@@ -121,8 +121,7 @@ $$ This function takes a single argument (1 for vendor, 2 for customer as
 	LOOP
 		RETURN NEXT out_entity;
 	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL;
+$$;
 
 COMMENT ON FUNCTION payment_get_all_accounts(int) IS
 $$ This function takes a single argument (1 for vendor, 2 for customer as 
@@ -358,7 +357,7 @@ BEGIN
 		    JOIN (SELECT ap.id, invnumber, transdate, amount, entity_id, 
 				 curr, 1 as invoice_class,
 		                 entity_credit_account, on_hold, v.batch_id,
-				 approved
+				 approved, paid
 		            FROM ap
 		       LEFT JOIN (select * from voucher where batch_class = 1) v 
 			         ON (ap.id = v.trans_id)
@@ -368,7 +367,7 @@ BEGIN
 		          SELECT ar.id, invnumber, transdate, amount, entity_id,
 		                 curr, 2 as invoice_class,
 		                 entity_credit_account, on_hold, v.batch_id,
-				 approved
+				 approved, paid
 		            FROM ar
 		       LEFT JOIN (select * from voucher where batch_class = 2) v 
 			         ON (ar.id = v.trans_id)
@@ -397,6 +396,7 @@ BEGIN
 		             AND a.approved
 		         AND a.amount <> a.paid 
 			 AND NOT a.on_hold
+                         AND a.curr = in_currency
 		         AND EXISTS (select trans_id FROM acc_trans
 		                      WHERE trans_id = a.id AND
 		                            chart_id = (SELECT id from account
@@ -439,6 +439,11 @@ the LedgerSMB discretionary locking framework, and if not possible, returns the
 username of the individual who has the lock.
 $$;
 
+DROP FUNCTION IF EXISTS payment_bulk_post
+(in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
+        in_ar_ap_accno text, in_cash_accno text,
+        in_payment_date date, in_account_class int,
+        in_exchangerate numeric, in_curr text);
 
 CREATE OR REPLACE FUNCTION payment_bulk_post
 (in_transactions numeric[], in_batch_id int, in_source text, in_total numeric,
@@ -506,27 +511,27 @@ BEGIN
             UPDATE bulk_payments_in
                SET fxrate = 1;
         ELSE
-            UPDATE bulk_payments_in bpi
+            UPDATE bulk_payments_in
                SET fxrate =
                 (SELECT CASE WHEN in_account_class = 1 THEN sell
                              ELSE buy
                         END
                    FROM exchangerate e
-                   JOIN (SELECT * FROM ar
+                   JOIN (SELECT transdate, id, curr FROM ar
                          UNION
-                         SELECT * FROM ap) a
+                         SELECT transdate, id, curr FROM ap) a
                      ON (e.transdate = a.transdate
                          AND e.curr = a.curr)
-                   WHERE a.id = bpi.id);
-            UPDATE bulk_payments_in bpi
+                   WHERE a.id = bulk_payments_in.id);
+            UPDATE bulk_payments_in
                SET gain_loss_accno =
                 (SELECT value::int FROM defaults
                   WHERE setting_key = 'fxgain_accno_id')
-             WHERE ((t_exchangerate - bpi.fxrate) * t_cash_sign) < 0;
+             WHERE ((t_exchangerate - bulk_payments_in.fxrate) * t_cash_sign) < 0;
             UPDATE bulk_payments_in
                SET gain_loss_accno = (SELECT value::int FROM defaults
                   WHERE setting_key = 'fxloss_accno_id')
-             WHERE ((t_exchangerate - bpi.fxrate) * t_cash_sign) > 0;
+             WHERE ((t_exchangerate - bulk_payments_in.fxrate) * t_cash_sign) > 0;
             -- explicitly leave zero gain/loss accno_id entries at NULL
             -- so we have an easy check for which 
         END IF;
@@ -1311,10 +1316,7 @@ BEGIN
             
       LOOP
            RETURN NEXT out_overpayment;
-    		WHERE available <> 0 AND in_account_class = payment_class
-        LOOP
-                RETURN NEXT out_entity;
-        END LOOP;
+      END LOOP;
  END;
 $$ LANGUAGE PLPGSQL;
 
