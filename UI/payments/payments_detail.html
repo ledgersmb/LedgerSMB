@@ -148,14 +148,24 @@
      </div> 
      <?lsmb  IF default_currency != currency ?>
       <div class="info" id="exrate_row">
-         <?lsmb PROCESS input element_data= {
+         <?lsmb IF fx_from_db ?>
+         <label><?lsmb text('Exchange Rate') ?>:</label> <?lsmb exchangerate ?>
+         <?lsmb PROCESS input element_data = {
+                name = 'exchangerate'
+               value = exchangerate
+                type = 'hidden'
+         };
+         ELSE ;
+                 
+         PROCESS input element_data= {
 		label = text('Exchange Rate') #'
 		type = 'text'
 		class = "numeric"
 		name = 'exchangerate'
 		value = exchangerate
 		size = 20
-	}  ?>
+	};
+        END ?>
 	</div>
      <?lsmb END ?>
      <?lsmb IF business ?>
