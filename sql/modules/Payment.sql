@@ -484,6 +484,9 @@ BEGIN
         ELSE 
                 t_exchangerate := in_exchangerate;
         END IF;
+        IF t_exchangerate IS NULL THEN
+            RAISE EXCEPTION 'No exchangerate provided and not default currency';
+        END IF;
 
         CREATE TEMPORARY TABLE bulk_payments_in
            (id int, amount numeric, fxrate numeric, gain_loss_accno int);
@@ -540,7 +543,7 @@ BEGIN
         INSERT INTO acc_trans
              (trans_id, chart_id, amount, approved,
               voucher_id, transdate, source)
-           SELECT id, t_cash_id, amount * t_cash_sign * fxrate,
+           SELECT id, t_cash_id, amount * t_cash_sign * t_exchangerate,
                   CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
                   t_voucher_id, in_payment_date, in_source
@@ -568,7 +571,6 @@ BEGIN
                   t_voucher_id, in_payment_date, in_source
              FROM bulk_payments_in
             WHERE amount <> 0 AND gain_loss_accno IS NOT NULL;
-
 
         DROP TABLE bulk_payments_in;
         perform unlock_all();
