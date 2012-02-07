@@ -1130,6 +1130,10 @@ BEGIN
                         and coalesce (in_voucher_id, 0) 
                              = coalesce(voucher_id, 0)
 	LOOP
+                IF pay_row.curr = t_currs[0] THEN
+                   pay_row.fxrage = 1;
+                END IF;
+
 		IF in_batch_id IS NOT NULL 
 			AND t_voucher_inserted IS NOT TRUE
 		THEN
