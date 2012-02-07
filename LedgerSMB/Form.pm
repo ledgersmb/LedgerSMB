@@ -1820,9 +1820,9 @@ sub all_vc {
     ($myconfig->{vclimit}) = $sth->fetchrow_array();
 
     if ($vc eq 'customer'){
-        $self->{vc_class} = 1;
-    } else {
         $self->{vc_class} = 2;
+    } else {
+        $self->{vc_class} = 1;
         $vc = 'vendor';
     }
     my $query = qq|SELECT count(*) FROM entity_credit_account ec 

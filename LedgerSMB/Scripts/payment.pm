@@ -555,6 +555,7 @@ This displays the bulk payment screen with current data.
 sub display_payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
+    $payment->{default_currency} =  $payment->get_default_currency();;
     $payment->get_payment_detail_data();
     $payment->open_form();
     $payment->{dbh}->commit;

@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 package LedgerSMB::Scripts::admin;
 use strict;
 

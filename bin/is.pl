@@ -373,7 +373,7 @@ sub form_header {
             $exchangerate .=
                 qq|<th align=right>|
               . $locale->text('Exchange Rate')
-              . qq|</th><td><input name="exchangerate size="10" value="$form->{exchangerate}"></td>|;
+              . qq|</th><td><input name="exchangerate" size="10" value="$form->{exchangerate}"></td>|;
         }
     }
     $exchangerate .= qq|
