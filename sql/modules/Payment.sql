@@ -1087,9 +1087,7 @@ BEGIN
         SELECT * INTO t_exchangerate FROM currency_get_exchangerate(
               in_currency, in_date_reversed, in_account_class);
 
-        SELECT
-
-        IF (in_currency IS NULL OR in_currency = t_currs[0]) THEN
+        IF in_currency IS NULL OR in_currency = t_currs[0] THEN
                 t_exchangerate := 1;
         ELSIF t_exchangerate IS NULL THEN
                 t_exchangerate := in_exchangerate;
@@ -1113,12 +1111,14 @@ BEGIN
 		SELECT a.*, c.ar_ap_account_id
 		FROM acc_trans a
 		JOIN (select id, curr, entity_credit_account, buy as fxrate
-			FROM ar WHERE in_account_class = 2
+			FROM ar 
                         JOIN exchangerate USING (transdate, curr)
+                       WHERE in_account_class = 2
 			UNION
 			SELECT id, curr, entity_credit_account, sell as fxrate
-			FROM ap WHERE in_account_class = 1
+			FROM ap
                         JOIN exchangerate USING (transdate, curr)
+                       WHERE in_account_class = 1
 		) arap ON (a.trans_id = arap.id)
 		JOIN entity_credit_account c 
 			ON (arap.entity_credit_account = c.id)
@@ -1176,7 +1176,7 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION payment__reverse
 (in_source text, in_date_paid date, in_credit_id int, in_cash_accno text,
         in_date_reversed date, in_account_class int, in_batch_id int,
-        in_voucher_id int) IS $$
+        in_voucher_id int, in_exchangerate numeric) IS $$
 Reverses a payment.  All fields are mandatory except batch_id and voucher_id
 because they determine the identity of the payment to be reversed.
 $$;
