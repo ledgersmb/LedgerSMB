@@ -552,6 +552,7 @@ sub all_transactions {
     my $zeroBF=new Math::BigFloat(0);#HV make sure BigFloat stays BigFloat
 
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth=>$sth,hashref=>$ref);
 
         # gl
         if ( $ref->{type} eq "gl" ) {
