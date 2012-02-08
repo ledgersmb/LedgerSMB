@@ -548,6 +548,9 @@ sub all_transactions {
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
+    my $minusOne=new Math::BigFloat(-1);#HV make sure BigFloat stays BigFloat
+    my $zeroBF=new Math::BigFloat(0);#HV make sure BigFloat stays BigFloat
+
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
 
         # gl
@@ -578,12 +581,12 @@ sub all_transactions {
         }
 
         if ( $ref->{amount} < 0 ) {
-            $ref->{debit}  = $ref->{amount} * -1;
-            $ref->{credit} = 0;
+            $ref->{debit}  = $ref->{amount} * $minusOne;
+            $ref->{credit} = $zeroBF;
         }
         else {
             $ref->{credit} = $ref->{amount};
-            $ref->{debit}  = 0;
+            $ref->{debit}  = $zeroBF;
         }
 
         push @{ $form->{GL} }, $ref;

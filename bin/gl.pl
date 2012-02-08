@@ -501,7 +501,7 @@ sub generate_report {
     $form->{sort} = "transdate" unless $form->{sort};
     $form->{amountfrom} = $form->parse_amount(\%myconfig, $form->{amountfrom});
     $form->{amountto} = $form->parse_amount(\%myconfig, $form->{amountto});
-    my ($totaldebit, $totalcredit) = (0, 0);
+    my ($totaldebit, $totalcredit)=(new Math::BigFloat(0),new Math::BigFloat(0));
 
     GL->all_transactions( \%myconfig, \%$form );
 
@@ -534,7 +534,7 @@ sub generate_report {
     } else {
         $form->{title} = $locale->text('General Ledger');
     }
-    $ml = ( $form->{category} =~ /(A|E)/ ) ? -1 : 1;
+    $ml=new Math::BigFloat(($form->{category} =~ /(A|E)/)?-1:1);
 
     if (defined $form->{category} and $form->{category} ne 'X' ) {
         $form->{title} .=
@@ -715,12 +715,12 @@ sub generate_report {
     $hiddens{sort} = $form->{sort};
     $hiddens{callback} = $form->{callback};
 
-    $cml = 1;
+    $cml=new Math::BigFloat(1);
 
     # initial item for subtotals
     if ( @{ $form->{GL} } ) {
         $sameitem = $form->{GL}->[0]->{ $form->{sort} };
-        $cml = -1 if $form->{contra};
+        $cml=new Math::BigFloat(-1) if $form->{contra};
     }
 
     my @rows;
