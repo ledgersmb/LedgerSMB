@@ -483,7 +483,7 @@ BEGIN
           from defaults 
          where setting_key = 'curr';
 
-        IF (in_currency IS NULL OR in_currency = t_currs[0]) THEN
+        IF (in_currency IS NULL OR in_currency = t_currs[1]) THEN
                 t_exchangerate := 1;
         ELSIF t_exchangerate IS NULL THEN
                 t_exchangerate := in_exchangerate;
@@ -520,7 +520,7 @@ BEGIN
             t_cash_sign := -1;
         END IF;
 
-        IF (in_currency IS NULL OR in_currency = t_currs[0]) THEN
+        IF (in_currency IS NULL OR in_currency = t_currs[1]) THEN
             UPDATE bulk_payments_in
                SET fxrate = 1;
         ELSE
@@ -1095,8 +1095,9 @@ BEGIN
           from defaults
          where setting_key = 'curr';
 
-        IF in_currency IS NULL OR in_currency = t_currs[0] THEN
+        IF in_currency IS NULL OR in_currency = t_currs[1] THEN
                 t_rev_fx := 1;
+                t_paid_fx := 1;
         ELSIF t_rev_fx IS NULL THEN
                 t_rev_fx := in_exchangerate;
                 PERFORM payments_set_exchangerate(in_account_class,
@@ -1118,27 +1119,31 @@ BEGIN
 	FOR pay_row IN 
 		SELECT a.*, c.ar_ap_account_id, arap.curr, arap.fxrate
 		FROM acc_trans a
-		JOIN (select id, curr, entity_credit_account, buy as fxrate
+		JOIN (select id, curr, entity_credit_account, 
+                             CASE WHEN curr = t_currs[1] THEN 1
+                                   ELSE buy END as fxrate
 			FROM ar 
-                        JOIN exchangerate USING (transdate, curr)
+                   LEFT JOIN exchangerate USING (transdate, curr)
                        WHERE in_account_class = 2
 			UNION
-			SELECT id, curr, entity_credit_account, sell as fxrate
+			SELECT id, curr, entity_credit_account, 
+                               CASE WHEN curr = t_currs[1] THEN 1
+                                    ELSE sell END as fxrate
 			FROM ap
-                        JOIN exchangerate USING (transdate, curr)
+                   LEFT JOIN exchangerate USING (transdate, curr)
                        WHERE in_account_class = 1
 		) arap ON (a.trans_id = arap.id)
 		JOIN entity_credit_account c 
 			ON (arap.entity_credit_account = c.id)
-		JOIN chart ch ON (a.chart_id = ch.id)
-		WHERE coalesce(source, '') = coalesce(in_source, '')
-			AND transdate = in_date_paid
-			AND in_credit_id = c.id
+		JOIN account ch ON (a.chart_id = ch.id)
+		WHERE a.source IS NOT DISTINCT FROM in_source
+			AND a.transdate = in_date_paid
+			AND in_credit_id = arap.entity_credit_account
 			AND in_cash_accno = ch.accno
-                        and in_voucher_id IS DISTINCT FROM voucher_id
+                        and in_voucher_id IS NOT DISTINCT FROM voucher_id
 	LOOP
-                IF pay_row.curr = t_currs[0] THEN
-                   pay_row.fxrage = 1;
+                IF pay_row.curr = t_currs[1] THEN
+                   pay_row.fxrate = 1;
                 END IF;
 
 		IF in_batch_id IS NOT NULL 
