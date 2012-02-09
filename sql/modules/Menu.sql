@@ -1,4 +1,4 @@
-
+DROP TYPE IF EXISTS menu_item CASCADE;
 CREATE TYPE menu_item AS (
    position int,
    id int,
@@ -34,12 +34,17 @@ BEGIN
 		FROM tree c
 		JOIN menu_node n USING(id)
                 JOIN menu_attribute ma ON (n.id = ma.node_id)
-               WHERE n.id IN (select node_id FROM menu_acl
-                               WHERE pg_has_role(CASE WHEN role_name 
+               WHERE n.id IN (select node_id 
+                                FROM menu_acl acl
+                                JOIN pg_roles pr on pr.rolname = acl.role_name
+                               WHERE CASE WHEN rolname 
                                                            ilike 'public'
-                                                      THEN current_user
-                                                      ELSE role_name
-                                                   END, 'USAGE')
+                                                      THEN true
+                                                      WHEN rolname IS NULL
+                                                      THEN FALSE
+                                                      ELSE pg_has_role(rolname,
+                                                                       'USAGE')
+                                      END
                             GROUP BY node_id
                               HAVING bool_and(CASE WHEN acl_type ilike 'DENY'
                                                    THEN FALSE
@@ -50,12 +55,18 @@ BEGIN
                                  FROM tree cc
                                  JOIN menu_node cn USING(id)
                                 WHERE cn.id IN 
-                                      (select node_id FROM menu_acl
-                                        WHERE pg_has_role(CASE WHEN role_name 
+                                      (select node_id 
+                                         FROM menu_acl acl
+                                         JOIN pg_roles pr 
+                                              on pr.rolname = acl.role_name
+                                        WHERE CASE WHEN rolname 
                                                            ilike 'public'
-                                                      THEN current_user
-                                                      ELSE role_name
-                                                   END, 'USAGE')
+                                                      THEN true
+                                                      WHEN rolname IS NULL
+                                                      THEN FALSE
+                                                      ELSE pg_has_role(rolname,
+                                                                       'USAGE')
+                                                END
                                      GROUP BY node_id
                                        HAVING bool_and(CASE WHEN acl_type 
                                                                  ilike 'DENY'
