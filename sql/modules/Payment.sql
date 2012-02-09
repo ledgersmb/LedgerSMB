@@ -1003,9 +1003,13 @@ CREATE TYPE payment_record AS (
         date_paid date
 );
 
+DROP FUNCTION IF EXISTS payment__search 
+(in_source text, in_date_from date, in_date_to date, in_credit_id int,
+        in_cash_accno text, in_account_class int);
+
 CREATE OR REPLACE FUNCTION payment__search 
 (in_source text, in_date_from date, in_date_to date, in_credit_id int, 
-	in_cash_accno text, in_account_class int)
+	in_cash_accno text, in_account_class int, in_currency char(3))
 RETURNS SETOF payment_record AS
 $$
 DECLARE 
@@ -1019,10 +1023,10 @@ BEGIN
 				ch.description]]), a.source, 
 			b.control_code, b.description, a.voucher_id, a.transdate
 		FROM entity_credit_account c
-		JOIN ( select entity_credit_account, id
+		JOIN ( select entity_credit_account, id, curr
 			FROM ar WHERE in_account_class = 2
 			UNION
-			SELECT entity_credit_account, id
+			SELECT entity_credit_account, id, curr
 			FROM ap WHERE in_account_class = 1
 			) arap ON (arap.entity_credit_account = c.id)
 		JOIN acc_trans a ON (arap.id = a.trans_id)
@@ -1031,6 +1035,7 @@ BEGIN
 		LEFT JOIN voucher v ON (v.id = a.voucher_id)
 		LEFT JOIN batch b ON (b.id = v.batch_id)
 		WHERE (ch.accno = in_cash_accno)
+                        AND (in_currency IS NULL OR in_currency = arap.curr)
 			AND (c.id = in_credit_id OR in_credit_id IS NULL)
 			AND (a.transdate >= in_date_from 
 				OR in_date_from IS NULL)
@@ -1048,7 +1053,7 @@ $$ language plpgsql;
 
 COMMENT ON FUNCTION payment__search
 (in_source text, in_date_from date, in_date_to date, in_credit_id int,
-        in_cash_accno text, in_account_class int) IS
+        in_cash_accno text, in_account_class int, char(3)) IS
 $$This searches for payments.  in_date_to and _date_from specify the acceptable
 date range.  All other matches are exact except that null matches all values.
 
@@ -1064,7 +1069,7 @@ DROP FUNCTION IF EXISTS payment__reverse
 CREATE OR REPLACE FUNCTION payment__reverse
 (in_source text, in_date_paid date, in_credit_id int, in_cash_accno text, 
 	in_date_reversed date, in_account_class int, in_batch_id int, 
-        in_voucher_id int, in_exchangerate numeric)
+        in_voucher_id int, in_exchangerate numeric, in_currency char(3))
 RETURNS INT 
 AS $$
 DECLARE
@@ -1072,10 +1077,16 @@ DECLARE
         t_voucher_id int;
         t_voucher_inserted bool;
         t_currs text[];
-        t_exchangerate numeric;
+        t_rev_fx numeric;
         t_fxgain_id int;
         t_fxloss_id int;
+        t_paid_fx numeric;
 BEGIN
+        SELECT * INTO t_rev_fx FROM currency_get_exchangerate(
+              in_currency, in_date_reversed, in_account_class);
+
+        SELECT * INTO t_paid_fx FROM currency_get_exchangerate(
+              in_currency, in_date_paid, in_account_class);
 
        select value::int INTO t_fxgain_id FROM setting_get('fxgain_accno_id');
        select value::int INTO t_fxloss_id FROM setting_get('fxloss_accno_id');
@@ -1084,21 +1095,18 @@ BEGIN
           from defaults
          where setting_key = 'curr';
 
-        SELECT * INTO t_exchangerate FROM currency_get_exchangerate(
-              in_currency, in_date_reversed, in_account_class);
-
         IF in_currency IS NULL OR in_currency = t_currs[0] THEN
-                t_exchangerate := 1;
-        ELSIF t_exchangerate IS NULL THEN
-                t_exchangerate := in_exchangerate;
+                t_rev_fx := 1;
+        ELSIF t_rev_fx IS NULL THEN
+                t_rev_fx := in_exchangerate;
                 PERFORM payments_set_exchangerate(in_account_class,
                                                   in_exchangerate,
                                                   in_currency,
                                                   in_date_reversed);
-        ELSIF t_exchangerate <> in_exchangerate THEN
+        ELSIF t_rev_fx <> in_exchangerate THEN
                 RAISE EXCEPTION 'Exchange rate different than on file';
         END IF;
-        IF t_exchangerate IS NULL THEN
+        IF t_rev_fx IS NULL THEN
             RAISE EXCEPTION 'No exchangerate provided and not default currency';
         END IF;
 
@@ -1108,7 +1116,7 @@ BEGIN
 		t_voucher_inserted := FALSE;
 	END IF;
 	FOR pay_row IN 
-		SELECT a.*, c.ar_ap_account_id
+		SELECT a.*, c.ar_ap_account_id, arap.curr, arap.fxrate
 		FROM acc_trans a
 		JOIN (select id, curr, entity_credit_account, buy as fxrate
 			FROM ar 
@@ -1127,8 +1135,7 @@ BEGIN
 			AND transdate = in_date_paid
 			AND in_credit_id = c.id
 			AND in_cash_accno = ch.accno
-                        and coalesce (in_voucher_id, 0) 
-                             = coalesce(voucher_id, 0)
+                        and in_voucher_id IS DISTINCT FROM voucher_id
 	LOOP
                 IF pay_row.curr = t_currs[0] THEN
                    pay_row.fxrage = 1;
@@ -1152,20 +1159,22 @@ BEGIN
 		(trans_id, chart_id, amount, transdate, source, memo, approved,
 			voucher_id) 
 		VALUES 
-		(pay_row.trans_id, pay_row.chart_id, pay_row.amount * -1 * t_exchangerate, 
+		(pay_row.trans_id, pay_row.chart_id, 
+                        pay_row.amount / t_paid_fx * -1 * t_rev_fx, 
 			in_date_reversed, in_source, 'Reversing ' || 
 			COALESCE(in_source, ''), 
 			case when in_batch_id is not null then false 
 			else true end, t_voucher_id),
-                 (pay_row.trans_id, pay_row.ar_ap_account_id, pay_row.amount * pay_row.fxrate,
+                 (pay_row.trans_id, pay_row.ar_ap_account_id, 
+                        pay_row.amount / t_paid_fx * pay_row.fxrate,
 			in_date_reversed, in_source, 'Reversing ' ||
 			COALESCE(in_source, ''), 
 			case when in_batch_id is not null then false 
 			else true end, t_voucher_id),
                  (pay_row.trans_id, 
-                  case when pay_row.amount * pay_row.fxrate < pay_row.amount * t_exchangerate 
-                       THEN t_fx_loss_id ELSE t_fx_gain_id END, 
-                  pay_row.amount * -1 * (t_exchangerate - pay_row.fxrate),
+                  case when pay_row.fxrate > t_rev_fx 
+                       THEN t_fxloss_id ELSE t_fxgain_id END, 
+                  pay_row.amount / t_paid_fx * (t_rev_fx - pay_row.fxrate),
                   in_date_reversed, in_source, 'Reversing ' ||  
                                                 COALESCE(in_source, ''),
                    case when in_batch_id is not null then false
@@ -1180,7 +1189,7 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION payment__reverse
 (in_source text, in_date_paid date, in_credit_id int, in_cash_accno text,
         in_date_reversed date, in_account_class int, in_batch_id int,
-        in_voucher_id int, in_exchangerate numeric) IS $$
+        in_voucher_id int, in_exchangerate numeric, char(3)) IS $$
 Reverses a payment.  All fields are mandatory except batch_id and voucher_id
 because they determine the identity of the payment to be reversed.
 $$;
