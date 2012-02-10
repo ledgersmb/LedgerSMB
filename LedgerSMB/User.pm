@@ -189,7 +189,8 @@ sub fetch_config {
     $sth = $dbh->prepare("SELECT value FROM defaults WHERE setting_key = 'templates'");
     $sth->execute();
     ($templates) = $sth->fetchrow_array() || 'demo';
-    $myconfig->{templates} = "templates/$templates";
+    $myconfig->{templates} = "$LedgerSMB::Sysconfig::templates/$templates";
+    print STDERR "$myconfig->{templates}\n";
     return $myconfig;
 }
 

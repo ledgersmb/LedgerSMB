@@ -16,6 +16,8 @@ Changelog for 1.3.11
 * Fixed GL recurring transaction not posting (Chris T)
 * Improved error handling when extensions/contrib scripts not found (Chris T)
 * Fixed multicurrency handling in bulk payment interface (Chris T and Erik H)
+* Corrected a number of number parsing/i18n issues (Herman V)
+* Corrected pos_cashier inadequate permissions (Chris T)
 
 Changelog for 1.3.10
 * Fixes for permissions for exchangerate table (Erik H)
