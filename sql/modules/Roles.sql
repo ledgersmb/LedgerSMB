@@ -619,7 +619,8 @@ GRANT "lsmb_<?lsmb dbname ?>__ar_transaction_create" TO "lsmb_<?lsmb dbname ?>__
 
 GRANT SELECT, INSERT ON invoice TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__pos_enter";
-GRANT INSERT ON ar TO "lsmb_<?lsmb dbname ?>__pos_enter";
+GRANT SELECT, INSERT ON ar TO "lsmb_<?lsmb dbname ?>__pos_enter";
+GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__pos_enter";
