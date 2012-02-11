@@ -262,9 +262,9 @@ Displays the search criteria screen
 sub search {
     my $request = shift @_;
     my $template = LedgerSMB::Template->new(
-        user => $employee->{_user},
+        user => $request->{_user},
         template => 'filter',
-        locale => $employee->{_locale},
+        locale => $request->{_locale},
         path => 'UI/employee',
         format => 'HTML'
     );
