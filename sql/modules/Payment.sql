@@ -553,7 +553,7 @@ BEGIN
         INSERT INTO acc_trans
              (trans_id, chart_id, amount, approved,
               voucher_id, transdate, source)
-           SELECT id, t_cash_id, amount * t_cash_sign * t_exchangerate,
+           SELECT id, t_cash_id, amount * t_cash_sign * t_exchangerate/fxrate,
                   CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
                   t_voucher_id, in_payment_date, in_source
@@ -564,7 +564,7 @@ BEGIN
              (trans_id, chart_id, amount, approved,
               voucher_id, transdate, source)
            SELECT id, t_ar_ap_id,
-                  amount * -1 * t_cash_sign * fxrate,
+                  amount * -1 * t_cash_sign,
                   CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
                   t_voucher_id, in_payment_date, in_source
@@ -575,7 +575,7 @@ BEGIN
              (trans_id, chart_id, amount, approved,
               voucher_id, transdate, source)
            SELECT id, gain_loss_accno,
-                  amount * -1 * t_cash_sign * (t_exchangerate - fxrate),
+                  amount * t_cash_sign * (1 - t_exchangerate/fxrate),
                   CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
                   t_voucher_id, in_payment_date, in_source

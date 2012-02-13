@@ -156,7 +156,7 @@ sub import_file {
 
 =item get
 
-Gets a fixed asset, sets all standard properties.
+Gets a fixed asset, sets all standard properties.  The id property must be set.
 
 =cut
 
