@@ -104,6 +104,9 @@ IRC: mst#irc.perl.org contributed the initial Makefile.PL
 Rich Walker <rw @ shadowrobot.com> has provided assistance in the dists/deb 
 documentation for Debian installations.
 
+Steven Marshall <steven.marshall @ tatylee.com> Contributed a bug fix for the 
+menu.
+
 Original Authors of SQL-Ledger:
 ===================================
 Dieter Simader <dsimader @ sql-ledger.com>

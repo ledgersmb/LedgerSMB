@@ -36,7 +36,7 @@ BEGIN
                 JOIN menu_attribute ma ON (n.id = ma.node_id)
                WHERE n.id IN (select node_id 
                                 FROM menu_acl acl
-                                JOIN pg_roles pr on pr.rolname = acl.role_name
+                          LEFT JOIN pg_roles pr on pr.rolname = acl.role_name
                                WHERE CASE WHEN rolname 
                                                            ilike 'public'
                                                       THEN true
@@ -57,7 +57,7 @@ BEGIN
                                 WHERE cn.id IN 
                                       (select node_id 
                                          FROM menu_acl acl
-                                         JOIN pg_roles pr 
+                                    LEFT JOIN pg_roles pr 
                                               on pr.rolname = acl.role_name
                                         WHERE CASE WHEN rolname 
                                                            ilike 'public'

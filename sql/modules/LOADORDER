@@ -6,6 +6,7 @@ chart.sql
 Account.sql
 Session.sql
 Business_type.sql
+Business_Unit.sql
 Location.sql
 Company.sql
 Customer.sql 

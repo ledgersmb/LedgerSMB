@@ -7,13 +7,6 @@ $$ SELECT -1;$$ LANGUAGE SQL;
 
 CREATE SEQUENCE id;
 -- As of 1.3 there is no central db anymore. --CT
-CREATE TABLE department (
-  id serial PRIMARY KEY,
-  description text,
-  role char(1) default 'P'
-);
-
-COMMENT ON COLUMN department.role IS $$P for Profit Center, C for Cost Center$$;
 --
 CREATE TABLE language (
   code varchar(6) PRIMARY KEY,
@@ -1104,8 +1097,6 @@ CREATE TABLE journal_line (
     amount numeric not null check (amount <> 'NaN'),
     cleared bool not null default false,
     reconciliation_report int references cr_report(id),
-    project_id int,
-    department_id int references department(id) not null,
     line_type text references account_link_description,
     primary key (id)
 );
@@ -1165,8 +1156,7 @@ CREATE TABLE gl (
   transdate date DEFAULT current_date,
   person_id integer references person(id),
   notes text,
-  approved bool default true,
-  department_id int default 0
+  approved bool default true
 );
 
 COMMENT ON TABLE gl IS
@@ -1294,7 +1284,6 @@ CREATE TABLE acc_trans (
   source text,
   cleared bool DEFAULT 'f',
   fx_transaction bool DEFAULT 'f',
-  project_id int,
   memo text,
   invoice_id int,
   approved bool default true,
@@ -1341,7 +1330,6 @@ CREATE TABLE parts (
   drawing text,
   microfiche text,
   partsgroup_id int,
-  project_id int,
   avgcost NUMERIC
 );
 
@@ -1382,7 +1370,6 @@ CREATE TABLE invoice (
   discount numeric,
   assemblyitem bool DEFAULT 'f',
   unit varchar(5),
-  project_id int,
   deliverydate date,
   serialnumber text,
   notes text
@@ -1490,7 +1477,6 @@ CREATE TABLE ar (
   till varchar(20),
   quonumber text,
   intnotes text,
-  department_id int default 0,
   shipvia text,
   language_code varchar(6),
   ponumber text,
@@ -1574,7 +1560,6 @@ CREATE TABLE ap (
   till varchar(20),
   quonumber text,
   intnotes text,
-  department_id int DEFAULT 0,
   shipvia text,
   language_code varchar(6),
   ponumber text,
@@ -1739,7 +1724,6 @@ CREATE TABLE oe (
   quotation bool default 'f',
   quonumber text,
   intnotes text,
-  department_id int default 0,
   shipvia text,
   language_code varchar(6),
   ponumber text,
@@ -1765,7 +1749,6 @@ CREATE TABLE orderitems (
   precision int,
   discount numeric,
   unit varchar(5),
-  project_id int,
   reqdate date,
   ship numeric,
   serialnumber text,
@@ -1788,21 +1771,54 @@ whatever you can get for it when you sell the acquired currency (sell rate).
 When you have to pay someone in a foreign currency, the equivalent amount is the amount
 you have to spend to acquire the foreign currency (buy rate).$$;
 --
-CREATE TABLE project (
-  id serial PRIMARY KEY,
-  projectnumber text,
-  description text,
-  startdate date,
-  enddate date,
-  parts_id int,
-  production numeric default 0,
-  completed numeric default 0,
-  credit_id int references entity_credit_account(id)
+
+CREATE TABLE business_unit_class (
+    id int not null unique,
+    label text primary key,
+    active bool not null default false,
+    ordering int
 );
 
-ALTER TABLE journal_line ADD FOREIGN KEY (project_id) REFERENCES project(id);
+COMMENT ON TABLE business_unit_class IS 
+$$ Consolidates projects and departments, and allows this to be extended for
+funds accounting and other purposes.$$;
 
-COMMENT ON COLUMN project.parts_id IS
+INSERT INTO business_unit_class (id, label, active, ordering)
+VALUES (1, 'Department', '0', '10'),
+       (2, 'Project', '0', '20');
+
+CREATE TABLE business_unit (
+  id serial PRIMARY KEY,
+  class_id int not null references business_unit_class(id),
+  control_code text,
+  description text,
+  start_date date,
+  end_date date,
+  parent_id int references business_unit(id),
+  credit_id int references entity_credit_account(id),
+  UNIQUE(id, class_id) 
+);
+
+CREATE TABLE job (
+  bu_id int primary key references business_unit(id),
+  parts_id int,
+  production numeric default 0,
+  completed numeric default 0
+);
+
+CREATE TABLE business_unit_ac (
+  entry_id int references acc_trans(entry_id),
+  class_id int references business_unit_class(id),
+  bu_id int,
+  primary key(bu_id, class_id, entry_id),
+  foreign key(class_id, bu_id) references business_unit(class_id, id)
+);
+
+COMMENT ON TABLE business_unit IS
+$$ Tracks Projects, Departments, Funds, Etc.$$;
+
+
+COMMENT ON COLUMN job.parts_id IS
 $$ Job costing/manufacturing here not implemented.$$;
 --
 CREATE TABLE partsgroup (
@@ -1824,14 +1840,6 @@ CREATE TABLE status (
 COMMENT ON TABLE status IS
 $$ Whether AR/AP transactions and invoices have been emailed and/or printed $$;
 
---
--- department transaction table
-CREATE TABLE dpt_trans (
-  trans_id int PRIMARY KEY,
-  department_id int
-);
-
-COMMENT ON TABLE dpt_trans IS $$Department to Transaction Map$$;
 --
 -- business table
 CREATE TABLE business (
@@ -1947,13 +1955,13 @@ ALTER TABLE parts_translation ADD foreign key (trans_id) REFERENCES parts(id);
 COMMENT ON TABLE parts_translation IS
 $$ Translation information for parts.$$;
 
-CREATE TABLE project_translation 
+CREATE TABLE business_unit_translation 
 (PRIMARY KEY (trans_id, language_code)) INHERITS (translation);
-ALTER TABLE project_translation 
-ADD foreign key (trans_id) REFERENCES project(id);
+ALTER TABLE business_unit_translation 
+ADD foreign key (trans_id) REFERENCES business_unit(id);
 
-COMMENT ON TABLE project_translation IS
-$$ Translation information for projects.$$;
+COMMENT ON TABLE business_unit_translation IS
+$$ Translation information for projects, departments, etc.$$;
 
 CREATE TABLE partsgroup_translation 
 (PRIMARY KEY (trans_id, language_code)) INHERITS (translation);
@@ -2025,7 +2033,7 @@ $$ Template, printer etc. to print to when recurring transaction posts.$$;
 --
 CREATE TABLE jcitems (
   id serial PRIMARY KEY,
-  project_id int,
+  business_unit_id int references business_unit(id),
   parts_id int,
   description text,
   qty numeric,
@@ -2178,15 +2186,12 @@ create index parts_description_key on parts (lower(description));
 create index partstax_parts_id_key on partstax (parts_id);
 --
 --
-create index project_id_key on project (id);
-create unique index projectnumber_key on project (projectnumber);
 --
 create index partsgroup_id_key on partsgroup (id);
 create unique index partsgroup_key on partsgroup (partsgroup);
 --
 create index status_trans_id_key on status (trans_id);
 --
-create index department_id_key on department (id);
 --
 create index partsvendor_parts_id_key on partsvendor (parts_id);
 --
@@ -2211,32 +2216,6 @@ end;
 ' language 'plpgsql';
 -- end function
 --
-CREATE FUNCTION check_department() RETURNS TRIGGER AS '
-
-declare
-  dpt_id int;
-
-begin
- 
-  if new.department_id = 0 then
-    delete from dpt_trans where trans_id = new.id;
-    return NULL;
-  end if;
-
-  select into dpt_id trans_id from dpt_trans where trans_id = new.id;
-  
-  if dpt_id > 0 then
-    update dpt_trans set department_id = new.department_id where trans_id = dpt_id;
-  else
-    insert into dpt_trans (trans_id, department_id) values (new.id, new.department_id);
-  end if;
-return NULL;
-
-end;
-' language 'plpgsql';
--- end function
-CREATE TRIGGER check_department AFTER INSERT OR UPDATE ON oe FOR EACH ROW EXECUTE PROCEDURE check_department();
--- end trigger
 --
 CREATE FUNCTION del_recurring() RETURNS TRIGGER AS '
 BEGIN
@@ -3489,7 +3468,7 @@ CREATE TABLE asset_item (
 	purchase_date date  not null,
         start_depreciation date not null,
 	location_id int references warehouse(id),
-	department_id int references department(id),
+	department_id int references business_unit(id),
 	invoice_id int references eca_invoice(journal_id),
 	asset_account_id int references account(id),
 	dep_account_id int references account(id),
@@ -3554,7 +3533,7 @@ CREATE TABLE asset_report_line(
 	asset_id bigint references asset_item(id),
         report_id bigint references asset_report(id),
 	amount numeric,
-	department_id int references department(id),
+	department_id int references business_unit(id),
 	warehouse_id int references warehouse(id),
 	PRIMARY KEY(asset_id, report_id)
 );
@@ -4442,8 +4421,7 @@ CREATE TABLE payment (
   entity_credit_id   integer references entity_credit_account(id),
   employee_id integer references person(id),
   currency char(3),
-  notes text,
-  department_id integer default 0);
+  notes text);
               
 COMMENT ON TABLE payment IS $$ This table will store the main data on a payment, prepayment, overpayment, et$$;
 COMMENT ON COLUMN payment.reference IS $$ This field will store the code for both receipts and payment order  $$; 
@@ -4472,5 +4450,5 @@ COMMENT ON TABLE payment_links IS $$
 
  This reasoning is hacky and i hope it can dissapear when we get to 1.4 - D.M.
 $$;
- 
+
 commit;
