@@ -1814,6 +1814,22 @@ CREATE TABLE business_unit_ac (
   foreign key(class_id, bu_id) references business_unit(class_id, id)
 );
 
+CREATE TABLE business_unit_inv (
+  entry_id int references invoice(id),
+  class_id int references business_unit_class(id),
+  bu_id int,
+  primary key(bu_id, class_id, entry_id),
+  foreign key(class_id, bu_id) references business_unit(class_id, id)
+);
+
+CREATE TABLE business_unit_oitem (
+  entry_id int references orderitems(id),
+  class_id int references business_unit_class(id),
+  bu_id int,
+  primary key(bu_id, class_id, entry_id),
+  foreign key(class_id, bu_id) references business_unit(class_id, id)
+);
+
 COMMENT ON TABLE business_unit IS
 $$ Tracks Projects, Departments, Funds, Etc.$$;
 
