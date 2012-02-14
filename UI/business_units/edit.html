@@ -1,0 +1,89 @@
+<?lsmb INCLUDE 'ui-header.html' 
+      include_stylesheet = ["UI/business_unit/edit.css"] 
+?>
+<?lsmb PROCESS 'elements.html' ?>
+<body onLoad="init()">
+<div class="listtop"><?lsmb title ?></div>
+<form action="<?lsmb script ?>" method="post">
+<!-- These are for Javascript automation of defaults -CT -->
+<?lsmb PROCESS input element_data = {
+	type = "hidden"
+	name = "id"
+	value = id
+} ?>
+<div class="inputrow" id="tagrow">
+<?lsmb PROCESS input element_data = {
+	type = "text"
+	class = "control_code"
+	name = "control_code"
+	value = control_code
+	label = text('Control Code') #'
+	size = 32
+} ?>
+<?lsmb PROCESS select element_data = {
+        label = text('Parent')
+        class = "parent"
+      options = parent_options
+    text_attr = 'text'
+   value_attr = 'id'
+default_values= [parent]
+} ?>
+</div>
+<div class="inputrow" id="daterow">
+<?lsmb PROCESS input element_data = {
+	name = "start_date"
+	class = "date"
+	label = text("Start Date") #"
+         type = "text"
+        value = start_date
+} ?>
+<?lsmb PROCESS input element_data = {
+	name = "end_date"
+	class = "date"
+	label = text("End Date") #"
+         type = "text"
+        value = end_date
+} ?>
+</div>
+</div>
+<div class="inputrow" id="descrow">
+<?lsmb PROCESS input element_data = {
+	label = text("Description:")
+	name = "description"
+	class = "description"
+	value = description
+	type = "text"
+} ?>
+</div>
+<div class="inputrow" id="customer_row">
+<span class="inputgroup" id="startdepgroup">
+<?lsmb PROCESS input element_data = {
+	label = text("Customer")
+	name = "customer"
+	value = customer
+	type = "text"
+	size = 12
+        class = "search customer"
+} ?>
+</span>
+</div>
+<div class="inputrow" id="buttonrow">
+<?lsmb PROCESS button element_data = {
+	text = text("Save")
+	type = "submit"
+	class = "submit"
+	name = "action"
+	value = "asset_save"
+} ?>
+</div>
+<?lsmb PROCESS inout element_data = {
+     type = "hidden"
+     name = "class_id"
+    value = class_id
+} ?>
+</form>
+<div id="children">
+<!-- TODO:  Show and link to children here -->
+</div>
+</body>
+</html>

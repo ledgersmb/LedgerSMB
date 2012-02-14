@@ -1,0 +1,54 @@
+<?lsmb INCLUDE 'ui-header.html' 
+      include_stylesheet = ["UI/businbusiness_unit/filter.css"] 
+?>
+<?lsmb PROCESS 'elements.html' ?>
+<body>
+<div class="listtop"><?lsmb title ?></div>
+<form action="<?lsmb script ?>" method="post">
+<?lsmb PROCESS inout element_data = {
+     type = "hidden"
+     name = "class_id"
+    value = class_id
+} ?>
+<div class="inputrow" id="tagrow">
+<?lsmb PROCESS input element_data = {
+	type = "text"
+	class = "control_code"
+	name = "tag"
+	value = tag
+	label = text('Control Code') #'
+	size = 32
+} ?>
+</div>
+</div>
+<div class="inputrow" id="descrow">
+<?lsmb PROCESS input element_data = {
+	label = text("Description:")
+	name = "description"
+	class = "description"
+	value = description
+	type = "text"
+} ?>
+</div>
+<div class="inputrow" id="daterow">
+<?lsmb PROCESS input element_data = {
+	label = text("Active On") #"
+	name = "active_on"
+	class = "date"
+	value = active_on
+	type = "text"
+	size = 12
+} ?>
+</div>
+<div class="inputrow" id="buttonrow">
+<?lsmb PROCESS button element_data = {
+	text = text("Search")
+	type = "submit"
+	class = "submit"
+	name = "action"
+	value = "asset_results"
+} ?>
+</div>
+</form>
+</body>
+</html>

@@ -111,8 +111,8 @@ END;
 $$LANGUAGE PLPGSQL;
 
 CREATE OR REPLACE FUNCTION business_unit__save
-(in_id int, in_class_id int, in_control_code text, in_descriptin text,
-in_star_date date, in_end_date date, in_parent_id int, in_credit_id int)
+(in_id int, in_class_id int, in_control_code text, in_description text,
+in_start_date date, in_end_date date, in_parent_id int, in_credit_id int)
 RETURNS business_unit AS
 $$
 DECLARE retval business_unit;
