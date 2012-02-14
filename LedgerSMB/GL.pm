@@ -697,7 +697,7 @@ sub transaction {
     $form->all_departments( $myconfig, $dbh );
 
     # get projects
-    $form->all_projects( $myconfig, $dbh, $form->{transdate} );
+    $form->all_business_units( $form->{transdate} );
 
     $dbh->commit;
 
@@ -743,16 +743,7 @@ sub get_all_acc_dep_pro
 
 
     # get projects
-    $form->all_projects( $myconfig, $dbh, $form->{transdate} );
-
-    if ( @{ $form->{all_project} } ) {
-       $form->{projectset}=1; 
-       for ( @{ $form->{all_project} } ) {
-	  $_->{projectstyle}=$_->{projectnumber}."--".$_->{id};
-       }
-    }
-
-   
+    $form->all_business_units( $form->{transdate} );
 
 }
 

@@ -1793,7 +1793,7 @@ In addition to the possible population of $form->{all_${vc}},
 $form->{employee_id} is looked up if not already set, the list
 $form->{all_language} is populated using the language table and is sorted by the
 description, and $form->all_employees, $form->all_departments,
-$form->all_projects, and $form->all_taxaccounts are all run.
+$form->all_business_units, and $form->all_taxaccounts are all run.
 
 $module and $dbh are unused.
 
@@ -1915,7 +1915,7 @@ This is API-compatible with all_vc.  It is a handy wrapper function that calls
 the following functions:
 all_employees
 all_departments
-all_projects
+all_business_units
 all_taxaccounts
 
 It is preferable to using all_vc where the latter does not work properly due to
@@ -1924,7 +1924,7 @@ variable collisions, etc.
 $form->{employee_id} is looked up if not already set, the list
 $form->{all_language} is populated using the language table and is sorted by the
 description, and $form->all_employees, $form->all_departments,
-$form->all_projects, and $form->all_taxaccounts are all run.
+$form->all_business_units, and $form->all_taxaccounts are all run.
 
 $module and $dbh are unused.
 
@@ -1936,7 +1936,7 @@ sub get_regular_metadata {
 
     $self->all_employees( $myconfig, $dbh, $transdate, 1 );
     $self->all_departments( $myconfig, $dbh, $vc );
-    $self->all_projects( $myconfig, $dbh, $transdate, $job );
+    $self->all_business_units( $myconfig, $dbh, $transdate, $job );
     $self->all_taxaccounts( $myconfig, $dbh, $transdate );
     $self->all_languages();
 }
@@ -2061,131 +2061,41 @@ sub all_employees {
     $sth->finish;
 }
 
-=item $form->all_projects($myconfig, $dbh2[, $transdate, $job]);
+=item $form->all_business_units([$transdate, $credit_id]);
 
-Populates the list referred to as $form->{all_project} with hashes detailing
-all projects.  If $job is true, limit the projects to those whose ids  are not
-also present in parts with a project_id > 0.  If $transdate is set, the projects
-are limited to those valid on $transdate.  If $form->{language_code} is set,
-include the translation description in the project list and limit to
-translations with a matching language_code.  The result list,
-$form->{all_project}, is sorted by projectnumber.
-
-$myconfig and $dbh2 are unused.  $job appears to be part of attempted job-
-costing support.
+Returns a list at bu_class with class information, ordered by order information
+and a list of units in lists at bu_units->$class_id.  $transdate is used to
+filter projects active at specified date.  $credit_id is to filter out 
+units assigned to other customers.
 
 =cut
 
-sub all_projects {
+sub all_business_units {
 
-    my ( $self, $myconfig, $dbh2, $transdate, $job ) = @_;
+    my ( $self, $transdate, $credit_id ) = @_;
+    $self->{bu_class} = [];
+    $self->{b_units} = {};
 
     my $dbh       = $self->{dbh};
-    my @queryargs = ();
+    my $class_sth = $dbh->prepare(
+                q|SELECT * FROM business_unit__list_classes('1')|;
+    $class_sth->execute;
 
-    my $where = "1 = 1";
+    my $bu_sth    = $dbh->prepare(
+                q|SELECT * 
+                    FROM business_unit__list_by_class(?, ?, ?, 'false')|;
 
-    $where = qq|id NOT IN (SELECT id
-							 FROM parts
-							WHERE project_id > 0)| if !$job;
-
-    my $query = qq|SELECT *
-					 FROM project
-					WHERE $where|;
-
-    if ( $self->{language_code} ) {
-
-        $query = qq|
-			SELECT pr.*, t.description AS translation
-			FROM project pr
-			LEFT JOIN translation t ON (t.trans_id = pr.id)
-			WHERE t.language_code = ?|;
-        push( @queryargs, $self->{language_code} );
-    }
-
-    if ($transdate) {
-        $query .= qq| AND (startdate IS NULL OR startdate <= ?)
-				AND (enddate IS NULL OR enddate >= ?)|;
-        push( @queryargs, $transdate, $transdate );
-    }
-
-    $query .= qq| ORDER BY projectnumber|;
- 
-    #my $sth = $dbh->prepare($query);
-    #$sth->execute(@queryargs) || $self->dberror($query);
-    
-     #temporary query
-
-     $query=qq|SELECT pr.*, e.name AS customer
-               FROM project pr
-               LEFT JOIN entity_credit_account c ON (c.id = pr.credit_id) 
-               left join entity e on(e.id=c.entity_id)
-              |;
-my $sth = $dbh->prepare($query);
-    $sth->execute() || $self->dberror($query);
-    #temparary query	
-
-    
-
-    @{ $self->{all_project} } = ();
-
-    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-        push @{ $self->{all_project} }, $ref;
-      
-    }
-
-    $sth->finish;
-}
-
-=item $form->all_departments($myconfig, $dbh2, $vc);
-
-Set $form->{all_department} to be a reference to a list of hashrefs describing
-departments of the form {'id' => id, 'description' => description}.  If $vc
-is 'customer', further limit the results to those whose role is 'P' (Profit
-Center).
-
-This procedure is internally followed by a call to $form->all_years($myconfig).
-
-$dbh2 is not used.
-
-=cut
-
-sub all_departments {
-
-    my ( $self, $myconfig, $dbh2, $vc ) = @_;
-
-    my $dbh = $self->{dbh};
-
-    my $where = "1 = 1";
-
-    if ($vc) {
-        if ( $vc eq 'customer' ) {
-            $where = " role = 'P'";
+    while (my $classref = $class_sth->fetchrow_hashref('NAME_lc')){
+        push @{$self->{bu_class}}, $classref;
+        $bu_sth->execute($classref->{id}, $transdate, $credit_id, '0');
+        $self->{b_units}->{$classref->{id}} = [];
+        while my ($buref = $bu_sth->fetchrow_hashref('NAME_lc')){
+           push @{$self->{b_units}->{$classref->{id}}}, $buref;
         }
     }
+    $class_sth->finish;
+    $bu_sth->finish;
 
-    my $query = qq|SELECT id, description
-					 FROM department
-					WHERE $where
-				 ORDER BY id|;
-
-#temporary
- $query = qq|SELECT id, description
-					 FROM department
-				 ORDER BY id|;
-#end
-
-    my $sth = $dbh->prepare($query);
-    $sth->execute || $self->dberror($query);
-
-    @{ $self->{all_department} } = ();
-
-    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-        push @{ $self->{all_department} }, $ref;
-    }
-
-    $sth->finish;
-    $self->all_years($myconfig);
 }
 
 =item $form->all_languages($myconfig);

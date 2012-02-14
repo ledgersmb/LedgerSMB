@@ -1,4 +1,4 @@
-
+# SLATED TO BE GREATLY REDUCED IN 1.4
 =head1 NAME
 
 PE
@@ -52,7 +52,7 @@ Support functions for projects, partsgroups, and parts
 
 package PE;
 
-=item PE->($myconfig, $form);
+=item PE->projects($myconfig, $form);
 
 Populates the list referred to as $form->{all_project} with hashes containing
 details about projects.  Each hash contains the project record's fields along
@@ -70,6 +70,7 @@ Returns the number of projects added to the list.  $myconfig is unused.
 
 =cut
 
+# Not practical to remove until after AR/AP refactoring complete
 sub projects {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -86,24 +87,18 @@ sub projects {
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
     my $query;
-    my $where = "WHERE 1=1";
+    my $where = "WHERE class_id = 2";
 
     $query = qq|
 		   SELECT pr.*, e.name 
-		     FROM project pr
+		     FROM business_unit pr
 		LEFT JOIN entity_credit_account c ON (c.id = pr.credit_id)
 		LEFT JOIN entity e ON (c.entity_id = e.id)|;
-
-    if ( $form->{type} eq 'job' ) {
-        $where .= qq| AND pr.id NOT IN (SELECT DISTINCT id
-			            FROM parts
-			            WHERE project_id > 0)|;
-    }
 
     my $var;
     if ( $form->{projectnumber} ne "" ) {
         $var = $dbh->quote( $form->like( lc $form->{projectnumber} ) );
-        $where .= " AND lower(pr.projectnumber) LIKE $var";
+        $where .= " AND lower(pr.control_code) LIKE $var";
     }
     if ( $form->{description} ne "" ) {
         $var = $dbh->quote( $form->like( lc $form->{description} ) );
@@ -126,17 +121,17 @@ sub projects {
     }
 
     if ( $form->{status} eq 'orphaned' ) {
-        $where .= qq| AND pr.id NOT IN (SELECT DISTINCT project_id
-                                    FROM acc_trans
-				    WHERE project_id > 0
+        $where .= qq| AND pr.id NOT IN (SELECT DISTINCT bu_id
+                                    FROM business_unit_ac
+                                   WHERE class_id = 2;
                                  UNION
-                                    SELECT DISTINCT project_id
-		                    FROM invoice
-				    WHERE project_id > 0
+                                    SELECT DISTINCT bu_id
+		                    FROM business_unit_inv
+                                   WHERE class_id = 2;
 				 UNION
-		                    SELECT DISTINCT project_id
-		                    FROM orderitems
-				    WHERE project_id > 0
+		                    SELECT DISTINCT bu_id
+		                    FROM business_unit_oitems
+                                   WHERE class_id = 2;
 				 UNION
 		                    SELECT DISTINCT project_id
 		                    FROM jcitems
@@ -145,10 +140,11 @@ sub projects {
 
     } elsif ( $form->{status} eq 'active' ) {
         $where .= qq| 
-			AND (pr.enddate IS NULL 
-			OR pr.enddate >= current_date)|;
+			current_date BETWEEN pr.start_date 
+                                      AND coalesce(pr.end_date, current_date)|;
     } elsif ( $form->{status} eq 'inactive' ) {
-        $where .= qq| AND pr.enddate <= current_date|;
+        $where .= qq| current_date NOT BETWEEN pr.start_date 
+                                   AND coalesce(pr.end_date, current_date)|;|;
     }
 
     $query .= qq|
@@ -184,6 +180,7 @@ SELECT queries for the table 'project'.
 
 =cut
 
+# Remove as soon as new business unit management interface is complete
 sub get_project {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -261,6 +258,7 @@ UPDATE on the project table are run.
 
 =cut
 
+# Remove as soon as new project management interface is complete
 sub save_project {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -308,289 +306,6 @@ sub save_project {
 
 }
 
-=item PE->list_stock($myconfig, $form);
-
-Populates the list referred to as $form->{all_project} with hashes that contain
-details about projects.
-
-Sets $form->{stockingdate} to the current date if it is not already set.
-
-This function is probably unused.
-
-$myconfig is unused.
-
-=cut
-
-sub list_stock {
-    my ( $self, $myconfig, $form ) = @_;
-
-    my $dbh = $form->{dbh};
-
-    my $var;
-    my $where = "1 = 1";
-
-    if ( $form->{status} eq 'active' ) {
-        $where = qq|
-			(pr.enddate IS NULL OR pr.enddate >= current_date)
-			AND pr.completed < pr.production|;
-    } elsif ( $form->{status} eq 'inactive' ) {
-        $where = qq|pr.completed = pr.production|;
-    }
-
-    if ( $form->{projectnumber} ) {
-        $var = $dbh->quote( $form->like( lc $form->{projectnumber} ) );
-        $where .= " AND lower(pr.projectnumber) LIKE $var";
-    }
-
-    if ( $form->{description} ) {
-        $var = $dbh->quote( $form->like( lc $form->{description} ) );
-        $where .= " AND lower(pr.description) LIKE $var";
-    }
-
-    $form->{sort} = "projectnumber" unless $form->{sort};
-    my @a         = ( $form->{sort} );
-    my %ordinal   = ( projectnumber => 2, description => 3 );
-    my $sortorder = $form->sort_order( \@a, \%ordinal );
-
-    my $query = qq|
-		   SELECT pr.*, p.partnumber
-		     FROM project pr
-		     JOIN parts p ON (p.id = pr.parts_id)
-		    WHERE $where
-		 ORDER BY $sortorder|;
-
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        push @{ $form->{all_project} }, $ref;
-    }
-    $sth->finish;
-
-    $query = qq|SELECT current_date|;
-    ( $form->{stockingdate} ) = $dbh->selectrow_array($query)
-      if !$form->{stockingdate};
-
-    $dbh->commit;
-
-}
-
-=item PE->jobs($myconfig, $form);
-
-This function is probably unused.
-
-$myconfig is unused.
-
-=cut
-
-sub jobs {
-    my ( $self, $myconfig, $form ) = @_;
-
-    my $dbh = $form->{dbh};
-
-    $form->{sort} = "projectnumber" unless $form->{sort};
-    my @a         = ( $form->{sort} );
-    my %ordinal   = ( projectnumber => 2, description => 3, startdate => 4 );
-    my $sortorder = $form->sort_order( \@a, \%ordinal );
-
-    my $query = qq|
-		   SELECT pr.*, p.partnumber, p.onhand, e.name
-		     FROM project pr
-		     JOIN parts p ON (p.id = pr.parts_id)
-		LEFT JOIN entity_credit_account c ON (c.id = pr.credit_id)
-		LEFT JOIN entity e ON (e.id = c.entity_id)
-		    WHERE 1=1|;
-
-    if ( $form->{projectnumber} ne "" ) {
-        $var = $dbh->quote( $form->like( lc $form->{projectnumber} ) );
-        $query .= " AND lower(pr.projectnumber) LIKE $var";
-    }
-    if ( $form->{description} ne "" ) {
-        $var = $dbh->quote( $form->like( lc $form->{description} ) );
-        $query .= " AND lower(pr.description) LIKE $var";
-    }
-
-    ( $form->{startdatefrom}, $form->{startdateto} ) =
-      $form->from_to( $form->{year}, $form->{month}, $form->{interval} )
-      if $form->{year} && $form->{month};
-
-    if ( $form->{startdatefrom} ) {
-        $query .=
-          " AND pr.startdate >= " . $dbh->quote( $form->{startdatefrom} );
-    }
-    if ( $form->{startdateto} ) {
-        $query .= " AND pr.startdate <= " . $dbh->quote( $form->{startdateto} );
-    }
-
-    if ( $form->{status} eq 'active' ) {
-        $query .= qq| AND NOT pr.production = pr.completed|;
-    }
-    if ( $form->{status} eq 'inactive' ) {
-        $query .= qq| AND pr.production = pr.completed|;
-    }
-    if ( $form->{status} eq 'orphaned' ) {
-        $query .= qq| 
-			AND pr.completed = 0
-			AND (pr.id NOT IN 
-			(SELECT DISTINCT project_id
-			   FROM invoice
-			  WHERE project_id > 0
-			 UNION
-			 SELECT DISTINCT project_id
-			   FROM orderitems
-			  WHERE project_id > 0
-			 UNION
-			 SELECT DISTINCT project_id
-			   FROM jcitems
-			  WHERE project_id > 0)
-			 )|;
-    }
-
-    $query .= qq|
-		ORDER BY $sortorder|;
-
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        push @{ $form->{all_project} }, $ref;
-    }
-
-    $sth->finish;
-
-    $dbh->commit;
-
-}
-
-=item PE->get_job($myconfig, $form);
-
-This function is probably unused as part of Dieter's incomplete job costing.
-
-=cut
-
-sub get_job {
-    my ( $self, $myconfig, $form ) = @_;
-
-    # connect to database
-    my $dbh = $form->{dbh};
-
-    my $query;
-    my $sth;
-    my $ref;
-
-    if ( $form->{id} ) {
-        $query = qq|
-			SELECT value FROM defaults 
-			 WHERE setting_key = 'weightunit'|;
-        ( $form->{weightunit} ) = $dbh->selectrow_array($query);
-
-        $query = qq|
-			   SELECT pr.*, p.partnumber, 
-			          p.description AS partdescription, p.unit, 
-			          p.listprice, p.sellprice, p.priceupdate, 
-			          p.weight, p.notes, p.bin, p.partsgroup_id,
-			          ch.accno AS income_accno, 
-			          ch.description AS income_description, 
-			          pr.credit_id, e.name AS customer, 
-			          pg.partsgroup
-			     FROM project pr
-			LEFT JOIN parts p ON (p.id = pr.parts_id)
-			LEFT JOIN chart ch ON (ch.id = p.income_accno_id)
-			LEFT JOIN entity_credit_account c ON 
-                                                   (c.id = pr.credit_id)
-			LEFT JOIN entity e ON (e.id = c.entity_id
-			LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
-			    WHERE pr.id = | . $dbh->quote( $form->{id} );
-    }
-    else {
-        $query = qq|
-			SELECT value, current_date AS startdate FROM defaults
-			 WHERE setting_key = 'weightunit'|;
-    }
-
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    $ref = $sth->fetchrow_hashref(NAME_lc);
-
-    for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
-
-    $sth->finish;
-
-    if ( $form->{id} ) {
-
-        # check if it is orphaned
-        $query = qq|
-			SELECT count(*)
-			  FROM invoice
-			 WHERE project_id = ?
-			UNION
-			SELECT count(*)
-			  FROM orderitems
-			 WHERE project_id = ?
-			UNION
-			SELECT count(*)
-			  FROM jcitems
-			 WHERE project_id = ?|;
-        $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id}, $form->{id}, $form->{id} )
-          || $form->dberror($query);
-
-        my $count;
-
-        while ( ($count) = $sth->fetchrow_array ) {
-            $form->{orphaned} += $count;
-        }
-        $sth->finish;
-
-    }
-
-    $form->{orphaned} = !$form->{orphaned};
-
-    $query = qq|
-		  SELECT accno, description, link
-		    FROM chart
-		   WHERE link LIKE ?
-		ORDER BY accno|;
-    $sth = $dbh->prepare($query);
-    $sth->execute('%IC%') || $form->dberror($query);
-
-    while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        for ( split /:/, $ref->{link} ) {
-            if (/IC/) {
-                push @{ $form->{IC_links}{$_} },
-                  {
-                    accno       => $ref->{accno},
-                    description => $ref->{description}
-                  };
-            }
-        }
-    }
-    $sth->finish;
-
-    if ( $form->{id} ) {
-        $query = qq|
-			SELECT ch.accno
-			  FROM parts p
-			  JOIN partstax pt ON (pt.parts_id = p.id)
-			  JOIN chart ch ON (pt.chart_id = ch.id)
-			 WHERE p.id = ?|;
-
-        $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id} ) || $form->dberror($query);
-
-        while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-            $form->{amount}{ $ref->{accno} } = $ref->{accno};
-        }
-        $sth->finish;
-    }
-
-    PE->get_customer( $myconfig, $form, $dbh );
-
-    $dbh->commit;
-
-}
-
 =item PE->get_customer($myconfig, $form[, $dbh]);
 
 Populates the list referred to as $form->{all_customer} with hashes containing
@@ -602,6 +317,7 @@ result set.
 
 =cut
 
+# This may be subject to deletion after new business unit interface is up
 sub get_customer {
     my ( $self, $myconfig, $form, $dbh ) = @_;
 
@@ -667,356 +383,7 @@ sub get_customer {
 
 }
 
-=item PE->save_job($myconfig, $form);
 
-Yet another save function.  This one is related to the incomplete job handling.
-
-=cut
-
-sub save_job {
-    my ( $self, $myconfig, $form ) = @_;
-    $form->{projectnumber} =
-      $form->update_defaults( $myconfig, "projectnumber", $dbh )
-      unless $form->{projectnumber};
-
-    my $dbh = $form->{dbh};
-
-    my ($income_accno) = split /--/, $form->{IC_income};
-
-    my ( $partsgroup, $partsgroup_id ) = split /--/, $form->{partsgroup};
-
-    if ( $form->{id} ) {
-        $query = qq|
-			SELECT id FROM project
-			WHERE id = | . $dbh->quote( $form->{id} );
-        ( $form->{id} ) = $dbh->selectrow_array($query);
-    }
-
-    if ( !$form->{id} ) {
-        my $uid = localtime;
-        $uid .= "$$";
-
-        $query = qq|
-			INSERT INTO project (projectnumber)
-			     VALUES ('$uid')|;
-        $dbh->do($query) || $form->dberror($query);
-
-        $query = qq|
-			SELECT id FROM project 
-			 WHERE projectnumber = '$uid'|;
-        ( $form->{id} ) = $dbh->selectrow_array($query);
-    }
-
-
-    $query = qq|
-		UPDATE project 
-		   SET projectnumber = ?,
-		       description = ?,
-		       startdate = ?,
-		       enddate = ?,
-		       parts_id = ?
-		       production = ?,
-		       credit_id = ?
-		 WHERE id = ?|;
-    $sth = $dbh->prepare($query);
-    $sth->execute(
-        $form->{projectnumber}, $form->{description}, $form->{startdate},
-        $form->{enddate},       $form->{id},          $form->{production},
-        $form->{customer_id},   $form->{id}
-    ) || $form->dberror($query);
-
-    #### add/edit assembly
-    $query = qq|SELECT id FROM parts WHERE id = | . $dbh->quote( $form->{id} );
-    my ($id) = $dbh->selectrow_array($query);
-
-    if ( !$id ) {
-        $query = qq|
-		INSERT INTO parts (id) 
-		     VALUES (| . $dbh->quote( $form->{id} ) . qq|)|;
-        $dbh->do($query) || $form->dberror($query);
-    }
-
-    my $partnumber =
-      ( $form->{partnumber} )
-      ? $form->{partnumber}
-      : $form->{projectnumber};
-
-    $query = qq|
-		UPDATE parts 
-		   SET partnumber = ?,
-		       description = ?,
-		       priceupdate = ?,
-		       listprice = ?,
-		       sellprice = ?,
-		       weight = ?,
-		       bin = ?,
-		       unit = ?,
-		       notes = ?,
-		       income_accno_id = (SELECT id FROM chart
-		                           WHERE accno = ?),
-		       partsgroup_id = ?,
-		       assembly = '1',
-		       obsolete = '1',
-		       project_id = ?
-		       WHERE id = ?|;
-
-    $sth = $dbh->prepare($query);
-    $sth->execute(
-        $partnumber,
-        $form->{partdescription},
-        $form->{priceupdate},
-        $form->parse_amount( $myconfig, $form->{listprice} ),
-        $form->parse_amount( $myconfig, $form->{sellprice} ),
-        $form->parse_amount( $myconfig, $form->{weight} ),
-        $form->{bin},
-        $form->{unit},
-        $form->{notes},
-        $income_accno,
-        ($partsgroup_id) ? $partsgroup_id : undef,
-        $form->{id},
-        $form->{id}
-    ) || $form->dberror($query);
-
-    $query =
-      qq|DELETE FROM partstax WHERE parts_id = | . $dbh->quote( $form->{id} );
-    $dbh->do($query) || $form->dberror($query);
-
-    $query = qq|
-		INSERT INTO partstax (parts_id, chart_id)
-		    VALUES (?, (SELECT id FROM chart WHERE accno = ?))|;
-    $sth = $dbh->prepare($query);
-    for ( split / /, $form->{taxaccounts} ) {
-        if ( $form->{"IC_tax_$_"} ) {
-            $sth->execute( $form->{id}, $_ )
-              || $form->dberror($query);
-        }
-    }
-
-    $dbh->commit;
-
-}
-
-=item PE->stock_assembly($myconfig, $form)
-
-Looks like more of that job control code.  IC.pm has the functions actually
-used by assemblies.
-
-=cut
-
-sub stock_assembly {
-    my ( $self, $myconfig, $form ) = @_;
-
-    my $dbh = $form->{dbh};
-
-    my $ref;
-
-    my $query = qq|SELECT * FROM project WHERE id = ?|;
-    my $sth = $dbh->prepare($query) || $form->dberror($query);
-
-    $query = qq|SELECT COUNT(*) FROM parts WHERE project_id = ?|;
-    my $rvh = $dbh->prepare($query) || $form->dberror($query);
-
-    if ( !$form->{stockingdate} ) {
-        $query = qq|SELECT current_date|;
-        ( $form->{stockingdate} ) = $dbh->selectrow_array($query);
-    }
-
-    $query = qq|SELECT * FROM parts WHERE id = ?|;
-    my $pth = $dbh->prepare($query) || $form->dberror($query);
-
-    $query = qq|
-		  SELECT j.*, p.lastcost FROM jcitems j
-		    JOIN parts p ON (p.id = j.parts_id)
-		   WHERE j.project_id = ?
-		         AND j.checkedin <= | . $dbh->quote( $form->{stockingdate} ) . qq|
-		ORDER BY parts_id|;
-    my $jth = $dbh->prepare($query) || $form->dberror($query);
-
-    $query = qq|
-		INSERT INTO assembly (id, parts_id, qty, bom, adj)
-		     VALUES (?, ?, ?, '0', '0')|;
-    my $ath = $dbh->prepare($query) || $form->dberror($query);
-
-    my $i = 0;
-    my $sold;
-    my $ship;
-
-    while (1) {
-        $i++;
-        last unless $form->{"id_$i"};
-
-        $stock = $form->parse_amount( $myconfig, $form->{"stock_$i"} );
-
-        if ($stock) {
-            $sth->execute( $form->{"id_$i"} );
-            $ref = $sth->fetchrow_hashref(NAME_lc);
-
-            if ( $stock > ( $ref->{production} - $ref->{completed} ) ) {
-                $stock = $ref->{production} - $ref->{completed};
-            }
-            if ( ( $stock * -1 ) > $ref->{completed} ) {
-                $stock = $ref->{completed} * -1;
-            }
-
-            $pth->execute( $form->{"id_$i"} );
-            $pref = $pth->fetchrow_hashref(NAME_lc);
-
-            my %assembly  = ();
-            my $lastcost  = 0;
-            my $sellprice = 0;
-            my $listprice = 0;
-
-            $jth->execute( $form->{"id_$i"} );
-            while ( $jref = $jth->fetchrow_hashref(NAME_lc) ) {
-                $assembly{qty}{ $jref->{parts_id} } +=
-                  ( $jref->{qty} - $jref->{allocated} );
-                $assembly{parts_id}{ $jref->{parts_id} } = $jref->{parts_id};
-                $assembly{jcitems}{ $jref->{id} }        = $jref->{id};
-                $lastcost +=
-                  $form->round_amount(
-                    $jref->{lastcost} * ( $jref->{qty} - $jref->{allocated} ),
-                    2 );
-                $sellprice += $form->round_amount(
-                    $jref->{sellprice} * ( $jref->{qty} - $jref->{allocated} ),
-                    2
-                );
-                $listprice += $form->round_amount(
-                    $jref->{listprice} * ( $jref->{qty} - $jref->{allocated} ),
-                    2
-                );
-            }
-            $jth->finish;
-
-            $uid = localtime;
-            $uid .= "$$";
-
-            $query = qq|
-				INSERT INTO parts (partnumber)
-				     VALUES ('$uid')|;
-            $dbh->do($query) || $form->dberror($query);
-
-            $query = qq|
-				SELECT id
-				  FROM parts
-				 WHERE partnumber = '$uid'|;
-            ($uid) = $dbh->selectrow_array($query);
-
-            $lastcost = $form->round_amount( $lastcost / $stock, 2 );
-            $sellprice =
-              ( $pref->{sellprice} )
-              ? $pref->{sellprice}
-              : $form->round_amount( $sellprice / $stock, 2 );
-            $listprice =
-              ( $pref->{listprice} )
-              ? $pref->{listprice}
-              : $form->round_amount( $listprice / $stock, 2 );
-
-            $rvh->execute( $form->{"id_$i"} );
-            my ($rev) = $rvh->fetchrow_array;
-            $rvh->finish;
-
-            $query = qq|
-				UPDATE parts 
-				   SET partnumber = ?,
-				       description = ?,
-				       priceupdate = ?,
-				       unit = ?,
-				       listprice = ?,
-				       sellprice = ?,
-				       lastcost = ?,
-				       weight = ?,
-				       onhand = ?,
-				       notes = ?,
-				       assembly = '1',
-				       income_accno_id = ?,
-				       bin = ?,
-				       project_id = ?
-				 WHERE id = ?|;
-            $sth = $dbh->prepare($query);
-            $sth->execute(
-                "$pref->{partnumber}-$rev", $pref->{partdescription},
-                $form->{stockingdate},      $pref->{unit},
-                $listprice,                 $sellprice,
-                $lastcost,                  $pref->{weight},
-                $stock,                     $pref->{notes},
-                $pref->{income_accno_id},   $pref->{bin},
-                $form->{"id_$i"},           $uid
-            ) || $form->dberror($query);
-
-            $query = qq|
-				INSERT INTO partstax (parts_id, chart_id)
-				     SELECT ?, chart_id FROM partstax
-				      WHERE parts_id = ?|;
-            $sth = $dbh->prepare($query);
-            $sth->execute( $uid, $pref->{id} )
-              || $form->dberror($query);
-
-            $pth->finish;
-
-            for ( keys %{ $assembly{parts_id} } ) {
-                if ( $assembly{qty}{$_} ) {
-                    $ath->execute(
-                        $uid,
-                        $assembly{parts_id}{$_},
-                        $form->round_amount( $assembly{qty}{$_} / $stock, 4 )
-                    );
-                    $ath->finish;
-                }
-            }
-
-            $form->update_balance( $dbh, "project", "completed",
-                qq|id = $form->{"id_$i"}|, $stock );
-
-            $query = qq|
-				UPDATE jcitems 
-				   SET allocated = qty
-				 WHERE allocated != qty
-				       AND checkedin <= ?
-				       AND project_id = ?|;
-            $sth = $dbh->prepare($query);
-            $sth->execute( $form->{stockingdate}, $form->{"id_$i"} )
-              || $form->dberror($query);
-
-            $sth->finish;
-
-        }
-
-    }
-
-    my $rc = $dbh->commit;
-
-    $rc;
-
-}
-
-=item PE->delete_project($myconfig, $form);
-
-Deletes the database entry in project identified by $form->{id} and associated
-translations.
-
-$myconfig is unused.
-
-=cut
-
-sub delete_project {
-    my ( $self, $myconfig, $form ) = @_;
-
-    my $dbh = $form->{dbh};
-
-    $query = qq|DELETE FROM project WHERE id = ?|;
-    $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    $query = qq|DELETE FROM translation
-	      WHERE trans_id = ?|;
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    my $rc = $dbh->commit;
-
-    $rc;
-
-}
 
 =item PE->delete_partsgroup($myconfig, $form);
 
@@ -1069,58 +436,6 @@ sub delete_pricegroup {
 
 }
 
-=item PE->delete_job($myconfig, $form);
-
-An "enhanced" variant of PE->delete_project.  In addition to deleting the
-project identified by $form->{id} and the associated translations, also deletes
-all parts and assemblies with $form->{id} as a project_id.  This function adds
-an audit trail entry for the table 'project' and the action 'deleted' where the
-formname is taken from $form->{type}.
-
-$myconfig is unused.
-
-=cut
-
-sub delete_job {
-    my ( $self, $myconfig, $form ) = @_;
-
-    my $dbh = $form->{dbh};
-
-    my %audittrail = (
-        tablename => 'project',
-        reference => $form->{id},
-        formname  => $form->{type},
-        action    => 'deleted',
-        id        => $form->{id}
-    );
-
-    $form->audittrail( $dbh, "", \%audittrail );
-
-    my $query = qq|DELETE FROM project WHERE id = ?|;
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    $query = qq|DELETE FROM translation WHERE trans_id = ?|;
-    $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    # delete all the assemblies
-    $query = qq|
-		DELETE FROM assembly a 
-		       JOIN parts p ON (a.id = p.id)
-		      WHERE p.project_id = ?|;
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    $query = qq|DELETE FROM parts WHERE project_id = ?|;
-    $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    my $rc = $dbh->commit;
-
-    $rc;
-
-}
 
 =item PE->partsgroups($myconfig, $form);
 

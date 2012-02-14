@@ -62,15 +62,13 @@ sub get_jcitems {
 			       AS checkedouta, 
 			       to_char(j.checkedin, ?) AS transdate,
 			       e.name AS employee, p.partnumber,
-			       pr.projectnumber, 
+			       pr.control_code, 
 			       pr.description AS projectdescription,
-			       pr.production, pr.completed, 
-			       pr.parts_id AS project
 			  FROM jcitems j
                           JOIN person ps ON (j.person_id = ps.id)
 			  JOIN entity e ON (e.id = ps.entity_id)
 			  JOIN parts p ON (p.id = j.parts_id)
-			  JOIN project pr ON (pr.id = j.project_id)
+			  JOIN business_unit pr ON (pr.id = j.project_id)
 			 WHERE j.id = ?|;
         $sth = $dbh->prepare($query);
         $sth->execute( $dateformat, $form->{id} )
@@ -80,7 +78,7 @@ sub get_jcitems {
 
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
-        $form->{project} = ( $form->{project} ) ? "job" : "project";
+        $form->{project} = "project";
         for (qw(checkedin checkedout)) {
             $form->{$_} = $form->{"${_}a"};
             delete $form->{"${_}a"};
@@ -133,89 +131,19 @@ sub jcitems_links {
 
     my $query;
 
-    if ( $form->{project_id} ) {
-        $form->{orphaned} = 1;
-        $query = qq|SELECT parts_id FROM project WHERE id = ?|;
-        my $sth = $dbh->prepare($query);
-        $sth->execute( $form->{project_id} );
-
-        ($parts_id, $form->{credit_id} ) = $sth->fetchrow_array ;
-        if ( $parts_id ) {
-            $form->{project} = 'job';
-            $query = qq|
-				SELECT id
-				  FROM project
-				 WHERE parts_id > 0
-				       AND production > completed
-				       AND id = $form->{project_id}|;
-            my $sth = $dbh->prepare($query);
-            $sth->execute( $form->{project_id} );
-            ( $form->{orphaned} ) = $sth->fetchrow_array();
-            $sth->finish;
-        }
-        else {
-            $form->{project} = 'project';
-        }
-        $sth->finish;
-    }
-
+    $form->{project} = 'project';
     JC->jcparts( $myconfig, $form, $dbh );
 
     $form->all_employees( $myconfig, $dbh, $form->{transdate} );
-
-    my $where;
-
-    if ( $form->{transdate} ) {
-        $where .= qq| 
-			AND (enddate IS NULL
-				OR enddate >= | . $dbh->quote( $form->{transdate} ) . qq|)
-			AND (startdate <= | . $dbh->quote( $form->{transdate} ) . qq|
-				OR startdate IS NULL)|;
-    }
-
-    if ( $form->{project} eq 'job' ) {
-        $query = qq|
-			SELECT pr.*
-			  FROM project pr
-			 WHERE pr.parts_id > 0
-			       AND pr.production > pr.completed
-			       $where|;
-    }
-    elsif ( $form->{project} eq 'project' ) {
-        $query = qq|
-			SELECT pr.*
-			  FROM project pr
-			 WHERE pr.parts_id IS NULL
-			       $where|;
-    }
-    else {
-        $query = qq|
-			SELECT pr.*
-			  FROM project pr
-			 WHERE 1=1
-			       $where
-			EXCEPT
-			SELECT pr.*
-			  FROM project pr
-			 WHERE pr.parts_id > 0
-			       AND pr.production = pr.completed|;
-    }
-
-    if ( $form->{project_id} ) {
-        $query .= qq|
-			UNION
-			SELECT *
-			  FROM project
-			 WHERE id = | . $dbh->quote( $form->{project_id} );
-    }
-
-    $query .= qq|
-                 ORDER BY projectnumber|;
+    my $proj_sth = $form->{dbh}->prepare(q|
+        SELECT * FROM business_unit__list_by_class('2', ?, ?, '0')
+    |);
+    $proj_sth->execute($form->{transdate}, $form->{customer_id});
 
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+    while ( my $ref = $proj_sth->fetchrow_hashref(NAME_lc) ) {
         push @{ $form->{all_project} }, $ref;
     }
     $sth->finish;
@@ -399,7 +327,7 @@ sub jcitems {
         $var = $dbh->quote($var);
         $where .= " AND j.project_id = $var";
 
-        $query = qq|SELECT parts_id FROM project WHERE id = $var|;
+        $query = qq|SELECT class_id = 3 FROM business_unit WHERE id = $var|;
         my ($job) = $dbh->selectrow_array($query);
         $form->{project} = ($job) ? "job" : "project";
 
@@ -490,7 +418,7 @@ sub jcitems {
                   JOIN entity e ON pn.entity_id = e.id
                   JOIN entity_employee ee ON ee.entity_id = e.id
 		  JOIN parts p ON (p.id = j.parts_id)
-		  JOIN project pr ON (pr.id = j.project_id)
+		  JOIN business_unit pr ON (pr.id = j.project_id)
 		 WHERE $where
 		ORDER BY employee, employeenumber, $sortorder|;
 
@@ -523,8 +451,8 @@ sub save {
 
         # check if it was a job
         $query = qq|
-			SELECT pr.parts_id, pr.production - pr.completed
-			  FROM project pr
+			SELECT pr.class_id = 3, pr.production - pr.completed
+			  FROM business_unit pr
 			  JOIN jcitems j ON (j.project_id = pr.id)
 			 WHERE j.id = ?|;
         $sth = $dbh->prepare($query);
@@ -538,9 +466,9 @@ sub save {
         # check if new one belongs to a job
         if ($project_id) {
             $query = qq|
-				SELECT pr.parts_id, 
+				SELECT pr.class_id = 3, 
 				       pr.production - pr.completed
-				  FROM project pr
+				  FROM business_unit pr
 				 WHERE pr.id = ?|;
             $sth = $dbh->prepare($query);
             $sth->execute($project_id);

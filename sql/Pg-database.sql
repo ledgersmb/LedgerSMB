@@ -1785,7 +1785,11 @@ funds accounting and other purposes.$$;
 
 INSERT INTO business_unit_class (id, label, active, ordering)
 VALUES (1, 'Department', '0', '10'),
-       (2, 'Project', '0', '20');
+       (2, 'Project', '0', '20'),
+       (3, 'Job', '0', '30'),
+       (4, 'Fund', '0', '40'),
+       (5, 'Customer', '0', '50'),
+       (6, 'Vendor', '0', '60');
 
 CREATE TABLE business_unit (
   id serial PRIMARY KEY,
