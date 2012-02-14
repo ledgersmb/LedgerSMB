@@ -893,6 +893,7 @@ sub transactions {
                                               AND charttype = 'A')
 			LEFT JOIN invoice i ON (i.id = ac.invoice_id)|;
     }
+    #print STDERR localtime()." AA.pm transactions summary=$form->{summary} outstanding=$form->{outstanding} group_by_fields=$group_by_fields\n";
     my $query;
     if ($form->{outstanding}){
         # $form->{ARAP} is safe since it is set in calling scripts and not passed from the UA
@@ -934,6 +935,7 @@ sub transactions {
 		          --a.ponumber, a.invoice 
 		   HAVING abs(sum(acs.amount::numeric(20,2))) > 0.000 |;
         } else {
+            #HV typo error a.ponumber $acc_trans_fields -> a.ponumber $acc_trans_flds
             $query = qq|
 		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
 		          a.duedate, a.netamount, a.amount::numeric(20,$p), 
@@ -948,7 +950,7 @@ sub transactions {
 		          ex.$buysell AS exchangerate, 
 		          d.description AS department, 
 		          as_array(p.projectnumber) as ac_projects,
-		          a.ponumber $acc_trans_fields
+		          a.ponumber $acc_trans_flds
 		     FROM $table a
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
 		     JOIN acc_trans acs ON (acs.trans_id = a.id)
@@ -968,7 +970,7 @@ sub transactions {
 		 GROUP BY a.id, a.invnumber, a.ordnumber, a.transdate, a.duedate, a.netamount,
 		          a.amount, a.terms, a.notes, a.shipvia, a.shippingpoint, vce.name,
 		          vc.meta_number, a.entity_credit_account, a.till, ex.$buysell, d.description, vce.name,
-		          a.ponumber, a.invoice, a.datepaid $acc_trans_fields
+		          a.ponumber, a.invoice, a.datepaid $acc_trans_flds
 		   HAVING abs(sum(acs.amount::numeric(20,$p))) > 0 |;
        } 
     } else {
@@ -1218,6 +1220,7 @@ sub transactions {
             $ref->{description} ||= $ref->{linedescription};
         }
 
+        #print STDERR localtime()." AA.pm transactions row=".Data::Dumper::Dumper($ref)."\n";
         push @{ $form->{transactions} }, $ref;
     }
 

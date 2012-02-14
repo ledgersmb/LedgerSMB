@@ -113,6 +113,7 @@ sub get_search_criteria {
     if ($payment->{batch_id} && $payment->{batch_date}){
         $payment->{date_reversed} = $payment->{batch_date};
     }
+    @{$payment->{currencies}} = $payment->get_open_currencies();
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
@@ -559,6 +560,14 @@ sub display_payments {
     $payment->get_payment_detail_data();
     $payment->open_form();
     $payment->{dbh}->commit;
+    my $db_fx = $payment->get_exchange_rate($payment->{currency}, 
+                                            $payment->{batch_date});
+    if ($db_fx){
+        $payment->{exchangerate} = $db_fx->bstr;
+        $payment->{fx_from_db} = 1;
+    } else {
+        $payment->{exchangerate} = undef;
+    }
     $payment->{grand_total} = 0;
     for (@{$payment->{contact_invoices}}){
         my $contact_total = 0;

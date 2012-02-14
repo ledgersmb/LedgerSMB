@@ -2150,10 +2150,38 @@ sub transactions {
     foreach $ref ( @{ $form->{transactions} } ) {
 
         $i++;
+        #print STDERR localtime()." aa.pl sub transactions row=".Data::Dumper::Dumper($ref)."\n";
+        #print STDERR localtime()." aa.pl sub transactions invnumber=$ref->{invnumber} projectnumber=$ref->{projectnumber}\n";
         if ($form->{l_projectnumber} eq 'Y' and ref($ref->{ac_projects}) eq 'ARRAY' and ref($ref->{inv_projects}) eq 'ARRAY'){
-            my @projects; 
-            push @projects, @{$ref->{ac_projects}};
-            push @projects, @{$ref->{inv_projects}};
+            #HV $ref->{projectnumber} in this case is not filled by AA-->transactions
+            my @projects;
+            my %projects_hash;
+            foreach $acprjct(@{$ref->{ac_projects}})
+            {
+             if($acprjct)
+             {
+              if(! exists $projects_hash{$acprjct})
+              {
+               #print STDERR localtime()." aa.pl sub transactions acprjct=$acprjct\n";
+               $projects_hash{$acprjct}=1;
+               push @projects, $acprjct;
+              }
+             }
+            }
+            foreach $invprjct(@{$ref->{inv_projects}})
+            {
+             if($invprjct)
+             {
+              if(! exists $projects_hash{$invprjct})
+              {
+               #print STDERR localtime()." aa.pl sub transactions invprjct=$invprjct\n";
+               $projects_hash{$invprjct}=1;
+               push @projects, $invprjct;
+              }
+             }
+            }
+            #push @projects, @{$ref->{ac_projects}};
+            #push @projects, @{$ref->{inv_projects}};
             $ref->{projectnumber} = join '<br />', @projects;
             $ref->{projectnumber} =~ s/(<br \/>)+/<br \/>/;
         } elsif ($form->{l_projectnumber} eq 'Y') { $form->error($locale->text('Invalid Project Data:'). 

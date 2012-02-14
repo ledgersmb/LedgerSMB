@@ -102,6 +102,24 @@
 		label = text('Date Reversed') # '
 	} ?>
 	<?lsmb END # if batch_id ?></div>
+<div class="input" id="curr-exchange-div">
+      <?lsmb INCLUDE select element_data = {
+              name = 'currency'
+           options = currencies
+         text_attr = 'payments_get_open_currencies'
+        value_attr = 'payments_get_open_currencies'
+  default_optiopns = [default_currency]
+             label = text('Currency')
+      } ?>
+      <?lsmb INCLUDE input element_data = {
+             label = text('Exchange Rate') #'
+              type = 'text'
+              size = 10
+              name = 'exchangerate'
+             value = exchangerate
+             class = 'fxrate'
+      } ?>
+</div>
 <?lsmb END # if ! search_only -?>
 <div class="input" id="search_button_div">
 	<?lsmb INCLUDE button element_data = {
