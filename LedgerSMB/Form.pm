@@ -2078,18 +2078,20 @@ sub all_business_units {
 
     my $dbh       = $self->{dbh};
     my $class_sth = $dbh->prepare(
-                q|SELECT * FROM business_unit__list_classes('1')|;
+                q|SELECT * FROM business_unit__list_classes('1')|
+    );
     $class_sth->execute;
 
     my $bu_sth    = $dbh->prepare(
                 q|SELECT * 
-                    FROM business_unit__list_by_class(?, ?, ?, 'false')|;
+                    FROM business_unit__list_by_class(?, ?, ?, 'false')|
+    );
 
     while (my $classref = $class_sth->fetchrow_hashref('NAME_lc')){
         push @{$self->{bu_class}}, $classref;
         $bu_sth->execute($classref->{id}, $transdate, $credit_id, '0');
         $self->{b_units}->{$classref->{id}} = [];
-        while my ($buref = $bu_sth->fetchrow_hashref('NAME_lc')){
+        while (my $buref = $bu_sth->fetchrow_hashref('NAME_lc')){
            push @{$self->{b_units}->{$classref->{id}}}, $buref;
         }
     }

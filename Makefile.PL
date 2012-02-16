@@ -26,7 +26,7 @@ requires 'IO::Scalar';
 requires 'Encode';
 requires 'Time::Local';
 requires 'Cwd';
-requires 'Config::Std';
+requires 'Config::General';
 requires 'MIME::Lite';
 requires 'Template' => '2.14';
 requires 'Error';

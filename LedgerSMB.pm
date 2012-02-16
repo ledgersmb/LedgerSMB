@@ -373,6 +373,14 @@ sub new {
     }
     $self->get_user_info;
 
+    my %date_setting = (
+        'mm/dd/yy' => "SQL, US",
+        'mm-dd-yy' => "POSTGRES, US",
+        'dd/mm/yy' => "SQL, EUROPEAN",
+        'dd-mm-yy' => "POSTGRES, EUROPEAN",
+        'dd.mm.yy' => "GERMAN",
+    );
+
     $self->{dbh}->do("set DateStyle to '".$date_setting{$self->{_user}->{dateformat}}."'");
     #my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{language})
     # or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");

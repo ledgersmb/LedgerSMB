@@ -9,7 +9,7 @@ no strict qw(refs);
 use Cwd;
 
 # use LedgerSMB::Form;
-use Config::Std;
+use Config::General;
 use DBI qw(:sql_types);
 binmode STDOUT, ':utf8';
 binmode STDERR, ':utf8';
@@ -100,7 +100,8 @@ our $DBI_TRACE=0;
 our %printer;
 
 our %config;
-read_config( 'ledgersmb.conf' => %config ) or die;
+my $cfg_h = new Config::General("ledgersmb.conf") or die;
+%config = $cfg_h->getall;
 # Root variables
 for my $var (
     qw(pathsep logging log_level DBI_TRACE check_max_invoices language auth latex

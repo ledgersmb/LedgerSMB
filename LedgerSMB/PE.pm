@@ -144,7 +144,7 @@ sub projects {
                                       AND coalesce(pr.end_date, current_date)|;
     } elsif ( $form->{status} eq 'inactive' ) {
         $where .= qq| current_date NOT BETWEEN pr.start_date 
-                                   AND coalesce(pr.end_date, current_date)|;|;
+                                   AND coalesce(pr.end_date, current_date)|;
     }
 
     $query .= qq|
