@@ -63,12 +63,57 @@ has 'ordering' => (is => 'rw', isa => 'Int');
 
 =item get($id)
 
+returns the business unit class that corresponds to the id requested.
+
+=cut
+
+sub get {
+    my ($self, $id) = @_;
+    my @classes = $self->call_procedure(procname => 'business_unit_class__get', 
+                                            args => [$id]
+    );
+    return $self->new(shift @classes);
+}
+
 =item save
+
+Saves the existing buisness unit class to the database, and updates any fields 
+changed in the process.
+
+=cut
+
+sub save {
+    my ($self) = @_;
+    my ($ref) = $self->exec_method({funcname => 'business_unit_class__save'});
+    $self = $self->new($ref);
+}   
 
 =item list
 
+Returns a list of all business unit classes.
+
+=cut
+
+sub list {
+    my ($self) = @_;
+    my @classes = $self->exec_method({funcname => 'business_unit_class__list'});
+    for my $class (@classes){
+        $class = $self->new($class);
+    }
+    return @classes;
+}
+
 =item delete
+
+Deletes a business unit class.  Such classes may not have business units attached.
+
+=cut
  
+sub delete {
+    my ($self) = @_;
+    my ($ref) = $self->exec_method({funcname => 'business_unit_class__delete'});
+}   
+
 =back
 
 =head1 PREDEFINED CLASSES
@@ -99,3 +144,7 @@ Used in some countries/industries for multi-vendor payments
 
 Copyright (C) 2012 The LedgerSMB Core Team.  This module may be used under the
 GNU GPL in accordance with the LICENSE file listed.
+
+=cut
+
+1;

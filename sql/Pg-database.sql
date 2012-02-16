@@ -1800,7 +1800,8 @@ CREATE TABLE business_unit (
   end_date date,
   parent_id int references business_unit(id),
   credit_id int references entity_credit_account(id),
-  UNIQUE(id, class_id) 
+  UNIQUE(id, class_id), -- needed for foreign keys
+  UNIQUE(class_id, control_code) 
 );
 
 CREATE TABLE job (

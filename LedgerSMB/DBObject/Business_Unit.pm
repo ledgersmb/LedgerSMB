@@ -114,17 +114,59 @@ has 'children' => (is => 'rw', isa => 'ArrayRef[LedgerSMB::DBObject::Business_Un
 
 =item get($id)
 
+Returns the business reporting unit referenced by the id.
+
+=cut
+
+sub get {
+    my ($self, $id) = @_;
+    my @units = $self->call_procedure(procname => 'business_unit__get',
+                                            args => [$id]
+    );
+    return $self->new(shift @units);
+} 
+
 =item save
 
-=item list
+Saves the business reporting unit ot the database and updates changes to object.
+
+=cut
+
+sub save {
+    my ($self) = @_;
+    my ($ref) = $self->exec_method({funcname => 'business_unit__save'});
+    $self = $self->new($ref);
+}   
+
+=item list ($date, $credit_id, $class)
+
+Lists all business reporting units active on $date, for $credit_id (or for all
+credit_ids), and of $class.  Undef on date and credit_id match all rows.
 
 =item delete
 
+Deletes the buisness reporting unit.  A unit can only be deleted if it has no 
+children and no transactions attached.
+
+=cut
+
+sub delete {
+    my ($self) = @_;
+    my ($ref) = $self->exec_method({funcname => 'business_unit__delete'});
+}   
+
 =item search
+
+Returns a list of buisness reporting units matching search criteria.
 
 =item get_tree
 
+Retrieves children recursively from the database and populates children 
+appropriately
+
 =item tree_to_list
+
+Returns tree as a list.
  
 =back
 
