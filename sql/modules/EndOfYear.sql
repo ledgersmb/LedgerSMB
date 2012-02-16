@@ -165,8 +165,7 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION eoy_reopen_books(in_end_date date) IS
-$$ Removes checkpoints and reverses yearend transactions starting on 
-in_end_date$$;
+$$ Removes checkpoints and reverses yearend transactions on in_end_date$$;
 
 CREATE OR REPLACE FUNCTION account__obtain_balance
 (in_transdate date, in_account_id int)

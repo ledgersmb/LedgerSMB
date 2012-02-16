@@ -356,7 +356,6 @@ sub new {
     {
      $self->_db_init;
     }
-
     LedgerSMB::Company_Config::initialize($self);
 
     #TODO move before _db_init to avoid _db_init with invalid session?
