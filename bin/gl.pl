@@ -1053,6 +1053,7 @@ sub update {
          $form->{oldtransdate} = $form->{transdate};
      }
 
+    GL->get_all_acc_dep_pro( \%myconfig, \%$form );
     @a     = ();
     $count = 0;
     @flds  = qw(accno debit credit projectnumber fx_transaction source memo);
@@ -1061,6 +1062,19 @@ sub update {
         unless ( ( $form->{"debit_$i"} eq "" )
             && ( $form->{"credit_$i"} eq "" ) )
         {
+            my $found_acc = 0;
+            for my $acc(@{ $form->{all_accno} }){
+                if ($form->{"accno_$i"} eq $acc->{accstyle}){
+                    $found_acc = 1;
+                } elsif ($form->{"accno_$i"} eq $acc->{accno}){
+                    $form->{"accno_$i"} = $acc->{accstyle};
+                    $found_acc = 1;
+                }
+
+           }
+           if (not $found_acc){
+               $form->error($locale->text('Account [_1] not found.', $form->{"accno_$i"}));
+           }
             for (qw(debit credit)) {
                 $form->{"${_}_$i"} =
                   $form->parse_amount( \%myconfig, $form->{"${_}_$i"} );
@@ -1085,7 +1099,6 @@ sub update {
 
     $form->{rowcount} = $count;
  
-    GL->get_all_acc_dep_pro( \%myconfig, \%$form );
     
     
     &display_form;
