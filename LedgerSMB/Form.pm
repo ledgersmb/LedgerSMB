@@ -3196,7 +3196,7 @@ sub update_defaults {
 # <?lsmb PHONE ?> for customer and vendors
 
     my $num = $_;
-    ($num) = $num =~ /(\d+)/;
+    ($num) = $num =~ /\D*(\d+)\D*$/;
 
     if ( defined $num ) {
         my $incnum;
@@ -3279,7 +3279,7 @@ sub update_defaults {
             }
 
             if ( $param =~ /<\?lsmb (yy|mm|dd)/i ) {
-
+                my $test_param = $1;
 		# SC: XXX Does this even work anymore?
                 my $p = $param;
                 $p =~ s/(<|>|%)//g;
@@ -3291,13 +3291,15 @@ sub update_defaults {
 
                 my @a = $self->split_date( $myconfig->{dateformat},
                     $self->{transdate} );
-                for ( sort keys %d ) { push @p, $a[ $d{$_} ] if ( $p =~ /$_/ ) }
+                for my $k( sort keys %d ) { push @p, $a[ $d{$k} ] 
+                                 if ( $param =~ /$k/i ) }
                 $str = join $spc, @p;
-                $var =~ s/$param/$str/;
+                $var =~ s/<\?lsmb $test_param \?>/$str/i;
             }
 
             if ( $param =~ /<\?lsmb curr/i ) {
-                $var =~ s/$param/$self->{currency}/;
+                my $curr = $self->{currency} || $self->{curr};
+                $var =~ s/<\?lsmb curr \?>/$curr/i;
             }
         }
     }

@@ -1,7 +1,7 @@
 RELEASE NOTES
 LedgerSMB 1.3
 
-Latest Revision:  1.3.3, October 28th.
+Latest Revision:  1.3.11, February 15, 2012.
 
 1:  Welcome to LedgerSMB
 
@@ -15,7 +15,7 @@ which it was derived, but the feature set is starting to diverge rapidly.
 
 * Perl 5.8.
 * Apache, IIS, or other web server that supports CGI.
-* PostgreSQL 8.2 or higher.
+* PostgreSQL 8.3 or higher.
 * Any operating system that supports the above environment.
 * The following CPAN modules:
 	* Data::Dumper
@@ -86,6 +86,11 @@ reversal routines.  It will be corrected (by removing the ability to truly
 repost invoices) in an upcoming version as we continue to re-engineer the
 application.
 
+Also the current design of foreign exchange handling means that if you reverse a
+payment, the foreing exchange gains and losses will not be exactly reversed 
+unless you are able to reverse on the same day.  If reversed on different days the gain/loss will be realized per the time when the payment was in effect and 
+not reversed.
+
 4:  Differences between LedgerSMB and SQL-Ledger(TM)
 
 4.1: Login name restrictions
@@ -117,7 +122,7 @@ We have also dispensed with the old pagebreak functionality, moving instead to
 the longtable package in LaTeX.
 
 5:  Roadmap
-This project has no defined roadmap but rather a set of statements and 
+This project has a losely defined roadmap and a set of statements and 
 objectives contained in the documentation manager and trackers of sourceforge.
 In general, our development is focused around the following principles:
 
@@ -135,9 +140,11 @@ The above being said, we have a set of targets for the next major release
 anyway.  These include:
 
 * Integrated budgetting module
-* Rewritten AR/AP/GL handling
 * Rewritten reports
-* Rewritten invoices and orders
+* Rewritten project/department handling to include nested departments
+* Funds accounting
+* Rewritten Sales Orders
+* A framework for implementing payroll solutions
 
 6:  Get Involved
 Contributors should start by joining the LedgerSMB users and devel lists.  Code
