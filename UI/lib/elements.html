@@ -123,37 +123,34 @@
 	    custom_attribute_data=element_data.attributes 
 	  ?>
 	  <?lsmb PROCESS auto_label  # Process element label. ?>
-	  <input type="text" class="autocomplete" size="60" value="<?lsmb element_data.initial_value ?>" id="<?lsmb attribute_data.id ?>-ac-search" name="<?lsmb attribute_data.id ?>-ac-search" onclick="this.value='';" onblur="this.value = $('<?lsmb attribute_data.id ?>').value" />
-	  <input type="hidden" id="<?lsmb attribute_data.id ?>" name="<?lsmb element_data.name ?>"  value="<?lsmb element_data.initial_value?>" />
+	  <input type="text" 
+                class="autocomplete ajaxselect" 
+                 size="60" 
+                value="<?lsmb element_data.initial_value ?>" 
+                   id="<?lsmb attribute_data.id ?>" 
+                 name="<?lsmb element_data.name ?>" 
+              onclick="this.value='';" 
+          />
+	  <input type="hidden" 
+                   id="<?lsmb attribute_data.id ?>" 
+                 name="<?lsmb element_data.name ?>-old"  
+                value="<?lsmb element_data.initial_value?>" 
+          />
 	  <span class="indicator" id="<?lsmb attribute_data.id ?>-ac-indicator" style="display: none">Working...</span>
 	  <div id="<?lsmb attribute_data.id ?>-ac-choices" class="autocomplete"></div>
 	  <script language="javascript" type="text/javascript"><!--
-	    function post_ajax_setter(text,li)
-	    {
-	      hidden_field_to_update = text.id.substring(0,text.id.length-10);
-	      $(hidden_field_to_update).value = li.id;
-	      text.blur();
-	    }
-	    new Ajax.Autocompleter('<?lsmb attribute_data.id ?>-ac-search', 
+	    new Ajax.Autocompleter('<?lsmb attribute_data.id ?>', 
                                    '<?lsmb attribute_data.id ?>-ac-choices', 
                                    '<?lsmb element_data.ajax_target ?>', 
                                    {"afterUpdateElement":post_ajax_setter,
-                                   <?lsmb IF attribute_data.params ?>
-                                   'parameters' : <?lsmb SET params=""; FOR k
+                                   'parameters' : 
+                                                <?lsmb SET params="search_field=" _ attribute_data.id; 
+                                               FOR k
                                                IN attribute_data.params.keys();
-                                                IF params == "";
-                                                    params = "$k=" _ attribute_data.params.$k;
-                                                ELSE;
-                                                    params = params _ "&$k=" _ attribute_data.params.$k;
-                                                END;
-                                                
+                                                  params = params _ "&$k=" _ attribute_data.params.$k;
                                                END;
-                                               #"<?lsmb k >" : <?lsmb
-                                               #   attribute_data.params.$k
-                                               #->
                                                ?>
                                                <?lsmb '"' _ params _ '"'?>
-                                               <?lsmb END -?>
                                                
                                    })
 	  //--></script>

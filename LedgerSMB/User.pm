@@ -190,7 +190,6 @@ sub fetch_config {
     $sth->execute();
     ($templates) = $sth->fetchrow_array() || 'demo';
     $myconfig->{templates} = "$LedgerSMB::Sysconfig::templates/$templates";
-    print STDERR "$myconfig->{templates}\n";
     return $myconfig;
 }
 

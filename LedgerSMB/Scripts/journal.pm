@@ -47,15 +47,11 @@ sub __default {
     
     my $funcname = 'chart_list_search';
     my %results_hash;
-    foreach my $r (keys %{$request})
-    {
-       
-      if ($r =~ m/-ac-search$/)
-      {
-        my @call_args = ($request->{$r}, $request->{link_desc});
-        my @results = $request->call_procedure( procname => $funcname, args => \@call_args, order_by => 'accno' );
-        foreach (@results) { $results_hash{$_->{'accno'}.'--'.$_->{'description'}} = $_->{'accno'}.'--'.$_->{'description'}; }
-      }
+    my $search_field = $request->{search_field};
+    $search_field =~ s/-/_/g;
+    my @call_args = ($request->{$search_field}, $request->{link_desc});
+    my @results = $request->call_procedure( procname => $funcname, args => \@call_args, order_by => 'accno' );
+    foreach (@results) { $results_hash{$_->{'accno'}.'--'.$_->{'description'}} = $_->{'accno'}.'--'.$_->{'description'}; 
     }
     
     $request->{results} = \%results_hash;
