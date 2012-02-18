@@ -204,6 +204,7 @@ around the code everywhere.
 use CGI::Simple;
 $CGI::Simple::DISABLE_UPLOADS = 0;
 use LedgerSMB::PGNumber;
+use LedgerSMB::PGDate;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;
 use Error;
@@ -710,11 +711,11 @@ sub call_procedure {
 	for (0 .. $#names){
             #   numeric            float4/real
             if ($types[$_] == 3 or $types[$_] == 2) {
-                $ref->{$names[$_]} = Math::BigFloat->new($ref->{$names[$_]});
+                $ref->{$names[$_]} = Math::BigFloat->new($ref->{$names[$_]}, 'datetime') if defined $ref->{$names[$_]};
             }
             #    DATE                TIMESTAMP
             if ($types[$_] == 91 or $types[$_] == 11){
-                $ref->{$names[$_]} = LedgerSMB::PGDate->from_db($ref->{$names[$_]});
+                $ref->{$names[$_]} = LedgerSMB::PGDate->from_db($ref->{$names[$_]}, 'date') if defined $ref->{$names[$_]};
             }
         }
         push @results, $ref;

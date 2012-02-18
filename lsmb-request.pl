@@ -29,6 +29,7 @@ $| = 1;
 binmode (STDIN, ':utf8');
 binmode (STDOUT, ':utf8');
 use LedgerSMB::User;
+use LedgerSMB::App_State;
 use LedgerSMB;
 use LedgerSMB::Locale;
 use Data::Dumper;
@@ -59,7 +60,9 @@ $logger->debug("\$ENV{SCRIPT_NAME}=$ENV{SCRIPT_NAME} \$request->{action}=$reques
 my $locale;
 
 if ($request->{_user}){
+    $LedgerSMB::App_State::User = $request->{_user};
     $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
+    $LedgerSMB::App_State::Locale = $locale;
 } else {
     $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
        or $request->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );

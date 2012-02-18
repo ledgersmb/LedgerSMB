@@ -33,6 +33,7 @@ requires 'Error';
 requires 'CGI::Simple';
 requires 'File::MimeInfo';
 requires 'Number::Format';
+requires 'DateTime::Format::Strptime';
 
 recommends 'perl-Math-BigInt-GMP';
 

@@ -69,7 +69,7 @@ sub init {
     my ($username, $credential, $company) = @_;
     $SODA   = LedgerSMB::SODA->new({db => $company, 
                               username => $username,
-                                  cred => $cred});
+                                  cred => $credential});
     $User   = LedgerSMB::User->fetch_config($SODA);
     $Locale = LedgerSMB::Locale->get_handle($User->{language});
 }
