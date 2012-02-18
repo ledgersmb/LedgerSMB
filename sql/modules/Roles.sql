@@ -1,5 +1,13 @@
 GRANT ALL ON SCHEMA public TO public; -- required for Pg 8.2
 
+CRATE ROLE "lsmb_<?lsmb dbname ?>__business_units_manage"
+WITH INHERIT NOLOGIN;
+
+GRANT INSERT, UPDATE, DELETE ON business_unit_class, business_unit
+TO "lsmb_<?lsmb dbname ?>__business_units_manage";
+
+GRANT SELECT ON business_unit_class, business_unit TO PUBLIC;
+
 -- Exchange rate creation (required insert and update on 'exchangerate' table)
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__exchangerate_edit"
