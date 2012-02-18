@@ -59,24 +59,6 @@ sub login {
             company_name => $request->{database},
                 password => $creds->{password}}
     );
-    my $server_info = $database->server_version;
-    my @sv_info = split '.', $server_info;
-    if (($sv_info[0] > 9)or ($sv_info[0]  == 9 and $sv_info[1] >= 1)){
-       if (! -f "$ENV{PG_CONTRIB_DIR}/tablefunc.control"){
-            $request->error($request->{_locale}->text(
-                      'Cannot find Contrib script [_1] in [_2].',
-                      "tablefunc.control", $ENV{PG_CONTRIB_DIR}
-            ));
-       }
-    } else {
-       if (! -f "$ENV{PG_CONTRIB_DIR}/tablefunc.sql"){
-            $request->error($request->{_locale}->text(
-                      'Cannot find Contrib script [_1] in [_2].',
-                      "tablefunc.sql", $ENV{PG_CONTRIB_DIR}
-            ));
-      
-       }
-    }
     
     my $version_info = $database->get_info();
     if(!$request->{dbh}){$request->{dbh}=$database->{dbh};}#allow upper stack to disconnect dbh when leaving
@@ -694,6 +676,9 @@ sub run_upgrade {
             company_name => $request->{database},
                 password => $creds->{password}}
     );
+    my $rc;
+    my $rc2;
+    my $temp;
 
     # ENVIRONMENT NECESSARY
     $ENV{PGUSER} = $creds->{login};

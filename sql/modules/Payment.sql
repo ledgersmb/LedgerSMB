@@ -841,46 +841,6 @@ This API will probably change in 1.4 as we start looking at using more custom
 complex types and arrays of those (requires Pg 8.4 or higher).
 $$;
 
--- Move this to the projects module when we start on that. CT
-CREATE OR REPLACE FUNCTION project_list_open(in_date date) 
-RETURNS SETOF project AS
-$$
-DECLARE out_project project%ROWTYPE;
-BEGIN
-	FOR out_project IN
-		SELECT * from project
-		WHERE startdate <= in_date AND enddate >= in_date
-		      AND completed = 0
-	LOOP
-		return next out_project;
-	END LOOP;
-END;
-$$ language plpgsql;
-
-comment on function project_list_open(in_date date) is
-$$ This function returns all projects that were open as on the date provided as
-the argument.$$;
--- Move this to the projects module when we start on that. CT
-
-
-CREATE OR REPLACE FUNCTION department_list(in_role char)
-RETURNS SETOF department AS
-$$
-DECLARE out_department department%ROWTYPE;
-BEGIN
-       FOR out_department IN
-               SELECT * from department
-               WHERE role = coalesce(in_role, role)
-       LOOP
-               return next out_department;
-       END LOOP;
-END;
-$$ language plpgsql;
--- Move this into another module.
-
-comment on function department_list(in_role char) is
-$$ This function returns all department that match the role provided as
-the argument.$$;
 
 CREATE OR REPLACE FUNCTION payments_get_open_currencies(in_account_class int)
 RETURNS SETOF char(3) AS

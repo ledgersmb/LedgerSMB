@@ -115,7 +115,7 @@ sub login {
     if (!$request->{_user}){
         __default($request);
     }
-    require "scripts/menu.pl";
+    require LedgerSMB::Scripts::menu;
     LedgerSMB::Scripts::menu::root_doc($request);
 
 }

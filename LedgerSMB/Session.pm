@@ -37,7 +37,7 @@ sub check {
     my $secure;
 
    if ($cookie eq 'Login'){
-        return session_create($form);
+        return create($form);
     }
     my $timeout;
 
