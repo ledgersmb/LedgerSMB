@@ -13,12 +13,13 @@
     <th><?lsmb text('Non-Accounting') ?></th>
     <th><?lsmb text('Ordering') ?></th>
     <th>&nbsp;</th>
+    <th>&nbsp;</th>
 </tr>
 <?lsmb classes.push({}); 
        FOR c IN classes 
 ?>
 <form action="<?lsmb script ?>" method=POST id="edit-<?lsmb c.id ?>">
-<tr class="row<?lsmb LOOP % 2 ?>">
+<tr class="listrow<?lsmb loop.count % 2 ?>">
 <td>
 <?lsmb PROCESS input element_data = {
     type = "hidden"
@@ -61,7 +62,7 @@
    class = "submit"
     name = "action"
    value = "save_class"
-    text = (c.id) ? text('Save') : text('Add')
+    text = (c.id) ? text('Save') : text('Add Class')
 };
 PROCESS button element_data = {
     type = "submit"
@@ -70,6 +71,24 @@ PROCESS button element_data = {
    value = "delete"
     text = text('Delete')
 } ?>
+</td>
+<td><?lsmb 
+IF c.id;
+PROCESS button element_data = {
+    type = "submit"
+   class = "submit"
+    name = "action"
+   value = "add"
+    text = text('Add Unit') #'
+};
+PROCESS button element_data = {
+    type = "submit"
+   class = "submit"
+    name = "action"
+   value = "delete"
+    text = text('List Units')#'
+};
+END; ?>
 </tr>
 </form>
 <?lsmb END ?>

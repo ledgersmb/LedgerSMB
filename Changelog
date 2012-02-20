@@ -1,13 +1,20 @@
 Changelog for 1.4 Series
 Forthcoming
 
+General Enhancements:
 * scripts/* files moved to make inheritance possible (Chris T)
 * PostgreSQL contrib dependencies removed, now requre Pg 8.4 (Chris T)
 * Performance enhancements on menu routines (Chris T and Steven M)
 * Projects and Departments can now have subprojects and Departments (Chris T)
 * Project/department mechanism generalized to support funds, etc (Chris T)
 * Removed the Config::Std dependency and moved to Config::General (Chris T)
-* Merged in transaction import add-on for 1.4, also for other csv's (Chirs T)
+* Merged in transaction import add-on for 1.4, also for other csv's (Chris T)
+
+New Business Reporting Unit System (Chris T)
+* Replaces Projects and Departments
+* Business reporting units may be nested
+* Allows one to do funds accounting, track jobs separately from projects, etc
+* Report on any combination of business reporting units (up to one per class)
 
 Changelog for 1.3 Series
 Initial Release:  Monday, Oct 12 2011
