@@ -83,26 +83,31 @@ $$ This function returns tree-related records with the root of the tree being
 the business unit of in_id.  $$;
 
 CREATE OR REPLACE FUNCTION business_unit_class__save 
-(in_id int, in_label text, in_active bool, in_ordering int)
+(in_id int, in_label text, in_active bool, in_non_accounting, in_ordering int)
 RETURNS business_unit_class AS
 $$
 DECLARE retval business_unit_class;
+        t_id int;
 BEGIN
 
+t_id := in_id;
 UPDATE business_unit_class
    SET label = in_label,
        active = in_active,
-       ordering = in_ordering
+       ordering = in_ordering,
+       non_accounting = in_non_accounting
  WHERE id = in_id;
 
 IF NOT FOUND THEN
 
-   INSERT INTO business_unit_class (id, label, active, ordering)
-   VALUES (in_id, in_label, in_active, in_ordering);
+   INSERT INTO business_unit_class (label, active, non_accounting, ordering)
+   VALUES (in_label, in_active, in_non_accounting, in_ordering);
+
+   t_id := currval('business_unit_class_id_seq');
 
 END IF;
 
-SELECT * INTO retval FROM business_unit_class;
+SELECT * INTO retval FROM business_unit_class WHERE id = t_id;
 
 RETURN retval;
 

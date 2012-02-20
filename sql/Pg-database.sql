@@ -1776,6 +1776,7 @@ CREATE TABLE business_unit_class (
     id int not null unique,
     label text primary key,
     active bool not null default false,
+    non_accounting bool not null default false,
     ordering int
 );
 

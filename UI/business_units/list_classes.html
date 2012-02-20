@@ -1,0 +1,77 @@
+<?lsmb INCLUDE 'ui-header.html' 
+      include_stylesheet = ["UI/businbusiness_unit/filter.css"] 
+?>
+<?lsmb PROCESS 'elements.html' ?>
+<body>
+<div class="listtop"><?lsmb title ?></div>
+<table>
+<!-- headings -->
+<tr class="listheading"> 
+    <th><?lsmb text('ID') ?></th>
+    <th><?lsmb text('Label') ?></th>
+    <th><?lsmb text('Active') ?></th>
+    <th><?lsmb text('Non-Accounting') ?></th>
+    <th><?lsmb text('Ordering') ?></th>
+    <th>&nbsp;</th>
+</tr>
+<?lsmb push classes, {}; 
+       FOR c IN classes 
+?>
+<form action="<?lsmb script ?>" method=POST id="edit-<?lsmb c.id ?>">
+<tr class="row<?lsmb LOOP%2?>">
+<td><?lsmb c.id ?>
+<?lsmb PROCESS input element_data = {
+    type = "hidden"
+   value = c.id
+    name = "id"
+} ?></td>
+<td><?lsmb PROCESS input element_data = {
+    type = "text"
+   class = "control_code"
+    name = "label"
+   value = c.label
+    size = 12
+} ?>
+</td>
+<td><?lsmb PROCESS input element_data = {
+    type = "checkbox"
+   value = "1"
+   class = "is-active"
+    name = "is_active"
+ checked = (c.is_active)? 'CHECKED' : ''
+} ?>
+</td>
+<td><?lsmb PROCESS input element_data = {
+    type = "checkbox"
+   value = "1"
+    name = "non-accounting"
+ checked = (c.non-accounting)? 'CHECKED' : ''
+} ?>
+</td>
+<td><?lsmb PROCESS input element_data = {
+    type = "text"
+   class = "ordering"
+    name = "ordering"
+   value = c.ordering
+    size = 4
+} ?>
+</td>
+<td><?lsmb PROCESS button element_data = {
+    type = "submit"
+   class = "submit"
+    name = "action"
+   value = "save"
+    text = (c.id) ? text('Save') : text('Add')
+};
+<?lsmb PROCESS button element_data = {
+    type = "submit"
+   class = "submit"
+    name = "action"
+   value = "delete"
+    text = text('Delete')
+} ?>
+</tr>
+<?lsmb END ?>
+</table>
+</body>
+</html>

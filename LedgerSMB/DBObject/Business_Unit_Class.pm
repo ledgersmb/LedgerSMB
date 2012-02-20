@@ -46,6 +46,17 @@ hidden.
 
 has 'active' => (is => 'rw', isa => 'Bool');
 
+# Hmm should we move this to per-module restrictions? --CT
+
+=item non_accounting bool
+
+If true, indicates that this will not show up on accounting transaction screens.
+this is indivated for CRM and other applications.
+
+=cut
+
+has 'non_accounting' => (is => 'rw', isa => 'Bool');
+
 =item ordering 
 
 The entry boxes (drop down or text entry) are set arranged from low to high
