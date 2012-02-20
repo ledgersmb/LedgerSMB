@@ -11,7 +11,7 @@ funds, and projects.
 
 =cut
 
-package LedgerSMB::DBObject::Business_Unit_Class;
+package LedgerSMB::DBObject::Business_Unit;
 use Moose;
 use LedgerSMB::DBObject_Moose;
 extends 'LedgerSMB::DBObject_Moose';

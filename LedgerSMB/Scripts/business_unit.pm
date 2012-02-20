@@ -7,6 +7,7 @@ LedgerSMB::Scripts::business_unit
 package LedgerSMB::Scripts::business_unit;
 use LedgerSMB::DBObject::Business_Unit_Class;
 use LedgerSMB::DBObject::Business_Unit;
+use LedgerSMB::Template;
 
 =head1 SYNOPSIS
 
@@ -24,6 +25,11 @@ All functions take a single $request object as their sole argument
 
 sub list_classes {
     my ($request) = @_;
+    my $bu_class = LedgerSMB::DBObject::Business_Unit_Class->new(%$request);
+    @{$request->{classes}} = $bu_class->list;
+    my $template = LedgerSMB::Template->new(
+    );
+    $template->render($request);
 }
 
 =item add
@@ -34,6 +40,7 @@ Adds a new business unit.  $request->{class_id} must be set.
 
 sub add {
     my ($request) = @_;
+    
 }
 
 =item edit

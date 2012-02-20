@@ -110,7 +110,7 @@ sub list {
     my ($self) = @_;
     my @classes = $self->exec_method({funcname => 'business_unit_class__list'});
     for my $class (@classes){
-        $class = $self->new($class);
+        $class = $self->new(%$class);
     }
     return @classes;
 }
