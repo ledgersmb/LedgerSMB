@@ -19,12 +19,12 @@
 ?>
 <form action="<?lsmb script ?>" method=POST id="edit-<?lsmb c.id ?>">
 <tr class="row<?lsmb LOOP % 2 ?>">
-<td><?lsmb c.id ?>
+<td>
 <?lsmb PROCESS input element_data = {
     type = "hidden"
    value = c.id
     name = "id"
-} ?></td>
+} ?><?lsmb c.id ?></td>
 <td><?lsmb PROCESS input element_data = {
     type = "text"
    class = "control_code"
@@ -37,8 +37,8 @@
     type = "checkbox"
    value = "1"
    class = "is-active"
-    name = "is_active"
- checked = (c.is_active)? 'CHECKED' : ''
+    name = "active"
+ checked = (c.active)? 'CHECKED' : ''
 } ?>
 </td>
 <td><?lsmb PROCESS input element_data = {
@@ -60,7 +60,7 @@
     type = "submit"
    class = "submit"
     name = "action"
-   value = "save"
+   value = "save_class"
     text = (c.id) ? text('Save') : text('Add')
 };
 PROCESS button element_data = {
@@ -71,6 +71,7 @@ PROCESS button element_data = {
     text = text('Delete')
 } ?>
 </tr>
+</form>
 <?lsmb END ?>
 </table>
 </body>

@@ -8,6 +8,9 @@ package LedgerSMB::Scripts::business_unit;
 use LedgerSMB::DBObject::Business_Unit_Class;
 use LedgerSMB::DBObject::Business_Unit;
 use LedgerSMB::Template;
+use Carp;
+
+$Carp::Verbose = 1;
 
 =head1 SYNOPSIS
 
@@ -130,7 +133,7 @@ LedgerSMB::DBObject::Business_Unit must be set for $request.
 
 sub save {
     my ($request) = @_;
-    my $unit = LedgerSMB::DBObject::Business_Unit->new($request);
+    my $unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
     $unit->save;
     edit($request);
 }
@@ -144,7 +147,13 @@ LedgerSMB::DBObject::Business_Unit_Class must be set for $request.
 
 sub save_class {
     my ($request) = @_;
-    my $bu_class = LedgerSMB::DBObject::Business_Unit_Class->new($request);
+    $request->debug({file => '/tmp/search'});
+    for my $key (qw(active non_accounting)){
+        if (!$request->{$key}){
+            $request->{$key} = 0;
+        }
+    }
+    my $bu_class = LedgerSMB::DBObject::Business_Unit_Class->new(%$request);
     $bu_class->save;
     list_classes($request);
 }

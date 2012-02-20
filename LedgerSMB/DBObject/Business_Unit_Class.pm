@@ -84,6 +84,8 @@ sub get {
     my @classes = $self->call_procedure(procname => 'business_unit_class__get', 
                                             args => [$id]
     );
+    my $ref = shift @classes;
+    $self->prepare_dbhash($ref);
     return $self->new(shift @classes);
 }
 
@@ -97,7 +99,9 @@ changed in the process.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'business_unit_class__save'});
-    $self = $self->new($ref);
+    $self->prepare_dbhash($ref);
+    $self = $self->new(%$ref);
+    $self->dbh->commit;
 }   
 
 =item list
