@@ -45,7 +45,7 @@ module but can be overridden in decendant modules.
 
 =cut
 
-package LedgerSMB::DBObject;
+package LedgerSMB::DBObject_Moose;
 use Moose;
 use Scalar::Util;
 use LedgerSMB::Log;

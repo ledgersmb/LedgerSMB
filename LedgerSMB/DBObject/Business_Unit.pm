@@ -175,3 +175,7 @@ Returns tree as a list.
 
 Copyright (C) 2012 The LedgerSMB Core Team.  This module may be used under the
 GNU GPL in accordance with the LICENSE file listed.
+
+=cut
+
+1;

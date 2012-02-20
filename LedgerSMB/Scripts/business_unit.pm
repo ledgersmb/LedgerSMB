@@ -144,3 +144,7 @@ sub save_class {
 Copyright (C) 2012 LedgerSMB core team.  Redistribution and use of work is 
 governed under the GNU General Public License, version 2 or at your option any
 later version.
+
+=cut
+
+1;
