@@ -1773,7 +1773,7 @@ you have to spend to acquire the foreign currency (buy rate).$$;
 --
 
 CREATE TABLE business_unit_class (
-    id int not null unique,
+    id serial not null unique,
     label text primary key,
     active bool not null default false,
     non_accounting bool not null default false,

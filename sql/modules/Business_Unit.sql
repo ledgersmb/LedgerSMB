@@ -83,7 +83,7 @@ $$ This function returns tree-related records with the root of the tree being
 the business unit of in_id.  $$;
 
 CREATE OR REPLACE FUNCTION business_unit_class__save 
-(in_id int, in_label text, in_active bool, in_non_accounting, in_ordering int)
+(in_id int, in_label text, in_active bool, in_non_accounting bool, in_ordering int)
 RETURNS business_unit_class AS
 $$
 DECLARE retval business_unit_class;

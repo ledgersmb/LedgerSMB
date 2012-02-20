@@ -27,7 +27,7 @@ yet been saved in the database
 
 =cut
 
-has 'id' => (is => 'rw', isa => 'Int');
+has 'id' => (is => 'rw', isa => 'Maybe[Int]');
 
 =item label
 
