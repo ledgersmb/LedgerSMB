@@ -14,11 +14,11 @@
     <th><?lsmb text('Ordering') ?></th>
     <th>&nbsp;</th>
 </tr>
-<?lsmb push classes, {}; 
+<?lsmb classes.push({}); 
        FOR c IN classes 
 ?>
 <form action="<?lsmb script ?>" method=POST id="edit-<?lsmb c.id ?>">
-<tr class="row<?lsmb LOOP%2?>">
+<tr class="row<?lsmb LOOP % 2 ?>">
 <td><?lsmb c.id ?>
 <?lsmb PROCESS input element_data = {
     type = "hidden"
@@ -63,7 +63,7 @@
    value = "save"
     text = (c.id) ? text('Save') : text('Add')
 };
-<?lsmb PROCESS button element_data = {
+PROCESS button element_data = {
     type = "submit"
    class = "submit"
     name = "action"

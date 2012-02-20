@@ -56,6 +56,16 @@ has '_user' => (is => 'ro', isa => 'HashRef[Any]', required => '1');
 has '_locale' => (is => 'ro', isa => 'LedgerSMB::Locale', required => '1');
 has '_request' => (is => 'ro', isa => 'CGI::Simple', required => '1');
 
+sub prepare_dbhash {
+    my $self = shift;
+    my $target = shift;
+    for my $att (qw(dbh _roles _user _locale _request)){
+        if (!$target->{$att}){
+           $target->{$att} = $self->{$att};
+        }
+    }
+}
+
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::DBObject');
 
@@ -427,6 +437,8 @@ sub dberror{
    }
    $self->error($self->{dbh}->state . ":" . $self->{dbh}->errstr);
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

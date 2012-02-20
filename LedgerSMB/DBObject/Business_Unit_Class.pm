@@ -108,8 +108,9 @@ Returns a list of all business unit classes.
 
 sub list {
     my ($self) = @_;
-    my @classes = $self->exec_method({funcname => 'business_unit_class__list'});
+    my @classes = $self->exec_method({funcname => 'business_unit__list_classes'});
     for my $class (@classes){
+        $self->prepare_dbhash($class);
         $class = $self->new(%$class);
     }
     return @classes;
@@ -159,4 +160,5 @@ GNU GPL in accordance with the LICENSE file listed.
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
 1;

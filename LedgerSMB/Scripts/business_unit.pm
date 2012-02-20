@@ -28,6 +28,11 @@ sub list_classes {
     my $bu_class = LedgerSMB::DBObject::Business_Unit_Class->new(%$request);
     @{$request->{classes}} = $bu_class->list;
     my $template = LedgerSMB::Template->new(
+        user =>$request->{_user},
+        locale => $request->{_locale},
+        path => 'UI/business_units',
+        template => 'list_classes',
+        format => 'HTML'
     );
     $template->render($request);
 }

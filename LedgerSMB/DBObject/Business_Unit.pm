@@ -178,4 +178,5 @@ GNU GPL in accordance with the LICENSE file listed.
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
 1;
