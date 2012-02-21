@@ -4,6 +4,9 @@
 
 cp ../release/ledgersm*.tar.gz /root/rpmbuild/SOURCES/
 
-rpmbuild -ba dists/rpm/ledgersmb.spec
+rpmbuild -ba   \
+               --define "_source_filedigest_algorithm 0" \
+               --define "_binary_filedigest_algorithm 0" \
+               dists/rpm/ledgersmb.spec
 
 mv /root/rpmbuild/SOURCES/ledgersmb* ../release

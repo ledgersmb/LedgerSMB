@@ -2245,14 +2245,9 @@ CREATE TRIGGER parts_short AFTER UPDATE ON parts
 FOR EACH ROW EXECUTE PROCEDURE trigger_parts_short();
 -- end function
 
-CREATE OR REPLACE FUNCTION add_custom_field (VARCHAR, VARCHAR, VARCHAR) 
+CREATE OR REPLACE FUNCTION add_custom_field (table_name VARCHAR, new_field_name VARCHAR, field_datatype VARCHAR) 
 RETURNS BOOL AS
 '
-DECLARE
-table_name ALIAS FOR $1;
-new_field_name ALIAS FOR $2;
-field_datatype ALIAS FOR $3;
-
 BEGIN
 	perform TABLE_ID FROM custom_table_catalog 
 		WHERE extends = table_name;
