@@ -104,6 +104,9 @@ IRC: mst#irc.perl.org contributed the initial Makefile.PL
 Rich Walker <rw @ shadowrobot.com> has provided assistance in the dists/deb 
 documentation for Debian installations.
 
+Hilton Day < hilton.day @ gmail.com > has contributed a fix for the RPM build 
+process.
+
 Original Authors of SQL-Ledger:
 ===================================
 Dieter Simader <dsimader @ sql-ledger.com>
