@@ -145,7 +145,7 @@ sub from_input {
     } 
     bless $pgnum, $self;
     $pgnum->bmul(-1) if $negate;
-    die 'LedgerSMB::PGNumber Invalid Number' if $pgnum->is_nan() or (!defined $newval);
+    die 'LedgerSMB::PGNumber Invalid Number' if $pgnum->is_nan();
     return $pgnum;
 }
 

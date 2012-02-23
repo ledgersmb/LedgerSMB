@@ -316,6 +316,9 @@ DECLARE
     eca entity_credit_account;
     iter int;
 BEGIN
+     IF in_tax_ids = '{}' THEN
+         RETURN NULL;
+     END IF;
      SELECT * FROM entity_credit_account into eca WHERE id = in_credit_id;
 
      IF eca.entity_class = 1 then
