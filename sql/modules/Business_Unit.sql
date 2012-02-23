@@ -137,16 +137,21 @@ UPDATE business_unit
 
 
 IF FOUND THEN
-   t_id = in_id;
+   t_id := in_id;
 ELSE
    INSERT INTO business_unit 
           (class_id, control_code, description, start_date, end_date, parent_id,
            credit_id)
    VALUES (in_class_id, in_control_code, in_description, in_start_date, 
            in_end_date, in_parent_id, in_credit_id);
+    t_id := currval('business_unit_id_seq');
 END IF;
 
-SELECT * INTO retval FROM business_unit WHERE id = in_id;
+RAISE NOTICE 'ID: %', t_id;
+
+SELECT * INTO retval FROM business_unit WHERE id = t_id;
+
+RAISE NOTICE 'ID: %', retval.id;
 
 RETURN retval;
 END;

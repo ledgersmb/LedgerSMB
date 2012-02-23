@@ -52,7 +52,7 @@ use LedgerSMB::Log;
 
 has 'dbh' => (is => 'ro', isa => 'DBI::db', required => '1');
 has '_roles' => (is => 'ro', isa => 'ArrayRef[Str]', required => '1');
-has '_user' => (is => 'ro', isa => 'HashRef[Any]', required => '1');
+has '_user' => (is => 'ro', isa => 'LedgerSMB::User', required => '1');
 has '_locale' => (is => 'ro', isa => 'LedgerSMB::Locale', required => '1');
 has '_request' => (is => 'ro', isa => 'CGI::Simple', required => '1');
 

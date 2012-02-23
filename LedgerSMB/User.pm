@@ -62,6 +62,11 @@ use Data::Dumper;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::User');
 
+sub dateformat {
+    my ($self) = @_;
+    return $self->{language};
+}
+
 =item LedgerSMB::User->new($login);
 
 Create a LedgerSMB::User object.  If the user $login exists, set the fields
@@ -190,6 +195,7 @@ sub fetch_config {
     $sth->execute();
     ($templates) = $sth->fetchrow_array() || 'demo';
     $myconfig->{templates} = "$LedgerSMB::Sysconfig::templates/$templates";
+    bless $myconfig, __PACKAGE__;
     return $myconfig;
 }
 

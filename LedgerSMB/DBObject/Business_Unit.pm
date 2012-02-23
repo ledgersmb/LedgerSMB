@@ -52,7 +52,7 @@ Textual description of the reporting unit.
 
 =cut
 
-has 'description' => (is => 'rw', isa => 'Str');
+has 'description' => (is => 'rw', isa => 'Maybe[Str]');
 
 =item start_date
 
@@ -78,7 +78,7 @@ The internal id of the parent, if applicable.  undef means no parent.
 
 =cut
 
-has 'parent_id' => (is => 'rw', isa => 'Int');
+has 'parent_id' => (is => 'rw', isa => 'Maybe[Int]');
 
 =item parent
 
@@ -86,7 +86,7 @@ A reference to the parent business reporting unit
 
 =cut
 
-has 'parent' => (is => 'rw', isa => 'LedgerSMB::DBObject::Business_Unit');
+has 'parent' => (is => 'rw', isa => 'Maybe[LedgerSMB::DBObject::Business_Unit]');
 
 =item credit_id
 
@@ -95,7 +95,7 @@ unit.
 
 =cut
 
-has 'credit_id' => (is => 'rw', isa => 'Int');
+has 'credit_id' => (is => 'rw', isa => 'Maybe[Int]');
 
 =item children
 
@@ -107,7 +107,7 @@ This is not set unless get_tree has already been called.
 
 =cut
 
-has 'children' => (is => 'rw', isa => 'ArrayRef[LedgerSMB::DBObject::Business_Unit]');
+has 'children' => (is => 'rw', isa => 'Maybe[ArrayRef[LedgerSMB::DBObject::Business_Unit]]');
 
 =head1 METHODS
 

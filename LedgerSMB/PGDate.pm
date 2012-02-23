@@ -164,10 +164,17 @@ This returns the human readable formatted date.  If $format is supplied, it is
 used.  If $format is not supplied, the dateformat of the user is used.
 
 =cut
+
 sub to_output {
     my ($self) = @_;
     return undef if !defined $self->date;
-    my $fmt = $formats->{$LedgerSMB::App_State::User->dateformat}->[0];
+    my $fmt;
+    if (defined $LedgerSMB::App_State::User->{dateformat}){
+        $fmt = $formats->{uc($LedgerSMB::App_State::User->{dateformat})}->[0];
+    } else {
+        $fmt = '%F';
+    }
+    
     my $formatter = new DateTime::Format::Strptime(
              pattern => $fmt,
               locale => $LedgerSMB::App_State::Locale->{datetime},

@@ -52,16 +52,7 @@ sub add {
         $request->{class_id} = $request->{id};
     }
     $request->{id} = undef;
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/business_units',
-        template => 'edit',
-        format => 'HTML'
-    );
-    $template->render($request);
-
-    
+    _display($request); 
 }
 
 =item edit
@@ -72,6 +63,24 @@ Edits an existing business unit.  $request->{id} must be set.
 
 sub edit {
     my ($request) = @_;
+    $request->{control_code} = '';
+    $request->{class_id} = 0 unless $request->{class_id} = 0;
+    my $b_unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
+    $b_unit->get;
+    _display($b_unit);
+}
+
+sub _display {
+    my ($request) = @_;
+    my $template = LedgerSMB::Template->new(
+        user =>$request->{_user},
+        locale => $request->{_locale},
+        path => 'UI/business_units',
+        template => 'edit',
+        format => 'HTML'
+    );
+    $template->render($request);
+
 }
 
 =item list
@@ -104,6 +113,38 @@ If set, excludes those which are not associated with customers/vendors.
 
 sub list {
     my ($request) = @_;
+    $request->{control_code} = '';
+    $request->{class_id} = 0 unless $request->{class_id} = 0;
+    my $b_unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
+    my $template = LedgerSMB::Template->new(
+        user =>$request->{_user},
+        locale => $request->{_locale},
+        path => 'UI',
+        template => 'form-dynatable',
+        format => 'HTML'
+    );
+    my $cols;
+    @$cols = qw(id control_code description start_date end_date);
+    my $heading = {
+                  id => $request->{_locale}->text('ID'),
+        control_code => $request->{_locale}->text('Control Code'),
+         description => $request->{_locale}->text('Description'),
+          start_date => $request->{_locale}->text('Start Date'),
+            end_date => $request->{_locale}->text('End Date'),
+    };
+    my $rows;
+    @$rows = $b_unit->list; 
+    my $base_href= "business_unit.pl?action=edit";
+    for $row(@$rows){
+        $row->{control_code} = {text => $row->{control_code},
+                                href => "$base_href&id=$row->{id}"};
+    }
+    $template->render({
+         form    => $request,
+         heading => $heading,
+         rows    => $rows,
+         columns => $cols,
+    });
 }
 
 =item delete
@@ -117,7 +158,7 @@ $request->{id} must be set.
 
 sub delete {
     my ($request) = @_;
-    my $unit = LedgerSMB::DBObject::Business_Unit->new($request);
+    my $unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
     $unit->delete;
     list($request);
 }
@@ -150,7 +191,6 @@ sub save {
                               if defined $request->{start_date};
     $request->{end_date} = LedgerSMB::PGDate->from_input($request->{end_date}, 0)
                               if defined $request->{end_date};
-    my $unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
     my $unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
     $unit->save;
     edit($request);
