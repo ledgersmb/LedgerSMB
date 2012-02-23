@@ -225,6 +225,7 @@ sub to_db {
     return $self->to_output({format => '1000.00'});
 }
 
+
 1;
 
 =back

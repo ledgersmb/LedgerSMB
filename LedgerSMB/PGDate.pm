@@ -31,7 +31,7 @@ A DateTime object for internal storage and processing.
 
 =cut
 
-has date => (isa => 'DateTime', is=> 'ro', required => '1');
+has date => (isa => 'Maybe[DateTime]', is=> 'ro', required => '1');
 
 =back
 
@@ -147,7 +147,6 @@ sub _parse_string {
             }
         }
     }
-    confess 'LedgerSMB::PGDate Invalid Date';
 }
 
 sub from_input{
@@ -214,6 +213,8 @@ sub to_db {
     );
     return $formatter->format_datetime($self->date);
 }
+
+__PACKAGE__->meta->make_immutable;
 
 1;
 

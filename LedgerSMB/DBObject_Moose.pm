@@ -366,9 +366,13 @@ sub call_procedure {
             if ($types[$_] == 3 or $types[$_] == 2) {
                 $ref->{$names[$_]} = Math::BigFloat->new($ref->{$names[$_]});
             }
-            #    DATE                TIMESTAMP
-            if ($types[$_] == 91 or $types[$_] == 11){
-                $ref->{$names[$_]} = LedgerSMB::PGDate->from_db($ref->{$names[$_]});
+            #    DATE 
+            elsif ($types[$_] == 91){
+                $ref->{$names[$_]} = LedgerSMB::PGDate->from_db($ref->{$names[$_]}, 'date');
+            }
+            # TIMESTAMP
+            elsif ($types[$_] == 11){
+                $ref->{$names[$_]} = LedgerSMB::PGDate->from_db($ref->{$names[$_]}, 'datetime');
             }
         }
         push @results, $ref;
