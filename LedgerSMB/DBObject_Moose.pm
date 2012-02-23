@@ -144,6 +144,13 @@ sub exec_method {
         for (@in_args) { push @call_args, $_ } ;
         $self->{call_args} = \@call_args;
         $logger->debug("exec_method: \$self = " . Data::Dumper::Dumper($self));
+        for my $arg(@call_args){
+            if (isa('LedgerSMB::PGDate', $arg) or
+                 isa('LedgerSMB::PGNumber', $arg)){
+                $arg = $arg->to_db;
+            }
+        }
+           
         return $self->call_procedure( procname => $funcname, 
                                           args => \@call_args, 
                                       order_by => $self->{_order_method}->{"$funcname"}, 
@@ -151,6 +158,13 @@ sub exec_method {
                              continue_on_error => $args{continue_on_error});
     }
     else {
+        for my $arg(@in_args){
+            if (isa('LedgerSMB::PGDate', $arg) or
+                 isa('LedgerSMB::PGNumber', $arg)){
+                $arg = $arg->to_db;
+            }
+        }
+           
         return $self->call_procedure( procname => $funcname, 
                                           args => \@in_args, 
                                       order_by => $self->{_order_method}->{"$funcname"}, 

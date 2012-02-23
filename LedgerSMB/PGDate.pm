@@ -152,8 +152,8 @@ sub _parse_string {
 
 sub from_input{
     my ($self, $input, $has_time) = @_;
-    my $format = $LedgerSMB::App_State::User->dateformat;
-    my $dt =  _parse_string($self, $input, $format, $has_time);
+    my $format = $LedgerSMB::App_State::User->{dateformat};
+    my $dt =  _parse_string($self, $input, uc($format), $has_time);
     return $self->new({date => $dt});
 }
 

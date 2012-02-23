@@ -48,7 +48,7 @@
 
 use LedgerSMB::Sysconfig;
 use Digest::MD5;
-use Error qw(:try);
+use Try::Tiny;
 
 $| = 1;
 
@@ -168,8 +168,8 @@ else {
 }
 
 }
-catch CancelFurtherProcessing with {
-  my $ex = shift;
+catch {
+  $form->error($_);
 };
 
 $logger->trace("leaving after script=bin/$form->{script} action=$form->{action}");#trace flow

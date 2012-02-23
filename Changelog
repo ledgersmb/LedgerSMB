@@ -9,6 +9,7 @@ General Enhancements:
 * Project/department mechanism generalized to support funds, etc (Chris T)
 * Removed the Config::Std dependency and moved to Config::General (Chris T)
 * Merged in transaction import add-on for 1.4, also for other csv's (Chris T)
+* Improved error handling using Try::Tiny and die (Chris T)
 
 New Business Reporting Unit System (Chris T)
 * Replaces Projects and Departments

@@ -27,7 +27,7 @@ yet been saved in the database
 
 =cut
 
-has 'id' => (is => 'rw', isa => 'Int');
+has 'id' => (is => 'rw', isa => 'Maybe[Int]');
 
 =item class_id
 
@@ -61,7 +61,7 @@ here for conversion to/from input and to/from strings for the db.
 
 =cut
 
-has 'start_date' => (is => 'rw', isa => 'LedgerSMB::PGDate');
+has 'start_date' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
 
 =item end_date
 
@@ -70,7 +70,7 @@ here for conversion to/from input and to/from strings for the db.
 
 =cut
 
-has 'end_date' => (is => 'rw', isa => 'LedgerSMB::PGDate');
+has 'end_date' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
 
 =item parent_id
 

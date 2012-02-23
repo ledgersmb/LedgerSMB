@@ -18,7 +18,7 @@
 	name = "control_code"
 	value = control_code
 	label = text('Control Code') #'
-	size = 32
+	size = 16
 } ?>
 <?lsmb PROCESS select element_data = {
         label = text('Parent')
@@ -36,6 +36,7 @@ default_values= [parent]
 	label = text("Start Date") #"
          type = "text"
         value = start_date
+         size = 12
 } ?>
 <?lsmb PROCESS input element_data = {
 	name = "end_date"
@@ -43,6 +44,7 @@ default_values= [parent]
 	label = text("End Date") #"
          type = "text"
         value = end_date
+         size = 12
 } ?>
 </div>
 </div>
@@ -73,10 +75,10 @@ default_values= [parent]
 	type = "submit"
 	class = "submit"
 	name = "action"
-	value = "asset_save"
+	value = "save"
 } ?>
 </div>
-<?lsmb PROCESS inout element_data = {
+<?lsmb PROCESS input element_data = {
      type = "hidden"
      name = "class_id"
     value = class_id

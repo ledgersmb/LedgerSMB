@@ -48,6 +48,19 @@ Adds a new business unit.  $request->{class_id} must be set.
 
 sub add {
     my ($request) = @_;
+    if (!$request->{class_id}){
+        $request->{class_id} = $request->{id};
+    }
+    $request->{id} = undef;
+    my $template = LedgerSMB::Template->new(
+        user =>$request->{_user},
+        locale => $request->{_locale},
+        path => 'UI/business_units',
+        template => 'edit',
+        format => 'HTML'
+    );
+    $template->render($request);
+
     
 }
 
@@ -133,6 +146,11 @@ LedgerSMB::DBObject::Business_Unit must be set for $request.
 
 sub save {
     my ($request) = @_;
+    $request->{start_date} = LedgerSMB::PGDate->from_input($request->{start_date}, 0)
+                              if defined $request->{start_date};
+    $request->{end_date} = LedgerSMB::PGDate->from_input($request->{end_date}, 0)
+                              if defined $request->{end_date};
+    my $unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
     my $unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
     $unit->save;
     edit($request);

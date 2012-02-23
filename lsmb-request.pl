@@ -22,7 +22,7 @@ package LedgerSMB::Handler;
 
 use LedgerSMB::Sysconfig;
 use Digest::MD5;
-use Error qw(:try);
+use Try::Tiny;
 
 $| = 1;
 
@@ -106,9 +106,8 @@ sub call_script {
       || $request->error($locale->text("Action Not Defined: ") . $request->{action});
     $script->can( $request->{action} )->($request);
   }
-  catch CancelFurtherProcessing with {
-    my $ex = shift;
-    $logger->debug("CancelFurtherProcessing \$ex=$ex");
+  catch {
+     $request->error($_);
   };
 }
 1;
