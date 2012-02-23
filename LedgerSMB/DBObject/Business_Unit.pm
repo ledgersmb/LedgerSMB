@@ -141,10 +141,24 @@ sub save {
     $self->dbh->commit;
 }   
 
-=item list ($date, $credit_id, $class)
+=item list ($date, $class_id, $credit_id, $strict, $active_on)
 
 Lists all business reporting units active on $date, for $credit_id (or for all
 credit_ids), and of $class.  Undef on date and credit_id match all rows.
+
+=cut
+
+sub list {
+    my ($self, $class_id, $credit_id, $strict, $active_on) = @_;
+    my @rows =  $self->call_procedure(procname => 'business_unit__list_by_class',
+                                      args => [$class_id, $active_on, 
+                                               $credit_id, $strict]);
+    for my $row(@rows){
+        $self->prepare_dbhash($row);
+        $row = $self->new($row);
+    }
+    return @rows;
+}
 
 =item delete
 

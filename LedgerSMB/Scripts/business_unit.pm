@@ -133,7 +133,7 @@ sub list {
             end_date => $request->{_locale}->text('End Date'),
     };
     my $rows;
-    @$rows = $b_unit->list; 
+    @$rows = $b_unit->list($request->{id}); 
     my $base_href= "business_unit.pl?action=edit";
     for $row(@$rows){
         $row->{control_code} = {text => $row->{control_code},

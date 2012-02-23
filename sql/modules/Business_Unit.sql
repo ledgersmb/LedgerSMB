@@ -27,7 +27,7 @@ $$
 BEGIN
 RETURN QUERY SELECT * FROM business_unit 
               WHERE (in_active_on BETWEEN start_date AND end_date OR
-                     in_active_in IS NULL)
+                     in_active_on IS NULL)
                     AND (in_credit_id = credit_id
                         OR (credit_id IS NULL and in_strict_credit IS NOT TRUE)
                         OR (in_credit_id IS NULL))

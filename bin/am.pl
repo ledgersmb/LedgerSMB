@@ -49,7 +49,7 @@ sub edit   { &{"edit_$form->{type}"} }
 sub save   { &{"save_$form->{type}"} }
 sub delete { &{"delete_$form->{type}"} }
 
-my @default_textboxes = (
+our @default_textboxes = (
    { name => 'glnumber', label => $locale->text('GL Reference Number') },
    { name => 'sinumber', 
       label => $locale->text('Sales Invoice/AR Transaction Number'), },
@@ -75,6 +75,10 @@ my @default_textboxes = (
    { name => 'company_address', label => $locale->text('Company Address') },
    { name => 'company_phone', label => $locale->text('Company Phone') },
    { name => 'company_fax', label => $locale->text('Company Fax') },
+   { name => 'company_sales_tax_id', 
+                             label =>  $locale->text('Company Sales Tax ID') },
+   { name => 'company_license_number',
+                           label =>  $locale->text('Company License Number') },
 );
 
 my @default_others = qw(businessnumber weightunit separate_duties default_language
