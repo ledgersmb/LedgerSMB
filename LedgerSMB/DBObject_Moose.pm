@@ -145,9 +145,8 @@ sub exec_method {
         $self->{call_args} = \@call_args;
         $logger->debug("exec_method: \$self = " . Data::Dumper::Dumper($self));
         for my $arg(@call_args){
-            if (isa('LedgerSMB::PGDate', $arg) or
-                 isa('LedgerSMB::PGNumber', $arg)){
-                $arg = $arg->to_db;
+            if (eval {$arg->can('to_db')}){
+               $arg = $arg->to_db;
             }
         }
            
@@ -159,9 +158,8 @@ sub exec_method {
     }
     else {
         for my $arg(@in_args){
-            if (isa('LedgerSMB::PGDate', $arg) or
-                 isa('LedgerSMB::PGNumber', $arg)){
-                $arg = $arg->to_db;
+            if (eval {$arg->can('to_db')}){
+               $arg = $arg->to_db;
             }
         }
            

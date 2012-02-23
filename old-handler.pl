@@ -169,7 +169,11 @@ else {
 
 }
 catch {
-  $form->error($_);
+  # We have an exception here because otherwise we always get an exception
+  # when output terminates.  A mere 'die' will no longer trigger an automatic
+  # error, but die 'foo' will map to $form->error('foo')
+  # -- CT
+  $form->error($_)  unless $_ eq 'Died'; 
 };
 
 $logger->trace("leaving after script=bin/$form->{script} action=$form->{action}");#trace flow

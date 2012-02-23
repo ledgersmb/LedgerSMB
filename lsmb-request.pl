@@ -107,7 +107,11 @@ sub call_script {
     $script->can( $request->{action} )->($request);
   }
   catch {
-     $request->error($_);
+      # We have an exception here because otherwise we always get an exception
+      # when output terminates.  A mere 'die' will no longer trigger an 
+      # automatic error, but die 'foo' will map to $request->error('foo')
+      # -- CT
+     $request->error($_) unless $_ eq 'Died';
   };
 }
 1;
