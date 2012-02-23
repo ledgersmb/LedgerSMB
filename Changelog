@@ -8,8 +8,13 @@ General Enhancements:
 * Projects and Departments can now have subprojects and Departments (Chris T)
 * Project/department mechanism generalized to support funds, etc (Chris T)
 * Removed the Config::Std dependency and moved to Config::General (Chris T)
-* Merged in transaction import add-on for 1.4, also for other csv's (Chris T)
 * Improved error handling using Try::Tiny and die (Chris T)
+
+New CSV Import Module (Chris T)
+* Imports GL transactions
+* Imports AP batches
+* Extensible
+* field maps can be overridden
 
 New Business Reporting Unit System (Chris T)
 * Replaces Projects and Departments
@@ -27,6 +32,12 @@ Changelog for 1.3.12
 * Corrected erroneous log messages from debugging 1.3.11 (Chris T)
 * Autocomplete ajaxselect now work (degraded) without Javascript (Chris T)
 * Autocomplete ajaxselect now accept full entry without waiting (Chris T)
+* Inlined add_custom_field's argument names for autodocumentation (Chris T)
+* Updated add_custom_field to run on PostgreSQL 9.0 (Chris T)
+* Updated dists/rpm/build.sh to support RHEL 5 (Hilton D)
+* Corrected stylesheet not set on error pages (Chris T)
+
+Hilton D is Hilton Day
 
 Changelog for 1.3.11
 * Fixed outstanding report for payment reversal and partial payments (Chris T)

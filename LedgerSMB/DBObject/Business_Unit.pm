@@ -136,7 +136,9 @@ Saves the business reporting unit ot the database and updates changes to object.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'business_unit__save'});
+    $self->prepare_dbhash($ref);
     $self = $self->new($ref);
+    $self->dbh->commit;
 }   
 
 =item list ($date, $credit_id, $class)

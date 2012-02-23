@@ -813,7 +813,7 @@ sub error {
 
         
         print qq|Content-Type: text/html; charset=utf-8\n\n|;
-        print "<head></head>";
+        print "<head><link rel='stylesheet' href='css/$self->{_user}->{stylesheet}' type='text/css'></head>";
         $self->{msg} =~ s/\n/<br \/>\n/;
         print
           qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></body>|;
