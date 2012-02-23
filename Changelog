@@ -10,6 +10,9 @@ General Enhancements:
 * Removed the Config::Std dependency and moved to Config::General (Chris T)
 * Improved error handling using Try::Tiny and die (Chris T)
 
+Customer/Vendor Handling 
+* Added sales tax id and license number fields for companies (Chris T)
+
 New CSV Import Module (Chris T)
 * Imports GL transactions
 * Imports AP batches

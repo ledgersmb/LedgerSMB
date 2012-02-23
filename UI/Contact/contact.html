@@ -351,6 +351,28 @@ END ?>
 		} ?>
 </div>
 </div>
+<div class="input_line" id="sales-tax-info">
+<div class="input_group1">
+     <?lsmb INCLUDE input element_data = {
+         label = text('Sales Tax ID') #'
+          name = 'sales_tax_id'
+          type = 'text'
+         class = 'taxnumber'
+          size = '19'
+         value = sales_tax_id
+     } ?>
+</div>
+<div class="input_group2">
+     <?lsmb INCLUDE input element_data = {
+         label = text('License Number') #'
+          name = 'license_number'
+          type = 'text'
+         class = 'taxnumber'
+          size = '19'
+         value = license_number
+     } ?>
+</div>
+</div>
 <div class="input_line">
             <hr/>
 <div class="input_group1">

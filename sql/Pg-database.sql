@@ -650,6 +650,8 @@ CREATE TABLE company (
   entity_id integer not null references entity(id),
   legal_name text check (legal_name ~ '[[:alnum:]_]'),
   tax_id text,
+  sales_tax_id text,
+  license_number text,
   sic_code varchar,
   created date default current_date not null,
   PRIMARY KEY (entity_id,legal_name));

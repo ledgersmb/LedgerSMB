@@ -61,7 +61,7 @@ create type eca_history_result as (
    project_id int,
    projectnumber text,
    serialnumber text,
-   exchngerate numeric,
+   exchangerate numeric,
    salesperson_id int,
    salesperson_name text
 );
@@ -171,7 +171,7 @@ LEFT JOIN person ep ON (ep.entity_id = ee.id)
  ORDER BY eca.meta_number;
 $$ LANGUAGE SQL;
 
-COMMENT ON FUNCTION eca_history
+COMMENT ON FUNCTION eca_history 
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
  in_country_id int, in_from_date date, in_to_date date, in_type char(1),
@@ -640,10 +640,18 @@ account.$$;
 
 
 DROP FUNCTION IF EXISTS company_save(int, text, int, text, text, int, text, int);
-CREATE OR REPLACE FUNCTION company_save (
+
+DROP FUNCTION IF EXISTS company_save (
     in_id int, in_control_code text, in_entity_class int,
     in_name text, in_tax_id TEXT,
     in_entity_id int, in_sic_code text,in_country_id int
+);
+
+CREATE OR REPLACE FUNCTION company_save (
+    in_id int, in_control_code text, in_entity_class int,
+    in_name text, in_tax_id TEXT,
+    in_entity_id int, in_sic_code text,in_country_id int,
+    in_sales_tax_id text, in_license_number text
 ) RETURNS INT AS $$
 DECLARE t_entity_id INT;
 	t_company_id INT;
@@ -674,13 +682,17 @@ BEGIN
 	UPDATE company
 	SET legal_name = in_name,
 		tax_id = in_tax_id,
-		sic_code = in_sic_code
+		sic_code = in_sic_code,
+                sales_tax_id = in_sales_tax_id,
+                license_number = in_license_number
 	WHERE id = t_company_id;
 
 
 	IF NOT FOUND THEN
-		INSERT INTO company(entity_id, legal_name, tax_id, sic_code)
-		VALUES (t_entity_id, in_name, in_tax_id, in_sic_code);
+		INSERT INTO company(entity_id, legal_name, tax_id, sic_code,
+                                    sales_tax_id, license_number)
+		VALUES (t_entity_id, in_name, in_tax_id, in_sic_code, 
+                        in_sales_tax_id, in_license_number);
 
 	END IF;
 	RETURN t_entity_id;
@@ -690,7 +702,8 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON  FUNCTION company_save (
     in_id int, in_control_code text, in_entity_class int,
     in_name text, in_tax_id TEXT,
-    in_entity_id int, in_sic_code text,in_country_id int
+    in_entity_id int, in_sic_code text,in_country_id int,
+    in_sales_tax_id text, in_license_number text
  ) is
 $$ Saves a company.  Returns the id number of the record stored.$$;
 
