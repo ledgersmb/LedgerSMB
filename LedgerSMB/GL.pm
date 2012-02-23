@@ -697,9 +697,6 @@ sub transaction {
 
     $sth->finish;
 
-    # get departments
-    $form->all_departments( $myconfig, $dbh );
-
     # get projects
     $form->all_business_units( $form->{transdate} );
 

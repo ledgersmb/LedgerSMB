@@ -1935,7 +1935,6 @@ sub get_regular_metadata {
     $dbh = $self->{dbh};
 
     $self->all_employees( $myconfig, $dbh, $transdate, 1 );
-    $self->all_departments( $myconfig, $dbh, $vc );
     $self->all_business_units( $myconfig, $dbh, $transdate, $job );
     $self->all_taxaccounts( $myconfig, $dbh, $transdate );
     $self->all_languages();

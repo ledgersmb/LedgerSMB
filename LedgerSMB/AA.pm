@@ -974,6 +974,7 @@ sub transactions {
 		   HAVING abs(sum(acs.amount::numeric(20,$p))) > 0 |;
        } 
     } else {
+        # XXX MUST BE PORTED TO NEW BUSINESS UNIT FRAMEWORK
         $query = qq|
 		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
 		          a.duedate, a.netamount, a.amount, 
@@ -1472,11 +1473,17 @@ sub get_name {
          $query = qq|
 			   SELECT c.accno, c.description, c.link, 
                                   c.category,
-			          ac.project_id,
-			          a.department_id
+			          pbu.bu_id AS project_id,
+			          dbu.bu_id AS department_id
 			     FROM chart c
 			     JOIN acc_trans ac ON (ac.chart_id = c.id)
 			     JOIN $arap a ON (a.id = ac.trans_id)
+                        LEFT JOIN business_unit_ac pbu 
+                                  ON (ac.entry_id = pbu.entry_id 
+                                     AND pbu.class_id = 2)
+                        LEFT JOIN business_unit_ac dbu
+                                  ON (ac.entry_id = dbu.entry_id
+                                      AND dbu.class_id = 1)
 			    WHERE c.charttype = 'A' AND a.entity_credit_account = ?
 			          AND a.id = (SELECT max(id) 
 			                         FROM $arap
