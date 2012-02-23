@@ -47,7 +47,7 @@ of the class of business units (1 for department, 2 for project, etc).
 With the exception of in_business_unit_class_id, the null matches all records.
 $$;
 
-DROP TYPE IF EXISTS business_unit_short;
+DROP TYPE IF EXISTS business_unit_short CASCADE;
 
 CREATE TYPE business_unit_short AS (
 id int,
@@ -121,6 +121,7 @@ in_start_date date, in_end_date date, in_parent_id int, in_credit_id int)
 RETURNS business_unit AS
 $$
 DECLARE retval business_unit;
+        t_id int;
 
 BEGIN
 
@@ -134,7 +135,10 @@ UPDATE business_unit
        credit_id = in_credit_id
  WHERE id = in_id;
 
-IF NOT FOUND THEN
+
+IF FOUND THEN
+   t_id = in_id;
+ELSE
    INSERT INTO business_unit 
           (class_id, control_code, description, start_date, end_date, parent_id,
            credit_id)
@@ -142,6 +146,7 @@ IF NOT FOUND THEN
            in_end_date, in_parent_id, in_credit_id);
 END IF;
 
+SELECT * INTO retval FROM business_unit WHERE id = in_id;
 
 RETURN retval;
 END;

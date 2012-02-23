@@ -124,6 +124,7 @@ module to handle the parsing.
 
 sub _parse_string {
     my ($self, $string, $format, $has_time) = @_;
+    return undef if !defined $string;
     if (!defined $LedgerSMB::App_State::Locale->{datetime}){
         $LedgerSMB::App_State::Locale->{datetime} = 'en_US';
     }
@@ -165,6 +166,7 @@ used.  If $format is not supplied, the dateformat of the user is used.
 =cut
 sub to_output {
     my ($self) = @_;
+    return undef if !defined $self->date;
     my $fmt = $formats->{$LedgerSMB::App_State::User->dateformat}->[0];
     my $formatter = new DateTime::Format::Strptime(
              pattern => $fmt,
@@ -204,6 +206,7 @@ This returns the preferred form for database queries.
 
 sub to_db {
     my ($self) = @_;
+    return undef if !defined $self->date;
     my $fmt = $formats->{'YYYY-MM-DD'}->[0];
     $fmt .= ' %T' if ($self->date->hour);
     my $formatter = new DateTime::Format::Strptime(
