@@ -98,8 +98,19 @@ cornerlogo {
 .submenu {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 12px;
-  padding-left: 5px;
+  padding-left: 20px;
 }
+
+#top_menu {
+  margin: 0px;
+  padding: 0px;
+  -webkit-padding-start: 0px;
+}
+
+#top_menu:before {
+  content: "";
+}
+
 
 .menu_open, .menu_closed {
     list-style: none;
