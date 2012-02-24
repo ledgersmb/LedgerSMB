@@ -12,6 +12,7 @@ Changelog for 1.3.12
 * Updated add_custom_field to run on PostgreSQL 9.0 (Chris T)
 * Updated dists/rpm/build.sh to support RHEL 5 (Hilton D)
 * Corrected stylesheet not set on error pages (Chris T)
+* Tightened up permissions on menu items and employee management (Chris T)
 
 Hilton D is Hilton Day
 
