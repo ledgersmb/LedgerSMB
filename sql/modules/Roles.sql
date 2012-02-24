@@ -824,6 +824,8 @@ values (82, 'allow', 'lsmb_<?lsmb dbname ?>__part_create');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__part_edit"
 WITH INHERIT NOLOGIN;
 
+GRANT "lsmb_<?lsmb dbname ?>__file_read" TO "lsmb_<?lsmb dbname ?>__part_edit";
+
 GRANT SELECT ON assembly, orderitems, jcitems, invoice 
 TO "lsmb_<?lsmb dbname ?>__part_edit";
 
