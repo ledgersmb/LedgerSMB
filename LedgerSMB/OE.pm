@@ -2378,7 +2378,7 @@ sub generate_orders {
         $query = qq|
 			SELECT v.curr, v.taxincluded, t.rate, c.accno
 			FROM vendor v
-			LEFT JOIN vendortax vt ON (v.id = vt.vendor_id)
+			LEFT JOIN eca_tax vt ON (v.id = vt.vendor_id)
 			LEFT JOIN tax t ON (t.chart_id = vt.chart_id)
 			LEFT JOIN chart c ON (c.id = t.chart_id)
 			WHERE v.id = ?|;

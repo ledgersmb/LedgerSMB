@@ -932,8 +932,8 @@ DECLARE out_row payment_location_result;
                 SELECT l.id, l.line_one, l.line_two, l.line_three, l.city,
                        l.state, l.mail_code, c.name, lc.class
                 FROM location l
-                JOIN company_to_location ctl ON (ctl.location_id = l.id)
-                JOIN company cp ON (ctl.company_id = cp.id)
+                JOIN entity_to_location ctl ON (ctl.location_id = l.id)
+                JOIN entity cp ON (ctl.entity_id = cp.id)
                 JOIN location_class lc ON (ctl.location_class = lc.id)
                 JOIN country c ON (c.id = l.country_id)
                 JOIN entity_credit_account ec ON (ec.entity_id = cp.entity_id)

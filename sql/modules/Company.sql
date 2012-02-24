@@ -235,17 +235,20 @@ BEGIN
                        WHERE in_meta_number IS NULL) ec ON (ec.entity_id = e.id)
 		LEFT JOIN business b ON (ec.business_id = b.id)
 		WHERE coalesce(ec.entity_class,e.entity_class) = in_account_class
-			AND (c.id IN (select company_id FROM company_to_contact
-				WHERE contact ILIKE ALL(t_contact_info))
-				OR '' ILIKE ALL(t_contact_info))
+			AND (c.entity_id IN (select entity_id 
+                                               FROM entity_to_contact
+                                              WHERE contact ILIKE 
+                                                            ANY(t_contact_info))
+				                    OR '' ILIKE 
+                                                          ALL(t_contact_info))
 			
 			AND (c.legal_name ilike '%' || in_legal_name || '%'
 				OR in_legal_name IS NULL)
 			AND ((in_address IS NULL AND in_city IS NULL 
 					AND in_state IS NULL 
 					AND in_country IS NULL)
-				OR (c.id IN 
-				(select company_id FROM company_to_location
+				OR (c.entity_id IN 
+				(select entity_id FROM entity_to_location
 				WHERE location_id IN 
 					(SELECT id FROM location
 					WHERE line_one 
@@ -299,11 +302,9 @@ meta_number must match exactly or be NULL.  inc_open and inc_closed are exact
 matches too.  All other values specify ranges or may match partially.$$;
 
 CREATE OR REPLACE FUNCTION eca__get_taxes(in_credit_id int)
-returns setof customertax AS
+returns setof eca_tax AS
 $$
-select * from customertax where customer_id = $1
-union
-select * from vendortax where vendor_id = $1;
+select * from eca_tax where customer_id = $1;
 $$ language sql;
 
 COMMENT ON FUNCTION eca__get_taxes(in_credit_id int) IS
@@ -321,23 +322,12 @@ BEGIN
      END IF;
      SELECT * FROM entity_credit_account into eca WHERE id = in_credit_id;
 
-     IF eca.entity_class = 1 then
-        DELETE FROM vendortax WHERE vendor_id = in_credit_id;
-        FOR iter in array_lower(in_tax_ids, 1) .. array_upper(in_tax_ids, 1)
-        LOOP
-             INSERT INTO vendortax (vendor_id, chart_id)
-             values (in_credit_id, in_tax_ids[iter]);
-        END LOOP;
-     ELSIF eca.entity_class = 2 then
-        DELETE FROM customertax WHERE customer_id = in_credit_id;
-        FOR iter in array_lower(in_tax_ids, 1) .. array_upper(in_tax_ids, 1)
-        LOOP
-             INSERT INTO customertax (customer_id, chart_id)
-             values (in_credit_id, in_tax_ids[iter]);
-        END LOOP;
-     ELSE 
-        RAISE EXCEPTION 'Wrong entity class or credit account not found!';
-     END IF;
+     DELETE FROM eca_tax WHERE eca_id = in_credit_id;
+     FOR iter in array_lower(in_tax_ids, 1) .. array_upper(in_tax_ids, 1)
+     LOOP
+          INSERT INTO eca_tax (eca__id, chart_id)
+          values (in_credit_id, in_tax_ids[iter]);
+     END LOOP;
      RETURN TRUE;
 end;
 $$ language plpgsql;
@@ -859,10 +849,10 @@ BEGIN
 		SELECT l.id, l.line_one, l.line_two, l.line_three, l.city, 
 			l.state, l.mail_code, c.id, c.name, lc.id, lc.class
 		FROM location l
-		JOIN company_to_location ctl ON (ctl.location_id = l.id)
+		JOIN entity_to_location ctl ON (ctl.location_id = l.id)
 		JOIN location_class lc ON (ctl.location_class = lc.id)
 		JOIN country c ON (c.id = l.country_id)
-		WHERE ctl.company_id = (select id from company where entity_id = in_entity_id)
+		WHERE ctl.entity_id = in_entity_id
 		ORDER BY lc.id, l.id, c.name
 	LOOP
 		RETURN NEXT out_row;
@@ -887,11 +877,9 @@ DECLARE out_row contact_list;
 BEGIN
 	FOR out_row IN
 		SELECT cl.class, cl.id, c.description, c.contact
-		FROM company_to_contact c
+		FROM entity_to_contact c
 		JOIN contact_class cl ON (c.contact_class_id = cl.id)
-		WHERE company_id = 
-			(select id FROM company 
-			WHERE entity_id = in_entity_id)
+		WHERE c.entity_id = in_entity_id
 	LOOP
 		return next out_row;
 	END LOOP;
@@ -983,8 +971,9 @@ CREATE OR REPLACE FUNCTION company__delete_contact
 returns bool as $$
 BEGIN
 
-DELETE FROM company_to_contact
- WHERE company_id = in_company_id and contact_class_id = in_contact_class_id
+DELETE FROM entity_to_contact
+ WHERE entity_id = (select entity_id from company where id = in_companu_id) 
+       and contact_class_id = in_contact_class_id
        and contact= in_contact;
 RETURN FOUND;
 
@@ -1022,10 +1011,9 @@ RETURNS INT AS
 $$
 DECLARE out_id int;
 BEGIN
-	INSERT INTO company_to_contact(company_id, contact_class_id, 
-		description, contact)
-	SELECT id, in_contact_class, in_description, in_contact FROM company
-	WHERE entity_id = in_entity_id;
+	INSERT INTO entity_to_contact 
+               (entity_id, contact_class_id, description, contact)
+	VALUES (entity_id, in_contact_class, in_description, in_contact);
 
 	RETURN 1;
 END;
@@ -1134,8 +1122,8 @@ create or replace function _entity_location_save(
 	SELECT id INTO t_company_id
 	FROM company WHERE entity_id = in_entity_id;
 
-	DELETE FROM company_to_location
-	WHERE company_id = t_company_id
+	DELETE FROM entity_to_location
+	WHERE company_id = in_entity_id
 		AND location_class = in_location_class
 		AND location_id = in_location_id;
 
@@ -1143,9 +1131,9 @@ create or replace function _entity_location_save(
 		in_state, in_mail_code, in_country_code) 
 	INTO l_id;
 
-	INSERT INTO company_to_location 
+	INSERT INTO entity_to_location
 		(company_id, location_class, location_id)
-	VALUES  (t_company_id, in_location_class, l_id);
+	VALUES  (in_entity_id, in_location_class, l_id);
 
 	RETURN l_id;    
     END;

@@ -227,8 +227,8 @@ create or replace function employee_set_location
     (in_employee int, in_location int) 
 returns void as $$
 
-    INSERT INTO person_to_location (person_id,location_id) 
-        VALUES ($1, $2);
-    
+    INSERT INTO entity_to_location (entity_id,location_id) 
+    SELECT entity_id, $2
+      FROM person WHERE id = $1;
 $$ language 'sql';
 

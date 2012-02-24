@@ -12,6 +12,7 @@ General Enhancements:
 
 Customer/Vendor Handling 
 * Added sales tax id and license number fields for companies (Chris T)
+* Simpified database schema (Chris T)
 
 New CSV Import Module (Chris T)
 * Imports GL transactions

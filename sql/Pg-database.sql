@@ -504,14 +504,6 @@ INSERT INTO entity_class (id,class) VALUES (6,'Referral');
 
 SELECT setval('entity_class_id_seq',7);
 
-CREATE TABLE entity_class_to_entity (
-  entity_class_id integer not null references entity_class(id) ON DELETE CASCADE,
-  entity_id integer not null references entity(id) ON DELETE CASCADE,
-  PRIMARY KEY(entity_class_id,entity_id)
-  );
-
-COMMENT ON TABLE entity_class_to_entity IS $$ Relation builder for classes to entity $$;
-
 -- USERS stuff --
 CREATE TABLE users (
     id serial UNIQUE, 
@@ -658,13 +650,13 @@ CREATE TABLE company (
   
 COMMENT ON COLUMN company.tax_id IS $$ In the US this would be a EIN. $$;  
 
-CREATE TABLE company_to_location (
+CREATE TABLE entity_to_location (
   location_id integer references location(id) not null,
   location_class integer not null references location_class(id),
-  company_id integer not null references company(id) ON DELETE CASCADE,
-  PRIMARY KEY(location_id,company_id, location_class));
+  entity_id integer not null references entity(id) ON DELETE CASCADE,
+  PRIMARY KEY(location_id, entity_id, location_class));
 
-COMMENT ON TABLE company_to_location IS
+COMMENT ON TABLE entity_to_location IS
 $$ This table is used for locations generic to companies.  For contract-bound
 addresses, use eca_to_location instead $$;
 
@@ -711,12 +703,6 @@ create table entity_employee (
 COMMENT ON TABLE entity_employee IS 
 $$ This contains employee-specific extensions to person/entity. $$;
 
-CREATE TABLE person_to_location (
-  location_id integer not null references location(id),
-  location_class integer not null references location_class(id),
-  person_id integer not null references person(id) ON DELETE CASCADE,
-  PRIMARY KEY (location_id,person_id));
-
 CREATE TABLE person_to_company (
   location_id integer references location(id) not null,
   person_id integer not null references person(id) ON DELETE CASCADE,
@@ -735,26 +721,6 @@ CREATE TABLE entity_other_name (
 COMMENT ON TABLE entity_other_name IS $$ Similar to company_other_name, a person
 may be jd, Joshua Drake, linuxpoet... all are the same person.  Currently
 unused in the front-end but will likely be added in future versions.$$;
-
-CREATE TABLE person_to_entity (
- person_id integer not null references person(id) ON DELETE CASCADE,
- entity_id integer not null check (entity_id != person_id) references entity(id) ON DELETE CASCADE,
- related_how text,
- created date not null default current_date,
- PRIMARY KEY (person_id,entity_id));
-
-COMMENT ON TABLE person_to_entity IS
-$$ This provides a map so that entities can also be used like groups.$$;
- 
-CREATE TABLE company_to_entity (
- company_id integer not null references company(id) ON DELETE CASCADE,
- entity_id integer check (company_id != entity_id) not null references entity(id) ON DELETE CASCADE,
- related_how text,
- created date not null default current_date,
- PRIMARY KEY (company_id,entity_id));
- 
-COMMENT ON TABLE company_to_entity IS
-$$ This provides a map so that entities can also be used like groups.$$;
 
 CREATE TABLE contact_class (
   id serial UNIQUE,
@@ -789,26 +755,16 @@ INSERT INTO contact_class (id,class) values (17,'Billing BCC');
 
 SELECT SETVAL('contact_class_id_seq',17);
 
-CREATE TABLE person_to_contact (
-  person_id integer not null references person(id) ON DELETE CASCADE,
+CREATE TABLE entity_to_contact (
+  entity_id integer not null references person(id) ON DELETE CASCADE,
   contact_class_id integer references contact_class(id) not null,
   contact text check(contact ~ '[[:alnum:]_]') not null,
   description text,
   PRIMARY KEY (person_id,contact_class_id,contact));
   
-COMMENT ON TABLE person_to_contact IS 
-$$ This table stores contact information for persons$$;
+COMMENT ON TABLE entity_to_contact IS 
+$$ This table stores contact information for entities$$;
   
-CREATE TABLE company_to_contact (
-  company_id integer not null references company(id) ON DELETE CASCADE,
-  contact_class_id integer references contact_class(id) not null,
-  contact text check(contact ~ '[[:alnum:]_]') not null,
-  description text,
-  PRIMARY KEY (company_id, contact_class_id,  contact));  
-
-COMMENT ON TABLE person_to_contact IS 
-$$ This table stores contact information for companies$$;
-
 CREATE TABLE entity_bank_account (
     id serial not null,
     entity_id int not null references entity(id) ON DELETE CASCADE,
@@ -883,7 +839,7 @@ CREATE TABLE eca_to_contact (
   PRIMARY KEY (credit_id, contact_class_id,  contact));  
 
 COMMENT ON TABLE eca_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single vendor or customer account. For generic 
-contacts, use company_to_contact or person_to_contact instead.$$;
+contacts, use entity_to_contact instead.$$;
   
 CREATE TABLE eca_to_location (
   location_id integer references location(id) not null,
@@ -897,7 +853,7 @@ CREATE UNIQUE INDEX eca_to_location_billing_u ON eca_to_location(credit_id)
 
 COMMENT ON TABLE eca_to_location IS
 $$ This table is used for locations bound to contracts.  For generic contact
-addresses, use company_to_location instead $$;
+addresses, use entity_to_location instead $$;
 
 -- Begin rocking notes interface
 -- Begin rocking notes interface
@@ -1674,22 +1630,14 @@ $$This is an integer indicating the pass of the tax. This is to support
 cumultative sales tax rules (for example, Quebec charging taxes on the federal
 taxes collected).$$;
 --
-CREATE TABLE customertax (
-  customer_id int references entity_credit_account(id) on delete cascade,
+CREATE TABLE eca_tax (
+  eca_id int references entity_credit_account(id) on delete cascade,
   chart_id int REFERENCES account(id),
   PRIMARY KEY (customer_id, chart_id)
 );
 
-COMMENT ON TABLE customertax IS $$ Mapping customer to taxes.$$;
+COMMENT ON TABLE eca_tax IS $$ Mapping customers and vendors to taxes.$$;
 --
-CREATE TABLE vendortax (
-  vendor_id int references entity_credit_account(id) on delete cascade,
-  chart_id int REFERENCES account(id),
-  PRIMARY KEY (vendor_id, chart_id)
-);
---
-COMMENT ON TABLE vendortax IS $$ Mapping vendor to taxes.$$;
-
 CREATE TABLE oe_class (
   id smallint unique check(id IN (1,2,3,4)),
   oe_class text primary key);
@@ -2184,8 +2132,6 @@ CREATE TRIGGER je_audit_trail AFTER insert or update or delete ON journal_entry
 FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
 
 create index assembly_id_key on assembly (id);
---
-create index customer_customer_id_key on customertax (customer_id);
 --
 create index exchangerate_ct_key on exchangerate (curr, transdate);
 --

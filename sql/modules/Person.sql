@@ -96,8 +96,8 @@ BEGIN
 		SELECT l.id, l.line_one, l.line_two, l.line_three, l.city, 
 			l.state, l.mail_code, c.id, c.name, lc.id, lc.class
 		FROM location l
-		JOIN person_to_location ctl ON (ctl.location_id = l.id)
-		JOIN person p ON (ctl.person_id = p.id)
+		JOIN entity_to_location ctl ON (ctl.location_id = l.id)
+		JOIN person p ON (ctl.person_id = p.entity_id)
 		JOIN location_class lc ON (ctl.location_class = lc.id)
 		JOIN country c ON (c.id = l.country_id)
 		WHERE p.entity_id = in_entity_id
@@ -118,9 +118,9 @@ DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN 
 		SELECT cc.class, cc.id, c.description, c.contact
-		FROM person_to_contact c
+		FROM entity_to_contact c
 		JOIN contact_class cc ON (c.contact_class_id = cc.id)
-		JOIN person p ON (c.person_id = p.id)
+		JOIN person p ON (c.person_id = p.entity_id)
 		WHERE p.entity_id = in_entity_id
 	LOOP
 		RETURN NEXT out_row;
@@ -137,8 +137,9 @@ CREATE OR REPLACE FUNCTION person__delete_contact
 returns bool as $$
 BEGIN
 
-DELETE FROM person_to_contact
- WHERE person_id = in_person_id and contact_class_id = in_contact_class_id
+DELETE FROM entity_to_contact
+ WHERE person_id = (SELECT entity_id FROM person WHERE id = in_person_id) 
+       and contact_class_id = in_contact_class_id
        and contact= in_contact;
 RETURN FOUND;
 
@@ -160,33 +161,30 @@ RETURNS INT AS
 $$
 DECLARE 
     out_id int;
-    v_orig person_to_contact;
+    v_orig entity_to_contact;
 BEGIN
     
     SELECT cc.* into v_orig 
-    FROM person_to_contact cc, person p
-    WHERE p.entity_id = in_entity_id 
+      FROM entity_to_contact cc
+      JOIN person p ON (p.entity_id = cc.entity_id)
+     WHERE p.entity_id = in_entity_id 
     and cc.contact_class_id = in_old_contact_class
-    AND cc.contact = in_old_contact
-    AND cc.person_id = p.id;
+    AND cc.contact = in_old_contact;
     
     IF NOT FOUND THEN
     
         -- create
-        INSERT INTO person_to_contact(person_id, contact_class_id, contact, description)
-        VALUES (
-            (SELECT id FROM person WHERE entity_id = in_entity_id),
-            in_contact_class,
-            in_contact_new,
-            in_description
-        );
+        INSERT INTO entity_to_contact
+               (entity_id, contact_class_id, contact, description)
+        VALUES (in_entity_id, in_contact_class, in_contact_new, in_description);
+
         return 1;
     ELSE
         -- edit.
-        UPDATE person_to_contact
+        UPDATE entity_to_contact
            SET contact = in_contact_new, description = in_description
          WHERE contact = in_old_contact
-               AND person_id = v_orig.person_id
+               AND entity_id = in_entity_id
                AND contact_class_id = in_old_contact_class;
         return 0;
     END IF;
@@ -240,8 +238,9 @@ RETURNS BOOL AS
 $$
 BEGIN
 
-DELETE FROM person_to_location
- WHERE person_id = in_person_id AND location_id = in_location_id 
+DELETE FROM entity_to_location
+ WHERE person_id = (select entity_id from person where id = in_person_id) 
+       AND location_id = in_location_id 
        AND location_class = in_location_class;
 
 RETURN FOUND;
@@ -276,9 +275,9 @@ CREATE OR REPLACE FUNCTION person__save_location(
 	SELECT id INTO t_person_id
 	FROM person WHERE entity_id = in_entity_id;
 
-    UPDATE person_to_location
+    UPDATE entity_to_location
        SET location_class = in_location_class
-     WHERE person_id = t_person_id 
+     WHERE entity_id = in_entity_id
            AND location_class = in_old_location_class
            AND location_id = in_location_id;
     
@@ -295,9 +294,9 @@ CREATE OR REPLACE FUNCTION person__save_location(
     		in_mail_code, 
     		in_country_code);
     	
-        INSERT INTO person_to_location 
-    		(person_id, location_id, location_class)
-    	VALUES  (t_person_id, l_id, in_location_class);
+        INSERT INTO entity_to_location 
+    		(entity_id, location_id, location_class)
+    	VALUES  (in_entity_id, l_id, in_location_class);
     ELSE
         l_id := location_save(
             in_location_id, 
