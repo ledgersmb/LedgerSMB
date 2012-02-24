@@ -104,8 +104,9 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (30, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (33, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (49, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
+
+DELETE FROM menu_acl
+WHERE node_id = 49 AND role_name = 'lsmb_<?lsmb dbname ?>__contact_read';
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_create"
@@ -162,8 +163,17 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (30, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (31, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
+
+
+CREATE ROLE "lsmb_<?lsmb dbname ?>__employees_manage"
+WITH INHERIT NOLOGIN
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
+
+GRANT ALL ON entity_employee, person, entity, entity_id_seq
+TO "lsmb_<?lsmb dbname ?>__employees_manage";
+
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (48, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
+values (48, 'allow', 'lsmb_<?lsmb dbname ?>__employees_manage');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_edit"
@@ -216,10 +226,9 @@ WITH INHERIT NOLOGIN;
 
 GRANT EXECUTE ON FUNCTION batch_post(int) TO "lsmb_<?lsmb dbname ?>__batch_post";
 
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (206, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (210, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
+DELETE FROM menu_acl 
+ WHERE node_id in (206, 210) 
+       AND role_name = 'lsmb_<?lsmb dbname ?>__contact_create';
 
 -- AR
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create"
@@ -822,6 +831,11 @@ values (82, 'allow', 'lsmb_<?lsmb dbname ?>__part_create');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__part_edit"
 WITH INHERIT NOLOGIN;
+
+GRANT "lsmb_<?lsmb dbname ?>__file_read" TO "lsmb_<?lsmb dbname ?>__part_edit";
+
+GRANT SELECT ON assembly, orderitems, jcitems, invoice 
+TO "lsmb_<?lsmb dbname ?>__part_edit";
 
 GRANT DELETE ON assembly TO "lsmb_<?lsmb dbname ?>__part_edit";
 GRANT UPDATE ON parts, partsgroup, assembly TO "lsmb_<?lsmb dbname ?>__part_edit";
@@ -1554,7 +1568,8 @@ values (242, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__users_manage"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_edit",
-"lsmb_<?lsmb dbname ?>__contact_create";
+"lsmb_<?lsmb dbname ?>__contact_create",
+"lsmb_<?lsmb dbname ?>__employees_manage";
 
 GRANT SELECT ON role_view TO "lsmb_<?lsmb dbname ?>__users_manage";
 GRANT EXECUTE ON FUNCTION  admin__add_user_to_role(TEXT, TEXT) 
@@ -1709,6 +1724,8 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_depreciate" NOLOGIN INHERIT;
 GRANT SELECT, INSERT ON asset_report, asset_report_line, asset_item, asset_class
 TO "lsmb_<?lsmb dbname ?>__assets_depreciate";
 
+GRANT ALL ON asset_report_id_seq TO "lsmb_<?lsmb dbname ?>__assets_depreciate"; 
+
 INSERT INTO menu_acl(role_name, acl_type, node_id)
 values('lsmb_<?lsmb dbname ?>__assets_depreciate', 'allow', 238);
 INSERT INTO menu_acl(role_name, acl_type, node_id)
@@ -1719,6 +1736,12 @@ GRANT SELECT ON asset_report, asset_report_line, asset_item, asset_class
 TO "lsmb_<?lsmb dbname ?>__assets_approve";
 GRANT EXECUTE ON FUNCTION  asset_report__approve(int, int, int, int)
 TO "lsmb_<?lsmb dbname ?>__assets_approve";
+
+INSERT INTO menu_acl (role_name, acl_type, node_id)
+values('lsmb_<?lsmb dbname ?>__assets_approve', 'allow', 239),
+      ('lsmb_<?lsmb dbname ?>__assets_approve', 'allow', 240);
+
+
 GRANT SELECT ON asset_class, asset_item to public;
 GRANT SELECT ON asset_unit_class TO public;
 GRANT SELECT ON asset_dep_method TO public;
@@ -1743,7 +1766,9 @@ GRANT SELECT ON parts, partsgroup TO public;
 GRANT SELECT ON language, project TO public;
 GRANT SELECT ON business, exchangerate, department, new_shipto, tax TO public;
 GRANT ALL ON recurring, recurringemail, recurringprint, status TO public; 
-GRANT ALL ON transactions, entity_employee TO public;
+GRANT ALL ON transactions TO public;
+GRANT SELECT ON entity_employee TO public;
+REVOKE INSERT, UPDATE, DELETE ON entity_employee FROM public; --fixing old perms
 GRANT ALL ON pending_job, payments_queue TO PUBLIC;
 GRANT ALL ON pending_job_id_seq TO public;
 GRANT ALL ON invoice_tax_form TO public;
