@@ -1039,8 +1039,9 @@ sub _db_init {
     $sth = $self->{dbh}->prepare($query);
     $sth->execute;
     my $ref;
+    $self->{custom_db_fields} = {};
     while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-        push @{ $self->{custom_db_fields}{ $ref->{extends} } },
+        push @{ $self->{custom_db_fields}->{ $ref->{extends} } },
           $ref->{field_def};
     }
 

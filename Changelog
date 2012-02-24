@@ -13,6 +13,8 @@ Changelog for 1.3.12
 * Updated dists/rpm/build.sh to support RHEL 5 (Hilton D)
 * Corrected stylesheet not set on error pages (Chris T)
 * Tightened up permissions on menu items and employee management (Chris T)
+* Corrected permissions on fixed asset depreciation workflow/menu (Chris T)
+* Corrected Perl issues on _db_init when custom fields defined, 5.12 (Chris T)
 
 Hilton D is Hilton Day
 

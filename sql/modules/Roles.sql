@@ -1737,6 +1737,12 @@ GRANT SELECT ON asset_report, asset_report_line, asset_item, asset_class
 TO "lsmb_<?lsmb dbname ?>__assets_approve";
 GRANT EXECUTE ON FUNCTION  asset_report__approve(int, int, int, int)
 TO "lsmb_<?lsmb dbname ?>__assets_approve";
+
+INSERT INTO menu_acl (role_name, acl_type, node_id)
+values('lsmb_<?lsmb dbname ?>__assets_approve', 'allow', 239),
+      ('lsmb_<?lsmb dbname ?>__assets_approve', 'allow', 240);
+
+
 GRANT SELECT ON asset_class, asset_item to public;
 GRANT SELECT ON asset_unit_class TO public;
 GRANT SELECT ON asset_dep_method TO public;
