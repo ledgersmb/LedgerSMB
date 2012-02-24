@@ -101,6 +101,18 @@ cornerlogo {
   padding-left: 5px;
 }
 
+.menu_open, .menu_closed {
+    list-style: none;
+}
+.menu_open:before {
+    content: '-';
+}
+
+.menu_closed:before {
+    content: '+';
+}
+
+
 .menuOut a {
   cursor: pointer;
   margin: 0px;
