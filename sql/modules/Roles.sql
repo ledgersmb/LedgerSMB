@@ -1727,6 +1727,8 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_depreciate" NOLOGIN INHERIT;
 GRANT SELECT, INSERT ON asset_report, asset_report_line, asset_item, asset_class
 TO "lsmb_<?lsmb dbname ?>__assets_depreciate";
 
+GRANT EXECUTE ON FUNCTION asset_report__save(
+
 GRANT ALL ON asset_report_id_seq TO "lsmb_<?lsmb dbname ?>__assets_depreciate"; 
 
 INSERT INTO menu_acl(role_name, acl_type, node_id)

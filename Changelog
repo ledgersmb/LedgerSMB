@@ -19,6 +19,7 @@ Changelog for 1.3.12
 * Clarified string for vendor's part number in parts screen (Frans S)
 * Recon checkbox now is set properly (Chris T)
 * Corrected missing "search assets" menu item (Chris T)
+* Net Book Value report now shows undepreciated assets (Chris T)
 
 Hilton D is Hilton Day
 
