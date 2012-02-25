@@ -2559,8 +2559,8 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 230	Add Class	228	1
 231	List Classes	228	2
 232	Add Assets	229	1
-233	Search Assets	\N	2
-235	Import	229	2
+233	Search Assets	229	2
+235	Import	229	3
 234	Depreciate	229	4
 237	Net Book Value	236	1
 238	Disposal	229	5
