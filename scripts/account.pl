@@ -113,6 +113,7 @@ sub _display_account_screen {
     my ($form) = @_;
     my $account = LedgerSMB::DBObject::Account->new({base => $form});
     @{$form->{all_headings}} = $account->list_headings();
+    $form->{recon} = $account->is_recon();
     my $locale = $form->{_locale};
     my $buttons = [];
     my $checked;
