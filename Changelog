@@ -20,9 +20,11 @@ Changelog for 1.3.12
 * Recon checkbox now is set properly (Chris T)
 * Corrected missing "search assets" menu item (Chris T)
 * Net Book Value report now shows undepreciated assets (Chris T)
+* Permissions fixes to fixed asset module (Chris T)
 
 Hilton D is Hilton Day
-
+Frans S is Frans van der Star
+Chris T is Chris Travers
 Changelog for 1.3.11
 * Fixed outstanding report for payment reversal and partial payments (Chris T)
 * Fixed handling of non-existing roles in menu grants (Chris T)
