@@ -16,6 +16,7 @@ Changelog for 1.3.12
 * Corrected permissions on fixed asset depreciation workflow/menu (Chris T)
 * Corrected Perl issues on _db_init when custom fields defined, 5.12 (Chris T)
 * Adding missing permissions for editing parts (Chris T)
+* Clarified string for vendor's part number in parts screen (Frans S)
 
 Hilton D is Hilton Day
 

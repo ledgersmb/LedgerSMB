@@ -2808,7 +2808,7 @@ sub vendor_row {
       <table width=100%>
 	<tr>
 	  <th class="listheading">| . $locale->text('Vendor') . qq|</th>
-	  <th class="listheading">| . $locale->text('Number') . qq|</th>
+	  <th class="listheading">| . $locale->text('Vendor Reference Number') . qq|</th>
 	  <th class="listheading">| . $locale->text('Cost') . qq|</th>
 	  $currency
 	  <th class="listheading">| . $locale->text('Leadtime') . qq|</th>
