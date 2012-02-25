@@ -238,3 +238,8 @@ begin
 end;
 $$ language plpgsql;
 COMMIT;
+
+BEGIN; -- Search Assets menu
+UPDATE update menu_node set position = 3 where position = 2 and parent = 229;
+update menu_node set parent = 229 where id = 233;
+COMMIT;
