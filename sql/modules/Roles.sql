@@ -1679,7 +1679,7 @@ GRANT SELECT, UPDATE ON asset_class_id_seq
 TO "lsmb_<?lsmb dbname ?>__assets_administer";
 
 INSERT INTO menu_acl(role_name, acl_type, node_id)
-values('lsmb_<?lsmb dbname ?>__assets_enter', 'allow', 237);
+values('lsmb_<?lsmb dbname ?>__assets_administer', 'allow', 237);
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_enter" NOLOGIN INHERIT;
@@ -1704,6 +1704,7 @@ values('lsmb_<?lsmb dbname ?>__assets_enter', 'allow', 235);
 CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_depreciate" NOLOGIN INHERIT;
 GRANT SELECT, INSERT ON asset_report, asset_report_line, asset_item, asset_class
 TO "lsmb_<?lsmb dbname ?>__assets_depreciate";
+GRANT UPDATE ON asset_report TO "lsmb_<?lsmb dbname ?>__assets_depreciate";
 
 GRANT ALL ON asset_report_id_seq TO "lsmb_<?lsmb dbname ?>__assets_depreciate"; 
 

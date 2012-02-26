@@ -119,6 +119,19 @@ sub check_transactions {
     $self->{has_transactions} = $ref->{'account_has_transactions'};
 } 
 
+=item is_recon
+
+Returns true if is set up for reconciliation.  False otherwise.
+
+=cut
+
+sub is_recon {
+    my $self = shift @_;
+    my ($ref) = $self->exec_method(funcname => 'account__is_recon');
+    $self->{account__is_recon} = $ref->{'account__is_recon'};
+    return $self->{account__is_recon};
+}
+
 =item delete()
 
 Attemps to delete the account.  This will NOT succeed if the account is 

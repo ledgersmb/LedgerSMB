@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE OR REPLACE FUNCTION asset_dep__straight_line_base
 (in_base_life numeric, in_life numeric, in_used numeric, in_basis numeric, 
 in_dep_to_date numeric)
@@ -211,6 +213,7 @@ $$ LANGUAGE SQL;
 COMMENT ON FUNCTION asset_class__list() is
 $$ Returns an alphabetical list of asset classes.$$;
 
+DROP TYPE IF EXISTS asset_class_result CASCADE;
 CREATE TYPE asset_class_result AS (
 	id int,
 	asset_account_id int,
@@ -513,8 +516,6 @@ DECLARE
 	item record;
 	method_text text;
 BEGIN
-	DELETE FROM asset_report_line where report_id = in_id;
-
 	UPDATE asset_report 
 	set asset_class = in_asset_class,
 		report_class = in_report_class,
@@ -570,6 +571,7 @@ COMMENT ON FUNCTION asset_report__dispose
 in_percent_disposed numeric) IS
 $$ Disposes of an asset.  in_dm is the disposal method id.$$;
 
+DROP TYPE IF EXISTS asset_disposal_report_line CASCADE;
 CREATE TYPE asset_disposal_report_line 
 AS (
        id int,
@@ -620,6 +622,8 @@ COMMENT ON FUNCTION asset_report__get_disposal (in_id int) IS
 $$ Returns a set of lines of disposed assets in a disposal report, specified
 by the report id.$$;
 
+DROP TYPE IF EXISTS asset_nbv_line CASCADE;
+
 CREATE TYPE asset_nbv_line AS (
     id int, 
     tag text,
@@ -651,7 +655,7 @@ $$
      JOIN asset_dep_method adm ON (adm.id = ac.method)
 LEFT JOIN asset_report_line rl ON (ai.id = rl.asset_id)
 LEFT JOIN asset_report r on (rl.report_id = r.id)
-    WHERE r.approved_at IS NOT NULL
+    WHERE r.id IS NULL OR r.approved_at IS NOT NULL
  GROUP BY ai.id, ai.tag, ai.description, ai.start_depreciation, ai.purchase_date,
           adm.short_name, ai.usable_life, ai.purchase_value, salvage_value
    HAVING (NOT 2 = ANY(as_array(r.report_class))) 
@@ -662,7 +666,8 @@ $$ language sql;
 
 COMMENT ON FUNCTION asset_nbv_report () IS
 $$ Returns the current net book value report.$$;
-      
+
+DROP TYPE IF EXISTS partial_disposal_line CASCADE;      
 CREATE TYPE partial_disposal_line AS (
 id int,
 tag text,
@@ -827,6 +832,7 @@ $$ language sql;
 COMMENT ON FUNCTION asset_report__get(in_id int) IS
 $$ Returns the asset_report line identified by id.$$;
 
+DROP TYPE IF EXISTS asset_report_line_result CASCADE;
 CREATE TYPE asset_report_line_result AS(
      tag text,
      start_depreciation date,
@@ -877,6 +883,7 @@ $$ language sql;
 COMMENT ON FUNCTION asset_report__get_lines(in_id int) IS
 $$ Returns the lines of an asset depreciation report.$$;
 
+DROP TYPE IF EXISTS asset_report_result CASCADE;
 CREATE TYPE asset_report_result AS (
         id int,
         report_date date,
@@ -1272,3 +1279,5 @@ api's.$$; --'
 -- needed to go here because dependent on other functions in other modules. --CT
 alter table asset_report alter column entered_by 
 set default person__get_my_entity_id();
+
+COMMIT;

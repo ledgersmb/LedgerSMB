@@ -10,6 +10,17 @@ COMMENT ON FUNCTION account__get_from_accno(in_accno text) IS
 $$ Returns the account where the accno field matches (excatly) the 
 in_accno provided.$$;
 
+CREATE OR REPLACE FUNCTION account__is_recon(in_accno text) RETURNS BOOL AS
+$$ SELECT count(*) > 0 
+     FROM cr_coa_to_account c2a
+     JOIN account ON account.id = c2a.chart_id 
+    WHERE accno = $1; $$
+LANGUAGE SQL;
+
+COMMENT ON FUNCTION account__is_recon(in_accno text) IS
+$$ Returns true if account is set up for reconciliation, false otherwise.
+Note that returns false on invalid account number too$$;
+
 CREATE OR REPLACE FUNCTION account__get_taxes()
 RETURNS setof account AS
 $$
