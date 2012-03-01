@@ -123,14 +123,7 @@ sub asset_category_save {
     my ($request) = @_;
     my $ac = LedgerSMB::DBObject::Asset_Class->new(base => $request);
     $ac->save;
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user}, 
-        locale => $request->{_locale},
-        path => 'UI/asset',
-        template => 'edit_class',
-        format => 'HTML'
-    );
-    $template->render($ac);
+    asset_category_screen($ac);
 }
 
 # Is this even working at the moment?  Not documenting unil I know.

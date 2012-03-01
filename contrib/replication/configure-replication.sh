@@ -108,19 +108,55 @@ while : ; do
 done
 
 
-SEQUENCES=" acc_trans_entry_id_seq audittrail_entry_id_seq
- custom_field_catalog_field_id_seq custom_table_catalog_table_id_seq
- id inventory_entry_id_seq invoiceid jcitemsid orderitemsid
- partscustomer_entry_id_seq partsvendor_entry_id_seq
- session_session_id_seq shipto_entry_id_seq "
+SEQUENCES=" asset_report_id_seq asset_dep_method_id_seq 
+            asset_disposal_method_id_seq audittrail_entry_id_seq
+            batch_class_id_seq budget_info_id_seq
+            custom_field_catalog_field_id_seq asset_class_id_seq
+            asset_item_id_seq contact_class_id_seq country_id_seq
+            custom_table_catalog_table_id_seq entity_class_id_seq
+            file_class_id_seq batch_id_seq department_id_seq new_shipto_id_seq
+            entity_bank_account_id_seq location_class_id_seq note_class_id_seq
+            menu_acl_id_seq menu_attribute_id_seq menu_node_id_seq
+            mime_type_id_seq file_base_id_seq payment_type_id_seq 
+            location_id_seq open_forms_id_seq partscustomer_entry_id_seq
+            partsvendor_entry_id_seq payment_id_seq jcitems_id_seq
+            pending_job_id_seq salutation_id_seq taxcategory_taxcategory_id_seq
+            warehouse_id_seq acc_trans_entry_id_seq account_checkpoint_id_seq
+            company_id_seq note_id_seq account_heading_id_seq id
+            business_id_seq parts_id_seq oe_id_seq invoice_id_seq
+            orderitems_id_seq country_tax_form_id_seq pricegroup_id_seq
+            cr_report_line_id_seq session_session_id_seq inventory_entry_id_seq
+            project_id_seq cr_report_id_seq entity_credit_account_id_seq 
+            taxmodule_taxmodule_id_seq users_id_seq voucher_id_seq 
+            person_id_seq entity_id_seq partsgroup_id_seq account_id_seq"
 
-TABLES=" acc_trans ap ar assembly audittrail business chart
- custom_field_catalog custom_table_catalog customer customertax
- defaults department dpt_trans employee exchangerate gifi gl inventory
- invoice jcitems language makemodel oe orderitems parts partscustomer
- partsgroup partstax partsvendor pricegroup project recurring
- recurringemail recurringprint session shipto sic status tax
- transactions translation vendor vendortax warehouse yearend"
+TABLES=" ac_tax_form acc_trans account account_checkpoint account_heading
+         account_link account_link_description ap ar assembly asset_class
+         asset_dep_method asset_disposal_method asset_item asset_note
+         asset_report asset_report_class asset_report_line
+         asset_rl_to_disposal_method asset_unit_class audittrail batch
+         batch_class budget_info budget_line budget_note budget_to_department
+         budget_to_project business company company_to_contact company_to_entity
+         company_to_location contact_class country country_tax_form
+         cr_coa_to_account cr_report cr_report_line custom_field_catalog
+         custom_is custom_table_catalog customertax defaults department
+         dpt_trans eca_note eca_to_contact eca_to_location entity
+         entity_bank_account entity_class entity_class_to_entity
+         entity_credit_account entity_employee entity_note entity_other_name
+         exchangerate file_base file_class file_order file_order_to_order
+         file_order_to_tx file_part file_secondary_attachment file_transaction
+         file_tx_to_order file_view_catalog gifi gl inventory invoice
+         invoice_note invoice_tax_form jcitems language location location_class
+         lsmb_roles makemodel menu_acl menu_attribute menu_node mime_type
+         new_shipto note note_class oe oe_class open_forms orderitems parts
+         parts_translation partscustomer partsgroup partsgroup_translation
+         partstax partsvendor payment payment_links payment_type payments_queue
+         pending_job person person_to_company person_to_contact person_to_entity
+         person_to_location pricegroup project project_translation recurring
+         recurringemail recurringprint salutation session sic status tax
+         tax_extended taxcategory taxmodule transactions translation
+         user_preference users vendortax voucher warehouse yearend"
+
 
 SETUPSET=${mktmp}/create_set.slonik
 
