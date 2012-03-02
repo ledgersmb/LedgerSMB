@@ -855,7 +855,81 @@ COMMENT ON TABLE eca_to_location IS
 $$ This table is used for locations bound to contracts.  For generic contact
 addresses, use entity_to_location instead $$;
 
--- Begin rocking notes interface
+CREATE TABLE employee_class (
+    label text not null primary key,
+    id serial not null unique,
+);
+
+CREATE TABLE employee_to_ec (
+    employee_id int references entity_employee(entity_id),
+    ec_id int references employee_class(id),
+    primary key(employee_id)
+);
+
+
+-- Begin payroll section
+CREATE TABLE payroll_income_class (
+   id int not null,
+   country_id int not null references country(id),
+   label text not null,
+   unique (id, country_id),
+   primary key (country_id, label)
+);
+
+CREATE TABLE payroll_income_category (
+   id serial not null unique,
+   label text
+);
+
+INSERT INTO payroll_income_category (label) 
+values ('Salary'), 
+       ('Hourly'), 
+       ('Chord'), 
+       ('Non-cash');
+
+CREATE TABLE payroll_income_type (
+   itype_id serial not null unique,
+   account_id int not null references account(id),
+   pic_id int not null,
+   country_id int not null,
+   label text not null,
+   unit text not null,
+   default_amount numeric,
+   foreign key(pic_id, country_id) 
+              references payroll_income_class(id, country_id)
+);
+
+CREATE TABLE payroll_deduction_class (
+   id int not null,
+   country_id int not null references country(id),
+   label text not null,
+   unique (id, country_id),
+   primary key (country_id, label)
+);
+
+CREATE TABLE payroll_deduction_type (
+   itype_id serial not null unique,
+   account_id int not null references account(id),
+   pic_id int not null,
+   country_id int not null,
+   label text not null,
+   unit text not null,
+   default_amount numeric,
+   calc_percent bool not null,
+   foreign key(pic_id, country_id) 
+              references payroll_income_class(id, country_id)
+);
+
+CREATE TABLE payroll_report (
+   id serial not null primary key,
+   ec_id int not null references employee_class(id),
+   payment_date date not null,
+   created_by int references entity_employee(entity_id),
+   approved_by int references  entity_employee(entity_id),
+   primary key(id)
+);
+
+--TODO:  Add payroll line items, approval process, registry for locale functions, etc
 -- Begin rocking notes interface
 CREATE TABLE note_class(id serial primary key, class text not null check (class ~ '[[:alnum:]_]'));
 INSERT INTO note_class(id,class) VALUES (1,'Entity');
