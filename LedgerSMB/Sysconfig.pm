@@ -18,7 +18,6 @@ binmode STDERR, ':utf8';
 our $pathsep = ':';
 
 our $auth = 'DB';
-our $logging = 0;      # No logging on by default
 our $images = getcwd() . '/images'; 
 
 our $force_username_case = undef; # don't force case
@@ -102,14 +101,15 @@ our %printer;
 our %config;
 my $cfg_h = new Config::General("ledgersmb.conf") or die;
 %config = $cfg_h->getall;
+
 # Root variables
 for my $var (
-    qw(pathsep logging log_level DBI_TRACE check_max_invoices language auth latex
+    qw(pathsep log_level DBI_TRACE check_max_invoices language auth latex
     db_autoupdate force_username_case max_post_size decimal_places cookie_name
     return_accno no_db_str tempdir cache_templates)
   )
 {
-    ${$var} = $config{''}{$var} if $config{''}{$var};
+    ${$var} = $config{$var} if $config{$var};
 }
 
 %printer = %{ $config{printers} } if $config{printers};

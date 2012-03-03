@@ -2,6 +2,25 @@ CREATE LANGUAGE PLPGSQL; -- separate transaction since may already exist
 
 begin;
 
+CREATE TABLE lsmb_module (
+     id int not null unique,
+     label text primary key
+);
+
+COMMENT ON TABLE lsmb_module IS
+$$ This stores categories functionality into modules.  Addons may add rows here, but 
+the id should be hardcoded.  As always 900-1000 will be reserved for internal use, 
+and negative numbers will be reserved for testing.$$;
+
+INSERT INTO lsmb_module (id, label)
+VALUES (1, 'AR'),
+       (2, 'AP'),
+       (3, 'GL'),
+       (4, 'Entity'),
+       (5, 'Manufacturing'),
+       (6, 'Fixed Assets');
+
+
 CREATE OR REPLACE FUNCTION person__get_my_entity_id() RETURNS INT AS
 $$ SELECT -1;$$ LANGUAGE SQL;
 
@@ -1800,7 +1819,6 @@ CREATE TABLE business_unit_class (
     id serial not null unique,
     label text primary key,
     active bool not null default false,
-    non_accounting bool not null default false,
     ordering int
 );
 
@@ -1814,7 +1832,21 @@ VALUES (1, 'Department', '0', '10'),
        (3, 'Job', '0', '30'),
        (4, 'Fund', '0', '40'),
        (5, 'Customer', '0', '50'),
-       (6, 'Vendor', '0', '60');
+       (6, 'Vendor', '0', '60'),
+       (7, 'Lot',  0, 50);
+
+CREATE TABLE bu_class_to_module (
+   bu_class_id int references business_unit_class(id),
+   module_id int references lsmb_module(id),
+   primary key (bu_class_id, module_id)
+);
+
+INSERT INTO  bu_class_to_module (bu_class_id, module_id)
+SELECT business_unit_class.id, lsmb_module.id
+  FROM business_unit_class
+ CROSS
+  JOIN lsmb_module; -- by default activate all existing business units on all modules
+       
 
 CREATE TABLE business_unit (
   id serial PRIMARY KEY,

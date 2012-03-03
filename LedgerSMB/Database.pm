@@ -28,6 +28,8 @@ our $VERSION = '1';
 use LedgerSMB::Sysconfig;
 use base('LedgerSMB');
 use strict;
+Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+my $logger = Log::Log4perl->get_logger('');
 
 my $dbversions = {
     '1.2' => '1.2.0',
@@ -268,7 +270,8 @@ sub get_info {
     my $creds = LedgerSMB::Auth->get_credentials();
     my $dbh = DBI->connect(
         "dbi:Pg:dbname=$self->{company_name}", 
-         "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
+         "$creds->{login}", "$creds->{password}", 
+         { AutoCommit => 0, PrintError => $logger->is_debug(), }
     );
     if (!$dbh){ # Could not connect, try to validate existance by connecting
                 # to template1 and checking
