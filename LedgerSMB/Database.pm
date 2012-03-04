@@ -271,7 +271,7 @@ sub get_info {
     my $dbh = DBI->connect(
         "dbi:Pg:dbname=$self->{company_name}", 
          "$creds->{login}", "$creds->{password}", 
-         { AutoCommit => 0, PrintError => $logger->is_debug(), }
+         { AutoCommit => 0, PrintError => $logger->is_warn(), }
     );
     if (!$dbh){ # Could not connect, try to validate existance by connecting
                 # to template1 and checking

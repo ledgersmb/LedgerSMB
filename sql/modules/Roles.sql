@@ -1,5 +1,26 @@
 GRANT ALL ON SCHEMA public TO public; -- required for Pg 8.2
 
+CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_enter" WITH INHERIT NOLOGIN;
+CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_view" WITH INHERIT NOLOGIN;
+CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_approve" WITH INHERIT NOLOGIN;
+CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_obsolete" WITH INHERIT NOLOGIN;
+
+GRANT SELECT 
+ON budget_info, budget_line, budget_to_department, budget_to_project
+TO "lsmb_<?lsmb dbname ?>__budget_view";
+
+GRANT INSERT 
+ON budget_info, budget_line, budget_to_department, budget_to_project 
+TO "lsmb_<?lsmb dbname ?>__budget_enter";
+
+GRANT UPDATE (approved_at, approved_by) on budget_info 
+TO "lsmb_<?lsmb dbname ?>__budget_approve";
+
+GRANT UPDATE (obsolete_at, obsolete_by) on budget_info
+TO "lsmb_<?lsmb dbname ?>__budget_obsolete";
+
+GRANT EXECUTE ON FUNCTION budget__reject(in_id int) 
+TO "lsmb_<?lsmb dbname ?>__budget_approve";
 CRATE ROLE "lsmb_<?lsmb dbname ?>__business_units_manage"
 WITH INHERIT NOLOGIN;
 
