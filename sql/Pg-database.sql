@@ -1067,7 +1067,7 @@ CREATE TABLE cr_report_line (
     insert_time TIMESTAMPTZ NOT NULL DEFAULT now(),
     trans_type text, 
     post_date date,
-    ledger_id int,
+    ledger_id int references acc_trans(entry_id),
     overlook boolean not null default 'f',
     cleared boolean not null default 'f'
 );

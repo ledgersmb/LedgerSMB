@@ -556,7 +556,7 @@ account.  For asset and expense accounts this is the debit balance, for others
 this is the credit balance.$$;
 
 CREATE OR REPLACE VIEW recon_payee AS
- SELECT n.name AS payee, rr.id, rr.report_id, rr.scn, rr.their_balance, rr.our_balance, rr.errorcode, rr."user", rr.clear_time, rr.insert_time, rr.trans_type, rr.post_date, rr.ledger_id, rr.voucher_id, rr.overlook, rr.cleared
+ SELECT n.name AS payee, rr.id, rr.report_id, rr.scn, rr.their_balance, rr.our_balance, rr.errorcode, rr."user", rr.clear_time, rr.insert_time, rr.trans_type, rr.post_date, rr.ledger_id, ac.voucher_id, rr.overlook, rr.cleared
    FROM cr_report_line rr
    LEFT JOIN acc_trans ac ON rr.ledger_id = ac.entry_id
    LEFT JOIN gl ON ac.trans_id = gl.id
