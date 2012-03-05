@@ -21,7 +21,7 @@ TO "lsmb_<?lsmb dbname ?>__budget_obsolete";
 
 GRANT EXECUTE ON FUNCTION budget__reject(in_id int) 
 TO "lsmb_<?lsmb dbname ?>__budget_approve";
-CRATE ROLE "lsmb_<?lsmb dbname ?>__business_units_manage"
+CREATE ROLE "lsmb_<?lsmb dbname ?>__business_units_manage"
 WITH INHERIT NOLOGIN;
 
 GRANT INSERT, UPDATE, DELETE ON business_unit_class, business_unit

@@ -775,11 +775,11 @@ INSERT INTO contact_class (id,class) values (17,'Billing BCC');
 SELECT SETVAL('contact_class_id_seq',17);
 
 CREATE TABLE entity_to_contact (
-  entity_id integer not null references person(id) ON DELETE CASCADE,
+  entity_id integer not null references person(entity_id) ON DELETE CASCADE,
   contact_class_id integer references contact_class(id) not null,
   contact text check(contact ~ '[[:alnum:]_]') not null,
   description text,
-  PRIMARY KEY (person_id,contact_class_id,contact));
+  PRIMARY KEY (entity_id,contact_class_id,contact));
   
 COMMENT ON TABLE entity_to_contact IS 
 $$ This table stores contact information for entities$$;
@@ -876,7 +876,7 @@ addresses, use entity_to_location instead $$;
 
 CREATE TABLE employee_class (
     label text not null primary key,
-    id serial not null unique,
+    id serial not null unique
 );
 
 CREATE TABLE employee_to_ec (
@@ -944,8 +944,7 @@ CREATE TABLE payroll_report (
    ec_id int not null references employee_class(id),
    payment_date date not null,
    created_by int references entity_employee(entity_id),
-   approved_by int references  entity_employee(entity_id),
-   primary key(id)
+   approved_by int references  entity_employee(entity_id)
 );
 
 --TODO:  Add payroll line items, approval process, registry for locale functions, etc
@@ -1726,7 +1725,7 @@ taxes collected).$$;
 CREATE TABLE eca_tax (
   eca_id int references entity_credit_account(id) on delete cascade,
   chart_id int REFERENCES account(id),
-  PRIMARY KEY (customer_id, chart_id)
+  PRIMARY KEY (eca_id, chart_id)
 );
 
 COMMENT ON TABLE eca_tax IS $$ Mapping customers and vendors to taxes.$$;
@@ -1833,7 +1832,7 @@ VALUES (1, 'Department', '0', '10'),
        (4, 'Fund', '0', '40'),
        (5, 'Customer', '0', '50'),
        (6, 'Vendor', '0', '60'),
-       (7, 'Lot',  0, 50);
+       (7, 'Lot',  '0', 50);
 
 CREATE TABLE bu_class_to_module (
    bu_class_id int references business_unit_class(id),

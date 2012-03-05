@@ -304,7 +304,7 @@ matches too.  All other values specify ranges or may match partially.$$;
 CREATE OR REPLACE FUNCTION eca__get_taxes(in_credit_id int)
 returns setof eca_tax AS
 $$
-select * from eca_tax where customer_id = $1;
+select * from eca_tax where eca_id = $1;
 $$ language sql;
 
 COMMENT ON FUNCTION eca__get_taxes(in_credit_id int) IS

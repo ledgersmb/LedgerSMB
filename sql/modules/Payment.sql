@@ -1304,7 +1304,7 @@ DROP VIEW IF EXISTS overpayments CASCADE;
 CREATE VIEW overpayments AS
 SELECT p.id as payment_id, p.reference as payment_reference, p.payment_class, p.closed as payment_closed,
        p.payment_date, ac.chart_id, c.accno, c.description as chart_description,
-       p.department_id, abs(sum(ac.amount)) as available, cmp.legal_name, 
+       abs(sum(ac.amount)) as available, cmp.legal_name, 
        eca.id as entity_credit_id, eca.entity_id, eca.discount, eca.meta_number
 FROM payment p
 JOIN payment_links pl ON (pl.payment_id=p.id)
@@ -1316,7 +1316,7 @@ WHERE p.gl_id IS NOT NULL
       AND (pl.type = 2 OR pl.type = 0)
       AND c.link LIKE '%overpayment%'
 GROUP BY p.id, c.accno, p.reference, p.payment_class, p.closed, p.payment_date,
-      ac.chart_id, chart_description, p.department_id,  legal_name, eca.id,
+      ac.chart_id, chart_description,legal_name, eca.id,
       eca.entity_id, eca.discount, eca.meta_number;
 
 CREATE OR REPLACE FUNCTION payment_get_open_overpayment_entities(in_account_class int)

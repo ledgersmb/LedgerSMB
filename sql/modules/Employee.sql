@@ -4,7 +4,7 @@
 -- Public License v 2 or at your option any later version.
 
 -- Docstrings already added to this file.
-
+BEGIN;
 
 
 CREATE OR REPLACE FUNCTION employee__save 
@@ -177,8 +177,6 @@ $$ Returns a list of managers, that is employees with the 'manager' role set.$$;
 --
 -- % type is pg_trgm comparison.
 
-CREATE INDEX notes_idx ON entity_note USING gist(note gist_trgm_ops);
-
 --Testing this more before replacing employee__search with it.
 -- Consequently not to be publically documented yet, --CT
 
@@ -231,4 +229,4 @@ returns void as $$
     SELECT entity_id, $2
       FROM person WHERE id = $1;
 $$ language 'sql';
-
+COMMIT;
