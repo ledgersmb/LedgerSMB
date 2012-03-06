@@ -162,10 +162,6 @@ Currently the 1.3 pricelist functionality is defective and while new customers a
 vendors can be added to a part, one cannot add new parts to the customer.  This is being
 actively worked on and we expect to finish it in the near future.
 
-3.8:   Timecards: lost employee and non-chargeable hours
-
-New bug report.  Presumably the mapping to employee and non-chargeable hours bit are being lost on save.  Expect to have this fixed in the near future.
-
 4:  Differences between LedgerSMB and SQL-Ledger(TM)
 
 4.1: Login name restrictions

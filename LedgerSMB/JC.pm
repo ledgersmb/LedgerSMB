@@ -61,7 +61,8 @@ sub get_jcitems {
 			       to_char(j.checkedout, 'HH24:MI:SS') 
 			       AS checkedouta, 
 			       to_char(j.checkedin, ?) AS transdate,
-			       e.name AS employee, p.partnumber,
+			       e.name AS employee, e.id as employee_id, 
+                               p.partnumber,
 			       pr.projectnumber, 
 			       pr.description AS projectdescription,
 			       pr.production, pr.completed, 
