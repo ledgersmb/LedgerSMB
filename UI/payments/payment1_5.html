@@ -42,11 +42,10 @@
  <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" ?>
  
    <tr class="<?lsmb alterning_style -?>">
-     <td align="center"><?lsmb i -?> </td>
-     <td align="center"><?lsmb item.name -?>  </td>
      <td align="center">
      <input type="radio" name="vendor-customer" id="vendor-customer_id" value="<?lsmb  item.id -?>--<?lsmb item.name -?>" />
      </td>
+     <td align="center"><?lsmb item.name -?>  </td>
   <?lsmb END -?>   
 </table>
 
