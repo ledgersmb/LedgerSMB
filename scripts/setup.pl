@@ -231,7 +231,14 @@ sub run_backup {
             file     => $backupfile,
 	);
         $mail->send;
+        my $template = LedgerSMB::Template->new(
+            path => 'UI/setup',
+            template => 'complete',
+            format => 'HTML',
+        );
+        $template->render($request);
     } elsif ($request->{backup_type} eq 'browser'){
+        binmode(STDOUT, ':bytes');
         open BAK, '<', $backupfile;
         my $cgi = CGI::Simple->new();
         $backupfile =~ s/$LedgerSMB::Sysconfig::backuppath(\/)?//;
@@ -249,12 +256,6 @@ sub run_backup {
     } else {
         $request->error($request->{_locale}->text("Don't know what to do with backup"));
     }
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'complete',
-            format => 'HTML',
-    );
-    $template->render($request);
  
 }
    
