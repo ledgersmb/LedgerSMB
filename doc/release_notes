@@ -1,7 +1,7 @@
 RELEASE NOTES
 LedgerSMB 1.3
 
-Latest Revision:  1.3.11, February 15, 2012.
+Latest Revision:  1.3.13, March 6, 2012.
 
 1:  Welcome to LedgerSMB
 
@@ -48,11 +48,19 @@ The new code is also far more modular (and hence manageable) than the old code,
 though it is expected that further improvements will occur in the move from 1.3
 to 1.4.
 
+With this we hope to make LedgerSMB into a stable platform for more agile business 
+application development.  With an ERP system it is often about the platform, not about
+the out-of-the-box functionality.
+
 2.2:  Security
 
 Prior to 1.3, security was not pervasively enforced in any real way through the
 database.  In 1.3, all user permissions are orchestrated via ROLES in the
 underlying database, and permissions are rigorously enforced in this way.
+
+Role-based security provides a far better approach to security than the previous methods
+and since the permissions are now rigorously enforced, the overall security of the 
+application is much better.
 
 2.3:  New Features
 
@@ -78,7 +86,30 @@ transaction load.
 The contact management and reconciliation portions of the database have been
 fully redesigned to provide more flexibility for customization.
 
+2.5:  Multicompany operations
+
+LedgerSMB 1.3 continues to use multiple physical databases for separate companies as
+did 1.2.  The major difference is that now users are database users, and since database
+users are global to the database cluster, they can now be shared (or not) between 
+companies.
+
+Global users can be imported into new companies (though first and last name, 
+and employee number need not be shared between the accounts).  Permissions can be 
+assigned separately on different databases.
+
+2.6:  Fixed Asset Handling
+
+LedgerSMB 1.3 comes with a fixed asset module, meaning you can now define your assets,
+depreciate them, and dispose of them either entirely or partially.
+
+The fixed asset system is designed to be extensible.  Currently only time-based, 
+straight-line depreciations are included.  However the system is designed to allow the 
+creation of new depreciation methods including time-based and production-based methods.
+
 3:  Known Issues
+
+3.1:  Reposting Invoices
+
 Reposting invoices is known to cause inaccuracies cost of goods sold and
 inventory accounts.  This problem has been confirmed to affect SQL-Ledger 2.6.x 
 as well and is caused by problems involving the de-allocation and trasaction
@@ -86,10 +117,54 @@ reversal routines.  It will be corrected (by removing the ability to truly
 repost invoices) in an upcoming version as we continue to re-engineer the
 application.
 
-Also the current design of foreign exchange handling means that if you reverse a
-payment, the foreing exchange gains and losses will not be exactly reversed 
-unless you are able to reverse on the same day.  If reversed on different days the gain/loss will be realized per the time when the payment was in effect and 
+3.2:  Foreign exchange and payment reversals
+
+The current design of foreign exchange handling means that if you reverse a
+payment, the foreign exchange gains and losses will not be exactly reversed 
+unless you are able to reverse on the same day.  If reversed on different days the 
+gain/loss will be realized per the time when the payment was in effect and 
 not reversed.
+
+
+3.3:  Default CoA files miss Reconciliation assignment
+
+Currently reconciliation mappings are not set up when a new chart of accounts is loaded
+
+To work around this issue, go to the System/Chart of Accounts/List Accounts select each
+account you wish to be subject to the reconciliation workflow, check the recon box, 
+click save.  We are planning on fixing this in a future release.
+
+3.4:  Password not set properly for new users with . in username
+
+Currently when you set up a user with a . in the username, the password is not properly
+set.  The reason for this is unknown and we intend to fix in a future version.
+
+You can set the user's password in psql using ALTER USER ... WITH PASSWORD '...'; to 
+work around this issue.
+
+3.5:  XLS and ODS download buttons show even if prereqs missing
+
+Currently the XLS and ODS (Excel and OpenOffice) spreadsheet download buttons show even
+if the prerequisites are not available.  We intend to fix this in a future version.
+
+3.6:  POS ignores pd_proto
+
+Currently in point of sales environments, in some cases, the connections back to the 
+terminal in order to control pole displays seems tied to TCP even when one sets it to 
+UDP.  This can have significant issues regarding performance if this port is not open.
+
+The cause is unknown.  It is believed to affect 1.2 as well.  We expect to fix this
+in a future release.
+
+3.7:  Can't add prices to pricelist from customer screen
+
+Currently the 1.3 pricelist functionality is defective and while new customers and
+vendors can be added to a part, one cannot add new parts to the customer.  This is being
+actively worked on and we expect to finish it in the near future.
+
+3.8:   Timecards: lost employee and non-chargeable hours
+
+New bug report.  Presumably the mapping to employee and non-chargeable hours bit are being lost on save.  Expect to have this fixed in the near future.
 
 4:  Differences between LedgerSMB and SQL-Ledger(TM)
 
@@ -139,11 +214,11 @@ The above being said, we have a set of targets for the next major release
 (1.4.0).  There is no guarantee we will reach these targets but we have them
 anyway.  These include:
 
-* Integrated budgetting module
+* Integrated budgetting module (included already)
 * Rewritten reports
-* Rewritten project/department handling to include nested departments
-* Funds accounting
-* Rewritten Sales Orders
+* Rewritten project/department handling to include nested departments (largely included)
+* Funds accounting (largely included)
+* Rewritten Sales Orders (may be deferred)
 * A framework for implementing payroll solutions
 
 6:  Get Involved
