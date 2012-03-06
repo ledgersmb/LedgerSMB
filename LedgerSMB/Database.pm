@@ -394,9 +394,23 @@ sub create {
     # We have to use template0 because of issues that Debian has with database 
     # encoding.  Apparently that causes problems for us, so template0 must be
     # used.
-    my $rc = system("createdb -T template0 -E UTF8 > $temp/dblog");
+    #
+    # Also moved away from createdb here because at least for some versions of
+    # PostgreSQL, it connects to the postgres db in order to issue the CREATE DATABASE
+    # command.  This makes it harder to adequately secure the platform via pg_hba.conf.
+    # 
+    # Hat tip:  irc user nwnw -- CT
+
+    use DBI;
+    my $dbh = DBI->connect('dbi:Pg:dbname=template1');
+
+    $dbh->{RaiseError} = 1;
+    $dbh->{AutoCommit} = 1;
+    my $dbn = $dbh->quote_identifier($ENV{PGDATABASE});
+    my $rc = $dbh->do("CREATE DATABASE $dbn WITH TEMPLATE template0 ENCODING 'UTF8'");
+
     $logger->trace("after create db \$rc=$rc");
-    if ($rc) {
+    if (!$rc) {
         return $rc;
     }
     my $rc2=0;
