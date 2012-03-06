@@ -243,3 +243,13 @@ BEGIN; -- Search Assets menu
 UPDATE update menu_node set position = 3 where position = 2 and parent = 229;
 update menu_node set parent = 229 where id = 233;
 COMMIT;
+
+BEGIN; -- timecard additional info
+ALTER TABLE jcitems ADD total numeric NOT NULL DEFAULT 0;
+ALTER TABLE jcitems ADD non_billable numeric NOT NULL DEFAULT 0;
+
+UPDATE jcitems 
+   SET total = qty
+ WHERE qty IS NOT NULL and total = 0;
+
+COMMIT;

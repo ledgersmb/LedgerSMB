@@ -6,6 +6,7 @@ Changelog for 1.3.13
 * Reduced log messages when upgrading/creating db, for some log levels (Chris T)
 * Changed db setup not to use createdb for simple admin of pg_hba.conf (Chris T)
 * Corrected type = 'password' not handled properly in elements.html (Chris T)
+* Non-billable information now retained in db for timecards (Chris T)
 
 Changelog for 1.3.12
 * Corrected processing of <?lsmb tags in order/invoice numbers (Chris T)
