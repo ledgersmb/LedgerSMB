@@ -242,6 +242,7 @@ sub _preprocess {
 sub render {
 	my $self = shift;
 	my $vars = shift;
+        $vars->{ENVARS} = \%ENV;
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
 		throw Error::Simple "Invalid format";
 	}
