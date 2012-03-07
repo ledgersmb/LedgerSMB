@@ -10,6 +10,8 @@ General Enhancements:
 * Removed the Config::Std dependency and moved to Config::General (Chris T)
 * Improved error handling using Try::Tiny and die (Chris T)
 * Added +/- selection indicators to menu CSS (Chris T)
+* Added "dynatable.html" template that can be included in templates (Chris T)
+* Dynatable forms obtained through GET now show link back to form (Chris T)
 
 Customer/Vendor Handling 
 * Added sales tax id and license number fields for companies (Chris T)
