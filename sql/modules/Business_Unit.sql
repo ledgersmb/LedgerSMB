@@ -103,7 +103,7 @@ $$ SELECT * FROM lsmb_module
 $$;
 
 CREATE OR REPLACE FUNCTION business_unit_class__save 
-(in_id int, in_label text, in_active bool, in_non_accounting bool, in_ordering int)
+(in_id int, in_label text, in_active bool, in_ordering int)
 RETURNS business_unit_class AS
 $$
 DECLARE retval business_unit_class;
@@ -114,14 +114,13 @@ t_id := in_id;
 UPDATE business_unit_class
    SET label = in_label,
        active = in_active,
-       ordering = in_ordering,
-       non_accounting = in_non_accounting
+       ordering = in_ordering
  WHERE id = in_id;
 
 IF NOT FOUND THEN
 
-   INSERT INTO business_unit_class (label, active, non_accounting, ordering)
-   VALUES (in_label, in_active, in_non_accounting, in_ordering);
+   INSERT INTO business_unit_class (label, active, ordering)
+   VALUES (in_label, in_active, in_ordering);
 
    t_id := currval('business_unit_class_id_seq');
 

@@ -10,8 +10,10 @@
     <th><?lsmb text('ID') ?></th>
     <th><?lsmb text('Label') ?></th>
     <th><?lsmb text('Active') ?></th>
-    <th><?lsmb text('Non-Accounting') ?></th>
     <th><?lsmb text('Ordering') ?></th>
+  <?lsmb FOR mod IN modules ?>
+    <th><?lsmb text(mod.label) ?></th>
+  <?lsmb END ?>
     <th>&nbsp;</th>
     <th>&nbsp;</th>
 </tr>
@@ -57,6 +59,21 @@
     size = 4
 } ?>
 </td>
+  <?lsmb FOR mod IN modules ?>
+    <td><?lsmb 
+    IF c.modules.grep(mod.id);
+        checked = 'checked';
+    ELSE; 
+        checked = '';
+    END;
+    PROCESS input element_data = {
+       type = 'checkbox'
+    checked = checked
+       name = "module_" _ mod.id
+      value = 1
+    } ?> </td>
+  <?lsmb END ?>
+    <!-- TODO:  Add modules perms here -->
 <td><?lsmb PROCESS button element_data = {
     type = "submit"
    class = "submit"

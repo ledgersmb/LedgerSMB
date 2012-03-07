@@ -1750,6 +1750,8 @@ GRANT SELECT ON asset_unit_class TO public;
 GRANT SELECT ON asset_dep_method TO public;
 
 -- Grants to all users;
+GRANT SELECT ON lsmb_module TO public; -- everyone needs to read this table and nothing
+-- sensitive in that table.
 GRANT SELECT ON makemodel TO public;
 GRANT SELECT ON custom_field_catalog TO public;
 GRANT SELECT ON custom_table_catalog TO public;
