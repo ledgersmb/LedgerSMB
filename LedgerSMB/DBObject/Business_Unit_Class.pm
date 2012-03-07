@@ -14,6 +14,7 @@ funds, and projects.
 package LedgerSMB::DBObject::Business_Unit_Class;
 use Moose;
 use LedgerSMB::DBObject_Moose;
+use LedgerSMB::DBObject::App_Module;
 extends 'LedgerSMB::DBObject_Moose';
 
 =head1 PROPERTIES
@@ -56,7 +57,9 @@ this is indivated for CRM and other applications.
 
 =cut
 
-has 'modules' => (is => 'rw', isa => 'ArrayRef[LedgerSMB::DBObject::App_Module]');
+has 'modules' => (is => 'rw', 
+                 isa => 'ArrayRef[LedgerSMB::DBObject::App_Module]'
+);
 
 =item ordering 
 
@@ -85,8 +88,12 @@ sub get {
                                             args => [$id]
     );
     my $ref = shift @classes;
+    my @modules = $self->call_procedure(procname => 'business_unit_class__get_modules',
+                                            args => [$id]
+    );
     $self->prepare_dbhash($ref);
-    return $self->new(shift @classes);
+    my $class = $self->new(shift @classes);
+    $class->modules(\@modules);
 }
 
 =item save
@@ -136,6 +143,14 @@ sub list {
     for my $class (@classes){
         $self->prepare_dbhash($class);
         $class = $self->new(%$class);
+        my @modules = $self->call_procedure(procname => 'business_unit_class__get_modules',
+                                                args => [$class->id]
+        );
+        for my $m (@modules){
+            $self->prepare_dbhash($m);
+            $m = LedgerSMB::DBObject::App_Module->new($m);
+        }
+        $class->modules(\@modules);
     }
     return @classes;
 }

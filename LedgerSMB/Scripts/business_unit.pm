@@ -208,13 +208,21 @@ LedgerSMB::DBObject::Business_Unit_Class must be set for $request.
 
 sub save_class {
     my ($request) = @_;
-    $request->debug({file => '/tmp/search'});
+    my $lsmb_modules = LedgerSMB::DBObject::App_Module->new(%$request);
+    my @modules = $lsmb_modules->list;
+    my $modlist = [];
+    for my $mod (@modules){
+        if ($request->{"module_" . $mod->id}){
+            push @$modlist, $mod;
+        }
+    }
     for my $key (qw(active non_accounting)){
         if (!$request->{$key}){
             $request->{$key} = 0;
         }
     }
     my $bu_class = LedgerSMB::DBObject::Business_Unit_Class->new(%$request);
+    $bu_class->modules($modlist);
     $bu_class->save;
     list_classes($request);
 }

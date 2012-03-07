@@ -54,10 +54,11 @@
 </td>
   <?lsmb FOREACH m IN modules ?>
     <td><?lsmb 
-    IF c.modules.grep(m.id);
-        checked = 'checked';
-    ELSE; 
-        checked = '';
+    checked = undef;
+    FOREACH mm IN c.modules;
+       IF mm.id == m.id;
+            checked = 'checked';
+       END;
     END;
     PROCESS input element_data = {
        type = 'checkbox'
