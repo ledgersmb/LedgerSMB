@@ -46,17 +46,11 @@ local   all         all                               md5
 host    all         all         127.0.0.1/32          md5
 - Restart PostgreSQL to apply changes (service postgres restart)
 
-In %{_sysconfdir}/%{name}/ledgersmb.conf set DBPassword to something
-and create the ledgersmb master user and database:
-su - postgres -c "createuser -d ledgersmb --createdb --superuser -P"
-su - postgres -c "createdb ledgersmb"
-su - postgres -c "createlang plpgsql ledgersmb"
-su - postgres -c "psql ledgersmb < %{_datadir}/%{name}/sql/Pg-central.sql"
-Bleeding edge hint: Set password to avoid bogus web prompt:
-su - postgres -c "psql ledgersmb -c \"update users_conf set password = md5('yada') where id = 1;\""
+- log in via psql, ALTER USER postgres WITH PASSWORD 'yada';
 
-Visit http://localhost/ledgersmb/admin.pl with password "yada" and create an
-application database and users.
+Visit http://localhost/ledgersmb/setup.pl with username postgres and password 
+'yada' and create an application database.  This will also walk you through 
+creating an initial admin user.
 
 Also note, this does NOT provide the LaTeX template extensions which are 
 technically optional but frequently used.  To use these you will need to install

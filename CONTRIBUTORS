@@ -7,27 +7,28 @@ Chris Travers <chris @ metatrontech.com>
 Wrote the inventory activity report, helped with the session handling fix, 
 and other tasks.
 
-Christopher Murtagh <christopher.murtagh @ gmail.com>
-Wrote the session handling fix, has begun reformatting the files to fit the
-current coding standards, and other contributions.
-
 Joshua Drake <jd @ commandprompt . com>
 Contributed database fixes, the contact/company/entity schema, and other 
 db-centric changes.
+
+Erik Huelsmann <ehuels @ gmail.com> has provided numerous bugfixes and guidance for the
+project.
+
+Other Committers:
+==================
+Jeff Kowalczyk [email omitted] contributed the ledger-smb-smallgray.css and has submitted numerous bug fixes.
+
+Herman Vierendeels <herman.vierendeels @ gmail.com> Contributed a number of 
+bugfixes.
+
+Christopher Murtagh <christopher.murtagh @ gmail.com>
+Wrote the session handling fix, has begun reformatting the files to fit the
+current coding standards, and other contributions.
 
 Seneca Cunningham <tentra @ gmail.com> 
 Contributed code fixes and support for advanced tax rules.  She has also 
 re-engineered the localization framework.  She has also provided support for 
 Excel, ODS, and other formats for reports.
-
-Other Committers:
-==================
-Erik Huelsmann <ehuels @ gmail.com> has provided bugfixes.
-
-Jeff Kowalczyk [email omitted] contributed the ledger-smb-smallgray.css and has submitted numerous bug fixes.
-
-Herman Vierendeels <herman.vierendeels @ gmail.com> Contributed a number of 
-bugfixes.
 
 Other Contributors:
 ========================

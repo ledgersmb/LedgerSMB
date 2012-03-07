@@ -3,7 +3,7 @@ Forthcoming
 
 General Enhancements:
 * scripts/* files moved to make inheritance possible (Chris T)
-* PostgreSQL contrib dependencies removed, now requre Pg 8.4 (Chris T)
+* PostgreSQL contrib dependencies removed, now require Pg 8.4 (Chris T)
 * Performance enhancements on menu routines (Chris T and Steven M)
 * Projects and Departments can now have subprojects and Departments (Chris T)
 * Project/department mechanism generalized to support funds, etc (Chris T)
