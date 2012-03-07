@@ -59,6 +59,24 @@ sub login {
             company_name => $request->{database},
                 password => $creds->{password}}
     );
+    my $server_info = $database->server_version;
+    my @sv_info = split(/\./, $server_info);
+    if (($sv_info[0] > 9)or ($sv_info[0]  == 9 and $sv_info[1] >= 1)){
+       if (! -f "$ENV{PG_CONTRIB_DIR}/tablefunc.control"){
+            $request->error($request->{_locale}->text(
+                      'Cannot find Contrib scripts in [_1].',
+                      $ENV{PG_CONTRIB_DIR}
+            ));
+       }
+    } else {
+       if (! -f "$ENV{PG_CONTRIB_DIR}/tablefunc.sql"){
+            $request->error($request->{_locale}->text(
+                      'Cannot find Contrib scripts in [_1].',
+                      $ENV{PG_CONTRIB_DIR}
+            ));
+      
+       }
+    }
     
     my $version_info = $database->get_info();
     if(!$request->{dbh}){$request->{dbh}=$database->{dbh};}#allow upper stack to disconnect dbh when leaving
@@ -215,7 +233,14 @@ sub run_backup {
             file     => $backupfile,
 	);
         $mail->send;
+        my $template = LedgerSMB::Template->new(
+            path => 'UI/setup',
+            template => 'complete',
+            format => 'HTML',
+        );
+        $template->render($request);
     } elsif ($request->{backup_type} eq 'browser'){
+        binmode(STDOUT, ':bytes');
         open BAK, '<', $backupfile;
         my $cgi = CGI::Simple->new();
         $backupfile =~ s/$LedgerSMB::Sysconfig::backuppath(\/)?//;
@@ -233,12 +258,6 @@ sub run_backup {
     } else {
         $request->error($request->{_locale}->text("Don't know what to do with backup"));
     }
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'complete',
-            format => 'HTML',
-    );
-    $template->render($request);
  
 }
    

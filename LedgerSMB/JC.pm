@@ -61,7 +61,8 @@ sub get_jcitems {
 			       to_char(j.checkedout, 'HH24:MI:SS') 
 			       AS checkedouta, 
 			       to_char(j.checkedin, ?) AS transdate,
-			       e.name AS employee, p.partnumber,
+			       e.name AS employee, e.id as employee_id, 
+                               p.partnumber,
 			       pr.control_code, 
 			       pr.description AS projectdescription,
 			  FROM jcitems j
@@ -83,6 +84,8 @@ sub get_jcitems {
             $form->{$_} = $form->{"${_}a"};
             delete $form->{"${_}a"};
         }
+
+        $form->{noncharge} = $form->{non_billable};
 
         $query = qq|
 			SELECT s.printed, s.spoolfile, s.formname
@@ -446,6 +449,13 @@ sub save {
     my $sth;
 
     my ( $null, $project_id ) = split /--/, $form->{projectnumber};
+    for (qw(qty sellprice allocated noncharge)) {
+        $form->{$_} = $form->parse_amount( $myconfig, $form->{$_} );
+    }
+    my ($total, $nonbillable);
+
+    $nonbillable = $form->{noncharge} || 0;
+    $total = $form->{qty} + $nonbillable;
 
     if ( $form->{id} ) {
 
@@ -485,10 +495,12 @@ sub save {
         my $uid = localtime;
         $uid .= "$$";
 
-        $query = qq|INSERT INTO jcitems (description, person_id) 
-                    SELECT '$uid', id
+        $query = qq|INSERT INTO jcitems 
+                           (description, person_id, total, non_billable) 
+                    SELECT ?, id, ?, ?
                       FROM person WHERE entity_id = person__get_my_entity_id()|;
-        $dbh->do($query) || $form->dberror($query);
+        my $isth = $dbh->prepare($query) || $form->dberror($query);
+        $isth->execute($uid, $total, $nonbillable)|| $form->dberror($query);
 
         $query = qq|SELECT id FROM jcitems WHERE description = '$uid'|;
         ( $form->{id} ) = $dbh->selectrow_array($query);
@@ -531,7 +543,9 @@ sub save {
 		       checkedout = ?::timestamp,
 		       person_id = (SELECT id FROM person 
                                      WHERE entity_id = ?),
-		       notes = ?
+		       notes = ?,
+                       total = ?,
+                       non_billable = ?
 		 WHERE id = ?|;
     $sth = $dbh->prepare($query);
     $sth->execute(
@@ -547,6 +561,8 @@ sub save {
         "$outdate $form->{outhour}:$form->{outmin}:$form->{outsec}",
         $form->{employee_id},
         $form->{notes},
+        $total,
+        $nonbillable,
         $form->{id}
     ) || $form->dberror($query);
 

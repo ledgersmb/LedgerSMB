@@ -2121,7 +2121,9 @@ CREATE TABLE jcitems (
   checkedin timestamp with time zone,
   checkedout timestamp with time zone,
   person_id integer references person(id) not null,
-  notes text
+  notes text,
+  total numeric not null,
+  non_billable numeric not null default 0
 );
 
 COMMENT ON TABLE jcitems IS $$ Time and materials cards. 
