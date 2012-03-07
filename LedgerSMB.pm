@@ -808,6 +808,8 @@ sub error {
 
         $self->{msg}    = $msg;
         $self->{format} = "html";
+        $logger->error($msg);
+        $logger->error("dbversion: $self->{dbversion}, company: $self->{company}");
 
         delete $self->{pre};
 
@@ -816,7 +818,9 @@ sub error {
         print "<head><link rel='stylesheet' href='css/$self->{_user}->{stylesheet}' type='text/css'></head>";
         $self->{msg} =~ s/\n/<br \/>\n/;
         print
-          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></body>|;
+          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></p>
+             <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
+             </body>|;
 
         exit;
 

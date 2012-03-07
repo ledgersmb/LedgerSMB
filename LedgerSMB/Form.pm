@@ -465,9 +465,13 @@ sub error {
         if ( !$self->{header} ) {
             $self->header;
         }
+        $logger->error($msg);
+        $logger->error("dbversion: $self->{dbversion}, company: $self->{company}");
 
         print
-          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></body>|;
+          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b>
+             <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
+             </body>|;
 
         $self->finalize_request();
 
