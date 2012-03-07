@@ -139,6 +139,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Mailer;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
+use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 

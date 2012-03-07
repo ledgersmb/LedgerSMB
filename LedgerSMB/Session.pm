@@ -16,7 +16,7 @@ sessions).
 package LedgerSMB::Session;
 
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Log;
+use Log::Log4perl;
 use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');

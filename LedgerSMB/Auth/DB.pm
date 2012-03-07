@@ -19,7 +19,7 @@ authentication.
 package LedgerSMB::Auth;
 use MIME::Base64;
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Log;
+use Log::Log4perl;
 use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Auth');

@@ -55,6 +55,7 @@ This module provides some administrative functions
 package AM;
 use LedgerSMB::Tax;
 use LedgerSMB::Sysconfig;
+use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('AM');
 

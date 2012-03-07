@@ -48,7 +48,7 @@ module but can be overridden in decendant modules.
 package LedgerSMB::DBObject;
 use Scalar::Util;
 use base qw(LedgerSMB);
-use LedgerSMB::Log;
+use Log::Log4perl;
 use strict;
 use warnings;
 

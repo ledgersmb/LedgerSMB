@@ -33,7 +33,7 @@ use LedgerSMB::App_State;
 use LedgerSMB;
 use LedgerSMB::Locale;
 use Data::Dumper;
-use LedgerSMB::Log;
+use Log::Log4perl;
 use LedgerSMB::CancelFurtherProcessing;
 use strict;
 

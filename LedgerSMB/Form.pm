@@ -66,13 +66,13 @@ use Cwd;
 use File::Copy;
 use LedgerSMB::Company_Config;
 use LedgerSMB::PGNumber;
+use Log::Log4perl;
 
 use charnames qw(:full);
 use open ':utf8';
 package Form;
 use utf8;
 
-use LedgerSMB::Log;
 our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
 
 =item new Form([$argstr])

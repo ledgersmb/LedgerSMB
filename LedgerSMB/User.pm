@@ -59,6 +59,7 @@ package LedgerSMB::User;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Auth;
 use Data::Dumper;
+use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::User');
 

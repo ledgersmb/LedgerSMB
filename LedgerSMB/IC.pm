@@ -33,7 +33,7 @@
 
 package IC;
 
-use LedgerSMB::Log;
+use Log::Log4perl;
 use LedgerSMB::File;
 
 my $logger = Log::Log4perl->get_logger('IC');

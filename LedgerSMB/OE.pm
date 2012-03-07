@@ -35,6 +35,7 @@
 package OE;
 use LedgerSMB::Tax;
 use LedgerSMB::Sysconfig;
+use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('OE');
 =over

@@ -28,6 +28,7 @@ our $VERSION = '1';
 use LedgerSMB::Sysconfig;
 use base('LedgerSMB');
 use strict;
+use Log::Log4perl;
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 my $logger = Log::Log4perl->get_logger('');
 

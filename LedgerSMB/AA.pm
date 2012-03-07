@@ -28,7 +28,7 @@ replacement is available.
 
 package AA;
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Log;
+use Log::Log4perl;
 use LedgerSMB::File;
 use Math::BigFloat;
 

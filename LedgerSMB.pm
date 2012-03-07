@@ -215,7 +215,6 @@ use LedgerSMB::Template;
 use LedgerSMB::Locale;
 use LedgerSMB::User;
 use LedgerSMB::Setting;
-use LedgerSMB::Log;
 use LedgerSMB::Company_Config;
 use strict;
 use utf8;

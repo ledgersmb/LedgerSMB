@@ -1,7 +1,7 @@
 use Template;
 use LedgerSMB::DBObject::Account;
 package LedgerSMB::Scripts::account;
-use LedgerSMB::Log;
+use Log::Log4perl;
 use Data::Dumper;
 use strict;
 

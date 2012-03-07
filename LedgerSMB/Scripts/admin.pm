@@ -24,7 +24,7 @@ use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
 use Data::Dumper;
 use LedgerSMB::Setting;
-use LedgerSMB::Log;
+use Log::Log4perl;
 
 # I don't really like the code in this module.  The callbacks are per form which
 # means there is no semantic difference between different buttons that can be 

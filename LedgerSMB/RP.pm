@@ -32,7 +32,7 @@
 #======================================================================
 
 package RP;
-use LedgerSMB::Log;
+use Log::Log4perl;
 our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
 
 sub inventory_activity {

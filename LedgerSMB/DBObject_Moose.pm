@@ -48,7 +48,7 @@ module but can be overridden in decendant modules.
 package LedgerSMB::DBObject_Moose;
 use Moose;
 use Scalar::Util;
-use LedgerSMB::Log;
+use Log::Log4perl;
 
 has 'dbh' => (is => 'ro', isa => 'DBI::db', required => '1');
 has '_roles' => (is => 'ro', isa => 'ArrayRef[Str]', required => '1');

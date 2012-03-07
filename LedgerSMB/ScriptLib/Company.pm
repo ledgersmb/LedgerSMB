@@ -2,7 +2,7 @@ package LedgerSMB::ScriptLib::Company;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Customer;
 use LedgerSMB::DBObject::Vendor;
-use LedgerSMB::Log;
+use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger("LedgerSMB::ScriptLib::Company");
 
