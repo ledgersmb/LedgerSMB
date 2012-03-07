@@ -49,14 +49,14 @@ has 'active' => (is => 'rw', isa => 'Bool');
 
 # Hmm should we move this to per-module restrictions? --CT
 
-=item non_accounting bool
+=item modules bool
 
 If true, indicates that this will not show up on accounting transaction screens.
 this is indivated for CRM and other applications.
 
 =cut
 
-has 'non_accounting' => (is => 'rw', isa => 'Bool');
+has 'modules' => (is => 'rw', isa => 'ArrayRef[LedgerSMB::DBObject::App_Module]');
 
 =item ordering 
 
@@ -99,10 +99,30 @@ changed in the process.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'business_unit_class__save'});
+    $self->save_modules();
     $self->prepare_dbhash($ref);
     $self = $self->new(%$ref);
     $self->dbh->commit;
 }   
+
+=item save_modules
+
+This saves only the module permissions.  This takes the list of modules and prepares an array for the saving and then saves the modules.  This is broken off as a public 
+interface because it makes it possible to activate/deactive regarding modules after the 
+fact without changing anything else.
+
+=cut
+
+sub save_modules {
+    my ($self) = @_;
+    my $mod_ids = [];
+    for my $mod (@{$self->modules}){
+        push @$mod_ids, $mod->id;
+    }
+    $self->call_procedure(procname => 'business_unit_class__save_modules',
+                              args => [$self->id, $mod_ids]
+    );
+}
 
 =item list
 

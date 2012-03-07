@@ -82,6 +82,26 @@ COMMENT ON FUNCTION business_unit__get_tree_for(in_id int) IS
 $$ This function returns tree-related records with the root of the tree being 
 the business unit of in_id.  $$;
 
+CREATE OR REPLACE FUNCTION business_unit_class__save_modules
+(in_id int, in_mod_ids int[])
+RETURNS BOOL AS
+$$
+DELETE FROM bu_class_to_module WHERE bu_class_id = $1;
+
+INSERT INTO bu_class_to_module (bu_class_id, module_id)
+SELECT $1, unnest
+  FROM unnest($2);
+
+SELECT true;
+$$ LANGUAGE SQL;
+
+CREATE FUNCTION business_unit_class__get_modules(in_id int)
+RETURNS SETOF lsmb_module AS
+$$ SELECT * FROM lsmb_module 
+    WHERE id IN (select module_id from bu_class_to_module where bu_class_id = $1);
+ ORDER BY id;
+$$;
+
 CREATE OR REPLACE FUNCTION business_unit_class__save 
 (in_id int, in_label text, in_active bool, in_non_accounting bool, in_ordering int)
 RETURNS business_unit_class AS
