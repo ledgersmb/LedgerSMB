@@ -68,13 +68,13 @@ sub get {
     return $self->new($ref);
 }
 
-=item list_all()
+=item list()
 
 This returns a list of all modules, ordered by id.
 
 =cut
 
-sub list_all{
+sub list{
     my ($self) = @_;
     my @results = $self->call_procedure(procname => 'lsmb_module__list');
     for my $ref(@results){

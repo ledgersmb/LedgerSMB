@@ -6,6 +6,7 @@ LedgerSMB::Scripts::business_unit
 
 package LedgerSMB::Scripts::business_unit;
 use LedgerSMB::DBObject::Business_Unit_Class;
+use LedgerSMB::DBObject::App_Module;
 use LedgerSMB::DBObject::Business_Unit;
 use LedgerSMB::Template;
 use Carp;
@@ -29,7 +30,9 @@ All functions take a single $request object as their sole argument
 sub list_classes {
     my ($request) = @_;
     my $bu_class = LedgerSMB::DBObject::Business_Unit_Class->new(%$request);
+    my $lsmb_modules = LedgerSMB::DBObject::App_Module->new(%$request);
     @{$request->{classes}} = $bu_class->list;
+    @{$request->{modules}} = $lsmb_modules->list;
     my $template = LedgerSMB::Template->new(
         user =>$request->{_user},
         locale => $request->{_locale},

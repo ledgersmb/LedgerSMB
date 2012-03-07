@@ -98,9 +98,9 @@ $$ LANGUAGE SQL;
 CREATE FUNCTION business_unit_class__get_modules(in_id int)
 RETURNS SETOF lsmb_module AS
 $$ SELECT * FROM lsmb_module 
-    WHERE id IN (select module_id from bu_class_to_module where bu_class_id = $1);
+    WHERE id IN (select module_id from bu_class_to_module where bu_class_id = $1)
  ORDER BY id;
-$$;
+$$ language sql;
 
 CREATE OR REPLACE FUNCTION business_unit_class__save 
 (in_id int, in_label text, in_active bool, in_ordering int)
