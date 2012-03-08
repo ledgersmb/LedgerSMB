@@ -929,6 +929,8 @@ sub edit {
 
     &create_links;
 
+    $form->all_business_units($form->{transdate}, undef, 'GL');
+
     $form->{locked} =
       ( $form->{revtrans} )
       ? '1'
@@ -956,6 +958,9 @@ sub edit {
         else {
             $form->{totalcredit} += $ref->{amount};
             $form->{"credit_$i"} = $ref->{amount};
+        }
+        for my $cls (@{$form->{bu_class}}){
+            $form->{"b_unit_$cls->{id}_$i"} = $ref->{"b_unit_$cls->{id}"};
         }
 
         $i++;

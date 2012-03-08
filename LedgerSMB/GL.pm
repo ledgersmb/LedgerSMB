@@ -89,6 +89,7 @@ sub delete_transaction {
 sub post_transaction {
 
     my ( $self, $myconfig, $form, $locale) = @_;
+    $form->all_business_units;
     $form->{reference} = $form->update_defaults( $myconfig, 'glnumber', $dbh )
       unless $form->{reference};
     my $null;
@@ -156,8 +157,7 @@ sub post_transaction {
 		   SET reference = | . $dbh->quote( $form->{reference} ) . qq|,
 		      description = | . $dbh->quote( $form->{description} ) . qq|,
 		      notes = | . $dbh->quote( $form->{notes} ) . qq|,
-		      transdate = ?,
-		      department_id = ?
+		      transdate = ?
 		WHERE id = ?|;
 
     if (defined $form->{approved}) {
@@ -179,7 +179,7 @@ sub post_transaction {
     }
     $sth = $dbh->prepare($query);
     print STDERR $query;
-    $sth->execute( $form->{transdate}, $department_id, $form->{id} )
+    $sth->execute( $form->{transdate}, $form->{id} )
       || $form->dberror($query);
 
     my $amount = 0;
@@ -187,6 +187,10 @@ sub post_transaction {
     my $debit;
     my $credit;
 
+    $b_sth = $dbh->prepare(
+            qq|INSERT INTO business_unit_ac (entry_id, class_id, bu_id) | . 
+            qq|VALUES (currval('acc_trans_entry_id_seq'), ?, ?)|
+    );
     # insert acc_trans transactions
     for $i ( 0 .. $form->{rowcount} ) {
 
@@ -221,21 +225,26 @@ sub post_transaction {
             $query = qq|
 				INSERT INTO acc_trans 
 				            (trans_id, chart_id, amount, 
-				            transdate, source, project_id, 
+				            transdate, source,
 				            fx_transaction, memo, cleared)
 				    VALUES  (?, (SELECT id
 				                   FROM chart
-				                  WHERE accno = ? AND charttype = 'A'),
-				           ?, ?, ?, ?, ?, ?, ?)|;
+				                  WHERE accno = ? ),
+				           ?, ?, ?, ?, ?, ?)|;
             $sth = $dbh->prepare($query);
             $sth->execute(
                 $form->{id},                  $accno,
                 $amount,                      $form->{transdate},
-                $form->{"source_$i"},         $project_id,
+                $form->{"source_$i"}, 
                 ($form->{"fx_transaction_$i"} || 0), $form->{"memo_$i"},
                 ($form->{"cleared_$i"} || 0)
             ) || $form->dberror($query);
-
+            for my $cls(@{$form->{bu_class}}){
+                if ($form->{"b_unit_$cls->{id}_$i"}){
+                    $b_sth->execute($cls->{id}, 
+                                     $form->{"b_unit_$cls->{id}_$i"});
+                }
+            }
             $posted = 1;
         }
     }
@@ -623,9 +632,8 @@ sub transaction {
         #$form->{separate_duties} = $results->{'separate_duties'}->{'value'};
         $sth->finish;
 
-        $query = qq|SELECT g.*, d.description AS department
+        $query = qq|SELECT g.* 
 					  FROM gl g
-				 LEFT JOIN department d ON (d.id = g.department_id)  
 					 WHERE g.id = ?|;
 
         $sth = $dbh->prepare($query);
@@ -636,24 +644,31 @@ sub transaction {
         $sth->finish;
 
         # retrieve individual rows
-        $query = qq|SELECT ac.*, c.accno, c.description, p.projectnumber
+        $query = qq|SELECT ac.*, c.accno, c.description
 					  FROM acc_trans ac
 					  JOIN chart c ON (ac.chart_id = c.id and c.charttype = 'A')
-				 LEFT JOIN project p ON (p.id = ac.project_id)
 					 WHERE ac.trans_id = ?
 				  ORDER BY ac.entry_id|;
 
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
+        my $bu_sth = $dbh->prepare(
+            qq|SELECT * FROM business_unit_ac 
+                WHERE entry_id = ?  |
+        );
+
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+            $bu_sth->execute($ref->{entry_id});
+            while ($buref = $bu_sth->fetchrow_hashref(NAME_lc) ) {
+                 $ref->{"b_unit_$buref->{class_id}"} = $buref->{bu_id};
+            }
 
             if ( $ref->{fx_transaction} ) {
                 $form->{transfer} = 1;
             }
             push @{ $form->{GL} }, $ref;
         }
-
         # get recurring transaction
         $form->get_recurring($dbh);
 
@@ -683,8 +698,7 @@ sub transaction {
 
     # get chart of accounts
     $query = qq|SELECT id,accno,description
-				  FROM chart
-				 WHERE charttype = 'A'
+				  FROM account
 			  ORDER BY accno|;
 
     $sth = $dbh->prepare($query);
@@ -716,8 +730,7 @@ sub get_all_acc_dep_pro
    my $dbh = $form->{dbh};
 
     $query = qq|SELECT id,accno,description
-				  FROM chart
-				 WHERE charttype = 'A'
+				  FROM account
 			  ORDER BY accno|;
 
     $sth = $dbh->prepare($query);
