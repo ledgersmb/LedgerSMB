@@ -2075,15 +2075,15 @@ units assigned to other customers.
 
 sub all_business_units {
 
-    my ( $self, $transdate, $credit_id ) = @_;
+    my ( $self, $transdate, $credit_id, $module_name) = @_;
     $self->{bu_class} = [];
     $self->{b_units} = {};
 
     my $dbh       = $self->{dbh};
     my $class_sth = $dbh->prepare(
-                q|SELECT * FROM business_unit__list_classes('1')|
+                q|SELECT * FROM business_unit__list_classes('1', ?)|
     );
-    $class_sth->execute;
+    $class_sth->execute($module_name);
 
     my $bu_sth    = $dbh->prepare(
                 q|SELECT * 
@@ -2092,7 +2092,7 @@ sub all_business_units {
 
     while (my $classref = $class_sth->fetchrow_hashref('NAME_lc')){
         push @{$self->{bu_class}}, $classref;
-        $bu_sth->execute($classref->{id}, $transdate, $credit_id, '0');
+        $bu_sth->execute($classref->{id}, $transdate, $credit_id);
         $self->{b_units}->{$classref->{id}} = [];
         while (my $buref = $bu_sth->fetchrow_hashref('NAME_lc')){
            push @{$self->{b_units}->{$classref->{id}}}, $buref;

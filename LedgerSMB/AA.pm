@@ -60,6 +60,7 @@ sub post_transaction {
 	use strict;
 
     my ( $self, $myconfig, $form ) = @_;
+    $form->all_business_units;
 
     my $exchangerate;
     my $batch_class;
@@ -206,6 +207,7 @@ sub post_transaction {
 
             push @{ $form->{acc_trans}{lineitems} },
               {
+                row_num        => $i,
                 accno          => $accno,
                 amount         => $amount{fxamount}{$i},
                 project_id     => $project_id,
@@ -219,6 +221,7 @@ sub post_transaction {
                 $amount = $amount{amount}{$i} - $amount{fxamount}{$i};
                 push @{ $form->{acc_trans}{lineitems} },
                   {
+                    row_num        => $i,
                     accno          => $accno,
                     amount         => $amount,
                     project_id     => $project_id,
@@ -381,7 +384,6 @@ sub post_transaction {
 			curr = ?,
 			notes = ?,
 			intnotes = ?,
-			department_id = ?,
 			ponumber = ?,
                         reverse = ?
 		WHERE id = ?
@@ -394,7 +396,7 @@ sub post_transaction {
         $form->{duedate},       $paid,
         $datepaid,              $invnetamount,
         $form->{currency},      $form->{notes},
-        $form->{intnotes},      $form->{department_id},
+        $form->{intnotes},
         $form->{ponumber},      $form->{reverse},
         $form->{id}
     );
@@ -440,26 +442,40 @@ sub post_transaction {
 
     my $taxformfound=AA->taxform_exist($form,$form->{"$form->{vc}_id"});
 
+
+    my $b_unit_sth = $dbh->prepare(
+         "INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
+          VALUES (currval('acc_trans_entry_id_seq'), ?, ?)"
+    );
+
     foreach $ref ( @{ $form->{acc_trans}{lineitems} } ) {
         # insert detail records in acc_trans
         if ( $ref->{amount} ) {
             $query = qq|
 				INSERT INTO acc_trans 
 				            (trans_id, chart_id, amount, 
-				            transdate, project_id, memo, 
+				            transdate, memo, 
 				            fx_transaction, cleared)
 				    VALUES  (?, (SELECT id FROM chart
 				                  WHERE accno = ?), 
-				            ?, ?, ?, ?, ?, ?)|;
+				            ?, ?, ?, ?, ?)|;
 
             @queryargs = (
                 $form->{id},            $ref->{accno},
                 $ref->{amount} * $ml,   $form->{transdate},
-                $ref->{project_id},     $ref->{description},
+                $ref->{description},
                 $ref->{fx_transaction}, $ref->{cleared}
             );
            $dbh->prepare($query)->execute(@queryargs)
               || $form->dberror($query);
+           if ($ref->{row_num} and !$ref->{fx_transaction}){
+              my $i = $ref->{row_num};
+              for my $cls(@{$form->{bu_class}}){
+                  if ($form->{"b_unit_$cls->{id}_$i"}){
+                     $b_unit_sth->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
+                  }
+              }
+           }
 
            if($taxformfound)
            {

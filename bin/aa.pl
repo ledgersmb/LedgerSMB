@@ -222,20 +222,6 @@ sub create_links {
         }
     }
 
-    # departments
-    if ( @{ $form->{all_department} } ) {
-        $form->{selectdepartment} = "<option>\n";
-        $form->{department} = "$form->{department}--$form->{department_id}"
-          if $form->{department_id};
-
-        for ( @{ $form->{all_department} } ) {
-            $form->{selectdepartment} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-    }
-
-    $form->{employee} = "$form->{employee}--$form->{employee_id}";
-
     # sales staff
     if ( @{ $form->{all_employee} } ) {
         $form->{selectemployee} = "";
@@ -429,6 +415,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 sub form_header {
 
     $title = $form->{title};
+    $form->all_business_units($transdate, $form->{"$form->{vc}_id"}, $form->{ARAP});
 
     if($form->{batch_id})
     {
@@ -722,20 +709,25 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
       <table>
 |;
 
-    $project = qq|
-	  <th>| . $locale->text('Project') . qq|</th>
-| if $form->{selectprojectnumber};
-
     print qq|
 	<tr>
 	  <th>| . $locale->text('Amount') . qq|</th>
 	  <th></th>
 	  <th>| . $locale->text('Account') . qq|</th>
 	  <th>| . $locale->text('Description') . qq|</th>
-	  <th>| . $locale->text('Tax Form Applied') . qq|</th>
-	  $project
+	  <th>| . $locale->text('Tax Form Applied') . qq|</th>|;
+    for my $cls (@{$form->{bu_class}}){
+        if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
+            print qq|<th>| . $locale->text($cls->{label}) . qq|</th>|;
+        }
+    }
+    print qq|
 	</tr>
 |;
+    # Building buisness unit dropdowns
+
+
+    # Display rows
 
     for $i ( 1 .. $form->{rowcount} ) {
 
@@ -781,7 +773,22 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
 	  <td><select name="$form->{ARAP}_amount_$i">$selectamount</select></td>
 	  $description
           $taxformcheck
-	  $project
+	  $project|;
+
+        for my $cls (@{$form->{bu_class}}){
+            if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
+                print qq|<td><select name="b_unit_$cls->{id}_$i">
+                                    <option></option>|;
+                      for my $bu (@{$form->{b_units}->{"$cls->{id}"}}){
+                         print qq|  <option value="$bu->{id}">$bu->{control_code}
+                                    </option>|;
+                      }
+                print qq|
+                             </select>
+                        </th>|;
+            }
+        }
+        print qq|
 	</tr>
 |;
 
