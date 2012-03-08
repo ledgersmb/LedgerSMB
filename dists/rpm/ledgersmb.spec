@@ -20,7 +20,7 @@ Requires: perl-Locale-Maketext-Lexicon >= 0.62
 Requires: perl-IO-String 
 Requires: perl-Math-BigInt-GMP
 Requires: perl-Log-Log4perl perl-DateTime perl-DateTime-Format-Strptime
-Requires: perl-Config-General perl-Moose
+Requires: perl-Config-General perl-Moose perl-Number-Format
 BuildRequires: perl
 # avoid bogus autodetection of perl modules:
 AutoReqProv: no
