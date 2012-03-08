@@ -1,7 +1,7 @@
 # RPM spec written for and tested on CentOS 4 and CentOS 5 
 Summary: LedgerSMB - Open Source accounting software
 Name: ledgersmb
-Version: 1.3.12
+Version: 1.3.999000
 Release: 1
 License: GPL
 URL: http://www.ledgersmb.org/
@@ -20,7 +20,7 @@ Requires: perl-Locale-Maketext-Lexicon >= 0.62
 Requires: perl-IO-String 
 Requires: perl-Math-BigInt-GMP
 Requires: perl-Log-Log4perl perl-DateTime perl-DateTime-Format-Strptime
-Requires: perl-Config-Std
+Requires: perl-Config-General
 BuildRequires: perl
 # avoid bogus autodetection of perl modules:
 AutoReqProv: no
