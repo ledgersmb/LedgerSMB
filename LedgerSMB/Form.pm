@@ -2284,8 +2284,7 @@ sub create_links {
 				a.entity_credit_account AS entity_id, 
 				a.datepaid, a.duedate, a.ordnumber,
 				a.taxincluded, a.curr AS currency, a.notes, 
-				a.intnotes, ce.name AS $vc, a.department_id, 
-				d.description AS department,
+				a.intnotes, ce.name AS $vc, 
 				a.amount AS oldinvtotal, a.paid AS oldtotalpaid,
 				a.person_id, e.name AS employee, 
 				c.language_code, a.ponumber, a.reverse,
@@ -2297,7 +2296,6 @@ sub create_links {
 			LEFT JOIN entity_employee er 
                                    ON (er.entity_id = a.person_id)
 			LEFT JOIN entity e ON (er.entity_id = e.id)
-			LEFT JOIN department d ON (d.id = a.department_id)
                         LEFT JOIN country_tax_form ctf 
                                   ON (ctf.id = c.taxform_id)
 			WHERE a.id = ? AND c.entity_class = 
@@ -2373,13 +2371,16 @@ sub create_links {
         # get amounts from individual entries
         $query = qq|
 			SELECT c.accno, c.description, a.source, a.amount,
-				a.memo,a.entry_id, a.transdate, a.cleared, a.project_id,
-				p.projectnumber
+				a.memo,a.entry_id, a.transdate, a.cleared, 
+                                compound_array(ARRAY[ARRAY[bul.class_id, bul.bu_id]])
+                                AS bu_lines
 			FROM acc_trans a
 			JOIN chart c ON (c.id = a.chart_id)
-			LEFT JOIN project p ON (p.id = a.project_id)
+                   LEFT JOIN business_unit_ac bul ON a.entry_id = bul.entry_id
 			WHERE a.trans_id = ?
 				AND a.fx_transaction = '0'
+                        GROUP BY c.accno, c.description, a.source, a.amount,
+                                a.memo,a.entry_id, a.transdate, a.cleared
 			ORDER BY transdate|;
 
         $sth = $dbh->prepare($query);
@@ -2394,6 +2395,9 @@ sub create_links {
         # store amounts in {acc_trans}{$key} for multiple accounts
         while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             $self->db_parse_numeric(sth=>$sth, hashref=>$ref);#tshvr
+            for my $aref (@{$ref->{bu_lines}}){
+                $ref->{"b_unit_$aref->[0]"} = $aref->[1];
+            }
             $ref->{exchangerate} =
               $self->get_exchangerate( $dbh, $self->{currency},
                 $ref->{transdate}, $fld );

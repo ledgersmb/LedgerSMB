@@ -221,6 +221,8 @@ sub create_links {
               qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
         }
     }
+    # Business Reporting Units
+    $form->all_business_units;
 
     # sales staff
     if ( @{ $form->{all_employee} } ) {
@@ -326,9 +328,13 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
                        $form->{rowcount}++;
                         $netamount += $form->{"${akey}_$i"};
 
-                        $form->{"projectnumber_$i"} =
-"$form->{acc_trans}{$key}->[$i-1]->{projectnumber}--$form->{acc_trans}{$key}->[$i-1]->{project_id}"
-                          if $form->{acc_trans}{$key}->[ $i - 1 ]->{project_id};
+                        my $ref = $form->{acc_trans}{$key}->[ $i - 1 ];
+                        for my $cls (@{$form->{bu_class}}){
+                           if ($ref->{"b_unit_$cls->{id}"}){
+                              $form->{"b_unit_$cls->{id}_$i"} 
+                                                         = $ref->{"b_unit_$cls->{id}"};
+                           }
+                        }
                     }
                     else {
                         $form->{invtotal} =
@@ -780,7 +786,12 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
                 print qq|<td><select name="b_unit_$cls->{id}_$i">
                                     <option></option>|;
                       for my $bu (@{$form->{b_units}->{"$cls->{id}"}}){
-                         print qq|  <option value="$bu->{id}">$bu->{control_code}
+                         my $selected = '';
+                         if ($form->{"b_unit_$cls->{id}_$i"} eq $bu->{id}){
+                            $selected = "SELECTED='SELECTED'";
+                         }
+                         print qq|  <option value="$bu->{id}" $selected>
+                                        $bu->{control_code}
                                     </option>|;
                       }
                 print qq|
