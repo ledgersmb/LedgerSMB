@@ -177,6 +177,7 @@ sub add {
 sub display_form
 {
     #Add General Ledger Transaction
+    $form->all_business_units($form->{transdate}, undef, 'GL');
     $form->close_form;
     $form->open_form; 
     $form->{dbh}->commit;
@@ -403,7 +404,10 @@ sub display_row
 
 			      $temphash1->{debit}=$form->{"debit_$i"};
 			      $temphash1->{credit}=$form->{"credit_$i"};
-
+                              for my $cls(@{$form->{bu_class}}){
+                                  $temphash1->{"b_unit_$cls->{id}"} =
+                                         $form->{"b_unit_$cls->{id}_$i"};
+                              } 
 
 			      if ( $i < $form->{rowcount} )
 			      {					      
@@ -438,7 +442,7 @@ sub display_row
 			      }
 
          }
-  
+ 
          push @displayrows,$temphash1;
 
  } 
@@ -457,7 +461,7 @@ sub search {
 
     $colspan = 5;
 
-    $form->all_departments( \%myconfig );
+    #$form->all_departments( \%myconfig );
 
     # departments
     if ( @{ $form->{all_department} } ) {
@@ -1051,12 +1055,19 @@ sub update {
 
      if ( $form->{transdate} ne $form->{oldtransdate} ) {
          $form->{oldtransdate} = $form->{transdate};
-     }
+     } 
 
+    $form->all_business_units($form->{transdate}, undef, 'GL');
     GL->get_all_acc_dep_pro( \%myconfig, \%$form );
+
     @a     = ();
     $count = 0;
     @flds  = qw(accno debit credit projectnumber fx_transaction source memo);
+    for my $cls (@{$form->{bu_class}}){
+        if (scalar @{$form->{b_units}->{$cls->{id}}}){
+           push @flds, "b_unit_$cls->{id}";
+        }
+    }
 
     for $i ( 0 .. $form->{rowcount} ) {
         unless ( ( $form->{"debit_$i"} eq "" )
@@ -1087,7 +1098,7 @@ sub update {
             $count++;
         }
     }
-
+    
     for $i ( 1 .. $count ) {
         $j = $i - 1;
         for (@flds) { $form->{"${_}_$j"} = $a[$j]->{$_} }
@@ -1096,7 +1107,6 @@ sub update {
     for $i ( $count  .. $form->{rowcount} ) {
         for (@flds) { delete $form->{"${_}_$i"} }
     }
-
     $form->{rowcount} = $count;
  
     

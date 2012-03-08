@@ -421,7 +421,9 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 sub form_header {
 
     $title = $form->{title};
-    $form->all_business_units($transdate, $form->{"$form->{vc}_id"}, $form->{ARAP});
+    $form->all_business_units($form->{transdate}, 
+                              $form->{"$form->{vc}_id"}, 
+                              $form->{ARAP});
 
     if($form->{batch_id})
     {

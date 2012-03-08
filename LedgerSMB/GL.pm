@@ -731,18 +731,6 @@ sub get_all_acc_dep_pro
     $sth->finish;
    
     
-    # get departments
-  
-    $form->all_departments( $myconfig, $dbh );
-
-    if ( @{ $form->{all_department} } ) {
-        $form->{departmentset} = 1;
-        for ( @{ $form->{all_department} } ) {
-            $_->{departmentstyle}=$_->{description}."--".$_->{id};
-        }
-    }
-
-
     # get projects
     $form->all_business_units( $form->{transdate} );
 
