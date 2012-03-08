@@ -121,10 +121,11 @@ Returns the business reporting unit referenced by the id.
 
 sub get {
     my ($self, $id) = @_;
-    my @units = $self->call_procedure(procname => 'business_unit__get',
+    my ($unit) = $self->call_procedure(procname => 'business_unit__get',
                                             args => [$id]
     );
-    return $self->new(shift @units);
+    $self->prepare_dbhash($unit);
+    return $self->new(%$unit);
 } 
 
 =item save

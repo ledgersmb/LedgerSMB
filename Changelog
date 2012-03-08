@@ -13,6 +13,7 @@ General Enhancements:
 * Added "dynatable.html" template that can be included in templates (Chris T)
 * Dynatable forms obtained through GET now show link back to form (Chris T)
 * LedgerSMB->error and Form->error now show db version and company (Chris T)
+* Simpler use of Log::Log4perl instead of LedgerSMB::Log (Chris T)
 
 Customer/Vendor Handling 
 * Added sales tax id and license number fields for companies (Chris T)

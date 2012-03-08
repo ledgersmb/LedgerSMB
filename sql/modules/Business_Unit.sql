@@ -95,7 +95,7 @@ SELECT $1, unnest
 SELECT true;
 $$ LANGUAGE SQL;
 
-CREATE FUNCTION business_unit_class__get_modules(in_id int)
+CREATE OR REPLACE FUNCTION business_unit_class__get_modules(in_id int)
 RETURNS SETOF lsmb_module AS
 $$ SELECT * FROM lsmb_module 
     WHERE id IN (select module_id from bu_class_to_module where bu_class_id = $1)
@@ -175,5 +175,9 @@ RAISE NOTICE 'ID: %', retval.id;
 RETURN retval;
 END;
 $$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION business_unit__get(in_id int)
+RETURNS business_unit AS
+$$ SELECT * FROM business_unit where id = $1; $$ LANGUAGE SQL;
 
 COMMIT;
