@@ -1,16 +1,22 @@
 BEGIN;
 
-CREATE OR REPLACE FUNCTION business_unit__list_classes(in_active bool)
+CREATE OR REPLACE FUNCTION business_unit__list_classes(in_active bool, in_module text)
 RETURNS SETOF business_unit_class AS
 $$
 
-SELECT * FROM business_unit_class 
- WHERE active = $1 OR $1 IS NULL
+SELECT bc.* 
+  FROM business_unit_class bc
+ WHERE     (active = $1 OR $1 IS NULL)
+       AND (id IN (select bu_class_id 
+                     FROM bu_class_to_module bcm
+                     JOIN lsmb_module mod ON mod.id = bcm.module_id
+                    WHERE lower(label) = lower($2))
+            OR $2 is null)
 ORDER BY ordering;
 
 $$ LANGUAGE SQL;
 
-COMMENT ON FUNCTION business_unit__list_classes(in_active bool) IS
+COMMENT ON FUNCTION business_unit__list_classes(in_active bool, in_module text) IS
 $$ This function lists all business unit clases.  If in_active is true, then 
 only active classes are listed.  If it is false then only inactive classes are
 listed.  If it is null, then all classes are listed.$$;
@@ -26,8 +32,9 @@ RETURNS SETOF business_unit AS
 $$
 BEGIN
 RETURN QUERY SELECT * FROM business_unit 
-              WHERE (in_active_on BETWEEN start_date AND end_date OR
-                     in_active_on IS NULL)
+              WHERE (in_active_on BETWEEN coalesce(start_date, in_active_on) 
+                                      AND coalesce(end_date, in_active_on) 
+                      OR in_active_on IS NULL)
                     AND (in_credit_id = credit_id
                         OR (credit_id IS NULL and in_strict_credit IS NOT TRUE)
                         OR (in_credit_id IS NULL))

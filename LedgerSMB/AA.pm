@@ -1415,9 +1415,9 @@ sub get_name {
     # get taxes
     $query = qq|
 		SELECT c.accno
-		  FROM chart c
-		  JOIN $form->{vc}tax ct ON (ct.chart_id = c.id)
-		 WHERE c.charttype = 'A' AND ct.$form->{vc}_id = ?|;
+		  FROM account c
+		  JOIN eca_tax ct ON (ct.chart_id = c.id)
+		 WHERE ct.eca_id = ?|;
 
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{"$form->{vc}_id"} ) || $form->dberror($query);
