@@ -124,7 +124,15 @@ sub _calc_taxes {
 
 sub display_row {
     my $numrows = shift;
-
+    my $lsmb_module;
+    if ($form->{vc} eq 'customer'){
+       $lsmb_module = 'AR';
+    } elsif ($form->{vc} eq 'vendor'){
+       $lsmb_module = 'AP';
+    }
+    $form->all_business_units($form->{transdate}, 
+                              $form->{"$form->{vc}_id"}, 
+                              $lsmb_module);
     @column_index = qw(runningnumber partnumber description qty);
 
     if ( $form->{type} eq "sales_order" ) {
@@ -171,6 +179,13 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     }
 
     push @column_index, @{LedgerSMB::Sysconfig::io_lineitem_columns};
+    for my $cls(@{$form->{bu_class}}){
+        if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
+             push @column_index, "b_unit_$cls->{id}";
+             $column_data{"b_unit_$cls->{id}"} = 
+               qq|<th class=listheading nowrap>| . $cls->{label} . qq|</th>|;
+        }
+    }
 
     push @column_index, "taxformcheck";#increase the number of elements by pushing into column_index.(Ex: NEw added element 
 				       # taxformcheck & check the screen AR->Sales Invoice) do everything before colspan ;
@@ -334,6 +349,24 @@ qq|<td><input name="description_$i" size=48 value="$form->{"description_$i"}"></
 
 	}
 
+        for my $cls(@{$form->{bu_class}}){
+            if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
+                $column_data{"b_unit_$cls->{id}"} = 
+                   qq|<td><select name="b_unit_$cls->{id}_$i">
+                           <option></option>|;
+                my $selected = "";
+                for my $bu (@{$form->{b_units}->{"$cls->{id}"}}){
+                   if ($bu->{id} eq $form->{"b_unit_$cls->{id}_$i"}){
+                       $selected = "SELECTED='SELECTED'";
+                   }
+                   $column_data{"b_unit_$cls->{id}"} .= qq|
+                       <option value="$bu->{id}">$bu->{control_code}</option>|;
+                }
+                $column_data{"b_unit_$cls->{id}"} .= qq|
+                     </select></td>|;
+                   
+            }
+        }
 
 $column_data{runningnumber} =
           qq|<td><input name="runningnumber_$i" size=3 value=$i></td>|;
