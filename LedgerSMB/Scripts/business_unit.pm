@@ -69,8 +69,8 @@ sub edit {
     $request->{control_code} = '';
     $request->{class_id} = 0 unless $request->{class_id} = 0;
     my $b_unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
-    $b_unit->get($request->{id});
-    _display($b_unit);
+    my $bu = $b_unit->get($request->{id});
+    _display($bu);
 }
 
 sub _display {

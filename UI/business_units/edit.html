@@ -3,7 +3,13 @@
 ?>
 <?lsmb PROCESS 'elements.html' ?>
 <body onLoad="init()">
-<div class="listtop"><?lsmb title ?></div>
+<div class="listtop">
+   <?lsmb 
+   IF id; 
+      text('Edit Reporting Unit');
+   ELSE;
+      text('Add Reporting Unit');
+    END; ?></div>
 <form action="<?lsmb script ?>" method="post">
 <!-- These are for Javascript automation of defaults -CT -->
 <?lsmb PROCESS input element_data = {
