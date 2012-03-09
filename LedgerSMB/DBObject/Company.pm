@@ -227,65 +227,6 @@ sub get_history {
     return @results;
 }
 
-=pod
-
-=over
-
-=item save_credit 
-
-This method saves the credit account for the company.
-
-Expected inputs:
-credit_id (int): (Optional) Id for the account
-entity_class (int):  Class of the account, required (1 = vendor, 2 = customer)
-entity_id (int):  ID of entity to attach to. 
-description (text):  Description of account
-discount (numeric):  Early payment discount 
-taxincluded (bool):  Whether prices include tax. 
-creditlimit (numeric):  Credit limit
-discount_terms (int):  How many days can elapse before the discount lapses too.
-terms (int):  How many days can lapse before the invoice is overdue. 
-meta_number (varchar):  Account string identifier for the account.
-business_id (int):  ID for business type.
-language (varchar): Language code for invoices.
-pricegroup_id (int): Price group
-curr (char):  Currency  identifier, three characters long.
-startdate (date):  Date of the start of the relationship. 
-enddate (date):  Date of the end of the relationship.
-threshold (NUMERIC):  How much must be owed before the invoices can be paid.
-ar_ap_account_id (int):  ID of ar/ap account.  REQUIRED
-cash_account_id (int):  ID of cash account (Optional)
-pay_to_name (text):  Name to pay to or receive from.
-taxform_id (int);  ID of tax form
-
-=back
-
-=cut
-
-sub save_credit {
-
-    my $self = shift @_;
-    $self->set_entity_class();
-    $self->{threshold} = $self->parse_amount(amount => $self->{threshold});
-    $self->{tax_ids} = $self->_db_array_scalars(@{$self->{tax_ids}});
-    my ($ref) = $self->exec_method(funcname => 'entity_credit_save');
-    $self->{credit_id} = (values %$ref)[0];
-    my $dbh=$self->{dbh};
-    if ($self->{taxform1_id}) {
-       my $sth = $dbh->prepare(
-           "update entity_credit_account 
-                set country_taxform_id=? 
-              where id=?"
-       );
-       $sth->execute($self->{taxform1_id}, $self->{credit_id});
-    }
-    if ($self->{tax_ids} ne '{}'){
-        $self->exec_method(funcname => 'eca__set_taxes');
-    }
-    $self->{threshold} = $self->format_amount(amount => $self->{threshold});
-    $self->{dbh}->commit;
-}
-
 =over
 
 =item save_location

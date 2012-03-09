@@ -66,6 +66,14 @@ create type eca_history_result as (
    salesperson_name text
 );
 
+CREATE OR REPLACE FUNCTION eca__get_by_meta_number
+(in_meta_number text, in_entity_class int)
+RETURNS entity_credit_account AS
+$$
+SELECT * FROM entity_credit_account
+ WHERE entity_class = $2 AND meta_number = $1;
+$$ language sql;
+
 CREATE OR REPLACE FUNCTION eca_history
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
@@ -713,7 +721,7 @@ DROP FUNCTION IF EXISTS entity_credit_save (
     in_pay_to_name text,
     in_taxform_id int);
 
-CREATE OR REPLACE FUNCTION entity_credit_save (
+CREATE OR REPLACE FUNCTION eca__save (
     in_credit_id int, in_entity_class int,
     in_entity_id int, in_description text,
     in_discount numeric, in_taxincluded bool, in_creditlimit numeric, 
@@ -822,7 +830,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
     
 $$ language 'plpgsql';
 
-COMMENT ON  FUNCTION entity_credit_save (
+COMMENT ON  FUNCTION eca__save (
     in_credit_id int, in_entity_class int,
     in_entity_id int, in_description text,
     in_discount numeric, in_taxincluded bool, in_creditlimit numeric,

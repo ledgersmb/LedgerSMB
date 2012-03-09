@@ -2,6 +2,7 @@ package LedgerSMB::ScriptLib::Company;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Customer;
 use LedgerSMB::DBObject::Entity::Company;
+use LedgerSMB::DBObject::Entity::Credit_Account;
 use LedgerSMB::DBObject::Vendor;
 use Log::Log4perl;
 
@@ -661,26 +662,28 @@ This inserts or updates a credit account of the sort listed here.
 sub save_credit {
     
     my ($request) = @_;
+    my $company;
+    my @taxes;
+    $request->{entity_class} = $request->{account_class};
+
     if (!$request->{ar_ap_account_id}){
           $request->error(
               $request->{_locale}->text('No AR or AP Account Selected')
           );
     }
 
-    my $company = new_company($request);
-    my @taxes;
-    $company->{tax_ids} = [];
-    for my $key(keys %$company){
+    $request->{tax_ids} = [];
+    for my $key(keys %$request){
         if ($key =~ /^taxact_(\d+)$/){
            my $tax = $1;
-           push @{$company->{tax_ids}}, $tax;
+           push @{$request->{tax_ids}}, $tax;
         }  
     }
-    if (_close_form($company)){
-        $company->save_credit();
+    if (_close_form($request)){
+        $credit = LedgerSMB::DBObject::Entity::Credit_Account->new(%$request);    
+        $credit->save();
     }
-    $company->get();
-    _render_main_screen($company);
+    _render_main_screen($request);
 }
 
 =pod

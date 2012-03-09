@@ -232,6 +232,14 @@ This is a link to the bank account record.  Note that multiple bank accounts can
 be linked to an entity, but only one can be primary, for things like payments by
 wire or ACH.
 
+=item tax_ids
+
+This is an arrayref of ints for the tax accounts linked to the customer.
+
+=cut
+
+has 'tax_ids' => (is => 'rw', isa => 'Maybe[ArrayRef[Int]]');
+
 =cut
 
 has 'bank_account' => (is => 'rw', isa => 'Maybe[Int]');
@@ -250,15 +258,82 @@ has 'taxform_id' => (is => 'rw', isa => 'Maybe[Int]');
 
 =over
 
-=item get_by_id
+=item get_by_id($id int);
 
-=item get_by_meta_number
+Retrieves and returns the entity credit account corresponding with the id 
+mentioned.
 
-=item list_for_entity
+=cut
 
-=item get_current_debt
+sub get_by_id {
+    my ($self, $id) = @_;
+    my ($ref) = $self->call_procedure(procname => 'entity_credit__get',
+                                          args => [$id]);
+    $self->prepare_dbhash($ref);
+    return $self->new(%$ref);
+}
 
-=item save
+=item get_by_meta_number($meta_number string, $entity_class int)
+
+Retrieves and returns the entity credit account, of entity class $entity_class, 
+identified by $meta_number
+
+=cut
+
+sub get_by_meta_number {
+    my ($self, $meta_number, $entity_class) = @_;
+    my ($ref) = $self->call_procedure(procname => 'eca__get_by_met_number',
+                                          args => [$meta_number, 
+                                                   $entity_class]);
+    $self->prepare_dbhash($ref);
+    return $self->new(%$ref);
+}
+
+=item list_for_entity($entity_id int, [$entity_class int]);
+
+Returns a list of entity credit accounts for the entity (company or person)
+identified by $entity_id
+
+=cut
+
+sub list_for_entity {
+    my ($self, $entity_id, $entity_class) = @_;
+    my @results = $self->call_procedure(procname => 'entity__list_credit',
+                                            args => [$entity_id, $entity_class]
+    );
+    for my $ref (@results){
+        $self->prepare_dbhash($ref);
+        $ref = $self->new(%$ref);
+    }
+    return @results;
+}
+
+=item get_current_debt()
+
+Sets $self->current_debt and returns the same value.
+
+=cut
+
+sub get_current_debt {
+    my ($self) = @_;
+    my ($ref) = $self->exec_method({funcname => 'eca__get_current_debt'});
+    $self->current_debt($ref->{eca__get_current_debt});
+    return $self->current_debt;
+}
+
+=item save()
+
+Saves the entity credit account.  This also sets db defaults if not set.
+
+=cut
+
+sub save {
+    my ($self) = @_;
+    my ($ref) = $self->exec_method({funcname => 'eca__save'});
+    $self->prepare_dbhash($ref);
+    $self = $self->new(%$ref);
+}
+
 
 =head1 COPYRIGHT
 
