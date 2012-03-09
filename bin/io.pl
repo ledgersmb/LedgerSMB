@@ -348,19 +348,20 @@ qq|<td><input name="description_$i" size=48 value="$form->{"description_$i"}"></
 		$taxchecked="checked";
 
 	}
-
         for my $cls(@{$form->{bu_class}}){
             if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
                 $column_data{"b_unit_$cls->{id}"} = 
                    qq|<td><select name="b_unit_$cls->{id}_$i">
                            <option></option>|;
-                my $selected = "";
                 for my $bu (@{$form->{b_units}->{"$cls->{id}"}}){
+                   my $selected = "";
                    if ($bu->{id} eq $form->{"b_unit_$cls->{id}_$i"}){
                        $selected = "SELECTED='SELECTED'";
                    }
                    $column_data{"b_unit_$cls->{id}"} .= qq|
-                       <option value="$bu->{id}">$bu->{control_code}</option>|;
+                       <option value="$bu->{id}" $selected >
+                               $bu->{control_code}
+                       </option>|;
                 }
                 $column_data{"b_unit_$cls->{id}"} .= qq|
                      </select></td>|;

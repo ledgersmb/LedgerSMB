@@ -1057,7 +1057,7 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
 }
 
 sub update {
-    on_update();#TODO meaning ?
+    on_update(); # Used for overrides for POS invoices --CT
     $form->{taxes} = {};
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
