@@ -302,6 +302,7 @@ sub transactions {
 sub save {
     my ( $self, $myconfig, $form ) = @_;
   
+    $form->all_business_units;
     $form->db_prepare_vars(
         "quonumber", "transdate",     "vendor_id",     "entity_id",
         "reqdate",   "taxincluded",   "shippingpoint", "shipvia",
@@ -310,6 +311,11 @@ sub save {
     );
     # connect to database, turn off autocommit
     my $dbh = $form->{dbh};
+    my $b_unit_sth = $dbh->prepare(
+         "INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
+          VALUES (currval('orderitems_id_seq'), ?, ?)"
+    );
+
     my @queryargs;
     my $quotation;
     my $ordnumber;
@@ -358,7 +364,7 @@ sub save {
     my $ml = ( $form->{type} eq 'sales_order' ) ? 1 : -1;
 
     $query = qq|
-		SELECT p.assembly, p.project_id
+		SELECT p.assembly 
 		FROM parts p WHERE p.id = ?|;
     my $pth = $dbh->prepare($query) || $form->dberror($query);
 
@@ -410,11 +416,11 @@ sub save {
 			INSERT INTO oe 
 				(id, ordnumber, quonumber, transdate, 
 				reqdate, shippingpoint, shipvia,
-				notes, intnotes, curr, closed, department_id,
+				notes, intnotes, curr, closed, 
 				person_id, language_code, ponumber, terms,
 				quotation, oe_class_id, entity_credit_account)
 			VALUES 
-				($form->{id}, ?, ?, ?,
+				($form->{id}, ?, ?, 
 				?, ?, ?,
 				?, ?, ?, ?, ?,
 				?, ?, ?, ?,
@@ -425,7 +431,7 @@ sub save {
             $form->{shippingpoint}, $form->{shipvia},
             $form->{notes},         $form->{intnotes},
             $form->{currency},      $form->{closed},
-            $form->{department_id}, $form->{person_id},
+            $form->{person_id},
             $form->{language_code}, $form->{ponumber},
             $form->{terms},         $quotation, $class_id, $form->{"$form->{vc}_id"}
         );
@@ -549,22 +555,28 @@ sub save {
             # save detail record in orderitems table
             $query = qq|INSERT INTO orderitems (
 		          trans_id, parts_id, description, qty, sellprice,
-		          discount, unit, reqdate, project_id, ship, 
+		          discount, unit, reqdate, ship, 
 		          serialnumber, notes, precision)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)|;
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)|;
             $sth = $dbh->prepare($query);
             push( @queryargs,
                 $form->{id},                $form->{"id_$i"},
                 $form->{"description_$i"},  $form->{"qty_$i"},
                 $fxsellprice,               $form->{"discount_$i"},
                 $form->{"unit_$i"},         $form->{"reqdate_$i"},
-                $project_id,                $form->{"ship_$i"},
+                $form->{"ship_$i"},
                 $form->{"serialnumber_$i"}, $form->{"notes_$i"},
                 $form->{"precision_$i"}
             );
             $sth->execute(@queryargs) || $form->dberror($query);
 	    $dbh->commit;
             $form->{"sellprice_$i"} = $fxsellprice;
+            for my $cls(@{$form->{bu_class}}){
+                if ($form->{"b_unit_$cls->{id}_$i"}){
+                 $b_unit_sth->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
+                }
+            }
+
         }
         $form->{"discount_$i"} *= 100;
  
@@ -629,7 +641,6 @@ sub save {
 				curr = ?, 
 				closed = ?, 
 				quotation = ?, 
-				department_id = ?, 
 				person_id = ?, 
 				language_code = ?, 
 				ponumber = ?, 
@@ -648,7 +659,7 @@ sub save {
             $form->{shipvia},       $form->{notes},
             $form->{intnotes},      $form->{currency},
             $form->{closed},        $quotation,
-            $form->{department_id}, $form->{person_id},
+            $form->{person_id},
             $form->{language_code}, $form->{ponumber},
             $form->{terms},         $form->{id}
         );
@@ -809,6 +820,11 @@ sub retrieve {
     # connect to database
     my $dbh = $form->{dbh};
 
+    my $bu_sth = $dbh->prepare(
+            qq|SELECT * FROM business_unit_oitem
+                WHERE entry_id = ?  |
+    );
+
     my $query;
     my $sth;
     my $var;
@@ -830,8 +846,7 @@ sub retrieve {
 				o.person_id AS employee_id,
 				o.entity_credit_account AS $form->{vc}_id, c.legal_name AS $form->{vc}, 
 				o.amount AS invtotal, o.closed, o.reqdate, 
-				o.quonumber, o.department_id, 
-				d.description AS department, o.language_code, 
+				o.quonumber, o.language_code,
 				o.ponumber
 			FROM oe o
 			JOIN entity_credit_account cr ON (cr.id = o.entity_credit_account)
@@ -840,7 +855,6 @@ sub retrieve {
 			LEFT JOIN person pe ON (o.person_id = pe.id)
 			LEFT JOIN entity_employee e 
                                   ON (pe.entity_id = e.entity_id)
-			LEFT JOIN department d ON (o.department_id = d.id)
 			WHERE o.id = ?|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -882,8 +896,8 @@ sub retrieve {
 			SELECT o.id AS orderitems_id, p.partnumber, p.assembly, 
 				o.description, o.qty, o.sellprice, o.precision, 
 				o.parts_id AS id, o.unit, o.discount, p.bin,
-				o.reqdate, o.project_id, o.ship, o.serialnumber,
-				o.notes, pr.projectnumber, pg.partsgroup, 
+				o.reqdate, o.ship, o.serialnumber,
+				o.notes, pg.partsgroup, 
 				p.partsgroup_id, p.partnumber AS sku,
 				p.listprice, p.lastcost, p.weight, p.onhand,
 				p.inventory_accno_id, p.income_accno_id, 
@@ -891,7 +905,6 @@ sub retrieve {
 					AS partsgrouptranslation
 			FROM orderitems o
 			JOIN parts p ON (o.parts_id = p.id)
-			LEFT JOIN project pr ON (o.project_id = pr.id)
 			LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
 			LEFT JOIN translation t 
 				ON (t.trans_id = p.partsgroup_id 
@@ -922,6 +935,11 @@ sub retrieve {
 
         while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
+
+            $bu_sth->execute($ref->{invoice_id});
+            while ( $buref = $bu_sth->fetchrow_hashref(NAME_lc) ) {
+                $ref->{"b_unit_$buref->{class_id}"} = $buref->{bu_id};
+            }
 
             ($decimalplaces) = ( $ref->{sellprice} =~ /\.(\d+)/ );
             $decimalplaces = length $decimalplaces;
