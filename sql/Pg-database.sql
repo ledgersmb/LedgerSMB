@@ -1410,7 +1410,7 @@ CREATE UNIQUE INDEX parts_partnumber_index_u ON parts (partnumber)
 WHERE obsolete is false;
 CREATE TABLE invoice (
   id serial PRIMARY KEY,
-  trans_id int REFERENCES journal_entry(id),
+  trans_id int REFERENCES transactions(id),
   parts_id int REFERENCES parts(id),
   description text,
   qty NUMERIC,

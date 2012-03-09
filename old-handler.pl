@@ -139,17 +139,17 @@ $logger->trace("trying script=bin/$form->{script} action=$form->{action}");#trac
 try {
   require "bin/$form->{script}";
 
-# customized scripts
-if ( -f "bin/custom/$form->{script}" ) {
+  # customized scripts
+  if ( -f "bin/custom/$form->{script}" ) {
     eval { require "bin/custom/$form->{script}"; };
-}
+  }
 
-# customized scripts for login
-if ( -f "bin/custom/$form->{login}_$form->{script}" ) {
+  # customized scripts for login
+  if ( -f "bin/custom/$form->{login}_$form->{script}" ) {
     eval { require "bin/custom/$form->{login}_$form->{script}"; };
-}
+  }
 
-if ( $form->{action} ) {
+  if ( $form->{action} ) {
 
     binmode STDOUT, ':utf8';
     binmode STDERR, ':utf8';
@@ -161,11 +161,11 @@ if ( $form->{action} ) {
 
     &{ $form->{action} };
 
-}
-else {
+  }
+  else {
     $form->error( __FILE__ . ':' . __LINE__ . ': '
           . $locale->text('action not defined!'));
-}
+  }
 
 }
 catch {
