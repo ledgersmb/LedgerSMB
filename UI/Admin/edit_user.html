@@ -146,6 +146,11 @@
         <button type="submit" value="save_user"><?lsmb text('Save User') ?>
            <?lsmb END ?>
         </button>
+    <?lsmb IF user.employee.entity_id;
+              e_id = user.employee.entity_id ?>
+       <a href="employee.pl?action=edit&entity_id=<?lsmb e_id ?>">[<?lsmb text('Edit') 
+       ?>]</a>
+    <?lsmb END ?> 
     </form>
     <?lsmb IF user.user.username AND user.user.import != 1 ?>
         <form name="groups" method="POST" action="admin.pl">

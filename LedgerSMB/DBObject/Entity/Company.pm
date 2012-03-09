@@ -39,7 +39,7 @@ Tax identifier for the company.
 
 =cut
 
-has 'tax_id' => (is => 'rw', isa => 'Str', default => '');
+has 'tax_id' => (is => 'rw', isa => 'Maybe[Str]', default => '');
 
 =item sales_tax_id
 
@@ -47,7 +47,7 @@ Sales tax identifier for the company (like a GST or VAT number)
 
 =cut
 
-has 'sales_tax_id' => (is => 'rw', isa => 'Str', default => '');
+has 'sales_tax_id' => (is => 'rw', isa => 'Maybe[Str]', default => '');
 
 =item license_number
 
@@ -55,7 +55,7 @@ Buisness license number for the company
 
 =cut
 
-has 'license_number' => (is => 'rw', isa => 'Str', default => '');
+has 'license_number' => (is => 'rw', isa => 'Maybe[Str]', default => '');
 
 =item sic_code
 
@@ -63,7 +63,7 @@ Business categorization code.  SIC, NAICS, or other systems can be used.
 
 =cut
 
-has 'sic_code' => (is => 'rw', isa => 'Str', default => '');
+has 'sic_code' => (is => 'rw', isa => 'Maybe[Str]', default => '');
 
 =item created 
 

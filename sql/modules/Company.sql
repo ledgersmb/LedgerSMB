@@ -632,15 +632,14 @@ $$ Returns billing information (billing name and address) for a given credit
 account.$$;
 
 
-DROP FUNCTION IF EXISTS company_save(int, text, int, text, text, int, text, int);
-
 DROP FUNCTION IF EXISTS company_save (
     in_id int, in_control_code text, in_entity_class int,
     in_name text, in_tax_id TEXT,
-    in_entity_id int, in_sic_code text,in_country_id int
+    in_entity_id int, in_sic_code text,in_country_id int,
+    in_sales_tax_id text, in_license_number text
 );
 
-CREATE OR REPLACE FUNCTION company_save (
+CREATE OR REPLACE FUNCTION company__save (
     in_id int, in_control_code text, in_entity_class int,
     in_name text, in_tax_id TEXT,
     in_entity_id int, in_sic_code text,in_country_id int,
@@ -692,7 +691,7 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-COMMENT ON  FUNCTION company_save (
+COMMENT ON  FUNCTION company__save (
     in_id int, in_control_code text, in_entity_class int,
     in_name text, in_tax_id TEXT,
     in_entity_id int, in_sic_code text,in_country_id int,

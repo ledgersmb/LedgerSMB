@@ -37,6 +37,8 @@ use Log::Log4perl;
 use LedgerSMB::CancelFurtherProcessing;
 use strict;
 
+LedgerSMB::App_State->zero();
+
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Handler');
 
 $logger->debug("Begin");

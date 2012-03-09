@@ -139,6 +139,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Mailer;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
+use LedgerSMB::App_State;
 use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
@@ -244,6 +245,7 @@ sub render {
 	my $self = shift;
 	my $vars = shift;
         $vars->{ENVARS} = \%ENV;
+        $vars->{USER} = $LedgerSMB::App_State::User;
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
 		throw Error::Simple "Invalid format";
 	}

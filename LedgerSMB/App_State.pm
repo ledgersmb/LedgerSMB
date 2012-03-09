@@ -74,6 +74,18 @@ sub init {
     $Locale = LedgerSMB::Locale->get_handle($User->{language});
 }
 
+=item zero()
+
+zeroes out all majro parts.
+
+=cut
+
+sub zero() {
+    $SODA = undef;
+    $User = undef;
+    $Locale = undef;
+}
+
 =item cleanup
 
 Deletes all objects attached here.

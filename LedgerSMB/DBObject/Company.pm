@@ -70,37 +70,6 @@ sub get_by_cc {
 }
 
 
-=over
-
-=item save()
-
-This stores the company record including a credit account in the database.
-
-TODO:  Separate company from credit account storage.
-
-=back
-
-=cut
-
-sub save {
-    my $self = shift @_;
-    $self->set_entity_class();
-    unless($self->{control_code}) {
-        $self->{notice} = "You must set the Control Code";
-        return;
-    }
-    unless($self->{name}) {
-        $self->{notice} = "You must set the Name";
-        return;
-    }
-    my ($ref) = $self->exec_method(funcname => 'company_save');
-    $self->{entity_id} = (values %$ref)[0];
-    $self->get;
-    $self->get_metadata;
-    $self->{dbh}->commit;
-}
-
-
 =over 
 
 =item delete_contact

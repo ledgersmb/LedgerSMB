@@ -1,6 +1,7 @@
 package LedgerSMB::ScriptLib::Company;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Customer;
+use LedgerSMB::DBObject::Entity::Company;
 use LedgerSMB::DBObject::Vendor;
 use Log::Log4perl;
 
@@ -635,12 +636,14 @@ company as needed, and will generate a new Company ID for the company if needed.
 sub save {
     
     my ($request) = @_;
-    my $company = new_company($request);
-    if (_close_form($company)){
+    set_entity_class($request);
+    my $closed = _close_form($request);
+    my $company = LedgerSMB::DBObject::Entity::Company->new(%$request);
+    if ($closed){
         #$logger->debug("\$company = " . Data::Dumper::Dumper($company));
         $company->save();
     }
-    _render_main_screen($company);
+    _render_main_screen($request, $company);
 }
 
 =pod
@@ -734,21 +737,24 @@ Pulls relevant data from db and renders the data entry screen for it.
 =cut
 
 sub _render_main_screen{
-    my $company = shift @_;
-    $company->close_form;
-    $company->open_form;
-    $company->{dbh}->commit;
-    $company->get_metadata();
-    set_entity_class($company);
+    my ($request, $company) = @_;
+    $request->close_form;
+    $request->open_form;
+    $request->{dbh}->commit;
+    set_entity_class($request);
+    if (!$company){
+        $company = new_company($request);
+        $company->get_metadata();
+    }
 
-    $company->{creditlimit} = $company->format_amount({amount => $company->{creditlimit}}) unless !defined $company->{creditlimit}; 
+    $company->{creditlimit} = $request->format_amount({amount => $company->{creditlimit}}) unless !defined $company->{creditlimit}; 
     $company->{discount} = "$company->{discount}" unless !defined $company->{discount}; 
     $company->{note_class_options} = [
         {label => 'Entity', value => 1},
         {label => $ec_labels->{"$company->{entity_class}"} . ' Account', 
          value => 3},
     ];
-    $company->{threshold} = $company->format_amount(amount => $company->{threshold});
+    $company->{threshold} = $request->format_amount(amount => $company->{threshold});
     if(! $company->{language_code})
     {
      #$logger->debug("company->language code not set!");
@@ -804,7 +810,7 @@ Saves contact info as per LedgerSMB::DBObject::Company::save_contact.
 =cut
 
 sub save_contact {
-    my ($request) = @_;
+   my ($request) = @_;
     my $company = new_company($request);
     if (_close_form($company)){
         $company->save_contact();
