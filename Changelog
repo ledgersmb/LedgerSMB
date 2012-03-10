@@ -10,6 +10,7 @@ Changelog for 1.3.13
 * Corrected character encoding issue with backup scripts (Chris T)
 * Changes in the single payment UI to minimize mouse movements (Erik H)
 * Adding link to employee edit screen from user page (h/t H Sorli) (Chris T)
+* Fixed: Can't designate managers (Chris T, bug  3486840)
 
 Changelog for 1.3.12
 * Corrected processing of <?lsmb tags in order/invoice numbers (Chris T)
