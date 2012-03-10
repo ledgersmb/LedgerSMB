@@ -98,7 +98,7 @@ END ?>
                 name = "entity_id"
                value = entity_id
 } ?>	
-<div class="input" id="person_name_div"><?lsmb #text('Name:')?>&nbsp;
+<div class="input_line" id="person_name_div"><?lsmb #text('Name:')?>&nbsp;
 <div class="input_group">
 <!-- TODO:  Add Saluatation -->
 <?lsmb PROCESS input element_data = {
@@ -118,6 +118,8 @@ END ?>
 	size = 20
 } ?>
 </div>
+</div>
+<div class="input_line" id='person_name2_div'>
 <div class="input_group">
 <?lsmb PROCESS input element_data = {
 	label = text('Last Name') #'
@@ -127,8 +129,6 @@ END ?>
 	size = 20
 } ?>
 </div>
-</div>
-<div id="job_title_div">
 <!-- Note that the strange # ' constructs are only necessary to help VIM avoid
 problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <div class="input_group">
@@ -140,6 +140,8 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	size = 20
 } # ' ?>
 </div>
+</div>
+<div class="input_line" id="person-role-div">
 <div class="input_group">
 <?lsmb PROCESS input element_data = {
 	label = text('Sales')
@@ -149,6 +151,17 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	name = "sales"
 } ?>
 </div>
+<div class="input_group">
+<?lsmb PROCESS input element_data = {
+        label = text('Manager')
+        value = 'manager'
+        type = "checkbox"
+        checked = is_manager
+        name = "is_manager"
+} ?>
+</div>
+</div>
+<div class="input_line" id="person-country-div">
 <div class="input_group">
        <?lsmb country_list.unshift({}) ?>
 		<?lsmb INCLUDE select element_data = {
@@ -172,13 +185,14 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 } # ' ?>
 </div>
 <div class="input_group">
-<label for="manager_select"><?lsmb text('Manager') ?></label>
-<select id="manager_select" name="manager_id">
-<?lsmb FOREACH e = employee ?>
-<option value = e.entity_id <?lsmb (manager_id == e.entity_id) ? "SELECTED" : ""?><?lsmb e.name ?></option>
-<?lsmb END ?>
-</select>
-</div>
+<?lsmb PROCESS select element_data = {
+         label = text('Manager')
+          name = 'manager_id'
+       options = all_managers
+default_values = [manager_id]
+     text_attr = 'label'
+    value_attr = 'id'
+} ?> 
 </div>
 <div id="hr_dates_div">
 <div class="input_group">

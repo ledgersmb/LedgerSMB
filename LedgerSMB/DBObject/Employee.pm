@@ -96,10 +96,32 @@ sub set_entity_class {
 sub save {
    my ($self) = @_;
    $self->set_entity_class();
+   if ($self->{is_manager}) {
+       $self->{role} = 'manager';
+   } else {
+       $self->{role} = 'user';
+   }
    my ($ref) = $self->exec_method(funcname => 'person__save');
    $self->{entity_id} = $ref->{'person__save'};
    $self->exec_method(funcname => 'employee__save');
    $self->{dbh}->commit;
+}
+
+
+=item get_managers 
+
+Retrieves a set of managers and attaches to $self->{all_managers}
+
+=cut
+
+sub get_managers {
+    my ($self) = @_;
+    my @results = $self->exec_method(funcname => 'employee__all_managers');
+    for my $ref (@results) {
+        $ref->{label} = $ref->{employeenumber} . '--' . $ref->{last_name};
+    }
+    $self->{all_managers} = \@results;
+    return @results;
 }
 
 =item save_location
@@ -170,7 +192,7 @@ $self->{cash_acc_list} = qw(list of cash accounts)
 
 sub get_metadata {
     my $self = shift @_;
-
+    $self->get_managers;
     @{$self->{entity_classes}} = 
 		$self->exec_method(funcname => 'entity__list_classes');
 
@@ -220,6 +242,9 @@ List of bank accounts
 sub get {
     my $self = shift @_;
     my ($ref) = $self->exec_method(funcname => 'employee__get');
+    if ($ref->{role} eq 'manager'){
+        $ref->{is_manager} = 1;
+    }
     $self->merge($ref);
     @{$self->{locations}} = $self->exec_method(
 		funcname => 'person__list_locations');

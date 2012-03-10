@@ -88,6 +88,22 @@ CREATE TYPE employee_result AS (
     country_id int
 );
 
+CREATE OR REPLACE FUNCTION employee__all_managers()
+RETURNS setof employee_result AS
+$$
+   SELECT p.entity_id, p.id, s.salutation,
+          p.first_name, p.middle_name, p.last_name,
+          ee.startdate, ee.enddate, ee.role, ee.ssn, ee.sales, ee.manager_id,
+          mp.first_name, mp.last_name, ee.employeenumber, ee.dob, e.country_id
+     FROM person p
+     JOIN entity_employee ee on (ee.entity_id = p.entity_id)
+     JOIN entity e ON (p.entity_id = e.id)
+LEFT JOIN salutation s on (p.salutation_id = s.id)
+LEFT JOIN person mp ON ee.manager_id = p.entity_id
+    WHERE ee.role = 'manager'
+ ORDER BY ee.employeenumber;
+$$ LANGUAGE SQL; 
+
 CREATE OR REPLACE FUNCTION employee__get
 (in_entity_id integer)
 returns employee_result as
