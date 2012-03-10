@@ -12,6 +12,9 @@ begin;
 SELECT account_heading_save(NULL, '1000', 'ACTIF COURANT', NULL);
 SELECT account_save(NULL,'1060','Compte chèque','A','1002', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1065','Petite caisse','A','1001', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE accno in ('1060', '1065');
+
 SELECT account_save(NULL,'1200','Comptes clients','A','1060', NULL, false, false, string_to_array('AR', ':'));
 SELECT account_save(NULL,'1205','Provisions pour créances douteuses','A','1063', NULL, false, false, string_to_array('', ':'));
 SELECT account_heading_save(NULL, '1500', 'INVENTAIRE', NULL);

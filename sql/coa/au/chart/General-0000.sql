@@ -18,6 +18,10 @@ SELECT account_save(NULL,'1840','Motor Vehicles - at Cost','A','1800', NULL, fal
 INSERT INTO chart (accno, description, charttype, category, link, gifi_accno, contra) VALUES ('1845', 'Less: Accumulated Depreciation', 'A', 'A', '', '1800', '1');
 SELECT account_heading_save(NULL, '1800', 'CAPITAL ASSETS', NULL);
 SELECT account_save(NULL,'1060','Cheque Account','A','1000', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
+
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE accno = '1060';
+
 SELECT account_save(NULL,'1205','Less: Provision Doubtful Debts','A','1000', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'1210','Trade Debtors / Australia - with GST','A','1000', NULL, false, false, string_to_array('AR', ':'));
 SELECT account_save(NULL,'1220','Trade Debtors / Exports - GST free','A','1000', NULL, false, false, string_to_array('AR', ':'));

@@ -4,6 +4,9 @@ begin;
 SELECT account_heading_save(NULL,'1000','KORTFRISTEDE AKTIVER', NULL);
 SELECT account_save(NULL,'1061','Bank','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1065','Kasse','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE accno in ('1061', '1065');
+
 SELECT account_save(NULL,'1200','Indbetalinger','A','', NULL, false, false, string_to_array('AR', ':'));
 SELECT account_save(NULL,'1205','Hensættelser til formodet gæld','A','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'1210','Moms indgående','A','', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'));

@@ -5,6 +5,9 @@ begin;
 SELECT account_heading_save(NULL, '10000', 'BANK AND CASH ACCOUNTS', NULL);
 SELECT account_save(NULL,'10001','Bank Account','A','100', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'10010','Petty Cash','A','100', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE accno in ('10001', '10010');
+
 SELECT account_heading_save(NULL, '11000', 'CUSTOMERS AND SETTLEMENT ACCOUNTS', NULL);
 SELECT account_save(NULL,'11001','Accounts Receivables','A','110', NULL, false, false, string_to_array('AR', ':'));
 SELECT account_heading_save(NULL, '12000', 'OTHER CURRENT ASSETS', NULL);
