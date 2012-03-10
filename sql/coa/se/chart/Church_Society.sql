@@ -44,6 +44,9 @@ SELECT account_save(NULL,'1930','Checkräkningskonto','A','', NULL, false, false
 SELECT account_save(NULL,'1940','Övriga bankkonto','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1941','Nordea värdepappersfond','A','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'1942','Nordea girokapitalkonto','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE accno in ('1910', '1920', '1930', '1940', '1941', '1942');
+
 SELECT account_heading_save(NULL,'2','Eget kapital och skulder', NULL);
 SELECT account_heading_save(NULL,'20','Eget kapital', NULL);
 SELECT account_save(NULL,'2000','Eget kapital EFS Åsele','Q','', NULL, false, false, string_to_array('', ':'));

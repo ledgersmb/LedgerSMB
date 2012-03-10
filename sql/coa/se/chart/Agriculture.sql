@@ -226,6 +226,11 @@ SELECT account_save(NULL,'1910','Kassa ','A','200', NULL, false, false, string_t
 SELECT account_save(NULL,'1920','Plusgiro ','A','200', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1930','Checkräkningskonto','A','200', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1940','Bank och Övr bankkon','A','200', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
+
+
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE accno in ('1900', '1910', '1920', '1930', '1940');
+
 SELECT account_save(NULL,'1950','Bankcertifikat ','A','200', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'1960','Koncernkont moderbol','A','200', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'1970','Särskilda bankkonton','A','200', NULL, false, false, string_to_array('', ':'));

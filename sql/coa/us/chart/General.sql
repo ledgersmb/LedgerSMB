@@ -5,6 +5,9 @@ begin;
 SELECT account_heading_save(NULL,'1000','CURRENT ASSETS', NULL);
 SELECT account_save(NULL,'1060','Checking Account','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1065','Petty Cash','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE accno in ('1060', '1065');
+
 SELECT account_save(NULL,'1200','Accounts Receivables','A','', NULL, false, false, string_to_array('AR', ':'));
 SELECT account_save(NULL,'1205','Allowance for doubtful accounts','A','', NULL, false, false, string_to_array('', ':'));
 SELECT account_heading_save(NULL,'1500','INVENTORY ASSETS', NULL);

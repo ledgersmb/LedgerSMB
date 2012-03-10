@@ -4,6 +4,9 @@ begin;
 SELECT account_heading_save(NULL, '1000', 'RECURSOS ATUAIS', NULL);
 SELECT account_save(NULL,'1060','Checando Cliente','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1065','Caixa Baixo','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE accno in ('1060', '1065');
+
 SELECT account_save(NULL,'1200','Contas a Receber','A','', NULL, false, false, string_to_array('AR', ':'));
 SELECT account_save(NULL,'1205','Provisão para devedors duvidosos','A','', NULL, false, false, string_to_array('', ':'));
 SELECT account_heading_save(NULL, '1500', 'INVENTÁRIO DE CLIENTES', NULL);

@@ -4,6 +4,9 @@ begin;
 SELECT account_heading_save(NULL,'1000','AKTIVA LANCAR', NULL);
 SELECT account_save(NULL,'1060','Bank','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1065','Kas Kecil','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE accno in ('1060', '1065');
+
 SELECT account_save(NULL,'1200','Piutang','A','', NULL, false, false, string_to_array('AR', ':'));
 SELECT account_heading_save(NULL,'1500','INVENTORY', NULL);
 SELECT account_save(NULL,'1520','Inventory / Umum','A','', NULL, false, false, string_to_array('IC', ':'));
