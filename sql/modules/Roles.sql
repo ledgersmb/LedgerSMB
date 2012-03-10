@@ -1077,32 +1077,6 @@ IN ROLE "lsmb_<?lsmb dbname ?>__gl_transaction_create",
 "lsmb_<?lsmb dbname ?>__yearend_run",
 "lsmb_<?lsmb dbname ?>__gl_reports";
 
--- PROJECTS
-CREATE ROLE "lsmb_<?lsmb dbname ?>__project_create"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT ON project TO "lsmb_<?lsmb dbname ?>__project_create";
-GRANT ALL ON project_id_seq TO "lsmb_<?lsmb dbname ?>__project_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (98, 'allow', 'lsmb_<?lsmb dbname ?>__project_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (99, 'allow', 'lsmb_<?lsmb dbname ?>__project_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__project_edit"
-WITH INHERIT NOLOGIN;
-
-GRANT UPDATE ON project TO "lsmb_<?lsmb dbname ?>__project_edit";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (98, 'allow', 'lsmb_<?lsmb dbname ?>__project_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (103, 'allow', 'lsmb_<?lsmb dbname ?>__project_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (104, 'allow', 'lsmb_<?lsmb dbname ?>__project_edit');
-
-
 CREATE ROLE "lsmb_<?lsmb dbname ?>__project_timecard_add"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
@@ -1388,38 +1362,6 @@ IN ROLE "lsmb_<?lsmb dbname ?>__account_create",
 "lsmb_<?lsmb dbname ?>__gifi_create",
 "lsmb_<?lsmb dbname ?>__gifi_edit";
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__department_create"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT ON department TO "lsmb_<?lsmb dbname ?>__department_create";
-GRANT ALL ON department_id_seq TO "lsmb_<?lsmb dbname ?>__department_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (128, 'allow', 'lsmb_<?lsmb dbname ?>__department_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (144, 'allow', 'lsmb_<?lsmb dbname ?>__department_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (145, 'allow', 'lsmb_<?lsmb dbname ?>__department_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__department_edit"
-WITH INHERIT NOLOGIN;
-
-GRANT UPDATE ON department TO "lsmb_<?lsmb dbname ?>__department_edit";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (128, 'allow', 'lsmb_<?lsmb dbname ?>__department_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (144, 'allow', 'lsmb_<?lsmb dbname ?>__department_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (146, 'allow', 'lsmb_<?lsmb dbname ?>__department_edit');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__department_all"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__department_create",
-"lsmb_<?lsmb dbname ?>__department_edit";
-
 CREATE ROLE "lsmb_<?lsmb dbname ?>__business_type_create"
 WITH INHERIT NOLOGIN;
 
@@ -1606,7 +1548,6 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__system_admin"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__system_settings_change",
 "lsmb_<?lsmb dbname ?>__account_all",
-"lsmb_<?lsmb dbname ?>__department_all",
 "lsmb_<?lsmb dbname ?>__business_type_all",
 "lsmb_<?lsmb dbname ?>__sic_all",
 "lsmb_<?lsmb dbname ?>__template_edit",
@@ -1657,19 +1598,6 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (97, 'allow', 'lsmb_<?lsmb dbname ?>__part_translation_create');
 
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__project_translation_create"
-WITH INHERIT NOLOGIN;
-
-GRANT ALL ON project_translation 
-TO "lsmb_<?lsmb dbname ?>__project_translation_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (98, 'allow', 'lsmb_<?lsmb dbname ?>__project_translation_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (107, 'allow', 'lsmb_<?lsmb dbname ?>__project_translation_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (108, 'allow', 'lsmb_<?lsmb dbname ?>__project_translation_create');
-
 CREATE ROLE "lsmb_<?lsmb dbname ?>__partsgroup_translation_create"
 WITH INHERIT NOLOGIN;
 
@@ -1687,8 +1615,7 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__manual_translation_all"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__language_create",
 "lsmb_<?lsmb dbname ?>__part_translation_create",
-"lsmb_<?lsmb dbname ?>__partsgroup_translation_create",
-"lsmb_<?lsmb dbname ?>__project_translation_create";
+"lsmb_<?lsmb dbname ?>__partsgroup_translation_create";
 
 -- Fixed Assets
 
@@ -1768,8 +1695,8 @@ GRANT SELECT ON custom_field_catalog TO PUBLIC;
 grant select on menu_node, menu_attribute, menu_acl to public;
 GRANT select on chart, gifi, country to public;
 GRANT SELECT ON parts, partsgroup TO public;
-GRANT SELECT ON language, project TO public;
-GRANT SELECT ON business, exchangerate, department, new_shipto, tax TO public;
+GRANT SELECT ON language TO public;
+GRANT SELECT ON business, exchangerate, new_shipto, tax TO public;
 GRANT ALL ON recurring, recurringemail, recurringprint, status TO public; 
 GRANT ALL ON transactions TO public;
 GRANT SELECT ON entity_employee TO public;
@@ -1794,8 +1721,7 @@ GRANT SELECT ON warehouse TO public;
 GRANT SELECT ON voucher TO public;
 GRANT select ON account, account_link, account_link_description TO PUBLIC;
 GRANT select ON sic TO public;
-GRANT SELECT ON parts_translation,  partsgroup_translation, 
-                project_translation TO public;
+GRANT SELECT ON parts_translation,  partsgroup_translation TO public;
 GRANT SELECT ON asset_report_class, asset_rl_to_disposal_method,
                 asset_disposal_method TO PUBLIC;
 GRANT SELECT ON mime_type, file_class TO PUBLIC;
