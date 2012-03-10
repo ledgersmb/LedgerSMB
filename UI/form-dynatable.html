@@ -1,10 +1,11 @@
 <?lsmb PROCESS 'ui-header.html' ?>
 <?lsmb PROCESS elements.html ?> 
+<?lsmb PROCESS 'dynatable.html' ?>
 
 <body>
 <form method="post" action="<?lsmb form.script ?>">
 
-<?lsmb PROCESS 'dynatable.html' ?>
+<?lsmb PROCESS 'dynatable' ?>
 <br />
 
 <?lsmb FOREACH hidden IN hiddens.keys;
