@@ -66,6 +66,9 @@ SELECT account_save(NULL,'4020','銷售 / 硬體','I','', NULL, false, false, st
 SELECT account_save(NULL,'4320','諮詢','I','', NULL, false, false, string_to_array('AR_amount:IC_income', ':'));
 SELECT account_save(NULL,'1200','應收帳款','A','', NULL, false, false, string_to_array('AR', ':'));
 SELECT account_save(NULL,'1061','支票戶頭','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE accno in ('1061', '1065');
+
 SELECT account_save(NULL,'2310','商品服務稅','L','', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'));
 --
 -- exchange rate

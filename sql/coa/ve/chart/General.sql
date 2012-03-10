@@ -10,6 +10,9 @@ SELECT account_save(NULL,'1100','Banesco APD','A','', NULL, false, false, string
 SELECT account_save(NULL,'1110','Provincial','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1120','Venezuela','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1130','Banesco JD','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE accno in ('1050', '1100', '1110', '1120', '1130');
+
 SELECT account_save(NULL,'1200','Cuentas por Cobrar','A','', NULL, false, false, string_to_array('AR', ':'));
 SELECT account_save(NULL,'1205','Provisión Cuentas Incobrables','A','', NULL, false, false, string_to_array('', ':'));
 SELECT account_heading_save(NULL,'1500','INVENTARIO', NULL);
