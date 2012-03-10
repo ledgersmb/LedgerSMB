@@ -253,3 +253,11 @@ UPDATE jcitems
  WHERE qty IS NOT NULL and total = 0;
 
 COMMIT;
+
+BEGIN;
+
+-- FX RECON 
+
+ALTER TABLE cr_report ADD recon_fx bool default false;
+
+COMMIT;

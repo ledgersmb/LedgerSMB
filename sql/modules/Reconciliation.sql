@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE OR REPLACE FUNCTION reconciliation__submit_set(
 	in_report_id int, in_line_ids int[]) RETURNS bool AS
 $$
@@ -98,6 +100,8 @@ BEGIN
    END IF;
 END;
 $$ LANGUAGE PLPGSQL;
+
+DROP TRIGGER IF EXISTS block_change_when_approved ON cr_report;
 
 CREATE TRIGGER block_change_when_approved BEFORE UPDATE OR DELETE ON cr_report
 FOR EACH ROW EXECUTE PROCEDURE cr_report_block_changing_approved();
@@ -200,9 +204,10 @@ $$Marks the report approved and marks all cleared transactions in it cleared.$$;
 
 -- XXX Badly named, rename for 1.4.  --CT
 CREATE OR REPLACE FUNCTION reconciliation__new_report_id 
-(in_chart_id int, in_total numeric, in_end_date date) returns INT as $$
+(in_chart_id int, in_total numeric, in_end_date date, in_recon_fx) returns INT as $$
 
-    INSERT INTO cr_report(chart_id, their_total, end_date) values ($1, $2, $3);
+    INSERT INTO cr_report(chart_id, their_total, end_date, recon_fx) 
+    values ($1, $2, $3, $4);
     SELECT currval('cr_report_id_seq')::int;
 
 $$ language 'sql';
@@ -360,38 +365,60 @@ This function is very sensitive to ordering of inputs.  NULL or empty in_scn val
 that within each category, one submits in order of amount.  We should therefore
 wrap it in another function which can operate on a set, perhaps in 1.4....$$;
 
+
 create or replace function reconciliation__pending_transactions 
 (in_end_date DATE, in_chart_id int, in_report_id int, in_their_total numeric) 
 RETURNS int as $$
     
     DECLARE
         gl_row RECORD;
+        t_recon_fx BOOL;
     BEGIN
+                SELECT recon_fx INTO t_recon_fx FROM cr_report WHERE id = in_report_id;
+ 
 		INSERT INTO cr_report_line (report_id, scn, their_balance, 
 			our_balance, "user", voucher_id, ledger_id, post_date)
 		SELECT in_report_id, 
 		       COALESCE(ac.source, gl.ref),
 		       0, 
-		       sum(amount) AS amount,
+		       sum(amount / CASE WHEN t_recon_fx IS NOT TRUE OR gl.table = 'gl'
+                                         THEN 1
+                                         WHEN t_recon_fx and gl.table = 'ap' 
+                                         THEN ex.sell
+                                         WHEN t_recon_fx and gl.table = 'ar' 
+                                         THEN ex.buy
+                                    END) AS amount,
 				(select entity_id from users 
 				where username = CURRENT_USER),
 			ac.voucher_id, min(ac.entry_id), ac.transdate
 		FROM acc_trans ac
 		JOIN transactions t on (ac.trans_id = t.id)
-		JOIN (select id, entity_credit_account::text as ref, 'ar' as table FROM ar where approved
+		JOIN (select id, entity_credit_account::text as ref, curr, 
+                             transdate, 'ar' as table 
+                        FROM ar where approved
 			UNION
-		      select id, entity_credit_account::text, 'ap' as table FROM ap WHERE approved
+		      select id, entity_credit_account::text, curr, 
+                             transdate, 'ap' as table 
+                        FROM ap WHERE approved
 			UNION
-		      select id, reference, 'gl' as table FROM gl WHERE approved) gl 
+		      select id, reference, '', 
+                             transdate, 'gl' as table 
+                        FROM gl WHERE approved) gl 
 			ON (gl.table = t.table_name AND gl.id = t.id)
 		LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
 			AND ((rl.ledger_id = ac.entry_id 
 				AND ac.voucher_id IS NULL) 
 				OR (rl.voucher_id = ac.voucher_id)))
+                LEFT JOIN exchangerate ex ON gl.transdate = ex.transdate
 		WHERE ac.cleared IS FALSE
 			AND ac.approved IS TRUE
 			AND ac.chart_id = in_chart_id
 			AND ac.transdate <= in_end_date
+                        AND ((t_recon_fx is not true 
+                                and ac.fx_transaction is not true) 
+                            OR (t_recon_fx is true 
+                                AND (gl.table <> 'gl' OR ac.fx_transaction
+                                                      IS TRUE))) 
 		GROUP BY gl.ref, ac.source, ac.transdate,
 			ac.memo, ac.voucher_id, gl.table
 		HAVING count(rl.id) = 0;
@@ -502,6 +529,8 @@ in_date_to and in_date_from give a range of reports.  All other inputs are
 exact matches.
 $$;
 
+DROP TYPE IF EXISTS recon_accounts CASCADE;
+
 create type recon_accounts as (
     name text,
     accno text,
@@ -588,3 +617,5 @@ $$ language 'plpgsql';
 
 COMMENT ON FUNCTION reconciliation__report_details_payee (in_report_id INT) IS
 $$ Pulls the payee information for the reconciliation report.$$;
+
+COMMIT;
