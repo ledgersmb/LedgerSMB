@@ -99,6 +99,7 @@ LedgerSMB depends on these required modules:
   Log::Log4perl
   Locale::Maketext
   DateTime
+  DateTime::Format:Strptime
   Locale::Maketext::Lexicon
   DBI
   MIME::Base64
@@ -112,9 +113,10 @@ LedgerSMB depends on these required modules:
   Locale::Language
   Time::Local
   Cwd
-  Config::Std
+  Config::General
   MIME::Lite
   Template
+  Template::Plugin::Number::Format
   Error
   CGI::Simple
   File::MimeInfo
@@ -166,10 +168,11 @@ To install all the required packages which Squeeze supports, execute the
 following command:
 
  $ aptitude install libdatetime-perl libdbi-perl libdbd-pg-perl \
-   libcgi-simple-perl libtemplate-perl libconfig-std-perl libmime-lite-perl \
+   libcgi-simple-perl libtemplate-perl libmime-lite-perl \
    liberror-perl liblocale-maketext-lexicon-perl libtest-exception-perl \
    libtest-trap-perl liblog-log4perl-perl libmath-bigint-gmp-perl \
-   libfile-mimeinfo-perl
+   libfile-mimeinfo-perl libtemplate-plugin-number-format-perl \
+   libdatetime-format-strptime-perl libconfig-general-perl
 
 This installs the modules available from the Squeeze repository.
 
