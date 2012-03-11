@@ -11,7 +11,8 @@ data.
 
 =cut
 
-package LedgerSMB::Scripts::import_trans;
+package LedgerSMB::Scripts::import_csv;
+use Moose;
 use LedgerSMB::Template;
 use LedgerSMB::Form;
 use strict;
@@ -181,3 +182,5 @@ sub run_import {
 }
 
 eval { do 'scripts/custom/import_trans.pl'; };
+
+1;
