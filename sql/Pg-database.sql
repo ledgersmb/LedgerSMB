@@ -1049,6 +1049,7 @@ CREATE TABLE cr_report (
     deleted_by int references entity(id),
     approved_by int references entity(id),
     approved_username text,
+    recon_fx bool default false,
     CHECK (deleted is not true or approved is not true)
 );
 

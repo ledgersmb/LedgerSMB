@@ -594,6 +594,84 @@ sub select_coa {
     $template->render($request);
 }
 
+
+=item skip_coa
+
+Entry point when on the CoA selection screen the 'Skip' button
+is being pressed.  This allows the user to load a CoA later.
+
+The CoA loaded at a later time may be a self-defined CoA, i.e. not
+one distributed with the LSMB standard distribution.  The 'Skip'
+button facilitates that scenario.
+
+=cut
+
+sub skip_coa {
+    my ($request) = @_;
+
+    _render_new_user($request);
+}
+
+
+=item _render_new_user
+
+Renders the new user screen. Common functionality to both the
+select_coa and skip_coa functions.
+
+=cut
+
+sub _render_new_user {
+    my ($request) = @_;
+
+    # One thing to remember here is that the setup.pl does not get the
+    # benefit of the automatic db connection.  So in order to build this
+    # form, we have to manage that ourselves. 
+    #
+    # However we get the benefit of having had to set the environment
+    # variables for the Pg connection above, so don't need to pass much
+    # info. 
+    #
+    # Also I am opting to use the lower-level call_procedure interface
+    # here in order to avoid creating objects just to get argument
+    # mapping going. --CT
+
+    my $creds = LedgerSMB::Auth::get_credentials();
+    
+    # ENVIRONMENT NECESSARY
+    $ENV{PGUSER} = $creds->{login};
+    $ENV{PGPASSWORD} = $creds->{password};
+    $ENV{PGDATABASE} = $request->{database};
+
+
+
+
+    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    $request->{dbh}->{AutoCommit} = 0;
+
+    @{$request->{salutations}} 
+    = $request->call_procedure(procname => 'person__list_salutations' ); 
+    
+    @{$request->{countries}} 
+    = $request->call_procedure(procname => 'location_list_country' ); 
+
+    my $locale = $request->{_locale};
+
+    @{$request->{perm_sets}} = (
+        {id => '0', label => $locale->text('Manage Users')},
+        {id => '1', label => $locale->text('Full Permissions')},
+        );
+
+    my $template = LedgerSMB::Template->new(
+        path => 'UI/setup',
+        template => 'new_user',
+        format => 'HTML',
+           );
+
+    $template->render($request);
+}
+
+
+
 =item save_user
 
 Saves the administrative user, and then directs to the login page.
