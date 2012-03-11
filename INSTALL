@@ -117,7 +117,6 @@ LedgerSMB depends on these required modules:
   MIME::Lite
   Template
   Template::Plugin::Number::Format
-  Error
   CGI::Simple
   File::MimeInfo
 
@@ -169,7 +168,7 @@ following command:
 
  $ aptitude install libdatetime-perl libdbi-perl libdbd-pg-perl \
    libcgi-simple-perl libtemplate-perl libmime-lite-perl \
-   liberror-perl liblocale-maketext-lexicon-perl libtest-exception-perl \
+   liblocale-maketext-lexicon-perl libtest-exception-perl \
    libtest-trap-perl liblog-log4perl-perl libmath-bigint-gmp-perl \
    libfile-mimeinfo-perl libtemplate-plugin-number-format-perl \
    libdatetime-format-strptime-perl libconfig-general-perl
