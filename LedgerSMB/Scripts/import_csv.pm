@@ -161,8 +161,8 @@ sub begin_import {
     my $template = LedgerSMB::Template->new(
         user =>$request->{_user}, 
         locale => $request->{_locale},
-        path => 'UI/import_trans',
-        template => 'import_trans',
+        path => 'UI/import_csv',
+        template => 'import_csv',
         format => 'HTML'
     );
     $template->render($request);
