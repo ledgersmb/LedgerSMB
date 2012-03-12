@@ -689,6 +689,7 @@ SELECT account_save(NULL,'1105100002','Caja Menor 2','A','1105100002', NULL, fal
 SELECT account_save(NULL,'1105100003','Caja Menor 3','A','1105100003', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1105100004','Caja menor 4','A','1105100004', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1105100005','Caja menor 5','A','1105100005', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
+
 SELECT account_save(NULL,'1110050013','Banco Ganadero Cta.Cte.xxxxxxxx','A','1110050013', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1110050029','Tequendama Cte. #xxxxxxxx','A','1110050029', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
 SELECT account_save(NULL,'1120050013','Banco Ganadero Ahorro xxxxxxxx','A','1120050013', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'));
@@ -785,6 +786,9 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
  
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE id IN (select account_id FROM account_link
+                           WHERE description = 'AP_paid');
 commit;
 UPDATE account
    SET tax = true
