@@ -14,6 +14,7 @@ Changelog for 1.3.13
 * Can now skip adding the chart of accounts (Erik H)
 * Fixed: can't reconcile accounts in foreign currency (bug 3498036)(Chris T)
 * Fixed: Recon not setup for cash accounts in default COA (Erik H and Chris T)
+* Corrected minor issue with demo sales quotation template (Chris T)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
