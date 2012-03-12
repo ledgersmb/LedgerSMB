@@ -159,8 +159,6 @@ CPAN module (the Perl module downloader) as well.
 
 >>> Perl module dependencies for Debian
 
-[For a list of actions to take on Lenny, see below]
-
 ---- Actions for Debian Squeeze
 
 To install all the required packages which Squeeze supports, execute the
@@ -190,43 +188,6 @@ from the Squeeze repository through:
  $ aptitude install libnet-tclink-perl
 
 The Open Office output option is available from the Squeeze repository
-as well through the command:
-
- $ aptitude install libxml-twig-perl
-
-
----- Actions for Debian Lenny
-
-To install all the required packages which Lenny supports, execute the
-following command:
-
- $ aptitude install libdatetime-perl libdbi-perl libdbd-pg-perl \
-   libcgi-simple-perl libtemplate-perl libconfig-std-perl libmime-lite-perl \
-   liberror-perl liblocale-maketext-lexicon-perl libtest-exception-perl \
-   liblog-log4perl-perl libmath-bigint-gmp-perl libfile-mimeinfo-perl
-
-The required module Test::Trap isn't available as a Lenny package. In order
-to install that component, execute the following commands:
-
- $ aptitude install libmodule-install-perl
- $ cpan 'Test::Trap'
-
-
-As far as the optional packages are concerned on Lenny, the Excel and
-PDF/Postscript output options are not directly available. If you want
-these output options, you'll need to download them from CPAN.
-
-Please note that the PDF/Postscript module depends on the TeX/LaTeX
-package which *is* in the Lenny package repository:
-
- $ aptitude install texlive-latex-recommended
-
-The credit card processing support for TrustCommerce is available
-from the Lenny repository through:
-
- $ aptitude install libnet-tclink-perl
-
-The Open Office output option is available from the Lenny repository
 as well through the command:
 
  $ aptitude install libxml-twig-perl
