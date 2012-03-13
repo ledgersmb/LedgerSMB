@@ -83,7 +83,7 @@
   
 \vspace{1cm}
 
-\begin{longtable}{@{\extracolsep{\fill}}llrlrrr@{\extracolsep{0pt}}}
+\begin{longtable}{@{\extracolsep{\fill}}llrlrr|r@{\extracolsep{0pt}}}
   \textbf{<?lsmb text('Number') ?>} & \textbf{<?lsmb text('Description') ?>} 
    & \textbf{<?lsmb text('Qty') ?>} & \textbf{<?lsmb text('Unit') ?>} 
    & \textbf{<?lsmb text('Price') ?>} & \textbf{<?lsmb text('Disc %') ?>} 
@@ -99,6 +99,14 @@
   <?lsmb discountrate.${lc} ?> &
   <?lsmb linetotal.${lc} ?> \\
 <?lsmb END ?>
+\hline \hline
+\multicolumn{6}{r|}{<?lsmb text('Subtotal') ?>} & <?lsmb subtotal ?> \\*
+<?lsmb FOREACH tax ?>
+<?lsmb lc = loop.count - 1 ?>
+\multicolumn{6}{r|}{<?lsmb taxdescription.${lc} 
+                    ?>  on <?lsmb taxbase.${lc} ?> }
+ & <?lsmb tax.${lc} ?> \\*
+<?lsmb END ?>
 \end{longtable}
 
 
@@ -106,19 +114,6 @@
 \rule{\textwidth}{2pt}
 
 \vspace{0.2cm}
-
-\hfill
-\begin{tabularx}{7cm}{Xr@{\hspace{1cm}}r@{}}
-  & Subtotal & <?lsmb subtotal ?> \\
-<?lsmb FOREACH tax ?>
-<?lsmb lc = loop.count - 1 ?>
-  & <?lsmb taxdescription.${lc} ?> on <?lsmb taxbase.${lc} ?> & <?lsmb tax.${lc} ?>\\
-<?lsmb END ?>
-  \hline
-  & Total & <?lsmb quototal ?>\\
-\end{tabularx}
-
-\vspace{0.3cm}
 
 \hfill
 <?lsmb text('All prices in [_1].', currency) ?>

@@ -93,17 +93,14 @@ sub call_script {
 
   try {        
     $request->{script} = $script;
-    my $scriptmod = "$script";
-    $scriptmod =~ s/\.pl$//;
-    my $eval_string = "require LedgerSMB::Scripts::$scriptmod;";
-    #eval { require LedgerSMB::Scripts::$scriptmod; } 
-    eval $eval_string
-      || $request->error($locale->text('Unable to open script') . 
-                          ": $scriptmod : $!"
-          );
     $script =~ s/\.pl$//;
     $script = "LedgerSMB::Scripts::$script";
     $request->{_script_handle} = $script;
+
+    eval "require $script;"
+      || $request->error($locale->text('Unable to open script') . 
+                          ": $script : $!"
+          );
     $script->can($request->{action}) 
       || $request->error($locale->text("Action Not Defined: ") . $request->{action});
     $script->can( $request->{action} )->($request);
