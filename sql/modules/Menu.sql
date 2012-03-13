@@ -37,7 +37,7 @@ BEGIN
                WHERE n.id IN (select node_id 
                                 FROM menu_acl acl
                           LEFT JOIN pg_roles pr on pr.rolname = acl.role_name
-                               WHERE CASE WHEN rolname 
+                               WHERE CASE WHEN role_name 
                                                            ilike 'public'
                                                       THEN true
                                                       WHEN rolname IS NULL

@@ -9,7 +9,7 @@ no strict qw(refs);
 use Cwd;
 
 # use LedgerSMB::Form;
-use Config::General;
+use Config::IniFiles;
 use DBI qw(:sql_types);
 binmode STDOUT, ':utf8';
 binmode STDERR, ':utf8';
@@ -99,8 +99,7 @@ our $DBI_TRACE=0;
 our %printer;
 
 our %config;
-my $cfg_h = new Config::General("ledgersmb.conf") or die;
-%config = $cfg_h->getall;
+tie %config, 'Config::IniFiles', (-file=> 'ledgersmb.conf' );
 
 # Root variables
 for my $var (
@@ -109,7 +108,7 @@ for my $var (
     return_accno no_db_str tempdir cache_templates)
   )
 {
-    ${$var} = $config{$var} if $config{$var};
+    ${$var} = $config{'main'}{$var} if $config{$var};
 }
 
 %printer = %{ $config{printers} } if $config{printers};
