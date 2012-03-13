@@ -191,7 +191,7 @@ In general, our development is focused around the following principles:
 
 * LSMB as infrastructure:  LSMB should be accessible from other applications.
 
-* Universal applicability:  LSMB should be usable by any any business and should
+* Universal applicability:  LSMB should be usable by any business and should
 always do the right thing in the background.  Businesses should never find that 
 they have outgrown the software.
 
