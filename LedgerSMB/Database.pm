@@ -275,9 +275,9 @@ sub get_info {
          { AutoCommit => 0, PrintError => $logger->is_warn(), }
     );
     if (!$dbh){ # Could not connect, try to validate existance by connecting
-                # to template1 and checking
+                # to postgres and checking
            $dbh = DBI->connect(
-                   "dbi:Pg:dbname=template1", 
+                   "dbi:Pg:dbname=postgres", 
                    "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
             );
            return $retval unless $dbh;
@@ -365,7 +365,7 @@ sub server_version {
     my $self = shift @_;
     my $creds = LedgerSMB::Auth->get_credentials();
     my $dbh = DBI->connect(
-        "dbi:Pg:dbname=template1", 
+        "dbi:Pg:dbname=postgres", 
          "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
     );
     my ($version) = $dbh->selectrow_array('SELECT version()');
@@ -378,7 +378,7 @@ sub server_version {
 =item $db->create();
 
 Creates a database and loads the contrib files.  This is done from template0, 
-meaning nothing added to template1 will be found in this database.  This was 
+meaning nothing added to postgres will be found in this database.  This was 
 necessary as a workaround for issues on some Debian systems.
 
 Returns true if successful, false of not.  Creates a log called dblog in the 
@@ -403,7 +403,7 @@ sub create {
     # Hat tip:  irc user nwnw -- CT
 
     use DBI;
-    my $dbh = DBI->connect('dbi:Pg:dbname=template1');
+    my $dbh = DBI->connect('dbi:Pg:dbname=postgres');
 
     $dbh->{RaiseError} = 1;
     $dbh->{AutoCommit} = 1;

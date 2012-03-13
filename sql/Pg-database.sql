@@ -2468,14 +2468,11 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 13	Reports	11	2
 14	Search	13	1
 15	History	13	2
-16	Point of Sale	0	2
-17	Sale	16	1
-18	Open	16	2
-19	Receipts	16	3
-20	Close Till	16	4
+16	Budgets	109	6
+17	Add  Budget	16	1
+18	Search	16	2
 21	AP	0	3
 22	Add Transaction	21	1
-145	Add Department	144	1
 25	Transactions	24	1
 26	Outstanding	24	2
 27	AP Aging	24	3
@@ -2490,7 +2487,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 38	Payment	35	3
 223	Use Overpayment	35	4
 37	Use AR Overpayment	35	2
-146	List Departments	144	2
 42	Receipts	41	1
 43	Payments	41	2
 44	Reconciliation	41	3
@@ -2648,7 +2644,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 153	SIC	128	12
 150	Language	128	11
 147	Type of Business	128	10
-144	Departments	128	9
+144	Reporting Units	128	9
 141	Warehouses	128	8
 136	Chart of Accounts	128	7
 220	Add User	219	1
@@ -2772,16 +2768,10 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 15	db	customer	37
 15	action	history	33
 16	menu	1	38
-17	module	ps.pl	39
-17	action	add	40
-17	nextsub	openinvoices	41
-18	action	openinvoices	42
-18	module	ps.pl	43
-19	module	ps.pl	44
-19	action	receipts	46
-20	module	ps.pl	47
-20	action	till_closing	48
-20	pos	true	49
+17	module	budgets.pl	39
+17	action	new_budget	40
+18	action	begin_search	42
+18	module	budgets.pl	43
 21	menu	1	50
 22	action	add	52
 22	module	ap.pl	51
@@ -3076,10 +3066,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 143	module	am.pl	365
 142	action	add_warehouse	366
 143	action	list_warehouse	367
-145	module	am.pl	368
-146	module	am.pl	369
-145	action	add_department	370
-146	action	list_department	371
+144	module	business_unit.pl	368
+144	action	list_classes	370
 147	menu	1	372
 148	module	am.pl	373
 149	module	am.pl	374
@@ -3239,7 +3227,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 192	new	1	531
 0	menu	1	535
 136	menu	1	536
-144	menu	1	537
 195	action	add	540
 195	module	is.pl	541
 196	action	add	543

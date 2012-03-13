@@ -14,6 +14,7 @@ General Enhancements:
 * Dynatable forms obtained through GET now show link back to form (Chris T)
 * LedgerSMB->error and Form->error now show db version and company (Chris T)
 * Simpler use of Log::Log4perl instead of LedgerSMB::Log (Chris T)
+* Changing all auth calls to hit postgres db instead of template1 (Chris T)
 
 Customer/Vendor Handling 
 * Added sales tax id and license number fields for companies (Chris T)
