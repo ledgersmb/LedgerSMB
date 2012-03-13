@@ -27,7 +27,7 @@ WITH INHERIT NOLOGIN;
 GRANT INSERT, UPDATE, DELETE ON business_unit_class, business_unit, bu_class_to_module
 TO "lsmb_<?lsmb dbname ?>__business_units_manage";
 
-GRANT SELECT ON business_unit_class, business_unit TO PUBLIC;
+GRANT SELECT ON business_unit_class, business_unit, bu_class_to_module TO PUBLIC;
 
 -- Exchange rate creation (required insert and update on 'exchangerate' table)
 
