@@ -1,7 +1,7 @@
 RELEASE NOTES
 LedgerSMB 1.3
 
-Latest Revision:  1.3.13, March 6, 2012.
+Latest Revision:  1.3.13, March 14, 2012.
 
 1:  Welcome to LedgerSMB
 
@@ -126,15 +126,7 @@ gain/loss will be realized per the time when the payment was in effect and
 not reversed.
 
 
-3.3:  Default CoA files miss Reconciliation assignment
-
-Currently reconciliation mappings are not set up when a new chart of accounts is loaded
-
-To work around this issue, go to the System/Chart of Accounts/List Accounts select each
-account you wish to be subject to the reconciliation workflow, check the recon box, 
-click save.  We are planning on fixing this in a future release.
-
-3.4:  Password not set properly for new users with . in username
+3.3:  Password not set properly for new users with . in username
 
 Currently when you set up a user with a . in the username, the password is not properly
 set.  The reason for this is unknown and we intend to fix in a future version.
@@ -142,12 +134,12 @@ set.  The reason for this is unknown and we intend to fix in a future version.
 You can set the user's password in psql using ALTER USER ... WITH PASSWORD '...'; to 
 work around this issue.
 
-3.5:  XLS and ODS download buttons show even if prereqs missing
+3.4:  XLS and ODS download buttons show even if prereqs missing
 
 Currently the XLS and ODS (Excel and OpenOffice) spreadsheet download buttons show even
 if the prerequisites are not available.  We intend to fix this in a future version.
 
-3.6:  POS ignores pd_proto
+3.5:  POS ignores pd_proto
 
 Currently in point of sales environments, in some cases, the connections back to the 
 terminal in order to control pole displays seems tied to TCP even when one sets it to 
@@ -156,7 +148,7 @@ UDP.  This can have significant issues regarding performance if this port is not
 The cause is unknown.  It is believed to affect 1.2 as well.  We expect to fix this
 in a future release.
 
-3.7:  Can't add prices to pricelist from customer screen
+3.6:  Can't add prices to pricelist from customer screen
 
 Currently the 1.3 pricelist functionality is defective and while new customers and
 vendors can be added to a part, one cannot add new parts to the customer.  This is being
@@ -212,9 +204,10 @@ anyway.  These include:
 
 * Integrated budgetting module (included already)
 * Rewritten reports
-* Rewritten project/department handling to include nested departments (largely included)
-* Funds accounting (largely included)
+* Rewritten project/department handling to include nested departments (already included)
+* Funds accounting (already included)
 * Rewritten Sales Orders (may be deferred)
+* Framework for web services
 * A framework for implementing payroll solutions
 
 6:  Get Involved
