@@ -156,6 +156,17 @@ our $process = {
                }
                $dbh->commit;
              },
+    sic   => sub {
+               my ($request, $entries) = @_;
+               my $dbh = $request->{dbh};
+               my $sth = $dbh->prepare('INSERT INTO sic (code, sictype, description) VALUES (?, ?, ?)') || die $dbh->errstr;;
+
+               foreach my $entry (@$entries) {
+                 $sth->execute($entry->[0], $entry->[1], $entry->[2])
+                    || die $sth->errstr();
+               }
+               $dbh->commit;
+             },
 };
 
 sub parse_file {
