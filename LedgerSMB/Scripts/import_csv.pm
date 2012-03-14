@@ -145,7 +145,16 @@ our $process = {
                   });
                   $account->save();
                }
+             },
+    gifi  => sub {
+               my ($request, $entries) = @_;
+               my $dbh = $request->{dbh};
+               my $sth = $dbh->prepare('INSERT INTO gifi (accno, description) VALUES (?, ?)') || die $dbh->errstr;;
 
+               foreach my $entry (@$entries) {
+                 $sth->execute($entry->[0], $entry->[1]) || die $sth->errstr();
+               }
+               $dbh->commit;
              },
 };
 
