@@ -241,7 +241,7 @@ IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
    TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 
-GRANT INSERT ON ar, invoice_note 
+GRANT INSERT ON ar, invoice_note, business_unit_ac 
 TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 
 GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
@@ -263,7 +263,7 @@ IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
 
 GRANT INSERT ON ar TO "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
-GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
+GRANT INSERT ON acc_trans, business_unit_ac TO "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
@@ -277,7 +277,7 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 
 --### oldcode: UPDATE granted because old code wants it
-GRANT SELECT, INSERT, UPDATE ON invoice, new_shipto 
+GRANT SELECT, INSERT, UPDATE ON invoice, new_shipto,  business_unit_inv
 TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
@@ -310,8 +310,9 @@ IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
 "lsmb_<?lsmb dbname ?>__file_read";
 
 GRANT SELECT ON ar TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
-GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
-GRANT SELECT ON invoice TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
+GRANT SELECT ON acc_trans, business_unit_ac
+ TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
+GRANT SELECT ON invoice, business_unit_inv TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
 GRANT SELECT ON inventory TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
 GRANT SELECT ON tax_extended TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
 
@@ -359,7 +360,7 @@ GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
 
 GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__sales_order_create";
-GRANT INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_order_create";
+GRANT INSERT, UPDATE ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 GRANT ALL on inventory TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 
@@ -369,7 +370,7 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (51, 'allow', 'lsmb_<?lsmb dbname ?>__sales_order_create');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__sales_order_edit";
-GRANT DELETE ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_order_edit";
+GRANT DELETE ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__sales_order_edit";
 GRANT DELETE ON new_shipto TO "lsmb_<?lsmb dbname ?>__sales_order_edit";
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__sales_quotation_create"
@@ -382,7 +383,7 @@ GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
 
 GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
-GRANT INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
+GRANT INSERT, UPDATE ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
@@ -397,7 +398,7 @@ IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
 "lsmb_<?lsmb dbname ?>__file_read";
 
 GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__sales_order_list";
-GRANT SELECT ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_order_list";
+GRANT SELECT ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__sales_order_list";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (50, 'allow', 'lsmb_<?lsmb dbname ?>__sales_order_list');
@@ -413,7 +414,7 @@ IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
 "lsmb_<?lsmb dbname ?>__file_read";
 
 GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__sales_quotation_list";
-GRANT SELECT ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_quotation_list";
+GRANT SELECT ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__sales_quotation_list";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (67, 'allow', 'lsmb_<?lsmb dbname ?>__sales_quotation_list');
@@ -447,7 +448,8 @@ GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
 GRANT SELECT, INSERT ON ap, invoice_note 
 TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
-GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
+GRANT INSERT ON acc_trans, business_unit_ac
+ TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 
 GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
@@ -464,9 +466,10 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
 "lsmb_<?lsmb dbname ?>__batch_create";
 
-GRANT SELECT,INSERT, UPDATE ON ap, invoice TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
+GRANT SELECT,INSERT, UPDATE ON ap, invoice, business_unit_inv TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
-GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
+GRANT INSERT ON acc_trans, business_unit_ac
+ TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
 
 GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
@@ -478,7 +481,7 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_invoice_create"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 
-GRANT INSERT ON invoice TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
+GRANT INSERT ON invoice, business_unit_inv TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
 GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
 GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
 GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
@@ -509,7 +512,8 @@ IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
 "lsmb_<?lsmb dbname ?>__file_read";
 
 GRANT SELECT ON ap TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
-GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
+GRANT SELECT ON acc_trans, business_unit_ac
+ TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
 GRANT SELECT ON invoice TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
 GRANT SELECT ON inventory TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
 GRANT SELECT ON tax_extended TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
@@ -556,13 +560,13 @@ GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
    TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 
 GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
-GRANT INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
+GRANT INSERT, UPDATE ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 GRANT ALL on inventory TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__purchase_order_edit";
-GRANT DELETE ON orderitems TO "lsmb_<?lsmb dbname ?>__purchase_order_edit";
+GRANT DELETE ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__purchase_order_edit";
 GRANT DELETE ON new_shipto TO "lsmb_<?lsmb dbname ?>__purchase_order_edit";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
@@ -580,7 +584,7 @@ GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
    TO "lsmb_<?lsmb dbname ?>__rfq_create";
 
 GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__rfq_create";
-GRANT INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__rfq_create";
+GRANT INSERT, UPDATE ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__rfq_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__rfq_create";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__rfq_create";
 
@@ -595,7 +599,7 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
 GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__purchase_order_list";
-GRANT SELECT ON orderitems TO "lsmb_<?lsmb dbname ?>__purchase_order_list";
+GRANT SELECT ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__purchase_order_list";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (50, 'allow', 'lsmb_<?lsmb dbname ?>__purchase_order_list');
@@ -610,7 +614,7 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
 GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__rfq_list";
-GRANT SELECT ON orderitems TO "lsmb_<?lsmb dbname ?>__rfq_list";
+GRANT SELECT ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__rfq_list";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (67, 'allow', 'lsmb_<?lsmb dbname ?>__rfq_list');
@@ -640,7 +644,8 @@ GRANT SELECT, INSERT ON invoice TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT SELECT, INSERT ON ar TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__pos_enter";
-GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__pos_enter";
+GRANT INSERT ON acc_trans, business_unit_ac
+ TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__pos_enter";
@@ -659,7 +664,8 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__close_till"
 WITH INHERIT NOLOGIN;
 
 GRANT INSERT ON gl TO "lsmb_<?lsmb dbname ?>__close_till";
-GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__close_till";
+GRANT INSERT ON acc_trans, business_unit_ac
+ TO "lsmb_<?lsmb dbname ?>__close_till";
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__close_till";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__close_till";
 
@@ -673,7 +679,8 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__list_all_open"
 WITH INHERIT NOLOGIN;
 
 GRANT SELECT ON ar TO "lsmb_<?lsmb dbname ?>__list_all_open";
-GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__list_all_open";
+GRANT SELECT ON acc_trans, business_unit_ac
+ TO "lsmb_<?lsmb dbname ?>__list_all_open";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (16, 'allow', 'lsmb_<?lsmb dbname ?>__list_all_open');
@@ -836,7 +843,7 @@ WITH INHERIT NOLOGIN;
 
 GRANT "lsmb_<?lsmb dbname ?>__file_read" TO "lsmb_<?lsmb dbname ?>__part_edit";
 
-GRANT SELECT ON assembly, orderitems, jcitems, invoice 
+GRANT SELECT ON assembly, orderitems, jcitems, invoice, business_unit_oitem 
 TO "lsmb_<?lsmb dbname ?>__part_edit";
 
 GRANT DELETE ON assembly TO "lsmb_<?lsmb dbname ?>__part_edit";
@@ -1114,7 +1121,7 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
 GRANT SELECT, INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__orders_generate";
-GRANT SELECT, INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__orders_generate";
+GRANT SELECT, INSERT, UPDATE ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__orders_generate";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__orders_generate";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__orders_generate";
 
