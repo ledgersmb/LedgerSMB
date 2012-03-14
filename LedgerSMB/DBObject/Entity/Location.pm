@@ -1,0 +1,191 @@
+=head1 NAME
+
+LedgerSMB::DBObject::Entity::Location - Address Handling for LedgerSMB Contacts
+
+=head1 SYNPOSIS
+
+This contains a the basic handling of addresses for LedgerSMB contacts.
+
+Addresses may be tacked for billing, marketing, and shipping, and may be
+attached either to the entity (person or company) or credit account
+(customer/vendor account).
+
+=head1 INHERITS
+
+=over
+
+=item LedgerSMB::DBObject_Moose
+
+=cut
+
+package LedgerSMB::DBObject::Entity::Location;
+use Moose;
+extends 'LedgerSMB::DBObject_Moose';
+
+=head1 PROPERTIES
+
+=over
+
+=item active
+
+Bool, whether the address is active.
+
+=cut
+
+has 'active' => (is => 'rw', isa => 'Maybe[Bool]');
+
+=item inactive_date
+
+Date when the location became inactive.
+
+=cut
+
+has 'inactive_date' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+
+=item location_id
+
+Internal id of the actual location entry.
+
+=cut
+
+has 'location_id' => (is => 'rw', isa => 'Maybe[Int]');
+
+=item entity_id
+
+Internal id of linked entity.  Is undef if linked to an entity credit account 
+instead
+
+=cut
+
+has 'entity_id' => (is => 'ro', isa => 'Maybe[Int]');
+
+=item eca_id
+
+Internal id of lined entity credit account.  Is undef if linked to entity
+instead.
+
+=cut
+
+has 'eca_id' => (is => 'ro', isa => 'Maybe[Int]');
+
+=item class_id 
+
+Internal id of location class.
+
+=over
+
+=item 1 for Billing
+
+=item 2 for Sales
+
+=item 3 for Shipping
+
+=back
+
+=cut
+
+has 'class_id' => (is => 'ro', isa => 'Maybe[Int]');
+
+=item class_name
+
+The name of the class that goes with the id.  This is not set until
+$self->set_class_name is called.
+
+=cut
+
+our %classes = ( 1 => $App_State::Locate->text('Billing'),
+                 2 => $App_State::Locate->text('Sales'),
+                 3 => $App_State::Locate->text('Shipping'),
+);
+
+has 'class_name' => (is => 'rw', isa => 'Maybe[Str]');
+
+=item line_one
+
+The first line of the street address.
+
+=cut
+
+has 'line_one' => (is => 'rw', 'isa' => 'Maybe[Str]');
+
+=item line_two
+
+The second line of the street address
+
+=cut
+
+has 'line_two' => (is => 'rw', 'isa' => 'Maybe[Str]');
+
+=item line_three
+
+The third line of the street address
+
+=cut
+
+has 'line_three' => (is => 'rw', 'isa' => 'Maybe[Str]');
+
+=item city
+
+Name of the city.
+
+=cut
+
+has 'city' => (is => 'rw', 'isa' => 'Maybe[Str]');
+
+=item state
+
+Name of the state or province
+
+=cut
+
+has 'state' => (is => 'rw', 'isa' => 'Maybe[Str]');
+
+=item mail_code
+
+Zip or postal code
+
+=cut
+
+has 'mail_code' => (is => 'rw', 'isa' => 'Maybe[Str]');
+
+=item country_id
+
+This is the internal id of the country for the address.
+
+=cut
+
+has 'country_id' => (is => 'rw', 'isa' => 'Maybe[Int]');
+
+=item counry_name
+
+The name of the country
+
+=cut
+
+has 'country_name' => (is => 'rw', 'isa' => 'Maybe[Str]');
+
+=back
+
+=head1 METHODS
+
+=over
+
+=item get($args hashref)
+
+=item save()
+
+=item deactivate()
+
+=item list($args hashref)
+
+=back
+
+=head1 COPYRIGHT
+
+COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
+terms of the GNU General Public License version 2 or at your option any later
+version.  Please see the enclosed LICENSE file for details.
+
+=cut
+
+return 1;
