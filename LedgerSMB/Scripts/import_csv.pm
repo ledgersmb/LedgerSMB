@@ -124,6 +124,29 @@ our $process = {
                        AA->post_transaction($request->{_user}, $form);
                    }
                },
+    chart => sub {
+               use LedgerSMB::DBObject::Account;
+
+               my ($request, $entries) = @_;
+
+               foreach my $entry (@$entries){
+                  my $account = LedgerSMB::DBObject::Account->new({base=>$request});
+
+                  $account->merge({
+                      accno => $entry->[0],
+                      description => $entry->[1],
+                      charttype => $entry->[2],
+                      category => $entry->[3],
+                      contra => $entry->[4],
+                      tax => $entry->[5],
+                      link => $entry->[6],
+#                      heading => $entry->[7],
+                      gifi_accno => $entry->[8],
+                  });
+                  $account->save();
+               }
+
+             },
 };
 
 sub parse_file {
@@ -152,7 +175,7 @@ sub parse_file {
         }
         push @{$self->{import_entries}}, \@fields;
     }     
-    unshift @{$self->{import_entries}}; # get rid of header line
+    shift @{$self->{import_entries}}; # get rid of header line
     return @{$self->{import_entries}};
 }
 
