@@ -183,6 +183,9 @@ TO "lsmb_<?lsmb dbname ?>__employees_manage";
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (48, 'allow', 'lsmb_<?lsmb dbname ?>__employees_manage');
 
+INSERT INTO menu_acl (node_id, acl_type, role_name) 
+values (49, 'allow', 'lsmb_<?lsmb dbname ?>__employees_manage');
+
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_edit"
 WITH INHERIT NOLOGIN
@@ -231,6 +234,10 @@ GRANT EXECUTE ON FUNCTION batch_post(int) TO "lsmb_<?lsmb dbname ?>__batch_post"
 DELETE FROM menu_acl 
  WHERE node_id in (206, 210) 
        AND role_name = 'lsmb_<?lsmb dbname ?>__contact_create';
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (206, 'allow', 'lsmb_<?lsmb dbname ?>__batch_post'),
+       (210, 'allow', 'lsmb_<?lsmb dbname ?>__batch_post');
 
 -- AR
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create"
@@ -1738,6 +1745,9 @@ GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 --TODO, lock recurring, pending_job, payment_queue down more
 -- Roles with no db permissions:
 CREATE ROLE "lsmb_<?lsmb dbname ?>__draft_edit" WITH INHERIT NOLOGIN;
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (210, 'allow', 'lsmb_<?lsmb dbname ?>__draft_edit');
 
 -- CT:  The following grant is required for now, but will hopefully become less 
 -- important when we get to 1.4 and can more sensibly lock things down.

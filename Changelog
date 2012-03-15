@@ -39,6 +39,10 @@ Supported Presently
 Changelog for 1.3.14
 * Argentina (Spanish) translation and charts of accounts added. (Andres B)
 * Fixed errors saving when duedate is blank, bug 3503463 (Chris T)
+* Corrected editing pos_invoice.txt whitelisting in front-end (Chris T)
+* Corrected erroneous directory transversal denial (Chris T, bug 3504924)
+* Added recon data to Norwegian chart of accounts (h/t H. Sorli) (Chris T)
+* Fixed some menu items disappearing after upgrade (Chris T, bug 3504934)
 
 Andres B is Andres Basile
 

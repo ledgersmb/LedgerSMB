@@ -1120,7 +1120,7 @@ sub list_templates {
         $form->{file} = "$form->{template}.tex";
     } elsif (uc($form->{format}) eq 'HTML') {
         $form->{file} = "$form->{template}.html";
-    } elsif (uc($form->{format}) eq 'TXT'){
+    } elsif (uc($form->{format}) eq 'TEXT'){
         $form->{file} = "$form->{template}.txt";
     }
 
