@@ -226,8 +226,8 @@ DELETE FROM menu_acl
        AND role_name = 'lsmb_<?lsmb dbname ?>__contact_create';
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (206, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create'),
-       (210, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
+values (206, 'allow', 'lsmb_<?lsmb dbname ?>__batch_post'),
+       (210, 'allow', 'lsmb_<?lsmb dbname ?>__batch_post');
 
 -- AR
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create"
