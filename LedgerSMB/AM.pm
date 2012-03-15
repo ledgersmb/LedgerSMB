@@ -1501,7 +1501,7 @@ sub check_template_name {
     my ( $self, $myconfig, $form ) = @_;
 
     my @allowedsuff = qw(css tex txt html xml);
-    if ( $form->{file} =~ /^(.:)*?\/|:|\.\.\/|^\// ) {
+    if ( $form->{file} =~ /^(.:)*?\/|:|\.\.\// ) {
         $form->error("Directory transversal not allowed.");
     }
     if ( $form->{file} =~ /^${LedgerSMB::Sysconfig::backuppath}\// ) {
