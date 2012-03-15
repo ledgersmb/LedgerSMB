@@ -36,6 +36,10 @@ SELECT account_save(NULL,'8700','Árfolyamveszteség','E','870', NULL, false, fa
 SELECT account_save(NULL,'9110','Belföldi árbevétel','I','911', NULL, false, false, string_to_array('AR_amount:IC_sale:IC_income', ':'));
 SELECT account_save(NULL,'9111','Külföldi árbevétel','I','911', NULL, false, false, string_to_array('AR_amount:IC_sale:IC_income', ':'));
 SELECT account_save(NULL,'9700','Árfolyamnyereség','I','970', NULL, false, false, string_to_array('', ':'));
+
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE id IN (select account_id FROM account_link
+                           WHERE description = 'AP_paid');
 --
 INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno='4660'),'0.25','');
 INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno='4661'),'0.15','');
