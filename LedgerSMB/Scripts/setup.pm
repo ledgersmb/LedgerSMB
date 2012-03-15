@@ -654,6 +654,11 @@ sub _render_new_user {
     @{$request->{countries}} 
     = $request->call_procedure(procname => 'location_list_country' ); 
 
+    for my $country (@{$request->{countries}}){
+        if (lc($request->{coa_lc}) eq lc($country->{short_name})){
+           $request->{country_id} = $country->{id};
+        }
+    }
     my $locale = $request->{_locale};
 
     @{$request->{perm_sets}} = (
