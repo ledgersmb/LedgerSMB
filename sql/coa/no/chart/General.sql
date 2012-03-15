@@ -291,6 +291,10 @@ SELECT account_save(NULL,'8950','Fondsemisjon','E','', NULL, false, false, strin
 SELECT account_save(NULL,'8960','Overføringer annen egenkapital','E','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'8980','Avsatt til fri egenkapital','E','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'8990','Udekket tap','E','', NULL, false, false, string_to_array('', ':'));
+ 
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE id IN (select account_id FROM account_link
+                           WHERE description = 'AP_paid');
 --
 insert into tax (chart_id,rate) values ((select id from chart where accno = '2710'),0.25);
 insert into tax (chart_id,rate) values ((select id from chart where accno = '2720'),0.14);
