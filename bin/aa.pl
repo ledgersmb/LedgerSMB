@@ -1278,6 +1278,9 @@ sub post {
        &update;
        $form->finalize_request();
     }
+    if (!$form->{duedate}){
+          $form->{duedate} = $form->{transdate};
+    }
     $label =
       ( $form->{vc} eq 'customer' )
       ? $locale->text('Customer missing!')

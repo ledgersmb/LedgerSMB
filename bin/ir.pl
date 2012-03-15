@@ -1252,6 +1252,9 @@ sub post {
        &update;
        $form->finalize_request();
     }
+    if (!$form->{duedate}){
+          $form->{duedate} = $form->{transdate};
+    }
 
     $form->isblank( "transdate", $locale->text('Invoice Date missing!') );
     $form->isblank( "vendor",    $locale->text('Vendor missing!') );
