@@ -939,6 +939,10 @@ SELECT account_save(NULL,'512000','BANQUE','A','', NULL, false, false, string_to
 --
 SELECT account_save(NULL,'999000','Foreign Exchange Gain','I','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'999010','Foreign Exchange Loss','E','', NULL, false, false, string_to_array('', ':'));
+
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE id IN (select account_id FROM account_link
+                           WHERE description = 'AP_paid');
 --
 -- insert taxes
 --

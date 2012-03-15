@@ -313,6 +313,10 @@ INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10603, '70100', 'Počáteční účet rozvažný', 'A', 'A', '', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10605, '70200', 'Konečný účet rozvažný', 'A', 'A', '', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10607, '71000', 'Účet zisků a ztrát', 'A', 'A', '', '', false);
+
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE id IN (select account_id FROM account_link
+                           WHERE description = 'AP_paid');
 --
 insert into tax (chart_id,rate) values ((select id from chart where accno = '34311'),0.05);
 insert into tax (chart_id,rate) values ((select id from chart where accno = '34312'),0.19);

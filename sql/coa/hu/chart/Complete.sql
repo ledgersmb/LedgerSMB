@@ -413,6 +413,10 @@ SELECT account_save(NULL,'4672','Fizetendő ÁFA 5%','','L', NULL, false, false,
 SELECT account_save(NULL,'4673','Fizetendő ÁFA 0%','','L', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL,'4674','Fizetendő ÁFA adómentes','','L', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
 
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE id IN (select account_id FROM account_link
+                           WHERE description = 'AP_paid');
+
 INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno='4661'),'0.20','VIS');
 INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno='4662'),'0.05','VIS');
 INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno='4663'),'0','VIS');

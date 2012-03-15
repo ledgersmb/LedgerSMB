@@ -246,6 +246,10 @@ SELECT account_save(NULL,'8810','Nodoklis no peïòas','','E', NULL, false, fals
 SELECT account_save(NULL,'1330','Lîdzdalîbas saistîto uzòçmumu kapitâlâ','','A', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'2354','PVN samaksâts 18%','','E', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL,'2352','PVN ieòemtais 18%','','L', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
+
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE id IN (select account_id FROM account_link
+                           WHERE description = 'AP_paid');
 --
 INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart where accno = '2352'),'0.18','');
 INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart where accno = '2354'),'0.18','');

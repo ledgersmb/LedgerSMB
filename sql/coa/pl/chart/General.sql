@@ -324,6 +324,10 @@ SELECT account_save(NULL,'892000000','Wynik finansowy','Q','', NULL, false, fals
 SELECT account_save(NULL,'893000000','Odpisy z zysku netto w ci±gu roku obrotowego','Q','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'893010000','Podatek dochodowy','Q','', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL,'893020000','Inne obowi±zkowe obci±¿enia wyniku finansowego','Q','', NULL, false, false, string_to_array('', ':'));
+
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE id IN (select account_id FROM account_link
+                           WHERE description = 'AP_paid');
 --
 insert into tax (chart_id,rate) values ((select id from chart where accno = '223020100'),0.22);
 insert into tax (chart_id,rate) values ((select id from chart where accno = '223020200'),0.07);
