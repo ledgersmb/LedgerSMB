@@ -1812,6 +1812,9 @@ GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 -- Roles with no db permissions:
 CREATE ROLE "lsmb_<?lsmb dbname ?>__draft_edit" WITH INHERIT NOLOGIN;
 
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (210, 'allow', 'lsmb_<?lsmb dbname ?>__draft_edit');
+
 -- CT:  The following grant is required for now, but will hopefully become less 
 -- important when we get to 1.4 and can more sensibly lock things down.
 GRANT ALL ON dpt_trans TO public;
