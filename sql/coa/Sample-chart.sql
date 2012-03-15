@@ -69,6 +69,10 @@ SELECT account_save(NULL,'5790','Utilities','E','', NULL, false,string_to_array(
 SELECT account_save(NULL,'5795','Registrations','E','', NULL, false,string_to_array('AP_amount', ':'));
 SELECT account_save(NULL,'5800','Licenses','E','', NULL, false,string_to_array('AP_amount', ':'));
 SELECT account_save(NULL,'5810','Foreign Exchange Loss','E','', NULL, false,string_to_array('', ':'));
+ 
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+FROM account WHERE id IN (select account_id FROM account_link
+                           WHERE description = 'AP_paid');
 --
 insert into tax (chart_id,rate) values ((select id from chart where accno = '2310'),0.1);
 insert into tax (chart_id,rate) values ((select id from chart where accno = '2320'),0.14);
