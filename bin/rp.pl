@@ -854,6 +854,12 @@ qq|gl.pl?path=$form->{path}&action=generate_report&accounttype=$form->{accountty
     $column_data{debit} = $totaldebit;
     $column_data{credit} = $totalcredit;
 
+
+    my %can_load;
+    $can_load{CSV} = 1;
+    $can_load{XLS} = ! eval { require Excel::Template::Plus };
+    $can_load{ODS} = ! eval { require OpenOffice::OODoc };
+
     my @buttons;
     for my $type (qw(CSV XLS ODS)) {
         push @buttons, {
@@ -862,6 +868,7 @@ qq|gl.pl?path=$form->{path}&action=generate_report&accounttype=$form->{accountty
             text => $locale->text("[_1] Report", $type),
             type => 'submit',
             class => 'submit',
+            disabled => $can_load{$type} ? "" : "disabled",
         };
     }
     my $format;
@@ -1265,6 +1272,11 @@ qq|$ref->{module}.pl?path=$form->{path}&action=edit&id=$ref->{id}&login=$form->{
 ##        &menubar;
 ##    }
 
+    my %can_load;
+    $can_load{CSV} = 1;
+    $can_load{XLS} = ! eval { require Excel::Template::Plus };
+    $can_load{ODS} = ! eval { require OpenOffice::OODoc };
+
     for my $type (qw(CSV XLS ODS)) {
         push @buttons, {
             name => 'action',
@@ -1272,6 +1284,7 @@ qq|$ref->{module}.pl?path=$form->{path}&action=edit&id=$ref->{id}&login=$form->{
             text => $locale->text("[_1] Report", $type),
             type => 'submit',
             class => 'submit',
+            disabled => $can_load{$type} ? "" : "disabled",
         };
     }
     my $format;

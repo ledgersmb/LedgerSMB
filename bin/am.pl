@@ -252,6 +252,11 @@ sub list_account {
         push @rows, \%column_data;
     }
 
+    my %can_load;
+    $can_load{CSV} = 1;
+    $can_load{XLS} = ! eval { require Excel::Template::Plus };
+    $can_load{ODS} = ! eval { require OpenOffice::OODoc };
+
     my @buttons;
     for my $type (qw(CSV XLS ODS)) {
         push @buttons, {
@@ -260,6 +265,7 @@ sub list_account {
             text => $locale->text("[_1] Report", $type),
             type => 'submit',
             class => 'submit',
+            disabled => $can_load{$type} ? "" : "disabled",
         };
     }
     my %hiddens = (
