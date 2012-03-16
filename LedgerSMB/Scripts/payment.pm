@@ -664,26 +664,10 @@ sub payment {
  #my $locale       = $request->{_locale};
  my $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
  my $Settings = LedgerSMB::Setting->new({'base' => $request});
-# Lets get the project data... 
- my  @projectOptions; 
- my  @arrayOptions  = $dbPayment->list_open_projects();
-  push @projectOptions, {}; #A blank field on the select box 
- for my $ref (0 .. $#arrayOptions) {
-       push @projectOptions, { value => $arrayOptions[$ref]->{id}."--".$arrayOptions[$ref]->{projectnumber}."--".$arrayOptions[$ref]->{description},
-                                text => $arrayOptions[$ref]->{projectnumber}."--".$arrayOptions[$ref]->{description}};
- }
 
-# Lets get the departments data...
-  my @departmentOptions;
-  my $role =  $request->{type} eq 'receipt' ? 'P' : 'C';
-  @arrayOptions = $dbPayment->list_departments($role);
-  push @departmentOptions, {}; # A blank field on the select box
-  for my $ref (0 .. $#arrayOptions) {
-      push @departmentOptions, {  value => $arrayOptions[$ref]->{id}."--".$arrayOptions[$ref]->{description},
-                                  text => $arrayOptions[$ref]->{description}};
-  }
 # Lets get the currencies (this uses the $dbPayment->{account_class} property)
  my @currOptions;
+ my @arrayOptions;
  @arrayOptions = $Settings->get_currencies();
 
  for my $ref (0 .. $#arrayOptions) {
@@ -699,14 +683,6 @@ my $select = {
   stylesheet => $request->{_user}->{stylesheet},
   login    => { name  => 'login', 
                 value => $request->{_user}->{login}   },
-  projects => {
-    name => 'projects',
-    options => \@projectOptions
-  },
-  department => {
-    name => 'department',
-    options => \@departmentOptions
-  },
   curr => {
     name => 'curr',
     options => \@currOptions
@@ -843,6 +819,26 @@ my @selected_checkboxes;
 my @department;
 my @currency_options;
 my $exchangerate;
+my $module;
+my $b_units;
+if ($request->{account_class} == 2){
+    $module = 'AR';
+} elsif ($request->{account_class} == 1){
+    $module = 'AP';
+}
+
+my @b_classes = $request->call_procedure(
+                        procname => 'business_unit__list_classes',
+                            args => ['1', $module]);
+
+for my $cls (@b_classes){
+   my @units = $request->call_procedure(
+                        procname => 'business_unit__list_by_class',
+                            args => [$cls->{id}, $request->{transdate}, 
+                                     $request->{credit_id}, '0'],
+   );
+   $b_units->{$cls->{id}} = \@units;
+}
 # LETS GET THE CUSTOMER/VENDOR INFORMATION	
 
 ($Payment->{entity_credit_id}, $Payment->{company_name}) = split /--/ , $request->{'vendor-customer'};
