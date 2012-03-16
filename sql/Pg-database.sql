@@ -146,6 +146,7 @@ COMMENT ON TABLE language IS
 $$ Languages for manual translations and so forth.$$;
 INSERT INTO language (code, description)
 VALUES ('ar_EG', 'Arabic (Egypt)'),
+       ('es_AR', 'Spanish (Argentina)'),
        ('bg',    'Bulgarian'), 
        ('ca',    'Catalan'),
        ('cs',    'Czech'),
