@@ -111,7 +111,7 @@ The total debt that is acceptable for the account
 
 =cut
 
-has 'creditlimit' => (is => 'rw', isa => 'Maybe[Num]');
+has 'creditlimit' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGNumber]');
 
 =item current_debt
 
@@ -121,7 +121,7 @@ operation.  Use get_current_debt() to set it.
 
 =cut
 
-has 'current_debt' => (is => 'rw', isa => 'Maybe[Num]');
+has 'current_debt' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGNumber]');
 
 =item terms
 
@@ -257,6 +257,32 @@ has 'taxform_id' => (is => 'rw', isa => 'Maybe[Int]');
 =head1 METHODS
 
 =over
+
+=item prepare_input($hashref)
+
+Takes all PGNumber and PGDate inputs and constructs appropriate classes.
+
+=cut
+
+sub prepare_input {
+    my ($self, $request) = @_;
+
+    $request->{startdate} =
+       LedgerSMB::PGDate->from_input($request->{startdate}) 
+            if defined $request->{startdate};
+    $request->{enddate} =
+       LedgerSMB::PGDate->from_input($request->{enddate}) 
+            if defined $request->{enddate};
+    $request->{discount} = 
+       LedgerSMB::PGNumber->from_input($request->{discount})
+            if defined $request->{discount};
+    $request->{threshold} = 
+       LedgerSMB::PGNumber->from_input($request->{threshold})
+            if defined $request->{threshold};
+    $request->{creditlimit} = 
+       LedgerSMB::PGNumber->from_input($request->{creditlimit})
+            if defined $request->{creditlimit};
+}
 
 =item get_by_id($id int);
 

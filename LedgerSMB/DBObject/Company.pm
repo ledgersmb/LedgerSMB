@@ -46,30 +46,6 @@ sub set_entity_class {
     }
 }
 
-=over
-
-=item get_by_cc
-
-This retrieves the company header information by control code.  Leaves the 
-overall account class untouched.
-
-=back
-
-=cut
-
-sub get_by_cc {
-    my $self = shift @_;
-    my $entity_class = $self->{entity_class};
-    my ($ref) = $self->exec_method({funcname => 'entity__get_by_cc'});
-    $self->merge($ref);
-    $self->{entity_id} = $self->{id};
-    delete $self->{id};
-    $self->get;
-    $self->get_metadata;
-    $self->{entity_class} = $entity_class;
-}
-
-
 =over 
 
 =item delete_contact
@@ -263,26 +239,6 @@ sub save_location {
     }
 
     $self->{dbh}->commit;
-}
-
-=over
-
-=item get_credit_id 
-
-This method returns the current credit id from the screen.
-
-Requires entity_id, meta_number, and entity_class be set.
-
-=back
-
-=cut
-
-sub get_credit_id {
-    my $self = shift @_;
-    my ($ref) = $self->exec_method(
-           funcname => 'entity_credit_get_id'
-    );
-    $self->{credit_id} = $ref->{'entity_credit_get_id'};
 }
 
 =over
@@ -484,10 +440,6 @@ sub get_billing_info {
 }
 
 
-
-# I don't believe account() is used.  At any rate the stored proc called 
-# doesn't exist and therefore it can't work.  Therefore deleting the account() 
-# function. Not the same as the accounts() function which is used. --CT 
 
 =item accounts
 

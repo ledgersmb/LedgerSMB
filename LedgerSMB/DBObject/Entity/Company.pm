@@ -25,6 +25,14 @@ extends 'LedgerSMB::DBObject::Entity';
 
 =over
 
+=item entity_id
+
+ID of entity attached.  This is also an interal reference to this company.
+
+=cut
+
+has 'entity_id' => (is => 'rw', isa => 'Maybe[Int]');
+
 =item legal_name
 
 Legal name of the company.  Will also map back to the entity's name field.
@@ -89,9 +97,31 @@ sub get {
     my ($self, $id) = @_;
     my ($ref) = $self->call_procedure(procname => 'company__get',
                                           args => [$id]);
+    if (!$ref){
+        die $self->{_locale}->text('No company found.');
+    }
     $self->prepare_dbhash($ref);
     return $self->new(%$ref);
 }
+
+=item get_by_cc($cc)
+
+This retrieves a company associated with a control code.  Dies with error if 
+company does not exist.
+
+=cut
+
+sub get_by_cc {
+    my ($self, $cc) = @_;
+    my ($ref) = $self->call_procedure(procname => 'company__get_by_cc',
+                                          args => [$cc]);
+    if (!$ref){
+        die $self->{_locale}->text('No company found.');
+    }
+    $self->prepare_dbhash($ref);
+    return $self->new(%$ref);
+}
+
 
 =item save()
 

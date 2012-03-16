@@ -418,7 +418,7 @@ END ?>
 </div>
 <?lsmb END ?>
 </div>
-<?lsmb IF entity_id ?>
+<?lsmb IF credit_list ?>
 <div id="credit_div" class="container">
 <div class="listtop"><strong>Accounts</strong></div>
     <table width="100%">
@@ -430,8 +430,9 @@ END ?>
         <th class="start_date"><?lsmb text('Start Date') ?></th>
         <th class="end_date"><?lsmb text('End Date') ?></th>
     </tr>
-    <?lsmb FOREACH cl_item = credit_list ?>
-    <tr <?lsmb IF meta_number == cl_item.meta_number  ?> class="active"<?lsmb END ?>>
+    <?lsmb FOREACH cl_item IN credit_list ?>
+    <tr <?lsmb IF meta_number == cl_item.meta_number ;
+                   credit_act = cl_item;  ?> class="active"<?lsmb END ?>>
         <td><?lsmb IF cl_item.entity_class == 1 ?><?lsmb text('Vendor') ?>
             <?lsmb ELSIF cl_item.entity_class == 2 ?><?lsmb text('Customer') ?>
             <?lsmb END ?>
@@ -456,17 +457,17 @@ END ?>
 	<?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "entity_id"
-		value = entity_id
+		value = credit_act.entity_id
 	} ?>	
 	<?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "credit_id"
-		value = credit_id
+		value = credit_act.id
 	} ?>	
 	<?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "account_class"
-		value = account_class
+		value = credit_act.entity_class
 	} ?>	
         <table>
 	<tr class="eca_row">
@@ -475,14 +476,14 @@ END ?>
 		label = text("$entity_classname Number"),
 		type= "text",
 		name = "meta_number",
-		value = meta_number,
+		value = credit_act.meta_number,
 		size = "10"
 	}  # " ?></td>
 	<td><?lsmb PROCESS input element_data = {
 		label = text("Description"),
 		type= "text",
 		name = "description",
-		value = description,
+		value = credit_act.description,
 		size = "20"
 	} ?></td>
 	</tr>
@@ -493,7 +494,7 @@ END ?>
 		type = "text"
 		size = "50"
 		name = "pay_to_name"
-		value = pay_to_name
+		value = credit_act.pay_to_name
 		class = "name"
 	} ?>
 	</td>
@@ -504,7 +505,7 @@ END ?>
 			label = text('Starting Date'),
 			name = "startdate",
 			class = "date",
-			value = startdate,
+			value = credit_act.startdate,
 			type = "text",
 			size = "12",
 			maxlength = "10"
@@ -515,7 +516,7 @@ END ?>
 			label = text('End Date'),
 			name = "enddate",
 			class = "date",
-			value = enddate,
+			value = credit.enddate,
 			type = "text",
 			size = "12",
 			maxlength = "10"
@@ -527,7 +528,7 @@ END ?>
 		<?lsmb INCLUDE input element_data = {
 			label = text('Credit Limit'),
 			name = "creditlimit",
-			value = creditlimit,
+			value = credit_act.creditlimit,
 			type = "text",
 			size = "20"
 		} #' ?>
@@ -536,7 +537,7 @@ END ?>
 		<?lsmb INCLUDE input element_data = {
 			label = text('Terms'),
 			name = "terms",
-			value = terms,
+			value = credit_act.terms,
 			type = "text",
 			size = "5"
 		} ?> <?lsmb text('days') ?></span>
@@ -547,14 +548,14 @@ END ?>
 		<?lsmb INCLUDE input element_data = {
 			label = text('Discount'),
 			name = "discount",
-			value = discount,
+			value = credit_act.discount,
 			type = "text",
 			size = "3",
 			maxlength = 3
 		} ?>% / 
 		<?lsmb INCLUDE input element_data = {
 			name = "discount_terms",
-			value = discount_terms,
+			value = credit_act.discount_terms,
 			type = "text",
 			size = "3",
 			maxlength = 3
@@ -564,7 +565,7 @@ END ?>
 		<?lsmb INCLUDE input element_data = {
 			label = text('Subcontract GIFI'),
 			name = "gifi_accno",
-			value = gifi_accno,
+			value = credit_act.gifi_accno,
 			type = "text",
 			size = "19"
 		} #' ?>
@@ -573,7 +574,7 @@ END ?>
         <tr id="account-link-row">
            <td> <?lsmb INCLUDE select element_data = {
 			name = "ar_ap_account_id"
-			default_values = [ar_ap_account_id]
+			default_values = [credit_act.ar_ap_account_id]
 			options = ar_ap_acc_list
 			label = text((account_class == 1) ? 'AP' : 'AR')
 			text_attr = "text"
@@ -582,7 +583,7 @@ END ?>
            </td>
            <td> <?lsmb INCLUDE select element_data = {
 			name = "cash_account_id"
-			default_values = [cash_account_id]
+			default_values = [credit_act.cash_account_id]
 			options = cash_acc_list
 			label = text('Payment')
 			text_attr = "text"
@@ -591,7 +592,7 @@ END ?>
            </td>
            <td> <?lsmb INCLUDE select element_data = {
                         name = "discount_account_id"
-                        default_values = [discount_account_id]
+                        default_values = [credit_act.discount_account_id]
                         options = discount_acc_list
                         label = text('Discount')
                         text_attr = "text"
@@ -604,7 +605,7 @@ END ?>
                        INCLUDE select element_data = {
 			name = "business_id"
 			options = business_types
-			default_values = [business_id]
+			default_values = [credit_act.business_id]
 			text_attr = "description"
 			value_attr = "id"
 			label = text('Business Type') #'
@@ -612,7 +613,7 @@ END ?>
 	  </td>
           <td> <?lsmb INCLUDE input element_data = {
 			name = "threshold"
-			value = threshold
+			value = credit_act.threshold
 			type = "text"
 			size = "20"
 			label = text('Threshold')
@@ -626,7 +627,7 @@ END ?>
 	 <td> <?lsmb INCLUDE select element_data = {
 			name = "taxform_id"
 			options = taxform_list
-			default_values = [taxform_id]
+			default_values = [credit_act.taxform_id]
 			text_attr = "form_name"
 			value_attr = "id"
 			label = text('Taxforms') 
@@ -635,7 +636,7 @@ END ?>
         <td> <?lsmb INCLUDE select element_data = {
 		label = text("Language")
 		name = "language_code"
-                default_values = [language_code],
+                default_values = [credit_act.language_code],
                 options = language_code_list
 		text_attr = "text"
 		value_attr = "code"
@@ -646,7 +647,7 @@ END ?>
                         options = all_currencies
                         text_attr = 'text'
                         value_attr = 'text'
-                        default_values = [curr]
+                        default_values = [credit_act.curr]
                         label = text('Currency')
                } ?>
            </td>
@@ -673,7 +674,7 @@ END ?>
                    } ?><span></div>
         <?lsmb END # FOR tx ?>
          </div>
-		<?lsmb IF credit_id;
+		<?lsmb IF credit_act.id;
 		INCLUDE button element_data = {
 			text = text('Save Changes'),
 			class="submit" 

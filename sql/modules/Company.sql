@@ -556,7 +556,8 @@ COMMENT ON FUNCTION entity__list_credit (in_entity_id int, in_entity_class int)
 IS $$ Returns a list of entity credit account entries for the entity and of the
 entity class.$$;
 
-CREATE OR REPLACE FUNCTION company__get (in_entity_id int) RETURNS company_entity AS
+CREATE OR REPLACE FUNCTION company__get (in_entity_id int) 
+RETURNS company_entity AS
 $$
 	SELECT c.entity_id, c.legal_name, c.tax_id, c.sales_tax_id,
                c.license_number, c.sic_code, e.control_code, e.country_id 
@@ -568,12 +569,18 @@ $$ language sql;
 COMMENT ON FUNCTION company__get (in_entity_id int) IS
 $$ Returns all attributes for the company attached to the entity.$$;
 
-CREATE OR REPLACE FUNCTION entity__get_by_cc (in_control_code text)
-RETURNS SETOF entity AS $$
-SELECT * FROM entity WHERE control_code = $1 $$ language sql;
+CREATE OR REPLACE FUNCTION company__get_by_cc (in_control_code text)
+RETURNS company_entity AS
+$$
+        SELECT c.entity_id, c.legal_name, c.tax_id, c.sales_tax_id,
+               c.license_number, c.sic_code, e.control_code, e.country_id
+          FROM company c
+          JOIN entity e ON e.id = c.entity_id
+         WHERE e.control_code = $1;
+$$ language sql;
 
-COMMENT ON FUNCTION entity__get_by_cc (in_control_code text) IS
-$$ Returns the entity row attached to the control code. $$;
+COMMENT ON FUNCTION company__get_by_cc (in_control_code text) IS
+$$ Returns the entity/company row attached to the control code. $$;
 
 create or replace function save_taxform 
 (in_country_code int, in_taxform_name text)

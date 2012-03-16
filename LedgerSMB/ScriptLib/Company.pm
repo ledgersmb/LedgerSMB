@@ -58,11 +58,13 @@ control code
 =cut
 
 sub get_by_cc {
-   my ($request) = @_;
-   my $company = new_company($request);
-   $company->get_by_cc();   
-   $request->{company} = $company;
-   _render_main_screen($request);
+    my ($request) = @_;
+    $request->{legal_name} ||= 'test';
+    $request->{country_id} = 0;
+    my $company = LedgerSMB::DBObject::Entity::Company->new(%$request);
+    $company = $company->get_by_cc($request->{control_code});
+    $request->{company} = $company;
+    _render_main_screen($request);
 }
 
 =item dispatch_legacy
@@ -220,7 +222,6 @@ of the company informations.
 =cut
 
 sub get {
-    
     my ($request) = @_;
     $request->{legal_name} ||= 'test';
     my $company = LedgerSMB::DBObject::Entity::Company->new(%$request);
@@ -681,10 +682,11 @@ sub save_credit {
         }  
     }
     if (_close_form($request)){
+        LedgerSMB::DBObject::Entity::Credit_Account->prepare_input($request);
         $credit = LedgerSMB::DBObject::Entity::Credit_Account->new(%$request);    
         $credit->save();
     }
-    _render_main_screen($request);
+    get($request);
 }
 
 =pod
@@ -742,10 +744,22 @@ Pulls relevant data from db and renders the data entry screen for it.
 
 sub _render_main_screen{
     my ($request, $company) = @_;
+    delete $request->{creditlimit};
+    delete $request->{discount};
+    delete $request->{threshold};
+    delete $request->{startdate};
+    delete $request->{enddate};
+    my $credit = LedgerSMB::DBObject::Entity::Credit_Account->new(%$request);
     $request->close_form;
     $request->open_form;
     $request->{dbh}->commit;
-    set_entity_class($request);
+    if ($request->{company}){
+        my @credit_list = 
+           $credit->list_for_entity($request->{company}->entity_id);
+        $request->{credit_list} = \@credit_list;
+        $request->{entity_id} = $request->{company}->entity_id;
+    }
+    set_entity_class($request) unless $request->{entity_class};
     if (!$company){
         $company = new_company($request);
         $company->get_metadata();

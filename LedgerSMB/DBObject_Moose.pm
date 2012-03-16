@@ -364,7 +364,7 @@ sub call_procedure {
 	for (0 .. $#names){
             #   numeric            float4/real
             if ($types[$_] == 3 or $types[$_] == 2) {
-                $ref->{$names[$_]} = Math::BigFloat->new($ref->{$names[$_]});
+                $ref->{$names[$_]} = LedgerSMB::PGNumber->from_db($ref->{$names[$_]});
             }
             #    DATE 
             elsif ($types[$_] == 91){
