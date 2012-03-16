@@ -40,7 +40,7 @@ use strict;
 LedgerSMB::App_State->zero();
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Handler');
-
+Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 $logger->debug("Begin");
 
 # for custom preprocessing logic

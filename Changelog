@@ -46,6 +46,8 @@ Changelog for 1.3.14
 * Added default to country for initial setup (Chris T, bug 3496967)
 * Added recon data to COA files for a few extra locales (Chris T bug 3505102)
 * Clarified error message when contrib scripts not found (Chris T)
+* Corrected warnings for missin glog initalization (Andres B)
+* XAL and ODS buttons are now disabled if prereqs are missing (Erik H)
 
 Andres B is Andres Basile
 

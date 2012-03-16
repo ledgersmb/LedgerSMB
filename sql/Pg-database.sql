@@ -168,6 +168,7 @@ together.$$;
 --TABLE language moved here because of later references
 INSERT INTO language (code, description)
 VALUES ('ar_EG', 'Arabic (Egypt)'),
+       ('es_AR', 'Spanish (Argentina)'),
        ('bg',    'Bulgarian'), 
        ('ca',    'Catalan'),
        ('cs',    'Czech'),
