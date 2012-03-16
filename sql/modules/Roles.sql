@@ -278,6 +278,10 @@ values (4, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (198, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher');
 
+-- Activate when AR batch import is working
+--INSERT INTO menu_acl (node_id, acl_type, role_name) 
+--values (244, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher');
+
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_invoice_create"
 WITH INHERIT NOLOGIN
@@ -483,6 +487,8 @@ GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (199, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher');
+INSERT INTO menu_acl (node_id, acl_type, role_name) 
+values (243, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_invoice_create"
 WITH INHERIT NOLOGIN
@@ -1032,6 +1038,8 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (35, 'allow', 'lsmb_<?lsmb dbname ?>__gl_transaction_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (40, 'allow', 'lsmb_<?lsmb dbname ?>__gl_transaction_create');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (245, 'allow', 'lsmb_<?lsmb dbname ?>__gl_transaction_create');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__gl_voucher_create"
@@ -1317,6 +1325,8 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (136, 'allow', 'lsmb_<?lsmb dbname ?>__account_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (137, 'allow', 'lsmb_<?lsmb dbname ?>__account_create');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (246, 'allow', 'lsmb_<?lsmb dbname ?>__account_create');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__account_edit"
@@ -1353,6 +1363,8 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (136, 'allow', 'lsmb_<?lsmb dbname ?>__gifi_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (139, 'allow', 'lsmb_<?lsmb dbname ?>__gifi_create');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (247, 'allow', 'lsmb_<?lsmb dbname ?>__gifi_create');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__gifi_edit"
@@ -1419,6 +1431,8 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (153, 'allow', 'lsmb_<?lsmb dbname ?>__sic_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (154, 'allow', 'lsmb_<?lsmb dbname ?>__sic_create');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (248, 'allow', 'lsmb_<?lsmb dbname ?>__sic_create');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__sic_edit"
