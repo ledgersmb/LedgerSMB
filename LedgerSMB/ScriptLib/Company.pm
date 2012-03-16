@@ -61,7 +61,8 @@ sub get_by_cc {
    my ($request) = @_;
    my $company = new_company($request);
    $company->get_by_cc();   
-   _render_main_screen($company);
+   $request->{company} = $company;
+   _render_main_screen($request);
 }
 
 =item dispatch_legacy
@@ -221,11 +222,11 @@ of the company informations.
 sub get {
     
     my ($request) = @_;
-    my $company = new_company($request);
-    $company->get();
-    $company->get_credit_id();
-#    $company->get_metadata(); It will be called from _render_main_screen
-    _render_main_screen($company);
+    $request->{legal_name} ||= 'test';
+    my $company = LedgerSMB::DBObject::Entity::Company->new(%$request);
+    $company = $company->get($request->{entity_id});
+    $request->{company} = $company;
+    _render_main_screen($request);
 }
 
 =pod

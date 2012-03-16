@@ -145,7 +145,7 @@ sub exec_method {
         $self->{call_args} = \@call_args;
         $logger->debug("exec_method: \$self = " . Data::Dumper::Dumper($self));
         for my $arg(@call_args){
-            if (eval {$arg->can('to_db')}){
+            if (defined $arg && eval {$arg->can('to_db')}){
                $arg = $arg->to_db;
             }
         }

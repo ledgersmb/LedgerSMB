@@ -87,7 +87,8 @@ This retrieves and returns the item as a blessed reference
 
 sub get {
     my ($self, $id) = @_;
-    my ($ref) = $self->exec_method({funcname => 'company__get'});
+    my ($ref) = $self->call_procedure(procname => 'company__get',
+                                          args => [$id]);
     $self->prepare_dbhash($ref);
     return $self->new(%$ref);
 }

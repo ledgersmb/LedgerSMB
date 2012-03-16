@@ -6,6 +6,19 @@
 
 BEGIN;
 
+DROP TYPE IF EXISTS company_entity CASCADE;
+
+CREATE TYPE company_entity AS(
+  entity_id int,
+  legal_name text,
+  tax_id text,
+  sales_tax_id text,
+  license_number text,
+  sic_code varchar,
+  control_code text,
+  country_id int
+);
+
 DROP TYPE IF EXISTS eca__pricematrix CASCADE;
 
 CREATE TYPE eca__pricematrix AS (
@@ -543,16 +556,16 @@ COMMENT ON FUNCTION entity__list_credit (in_entity_id int, in_entity_class int)
 IS $$ Returns a list of entity credit account entries for the entity and of the
 entity class.$$;
 
-CREATE OR REPLACE FUNCTION company_retrieve (in_entity_id int) RETURNS company AS
+CREATE OR REPLACE FUNCTION company__get (in_entity_id int) RETURNS company_entity AS
 $$
-DECLARE t_company company;
-BEGIN
-	SELECT * INTO t_company FROM company WHERE entity_id = in_entity_id;
-	RETURN t_company;
-END;
-$$ language plpgsql;
+	SELECT c.entity_id, c.legal_name, c.tax_id, c.sales_tax_id,
+               c.license_number, c.sic_code, e.control_code, e.country_id 
+          FROM company c
+          JOIN entity e ON e.id = c.entity_id
+         WHERE entity_id = $1;
+$$ language sql;
 
-COMMENT ON FUNCTION company_retrieve (in_entity_id int) IS
+COMMENT ON FUNCTION company__get (in_entity_id int) IS
 $$ Returns all attributes for the company attached to the entity.$$;
 
 CREATE OR REPLACE FUNCTION entity__get_by_cc (in_control_code text)
