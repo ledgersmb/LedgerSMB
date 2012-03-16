@@ -64,6 +64,9 @@ sub login {
             $request->error($request->{_locale}->text(
                       'Cannot find Contrib script [_1] in [_2].',
                       "tablefunc.control", $ENV{PG_CONTRIB_DIR}
+            ) . "\n" . 
+            $request->{_locale}->text(
+                 'Please point your contrib_dir directive in your ledgersmb.conf to the appropriate location'
             ));
        }
     } else {
@@ -71,6 +74,9 @@ sub login {
             $request->error($request->{_locale}->text(
                       'Cannot find Contrib script [_1] in [_2].',
                       "tablefunc.sql", $ENV{PG_CONTRIB_DIR}
+            ) . "\n" . 
+            $request->{_locale}->text(
+                 'Please point your contrib_dir directive in your ledgersmb.conf to the appropriate location'
             ));
       
        }
