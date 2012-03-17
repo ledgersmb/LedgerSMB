@@ -1,0 +1,68 @@
+<?lsmb BLOCK dynatable ?>
+<table width="100%">
+  <tr>
+    <th class="listtop" colspan="<?lsmb columns.size ?>"><?lsmb form.title ?></th>
+  </tr>
+  <tr>
+  <?lsmb IF options.defined ?>
+    <td><?lsmb FOREACH option IN options; option ?><br /><?lsmb END ?></td>
+  <?lsmb ELSE ?>
+    <td colspan="<?lsmb columns.size ?>"></td></tr>
+  <?lsmb END ?>
+  </tr>
+  <tr class="listheading">
+<?lsmb FOREACH column IN columns ?>
+    <th class="listtop">
+	<?lsmb IF heading.$column.href.defined ?><a class="listtop" href="<?lsmb heading.$column.href ?>"><?lsmb heading.$column.text ?></a>
+	<?lsmb ELSE; heading.$column; END ?>
+    </th>
+<?lsmb END ?>
+  </tr>
+  <?lsmb USE dumper(indent=2, pad="<br>") ?>
+<?lsmb FOREACH row IN rows ?>
+<?lsmb IF row.class == 'heading';      s = 'th'; c = 'listheading';
+	ELSIF row.class == 'subtotal'; s = 'th'; c = 'listsubtotal';
+	ELSIF row.class == 'divider';  s = 'th'; c = 'listheading';
+	ELSE;                          s = 'td'; c = "listrow${row.i}"; END ?>
+<tr class="<?lsmb c ?>">
+  <?lsmb IF row.class == 'divider' ?>
+  <th colspan="<?lsmb columns.size ?>">
+    <?lsmb IF row.href.defined ?>
+    <a href="<?lsmb row.href?>"><?lsmb row.text ?></a>
+    <?lsmb ELSIF row.delimiter;
+	FOREACH l IN row.text.split(row.delimiter); l ?><br /><?lsmb END ?>
+    <?lsmb ELSIF row.input.defined;
+	PROCESS input element_data=row.input ?>
+    <?lsmb ELSIF row.select.defined;
+	PROCESS select element_data=row.select ?>
+    <?lsmb ELSE; row.text; END ?>
+  </th>
+</tr>
+  <?lsmb NEXT; END ?>
+  <?lsmb FOREACH column IN columns ?>
+  <<?lsmb s ?> class="<?lsmb c ?>" <?lsmb IF (!row.class.defined || row.class != 'heading') && row_alignment.$column ?>align="<?lsmb row_alignment.$column ?>"<?lsmb END ?>>
+    <?lsmb IF row.$column.href.defined ?>
+    <a href="<?lsmb row.$column.href?>"><?lsmb row.$column.text ?></a>
+    <?lsmb ELSIF row.$column.delimiter;
+	FOREACH l IN row.$column.text.split(row.$column.delimiter); l ?><br /><?lsmb END ?>
+    <?lsmb ELSIF row.$column.input.defined;
+	PROCESS input element_data=row.$column.input ?>
+    <?lsmb ELSIF row.$column.select.defined;
+	PROCESS select element_data=row.$column.select ?>
+    <?lsmb ELSIF row.$column.text.defined;row.$column.text ?>
+    <?lsmb ELSE; row.$column; END ?>
+  </<?lsmb s ?>>
+  <?lsmb END ?>
+</tr>
+<?lsmb END ?>
+<?lsmb IF totals ?>
+<tr class="listtotal">
+  <?lsmb FOREACH column IN columns ?>
+  <th class="listtotal" align="right"><?lsmb totals.$column ?></th>
+  <?lsmb END ?>
+</tr>
+<?lsmb END ?>
+  <tr><td colspan="<?lsmb columns.size ?>"><hr size="3" /></td></tr>
+</table>
+
+<?lsmb END # BLOCK ?>

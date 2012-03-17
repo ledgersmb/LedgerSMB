@@ -1,68 +1,124 @@
 <?lsmb BLOCK dynatable ?>
-<table width="100%">
-  <tr>
-    <th class="listtop" colspan="<?lsmb columns.size ?>"><?lsmb form.title ?></th>
-  </tr>
-  <tr>
-  <?lsmb IF options.defined ?>
-    <td><?lsmb FOREACH option IN options; option ?><br /><?lsmb END ?></td>
-  <?lsmb ELSE ?>
-    <td colspan="<?lsmb columns.size ?>"></td></tr>
-  <?lsmb END ?>
-  </tr>
-  <tr class="listheading">
-<?lsmb FOREACH column IN columns ?>
-    <th class="listtop">
-	<?lsmb IF heading.$column.href.defined ?><a class="listtop" href="<?lsmb heading.$column.href ?>"><?lsmb heading.$column.text ?></a>
-	<?lsmb ELSE; heading.$column; END ?>
-    </th>
-<?lsmb END ?>
-  </tr>
-  <?lsmb USE dumper(indent=2, pad="<br>") ?>
-<?lsmb FOREACH row IN rows ?>
-<?lsmb IF row.class == 'heading';      s = 'th'; c = 'listheading';
-	ELSIF row.class == 'subtotal'; s = 'th'; c = 'listsubtotal';
-	ELSIF row.class == 'divider';  s = 'th'; c = 'listheading';
-	ELSE;                          s = 'td'; c = "listrow${row.i}"; END ?>
-<tr class="<?lsmb c ?>">
-  <?lsmb IF row.class == 'divider' ?>
-  <th colspan="<?lsmb columns.size ?>">
-    <?lsmb IF row.href.defined ?>
-    <a href="<?lsmb row.href?>"><?lsmb row.text ?></a>
-    <?lsmb ELSIF row.delimiter;
-	FOREACH l IN row.text.split(row.delimiter); l ?><br /><?lsmb END ?>
-    <?lsmb ELSIF row.input.defined;
-	PROCESS input element_data=row.input ?>
-    <?lsmb ELSIF row.select.defined;
-	PROCESS select element_data=row.select ?>
-    <?lsmb ELSE; row.text; END ?>
-  </th>
-</tr>
-  <?lsmb NEXT; END ?>
-  <?lsmb FOREACH column IN columns ?>
-  <<?lsmb s ?> class="<?lsmb c ?>" <?lsmb IF (!row.class.defined || row.class != 'heading') && row_alignment.$column ?>align="<?lsmb row_alignment.$column ?>"<?lsmb END ?>>
-    <?lsmb IF row.$column.href.defined ?>
-    <a href="<?lsmb row.$column.href?>"><?lsmb row.$column.text ?></a>
-    <?lsmb ELSIF row.$column.delimiter;
-	FOREACH l IN row.$column.text.split(row.$column.delimiter); l ?><br /><?lsmb END ?>
-    <?lsmb ELSIF row.$column.input.defined;
-	PROCESS input element_data=row.$column.input ?>
-    <?lsmb ELSIF row.$column.select.defined;
-	PROCESS select element_data=row.$column.select ?>
-    <?lsmb ELSIF row.$column.text.defined;row.$column.text ?>
-    <?lsmb ELSE; row.$column; END ?>
-  </<?lsmb s ?>>
-  <?lsmb END ?>
-</tr>
-<?lsmb END ?>
-<?lsmb IF totals ?>
-<tr class="listtotal">
-  <?lsmb FOREACH column IN columns ?>
-  <th class="listtotal" align="right"><?lsmb totals.$column ?></th>
-  <?lsmb END ?>
-</tr>
-<?lsmb END ?>
-  <tr><td colspan="<?lsmb columns.size ?>"><hr size="3" /></td></tr>
+<table id="<?lsmb attributes.id ?>" class="<?lsmb attributes.class">
+<?lsmb- IF !hide_header -?>
+<thead>
+   <tr>
+   <?lsmb- FOREACH COL IN columns -?>
+   <th class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>">
+       <?lsmb COL.name ?>
+   </th>
+   <?lsmb- END -?>
+   </tr>
+</thead>
+<?lsmb- END -?>
+<tbody>
+   <?lsmb- FOREACH ROW IN tbody.rows -?>
+   <tr class="<?lsmb ROW.html_class ?>">
+      <?lsmb- FOREACH COL IN columns -?>
+      <td class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>">
+          <?lsmb- IF COL.type == 'input_text' -?>
+          <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
+               type="text"
+              class="<?lsmb COL.class ?>"
+               name="<?lsmb COL.col_id ?>_<?lsmb loop.count ?>"
+              value="<?lsmb ROW.${COL.col_id} ?>"
+         />
+         <?lsmb- ELSIF COL.type == 'checkbox';
+                   IF ROW.${COL.name};
+                      CHECKED = "checked='CHECKED'";
+                   ELSE; 
+                      CHECKED = '';
+                   END;
+                   ?> 
+         <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
+               type="checkbox"
+               name="<?lsmb COL.col_id ?>_<?lsmb loop.count ?>"
+              class="<?lsmb COL.class ?>"
+              value="<?lsmb ROW.row_id ?>"
+               <?lsmb CHECKED ?> />
+         <?lsmb- ELSIF COL.type == 'radio' ?> 
+         <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
+               type="radio"
+               name="<?lsmb COL.col_id ?>"
+              class="<?lsmb COL.class ?>"
+              value="<?lsmb ROW.row_id ?>"
+               <?lsmb CHECKED ?> />
+         <?lsmb- ELSIF COL.type == 'href'; 
+                   IF row.${COL.col_id}_href_suffix;
+                      HREF = COL.href_base _ ROW.${COL.col_id}_href_suffix;
+                   ELSE;
+                      HREF = COL.href_base _ ROW.row_id;
+                   END
+          ?><a href="<?lsmb HREF ?>"><?lsmb ROW.${COL.col_id} ?></a>
+         <?lsmb- ELSE -?>
+            <?lsmb ROW.${COL.col_id} ?>
+         <?lsmb- END -?>
+      </td>
+      <?lsmb- COUNT = loop.count -?>
+      <?lsmb- END -?>
+   </tr>
+   <?lsmb- END ?>
+</tbody>
+<?lsmb- IF tfoot -?>
+<tfoot>
+   <?lsmb- FOREACH ROW IN tfoot.rows -?>
+   <tr>
+     <?lsmb- FOREACH COL IN columns;
+     IF tfoot.coltypes.${COL.col_id} == 'spacer';
+        SPACECOUNT = SPACECOUNT + 1;
+     ELSE;
+       IF SPACECOUNT gt 0 ?>
+          <td colspan="<?lsmb SPACECOUNT ?>">&nbsp;</td>
+       <?lsmb END ?>
+     <td class="<?lsmb COL.col_id ?>">
+       <?lsmb IF tfoot.coltypes.${COL.col_id};
+             TYPE = tfoot.coltypes.${COL.col_id};
+          ELSE; 
+             TYPE = COL.type;
+          END;
+          <?lsmb- IF TYPE == 'input_text' -?>
+          <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
+               type="text"
+              class="<?lsmb COL.class ?>"
+               name="<?lsmb COL.col_id ?>_<?lsmb loop.count ?>"
+              value="<?lsmb ROW.${COL.col_id} ?>"
+         />
+         <?lsmb- ELSIF TYPE == 'checkbox';
+                   IF ROW.${COL.name};
+                      CHECKED = "checked='CHECKED'";
+                   ELSE; 
+                      CHECKED = '';
+                   END;
+                   ?> 
+         <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
+               type="checkbox"
+               name="<?lsmb COL.col_id ?>_<?lsmb loop.count ?>"
+              class="<?lsmb COL.class ?>"
+              value="<?lsmb ROW.row_id ?>"
+               <?lsmb CHECKED ?> />
+         <?lsmb- ELSIF TYPE == 'radio' ?> 
+         <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
+               type="radio"
+               name="<?lsmb COL.col_id ?>"
+              class="<?lsmb COL.class ?>"
+              value="<?lsmb ROW.row_id ?>"
+               <?lsmb CHECKED ?> />
+         <?lsmb- ELSIF TYPE == 'href'; 
+                   IF row.${COL.col_id}_href_suffix;
+                      HREF = COL.href_base _ ROW.${COL.col_id}_href_suffix;
+                   ELSE;
+                      HREF = COL.href_base _ ROW.row_id;
+                   END
+          ?><a href="<?lsmb HREF ?>"><?lsmb ROW.${COL.col_id} ?></a>
+         <?lsmb- ELSE -?>
+            <?lsmb ROW.${COL.col_id} ?>
+         <?lsmb- END -?>
+     </td>
+     <?lsmb- END #if -?>
+     <?lsmb- END -?>
+   </tr>
+   <?lsmb- END -?>
+</tfoot>
+<?lsmb- END -?>
 </table>
-
-<?lsmb END # BLOCK ?>
+<?lsmb END #block ?>
