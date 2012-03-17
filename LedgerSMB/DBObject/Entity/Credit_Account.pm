@@ -295,6 +295,7 @@ sub get_by_id {
     my ($self, $id) = @_;
     my ($ref) = $self->call_procedure(procname => 'entity_credit__get',
                                           args => [$id]);
+    $ref->{tax_ids} = $self->_get_tax_ids($id);
     $self->prepare_dbhash($ref);
     return $self->new(%$ref);
 }
@@ -312,7 +313,22 @@ sub get_by_meta_number {
                                           args => [$meta_number, 
                                                    $entity_class]);
     $self->prepare_dbhash($ref);
+    $ref->{tax_ids} = $self->_set_tax_ids($ref->{id});
     return $self->new(%$ref);
+}
+
+# Private methid _get_tax_ids
+# returns an array ref of chart ids for the taxes.
+
+sub _get_tax_ids {
+    my ($self, $id) = @_;
+    my @tax_ids;
+    my @results = $self->call_procedure(procname => 'eca__get_taxes',
+                                            args => [$id]);
+    for my $ref (@results){
+        push @tax_ids, $ref->{chart_id};
+    }
+    return \@tax_ids
 }
 
 =item list_for_entity($entity_id int, [$entity_class int]);
@@ -328,6 +344,7 @@ sub list_for_entity {
                                             args => [$entity_id, $entity_class]
     );
     for my $ref (@results){
+        $ref->{tax_ids} = $self->_get_tax_ids($ref->{id});
         $self->prepare_dbhash($ref);
         $ref = $self->new(%$ref);
     }
@@ -356,6 +373,9 @@ Saves the entity credit account.  This also sets db defaults if not set.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'eca__save'});
+    if (@{$self->{tax_ids}}){
+        $self->exec_method(funcname => 'eca__set_taxes');
+    }
     $self->prepare_dbhash($ref);
     $self = $self->new(%$ref);
 }

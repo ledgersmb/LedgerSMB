@@ -474,7 +474,7 @@ END ?>
 	} ?>	
 	<?lsmb PROCESS input element_data = {
 		type = "hidden"
-		name = "credit_id"
+		name = "id"
 		value = credit_act.id
 	} ?>	
 	<?lsmb PROCESS input element_data = {
@@ -676,7 +676,7 @@ END ?>
             <?lsmb tx.accno ?>--<?lsmb tx.description ?></span>
         <span class="input" id="txinput-<?lsmb tx.id ?>">
             <?lsmb checked = "";  
-                   IF eca_tax.grep(tx.id).size == 1;
+                   IF credit_act.tax_ids.grep(tx.id).size == 1;
                        checked = "CHECKED";
                    END;
                    INCLUDE input element_data = {

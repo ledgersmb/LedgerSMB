@@ -322,7 +322,9 @@ $$Creates a summary account (no quantities, just parts group by invoice).
 meta_number must match exactly or be NULL.  inc_open and inc_closed are exact
 matches too.  All other values specify ranges or may match partially.$$;
 
-CREATE OR REPLACE FUNCTION eca__get_taxes(in_credit_id int)
+DROP FUNCTION IF EXISTS eca__get_taxes(in_credit_id int);
+
+CREATE OR REPLACE FUNCTION eca__get_taxes(in_id int)
 returns setof eca_tax AS
 $$
 select * from eca_tax where eca_id = $1;
@@ -331,7 +333,8 @@ $$ language sql;
 COMMENT ON FUNCTION eca__get_taxes(in_credit_id int) IS
 $$ Returns a set of taxable account id's.$$; --'
 
-CREATE OR REPLACE FUNCTION eca__set_taxes(in_credit_id int, in_tax_ids int[])
+DROP FUNCTION IF EXISTS eca__set_taxes(int, int[]);
+CREATE OR REPLACE FUNCTION eca__set_taxes(in_id int, in_tax_ids int[])
 RETURNS bool AS
 $$
 DECLARE 
@@ -341,19 +344,19 @@ BEGIN
      IF in_tax_ids = '{}' THEN
          RETURN NULL;
      END IF;
-     SELECT * FROM entity_credit_account into eca WHERE id = in_credit_id;
+     SELECT * FROM entity_credit_account into eca WHERE id = in_id;
 
-     DELETE FROM eca_tax WHERE eca_id = in_credit_id;
+     DELETE FROM eca_tax WHERE eca_id = in_id;
      FOR iter in array_lower(in_tax_ids, 1) .. array_upper(in_tax_ids, 1)
      LOOP
-          INSERT INTO eca_tax (eca__id, chart_id)
-          values (in_credit_id, in_tax_ids[iter]);
+          INSERT INTO eca_tax (eca_id, chart_id)
+          values (in_id, in_tax_ids[iter]);
      END LOOP;
      RETURN TRUE;
 end;
 $$ language plpgsql;
 
-comment on function eca__set_taxes(in_credit_id int, in_tax_ids int[]) is
+comment on function eca__set_taxes(in_id int, in_tax_ids int[]) is
 $$Sets the tax values for the customer or vendor.
 
 The entity credit account must exist before calling this function, and must
@@ -741,8 +744,22 @@ DROP FUNCTION IF EXISTS entity_credit_save (
     in_pay_to_name text,
     in_taxform_id int);
 
-CREATE OR REPLACE FUNCTION eca__save (
+DROP FUNCTION IF EXISTS eca__save (
     in_credit_id int, in_entity_class int,
+    in_entity_id int, in_description text,
+    in_discount numeric, in_taxincluded bool, in_creditlimit numeric,
+    in_discount_terms int,
+    in_terms int, in_meta_number varchar(32), in_business_id int,
+    in_language_code varchar(6), in_pricegroup_id int,
+    in_curr char, in_startdate date, in_enddate date,
+    in_threshold NUMERIC,
+    in_ar_ap_account_id int,
+    in_cash_account_id int,
+    in_pay_to_name text,
+    in_taxform_id int);
+
+CREATE OR REPLACE FUNCTION eca__save (
+    in_id int, in_entity_class int,
     in_entity_id int, in_description text,
     in_discount numeric, in_taxincluded bool, in_creditlimit numeric, 
     in_discount_terms int,
@@ -793,10 +810,10 @@ CREATE OR REPLACE FUNCTION eca__save (
 		discount_terms = in_discount_terms,
 		pay_to_name = in_pay_to_name,
 		taxform_id = in_taxform_id
-            where id = in_credit_id;
+            where id = in_id;
         
          IF FOUND THEN
-            RETURN in_credit_id;
+            RETURN in_id;
          ELSE
             INSERT INTO entity_credit_account (
                 entity_id,
@@ -851,7 +868,7 @@ CREATE OR REPLACE FUNCTION eca__save (
 $$ language 'plpgsql';
 
 COMMENT ON  FUNCTION eca__save (
-    in_credit_id int, in_entity_class int,
+    in_id int, in_entity_class int,
     in_entity_id int, in_description text,
     in_discount numeric, in_taxincluded bool, in_creditlimit numeric,
     in_discount_terms int,

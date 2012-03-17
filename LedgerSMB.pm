@@ -667,7 +667,10 @@ sub call_procedure {
     
     $schema = $self->{dbh}->quote_identifier($schema);
     
-    for ( 1 .. scalar @call_args ) {
+    for my $arg ( @call_args ) {
+        if (eval { $arg->can('to_db') }){
+           $arg = $arg->to_db;
+        }
         $argstr .= "?, ";
     }
     $argstr =~ s/\, $//;
