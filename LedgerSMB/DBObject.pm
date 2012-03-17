@@ -72,7 +72,8 @@ sub new {
     else {
         @mergelist = ();
     }
-    if ( !$base->isa('LedgerSMB') ) {
+    if ( !$base->isa('LedgerSMB') and !$base->isa('LedgerSMB::DBObject_Moose') 
+    ) {
         $self->error("Constructor called without LedgerSMB object arg");
     }
 
