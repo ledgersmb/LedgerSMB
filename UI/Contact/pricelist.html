@@ -1,5 +1,6 @@
 <?lsmb INCLUDE 'ui-header.html' ?>
 <?lsmb PROCESS 'elements.html' ?>
+<?lsmb PROCESS 'dynatable.html' ?>
 <!-- 
 
 The overall structure here is imagined to be a list of individual price
@@ -13,79 +14,59 @@ checking a price deal for a customer.
 <?lsmb account_class = entity_class ?>
 <body>
 <div class="listtop"><?lsmb text('Pricelist') ?> <?lsmb pricematrix.length ?></div>
-<table>
-<tr class="listheading">
-<th class="listheading"><?lsmb text('Partnumber') ?></th>
-<th class="listheading"><?lsmb text('Description') ?></th>
-<th class="listheading"><?lsmb IF accont_class == 1; 
-                                   text('Last Cost');
-                               ELSE;
-                                   text('Sell Price'); 
-                               END ?></th>
-<?lsmb IF account_class == 2 ?>
-<th class="listheading"><?lsmb text('Valid From') ?></th>
-<th class="listheading"><?lsmb text('Valid To') ?></th>
-<?lsmb ELSE ?>
-<th class="listheading"><?lsmb text('Vendor Partnumber') ?></th>
-<th class="listheading"><?lsmb text('Lead Time') ?></th>
-<?lsmb END ?>
-<th class="listheading"><?lsmb text('Currency') ?></th>
-<th class="listheading">&nbsp;</th>
-</tr>
-<?lsmb FOR pm IN pricematrix ?>
-<tr>
-<td><?lsmb pm.int_partnumber ?></td>
-<td><?lsmb pm.description ?></td>
-<td><?lsmb IF account_class == 1; pm.lastcost; ELSE; pm.sellprice; END ?>
-</td>
-<?lsmb IF account_class == 2; ?>
-<td><?lsmb pm.validfrom ?></td>
-<td><?lsmb pm.validto ?></td>
-<?lsmb ELSE ?>
-<td><?lsmb pm.partnumber ?></td>
-<td><?lsmb pm.leadtime ?></td>
-<?lsmb END  ?>
-<td><?lsmb pm.currency ?></td>
-<td><a href="<?lsmb script ?>?action=delete_pricematrix&credit_id=<?lsmb id ?>&entry_id=<?lsmb pm.entry_id ?>">[<?lsmb text('Delete') ?>]</a></td>
-</tr>
-<?lsmb END # FOR pricematrix ?>
-</table>
-
-<?lsmb IF pricematrix_pricegroup ?>
-<div class="listtop"><?lsmb text('Pricelist for Pricegroup') ?></div>
-<table>
-<tr class="listheading">
-<th class="listheading"><?lsmb text('Partnumber') ?></th>
-<th class="listheading"><?lsmb text('Description') ?></th>
-<th class="listheading"><?lsmb IF accont_class == 1; 
-                                   text('Last Cost');
-                               ELSE;
-                                   text('Sell Price');
-                               END ?></th>
-<?lsmb IF account_class == 2 ?>
-<th class="listheading"><?lsmb text('Valid From') ?></th>
-<th class="listheading"><?lsmb text('Valid To') ?></th>
-<?lsmb ELSE ?>
-<th class="listheading"><?lsmb text('Vendor Partnumber') ?></th>
-<th class="listheading"><?lsmb text('Lead Time') ?></th>
-<?lsmb END ?>
-<th class="listheading"><?lsmb text('Currency') ?></th>
-<?lsmb FOR pm IN pricematrix_pricegroup ?>
-<tr>
-<td><?lsmb pm.int_partnumber ?></td>
-<td><?lsmb pm.description ?></td>
-<td><?lsmb IF account_class == 1; pm.lastcost; ELSE; pm.sellprice; END ?>
-</td>
-<?lsmb IF account_class == 2; ?>
-<td><?lsmb pm.validfrom ?></td>
-<td><?lsmb pm.validto ?></td>
-<?lsmb ELSE ?>
-<td><?lsmb pm.partnumber ?></td>
-<td><?lsmb pm.leadtime ?></td>
-<?lsmb END  ?>
-<td><?lsmb pm.currency ?></td>
-</table>
-<?lsmb END ?>
-<?lsmb END ?>
+<?lsmb 
+    columns = [ { col_id = 'int_partnumber'
+                  name = text('Partnumber')
+                  type = 'text'
+                },
+                { col_id = 'description'
+                  name = text('Description')
+                  type = 'text'
+                } ];
+     IF account_class == 1;
+         columns.push(
+                  {col_id = 'lastcost'
+                     name = text('Last Cost') #'
+                     type = 'text_input'},
+                  {col_id = 'partnumber',
+                     name = text('Vendor Partnumber') #'
+                     type = 'text_input'},
+                  {col_id = 'leadtime',
+                     name = text('Lead Time') #'
+                     type = 'input_text'}
+         );
+     ELSE;
+         columns.push(
+                  {col_id = 'sellprice'
+                     name = text('Sell Price') #'
+                     type = 'text_input'},
+                  {col_id = 'validfrom',
+                     name = text('Valid From') #'
+                     type = 'text_input'},
+                  {col_id = 'validto',
+                     name = text('Valid To') #'
+                     type = 'text_input'},
+         );
+                        
+     END;
+     columns.push({col_id = 'currency',
+                     name = text('Currency'),
+                     type = 'text'},
+                  {col_id = 'delete',
+                     name = '&nbsp;',
+                     type = 'href',
+                href_base = script _ '?action=delete_pricematrix&credit_id=' 
+                            _ id _ '&entry_id=' }
+     );
+     FOREACH pm IN pricematrix;
+         pm.delete = '[' _ text('Delete') _ ']';
+         pm.row_id = pm.entry_id;
+     END;
+     PROCESS dynatable
+         tbody = { rows = pricematrix }; ?>
+<?lsmb IF pricematrix_pricegroup;
+     PROCESS dynatable
+         tbody = { rows = pricematrix_pricegroup };
+       END ?>
 </body>
 </html>

@@ -156,7 +156,7 @@ cornerlogo {
 }
 
 .listtop { font-size: 10pt; background-color: black; color: white; }
-.listheading { font-size: 10pt; background-color: #004a80; color: white; }
+.listheading, thead th { font-size: 10pt; background-color: #004a80; color: white; }
 A.listheading:link, A.listheading:active, A.listheading:visited {
   text-decoration: none; }
 .listrow1 { font-size: 10pt; background-color: #e6e6fa; color: black; vertical-align: top; }

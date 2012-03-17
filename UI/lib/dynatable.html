@@ -1,5 +1,5 @@
 <?lsmb BLOCK dynatable ?>
-<table id="<?lsmb attributes.id ?>" class="<?lsmb attributes.class">
+<table id="<?lsmb attributes.id ?>" class="<?lsmb attributes.class ?>">
 <?lsmb- IF !hide_header -?>
 <thead>
    <tr>
@@ -44,8 +44,9 @@
               value="<?lsmb ROW.row_id ?>"
                <?lsmb CHECKED ?> />
          <?lsmb- ELSIF COL.type == 'href'; 
-                   IF row.${COL.col_id}_href_suffix;
-                      HREF = COL.href_base _ ROW.${COL.col_id}_href_suffix;
+                   HREF_SFX = COL.col_id _ "_href_suffix";
+                   IF row.$HREF_SFX;
+                      HREF = COL.href_base _ ROW.$HREF_SFX;
                    ELSE;
                       HREF = COL.href_base _ ROW.row_id;
                    END
@@ -67,7 +68,7 @@
      IF tfoot.coltypes.${COL.col_id} == 'spacer';
         SPACECOUNT = SPACECOUNT + 1;
      ELSE;
-       IF SPACECOUNT gt 0 ?>
+       IF SPACECOUNT > 0 ?>
           <td colspan="<?lsmb SPACECOUNT ?>">&nbsp;</td>
        <?lsmb END ?>
      <td class="<?lsmb COL.col_id ?>">
@@ -76,7 +77,7 @@
           ELSE; 
              TYPE = COL.type;
           END;
-          <?lsmb- IF TYPE == 'input_text' -?>
+          IF TYPE == 'input_text' -?>
           <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
                type="text"
               class="<?lsmb COL.class ?>"
@@ -104,6 +105,13 @@
               value="<?lsmb ROW.row_id ?>"
                <?lsmb CHECKED ?> />
          <?lsmb- ELSIF TYPE == 'href'; 
+                   HREF_SFX = COL.col_id _ "_href_suffix";
+                   IF row.$HREF_SFX;
+                      HREF = COL.href_base _ ROW.$HREF_SFX;
+                   ELSE;
+                      HREF = COL.href_base _ ROW.row_id;
+                   END
+          ?><a href="<?lsmb HREF ?>"><?lsmb ROW.${COL.col_id} ?></a>
                    IF row.${COL.col_id}_href_suffix;
                       HREF = COL.href_base _ ROW.${COL.col_id}_href_suffix;
                    ELSE;
