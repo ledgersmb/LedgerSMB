@@ -1,0 +1,324 @@
+<?lsmb IF credit_list ?>
+<div id="credit_div" class="container">
+<div class="listtop"><strong>Accounts</strong></div>
+    <table width="100%">
+    <tr class="listheading">
+        <th class="account_class"><?lsmb text('Type') ?></th>
+        <th class="number"><?lsmb text("Number") ?></th>
+        <th class="description"><?lsmb text("Description") ?></th>
+        <th class="credit_limit"><?lsmb text('Credit Limit') ?></th>
+        <th class="start_date"><?lsmb text('Start Date') ?></th>
+        <th class="end_date"><?lsmb text('End Date') ?></th>
+    </tr>
+    <?lsmb FOREACH cl_item IN credit_list ?>
+    <tr <?lsmb IF meta_number == cl_item.meta_number ;
+                   credit_act = cl_item;  ?> class="active"<?lsmb END ?>>
+        <td><?lsmb IF cl_item.entity_class == 1 ?><?lsmb text('Vendor') ?>
+            <?lsmb ELSIF cl_item.entity_class == 2 ?><?lsmb text('Customer') ?>
+            <?lsmb END ?>
+        </td>
+        <td><a href="<?lsmb script ?>?action=get&account_class=<?lsmb 
+		account_class ?>&entity_id=<?lsmb entity_id 
+		?>&meta_number=<?lsmb cl_item.meta_number ?>"><?lsmb cl_item.meta_number ?></a></td>
+        <td><?lsmb cl_item.description ?></td>
+        <td><?lsmb cl_item.credit_limit ?></td>
+        <td><?lsmb cl_item.start_date ?></td>
+        <td><?lsmb cl_item.end_date ?></td>
+    </tr>    
+    <?lsmb END ?>
+    </table>
+    <form id="credit_form" name="credit_form" method="post" 
+	action="<?lsmb script ?>">
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "form_id"
+		value = form_id
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "entity_id"
+		value = credit_act.entity_id
+	} ?>	
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "id"
+		value = credit_act.id
+	} ?>	
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "account_class"
+		value = credit_act.entity_class
+	} ?>	
+        <table>
+	<tr class="eca_row">
+	<td>
+ 	<?lsmb PROCESS input element_data = {
+		label = text("$entity_classname Number"),
+		type= "text",
+		name = "meta_number",
+		value = credit_act.meta_number,
+		size = "10"
+	}  # " ?></td>
+	<td><?lsmb PROCESS input element_data = {
+		label = text("Description"),
+		type= "text",
+		name = "description",
+		value = credit_act.description,
+		size = "20"
+	} ?></td>
+	</tr>
+	<tr class="pay_to_row">
+	<td colspan = "2">
+	<?lsmb PROCESS input element_data = {
+		label = text('Pay To') #'
+		type = "text"
+		size = "50"
+		name = "pay_to_name"
+		value = credit_act.pay_to_name
+		class = "name"
+	} ?>
+	</td>
+        </tr>
+        <tr id="date-row">
+            <td>
+		<?lsmb PROCESS input element_data = {
+			label = text('Starting Date'),
+			name = "startdate",
+			class = "date",
+			value = credit_act.startdate,
+			type = "text",
+			size = "12",
+			maxlength = "10"
+		} #' ?>
+            </td>
+            <td>
+		<?lsmb PROCESS input element_data = {
+			label = text('End Date'),
+			name = "enddate",
+			class = "date",
+			value = credit.enddate,
+			type = "text",
+			size = "12",
+			maxlength = "10"
+		} #' ?>
+            </td>
+        </tr>
+        <tr id="credit-row">
+            <td>
+		<?lsmb INCLUDE input element_data = {
+			label = text('Credit Limit'),
+			name = "creditlimit",
+			value = credit_act.creditlimit,
+			type = "text",
+			size = "20"
+		} #' ?>
+            </td>
+            <td><span id="terms-span">
+		<?lsmb INCLUDE input element_data = {
+			label = text('Terms'),
+			name = "terms",
+			value = credit_act.terms,
+			type = "text",
+			size = "5"
+		} ?> <?lsmb text('days') ?></span>
+            </td>
+	</tr>
+	<tr id="discount-gifi-row">
+            <td>
+		<?lsmb INCLUDE input element_data = {
+			label = text('Discount'),
+			name = "discount",
+			value = credit_act.discount,
+			type = "text",
+			size = "3",
+			maxlength = 3
+		} ?>% / 
+		<?lsmb INCLUDE input element_data = {
+			name = "discount_terms",
+			value = credit_act.discount_terms,
+			type = "text",
+			size = "3",
+			maxlength = 3
+		} ?> <?lsmb text('days') ?>
+            </td>
+            <td>
+		<?lsmb INCLUDE input element_data = {
+			label = text('Subcontract GIFI'),
+			name = "gifi_accno",
+			value = credit_act.gifi_accno,
+			type = "text",
+			size = "19"
+		} #' ?>
+            </td>
+        </tr>
+        <tr id="account-link-row">
+           <td> <?lsmb INCLUDE select element_data = {
+			name = "ar_ap_account_id"
+			default_values = [credit_act.ar_ap_account_id]
+			options = ar_ap_acc_list
+			label = text((account_class == 1) ? 'AP' : 'AR')
+			text_attr = "text"
+			value_attr = "id"
+                } ?>
+           </td>
+           <td> <?lsmb INCLUDE select element_data = {
+			name = "cash_account_id"
+			default_values = [credit_act.cash_account_id]
+			options = cash_acc_list
+			label = text('Payment')
+			text_attr = "text"
+			value_attr = "id"
+                } ?>
+           </td>
+           <td> <?lsmb INCLUDE select element_data = {
+                        name = "discount_account_id"
+                        default_values = [credit_act.discount_account_id]
+                        options = discount_acc_list
+                        label = text('Discount')
+                        text_attr = "text"
+                        value_attr = "id"
+                } ?>
+           </td>
+        </tr>
+        <tr id="business-threshold-row">
+           <td> <?lsmb business_types.unshift({});
+                       INCLUDE select element_data = {
+			name = "business_id"
+			options = business_types
+			default_values = [credit_act.business_id]
+			text_attr = "description"
+			value_attr = "id"
+			label = text('Business Type') #'
+			} ?> 
+	  </td>
+          <td> <?lsmb INCLUDE input element_data = {
+			name = "threshold"
+			value = credit_act.threshold
+			type = "text"
+			size = "20"
+			label = text('Threshold')
+			class = "numeric"
+               } ?>
+	</tr>
+
+	<tr id="taxform-threshold-row">
+        <?lsmb taxform_list.unshift({}) ?>
+	
+	 <td> <?lsmb INCLUDE select element_data = {
+			name = "taxform_id"
+			options = taxform_list
+			default_values = [credit_act.taxform_id]
+			text_attr = "form_name"
+			value_attr = "id"
+			label = text('Taxforms') 
+			} ?> 
+	  </td>
+        <td> <?lsmb INCLUDE select element_data = {
+		label = text("Language")
+		name = "language_code"
+                default_values = [credit_act.language_code],
+                options = language_code_list
+		text_attr = "text"
+		value_attr = "code"
+                } ?>
+        </td>
+          <td> <?lsmb INCLUDE select element_data = {
+                        name = 'curr'
+                        options = all_currencies
+                        text_attr = 'text'
+                        value_attr = 'text'
+                        default_values = [credit_act.curr]
+                        label = text('Currency')
+               } ?>
+           </td>
+
+        </tr>
+
+        </table>
+        <div class="input_container" id="tax-credit-div">
+        <div class="listtop"><?lsmb text('Taxes') ?></div>
+        <?lsmb FOR tx = all_taxes ?> 
+        <div class="inputrow" id="taxrow-<?lsmb tx.chart_id ?>">
+        <span class="lable" id="txlabel-<?lsmb tx.chart_id ?>">
+            <?lsmb tx.accno ?>--<?lsmb tx.description ?></span>
+        <span class="input" id="txinput-<?lsmb tx.id ?>">
+            <?lsmb checked = "";  
+                   IF credit_act.tax_ids.grep(tx.id).size == 1;
+                       checked = "CHECKED";
+                   END;
+                   INCLUDE input element_data = {
+                           type = "checkbox"
+                           checked = checked
+                           name = "taxact_$tx.id"
+                           value = tx.id
+                   } ?><span></div>
+        <?lsmb END # FOR tx ?>
+         </div>
+		<?lsmb IF credit_act.id;
+		INCLUDE button element_data = {
+			text = text('Save Changes'),
+			class="submit" 
+			type="submit" 
+			name="action" 
+			value="save_credit" 
+			accesskey="C" 
+			title="Save Credit Account[Alt-C]"
+		};
+		END ?>
+		<?lsmb INCLUDE button element_data = {
+			text = text('Save New'),
+			class="submit" 
+			type="submit" 
+			name="action" 
+			value="save_credit_new"  
+			title="Save Credit Account as New" #'
+		} ?>
+		<?lsmb INCLUDE button element_data = {
+                        class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="add_transaction" 
+                        accesskey="A" 
+                        title="Transaction [Alt-A]"
+			text = (entity_class == 1) ? text('AP Transaction') : text('AR Transaction')
+		} ?>
+		<?lsmb INCLUDE button element_data = {
+                        class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="add_invoice" 
+                        accesskey="I" 
+                        title="Invoice [Alt-I]"
+			text = (entity_class == 1) ? text('Vendor Invoice')  : text('Customer Invoice') 
+		} ?>
+		<?lsmb INCLUDE button element_data = {
+                        class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="add_order" 
+                        accesskey="O" 
+                        title="Order [Alt-O]"
+			text = (entity_class == 1) ? text('Purchase Order') : text('Sales Order')
+		} ?>
+		<?lsmb INCLUDE button element_data = {
+                        class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="rfq" 
+                        accesskey="Q" 
+                        title="Quotation [Alt-Q]"
+			text = (entity_class == 1) ? text('RFQ') : text('Quotation')
+		} ?>
+		<?lsmb INCLUDE button element_data = {
+                        class="submit" 
+                        type="submit" 
+                        name="action" 
+                        value="pricelist" 
+                        accesskey="P" 
+                        title="Pricelist [Alt-P]"
+			text = text('Pricelist') 
+		} ?>
+	
+    </form>
+</div>
+<?lsmb END ?>

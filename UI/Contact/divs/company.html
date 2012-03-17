@@ -1,0 +1,164 @@
+<div class="container" id="company_div">
+<?lsmb SWITCH entity_class
+	?><?lsmb CASE 1 ?><?lsmb entity_classname = "Vendor" 
+	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
+	?><?lsmb END ?>
+	<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
+<form name="customer" method="post" action="<?lsmb script ?>">
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "target_div"
+		value = 'company_div'
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "entity_id"
+		value = entity_id
+	} ?>	
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "id"
+		value = company.id
+	} ?>	
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "form_id"
+		value = form_id
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "account_class"
+		value = account_class
+	} ?>	
+<div class="input_line">
+<div class="input_group1">
+	<?lsmb PROCESS input element_data = {
+		label = text('Control Code') #'
+		type= "text"
+		name = "control_code"
+		value = company.control_code
+		size = "20"
+	} ?>
+	<?lsmb IF !created_as_class;
+		created_as_class = entity_class;
+	END; # IF !created_as_class ?> 
+</div>
+<div class="input_group2">
+        <?lsmb company_entity_class = company.entity_class;
+        IF !company_entity_class;
+              company_entity_class = entity_class;
+        END;
+        PROCESS select element_data = {
+		name = "created_as_class"
+		options = entity_classes
+		default_values = [company_entity_class]
+		text_attr = 'class'
+		value_attr = 'id'
+		label = text('Class')
+	} ?>
+	<?lsmb PROCESS button element_data = {
+		text = text('Generate Control Code') #'
+		type = "submit"
+		name = "action"
+		value = "generate_control_code"
+		class = "submit"
+        } ?>
+        <?lsmb PROCESS button element_data = {
+                text = text('Retrieve')
+                type = 'submit'
+                name = 'action'
+               value = 'get_by_cc'
+               class = 'submit'
+        } ?>
+</div>
+</div>
+<div class="input_line">
+<div class="input_group1">
+	<?lsmb PROCESS input element_data = {
+		label = text('Name')
+		type= "text"
+		name = "legal_name"
+		value = company.legal_name
+		size = "20"
+	} ?>
+</div>
+<div class="input_group2">
+       <?lsmb country_list.unshift({});
+                company_country_id = company.country_id;
+                IF !company_country_id; 
+                          company_country_id = default_country_id;
+                END;
+		INCLUDE select element_data = {
+			text_attr = "name"
+			value_attr = "id"
+			default_values = [company_country_id]
+			options = country_list
+			name = "country_id"
+			label = text('Country') 
+	} ?> 
+</div>
+</div>
+<div class="input_line">
+<div class="input_group1">
+		<?lsmb INCLUDE input element_data = {
+			label = text('Tax Number/SSN'),
+			name = "tax_id",
+			value = company.tax_id,
+			type = "text",
+			size = "19"
+		} #' ?>
+</div>
+<div class="input_group2">
+		<?lsmb INCLUDE input element_data = {
+			label = text('SIC'),
+			name = "sic_code",
+			value = company.sic_code,
+			type = "text",
+			size = "19",
+			class = 'sic'
+		} ?>
+</div>
+</div>
+<div class="input_line" id="sales-tax-info">
+<div class="input_group1">
+     <?lsmb INCLUDE input element_data = {
+         label = text('Sales Tax ID') #'
+          name = 'sales_tax_id'
+          type = 'text'
+         class = 'taxnumber'
+          size = '19'
+         value = company.sales_tax_id
+     } ?>
+</div>
+<div class="input_group2">
+     <?lsmb INCLUDE input element_data = {
+         label = text('License Number') #'
+          name = 'license_number'
+          type = 'text'
+         class = 'taxnumber'
+          size = '19'
+         value = company.license_number
+     } ?>
+</div>
+</div>
+<div class="input_line">
+            <hr/>
+<div class="input_group1">
+		<?lsmb INCLUDE button element_data = {
+			text = text('Save'),
+			class="submit" 
+			type="submit" 
+			name="action" 
+			value="save" 
+			accesskey="S" 
+			title="Save [Alt-S]"
+		} ?>
+</div>
+</div>
+</form>
+<?lsmb FOREACH n = notes ?>
+<div class="note">
+<div class="note_contents"><?lsmb n.note ?></div>
+</div>
+<?lsmb END ?>
+</div>
