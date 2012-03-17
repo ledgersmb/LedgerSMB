@@ -35,6 +35,8 @@ requires 'CGI::Simple';
 requires 'File::MimeInfo';
 requires 'Number::Format';
 requires 'DateTime::Format::Strptime';
+requires 'Moose';
+
 
 recommends 'perl-Math-BigInt-GMP';
 
