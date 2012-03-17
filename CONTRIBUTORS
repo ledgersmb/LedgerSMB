@@ -108,6 +108,9 @@ documentation for Debian installations.
 Hilton Day < hilton.day @ gmail.com > has contributed a fix for the RPM build 
 process.
 
+Andres Basile < basile @ gmail.com > has contributed a number of bug fixes, as 
+well as Argentina chart of accounts and i18n files as well.
+
 Original Authors of SQL-Ledger:
 ===================================
 Dieter Simader <dsimader @ sql-ledger.com>
