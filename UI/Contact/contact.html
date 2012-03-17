@@ -62,24 +62,37 @@ END ?>
 <?lsmb text("Add Employee") ?>
 <?lsmb text("Edit Employee") ?>
 -->
+<?lsmb # TODO:  Move to controller scripts.
+       nav_list = [];
+       IF entity_class == 3;
+          nav_list.push({id = 'hr_div', label = text('HR')});
+       ELSE;
+          nav_list.push({id = 'company_div', label = text('Company')},
+                        {id = 'credit_div', label = text('Credit Accts')}); #'
+       END; 
+       IF entity_id;
+           nav_list.push(
+                 {id = 'location_div', label = text('Addresses')},
+                 {id = 'contact_div', label = text('Contact Info')}, #'
+                 {id = 'bank_div', label = text('Bank Accounts')}, #'
+                 {id = 'notes_div', label = text('Notes')}
+           );
+           IF account_class == 1 or account_class == 2;
+            #nav_list.push({id = 'prices_div', label = text('Pricelist')});
+            #nav_list.push({id = 'history_div', label = text('History')});
+           ELSIF account_class == 3;
+            #nav_list.push({id = 'user_div', label = text('User')});
+           END;
+      END; ?>
 <ul class="navigation">
-	<?lsmb IF entity_class == 3 ?>
-	<li class="nav"><a href="#hr_div"><?lsmb text('HR') ?></a></li>
-	<?lsmb ELSE ?>
-	<li class="nav"><a href="#company_div"><?lsmb text('Company') ?></a></li>
-	<li class="nav"><a href="#credit_div"><?lsmb text('Accounts') ?></a></li>
-	<?lsmb END ?>
-	<?lsmb IF entity_id ?>
-	<li class="nav"><a href="#location_div"><?lsmb text('Addresses') ?></a></li>
-	<li class="nav"><a href="#contact_div"><?lsmb text('Contact Info') ?></a></li>
-	<li class="nav"><a href="#bank_div"><?lsmb text('Bank Accounts') ?></a></li>
-	<li class="nav"><a href="#notes_div"><?lsmb text('Notes') ?></a></li>
-	<!-- Commented out as not yet implemented -CT
-	<li><a href="#history_div"><?lsmb text('History') ?></a></li>
-	<li><a href="#user_div"><?lsmb text('User') ?></a></li>
-	-->
-	<?lsmb END ?>
+        <?lsmb FOREACH nav IN nav_list ?>
+        <li class="nav"><a href="#<?lsmb nav.id ?>"><?lsmb nav.label ?></a></li>
+        <?lsmb  END ?>
 </ul>
+<?lsmb FOREACH ITEM IN div_list; 
+      PROCESS ITEM;
+  END 
+?>
 </div>
 <?lsmb IF entity_class == 3 ?>
 <div id="hr_div" class="container">

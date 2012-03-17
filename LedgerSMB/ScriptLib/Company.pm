@@ -320,9 +320,7 @@ This method creates a blank screen for entering a company's information.
 
 sub add {
     my ($request) = @_;
-    my $company = new_company($request);
-    set_entity_class($company);
-    _render_main_screen($company);
+    _render_main_screen($request);
 }
 
 
@@ -753,7 +751,7 @@ sub _render_main_screen{
     $request->close_form;
     $request->open_form;
     $request->{dbh}->commit;
-    if ($request->{company}){
+    if (ref $request->{company}){
         my @credit_list = 
            $credit->list_for_entity($request->{company}->entity_id);
         $request->{credit_list} = \@credit_list;
