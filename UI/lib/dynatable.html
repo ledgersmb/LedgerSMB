@@ -12,8 +12,12 @@
 </thead>
 <?lsmb- END -?>
 <tbody>
-   <?lsmb- FOREACH ROW IN tbody.rows -?>
+   <?lsmb- ROWCOUNT = 0;
+   FOREACH ROW IN tbody.rows;
+   ROWCOUNT = ROWCOUNT + 1 -?>
    <tr class="<?lsmb ROW.html_class ?>">
+      <input type="hidden" name="row_<?lsmb loop.count ?>" 
+             value="<?lsmb row_id ?>" />
       <?lsmb- FOREACH COL IN columns -?>
       <td class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>">
           <?lsmb- IF COL.type == 'input_text' -?>
@@ -62,7 +66,8 @@
 </tbody>
 <?lsmb- IF tfoot -?>
 <tfoot>
-   <?lsmb- FOREACH ROW IN tfoot.rows -?>
+   <?lsmb- FOREACH ROW IN tfoot.rows;
+    ROWCOUNT = ROWCOUNT + 1; -?>
    <tr>
      <?lsmb- FOREACH COL IN columns;
      IF tfoot.coltypes.${COL.col_id} == 'spacer';
@@ -72,8 +77,9 @@
           <td colspan="<?lsmb SPACECOUNT ?>">&nbsp;</td>
        <?lsmb END ?>
      <td class="<?lsmb COL.col_id ?>">
-       <?lsmb IF tfoot.coltypes.${COL.col_id};
-             TYPE = tfoot.coltypes.${COL.col_id};
+       <?lsmb COL_ID = COL.col_id;
+          IF tfoot.coltypes.$COL_ID;
+             TYPE = tfoot.coltypes.$COL_ID;
           ELSE; 
              TYPE = COL.type;
           END;
@@ -112,12 +118,6 @@
                       HREF = COL.href_base _ ROW.row_id;
                    END
           ?><a href="<?lsmb HREF ?>"><?lsmb ROW.${COL.col_id} ?></a>
-                   IF row.${COL.col_id}_href_suffix;
-                      HREF = COL.href_base _ ROW.${COL.col_id}_href_suffix;
-                   ELSE;
-                      HREF = COL.href_base _ ROW.row_id;
-                   END
-          ?><a href="<?lsmb HREF ?>"><?lsmb ROW.${COL.col_id} ?></a>
          <?lsmb- ELSE -?>
             <?lsmb ROW.${COL.col_id} ?>
          <?lsmb- END -?>
@@ -128,5 +128,7 @@
    <?lsmb- END -?>
 </tfoot>
 <?lsmb- END -?>
+<input type="hidden" name="rowcount_<?lsmb attributes.id ?>" 
+      value="<?lsmb ROWCOUNT ?>" />
 </table>
 <?lsmb END #block ?>

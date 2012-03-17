@@ -39,13 +39,13 @@ checking a price deal for a customer.
          columns.push(
                   {col_id = 'sellprice'
                      name = text('Sell Price') #'
-                     type = 'text_input'},
+                     type = 'input_text'},
                   {col_id = 'validfrom',
                      name = text('Valid From') #'
-                     type = 'text_input'},
+                     type = 'input_text'},
                   {col_id = 'validto',
                      name = text('Valid To') #'
-                     type = 'text_input'},
+                     type = 'input_text'},
          );
                         
      END;
@@ -61,9 +61,22 @@ checking a price deal for a customer.
      FOREACH pm IN pricematrix;
          pm.delete = '[' _ text('Delete') _ ']';
          pm.row_id = pm.entry_id;
-     END;
-     PROCESS dynatable
-         tbody = { rows = pricematrix }; ?>
+     END ?>
+<form name="pricematrix" action="<?lsmb script ?>" method="post">
+ <input type="hidden" name="entity_class"  value="<?lsmb account_class ?>" />
+ <input type="hidden" name="credit_id" value="<?lsmb credit_id ?>" /><?lsmb
+      PROCESS dynatable
+    attributes = { id = 'pricematrix' }
+         tbody = { rows = pricematrix }
+         tfoot = { coltypes = { int_partnumber = 'input_text' }
+                   rows = [{}]} ?>
+<?lsmb PROCESS button element_data = {
+    type = "submit"
+   class = "submit"
+    name = "action"
+    text = text('Save')
+   value = "save_pricelist"
+} ?>
 <?lsmb IF pricematrix_pricegroup;
      PROCESS dynatable
          tbody = { rows = pricematrix_pricegroup };
