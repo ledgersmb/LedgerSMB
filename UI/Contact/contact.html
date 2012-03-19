@@ -65,34 +65,40 @@ END ?>
 <?lsmb # TODO:  Move to controller scripts.
        nav_list = [];
        IF entity_class == 3;
-          nav_list.push({id = 'hr_div', label = text('HR')});
+          DIVS.push({id = 'hr_div', label = text('HR')});
        ELSE;
-          nav_list.push({id = 'company_div', label = text('Company')},
-                        {id = 'credit_div', label = text('Credit Accts')}); #'
+          DIVS.push({id = 'company_div', 
+                  label = text('Company'), 
+               template = 'company'},
+                    {id = 'credit_div', 
+                  label = text('Credit Accts'),
+               template = 'credit'}); #'
           div_list = ['company', 'credit'];
        END; 
        IF entity_id;
-           nav_list.push(
+           DIVS.push(
                  {id = 'location_div', label = text('Addresses')},
                  {id = 'contact_div', label = text('Contact Info')}, #'
                  {id = 'bank_div', label = text('Bank Accounts')}, #'
                  {id = 'notes_div', label = text('Notes')}
            );
            IF account_class == 1 or account_class == 2;
-            #nav_list.push({id = 'prices_div', label = text('Pricelist')});
-            #nav_list.push({id = 'history_div', label = text('History')});
+            #DIVS.push({id = 'prices_div', label = text('Pricelist')});
+            #DIVS.push({id = 'history_div', label = text('History')});
            ELSIF account_class == 3;
-            #nav_list.push({id = 'user_div', label = text('User')});
+            #DIVS.push({id = 'user_div', label = text('User')});
            END;
       END; ?>
 <ul class="navigation">
-        <?lsmb FOREACH nav IN nav_list ?>
+        <?lsmb FOREACH nav IN DIVS ?>
         <li class="nav"><a href="#<?lsmb nav.id ?>"><?lsmb nav.label ?></a></li>
         <?lsmb  END ?>
 </ul>
-<?lsmb FOREACH ITEM IN div_list; 
-      INCLUDEDIV = "divs/" _ ITEM _ ".html";
-      PROCESS $INCLUDEDIV;
+  <?lsmb FOREACH ITEM IN DIVS; 
+      INCLUDEDIV = "divs/" _ ITEM.template _ ".html";
+      IF ITEM.deplate;
+          PROCESS $INCLUDEDIV;
+      END
   END 
 ?>
 </div>
