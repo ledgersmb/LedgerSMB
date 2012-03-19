@@ -1,0 +1,171 @@
+<div id="hr_div" class="container">
+	<div class="listtop"><strong><?lsmb text("$operation Employee") ?></strong></div>
+<form name="hr" action="<?lsmb script ?>" method="post">
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "target_div"
+		value = 'hr_div'
+	} ?>
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "form_id"
+		value = form_id
+	} ?>
+<?lsmb PROCESS input element_data = {
+                type = "hidden"
+                name = "entity_id"
+               value = entity_id
+} ?>	
+<div class="input_line" id="person_name_div"><?lsmb #text('Name:')?>&nbsp;
+<div class="input_group">
+<!-- TODO:  Add Saluatation -->
+<?lsmb PROCESS input element_data = {
+	label = text('First Name') #'
+	name = "first_name"
+	value = first_name
+	type = "text"
+	size = 20
+} ?>
+</div>
+<div class="input_group">
+<?lsmb PROCESS input element_data = {
+	label = text('Middle Name') #'
+	name = "middle_name"
+	value = middle_name
+	type = "text"
+	size = 20
+} ?>
+</div>
+</div>
+<div class="input_line" id='person_name2_div'>
+<div class="input_group">
+<?lsmb PROCESS input element_data = {
+	label = text('Last Name') #'
+	name = "last_name"
+	value = last_name
+	type = "text"
+	size = 20
+} ?>
+</div>
+<!-- Note that the strange # ' constructs are only necessary to help VIM avoid
+problems with multi-word single-quoted constructs in PI tags. -CT  -->
+<div class="input_group">
+<?lsmb PROCESS input element_data = {
+	label = text('Job Title')
+	name = "role"
+	value = role
+	type = "text"
+	size = 20
+} # ' ?>
+</div>
+</div>
+<div class="input_line" id="person-role-div">
+<div class="input_group">
+<?lsmb PROCESS input element_data = {
+	label = text('Sales')
+	value = 1
+	type = "checkbox"
+	checked = sales
+	name = "sales"
+} ?>
+</div>
+<div class="input_group">
+<?lsmb PROCESS input element_data = {
+        label = text('Manager')
+        value = 'manager'
+        type = "checkbox"
+        checked = is_manager
+        name = "is_manager"
+} ?>
+</div>
+</div>
+<div class="input_line" id="person-country-div">
+<div class="input_group">
+       <?lsmb country_list.unshift({}) ?>
+		<?lsmb INCLUDE select element_data = {
+			text_attr = "name"
+			value_attr = "id"
+			default_values = [country_id]
+			options = country_list
+			name = "country_id"
+			label = text('Country') 
+	} ?> 
+</div>
+</div>
+<div id="employee_div">
+<div class="input_group">
+<?lsmb PROCESS input element_data = {
+	label = text('Employee Number')
+	value = employeenumber
+	name = "employeenumber"
+	type = "text"
+	size = 20
+} # ' ?>
+</div>
+<div class="input_group">
+<?lsmb PROCESS select element_data = {
+         label = text('Manager')
+          name = 'manager_id'
+       options = all_managers
+default_values = [manager_id]
+     text_attr = 'label'
+    value_attr = 'id'
+} ?> 
+</div>
+<div id="hr_dates_div">
+<div class="input_group">
+<?lsmb PROCESS input element_data = {
+	label = text('DOB')
+	name = "dob"
+	value = dob
+	type = "text"
+	class = "date"
+	size = 10
+}  ?>
+</div>
+<div class="input_group">
+<?lsmb PROCESS input element_data = {
+	label = text('Start Date')
+	name = "start_date"
+	value = start_date
+	type = "text"
+	class = "date"
+	size = 10
+} # '  ?>
+</div>
+<div class="input_group">
+<?lsmb PROCESS input element_data = {
+	label = text('End Date')
+	name = "end_date"
+	value = end_date
+	class = "text"
+	type = "text"
+	size = 10
+} # ' ?>
+</div>
+</div>
+<div>
+<?lsmb PROCESS button element_data = {
+	text = text('Save')
+	class = "submit"
+	type = "submit"
+        name = 'action'
+	value = "save"
+} ?>
+<?lsmb 
+IF manage_users and entity_id;
+   IF user_id ?>
+       <a href="admin.pl?action=edit_user&user_id=<?lsmb user_id ?>"
+       >[<?lsmb text('Edit User') ?>]</a><?lsmb 
+   ELSE ?>
+       <a href="admin.pl?action=new_user&first_name=<?lsmb tt_url(first_name) 
+                ?>&last_name=<?lsmb tt_url(last_name) 
+                ?>&employeenumber=<?lsmb tt_url(employeenumber) 
+                ?>&country_id=<?lsmb tt_url(country_id) 
+                ?>&entity_id=<?lsmb tt_url(entity_id) ?>"
+       >[<?lsmb text('Add User') ?>]</a><?lsmb
+   END;
+END ?>
+</div>
+</form>
+</div>
