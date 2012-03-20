@@ -1,0 +1,121 @@
+<div class="container" id="contact_div">
+	<div class="listtop"><?lsmb text('Contact Information') ?></div>
+	<table width="100%">
+	<tr class="listheading">
+		<th class="contact_class"><?lsmb text('Type') ?></th>
+		<th class="description"><?lsmb text('Description') ?></th>
+		<th class="contact"><?lsmb text('Contact Info') ?></th>
+		<th class="contact_actions"><?lsmb text('Actions') ?></th>
+	</tr>
+	<?lsmb FOREACH ct = contacts ?>
+	<tr>
+		<td class="contact_class"><?lsmb ct.class ?></td>
+		<td class="description"><?lsmb ct.description ?></td>
+		<td class="contact"><?lsmb ct.contact ?></td>
+		<td class="contact_actions">
+			<a href="<?lsmb tt_url(script) 
+				?>?entity_id=<?lsmb tt_url(entity_id)
+				?>&contact=<?lsmb tt_url(ct.contact)
+				?>&contact_class=<?lsmb tt_url(ct.class_id)
+				?>&description=<?lsmb tt_url(ct.description)
+				?>&action=edit&credit_id=<?lsmb 
+				tt_url(credit_id) 
+                                ?>&person_id=<?lsmb tt_url(person_id)
+                                ?>&target_div=contact_div"
+			>[<?lsmb text('Edit'); ?>]</a>&nbsp;&nbsp;
+			<a href="<?lsmb tt_url(script) 
+				?>?entity_id=<?lsmb tt_url(entity_id) 
+				?>&contact_class_id=<?lsmb 
+                                tt_url(ct.class_id)
+				?>&action=delete_contact&credit_id=<?lsmb 
+				tt_url(credit_id) ?>&form_id=<?lsmb form_id 
+                                ?>&contact=<?lsmb tt_url(ct.contact)
+                                ?>&person_id=<?lsmb tt_url(person_id)
+                                ?>&target_div=contact_div"
+			>[<?lsmb text('Delete'); ?>]</a>
+		</td>
+	</tr>
+	<?lsmb END ?>
+	</table>
+	<form action="<?lsmb script ?>">
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "form_id"
+		value = form_id
+	} ?>
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "target_div"
+		value = 'contact_div'
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="entity_id" 
+		value=entity_id
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="credit_id" 
+		value=credit_id
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="old_contact_class" 
+		value=contact_class
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="old_contact" 
+		value=contact
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type="hidden" 
+		name="contact_id" 
+		value=contact_id
+	} ?>
+	<div>
+		<?lsmb PROCESS select element_data = {
+			name = "contact_class"
+			label = "Type"
+			text_attr = "class"
+			value_attr = "id"
+			default_values = [contact_class]		
+			options = contact_class_list
+		} ?>
+	</div>
+	<div>
+		<?lsmb PROCESS input element_data = {
+			label = text('Description'),
+			name = "description"
+			value = description
+			type = "text"
+			size = "20"
+		} #' ?>
+	</div>
+	<div>
+		<?lsmb PROCESS input element_data = {
+			label = text('Contact Info'),
+			name = "contact"
+			value = contact
+			type = "text"
+			size = "20"
+		} #' ?>
+	</div>
+	<div><?lsmb PROCESS button element_data = {
+		name = "action",
+		value = "save_contact",
+		text =  text('Save Contact'),
+		class = "submit"
+		} #' ?>
+	<?lsmb IF contact.defined ?> 
+	<?lsmb PROCESS button element_data = {
+		name = "action",
+		value = "save_contact_new",
+		text =  text('Save As New'),
+		class = "submit"
+		} #' ?>
+ 	<?lsmb END # IF old_contact.defined ?>
+	</div>
+</form>
+	
+</div>
