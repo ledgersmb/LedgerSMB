@@ -20,7 +20,13 @@ columns.unshift({
 <form name="search" action="<?lsmb script ?>" method="post">
 <?lsmb-
 
-PROCESS dynatable tbody = { rows = rows };
+PROCESS dynatable 
+        attributes = {
+           class = 'search'
+              id = 'search'
+    input_prefix = 'search_'
+        }
+        tbody = { rows = rows };
 
 PROCESS button element_data = {
    name = 'action'

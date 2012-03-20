@@ -13,6 +13,7 @@
 <?lsmb- END -?>
 <tbody>
    <?lsmb- ROWCOUNT = 0;
+   PFX = attributes.input_prefix;
    FOREACH ROW IN tbody.rows;
    ROWCOUNT = ROWCOUNT + 1 -?>
    <tr class="<?lsmb ROW.html_class ?>">
@@ -24,7 +25,7 @@
           <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
                type="text"
               class="<?lsmb COL.class ?>"
-               name="<?lsmb COL.col_id ?>_<?lsmb loop.count ?>"
+               name="<?lsmb PFX _ COL.col_id ?>_<?lsmb loop.count ?>"
               value="<?lsmb ROW.${COL.col_id} ?>"
          />
          <?lsmb- ELSIF COL.type == 'checkbox';
@@ -36,14 +37,14 @@
                    ?> 
          <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
                type="checkbox"
-               name="<?lsmb COL.col_id ?>_<?lsmb loop.count ?>"
+               name="<?lsmb PFX _ COL.col_id ?>_<?lsmb loop.count ?>"
               class="<?lsmb COL.class ?>"
               value="<?lsmb ROW.row_id ?>"
                <?lsmb CHECKED ?> />
          <?lsmb- ELSIF COL.type == 'radio' ?> 
          <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
                type="radio"
-               name="<?lsmb COL.col_id ?>"
+               name="<?lsmb PFX _ COL.col_id ?>"
               class="<?lsmb COL.class ?>"
               value="<?lsmb ROW.row_id ?>"
                <?lsmb CHECKED ?> />
@@ -55,6 +56,12 @@
                       HREF = COL.href_base _ ROW.row_id;
                    END
           ?><a href="<?lsmb HREF ?>"><?lsmb ROW.${COL.col_id} ?></a>
+         <?lsmb ELSIF COL.type == 'mirrored';
+         NAME = PFX _ ROW.${COL.col_id} _ '_' _ ROWCOUNT;
+         ROW.${COL.col_id} ?>
+         <input type="hidden" 
+               name="<?lsmb NAME ?>" 
+             value ="<?lsmb  ROW.${COL.col_id} ?>" />
          <?lsmb- ELSE -?>
             <?lsmb ROW.${COL.col_id} ?>
          <?lsmb- END -?>
@@ -87,7 +94,7 @@
           <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
                type="text"
               class="<?lsmb COL.class ?>"
-               name="<?lsmb COL.col_id ?>_<?lsmb loop.count ?>"
+               name="<?lsmb PFX _ COL.col_id ?>_<?lsmb loop.count ?>"
               value="<?lsmb ROW.${COL.col_id} ?>"
          />
          <?lsmb- ELSIF TYPE == 'checkbox';
@@ -99,14 +106,14 @@
                    ?> 
          <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
                type="checkbox"
-               name="<?lsmb COL.col_id ?>_<?lsmb loop.count ?>"
+               name="<?lsmb PFX _ COL.col_id ?>_<?lsmb loop.count ?>"
               class="<?lsmb COL.class ?>"
               value="<?lsmb ROW.row_id ?>"
                <?lsmb CHECKED ?> />
          <?lsmb- ELSIF TYPE == 'radio' ?> 
          <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
                type="radio"
-               name="<?lsmb COL.col_id ?>"
+               name="<?lsmb PFX _ COL.col_id ?>"
               class="<?lsmb COL.class ?>"
               value="<?lsmb ROW.row_id ?>"
                <?lsmb CHECKED ?> />
@@ -118,6 +125,12 @@
                       HREF = COL.href_base _ ROW.row_id;
                    END
           ?><a href="<?lsmb HREF ?>"><?lsmb ROW.${COL.col_id} ?></a>
+         <?lsmb ELSIF TYPE == 'mirrored';
+         NAME = PFX _ ROW.${COL.col_id} _ '_' _ ROWCOUNT;
+         ROW.${COL.col_id} ?>
+         <input type="hidden" 
+               name="<?lsmb NAME ?>" 
+             value ="<?lsmb  ROW.${COL.col_id} ?>" />
          <?lsmb- ELSE -?>
             <?lsmb ROW.${COL.col_id} ?>
          <?lsmb- END -?>
