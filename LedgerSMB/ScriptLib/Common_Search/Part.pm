@@ -88,7 +88,7 @@ results are no longer needed.
 
 sub search {
     my ($self, $args) = @_;
-    @results = $self->{_part}->search($args);
+    @results = $self->{_part}->search_lite($args);
     $self->{_results} = \@results;
     return $self->{_results};
 }

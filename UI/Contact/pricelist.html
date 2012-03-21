@@ -68,7 +68,8 @@ checking a price deal for a customer.
       PROCESS dynatable
     attributes = { id = 'pricematrix' }
          tbody = { rows = pricematrix }
-         tfoot = { coltypes = { int_partnumber = 'input_text' }
+         tfoot = { coltypes = { int_partnumber = 'input_text',
+                                   description = 'input_text', }
                    rows = [{}]} ?>
 <?lsmb PROCESS button element_data = {
     type = "submit"
