@@ -103,6 +103,12 @@ sub render {
 
 Returns a list of columns as expected for Dynatable.
 
+=item results
+
+Returns a list of results, becomes the rows for the table.
+
+=back
+
 =head1 COPYRIGHT
 
 Copyright (C) 2012 LedgerSMB Core Team.  This file may be re-used under the terms of the GNU General Public License version 2 or at your option any later version.

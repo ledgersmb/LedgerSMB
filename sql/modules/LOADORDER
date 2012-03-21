@@ -25,4 +25,6 @@ EndOfYear.sql
 Util.sql
 Assets.sql
 Files.sql
+Parts.sql
 Fixes.sql
+

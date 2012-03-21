@@ -13,6 +13,13 @@ BEGIN
 END;
 $$ language plpgsql;
 
+
+CREATE OR REPLACE FUNCTION get_default_lang() RETURNS text AS
+$$ SELECT description FROM language 
+    WHERE code = (SELECT substring(value, 1, 2) FROM defaults
+                   WHERE setting_key = 'default_language');
+$$ LANGUAGE sql;
+
 CREATE OR REPLACE FUNCTION je_get_default_lines() returns varchar as
 $$
 SELECT value FROM menu_attribute where node_id = 74 and attribute = 'rowcount';
