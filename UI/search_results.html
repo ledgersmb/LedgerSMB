@@ -1,0 +1,41 @@
+<?lsmb-
+INCLUDE 'ui-header.html';
+PROCESS 'elements.html';
+PROCESS 'dynatable.html';
+
+IF select_multi ;
+    COLTYPE = 'checkbox'
+ELSE
+    COLTYPE = 'radio'
+END;
+
+columns.unshift({
+      col_id = 'select',
+        name = '', # No label
+        type = COLTYPE
+});
+
+-?>
+<body>
+<form name="search" action="<?lsmb script ?>" method="post">
+<?lsmb-
+
+PROCESS dynatable 
+        attributes = {
+           class = 'search'
+              id = 'search'
+    input_prefix = 'search_'
+        }
+        tbody = { rows = rows };
+
+PROCESS button element_data = {
+   name = 'action'
+   text = text('Continue')
+  class = 'submit'
+   type = 'submit'
+}
+
+-?>
+</form>
+</body>
+</html>
