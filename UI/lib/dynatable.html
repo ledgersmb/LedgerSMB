@@ -25,7 +25,7 @@
           <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
                type="text"
               class="<?lsmb COL.class ?>"
-               name="<?lsmb PFX _ COL.col_id ?>_<?lsmb loop.count ?>"
+               name="<?lsmb PFX _ COL.col_id _ '_' _ ROW.row_id ?>"
               value="<?lsmb ROW.${COL.col_id} ?>"
          />
          <?lsmb- ELSIF COL.type == 'checkbox';
@@ -57,7 +57,7 @@
                    END
           ?><a href="<?lsmb HREF ?>"><?lsmb ROW.${COL.col_id} ?></a>
          <?lsmb ELSIF COL.type == 'mirrored';
-         NAME = PFX _ ROW.${COL.col_id} _ '_' _ ROWCOUNT;
+         NAME = PFX _ ROW.${COL.col_id} _ '_' _ $ROW.row_id;
          ROW.${COL.col_id} ?>
          <input type="hidden" 
                name="<?lsmb NAME ?>" 
@@ -94,7 +94,7 @@
           <input id="<?lsmb COL.col_id ?>-<?lsmb loop.count ?>"
                type="text"
               class="<?lsmb COL.class ?>"
-               name="<?lsmb PFX _ COL.col_id ?>_<?lsmb loop.count ?>"
+               name="<?lsmb PFX _ COL.col_id _ 'tfoot_' _ loop.count ?>"
               value="<?lsmb ROW.${COL.col_id} ?>"
          />
          <?lsmb- ELSIF TYPE == 'checkbox';
@@ -126,7 +126,7 @@
                    END
           ?><a href="<?lsmb HREF ?>"><?lsmb ROW.${COL.col_id} ?></a>
          <?lsmb ELSIF TYPE == 'mirrored';
-         NAME = PFX _ ROW.${COL.col_id} _ '_' _ ROWCOUNT;
+         NAME = PFX _ ROW.${COL.col_id} _ '_' _ 'tfoot_' _ ROWCOUNT;
          ROW.${COL.col_id} ?>
          <input type="hidden" 
                name="<?lsmb NAME ?>" 
