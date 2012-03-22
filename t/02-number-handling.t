@@ -13,7 +13,7 @@ use Math::BigFloat;
 use LedgerSMB;
 use LedgerSMB::Form;
 
-my $lsmb_nan_message = "Content-Type: text/html; charset=utf-8\n\n<head></head><body><h2 class=\"error\">Error!</h2> <p><b>Invalid number detected during parsing</b></body>";
+my $lsmb_nan_message = "Content-Type: text/html; charset=utf-8\n\n<head><link rel='stylesheet' href='css/' type='text/css'></head><body><h2 class=\"error\">Error!</h2> <p><b>Invalid number detected during parsing</b></body>";
 my $form_nan_message = '<body><h2 class="error">Error!</h2> <p><b>Invalid number detected during parsing</b></body>';
 my @r;
 my $form = new Form;
