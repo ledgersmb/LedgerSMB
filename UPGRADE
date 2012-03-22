@@ -39,6 +39,18 @@ From LedgerSMB 1.2.x
   http) and follow the prompts:
    * Provide Pg superuser and database information for your existing database
    * Click continue when asked to upgrade
+   * When asking for upgrade info:
+       * contrib_dir is the directory where either tablefunc.control or 
+         tablefunc.sql is, depending on your PostgreSQL version (9.1 and higher 
+         would use tablefunc.control)
+       * Default country is the country to map contacts which have no country 
+         information to.  This is the short, two letter ISO code for the 
+         country, such as AU for Austria, or US for United States.  It is 
+         case insensitive.
+       * Default ar/ap accounts provide links to accounts for purposes of
+         selection among multiple AR/AP accounts, and for purposes of payment
+         reversals.  Enter account numbers here, like 1200 for AR and 2100 for
+         AP
    * Provide user information.
    * log into the application and create additional users under System/User
      Management
