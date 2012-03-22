@@ -394,13 +394,14 @@ sub create {
     $logger->trace("trying to create db \$ENV{PG_CONTRIB_DIR}=$ENV{PG_CONTRIB_DIR}");
     # We have to use template0 because of issues that Debian has with database 
     # encoding.  Apparently that causes problems for us, so template0 must be
-    # used.
+    # used. Hat tip:  irc user nwnw on #ledgersmb
     #
     # Also moved away from createdb here because at least for some versions of
-    # PostgreSQL, it connects to the postgres db in order to issue the CREATE DATABASE
-    # command.  This makes it harder to adequately secure the platform via pg_hba.conf.
+    # PostgreSQL, it connects to the postgres db in order to issue the 
+    # CREATE DATABASE command.  This makes it harder to adequately secure the 
+    # platform via pg_hba.conf.  Long run we should specify a locale.
     # 
-    # Hat tip:  irc user nwnw -- CT
+    # Hat tip:  irc user RhodiumToad on #postgresql -- CT
 
     use DBI;
     my $dbh = DBI->connect('dbi:Pg:dbname=postgres');
