@@ -1,6 +1,6 @@
 =head1 NAME
-#!/usr/bin/perl
-The LedgerSMB Request Handler
+
+lsmb-request.pl - The LedgerSMB Request Handler
 
 =head1 SYNOPSYS
 This file receives the web request, instantiates the proper objects, and passes
