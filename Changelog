@@ -14,6 +14,7 @@ Changelog for 1.3.14
 * Clarified error message when contrib scripts not found (Chris T)
 * Corrected warnings for missin glog initalization (Andres B)
 * XAL and ODS buttons are now disabled if prereqs are missing (Erik H)
+* Experimental support for migrating from SQL-Ledger via Setup.pl (Chris T)
 
 Andres B is Andres Basile
 

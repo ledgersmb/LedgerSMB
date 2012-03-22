@@ -280,6 +280,66 @@ sub migrate_sl{
             company_name => $request->{database},
                 password => $creds->{password}}
     );
+
+    # ENVIRONMENT NECESSARY
+    $ENV{PGUSER} = $creds->{login};
+    $ENV{PGPASSWORD} = $creds->{password};
+    $ENV{PGDATABASE} = $request->{database};
+
+    # Credentials set above via environment variables --CT
+    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    my $dbh = $request->{dbh};
+    $dbh->do('ALTER SCHEMA public RENAME TO lsmb12');
+    $dbh->do('CREATE SCHEMA PUBLIC');
+    # Copying contrib script loading for now
+    my $rc = 0;
+    my $temp = $LedgerSMB::Sysconfig::tempdir;
+     my @contrib_scripts = qw(tsearch2 tablefunc);
+
+     for my $contrib (@contrib_scripts){
+         my $rc2;
+         $rc2=system("psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
+         $rc ||= $rc2
+     }
+     my $rc2 = system("psql -f sql/Pg-database.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
+     
+     $rc ||= $rc2;
+
+    $database->load_modules('LOADORDER');
+    $database->process_roles('Roles.sql');
+    my $dbtemplate = LedgerSMB::Template->new(
+        user => {}, 
+        path => 'sql/upgrade',
+        template => 'sl2.8-1.3',
+        no_auto_output => 1,
+        format_options => {extension => 'sql'},
+        output_file => 'sl2.8-1.3-upgrade',
+        format => 'TXT' );
+    $dbtemplate->render($request);
+    $rc2 = system("psql -f $temp/sl2.8-1.3-upgrade.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
+    $rc ||= $rc2;
+
+    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+
+   @{$request->{salutations}} 
+    = $request->call_procedure(procname => 'person__list_salutations' ); 
+          
+   @{$request->{countries}} 
+    = $request->call_procedure(procname => 'location_list_country' ); 
+
+   my $locale = $request->{_locale};
+
+   @{$request->{perm_sets}} = (
+       {id => '0', label => $locale->text('Manage Users')},
+       {id => '1', label => $locale->text('Full Permissions')},
+   );
+    my $template = LedgerSMB::Template->new(
+                   path => 'UI/setup',
+                   template => 'new_user',
+                   format => 'HTML',
+     );
+     $template->render($request);
+
 }
 
 =item upgrade 
