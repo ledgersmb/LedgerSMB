@@ -289,7 +289,7 @@ sub migrate_sl{
     # Credentials set above via environment variables --CT
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
     my $dbh = $request->{dbh};
-    $dbh->do('ALTER SCHEMA public RENAME TO lsmb12');
+    $dbh->do('ALTER SCHEMA public RENAME TO sl28');
     $dbh->do('CREATE SCHEMA PUBLIC');
     # Copying contrib script loading for now
     my $rc = 0;
