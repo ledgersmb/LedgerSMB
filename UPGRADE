@@ -44,7 +44,9 @@ From LedgerSMB 1.2.x
          tablefunc.sql is, depending on your PostgreSQL version (9.1 and higher 
          would use tablefunc.control)
        * Default country is the country to map contacts which have no country 
-         information to.
+         information to.  This is the short, two letter ISO code for the 
+         country, such as AU for Austria, or US for United States.  It is 
+         case insensitive.
        * Default ar/ap accounts provide links to accounts for purposes of
          selection among multiple AR/AP accounts, and for purposes of payment
          reversals.  Enter account numbers here, like 1200 for AR and 2100 for
