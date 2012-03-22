@@ -61,6 +61,8 @@ sub search_lite {
     );
 }
 
+=back
+
 =head1 COPYRIGHT
 
 Copyright (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the

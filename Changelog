@@ -15,6 +15,7 @@ Changelog for 1.3.14
 * Corrected warnings for missin glog initalization (Andres B)
 * XAL and ODS buttons are now disabled if prereqs are missing (Erik H)
 * Experimental support for migrating from SQL-Ledger via Setup.pl (Chris T)
+* Fixed POD issues with lsmb-request.pl (h/t Robert C) (Chris T item 3472648)
 
 Andres B is Andres Basile
 

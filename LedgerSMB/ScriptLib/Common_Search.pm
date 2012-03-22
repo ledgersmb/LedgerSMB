@@ -99,6 +99,8 @@ sub render {
 
 =head2 Child Classes Must Implement the Following
 
+=over
+
 =item columns
 
 Returns a list of columns as expected for Dynatable.

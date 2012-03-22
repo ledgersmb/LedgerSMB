@@ -26,7 +26,7 @@ Returns a list of columns for the embedded table engine as an arrayref.
 my $COLUMNS = [
       {col_id => 'id',
          name => 'ID',
-         type => 'mirrored', }
+         type => 'mirrored', },
 
       {col_id => 'partnumber',
          name => 'Partnumber',
@@ -88,7 +88,7 @@ results are no longer needed.
 
 sub search {
     my ($self, $args) = @_;
-    @results = $self->{_part}->search_lite($args);
+    my @results = $self->{_part}->search_lite($args);
     $self->{_results} = \@results;
     return $self->{_results};
 }
