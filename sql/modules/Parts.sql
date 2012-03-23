@@ -10,7 +10,8 @@ SELECT *
        AND ($2 IS NULL 
             OR (to_tsvector(get_default_lang()::name, description) 
                 @@
-                plainto_tsquery(get_default_lang()::name, $2::tsvector)))
+                plainto_tsquery(get_default_lang()::name, $2)))
+       AND not obsolete
 ORDER BY partnumber;
 $$ LANGUAGE SQL;
 

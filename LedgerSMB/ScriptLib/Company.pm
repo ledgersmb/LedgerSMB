@@ -1061,9 +1061,10 @@ and the description is a full text search.
 sub save_pricelist {
     my ($request) = @_;
     use LedgerSMB::ScriptLib::Common_Search::Part;
+    use LedgerSMB::DBObject::Pricelist;
 
-    my $count = $request->{rowcount};
-    my $pricelist = LedgerSMB::DBObject::Pricelist;
+    my $count = $request->{rowcount_pricematrix};
+    my $pricelist = LedgerSMB::DBObject::Pricelist->new({base => $request});
     my @lines;
     my $redirect_to_selection = 0;
 
@@ -1073,6 +1074,7 @@ sub save_pricelist {
                    { partnumber => $request->{"int_partnumber_tfoot_$count"},
                     description => $request->{"description_tfoot_$count"}, }
     );
+
     if (scalar @parts == 0) {
         $request->error($request->{_locale}->text('Part not found'));
     } elsif (scalar @parts > 1){
