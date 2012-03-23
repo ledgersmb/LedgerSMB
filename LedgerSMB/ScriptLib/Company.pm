@@ -1048,6 +1048,67 @@ sub pricelist {
 
 =item delete_price
 
+=item save_pricelist
+
+This routine saves the price matrix.  For existing rows, valid_to, valid_from,
+price fields are saved.
+
+For the new row, the partnumber field matches the beginning of the part number,
+and the description is a full text search.
+
+=cut
+
+sub save_pricelist {
+    my ($request) = @_;
+    use LedgerSMB::ScriptLib::Common_Search::Part;
+
+    my $count = $request->{rowcount};
+    my $pricelist = LedgerSMB::DBObject::Pricelist;
+    my @lines;
+    my $redirect_to_selection = 0;
+
+    # Search and populate
+    my $psearch = LedgerSMB::ScriptLib::Common_Search::Part->new($request);
+    my @parts = $psearch->search(
+                   { partnumber => $request->{"int_partnumber_tfoot_$count"},
+                    description => $request->{"description_tfoot_$count"}, }
+    );
+    if (scalar @parts == 0) {
+        $request->error($request->{_locale}->text('Part not found'));
+    } elsif (scalar @parts > 1){
+        $redirect_to_selection = 1;
+    } else {
+        push @lines, { id => $parts[1]->{id},
+                  validfrom => $request->{"validfrom_tfoot_$count"},
+                    validto => $request->{"validto_tfoot_$count"},
+                   lastcost => $request->{"lastcost_tfoot_$count"},
+                  sellprice => $request->{"sellprice_tfoot_$count"},
+                   leadtime => $request->{"leadtime_tfoot_$count"},
+             }; 
+    }
+
+    # Save rows
+    for (1 .. ($count - 1)){
+        $id = $request->{"row_id_$_"};
+        push @lines, { id => $id,
+               validfrom => $request->{"validfrom_$id"},
+                 validto => $request->{"validto_$id"},
+                lastcost => $request->{"lastcost_$id"},
+               sellprice => $request->{"sellprice_$id"},
+                leadtime => $request->{"leadtime_$id"},
+        };
+    }
+
+    $pricelist->save(\@lines);
+
+    # Return to UI
+
+    pricelist($request) unless $redirect_to_selection;
+
+    $psearch->render;
+}
+
+
 =back
 
 =head1 COPYRIGHT
