@@ -9,6 +9,7 @@ This provides functionality to search for a part, for new 1.3-framework code.
 =cut
 
 package LedgerSMB::ScriptLib::Common_Search::Part;
+use base qw(LedgerSMB::ScriptLib::Common_Search);
 use strict;
 use warnings;
 use LedgerSMB::DBObject::Part; 
@@ -70,7 +71,7 @@ Instantiates a new search object.
 =cut
 
 sub new {
-    my ($self, $request) = @_;
+    my ($pkg, $request) = @_;
     my $self = {};
     bless $self, __PACKAGE__;
     $self->{_part} = LedgerSMB::DBObject::Part->new({base => $request});

@@ -4,9 +4,9 @@ PROCESS 'elements.html';
 PROCESS 'dynatable.html';
 
 IF select_multi ;
-    COLTYPE = 'checkbox'
-ELSE
-    COLTYPE = 'radio'
+    COLTYPE = 'checkbox';
+ELSE;
+    COLTYPE = 'radio';
 END;
 
 columns.unshift({

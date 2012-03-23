@@ -15,7 +15,10 @@ checking a price deal for a customer.
 <body>
 <div class="listtop"><?lsmb text('Pricelist') ?> <?lsmb pricematrix.length ?></div>
 <?lsmb 
-    columns = [ { col_id = 'int_partnumber'
+    columns = [ 
+              { col_id = 'parts_id',
+                  type = 'hidden' },
+              { col_id = 'int_partnumber'
                   name = text('Partnumber')
                   type = 'text'
                 },
