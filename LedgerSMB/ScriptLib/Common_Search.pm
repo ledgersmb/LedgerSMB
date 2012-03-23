@@ -56,9 +56,9 @@ sub extract {
         return $retval;
     } else {
         my @retval;
-        for $row (1 .. $form->{search_rowcount}){
-            next unless $form->{"search_select_$row"};
-            my $id = $form->{"search_select_$row"};
+        for my $row (1 .. $request->{search_rowcount}){
+            next unless $request->{"search_select_$row"};
+            my $id = $request->{"search_select_$row"};
             my $item = {};
             for my $key (keys %$request){
                 if ($key =~ /^search\_.*\_$id$/){

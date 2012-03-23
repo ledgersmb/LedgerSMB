@@ -45,14 +45,13 @@ Saves the pricelist.
 
 sub save {
     my ($self, $lines) = @_;
-    $self->exec_method({funcname => 'pricelist__clear'});
     for my $ref (@$lines){
-        my $line = $self->new({base => $self, 
+        my $line = __PACKAGE__->new({base => $self, 
                                copy => 'list',  
-                          mergelist => ['entity_class', 'credit_id'], }
+                              merge => ['entity_class', 'credit_id'], }
         );
         $line->merge($ref);
-        $line->exec_method({funcname => 'pricelist__add'});
+        $line->exec_method({funcname => 'pricelist__save'});
     }
     $self->{dbh}->commit;
 }

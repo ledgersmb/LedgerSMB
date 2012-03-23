@@ -1527,7 +1527,7 @@ RETURN FOUND or retval;
 END;
 $$ language plpgsql;
 
-CREATE OR REPLACE FUNCTION eca__save_pricematrix
+CREATE OR REPLACE FUNCTION pricelist__save
 (in_parts_id int, in_credit_id int, in_pricebreak numeric, in_price numeric, 
  in_lead_time int2, in_partnumber text, in_validfrom date, in_validto date, 
  in_curr char(3), in_entry_id int)
@@ -1536,15 +1536,16 @@ $$
 DECLARE 
    retval eca__pricematrix;
    t_insert bool;
+   t_entity_class int;
 
 BEGIN
 
 t_insert := false;
 
-PERFORM * FROM entity_credit_account 
-  WHERE id = in_credit_id AND entity_class = 1;
+SELECT entity_class INTO t_entity_class FROM entity_credit_account 
+  WHERE id = in_credit_id;
 
-IF FOUND THEN -- VENDOR
+IF t_entity_class = 1 THEN -- VENDOR
     UPDATE partsvendor
        SET lastcost = in_price,
            leadtime = in_lead_time,
@@ -1568,12 +1569,8 @@ IF FOUND THEN -- VENDOR
      WHERE parts_id = in_parts_id and credit_id = in_credit_id;
 
     RETURN retval;
-END IF;
 
-PERFORM * FROM entity_credit_account
-  WHERE id = in_credit_id AND entity_class = 2;
-
-IF FOUND THEN -- CUSTOMER
+ELSIF t_entity_class = 2 THEN -- CUSTOMER
     UPDATE partscustomer
        SET pricebreak = in_pricebreak,
            sellprice  = in_price,
@@ -1604,11 +1601,20 @@ IF FOUND THEN -- CUSTOMER
                            
     RETURN retval;
 
-END IF;
+ELSE
 
 RAISE EXCEPTION 'No valid entity credit account found';
-   
+
+END IF;
 END;
 $$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION pricelist__delete(entry_id int, credit_id int)
+returns bool as
+$$
+delete from partscustomer where entry_id = $1 and credit_id = $2;
+delete from partsvendor where entry_id = $1 and credit_id = $2;
+select true;
+$$ language sql;
 
 COMMIT;
