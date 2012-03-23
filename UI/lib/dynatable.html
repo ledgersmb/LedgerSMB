@@ -3,11 +3,12 @@
 <?lsmb- IF !hide_header -?>
 <thead>
    <tr>
-   <?lsmb- FOREACH COL IN columns -?>
+   <?lsmb- FOREACH COL IN columns; 
+   IF COL.type != 'hidden'; -?>
    <th class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>">
        <?lsmb COL.name ?>
    </th>
-   <?lsmb- END -?>
+   <?lsmb- END; END; -?>
    </tr>
 </thead>
 <?lsmb- END -?>
@@ -17,9 +18,15 @@
    FOREACH ROW IN tbody.rows;
    ROWCOUNT = ROWCOUNT + 1 -?>
    <tr class="<?lsmb ROW.html_class ?>">
-      <input type="hidden" name="row_ROWCOUNT" 
-             value="<?lsmb row_id ?>" />
-      <?lsmb- FOREACH COL IN columns -?>
+      <input type="hidden" name="row_<?lsmb ROWCOUNT ?>" 
+             value="<?lsmb ROW.row_id ?>" />
+      <?lsmb- FOREACH COL IN columns;
+          IF COL.type == 'hidden';
+      NAME = PFX _ COL.col_id _ '_' _ ROW.row_id; ?>
+      <input type="hidden" 
+             name="<?lsmb NAME ?>" 
+            value="<?lsmb  ROW.${COL.col_id} ?>" />
+      <?lsmb- ELSE - ?>
       <td class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>">
           <?lsmb- IF COL.type == 'input_text' -?>
           <input id="<?lsmb COL.col_id _ '-' _ ROWCOUNT ?>"
@@ -57,7 +64,7 @@
                    END
           ?><a href="<?lsmb HREF ?>"><?lsmb ROW.${COL.col_id} ?></a>
          <?lsmb ELSIF COL.type == 'mirrored';
-         NAME = PFX _ ROW.${COL.col_id} _ '_' _ $ROW.row_id;
+         NAME = PFX _ COL.col_id _ '_' _ $ROW.row_id;
          ROW.${COL.col_id} ?>
          <input type="hidden" 
                name="<?lsmb NAME ?>" 
@@ -66,7 +73,7 @@
             <?lsmb ROW.${COL.col_id} ?>
          <?lsmb- END -?>
       </td>
-      <?lsmb- END -?>
+      <?lsmb- END; END -?>
    </tr>
    <?lsmb- END ?>
 </tbody>
@@ -76,19 +83,26 @@
     ROWCOUNT = ROWCOUNT + 1; -?>
    <tr>
      <?lsmb- FOREACH COL IN columns;
+     COL_ID = COL.col_id;
+     IF tfoot.coltypes.$COL_ID;
+        TYPE = tfoot.coltypes.$COL_ID;
+     ELSE; 
+        TYPE = COL.type;
+     END;
      IF tfoot.coltypes.${COL.col_id} == 'spacer';
         SPACECOUNT = SPACECOUNT + 1;
      ELSE;
        IF SPACECOUNT > 0 ?>
           <td colspan="<?lsmb SPACECOUNT ?>">&nbsp;</td>
-       <?lsmb END ?>
+       <?lsmb END;
+       IF TYPE == 'hidden';
+       NAME = PFX _ COL.col_id _ '_' _ '_tfoot_' _ ROWCOUNT; -?>
+       <input type="hidden" 
+              name="<?lsmb NAME ?>" 
+             value="<?lsmb  ROW.${COL.col_id} ?>" />
+     <?lsmb- ELSE ?>
      <td class="<?lsmb COL.col_id ?>">
-       <?lsmb COL_ID = COL.col_id;
-          IF tfoot.coltypes.$COL_ID;
-             TYPE = tfoot.coltypes.$COL_ID;
-          ELSE; 
-             TYPE = COL.type;
-          END;
+       <?lsmb 
           IF TYPE == 'input_text' -?>
           <input id="<?lsmb COL.col_id _ '-' _ ROWCOUNT ?>"
                type="text"
@@ -125,7 +139,7 @@
                    END
           ?><a href="<?lsmb HREF ?>"><?lsmb ROW.${COL.col_id} ?></a>
          <?lsmb ELSIF TYPE == 'mirrored';
-         NAME = PFX _ ROW.${COL.col_id} _ '_' _ '_tfoot_' _ ROWCOUNT;
+         NAME = PFX _ COL.col_id _ '_' _ '_tfoot_' _ ROWCOUNT;
          ROW.${COL.col_id} ?>
          <input type="hidden" 
                name="<?lsmb NAME ?>" 
@@ -134,7 +148,7 @@
             <?lsmb ROW.${COL.col_id} ?>
          <?lsmb- END -?>
      </td>
-     <?lsmb- END #if -?>
+     <?lsmb- END; END #ifs -?>
      <?lsmb- END -?>
    </tr>
    <?lsmb- END -?>

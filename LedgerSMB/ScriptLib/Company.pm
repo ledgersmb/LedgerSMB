@@ -1047,34 +1047,42 @@ sub save_pricelist {
     my $redirect_to_selection = 0;
 
     # Search and populate
-    my $psearch = LedgerSMB::ScriptLib::Common_Search::Part->new($request);
-    my @parts = $psearch->search(
+    if (defined $request->{"int_partnumber_tfoot_$count"} 
+         or defined $request->{"description_tfoot_$count"})
+    {
+        my $psearch = LedgerSMB::ScriptLib::Common_Search::Part->new($request);
+        my @parts = $psearch->search(
                    { partnumber => $request->{"int_partnumber_tfoot_$count"},
                     description => $request->{"description_tfoot_$count"}, }
-    );
+        );
 
-    if (scalar @parts == 0) {
-        $request->error($request->{_locale}->text('Part not found'));
-    } elsif (scalar @parts > 1){
-        $redirect_to_selection = 1;
-    } else {
-        push @lines, { id => $parts[1]->{id},
+        if (scalar @parts == 0) {
+            $request->error($request->{_locale}->text('Part not found'));
+        } elsif (scalar @parts > 1){
+            $redirect_to_selection = 1;
+        } else {
+            my $part = shift @parts;
+            push @lines, {
+                   parts_id => $part->{id},
                   validfrom => $request->{"validfrom_tfoot_$count"},
                     validto => $request->{"validto_tfoot_$count"},
-                   lastcost => $request->{"lastcost_tfoot_$count"},
-                  sellprice => $request->{"sellprice_tfoot_$count"},
+                      price => $request->{"lastcost_tfoot_$count"} ||
+                               $request->{"sellprice_tfoot_$count"},
                    leadtime => $request->{"leadtime_tfoot_$count"},
              }; 
+        }
     }
 
     # Save rows
     for (1 .. ($count - 1)){
-        $id = $request->{"row_id_$_"};
-        push @lines, { id => $id,
+        $id = $request->{"row_$_"};
+        push @lines, { 
+                entry_id => $id,
+                parts_id => $request->{"parts_id_$id"},
                validfrom => $request->{"validfrom_$id"},
                  validto => $request->{"validto_$id"},
-                lastcost => $request->{"lastcost_$id"},
-               sellprice => $request->{"sellprice_$id"},
+                   price => $request->{"lastcost_$id"} || 
+                            $request->{"sellprice_$id"},
                 leadtime => $request->{"leadtime_$id"},
         };
     }
