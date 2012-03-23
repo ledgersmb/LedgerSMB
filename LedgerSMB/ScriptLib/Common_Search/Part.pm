@@ -70,7 +70,7 @@ Instantiates a new search object.
 =cut
 
 sub new {
-    my ($request) = @_;
+    my ($self, $request) = @_;
     my $self = {};
     bless $self, __PACKAGE__;
     $self->{_part} = LedgerSMB::DBObject::Part->new({base => $request});
@@ -90,7 +90,7 @@ sub search {
     my ($self, $args) = @_;
     my @results = $self->{_part}->search_lite($args);
     $self->{_results} = \@results;
-    return $self->{_results};
+    return @{$self->{_results}};
 }
 
 =back

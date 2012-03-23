@@ -54,7 +54,7 @@ sub save {
         $line->merge($ref);
         $line->exec_method({funcname => 'pricelist__add'});
     }
-    $dbh->commit;
+    $self->{dbh}->commit;
 }
 
 =back
