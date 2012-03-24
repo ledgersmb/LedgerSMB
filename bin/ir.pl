@@ -451,7 +451,21 @@ sub form_header {
 		      <td class="plus$n" nowrap>|
       . $form->format_amount( \%myconfig, $form->{creditremaining}, 0, "0" )
       . qq|</td>
-		    </tr>
+		    </tr>|;
+		if ($form->{entity_control_code}){
+                    $form->hide_form(qw(entity_control_code meta_number));
+			print qq|
+	        <tr>
+		<th align="right" nowrap>| . 
+			$locale->text('Entity Code') . qq|</th>
+		<td colspan="2">$form->{entity_control_code}</td>
+		<th align="right" nowrap>| . 
+			$locale->text('Account') . qq|</th>
+		<td colspan=3>$form->{meta_number}</td>
+	      </tr>
+		|;
+	       }
+	print qq|
 		  </table>
 		</td>
 	      <tr>

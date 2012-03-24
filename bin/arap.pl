@@ -156,16 +156,18 @@ sub check_name {
 sub select_name {
     my ($table) = @_;
 
-    @column_index = qw(ndx name control_code address);
+    @column_index = qw(ndx name control_code meta_number);
 
     $label = ucfirst $table;
-    $column_data{ndx} = qq|<th>&nbsp;</th>|;
-    $column_data{name} =
-      qq|<th class=listheading colspan=3>| . $locale->text($label) . qq|</th>|;
-    $column_data{address} =
-        qq|<th class=listheading colspan=5>|
-      . $locale->text('Address')
-      . qq|</th>|;
+    %column_data = (ndx => qq|<th>&nbsp;</th>|,
+                   name => qq|<th class=listheading>| . 
+                               $locale->text('Name') . qq|</th>|,
+           control_code => qq|<th class=listheading>| .
+                               $locale->text('Control Code') . qq|</th>|,
+            meta_number => qq|<th class=listheading>| .
+                               $locale->text('[_1] Number', $label) . qq|</th>|
+    );
+    
 
     # list items with radio button on a form
     $form->header;
@@ -193,7 +195,7 @@ sub select_name {
 	</tr>
 |;
 
-    @column_index = qw(ndx name control_code meta_number address city state zipcode country);
+    @column_index = qw(ndx name control_code meta_number);
 
     my $i = 0;
     foreach $ref ( @{ $form->{name_list} } ) {
