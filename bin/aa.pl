@@ -193,6 +193,11 @@ sub create_links {
       qq|<option value="transaction">| . $locale->text('Transaction');
 
     # currencies
+    if (!$form->{currencies}){
+        $form->error($locale->text(
+           'No currencies defined.  Please set these up under System/Defaults.'
+        ));
+    }
     @curr = split /:/, $form->{currencies};
     $form->{defaultcurrency} = $curr[0];
     chomp $form->{defaultcurrency};

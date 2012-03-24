@@ -19,6 +19,7 @@ Changelog for 1.3.14
 * Fixed means of adding parts/editing pricelist missing (Chris T, bug 3442163)
 * Fixed unknown db detected as SQL-Ledger (Chris T, bug 3510039)
 * Fixed pos ignores pd_proto and always connects tcp (Chris T, bug 3458112)
+* Error now displayed when currencies are not defined (Chris T, bug 3509555)
 
 Andres B is Andres Basile
 
