@@ -229,11 +229,7 @@ BEGIN
                       UNION ALL
                       SELECT * FROM company
                        WHERE in_legal_name IS NULL) c ON (e.id = c.entity_id)
-		LEFT JOIN (SELECT * FROM entity_credit_account 
-                       WHERE meta_number = in_meta_number
-                      UNION ALL
-                      SELECT * from entity_credit_account
-                       WHERE in_meta_number IS NULL) ec ON (ec.entity_id = e.id)
+		LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
 		LEFT JOIN business b ON (ec.business_id = b.id)
 		WHERE coalesce(ec.entity_class,e.entity_class) = in_account_class
 			AND (c.id IN (select company_id FROM company_to_contact
@@ -283,6 +279,8 @@ BEGIN
 				OR (ec.startdate IS NULL))
 			AND (ec.enddate >= coalesce(in_date_from, ec.enddate)
 				OR (ec.enddate IS NULL))
+	 		AND (ec.meta_number = in_meta_number
+			     OR in_meta_number IS NULL)
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;
