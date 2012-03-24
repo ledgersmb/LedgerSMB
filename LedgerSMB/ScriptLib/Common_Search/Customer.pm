@@ -1,10 +1,11 @@
 =head1 NAME
 
-LedgerSMB::ScriptLib::Common_Search::Part - Part Search Routines
+LedgerSMB::ScriptLib::Common_Search::Customer - Customer Search Routines
 
 =head1 SYNPOSIS
 
-This provides functionality to search for a part, for new 1.3-framework code.
+This provides functionality to search for a customer,
+for new 1.3-framework code.
 
 =cut
 
@@ -93,7 +94,11 @@ sub new {
 };
 
 
-=item search({partnumber => $string, description => $string})
+=item search({contact => $string, contact_info => $string,
+  meta_number => $string, address => $string, city => $string,
+  state => $string, mail_code => $string, country => $string,
+  date_from => $string, date_to => $string, business_id => $int,
+  legal_name => $string, control_code => $string})
 
 Performs a search and caches it.  One object should be used per search unless
 results are no longer needed.
