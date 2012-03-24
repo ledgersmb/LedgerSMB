@@ -47,6 +47,17 @@ sub columns {
    return $COLUMNS;
 }
 
+
+=item row_id
+
+Returns the column_id to use as the row id.
+
+=cut
+
+sub row_id {
+   return 'id';
+}
+
 =item results
 
 Returns a list of results as an array of hashrefs.

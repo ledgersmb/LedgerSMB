@@ -82,8 +82,13 @@ This renders the search screen.
 
 sub render {
     my ($self, $request) = @_;
-    $request->{columns} = $self->columns;
-    $request->{rows} = $self->results;
+    delete $request->{action};
+    my $datahash = { request => $request };
+    $datahash->{columns} = $self->columns;
+    $datahash->{rows} = $self->results;
+    for my $ref(@{$datahash->{rows}}){
+        $ref->{row_id} = $ref->{$self->row_id};
+    }
     my $template = LedgerSMB::Template->new(
        user => $request->{_user},
        locale => $request->{_locale},
@@ -91,7 +96,7 @@ sub render {
        template => 'search_results',
        format => 'HTML',
     );
-    $template->render($request);
+    $template->render($datahash);
 }
     
 
@@ -108,6 +113,10 @@ Returns a list of columns as expected for Dynatable.
 =item results
 
 Returns a list of results, becomes the rows for the table.
+
+=item row_id
+
+Returns the column name (col_id) to use for the row_id.
 
 =back
 

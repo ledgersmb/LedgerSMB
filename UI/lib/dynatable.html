@@ -1,5 +1,5 @@
 <?lsmb BLOCK dynatable ?>
-<table id="<?lsmb attributes.id ?>" class="<?lsmb attributes.class ?>">
+<table id="<?lsmb attributes.id ?>" class="dynatable <?lsmb attributes.class ?>">
 <?lsmb- IF !hide_header -?>
 <thead>
    <tr>
@@ -64,7 +64,7 @@
                    END
           ?><a href="<?lsmb HREF ?>"><?lsmb ROW.${COL.col_id} ?></a>
          <?lsmb ELSIF COL.type == 'mirrored';
-         NAME = PFX _ COL.col_id _ '_' _ $ROW.row_id;
+         NAME = PFX _ COL.col_id _ '_' _ ROW.row_id;
          ROW.${COL.col_id} ?>
          <input type="hidden" 
                name="<?lsmb NAME ?>" 
@@ -80,6 +80,7 @@
 <?lsmb- IF tfoot -?>
 <tfoot>
    <?lsmb- FOREACH ROW IN tfoot.rows;
+    SPACECOUNT = 0;
     ROWCOUNT = ROWCOUNT + 1; -?>
    <tr>
      <?lsmb- FOREACH COL IN columns;

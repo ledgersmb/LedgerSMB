@@ -2,15 +2,9 @@ Upgrading to LedgerSMB 1.3
 
 From LedgerSMB 1.3:
 
-Untar over the top and then:
+Untar over the top and then select step 1 or 2:
 
-1)  Shell script process (UNIX/Linux only):
-
-* cd to the sql/modules directory of the ledgersmb installation.
-* sh reload_modules.sh [dbname] 
-* repeat the shell script for each database for each database
-
-2)  Automated process (all platforms):
+1)  Automated process (all platforms):
 
 * direct browser to the setup.pl file in the directory you are in.
 * provide PostgreSQL superuser credentials and the name of your data base.
@@ -18,6 +12,14 @@ Untar over the top and then:
 * [Optionally] Click 'Backup DB' and/or 'Backup Roles'.
 * Click 'Yes', answering "LedgerSMB 1.3 found. Rebuild/Upgrade?"
 * Repeat for each database.
+
+2) Shell script process (UNIX/Linux only):
+
+* cd to the sql/modules directory of the ledgersmb installation.
+* sh reload_modules.sh [dbname]
+* repeat the shell script for each database.
+
+
 
 From LedgerSMB 1.1 and earlier:
 
@@ -35,9 +37,13 @@ From LedgerSMB 1.2.x
    * make test
       But run 'make test' under an english locale, because some tests check for english error messages.
 * run the install.sh script.
+* fix ledgersmb.conf with new config
+  copy ledgersmb.conf to ledgersmb.conf.old
+  copy ledgersmb.conf.default to ledgersmb.conf and reconfigure.
 * direct your browser to the setup.pl script in your ledgersmb directory (via
   http) and follow the prompts:
    * Provide Pg superuser and database information for your existing database
+     (the database created for your company)
    * Click continue when asked to upgrade
    * When asking for upgrade info:
        * contrib_dir is the directory where either tablefunc.control or 
@@ -51,6 +57,10 @@ From LedgerSMB 1.2.x
          selection among multiple AR/AP accounts, and for purposes of payment
          reversals.  Enter account numbers here, like 1200 for AR and 2100 for
          AP
-   * Provide user information.
+   * Provide user information. 
+     Note: users are recreated as PostreSQL db users with application acess instead 
+     of just imported from your 1.2.x install. New users created by the administrative 
+     functions have their password auth timing out after a day, unless they change their 
+     passwords after logging into LedgerSMB. 
    * log into the application and create additional users under System/User
      Management

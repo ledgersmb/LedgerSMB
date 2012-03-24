@@ -1,5 +1,5 @@
 <?lsmb-
-INCLUDE 'ui-header.html';
+INCLUDE 'ui-header.html' stylesheet = request.stylesheet;
 PROCESS 'elements.html';
 PROCESS 'dynatable.html';
 
@@ -33,7 +33,18 @@ PROCESS button element_data = {
    text = text('Continue')
   class = 'submit'
    type = 'submit'
-}
+  value = request.search_redirect
+};
+
+FOREACH RKEY IN request.keys();
+
+    PROCESS input element_data = {
+           name = RKEY
+           type = "hidden"
+          value = request.$RKEY
+    }; 
+
+END;
 
 -?>
 </form>
