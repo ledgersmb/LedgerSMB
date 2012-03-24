@@ -261,7 +261,8 @@ BEGIN
                                               WHERE contact ILIKE 
                                                             ANY(t_contact_info))
 				                    OR '' ILIKE 
-                                                          ALL(t_contact_info))
+                                                          ALL(t_contact_info)
+                                                    OR t_contact_info IS NULL)
 			
 			AND (c.legal_name ilike '%' || in_legal_name || '%'
 				OR in_legal_name IS NULL)
@@ -275,7 +276,7 @@ BEGIN
 					WHERE line_one 
 						ilike '%' || 
 							coalesce(in_address, '')
-							|| '%'
+							|| '%
 						AND city ILIKE 
 							'%' || 
 							coalesce(in_city, '') 
