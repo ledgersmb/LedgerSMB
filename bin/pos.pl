@@ -49,21 +49,6 @@ $form->{currency} = 'USD';
 1;
 
 # end
-sub custom_send_to_pd{
-  socket(SOCK, 2, 1, getprotobynumber($pos_config{'pd_proto'}));
-  connect(SOCK, $pos_config{'pd_dest'});
-  my $rn = $numrows - 1;
-  my $ds_string = sprintf (
-	'%s%s @ $%-7.2f%s%s%s', 
-	$pd_control{'new_line'},
-	$form->{"qty_$rn"},
-	$form->{"sellprice_$rn"},
-	$pd_control{'new_line'},
-	"Subtotal: \$".sprintf('%-7.2f', $form->{'invtotal'})
-  );
-  print SOCK $ds_string;
-  close SOCK;
-}
 
 sub open_drawer{
    require "pos.conf.pl";
@@ -84,7 +69,10 @@ sub check_alert {
 }
 
 sub send_to_pd {
-    socket( SOCK, 2, 1, getprotobynumber( $pos_config{'pd_proto'} ) );
+    my $sock_type = SOCK_STREAM;
+    $sock_type = SOCK_DGRAM if $pos_config{'pd_proto'} eq 'udp'; 
+    socket( SOCK, PF_INET, $sock_type, 
+             getprotobynumber( $pos_config{'pd_proto'} ) );
     connect( SOCK, $pos_config{'pd_dest'} );
     my $rn        = $numrows - 1;
     my $ds_string = sprintf(
