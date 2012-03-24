@@ -1040,17 +1040,18 @@ sub save_pricelist {
     my ($request) = @_;
     use LedgerSMB::ScriptLib::Common_Search::Part;
     use LedgerSMB::DBObject::Pricelist;
-
     my $count = $request->{rowcount_pricematrix};
+
     my $pricelist = LedgerSMB::DBObject::Pricelist->new({base => $request});
     my @lines;
     my $redirect_to_selection = 0;
+    my $psearch;
 
     # Search and populate
     if (defined $request->{"int_partnumber_tfoot_$count"} 
          or defined $request->{"description_tfoot_$count"})
     {
-        my $psearch = LedgerSMB::ScriptLib::Common_Search::Part->new($request);
+        $psearch = LedgerSMB::ScriptLib::Common_Search::Part->new($request);
         my @parts = $psearch->search(
                    { partnumber => $request->{"int_partnumber_tfoot_$count"},
                     description => $request->{"description_tfoot_$count"}, }
@@ -1093,7 +1094,36 @@ sub save_pricelist {
 
     pricelist($request) unless $redirect_to_selection;
 
-    $psearch->render;
+    $request->{search_redirect} = 'pricelist_search_handle';
+    $psearch->render($request);
+}
+
+
+=item pricelist_search_handle
+
+Handles the return from the parts search from the pricelist screen.
+
+=cut
+
+sub pricelist_search_handle {
+    my ($request) = @_;
+    use LedgerSMB::ScriptLib::Common_Search::Part;
+    use LedgerSMB::DBObject::Pricelist;
+
+    my $psearch = LedgerSMB::ScriptLib::Common_Search::Part->new($request);
+    my $part = $psearch->extract;
+
+    my $plist = LedgerSMB::DBObject::Pricelist->new({base => $request });
+    my $row = $request->{rowcount_pricematrix};
+
+    $plist->save([{parts_id => $part->{id},
+                  validfrom => $request->{"validfrom_tfoot_$row"},
+                    validto => $request->{"validto_tfoot_$row"},
+                      price => $request->{"lastcost_tfoot_$row"} ||
+                               $request->{"sellprice_tfoot_$row"},
+                   leadtime => $request->{"leadtime_tfoot_$row"},
+    }]);
+    pricelist($request);
 }
 
 
