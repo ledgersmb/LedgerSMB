@@ -238,7 +238,8 @@ BEGIN
 		WHERE coalesce(ec.entity_class,e.entity_class) = in_account_class
 			AND (c.id IN (select company_id FROM company_to_contact
 				WHERE contact ILIKE ALL(t_contact_info))
-				OR '' ILIKE ALL(t_contact_info))
+				OR '' ILIKE ALL(t_contact_info)
+				OR t_contact_info IS NULL)
 			
 			AND (c.legal_name ilike '%' || in_legal_name || '%'
 				OR in_legal_name IS NULL)
