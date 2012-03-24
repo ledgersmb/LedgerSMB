@@ -1133,7 +1133,7 @@ sub pricelist_search_handle {
     use LedgerSMB::DBObject::Pricelist;
 
     my $psearch = LedgerSMB::ScriptLib::Common_Search::Part->new($request);
-    my $part = $psearch->extract;
+    my $part = $psearch->extract($request);
 
     my $plist = LedgerSMB::DBObject::Pricelist->new({base => $request });
     my $row = $request->{rowcount_pricematrix};

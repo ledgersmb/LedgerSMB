@@ -41,7 +41,7 @@ list of hashrefs.
 =cut
 
 sub extract {
-    my ($request) = @_;
+    my ($self, $request) = @_;
     if ($request->{search_select}){
         my $id = $request->{search_select};
         my $retval = {};
