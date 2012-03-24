@@ -311,7 +311,7 @@ sub get_info {
        my $rv=$sth->execute();     
        if(defined($rv))
        {
-        if (my ($ref) = $sth->fetchrow_hashref('NAME_lc')){
+        if (my $ref = $sth->fetchrow_hashref('NAME_lc')){
            if ($ref->{version}){
                $retval->{appname} = 'ledgersmb';
                $retval->{version} = 'legacy';
@@ -324,7 +324,7 @@ sub get_info {
        # LedgerSMB 1.2 and above
        $sth = $dbh->prepare('SELECT value FROM defaults WHERE setting_key = ?');
        $sth->execute('version');
-       if (my ($ref) = $sth->fetchrow_hashref('NAME_lc')){
+       if (my $ref = $sth->fetchrow_hashref('NAME_lc')){
            $retval->{full_version} = $ref->{value};
            $retval->{appname} = 'ledgersmb';
            if ($ref->{value} eq '1.2.0') {
@@ -342,12 +342,15 @@ sub get_info {
        # SQL-Ledger 2.7-2.8 (fldname, fldvalue)
        $sth = $dbh->prepare('SELECT fldvalue FROM defaults WHERE fldname = ?');
        $sth->execute('version');
-       if (my ($ref) = $sth->fetchrow_hashref('NAME_lc')){
+       if (my $ref = $sth->fetchrow_hashref('NAME_lc')){
             $retval->{appname} = 'sql-ledger';
             $retval->{full_version} = $ref->{fldname};
             $retval->{version} = $ref->{fldname};
             $retval->{version} =~ s/(\d+\.\d+).*/$1/g;
-       }
+       } else {
+            $retval->{appname} = 'unknown';
+            $retval->{exists} = 'exists';
+       } 
        $dbh->rollback;
    }
    #$logger->debug("DBI->disconnect dbh=$dbh");
