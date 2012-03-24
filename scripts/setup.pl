@@ -237,6 +237,7 @@ sub run_backup {
             file     => $backupfile,
 	);
         $mail->send;
+        unlink $backupfile;
         my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'complete',
@@ -258,6 +259,7 @@ sub run_backup {
         while (read(BAK, $data, 1024 * 1024)){ # Read 1MB at a time
             print $data;
         }
+        unlink $backupfile;
         exit;
     } else {
         $request->error($request->{_locale}->text("Don't know what to do with backup"));
