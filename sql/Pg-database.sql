@@ -908,7 +908,7 @@ values ('Salary'),
        ('Non-cash');
 
 CREATE TABLE payroll_income_type (
-   itype_id serial not null unique,
+   id serial not null unique,
    account_id int not null references account(id),
    pic_id int not null,
    country_id int not null,
@@ -917,6 +917,17 @@ CREATE TABLE payroll_income_type (
    default_amount numeric,
    foreign key(pic_id, country_id) 
               references payroll_income_class(id, country_id)
+);
+
+CREATE TABLE payroll_employee_class (
+   id serial not null unique,
+   label text primary key
+);
+
+CREATE TABLE payroll_employee_class_to_income_type (
+   ec_id int references payroll_employee_class (id),
+   it_id int references payroll_income_type(id),
+   primary key(ec_id, it_id)
 );
 
 CREATE TABLE payroll_deduction_class (
@@ -942,10 +953,33 @@ CREATE TABLE payroll_deduction_type (
 
 CREATE TABLE payroll_report (
    id serial not null primary key,
-   ec_id int not null references employee_class(id),
+   ec_id int not null references payroll_employee_class(id),
    payment_date date not null,
    created_by int references entity_employee(entity_id),
    approved_by int references  entity_employee(entity_id)
+);
+
+CREATE TABLE payroll_report_line (
+   id serial not null unique,
+   report_id int not null references payroll_report(id),
+   employee_id int not null references entity(id),
+   it_id int not null references payroll_income_type(id),
+   qty numeric not null,
+   rate numeric not null,
+   description text,
+   primary key (it_id, employee_id, report_id)
+);
+
+CREATE TABLE payroll_pto_class (
+   id serial not null unique,
+   label text primary key
+);
+
+CREATE TABLE payroll_paid_timeoff (
+   employee_id int not null references entity(id),
+   pto_class_id int not null references payroll_pto_class(id),
+   report_id int not null references payroll_report(id)),
+   amount numeric not null
 );
 
 --TODO:  Add payroll line items, approval process, registry for locale functions, etc
