@@ -36,6 +36,7 @@ From LedgerSMB 1.2.x
    * make
    * make test
       But run 'make test' under an english locale, because some tests check for english error messages.
+      (Bash tips: LANG=en_US make test )
 * run the install.sh script.
 * fix ledgersmb.conf with new config
   copy ledgersmb.conf to ledgersmb.conf.old
