@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-LedgerSMB::Template::TXT  Template support module for LedgerSMB
+LedgerSMB::Template::TXT - Template support module for LedgerSMB
 
 =head1 METHODS
 
