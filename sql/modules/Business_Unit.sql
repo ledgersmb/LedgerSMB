@@ -187,4 +187,36 @@ CREATE OR REPLACE FUNCTION business_unit__get(in_id int)
 RETURNS business_unit AS
 $$ SELECT * FROM business_unit where id = $1; $$ LANGUAGE SQL;
 
+CREATE OR REPLACE FUNCTION eca_bu_trigger() RETURNS TRIGGER AS
+$$
+BEGIN
+  IF TG_OP = 'INSERT'
+      INSERT INTO business_unit(class_id, description, credit_id)
+      VALUES (7 - NEW.entity_class, NEW.meta_number, NEW.id);
+  ELSIF TG_OP = 'UPDATE'
+      IF new.meta_number <> old.meta_number THEN
+         UPDATE business_unit SET description = new.meta_number
+          WHERE class_id = 7 - NEW.entity_class
+                AND credit_id = new.id;
+      END IF;
+  ELSIF TG_OP = 'DELETE'
+      DELETE FROM business_unit WHERE class_id = 7 - NEW.entity_class
+                  AND credit_id = old_id;
+      RETURN;
+  END IF;
+  RETURN NEW;
+END;
+$$ LANGUAGE PLPGSQL;
+
+DROP TRIGGER IF EXISTS eca_maintain_b_units CASCADE;
+DROP TRIGGER IF EXISTS eca_maintain_b_units_del CASCADE;
+
+CREATE TRIGGER eca_maintain_b_units AFTER INSERT OR UPDATE 
+       ON entity_credit_account
+       FOR EACH ROW EXECUTE PROCEDURE eca_bu_trigger();
+
+CREATE TRIGGER eca_maintain_b_units_del BEFORE DELETE
+       ON entity_credit_account
+       FOR EACH ROW EXECUTE PROCEDURE eca_bu_trigger();
+
 COMMIT;
