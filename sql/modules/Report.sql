@@ -1,6 +1,8 @@
 -- Unused currently and untested.  This is expected to be a basis for 1.4 work
 -- not recommended for current usage.  Not documenting yet.  --CT
+BEGIN;
 
+DROP TYPE IF EXISTS report_aging_item CASCADE;
 
 CREATE TYPE report_aging_item AS (
 	entity_id int,
@@ -35,7 +37,7 @@ CREATE TYPE report_aging_item AS (
 
 
 CREATE OR REPLACE FUNCTION 
-report_invoice_aging(in_entity_id int, in_entity_class int) 
+report__invoice_aging(in_entity_id int, in_entity_class int) 
 RETURNS SETOF report_aging_item
 AS
 $$
@@ -157,4 +159,102 @@ BEGIN
 END;
 $$ language plpgsql;
 
+DROP TYPE IF EXISTS gl_report_item CASCADE;
 
+CREATE TYPE gl_report_item AS (
+    id int,
+    type text,
+    invoice bool,
+    reference text,
+    description text,
+    transdate date,
+    source text,
+    amount numeric,
+    accno text,
+    gifi_accno text,
+    till text,
+    cleared bool,
+    memo text,
+    accname text,
+    chart_id int,
+    entry_id int,
+    running_balance numeric,
+    business_units int[]
+);
+
+CREATE OR REPLACE FUNCTION report__gl
+(in_reference text, in_accno text, in_source text, in_memo text, 
+in_description text, in_date_from date, in_date_to date, in_approved bool,
+in_amount_from numeric, in_amount_to numeric, in_business_units int[])
+RETURNS SETOF gl_report_item AS
+$$
+DECLARE 
+         retval gl_report_item;
+         t_balance numeric;
+         t_chart_id int;
+BEGIN
+
+IF in_date_from IS NULL THEN
+   t_balance := 0;
+ELSIF in_accno IS NOT NULL THEN
+   SELECT id INTO t_chart_id FROM account WHERE accno  = in_accno;
+   t_balance := account__obtain_balance(in_date_from, t_accno);
+ELSE
+   t_balance := null;
+END IF;
+
+FOR retval IN
+       SELECT g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
+              ac.source, ac.amount, c.accno, c.gifi_accno, 
+              g.till, ac.cleared, ac.memo, c.description AS accname, 
+              ac.chart_id, ac.entry_id, 
+              sum(ac.amount) over (rows unbounded preceding) + t_balance 
+                as running_balance,
+              compound_array(ARRAY[ARRAY[bac.class_id, bac.bu_id]])
+         FROM (select id, 'gl', false, reference, description, 
+                      null::text as till 
+                 FROM gl
+               UNION
+               SELECT id, 'ar', invoice, invnumber, e.name, till
+                 FROM ar
+                 JOIN entity_credit_account eca ON ar.entity_credit_account
+                      = eca.id
+                 JOIN entity e ON e.id = eca.entity_id
+               UNION
+               SELECT id, 'ap', invoice, invnumber, e.name, null as till
+                 FROM ap
+                 JOIN entity_credit_account eca ON ap.entity_credit_account 
+                      = eca.id
+                 JOIN entity e ON e.id = eca.entity_id) g
+         JOIN acc_trans ac ON ac.trans_id = g.id
+         JOIN chart c ON ac.chart_id = c.id
+        WHERE (g.reference ilike in_reference || '%' or in_reference is null)
+              AND (c.accno = in_accno OR in_accno IS NULL)
+              AND (ac.source ilike '%' || in_source || '%' 
+                   OR in_source is null)
+              AND (ac.memo ilike '%' || in_memo || '%' OR in_memo is null)
+              AND (in_description IS NULL OR
+                  to_tsvector(get_default_lang()::name, g.description)
+                  @@
+                  plainto_tsquery(get_default_lang()::name, in_description))
+              AND (transdate BETWEEN in_date_from AND in_date_to
+                   OR (transdate >= in_date_from AND in_date_to IS NULL)
+                   OR (transdate <= in_date_to AND in_date_from IS NULL))
+              AND (in_approved is false OR (g.approved AND ac.approved))
+              AND (in_amount_from IS NULL OR ac.amount >= in_amount_from)
+              AND (in_amount_to IS NULL OR ac_amount <= in_amount_to)
+     GROUP BY g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
+              ac.source, ac.amount, c.accno, c.gifi_accno,
+              g.till, ac.cleared, ac.memo, c.description,
+              ac.chart_id, ac.entry_id
+       HAVING in_business_units <@ as_array(bac.bu_id)
+     ORDER BY ac.transdate, g.trans_id, c.accno
+LOOP
+   RETURN NEXT retval;
+END LOOP;
+
+
+END;
+$$ language plpgsql;
+
+COMMIT;
