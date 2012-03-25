@@ -1,0 +1,379 @@
+/* Gnome Stylesheet for LedgerSMB
+Mixed by: Andres Basile <basile@gmail.com>
+Original file: ledgersmb.css
+Icons: http://download.gnome.org/sources/gnome-icon-theme
+Copyright: Ulisse Perusin <uli.peru@gmail.com>; Riccardo Buzzotta <raozuzu@yahoo.it>; Josef Vyba­ral <cornelius@vybiral.info>; Hylke Bons <h.bons@student.rug.nl>; Ricardo Gonzalez <rick@jinlabs.com>; Lapo Calamandrei <calamandrei@gmail.com>; Rodney Dawes <dobey@novell.com>; Luca Ferretti <elle.uca@libero.it>; Tuomas Kuosmanen <tigert@gimp.org>; Andreas Nilsson <nisses.mail@home.se>; Jakub Steiner <jimmac@novell.com>
+This package is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; version 2 dated June, 1991.
+*/
+
+/* general stuff */
+A:link { text-decoration: none; }
+A:visited {text-decoration: none; }
+A:active { text-decoration: underline; }
+A:hover { 
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+body {
+  font-family: Arial, Verdana, Helvetica, sans-serif;
+  color: #1A1A1A;
+  font-size: 12pt;
+  background-color: #EDECEB;
+}
+
+.cornderlogo {
+ border: 1px solid #000;
+ width: 150px;
+ margin-left: 1px;
+ background: #F5F5B5;
+ padding: 4px;
+}
+
+ul#top_menu {
+ list-style-type:none;
+ padding: 0px;
+}
+
+ul.submenu {
+ list-style-type:none;
+ padding: 0px;
+ margin-top: 4px;
+ margin-bottom: 4px;
+ border: 1px solid #000;
+}
+
+li.menu_closed {
+ background: #999 url('gnome/zoom-in.png') top left no-repeat;
+ padding-left: 18px;
+}
+
+li.menu_open {
+ background: #bbb url('gnome/zoom-out.png') top left no-repeat;
+ padding-left: 18px;
+}
+
+li.menu_item {
+ background: #ddd url('gnome/edit-redo.png') top left no-repeat;
+ padding-left: 18px;
+}
+
+/* Reports
+Reportes */
+li#menu_4, li#menu_13, li#menu_24, li#menu_32, li#menu_41, li#menu_53, li#menu_70, li#menu_76, li#menu_85, li#menu_103, li#menu_109, li#menu_226, li#menu_236 {
+ background: #eee url('gnome/address-book-new.png') top left no-repeat;
+}
+
+/* Search
+Buscar */
+li#menu_14, li#menu_33, li#menu_49, li#menu_104, li#menu_221, li#menu_233 {
+ background: #eee url('gnome/system-search.png') center left no-repeat;
+}
+
+/* History
+Historial */
+li#menu_15, li#menu_34 {
+ background: #eee url('gnome/document-open-recent.png') center left no-repeat;
+}
+
+/* Add
+Nuevo */
+li#menu_2, li#menu_12, li#menu_22, li#menu_31, li#menu_36, li#menu_38, li#menu_48, li#menu_78, li#menu_79, li#menu_80, li#menu_81, li#menu_82, li#menu_83, li#menu_99, li#menu_100, li#menu_137, li#menu_139, li#menu_142, li#menu_145, li#menu_148, li#menu_151, li#menu_154, li#menu_218, li#menu_220, li#menu_230, li#menu_232 {
+ background: #eee url('gnome/list-add.png') center left no-repeat;
+}
+
+/* List
+Lista */
+li#menu_138, li#menu_140, li#menu_143, li#menu_146, li#menu_149, li#menu_152, li#menu_155, li#menu_225, li#menu_231 {
+ background: #eee url('gnome/text-x-preview.png') top left no-repeat;
+}
+
+/* Contacts
+Contactos */
+li#menu_11, li#menu_30, li#menu_47 {
+ background: #eee url('gnome/user-info.png') top left no-repeat;
+}
+
+/* Inventory
+Inventario */
+li#menu_114 {
+ background: #eee url('gnome/package-x-generic.png') center left no-repeat;
+}
+
+/* Recurrents
+Recurrentes */
+li#menu_115 {
+ background: #eee url('gnome/view-refresh.png') center left no-repeat;
+}
+
+/* Taxes
+Impuestos */
+li#menu_130 {
+ background: #eee url('gnome/face-angry.png') top left no-repeat;
+}
+
+/* Preferences
+Preferencias */
+li#menu_191, li#menu_131 {
+ background: #eee url('gnome/preferences-system.png') center left no-repeat;
+}
+
+/* New Window
+Nueva Ventana */
+li#menu_192 {
+ background: #eee url('gnome/window-new.png') center left no-repeat;
+}
+
+/* Logout
+Salir */
+li#menu_193 {
+ background: #eee url('gnome/system-log-out.png') center left no-repeat;
+}
+
+span.warning_label {
+  font-weight: bold;
+  color: red
+}
+td {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+}
+
+th {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+}
+
+#company_info {
+   font-weight: bold;
+   font-size: 9pt;
+}
+
+/* login and admin */
+.login {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+body.login {
+  background: #EDECEB;
+  color: black;
+}
+h1.login {
+  font-size: 18pt;
+}
+table.login {
+  background-color: #EDECEB;
+  padding: 20px;
+}
+td.login {
+  text-align: center;
+}
+th.login {
+  text-align: right;
+}
+
+body.admin {
+  background-color: #FFFFFF;
+  color: black;
+}
+
+
+/* ##### MENU ##### */
+
+.menuOut {
+  cursor: pointer;
+  background-color: #eeeeee;
+  font-size: 11px;
+  color: #000084;
+  padding: 2px;
+  text-align: left;
+}
+
+.menuOver {
+  cursor: pointer;
+  background-color: #004a80;
+  font-size: 11px;
+  color: #ffffff;
+  padding: 2px;
+  text-align: left;
+}
+
+.submenu {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  padding-left: 5px;
+}
+
+.menuOut a {
+  cursor: pointer;
+  margin: 0px;
+  background-color: #eeeeee;
+  font-size: 11px;
+  color: #000084;
+  border: 0px solid #000000;
+  padding: 0px;
+  text-align: left;
+}
+
+.menuOver a {
+  margin: 0px;
+  background-color: transparent;
+  font-size: 11px;
+  color: #ffffff;
+  padding: 0px;
+  text-align: left;
+}
+
+.submenu a {
+  color: #004a80;
+  text-decoration: none;
+}
+
+.submenu a:hover {
+  text-decoration: none;
+  color: #eeeeee;
+  background: #004a80;
+}
+
+.listtop { font-size: 10pt; background-color: #F5F5B5; color: #1A1A1A; }
+
+.listheading { font-size: 10pt; background-color: #86ABD9; color: #1A1A1A; }
+
+
+A.listheading:link, A.listheading:active, A.listheading:visited {
+  text-decoration: none; }
+.listrow1 { font-size: 10pt; background-color: #e6e6fa; color: black; vertical-align: top; }
+.listrow0 { font-size: 10pt; background-color: #ffe4e1; color: black; vertical-align: top; }
+.listsubtotal { font-size: 10pt; background-color: #5a7d9b; color: white; }
+.listtotal { font-size: 10pt; background-color: #EDECEB; color: white; }
+
+textarea {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  border: 1px solid #888888;
+  font-size: 11px;
+  background-color: #eeeeee;
+  font-weight: bold;
+}
+
+input {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  border: 1px solid #888888;
+  font-size: 11px;
+  background-color: #eeeeee;
+  font-weight: bold;
+}
+
+select {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+}
+
+.submit {
+  font-size: 10pt;
+  color: #000080;
+  font-weight: normal;
+}
+
+.checkbox, .radio {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+}
+
+.plus0 {    /* font color for negative numbers */
+  color: red;
+}
+
+.plus1 {
+  color: green;
+}
+
+h2.confirm {
+  color: blue;
+  font-size: 14pt;
+}
+
+h2.error {
+  color: red;
+  font-size: 14pt;
+}
+
+#notes_div div.note {
+	margin: 1em;
+	padding: 1em;
+	border: 2px;
+	height: 5em;
+	width: 90%;
+	overflow: hidden;
+	background-color: #ddd;
+	border-style: groove;
+}
+
+#notes_div div.note:hover {
+	overflow:visible;
+	background-color: #ddd;
+	border-style: groove;
+	height: 100%;
+	width: 90%;
+	min-height: 5em;
+	overflow: auto;
+}
+
+#company_div div.note {
+	display: none;
+}
+
+tr.active {
+	background-color: #ddd;
+}
+
+tr.record {
+	background-color: pink;
+}
+
+tr.warning {
+	background-color: yellow;
+}
+/* media stuff */
+
+@media screen {
+  .noscreen {   /* items with this class won't display */
+    display: none;
+  }
+}
+
+@media print {
+  .noprint {   /* items with this class won't print */
+    display: none;
+  }
+}
+
+/* ajax-specific styling */
+
+div.autocomplete {
+  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0px; padding:0px;
+}
+div.autocomplete ul {
+  list-style-type:none; margin:0px; padding:0px;
+}
+div.autocomplete ul li.selected { background-color: #ccc;}
+div.autocomplete ul li {
+  list-style-type:none; display:block; margin:0; padding:2px; height:16px; font-size: 10px; cursor:pointer;
+}
+span.indicator {
+  border: 1px solid black; font-size: 10px; padding: 2px; background-color: #eee;
+}
+
+/* ajax-specific styling */
+
+div.autocomplete {
+  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0px; padding:0px;
+}
+div.autocomplete ul {
+  list-style-type:none; margin:0px; padding:0px;
+}
+div.autocomplete ul li.selected { background-color: #ccc;}
+div.autocomplete ul li {
+  list-style-type:none; display:block; margin:0; padding:2px; height:16px; font-size: 10px; cursor:pointer;
+}
+span.indicator {
+  border: 1px solid black; font-size: 10px; padding: 2px; background-color: #eee;
+}

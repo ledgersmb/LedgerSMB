@@ -56,6 +56,7 @@ Changelog for 1.3.14
 * Error now displayed when currencies are not defined (Chris T, bug 3509555)
 * Fixed "no obvious way to select credit account" (Chris T, bug 3510564)
 * Added code to unlink backup files after sent (Chris T)
+* Added Gnome css (Andres B)
 
 Andres B is Andres Basile
 
