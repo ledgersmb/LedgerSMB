@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-LedgerSMB:DBObject::Draft, LedgerSMB base class for managing "drafts."
+LedgerSMB::DBObject::Draft - LedgerSMB base class for managing "drafts."
 
 =head1 SYNOPSIS
 

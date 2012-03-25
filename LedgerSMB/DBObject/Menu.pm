@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Menu:  Menu Handling Back-end Routines for LedgerSMB
+LedgerSMB::DBObject::Menu - Menu Handling Back-end Routines for LedgerSMB
 
 =head1 SYNOPSIS
 

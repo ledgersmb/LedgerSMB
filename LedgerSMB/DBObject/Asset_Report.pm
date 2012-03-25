@@ -3,7 +3,7 @@ package LedgerSMB::DBObject::Asset_Report;
 
 =head1 NAME
 
-LedgerSMB::DBObject::Asset_Report.pm, LedgerSMB Base Class for Asset Reports
+LedgerSMB::DBObject::Asset_Report - LedgerSMB Base Class for Asset Reports
 
 =head1 SYNOPSIS
 

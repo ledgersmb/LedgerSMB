@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-LedgerSMB::Date Date Handling Back-end Routines for LedgerSMB
+LedgerSMB::DBobject::Date - Date Handling Back-end Routines for LedgerSMB
 
 =head1 SYNOPSIS
 

@@ -2,7 +2,7 @@ package LedgerSMB::DBObject::Asset;
 
 =head1 NAME
 
-LedgerSMB::DBObject::Asset.pm, LedgerSMB Base Class for Fixed Assets
+LedgerSMB::DBObject::Asset - LedgerSMB Base Class for Fixed Assets
 
 =head1 SYNOPSIS
 

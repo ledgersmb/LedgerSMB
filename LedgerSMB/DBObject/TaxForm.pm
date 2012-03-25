@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-LedgerSMB:DBObject::TaxForm
+LedgerSMB::DBObject::TaxFormm - Includes methods for saving and retrieving tax forms.
 
 =head1 SYNOPSIS
 
