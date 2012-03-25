@@ -131,18 +131,27 @@ our $process = {
 
                foreach my $entry (@$entries){
                   my $account = LedgerSMB::DBObject::Account->new({base=>$request});
-
-                  $account->merge({
+                  my $settings = {
                       accno => $entry->[0],
                       description => $entry->[1],
                       charttype => $entry->[2],
                       category => $entry->[3],
                       contra => $entry->[4],
                       tax => $entry->[5],
-                      link => $entry->[6],
 #                      heading => $entry->[7],
                       gifi_accno => $entry->[8],
-                  });
+                  };
+
+                  if ($entry->[6] !~ /:/) {
+                    $settings->{$entry->[6]} = 1
+                      if ($entry-[6] != "");
+                  else {
+                    foreach my $link (split( /:/, $entry->[6]) {
+                       $settings->{$link} = 1;
+                    }
+                  }
+
+                  $account->merge($settings);
                   $account->save();
                }
              },
