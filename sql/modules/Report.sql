@@ -247,13 +247,14 @@ FOR retval IN
               AND (ac.source ilike '%' || in_source || '%' 
                    OR in_source is null)
               AND (ac.memo ilike '%' || in_memo || '%' OR in_memo is null)
-              AND (in_description IS NULL OR
+             AND (in_description IS NULL OR
                   to_tsvector(get_default_lang()::name, g.description)
                   @@
                   plainto_tsquery(get_default_lang()::name, in_description))
               AND (transdate BETWEEN in_date_from AND in_date_to
                    OR (transdate >= in_date_from AND in_date_to IS NULL)
-                   OR (transdate <= in_date_to AND in_date_from IS NULL))
+                   OR (transdate <= in_date_to AND in_date_from IS NULL)
+                   OR (in_date_to IS NULL AND in_date_from IS NULL))
               AND (in_approved is false OR (g.approved AND ac.approved))
               AND (in_amount_from IS NULL OR ac.amount >= in_amount_from)
               AND (in_amount_to IS NULL OR ac.amount <= in_amount_to)
@@ -262,7 +263,7 @@ FOR retval IN
               ac.source, ac.amount, c.accno, c.gifi_accno,
               g.till, ac.cleared, ac.memo, c.description,
               ac.chart_id, ac.entry_id, ac.trans_id
-       HAVING in_business_units 
+       HAVING in_business_units is null or in_business_units 
                 <@ compound_array(string_to_array(bu_tree.path, ',')::int[])
      ORDER BY ac.transdate, ac.trans_id, c.accno
 LOOP

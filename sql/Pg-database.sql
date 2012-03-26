@@ -2938,8 +2938,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 75	pos_adjust	1	176
 75	reference	Adjusting Till: (Till)  Source: (Source)	177
 75	descripton	Adjusting till due to data entry error	178
-76	module	gl.pl	180
-76	action	search	181
+76	module	journal.pl	180
+76	action	begin_search	181
 77	menu	1	182
 78	module	ic.pl	183
 78	action	add	184

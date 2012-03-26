@@ -83,9 +83,15 @@ our @COLUMNS = (
        type => 'text',
      pwidth => 1, },
 
+    {col_id => 'transdate',
+       name => $locale->text('Date'),
+       type => 'text',
+     pwidth => '3', },
+
     {col_id => 'reference',
        name => $locale->text('Reference'),
-       type => 'text',
+       type => 'href',
+  href_base => '',
      pwidth => '3', },
 
     {col_id => 'description',
@@ -122,11 +128,6 @@ our @COLUMNS = (
        name => $locale->text('Cleared'),
        type => 'text',
      pwidth => '1', },
-
-    {col_id => 'transdate',
-       name => $locale->text('Date'),
-       type => 'text',
-     pwidth => '3', },
 
     {col_id => 'till',
        name => $locale->text('Till'),
@@ -310,7 +311,32 @@ Runs the report, and assigns rows to $self->rows.
 sub run_report{
     my ($self) = @_;
     my @rows = $self->exec_method({funcname => 'report__gl'});
-    # TODO:  Convert to links and add href stuff.
+    for my $ref(@rows){
+        if ($ref->{amount} < 0){
+            $ref->{debits} = $ref->{amount} * -1;
+            $ref->{credits} = 0;
+        } else {
+            $ref->{credits} = $ref->{amount};
+            $ref->{debits} = 0;
+        }
+        if ($ref->{type} eq 'gl'){
+           $ref->{reference_href_suffix} = "gl.pl?action=edit&id=$ref->{id}";
+        } elsif ($ref->{type} eq 'ar'){
+           if ($ref->{invoice}){
+                $ref->{reference_href_suffix} = 'is.pl';
+           } else {
+                $ref->{reference_href_suffix} = 'ar.pl';
+           }
+           $ref->{reference_href_suffix} .= "?action=edit&id=$ref->{id}";
+        } elsif ($ref->{type} eq 'ap'){
+           if ($ref->{invoice}){
+                $ref->{reference_href_suffix} = 'ir.pl';
+           } else {
+                $ref->{reference_href_suffix} = 'ap.pl';
+           }
+           $ref->{reference_href_suffix} .= "?action=edit&id=$ref->{id}";
+        }
+    }
     $self->rows(\@rows);
 }
 

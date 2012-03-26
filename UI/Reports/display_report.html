@@ -1,7 +1,7 @@
 <?lsmb
 
 PROCESS "ui-header.html"
-   stylesheet = request.stylesheet;
+   stylesheet = USER.stylesheet;
 
 PROCESS "elements.html";
 
@@ -12,7 +12,7 @@ LINK = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME
 
 ?>
 <body>
-<?lsmb PROCESS dynatable ?>
+<?lsmb PROCESS dynatable tbody = {rows => rows } ?>
 
 <a href="<?lsmb LINK ?>">[<?lsmb text('permalink') ?>]</a>&nbsp;
 <a href="<?lsmb LINK _ '&format=PDF' ?>">[<?lsmb text('PDF') ?>]</a>&nbsp;

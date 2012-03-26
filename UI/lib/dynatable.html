@@ -57,7 +57,7 @@
                <?lsmb CHECKED ?> />
          <?lsmb- ELSIF COL.type == 'href'; 
                    HREF_SFX = COL.col_id _ "_href_suffix";
-                   IF row.$HREF_SFX;
+                   IF ROW.$HREF_SFX;
                       HREF = COL.href_base _ ROW.$HREF_SFX;
                    ELSE;
                       HREF = COL.href_base _ ROW.row_id;

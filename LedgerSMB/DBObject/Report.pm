@@ -139,7 +139,24 @@ sub render {
         format => uc($request->{format} || 'HTML'),
     );
     $template->render({report => $self, request => $request,
-                       columns => $self->columns, rows => $self->rows});
+                       columns => $self->show_cols($request), rows => $self->rows});
+}
+
+=item show_cols 
+
+Returns a list of columns based on selected ones from the report
+
+=cut
+
+sub show_cols {
+    my ($self, $request) = @_;
+    my @retval;
+    for my $ref (@{$self->columns}){
+        if ($request->{"col_$ref->{col_id}"}){
+            push @retval, $ref;
+        }
+    }
+    return \@retval;
 }
 
 =back
