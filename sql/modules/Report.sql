@@ -183,9 +183,10 @@ CREATE TYPE gl_report_item AS (
 );
 
 CREATE OR REPLACE FUNCTION report__gl
-(in_reference text, in_accno text, in_source text, in_memo text, 
-in_description text, in_date_from date, in_date_to date, in_approved bool,
-in_amount_from numeric, in_amount_to numeric, in_business_units int[])
+(in_reference text, in_accno text, in_category char(1),
+in_source text, in_memo text,  in_description text, in_date_from date, 
+in_date_to date, in_approved bool, in_amount_from numeric, in_amount_to numeric,
+in_business_units int[])
 RETURNS SETOF gl_report_item AS
 $$
 DECLARE 
@@ -204,6 +205,15 @@ ELSE
 END IF;
 
 FOR retval IN
+       WITH RECURSIVE bu_tree (id, path) AS (
+            SELECT id, id::text AS path
+              FROM business_unit
+             WHERE parent is null
+            UNION
+            SELECT id, bu_tree.path || , || id
+              FROM business_unit
+              JOIN bu_tree ON bu_tree.id = business_unit.parent
+            )
        SELECT g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
               ac.source, ac.amount, c.accno, c.gifi_accno, 
               g.till, ac.cleared, ac.memo, c.description AS accname, 
@@ -227,7 +237,9 @@ FOR retval IN
                       = eca.id
                  JOIN entity e ON e.id = eca.entity_id) g
          JOIN acc_trans ac ON ac.trans_id = g.id
-         JOIN chart c ON ac.chart_id = c.id
+         JOIN account c ON ac.chart_id = c.id
+    LEFT JOIN business_unit_ac bac ON ac.entry_id = bac.entry_id 
+    LEFT JOIN bu_tree ON bac.bu_id = bu_tree.id
         WHERE (g.reference ilike in_reference || '%' or in_reference is null)
               AND (c.accno = in_accno OR in_accno IS NULL)
               AND (ac.source ilike '%' || in_source || '%' 
@@ -243,17 +255,17 @@ FOR retval IN
               AND (in_approved is false OR (g.approved AND ac.approved))
               AND (in_amount_from IS NULL OR ac.amount >= in_amount_from)
               AND (in_amount_to IS NULL OR ac_amount <= in_amount_to)
+              AND (in_category = c.category OR in_category IS NULL)
      GROUP BY g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
               ac.source, ac.amount, c.accno, c.gifi_accno,
               g.till, ac.cleared, ac.memo, c.description,
               ac.chart_id, ac.entry_id
-       HAVING in_business_units <@ as_array(bac.bu_id)
+       HAVING in_business_units 
+                <@ as_array(string_to_array(bu_tree.path, ',')::int[])
      ORDER BY ac.transdate, g.trans_id, c.accno
 LOOP
    RETURN NEXT retval;
 END LOOP;
-
-
 END;
 $$ language plpgsql;
 

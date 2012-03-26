@@ -19,6 +19,7 @@ our $VERSION = '1.0';
 
 use LedgerSMB;
 use LedgerSMB::Template;
+use LedgerSMB::DBObject::Report::GL;
 use strict;
 
 =pod
@@ -29,8 +30,6 @@ use strict;
 
 Get the search string, query the database, return the results in a ul/li
 pair easily queried by scriptaculous's autocompleter.
-
-=back
 
 =cut
 
@@ -57,6 +56,39 @@ sub __default {
     $request->{results} = \%results_hash;
     $template->render($request);
 }
+
+=item start_search
+
+Displays the search screen
+
+=cut
+
+sub start_search {
+    my ($request) = @_;
+    my $template = LedgerSMB::Template->new(
+        user => $request->{_user},
+        locale => $request->{_locale},
+        path => 'UI/journal',
+        template => 'search',
+        format => 'HTML'
+    );
+    $template->render($request);
+}
+
+=item search
+
+Runs a search and displays results.
+
+=cut
+
+sub search {
+    my ($request) = @_;
+    my $report = LedgerSMB::DBObject::Report::GL->new(%$request);
+    $report->run_report;
+    $report->render;
+}
+
+=back
 
 =head1 Copyright (C) 2007 The LedgerSMB Core Team
 

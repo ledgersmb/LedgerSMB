@@ -99,7 +99,7 @@ sub call_script {
 
     eval "require $script;"
       || $request->error($locale->text('Unable to open script') . 
-                          ": $script : $!"
+                          ": $script : $!: $@"
           );
     $script->can($request->{action}) 
       || $request->error($locale->text("Action Not Defined: ") . $request->{action});

@@ -121,7 +121,7 @@ This takes no arguments and simply renders the report as is.
 =cut
 
 sub render {
-    my ($self) = @_;
+    my ($self, $request) = @_;
     my $template;
     if ($template = eval {$self->{template}}){
        # what needs to be done here?  Maybe log it? 
@@ -131,13 +131,14 @@ sub render {
     if (!defined $self->format){
         $self->format('html');
     }
-    my $template = LedgerSMB::Template->new(
-        user => $LedgerSMB::App_State::User;
+    $template = LedgerSMB::Template->new(
+        user => $LedgerSMB::App_State::User,
         locale => $LedgerSMB::App_State::Locale,
         path => 'UI',
         template => $template,
         format => uc($self->format),
     );
+    $template->render({report => $self, request => $request});
 }
 
 =back
