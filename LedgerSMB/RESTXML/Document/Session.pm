@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-LedgerSMB::RESTXML::Document::Session
+LedgerSMB::RESTXML::Document::Session - Sets up an authentication session for iterativly accessing documents.
 
 =head1 SYNOPSIS
 

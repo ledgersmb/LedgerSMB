@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-LedgerSMB::File
+LedgerSMB::File - Provides routines for managing file attachments.
 
 =head1 SYNPSIS
 

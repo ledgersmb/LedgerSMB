@@ -2,11 +2,11 @@
 
 =head1 NAME
 
-LedgerSMB::File::Transaction
+LedgerSMB::File::Transaction - Manages attachments to financial transactions.
 
-=head1 SYNPSIS
+=head1 SYNOPSIS
 
-Manages attachments to financial trnasactions (in 1.3, AR, AP, and GL entries)
+Manages attachments to financial transactions (in 1.3, AR, AP, and GL entries)
 
 =head1 INHERITS
 

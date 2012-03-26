@@ -215,7 +215,7 @@ Requires form var: id
 
 Extracts a single company from the database, using its company ID as the primary
 point of uniqueness. Shows (appropriate to user privileges) and allows editing
-of the company informations.
+of the company information.
 
 =back
 
@@ -516,8 +516,6 @@ l_deliverydate:  invoice.deliverydate or orderitems.reqdate
 l_projectnumber: project.projectnumber
 l_serialnumber:  invoice/orderitems.serialnumber
 
-
-=item 
 
 =back
 

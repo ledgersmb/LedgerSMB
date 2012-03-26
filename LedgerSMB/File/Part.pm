@@ -2,9 +2,9 @@
 
 =head1 NAME
 
-LedgerSMB::File::Part
+LedgerSMB::File::Part - Manages attachments to goods and services.
 
-=head1 SYNPSIS
+=head1 SYNOPSIS
 
 Manages attachments to goods and services.
 

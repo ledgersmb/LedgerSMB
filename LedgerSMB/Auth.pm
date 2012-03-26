@@ -2,7 +2,8 @@
 
 =head1 NAME
 
-LedgerSMB::Auth.pm
+LedgerSMB::Auth.pm - Provides an abstraction layer for session management and
+authentication.
 
 =head1 SYNOPSIS
 

@@ -1,3 +1,10 @@
+
+=head1 NAME
+
+LedgerSMB::RESTXML::Handler - RESTful LSMB API
+
+=cut
+
 package LedgerSMB::RESTXML::Handler;
 use strict;
 use warnings;

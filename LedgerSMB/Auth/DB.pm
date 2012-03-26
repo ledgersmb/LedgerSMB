@@ -3,7 +3,7 @@
 
 =head1 NAME
 
-LedgerSMB::Auth.pm, Standard DB module.
+LedgerSMB::Auth::DB - Standard Authentication DB module.
 
 =head1 SYNOPSIS
 
