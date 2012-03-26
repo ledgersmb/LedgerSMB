@@ -21,9 +21,9 @@ $$ language plpgsql;
 
 
 CREATE OR REPLACE FUNCTION get_default_lang() RETURNS text AS
-$$ SELECT description FROM language 
+$$ SELECT coalesce((select description FROM language 
     WHERE code = (SELECT substring(value, 1, 2) FROM defaults
-                   WHERE setting_key = 'default_language');
+                   WHERE setting_key = 'default_language')), 'english');
 $$ LANGUAGE sql;
 
 CREATE OR REPLACE FUNCTION je_get_default_lines() returns varchar as
