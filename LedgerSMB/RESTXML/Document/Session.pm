@@ -5,8 +5,8 @@ LedgerSMB::RESTXML::Document::Session - Sets up an authentication session for it
 
 =head1 SYNOPSIS
 
-This sets up an authentication session for iterativly accessing documents in LedgerSMB.  A user should
-post a login document to /Session/userid, and upon success, they will recieve a cookie which they can use to further
+This sets up an authentication session for iteratively accessing documents in LedgerSMB.  A user should
+post a login document to /Session/userid, and upon success, they will receive a cookie which they can use to further
 access other resources.
 
 =cut
