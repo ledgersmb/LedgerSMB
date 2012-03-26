@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-AM
+LedgerSMB::AM - This module provides some administrative functions
 
 =head1 SYNOPSIS
 

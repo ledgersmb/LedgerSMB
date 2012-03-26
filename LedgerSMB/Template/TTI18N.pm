@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-LedgerSMB::Template::TTI18N  Template Toolkit i18n support functions
+LedgerSMB::Template::TTI18N - Template Toolkit i18n support functions
 
 =head1 SYNOPSIS
 

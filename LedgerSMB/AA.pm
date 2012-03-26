@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-LedgerSMB::AA
+LedgerSMB::AA - Contains the routines for managing AR and AP transactions.
 
 =head1 SYNPOSIS
 

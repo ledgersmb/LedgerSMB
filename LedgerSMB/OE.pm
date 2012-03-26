@@ -1,3 +1,9 @@
+=head1 NAME
+
+LedgerSMB::OE - Order Entry
+
+=cut
+
 #=====================================================================
 # LedgerSMB
 # Small Medium Business Accounting software

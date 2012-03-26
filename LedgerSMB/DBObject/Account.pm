@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Account: Base class for chart of accounts entries
+LedgerSMB::DBObject::Account - Base class for chart of accounts entries
 
 =head1 SYNOPSYS
 
@@ -134,7 +134,7 @@ sub is_recon {
 
 =item delete()
 
-Attemps to delete the account.  This will NOT succeed if the account is 
+Attempts to delete the account.  This will NOT succeed if the account is
 referenced in any way by any transactions, credit accounts, etc.
 
 $account->{id} must be set.

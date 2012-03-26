@@ -1,3 +1,9 @@
+=head1 NAME
+
+LedgerSMB::DBObject::User - LedgerSMB User DB Objects
+
+=cut
+
 package LedgerSMB::DBObject::User;
 
 use base qw/LedgerSMB::DBObject/;
@@ -10,6 +16,8 @@ use strict;
 
 Returns a hash where the keys are registered locales and the values are the
 textual representation of the locale name.
+
+=back
 
 =cut
 

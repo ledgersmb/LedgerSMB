@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-LedgerSMB::Payment:  Payment Handling Back-end Routines for LedgerSMB
+LedgerSMB::DBOject::Payment - Payment Handling Back-end Routines for LedgerSMB
 
 =head1 SYNOPSIS
 

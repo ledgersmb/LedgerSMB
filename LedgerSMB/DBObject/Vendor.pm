@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-LedgerSMB::DBObject::Vendor, LedgerSMB Class for Vendors
+LedgerSMB::DBObject::Vendor - LedgerSMB Class for Vendors
 
 =head1 SYNOPSIS
 

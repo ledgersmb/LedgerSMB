@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::DBObject::EOY: End of Year handling module
+LedgerSMB::DBObject::EOY - End of Year handling module
 
 =head1 SYNOPSYS
 

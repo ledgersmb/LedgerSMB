@@ -2,7 +2,7 @@ package LedgerSMB::DBObject::Admin;
 
 =head1 NAME
 
-LedgerSMB::DBObject::Admin 
+LedgerSMB::DBObject::Admin - User/group management for LedgerSMB
 
 =head1 SYNOPSIS
 

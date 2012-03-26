@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-LedgerSMB::DBObject::Customer, LedgerSMB Class for Customers
+LedgerSMB::DBObject::Customer - LedgerSMB Class for Customers
 
 =head1 SYNOPSIS
 

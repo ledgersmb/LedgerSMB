@@ -1,7 +1,7 @@
 # SLATED TO BE GREATLY REDUCED IN 1.4
 =head1 NAME
 
-PE
+LedgerSMB::PE - Support functions for projects, partsgroups, and parts
 
 =head1 SYNOPSIS
 

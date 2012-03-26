@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-LedgerSMB::User
+LedgerSMB::User - Provides user support and database management functions.
 
 =head1 SYNOPSIS
 

@@ -30,6 +30,9 @@ Contributed code fixes and support for advanced tax rules.  She has also
 re-engineered the localization framework.  She has also provided support for 
 Excel, ODS, and other formats for reports.
 
+Havard Sorli <havard @ anix no>
+Contributed documentation fixes, bug hunting, website updates and user support.
+
 Other Contributors:
 ========================
 David Bandel <david.bandel @ gmail.com> Provided some bug fixes and 
@@ -112,7 +115,8 @@ Steven Marshall <steven.marshall @ tatylee.com> Contributed a bug fix for the
 menu.
 
 Andres Basile < basile @ gmail.com > has contributed a number of bug fixes, as 
-well as Argentina chart of accounts and i18n files as well.
+well as Gnome.css, Argentina chart of accounts and i18n files as well.
+
 
 Original Authors of SQL-Ledger:
 ===================================

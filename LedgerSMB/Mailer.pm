@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Mailer   Mail output for LedgerSMB
+LedgerSMB::Mailer - Mail output for LedgerSMB
 
 =head1 SYNOPSIS
 

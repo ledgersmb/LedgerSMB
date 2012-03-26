@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Company.pm
+LedgerSMB::DBObject::Company - Base utility functions for processing customers and vendors.
 
 =head1 SYNOPSIS
 

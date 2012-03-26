@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-LedgerSMB::Template::ODS  Template support module for LedgerSMB
+LedgerSMB::Template::ODS - Template support module for LedgerSMB
 
 =head1 SYNOPSIS
 

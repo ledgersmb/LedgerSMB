@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Template::Elements:  Template Utility Functions
+LedgerSMB::Template::Elements - Template Utility Functions
 
 =head1 SYNOPSIS
 

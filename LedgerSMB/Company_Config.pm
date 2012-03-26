@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Company_Config    Company-specific Configuration for LedgerSMB
+LedgerSMB::Company_Config - Company-specific Configuration for LedgerSMB.
 
 =head1 SYNOPSIS
 
