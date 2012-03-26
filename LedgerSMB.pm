@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-LedgerSMB  The Base class for many LedgerSMB objects, including DBObject.
+LedgerSMB - The Base class for many LedgerSMB objects, including DBObject.
 
 =head1 SYNOPSIS
 

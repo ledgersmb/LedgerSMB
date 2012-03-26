@@ -2,9 +2,9 @@
 
 =head1 NAME
 
-LedgerSMB::File::Order
+LedgerSMB::File::Order - Manages attachments to orders.
 
-=head1 SYNPSIS
+=head1 SYNOPSIS
 
 Manages attachments to orders (sales orders, purchase orders, quotations and
 RFQ's).

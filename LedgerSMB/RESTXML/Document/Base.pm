@@ -1,3 +1,9 @@
+=head1 NAME
+
+LedgerSMB::RESTXML::Document::Base - Base XML:Twig structure function
+
+=cut
+
 package LedgerSMB::RESTXML::Document::Base;
 use strict;
 use warnings;

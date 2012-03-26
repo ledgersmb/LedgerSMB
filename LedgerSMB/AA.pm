@@ -4,7 +4,7 @@
 
 LedgerSMB::AA - Contains the routines for managing AR and AP transactions.
 
-=head1 SYNPOSIS
+=head1 SYNOPSIS
 
 This module contains the routines for managing AR and AP transactions and 
 many of the reorts (a few others are found in LedgerSMB::RP.pm).
