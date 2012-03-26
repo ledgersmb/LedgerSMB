@@ -13,7 +13,7 @@ Changelog for 1.3.14
 * Added recon data to COA files for a few extra locales (Chris T bug 3505102)
 * Clarified error message when contrib scripts not found (Chris T)
 * Corrected warnings for missin glog initalization (Andres B)
-* XAL and ODS buttons are now disabled if prereqs are missing (Erik H)
+* XLS and ODS buttons are now disabled if prereqs are missing (Erik H)
 * Experimental support for migrating from SQL-Ledger via Setup.pl (Chris T)
 * Fixed POD issues with lsmb-request.pl (h/t Robert C) (Chris T item 3472648)
 * Fixed means of adding parts/editing pricelist missing (Chris T, bug 3442163)
@@ -25,11 +25,13 @@ Changelog for 1.3.14
 * Added Gnome css (Andres B)
 * Update doc; UPGRADE & README.sql-ledger (h/t Chris T & Erik H) (H Sorli)
 * Change logo to "new" design - rename old logo (H Sorli, item 3435532)
+* POD corrections to correct for POD style guidelines (Robert C)
 
 Andres B is Andres Basile
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
 H Sorli is Havard Sorli
+Robert C is Robert James Clay
 
 Changelog for 1.3.13
 * Reduced log messages when upgrading/creating db, for some log levels (Chris T)
