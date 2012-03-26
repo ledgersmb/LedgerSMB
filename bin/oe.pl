@@ -464,8 +464,7 @@ sub form_header {
           . qq|</td>
 		    </tr>|;
 		if ($form->{entity_control_code}){
-                    $form->hide_form(qw(entity_control_code meta_number));
-			print qq|
+			$creditremaining .= qq|
 	        <tr>
 		<th align="right" nowrap>| . 
 			$locale->text('Entity Code') . qq|</th>
@@ -476,7 +475,7 @@ sub form_header {
 	      </tr>
 		|;
 	       }
-	print qq|
+	$creditremaining .= qq|
 		  </table>
 		</td>
 	      </tr>
@@ -588,6 +587,7 @@ sub form_header {
     if ($form->{notice}){
          print qq|$form->{notice}<br/>|;
     }
+    $form->hide_form(qw(entity_control_code meta_number));
     $form->hide_form(
         qw(id type formname media format printed emailed queued vc title discount creditlimit creditremaining tradediscount business recurring form_id)
     );
