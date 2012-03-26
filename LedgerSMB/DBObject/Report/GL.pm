@@ -160,7 +160,7 @@ our @COLUMNS = (
 );
 
 sub columns {
-    return @COLUMNS;
+    return \@COLUMNS;
 }
 
     # TODO:  business_units int[]

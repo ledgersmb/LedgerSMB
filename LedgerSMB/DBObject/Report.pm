@@ -136,9 +136,10 @@ sub render {
         locale => $LedgerSMB::App_State::Locale,
         path => 'UI',
         template => $template,
-        format => uc($self->format),
+        format => uc($request->{format} || 'HTML'),
     );
-    $template->render({report => $self, request => $request});
+    $template->render({report => $self, request => $request,
+                       columns => $self->columns, rows => $self->rows});
 }
 
 =back

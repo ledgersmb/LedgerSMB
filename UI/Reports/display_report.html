@@ -1,0 +1,23 @@
+<?lsmb
+
+PROCESS "ui-header.html"
+   stylesheet = request.stylesheet;
+
+PROCESS "elements.html";
+
+PROCESS "dynatable.html";
+
+LINK = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME 
+           _ '?' _ ENVARS.QUERY_STRING _ '&company=' _ form.company;
+
+?>
+<body>
+<?lsmb PROCESS dynatable ?>
+
+<a href="<?lsmb LINK ?>">[<?lsmb text('permalink') ?>]</a>&nbsp;
+<a href="<?lsmb LINK _ '&format=PDF' ?>">[<?lsmb text('PDF') ?>]</a>&nbsp;
+<a href="<?lsmb LINK _ '&format=CSV' ?>">[<?lsmb text('CSV') ?>]</a>&nbsp;
+<a href="<?lsmb LINK _ '&format=XLS' ?>">[<?lsmb text('XLS') ?>]</a>&nbsp;
+<a href="<?lsmb LINK _ '&format=ODS' ?>">[<?lsmb text('ODS') ?>]</a>&nbsp;
+</body>
+<?lsmb PROCESS end_html ?>
