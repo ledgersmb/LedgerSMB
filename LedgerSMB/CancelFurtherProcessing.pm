@@ -2,12 +2,11 @@ package CancelFurtherProcessing;
 
 =head1 NAME
 
-CancelFurtherProcessing
+CancelFurtherProcessing - A simple wrapper around Error.pm for error trapping.
 
 =head1 SYNOPSIS
 
 A simple wrapper around Error.pm for error trapping.
-
 
 =head1 Copyright (C) 2011 The LedgerSMB Core Team
 

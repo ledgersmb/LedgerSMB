@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 =head1 NAME
 
-LedgerSMB::Database
+LedgerSMB::Database - Provides the APIs for database creation and management.
 
 =head1 SYNOPSIS
 

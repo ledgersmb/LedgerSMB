@@ -6,11 +6,11 @@ LedgerSMB::Log - LedgerSMB logging and debugging framework
 =head1 SYOPSIS
 
 This module maintains a connection to the LedgerSMB log file 
-(Seperate from the apche error log, for now)
+(Separate from the apache error log, for now)
 
 =head1 METHODS
 
-This module is loosly based on Apache::Log.
+This module is loosely based on Apache::Log.
 
 Available methods: (in order, most to least severe)
 

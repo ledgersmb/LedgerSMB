@@ -1,3 +1,8 @@
+=head1 NAME
+
+LedgerSMB::IS - Inventory Invoicing
+
+=cut
 #====================================================================
 # LedgerSMB
 # Small Medium Business Accounting software

@@ -1,7 +1,9 @@
 =head1 NAME
-LedgerSMB::Batch
+
+LedgerSMB::Batch - Batch/voucher management model for LedgerSMB 1.3
 
 =head1 SYNOPSIS
+
 Batch/voucher management model for LedgerSMB 1.3
 
 =head1 METHODS

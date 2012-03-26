@@ -1,3 +1,9 @@
+=head1 NAME
+
+LedgerSMB::IR - Inventory received module
+
+=cut
+
 #=====================================================================
 # LedgerSMB
 # Small Medium Business Accounting software

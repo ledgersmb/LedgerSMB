@@ -1,7 +1,7 @@
 
 =head1 NAME
 
-Form
+LedgerSMB::Form - Provides general legacy support functions and the central object.
 
 =head1 SYNOPSIS
 
