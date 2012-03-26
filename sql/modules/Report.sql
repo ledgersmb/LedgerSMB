@@ -208,11 +208,11 @@ FOR retval IN
        WITH RECURSIVE bu_tree (id, path) AS (
             SELECT id, id::text AS path
               FROM business_unit
-             WHERE parent is null
+             WHERE parent_id is null
             UNION
-            SELECT id, bu_tree.path || , || id
-              FROM business_unit
-              JOIN bu_tree ON bu_tree.id = business_unit.parent
+            SELECT bu.id, bu_tree.path || ',' || bu.id
+              FROM business_unit bu
+              JOIN bu_tree ON bu_tree.id = bu.parent_id
             )
        SELECT g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
               ac.source, ac.amount, c.accno, c.gifi_accno, 
@@ -221,17 +221,19 @@ FOR retval IN
               sum(ac.amount) over (rows unbounded preceding) + t_balance 
                 as running_balance,
               compound_array(ARRAY[ARRAY[bac.class_id, bac.bu_id]])
-         FROM (select id, 'gl', false, reference, description, 
+         FROM (select id, 'gl' as type, false as invoice, reference, 
+                      description, approved,
                       null::text as till 
                  FROM gl
                UNION
-               SELECT id, 'ar', invoice, invnumber, e.name, till
+               SELECT ar.id, 'ar', invoice, invnumber, e.name, approved, till
                  FROM ar
                  JOIN entity_credit_account eca ON ar.entity_credit_account
                       = eca.id
                  JOIN entity e ON e.id = eca.entity_id
                UNION
-               SELECT id, 'ap', invoice, invnumber, e.name, null as till
+               SELECT ap.id, 'ap', invoice, invnumber, e.name, approved,
+                      null as till
                  FROM ap
                  JOIN entity_credit_account eca ON ap.entity_credit_account 
                       = eca.id
@@ -254,15 +256,15 @@ FOR retval IN
                    OR (transdate <= in_date_to AND in_date_from IS NULL))
               AND (in_approved is false OR (g.approved AND ac.approved))
               AND (in_amount_from IS NULL OR ac.amount >= in_amount_from)
-              AND (in_amount_to IS NULL OR ac_amount <= in_amount_to)
+              AND (in_amount_to IS NULL OR ac.amount <= in_amount_to)
               AND (in_category = c.category OR in_category IS NULL)
      GROUP BY g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
               ac.source, ac.amount, c.accno, c.gifi_accno,
               g.till, ac.cleared, ac.memo, c.description,
-              ac.chart_id, ac.entry_id
+              ac.chart_id, ac.entry_id, ac.trans_id
        HAVING in_business_units 
-                <@ as_array(string_to_array(bu_tree.path, ',')::int[])
-     ORDER BY ac.transdate, g.trans_id, c.accno
+                <@ compound_array(string_to_array(bu_tree.path, ',')::int[])
+     ORDER BY ac.transdate, ac.trans_id, c.accno
 LOOP
    RETURN NEXT retval;
 END LOOP;
