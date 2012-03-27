@@ -1,3 +1,10 @@
+
+=head1 NAME
+
+LedgerSMB::IC - Inventory Control backend
+
+=cut
+
 #=====================================================================
 # LedgerSMB
 # Small Medium Business Accounting software
@@ -46,6 +53,8 @@ Returns a list of files associated with the existing transaction.  This is
 provisional, and wil change for 1.4 as the GL transaction functionality is 
                   {ref_key => $self->{id}, file_class => 1}
 rewritten
+
+=back
 
 =cut
 
