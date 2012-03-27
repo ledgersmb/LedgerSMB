@@ -144,13 +144,13 @@ our @COLUMNS = (
        type => 'text',
      pwidth => '3', },
 
-    {col_id => 'gifi_accno',
-       name => $locale->text('GIFI'),
+    {col_id => 'accname',
+       name => $locale->text('Account Name'),
        type => 'text',
      pwidth => '3', },
 
-    {col_id => 'accname',
-       name => $locale->text('Account Name'),
+    {col_id => 'gifi_accno',
+       name => $locale->text('GIFI'),
        type => 'text',
      pwidth => '3', },
 
@@ -365,6 +365,11 @@ sub run_report{
                 $ref->{reference_href_suffix} = 'ap.pl';
            }
            $ref->{reference_href_suffix} .= "?action=edit&id=$ref->{id}";
+        }
+        if ($ref->{cleared}){
+            $ref->{cleared} = 'X';
+        } else {
+            $ref->{cleared} = '';
         }
     }
     $self->rows(\@rows);
