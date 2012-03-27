@@ -120,6 +120,7 @@ The input is formatted.
 sub from_input {
     my $self   = shift @_;
     my $string = shift @_;
+    return undef if !defined $string;
     my $negate;
     my $pgnum;
     my $newval;
@@ -213,6 +214,7 @@ sub to_output {
 
 sub from_db {
     my ($self, $string) = @_;
+    return undef if !defined $string;
     return $self->new($string);
 }
 

@@ -176,6 +176,35 @@ sub filter_template {
     return 'journal/search';
 }
 
+=item name
+
+Returns the localized template name
+
+=cut
+
+sub name {
+    return $locale->text('General Ledger Report');
+}
+
+=item header_lines
+
+Returns the inputs to display on header.
+
+=cut
+
+sub header_lines {
+    return [{name => 'date_from',
+             text => $locale->text('Start Date')},
+            {name => 'date_to',
+             text => $locale->text('End Date')},
+            {name => 'accno',
+             text => $locale->text('Account Number')},
+            {name => 'reference',
+             text => $locale->text('Reference')},
+            {name => 'source',
+             text => $locale->text('Source')}];
+}
+
 =head2 Criteria Properties
 
 Note that in all cases, undef matches everything.
@@ -300,6 +329,7 @@ sub prepare_criteria{
     $request->{amount_to} = LedgerSMB::PGNumber->from_input(
                                $request->{amount_to}
     );
+    $request->{accno} =~ s/--.*$//;
 }
 
 =item run_report()

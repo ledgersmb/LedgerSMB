@@ -57,6 +57,23 @@ th.login {
   text-align: right;
 }
 
+table.report {
+   width: 100%
+}
+
+div.report_header {
+   overflow: auto;
+}
+
+div.report_header label {
+   display: block;
+   float: left;
+   width: 12em;
+   font-weight: bold;
+   text-align: right;
+   margin-right: 1em;
+}
+
 body.admin {
   background-color: #FFFFFF;
   color: black;

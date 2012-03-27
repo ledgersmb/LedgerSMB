@@ -152,6 +152,7 @@ sub _parse_string {
 
 sub from_input{
     my ($self, $input, $has_time) = @_;
+    return undef if !defined $input;
     my $format = $LedgerSMB::App_State::User->{dateformat};
     my $dt =  _parse_string($self, $input, uc($format), $has_time);
     return $self->new({date => $dt});
@@ -193,6 +194,7 @@ The $date is the date or datetime value from the db. The type is either 'date',
 sub from_db {
     use Carp;
     my ($self, $input, $type) = @_;
+    return undef if !defined $input;
     my $format = 'YYYY-MM-DD';
     my $has_time;
     if ((lc($type) eq 'datetime') or (lc($type) eq 'timestamp')) {

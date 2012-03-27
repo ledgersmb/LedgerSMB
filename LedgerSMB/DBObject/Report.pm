@@ -138,8 +138,12 @@ sub render {
         template => $template,
         format => uc($request->{format} || 'HTML'),
     );
-    $template->render({report => $self, request => $request,
-                       columns => $self->show_cols($request), rows => $self->rows});
+    $template->render({report => $self, 
+                      request => $request,
+                         name => $self->name,
+                       hlines => $self->header_lines,
+                      columns => $self->show_cols($request), 
+                         rows => $self->rows});
 }
 
 =item show_cols 

@@ -84,6 +84,7 @@ Runs a search and displays results.
 sub search {
     my ($request) = @_;
     delete $request->{category} if ($request->{category} = 'X');
+    LedgerSMB::DBObject::Report::GL->prepare_criteria($request);
     my $report = LedgerSMB::DBObject::Report::GL->new(%$request);
     $report->run_report;
     $report->render($request);

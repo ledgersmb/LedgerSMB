@@ -12,7 +12,20 @@ LINK = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME
 
 ?>
 <body>
-<?lsmb PROCESS dynatable tbody = {rows => rows } ?>
+<div class="report_header"><label><?lsmb text('Report Name') ?>:</label>
+<span class="report_header"><?lsmb name ?></span>
+</div>
+<body>
+<div class="report_header"><label><?lsmb text('Company') ?>:</label>
+<span class="report_header"><?lsmb request.company ?></span>
+</div>
+<?lsmb FOREACH LINE IN hlines ?>
+<div class="report_header"><label><?lsmb LINE.text ?>:</label>
+<span class="report_header"><?lsmb request.${LINE.name} ?></span>
+</div>
+<?lsmb END ?>
+<?lsmb PROCESS dynatable tbody = {rows => rows } 
+               attributes = {class = 'report' } ?>
 
 <a href="<?lsmb LINK ?>">[<?lsmb text('permalink') ?>]</a>&nbsp;
 <a href="<?lsmb LINK _ '&format=PDF' ?>">[<?lsmb text('PDF') ?>]</a>&nbsp;
