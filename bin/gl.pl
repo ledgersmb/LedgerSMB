@@ -452,51 +452,6 @@ $hiddens{pos_adjust}=$form->{pos_adjust};
 
 }
 
-
-
-
-sub search {
-
-    $form->{title} = $locale->text('General Ledger Reports');
-
-    $colspan = 5;
-
-    #$form->all_departments( \%myconfig );
-
-    # departments
-    if ( @{ $form->{all_department} } ) {
-        unshift @{ $form->{all_department} }, {id => "", description => ""};
-    }
-
-    @{$form->{all_accounts}} = $form->all_accounts;
-    unshift @{$form->{all_accounts}}, {id => "", accno => ""};
-
-    if ( @{ $form->{all_years} } ) {
-        # accounting years
-        for ( @{ $form->{all_years} } ) {
-             $_ = {year => $_};
-        }
-        unshift @{ $form->{all_years} }, {};
-        $form->{accountingmonths} = [];
-        for ( sort keys %{ $form->{all_month} } ) {
-            push @{$form->{accountingmonths}}, 
-                {id     => $_,
-                 month  => $locale->text( $form->{all_month}{$_} )};
-        }
-
-    }
-    
-    my $template = LedgerSMB::Template->new(
-        user => \%myconfig,
-        locale => $locale,
-        path => 'UI/journal',
-        template => 'search',
-        format => 'HTML',
-        );
-    $template->render($form);
-    
-}
-
 sub edit {
 
     &create_links;
