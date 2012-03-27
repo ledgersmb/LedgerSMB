@@ -22,6 +22,9 @@ our $cols = {
    gl       =>  ['accno', 'debit', 'credit', 'source', 'memo'],
    ap_multi =>  ['vendor', 'amount', 'account', 'ap', 'description', 
                  'invnumber', 'transdate'],
+   timecard =>  ['employee', 'projectnumber', 'transdate', 'partnumber',
+                 'description', 'qty', 'noncharge', 'sellprice', 'allocated',
+                'notes'],
 };
 our $preprocess = {};
 our $postprocess = {};
@@ -175,6 +178,20 @@ our $process = {
                     || die $sth->errstr();
                }
                $dbh->commit;
+             },
+ timecard => sub {
+               use LedgerSMB::JC;
+               my ($request, $entries) = @_;
+               my $myconfig = {};
+               for my $entry (@$entries) {
+                   my $jc = {dbh => $request->{dbh}};
+                   my $counter = 0;
+                   for my $col (@{$cols->{timecard}}){
+                       $jc->{$col} = $entry->[$counter];
+                       ++$counter;
+                   }
+                   LedgerSMB::JC->save($myconfig, $jc);
+               }
              },
 };
 
