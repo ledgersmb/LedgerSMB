@@ -1014,7 +1014,7 @@ sub pricelist {
                 user => $request->{_user},
                 path => 'UI/Contact' ,
                 template => 'pricelist',
-                format => 'HTML',
+                format => uc($request->{format} || 'HTML'),
                 locale => $company->{_locale},
     );
 
