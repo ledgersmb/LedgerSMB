@@ -320,7 +320,7 @@ sub output {
 	} elsif (defined $self->{output} or lc $method eq 'screen') {
 		$self->_http_output;
 		throw CancelFurtherProcessing();
-	} elsif (defined $method) {
+	} elsif (defined $method and $method ne '' ) {
 		$self->_lpr_output;
 	} else {
 		$self->_http_output_file;
