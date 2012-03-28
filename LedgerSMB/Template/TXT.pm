@@ -111,7 +111,7 @@ sub process {
 }
 
 sub postprocess {
-    my ($self, $parent) = shift;
+    my ($parent) = shift;
     if (!$parent->{rendered}){
         return $parent->{template} . '.' get_extension($parent); 
     }
