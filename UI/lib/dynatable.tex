@@ -26,18 +26,28 @@ FOREACH COL IN columns;
    ELSIF COL.palign;
         COL.palign;
    ELSE;
-        'r';
+        'l';
    END;
    IF COL.psep_after;
       '|';
    END;
 END; 
 -?>}
-<?lsmb- IF firsthead; firsthead ?>\\
-\endfirsthead
+<?lsmb IF firsthead; firsthead ?>\\
 <?lsmb- END ?>
 <?lsmb IF head; head ?>\\<?lsmb- END ?>
 <?lsmb- -?>
+<?lsmb 
+SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
+
+FOREACH COL IN columns;
+    IF 0 == SKIP_TYPES.grep(COL.type).size();
+        COL.name _ ' & ';
+    END;
+END;
+-?>\\
+\hline\hline
+\endfirsthead
 <?lsmb 
 SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
 

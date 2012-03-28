@@ -1,4 +1,4 @@
-<?lsmb  FILTER latex ?>
+<?lsmb   FILTER latex ?>
 \documentclass[a4paper]{article}
 \usepackage{longtable}
 \usepackage[margin=1cm]{geometry}
@@ -53,11 +53,13 @@
       PROCESS dynatable
     attributes = { id = 'pricematrix' }
          tbody = { rows = pricematrix }
+    firsthead = '\multicolumn{4}{l}{' _ text('Pricelist for [_1]', name)
+                  _ '}';
 
-   #IF pricematrix_pricegroup.size() > 0 ;
-   #  PROCESS dynatable
-   #      tbody = { rows = pricematrix_pricegroup };
-   #END;
+   IF pricematrix_pricegroup.size() > 0 ;
+     PROCESS dynatable
+         tbody = { rows = pricematrix_pricegroup };
+   END;
 -?>
 \end{document}
 <?lsmb  END ?>
