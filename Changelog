@@ -7,7 +7,7 @@ Changelog for 1.3.15
 * Corrected build issues w/Makefile due to inclusion of LedgerSMB.pm (Chris T)
 * ledgersmb.conf.default : Update default PATH (H Sorli, item 3430019)
 * Fixed imballanced payments when early payment discount processed (Chris T)
-* Pricelists exportable as PDF (Chris T)
+* Pricelists exportable as PDF and CSV (Chris T)
 
 Chris B is Chris Bennet
 Chris T is Chris Travers

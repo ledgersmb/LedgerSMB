@@ -298,7 +298,11 @@ sub render {
 sub escape {
     my ($self, $vars) = @_;
     my $format = "LedgerSMB::Template::$self->{format}";
-    return $format->can('escape')->($vars) || $vars;
+    if ($format->can('escape')){
+         return $format->can('escape')->($vars);
+    } else {
+         return $vars;
+    }
 } 
 
 sub output {
@@ -344,8 +348,7 @@ sub _http_output {
 
 	my $format = "LedgerSMB::Template::$self->{format}";
 	my $disposition = "";
-	my $name = $format->can('postprocess')->($self);
-
+	my $name = $format->can('postprocess')->($self) || $self->{rendered};
 	if ($name) {
 		$name =~ s#^.*/##;
 		$disposition .= qq|\nContent-Disposition: attachment; filename="$name"|;

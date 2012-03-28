@@ -124,8 +124,11 @@ sub process {
 }
 
 sub postprocess {
-	my $parent = shift;
+	my ($parent, ) = @_;
 	$parent->{rendered} = "$parent->{outputfile}.csv" if $parent->{outputfile};
+        if (!$parent->{rendered}){
+            return "$parent->{template}.csv";
+        }
 	return $parent->{rendered};
 }
 
