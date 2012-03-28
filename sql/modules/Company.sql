@@ -475,6 +475,7 @@ CREATE TYPE entity_credit_retrieve AS (
         enddate date,
         ar_ap_account_id int,
         cash_account_id int,
+        discount_account_id int,
         threshold numeric,
 	control_code text,
 	credit_id int,
@@ -520,6 +521,7 @@ BEGIN
 			ec.language_code, 
 			ec.pricegroup_id, ec.curr, ec.startdate, 
 			ec.enddate, ec.ar_ap_account_id, ec.cash_account_id, 
+                        ec.discount_account_id,
 			ec.threshold, e.control_code, ec.id, ec.pay_to_name,
                         ec.taxform_id
 		FROM company c
@@ -708,6 +710,20 @@ DROP FUNCTION IF EXISTS entity_credit_save (
     in_pay_to_name text,
     in_taxform_id int);
 
+DROP FUNCTION IF EXISTS entity_credit_save (
+    in_credit_id int, in_entity_class int,
+    in_entity_id int, in_description text,
+    in_discount numeric, in_taxincluded bool, in_creditlimit numeric, 
+    in_discount_terms int,
+    in_terms int, in_meta_number varchar(32), in_business_id int, 
+    in_language_code varchar(6), in_pricegroup_id int, 
+    in_curr char, in_startdate date, in_enddate date, 
+    in_threshold NUMERIC,
+    in_ar_ap_account_id int,
+    in_cash_account_id int,
+    in_pay_to_name text,
+    in_taxform_id int);
+
 CREATE OR REPLACE FUNCTION entity_credit_save (
     in_credit_id int, in_entity_class int,
     in_entity_id int, in_description text,
@@ -720,8 +736,8 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
     in_ar_ap_account_id int,
     in_cash_account_id int,
     in_pay_to_name text,
-    in_taxform_id int
-    
+    in_taxform_id int,
+    in_discount_account_id int
 ) returns INT as $$
     
     DECLARE
@@ -749,6 +765,7 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 terms = in_terms,
                 ar_ap_account_id = in_ar_ap_account_id,
                 cash_account_id = in_cash_account_id,
+                discount_account_id = in_discount_account_id,
                 meta_number = t_meta_number,
                 business_id = in_business_id,
                 language_code = in_language_code,
@@ -785,8 +802,8 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
 		ar_ap_account_id,
                 pay_to_name,
                 taxform_id,
-                cash_account_id
-
+                cash_account_id,
+                discount_account_id
             )
             VALUES (
                 in_entity_id,
@@ -808,7 +825,8 @@ CREATE OR REPLACE FUNCTION entity_credit_save (
                 in_ar_ap_account_id,
                 in_pay_to_name,
                 in_taxform_id,
-		in_cash_account_id
+		in_cash_account_id,
+                in_discount_account_id
             );
             RETURN currval('entity_credit_account_id_seq');
        END IF;
@@ -829,8 +847,8 @@ COMMENT ON  FUNCTION entity_credit_save (
     in_ar_ap_account_id int,
     in_cash_account_id int,
     in_pay_to_name text,
-    in_taxform_id int
-
+    in_taxform_id int,
+    in_discount_account_id int
 ) IS
 $$ Saves an entity credit account.  Returns the id of the record saved.  $$;
 
