@@ -65,6 +65,42 @@ $$ language sql;
 COMMENT ON FUNCTION months_passed (in_start timestamp, in_end timestamp) IS
 $$ Returns the number of months between in_start and in_end.$$;
 
+CREATE OR REPLACE FUNCTION asset_dep_straight_line_yr_d
+(in_asset_ids int[],  in_report_date date, in_report_id int)
+RETURNS bool AS
+$$
+     INSERT INTO asset_report_line (asset_id, report_id, amount, department_id, 
+                                   warehouse_id)
+     SELECT ai.id, $3, 
+            asset_dep__straight_line_base(
+                  ai.usable_life, -- years
+                  ai.usable_life - 
+                  get_fractional_year(coalesce(max(report_date),
+                                         start_depreciation,
+                                         purchase_date),
+                                       coalesce(start_depreciation,
+                                         purchase_date)),
+                  get_fractional_year(coalesce(max(report_date),
+                                         start_depreciation,
+                                         purchase_date),
+                                $2),
+                  purchase_value - salvage_value,
+                  coalesce(sum(l.amount), 0)), 
+            ai.department_id, ai.location_id
+       FROM asset_item ai
+  LEFT JOIN asset_report_line l ON (l.asset_id = ai.id)
+  LEFT JOIN asset_report r ON (l.report_id = r.id)
+      WHERE ai.id = ANY($1) 
+   GROUP BY ai.id, ai.start_depreciation, ai.purchase_date, ai.purchase_value,
+            ai.salvage_value, ai.department_id, ai.location_id, ai.usable_life;
+                                                      
+    UPDATE asset_report SET report_class = 1 WHERE id = $3;
+
+    select true;
+$$ language sql;
+     
+
+
 CREATE OR REPLACE FUNCTION asset_dep_straight_line_yr_m
 (in_asset_ids int[],  in_report_date date, in_report_id int)
 RETURNS bool AS
