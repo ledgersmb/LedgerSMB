@@ -491,6 +491,7 @@ CREATE TYPE entity_credit_retrieve AS (
         enddate date,
         ar_ap_account_id int,
         cash_account_id int,
+        discount_account_id int,
         threshold numeric,
 	control_code text,
 	credit_id int,
@@ -536,6 +537,7 @@ BEGIN
 			ec.language_code, 
 			ec.pricegroup_id, ec.curr, ec.startdate, 
 			ec.enddate, ec.ar_ap_account_id, ec.cash_account_id, 
+                        ec.discount_account_id,
 			ec.threshold, e.control_code, ec.id, ec.pay_to_name,
                         ec.taxform_id
 		FROM company c
@@ -769,8 +771,8 @@ CREATE OR REPLACE FUNCTION eca__save (
     in_ar_ap_account_id int,
     in_cash_account_id int,
     in_pay_to_name text,
-    in_taxform_id int
-    
+    in_taxform_id int,
+    in_discount_account_id int
 ) returns INT as $$
     
     DECLARE
@@ -798,6 +800,7 @@ CREATE OR REPLACE FUNCTION eca__save (
                 terms = in_terms,
                 ar_ap_account_id = in_ar_ap_account_id,
                 cash_account_id = in_cash_account_id,
+                discount_account_id = in_discount_account_id,
                 meta_number = t_meta_number,
                 business_id = in_business_id,
                 language_code = in_language_code,
@@ -834,8 +837,8 @@ CREATE OR REPLACE FUNCTION eca__save (
 		ar_ap_account_id,
                 pay_to_name,
                 taxform_id,
-                cash_account_id
-
+                cash_account_id,
+                discount_account_id
             )
             VALUES (
                 in_entity_id,
@@ -857,7 +860,8 @@ CREATE OR REPLACE FUNCTION eca__save (
                 in_ar_ap_account_id,
                 in_pay_to_name,
                 in_taxform_id,
-		in_cash_account_id
+		in_cash_account_id,
+                in_discount_account_id
             );
             RETURN currval('entity_credit_account_id_seq');
        END IF;
@@ -878,8 +882,8 @@ COMMENT ON  FUNCTION eca__save (
     in_ar_ap_account_id int,
     in_cash_account_id int,
     in_pay_to_name text,
-    in_taxform_id int
-
+    in_taxform_id int,
+    in_discount_account_id int
 ) IS
 $$ Saves an entity credit account.  Returns the id of the record saved.  $$;
 
