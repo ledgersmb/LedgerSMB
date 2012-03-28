@@ -111,7 +111,10 @@ sub process {
 }
 
 sub postprocess {
-    my $parent = shift;
+    my ($parent) = shift;
+    if (!$parent->{rendered}){
+        return $parent->{template} . '.' get_extension($parent); 
+    }
     $parent->{rendered} = "$parent->{outputfile}.". get_extension($parent) if $parent->{outputfile};
     return $parent->{rendered};
 }

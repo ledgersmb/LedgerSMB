@@ -67,7 +67,8 @@ checking a price deal for a customer.
      END ?>
 <form name="pricematrix" action="<?lsmb script ?>" method="post">
  <input type="hidden" name="entity_class"  value="<?lsmb account_class ?>" />
- <input type="hidden" name="credit_id" value="<?lsmb credit_id ?>" /><?lsmb
+ <input type="hidden" name="credit_id" value="<?lsmb credit_id ?>" />
+ <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>" /><?lsmb
       PROCESS dynatable
     attributes = { id = 'pricematrix' }
          tbody = { rows = pricematrix }
@@ -83,6 +84,9 @@ checking a price deal for a customer.
 } ?> <a href="customer.pl?action=pricelist&format=PDF&credit_id=<?lsmb 
              credit_id ?>&entity_id=<?lsmb entity_id 
      ?>">[<?lsmb text('PDF') ?>]</a>
+ <a href="customer.pl?action=pricelist&format=CSV&credit_id=<?lsmb 
+             credit_id ?>&entity_id=<?lsmb entity_id 
+     ?>">[<?lsmb text('CSV') ?>]</a>
 <?lsmb IF pricematrix_pricegroup;
      PROCESS dynatable
          tbody = { rows = pricematrix_pricegroup };
