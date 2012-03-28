@@ -80,7 +80,9 @@ checking a price deal for a customer.
     name = "action"
     text = text('Save')
    value = "save_pricelist"
-} ?>
+} ?> <a href="customer.pl?action=pricelist&format=PDF&credit_id=<?lsmb 
+             credit_id ?>&entity_id=<?lsmb entity_id 
+     ?>">[<?lsmb text('PDF') ?>]</a>
 <?lsmb IF pricematrix_pricegroup;
      PROCESS dynatable
          tbody = { rows = pricematrix_pricegroup };
