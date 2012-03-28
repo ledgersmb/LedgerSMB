@@ -636,6 +636,9 @@ DECLARE current_exchangerate numeric;
 DECLARE old_exchangerate numeric;
 DECLARE fx_gain_loss_amount numeric;
 BEGIN
+      IF array_upper(in_amount, 1) <> array_upper(in_cash_account_id, 1) THEN
+          RAISE EXCEPTION 'Wrong number of accounts';
+      END IF;
         
         SELECT * INTO default_currency  FROM defaults_get_defaultcurrency(); 
         SELECT * INTO current_exchangerate FROM currency_get_exchangerate(in_curr, in_datepaid, in_account_class);
