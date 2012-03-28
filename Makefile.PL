@@ -2,11 +2,10 @@
 
 use strict;
 use warnings;
-use LedgerSMB;
 use inc::Module::Install 0.65;
 
 name 'LedgerSMB';
-version $LedgerSMB::VERSION;
+version 1.3.15;
 license 'GPL';
 
 perl_version '5.8.1';
