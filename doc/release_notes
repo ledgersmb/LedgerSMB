@@ -125,23 +125,7 @@ unless you are able to reverse on the same day.  If reversed on different days t
 gain/loss will be realized per the time when the payment was in effect and 
 not reversed.
 
-3.3:  Early Payment Discounts not properly handled
-
-Two issues with LedgerSMB 1.3.x were discovered during the LedgerSMB 1.3.14
-release candidate process.  These are expected to be fixed in 1.3.15, but until
-then this feature should not be used.  Due to the severity and obviousness of 
-these issues, it is not believed that anyone is using these features now, and 
-these features are not present in 1.2.x.
-
-The first is that the account mappings to early payment discounts are not
-properly saved.  This means that the accounting software cannot find the
-appropriate accounts to store discounts in.  It isn't clear yet whether the fact
-that early payment discounts are also listing as unbalanced transactions is due
-to this or something else.
-
-Please don't use this feature until 1.3.15.
-
-3.4:  Missing Annual Daily Straight Line Stored Procedure
+3.3:  Missing Annual Daily Straight Line Stored Procedure
 
 Apparently the stored procedure for handling asset depreciation where the annual
 daily straight line method is selected is missing.  More typically, the annual

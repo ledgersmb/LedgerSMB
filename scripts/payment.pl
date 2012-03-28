@@ -1265,6 +1265,8 @@ my @op_account_id;
 #
 # Ok, we want to use the disccount information in order to do some accounting movements,
 # we will process it with the same logic for a regular payment, and see where does this leave us.
+#
+$Payment->{vc_name} = $Payment->{company_name};
 @array_options = $Payment->get_entity_credit_account();# We need to know the disccount account
 my $discount_account_id = $array_options[0]->{discount};
 @array_options = $Payment->get_open_invoices(); 
