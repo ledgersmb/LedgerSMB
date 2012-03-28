@@ -329,13 +329,13 @@ BEGIN
 		              a.id::text, a.invnumber, a.transdate::text, 
 		              a.amount::text, (a.amount - p.due)::text,
 		              (CASE WHEN c.discount_terms 
-		                        > extract('days' FROM age(a.transdate))
+		                        < extract('days' FROM age(a.transdate))
 		                   THEN 0
-		                   ELSE (a.amount - coalesce((a.amount - p.due), 0)) * coalesce(c.discount, 0) / 100
+		                   ELSE (coalesce(p.due, 0) * coalesce(c.discount, 0) / 100)
 		              END)::text, 
 		              (coalesce(p.due, 0) -
 		              (CASE WHEN c.discount_terms 
-		                        > extract('days' FROM age(a.transdate))
+		                        < extract('days' FROM age(a.transdate))
 		                   THEN 0
 		                   ELSE (coalesce(p.due, 0)) * coalesce(c.discount, 0) / 100
 		              END))::text,
@@ -558,6 +558,47 @@ BEGIN
                        ELSE false END,
                   t_voucher_id, in_payment_date, in_source
              FROM bulk_payments_in  where amount <> 0;
+
+        -- early payment discounts
+        INSERT INTO acc_trans
+               (trans_id, chart_id, amount, approved,
+               voucher_id, transdate, source)
+        SELECT bpi.id, eca.discount_account_id, 
+               amount * t_cash_sign * t_exchangerate/fxrate 
+               / (1 - discount::numeric/100) 
+               * (discount::numeric/100),
+               CASE WHEN t_voucher_id IS NULL THEN true
+                       ELSE false END,
+               t_voucher_id, in_payment_date, in_source
+          FROM bulk_payments_in bpi
+          JOIN (select entity_credit_account, id, transdate FROM ar 
+                 WHERE in_account_class = 2
+                 UNION
+                SELECT entity_credit_account, id, transdate FROM ap
+                 WHERE in_account_class = 1) gl ON gl.id = bpi.id
+          JOIN entity_credit_account eca ON gl.entity_credit_account = eca.id
+         WHERE bpi.amount <> 0 
+               AND extract('days' from age(gl.transdate)) < eca.discount_terms;
+
+        INSERT INTO acc_trans
+               (trans_id, chart_id, amount, approved,
+               voucher_id, transdate, source)
+        SELECT bpi.id, t_ar_ap_id, 
+               amount * t_cash_sign * -1 * t_exchangerate/fxrate 
+               / (1 - discount::numeric/100) 
+               * (discount::numeric/100),
+               CASE WHEN t_voucher_id IS NULL THEN true
+                       ELSE false END,
+               t_voucher_id, in_payment_date, in_source
+          FROM bulk_payments_in bpi
+          JOIN (select entity_credit_account, id, transdate FROM ar 
+                 WHERE in_account_class = 2
+                 UNION
+                SELECT entity_credit_account, id, transdate FROM ap
+                 WHERE in_account_class = 1) gl ON gl.id = bpi.id
+          JOIN entity_credit_account eca ON gl.entity_credit_account = eca.id
+         WHERE bpi.amount <> 0 
+               AND extract('days' from age(gl.transdate)) < eca.discount_terms;
 
         -- Insert ar/ap side
         INSERT INTO acc_trans
