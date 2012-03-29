@@ -333,6 +333,7 @@ sub output {
 
 sub _http_output {
 	my ($self, $data) = @_;
+        LedgerSMB::App_State::cleanup();
 	$data ||= $self->{output};
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
 		throw Error::Simple "Invalid format";
@@ -371,6 +372,7 @@ sub _http_output {
 
 sub _http_output_file {
 	my $self = shift;
+        LedgerSMB::App_State::cleanup();
 	my $FH;
 
 	open($FH, '<:bytes', $self->{rendered}) or

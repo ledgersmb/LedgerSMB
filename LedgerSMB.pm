@@ -208,6 +208,7 @@ use LedgerSMB::PGDate;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;
 use Error;
+use LedgerSMB::App_State;
 use LedgerSMB::Auth;
 use LedgerSMB::Session;
 use LedgerSMB::CancelFurtherProcessing;
@@ -882,6 +883,7 @@ sub _db_init {
     }
     $self->{dbh}->{pg_server_prepare} = 0;
     $self->{dbh}->{pg_enable_utf8} = 1;
+    $LedgerSMB::App_State::DBH = $self->{dbh};
 
     # This is the general version check
     my $sth = $self->{dbh}->prepare("

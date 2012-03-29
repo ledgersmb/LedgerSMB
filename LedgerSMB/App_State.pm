@@ -55,6 +55,14 @@ our $Company_Settings;
 
 Hashref for storing connection-specific settings for the application.
 
+=item DBH
+
+Database handle for current connection
+
+=cut
+
+our $DBH;
+
 =back
 
 =head1 METHODS 
@@ -84,6 +92,7 @@ sub zero() {
     $SODA = undef;
     $User = undef;
     $Locale = undef;
+    $DBH = undef;
 }
 
 =item cleanup
@@ -94,14 +103,17 @@ Deletes all objects attached here.
 
 sub cleanup {
 
-    $SODA->dbh->disconnect;
-
+    if ($DBH){
+        $DBH->commit;
+        $DBH->disconnect;
+    }
     $Locale           = LedgerSMB::Locale->get_handle(
                             $LedgerSMB::Sysconfig::language
                         );
     $User             = {};
     $SODA             = {};
     $Company_Settings = {};
+    $DBH = undef;
 }
 
 1;
