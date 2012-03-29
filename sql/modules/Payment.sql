@@ -69,29 +69,40 @@ as needed for discount calculations and the like.$$;
 
 -- payment_get_open_accounts and the option to get all accounts need to be
 -- refactored and redesigned.  -- CT
-CREATE OR REPLACE FUNCTION payment_get_open_accounts(in_account_class int) 
+CREATE OR REPLACE FUNCTION payment_get_open_accounts(in_account_class int)
 returns SETOF entity AS
 $$
 DECLARE out_entity entity%ROWTYPE;
 BEGIN
-	FOR out_entity IN
-		SELECT ec.id, cp.legal_name as name, e.entity_class, e.created 
-		FROM entity e
-		JOIN entity_credit_account ec ON (ec.entity_id = e.id)
-		JOIN company cp ON (cp.entity_id = e.id)
-			WHERE ec.entity_class = in_account_class
+        FOR out_entity IN
+                SELECT ec.id, cp.legal_name as name, e.entity_class, e.created
+                FROM entity e
+                JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+                JOIN company cp ON (cp.entity_id = e.id)
+                        WHERE ec.entity_class = in_account_class
                         AND CASE WHEN in_account_class = 1 THEN
-	           		ec.id IN (SELECT entity_credit_account FROM ap 
-	           			WHERE amount <> paid
-		   			GROUP BY entity_credit_account)
-		    	       WHEN in_account_class = 2 THEN
-		   		ec.id IN (SELECT entity_credit_account FROM ar
-		   			WHERE amount <> paid
-		   			GROUP BY entity_credit_account)
-		   	  END
-	LOOP
-		RETURN NEXT out_entity;
-	END LOOP;
+                                ec.id IN
+                                (SELECT entity_credit_account
+                                   FROM acc_trans
+                                   JOIN chart ON (acc_trans.chart_id = chart.id)
+                                   JOIN ap ON (acc_trans.trans_id = ap.id)
+                                   WHERE link = 'AP'
+                                   GROUP BY chart_id,
+                                         trans_id, entity_credit_account
+                                   HAVING SUM(acc_trans.amount) <> 0)
+                               WHEN in_account_class = 2 THEN
+                                ec.id IN (SELECT entity_credit_account
+                                   FROM acc_trans
+                                   JOIN chart ON (acc_trans.chart_id = chart.id)
+                                   JOIN ar ON (acc_trans.trans_id = ar.id)
+                                   WHERE link = 'AR'
+                                   GROUP BY chart_id,
+                                         trans_id, entity_credit_account
+                                   HAVING SUM(acc_trans.amount) <> 0)
+                          END
+        LOOP
+                RETURN NEXT out_entity;
+        END LOOP;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -302,125 +313,126 @@ CREATE TYPE payment_contact_invoice AS (
 
 CREATE OR REPLACE FUNCTION payment_get_all_contact_invoices
 (in_account_class int, in_business_id int, in_currency char(3),
-	in_date_from date, in_date_to date, in_batch_id int, 
-	in_ar_ap_accno text, in_meta_number text)
+        in_date_from date, in_date_to date, in_batch_id int, 
+        in_ar_ap_accno text, in_meta_number text)
 RETURNS SETOF payment_contact_invoice AS
 $$
 DECLARE payment_item payment_contact_invoice;
 BEGIN
-	FOR payment_item IN
-		  SELECT c.id AS contact_id, e.control_code as econtrol_code, 
-			c.description as eca_description, 
-			e.name AS contact_name,
-		         c.meta_number AS account_number,
-			 sum( case when u.username IS NULL or 
-				       u.username = SESSION_USER 
-			     THEN 
-		              coalesce(p.due::numeric, 0) -
-		              CASE WHEN c.discount_terms 
-		                        > extract('days' FROM age(a.transdate))
-		                   THEN 0
-		                   ELSE (coalesce(p.due::numeric, 0)) * 
-					coalesce(c.discount::numeric, 0) / 100
-		              END
-			     ELSE 0::numeric
-			     END) AS total_due,
-		         compound_array(ARRAY[[
-		              a.id::text, a.invnumber, a.transdate::text, 
-		              a.amount::text, (a.amount - p.due)::text,
-		              (CASE WHEN c.discount_terms 
-		                        < extract('days' FROM age(a.transdate))
-		                   THEN 0
-		                   ELSE (coalesce(p.due, 0) * coalesce(c.discount, 0) / 100)
-		              END)::text, 
-		              (coalesce(p.due, 0) -
-		              (CASE WHEN c.discount_terms 
-		                        < extract('days' FROM age(a.transdate))
-		                   THEN 0
-		                   ELSE (coalesce(p.due, 0)) * coalesce(c.discount, 0) / 100
-		              END))::text,
-			 	case when u.username IS NOT NULL 
-				          and u.username <> SESSION_USER 
-				     THEN 0::text
-				     ELSE 1::text
-				END,
-				COALESCE(u.username, 0::text)
-				]]),
+        FOR payment_item IN
+                  SELECT c.id AS contact_id, e.control_code as econtrol_code, 
+                        c.description as eca_description, 
+                        e.name AS contact_name,
+                         c.meta_number AS account_number,
+                         sum( case when u.username IS NULL or 
+                                       u.username = SESSION_USER 
+                             THEN 
+                              coalesce(p.due::numeric, 0) -
+                              CASE WHEN c.discount_terms 
+                                        > extract('days' FROM age(a.transdate))
+                                   THEN 0
+                                   ELSE (coalesce(p.due::numeric, 0)) * 
+                                        coalesce(c.discount::numeric, 0) / 100
+                              END
+                             ELSE 0::numeric
+                             END) AS total_due,
+                         compound_array(ARRAY[[
+                              a.id::text, a.invnumber, a.transdate::text, 
+                              a.amount::text, (a.amount - p.due)::text,
+                              (CASE WHEN c.discount_terms 
+                                        < extract('days' FROM age(a.transdate))
+                                   THEN 0
+                                   ELSE (coalesce(p.due, 0) * coalesce(c.discount, 0) / 100)
+                              END)::text, 
+                              (coalesce(p.due, 0) -
+                              (CASE WHEN c.discount_terms 
+                                        < extract('days' FROM age(a.transdate))
+                                   THEN 0
+                                   ELSE (coalesce(p.due, 0)) * coalesce(c.discount, 0) / 100
+                              END))::text,
+                                case when u.username IS NOT NULL 
+                                          and u.username <> SESSION_USER 
+                                     THEN 0::text
+                                     ELSE 1::text
+                                END,
+                                COALESCE(u.username, 0::text)
+                                ]]),
                               sum(case when a.batch_id = in_batch_id then 1
-		                  else 0 END),
-		              bool_and(lock_record(a.id, (select max(session_id) 				FROM "session" where users_id = (
-					select id from users WHERE username =
-					SESSION_USER))))
+                                  else 0 END),
+                              bool_and(lock_record(a.id, (select max(session_id)
+                                FROM "session" where users_id = (
+                                        select id from users WHERE username =
+                                        SESSION_USER))))
                            
-		    FROM entity e
-		    JOIN entity_credit_account c ON (e.id = c.entity_id)
-		    JOIN (SELECT ap.id, invnumber, transdate, amount, entity_id, 
-				 curr, 1 as invoice_class,
-		                 entity_credit_account, on_hold, v.batch_id,
-				 approved, paid
-		            FROM ap
-		       LEFT JOIN (select * from voucher where batch_class = 1) v 
-			         ON (ap.id = v.trans_id)
-			   WHERE in_account_class = 1
-			         AND (v.batch_class = 1 or v.batch_id IS NULL)
-		           UNION
-		          SELECT ar.id, invnumber, transdate, amount, entity_id,
-		                 curr, 2 as invoice_class,
-		                 entity_credit_account, on_hold, v.batch_id,
-				 approved, paid
-		            FROM ar
-		       LEFT JOIN (select * from voucher where batch_class = 2) v 
-			         ON (ar.id = v.trans_id)
-			   WHERE in_account_class = 2
-			         AND (v.batch_class = 2 or v.batch_id IS NULL)
-			ORDER BY transdate
-		         ) a ON (a.entity_credit_account = c.id)
-		    JOIN transactions t ON (a.id = t.id)
-		    JOIN (SELECT acc_trans.trans_id, 
-		                 sum(CASE WHEN in_account_class = 1 THEN amount
-		                          WHEN in_account_class = 2 
-		                          THEN amount * -1
-		                     END) AS due 
-		            FROM acc_trans 
-		            JOIN account coa ON (coa.id = acc_trans.chart_id)
+                    FROM entity e
+                    JOIN entity_credit_account c ON (e.id = c.entity_id)
+                    JOIN (SELECT ap.id, invnumber, transdate, amount, entity_id, 
+                                 curr, 1 as invoice_class,
+                                 entity_credit_account, on_hold, v.batch_id,
+                                 approved, paid
+                            FROM ap
+                       LEFT JOIN (select * from voucher where batch_class = 1) v 
+                                 ON (ap.id = v.trans_id)
+                           WHERE in_account_class = 1
+                                 AND (v.batch_class = 1 or v.batch_id IS NULL)
+                           UNION
+                          SELECT ar.id, invnumber, transdate, amount, entity_id,
+                                 curr, 2 as invoice_class,
+                                 entity_credit_account, on_hold, v.batch_id,
+                                 approved, paid
+                            FROM ar
+                       LEFT JOIN (select * from voucher where batch_class = 2) v 
+                                 ON (ar.id = v.trans_id)
+                           WHERE in_account_class = 2
+                                 AND (v.batch_class = 2 or v.batch_id IS NULL)
+                        ORDER BY transdate
+                         ) a ON (a.entity_credit_account = c.id)
+                    JOIN transactions t ON (a.id = t.id)
+                    JOIN (SELECT acc_trans.trans_id, 
+                                 sum(CASE WHEN in_account_class = 1 THEN amount
+                                          WHEN in_account_class = 2 
+                                          THEN amount * -1
+                                     END) AS due 
+                            FROM acc_trans 
+                            JOIN account coa ON (coa.id = acc_trans.chart_id)
                             JOIN account_link al ON (al.account_id = coa.id)
-		       LEFT JOIN voucher v ON (acc_trans.voucher_id = v.id)
-		           WHERE ((al.description = 'AP' AND in_account_class = 1)
-		                 OR (al.description = 'AR' AND in_account_class = 2))
-			   AND (approved IS TRUE or v.batch_class IN (3, 6))
-		        GROUP BY acc_trans.trans_id) p ON (a.id = p.trans_id)
-		LEFT JOIN "session" s ON (s."session_id" = t.locked_by)
-		LEFT JOIN users u ON (u.id = s.users_id)
-		   WHERE (a.batch_id = in_batch_id
-		          OR (a.invoice_class = in_account_class
-		             AND a.approved
-		         AND a.amount <> a.paid 
-			 AND NOT a.on_hold
+                       LEFT JOIN voucher v ON (acc_trans.voucher_id = v.id)
+                           WHERE ((al.description = 'AP' AND in_account_class = 1)
+                                 OR (al.description = 'AR' AND in_account_class = 2))
+                           AND (approved IS TRUE or v.batch_class IN (3, 6))
+                        GROUP BY acc_trans.trans_id) p ON (a.id = p.trans_id)
+                LEFT JOIN "session" s ON (s."session_id" = t.locked_by)
+                LEFT JOIN users u ON (u.id = s.users_id)
+                   WHERE (a.batch_id = in_batch_id
+                          OR (a.invoice_class = in_account_class
+                             AND a.approved
+                         AND due <> 0
+                         AND NOT a.on_hold
                          AND a.curr = in_currency
-		         AND EXISTS (select trans_id FROM acc_trans
-		                      WHERE trans_id = a.id AND
-		                            chart_id = (SELECT id from account
-		                                         WHERE accno
-		                                               = in_ar_ap_accno)
-		                    )))
-		         AND (in_meta_number IS NULL OR 
+                         AND EXISTS (select trans_id FROM acc_trans
+                                      WHERE trans_id = a.id AND
+                                            chart_id = (SELECT id from account
+                                                         WHERE accno
+                                                               = in_ar_ap_accno)
+                                    )))
+                         AND (in_meta_number IS NULL OR 
                              in_meta_number = c.meta_number)
-		GROUP BY c.id, e.name, c.meta_number, c.threshold, 
-			e.control_code, c.description
-		  HAVING  (sum(p.due) >= c.threshold
-			OR sum(case when a.batch_id = in_batch_id then 1
+                GROUP BY c.id, e.name, c.meta_number, c.threshold, 
+                        e.control_code, c.description
+                  HAVING  (sum(p.due) >= c.threshold
+                        OR sum(case when a.batch_id = in_batch_id then 1
                                   else 0 END) > 0)
         ORDER BY c.meta_number ASC
-	LOOP
-		RETURN NEXT payment_item;
-	END LOOP;
+        LOOP
+                RETURN NEXT payment_item;
+        END LOOP;
 END;
 $$ LANGUAGE plpgsql;
 
 COMMENT ON FUNCTION payment_get_all_contact_invoices
 (in_account_class int, in_business_id int, in_currency char(3),
-	in_date_from date, in_date_to date, in_batch_id int, 
-	in_ar_ap_accno text, in_meta_number text) IS
+        in_date_from date, in_date_to date, in_batch_id int, 
+        in_ar_ap_accno text, in_meta_number text) IS
 $$
 This function takes the following arguments (all prefaced with in_ in the db):
 account_class: 1 for vendor, 2 for customer
