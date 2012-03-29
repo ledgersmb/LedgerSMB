@@ -34,6 +34,5 @@ ADD_COMMA=0;
             ROW.$COL_ID;
         END;
     END; 
-
-END ?>
-<?lsmb END ?>
+?>
+<?lsmb END; END ?>
