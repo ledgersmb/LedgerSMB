@@ -68,6 +68,9 @@ sub get_template {
 sub preprocess {
     my $rawvars = shift;
     my $vars;
+    if (eval {$rawvars->can('to_output')}){
+       $rawvars = $rawvars->to_output;
+    }
     my $type = ref $rawvars;
 
     #XXX fix escaping function

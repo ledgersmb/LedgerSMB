@@ -1,0 +1,4 @@
+<?lsmb PROCESS 'dynatable.csv';
+
+PROCESS dynatable tbody = {rows = rows };
+?>

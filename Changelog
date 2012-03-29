@@ -18,6 +18,7 @@ General Enhancements:
 
 New Reporting Framework
 * Easy bridge between SQL and display (Chris T)
+* All reports exportable to CSV (Chris T)
 
 Customer/Vendor Handling 
 * Added sales tax id and license number fields for companies (Chris T)

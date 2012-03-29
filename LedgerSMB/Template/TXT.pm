@@ -67,7 +67,7 @@ sub get_template {
     return "${name}.". get_extension($parent);
 }
 
-sub preprocess {
+sub preprocess { # TODO handling of objects with to_output methods
     my $rawvars = shift;
     return $rawvars;
 }

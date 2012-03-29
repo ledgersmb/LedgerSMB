@@ -57,6 +57,9 @@ sub get_template {
 sub preprocess {
 	my $rawvars = shift;
 	my $vars;
+        if (eval {$rawvars->can('to_output')}){
+           $rawvars = $rawvars->to_output;
+        }
 	my $type = ref $rawvars;
 
 	#XXX fix escaping function
@@ -73,9 +76,7 @@ sub preprocess {
 		} else {
 			$vars = $rawvars;
 		}
-		$vars =~ s/(^ +| +$)//g;
-		$vars =~ s/"/""/g;
-		$vars = qq|"$vars"| if $vars !~ /^\w*$/;
+              
 	} else { # hashes and objects
 		for ( keys %{$rawvars} ) {
 			$vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
@@ -130,6 +131,9 @@ sub postprocess {
             return "$parent->{template}.csv";
         }
 	return $parent->{rendered};
+}
+
+sub escape {
 }
 
 1;
