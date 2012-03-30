@@ -1,6 +1,6 @@
 <?lsmb- BLOCK dynatable;
 
-TOTAL_WIDTH=82; # cm. using A4 as a basis because it is slightly narrower than
+TOTAL_WIDTH=14; # cm. using A4 as a basis because it is slightly narrower than
                 # US Letter. This way the dynatable works for both paper sizes.
                 # This assumes a 1cm margin on either side. --CT
 DECLARED_WIDTH=0; 
@@ -22,7 +22,7 @@ FOREACH COL IN columns;
       '|';
    END;
    IF COL.pwidth;
-       "p{" _ (COL_pwidth * WIDTH_PER_P) _ "cm}";
+       "p{" _ (COL.pwidth * WIDTH_PER_P) _ "cm}";
    ELSIF COL.palign;
         COL.palign;
    ELSE;
@@ -40,9 +40,14 @@ END;
 <?lsmb 
 SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
 
+ADD_SEP = 0;
 FOREACH COL IN columns;
+    IF ADD_SEP;
+      ' & ';
+    END;
+    ADD_SEP = 1;
     IF 0 == SKIP_TYPES.grep(COL.type).size();
-        COL.name _ ' & ';
+        COL.name;
     END;
 END;
 -?>\\
@@ -51,9 +56,14 @@ END;
 <?lsmb 
 SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
 
+ADD_SEP = 0;
 FOREACH COL IN columns;
+    IF ADD_SEP;
+      ' & ';
+    END;
+    ADD_SEP = 1;
     IF 0 == SKIP_TYPES.grep(COL.type).size();
-        COL.name _ ' & ';
+        COL.name;
     END;
 END;
 -?>\\
@@ -62,10 +72,15 @@ END;
 <?lsmb
 
 FOREACH ROW IN tbody.rows;
+    ADD_SEP = 0;
     FOREACH COL IN columns;
+        IF ADD_SEP;
+           ' & ';
+        END;
+        ADD_SEP = 1;
         COL_ID = COL.col_id;
         IF 0 == SKIP_TYPES.grep(COL.type).size();
-            ROW.$COL_ID _ ' & '; # $ 
+            ROW.$COL_ID; #$
         END;
     END; 
     ?>\\
