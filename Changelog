@@ -8,7 +8,7 @@ Changelog for 1.3.15
 * ledgersmb.conf.default : Update default PATH (H Sorli, item 3430019)
 * Fixed imballanced payments when early payment discount processed (Chris T)
 * Pricelists exportable as PDF and CSV (Chris T)
-* Fixed payment/receipts shows with 0 due/payment list (Chris T, bug 3512555)
+* Fixed payment/receipts shows with 0 due/payment list (Erik H, bug 3512555)
 
 Chris B is Chris Bennet
 Chris T is Chris Travers
