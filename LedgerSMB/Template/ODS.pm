@@ -56,8 +56,8 @@ use OpenOffice::OODoc;
 use LedgerSMB::Template::TTI18N;
 
 my $binmode = undef;
-binmode STDOUT, $binmode;
-binmode STDERR, $binmode;
+binmode STDOUT, ':bytes';
+binmode STDERR, ':bytes';
 
 # SC: The ODS handlers need these vars in common
 my $ods;
