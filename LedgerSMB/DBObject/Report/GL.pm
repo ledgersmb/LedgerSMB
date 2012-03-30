@@ -86,7 +86,7 @@ our @COLUMNS = (
     {col_id => 'transdate',
        name => $locale->text('Date'),
        type => 'text',
-     pwidth => '3', },
+     pwidth => '4', },
 
     {col_id => 'reference',
        name => $locale->text('Reference'),
@@ -97,7 +97,7 @@ our @COLUMNS = (
     {col_id => 'description',
        name => $locale->text('Description'),
        type => 'text',
-     pwidth => '12', },
+     pwidth => '6', },
 
     {col_id => 'entry_id',
        name => $locale->text('Entry ID'),
@@ -127,7 +127,7 @@ our @COLUMNS = (
     {col_id => 'cleared',
        name => $locale->text('Cleared'),
        type => 'text',
-     pwidth => '1', },
+     pwidth => '3', },
 
     {col_id => 'till',
        name => $locale->text('Till'),

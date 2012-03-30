@@ -61,6 +61,7 @@ use LedgerSMB::Auth;
 use LedgerSMB::Session;
 use LedgerSMB::CancelFurtherProcessing;
 use Data::Dumper;
+use LedgerSMB::App_State;
 
 our $logger=Log::Log4perl->get_logger('old-handler-chain');#make logger available to other old programs
 
@@ -160,6 +161,7 @@ try {
       . " $form->{version} - $myconfig{name} - $myconfig{dbname}";
 
     &{ $form->{action} };
+    LedgerSMB::App_State::cleanup();
 
   }
   else {

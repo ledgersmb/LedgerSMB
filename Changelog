@@ -15,20 +15,28 @@ General Enhancements:
 * LedgerSMB->error and Form->error now show db version and company (Chris T)
 * Simpler use of Log::Log4perl instead of LedgerSMB::Log (Chris T)
 * Changing all auth calls to hit postgres db instead of template1 (Chris T)
+* Centralized database commit for new code (Chris T)
 
 New Reporting Framework
 * Easy bridge between SQL and display (Chris T)
 * All reports exportable to CSV (Chris T)
+* All reports exportable to PDF (Chris T)
+* Unified UI for reports (Chris T)
 
 Customer/Vendor Handling 
 * Added sales tax id and license number fields for companies (Chris T)
 * Simpified database schema (Chris T)
 
-New CSV Import Module (Chris T)
-* Imports GL transactions
-* Imports AP batches
+New CSV Import Module
+* Imports GL transactions (Chris T)
+* Imports AP batches (Chris T)
+* Imports charts of accounts entries (Erik H)
+* Imports GIFI tables (Erik H)
+* Imports SIC tables (Erik H)
+* Imports timecards (Chris T)
 * Extensible
 * field maps can be overridden
+
 
 New Business Reporting Unit System (Chris T)
 * Replaces Projects and Departments

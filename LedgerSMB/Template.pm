@@ -85,6 +85,26 @@ The base name of the file for output.
 
 =back
 
+=item available_formats()
+
+Returns a list of format names, any of the following (in order) as applicable:
+
+=over
+
+=item HTML (always available)
+
+=item TXT (includes CSV, always available))
+
+=item PDF
+
+=item PS
+
+=item XLS
+
+=item ODS
+
+=back
+
 =item new_UI(user => \%myconfig, locale => $locale, template => $file, ...)
 
 Wrapper around the constructor that sets the path to 'UI', format to 'HTML',
@@ -143,6 +163,20 @@ use LedgerSMB::App_State;
 use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
+
+sub available_formats {
+    my @retval = ('HTML', 'TXT');
+    if (eval {require LedgerSMB::Template::LaTeX}){
+        push @retval, 'PDF', 'PS';
+    }
+    if (eval {require LedgerSMB::Template::XLS}){
+        push @retval, 'XLS';
+    }
+    if (eval {require LedgerSMB::Template::ODS}){
+        push @retval, 'ODS';
+    }
+    return \@retval;
+}
 
 sub new {
 	my $class = shift;
@@ -244,6 +278,7 @@ sub _preprocess {
 sub render {
 	my $self = shift;
 	my $vars = shift;
+        $vars->{FORMATS} = $self->available_formats;
         $vars->{ENVARS} = \%ENV;
         $vars->{USER} = $LedgerSMB::App_State::User;
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {

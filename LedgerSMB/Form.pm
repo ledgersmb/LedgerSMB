@@ -67,6 +67,7 @@ use File::Copy;
 use LedgerSMB::Company_Config;
 use LedgerSMB::PGNumber;
 use Log::Log4perl;
+use LedgerSMB::App_State;
 
 use charnames qw(:full);
 use open ':utf8';
@@ -1262,6 +1263,7 @@ sub db_init {
     }
     LedgerSMB::Company_Config::initialize($self);
     $sth->finish();
+    LedgerSMB::App_State::DBH = $self->{dbh};
     $logger->trace("end");
 }
 
