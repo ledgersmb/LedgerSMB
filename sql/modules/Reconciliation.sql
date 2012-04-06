@@ -204,7 +204,7 @@ $$Marks the report approved and marks all cleared transactions in it cleared.$$;
 
 -- XXX Badly named, rename for 1.4.  --CT
 CREATE OR REPLACE FUNCTION reconciliation__new_report_id 
-(in_chart_id int, in_total numeric, in_end_date date, in_recon_fx) returns INT as $$
+(in_chart_id int, in_total numeric, in_end_date date, in_recon_fx bool) returns INT as $$
 
     INSERT INTO cr_report(chart_id, their_total, end_date, recon_fx) 
     values ($1, $2, $3, $4);
@@ -213,7 +213,7 @@ CREATE OR REPLACE FUNCTION reconciliation__new_report_id
 $$ language 'sql';
 
 COMMENT ON FUNCTION reconciliation__new_report_id 
-(in_chart_id int, in_total numeric, in_end_date date)  IS
+(in_chart_id int, in_total numeric, in_end_date date, in_recon_fx bool)  IS
 $$ Inserts creates a new report and returns the id.$$;
 
 create or replace function reconciliation__add_entry(
