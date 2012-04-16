@@ -29,5 +29,6 @@ Util.sql
 Assets.sql
 Files.sql
 Parts.sql
+COGS.sql
 Fixes.sql
 
