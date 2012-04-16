@@ -1719,84 +1719,40 @@ sub process_assembly {
 }
 
 sub cogs {
-    # This is nearly entirely rewritten since 1.2.8 based in part on the works
-    # of Victor Sterpu and Dieter Simader (see CONTRIBUTORS for more 
-    # information).  However, there are a number of areas where I have 
-    # substantially rewritten the logic.  This function is heavily annotated 
-    # largely because COGS/invoices are still scheduled to be re-engineered in
-    # 1.4 so it is a good idea to have records of opinions in the code.-- CT
     my ( $dbh2, $form, $id, $totalqty, $project_id, $sellprice) = @_;
+    # $id is parts id.
     my $dbh   = $form->{dbh};
-    my $query;
-    my $allocated = 0;
-    if ($totalqty == 0) {
-        return 0;
-    }
-    elsif ($totalqty > 0) {
-    # If the quantity is positive, we do a standard FIFO COGS calculation. 
-    # In this case, we are going to order the queue by transdate and trans_id
-    # as this is the best way of doing this perpetually.  We don't want out 
-    # of order entry to screw with the books.  Of course if someone wants to
-    # implement LIFO, this would be the place to do it. -- CT
 
-        my $query = qq|
-		   SELECT i.id, i.trans_id, i.qty, i.allocated, i.sellprice,
-		          i.precision, i.fxsellprice, p.inventory_accno_id, 
-		          p.expense_accno_id, 
-		          (i.qty * -1) - i.allocated AS available
-		     FROM invoice i
-		     JOIN parts p ON (i.parts_id = p.id) 
-		     JOIN ap a ON (i.trans_id = a.id)
-		    WHERE i.parts_id = ? AND (i.qty + i.allocated) < 0
-		 ORDER BY a.transdate, i.trans_id|;
-        my $sth = $dbh->prepare($query);
-        $sth->execute($id) || $form->dberror($query);
+    # Parts info
+    my $part_sth = $dbh->prepare('SELECT * FROM parts WHERE id = ?');
+    $part_sth->execute($id);
+    my ($part_ref) = $part_sth->fetchrow_hashref('NAME_lc')
 
-        my $qty;
+    # Getting cogs
+    my $cogs_sth = $dbh->prepare('SELECT * FROM cogs__add_for_ar(?, ?)');
+    $cogs_sth->execute($id, $totalqty);
+    my ($cogs) = $cogs_sth->fetchrow_array();
 
-        while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-            $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
-            if ( $ref->{available} >= $totalqty ) {
-                $qty = $totalqty;
-            }
-            else {
-                $qty = $ref->{available};
-            }
+    # Setting up for the main transaction.
 
-            $form->update_balance( $dbh, "invoice", "allocated",
-                qq|id = $ref->{id}|, $qty );
-
-            # total expenses and inventory
-            # sellprice is the cost of the item
-            my $linetotal = $form->round_amount($ref->{sellprice} * $qty, 2);
-
-            # add expense
-            push @{ $form->{acc_trans}{lineitems} },
+    if ($totalqty > 0){
+        push @{ $form->{acc_trans}{lineitems} },
               {
-                chart_id   => $ref->{expense_accno_id},
-                amount     => $linetotal * -1,
+                chart_id   => $parts_ref->{expense_accno_id},
+                amount     => $cogs * -1,
                 project_id => $project_id,
-                invoice_id => $ref->{id}
+                invoice_id => $parts_ref->{id}
               };
 
-            # deduct inventory
-            push @{ $form->{acc_trans}{lineitems} },
+        push @{ $form->{acc_trans}{lineitems} },
               {
-                chart_id   => $ref->{inventory_accno_id},
-                amount     => $linetotal,
+                chart_id   => $parts_ref->{inventory_accno_id},
+                amount     => $cogs,
                 project_id => $project_id,
-                invoice_id => $ref->{id}
+                invoice_id => $parts_ref->{id}
               };
 
-            # subtract from allocated
-            $allocated -= $qty;
-
-            last if ( ( $totalqty -= $qty ) <= 0 );
-        }
-
-        $sth->finish;
-    }
-    else {
+    } else {
     # In this case, the quantity is negative.  So we are looking at a 
     # reversing  entry for partial COGS.   The two workflows supported here 
     # are those involved in voiding an invoice or returning some items on it.

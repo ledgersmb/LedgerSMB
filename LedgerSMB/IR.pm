@@ -443,108 +443,13 @@ sub post_invoice {
                     qq|id = $form->{"id_$i"}|,
                     $form->{"qty_$i"} )
                   unless $form->{shipped};
-
-                # check if we sold the item
-                $query = qq|
-					  SELECT i.id, i.qty, i.allocated, 
-					         i.trans_id, 
-					         p.inventory_accno_id, 
-					         p.expense_accno_id, a.transdate
-					    FROM invoice i
-					    JOIN parts p ON (p.id = i.parts_id)
-					    JOIN ar a ON (a.id = i.trans_id)
-					   WHERE i.parts_id = ?
-					         AND (i.qty + i.allocated) > 0
-					ORDER BY transdate|;
-                $sth = $dbh->prepare($query);
-                $sth->execute( $form->{"id_$i"} )
-                  || $form->dberror($query);
-
-                while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-                    $form->db_parse_numeric(sth=>$sth, hashref => $ref);
-
-                    my $qty = $ref->{qty} + $ref->{allocated};
-
-                    if ( ( $qty - $totalqty ) > 0 ) {
-                        $qty = $totalqty;
-                    }
-
-                    $linetotal =
-                      $form->round_amount( $form->{"sellprice_$i"} * $qty, 2 );
-
-                    if ($linetotal) {
-                        $query = qq|
-				INSERT INTO acc_trans 
-				            (trans_id, 
-				            chart_id, 
-				            amount, 
-				            invoice_id,
-				            transdate) 
-				     VALUES (?, ?, ?, 
-				            ?, (SELECT CASE WHEN ? <= value::date
-				                            THEN value::date +
-				                               '1 day'::interval
-				                            ELSE ?
-				                        END AS value 
-				                  FROM defaults
-				                  WHERE setting_key = 'closedto'
-				))|;
-
-                        my $sth = $dbh->prepare($query);
-                        $sth->execute(
-                            $ref->{trans_id},   $ref->{inventory_accno_id},
-                            $linetotal, 
-                            $invoice_id,
-                            $ref->{transdate}, $ref->{transdate},
-                        ) || $form->dberror($query);
-
-                        for my $cls(@{$form->{bu_class}}){
-                            if ($form->{"b_unit_$cls->{id}_$i"}){
-                             $b_unit_sth_ac->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
-                            }
-                        }
-                        # add expense
-                        $query = qq|
-				INSERT INTO acc_trans 
-				            (trans_id, chart_id, amount, 
-				            invoice_id,
-				            transdate) 
-				     VALUES (?, ?, ?, 
-				            ?, (SELECT CASE WHEN ? <= value::date
-				                            THEN value::date +
-				                               '1 day'::interval
-				                            ELSE ?
-				                        END AS value 
-				                  FROM defaults
-				                  WHERE setting_key = 'closedto'
-				))|;
-                        $sth = $dbh->prepare($query);
-                        $sth->execute(
-                            $ref->{trans_id},   $ref->{expense_accno_id},
-                            $linetotal * -1,    
-                            $invoice_id,
-                            $ref->{transdate}, $ref->{transdate},
-                        ) || $form->dberror($query);
-                    }
-
-                    for my $cls(@{$form->{bu_class}}){
-                        if ($form->{"b_unit_$cls->{id}_$i"}){
-                         $b_unit_sth_ac->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
-                        }
-                    }
-                    # update allocated for sold item
-                    $form->update_balance( $dbh, "invoice", "allocated",
-                        qq|id = $ref->{id}|,
-                        $qty * -1 );
-                    $form->update_balance( $dbh, "invoice", "allocated",
-				qq|id =$invoice_id|,$qty);
-
-                    $allocated += $qty;
-
-                    last if ( ( $totalqty -= $qty ) <= 0 );
-                }
-
-                $sth->finish;
+                my $cogs_sth = $dbh->prepare(
+                      'SELECT * FROM cogs__add_for_ap(?, ?, ?)'
+                );
+                $cogs_sth->execute($form->{"id_$i"}, 
+                                   $form->{"qty_$i"},
+                                   $form->{"sellprice_$i"});
+                $cogs_sth->finish;
 
             }
             else {
