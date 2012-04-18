@@ -170,12 +170,11 @@ LOOP
         WHERE id = t_inv.id;
 
        INSERT INTO acc_trans 
-              (chart_id, transdate, amount, invoice, approved, project_id)
+              (chart_id, transdate, amount, invoice, approved)
        SELECT expense_accno_id, 
               CASE WHEN t_inv.transdate > t_cp.end_date THEN t_inv.transdate
                    ELSE t_cp.end_date + '1 day'::interval
-               END, -1 * (in_qty - t_alloc) * in_lastcost, t_inv.id, true, 
-              t_inv.project_id
+               END, -1 * (in_qty - t_alloc) * in_lastcost, t_inv.id, true
          FROM parts 
        WHERE  parts_id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
               AND expense_accno_id IS NOT NULL
@@ -183,8 +182,7 @@ LOOP
        SELECT income_accno_id,
               CASE WHEN t_inv.transdate > t_cp.end_date THEN t_inv.transdate
                    ELSE t_cp.end_date + '1 day'::interval
-               END, (in_qty - t_alloc) * in_lastcost, t_inv.id, true,
-              t_inv.project_id
+               END, (in_qty - t_alloc) * in_lastcost, t_inv.id, true
          FROM parts 
        WHERE  parts_id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
               AND expense_accno_id IS NOT NULL;
@@ -198,12 +196,12 @@ LOOP
 
        
        INSERT INTO acc_trans
-              (chart_id, transdate, amount, invoice, approved, project_id)
+              (chart_id, transdate, amount, invoice, approved)
        SELECT expense_accno_id,
               CASE WHEN t_inv.transdate > t_cp.end_date THEN t_inv.transdate
                    ELSE t_cp.end_date + '1 day'::interval
                END, -1 * (t_inv.qty + t_inv.allocated) * in_lastcost, 
-              t_inv.id, true, t_inv.project_id
+              t_inv.id, true
          FROM parts
        WHERE  parts_id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
               AND expense_accno_id IS NOT NULL
@@ -211,8 +209,7 @@ LOOP
        SELECT income_accno_id,
               CASE WHEN t_inv.transdate > t_cp.end_date THEN t_inv.transdate
                    ELSE t_cp.end_date + '1 day'::interval
-               END, (t_inv.qty + t_inv.allocated) * in_lastcost, t_inv.id, true,
-              t_inv.project_id
+               END, (t_inv.qty + t_inv.allocated) * in_lastcost, t_inv.id, true
          FROM parts
        WHERE  parts_id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
               AND expense_accno_id IS NOT NULL;
