@@ -2,6 +2,7 @@
 \documentclass{scrartcl}
 \usepackage[utf8]{inputenc}
 \usepackage{tabularx}
+\usepackage{longtable}
 \usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
 \usepackage{graphicx}
 
@@ -108,7 +109,7 @@
   
 \vspace{1cm}
   
-\begin{tabularx}{\textwidth}{@{}rlXllrrl@{}}
+\begin{longtable}{@{\extracolsep{\fill}}rllllrrl@{}}
   \textbf{<?lsmb text('Item') ?>} & \textbf{<?lsmb text('Number') ?>} 
   & \textbf{<?lsmb text('Description') ?>} 
   & \textbf{<?lsmb text('Serial Number') ?>} & 
@@ -125,7 +126,7 @@
   <?lsmb ship.${lc} ?> &
   <?lsmb unit.${lc} ?> \\
 <?lsmb END ?>
-\end{tabularx}
+\end{longtable}
 
 
 \parbox{\textwidth}{
