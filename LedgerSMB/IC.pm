@@ -1241,7 +1241,7 @@ sub all_parts {
 				p.drawing, p.microfiche, p.assembly, 
 				pg.partsgroup, a.invnumber, a.ordnumber, 
 				a.quonumber, i.trans_id, ct.employee_id, 
-				CONCAT(e.first_name, ' ',e.last_name) AS employee, a.curr, a.till, p.notes
+				e.first_name \|\| ' ' \|\| e.last_name AS employee, a.curr, a.till, p.notes
 				$makemodelfld|;
 
             if ( $form->{bought} ) {
@@ -1338,7 +1338,7 @@ sub all_parts {
 				p.drawing, p.microfiche, p.assembly,
 				pg.partsgroup, '' AS invnumber, a.ordnumber, 
 				a.quonumber, i.trans_id, ct.employee_id, 
-				CONCAT(e.first_name, ' ',e.last_name) AS employee, a.curr, '0' AS till, 
+				e.first_name \|\| ' ' \|\| e.last_name AS employee, a.curr, '0' AS till, 
 				p.notes
 				$makemodelfld|;
 
@@ -1382,7 +1382,7 @@ sub all_parts {
 					pg.partsgroup, '' AS invnumber, 
 					a.ordnumber, a.quonumber,
 					i.trans_id, ct.employee_id,
-					CONCAT(e.first_name,' ',e.last_name) AS employee,
+					e.first_name \|\| ' ' \|\| e.last_name AS employee,
 					a.curr, '0' AS till, p.notes
 					$makemodelfld|;
 
@@ -1449,7 +1449,7 @@ sub all_parts {
 				p.drawing, p.microfiche, p.assembly,
 				pg.partsgroup, '' AS invnumber, a.ordnumber, 
 				a.quonumber, i.trans_id, ct.employee_id, 
-				CONCAT(e.first_name,' ',e.last_name) AS employee, a.curr, '0' AS till, p.notes
+				e.first_name \|\| ' ' \|\| e.last_name AS employee, a.curr, '0' AS till, p.notes
 				$makemodelfld|;
 
             if ( $form->{quoted} ) {
@@ -1493,7 +1493,7 @@ sub all_parts {
 					pg.partsgroup, '' AS invnumber, 
 					a.ordnumber, a.quonumber,
 					i.trans_id, ct.employee_id, 
-					CONCAT(e.first_name,' ',e.last_name) AS employee,
+					e.first_name \|\| ' ' \|\| e.last_name AS employee,
 					a.curr, '0' AS till, p.notes
 					$makemodelfld|;
 
