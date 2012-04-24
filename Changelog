@@ -16,6 +16,7 @@ General Enhancements:
 * Simpler use of Log::Log4perl instead of LedgerSMB::Log (Chris T)
 * Changing all auth calls to hit postgres db instead of template1 (Chris T)
 * Centralized database commit for new code (Chris T)
+* invoice.unit is now unbounded numeric to reduce errors (Chris T, 3516235)
 
 New Reporting Framework
 * Easy bridge between SQL and display (Chris T)

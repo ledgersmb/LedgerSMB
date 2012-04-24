@@ -1456,7 +1456,7 @@ CREATE TABLE invoice (
   fxsellprice NUMERIC,
   discount numeric,
   assemblyitem bool DEFAULT 'f',
-  unit varchar(5),
+  unit varchar(),
   deliverydate date,
   serialnumber text,
   notes text
