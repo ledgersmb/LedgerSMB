@@ -1969,7 +1969,7 @@ sub all_accounts {
 =item $form->all_taxaccounts($myconfig, $dbh2[, $transdate]);
 
 Get the tax rates and numbers for all the taxes in $form->{taxaccounts}.  Does
-nothing if $form->{taxaccounts} is false.  Taxes are listed as a space seperated
+nothing if $form->{taxaccounts} is false.  Taxes are listed as a space separated
 list of account numbers from the chart.  The retrieved values are placed within
 $form->{${accno}_rate} and $form->{${accno}_taxnumber}.  If $transdate is set,
 then only process taxes that were valid on $transdate.
@@ -2187,7 +2187,7 @@ Populates the hash referred to as $form->{${module}_links} details about
 accounts that have $module in their link field.  The hash is keyed upon link
 elements such as 'AP_amount' and 'AR_tax' and they refer to lists of hashes
 containing accno and description for the appropriate accounts.  If the key does
-not contain 'tax', the account number is appended to the space seperated list
+not contain 'tax', the account number is appended to the space separated list
 $form->{accounts}.  $module is typically 'AR' or 'AP' and is the base type of
 the accounts looked up.
 
@@ -2754,7 +2754,7 @@ sub update_status {
 Clears out any old status entries for $form->{id} and saves new status entries.
 Queued form names are extracted from $form->{queued}.  Printed and emailed form
 names are extracted from $form->{printed} and $form->{emailed}.  The queued,
-printed, and emailed fields are space seperated lists.
+printed, and emailed fields are space separated lists.
 
 =cut
 
@@ -2898,7 +2898,7 @@ sub get_recurring {
 Saves or deletes recurring transaction scheduling.  $form->{id} is used to
 determine the id used in the various recurring tables.  A recurring transaction
 schedule is deleted by having $form->{recurring} be false.  For adding or
-updating a schedule, $form->{recurring} is a comma seperated field with partial
+updating a schedule, $form->{recurring} is a comma separated field with partial
 subfield quoting of the form:
 
   reference,startdate,repeat,unit,howmany,payment,print,email,message
@@ -2933,11 +2933,11 @@ Flag to indicate if a payment is included in the transaction.
 
 =item print
 
-A colon seperated list of formname:format:printer triplets.
+A colon separated list of formname:format:printer triplets.
 
 =item email
 
-A colon seperated list of formname:format pairs.
+A colon separated list of formname:format pairs.
 
 =item message
 

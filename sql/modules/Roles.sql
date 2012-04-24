@@ -856,6 +856,9 @@ WITH INHERIT NOLOGIN;
 
 GRANT "lsmb_<?lsmb dbname ?>__file_read" TO "lsmb_<?lsmb dbname ?>__part_edit";
 
+GRANT ALL ON partscustomer_entry_id_seq 
+TO "lsmb_<?lsmb dbname ?>__contact_edit", "lsmb_<?lsmb dbname ?>__part_edit";
+
 GRANT SELECT ON assembly, orderitems, jcitems, invoice, business_unit_oitem 
 TO "lsmb_<?lsmb dbname ?>__part_edit";
 

@@ -3,6 +3,7 @@
  \usepackage{xltxtra}
  \setmainfont{Verdana}
 \usepackage{tabularx}
+\usepackage{longtable}
 \usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
 \usepackage{graphicx}
 
@@ -118,10 +119,10 @@
   
 \vspace{1cm}
 
-\begin{tabularx}{\textwidth}{@{}rlXrll@{}}
+\begin{longtable}{@{\extracolsep{\fill}}rllrll@{}}
   \textbf{<?lsmb text('Item') ?>} & \textbf{<?lsmb text('Number') ?>} 
   & \textbf{<?lsmb text('Description') ?>} & \textbf{<?lsmb text('Qty') ?>} &
-  & \textbf{<?lsmb text('Serial Number')} \\
+  & \textbf{<?lsmb text('Serial Number') ?>} \\
 <?lsmb FOREACH number ?>
 <?lsmb lc = loop.count - 1 ?>
   <?lsmb runningnumber.${lc} ?> &
@@ -131,7 +132,7 @@
   <?lsmb unit.${lc} ?> &
   <?lsmb serialnumber.${lc} ?> \\
 <?lsmb END ?>
-\end{tabularx}
+\end{longtable}
 
 
 \parbox{\textwidth}{
