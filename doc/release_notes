@@ -70,6 +70,10 @@ transactions are now separate.  By default, this means that a transaction now is
 entered first and then approved, and it only posts to the books when it is
 approved.  Bank reconciliation works on a similar principle.
 
+Note that in 1.3.x, AR/AP recurring transactions are saved rather than posted, 
+assuming that separation of duties is not disabled.  These are then approved or 
+deleted through the normal transaction approval workflows.
+
 Bank reconciliation also has been entirely redesigned to provide multi-user-safe
 workflows, and an ability to reasonably handle a much larger transaction load
 than was previously possible.  This includes a new user interface design, and a
