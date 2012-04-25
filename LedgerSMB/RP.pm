@@ -1841,7 +1841,7 @@ sub aging {
                        a.curr, a.ponumber, a.notes, c.language_code
 		HAVING sum(p.due) <> 0|;
 
-    $query .= qq| ORDER BY e.legal_name, ctid, curr, $transdate, invnumber|;
+    $query .= qq| ORDER BY curr, e.legal_name, ctid, $transdate, invnumber|;
     $sth = $dbh->prepare($query) || $form->dberror($query);
 
     $sth->execute($form->{todate}, $form->{todate}, $form->{todate}, 

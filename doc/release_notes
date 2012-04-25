@@ -1,7 +1,7 @@
 RELEASE NOTES
 LedgerSMB 1.3
 
-Latest Revision:  1.3.14, March 28, 2012.
+Latest Revision:  1.3.16, April 25, 2012.
 
 1:  Welcome to LedgerSMB
 
@@ -125,18 +125,34 @@ unless you are able to reverse on the same day.  If reversed on different days t
 gain/loss will be realized per the time when the payment was in effect and 
 not reversed.
 
-3.3:  Missing Annual Daily Straight Line Stored Procedure
+3.3:  Invoice unit column throws error when too long.
 
-Apparently the stored procedure for handling asset depreciation where the annual
-daily straight line method is selected is missing.  More typically, the annual
-monthly method is used.  For now, use that method instead.
+The unit column in the invoice is limited to 5 characters and will throw an SQl error when it is too long.  The error looks like:
 
-The differences between these methods do not result in financial differences
-over the course of a year.  Rather they affect how that annual depreciation is
-spread out over the year.  In daily, the year is divided into equal parts per
-day so we depreciate less in February than in August.  In monthly, we depreciate
-1/12th of the annual depreciation amount each month, so February and August show
-the same depreciation values.
+UPDATE invoice
+SET trans_id = ?,
+parts_id = ?,
+description = ?,
+qty = ?,
+sellprice = ?,
+fxsellprice = ?,
+discount = ?,
+allocated = ?,
+unit = ?,
+deliverydate = ?,
+project_id = ?,
+serialnumber = ?,
+precision = ?,
+notes = ?
+WHERE id = ?
+ERROR: value too long for type character varying(5)
+
+Due to compatibility issues, a fix for this has been included for 1.4, but is
+not planned to be backported for 1.3.
+
+If you need change the maximum length, you can:
+
+ALTER TABLE invoice SET unit TYPE varchar([length]);
 
 4:  Differences between LedgerSMB and SQL-Ledger(TM)
 

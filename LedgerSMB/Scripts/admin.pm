@@ -164,6 +164,8 @@ sub new_user {
     #my ($request) = @_;
     my $request = shift @_;
     my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
+
+    my $setting = LedgerSMB::Setting->new(base => $request, copy => 'base');
     
     my @sal = $admin->get_salutations();
     
@@ -182,6 +184,7 @@ sub new_user {
     
         $template->render(
             {
+                default_country => $setting->get('default_country'),
                 salutations=>\@sal,
                 roles=>$groups,
                 countries=>$admin->get_countries(),
