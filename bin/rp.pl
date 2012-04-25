@@ -1054,7 +1054,7 @@ sub aging {
                 $column_data{c90}   = $c90total;
                 $column_data{total} = $total;
 
-                push @{$currencies[0]{totals}}, \%column_data;
+                $currencies[0]{totals} =  \%column_data;
 
                 $c0subtotal  = 0;
                 $c30subtotal = 0;
@@ -1221,8 +1221,8 @@ qq|$ref->{module}.pl?path=$form->{path}&action=edit&id=$ref->{id}&login=$form->{
     $column_data{c60}   = $c60total;
     $column_data{c90}   = $c90total;
     $column_data{total} = $total;
-    
-    $currencies[0]{total} = \%column_data;
+
+    $currencies[0]{totals} = \%column_data;
 
     $row_alignment{c0}     = 'right';
     $row_alignment{c30}    = 'right';
@@ -1303,6 +1303,7 @@ qq|$ref->{module}.pl?path=$form->{path}&action=edit&id=$ref->{id}&login=$form->{
         path => 'UI',
         format => $format,
         );
+
     $template->render({
         form => $form,
         hiddens => \%hiddens,
