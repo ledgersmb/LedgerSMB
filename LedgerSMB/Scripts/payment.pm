@@ -1364,6 +1364,10 @@ sub print_payment {
 #  $Payment->{format_amount} = sub {return $Payment->format_amount(@_); };
   # IF YOU NEED MORE INFORMATION ON THE HEADER AND ROWS ITEMS CHECK SQL FUNCTIONS
   # payment_gather_header_info AND payment_gather_line_info  
+  for my $row (@rows) {
+      $row->{amount} = $Payment->format_amount({amount => $row->{amount},
+                                               money => 1});
+  }
   my $select = {
       header        => $header,
       rows          => \@rows,
