@@ -1508,6 +1508,9 @@ sub taxes {
     $i = 0;
     foreach $ref ( @{ $form->{taxrates} } ) {
         $i++;
+        $form->{"minvalue_$i"} = 
+          $form->format_amount( \%myconfig, $ref->{minvalue}) || 0;
+        
         $form->{"taxrate_$i"} =
           $form->format_amount( \%myconfig, $ref->{rate} );
         $form->{"taxdescription_$i"} = $ref->{description};

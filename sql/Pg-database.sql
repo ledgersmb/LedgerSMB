@@ -1460,6 +1460,7 @@ COMMENT ON TABLE partstax IS $$ Mapping of parts to taxes.$$;
 CREATE TABLE tax (
   chart_id int REFERENCES account(id),
   rate numeric,
+  minvalue numeric,
   taxnumber text,
   validto timestamp not null default 'infinity',
   pass integer DEFAULT 0 NOT NULL,

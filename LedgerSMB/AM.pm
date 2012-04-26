@@ -1860,7 +1860,7 @@ sub taxes {
     my $query = qq|
 		  SELECT c.id, c.accno, c.description, 
 		         t.rate * 100 AS rate, t.taxnumber, t.validto,
-			 t.pass, m.taxmodulename
+			 t.minvalue, t.pass, m.taxmodulename
 		    FROM chart c
 		    LEFT JOIN
                      (tax t JOIN taxmodule m 
@@ -1948,11 +1948,11 @@ sub save_taxes {
         $form->{"pass_$i"} = 0 if not $form->{"pass_$i"};
         delete $form->{"old_validto_$i"} if ! $form->{"old_validto_$i"};
 
-        $sth = $dbh->prepare('select account__save_tax(?,?,?,?,?,?,?)');         
+        $sth = $dbh->prepare('select account__save_tax(?,?,?,?,?,?,?,?)');         
         my @queryargs = (
-            $chart_id, $validto, $rate, $form->{"taxnumber_$i"},
-            $form->{"pass_$i"}, $form->{"taxmodule_id_$i"},
-            $form->{"old_validto_$i"}
+            $chart_id, $validto, $rate, $form->{"minvalue_$i"},
+            $form->{"taxnumber_$i"}, $form->{"pass_$i"}, 
+            $form->{"taxmodule_id_$i"}, $form->{"old_validto_$i"}
         );
        $sth->execute(@queryargs) ||$form->dberror($query);
        $sth->finish;

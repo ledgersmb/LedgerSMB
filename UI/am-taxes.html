@@ -10,6 +10,7 @@
 	<tr>
 	  <th></th>
 	  <th><?lsmb text('Rate (%)') ?></th>
+	  <th><?lsmb text('Min Taxable') ?></th>
 	  <th><?lsmb text('Number') ?></th>
 	  <th><?lsmb text('Valid To') ?></th>
 	  <th><?lsmb text('Ordering') ?></th>
@@ -19,6 +20,7 @@
 	<tr>
 	  <th align="right"><?lsmb row.0 ?></th>
 	  <td><input name="taxrate_<?lsmb i ?>" size="6" value="<?lsmb form.item("taxrate_$i") ?>" /></td>
+	  <td><input name="minvalue_<?lsmb i ?>" size="6" value="<?lsmb form.item("minvalue_$i") ?>" /></td>
 	  <td><input name="taxnumber_<?lsmb i ?>" value="<?lsmb form.item("taxnumber_$i") ?>" /></td>
 	  <td><input class="date" name="validto_<?lsmb i ?>" size="11" value="<?lsmb form.item("validto_$i") ?>" title="<?lsmb user.dateformat ?>" /></td>
 	  <td><input name="pass_<?lsmb i ?>" size="6" value="<?lsmb form.item("pass_$i") ?>" /></td>

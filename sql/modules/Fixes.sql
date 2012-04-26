@@ -261,3 +261,11 @@ BEGIN;
 ALTER TABLE cr_report ADD recon_fx bool default false;
 
 COMMIT;
+
+BEGIN;
+
+-- MIN VALUE FOR TAXES
+
+ALTER TABLE tax ADD minvalue numeric;
+
+COMMIT;

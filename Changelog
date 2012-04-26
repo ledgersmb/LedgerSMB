@@ -10,9 +10,10 @@ Changelog for 1.3.16
 * Correcting ordering of aging reports so currencies are clustered (Chris T)
 * Fixed curr totals not showing for aging rpts (Chris T, 3512591, h/t John L)
 * Fixed new user screen not respecting default country (Chris T, 3513760)
-* Fixed hasn(...) in HTML payment receipt (Chris T, 3515924, h/t Michael R)
+* Fixed hash(...) in HTML payment receipt (Chris T, 3515924, h/t Michael R)
 * Fixed errors about Concat() not found on Pg 8.4 (Erik H)
 * Fixed can't edit templates with absolute templates path (Chris T 3516725)
+* Added API for minimum value for taxes for local tax modules (Chris T)
 
 John L is John Locke
 Michael R is Michael Richardson

@@ -254,14 +254,20 @@ COMMENT ON FUNCTION account_heading__list() IS
 $$ Returns a list of all account headings, currently ordered by account number.
 $$;
 
+DROP FUNCTION IF EXISTS account__save_tax
+(in_chart_id int, in_validto date, in_rate numeric, in_taxnumber text,
+in_pass int, in_taxmodule_id int, in_old_validto date);
+
 CREATE OR REPLACE FUNCTION account__save_tax
-(in_chart_id int, in_validto date, in_rate numeric, in_taxnumber text, 
+(in_chart_id int, in_validto date, in_rate numeric, in_minvalue numeric, 
+in_taxnumber text, 
 in_pass int, in_taxmodule_id int, in_old_validto date)
 returns bool as
 $$
 BEGIN
 	UPDATE tax SET validto = in_validto,
                rate = in_rate,
+               minvalue = in_minvalue,
                taxnumber = in_taxnumber,
                pass = in_pass,
                taxmodule_id = in_taxmodule_id
@@ -271,9 +277,10 @@ BEGIN
              return true;
          END IF;
 
-         INSERT INTO tax(chart_id, validto, rate, taxnumber, pass, taxmodule_id)
-         VALUES (in_chart_id, in_validto, in_rate, in_taxnumber, in_pass,
-                 in_taxmodule_id);
+         INSERT INTO tax(chart_id, validto, rate, minvalue, taxnumber, pass, 
+                        taxmodule_id)
+         VALUES (in_chart_id, in_validto, in_rate, in_minvalue, in_taxnumber, 
+                in_pass, in_taxmodule_id);
 
          RETURN TRUE;
 
@@ -281,6 +288,6 @@ END;
 $$ language plpgsql;
 
 COMMENT ON FUNCTION account__save_tax
-(in_chart_id int, in_validto date, in_rate numeric, in_taxnumber text,
-in_pass int, in_taxmodule_id int, in_old_validto date) IS
+(in_chart_id int, in_validto date, in_rate numeric, in_minval numeric, 
+in_taxnumber text, in_pass int, in_taxmodule_id int, in_old_validto date) IS
 $$ This saves tax rates.$$; 
