@@ -1,7 +1,7 @@
 RELEASE NOTES
 LedgerSMB 1.3
 
-Latest Revision:  1.3.16, April 25, 2012.
+Latest Revision:  1.3.16, April 30, 2012.
 
 1:  Welcome to LedgerSMB
 
@@ -103,12 +103,21 @@ assigned separately on different databases.
 
 2.6:  Fixed Asset Handling
 
-LedgerSMB 1.3 comes with a fixed asset module, meaning you can now define your assets,
-depreciate them, and dispose of them either entirely or partially.
+LedgerSMB 1.3 comes with a fixed asset module, meaning you can now define your 
+assets, depreciate them, and dispose of them either entirely or partially.
 
 The fixed asset system is designed to be extensible.  Currently only time-based, 
-straight-line depreciations are included.  However the system is designed to allow the 
-creation of new depreciation methods including time-based and production-based methods.
+straight-line depreciations are included.  However the system is designed to 
+allow the creation of new depreciation methods including time-based and 
+production-based methods.
+
+2.7:  Tax Changes
+
+As of LedgerSMB 1.3.16, a few changes were made to the Sales Tax API so that it 
+is easier to implement local tax rules.  This includes a minimum tax value, 
+exposed through  the user interface, and a maximum value which is not yet
+exposed.  The handling of these are module-specific and they are ignored by the
+Simple tax module included.
 
 3:  Known Issues
 

@@ -1101,6 +1101,10 @@ The tax rules drop-down box allows one to select any installed tax module
 integer which allows one to specify a tax run which occurs on the form after
 any rules with lower entries in this box.  This allows for compounding of sales tax (for example, when PST applies to the total and GST as well).
 
+As in 1.3.16, new API's have been added to allow one to pass info to tax modules
+as to minimum and maximum taxable values.  These values are not currently used
+by the simple tax module, but this behavior may change in the future.
+
 \subsubsection{Adding A Sales Tax Account}
 
 Sales Tax is collected on behalf of a state or national government

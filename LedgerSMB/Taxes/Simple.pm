@@ -37,6 +37,7 @@ struct Taxes::Simple => {
     account     => '$',
     value       => 'Math::BigFloat',
     minvalue    => 'Math::BigFloat', #Ignored in Simple Tax rules
+    maxvalue    => 'Math::BigFloat', #Ignored in Simple Tax rules
     pass        => '$'
 };
 
