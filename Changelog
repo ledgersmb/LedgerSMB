@@ -14,6 +14,7 @@ Changelog for 1.3.16
 * Fixed errors about Concat() not found on Pg 8.4 (Erik H)
 * Fixed can't edit templates with absolute templates path (Chris T 3516725)
 * Added API for minimum value for taxes for local tax modules (Chris T)
+* Added API (but not UI) for tax max value (Chris T)
 
 John L is John Locke
 Michael R is Michael Richardson

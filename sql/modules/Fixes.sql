@@ -267,5 +267,7 @@ BEGIN;
 -- MIN VALUE FOR TAXES
 
 ALTER TABLE tax ADD minvalue numeric;
+ALTER TABLE tax ADD maxvalue numeric;
+
 
 COMMIT;

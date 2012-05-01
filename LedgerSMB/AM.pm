@@ -1947,10 +1947,11 @@ sub save_taxes {
         $validto = 'infinity' if not $validto;
         $form->{"pass_$i"} = 0 if not $form->{"pass_$i"};
         delete $form->{"old_validto_$i"} if ! $form->{"old_validto_$i"};
-
-        $sth = $dbh->prepare('select account__save_tax(?,?,?,?,?,?,?,?)');         
+	
+        $sth = $dbh->prepare('select account__save_tax(?,?,?,?,?,?,?,?,?)');         
         my @queryargs = (
-            $chart_id, $validto, $rate, $form->{"minvalue_$i"},
+            $chart_id, $validto, $rate, 
+            $form->{"minvalue_$i"}, $form->{"maxvalue_$i"},
             $form->{"taxnumber_$i"}, $form->{"pass_$i"}, 
             $form->{"taxmodule_id_$i"}, $form->{"old_validto_$i"}
         );

@@ -260,7 +260,7 @@ in_pass int, in_taxmodule_id int, in_old_validto date);
 
 CREATE OR REPLACE FUNCTION account__save_tax
 (in_chart_id int, in_validto date, in_rate numeric, in_minvalue numeric, 
-in_taxnumber text, 
+in_maxvalue numeric, in_taxnumber text, 
 in_pass int, in_taxmodule_id int, in_old_validto date)
 returns bool as
 $$
@@ -268,6 +268,7 @@ BEGIN
 	UPDATE tax SET validto = in_validto,
                rate = in_rate,
                minvalue = in_minvalue,
+               maxvalue = in_maxvalue,
                taxnumber = in_taxnumber,
                pass = in_pass,
                taxmodule_id = in_taxmodule_id
@@ -277,10 +278,10 @@ BEGIN
              return true;
          END IF;
 
-         INSERT INTO tax(chart_id, validto, rate, minvalue, taxnumber, pass, 
-                        taxmodule_id)
-         VALUES (in_chart_id, in_validto, in_rate, in_minvalue, in_taxnumber, 
-                in_pass, in_taxmodule_id);
+         INSERT INTO tax(chart_id, validto, rate, minvalue, maxvalue, taxnumber,
+                        pass, taxmodule_id)
+         VALUES (in_chart_id, in_validto, in_rate, in_minvalue, in_maxvalue, 
+                in_taxnumber, in_pass, in_taxmodule_id);
 
          RETURN TRUE;
 
