@@ -16,6 +16,8 @@ Changelog for 1.3.16
 * Added API for minimum value for taxes for local tax modules (Chris T)
 * Added API (but not UI) for tax max value (Chris T)
 
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
 John L is John Locke
 Michael R is Michael Richardson
 
