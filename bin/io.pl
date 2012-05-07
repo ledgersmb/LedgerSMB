@@ -85,6 +85,7 @@ if ( -f "bin/custom/$form->{login}_io.pl" ) {
 # $locale->text('Dec')
 
 sub _calc_taxes {
+    $form->{subtotal} = $form->{invsubtotal};
     for $i (1 .. $form->{rowcount}){
         my $linetotal = 
              $form->parse_amount(\%myconfig, $form->{"sellprice_$i"}) 
