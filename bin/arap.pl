@@ -156,7 +156,7 @@ sub check_name {
 sub select_name {
     my ($table) = @_;
 
-    @column_index = qw(ndx name control_code meta_number);
+    @column_index = qw(ndx name control_code meta_number address city);
 
     $label = ucfirst $table;
     %column_data = (ndx => qq|<th>&nbsp;</th>|,
@@ -165,7 +165,11 @@ sub select_name {
            control_code => qq|<th class=listheading>| .
                                $locale->text('Control Code') . qq|</th>|,
             meta_number => qq|<th class=listheading>| .
-                               $locale->text('[_1] Number', $label) . qq|</th>|
+                               $locale->text('[_1] Number', $label) . qq|</th>|,
+            address => qq|<th class=listheading>| .
+                               $locale->text('Address') . '</th>',
+            city => qq|<th class=listheading>| .
+	                       $locale->text('City') . '</th>',
     );
     
 
@@ -195,13 +199,13 @@ sub select_name {
 	</tr>
 |;
 
-    @column_index = qw(ndx name control_code meta_number);
-
     my $i = 0;
     foreach $ref ( @{ $form->{name_list} } ) {
         $checked = ( $i++ ) ? "" : "checked";
 
-        $ref->{name} = $form->quote( $ref->{name} );
+        foreach (qw(name address city state zipcode country)) {
+        	$ref->{$_} = $form->quote( $ref->{$_} );
+	}
 
         $column_data{ndx} =
 qq|<td><input name=ndx class=radio type=radio value=$i $checked></td>|;
@@ -211,8 +215,7 @@ qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</
 qq|<td><input name="new_control_code_$i" type=hidden value="$ref->{control_code}">$ref->{control_code}</td>|;
         $column_data{meta_number} =
 qq|<td><input name="new_meta_number_$i" type=hidden value="$ref->{meta_number}">$ref->{meta_number}</td>|;
-        $column_data{address} = qq|<td>$ref->{address1} $ref->{address2}</td>|;
-        $column_data{address} = qq|<td>$ref->{address1} $ref->{address2}</td>|;
+        $column_data{address} = qq|<td>$ref->{address}</td>|;
         for (qw(city state zipcode country)) {
             $column_data{$_} = qq|<td>$ref->{$_}&nbsp;</td>|;
         }
