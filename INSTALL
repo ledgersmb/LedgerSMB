@@ -82,12 +82,39 @@ PostgreSQL authorization settings (pg_hba.conf)
 pg_hba.conf settings for production
 -----------------------------------
 
-<section to be filled out>
+LedgerSMB passes through the HTTP auth info to PostgreSQL as user
+credentials.  Currently we do not support Kerberos auth but that won't
+be hard to add once someone wants it (maybe a couple hours of
+development time).  Consequently, you should be aware of a couple of
+things:
 
-pg_hba.conf settings during setup (tools/prepare-company-database.sh)
----------------------------------------------------------------------
+1)  Re-usable credentials are required.  That basically means HTTP
+Basic unless you want to set up Kerberos.  As a result you will
+certainly want to run this over SSL if this is not a single system
+operation (which in your cases it is not).
 
-<section to be filled out>
+2)  This also means that PostgreSQL must be able to use the
+credentials the web server accepts.  Currently we recommend the md5
+authentication method in the pg_hba.conf.  If you set pg_hba.conf
+options to trust, then it won't even check the password or the
+password expiration, so don't do that outside of testing/recovery
+scenarios.
+
+3)  The postgres user or other db superuser must be given access via
+the web app in order to create databases.
+
+A typical pg_hba.conf entry might be:
+
+host   all   all   127.0.0.1/32    md5
+
+If you want to lock this down, you can lock it down further by:
+host   lsmbdb  all  127.0.0.1/32    md5
+host  postgres postgres  127.0.0.1/32    md5
+
+As of 1.4, connections to template1 are no longer required for the db setup 
+process.
+
+Note that the above will require new pg_hba.conf lines for each db created.
 
 
 Installing Perl module dependencies
