@@ -1017,7 +1017,7 @@ sub _db_init {
 
     ($self->{_role_prefix}) = $sth->fetchrow_array;
     if ($dbversion ne $self->{dbversion}){
-        $self->error("Database is not the expected version.  Was $dbversion, expected $self->{dbversion}.  Please re-run setup.pl against this database to correct.");
+        $self->error("Database is not the expected version.  Was $dbversion, expected $self->{dbversion}.  Please re-run setup.pl against this database to correct.<a href='setup.pl'>setup.pl</a>");
     }
 
     $sth = $self->{dbh}->prepare('SELECT check_expiration()');
