@@ -714,6 +714,8 @@ sub invoice_details {
 
     $form->format_string(qw(text_amount text_decimal));
 
+    $form->{invtotal} ||= 0;
+    $form->{paid} ||= 0;
     $form->{total} =
       $form->format_amount( $myconfig, $form->{invtotal} - $form->{paid}, 2 );
 

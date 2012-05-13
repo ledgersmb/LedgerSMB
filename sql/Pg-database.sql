@@ -3769,7 +3769,7 @@ $$ Maps disposal method to line items in the asset disposal report.$$;
 CREATE TABLE mime_type (
        id serial not null unique,
        mime_type text primary key,
-       invoice_include bool default false,
+       invoice_include bool default false
 );
 
 COMMENT ON TABLE mime_type IS

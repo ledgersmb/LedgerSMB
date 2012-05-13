@@ -1592,10 +1592,7 @@ sub print_form {
         );
         $form->{file_list} = \@files;
         $form->{file_path} = $file->file_path;
-        $form->error($file->file_path);
     }
-
-    $form->error;
 
     &validate_items;
 
