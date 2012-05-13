@@ -240,7 +240,6 @@ $$ language plpgsql;
 COMMIT;
 
 BEGIN; -- Search Assets menu
-UPDATE update menu_node set position = 3 where position = 2 and parent = 229;
 update menu_node set parent = 229 where id = 233;
 COMMIT;
 
@@ -269,5 +268,12 @@ BEGIN;
 ALTER TABLE tax ADD minvalue numeric;
 ALTER TABLE tax ADD maxvalue numeric;
 
+
+COMMIT;
+
+BEGIN;
+
+ALTER TABLE mime_type ADD invoice_include bool default false;
+UPDATE mime_type SET invoice_include = 'true' where mime_type like 'image/%';
 
 COMMIT;

@@ -1290,6 +1290,26 @@ sub print_button {
 qq|<button class="submit" type="submit" name="action" value="$name" accesskey="$button->{$name}{key}" title="$button->{$name}{value} [Alt-$button->{$name}{key}]">$button->{$name}{value}</button>\n|;
 }
 
+
+=item test_should_get_images
+
+Returns true if images should get be retrieved for embedding in templates
+
+=cut
+
+
+sub test_should_get_images {
+    my ($self)  = @_;
+    my $dbh = $self->{dbh};
+    my $sth = $dbh->prepare(
+        "SELECT value FROM defaults WHERE setting_key = 'template_images'"
+    );
+    $sth->execute;
+    my ($retval) = $sth->fetchrow_array();
+    return $retval;
+}
+
+
 # Database routines used throughout
 
 =item $form->db_init($myconfig);

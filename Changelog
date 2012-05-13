@@ -7,6 +7,8 @@ Changelog for 1.3.17
 * Taxes::Simple now respects min/max values based on subtotal (Chris T)
 * Fixed company name/address missing from income statement (Chris T, h/t Mark L)
 * Fixed company name/address missing from balance sheet (Chris T, h/t Mark L)
+* Optional image retrieval with size detection for latex templates (Chris T)
+* Added option to attach images to LaTeX PDF invoices/orders/etc (Chris T)
 
 Mark L is Matt Lubratt
 

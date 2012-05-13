@@ -1704,7 +1704,7 @@ sub save_defaults {
                       sonumber ponumber sqnumber rfqnumber partnumber 
                       employeenumber customernumber vendornumber projectnumber 
                       yearend curr weightunit businessnumber default_country 
-                      check_prefix password_duration templates vclimit)
+                      check_prefix password_duration templates vclimit template_images)
     }
     for (@$defaults)
     {

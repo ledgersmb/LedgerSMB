@@ -80,7 +80,7 @@ my @default_textboxes = (
 my @default_others = qw(businessnumber weightunit separate_duties default_language
                         inventory_accno_id income_accno_id expense_accno_id 
                         fxgain_accno_id fxloss_accno_id default_country 
-                        templates curr);
+                        templates curr template_images);
 
 sub save_as_new {
 
