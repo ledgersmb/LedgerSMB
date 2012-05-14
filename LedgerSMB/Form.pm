@@ -96,7 +96,9 @@ sub new {
 
     $ENV{CONTENT_LENGTH} = 0 unless defined $ENV{CONTENT_LENGTH};
 
-    if ( ( $ENV{CONTENT_LENGTH} != 0 ) && ( $ENV{CONTENT_LENGTH} > $LedgerSMB::Sysconfig::max_post_size ) ) {
+    if ( ( $ENV{CONTENT_LENGTH} != 0 ) 
+         && ( $ENV{CONTENT_LENGTH} > $LedgerSMB::Sysconfig::max_post_size ) 
+         && $LedgerSMB::Sysconfig::max_post_size  != -1) {
         print "Status: 413\n Request entity too large\n\n";
         die "Error: Request entity too large\n";
     }

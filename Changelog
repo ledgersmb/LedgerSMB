@@ -13,6 +13,7 @@ Changelog for 1.3.17
 * Fixed file uploads sometimes hanging (Chris T)
 * Fixed file uploads sometimes throwing action not found errors (Chris T)
 * Fixed helpful DB error messages not displayed (Chris T)
+* Fixing Form.pm so that max_post_size = -1 behaves as in CGI::Simple (Chris T)
 
 Mark L is Matt Lubratt
 
