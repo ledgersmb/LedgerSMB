@@ -82,7 +82,8 @@ sub init_taxes {
         $tax->chart( $ref->{'chart'} );
         $tax->description( $ref->{'description'} );
         $tax->value( Math::BigFloat->bzero() );
-        $tax->minvalue($ref->{'minvalue'});
+        $tax->minvalue(Math::BigFloat->new($ref->{'minvalue'} || 0));
+        $tax->maxvalue(Math::BigFloat->new($ref->{'maxvalue'} || 0));
 
         push @taxes, $tax;
         $sth->finish;#should this not be out of foreach loop?, to examine
