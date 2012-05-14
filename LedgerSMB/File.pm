@@ -312,6 +312,7 @@ sub get_for_template{
     
     for my $result (@results) {
         open FILE, '>', $self->file_path . "/$result->{file_name}";
+        binmode FILE, ':bytes';
         print FILE $result->{content};
         close FILE;
         eval { # Block used so that Image::Size is optional

@@ -1069,7 +1069,7 @@ sub dberror{
    my $self = shift @_;
    my $state_error = {};
    if ($self->{_locale}){
-       my $state_error = {
+       $state_error = {
             '42883' => $self->{_locale}->text('Internal Database Error'),
             '42501' => $self->{_locale}->text('Access Denied'),
             '42401' => $self->{_locale}->text('Access Denied'),
@@ -1077,7 +1077,7 @@ sub dberror{
             '22012' => $self->{_locale}->text('Division by 0 error'),
             '22004' => $self->{_locale}->text('Required input not provided'),
             '23502' => $self->{_locale}->text('Required input not provided'),
-            '23505' => $self->{_locale}->text('Conflict with Existing Data'),
+            '23505' => $self->{_locale}->text('Conflict with Existing Data.  Perhaps you already entered this?'),
             'P0001' => $self->{_locale}->text('Error from Function:') . "\n" .
                     $self->{dbh}->errstr,
        };

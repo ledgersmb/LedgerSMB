@@ -10,7 +10,9 @@ Changelog for 1.3.17
 * Optional image retrieval with size detection for latex templates (Chris T)
 * Added option to attach images to LaTeX PDF invoices/orders/etc (Chris T)
 * Corrected one is_zero error with latest Math::BigInt (Chris T)
-
+* Fixed file uploads sometimes hanging (Chris T)
+* Fixed file uploads sometimes throwing action not found errors (Chris T)
+* Fixed helpful DB error messages not displayed (Chris T)
 
 Mark L is Matt Lubratt
 
