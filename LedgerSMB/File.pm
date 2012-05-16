@@ -75,9 +75,24 @@ ID of the file class.
 
 ID of class of the original attachment point (for a link)
 
+=item file_path
+
+Path, relative to $LedgerSMB::tempdir, where file data is stored (for LaTeX use
+of attached images).
+
 =item dbobject
 
 Object for db interface.
+
+=item sizex
+
+X axis dimensions, if Image::Size is installed and file is image (only on files
+retrieved for invoices).
+
+=item sizey
+
+Y axis dimensions, if Image::Size is installed and file is image (only on files
+retrieved for invoices).
 
 =item x_info
 
@@ -105,6 +120,9 @@ struct 'LedgerSMB::File' => {
    file_class     =>  '$',
    src_class      =>  '$',
    dbobject       =>  'LedgerSMB::DBObject',
+   file_path      =>  '$',
+   sizex          =>  '$',
+   sizey          =>  '$',
    x_info         =>  '%'
 };
 
@@ -269,6 +287,53 @@ sub get{
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'file__get'});
     $self->merge($ref);
+}
+
+=item get_for_template({ref_key => int, file_class => int})
+
+Returns file data for invoices for embedded images, except that content is set
+to a directive relative to tempdir where these files are stored.
+
+=cut
+
+sub get_for_template{
+    my ($self, $args) = @_;
+
+    my @results = $self->exec_method(
+                 {funcname => 'file__get_for_template',
+                      args => [$args->{ref_key}, $args->{file_class}]
+                 }
+     );
+    if ( -d $LedgerSMB::Sysconfig::tempdir . '/' . $$){
+        die 'directory exists';
+    }
+    mkdir $LedgerSMB::Sysconfig::tempdir . '/' . $$;
+    $self->file_path($LedgerSMB::Sysconfig::tempdir . '/' . $$);
+    
+    for my $result (@results) {
+        open FILE, '>', $self->file_path . "/$result->{file_name}";
+        binmode FILE, ':bytes';
+        print FILE $result->{content};
+        close FILE;
+        eval { # Block used so that Image::Size is optional
+           require Image::Size;
+           my ($x, $y);
+           ($x, $y) = imgsize(\{$result->{content}});
+           $result->{sizex} = $x;
+           $result->{sizey} = $y;
+        };
+    }
+}
+
+
+sub DESTROY {
+   my ($self) = $_;
+   opendir(TMP, $self->{file_path}) || return 1;
+   for my $file (readdir(TMP)){
+       unlink $self->{file_path} . '/' . $file;
+   }
+   closedir (TMP);
+   rmdir $self->{file_path};
 }
 
 =item list({ref_key => int, file_class => int})

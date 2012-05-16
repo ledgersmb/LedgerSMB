@@ -152,6 +152,22 @@ CREATE TYPE file_list_item AS (
        content bytea
 );
 
+CREATE OR REPLACE FUNCTION file__get_for_template
+(in_ref_key int, in_file_class int)
+RETURNS SETOF file_list_item AS
+$$ 
+
+SELECT m.mime_type, f.file_name, f.description, f.uploaded_by, e.name, 
+       f.uploaded_at, f.id, f.ref_key, f.file_class,  f.content
+  FROM mime_type m
+  JOIN file_base f ON f.mime_type_id = m.id
+  JOIN entity e ON f.uploaded_by = e.id
+ WHERE f.ref_key = $1 and f.file_class = $2
+       AND m.invoice_include;
+
+$$ language sql;
+
+
 CREATE OR REPLACE FUNCTION file__list_by(in_ref_key int, in_file_class int)
 RETURNS SETOF file_list_item AS
 $$

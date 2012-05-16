@@ -390,7 +390,7 @@ isa_ok($template, 'LedgerSMB::Template',
 is($template->{include_path}, 't/data',
 	'Template, new (TXT): Object creation with format and template');
 is($template->render({'login' => 'foo&bar'}),
-	undef,
+	'04-template.txt',
 	'Template, render: Simple text template, no filename');
 is($template->{output}, "I am a template.\nLook at me foo&bar.\n", 
 	'Template, render (TXT): Simple TXT template, correct output');

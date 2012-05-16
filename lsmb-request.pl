@@ -26,7 +26,7 @@ use Try::Tiny;
 
 $| = 1;
 
-binmode (STDIN, ':utf8');
+binmode (STDIN, ':bytes');
 binmode (STDOUT, ':utf8');
 use LedgerSMB::User;
 use LedgerSMB::App_State;

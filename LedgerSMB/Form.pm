@@ -97,7 +97,9 @@ sub new {
 
     $ENV{CONTENT_LENGTH} = 0 unless defined $ENV{CONTENT_LENGTH};
 
-    if ( ( $ENV{CONTENT_LENGTH} != 0 ) && ( $ENV{CONTENT_LENGTH} > $LedgerSMB::Sysconfig::max_post_size ) ) {
+    if ( ( $ENV{CONTENT_LENGTH} != 0 ) 
+         && ( $ENV{CONTENT_LENGTH} > $LedgerSMB::Sysconfig::max_post_size ) 
+         && $LedgerSMB::Sysconfig::max_post_size  != -1) {
         print "Status: 413\n Request entity too large\n\n";
         die "Error: Request entity too large\n";
     }
@@ -1170,6 +1172,26 @@ sub print_button {
     print
 qq|<button class="submit" type="submit" name="action" value="$name" accesskey="$button->{$name}{key}" title="$button->{$name}{value} [Alt-$button->{$name}{key}]">$button->{$name}{value}</button>\n|;
 }
+
+
+=item test_should_get_images
+
+Returns true if images should get be retrieved for embedding in templates
+
+=cut
+
+
+sub test_should_get_images {
+    my ($self)  = @_;
+    my $dbh = $self->{dbh};
+    my $sth = $dbh->prepare(
+        "SELECT value FROM defaults WHERE setting_key = 'template_images'"
+    );
+    $sth->execute;
+    my ($retval) = $sth->fetchrow_array();
+    return $retval;
+}
+
 
 # Database routines used throughout
 

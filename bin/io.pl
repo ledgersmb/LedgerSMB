@@ -43,6 +43,7 @@ use LedgerSMB::Tax;
 use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Company_Config;
+use LedgerSMB::File;
 
 # any custom scripts for this one
 if ( -f "bin/custom/io.pl" ) {
@@ -1608,6 +1609,23 @@ sub print_form {
         $form->{label} = $locale->text('Quotation');
         $numberfld     = "rfqnumber";
         $order         = 1;
+    }
+
+    if ($form->test_should_get_images){
+        my $file = LedgerSMB::File->new();
+        $file->new_dbobject({base => $form, locale => $locale});
+        my @files;
+        my $fc;
+        if ($inv eq 'inv') {
+           $fc = 1;
+        } else {
+           $fc = 2;
+        }
+        my @files = $file->get_for_template(
+                {ref_key => $form->{id}, file_class => $fc}
+        );
+        $form->{file_list} = \@files;
+        $form->{file_path} = $file->file_path;
     }
 
     &validate_items;

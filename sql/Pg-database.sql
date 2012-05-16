@@ -3670,7 +3670,8 @@ $$ Maps disposal method to line items in the asset disposal report.$$;
 
 CREATE TABLE mime_type (
        id serial not null unique,
-       mime_type text primary key
+       mime_type text primary key,
+       invoice_include bool default false
 );
 
 COMMENT ON TABLE mime_type IS
@@ -4360,6 +4361,8 @@ INSERT INTO mime_type (mime_type) VALUES('application/vnd.iccprofile');
 INSERT INTO mime_type (mime_type) VALUES('application/vnd.oasis.opendocument.graphics');
 INSERT INTO mime_type (mime_type) VALUES('application/vnd.ms-tnef');
 INSERT INTO mime_type (mime_type) VALUES('video/vnd.rn-realvideo');
+
+UPDATE mime_type SET invoice_include = 'true' where mime_type like 'image/%';
 
 CREATE TABLE file_class (
        id serial not null unique,
