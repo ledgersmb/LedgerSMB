@@ -164,9 +164,7 @@ sub _cell_handler {
 			$ods->cellValueType($cell, 'float');
 		}
 	}
-        print STDERR "Calling cellValue($sheetname, $rowcount, $currcol, $_->{att}->{text})\n";
 	$ods->cellValue($sheetname, $rowcount, $currcol, $_->{att}->{text});
-        print STDERR "The above cell is now set to " . $ods->getCellValue($sheetnum, $rowcount, $currcol) . "\n";
 	if (@style_stack) {
 		$ods->cellStyle($cell, $style_stack[0][0]);
 	}
@@ -802,15 +800,6 @@ sub _ods_process {
 		);
 	$parser->parse($template);
 	$parser->purge;
-##############
-use Data::Dumper;
-           my $d    = Data::Dumper->new( [$ods] );
-    $d->Sortkeys(1);
-
-        open( FH, '>', "/tmp/ods" ) or die $!;
-        print FH $d->Dump();
-        close(FH);
-########### 
 	$ods->save;
 }
 
