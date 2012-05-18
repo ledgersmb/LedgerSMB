@@ -91,6 +91,12 @@ IF FORMATS.grep('XLS').size()
 ?> <a href="customer.pl?action=pricelist&format=XLS&credit_id=<?lsmb 
              credit_id ?>&entity_id=<?lsmb entity_id 
      ?>">[<?lsmb text('XLS') ?>]</a>
+<?lsmb END;
+
+IF FORMATS.grep('ODS').size() 
+?> <a href="customer.pl?action=pricelist&format=ODS&credit_id=<?lsmb 
+             credit_id ?>&entity_id=<?lsmb entity_id 
+     ?>">[<?lsmb text('ODS') ?>]</a>
 <?lsmb END ?>
  <a href="customer.pl?action=pricelist&format=CSV&credit_id=<?lsmb 
              credit_id ?>&entity_id=<?lsmb entity_id 

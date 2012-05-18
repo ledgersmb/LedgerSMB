@@ -1,0 +1,47 @@
+<?lsmb- BLOCK dynatable;
+
+ROWCOUNT = 1;
+
+IF tbody.rows.size;
+  ROWCOUNT = ROWCOUNT + tbody.rows.size;
+END;
+
+IF tfoot.rows.size;
+  ROWCOUNT = ROWCOUNT + tbody.rows.size;
+END;
+
+-?>
+<worksheet name="<?lsmb attributes.id ?>" rows="<?lsmb ROWCOUNT ?>" columns="<?lsmb columns.size + 1 ?>">
+<format bottom="5" bg_color="lime" bottom_color="magenta">
+<?lsmb IF !hide_header -?>
+   <row>
+   <?lsmb FOREACH COL IN columns; 
+   IF COL.type != 'hidden'; -?>
+   <cell text="<?lsmb COL.name ?>" />
+   <?lsmb END; END; ?>
+   </row>
+<?lsmb END -?>
+</format>
+<format align="right">
+<?lsmb FOREACH ROW IN tbody.rows -?>
+   <row>
+      <?lsmb FOREACH COL IN columns -?>
+       <?lsmb IF COL.type != 'hidden'; -?>
+        <cell text="<?lsmb ROW.${COL.col_id} ?>" />
+      <?lsmb END; END -?>
+	</row>
+	<?lsmb END -?>
+<?lsmb- IF tfoot -?>
+   <?lsmb- FOREACH ROW IN tfoot.rows; ?>
+	<row>
+	<?lsmb FOREACH COL IN columns ?>
+        <?lsmb IF COL.type != 'hidden'; -?>
+		<cell text="<?lsmb ROW.${COL.col_id} ?>" />
+      
+	<?lsmb END; END ?>
+	</row>
+        <?lsmb END;
+END ?>
+</format>
+</worksheet>
+<?lsmb END ?>

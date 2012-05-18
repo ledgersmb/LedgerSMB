@@ -54,6 +54,9 @@ use Template;
 use XML::Twig;
 use OpenOffice::OODoc;
 use LedgerSMB::Template::TTI18N;
+use LedgerSMB::Sysconfig;
+
+$OpenOffice::OODoc::File::WORKING_DIRECTORY = $LedgerSMB::Sysconfig::tempdir;
 
 my $binmode = undef;
 binmode STDOUT, ':bytes';
@@ -63,7 +66,11 @@ binmode STDERR, ':bytes';
 my $ods;
 my $rowcount;
 my $currcol;
+my $maxrows;
+my $maxcols;
 my %celltype;
+my $sheetnum = -1;
+my $sheetname;
 
 # SC: The elements of the style table for regular styles and stack are
 #     arrays where the stack name is the first element and the style
@@ -119,16 +126,20 @@ my @line_width = ('none', '0.018cm solid', '0.035cm solid',
 	);
 
 sub _worksheet_handler {
+        $sheetnum += 1;
 	$rowcount = -1;
 	$currcol = 0;
 	my $rows = $_->{att}->{rows};
 	my $columns = $_->{att}->{columns};
 	$rows ||= 1000;
 	$columns ||= 52;
+        $maxrows = $rows;
+        $maxcols = $columns;
 	my $sheet;
 	if ($_->is_first_child) {
 		$sheet = $ods->getTable(0, $rows, $columns);
 		$ods->renameTable($sheet, $_->{att}->{name});
+                $sheetname = $_->{att}->{name};
 	} else {
 		$sheet = $ods->appendTable($_->{att}->{name}, $rows, $columns);
 	}
@@ -140,7 +151,8 @@ sub _row_handler {
 }
 
 sub _cell_handler {
-	my $cell = $ods->getCell(-1, $rowcount, $currcol);
+        $ods->expandTable($sheetname, $maxrows, $maxcols);
+	my $cell = $ods->getCell($sheetname, $rowcount, $currcol);
 	
 	if (@style_stack and $celltype{$style_stack[0][0]}) {
 		$ods->cellValueType($cell, $celltype{$style_stack[0][0]}[0]);
@@ -152,7 +164,9 @@ sub _cell_handler {
 			$ods->cellValueType($cell, 'float');
 		}
 	}
-	$ods->cellValue($cell, $_->{att}->{text});
+        print STDERR "Calling cellValue($sheetname, $rowcount, $currcol, $_->{att}->{text})\n";
+	$ods->cellValue($sheetname, $rowcount, $currcol, $_->{att}->{text});
+        print STDERR "The above cell is now set to " . $ods->getCellValue($sheetnum, $rowcount, $currcol) . "\n";
 	if (@style_stack) {
 		$ods->cellStyle($cell, $style_stack[0][0]);
 	}
@@ -160,7 +174,7 @@ sub _cell_handler {
 }
 
 sub _formula_handler {
-	my $cell = $ods->getCell(-1, $rowcount, $currcol);
+	my $cell = $ods->getCell($sheetnum, $rowcount, $currcol);
 	
 	if (@style_stack and $celltype{$style_stack[0][0]}) {
 		$ods->cellValueType($cell, $celltype{$style_stack[0][0]}[0]);
@@ -762,8 +776,7 @@ sub _format_cleanup_handler {
 
 sub _ods_process {
 	my ($filename, $template) = @_;
-
-	$ods = ooDocument(file => $filename, create => 'spreadsheet');
+	$ods = ooDocument(file => "$filename", create => 'spreadsheet');
 	
 	my $parser = XML::Twig->new(
 		start_tag_handlers => {
@@ -789,6 +802,15 @@ sub _ods_process {
 		);
 	$parser->parse($template);
 	$parser->purge;
+##############
+use Data::Dumper;
+           my $d    = Data::Dumper->new( [$ods] );
+    $d->Sortkeys(1);
+
+        open( FH, '>', "/tmp/ods" ) or die $!;
+        print FH $d->Dump();
+        close(FH);
+########### 
 	$ods->save;
 }
 
