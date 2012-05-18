@@ -1,0 +1,30 @@
+<?lsmb PROCESS "dynatable.odst" 
+
+HEADS 2;
+
+IF hlines.size;
+
+  HEADS = HEADS + hlines.size;
+
+END;
+
+?>
+<workbook>
+<worksheet name="<?lsmb text('Title Page') ?>" rows="<?lsmb HEADS ?>" 
+           columns="2">
+<row><cell text="<?lsmb text('Report Name') ?>:" />
+     <cell text="<?lsmb name ?>" />
+</row>
+<row><cell text="<?lsmb text('Company') ?>:" />
+     <cell test="<?lsmb request.company ?>" />
+</row>
+<?lsmb FOREACH HLINE IN hlines -?>
+<row><cell text="<?lsmb HLINE.text ?>:" />
+     <cell text="<?lsmb request.${LINE.name} ?>" />
+</row>
+<?lsmb END -?>
+</worksheet>
+<?lsmb PROCESS dynatable
+       attributes = {id = name }
+       tbody = {rows = rows } ?>
+</workbook>
