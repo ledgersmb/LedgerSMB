@@ -1,6 +1,6 @@
 <?lsmb- BLOCK escape;
 
-IF VALUE.match('\D'); # any non-digit means run escaping
+IF VALUE.match('[^0-9.+-]'); # any non-digit means run escaping
    '"' _ VALUE.replace('"', '""') _ '"';
 ELSE;
    VALUE;
