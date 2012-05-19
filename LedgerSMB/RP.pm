@@ -1883,8 +1883,8 @@ sub get_customer {
     my $query = qq|
 		SELECT e.name, c.contact, cc.class 
                   FROM entity_credit_account eca
-                  JOIN entity USING (entity_id)
-                  JOIN eca_to_contact c ON (eca.credit_id = eca.id)
+                  JOIN entity e ON e.id = eca.entity_id
+                  JOIN eca_to_contact c ON (c.credit_id = eca.id)
                   JOIN contact_class cc ON (c.contact_class_id = cc.id)
 		 WHERE eca.id = ?
                        AND cc.id BETWEEN 12 AND 17|;
@@ -1895,6 +1895,7 @@ sub get_customer {
         $form->{ lc($ref->{class}) } .=
 	    ($form->{ lc($ref->{class}) } ? ", " : "") . $ref->{contact};
     }
+    
 
     $dbh->commit;
 
