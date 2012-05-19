@@ -1881,19 +1881,37 @@ sub get_customer {
     my $dbh = $form->{dbh};
 
     my $query = qq|
-		SELECT e.name, c.contact, cc.class 
+		SELECT e.name, c.contact, c.contact_class_id as class_id 
                   FROM entity_credit_account eca
                   JOIN entity e ON e.id = eca.entity_id
                   JOIN eca_to_contact c ON (c.credit_id = eca.id)
-                  JOIN contact_class cc ON (c.contact_class_id = cc.id)
 		 WHERE eca.id = ?
-                       AND cc.id BETWEEN 12 AND 17|;
+                       AND contact_class_id BETWEEN 12 AND 17
+                 ORDER BY contact_class_id DESC|;
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{"$form->{ct}_id"} );
-    while (my $ref = $sth->fetchrow_hashref('NAME_lc')){
+
+    # This is a copy from code also present in Form.pm
+    my %id_map = ( 12 => 'email',
+                   13 => 'cc',
+                   14 => 'bcc',
+                   15 => 'email',
+                   16 => 'cc',
+                   17 => 'bcc' );
+
+    my $ctype;
+    my $billing_email = 0;
+    while (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
+        $ctype = $id_map{$ref->{class_id}};
+
+        $billing_email = 1
+           if $ref->{class_id} == 15;
+
         $form->{ $form->{ct} } = $ref->{name}; # each 'name' row is the same
-        $form->{ lc($ref->{class}) } .=
-	    ($form->{ lc($ref->{class}) } ? ", " : "") . $ref->{contact};
+        $form->{$ctype} .=
+	    ($form->{$ctype} ? ", " : "") . $ref->{contact}
+          if (($ref->{class_id} < 15) && ! $billing_email)
+              || $ref->{class_id} >= 15;
     }
     
 
