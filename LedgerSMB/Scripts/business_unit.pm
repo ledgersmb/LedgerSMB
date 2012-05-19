@@ -70,9 +70,11 @@ Edits an existing business unit.  $request->{id} must be set.
 sub edit {
     my ($request) = @_;
     $request->{control_code} = '';
-    $request->{class_id} = 0 unless $request->{class_id} = 0;
+    $request->{class_id} = 0 unless $request->{class_id} != 0;
     my $b_unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
     my $bu = $b_unit->get($request->{id});
+    @{$bu->{parent_options}} = $b_unit->list($bu->{class_id});
+    
     _display($bu);
 }
 
