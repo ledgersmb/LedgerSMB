@@ -54,6 +54,9 @@ sub add {
     if (!$request->{class_id}){
         $request->{class_id} = $request->{id};
     }
+    $request->{control_code} = '';
+    my $b_unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
+    @{$request->{parent_options}} = $b_unit->list($request->{class_id});
     $request->{id} = undef;
     _display($request); 
 }
@@ -196,7 +199,7 @@ sub save {
                               if defined $request->{end_date};
     my $unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
     $unit->save;
-    edit($request);
+    add($request);
 }
 
 =item save_class

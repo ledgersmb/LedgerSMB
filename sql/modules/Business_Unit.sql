@@ -157,7 +157,6 @@ UPDATE business_unit
        description = in_description,
        start_date = in_start_date,
        end_date = in_end_date,
-       parent_id = in_parent_id,
        credit_id = in_credit_id
  WHERE id = in_id;
 
@@ -173,11 +172,7 @@ ELSE
     t_id := currval('business_unit_id_seq');
 END IF;
 
-RAISE NOTICE 'ID: %', t_id;
-
 SELECT * INTO retval FROM business_unit WHERE id = t_id;
-
-RAISE NOTICE 'ID: %', retval.id;
 
 RETURN retval;
 END;
