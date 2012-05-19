@@ -1285,7 +1285,7 @@ sub db_init {
     }
     LedgerSMB::Company_Config::initialize($self);
     $sth->finish();
-    LedgerSMB::App_State::DBH = $self->{dbh};
+    $LedgerSMB::App_State::DBH = $self->{dbh};
     $logger->trace("end");
 }
 

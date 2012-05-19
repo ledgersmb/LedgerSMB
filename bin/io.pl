@@ -1434,7 +1434,8 @@ sub print_options {
     $options{format} = {
         name => 'format',
         default_values => $form->{selectformat},
-        options => [{text => 'HTML', value => 'html'}],
+        options => [{text => 'HTML', value => 'html'},
+                    {text => 'CSV', value => 'csv'} ],
         };
     if ( ${LedgerSMB::Sysconfig::latex} ) {
         push @{$options{format}{options}}, {

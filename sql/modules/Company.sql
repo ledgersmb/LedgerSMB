@@ -272,7 +272,7 @@ BEGIN
 					WHERE line_one 
 						ilike '%' || 
 							coalesce(in_address, '')
-							|| '%
+							|| '%'
 						AND city ILIKE 
 							'%' || 
 							coalesce(in_city, '') 
@@ -673,7 +673,7 @@ DROP FUNCTION IF EXISTS company_save (
 
 CREATE OR REPLACE FUNCTION company__save (
     in_id int, in_control_code text, in_entity_class int,
-    in_name text, in_tax_id TEXT,
+    in_legal_name text, in_tax_id TEXT,
     in_entity_id int, in_sic_code text,in_country_id int,
     in_sales_tax_id text, in_license_number text
 ) RETURNS INT AS $$
@@ -690,7 +690,7 @@ BEGIN
 	END IF;
 
 	UPDATE entity 
-	SET name = in_name, 
+	SET name = in_legal_name, 
 		entity_class = in_entity_class,
 		control_code = in_control_code
 	WHERE id = in_entity_id;
@@ -699,12 +699,12 @@ BEGIN
 		t_entity_id = in_entity_id;
 	ELSE
 		INSERT INTO entity (name, entity_class, control_code,country_id)
-		VALUES (in_name, in_entity_class, t_control_code,in_country_id);
+		VALUES (in_legal_name, in_entity_class, t_control_code,in_country_id);
 		t_entity_id := currval('entity_id_seq');
 	END IF;
 
 	UPDATE company
-	SET legal_name = in_name,
+	SET legal_name = in_legal_name,
 		tax_id = in_tax_id,
 		sic_code = in_sic_code,
                 sales_tax_id = in_sales_tax_id,
@@ -715,7 +715,7 @@ BEGIN
 	IF NOT FOUND THEN
 		INSERT INTO company(entity_id, legal_name, tax_id, sic_code,
                                     sales_tax_id, license_number)
-		VALUES (t_entity_id, in_name, in_tax_id, in_sic_code, 
+		VALUES (t_entity_id, in_legal_name, in_tax_id, in_sic_code, 
                         in_sales_tax_id, in_license_number);
 
 	END IF;
@@ -725,7 +725,7 @@ $$ LANGUAGE PLPGSQL;
 
 COMMENT ON  FUNCTION company__save (
     in_id int, in_control_code text, in_entity_class int,
-    in_name text, in_tax_id TEXT,
+    in_legal_name text, in_tax_id TEXT,
     in_entity_id int, in_sic_code text,in_country_id int,
     in_sales_tax_id text, in_license_number text
  ) is

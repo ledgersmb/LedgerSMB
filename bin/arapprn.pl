@@ -519,7 +519,7 @@ sub print_options {
     $media = qq|<select name=media>
           <option value="screen">| . $locale->text('Screen');
 
-    $form->{selectformat} = qq|<option value="html">html\n|;
+    $form->{selectformat} = qq|<option value="html">html<option value="csv">csv\n|;
 
     if ( %{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex} ) {
         for ( sort keys %{LedgerSMB::Sysconfig::printer} ) {

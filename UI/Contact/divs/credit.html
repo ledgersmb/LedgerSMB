@@ -1,32 +1,30 @@
-<?lsmb IF credit_list ?>
+<?lsmb IF entity_id ?>
 <div id="credit_div" class="container">
 <div class="listtop"><strong>Accounts</strong></div>
-    <table width="100%">
-    <tr class="listheading">
-        <th class="account_class"><?lsmb text('Type') ?></th>
-        <th class="number"><?lsmb text("Number") ?></th>
-        <th class="description"><?lsmb text("Description") ?></th>
-        <th class="credit_limit"><?lsmb text('Credit Limit') ?></th>
-        <th class="start_date"><?lsmb text('Start Date') ?></th>
-        <th class="end_date"><?lsmb text('End Date') ?></th>
-    </tr>
-    <?lsmb FOREACH cl_item IN credit_list ?>
-    <tr <?lsmb IF meta_number == cl_item.meta_number ;
-                   credit_act = cl_item;  ?> class="active"<?lsmb END ?>>
-        <td><?lsmb IF cl_item.entity_class == 1 ?><?lsmb text('Vendor') ?>
-            <?lsmb ELSIF cl_item.entity_class == 2 ?><?lsmb text('Customer') ?>
-            <?lsmb END ?>
-        </td>
-        <td><a href="<?lsmb script ?>?action=get&account_class=<?lsmb 
-		account_class ?>&entity_id=<?lsmb entity_id 
-		?>&meta_number=<?lsmb cl_item.meta_number ?>"><?lsmb cl_item.meta_number ?></a></td>
-        <td><?lsmb cl_item.description ?></td>
-        <td><?lsmb cl_item.credit_limit ?></td>
-        <td><?lsmb cl_item.start_date ?></td>
-        <td><?lsmb cl_item.end_date ?></td>
-    </tr>    
-    <?lsmb END ?>
-    </table>
+<?lsmb 
+
+FOREACH cl IN credit_list;
+   IF cl.entity_class == 1;
+        cl.account_class_label = text('Vendor');
+   ELSIF  cl.entity_class == 2;
+        cl.account_class_label = text('Customer');
+   END;
+   cl.meta_number_href_suffix = 'account_class=' _ cl.entity_class _ 
+      '&entity_id=' _ cl.entity_id _ '&meta_number=' _ cl.meta_number;
+END;
+
+PROCESS dynatable 
+      attributes = {id = 'credit_accounts_list' }
+      columns = [ 
+        { col_id = 'account_class_label', type = 'text', name = text('Type') }
+        { col_id = 'meta_number', type = 'href', name = text("Number"), 
+          href_base = "$script?action=get&" }
+        { col_id = 'description', type = 'text', name = text("Description") }
+        { col_id = 'credit_limit', type = 'text', name = text('Credit Limit') }
+        { col_id = 'start_date', type = 'text', name = text('Start Date') }
+        { col_id = 'end_date', type = 'text', name = text('End Date') }
+    ], #'
+    tbody = {rows = credit_list}; ?>
     <form id="credit_form" name="credit_form" method="post" 
 	action="<?lsmb script ?>">
 <?lsmb PROCESS input element_data = {

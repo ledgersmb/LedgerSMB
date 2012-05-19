@@ -45,7 +45,7 @@ an entity,
 
 =cut
 
-has 'control_code' => (is => 'rw', isa => 'Str', required => 1, default => 'DEFAULT');
+has 'control_code' => (is => 'rw', isa => 'Maybe[Str]', required => 1, default => 'DEFAULT');
 
 =item name
 

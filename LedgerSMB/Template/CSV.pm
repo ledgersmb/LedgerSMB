@@ -76,10 +76,13 @@ sub preprocess {
 		} else {
 			$vars = $rawvars;
 		}
-              
+		$vars =~ s/(^ +| +$)//g;
+		$vars =~ s/"/""/g;
+		$vars = qq|"$vars"| if $vars =~ /[^0-9.+-]/;
+                warn $vars;
 	} else { # hashes and objects
 		for ( keys %{$rawvars} ) {
-			$vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
+			$vars->{$_} = preprocess( $rawvars->{$_} );
 		}
 	}
 	return $vars;

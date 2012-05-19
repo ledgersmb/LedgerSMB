@@ -3165,8 +3165,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 166	template	purchase_order	427
 167	template	bin_list	428
 168	template	statement	429
-169	template	quotation	430
-170	template	rfq	431
+169	template	sales_quotation	430
+170	template	request_quotation	431
 171	template	timecard	432
 241	template	letterhead	644
 157	format	HTML	433

@@ -1,4 +1,4 @@
-
+<?lsmb
  INCLUDE 'ui-header.html'
         stylesheet = USER.stylesheet
 	include_stylesheet = [
@@ -8,7 +8,8 @@
 		'UI/Contact/contact.js'
 	]
 ?>
-<?lsmb PROCESS 'elements.html' ?>
+<?lsmb PROCESS 'elements.html';
+PROCESS "dynatable.html"  ?>
 <?lsmb IF !country_id; country_id = default_country; END -?>
 <?lsmb IF !country_id_t; country_id_t = default_country; END -?>
 <?lsmb 
@@ -63,6 +64,7 @@ END ?>
 -->
 <?lsmb # TODO:  Move to controller scripts.
        nav_list = [];
+       DIVS = [];
        IF entity_class == 3;
           DIVS.push({id = 'hr_div', 
                   label = text('HR'),
@@ -105,11 +107,12 @@ END ?>
         <li class="nav"><a href="#<?lsmb nav.id ?>"><?lsmb nav.label ?></a></li>
         <?lsmb  END ?>
 </ul>
+
   <?lsmb FOREACH ITEM IN DIVS; 
       INCLUDEDIV = "divs/" _ ITEM.template _ ".html";
-      IF ITEM.deplate;
+      IF ITEM.template;
           PROCESS $INCLUDEDIV;
-      END
+      END;
   END 
 ?>
 </body>
