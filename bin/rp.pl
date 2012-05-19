@@ -1072,6 +1072,7 @@ sub aging {
                 };
             $column_data{statement}{checked} = 'checked' if $ref->{checked};
             $hiddens{"curr_$i"} = $ref->{curr};
+            $hiddens{"$form->{ct}_id_$i"} = $ref->{ctid};
         }
 
 

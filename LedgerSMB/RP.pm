@@ -1786,7 +1786,7 @@ sub aging {
         $form->{arap} = 'ap';
     }
         $query .= qq|
-		SELECT c.entity_id AS ctid, 
+		SELECT c.id AS ctid, 
 		       c.meta_number as $form->{ct}number, e.legal_name as name,
 		       '' as address1, '' as address2, '' as city,
 		       '' as state, 
@@ -1836,7 +1836,7 @@ sub aging {
                        ON (a.entity_credit_account = c.id)
 		  JOIN company e ON e.entity_id = c.entity_id
 		 WHERE $where
-              GROUP BY c.entity_id, c.meta_number, e.legal_name, a.invnumber,
+              GROUP BY c.id, c.meta_number, e.legal_name, a.invnumber,
                        a.transdate, a.ordnumber, a.duedate, a.invoice, a.id,
                        a.curr, a.ponumber, a.notes, c.language_code
 		HAVING sum(p.due) <> 0|;
