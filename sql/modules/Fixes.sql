@@ -277,3 +277,13 @@ ALTER TABLE mime_type ADD invoice_include bool default false;
 UPDATE mime_type SET invoice_include = 'true' where mime_type like 'image/%';
 
 COMMIT;
+
+BEGIN;
+
+UPDATE menu_attribute SET value = 'sales_quotation' 
+WHERE node_id = 169 AND attribute = 'template';
+
+UPDATE menu_attribute SET value = 'request_quotation' 
+WHERE node_id = 170 AND attribute = 'template';
+
+COMMIT;
