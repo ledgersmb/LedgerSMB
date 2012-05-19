@@ -272,4 +272,81 @@ END LOOP;
 END;
 $$ language plpgsql;
 
+
+DROP TYPE IF EXISTS cash_summary_item CASCADE;
+
+CREATE TYPE cash_summary_item AS (
+   account_id int,
+   accno text,
+   is_heading bool,
+   description text,
+   document_type text,
+   debits numeric,
+   credits numeric
+);
+
+CREATE OR REPLACE FUNCTION report__cash_summary
+(in_date_from date, in_date_to date, in_from_accno text, in_to_accno text)
+RETURNS SETOF cash_summary_item AS 
+$$
+SELECT a.id, a.accno, a.is_heading, a.description, t.label, 
+       sum(CASE WHEN ac.amount < 0 THEN ac.amount * -1 ELSE NULL END),
+       sum(CASE WHEN ac.amount > 0 THEN ac.amount ELSE NULL END)
+  FROM (select id, accno, false as is_heading, description FROM account
+       UNION
+        SELECT id, accno, true, description FROM account_heading) a
+  LEFT
+  JOIN acc_trans ac ON ac.chart_id = a.id 
+  LEFT
+  JOIN (select id, case when table_name ilike 'ar' THEN 'rcpt'
+                        when table_name ilike 'ap' THEN 'pmt'
+                        when table_name ilike 'gl' THEN 'xfer'
+                    END AS label
+          FROM transactions) t ON t.id = ac.trans_id
+ WHERE accno BETWEEN $3 AND $4
+        and ac.transdate BETWEEN $1 AND $2
+GROUP BY a.id, a.accno, a.is_heading, a.description, t.label
+ORDER BY accno;
+
+$$ LANGUAGE SQL;
+
+DROP TYPE IF EXISTS general_balance_line CASCADE;
+
+CREATE TYPE general_balance_line AS (
+   account_id int,
+   account_accno text,
+   account_description text,
+   starting_balance numeric,
+   debits numeric,
+   credits numeric,
+   final_balance numeric
+);
+
+CREATE OR REPLACE FUNCTION report__general_balance 
+(in_date_from date, in_date_to date)
+RETURNS SETOF general_balance_line AS
+$$
+
+SELECT a.id, a.accno, a.description,
+      sum(CASE WHEN ac.transdate < $1 THEN abs(amount) ELSE null END),
+      sum(CASE WHEN ac.transdate >= $1 AND ac.amount < 0 
+               THEN ac.amount * -1 ELSE null END),
+      SUM(CASE WHEN ac.transdate >= $1 AND ac.amount > 0
+               THEN ac.amount ELSE null END),
+      SUM(ABS(ac.amount))
+ FROM account a 
+ LEFT
+ JOIN acc_trans ac ON ac.chart_id = a.id
+ LEFT 
+ JOIN (select id, approved from ar UNION
+       SELECT id, approved from ap UNION
+       SELECT id, approved FROM gl) gl ON ac.trans_id = gl.id
+WHERE gl.approved and ac.approved
+      and ac.transdate <= $2 
+GROUP BY a.id, a.accno, a.description
+ORDER BY a.accno;
+
+$$ LANGUAGE SQL; 
+
+
 COMMIT;

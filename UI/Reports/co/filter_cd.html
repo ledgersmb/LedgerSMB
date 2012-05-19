@@ -1,0 +1,128 @@
+<?lsmb INCLUDE 'ui-header.html' 
+       	include_script = ["UI/ajax/scriptaculous/lib/prototype.js","UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls","UI/ajax/helpers.js"]
+?>
+<?lsmb PROCESS 'elements.html' ?>
+<body>
+
+<form method="get" action="<?lsmb script ?>">
+<?lsmb PROCESS input element_data = {
+    type = "hidden"
+    name = "sort"
+    value = "transdate"
+} ?>
+
+<table width="100%">
+  <tr>
+    <th class="listtop"><?lsmb text('Caja Diaria')  _ ' --- ' 
+          _ text('All fields are required') ?>
+    </th>
+
+  </tr>
+  <tr height="5"></tr>
+  <tr>
+    <td>
+      <table>
+	  <tr>
+	  <th align="right"><?lsmb text('Accounts From') ?></th>
+	  <td><?lsmb PROCESS input element_data = {
+                     name = 'from_accno'
+                     type = 'text'
+                     size = 20 } ?></td>
+	  <th align="right"><?lsmb text('Accounts To') ?></th>
+	  <td><?lsmb PROCESS input element_data = {
+                     name="to_accno" 
+                     size="20"
+                     type="text"
+              } ?></td>
+	</tr>
+	
+	<tr>
+
+	  <th align="right"><?lsmb text('From') ?></th>
+	  <td><?lsmb PROCESS input element_data = {
+               class="date" 
+               name="date_from" 
+               size="11" 
+               title=datestyle } ?></td>
+	  <th align="right"><?lsmb text('To') ?></th>
+	  <td><?lsmb PROCESS input element_data = {
+                 class="date" 
+                 name="date_to" 
+                 size="11" 
+                 title=datestyle } ?></td>
+	</tr>
+	
+	<tr>
+	  <th align="right"><?lsmb text('Include in Report') ?></th>
+
+                      <td nowrap><?lsmb PROCESS input element_data = {
+                                        name="col_accno" 
+                                        class="checkbox" 
+                                        type="checkbox" 
+                                        value="Y"
+                                        checked = 'checked'
+                                 } ?> <?lsmb text('Account Number') ?></td>
+                      <td nowrap><?lsmb PROCESS input element_data = {
+                                        name="col_description" 
+                                        class="checkbox" 
+                                        type="checkbox" 
+                                        value="Y" 
+                                        checked="checked"
+                                  } ?> <?lsmb text('Account Name') ?></td>
+                     <td nowrap><?lsmb PROCESS input element_data = {
+                                       name="col_document_type" 
+                                       class="checkbox" 
+                                       type="checkbox" 
+                                       value="Y" 
+                                       checked="checked"
+                                } ?> <?lsmb text('Document Type') ?></td>
+                     <td nowrap><?lsmb PROCESS input element_data = {
+                                       name="col_debits" 
+                                       class="checkbox" 
+                                       type="checkbox" 
+                                       value="Y" 
+                                       checked="checked"
+                                 } ?> <?lsmb text('Debits') ?></td>
+
+                    <td nowrap><?lsmb PROCESS input element_data = { 
+                                      name="col_credits" 
+                                      class="checkbox" 
+                                      type="checkbox" 
+                                      value="Y" 
+                                      checked="checked"
+                               } ?> <?lsmb text('Credits') ?></td>
+                  </tr>
+
+      </table>
+    </td>
+  </tr>
+  <tr>
+    <td><hr size=3 noshade></td>
+  </tr>
+</table>
+
+<?lsmb PROCESS input element_data = {
+       type="hidden" 
+       name="path" 
+       value=path
+} ?>
+<?lsmb PROCESS input element_data = { 
+       type="hidden" 
+       name="login" 
+       value=login
+} ?>
+
+<br>
+<?lsmb PROCESS button element_data = {
+       text = text('Continue')
+       class="submit" 
+       type="submit" 
+       name="action" 
+       value="run_caja_diaria"
+} ?>
+</form>
+
+
+</body>
+</html>
+
