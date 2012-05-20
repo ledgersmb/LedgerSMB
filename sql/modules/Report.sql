@@ -11,7 +11,8 @@ CREATE TYPE report_aging_item AS (
 	address1 text,
 	address2 text,
 	address3 text,
-	city_province text,
+	city text,
+        state text,
 	mail_code text,
 	country text,
 	contact_name text,
@@ -56,7 +57,7 @@ BEGIN
 		SELECT c.entity_id, c.meta_number, e.name,
 		       l.line_one as address1, l.line_two as address2, 
 		       l.line_three as address3,
-		       l.city_province, l.mail_code, country.name as country, 
+		       l.city, l.state, l.mail_code, country.name as country, 
 		       e.name as contact_name, 
 	               a.invnumber, a.transdate, a.till, a.ordnumber, 
 		       a.ponumber, a.notes, 
@@ -148,6 +149,22 @@ BEGIN
         END LOOP;
 END;
 $$ language plpgsql;
+
+CREATE OR REPLACE FUNCTION report__invoice_aging_summary
+(in_entity_id int, in_entity_class int, in_accno text, in_to_date timestamp,
+ in_business_units int[])) 
+RETURNS SETOF report_aging_item
+AS $$
+SELECT entity_id, account_number, name, address1, address2, address3, city, 
+       state, mail_code, country, contact_name, invnumber, null, null, null, 
+       null, null, sum(c0), sum(c30), sum(c60), sum(c90), null, null, curr,
+       null, null
+  FROM report__invoice_aging_summary($1, $2, $3, $4)
+ GROUP BY entity_id, account_number, name, address1, address2, address3, city, 
+       state, mail_code, country, contact_name, invnumber, curr
+ ORDER BY account_number
+$$ LANGUAGE SQL;
+
 
 DROP TYPE IF EXISTS gl_report_item CASCADE;
 
