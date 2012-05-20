@@ -1,4 +1,4 @@
-CREATE LANGUAGE PLPGSQL; -- separate transaction since may already exist
+CREATE LANGUAGE PLPGSQL; -- Remove when 8.4 is no longer supported
 
 begin;
 
@@ -978,7 +978,7 @@ CREATE TABLE payroll_pto_class (
 CREATE TABLE payroll_paid_timeoff (
    employee_id int not null references entity(id),
    pto_class_id int not null references payroll_pto_class(id),
-   report_id int not null references payroll_report(id)),
+   report_id int not null references payroll_report(id),
    amount numeric not null
 );
 
@@ -1444,6 +1444,7 @@ $$Hyperlink to product image.$$;
 	
 CREATE UNIQUE INDEX parts_partnumber_index_u ON parts (partnumber) 
 WHERE obsolete is false;
+
 CREATE TABLE invoice (
   id serial PRIMARY KEY,
   trans_id int REFERENCES transactions(id),
@@ -1456,7 +1457,7 @@ CREATE TABLE invoice (
   fxsellprice NUMERIC,
   discount numeric,
   assemblyitem bool DEFAULT 'f',
-  unit varchar(),
+  unit varchar,
   deliverydate date,
   serialnumber text,
   notes text
