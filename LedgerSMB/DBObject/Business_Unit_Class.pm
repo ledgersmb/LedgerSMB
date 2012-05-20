@@ -131,15 +131,17 @@ sub save_modules {
     );
 }
 
-=item list
+=item list(bool $active, string $mod_name)
 
 Returns a list of all business unit classes.
 
 =cut
 
 sub list {
-    my ($self) = @_;
-    my @classes = $self->exec_method({funcname => 'business_unit__list_classes'});
+    my ($self, $active, $mod_name) = @_;
+    my @classes = $self->call_procedure(
+            procname => 'business_unit__list_classes',
+                args => [$active, $mod_name]);
     for my $class (@classes){
         $self->prepare_dbhash($class);
         $class = $self->new(%$class);

@@ -68,17 +68,24 @@
                               size='60'
                               type='text' } ?></td>
 	</tr>
-        <?lsmb IF all_departments.size -?>
+        <?lsmb FOREACH BUC IN bu_classes ?>
         <tr>
-          <th align="right"><?lsmb text('Department') ?></th>
-          <td colspan="5"><?lsmb PROCESS select element_data = {
-                                 name = 'department'
-                                 options = all_departments
-                                 value_attr = 'id'
-                                 text_attr = 'description'
-                              } ?></td>
+          <th align="right"><?lsmb text(BUC.label) ?></th>
+          <?lsmb b_units.${BUC.id}.unshift({}) ?>
+          <td><?lsmb PROCESS select element_data = {
+                   name = 'business_unit_' _ loop.count
+                options = b_units.${BUC.id}
+              text_attr = 'text'
+             value_attr = 'id'
+                  class = 'business_unit'
+              } ?></td>
         </tr>
-        <?lsmb END -?>
+        <?lsmb END; # FOREACH BUC
+        PROCESS input element_data = {
+             type = 'hidden'
+             name = 'bc_count'
+             value = bu_classes.size
+        } ?>
 	<tr>
 
 	  <th align="right"><?lsmb text('From') ?></th>

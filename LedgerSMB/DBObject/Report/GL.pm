@@ -384,4 +384,5 @@ later version.  Please see included LICENSE.TXT for details.
 
 =cut
 
+__PACKAGE__->meta->make_immutable;
 return 1;

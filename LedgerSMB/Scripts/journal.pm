@@ -19,6 +19,7 @@ our $VERSION = '1.0';
 
 use LedgerSMB;
 use LedgerSMB::Template;
+use LedgerSMB::DBObject::Business_Unit;
 use LedgerSMB::DBObject::Report::GL;
 use strict;
 
@@ -65,6 +66,18 @@ Displays the search screen
 
 sub start_search {
     my ($request) = @_;
+    $request->{class_id} = 0;
+    $request->{control_code} = '';
+    my $buc = LedgerSMB::DBObject::Business_Unit_Class->new(%$request);
+    my $bu = LedgerSMB::DBObject::Business_Unit->new(%$request);
+    @{$request->{bu_classes}} = $buc->list(1, 'gl');
+    for my $bc (@{$request->{bu_classes}}){
+        @{$request->{b_units}->{$bc->{id}}}
+            = $bu->list($bc->{id}, undef, 0, undef);
+        for my $bu (@{$request->{b_units}->{$bc->{id}}}){
+            $bu->{text} = $bu->control_code . ' -- '. $bu->description;
+        }
+    } 
     my $template = LedgerSMB::Template->new(
         user => $request->{_user},
         locale => $request->{_locale},
@@ -84,6 +97,11 @@ Runs a search and displays results.
 sub search {
     my ($request) = @_;
     delete $request->{category} if ($request->{category} = 'X');
+    $request->{business_units} = [];
+    for my $count (1 .. $request->{bc_count}){
+         push @{$request->{business_units}}, $request->{"business_unit_$count"}
+               if $request->{"business_unit_$count"};
+    }
     LedgerSMB::DBObject::Report::GL->prepare_criteria($request);
     my $report = LedgerSMB::DBObject::Report::GL->new(%$request);
     $report->run_report;
