@@ -17,7 +17,7 @@ CREATE OR REPLACE FUNCTION cogs__reverse_ar(in_parts_id int, in_qty numeric)
 RETURNS NUMERIC AS
 $$
 DECLARE t_alloc numeric := 0;
-        t_cogs := 0;
+        t_cogs numeric := 0;
         t_inv invoice;
 BEGIN
 
@@ -87,6 +87,8 @@ LOOP
    END IF;
 END LOOP;
 
+RETURN 0;
+
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -96,7 +98,7 @@ records in order, calculating COGS on a FIFO basis and returning it to the
 application to attach to the current transaction.$$;
 
 CREATE OR REPLACE FUNCTION cogs__reverse_ap
-(in_parts_id int, in_qty numeric) AS
+(in_parts_id int, in_qty numeric) RETURNS numeric AS
 $$
 DECLARE t_alloc numeric;
         t_inv inventory;
@@ -122,6 +124,8 @@ LOOP
         WHERE id = t_inv.id;
    END IF;
 END LOOP;
+
+RETURN 0;
 
 RAISE EXCEPTION 'TOO FEW TO ALLOCATE';
 END;

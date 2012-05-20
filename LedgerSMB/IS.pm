@@ -1728,7 +1728,7 @@ sub cogs {
     # Parts info
     my $part_sth = $dbh->prepare('SELECT * FROM parts WHERE id = ?');
     $part_sth->execute($id);
-    my ($part_ref) = $part_sth->fetchrow_hashref('NAME_lc')
+    my ($part_ref) = $part_sth->fetchrow_hashref('NAME_lc');
 
 
     # Setting up for the main transaction.
