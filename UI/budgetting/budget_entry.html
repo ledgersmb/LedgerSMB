@@ -1,0 +1,236 @@
+<?lsmb INCLUDE 'ui-header.html' 
+	include_script = [
+		"UI/ajax/scriptaculous/lib/prototype.js",
+		"UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls",
+		"UI/ajax/helpers.js"]
+	stylesheet=stylesheet 
+        include_stylesheet = ["UI/budgetting/budgetting.css"];
+    PROCESS elements.html; ?>
+<body>
+
+<form method="post" action="<?lsmb script ?>">
+<div id="budget-header">
+<div class="listtop"><?lsmb title ?></div>
+<div class="input_row" id = "reference_row">
+<div class="input_group">
+       <?lsmb INCLUDE input element_data = {
+			name = "reference",
+			value = reference,
+			type = "text",
+			size = "20",
+			class = 'reference',
+			label = text('Reference')
+	} ?>
+</div>
+<div class="input_group">
+	  <?lsmb INCLUDE input element_data = {
+			      name = "description",
+			      value = description,
+			      type = "text",
+			      size = "50",
+			      class = 'description'
+			      label = text('Description')
+								      } 
+	   ?>
+</div></div>
+<div class="input_row" id = "date_row">
+<div class="input_group">
+        <?lsmb INCLUDE input element_data = {
+		name = "start_date"
+		value = start_date
+		type = "text"
+		size = "11"
+		class = 'date'
+		label = text('Start Date') #'
+        } ?>
+</div>
+<div class="input_group">
+        <?lsmb INCLUDE input element_data = {
+                name = "end_date"
+                value = end_date
+                type = "text"
+                size = "11"
+                class = 'date'
+                label = text('End Date') #'
+        } ?>
+</div>
+
+</div></div>
+
+<?FOREACH BUC IN bu_classes ?>
+<div class="inputrow"><div class="inputgroup">
+          <?lsmb PROCESS select element_data = {
+                   name = 'business_unit_' _ loop.count
+                options = b_units.${BUC.id}
+              text_attr = 'text'
+             value_attr = 'id'
+                  class = 'business_unit'
+                  label = text(BUC.label)
+              } ?>
+</div></div>
+<?lsmb END # FOREACH BUC ?>
+
+         <!-- Move notes to bottom and add subject line 
+	<tr>
+	  <th align="right"><?lsmb text('Notes') ?></th>
+	  <td colspan="3">
+			<?lsmb IF colrownotes ==1 ?>
+			      <?lsmb INCLUDE textarea element_data={
+							name = "notes"
+							rows = form.rowsnotes
+							cols = form.colsnotes
+							value = form.notes
+							id = "not_1"
+                                                 	    } 
+			       ?>
+			<?lsmb ELSE ?>
+				  <?lsmb INCLUDE input element_data = {
+						      name = "notes",
+						      value = form.notes,
+						      type = "text",
+						      size = "50",
+						      class = 'notes'
+						      id = "not_1"
+                                                          } 
+				   ?>
+
+			<?lsmb END ?>
+
+
+	  </td>
+	</tr> -->
+      <table width="100%">
+	  <tr class="listheading">
+	  <th class="listheading"><?lsmb text('Account') ?></th>
+	  <?lsmb IF transfer == 1 ?>
+	     <th class="listheading"><?lsmb text('FX') ?></th>
+	  <?lsmb END ?>
+          <th class="listheading"><?lsmb text('Debit') ?></th>
+	  <th class="listheading"><?lsmb text('Credit') ?></th>
+	  <th class="listheading"><?lsmb text('Description') ?></th>
+	</tr>
+	<?lsmb FOREACH displayrow IN display_rows ?> 
+	<tr>
+		<?lsmb INDEX= loop.count ?>
+		  <td>
+			<?lsmb IF displayrow.accnoset == 0 ?>
+              			<?lsmb PROCESS ajaxselect element_data = {
+		                     name = "account_id_$INDEX"
+		                     initial_value = ${"accno_$INDEX"}
+		                     text_attr = 'accno'
+		                     value_attr = 'id'
+		                     ajax_target = 'journal.pl'
+		              } ?> 
+			   
+			  <?lsmb ELSE ?>
+			      
+				      <?lsmb PROCESS input element_data = {
+					label = displayrow.account_id
+                                        type = "hidden"
+                                        value = displayrow.account_id
+                                        name = "account_id_$INDEX"
+					id = "acc_$INDEX"
+				      } ?>
+			      
+
+			<?lsmb END ?> 
+	  
+		 </td>
+	      
+		  <td>
+			  <?lsmb PROCESS input element_data = {
+				  value = displayrow.debit
+				  name = "debit_$INDEX"
+				  type = "text"
+				  size = 12
+				  accesskey = displayrow.index
+                                              }  ?>
+		  
+		   </td>
+
+		  <td>
+			  <?lsmb PROCESS input element_data = {
+				  value = displayrow.credit
+				  name = "credit_$INDEX"
+				  type = "text"
+				  size = 12
+                                      }  ?>
+		  
+		   </td>
+
+		    <td>
+			  <?lsmb PROCESS input element_data = {
+				  value = displayrow.description
+				  name = "description_$INDEX"
+				  type = "text"
+				  size = 30
+                                     }  ?>
+		  
+		   </td>
+        </tr>
+	<?lsmb END ?>
+     </table>
+    <hr size="3">
+
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type = 'hidden',
+		name = hidden,
+		value = hiddens.item(hidden)
+		}; END ?>
+
+<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+</form>
+<?lsmb IF id ?>
+<form name="note" action="<?lsmb script ?>" method="POST">
+<?lsmb PROCESS input element_data = {
+       name = "id"
+      value = id
+       type = "hidden"
+} ?>
+<div class="inputrow">
+<div class="inputgroup">
+<?lsmb PROCESS input element_data = {
+        type = "text"
+        name = "subject"
+        size = "64"
+       label = text('Subject')
+}
+?>
+</div></div>
+<div class="inputrow">
+<div class="inputgroup">
+<?lsmb PROCESS textarea element_data = {
+        name = "note"
+        cols = '64'
+        rows = '5'
+       label = text('Content')
+}
+?>
+</div></div>
+<div class="inputrow">
+<div class="inputgroup">
+<?lsmb PROCESS button element_data = {
+        name = "action"
+       value = 'add_note'
+        type = "submit"
+       class = "submit"
+        text = text('Add Note') #'
+}
+?>
+</div></div>
+</form>
+<?lsmb END # IF id ?>
+<?lsmb FOREACH note IN notes ?>
+<div class="note">
+<div class="note_subject"><label><?lsmb text('Subject') ?>:</label>
+<?lsmb note.subject ?></div>
+<div class="note_entry_info"><label>&nbsp;:</label>
+<?lsmb note.created_by ?>:<?lsmb note.created ?>
+</div>
+<div class="note_content"><label><?lsmb text('Content') ?>:</label>
+<?lsmb note.note ?>
+</div>
+<?lsmb END # FOREACH Note ?>
+</body>
+</html>

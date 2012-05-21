@@ -1,0 +1,14 @@
+div.input_row {
+    overflow: auto;
+}
+div.input_group {
+    float: left;
+    width: 35em;
+}
+
+div label {
+    text-align: right;
+    width: 5em;
+    display: block;
+    float: left;
+}

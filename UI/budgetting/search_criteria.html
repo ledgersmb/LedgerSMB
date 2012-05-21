@@ -1,0 +1,87 @@
+<?lsmb INCLUDE 'ui-header.html' 
+	stylesheet=stylesheet 
+        include_stylesheet = ["UI/budgetting/budgetting.css"] ?>
+<?lsmb PROCESS elements.html ?> 
+<body>
+<form action="<?lsmb script ?>" method="get">
+<div class="listtop"><?lsmb title ?></div>
+<div class="input_row" id = "reference_row">
+<div class="input_group">
+       <?lsmb INCLUDE input element_data = {
+			name = "reference",
+			value = reference,
+			type = "text",
+			size = "20",
+			class = 'reference',
+			label = text('Reference')
+	} ?>
+</div>
+<div class="input_group">
+	  <?lsmb INCLUDE input element_data = {
+			      name = "description",
+			      value = description,
+			      type = "text",
+			      size = "50",
+			      class = 'description'
+			      label = text('Description')
+								      } 
+	   ?>
+</div></div>
+<div class="input_row" id = "date_row">
+<div class="input_group">
+        <?lsmb INCLUDE input element_data = {
+		name = "start_date"
+		value = start_date
+		type = "text"
+		size = "11"
+		class = 'date'
+		label = text('Start Date') #'
+        } ?>
+</div>
+<div class="input_group">
+        <?lsmb INCLUDE input element_data = {
+                name = "end_date"
+                value = end_date
+                type = "text"
+                size = "11"
+                class = 'date'
+                label = text('End Date') #'
+        } ?>
+</div>
+
+</div></div>
+<div class="input_row" id = "description_row">
+<div class="input_group">
+	    <?lsmb INCLUDE select element_data = {
+			text_attr = "description"
+			value_attr = "id"
+			default_values = [department_id]
+			options = departments
+			name = "department_id"
+                        label = text('Department')
+	    } ?>
+
+</div>
+<div class="input_group">
+	    <?lsmb INCLUDE select element_data = {
+			text_attr = "description"
+			value_attr = "id"
+			default_values = [project_id]
+			options = projects
+			name = "project_id"
+                        label = text('Project')
+	    } ?>
+
+</div></div>
+<div class="input_row" id = "button_row">
+<?lsmb PROCESS button element_data = {
+        text = text('Search')
+       value = 'search'
+        name = 'action'
+        type = 'submit'
+       class = 'submit'
+} ?>
+</div>
+</form>
+</body>
+</html>
