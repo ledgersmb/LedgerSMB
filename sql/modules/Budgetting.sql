@@ -8,19 +8,9 @@
 -- 4:  Make department_id default to 0 and be not null
 -- 5:  Convert type definitions to views.
 
+BEGIN;
 
--- 1.4 note:  Move to Util.sql
-CREATE OR REPLACE FUNCTION project_list_open(in_date date) 
-RETURNS SETOF project AS
-$$ SELECT * FROM project 
-   WHERE $1 BETWEEN coalesce(startdate, $1) AND coalesce(enddate, $1)
-ORDER BY projectnumber;
-$$ language sql;
-
--- 1.4 note:  Move to Util.sql
-CREATE OR REPLACE FUNCTION department_list()
-RETURNS SETOF department AS
-$$ SELECT * FROM department ORDER BY description $$ language sql;
+DROP TYPE IF EXISTS budget_info_ext CASCADE;
 
 CREATE TYPE budget_info_ext AS (
    id INT,
@@ -36,20 +26,43 @@ CREATE TYPE budget_info_ext AS (
    obsolete_at timestamp,
    entered_by_name text,
    approved_by_name text,
-   obsolete_by_name text,
-   department_id int,
-   department_name text,
-   project_id int,
-   projectnumber text
+   obsolete_by_name text
 );
 
 COMMENT ON TYPE budget_info_ext IS 
 $$ This is the base budget_info type.  In 1.4, it will be renamed budget and
-include an array of lines, but since we support 8.3, we can't do that. 
+include an array of lines, but since we support 8.3, we cannot do that. 
 
 The id, start_date, end_date, reference, description, entered_by, approved_by,
 entered_at, and approved_at fields reference the budget_info table.  The other
-two fields refer to the possible joins. $$; --'
+two fields refer to the possible joins. $$; 
+
+CREATE OR REPLACE FUNCTION budget__get_info(in_id int)
+returns budget_info_ext AS
+$$ 
+select bi.id, bi.start_date, bi.end_date, bi.reference, bi.description, 
+       bi.entered_by, bi.approved_by, bi.obsolete_by, bi.entered_at, 
+       bi.approved_at, bi.obsolete_at, 
+       ee.name, ae.name, oe.name
+  from budget_info bi
+  JOIN entity ee ON bi.entered_by = ee.id
+  LEFT JOIN entity ae ON bi.approved_by = ae.id
+  LEFT JOIN entity oe ON bi.obsolete_by = oe.id
+ where bi.id = $1; 
+$$ language sql;
+
+COMMENT ON FUNCTION budget__get_info(in_id int) IS
+$$ Selects the budget info. $$;
+
+CREATE OR REPLACE FUNCTION budget__get_business_units(in_id int) 
+returns setof business_unit AS
+$$ select bu.*
+     FROM business_unit bu
+     JOIN budget_to_business_unit b2bu ON b2bu.bu_id = bu.id
+     JOIN budget_info bi ON bi.id = b2bu.budget_id
+    WHERE bi.id = $1
+ ORDER BY bu.class_id;
+$$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION budget__search(
    in_start_date date,
@@ -60,24 +73,18 @@ CREATE OR REPLACE FUNCTION budget__search(
    in_entered_by int, 
    in_approved_by int,
    in_obsolete_by int,
-   in_department_id int,
-   in_project_id int,
+   in_business_units int[],
    in_is_approved bool, in_is_obsolete bool
 ) RETURNS SETOF budget_info_ext AS
 $$
 select bi.id, bi.start_date, bi.end_date, bi.reference, bi.description, 
        bi.entered_by, bi.approved_by, bi.obsolete_by, bi.entered_at, 
        bi.approved_at, bi.obsolete_at, 
-       ee.name, ae.name, oe.name, bd.department_id, d.description, 
-       bp.project_id, p.projectnumber
+       ee.name, ae.name, oe.name
   from budget_info bi 
   JOIN entity ee ON bi.entered_by = ee.id
-  LEFT JOIN budget_to_department bd ON bd.budget_id = bi.id
   LEFT JOIN entity ae ON bi.approved_by = ae.id
   LEFT JOIN entity oe ON bi.obsolete_by = oe.id
-  LEFT JOIN budget_to_project bp ON bp.budget_id = bi.id
-  LEFT JOIN department d ON d.id = bd.department_id
-  LEFT JOIN project p ON bp.project_id = p.id
  WHERE (start_date = $1 or $1 is null) AND ($2 = end_date or $2 is null) 
        AND ($3 BETWEEN start_date AND end_date or $2 is null)
        AND ($4 ilike reference || '%' or $4 is null) 
@@ -85,11 +92,9 @@ select bi.id, bi.start_date, bi.end_date, bi.reference, bi.description,
        AND ($6 = entered_by or $6 is null) 
        AND ($7 = approved_by or $7 is null) 
        AND ($8 = obsolete_by or $8 is null) 
-       AND ($9 = department_id OR $9 is null) 
-       AND ($10 = project_id OR  $10 IS NULL)
-       AND ($11 IS NULL OR ($11 = (approved_by IS NOT NULL)))
-       AND ($12 IS NULL OR ($12 = (obsolete_by IS NOT NULL)))
- ORDER BY department_id, project_id, reference;
+       AND ($10 IS NULL OR ($10 = (approved_by IS NOT NULL)))
+       AND ($11 IS NULL OR ($11 = (obsolete_by IS NOT NULL)))
+ ORDER BY reference;
 $$ language sql;
 
 COMMENT ON FUNCTION budget__search(
@@ -101,21 +106,26 @@ COMMENT ON FUNCTION budget__search(
    in_entered_by int,
    in_approved_by int,
    in_obsolete_by int,
-   in_department_id int,
-   in_project_id int,
+   in_business_units int[],
    in_is_approved bool, 
    in_is_obsolete bool
 )  IS $$ This is a general search for budgets$$;
 
 CREATE OR REPLACE FUNCTION budget__save_info
 (in_id int, in_start_date date, in_end_date date, in_reference text,
-in_description text, in_department_id int, in_project_id int)
+in_description text, in_business_units int[])
 RETURNS budget_info_ext AS
 $$
 DECLARE 
    retval budget_info_ext;
    t_id int;
 BEGIN
+
+   PERFORM * FROM budget_info WHERE id = in_id and approved_by is not null;
+   IF FOUND THEN
+       RAISE EXCEPTION 'report approved';
+   END IF;
+
   UPDATE budget_info
      SET start_date = in_start_date,
          end_date = in_end_date,
@@ -125,33 +135,14 @@ BEGIN
   IF FOUND THEN
       t_id := in_id;
   ELSE
-       PERFORM * FROM budget_info WHERE id = in_id and approved_by is not null;
-       IF FOUND THEN
-           RAISE EXCEPTION 'report approved';
-       END IF;
        INSERT INTO budget_info (start_date, end_date, reference, description)
             VALUES (in_start_date, in_end_date, in_reference, in_description);
        t_id = currval('budget_info_id_seq');
-  END IF;
-  IF in_project_id IS NOT NULL THEN
-     UPDATE budget_to_project 
-        SET project_id = in_project_id 
-      WHERE budget_id = t_id;
 
-     IF NOT FOUND THEN
-        INSERT INTO budget_to_project(budget_id, project_id)
-             VALUES (t_id, in_project_id);
-     END IF;
-  END IF;
-  IF in_department_id IS NOT NULL THEN
-     UPDATE budget_to_department 
-        SET department_id = in_department_id 
-      WHERE budget_id = t_id;
-
-     IF NOT FOUND THEN
-        INSERT INTO budget_to_department(budget_id, department_id)
-             VALUES (t_id, in_department_id);
-     END IF;
+       INSERT INTO budget_to_business_unit(budget_id, bu_id, bu_class)
+       SELECT t_id, id, class_id
+         FROM business_unit
+        WHERE id = ANY(in_business_units);
   END IF;
   retval := budget__get_info(t_id);
   return retval;
@@ -160,7 +151,7 @@ $$ language plpgsql;
 
 COMMENT ON FUNCTION budget__save_info
 (in_id int, in_start_date date, in_end_date date, in_reference text,
-in_description text, in_department_id int, in_project_id int) IS
+in_description text, in_business_units int[]) IS
 $$Saves the extended budget info passed through to the function.  See the 
 comment on type budget_info_ext for more information.$$;
 
@@ -203,28 +194,6 @@ COMMENT ON FUNCTION budget__save_details(in_id int, in_details text[]) IS
 $$ This saves the line items for the budget.  in_details is an array n long
 where each entry is {int account_id, text description, numeric amount}.  The
 in_id parameter is the budget_id.$$;
-
-CREATE OR REPLACE FUNCTION budget__get_info(in_id int)
-returns budget_info_ext AS
-$$ 
-select bi.id, bi.start_date, bi.end_date, bi.reference, bi.description, 
-       bi.entered_by, bi.approved_by, bi.obsolete_by, bi.entered_at, 
-       bi.approved_at, bi.obsolete_at, 
-       ee.name, ae.name, oe.name, bd.department_id, d.description, 
-       bp.project_id, p.projectnumber
-  from budget_info bi
-  JOIN entity ee ON bi.entered_by = ee.id
-  LEFT JOIN budget_to_department bd ON bd.budget_id = bi.id
-  LEFT JOIN entity ae ON bi.approved_by = ae.id
-  LEFT JOIN entity oe ON bi.obsolete_by = oe.id
-  LEFT JOIN budget_to_project bp ON bp.budget_id = bi.id
-  LEFT JOIN department d ON d.id = bd.department_id
-  LEFT JOIN project p ON bp.project_id = p.id
- where bi.id = $1; 
-$$ language sql;
-
-COMMENT ON FUNCTION budget__get_info(in_id int) IS
-$$ Selects the budget info. $$;
 
 CREATE OR REPLACE FUNCTION budget__get_details(in_id int)
 RETURNS SETOF budget_line AS
@@ -269,6 +238,7 @@ COMMENT ON FUNCTION budget__get_notes(in_id int) IS
 $$ Returns all notes associated with a budget, by default in the order they 
 were created.$$;
 
+DROP TYPE IF EXISTS budget_variance_report CASCADE;
 CREATE TYPE budget_variance_report AS (
     accno text,
     account_label text,
@@ -349,3 +319,5 @@ REVOKE EXECUTE ON FUNCTION budget__reject(in_id int) FROM public;
 
 COMMENT ON FUNCTION budget__reject(in_id int) IS
 $$ Deletes unapproved budgets only.$$;
+
+COMMIT;

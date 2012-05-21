@@ -1,5 +1,19 @@
+<?lsmb INCLUDE 'ui-header.html'; 
+       PROCESS elements.html;
+       PROCESS report_base.html ?> 
+<body>
+<form method="get" action="report_aging.pl">
+<table width="100%">
+  <tr><th class="listtop"><?lsmb text('Aging Report') ?></th></tr>
+  <tr><td> </td></tr>
+  <tr>
+    <td>
+      <table>
+       <?lsmb INCLUDE business_classes ?>
       <tr>
-        <th align="right"><?lsmb text(form.uvc) ?></th>
+        <th align="right"><?lsmb IF entity_class == 1; text('Vendor');
+                              ELSIF entity_class == 2; text('Customer');
+                               END ?></th>
         <td><?lsmb PROCESS input element_data={
               name  = 'name'
               type  = 'text'
@@ -22,7 +36,6 @@
         class = 'date',
         name = 'todate',
         size = '11',
-        title = user.dateformat,
         } ?></td>
       </tr>
       <tr>
@@ -36,18 +49,18 @@
       </tr>
       <tr>
         <th></th>
-        <td>
+        <td colspan="2">
 <?lsmb PROCESS input element_data={
   type = 'radio',
-  name = 'summary',
-  value = '1',
+  name = 'report_type',
+  value = 'summary',
   label = text('Summary'),
   checked = 'checked',
   } -?>
 <?lsmb PROCESS input element_data={
   type = 'radio',
-  name = 'summary',
-  value = '0',
+  name = 'report_type',
+  value = 'detail',
   label = text('Detail'),
   } -?>
         </td>
@@ -68,7 +81,7 @@
   checked = 'checked',
   } -?>
                   </td>
-                  <td>
+                  <td colspan="2">
 <?lsmb PROCESS input element_data={
   name = 'overdue',
   type = 'radio',
@@ -113,6 +126,11 @@
   label = '90',
   checked = 'checked',
   } -?>
+<?lsmb PROCESS input element_data = {
+  name = 'entity_class'
+  type = 'hidden'
+  value = entity_class 
+} ?>
                   </td>
                 </tr>
               </table>
@@ -120,3 +138,18 @@
           </tr>
         </table></td>
       </tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td><hr size="3" noshade="noshade" /></td></tr>
+</table>
+<?lsmb PROCESS button element_data = {
+   name = 'action'
+   text = text('Continue')
+  value = 'run_report'
+   type = 'submit'
+  class = 'submit'
+} ?>
+</form>
+</body>
+</html>

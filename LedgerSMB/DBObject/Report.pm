@@ -126,7 +126,8 @@ sub render {
 
     # This is a hook for other modules to use to override the default
     # template --CT
-    eval {$template = $self->template} || $template = 'Reports/display_report';
+    eval {$template = $self->template};
+    $template ||= 'Reports/display_report';
 
     if (!defined $self->format){
         $self->format('html');

@@ -1934,6 +1934,46 @@ CREATE TABLE business_unit_oitem (
 COMMENT ON TABLE business_unit IS
 $$ Tracks Projects, Departments, Funds, Etc.$$;
 
+CREATE TABLE budget_info (
+   id serial not null unique,
+   start_date date not null,
+   end_date date not null,
+   reference text primary key,
+   description text not null,
+   entered_by int not null references entity(id) 
+                  default person__get_my_entity_id(),
+   approved_by int references entity(id),
+   obsolete_by int references entity(id),
+   entered_at timestamp not null default now(),
+   approved_at timestamp,
+   obsolete_at timestamp,
+   check (start_date < end_date)
+);
+
+CREATE TABLE budget_to_business_unit (
+    budget_id int not null unique references budget_info(id),
+    bu_id int not null references business_unit(id),
+    bu_class int references business_unit_class(id),
+    primary key (budget_id, bu_class)
+);
+
+
+CREATE TABLE budget_line (
+    budget_id int not null references budget_info(id),
+    account_id int not null references account(id),
+    description text,
+    amount numeric not null,
+    primary key (budget_id, account_id) 
+);
+
+INSERT INTO note_class (id, class) values ('6', 'Budget');
+
+CREATE TABLE budget_note (
+    primary key(id),
+    check (note_class = 6),
+    foreign key(ref_key) references budget_info(id)
+) INHERITS (note);
+ALTER TABLE budget_note ALTER COLUMN note_class SET DEFAULT 6;
 
 COMMENT ON COLUMN job.parts_id IS
 $$ Job costing/manufacturing here not implemented.$$;

@@ -36,27 +36,26 @@ CREATE TYPE report_aging_item AS (
 
 CREATE OR REPLACE FUNCTION report__invoice_aging_detail
 (in_entity_id int, in_entity_class int, in_accno text, in_to_date timestamp,
- in_business_units int[])) 
+ in_business_units int[]) 
 RETURNS SETOF report_aging_item
 AS
 $$
 DECLARE
 	item report_aging_item;
 BEGIN
-	IF in_entity_class = 1 THEN
 	FOR item IN
                   WITH RECURSIVE bu_tree (id, path) AS (
                 SELECT id, id::text AS path
                   FROM business_unit
-                 WHERE id in(in_business_units)
+                 WHERE id = any(in_business_units)
                  UNION
                 SELECT bu.id, bu_tree.path || ',' || bu.id
                   FROM business_unit bu
                   JOIN bu_tree ON bu_tree.id = bu.parent_id
                        )
 		SELECT c.entity_id, c.meta_number, e.name,
-		       l.line_one as address1, l.line_two as address2, 
-		       l.line_three as address3,
+		       l.line_one, l.line_two, 
+		       l.line_three,
 		       l.city, l.state, l.mail_code, country.name as country, 
 		       e.name as contact_name, 
 	               a.invnumber, a.transdate, a.till, a.ordnumber, 
@@ -64,32 +63,30 @@ BEGIN
 		       CASE WHEN 
 		                 EXTRACT(days FROM age(min(ac.transdate), 
                                                        coalesce(in_to_date,
-                                                                now())/30) 
+                                                                now()))/30) 
 		                 = 0
-		                 THEN (a.amount - (a.sign * sum(ac.amount)) 
+		                 THEN (a.amount - a.sign * sum(ac.amount)) 
                             ELSE 0 END
 		            as c0, 
 		       CASE WHEN EXTRACT(days FROM age(min(ac.transdate), 
                                                        coalesce(in_to_date,
-                                                                now())/30)
+                                                                now()))/30)
 		                 = 1
-		                 THEN (a.amount - (a.sign * sum(ac.amount)) 
+		                 THEN (a.amount - a.sign * sum(ac.amount)) 
                             ELSE 0 END
 		            as c30, 
 		       CASE WHEN EXTRACT(days FROM age(min(ac.transdate),
                                                        coalesce(in_to_date,
-                                                                now())/30)
+                                                                now()))/30)
 		                 = 2
-		            THEN (a.amount - (a.sign * sum(ac.amount),
-                                                       coalesce(in_to_date,
-                                                                now()) 
+		            THEN (a.amount - (a.sign * sum(ac.amount)))
                             ELSE 0 END
 		            as c60, 
 		       CASE WHEN EXTRACT(days FROM age(min(ac.transdate),
                                                        coalesce(in_to_date,
-                                                                now())/30)
+                                                                now()))/30)
 		                 > 2
-		            THEN (a.amount - (a.sign * sum(ac.amount)) 
+		            THEN (a.amount - a.sign * sum(ac.amount))
                             ELSE 0 END
 		            as c90, 
 		       a.duedate, a.id, a.curr,
@@ -104,13 +101,13 @@ BEGIN
 				WHERE i.trans_id = a.id) AS line_items
 		  FROM (select id, invnumber, till, ordnumber, amount, duedate,
                                curr, ponumber, notes, entity_credit_account,
-                               -1 AS sign
+                               -1 AS sign, transdate
                           FROM ar
                          WHERE in_entity_class = 2
                          UNION 
                         SELECT id, invnumber, null, ordnumber, amount, duedate,
                                curr, ponumber, notes, entity_credit_account,
-                               1 as sign
+                               1 as sign, transdate
                           FROM ap
                          WHERE in_entity_class = 1) a
                   JOIN acc_trans ac ON ac.trans_id = a.id
@@ -133,12 +130,10 @@ BEGIN
                  WHERE (e.id = in_entity_id OR in_entity_id IS NULL)
                        AND (in_accno IS NULL or acc.accno = in_accno)
               GROUP BY c.entity_id, c.meta_number, e.name,
-                       l.line_one as address1, l.line_two as address2,
-                       l.line_three as address3,
-                       l.city_province, l.mail_code, country.name as country,
-                       e.name as contact_name,
+                       l.line_one, l.line_two, l.line_three,
+                       l.city, l.state, l.mail_code, country.name,
                        a.invnumber, a.transdate, a.till, a.ordnumber,
-                       a.ponumber, a.notes,
+                       a.ponumber, a.notes, a.amount, a.sign,
                        a.duedate, a.id, a.curr
                 HAVING in_business_units is null or in_business_units 
                        <@ compound_array(string_to_array(bu_tree.path, 
@@ -152,14 +147,15 @@ $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION report__invoice_aging_summary
 (in_entity_id int, in_entity_class int, in_accno text, in_to_date timestamp,
- in_business_units int[])) 
+ in_business_units int[]) 
 RETURNS SETOF report_aging_item
 AS $$
 SELECT entity_id, account_number, name, address1, address2, address3, city, 
-       state, mail_code, country, contact_name, invnumber, null, null, null, 
-       null, null, sum(c0), sum(c30), sum(c60), sum(c90), null, null, curr,
-       null, null
-  FROM report__invoice_aging_summary($1, $2, $3, $4)
+       state, mail_code, country, contact_name, invnumber, null::date, 
+       null::text, null::text, null::text, null::text, 
+       sum(c0), sum(c30), sum(c60), sum(c90), null::date, null::int, curr,
+       null::numeric, null::text[]
+  FROM report__invoice_aging_detail($1, $2, $3, $4, $5)
  GROUP BY entity_id, account_number, name, address1, address2, address3, city, 
        state, mail_code, country, contact_name, invnumber, curr
  ORDER BY account_number

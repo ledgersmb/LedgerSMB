@@ -1,0 +1,62 @@
+<?lsmb
+
+PROCESS "ui-header.html"
+   stylesheet = USER.stylesheet;
+
+PROCESS "elements.html";
+
+PROCESS "dynatable.html";
+
+LINK = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME 
+           _ '?' _ ENVARS.QUERY_STRING _ '&company=' _ form.company;
+
+?>
+<body>
+<div class="report_header"><label><?lsmb text('Report Name') ?>:</label>
+<span class="report_header"><?lsmb name ?></span>
+</div>
+<body>
+<div class="report_header"><label><?lsmb text('Company') ?>:</label>
+<span class="report_header"><?lsmb request.company ?></span>
+</div>
+<?lsmb FOREACH LINE IN hlines ?>
+<div class="report_header"><label><?lsmb LINE.text ?>:</label>
+<span class="report_header"><?lsmb request.${LINE.name} ?></span>
+</div>
+<?lsmb END ?>
+
+<form method="get" action="aging_report.pl">
+<?lsmb PROCESS dynatable tbody = {rows => rows } 
+               attributes = {class = 'report' } ?>
+<?lsmb PROCESS button element_data = {
+    text = text('Print')
+    name = 'action'
+   value = 'print_statements'
+    type = 'submit'
+   class = 'submit'
+} ?>
+<?lsmb PROCESS button element_data = {
+    text = text('Email')
+    name = 'action'
+   value = 'email_statements'
+    type = 'submit'
+   class = 'submit'
+} ?>
+</form>
+<a href="<?lsmb LINK ?>">[<?lsmb text('permalink') ?>]</a>&nbsp;
+<?lsmb IF FORMATS.grep('PDF').size()
+?>
+<a href="<?lsmb LINK _ '&format=PDF' ?>">[<?lsmb text('PDF') ?>]</a>&nbsp;
+<?lsmb END;
+IF FORMATS.grep('TXT').size();
+?>
+<a href="<?lsmb LINK _ '&format=CSV' ?>">[<?lsmb text('CSV') ?>]</a>&nbsp;
+<?lsmb END;
+IF FORMATS.grep('XLS').size() ?>
+<a href="<?lsmb LINK _ '&format=XLS' ?>">[<?lsmb text('XLS') ?>]</a>&nbsp;
+<?lsmb END;
+IF FORMATS.grep('ODS').size() ?>
+<a href="<?lsmb LINK _ '&format=ODS' ?>">[<?lsmb text('ODS') ?>]</a>&nbsp;
+<?lsmb END; ?>
+</body>
+<?lsmb PROCESS end_html ?>

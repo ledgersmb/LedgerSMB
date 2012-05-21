@@ -26,7 +26,7 @@ reportins aimed at the customer in question.
 
 =cut
 
-package LedgerSMB::DBObject::Report::GL;
+package LedgerSMB::DBObject::Report::Aging;
 use Moose;
 extends 'LedgerSMB::DBObject::Report';
 
@@ -85,11 +85,11 @@ sub columns {
     my $credit_label;
     if ($self->entity_class == 1) {
         $credit_label = $LedgerSMB::App_State::Locale->text('Vendor');
-    } elsif $self->entity_class == 2){
+    } elsif ($self->entity_class == 2){
         $credit_label = $LedgerSMB::App_State::Locale->text('Customer');
     }
     push @COLUMNS,
-      {col_id => 'select'
+      {col_id => 'select',
          type => 'checkbox'},
  
       {col_id => 'credit_acct',
@@ -103,7 +103,7 @@ sub columns {
        pwidth => '0', };
 
    if ($self->report_type eq 'detail'){
-     push @columns,
+     push @COLUMNS,
           {col_id => 'invnumber',
              name => $locale->text('Invoice'),
              type => 'href',
@@ -124,6 +124,7 @@ sub columns {
              name => $locale->text('Due Date'),
              type => 'text',
            pwidth => '2', };
+    }
 
     push @COLUMNS,
     {col_id => 'c0',
@@ -149,7 +150,7 @@ sub columns {
     {col_id => 'total',
        name => $locale->text('Total'),
        type => 'text',
-     pwidth => '1', },
+     pwidth => '1', };
     return \@COLUMNS;
 }
 
@@ -186,7 +187,7 @@ sub template {
     if (!$self->format or (uc($self->format) eq 'HTML') 
            or (uc($self->format) eq 'PDF'))
     {
-           return 'aging_report';
+           return 'Reports/aging_report';
     }
     else {
        return undef;
@@ -231,6 +232,14 @@ Calculate report as on a specific date
 =cut
 
 has 'date_ref' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+
+=item entity_class
+
+1 for vendor, 2 for customer
+
+=cut
+
+has 'entity_class' => (is => 'rw', isa => 'Maybe[Int]');
 
 =head1 METHODS
 

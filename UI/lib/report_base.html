@@ -1,0 +1,51 @@
+<?lsmb- BLOCK business_classes;
+        FOREACH BUC IN bu_classes ?>
+        <tr>
+          <th align="right"><?lsmb text(BUC.label) ?></th>
+          <?lsmb b_units.${BUC.id}.unshift({}) ?>
+          <td><?lsmb PROCESS select element_data = {
+                   name = 'business_unit_' _ loop.count
+                options = b_units.${BUC.id}
+              text_attr = 'text'
+             value_attr = 'id'
+                  class = 'business_unit'
+              } ?></td>
+        </tr>
+        <?lsmb END; # FOREACH BUC
+END # BLOCK -?>
+
+<?lsmb- BLOCK gifi_or_standard ?>
+        <tr>
+          <th align="right"><?lsmb text('Accounts') ?></th>
+          <td>
+  <?lsmb PROCESS input element_data={
+    type = 'radio',
+    name = 'accounttype',
+    value = 'standard',
+    label = text('Standard'),
+    checked = 'checked',
+    } -?>
+  <?lsmb PROCESS input element_data={
+    type = 'radio',
+    name = 'accounttype',
+    value = 'gifi',
+    label = text('GIFI'),
+    } -?>
+          </td>
+        </tr>
+<?lsmb END # BLOCK -?>
+
+<?lsmb- BLOCK ignore_yearend ?>
+	<tr>
+	  <th align="right"><?lsmb text('Ignore Year-ends'); ?></th>
+	  <td>
+	      <?lsmb PROCESS select element_data = {
+                 options = form.yearend_options,
+                 default_values = [form.ignore_yearend],
+                 name = 'ignore_yearend',
+                 text_attr = 'label',
+                 value_attr = 'id',
+           }?>
+       </td>
+	</tr>
+<?lsmb END # BLOCK -?>
