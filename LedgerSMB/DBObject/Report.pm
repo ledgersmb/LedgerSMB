@@ -123,11 +123,11 @@ This takes no arguments and simply renders the report as is.
 sub render {
     my ($self, $request) = @_;
     my $template;
-    if ($template = eval {$self->{template}}){
-       # what needs to be done here?  Maybe log it? 
-    } else {
-        $template = 'Reports/display_report';
-    }
+
+    # This is a hook for other modules to use to override the default
+    # template --CT
+    eval {$template = $self->template} || $template = 'Reports/display_report';
+
     if (!defined $self->format){
         $self->format('html');
     }

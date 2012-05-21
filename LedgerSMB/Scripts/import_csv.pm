@@ -208,7 +208,8 @@ sub parse_file {
         $line =~ s/[^"]"",/"/g;
         while ($line ne '') {
             if ($line =~ /^"/){
-                $line =~ s/"(.*?)"(,|$)//;
+                $line =~ s/"(.*?)"(,|$)// 
+                    || $self->error($self->{_locale}->text('Invalid file'));
                 my $field = $1;
                 $field =~ s/\s*$//;
                 push @fields, $field;
