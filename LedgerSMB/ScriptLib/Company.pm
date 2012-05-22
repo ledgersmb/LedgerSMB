@@ -662,7 +662,6 @@ sub save_credit {
     my ($request) = @_;
     my $company;
     my @taxes;
-    $request->{entity_class} = $request->{account_class};
 
     if (!$request->{ar_ap_account_id}){
           $request->error(
@@ -679,7 +678,7 @@ sub save_credit {
     }
     if (_close_form($request)){
         LedgerSMB::DBObject::Entity::Credit_Account->prepare_input($request);
-        $credit = LedgerSMB::DBObject::Entity::Credit_Account->new(%$request);    
+        $credit = LedgerSMB::DBObject::Entity::Credit_Account->new(%$request);
         $credit->save();
     }
     get($request);

@@ -372,6 +372,7 @@ Saves the entity credit account.  This also sets db defaults if not set.
 
 sub save {
     my ($self) = @_;
+    warn $self->{entity_class};
     my ($ref) = $self->exec_method({funcname => 'eca__save'});
     if (@{$self->{tax_ids}}){
         $self->exec_method(funcname => 'eca__set_taxes');

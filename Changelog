@@ -54,6 +54,7 @@ Changelog for 1.3.18
 * Added ODS pricelists (Chris T)
 * Better CSV escaping (Chris T, h/t Erik H)
 * Fixed menu errors preventing quote/rfq template editing (Chris T, 3524793)
+* Fixed customer email not showing emailing statements (Chris T and Erik H)
 
 
 Changelog for 1.3.17

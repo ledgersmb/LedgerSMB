@@ -35,17 +35,21 @@ PROCESS dynatable
 	<?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "entity_id"
-		value = credit_act.entity_id
+		value = entity_id
 	} ?>	
 	<?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "id"
 		value = credit_act.id
 	} ?>	
-	<?lsmb PROCESS input element_data = {
+	<?lsmb ec = credit_act.entity_class;
+              IF !ec;
+                 ec=account_class;
+              END;
+              PROCESS input element_data = {
 		type = "hidden"
-		name = "account_class"
-		value = credit_act.entity_class
+		name = "entity_class"
+		value = ec
 	} ?>	
         <table>
 	<tr class="eca_row">
