@@ -1,0 +1,67 @@
+{
+   "bank_acct" : [
+      {
+         "iban" : "3245431235",
+         "bic" : "12435655"
+      }
+   ],
+   "eca" : [
+      {
+         "location" : [
+            {
+               "city" : "Red City",
+               "country_code" : "US",
+               "class_id" : "1",
+               "mail_code" : "97432",
+               "line_one" : "103 Park Road",
+               "state" : "Washington"
+            }
+         ],
+         "language" : "en_US",
+         "meta_number" : "C123",
+         "terms" : "30",
+         "contact" : [
+            {
+               "contact" : "ar@example.org",
+               "class" : "email",
+               "description" : "Accounts Payable"
+            }
+         ],
+         "cash_accno" : "1060",
+         "arap_accno" : "1200",
+         "description" : "Example",
+         "note" : [
+            "This is a note about the customer account."
+         ],
+         "currency" : "USD",
+         "entity_class" : "2",
+         "pay_to" : "Examples, Inc",
+         "start_date" : "2011-01-01",
+         "credit_limit" : "500"
+      },
+      {
+         "language" : "en_US",
+         "meta_number" : "V123",
+         "terms" : "30",
+         "cash_accno" : "1060",
+         "arap_accno" : "1200",
+         "description" : "Example",
+         "currency" : "USD",
+         "entity_class" : "1",
+         "pay_to" : "Examples, Inc",
+         "start_date" : "2011-01-01",
+         "credit_limit" : "500"
+      }
+   ],
+   "company" : [
+      {
+         "taxnumber" : "12345",
+         "entity_class" : "2",
+         "country_code" : "US",
+         "legal_name" : "Test Company"
+      }
+   ],
+   "note" : [
+      "This is a note about the entity and will show up on both accounts.\n   "
+   ]
+}

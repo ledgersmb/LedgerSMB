@@ -1,13 +1,12 @@
 =head1 NAME
 
-LedgerSMB::REST_Format::xml - XML file support for LedgerSMB RESTful web 
-services.
+LedgerSMB::REST_Format::json - JSON support for LedgerSMB RESTful web services.
 
 =head1 SYNOPSYS
 
 
-my $hash = LedgerSMB::REST_Format::xml::from_input($request);
-my $xml = LedgerSMB::REST_Format::xml::to_output($request);
+my $hash = LedgerSMB::REST_Format::json::from_input($request);
+my $json = LedgerSMB::REST_Format::json::to_output($request);
 
 =head1 COPYRIGHT 
 
@@ -19,19 +18,20 @@ LICENSE.TXT file.
 
 =cut
 
-use XML::Simple;
+use JSON;
 use strict;
 use warnings;
 
+local $JSON::UTF8 = 1;
+
 sub from_input{
     my $request = shift @_;
-    return XMLin($request->{payload}, ForceArray=>1);
+    return decode_json($request->{payload});
 }
 
 sub to_output{
     my $request = shift @_; 
-    return XMLout($request->{payload}, RootName => $request->{class_name},
-           ContentKey => 'text');
+    return encode_json($request->{payload}, { pretty => 1, indent => 2 };
 }
 
 1;
