@@ -25,12 +25,13 @@ use warnings;
 
 sub from_input{
     my $request = shift @_;
-    return XMLin($request->{payload}, ForceArray=>1);
+    return XMLin($request->{payload}, ForceArray=>1, ContentKey => 'text');
 }
 
 sub to_output{
     my $request = shift @_; 
-    return XMLout($request->{payload}, RootName => $request->{class_name});
+    return XMLout($request->{payload}, RootName => $request->{class_name},
+           ContentKey => 'text');
 }
 
 1;
