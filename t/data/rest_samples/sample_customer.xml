@@ -9,12 +9,12 @@
        <location class_id='1' line_one='103 Park Road' city='Red City'
                  state='Washington' mail_code='97432' country_code='US' />
        <contact class='email' description='Accounts Payable'
-                contact='ar@example.org' />
+                contact='ap@example.org' />
        <note>This is a note about the customer account.</note>
    </eca>
    <eca meta_number='V123' pay_to='Examples, Inc' description='Example'
         start_date='2011-01-01' credit_limit='500' currency='USD'
-        terms='30' arap_accno='1200' cash_accno='1060' language='en_US'
+        terms='30' arap_accno='2100' cash_accno='1060' language='en_US'
         entity_class='1'>
    </eca>
    <note>This is a note about the entity and will show up on both accounts.

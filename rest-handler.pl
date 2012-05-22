@@ -251,6 +251,8 @@ sub get_request_properties {
     $request->{format} = $1;
 
     my @components = split /\//, $url;
+    my $version = shift @components;
+    die '400 Unsupported Version' if ($version ne '1.4');
 
     $request->{dbh} = DBI->connect(
         "dbi:Pg:dbname=$components[0]", 
