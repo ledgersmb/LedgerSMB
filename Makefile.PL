@@ -43,8 +43,12 @@ test_requires 'Test::More';
 test_requires 'Test::Trap';
 test_requires 'Test::Exception';
 
+feature 'RESTful Web Services XML support',
+    -default => 0,
+    'XML::Simple' => 0;
+
 feature 'Size detection for images for embedding in LaTeX templates',
-    -default => 1,
+    -default => 0,
     'Image::Size' => 0;
 
 feature 'POS module credit card processing support',
