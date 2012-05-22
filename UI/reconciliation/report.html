@@ -15,6 +15,7 @@
 <tr>
   <th><?lsmb text('Reconciliation Date:') ?></th><td><?lsmb end_date ?></td>
 </tr>
+<?lsmb IF ! approved ?>
 <tr>
  <th><?lsmb text('Beginning Statement Balance:') ?></th>
  <td><?lsmb beginning_balance ?></td>
@@ -43,6 +44,7 @@
 </tr>
 <tr>
   <th><?lsmb text('Ending GL Balance:') ?></th><td><?lsmb statement_gl_calc ?></td>
+<?lsmb END ?>
 </tr>
 </table>
 <br />
