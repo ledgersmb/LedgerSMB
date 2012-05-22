@@ -16,6 +16,7 @@ Alias /ledgersmb WORKING_DIR/
   # to the CGI scripts running from this directory
   RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
 
+
   AllowOverride All
   AddHandler cgi-script .pl
   Options ExecCGI Includes FollowSymlinks
@@ -34,6 +35,12 @@ Alias /ledgersmb WORKING_DIR/
     Order Deny,Allow
     Deny from All
   </Files>
+</Directory>
+
+<Directory WORKING_DIR/rest>
+   RewriteEngine On
+   RewriteBase /ledgersmb/rest/
+   RewriteRule . ../rest-handler.pl
 </Directory>
 
 <Directory WORKING_DIR/users>
