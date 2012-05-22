@@ -62,15 +62,70 @@ use base qw(Math::BigFloat);
 =cut
 
 our $lsmb_formats = {
-      "1000.00" => { thousands_sep => '',  decimal_sep => '.' },
+      "1000.00" => { thousands_sep => '',  decimal_sep => '.', 
+                         formatter => sub { return Number::Format::new(
+                                                     -thousands_sep => '',
+                                                     -decimal_point => '.',
+                                                        -neg_format => 'x'
+                                                    ); }
+                    },
 
-      "1000,00" => { thousands_sep => '',  decimal_sep => ',' },
-     "1 000.00" => { thousands_sep => ' ', decimal_sep => '.' },
-     "1 000,00" => { thousands_sep => ' ', decimal_sep => ',' },
-     "1,000.00" => { thousands_sep => ',', decimal_sep => '.' },
-     "1.000,00" => { thousands_sep => '.', decimal_sep => ',' },
-     "1'000,00" => { thousands_sep => "'", decimal_sep => ',' },
-     "1'000.00" => { thousands_sep => "'", decimal_sep => '.' },
+      "1000,00" => { thousands_sep => '',  decimal_sep => ',' ,
+                         formatter => sub { return Number::Format::new(
+                                                     -thousands_sep => '',
+                                                     -decimal_point => ',',
+                                                        -neg_format => 'x'
+                                                    ); }
+                    },
+
+     "1 000.00" => { thousands_sep => ' ', decimal_sep => '.' ,
+                         formatter => sub { return Number::Format::new(
+                                                     -thousands_sep => ' ',
+                                                     -decimal_point => '.',
+                                                        -neg_format => 'x'
+                                                    ); }
+                    },
+
+     "1 000,00" => { thousands_sep => ' ', decimal_sep => ',' ,
+                         formatter => sub { return Number::Format::new(
+                                                     -thousands_sep => ' ',
+                                                     -decimal_point => ',',
+                                                        -neg_format => 'x'
+                                                    ); }
+                    },
+
+     "1,000.00" => { thousands_sep => ',', decimal_sep => '.' ,
+                         formatter => sub { return Number::Format::new(
+                                                     -thousands_sep => ',',
+                                                     -decimal_point => '.',
+                                                        -neg_format => 'x'
+                                                    ); }
+                    },
+
+     "1.000,00" => { thousands_sep => '.', decimal_sep => ',' ,
+                         formatter => sub { return Number::Format::new(
+                                                     -thousands_sep => '.',
+                                                     -decimal_point => ',',
+                                                        -neg_format => 'x'
+                                                    ); }
+                    },
+
+     "1'000,00" => { thousands_sep => "'", decimal_sep => ',' ,
+                         formatter => sub { return Number::Format::new(
+                                                     -thousands_sep => "'",
+                                                     -decimal_point => ',',
+                                                        -neg_format => 'x'
+                                                    ); }
+                    },
+
+     "1'000.00" => { thousands_sep => "'", decimal_sep => '.' ,
+                         formatter => sub { return Number::Format::new(
+                                                     -thousands_sep => "'",
+                                                     -decimal_point => '.',
+                                                        -neg_format => 'x'
+                                                    ); }
+                    },
+
 
 };
 
@@ -136,10 +191,8 @@ sub from_input {
         my $format = ($args{format}) ? $args{format}
                               : $LedgerSMB::App_State::User->{numberformat};
         die 'LedgerSMB::PGNumber No Format Set' if !$format;
-        my $formatter = new Number::Format(
-                    -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
-                    -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
-        );
+        die "bad format: $format" if !$lsmb_formats->{$format};
+        my $formatter = &$lsmb_formats->{$format}->{formatter};
         $newval = $formatter->unformat_number($string);
         $pgnum = Math::BigFloat->new($newval);
         $self->round_mode('+inf');
@@ -195,12 +248,11 @@ sub to_output {
     my $zfill = ($places > 0) ? 1 : 0;
     $dplaces = 10 unless defined $dplaces;
     my $ts = $lsmb_formats->{$format}->{thousands_sep};
-    my $formatter = Number::Format::new(
-                    -thousands_sep => $ts,
-                    -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
-                    -decimal_fill => $zfill,
-                       -neg_format => 'x'
-                );   
+    
+    die "bad format: $format" if !$lsmb_formats->{$format};
+    warn $format;
+    warn &{$lsmb_formats->{$format}->{formatter}};
+    my $formatter = &$lsmb_formats->{$format}->{formatter};
     $str = $formatter->format_number($str, $dplaces);
 
     my $neg_format = (defined $args{neg_format}) ? $args{neg_format} : 'def';
