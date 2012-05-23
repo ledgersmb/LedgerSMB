@@ -102,7 +102,7 @@ cornerlogo {
 }
 
 .menu_item {
-    padding-left: 20px;
+    padding-left: 12px;
 }
 
 #top_menu {
@@ -113,18 +113,23 @@ cornerlogo {
   background-image: none;
 }
 
+#top_menu ul {
+  margin : 0;
+  padding : 0;
+}
+
 .menu_open {
 background-image: url('../images/down.gif');
 background-repeat: no-repeat;
 background-position: 0px 0px; 
-padding-left: 20px; 
+padding-left: 12px; 
 }
 
 .menu_closed {
 background-image: url('../images/up.gif');
 background-repeat: no-repeat;
 background-position: 0px 0px; 
-padding-left: 20px; 
+padding-left: 12px; 
 }
 
 
