@@ -3,8 +3,8 @@
         include_stylesheet = ["UI/budgetting/budgetting.css"] ?>
 <?lsmb PROCESS elements.html ?> 
 <body>
-<form action="<?lsmb script ?>" method="get">
-<div class="listtop"><?lsmb title ?></div>
+<form action="budget_reports.pl" method="get">
+<div class="listtop"><?lsmb text('Search Budgets') ?></div>
 <div class="input_row" id = "reference_row">
 <div class="input_group">
        <?lsmb INCLUDE input element_data = {
@@ -50,29 +50,23 @@
 </div>
 
 </div></div>
-<div class="input_row" id = "description_row">
-<div class="input_group">
-	    <?lsmb INCLUDE select element_data = {
-			text_attr = "description"
-			value_attr = "id"
-			default_values = [department_id]
-			options = departments
-			name = "department_id"
-                        label = text('Department')
-	    } ?>
-
-</div>
-<div class="input_group">
-	    <?lsmb INCLUDE select element_data = {
-			text_attr = "description"
-			value_attr = "id"
-			default_values = [project_id]
-			options = projects
-			name = "project_id"
-                        label = text('Project')
-	    } ?>
-
+<?lsmb FOREACH BUC IN bu_classes ?>
+<div class="inputrow"><div class="inputgroup">
+          <?lsmb PROCESS select element_data = {
+                   name = 'business_unit_' _ loop.count
+                options = b_units.${BUC.id}
+              text_attr = 'text'
+             value_attr = 'id'
+                  class = 'business_unit'
+                  label = text(BUC.label)
+              } ?>
 </div></div>
+<?lsmb max_class=loop.count; END; # FOREACH BUC
+PROCESS input element_data = {
+     name = 'bclass_count'
+     type = 'hidden'
+     value = max_class
+} ?>
 <div class="input_row" id = "button_row">
 <?lsmb PROCESS button element_data = {
         text = text('Search')

@@ -5,6 +5,7 @@ LedgerSMB::DBObject::Budget
 =cut
 
 package LedgerSMB::DBObject::Budget;
+use LedgerSMB::PGDate;
 use strict;
 our $VERSION = 0.1;
 
@@ -28,7 +29,7 @@ LedgerSMB::DBObject::Budget_Report.
 =cut
 
 use Moose;
-extends LedgerSMB::DBObject_Moose;
+extends 'LedgerSMB::DBObject_Moose';
 
 =head1 PROPERTIES
 
@@ -145,7 +146,7 @@ has 'business_unit_ids' => (is => 'rw', isa => 'Maybe[ArrayRef[Int]]');
 
 =cut
 
-has 'lines' => (is => 'rw', isa => 'Maybe[ArrayRef[Hashref[Any]]]');
+has 'lines' => (is => 'rw', isa => 'Maybe[ArrayRef[HashRef[Any]]]');
 =over
 
 =item $budget_id int
@@ -199,6 +200,7 @@ Saves the current budget.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'budget__save_info'});
+    $self->id($ref->{id});
     $self->{details} = [];
     for my $line (@{$self->lines}){
        my $l_info = [$line->{account_id}, 
@@ -212,7 +214,53 @@ sub save {
     $self->{dbh}->commit;
 }
 
-=item 
+
+=item from_input
+
+Prepares dates as PGDate formats
+
+=cut
+
+sub from_input {
+    my ($self, $input) = @_;
+    $input->{start_date} = LedgerSMB::PGDate->from_input($input->{start_date});
+    $input->{end_date} = LedgerSMB::PGDate->from_input($input->{end_date});
+    for my $rownum (1 .. $input->{rowcount}){
+         my $line = {};
+         $input->{"debit_$rownum"} = $input->parse_amount(
+                    amount => $input->{"debit_$rownum"}
+         );
+         $input->{"debit_$rownum"} = $input->format_amount(
+                    {amount => $input->{"debit_$rownum"}, format => '1000.00'}
+         );
+         $input->{"credit_$rownum"} = $input->parse_amount(
+                    amount => $input->{"credit_$rownum"}
+         );
+         $input->{"credit_$rownum"} = $input->format_amount(
+                   {amount => $input->{"credit_$rownum"}, format => '1000.00'}
+         );
+         if ($input->{"debit_$rownum"} and $input->{"credit_$rownum"}){
+             $input->error($input->{_locale}->text(
+                 'Cannot specify both debits and credits for budget line [_1]',
+                 $rownum
+             )); 
+         } elsif(!$input->{"debit_$rownum"} and !$input->{"credit_$rownum"}){
+             next;
+         } else {
+             $line->{amount} = $input->{"credit_$rownum"} 
+                             - $input->{"debit_$rownum"};
+         }
+         my ($accno) = split /--/, $input->{"account_id_$rownum"};
+         my ($ref) = $input->call_procedure(
+                       procname => 'account__get_from_accno',
+                           args => [$accno]
+          );
+         $line->{description} = $input->{"description_$rownum"};
+         $line->{account_id} = $ref->{id};
+         push @{$input->{lines}}, $line;
+    }
+    return $self->new(%$input);
+}
 
 =item search
 This method uses the object as the search criteria.  Nulls/undefs match all 
@@ -276,9 +324,12 @@ sub get {
    my ($info) = $self->call_procedure(
           procname => 'budget__get_info', args => [$id]
    );
+   $self->prepare_dbhash($info);
    $self = $self->new(%$info);
-   @{$self->{lines}} = $self->exec_method({funcname => 'budget__get_details'});
+   my @lines = $self->exec_method({funcname => 'budget__get_details'});
+   $self->lines(\@lines);
    @{$self->{notes}} = $self->exec_method({funcname => 'budget__get_notes'});
+   return $self;
 }
 
 =item approve

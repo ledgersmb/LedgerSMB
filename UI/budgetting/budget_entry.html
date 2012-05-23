@@ -3,7 +3,7 @@
 		"UI/ajax/scriptaculous/lib/prototype.js",
 		"UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls",
 		"UI/ajax/helpers.js"]
-	stylesheet=stylesheet 
+	stylesheet=USER.stylesheet 
         include_stylesheet = ["UI/budgetting/budgetting.css"];
     PROCESS elements.html; ?>
 <body>
@@ -57,7 +57,7 @@
 
 </div></div>
 
-<?FOREACH BUC IN bu_classes ?>
+<?lsmb FOREACH BUC IN bu_classes ?>
 <div class="inputrow"><div class="inputgroup">
           <?lsmb PROCESS select element_data = {
                    name = 'business_unit_' _ loop.count

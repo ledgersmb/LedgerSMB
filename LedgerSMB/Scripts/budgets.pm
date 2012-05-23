@@ -46,17 +46,6 @@ sub variance_report {
                  used_amount => $request->{_locale}->text('- Used'),
                     variance => $request->{_locale}->text('= Variance'),
     };
-    for my $row(@rows){
-        $row->{budget_amount} = $report->format_amount(
-                {amount => $row->{budget_amount}, money => 1}
-        );
-        $row->{used_amount} = $report->format_amount(
-                {amount => $row->{used_amount}, money => 1}
-        );
-        $row->{variance} = $report->format_amount(
-                {amount => $row->{variance}, money => 1}
-        );
-    }
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
@@ -81,7 +70,7 @@ defaults however.
 
 sub new_budget {
     my ($request) = @_;
-    my $budget = LedgerSMB::DBObject::Budget->new(%$request);
+    my $budget = LedgerSMB::DBObject::Budget->from_input($request);
     _render_screen($budget);
 }
 
@@ -95,25 +84,19 @@ sub _render_screen {
     my $additional_rows = 5;
     $additional_rows +=20 unless $budget->{rowcount};
     $additional_rows = 0 if $budget->{id};
-    $request->{class_id} = 0 unless $request->{class_id};
-    $request->{control_code} = '' unless $request->{control_code};
-    my $buc = LedgerSMB::DBObject::Business_Unit_Class->new(%$request);
-    my $bu = LedgerSMB::DBObject::Business_Unit->new(%$request);
-    @{$request->{bu_classes}} = $buc->list(1, 'gl');
-    for my $bc (@{$request->{bu_classes}}){
-        @{$request->{b_units}->{$bc->{id}}}
+    $budget->{class_id} = 0 unless $budget->{class_id};
+    $budget->{control_code} = '' unless $budget->{control_code};
+    my $buc = LedgerSMB::DBObject::Business_Unit_Class->new(%$budget);
+    my $bu = LedgerSMB::DBObject::Business_Unit->new(%$budget);
+    @{$budget->{bu_classes}} = $buc->list(1, 'gl');
+    for my $bc (@{$budget->{bu_classes}}){
+        @{$budget->{b_units}->{$bc->{id}}}
             = $bu->list($bc->{id}, undef, 0, undef);
-        for my $bu (@{$request->{b_units}->{$bc->{id}}}){
+        for my $bu (@{$budget->{b_units}->{$bc->{id}}}){
             $bu->{text} = $bu->control_code . ' -- '. $bu->description;
         }
     }
     $budget->{rowcount} ||= 0;
-    for my $row (@{$budget->{display_rows}}){
-        $row->{debit} = $budget->format_amount(amount => $row->{debit},
-                                               money  => 1) if $row->{debit} ;
-        $row->{credit} = $budget->format_amount(amount => $row->{credit},
-                                                 money  => 1) if $row->{credit};
-    }
     for (1 .. $additional_rows) {
         push @{$budget->{display_rows}}, 
              {accnoset => 0, index => $_ + $budget->{rowcount}};
@@ -218,7 +201,7 @@ Reuuires id to be set.  Displays a budget for review.
 sub view_budget {
     my ($request) = @_;
     my $budget = LedgerSMB::DBObject::Budget->new(%$request);
-    $budget->get($request->{id});
+    $budget = $budget->get($request->{id});
     $budget->{display_rows} = [];
     for my $line (@{$budget->{lines}}){
         my $row = {};
@@ -246,41 +229,7 @@ LedgerSMB::DBObject::Budget properties required.  Lines represented by
 
 sub save {
     my ($request) = @_;
-    my $budget = LedgerSMB::DBObject::Budget->new({base => $request});
-    for my $rownum (1 .. $request->{rowcount}){
-         my $line = {};
-         $request->{"debit_$rownum"} = $request->parse_amount(
-                    amount => $request->{"debit_$rownum"}
-         );
-         $request->{"debit_$rownum"} = $request->format_amount(
-                    {amount => $request->{"debit_$rownum"}, format => '1000.00'}
-         );
-         $request->{"credit_$rownum"} = $request->parse_amount(
-                    amount => $request->{"credit_$rownum"}
-         );
-         $request->{"credit_$rownum"} = $request->format_amount(
-                   {amount => $request->{"credit_$rownum"}, format => '1000.00'}
-         );
-         if ($request->{"debit_$rownum"} and $request->{"credit_$rownum"}){
-             $request->error($request->{_locale}->text(
-                 'Cannot specify both debits and credits for budget line [_1]',
-                 $rownum
-             )); 
-         } elsif(!$request->{"debit_$rownum"} and !$request->{"credit_$rownum"}){
-             next;
-         } else {
-             $line->{amount} = $request->{"credit_$rownum"} 
-                             - $request->{"debit_$rownum"};
-         }
-         my ($accno) = split /--/, $request->{"account_id_$rownum"};
-         my ($ref) = $request->call_procedure(
-                       procname => 'account__get_from_accno',
-                           args => [$accno]
-          );
-         $line->{description} = $request->{"description_$rownum"};
-         $line->{account_id} = $ref->{id};
-         push @{$budget->{lines}}, $line;
-    }
+    my $budget = LedgerSMB::DBObject::Budget->from_input($request);
     $budget->save();
     view_budget($budget); 
 } 
@@ -340,23 +289,11 @@ No inputs expected or used
 
 sub begin_search{
     my ($request) = @_;
-    my $budget = LedgerSMB::DBObject::Budget->new(%$request);
-    @{$budget->{projects}} = $budget->list_projects;
-    unshift @{$budget->{projects}}, {};
-    @{$budget->{departments}} = $budget->list_departments;
-    unshift @{$budget->{departments}}, {};
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/budgetting',
-        template => 'search_criteria',
-        format   => 'HTML'
-    );
-
-    $template->render($budget);
+    $request->{module_name} = 'gl';
+    $request->{report_name} = 'budget_search';
+    use LedgerSMB::Scripts::reports;
+    LedgerSMB::Scripts::reports::start_report($request);
 }
-
-1;
 
 =item search
 See LedgerSMB::Budget's search routine for expected inputs.
@@ -439,3 +376,6 @@ Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 
+=cut
+
+1;
