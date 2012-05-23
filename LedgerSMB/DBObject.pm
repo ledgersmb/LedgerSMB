@@ -49,6 +49,7 @@ package LedgerSMB::DBObject;
 use Scalar::Util;
 use base qw(LedgerSMB);
 use Log::Log4perl;
+use LedgerSMB::App_State;
 use strict;
 use warnings;
 
@@ -103,14 +104,16 @@ Sets the ordering used by default for specific functions called by exec_method
 
 sub set_ordering {
     my ($self, $args) = @_;
+    my $dbh = $LedgerSMB::App_State::DBH;
     $self->{_order_method}->{$args->{method}} = 
-		$self->{dbh}->quote_identifier($args->{column});
+		$dbh->quote_identifier($args->{column});
 }
 
 sub exec_method {
     my $self   = shift @_;
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     my $funcname = $args{funcname};
+    my $dbh = $LedgerSMB::App_State::DBH;
     
     my $schema   = $args{schema} || $LedgerSMB::Sysconfig::db_namespace;
     
@@ -127,7 +130,7 @@ sub exec_method {
 	       coalesce((SELECT oid FROM pg_namespace WHERE nspname = ?), 
 	                pronamespace)
     ";
-    my $sth   = $self->{dbh}->prepare(
+    my $sth   = $dbh->prepare(
 		$query
     );
     $sth->execute($funcname, $schema) 

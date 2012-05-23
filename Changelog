@@ -55,6 +55,10 @@ Changelog for 1.3.18
 * Better CSV escaping (Chris T, h/t Erik H)
 * Fixed menu errors preventing quote/rfq template editing (Chris T, 3524793)
 * Fixed customer email not showing emailing statements (Chris T and Erik H)
+* Approved recon reports no longer show invalid balance info (Chris T,3518283)
+* CSS directory is now configurable (Chris T, 3516730, h/t Robert C)
+
+Robert C is Robert James Clay
 
 
 Changelog for 1.3.17

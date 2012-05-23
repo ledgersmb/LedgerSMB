@@ -281,6 +281,7 @@ sub render {
         $vars->{FORMATS} = $self->available_formats;
         $vars->{ENVARS} = \%ENV;
         $vars->{USER} = $LedgerSMB::App_State::User;
+        $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
 		throw Error::Simple "Invalid format";
 	}

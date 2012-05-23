@@ -656,17 +656,18 @@ sub call_procedure {
     my $query_rc;
     my $argstr   = "";
     my @results;
+    my $dbh = $LedgerSMB::App_State::DBH;
 
     if (!defined $procname){
         $self->error('Undefined function in call_procedure.');
     }
-    $procname = $self->{dbh}->quote_identifier($procname);
+    $procname = $dbh->quote_identifier($procname);
     # Add the test for whether the schema is something useful.
     $logger->trace("\$procname=$procname");
     
     $schema = $schema || $LedgerSMB::Sysconfig::db_namespace;
     
-    $schema = $self->{dbh}->quote_identifier($schema);
+    $schema = $dbh->quote_identifier($schema);
     
     for my $arg ( @call_args ) {
         if (eval { $arg->can('to_db') }){
@@ -680,7 +681,7 @@ sub call_procedure {
         $query .= " ORDER BY $order_by";
     }
     $query =~ s/\(\)/($argstr)/;
-    my $sth = $self->{dbh}->prepare($query);
+    my $sth = $dbh->prepare($query);
     my $place = 1;
     # API Change here to support byteas:  
     # If the argument is a hashref, allow it to define it's SQL type
@@ -701,10 +702,10 @@ sub call_procedure {
     $query_rc = $sth->execute();
     if (!$query_rc){
           if ($args{continue_on_error} and  #  only for plpgsql exceptions
-                          ($self->{dbh}->state =~ /^P/)){
-                $@ = $self->{dbh}->errstr;
+                          ($dbh->state =~ /^P/)){
+                $@ = $dbh->errstr;
           } else {
-                $self->dberror($self->{dbh}->errstr . ": " . $query);
+                $self->dberror($dbh->errstr . ": " . $query);
           }
     }
    
