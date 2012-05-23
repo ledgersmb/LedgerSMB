@@ -62,70 +62,15 @@ use base qw(Math::BigFloat);
 =cut
 
 our $lsmb_formats = {
-      "1000.00" => { thousands_sep => '',  decimal_sep => '.', 
-                         formatter => sub { return Number::Format::new(
-                                                     -thousands_sep => '',
-                                                     -decimal_point => '.',
-                                                        -neg_format => 'x'
-                                                    ); }
-                    },
+      "1000.00" => { thousands_sep => '',  decimal_sep => '.' },
 
-      "1000,00" => { thousands_sep => '',  decimal_sep => ',' ,
-                         formatter => sub { return Number::Format::new(
-                                                     -thousands_sep => '',
-                                                     -decimal_point => ',',
-                                                        -neg_format => 'x'
-                                                    ); }
-                    },
-
-     "1 000.00" => { thousands_sep => ' ', decimal_sep => '.' ,
-                         formatter => sub { return Number::Format::new(
-                                                     -thousands_sep => ' ',
-                                                     -decimal_point => '.',
-                                                        -neg_format => 'x'
-                                                    ); }
-                    },
-
-     "1 000,00" => { thousands_sep => ' ', decimal_sep => ',' ,
-                         formatter => sub { return Number::Format::new(
-                                                     -thousands_sep => ' ',
-                                                     -decimal_point => ',',
-                                                        -neg_format => 'x'
-                                                    ); }
-                    },
-
-     "1,000.00" => { thousands_sep => ',', decimal_sep => '.' ,
-                         formatter => sub { return Number::Format::new(
-                                                     -thousands_sep => ',',
-                                                     -decimal_point => '.',
-                                                        -neg_format => 'x'
-                                                    ); }
-                    },
-
-     "1.000,00" => { thousands_sep => '.', decimal_sep => ',' ,
-                         formatter => sub { return Number::Format::new(
-                                                     -thousands_sep => '.',
-                                                     -decimal_point => ',',
-                                                        -neg_format => 'x'
-                                                    ); }
-                    },
-
-     "1'000,00" => { thousands_sep => "'", decimal_sep => ',' ,
-                         formatter => sub { return Number::Format::new(
-                                                     -thousands_sep => "'",
-                                                     -decimal_point => ',',
-                                                        -neg_format => 'x'
-                                                    ); }
-                    },
-
-     "1'000.00" => { thousands_sep => "'", decimal_sep => '.' ,
-                         formatter => sub { return Number::Format::new(
-                                                     -thousands_sep => "'",
-                                                     -decimal_point => '.',
-                                                        -neg_format => 'x'
-                                                    ); }
-                    },
-
+      "1000,00" => { thousands_sep => '',  decimal_sep => ',' },
+     "1 000.00" => { thousands_sep => ' ', decimal_sep => '.' },
+     "1 000,00" => { thousands_sep => ' ', decimal_sep => ',' },
+     "1,000.00" => { thousands_sep => ',', decimal_sep => '.' },
+     "1.000,00" => { thousands_sep => '.', decimal_sep => ',' },
+     "1'000,00" => { thousands_sep => "'", decimal_sep => ',' },
+     "1'000.00" => { thousands_sep => "'", decimal_sep => '.' },
 
 };
 
@@ -175,6 +120,10 @@ The input is formatted.
 sub from_input {
     my $self   = shift @_;
     my $string = shift @_;
+    my %args   = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;  
+    my $format = ($args{format}) ? $args{format}
+                              : $LedgerSMB::App_State::User->{numberformat};
+    die 'LedgerSMB::PGNumber No Format Set' if !$format;
     return undef if !defined $string;
     my $negate;
     my $pgnum;
@@ -187,12 +136,10 @@ sub from_input {
     if (UNIVERSAL::isa( $string, 'Math::BigFloat' ) ) {
         $pgnum = $string; 
     } else {
-        my %args   = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;  
-        my $format = ($args{format}) ? $args{format}
-                              : $LedgerSMB::App_State::User->{numberformat};
-        die 'LedgerSMB::PGNumber No Format Set' if !$format;
-        die "bad format: $format" if !$lsmb_formats->{$format};
-        my $formatter = &$lsmb_formats->{$format}->{formatter};
+        my $formatter = new Number::Format(
+                    -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
+                    -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
+        );
         $newval = $formatter->unformat_number($string);
         $pgnum = Math::BigFloat->new($newval);
         $self->round_mode('+inf');
@@ -247,16 +194,14 @@ sub to_output {
     $places = 0 unless defined $places and ($places > 0);
     my $zfill = ($places > 0) ? 1 : 0;
     $dplaces = 10 unless defined $dplaces;
-    my $ts = $lsmb_formats->{$format}->{thousands_sep};
-    
-    die "bad format: $format" if !$lsmb_formats->{$format};
-    warn $format;
-    warn &{$lsmb_formats->{$format}->{formatter}};
-    my $formatter = &$lsmb_formats->{$format}->{formatter};
+    my $formatter = new Number::Format(
+                    -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
+                    -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
+                     -decimal_fill => $zfill,
+                       -neg_format => 'x');   
     $str = $formatter->format_number($str, $dplaces);
 
-    my $neg_format = (defined $args{neg_format}) ? $args{neg_format} : 'def';
-    $neg_format = 'def' unless $neg_format eq 'paren' or $neg_format eq 'DRCR';
+    my $neg_format = ($args{neg_format}) ? $args{neg_format} : 'def';
     my $fmt = ($is_neg) ? $lsmb_neg_formats->{$neg_format}->{neg}
                         : $lsmb_neg_formats->{$neg_format}->{pos};
    

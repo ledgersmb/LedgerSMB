@@ -25,6 +25,17 @@ my $lsmb = new LedgerSMB;
 ok(defined $lsmb);
 isa_ok($lsmb, 'LedgerSMB');
 
+@r = trap{$form->format_amount({'apples' => '1000.00'}, 'foo', 2)};
+is($trap->exit, undef,
+	'form: No numberformat set, invalid amount (NaN check)');
+cmp_ok($trap->die, '=~', $no_format_message,
+	'form: No numberformat set, invalid amount message (NaN check)');
+@r = trap{$lsmb->format_amount('user' => {'apples' => '1000.00'},
+	'amount' => 'foo', 'precision' => 2)};
+is($trap->exit, undef,
+	'lsmb: No numberformat set, invalid amount (NaN check)');
+cmp_ok($trap->die, , '=~', $no_format_message,
+	'lsmb: No numberformat set, invalid amount message (NaN check)');
 my $expected;
 foreach my $value ('0.01', '0.05', '0.015', '0.025', '1.1', '1.5', '1.9', 
 		'10.01', '4', '5', '5.1', '5.4', '5.5', '5.6', '6', '0', 
@@ -186,17 +197,6 @@ is($lsmb->format_amount('user' => {'numberformat' => '1000.00'},
 $ENV{GATEWAY_INTERFACE} = 'yes';
 $form->{pre} = 'Blah';
 $form->{header} = 'Blah';
-@r = trap{$form->format_amount({'apples' => '1000.00'}, 'foo', 2)};
-is($trap->exit, undef,
-	'form: No numberformat set, invalid amount (NaN check)');
-cmp_ok($trap->die, '=~', $no_format_message,
-	'form: No numberformat set, invalid amount message (NaN check)');
-@r = trap{$lsmb->format_amount('user' => {'apples' => '1000.00'},
-	'amount' => 'foo', 'precision' => 2)};
-is($trap->exit, undef,
-	'lsmb: No numberformat set, invalid amount (NaN check)');
-cmp_ok($trap->die, , '=~', $no_format_message,
-	'lsmb: No numberformat set, invalid amount message (NaN check)');
 is($form->format_amount({'numberformat' => '1000.00'} , '-1.00', 2, 'paren'), '(1.00)',
 	"form: -1.00 with dash '-'");
 is($lsmb->format_amount('user' => {'numberformat' => '1000.00'}, 
