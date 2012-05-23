@@ -11,9 +11,9 @@
 	<?lsmb END -?>
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<?lsmb IF form.stylesheet ?>
-	<link rel="stylesheet" href="css/<?lsmb form.stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
+	<link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb form.stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
 	<?lsmb ELSIF stylesheet ?>
-	<link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
+	<link rel="stylesheet" href="<?lsmb CSSDIR ?><?lsmb stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
 	<?lsmb ELSE ?>
 	<?lsmb END ?>
 	<?lsmb FOREACH s = include_stylesheet ?>

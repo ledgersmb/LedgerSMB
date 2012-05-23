@@ -20,6 +20,7 @@ our $pathsep = ':';
 our $auth = 'DB';
 our $logging = 0;      # No logging on by default
 our $images = getcwd() . '/images'; 
+our $cssdir = 'css/';
 
 our $force_username_case = undef; # don't force case
 
@@ -105,10 +106,14 @@ read_config( 'ledgersmb.conf' => %config ) or die;
 for my $var (
     qw(pathsep logging log_level DBI_TRACE check_max_invoices language auth latex
     db_autoupdate force_username_case max_post_size decimal_places cookie_name
-    return_accno no_db_str tempdir cache_templates)
+    return_accno no_db_str tempdir cache_templates cssdir)
   )
 {
     ${$var} = $config{''}{$var} if $config{''}{$var};
+}
+
+if ($cssdir !~ m|/$|){
+    $cssdir = "$cssdir/";
 }
 
 %printer = %{ $config{printers} } if $config{printers};

@@ -277,6 +277,7 @@ sub render {
 	my $self = shift;
 	my $vars = shift;
         $vars->{FORMATS} = $self->available_formats;
+        $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
 		throw Error::Simple "Invalid format";
 	}

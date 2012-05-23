@@ -612,7 +612,8 @@ sub header {
     if ( $ENV{GATEWAY_INTERFACE} ) {
         if ( $self->{stylesheet} && ( -f "css/$self->{stylesheet}" ) ) {
             $stylesheet =
-qq|<link rel="stylesheet" href="css/$self->{stylesheet}" type="text/css" title="LedgerSMB stylesheet" />\n|;
+qq|<link rel="stylesheet" href="$LedgerSMB::Sysconfig::cssdir| . 
+qq|$self->{stylesheet}" type="text/css" title="LedgerSMB stylesheet" />\n|;
         }
 
         $self->{charset} ||= "utf-8";
