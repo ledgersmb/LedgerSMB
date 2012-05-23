@@ -274,7 +274,7 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 
 --### oldcode: UPDATE granted because old code wants it
-GRANT SELECT, INSERT, UPDATE ON invoice, new_shipto 
+GRANT SELECT, INSERT, UPDATE ON invoice, new_shipto, new_shipto_id_seq
 TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
 GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
