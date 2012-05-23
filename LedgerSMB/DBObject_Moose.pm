@@ -103,8 +103,7 @@ sub run_custom_queries {
 
 sub call_procedure {
     my $self   = shift @_; 
-    my $dbo = $self->_to_dbobject;
-    return $dbo->call_procedure(@_);
+    return LedgerSMB::DBObject::call_procedure(@_);
 }
 
 # Keeping this here due to common requirements
