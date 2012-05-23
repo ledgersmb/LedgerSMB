@@ -94,72 +94,40 @@ cornerlogo {
 	padding: 4px;
 }
 
-.menuOut {
-  cursor: pointer;
-  background-color: #eeeeee;
-  font-size: 11px;
-  color: #000084;
-  padding: 2px;
-  text-align: left;
-}
-
-.menuOver {
-  cursor: pointer;
-  background-color: #004a80;
-  font-size: 11px;
-  color: #ffffff;
-  padding: 2px;
-  text-align: left;
-}
-
 .submenu {
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 12px;
   padding-left: 20px;
+  list-style: none;
+}
+
+.menu_item {
+    padding-left: 20px;
 }
 
 #top_menu {
   margin: 0px;
   padding: 0px;
   -webkit-padding-start: 0px;
+  list-style: none;
+  background-image: none;
 }
 
-#top_menu:before {
-  content: "";
+.menu_open {
+background-image: url('../images/down.gif');
+background-repeat: no-repeat;
+background-position: 0px 0px; 
+padding-left: 20px; 
+}
+
+.menu_closed {
+background-image: url('../images/up.gif');
+background-repeat: no-repeat;
+background-position: 0px 0px; 
+padding-left: 20px; 
 }
 
 
-.menu_open, .menu_closed {
-    list-style: none;
-}
-.menu_open:before {
-    content: '-';
-}
-
-.menu_closed:before {
-    content: '+';
-}
-
-
-.menuOut a {
-  cursor: pointer;
-  margin: 0px;
-  background-color: #eeeeee;
-  font-size: 11px;
-  color: #000084;
-  border: 0px solid #000000;
-  padding: 0px;
-  text-align: left;
-}
-
-.menuOver a {
-  margin: 0px;
-  background-color: transparent;
-  font-size: 11px;
-  color: #ffffff;
-  padding: 0px;
-  text-align: left;
-}
 
 .submenu a {
   color: #004a80;
