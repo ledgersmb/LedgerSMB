@@ -59,16 +59,16 @@ instead
 
 has 'entity_id' => (is => 'ro', isa => 'Maybe[Int]');
 
-=item eca_id
+=item credit_id
 
 Internal id of lined entity credit account.  Is undef if linked to entity
 instead.
 
 =cut
 
-has 'eca_id' => (is => 'ro', isa => 'Maybe[Int]');
+has 'credit_id' => (is => 'ro', isa => 'Maybe[Int]');
 
-=item class_id 
+=item location_class
 
 Internal id of location class.
 
@@ -84,7 +84,7 @@ Internal id of location class.
 
 =cut
 
-has 'class_id' => (is => 'ro', isa => 'Maybe[Int]');
+has 'location_class' => (is => 'ro', isa => 'Maybe[Int]');
 
 =item class_name
 
@@ -93,9 +93,9 @@ $self->set_class_name is called.
 
 =cut
 
-our %classes = ( 1 => $App_State::Locate->text('Billing'),
-                 2 => $App_State::Locate->text('Sales'),
-                 3 => $App_State::Locate->text('Shipping'),
+our %classes = ( 1 => $LedgerSMB::App_State::Locale->text('Billing'),
+                 2 => $LedgerSMB::App_State::Locale->text('Sales'),
+                 3 => $LedgerSMB::App_State::Locale->text('Shipping'),
 );
 
 has 'class_name' => (is => 'rw', isa => 'Maybe[Str]');
@@ -172,12 +172,81 @@ has 'country_name' => (is => 'rw', 'isa' => 'Maybe[Str]');
 
 =item get($args hashref)
 
+Retrieves locations and returns them.  Args include:
+
+=over 
+
+=item entity_id (required)
+
+=item credit_id (optional)
+
+=item only_class int (optional)
+
+=item
+
+This function returns all locations attached to the entity_id and, if the credit_id is provided, all locations attached to the credit_id as well.  The two 
+are appended together with the ones at the entity level coming first.
+
+If only_class is set, all results will be discarded that are not a specific 
+class (useful for retrieving billing info only).
+
+=cut
+
+sub get_active {
+    my ($self, $request, $args) = @_;
+    my @results;
+    for my $ref ($self->call_procedure(procname => 'entity__list_locations',
+                                           args => [$args->{entity_id}]))
+    {
+       next if ($args->{only_class}) 
+               and ($args->{only_class} != $ref->{location_class});
+        LedgerSMB::DBObject_Moose::prepare_dbhash($request, $ref);
+        push @results, $self->new(%$ref);
+    }
+    return @results unless $args->{credit_id};
+
+    for my $ref ($self->call_procedure(procname => 'eca__list_locations',
+                                           args => [$args->{credit_id}]))
+    {
+       next if ($args->{only_class}) 
+               and ($args->{only_class} != $ref->{location_class});
+        $ref->{credit_id} = $args->{credit_id};
+        LedgerSMB::DBObject_Moose::prepare_dbhash($request, $ref);
+        push @results, $self->new(%$ref);
+    }
+
+    return @results;
+
+}
 
 =item save()
 
+Saves the current location to the database
+
+=cut
+
+sub save {
+    my ($self) = @_;
+    my $procname;
+
+    if ($self->credit_id){
+        $procname = 'eca__location_save';
+    } else {
+        $procname = 'entity__location_save';
+    }
+    $self->exec_method({funcname => $procname});
+}
+
 =item deactivate()
 
-=item list($args hashref)
+Deactivates the current location
+
+=cut
+
+sub deactivate {
+    my ($self) = @_;
+    $self->exec_method({funcname => 'location__deactivate'});
+}
 
 =back
 

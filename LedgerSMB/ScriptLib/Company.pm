@@ -3,6 +3,7 @@ use LedgerSMB::Template;
 use LedgerSMB::DBObject::Customer;
 use LedgerSMB::DBObject::Entity::Company;
 use LedgerSMB::DBObject::Entity::Credit_Account;
+use LedgerSMB::DBObject::Entity::Location;
 use LedgerSMB::DBObject::Vendor;
 use Log::Log4perl;
 
@@ -244,15 +245,13 @@ Adds a location to the company as defined in the inherited object
 
 sub add_location {
     my ($request) = @_;
-    my $company = new_company($request);
-    set_entity_class($company);
-    $company->save_location();
-    $company->get();
+    my $location = LedgerSMB::DBObject::Entity::Location->new(%$request);
+    my $company = LedgerSMB::DBObject::Entity::Company->new(%$request);
 
-    
-    $company->get_metadata();
+    $location->save();
+    $company = $company->get($request->{entity_id});
 
-    _render_main_screen($company);
+    _render_main_screen($request, $company);
 	
 }
 
@@ -759,6 +758,17 @@ sub _render_main_screen{
         $company = new_company($request);
         $company->get_metadata();
     }
+    for my $ref (@{$request->{credit_list}}){
+        $company->{credit_act} = $ref; 
+    }
+    my $err =  $company->{credit_act}->{id};
+    @{$company->{locations}} = 
+          LedgerSMB::DBObject::Entity::Location->get_active(
+                       $request,
+                       {entity_id => $company->{entity_id},
+                        credit_id => $company->{credit_act}->{id}}
+          );
+                         
 
     $company->{creditlimit} = $request->format_amount({amount => $company->{creditlimit}}) unless !defined $company->{creditlimit}; 
     $company->{discount} = "$company->{discount}" unless !defined $company->{discount}; 

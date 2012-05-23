@@ -530,7 +530,7 @@ DECLARE out_row entity_credit_retrieve;
 BEGIN
 	
 	FOR out_row IN 
-		SELECT  c.id, e.id, ec.entity_class, ec.discount, 
+		SELECT  ec.id, e.id, ec.entity_class, ec.discount, 
                         ec.discount_terms,
 			ec.taxincluded, ec.creditlimit, ec.terms, 
 			ec.meta_number, ec.description, ec.business_id, 
@@ -540,9 +540,8 @@ BEGIN
                         ec.discount_account_id,
 			ec.threshold, e.control_code, ec.id, ec.pay_to_name,
                         ec.taxform_id
-		FROM company c
-		JOIN entity e ON (c.entity_id = e.id)
-		JOIN entity_credit_account ec ON (c.entity_id = ec.entity_id)
+		FROM entity e 
+		JOIN entity_credit_account ec ON (e.id = ec.entity_id)
 		WHERE e.id = in_entity_id
 			AND ec.entity_class = 
 				CASE WHEN in_entity_class = 3 THEN 2
@@ -887,7 +886,7 @@ COMMENT ON  FUNCTION eca__save (
 ) IS
 $$ Saves an entity credit account.  Returns the id of the record saved.  $$;
 
-CREATE OR REPLACE FUNCTION company__list_locations(in_entity_id int)
+CREATE OR REPLACE FUNCTION entity__list_locations(in_entity_id int)
 RETURNS SETOF location_result AS
 $$
 DECLARE out_row RECORD;
@@ -907,7 +906,7 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-COMMENT ON FUNCTION company__list_locations(in_entity_id int) IS
+COMMENT ON FUNCTION entity__list_locations(in_entity_id int) IS
 $$ Lists all locations for an entity.$$;
 
 DROP TYPE IF EXISTS contact_list CASCADE;
@@ -1131,25 +1130,25 @@ CREATE OR REPLACE FUNCTION company__next_id() returns bigint as $$
     
 $$ language 'sql';
 
-CREATE OR REPLACE FUNCTION company__location_save (
+CREATE OR REPLACE FUNCTION entity__location_save (
     in_entity_id int, in_location_id int,
     in_location_class int, in_line_one text, in_line_two text, 
-    in_city TEXT, in_state TEXT, in_mail_code text, in_country_code int,
+    in_city TEXT, in_state TEXT, in_mail_code text, in_country_id int,
     in_created date
 ) returns int AS $$
     BEGIN
     return _entity_location_save(
         in_entity_id, in_location_id,
         in_location_class, in_line_one, in_line_two, 
-        '', in_city , in_state, in_mail_code, in_country_code);
+        '', in_city , in_state, in_mail_code, in_country_id);
     END;
 
 $$ language 'plpgsql';
 
-COMMENT ON FUNCTION company__location_save (
+COMMENT ON FUNCTION entity__location_save (
     in_entity_id int, in_location_id int,
     in_location_class int, in_line_one text, in_line_two text,
-    in_city TEXT, in_state TEXT, in_mail_code text, in_country_code int,
+    in_city TEXT, in_state TEXT, in_mail_code text, in_country_id int,
     in_created date
 ) IS
 $$ Saves a location to a company.  Returns the location id.$$;
@@ -1158,7 +1157,7 @@ create or replace function _entity_location_save(
     in_entity_id int, in_location_id int,
     in_location_class int, in_line_one text, in_line_two text, 
     in_line_three text, in_city TEXT, in_state TEXT, in_mail_code text, 
-    in_country_code int
+    in_country_id int
 ) returns int AS $$
 
     DECLARE
@@ -1170,16 +1169,16 @@ create or replace function _entity_location_save(
 	FROM company WHERE entity_id = in_entity_id;
 
 	DELETE FROM entity_to_location
-	WHERE company_id = in_entity_id
+	WHERE entity_id = in_entity_id
 		AND location_class = in_location_class
 		AND location_id = in_location_id;
 
 	SELECT location_save(NULL, in_line_one, in_line_two, in_line_three, in_city,
-		in_state, in_mail_code, in_country_code) 
+		in_state, in_mail_code, in_country_id) 
 	INTO l_id;
 
 	INSERT INTO entity_to_location
-		(company_id, location_class, location_id)
+		(entity_id, location_class, location_id)
 	VALUES  (in_entity_id, in_location_class, l_id);
 
 	RETURN l_id;    
@@ -1201,7 +1200,7 @@ create or replace function eca__location_save(
     in_credit_id int, in_location_id int,
     in_location_class int, in_line_one text, in_line_two text, 
     in_line_three text, in_city TEXT, in_state TEXT, in_mail_code text, 
-    in_country_code int, in_old_location_class int
+    in_country_id int, in_old_location_class int
 ) returns int AS $$
 
     DECLARE
@@ -1225,7 +1224,7 @@ create or replace function eca__location_save(
                 in_city,
                 in_state, 
                 in_mail_code, 
-                in_country_code
+                in_country_id
             )
         	INTO l_id; 
         ELSE
@@ -1237,7 +1236,7 @@ create or replace function eca__location_save(
                 in_city,
                 in_state, 
                 in_mail_code, 
-                in_country_code
+                in_country_id
             )
         	INTO l_id; 
             INSERT INTO eca_to_location 

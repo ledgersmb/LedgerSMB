@@ -951,30 +951,30 @@ sub _on_connection_error {
 sub dberror{
    my $self = shift @_;
    my $state_error = {};
-   if ($self->{_locale}){
-       $state_error = {
-            '42883' => $self->{_locale}->text('Internal Database Error'),
-            '42501' => $self->{_locale}->text('Access Denied'),
-            '42401' => $self->{_locale}->text('Access Denied'),
-            '22008' => $self->{_locale}->text('Invalid date/time entered'),
-            '22012' => $self->{_locale}->text('Division by 0 error'),
-            '22004' => $self->{_locale}->text('Required input not provided'),
-            '23502' => $self->{_locale}->text('Required input not provided'),
-            '23505' => $self->{_locale}->text('Conflict with Existing Data.  Perhaps you already entered this?'),
-            'P0001' => $self->{_locale}->text('Error from Function:') . "\n" .
-                    $self->{dbh}->errstr,
-       };
-   }
-   $logger->error("Logging SQL State ".$self->{dbh}->state.", error ".
-           $self->{dbh}->err . ", string " .$self->{dbh}->errstr);
-   if (defined $state_error->{$self->{dbh}->state}){
-       $self->error($state_error->{$self->{dbh}->state}
+   my $locale = $LedgerSMB::App_State::Locale;
+   my $dbh = $LedgerSMB::App_State::DBH;
+   $state_error = {
+            '42883' => $locale->text('Internal Database Error'),
+            '42501' => $locale->text('Access Denied'),
+            '42401' => $locale->text('Access Denied'),
+            '22008' => $locale->text('Invalid date/time entered'),
+            '22012' => $locale->text('Division by 0 error'),
+            '22004' => $locale->text('Required input not provided'),
+            '23502' => $locale->text('Required input not provided'),
+            '23505' => $locale->text('Conflict with Existing Data.  Perhaps you already entered this?'),
+            'P0001' => $locale->text('Error from Function:') . "\n" .
+                    $dbh->errstr,
+   };
+   $logger->error("Logging SQL State ".$dbh->state.", error ".
+           $dbh->err . ", string " .$dbh->errstr);
+   if (defined $state_error->{$dbh->state}){
+       die $state_error->{$dbh->state}
            . "\n" . 
-          $self->{_locale}->text('More information has been reported in the error logs'));
-       $self->{dbh}->rollback;
+          $locale->text('More information has been reported in the error logs');
+       $dbh->rollback;
        exit;
    }
-   $self->error($self->{dbh}->state . ":" . $self->{dbh}->errstr);
+   die $dbh->state . ":" . $dbh->errstr;
 }
 
 sub redo_rows {

@@ -44,6 +44,7 @@ it will be up to the application to handle any exceptions.
 
 package LedgerSMB::DBObject_Moose;
 use LedgerSMB::DBObject;
+use LedgerSMB;
 use Moose;
 use Scalar::Util;
 use Log::Log4perl;
@@ -103,7 +104,7 @@ sub run_custom_queries {
 
 sub call_procedure {
     my $self   = shift @_; 
-    return LedgerSMB::DBObject::call_procedure(@_);
+    return LedgerSMB->call_procedure(@_);
 }
 
 # Keeping this here due to common requirements
