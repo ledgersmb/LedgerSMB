@@ -82,44 +82,6 @@ sub delete_contact {
     return $rv;
 }
 
-=over
-
-=item delete_location
-
-Deletes a record from the location side.
-
-Required request variables:
-
-location_id
-location_class_id
-
-One of:
-
-credit_id (preferred)
-company_id (as fallback)
-
-Returns true if a record was deleted.  False otherwise.
-
-=back
-
-=cut
-
-sub delete_location {
-    my ($self) = @_;
-    my $rv;
-    if ($self->{credit_id}){
-        ($rv) = $self->exec_method(funcname => 'eca__delete_location');
-    } elsif ($self->{company_id}){
-        ($rv) = $self->exec_method(funcname => 'company__delete_location');
-    } else {
-       $self->error($self->{_locale}->text(
-          'No company or credit id in LedgerSMB::DBObject::delete_location'
-       ));
-    }
-    $self->{dbh}->commit;
-    return $rv;
-}
-
 
 =over 
 
@@ -201,44 +163,6 @@ sub get_history {
     }
     $self->{history_rows} = \@results;
     return @results;
-}
-
-=over
-
-=item save_location
-
-This method saves an address for a company.
-
-Requires the following variables on the object:
-credit_id
-location_id 
-location_class (1 = billing, 2 = shipping, 3 = sales)
-line_one
-line_two
-city
-state (can hold province info)  
-mail_code (zip or postal code) 
-country_code (ID of country)
-
-
-=back
-
-=cut
-
-sub save_location {
-    my $self = shift @_;
-
-    $self->{country_id} = $self->{country_code};
-
-    if($self->{credit_id}){
-        $self->exec_method(funcname => 'eca__location_save');
-    } else {
-        my ($ref) = $self->exec_method(funcname => 'company__location_save');
-        my @vals = values %$ref;
-        $self->{location_id} = $vals[0];
-    }
-
-    $self->{dbh}->commit;
 }
 
 =over
@@ -455,23 +379,6 @@ sub accounts {
     
     $self->set_entity_class();
     @{$self->{accounts}} = $self->exec_method(funcname => 'company__get_all_accounts');
-}
-
-=item address($id)
-
-Returns the location if it is specified by the $id argument.
-
-=cut 
-
-sub address {
-    
-    my ($self, $id) = @_;
-    
-    for my $loc (@{ $self->{locations} }) {
-        if ($loc->{id} == $id) {
-            return $loc;
-        }
-    }
 }
 
 =item get_pricematrix
