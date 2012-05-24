@@ -65,18 +65,19 @@ Who marked the budget obsolete
 
 sub columns {
    return [ {col_id => 'start_date',
-               type => 'text',
+               type => 'href',
+          href_base => 'budget_reports.pl?action=variance_report&id=',
                name => $locale->text('Start Date') },
 
             {col_id => 'end_date', 
-               type => 'text',
+               type => 'href',
+          href_base => 'budget_reports.pl?action=variance_report&id=',
                name => $locale->text('End Date') },
 
             {col_id => 'reference', 
                type => 'href',
           href_base => 'budgets.pl?action=view_budget&id=',
                name => $locale->text('Reference') },
-             
 
             {col_id => 'description', 
                type => 'href',
@@ -217,8 +218,15 @@ sub run_report{
 
 =back
 
-=head1 COPYRIGHT
+=head1 COPYRIGHT AND LICENSE
+
+Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU 
+General Public License version 2, or at your option any later version.  Please
+see the included License.txt for details.
 
 =cut
+
+__PACKAGE__->meta->make_immutable;
+
 
 return 1;

@@ -54,22 +54,15 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::DBObject');
 sub __validate__ {}
 
 has 'dbh' => (is => 'ro', isa => 'DBI::db', required => '1');
-has '_roles' => (is => 'ro', isa => 'ArrayRef[Str]', required => '1');
 has '_user' => (is => 'ro', isa => 'LedgerSMB::User', required => '1');
 has '_locale' => (is => 'ro', isa => 'LedgerSMB::Locale', required => '1');
 
 sub prepare_dbhash {
     my $self = shift;
     my $target = shift;
-    for my $att (qw(_roles _user _locale)){
-        my $t_att = $att;
-        $att =~ s/^\_//;
-        $att = ucfirst($att);
-        if (!$target->{$att}){
-           $target->{$t_att} = ${"LedgerSMB::App_State::$att"};
-        }
-    }
     $target->{dbh} = $LedgerSMB::App_State::DBH;
+    $target->{_user} = $LedgerSMB::App_State::User;
+    $target->{_locale} = $LedgerSMB::App_State::Locale;
 }
 
 # _to_dbobject 
