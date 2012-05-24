@@ -92,7 +92,7 @@ sub columns {
       {col_id => 'select',
          type => 'checkbox'},
  
-      {col_id => 'credit_acct',
+      {col_id => 'name',
          name => $credit_label,
          type => 'text',
        pwidth => 1, },

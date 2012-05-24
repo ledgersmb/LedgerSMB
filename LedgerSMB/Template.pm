@@ -282,6 +282,24 @@ sub render {
         $vars->{ENVARS} = \%ENV;
         $vars->{USER} = $LedgerSMB::App_State::User;
         $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
+
+        my @stdformats = ();
+        for (qw(HTML PDF PS)){
+           if (scalar(grep {/^$_$/} @{$vars->{FORMATS}})){
+               push @stdformats, $_;
+           }
+        }
+        $vars->{STDFORMATS} = \@stdformats;
+        eval {
+             $vars->{PRINTERS} = [
+                   {text => $LedgerSMB::App_State::Locale->text('Screen'),
+                   value => 'screen'},
+             ]; 
+        };
+        for (keys %LedgerSMB::Sysconfig::printers){
+            push @{$vars->{PRINTERS}}, { text => $_, value => $_ };
+        }
+
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
 		throw Error::Simple "Invalid format";
 	}

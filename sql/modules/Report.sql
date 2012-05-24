@@ -8,13 +8,6 @@ CREATE TYPE report_aging_item AS (
 	entity_id int,
 	account_number varchar(24),
 	name text,
-	address1 text,
-	address2 text,
-	address3 text,
-	city text,
-        state text,
-	mail_code text,
-	country text,
 	contact_name text,
 	invnumber text,
 	transdate date,
@@ -30,13 +23,14 @@ CREATE TYPE report_aging_item AS (
 	id int,
 	curr varchar(3),
 	exchangerate numeric,
-	line_items text[][]
+	line_items text[][],
+        age int
 );
 
 
 CREATE OR REPLACE FUNCTION report__invoice_aging_detail
-(in_entity_id int, in_entity_class int, in_accno text, in_to_date timestamp,
- in_business_units int[]) 
+(in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
+ in_business_units int[], in_use_duedate bool) 
 RETURNS SETOF report_aging_item
 AS
 $$
@@ -54,39 +48,23 @@ BEGIN
                   JOIN bu_tree ON bu_tree.id = bu.parent_id
                        )
 		SELECT c.entity_id, c.meta_number, e.name,
-		       l.line_one, l.line_two, 
-		       l.line_three,
-		       l.city, l.state, l.mail_code, country.name as country, 
 		       e.name as contact_name, 
 	               a.invnumber, a.transdate, a.till, a.ordnumber, 
 		       a.ponumber, a.notes, 
-		       CASE WHEN 
-		                 EXTRACT(days FROM age(min(ac.transdate), 
-                                                       coalesce(in_to_date,
-                                                                now()))/30) 
-		                 = 0
-		                 THEN (a.amount - a.sign * sum(ac.amount)) 
+		       CASE WHEN a.age/30 = 0
+		                 THEN (a.sign * sum(ac.amount)) 
                             ELSE 0 END
 		            as c0, 
-		       CASE WHEN EXTRACT(days FROM age(min(ac.transdate), 
-                                                       coalesce(in_to_date,
-                                                                now()))/30)
-		                 = 1
-		                 THEN (a.amount - a.sign * sum(ac.amount)) 
+		       CASE WHEN a.age/30 = 1
+		                 THEN (a.sign * sum(ac.amount))
                             ELSE 0 END
 		            as c30, 
-		       CASE WHEN EXTRACT(days FROM age(min(ac.transdate),
-                                                       coalesce(in_to_date,
-                                                                now()))/30)
-		                 = 2
-		            THEN (a.amount - (a.sign * sum(ac.amount)))
+		       CASE WHEN a.age/30 = 2
+		            THEN (a.sign * sum(ac.amount))
                             ELSE 0 END
 		            as c60, 
-		       CASE WHEN EXTRACT(days FROM age(min(ac.transdate),
-                                                       coalesce(in_to_date,
-                                                                now()))/30)
-		                 > 2
-		            THEN (a.amount - a.sign * sum(ac.amount))
+		       CASE WHEN a.age/30 > 2
+		            THEN (a.sign * sum(ac.amount))
                             ELSE 0 END
 		            as c90, 
 		       a.duedate, a.id, a.curr,
@@ -98,16 +76,29 @@ BEGIN
 					i.description, i.qty::text]])
 				FROM parts p 
 				JOIN invoice i ON (i.parts_id = p.id)
-				WHERE i.trans_id = a.id) AS line_items
+				WHERE i.trans_id = a.id) AS line_items,
+                   (coalesce(in_to_date, now())::date - a.transdate) as age
 		  FROM (select id, invnumber, till, ordnumber, amount, duedate,
                                curr, ponumber, notes, entity_credit_account,
-                               -1 AS sign, transdate
+                               -1 AS sign, transdate,
+                               CASE WHEN in_use_duedate 
+                                    THEN coalesce(in_to_date, now())::date
+                                         - duedate
+                                    ELSE coalesce(in_to_date, now())::date
+                                         - transdate 
+                               END as age
                           FROM ar
                          WHERE in_entity_class = 2
                          UNION 
                         SELECT id, invnumber, null, ordnumber, amount, duedate,
                                curr, ponumber, notes, entity_credit_account,
-                               1 as sign, transdate
+                               1 as sign, transdate,
+                               CASE WHEN in_use_duedate 
+                                    THEN coalesce(in_to_date, now())::date
+                                         - duedate
+                                    ELSE coalesce(in_to_date, now())::date
+                                         - transdate 
+                               END as age
                           FROM ap
                          WHERE in_entity_class = 1) a
                   JOIN acc_trans ac ON ac.trans_id = a.id
@@ -134,7 +125,7 @@ BEGIN
                        l.city, l.state, l.mail_code, country.name,
                        a.invnumber, a.transdate, a.till, a.ordnumber,
                        a.ponumber, a.notes, a.amount, a.sign,
-                       a.duedate, a.id, a.curr
+                       a.duedate, a.id, a.curr, a.age
                 HAVING in_business_units is null or in_business_units 
                        <@ compound_array(string_to_array(bu_tree.path, 
                                          ',')::int[])
@@ -146,18 +137,16 @@ END;
 $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION report__invoice_aging_summary
-(in_entity_id int, in_entity_class int, in_accno text, in_to_date timestamp,
- in_business_units int[]) 
+(in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
+ in_business_units int[], in_use_duedate bool) 
 RETURNS SETOF report_aging_item
 AS $$
-SELECT entity_id, account_number, name, address1, address2, address3, city, 
-       state, mail_code, country, contact_name, invnumber, null::date, 
+SELECT entity_id, account_number, name, contact_name, null::text, null::date, 
        null::text, null::text, null::text, null::text, 
        sum(c0), sum(c30), sum(c60), sum(c90), null::date, null::int, curr,
-       null::numeric, null::text[]
-  FROM report__invoice_aging_detail($1, $2, $3, $4, $5)
- GROUP BY entity_id, account_number, name, address1, address2, address3, city, 
-       state, mail_code, country, contact_name, invnumber, curr
+       null::numeric, null::text[], null::int
+  FROM report__invoice_aging_detail($1, $2, $3, $4, $5, $6)
+ GROUP BY entity_id, account_number, name, contact_name, curr
  ORDER BY account_number
 $$ LANGUAGE SQL;
 

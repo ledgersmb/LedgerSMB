@@ -29,6 +29,7 @@ Runs the report and displays it
 
 sub run_report{
     my ($request) = @_;
+
     delete $request->{category} if ($request->{category} = 'X');
     $request->{business_units} = [];
     for my $count (1 .. $request->{bc_count}){
@@ -39,6 +40,17 @@ sub run_report{
     my $report = LedgerSMB::DBObject::Report::Aging->new(%$request);
     $report->run_report;
     $report->render($request);
+}
+
+
+=item select_all
+
+Runs a report again, selecting all items
+
+=cut
+
+sub select_all {
+    run_report(@_);
 }
 
 =item THE FOLLOWING ARE TODO

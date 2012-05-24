@@ -37,7 +37,7 @@ width="attributes.width">
               value="<?lsmb ROW.${COL.col_id} ?>"
          />
          <?lsmb- ELSIF COL.type == 'checkbox';
-                   IF ROW.${COL.name};
+                   IF ROW.${COL.col_id};
                       CHECKED = "checked='CHECKED'";
                    ELSE; 
                       CHECKED = '';

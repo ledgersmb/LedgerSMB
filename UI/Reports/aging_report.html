@@ -25,24 +25,79 @@ LINK = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME
 </div>
 <?lsmb END ?>
 
-<form method="get" action="aging_report.pl">
-<?lsmb PROCESS dynatable tbody = {rows => rows } 
-               attributes = {class = 'report' } ?>
-<?lsmb PROCESS button element_data = {
-    text = text('Print')
+<form method="get" action="report_aging.pl">
+<?lsmb
+
+IF request.action == 'select_all';
+   FOREACH ROW IN rows;
+      ROW.select = 1;
+   END;
+END;
+
+FOREACH KEY IN report.keys();
+    IF KEY == 'rows' or KEY.keys();
+       NEXT;
+    ELSE;
+        PROCESS input element_data = {
+             name = KEY
+             type = 'hidden'
+            value = report.$KEY
+        };
+    END;
+END;
+
+PROCESS dynatable tbody = {rows = rows } 
+               attributes = {id = 'aging', class = 'report' };
+PROCESS button element_data = {
+    text = text('Select All') #'
     name = 'action'
-   value = 'print_statements'
+   value = 'select_all'
     type = 'submit'
    class = 'submit'
-} ?>
-<?lsmb PROCESS button element_data = {
-    text = text('Email')
+};
+PROCESS select element_data = {
+    name = 'print_template'
+ options = [{text = 'Statement', value = 'Statement'}]
+   class = 'print_template'
+};
+
+PRINTERS.push({text = text('Email'), value = 'email' });
+
+PFORMATS = [];
+
+FOREACH F IN STDFORMATS;
+  PFORMATS.push({text = F, value = F});
+END;
+
+PROCESS select element_data = {
+   name = 'print_format'
+options = PFORMATS
+  class = 'print_format'
+};
+
+PROCESS select element_data = {
+   name = 'print_to'
+options = PRINTERS
+  class = 'printers'
+};
+
+PROCESS input element_data = {
+   name = 'copies'
+  value = '1'
+   type = 'text'
+   size = '2'
+  class = 'smallint'
+};
+
+PROCESS button element_data = {
+    text = text('Generate')
     name = 'action'
-   value = 'email_statements'
+   value = 'generate_statements'
     type = 'submit'
    class = 'submit'
-} ?>
-</form>
+};
+ ?>
+</form><br />
 <a href="<?lsmb LINK ?>">[<?lsmb text('permalink') ?>]</a>&nbsp;
 <?lsmb IF FORMATS.grep('PDF').size()
 ?>
