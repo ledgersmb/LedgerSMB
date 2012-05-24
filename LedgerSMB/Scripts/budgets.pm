@@ -27,41 +27,6 @@ use LedgerSMB::DBObject::Business_Unit_Class;
 
 =over
 
-=item variance_report
-Requires id field to be set.
-
-=cut
-
-sub variance_report {
-    my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Budget_Report->new({base => $request});
-    my @rows = $report->run_report();
-    my @cols = qw(accno account_label budget_description budget_amount 
-               used_amount variance);
-    my $heading = {
-          budget_description => $request->{_locale}->text('Description'),
-                       accno => $request->{_locale}->text('Account Number'),
-               account_label => $request->{_locale}->text('Account Label'),
-               budget_amount => $request->{_locale}->text('Amount Budgetted'),
-                 used_amount => $request->{_locale}->text('- Used'),
-                    variance => $request->{_locale}->text('= Variance'),
-    };
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI',
-        template => 'form-dynatable',
-        format   => ($report->{format}) ? $report->{format} : 'HTML',
-    );
-    $template->render({
-           form => $report,
-        columns => \@cols,
-           rows => \@rows,
-        heading => $heading,
-    });
-
-}
-
 =item new_budget 
 No inputs provided.  LedgerSMB::DBObject::Budget properties can be used to set
 defaults however.
@@ -293,70 +258,6 @@ sub begin_search{
     $request->{report_name} = 'budget_search';
     use LedgerSMB::Scripts::reports;
     LedgerSMB::Scripts::reports::start_report($request);
-}
-
-=item search
-See LedgerSMB::Budget's search routine for expected inputs.
-
-=cut
-
-sub search {
-    my ($request)  = @_;
-    my $budget = LedgerSMB::DBObject::Budget->new({base => $request});
-    my @rows = $budget->search;
-    my $cols = ['start_date',
-                'end_date',
-                'reference',
-                'description',
-                'entered_by_name',
-                'approved_by_name',
-                'obsolete_by_name',
-                'department_name',
-                'project_number',
-    ];
-    my $heading = {
-                      start_date => $budget->{_locale}->text('Start Date'),
-                        end_date => $budget->{_locale}->text('End Date'),
-                       reference => $budget->{_locale}->text('Reference'),
-                     description => $budget->{_locale}->text('Description'),
-                 entered_by_name => $budget->{_locale}->text('Entered by'),
-                approved_by_name => $budget->{_locale}->text('Approved By'),
-                obsolete_by_name => $budget->{_locale}->text('Obsolete By'),
-                 department_name => $budget->{_locale}->text('Department'),
-                  project_number => $budget->{_locale}->text('Project'),
-    };
-
-    my $base_url = 'budgets.pl';
-
-    for my $row (@rows){
-           $row->{reference} = { href => $base_url 
-                                         . '?action=view_budget'
-                                         . '&id=' . $row->{id},
-                                 text => $row->{reference},
-                               };
-           $row->{start_date} = { href => $base_url
-                                          . '?action=variance_report'
-                                          . '&id=' . $row->{id},
-                                   text => $row->{start_date},
-                                 };
-           $row->{end_date} = { href => $row->{start_date}->{href},
-                                text => $row->{end_date}
-                              };
-
-    }
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI',
-        template => 'form-dynatable',
-        format   => ($budget->{format}) ? $budget->{format} : 'HTML',
-    );
-    $template->render({
-           form => $budget,
-        columns => $cols,
-           rows => \@rows,
-        heading => $heading,
-    });
 }
 
 =back
