@@ -1284,9 +1284,9 @@ sub db_init {
         $sth->execute;
         ($self->{pw_expires})  = $sth->fetchrow_array;
     }
-    LedgerSMB::Company_Config::initialize($self);
     $sth->finish();
     $LedgerSMB::App_State::DBH = $self->{dbh};
+    LedgerSMB::Company_Config::initialize($self);
     $logger->trace("end");
 }
 

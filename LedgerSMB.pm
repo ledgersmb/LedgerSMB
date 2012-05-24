@@ -657,6 +657,7 @@ sub call_procedure {
     my $argstr   = "";
     my @results;
     my $dbh = $LedgerSMB::App_State::DBH;
+    die 'Database handle not found!' if !$dbh;
 
     if (!defined $procname){
         $self->error('Undefined function in call_procedure.');

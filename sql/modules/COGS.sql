@@ -24,9 +24,9 @@ BEGIN
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
-      JOIN (select id, approved from ap 
+      JOIN (select id, approved, transdate from ap 
             union
-            select id, approved from gl) a ON a.id = i.trans_id
+            select id, approved, transdate from gl) a ON a.id = i.trans_id
      WHERE qty + allocated < 0 and a.approved
   ORDER BY a.transdate DESC, a.id DESC, i.id DESC
 LOOP
@@ -68,9 +68,9 @@ BEGIN
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
-      JOIN (select id, approved from ap
+      JOIN (select id, approved, transdate from ap
              union
-            select id, approved from gl) a ON a.id = i.trans_id
+            select id, approved, transdate from gl) a ON a.id = i.trans_id
      WHERE qty + allocated < 0
   ORDER BY a.transdate, a.id, i.id
 LOOP

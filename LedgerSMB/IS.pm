@@ -1744,7 +1744,7 @@ sub cogs {
                 amount     => $cogs * -1,
                 project_id => $project_id,
                 invoice_id => $inv_id
-              };
+              } if $cogs;
 
         push @{ $form->{acc_trans}{lineitems} },
               {
@@ -1752,7 +1752,7 @@ sub cogs {
                 amount     => $cogs,
                 project_id => $project_id,
                 invoice_id => $inv_id
-              };
+              } if $cogs;
 
     } else {
         # Getting cogs
