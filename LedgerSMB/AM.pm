@@ -158,13 +158,12 @@ sub delete_account {
     my ($rowcount) = $sth->fetchrow_array();
 
     if ($rowcount) {
-        $form->error( "Cannot delete accounts with associated transactions!" );
+        $form->error( "Cannot delete accounts with associated or pending transactions!" );
     }
 
     # delete chart of account record
     $query = qq|
-		DELETE FROM chart
-		      WHERE id = ?|;
+		DELETE FROM account where id = ?|;
 
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);

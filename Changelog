@@ -10,7 +10,9 @@ Changelog for 1.3.18
 * Fixed customer email not showing emailing statements (Chris T and Erik H)
 * Approved recon reports no longer show invalid balance info (Chris T,3518283)
 * CSS directory is now configurable (Chris T, 3516730, h/t Robert C)
+* Corrected cannot delete accounts (Chris T, 3529383, h/t David M)
 
+David M is David Mora
 Robert C is Robert James Clay
 
 
