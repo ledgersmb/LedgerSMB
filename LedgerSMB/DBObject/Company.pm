@@ -48,43 +48,6 @@ sub set_entity_class {
 
 =over 
 
-=item delete_contact
-
-required request variables:
-
-contact_class_id:  int id of contact class
-contact: text of contact information
-
-Must include at least one of:
-
-credit_id: int of entity_credit_account.id, preferred value
-company_id:  int of company.id, only used if credit_id not set.
-
-returns true of a record was deleted.
-
-=back
-
-=cut
-
-sub delete_contact {
-    my ($self) = @_;
-    my $rv;
-    if ($self->{credit_id}){
-        ($rv) = $self->exec_method(funcname => 'eca__delete_contact');
-    } elsif ($self->{company_id}){
-        ($rv) = $self->exec_method(funcname => 'company__delete_contact');
-    } else {
-       $self->error($self->{_locale}->text(
-          'No company or credit id in LedgerSMB::DBObject::delete_contact'
-       ));
-    }
-    $self->{dbh}->commit;
-    return $rv;
-}
-
-
-=over 
-
 =item delete_bank_account
 
 Deletes a bank account
@@ -232,8 +195,6 @@ sub get_metadata {
         $curr = { text => $curr };
     }
 
-    @{$self->{contact_class_list}} = 
-         $self->exec_method(funcname => 'entity_list_contact_class');
     #HV was $country_setting , given it a more general name, not only for country
     my $setting_module = LedgerSMB::Setting->new({base => $self, copy => 'base'});
     $setting_module->{key} = 'default_country';
@@ -242,31 +203,6 @@ sub get_metadata {
     $setting_module->{key} = 'default_language';
     $setting_module->get;
     $self->{default_language} = $setting_module->{value};
-}
-
-=item save_contact
-
-Saves a contact.  Requires credit_id, contact_class, description, and contact to 
-be set.
-
-Requires the following be set:
-credit_id or entity_id
-contact_class
-description
-contact
-old_contact
-old_contact_class
-
-=cut
-
-sub save_contact {
-    my ($self) = @_;
-    if ($self->{credit_id}){
-        $self->exec_method(funcname => 'eca__save_contact');
-    } else {
-        $self->exec_method(funcname => 'company__save_contact');
-    }
-    $self->{dbh}->commit;
 }
 
 =item save_bank_account

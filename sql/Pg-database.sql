@@ -776,7 +776,7 @@ INSERT INTO contact_class (id,class) values (17,'Billing BCC');
 SELECT SETVAL('contact_class_id_seq',17);
 
 CREATE TABLE entity_to_contact (
-  entity_id integer not null references person(entity_id) ON DELETE CASCADE,
+  entity_id integer not null references entity(id) ON DELETE CASCADE,
   contact_class_id integer references contact_class(id) not null,
   contact text check(contact ~ '[[:alnum:]_]') not null,
   description text,

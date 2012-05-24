@@ -4,6 +4,7 @@ use LedgerSMB::DBObject::Customer;
 use LedgerSMB::DBObject::Entity::Company;
 use LedgerSMB::DBObject::Entity::Credit_Account;
 use LedgerSMB::DBObject::Entity::Location;
+use LedgerSMB::DBObject::Entity::Contact;
 use LedgerSMB::DBObject::Vendor;
 use Log::Log4perl;
 
@@ -761,7 +762,14 @@ sub _render_main_screen{
     for my $ref (@{$request->{credit_list}}){
         $company->{credit_act} = $ref; 
     }
-    my $err =  $company->{credit_act}->{id};
+    @{$company->{contacts}} = 
+          LedgerSMB::DBObject::Entity::Contact->list(
+              {entity_id => $company->{entity_id},
+                        credit_id => $company->{credit_act}->{id}},
+              $request
+          );
+    @{$company->{contact_class_list}} = 
+          LedgerSMB::DBObject::Entity::Contact->list_classes;
     @{$company->{locations}} = 
           LedgerSMB::DBObject::Entity::Location->get_active(
                        $request,
@@ -834,12 +842,11 @@ Saves contact info as per LedgerSMB::DBObject::Company::save_contact.
 
 sub save_contact {
    my ($request) = @_;
-    my $company = new_company($request);
-    if (_close_form($company)){
-        $company->save_contact();
-    }
-    $company->get;
-    _render_main_screen( $company );
+   my $contact = LedgerSMB::DBObject::Entity::Contact->new(%$request);   
+   if (_close_form($request)){
+       $contact->save();
+   }
+   get( $request );
 }
 
 =pod

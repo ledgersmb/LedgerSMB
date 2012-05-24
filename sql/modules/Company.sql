@@ -429,7 +429,7 @@ $$ language sql;
 COMMENT ON FUNCTION entity_credit__get(in_id int) IS
 $$ Returns the entity credit account info.$$;
 
-CREATE OR REPLACE FUNCTION entity_list_contact_class() 
+CREATE OR REPLACE FUNCTION contact_class__list() 
 RETURNS SETOF contact_class AS
 $$
 DECLARE out_row RECORD;
@@ -442,7 +442,7 @@ BEGIN
 END;
 $$ language plpgsql;
 
-COMMENT ON FUNCTION entity_list_contact_class() IS
+COMMENT ON FUNCTION contact_class__list() IS
 $$ Returns a list of contact classes ordered by ID.$$;
 
 DROP TYPE IF EXISTS entity_credit_search_return CASCADE;
@@ -917,7 +917,7 @@ CREATE TYPE contact_list AS (
 	contact text
 );
 
-CREATE OR REPLACE FUNCTION company__list_contacts(in_entity_id int) 
+CREATE OR REPLACE FUNCTION entity__list_contacts(in_entity_id int) 
 RETURNS SETOF contact_list AS $$
 DECLARE out_row contact_list;
 BEGIN
@@ -932,7 +932,7 @@ BEGIN
 END;
 $$ language plpgsql;
 
-COMMENT ON FUNCTION company__list_contacts(in_entity_id int) IS
+COMMENT ON FUNCTION entity__list_contacts(in_entity_id int) IS
 $$ Lists all contact info for the entity.$$;
 
 CREATE OR REPLACE FUNCTION company__list_bank_account(in_entity_id int)
@@ -1051,22 +1051,28 @@ COMMENT ON FUNCTION eca__delete_contact
 $$ Returns true if at least one record was deleted.  False if no records were
 affected.$$;
 
-CREATE OR REPLACE FUNCTION company__save_contact
-(in_entity_id int, in_contact_class int, in_description text, in_contact text)
+CREATE OR REPLACE FUNCTION entity__save_contact
+(in_entity_id int, in_class_id int, in_description text, in_contact text,
+ in_old_contact text, in_old_class_id int)
 RETURNS INT AS
 $$
 DECLARE out_id int;
 BEGIN
+        DELETE FROM entity_to_contact 
+         WHERE entity_id = in_entity_id AND contact = in_old_contact 
+               AND contact_class_id = in_old_class_id;
+
 	INSERT INTO entity_to_contact 
                (entity_id, contact_class_id, description, contact)
-	VALUES (entity_id, in_contact_class, in_description, in_contact);
+	VALUES (in_entity_id, in_class_id, in_description, in_contact);
 
 	RETURN 1;
 END;
 $$ LANGUAGE PLPGSQL;
 
-COMMENT ON FUNCTION company__save_contact
-(in_entity_id int, in_contact_class int, in_description text, in_contact text) IS
+COMMENT ON FUNCTION entity__save_contact
+(in_entity_id int, in_contact_class int, in_description text, in_contact text,
+in_old_contact text, in_old_class_id int) IS
 $$ Saves company contact information.  The return value is meaningless. $$;
 
 DROP TYPE IF EXISTS entity_note_list CASCADE;

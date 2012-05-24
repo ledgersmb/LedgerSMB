@@ -203,7 +203,7 @@ sub get_metadata {
          $self->exec_method(funcname => 'location_list_country');
 
     @{$self->{contact_class_list}} = 
-         $self->exec_method(funcname => 'entity_list_contact_class');
+         $self->exec_method(funcname => 'contact_class__list');
     my $country_setting = LedgerSMB::Setting->new({base => $self, copy => 'base'});
     $country_setting->{key} = 'default_country';
     $country_setting->get;
