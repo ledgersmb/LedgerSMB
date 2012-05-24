@@ -161,6 +161,9 @@ sub show_cols {
             push @retval, $ref;
         }
     }
+    if (scalar @retval == 0){
+       @retval = @{$self->columns};
+    }
     return \@retval;
 }
 

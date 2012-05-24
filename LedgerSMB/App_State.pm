@@ -63,6 +63,23 @@ Database handle for current connection
 
 our $DBH;
 
+
+=item Roles
+
+This is a list (array) of role names for the current user.
+
+=cut
+
+our @Roles;
+
+=item Role_Prefix
+
+String of the beginning of the role.
+
+=cut
+
+our $Role_Prefix;
+
 =back
 
 =head1 METHODS 
@@ -93,6 +110,8 @@ sub zero() {
     $User = undef;
     $Locale = undef;
     $DBH = undef;
+    @Roles = ();
+    $Role_Prefix = undef;
 }
 
 =item cleanup
@@ -114,6 +133,8 @@ sub cleanup {
     $SODA             = {};
     $Company_Settings = {};
     $DBH = undef;
+    @Roles = ();
+    $Role_Prefix = undef;
 }
 
 1;

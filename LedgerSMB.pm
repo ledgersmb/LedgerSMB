@@ -361,6 +361,7 @@ sub new {
     LedgerSMB::Company_Config::initialize($self);
 
     #TODO move before _db_init to avoid _db_init with invalid session?
+    #  Can't do that:  Company_Config has to pull company data from the db --CT
     if ($self->is_run_mode('cgi', 'mod_perl') and !$ENV{LSMB_NOHEAD}) {
        #check for valid session unless this is an inital authentication
        #request -- CT
@@ -938,6 +939,11 @@ sub _db_init {
     while (my @roles = $sth->fetchrow_array){
         push @{$self->{_roles}}, $roles[0];
     }
+
+    $LedgerSMB::App_State::Roles = @{$self->{_roles}};
+    $LedgerSMB::App_State::Role_Prefix = $self->{_role_prefix};
+    # @{$self->{_roles}} will eventually go away. --CT
+
     $sth->finish();
     $logger->debug("end");
 }

@@ -1,12 +1,11 @@
-
-
 =head1 NAME
 
-LedgerSMB::DBObject - LedgerSMB class for building objects from db relations
+LedgerSMB::DBObject_Moose - LedgerSMB class for building objects from db 
+relations, now with Moose!
 
 =head1 SYOPSIS
 
-This module creates object instances based on LedgerSMB's in-database ORM.  
+This module creates object instances based on LedgerSMB's in-database ORM, using Moose.
 
 =head1 METHODS
 
@@ -74,7 +73,7 @@ sub prepare_dbhash {
 }
 
 # _to_dbobject 
-#Private method used to convert to db object for purposes of 
+#Private method used to convert to db object for purposes of function wrapping
 #
 sub _to_dbobject {
      my $self   = shift @_;

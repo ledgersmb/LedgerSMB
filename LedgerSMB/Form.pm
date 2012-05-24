@@ -1276,6 +1276,17 @@ sub db_init {
         push @{$self->{_roles}}, $roles[0];
     }
 
+    $sth = $self->{dbh}->prepare("
+            SELECT value FROM defaults 
+             WHERE setting_key = 'role_prefix'");
+    $sth->execute;
+
+    ($self->{_role_prefix}) = $sth->fetchrow_array;
+    $LedgerSMB::App_State::Roles = @{$self->{_roles}};
+    $LedgerSMB::App_State::Role_Prefix = $self->{_role_prefix};
+    # Expect @{$self->{_roles}} to go away sometime during 1.4/1.5 development
+    # -CT
+
     $sth = $dbh->prepare('SELECT check_expiration()');
     $sth->execute;
     ($self->{warn_expire}) = $sth->fetchrow_array;
