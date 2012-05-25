@@ -57,7 +57,13 @@ Changelog for 1.3.18
 * Fixed customer email not showing emailing statements (Chris T and Erik H)
 * Approved recon reports no longer show invalid balance info (Chris T,3518283)
 * CSS directory is now configurable (Chris T, 3516730, h/t Robert C)
+* Corrected cannot delete accounts (Chris T, 3529383, h/t David M)
+* Fixed ODS output broken due to missing export (Chris T)
+* Fixed button disable inverted (Chris T)
+* Fixed internal server error on requirements report (Chris T, h/t Nigel T)
 
+David M is David Mora
+Nigel T is Nigel Titley
 Robert C is Robert James Clay
 
 

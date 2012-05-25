@@ -189,15 +189,16 @@ sub list_account {
 "$form->{script}?action=list_account&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
     $form->{callback} = $callback;
-    @column_index = qw(accno gifi_accno description debit credit link);
+    @column_index = qw(accno gifi_accno description debit credit link delete);
 
     my $column_names = {
-        accno => 'Account',
-        gifi_accno => 'GIFI',
-        description => 'Description',
-        debit => 'Debit',
-        credit => 'Credit',
-        link => 'Link'
+        accno => $locale->text('Account'),
+        gifi_accno => $locale->text('GIFI'),
+        description => $locale->text('Description'),
+        debit => $locale->text('Debit'),
+        credit => $locale->text('Credit'),
+        link => $locale->text('Link'),
+        delete => $locale->text('Delete')
     };
 
     # escape callback
@@ -250,6 +251,14 @@ sub list_account {
             $column_data{description} = $ca->{description};
             $column_data{debit}       = $ca->{debit};
             $column_data{credit} = $ca->{credit};
+	    if (($ca->{debit} =~ /\d/ )or ($ca->{credit} =~ /\d/)){
+               # Note, this is just a stub in case we want to put a 
+               # message here --CT
+            } else {
+                $column_data{delete} ={text => '['.$locale->text('Delete').']',
+                                      href => 'am.pl?action=delete_account&'.
+                                              'id='.$ca->{id} };
+            }
 	    $column_data{link}   = {text => $ca->{link}, delimiter => ':'};
 
         }
@@ -258,8 +267,8 @@ sub list_account {
 
     my %can_load;
     $can_load{CSV} = 1;
-    $can_load{XLS} = ! eval { require Excel::Template::Plus };
-    $can_load{ODS} = ! eval { require OpenOffice::OODoc };
+    $can_load{XLS} = eval { require Excel::Template::Plus };
+    $can_load{ODS} = eval { require OpenOffice::OODoc };
 
     my @buttons;
     for my $type (qw(CSV XLS ODS)) {

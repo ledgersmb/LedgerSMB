@@ -2589,10 +2589,13 @@ qq|<th nowrap colspan=$colspan><a class=listheading href=$href&sort=partnumber>|
       qq|<th class=listheading nowrap>| . $locale->text('Order') . qq|</th>|;
     $column_header{year} = qq|<th class=listheading nowrap>$form->{year}</th>|;
 
+    $SHORTMONTH = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 
+                   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                   
     for ( sort { $a <=> $b } keys %month ) {
         $column_header{$_} =
             qq|<th class=listheading nowrap>|
-          . $locale->text( $locale->{SHORT_MONTH}[ $_ - 1 ] )
+          . $locale->text( $SHORTMONTH->[ $_ - 1 ] )
           . qq|</th>|;
     }
 

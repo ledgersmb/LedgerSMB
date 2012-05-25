@@ -827,8 +827,8 @@ qq|gl.pl?path=$form->{path}&action=generate_report&accounttype=$form->{accountty
 
     my %can_load;
     $can_load{CSV} = 1;
-    $can_load{XLS} = ! eval { require Excel::Template::Plus };
-    $can_load{ODS} = ! eval { require OpenOffice::OODoc };
+    $can_load{XLS} =  eval { require Excel::Template::Plus };
+    $can_load{ODS} =  eval { require OpenOffice::OODoc };
 
     my @buttons;
     for my $type (qw(CSV XLS ODS)) {

@@ -1410,6 +1410,7 @@ CREATE TABLE parts (
   inventory_accno_id int references account(id),
   income_accno_id int references account(id),
   expense_accno_id int references account(id),
+  returns_accno_id int references account(id),
   bin text,
   obsolete bool DEFAULT 'f',
   bom bool DEFAULT 'f',
@@ -1574,6 +1575,7 @@ CREATE TABLE ar (
   entity_credit_account int references entity_credit_account(id) not null,
   force_closed bool,
   description text,
+  is_return bool default false,
   unique(invnumber) -- probably a good idea as per Erik's request --CT
 );
 

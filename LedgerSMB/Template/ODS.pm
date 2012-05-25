@@ -53,6 +53,7 @@ use CGI::Simple::Standard qw(:html);
 use Template;
 use XML::Twig;
 use OpenOffice::OODoc;
+use OpenOffice::OODoc::Styles;
 use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Sysconfig;
 
