@@ -40,7 +40,7 @@ test_requires 'Test::Trap';
 test_requires 'Test::Exception';
 
 feature 'Size detection for images for embedding in LaTeX templates',
-    -default => 1,
+    -default => 0,
     'Image::Size' => 0;
 
 feature 'POS module credit card processing support',
