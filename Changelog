@@ -13,8 +13,10 @@ Changelog for 1.3.18
 * Corrected cannot delete accounts (Chris T, 3529383, h/t David M)
 * Fixed ODS output broken due to missing export (Chris T)
 * Fixed button disable inverted (Chris T)
+* Fixed internal server error on requirements report (Chris T, h/t Nigel T)
 
 David M is David Mora
+Nigel T is Nigel Titley
 Robert C is Robert James Clay
 
 

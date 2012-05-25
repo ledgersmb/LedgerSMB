@@ -78,6 +78,7 @@ use base 'Locale::Maketext';
 use Locale::Maketext::Lexicon;
 use Encode;
 
+
 Locale::Maketext::Lexicon->import(
     {
         '*'     => [ Gettext => "${LedgerSMB::Sysconfig::localepath}/*.po", ],
