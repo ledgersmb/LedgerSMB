@@ -2518,7 +2518,7 @@ $$This table stores the tree structure of the menu.$$;
 -- Name: menu_node_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval('menu_node_id_seq', 248, true);
+SELECT pg_catalog.setval('menu_node_id_seq', 253, true);
 
 --
 -- Data for Name: menu_node; Type: TABLE DATA; Schema: public; Owner: ledgersmb
@@ -2527,12 +2527,6 @@ SELECT pg_catalog.setval('menu_node_id_seq', 248, true);
 COPY menu_node (id, label, parent, "position") FROM stdin;
 205	Transaction Approval	0	5
 206	Batches	205	1
-46	HR	0	6
-50	Order Entry	0	7
-63	Shipping	0	8
-67	Quotations	0	9
-73	General Journal	0	10
-77	Goods and Services	0	11
 0	Top-level	\N	0
 1	AR	0	1
 2	Add Transaction	1	1
@@ -2542,8 +2536,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 9	Taxable Sales	4	4
 10	Non-Taxable	4	5
 12	Add Customer	11	1
-13	Reports	11	2
-14	Search	13	1
 15	History	13	2
 16	Budgets	109	6
 17	Add  Budget	16	1
@@ -2556,8 +2548,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 28	Taxable	24	4
 29	Non-taxable	24	5
 31	Add Vendor	30	1
-32	Reports	30	2
-33	Search	32	1
 34	History	32	2
 35	Cash	0	4
 36	Receipt	35	1
@@ -2676,6 +2666,10 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 180	Purchase Order	172	8
 181	Bin List	172	9
 182	Statement	172	10
+13	Reports	11	3
+14	Search	11	2
+32	Reports	30	3
+33	Search	30	2
 183	Check	172	11
 184	Receipt	172	12
 185	Quotation	172	13
@@ -2683,8 +2677,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 187	Timecard	172	15
 242	Letterhead	172	16
 189	POS Invoice	188	1
-198	AR Voucher	1	2
-199	AP Voucher	21	2
 200	Vouchers	35	5
 40	Transfer	35	6
 41	Reports	35	8
@@ -2693,12 +2685,8 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 204	Reverse Receipts	200	4
 201	Payments	200	1
 202	Reverse Payment	200	2
-98	Projects	0	12
-109	Reports	0	13
-115	Recurring Transactions	0	14
 210	Drafts	205	2
 211	Reconciliation	205	3
-217	Tax Forms	0	15
 218	Add Tax Form	217	1
 219	Admin Users	128	5
 188	Text Templates	128	15
@@ -2715,13 +2703,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 222	Sessions	219	3
 225	List Tax Forms	217	2
 226	Reports	217	3
-227	Fixed Assets	0	17
-193	Logout	0	23
-192	New Window	0	22
-191	Preferences	0	21
-190	Stylesheet	0	20
-128	System	0	19
-116	Batch Printing	0	18
 228	Asset Classes	227	1
 229	Assets	227	2
 230	Add Class	228	1
@@ -2737,14 +2718,10 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 240	Disposal	236	3
 243	Import Batch	21	3
 23	Vendor Invoice	21	4
-24	Reports	21	7
-30	Vendors	21	8
 196	Debit Note	21	5
 197	Debit Invoice	21	6
 244	Import Batch	1	3
 3	Sales Invoice	1	4
-11	Customers	1	8
-4	Reports	1	7
 194	Credit Note	1	5
 195	Credit Invoice	1	6
 245	Import	73	2
@@ -2755,6 +2732,34 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 140	List GIFI	136	5
 247	Import GIFI	136	6
 248	Import	153	3
+249	Vouchers	1	7
+11	Customers	1	9
+4	Reports	1	8
+250	Vouchers	21	7
+24	Reports	21	8
+30	Vendors	21	9
+198	AR Voucher	249	1
+199	AP Voucher	250	1
+251	Budgets	0	6
+46	HR	0	7
+50	Order Entry	0	8
+63	Shipping	0	9
+67	Quotations	0	10
+73	General Journal	0	11
+77	Goods and Services	0	12
+98	Projects	0	13
+109	Reports	0	14
+115	Recurring Transactions	0	15
+217	Tax Forms	0	16
+227	Fixed Assets	0	18
+193	Logout	0	24
+192	New Window	0	23
+191	Preferences	0	22
+190	Stylesheet	0	21
+128	System	0	20
+116	Batch Printing	0	19
+252	Add Budget	251	1
+253	Search	251	2
 \.
 
 --
@@ -2807,7 +2812,7 @@ $$;
 -- Name: menu_attribute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: ledgersmb
 --
 
-SELECT pg_catalog.setval('menu_attribute_id_seq', 667, true);
+SELECT pg_catalog.setval('menu_attribute_id_seq', 681, true);
 
 
 --
@@ -2832,9 +2837,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 6	module	ar.pl	12
 6	action	search	13
 6	nextsub	transactions	14
-7	module	rp.pl	15
-7	action	report	16
-7	report	ar_aging	17
 6	outstanding	1	18
 9	module	rp.pl	21
 9	action	report	22
@@ -2868,12 +2870,9 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 26	action	search	61
 26	nextsub	transactions	62
 26	module	ap.pl	60
-27	module	rp.pl	63
-27	action	report	64
 28	module	rp.pl	66
 28	action	report	67
 28	report	tax_collected	68
-27	report	tax_paid	65
 29	module	rp.pl	69
 29	action	report	70
 29	report	nontaxable_purchases	71
@@ -2969,7 +2968,12 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 71	type	sales_quotation	165
 71	action	search	164
 72	module	oe.pl	166
+7	module	reports.pl	15
 64	type	ship_order	149
+7	action	start_report	16
+7	report_name	aging	17
+27	module	reports.pl	63
+27	report_name	aging	65
 72	action	search	168
 72	type	request_quotation	167
 73	menu	1	169
@@ -2981,8 +2985,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 75	pos_adjust	1	176
 75	reference	Adjusting Till: (Till)  Source: (Source)	177
 75	descripton	Adjusting till due to data entry error	178
-76	module	journal.pl	180
-76	action	start_search	181
 77	menu	1	182
 78	module	ic.pl	183
 78	action	add	184
@@ -3119,6 +3121,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 127	action	search	331
 127	type	timecard	332
 125	type	bin_list	324
+76	module	reports.pl	180
+76	action	start_report	181
 117	type	invoice	296
 118	type	sales_order	301
 126	type	request_quotation	328
@@ -3206,8 +3210,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 166	template	purchase_order	427
 167	template	bin_list	428
 168	template	statement	429
-169	template	sales_quotation	430
-170	template	request_quotation	431
+169	template	quotation	430
+170	template	rfq	431
 171	template	timecard	432
 241	template	letterhead	644
 157	format	HTML	433
@@ -3301,7 +3305,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 193	module	login.pl	532
 193	action	logout	533
 193	target	_top	534
-192	menu	1	530
 192	new	1	531
 0	menu	1	535
 136	menu	1	536
@@ -3393,13 +3396,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 239	depreciation	1	639
 240	module	asset.pl	640
 240	action	search_reports	641
-65	type	receive_order	149
-83	type	pricegroup	200
-82	type	partsgroup	197
-91	type	partsgroup	222
-92	type	pricegroup	225
 235	action	begin_import	631
-203	batch_type	receipt	567
+249	menu	1	668
 243	module	import_csv.pl	650
 243	action	begin_import	651
 243	type	ap_multi	652
@@ -3418,6 +3416,27 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 248	module	import_csv.pl	665
 248	action	begin_import	666
 248	type	sic	667
+65	type	receive_order	149
+83	type	pricegroup	200
+82	type	partsgroup	197
+91	type	partsgroup	222
+92	type	pricegroup	225
+203	batch_type	receipt	567
+250	menu	1	669
+7	module_name	gl	671
+7	entity_class	2	672
+27	entity_class	1	673
+76	report_name	gl	530
+27	action	start_report	64
+27	module_name	gl	674
+251	menu	1	675
+252	module	budgets.pl	676
+253	module	reports.pl	677
+252	action	new_budget	678
+253	report_name	budget_search	680
+253	module_name	gl	681
+253	action	start_report	679
+76	module_name	gl	670
 \.
 
 --

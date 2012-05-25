@@ -58,36 +58,6 @@ sub __default {
     $template->render($request);
 }
 
-=item start_search
-
-Displays the search screen
-
-=cut
-
-sub start_search {
-    my ($request) = @_;
-    $request->{class_id} = 0;
-    $request->{control_code} = '';
-    my $buc = LedgerSMB::DBObject::Business_Unit_Class->new(%$request);
-    my $bu = LedgerSMB::DBObject::Business_Unit->new(%$request);
-    @{$request->{bu_classes}} = $buc->list(1, 'gl');
-    for my $bc (@{$request->{bu_classes}}){
-        @{$request->{b_units}->{$bc->{id}}}
-            = $bu->list($bc->{id}, undef, 0, undef);
-        for my $bu (@{$request->{b_units}->{$bc->{id}}}){
-            $bu->{text} = $bu->control_code . ' -- '. $bu->description;
-        }
-    } 
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        locale => $request->{_locale},
-        path => 'UI/journal',
-        template => 'search',
-        format => 'HTML'
-    );
-    $template->render($request);
-}
-
 =item search
 
 Runs a search and displays results.

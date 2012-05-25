@@ -119,14 +119,14 @@ cornerlogo {
 }
 
 .menu_open {
-background-image: url('../images/down.gif');
+background-image: url('../images/up.gif');
 background-repeat: no-repeat;
 background-position: 0px 0px; 
 padding-left: 12px; 
 }
 
 .menu_closed {
-background-image: url('../images/up.gif');
+background-image: url('../images/down.gif');
 background-repeat: no-repeat;
 background-position: 0px 0px; 
 padding-left: 12px; 

@@ -2,8 +2,17 @@ GRANT ALL ON SCHEMA public TO public; -- required for Pg 8.2
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_enter" WITH INHERIT NOLOGIN;
 CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_view" WITH INHERIT NOLOGIN;
-CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_approve" WITH INHERIT NOLOGIN;
-CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_obsolete" WITH INHERIT NOLOGIN;
+CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_approve" WITH INHERIT NOLOGIN
+IN ROLE "lsmb_<?lsmb dbname ?>__budget_view";
+
+CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_obsolete" WITH INHERIT NOLOGIN
+IN ROLE "lsmb_<?lsmb dbname ?>__budget_view";
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (252, 'allow', 'lsmb_<?lsmb dbname ?>__budget_enter');
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (253, 'allow', 'lsmb_<?lsmb dbname ?>__budget_view');
 
 GRANT SELECT 
 ON budget_info, budget_line, budget_to_department, budget_to_project

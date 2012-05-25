@@ -91,7 +91,7 @@ sub columns {
     push @COLUMNS,
       {col_id => 'select',
          type => 'checkbox'},
- 
+
       {col_id => 'name',
          name => $credit_label,
          type => 'text',
@@ -267,6 +267,10 @@ sub run_report{
     my ($self) = @_;
     my @rows = $self->exec_method({funcname => 'report__invoice_aging_' .
                                                 $self->report_type});
+    for my $row(@rows){
+        $row->{row_id} = "$row->{account_number}:$row->{entity_id}";
+        $row->{total} = $row->{c0} + $row->{c30} + $row->{c60} + $row->{c90};
+    }
     $self->rows(\@rows);
 }
 
