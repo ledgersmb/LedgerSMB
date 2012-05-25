@@ -2,17 +2,19 @@
 <?lsmb PROCESS elements.html ?> 
 <?lsmb account_class = entity_class ?>
 <body>
-<?lsmb IF account_class == 1 -?>
-<?lsmb entity_type = 'Vendor' -?>
-<?lsmb ELSIF account_class == 2 -?>
-<?lsmb entity_type = 'Customer' -?>
-<?lsmb ELSIF account_class == 3 -?>
-<?lsmb entity_type = 'Employee' -?>
-<?lsmb ELSE -?>
-<?lsmb entity_type = 'Unsupported' -?>
-<?lsmb END -?>
-<?lsmb title = text("$entity_type Search") # " -?>
-<form method="get" action="<?lsmb script ?>">
+<?lsmb 
+IF account_class == 0;
+   title = text('Contact Search'); #'
+ELSIF account_class == 1;
+   title = text('Vendor Search'); #'
+ELSIF account_class == 2;
+   title = text('Customer Search'); #'
+ELSIF account_class == 3;
+   title = text('Employee Search'); #'
+ELSE;
+   title = text('Unsupported.  Expect errors'); #'
+END -?>
+<form method="get" action="">
 <?lsmb INCLUDE input element_data = {
 	type = "hidden"
 	name = "account_class"
@@ -29,7 +31,7 @@
           <td>
             <table>
               <tr>
-                <th align="right"><?lsmb text('Company Name') ?></th>
+                <th align="right"><?lsmb text('Name') ?></th>
                 <td><?lsmb INCLUDE input element_data={size = '32', name = 'legal_name'} ?></td>
               </tr>
              <tr>
@@ -72,7 +74,7 @@
           <td>
             <table>
               <tr>
-                <th align="right"><?lsmb text("$entity_type Number") ?></th>
+                <th align="right"><?lsmb text("Account Number") ?></th>
                 <td><?lsmb INCLUDE input element_data={
   size = '32', name = "meta_number"} ?></td>
               </tr>
@@ -220,7 +222,7 @@
                 <tr>
                   <td align="right">
     <?lsmb INCLUDE input element_data={
-      name = 'l_partnumber',
+      name = 'col_partnumber',
       type = 'checkbox',
       value = 'Y',
       label = text('Part Number'), # '
@@ -229,7 +231,7 @@
                   </td>
                   <td align="right">
     <?lsmb INCLUDE input element_data={
-      name = 'l_description',
+      name = 'col_description',
       type = 'checkbox',
       value = 'Y',
       label = text('Description'),
@@ -238,7 +240,7 @@
                   </td>
                   <td align="right">
     <?lsmb INCLUDE input element_data={
-      name = 'l_sellprice',
+      name = 'col_sellprice',
       type = 'checkbox',
       value = 'Y',
       label = text('Sell Price'), # '
@@ -247,7 +249,7 @@
                   </td>
                   <td align="right">
     <?lsmb INCLUDE input element_data={
-      name = 'l_curr',
+      name = 'col_curr',
       type = 'checkbox',
       value = 'Y',
       label = text('Currency'),
@@ -257,7 +259,7 @@
                 <tr>
                   <td align="right">
     <?lsmb INCLUDE input element_data={
-      name = 'l_qty',
+      name = 'col_qty',
       type = 'checkbox',
       value = 'Y',
       label = text('Qty'),
@@ -265,7 +267,7 @@
                   </td>
                   <td align="right">
     <?lsmb INCLUDE input element_data={
-      name = 'l_unit',
+      name = 'col_unit',
       type = 'checkbox',
       value = 'Y',
       label = text('Unit'),
@@ -273,7 +275,7 @@
                   </td>
                   <td align="right">
     <?lsmb INCLUDE input element_data={
-      name = 'l_discount',
+      name = 'col_discount',
       type = 'checkbox',
       value = 'Y',
       label = text('Discount'),
@@ -283,7 +285,7 @@
                 <tr>
                   <td align="right">
     <?lsmb INCLUDE input element_data={
-      name = 'l_deliverydate',
+      name = 'col_deliverydate',
       type = 'checkbox',
       value = 'Y',
       label = text('Delivery Date'), # '
@@ -291,7 +293,7 @@
                   </td>
                   <td align="right">
     <?lsmb INCLUDE input element_data={
-      name = 'l_projectnumber',
+      name = 'col_projectnumber',
       type = 'checkbox',
       value = 'Y',
       label = text('Project Number'), # '
@@ -299,7 +301,7 @@
                   </td>
                   <td align="right">
     <?lsmb INCLUDE input element_data={
-      name = 'l_serialnumber',
+      name = 'col_serialnumber',
       type = 'checkbox',
       value = 'Y',
       label = text('Serial Number'), # '
@@ -329,7 +331,7 @@
                     <tr>
                       <td align="right">
   <?lsmb INCLUDE input element_data={
-    name = 'l_transnumber',
+    name = 'col_transnumber',
     type = 'checkbox',
     value = 'Y',
     label = form.translabel,
@@ -339,7 +341,7 @@
                     <tr>
                       <td align="right">
   <?lsmb INCLUDE input element_data={
-    name = 'l_invnumber',
+    name = 'col_invnumber',
     type = 'checkbox',
     value = 'Y',
     label = form.invlabel,
@@ -349,7 +351,7 @@
                     <tr>
                       <td align="right">
   <?lsmb INCLUDE input element_data={
-    name = 'l_ordnumber',
+    name = 'col_ordnumber',
     type = 'checkbox',
     value = 'Y',
     label = form.ordlabel,
@@ -359,7 +361,7 @@
                     <tr>
                       <td align="right">
   <?lsmb INCLUDE input element_data={
-    name = 'l_quonumber',
+    name = 'col_quonumber',
     type = 'checkbox',
     value = 'Y',
     label = form.quolabel,
@@ -412,28 +414,28 @@
                       <td />
                       <td colspan="3">
                         <?lsmb INCLUDE input element_data={
-    name = 'l_amount',
+    name = 'col_amount',
     type = 'checkbox',
     value = 'Y',
     label = text('Amount'),
     checked = 'checked'
     } -?>
                         <?lsmb INCLUDE input element_data={
-    name = 'l_tax',
+    name = 'col_tax',
     type = 'checkbox',
     value = 'Y',
     label = text('Tax'),
     checked = 'checked'
     } -?>
                         <?lsmb INCLUDE input element_data={
-    name = 'l_total',
+    name = 'col_total',
     type = 'checkbox',
     value = 'Y',
     label = text('Total'),
     checked = 'checked'
     } -?>
                         <?lsmb INCLUDE input element_data={
-    name = 'l_subtotal',
+    name = 'col_subtotal',
     type = 'checkbox',
     value = 'Y',
     label = text('Subtotal'),
