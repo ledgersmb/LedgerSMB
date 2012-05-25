@@ -135,6 +135,7 @@ VALUES
 ('IC_taxservice',  FALSE, FALSE),
 ('IC_income',      FALSE, FALSE),
 ('IC_expense',     FALSE, FALSE),
+('IC_returns',     FALSE, FALSE),
 ('Asset_Dep',      FALSE, FALSE),
 ('Fixed_Asset',    FALSE, FALSE),
 ('asset_expense',  FALSE, FALSE),

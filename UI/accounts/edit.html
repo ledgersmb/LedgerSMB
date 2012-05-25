@@ -312,6 +312,15 @@ INCLUDE 'ui-header.html'
              value = 'IC_expense'} ?>
    </div>
    <div class="inputgroup">
+      <?lsmb IF form.IC_expense;IC_expense= 'CHECKED'; END;
+         INCLUDE input element_data={
+              name = 'IC_expense',
+              type = 'checkbox',
+             label = text('Returns'),
+           checked = IC_returns,
+             value = ' IC_returns'} ?>
+   </div>
+   <div class="inputgroup">
       <?lsmb IF form.IC_taxservice; IC_taxservice= 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'IC_taxservice',
