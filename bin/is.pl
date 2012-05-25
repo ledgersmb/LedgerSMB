@@ -449,7 +449,7 @@ sub form_header {
         qw(form_id id type printed emailed queued title vc terms discount 
            creditlimit creditremaining tradediscount business closedto locked 
            shipped oldtransdate recurring reverse batch_id subtype 
-           meta_number)
+           meta_number separate_duties)
     );
 
     if ($form->{notice}){

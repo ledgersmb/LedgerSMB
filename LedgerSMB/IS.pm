@@ -44,6 +44,16 @@ use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::IS');
 
+
+sub add_cogs {
+    my ($self, $form) = @_;
+    my $dbh = $form->{dbh};
+    my $query = 
+     "select cogs__add_for_ar_line(id) FROM invoice WHERE trans_id = ?";
+    my $sth = $dbh->prepare($query) || $form->dberror($query);
+    $sth->execute($form->{id}) || $form->dberror($query);
+}
+
 sub getposlines {
     my ( $self, $myconfig, $form ) = @_;
     %pos_config  = %{ $form->{pos_config} };
@@ -1203,12 +1213,6 @@ sub post_invoice {
                         $form->{"qty_$i"} * -1
                     ) unless $form->{shipped};
 
-                    $allocated = cogs(
-                        $dbh,              $form,      
-                        $form->{"id_$i"},  $form->{"qty_$i"}, 
-                        $project_id,       $form->{"sellprice_$i"},
-                    ); 
-
                 }
             }
 
@@ -1594,6 +1598,8 @@ sub post_invoice {
     $form->{taxincluded} *= 1;
 
 
+    my $approved = 1;
+    $approved = 0 if $form->{separate_duties};
     # save AR record
     $query = qq|
 		UPDATE ar set
@@ -1618,7 +1624,8 @@ sub post_invoice {
 		       person_id = ?,
 		       till = ?,
 		       language_code = ?,
-		       ponumber = ?
+		       ponumber = ?,
+                       approved = ?
 		 WHERE id = ?
              |;
     $sth = $dbh->prepare($query);
@@ -1633,7 +1640,7 @@ sub post_invoice {
         $form->{intnotes},      $form->{taxincluded},
         $form->{currency},
         $form->{employee_id},   $form->{till},
-        $form->{language_code}, $form->{ponumber},
+        $form->{language_code}, $form->{ponumber}, $approved,
         $form->{id}
     ) || $form->dberror($query);
 
@@ -1644,6 +1651,10 @@ sub post_invoice {
 
     # save printed, emailed and queued
     $form->save_status($dbh);
+
+    if (!$form->{separate_duties}){
+        $self->add_cogs($form);
+    }
 
     my %audittrail = (
         tablename => 'ar',

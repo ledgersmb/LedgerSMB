@@ -66,6 +66,15 @@ sub get_files {
 
 }
 
+sub add_cogs {
+    my ($self, $form) = @_;
+    my $dbh = $form->{dbh};
+    my $query = 
+     "select cogs__add_for_ap_line(id) FROM invoice WHERE trans_id = ?";
+    my $sth = $dbh->prepare($query) || $form->dberror($query);
+    $sth->execute($form->{id}) || $form->dberror($query);
+}
+
 sub post_invoice {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -400,29 +409,7 @@ sub post_invoice {
                         $allocated += $qty;
                         last if ( ( $totalqty -= $qty ) >= 0 );
             	    }
-		} else {
-		    # start patch bug 1755355 ###############################################################################
-		    # check for unallocated entries atthe same price to match our entry
-		    $query = qq|
-		                SELECT i.id, i.qty, i.allocated, a.transdate
-		                FROM invoice i
-		                JOIN parts p ON (p.id = i.parts_id)
-		                JOIN ap a ON (a.id = i.trans_id)
-		                WHERE i.parts_id = ? AND (i.qty + i.allocated) > 0 AND i.sellprice = ?
-		                ORDER BY transdate|;
-                    $sth = $dbh->prepare($query);
-		    $sth->execute( $form->{"id_$i"}, $form->{"sellprice_$i"}) || $form->dberror($query);
-		    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-			$form->db_parse_numeric(sth=>$sth, hashref => $ref);
-		        my $qty = $ref->{qty} + $ref->{allocated};
-		        if ( ( $qty - $totalqty ) > 0 ) { $qty = $totalqty; }
-		        # update allocated for sold item
-			$form->update_balance( $dbh, "invoice", "allocated", qq|id = $ref->{id}|, $qty * -1 );
-		        $allocated += $qty;
-		        last if ( ( $totalqty -= $qty ) <= 0 );
-		    }
-                    # stop  patch bug 1755355 ###############################################################################
-                  }
+		} 
 
                 # add purchase to inventory
                 push @{ $form->{acc_trans}{lineitems} },
@@ -443,13 +430,6 @@ sub post_invoice {
                     qq|id = $form->{"id_$i"}|,
                     $form->{"qty_$i"} )
                   unless $form->{shipped};
-                my $cogs_sth = $dbh->prepare(
-                      'SELECT * FROM cogs__add_for_ap(?, ?, ?)'
-                );
-                $cogs_sth->execute($form->{"id_$i"}, 
-                                   $form->{"qty_$i"},
-                                   $form->{"sellprice_$i"});
-                $cogs_sth->finish;
 
             }
             else {
@@ -761,6 +741,8 @@ sub post_invoice {
     # set values which could be empty
     $form->{taxincluded} *= 1;
 
+    my $approved = 1;
+    $approved = 0 if $form->{separate_duties};
 
     # save AP record
     $query = qq|
@@ -782,7 +764,8 @@ sub post_invoice {
 		       intnotes = ?,
 		       curr = ?,
 		       language_code = ?,
-		       ponumber = ?
+		       ponumber = ?, 
+                       approved = ?
 		 WHERE id = ?|;
 
     $sth = $dbh->prepare($query);
@@ -793,7 +776,8 @@ sub post_invoice {
         $form->{duedate},       $form->{shippingpoint}, $form->{shipvia},
         $form->{taxincluded},   $form->{notes},         $form->{intnotes},
         $form->{currency},
-        $form->{language_code}, $form->{ponumber},      $form->{id}
+        $form->{language_code}, $form->{ponumber},      
+        $approved,              $form->{id}
     ) || $form->dberror($query);
 
     # add shipto
@@ -808,6 +792,10 @@ sub post_invoice {
         action    => 'posted',
         id        => $form->{id}
     );
+
+    if (!$form->{separate_duties}){
+        $self->add_cogs($form);
+    }
 
     $form->audittrail( $dbh, "", \%audittrail );
 

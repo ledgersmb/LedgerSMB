@@ -74,7 +74,7 @@ FOR t_inv IN
      WHERE qty + allocated < 0
   ORDER BY a.transdate, a.id, i.id
 LOOP
-   IF t_alloc > qty THEN
+   IF t_alloc > in_qty THEN
        RAISE EXCEPTION 'TOO MANY ALLOCATED';
    ELSIF t_alloc = in_qty THEN
        return t_cogs;
@@ -91,7 +91,7 @@ LOOP
    END IF;
 END LOOP;
 
-RETURN 0;
+RETURN t_cogs;
 
 END;
 $$ LANGUAGE PLPGSQL;
@@ -115,7 +115,7 @@ FOR t_inv IN
      WHERE allocated > 0
   ORDER BY a.transdate, a.id, i.id
 LOOP
-   IF t_alloc > qty THEN
+   IF t_alloc > in_qty THEN
        RAISE EXCEPTION 'TOO MANY ALLOCATED';
    ELSIF t_alloc = in_qty THEN
        return t_alloc;
@@ -229,5 +229,58 @@ END LOOP;
 
 END;
 $$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION cogs__add_for_ar_line(in_invoice_id int)
+RETURNS numeric AS
+$$
+DECLARE 
+   t_cogs numeric;
+   t_inv invoice;
+   t_part parts;
+   t_ar ar;
+   t_transdate date;
+BEGIN
+
+SELECT CASE WHEN qty > 0 THEN cogs__add_for_ar(parts_id, qty)
+            ELSE cogs__reverse_ar(parts_id, qty)
+       END
+  INTO t_cogs 
+  FROM invoice WHERE id = in_invoice_id;
+
+
+SELECT * INTO t_inv FROM invoice WHERE id = in_invoice_id;
+SELECT * INTO t_part FROM parts WHERE id = t_inv.parts_id;
+SELECT * INTO t_ar FROM ar WHERE id = t_inv.trans_id;
+
+SELECT CASE WHEN t_ar.transdate > max(end_date) THEN t_ar.transdate
+            ELSE max(end_date) + '1 day'::interval
+        END INTO t_transdate
+  from account_checkpoint td; 
+
+INSERT INTO acc_trans 
+       (trans_id, chart_id, approved, amount, transdate,  invoice_id)
+VALUES (t_inv.trans_id, CASE WHEN t_inv.qty < 0 AND t_ar.is_return 
+                           THEN t_part.returns_accno_id
+                           ELSE t_part.expense_accno_id
+                      END, TRUE, t_cogs * -1, t_transdate, t_inv.id),
+       (t_inv.trans_id, t_part.inventory_accno_id, TRUE, t_cogs, 
+       t_transdate, t_inv.id);
+
+RETURN t_cogs;
+
+END;
+
+$$ LANGUAGE PLPGSQL;
+
+CREATE OR REPLACE FUNCTION cogs__add_for_ap_line(in_invoice_id int)
+RETURNS numeric AS
+$$
+
+SELECT cogs__add_for_ap(i.parts_id, i.qty, p.lastcost)
+  FROM invoice i
+  JOIN parts p ON p.id = i.parts_id
+ WHERE i.id = $1;
+
+$$ LANGUAGE SQL;
 
 COMMIT;

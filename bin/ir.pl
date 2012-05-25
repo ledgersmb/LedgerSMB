@@ -414,7 +414,8 @@ sub form_header {
     $form->{vc} = "vendor";
     $form->hide_form(
         qw(id title vc type terms creditlimit creditremaining closedto locked 
-           shipped oldtransdate recurring reverse batch_id subtype form_id)
+           shipped oldtransdate recurring reverse batch_id subtype form_id
+           separate_duties)
     );
 
     print qq|
