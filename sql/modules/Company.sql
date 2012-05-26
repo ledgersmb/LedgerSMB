@@ -38,17 +38,16 @@ CREATE TYPE eca__pricematrix AS (
 );
 
 
-DROP TYPE IF EXISTS  company_search_result CASCADE;
+DROP TYPE IF EXISTS  contact_search_result CASCADE;
 
-CREATE TYPE company_search_result AS (
+CREATE TYPE contact_search_result AS (
 	entity_id int,
 	entity_control_code text,
-	company_id int,
 	entity_credit_id int,
 	meta_number text,
 	credit_description text,
 	entity_class int,
-	legal_name text,
+	name text,
 	sic_code text,
 	business_type text,
 	curr text
@@ -222,15 +221,28 @@ FROM   eca_history($1, $2, $3, $4, $5, $6, $7, $8, $9,
  group by id, name, meta_number, curr, parts_id, partnumber, description, unit
  order by meta_number;
 $$ LANGUAGE SQL;
+
+COMMENT ON FUNCTION eca_history_summary
+(in_name text, in_meta_number text, in_contact_info text, in_address_line text,
+ in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
+ in_country_id int, in_from_date date, in_to_date date, in_type char(1),
+ in_start_from date, in_start_to date, in_account_class int,
+ in_inc_open bool, in_inc_closed bool) IS
+$$Creates a summary account (no quantities, just parts group by invoice).
+
+meta_number must match exactly or be NULL.  inc_open and inc_closed are exact
+matches too.  All other values specify ranges or may match partially.$$;
+
 --HV coalesce(ec.entity_class,e.entity_class) in case entity but not yet entity_credit_account
-CREATE OR REPLACE FUNCTION company__search
+CREATE OR REPLACE FUNCTION contact__search
 (in_account_class int, in_contact text, in_contact_info text[], 
 	in_meta_number text, in_address text, in_city text, in_state text, 
-	in_mail_code text, in_country text, in_date_from date, in_date_to date,
-	in_business_id int, in_legal_name text, in_control_code text)
-RETURNS SETOF company_search_result AS $$
+	in_mail_code text, in_country text, in_active_date_from date, 
+        in_active_date_to date,
+	in_business_id int, in_name_part text, in_control_code text)
+RETURNS SETOF contact_search_result AS $$
 DECLARE
-	out_row company_search_result;
+	out_row contact_search_result;
 	loop_count int;
 	t_contact_info text[];
 BEGIN
@@ -238,17 +250,31 @@ BEGIN
 
 
 	FOR out_row IN
-		SELECT e.id, e.control_code, c.id, ec.id, ec.meta_number, 
+		SELECT e.id, e.control_code, ec.id, ec.meta_number, 
 			ec.description, ec.entity_class, 
 			c.legal_name, c.sic_code, b.description , ec.curr::text
-		FROM (select * from entity where in_control_code = control_code
+		FROM (select * from entity 
+                       where control_code like in_control_code || '%'
                       union
                       select * from entity where in_control_code is null) e
-		JOIN (SELECT * FROM company 
-                       WHERE legal_name ilike  '%' || in_legal_name || '%'
+		JOIN (SELECT legal_name, sic_code, entity_id 
+                        FROM company 
+                       WHERE legal_name @@ plainto_tsquery(in_name_part)
                       UNION ALL
-                      SELECT * FROM company
-                       WHERE in_legal_name IS NULL) c ON (e.id = c.entity_id)
+                      SELECT legal_name, sic_code, entity_id
+                        FROM company
+                       WHERE in_name_part IS NULL
+                      UNION ALL
+                     SELECT first_name || ' ' || middle_name || ' ' 
+                            || last_name, null, entity_id
+                       FROM person
+                      WHERE first_name || ' ' || middle_name || ' '
+                            || last_name @@ plainto_tsquery(in_name_part)
+                      UNION ALL
+                     SELECT first_name || ' ' || middle_name || ' ' 
+                            || last_name, null, entity_id
+                       FROM person
+                       WHERE in_name_part IS NULL) c ON (e.id = c.entity_id)
 		LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
 		LEFT JOIN business b ON (ec.business_id = b.id)
 		WHERE coalesce(ec.entity_class,e.entity_class) = in_account_class
@@ -260,8 +286,6 @@ BEGIN
                                                           ALL(t_contact_info)
                                                     OR t_contact_info IS NULL)
 			
-			AND (c.legal_name ilike '%' || in_legal_name || '%'
-				OR in_legal_name IS NULL)
 			AND ((in_address IS NULL AND in_city IS NULL 
 					AND in_state IS NULL 
 					AND in_country IS NULL)
@@ -269,10 +293,14 @@ BEGIN
 				(select entity_id FROM entity_to_location
 				WHERE location_id IN 
 					(SELECT id FROM location
-					WHERE line_one 
-						ilike '%' || 
-							coalesce(in_address, '')
-							|| '%'
+					WHERE (line_one @@ plainto_tsquery(
+                                                              in_address)
+                                               OR
+					       line_two @@ plainto_tsquery(
+                                                              in_address)
+                                               OR
+					       line_three @@ plainto_tsquery(
+                                                              in_address))
 						AND city ILIKE 
 							'%' || 
 							coalesce(in_city, '') 
@@ -288,8 +316,8 @@ BEGIN
 							|| '%'
 						AND country_id IN 
 							(SELECT id FROM country
-							WHERE name ILIKE '%' ||
-								in_country ||'%'
+							WHERE name ilike
+                                                              in_country
 								OR short_name
 								ilike 
 								in_country)))))
@@ -297,29 +325,18 @@ BEGIN
 				coalesce(in_business_id, ec.business_id)
 				OR (ec.business_id IS NULL 
 					AND in_business_id IS NULL))
-			AND (ec.startdate <= coalesce(in_date_to, 
+			AND (ec.startdate <= coalesce(in_active_date_to, 
 						ec.startdate)
 				OR (ec.startdate IS NULL))
-			AND (ec.enddate >= coalesce(in_date_from, ec.enddate)
+			AND (ec.enddate >= coalesce(in_active_date_from, ec.enddate)
 				OR (ec.enddate IS NULL))
-	 		AND (ec.meta_number = in_meta_number
+	 		AND (ec.meta_number like in_meta_number || '%'
 			     OR in_meta_number IS NULL)
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;
 END;
 $$ language plpgsql;
-
-COMMENT ON FUNCTION eca_history_summary
-(in_name text, in_meta_number text, in_contact_info text, in_address_line text,
- in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
- in_country_id int, in_from_date date, in_to_date date, in_type char(1),
- in_start_from date, in_start_to date, in_account_class int,
- in_inc_open bool, in_inc_closed bool) IS
-$$Creates a summary account (no quantities, just parts group by invoice).
-
-meta_number must match exactly or be NULL.  inc_open and inc_closed are exact
-matches too.  All other values specify ranges or may match partially.$$;
 
 DROP FUNCTION IF EXISTS eca__get_taxes(in_credit_id int);
 

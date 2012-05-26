@@ -1,6 +1,5 @@
 <?lsmb INCLUDE 'ui-header.html' ?> 
 <?lsmb PROCESS elements.html ?> 
-<?lsmb account_class = entity_class ?>
 <body>
 <?lsmb 
 IF account_class == 0;
@@ -14,7 +13,7 @@ ELSIF account_class == 3;
 ELSE;
    title = text('Unsupported.  Expect errors'); #'
 END -?>
-<form method="get" action="">
+<form method="get" action="contact_reports.pl">
 <?lsmb INCLUDE input element_data = {
 	type = "hidden"
 	name = "account_class"
@@ -32,7 +31,9 @@ END -?>
             <table>
               <tr>
                 <th align="right"><?lsmb text('Name') ?></th>
-                <td><?lsmb INCLUDE input element_data={size = '32', name = 'legal_name'} ?></td>
+                <td><?lsmb INCLUDE input element_data={
+                          size = '32', name = 'name_part'
+                     } ?></td>
               </tr>
              <tr>
                 <th align="right"><?lsmb text('Control Code') ?></th>
@@ -43,10 +44,6 @@ END -?>
 			value = control_code
 			} ?></td>
              </tr>
-              <tr>
-                <th align="right"><?lsmb text('Contact') ?></th>
-                <td><?lsmb INCLUDE input element_data={size = '32', name = 'contact'} ?></td>
-              </tr>
               <tr>
                 <th align="right"><?lsmb text('E-mail') ?></th>
                 <td><?lsmb INCLUDE input element_data={size = '32', name = 'email'} ?></td>
@@ -107,9 +104,9 @@ END -?>
                 <th align="right"><?lsmb text('Active') ?></th>
                 <td>
                    <?lsmb text('From'); ' '; INCLUDE input element_data={
-  size = '11', name = 'startdatefrom', class = 'date', title = user.dateformat};
+  size = '11', name = 'active_date_from', class = 'date', title = user.dateformat};
                           text('Date to'); ' '; INCLUDE input element_data={
-  size = '11', name = 'startdateto', class = 'date', title = user.dateformat} ?>
+  size = '11', name = 'active_date_to', class = 'date', title = user.dateformat} ?>
                 </td>
               </tr>
             </table>
@@ -475,7 +472,7 @@ END -?>
 <?lsmb INCLUDE button element_data = {
 	text = text('Search')
 	name = "action"
-	value = 'get_results'
+	value = 'search'
 	class = "submit"
 	type = "submit"
 } ?>

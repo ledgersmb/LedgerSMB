@@ -139,6 +139,19 @@ sub cleanup {
 
 1;
 
+=item get_url
+
+Returns URL of get request or undef
+
+=cut
+
+sub get_url {
+    if ($ENV{REQUEST_METHOD} ne 'GET') {
+       return undef;
+    }
+    return "$ENV{SCRIPT_NAME}?$ENV{QUERY_STRING}";
+}
+
 =back
 
 =head1 COPYRIGHT

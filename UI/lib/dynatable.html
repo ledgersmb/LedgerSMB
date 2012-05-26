@@ -1,13 +1,20 @@
 <?lsmb BLOCK dynatable ?>
 <table id="<?lsmb attributes.id ?>" class="dynatable <?lsmb attributes.class ?>"
-width="attributes.width">
+width="<?lsmb attributes.width ?>">
 <?lsmb- IF !hide_header -?>
 <thead>
    <tr>
    <?lsmb- FOREACH COL IN columns; 
    IF COL.type != 'hidden'; -?>
-   <th class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>">
-       <?lsmb COL.name ?>
+   <th class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>"><?lsmb
+
+IF attributes.order_url 
+?> <a href="<?lsmb order_url ?>&order_by=<?lsmb COL.col_id ?>"><?lsmb
+END;
+COL.name;
+IF attributes.order_url 
+?></a><?lsmb
+END; ?>
    </th>
    <?lsmb- END; END; -?>
    </tr>

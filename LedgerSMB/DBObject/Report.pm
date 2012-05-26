@@ -108,6 +108,46 @@ formats could be supported in the future.  If undefined, defaults html.
 
 has 'format' => (is => 'rw', isa => 'Maybe[Str]');
 
+=item order_by
+
+The column to order on.  used in providing subtotals also.
+
+=cut
+
+has order_by  => (is => 'rw', isa => 'Maybe[Str]');
+
+=item old_order_by
+
+Previous order by.  Used internally to determine order direction.
+
+=cut
+
+has old_order_by  => (is => 'rw', isa => 'Maybe[Str]');
+
+=item order_dir
+
+either asc, desc, or undef.  used to determine next ordering.
+
+=cut
+
+has order_dir  => (is => 'rw', isa => 'Maybe[Str]');
+
+=item order_url
+
+Url for order redirection.  Interal only.
+
+=cut
+
+has order_url  => (is => 'rw', isa => 'Maybe[Str]');
+
+=item show_subtotals
+
+bool, determines whether to show subtotals.
+
+=cut
+
+has show_subtotals => (is => 'rw', isa => 'Bool');
+
 =back
 
 =head1 METHODS
@@ -129,6 +169,52 @@ sub render {
     eval {$template = $self->template};
     $template ||= 'Reports/display_report';
 
+    # Sorting and Subtotal logic
+    my $url = LedgerSMB::App_State::get_url();
+    if ($self->order_by eq $self->old_order_by){
+        if (lc($self->order_dir) eq 'asc'){
+            $self->order_dir('desc');
+        } else {
+            $self->order_dir('asc');
+        }
+    }
+    $url =~ s/&?order_by=[^\&]*/$1/g;
+    $url =~ s/&?order_dir=[^\&]*/$1/g;
+    $self->order_url(
+        "$url&old_order_by=".$self->order_by."&order_dir=".$self->order_dir
+    );
+
+    my $rows = $self->rows;
+    @$rows = sort {$a->{$self->order_by} cmp $b->{$self->order_by}} @$rows
+      if $self->order_by;
+    if (lc($self->order_dir) eq 'desc' and $self->order_by) {
+        @$rows = reverse @$rows;
+    }
+    $self->rows($rows);
+    if ($self->show_subtotals){
+        my @newrows;
+        my $subtotals = {html_class => 'subtotal'};
+        for my $col ({eval $self->subtotal_on}){
+           $subtotals->{$col} = 0;
+        }
+        my $col_val = undef;
+        for my $r (@{$self->rows}){
+            if (defined $col_val and ($col_val ne $r->{$self->order_by})){
+                push @newrows, $subtotals;
+                $subtotals = {html_class => 'subtotal'};
+                for my $col ({eval $self->subtotal_on}){
+                    $subtotals->{$col} = 0;
+                }
+            }
+            for my $col ({eval $self->subtotal_on}){
+                $subtotals->{$col} += $r->{$col};
+            }
+            push @newrows, $r;
+        }
+   } 
+    
+    # Rendering
+
     if (!defined $self->format){
         $self->format('html');
     }
@@ -144,6 +230,7 @@ sub render {
                          name => $self->name,
                        hlines => $self->header_lines,
                       columns => $self->show_cols($request), 
+                    order_url => $self->order_url,
                          rows => $self->rows});
 }
 

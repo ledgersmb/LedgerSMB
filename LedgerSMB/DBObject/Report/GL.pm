@@ -205,6 +205,16 @@ sub header_lines {
              text => $locale->text('Source')}];
 }
 
+=item subtotal_cols
+
+Returns list of columns for subtotals
+
+=cut
+
+sub subtotal_cols {
+    return ['debits', 'credits'];
+}
+
 =head2 Criteria Properties
 
 Note that in all cases, undef matches everything.
