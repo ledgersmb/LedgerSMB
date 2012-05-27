@@ -934,6 +934,7 @@ CREATE TYPE contact_list AS (
 	contact text
 );
 
+
 CREATE OR REPLACE FUNCTION entity__list_contacts(in_entity_id int) 
 RETURNS SETOF contact_list AS $$
 DECLARE out_row contact_list;
@@ -952,7 +953,19 @@ $$ language plpgsql;
 COMMENT ON FUNCTION entity__list_contacts(in_entity_id int) IS
 $$ Lists all contact info for the entity.$$;
 
-CREATE OR REPLACE FUNCTION company__list_bank_account(in_entity_id int)
+CREATE OR REPLACE FUNCTION entity__delete_bank_account(in_id int)
+RETURNS BOOL AS
+$$
+BEGIN;
+
+DELETE FROM entity_bank_account WHERE id = in_id;
+
+RETURN FOUND;
+
+END;
+
+$$ LANGUAGE PLPGSQL;
+CREATE OR REPLACE FUNCTION entity__list_bank_account(in_entity_id int)
 RETURNS SETOF entity_bank_account AS
 $$
 DECLARE out_row entity_bank_account%ROWTYPE;
@@ -965,10 +978,10 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-COMMENT ON FUNCTION company__list_bank_account(in_entity_id int) IS
+COMMENT ON FUNCTION entity__list_bank_account(in_entity_id int) IS
 $$ Lists all bank accounts for the entity.$$;
 
-CREATE OR REPLACE FUNCTION eca__save_bank_account
+CREATE OR REPLACE FUNCTION entity__save_bank_account
 (in_entity_id int, in_credit_id int, in_bic text, in_iban text,
 in_bank_account_id int)
 RETURNS int AS
@@ -997,37 +1010,10 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-COMMENT ON  FUNCTION eca__save_bank_account
+COMMENT ON  FUNCTION entity__save_bank_account
 (in_entity_id int, in_credit_id int, in_bic text, in_iban text,
 in_bank_account_id int) IS
 $$ Saves bank account to the credit account.$$;
-
-CREATE OR REPLACE FUNCTION entity__save_bank_account
-(in_entity_id int, in_bic text, in_iban text, in_bank_account_id int)
-RETURNS int AS
-$$
-DECLARE out_id int;
-BEGIN
-        UPDATE entity_bank_account
-           SET bic = in_bic,
-               iban = in_iban
-         WHERE id = in_bank_account_id;
-
-        IF FOUND THEN
-                out_id = in_bank_account_id;
-        ELSE
-	  	INSERT INTO entity_bank_account(entity_id, bic, iban)
-		VALUES(in_entity_id, in_bic, in_iban);
-	        SELECT CURRVAL('entity_bank_account_id_seq') INTO out_id ;
-	END IF;
-
-	RETURN out_id;
-END;
-$$ LANGUAGE PLPGSQL;
-
-COMMENT ON FUNCTION entity__save_bank_account
-(in_entity_id int, in_bic text, in_iban text, in_bank_account_id int) IS
-$$Saves a bank account to the entity.$$;
 
 CREATE OR REPLACE FUNCTION company__delete_contact
 (in_company_id int, in_contact_class_id int, in_contact text)

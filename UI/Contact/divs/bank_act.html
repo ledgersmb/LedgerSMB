@@ -1,25 +1,24 @@
 <div class="container" id="bank_div">
 <div class="listtop"><?lsmb text('Bank Accounts') ?></div>
-<table width="100%">
-<tr class="listheading">
-	<th class="bic"><?lsmb text('BIC/SWIFT Code') ?></th>
-	<th class="iban"><?lsmb text('Account Number') ?></th>
-	<th class="actions"><?lsmb text('Actions') ?></th>
-</tr>
-<?lsmb FOREACH ba = bank_account ?>
-<tr>
-	<td class="bic"><?lsmb ba.bic ?></td>
-	<td class="iban"><?lsmb ba.iban ?></td>
-	<td class="actions">
-		<a href="<?lsmb script ?>?action=delete_bank_acct&entity_id=<?lsmb
-			entity_id ?>&bank_account_id=<?lsmb ba.id 
-                        ?>&target_div=bank_div&form_id=<?lsmb form_id 
-                        ?>&credit_id=<?lsmb tt_url(credit_id) ?>"
-			>[<?lsmb text('Delete') ?>]</a> 
-	</td>
-</tr>
-<?lsmb END ?>
-</table>
+<?lsmb 
+href_base = script _ '?&entity_id=' _ entity_id _ '&bank_account_id=' _ 
+      ba.id _ '&target_div=bank_div&form_id=' _ form_id _ '&credit_id=' _ 
+      credit_id;
+FOREACH ba IN bank_account;
+    ba.iban_href_suffix = href_base _ '&bic=' _ bic _ '&iban=' _ iban _
+         '&action=edit_bank_account';
+    ba.delete_href_suffix = href_base _ '&action=delete_bank_account';
+    ba.delete = '[' _ text('Delete') _ ']';
+END;
+PROCESS dynatable 
+   attributes = { id = 'bank_account_list', width = '100%' }
+   tbody = {rows = bank_account}
+   columns = [
+     { col_id='bic', type='text', name=text('BIC/SWIFT Code') } #'
+     { col_id='iban', type='href', href_base='', name=text('Account Number')}#'
+     { col_id='delete', type='href', href_base='', name=' ' }
+   ];
+?>
 <form name="bank_acct" action="<?lsmb script ?>">
 <?lsmb PROCESS input element_data = {
 		type = "hidden"

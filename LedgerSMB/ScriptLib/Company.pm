@@ -777,7 +777,8 @@ sub _render_main_screen{
                         credit_id => $company->{credit_act}->{id}}
           );
                          
-
+    @{$company->{bank_account}} = 
+         LedgerSMB::DBObject::Entity::Bank->list($company->{entity_id);
     $company->{creditlimit} = $request->format_amount({amount => $company->{creditlimit}}) unless !defined $company->{creditlimit}; 
     $company->{discount} = "$company->{discount}" unless !defined $company->{discount}; 
     $company->{note_class_options} = [
@@ -896,12 +897,9 @@ Required request variables:
 
 sub delete_bank_acct{
     my ($request) = @_;
-    my $company = new_company($request);
-    if (_close_form($company)){
-        $company->delete_bank_account();
-    }
-    $company->get;
-    _render_main_screen( $company );
+    my $account = LedgerSMB::DBObject::Entity::Bank->new(%$request);
+    $account->delete;
+    get($request);
 }
 
 =pod
@@ -999,12 +997,9 @@ Adds a bank account to a company and, if defined, an entity credit account.
 
 sub save_bank_account {
     my ($request) = @_;
-    my $company = new_company($request);
-    if (_close_form($company)){
-        $company->save_bank_account();
-    }
-    $company->get;
-    _render_main_screen($company );
+    my $bank = LedgerSMB::DBObject::Entity::Bank->new(%$request);
+    $bank->save;
+    get($request);
 }
 
 =item save_notes($request)
