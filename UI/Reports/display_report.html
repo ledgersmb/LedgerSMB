@@ -36,9 +36,6 @@ IF FORMATS.grep('TXT').size();
 ?>
 <a href="<?lsmb LINK _ '&format=CSV' ?>">[<?lsmb text('CSV') ?>]</a>&nbsp;
 <?lsmb END;
-IF FORMATS.grep('XLS').size() ?>
-<a href="<?lsmb LINK _ '&format=XLS' ?>">[<?lsmb text('XLS') ?>]</a>&nbsp;
-<?lsmb END;
 IF FORMATS.grep('ODS').size() ?>
 <a href="<?lsmb LINK _ '&format=ODS' ?>">[<?lsmb text('ODS') ?>]</a>&nbsp;
 <?lsmb END; ?>
