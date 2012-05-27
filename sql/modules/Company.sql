@@ -956,7 +956,7 @@ $$ Lists all contact info for the entity.$$;
 CREATE OR REPLACE FUNCTION entity__delete_bank_account(in_id int)
 RETURNS BOOL AS
 $$
-BEGIN;
+BEGIN
 
 DELETE FROM entity_bank_account WHERE id = in_id;
 
