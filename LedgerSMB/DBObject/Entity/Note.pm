@@ -1,22 +1,25 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Entity::Bank - Bank account info for customers, vendors, 
-employees, and more.
+LedgerSMB::DBObject::Entity::Note - Notes handling for customers, vendors, 
+employees, etc.
 
 =head1 SYNPOSIS
 
-  @bank_list = LedgerSMB::DBObject::Entity::Bank->list($entity_id);
-  $bank->save;
+  @notes = LedgerSMB::DBObject::Entity::Bank->list($entity_id, [$credit_id]);
+  $note->add;
 
 =head1 DESCRIPTION
 
-This module manages bank accounts, for wire transfers, etc. for customers,
-vendors, employees etc.   Bank accounts are attached to the entity with the
-credit account being able to attach itself to a single bank account.
+This module handles tracking of notes for customers, vendors, employees, sales
+leads, and more.  Notes are expected to be read-only, and essentially
+append-only.
+
+This module handles attaching notes either at the entity level or the credit id
+level.  
 
 =cut
 
-package LedgerSMB::DBObject::Entity::Bank;
+package LedgerSMB::DBObject::Entity::Note;
 use Moose;
 extends 'LedgerSMB::DBObject_Moose';
 
@@ -46,9 +49,6 @@ has 'entity_id' => (is => 'rw', isa => 'Maybe[Int]');
 If this is set, this is attached to an entity credit account.  If this and
 entity_id are set, entity_id is ignored.
 
-This is never set on retrieval, but is used to attach this as the default bank
-account for a given entity credit account.
-
 =cut
 
 has 'credit_id' => (is => 'rw', isa => 'Maybe[Int]');
@@ -61,23 +61,21 @@ If set this indicates this has been saved to the db.
 
 has 'id' => (is =>'ro', isa => 'Maybe[Int]');
 
-=item bic
+=item subject
 
-Banking Institution Code, such as a SWIFT code or ABA routing number.  This can
-be set to undef because there are cases where the BIC is not needed for wire
-transfers.
+This is the subject of the note. 
 
 =cut
 
-has 'bic' => (is =>'rw', isa => 'Maybe[Str]');
+has 'subject' => (is =>'rw', isa => 'Maybe[Str]');
 
-=item iban
+=item note
 
-This is the bank account number.  It is required on all records.
+The contents of the note.  Required
 
 =cut
 
-has 'iban' => (is => 'rw', isa => 'Str');
+has 'note' => (is => 'rw', isa => 'Str');
 
 =back
 
@@ -85,7 +83,7 @@ has 'iban' => (is => 'rw', isa => 'Str');
 
 =over
 
-=item list($entity_id)
+=item list($entity_id, [$credit_id])
 
 Lists all bank accounts for entity_id.  This does not need to be performed on a
 blessed reference.  All return results are objects.
@@ -93,9 +91,15 @@ blessed reference.  All return results are objects.
 =cut
 
 sub list{
-    my ($self, $entity_id) = @_;
-    my @results = $self->call_procedure(procname =>
-             'entity__list_bank_account', args => [$entity_id]);
+    my ($self, $entity_id, $credit_id) = @_;
+    my @results;
+    if ($credit_id){
+        @results = $self->call_procedure(procname =>
+             'eca__list_notes', args => [$credit_id]);
+    } else {
+        @results = $self->call_procedure(procname =>
+             'entity__list_notes', args => [$credit_id]);
+    }
     for my $row(@results){
         $self->prepare_dbhash($row); 
         $row = $self->new(%$row);
@@ -112,21 +116,9 @@ setting things like the id field.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'entity__save_bank_account'});
+    my ($ref) = $self->exec_method({funcname => 'entity__save_notes'});
     $self->prepare_dbhash($ref);
     $self = $self->new(%$ref);
-}
-
-=item delete
-
-Deletes the bank account object from the database.
-
-=cut
-
-sub delete {
-    my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'entity__save_bank_account'});
-    return $ref;
 }
 
 =back

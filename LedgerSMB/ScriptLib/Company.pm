@@ -6,6 +6,7 @@ use LedgerSMB::DBObject::Entity::Credit_Account;
 use LedgerSMB::DBObject::Entity::Location;
 use LedgerSMB::DBObject::Entity::Contact;
 use LedgerSMB::DBObject::Entity::Bank;
+use LedgerSMB::DBObject::Entity::Note;
 use LedgerSMB::DBObject::Vendor;
 use Log::Log4perl;
 
@@ -780,6 +781,9 @@ sub _render_main_screen{
                          
     @{$company->{bank_account}} = 
          LedgerSMB::DBObject::Entity::Bank->list($company->{entity_id});
+    @{$company->{notes}} = 
+         LedgerSMB::DBObject::Entity::Note->list($company->{entity_id}, 
+                                                 $company->{credit_act}->{id});
     $company->{creditlimit} = $request->format_amount({amount => $company->{creditlimit}}) unless !defined $company->{creditlimit}; 
     $company->{discount} = "$company->{discount}" unless !defined $company->{discount}; 
     $company->{note_class_options} = [
@@ -1012,12 +1016,9 @@ subject.
 
 sub save_notes {
     my ($request) = @_;
-    my $company = new_company($request);
-    if (_close_form($company)){
-        $company->save_notes();
-    }
-    $company->get();
-    _render_main_screen($company );
+    my $note = LedgerSMB::DBObject::Entity::Note->new(%$request);
+    $note->save;
+    get($request);
 }
 
 =item pricelist

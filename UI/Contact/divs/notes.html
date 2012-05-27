@@ -21,7 +21,6 @@
 		name="credit_id" 
 		value=credit_id
 	} ?>
-<?lsmb IF credit_id -?>
 <div class="input">
    <?lsmb PROCESS input element_data = {
       label = text('Subject'),
@@ -31,6 +30,7 @@
       size = "20"
 	} ?>
 </div>
+<?lsmb IF credit_id -?>
 <div class="input"><?lsmb PROCESS select element_data = {
 			name = "note_class"
 			default_values = [note_class]
