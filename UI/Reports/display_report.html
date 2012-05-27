@@ -21,7 +21,7 @@ LINK = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME
 </div>
 <?lsmb FOREACH LINE IN hlines ?>
 <div class="report_header"><label><?lsmb LINE.text ?>:</label>
-<span class="report_header"><?lsmb request.${LINE.name} ?><?lsmb report ?></span>
+<span class="report_header"><?lsmb request.${LINE.name} ?></span>
 </div>
 <?lsmb END ?>
 <?lsmb PROCESS dynatable tbody = {rows => rows } 

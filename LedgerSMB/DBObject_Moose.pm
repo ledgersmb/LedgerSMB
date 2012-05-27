@@ -109,6 +109,28 @@ sub is_allowed_role {
     return $dbo->is_allowed_role(@_);
 }
 
+sub get_interval_dates {
+    my ($self, $year, $month, $type) = @_;
+    my $start = "$year-$month-01"; 
+    return {start => undef, end => LedgerSMB::PGDate->from_db($start, 'date')}
+      if $type eq 'none';
+    my $dbh = $LedgerSMB::App_State::DBH;
+    my $intervals = {
+          year => '1 year',
+          month => '1 month',
+          quarter => '3 months'
+    };
+
+    my $sth = $dbh->prepare(
+           "SELECT (?::date + ?::interval - '1 day'::interval)::date"
+    );
+
+    $sth->execute($start, $intervals->{$type});
+    my ($end) = $sth->fetchrow_array();
+    return { start => LedgerSMB::PGDate->from_db($start, 'date'), 
+               end => LedgerSMB::PGDate->from_db($end, 'date') };   
+}
+
 __PACKAGE__->meta->make_immutable;
 
 1;

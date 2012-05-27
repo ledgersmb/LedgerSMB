@@ -59,6 +59,11 @@ sub start_report {
             }
         }
     }
+    @{$request->{all_years}} = $request->call_procedure(
+              procname => 'date_get_all_years'
+    );
+    my $months = LedgerSMB::App_State::all_months();
+    $request->{all_months} = $months->{dropdown};
     if (!$request->{report_name}){
         die $request->{_locale}->text('No report specified');
     }

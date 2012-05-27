@@ -193,9 +193,9 @@ Returns the inputs to display on header.
 =cut
 
 sub header_lines {
-    return [{name => 'date_from',
+    return [{name => 'from_date',
              text => $locale->text('Start Date')},
-            {name => 'date_to',
+            {name => 'to_date',
              text => $locale->text('End Date')},
             {name => 'accno',
              text => $locale->text('Account Number')},
@@ -270,21 +270,21 @@ Full text search of description field of GL transaction
 
 has 'description' => (is => 'rw', isa => 'Maybe[Str]');
 
-=item date_from
+=item from_date
 
 Earliest date which matches the search
 
 =cut
 
-has 'date_from' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'from_date' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
 
-=item date_to
+=item to_date
 
 Last date that matches the search
 
 =cut
 
-has 'date_to' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'to_date' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
 
 =item approved
 
@@ -329,16 +329,7 @@ Instantiates the PGDate and PGNumber inputs.
 
 sub prepare_criteria{
     my ($self, $request) = @_;
-    $request->{date_from} = LedgerSMB::PGDate->from_input(
-                               $request->{date_from}
-    );
-    $request->{date_to} = LedgerSMB::PGDate->from_input($request->{date_to});
-    $request->{amount_from} = LedgerSMB::PGNumber->from_input(
-                               $request->{amount_from}
-    );
-    $request->{amount_to} = LedgerSMB::PGNumber->from_input(
-                               $request->{amount_to}
-    );
+    $self->prepare_input($request);
     $request->{accno} =~ s/--.*$//;
 }
 

@@ -254,6 +254,62 @@ sub show_cols {
     return \@retval;
 }
 
+=item prepare_input
+
+Handles from_date and to_date fields, as well as from_month, from_year, and 
+interval, setting from_date and to_date to LedgerSMB::PGDate types, and setting
+from_amount and to_amount to LedgerSMB::PGNumber types.
+
+Valid values for interval are:
+
+=over
+
+=item none 
+
+No start date, end date as first of the month
+
+=item month
+
+Valid for the month selected
+
+=item quarter
+
+Valid for the month selected and the two proceeding ones.
+
+=item year
+
+Valid for a year starting with the month selected.
+
+=back
+
+=cut
+
+sub prepare_input {
+    my ($self, $request) = @_;
+    if ($request->{from_month} and $request->{year}){
+        my $interval = $self->get_interval_dates(
+                                                  $request->{year}, 
+                                                  $request->{from_month}, 
+                                                  $request->{interval}
+        );
+        $request->{from_date} = $interval->{start};
+        $request->{to_date} = $interval->{end};
+    } else {
+        $request->{from_date} = LedgerSMB::PGDate->from_input(
+                                   $request->{from_date}
+        );
+        $request->{date_to} = LedgerSMB::PGDate->from_input(
+                                   $request->{date_to}
+        );
+    }
+    $request->{from_amount} = LedgerSMB::PGNumber->from_input(
+                               $request->{from_amount}
+    );
+    $request->{to_amount} = LedgerSMB::PGNumber->from_input(
+                               $request->{to_amount}
+    );
+}
+
 =back
 
 =head1 COPYRIGHT

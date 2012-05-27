@@ -152,7 +152,64 @@ sub get_url {
     return "$ENV{SCRIPT_NAME}?$ENV{QUERY_STRING}";
 }
 
+=item all_months(is_short $bool)
+
+Returns hashref of localized date data with following members:
+
+If $is_short is set and true, returns short names (Jan, Feb, etc) instead of 
+long names (January, February, etc).
+
+=over
+
+=item dropdown
+
+Month information in drop down format.
+
+=item hashref
+
+Month info in hashref format in 01 => January format
+
 =back
+
+=cut
+
+sub all_months {
+    my ($self, $is_short) = @_;
+    my $i18n = $Locale;
+    my $months = {
+     '01' => {long => $i18n->text('January'),   short => $i18n->text('Jan'), },
+     '02' => {long => $i18n->text('February'),  short => $i18n->text('Feb'), },
+     '03' => {long => $i18n->text('March'),     short => $i18n->text('Mar'), },
+     '04' => {long => $i18n->text('April'),     short => $i18n->text('Apr'), },
+           # XXX That's asking for trouble below.  Need to update .po files
+           # before changing however. --CT
+     '05' => {long => $i18n->text('May'),       short => $i18n->text('May'), },
+     '06' => {long => $i18n->text('June'),      short => $i18n->text('Jun'), },
+     '07' => {long => $i18n->text('July'),      short => $i18n->text('Jul'), },
+     '08' => {long => $i18n->text('August'),    short => $i18n->text('Aug'), },
+     '09' => {long => $i18n->text('September'), short => $i18n->text('Sep'), },
+     '10' => {long => $i18n->text('October'),   short => $i18n->text('Oct'), },
+     '11' => {long => $i18n->text('November'),  short => $i18n->text('Nov'), },
+     '12' => {long => $i18n->text('December'),  short => $i18n->text('Dec'), },
+    };
+
+    my $for_dropdown = [];
+    my $as_hashref = {};
+    for my $key (sort {$a cmp $b} keys %$months){
+        my $mname;
+        if ($is_short){
+           $mname = $months->{$key}->{short};
+        } else {
+           $mname = $months->{$key}->{long};
+        }
+        $as_hashref->{$key} = $mname;
+        push @$for_dropdown, {text => $mname, value => $key};
+    }
+    return { as_hashref => $as_hashref, dropdown=> $for_dropdown };
+}
+
+=back
+
 
 =head1 COPYRIGHT
 

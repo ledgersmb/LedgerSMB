@@ -176,8 +176,8 @@ CREATE TYPE gl_report_item AS (
 
 CREATE OR REPLACE FUNCTION report__gl
 (in_reference text, in_accno text, in_category char(1),
-in_source text, in_memo text,  in_description text, in_date_from date, 
-in_date_to date, in_approved bool, in_amount_from numeric, in_amount_to numeric,
+in_source text, in_memo text,  in_description text, in_from_date date, 
+in_to_date date, in_approved bool, in_from_amount numeric, in_to_amount numeric,
 in_business_units int[])
 RETURNS SETOF gl_report_item AS
 $$
@@ -187,11 +187,11 @@ DECLARE
          t_chart_id int;
 BEGIN
 
-IF in_date_from IS NULL THEN
+IF in_from_date IS NULL THEN
    t_balance := 0;
 ELSIF in_accno IS NOT NULL THEN
    SELECT id INTO t_chart_id FROM account WHERE accno  = in_accno;
-   t_balance := account__obtain_balance(in_date_from, t_accno);
+   t_balance := account__obtain_balance(in_from_date , t_accno);
 ELSE
    t_balance := null;
 END IF;
@@ -243,13 +243,13 @@ FOR retval IN
                   to_tsvector(get_default_lang()::name, g.description)
                   @@
                   plainto_tsquery(get_default_lang()::name, in_description))
-              AND (transdate BETWEEN in_date_from AND in_date_to
-                   OR (transdate >= in_date_from AND in_date_to IS NULL)
-                   OR (transdate <= in_date_to AND in_date_from IS NULL)
-                   OR (in_date_to IS NULL AND in_date_from IS NULL))
+              AND (transdate BETWEEN in_from_date AND in_to_date
+                   OR (transdate >= in_from_date AND  in_to_date IS NULL)
+                   OR (transdate <= in_to_date AND in_from_date IS NULL)
+                   OR (in_to_date IS NULL AND in_from_date IS NULL))
               AND (in_approved is false OR (g.approved AND ac.approved))
-              AND (in_amount_from IS NULL OR ac.amount >= in_amount_from)
-              AND (in_amount_to IS NULL OR ac.amount <= in_amount_to)
+              AND (in_from_amount IS NULL OR ac.amount >= in_from_amount)
+              AND (in_to_amount IS NULL OR ac.amount <= in_to_amount)
               AND (in_category = c.category OR in_category IS NULL)
      GROUP BY g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
               ac.source, ac.amount, c.accno, c.gifi_accno,
