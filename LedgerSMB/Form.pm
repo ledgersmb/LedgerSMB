@@ -2283,9 +2283,9 @@ sub create_links {
     my $key;
 
     # now get the account numbers
-    $query = qq|SELECT accno, description, link
-				  FROM chart
-                  JOIN account USING id AND NOT obsolete
+    $query = qq|SELECT a.accno, a.description, a.link
+				  FROM chart a
+                  JOIN account ON a.id = account.id AND NOT account.obsolete
 				 WHERE link LIKE ?
 			  ORDER BY accno|;
 
