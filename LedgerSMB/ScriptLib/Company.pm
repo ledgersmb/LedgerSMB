@@ -71,126 +71,6 @@ sub get_by_cc {
     _render_main_screen($request);
 }
 
-=item dispatch_legacy
-
-This is a semi-private method which interfaces with the old code.  Note that
-as long as any other functions use this, the contact interface cannot be said to 
-be safe for code caching.
-
-Not fully documented because this will go away as soon as possible.
-
-=cut
-
-sub dispatch_legacy {
-    our ($request) = shift @_;
-    use LedgerSMB::Form;
-    my $aa;
-    my $inv;
-    my $otype;
-    my $qtype;
-    my $cv;
-    if ($request->{account_class} == 1){
-       $aa = 'ap';
-       $inv = 'ir';
-       $otypr = 'purchase_order';
-       $qtype = 'request_quotation';
-       $cv = 'vendor';
-    } elsif ($request->{account_class} == 2){
-       $aa = 'ar';
-       $inv = 'is';
-       $otypr = 'sales_order';
-       $qtype = 'sales_quotation';
-       $cv = 'customer';
-    } else {
-       $request->error($request->{_locale}->text('Unsupport account type'));
-    }
-    our $dispatch = 
-    {
-        add_transaction  => {script => "bin/$aa.pl", 
-                               data => {"${cv}_id" => $request->{credit_id}},
-                            },
-        add_invoice      => {script => "bin/$inv.pl",
-                               data => {"${cv}_id" => $request->{credit_id}},
-                            },
-        add_order        => {script => 'bin/oe.pl', 
-                               data => {"${cv}_id" => $request->{credit_id},
-                                            type   => $otype,
-                                               vc  => $cv,
-                                       },
-                            },
-        rfq              => {script => 'bin/oe.pl', 
-                               data => {"${cv}_id" => $request->{credit_id},
-                                            type   => $qtype,
-                                               vc  => $cv,
-                                       },
-                            },
- 
-    };
-
-    our $form = new Form;
-    our %myconfig = ();
-    %myconfig = %{$request->{_user}};
-    $form->{stylesheet} = $myconfig{stylesheet};
-    our $locale = $request->{_locale};
-
-    for (keys %{$dispatch->{$request->{action}}->{data}}){
-        $form->{$_} = $dispatch->{$request->{action}}->{data}->{$_};
-    }
-
-    my $script = $dispatch->{$request->{action}}{script};
-    $form->{script} = $script;
-    $form->{action} = 'add';
-    $form->{dbh} = $request->{dbh};
-    $form->{script} =~ s|.*/||;
-    { no strict; no warnings 'redefine'; do $script; }
-
-    $form->{action}();
-}
-
-=item add_transaction
-
-Dispatches to the Add (AR or AP as appropriate) transaction screen.
-
-=cut
-
-sub add_transaction {
-    my $request = shift @_;
-    dispatch_legacy($request);
-}
-
-=item add_invoice
-
-Dispatches to the (sales or vendor, as appropriate) invoice screen.
-
-=cut
-
-sub add_invoice {
-    my $request = shift @_;
-    dispatch_legacy($request);
-}
-
-=item add_order
-
-Dispatches to the sales/purchase order screen.
-
-=cut
-
-sub add_order {
-    my $request = shift @_;
-    dispatch_legacy($request);
-}
-
-=item rfq
-
-Dispatches to the quotation/rfq screen
-
-=cut
-
-sub rfq {
-    my $request = shift @_;
-    dispatch_legacy($request);
-}
-
 
 =item new_company($request) 
 
@@ -311,137 +191,6 @@ sub generate_control_code {
 =pod
 
 =over
-
-=item add
-
-This method creates a blank screen for entering a company's information.
-
-=back
-
-=cut 
-
-sub add {
-    my ($request) = @_;
-    _render_main_screen($request);
-}
-
-
-
-=pod
-
-=over
-
-=item get_results($self, $request, $user)
-
-Requires form var: search_pattern
-
-Directly calls the database function search, and returns a set of all vendors
-found that match the search parameters. Search parameters search over address 
-as well as vendor/Company name.
-
-=back
-
-=cut
-
-sub get_results {
-    my ($request) = @_;
-        
-    my $company = new_company($request);
-    set_entity_class($company);
-    $company->{contact_info} = 
-             qq|{"%$request->{email}%","%$request->{phone}%"}|;
-    my $results = $company->search();
-    if ($company->{order_by}){
-       # TODO:  Set ordering logic
-    };
-
-    # URL Setup
-    my $baseurl = "$request->{script}";
-    my $search_url = "$base_url?action=get_results";
-    my $get_url = "$base_url?action=get&account_class=$request->{account_class}";
-    for (keys %$vendor){
-        next if $_ eq 'order_by';
-        $search_url .= "&$_=$form->{$_}";
-    }
-
-    my $meta_number_name;
-    if($company->{account_class}==1){$meta_number_name='Vendor Number';}
-    elsif($company->{account_class}==2){$meta_number_name='Customer Number';}
-    else{$meta_number_name='Unknown';}
-    # Column definitions for dynatable
-    @columns = qw(legal_name entity_control_code meta_number credit_description business_type curr);
-		
-	my $column_names = {
-	    legal_name => 'Name',
-	    entity_control_code => 'Control Code',
-	    meta_number => $meta_number_name,
-	    credit_description => 'Description',
-	    business_type => 'Business Type',
-	    curr => 'Currency'
-    };
-	my @sort_columns = @columns;
-	my $sort_href = "$search_url&order_by";
-
-    my @rows;
-    for $ref (@{$company->{search_results}}){
-    if(!$ref->{meta_number}){$ref->{meta_number}='';}
-    my $http_href="$get_url&entity_id=$ref->{entity_id}"."&meta_number=$ref->{meta_number}";
-	push @rows, 
-                {legal_name   => {text=>$ref->{legal_name},href=>$http_href},
-		entity_control_code => $ref->{entity_control_code},
-		credit_description => $ref->{credit_description},
-                meta_number   => {text=>$ref->{meta_number}},
-		business_type => $ref->{business_type},
-                curr          => $ref->{curr},
-                };
-    }
-    #my $label = $ec_labels->{"$company->{account_class}"};
-    my $label_text="Add ".$ec_labels->{"$company->{account_class}"};
-# CT:  Labels for i18n:
-# text->{'Add Customer')
-# text->('Add Vendor')
-
-# CT:  The CSV Report is broken.  I get:
-# Not an ARRAY reference at 
-# /usr/lib/perl5/site_perl/5.8.8/CGI/Simple.pm line 423
-# Disabling the button for now.
-    my @buttons = (
-#	{name => 'action',
-#        value => 'csv_company_list',
-#        text => $company->{_locale}->text('CSV Report'),
-#        type => 'submit',
-#        class => 'submit',
-#        },
-	{name => 'action',
-        value => 'add',
-        text => $company->{_locale}->text($label_text),
-        type => 'submit',
-        class => 'submit',
-	}
-    );
-
-    my $template = LedgerSMB::Template->new( 
-		user => $user,
-		path => 'UI' ,
-    		template => 'form-dynatable', 
-		locale => $company->{_locale}, 
-		format => ($request->{FORMAT}) ? $request->{FORMAT}  : 'HTML',
-    );
-            
-    my $column_heading = $template->column_heading($column_names,
-        {href => $sort_href, columns => \@sort_columns}
-    );
-            
-    $logger->debug("\$company = " . Data::Dumper::Dumper($company));
-    $template->render({
-	form    => $company,
-	columns => \@columns,
-#        hiddens => $company,
-	buttons => \@buttons,
-	heading => $column_heading,
-	rows    => \@rows,
-    });
-}
 
 =pod
 
@@ -767,14 +516,12 @@ sub _render_main_screen{
     @{$company->{contacts}} = 
           LedgerSMB::DBObject::Entity::Contact->list(
               {entity_id => $company->{entity_id},
-                        credit_id => $company->{credit_act}->{id}},
-              $request
+                        credit_id => $company->{credit_act}->{id}}
           );
     @{$company->{contact_class_list}} = 
           LedgerSMB::DBObject::Entity::Contact->list_classes;
     @{$company->{locations}} = 
           LedgerSMB::DBObject::Entity::Location->get_active(
-                       $request,
                        {entity_id => $company->{entity_id},
                         credit_id => $company->{credit_act}->{id}}
           );
@@ -786,7 +533,7 @@ sub _render_main_screen{
                                                  $company->{credit_act}->{id});
     $company->{creditlimit} = $request->format_amount({amount => $company->{creditlimit}}) unless !defined $company->{creditlimit}; 
     $company->{discount} = "$company->{discount}" unless !defined $company->{discount}; 
-    $company->{note_class_options} = [
+    $company->{attach_level_options} = [
         {label => 'Entity', value => 1},
         {label => $ec_labels->{"$company->{entity_class}"} . ' Account', 
          value => 3},

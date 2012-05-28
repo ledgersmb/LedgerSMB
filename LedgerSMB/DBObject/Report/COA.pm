@@ -180,10 +180,18 @@ sub run_report{
     my ($self) = @_;
     my @rows = $self->exec_method({funcname => 'report__coa'});
     for my $r(@rows){
+        my $ct; 
+        if ($r->{is_heading}){
+           $ct = 'H';
+        } else {
+           $ct = 'A';
+        }
         $r->{edit} = '['.$locale->text('Edit').']';
         $r->{delete} = '['.$locale->text('Delete').']' if $r->{rowcount};
-        $r->{edit_href_suffix} = 'account.pl?action=edit&id='.$r->{id};
-        $r->{delete_href_suffix} = 'account.pl?action=delete&id='.$r->{id};
+        $r->{edit_href_suffix} = 'account.pl?action=edit&id='.$r->{id} . 
+           "&charttype=$ct";
+        $r->{delete_href_suffix} = 'account.pl?action=delete&id='.$r->{id} .
+           "&charttype=$ct";
         $r->{accno_href_suffix} = 
                 'reports.pl?action=start_report&module_name=gl&report_name=gl' .
                 "&accno=$r->{accno}--$r->{description}" 

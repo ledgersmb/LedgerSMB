@@ -1085,7 +1085,7 @@ CREATE TYPE entity_note_list AS (
 	note text
 );
 
-CREATE OR REPLACE FUNCTION company__list_notes(in_entity_id int) 
+CREATE OR REPLACE FUNCTION entity__list_notes(in_entity_id int) 
 RETURNS SETOF entity_note AS 
 $$
 DECLARE out_row record;
@@ -1101,7 +1101,7 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-COMMENT ON FUNCTION company__list_notes(in_entity_id int) IS
+COMMENT ON FUNCTION entity__list_notes(in_entity_id int) IS
 $$ Returns a set of notes (including content) attached to the entity.$$;
 		
 CREATE OR REPLACE FUNCTION eca__list_notes(in_credit_id int) 

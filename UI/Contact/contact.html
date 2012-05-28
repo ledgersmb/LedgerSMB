@@ -12,34 +12,9 @@
 PROCESS "dynatable.html"  ?>
 <?lsmb IF !country_id; country_id = default_country; END -?>
 <?lsmb IF !country_id_t; country_id_t = default_country; END -?>
-<?lsmb 
-# Adding the action requirement to the conditional because otherwise it still
-# breaks.  --CT
-IF (!(action == 'edit' and target_div)); ?>
-<?lsmb IF (!entity_id and account_class != 3); 
-	target_div = 'company_div';
-ELSIF ((!entity_id or action == 'save') and entity_class == 3);
-		target_div = 'hr_div';
-ELSIF action == 'save_credit' or action == 'get' or action == 'edit'
-			or action=='save'; 
-		target_div = 'credit_div';
-ELSIF action== 'save_location' or action == 'get_location' 
-			or action == 'delete_location';
-		target_div = 'location_div';
-ELSIF action== 'save_location' or action == 'get_location' 
-			or action == 'delete_location';
-		target_div = 'location_div';
-ELSIF action== 'save_contact' or action == 'get_contact' 
-			or action == 'delete_contact';
-		target_div = 'contact_div';
-ELSIF action== 'save_bank_account' or action == 'get_bank_acct' 
-			or action == 'delete_bank_acct';
-		target_div = 'bank_div';
-ELSIF action== 'save_notes';
-		target_div = 'notes_div';
-END ?>
-<?lsmb END ?>
-<body onload="init('<?lsmb target_div ?>')">
+<?lsmb  # Target_div handling now moved to controller script -- CT -?>
+
+<body onload="init('<?lsmb request.target_div ?>')">
     <?lsmb IF name ?> 
 <div class="pageheading"><?lsmb text('Company') ?>: <?lsmb name ?></div>
     <?lsmb END ?>
@@ -62,57 +37,16 @@ END ?>
 <?lsmb text("Add Employee") ?>
 <?lsmb text("Edit Employee") ?>
 -->
-<?lsmb # TODO:  Move to controller scripts.
-       nav_list = [];
-       DIVS = [];
-       IF entity_class == 3;
-          DIVS.push({id = 'hr_div', 
-                  label = text('HR'),
-               template = 'employee'}
-         );
-       ELSE;
-          DIVS.push({id = 'company_div', 
-                  label = text('Company'), 
-               template = 'company'},
-                    {id = 'credit_div', 
-                  label = text('Credit Accts'),
-               template = 'credit'}); #'
-          div_list = ['company', 'credit'];
-       END; 
-       IF entity_id;
-           DIVS.push(
-                 {id = 'location_div', 
-               label = text('Addresses'),
-            template = 'address'},
-                 {id = 'contact_div', 
-               label = text('Contact Info')
-            template = 'contact_info'}, #'
-                 {id = 'bank_div', 
-               label = text('Bank Accounts')
-            template = 'bank_act'}, #'
-                 {id = 'notes_div', 
-               label = text('Notes'),
-            template = 'notes'}
-           );
-           IF account_class == 1 or account_class == 2;
-            #DIVS.push({id = 'tasks_div', label = text('Tasks')});
-            #DIVS.push({id = 'prices_div', label = text('Pricelist')});
-            #DIVS.push({id = 'history_div', label = text('History')});
-           ELSIF account_class == 3;
-            #DIVS.push({id = 'user_div', label = text('User')});
-           END;
-      END; ?>
 <ul class="navigation">
         <?lsmb FOREACH nav IN DIVS ?>
-        <li class="nav"><a href="#<?lsmb nav.id ?>"><?lsmb nav.label ?></a></li>
+         <li class="nav"><a href="#<?lsmb nav ?>_div"><?lsmb DIV_LABEL.$nav 
+          ?></a></li>
         <?lsmb  END ?>
 </ul>
 
   <?lsmb FOREACH ITEM IN DIVS; 
-      INCLUDEDIV = "divs/" _ ITEM.template _ ".html";
-      IF ITEM.template;
-          PROCESS $INCLUDEDIV;
-      END;
+      INCLUDEDIV = "divs/" _ ITEM _ ".html";
+      INCLUDE $INCLUDEDIV;
   END 
 ?>
 </body>

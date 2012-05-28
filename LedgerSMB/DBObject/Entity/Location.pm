@@ -193,14 +193,14 @@ class (useful for retrieving billing info only).
 =cut
 
 sub get_active {
-    my ($self, $request, $args) = @_;
+    my ($self, $args) = @_;
     my @results;
     for my $ref ($self->call_procedure(procname => 'entity__list_locations',
                                            args => [$args->{entity_id}]))
     {
        next if ($args->{only_class}) 
                and ($args->{only_class} != $ref->{location_class});
-        LedgerSMB::DBObject_Moose::prepare_dbhash($request, $ref);
+        $self->prepare_dbhash($ref);
         push @results, $self->new(%$ref);
     }
     return @results unless $args->{credit_id};
@@ -211,7 +211,7 @@ sub get_active {
        next if ($args->{only_class}) 
                and ($args->{only_class} != $ref->{location_class});
         $ref->{credit_id} = $args->{credit_id};
-        LedgerSMB::DBObject_Moose::prepare_dbhash($request, $ref);
+        $self->prepare_dbhash($ref);
         push @results, $self->new(%$ref);
     }
 
