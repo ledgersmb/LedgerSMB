@@ -21,6 +21,7 @@ use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Business_Unit;
 use LedgerSMB::DBObject::Report::GL;
+use LedgerSMB::DBObject::Report::COA;
 use strict;
 
 =pod
@@ -56,6 +57,27 @@ sub __default {
     
     $request->{results} = \%results_hash;
     $template->render($request);
+}
+
+=item chart_of_accounts
+
+Returns and displays the chart of accounts
+
+=cut
+
+sub chart_of_accounts {
+    my ($request) = @_;
+    for my $col(qw(accno description gifi_accno debit_balance credit_balance)){
+        $request->{"col_$col"} = '1'; 
+    }
+    if ($request->is_allowed_role({allowed_roles => ['account_edit']})){
+       for my $col(qw(link edit delete)){
+           $request->{"col_$col"} = '1'; 
+       }
+    }
+    my $report = LedgerSMB::DBObject::Report::COA->new(%$request);
+    $report->run_report();
+    $report->render($request);
 }
 
 =item search

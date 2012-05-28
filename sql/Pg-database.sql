@@ -76,7 +76,8 @@ CREATE TABLE account (
   gifi_accno text,
   heading int not null references account_heading(id),
   contra bool not null default false,
-  tax bool not null default false
+  tax bool not null default false,
+  obsolete bool not null default false
 );
 
 COMMENT ON TABLE  account IS

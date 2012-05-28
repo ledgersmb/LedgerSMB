@@ -25,7 +25,7 @@ END; ?>
    PFX = attributes.input_prefix;
    FOREACH ROW IN tbody.rows;
    ROWCOUNT = ROWCOUNT + 1 -?>
-   <tr class="<?lsmb ROW.html_class ?>">
+   <tr class="<?lsmb ROW.html_class _ ' ' _ ROW.row_id ?>">
       <input type="hidden" name="row_<?lsmb ROWCOUNT ?>" 
              value="<?lsmb ROW.row_id ?>" />
       <?lsmb- FOREACH COL IN columns;

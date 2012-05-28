@@ -75,9 +75,9 @@ sub preprocess {
             push @{$vars}, preprocess( $_ );
         }
     } elsif (!$type) {
-        return escapeHTML($rawvars);
+        return escape($rawvars);
     } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
-        return escapeHTML($$rawvars);
+        return escape($$rawvars);
     } elsif ($type eq 'CODE'){
         return $rawvars;
     } elsif ($type eq 'IO::File'){

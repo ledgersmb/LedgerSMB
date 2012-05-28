@@ -1,5 +1,4 @@
--- VERSION 1.3.0
-
+BEGIN;
 CREATE OR REPLACE FUNCTION account__get_from_accno(in_accno text)
 returns account as
 $$
@@ -74,7 +73,7 @@ If not, returns false.$$;
 CREATE OR REPLACE FUNCTION account_save 
 (in_id int, in_accno text, in_description text, in_category char(1), 
 in_gifi_accno text, in_heading int, in_contra bool, in_tax bool,
-in_link text[])
+in_link text[], is_obsolete bool)
 RETURNS int AS $$
 DECLARE 
 	t_heading_id int;
@@ -116,12 +115,15 @@ BEGIN
 		gifi_accno = in_gifi_accno,
 		heading = t_heading_id,
 		contra = in_contra,
+                obsolete = is_obsolete,
                 tax = t_tax
 	WHERE id = in_id;
 
 	IF FOUND THEN
 		t_id := in_id;
 	ELSE
+                -- can't obsolete on insert, but this can be changed if users
+                -- request it --CT
 		INSERT INTO account (accno, description, category, gifi_accno,
 			heading, contra, tax)
 		VALUES (in_accno, in_description, in_category, in_gifi_accno,
@@ -157,6 +159,20 @@ closest to but prior (by collation order) is used.
 
 Then it saves the account information, and rebuilds the account_link records 
 based on the in_link array.
+$$;
+
+CREATE OR REPLACE FUNCTION account__delete(in_id int)
+RETURNS BOOL AS
+$$
+BEGIN
+DELETE FROM account WHERE id = in_id;
+RETURN FOUND;
+END;
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION account__delete(int) IS
+$$ This deletes an account with the id specified.  If the account has 
+transactions associated with it, it will fail and raise a foreign key constraint.
 $$;
 
 CREATE OR REPLACE FUNCTION account_heading_list()
@@ -289,6 +305,57 @@ END;
 $$ language plpgsql;
 
 COMMENT ON FUNCTION account__save_tax
-(in_chart_id int, in_validto date, in_rate numeric, in_minval numeric, 
-in_taxnumber text, in_pass int, in_taxmodule_id int, in_old_validto date) IS
+(in_chart_id int, in_validto date, in_rate numeric, in_minvalue numeric, 
+in_maxvalue numeric, in_taxnumber text, 
+in_pass int, in_taxmodule_id int, in_old_validto date) IS
 $$ This saves tax rates.$$; 
+
+DROP TYPE IF EXISTS coa_entry CASCADE;
+
+CREATE TYPE coa_entry AS (
+    id int,
+    is_heading bool,
+    accno text,
+    description text,
+    gifi text,
+    debit_balance numeric,
+    credit_balance numeric,
+    rowcount bigint,
+    link text
+);
+
+CREATE OR REPLACE FUNCTION report__coa() RETURNS SETOF coa_entry AS
+$$
+
+WITH ac (chart_id, amount) AS (
+     SELECT chart_id, amount
+       FROM acc_trans
+       JOIN (select id, approved from ar union all
+             select id, approved from ap union all
+             select id, approved from gl) gl ON gl.id = acc_trans.trans_id
+      WHERE acc_trans.approved and gl.approved
+),
+l(account_id, link) AS (
+     SELECT account_id, array_to_string(array_agg(description), ':')
+       FROM account_link
+   GROUP BY account_id
+)
+SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno, 
+       CASE WHEN sum(ac.amount) < 0 THEN sum(amount) * -1 ELSE null::numeric
+        END,
+       CASE WHEN sum(ac.amount) > 0 THEN sum(amount) ELSE null::numeric END,
+       count(ac.*), l.link
+  FROM (SELECT id,false as is_heading, accno, description, gifi_accno
+          FROM account
+         UNION
+        SELECT id, true, accno, description, null::text 
+          FROM account_heading) a
+
+ LEFT JOIN ac ON ac.chart_id = a.id AND not a.is_heading
+ LEFT JOIN l ON l.account_id = a.id AND NOT a.is_heading
+  GROUP BY a.id, a.is_heading, a.accno, a.description, a.gifi_accno, l.link
+  ORDER BY a.accno;
+
+$$ LANGUAGE SQL;
+
+COMMIT;
