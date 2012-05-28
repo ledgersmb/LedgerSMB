@@ -692,10 +692,11 @@ CREATE OR REPLACE FUNCTION company__save (
     in_legal_name text, in_tax_id TEXT,
     in_entity_id int, in_sic_code text,in_country_id int,
     in_sales_tax_id text, in_license_number text
-) RETURNS INT AS $$
+) RETURNS company AS $$
 DECLARE t_entity_id INT;
 	t_company_id INT;
 	t_control_code TEXT;
+        t_retval COMPANY;
 BEGIN
 	t_company_id := in_id;
 
@@ -735,7 +736,8 @@ BEGIN
                         in_sales_tax_id, in_license_number);
 
 	END IF;
-	RETURN t_entity_id;
+        SELECT * INTO t_retval FROM company WHERE entity_id = t_entity_id;
+        RETURN t_retval;	
 END;
 $$ LANGUAGE PLPGSQL;
 

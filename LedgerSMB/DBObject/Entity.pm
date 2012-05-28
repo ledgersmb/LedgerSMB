@@ -45,7 +45,7 @@ an entity,
 
 =cut
 
-has 'control_code' => (is => 'rw', isa => 'Maybe[Str]', required => 1, default => 'DEFAULT');
+has 'control_code' => (is => 'rw', isa => 'Str', required => 1);
 
 =item name
 
@@ -63,7 +63,7 @@ ID of country of entiy.
 
 =cut
 
-has 'country_id' => (is => 'rw', isa => 'Int', required => '1', default => '0');
+has 'country_id' => (is => 'rw', isa => 'Int', required => '1');
 
 =item country_name
 
@@ -71,7 +71,7 @@ Name of country (optional)
 
 =cut
 
-has 'country_name' => (is => 'rw', isa => 'Maybe[Str]', required => '0');
+has 'country_name' => (is => 'rw', isa => 'Maybe[Str]');
 
 =item entity_class
 
@@ -83,7 +83,7 @@ table in database for list of valid values, but 1 is for vendors, 2 for customer
 
 =cut
 
-has 'entity_class' => (is => 'rw', isa => 'Int', required => '1', default => 0);
+has 'entity_class' => (is => 'rw', isa => 'Int');
 
 =head1 METHODS
 
@@ -129,5 +129,7 @@ conditions of the GNU GPL v2 or at your option any later version.  Please see th
 accompanying LICENSE.TXT for more information.
 
 =cut
+
+__PACKAGE__->meta->make_immutable;
 
 return 1;

@@ -133,6 +133,9 @@ sub save {
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'company__save'});
     $self->prepare_dbhash($ref);
+    $ref->{control_code} = $self->{control_code};
+    $ref->{entity_class} = $self->{entity_class};
+    $ref->{country_id} = $self->{country_id};
     $self = $self->new(%$ref);
 }
 

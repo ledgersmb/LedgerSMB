@@ -147,20 +147,45 @@ sub _main_screen {
 
     #use Data::Dumper;
     #$Data::Dumper::Sortkeys = 1;
+    @country_list = $request->call_procedure(
+                     procname => 'location_list_country'
+      );
+    @entity_classes = $request->call_procedure(
+                      procname => 'entity__list_classes'
+    );
 
     $template->render({
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,
                   request => $request,
                   company => $company,
+             country_list => \@country_list,
                credit_act => $credit_act,
               credit_list => \@credit_list,
+           entity_classes => \@entity_classes,
                 locations => \@locations,
                  contacts => \@contacts,
              bank_account => \@bank_account,
                     notes => \@notes,
      attach_level_options => $attach_level_options
     });
+}
+
+=item generate_control_code 
+
+Generates a control code and hands off execution to other routines
+
+=cut
+
+sub generate_control_code {
+    my ($request) = @_;
+    my ($ref) = $request->call_procedure(
+                             procname => 'setting_increment', 
+                             args     => ['entity_control']
+                           );
+    ($request->{control_code}) = values %$ref;
+    $request->{dbh}->commit;
+    _main_screen($request, $request);
 }
 
 =item dispatch_legacy
@@ -293,7 +318,22 @@ This method creates a blank screen for entering a company's information.
 
 sub add {
     my ($request) = @_;
-    _main_screen($request);
+    _main_screen($request, $request);
+}
+
+=item save_company
+
+Saves a company and moves on to the next screen
+
+=cut
+
+sub save_company {
+    my ($request) = @_;
+    my $company = LedgerSMB::DBObject::Entity::Company->new(%$request);
+    use Data::Dumper;
+    $Data::Dumper::Sortkeys => 1;
+    $company = $company->save;
+    _main_screen($request, $company);
 }
 
 1;

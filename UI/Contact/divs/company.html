@@ -46,10 +46,10 @@
 <div class="input_group2">
         <?lsmb company_entity_class = company.entity_class;
         IF !company_entity_class;
-              company_entity_class = entity_class;
+              company_entity_class = request.entity_class;
         END;
         PROCESS select element_data = {
-		name = "created_as_class"
+		name = "entity_class"
 		options = entity_classes
 		default_values = [company_entity_class]
 		text_attr = 'class'
@@ -149,7 +149,7 @@
 			class="submit" 
 			type="submit" 
 			name="action" 
-			value="save" 
+			value="save_company" 
 			accesskey="S" 
 			title="Save [Alt-S]"
 		} ?>
