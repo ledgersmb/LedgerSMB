@@ -23,6 +23,8 @@ use LedgerSMB::DBObject::Entity::Contact;
 use LedgerSMB::DBObject::Entity::Bank;
 use LedgerSMB::DBObject::Entity::Note;
 use LedgerSMB::App_State;
+use strict;
+use warnings;
 
 my $locale = $LedgerSMB::App_State::Locale;
 
@@ -70,8 +72,7 @@ sub get {
     my ($request) = @_;
     $request->{entity_class} ||= $request->{account_class};
     $request->{legal_name} ||= 'test';
-    my $company = LedgerSMB::DBObject::Entity::Company->new(%$request);
-    $company = $company->get($request->{entity_id});
+    my $company = LedgerSMB::DBObject::Entity::Company->get($request->{entity_id});
     _main_screen($request, $company);
 }
 
@@ -82,6 +83,7 @@ sub get {
 
 sub _main_screen {
     my ($request, $company) = @_;
+
     # DIVS logic
     my @DIVS;
     if ($company->{entity_id}){
@@ -90,7 +92,7 @@ sub _main_screen {
        @DIVS = qw(company);
     }
 
-    %DIV_LABEL = (
+    my %DIV_LABEL = (
              company => $locale->text('Company'),
               credit => $locale->text('Credit Accounts'),
              address => $locale->text('Addresses'),
@@ -112,6 +114,10 @@ sub _main_screen {
                 or ($request->{meta_number} eq $ref->{meta_number});
     }
 
+    my $entity_class = $credit_act->{entity_class};
+    $entity_class ||= $company->{entity_class};
+    $entity_class ||= $request->{entity_class};
+    $entity_class ||= $request->{account_class};
     my @locations = LedgerSMB::DBObject::Entity::Location->get_active(
                        {entity_id => $request->{entity_id},
                         credit_id => $credit_act->{id}}
@@ -129,12 +135,67 @@ sub _main_screen {
     my @notes =
          LedgerSMB::DBObject::Entity::Note->list($request->{entity_id},
                                                  $credit_act->{id});
-    $attach_level_options = [
+
+    # Globals for the template
+    my @all_taxes = $request->call_procedure(procname => 'account__get_taxes');
+
+    my @ar_ap_acc_list = $request->call_procedure(procname => 'chart_get_ar_ap',
+                                           args => [$entity_class]);
+
+    my @cash_acc_list = $request->call_procedure(procname => 'chart_list_cash',
+                                           args => [$entity_class]);
+
+    my @discount_acc_list =
+         $request->call_procedure(procname => 'chart_list_discount',
+                                     args => [$entity_class]);
+
+    for my $var (\@ar_ap_acc_list, \@cash_acc_list, \@discount_acc_list){
+        for my $ref (@$var){
+            $ref->{text} = "$ref->{accno}--$ref->{description}";
+        }
+    }
+
+#
+    my @language_code_list = 
+             $request->call_procedure(procname=> 'person__list_languages');
+
+    for my $ref (@language_code_list){
+        $ref->{text} = "$ref->{code}--$ref->{description}";
+    }
+    
+    my @location_class_list = 
+            $request->call_procedure(procname => 'location_list_class');
+
+    my @business_types =
+               $request->call_procedure(procname => 'business_type__list');
+
+    my ($curr_list) =
+          $request->call_procedure(procname => 'setting__get_currencies');
+
+    my @all_currencies;
+    for my $curr (@{$curr_list->{'setting__get_currencies'}}){
+        push @all_currencies, { text => $curr};
+    }
+
+    my ($default_country) = $request->call_procedure(
+              procname => 'setting_get',
+                  args => ['default_country']);
+    $default_country = $default_country->{value};
+
+    my ($default_language) = $request->call_procedure(
+              procname => 'setting_get',
+                  args => ['default_language']);
+    $default_language = $default_language->{value};
+
+    my $attach_level_options = [
         {label => $locale->text('Entity'), value => 1} ];
     push@{$attach_level_options},
         {label => $locale->text('Credit Account'),
          value => 3} if $credit_act->{id};
     ;
+
+    $request->close_form();
+    $request->open_form();
 
     # Template info and rendering 
     my $template = LedgerSMB::Template->new(
@@ -145,14 +206,16 @@ sub _main_screen {
         format => 'HTML'
     );
 
-    #use Data::Dumper;
-    #$Data::Dumper::Sortkeys = 1;
-    @country_list = $request->call_procedure(
+    use Data::Dumper;
+    $Data::Dumper::Sortkeys = 1;
+    #die '<pre>' . Dumper($request) . '</pre>';
+    my @country_list = $request->call_procedure(
                      procname => 'location_list_country'
       );
-    @entity_classes = $request->call_procedure(
+    my @entity_classes = $request->call_procedure(
                       procname => 'entity__list_classes'
     );
+    my $entity_id = $company->{entity_id};
 
     $template->render({
                      DIVS => \@DIVS,
@@ -167,7 +230,16 @@ sub _main_screen {
                  contacts => \@contacts,
              bank_account => \@bank_account,
                     notes => \@notes,
-     attach_level_options => $attach_level_options
+          # globals
+                  form_id => $request->{form_id},
+           ar_ap_acc_list => \@ar_ap_acc_list,
+            cash_acc_list => \@cash_acc_list,
+        discount_acc_list => \@discount_acc_list,
+       language_code_list => \@language_code_list,
+           all_currencies => \@all_currencies,
+     attach_level_options => $attach_level_options, 
+                entity_id => $entity_id,
+             entity_class => $entity_class,
     });
 }
 
@@ -201,25 +273,28 @@ Not fully documented because this will go away as soon as possible.
 sub dispatch_legacy {
     our ($request) = shift @_;
     use LedgerSMB::Form;
+    no strict;
+    use Data::Dumper;
     my $aa;
     my $inv;
     my $otype;
     my $qtype;
     my $cv;
+    $request->{account_class} ||= $request->{entity_class};
     if ($request->{account_class} == 1){
        $aa = 'ap';
        $inv = 'ir';
-       $otypr = 'purchase_order';
+       $otype = 'purchase_order';
        $qtype = 'request_quotation';
        $cv = 'vendor';
     } elsif ($request->{account_class} == 2){
        $aa = 'ar';
        $inv = 'is';
-       $otypr = 'sales_order';
+       $otype = 'sales_order';
        $qtype = 'sales_quotation';
        $cv = 'customer';
     } else {
-       $request->error($request->{_locale}->text('Unsupport account type'));
+       $request->error($request->{_locale}->text('Unsupported account type'));
     }
     our $dispatch = 
     {
@@ -334,6 +409,53 @@ sub save_company {
     $Data::Dumper::Sortkeys => 1;
     $company = $company->save;
     _main_screen($request, $company);
+}
+
+=item save_credit($request)
+
+This inserts or updates a credit account of the sort listed here.
+
+=cut
+
+sub save_credit {
+    
+    my ($request) = @_;
+    my $company;
+    my @taxes;
+
+    if (!$request->{ar_ap_account_id}){
+          $request->error(
+              $request->{_locale}->text('No AR or AP Account Selected')
+          );
+    }
+
+    $request->{tax_ids} = [];
+    for my $key(keys %$request){
+        if ($key =~ /^taxact_(\d+)$/){
+           my $tax = $1;
+           push @{$request->{tax_ids}}, $tax;
+        }  
+    }
+    if ($request->close_form){
+        LedgerSMB::DBObject::Entity::Credit_Account->prepare_input($request);
+        my $credit = LedgerSMB::DBObject::Entity::Credit_Account->new(%$request);
+        $credit = $credit->save();
+        $request->{meta_number} = $credit->{meta_number};
+    }
+    get($request);
+}
+
+=item save_credit_new($request)
+
+This inserts a new credit account.
+
+=cut
+
+
+sub save_credit_new {
+    my ($request) = @_;
+    $request->{credit_id} = undef;
+    save_credit($request);
 }
 
 1;

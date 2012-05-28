@@ -398,61 +398,6 @@ sub save {
 
 =pod
 
-=over
-
-=item save_credit($request)
-
-This inserts or updates a credit account of the sort listed here.
-
-=back
-
-=cut
-
-sub save_credit {
-    
-    my ($request) = @_;
-    my $company;
-    my @taxes;
-
-    if (!$request->{ar_ap_account_id}){
-          $request->error(
-              $request->{_locale}->text('No AR or AP Account Selected')
-          );
-    }
-
-    $request->{tax_ids} = [];
-    for my $key(keys %$request){
-        if ($key =~ /^taxact_(\d+)$/){
-           my $tax = $1;
-           push @{$request->{tax_ids}}, $tax;
-        }  
-    }
-    if (_close_form($request)){
-        LedgerSMB::DBObject::Entity::Credit_Account->prepare_input($request);
-        $credit = LedgerSMB::DBObject::Entity::Credit_Account->new(%$request);
-        $credit->save();
-    }
-    get($request);
-}
-
-=pod
-
-=over
-
-=item save_credit_new($request)
-
-This inserts a new credit account.
-
-=back
-
-=cut
-
-
-sub save_credit_new {
-    my ($request) = @_;
-    $request->{credit_id} = undef;
-    save_credit($request);
-}
 
 =pod
 

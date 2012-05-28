@@ -3,10 +3,10 @@
 <?lsmb 
 
 FOREACH cl IN credit_list;
-   IF cl.entity_class == 1;
-        cl.account_class_label = text('Vendor');
-   ELSIF  cl.entity_class == 2;
-        cl.account_class_label = text('Customer');
+   IF entity_class == 1;
+        account_class_label = text('Vendor');
+   ELSIF  entity_class == 2;
+        account_class_label = text('Customer');
    END;
    cl.meta_number_href_suffix = 'account_class=' _ cl.entity_class _ 
       '&entity_id=' _ cl.entity_id _ '&meta_number=' _ cl.meta_number;
@@ -44,6 +44,9 @@ PROCESS dynatable
 	<?lsmb ec = credit_act.entity_class;
               IF !ec;
                  ec=account_class;
+                 IF !ec;
+                    ec=entity_class;
+                 END;
               END;
               PROCESS input element_data = {
 		type = "hidden"
@@ -54,7 +57,7 @@ PROCESS dynatable
 	<tr class="eca_row">
 	<td>
  	<?lsmb PROCESS input element_data = {
-		label = text("$entity_classname Number"),
+		label = text("$entity_classname Number"), #fixme for i18n
 		type= "text",
 		name = "meta_number",
 		value = credit_act.meta_number,
@@ -257,7 +260,7 @@ PROCESS dynatable
          </div>
 		<?lsmb IF credit_act.id;
 		INCLUDE button element_data = {
-			text = text('Save Changes'),
+			text = text('Save Changes'), #'
 			class="submit" 
 			type="submit" 
 			name="action" 
@@ -265,16 +268,17 @@ PROCESS dynatable
 			accesskey="C" 
 			title="Save Credit Account[Alt-C]"
 		};
-		END ?>
-		<?lsmb INCLUDE button element_data = {
-			text = text('Save New'),
+		END;
+		INCLUDE button element_data = {
+			text = text('Save New'), #'
 			class="submit" 
 			type="submit" 
 			name="action" 
 			value="save_credit_new"  
-			title="Save Credit Account as New" #'
-		} ?>
-		<?lsmb INCLUDE button element_data = {
+			title="Save Credit Account as New" 
+		};
+                IF credit_act.id;
+		    INCLUDE button element_data = {
                         class="submit" 
                         type="submit" 
                         name="action" 
@@ -282,8 +286,8 @@ PROCESS dynatable
                         accesskey="A" 
                         title="Transaction [Alt-A]"
 			text = (entity_class == 1) ? text('AP Transaction') : text('AR Transaction')
-		} ?>
-		<?lsmb INCLUDE button element_data = {
+		    }; 
+		    INCLUDE button element_data = {
                         class="submit" 
                         type="submit" 
                         name="action" 
@@ -291,8 +295,8 @@ PROCESS dynatable
                         accesskey="I" 
                         title="Invoice [Alt-I]"
 			text = (entity_class == 1) ? text('Vendor Invoice')  : text('Customer Invoice') 
-		} ?>
-		<?lsmb INCLUDE button element_data = {
+		    };
+		    INCLUDE button element_data = {
                         class="submit" 
                         type="submit" 
                         name="action" 
@@ -300,8 +304,8 @@ PROCESS dynatable
                         accesskey="O" 
                         title="Order [Alt-O]"
 			text = (entity_class == 1) ? text('Purchase Order') : text('Sales Order')
-		} ?>
-		<?lsmb INCLUDE button element_data = {
+		    };
+		    INCLUDE button element_data = {
                         class="submit" 
                         type="submit" 
                         name="action" 
@@ -309,8 +313,8 @@ PROCESS dynatable
                         accesskey="Q" 
                         title="Quotation [Alt-Q]"
 			text = (entity_class == 1) ? text('RFQ') : text('Quotation')
-		} ?>
-		<?lsmb INCLUDE button element_data = {
+		    };
+		    INCLUDE button element_data = {
                         class="submit" 
                         type="submit" 
                         name="action" 
@@ -318,7 +322,8 @@ PROCESS dynatable
                         accesskey="P" 
                         title="Pricelist [Alt-P]"
 			text = text('Pricelist') 
-		} ?>
+		    };
+                END ?>
 	
     </form>
 </div>
