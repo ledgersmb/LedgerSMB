@@ -131,6 +131,7 @@ BEGIN
                            or id in 
                           (select account_id from account_link 
                             where description = in_link_desc))
+                       AND not obsolete
               ORDER BY accno
 	LOOP
 		RETURN next out_row;

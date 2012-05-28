@@ -1,4 +1,3 @@
-
 =head1 NAME
 
 LedgerSMB::Form - Provides general legacy support functions and the central object.
@@ -2286,6 +2285,7 @@ sub create_links {
     # now get the account numbers
     $query = qq|SELECT accno, description, link
 				  FROM chart
+                  JOIN account USING id AND NOT obsolete
 				 WHERE link LIKE ?
 			  ORDER BY accno|;
 

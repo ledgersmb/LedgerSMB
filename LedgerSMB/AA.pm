@@ -1433,7 +1433,7 @@ sub get_name {
 		SELECT c.accno
 		  FROM account c
 		  JOIN eca_tax ct ON (ct.chart_id = c.id)
-		 WHERE ct.eca_id = ?|;
+		 WHERE ct.eca_id = ? AND NOT obsolete |;
 
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{"$form->{vc}_id"} ) || $form->dberror($query);

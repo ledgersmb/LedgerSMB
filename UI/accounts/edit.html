@@ -35,6 +35,24 @@ INCLUDE 'ui-header.html'
     } ?>
   </div>
 </div>
+<?lsmb IF form.id ?>
+<div  class="inputline" id="obsolete-line">
+<label class="line" for='obsolete'><?lsmb text('Obsolete') ?></label>
+<?lsmb
+        IF form.obsolete; 
+           obsolete = 'CHECKED';
+        END; 
+        INCLUDE input element_data={
+               name = 'obsolete'
+               type = 'checkbox',
+            checked = obsolete
+              value = '1'
+        } ?>
+   </div>
+   
+</div>
+<?lsmb END #  IF ID ?>
+<div class="inputline" id="obsolete_line">
 <div class="inputline" id="desc-line">
    <label class="line"><?lsmb text('Description') ?></label>
    <div class="inputgroup">
