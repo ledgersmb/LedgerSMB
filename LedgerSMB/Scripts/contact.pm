@@ -558,4 +558,37 @@ sub delete_contact {
     get($request);
 }
 
+=item delete_bank_acct
+
+Deletes the selected bank account record
+
+Required request variables:
+* bank_account_id
+* entity_id
+* form_id
+
+=cut
+
+sub delete_bank_account{
+    my ($request) = @_;
+    my $account = LedgerSMB::DBObject::Entity::Bank->new(%$request);
+    $account->delete;
+    $request->{target_div} = 'bank_act_div';
+    get($request);
+}
+
+=sub save_bank_account 
+
+Adds a bank account to a company and, if defined, an entity credit account.
+
+=cut
+
+sub save_bank_account {
+    my ($request) = @_;
+    my $bank = LedgerSMB::DBObject::Entity::Bank->new(%$request);
+    $bank->save;
+    $request->{target_div} = 'bank_act_div';
+    get($request);
+}
+
 1;

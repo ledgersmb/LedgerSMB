@@ -125,7 +125,7 @@ Deletes the bank account object from the database.
 
 sub delete {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'entity__save_bank_account'});
+    my ($ref) = $self->exec_method({funcname => 'entity__delete_bank_account'});
     return $ref;
 }
 

@@ -1,13 +1,12 @@
 <div class="container" id="bank_act_div">
 <div class="listtop"><?lsmb text('Bank Accounts') ?></div>
 <?lsmb 
-href_base = script _ '?&entity_id=' _ entity_id _ '&bank_account_id=' _ 
-      ba.id _ '&target_div=bank_div&form_id=' _ form_id _ '&credit_id=' _ 
-      credit_id;
+href_base = script _ '?&entity_id=' _ entity_id _ '&target_div=bank_act_div' _
+            '&form_id=' _ form_id _ '&credit_id=' _ credit_id _ '&id=';
 FOREACH ba IN bank_account;
-    ba.iban_href_suffix = href_base _ '&bic=' _ bic _ '&iban=' _ iban _
-         '&action=edit_bank_account';
-    ba.delete_href_suffix = href_base _ '&action=delete_bank_account';
+    ba.iban_href_suffix = '&bic=' _ ba.bic _ '&iban=' _ ba.iban _
+         '&action=edit' _ '&id=' _ ba.id;
+    ba.delete_href_suffix=ba.id _ '&action=delete_bank_account';
     ba.delete = '[' _ text('Delete') _ ']';
 END;
 PROCESS dynatable 
@@ -15,8 +14,9 @@ PROCESS dynatable
    tbody = {rows = bank_account}
    columns = [
      { col_id='bic', type='text', name=text('BIC/SWIFT Code') } #'
-     { col_id='iban', type='href', href_base='', name=text('Account Number')}#'
-     { col_id='delete', type='href', href_base='', name=' ' }
+     { col_id='iban', type='href', href_base=href_base, 
+         name=text('Account Number')}#'
+     { col_id='delete', type='href', href_base=href_base, name=' ' }
    ];
 ?>
 <form name="bank_acct" action="<?lsmb script ?>">
@@ -24,11 +24,6 @@ PROCESS dynatable
 		type = "hidden"
 		name = "form_id"
 		value = form_id
-	} ?>
-<?lsmb PROCESS input element_data = {
-		type = "hidden"
-		name = "target_div"
-		value = 'bank_div'
 	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
@@ -43,14 +38,14 @@ PROCESS dynatable
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
 		name="bank_account_id" 
-		value=bank_account_id
+		value=request.id
 	} ?>
 	<div>
 	<?lsmb INCLUDE input element_data = {
 		type="text" 
 		label = text('BIC/SWIFT Code')
 		name="bic" 
-		value=bic
+		value=request.bic
 		size=20
 	} #' ?>
 	</div>
@@ -59,7 +54,7 @@ PROCESS dynatable
 		type="text" 
 		label = text('Bank Account')
 		name="iban" 
-		value=iban
+		value=request.iban
 		size=20
 	} #' ?>
 	</div>
