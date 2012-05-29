@@ -77,6 +77,14 @@ The contents of the note.  Required
 
 has 'note' => (is => 'rw', isa => 'Str');
 
+=item 'note_class'
+
+ID for note class (1 for entity, 3 for eca, etc)
+
+=cut
+
+has 'note_class'  => (is => 'rw', isa => 'Maybe[Int]');
+
 =back
 
 =head1 METHODS

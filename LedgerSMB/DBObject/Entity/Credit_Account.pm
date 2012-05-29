@@ -381,6 +381,65 @@ sub save {
     $self = $self->new(%$ref);
 }
 
+=item get_pricematrix
+
+This routine gets the price matrix for the customer or vendor.  This returns a 
+hashref with up to two keys:  pricematrix for all vendors and customers, and
+pricematrix_pricegroup for customers.
+
+=cut
+
+sub get_pricematrix {
+    my $self = shift @_;
+    my $retval = {};
+    @{$retval->{pricematrix}} = $self->exec_method(
+               funcname => 'eca__get_pricematrix'
+    );
+    if ($self->{entity_class} == 1){
+        @{$retval->{pricematrix_pricegroup}}= $self->exec_method(
+               funcname => 'eca__get_pricematrix_by_pricegroup'
+        );
+    }
+}
+
+=item delete_pricematrix($entry_id)
+
+This deletes a pricematrix line identified by $entry_id
+
+=cut
+
+sub delete_pricematrix {
+    my $self = shift @_;
+    my ($entry_id) = @_;
+    my ($retval) = $self->exec_method(funcname => 'eca__delete_pricematrix', 
+                           args => [$self->{credit_id}, $entry_id]
+    );
+    return $retval;
+}
+
+
+=item save_pricematrix
+
+Updates or inserts the price matrix.
+
+=cut
+
+sub save_pricematrix {
+    my ($self, $request)  = @_;
+    for my $count (1 .. $request->{pm_rowcount}){
+        my $entry_id = $request->{"pm_$count"};
+        my @args = ();
+        for my $prop (qw(parts_id credit_id pricebreak price lead_time
+                         partnumber validfrom validto curr entry_id)){
+            push @args, $request->{"${prop}_$entry_id"};
+            $self->execute_method(funcname => 'eca__save_pricematrix',
+                                      args => \@args);
+        }
+    }
+}
+
+
+=back
 
 =head1 COPYRIGHT
 

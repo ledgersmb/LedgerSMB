@@ -608,6 +608,31 @@ sub save_notes {
     get($request);
 }
 
+=item get_pricelist
+
+This returns and displays the pricelist.  The id field is required.
+
+=cut
+
+sub get_pricelist {
+    my ($request) = @_;
+    my $credit = LedgerSMB::DBObject::Entity::Credit_Account->get_by_id(
+       $request->{credit_id}
+    );
+    my $pricelist = $credit->get_pricematrix;
+    $request->merge($credit) if $credit;
+    $request->merge($pricelist) if $pricelist;
+    my $template = LedgerSMB::Template->new(
+                user => $request->{_user},
+                path => 'UI/Contact' ,
+                template => 'pricelist',
+                format => uc($request->{format} || 'HTML'),
+                locale => $request->{_locale},
+    );
+
+    $template->render($request);
+}
+
 =back
 
 =head1 COPYRIGHT

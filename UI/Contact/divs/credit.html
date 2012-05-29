@@ -314,17 +314,10 @@ PROCESS dynatable
                         accesskey="Q" 
                         title="Quotation [Alt-Q]"
 			text = (entity_class == 1) ? text('RFQ') : text('Quotation')
-		    };
-		    INCLUDE button element_data = {
-                        class="submit" 
-                        type="submit" 
-                        name="action" 
-                        value="pricelist" 
-                        accesskey="P" 
-                        title="Pricelist [Alt-P]"
-			text = text('Pricelist') 
-		    };
-                END ?>
+		    }; ?>
+                <A HREF="contact.pl?action=get_pricelist&credit_id=<?lsmb 
+                        credit_act.id ?>"><?lsmb text('Pricelist') ?></a>
+                <?lsmb END ?>
 	
     </form>
 </div>
