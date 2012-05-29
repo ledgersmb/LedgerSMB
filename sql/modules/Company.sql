@@ -1017,14 +1017,14 @@ COMMENT ON  FUNCTION entity__save_bank_account
 in_bank_account_id int) IS
 $$ Saves bank account to the credit account.$$;
 
-CREATE OR REPLACE FUNCTION company__delete_contact
-(in_company_id int, in_contact_class_id int, in_contact text)
+CREATE OR REPLACE FUNCTION entity__delete_contact
+(in_entity_id int, in_class_id int, in_contact text)
 returns bool as $$
 BEGIN
 
 DELETE FROM entity_to_contact
- WHERE entity_id = (select entity_id from company where id = in_companu_id) 
-       and contact_class_id = in_contact_class_id
+ WHERE entity_id = in_entity_id
+       and contact_class_id = in_class_id
        and contact= in_contact;
 RETURN FOUND;
 
@@ -1038,12 +1038,12 @@ $$ Returns true if at least one record was deleted.  False if no records were
 affected.$$;
 
 CREATE OR REPLACE FUNCTION eca__delete_contact
-(in_credit_id int, in_contact_class_id int, in_contact text)
+(in_credit_id int, in_class_id int, in_contact text)
 returns bool as $$
 BEGIN
 
 DELETE FROM eca_to_contact
- WHERE credit_id = in_credit_id and contact_class_id = in_contact_class_id
+ WHERE credit_id = in_credit_id and contact_class_id = in_class_id
        and contact= in_contact;
 RETURN FOUND;
 
@@ -1351,7 +1351,7 @@ COMMENT ON FUNCTION eca__list_contacts(in_credit_id int) IS
 $$ Returns a list of contact info attached to the entity credit account.$$;
 
 CREATE OR REPLACE FUNCTION eca__save_contact
-(in_credit_id int, in_contact_class int, in_description text, in_contact text,
+(in_credit_id int, in_class_id int, in_description text, in_contact text,
 in_old_contact text, in_old_contact_class int)
 RETURNS INT AS
 $$
@@ -1368,14 +1368,14 @@ BEGIN
         UPDATE eca_to_contact
            SET contact = in_contact,
                description = in_description,
-               contact_class_id = in_contact_class
+               contact_class_id = in_class_id
          WHERE credit_id = in_credit_id
            AND contact_class_id = in_old_contact_class
            AND contact = in_old_contact;
     ELSE
         INSERT INTO eca_to_contact(credit_id, contact_class_id, 
                 description, contact)
-        VALUES (in_credit_id, in_contact_class, in_description, in_contact);
+        VALUES (in_credit_id, in_class_id, in_description, in_contact);
         
     END IF;
 

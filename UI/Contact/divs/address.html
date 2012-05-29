@@ -83,7 +83,9 @@
                           options         = attach_level_options
                           label           = text('Attach To') #'
                        };
-                     END; ?>
+                     ELSE ?>
+             <label><?lsmb text('Attach to') ?></label><?lsmb text('Entity');
+                    END; ?>
 	<div> 
                 <?lsmb INCLUDE select element_data = {
                        name           = "location_class"
@@ -179,4 +181,5 @@
 	} #' ?>
 	</div>
     </form>
+</div>
 </div>

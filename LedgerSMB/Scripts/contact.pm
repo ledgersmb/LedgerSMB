@@ -52,6 +52,7 @@ sub get_by_cc {
     $request->{entity_class} ||= $request->{account_class};
     $request->{legal_name} ||= 'test';
     $request->{country_id} = 0;
+    $request->{target_div} = 'credit_div';
     my $company = LedgerSMB::DBObject::Entity::Company->new(%$request);
     $company = $company->get_by_cc($request->{control_code});
     _main_screen($request, $company);
@@ -241,6 +242,7 @@ sub _main_screen {
                 entity_id => $entity_id,
              entity_class => $entity_class,
       location_class_list => \@location_class_list,
+       contact_class_list => \@contact_class_list,
     });
 }
 
@@ -257,7 +259,7 @@ sub generate_control_code {
                              args     => ['entity_control']
                            );
     ($request->{control_code}) = values %$ref;
-    $request->{dbh}->commit;
+    $request->{target_div} = 'company_div';
     _main_screen($request, $request);
 }
 
@@ -408,6 +410,7 @@ sub save_company {
     my $company = LedgerSMB::DBObject::Entity::Company->new(%$request);
     use Data::Dumper;
     $Data::Dumper::Sortkeys => 1;
+    $request->{target_div} = 'credit_div';
     $company = $company->save;
     _main_screen($request, $company);
 }
@@ -421,6 +424,7 @@ This inserts or updates a credit account of the sort listed here.
 sub save_credit {
     
     my ($request) = @_;
+    $request->{target_div} = 'credit_div';
     my $company;
     my @taxes;
 
@@ -502,6 +506,12 @@ sub edit {
     get (@_);
 }
 
+=item delete_location
+
+Deletes the specified location
+
+=cut
+
 sub delete_location {
     my ($request) = @_;
     my $location = LedgerSMB::DBObject::Entity::Location->new(%$request);
@@ -510,6 +520,41 @@ sub delete_location {
        $location->credit_id(undef);
     }
     $location->delete;
+    $request->{target_div} = 'address_div';
+    get($request);
+}
+
+=item save_contact
+
+Saves the specified contact info
+
+=cut
+
+sub save_contact {
+    my ($request) = @_;
+    my $contact = LedgerSMB::DBObject::Entity::Contact->new(%$request);
+    if ($request->{attach_to} == 1){
+       $contact->credit_id(undef);
+    }
+    $contact->save;
+    $request->{target_div} = 'address_div';
+    $request->{target_div} = 'contact_info_div';
+    get($request);
+} 
+
+=item selete_contact
+
+Deletes the specified contact info.  Note that for_credit is used to pass the 
+credit id over in this case.
+
+=cut
+
+sub delete_contact {
+    my ($request) = @_;
+    my $contact = LedgerSMB::DBObject::Entity::Contact->new(%$request);
+    $contact->credit_id($request->{for_credit});
+    $contact->delete;
+    $request->{target_div} = 'contact_info_div';
     get($request);
 }
 

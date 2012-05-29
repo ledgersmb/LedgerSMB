@@ -9,7 +9,8 @@ FOREACH cl IN credit_list;
         account_class_label = text('Customer');
    END;
    cl.meta_number_href_suffix = 'account_class=' _ cl.entity_class _ 
-      '&entity_id=' _ cl.entity_id _ '&meta_number=' _ cl.meta_number;
+      '&entity_id=' _ cl.entity_id _ '&meta_number=' _ cl.meta_number _
+      '&target_div=credit_div';
 END;
 
 PROCESS dynatable 

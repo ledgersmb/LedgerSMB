@@ -2,27 +2,31 @@
 <div class="listtop"><?lsmb text('Contact Information') ?></div>
 <?lsmb 
 
-FOREACH row IN contacts;
-    row.edit = '[' _ text('Edit') _ ']';
-    row.delete = '[' _ text('Delete') _ ']';
-    row.edit_href_suffix = 
+FOREACH ROW IN contacts;
+    ROW.edit = '[' _ text('Edit') _ ']';
+    ROW.delete = '[' _ text('Delete') _ ']';
+    ROW.edit_href_suffix = 
                tt_url(script) _ '?entity_id=' _ entity_id _ '&contact=' _
-               tt_url(row.contact) _ '&contact_class=' _ row.contact _
-               '&contact_class=' _ row.class_id _ '&description=' _
-               tt_url(row.description) _ '&credit_id=' _ credit_id _
-               '&action=edit&target_div=contact_div';
-    row.delete_href_suffix = 
+               tt_url(ROW.contact) _ '&class_id=' _ ROW.class_id _
+               '&description=' _ tt_url(ROW.description) _ '&credit_id=' _ 
+               credit_act.id _ '&action=edit&target_div=contact_div&for_credit='
+               _ ROW.credit_id;
+    ROW.delete_href_suffix = 
                tt_url(script) _ '?entity_id=' _ entity_id _ '&contact=' _
-               tt_url(row.contact) _ '&contact_class=' _ row.contact _
-               '&contact_class=' _ row.class_id _ '&description=' _
-               tt_url(row.description) _ '&credit_id=' _ credit_id _
-               '&action=delete_contact&target_div=contact_div';
+               tt_url(ROW.contact) _ '&class_id=' _ ROW.class_id _ 
+               '&description=' _ tt_url(ROW.description) _ '&credit_id=' _ 
+               credit_act.id _ '&action=delete_contact&' _
+               'target_div=contact_div&for_credit=' _ ROW.credit_id;
+    IF ROW.credit_id;
+         ROW.for_credit = 'X';
+    END;
 END;
 PROCESS dynatable 
         attributes = {id = 'contact-list' }
         tbody = {rows = contacts}
         columns = [
-         {col_id='class_name', type='text' name=text('Type') },
+         {col_id='for_credit', type='text', name=text('This Account') }, #' 
+         {col_id='class', type='text', name=text('Type') },
          {col_id='description', type='text', name=text('Description') },
          {col_id='contact', type='text', name=text('Contact Info') } #'
          {col_id='edit', type='href', href_base='', name='' }
@@ -34,11 +38,6 @@ PROCESS dynatable
 		name = "form_id"
 		value = form_id
 	} ?>
-<?lsmb PROCESS input element_data = {
-		type = "hidden"
-		name = "target_div"
-		value = 'contact_div'
-	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
 		name="entity_id" 
@@ -47,30 +46,42 @@ PROCESS dynatable
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
 		name="credit_id" 
-		value=credit_id
+		value=credit_act.id
 	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
 		name="old_contact_class" 
-		value=contact_class
+		value=request.contact_class
 	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
 		name="old_contact" 
-		value=contact
+		value=request.contact
 	} ?>
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
 		name="contact_id" 
-		value=contact_id
+		value=request.contact_id
 	} ?>
+        <div>
+           
+             <?lsmb IF credit_act.id;
+                       INCLUDE select element_data = {
+                          name            = "attach_to"
+                          default_options = ['3']
+                          options         = attach_level_options
+                          label           = text('Attach To') #'
+                       };
+                     ELSE ?>
+             <label><?lsmb text('Attach to') ?></label><?lsmb text('Entity');
+                    END; ?>
 	<div>
 		<?lsmb PROCESS select element_data = {
 			name = "class_id"
 			label = "Type"
 			text_attr = "class"
 			value_attr = "id"
-			default_values = [contact_class]		
+			default_values = [request.class_id]		
 			options = contact_class_list
 		} ?>
 	</div>
@@ -78,7 +89,7 @@ PROCESS dynatable
 		<?lsmb PROCESS input element_data = {
 			label = text('Description'),
 			name = "description"
-			value = description
+			value = request.description
 			type = "text"
 			size = "20"
 		} #' ?>
@@ -87,7 +98,7 @@ PROCESS dynatable
 		<?lsmb PROCESS input element_data = {
 			label = text('Contact Info'),
 			name = "contact"
-			value = contact
+			value = request.contact
 			type = "text"
 			size = "20"
 		} #' ?>
