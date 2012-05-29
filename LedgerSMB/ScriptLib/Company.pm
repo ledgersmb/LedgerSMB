@@ -118,45 +118,6 @@ sub get {
 
 =over
 
-=item add_location 
-
-Adds a location to the company as defined in the inherited object
-
-=back
-
-=cut
-
-sub add_location {
-    my ($request) = @_;
-    my $location = LedgerSMB::DBObject::Entity::Location->new(%$request);
-    my $company = LedgerSMB::DBObject::Entity::Company->new(%$request);
-
-    $location->save();
-    $company = $company->get($request->{entity_id});
-
-    _render_main_screen($request, $company);
-	
-}
-
-=pod
-
-=over
-
-=item save_new_location 
-
-Adds a location to the company as defined in the inherited object, not
-overwriting existing locations.
-
-=back
-
-=cut
-
-sub save_new_location {
-    my ($request) = @_;
-    delete $request->{location_id};
-   add_location($request);
-}
-
 =pod
 
 =over

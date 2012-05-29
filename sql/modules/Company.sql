@@ -1142,14 +1142,14 @@ CREATE OR REPLACE FUNCTION company__next_id() returns bigint as $$
 $$ language 'sql';
 
 CREATE OR REPLACE FUNCTION entity__location_save (
-    in_entity_id int, in_location_id int,
+    in_entity_id int, in_id int,
     in_location_class int, in_line_one text, in_line_two text, 
     in_city TEXT, in_state TEXT, in_mail_code text, in_country_id int,
     in_created date
 ) returns int AS $$
     BEGIN
     return _entity_location_save(
-        in_entity_id, in_location_id,
+        in_entity_id, in_id,
         in_location_class, in_line_one, in_line_two, 
         '', in_city , in_state, in_mail_code, in_country_id);
     END;
@@ -1157,7 +1157,7 @@ CREATE OR REPLACE FUNCTION entity__location_save (
 $$ language 'plpgsql';
 
 COMMENT ON FUNCTION entity__location_save (
-    in_entity_id int, in_location_id int,
+    in_entity_id int, in_id int,
     in_location_class int, in_line_one text, in_line_two text,
     in_city TEXT, in_state TEXT, in_mail_code text, in_country_id int,
     in_created date
@@ -1208,7 +1208,7 @@ $$ Private method for storing locations to an entity.  Do not call directly.
 Returns the location id that was inserted or updated.$$;
 
 create or replace function eca__location_save(
-    in_credit_id int, in_location_id int,
+    in_credit_id int, in_id int,
     in_location_class int, in_line_one text, in_line_two text, 
     in_line_three text, in_city TEXT, in_state TEXT, in_mail_code text, 
     in_country_id int, in_old_location_class int
@@ -1224,11 +1224,11 @@ create or replace function eca__location_save(
            SET location_class = in_location_class
          WHERE credit_id = in_credit_id
            AND location_class = in_old_location_class
-           AND location_id = in_location_id;
+           AND location_id = in_id;
            
          IF FOUND THEN
             SELECT location_save(
-                in_location_id, 
+                in_id, 
                 in_line_one, 
                 in_line_two, 
                 in_line_three, 
@@ -1262,7 +1262,7 @@ create or replace function eca__location_save(
 $$ language 'plpgsql';
 
 COMMENT ON function eca__location_save(
-    in_credit_id int, in_location_id int,
+    in_credit_id int, in_id int,
     in_location_class int, in_line_one text, in_line_two text,
     in_line_three text, in_city TEXT, in_state TEXT, in_mail_code text,
     in_country_code int, in_old_location_class int
@@ -1270,13 +1270,13 @@ COMMENT ON function eca__location_save(
 $$ Saves a location to an entity credit account. Returns id of saved record.$$;
 
 CREATE OR REPLACE FUNCTION eca__delete_location
-(in_credit_id int, in_location_id int, in_location_class int)
+(in_credit_id int, in_id int, in_location_class int)
 RETURNS BOOL AS
 $$
 BEGIN
 
 DELETE FROM eca_to_location
- WHERE credit_id = in_credit_id AND location_id = in_location_id 
+ WHERE credit_id = in_credit_id AND location_id = in_id 
        AND location_class = in_location_class;
 
 RETURN FOUND;
@@ -1285,18 +1285,18 @@ END;
 $$ language plpgsql;
 
 COMMENT ON FUNCTION eca__delete_location
-(in_credit_id int, in_location_id int, in_location_class int) IS
+(in_credit_id int, in_id int, in_location_class int) IS
 $$ Deletes the record identified.  Returns true if successful, false if no record
 found.$$;
 
-CREATE OR REPLACE FUNCTION company__delete_location
-(in_company_id int, in_location_id int, in_location_class int)
+CREATE OR REPLACE FUNCTION entity__delete_location
+(in_entity_id int, in_id int, in_location_class int)
 RETURNS BOOL AS
 $$
 BEGIN
 
-DELETE FROM eca_to_location
- WHERE company_id = in_company_id AND location_id = in_location_id 
+DELETE FROM entity_to_location
+ WHERE entity_id = in_entity_id AND location_id = in_id 
        AND location_class = in_location_class;
 
 RETURN FOUND;
@@ -1304,8 +1304,8 @@ RETURN FOUND;
 END;
 $$ language plpgsql;
 
-COMMENT ON FUNCTION company__delete_location
-(in_company_id int, in_location_id int, in_location_class int) IS
+COMMENT ON FUNCTION entity__delete_location
+(in_entity_id int, in_id int, in_location_class int) IS
 $$ Deletes the record identified.  Returns true if successful, false if no record
 found.$$;
 

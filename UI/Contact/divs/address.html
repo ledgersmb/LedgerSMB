@@ -27,12 +27,7 @@
 		type="hidden" 
 		name="credit_id" 
 		value=credit_act.id
-	} ?>
-	<?lsmb PROCESS input element_data = {
-		type="hidden" 
-		name="location_id" 
-		value=location_id
-	}; ?><?lsmb
+	};
     FOREACH LOC IN locations;
         IF LOC.credit_id;
            LOC.is_for_credit = 'X';
@@ -47,15 +42,18 @@
         LOC.edit = '[' _ text('Edit') _ ']';
         LOC.delete= '[' _ text('Delete') _ ']';
         LOC.edit_href_suffix= script _ '?action=edit&entity_id=' _ entity_id _
-    			'&location_id=' _ loc.id _ '&credit_id=' _
-    			credit_act.id _ '&country_code=' _ loc.country_id _
-                       '&target_div=location_div&location_class=' _
-                        loc.location_class;
-        LOC.delete_href_suffix= script _ '?action=delete&entity_id=' _ entity_id _
-    			'&location_id=' _ loc.id _ '&credit_id=' _
-    			credit_act.id _ '&country_code=' _ loc.country_id _
-                       '&target_div=location_div&location_class=' _
-                        loc.location_class;
+    			'&location_id=' _ LOC.id _ '&credit_id=' _
+    			credit_act.id _ '&is_for_credit=' _ LOC.is_for_credit _
+                        '&target_div=address_div&location_class=' _
+                        LOC.location_class;
+        LOC.delete_href_suffix= script _ '?action=delete_location&entity_id=' _ 
+                        entity_id _ '&location_id=' _ LOC.id _ '&credit_id=' _
+    			credit_act.id _ '&is_for_credit=' _ LOC.is_for_credit _
+                        '&target_div=address_div&location_class=' _
+                        LOC.location_class;
+        IF LOC.id == request.location_id && request.action == 'edit';
+             DISPLAY = LOC;
+        END;
     END; ?><?lsmb
     PROCESS dynatable 
                tbody = {rows = locations}
@@ -72,11 +70,24 @@
        {col_id = 'edit', type='href', name=' ', href_base='' }
        {col_id = 'delete', type='href', name=' ', href_base='' } 
     ];
-       ?> 
+	PROCESS input element_data = {
+		type="hidden" 
+		name="location_id" 
+		value= DISPLAY.id
+	}; 
+       ?> <div>
+             <?lsmb IF credit_act.id;
+                       INCLUDE select element_data = {
+                          name            = "attach_to"
+                          default_options = ['3']
+                          options         = attach_level_options
+                          label           = text('Attach To') #'
+                       };
+                     END; ?>
 	<div> 
                 <?lsmb INCLUDE select element_data = {
                        name           = "location_class"
-                       default_values = [location_class]
+                       default_values = [DISPLAY.location_class]
                        options        = location_class_list
                        text_attr      = "class"
                        value_attr     = "id"
@@ -88,7 +99,7 @@
 		<?lsmb INCLUDE input element_data = {
 			label = text('Address'),
 			name = "line_one",
-			value = line_one,
+			value = DISPLAY.line_one,
 			type = "text",
 			size = "20"
 		} ?>
@@ -98,7 +109,7 @@
                         label = ":"
 			name = "line_two"
 			class = "addl-address"
-			value = line_two
+			value = DISPLAY.line_two
 			type = "text"
 			size = "20"
 		} ?>
@@ -108,7 +119,7 @@
                         label = ":"
 			name = "line_three"
 			class = "addl-address"
-			value = line_three
+			value = DISPLAY.line_three
 			type = "text"
 			size = "20"
 		} ?>
@@ -117,7 +128,7 @@
 		<?lsmb PROCESS input element_data = {
 			label = text('City'),
 			name = "city",
-			value = city,
+			value = DISPLAY.city,
 			type = "text",
 			size = "20"
 		} ?>
@@ -126,7 +137,7 @@
 		<?lsmb PROCESS input element_data = {
 			label = text('State/Province'),
 			name = "state",
-			value = state,
+			value = DISPLAY.state,
 			type = "text",
 			size = "20"
 		} ?>
@@ -135,7 +146,7 @@
 		<?lsmb PROCESS input element_data = {
 			label = text('Zip/Post Code'),
 			name = "mail_code",
-			value = mail_code,
+			value = DISPLAY.mail_code,
 			type = "text",
 			size = "20"
 		} #' ?>
@@ -145,7 +156,7 @@
 		<?lsmb INCLUDE select element_data = {
 			text_attr = "name"
 			value_attr = "id"
-			default_values = [country_id]
+			default_values = [DISPLAY.country_id]
 			options = country_list
 			name = "country_id"
 			label = text('Country') 
@@ -155,7 +166,7 @@
              <?lsmb PROCESS button element_data = {
 		class = "submit" 
 		name = "action" 
-		value = "add_location" 
+		value = "save_location" 
 		id = "loc_save_location"
 		text = text('Save Location') 
 	} #' ?>

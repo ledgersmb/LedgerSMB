@@ -42,13 +42,13 @@ Date when the location became inactive.
 
 has 'inactive_date' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
 
-=item location_id
+=item id
 
 Internal id of the actual location entry.
 
 =cut
 
-has 'location_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'id' => (is => 'rw', isa => 'Maybe[Int]');
 
 =item entity_id
 
@@ -66,7 +66,7 @@ instead.
 
 =cut
 
-has 'credit_id' => (is => 'ro', isa => 'Maybe[Int]');
+has 'credit_id' => (is => 'rw', isa => 'Maybe[Int]');
 
 =item location_class
 
@@ -237,15 +237,21 @@ sub save {
     $self->exec_method({funcname => $procname});
 }
 
-=item deactivate()
+=item delete()
 
-Deactivates the current location
+Deletes the current location
 
 =cut
 
-sub deactivate {
+sub delete{
     my ($self) = @_;
-    $self->exec_method({funcname => 'location__deactivate'});
+    my $procname;
+    if ($self->credit_id){
+        $procname = 'eca__delete_location';
+    } else {
+        $procname = 'entity__delete_location';
+    }
+    $self->exec_method({funcname => $procname});
 }
 
 =back

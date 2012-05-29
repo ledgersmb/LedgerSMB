@@ -188,9 +188,9 @@ sub _main_screen {
     $default_language = $default_language->{value};
 
     my $attach_level_options = [
-        {label => $locale->text('Entity'), value => 1} ];
+        {text => $locale->text('Entity'), value => 1} ];
     push@{$attach_level_options},
-        {label => $locale->text('Credit Account'),
+        {text => $locale->text('Credit Account'),
          value => 3} if $credit_act->{id};
     ;
 
@@ -240,6 +240,7 @@ sub _main_screen {
      attach_level_options => $attach_level_options, 
                 entity_id => $entity_id,
              entity_class => $entity_class,
+      location_class_list => \@location_class_list,
     });
 }
 
@@ -456,6 +457,60 @@ sub save_credit_new {
     my ($request) = @_;
     $request->{credit_id} = undef;
     save_credit($request);
+}
+
+=item save_location 
+
+Adds a location to the company as defined in the inherited object
+
+=cut
+
+sub save_location {
+    my ($request) = @_;
+
+    my $location = LedgerSMB::DBObject::Entity::Location->new(%$request);
+    if ($request->{attach_to} eq '1'){
+       $location->credit_id(undef);
+    }
+    $location->id($request->{location_id});
+    $location->save;
+    $request->{target_div} = 'address_div';
+    get($request);
+	
+}
+
+=item save_new_location 
+
+Adds a location to the company as defined in the inherited object, not
+overwriting existing locations.
+
+=cut
+
+sub save_new_location {
+    my ($request) = @_;
+    delete $request->{location_id};
+    save_location($request);
+}
+
+=item edit
+
+This is a synonym of get() which is preferred to use for editing operations.
+
+=cut
+
+sub edit {
+    get (@_);
+}
+
+sub delete_location {
+    my ($request) = @_;
+    my $location = LedgerSMB::DBObject::Entity::Location->new(%$request);
+    $location->id($request->{location_id});
+    if (!$request->{is_for_credit}){
+       $location->credit_id(undef);
+    }
+    $location->delete;
+    get($request);
 }
 
 1;
