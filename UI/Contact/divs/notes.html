@@ -19,7 +19,7 @@
 	<?lsmb PROCESS input element_data = {
 		type="hidden" 
 		name="credit_id" 
-		value=credit_id
+		value=credit_act.id
 	} ?>
 <div class="input">
    <?lsmb PROCESS input element_data = {
@@ -30,17 +30,20 @@
       size = "20"
 	} ?>
 </div>
-<?lsmb IF credit_id -?>
-<div class="input"><?lsmb PROCESS select element_data = {
+<div class="input">
+<?lsmb 
+IF credit_act.id;
+    PROCESS select element_data = {
 			name = "note_class"
 			default_values = [note_class]
-			options = note_class_options
+			options = attach_level_options
 			label = text("Note Class") #"
-			text_attr = "label"
 			value_attr = "value"
-	} ?>
+	};
+ELSE ?>
+<label><?lsmb text('Note Class') ?></label><?lsmb text('Entity');
+END; ?>
 </div>
-<?lsmb END # IF credit_id -?>
 <div class="input"><?lsmb PROCESS textarea element_data = {
 	label = text('Notes')
 	name = 'note'
@@ -55,7 +58,7 @@
 
 </form>
 <?lsmb FOREACH n = notes ?>
-<div class="note">
+<div class="note<?lsmb IF n.note_class == 3; ' eca_note'; END ?>">
     <div class="note_subject"><?lsmb text('Subject: [_1]', n.subject)?></div>
     <div class="timestamp"><?lsmb text('Entered at: [_1]', n.created) ?></div>
     <div class="author"><?lsmb text("Author: [_1]", n.created_by) ?></div>

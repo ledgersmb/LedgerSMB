@@ -98,7 +98,7 @@ sub list{
              'eca__list_notes', args => [$credit_id]);
     } else {
         @results = $self->call_procedure(procname =>
-             'entity__list_notes', args => [$credit_id]);
+             'entity__list_notes', args => [$entity_id]);
     }
     for my $row(@results){
         $self->prepare_dbhash($row); 
@@ -116,7 +116,12 @@ setting things like the id field.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'entity__save_notes'});
+    my $ref;
+    if ($self->credit_id){
+        ($ref) = $self->exec_method({funcname => 'eca__save_notes'});
+    } else {
+        ($ref) = $self->exec_method({funcname => 'entity__save_notes'});
+    }
     $self->prepare_dbhash($ref);
     $self = $self->new(%$ref);
 }

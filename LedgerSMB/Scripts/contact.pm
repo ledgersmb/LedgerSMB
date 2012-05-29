@@ -591,4 +591,31 @@ sub save_bank_account {
     get($request);
 }
 
+=item save_notes($request)
+
+Saves notes.  entity_id or credit_id must be set, as must note_class, note, and 
+subject.
+
+=cut
+
+sub save_notes {
+    my ($request) = @_;
+    my $note = LedgerSMB::DBObject::Entity::Note->new(%$request);
+    if ($request->{note_class} == 1){
+       $note->credit_id(undef);
+    }
+    $note->save;
+    get($request);
+}
+
+=back
+
+=head1 COPYRIGHT
+
+Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU 
+General Public License, version 2, or at your option any later version.  Please 
+see the accompanying License.txt for more information.
+
+=cut
+
 1;
