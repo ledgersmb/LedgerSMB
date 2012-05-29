@@ -238,15 +238,6 @@ sub create_links {
         }
     }
 
-    # projects
-    if ( @{ $form->{all_project} } ) {
-        $form->{selectprojectnumber} = "<option>\n";
-        for ( @{ $form->{all_project} } ) {
-            $form->{selectprojectnumber} .=
-qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
-        }
-    }
-
     if ( @{ $form->{all_language} } ) {
         $form->{selectlanguage} = "<option>\n";
         for ( @{ $form->{all_language} } ) {
@@ -1224,8 +1215,6 @@ sub update {
             $newproj =
               &rebuild_vc( $form->{vc}, $form->{ARAP}, $form->{transdate} )
               if !$newname;
-            $form->all_projects( \%myconfig, undef, $form->{transdate} )
-              if !$newproj;
 
             $form->{selectemployee} = "";
             if ( @{ $form->{all_employee} } ) {
@@ -1327,7 +1316,7 @@ sub post {
       if ( $form->{currency} ne $form->{defaultcurrency} );
 
     for $i ( 1 .. $form->{paidaccounts} ) {
-        if ( $form->{"paid_$i"} ) {
+        if ( $form->{"paid_$i"} and $form->{"paid_$i"} != 0) {
             $datepaid = $form->datetonum( \%myconfig, $form->{"datepaid_$i"} );
 
             $form->isblank( "datepaid_$i",
@@ -1506,26 +1495,6 @@ sub search {
         $selectname = qq|<input name=$form->{vc} size=35>|;
     }
 
-    # departments
-    if ( @{ $form->{all_department} } ) {
-        $form->{selectdepartment} = "<option>\n";
-
-        for ( @{ $form->{all_department} } ) {
-            $form->{selectdepartment} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-
-        $l_department =
-          qq|<input name="l_department" class=checkbox type=checkbox value=Y> |
-          . $locale->text('Department');
-
-        $department = qq| 
-        <tr> 
-	  <th align=right nowrap>| . $locale->text('Department') . qq|</th>
-	  <td colspan=3><select name=department>$form->{selectdepartment}</select></td>
-	</tr>
-|;
-    }
 
     if ( @{ $form->{all_employee} } ) {
         $form->{selectemployee} = "<option>\n";
