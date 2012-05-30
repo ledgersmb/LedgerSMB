@@ -247,10 +247,7 @@ sub list_account {
             $column_data{description} = $ca->{description};
             $column_data{debit}       = $ca->{debit};
             $column_data{credit} = $ca->{credit};
-	    if (($ca->{debit} =~ /\d/ )or ($ca->{credit} =~ /\d/)){
-               # Note, this is just a stub in case we want to put a 
-               # message here --CT
-            } else {
+            if ($ca->{rowcount} == 0){
                 $column_data{delete} ={text => '['.$locale->text('Delete').']',
                                       href => 'am.pl?action=delete_account&'.
                                               'id='.$ca->{id} };

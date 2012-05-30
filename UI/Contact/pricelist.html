@@ -87,12 +87,6 @@ IF FORMATS.grep('PDF').size() ?> <a href="customer.pl?action=pricelist&format=PD
              credit_id ?>&entity_id=<?lsmb entity_id 
      ?>">[<?lsmb text('PDF') ?>]</a>
 <?lsmb END;
-IF FORMATS.grep('XLS').size() 
-?> <a href="customer.pl?action=pricelist&format=XLS&credit_id=<?lsmb 
-             credit_id ?>&entity_id=<?lsmb entity_id 
-     ?>">[<?lsmb text('XLS') ?>]</a>
-<?lsmb END;
-
 IF FORMATS.grep('ODS').size() 
 ?> <a href="customer.pl?action=pricelist&format=ODS&credit_id=<?lsmb 
              credit_id ?>&entity_id=<?lsmb entity_id 
