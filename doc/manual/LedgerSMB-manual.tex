@@ -782,6 +782,54 @@ the double underscore at the end of the prefix).
       \end{description}
 \end{itemize}
 
+\subsection{Creating Custom Groups}
+
+Because LedgerSMB uses database roles and naming conventions to manage
+permissions it is possible to create additional roles and use them to manage
+groups.  There is not currently a way of doing this from the front-end, but as
+long as you follow the conventions, roles you create can be assigned to users
+through the front-end.  One can also create super-groups that the front-end
+cannot see but can assign permissions to broups of users on multiple databases.
+This section will cover both of these approaches.
+
+\subsubsection{Naming Conventions}
+
+In PostgreSQL, roles are global to the instance of the server.  This means that
+a single role can exist and be granted permissions on multiple databases. We
+therefore have to be careful to avoid naming collisions which could have the
+effect of granting permissions unintentionally to individuals who are not
+intended to be application users.
+
+The overall role consists of a prefix and a name.  The prefix starts with lsmb\_
+to identify the role as one created by this application, and then typically the
+name of the database.  This convention can be overridden by setting this in the
+defaults table (the setting is named 'role\_prefix') but this is typically done
+only when renaming databases.  After the prefix follow {\bf two} underscores.
+
+So by default a role for LedgerSMB in a company named mtech\_test would start
+with lsmb\_mtech\_test\_\_.  To create a role for LedgerSMB all we have to do is
+create one in the database with these conventions.
+
+\subsubsection{Example}
+Suppose mtech\_test is a database for a financial services company
+and most users must have appropriate permissions to enter batches etc, but not
+approve them  A role could be created like:
+
+\begin{verbatim}
+CREATE ROLE lsmb_mtech_test__user;
+GRANT lsmb_mtech_test__all_ap,
+      lsmb_mtech_test__create_batch,
+      lsmb_mtech_test__read_contact,
+      lsmb_mtech_test__list_batches,
+      lsmb_mtech_test__create_contact,
+      lsmb_mtech_test__all_gl,
+      lsmb_mtech_test__process_payment
+TO lsmb_mtech_test__user;
+\end{verbatim}
+
+Then when going to the user interface to add roles, you will see an entry that
+says "user" and this can be granted to the user.
+
 \section{Contact Management}
 
 Every business does business with other persons, corporate or natural.  They may
