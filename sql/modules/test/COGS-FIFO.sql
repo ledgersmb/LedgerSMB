@@ -607,7 +607,14 @@ SELECT 'post-ap-4 COGS is 25, invoice 2, series 4)', sum(amount) = 25
  WHERE trans_id = -4204 and chart_id = -4102;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'multi-call safety, ap reversal', cogs__add_for_ap_line(-4204) = 0;
+SELECT 'multi-call-safe ar cogs, id ' || i.id, cogs__add_for_ar_line(i.id) = 0
+  FROM invoice i JOIN ar ON ar.id = i.trans_id
+ WHERE i.id < -1000;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'multi-call-safe ap cogs, id ' || i.id, cogs__add_for_ap_line(i.id) = 0
+  FROM invoice i JOIN ap ON ap.id = i.trans_id
+ WHERE i.id < -1000;
 
 -- finalization
 SELECT sum(amount) as balance, chart_id, trans_id from acc_trans 
