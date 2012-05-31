@@ -20,6 +20,7 @@ $$
 DECLARE t_alloc numeric := 0;
         t_cogs numeric := 0;
         t_inv invoice;
+        t_avail numeric;
 BEGIN
 
 RAISE NOTICE 'reversing ar';
@@ -29,23 +30,26 @@ FOR t_inv IN
       JOIN (select id, approved, transdate from ap 
             union
             select id, approved, transdate from gl) a ON a.id = i.trans_id
-     WHERE qty + allocated < 0 and a.approved
+     WHERE allocated > 0 and a.approved and parts_id = in_parts_id
   ORDER BY a.transdate DESC, a.id DESC, i.id DESC
 LOOP
-   IF t_alloc > qty THEN
+   t_avail := t_inv.allocated;
+   IF t_alloc < in_qty THEN
        RAISE EXCEPTION 'TOO MANY ALLOCATED';
    ELSIF t_alloc = in_qty THEN
        RETURN ARRAY[t_alloc, t_cogs];
-   ELSIF (in_qty - t_alloc) <= -1 * (t.qty + t_inv.allocated) THEN
-       UPDATE invoice SET allocated = allocated - (in_qty - t_alloc)
+   ELSIF (in_qty - t_alloc) * -1 <=  t_inv.allocated THEN
+       raise notice 'partial reversal';
+       UPDATE invoice SET allocated = allocated + (in_qty - t_alloc)
         WHERE id = t_inv.id;
-       t_cogs := t_cogs + (in_qty - t_alloc) * t_inv.sellprice;
-       return ARRAY[t_alloc, t_cogs];
+       t_cogs := t_cogs +  (in_qty - t_alloc) * t_inv.sellprice;
+       return ARRAY[t_alloc + (in_qty - t_alloc), t_cogs];
    ELSE
+       raise notice 'full reversal';
        UPDATE invoice SET allocated = 0
         WHERE id = t_inv.id;
        t_alloc := t_alloc + t_inv.allocated * -1;
-       t_cogs := t_cogs + -1 * (t_inv.qty + t_inv.allocated) * t_inv.sellprice;
+       t_cogs := t_cogs + -1 * (t_inv.allocated) * t_inv.sellprice;
    END IF;
 END LOOP;
 
@@ -267,20 +271,20 @@ DECLARE
    t_transdate date;
 BEGIN
 
-SELECT CASE WHEN qty > 0 THEN cogs__add_for_ar(parts_id, qty)
-            ELSE cogs__reverse_ar(parts_id, qty)
-       END
-  INTO t_cogs 
-  FROM invoice WHERE id = in_invoice_id;
+SELECT * INTO t_inv FROM invoice WHERE id = in_invoice_id;
+SELECT * INTO t_part FROM parts WHERE id = t_inv.parts_id;
+SELECT * INTO t_ar FROM ar WHERE id = t_inv.trans_id;
+
+IF t_inv.qty > 0 THEN 
+   t_cogs := cogs__add_for_ar(t_inv.parts_id, t_inv.qty);
+ELSE
+   t_cogs := cogs__reverse_ar(t_inv.parts_id, t_inv.qty);
+END IF;
 
 RAISE NOTICE 'cogs function returned %', t_cogs;
 
 UPDATE invoice set allocated = allocated - t_cogs[1]
  WHERE id = in_invoice_id;
-
-SELECT * INTO t_inv FROM invoice WHERE id = in_invoice_id;
-SELECT * INTO t_part FROM parts WHERE id = t_inv.parts_id;
-SELECT * INTO t_ar FROM ar WHERE id = t_inv.trans_id;
 
 SELECT CASE WHEN t_ar.transdate > max(end_date) THEN t_ar.transdate
             ELSE max(end_date) + '1 day'::interval
