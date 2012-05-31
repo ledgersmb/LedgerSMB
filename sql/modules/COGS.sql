@@ -23,7 +23,6 @@ DECLARE t_alloc numeric := 0;
         t_avail numeric;
 BEGIN
 
-RAISE NOTICE 'reversing ar';
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
@@ -75,7 +74,6 @@ DECLARE t_alloc numeric := 0;
         t_avail numeric;
 BEGIN
 
-RAISE NOTICE 'adding for ar';
 
 FOR t_inv IN
     SELECT i.*
@@ -87,23 +85,17 @@ FOR t_inv IN
   ORDER BY a.transdate asc, a.id asc, i.id asc
 LOOP
    t_avail := (t_inv.qty + t_inv.allocated) * -1;
-   RAISE NOTICE 'id: %, qty: %, allocated: %, requested %, needed %, avail %, cogs so far %', 
-                  t_inv.id, t_inv.qty, t_inv.allocated, in_qty, 
-                  in_qty + t_alloc, t_avail, t_cogs;
    IF t_alloc > in_qty THEN
        RAISE EXCEPTION 'TOO MANY ALLOCATED';
    ELSIF t_alloc = in_qty THEN
        return ARRAY[t_alloc, t_cogs];
    ELSIF (in_qty + t_alloc) <= t_avail THEN
-       RAISE NOTICE 'partial allocation: % @ % + %', in_qty - t_alloc, t_inv.sellprice, t_cogs;
        UPDATE invoice SET allocated = allocated + (in_qty - t_alloc)
         WHERE id = t_inv.id;
        t_cogs := t_cogs + (in_qty - t_alloc) * t_inv.sellprice;
        t_alloc := in_qty;
-       RAISE NOTICE 'cogs %, allocated %, left %', t_cogs, t_alloc, in_qty - t_alloc;
        return ARRAY[t_alloc, t_cogs];
    ELSE
-       RAISE NOTICE 'full allocation';
        UPDATE invoice SET allocated = qty * -1
         WHERE id = t_inv.id;
        t_cogs := t_cogs + (t_avail * t_inv.sellprice);
@@ -125,34 +117,42 @@ Return values are an array of {allocated, cogs}.
 $$;
 
 CREATE OR REPLACE FUNCTION cogs__reverse_ap
-(in_parts_id int, in_qty numeric) RETURNS numeric AS
+(in_parts_id int, in_qty numeric) RETURNS numeric[] AS
 $$
-DECLARE t_alloc numeric;
+DECLARE t_alloc numeric :=0;
         t_inv invoice;
+        t_cogs numeric :=0;
+        retval numeric[];
 BEGIN
+RAISE NOTICE 'reversing AP: parts_id %, qty %', in_parts_id, in_qty;
 
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
       JOIN ap a ON a.id = i.trans_id
-     WHERE allocated > 0
+     WHERE qty + allocated < 0 AND parts_id = in_parts_id
   ORDER BY a.transdate, a.id, i.id
 LOOP
+   RAISE NOTICE 'id %, avail %, allocated %, requesting %', t_inv.id, t_inv.qty + t_inv.allocated, t_alloc, in_qty - t_alloc;
    IF t_alloc > in_qty THEN
        RAISE EXCEPTION 'TOO MANY ALLOCATED';
    ELSIF t_alloc = in_qty THEN
-       return t_alloc;
+       return ARRAY[t_alloc, t_cogs];
    ELSIF (in_qty - t_alloc) <= -1 * (t_inv.qty + t_inv.allocated) THEN
+       raise notice 'partial reversal';
        UPDATE invoice SET allocated = allocated + (in_qty - t_alloc)
         WHERE id = t_inv.id;
-       return t_alloc;
+       return ARRAY[in_qty * -1, t_cogs + (in_qty - t_alloc) * t_inv.sellprice];
    ELSE
+       raise notice 'total reversal';
        UPDATE invoice SET allocated = qty * -1
         WHERE id = t_inv.id;
+       t_alloc := t_alloc - (t_inv.qty + t_inv.allocated);
+       t_cogs := t_cogs - (t_inv.qty + t_inv.allocated) * t_inv.sellprice;
    END IF;
 END LOOP;
 
-RETURN 0;
+RETURN ARRAY[t_alloc, t_cogs];
 
 RAISE EXCEPTION 'TOO FEW TO ALLOCATE';
 END;
@@ -275,13 +275,16 @@ SELECT * INTO t_inv FROM invoice WHERE id = in_invoice_id;
 SELECT * INTO t_part FROM parts WHERE id = t_inv.parts_id;
 SELECT * INTO t_ar FROM ar WHERE id = t_inv.trans_id;
 
-IF t_inv.qty > 0 THEN 
-   t_cogs := cogs__add_for_ar(t_inv.parts_id, t_inv.qty);
-ELSE
-   t_cogs := cogs__reverse_ar(t_inv.parts_id, t_inv.qty);
+IF t_inv.qty + t_inv.allocated = 0 THEN
+   return 0;
 END IF;
 
-RAISE NOTICE 'cogs function returned %', t_cogs;
+IF t_inv.qty > 0 THEN 
+   t_cogs := cogs__add_for_ar(t_inv.parts_id, t_inv.qty + t_inv.allocated);
+ELSE
+   t_cogs := cogs__reverse_ar(t_inv.parts_id, t_inv.qty + t_inv.allocated);
+END IF;
+
 
 UPDATE invoice set allocated = allocated - t_cogs[1]
  WHERE id = in_invoice_id;
@@ -308,20 +311,58 @@ $$ LANGUAGE PLPGSQL;
 CREATE OR REPLACE FUNCTION cogs__add_for_ap_line(in_invoice_id int)
 RETURNS numeric AS
 $$
-
 DECLARE retval numeric;
-
+        r_cogs numeric[];
+        t_inv invoice;
+        t_adj numeric;
+        t_ap  ap;
 BEGIN
 
-SELECT cogs__add_for_ap(i.parts_id, i.qty, i.sellprice) INTO retval
-  FROM invoice i
-  JOIN parts p ON p.id = i.parts_id
- WHERE i.id = $1;
+SELECT * INTO t_inv FROM invoice 
+ WHERE id = in_invoice_id;
 
-UPDATE invoice 
-   SET allocated = allocated + retval
- WHERE id = $1;
+IF t_inv.qty + t_inv.allocated = 0 THEN
+   return 0;
+END IF;
 
+SELECT * INTO t_ap FROM ap WHERE id = t_inv.trans_id;
+
+IF t_inv.qty < 0 THEN -- normal COGS
+
+    SELECT cogs__add_for_ap(i.parts_id, i.qty + i.allocated, i.sellprice) 
+      INTO retval
+      FROM invoice i
+      JOIN parts p ON p.id = i.parts_id
+     WHERE i.id = $1;
+
+    UPDATE invoice 
+       SET allocated = allocated + retval
+     WHERE id = $1;
+ELSE -- reversal
+
+   r_cogs := cogs__reverse_ap(t_inv.parts_id, t_inv.qty + t_inv.allocated);
+
+   UPDATE invoice
+      SET allocated = allocated + r_cogs[1]
+    WHERE id = in_invoice_id;
+
+   t_adj := t_inv.sellprice * r_cogs[1] + r_cogs[2];
+
+   INSERT INTO acc_trans 
+          (chart_id, trans_id, approved,  amount, transdate, invoice_id)
+   SELECT p.inventory_accno_id, t_inv.trans_id, true, t_adj, t_ap.transdate, 
+          in_invoice_id
+     FROM parts p
+    WHERE id = t_inv.parts_id
+    UNION
+   SELECT p.expense_accno_id, t_inv.trans_id, true, t_adj * -1, t_ap.transdate,
+          in_invoice_id
+     FROM parts p
+    WHERE id = t_inv.parts_id;
+   retval := r_cogs[1];
+   raise notice 'cogs reversal returned %', r_cogs;
+
+END IF;
 
 RETURN retval;
 
