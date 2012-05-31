@@ -21,6 +21,7 @@ DECLARE t_alloc numeric := 0;
         t_inv invoice;
 BEGIN
 
+RAISE NOTICE 'reversing ar';
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
@@ -65,15 +66,18 @@ DECLARE t_alloc numeric := 0;
         t_inv invoice;
 BEGIN
 
+RAISE NOTICE 'adding for ar';
+
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
       JOIN (select id, approved, transdate from ap
              union
             select id, approved, transdate from gl) a ON a.id = i.trans_id
-     WHERE qty + allocated < 0
+     WHERE qty + allocated < 0 AND i.parts_id = in_parts_id
   ORDER BY a.transdate, a.id, i.id
 LOOP
+   RAISE NOTICE 'id: %, qty: %, allocated: %', t_inv.id, t_inv.qty, t_inv.allocated;
    IF t_alloc > in_qty THEN
        RAISE EXCEPTION 'TOO MANY ALLOCATED';
    ELSIF t_alloc = in_qty THEN
@@ -105,7 +109,7 @@ CREATE OR REPLACE FUNCTION cogs__reverse_ap
 (in_parts_id int, in_qty numeric) RETURNS numeric AS
 $$
 DECLARE t_alloc numeric;
-        t_inv inventory;
+        t_inv invoice;
 BEGIN
 
 FOR t_inv IN
@@ -151,82 +155,89 @@ returns numeric AS
 $$
 DECLARE t_alloc numeric := 0;
         t_cogs numeric := 0;
-        t_inv inventory;
+        t_inv invoice;
         t_cp account_checkpoint;
+        t_ar ar;
+        t_avail numeric;
 BEGIN
 
-IF in_qty < 0 THEN
+
+IF in_qty > 0 THEN
    return cogs__reverse_ap(in_parts_id, in_qty * -1) * in_lastcost;
 END IF;
 
-SELECT * INTO t_cp FROM account_checkpoint ORDER BY end_date LIMIT 1;
+SELECT * INTO t_cp FROM account_checkpoint ORDER BY end_date DESC LIMIT 1;
 
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
       JOIN ar a ON a.id = i.trans_id
-     WHERE qty + allocated > 0
+     WHERE qty + allocated > 0 and parts_id  = in_parts_id
   ORDER BY a.transdate, a.id, i.id
 LOOP
-
-   IF t_alloc > qty THEN
+   t_avail := t_inv.qty + t_inv.allocated;
+   SELECT * INTO t_ar FROM ar WHERE id = t_inv.trans_id;
+   IF t_alloc < in_qty THEN
        RAISE EXCEPTION 'TOO MANY ALLOCATED';
    ELSIF t_alloc = in_qty THEN
-       return t_cogs;
-   ELSIF (in_qty - t_alloc) <= (t_inv.qty + t_inv.allocated) THEN
-       UPDATE invoice SET allocated = allocated + (in_qty - t_alloc)
+       return t_alloc;
+   ELSIF (in_qty + t_alloc) * -1 <=  t_avail  THEN
+       UPDATE invoice SET allocated = allocated + (in_qty + t_alloc)
         WHERE id = t_inv.id;
 
        INSERT INTO acc_trans 
-              (chart_id, transdate, amount, invoice, approved)
+              (chart_id, transdate, amount, invoice_id, approved, trans_id)
        SELECT expense_accno_id, 
-              CASE WHEN t_inv.transdate > t_cp.end_date THEN t_inv.transdate
+              CASE WHEN t_ar.transdate > t_cp.end_date THEN t_ar.transdate
                    ELSE t_cp.end_date + '1 day'::interval
-               END, -1 * (in_qty - t_alloc) * in_lastcost, t_inv.id, true
+               END, -1 * (in_qty + t_alloc) * in_lastcost, t_inv.id, true,
+              t_inv.trans_id
          FROM parts 
-       WHERE  parts_id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
+       WHERE  id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
               AND expense_accno_id IS NOT NULL
        UNION
        SELECT income_accno_id,
-              CASE WHEN t_inv.transdate > t_cp.end_date THEN t_inv.transdate
+              CASE WHEN t_ar.transdate > t_cp.end_date THEN t_ar.transdate
                    ELSE t_cp.end_date + '1 day'::interval
-               END, (in_qty - t_alloc) * in_lastcost, t_inv.id, true
+               END, (in_qty + t_alloc) * in_lastcost, t_inv.id, true,
+              t_inv.trans_id
          FROM parts 
-       WHERE  parts_id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
+       WHERE  id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
               AND expense_accno_id IS NOT NULL;
                                     
-       t_cogs := t_cogs + (in_qty - t_alloc) * in_lastcost;
-       return t_cogs;
+       t_cogs := t_cogs + (in_qty + t_alloc) * in_lastcost;
+       return in_qty * -1;
    ELSE
-       UPDATE invoice SET allocated = qty
+       UPDATE invoice SET allocated = qty * -1
         WHERE id = t_inv.id;
-       t_cogs := t_cogs + (t_inv.qty + t_inv.allocated) * in_lastcost;
+       t_cogs := t_cogs + t_avail * in_lastcost;
 
-       
        INSERT INTO acc_trans
-              (chart_id, transdate, amount, invoice, approved)
+              (chart_id, transdate, amount, invoice_id, approved, trans_id)
        SELECT expense_accno_id,
-              CASE WHEN t_inv.transdate > t_cp.end_date THEN t_inv.transdate
+              CASE WHEN t_ar.transdate > t_cp.end_date THEN t_ar.transdate
                    ELSE t_cp.end_date + '1 day'::interval
-               END, -1 * (t_inv.qty + t_inv.allocated) * in_lastcost, 
-              t_inv.id, true
+               END,  t_avail * in_lastcost, 
+              t_inv.id, true, t_inv.trans_id
          FROM parts
-       WHERE  parts_id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
+       WHERE  id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
               AND expense_accno_id IS NOT NULL
        UNION
        SELECT income_accno_id,
-              CASE WHEN t_inv.transdate > t_cp.end_date THEN t_inv.transdate
+              CASE WHEN t_ar.transdate > t_cp.end_date THEN t_ar.transdate
                    ELSE t_cp.end_date + '1 day'::interval
-               END, (t_inv.qty + t_inv.allocated) * in_lastcost, t_inv.id, true
+               END, -1 * t_avail * in_lastcost, t_inv.id, true, t_inv.trans_id
          FROM parts
-       WHERE  parts_id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
+       WHERE  id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
               AND expense_accno_id IS NOT NULL;
-
+       t_alloc := t_alloc + t_avail;
+       t_cogs := t_cogs + t_avail * in_lastcost;
    END IF;
 
 
 END LOOP;
 
+RETURN t_alloc;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -256,7 +267,6 @@ SELECT CASE WHEN t_ar.transdate > max(end_date) THEN t_ar.transdate
             ELSE max(end_date) + '1 day'::interval
         END INTO t_transdate
   from account_checkpoint td; 
-
 INSERT INTO acc_trans 
        (trans_id, chart_id, approved, amount, transdate,  invoice_id)
 VALUES (t_inv.trans_id, CASE WHEN t_inv.qty < 0 AND t_ar.is_return 
@@ -276,11 +286,24 @@ CREATE OR REPLACE FUNCTION cogs__add_for_ap_line(in_invoice_id int)
 RETURNS numeric AS
 $$
 
-SELECT cogs__add_for_ap(i.parts_id, i.qty, p.lastcost)
+DECLARE retval numeric;
+
+BEGIN
+
+SELECT cogs__add_for_ap(i.parts_id, i.qty, i.sellprice) INTO retval
   FROM invoice i
   JOIN parts p ON p.id = i.parts_id
  WHERE i.id = $1;
 
-$$ LANGUAGE SQL;
+UPDATE invoice 
+   SET allocated = allocated + retval
+ WHERE id = $1;
+
+
+RETURN retval;
+
+END;
+
+$$ LANGUAGE PLPGSQL;
 
 COMMIT;
