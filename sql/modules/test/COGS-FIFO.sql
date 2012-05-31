@@ -68,6 +68,14 @@ SELECT 'post-ap-run COGS is 37.50, (invoice 1, series 1)', sum(amount) = 37.5
   from acc_trans 
  where trans_id = -1201 and chart_id = -1102;
 
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ap-run allocated 75 (invoice 1, series 1)', allocated = -75
+FROM invoice WHERE id = -1201;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ap-run allocated 75 (invoice 2, series 1)', allocated = 75
+FROM invoice WHERE id = -1202;
+
 INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
 VALUES (-1203, true, 'test1003', now() - '9 days'::interval, -2000);
 INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
@@ -80,10 +88,21 @@ SELECT 'initial COGS is null, (invoice 3, series 1)', sum(amount) IS NULL
 
 SELECT cogs__add_for_ar_line(-1203);
 
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ap-run allocated 75 (invoice 1, series 1)', allocated = -75
+FROM invoice WHERE id = -1201;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ap-run allocated still 75 (invoice 2, series 1)', allocated = 75
+FROM invoice WHERE id = -1202;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ap-run allocated 0 (invoice 3, series 1)', allocated = 0
+FROM invoice WHERE id = -1203;
 
 --duplicate to check against reversals
 INSERT INTO test_result (test_name, success)
-SELECT 'post-ap-run COGS is 37.50, (invoice 1, series 1)', sum(amount) = 37.5
+SELECT 'post-ap-run COGS still 37.50, (invoice 1, series 1)', sum(amount) = 37.5
   from acc_trans 
  where trans_id = -1201 and chart_id = -1102;
 
@@ -99,6 +118,22 @@ INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
 VALUES (-1204, -1204, -1, -75, 0, 1);
 
 SELECT cogs__add_for_ap_line(-1204);
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ap-run allocated 100 (invoice 1, series 1)', allocated = -100
+FROM invoice WHERE id = -1201;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ap-run allocated still 75 (invoice 2, series 1)', allocated = 75
+FROM invoice WHERE id = -1202;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ap-run allocated 50 (invoice 3, series 1)', allocated = -50
+FROM invoice WHERE id = -1203;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ap-run allocated 75 (invoice 4, series 1)', allocated = 75
+FROM invoice WHERE id = -1204;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'post-ap-run COGS is 62.50, (invoice 1, series 1)', sum(amount) = 62.5
@@ -119,6 +154,27 @@ VALUES (-1205, -1205, -1, -50, 0, 2);
 SELECT parts_id, qty, allocated, trans_id, id FROM invoice WHERE parts_id < 0;
 SELECT cogs__add_for_ap_line(-1205);
 
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ap-run allocated still 100 (invoice 1, series 1)', allocated = -100
+FROM invoice WHERE id = -1201;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ap-run allocated still 75 (invoice 2, series 1)', allocated = 75
+FROM invoice WHERE id = -1202;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ap-run allocated 100 (invoice 3, series 1)', allocated = -100
+FROM invoice WHERE id = -1203;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ap-run allocated still 75 (invoice 4, series 1)', allocated = 75
+FROM invoice WHERE id = -1204;
+
+
+INSERT INTO test_result(test_name, success)
+SELECT 'post-ap-run allocated 50 (invoice 5, series 1)', allocated = 50
+FROM invoice WHERE id = -1205;
+
 INSERT INTO test_result (test_name, success)
 SELECT 'post-ap-run COGS is 62.50, (invoice 1, series 1)', sum(amount) = 62.5
   from acc_trans 
@@ -134,6 +190,13 @@ SELECT 'post-ap-run COGS is 150, (invoice 2, series 1)', sum(amount) = 150
   from acc_trans 
  where trans_id = -1203 and chart_id = -1102;
 
+-- Series 2, AP invoices first, cogs only added to AR
+
+
+
+-- Series 3, Mixed
+
+-- Series 4, AP Reversal
 
 SELECT * FROM test_result;
 
