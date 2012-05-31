@@ -80,6 +80,14 @@ String of the beginning of the role.
 
 our $Role_Prefix;
 
+=item DBName
+
+name of the database connecting to
+
+=cut
+
+our $DBName;
+
 =back
 
 =head1 METHODS 
@@ -111,6 +119,7 @@ sub zero() {
     $Locale = undef;
     $DBH = undef;
     @Roles = ();
+    $DBName = undef;
     $Role_Prefix = undef;
 }
 
@@ -133,6 +142,7 @@ sub cleanup {
     $SODA             = {};
     $Company_Settings = {};
     $DBH = undef;
+    $DBName = undef;
     @Roles = ();
     $Role_Prefix = undef;
 }

@@ -1283,6 +1283,7 @@ sub db_init {
     ($self->{_role_prefix}) = $sth->fetchrow_array;
     $LedgerSMB::App_State::Roles = @{$self->{_roles}};
     $LedgerSMB::App_State::Role_Prefix = $self->{_role_prefix};
+    $LedgerSMB::App_State::DBName = $dbname;
     # Expect @{$self->{_roles}} to go away sometime during 1.4/1.5 development
     # -CT
 

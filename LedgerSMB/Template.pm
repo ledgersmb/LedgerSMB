@@ -282,6 +282,7 @@ sub render {
         $vars->{ENVARS} = \%ENV;
         $vars->{USER} = $LedgerSMB::App_State::User;
         $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
+        $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
 
         my @stdformats = ();
         for (qw(HTML PDF PS)){

@@ -887,6 +887,7 @@ sub _db_init {
     $self->{dbh}->{pg_server_prepare} = 0;
     $self->{dbh}->{pg_enable_utf8} = 1;
     $LedgerSMB::App_State::DBH = $self->{dbh};
+    $LedgerSMB::App_State::DBName = $dbname;
 
     # This is the general version check
     my $sth = $self->{dbh}->prepare("
