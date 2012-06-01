@@ -1306,6 +1306,10 @@ sub trial_balance {
     my ( $self, $myconfig, $form ) = @_;
     my $p;
     my $year_end = $form->{ignore_yearend};
+    ( $form->{fromdate}, $form->{todate} ) =
+      $form->from_to( $form->{fromyear}, $form->{frommonth}, $form->{interval} )
+      if $form->{fromyear} && $form->{frommonth};
+
     my $dbh = $form->{dbh};
     my $approved = 'FALSE';
 
