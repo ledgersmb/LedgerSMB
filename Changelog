@@ -61,6 +61,7 @@ Changelog for 1.3.18
 * Fixed ODS output broken due to missing export (Chris T)
 * Fixed button disable inverted (Chris T)
 * Fixed internal server error on requirements report (Chris T, h/t Nigel T)
+* Fixed formatting issues with long dates and ISO db dates (Chris T 3525843)
 
 David M is David Mora
 Nigel T is Nigel Titley

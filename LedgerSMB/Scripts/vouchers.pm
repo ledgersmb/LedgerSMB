@@ -114,6 +114,8 @@ sub add_vouchers {
         ap         => {script => 'bin/ap.pl', function => sub {add()}},
         ar         => {script => 'bin/ar.pl', function => sub {add()}},
         gl         => {script => 'bin/gl.pl', function => sub {add()}},
+     sales_invoice => {script => 'bin/is.pl', function => sub {add()}},
+    vendor_invoice => {script => 'bin/ir.pl', function => sub {add()}}
         receipt    => {script => 'scripts/payment.pl', 
 	             function => sub {
 				my ($request) = @_;

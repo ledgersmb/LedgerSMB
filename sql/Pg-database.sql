@@ -1315,7 +1315,7 @@ CREATE TABLE batch_class (
 
 COMMENT ON TABLE batch_class IS 
 $$ These values are hard-coded.  Please coordinate before adding standard
-values.$$;
+values. Values from 900 to 999 are reserved for local use.$$;
 
 insert into batch_class (id,class) values (1,'ap');
 insert into batch_class (id,class) values (2,'ar');
@@ -1323,8 +1323,11 @@ insert into batch_class (id,class) values (3,'payment');
 insert into batch_class (id,class) values (4,'payment_reversal');
 insert into batch_class (id,class) values (5,'gl');
 insert into batch_class (id,class) values (6,'receipt');
+insert into batch_class (id,class) values (7,'receipt_reversal');
+insert into batch_class (id,class) values (8,'sales_invoice');
+insert into batch_class (id,class) values (9,'vendor_invoice');
 
-SELECT SETVAL('batch_class_id_seq',6);
+SELECT SETVAL('batch_class_id_seq',9);
 
 CREATE TABLE batch (
   id serial primary key,

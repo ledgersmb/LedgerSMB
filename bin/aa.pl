@@ -1008,7 +1008,7 @@ sub form_footer {
            if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
                $button{edit_and_approve} = { 
                    ndx   => 4, 
-                   key   => 'O', 
+                   key   => 'E', 
                    value => $locale->text('Post as Shown') };
           }
            delete $button{post_as_new};

@@ -98,7 +98,6 @@ sub text {
 ##}
 sub date {
     my ( $self, $myconfig, $date, $longformat ) = @_;
-
     my @longmonth = (qw(Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec));
     @longmonth = (
         "January",   "February", "March",    "April",
@@ -124,8 +123,10 @@ sub date {
         return $date;
     }
     if ( $date =~ /\D/ ) {
-
-        if ( $myconfig->{dateformat} =~ /^yy/ ) {
+        if ($date  =~ /\d{4}/){ # db date in
+            ( $yy, $mm, $dd ) = split /\D/, $date;
+        }
+        elsif ( $myconfig->{dateformat} =~ /^yy/ ) {
             ( $yy, $mm, $dd ) = split /\D/, $date;
         }
         elsif ( $myconfig->{dateformat} =~ /^mm/ ) {

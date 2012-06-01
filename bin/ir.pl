@@ -54,6 +54,41 @@ sub copy_to_new{
     update();
 }
 
+sub edit_and_approve {
+    use LedgerSMB::DBObject::Draft;
+    use LedgerSMB;
+    my $lsmb = LedgerSMB->new();
+    $lsmb->merge($form);
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    $draft->delete();
+    delete $form->{id};
+    $form->{approved} = 1;
+    &post;
+}
+
+sub approve {
+    use LedgerSMB::DBObject::Draft;
+    use LedgerSMB;
+    my $lsmb = LedgerSMB->new();
+    $lsmb->merge($form);
+
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+
+    $draft->approve();
+
+    if ($form->{callback}){
+        print "Location: $form->{callback}\n";
+        print "Status: 302 Found\n\n";
+        print "<html><body>";
+        my $url = $form->{callback};
+        print qq|If you are not redirected automatically, click <a href="$url">|
+                . qq|here</a>.</body></html>|;
+
+    } else {
+        $form->info($locale->text('Draft Posted'));
+    }
+}
+
 sub new_screen {
     use LedgerSMB::Form;
     my @reqprops = qw(ARAP vc dbh stylesheet type);
@@ -871,13 +906,33 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
              { ndx => 11, key=> 'N', value => $locale->text('New') }
         );
 
-        if ( $form->{id} ) {
+        if ($from->{separate_duties}){
+           $button{'post'}->{value} = $locale->text('Save') unless $form->{id};
+        }
 
-            if ( $form->{locked} ) {
+        if ( $form->{id} ) {
+         
+            if ( $form->{locked} and !$form->{approved} ) {
                 for ( "post", "delete", 'on_hold' ) { delete $button{$_} }
             }
             for ( 'post_as_new', 'print_and_post_as_new', "update") {
                 delete $button{$_};
+            }
+            my $is_draft = 0;
+            if (!$form->{approved} && !$form->{batch_id}){
+               $is_draft = 1;
+               $button{approve} = { 
+                       ndx   => 3, 
+                       key   => 'O', 
+                       value => $locale->text('Post as Saved') };
+               if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
+                   $button{edit_and_approve} = { 
+                       ndx   => 4, 
+                       key   => 'E', 
+                       value => $locale->text('Post as Shown') };
+              }
+               delete $button{post_as_new};
+               delete $button{post};
             }
 
         }
@@ -1265,6 +1320,7 @@ sub update {
 }
 
 sub post {
+
     if (!$form->close_form()){
        $form->{notice} = $locale->text(
              'Could not save the data.  Please try again'

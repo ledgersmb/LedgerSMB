@@ -959,14 +959,34 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
         );
 
 
-
+        if ($from->{separate_duties}){
+           $button{'post'}->{value} = $locale->text('Save') unless $form->{id};
+        }
 
         if ( $form->{id} ) {
 
-            if ( $form->{locked} || $transdate <= $closedto ) {
+            if ( ($form->{locked} || $transdate <= $closedto) 
+                    and $form->{approved}
+             ) {
                 for ( "post", "print_and_post", "delete" ) {
                     delete $button{$_};
                 }
+            }
+            my $is_draft = 0;
+            if (!$form->{approved} && !$form->{batch_id}){
+               $is_draft = 1;
+               $button{approve} = { 
+                       ndx   => 3, 
+                       key   => 'O', 
+                       value => $locale->text('Post as Saved') };
+               if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
+                   $button{edit_and_approve} = { 
+                       ndx   => 4, 
+                       key   => 'E', 
+                       value => $locale->text('Post as Shown') };
+              }
+               delete $button{post_as_new};
+               delete $button{post};
             }
 
             if ( !${LedgerSMB::Sysconfig::latex} ) {
