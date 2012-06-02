@@ -68,10 +68,6 @@ feature 'OpenOffice.org output',
     'XML::Twig' => 0,
     'OpenOffice::OODoc' => 0;
 
-feature 'Excel output',
-    -default => 0,
-    'Excel::Template::Plus' => 0;
-
 Makefile->postamble(
      qq{installdb :: \n\tLSMB_INSTALL_DB=1 LSMB_TEST_DB=1 make test\n}
 );
