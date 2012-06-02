@@ -1,0 +1,124 @@
+<div class="container" id="person_div">
+<?lsmb SWITCH entity_class
+	?><?lsmb CASE 1 ?><?lsmb entity_classname = "Vendor" 
+	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
+	?><?lsmb END ?>
+	<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
+<form name="customer" method="post" action="<?lsmb script ?>">
+<?lsmb PROCESS input element_data = { # Only for generate_control_code
+		type = "hidden"
+		name = "target_div"
+		value = 'person_div'
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "entity_id"
+		value = entity_id
+	} ?>	
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "id"
+		value = person.id
+	} ?>	
+<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "form_id"
+		value = form_id
+	} ?>
+	<?lsmb PROCESS input element_data = {
+		type = "hidden"
+		name = "account_class"
+		value = account_class
+	} ?>	
+<div class="input_line">
+<div class="input_group1">
+	<?lsmb PROCESS input element_data = {
+		label = text('Control Code') #'
+		type= "text"
+		name = "control_code"
+		value = person.control_code
+		size = "20"
+	} ?>
+	<?lsmb IF !created_as_class;
+		created_as_class = entity_class;
+	END; # IF !created_as_class ?> 
+</div>
+<div class="input_group2">
+        <?lsmb company_entity_class =persony.entity_class;
+        IF !company_entity_class;
+              company_entity_class = request.entity_class;
+        END;
+        PROCESS select element_data = {
+		name = "entity_class"
+		options = entity_classes
+		default_values = [person_entity_class]
+		text_attr = 'class'
+		value_attr = 'id'
+		label = text('Class')
+	} ?>
+	<?lsmb PROCESS button element_data = {
+		text = text('Generate Control Code') #'
+		type = "submit"
+		name = "action"
+		value = "generate_control_code"
+		class = "submit"
+        } ?>
+        <?lsmb PROCESS button element_data = {
+                text = text('Retrieve')
+                type = 'submit'
+                name = 'action'
+               value = 'get_by_cc'
+               class = 'submit'
+        } ?>
+</div>
+</div>
+<div class="input_line">
+<div class="input_group1">
+	<?lsmb PROCESS input element_data = {
+		label = text('Given Name') #'
+		type= "text"
+		name = "first_name"
+		value = person.first_name
+		size = "20"
+	} ?>
+</div>
+<div class="input_group2">
+        <?lsmb PROCESS input element_data = {
+                label = text('Middle Name') #'
+                type= "text"
+                name = "middle_name"
+                value = person.middle_name
+                size = "20"
+        } ?>
+</div>
+<div class="input_group2">
+        <?lsmb PROCESS input element_data = {
+                label = text('Surname') 
+                type= "text"
+                name = "surname"
+                value = person.surname
+                size = "20"
+        } ?>
+</div>
+</div>
+<div class="input_line">
+            <hr/>
+<div class="input_group1">
+		<?lsmb INCLUDE button element_data = {
+			text = text('Save'),
+			class="submit" 
+			type="submit" 
+			name="action" 
+			value="save_person" 
+			accesskey="S" 
+			title="Save [Alt-S]"
+		} ?>
+</div>
+</div>
+</form>
+<?lsmb FOREACH n = notes ?>
+<div class="note">
+<div class="note_contents"><?lsmb n.note ?></div>
+</div>
+<?lsmb END ?>
+</div>

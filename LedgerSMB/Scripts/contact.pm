@@ -17,6 +17,7 @@ This module is the UI controller for the customer, vendor, etc functions; it
 package LedgerSMB::Scripts::contact;
 
 use LedgerSMB::DBObject::Entity::Company;
+use LedgerSMB::DBObject::Entity::Person;
 use LedgerSMB::DBObject::Entity::Credit_Account;
 use LedgerSMB::DBObject::Entity::Location;
 use LedgerSMB::DBObject::Entity::Contact;
@@ -83,18 +84,21 @@ sub get {
 # this attaches everything other than {company} to $request and displays it.
 
 sub _main_screen {
-    my ($request, $company) = @_;
+    my ($request, $company, $person) = @_;
 
     # DIVS logic
     my @DIVS;
-    if ($company->{entity_id}){
-       @DIVS = qw(company credit address contact_info bank_act notes);
+    if ($company->{entity_id} or $person->{entity_id}){
+       @DIVS = qw(address contact_info bank_act notes);
+       unshift @DIVS, 'company' if $company->{entity_id};
+       unshift @DIVS, 'person' if $person->{entity_id};
     } else {
-       @DIVS = qw(company);
+       @DIVS = qw(company person);
     }
 
     my %DIV_LABEL = (
              company => $locale->text('Company'),
+              person => $locale->text('Person'),
               credit => $locale->text('Credit Accounts'),
              address => $locale->text('Addresses'),
         contact_info => $locale->text('Contact Info'),
@@ -223,6 +227,7 @@ sub _main_screen {
                 DIV_LABEL => \%DIV_LABEL,
                   request => $request,
                   company => $company,
+                   person => $person,
              country_list => \@country_list,
                credit_act => $credit_act,
               credit_list => \@credit_list,
@@ -260,7 +265,7 @@ sub generate_control_code {
                            );
     ($request->{control_code}) = values %$ref;
     $request->{target_div} = 'company_div';
-    _main_screen($request, $request);
+    _main_screen($request, $request, $request);
 }
 
 =item dispatch_legacy

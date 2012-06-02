@@ -139,34 +139,6 @@ sub save {
     $self = $self->new(%$ref);
 }
 
-=item search({account_class => int, contact => string, contact_info => arrayref(string),
-              meta_number => string, address => string, city => string, state => string,
-              mail_code => string, country => string, date_from => date, 
-              date_to => date, business_id => int, legal_name => string, 
-              control_code string})
-
-Retrieves a list of companies matching search criteria.
-
-account_class is required and is an exact match.
-control_code and business_id are exact matches.
-All other criteria are partial matches.
-
-Except with account_class, undef matches all values.
-
-=cut
-
-sub search {
-    my ($self, $criteria) = @_;
-    my @results = $self->exec_method({funcname => 'company__search', 
-                                       arghash => $criteria}
-    );
-    for my $ref (@results){
-        $self->prepare_dbhash($ref);
-        $ref = $self->new(%$ref);
-    }
-    return @results;
-}
-
 =back
 
 =head1 COPYRIGHT
