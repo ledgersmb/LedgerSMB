@@ -106,7 +106,7 @@ Returns the inputs to display on header.
 =cut
 
 sub header_lines {
-    return [{name => 'control_code',
+    return [{name => 'reference',
              text => $locale->text('Budget Number')},
             {name => 'description',
              text => $locale->text('Description')},
@@ -140,11 +140,11 @@ from a budget object.
 
 =over
 
-=item control_code
+=item reference
 
 =cut
 
-has control_code => (is => 'ro', isa => 'Str');
+has  reference => (is => 'ro', isa => 'Str');
 
 =item description
 
@@ -181,7 +181,8 @@ sub for_budget_id {
     use LedgerSMB::DBObject::Budget;
 
     my $budget = LedgerSMB::DBObject::Budget->get($id);
-    return $self->new(%$budget);  
+    my $report = $self->new(%$budget); 
+    return $report;
 }
 
 =item run_report
