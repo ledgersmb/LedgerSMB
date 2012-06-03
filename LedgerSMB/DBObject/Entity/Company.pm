@@ -98,7 +98,7 @@ sub get {
     my ($ref) = $self->call_procedure(procname => 'company__get',
                                           args => [$id]);
     if (!$ref){
-        die $self->{_locale}->text('No company found.');
+        return undef;
     }
     $self->prepare_dbhash($ref);
     return $self->new(%$ref);
@@ -116,7 +116,7 @@ sub get_by_cc {
     my ($ref) = $self->call_procedure(procname => 'company__get_by_cc',
                                           args => [$cc]);
     if (!$ref){
-        die $self->{_locale}->text('No company found.');
+        return undef;
     }
     $self->prepare_dbhash($ref);
     return $self->new(%$ref);

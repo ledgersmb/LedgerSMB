@@ -50,13 +50,15 @@ control code
 
 sub get_by_cc {
     my ($request) = @_;
-    $request->{entity_class} ||= $request->{account_class};
-    $request->{legal_name} ||= 'test';
-    $request->{country_id} = 0;
-    $request->{target_div} = 'credit_div';
-    my $company = LedgerSMB::DBObject::Entity::Company->new(%$request);
-    $company = $company->get_by_cc($request->{control_code});
-    _main_screen($request, $company);
+    my $entity = 
+              LedgerSMB::DBObject::Entity->get_by_cc($request->{control_code});
+    my ($company, $person) = (undef, undef);
+    if ($entity->isa('LedgerSMB::DBObject::Entity::Company')){
+       $company = $entity;
+    } elsif ($entity->isa('LedgerSMB::DBObject::Entity::Person')){
+       $person = $entity;
+    }
+    _main_screen($request, $company, $person);
 }
 
 
@@ -72,10 +74,14 @@ of the company information.
 
 sub get {
     my ($request) = @_;
-    $request->{entity_class} ||= $request->{account_class};
-    $request->{legal_name} ||= 'test';
-    my $company = LedgerSMB::DBObject::Entity::Company->get($request->{entity_id});
-    _main_screen($request, $company);
+    my $entity = LedgerSMB::DBObject::Entity->get($request->{entity_id});
+    my ($company, $person) = (undef, undef);
+    if ($entity->isa('LedgerSMB::DBObject::Entity::Company')){
+       $company = $entity;
+    } elsif ($entity->isa('LedgerSMB::DBObject::Entity::Person')){
+       $person = $entity;
+    }
+    _main_screen($request, $company, $person);
 }
 
 
@@ -86,15 +92,17 @@ sub get {
 sub _main_screen {
     my ($request, $company, $person) = @_;
 
+
     # DIVS logic
     my @DIVS;
     if ($company->{entity_id} or $person->{entity_id}){
-       @DIVS = qw(address contact_info bank_act notes);
+       @DIVS = qw(credit address contact_info bank_act notes);
        unshift @DIVS, 'company' if $company->{entity_id};
        unshift @DIVS, 'person' if $person->{entity_id};
     } else {
        @DIVS = qw(company person);
     }
+    $request->{company_div} ||= 'company';
 
     my %DIV_LABEL = (
              company => $locale->text('Company'),
@@ -107,9 +115,11 @@ sub _main_screen {
     );
 
     # DIVS contents
+    my $entity_id = $company->{entity_id};
+    $entity_id ||= $person->{entity_id};
     my @credit_list = 
        LedgerSMB::DBObject::Entity::Credit_Account->list_for_entity(
-                          $company->{entity_id},
+                          $entity_id,
                           $request->{entity_class}
         );
     my $credit_act;
@@ -124,7 +134,7 @@ sub _main_screen {
     $entity_class ||= $request->{entity_class};
     $entity_class ||= $request->{account_class};
     my @locations = LedgerSMB::DBObject::Entity::Location->get_active(
-                       {entity_id => $request->{entity_id},
+                       {entity_id => $entity_id,
                         credit_id => $credit_act->{id}}
           );
 
@@ -132,16 +142,19 @@ sub _main_screen {
           LedgerSMB::DBObject::Entity::Contact->list_classes;
 
     my @contacts = LedgerSMB::DBObject::Entity::Contact->list(
-              {entity_id => $request->{entity_id},
+              {entity_id => $entity_id,
                credit_id => $credit_act->{id}}
     );
     my @bank_account = 
-         LedgerSMB::DBObject::Entity::Bank->list($request->{entity_id});
+         LedgerSMB::DBObject::Entity::Bank->list($entity_id);
     my @notes =
-         LedgerSMB::DBObject::Entity::Note->list($request->{entity_id},
+         LedgerSMB::DBObject::Entity::Note->list($entity_id,
                                                  $credit_act->{id});
 
     # Globals for the template
+    my @salutations = $request->call_procedure(
+                procname => 'person__list_salutations'
+    );
     my @all_taxes = $request->call_procedure(procname => 'account__get_taxes');
 
     my @ar_ap_acc_list = $request->call_procedure(procname => 'chart_get_ar_ap',
@@ -220,7 +233,6 @@ sub _main_screen {
     my @entity_classes = $request->call_procedure(
                       procname => 'entity__list_classes'
     );
-    my $entity_id = $company->{entity_id};
 
     $template->render({
                      DIVS => \@DIVS,
@@ -238,6 +250,7 @@ sub _main_screen {
                     notes => \@notes,
           # globals
                   form_id => $request->{form_id},
+              salutations => \@salutations,
            ar_ap_acc_list => \@ar_ap_acc_list,
             cash_acc_list => \@cash_acc_list,
         discount_acc_list => \@discount_acc_list,
@@ -264,7 +277,6 @@ sub generate_control_code {
                              args     => ['entity_control']
                            );
     ($request->{control_code}) = values %$ref;
-    $request->{target_div} = 'company_div';
     _main_screen($request, $request, $request);
 }
 
@@ -413,11 +425,26 @@ Saves a company and moves on to the next screen
 sub save_company {
     my ($request) = @_;
     my $company = LedgerSMB::DBObject::Entity::Company->new(%$request);
-    use Data::Dumper;
-    $Data::Dumper::Sortkeys => 1;
     $request->{target_div} = 'credit_div';
-    $company = $company->save;
-    _main_screen($request, $company);
+    _main_screen($request, $company->save);
+}
+
+=item save_person
+
+Saves a person and moves on to the next screen
+
+=cut
+
+sub save_person {
+    my ($request) = @_;
+    my $person = LedgerSMB::DBObject::Entity::Person->new(
+              %$request
+    );
+    use Data::Dumper;
+    $Data::Dumper::Sortkeys = 1;
+    $request->{target_div} = 'credit_div';
+    $person->save;
+    _main_screen($request, undef, $person);
 }
 
 =item save_credit($request)
@@ -547,7 +574,7 @@ sub save_contact {
     get($request);
 } 
 
-=item selete_contact
+=item delete_contact
 
 Deletes the specified contact info.  Note that for_credit is used to pass the 
 credit id over in this case.

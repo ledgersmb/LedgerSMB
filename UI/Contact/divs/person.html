@@ -74,6 +74,20 @@
 </div>
 <div class="input_line">
 <div class="input_group1">
+     <?lsmb 
+        PROCESS select element_data = {
+                  label = text('Salutation')
+                   name = 'salutation_id'
+         default_values = [salutation_id]
+                options = salutations
+                  class = 'salutations'
+              text_attr = 'salutation'
+             value_attr = 'id'
+    } ?>
+</div>
+</div>
+<div class="input_line">
+<div class="input_group1">
 	<?lsmb PROCESS input element_data = {
 		label = text('Given Name') #'
 		type= "text"
@@ -82,7 +96,9 @@
 		size = "20"
 	} ?>
 </div>
-<div class="input_group2">
+</div>
+<div class="input_line">
+<div class="input_group1">
         <?lsmb PROCESS input element_data = {
                 label = text('Middle Name') #'
                 type= "text"
@@ -91,14 +107,33 @@
                 size = "20"
         } ?>
 </div>
-<div class="input_group2">
+</div>
+<div class="input_line">
+<div class="input_group1">
         <?lsmb PROCESS input element_data = {
                 label = text('Surname') 
                 type= "text"
-                name = "surname"
-                value = person.surname
+                name = "last_name"
+                value = person.last_name
                 size = "20"
         } ?>
+</div>
+</div>
+<div class="input_line">
+<div class="input_group1">
+       <?lsmb 
+                person_country_id = person.country_id;
+                IF !person_country_id; 
+                          person_country_id = default_country_id;
+                END;
+		INCLUDE select element_data = {
+			text_attr = "name"
+			value_attr = "id"
+			default_values = [company_country_id]
+			options = country_list
+			name = "country_id"
+			label = text('Country') 
+	} ?> 
 </div>
 </div>
 <div class="input_line">

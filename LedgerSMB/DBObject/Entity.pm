@@ -6,6 +6,9 @@ LedgerSMB::DBObject::Entity -- Entity Management base classes for LedgerSMB
 
 package LedgerSMB::DBObject::Entity;
 use Moose;
+extends 'LedgerSMB::DBObject_Moose';
+use LedgerSMB::DBObject::Entity::Company;
+use LedgerSMB::DBObject::Entity::Person;
 
 =head1 SYNOPSYS
 
@@ -22,7 +25,6 @@ likely inherit this class.
 
 =cut
 
-extends 'LedgerSMB::DBObject_Moose';
 
 =head1 PROPERTIES
 
@@ -63,7 +65,7 @@ ID of country of entiy.
 
 =cut
 
-has 'country_id' => (is => 'rw', isa => 'Int', required => '1');
+has 'country_id' => (is => 'rw', isa => 'Int');
 
 =item country_name
 
@@ -89,38 +91,27 @@ has 'entity_class' => (is => 'rw', isa => 'Int');
 
 =over
 
-=item get_locations
+=item get($id)
 
-Returns a list of locations for that entity
+This retrieves the entity or person by id
 
-=cut
-
-sub get_locations {
-    my ($self) = @_;
-    return $self->exec_method({funcname => 'entity__list_locations'}, add_dbo=> 1);
-}
-
-=item get_contacts
-
-Returns a list of contacts tied to the entity.
+Please note, that the return value will always be either undef (not found), or
+an object of type of either LedgerSMB::DBObject::Entity::Company or
+LedgerSMB::DBObject::Entity::Person
 
 =cut
 
-sub get_contacts{
-    my ($self) = @_;
-    return $self->exec_method({funcname => 'entity__list_contacts'}, add_dbo => 1);
+sub get{
+    my ($id) = @_;
+    my $entity = 
+       LedgerSMB::DBObject::Entity::Company->get($id) ||
+        LedgerSMB::DBObject::Entity::Person->get($id);
+    return $entity; 
 }
 
-=item get_notes
+=item get_by_cc($control_code)
 
-Returns a list of notes tied to the entity.
-
-=cut
-
-sub get_notes{
-    my ($self) = @_;
-    return $self->exec_method({funcname => 'entity__list_notes'}, add_dbo => 1);
-}
+This retrieves the entity or person by control code
 
 =head1 COPYRIGHT
 

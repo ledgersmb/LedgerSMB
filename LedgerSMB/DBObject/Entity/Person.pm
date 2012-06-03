@@ -32,7 +32,6 @@ use Moose;
 extends 'LedgerSMB::DBObject::Entity';
 
 use LedgerSMB::App_State;
-
 my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 PROPERTIES
@@ -148,10 +147,7 @@ person does not exist.
 sub get_by_cc {
     my ($self, $cc) = @_;
     my ($ref) = $self->call_procedure(procname => 'person__get_by_cc',
-                                          args => [$cc]);
-    if (!$ref){
-        die $self->{_locale}->text('No person found.');
-    }
+                                          args => [$cc]) || return undef;
     $self->prepare_dbhash($ref);
     return $self->new(%$ref);
 }
@@ -166,11 +162,7 @@ Saves the item and populates db defaults in id and created.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'person__save'});
-    $self->prepare_dbhash($ref);
-    $ref->{control_code} = $self->{control_code};
-    $ref->{entity_class} = $self->{entity_class};
-    $ref->{country_id} = $self->{country_id};
-    $self = $self->new(%$ref);
+    $self->entity_id(values %$ref);
 }
 
 =back
@@ -183,6 +175,9 @@ file for details.
 
 =cut
 
-__PACKAGE__->meta->make_immutable;
+# Not sure why but making the class immutable causes parent attributes to be 
+# lost.  Is this a bug in Class::MOP?
+#
+#__PACKAGE__->meta->make_immutable;
 
-return 1;
+1;
