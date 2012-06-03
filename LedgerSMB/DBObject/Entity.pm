@@ -102,7 +102,7 @@ LedgerSMB::DBObject::Entity::Person
 =cut
 
 sub get{
-    my ($id) = @_;
+    my ($self, $id) = @_;
     my $entity = 
        LedgerSMB::DBObject::Entity::Company->get($id) ||
         LedgerSMB::DBObject::Entity::Person->get($id);
@@ -111,7 +111,19 @@ sub get{
 
 =item get_by_cc($control_code)
 
-This retrieves the entity or person by control code
+This retrieves the entity or person by control code.  It has the same return
+possibilities as get() above.
+
+=cut
+
+sub get_by_cc{
+    my ($self, $control_code) = @_;
+    my $entity = 
+       LedgerSMB::DBObject::Entity::Company->get_by_cc($control_code) ||
+        LedgerSMB::DBObject::Entity::Person->get_by_cc($control_code);
+    return $entity; 
+}
+
 
 =head1 COPYRIGHT
 

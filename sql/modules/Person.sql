@@ -20,6 +20,41 @@ $$ SELECT * FROM language ORDER BY code ASC $$ language sql;
 COMMENT ON FUNCTION person__list_languages() IS
 $$ Returns a list of languages ordered by code$$;
 
+DROP TYPE IF EXISTS person_entity CASCADE;
+
+CREATE TYPE person_entity AS (
+    entity_id int,
+    control_code text,
+    name text,
+    country_id int,
+    country_name text,
+    first_name text,
+    middle_name text,
+    last_name text
+);
+
+CREATE FUNCTION person__get(in_entity_id int)
+RETURNS person_entity AS
+$$
+SELECT e.id, e.control_code, e.name, e.country_id, c.name, 
+       p.first_name, p.middle_name, p.last_name
+  FROM entity e
+  JOIN country c ON c.id = e.country_id
+  JOIN person p ON p.entity_id = e.id
+ WHERE e.id = $1;
+$$ LANGUAGE SQL;
+
+CREATE FUNCTION person__get_by_cc(in_control_code text)
+RETURNS person_entity AS
+$$
+SELECT e.id, e.control_code, e.name, e.country_id, c.name, 
+       p.first_name, p.middle_name, p.last_name
+  FROM entity e
+  JOIN country c ON c.id = e.country_id
+  JOIN person p ON p.entity_id = e.id
+ WHERE e.control_code = $1;
+$$ LANGUAGE SQL;
+
 CREATE OR REPLACE FUNCTION person__list_salutations() 
 RETURNS SETOF salutation AS
 $$ SELECT * FROM salutation ORDER BY id ASC $$ language sql;

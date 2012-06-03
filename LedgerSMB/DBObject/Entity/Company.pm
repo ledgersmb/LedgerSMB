@@ -97,9 +97,7 @@ sub get {
     my ($self, $id) = @_;
     my ($ref) = $self->call_procedure(procname => 'company__get',
                                           args => [$id]);
-    if (!$ref){
-        return undef;
-    }
+    return undef unless $ref->{control_code};
     $self->prepare_dbhash($ref);
     return $self->new(%$ref);
 }
@@ -115,9 +113,7 @@ sub get_by_cc {
     my ($self, $cc) = @_;
     my ($ref) = $self->call_procedure(procname => 'company__get_by_cc',
                                           args => [$cc]);
-    if (!$ref){
-        return undef;
-    }
+    return undef unless $ref->{control_code};
     $self->prepare_dbhash($ref);
     return $self->new(%$ref);
 }

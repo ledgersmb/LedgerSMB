@@ -130,9 +130,7 @@ sub get {
     my ($self, $id) = @_;
     my ($ref) = $self->call_procedure(procname => 'person__get',
                                           args => [$id]);
-    if (!$ref){
-        die $locale->text('No person found.');
-    }
+    return undef unless $ref->{control_code};
     $self->prepare_dbhash($ref);
     return $self->new(%$ref);
 }
@@ -147,7 +145,8 @@ person does not exist.
 sub get_by_cc {
     my ($self, $cc) = @_;
     my ($ref) = $self->call_procedure(procname => 'person__get_by_cc',
-                                          args => [$cc]) || return undef;
+                                          args => [$cc]);
+    return undef unless $ref->{control_code};
     $self->prepare_dbhash($ref);
     return $self->new(%$ref);
 }
