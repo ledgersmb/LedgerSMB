@@ -265,14 +265,18 @@ BEGIN
                         FROM company
                        WHERE in_name_part IS NULL
                       UNION ALL
-                     SELECT first_name || ' ' || middle_name || ' ' 
-                            || last_name, null, entity_id
+                     SELECT coalesce(first_name, '') || ' ' 
+                            || coalesce(middle_name, '') || ' ' 
+                            || coalesce(last_name, ''), null, entity_id
                        FROM person
-                      WHERE first_name || ' ' || middle_name || ' '
-                            || last_name @@ plainto_tsquery(in_name_part)
+                      WHERE coalesce(first_name, '') || ' ' 
+                            || coalesce(middle_name, '') || ' '
+                            || coalesce(last_name, '') 
+                             @@ plainto_tsquery(in_name_part)
                       UNION ALL
-                     SELECT first_name || ' ' || middle_name || ' ' 
-                            || last_name, null, entity_id
+                     SELECT coalesce(first_name, '') || ' ' 
+                            || coalesce(middle_name, '') || ' ' 
+                            || coalesce(last_name, ''), null, entity_id
                        FROM person
                        WHERE in_name_part IS NULL) c ON (e.id = c.entity_id)
 		LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
