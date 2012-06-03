@@ -119,15 +119,9 @@ GRANT EXECUTE ON FUNCTION eca__list_notes(int)  TO "lsmb_<?lsmb dbname ?>__conta
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (1, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (11, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (14, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (21, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (30, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (33, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
 
 DELETE FROM menu_acl
 WHERE node_id = 49 AND role_name = 'lsmb_<?lsmb dbname ?>__contact_read';
@@ -171,15 +165,9 @@ GRANT ALL ON eca_tax TO"lsmb_<?lsmb dbname ?>__contact_create";
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (1, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (11, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (12, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (21, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (30, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (31, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
 
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__employees_manage"
@@ -286,6 +274,8 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (4, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (198, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher');
+INSERT INTO menu_acl (node_id, acl_type, role_name) 
+values (20, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher');
 
 -- Activate when AR batch import is working
 --INSERT INTO menu_acl (node_id, acl_type, role_name) 
@@ -351,10 +341,6 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (9, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (10, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (11, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (13, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (15, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
 
@@ -499,6 +485,8 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (199, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (243, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher');
+INSERT INTO menu_acl (node_id, acl_type, role_name) 
+values (39, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_invoice_create"
 WITH INHERIT NOLOGIN
@@ -555,10 +543,6 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (28, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (29, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (30, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (32, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (34, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
 

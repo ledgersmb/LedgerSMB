@@ -1,3 +1,5 @@
+BEGIN;
+
 DROP TYPE IF EXISTS menu_item CASCADE;
 CREATE TYPE menu_item AS (
    position int,
@@ -159,4 +161,4 @@ COMMENT ON VIEW menu_friendly IS
 $$ A nice human-readable view for investigating the menu tree.  Does not
 show menu attributes or acls.$$;
 
-
+COMMIT;

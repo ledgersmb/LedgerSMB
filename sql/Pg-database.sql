@@ -2532,31 +2532,31 @@ SELECT pg_catalog.setval('menu_node_id_seq', 253, true);
 --
 
 COPY menu_node (id, label, parent, "position") FROM stdin;
-205	Transaction Approval	0	5
 206	Batches	205	1
+14	Search	19	2
+12	Add Contact	19	3
+15	Customer History	4	6
+34	Vendor History	24	6
+110	Chart of Accounts	73	5
+137	Add Accounts	73	6
 0	Top-level	\N	0
-1	AR	0	1
+20	Invoice Vouchers	249	2
 2	Add Transaction	1	1
 5	Transactions	4	1
 6	Outstanding	4	2
 7	AR Aging	4	3
 9	Taxable Sales	4	4
 10	Non-Taxable	4	5
-12	Add Customer	11	1
-15	History	13	2
+39	Invoice Vouchers	250	2
 16	Budgets	109	6
 17	Add  Budget	16	1
 18	Search	16	2
-21	AP	0	3
 22	Add Transaction	21	1
 25	Transactions	24	1
 26	Outstanding	24	2
 27	AP Aging	24	3
 28	Taxable	24	4
 29	Non-taxable	24	5
-31	Add Vendor	30	1
-34	History	32	2
-35	Cash	0	4
 36	Receipt	35	1
 38	Payment	35	3
 223	Use Overpayment	35	4
@@ -2617,7 +2617,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 106	Time Cards	103	3
 107	Translations	98	5
 108	Description	107	1
-110	Chart of Accounts	109	1
 111	Trial Balance	109	2
 112	Income Statement	109	3
 113	Balance Sheet	109	4
@@ -2637,8 +2636,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 130	Taxes	128	2
 131	Defaults	128	3
 132	Yearend	128	4
-137	Add Accounts	136	1
-138	List Accounts	136	2
 142	Add Warehouse	141	1
 143	List Warehouse	141	2
 148	Add Business	147	1
@@ -2673,10 +2670,10 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 180	Purchase Order	172	8
 181	Bin List	172	9
 182	Statement	172	10
-13	Reports	11	3
-14	Search	11	2
-32	Reports	30	3
-33	Search	30	2
+205	Transaction Approval	0	6
+1	AR	0	2
+21	AP	0	4
+35	Cash	0	5
 183	Check	172	11
 184	Receipt	172	12
 185	Quotation	172	13
@@ -2684,6 +2681,9 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 187	Timecard	172	15
 242	Letterhead	172	16
 189	POS Invoice	188	1
+19	Contacts	0	1
+246	Import Chart	73	7
+136	GIFI	128	7
 200	Vouchers	35	5
 40	Transfer	35	6
 41	Reports	35	8
@@ -2704,7 +2704,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 147	Type of Business	128	10
 144	Reporting Units	128	9
 141	Warehouses	128	8
-136	Chart of Accounts	128	7
 220	Add User	219	1
 221	Search Users	219	2
 222	Sessions	219	3
@@ -2734,39 +2733,36 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 245	Import	73	2
 75	Adjust Till	73	3
 76	Reports	73	4
-246	Import Chart	136	3
 139	Add GIFI	136	4
 140	List GIFI	136	5
 247	Import GIFI	136	6
 248	Import	153	3
 249	Vouchers	1	7
-11	Customers	1	9
 4	Reports	1	8
 250	Vouchers	21	7
 24	Reports	21	8
-30	Vendors	21	9
 198	AR Voucher	249	1
 199	AP Voucher	250	1
-251	Budgets	0	6
-46	HR	0	7
-50	Order Entry	0	8
-63	Shipping	0	9
-67	Quotations	0	10
-73	General Journal	0	11
-77	Goods and Services	0	12
-98	Projects	0	13
-109	Reports	0	14
-115	Recurring Transactions	0	15
-217	Tax Forms	0	16
-227	Fixed Assets	0	18
-193	Logout	0	24
-192	New Window	0	23
-191	Preferences	0	22
-190	Stylesheet	0	21
-128	System	0	20
-116	Batch Printing	0	19
 252	Add Budget	251	1
 253	Search	251	2
+251	Budgets	0	7
+46	HR	0	8
+50	Order Entry	0	9
+63	Shipping	0	10
+67	Quotations	0	11
+73	General Journal	0	12
+77	Goods and Services	0	13
+98	Projects	0	14
+109	Reports	0	15
+115	Recurring Transactions	0	16
+217	Tax Forms	0	17
+227	Fixed Assets	0	19
+193	Logout	0	25
+192	New Window	0	24
+191	Preferences	0	23
+190	Stylesheet	0	22
+128	System	0	21
+116	Batch Printing	0	20
 \.
 
 --
@@ -2851,12 +2847,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 10	module	rp.pl	24
 10	action	report	25
 10	report	nontaxable_sales	26
-11	menu	1	27
-12	module	customer.pl	28
 12	action	add	29
-13	menu	1	31
-14	module	customer.pl	32
-14	action	search	36
 15	db	customer	37
 15	action	history	33
 16	menu	1	38
@@ -2883,14 +2874,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 29	module	rp.pl	69
 29	action	report	70
 29	report	nontaxable_purchases	71
-30	menu	1	72
-31	module	vendor.pl	73
-31	action	add	74
-31	db	vendor	75
-32	menu	1	76
-33	module	vendor.pl	77
-33	action	search	79
-33	db	vendor	78
 34	module	vendor.pl	80
 34	action	history	81
 34	db	vendor	82
@@ -2981,6 +2964,10 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 7	report_name	aging	17
 27	module	reports.pl	63
 27	report_name	aging	65
+12	module	contact.pl	28
+14	action	start_report	36
+14	module	reports.pl	32
+14	module_name	gl	27
 72	action	search	168
 72	type	request_quotation	167
 73	menu	1	169
@@ -3071,7 +3058,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 108	action	translation	270
 108	translation	project	271
 109	menu	1	272
-110	module	ca.pl	273
 110	action	chart_of_accounts	274
 111	action	report	275
 111	module	rp.pl	276
@@ -3132,6 +3118,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 76	action	start_report	181
 117	type	invoice	296
 118	type	sales_order	301
+110	module	journal.pl	273
 126	type	request_quotation	328
 127	vc	employee	333
 128	menu	1	334
@@ -3144,10 +3131,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 130	action	taxes	343
 132	module	account.pl	346
 132	action	yearend_info	347
-138	module	am.pl	356
 139	module	am.pl	357
 140	module	am.pl	358
-138	action	list_account	360
 139	action	add_gifi	361
 140	action	list_gifi	362
 141	menu	1	363
@@ -3444,7 +3429,16 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 253	module_name	gl	681
 253	action	start_report	679
 76	module_name	gl	670
+19	menu	1	11
+14	report_name	contact_search	31
+20	module	vouchers.pl	72
+20	action	create_batch	73
+20	batch_type	sales_invoice	74
+39	module	vouchers.pl	75
+39	action	create_batch	76
+39	batch_type	vendor_invoice	77
 \.
+
 
 --
 
