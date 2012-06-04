@@ -221,7 +221,7 @@ use utf8;
 $CGI::Simple::POST_MAX = -1;
 
 package LedgerSMB;
-our $VERSION = '1.3.17';
+our $VERSION = '1.3.18';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
@@ -241,7 +241,7 @@ sub new {
     $logger->debug("Begin called from \$filename=$filename \$line=$line \$type=$type \$argstr=$argstr ref argstr=".ref $argstr);
 
     $self->{version} = $VERSION;
-    $self->{dbversion} = "1.3.17";
+    $self->{dbversion} = "1.3.18";
     
     bless $self, $type;
 
