@@ -18,7 +18,9 @@ Changelog for 1.3.18
 * Removing XLS support which has been broken for some time (Chris T)
 * Fixes for slow menu performance on menu (Chris T)
 
+Chris T is Chris Travers
 David M is David Mora
+Erik H is Erik Huelsmann
 Nigel T is Nigel Titley
 Robert C is Robert James Clay
 
