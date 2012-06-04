@@ -1,5 +1,6 @@
 <?lsmb INCLUDE 'ui-header.html' ?> 
-<?lsmb PROCESS elements.html ?> 
+<?lsmb PROCESS elements.html;
+       PROCESS report_base.html ?> 
 <body>
 <?lsmb 
 IF account_class == 0;
@@ -14,11 +15,6 @@ ELSE;
    title = text('Unsupported.  Expect errors'); #'
 END -?>
 <form method="get" action="contact_reports.pl">
-<?lsmb INCLUDE input element_data = {
-	type = "hidden"
-	name = "account_class"
-	value = account_class
-} -?>
 <table width="100%">
   <tr><th class="listtop"><?lsmb title ?></th></tr>
 
@@ -29,6 +25,7 @@ END -?>
         <tr valign="top">
           <td>
             <table>
+              <?lsmb PROCESS entity_class ?>
               <tr>
                 <th align="right"><?lsmb text('Name') ?></th>
                 <td><?lsmb INCLUDE input element_data={

@@ -58,12 +58,12 @@ sub columns {
 
        {col_id => 'entity_control_code',
             type => 'href',
-       href_base =>"contact.pl?action=get&account_class=".$self->account_class,
+       href_base =>"contact.pl?action=get&entity_class=".$self->entity_class,
             name => $locale->text('Control Code') },
 
        {col_id => 'meta_number',
             type => 'href',
-       href_base =>"contact.pl?action=get&account_class=".$self->account_class,
+       href_base =>"contact.pl?action=get&entity_class=".$self->entity_class,
             name => $locale->text('Credit Account Number') },
 
        {col_id => 'credit_description',
@@ -100,13 +100,13 @@ sub header_lines {
 
 =over
 
-=item account_class
+=item entity_class
 
 The account/entity class of the contact.  Required and an exact match.
 
 =cut
 
-has account_class => (is => 'ro', isa => 'Int');
+has entity_class => (is => 'ro', isa => 'Int');
 
 =item name_part
 

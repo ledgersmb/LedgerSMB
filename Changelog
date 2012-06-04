@@ -5,8 +5,6 @@ General Enhancements:
 * scripts/* files moved to make inheritance possible (Chris T)
 * PostgreSQL contrib dependencies removed, now require Pg 8.4 (Chris T)
 * Performance enhancements on menu routines (Chris T and Steven M)
-* Projects and Departments can now have subprojects and Departments (Chris T)
-* Project/department mechanism generalized to support funds, etc (Chris T)
 * Removed the Config::Std dependency and moved to Config::General (Chris T)
 * Improved error handling using Try::Tiny and die (Chris T)
 * Added +/- selection indicators to menu CSS (Chris T)
@@ -17,6 +15,7 @@ General Enhancements:
 * Changing all auth calls to hit postgres db instead of template1 (Chris T)
 * Centralized database commit for new code (Chris T)
 * invoice.unit is now unbounded numeric to reduce errors (Chris T, 3516235)
+* Invoices with inventory subject to draft/vouchers workflows (Chris T)
 
 New Reporting Framework
 * Easy bridge between SQL and display (Chris T)

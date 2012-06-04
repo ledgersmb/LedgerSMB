@@ -19,6 +19,20 @@
         }; 
 END # BLOCK -?>
 
+<?lsmb- BLOCK entity_class ?>
+      <tr>
+      <th align="right"><?lsmb text('Entity Class') ?></th>
+      <td><?lsmb
+        PROCESS select element_data = {
+		name = "entity_class"
+		options = entity_classes
+		default_values = [company_entity_class]
+		text_attr = 'class'
+		value_attr = 'id'
+	} ?></td>
+       </tr>
+<?lsmb END # BLOCK -?>
+
 <?lsmb- BLOCK gifi_or_standard ?>
         <tr>
           <th align="right"><?lsmb text('Accounts') ?></th>

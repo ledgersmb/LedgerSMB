@@ -188,6 +188,7 @@ LEFT JOIN person ep ON (ep.entity_id = ee.id)
           and (a.transdate <= $12 or $12 is null)
           and (eca.startdate >= $14 or $14 is null)
           and (eca.startdate <= $15 or $15 is null)
+          and (a.notes @@ plainto_tsquery(in_notes) or in_notes is null)
  ORDER BY eca.meta_number;
 $$ LANGUAGE SQL;
 
@@ -235,7 +236,7 @@ matches too.  All other values specify ranges or may match partially.$$;
 
 --HV coalesce(ec.entity_class,e.entity_class) in case entity but not yet entity_credit_account
 CREATE OR REPLACE FUNCTION contact__search
-(in_account_class int, in_contact text, in_contact_info text[], 
+(in_entity_class int, in_contact text, in_contact_info text[], 
 	in_meta_number text, in_address text, in_city text, in_state text, 
 	in_mail_code text, in_country text, in_active_date_from date, 
         in_active_date_to date,
@@ -281,7 +282,7 @@ BEGIN
                        WHERE in_name_part IS NULL) c ON (e.id = c.entity_id)
 		LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
 		LEFT JOIN business b ON (ec.business_id = b.id)
-		WHERE coalesce(ec.entity_class,e.entity_class) = in_account_class
+		WHERE coalesce(ec.entity_class,e.entity_class) = in_entity_class
 			AND (c.entity_id IN (select entity_id 
                                                FROM entity_to_contact
                                               WHERE contact ILIKE 

@@ -59,6 +59,9 @@ sub start_report {
             }
         }
     }
+    @{$request->{entity_classes}} = $request->call_procedure(
+                      procname => 'entity__list_classes'
+    );
     @{$request->{all_years}} = $request->call_procedure(
               procname => 'date_get_all_years'
     );
