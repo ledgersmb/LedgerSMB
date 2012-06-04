@@ -110,40 +110,40 @@ $$
           ) eca  -- broken into unions for performance
      join entity e on eca.entity_id = e.id
      JOIN (select  invnumber, curr, transdate, entity_credit_account, id,
-                   person_id
+                   person_id, notes
              FROM ar 
             where $16 = 2 and $13 = 'i'
                   and (($17 and amount = paid) or ($18 and amount <> paid))
             UNION 
            select invnumber, curr, transdate, entity_credit_account, id,
-                  person_id
+                  person_id, notes
              FROM ap 
             where $16 = 1 and $13 = 'i'
                   and (($17 and amount = paid) or ($18 and amount <> paid))
            union 
            select ordnumber, curr, transdate, entity_credit_account, id,
-                  person_id
+                  person_id, notes
            from oe 
            where ($16= 1 and oe.oe_class_id = 2 and $13 = 'o' 
                   and quotation is not true)
                   and (($17 and not closed) or ($18 and closed))
            union 
            select ordnumber, curr, transdate, entity_credit_account, id,
-                  person_id
+                  person_id, notes
            from oe 
            where ($16= 2 and oe.oe_class_id = 1 and $13 = 'o'
                   and quotation is not true)
                   and (($17 and not closed) or ($18 and closed))
            union 
            select quonumber, curr, transdate, entity_credit_account, id,
-                  person_id
+                  person_id, notes
            from oe 
            where($16= 1 and oe.oe_class_id = 4 and $13 = 'q'
                 and quotation is true)
                   and (($17 and not closed) or ($18 and closed))
            union 
            select quonumber, curr, transdate, entity_credit_account, id,
-                  person_id
+                  person_id, notes
            from oe 
            where($16= 2 and oe.oe_class_id = 4 and $13 = 'q'
                  and quotation is true)
@@ -188,7 +188,7 @@ LEFT JOIN person ep ON (ep.entity_id = ee.id)
           and (a.transdate <= $12 or $12 is null)
           and (eca.startdate >= $14 or $14 is null)
           and (eca.startdate <= $15 or $15 is null)
-          and (a.notes @@ plainto_tsquery(in_notes) or in_notes is null)
+          and (a.notes @@ plainto_tsquery($9) or $9 is null)
  ORDER BY eca.meta_number;
 $$ LANGUAGE SQL;
 
@@ -1037,7 +1037,7 @@ END;
 
 $$ language plpgsql;
 
-COMMENT ON FUNCTION company__delete_contact
+COMMENT ON FUNCTION entity__delete_contact
 (in_company_id int, in_contact_class_id int, in_contact text) IS
 $$ Returns true if at least one record was deleted.  False if no records were 
 affected.$$;

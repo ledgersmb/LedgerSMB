@@ -149,7 +149,7 @@ $$ language plpgsql;
 COMMENT ON FUNCTION account_save
 (in_id int, in_accno text, in_description text, in_category char(1),
 in_gifi_accno text, in_heading int, in_contra bool, in_tax bool,
-in_link text[]) IS
+in_link text[], is_obsolete bool) IS
 $$ This deletes existing account_link entries, where the 
 account_link.description is not designated as a custom one in the 
 account_link_description table.
@@ -219,7 +219,7 @@ ELSE
   -- should these be rewritten as coalesces? --CT
   CASE WHEN new.contra IS NULL THEN FALSE ELSE new.contra END,
   CASE WHEN new.tax IS NULL THEN FALSE ELSE new.tax END,
-  string_to_array(new.link, ':'))
+  string_to_array(new.link, ':'), false)
 END;
 
 CREATE OR REPLACE FUNCTION cr_coa_to_account_save(in_accno text, in_description text)

@@ -31,11 +31,6 @@ $$
 SELECT value FROM menu_attribute where node_id = 74 and attribute = 'rowcount';
 $$ language sql; 
 
-CREATE OR REPLACE FUNCTION department__list_all() RETURNS SETOF department AS
-$$
-SELECT * FROM department order by description;
-$$ language sql;
-
 CREATE OR REPLACE FUNCTION warehouse__list_all() RETURNS SETOF warehouse AS
 $$
 SELECT * FROM warehouse order by description;

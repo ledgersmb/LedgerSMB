@@ -14,14 +14,6 @@ values (252, 'allow', 'lsmb_<?lsmb dbname ?>__budget_enter');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (253, 'allow', 'lsmb_<?lsmb dbname ?>__budget_view');
 
-GRANT SELECT 
-ON budget_info, budget_line, budget_to_department, budget_to_project
-TO "lsmb_<?lsmb dbname ?>__budget_view";
-
-GRANT INSERT 
-ON budget_info, budget_line, budget_to_department, budget_to_project 
-TO "lsmb_<?lsmb dbname ?>__budget_enter";
-
 GRANT UPDATE (approved_at, approved_by) on budget_info 
 TO "lsmb_<?lsmb dbname ?>__budget_approve";
 
@@ -1336,8 +1328,6 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (128, 'allow', 'lsmb_<?lsmb dbname ?>__account_edit');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (136, 'allow', 'lsmb_<?lsmb dbname ?>__account_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (138, 'allow', 'lsmb_<?lsmb dbname ?>__account_edit');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__auditor"
 WITH INHERIT NOLOGIN;
@@ -1577,7 +1567,6 @@ IN ROLE "lsmb_<?lsmb dbname ?>__system_settings_change",
 "lsmb_<?lsmb dbname ?>__sic_all",
 "lsmb_<?lsmb dbname ?>__template_edit",
 "lsmb_<?lsmb dbname ?>__users_manage",
-"lsmb_<?lsmb dbname ?>__backup",
 "lsmb_<?lsmb dbname ?>__tax_form_save";
 
 -- Manual Translation
@@ -1726,8 +1715,6 @@ GRANT ALL ON recurring, recurringemail, recurringprint, status TO public;
 GRANT ALL ON transactions TO public;
 GRANT SELECT ON entity_employee TO public;
 REVOKE INSERT, UPDATE, DELETE ON entity_employee FROM public; --fixing old perms
-GRANT ALL ON pending_job, payments_queue TO PUBLIC;
-GRANT ALL ON pending_job_id_seq TO public;
 GRANT ALL ON invoice_tax_form TO public;
 GRANT SELECT ON taxmodule TO public;
 GRANT ALL ON ac_tax_form to public;
@@ -1759,10 +1746,6 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__draft_edit" WITH INHERIT NOLOGIN;
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (210, 'allow', 'lsmb_<?lsmb dbname ?>__draft_edit');
-
--- CT:  The following grant is required for now, but will hopefully become less 
--- important when we get to 1.4 and can more sensibly lock things down.
-GRANT ALL ON dpt_trans TO public;
 
 -- Roles dependant on FUNCTIONS
 CREATE ROLE "lsmb_<?lsmb dbname ?>__voucher_delete" 
