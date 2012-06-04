@@ -91,7 +91,12 @@ sub name { return $locale->text('Contact Search') }
 =cut
 
 sub header_lines {
-     return []; # TODO
+     return [
+            {name => 'name_part',
+             text => $locale->text('Name')},
+            {name => 'meta_number',
+             text => $locale->text('Account Number')}
+       ]; 
 }
 
 =back
