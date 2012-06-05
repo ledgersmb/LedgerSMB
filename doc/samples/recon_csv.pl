@@ -39,16 +39,16 @@ use strict;
 # Despite the namespace this doesn't have to handle CSV, though that is the most
 # frequent use case.  Any other format could be used instead.
 
-sub parse_11 {
+sub parse_mycompany_11 {
     parse_n(@_);
 }
 
-# One workaround for the above limitation is to set up different databases with
-# different start id's for accounts (on creation).  This would mean you could
-# have different parsers with presumed mutually exclusive id ranges, perhaps
-# offset by 10000 or 100000.
+# In 1.3, the recon parsing used only the account_id which meant that this
+# wasn't very friendly system-wide.  As of 1.4, we include the db name as part
+# of the dispatch routine.  For compatibility, you may still end up with 
+# non-overlapping ranges.
 
-sub parse_12345 {
+sub parse_mycompany_12345 {
     parse_n(@_);
 }
 

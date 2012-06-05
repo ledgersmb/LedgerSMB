@@ -4,6 +4,7 @@
 package LedgerSMB::Reconciliation::CSV;
 
 use base qw/LedgerSMB::DBObject::Reconciliation/;
+use LedgerSMB::App_State;
 
 opendir (DCSV, 'LedgerSMB/Reconciliation/CSV/Formats');
 for my $format (readdir(DCSV)){
@@ -30,7 +31,7 @@ sub process {
     my ($recon, $fldname) = @_;
     my $contents = $self->load_file($fldname);
     
-    my $func = "parse_" . $recon->{chart_id};
+    my $func = "parse_${LedgerSMB::App_State::DBName}_$recon->{chart_id}";
     if ($self->can($func)){
        @entries = $self->can($func)->($self,$contents);
        @{$self->{entries}} = @entries;
