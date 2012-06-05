@@ -57,6 +57,9 @@ sub columns {
          {col_id => 'id',
             type => 'text',
             name => $locale->text('ID') },
+         {col_id => 'entity_name',
+            type => 'text',
+            name => $locale->text('Name') },
 
          {col_id => 'invnumber',
             type => 'href',
@@ -304,9 +307,11 @@ sub run_report {
        );
     } else {
        @rows = $self->exec_method({funcname => 'ar_ap__transaction_search'});
+       my $rn = 0;
        for my $r (@rows){
+            $r->{running_number} = ++$rn;
             my $href;
-            if ($r->invoice){
+            if ($r->{invoice}){
                 if ($self->entity_class == 1) {
                     $href = 'ir.pl';
                 } else {

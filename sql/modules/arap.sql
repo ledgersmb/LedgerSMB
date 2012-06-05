@@ -4,6 +4,7 @@ DROP TYPE IF EXISTS purchase_info CASCADE;
 
 CREATE TYPE purchase_info AS (
     id int,
+    invoice bool,
     invnumber text,
     ordnumber text,
     ponumber text,
@@ -33,7 +34,8 @@ RETURNS SETOF purchase_info AS
 $$
 BEGIN
 RETURN QUERY
-   SELECT gl.id, gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate, 
+   SELECT gl.id, gl.invoice, 
+          gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate, 
           e.name, eca.meta_number::text, e.id, gl.amount, 
           gl.amount - sum(CASE WHEN l.description IN ('AR', 'AP')
                                THEN ac.amount ELSE 0 
@@ -41,14 +43,16 @@ RETURN QUERY
           gl.amount - gl.netamount, gl.curr, gl.datepaid, gl.duedate, 
           gl.notes, gl.shippingpoint, gl.shipvia, 
           compound_array(bua.business_units || bui.business_units)
-     FROM (select id, invnumber, ordnumber, ponumber, transdate, duedate,
+     FROM (select id, invoice, invnumber, ordnumber, ponumber, transdate, duedate,
                   description, notes, shipvia, shippingpoint, amount, 
-                  netamount, curr, datepaid, entity_credit_account, on_hold
+                  netamount, curr, datepaid, entity_credit_account, on_hold,
+                  approved
              FROM ar WHERE in_entity_class = 2
             UNION
-           select id, invnumber, ordnumber, ponumber, transdate, duedate,
+           select id, invoice, invnumber, ordnumber, ponumber, transdate, duedate,
                   description, notes, shipvia, shippingpoint, amount, 
-                  netamount, curr, datepaid, entity_credit_account, on_hold
+                  netamount, curr, datepaid, entity_credit_account, on_hold,
+                  approved
              FROM ap WHERE in_entity_class = 1) gl
      JOIN entity_credit_account eca ON gl.entity_credit_account = eca.id
      JOIN entity e ON e.id = eca.entity_id
@@ -90,11 +94,12 @@ LEFT JOIN (SELECT compound_array(ARRAY[ARRAY[buc.label, bu.control_code]])
           AND (in_to_date IS NULL OR in_to_date >= gl.transdate)
           AND (in_on_hold IS NULL OR in_on_hold = gl.on_hold)
           AND (in_as_of IS NULL OR in_as_of >= ac.transdate)
+          AND gl.approved AND ac.approved 
  GROUP BY gl.id, gl.invnumber, gl.ordnumber, gl.ponumber, gl.transdate,
           gl.duedate, e.name, eca.meta_number, gl.amount,
           gl.netamount, gl.curr, gl.datepaid, gl.duedate,
-          gl.notes, gl.shippingpoint, gl.shipvia, e.id
-   HAVING in_source = ANY(array_agg(ac.source));
+          gl.notes, gl.shippingpoint, gl.shipvia, e.id, gl.invoice
+   HAVING in_source = ANY(array_agg(ac.source)) or in_source IS NULL;
 END;
 $$ LANGUAGE PLPGSQL;
 CREATE OR REPLACE FUNCTION ar_ap__transaction_search_summary
