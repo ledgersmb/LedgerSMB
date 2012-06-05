@@ -97,5 +97,29 @@ LEFT JOIN (SELECT compound_array(ARRAY[ARRAY[buc.label, bu.control_code]])
    HAVING in_source = ANY(array_agg(ac.source));
 END;
 $$ LANGUAGE PLPGSQL;
+CREATE OR REPLACE FUNCTION ar_ap__transaction_search_summary
+(in_account_id int, in_name_part text, in_meta_number text, in_invnumber text,
+ in_ordnumber text, in_ponumber text, in_source text, in_description text,
+ in_notes text, in_shipvia text, in_from_date date, in_to_date date, 
+ in_on_hold bool, in_inc_open bool, in_inc_closed bool, in_as_of date, 
+ in_entity_class int)
+RETURNS SETOF purchase_info AS
+$$
+BEGIN
+   RETURN QUERY
+       SELECT null::int, null::text, null::text, null::text, null::date
+              entity_name, meta_number, entity_id, sum(amount), 
+              sum(amount_paid), sum(tax), currency, null::date, null::date,
+              tull::text, null::text, null::text, null::text[]
+         FROM ar_ap__transaction_search
+              (in_account_id, in_name_part, in_meta_number, in_invnumber,
+              in_ordnumber, in_ponumber, in_source, in_description,
+              in_notes, in_shipvia, in_from_date, in_to_date,
+              in_on_hold, in_inc_open, in_inc_closed, in_as_of,  
+              in_entity_class)
+     GROUP BY entity_name, meta_number, entity_id;
+END;
+$$ language plpgsql;
+
 
 COMMIT;
