@@ -928,7 +928,7 @@ sub transactions {
                                 * CASE WHEN '$table' = 'ar' THEN -1 ELSE 1 END)
                           AS paid,
 		          vce.name, vc.meta_number,
-		          a.entity_credit_account, 
+		          a.entity_credit_account
 		     FROM $table a
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
 		     JOIN acc_trans acs ON (acs.trans_id = a.id)
@@ -944,9 +944,7 @@ sub transactions {
 			AND a.approved IS TRUE AND acs.approved IS TRUE
 			AND a.force_closed IS NOT TRUE
 		 GROUP BY 
-		          vc.meta_number, a.entity_credit_account, vce.name, 
-                          d.description --,
-		          --a.ponumber, a.invoice 
+		          vc.meta_number, a.entity_credit_account, vce.name 
 		   HAVING abs(sum(acs.amount::numeric(20,2))) > 0.000 |;
         } else {
             #HV typo error a.ponumber $acc_trans_fields -> a.ponumber $acc_trans_flds
@@ -979,7 +977,7 @@ sub transactions {
 			AND a.force_closed IS NOT TRUE
 		 GROUP BY a.id, a.invnumber, a.ordnumber, a.transdate, a.duedate, a.netamount,
 		          a.amount, a.terms, a.notes, a.shipvia, a.shippingpoint, vce.name,
-		          vc.meta_number, a.entity_credit_account, a.till, ex.$buysell, d.description, vce.name,
+		          vc.meta_number, a.entity_credit_account, a.till, ex.$buysell, vce.name,
 		          a.ponumber, a.invoice, a.datepaid $acc_trans_flds
 		   HAVING abs(sum(acs.amount::numeric(20,$p))) > 0 |;
        } 
