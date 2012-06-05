@@ -21,6 +21,7 @@ package LedgerSMB::Scripts::setup;
 
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
+use LedgerSMB::App_State;
 use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
@@ -49,7 +50,6 @@ sub login {
     use LedgerSMB::Locale;
     my ($request) = @_;
     $logger->trace("\$request=$request \$request->{dbh}=$request->{dbh} request=".Data::Dumper::Dumper(\$request));
-    #$request->{_locale}->new('en'); why not continue to use already set $request->{_locale}
     my $creds = LedgerSMB::Auth::get_credentials();
     if (!$request->{database}){
         $request->error($request->{_locale}->text('No database specified'));
@@ -753,6 +753,7 @@ sub save_user {
                                    $creds->{login},
                                    $creds->{password});
     $request->{dbh}->{AutoCommit} = 0;
+    $LedgerSMB::App_State::DBH = $request->{dbh};
     my $user = LedgerSMB::DBObject::Admin->new({base => $request});
     if (8 == $user->save_user){ # Told not to import but user exists in db
         $request->{notice} = $request->{_locale}->text(

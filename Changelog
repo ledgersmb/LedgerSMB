@@ -17,6 +17,10 @@ General Enhancements:
 * invoice.unit is now unbounded numeric to reduce errors (Chris T, 3516235)
 * Invoices with inventory subject to draft/vouchers workflows (Chris T)
 
+New RESTful Web Services Framework
+* Supports XML and JSON as input formats
+* Supports XML and JSON as output formats
+
 New Reporting Framework
 * Easy bridge between SQL and display (Chris T)
 * All reports exportable to CSV (Chris T)
