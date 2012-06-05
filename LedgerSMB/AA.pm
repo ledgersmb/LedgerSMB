@@ -897,10 +897,10 @@ sub transactions {
     if ( !$form->{summary} and !$form->{outstanding} ) {
         $acc_trans_flds = qq|
 			, c.accno, ac.source,
-			p.projectnumber, ac.memo AS description,
+			ac.memo AS description,
 			ac.amount AS linetotal,
 			i.description AS linedescription|;
-        $group_by_fields = qq|, c.accno, ac.source, p.projectnumber, ac.memo,
+        $group_by_fields = qq|, c.accno, ac.source, ac.memo,
                               ac.amount, i.description |;
 
         $acc_trans_join = qq| 
@@ -929,7 +929,6 @@ sub transactions {
                           AS paid,
 		          vce.name, vc.meta_number,
 		          a.entity_credit_account, 
-		          d.description AS department
 		     FROM $table a
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
 		     JOIN acc_trans acs ON (acs.trans_id = a.id)
@@ -938,7 +937,6 @@ sub transactions {
                                      AND charttype = 'A')
 		LEFT JOIN exchangerate ex ON (ex.curr = a.curr
 		          AND ex.transdate = a.transdate)
-		LEFT JOIN department d ON (a.department_id = d.id)
 		$acc_trans_join
 		    WHERE c.link = '$form->{ARAP}' AND 
 		          (|.$dbh->quote($form->{transdateto}) . qq| IS NULL OR 
@@ -964,8 +962,6 @@ sub transactions {
 		          vce.name, vc.meta_number,
 		          a.entity_credit_account, a.till, 
 		          ex.$buysell AS exchangerate, 
-		          d.description AS department, 
-		          as_array(p.projectnumber) as ac_projects,
 		          a.ponumber $acc_trans_flds
 		     FROM $table a
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
@@ -975,8 +971,6 @@ sub transactions {
                                       AND charttype='A')
 		LEFT JOIN exchangerate ex ON (ex.curr = a.curr
 		          AND ex.transdate = a.transdate)
-		LEFT JOIN department d ON (a.department_id = d.id)
-                LEFT JOIN project p ON acs.project_id = p.id 
 		$acc_trans_join
 		    WHERE c.link = '$ARAP' AND 
 		          (|.$dbh->quote($form->{transdateto}) . qq| IS NULL OR 
@@ -1000,9 +994,7 @@ sub transactions {
 		          vce.name, vc.meta_number,
 		          vc.entity_id, a.till, me.name AS manager, a.curr,
 		          ex.$buysell AS exchangerate, 
-		          d.description AS department, 
-		          a.ponumber, as_array(p.projectnumber) as ac_projects,
-                          as_array(ip.projectnumber) as inv_projects
+		          a.ponumber
                           $acc_trans_flds
 		     FROM $table a
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
@@ -1027,10 +1019,7 @@ sub transactions {
 		     JOIN entity vce ON (vc.entity_id = vce.id)
 		LEFT JOIN exchangerate ex ON (ex.curr = a.curr
 		          AND ex.transdate = a.transdate)
-		LEFT JOIN department d ON (a.department_id = d.id) 
-                LEFT JOIN invoice i ON (i.trans_id = a.id)
-                LEFT JOIN project ip ON (i.project_id = ip.id)
-                LEFT JOIN project p ON ac.project_id = p.id |;
+                LEFT JOIN invoice i ON (i.trans_id = a.id) |;
         $group_by = qq| 
                 GROUP BY  a.id, a.invnumber, a.ordnumber, a.transdate,
                           a.duedate, a.netamount, a.amount,
@@ -1038,8 +1027,7 @@ sub transactions {
                           a.shipvia, a.shippingpoint, ee.name , 
                           vce.name, vc.meta_number, a.amount, pd.due,
                           vc.entity_id, a.till, me.name, a.curr,
-                          ex.$buysell, a.ponumber,
-                          d.description $group_by_fields|;
+                          ex.$buysell, a.ponumber $group_by_fields|;
     }
 
     my %ordinal = (

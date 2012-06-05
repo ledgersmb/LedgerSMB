@@ -2181,9 +2181,6 @@ sub transactions {
             #push @projects, @{$ref->{inv_projects}};
             $ref->{projectnumber} = join '<br />', @projects;
             $ref->{projectnumber} =~ s/(<br \/>)+/<br \/>/;
-        } elsif ($form->{l_projectnumber} eq 'Y') { $form->error($locale->text('Invalid Project Data:'). 
-                              ref($ref->{ac_projects}) . $ref->{ac_projects} .  ref($ref->{inv_projects}) . $ref->{inv_projects}
-                             )
         }
         if ( $form->{l_subtotal} eq 'Y' ) {
             if ( $sameitem ne $ref->{ $form->{sort} } ) {
