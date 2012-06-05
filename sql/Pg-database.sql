@@ -2548,7 +2548,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 9	Taxable Sales	4	4
 10	Non-Taxable	4	5
 39	Invoice Vouchers	250	2
-16	Budgets	109	6
+16	Budgets	0	18
 17	Add  Budget	16	1
 18	Search	16	2
 22	Add Transaction	21	1

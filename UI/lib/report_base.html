@@ -3,7 +3,7 @@
         <tr>
           <th align="right"><?lsmb text(BUC.label) ?></th>
           <?lsmb b_units.${BUC.id}.unshift({}) ?>
-          <td><?lsmb PROCESS select element_data = {
+          <td colspan=3><?lsmb PROCESS select element_data = {
                    name = 'business_unit_' _ loop.count
                 options = b_units.${BUC.id}
               text_attr = 'text'

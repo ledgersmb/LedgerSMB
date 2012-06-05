@@ -100,6 +100,26 @@ sub search {
     $report->render($request);
 }
 
+=item search_purchases
+
+Runs a search of AR or AP transactions and displays results.
+
+=cut
+
+sub search_purchases {
+    my ($request) = @_;
+    use LedgerSMB::DBObject::Report::Contact::Purchase;
+    $request->{business_units} = [];
+    for my $count (1 .. $request->{bc_count}){
+         push @{$request->{business_units}}, $request->{"business_unit_$count"}
+               if $request->{"business_unit_$count"};
+    }
+    LedgerSMB::DBObject::Report::Contact::Purchase->prepare_criteria($request);
+    my $report = LedgerSMB::DBObject::Report::Contact::Purchase->new(%$request);
+    $report->run_report;
+    $report->render($request);
+}
+
 =back
 
 =head1 Copyright (C) 2007 The LedgerSMB Core Team
