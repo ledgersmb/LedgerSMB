@@ -531,7 +531,9 @@ sub form_header {
           . $form->escape( $form->{"select$form->{vc}"}, 1 ) . qq|">|;
     }
     else {
-        $vc = qq|<input name=$form->{vc} value="$form->{$form->{vc}}" size=35>|;
+        $vc = qq|<input name=$form->{vc} value="$form->{$form->{vc}}" size=35>
+             <a id="new-contact" target="new" href="$form->{vc}.pl?action=add">
+                 [| . $locale->text('New') . qq|]</a>|;
     }
 
     $department = qq|

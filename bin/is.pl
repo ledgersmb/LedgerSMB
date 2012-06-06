@@ -392,7 +392,9 @@ sub form_header {
           . $form->escape( $form->{selectcustomer}, 1 ) . qq|">|;
     }
     else {
-        $customer = qq|<input name="customer" value="$form->{customer}" size="35">|;
+        $customer = qq|<input name="customer" value="$form->{customer}" size="35"> 
+     <a target="new" id="new-contact" href="customer.pl?action=add">[| . 
+        $locale->text('New') . qq|]</a> |;
     }
 
     $department = qq|
