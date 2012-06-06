@@ -31,12 +31,17 @@ END;
             ?></span>
 </div>
 <?lsmb END ?>
-<?lsmb PROCESS dynatable tbody = {rows => rows } 
+<form method="post" action="<?lsmb ENVARS.SCRIPT_NAME ?>">
+<?lsmb PROCESS dynatable tbody = {rows = rows } 
                attributes = {class = 'report', order_url = order_url } ?>
 
-<a href="<?lsmb LINK ?>">[<?lsmb text('permalink') ?>]</a>&nbsp;
 <?lsmb IF FORMATS.grep('PDF').size()
 ?>
+<?lsmb 
+FOREACH BUTTON IN buttons;
+  PROCESS button element_data = BUTTON;
+END; ?><br />
+<a href="<?lsmb LINK ?>">[<?lsmb text('permalink') ?>]</a>&nbsp;
 <a href="<?lsmb LINK _ '&format=PDF' ?>">[<?lsmb text('PDF') ?>]</a>&nbsp;
 <?lsmb END;
 IF FORMATS.grep('TXT').size();

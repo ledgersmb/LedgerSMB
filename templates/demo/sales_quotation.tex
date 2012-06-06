@@ -92,12 +92,16 @@
 <?lsmb FOREACH number ?>
 <?lsmb lc = loop.count - 1 ?>
   <?lsmb number.${lc} ?> &
-  <?lsmb description.${lc} ?> &
+\begin{minipage}{4in}
+\raggedright
+  <?lsmb description.${lc} ?> 
+\end{minipage}&
   <?lsmb qty.${lc} ?> &
   <?lsmb unit.${lc} ?> &
   <?lsmb sellprice.${lc} ?> &
   <?lsmb discountrate.${lc} ?> &
   <?lsmb linetotal.${lc} ?> \\
+ & & & & & \\
 <?lsmb END ?>
 \hline \hline
 \multicolumn{6}{r|}{<?lsmb text('Subtotal') ?>} & <?lsmb subtotal ?> \\*
