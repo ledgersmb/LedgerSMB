@@ -531,7 +531,15 @@ sub form_header {
           . $form->escape( $form->{"select$form->{vc}"}, 1 ) . qq|">|;
     }
     else {
-        $vc = qq|<input name=$form->{vc} value="$form->{$form->{vc}}" size=35>|;
+        if ($form->{vc} eq 'vendor'){
+            $eclass = 1;
+        } elsif ($form->{vc} eq 'customer'){
+            $eclass = 2
+        }
+        $vc = qq|<input name=$form->{vc} value="$form->{$form->{vc}}" size=35>
+             <a id="new-contact" target="new" 
+                 href="contact.pl?action=add&entity_class=$eclass">
+                 [| . $locale->text('New') . qq|]</a>|;
     }
 
     $department = qq|

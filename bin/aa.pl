@@ -430,6 +430,11 @@ sub form_header {
     # 	$locale->text('Add AP Transaction');
     #   $locale->text('Edit AR Transaction');
     #   $locale->text('Edit AP Transaction');
+    if ($form->{ARAP} eq 'AP'){
+        $eclass = '1';
+    } elsif ($form->{ARAP} eq 'AR'){
+        $eclass = '2';
+    }
     my $title_msgid="$title $form->{ARAP} Transaction";
     if ($form->{reverse} == 0){
        #$form->{title} = $locale->text("[_1] [_2] Transaction", $title, $form->{ARAP});
@@ -544,7 +549,10 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     $name =
       ( $form->{"select$form->{vc}"} )
       ? qq|<select name="$form->{vc}">$form->{"select$form->{vc}"}</select>|
-      : qq|<input name="$form->{vc}" value="$form->{$form->{vc}}" size=35>|;
+      : qq|<input name="$form->{vc}" value="$form->{$form->{vc}}" size=35> 
+                 <a href="contact.pl?action=add&entity_class=$eclass" 
+                    target="new" id="new-contact">[|
+                 .  $locale->text('New') . qq|]</a>|;
 
     $employee = qq|
                 <input type=hidden name=employee value="$form->{employee}">
@@ -618,12 +626,12 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 	    <table>
 	      <tr>
 		<th align="right" nowrap>$label</th>
-		<td colspan=3>$name</td>
+		<td colspan=3>$name 
+                </td>
 		<input type=hidden name="select$form->{vc}" value="|
       . $form->escape( $form->{"select$form->{vc}"}, 1 ) . qq|">
 	      </tr>
 	      <tr>
-		<td></td>
 		<td colspan=3>
 		  <table width=100%>
 		    <tr>

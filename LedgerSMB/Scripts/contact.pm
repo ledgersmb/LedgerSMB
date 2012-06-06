@@ -24,6 +24,8 @@ use LedgerSMB::DBObject::Entity::Contact;
 use LedgerSMB::DBObject::Entity::Bank;
 use LedgerSMB::DBObject::Entity::Note;
 use LedgerSMB::App_State;
+use LedgerSMB::Template;
+
 use strict;
 use warnings;
 
@@ -413,6 +415,7 @@ This method creates a blank screen for entering a company's information.
 
 sub add {
     my ($request) = @_;
+    $request->{target_div} = 'company_div';
     _main_screen($request, $request);
 }
 

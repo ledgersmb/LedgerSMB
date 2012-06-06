@@ -418,7 +418,10 @@ sub form_header {
           . $form->escape( $form->{selectvendor}, 1 ) . qq|">|;
     }
     else {
-        $vendor = qq|<input name=vendor value="$form->{vendor}" size=35>|;
+        $vendor = qq|<input name=vendor value="$form->{vendor}" size=35>
+                 <a href="contact.pl?action=add&entity_class=1" 
+                  target="new" id="new-contact">[|
+                 .  $locale->text('New') . qq|]</a>|;
     }
 
     $department = qq|
