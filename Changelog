@@ -30,6 +30,7 @@ New Reporting Framework
 Customer/Vendor Handling 
 * Added sales tax id and license number fields for companies (Chris T)
 * Simpified database schema (Chris T)
+* Full text search of notes for customers/vendors (Chris T)
 
 New CSV Import Module
 * Imports GL transactions (Chris T)

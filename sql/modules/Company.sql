@@ -234,13 +234,20 @@ $$Creates a summary account (no quantities, just parts group by invoice).
 meta_number must match exactly or be NULL.  inc_open and inc_closed are exact
 matches too.  All other values specify ranges or may match partially.$$;
 
---HV coalesce(ec.entity_class,e.entity_class) in case entity but not yet entity_credit_account
+DROP FUNCTION IF EXISTS  contact__search
+(in_entity_class int, in_contact text, in_contact_info text[],
+        in_meta_number text, in_address text, in_city text, in_state text,
+        in_mail_code text, in_country text, in_active_date_from date,
+        in_active_date_to date,
+        in_business_id int, in_name_part text, in_control_code text);
+
 CREATE OR REPLACE FUNCTION contact__search
 (in_entity_class int, in_contact text, in_contact_info text[], 
 	in_meta_number text, in_address text, in_city text, in_state text, 
 	in_mail_code text, in_country text, in_active_date_from date, 
         in_active_date_to date,
-	in_business_id int, in_name_part text, in_control_code text)
+	in_business_id int, in_name_part text, in_control_code text,
+        in_notes text)
 RETURNS SETOF contact_search_result AS $$
 DECLARE
 	out_row contact_search_result;
@@ -337,6 +344,11 @@ BEGIN
 				OR (ec.enddate IS NULL))
 	 		AND (ec.meta_number like in_meta_number || '%'
 			     OR in_meta_number IS NULL)
+                        AND (in_notes IS NULL OR e.id in (
+                                     SELECT entity_id from entity_note
+                                      WHERE note @@ plainto_tsquery(in_notes))
+                                  OR ec.id IN (select ref_key FROM eca_note
+                                     WHERE note @@ plainto_tsquery(in_notes)))
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;

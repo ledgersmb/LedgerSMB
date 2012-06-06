@@ -161,6 +161,14 @@ Matches beginning of customer/vendor/etc. number.
 
 has meta_number => (is => 'ro', isa => 'Maybe[Str]');
 
+=item notes
+
+Full text search of all entity/eca notes
+
+=cut
+
+has notes => (is => 'ro', isa => 'Maybe[Str]');
+
 =item address
 
 Full text search (fully matching) on any address line.

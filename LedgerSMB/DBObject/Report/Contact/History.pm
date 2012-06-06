@@ -24,7 +24,7 @@ both customers and vendors.
 
 =cut
 
-package LedgerSMB::DBObject::Report::Contact::Search;
+package LedgerSMB::DBObject::Report::Contact::History;
 use Moose;
 extends 'LedgerSMB::DBObject::Report';
 use LedgerSMB::App_State;
