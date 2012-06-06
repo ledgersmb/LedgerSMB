@@ -326,8 +326,6 @@ values (4, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (5, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (6, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (7, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (9, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
@@ -527,8 +525,6 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (24, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (25, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (26, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (27, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
 INSERT INTO menu_acl (node_id, acl_type, role_name)

@@ -2542,21 +2542,19 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 0	Top-level	\N	0
 20	Invoice Vouchers	249	2
 2	Add Transaction	1	1
-5	Transactions	4	1
-6	Outstanding	4	2
 7	AR Aging	4	3
 9	Taxable Sales	4	4
 10	Non-Taxable	4	5
 39	Invoice Vouchers	250	2
-16	Budgets	0	18
+5	Search	1	7
 17	Add  Budget	16	1
 18	Search	16	2
 22	Add Transaction	21	1
-25	Transactions	24	1
-26	Outstanding	24	2
 27	AP Aging	24	3
 28	Taxable	24	4
 29	Non-taxable	24	5
+25	Search	21	7
+16	Budgets	73	8
 36	Receipt	35	1
 38	Payment	35	3
 223	Use Overpayment	35	4
@@ -2684,6 +2682,10 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 19	Contacts	0	1
 246	Import Chart	73	7
 136	GIFI	128	7
+4	Reports	1	9
+249	Vouchers	1	8
+24	Reports	21	9
+250	Vouchers	21	8
 200	Vouchers	35	5
 40	Transfer	35	6
 41	Reports	35	8
@@ -2737,10 +2739,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 140	List GIFI	136	5
 247	Import GIFI	136	6
 248	Import	153	3
-249	Vouchers	1	7
-4	Reports	1	8
-250	Vouchers	21	7
-24	Reports	21	8
 198	AR Voucher	249	1
 199	AP Voucher	250	1
 252	Add Budget	251	1
@@ -2823,7 +2821,6 @@ SELECT pg_catalog.setval('menu_attribute_id_seq', 681, true);
 --
 
 COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
-26	outstanding	1	584
 205	menu	1	574
 206	module	vouchers.pl	575
 206	action	search_batch	576
@@ -2834,13 +2831,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 3	module	is.pl	5
 3	type	invoice	6
 4	menu	1	7
-5	module	ar.pl	8
-5	action	search	9
-5	nextsub	transactions	10
-6	module	ar.pl	12
-6	action	search	13
-6	nextsub	transactions	14
-6	outstanding	1	18
 9	module	rp.pl	21
 9	action	report	22
 9	report	tax_collected	23
@@ -2848,8 +2838,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 10	action	report	25
 10	report	nontaxable_sales	26
 12	action	add	29
-15	db	customer	37
-15	action	history	33
 16	menu	1	38
 17	module	budgets.pl	39
 17	action	new_budget	40
@@ -2862,21 +2850,12 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 23	type	invoice	55
 23	module	ir.pl	54
 24	menu	1	56
-25	action	search	58
-25	nextsub	transactions	59
-25	module	ap.pl	57
-26	action	search	61
-26	nextsub	transactions	62
-26	module	ap.pl	60
 28	module	rp.pl	66
 28	action	report	67
 28	report	tax_collected	68
 29	module	rp.pl	69
 29	action	report	70
 29	report	nontaxable_purchases	71
-34	module	vendor.pl	80
-34	action	history	81
-34	db	vendor	82
 35	menu	1	83
 36	module	payment.pl	84
 36	action	payment	85
@@ -2968,6 +2947,17 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 14	action	start_report	36
 14	module	reports.pl	32
 14	module_name	gl	27
+15	action	start_report	33
+15	report_name	purchase_history	37
+34	action	start_report	81
+34	report_name	purchase_history	82
+34	module	reports.pl	80
+5	module	reports.pl	8
+5	action	start_report	9
+5	report_name	search_purchases	10
+25	report_name	search_purchases	59
+25	action	start_report	58
+25	module	reports.pl	57
 72	action	search	168
 72	type	request_quotation	167
 73	menu	1	169
@@ -3329,7 +3319,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 210	action	search	585
 210	module	drafts.pl	586
 199	batch_type	ap	561
-15	module	customer.pl	35
 45	module	recon.pl	106
 45	action	new_report	107
 44	module	recon.pl	108
@@ -3437,6 +3426,11 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 39	module	vouchers.pl	75
 39	action	create_batch	76
 39	batch_type	vendor_invoice	77
+15	module	reports.pl	35
+34	entity_class	1	20
+15	entity_class	2	19
+5	entity_class	2	12
+25	entity_class	1	13
 \.
 
 

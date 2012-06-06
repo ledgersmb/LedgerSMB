@@ -183,8 +183,8 @@ foreach my $format (0 .. $#formats) {
 # (2 + 23), 25 - 12, 13 - 1, 12
 foreach my $format (0 .. $#formats) {
 	$form->{db_dateformat} = $formats[$format][0];
-	my $fmt = $formats[$format][0];
-	my $sep = $formats[$format][1];
+	my $fmt = 'yyyy-mm-dd';
+	my $sep = '-';
 	my $yearcount = $formats[$format][2];
 	my $results = $fmt;
 	$results =~ s/(yy)?yy/1999/;
