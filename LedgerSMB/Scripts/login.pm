@@ -140,7 +140,7 @@ sub logout {
                    );
     $request->{callback}   = "";
     $request->{endsession} = 1;
-    if($request->{dbh}){LedgerSMB::Auth::session_destroy($request);}#if logout on already logged out session
+    if($request->{dbh}){LedgerSMB::Session::destroy($request);}#if logout on already logged out session
      my $template = LedgerSMB::Template->new(
         user =>$request->{_user}, 
         locale => $request->{_locale},
