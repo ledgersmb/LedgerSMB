@@ -2,7 +2,7 @@
     <div class="listtop"><?lsmb text('Locations') ?></div>
 	<!-- This entire form should probably be optionaly automated with AJAX
 	in order to prevent user confusion -CT -->
-    <form id="location_form" action="<?lsmb script ?>">
+    <form id="location_form" action="<?lsmb script ?>" method="post">
 <?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "form_id"

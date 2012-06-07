@@ -19,7 +19,7 @@ PROCESS dynatable
      { col_id='delete', type='href', href_base=href_base, name=' ' }
    ];
 ?>
-<form name="bank_acct" action="<?lsmb script ?>">
+<form name="bank_acct" action="<?lsmb script ?>" method="post">
 <?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "form_id"
