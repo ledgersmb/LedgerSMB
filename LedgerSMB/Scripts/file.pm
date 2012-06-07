@@ -111,7 +111,6 @@ sub attach_file {
         $file->content($fdata);
     }
     $request->{content} = $file->content;
-    $request->debug({file => '/tmp/file'});
     $file->attach;
     my $cgi = CGI::Simple->new;
     print $cgi->redirect($request->{callback});

@@ -591,6 +591,11 @@ sub form_header {
 }
 
 sub void {
+    if ($form->{invnumber} =~ /-VOID$/){
+       $form->error($locale->text(
+           "Can't void a voided invoice!"
+       ));
+    }
     for my $i (1 .. $form->{rowcount}){
         $form->{"qty_$_"} *= -1;
     }
@@ -953,11 +958,11 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
             'on_hold' =>
               { ndx => 12, key => 'O', value => $locale->text('On Hold') },
              'void'  => 
-                { ndx => 12, key => 'V', value => $locale->text('Void') },
+                { ndx => 13, key => 'V', value => $locale->text('Void') },
              'save_info'  => 
-                { ndx => 13, key => 'I', value => $locale->text('Save Info') },
+                { ndx => 14, key => 'I', value => $locale->text('Save Info') },
             'new_screen' => # Create a blank ar/ap invoice.
-             { ndx => 14, key=> 'N', value => $locale->text('New') }
+             { ndx => 15, key=> 'N', value => $locale->text('New') }
 
         );
 
@@ -965,6 +970,7 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
         if ($from->{separate_duties}){
            $button{'post'}->{value} = $locale->text('Save') unless $form->{id};
         }
+       delete $button{void} if $form->{invnumber} =~ /-VOID/;
 
         if ( $form->{id} ) {
 
@@ -1019,7 +1025,6 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
                 %button = ();
             }
         }
-
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
         {
             $form->print_button( \%button, $_ );
@@ -1530,6 +1535,5 @@ sub save_info {
 	    }
 
 }
-
 
 
