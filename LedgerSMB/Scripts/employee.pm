@@ -3,178 +3,347 @@
 
 =head1 NAME
 
-LedgerSMB::Scripts::employee - LedgerSMB class defining the Controller
-functions, template instantiation and rendering for employee editing and display.
+LedgerSMB::Scripts::contact - LedgerSMB class defining the Controller
+functions, template instantiation and rendering for customer editing and display.
 
 =head1 SYOPSIS
 
-This module is the UI controller for the employee DB access; it provides the 
-View interface, as well as defines the Save employee. 
-Save employee will update or create as needed.
-
+This module is the UI controller for the customer, vendor, etc functions; it 
 
 =head1 METHODS
-
-=over 
 
 =cut
 
 package LedgerSMB::Scripts::employee;
 
+use LedgerSMB::DBObject::Entity::Person::Employee;
+use LedgerSMB::DBObject::Entity::Location;
+use LedgerSMB::DBObject::Entity::Contact;
+use LedgerSMB::DBObject::Entity::Bank;
+use LedgerSMB::DBObject::Entity::Note;
+use LedgerSMB::App_State;
 use LedgerSMB::Template;
-use LedgerSMB::DBObject::Employee;
 
-#require 'lsmb-request.pl';
+use strict;
+use warnings;
 
-=item get($self, $request, $user)
+my $locale = $LedgerSMB::App_State::Locale;
+
+=head1 COPYRIGHT
+
+Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU 
+General Public License, version 2, or at your option any later version.  Please 
+see the accompanying License.txt for more information.
+
+=cut
+
+=head1 METHODS
+
+=over
+
+=item get_by_cc 
+
+Retrieves the employee based on control code.
+
+=cut
+
+sub get_by_cc {
+    my ($request) = @_;
+    my $emp = LedgerSMB::DBObject::Entity::Person::Employee->get_by_cc(
+                            $request->{control_code}
+    );
+    _main_screen($request, $emp);
+}
+
+
+=item get
 
 Requires form var: id
 
-Extracts a single employee from the database, using its company ID as the primary
-point of uniqueness. Shows (appropriate to user privileges) and allows editing
-of the employee informations.
+Retrieves the employee by id.
 
 =cut
-
 
 sub get {
-    
     my ($request) = @_;
-    my $employee = LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
-    
-    $employee->get_metadata();
-    $employee->set( entity_class=> '3' );
-    $employee->{target_div} = 'hr_div'; 
-    my $result = $employee->get();
-    
-    my $template = LedgerSMB::Template->new( user => $user, 
-	template => 'contact', language => $user->{language}, 
-	path => 'UI/Contact',
-        format => 'HTML');
-    $template->render($results);
-        
+    my $emp = LedgerSMB::DBObject::Entity::Person::Employee->get(
+                          $request->{entity_id}
+    );
+    _main_screen($request, $emp);
 }
 
-=item add_location
 
-Adds a location to an employee and returns to the edit employee screen.
-Standard location inputs apply.
+# private method _main_screen 
+#
+# this attaches everything other than employee and displays.
+
+sub _main_screen {
+    my ($request, $employee) = @_;
+
+
+    # DIVS logic
+    my @DIVS;
+    if ($employee->{entity_id}){
+       @DIVS = qw(employee address contact_info bank_act notes);
+    } else {
+       @DIVS = qw(employee);
+    }
+    $request->{target_div} ||= 'employee_div';
+
+    my %DIV_LABEL = (
+             company => $locale->text('Employee'),
+             address => $locale->text('Addresses'),
+        contact_info => $locale->text('Contact Info'),
+            bank_act => $locale->text('Bank Accounts'),
+               notes => $locale->text('Notes'),
+    );
+
+    # DIVS contents
+    my $entity_id = $employee->{entity_id};
+
+    my $entity_class = 3;
+
+    my @locations = LedgerSMB::DBObject::Entity::Location->get_active(
+                       {entity_id => $entity_id,
+                        credit_id => undef}
+          );
+
+    my @contact_class_list =
+          LedgerSMB::DBObject::Entity::Contact->list_classes;
+
+    my @contacts = LedgerSMB::DBObject::Entity::Contact->list(
+              {entity_id => $entity_id,
+               credit_id => undef}
+    );
+    my @bank_account = 
+         LedgerSMB::DBObject::Entity::Bank->list($entity_id);
+    my @notes =
+         LedgerSMB::DBObject::Entity::Note->list($entity_id,
+                                                 undef);
+
+    # Globals for the template
+    my @salutations = $request->call_procedure(
+                procname => 'person__list_salutations'
+    );
+    my @managers = $request->call_procedure(
+                         procname => 'employee__all_managers'
+    );
+
+    my @language_code_list = 
+             $request->call_procedure(procname=> 'person__list_languages');
+
+    for my $ref (@language_code_list){
+        $ref->{text} = "$ref->{code}--$ref->{description}";
+    }
+    
+    my @location_class_list = 
+            $request->call_procedure(procname => 'location_list_class');
+
+    my ($curr_list) =
+          $request->call_procedure(procname => 'setting__get_currencies');
+
+    my @all_currencies;
+    for my $curr (@{$curr_list->{'setting__get_currencies'}}){
+        push @all_currencies, { text => $curr};
+    }
+
+    my ($default_country) = $request->call_procedure(
+              procname => 'setting_get',
+                  args => ['default_country']);
+    $default_country = $default_country->{value};
+
+    my ($default_language) = $request->call_procedure(
+              procname => 'setting_get',
+                  args => ['default_language']);
+    $default_language = $default_language->{value};
+
+    my $attach_level_options = [
+        {text => $locale->text('Entity'), value => 1} ];
+
+    $request->close_form();
+    $request->open_form();
+
+    # Template info and rendering 
+    my $template = LedgerSMB::Template->new(
+        user => $request->{_user},
+        template => 'contact',
+        locale => $request->{_locale},
+        path => 'UI/Contact',
+        format => 'HTML'
+    );
+
+    use Data::Dumper;
+    $Data::Dumper::Sortkeys = 1;
+    #die '<pre>' . Dumper($request) . '</pre>';
+    my @country_list = $request->call_procedure(
+                     procname => 'location_list_country'
+      );
+    my @entity_classes = $request->call_procedure(
+                      procname => 'entity__list_classes'
+    );
+
+    $template->render({
+                     DIVS => \@DIVS,
+                DIV_LABEL => \%DIV_LABEL,
+                  request => $request,
+                 employee => $employee,
+             country_list => \@country_list,
+                locations => \@locations,
+                 contacts => \@contacts,
+             bank_account => \@bank_account,
+                    notes => \@notes,
+                 managers => \@managers,
+          # globals
+                  form_id => $request->{form_id},
+              salutations => \@salutations,
+       language_code_list => \@language_code_list,
+           all_currencies => \@all_currencies,
+     attach_level_options => $attach_level_options, 
+                entity_id => $entity_id,
+             entity_class => $entity_class,
+      location_class_list => \@location_class_list,
+       contact_class_list => \@contact_class_list,
+    });
+}
+
+=item generate_control_code 
+
+Generates a control code and hands off execution to other routines
 
 =cut
 
-sub add_location {
+sub generate_control_code {
     my ($request) = @_;
-    my $employee= LedgerSMB::DBObject::Employee->new({base => $request, copy => 'all'});
-    $employee->set( entity_class=> '3' );
-    $employee->save_location();
-    $employee->get();
-
-    
-
-    _render_main_screen($employee);
-	
+    my ($ref) = $request->call_procedure(
+                             procname => 'setting_increment', 
+                             args     => ['entity_control']
+                           );
+    ($request->{control_code}) = values %$ref;
+    _main_screen($request, $request);
 }
+
 
 =item add
 
-This method creates a blank screen for entering a employee's information.
+This method creates a blank screen for entering a company's information.
+
+=back
 
 =cut 
 
 sub add {
     my ($request) = @_;
-    my $employee= LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
-    $employee->set( entity_class=> '3' );
-    $employee->{target_div} = 'hr_div'; 
-    _render_main_screen($employee);
+    $request->{target_div} = 'employee_div';
+    _main_screen($request, $request);
 }
 
-=item delete_contact
+=item save_employee
 
-Deletes the selected contact info record
-
-Must include company_id or credit_id (credit_id used if both are provided) plus:
-
-=over
-
-=item contact_class_id
-
-=item contact
-
-=item form_id
-
-=back
+Saves a company and moves on to the next screen
 
 =cut
 
-sub delete_contact {
+sub save_employee {
     my ($request) = @_;
-    my $employee= LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
-    if (_close_form($employee)){
-        $employee->delete_contact();
+    my $employee = LedgerSMB::DBObject::Entity::Person::Employee->new(%$request);
+    $request->{target_div} = 'credit_div';
+    $employee->save;
+    _main_screen($request, $employee);
+}
+
+=item save_location 
+
+Adds a location to the company as defined in the inherited object
+
+=cut
+
+sub save_location {
+    my ($request) = @_;
+
+    my $location = LedgerSMB::DBObject::Entity::Location->new(%$request);
+    if ($request->{attach_to} eq '1'){
+       $location->credit_id(undef);
     }
-    $employee->get;
-    _render_main_screen( $employee);
+    $location->id($request->{location_id});
+    $location->save;
+    $request->{target_div} = 'address_div';
+    get($request);
+	
 }
 
-=item save_contact_new($request)
+=item save_new_location 
 
-Saves contact info as a new line as per save_contact above.
+Adds a location to the company as defined in the inherited object, not
+overwriting existing locations.
 
 =cut
 
-sub save_contact_new{
+sub save_new_location {
     my ($request) = @_;
-    delete $request->{old_contact};
-    delete $request->{old_contact_class};
-    save_contact($request);
+    delete $request->{location_id};
+    save_location($request);
+}
+
+=item edit
+
+This is a synonym of get() which is preferred to use for editing operations.
+
+=cut
+
+sub edit {
+    get (@_);
 }
 
 =item delete_location
 
-Deletes the selected contact info record
-
-Must include company_id or credit_id (credit_id used if both are provided) plus:
-
-* location_class_id
-* location_id 
-* form_id
+Deletes the specified location
 
 =cut
 
 sub delete_location {
     my ($request) = @_;
-    my $employee= LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
-    if (_close_form($employee)){
-        $employee->delete_location();
+    my $location = LedgerSMB::DBObject::Entity::Location->new(%$request);
+    $location->id($request->{location_id});
+    if (!$request->{is_for_credit}){
+       $location->credit_id(undef);
     }
-    $employee->get;
-    _render_main_screen( $employee);
+    $location->delete;
+    $request->{target_div} = 'address_div';
+    get($request);
 }
 
-=item edit_bank_account($request)
+=item save_contact
 
-displays screen to a bank account
-
-Required data:
-
-=over 
-
-=item bank_account_id
-
-=item bic
-
-=item iban
-
-=back
+Saves the specified contact info
 
 =cut
 
-sub edit_bank_acct {
+sub save_contact {
     my ($request) = @_;
-    my $employee= LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
-    $employee->get;
-    _render_main_screen( $employee);
+    my $contact = LedgerSMB::DBObject::Entity::Contact->new(%$request);
+    if ($request->{attach_to} == 1){
+       $contact->credit_id(undef);
+    }
+    $contact->save;
+    $request->{target_div} = 'address_div';
+    $request->{target_div} = 'contact_info_div';
+    get($request);
+} 
+
+=item delete_contact
+
+Deletes the specified contact info.  Note that for_credit is used to pass the 
+credit id over in this case.
+
+=cut
+
+sub delete_contact {
+    my ($request) = @_;
+    my $contact = LedgerSMB::DBObject::Entity::Contact->new(%$request);
+    $contact->credit_id($request->{for_credit});
+    $contact->delete;
+    $request->{target_div} = 'contact_info_div';
+    get($request);
 }
 
 =item delete_bank_acct
@@ -182,245 +351,59 @@ sub edit_bank_acct {
 Deletes the selected bank account record
 
 Required request variables:
-
-=over
-
-=item bank_account_id
-
-=item entity_id
-
-=item form_id
-
-=back
+* bank_account_id
+* entity_id
+* form_id
 
 =cut
 
-sub delete_bank_acct{
+sub delete_bank_account{
     my ($request) = @_;
-    my $employee= LedgerSMB::DBObject::Employee->new(base => $request, copy => 'all');
-    if (_close_form($employee)){
-        $employee->delete_bank_account();
-    }
-    $employee->get;
-    _render_main_screen( $employee);
+    my $account = LedgerSMB::DBObject::Entity::Bank->new(%$request);
+    $account->delete;
+    $request->{target_div} = 'bank_act_div';
+    get($request);
 }
 
-# Private method.  Sets notice if form could not be closed.
-sub _close_form {
-    my ($employee) = @_;
-    if (!$employee->close_form()){
-        $employee->{notice} = 
-               $employee->{_locale}->text('Changes not saved.  Please try again.');
-        return 0;
-    }
-    return 1;
-}
+=sub save_bank_account 
 
-=item save($self, $request, $user)
-
-Saves a employee to the database. The function will update or insert a new 
-employee as needed, and will generate a new Company ID for the employee if needed.
-
-=cut
-
-sub save {
-    
-    my ($request) = @_;
-
-    my $employee = LedgerSMB::DBObject::Employee->new({base => $request});
-    if (!$employee->{employeenumber}){
-        my ($ref) = $employee->call_procedure(
-                             procname => 'setting_increment', 
-                             args     => ['employeenumber']
-                           );
-        ($employee->{employeenumber}) = values %$ref;
-    }
-    $employee->{employee_number}=$employee->{employeenumber};
-    $employee->save();
-    _render_main_screen($employee);
-}
-
-=item search
-
-Displays the search criteria screen
-
-=cut
-
-sub search {
-    my $request = shift @_;
-    my $template = LedgerSMB::Template->new(
-        user => $request->{_user},
-        template => 'filter',
-        locale => $request->{_locale},
-        path => 'UI/employee',
-        format => 'HTML'
-    );
-    $template->render($request);
-}
-
-=item search_results
-
-Displays search results.
-
-=cut
-
-sub search_results {
-    my $request = shift @_;
-    my $employee = LedgerSMB::DBObject::Employee->new({base => $request});
-    my @rows = $employee->search();
-    my $template = LedgerSMB::Template->new(
-        user => $employee->{_user},
-        template => 'form-dynatable',
-        locale => $employee->{_locale},
-        path => 'UI',
-        format => 'HTML'
-    );
-    my @columns;
-    my $locale = $request->{_locale};
-    $request->{title} = $locale->text('Search Results');
-    for my $col (qw(l_position l_id l_employeenumber l_salutation 
-                    l_first_name l_middle_name l_last_name l_dob 
-                    l_startdate l_enddate l_role l_ssn l_sales l_manager_id
-                    l_manager_first_name l_manager_last_name)){
-        if ($request->{$col}){
-           my $pcol = $col;
-           $pcol =~ s/^l_//;
-           push @columns, $pcol;
-        }
-    }
-    # Omitting headers for the running number and salutation fields --CT
-    my $header = { 
-           id => $locale->text('ID'),
-employeenumber=> $locale->text('Employee Number'),
-   first_name => $locale->text('First Name'),
-  middle_name => $locale->text('Middle Name'),
-    last_name => $locale->text('Last Name'),
-          dob => $locale->text('DOB'),
-    startdate => $locale->text('Start Date'),
-      enddate => $locale->text('End Date'),
-         role => $locale->text('Role'),
-          ssn => $locale->text('SSN'),
-        sales => $locale->text('Sales'),
-   manager_id => $locale->text('Manager ID'),
-
-
-   manager_first_name => $locale->text('Manager First Name'),
-    manager_last_name => $locale->text('Manager Last Name'),
-    };
-
-    my $pos = 1;
-    for my $ref(@rows){
-        $ref->{position} = $pos;
-        my $href = "employee.pl?action=edit&entity_id=$ref->{entity_id}";
-        $ref->{id} = {href => $href,
-                      text => $ref->{entity_id}};
-        $ref->{employeenumber} = { href => $href,
-                                   text => $ref->{employeenumber} };
-        ++$pos;
-    } 
-    $template->render({
-          form => $request,
-       columns => \@columns,
-       heading => $header,
-          rows => \@rows,
-    });
-}
-
-=item edit
-
-displays the edit employee screen. Requires id field to be set.
-
-=cut
-
-sub edit{
-    my $request = shift @_;
-    my $employee = LedgerSMB::DBObject::Employee->new({base => $request});
-    $employee->get();
-    _render_main_screen($employee);
-}
-
-sub _render_main_screen{
-    my $employee = shift @_;
-    $employee->get_metadata();
-    $employee->close_form;
-    $employee->open_form;
-    $employee->{dbh}->commit;
-    $employee->{entity_class} = 3;
-    $employee->{creditlimit} = "$employee->{creditlimit}"; 
-    $employee->{discount} = "$employee->{discount}"; 
-    $employee->{script} = "employee.pl";
-    if ($employee->is_allowed_role({allowed_roles => [
-                                 "lsmb_$employee->{company}__users_manage"]
-                                }
-    )){
-        $employee->{manage_users} = 1;
-    }
-    $employee->debug({file => '/tmp/emp'});
-    my $template = LedgerSMB::Template->new( 
-	user => $employee->{_user}, 
-    	template => 'contact', 
-	locale => $employee->{_locale},
-	path => 'UI/Contact',
-        format => 'HTML'
-    );
-    $template->render($employee);
-}
-
-=item save_contact
-
-Saves contact info and returns to edit employee screen
-
-=cut
-
-sub save_contact {
-    my ($request) = @_;
-    my $employee = LedgerSMB::DBObject::Employee->new({base => $request});
-    $employee->save_contact();
-    $employee->get;
-    _render_main_screen($employee );
-}
-
-=item save_bank_account
-
-Saves bank account information (bic, iban, id required) and returns to the 
-edit employee screen
+Adds a bank account to a company and, if defined, an entity credit account.
 
 =cut
 
 sub save_bank_account {
     my ($request) = @_;
-    my $employee = LedgerSMB::DBObject::Employee->new({base => $request});
-    $employee->save_bank_account();
-    $employee->get;
-    _render_main_screen($employee);
+    my $bank = LedgerSMB::DBObject::Entity::Bank->new(%$request);
+    $bank->save;
+    $request->{target_div} = 'bank_act_div';
+    get($request);
 }
 
-=item save_notes
+=item save_notes($request)
 
-Attaches note (subject, note, id required) and returns to the edit employee
-screen.
+Saves notes.  entity_id or credit_id must be set, as must note_class, note, and 
+subject.
 
 =cut
 
 sub save_notes {
     my ($request) = @_;
-    my $employee = LedgerSMB::DBObject::Employee->new({base => $request});
-    $employee->save_notes();
-    $employee->get();
-    _render_main_screen($employee);
+    my $note = LedgerSMB::DBObject::Entity::Note->new(%$request);
+    if ($request->{note_class} == 1){
+       $note->credit_id(undef);
+    }
+    $note->save;
+    get($request);
 }
-    
-eval { do "scripts/custom/employee.pl"};
 
 =back
 
 =head1 COPYRIGHT
 
-Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
-General Public License version 2, or at your option any later version.  Please
-see the included License.txt for details.
+Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU 
+General Public License, version 2, or at your option any later version.  Please 
+see the accompanying License.txt for more information.
 
 =cut
-
 
 1;
