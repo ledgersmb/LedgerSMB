@@ -121,7 +121,7 @@ our @COLUMNS = (
      pwidth => '3', },
 
     {col_id => 'delete',
-       name => $locale->text('Cleared'),
+       name => $locale->text('Delete'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
@@ -187,10 +187,11 @@ sub run_report{
            $ct = 'A';
         }
         $r->{edit} = '['.$locale->text('Edit').']';
-        $r->{delete} = '['.$locale->text('Delete').']' if $r->{rowcount};
+        $r->{delete} = '['.$locale->text('Delete').']' 
+                  if !$r->{rowcount} and !$r->{is_heading};
         $r->{edit_href_suffix} = 'account.pl?action=edit&id='.$r->{id} . 
            "&charttype=$ct";
-        $r->{delete_href_suffix} = 'account.pl?action=delete&id='.$r->{id} .
+        $r->{delete_href_suffix} = 'journal.pl?action=delete_account&id='.$r->{id} .
            "&charttype=$ct";
         $r->{accno_href_suffix} = 
                 'reports.pl?action=start_report&module_name=gl&report_name=gl' .

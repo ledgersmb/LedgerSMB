@@ -80,6 +80,23 @@ sub chart_of_accounts {
     $report->render($request);
 }
 
+=item delete_account
+
+This deletes an account and returns to the chart of accounts screen.
+
+This is here rather than in LedgerSMB::Scripts::Account because the redirect
+occurs to here.
+
+=cut
+
+sub delete_account {
+    my ($request) = @_;
+    use LedgerSMB::DBObject::Account;
+    my $account =  LedgerSMB::DBObject::Account->new({base => $request});
+    $account->delete;
+    chart_of_accounts($request);
+}
+
 =item search
 
 Runs a search and displays results.

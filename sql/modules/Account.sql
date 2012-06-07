@@ -165,6 +165,7 @@ CREATE OR REPLACE FUNCTION account__delete(in_id int)
 RETURNS BOOL AS
 $$
 BEGIN
+DELETE FROM account_link WHERE account_id = in_id;
 DELETE FROM account WHERE id = in_id;
 RETURN FOUND;
 END;
@@ -328,12 +329,13 @@ CREATE OR REPLACE FUNCTION report__coa() RETURNS SETOF coa_entry AS
 $$
 
 WITH ac (chart_id, amount) AS (
-     SELECT chart_id, amount
+     SELECT chart_id, CASE WHEN acc_trans.approved and gl.approved THEN amount
+                           ELSE 0 
+                       END
        FROM acc_trans
        JOIN (select id, approved from ar union all
              select id, approved from ap union all
              select id, approved from gl) gl ON gl.id = acc_trans.trans_id
-      WHERE acc_trans.approved and gl.approved
 ),
 l(account_id, link) AS (
      SELECT account_id, array_to_string(array_agg(description), ':')
