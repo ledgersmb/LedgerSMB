@@ -2145,7 +2145,7 @@ sub retrieve_item {
 
     if ( $form->{"partnumber_$i"} ne "" ) {
         $var = $dbh->quote( $form->like( lc $form->{"partnumber_$i"} ) );
-        $where .= " AND lower(p.partnumber) LIKE $var";
+        $where .= " AND (lower(p.partnumber) LIKE $var or mm.barcode is not null)";
     }
     if ( $form->{"description_$i"} ne "" ) {
         $var = $dbh->quote( $form->like( lc $form->{"description_$i"} ) );
@@ -2189,6 +2189,8 @@ sub retrieve_item {
 		          t1.description AS translation, 
 		          t2.description AS grouptranslation
                      FROM parts p
+                LEFT JOIN makemodel mm ON (mm.parts_id = p.id AND mm.barcode = |
+                             . $dbh->quote($form->{"partnumber_$i"}) . qq|)
 		LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
 		LEFT JOIN translation t1 
 		          ON (t1.trans_id = p.id AND t1.language_code = ?)

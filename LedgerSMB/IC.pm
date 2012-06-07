@@ -146,7 +146,7 @@ sub get_part {
 
         if ( $form->{makemodel} ne "" ) {
             $query = qq|
-				SELECT make, model
+				SELECT make, model, barcode
 				  FROM makemodel
 				 WHERE parts_id = ?|;
 
@@ -283,13 +283,12 @@ sub save {
 
         # get old price
         $query = qq|
-			SELECT id, listprice, sellprice, lastcost, weight, 
-			       project_id
+			SELECT id, listprice, sellprice, lastcost, weight
 			  FROM parts
 			 WHERE id = ?|;
         my $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} );
-        my ( $id, $listprice, $sellprice, $lastcost, $weight, $project_id ) =
+        my ( $id, $listprice, $sellprice, $lastcost, $weight) =
           $sth->fetchrow_array();
 
         if ($id) {
@@ -479,15 +478,15 @@ sub save {
     # insert makemodel records
     if ( $form->{item} =~ /(part|assembly)/ ) {
         $query = qq|
-			INSERT INTO makemodel (parts_id, make, model)
-			     VALUES (?, ?, ?)|;
+			INSERT INTO makemodel (parts_id, make, model, barcode)
+			     VALUES (?, ?, ?, ?)|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
         for $i ( 1 .. $form->{makemodel_rows} ) {
             if (   ( $form->{"make_$i"} ne "" )
                 || ( $form->{"model_$i"} ne "" ) )
             {
                 $sth->execute( $form->{id}, $form->{"make_$i"},
-                    $form->{"model_$i"} )
+                    $form->{"model_$i"} , $form->{"barcode_$i"})
                   || $form->dberror($query);
             }
         }
@@ -690,8 +689,7 @@ sub retrieve_assemblies {
         my $description = $dbh->quote( $form->like( lc $form->{description} ) );
         $where .= " AND lower(p.description) LIKE $description";
     }
-    $where .= qq| AND p.obsolete = '0'
-		AND p.project_id IS NULL|;
+    $where .= qq| AND not p.obsolete |;
 
     my %ordinal = (
         'partnumber'  => 2,

@@ -269,7 +269,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}\n|;
     # setup make and models
     $i = 1;
     foreach $ref ( @{ $form->{makemodels} } ) {
-        for (qw(make model)) { $form->{"${_}_$i"} = $ref->{$_} }
+        for (qw(make model barcode)) { $form->{"${_}_$i"} = $ref->{$_} }
         $i++;
     }
     $form->{makemodel_rows} = $i - 1;
@@ -2773,6 +2773,7 @@ sub makemodel_row {
 	<tr>
 	  <th class="listheading">| . $locale->text('Make') . qq|</th>
 	  <th class="listheading">| . $locale->text('Model') . qq|</th>
+	  <th class="listheading">| . $locale->text('Bar Code') . qq|</th>
 	</tr>
 |;
 
@@ -2781,6 +2782,8 @@ sub makemodel_row {
 	<tr>
 	  <td><input name="make_$i" size=30 value="$form->{"make_$i"}"></td>
 	  <td><input name="model_$i" size=30 value="$form->{"model_$i"}"></td>
+          <td><input name="barcode_$i" size=30 value="$form->{"barcode_$i"}">
+          </td>
 	</tr>
 |;
     }
