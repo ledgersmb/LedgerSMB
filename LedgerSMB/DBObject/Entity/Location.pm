@@ -86,6 +86,14 @@ Internal id of location class.
 
 has 'location_class' => (is => 'ro', isa => 'Maybe[Int]');
 
+=item old_location_class
+
+Old location class for updating
+
+=cut
+
+has 'old_location_class' => (is => 'ro', isa => 'Maybe[Int]');
+
 =item class_name
 
 The name of the class that goes with the id.  This is not set until
