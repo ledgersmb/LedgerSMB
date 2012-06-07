@@ -91,7 +91,7 @@ sub _main_screen {
     $request->{target_div} ||= 'employee_div';
 
     my %DIV_LABEL = (
-             company => $locale->text('Employee'),
+            employee => $locale->text('Employee'),
              address => $locale->text('Addresses'),
         contact_info => $locale->text('Contact Info'),
             bank_act => $locale->text('Bank Accounts'),
@@ -245,6 +245,10 @@ Saves a company and moves on to the next screen
 
 sub save_employee {
     my ($request) = @_;
+    for my $key (qw(start_date end_date dob)){
+         $request->{$key} = LedgerSMB::PGDate->from_input($request->{$key});
+    }
+    $request->{control_code} = $request->{employeenumber};
     my $employee = LedgerSMB::DBObject::Entity::Person::Employee->new(%$request);
     $request->{target_div} = 'credit_div';
     $employee->save;

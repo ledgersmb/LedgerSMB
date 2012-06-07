@@ -95,13 +95,13 @@ Entity id of manager
 
 has manager_id => (is => 'rw', isa => 'Maybe[Int]');
 
-=item employee_number
+=item employeenumber
 
 Employee number, required, for employee.
 
 =cut
 
-has employee_number => (is => 'rw', isa => 'Str');
+has employeenumber => (is => 'rw', isa => 'Str');
 
 =back
 
@@ -148,9 +148,10 @@ Saves the employee.  Must be a blessed reference.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'employee__save'});
+    my ($ref) = $self->exec_method({funcname => 'person__save'});
     my ($id) = values(%$ref);
     $self->entity_id($id);
+    my ($ref) = $self->exec_method({funcname => 'employee__save'});
 }
 
 =back

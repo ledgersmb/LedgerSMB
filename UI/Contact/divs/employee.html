@@ -1,4 +1,4 @@
-<div id="hr_div" class="container">
+<div id="employee_div" class="container">
 	<div class="listtop"><strong><?lsmb text("$operation Employee") ?></strong></div>
 <form name="hr" action="<?lsmb script ?>" method="post">
 <?lsmb PROCESS input element_data = {
@@ -150,7 +150,7 @@ default_values = [manager_id]
 	class = "submit"
 	type = "submit"
         name = 'action'
-	value = "save"
+	value = "save_employee"
 } ?>
 <?lsmb 
 IF manage_users and entity_id;
