@@ -3673,13 +3673,254 @@ is a huge advantage of LedgerSMB over Quickbooks and the like. The
 rapid development of reports allows for one to easily develop reports
 of any sort within LedgerSMB.
 
+Beginning in 1.4, LedgerSMB has a reporting framework that allows you to turn
+general SQL queries into reports that can be output in a variety of formats
+including HTML, PDF, CSV, and ODS.  This reporting framework is not too
+difficult to learn.  This section guides you through how to write such a report
+in LedgerSMB 1.4.
 
-\subsubsection{Examples}
+In this example we will walk through the implementation of the Contact Search
+structure.  This is believed to be a fairly basic report.  Many features will be
+mentioned in passing along with which files they are used in, so if you need to
+use advanced features you will know where to look (I recommend checking the
+development documentation in the POD of the actual program modules as your
+primary resource here).
 
-For one customer, we developed a report of parts sold and received
-during arbitrary time frames. The report allows one to go back and
-look up the invoices involved.
+\subsubsection{Essential Parts of a Report}
 
+A report in LedgerSMB 1.4 consists of the following basic components:
+
+\begin{itemize}
+\item Filter screen
+\item Stored Procedure
+\item Report module
+\item Workflow hooks
+\end{itemize}
+
+Each of these will be covered in turn.
+
+\subsubsection{Filter Screen}
+
+Every filter screen must have a unique name and is placed in
+UI/Reports/filters/contact\_search.html.  This file creates an HTML form that
+submits the search criteria back to a specified script.  It is involed through a
+URL like
+\url{http://myhost/ledgersmb/reports.pl?action=being\_report\&report\_name=contact\_search\&module=gl}.
+The arguments passed by the HTTP request are:  action (what to do), report\_name
+(which filter file to render), and module (which set of business reporting units
+we might be interested in).  Most commonly the correct module is gl which is for
+all financial transactions.
+
+As always the filter screen is an HTML template rendered with Template Toolkit,
+but using SGML process instruction tags rather than the default \%-based ones.
+The choice of the SGML $<$?lsmb ... ?$>$ PI tags is largely to support LaTeX
+better as well as to better conform to HTML and SGML standards.
+
+You may also want to look at UI/lib/report\_base.html for prebuilt controls for
+things like date ranges and lists of business report units.
+
+\subsubsection{The Stored Procedure}
+
+The primary work for the report is the stored procedure.  There are a couple
+general LedgerSMB rules to be aware of.  Prefix your arguments with in\_ and
+it's generally better to let the query mapper generate the queries than try to
+pass args in directly.  Typically package and method name are separated by a
+double underscore (\_\_) which can be a bit hard to see sometimes.
+
+The stored procedure for the Contact Search report is defined as follows:
+
+\begin{verbatim}
+CREATE OR REPLACE FUNCTION contact__search
+(in_entity_class int, in_contact text, in_contact_info text[],
+        in_meta_number text, in_address text, in_city text, in_state text,
+        in_mail_code text, in_country text, in_active_date_from date,
+        in_active_date_to date,
+        in_business_id int, in_name_part text, in_control_code text,
+        in_notes text)
+RETURNS SETOF contact_search_result AS $$
+DECLARE
+        out_row contact_search_result;
+        loop_count int;
+        t_contact_info text[];
+BEGIN
+        t_contact_info = in_contact_info;
+
+
+        FOR out_row IN
+                SELECT e.id, e.control_code, ec.id, ec.meta_number,
+                        ec.description, ec.entity_class,
+                        c.legal_name, c.sic_code, b.description , ec.curr::text
+                FROM (select * from entity
+                       where control_code like in_control_code || '%'
+                      union
+                      select * from entity where in_control_code is null) e
+                JOIN (SELECT legal_name, sic_code, entity_id
+                        FROM company
+                       WHERE legal_name @@ plainto_tsquery(in_name_part)
+                      UNION ALL
+                      SELECT legal_name, sic_code, entity_id
+                        FROM company
+                       WHERE in_name_part IS NULL
+                      UNION ALL
+                     SELECT coalesce(first_name, '') || ' '
+                            || coalesce(middle_name, '') || ' '
+                            || coalesce(last_name, ''), null, entity_id
+                       FROM person
+                      WHERE coalesce(first_name, '') || ' '
+                            || coalesce(middle_name, '') || ' '
+                            || coalesce(last_name, '')
+                             @@ plainto_tsquery(in_name_part)
+                      UNION ALL
+                     SELECT coalesce(first_name, '') || ' '
+                            || coalesce(middle_name, '') || ' '
+                            || coalesce(last_name, ''), null, entity_id
+                       FROM person
+                       WHERE in_name_part IS NULL) c ON (e.id = c.entity_id)
+                LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
+                LEFT JOIN business b ON (ec.business_id = b.id)
+                WHERE coalesce(ec.entity_class,e.entity_class) = in_entity_class
+                        AND (c.entity_id IN (select entity_id
+                                               FROM entity_to_contact
+                                              WHERE contact ILIKE
+                                                            ANY(t_contact_info))
+                                                    OR '' ILIKE
+                                                          ALL(t_contact_info)
+                                                    OR t_contact_info IS NULL)
+
+                        AND ((in_address IS NULL AND in_city IS NULL
+                                        AND in_state IS NULL
+                                        AND in_country IS NULL)
+                                OR (c.entity_id IN
+                                (select entity_id FROM entity_to_location
+                                WHERE location_id IN
+                                        (SELECT id FROM location
+                                        WHERE (line_one @@ plainto_tsquery(
+  in_address)
+                                               OR
+                                               line_two @@ plainto_tsquery(
+                                                              in_address)
+                                               OR
+                                               line_three @@ plainto_tsquery(
+                                                              in_address))
+                                                AND city ILIKE
+                                                        '%' ||
+                                                        coalesce(in_city, '')
+                                                        || '%'
+                                                AND state ILIKE
+                                                        '%' ||
+                                                        coalesce(in_state, '')
+                                                        || '%'
+                                                AND mail_code ILIKE
+                                                        '%' ||
+                                                        coalesce(in_mail_code,
+                                                                '')
+                                                        || '%'
+                                                AND country_id IN
+                                                        (SELECT id FROM country
+                                                        WHERE name ilike
+                                                              in_country
+                                                                OR short_name
+                                                                ilike
+                                                                in_country)))))
+                        AND (ec.business_id =
+                                coalesce(in_business_id, ec.business_id)
+                                OR (ec.business_id IS NULL
+                                        AND in_business_id IS NULL))
+                        AND (ec.startdate <= coalesce(in_active_date_to,
+                                                ec.startdate)
+                                OR (ec.startdate IS NULL))
+                        AND (ec.enddate >= coalesce(in_active_date_from,
+ec.enddate)
+                                OR (ec.enddate IS NULL))
+                        AND (ec.meta_number like in_meta_number || '%'
+                             OR in_meta_number IS NULL)
+                        AND (in_notes IS NULL OR e.id in (
+                                     SELECT entity_id from entity_note
+                                      WHERE note @@ plainto_tsquery(in_notes))
+                                  OR ec.id IN (select ref_key FROM eca_note
+                                     WHERE note @@ plainto_tsquery(in_notes)))
+        LOOP
+                RETURN NEXT out_row;
+        END LOOP;
+END;
+$$ language plpgsql;
+\end{verbatim}
+
+This is just a bit complex.  Most of the query is just a set of filter
+condutions, however.  The filter runs, and spits out results based on inputs.
+Moreover, because of the magic of the DBObject mapper, an input in the filter
+screen named notes gets mapped to the in\_notes argument here.
+
+\subsubsection{Report Module}
+
+The report module for this report is in
+LedgerSMB/DBObject/Report/Contact/Search.pm.  This file defines the basic outlay
+of the report.  These modules all must inherit from LedgerSMB::DBObject::Report
+and therefore must also use Moose.  This also automatically makes the DBOBject
+query mapping routines available to report objects.
+
+All reports are assumed to be tabular structures (this isn't always the case but
+non-tabular reports are an advanced topic beyond this current introduction.  See
+the income statement and balance sheet reports for how this would be done
+however).
+
+All criteria are handled as Moose properties (using the "has" function) and it
+is important that they be listed here.  Non-listed properties will not be
+available to your stored procedure.  Reports are also assumed to have rows and
+so the Report class automatically handles this here.
+
+Additionally the following functions are required in your module:
+
+\begin{description}
+  \item[columns]  This returns a list of column data.  Each is a hashref with
+                    the following attributes:
+     \begin{description}
+       \item[col\_id]  The unique name of the column
+       \item[type] Typically `text' though `checkbox' and `href' are not
+                    uncommon.
+       \item[href\_base] Only valid for type href, and is the beginning of the
+                         href.
+       \item[pwidth]  Size to print on an arbitrary scale, for PDF only.
+       \item[name] Label for the column
+     \end{description}
+   \item[name]  This returns the name of the report, to print in the header
+   \item[header\_lines] Returns a list of hasrefs (name/text are keys) for
+                     printing criteria information on the header of the report.
+\end{description}
+
+Additionally subtotal\_on (returning a list of column names for subtotals) is
+optional.
+
+Typically the convention is that a prepare\_input function takes a \$request
+object and turns dates into appropriate types, while a run\_report function
+actually runs the report and sets the rows property.  render(\$request) is
+provided by the Report class (see workflow hooks below).
+
+\subsubsection{Workflow Hooks}
+
+In the workflow script one will typically see some lines like:
+
+\begin{verbatim}
+sub search{
+    my ($request) = @_;
+
+    LedgerSMB::DBObject::Report::Contact::Search->prepare_criteria($request);
+    my $report = LedgerSMB::DBObject::Report::Contact::Search->new(%$request);
+    $report->run_report;
+    $report->render($request);
+}
+\end{verbatim}
+
+There are a few notes about the above lines that are worth making though usually
+these can be copied and pasted, and modified to fit.
+
+The render call requires a request object because it checks to see if a set of
+columns are requested.  If any columns are explicitly requested it displays only
+those that were requested.  If columns are not explicitly requested it displays
+all available columns.  A column is explicitly requested if the request contains
+a true value for a parameter of col\_\$colname, so a column named city would be
+requested by a variable set named col\_city.  Additionally ordering and
+subtotals are then automatically handled as well.
 
 \section{Integration Possibilities}
 
