@@ -5,8 +5,8 @@ BEGIN;
 insert into users (entity_id, username, id)
 values (-200, '_test1', -200);
 
-insert into session (session_id, users_id, token, last_used, transaction_id)
-values (-200, -200, md5(random()::text), now(), 0);
+insert into session (session_id, users_id, token, last_used)
+values (-200, -200, md5(random()::text), now());
 
 INSERT INTO chart (accno, description, charttype, category, link)
 VALUES ('00001', 'testing', 'A', 'L', 'AP');
@@ -15,8 +15,8 @@ VALUES ('00002', 'testing2', 'A', 'E', 'AP_amount');
 INSERT INTO chart (accno, description, charttype, category, link)
 VALUES ('00003', 'testing2', 'A', 'A', 'AP_paid');
 
-INSERT INTO session (users_id, last_used, token, transaction_id)
-values (currval('users_id_seq'),  now(), md5('test2'), 2);
+INSERT INTO session (users_id, last_used, token)
+values (currval('users_id_seq'),  now(), md5('test2'));
 
 INSERT INTO test_result(test_name, success)
 SELECT 'AP Batch created', (SELECT batch_create('test', 'test', 'ap', now()::date)) IS NOT NULL;
@@ -126,7 +126,7 @@ values (currval('id')::int,
 
 INSERT INTO test_result(test_name, success)
 SELECT 'batch_description exists', count(batch_description) = 1 
-FROM payment__search('_test_src1', NULL, NULL, -101, '00003', 1);
+FROM payment__search('_test_src1', NULL, NULL, -101, '00003', 1, 'USD');
 
 SELECT * FROM TEST_RESULT;
 
