@@ -147,6 +147,7 @@ Displays the search results
 
 sub get_results {
     my ($request) = @_;
+    my $locale = $request->{_locale};
     $request->close_form;
     $request->open_form({commit =>1});
         if ($request->{approved} ne '1' and $request->{approved} ne '0'){
@@ -179,15 +180,14 @@ sub get_results {
              "&approved=$search->{approved}&submitted=$search->{submitted}";
         
         my $column_names = {
-            "select" => 'Select',
-            account => 'Account',
-            their_total => 'Balance',
-            end_date => 'Statement Date',
-            submitted => 'Submitted',
-            approved => 'Approved',
-            updated => 'Last Updated',
-            entered_username => 'Entered By',
-            approved_username => 'Approved By'
+            account => $locale->text('Account'),
+            their_total => $locale->text('Balance'),
+            end_date => $locale->text('Statement Date'),
+            submitted => $locale->text('Submitted'),
+            approved => $locale->text('Approved'),
+            updated => $locale->text('Last Updated'),
+            entered_username => $locale->text('Entered By'),
+            approved_username => $locale->text('Approved By')
         };
         my $sort_href = "$search_url&order_by";
         my @sort_columns = qw(account their_total end_date submitted 
@@ -195,8 +195,8 @@ sub get_results {
         
 	my $cols = [];
 	my @acts = $search->get_accounts;
-	@$cols = qw(select account end_date their_total approved submitted 
-                    updated entered_username approved_username);
+	@$cols = qw(account end_date their_total approved submitted 
+                    updated entered_username approved_username action);
 	my $recon =$search;
 	for my $row(@results){
             my $act = undef;
@@ -213,6 +213,8 @@ sub get_results {
                 text => $row->{end_date}, 
                 href => "$base_url&report_id=$row->{id}"
             };
+            $row->{action} = { text => '[' . $locale->text('View') . ']',
+                                href => "$base_url&report_id=$row->{id}" };
         }
 	$recon->{_results} = \@results;
         $recon->{title} = $request->{_locale}->text('Reconciliation Sets');
