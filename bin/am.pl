@@ -1062,7 +1062,7 @@ sub display_form {
 s/<%include (.*?)%>/<a href=$form->{script}\?action=display_form&file=$myconfig{templates}\/$form->{code}\/$1&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}>$1<\/a>/g;
 
     $form->{type} = "template";
-    $hiddens{$_} = $form->{$_} foreach qw(file type path login sessionid);
+    $hiddens{$_} = $form->{$_} foreach qw(file type path login sessionid code);
 
 ##SC: Temporary commenting
 ##    if ( $form->{lynx} ) {
@@ -1097,7 +1097,7 @@ sub edit_template {
     $form->{body} =~ s/&nbsp;/&amp;nbsp;/gi;
 
     $hiddens{type} = 'template';
-    $hiddens{$_} = $form->{$_} foreach qw(file path login sessionid);
+    $hiddens{$_} = $form->{$_} foreach qw(file path login sessionid code);
     $hiddens{callback} = qq|$form->{script}?action=display_form&file=$form->{file}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}|;
 
 ##SC: Temporary commenting

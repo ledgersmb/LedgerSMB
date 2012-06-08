@@ -1242,8 +1242,11 @@ sub load_template {
     $self->check_template_name( \%$myconfig, \%$form );
     open( TEMPLATE, '<', "$form->{file}" ) || ($testval = 1);
     if ($testval == 1 && ($! eq 'No such file or directory')){
-      $form->error('Template not found.  
-         Perhaps you meant to edit the default template instead?');
+      my $file = $form->{file};
+      $file =~ s|$form->{code}/||;
+      open( TEMPLATE, '<', "$file" ) ||  $form->error(
+                    "Template not found: $file"
+      );
     } elsif ($testval == 1){
        $form->error("$form->{file} : $!");
     }
