@@ -1349,6 +1349,12 @@ sub db_init {
     $logger->debug("acquired dbh \$self->{dbh}=$self->{dbh}");
     $self->{dbh}->{pg_server_prepare} = 0;
     my $dbh = $self->{dbh};
+
+    my $datequery = 'select dateformat from user_preference join users using(id)
+                      where username = CURRENT_USER';
+    my $date_sth = $dbh->prepare($datequery);
+    $date_sth->execute;
+    my ($datestyle) = $date_sth->fetchrow_array;
     my %date_query = (
         'mm/dd/yy' => 'set DateStyle to \'SQL, US\'',
         'mm-dd-yy' => 'set DateStyle to \'POSTGRES, US\'',
@@ -1356,11 +1362,7 @@ sub db_init {
         'dd-mm-yy' => 'set DateStyle to \'POSTGRES, EUROPEAN\'',
         'dd.mm.yy' => 'set DateStyle to \'GERMAN\''
     );
-    if ( !$myconfig->{dateformat}) {
-        $myconfig->{dateformat} = 'yyyy-mm-dd';
-    } else {
-        $self->{dbh}->do( $date_query{ $myconfig->{dateformat} } );
-    }
+    $self->{dbh}->do( $date_query{ $datestyle } );
     $self->{db_dateformat} = $myconfig->{dateformat};    #shim
 
     # This is the general version check
