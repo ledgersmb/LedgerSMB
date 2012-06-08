@@ -1785,7 +1785,6 @@ sub tax_report {
     } else {
         $form->error('Invalid input db in RP::tax_report.');
     }
-
     my $query = qq|
 
    SELECT gl.transdate, gl.id, gl.invnumber, e.name, e.id as entity_id, 
