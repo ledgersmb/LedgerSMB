@@ -65,9 +65,10 @@ END ?>
 	<li class="nav"><a href="#hr_div"><?lsmb text('HR') ?></a></li>
 	<?lsmb ELSE ?>
 	<li class="nav"><a href="#company_div"><?lsmb text('Company') ?></a></li>
+        <?lsmb IF entity_id ?>
 	<li class="nav"><a href="#credit_div"><?lsmb text('Accounts') ?></a></li>
-	<?lsmb END ?>
-	<?lsmb IF entity_id ?>
+	<?lsmb END; END ?>
+	<?lsmb IF entity_id AND entity_class == 3 OR credit_id ?>
 	<li class="nav"><a href="#location_div"><?lsmb text('Addresses') ?></a></li>
 	<li class="nav"><a href="#contact_div"><?lsmb text('Contact Info') ?></a></li>
 	<li class="nav"><a href="#bank_div"><?lsmb text('Bank Accounts') ?></a></li>
