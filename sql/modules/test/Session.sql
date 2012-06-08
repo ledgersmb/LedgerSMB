@@ -6,21 +6,21 @@ INSERT INTO test_result (test_name, success)
 values ('timeout set', 
 (select count(*) from defaults where setting_key = 'timeout') = 1);
 
-INSERT INTO session (users_id, last_used, token, transaction_id)
+INSERT INTO session (users_id, last_used, token)
 SELECT 	currval('users_id_seq'), 
 now() - coalesce((select value from defaults where setting_key = 'timeout')::interval, 
          '90 minutes'::interval) - '1 minute'::interval, 
-md5('test2'), 2;
+md5('test2');
 
 
-INSERT INTO session (users_id, last_used, token, transaction_id)
+INSERT INTO session (users_id, last_used, token)
 SELECT currval('users_id_seq'), 
 now() - coalesce((select value from defaults where setting_key = 'timeout')::interval, 
          '2 days'::interval), 
-md5('test3'), 3;
+md5('test3');
 
-INSERT INTO session (users_id, last_used, token, transaction_id)
-SELECT currval('users_id_seq'), now(), md5('test1'), 1;
+INSERT INTO session (users_id, last_used, token)
+SELECT currval('users_id_seq'), now(), md5('test1');
 
 INSERT INTO test_result (test_name, success)
 SELECT 'records exist in transactions table', count(*) > 0 FROM transactions;
