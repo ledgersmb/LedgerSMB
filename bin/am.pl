@@ -39,6 +39,7 @@ use LedgerSMB::User;
 use LedgerSMB::RP;
 use LedgerSMB::GL;
 use LedgerSMB::Template;
+use LedgerSMB::Sysconfig;
 
 1;
 
@@ -1272,7 +1273,7 @@ sub yes_delete_language {
 
 sub display_stylesheet {
 
-    $form->{file} = "css/$myconfig{stylesheet}";
+    $form->{file} = "$LedgerSMB::Sysconfig::fs_cssdir/$myconfig{stylesheet}";
     &display_form;
 
 }
@@ -1715,7 +1716,7 @@ sub config {
             };
     }
 
-    opendir CSS, "css/.";
+    opendir CSS, $LedgerSMB::Sysconfig::fs_cssdir;
     @all = grep /.*\.css$/, readdir CSS;
     closedir CSS;
 
