@@ -70,10 +70,10 @@ COMMENT ON FUNCTION account_has_transactions (in_id int) IS
 $$ Checks to see if any transactions use this account.  If so, returns true.
 If not, returns false.$$;
 
-CREATE OR REPLACE FUNCTION account_save 
+CREATE OR REPLACE FUNCTION account__save 
 (in_id int, in_accno text, in_description text, in_category char(1), 
 in_gifi_accno text, in_heading int, in_contra bool, in_tax bool,
-in_link text[], is_obsolete bool)
+in_link text[], in_obsolete bool, in_is_temp bool)
 RETURNS int AS $$
 DECLARE 
 	t_heading_id int;
@@ -115,8 +115,9 @@ BEGIN
 		gifi_accno = in_gifi_accno,
 		heading = t_heading_id,
 		contra = in_contra,
-                obsolete = is_obsolete,
-                tax = t_tax
+                obsolete = in_obsolete,
+                tax = t_tax,
+                is_temp = in_is_temp
 	WHERE id = in_id;
 
 	IF FOUND THEN
@@ -125,9 +126,9 @@ BEGIN
                 -- can't obsolete on insert, but this can be changed if users
                 -- request it --CT
 		INSERT INTO account (accno, description, category, gifi_accno,
-			heading, contra, tax)
+			heading, contra, tax, is_temp)
 		VALUES (in_accno, in_description, in_category, in_gifi_accno,
-			t_heading_id, in_contra, in_tax);
+			t_heading_id, in_contra, in_tax, in_is_temp);
 
 		t_id := currval('account_id_seq');
 	END IF;

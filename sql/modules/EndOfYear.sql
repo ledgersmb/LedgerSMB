@@ -81,7 +81,8 @@ BEGIN
 	JOIN account acc ON (acc.id = a.chart_id)
 	WHERE a.transdate <= in_end_date 
 		AND a.transdate > coalesce(cp.end_date, a.transdate - 1)
-		AND acc.category IN ('I', 'E')
+		AND (acc.category IN ('I', 'E')
+                      OR acc.category = 'Q' AND acc.is_temp)
 	GROUP BY a.chart_id;
 
 	INSERT INTO acc_trans (transdate, trans_id, chart_id, amount)

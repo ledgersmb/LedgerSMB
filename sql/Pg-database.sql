@@ -72,6 +72,7 @@ CREATE TABLE account (
   id serial not null unique,
   accno text primary key,
   description text,
+  is_temp not null default false bool,
   category CHAR(1) NOT NULL,
   gifi_accno text,
   heading int not null references account_heading(id),
@@ -79,6 +80,9 @@ CREATE TABLE account (
   tax bool not null default false,
   obsolete bool not null default false
 );
+
+COMMENT ON COLUMN account.is_temp IS
+$$ Only affects equity accounts.  If set, close at end of year. $$;
 
 COMMENT ON TABLE  account IS
 $$ This table stores the main account info.$$;

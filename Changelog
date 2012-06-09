@@ -16,6 +16,7 @@ General Enhancements:
 * Centralized database commit for new code (Chris T)
 * invoice.unit is now unbounded numeric to reduce errors (Chris T, 3516235)
 * Invoices with inventory subject to draft/vouchers workflows (Chris T)
+* Added Equity (Temp) account type (Chris T)
 
 New RESTful Web Services Framework
 * Supports XML and JSON as input formats

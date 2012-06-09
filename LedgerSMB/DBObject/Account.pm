@@ -54,6 +54,10 @@ sub save {
     if (!defined $self->{tax}) {
 	$self->{tax} = '0';
     }
+    if ($self->{category} eq 'Qt'){
+       $self->{is_temp} = '1';
+       $self->{category} = 'Q';
+    }
     $self->generate_links;
     my $func = 'account_save';
     if ($self->{charttype} and $self->{charttype} eq 'H') {
