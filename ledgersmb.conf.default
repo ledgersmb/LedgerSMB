@@ -4,7 +4,14 @@ logging  = 0
 #Be aware of tempdir setting.If client_browser and server_apache on same machine, sharing tmp-dir , problems 'Permission denied' if server tries to write temp-file wich already exists as client-owned
 tempdir = /tmp/ledgersmb
 
+# This is the logical CSS directory.  I.e. it is what comes before the 
+# ledgersmb.css in the url.  Example might be /my_css_dir/ or 
+# http://localhost/other_css_dir/
 cssdir = css/
+
+# THis is the location on the file system where the css files are, for editing 
+# and selection.  An example might be /var/www/ledgersmb_css/
+fs_cssdir = css/
 
 # Set language for login and admin pages
 language = 

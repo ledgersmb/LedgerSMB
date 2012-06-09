@@ -1223,7 +1223,7 @@ sub check_template_name {
 
     if ( $form->{file} !~ /^$myconfig->{templates}\// ) {
         $form->error("Not in a whitelisted directory: $form->{file}")
-          unless $form->{file} =~ /^css\//;
+          unless $form->{file} =~ /^$LedgerSMB::Sysconfig::fs_cssdir\//;
     }
 }
 
@@ -1243,7 +1243,7 @@ sub load_template {
     open( TEMPLATE, '<', "$form->{file}" ) || ($testval = 1);
     if ($testval == 1 && ($! eq 'No such file or directory')){
       my $file = $form->{file};
-      $file =~ s|$form->{code}/||;
+      $file =~ s|$form->{code}/|| if $form->{code};
       open( TEMPLATE, '<', "$file" ) ||  $form->error(
                     "Template not found: $file"
       );

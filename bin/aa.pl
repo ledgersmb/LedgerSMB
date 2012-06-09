@@ -1013,7 +1013,7 @@ sub form_footer {
                    ndx   => 3, 
                    key   => 'O', 
                    value => $locale->text('Post as Saved') };
-           if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
+           if (grep /^lsmb_$form->{company}__draft_edit$/, @{$form->{_roles}}){
                $button{edit_and_approve} = { 
                    ndx   => 4, 
                    key   => 'E', 

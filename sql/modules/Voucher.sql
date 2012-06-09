@@ -122,7 +122,7 @@ BEGIN
 END;
 $$ language plpgsql;
 
-COMMENT ON FUNCTION voucher_list (in_batch_id integer) IS
+COMMENT ON FUNCTION voucher__list (in_batch_id integer) IS
 $$ Retrieves a list of vouchers and amounts attached to the batch.$$;
 
 CREATE TYPE batch_list_item AS (
@@ -138,7 +138,7 @@ CREATE TYPE batch_list_item AS (
 );
 
 CREATE OR REPLACE FUNCTION 
-batch_search(in_class_id int, in_description text, in_created_by_eid int, 
+batch__search(in_class_id int, in_description text, in_created_by_eid int, 
 	in_date_from date, in_date_to date,
 	in_amount_gt numeric, 
 	in_amount_lt numeric, in_approved bool) 

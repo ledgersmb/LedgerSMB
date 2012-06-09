@@ -19,6 +19,7 @@ our $VERSION = '0.1';
 
 use LedgerSMB::Batch;
 use LedgerSMB::Template;
+use LedgerSMB::DBObject::Report::Unapproved::Batch_Overview;
 use strict;
 
 
@@ -115,7 +116,7 @@ sub add_vouchers {
         ar         => {script => 'bin/ar.pl', function => sub {add()}},
         gl         => {script => 'bin/gl.pl', function => sub {add()}},
      sales_invoice => {script => 'bin/is.pl', function => sub {add()}},
-    vendor_invoice => {script => 'bin/ir.pl', function => sub {add()}}
+    vendor_invoice => {script => 'bin/ir.pl', function => sub {add()}},
         receipt    => {script => 'scripts/payment.pl', 
 	             function => sub {
 				my ($request) = @_;
@@ -223,129 +224,10 @@ class_id and created_by are exact matches
 
 sub list_batches {
     my ($request) = @_;
-    $request->{action} = 'list_batches';
-    my $batch = LedgerSMB::Batch->new(base => $request);
-    $batch->close_form;
-    $batch->open_form;
-    $batch->{dbh}->commit;
-    if ($batch->{order_by}){
-        $batch->set_ordering(
-		{method => $batch->get_search_method({custom_types => $custom_batch_types}), 
-		 column => $batch->{order_by}
-		});
-    }
-    my @search_results = $batch->get_search_results({custom_types => $custom_batch_types});
-    $batch->{script} = "vouchers.pl";
-
-    my @columns = 
-        qw(select id control_code description transaction_total payment_total default_date);
-
-    my $base_href = "vouchers.pl";
-    my $search_href = "$base_href?action=list_batches";
-    my $batch_href = "$base_href?action=get_batch";
-
-    for my $key (
-       qw(class_id approved created_by description empty amount_gt amount_lt)
-    ){
-       $search_href .= "&$key=$batch->{$key}";
-    }
-
-	my $sort_href = "$search_href&order_by";
-	
-    my $column_names = {
-        'select'          => 'Select',
-        transaction_total => 'AR/AP/GL Total',
-        payment_total => 'Paid/Received Total',
-        description => 'Description',
-        control_code => 'Batch Number',
-        id => 'ID',
-        default_date => 'Post Date'
-    };
-    my @sort_columns = qw(id control_code description transaction_total payment_total default_date);
-	
-    my $count = 0;
-    my @rows;
-    for my $result (@search_results){
-        ++$count;
-        $batch->{"row_$count"} = $result->{id};
-        push @rows, {
-            'select'          => {
-                                 input => {
-                                           type  => 'checkbox',
-                                           value => 1,
-                                           name  => "batch_$result->{id}"
-                                 }
-            },
-            transaction_total => $batch->format_amount(
-                                     amount => $result->{transaction_total}
-				),
-            payment_total     => $batch->format_amount (
-                                     amount => $result->{payment_total}
-                                ),
-            description => $result->{description},
-            control_code => {
-                             text  => $result->{control_code},
-                             href  => "$batch_href&batch_id=$result->{id}",
-
-            },
-            id => $result->{id},
-			default_date => $result->{default_date}
-        };
-    }
-    $batch->{rowcount} = $count;
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI',
-        template => 'form-dynatable',
-        format   => ($batch->{format}) ? $batch->{format} : 'HTML', 
-    );
-
-	my $column_heading = $template->column_heading($column_names, 
-		{href => $sort_href, columns => \@sort_columns}
-	);
-
-    my $hiddens = $batch->take_top_level();
-    $batch->{rowcount} = "$count";
-    delete $batch->{search_results};
-    
-    my @buttons;
-    if ($batch->{empty})
-    {
-      @buttons = [{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => $request->{_locale}->text('Delete'),
-                    value => 'batch_delete',
-                    class => 'submit',
-               }];
-    } else {
-      @buttons = [{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => $request->{_locale}->text('Post'),
-                    value => 'batch_approve',
-                    class => 'submit',
-                 },{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => $request->{_locale}->text('Delete'),
-                    value => 'batch_delete',
-                    class => 'submit',
-                }];
-    }
-       # save form_id into the DB before sending the form.
-       # TODO: need to find a better place for this.
-       $batch->{dbh}->commit();
-
-    $template->render({ 
-	form    => $batch,
-	columns => \@columns,
-        heading => $column_heading,
-        rows    => \@rows,
-        hiddens => $hiddens,
-        buttons => @buttons
-    });
+    my $report = LedgerSMB::DBObject::Report::Unapproved::Batch_Overview->new(
+                 %$request);
+    $report->run_report;
+    $report->render($request);
         
 }
 

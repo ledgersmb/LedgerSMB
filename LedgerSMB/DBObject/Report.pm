@@ -148,6 +148,14 @@ bool, determines whether to show subtotals.
 
 has show_subtotals => (is => 'rw', isa => 'Bool');
 
+=item buttons 
+
+Buttons to show at the bottom of the screen
+
+=cut
+
+has buttons => (is => 'rw', isa => 'ArrayRef[Any]');
+
 =back
 
 =head1 METHODS
