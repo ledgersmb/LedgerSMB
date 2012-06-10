@@ -48,6 +48,7 @@ sub get {
         print $cgi->redirect($file->content);
         return 0;
     }
+    binmode (STDOUT, ':bytes');
 
     print $cgi->header(
           -type       => $file->get_mime_type,
