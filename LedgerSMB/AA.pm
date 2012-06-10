@@ -373,6 +373,7 @@ sub post_transaction {
     $query = qq|
 		UPDATE $table 
 		SET invnumber = ?,
+                    description = ?,
 			ordnumber = ?,
 			transdate = ?,
 			taxincluded = ?,
@@ -390,8 +391,8 @@ sub post_transaction {
 	|;
     
     my @queryargs = (
-        $form->{invnumber},     $form->{ordnumber},
-        $form->{transdate},     
+        $form->{invnumber},     $form->{description},    
+        $form->{ordnumber},     $form->{transdate},     
         $form->{taxincluded},   $invamount,
         $form->{duedate},       $paid,
         $datepaid,              $invnetamount,
@@ -400,7 +401,6 @@ sub post_transaction {
         $form->{ponumber},      $form->{reverse},
         $form->{id}
     );
-
     $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
     if (defined $form->{approved}) {
 

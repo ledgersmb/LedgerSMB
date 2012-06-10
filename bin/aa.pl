@@ -683,6 +683,12 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 	      $exchangerate
 	      $department
 	      $taxincluded
+            <tr>
+               <th align="right" nowrap>| . $locale->text('Description') . qq|
+               </th>
+               <td><input type="text" name="description" size="40" 
+                   value="| . $form->{description} . qq|" /></td>
+            </tr>
 	    </table>
 	  </td>
 	  <td align=right>

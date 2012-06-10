@@ -2334,7 +2334,8 @@ sub create_links {
 				a.amount AS oldinvtotal, a.paid AS oldtotalpaid,
 				a.person_id, e.name AS employee, 
 				c.language_code, a.ponumber, a.reverse,
-                                a.approved, ctf.default_reportable
+                                a.approved, ctf.default_reportable, 
+                                a.description
 			FROM $arap a
 			JOIN entity_credit_account c 
 				ON (a.entity_credit_account = c.id)
