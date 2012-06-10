@@ -26,7 +26,7 @@ CREATE TYPE voucher_list AS (
 
 -- voucher_list could use refactoring
 
-CREATE OR REPLACE FUNCTION voucher_list (in_batch_id integer)
+CREATE OR REPLACE FUNCTION voucher__list (in_batch_id integer)
 RETURNS SETOF voucher_list AS
 $$
 declare voucher_item record;
