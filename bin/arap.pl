@@ -523,70 +523,7 @@ sub print_and_post_as_new {
 }
 
 sub repost {
-
-    if ( $form->{type} =~ /_order/ ) {
-        if ( $form->{print_and_save} ) {
-            $form->{nextsub} = "print_and_save";
-            $msg =
-              $locale->text('You are printing and saving an existing order');
-        }
-        else {
-            $form->{nextsub} = "save";
-            $msg = $locale->text('You are saving an existing order');
-        }
-    }
-    elsif ( $form->{type} =~ /_quotation/ ) {
-        if ( $form->{print_and_save} ) {
-            $form->{nextsub} = "print_and_save";
-            $msg =
-              $locale->text(
-                'You are printing and saving an existing quotation');
-        }
-        else {
-            $form->{nextsub} = "save";
-            $msg = $locale->text('You are saving an existing quotation');
-        }
-    }
-    else {
-        if ( $form->{print_and_post} ) {
-            $form->{nextsub} = "print_and_post";
-            $msg =
-              $locale->text(
-                'You are printing and posting an existing transaction!');
-        }
-        else {
-            $form->{nextsub} = "post";
-            $msg = $locale->text('You are posting an existing transaction!');
-        }
-    }
-
-    delete $form->{action};
-    $form->{repost} = 1;
-
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-|;
-
-    $form->hide_form;
-
-    print qq|
-<h2 class=confirm>| . $locale->text('Warning!') . qq|</h2>
-
-<h4>$msg</h4>
-
-<button name="action" class="submit" type="submit" value="continue">|
-      . $locale->text('Continue')
-      . qq|</button>
-</form>
-
-</body>
-</html>
-|;
-
+    $form->error($locale->text('Reposting Not Allowed');
 }
 
 sub schedule {

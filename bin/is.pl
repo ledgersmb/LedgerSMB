@@ -953,8 +953,6 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
               { ndx => 9, key => 'L', value => $locale->text('Sales Order') },
             'schedule' =>
               { ndx => 10, key => 'H', value => $locale->text('Schedule') },
-            'delete' =>
-              { ndx => 11, key => 'D', value => $locale->text('Delete') },
             'on_hold' =>
               { ndx => 12, key => 'O', value => $locale->text('On Hold') },
              'void'  => 
@@ -974,12 +972,8 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
 
         if ( $form->{id} ) {
 
-            if ( ($form->{locked} || $transdate <= $closedto) 
-                    and $form->{approved}
-             ) {
-                for ( "post", "print_and_post", "delete" ) {
-                    delete $button{$_};
-                }
+            for ( "post", "print_and_post", "delete" ) {
+                delete $button{$_};
             }
             my $is_draft = 0;
             if (!$form->{approved} && !$form->{batch_id}){
@@ -1430,53 +1424,6 @@ sub print_and_post {
     $old_form->{rowcount}++;
 
     &print_form($old_form);
-
-}
-
-sub delete {
-
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-|;
-
-    $form->{action} = "yes";
-    $form->hide_form;
-
-    print qq|
-<h2 class=confirm>| . $locale->text('Confirm!') . qq|</h2>
-
-<h4>|
-      . $locale->text( 'Are you sure you want to delete Invoice Number [_1]?',
-        $form->{invnumber} )
-      . qq|
-</h4>
-
-<p>
-<button name="action" class="submit" type="submit" value="yes">|
-      . $locale->text('Yes')
-      . qq|</button>
-</form>
-|;
-
-}
-
-sub yes {
-
-    if (
-        IS->delete_invoice(
-            \%myconfig, \%$form, ${LedgerSMB::Sysconfig::spool}
-        )
-      )
-    {
-        $form->redirect( $locale->text('Invoice deleted!') );
-    }
-    else {
-        $form->error( $locale->text('Cannot delete invoice!') );
-    }
 
 }
 

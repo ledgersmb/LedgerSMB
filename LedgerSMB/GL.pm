@@ -65,35 +65,6 @@ sub get_files {
 
 }
 
-sub delete_transaction {
-
-    my ( $self, $myconfig, $form ) = @_;
-
-    # connect to database
-    my $dbh = $form->{dbh};
-
-    my %audittrail = (
-        tablename => 'gl',
-        reference => $form->{reference},
-        formname  => 'transaction',
-        action    => 'deleted',
-        id        => $form->{id}
-    );
-
-    $form->audittrail( $dbh, "", \%audittrail );
-    my $id    = $dbh->quote( $form->{id} );
-    my $query = qq|DELETE FROM gl WHERE id = $id|;
-    $dbh->do($query) || $form->dberror($query);
-
-    $query = qq|DELETE FROM acc_trans WHERE trans_id = $id|;
-    $dbh->do($query) || $form->dberror($query);
-
-    # commit and redirect
-    my $rc = $dbh->commit;
-
-    $rc;
-}
-
 sub post_transaction {
 
     my ( $self, $myconfig, $form, $locale) = @_;

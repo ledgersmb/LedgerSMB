@@ -269,8 +269,6 @@ sub display_form
 		    { ndx => 6, key => 'N', value => $locale->text('Post as new') },
 		  'schedule' =>
 		    { ndx => 7, key => 'H', value => $locale->text('Schedule') },
-		  'delete' =>
-		    { ndx => 8, key => 'D', value => $locale->text('Delete') },
                   'new' => 
                     { ndx => 9, key => 'N', value => $locale->text('New') },
 	      );
@@ -286,16 +284,11 @@ sub display_form
               } else {
                  $a{'update'} = 1;
               }
-	      if ( $form->{id} && ($form->{approved} || !$form->{batch_id})) {
+	      if ( $form->{id}) {
 
 		  for ( 'post_as_new', 'schedule' ) { $a{$_} = 1 }
 
-		  if ( !$form->{locked} ) {
-		      if ( $transdate ge $closedto) {
-			  for ( 'post', 'delete' ) { $a{$_} = 1 }
-		      }
-		  }
-
+		  for ( 'post', 'delete' ) { $a{$_} = 1 }
 	      }
 	      elsif (!$form->{id}){
 		  if ( $transdate > $closedto ) {
@@ -639,49 +632,10 @@ sub update {
 
 
 
-sub delete {
-
-    my %hiddens;
-    delete $form->{action};
-    foreach (keys %$form) {
-        $hiddens{$_} = $form->{$_} unless ref $form->{$_};
-    }
-
-    $form->{title} = $locale->text('Confirm!');
-    my $query = $locale->text(
-        'Are you sure you want to delete Transaction [_1]',
-        $form->{reference} );
-
-    my @buttons = ({
-        name => 'action',
-        value => 'delete_transaction',
-        text => $locale->text('Yes'),
-        });
-    my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
-        locale => $locale, 
-        template => 'form-confirmation',
-        );
-    $template->render({
-        form => $form,
-        query => $query,
-        hiddens => \%hiddens,
-        buttons => \@buttons,
-    });
-}
-
-sub delete_transaction {
-
-    if ( GL->delete_transaction( \%myconfig, \%$form ) ) {
-        $form->redirect( $locale->text('Transaction deleted!') );
-    }
-    else {
-        $form->error( $locale->text('Cannot delete transaction!') );
-    }
-
-}
-
 sub post {
+    if ($form->{id}){
+       $form->error($locale->text('Cannot Repost Transaction'));
+    }
     if (!$form->close_form){
         &update;
         $form->finalize_request();

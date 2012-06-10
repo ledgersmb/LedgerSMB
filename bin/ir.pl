@@ -899,8 +899,6 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
             },
             'schedule' =>
               { ndx => 7, key => 'H', value => $locale->text('Schedule') },
-            'delete' =>
-              { ndx => 8, key => 'D', value => $locale->text('Delete') },
             'on_hold' =>
               { ndx => 9, key=> 'O', value => $locale->text('On Hold') },
 	    'save_info'  => 
@@ -915,9 +913,7 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
 
         if ( $form->{id} ) {
          
-            if ( $form->{locked} and !$form->{approved} ) {
-                for ( "post", "delete", 'on_hold' ) { delete $button{$_} }
-            }
+            for ( "post", "delete", 'on_hold' ) { delete $button{$_} }
             for ( 'post_as_new', 'print_and_post_as_new', "update") {
                 delete $button{$_};
             }
@@ -1391,46 +1387,6 @@ sub post {
     }
     else {
         $form->error( $locale->text('Cannot post invoice!') );
-    }
-
-}
-
-sub delete {
-
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-|;
-
-    $form->{action} = "yes";
-    $form->hide_form;
-
-    print qq|
-<h2 class=confirm>| . $locale->text('Confirm!') . qq|</h2>
-
-<h4>|
-      . $locale->text( 'Are you sure you want to delete Invoice Number [_1]?',
-        $form->{invnumber} )
-      . qq|</h4>
-<p>
-<button name="action" class="submit" type="submit" value="yes">|
-      . $locale->text('Yes')
-      . qq|</button>
-</form>
-|;
-
-}
-
-sub yes {
-
-    if ( IR->delete_invoice( \%myconfig, \%$form ) ) {
-        $form->redirect( $locale->text('Invoice deleted!') );
-    }
-    else {
-        $form->error( $locale->text('Cannot delete invoice!') );
     }
 
 }

@@ -18,6 +18,7 @@ General Enhancements:
 * Invoices with inventory subject to draft/vouchers workflows (Chris T)
 * Added Equity (Temp) account type (Chris T)
 * Added description field to AR/AP transaction screen (Chris T)
+* Removed ability to repost/delete transactions (Chris T)
 
 New RESTful Web Services Framework
 * Supports XML and JSON as input formats

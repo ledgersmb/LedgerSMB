@@ -1034,12 +1034,9 @@ sub form_footer {
             $button{post_as_new}->{value} = $locale->text('Save as New');
             $form->hide_form('separate_duties');
         }
-        if ( $form->{id} && ($form->{approved} || !$form->{batch_id})) {
-            if ( $form->{locked} || ( $transdate && $transdate <= $closedto ) )
-            {
-                for ( "post","delete" ) {
-                    delete $button{$_};
-                }
+        if ( $form->{id}) { 
+            for ( "post","delete" ) {
+                delete $button{$_};
             }
         }
         elsif (!$form->{id}) {
@@ -1433,55 +1430,6 @@ sub save_info {
 
 #New function starts Here
 
-
-sub delete {
-
-    $form->{title} = $locale->text('Confirm!');
-
-    $form->header;
-
-    print qq|
-<body>
-
-<form method=post action=$form->{script}>
-|;
-
-    $form->{action} = "yes";
-    $form->hide_form;
-
-    print qq|
-<h2 class=confirm>$form->{title}</h2>
-
-<h4>|
-      . $locale->text('Are you sure you want to delete Transaction')
-      . qq| $form->{invnumber}</h4>
-
-<button name="action" class="submit" type="submit" value="yes">|
-      . $locale->text('Yes')
-      . qq|</button>
-</form>
-
-</body>
-</html>
-|;
-
-}
-
-sub yes {
-
-    if (
-        AA->delete_transaction(
-            \%myconfig, \%$form, ${LedgerSMB::Sysconfig::spool}
-        )
-      )
-    {
-        $form->redirect( $locale->text('Transaction deleted!') );
-    }
-    else {
-        $form->error( $locale->text('Cannot delete transaction!') );
-    }
-
-}
 
 sub search {
 
