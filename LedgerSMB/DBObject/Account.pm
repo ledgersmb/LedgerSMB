@@ -103,6 +103,9 @@ sub get {
     for my $ref (@accounts){
         bless $ref, 'LedgerSMB::DBObject::Account';
         $ref->merge($self, keys => ['_user', '_locale', 'stylesheet', 'dbh', '_roles', '_request']);
+        if ($ref->{is_temp} and ($ref->{category} eq 'Q')){
+            $ref->{category} = 'Qt';
+        }
         push (@{$self->{account_list}}, $ref);
     }
     return @{$self->{account_list}};

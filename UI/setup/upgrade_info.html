@@ -4,22 +4,14 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
 <body>
 <h2><?lsmb text('Database Management Console') ?></h2>
-<div class="listtop"><?lsmb text('Enter User') ?></div>
-<form action="setup.pl" method="POST" name="new_user">
+<div class="listtop"><?lsmb text('Upgrade Info') ?></div>
+<form action="setup.pl" method="POST" name="upgrade_info">
 <?lsmb INCLUDE input element_data = {
     name = 'database'
     type = 'hidden'
    value = database
 } ?>
 <div class="form">
-<div class="input_row">
-<?lsmb INCLUDE input element_data = {
-                            name  = 'contribdir'
-                            type  = 'text'
-                           label  = text('Contrib Dir') #'
-                            class = 'directory'
-} ?>
-</div>
 <div class="input_row">
 <?lsmb INCLUDE input element_data = {
                             name  = 'default_country'
