@@ -514,6 +514,12 @@ sub form_header {
 	      </tr>
               $department
 	      $exchangerate
+            <tr>
+               <th align="right" nowrap>| . $locale->text('Description') . qq|
+               </th>
+               <td><input type="text" name="description" size="40" 
+                   value="| . $form->{description} . qq|" /></td>
+            </tr>
 	    </table>
 	  </td>
 	  <td align=right>

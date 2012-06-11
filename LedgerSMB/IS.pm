@@ -1606,6 +1606,7 @@ sub post_invoice {
 		       invnumber = ?,
 		       ordnumber = ?,
 		       quonumber = ?,
+                       description = ?,
 		       transdate = ?,
 		       entity_credit_account = ?,
 		       amount = ?,
@@ -1631,7 +1632,8 @@ sub post_invoice {
     $sth = $dbh->prepare($query);
     $sth->execute(
         $form->{invnumber},     $form->{ordnumber},
-        $form->{quonumber},     $form->{transdate} || 'now',
+        $form->{quonumber},     $form->{description}, 
+        $form->{transdate} || 'now',
         $form->{customer_id},   $invamount,
         $invnetamount,          $form->{paid},
         $form->{datepaid} || 'now',      $form->{duedate} || 'now',
@@ -1926,7 +1928,7 @@ sub retrieve_invoice {
 			          a.person_id, e.name AS employee, a.till, 
 			          a.reverse,
 			          a.language_code, a.ponumber,
-			          a.on_hold
+			          a.on_hold, a.description
 			     FROM ar a
 			LEFT JOIN entity_employee em ON (em.entity_id = a.person_id)
 			INNER JOIN entity e ON e.id = em.entity_id

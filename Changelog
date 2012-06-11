@@ -17,7 +17,7 @@ General Enhancements:
 * invoice.unit is now unbounded numeric to reduce errors (Chris T, 3516235)
 * Invoices with inventory subject to draft/vouchers workflows (Chris T)
 * Added Equity (Temp) account type (Chris T)
-* Added description field to AR/AP transaction screen (Chris T)
+* Added description field to transaction and invoice screens (Chris T)
 * Removed ability to repost/delete transactions (Chris T)
 
 New RESTful Web Services Framework

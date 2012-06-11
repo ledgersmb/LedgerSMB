@@ -523,7 +523,7 @@ sub print_and_post_as_new {
 }
 
 sub repost {
-    $form->error($locale->text('Reposting Not Allowed');
+    $form->error($locale->text('Reposting Not Allowed'));
 }
 
 sub schedule {

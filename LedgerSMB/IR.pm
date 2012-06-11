@@ -750,6 +750,7 @@ sub post_invoice {
 		   SET invnumber = ?,
 		       ordnumber = ?,
 		       quonumber = ?,
+                       description = ?,
 		       transdate = ?,
 		       amount = ?,
 		       netamount = ?,
@@ -771,7 +772,7 @@ sub post_invoice {
     $sth = $dbh->prepare($query);
     $sth->execute(
         $form->{invnumber},     $form->{ordnumber},     $form->{quonumber},
-        $form->{transdate},     $invamount,
+        $form->{description},   $form->{transdate},     $invamount,
         $invnetamount,          $form->{paid},          $form->{datepaid},
         $form->{duedate},       $form->{shippingpoint}, $form->{shipvia},
         $form->{taxincluded},   $form->{notes},         $form->{intnotes},
@@ -1066,7 +1067,7 @@ sub retrieve_invoice {
 			       a.ordnumber, a.quonumber, a.paid, a.taxincluded,
 			       a.notes, a.intnotes, a.curr AS currency, 
 			       a.entity_credit_account as vendor_id, a.language_code, a.ponumber,
-			       a.on_hold, a.reverse
+			       a.on_hold, a.reverse, a.description
 			  FROM ap a
 			 WHERE id = ?|;
         $sth = $dbh->prepare($query);
