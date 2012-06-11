@@ -13,8 +13,10 @@ $$ language plpgsql;
 COMMENT ON FUNCTION voucher_get_batch (in_batch_id integer) is
 $$ Retrieves basic batch information based on batch_id.$$;
 
+DROP TYPE IF EXISTS voucher_list CASCADE;
 CREATE TYPE voucher_list AS (
 	id int,
+        invoice bool,
 	reference text,
 	description text,
 	batch_id int,
@@ -32,7 +34,7 @@ $$
 declare voucher_item record;
 BEGIN
     	FOR voucher_item IN
-		SELECT v.id, a.invnumber, e.name, 
+		SELECT v.id, a.invoice, a.invnumber, e.name, 
 			v.batch_id, v.trans_id, 
 			a.amount, a.transdate, 'Payable'
 		FROM voucher v
@@ -44,7 +46,7 @@ BEGIN
 			AND v.batch_class = (select id from batch_class 
 					WHERE class = 'ap')
 		UNION
-		SELECT v.id, a.invnumber, e.name, 
+		SELECT v.id, a.invoice, a.invnumber, e.name, 
 			v.batch_id, v.trans_id, 
 			a.amount, a.transdate, 'Receivable'
 		FROM voucher v
@@ -57,7 +59,7 @@ BEGIN
 					WHERE class = 'ar')
 		UNION ALL
 		-- TODO:  Add the class labels to the class table.
-		SELECT v.id, a.source, 
+		SELECT v.id, false, a.source, 
 			cr.meta_number || '--'  || co.legal_name , 
 			v.batch_id, v.trans_id, 
 			sum(CASE WHEN bc.class LIKE 'payment%' THEN a.amount * -1
