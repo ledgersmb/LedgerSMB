@@ -1,6 +1,9 @@
+DROP TYPE IF EXISTS draft_search_result CASCADE;
+
 CREATE TYPE draft_search_result AS (
 	id int,
 	transdate date,
+        invoice bool,
 	reference text,
 	description text,
 	amount numeric
@@ -13,8 +16,8 @@ $$
 DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN
-		SELECT trans.id, trans.transdate, trans.reference, 
-			trans.description, 
+		SELECT trans.id, trans.transdate, trans.invoice, 
+                       trans.reference, trans.description, 
 			sum(case when lower(in_type) = 'ap' AND chart.link = 'AP'
 				 THEN line.amount
 				 WHEN lower(in_type) = 'ar' AND chart.link = 'AR'
@@ -25,18 +28,18 @@ BEGIN
 			    END) as amount
 		FROM (
 			SELECT id, transdate, reference, 
-				description,
+				description, false as invoice
                                 approved from gl
 			WHERE lower(in_type) = 'gl'
 			UNION
 			SELECT id, transdate, invnumber as reference, 
 				(SELECT name FROM eca__get_entity(entity_credit_account)),
-				approved from ap
+				invoice, approved from ap
 			WHERE lower(in_type) = 'ap'
 			UNION
 			SELECT id, transdate, invnumber as reference,
 				description, 
-				approved from ar
+				invoice, approved from ar
 			WHERE lower(in_type) = 'ar'
 			) trans
 		JOIN acc_trans line ON (trans.id = line.trans_id)
