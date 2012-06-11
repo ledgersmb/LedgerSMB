@@ -17,6 +17,11 @@ ALTER TABLE lsmb12.customer ADD COLUMN entity_id int;
 ALTER TABLE lsmb12.customer ADD COLUMN company_id int;
 ALTER TABLE lsmb12.customer ADD COLUMN credit_id int;
 
+-- Buisness Reporting Units
+
+INSERT INTO business_unit (class_id, id, control_code, description
+     SELECT 1, id, role || id::text, description FROM lsmb12.department;
+
 
 --Accounts
 INSERT INTO account_heading(id, accno, description)
@@ -394,10 +399,8 @@ INSERT INTO assembly SELECT * FROM lsmb12.assembly;
 
 ALTER TABLE gl DISABLE TRIGGER gl_audit_trail;
 
-INSERT INTO gl(id, reference, description, transdate, person_id, notes, 
-               department_id)
-    SELECT gl.id, reference, description, transdate, p.id, gl.notes, 
-           department_id
+INSERT INTO gl(id, reference, description, transdate, person_id, notes)
+    SELECT gl.id, reference, description, transdate, p.id, gl.notes
       FROM lsmb12.gl 
  LEFT JOIN lsmb12.employee em ON gl.employee_id = em.id
  LEFT JOIN person p ON em.entity_id = p.id;
@@ -409,12 +412,12 @@ ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
 INSERT INTO ar(id, invnumber, transdate, taxincluded, amount, 
             netamount, paid, datepaid, duedate, invoice, shippingpoint, terms,
             notes, curr, ordnumber, person_id, till, quonumber, intnotes, 
-            department_id, shipvia, language_code, ponumber, 
+            shipvia, language_code, ponumber, 
             entity_credit_account)
      SELECT ar.id, invnumber, transdate, ar.taxincluded, amount, netamount, 
             paid, datepaid, duedate, invoice, shippingpoint, ar.terms, ar.notes,
             ar.curr, ordnumber, em.entity_id, till, quonumber, intnotes, 
-            department_id, shipvia, ar.language_code, ponumber, credit_id
+            shipvia, ar.language_code, ponumber, credit_id
        FROM lsmb12.ar
        JOIN lsmb12.customer c ON c.id = ar.customer_id
   LEFT JOIN lsmb12.employee em ON em.id = ar.employee_id;
@@ -426,12 +429,12 @@ ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
 INSERT INTO ap(id, invnumber, transdate, taxincluded, amount, 
             netamount, paid, datepaid, duedate, invoice, shippingpoint, terms,
             notes, curr, ordnumber, person_id, till, quonumber, intnotes, 
-            department_id, shipvia, language_code, ponumber, 
+            shipvia, language_code, ponumber, 
             entity_credit_account)
      SELECT ap.id, invnumber, transdate, ap.taxincluded, amount, netamount, 
             paid, datepaid, duedate, invoice, shippingpoint, ap.terms, ap.notes,
             ap.curr, ordnumber, em.entity_id, till, quonumber, intnotes, 
-            department_id, shipvia, ap.language_code, ponumber, credit_id
+            shipvia, ap.language_code, ponumber, credit_id
        FROM lsmb12.ap
        JOIN lsmb12.vendor c ON c.id = ap.vendor_id
   LEFT JOIN lsmb12.employee em ON em.id = ap.employee_id;
@@ -439,18 +442,30 @@ INSERT INTO ap(id, invnumber, transdate, taxincluded, amount,
 ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 
 INSERT INTO acc_trans(trans_id, chart_id, amount, transdate, source, cleared,
-            fx_transaction, project_id, memo, invoice_id, entry_id)
+            fx_transaction, memo, invoice_id, entry_id)
      SELECT trans_id, a.id, amount, transdate, source, cleared,
-            fx_transaction, project_id, memo, invoice_id, entry_id
+            fx_transaction, memo, invoice_id, entry_id
        FROM lsmb12.acc_trans
        JOIN lsmb12.chart ON acc_trans.chart_id = chart.id
        JOIN account a ON chart.accno = a.accno; 
 
+INSERT INTO business_unit_ac (entry_id, bu_class_id, bu_id) 
+     SELECT ac.entry_id, 1, gl.department_id
+       FROM acc_trans ac
+       JOIN (select id, department_id from gl
+              UNION
+             SELECT id, department_id FROM ar
+              UNION
+             SELECT id, department_id FROM ap) gl ON ac.trans_id = gl.id
+      UNION
+     SELECT ac.entry_id, 2, ac.project_id + 1000
+       FROM lsmb12.acc_trans ac;
+
 INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
-            sellprice, fxsellprice, discount, assemblyitem, unit, project_id,
+            sellprice, fxsellprice, discount, assemblyitem, unit,
             deliverydate, serialnumber, notes)
     SELECT  id, trans_id, parts_id, description, qty, allocated,
-            sellprice, fxsellprice, discount, assemblyitem, unit, project_id,
+            sellprice, fxsellprice, discount, assemblyitem, unit,
             deliverydate, serialnumber, notes
        FROM lsmb12.invoice;
 
@@ -459,6 +474,18 @@ INSERT INTO partstax (parts_id, chart_id)
        FROM lsmb12.partstax pt
        JOIN lsmb12.chart ON chart.id = pt.chart_id
        JOIN account a ON chart.accno = a.accno;
+
+INSERT INTO business_unit_inv (entry_id, bu_class_id, bu_id) 
+     SELECT inv.id, 1, gl.department_id
+       FROM invoice inv
+       JOIN (select id, department_id from gl
+              UNION
+             SELECT id, department_id FROM ar
+              UNION
+             SELECT id, department_id FROM ap) gl ON ac.trans_id = gl.id
+      UNION
+     SELECT inv.id, 2, ac.project_id + 1000
+       FROM lsmb12.invoice inv;
 
 INSERT INTO tax(chart_id, rate, taxnumber, validto, pass, taxmodule_id)
      SELECT a.id, t.rate, t.taxnumber, 
@@ -510,18 +537,16 @@ INSERT INTO orderitems(id, trans_id, parts_id, description, qty, sellprice,
 
 INSERT INTO exchangerate select * from lsmb12.exchangerate;
 
-INSERT INTO project (id, projectnumber, description, startdate, enddate,
-            parts_id, production, completed, credit_id)
+INSERT INTO business_unit (id,control_code, description, startdate, enddate,
+            credit_id)
      SELECT p.id, projectnumber, description, p.startdate, p.enddate,
-            parts_id, production, completed, c.credit_id
+            c.credit_id
        FROM lsmb12.project p
        JOIN lsmb12.customer c ON p.customer_id = c.id;
 
 INSERT INTO partsgroup SELECT * FROM lsmb12.partsgroup;
 
 INSERT INTO status SELECT * FROM lsmb12.status;
-
-INSERT INTO department SELECT * FROM lsmb12.department;
 
 INSERT INTO business SELECT * FROM lsmb12.business;
 
@@ -571,10 +596,10 @@ INSERT INTO recurringemail SELECT * FROM lsmb12.recurringemail;
 
 INSERT INTO recurringprint SELECT * FROM lsmb12.recurringprint;
 
-INSERT INTO jcitems(id, project_id, parts_id, description, qty, allocated,
+INSERT INTO jcitems(id, business_unit_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
             person_id, notes)
-     SELECT j.id,  project_id, parts_id, description, qty, allocated,
+     SELECT j.id,  project_id + 1000, parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
             p.id, j.notes
        FROM lsmb12.jcitems j
