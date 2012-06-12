@@ -752,8 +752,9 @@ GRANT INSERT ON parts, makemodel, partsgroup, assembly TO "lsmb_<?lsmb dbname ?>
 GRANT ALL ON parts_id_seq, partsgroup_id_seq TO "lsmb_<?lsmb dbname ?>__part_create";
 GRANT INSERT ON partstax TO "lsmb_<?lsmb dbname ?>__part_create";
 
-GRANT ALL ON partsvendor_entry_id_seq TO "lsmb_<?lsmb dbname ?>__part_create", 
-"lsmb_<?lsmb dbname ?>__contact_create";
+GRANT ALL ON partsvendor_entry_id_seq, partscustomer_entry_id_seq
+TO "lsmb_<?lsmb dbname ?>__part_create", 
+   "lsmb_<?lsmb dbname ?>__contact_create";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (77, 'allow', 'lsmb_<?lsmb dbname ?>__part_create');

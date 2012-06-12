@@ -15,7 +15,7 @@ Changelog for 1.3.19
 * Added fs_cssdir config option for easier packaging (Chris T, h/t Robert C)
 * Fixed discarded input/bad label on 1.2 upgrade screen (Chris T, h/t Robert C)
 * Fixed encoding of attachment retrieval (Chris T h/t Erik H)
-* Fixed missing grant on partsnumber_entry_id_seq (Chris T, h/t Brian W)
+* Fixed missing grant on partsvendor_entry_id_seq (Chris T, h/t Brian W)
 
 Changelog for 1.3.18
 * Fixed missing template for CSV pricelists (Chris T)
