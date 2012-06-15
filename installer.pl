@@ -33,7 +33,7 @@ sub exit_with_help {
     print "  WEBAPPDIR=/path/to/install perl install.pl\n\n";
     print "If you are on Windows, remember to use forward slashes for paths, " .
            "for example:\n";
-    print "perl install.pl 'C://path/to/install'\n\n";
+    print "  perl install.pl 'C://path/to/install'\n\n";
     die "$msg\n\n";
 }
 
@@ -56,8 +56,9 @@ mkdir 'build/webapp';
 File::Copy::Recursive::rcopy_glob('*.pl', 'build/webapp') or die $!;
 rcopy('bin', 'build/webapp/bin') or die $!;
 
-# TODO add other files here that we don't want installed
+# if necessary add other files here that we don't want installed
 unlink "build/weball/installer.pl";
+unlink "build/weball/install_interactive.pl";
 
 mkdir 'build/PM';
 rcopy('LedgerSMB.pm', 'build/PM') or die $!;
@@ -76,7 +77,7 @@ system('perl Makefile.PL');
 system('make');
 system('make install');
 
-chdir '../webapp';
+chdir '../..';
 dircopy('build/webapp', $dest_dir);
 fcopy('ledgersmb.conf.default', "$dest_dir/ledgersmb.conf") 
                                           unless -f "$dest_dir/ledgersmb.conf";
