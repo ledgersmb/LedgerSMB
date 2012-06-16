@@ -270,9 +270,16 @@ sub get_request_properties {
         $request->{format} = $1;
     }
 
-    $request->{class_name} = $components[1];
-    $request->{id} = $components[2];
-    $request->{subresource} = $components[3];
+    $request->{classes} = {};
+    $request->{class_name} = '';
+    while (1) {
+        my $class = shift $components;
+        my $id = shift $components;
+        $id = undef if $id = 'all';
+        $request->{class_name} .= "::$class";
+        $request->{classes}->{$class} = $id;
+    }
+    $request->{class_name} =~ s/^:://;
     
     return $request;
 }
