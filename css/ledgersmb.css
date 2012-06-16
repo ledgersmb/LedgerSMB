@@ -30,6 +30,10 @@ th {
   font-size: 10pt;
 }
 
+table.criteria td {
+  text-align: right;
+}
+
 #company_info {
    font-weight: bold;
    font-size: 9pt;

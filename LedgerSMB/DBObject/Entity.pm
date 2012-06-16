@@ -124,6 +124,7 @@ sub get_by_cc{
     return $entity; 
 }
 
+=back
 
 =head1 COPYRIGHT
 

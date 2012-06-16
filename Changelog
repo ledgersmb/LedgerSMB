@@ -42,6 +42,7 @@ New CSV Import Module
 * Imports GIFI tables (Erik H)
 * Imports SIC tables (Erik H)
 * Imports timecards (Chris T)
+* Imports initial inventory and periodic counts (Chris T)
 * Extensible
 * field maps can be overridden
 

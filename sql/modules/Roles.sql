@@ -107,6 +107,26 @@ GRANT SELECT ON eca_to_location TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT SELECT ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT EXECUTE ON FUNCTION eca__list_notes(int)  TO "lsmb_<?lsmb dbname ?>__contact_read";
 
+INSERT INTO entity_class (id,class) VALUES (1,'Vendor');
+INSERT INTO entity_class (id,class) VALUES (2,'Customer');
+INSERT INTO entity_class (id,class) VALUES (3,'Employee');
+INSERT INTO entity_class (id,class) VALUES (4,'Contact');
+INSERT INTO entity_class (id,class) VALUES (5,'Lead');
+INSERT INTO entity_class (id,class) VALUES (6,'Referral');
+INSERT INTO entity_class (id,class) VALUES (7,'Hot Lead');
+INSERT INTO entity_class (id,class) VALUES (8,'Cold Lead');
+
+CREATE ROLE 'lsmb_<?lsmb dbname ?>__contact_class_vendor' WITH INHERIT NOLOGIN;
+CREATE ROLE 'lsmb_<?lsmb dbname ?>__contact_class_customer' 
+WITH INHERIT NOLOGIN;
+CREATE ROLE 'lsmb_<?lsmb dbname ?>__contact_class_employee' 
+WITH INHERIT NOLOGIN;
+CREATE ROLE 'lsmb_<?lsmb dbname ?>__contact_class_contact' WITH INHERIT NOLOGIN;
+CREATE ROLE 'lsmb_<?lsmb dbname ?>__contact_class_lead' WITH INHERIT NOLOGIN;
+CREATE ROLE 'lsmb_<?lsmb dbname ?>__contact_class_hot_lead' 
+WITH INHERIT NOLOGIN;
+CREATE ROLE 'lsmb_<?lsmb dbname ?>__contact_class_cold_lead'
+WITH INHERIT NOLOGIN;
 
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (1, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
