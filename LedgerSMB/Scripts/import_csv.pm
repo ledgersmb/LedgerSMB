@@ -282,8 +282,8 @@ our $process = {
                 $ap_form->{customer_id} = $ap_eca->{id}; 
 
                 # POST
-                IS->post_invoice(undef, $ar_form);
-                IR->post_invoice(undef, $ap_form);
+                IS->post_invoice(undef, $ar_form) if $ar_form->{rowcount};
+                IR->post_invoice(undef, $ap_form) if $ap_form->{rowcount};
 
                 # Now, update the report record.
                 $dbh->do( # These two params come from posting above, and from

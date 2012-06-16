@@ -1724,6 +1724,24 @@ COMMENT ON COLUMN ap.force_closed IS
 $$ Not exposed to the UI, but can be set to prevent an invoice from showing up
 for payment or in outstanding reports.$$;
 
+-- INVENTORY ADJUSTMENTS
+
+CREATE TABLE inventory_report (
+   id serial primary key, -- these are not tied to external sources usually
+   transdate date NOT NULL,    
+   source text, -- may be null 
+   ar_trans_id int,  -- would be null if no items were adjusted down
+   ap_trans_id int,  -- would be null if no items were adjusted up
+);
+
+CREATE TABLE inventory_report_line (
+   report_id int REFERENCES inventory_report(id), 
+   parts_id int REFERENCES parts(id),
+   counted numeric,
+   expected numeric,
+   PRIMARY KEY (report_id, parts_id)
+);
+
 --
 CREATE TABLE taxmodule (
   taxmodule_id serial PRIMARY KEY,
