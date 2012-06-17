@@ -58,10 +58,6 @@ for my $ext ('css', 'tex', 'txt', 'html', 'xml') {
 	ok(!defined $trap->die,
 		"AM, check_template_name: Template directory, ${ext}");
 }
-$form->{file} = 'css/apples.txt';
-@r = trap{AM->check_template_name($myconfig, $form)};
-ok(!defined $trap->die,
-	'AM, check_template_name: CSS directory, txt');
 $form->{file} = 'test2/apples.txt';
 @r = trap{AM->check_template_name($myconfig, $form)};
 if ( $expStackTrace == 0 )
@@ -196,8 +192,7 @@ $form->{file} = 't/data/04-not-there.txt';
 @r = trap{AM->load_template($myconfig, $form)};
 if ( $expStackTrace == 0 )
 {
-    is($trap->die, 'Error: Template not found.  
-         Perhaps you meant to edit the default template instead?
+    is($trap->die, 'Error: Template not found: t/data/04-not-there.txt
 ');
 }
 else
