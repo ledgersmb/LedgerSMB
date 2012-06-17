@@ -87,6 +87,10 @@ sub preprocess {
 sub process {
 	my $parent = shift;
 	my $cleanvars = shift;
+        for my $col (@{$cleanvars->{columns}}){
+            $col =~ s/""/"/g;
+            $col =~ s/(^"|"$)//g;
+        }
 	my $template;
 	my $source;
 	my $output;

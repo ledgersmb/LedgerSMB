@@ -17,6 +17,7 @@ Changelog for 1.3.19
 * Fixed encoding of attachment retrieval (Chris T h/t Erik H)
 * Fixed missing grant on partsvendor_entry_id_seq (Chris T, h/t Brian W)
 * Fixed voiding invoice duplicates payment (Chris T h/t John L)
+* Fixed CSV exports not having any data (Chris T h/t Erik H)
 
 Brian W is Brian Wolf
 Chris T is Chris Travers
