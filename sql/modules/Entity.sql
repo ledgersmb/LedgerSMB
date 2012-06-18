@@ -55,12 +55,13 @@ DECLARE out_row entity_class;
 BEGIN
 	FOR out_row IN 
 		SELECT * FROM entity_class
-             LEFT JOIN defaults ON setting_key = 'roll_prefix';
+             LEFT JOIN defaults ON setting_key = 'roll_prefix'
 		WHERE active and pg_has_role(SESSION_USER, 
                                      coalesce(defaults.value, 
-                                     'lsmb_' || current_database || '__') ||
+                                     'lsmb_' || current_database() || '__') ||
                                      'contact_class_' ||
-                                     lower(preg_replace(class, ' ', '_'))
+                                     lower(regexp_replace(class, ' ', '_')), 
+                                     'USAGE')
 		ORDER BY id
 	LOOP
 		RETURN NEXT out_row;

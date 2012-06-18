@@ -122,6 +122,8 @@ WITH INHERIT NOLOGIN;
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_employee" 
 WITH INHERIT NOLOGIN;
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_contact" WITH INHERIT NOLOGIN;
+CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_referral" 
+WITH INHERIT NOLOGIN;
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_lead" WITH INHERIT NOLOGIN;
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_hot_lead" 
 WITH INHERIT NOLOGIN;

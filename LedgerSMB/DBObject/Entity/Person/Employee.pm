@@ -151,7 +151,7 @@ sub save {
     my ($ref) = $self->exec_method({funcname => 'person__save'});
     my ($id) = values(%$ref);
     $self->entity_id($id);
-    my ($ref) = $self->exec_method({funcname => 'employee__save'});
+    $self->exec_method({funcname => 'employee__save'});
 }
 
 =back

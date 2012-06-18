@@ -75,6 +75,7 @@ DROP TYPE IF EXISTS employee_result CASCADE;
 
 CREATE TYPE employee_result AS (
     entity_id int,
+    control_code text,
     person_id int,
     salutation text,
     first_name text,
@@ -96,7 +97,7 @@ CREATE TYPE employee_result AS (
 CREATE OR REPLACE FUNCTION employee__all_managers()
 RETURNS setof employee_result AS
 $$
-   SELECT p.entity_id, p.id, s.salutation,
+   SELECT p.entity_id, e.control_code, p.id, s.salutation,
           p.first_name, p.middle_name, p.last_name,
           ee.startdate, ee.enddate, ee.role, ee.ssn, ee.sales, ee.manager_id,
           mp.first_name, mp.last_name, ee.employeenumber, ee.dob, e.country_id
@@ -113,7 +114,7 @@ CREATE OR REPLACE FUNCTION employee__get
 (in_entity_id integer)
 returns employee_result as
 $$
-   SELECT p.entity_id, p.id, s.salutation, 
+   SELECT p.entity_id, e.control_code, p.id, s.salutation, 
           p.first_name, p.middle_name, p.last_name,
           ee.startdate, ee.enddate, ee.role, ee.ssn, ee.sales, ee.manager_id,
           mp.first_name, mp.last_name, ee.employeenumber, ee.dob, e.country_id
@@ -135,7 +136,7 @@ in_first_name text, in_middle_name text, in_last_name text,
 in_notes text)
 RETURNS SETOF employee_result as
 $$
-SELECT p.entity_id, p.id, s.salutation,
+SELECT p.entity_id, e.control_code, p.id, s.salutation,
           p.first_name, p.middle_name, p.last_name,
           ee.startdate, ee.enddate, ee.role, ee.ssn, ee.sales, ee.manager_id,
           mp.first_name, mp.last_name, ee.employeenumber, ee.dob, e.country_id

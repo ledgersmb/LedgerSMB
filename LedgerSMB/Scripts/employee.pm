@@ -84,7 +84,7 @@ sub _main_screen {
     # DIVS logic
     my @DIVS;
     if ($employee->{entity_id}){
-       @DIVS = qw(employee address contact_info bank_act notes);
+       @DIVS = qw(employee user address contact_info bank_act notes);
     } else {
        @DIVS = qw(employee);
     }
@@ -92,6 +92,7 @@ sub _main_screen {
 
     my %DIV_LABEL = (
             employee => $locale->text('Employee'),
+                user => $locale->text('User'),
              address => $locale->text('Addresses'),
         contact_info => $locale->text('Contact Info'),
             bank_act => $locale->text('Bank Accounts'),

@@ -22,7 +22,7 @@
 <?lsmb PROCESS input element_data = {
 	label = text('First Name') #'
 	name = "first_name"
-	value = first_name
+	value = employee.first_name
 	type = "text"
 	size = 20
 } ?>
@@ -31,7 +31,7 @@
 <?lsmb PROCESS input element_data = {
 	label = text('Middle Name') #'
 	name = "middle_name"
-	value = middle_name
+	value = employee.middle_name
 	type = "text"
 	size = 20
 } ?>
@@ -42,7 +42,7 @@
 <?lsmb PROCESS input element_data = {
 	label = text('Last Name') #'
 	name = "last_name"
-	value = last_name
+	value = employee.last_name
 	type = "text"
 	size = 20
 } ?>
@@ -53,7 +53,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <?lsmb PROCESS input element_data = {
 	label = text('Job Title')
 	name = "role"
-	value = role
+	value = employee.role
 	type = "text"
 	size = 20
 } # ' ?>
@@ -65,7 +65,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	label = text('Sales')
 	value = 1
 	type = "checkbox"
-	checked = sales
+	checked = employee.sales
 	name = "sales"
 } ?>
 </div>
@@ -74,7 +74,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
         label = text('Manager')
         value = 'manager'
         type = "checkbox"
-        checked = is_manager
+        checked = employee.is_manager
         name = "is_manager"
 } ?>
 </div>
@@ -85,7 +85,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 		<?lsmb INCLUDE select element_data = {
 			text_attr = "name"
 			value_attr = "id"
-			default_values = [country_id]
+			default_values = [employee.country_id]
 			options = country_list
 			name = "country_id"
 			label = text('Country') 
@@ -95,29 +95,30 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 <div id="employee_div">
 <div class="input_group">
 <?lsmb PROCESS input element_data = {
-	label = text('Employee Number')
-	value = employeenumber
+	label = text('Employee Number') #'
+	value = employee.employeenumber
 	name = "employeenumber"
 	type = "text"
 	size = 20
-} # ' ?>
+}  ?>
 </div>
 <div class="input_group">
 <?lsmb PROCESS select element_data = {
          label = text('Manager')
           name = 'manager_id'
        options = all_managers
-default_values = [manager_id]
+default_values = [employee.manager_id]
      text_attr = 'label'
     value_attr = 'id'
 } ?> 
+</div>
 </div>
 <div id="hr_dates_div">
 <div class="input_group">
 <?lsmb PROCESS input element_data = {
 	label = text('DOB')
 	name = "dob"
-	value = dob
+	value = employee.dob
 	type = "text"
 	class = "date"
 	size = 10
@@ -127,7 +128,7 @@ default_values = [manager_id]
 <?lsmb PROCESS input element_data = {
 	label = text('Start Date')
 	name = "start_date"
-	value = start_date
+	value = employee.start_date
 	type = "text"
 	class = "date"
 	size = 10
@@ -137,7 +138,7 @@ default_values = [manager_id]
 <?lsmb PROCESS input element_data = {
 	label = text('End Date')
 	name = "end_date"
-	value = end_date
+	value = employee.end_date
 	class = "text"
 	type = "text"
 	size = 10

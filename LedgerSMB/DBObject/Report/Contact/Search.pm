@@ -58,12 +58,16 @@ sub columns {
 
        {col_id => 'entity_control_code',
             type => 'href',
-       href_base =>"contact.pl?action=get&entity_class=".$self->entity_class,
+       href_base =>($self->entity_class == 3)
+                    ? "employee.pl?action=get"
+                    :"contact.pl?action=get&entity_class=".$self->entity_class,
             name => $locale->text('Control Code') },
 
        {col_id => 'meta_number',
             type => 'href',
-       href_base =>"contact.pl?action=get&entity_class=".$self->entity_class,
+       href_base => ($self->entity_class == 3) 
+                    ? "employee.pl?action=get"
+                    : "contact.pl?action=get&entity_class=".$self->entity_class,
             name => $locale->text('Credit Account Number') },
 
        {col_id => 'credit_description',
