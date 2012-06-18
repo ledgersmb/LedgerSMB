@@ -1130,72 +1130,6 @@ sub save_template {
 
 }
 
-sub defaults {
-    # get defaults for account numbers and last numbers
-    AM->get_all_defaults( \%$form );
-    my %selects = (
-        'fxloss_accno_id' => {name => 'fxloss_accno_id', options => []},
-        'fxgain_accno_id' => {name => 'fxgain_accno_id', options => []},
-        'expense_accno_id' => {name => 'expense_accno_id', options => []},
-        'income_accno_id' => {name => 'income_accno_id', options => []},
-        'inventory_accno_id' => {name => 'inventory_accno_id', options => []},
-	'default_country' => {name   => 'default_country', 
-			     options => $form->{countries},
-			     default_values => [$form->{'default_country'}],
-			     text_attr => 'name',
-			     value_attr => 'id',
-		},
-	'default_language' => {name   => 'default_language', 
-			     options => $form->{languages},
-			     default_values => [$form->{'default_language'}],
-			     text_attr => 'description',
-			     value_attr => 'code',
-		},
-	'templates'       => {name => 'templates', options => []}	
-        );
-    foreach $key ( keys %{ $form->{accno} } ) {
-	print STDERR "$key\n";
-        foreach $accno ( sort keys %{ $form->{accno}{$key} } ) {
-            push @{$selects{$key}{options}}, {
-                text => "$accno--$form->{accno}{$key}{$accno}{description}",
-                value => "$accno--$form->{accno}{$key}{$accno}{description}",
-                };
-            $selects{$key}{default_values} = ["$accno--$form->{accno}{$key}{$accno}{description}"] if
-                ($form->{defaults}{$key} == $form->{accno}{$key}{$accno}{id});
-            print STDERR "$key $accno--$form->{accno}{$key}{$accno}{description}\n" if
-                ($form->{defaults}{$key} == $form->{accno}{$key}{$accno}{id});
-        }
-    }
-    for (qw(accno defaults)) { delete $form->{$_} }
-##SC: temporary commenting out
-##    if ( $form->{lynx} ) {
-##        require "bin/menu.pl";
-##        &menubar;
-##    }
-    # get_templates_directories the NON-UI templates options - David Mora
-    AM->get_templates_directories( \%$form );
-    foreach my $ref (@{$form->{templates_directories}}) {
-      push @{$selects{templates}{options}}, {text => $ref,value => $ref};
-    } 
-    $selects{templates}{default_values} = $form->{templates};
-    my %hiddens = (
-        path => $form->{path},
-        login => $form->{login},
-        sessionid => $form->{sessionid},
-        type => 'defaults',
-        );
-    my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
-        locale => $locale,
-        template => 'am-defaults');
-    $template->render({
-        form => $form,
-	hiddens => \%hiddens,
-	selects => \%selects,
-        default_textboxes => \@default_textboxes,
-    });
-}
-
 sub taxes {
 
     # get tax account numbers
@@ -1458,26 +1392,6 @@ sub config {
 	hiddens => \%hiddens,
 	selects => \%selects,
     });
-}
-
-sub save_defaults {
-    my @defaults;
-    if ($form->{password_duration} =~ /\D/){
-        $form->error(
-           $locale->text('Password duration must be an integer')
-        );
-    }
-    for (@default_textboxes){
-       push @defaults, $_->{name};
-    } 
-    push @defaults, @default_others;
-    if ( AM->save_defaults( \%myconfig, $form, \@defaults) ) {
-        $form->redirect( $locale->text('Defaults saved!') );
-    }
-    else {
-        $form->error( $locale->text('Cannot save defaults!') );
-    }
-
 }
 
 sub save_taxes {
