@@ -314,7 +314,7 @@ INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10605, '70200', 'Konečný účet rozvažný', 'A', 'A', '', '', false);
 INSERT INTO chart (id, accno, description, charttype, category, link, gifi_accno, contra) values (10607, '71000', 'Účet zisků a ztrát', 'A', 'A', '', '', false);
 
-SELECT cr_coa_to_account_save(accno, accno || '--' || description)
+SELECT cr_coa_to_account__save(accno, accno || '--' || description, false)
 FROM account WHERE id IN (select account_id FROM account_link
                            WHERE description = 'AP_paid');
 --
