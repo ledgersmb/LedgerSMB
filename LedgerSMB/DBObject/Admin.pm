@@ -31,7 +31,7 @@ use base qw(LedgerSMB::DBObject);
 
 use LedgerSMB::Location;
 use LedgerSMB::Contact;
-use LedgerSMB::DBObject::Employee;
+use LedgerSMB::DBObject::Entity::Person::Employee;
 use LedgerSMB::DBObject::User;
 use Log::Log4perl;
 use strict;
@@ -75,7 +75,8 @@ sub save_user {
 
     # I deleted some assignments which didn't play well with strict mode
     # and by my reading probably broke things. --CT
-    my $employee = LedgerSMB::DBObject::Employee->new( base=>$self);
+    $self->{control_code} = $self->{employeenumber};
+    my $employee = LedgerSMB::DBObject::Entity::Person::Employee->new(%$self);
     if (!$employee->{entity_id}){
          $employee->save();
     }

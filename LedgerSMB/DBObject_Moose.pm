@@ -54,15 +54,11 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::DBObject');
 sub __validate__ {}
 
 has 'dbh' => (is => 'ro', isa => 'DBI::db', required => '1');
-has '_user' => (is => 'ro', isa => 'LedgerSMB::User', required => '1');
-has '_locale' => (is => 'ro', isa => 'LedgerSMB::Locale', required => '1');
 
 sub prepare_dbhash {
     my $self = shift;
     my $target = shift;
     $target->{dbh} = $LedgerSMB::App_State::DBH;
-    $target->{_user} = $LedgerSMB::App_State::User;
-    $target->{_locale} = $LedgerSMB::App_State::Locale;
 }
 
 # _to_dbobject 

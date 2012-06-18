@@ -72,7 +72,7 @@ CREATE TABLE account (
   id serial not null unique,
   accno text primary key,
   description text,
-  is_temp not null default false bool,
+  is_temp bool not null default false,
   category CHAR(1) NOT NULL,
   gifi_accno text,
   heading int not null references account_heading(id),
@@ -494,31 +494,6 @@ sales or purchases, such as IRS 1099 forms and international equivalents.$$;
 
 -- BEGIN new entity management
 
-CREATE FUNCTION tg_enforce_perms_eclass () RETURNS TRIGGER AS 
-$$
-DECLARE
-   r_eclass entity_class;
-   roll_pfx text;
-BEGIN;
-IF TG_OP = 'DELETE' THEN
-   RETURN OLD;
-ELSE 
-   SELECT value INTO roll_pfx FROM defaults WHERE setting_key = 'roll_prefix';
-   SELECT * INTO r_eclass from entity_class WHERE id = new.entity_class;
-   IF pg_has_role(SESSION_USER, coalesce(roll_pfx, 
-                                         'lsmb_' || current_database || '__')
-                                || 'contact_class_' || lower(regexp_replace(
-                                                        r_eclass.class, 
-                                                        ' ', 
-                                                        '_') 
-   THEN
-      RETURN NEW;
-   ELSE
-      RAISE EXCEPTION 'Access Denied for class';
-   END IF;
-END;
-$$ LANGUAGE PLPGSQL;
-
 CREATE TABLE entity_class (
   id serial primary key,
   class text check (class ~ '[[:alnum:]_]') NOT NULL,
@@ -541,30 +516,26 @@ CREATE TABLE entity (
   country_id int references country(id) not null,
   PRIMARY KEY(control_code, entity_class));
 
-CREATE TRIGGER eclass_perms_check ON entity 
-BEFORE INSERT OR UPDATE OR DELETE 
-EXECUTE PROCEDURE tg_enforce_perms_eclass;
-  
 COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
 COMMENT ON COLUMN entity.name IS $$ This is the common name of an entity. If it was a person it may be Joshua Drake, a company Acme Corp. You may also choose to use a domain such as commandprompt.com $$;
 
 
 ALTER TABLE entity ADD FOREIGN KEY (entity_class) REFERENCES entity_class(id);
 
-INSERT INTO entity_class (id,class) VALUES (1,'Vendor');
-INSERT INTO entity_class (id,class) VALUES (2,'Customer');
-INSERT INTO entity_class (id,class) VALUES (3,'Employee');
-INSERT INTO entity_class (id,class) VALUES (4,'Contact');
-INSERT INTO entity_class (id,class) VALUES (5,'Lead');
-INSERT INTO entity_class (id,class) VALUES (6,'Referral');
-INSERT INTO entity_class (id,class) VALUES (7,'Hot Lead');
-INSERT INTO entity_class (id,class) VALUES (8,'Cold Lead');
+INSERT INTO entity_class (id,class) 
+VALUES (1,'Vendor'),
+       (2,'Customer'),
+       (3,'Employee'),
+       (4,'Contact'),
+       (5,'Lead'),
+       (6,'Referral'),
+       (7,'Hot Lead'),
+       (8,'Cold Lead');
 
 SELECT setval('entity_class_id_seq',8);
 
 -- USERS stuff --
 CREATE TABLE users (
-INSERT INTO entity_class (id,class) VALUES (5,'Lead');
     id serial UNIQUE, 
     username varchar(30) primary key,
     notify_password interval not null default '7 days'::interval,
@@ -873,10 +844,6 @@ CREATE TABLE entity_credit_account (
     CHECK (ar_ap_account_id IS NOT NULL OR entity_id = 0)
 );
 
-CREATE TRIGGER eclass_perms_check ON entity_credit_account
-BEFORE INSERT OR UPDATE OR DELETE 
-EXECUTE PROCEDURE tg_enforce_perms_eclass;
-  
 COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
 COMMENT ON TABLE entity_credit_account IS
 $$This table stores information relating to general relationships regarding 
@@ -1769,7 +1736,7 @@ CREATE TABLE inventory_report (
    transdate date NOT NULL,    
    source text, -- may be null 
    ar_trans_id int,  -- would be null if no items were adjusted down
-   ap_trans_id int,  -- would be null if no items were adjusted up
+   ap_trans_id int  -- would be null if no items were adjusted up
 );
 
 CREATE TABLE inventory_report_line (

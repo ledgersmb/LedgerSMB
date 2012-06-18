@@ -116,16 +116,16 @@ INSERT INTO entity_class (id,class) VALUES (6,'Referral');
 INSERT INTO entity_class (id,class) VALUES (7,'Hot Lead');
 INSERT INTO entity_class (id,class) VALUES (8,'Cold Lead');
 
-CREATE ROLE 'lsmb_<?lsmb dbname ?>__contact_class_vendor' WITH INHERIT NOLOGIN;
-CREATE ROLE 'lsmb_<?lsmb dbname ?>__contact_class_customer' 
+CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_vendor" WITH INHERIT NOLOGIN;
+CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_customer" 
 WITH INHERIT NOLOGIN;
-CREATE ROLE 'lsmb_<?lsmb dbname ?>__contact_class_employee' 
+CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_employee" 
 WITH INHERIT NOLOGIN;
-CREATE ROLE 'lsmb_<?lsmb dbname ?>__contact_class_contact' WITH INHERIT NOLOGIN;
-CREATE ROLE 'lsmb_<?lsmb dbname ?>__contact_class_lead' WITH INHERIT NOLOGIN;
-CREATE ROLE 'lsmb_<?lsmb dbname ?>__contact_class_hot_lead' 
+CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_contact" WITH INHERIT NOLOGIN;
+CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_lead" WITH INHERIT NOLOGIN;
+CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_hot_lead" 
 WITH INHERIT NOLOGIN;
-CREATE ROLE 'lsmb_<?lsmb dbname ?>__contact_class_cold_lead'
+CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_cold_lead"
 WITH INHERIT NOLOGIN;
 
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
@@ -839,8 +839,9 @@ GRANT INSERT ON parts, makemodel, partsgroup, assembly TO "lsmb_<?lsmb dbname ?>
 GRANT ALL ON parts_id_seq, partsgroup_id_seq TO "lsmb_<?lsmb dbname ?>__part_create";
 GRANT INSERT ON partstax TO "lsmb_<?lsmb dbname ?>__part_create";
 
-GRANT ALL ON partsvendor_entry_id_seq TO "lsmb_<?lsmb dbname ?>__part_create", 
-"lsmb_<?lsmb dbname ?>__contact_create";
+GRANT ALL ON partsvendor_entry_id_seq, partscustomer_entry_id_seq
+TO "lsmb_<?lsmb dbname ?>__part_create", 
+   "lsmb_<?lsmb dbname ?>__contact_create";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (77, 'allow', 'lsmb_<?lsmb dbname ?>__part_create');
@@ -1783,3 +1784,40 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (192, 'allow', 'public');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (193, 'allow', 'public');
+
+-- PERMISSIONS ENFORCEMENT PER ENTITY CLASS
+
+CREATE FUNCTION tg_enforce_perms_eclass () RETURNS TRIGGER AS 
+$$
+DECLARE
+   r_eclass entity_class;
+   roll_pfx text;
+BEGIN
+IF TG_OP = 'DELETE' THEN
+   RETURN OLD;
+ELSE 
+   SELECT value INTO roll_pfx FROM defaults WHERE setting_key = 'roll_prefix';
+   SELECT * INTO r_eclass from entity_class WHERE id = NEW.entity_class;
+   IF pg_has_role(SESSION_USER, coalesce(roll_pfx, 
+                                         'lsmb_' || current_database() || '__')
+                                || 'contact_class_' || lower(regexp_replace(
+                                                        r_eclass.class, 
+                                                        ' ', 
+                                                        '_')))
+   THEN
+      RETURN NEW;
+   ELSE
+      RAISE EXCEPTION 'Access Denied for class';
+   END IF;
+END IF;
+END;
+$$ LANGUAGE PLPGSQL;
+
+CREATE TRIGGER eclass_perms_check 
+BEFORE INSERT OR UPDATE OR DELETE ON entity 
+FOR EACH ROW EXECUTE PROCEDURE tg_enforce_perms_eclass();
+  
+CREATE TRIGGER eclass_perms_check 
+BEFORE INSERT OR UPDATE OR DELETE ON entity_credit_account
+FOR EACH ROW EXECUTE PROCEDURE tg_enforce_perms_eclass();
+  

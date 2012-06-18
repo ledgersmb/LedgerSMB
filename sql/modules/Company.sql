@@ -86,11 +86,11 @@ SELECT * FROM entity_credit_account
  WHERE entity_class = $2 AND meta_number = $1;
 $$ language sql;
 
-CREATE OR REPLACE FUNCTION eca_history
+CREATE OR REPLACE FUNCTION eca__history
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
  in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
- in_start_from date, in_start_to date, in_account_class int, 
+ in_start_from date, in_start_to date, in_entity_class int, 
  in_inc_open bool, in_inc_closed bool)
 RETURNS SETOF  eca_history_result AS
 $$
@@ -100,7 +100,7 @@ $$
             i.description, i.qty, i.unit::text, i.sellprice, i.discount, 
             i.deliverydate, null::int as project_id, null::text as projectnumber,
             i.serialnumber, 
-            case when $16 = 1 then xr.buy else xr.sell end as exchange_rate,
+            case when $16 = 1 then ex.buy else ex.sell end as exchange_rate,
             ee.id as salesperson_id, 
             ep.last_name || ', ' || ep.first_name as salesperson_name
      FROM (select * from entity_credit_account 
@@ -162,37 +162,36 @@ $$
 LEFT JOIN exchangerate ex ON (ex.transdate = a.transdate)
 LEFT JOIN entity ee ON (a.person_id = ee.id)
 LEFT JOIN person ep ON (ep.entity_id = ee.id)
-     JOIN exchangerate xr ON a.transdate = xr.transdate
     -- these filters don't perform as well on large databases
     WHERE (e.name ilike '%' || $1 || '%' or $1 is null)
           and ($3 is null or eca.id in 
                  (select credit_id from eca_to_contact
                    where contact ilike '%' || $3 || '%'))
-          and (($4 is null and $5 is null and $6 is null and $7 is null)
-               or eca.id in
-                  (select credit_id from eca_to_location 
-                    where location_id in
-                          (select id from location
-                            where ($4 is null or line_one ilike '%' || $4 || '%'
-                                   or line_two ilike '%' || $4 || '%') 
-                                  and ($5 is null or city 
-                                                     ilike '%' || $5 || '%')
-                                  and ($6 is null or state 
-                                                    ilike '%' || $6 || '%')
-                                  and ($7 is null or mail_code 
-                                                    ilike '%' || $7 || '%')
-                                  and ($10 is null or country_id = $10))
-                   )
-              )
-          and (a.transdate >= $11 or $11 is null)
-          and (a.transdate <= $12 or $12 is null)
-          and (eca.startdate >= $14 or $14 is null)
-          and (eca.startdate <= $15 or $15 is null)
-          and (a.notes @@ plainto_tsquery($9) or $9 is null)
+--          and (($4 is null and $5 is null and $6 is null and $7 is null)
+--               or eca.id in
+--                  (select credit_id from eca_to_location 
+--                    where location_id in
+--                          (select id from location
+--                            where ($4 is null or line_one ilike '%' || $4 || '%'
+--                                   or line_two ilike '%' || $4 || '%') 
+--                                  and ($5 is null or city 
+--                                                     ilike '%' || $5 || '%')
+--                                  and ($6 is null or state 
+--                                                    ilike '%' || $6 || '%')
+--                                  and ($7 is null or mail_code 
+--                                                    ilike '%' || $7 || '%')
+--                                  and ($10 is null or country_id = $10))
+--                   )
+--              )
+--          and (a.transdate >= $11 or $11 is null)
+--          and (a.transdate <= $12 or $12 is null)
+--          and (eca.startdate >= $14 or $14 is null)
+--          and (eca.startdate <= $15 or $15 is null)
+--          and (a.notes @@ plainto_tsquery($9) or $9 is null)
  ORDER BY eca.meta_number;
 $$ LANGUAGE SQL;
 
-COMMENT ON FUNCTION eca_history 
+COMMENT ON FUNCTION eca__history 
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
  in_country_id int, in_from_date date, in_to_date date, in_type char(1),
@@ -205,7 +204,7 @@ meta_number is an exact match, as are in_open and inc_closed.  All other fields
 allow for partial matches.  NULL matches all values.$$;
 
 
-CREATE OR REPLACE FUNCTION eca_history_summary
+CREATE OR REPLACE FUNCTION eca__history_summary
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
  in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
@@ -217,13 +216,13 @@ SELECT id, name, meta_number, null::int, null::text, curr, parts_id, partnumber,
        description, sum(qty), unit, null::numeric, null::numeric, null::date, 
        null::int, null::text, null::text, null::numeric,
        null::int, null::text
-FROM   eca_history($1, $2, $3, $4, $5, $6, $7, $8, $9,
+FROM   eca__history($1, $2, $3, $4, $5, $6, $7, $8, $9,
                    $10, $11, $12, $13, $14, $15, $16, $17, $18)
  group by id, name, meta_number, curr, parts_id, partnumber, description, unit
  order by meta_number;
 $$ LANGUAGE SQL;
 
-COMMENT ON FUNCTION eca_history_summary
+COMMENT ON FUNCTION eca__history_summary
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
  in_country_id int, in_from_date date, in_to_date date, in_type char(1),

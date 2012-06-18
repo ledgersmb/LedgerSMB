@@ -1,7 +1,5 @@
 # This is a simple CSV parsing routine.  The API isn't perfect and is likely to
-# change in the future.  Right now the function is parse_[account_id] which may 
-# break where multiple banks are used along with multiple databases.  In the 
-# In the future it is likely to change to parse_[dbname]_[account_id]
+# change in the future.  Right now the function is parse_[dbname]_[account_id].
 #
 # COPYRIGHT (c) 2012 Chris Travers (chris.travers@gmail.com)
 # All rights reserved.

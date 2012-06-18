@@ -68,6 +68,7 @@ if ($request->{_user}){
 } else {
     $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
        or $request->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
+    $LedgerSMB::App_State::Locale = $locale;
 }
 
 if (!$script){

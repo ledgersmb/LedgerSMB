@@ -607,6 +607,13 @@ sub void {
     }
     $form->{invnumber} .= '-VOID';
     $form->{reverse} = 1;
+    $form->{paidaccounts} = 1;
+    if ($form->{paid_1}){
+        warn $locale->text(
+             'Payments associated with voided invoice may need to be reversed.'
+        );
+        delete $form->{paid_1};
+    }
     &post_as_new;
 }
 

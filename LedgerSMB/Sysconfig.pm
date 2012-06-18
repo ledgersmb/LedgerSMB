@@ -83,7 +83,7 @@ our $smtppass   = '';
 our $smtpauthmethod = '';
 
 # set language for login and admin
-our $language = "";
+our $language = "en";
 
 # Maximum number of invoices that can be printed on a check
 our $check_max_invoices = 5;

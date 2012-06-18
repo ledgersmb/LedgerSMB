@@ -61,7 +61,7 @@ sub columns {
          {col_id => 'invnumber',
             type => 'href',
        href_base => 'is.pl?action=edit&id=',
-            name => $locale->text('Account Number') },
+            name => $locale->text('Invoice Number') },
 
          {col_id => 'curr',
             type => 'text',
@@ -149,7 +149,7 @@ The account/entity class of the contact.  Required and an exact match.
 
 =cut
 
-has account_class => (is => 'ro', isa => 'Int');
+has entity_class => (is => 'ro', isa => 'Int');
 
 =item name
 
@@ -348,7 +348,7 @@ Runs the report, populates rows.
 
 sub run_report {
     my ($self) = @_;
-    my $proc = 'company__history';
+    my $proc = 'eca__history';
     $proc .= '_summary' if $self->is_summary; 
     my @rows = $self->exec_method({funcname => $proc});
     for my $r(@rows){
