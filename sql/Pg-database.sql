@@ -1118,7 +1118,7 @@ CREATE TABLE cr_report_line (
     trans_type text, 
     post_date date,
     ledger_id int,
-    voucher_id int references voucher(id),
+    voucher_id int,
     overlook boolean not null default 'f',
     cleared boolean not null default 'f'
 );
@@ -2306,7 +2306,7 @@ INSERT INTO taxmodule (
 );
 
 CREATE TABLE ac_tax_form (
-        entry_id int references acc_trans(id) primary key,
+        entry_id int references acc_trans(entry_id) primary key,
         reportable bool
 );
 

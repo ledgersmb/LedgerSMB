@@ -569,66 +569,7 @@ sub select_coa {
     }
     if ($request->{coa_lc}){
         if ($request->{chart}){
-           my $creds = LedgerSMB::Auth::get_credentials();
-       
-           # ENVIRONMENT NECESSARY
-           $ENV{PGUSER} = $creds->{login};
-           $ENV{PGPASSWORD} = $creds->{password};
-           $ENV{PGDATABASE} = $request->{database};
-
-           my $database = LedgerSMB::Database->new(
-                      {username => $creds->{login},
-                   company_name => $request->{database},
-                       password => $creds->{password}}
-           );
-           my $logfile = $LedgerSMB::tempdir . "/dblog";
-
-           $database->exec_script(
-                    {script => "sql/coa/$request->{coa_lc}/chart/$request->{chart}", 
-                    logfile => $logfile}
-           );
-           if (-f "sql/coa/$request->{coa_lc}/gifi/$request->{chart}"){
-                 $database->exec_script(
-                    {script => "sql/coa/$request->{coa_lc}/gifi/$request->{chart}",
-                    logfile => $logfile}
-                );
-            }
-
-
-            # One thing to remember here is that the setup.pl does not get the
-            # benefit of the automatic db connection.  So in order to build this
-            # form, we have to manage that ourselves. 
-            #
-            # However we get the benefit of having had to set the environment
-            # variables for the Pg connection above, so don't need to pass much
-            # info. 
-            #
-            # Also I am opting to use the lower-level call_procedure interface
-            # here in order to avoid creating objects just to get argument
-            # mapping going. --CT
-
-            $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
-            $request->{dbh}->{AutoCommit} = 0;
-
-           @{$request->{salutations}} 
-            = $request->call_procedure(procname => 'person__list_salutations' ); 
-          
-           @{$request->{countries}} 
-            = $request->call_procedure(procname => 'location_list_country' ); 
-
-           my $locale = $request->{_locale};
-
-           @{$request->{perm_sets}} = (
-               {id => '0', label => $locale->text('Manage Users')},
-               {id => '1', label => $locale->text('Full Permissions')},
-           );
-
-           my $template = LedgerSMB::Template->new(
-                   path => 'UI/setup',
-                   template => 'new_user',
-	           format => 'HTML',
-           );
-           $template->render($request);
+           _render_new_user($request);
         } else {
             opendir(COA, "sql/coa/$request->{coa_lc}/chart");
             my @coa = sort (grep !/^(\.|[Ss]ample.*)/, readdir(COA));
@@ -648,12 +589,7 @@ sub select_coa {
              push @{$request->{coa_lcs}}, {code => $lcs};
         } 
     }
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'select_coa',
-	    format => 'HTML',
-    );
-    $template->render($request);
+    _render_new_user($request);
 }
 
 
@@ -715,7 +651,6 @@ sub _render_new_user {
     
     @{$request->{countries}} 
     = $request->call_procedure(procname => 'location_list_country' ); 
-
     for my $country (@{$request->{countries}}){
         if (lc($request->{coa_lc}) eq lc($country->{short_name})){
            $request->{country_id} = $country->{id};
@@ -749,12 +684,15 @@ sub save_user {
     my ($request) = @_;
     use LedgerSMB::DBObject::Entity::Person::Employee;
     use LedgerSMB::DBObject::Entity::User;
+    use LedgerSMB::PGDate;
     my $creds = LedgerSMB::Auth::get_credentials();
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",
                                    $creds->{login},
                                    $creds->{password});
     $request->{dbh}->{AutoCommit} = 0;
     $LedgerSMB::App_State::DBH = $request->{dbh};
+    $request->{control_code} = $request->{employeenumber};
+    $request->{dob} = LedgerSMB::PGDate->from_input($request->{dob});
     my $emp = LedgerSMB::DBObject::Entity::Person::Employee->new(%$request);
     $emp->save;
     $request->{entity_id} = $emp->entity_id;

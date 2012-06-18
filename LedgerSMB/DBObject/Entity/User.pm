@@ -58,7 +58,7 @@ This is only used for new users. It sets a temporary password (good for 24 hrs)
 
 =cut
 
-has password => (is => 'rw', isa => 'Str');
+has password => (is => 'rw', isa => 'Maybe[Str]');
 
 =item role_list
 

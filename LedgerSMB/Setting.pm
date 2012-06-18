@@ -183,7 +183,7 @@ sub set {
 
 sub accounts_by_link {
     my ($self, $link) = @_;
-    @results = $self->call_procedure(procname => 'account__get_by_link_desc',
+    my @results = $self->call_procedure(procname => 'account__get_by_link_desc',
                               args => [$link]);
     return \@results;
 }
