@@ -746,16 +746,20 @@ Saves the administrative user, and then directs to the login page.
 =cut
 
 sub save_user {
-    use LedgerSMB::DBObject::Admin;
     my ($request) = @_;
+    use LedgerSMB::DBObject::Entity::Person::Employee;
+    use LedgerSMB::DBObject::Entity::User;
     my $creds = LedgerSMB::Auth::get_credentials();
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",
                                    $creds->{login},
                                    $creds->{password});
     $request->{dbh}->{AutoCommit} = 0;
     $LedgerSMB::App_State::DBH = $request->{dbh};
-    my $user = LedgerSMB::DBObject::Admin->new({base => $request});
-    if (8 == $user->save_user){ # Told not to import but user exists in db
+    my $emp = LedgerSMB::DBObject::Entity::Person::Employee->new(%$request);
+    $emp->save;
+    $request->{entity_id} = $emp->entity_id;
+    my $user = LedgerSMB::DBObject::Entity::User->new(%$request);
+    if (8 == $user->create){ # Told not to import but user exists in db
         $request->{notice} = $request->{_locale}->text(
                        'User already exists. Import?'
         );

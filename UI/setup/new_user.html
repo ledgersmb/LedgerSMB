@@ -84,6 +84,24 @@ text('Password') ?></label>
 } ?>
 </div>
 <div class="input_row">
+<?lsmb INCLUDE input element_data = {
+    name = 'dob'
+   class = 'date'
+    type = 'text'
+    size = '10'
+   label = text('Date of Birth') #'
+} ?>
+</div>
+<div class="input_row">
+<?lsmb INCLUDE input element_data = {
+    name = 'ssn'
+   class = 'tax_id'
+    type = 'text'
+    size = '15'
+   label = text('Tax ID/SSN') #'
+} ?>
+</div>
+<div class="input_row">
 <?lsmb  countries.unshift({});
 INCLUDE select element_data = {
           options = countries
