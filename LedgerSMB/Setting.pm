@@ -53,11 +53,10 @@ our $VERSION = '1.0.0';
 sub get {
     my $self = shift;
     my ($key) = @_;
-    if ($key){
-        $self->{key} = $key;
-    }
-    my ($hashref) = $self->exec_method( funcname => 'setting_get' ) ;
-    $self->{value} = $hashref->{value};
+    $key ||= $self->{key};
+    my ($hashref) = $self->call_procedure( procname => 'setting_get',
+                                               args => [$key]) ;
+    $self->{value} = $hashref->{value} if $self->{key};
     return $self->{value};
 }
 
@@ -65,13 +64,16 @@ sub increment {
 
     my $self     = shift;
     my $myconfig = shift;
+    my $key = shift;
+    $key ||= $self->{key};
 
     # Long-run, we may want to run this via Parse::RecDescent, but this is
     # at least a start for here.  Chris T.
 
     # Replaces Form::UpdateDefaults
 
-    my ($retval) = $self->exec_method('funcname' => 'setting_increment');
+    my ($retval) = $self->call_procedure(procname => 'setting_increment',
+                                             args => [$key]) ;
     my $value = $retval->{setting_increment};
 # check for and replace
 # <?lsmb DATE ?>, <?lsmb YYMMDD ?>, <?lsmb YEAR ?>, <?lsmb MONTH ?>, <?lsmb DAY ?> or variations of
@@ -160,7 +162,7 @@ sub increment {
         }
     }
 
-    $self->{value} = $var;
+    $self->{value} = $var if $self->{key};
     $var;
 }
 
@@ -170,4 +172,18 @@ sub get_currencies {
     @{$self->{currencies}} = $self->_parse_array($data[0]->{setting__get_currencies});
     return @{$self->{currencies}};
 }
-            
+
+sub set {
+    my ($self, $key, $value) = @_;
+    $key ||= $self->{key};
+    $value ||= $self->{value};
+    $self->call_procedure(procname => 'setting__set',
+                              args => [$key, $value]);
+}
+
+sub accounts_by_link {
+    my ($self, $link) = @_;
+    @results = $self->call_procedure(procname => 'account__get_by_link_desc',
+                              args => [$link]);
+    return \@results;
+}

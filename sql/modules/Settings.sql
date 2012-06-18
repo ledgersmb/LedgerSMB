@@ -6,7 +6,7 @@
 -- Docstrings already added to this file.
 
 
-CREATE OR REPLACE FUNCTION setting_set (in_key varchar, in_value varchar) 
+CREATE OR REPLACE FUNCTION setting__set (in_key varchar, in_value varchar) 
 RETURNS BOOL AS
 $$
 BEGIN
