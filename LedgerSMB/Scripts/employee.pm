@@ -21,6 +21,7 @@ use LedgerSMB::DBObject::Entity::Location;
 use LedgerSMB::DBObject::Entity::Contact;
 use LedgerSMB::DBObject::Entity::Bank;
 use LedgerSMB::DBObject::Entity::Note;
+use LedgerSMB::DBObject::Entity::User;
 use LedgerSMB::App_State;
 use LedgerSMB::Template;
 
@@ -79,8 +80,10 @@ sub get {
 
 sub _main_screen {
     my ($request, $employee) = @_;
-
-
+    my $user;
+    if ($employee->{entity_id}){
+        $user = LedgerSMB::DBObject::Entity::User->get($employee->{entity_id});
+    }
     # DIVS logic
     my @DIVS;
     if ($employee->{entity_id}){
@@ -182,12 +185,15 @@ sub _main_screen {
     my @entity_classes = $request->call_procedure(
                       procname => 'entity__list_classes'
     );
+    my @roles = LedgerSMB::DBObject::Entity::User->list_roles;
 
     $template->render({
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,
                   request => $request,
                  employee => $employee,
+                     user => $user,
+                    roles => \@roles,
              country_list => \@country_list,
                 locations => \@locations,
                  contacts => \@contacts,
@@ -398,6 +404,58 @@ sub save_notes {
        $note->credit_id(undef);
     }
     $note->save;
+    get($request);
+}
+
+=item create_user
+
+This turns the employee into a user.
+
+=cut
+
+sub create_user {
+    my ($request) = @_;
+    if ($request->close_form){
+       my $user = LedgerSMB::DBObject::Entity::User->new(%$request);
+       $user->create;
+    }
+    get($request);
+}
+
+=item reset_password
+
+This resets the user's password
+
+=cut
+
+sub reset_password {
+    my ($request) = @_;
+    if ($request->close_form){
+       my $user = LedgerSMB::DBObject::Entity::User->new(%$request);
+       $user->reset_password($request->{password});
+    }
+    get($request);
+}
+
+=item save_roles
+
+Saves the user's permissions
+
+=cut
+
+sub save_roles {
+    my ($request) = @_;
+    if ($request->close_form){
+       my $user = LedgerSMB::DBObject::Entity::User->get($request->{entity_id});
+       my $roles;
+       for my $key(keys %$request){
+           if ($key =~ $request->{_role_prefix} and $request->{key}){
+               push @$roles, $request->{key};
+           }
+       }
+       $user->role_list($roles);
+       $user->save_roles;
+    }
     get($request);
 }
 

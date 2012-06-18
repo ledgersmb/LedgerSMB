@@ -219,13 +219,13 @@ FROM public;
         
 --$$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION admin__get_user(in_user_id INT) returns setof users as $$
+CREATE OR REPLACE FUNCTION admin__get_user(in_entity_id INT) returns setof users as $$
     
     DECLARE
         a_user users;
     BEGIN
         
-        select * into a_user from users where id = in_user_id;
+        select * into a_user from users where entity_id = in_entity_id;
         return next a_user;
         return;
     
@@ -534,28 +534,6 @@ comment on function admin__delete_group(text) IS $$
     Deletes the input group from the database. Not designed to be used to 
     remove a login-capable user.
 $$;
-
-CREATE OR REPLACE FUNCTION admin__list_roles(in_username text)
-RETURNS SETOF text AS
-$$
-DECLARE out_rolename RECORD;
-BEGIN
-	FOR out_rolename IN 
-		SELECT rolname FROM pg_roles 
-		WHERE oid IN (SELECT id FROM connectby (
-			'(SELECT m.member, m.roleid, r.oid FROM pg_roles r 
-			LEFT JOIN pg_auth_members m ON (r.oid = m.roleid)) a',
-			'oid', 'member', 'oid', '320461', '0', ','
-			) c(id integer, parent integer, "level" integer, 
-				path text, list_order integer)
-			)
-	LOOP
-		RETURN NEXT out_rolename.rolname;
-	END LOOP;
-END;
-$$ LANGUAGE PLPGSQL SECURITY DEFINER;
-
-REVOKE execute on function admin__list_roles(in_username text) from public;
 
 -- TODO:  Add admin user
 
