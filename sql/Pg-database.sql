@@ -588,6 +588,7 @@ CREATE TABLE transactions (
   id int PRIMARY KEY,
   table_name text,
   locked_by int references "session" (session_id) ON DELETE SET NULL,
+  approved bool,
   approved_by int references entity (id),
   approved_at timestamp
 );
@@ -2249,13 +2250,15 @@ CREATE OR REPLACE FUNCTION track_global_sequence() RETURNS TRIGGER AS
 $$
 BEGIN
 	IF tg_op = 'INSERT' THEN
-		INSERT INTO transactions (id, table_name) 
-		VALUES (new.id, TG_RELNAME);
+		INSERT INTO transactions (id, table_name, approved) 
+		VALUES (new.id, TG_RELNAME, new.approved);
 	ELSEIF tg_op = 'UPDATE' THEN
-		IF new.id = old.id THEN
+		IF new.id = old.id AND new.approved = old.approved THEN
 			return new;
 		ELSE
-			UPDATE transactions SET id = new.id WHERE id = old.id;
+			UPDATE transactions SET id = new.id, 
+                                                approved = new.approved
+                         WHERE id = old.id;
 		END IF;
 	ELSE 
 		DELETE FROM transactions WHERE id = old.id;

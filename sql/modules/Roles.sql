@@ -1787,7 +1787,7 @@ values (193, 'allow', 'public');
 
 -- PERMISSIONS ENFORCEMENT PER ENTITY CLASS
 
-CREATE FUNCTION tg_enforce_perms_eclass () RETURNS TRIGGER AS 
+CREATE OR REPLACE FUNCTION tg_enforce_perms_eclass () RETURNS TRIGGER AS 
 $$
 DECLARE
    r_eclass entity_class;
@@ -1803,7 +1803,7 @@ ELSE
                                 || 'contact_class_' || lower(regexp_replace(
                                                         r_eclass.class, 
                                                         ' ', 
-                                                        '_')))
+                                                        '_')), 'USAGE')
    THEN
       RETURN NEW;
    ELSE
