@@ -3,13 +3,13 @@ BEGIN;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'Saving Company', 
-	company_save (NULL, 'TESTING...', 1,'TESTING', 'TESTING', NULL, '1234', 232) 
+	company__save (NULL, 'TESTING...', 1,'TESTING', 'TESTING', NULL, '1234', 232, 'st-123', 'ubi-123-456-789') 
 		IS NOT NULL;
 
 
 INSERT INTO test_result (test_name, success)
 SELECT 'Saving Credit Acct', 
-	entity_credit_save(  NULL , 1, currval('entity_id_seq')::int, 'TEST', 0, false,
+	eca__save(  NULL , 1, currval('entity_id_seq')::int, 'TEST', 0, false,
 		0, 0, 0, 'test-123', NULL, NULL, NULL, 'USD', now()::date, now()::date,
 		0, -1000, NULL, NULL, NULL, NULL)
 	IS NOT NULL;

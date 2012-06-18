@@ -83,7 +83,7 @@ BEGIN
                         v.batch_id, v.trans_id, a.transdate, bc.class
 
 		UNION ALL
-		SELECT v.id, a.source, a.memo, 
+		SELECT v.id, false, a.source, a.memo, 
 			v.batch_id, v.trans_id, 
 			CASE WHEN bc.class LIKE 'receipt%' THEN sum(a.amount) * -1
 			     ELSE sum(a.amount)  END, a.transdate, 
@@ -105,7 +105,7 @@ BEGIN
 		GROUP BY v.id, a.source, cr.meta_number, co.legal_name ,
                         a.memo, v.batch_id, v.trans_id, a.transdate, bc.class
 		UNION ALL
-		SELECT v.id, g.reference, g.description, 
+		SELECT v.id, false, g.reference, g.description, 
 			v.batch_id, v.trans_id,
 			sum(a.amount), g.transdate, 'GL'
 		FROM voucher v
@@ -468,8 +468,6 @@ BEGIN
 	DELETE FROM ap WHERE id = ANY(t_transaction_ids);
 	DELETE FROM gl WHERE id = ANY(t_transaction_ids);
 	DELETE FROM voucher WHERE batch_id = in_batch_id;
-	DELETE FROM payments_queue WHERE batch_id = in_batch_id;
-	DELETE FROM pending_job WHERE batch_id = in_batch_id;
 	DELETE FROM batch WHERE id = in_batch_id;
 	DELETE FROM transactions WHERE id = ANY(t_transaction_ids);
 

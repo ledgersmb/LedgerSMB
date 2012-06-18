@@ -147,10 +147,10 @@ BEGIN
 END;
 $$ language plpgsql;
 
-COMMENT ON FUNCTION account_save
-(in_id int, in_accno text, in_description text, in_category char(1),
+COMMENT ON FUNCTION account__save
+(in_id int, in_accno text, in_description text, in_category char(1), 
 in_gifi_accno text, in_heading int, in_contra bool, in_tax bool,
-in_link text[], is_obsolete bool) IS
+in_link text[], in_obsolete bool, in_is_temp bool) IS
 $$ This deletes existing account_link entries, where the 
 account_link.description is not designated as a custom one in the 
 account_link_description table.
@@ -216,12 +216,12 @@ DO INSTEAD
 SELECT CASE WHEN new.charttype='H' THEN 
  account_heading_save(new.id, new.accno, new.description, NULL)
 ELSE
- account_save(new.id, new.accno, new.description, new.category,
+ account__save(new.id, new.accno, new.description, new.category,
   new.gifi_accno, NULL,
   -- should these be rewritten as coalesces? --CT
   CASE WHEN new.contra IS NULL THEN FALSE ELSE new.contra END,
   CASE WHEN new.tax IS NULL THEN FALSE ELSE new.tax END,
-  string_to_array(new.link, ':'), false)
+  string_to_array(new.link, ':'), false, false)
 END;
 
 CREATE OR REPLACE FUNCTION cr_coa_to_account_save(in_accno text, in_description text)

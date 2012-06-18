@@ -1118,6 +1118,7 @@ CREATE TABLE cr_report_line (
     trans_type text, 
     post_date date,
     ledger_id int,
+    voucher_id int references voucher(id),
     overlook boolean not null default 'f',
     cleared boolean not null default 'f'
 );
@@ -1201,8 +1202,6 @@ CREATE TABLE journal_line (
     line_type text references account_link_description,
     primary key (id)
 );
-ALTER TABLE cr_report_line ADD FOREIGN KEY (ledger_id) 
-REFERENCES journal_line(id);
 
 COMMENT ON TABLE journal_line IS
 $$ Replaces acc_trans as the main account transaction line table.$$;
@@ -1366,7 +1365,7 @@ $$ Note that this field is largely used for sorting the vouchers.  A given batch
 -- Although I am moving the primary key to voucher.id for now, as of 1.4, I 
 -- would expect trans_id to be primary key
 CREATE TABLE voucher (
-  trans_id int REFERENCES journal_entry(id) NOT NULL,
+  trans_id int REFERENCES transactions(id) NOT NULL,
   batch_id int references batch(id) not null,
   id serial PRIMARY KEY,
   batch_class int references batch_class(id) not null
@@ -2077,7 +2076,7 @@ $$ This table contains inventory mappings to warehouses, not general inventory
 management data.$$;
 --
 CREATE TABLE yearend (
-  trans_id int PRIMARY KEY REFERENCES journal_entry(id),
+  trans_id int PRIMARY KEY REFERENCES gl(id),
   reversed bool default false,
   transdate date
 );
@@ -2307,7 +2306,7 @@ INSERT INTO taxmodule (
 );
 
 CREATE TABLE ac_tax_form (
-        entry_id int references journal_line(id) primary key,
+        entry_id int references acc_trans(id) primary key,
         reportable bool
 );
 

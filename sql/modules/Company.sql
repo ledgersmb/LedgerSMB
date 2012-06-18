@@ -971,18 +971,6 @@ $$ language plpgsql;
 COMMENT ON FUNCTION entity__list_contacts(in_entity_id int) IS
 $$ Lists all contact info for the entity.$$;
 
-CREATE OR REPLACE FUNCTION entity__delete_bank_account(in_id int)
-RETURNS BOOL AS
-$$
-BEGIN
-
-DELETE FROM entity_bank_account WHERE id = in_id;
-
-RETURN FOUND;
-
-END;
-
-$$ LANGUAGE PLPGSQL;
 CREATE OR REPLACE FUNCTION entity__list_bank_account(in_entity_id int)
 RETURNS SETOF entity_bank_account AS
 $$

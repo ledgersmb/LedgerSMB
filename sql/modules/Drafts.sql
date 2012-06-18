@@ -28,7 +28,7 @@ BEGIN
 			    END) as amount
 		FROM (
 			SELECT id, transdate, reference, 
-				description, false as invoice
+				description, false as invoice,
                                 approved from gl
 			WHERE lower(in_type) = 'gl'
 			UNION
@@ -50,7 +50,8 @@ BEGIN
 				or trans.transdate <= in_to_date)
 			AND trans.approved IS FALSE
 			AND v.id IS NULL
-		GROUP BY trans.id, trans.transdate, trans.description, trans.reference
+		GROUP BY trans.id, trans.transdate, trans.description, 
+                         trans.reference, trans.invoice
 		HAVING (in_with_accno IS NULL or in_with_accno = 
 			ANY(as_array(chart.accno)))
 		ORDER BY trans.reference

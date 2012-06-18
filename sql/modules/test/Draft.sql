@@ -7,10 +7,12 @@ INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id, ar_
 VALUES (-1000, '_testv', 1, -1000, -1000); 
 INSERT INTO entity_credit_account (id, meta_number, entity_class, entity_id, ar_ap_account_id)
 VALUES (-1001, '_testc', 2, -1000, -1000); 
-SELECT account_save
-       (NULL, '00001', 'test only', 'A', NULL, NULL, FALSE, FALSE,'{}');
-SELECT account_save
-       (NULL, '00002', 'test only', 'A', NULL, NULL, FALSE, FALSE,'{}');
+SELECT account__save
+       (NULL, '00001', 'test only', 'A', NULL, NULL, FALSE, FALSE,'{}', false, 
+       false);
+SELECT account__save
+       (NULL, '00002', 'test only', 'A', NULL, NULL, FALSE, FALSE,'{}', false, 
+       false);
 INSERT INTO ap (invnumber, entity_credit_account, amount, netamount, paid, 
 	approved, curr)
 select '_TEST AP', -1000, '100', '100', '0', FALSE, 'USD';
