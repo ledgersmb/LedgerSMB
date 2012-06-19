@@ -2031,8 +2031,9 @@ COMMENT ON COLUMN job.parts_id IS
 $$ Job costing/manufacturing here not implemented.$$;
 --
 CREATE TABLE partsgroup (
-  id serial PRIMARY KEY,
-  partsgroup text
+  id serial primary key,
+  partsgroup text,
+  parent int references partsgroup(id)
 );
 
 COMMENT ON TABLE partsgroup is $$ Groups of parts for Point of Sale screen.$$;
