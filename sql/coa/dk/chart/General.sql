@@ -4,7 +4,7 @@ begin;
 SELECT account_heading_save(NULL,'1000','KORTFRISTEDE AKTIVER', NULL);
 SELECT account__save(NULL,'1061','Bank','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 SELECT account__save(NULL,'1065','Kasse','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
-SELECT cr_coa_to_account__save(accno, accno || '--' || description, false)
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE accno in ('1061', '1065');
 
 SELECT account__save(NULL,'1200','Indbetalinger','A','', NULL, false, false, string_to_array('AR', ':'), false, false);

@@ -6,7 +6,7 @@ SELECT account__save(NULL,'1010','Cash in bank-operating','A','22', NULL, false,
 SELECT account__save(NULL,'1020','Cash in bank-payroll','A','22', NULL, false, false, string_to_array('AP_paid', ':'), false, false);
 SELECT account__save(NULL,'1040','Petty cash','A','22', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 SELECT account__save(NULL,'1070','Savings & short-term investments','A','22', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT cr_coa_to_account__save(accno, accno || '--' || description, false)
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE accno in ('1010', '1020', '1040', '1070');
 
 SELECT account_heading_save(NULL,'1100','Accounts receivable', NULL);

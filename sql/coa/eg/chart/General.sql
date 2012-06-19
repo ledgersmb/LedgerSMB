@@ -16,7 +16,7 @@ SELECT account__save(NULL,'5470','Employee Benefits','E','', NULL, false, false,
 SELECT account__save(NULL,'5650','Capital Cost Allowance Expense','E','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1060','نقدية بالبنك','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 SELECT account__save(NULL,'1065','نقديةبالصندوق','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
-SELECT cr_coa_to_account__save(accno, accno || '--' || description, false)
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE accno in ('1060', '1065');
 
 SELECT account__save(NULL,'1520','مخزون - قطع غيار كمبيوتر','A','', NULL, false, false, string_to_array('IC', ':'), false, false);

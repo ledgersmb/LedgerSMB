@@ -37,7 +37,7 @@ SELECT account__save(NULL,'9110','Belföldi árbevétel','I','911', NULL, false,
 SELECT account__save(NULL,'9111','Külföldi árbevétel','I','911', NULL, false, false, string_to_array('AR_amount:IC_sale:IC_income', ':'), false, false);
 SELECT account__save(NULL,'9700','Árfolyamnyereség','I','970', NULL, false, false, string_to_array('', ':'), false, false);
 
-SELECT cr_coa_to_account__save(accno, accno || '--' || description, false)
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE id IN (select account_id FROM account_link
                            WHERE description = 'AP_paid');
 --

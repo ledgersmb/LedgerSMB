@@ -786,7 +786,7 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
  
-SELECT cr_coa_to_account__save(accno, accno || '--' || description, false)
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE id IN (select account_id FROM account_link
                            WHERE description = 'AP_paid');
 commit;

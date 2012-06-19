@@ -247,7 +247,7 @@ SELECT account__save(NULL,'1330','Lîdzdalîbas saistîto uzòçmumu kapitâlâ'
 SELECT account__save(NULL,'2354','PVN samaksâts 18%','','E', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'2352','PVN ieòemtais 18%','','L', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 
-SELECT cr_coa_to_account__save(accno, accno || '--' || description, false)
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE id IN (select account_id FROM account_link
                            WHERE description = 'AP_paid');
 --

@@ -215,7 +215,7 @@ SELECT account__save(NULL,'1911','Huvudkassa ','A','200', NULL, false, false, st
 SELECT account__save(NULL,'1920','Postgiro ','A','200', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 SELECT account__save(NULL,'1930','Checkräkningskonto ','A','200', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 SELECT account__save(NULL,'1940','Bank och Övriga bankkonton ','A','200', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
-SELECT cr_coa_to_account__save(accno, accno || '--' || description, false)
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE accno in ('1910', '1920', '1930', '1940');
 
 SELECT account__save(NULL,'1950','Bankcertifikat ','A','200', NULL, false, false, string_to_array('', ':'), false, false);

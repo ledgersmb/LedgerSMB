@@ -99,5 +99,5 @@ WHERE id
        FROM account_link
        WHERE description LIKE '%_tax');
 
-SELECT cr_coa_to_account__save(accno, accno || '--' || description, false)
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE accno = '1061';

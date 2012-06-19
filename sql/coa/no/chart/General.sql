@@ -292,7 +292,7 @@ SELECT account__save(NULL,'8960','Overføringer annen egenkapital','E','', NULL,
 SELECT account__save(NULL,'8980','Avsatt til fri egenkapital','E','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'8990','Udekket tap','E','', NULL, false, false, string_to_array('', ':'), false, false);
  
-SELECT cr_coa_to_account__save(accno, accno || '--' || description, false)
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE id IN (select account_id FROM account_link
                            WHERE description = 'AP_paid');
 --

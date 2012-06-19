@@ -19,7 +19,7 @@ INSERT INTO chart (accno, description, charttype, category, link, gifi_accno, co
 SELECT account_heading_save(NULL, '1800', 'CAPITAL ASSETS', NULL);
 SELECT account__save(NULL,'1060','Cheque Account','A','1000', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 
-SELECT cr_coa_to_account__save(accno, accno || '--' || description, false)
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE accno = '1060';
 
 SELECT account__save(NULL,'1205','Less: Provision Doubtful Debts','A','1000', NULL, false, false, string_to_array('', ':'), false, false);

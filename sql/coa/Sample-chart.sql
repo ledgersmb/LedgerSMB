@@ -70,7 +70,7 @@ SELECT account__save(NULL,'5795','Registrations','E','', NULL, false,string_to_a
 SELECT account__save(NULL,'5800','Licenses','E','', NULL, false,string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'5810','Foreign Exchange Loss','E','', NULL, false,string_to_array('', ':'), false, false);
  
-SELECT cr_coa_to_account__save(accno, accno || '--' || description, false)
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE id IN (select account_id FROM account_link
                            WHERE description = 'AP_paid');
 --

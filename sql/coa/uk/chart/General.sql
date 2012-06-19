@@ -23,7 +23,7 @@ SELECT account__save(NULL,'1210','Bank Deposit Account','A','', NULL, false, fal
 SELECT account__save(NULL,'1220','Building Society Account','A','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1230','Petty Cash','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 SELECT account__save(NULL,'1240','Company Credit Card','L','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT cr_coa_to_account__save(accno, accno || '--' || description, false)
+SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE accno in ('1200', '1210', '1220', '1230', '1240');
 
 SELECT account__save(NULL,'2100','Creditors Control Account','L','', NULL, false, false, string_to_array('AP', ':'), false, false);
