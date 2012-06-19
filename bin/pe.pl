@@ -224,8 +224,6 @@ sub search {
 }
 
 
-}
-
 sub save {
 
     if ( $form->{translation} ) {
@@ -405,6 +403,7 @@ sub partsgroup_header {
     # $locale->text('Edit Group')
 
     $form->{partsgroup} = $form->quote( $form->{partsgroup} );
+    PE->partsgroups(\%myconfig, $form);
 
     $form->header;
 
@@ -425,7 +424,17 @@ sub partsgroup_header {
     <td>
       <table width=100%>
 	<tr>
-	  <th align=right>| . $locale->text('Group') . qq|</th>
+          <th align="right">| . $locale->text('Parent') . qq|</th>
+          <td><select name='parent'>|;
+              for my $pg (@{$form->{item_list}}){
+                  my $selected = '';
+                  $selected = 'SELECTED="SELECTED"'
+                         if $form->{parent} == $pg->{id};
+                  print qq|<option value='$pg->{id}' $selected>
+                                  $pg->{partsgroup} </option>|;
+              }
+	  print qq|</select>
+          <th align="right">| . $locale->text('Group') . qq|</th>
 
           <td><input name=partsgroup size=30 value="$form->{partsgroup}"></td>
 	</tr>

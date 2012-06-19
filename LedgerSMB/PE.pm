@@ -387,8 +387,9 @@ sub save_partsgroup {
     }
     else {
         $query = qq|
-			INSERT INTO partsgroup (partsgroup)
-			     VALUES (?)|;
+			INSERT INTO partsgroup (partsgroup, parent)
+			     VALUES (?, ?)|;
+        push @group, $form->{parent};
     }
     $dbh->do($query, undef, @group) || $form->dberror($query);
 
