@@ -112,17 +112,17 @@ RETURNS SETOF purchase_info AS
 $$
 BEGIN
    RETURN QUERY
-       SELECT null::int, null::text, null::text, null::text, null::date
-              entity_name, meta_number, entity_id, sum(amount), 
+       SELECT null::int, null::bool, null::text, null::text, null::text, 
+              null::date, entity_name, meta_number, entity_id, sum(amount), 
               sum(amount_paid), sum(tax), currency, null::date, null::date,
-              tull::text, null::text, null::text, null::text[]
+              null::text, null::text, null::text, null::text[]
          FROM ar_ap__transaction_search
               (in_account_id, in_name_part, in_meta_number, in_invnumber,
               in_ordnumber, in_ponumber, in_source, in_description,
               in_notes, in_shipvia, in_from_date, in_to_date,
               in_on_hold, in_inc_open, in_inc_closed, in_as_of,  
               in_entity_class)
-     GROUP BY entity_name, meta_number, entity_id;
+     GROUP BY entity_name, meta_number, entity_id, currency;
 END;
 $$ language plpgsql;
 

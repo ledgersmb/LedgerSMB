@@ -17,6 +17,8 @@ This module is the UI controller for the customer, vendor, etc functions; it
 package LedgerSMB::Scripts::employee;
 
 use LedgerSMB::DBObject::Entity::Person::Employee;
+use LedgerSMB::DBObject::Entity::Payroll::Wage;
+use LedgerSMB::DBObject::Entity::Payroll::Deduction;
 use LedgerSMB::DBObject::Entity::Location;
 use LedgerSMB::DBObject::Entity::Contact;
 use LedgerSMB::DBObject::Entity::Bank;
@@ -87,7 +89,7 @@ sub _main_screen {
     # DIVS logic
     my @DIVS;
     if ($employee->{entity_id}){
-       @DIVS = qw(employee user address contact_info bank_act notes);
+       @DIVS = qw(employee user wage address contact_info bank_act notes);
     } else {
        @DIVS = qw(employee);
     }
@@ -96,6 +98,7 @@ sub _main_screen {
     my %DIV_LABEL = (
             employee => $locale->text('Employee'),
                 user => $locale->text('User'),
+                wage => $locale->text('Wages/Deductions'),
              address => $locale->text('Addresses'),
         contact_info => $locale->text('Contact Info'),
             bank_act => $locale->text('Bank Accounts'),
@@ -176,9 +179,6 @@ sub _main_screen {
         format => 'HTML'
     );
 
-    use Data::Dumper;
-    $Data::Dumper::Sortkeys = 1;
-    #die '<pre>' . Dumper($request) . '</pre>';
     my @country_list = $request->call_procedure(
                      procname => 'location_list_country'
       );
@@ -187,6 +187,23 @@ sub _main_screen {
     );
     my @roles = LedgerSMB::DBObject::Entity::User->list_roles;
 
+    my @wage_types = LedgerSMB::DBObject::Entity::Payroll::Wage->types(
+                  $employee->country_id
+          ) if $employee->can('country_id');
+ 
+    my @deduction_types = 
+          LedgerSMB::DBObject::Entity::Payroll::Deduction->types(
+                 $employee->country_id
+          ) if $employee->can('country_id');
+
+    my @wages = LedgerSMB::DBObject::Entity::Payroll::Wage->list(
+                 $employee->entity_id
+          ) if $employee->can('entity_id');  
+
+    my @deductions = LedgerSMB::DBObject::Entity::Payroll::Deduction->list(
+                 $employee->entity_id
+          ) if $employee->can('entity_id');  
+
     $template->render({
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,
@@ -194,6 +211,10 @@ sub _main_screen {
                  employee => $employee,
                      user => $user,
                     roles => \@roles,
+                    wages => \@wages,
+               deductions => \@deductions,
+               wage_types => \@wage_types,
+          deduction_types => \@deduction_types,
              country_list => \@country_list,
                 locations => \@locations,
                  contacts => \@contacts,

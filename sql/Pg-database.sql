@@ -931,6 +931,14 @@ CREATE TABLE payroll_income_type (
               references payroll_income_class(id, country_id)
 );
 
+CREATE TABLE payroll_wage (
+   entry_id serial not null unique,
+   entity_id int references entity(id),
+   type_id int references payroll_income_type(id),
+   rate numeric not null,
+   PRIMARY KEY(entity_id, type_id)
+);
+
 CREATE TABLE payroll_employee_class (
    id serial not null unique,
    label text primary key
@@ -951,7 +959,7 @@ CREATE TABLE payroll_deduction_class (
 );
 
 CREATE TABLE payroll_deduction_type (
-   itype_id serial not null unique,
+   id serial not null unique,
    account_id int not null references account(id),
    pic_id int not null,
    country_id int not null,
@@ -961,6 +969,14 @@ CREATE TABLE payroll_deduction_type (
    calc_percent bool not null,
    foreign key(pic_id, country_id) 
               references payroll_income_class(id, country_id)
+);
+
+CREATE TABLE payroll_deduction (
+   entry_id serial not null unique,
+   entity_id int references entity(id),
+   type_id int references payroll_deduction_type(id),
+   rate numeric not null,
+   PRIMARY KEY(entity_id, type_id)
 );
 
 CREATE TABLE payroll_report (

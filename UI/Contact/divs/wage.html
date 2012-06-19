@@ -1,0 +1,72 @@
+<div class="container" id="wage_div">
+<?lsmb 
+columns = [{ col_id = 'type', name = text('Type'), type = 'text' },
+           { col_id = 'rate', name = text('Amount/Rate'), type = 'text' }];
+
+PROCESS dynatable
+        columns = columns
+        attributes = {id = 'wage-table', width='100%' }
+        t_body = {rows = wages};
+
+PROCESS dynatable
+        columns = columns
+        attributes = {id = 'deduction-table', width='100%' }
+        t_body = {rows = deductions}; ?>
+
+<table>
+<tr>
+<form action="<?lsmb script ?>" method="post" name="wage">
+<td><?lsmb PROCESS select element_data = {
+                options = wage_types
+             value_attr = 'id'
+              text_attr = 'label'
+                   name = 'type_id'
+} ?></td>
+<td><?lsmb PROCESS input element_data = {
+              name = 'rate'
+             value = rate
+             class = 'number'
+              type = 'text'
+} ?></td>
+<?lsmb PROCESS input element_data = { 
+          name = 'entity_id'
+          type = 'hidden'
+         value = entity_id
+} ?>
+<td><?lsmb PROCESS button element_data = {
+          text = text('Add/Change Wage') #'
+          name = 'action'
+          type = 'submit'
+         class = 'submit'
+} ?></td>
+</form>
+</tr>
+<tr>
+<form action="<?lsmb script ?>" method="post" name="deduction">
+<td><?lsmb PROCESS select element_data = {
+                options = deduction_types
+             value_attr = 'id'
+              text_attr = 'label'
+                   name = 'type_id'
+} ?></td>
+<td><?lsmb PROCESS input element_data = {
+              name = 'rate'
+             value = rate
+             class = 'number'
+              type = 'text'
+} ?></td>
+<?lsmb PROCESS input element_data = { 
+          name = 'entity_id'
+          type = 'hidden'
+         value = entity_id
+} ?>
+<td><?lsmb PROCESS button element_data = {
+          text = text('Add/Change Deductions') #'
+          name = 'action'
+          type = 'submit'
+         class = 'submit'
+} ?></td>
+</form>
+</tr>
+</table>
+</div>
