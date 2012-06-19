@@ -110,7 +110,7 @@ sub get_search_method {
     } elsif ($args->{mini}){
         $search_proc = "batch_search_mini";
     } else {
-        $search_proc = "batch_search";
+        $search_proc = "batch__search";
     }
 
     if ( !defined $self->{created_by_eid} || $self->{created_by_eid} == 0){

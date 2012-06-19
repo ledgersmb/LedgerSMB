@@ -978,7 +978,7 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
         );
 
 
-        if ($from->{separate_duties}){
+        if ($from->{separate_duties} or $form->{batch_id}){
            $button{'post'}->{value} = $locale->text('Save') unless $form->{id};
         }
        delete $button{void} if $form->{invnumber} =~ /-VOID/;
@@ -1405,8 +1405,12 @@ sub post {
     ( $form->{AR_paid} ) = split /--/, $form->{AR_paid};
 
     if ( IS->post_invoice( \%myconfig, \%$form ) ) {
-	$form->{callback} =
+        if ($form->{batch_id}){
+            $form->{callback} .= "&batch_id=$form->{batch_id}";
+        } else {
+   	    $form->{callback} =
 	    "$form->{script}?action=edit&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}&id=$form->{id}";
+        }
         $form->redirect(
             $locale->text( 'Invoice [_1] posted!', $form->{invnumber} ) );
     }

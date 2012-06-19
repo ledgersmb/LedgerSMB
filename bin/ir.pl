@@ -913,8 +913,8 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
              { ndx => 11, key=> 'N', value => $locale->text('New') }
         );
 
-        if ($from->{separate_duties}){
-           $button{'post'}->{value} = $locale->text('Save') unless $form->{id};
+        if ($from->{separate_duties} or $form->{batch_id}){
+           $button{'post'}->{value} = $locale->text('Save');
         }
 
         if ( $form->{id} ) {
@@ -1388,6 +1388,9 @@ sub post {
     ( $form->{AP_paid} ) = split /--/, $form->{AP_paid};
 
     if ( IR->post_invoice( \%myconfig, \%$form ) ) {
+        if ($form->{batch_id}){
+            $form->{callback} .= "&batch_id=$form->{batch_id}";
+        }
         $form->redirect(
             $locale->text( 'Invoice [_1] posted!', $form->{invnumber} ) );
     }

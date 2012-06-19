@@ -781,6 +781,13 @@ sub post_invoice {
         $approved,              $form->{id}
     ) || $form->dberror($query);
 
+    if ($form->{batch_id}){
+        $sth = $dbh->prepare(
+           'INSERT INTO voucher (batch_id, trans_id, batch_class)
+            VALUES (?, ?, ?)');
+        $sth->execute($form->{batch_id}, $form->{id}, 9);
+    }
+
     # add shipto
     $form->{name} = $form->{vendor};
     $form->{name} =~ s/--$form->{vendor_id}//;

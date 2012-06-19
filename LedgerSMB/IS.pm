@@ -1260,6 +1260,13 @@ sub post_invoice {
                 $invoice_id
             ) || $form->dberror($query);
 
+            if ($form->{batch_id}){
+                $sth = $dbh->prepare(
+                   'INSERT INTO voucher (batch_id, trans_id, batch_class)
+                    VALUES (?, ?, ?)');
+                $sth->execute($form->{batch_id}, $form->{id}, 8);
+            }
+
             for my $cls(@{$form->{bu_class}}){
                 if ($form->{"b_unit_$cls->{id}_$i"}){
                  $b_unit_sth->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
