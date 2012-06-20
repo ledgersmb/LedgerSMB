@@ -26,6 +26,7 @@ use LedgerSMB::DBObject::Entity::Note;
 use LedgerSMB::DBObject::Entity::User;
 use LedgerSMB::App_State;
 use LedgerSMB::Template;
+use LedgerSMB::Scripts::employee::country;
 
 use strict;
 use warnings;
@@ -104,6 +105,16 @@ sub _main_screen {
             bank_act => $locale->text('Bank Accounts'),
                notes => $locale->text('Notes'),
     );
+
+    if ($LedgerSMB::Scripts::employee::country::country_divs{
+            $employee->{country_id}
+    }){
+        for my $cform (@{$LedgerSMB::Scripts::employee::country::country_divs{
+            $employee->{country_id}
+         }}){
+             push @DIVS, $cform->{file};
+             $DIV_LABEL{$cform->{file}} = $cform->{div_title};
+         }
 
     # DIVS contents
     my $entity_id = $employee->{entity_id};
