@@ -7,8 +7,6 @@ LedgerSMB::DBObject::Entity -- Entity Management base classes for LedgerSMB
 package LedgerSMB::DBObject::Entity;
 use Moose;
 extends 'LedgerSMB::DBObject_Moose';
-use LedgerSMB::DBObject::Entity::Company;
-use LedgerSMB::DBObject::Entity::Person;
 
 =head1 SYNOPSYS
 
@@ -86,45 +84,6 @@ table in database for list of valid values, but 1 is for vendors, 2 for customer
 =cut
 
 has 'entity_class' => (is => 'rw', isa => 'Int');
-
-=head1 METHODS
-
-=over
-
-=item get($id)
-
-This retrieves the entity or person by id
-
-Please note, that the return value will always be either undef (not found), or
-an object of type of either LedgerSMB::DBObject::Entity::Company or
-LedgerSMB::DBObject::Entity::Person
-
-=cut
-
-sub get{
-    my ($self, $id) = @_;
-    my $entity = 
-       LedgerSMB::DBObject::Entity::Company->get($id) ||
-        LedgerSMB::DBObject::Entity::Person->get($id);
-    return $entity; 
-}
-
-=item get_by_cc($control_code)
-
-This retrieves the entity or person by control code.  It has the same return
-possibilities as get() above.
-
-=cut
-
-sub get_by_cc{
-    my ($self, $control_code) = @_;
-    my $entity = 
-       LedgerSMB::DBObject::Entity::Company->get_by_cc($control_code) ||
-        LedgerSMB::DBObject::Entity::Person->get_by_cc($control_code);
-    return $entity; 
-}
-
-=back
 
 =head1 COPYRIGHT
 

@@ -53,7 +53,8 @@ control code
 sub get_by_cc {
     my ($request) = @_;
     my $entity = 
-              LedgerSMB::DBObject::Entity->get_by_cc($request->{control_code});
+           LedgerSMB::DBObject::Entity::Company->get_by_cc($request->{control_code});
+    $entity ||=  LedgerSMB::DBObject::Entity::Person->get_by_cc($request->{control_code});
     my ($company, $person) = (undef, undef);
     if ($entity->isa('LedgerSMB::DBObject::Entity::Company')){
        $company = $entity;
@@ -76,7 +77,8 @@ of the company information.
 
 sub get {
     my ($request) = @_;
-    my $entity = LedgerSMB::DBObject::Entity->get($request->{entity_id});
+    my $entity = LedgerSMB::DBObject::Entity::Company->get($request->{entity_id});
+    $entity ||= LedgerSMB::DBObject::Entity::Person->get($request->{entity_id});
     my ($company, $person) = (undef, undef);
     if ($entity->isa('LedgerSMB::DBObject::Entity::Company')){
        $company = $entity;
@@ -440,7 +442,8 @@ Saves a person and moves on to the next screen
 
 sub save_person {
     my ($request) = @_;
-    my $person = LedgerSMB::DBObject::Entity::Person->new(
+    use LedgerSMB::DBObject::Entity::Person2;
+    my $person = LedgerSMB::DBObject::Entity::Person2->new(
               %$request
     );
     use Data::Dumper;

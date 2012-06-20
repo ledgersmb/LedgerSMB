@@ -6,7 +6,7 @@ LedgerSMB::DBObject::Entity::Person -- Natural Person handling for LedgerSMB
 
 To save:
 
- my $person = LedgerSMB::DBObject::Entity::Person(\%$request);
+ my $person = LedgerSMB::DBObject::Entity::Person->new(\%$request);
  $person->save;
 
 To get by entity id:
@@ -177,6 +177,6 @@ file for details.
 # Not sure why but making the class immutable causes parent attributes to be 
 # lost.  Is this a bug in Class::MOP?
 #
-#__PACKAGE__->meta->make_immutable;
+__PACKAGE__->meta->make_immutable;
 
 1;
