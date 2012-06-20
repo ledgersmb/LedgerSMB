@@ -105,12 +105,12 @@ tie %config, 'Config::IniFiles', (-file=> 'ledgersmb.conf' );
 
 # Root variables
 for my $var (
-    qw(pathsep log_level DBI_TRACE check_max_invoices language auth latex
+    qw(pathsep log_level cssdir DBI_TRACE check_max_invoices language auth latex
     db_autoupdate force_username_case max_post_size decimal_places cookie_name
-    return_accno no_db_str tempdir cache_templates cssdir fs_cssdir)
+    return_accno no_db_str tempdir cache_templates fs_cssdir)
   )
 {
-    ${$var} = $config{'main'}{$var} if $config{$var};
+    ${$var} = $config{'main'}{$var} if $config{'main'}{$var};
 }
 
 if ($cssdir !~ m|/$|){
