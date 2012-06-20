@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 54;
+use Test::More tests => 49;
 
 use_ok('LedgerSMB::Sysconfig') 
     || BAIL_OUT('System Configuration could be loaded!');
@@ -11,16 +11,12 @@ use_ok('LedgerSMB::AA');
 use_ok('LedgerSMB::AM');
 use_ok('LedgerSMB::Auth');
 use_ok('LedgerSMB::BP');
-use_ok('LedgerSMB::CA');
 use_ok('LedgerSMB::CP');
 use_ok('LedgerSMB::DBObject');
 use_ok('LedgerSMB::DBObject::Account');
 use_ok('LedgerSMB::DBObject::Admin');
-use_ok('LedgerSMB::DBObject::Company');
-use_ok('LedgerSMB::DBObject::Customer');
 use_ok('LedgerSMB::DBObject::Date');
 use_ok('LedgerSMB::DBObject::Draft');
-use_ok('LedgerSMB::DBObject::Employee');
 use_ok('LedgerSMB::DBObject::EOY');
 use_ok('LedgerSMB::DBObject::Location');
 use_ok('LedgerSMB::DBObject::Menu');
@@ -28,7 +24,6 @@ use_ok('LedgerSMB::DBObject::Payment');
 use_ok('LedgerSMB::DBObject::Reconciliation');
 use_ok('LedgerSMB::DBObject::TaxForm');
 use_ok('LedgerSMB::DBObject::User');
-use_ok('LedgerSMB::DBObject::Vendor');
 use_ok('LedgerSMB::Form');
 use_ok('LedgerSMB::GL');
 use_ok('LedgerSMB::IC');

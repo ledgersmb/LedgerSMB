@@ -215,9 +215,13 @@ sub subtotal_cols {
     return ['debits', 'credits'];
 }
 
+=back
+
 =head2 Criteria Properties
 
 Note that in all cases, undef matches everything.
+
+=over
 
 =item reference (text)
 
@@ -317,6 +321,8 @@ Array of business unit id's
 
 has 'business_units' => (is => 'rw', isa => 'Maybe[ArrayRef[Int]]');
 
+=back
+
 =head1 METHODS
 
 =over
@@ -376,6 +382,7 @@ sub run_report{
     $self->rows(\@rows);
 }
 
+=back
 
 =head1 COPYRIGHT
 

@@ -131,9 +131,13 @@ sub header_lines {
              text => $locale->text('End Date')},]
 }
 
+=back
+
 =head2 Criteria Properties
 
 Note that in all cases, undef matches everything.
+
+=over
 
 =item date_from (text)
 
@@ -151,6 +155,7 @@ End date for the report
 
 has 'date_to'  => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
 
+=back
 
 =head1 METHODS
 
@@ -182,6 +187,7 @@ sub run_report{
     $self->rows(\@rows);
 }
 
+=back
 
 =head1 COPYRIGHT
 

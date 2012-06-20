@@ -148,9 +148,13 @@ sub subtotal_cols {
     return [];
 }
 
+=back
+
 =head2 Criteria Properties
 
 Note that in all cases, undef matches everything.
+
+=over
 
 =item reference (text)
 
@@ -213,6 +217,7 @@ sub run_report{
     $self->rows(\@rows);
 }
 
+=back
 
 =head1 COPYRIGHT
 

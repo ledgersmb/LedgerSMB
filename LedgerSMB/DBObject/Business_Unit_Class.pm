@@ -194,6 +194,8 @@ Used in some countries/industries for multi-customer receipts
 
 Used in some countries/industries for multi-vendor payments
 
+=back
+
 =head1 COPYRIGHT
 
 Copyright (C) 2012 The LedgerSMB Core Team.  This module may be used under the

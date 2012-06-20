@@ -137,6 +137,8 @@ sub save_defaults {
     default_screen($request);
 }
 
+=back
+
 =head1 COPYRIGHT
 
 Copyright (C) 2012 The LedgerSMB Core Team.  This file may be reused under the

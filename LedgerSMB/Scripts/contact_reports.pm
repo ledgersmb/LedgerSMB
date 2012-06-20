@@ -19,6 +19,7 @@ use LedgerSMB::DBObject::Report::Contact::Search;
 use LedgerSMB::DBObject::Report::Contact::History;
 use strict;
 
+=over
 
 =item search
 
@@ -49,5 +50,15 @@ sub history {
     $report->run_report;
     $report->render($request);
 }
+
+=back
+
+=head1 COPYRIGHT
+
+Copyright (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
+terms of te GNU General Public License version 2 or at your option any later
+version.  Please see included LICENSE.txt for more info.
+
+=cut
 
 return 1;

@@ -266,8 +266,6 @@ sub generate_control_code {
 
 This method creates a blank screen for entering a company's information.
 
-=back
-
 =cut 
 
 sub add {
@@ -275,6 +273,7 @@ sub add {
     $request->{target_div} = 'employee_div';
     _main_screen($request, $request);
 }
+
 
 =item save_employee
 
@@ -408,7 +407,7 @@ sub delete_bank_account{
     get($request);
 }
 
-=sub save_bank_account 
+=item save_bank_account 
 
 Adds a bank account to a company and, if defined, an entity credit account.
 

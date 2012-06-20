@@ -132,9 +132,13 @@ sub header_lines {
              text => $locale->text('Account Number End')},]
 }
 
+=back
+
 =head2 Criteria Properties
 
 Note that in all cases, undef matches everything.
+
+=over
 
 =item date_from (text)
 
@@ -165,6 +169,8 @@ has 'from_accno' => (is => 'rw', isa => 'Maybe[Str]');
 =cut
 
 has 'to_accno' => (is => 'rw', isa => 'Maybe[Str]');
+
+=back
 
 =head1 METHODS
 
@@ -200,6 +206,7 @@ sub run_report{
     $self->rows(\@rows);
 }
 
+=back
 
 =head1 COPYRIGHT
 

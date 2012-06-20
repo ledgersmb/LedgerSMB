@@ -22,6 +22,8 @@ package LedgerSMB::DBObject::Entity::Location;
 use Moose;
 extends 'LedgerSMB::DBObject_Moose';
 
+=back
+
 =head1 PROPERTIES
 
 =over
@@ -190,7 +192,7 @@ Retrieves locations and returns them.  Args include:
 
 =item only_class int (optional)
 
-=item
+=back
 
 This function returns all locations attached to the entity_id and, if the credit_id is provided, all locations attached to the credit_id as well.  The two 
 are appended together with the ones at the entity level coming first.

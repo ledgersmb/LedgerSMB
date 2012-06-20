@@ -157,9 +157,13 @@ sub subtotal_cols {
     return [];
 }
 
+=back
+
 =head2 Criteria Properties
 
 Note that in all cases, undef matches everything.
+
+=over
 
 =item batch_id (Int)
 
@@ -168,6 +172,8 @@ ID of batch to list vouchers of.
 =cut
 
 has 'batch_id' => (is => 'rw', isa => 'Int');
+
+=back
 
 =head1 METHODS
 
@@ -208,6 +214,7 @@ sub run_report{
     $self->rows(\@rows);
 }
 
+=back
 
 =head1 COPYRIGHT
 

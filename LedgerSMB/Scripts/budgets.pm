@@ -16,6 +16,8 @@ Budget workflow scripts.
 =item LedgerSMB::DBObject::Budget
 =item LedgerSMB::DBObject::Budget_Report
 
+=back
+
 =cut
 
 use LedgerSMB::DBObject::Budget;

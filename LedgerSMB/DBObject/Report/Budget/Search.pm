@@ -29,7 +29,7 @@ my $locale = $LedgerSMB::App_State::Locale;
 
 Read only accessor.  This provides the columns for the report
 
-=pver 
+=over 
 
 =item start_date
 
@@ -173,6 +173,8 @@ This returns all budgets matching all business units listed here.
 =cut
 
 has 'business_units' => (is=> 'rw', isa => 'Maybe[ArrayRef[Int]]');
+
+=back
 
 =head1 METHODS
 

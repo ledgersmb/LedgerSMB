@@ -21,6 +21,8 @@ use strict;
 
 =pod
 
+=over
+
 =item run_report
 
 Runs the report and displays it
@@ -132,3 +134,15 @@ sub generate_statement {
     }   
 
 }
+
+=back
+
+=head1 COPYRIGHT
+
+Copyright (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
+terms of te GNU General Public License version 2 or at your option any later
+version.  Please see included LICENSE.txt for more info.
+
+=cut
+
+1;

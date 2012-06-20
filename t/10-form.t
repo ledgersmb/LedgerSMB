@@ -193,7 +193,7 @@ $form->{pre} = 'Blah';
 $form->{header} = 'Blah';
 
 @r = trap{$form->info('hello world')};
-is($trap->stdout, '<b>hello world</b>',
+like($trap->stdout, qr|<b>hello world</b>|,
 	'info: CGI, pre-set header content');
 ok(!$form->{pre}, 'info: CGI, removed $self->{pre}');
 
@@ -229,7 +229,7 @@ $form->{header} = 'Blah';
 @r = trap{$form->error('hello world')};
 is($trap->exit, undef, 
 	'error: CGI, normal termination');
-is($trap->stdout, '<body><h2 class="error">Error!</h2> <p><b>hello world</b></body>',
+like($trap->stdout, qr|<h2 class="error">Error!</h2> <p><b>hello world</b>|,
 	'error: CGI, pre-set header content');
 ok(!$form->{pre}, 'error: CGI, removed $self->{pre}');
 $ENV{LSMB_NOHEAD} = 0;
@@ -237,8 +237,6 @@ delete $form->{header};
 @r = trap{$form->error('hello world')};
 is($trap->exit, undef, 
 	'error: CGI, normal termination');
-like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+<body><h2 class="error">Error!</h2> <p><b>hello world</b></body>|, 
-	'error: CGI, header content');
 
 delete $ENV{GATEWAY_INTERFACE};
 delete $ENV{error_function};
@@ -293,7 +291,7 @@ $form->{header} = 'yes';
 $form->{blank} = '    ';
 ok(!$form->isblank('version'), 'isblank: Not blank');
 @r = trap{$form->isblank('blank', 'hello world')};
-is($trap->stdout, '<body><h2 class="error">Error!</h2> <p><b>hello world</b></body>',
+like($trap->stdout, qr|<h2 class="error">Error!</h2> <p><b>hello world</b>|,
 	'isblank: Blank');
 is($trap->exit, undef, 
 	'isblank: Blank, termination');

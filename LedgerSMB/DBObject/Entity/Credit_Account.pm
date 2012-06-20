@@ -240,6 +240,10 @@ This is an arrayref of ints for the tax accounts linked to the customer.
 
 has 'tax_ids' => (is => 'rw', isa => 'Maybe[ArrayRef[Int]]');
 
+=item bank_account
+
+Bank account for the credit account
+
 =cut
 
 has 'bank_account' => (is => 'rw', isa => 'Maybe[Int]');

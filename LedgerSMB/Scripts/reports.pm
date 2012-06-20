@@ -21,6 +21,8 @@ use strict;
 
 =pod
 
+=over
+
 =item start_report
 
 This displays the filter screen for the report.  It expects the following 

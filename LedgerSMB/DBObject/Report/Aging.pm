@@ -204,9 +204,13 @@ sub header_lines {
     return [];
 }
 
+=back
+
 =head2 Criteria Properties
 
 Note that in all cases, undef matches everything.
+
+=over
 
 =item report_type
 
@@ -241,6 +245,8 @@ has 'date_ref' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
 
 has 'entity_class' => (is => 'rw', isa => 'Maybe[Int]');
 
+=back
+
 =head1 METHODS
 
 =over
@@ -274,6 +280,7 @@ sub run_report{
     $self->rows(\@rows);
 }
 
+=back
 
 =head1 COPYRIGHT
 

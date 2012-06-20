@@ -542,22 +542,6 @@ my $contact_request = {
 		]
 }; # Company with Credit Accounts and business types.
 
-my $contact_template = LedgerSMB::Template->new(
-        path            => 'UI/Contact',
-        template        => 'contact',
-        format          => 'HTML',
-        no_auto_output  => 1,
-        output_file     => 'contact_test1'
-);
-
-$contact_template->render($contact_request);
-
-my @output =  get_output_line_array($contact_template);
-is(grep (/value="1"  selected="selected"/, @output), 0, 'Select box Value 1 unselected');
-is(grep (/value="1000"  selected="selected"/, @output), 1, 'Select box Value 1000 selected');
-is(grep (/<td class="description">dtest1/, @output), 1, 'Contact description shows');
-is(grep (/value="4"\s+selected="selected">country4/, @output), 2, 'Default Country Set');
-# bulk payment template tests
 my $payment = LedgerSMB->new();
 $payment->merge({
 	contact_1 => 1, source_1 => 1, action=>'dispay_payments', id_1 => 1,
@@ -574,7 +558,7 @@ my $payment_template =  LedgerSMB::Template->new(
 );
 
 $payment_template->render($payment);
-@output =  get_output_line_array($payment_template);
+my @output =  get_output_line_array($payment_template);
 cmp_ok(grep(/101<\/td>/, @output), '>', 0, 'Invoice row exists');
 is(grep(/name="payment_101"/, @output), 0, 'Invoice locked');
 is(grep(/Locked by/, @output), 1, 'Invoice locked label shown');

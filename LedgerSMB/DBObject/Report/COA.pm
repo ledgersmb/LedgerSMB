@@ -162,6 +162,8 @@ sub subtotal_cols {
     return [];
 }
 
+=back
+
 =head2 Criteria Properties
 
 No criteria required.
@@ -204,6 +206,7 @@ sub run_report{
     $self->rows(\@rows);
 }
 
+=back
 
 =head1 COPYRIGHT
 
