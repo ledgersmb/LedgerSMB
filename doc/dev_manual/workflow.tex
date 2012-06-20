@@ -1,0 +1,2293 @@
+\section{LedgerSMB::ScriptLib::Company\_Co\label{LedgerSMB::ScriptLib::Company_Co}\index{LedgerSMB::ScriptLib::Company\ Co}}
+
+
+LedgerSMB class defining the Controller
+function modifications for the Colombian market.
+
+\subsection*{SYOPSIS\label{LedgerSMB::ScriptLib::Company_Co_SYOPSIS}\index{LedgerSMB::ScriptLib::Company Co!SYOPSIS}}
+
+
+This is implemented as a brief shim between the standard ScriptLib::Company 
+module and the input.  The idea is that this allows us to override or transform
+the existing functionality using the magic of inheritance.
+
+\begin{description}
+
+\item[{add}] \mbox{}
+
+Populates drop-down boxes and delegates the rest to the super.
+
+
+\item[{get}] \mbox{}
+
+This routine also grabs natural person info, and lists departments and 
+municipalities, then delegates to the existing Company script.
+
+
+\item[{save}] \mbox{}
+
+This routine replaces the save in the parent class and saves everything on the 
+company screen.
+
+
+
+This routine
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB::ScriptLib::Company_Co_COPYRIGHT}\index{LedgerSMB::ScriptLib::Company Co!COPYRIGHT}}
+
+
+Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU 
+General Public License, version 2, or at your option any later version.  Please 
+see the accompanying License.txt for more information.
+
+\section{LedgerSMB::ScriptLib::Company\label{LedgerSMB::ScriptLib::Company}\index{LedgerSMB::ScriptLib::Company}}
+
+
+LedgerSMB class defining the Controller
+functions, template instantiation and rendering for vendor and customer editing 
+and display.  This would also form the basis for other forms of company
+contacts.
+
+\subsection*{SYOPSIS\label{LedgerSMB::ScriptLib::Company_SYOPSIS}\index{LedgerSMB::ScriptLib::Company!SYOPSIS}}
+
+
+This module is the UI controller for the vendor DB access; it provides the 
+View interface, as well as defines the Save vendor. 
+Save vendor/customer will update or create as needed.
+
+\subsection*{METHODS\label{LedgerSMB::ScriptLib::Company_METHODS}\index{LedgerSMB::ScriptLib::Company!METHODS}}
+\begin{description}
+
+\item[{save\_person}] \mbox{}\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB::ScriptLib::Company_COPYRIGHT}\index{LedgerSMB::ScriptLib::Company!COPYRIGHT}}
+
+
+Copyright (c) 2009, the LedgerSMB Core Team.  This is licensed under the GNU 
+General Public License, version 2, or at your option any later version.  Please 
+see the accompanying License.txt for more information.
+
+\section{LedgerSMB:Scripts::account, LedgerSMB workflow scripts for managing accounts\label{LedgerSMB:Scripts::account_LedgerSMB_workflow_scripts_for_managing_accounts}\index{LedgerSMB:Scripts::account, LedgerSMB workflow scripts for managing accounts}}
+
+
+
+
+\subsection*{SYNOPSIS\label{LedgerSMB:Scripts::account_LedgerSMB_workflow_scripts_for_managing_accounts_SYNOPSIS}\index{LedgerSMB:Scripts::account LedgerSMB workflow scripts for managing accounts!SYNOPSIS}}
+
+
+This module contains the workflows for managing chart of accounts entries.
+
+
+
+In prior versions of LedgerSMB, these were found in the AM.pm.  In the current 
+version, these have been broken out and given their own API which is more 
+maintainable.
+
+\subsection*{METHODS\label{LedgerSMB:Scripts::account_LedgerSMB_workflow_scripts_for_managing_accounts_METHODS}\index{LedgerSMB:Scripts::account LedgerSMB workflow scripts for managing accounts!METHODS}}
+\begin{description}
+
+\item[{new}] \mbox{}
+
+Displays a screen to create a new account.
+
+
+\item[{edit}] \mbox{}
+
+Retrieves account information and then displays the screen.
+
+
+
+Requires the id and charttype variables in the request to be set.
+
+
+\item[{save}] \mbox{}
+
+Saves the account.
+
+
+
+Request variables
+id: (optional):  If set, overwrite existing account.
+accno: the text used to specify the account number
+description:  Text to describe the account
+category: A = asset, L = liability, Q = Equity, I = Income, E = expense
+gifi\_accno:  The GIFI account entry control code
+heading: (Optional) The integer representing the heading.id desired 
+contra:  If true, the account balances on the opposite side.
+tax:  If true, is a tax account
+link:  a list of strings representing text box identifier.
+
+
+\item[{save\_as\_new}] \mbox{}
+
+Saves as a new account.  Deletes the id field and then calls save()
+
+
+\item[{yearend\_info}] \mbox{}
+
+Shows the yearend screen.  No expected inputs.
+
+
+\item[{post\_yearend}] \mbox{}
+
+Posts a year-end closing transaction.
+
+
+
+Request variables expected:
+end\_date: Date for the yearend transaction.  
+reference: GL Source identifier.
+description: Description of transaction
+in\_retention\_acc\_id: Account id to post retained earnings into
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB:Scripts::account_LedgerSMB_workflow_scripts_for_managing_accounts_COPYRIGHT}\index{LedgerSMB:Scripts::account LedgerSMB workflow scripts for managing accounts!COPYRIGHT}}
+
+
+Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
+General Public License version 2, or at your option any later version.  Please
+see the included License.txt for details.
+
+\section{LedgerSMB::Scripts::business\_unit\label{LedgerSMB::Scripts::business_unit}\index{LedgerSMB::Scripts::business\ unit}}
+
+
+
+
+\subsection*{SYNOPSIS\label{LedgerSMB::Scripts::business_unit_SYNOPSIS}\index{LedgerSMB::Scripts::business unit!SYNOPSIS}}
+
+
+Workflow routines for LedgerSMB business reporting units
+
+\subsection*{FUNCTIONS\label{LedgerSMB::Scripts::business_unit_FUNCTIONS}\index{LedgerSMB::Scripts::business unit!FUNCTIONS}}
+
+
+All functions take a single \$request object as their sole argument
+
+\begin{description}
+
+\item[{list\_classes}] \mbox{}
+\item[{add}] \mbox{}
+
+Adds a new business unit.  \$request-$>$\{class\_id\} must be set.
+
+
+\item[{edit}] \mbox{}
+
+Edits an existing business unit.  \$request-$>$\{id\} must be set.
+
+
+\item[{list}] \mbox{}
+
+Lists business units.  The following properties of \$request may be set:
+
+\begin{description}
+
+\item[{class\_id (required)}] \mbox{}
+
+Lists units for appropriate class.
+
+
+\item[{active\_on}] \mbox{}
+
+If set filters for units active on the date in question, inclusive of start/end
+dates
+
+
+\item[{credit\_id}] \mbox{}
+
+If set, filters excludes those which are for customers/vendors other than than 
+identified by this value.
+
+
+\item[{strict\_credit\_id}] \mbox{}
+
+If set, excludes those which are not associated with customers/vendors.
+
+\end{description}
+
+\item[{delete}] \mbox{}
+
+Deletes an existing business unit.  Only vaid for ones with no transactions or 
+sub-units.
+
+
+
+\$request-$>$\{id\} must be set.
+
+
+\item[{delete\_class}] \mbox{}
+
+Deletes an existing business unit class.  Only valid of no units are of class.
+
+
+
+\$request-$>$\{id\} must be set.
+
+
+\item[{save}] \mbox{}
+
+Saves the existing unit.  Standard properties of 
+LedgerSMB::DBObject::Business\_Unit must be set for \$request.
+
+
+\item[{save\_class}] \mbox{}
+
+Saves the existing unit class.  Standard properties for 
+LedgerSMB::DBObject::Business\_Unit\_Class must be set for \$request.
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB::Scripts::business_unit_COPYRIGHT}\index{LedgerSMB::Scripts::business unit!COPYRIGHT}}
+
+
+Copyright (C) 2012 LedgerSMB core team.  Redistribution and use of work is 
+governed under the GNU General Public License, version 2 or at your option any
+later version.
+
+\section{LedgerSMB::Scripts::file\label{LedgerSMB::Scripts::file}\index{LedgerSMB::Scripts::file}}
+
+
+
+
+\subsection*{SYNOPSIS\label{LedgerSMB::Scripts::file_SYNOPSIS}\index{LedgerSMB::Scripts::file!SYNOPSIS}}
+
+
+This supplies file retrival and attachment workflows
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::file_METHODS}\index{LedgerSMB::Scripts::file!METHODS}}
+\begin{description}
+
+\item[{get}] \mbox{}
+
+Retrieves a file and sends it to the web browser.
+
+
+
+Requires that id and file\_class be set.
+
+
+\item[{show\_attachment\_screen}] \mbox{}
+
+Show the attachment or upload screen.
+
+
+\item[{attach\_file}] \mbox{}
+
+Attaches a file to an object
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB::Scripts::file_COPYRIGHT}\index{LedgerSMB::Scripts::file!COPYRIGHT}}
+
+
+Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU 
+General Public License version 2, or at your option any later version.  Please
+see the included License.txt for details.
+
+\section{LedgerSMB::Scripts::payment\label{LedgerSMB::Scripts::payment}\index{LedgerSMB::Scripts::payment}}
+
+
+LedgerSMB class defining the Controller functions for payment handling.
+
+\subsection*{SYNOPSIS\label{LedgerSMB::Scripts::payment_SYNOPSIS}\index{LedgerSMB::Scripts::payment!SYNOPSIS}}
+
+
+Defines the controller functions and workflow logic for payment processing.
+
+\subsection*{COPYRIGHT\label{LedgerSMB::Scripts::payment_COPYRIGHT}\index{LedgerSMB::Scripts::payment!COPYRIGHT}}
+
+
+Portions Copyright (c) 2007, David Mora R and Christian Ceballos B.
+
+
+
+Licensed to the public under the terms of the GNU GPL version 2 or later.
+
+
+
+Original copyright notice below.
+
+
+
+\#=====================================================================
+\# PLAXIS
+\# Copyright (c) 2007
+\#
+\#  Author: David Mora R
+\# 	   Christian Ceballos B	   
+\#
+\#
+\#
+\#  
+\#
+\# This program is free software; you can redistribute it and/or modify
+\# it under the terms of the GNU General Public License as published by
+\# the Free Software Foundation; either version 2 of the License, or
+\# (at your option) any later version.
+\#
+\# This program is distributed in the hope that it will be useful,
+\# but WITHOUT ANY WARRANTY; without even the implied warranty of
+\# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+\# GNU General Public License for more details.
+\# You should have received a copy of the GNU General Public License
+\# along with this program; if not, write to the Free Software
+\# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::payment_METHODS}\index{LedgerSMB::Scripts::payment!METHODS}}
+\begin{description}
+
+\item[{payment}] \mbox{}
+
+This method is used to set the filter screen and prints it, using the 
+TT2 system.
+
+
+\item[{get\_search\_criteria}] \mbox{}
+
+Displays the payment criteria screen.  Optional inputs are
+
+\begin{description}
+
+\item[{batch\_id}] \mbox{}
+\item[{batch\_date}] \mbox{}
+\item[{pre\_bulk\_post\_report}] \mbox{}
+
+This displays a report of the expected GL activity of a payment batch before it
+is saved.  For receipts, this just redirects to bulk\_post currently.
+
+
+\item[{get\_search\_results}] \mbox{}
+
+Displays the payment search results.
+
+
+
+inputs currently expected include
+
+\begin{description}
+
+\item[{credit\_id}] \mbox{}
+\item[{date\_from}] \mbox{}
+\item[{date\_to}] \mbox{}
+\item[{source}] \mbox{}
+\item[{cash\_accno}] \mbox{}
+\item[{account\_class}] \mbox{}\end{description}
+
+\item[{get\_search\_results\_reverse\_payments}] \mbox{}
+
+This reverses payments selected in the search results.
+
+
+\item[{post\_payments\_bulk}] \mbox{}
+
+This is a light-weight wrapper around LedgerSMB::DBObject::Payment-$>$post\_bulk.
+
+
+
+Please see the documentation of that function as to expected inouts.
+
+
+
+Additionally, this checks against the XSRF framework and  reloads the screen 
+with a notice to try again if the attempt to close out the form key is not 
+successful.
+
+
+\item[{print}] \mbox{}
+
+Prints a stack of checks.  Currently the logic from the single payment interface
+is not merged in, meaning that \$request-$>$\{multiple\} must be set to a true value.
+
+
+\item[{update\_payments}] \mbox{}
+
+Displays the bulk payment screen with current data
+
+
+\item[{display\_payments}] \mbox{}
+
+This displays the bulk payment screen with current data.
+
+
+\item[{payment}] \mbox{}
+
+This method is used to set the filter screen and prints it, using the 
+TT2 system.
+
+
+\item[{payment1\_5}] \mbox{}
+
+This method is called between payment and payment2, it will search the database
+for entity\_credit\_accounts that match the parameter, if only one is found it will
+run unnoticed by the user, if more than one is found it will ask the user to pick 
+one to handle the payment against
+
+
+\item[{payment2}] \mbox{}
+
+This method is used  for the payment module, it is a consecuence of the payment sub,
+and its used for all the mechanics of an invoices payment module.
+
+
+\item[{post\_payment}] \mbox{}
+
+This method is used  for the payment module (not the bulk payment),
+and its used for all the mechanics of storing a payment.
+
+
+\item[{print\_payment}] \mbox{}
+
+This sub will print the payment on the selected media, it needs to
+receive the \$Payment object with all this information.
+
+
+\item[{post\_and\_print\_payment}] \mbox{}
+
+This is simply a shortcut between post\_payment and print\_payment methods, please refer
+to these functions
+
+
+\item[{use\_overpayment}] \mbox{}
+
+This item will do the trick to use the overpayment information stored inside the payments,
+it should be powerful enough to link overpayment from one customer to other customers.
+
+
+\item[{use\_overpayment2}] \mbox{}
+
+This sub runs to allow the user to specify the invoices in which an overpayment should be used
+
+
+\item[{post\_overpayment}] \mbox{}
+
+This method reorganize the selected invoices by customer/vendor and adapt them to make them fit with the post\_payment sql method, calling it once by customer/vendor id
+
+\end{description}
+\section{LedgerSMB::Scripts::contact\label{LedgerSMB::Scripts::contact}\index{LedgerSMB::Scripts::contact}}
+
+
+LedgerSMB class defining the Controller
+functions, template instantiation and rendering for customer editing and display.
+
+\subsection*{SYOPSIS\label{LedgerSMB::Scripts::contact_SYOPSIS}\index{LedgerSMB::Scripts::contact!SYOPSIS}}
+
+
+This module is the UI controller for the customer, vendor, etc functions; it
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::contact_METHODS}\index{LedgerSMB::Scripts::contact!METHODS}}
+\subsection*{COPYRIGHT\label{LedgerSMB::Scripts::contact_COPYRIGHT}\index{LedgerSMB::Scripts::contact!COPYRIGHT}}
+
+
+Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU 
+General Public License, version 2, or at your option any later version.  Please 
+see the accompanying License.txt for more information.
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::contact_METHODS}\index{LedgerSMB::Scripts::contact!METHODS}}
+\begin{description}
+
+\item[{get\_by\_cc}] \mbox{}
+
+Populates the company area with info on the company, pulled up through the 
+control code
+
+
+\item[{get(\$self, \$request, \$user)}] \mbox{}
+
+Requires form var: id
+
+
+
+Extracts a single company from the database, using its company ID as the primary
+point of uniqueness. Shows (appropriate to user privileges) and allows editing
+of the company information.
+
+
+\item[{generate\_control\_code}] \mbox{}
+
+Generates a control code and hands off execution to other routines
+
+
+\item[{dispatch\_legacy}] \mbox{}
+
+This is a semi-private method which interfaces with the old code.  Note that
+as long as any other functions use this, the contact interface cannot be said to 
+be safe for code caching.
+
+
+
+Not fully documented because this will go away as soon as possible.
+
+
+\item[{add\_transaction}] \mbox{}
+
+Dispatches to the Add (AR or AP as appropriate) transaction screen.
+
+
+\item[{add\_invoice}] \mbox{}
+
+Dispatches to the (sales or vendor, as appropriate) invoice screen.
+
+
+\item[{add\_order}] \mbox{}
+
+Dispatches to the sales/purchase order screen.
+
+
+\item[{rfq}] \mbox{}
+
+Dispatches to the quotation/rfq screen
+
+
+\item[{add}] \mbox{}
+
+This method creates a blank screen for entering a company's information.
+
+
+\item[{save\_company}] \mbox{}
+
+Saves a company and moves on to the next screen
+
+
+\item[{save\_person}] \mbox{}
+
+Saves a person and moves on to the next screen
+
+
+\item[{save\_credit(\$request)}] \mbox{}
+
+This inserts or updates a credit account of the sort listed here.
+
+
+\item[{save\_credit\_new(\$request)}] \mbox{}
+
+This inserts a new credit account.
+
+
+\item[{save\_location}] \mbox{}
+
+Adds a location to the company as defined in the inherited object
+
+
+\item[{save\_new\_location}] \mbox{}
+
+Adds a location to the company as defined in the inherited object, not
+overwriting existing locations.
+
+
+\item[{edit}] \mbox{}
+
+This is a synonym of get() which is preferred to use for editing operations.
+
+
+\item[{delete\_location}] \mbox{}
+
+Deletes the specified location
+
+
+\item[{save\_contact}] \mbox{}
+
+Saves the specified contact info
+
+
+\item[{delete\_contact}] \mbox{}
+
+Deletes the specified contact info.  Note that for\_credit is used to pass the 
+credit id over in this case.
+
+
+\item[{delete\_bank\_acct}] \mbox{}
+
+Deletes the selected bank account record
+
+
+
+Required request variables:
+* bank\_account\_id
+* entity\_id
+* form\_id
+
+
+\item[{save\_bank\_account}] \mbox{}
+
+Adds a bank account to a company and, if defined, an entity credit account.
+
+
+\item[{save\_notes(\$request)}] \mbox{}
+
+Saves notes.  entity\_id or credit\_id must be set, as must note\_class, note, and 
+subject.
+
+
+\item[{get\_pricelist}] \mbox{}
+
+This returns and displays the pricelist.  The id field is required.
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB::Scripts::contact_COPYRIGHT}\index{LedgerSMB::Scripts::contact!COPYRIGHT}}
+
+
+Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU 
+General Public License, version 2, or at your option any later version.  Please 
+see the accompanying License.txt for more information.
+
+\section{LedgerSMB::Scripts::taxform\label{LedgerSMB::Scripts::taxform}\index{LedgerSMB::Scripts::taxform}}
+
+
+LedgerSMB handler for reports on tax forms.
+
+\subsection*{SYNOPSIS\label{LedgerSMB::Scripts::taxform_SYNOPSIS}\index{LedgerSMB::Scripts::taxform!SYNOPSIS}}
+
+
+Implement the ability to do end-of-year reporting on vendors as to how
+much was recorded as reportable.
+
+
+
+1) A summary report vs a detail report. 2) On the summary report, clicking
+through brings you to a detail report for that vendor. 3) On the detail
+report, clicking through brings you to the contact/account or invoice
+information depending on what one clicks.
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::taxform_METHODS}\index{LedgerSMB::Scripts::taxform!METHODS}}
+\begin{description}
+
+\item[{\_\_default}] \mbox{}
+
+Display the filter screen by default.
+
+
+\item[{add\_taxform}] \mbox{}
+
+Display the "add taxform" screen.
+
+
+\item[{generate\_report}] \mbox{}
+
+Generates the summary or detail report.   Query inputs (required unless
+otherwise specified:
+
+\begin{description}
+
+\item[{begin
+Begin date}] \mbox{}
+\item[{end
+End date}] \mbox{}
+\item[{taxform\_id
+ID of tax form}] \mbox{}
+\item[{meta\_number (optional) Vendor or customer}] \textbf{account number. If set, triggers detailed report instead of summary for all customers/vendors associated with the tax form.}\end{description}
+
+
+In the future the actual report routines will be wrapped in a taxform\_report
+package.
+
+
+\item[{print}] \mbox{}
+
+Prints the tax forms, using the 1099 templates.
+
+
+\item[{list\_all}] \mbox{}
+
+Lists all tax forms.
+
+\end{description}
+\subsection*{Copyright (C) 2010 The LedgerSMB Core Team\label{LedgerSMB::Scripts::taxform_Copyright_C_2010_The_LedgerSMB_Core_Team}\index{LedgerSMB::Scripts::taxform!Copyright (C) 2010 The LedgerSMB Core Team}}
+
+
+Licensed under the GNU General Public License version 2 or later (at your 
+option).  For more information please see the included LICENSE and COPYRIGHT 
+files.
+
+\section{LedgerSMB::Scripts::budget\_reports\label{LedgerSMB::Scripts::budget_reports}\index{LedgerSMB::Scripts::budget\ reports}}
+
+
+Budget search and reporting workflows.
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::budget_reports_METHODS}\index{LedgerSMB::Scripts::budget reports!METHODS}}
+\begin{description}
+
+\item[{search}] \mbox{}
+
+Searches for budgets.  See LedgerSMB::DBObject::Report::Budget::Search for 
+more.
+
+
+\item[{variance\_report}] \mbox{}
+
+This runs a variance report.  Requires that id be set.  Shows amounts budgetted
+vs amounts used.
+
+\end{description}
+\section{LedgerSMB::Scripts::employee::country\label{LedgerSMB::Scripts::employee::country}\index{LedgerSMB::Scripts::employee::country}}
+
+
+Country info for employee management
+
+\subsection*{SYNOPSYS\label{LedgerSMB::Scripts::employee::country_SYNOPSYS}\index{LedgerSMB::Scripts::employee::country!SYNOPSYS}}
+
+
+none really.  This just allows viewing of certain info,
+
+\subsection*{VARIABLES\label{LedgerSMB::Scripts::employee::country_VARIABLES}\index{LedgerSMB::Scripts::employee::country!VARIABLES}}
+\begin{description}
+
+\item[{country\_divs}] \mbox{}
+
+This is a hashref where country\_id =$>$ arrayref of hashrefs, where that hashref 
+has the following keys:
+
+\begin{description}
+
+\item[{div\_title}] \mbox{}
+\item[{file}] \mbox{}
+\item[{save\_sproc}] \mbox{}\end{description}
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB::Scripts::employee::country_COPYRIGHT}\index{LedgerSMB::Scripts::employee::country!COPYRIGHT}}
+\section{LedgerSMB::Scripts::inventory\label{LedgerSMB::Scripts::inventory}\index{LedgerSMB::Scripts::inventory}}
+
+
+LedgerSMB class defining the Controller
+functions, template instantiation and rendering for inventory management.
+
+\subsection*{SYOPSIS\label{LedgerSMB::Scripts::inventory_SYOPSIS}\index{LedgerSMB::Scripts::inventory!SYOPSIS}}
+
+
+This module is the UI controller for the customer DB access; it provides the 
+View interface, as well as defines the Save customer. 
+Save customer will update or create as needed.
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::inventory_METHODS}\index{LedgerSMB::Scripts::inventory!METHODS}}
+\begin{description}
+
+\item[{begin\_adjust}] \mbox{}
+
+This entry point specifies the screen for setting up an inventory adjustment.
+
+\end{description}
+\begin{description}
+
+\item[{enter\_adjust}] \mbox{}
+
+This entry point specifies the screen for entering an inventory adjustment.
+
+\end{description}
+\begin{description}
+
+\item[{adjustment\_next}] \mbox{}
+
+This function is triggered on the next button on the adjustment entry screen.
+It retrieves inventory information, calculates adjustment values, and displays the
+screen.
+
+\end{description}
+\begin{description}
+
+\item[{adjustment\_save}] \mbox{}
+
+This function saves the inventory adjustment report and then creates the required
+invoices.
+
+\end{description}
+\section{LedgerSMB::Scripts::import\_trans\label{LedgerSMB::Scripts::import_trans}\index{LedgerSMB::Scripts::import\ trans}}
+
+
+
+
+\subsection*{SYNPOSIS\label{LedgerSMB::Scripts::import_trans_SYNPOSIS}\index{LedgerSMB::Scripts::import trans!SYNPOSIS}}
+
+
+This is a module that demonstrates how to set up scripts for importing bulk 
+data.
+
+\section{LedgerSMB::Scripts::user\label{LedgerSMB::Scripts::user}\index{LedgerSMB::Scripts::user}}
+
+
+
+
+\subsection*{SYNPOSIS\label{LedgerSMB::Scripts::user_SYNPOSIS}\index{LedgerSMB::Scripts::user!SYNPOSIS}}
+
+
+User preferences and password setting routines for LedgerSMB.  These are all
+accessible to all users and do not perform administrative functions.
+
+\subsection*{DIFFERENCES FROM ADMIN MODULE\label{LedgerSMB::Scripts::user_DIFFERENCES_FROM_ADMIN_MODULE}\index{LedgerSMB::Scripts::user!DIFFERENCES FROM ADMIN MODULE}}
+
+
+Although there is some overlap between this module and that of the admin module,
+particularly regarding the setting of passwords, there are subtle differences as
+well.  Most notably an administrative password reset is valid by default for
+only one day, while the duration of a user password change is fully configurable
+and defaults to indefinite validity.
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::user_METHODS}\index{LedgerSMB::Scripts::user!METHODS}}
+\begin{description}
+
+\item[{preferences\_screen}] \mbox{}
+
+Displays the preferences screen.  No inputs needed.
+
+
+\item[{save\_preferences}] \mbox{}
+
+Saves preferences from inputs on preferences screen and returns to the same
+screen.
+
+
+\item[{change\_password}] \mbox{}
+
+Changes the password, leaves other preferences in place, and returns to the
+preferences screen
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB::Scripts::user_COPYRIGHT}\index{LedgerSMB::Scripts::user!COPYRIGHT}}
+
+
+Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
+General Public License version 2, or at your option any later version.  Please
+see the included License.txt for details.
+
+\section{LedgerSMB:Scripts::drafts, LedgerSMB workflow scripts for managing drafts\label{LedgerSMB:Scripts::drafts_LedgerSMB_workflow_scripts_for_managing_drafts}\index{LedgerSMB:Scripts::drafts, LedgerSMB workflow scripts for managing drafts}}
+
+
+
+
+\subsection*{SYNOPSIS\label{LedgerSMB:Scripts::drafts_LedgerSMB_workflow_scripts_for_managing_drafts_SYNOPSIS}\index{LedgerSMB:Scripts::drafts LedgerSMB workflow scripts for managing drafts!SYNOPSIS}}
+
+
+This module contains the workflows for managing unapproved, unbatched financial 
+transactions.  This does not contain facities for creating such transactions, 
+only searching for them, and posting them to the books or deleting those
+which have not been approved yet.
+
+\subsection*{METHODS\label{LedgerSMB:Scripts::drafts_LedgerSMB_workflow_scripts_for_managing_drafts_METHODS}\index{LedgerSMB:Scripts::drafts LedgerSMB workflow scripts for managing drafts!METHODS}}
+\begin{description}
+
+\item[{search}] \mbox{}
+
+Displays the search filter screen.  No inputs required.
+
+
+
+The following inputs are optional and become defaults for the search criteria:
+
+
+
+type:  either 'ar', 'ap', or 'gl'
+with\_accno: Draft transaction against a specific account.
+from\_date:  Earliest date for match
+to\_date: Latest date for match
+amount\_le: total less than or equal to
+amount\_ge: total greater than or equal to
+
+
+\item[{list\_drafts\_draft\_approve}] \mbox{}
+
+Required hash entries (global):
+
+
+
+rowcount: number of total drafts in the list
+
+
+
+Required hash entries:
+row\_\$runningnumber: transaction id of the draft on that row.
+draft\_\$id:  true if selected.
+
+
+
+Approves selected drafts.  If close\_form fails, does nothing and lists
+drafts again.
+
+
+\item[{list\_drafts\_draft\_delete}] \mbox{}
+
+Required hash entries (global):
+
+
+
+rowcount: number of total drafts in the list
+
+
+
+Required hash entries:
+row\_\$runningnumber: transaction id of the draft on that row.
+draft\_\$id:  true if selected.
+
+
+
+Deletes selected drafts.  If close\_form fails, does nothing and lists
+drafts again.
+
+
+\item[{list\_drafts}] \mbox{}
+
+Searches for drafts and lists those matching criteria:
+
+
+
+Required hash variables:
+
+
+
+type:  either 'ar', 'ap', or 'gl'
+
+
+
+The following inputs are optional and used for filter criteria
+
+
+
+with\_accno: Draft transaction against a specific account.
+from\_date:  Earliest date for match
+to\_date: Latest date for match
+amount\_le: total less than or equal to
+amount\_ge: total greater than or equal to
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB:Scripts::drafts_LedgerSMB_workflow_scripts_for_managing_drafts_COPYRIGHT}\index{LedgerSMB:Scripts::drafts LedgerSMB workflow scripts for managing drafts!COPYRIGHT}}
+
+
+Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
+General Public License version 2, or at your option any later version.  Please
+see the included License.txt for details.
+
+\section{LedgerSMB::Scripts::setup\label{LedgerSMB::Scripts::setup}\index{LedgerSMB::Scripts::setup}}
+
+
+
+
+\subsection*{SYNOPSIS\label{LedgerSMB::Scripts::setup_SYNOPSIS}\index{LedgerSMB::Scripts::setup!SYNOPSIS}}
+
+
+The workflows for creating new databases, updating old ones, and running
+management tasks.
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::setup_METHODS}\index{LedgerSMB::Scripts::setup!METHODS}}
+\begin{description}
+
+\item[{login}] \mbox{}
+
+Processes the login and examines the database to determine appropriate steps to
+take.
+
+
+\item[{backup\_db}] \mbox{}
+
+Backs up a full db
+
+
+\item[{backup\_roles}] \mbox{}
+
+Backs up roles only (for all db's)
+
+
+\item[{run\_backup}] \mbox{}
+
+Runs the backup.  If backup\_type is set to email, emails the
+
+
+\item[{migrate\_sl}] \mbox{}
+
+Beginning of an SQL-Ledger 2.7/2.8 migration.
+
+
+\item[{upgrade}] \mbox{}
+
+Beginning of the upgrade from 1.2 logic
+
+
+\item[{fix\_tests}] \mbox{}
+
+Handles input from the failed test function and then re-runs the migrate db 
+script.
+
+
+\item[{create\_db}] \mbox{}\begin{verbatim}
+ Beginning of the new database workflow
+\end{verbatim}
+
+\item[{select\_coa}] \mbox{}
+
+Selects and loads the COA.
+
+
+
+There are three distinct input scenarios here:
+
+
+
+coa\_lc and chart are set:  load the coa file specified (sql/coa/\$coa\_lc/\$chart)
+coa\_lc set, chart not set:  select the chart
+coa\_lc not set:  Select the coa location code
+
+
+\item[{skip\_coa}] \mbox{}
+
+Entry point when on the CoA selection screen the 'Skip' button
+is being pressed.  This allows the user to load a CoA later.
+
+
+
+The CoA loaded at a later time may be a self-defined CoA, i.e. not
+one distributed with the LSMB standard distribution.  The 'Skip'
+button facilitates that scenario.
+
+
+\item[{\_render\_new\_user}] \mbox{}
+
+Renders the new user screen. Common functionality to both the
+select\_coa and skip\_coa functions.
+
+
+\item[{save\_user}] \mbox{}
+
+Saves the administrative user, and then directs to the login page.
+
+
+\item[{run\_upgrade}] \mbox{}
+
+Runs the actual upgrade script.
+
+
+\item[{cancel}] \mbox{}
+
+Cancels work.  Returns to login screen.
+
+
+\item[{rebuild\_modules}] \mbox{}
+
+This method rebuilds the modules and sets the version setting in the defaults
+table to the version of the LedgerSMB request object.  This is used when moving
+between versions on a stable branch (typically upgrading)
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB::Scripts::setup_COPYRIGHT}\index{LedgerSMB::Scripts::setup!COPYRIGHT}}
+
+
+Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU 
+General Public License version 2, or at your option any later version.  Please
+see the included License.txt for details.
+
+\section{SYNOPSYS
+Budget workflow scripts.\label{SYNOPSYS_Budget_workflow_scripts_}\index{SYNOPSYS
+Budget workflow scripts.}}
+\section{REQUIRES\label{REQUIRES}\index{REQUIRES}}
+\begin{description}
+
+\item[{LedgerSMB::DBObject::Budget =item LedgerSMB::DBObject::Budget\_Report}] \mbox{}\end{description}
+\section{METHODS\label{METHODS}\index{METHODS}}
+\begin{description}
+
+\item[{new\_budget No inputs provided. LedgerSMB::DBObject::Budget}] \textbf{properties can be used to set defaults however.}
+\item[{update Updates the screen. Part of initial}] \textbf{entry workflow only.}
+\item[{view\_budget Reuuires id to be set. Displays}] \textbf{a budget for review.}
+\item[{save LedgerSMB::DBObject::Budget properties}] \textbf{required. Lines represented by [property]\_[line number] notation.}
+\item[{approve Requires id. Approves the budget.}] \mbox{}
+\item[{reject Requires id. Rejects unapproved budget}] \textbf{and deletes it.}
+\item[{obsolete Requires id, Marks budget obsolete.}] \mbox{}
+\item[{add\_note Requires id, subject, and note.}] \textbf{Adds a note to the budget.}
+\item[{begin\_search No inputs expected or used}] \mbox{}\end{description}
+\section{SEE ALSO\label{SEE_ALSO}\index{SEE ALSO}}
+\begin{description}
+
+\item[{LedgerSMB::DBObject::Budget =item LedgerSMB::DBObject::Budget\_Report}] \mbox{}\end{description}
+\section{COPYRIGHT AND LICENSE\label{COPYRIGHT_AND_LICENSE}\index{COPYRIGHT AND LICENSE}}
+
+
+Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU 
+General Public License version 2, or at your option any later version.  Please
+see the included License.txt for details.
+
+\section{LedgerSMB::Scripts::contact\label{LedgerSMB::Scripts::contact}\index{LedgerSMB::Scripts::contact}}
+
+
+LedgerSMB class defining the Controller
+functions, template instantiation and rendering for customer editing and display.
+
+\subsection*{SYOPSIS\label{LedgerSMB::Scripts::contact_SYOPSIS}\index{LedgerSMB::Scripts::contact!SYOPSIS}}
+
+
+This module is the UI controller for the customer, vendor, etc functions; it
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::contact_METHODS}\index{LedgerSMB::Scripts::contact!METHODS}}
+\subsection*{COPYRIGHT\label{LedgerSMB::Scripts::contact_COPYRIGHT}\index{LedgerSMB::Scripts::contact!COPYRIGHT}}
+
+
+Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU 
+General Public License, version 2, or at your option any later version.  Please 
+see the accompanying License.txt for more information.
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::contact_METHODS}\index{LedgerSMB::Scripts::contact!METHODS}}
+\begin{description}
+
+\item[{get\_by\_cc}] \mbox{}
+
+Retrieves the employee based on control code.
+
+
+\item[{get}] \mbox{}
+
+Requires form var: id
+
+
+
+Retrieves the employee by id.
+
+
+\item[{generate\_control\_code}] \mbox{}
+
+Generates a control code and hands off execution to other routines
+
+
+\item[{add}] \mbox{}
+
+This method creates a blank screen for entering a company's information.
+
+
+\item[{save\_employee}] \mbox{}
+
+Saves a company and moves on to the next screen
+
+
+\item[{save\_location}] \mbox{}
+
+Adds a location to the company as defined in the inherited object
+
+
+\item[{save\_new\_location}] \mbox{}
+
+Adds a location to the company as defined in the inherited object, not
+overwriting existing locations.
+
+
+\item[{edit}] \mbox{}
+
+This is a synonym of get() which is preferred to use for editing operations.
+
+
+\item[{delete\_location}] \mbox{}
+
+Deletes the specified location
+
+
+\item[{save\_contact}] \mbox{}
+
+Saves the specified contact info
+
+
+\item[{delete\_contact}] \mbox{}
+
+Deletes the specified contact info.  Note that for\_credit is used to pass the 
+credit id over in this case.
+
+
+\item[{delete\_bank\_acct}] \mbox{}
+
+Deletes the selected bank account record
+
+
+
+Required request variables:
+* bank\_account\_id
+* entity\_id
+* form\_id
+
+
+\item[{save\_bank\_account}] \mbox{}
+
+Adds a bank account to a company and, if defined, an entity credit account.
+
+
+\item[{save\_notes(\$request)}] \mbox{}
+
+Saves notes.  entity\_id or credit\_id must be set, as must note\_class, note, and 
+subject.
+
+
+\item[{create\_user}] \mbox{}
+
+This turns the employee into a user.
+
+
+\item[{reset\_password}] \mbox{}
+
+This resets the user's password
+
+
+\item[{save\_roles}] \mbox{}
+
+Saves the user's permissions
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB::Scripts::contact_COPYRIGHT}\index{LedgerSMB::Scripts::contact!COPYRIGHT}}
+
+
+Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU 
+General Public License, version 2, or at your option any later version.  Please 
+see the accompanying License.txt for more information.
+
+\section{LedgerSMB::Scripts::recon\label{LedgerSMB::Scripts::recon}\index{LedgerSMB::Scripts::recon}}
+
+
+
+
+\subsection*{SYOPSIS\label{LedgerSMB::Scripts::recon_SYOPSIS}\index{LedgerSMB::Scripts::recon!SYOPSIS}}
+
+
+This module acts as the UI controller class for Reconciliation. It controls
+interfacing with the Core Logic and database layers.
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::recon_METHODS}\index{LedgerSMB::Scripts::recon!METHODS}}
+\begin{description}
+
+\item[{display\_report(\$self, \$request, \$user)}] \mbox{}
+
+Renders out the selected report given by the incoming variable report\_id.
+Returns HTML, or raises an error from being unable to find the selected
+report\_id.
+
+
+\item[{search(\$self, \$request, \$user)}] \mbox{}
+
+Renders out a list of meta-reports based on the search criteria passed to the
+search function.
+Meta-reports are report\_id, date\_range, and likely errors.
+Search criteria accepted are
+
+\begin{description}
+
+\item[{date\_begin}] \mbox{}
+\item[{date\_end}] \mbox{}
+\item[{account}] \mbox{}
+\item[{status}] \mbox{}\end{description}
+
+\item[{select\_all\_recons}] \mbox{}
+
+Checks off all reconciliation items and updates recon set
+
+
+\item[{submit\_recon\_set}] \mbox{}
+
+Submits the recon set to be approved.
+
+
+\item[{save\_recon\_set}] \mbox{}
+
+Saves the reconciliation set for later use.
+
+
+\item[{get\_results}] \mbox{}
+
+Displays the search results
+
+
+\item[{search}] \mbox{}
+
+Displays search criteria screen
+
+
+\item[{new\_report (\$self, \$request, \$user)}] \mbox{}
+
+Creates a new report, from a selectable set of bank statements that have been
+received (or can be received from, depending on implementation)
+
+
+
+Allows for an optional selection key, which will return the new report after
+it has been created.
+
+
+\item[{new\_report}] \mbox{}
+
+Displays the new report screen.
+
+
+\item[{(\$request)}] \mbox{}
+
+Requires report\_id
+
+
+
+This deletes a report.  Reports may not be deleted if approved (this will throw
+a database-level exception).  Users may delete their own reports if they have
+not yet been submitted for approval.  Those who have approval permissions may 
+delete any non-approved reports.
+
+
+\item[{approve (\$self, \$request, \$user)}] \mbox{}
+
+Requires report\_id
+
+
+
+Approves the given report based on id. Generally, the roles should be 
+configured so as to disallow the same user from approving, as created the report.
+
+
+
+Returns a success page on success, returns a new report on failure, showing 
+the uncorrected entries.
+
+
+\item[{pending (\$self, \$request, \$user)}] \mbox{}
+
+Requires \{date\} and \{month\}, to handle the month-to-month pending transactions
+in the database. No mechanism is provided to grab ALL pending transactions 
+from the acc\_trans table.
+
+\end{description}
+\subsection*{Copyright (C) 2007, The LedgerSMB core team.\label{LedgerSMB::Scripts::recon_Copyright_C_2007_The_LedgerSMB_core_team_}\index{LedgerSMB::Scripts::recon!Copyright (C) 2007, The LedgerSMB core team.}}
+
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+\section{LedgerSMB::Scripts::menu\label{LedgerSMB::Scripts::menu}\index{LedgerSMB::Scripts::menu}}
+
+
+LedgerSMB controller script for menus
+
+\subsection*{SYOPSIS\label{LedgerSMB::Scripts::menu_SYOPSIS}\index{LedgerSMB::Scripts::menu!SYOPSIS}}
+
+
+This script provides a controller class for generating menus.  It can operate in
+two modes:  One creates a standard expanding menu which works with or without
+javascript.  The second creates drilldown menus for small-screen or text-only
+devices.
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::menu_METHODS}\index{LedgerSMB::Scripts::menu!METHODS}}
+\begin{description}
+
+\item[{\_\_default}] \mbox{}
+
+This pseudomethod is used to trap menu clicks that come back through the file
+and route to the appropriate function.  If \$request-$>$\{menubar\} is set, it routes
+to the drilldown\_menu.  Otherwise, it routes to expanding\_menu.
+
+\end{description}
+\begin{description}
+
+\item[{root\_doc}] \mbox{}
+
+If \$request-$>$\{menubar\} is set, this creates a drilldown menu.  Otherwise, it
+creates the root document (currently a frameset).
+
+\end{description}
+\begin{description}
+
+\item[{expanding\_menu}] \mbox{}
+
+This function generates an expanding menu.  By default all nodes are closed, but
+there nodes which are supposed to be open are marked.
+
+\end{description}
+\begin{description}
+
+\item[{drillown\_menu}] \mbox{}
+
+This function creates a single cross section of the menu.  Currently this is
+most useful for generating menus for small screen devices or devices where a
+limited number of options are necessary (screen readers, text-only browsers and
+the like).
+
+\end{description}
+\subsection*{Copyright (C) 2007 The LedgerSMB Core Team\label{LedgerSMB::Scripts::menu_Copyright_C_2007_The_LedgerSMB_Core_Team}\index{LedgerSMB::Scripts::menu!Copyright (C) 2007 The LedgerSMB Core Team}}
+
+
+Licensed under the GNU General Public License version 2 or later (at your 
+option).  For more information please see the included LICENSE and COPYRIGHT 
+files.
+
+\section{LedgerSMB::Scripts::report\_aging\label{LedgerSMB::Scripts::report_aging}\index{LedgerSMB::Scripts::report\ aging}}
+
+
+Aging Reports and Statements for LedgerSMB
+
+\subsection*{SYNOPSIS\label{LedgerSMB::Scripts::report_aging_SYNOPSIS}\index{LedgerSMB::Scripts::report aging!SYNOPSIS}}
+
+
+This module provides AR/AP aging reports and statements for LedgerSMB.
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::report_aging_METHODS}\index{LedgerSMB::Scripts::report aging!METHODS}}
+\begin{description}
+
+\item[{search}] \mbox{}
+
+Runs the search report and displays it
+
+
+\item[{history}] \mbox{}
+
+Runs the purchase history report and displays it
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB::Scripts::report_aging_COPYRIGHT}\index{LedgerSMB::Scripts::report aging!COPYRIGHT}}
+
+
+Copyright (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
+terms of te GNU General Public License version 2 or at your option any later
+version.  Please see included LICENSE.txt for more info.
+
+\section{LedgerSMB::Scripts::report\_aging\label{LedgerSMB::Scripts::report_aging}\index{LedgerSMB::Scripts::report\ aging}}
+
+
+Aging Reports and Statements for LedgerSMB
+
+\subsection*{SYNOPSIS\label{LedgerSMB::Scripts::report_aging_SYNOPSIS}\index{LedgerSMB::Scripts::report aging!SYNOPSIS}}
+
+
+This module provides AR/AP aging reports and statements for LedgerSMB.
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::report_aging_METHODS}\index{LedgerSMB::Scripts::report aging!METHODS}}
+\begin{description}
+
+\item[{run\_report}] \mbox{}
+
+Runs the report and displays it
+
+
+\item[{select\_all}] \mbox{}
+
+Runs a report again, selecting all items
+
+
+\item[{generate\_statement}] \mbox{}
+
+This generates a statement and sends it off to the printer, the screen, or
+email.
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB::Scripts::report_aging_COPYRIGHT}\index{LedgerSMB::Scripts::report aging!COPYRIGHT}}
+
+
+Copyright (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
+terms of te GNU General Public License version 2 or at your option any later
+version.  Please see included LICENSE.txt for more info.
+
+\section{LedgerSMB::Scripts::journal\label{LedgerSMB::Scripts::journal}\index{LedgerSMB::Scripts::journal}}
+
+
+LedgerSMB slim ajax script for journal's
+account search request.
+
+\subsection*{SYNOPSIS\label{LedgerSMB::Scripts::journal_SYNOPSIS}\index{LedgerSMB::Scripts::journal!SYNOPSIS}}
+
+
+A script for journal ajax requests: accepts a search string and returns a
+list of matching accounts in a ul/li pair acceptable for scriptaculous's
+autocomplete library..
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::journal_METHODS}\index{LedgerSMB::Scripts::journal!METHODS}}
+\begin{description}
+
+\item[{\_\_default}] \mbox{}
+
+Get the search string, query the database, return the results in a ul/li
+pair easily queried by scriptaculous's autocompleter.
+
+
+\item[{chart\_of\_accounts}] \mbox{}
+
+Returns and displays the chart of accounts
+
+
+\item[{delete\_account}] \mbox{}
+
+This deletes an account and returns to the chart of accounts screen.
+
+
+
+This is here rather than in LedgerSMB::Scripts::Account because the redirect
+occurs to here.
+
+
+\item[{search}] \mbox{}
+
+Runs a search and displays results.
+
+
+\item[{search\_purchases}] \mbox{}
+
+Runs a search of AR or AP transactions and displays results.
+
+\end{description}
+\subsection*{Copyright (C) 2007 The LedgerSMB Core Team\label{LedgerSMB::Scripts::journal_Copyright_C_2007_The_LedgerSMB_Core_Team}\index{LedgerSMB::Scripts::journal!Copyright (C) 2007 The LedgerSMB Core Team}}
+
+
+Licensed under the GNU General Public License version 2 or later (at your 
+option).  For more information please see the included LICENSE and COPYRIGHT 
+files.
+
+\section{LedgerSMB::Scripts::lreports\_co\label{LedgerSMB::Scripts::lreports_co}\index{LedgerSMB::Scripts::lreports\ co}}
+
+
+Colombian local reports
+
+\subsection*{SYNOPSIS\label{LedgerSMB::Scripts::lreports_co_SYNOPSIS}\index{LedgerSMB::Scripts::lreports co!SYNOPSIS}}
+
+
+This module holds Colombia-specific reports.
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::lreports_co_METHODS}\index{LedgerSMB::Scripts::lreports co!METHODS}}
+\begin{description}
+
+\item[{begin\_caja\_diaria}] \mbox{}
+
+Displays the filter screen for Caja Diaria
+
+
+\item[{begin\_bm}] \mbox{}
+
+Displays the filter screen for Balance y Mayor
+
+
+\item[{run\_caja\_diaria}] \mbox{}
+
+Runs a Caja Diaria and displays results.
+
+
+\item[{run\_bm}] \mbox{}
+
+Runs Balance y Mayor and displays results.
+
+\end{description}
+\subsection*{Copyright (C) 2007 The LedgerSMB Core Team\label{LedgerSMB::Scripts::lreports_co_Copyright_C_2007_The_LedgerSMB_Core_Team}\index{LedgerSMB::Scripts::lreports co!Copyright (C) 2007 The LedgerSMB Core Team}}
+
+
+Licensed under the GNU General Public License version 2 or later (at your 
+option).  For more information please see the included LICENSE and COPYRIGHT 
+files.
+
+\section{SYNPOSIS
+Voucher workflow scripts.\label{SYNPOSIS_Voucher_workflow_scripts_}\index{SYNPOSIS
+Voucher workflow scripts.}}
+
+
+\#      -{}-CT
+=head1 METHODS
+
+\begin{description}
+
+\item[{create\_batch}] \mbox{}
+
+Displays the new batch screen.  Required inputs are
+
+\begin{description}
+
+\item[{batch\_type}] \mbox{}\end{description}
+
+
+Additionally order\_by can be specified for the list of current batches for the
+current user.
+
+
+\item[{create-vouchers}] \mbox{}
+
+Closes the form in the db, and if unsuccessful displays the batch info again.
+
+
+
+If successful at closing the form, it saves the batch to the db and redirects to
+add\_vouchers().
+
+
+\item[{search\_batch}] \mbox{}
+
+Displays the search criteria screen.  No inputs required.
+
+
+\item[{list\_batches}] \mbox{}
+
+This function displays the search results.
+
+
+
+No inputs are required, but amount\_lt and amount\_gt can specify range
+Also description can be a partial match.
+
+
+
+empty specifies only voucherless batches
+
+
+
+approved (true or false) specifies whether the batch has been approved
+
+
+
+class\_id and created\_by are exact matches
+
+
+\item[{get\_batch}] \mbox{}
+
+Requires that batch\_id is set.
+
+
+
+Displays all vouchers from the batch by type, and includes amount.
+
+
+\item[{get\_batch\_batch\_approve}] \mbox{}
+
+Approves the single batch on the details screen.  Batch\_id must be set.,
+
+
+\item[{get\_batch\_voucher\_delete}] \mbox{}
+
+Deletes selected vouchers.
+
+
+\item[{batch\_approve}] \mbox{}
+
+Approves all selected batches.
+
+
+\item[{batch\_delete}] \mbox{}
+
+Deletes selected batches
+
+\end{description}
+\section{CUSTOM BATCH TYPES
+ custom\_batch\_types hash provides hooks for handling additional batch types
+ beyond the default types.  Entries can be added in a custom file.
+ Each entry is a hash, keyed by name, with the following keys:\label{CUSTOM_BATCH_TYPES_custom_batch_types_hash_provides_hooks_for_handling_additional_batch_types_beyond_the_default_types_Entries_can_be_added_in_a_custom_file_Each_entry_is_a_hash_keyed_by_name_with_the_following_keys:}\index{CUSTOM BATCH TYPES
+ custom\ batch\ types hash provides hooks for handling additional batch types
+ beyond the default types.  Entries can be added in a custom file.
+ Each entry is a hash, keyed by name, with the following keys:}}
+\begin{description}
+
+\item[{map\_to int}] \mbox{}
+
+maps to another type, not needed for new types in batch\_class table
+
+
+\item[{select\_method}] \mbox{}
+
+maps to the selection stored proc
+
+\end{description}
+\begin{verbatim}
+  for example:
+  $custom_batch_types->{ap_sample} = 
+      {map_to       => 1, 
+      select_method => 'custom_sample_ap_select'};
+\end{verbatim}
+\section{Copyright (C) 2009, The LedgerSMB core team.\label{Copyright_C_2009_The_LedgerSMB_core_team_}\index{Copyright (C) 2009, The LedgerSMB core team.}}
+
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+\section{LedgerSMB:Scripts::admin\label{LedgerSMB:Scripts::admin}\index{LedgerSMB:Scripts::admin}}
+
+
+
+
+\subsection*{SYNOPSIS\label{LedgerSMB:Scripts::admin_SYNOPSIS}\index{LedgerSMB:Scripts::admin!SYNOPSIS}}
+
+
+This module provides the workflow scripts for managing users and permissions.
+
+\subsection*{METHODS\label{LedgerSMB:Scripts::admin_METHODS}\index{LedgerSMB:Scripts::admin!METHODS}}
+\begin{description}
+
+\item[{save\_user}] \mbox{}
+
+Saves the user information, including name, etc.
+
+
+
+This is also used to effect an administrative password reset or create new 
+users.  However, if the import value is set to 1, it will not set the password.
+
+
+
+The reasoning here is that we don't really want to set passwords when we are 
+importing db cluster users into LedgerSMB.  If that needs to be done it can be
+a separate stage.
+
+
+\item[{save\_roles}] \mbox{}
+
+Saves the role assignments for a given user
+
+
+\item[{new\_user}] \mbox{}
+
+Displays a new user form.  No inputs used.
+
+
+\item[{edit\_user}] \mbox{}
+
+Displays the screen for editing a user.  user\_id must be set to prepopulate.
+
+
+\item[{delete\_user}] \mbox{}
+
+Deletes a user and returns to search results.
+
+
+\item[{save\_contact}] \mbox{}
+
+Saves contact information and returns to the edit user screen.
+
+
+\item[{delete\_contact}] \mbox{}
+
+Deletes contact information and returns to edit user screen
+
+
+\item[{search\_users}] \mbox{}
+
+Displays search criteria screen
+
+
+\item[{get\_user\_results}] \mbox{}
+
+Displays user search results
+
+
+\item[{list\_sessions}] \mbox{}
+
+Displays a list of open sessions.  No inputs required or used.
+
+
+\item[{delete\_session}] \mbox{}
+
+Deletes the session specified by \$request-$>$\{session\_id\}
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB:Scripts::admin_COPYRIGHT}\index{LedgerSMB:Scripts::admin!COPYRIGHT}}
+
+
+Copyright (C) 2010 LedgerSMB Core Team.  This file is licensed under the GNU 
+General Public License version 2, or at your option any later version.  Please
+see the included License.txt for details.
+
+\section{LedgerSMB::Scripts::reports\label{LedgerSMB::Scripts::reports}\index{LedgerSMB::Scripts::reports}}
+
+
+Common Report workflows
+
+\subsection*{SYNOPSIS\label{LedgerSMB::Scripts::reports_SYNOPSIS}\index{LedgerSMB::Scripts::reports!SYNOPSIS}}
+
+
+This module holds common workflow routines for reports.
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::reports_METHODS}\index{LedgerSMB::Scripts::reports!METHODS}}
+\begin{description}
+
+\item[{start\_report}] \mbox{}
+
+This displays the filter screen for the report.  It expects the following 
+request properties to be set:
+
+\begin{description}
+
+\item[{report\_name}] \mbox{}
+
+This is the name of the report
+
+
+\item[{module\_name}] \mbox{}
+
+Module name for the report.  This is used in retrieving business units.  If not
+set, no business units are retrieved.
+
+\end{description}
+
+
+Other variables that are set will be passed through to the underlying template.
+
+\end{description}
+\subsection*{Copyright (C) 2007 The LedgerSMB Core Team\label{LedgerSMB::Scripts::reports_Copyright_C_2007_The_LedgerSMB_Core_Team}\index{LedgerSMB::Scripts::reports!Copyright (C) 2007 The LedgerSMB Core Team}}
+
+
+Licensed under the GNU General Public License version 2 or later (at your 
+option).  For more information please see the included LICENSE and COPYRIGHT 
+files.
+
+\section{LedgerSMB:Scripts::login, LedgerSMB workflow scripts for managing drafts\label{LedgerSMB:Scripts::login_LedgerSMB_workflow_scripts_for_managing_drafts}\index{LedgerSMB:Scripts::login, LedgerSMB workflow scripts for managing drafts}}
+
+
+
+
+\subsection*{SYNOPSIS\label{LedgerSMB:Scripts::login_LedgerSMB_workflow_scripts_for_managing_drafts_SYNOPSIS}\index{LedgerSMB:Scripts::login LedgerSMB workflow scripts for managing drafts!SYNOPSIS}}
+
+
+This script contains the request handlers for logging in and out of LedgerSMB.
+
+\subsection*{METHODS\label{LedgerSMB:Scripts::login_LedgerSMB_workflow_scripts_for_managing_drafts_METHODS}\index{LedgerSMB:Scripts::login LedgerSMB workflow scripts for managing drafts!METHODS}}
+\begin{description}
+
+\item[{\_\_default (no action specified, do this)}] \mbox{}
+
+Displays the login screen.
+
+
+\item[{authenticate}] \mbox{}
+
+This routine checks for the authentication information and if successful
+sends either a 302 redirect or a 200 successful response.
+
+
+
+If unsuccessful sends a 401 if the username/password is bad, or a 454 error
+if the database does not exist.
+
+
+\item[{login}] \mbox{}
+
+Logs in the user and displays the root document.
+
+
+\item[{logout}] \mbox{}
+
+Logs the user out.  Handling of HTTP browser credentials is browser-specific.
+
+
+
+Firefox, Opera, and Internet Explorer are all supported.  Not sure about Chrome
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB:Scripts::login_LedgerSMB_workflow_scripts_for_managing_drafts_COPYRIGHT}\index{LedgerSMB:Scripts::login LedgerSMB workflow scripts for managing drafts!COPYRIGHT}}
+
+
+Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
+General Public License version 2, or at your option any later version.  Please
+see the included License.txt for details.
+
+\section{LedgerSMB::Scripts::asset\label{LedgerSMB::Scripts::asset}\index{LedgerSMB::Scripts::asset}}
+
+
+
+
+\subsection*{SYNPOSIS\label{LedgerSMB::Scripts::asset_SYNPOSIS}\index{LedgerSMB::Scripts::asset!SYNPOSIS}}
+
+
+Asset Management workflow script
+
+\subsection*{METHODS\label{LedgerSMB::Scripts::asset_METHODS}\index{LedgerSMB::Scripts::asset!METHODS}}
+\begin{description}
+
+\item[{begin\_depreciation\_all}] \mbox{}
+
+Displays the depreciation screen for all asset classes.
+
+
+
+No inputs required.  Those inputs expected for depreciate\_all can be used to
+set defaults here.
+
+
+\item[{depreciate\_all}] \mbox{}
+
+Creates a depreciation report for each asset class.  Depreciates all assets
+
+
+
+Expects report\_date to be set.
+
+
+\item[{asset\_category\_screen}] \mbox{}
+
+Asset class (edit create class)
+
+
+
+No inputs required.  Standard properties for asset\_class used to populate form
+if they are provided.
+
+
+\item[{asset\_category\_save}] \mbox{}
+
+Saves the asset class information provided.  
+See LedgerSMB::DBObject::Asset\_report for standard properties.  ID is optional.
+Others are required.
+
+
+\item[{asset\_category\_results}] \mbox{}
+
+Displays a list of all asset classes.  No inputs required.
+
+
+\item[{edit\_asset\_class}] \mbox{}
+
+Edits an asset class.  Expects id to be set.
+
+
+\item[{asset\_edit}] \mbox{}
+
+Displats the edit screen for an asset item.  Tag or id must be set.
+
+
+\item[{}] \mbox{}
+
+Screen to create a new asset.
+
+
+
+No inputs required, any standard properties from LedgerSMB::DBObject::Asset
+can be used to set defaults.
+
+
+\item[{asset\_search}] \mbox{}
+
+Displays the search screen for asset items.  No inputs required.
+
+
+
+Any inputs for asset\_results can be used here to set defaults.
+
+
+\item[{asset\_results}] \mbox{}
+
+Searches for asset items and displays them
+
+
+
+See LedgerSMB::DBObject::Asset-$>$search() for a list of search criteria that can
+be set.
+
+
+\item[{asset\_save}] \mbox{}
+
+Saves the asset.  See LedgerSMB::DBObject::Asset-$>$save() for more info.
+
+
+
+Additionally this also creates a note with the vendor number and invoice number
+for future reference, since this may not have been entered specifically as a
+vendor transaction in LedgerSMB.
+
+
+\item[{new\_report}] \mbox{}
+
+Starts the new report workflow.  No inputs required.
+
+
+
+report\_init inputs can be used to set defaults.
+
+
+\item[{report\_init}] \mbox{}
+
+Creates a report and populates the screen with possible report lines.
+
+
+
+Inputs expected:
+* report\_id int:  Report to enter the transactions into, 
+* accum\_account\_id int:  ID for accumulated depreciation.
+
+
+\item[{report\_save}] \mbox{}
+
+Saves the report.
+
+
+
+see LedgerSMB::DBObject::Asset\_Report-$>$save() for expected inputs.
+
+
+\item[{report\_get}] \mbox{}
+
+Retrieves the report identified by the id input and displays it.
+
+
+\item[{display\_report}] \mbox{}
+
+Not directly called.  This routine displays a report that is set up.
+
+
+
+Assumes that all standard properties of LedgerSMB::DBObject::Asset\_Report are 
+set, and also requires \$request-$>$\{assets\} is an array ref to the report line
+items.  Each has the standard properties of the LedgerSMB::DBObject::Asset plus
+dm (disposal method id) and amount (amount to depreciate).
+
+
+\item[{search\_reports}] \mbox{}
+
+Displays search report filter.  The only input expected is depreciation which if
+set and true makes this a depreciation report.
+
+
+
+Any other inputs required by
+report\_results can be used here to set defaults.  See the required inputs for
+LedgerSMB::DBObject::Asset\_Report-$>$search() for a list of such inputs.
+
+
+\item[{report\_results}] \mbox{}
+
+Executes the search for asset reports and displays the results.  See the 
+required inputs for LedgerSMB::DBObject::Asset\_Report-$>$search() for a list of 
+inputs.
+
+
+\item[{report\_details}] \mbox{}
+
+Displays the details of an existing report.  Requires that the id request arg is
+set which represents the id of the report.
+
+
+\item[{partial\_disposal\_details}] \mbox{}
+
+Displays the results of a partial disposal report.  The id must be set to the 
+id of the report desired.
+
+
+\item[{disposal\_details}] \mbox{}
+
+Displays the details of a disposal report.
+
+
+
+id must be set to the id of the report to be displayed.
+
+
+\item[{disposal\_details\_approve}] \mbox{}
+
+Pass through function for form-dynatable's action munging.  An lias for 
+report\_details\_approve.
+
+
+\item[{report\_details\_approve}] \mbox{}
+
+Approves disposal details.  id must be set,
+
+
+
+For disposal reports, gain\_acct and loss\_acct must be set to appropriate 
+account id's.
+
+
+
+For depreciation reports, expense\_acct must be set to an appropriate accont id.
+
+
+\item[{report\_results\_approve}] \mbox{}
+
+Loops through the input and approves all selected reports.
+
+
+
+For disposal reports, gain\_acct and loss\_acct must be set to appropriate 
+account id's.
+
+
+
+For depreciation reports, expense\_acct must be set to an appropriate accont id.
+
+
+
+For each row, there is  report\_\$id field which if set to a true value, indicates
+a report to be approved.
+
+
+\item[{display\_nbv}] \mbox{}
+
+Displays the net book value report, namely the current net value of all active
+active assets.
+
+
+
+No inputs required or used.
+
+
+\item[{begin\_import}] \mbox{}
+
+Displays the initial screen for asset import routines.
+
+
+
+No inputs required.
+
+
+\item[{run\_import}] \mbox{}
+
+Runs the actual import based on a CSV file.  This is tested primarily against
+Excel for the Mac which has known CSV generation problems, and Gnumeric which 
+produces very good CSV.  It should work on most CSV files if the format is 
+consistent.
+
+
+
+See the Customization Notes section below for more info on how to set up 
+CSV formats.
+
+\end{description}
+\subsection*{CUSTOMIZATION NOTES\label{LedgerSMB::Scripts::asset_CUSTOMIZATION_NOTES}\index{LedgerSMB::Scripts::asset!CUSTOMIZATION NOTES}}
+
+
+The handling of CSV imports of fixed assets is handled by @file\_columns.  This
+can be set in a custom/ file.
+
+\subsection*{Copyright (C) 2010, The LedgerSMB core team.\label{LedgerSMB::Scripts::asset_Copyright_C_2010_The_LedgerSMB_core_team_}\index{LedgerSMB::Scripts::asset!Copyright (C) 2010, The LedgerSMB core team.}}
+
+
+This file is licensed under the Gnu General Public License version 2, or at your
+option any later version.  A copy of the license should have been included with
+your software.
+
+\section{LedgerSMB::ScriptLib::Common\_Search::Part\label{LedgerSMB::ScriptLib::Common_Search::Part}\index{LedgerSMB::ScriptLib::Common\ Search::Part}}
+
+
+Part Search Routines
+
+\subsection*{SYNPOSIS\label{LedgerSMB::ScriptLib::Common_Search::Part_SYNPOSIS}\index{LedgerSMB::ScriptLib::Common Search::Part!SYNPOSIS}}
+
+
+This provides functionality to search for a part, for new 1.3-framework code.
+
+\subsection*{PROPERTIES/ACCESSORS\label{LedgerSMB::ScriptLib::Common_Search::Part_PROPERTIES_ACCESSORS}\index{LedgerSMB::ScriptLib::Common Search::Part!PROPERTIES/ACCESSORS}}
+\begin{description}
+
+\item[{columns (Global, static, read-only)}] \mbox{}
+
+Returns a list of columns for the embedded table engine as an arrayref.
+
+
+\item[{row\_id}] \mbox{}
+
+Returns the column\_id to use as the row id.
+
+
+\item[{results}] \mbox{}
+
+Returns a list of results as an array of hashrefs.
+
+\end{description}
+\subsection*{METHODS\label{LedgerSMB::ScriptLib::Common_Search::Part_METHODS}\index{LedgerSMB::ScriptLib::Common Search::Part!METHODS}}
+\begin{description}
+
+\item[{new (\$request)}] \mbox{}
+
+Instantiates a new search object.
+
+
+\item[{search(\{partnumber =$>$ \$string, description =$>$ \$string\})}] \mbox{}
+
+Performs a search and caches it.  One object should be used per search unless
+results are no longer needed.
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB::ScriptLib::Common_Search::Part_COPYRIGHT}\index{LedgerSMB::ScriptLib::Common Search::Part!COPYRIGHT}}
+
+
+Copyright (C) 2012 The LedgerSMB Core Team.  This file may be used in 
+accordance with the GNU General Public License version 2 or at your option any
+later version.  Please see attached LICENSE file for details.
+
+\section{LedgerSMB::ScriptLib::Common\_Search::Customer\label{LedgerSMB::ScriptLib::Common_Search::Customer}\index{LedgerSMB::ScriptLib::Common\ Search::Customer}}
+
+
+Customer Search Routines
+
+\subsection*{SYNPOSIS\label{LedgerSMB::ScriptLib::Common_Search::Customer_SYNPOSIS}\index{LedgerSMB::ScriptLib::Common Search::Customer!SYNPOSIS}}
+
+
+This provides functionality to search for a customer,
+for new 1.3-framework code.
+
+\subsection*{PROPERTIES/ACCESSORS\label{LedgerSMB::ScriptLib::Common_Search::Customer_PROPERTIES_ACCESSORS}\index{LedgerSMB::ScriptLib::Common Search::Customer!PROPERTIES/ACCESSORS}}
+\begin{description}
+
+\item[{columns (Global, static, read-only)}] \mbox{}
+
+Returns a list of columns for the embedded table engine as an arrayref.
+
+
+\item[{row\_id}] \mbox{}
+
+Returns the name of the column which contains the row unique id.
+
+
+\item[{results}] \mbox{}
+
+Returns a list of results as an array of hashrefs.
+
+\end{description}
+\subsection*{METHODS\label{LedgerSMB::ScriptLib::Common_Search::Customer_METHODS}\index{LedgerSMB::ScriptLib::Common Search::Customer!METHODS}}
+\begin{description}
+
+\item[{new (\$request)}] \mbox{}
+
+Instantiates a new search object.
+
+
+\item[{search(\{contact =$>$ \$string, contact\_info =$>$ \$string,   meta\_number =$>$ \$string, address =$>$ \$string, city =$>$ \$string,   state =$>$ \$string, mail\_code =$>$ \$string, country =$>$ \$string,   date\_from =$>$ \$string, date\_to =$>$ \$string, business\_id =$>$ \$int,   legal\_name =$>$ \$string, control\_code =$>$ \$string\})}] \mbox{}
+
+Performs a search and caches it.  One object should be used per search unless
+results are no longer needed.
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB::ScriptLib::Common_Search::Customer_COPYRIGHT}\index{LedgerSMB::ScriptLib::Common Search::Customer!COPYRIGHT}}
+
+
+Copyright (C) 2012 The LedgerSMB Core Team.  This file may be used in 
+accordance with the GNU General Public License version 2 or at your option any
+later version.  Please see attached LICENSE file for details.
+
+\section{LedgerSMB::ScriptLib::Common\_Search\label{LedgerSMB::ScriptLib::Common_Search}\index{LedgerSMB::ScriptLib::Common\ Search}}
+
+
+Common Search Routines for LedgerSMB
+
+\subsection*{SYNOPSIS\label{LedgerSMB::ScriptLib::Common_Search_SYNOPSIS}\index{LedgerSMB::ScriptLib::Common Search!SYNOPSIS}}
+
+
+TODO
+
+\subsection*{RESERVED ATTRIBUTES\label{LedgerSMB::ScriptLib::Common_Search_RESERVED_ATTRIBUTES}\index{LedgerSMB::ScriptLib::Common Search!RESERVED ATTRIBUTES}}
+
+
+These attributes will be overwritten in the process of using this module.
+Please plan for this before rendering the form.
+
+\begin{description}
+
+\item[{columns}] \mbox{}
+\item[{rows}] \mbox{}\end{description}
+\subsection*{ROUTINES\label{LedgerSMB::ScriptLib::Common_Search_ROUTINES}\index{LedgerSMB::ScriptLib::Common Search!ROUTINES}}
+\begin{description}
+
+\item[{extract(\$request)}] \mbox{}
+
+This takes a \$request object and checks to see if a search\_select option is set.
+If one is, it returns a single hashref of the data submitted back with prefixes
+removed.  If not, it runs through 1 .. \$request-$>$\{search\_rowcount\} and checks
+for submitted items.  It assembles these into a list and returns the list as a
+list of hashrefs.
+
+
+\item[{render(\$request)}] \mbox{}
+
+This renders the search screen.
+
+\end{description}
+\subsubsection*{Child Classes Must Implement the Following\label{LedgerSMB::ScriptLib::Common_Search_Child_Classes_Must_Implement_the_Following}\index{LedgerSMB::ScriptLib::Common Search!Child Classes Must Implement the Following}}
+\begin{description}
+
+\item[{columns}] \mbox{}
+
+Returns a list of columns as expected for Dynatable.
+
+
+\item[{results}] \mbox{}
+
+Returns a list of results, becomes the rows for the table.
+
+
+\item[{row\_id}] \mbox{}
+
+Returns the column name (col\_id) to use for the row\_id.
+
+\end{description}
+\subsection*{COPYRIGHT\label{LedgerSMB::ScriptLib::Common_Search_COPYRIGHT}\index{LedgerSMB::ScriptLib::Common Search!COPYRIGHT}}
+
+
+Copyright (C) 2012 LedgerSMB Core Team.  This file may be re-used under the terms of the GNU General Public License version 2 or at your option any later version.
+
