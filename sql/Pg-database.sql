@@ -4472,9 +4472,12 @@ CREATE TABLE file_class (
        class text primary key
 );
 
-insert into file_class values (1, 'transaction');
-insert into file_class values (2, 'order');
-insert into file_class values (3, 'part');
+insert into file_class values (1, 'transaction'),
+                              (2, 'order'),
+                              (3, 'part'),
+                              (4, 'entity'),
+                              (5, 'eca');
+
 
 COMMENT ON TABLE file_class IS
 $$ File classes are collections of files attached against rows in specific 
@@ -4535,7 +4538,27 @@ CREATE TABLE file_part (
 ) inherits (file_base);
 
 COMMENT ON TABLE file_part IS
-$$ File attachments primarily attached to orders and quotations.$$;
+$$ File attachments primarily attached to goods and services.$$;
+
+CREATE TABLE file_entity (
+       check (file_class=4),
+       unique(id),
+       primary key (ref_key, file_name, file_class),
+       foreign key (ref_key) references entity(id)
+) inherits (file_base);
+
+COMMENT ON TABLE file_entity IS
+$$ File attachments primarily attached to entities.$$;
+
+CREATE TABLE file_eca (
+       check (file_class=5),
+       unique(id),
+       primary key (ref_key, file_name, file_class),
+       foreign key (ref_key) references entity_credit_account(id)
+) inherits (file_base);
+
+COMMENT ON TABLE file_eca IS
+$$ File attachments primarily attached to customer and vendor agreements.$$;
 
 CREATE TABLE file_secondary_attachment (
        file_id int not null,

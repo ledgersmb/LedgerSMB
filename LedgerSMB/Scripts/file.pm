@@ -32,6 +32,8 @@ our $fileclassmap = {
    1   => 'LedgerSMB::File::Transaction',
    2   => 'LedgerSMB::File::Order',
    3   => 'LedgerSMB::File::Part',
+   4   => 'LedgerSMB::File::Entity',
+   5   => 'LedgerSMB::File::ECA',
 };
 
 sub get {
