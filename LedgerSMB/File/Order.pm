@@ -24,7 +24,8 @@ methods only
 
 package LedgerSMB::File::Order;
 use strict;
-use base qw(LedgerSMB::File);
+use Moose;
+extends 'LedgerSMB::File';
 
 =head1 METHODS
 

@@ -20,8 +20,8 @@ methods only
 =cut
 
 package LedgerSMB::File::Transaction;
-use strict;
-use base qw(LedgerSMB::File);
+use Moose;
+extends 'LedgerSMB::File';
 
 =back
 

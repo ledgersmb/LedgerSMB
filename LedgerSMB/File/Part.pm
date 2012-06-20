@@ -22,8 +22,8 @@ methods only
 =cut
 
 package LedgerSMB::File::Part;
-use strict;
-use base qw(LedgerSMB::File);
+use Moose;
+extends 'LedgerSMB::File';
 
 =head1 METHODS
 
