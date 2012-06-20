@@ -90,6 +90,82 @@ Setting both raises an exception.
 Note that currently links (setting id) is NOT supported because we dont have a
 use case of linking files to parts$$;
 
+CREATE OR REPLACE FUNCTION file__attach_to_entity
+(in_content bytea, in_mime_type_id int, in_file_name text,
+in_description text, in_id int, in_ref_key int, in_file_class int)
+RETURNS file_base
+AS
+$$
+DECLARE retval file_base;
+BEGIN
+   IF in_id IS NOT NULL THEN
+       IF in_content THEN
+          RAISE EXCEPTION $e$Can't specify id and content in attachment$e$;--'
+       END IF;
+       RAISE EXCEPTION 'links not implemented';
+       RETURN retval;
+   ELSE
+       INSERT INTO file_entity
+                   (content, mime_type_id, file_name, description, ref_key,
+                   file_class, uploaded_by, uploaded_at)
+            VALUES (in_content, in_mime_type_id, in_file_name, in_description,
+                   in_ref_key, in_file_class, person__get_my_entity_id(), 
+                   now());
+        SELECT * INTO retval FROM file_base 
+         where id = currval('file_base_id_seq');
+
+        RETURN retval;
+    END IF;
+END;
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION file__attach_to_entity
+(in_content bytea, in_mime_type_id int, in_file_name text,
+in_description text, in_id int, in_ref_key int, in_file_class int) IS
+$$ Attaches or links a file to a contact or entity.  in_content OR id can be 
+set. Setting both raises an exception.
+
+Note that currently links (setting id) is NOT supported because we dont have a
+use case of linking files to entities$$;
+
+CREATE OR REPLACE FUNCTION file__attach_to_eca
+(in_content bytea, in_mime_type_id int, in_file_name text,
+in_description text, in_id int, in_ref_key int, in_file_class int)
+RETURNS file_base
+AS
+$$
+DECLARE retval file_base;
+BEGIN
+   IF in_id IS NOT NULL THEN
+       IF in_content THEN
+          RAISE EXCEPTION $e$Can't specify id and content in attachment$e$;--'
+       END IF;
+       RAISE EXCEPTION 'links not implemented';
+       RETURN retval;
+   ELSE
+       INSERT INTO file_eca
+                   (content, mime_type_id, file_name, description, ref_key,
+                   file_class, uploaded_by, uploaded_at)
+            VALUES (in_content, in_mime_type_id, in_file_name, in_description,
+                   in_ref_key, in_file_class, person__get_my_entity_id(), 
+                   now());
+        SELECT * INTO retval FROM file_base 
+         where id = currval('file_base_id_seq');
+
+        RETURN retval;
+    END IF;
+END;
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION file__attach_to_eca
+(in_content bytea, in_mime_type_id int, in_file_name text,
+in_description text, in_id int, in_ref_key int, in_file_class int) IS
+$$ Attaches or links a file to a good or service.  in_content OR id can be set.
+Setting both raises an exception.
+
+Note that currently links (setting id) is NOT supported because we dont have a
+use case of linking files to entity credit accounts.$$;
+
 CREATE OR REPLACE FUNCTION file__attach_to_order
 (in_content bytea, in_mime_type_id int, in_file_name text,
 in_description text, in_id int, in_ref_key int, in_file_class int)

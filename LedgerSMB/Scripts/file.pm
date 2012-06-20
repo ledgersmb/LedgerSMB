@@ -25,6 +25,8 @@ use LedgerSMB::File;
 use LedgerSMB::File::Transaction;
 use LedgerSMB::File::Order;
 use LedgerSMB::File::Part;
+use LedgerSMB::File::Entity;
+use LedgerSMB::File::ECA;
 use strict;
 use CGI::Simple;
 
