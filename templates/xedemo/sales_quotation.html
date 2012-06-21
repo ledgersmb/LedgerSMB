@@ -4,7 +4,6 @@
   <title><?lsmb text('Quotation') ?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-
 <body bgcolor=ffffff>
 
 <table width="100%">
@@ -172,7 +171,9 @@
 	<tr valign=top>
           <?lsmb IF notes ?>
 	  <td><?lsmb text('Notes') ?></td>
-	  <td><?lsmb notes ?></td>
+          <td><?lsmb  FOREACH P IN notes.split('\n\n') ?>
+                    <p><?lsmb P ?></p>
+               <?lsmb END ?></td>
           <?lsmb END ?>
 	  <td align=right>
 	  <?lsmb text('All prices in [_1] Funds', currency) ?>

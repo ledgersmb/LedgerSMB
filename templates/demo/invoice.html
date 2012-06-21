@@ -211,7 +211,9 @@
       <table width="100%">
         <tr valign=top>
           <?lsmb IF notes ?>
-          <td><?lsmb notes ?></td>
+          <td><?lsmb  FOREACH P IN notes.split('\n\n') ?>
+                    <p><?lsmb P ?></p>
+               <?lsmb END ?></td>
           <?lsmb END ?>
 
 	  <td><?lsmb text_amount ?> ***** <?lsmb decimal ?>/100</td>
