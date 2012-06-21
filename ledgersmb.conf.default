@@ -1,7 +1,9 @@
 [main]
 auth = DB
 logging  = 0
-#Be aware of tempdir setting.If client_browser and server_apache on same machine, sharing tmp-dir , problems 'Permission denied' if server tries to write temp-file wich already exists as client-owned
+# Be aware of tempdir setting. If client_browser and server_apache on same 
+# machine, sharing tmp-dir , problems 'Permission denied' if server tries to 
+# write temp-file wich already exists as client-owned
 tempdir = /tmp/ledgersmb
 
 # This is the logical CSS directory.  I.e. it is what comes before the 
@@ -22,17 +24,8 @@ DBI_TRACE = 0
 # For Windows, uncomment the pathsep line=
 # pathsep = ;
 
-# If you have LaTeX installed, set to 1
-latex = 1
-
-# Maximum number of invoices that can be printed on a cheque
-check_max_invoices = 5
-
 # Maximum POST size to prevent DoS (4MB default)
 max_post_size = 4194304
-
-# Define global settings for decimal places
-decimal_places = 2
 
 # Spelling of cookie name for this instance of LedgerSMB.
 # Used to keep multiple instances and/or different versions

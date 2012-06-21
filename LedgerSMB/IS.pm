@@ -40,6 +40,7 @@ package IS;
 use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Setting;
 use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::IS');
@@ -392,7 +393,8 @@ sub invoice_details {
 
             my ($dec) = ( $sellprice =~ /\.(\d+)/ );
             $dec = length $dec;
-            my $decimalplaces = ( $dec > 2 ) ? $dec : 2;
+            my $dp = LedgerSMB::Setting->get('decimal_places');
+            my $decimalplaces = ( $dec > $dp ) ? $dec : $dp;
 
             my $discount = $form->round_amount(
                 $sellprice *
@@ -1085,7 +1087,7 @@ sub post_invoice {
             my $fxsellprice =
               $form->parse_amount( $myconfig, $form->{"sellprice_$i"} );
 
-            my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
+            my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
             my $decimalplaces = ($form->{"precision_$i"} > $moneyplaces) 
                              ? $form->{"precision_$i"}
                              : $moneyplaces;

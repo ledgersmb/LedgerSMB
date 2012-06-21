@@ -45,13 +45,10 @@ our @scripts = (
 );
 
 # if you have latex installed set to 1
-our $latex = 1;
+our $latex = eval {require LedgerSMB::Template::LaTeX}; 
 
 # Defaults to 1 megabyte
 our $max_post_size = 1024 * 1024;
-
-# defaults to 2-- default number of places to round amounts to
-our $decimal_places = 2;
 
 # defaults to LedgerSMB-1.3 - default spelling of cookie
 our $cookie_name = "LedgerSMB-1.3";
@@ -105,8 +102,8 @@ tie %config, 'Config::IniFiles', (-file=> 'ledgersmb.conf' );
 
 # Root variables
 for my $var (
-    qw(pathsep log_level cssdir DBI_TRACE check_max_invoices language auth latex
-    db_autoupdate force_username_case max_post_size decimal_places cookie_name
+    qw(pathsep log_level cssdir DBI_TRACE check_max_invoices language auth
+    db_autoupdate force_username_case max_post_size cookie_name
     return_accno no_db_str tempdir cache_templates fs_cssdir)
   )
 {

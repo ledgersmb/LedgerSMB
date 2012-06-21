@@ -46,6 +46,7 @@
 use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Tax;
+use LedgerSMB::Setting;
 
 require "bin/arap.pl";
 require "bin/io.pl";
@@ -312,7 +313,7 @@ sub prepare_invoice {
             $form->{"discount_$i"} =
               $form->format_amount( \%myconfig, $form->{"discount_$i"} * 100 );
 
-            my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
+            my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
             my ($dec) = ($form->{"sellprice_$i"} =~/\.(\d*)/);
             $dec = length $dec;
             $form->{"precision_$i"} = $dec;

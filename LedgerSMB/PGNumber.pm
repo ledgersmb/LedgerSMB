@@ -7,6 +7,7 @@ LedgerSMB::PGNumeric
 use strict;
 use warnings;
 use Number::Format;
+use LedgerSMB::Setting;
 
 package LedgerSMB::PGNumber;
 
@@ -187,7 +188,7 @@ sub to_output {
                               : $LedgerSMB::App_State::User->{numberformat};
 
     my $places = undef;
-    $places = $LedgerSMB::Sysconfig::decimal_places if $args{money};
+    $places = LedgerSMB::Setting->get('decimal_places') if $args{money};
     $places = ($args{places}) ? $args{places} : $places;
     my $str = $self->bstr;
     my $dplaces = $places;

@@ -41,6 +41,7 @@ package IR;
 use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Setting;
 use Math::BigFloat;
 
 =over
@@ -253,7 +254,7 @@ sub post_invoice {
 
             my ($dec) = ( $fxsellprice =~ /\.(\d+)/ );
             # deduct discount
-            my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
+            my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
             $decimalplaces = ($form->{"precision_$i"} > $moneyplaces) 
                              ? $form->{"precision_$i"}
                              : $moneyplaces;
@@ -1279,7 +1280,7 @@ sub retrieve_item {
         $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
 
         my ($dec) = ( $ref->{sellprice} =~ /\.(\d+)/ );
-        my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
+        my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
         $dec = length $dec;
         my $decimalplaces = ( $dec > $moneyplaces ) ? $dec : $moneyplaces;
 

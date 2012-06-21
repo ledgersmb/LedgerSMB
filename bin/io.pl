@@ -42,6 +42,7 @@ use Error qw(:try);
 use LedgerSMB::Tax;
 use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
 use LedgerSMB::File;
 
@@ -256,7 +257,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         else {
             ( $null, $dec ) = split /,/, $form->{"sellprice_$i"};
         }
-        my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
+        my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
         $dec = length $dec;
         $dec ||= $moneyplaces;
         $form->{"precision_$i"} ||= $dec;
@@ -682,7 +683,7 @@ sub item_selected {
             $form->{"partsgroup_$i"} =
               qq|$form->{"new_partsgroup_$j"}--$form->{"new_partsgroup_id_$j"}|;
 
-            my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
+            my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
             ($dec) = ( $form->{"sellprice_$i"} =~ /\.(\d+)/ );
             $dec = length $dec;
             $dec ||=$moneyplaces;

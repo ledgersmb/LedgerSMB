@@ -22,6 +22,7 @@ General Enhancements:
 * Partsgroups can now be nested though this is not yet used by LSMB (Chris T)
 * Added file attachments to parts (Chris T)
 * Added file attachments to customers, vendors, employees, leads etc (Chris T)
+* LaTeX format detection now run-time call, not configured (Chris T)
 
 New RESTful Web Services Framework
 * Supports XML and JSON as input formats

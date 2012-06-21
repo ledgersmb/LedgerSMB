@@ -46,6 +46,7 @@ Original copyright notice below.
 
 package LedgerSMB::Scripts::payment;
 use LedgerSMB::Template;
+use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
@@ -480,13 +481,13 @@ sub print {
             $check->{source} = $payment->{"source_$id"};
 
             my $inv_count; 
-
-            if ($LedgerSMB::Sysconfig::check_max_invoices > 
-                           $payment->{"invoice_count_$id"})
-            {
+            my $check_max_invoices = LedgerSMB::Setting->get(
+                         'check_max_invoices'
+            );
+            if ($check_max_invoices > $payment->{"invoice_count_$id"}) {
                 $inv_count = $payment->{"invoice_count_$id"};
             } else {
-                $inv_count = $LedgerSMB::Sysconfig::check_max_invoices;
+                $inv_count = $check_max_invoices;
             }
 
             for my $inv (1 .. $payment->{"invoice_count_$id"}){

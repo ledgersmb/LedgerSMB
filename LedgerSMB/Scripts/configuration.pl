@@ -43,6 +43,10 @@ our @default_textboxes = (
                              label =>  $locale->text('Company Sales Tax ID') },
    { name => 'company_license_number',
                            label =>  $locale->text('Company License Number') },
+   { name => 'check_max_invoices',
+                           label =>  $locale->text('Max Invoices per Check Stub') },
+   { name => 'decimal_places',
+                           label =>  $locale->text('Decimal Places for Money') },
 );
 
 our @default_others = qw(businessnumber weightunit separate_duties default_language

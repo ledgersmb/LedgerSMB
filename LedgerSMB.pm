@@ -591,7 +591,7 @@ sub format_amount {
         return undef;
     }
     if (!defined $args{precision} and defined $args{money}){
-       $places = $LedgerSMB::Sysconfig::decimal_places;
+       $places = LedgerSMB::Setting->get('decimal_places');
     }
 
     return $amount->to_output({format => $format, 
@@ -623,7 +623,7 @@ sub round_amount {
     # We will grab the default value, if it isnt defined
     #
     if (!defined $places){
-       $places = ${LedgerSMB::Sysconfig::decimal_places};
+       $places = LedgerSMB::Setting->get('decimal_places');
     }
     
     # These rounding rules follow from the previous implementation.
