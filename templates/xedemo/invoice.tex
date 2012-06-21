@@ -184,7 +184,10 @@ Fax: <?lsmb shiptofax ?>
 
 \vspace{12pt}
 
-<?lsmb notes ?>
+<?lsmb FOREACH P IN notes.split('\n\n') ?>
+<?lsmb P ?>\medskip
+
+<?lsmb END ?>
 }
 
 \vfill

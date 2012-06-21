@@ -4,7 +4,6 @@
   <title><?lsmb text('AP Transaction') ?></title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
-
 <body bgcolor=ffffff>
 
 <table width="100%">
@@ -165,9 +164,9 @@
   <tr>
     <td>&nbsp;</td>
 
-    <td>
-      <?lsmb notes ?>
-    </td>
+          <td><?lsmb  FOREACH P IN notes.split('\n\n') ?>
+                    <p><?lsmb P ?></p>
+               <?lsmb END ?></td>
   </tr>
 
   <?lsmb IF paid_1 ?>

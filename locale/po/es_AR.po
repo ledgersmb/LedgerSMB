@@ -1,26 +1,17 @@
-#######
-# Spanish (Argentina)
-# 
-# Andres Basile (basile@gmail.com)
-# GNU / GPL
-#######
-
-#######
-# Traduccion General
-#######
-# Archivo: ../LedgerSMB.pot
 msgid ""
 msgstr ""
-"Project-Id-Version: 1.13.10\n"
+"Project-Id-Version: LedgerSMB 1.13\n"
 "Report-Msgid-Bugs-To: basile@gmail.com\n"
 "POT-Creation-Date: 2012-03-15 00:00-0300\n"
-"PO-Revision-Date: 2012-03-15 00:00-0300\n"
+"PO-Revision-Date: 2012-06-20 13:35-0300\n"
 "Last-Translator: Andres Basile <basile@gmail.com>\n"
 "Language-Team: \n"
 "Language: Spanish (Argentina)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: Spanish\n"
+"X-Poedit-Country: ARGENTINA\n"
 
 msgid "Add Account"
 msgstr "Agregar Cuenta"
@@ -2326,951 +2317,327 @@ msgstr "Factura Cliente"
 msgid "Logged into %1"
 msgstr "Ingresado en %1"
 
-#######
-# MENU
-#######
-# Tabla: menu_node
-# Ordenado por id
-
-# 0
 msgid "Top-level"
 msgstr "Nivel Raiz"
 
-# 1
-# msgid "AR"
-# msgstr " "
-
-# 2
 msgid "Add Transaction"
 msgstr "Agregar Transaccion"
 
-# 3
-# msgid "Sales Invoice"
-# msgstr " "
-
-# 4
-# msgid "Reports"
-# msgstr " "
-
-# 5
 msgid "Transactions"
 msgstr "Transacciones"
 
-# 6
-# msgid "Outstanding"
-# msgstr " "
-
-# 7
 msgid "AR Aging"
 msgstr "Envejecimiento de Ingreso"
 
-# 9
 msgid "Taxable Sales"
 msgstr "Ventas con Impuestos"
 
-# 10
 msgid "Non-Taxable"
 msgstr "Sin Impuestos"
 
-# 11
 msgid "Customers"
 msgstr "Clientes"
 
-# 12
 msgid "Add Customer"
 msgstr "Agregar Cliente"
 
-# 13
-# msgid "Reports"
-# msgstr " "
-
-# 14
 msgid "Search"
 msgstr "Buscar"
 
-# 15
 msgid "History"
 msgstr "Historial"
 
-# 16
 msgid "Point of Sale"
 msgstr "Punto de Venta"
 
-# 17
 msgid "Sale"
 msgstr "Venta"
 
-# 18
-# msgid "Open"
-# msgstr " "
-
-# 19
-# msgid "Receipts"
-# msgstr " "
-
-# 20
 msgid "Close Till"
 msgstr "Cerra Caja"
 
-# 21
-# msgid "AP"
-# msgstr " "
-
-# 22
-# msgid "Add Transaction"
-# msgstr " "
-
-# 23
-# msgid "Vendor Invoice"
-# msgstr " "
-
-# 24
-# msgid "Reports"
-# msgstr " "
-
-# 25
-# msgid "Transactions"
-# msgstr " "
-
-# 26
-# msgid "Outstanding"
-# msgstr " "
-
-# 27
 msgid "AP Aging"
 msgstr "Envejecimiento de Egreso"
 
-# 28
 msgid "Taxable"
 msgstr "Imponible"
 
-# 29
 msgid "Non-taxable"
 msgstr "No Imponible"
 
-# 30
 msgid "Vendors"
 msgstr "Proveedores"
 
-# 31
 msgid "Add Vendor"
 msgstr "Agregar Proveedor"
 
-# 32
-# msgid "Reports"
-# msgstr " "
-
-# 33
-# msgid "Search"
-# msgstr " "
-
-# 34
-# msgid "History"
-# msgstr " "
-
-# 35
-# msgid "Cash"
-# msgstr " "
-
-# 36
-# msgid "Receipt"
-# msgstr " "
-
-# 37
 msgid "Use AR Overpayment"
 msgstr "Usar Sobrepago de Ingreso"
 
-# 38
-# msgid "Payment"
-# msgstr " "
-
-# 40
-# msgid "Transfer"
-# msgstr " "
-
-# 41
-# msgid "Reports"
-# msgstr " "
-
-# 42
-# msgid "Receipts"
-# msgstr " "
-
-# 43
-# msgid "Payments"
-# msgstr " "
-
-# 44
 msgid "Reconciliation"
 msgstr "Reconciliacion"
 
-# 45
-# msgid "Reconciliation"
-# msgstr " "
-
-# 46
-# msgid "HR"
-# msgstr " "
-
-# 47
 msgid "Employees"
 msgstr "Empleados"
 
-# 48
 msgid "Add Employee"
 msgstr "Agregar Empleado"
 
-# 49
-# msgid "Search"
-# msgstr " "
-
-# 50
 msgid "Order Entry"
 msgstr "Entrada de Orden"
 
-# 51
-# msgid "Sales Order"
-# msgstr " "
-
-# 52
-# msgid "Purchase Order"
-# msgstr " "
-
-# 53
-# msgid "Reports"
-# msgstr " "
-
-# 54
-# msgid "Sales Orders"
-# msgstr " "
-
-# 55
-# msgid "Purchase Orders"
-# msgstr " "
-
-# 56
 msgid "Generate"
 msgstr "Generar"
 
-# 57
-# msgid "Sales Orders"
-# msgstr " "
-
-# 58
-# msgid "Purchase Orders"
-# msgstr " "
-
-# 60
 msgid "Consolidate"
 msgstr "Consolidar"
 
-# 61
-# msgid "Sales Orders"
-# msgstr " "
-
-# 62
-# msgid "Purchase Orders"
-# msgstr " "
-
-# 63
 msgid "Shipping"
 msgstr "Envio"
 
-# 64
-# msgid "Ship"
-# msgstr "Despachar"
-
-# 65
 msgid "Receive"
 msgstr "Recibo"
 
-# 66
-# msgid "Transfer"
-# msgstr " "
-
-# 67
-# msgid "Quotations"
-# msgstr " "
-
-# 68
-# msgid "Quotation"
-# msgstr " "
-
-# 69
-# msgid "RFQ"
-# msgstr "PDP"
-
-# 70
-# msgid "Reports"
-# msgstr " "
-
-# 71
-# msgid "Quotations"
-# msgstr " "
-
-# 72
 msgid "RFQs"
 msgstr "Pedio de Presupuestos"
 
-# 73
-# msgid "General Journal"
-# msgstr " "
-
-# 74
 msgid "Journal Entry"
 msgstr "Entrada Diaria"
 
-# 75
 msgid "Adjust Till"
 msgstr "Ajustar Caja"
 
-# 76
-# msgid "Reports"
-# msgstr " "
-
-# 77
 msgid "Goods and Services"
 msgstr "Bienes y Sevicios"
 
-# 78
-# msgid "Add Part"
-# msgstr " "
-
-# 79
-# msgid "Add Service"
-# msgstr " "
-
-# 80
-# msgid "Add Assembly"
-# msgstr " "
-
-# 81
 msgid "Add Overhead"
 msgstr "Agregar Costos Generales"
 
-# 82
-# msgid "Add Group"
-# msgstr " "
-
-# 83
-# sgid "Add Pricegroup"
-# msgstr " "
-
-# 84
-# msgid "Stock Assembly"
-# msgstr " "
-
-# 85
-# msgid "Reports"
-# msgstr " "
-
-# 86
 msgid "All Items"
 msgstr "Todos los Items"
 
-# 87
 msgid "Parts"
 msgstr "Partes"
 
-# 88
 msgid "Requirements"
 msgstr "Requerimientos"
 
-# 89
 msgid "Services"
 msgstr "Servicios"
 
-# 90
 msgid "Labor"
 msgstr "Tarea"
 
-# 91
-# msgid "Groups"
-# msgstr " "
-
-# 92
-# msgid "Pricegroups"
-# msgstr " "
-
-# 93
-# msgid "Assembly"
-# msgstr " "
-
-# 94
 msgid "Components"
 msgstr "Componentes"
 
-# 95
 msgid "Translations"
 msgstr "Traducciones"
 
-# 96
-# msgid "Description"
-# msgstr " "
-
-# 97
 msgid "Partsgroup"
 msgstr "Grupo de Partes"
 
-# 98
-# msgid "Projects"
-# msgstr " "
-
-# 99
-# msgid "Add Project"
-# msgstr " "
-
-# 100
 msgid "Add Timecard"
 msgstr "Agregar Ficha de Horario"
 
-# 101
-# msgid "Generate"
-# msgstr " "
-
-# 102
-# msgid "Sales Orders"
-# msgstr " "
-
-# 103
-# msgid "Reports"
-# msgstr " "
-
-# 104
-# msgid "Search"
-# msgstr " "
-
-# 105
-# msgid "Transactions"
-# msgstr " "
-
-# 106
 msgid "Time CardsTime Cards"
 msgstr "Ficha de Horarios"
 
-# 107
-# msgid "Translations"
-# msgstr " "
-
-# 108
-# msgid "Description"
-# msgstr " "
-
-# 109
-# msgid "Reports"
-# msgstr " "
-
-# 110
-# msgid "Chart of Accounts"
-# msgstr " "
-
-# 111
-# msgid "Trial Balance"
-# msgstr " "
-
-# 112
 msgid "Income Statement"
 msgstr "Declaracion de Ganancias"
 
-# 113
 msgid "Balance Sheet"
 msgstr "Hoja de Balance"
 
-# 114
 msgid "Inventory Activity"
 msgstr "Actividad del Inventario"
 
-# 115
-# msgid "Recurring Transactions"
-# msgstr " "
-
-# 116
 msgid "Batch Printing"
 msgstr "Lote de Impresion"
 
-# 117
-# msgid "Sales Invoices"
-# msgstr " "
-
-# 118
-# msgid "Sales Orders"
-# msgstr " "
-
-# 119
 msgid "Checks"
 msgstr "Control"
 
-# 120
 msgid "Work Orders"
 msgstr "Ordenes de Trabajo"
 
-# 121
-# msgid "Quotations"
-# msgstr " "
-
-# 122
 msgid "Packing Lists"
 msgstr "Listas de Envio"
 
-# 123
 msgid "Pick Lists"
 msgstr "Listas de Retiros"
 
-# 124
-# msgid "Purchase Orders"
-# msgstr " "
-
-# 125
 msgid "Bin Lists"
 msgstr "Listas de Codigo Identificatorio Bancario"
 
-# 126
-# msgid "RFQs"
-# msgstr " "
-
-# 127
-# msgid "Time Cards"
-# msgstr " "
-
-# 128
 msgid "System"
 msgstr "Sistema"
 
-# 129
-# msgid "Audit Control"
-# msgstr " "
-
-# 130
-# msgid "Taxes"
-# msgstr " "
-
-# 131
 msgid "Defaults"
 msgstr "Predeterminados"
 
-# 132
-# msgid "Yearend"
-# msgstr " "
-
-# 136
-# msgid "Chart of Accounts"
-# msgstr ""
-
-# 137
 msgid "Add Accounts"
 msgstr "Agregar Cuentas"
 
-# 138
 msgid "List Accounts"
 msgstr "Listar Cuentas"
 
-# 139
 msgid "Add GIFI"
 msgstr "Agregar GIFI"
 
-# 140
 msgid "List GIFI"
 msgstr "Listar GIFI"
 
-# 141
-msgid "Warehouses"
-msgstr "Depositos"
-
-# 142
-msgid "Add Warehouse"
-msgstr "Agregar Deposito"
-
-# 143
 msgid "List Warehouse"
 msgstr "Listar Depositos"
 
-# 144
-msgid "Departments"
-msgstr "Departamentos"
-
-# 145
-msgid "Add Department"
-msgstr "Agregar Departamento"
-
-# 146
 msgid "List Departments"
 msgstr "Listar Departamentos"
 
-# 147
-msgid "Type of Business"
-msgstr "Tipo de Negocio"
-
-# 148
-msgid "Add Business"
-msgstr "Agregar Negocio"
-
-# 149
 msgid "List Businesses"
 msgstr "Listar Negocios"
 
-# 150
-msgid "Language"
-msgstr "Idioma"
-
-# 151
 msgid "Add Language"
 msgstr "Agregar Idioma"
 
-# 152
 msgid "List Languages"
 msgstr "Listar Idioma"
 
-# 153
 msgid "SIC"
 msgstr ""
 
-# 154
-msgid "Add SIC"
-msgstr "Agregar SIC"
-
-# 155
 msgid "List SIC"
 msgstr "Listar SIC"
 
-# 156
 msgid "HTML Templates"
 msgstr "Plantillas HTML"
 
-# 157
-# msgid "Income Statement"
-# msgstr ""
-
-# 158
-# msgid "Balance Sheet"
-# msgstr ""
-
-# 159
-# msgid "Invoice"
-# msgstr ""
-
-# 160
-# msgid "AR Transaction"
-# msgstr ""
-
-# 161
-# msgid "AP Transaction"
-# msgstr ""
-
-# 162
-# msgid "Packing List"
-# msgstr " "
-
-# 163
-# msgid "Pick List"
-# msgstr " "
-
-# 164
-# msgid "Sales Order"
-# msgstr " "
-
-# 165
-# msgid "Work Order"
-# msgstr " "
-
-# 166
-# msgid "Purchase Order"
-# msgstr " "
-
-# 167
-# msgid "Bin List"
-# msgstr " "
-
-# 168
-# msgid "Statement"
-# msgstr " "
-
-# 169
-# msgid "Quotation"
-# msgstr " "
-
-# 170
-# msgid "RFQ"
-# msgstr " "
-
-# 171
 msgid "Timecard"
 msgstr "Ficha de Horario"
 
-# 172
 msgid "LaTeX Templates"
 msgstr "Plantilla LaTeX"
 
-# 173
-# msgid "Invoice"
-# msgstr " "
-
-# 174
-# msgid "AR Transaction"
-# msgstr " "
-
-# 175
-# msgid "AP Transaction"
-# msgstr " "
-
-# 176
-# msgid "Packing List"
-# msgstr " "
-
-# 177
-# msgid "Pick List"
-# msgstr " "
-
-# 178
-# msgid "Sales Order"
-# msgstr " "
-
-# 179
-# msgid "Work Order"
-# msgstr " "
-
-# 180
-# msgid "Purchase Order"
-# msgstr " "
-
-# 181
-# msgid "Bin List"
-# msgstr " "
-
-# 182
-# msgid "Statement"
-# msgstr " "
-
-#### Corrected 
-
-# 183
 msgid "Check"
 msgstr "Cheque"
 
-# 184
-# msgid "Receipt"
-# msgstr " "
-
-# 185
-# msgid "Quotation"
-# msgstr " "
-
-# 186
-# msgid "RFQ"
-# msgstr " "
-
-# 187
-# msgid "Timecard"
-# msgstr " "
-
-# 188
 msgid "Text Templates"
 msgstr "Plantilla de Texto"
 
-# 189
 msgid "POS Invoice"
 msgstr "Factura de Punto de Venta"
 
-# 190
 msgid "Stylesheet"
 msgstr "Hoja de Estilo"
 
-# 191
-msgid "Preferences"
-msgstr "Preferencias"
-
-# 192
-msgid "New Window"
-msgstr "Ventana Nueva"
-
-# 193
 msgid "Logout"
 msgstr "Salir"
 
-# 194
 msgid "Credit Note"
 msgstr "Nota de Credito"
 
-# 195
 msgid "Credit Invoice"
 msgstr "Factura de Credito"
 
-# 196
 msgid "Debit Note"
 msgstr "Nota de Debito"
 
-# 197
 msgid "Debit Invoice"
 msgstr "Factura de Debito"
 
-# 198
 msgid "AR Voucher"
 msgstr "Cupon de Ingreso"
 
-# 199
 msgid "AP Voucher"
 msgstr "Cupon de Egreso"
 
-# 200
 msgid "Vouchers"
 msgstr "Cupones"
 
-# 201
-msgid "Payments"
-msgstr "Pagos"
-
-# 202
 msgid "Reverse Payment"
 msgstr "Pago Inverso"
 
-# 203
-# msgid "Receipts"
-# msgstr " "
-
-# 204
 msgid "Reverse Receipts"
 msgstr " "
 
-# 205
-msgid "Transaction Approval"
-msgstr "Aprobaciones"
-
-# 206
 msgid "Batches"
 msgstr "Lotes"
 
-# 210
 msgid "Drafts"
 msgstr "Borradores"
 
-# 211
-# msgid "Reconciliation"
-# msgstr " "
-
-# 217
 msgid "Tax Forms"
 msgstr "Formas de Impuesto"
 
-# 218
 msgid "Add Tax Form"
 msgstr "Agregar Forma de Impuesto"
 
-# 219
 msgid "Admin Users"
 msgstr "Administrar Usuarios"
 
-# 220
 msgid "Add User"
 msgstr "Agregar Usuario"
 
-# 221
 msgid "Search Users"
 msgstr "Buscar Usuario"
 
-# 222
 msgid "Sessions"
 msgstr "Sesiones"
 
-# 223
 msgid "Use Overpayment"
 msgstr "Usar Sobrepago"
 
-# 225
 msgid "List Tax Forms"
 msgstr "Listar Formas de Impuesto"
 
-# 226
-# msgid "Reports"
-# msgstr " "
-
-# 227
 msgid "Fixed Assets"
 msgstr "Activos Fijo"
 
-# 228
 msgid "Asset Classes"
 msgstr "Clases de Activo"
 
-# 229
 msgid "Assets"
 msgstr "Activos"
 
-# 230
 msgid "Add Class"
 msgstr "Agregar Clase"
 
-# 231
 msgid "List Classes"
 msgstr "Listar Clases"
 
-# 232
 msgid "Add Assets"
 msgstr "Agregar Activos"
 
-# 233
 msgid "Search Assets"
 msgstr "Buscar Activos"
 
-# 234
 msgid "Depreciate"
 msgstr "Depreciar"
 
-# 235
 msgid "Import"
 msgstr "Importar"
 
-# 236
-# msgid "Reports"
-# msgstr " "
-
-# 237
 msgid "Net Book Value"
 msgstr "Valor Neto de Libro"
 
-# 238
-# msgid "Disposal"
-# msgstr ""
-
-# 239
-# msgid "Depreciation"
-# msgstr " "
-
-# 240
-# msgid "Disposal"
-# msgstr " "
-
-# 241
 msgid "Letterhead"
 msgstr "Encabezado"
 
-# 242
-# msgid "Letterhead"
-# msgstr " "
-
-#######
-# EXTRAS
-#######
-
-# AR
-## Add AR Transaction
 msgid "Add AR Transaction"
 msgstr "Agregar Transaccion de Ingreso"
 
 msgid "Tax Form Applied"
 msgstr "Forma de Impuesto Aplicada"
 
-## Sales Invoice
 msgid "TaxForm"
 msgstr "Impuestos"
 
-# Sistema
-## Fin de Año
 msgid "Retained Earnings"
 msgstr "Ganancias Retenidas"
 
 msgid "Post Yearend"
 msgstr "Anunciar Fin de Año"
 
-# No encontrados previamente:
 msgid "Preferences for %1"
 msgstr "Preferencias para %1"
 
@@ -3280,7 +2647,6 @@ msgstr "Guardar Usuario"
 msgid "Employee No."
 msgstr "Nro. Empleado"
 
-### Listar Cuentas
 msgid "Debit"
 msgstr "Debe"
 
@@ -3290,7 +2656,6 @@ msgstr "Haber"
 msgid "Link"
 msgstr "Enlace"
 
-### Usuarios
 msgid "New User"
 msgstr "Usuario Nuevo"
 
@@ -3306,8 +2671,6 @@ msgstr "ID Impuesto"
 msgid "Date of Birth"
 msgstr "Fecha de Nacimiento"
 
-#######
-# :
-#######
 msgid "Username:"
 msgstr "Usuario"
+

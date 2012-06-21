@@ -157,7 +157,9 @@
       <table width="100%">
 	<tr valign=top>
 	  <td>Notes</td>
-	  <td><?lsmb notes ?></td>
+          <td><?lsmb  FOREACH P IN notes.split('\n\n') ?>
+                    <p><?lsmb P ?></p>
+               <?lsmb END ?></td>
 	</tr>
       </table>
     </td>

@@ -138,7 +138,10 @@
 
 \hfill
 
-<?lsmb notes ?>
+<?lsmb FOREACH P IN notes.split('\n\n') ?>
+<?lsmb P ?>\medskip
+
+<?lsmb END ?>
 
 }
 
