@@ -454,3 +454,10 @@ $$ A nice human-readable view for investigating the menu tree.  Does not
 show menu attributes or acls.$$;
 
 COMMIT;
+
+BEGIN;
+-- Fix for menu anomilies
+DELETE FROM menu_acl
+ where node_id in (select node_id from menu_attribute where attribute = 'menu');
+
+COMMIT;
