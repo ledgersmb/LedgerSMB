@@ -84,13 +84,17 @@ sub get {
 sub _main_screen {
     my ($request, $employee) = @_;
     my $user;
+    my @entity_files;
     if ($employee->{entity_id}){
         $user = LedgerSMB::DBObject::Entity::User->get($employee->{entity_id});
+        @entity_files = LedgerSMB::File->list(
+               {ref_key => $entity_id, file_class => '4'}
+        );
     }
     # DIVS logic
     my @DIVS;
     if ($employee->{entity_id}){
-       @DIVS = qw(employee user wage address contact_info bank_act notes);
+       @DIVS = qw(employee user wage address contact_info bank_act notes files);
     } else {
        @DIVS = qw(employee);
     }
@@ -104,6 +108,7 @@ sub _main_screen {
         contact_info => $locale->text('Contact Info'),
             bank_act => $locale->text('Bank Accounts'),
                notes => $locale->text('Notes'),
+               files => $locale->text('Files'),
     );
 
     if ($LedgerSMB::Scripts::employee::country::country_divs{
@@ -231,6 +236,7 @@ sub _main_screen {
                  contacts => \@contacts,
              bank_account => \@bank_account,
                     notes => \@notes,
+             entity_files => \@entity_files,
                  managers => \@managers,
           # globals
                   form_id => $request->{form_id},

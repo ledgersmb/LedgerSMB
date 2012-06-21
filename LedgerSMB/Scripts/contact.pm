@@ -23,6 +23,7 @@ use LedgerSMB::DBObject::Entity::Location;
 use LedgerSMB::DBObject::Entity::Contact;
 use LedgerSMB::DBObject::Entity::Bank;
 use LedgerSMB::DBObject::Entity::Note;
+use LedgerSMB::File;
 use LedgerSMB::App_State;
 use LedgerSMB::Template;
 
@@ -99,14 +100,21 @@ sub _main_screen {
 
     # DIVS logic
     my @DIVS;
+    my @entity_files;
+    my @eca_files;
     if ($company->{entity_id} or $person->{entity_id}){
-       @DIVS = qw(credit address contact_info bank_act notes);
+       my $entity_id = $company->{entity_id};
+       $entity_id ||= $person->{entity_id};
+       @DIVS = qw(credit address contact_info bank_act notes files);
        unshift @DIVS, 'company' if $company->{entity_id};
        unshift @DIVS, 'person' if $person->{entity_id};
+       @entity_files = LedgerSMB::File->list(
+               {ref_key => $entity_id, file_class => '4'}
+       );
     } else {
        @DIVS = qw(company person);
     }
-    $request->{company_div} ||= 'company';
+    $request->{target_div} ||= 'company';
 
     my %DIV_LABEL = (
              company => $locale->text('Company'),
@@ -116,6 +124,7 @@ sub _main_screen {
         contact_info => $locale->text('Contact Info'),
             bank_act => $locale->text('Bank Accounts'),
                notes => $locale->text('Notes'),
+               files => $locale->text('Files'),
     );
 
     # DIVS contents
@@ -128,9 +137,15 @@ sub _main_screen {
         );
     my $credit_act;
     for my $ref(@credit_list){
-        $credit_act = $ref 
-            if ($request->{credit_id} eq $ref->{id}) 
-                or ($request->{meta_number} eq $ref->{meta_number});
+        if (($request->{credit_id} eq $ref->{id}) 
+              or ($request->{meta_number} eq $ref->{meta_number})){
+        
+            $credit_act = $ref;
+            @eca_files = LedgerSMB::File->list(
+               {ref_key => $ref->{id}, file_class => '5'}
+             );
+
+        }     
     }
 
     my $entity_class = $credit_act->{entity_class};
@@ -252,6 +267,8 @@ sub _main_screen {
                  contacts => \@contacts,
              bank_account => \@bank_account,
                     notes => \@notes,
+             entity_files => \@entity_files,
+                eca_files => \@eca_files,
           # globals
                   form_id => $request->{form_id},
               salutations => \@salutations,
@@ -440,8 +457,7 @@ Saves a person and moves on to the next screen
 
 sub save_person {
     my ($request) = @_;
-    use LedgerSMB::DBObject::Entity::Person2;
-    my $person = LedgerSMB::DBObject::Entity::Person2->new(
+    my $person = LedgerSMB::DBObject::Entity::Person->new(
               %$request
     );
     use Data::Dumper;

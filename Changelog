@@ -20,6 +20,8 @@ General Enhancements:
 * Added description field to transaction and invoice screens (Chris T)
 * Removed ability to repost/delete transactions (Chris T)
 * Partsgroups can now be nested though this is not yet used by LSMB (Chris T)
+* Added file attachments to parts (Chris T)
+* Added file attachments to customers, vendors, employees, leads etc (Chris T)
 
 New RESTful Web Services Framework
 * Supports XML and JSON as input formats

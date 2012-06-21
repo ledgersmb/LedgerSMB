@@ -40,8 +40,7 @@ our $fileclassmap = {
 
 sub get {
     my ($request) = @_;
-    my $file = LedgerSMB::File->new();
-    $file->dbobject(LedgerSMB::DBObject->new({base => $request}));
+    my $file = LedgerSMB::File->new(%$request);
     $file->id($request->{id});
     $file->file_class($request->{file_class});
     $file->get();
@@ -92,8 +91,7 @@ Attaches a file to an object
 
 sub attach_file {
     my ($request) = @_;
-    my $file = $fileclassmap->{$request->{file_class}}->new();
-    $file->dbobject(LedgerSMB::DBObject->new({base => $request}));
+    my $file = $fileclassmap->{$request->{file_class}}->new(%$request);
     my @fnames =  $request->{_request}->upload_info;
     $file->file_name($fnames[0]);
     $file->merge($request);

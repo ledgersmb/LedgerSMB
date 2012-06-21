@@ -271,10 +271,9 @@ Lists files directly attached to the object.
 
 sub list{
     my ($self, $args) = @_;
-    my @results = $self->exec_method(
-                 {funcname => 'file__list_by', 
+    my @results = $self->call_procedure(
+                 procname => 'file__list_by', 
                       args => [$args->{ref_key}, $args->{file_class}]
-                 }
      );
     return @results;
 }
@@ -305,7 +304,6 @@ sub merge {
     my ($self, $ref) = @_;
     $self->attached_by_id ($ref->{attached_by_id} || $self->attached_by_id);
     $self->attached_by    ($ref->{attached_by}    || $self->attached_by);
-    $self->attached_at    ($ref->{attached_at}    || $self->attached_at);
     $self->reference      ($ref->{reference}      || $self->reference);
     $self->content        ($ref->{content}        || $self->content);
     $self->mime_type_id   ($ref->{mime_type_id}   || $self->mime_type_id);
@@ -316,8 +314,6 @@ sub merge {
     $self->ref_key        ($ref->{ref_key}        || $self->ref_key);
     $self->file_class     ($ref->{file_class}     || $self->file_class);
     $self->src_class      ($ref->{src_class}      || $self->src_class);
-    $self->dbobject       ($ref->{dbobject}       || $self->dbobject);
-    $self->x_info         ($ref->{dbobject}       || $self->x_info);
 }
 
 =item commit()
@@ -328,7 +324,7 @@ Returns the value of DBI->commit
 
 sub commit{
     my ($self) = @_;
-    return $self->dbobject->{dbh}->commit;
+    return $self->dbh->commit;
 }
 
 =back
