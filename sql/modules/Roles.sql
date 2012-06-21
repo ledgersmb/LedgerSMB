@@ -326,9 +326,9 @@ GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
    TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 
 
-GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__sales_order_create";
+GRANT ALL ON oe TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__sales_order_create";
-GRANT INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_order_create";
+GRANT ALL ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 GRANT ALL on inventory TO "lsmb_<?lsmb dbname ?>__sales_order_create";
 
@@ -347,7 +347,7 @@ IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
    TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
 
-GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
+GRANT ALL ON oe TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
 GRANT INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
@@ -502,8 +502,8 @@ IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
    TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 
-GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
-GRANT INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
+GRANT ALL ON oe TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
+GRANT ALL ON orderitems TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
 GRANT ALL on inventory TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
@@ -524,8 +524,8 @@ IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
    TO "lsmb_<?lsmb dbname ?>__rfq_create";
 
-GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__rfq_create";
-GRANT INSERT, UPDATE ON orderitems TO "lsmb_<?lsmb dbname ?>__rfq_create";
+GRANT ALL ON oe TO "lsmb_<?lsmb dbname ?>__rfq_create";
+GRANT ALL ON orderitems TO "lsmb_<?lsmb dbname ?>__rfq_create";
 GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__rfq_create";
 GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__rfq_create";
 
