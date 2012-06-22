@@ -50,7 +50,7 @@ sub login {
     use LedgerSMB::Locale;
     my ($request) = @_;
     $logger->trace("\$request=$request \$request->{dbh}=$request->{dbh} request=".Data::Dumper::Dumper(\$request));
-    my $creds = LedgerSMB::Auth::get_credentials();
+    my $creds = LedgerSMB::Auth::get_credentials('setup');
     if (!$request->{database}){
         $request->error($request->{_locale}->text('No database specified'));
     }
@@ -180,7 +180,7 @@ Runs the backup.  If backup_type is set to email, emails the
 sub run_backup {
     use LedgerSMB::Company_Config;
 
-    my $creds = LedgerSMB::Auth::get_credentials();
+    my $creds = LedgerSMB::Auth::get_credentials('setup');
     my $request = shift @_;
 
     my $database = LedgerSMB::Database->new(
@@ -255,7 +255,7 @@ Beginning of an SQL-Ledger 2.7/2.8 migration.
 
 sub migrate_sl{
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials();
+    my $creds = LedgerSMB::Auth::get_credentials('setup');
     my $database = LedgerSMB::Database->new(
                {username => $creds->{login},
             company_name => $request->{database},
@@ -331,7 +331,7 @@ Beginning of the upgrade from 1.2 logic
 
 sub upgrade{
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials();
+    my $creds = LedgerSMB::Auth::get_credentials('setup');
     my $database = LedgerSMB::Database->new(
                {username => $creds->{login},
             company_name => $request->{database},
@@ -475,7 +475,7 @@ script.
 
 sub fix_tests{
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials();
+    my $creds = LedgerSMB::Auth::get_credentials('setup');
     # ENVIRONMENT NECESSARY
     $ENV{PGUSER} = $creds->{login};
     $ENV{PGPASSWORD} = $creds->{password};
@@ -510,7 +510,7 @@ sub fix_tests{
 sub create_db{
     use LedgerSMB::Sysconfig;
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials();
+    my $creds = LedgerSMB::Auth::get_credentials('setup');
     my $rc=0;
 
 
@@ -633,7 +633,7 @@ sub _render_new_user {
     # here in order to avoid creating objects just to get argument
     # mapping going. --CT
 
-    my $creds = LedgerSMB::Auth::get_credentials();
+    my $creds = LedgerSMB::Auth::get_credentials('setup');
     
     # ENVIRONMENT NECESSARY
     $ENV{PGUSER} = $creds->{login};
@@ -685,7 +685,7 @@ sub save_user {
     use LedgerSMB::DBObject::Entity::Person::Employee;
     use LedgerSMB::DBObject::Entity::User;
     use LedgerSMB::PGDate;
-    my $creds = LedgerSMB::Auth::get_credentials();
+    my $creds = LedgerSMB::Auth::get_credentials('setup');
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",
                                    $creds->{login},
                                    $creds->{password});
@@ -760,7 +760,7 @@ Runs the actual upgrade script.
 
 sub run_upgrade {
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials();
+    my $creds = LedgerSMB::Auth::get_credentials('setup');
     my $database = LedgerSMB::Database->new(
                {username => $creds->{login},
             company_name => $request->{database},
@@ -836,7 +836,7 @@ between versions on a stable branch (typically upgrading)
 
 sub rebuild_modules {
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials();
+    my $creds = LedgerSMB::Auth::get_credentials('setup');
     my $database = LedgerSMB::Database->new(
                {username => $creds->{login},
             company_name => $request->{database},

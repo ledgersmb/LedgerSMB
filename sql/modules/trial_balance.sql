@@ -22,7 +22,7 @@ create type tb_row AS (
 
 CREATE OR REPLACE FUNCTION trial_balance__generate 
 (in_date_from DATE, in_date_to DATE, in_heading INT, in_accounts INT[],
- in_ignore_yearend TEXT, in_department INT) 
+ in_ignore_yearend TEXT, in_department INT, in_business_units int[]) 
 returns setof tb_row AS
 $$
 DECLARE
@@ -80,17 +80,33 @@ BEGIN
 
     RETURN QUERY
        WITH ac (transdate, amount, chart_id) AS (
+           WITH RECURSIVE bu_tree (id, path) AS (
+            SELECT id, id::text AS path
+              FROM business_unit
+             WHERE parent_id = any(in_business_units)
+                   OR (parent_id = IS NULL 
+                       AND (in_business_units = '{}' 
+                             OR in_business_units IS NULL))
+            UNION
+            SELECT bu.id, bu_tree.path || ',' || bu.id
+              FROM business_unit bu
+              JOIN bu_tree ON bu_tree.id = bu.parent_id
+            )
        SELECT ac.transdate, ac.amount, ac.chart_id
          FROM acc_trans ac
          JOIN (SELECT id, approved, department_id FROM ar UNION ALL
                SELECT id, approved, department_id FROM ap UNION ALL
                SELECT id, approved, department_id FROM gl) gl
                    ON ac.approved and gl.approved and ac.trans_id = gl.id
+    LEFT JOIN business_unit_ac buac ON ac.entry_id = buac.entry_id
+    LEFT JOIN bu_tree ON buac.bu_id = bu_tree.id
         WHERE ac.transdate BETWEEN t_roll_forward + '1 day'::interval 
                                     AND t_end_date
               AND ac.trans_id <> ALL(ignore_trans)
               AND (in_department is null 
                  or gl.department_id = in_department)
+              ((in_business_units = '{}' OR in_business_units IS NULL)
+                OR bu_tree.id IS NOT NULL)
        )
        SELECT a.id, a.accno, a.description, a.gifi_accno,
          case when in_date_from is null then 0 else

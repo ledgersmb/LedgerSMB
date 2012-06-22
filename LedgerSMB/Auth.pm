@@ -93,6 +93,12 @@ sub http_error {
     # but this doesn't seem to be working.  Although it is generally desirable
     # to create the headers using the package, I think we should print them
     # manually.  -CT
+    if ($errcode eq '401'){
+        if ($msg_plus eq 'setup'){
+           $err->{'401'}->{others}->{'WWW-Authenticate'}
+                = "Basic realm=\"LedgerSMB-$msg_plus\"";
+        }
+    }
     my $status;
     if ($err->{$errcode}->{status}){
         $status = $err->{$errcode}->{status};

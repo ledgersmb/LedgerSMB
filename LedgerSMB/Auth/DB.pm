@@ -62,7 +62,8 @@ Sends a 401 error to the browser popping up browser credential prompt.
 =cut
 
 sub credential_prompt{
-    http_error(401);
+    my ($suffix) = @_;
+    http_error(401, $suffix);
 }
 
 sub password_check { # Old routine, leaving in at the moment
