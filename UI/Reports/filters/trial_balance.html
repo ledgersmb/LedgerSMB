@@ -1,0 +1,161 @@
+<?lsmb include_stylesheet = ['css/trial_balance/search.css']?>
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?>
+
+<body>
+    <form method="post" action="trial_balance.pl">
+        <?lsmb IF report.id;
+            INCLUDE input element_data = {
+                type="hidden",
+                name="report_id",
+                value=report.id
+            };
+        END;?>
+        <table width="100%">
+          <tr><th class="listtop">Trial Balance <?lsmb id ? 'Edit' : 'Create'?> Report</th></tr>
+          <tr><td> </td></tr>
+          <tr>
+            <td>
+              <table>
+                <?lsmb PROCESS business_classes ?>
+                <tr>
+                    <th align="right"><?lsmb text('From') ?></th>
+                    <td>
+                        <?lsmb PROCESS input element_data={
+                        class => 'date',
+                        name => 'date_from',
+                        size => '11',
+                        title => user.dateformat,
+                        value => report.date_from,
+                        } ?>
+                    </td>
+                    <th align="right"><?lsmb text('To') ?></th>
+                    <td>
+                        <?lsmb PROCESS input element_data={
+                        class => 'date',
+                        name => 'date_to',
+                        size => '11',
+                        title => user.dateformat,
+                        value => report.date_to,
+                        } ?>
+                    </td>
+                </tr>
+                <tr>
+                <th colspan=2><?lsmb text('Round Amounts First') ?>
+                <td><?lsmb PROCESS input element_data={
+                              name => 'discrete_amounts',
+                              type => 'checkbox',
+                             value => 'Y',
+                      } -?>
+                </td>
+                </tr>
+            </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <table>
+                <tr>
+                  <th align="right"><?lsmb text('Ignore Year-ends'); ?></th>
+                  <td><?lsmb PROCESS select element_data = {
+                             options = [
+                                 {
+                                     label="All",
+                                     id="all",
+                                 },
+                                 {
+                                     label="Last Only",
+                                     id="last"
+                                 },
+                                 {
+                                     label="None",
+                                     id="none",
+                                 }
+                             ],
+                             default_values = [report.ignore_yearend],
+                             name = 'ignore_yearend',
+                             text_attr = 'label',
+                             value_attr = 'id',
+                             } ?>
+                    </td>
+                </tr>
+                <tr>
+                    <th align="righ"><?lsmb text("Description")?></th>
+                    <td colspan="2">
+                        <?lsmb PROCESS input element_data={
+                            name="description",
+                            value=report.description,
+                            size=65,
+                            class= 'text'
+                        }?>
+                    </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          <tr><td><hr size="3" noshade="noshade" /></td></tr>
+      </table>
+      <table width="100%">
+          <?lsmb # Add in the list of accounts here.?>
+          <?lsmb FOR heading IN headings?>
+            <tr class="heading">
+                <td class="title"><?lsmb heading.accno?> -- <?lsmb heading.description?></td>
+                <td class="check">
+                    <?lsmb IF report.heading_id; 
+                            IF report.heading_id == heading.id; 
+                                checked="checked"; 
+                            END; 
+                           ELSE; 
+                            checked=undef;
+                           END; 
+                           PROCESS input element_data = {
+                               type="radio",
+                               name="heading",
+                               value=heading.id,
+                               checked=checked
+                    }?>
+                </td>
+            </tr>
+            <?lsmb FOR account IN heading.accounts?>
+                <tr class="account">
+                    <td class="title"><?lsmb account.accno?> -- <?lsmb account.description?> </td>
+                    <td class="check">
+                        <?lsmb id = account.id; PROCESS input element_data = {
+                            type="checkbox",
+                            name="accounts",
+                            value=account.id
+                            checked=report_accounts.$id
+                        }?>
+                    </td>
+                </tr>
+            <?lsmb END?>
+          <?lsmb END?>
+        </table>
+        <br />
+        
+        <?lsmb PROCESS button element_data={
+            text => 'Save',
+            attributes => {
+                name=>'action',
+                value=>'save'
+            }
+        }?>
+        <?lsmb PROCESS button element_data={
+            text => 'Run',
+            attributes => {
+                name=>'action',
+                value=>'run'
+            }
+        }?>
+
+        <?lsmb PROCESS button element_data={
+            text => 'Save & Run',
+            attributes => {
+                name=>'action',
+                value=>'save_and_run'
+            }
+        }?>
+        
+        </form>
+    </body>
+</html>
