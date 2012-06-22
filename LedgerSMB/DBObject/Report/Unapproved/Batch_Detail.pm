@@ -208,8 +208,17 @@ sub run_report{
                 }]);
     my @rows = $self->exec_method({funcname => 'batch__search'});
     for my $r (@rows){
-       # TODO hrefs
-       $r->{row_id} = $r->{id};
+    for my $ref (@rows){
+        my $script;
+        my $class_to_script = {
+           1 => 'ap',
+           2 => 'ar',
+           5 => 'gl',
+           8 => 'is',
+           9 => 'ir',
+        };
+        $script = $class_to_script->{$ref->{batch_class}};
+        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}";
     }
     $self->rows(\@rows);
 }

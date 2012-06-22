@@ -213,7 +213,14 @@ Runs the report, and assigns rows to $self->rows.
 sub run_report{
     my ($self) = @_;
     my @rows = $self->exec_method({funcname => 'draft__search'});
-    # TODO:  Add URL handling
+    for my $ref (@rows){
+        my $script = $self->type;
+        if ($ref->{invoice}){
+            $script = 'is' if $self->type eq 'ar';
+            $script = 'ir' if $self->type eq 'ap';
+        }
+        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}";
+    }
     $self->rows(\@rows);
 }
 
