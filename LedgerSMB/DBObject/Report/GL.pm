@@ -161,10 +161,15 @@ our @COLUMNS = (
 );
 
 sub columns {
-    return \@COLUMNS;
+    my @bclasses = LedgerSMB::DBObject::Business_Unit_Class->list('1', 'gl');
+    my @COLS = @COLUMNS;
+    for my $class (@bclasses){
+        push @COLS, {col_id =>  "bc_" . $class->id,
+                       name => $locale->text($class->label),
+                       type => 'text',
+                     pwidth => '2'};
+    return \@COLS;
 }
-
-    # TODO:  business_units int[]
 
 =item filter_template
 
@@ -378,6 +383,7 @@ sub run_report{
         } else {
             $ref->{cleared} = '';
         }
+        $self->process_bclasses($ref);
     }
     $self->rows(\@rows);
 }

@@ -255,6 +255,9 @@ sub show_cols {
         if ($request->{"col_$ref->{col_id}"}){
             push @retval, $ref;
         }
+        if ($ref->{col_id} =~ /bc_\d+/){
+            push @retval, $ref if $request->{"col_business_units"};
+        }
     }
     if (scalar @retval == 0){
        @retval = @{$self->columns};
@@ -316,6 +319,22 @@ sub prepare_input {
     $request->{to_amount} = LedgerSMB::PGNumber->from_input(
                                $request->{to_amount}
     );
+}
+
+=item process_bclasses($ref)
+
+This function processes a ref for a hashref key of business_units, which holds 
+an array of arrays of (class_id, bu_id) and adds keys in the form of 
+bc_$class_id holding the $bu_id fields.
+
+=cut
+
+sub process_bclasses {
+    my ($self, $ref) = @_;
+    for my $bu (@{$ref->{business_units}}){
+        push @{$ref->{$bu->[0]}}, $bu->[1] 
+                 unless grep /$bu->[1]/ @{$ref->{$bu->[0]}};
+    }
 }
 
 =back
