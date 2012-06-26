@@ -380,7 +380,7 @@ qq|<td align=right><input name="qty_$i" title="$form->{"onhand_$i"}" size="5" va
 |;
 
         for (
-            qw(orderitems_id id bin weight listprice lastcost taxaccounts pricematrix sku onhand assembly inventory_accno_id income_accno_id expense_accno_id invoice_id precision)
+            qw(image orderitems_id id bin weight listprice lastcost taxaccounts pricematrix sku onhand assembly inventory_accno_id income_accno_id expense_accno_id invoice_id precision)
           )
         {
             $form->hide_form("${_}_$i");

@@ -175,7 +175,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 	} ?> 
 </div>
 </div>
-<div id="employee_div">
+<div id="employee_div" class="input_line">
 <div class="input_group">
 <?lsmb PROCESS input element_data = {
 	label = text('Employee Number')
@@ -195,7 +195,8 @@ default_values = [manager_id]
     value_attr = 'entity_id'
 } ?> 
 </div>
-<div id="hr_dates_div">
+</div>
+<div id="hr_dates_div" class="input_line">
 <div class="input_group">
 <?lsmb PROCESS input element_data = {
 	label = text('DOB')
