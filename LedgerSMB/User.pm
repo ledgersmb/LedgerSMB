@@ -195,6 +195,15 @@ sub fetch_config {
     $sth = $dbh->prepare("SELECT value FROM defaults WHERE setting_key = 'templates'");
     $sth->execute();
     ($templates) = $sth->fetchrow_array() || 'demo';
+    my %date_query = (
+        'mm/dd/yy' => 'set DateStyle to \'SQL, US\'',
+        'mm-dd-yy' => 'set DateStyle to \'POSTGRES, US\'',
+        'dd/mm/yy' => 'set DateStyle to \'SQL, EUROPEAN\'',
+        'dd-mm-yy' => 'set DateStyle to \'POSTGRES, EUROPEAN\'',
+        'dd.mm.yy' => 'set DateStyle to \'GERMAN\''
+    );
+    $dbh->do( $date_query{ $myconfig{dateformat} } );
+
     $myconfig->{templates} = "$LedgerSMB::Sysconfig::templates/$templates";
     bless $myconfig, __PACKAGE__;
     return $myconfig;

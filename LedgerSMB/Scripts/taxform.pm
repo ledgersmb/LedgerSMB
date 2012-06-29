@@ -136,7 +136,7 @@ sub generate_report {
     # TODO:  Eliminate duplicate code!
     if ($request->{meta_number}) {
       my @call_args = ($request->{'tax_form_id'},
-                       $request->{begin_month}.' '.$request->{begin_day}.' '.$request->{begin_year}, $request->{end_month}.' '.$request->{end_day}.' '.$request->{end_year}, 
+                       $request->{begin_year}.'-'.$request->{begin_month}.'-'.$request->{begin_day}, $request->{end_year}.'-'.$request->{end_month}.'-'.$request->{end_day}, 
                        $request->{meta_number});
                        
       my @results = $request->call_procedure(procname => 'tax_form_details_report', args => \@call_args);
@@ -178,7 +178,7 @@ sub generate_report {
     } 
     else {
         
-        my @call_args = ($request->{'tax_form_id'}, $request->{begin_month}.' '.$request->{begin_day}.' '.$request->{begin_year}, $request->{end_month}.' '.$request->{end_day}.' '.$request->{end_year});
+        my @call_args = ($request->{'tax_form_id'}, $request->{begin_year}.'-'.$request->{begin_month}.'-'.$request->{begin_day}, $request->{end_year}.'-'.$request->{end_month}.'-'.$request->{end_day});
         my @results = $request->call_procedure(procname => 'tax_form_summary_report', args => \@call_args);
         for my $r (@results){
             my $company = LedgerSMB::DBObject::Vendor->new(base => $request);

@@ -415,7 +415,7 @@ qq|<td align=right><input name="qty_$i" title="$form->{"onhand_$i"}" size="5" va
 |;
 
         for (
-            qw(orderitems_id id bin weight listprice lastcost taxaccounts pricematrix sku onhand assembly inventory_accno_id income_accno_id expense_accno_id invoice_id precision)
+            qw(image orderitems_id id bin weight listprice lastcost taxaccounts pricematrix sku onhand assembly inventory_accno_id income_accno_id expense_accno_id invoice_id precision)
           )
         {
             $form->hide_form("${_}_$i");
@@ -606,7 +606,7 @@ qq|<td><input name="ndx_$i" class=checkbox type=checkbox value=$i></td>|;
             qw(partnumber sku description partsgroup partsgroup_id bin weight 
                sellprice listprice lastcost onhand unit assembly 
                taxaccounts inventory_accno_id income_accno_id expense_accno_id 
-               pricematrix id notes)
+               pricematrix id image notes)
           )
         {
             print
@@ -672,7 +672,7 @@ sub item_selected {
             for (
                 qw(id partnumber sku description listprice lastcost
                   bin unit weight assembly taxaccounts pricematrix onhand notes 
-                  inventory_accno_id income_accno_id expense_accno_id)
+                  inventory_accno_id image income_accno_id expense_accno_id)
               )
             {
                 $form->{"${_}_$i"} = $form->{"new_${_}_$j"};
@@ -763,7 +763,7 @@ sub item_selected {
         for (
             qw(id partnumber sku description sellprice listprice lastcost 
                bin unit weight assembly taxaccounts pricematrix onhand
-               notes inventory_accno_id income_accno_id expense_accno_id)
+               notes inventory_accno_id income_accno_id expense_accno_id image)
           )
         {
             delete $form->{"new_${_}_$i"};
@@ -929,7 +929,7 @@ sub check_form {
          sellprice discount oldqty orderitems_id bin weight listprice 
          lastcost taxaccounts pricematrix sku onhand assembly 
          inventory_accno_id income_accno_id expense_accno_id notes reqdate 
-         deliverydate serialnumber projectnumber);
+         deliverydate serialnumber projectnumber image);
 
     # remove any makes or model rows
     if ( $form->{item} eq 'part' ) {
@@ -1667,7 +1667,8 @@ sub print_form {
             "partnumber_$i",    "description_$i",
             "projectnumber_$i", "partsgroup_$i",
             "serialnumber_$i",  "bin_$i",
-            "unit_$i",          "notes_$i"
+            "unit_$i",          "notes_$i", 
+            "image_$i",
           );
     }
     for ( split / /, $form->{taxaccounts} ) { push @vars, "${_}_description" }

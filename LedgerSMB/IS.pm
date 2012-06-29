@@ -2130,7 +2130,7 @@ sub retrieve_item {
 		          p.income_accno_id, p.expense_accno_id, pg.partsgroup, 
 		          p.partsgroup_id, p.partnumber AS sku, p.weight,
 		          t1.description AS translation, 
-		          t2.description AS grouptranslation
+		          t2.description AS grouptranslation, p.image
                      FROM parts p
                 LEFT JOIN makemodel mm ON (mm.parts_id = p.id AND mm.barcode = |
                              . $dbh->quote($form->{"partnumber_$i"}) . qq|)

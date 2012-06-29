@@ -66,6 +66,10 @@ Changelog for 1.3.20
 * Demo templates provide better handling of paragraph breaks in notes (Chris T)
 * Fixed menu anomilies due to menu grants on sub-menus (Chris T)
 * Fixed unable to change order or delete it (Chris T, 3535856)
+* Fixed invalid syntax for integer on saving employee (Chris T)
+* Cleaned up dates lines on employee screen (Chris T)
+* Added access to parts.image for ar invoice, order, quote templates (Chris T)
+* Fixed error on redirect from attaching file to part (Chris T h/t Brian W)
 
 Changelog for 1.3.19
 * New link for customer/vendor when not a dropdown (Chris T)
