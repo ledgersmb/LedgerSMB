@@ -198,7 +198,7 @@ at $payment->{entity_accounts}/
 sub get_entity_credit_account{
   my ($self) = @_;
   @{$self->{entity_accounts}} =
-    $self->exec_method(funcname => 'payment_get_entity_accounts'); 
+    ($self->exec_method(funcname => 'payment_get_entity_account_payment_info'),);
    return  @{$self->{entity_accounts}};
 }
 
