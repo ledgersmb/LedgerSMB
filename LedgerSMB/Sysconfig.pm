@@ -107,8 +107,9 @@ for my $var (
     return_accno no_db_str tempdir cache_templates fs_cssdir)
   )
 {
-    ${$var} = $config{'main'}{$var} if $config{'main'}{$var};
+    ${$var} = $config{main}{$var} if $config{main}{$var};
 }
+
 
 if ($cssdir !~ m|/$|){
     $cssdir = "$cssdir/";
