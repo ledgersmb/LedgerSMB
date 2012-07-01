@@ -34,7 +34,9 @@ COMMENT ON FUNCTION payment_type__get_label(in_payment_type_id int) IS
 $$ Returns all information on a payment type by the id.  This should be renamed
 to account for its behavior in future versions.$$;
 
-
+-- ### To be dropped in 1.4: it's imprecise
+-- to return a set of entity accounts based on their names,
+-- if we're going to use them for discount calculations...
 CREATE OR REPLACE FUNCTION payment_get_entity_accounts
 (in_account_class int,
  in_vc_name text,
@@ -66,6 +68,25 @@ COMMENT ON FUNCTION payment_get_entity_accounts
  in_vc_idn  text) IS
 $$ Returns a minimal set of information about customer or vendor accounts
 as needed for discount calculations and the like.$$;
+
+CREATE OR REPLACE FUNCTION payment_get_entity_account_payment_info
+(in_entity_credit_id int)
+RETURNS payment_vc_info
+AS $$
+ SELECT ec.id, cp.legal_name ||
+        coalesce(':' || ec.description,'') as name,
+        e.entity_class, ec.discount_account_id, ec.meta_number
+ FROM entity_credit_account ec
+ JOIN entity e ON (ec.entity_id = e.id)
+ JOIN company cp ON (cp.entity_id = e.id)
+ WHERE ec.id = $1;
+$$ LANGUAGE SQL;
+
+COMMENT ON FUNCTION payment_get_entity_account_payment_info
+(in_entity_credit_id int)
+IS $$ Returns payment information on the entity credit account as
+  required to for discount calculations and payment processing. $$;
+
 
 -- payment_get_open_accounts and the option to get all accounts need to be
 -- refactored and redesigned.  -- CT
