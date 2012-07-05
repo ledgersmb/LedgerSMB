@@ -290,8 +290,9 @@ sub new {
         }
     }
     #HV set _locale already to default here,so routines lower in stack can use it;e.g. login.pl
-    $self->{_locale}=LedgerSMB::Locale->get_handle($LedgerSMB::Sysconfig::language)
-      or $self->error( __FILE__ . ':' . __LINE__ .": Locale ($LedgerSMB::Sysconfig::language) not loaded: $!\n" );
+    $self->{_locale}=LedgerSMB::Locale->get_handle('en');
+    #$self->{_locale}=LedgerSMB::Locale->get_handle($LedgerSMB::Sysconfig::language);
+    #$self->error( __FILE__ . ':' . __LINE__ .": Locale ($LedgerSMB::Sysconfig::language) not loaded: $!\n" ) unless $self->{_locale};
 
     $self->{action} = "" unless defined $self->{action};
     $self->{action} =~ s/\W/_/g;
