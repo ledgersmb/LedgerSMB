@@ -18,6 +18,7 @@ Employee.sql
 Entity.sql
 Payment.sql
 Person.sql
+PNL.sql
 Report.sql
 Voucher.sql
 admin.sql

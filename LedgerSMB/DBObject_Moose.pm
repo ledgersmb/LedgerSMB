@@ -133,6 +133,22 @@ __PACKAGE__->meta->make_immutable;
 
 =back
 
+=head1 COERCIONS
+
+=over
+
+=item Str -> LedgerSMB::PGNumber via from_input()
+
+=item Str -> LedgerSMB::PGDate via from_input
+
+=cut
+
+coerce 'LedgerSMB::PGNumber' from 'Str' 
+   via { LedgerSMB::PGNumber->from_input($_) };
+
+coerce 'LedgerSMB::PGDate' from 'Str' 
+   via { LedgerSMB::PGDate->from_input($_) };
+
 =head1 Copyright (C) 2007, The LedgerSMB core team.
 
 This file is licensed under the Gnu General Public License version 2, or at your
