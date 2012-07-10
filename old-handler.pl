@@ -49,6 +49,7 @@
 use LedgerSMB::Sysconfig;
 use Digest::MD5;
 use Error qw(:try);
+use LedgerSMB::App_State;
 
 $| = 1;
 
@@ -159,7 +160,7 @@ if ( $form->{action} ) {
       . " $form->{version} - $myconfig{name} - $myconfig{dbname}";
 
     &{ $form->{action} };
-
+    LedgerSMB::App_State::cleanup();
 }
 else {
     $form->error( __FILE__ . ':' . __LINE__ . ': '

@@ -66,6 +66,7 @@ use Time::Local;
 use Cwd;
 use File::Copy;
 use LedgerSMB::Company_Config;
+use LedgerSMB::App_State;
 
 use charnames qw(:full);
 use open ':utf8';
@@ -1396,6 +1397,9 @@ sub db_init {
     while (my @roles = $sth->fetchrow_array){
         push @{$self->{_roles}}, $roles[0];
     }
+    $LedgerSMB::App_State::Roles = @{$self->{_roles}};
+    $LedgerSMB::App_State::Role_Prefix = $self->{_role_prefix};
+    $LedgerSMB::App_State::DBName = $dbname;
 
     $sth = $dbh->prepare('SELECT check_expiration()');
     $sth->execute;
@@ -1405,6 +1409,7 @@ sub db_init {
         $sth->execute;
         ($self->{pw_expires})  = $sth->fetchrow_array;
     }
+    $LedgerSMB::App_State::DBH = $self->{dbh};
     LedgerSMB::Company_Config::initialize($self);
     $sth->finish();
     $logger->trace("end");

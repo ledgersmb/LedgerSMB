@@ -213,6 +213,7 @@ use LedgerSMB::Template;
 use LedgerSMB::Locale;
 use LedgerSMB::User;
 use LedgerSMB::Setting;
+use LedgerSMB::App_State;
 use LedgerSMB::Log;
 use LedgerSMB::Company_Config;
 use strict;
@@ -781,6 +782,7 @@ sub call_procedure {
     my $procname = $args{procname};
     my $schema   = $args{schema};
     my @call_args;
+    my $dbh = $LedgerSMB::App_State::DBH;
     @call_args = @{ $args{args} } if defined $args{args};
     my $order_by = $args{order_by};
     my $query_rc;
@@ -790,13 +792,13 @@ sub call_procedure {
     if (!defined $procname){
         $self->error('Undefined function in call_procedure.');
     }
-    $procname = $self->{dbh}->quote_identifier($procname);
+    $procname = $dbh->quote_identifier($procname);
     # Add the test for whether the schema is something useful.
     $logger->trace("\$procname=$procname");
     
     $schema = $schema || $LedgerSMB::Sysconfig::db_namespace;
     
-    $schema = $self->{dbh}->quote_identifier($schema);
+    $schema = $dbh->quote_identifier($schema);
     
     for ( 1 .. scalar @call_args ) {
         $argstr .= "?, ";
@@ -807,7 +809,7 @@ sub call_procedure {
         $query .= " ORDER BY $order_by";
     }
     $query =~ s/\(\)/($argstr)/;
-    my $sth = $self->{dbh}->prepare($query);
+    my $sth = $dbh->prepare($query);
     my $place = 1;
     # API Change here to support byteas:  
     # If the argument is a hashref, allow it to define it's SQL type
@@ -828,10 +830,10 @@ sub call_procedure {
     $query_rc = $sth->execute();
     if (!$query_rc){
           if ($args{continue_on_error} and  #  only for plpgsql exceptions
-                          ($self->{dbh}->state =~ /^P/)){
-                $@ = $self->{dbh}->errstr;
+                          ($dbh->state =~ /^P/)){
+                $@ = $dbh->errstr;
           } else {
-                $self->dberror($self->{dbh}->errstr . ": " . $query);
+                $self->dberror($dbh->errstr . ": " . $query);
           }
     }
    
@@ -1002,6 +1004,8 @@ sub _db_init {
     }
     $self->{dbh}->{pg_server_prepare} = 0;
     $self->{dbh}->{pg_enable_utf8} = 1;
+    $LedgerSMB::App_State::DBH = $self->{dbh};
+    $LedgerSMB::App_State::DBName = $dbname;
 
     # This is the general version check
     my $sth = $self->{dbh}->prepare("
@@ -1054,6 +1058,10 @@ sub _db_init {
     while (my @roles = $sth->fetchrow_array){
         push @{$self->{_roles}}, $roles[0];
     }
+    $LedgerSMB::App_State::Roles = @{$self->{_roles}};
+    $LedgerSMB::App_State::Role_Prefix = $self->{_role_prefix};
+    # @{$self->{_roles}} will eventually go away. --CT
+
     $sth->finish();
     $logger->debug("end");
 }
@@ -1068,30 +1076,32 @@ sub _on_connection_error {
 sub dberror{
    my $self = shift @_;
    my $state_error = {};
-   if ($self->{_locale}){
+   my $locale = $LedgerSMB::App_State::Locale;
+   my $dbh = $LedgerSMB::App_State::DBH;
+   if ($locale){
        $state_error = {
-            '42883' => $self->{_locale}->text('Internal Database Error'),
-            '42501' => $self->{_locale}->text('Access Denied'),
-            '42401' => $self->{_locale}->text('Access Denied'),
-            '22008' => $self->{_locale}->text('Invalid date/time entered'),
-            '22012' => $self->{_locale}->text('Division by 0 error'),
-            '22004' => $self->{_locale}->text('Required input not provided'),
-            '23502' => $self->{_locale}->text('Required input not provided'),
-            '23505' => $self->{_locale}->text('Conflict with Existing Data.  Perhaps you already entered this?'),
-            'P0001' => $self->{_locale}->text('Error from Function:') . "\n" .
-                    $self->{dbh}->errstr,
+            '42883' => $locale->text('Internal Database Error'),
+            '42501' => $locale->text('Access Denied'),
+            '42401' => $locale->text('Access Denied'),
+            '22008' => $locale->text('Invalid date/time entered'),
+            '22012' => $locale->text('Division by 0 error'),
+            '22004' => $locale->text('Required input not provided'),
+            '23502' => $locale->text('Required input not provided'),
+            '23505' => $locale->text('Conflict with Existing Data.  Perhaps you already entered this?'),
+            'P0001' => $locale->text('Error from Function:') . "\n" .
+                    $dbh->errstr,
        };
    }
-   $logger->error("Logging SQL State ".$self->{dbh}->state.", error ".
-           $self->{dbh}->err . ", string " .$self->{dbh}->errstr);
-   if (defined $state_error->{$self->{dbh}->state}){
-       $self->error($state_error->{$self->{dbh}->state}
+   $logger->error("Logging SQL State ".$dbh->state.", error ".
+           $dbh->err . ", string " .$dbh->errstr);
+   if (defined $state_error->{$dbh->state}){
+       $self->error($state_error->{$dbh->state}
            . "\n" . 
-          $self->{_locale}->text('More information has been reported in the error logs'));
-       $self->{dbh}->rollback;
+          $locale->text('More information has been reported in the error logs'));
+       $dbh->rollback;
        exit;
    }
-   $self->error($self->{dbh}->state . ":" . $self->{dbh}->errstr);
+   $self->error($dbh->state . ":" . $dbh->errstr);
 }
 
 sub redo_rows {

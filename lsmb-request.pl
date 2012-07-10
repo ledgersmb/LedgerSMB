@@ -34,8 +34,10 @@ use LedgerSMB::Locale;
 use Data::Dumper;
 use LedgerSMB::Log;
 use LedgerSMB::CancelFurtherProcessing;
+use LedgerSMB::App_State;
 use strict;
 
+LedgerSMB::App_State->zero();
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Handler');
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 $logger->debug("Begin");
@@ -59,10 +61,13 @@ $logger->debug("\$ENV{SCRIPT_NAME}=$ENV{SCRIPT_NAME} \$request->{action}=$reques
 my $locale;
 
 if ($request->{_user}){
+    $LedgerSMB::App_State::User = $request->{_user};
     $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
+    $LedgerSMB::App_State::Locale = $locale;
 } else {
     $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
        or $request->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
+    $LedgerSMB::App_State::Locale = $locale;
 }
 
 if (!$script){
@@ -96,10 +101,12 @@ sub call_script {
     $script->can($request->{action}) 
       || $request->error($locale->text("Action Not Defined: ") . $request->{action});
     $script->can( $request->{action} )->($request);
+    LedgerSMB::App_State->cleanup();
   }
   catch CancelFurtherProcessing with {
     my $ex = shift;
     $logger->debug("CancelFurtherProcessing \$ex=$ex");
+    LedgerSMB::App_State->cleanup();
   };
 }
 1;
