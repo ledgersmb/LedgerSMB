@@ -49,6 +49,7 @@
 use LedgerSMB::Sysconfig;
 use Digest::MD5;
 use Try::Tiny;
+use LedgerSMB::App_State;
 
 $| = 1;
 

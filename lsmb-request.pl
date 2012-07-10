@@ -108,12 +108,15 @@ sub call_script {
     $script->can($request->{action}) 
       || $request->error($locale->text("Action Not Defined: ") . $request->{action});
     $script->can( $request->{action} )->($request);
+    LedgerSMB::App_State->cleanup();
   }
   catch {
       # We have an exception here because otherwise we always get an exception
       # when output terminates.  A mere 'die' will no longer trigger an 
       # automatic error, but die 'foo' will map to $request->error('foo')
       # -- CT
+     $LedgerSMB::App_State::DBH->rollback if $LedgerSMB::App_State::DBH;
+     LedgerSMB::App_State->cleanup();
      $request->error($_) unless $_ eq 'Died';
   };
 }

@@ -71,11 +71,14 @@ Changelog for 1.3.20
 * Added access to parts.image for ar invoice, order, quote templates (Chris T)
 * Fixed error on redirect from attaching file to part (Chris T h/t Brian W)
 * Fixed inability to look up vendor by ECA with discounts (Erik H h/t Matt B)
+* Removed broken cash-basis reports (Chris T, h/t Jigme D
+* Backporting LedgerSMB::App_State to make other backports easier (Chris T)
 
 Andres B is Andres Basile
 Brian W is Brian Wolf
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
+Jigme D is JigmeDatse
 Matt B is Matthew Bourque
 
 Changelog for 1.3.19
