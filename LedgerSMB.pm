@@ -290,7 +290,6 @@ sub new {
             $cookie{$name} = $value;
         }
     }
-    warn $LedgerSMB::Sysconfig::localepath;
     #HV set _locale already to default here,so routines lower in stack can use it;e.g. login.pl
     #$self->{_locale}=LedgerSMB::Locale->get_handle('en');
     $self->{_locale}=LedgerSMB::Locale->get_handle($LedgerSMB::Sysconfig::language);
