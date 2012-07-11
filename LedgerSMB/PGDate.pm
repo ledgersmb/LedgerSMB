@@ -152,6 +152,7 @@ sub _parse_string {
 
 sub from_input{
     my ($self, $input, $has_time) = @_;
+    return $input if eval {$input->isa(__PACKAGE__)};
     return undef if !defined $input;
     my $format = $LedgerSMB::App_State::User->{dateformat};
     my $dt =  _parse_string($self, $input, uc($format), $has_time);

@@ -810,7 +810,7 @@ sub finalize_request {
 sub error {
 
     my ( $self, $msg ) = @_;
-    Carp::confess();
+    #Carp::confess();
     if ( $ENV{GATEWAY_INTERFACE} ) {
 
         $self->{msg}    = $msg;

@@ -73,7 +73,7 @@ sub start_report {
         die $request->{_locale}->text('No report specified');
     }
     @{$request->{country_list}} = $request->call_procedure( 
-                   ocname => 'location_list_country'
+                   procname => 'location_list_country'
     );
     my $template = LedgerSMB::Template->new(
         user => $request->{_user},

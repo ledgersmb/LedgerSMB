@@ -7,6 +7,20 @@ relations, now with Moose!
 
 This module creates object instances based on LedgerSMB's in-database ORM, using Moose.
 
+=cut
+
+package LedgerSMB::DBObject_Moose;
+use Moose;
+use LedgerSMB::DBObject;
+use LedgerSMB;
+use Scalar::Util;
+use Log::Log4perl;
+use LedgerSMB::DBObject;
+use Moose::Util::TypeConstraints;
+use LedgerSMB::PGNumber;
+use LedgerSMB::PGDate;
+
+
 =head1 METHODS
 
 =over
@@ -41,19 +55,30 @@ it will be up to the application to handle any exceptions.
 
 =cut
 
-package LedgerSMB::DBObject_Moose;
-use LedgerSMB::DBObject;
-use LedgerSMB;
-use Moose;
-use Scalar::Util;
-use Log::Log4perl;
-use LedgerSMB::DBObject;
-
 my $logger = Log::Log4perl->get_logger('LedgerSMB::DBObject');
 
-sub __validate__ {}
-
 has 'dbh' => (is => 'ro', isa => 'DBI::db', required => '1');
+
+=item _num 
+
+Turns a number value into PGNumber object.
+
+=cut
+
+sub _num {
+    return LedgerSMB::PGNumber->from_input(@_);
+}
+
+=item _date
+
+Turns a value into a PGDate object
+
+=cut
+
+sub _date {
+    return LedgerSMB::PGDate->from_input(@_);
+}
+
 
 sub prepare_dbhash {
     my $self = shift;
@@ -127,27 +152,8 @@ sub get_interval_dates {
                end => LedgerSMB::PGDate->from_db($end, 'date') };   
 }
 
-__PACKAGE__->meta->make_immutable;
-
-1;
 
 =back
-
-=head1 COERCIONS
-
-=over
-
-=item Str -> LedgerSMB::PGNumber via from_input()
-
-=item Str -> LedgerSMB::PGDate via from_input
-
-=cut
-
-coerce 'LedgerSMB::PGNumber' from 'Str' 
-   via { LedgerSMB::PGNumber->from_input($_) };
-
-coerce 'LedgerSMB::PGDate' from 'Str' 
-   via { LedgerSMB::PGDate->from_input($_) };
 
 =head1 Copyright (C) 2007, The LedgerSMB core team.
 
@@ -156,3 +162,7 @@ option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
+
+__PACKAGE__->meta->make_immutable;
+
+1;

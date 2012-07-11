@@ -333,7 +333,7 @@ sub process_bclasses {
     my ($self, $ref) = @_;
     for my $bu (@{$ref->{business_units}}){
         push @{$ref->{$bu->[0]}}, $bu->[1] 
-                 unless grep /$bu->[1]/ @{$ref->{$bu->[0]}};
+                 unless grep(/$bu->[1]/, @{$ref->{$bu->[0]}});
     }
 }
 

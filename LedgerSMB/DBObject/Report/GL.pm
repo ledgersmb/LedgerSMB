@@ -168,6 +168,7 @@ sub columns {
                        name => $locale->text($class->label),
                        type => 'text',
                      pwidth => '2'};
+    }
     return \@COLS;
 }
 
@@ -285,7 +286,7 @@ Earliest date which matches the search
 
 =cut
 
-has 'from_date' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'from_date' => (is => 'rw', builder => '_date');
 
 =item to_date
 
@@ -293,7 +294,7 @@ Last date that matches the search
 
 =cut
 
-has 'to_date' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'to_date' => (is => 'rw', builder => '_date');
 
 =item approved
 
@@ -315,8 +316,8 @@ The highest value that can match, amount-wise.
 
 =cut
 
-has 'amount_from' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGNumber]');
-has 'amount_to' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGNumber]');
+has 'amount_from' => (is => 'rw', builder => '_num');
+has 'amount_to' => (is => 'rw', builder => '_num');
 
 =item business_units
 
@@ -331,18 +332,6 @@ has 'business_units' => (is => 'rw', isa => 'Maybe[ArrayRef[Int]]');
 =head1 METHODS
 
 =over
-
-=item prepare_criteria($request)
-
-Instantiates the PGDate and PGNumber inputs.
-
-=cut
-
-sub prepare_criteria{
-    my ($self, $request) = @_;
-    $self->prepare_input($request);
-    $request->{accno} =~ s/--.*$//;
-}
 
 =item run_report()
 
