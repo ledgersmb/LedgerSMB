@@ -207,16 +207,6 @@ has 'amount_lt' => (is => 'rw', isa => 'Maybe[Str]');
 
 =over
 
-=item prepare_criteria($request)
-
-Instantiates the PGDate and PGNumber inputs.
-
-=cut
-
-sub prepare_criteria{
-    my ($self, $request) = @_;
-}
-
 =item run_report()
 
 Runs the report, and assigns rows to $self->rows.

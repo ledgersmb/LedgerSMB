@@ -146,7 +146,7 @@ start date for the report
 
 =cut
 
-has 'date_from' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'date_from' => (is => 'rw', builder => '_date');
 
 =item date_to
 
@@ -154,7 +154,7 @@ End date for the report
 
 =cut
 
-has 'date_to'  => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'date_to'  => (is => 'rw', builder => '_date');
 
 
 =item from_accno
@@ -175,20 +175,6 @@ has 'to_accno' => (is => 'rw', isa => 'Maybe[Str]');
 =head1 METHODS
 
 =over
-
-=item prepare_criteria($request)
-
-Instantiates the PGDate and PGNumber inputs.
-
-=cut
-
-sub prepare_criteria{
-    my ($self, $request) = @_;
-    $request->{date_from} = LedgerSMB::PGDate->from_input(
-                               $request->{date_from}
-    );
-    $request->{date_to} = LedgerSMB::PGDate->from_input($request->{date_to});
-}
 
 =item run_report()
 

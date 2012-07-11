@@ -111,7 +111,6 @@ sub search {
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
                if $request->{"business_unit_$count"};
     }
-    #LedgerSMB::DBObject::Report::GL->prepare_criteria($request);
     my $report = LedgerSMB::DBObject::Report::GL->new(%$request);
     $report->run_report;
     $report->render($request);
@@ -131,7 +130,6 @@ sub search_purchases {
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
                if $request->{"business_unit_$count"};
     }
-    LedgerSMB::DBObject::Report::Contact::Purchase->prepare_criteria($request);
     my $report = LedgerSMB::DBObject::Report::Contact::Purchase->new(%$request);
     $report->run_report;
     $report->render($request);

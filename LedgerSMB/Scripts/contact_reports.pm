@@ -30,7 +30,6 @@ Runs the search report and displays it
 sub search{
     my ($request) = @_;
 
-    LedgerSMB::DBObject::Report::Contact::Search->prepare_criteria($request);
     my $report = LedgerSMB::DBObject::Report::Contact::Search->new(%$request);
     $report->run_report;
     $report->render($request);
@@ -45,7 +44,6 @@ Runs the purchase history report and displays it
 sub history {
     my ($request) = @_;
 
-    LedgerSMB::DBObject::Report::Contact::History->prepare_criteria($request);
     my $report = LedgerSMB::DBObject::Report::Contact::History->new(%$request);
     $report->run_report;
     $report->render($request);

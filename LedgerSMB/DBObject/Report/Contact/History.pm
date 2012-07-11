@@ -237,7 +237,7 @@ Include only invoices starting on this date
 
 =cut
 
-has from_date => (is => 'ro', isa => 'Maybe[LedgerSMB::PGDate]');
+has from_date => (is => 'ro', builder => '_date');
 
 =item to_date
 
@@ -245,7 +245,7 @@ Include only invoices before this date
 
 =cut
 
-has to_date => (is => 'ro', isa => 'Maybe[LedgerSMB::PGDate]');
+has to_date => (is => 'ro', builder => '_date');
 
 =item type
 
@@ -277,7 +277,7 @@ Include only customers active starting this date.
 
 =cut
 
-has start_from => (is => 'ro', isa => 'Maybe[LedgerSMB::PGDate]');
+has start_from => (is => 'ro', builder => '_date');
 
 =item start_to
 
@@ -285,7 +285,7 @@ Include only customers becoming active no later than this date
 
 =cut
 
-has start_to => (is => 'ro', isa => 'Maybe[LedgerSMB::PGDate]');
+has start_to => (is => 'ro', builder => '_date');
 
 =item inc_open
 
@@ -317,28 +317,6 @@ has is_summary => (is => 'ro', isa => 'Bool');
 =head1 METHODS
 
 =over 
-
-=item prepare_criteria
-
-Converts inputs to PgDate where needed
-
-=cut
-
-sub prepare_criteria {
-    my ($self, $request) = @_;
-    $request->{start_from} = LedgerSMB::PGDate->from_input(
-               $request->{start_from}
-    );
-    $request->{start_to} = LedgerSMB::PGDate->from_input(
-               $request->{start_to}
-    );
-    $request->{from_date} = LedgerSMB::PGDate->from_input(
-               $request->{from_date}
-    );
-    $request->{to_date} = LedgerSMB::PGDate->from_input(
-               $request->{to_date}
-    );
-}
 
 =item run_report
 

@@ -30,7 +30,6 @@ package LedgerSMB::DBObject::Report::Contact::Purchase;
 use Moose;
 extends 'LedgerSMB::DBObject::Report';
 use LedgerSMB::App_State;
-use LedgerSMB::PGDate;
 
 my $locale = $LedgerSMB::App_State::Locale;
 
@@ -245,7 +244,7 @@ Invoices posted starting on this date
 
 =cut
 
-has from_date => (is => 'ro', isa => 'Maybe[LedgerSMB::PGDate]');
+has from_date => (is => 'ro', builder => '_date');
 
 =item to_date
 
@@ -253,7 +252,7 @@ Invoices posted no later than this date
 
 =cut
 
-has to_date => (is => 'ro', isa => 'Maybe[LedgerSMB::PGDate]');
+has to_date => (is => 'ro', builder => '_date');
 
 =item as_of
 
@@ -261,7 +260,7 @@ Shows invoice balances as of this date.
 
 =cut
 
-has as_of => (is => 'ro', isa => 'Maybe[LedgerSMB::PGDate]');
+has as_of => (is => 'ro', builder => '_date');
 
 =item summarize
 
@@ -277,20 +276,6 @@ has summarize => (is => 'ro', isa => 'Bool');
 =head1 METHODS
 
 =over 
-
-=item prepare_criteria
-
-Converts inputs to PgDate where needed
-
-=cut
-
-sub prepare_criteria {
-    my ($self, $request) = @_;
-    $request->{as_of} = LedgerSMB::PGDate->from_input(
-               $request->{as_of}
-    );
-    $self->prepare_input($request);
-}
 
 =item run_report
 

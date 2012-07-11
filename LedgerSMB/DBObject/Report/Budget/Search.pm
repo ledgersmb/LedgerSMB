@@ -156,7 +156,7 @@ Exact match for the start date
 
 =cut
 
-has 'start_date' => (is=> 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'start_date' => (is=> 'rw', builder => '_date');
 
 =item end_date
 
@@ -164,7 +164,7 @@ Exact match for end date.
 
 =cut
 
-has 'end_date' => (is=> 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'end_date' => (is=> 'rw', builder => '_date');
 
 =item buisness_units
 
@@ -188,12 +188,6 @@ Creates criteria from web input to types expected
 
 sub prepare_criteria {
     my ($self, $request) = @_;
-    $request->{start_date} = LedgerSMB::PGDate->from_input(
-                               $request->{start_date}
-    );
-    $request->{end_date} = LedgerSMB::PGDate->from_input(
-                               $request->{end_date}
-    );
     my @business_units;
     for my $count(1 .. $request->{bclass_count}){
        push @business_units, $request->{"business_unit_$count"} 

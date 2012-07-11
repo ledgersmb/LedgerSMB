@@ -235,7 +235,7 @@ Calculate report as on a specific date
 
 =cut
 
-has 'date_ref' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'date_ref' => (is => 'rw', builder => '_date');
 
 =item entity_class
 
@@ -250,18 +250,6 @@ has 'entity_class' => (is => 'rw', isa => 'Maybe[Int]');
 =head1 METHODS
 
 =over
-
-=item prepare_criteria($request)
-
-Instantiates the PGDate and PGNumber inputs.
-
-=cut
-
-sub prepare_criteria{
-    my ($self, $request) = @_;
-    $request->{to_date} = LedgerSMB::PGDate->from_input($request->{to_date});
-    $request->{accno} =~ s/--.*$//;
-}
 
 =item run_report()
 

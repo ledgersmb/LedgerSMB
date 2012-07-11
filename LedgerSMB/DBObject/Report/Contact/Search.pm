@@ -29,7 +29,6 @@ package LedgerSMB::DBObject::Report::Contact::Search;
 use Moose;
 extends 'LedgerSMB::DBObject::Report';
 use LedgerSMB::App_State;
-use LedgerSMB::PGDate;
 
 my $locale = $LedgerSMB::App_State::Locale;
 
@@ -223,30 +222,14 @@ Active items only to this date.
 
 =cut
 
-has active_date_from => (is => 'ro', isa => 'Maybe[LedgerSMB::PgDate]');   
-has active_date_to => (is => 'ro', isa => 'Maybe[LedgerSMB::PGDate]');
+has active_date_from => (is => 'ro', builder => '_date');
+has active_date_to => (is => 'ro', builder => '_date');
 
 =back
 
 =head1 METHODS
 
 =over 
-
-=item prepare_criteria
-
-Converts inputs to PgDate where needed
-
-=cut
-
-sub prepare_criteria {
-    my ($self, $request) = @_;
-    $request->{active_date_from} = LedgerSMB::PGDate->from_input(
-               $request->{active_date_from}
-    );
-    $request->{active_date_to} = LedgerSMB::PGDate->from_input(
-               $request->{active_date_to}
-    );
-}
 
 =item run_report
 
