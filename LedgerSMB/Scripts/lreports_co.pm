@@ -67,7 +67,6 @@ Runs a Caja Diaria and displays results.
 
 sub run_caja_diaria {
     my ($request) = @_;
-    LedgerSMB::DBObject::Report::co::Caja_Diaria->prepare_criteria($request);
     my $report = LedgerSMB::DBObject::Report::co::Caja_Diaria->new(%$request);
     $report->run_report;
     $report->render($request);
@@ -81,7 +80,6 @@ Runs Balance y Mayor and displays results.
 
 sub run_bm {
     my ($request) = @_;
-    LedgerSMB::DBObject::Report::co::Balance_y_Mayor->prepare_criteria($request);
     my $report = LedgerSMB::DBObject::Report::co::Balance_y_Mayor->new(%$request);
     $report->run_report;
     $report->render($request);
