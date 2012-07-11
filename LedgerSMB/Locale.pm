@@ -74,11 +74,10 @@ $myconfig->{dateformat}.
 
 package LedgerSMB::Locale;
 
-use LedgerSMB::Sysconfig;
 use base 'Locale::Maketext';
+use LedgerSMB::Sysconfig;
 use Locale::Maketext::Lexicon;
 use Encode;
-
 
 Locale::Maketext::Lexicon->import(
     {

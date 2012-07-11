@@ -217,6 +217,7 @@ use LedgerSMB::Locale;
 use LedgerSMB::User;
 use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
+use Carp;
 use strict;
 use utf8;
 
@@ -289,10 +290,11 @@ sub new {
             $cookie{$name} = $value;
         }
     }
+    warn $LedgerSMB::Sysconfig::localepath;
     #HV set _locale already to default here,so routines lower in stack can use it;e.g. login.pl
-    $self->{_locale}=LedgerSMB::Locale->get_handle('en');
-    #$self->{_locale}=LedgerSMB::Locale->get_handle($LedgerSMB::Sysconfig::language);
-    #$self->error( __FILE__ . ':' . __LINE__ .": Locale ($LedgerSMB::Sysconfig::language) not loaded: $!\n" ) unless $self->{_locale};
+    #$self->{_locale}=LedgerSMB::Locale->get_handle('en');
+    $self->{_locale}=LedgerSMB::Locale->get_handle($LedgerSMB::Sysconfig::language);
+    $self->error( __FILE__ . ':' . __LINE__ .": Locale ($LedgerSMB::Sysconfig::language) not loaded: $!\n" ) unless $self->{_locale};
 
     $self->{action} = "" unless defined $self->{action};
     $self->{action} =~ s/\W/_/g;
@@ -384,9 +386,6 @@ sub new {
     );
 
     $self->{dbh}->do("set DateStyle to '".$date_setting{$self->{_user}->{dateformat}}."'");
-    #my $locale   = LedgerSMB::Locale->get_handle($self->{_user}->{language})
-    # or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
-    #$self->{_locale} = $locale;
     $self->{_locale}=LedgerSMB::Locale->get_handle($self->{_user}->{language})
      or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 
@@ -439,6 +438,7 @@ sub close_form {
 sub get_user_info {
     my ($self) = @_;
     $self->{_user} = LedgerSMB::User->fetch_config($self);
+    $self->{_user}->{language} ||= 'en';
 }
 #This function needs to be moved into the session handler.
 sub _get_password {
@@ -811,7 +811,7 @@ sub finalize_request {
 sub error {
 
     my ( $self, $msg ) = @_;
-
+    Carp::confess();
     if ( $ENV{GATEWAY_INTERFACE} ) {
 
         $self->{msg}    = $msg;

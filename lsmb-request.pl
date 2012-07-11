@@ -21,6 +21,7 @@ this software.
 package LedgerSMB::Handler;
 
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Locale;
 use Digest::MD5;
 use Try::Tiny;
 
@@ -63,7 +64,9 @@ my $locale;
 
 if ($request->{_user}){
     $LedgerSMB::App_State::User = $request->{_user};
+    warn $request->{_user}->{language};
     $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
+    warn $locale;
     $LedgerSMB::App_State::Locale = $locale;
 } else {
     #$locale = LedgerSMB::Locale->get_handle('en');

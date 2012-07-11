@@ -45,7 +45,7 @@ our @scripts = (
 );
 
 # if you have latex installed set to 1
-our $latex = eval {require LedgerSMB::Template::LaTeX}; 
+our $latex = eval {require Template::Plugin::Latex}; 
 
 # Defaults to 1 megabyte
 our $max_post_size = 1024 * 1024;
@@ -143,8 +143,6 @@ for my $var (qw(sendmail smtphost smtptimeout smtpuser
 my $modules_loglevel_overrides='';
 
 for (sort $cfg->Parameters('log4perl_config_modules_loglevel')){
-  print STDERR "Sysconfig key=$_ value=" . 
-        $cfg->val('log4perl_config_modules_loglevel', $_) ."\n";
   $modules_loglevel_overrides.='log4perl.logger.'.$_.'='.
         $cfg->val('log4perl_config_modules_loglevel', $_)."\n";
 }
@@ -212,6 +210,6 @@ if(!(-d "$tempdir")){
          $rc=system("mkdir -p $tempdir");#TODO what if error?
      #$logger->info("created tempdir \$tempdir rc=\$rc"); log4perl not initialised yet!
      }
- print STDERR localtime()." Sysconfig.pm created tempdir $tempdir rc=$rc\n";
 }
+
 1;
