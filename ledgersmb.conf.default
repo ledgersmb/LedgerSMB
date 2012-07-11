@@ -42,7 +42,7 @@ no_db_str = database
 
 [environment]
 # If the server can't find applications, append to the path
-PATH: /bin:/usr/bin:/usr/local/bin:/usr/local/pgsql/bin
+PATH=/bin:/usr/bin:/usr/local/bin:/usr/local/pgsql/bin
 
 # If on Mac OS X using Fink's Perl libs, append to the path
 #PERL5LIB = /sw/lib/perl5

@@ -97,8 +97,7 @@ our $DBI_TRACE=0;
 # available printers
 our %printer;
 
-our %config;
-tie %config, 'Config::IniFiles', (-file=> 'ledgersmb.conf' );
+my $cfg = Config::IniFiles->new( -file => "ledgersmb.conf" ) || die @Config::IniFiles::errors;
 
 # Root variables
 for my $var (
@@ -107,7 +106,7 @@ for my $var (
     return_accno no_db_str tempdir cache_templates fs_cssdir)
   )
 {
-    ${$var} = $config{main}{$var} if $config{main}{$var};
+    ${$var} = $cfg->val('main', $var) if $cfg->val('main', $var);
 }
 
 
@@ -115,42 +114,40 @@ if ($cssdir !~ m|/$|){
     $cssdir = "$cssdir/";
 }
 
-%printer = %{ $config{printers} } if $config{printers};
+for ($cfg->Parameters('printers')){
+     $printer{$_} = $cfg->val('printers', $_);   
+}
 
 # ENV Paths
 for my $var (qw(PATH PERL5LIB)) {
-    if (ref $config{environment}{$var} eq 'ARRAY') {
-        $ENV{$var} .= $pathsep . ( join $pathsep, @{ $config{environment}{$var} } );
-    } elsif ($config{environment}{$var}) {
-        $ENV{$var} .= $pathsep . $config{environment}{$var};
-    }
+     $ENV{$var} .= $pathsep . ( join $pathsep, $cfg->val('environment', $var));
 }
 
 # Application-specific paths
 for my $var (qw(localepath spool templates images)) {
-    ${$var} = $config{paths}{$var} if $config{paths}{$var};
+    ${$var} = $cfg->val('paths', $var) if $cfg->val('paths', $var);
 }
 
 # Programs
 for my $var (qw(gzip)) {
-    ${$var} = $config{programs}{$var} if $config{programs}{$var};
+    ${$var} = $cfg->val('prigrams', $var) if $cfg->val('prigrams', $var);
 }
 
 # mail configuration
 for my $var (qw(sendmail smtphost smtptimeout smtpuser 
              smtppass smtpauthmethod backup_email_from)) 
 {
-    ${$var} = $config{mail}{$var} if $config{mail}{$var};
+    ${$var} = $cfg->val('mail', $var) if $cfg->val('mail', $var);
 }
 
 my $modules_loglevel_overrides='';
-my %tmp=%{$config{log4perl_config_modules_loglevel}} if $config{log4perl_config_modules_loglevel};
-for(sort keys %tmp)
-{
- #print STDERR "Sysconfig key=$_ value=$tmp{$_}\n";
- $modules_loglevel_overrides=$modules_loglevel_overrides.'log4perl.logger.'.$_.'='.$tmp{$_}."\n";
+
+for (sort $cfg->Parameters('log4perl_config_modules_loglevel')){
+  print STDERR "Sysconfig key=$_ value=" . 
+        $cfg->val('log4perl_config_modules_loglevel', $_) ."\n";
+  $modules_loglevel_overrides.='log4perl.logger.'.$_.'='.
+        $cfg->val('log4perl_config_modules_loglevel', $_)."\n";
 }
-#print STDERR localtime()." Sysconfig \$modules_loglevel_overrides=$modules_loglevel_overrides\n";
 # Log4perl configuration
 our $log4perl_config = qq(
     log4perl.rootlogger = $log_level, Basic, Debug
@@ -193,12 +190,13 @@ our $log4perl_config = qq(
 #log4perl.logger.LedgerSMB.ScriptLib.Company=TRACE
 #print STDERR localtime()." Sysconfig log4perl_config=$log4perl_config\n";
 
-$ENV{PGHOST} = $config{database}{host};
-$ENV{PGPORT} = $config{database}{port};
-our $default_db = $config{database}{default_db};
-our $db_namespace = $config{database}{db_namespace} || 'public';
-$ENV{PGSSLMODE} = $config{database}{sslmode} if $config{database}{sslmode};
-$ENV{PG_CONTRIB_DIR} = $config{database}{contrib_dir};
+$ENV{PGHOST} = $cfg->val('database', 'host');
+$ENV{PGPORT} = $cfg->val('database', 'port');
+our $default_db = $cfg->val('database', 'default_db');
+our $db_namespace = $cfg->val('database', 'db_namespace') || 'public';
+$ENV{PGSSLMODE} = $cfg->val('database', 'sslmode') 
+    if $cfg->val('database', 'sslmode');
+$ENV{PG_CONTRIB_DIR} = $cfg->val('database', 'contrib_dir');
 
 $ENV{HOME} = $tempdir;
 
