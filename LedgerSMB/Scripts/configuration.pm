@@ -13,6 +13,8 @@ use LedgerSMB::AM; # To be removed, only for template directories right now
 use strict;
 use warnings;
 
+my $locale = $LedgerSMB::App_State::Locale;
+
 our @default_textboxes = (
    { name => 'glnumber', label => $locale->text('GL Reference Number') },
    { name => 'sinumber', 
@@ -67,10 +69,10 @@ Shows the defaults screen
 =cut
 
 sub defaults_screen{
-    my $request = @_;
-    $setting_handle = LedgerSMB::Setting->new({base => $request});
+    my ($request) = @_;
+    my $setting_handle = LedgerSMB::Setting->new({base => $request});
     my @defaults = @default_others;
-    for $tb (@default_textboxes){
+    for my $tb (@default_textboxes){
         push @defaults, $tb->{name};
     }
     for my $skey (@defaults){
@@ -107,15 +109,18 @@ sub defaults_screen{
 			     value_attr => 'code',
 		},
 	'templates'       => {name => 'templates',
-                           options => AM->get_template_directories }	
+                           options => _get_template_directories(), 
+                         text_attr => 'text',
+                        value_attr => 'value' 
+               },	
         );
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
+        user => $LedgerSMB::App_State::User, 
         locale => $locale,
         template => 'am-defaults');
     $template->render({
-        form => $form,
-	hiddens => \%hiddens,
+        form => $request,
+	# hiddens => \%hiddens,
 	selects => \%selects,
         default_textboxes => \@default_textboxes,
     });
@@ -128,17 +133,37 @@ Saves settings from the defaults screen
 =cut
 
 sub save_defaults {
-    my $request = @_;
-    $setting_handle = LedgerSMB::Setting->new({base => $request});
+    my ($request) = @_;
+    my $setting_handle = LedgerSMB::Setting->new({base => $request});
     my @defaults = @default_others;
-    for $tb (@default_textboxes){
+    for my $tb (@default_textboxes){
         push @defaults, $tb->{name};
     }
     for my $skey (@defaults){
         $request->{$skey} =~ s/--.*$// if $skey =~ /accno_id/;
         $setting_handle->set($skey, $request->{$skey});
     }
-    default_screen($request);
+    defaults_screen($request);
+}
+
+=item _get_template_directories
+
+Returns set of template directories available.
+
+=cut
+
+sub _get_template_directories {
+    my $subdircount = 0;
+    my @dirarray;
+    opendir ( DIR, $LedgerSMB::Sysconfig::templates) || die $locale->text("Error while opening directory: [_1]",  "./".$LedgerSMB::Sysconfig::templates);
+    while( my $name = readdir(DIR)){
+        next if ($name =~ /\./);
+        if (-d $LedgerSMB::Sysconfig::templates.'/'.$name) {
+            $dirarray[$subdircount++] = {text => $name, value => $name};
+        }
+    }
+    closedir(DIR);
+    return @dirarray;
 }
 
 =back

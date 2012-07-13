@@ -5,12 +5,14 @@
 
 -- Docstrings already added to this file.
 
+BEGIN;
 
-CREATE OR REPLACE FUNCTION setting__set (in_key varchar, in_value varchar) 
+DROP FUNCTION IF EXISTS setting__set(varchar, varchar);
+CREATE OR REPLACE FUNCTION setting__set (in_setting_key varchar, in_value varchar) 
 RETURNS BOOL AS
 $$
 BEGIN
-	UPDATE defaults SET value = in_value WHERE setting_key = in_key;
+	UPDATE defaults SET value = in_value WHERE setting_key = in_setting_key;
         IF NOT FOUND THEN
              INSERT INTO defaults (setting_key, value) 
                   VALUES (in_setting_key, in_value);
@@ -19,7 +21,7 @@ BEGIN
 END;
 $$ language plpgsql;
 
-COMMENT ON FUNCTION setting_set (in_key varchar, in_value varchar) IS
+COMMENT ON FUNCTION setting__set (in_setting_key varchar, in_value varchar) IS
 $$ sets a value in the defaults thable and returns true if successful.$$;
 
 CREATE OR REPLACE FUNCTION setting_get (in_key varchar) RETURNS defaults AS
@@ -102,3 +104,4 @@ $$ Returns an array of currencies from the defaults table.$$;
 
 ALTER TABLE entity ALTER control_code SET default setting_increment('entity_control');
 
+COMMIT;

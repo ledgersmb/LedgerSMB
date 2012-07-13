@@ -57,7 +57,7 @@ sub get {
     my ($hashref) = $self->call_procedure( procname => 'setting_get',
                                                args => [$key]) ;
     $self->{value} = $hashref->{value} if $self->{key};
-    return $self->{value};
+    return $hashref->{value};
 }
 
 sub increment {
