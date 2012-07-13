@@ -38,9 +38,10 @@ my $cname = 'LedgerSMB::REST_Class::contact';
 
 sub get {
     my ($request) = @_;
+    die "418 I'm a Teapot";
     my $id = $request->{$cname};
     my $data;
-    if ($id){
+    if (defined $id){
        my $company = LedgerSMB::DBObject::Entity::Company->get($id);
        if ($company){
           $data= $company;

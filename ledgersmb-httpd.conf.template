@@ -40,7 +40,7 @@ Alias /ledgersmb WORKING_DIR/
 <Directory WORKING_DIR/rest>
    RewriteEngine On
    RewriteBase /ledgersmb/rest/
-   RewriteRule . ../rest-handler.pl
+   RewriteRule .* ../rest-handler.pl
 </Directory>
 
 <Directory WORKING_DIR/users>

@@ -145,7 +145,6 @@ use CGI::Simple;
 use Try::Tiny;
 use strict;
 use warnings;
-warn 'starting';
 process_request();
 
 # Note:  Indenting try/catch only two characters here because it wraps all
@@ -167,7 +166,7 @@ sub process_request{
         if ($fmtpackage->can('from_input')){
             $request->{payload} = $fmtpackage->can('from_input')->($request);
         } else {
-            die '404 Unsupported Format';
+            die '415 Unsupported Media Type';
         }
     }
 
@@ -228,11 +227,11 @@ sub error_handler {
     my $content = $error;
     $content =~ s/^\d\d\d\s//;
     $error =~ s/(.*)\n.*/$1/m;
-    if ($error =~ /^\d\d\d/){
+    $error =~ s/ at .*//;
+    if ($error !~ /^\d\d\d/){
         $error = "500 $error";
     }
-    warn $error;
-    output({state => $error, content => $content, content_type => 'text/text'});
+    output({state => $error, content => $content, });
 }
 
 # Isolating request-> hashref logic so that it is easier to port to other
@@ -250,8 +249,7 @@ sub get_request_properties {
     $request->{args} = $cgi->Vars();
     $request->{method} = $ENV{REQUEST_METHOD};
     $request->{payload} = $cgi->param( "$request->{method}DATA" );
-
-    $url =~ s|/rest/(.*)|$1|;
+    $url =~ s|.*/rest-handler.pl/(.*)|$1|;
     $url =~ s|(\.[^/]$)||;
     $request->{format} = $1;
 
@@ -266,7 +264,7 @@ sub get_request_properties {
     );
 
     if (!$request->{dbh}) {
-           die '403 Authentication Failed';
+           die '401 Unauthorized';
     }
 
     if (!$request->{format}){
@@ -280,7 +278,7 @@ sub get_request_properties {
     while (@components) {
         my $class = shift @components;
         my $id = shift @components;
-        $id = undef if $id == 'all';
+        $id = undef if $id eq 'all';
         $request->{class_name} .= "::$class";
         $request->{classes}->{$request->{class_name}} = $id;
     }
@@ -299,7 +297,7 @@ sub output {
     } else {
         $ctype = 'text/text';
     }
-    $cgi->header($ctype, $args->{state});
+    print $cgi->header($ctype, $args->{state});
     $cgi->put($args->{content});
 }
 
