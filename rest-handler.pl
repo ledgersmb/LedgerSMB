@@ -154,6 +154,8 @@ sub process_request{
     my $request = get_request_properties();
 
     my $format = lc($request->{format});
+    my $return_info;
+
     if (! eval "require LedgerSMB::REST_Format::" . $format) {
        eval "require LedgerSMB::REST_Format::" . $format;
     }
@@ -191,7 +193,7 @@ sub process_request{
     } else {
 
         if ($classpkg->can(lc($request->{method}))){
-            $classpkg->can(lc($request->{method}))->($request);
+            $return_info = $classpkg->can(lc($request->{method}))->($request);
         } else {
             die '405 Method Not Allowed';
         }
@@ -200,9 +202,9 @@ sub process_request{
 
     my $content;
     my $ctype;
-    if ($request->{payload}){
+    if ($return_info){
         if ($fmtpackage->can('to_output')){
-            $content = $fmtpackage->can('to_output')->($request);
+            $content = $fmtpackage->can('to_output')->($request, $return_info);
         } else {
             return error_handler('415 Unsupported Media Type');
         }
@@ -271,15 +273,14 @@ sub get_request_properties {
     }
 
     $request->{classes} = {};
-    $request->{class_name} = '';
-    while (1) {
-        my $class = shift $components;
-        my $id = shift $components;
+    $request->{class_name} = 'LedgerSMB::REST_Class';
+    while (@$components) {
+        my $class = shift @$components;
+        my $id = shift @$components;
         $id = undef if $id = 'all';
         $request->{class_name} .= "::$class";
-        $request->{classes}->{$class} = $id;
+        $request->{classes}->{$request->{class_name}} = $id;
     }
-    $request->{class_name} =~ s/^:://;
     
     return $request;
 }

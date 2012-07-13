@@ -85,6 +85,25 @@ table in database for list of valid values, but 1 is for vendors, 2 for customer
 
 has 'entity_class' => (is => 'rw', isa => 'Int');
 
+=head1 METHODS
+
+=over
+
+=item get($id)
+
+Returns an entity by id
+
+=cut
+
+sub get{
+    my ($id) = @_;
+    my @results =  __PACKAGE__->call_procedure(procname => 'entity__get', 
+                                                   args => [$id]);
+    return shift @results;
+}
+
+=back
+
 =head1 COPYRIGHT
 
 Copyright (C) 2012 The LedgerSMB Core Team.  This file may be reused under the

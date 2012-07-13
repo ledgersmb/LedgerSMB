@@ -187,7 +187,7 @@ sub get {
         );
     $self->{employee} = $emp;
     my ($ent) = $self->exec_method( 
-        funcname=>'entity__get_entity',
+        funcname=>'entity__get',
         args=>[ $self->{user}->{entity_id} ] 
         );
     $self->{entity} = $ent;

@@ -72,7 +72,7 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION entity__list_classes () IS
 $$ Returns a list of entity classes, ordered by assigned ids$$;
 
-CREATE OR REPLACE FUNCTION entity__get_entity (
+CREATE OR REPLACE FUNCTION entity__get (
     in_entity_id int
 ) RETURNS setof entity AS $$
 
@@ -90,7 +90,7 @@ END;
 
 $$ language plpgsql;
 
-COMMENT ON FUNCTION entity__get_entity (
+COMMENT ON FUNCTION entity__get (
     in_entity_id int
 ) IS
 $$ Returns a set of (only one) entity record with the entity id.$$;

@@ -31,7 +31,8 @@ sub from_input{
 
 sub to_output{
     my $request = shift @_; 
-    return encode_json($request->{payload}, { pretty => 1, indent => 2 };
+    my $output = shift @_;
+    return encode_json($output, { pretty => 1, indent => 2 };
 }
 
 1;

@@ -30,7 +30,8 @@ sub from_input{
 
 sub to_output{
     my $request = shift @_; 
-    return XMLout($request->{payload}, RootName => $request->{class_name},
+    my $output = shift @_;
+    return XMLout($output, RootName => $request->{class_name},
            ContentKey => 'text');
 }
 
