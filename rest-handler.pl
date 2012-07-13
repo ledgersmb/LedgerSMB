@@ -190,10 +190,10 @@ sub process_request{
 
     } else {
 
-        if ($classpkg->can($request->{method})){
-            $classpkg->can($request->{method})->($request);
+        if ($classpkg->can(lc($request->{method}))){
+            $classpkg->can(lc($request->{method}))->($request);
         } else {
-            die '401 Method Not Allowed';
+            die '405 Method Not Allowed';
         }
 
     }
@@ -204,7 +204,7 @@ sub process_request{
         if ($fmtpackage->can('to_output')){
             $content = $fmtpackage->can('to_output')->($request);
         } else {
-            return error_handler('404 Unsupported Format');
+            return error_handler('415 Unsupported Media Type');
         }
     }
     if ($fmtpackage->can('mime_type')){
