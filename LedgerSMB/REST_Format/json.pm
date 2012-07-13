@@ -18,21 +18,27 @@ LICENSE.TXT file.
 
 =cut
 
+package LedgerSMB::REST_Format::json;
+
 use JSON;
 use strict;
 use warnings;
 
-local $JSON::UTF8 = 1;
+my $json = JSON->new();
+$json->pretty(1);
+$json->indent(1);
+$json->utf8(1);
+$json->convert_blessed(1);
 
 sub from_input{
     my $request = shift @_;
-    return decode_json($request->{payload});
+    return $json->decode($request->{payload});
 }
 
 sub to_output{
     my $request = shift @_; 
     my $output = shift @_;
-    return encode_json($output, { pretty => 1, indent => 2 };
+    return $json->encode($output);
 }
 
 1;

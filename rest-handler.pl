@@ -141,10 +141,24 @@ see the included License.txt for details.
 
 package LedgerSMB::REST_Handler;
 
+use FindBin;
+BEGIN {
+  lib->import($FindBin::Bin) unless $ENV{mod_perl}
+}
+
 use CGI::Simple;
 use Try::Tiny;
+use LedgerSMB::App_State;
+use LedgerSMB::Locale;
 use strict;
 use warnings;
+
+# Some modules depend on locale being set for error handling, but we want to 
+# ensure that only the default language is used to ensure nothing strange
+# happens.  So hard-coded to English here.  --CT
+my $locale = LedgerSMB::Locale->get_handle('en');
+$LedgerSMB::App_State::Locale = $locale;
+
 process_request();
 
 # Note:  Indenting try/catch only two characters here because it wraps all
@@ -158,7 +172,7 @@ sub process_request{
     my $return_info;
 
     if (! eval "require LedgerSMB::REST_Format::" . $format) {
-       eval "require LedgerSMB::REST_Format::" . $format;
+       eval "require LedgerSMB::REST_Format::" . $request->{format}
     }
     my $fmtpackage = "LedgerSMB::REST_Format::" . $format;
 
@@ -170,43 +184,31 @@ sub process_request{
         }
     }
 
-    my $classpkg = "LedgerSMB::REST_Class::" . $request->{class};
-    eval "require $classpkg" || return error_handler('404 Resource Not Found');
-
-    my $restobj;
-    if ($classpkg->can('new')){
-        $restobj = $classpkg->can('new')->($request);
-    } else {
-        die '500 Bad Class Definition';
+    my $classpkg = $request->{class_name};
+    if (!eval "require $classpkg"){
+       warn $!;
+       warn $@;
+       warn "failed require $classpkg";
+       return error_handler('404 Class Not Found');
     }
 
-    if ($request->{subresource}){
+    my $restobj = $classpkg;
 
-       my $suffixed_method = "$request->{subresource}_" 
-             . lc($request->{method});
-       if ($restobj->can($suffixed_method)){
-           $restobj->can($suffixed_method)->($request);
-       } else {
-           $restobj->can($request->{subresource}) 
-                  || die '404 Resource Not Found';
-       }
 
+    if ($classpkg->can(lc($request->{method}))){
+        $return_info = $classpkg->can(lc($request->{method}))->($request);
     } else {
-
-        if ($classpkg->can(lc($request->{method}))){
-            $return_info = $classpkg->can(lc($request->{method}))->($request);
-        } else {
-            die '405 Method Not Allowed';
-        }
-
+        die '405 Method Not Allowed';
     }
 
     my $content;
     my $ctype;
+    warn $fmtpackage;
     if ($return_info){
         if ($fmtpackage->can('to_output')){
             $content = $fmtpackage->can('to_output')->($request, $return_info);
         } else {
+            warn 'cannot output';
             return error_handler('415 Unsupported Media Type');
         }
     }
@@ -224,9 +226,15 @@ sub process_request{
 
 sub error_handler {
     my ($error) = @_;
+    warn $error;
+    # Sometimes the two lines below can be useful for debugging.  Note they 
+    # turn all errors into internal server errors and populate the logs with 
+    # all kinds of stuff --CT
+    #use Carp;
+    #Carp::confess();
     my $content = $error;
     $content =~ s/^\d\d\d\s//;
-    $error =~ s/(.*)\n.*/$1/m;
+    $error =~ s/\n/: /m;
     $error =~ s/ at .*//;
     if ($error !~ /^\d\d\d/){
         $error = "500 $error";
@@ -250,18 +258,19 @@ sub get_request_properties {
     $request->{method} = $ENV{REQUEST_METHOD};
     $request->{payload} = $cgi->param( "$request->{method}DATA" );
     $url =~ s|.*/rest-handler.pl/(.*)|$1|;
-    $url =~ s|(\.[^/]$)||;
+    $url =~ s|\.([^/.]*$)||;
     $request->{format} = $1;
 
     my @components = split /\//, $url;
     my $version = shift @components;
+    my $company = shift @components;
     die '400 Unsupported Version' if ($version ne '1.4');
-
     $request->{dbh} = DBI->connect(
-        "dbi:Pg:dbname=$components[0]", 
+        "dbi:Pg:dbname=$company", 
         "$creds->{login}", "$creds->{password}", 
             { AutoCommit => 0 }
     );
+    $LedgerSMB::App_State::DBH = $request->{dbh};
 
     if (!$request->{dbh}) {
            die '401 Unauthorized';

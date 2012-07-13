@@ -95,11 +95,11 @@ This retrieves and returns the item as a blessed reference
 
 sub get {
     my ($self, $id) = @_;
-    my ($ref) = $self->call_procedure(procname => 'company__get',
+    my ($ref) = LedgerSMB::DBObject::Entity->call_procedure(procname => 'company__get',
                                           args => [$id]);
     return undef unless $ref->{control_code};
-    $self->prepare_dbhash($ref);
-    return $self->new(%$ref);
+    __PACKAGE__->prepare_dbhash($ref);
+    return __PACKAGE__->new(%$ref);
 }
 
 =item get_by_cc($cc)

@@ -20,7 +20,15 @@ attached either to the entity (person or company) or credit account
 
 package LedgerSMB::DBObject::Entity::Location;
 use Moose;
+use LedgerSMB::App_State;
+use LedgerSMB::Locale;
 extends 'LedgerSMB::DBObject_Moose';
+
+my $locale = $LedgerSMB::App_State::Locale;
+if (!$locale){
+   $locale = LedgerSMB::Locale->get_handle('en');
+   warn 'default language used';
+}
 
 =back
 
@@ -103,9 +111,9 @@ $self->set_class_name is called.
 
 =cut
 
-our %classes = ( 1 => $LedgerSMB::App_State::Locale->text('Billing'),
-                 2 => $LedgerSMB::App_State::Locale->text('Sales'),
-                 3 => $LedgerSMB::App_State::Locale->text('Shipping'),
+our %classes = ( 1 => $locale->text('Billing'),
+                 2 => $locale->text('Sales'),
+                 3 => $locale->text('Shipping'),
 );
 
 has 'class_name' => (is => 'rw', isa => 'Maybe[Str]');

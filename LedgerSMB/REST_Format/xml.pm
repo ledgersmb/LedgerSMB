@@ -19,6 +19,7 @@ LICENSE.TXT file.
 
 =cut
 
+package LedgerSMB::REST_Format::xml;
 use XML::Simple;
 use strict;
 use warnings;

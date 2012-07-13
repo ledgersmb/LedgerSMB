@@ -6,7 +6,7 @@ LedgerSMB::REST_Class::Contact - Customer/vendor web servicesA
 
 package LedgerSMB::REST_Class::Contact;
 use LedgerSMB::DBObject::Entity;
-use LedgerSMB::DBObject::Entity::Credit_Acount;
+use LedgerSMB::DBObject::Entity::Credit_Account;
 use LedgerSMB::DBObject::Entity::Location;
 use LedgerSMB::DBObject::Entity::Contact;
 use LedgerSMB::DBObject::Entity::Company;
@@ -34,12 +34,11 @@ Searches or retrieves one or more records.
 
 =cut 
 
-my $cname = 'LedgerSMB::REST_Class::contact';
+my $cname = 'LedgerSMB::REST_Class::Contact';
 
 sub get {
     my ($request) = @_;
-    die "418 I'm a Teapot";
-    my $id = $request->{$cname};
+    my $id = $request->{classes}->{$cname};
     my $data;
     if (defined $id){
        my $company = LedgerSMB::DBObject::Entity::Company->get($id);
@@ -65,7 +64,7 @@ sub get {
          LedgerSMB::DBObject::Entity::Bank-> list($id);
        return $data;
     } else {
-       ...
+       die "Coming Soon";
     }
 }
 
@@ -89,3 +88,4 @@ accompanying LICENSE file for details.
 
 =cut
 
+1;
