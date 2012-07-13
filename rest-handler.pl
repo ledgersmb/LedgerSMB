@@ -1,3 +1,5 @@
+#!/usr/bin/perl
+
 =head1 NAME
 
 LedgerSMB::Handlers::REST_Handler - REST handler for new code sections
@@ -143,8 +145,8 @@ use CGI::Simple;
 use Try::Tiny;
 use strict;
 use warnings;
-
-return process_request();
+warn 'starting';
+process_request();
 
 # Note:  Indenting try/catch only two characters here because it wraps all
 # substantive logic in the function.  -CT
@@ -225,11 +227,12 @@ sub error_handler {
     my ($error) = @_;
     my $content = $error;
     $content =~ s/^\d\d\d\s//;
-    $error =~ s/(.*$).*/$1/m;
-    if ($error =~ /^\d\d\d\s/){
+    $error =~ s/(.*)\n.*/$1/m;
+    if ($error =~ /^\d\d\d/){
         $error = "500 $error";
     }
-    output({state => $error, content => $content});
+    warn $error;
+    output({state => $error, content => $content, content_type => 'text/text'});
 }
 
 # Isolating request-> hashref logic so that it is easier to port to other
@@ -274,10 +277,10 @@ sub get_request_properties {
 
     $request->{classes} = {};
     $request->{class_name} = 'LedgerSMB::REST_Class';
-    while (@$components) {
-        my $class = shift @$components;
-        my $id = shift @$components;
-        $id = undef if $id = 'all';
+    while (@components) {
+        my $class = shift @components;
+        my $id = shift @components;
+        $id = undef if $id == 'all';
         $request->{class_name} .= "::$class";
         $request->{classes}->{$request->{class_name}} = $id;
     }
@@ -287,7 +290,7 @@ sub get_request_properties {
 
 # Isolating output routine 
 sub output {
-    my ($args) = $_;
+    my ($args) = @_;
     my $ctype;
     my $cgi = CGI::Simple->new();
 
