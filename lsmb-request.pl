@@ -106,6 +106,7 @@ sub call_script {
   catch CancelFurtherProcessing with {
     my $ex = shift;
     $logger->debug("CancelFurtherProcessing \$ex=$ex");
+     $LedgerSMB::App_State::DBH->rollback if $LedgerSMB::App_State::DBH;
     LedgerSMB::App_State->cleanup();
   };
 }

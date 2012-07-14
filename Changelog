@@ -14,12 +14,14 @@ Changelog for 1.3.20
 * Fixed inability to look up vendor by ECA with discounts (Erik H h/t Matt B)
 * Removed broken cash-basis reports (Chris T, h/t Jigme D
 * Backporting LedgerSMB::App_State to make other backports easier (Chris T)
+* Fixed Customer/Vendor search results unsorted (Chris T, h/t lbm, 3537592)
 
 Andres B is Andres Basile
 Brian W is Brian Wolf
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
 Jigme D is JigmeDatse
+lbm is Louis Moore
 Matt B is Matthew Bourque
 
 Changelog for 1.3.19

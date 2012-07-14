@@ -344,6 +344,7 @@ sub get_results {
         
     my $company = new_company($request);
     set_entity_class($company);
+    $company->set_ordering({method => 'company__search', column => $request->{order_by}});
     $company->{contact_info} = 
              qq|{"%$request->{email}%","%$request->{phone}%"}|;
     my $results = $company->search();
