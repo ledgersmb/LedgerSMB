@@ -107,9 +107,45 @@ sub _get_entity {
 
 Determines of record exists and if not creates it.  If so, throws a 400 error
 
+=cut
+
+sub post {
+    my ($request, $id) = @_;
+    if ($id or $request->{payload}->{entity_id}){
+        $request->{payload}->{entity_id} = $id if $id;
+        if (LedgerSMB::DBObject::Entity->get($id)){
+            die '409 Conflict';
+        }
+    }
+    put($request, $id);
+}
+
 =item put
 
 Saves record, overwriting any record that was there before.
+
+=cut
+
+sub put {
+    my ($request, $id) = @_;
+    my $payload = $request->{payload};
+    $payload->{entity_id} = $id;
+    if (lc($payload->{entity_type}) eq 'person') {
+        LedgerSMB::DBObject::Entity::Company->new(%$payload)->save();
+    } elsif (lc($payload->{entity_type}) eq 'company'){
+        LedgerSMB::DBObject::Entity::Person->new(%$payload)->save();
+    } else {
+        die '400 Bad Request:  Must Specify entity_type';
+    }
+    for $act (@{$payload->{credit_accounts}}){
+        LedgerSMB::DBObject::Entity::Credit_Account->new(%$payload)->save();
+    }
+    if ($id){ 
+        die "303 Contact/$id.$request->{format}";
+    } else {
+        die "303 $id.$request->{format}";
+    }
+} 
 
 =item delete not implemented.
 
