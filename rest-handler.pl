@@ -146,6 +146,7 @@ BEGIN {
   lib->import($FindBin::Bin) unless $ENV{mod_perl}
 }
 
+use DBI;
 use CGI::Simple;
 use Try::Tiny;
 use LedgerSMB::App_State;
@@ -160,6 +161,8 @@ use warnings;
 # happens.  So hard-coded to English here.  --CT
 my $locale = LedgerSMB::Locale->get_handle('en');
 $LedgerSMB::App_State::Locale = $locale;
+$LedgerSMB::App_State::User = {numberformat => '1000.00', 
+                                 dateformat => 'YYYY-MM-DD'};
 
 process_request();
 
@@ -266,21 +269,21 @@ sub get_request_properties {
     $request->{method} = $ENV{REQUEST_METHOD};
     $request->{payload} = $cgi->param( "$request->{method}DATA" );
     $url =~ s|.*/rest-handler.pl/(.*)|$1|;
-    $url =~ s|\.([^/.]*$)||;
+    $url =~ s|\.([^/.?]*)(\?.*)?$||;
     $request->{format} = $1;
 
     my @components = split /\//, $url;
     my $version = shift @components;
     my $company = shift @components;
     die '400 Unsupported Version' if ($version ne '1.4');
-    $request->{dbh} = DBI->connect(
+    $LedgerSMB::App_State::DBH = DBI->connect(
         "dbi:Pg:dbname=$company", 
         "$creds->{login}", "$creds->{password}", 
             { AutoCommit => 0 }
     );
-    $LedgerSMB::App_State::DBH = $request->{dbh};
+    $request->{args}->{dbh} = $LedgerSMB::App_State::DBH;
 
-    if (!$request->{dbh}) {
+    if (!$request->{args}->{dbh}) {
            die '401 Unauthorized';
     }
 

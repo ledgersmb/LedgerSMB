@@ -146,7 +146,7 @@ start date for the report
 
 =cut
 
-has 'date_from' => (is => 'rw', builder => '_date');
+has 'date_from' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item date_to
 
@@ -154,7 +154,7 @@ End date for the report
 
 =cut
 
-has 'date_to'  => (is => 'rw', builder => '_date');
+has 'date_to'  => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 
 =item from_accno

@@ -98,8 +98,6 @@ sub preprocess {
     }
      
     return $vars;
-    my $rawvars = shift;
-    return $rawvars;
 }
 
 sub process {

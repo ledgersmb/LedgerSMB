@@ -222,8 +222,12 @@ Active items only to this date.
 
 =cut
 
-has active_date_from => (is => 'ro', builder => '_date');
-has active_date_to => (is => 'ro', builder => '_date');
+has active_date_from => (is => 'ro', 
+                        isa => 'LedgerSMB::Moose::Date', 
+                     coerce => 1);
+has active_date_to => (is => 'ro', 
+                      isa => 'LedgerSMB::Moose::Date', 
+                   coerce => 1);
 
 =back
 

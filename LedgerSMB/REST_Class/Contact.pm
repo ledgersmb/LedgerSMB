@@ -12,6 +12,7 @@ use LedgerSMB::DBObject::Entity::Contact;
 use LedgerSMB::DBObject::Entity::Company;
 use LedgerSMB::DBObject::Entity::Person;
 use LedgerSMB::DBObject::Entity::Bank;
+use LedgerSMB::DBObject::Report::Contact::Search;
 
 =head1 SYNOPSIS
 
@@ -41,31 +42,65 @@ sub get {
     my $id = $request->{classes}->{$cname};
     my $data;
     if ($id or ($id eq '0')){
-       my $company = LedgerSMB::DBObject::Entity::Company->get($id);
-       if ($company){
-          $data= $company;
-          $data->{entity_type} = 'Company';
-       } else {
-          my $person = LedgerSMB::DBObject::Entity::Person->get($id);
-          if ($person){
-             $data= $person;
-             $data->{entity_type} = 'Person';
-          } else {
-             die '404 Not Found';
-          }
-       }
-       @{$data->{credit_accounts}} = 
-          LedgerSMB::DBObject::Entity::Credit_Account->list_for_entity($id);
-       @{$data->{locations}} = 
-         LedgerSMB::DBObject::Entity::Location->get_active({entity_id => $id});
-       @{$data->{contact}} =
-         LedgerSMB::DBObject::Entity::Contact->list({{entity_id => $id}});
-       @{$data->{bank_accounts}} = 
-         LedgerSMB::DBObject::Entity::Bank-> list($id);
-       return $data;
+       return _get_entity($request, $id);
     } else {
-       die "Coming Soon";
+       if ($request->{args}->{entity_class}) {
+          @{$data->{contacts}} =  _search_entity_class(
+              $request, $request->{args}->{entity_class}
+          ); 
+          return $data;
+       } else {
+            my @results = ();
+            for $ref (LedgerSMB::DBObject::Entity->call_procedure(
+                          procname => 'entity__list_classes'
+                      )
+            ){
+                push @results,  _search_entity_class($request, $ref->{id});
+            }
+            return {contacts => \@results};
+       }
     }
+}
+
+sub _search_entity_class {
+    my ($request, $entity_class) = @_;
+    my $args = $request->{args};
+    $args->{entity_class} = $entity_class;
+    my $report = LedgerSMB::DBObject::Report::Contact::Search->new(%$args);
+    $report->run_report;
+    my @results;
+    for my $r (@{$report->rows}){
+        my @new_results = _get_entity($request, $r->{entity_id});
+        push @results, @new_results;
+    }
+    return @results;
+}
+
+
+sub _get_entity {
+    my ($request, $id) = @_;
+    my $company = LedgerSMB::DBObject::Entity::Company->get($id);
+    if ($company){
+       $data= $company;
+       $data->{entity_type} = 'Company';
+    } else {
+       my $person = LedgerSMB::DBObject::Entity::Person->get($id);
+       if ($person){
+          $data= $person;
+          $data->{entity_type} = 'Person';
+       } else {
+          die '404 Not Found';
+       }
+    }
+    @{$data->{credit_accounts}} = 
+       LedgerSMB::DBObject::Entity::Credit_Account->list_for_entity($id);
+    @{$data->{locations}} = 
+      LedgerSMB::DBObject::Entity::Location->get_active({entity_id => $id});
+    @{$data->{contact}} =
+      LedgerSMB::DBObject::Entity::Contact->list({{entity_id => $id}});
+    @{$data->{bank_accounts}} = 
+      LedgerSMB::DBObject::Entity::Bank-> list($id);
+    return $data;
 }
 
 =item post

@@ -17,9 +17,7 @@ use Scalar::Util;
 use Log::Log4perl;
 use LedgerSMB::DBObject;
 use Moose::Util::TypeConstraints;
-use LedgerSMB::PGNumber;
-use LedgerSMB::PGDate;
-
+use LedgerSMB::MooseTypes
 
 =head1 METHODS
 
@@ -56,29 +54,6 @@ it will be up to the application to handle any exceptions.
 =cut
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::DBObject');
-
-has 'dbh' => (is => 'ro', isa => 'DBI::db', required => '1');
-
-=item _num 
-
-Turns a number value into PGNumber object.
-
-=cut
-
-sub _num {
-    return LedgerSMB::PGNumber->from_input(@_);
-}
-
-=item _date
-
-Turns a value into a PGDate object
-
-=cut
-
-sub _date {
-    return LedgerSMB::PGDate->from_input(@_);
-}
-
 
 sub prepare_dbhash {
     my $self = shift;

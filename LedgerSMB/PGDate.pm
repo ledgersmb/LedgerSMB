@@ -124,6 +124,7 @@ module to handle the parsing.
 
 sub _parse_string {
     my ($self, $string, $format, $has_time) = @_;
+    $string = undef if $string eq '';
     return undef if !defined $string;
     if (!defined $LedgerSMB::App_State::Locale->{datetime}){
         $LedgerSMB::App_State::Locale->{datetime} = 'en_US';
@@ -153,6 +154,7 @@ sub _parse_string {
 sub from_input{
     my ($self, $input, $has_time) = @_;
     return $input if eval {$input->isa(__PACKAGE__)};
+    $input = undef if $input eq '';
     return undef if !defined $input;
     my $format = $LedgerSMB::App_State::User->{dateformat};
     my $dt =  _parse_string($self, $input, uc($format), $has_time);

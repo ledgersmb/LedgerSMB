@@ -237,7 +237,7 @@ Include only invoices starting on this date
 
 =cut
 
-has from_date => (is => 'ro', builder => '_date');
+has from_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::DBObject::Date');
 
 =item to_date
 
@@ -245,7 +245,7 @@ Include only invoices before this date
 
 =cut
 
-has to_date => (is => 'ro', builder => '_date');
+has to_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::DBObject::Date');
 
 =item type
 
@@ -277,7 +277,7 @@ Include only customers active starting this date.
 
 =cut
 
-has start_from => (is => 'ro', builder => '_date');
+has start_from => (is => 'ro', coerce => 1, isa => 'LedgerSMB::DBObject::Date');
 
 =item start_to
 
@@ -285,7 +285,7 @@ Include only customers becoming active no later than this date
 
 =cut
 
-has start_to => (is => 'ro', builder => '_date');
+has start_to => (is => 'ro', coerce => 1, isa => 'LedgerSMB::DBObject::Date');
 
 =item inc_open
 

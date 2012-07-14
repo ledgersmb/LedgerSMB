@@ -244,7 +244,7 @@ Invoices posted starting on this date
 
 =cut
 
-has from_date => (is => 'ro', builder => '_date');
+has from_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::DBObject::Date');
 
 =item to_date
 
@@ -252,7 +252,7 @@ Invoices posted no later than this date
 
 =cut
 
-has to_date => (is => 'ro', builder => '_date');
+has to_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::DBObject::Date');
 
 =item as_of
 
@@ -260,7 +260,7 @@ Shows invoice balances as of this date.
 
 =cut
 
-has as_of => (is => 'ro', builder => '_date');
+has as_of => (is => 'ro', coerce => 1, isa => 'LedgerSMB::DBObject::Date');
 
 =item summarize
 

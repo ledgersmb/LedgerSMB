@@ -286,7 +286,7 @@ Earliest date which matches the search
 
 =cut
 
-has 'from_date' => (is => 'rw', builder => '_date');
+has 'from_date' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item to_date
 
@@ -294,7 +294,7 @@ Last date that matches the search
 
 =cut
 
-has 'to_date' => (is => 'rw', builder => '_date');
+has 'to_date' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item approved
 
@@ -316,8 +316,10 @@ The highest value that can match, amount-wise.
 
 =cut
 
-has 'amount_from' => (is => 'rw', builder => '_num');
-has 'amount_to' => (is => 'rw', builder => '_num');
+has 'amount_from' => (is => 'rw', coerce => 1, 
+                     isa => 'LedgerSMB::Moose::Number');
+has 'amount_to' => (is => 'rw', coerce => 1, 
+                   isa => 'LedgerSMB::Moose::Number');
 
 =item business_units
 
