@@ -197,8 +197,16 @@ at $payment->{entity_accounts}/
 
 sub get_entity_credit_account{
   my ($self) = @_;
-  @{$self->{entity_accounts}} =
-    ($self->exec_method(funcname => 'payment_get_entity_account_payment_info'),);
+
+  # This is ugly but not sure what else to do for the moment.  Looking at 
+  # refactoring later.  -CT
+  if ($self->{credit_id}){
+    @{$self->{entity_accounts}} =
+      $self->exec_method(funcname => 'payment_get_entity_account_payment_info');
+   } else {
+     @{$self->{entity_accounts}} =
+        $self->exec_method(funcname => 'payment_get_entity_accounts');
+   }
    return  @{$self->{entity_accounts}};
 }
 
