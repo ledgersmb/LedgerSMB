@@ -413,10 +413,6 @@ WITH INHERIT NOLOGIN
 IN ROLE
 --### "lsmb_<?lsmb dbname ?>__ar_voucher_all",
 "lsmb_<?lsmb dbname ?>__ar_transaction_all",
-"lsmb_<?lsmb dbname ?>__sales_order_create",
-"lsmb_<?lsmb dbname ?>__sales_quotation_create",
-"lsmb_<?lsmb dbname ?>__sales_order_list",
-"lsmb_<?lsmb dbname ?>__sales_quotation_list",
 "lsmb_<?lsmb dbname ?>__file_attach_tx";
 
 -- AP
@@ -593,11 +589,8 @@ values (72, 'allow', 'lsmb_<?lsmb dbname ?>__rfq_list');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_all"
 WITH INHERIT NOLOGIN 
 IN ROLE "lsmb_<?lsmb dbname ?>__ap_all_vouchers",
-"lsmb_<?lsmb dbname ?>__ap_all_transactions",
-"lsmb_<?lsmb dbname ?>__purchase_order_create",
-"lsmb_<?lsmb dbname ?>__rfq_create",
-"lsmb_<?lsmb dbname ?>__purchase_order_list",
-"lsmb_<?lsmb dbname ?>__rfq_list";
+"lsmb_<?lsmb dbname ?>__file_attach_tx",
+"lsmb_<?lsmb dbname ?>__ap_all_transactions";
 
 -- POS
 CREATE ROLE "lsmb_<?lsmb dbname ?>__pos_enter"
