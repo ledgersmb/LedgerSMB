@@ -26,6 +26,7 @@ use LedgerSMB::DBObject::Entity::Note;
 use LedgerSMB::DBObject::Entity::User;
 use LedgerSMB::App_State;
 use LedgerSMB::Template;
+use LedgerSMB::File;
 use LedgerSMB::Scripts::employee::country;
 
 use strict;
@@ -88,7 +89,7 @@ sub _main_screen {
     if ($employee->{entity_id}){
         $user = LedgerSMB::DBObject::Entity::User->get($employee->{entity_id});
         @entity_files = LedgerSMB::File->list(
-               {ref_key => $entity_id, file_class => '4'}
+               {ref_key => $employee->{entity_id}, file_class => '4'}
         );
     }
     # DIVS logic
@@ -120,6 +121,7 @@ sub _main_screen {
              push @DIVS, $cform->{file};
              $DIV_LABEL{$cform->{file}} = $cform->{div_title};
          }
+    }
 
     # DIVS contents
     my $entity_id = $employee->{entity_id};

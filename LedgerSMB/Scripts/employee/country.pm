@@ -31,8 +31,8 @@ our %country_divs = (
 
        "232" => [ { div_title => 'W4', # UNITED STATES
                          file => 'country_us_w4',
-                   save_sproc => 'employee_us__save_w4' }]
-}
+                   save_sproc => 'employee_us__save_w4' }],
+);
 
 =back
 
