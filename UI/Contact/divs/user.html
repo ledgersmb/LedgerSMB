@@ -1,0 +1,142 @@
+<?lsmb PROCESS 'elements.html' ?>
+<div id="user_div" class="container">
+	<div class="listtop">
+            <?lsmb 
+               IF request.import;
+                       text('Importing User');
+                       action = 'save_user';
+                ELSIF user.username;
+                      text('Editing User');
+                      action = 'edit_user';
+                ELSE;
+                      text('New User');
+                      action = 'save_user';
+                END ?>
+        </div>
+    
+    <form method="POST" action="admin.pl">
+        <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
+        <table>
+
+            <?lsmb IF user.username?>
+            <tr>
+                <td><?lsmb text('Username') ?></td>
+                <td>
+                    <?lsmb user.username;
+                    INCLUDE input element_data = {
+                            name  = 'username'
+                            type  = 'hidden'
+                            value = user.username
+                    } ?>
+                </td>
+            </tr>
+            
+            <?lsmb ELSE ?>
+            <tr>
+                <td><?lsmb text('Username') ?></td>
+                <td>
+                    <input type="text" name="username" value="<?lsmb user.username ?>"/>
+                </td>
+            </tr>
+            <?lsmb END?>
+            <?lsmb UNLESS request.import ?>
+            <tr>
+                <td><?lsmb text('Password') ?></td>
+                <td>
+                    <input type="password" name="password" value="<?lsmb user.user.password ?>"/>
+                </td>
+            </tr>
+            <?lsmb END ?>
+            <?lsmb IF (request.import == 1) OR !user.username ?>
+            <tr>
+                <td><?lsmb text('Import') ?></td>
+                <?lsmb 
+                  IF request.import;
+                      importc1 = 'CHECKED';
+                      importc0 = '';
+                  ELSE;
+                      importc1 = '';
+                      importc0 = 'CHECKED';
+                  END; ?> 
+                <td><?lsmb INCLUDE input element_data = {
+                           label   = 'Yes'
+                           value   = '1'
+                           checked = importc1
+                           name    = 'import'
+                           type    = 'radio'
+                   };
+                   INCLUDE input element_data = {
+                           label   = 'No'
+                           value   = '0'
+                           checked = importc0
+                           name    = 'import'
+                           type    = 'radio'
+                   } ?>
+            </tr>
+            <?lsmb END # unless employee.entity_id ?>
+        </table>
+           <?lsmb IF user.username;
+                PROCESS button element_data  = {
+                         text = text('Reset Password') #'
+                         name = 'action'
+                         type = 'submit'
+                        class = 'submit'
+                        value = 'reset_password'
+                };
+           ELSE; 
+                PROCESS button element_data  = {
+                         text = text('Add User') #'
+                         name = 'action'
+                         type = 'submit'
+                        class = 'submit'
+                        value = 'create_user'
+                };
+           END;
+    ?>
+    </form>
+    <?lsmb IF user.username AND request.import != 1 ?>
+        <hr /> 
+        <form name="groups" method="POST" action="admin.pl">
+            <?lsmb PROCESS input element_data = {
+               type="hidden"
+               name="user_id"
+               value= user.user.id 
+           } ?>
+            <table>
+                <!-- Groups section -->
+                <tr>
+                <?lsmb FOREACH role IN roles ?>
+                <?lsmb IF loop.count % 2 == 0?>
+                </tr>
+                <tr>
+                <?lsmb END?>
+                    <td>
+                        <?lsmb rolcheck = undef; 
+                           IF user.role_list.grep(role.rolname).size;
+                              rolcheck = "checked";
+                           END ?>
+                        <?lsmb PROCESS input element_data = {
+                               type = "checkbox"
+                               label = role.rolname
+                               value = 1
+                               name = role.rolname
+                               checked = rolcheck
+                         }, label_pos = 1 ?>
+                    </td>
+                <?lsmb END?>
+                </tr>
+            </table>
+        
+            <table>
+                <tr>
+                    <td><?lsmb PROCESS button element_data = {
+                          text = text('Save Groups') #'
+                          class = "submit"
+                          name = "action"
+                          value = "save_roles"
+                    } ?></td>
+                </tr>
+            </table>
+        </form>   
+<?lsmb END?>
+</div>

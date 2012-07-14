@@ -1,0 +1,54 @@
+<div class="container" id="files_div">
+<?lsmb callback="contact.pl?action=get&id=" _ entity_id _
+                "&credit_id=" _ credit_act.id; 
+columns = [{ col_id = 'file_name', name = text('File name'), #'
+               type = 'href', href_base="file.pl&action=get"}
+           { col_id = 'mime_type_text', name = text('File Type'), #'
+               type = 'text'}
+           { col_id = 'attached_at', name = text('Attached At'), #'
+               type = 'text'}
+           { col_id = 'attached_by', name = text('Attached By'), #'
+               type = 'text'}]; ?>
+<div class="listtop"><?lsmb text('Files attached to Entity') ?></div>
+<?lsmb 
+  FOREACH COL IN columns;
+         IF COL.col_id == file_name;
+                  COL.href_base='file.pl&action=get&file_class=4&id=';
+         END;
+  END;
+  FOREACH ROW IN entity_files;
+       ROW.row_id = ROW.id;
+  END;
+
+INCLUDE dynatable
+      columns = columns
+      attributes = {id = 'entity-files', width = '100%'}
+      tbody = {rows = entity_files };
+?>
+<?lsmb IF credit_act.id ?>
+<div class="listtop"><?lsmb text('Files attached to Credit Account') ?></div>
+<?lsmb 
+  FOREACH COL IN columns;
+         IF COL.col_id == file_name;
+                  COL.href_base='file.pl&action=get&file_class=5&id=';
+         END;
+  END;
+  FOREACH ROW IN credit_files;
+       ROW.row_id = ROW.id;
+  END;
+
+INCLUDE dynatable
+      columns = columns
+      attributes = {id = 'eca-files', width = '100%'}
+      tbody = {rows = eca_files };
+END;
+?>
+<a href="file.pl?action=show_attachment_screen&ref_key=<?lsmb entity_id 
+         ?>&file_class=4&callback=<?lsmb tt_url(callback) ?>"
+>[<?lsmb text('Attach to Entity') ?>]</a>
+<?lsmb IF credit_act.id ?>
+<a href="file.pl?action=show_attachment_screen&ref_key=<?lsmb credit_act.id
+    ?>&file_class=5&callback=<?lsmb tt_url(callback) ?>"
+>[<?lsmb text('Attach to Credit Account') ?>]</a>
+<?lsmb END ?>
+</div>

@@ -1,0 +1,82 @@
+<?lsmb INCLUDE "ui-header.html"
+        stylesheet = stylesheet
+	include_stylesheet = [
+		"css/global.css"
+	]
+	titlebar = text('Batch Selection'); #'
+PROCESS "elements.html";
+PROCESS 'report_base.html';
+
+IF search_type == 'drafts';
+   class_types = [
+       { text = text('AP'), value = 'ap'},
+       { text = text('AR'), value = 'ar'},
+       { text = text('GL'), value = 'gl'},
+   ];
+   script = 'drafts.pl';
+END;
+
+ ?>
+<body>
+<form action="<?lsmb script ?>" method="post">
+<div class="listtop" id="title_div"><?lsmb text('Search Unapproved Transactions') ?></div>
+<div class="input" id="batch_class_div">
+	<?lsmb INCLUDE select element_data = {
+		label = text('Transaction Type') # '
+		options = class_types
+		value_attr = "value"
+		text_attr = "text"
+		name = "type"
+		default_values = [class_id]
+	} ?>
+</div>
+<!-- 
+Commenting this section out.  Does not seem to be used by API. -CT
+
+<div class="input" id="entered_by_div">
+	<?lsmb INCLUDE select element_data = {
+		label = text('Created By') # '
+		options = users
+		value_attr = "entity_id"
+		text_attr = "username"
+		name = "created_by_eid"
+		default_values = [created_by]
+	} ?></div> -->
+<div class="input" id="reference_div">
+	<?lsmb INCLUDE input element_data = {
+		label = text('Reference/Invoice Number') #'
+		size = 20
+		value = reference
+		name = "reference"
+	} ?>
+	</div>
+<div class="input" id="amounts_div">
+	<?lsmb INCLUDE input element_data = {
+		label = "Minimum Value"
+		name = "amount_gt"
+		class = "numeric"
+		size = 20
+		value = amount_gt
+		type = "text"
+	} ?>
+	<?lsmb INCLUDE input element_data = {
+		label = "Maximum Value"
+		name = "amount_lt"
+		value = amount_lt
+		size = 20
+		class = "numeric"
+		type = "text"
+	} ?>
+	</div>
+<div class="input" id="buttons_div">
+	<?lsmb INCLUDE button element_data = {
+		text = text('Search')
+		name = "action"
+		value = "list_drafts"
+		class = "submit"
+		type = "submit"
+	} ?> </div>
+</form>
+</body>
+
+</html>
