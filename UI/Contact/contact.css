@@ -102,4 +102,19 @@ div.input_group3 {
 	width: 6em;
 }
 
+#employee_div .g1 {
+        width: 27em;
+}
+
+#employee_div .g2 {
+        width: 25em;
+}
+
+#employee_div .g2 label {
+        width: 8em;
+}
+#employee_div .g1 label, #employee_div .solo label {
+        width: 10em;
+}
+
 
