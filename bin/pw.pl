@@ -34,31 +34,14 @@
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #======================================================================
 
-use LedgerSMB::Template;
+use CGI::Simple;
 
 1;
 
 # end of main
 
 sub getpassword {
-    $form->{sessionexpired} = shift @_;
-    @{$form->{hidden}};
-    for (keys %$form){
-        next if $_ =~ /(^script$|^endsession$|^password$)/;
-        my $attr = {};
-        $attr->{name} = $_;
-        $attr->{value} = $form->{$_};
-        push @{$form->{hidden}}, $attr;
-    }
-    my $template = LedgerSMB::Template->new(
-        user => \%myconfig, 
-        locale => $locale,
-        path => 'UI',
-        template => 'get_password',
-        format => 'HTML'
-    );
-    $template->render($form);
-    $template->output('http');
-    $form->finalize_request();
+    my $q = new CGI::Simple;
+    print $q->redirect('login.pl?action=logout&reason=timeout');
 }
 

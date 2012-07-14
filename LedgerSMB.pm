@@ -443,7 +443,12 @@ sub get_user_info {
 sub _get_password {
     my ($self) = shift @_;
     $self->{sessionexpired} = shift @_;
-    LedgerSMB::Auth::credential_prompt();
+    if ($self->{sessionexpired}){
+        my $q = new CGI::Simple;
+        print $q->redirect('login.pl?action=logout&reason=timeout');
+    } else {
+        LedgerSMB::Auth::credential_prompt();
+    }
     exit;
 }
 

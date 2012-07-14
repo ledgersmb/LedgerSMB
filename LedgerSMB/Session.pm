@@ -67,13 +67,14 @@ sub check {
     $checkQuery->execute( $sessionID, $token)
       || $form->dberror(
         __FILE__ . ':' . __LINE__ . ': Looking for session: ' );
-    my $sessionValid = $checkQuery->rows;
+    my $sessionValid = $checkQuery->fetchrow_hashref('NAME_lc');
+    my ($session_ref) = $sessionValid;
+    $sessionValid = $sessionValid->{session_id};
     $dbh->commit;
 
     if ($sessionValid) {
+       
 
-        #user has a valid session cookie, now check the user
-        my ( $session_ref) =  $checkQuery->fetchrow_hashref('NAME_lc');
 
         my $login = $form->{login};
 
@@ -97,13 +98,6 @@ sub check {
         }
         else {
 
-            my $sessionDestroy = $dbh->prepare("");
-
-            #delete the cookie in the browser
-            if ($ENV{SERVER_PORT} == 443){
-                 $secure = ' Secure;';
-            }
-            print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=; path=$path;$secure\n|;
             return 0;
         }
 

@@ -143,42 +143,6 @@ END;
 $$ language plpgsql;
 
 
-CREATE TABLE trial_balance__yearend_types (
-    type text primary key
-);
-INSERT INTO trial_balance__yearend_types (type) VALUES ('none');
-INSERT INTO trial_balance__yearend_types (type) VALUES ('all');
-INSERT INTO trial_balance__yearend_types (type) VALUES ('last');
-
-
-CREATE TABLE trial_balance (
-    id serial primary key,
-    date_from date, 
-    date_to date,
-    description text NOT NULL,
-    yearend text not null references trial_balance__yearend_types(type)
-);
-
-CREATE TABLE trial_balance__account_to_report (
-    report_id int not null references trial_balance(id),
-    account_id int not null references account(id)
-);
-
-CREATE TABLE trial_balance__heading_to_report (
-    report_id int not null references trial_balance(id),
-    heading_id int not null references account_heading(id)
-);
-
-CREATE TYPE trial_balance__entry AS (
-    id int,
-    date_from date,
-    date_to date,
-    description text,
-    yearend text,
-    heading_id int,
-    accounts int[]
-);
-
 
 CREATE OR REPLACE FUNCTION trial_balance__get (
     in_report_id int

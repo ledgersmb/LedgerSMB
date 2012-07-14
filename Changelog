@@ -23,6 +23,7 @@ General Enhancements:
 * Added file attachments to parts (Chris T)
 * Added file attachments to customers, vendors, employees, leads etc (Chris T)
 * LaTeX format detection now run-time call, not configured (Chris T)
+* Bringing back inactivity-based logouts (Chris T)
 
 New RESTful Web Services Framework
 * Supports XML and JSON as input formats

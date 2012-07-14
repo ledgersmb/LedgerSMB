@@ -1,7 +1,12 @@
 <?lsmb INCLUDE 'ui-header.html' include_script = scripts ?> 
 <?lsmb PROCESS elements.html ?> 
 <body>
-<h1 class="info"><?lsmb text('Logout Successful')?></h1>
-<p><a href="login.pl"><?lsmb text('Return to the login screen.') ?></a>
+<h1 class="info">
+   <?lsmb IF reason == 'timeout';
+            text('Logged out due to inactivity');
+          ELSE;
+            text('Logout Successful');
+          END; ?></h1>
+<p><a href="login.pl" target='top'><?lsmb text('Return to the login screen.') ?></a>
 </body>
 </html>

@@ -117,28 +117,14 @@ BEGIN
 		-- the above query also releases all discretionary locks by the
                 -- session
 
-		IF NOT FOUND THEN
-			PERFORM id FROM users WHERE username = SESSION_USER;
-			IF NOT FOUND THEN
-				RAISE EXCEPTION 'User Not Known';
-			END IF;
-			
-		END IF;
-		INSERT INTO session(users_id, token, last_used)
-		SELECT id, md5(random()::text), now()
-		  FROM users WHERE username = SESSION_USER;
-
-		SELECT * INTO out_row FROM session 
-		 WHERE session_id = currval('session_session_id_seq');
+                RETURN NULL;
 	END IF;
 	RETURN out_row;
 END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION session_check(int, text) IS 
-$$ Returns a session row.  If no session exists, creates one.
-The row returned is the current, active session.
- $$;
+$$ Returns a session row.  If no session exists, it returns null$$;
 
 CREATE OR REPLACE FUNCTION unlock_all() RETURNS BOOL AS
 $$
