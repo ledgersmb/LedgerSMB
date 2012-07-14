@@ -150,6 +150,8 @@ use CGI::Simple;
 use Try::Tiny;
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
+use LedgerSMB::Sysconfig;
+use LedgerSMB::Template::TXT;
 use strict;
 use warnings;
 
@@ -203,7 +205,13 @@ sub process_request{
 
     my $content;
     my $ctype;
-    warn $fmtpackage;
+
+    # We are going to re-use template escaping logic here.  Since TXT generally
+    # does not escape values but just returns a sanitized data tree (calling
+    # to_output where appropriate, we will use that.  --CT
+
+    $return_info = LedgerSMB::Template::TXT::preprocess($return_info);
+
     if ($return_info){
         if ($fmtpackage->can('to_output')){
             $content = $fmtpackage->can('to_output')->($request, $return_info);
@@ -230,8 +238,8 @@ sub error_handler {
     # Sometimes the two lines below can be useful for debugging.  Note they 
     # turn all errors into internal server errors and populate the logs with 
     # all kinds of stuff --CT
-    #use Carp;
-    #Carp::confess();
+    # use Carp;
+    # Carp::confess();
     my $content = $error;
     $content =~ s/^\d\d\d\s//;
     $error =~ s/\n/: /m;

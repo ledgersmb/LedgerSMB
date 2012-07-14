@@ -40,7 +40,7 @@ sub get {
     my ($request) = @_;
     my $id = $request->{classes}->{$cname};
     my $data;
-    if (defined $id){
+    if ($id or ($id eq '0')){
        my $company = LedgerSMB::DBObject::Entity::Company->get($id);
        if ($company){
           $data= $company;
@@ -51,7 +51,7 @@ sub get {
              $data= $person;
              $data->{entity_type} = 'Person';
           } else {
-             die '404  Not Found';
+             die '404 Not Found';
           }
        }
        @{$data->{credit_accounts}} = 

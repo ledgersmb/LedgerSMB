@@ -67,7 +67,37 @@ sub get_template {
     return "${name}.". get_extension($parent);
 }
 
-sub preprocess { # TODO handling of objects with to_output methods
+sub preprocess { 
+    # I wonder how much of this can be concentrated in the main template
+    # module? --CT
+    my $rawvars = shift;
+    my $vars;
+    if (eval {$rawvars->can('to_output')}){
+        $rawvars = $rawvars->to_output;
+    }
+    my $type = ref $rawvars;
+
+    return $rawvars if $type =~ /^LedgerSMB::Locale/;
+    return unless defined $rawvars;
+    if ( $type eq 'ARRAY' ) {
+        for (@{$rawvars}) {
+            push @{$vars}, preprocess( $_ );
+        }
+    } elsif (!$type) {
+        return $rawvars;
+    } elsif ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
+        return $$rawvars;
+    } elsif ($type eq 'CODE'){
+        return $rawvars;
+    } elsif ($type eq 'IO::File'){
+        return undef;
+    } else { # Hashes and objects
+        for ( keys %{$rawvars} ) {
+            $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
+        }
+    }
+     
+    return $vars;
     my $rawvars = shift;
     return $rawvars;
 }
