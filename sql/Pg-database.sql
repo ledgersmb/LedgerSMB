@@ -2,6 +2,18 @@ CREATE LANGUAGE PLPGSQL; -- Remove when 8.4 is no longer supported
 
 begin;
 
+-- Base sections for modules and roles
+
+CREATE TABLE lsmb_group (
+     role_name text primary key
+);
+
+CREATE TABLE lsmb_group_grants (
+     group_name text references lsmb_group(role_name),
+     granted_role text,
+     PRIMARY KEY (group_name, granted_role)
+); 
+
 CREATE TABLE lsmb_module (
      id int not null unique,
      label text primary key

@@ -13,6 +13,7 @@
 --
 -- -CT
 
+BEGIN;
 -- work in progress, not documenting yet.
 CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEXT) returns INT AS $$
     
@@ -423,6 +424,8 @@ REVOKE EXECUTE ON FUNCTION admin__save_user(
     in_import bool
 ) FROM public; 
 
+
+DROP VIEW if exists role_view CASCADE;
 create view role_view as 
     select * from pg_auth_members m join pg_roles a ON (m.roleid = a.oid);
         
@@ -457,8 +460,10 @@ CREATE OR REPLACE FUNCTION admin__create_group(in_group_name TEXT) RETURNS int a
         t_dbname text;
     BEGIN
 	t_dbname := current_database();
-        stmt := 'create role lsmb_'|| quote_ident(t_dbname || '__' || in_group_name);
+        stmt := 'create role '|| quote_ident('lsmb_' || t_dbname || '__' || in_group_name);
         execute stmt;
+        INSERT INTO lsmb_group (role_name) 
+             values (quote_literal('lsmb_' || t_dbname || '__' || in_group_name));
         return 1;
     END;
     
@@ -466,7 +471,66 @@ $$ language 'plpgsql' SECURITY DEFINER;
 
 REVOKE EXECUTE ON FUNCTION  admin__create_group(TEXT) FROM PUBLIC;
 
--- not sure if this is exposed to the front end yet. --CT
+CREATE OR REPLACE FUNCTION admin__add_group_to_role
+(in_group_name text, in_role_name text)
+RETURNS BOOL AS
+$$ 
+BEGIN
+   PERFORM * FROM lsmb_group_grants 
+     WHERE group_name = in_group_name AND
+           granted_role = in_role_name;
+
+ IF NOT FOUND THEN
+   INSERT INTO lsmb_group_grants(group_name, granted_role) 
+   VALUES (in_group_name, in_role_name);
+ END IF;
+
+   EXECUTE 'GRANT ' || quote_ident(in_role_name) || ' TO ' ||
+           quote_literal('lsmb_' || t_dbname || '__' || in_group_name);
+   RETURN TRUE;
+END;
+$$ LANGUAGE PLPGSQL SECURITY DEFINER;
+
+revoke execute on function admin__add_group_to_role 
+(in_group_name text, in_role_name text) FROM public;
+
+COMMENT ON function admin__add_group_to_role 
+(in_group_name text, in_role_name text) IS
+$$ This function inserts the arguments into lsmb_group_grants for future
+reference and issues the db-level grant.  It then returns true if there are no
+exceptions.$$;
+
+CREATE OR REPLACE FUNCTION admin__remove_group_from_role
+(in_group_name text, in_role_name text) RETURNS BOOL AS $$
+BEGIN
+
+   EXECUTE 'REVOKE ' || quote_ident(in_role_name) || ' FROM ' ||
+           quote_literal('lsmb_' || t_dbname || '__' || in_group_name);
+
+   DELETE FROM lsmb_group_grants 
+    WHERE group_name = in_group_name AND granted_role = in_role_name;
+
+   RETURN FOUND;
+
+END;
+
+$$ LANGUAGE PLPGSQL SECURITY DEFINER;  
+
+revoke execute on function admin__remove_group_from_role
+(in_group_name text, in_role_name text) FROM public;
+
+COMMENT ON  FUNCTION admin__remove_group_from_role
+(in_group_name text, in_role_name text) IS $$
+Returns true if the grant record was found and deleted, false otherwise.
+Issues db-level revoke in all cases.$$;
+
+CREATE OR REPLACE FUNCTION admin__list_group_grants(in_group_name text)
+RETURNS SETOF lsmb_group_grants AS $$
+SELECT * FROM lsmb_group_grants WHERE group_name = $1
+ORDER BY granted_role;
+$$ LANGUAGE SQL;
+
+--  not sure if this is exposed to the front end yet. --CT
 CREATE OR REPLACE FUNCTION admin__delete_user
 (in_username TEXT, in_drop_role bool) returns INT as $$
     
@@ -640,6 +704,7 @@ $$ language plpgsql;
 COMMENT ON function user__get_preferences (in_user_id int) IS
 $$ Returns the preferences row for the user.$$;
 
+DROP TYPE if exists user_result CASCADE;
 CREATE TYPE user_result AS (
 	id int,
 	username text,
@@ -674,6 +739,7 @@ COMMENT ON FUNCTION  admin__search_users(in_username text, in_first_name text, i
 $$ Returns a list of users matching search criteria.  Nulls match all values.
 only username is not an exact match.$$;
 
+DROP TYPE if exists session_result CASCADE;
 CREATE TYPE session_result AS (
 	id int,
 	username text,
@@ -704,3 +770,5 @@ $$ language plpgsql;
 
 COMMENT ON FUNCTION admin__drop_session(in_session_id int) IS
 $$ Drops the session identified, releasing all locks held.$$;
+
+COMMIT;
