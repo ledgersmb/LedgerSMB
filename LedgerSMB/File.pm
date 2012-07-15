@@ -20,6 +20,7 @@ package LedgerSMB::File;
 use Moose;
 extends 'LedgerSMB::DBObject_Moose';
 use File::MimeInfo;
+binmode STDIN, ':bytes';
 
 =item  attached_by_id
 
@@ -324,7 +325,7 @@ Returns the value of DBI->commit
 
 sub commit{
     my ($self) = @_;
-    return $self->dbh->commit;
+    return $LedgerSMB::App_State::DBH->commit;
 }
 
 =back

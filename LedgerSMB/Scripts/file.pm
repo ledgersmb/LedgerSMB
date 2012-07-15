@@ -27,6 +27,7 @@ use LedgerSMB::File::Order;
 use LedgerSMB::File::Part;
 use LedgerSMB::File::Entity;
 use LedgerSMB::File::ECA;
+use DBD::Pg qw(:pg_types);
 use strict;
 use CGI::Simple;
 
@@ -111,7 +112,7 @@ sub attach_file {
         $file->get_mime_type;
         my $fh = $request->{_request}->upload('upload_data');
         my $fdata = join ("", <$fh>);
-        $file->content($fdata);
+        $file->content({value => $fdata, type => => DBD::Pg::PG_BYTEA});
     }
     $request->{content} = $file->content;
     $file->attach;

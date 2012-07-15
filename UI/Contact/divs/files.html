@@ -1,5 +1,6 @@
 <div class="container" id="files_div">
-<?lsmb callback="contact.pl?action=get&id=" _ entity_id _
+<?lsmb callback="contact.pl?action=get&entity_class=" _ 
+                credit_act.entity_class _ "&entity_id=" _ entity_id _
                 "&credit_id=" _ credit_act.id; 
 columns = [{ col_id = 'file_name', name = text('File name'), #'
                type = 'href', href_base="file.pl&action=get"}

@@ -57,9 +57,9 @@ sub get_by_cc {
            LedgerSMB::DBObject::Entity::Company->get_by_cc($request->{control_code});
     $entity ||=  LedgerSMB::DBObject::Entity::Person->get_by_cc($request->{control_code});
     my ($company, $person) = (undef, undef);
-    if ($entity->isa('LedgerSMB::DBObject::Entity::Company')){
+    if (eval {$entity->isa('LedgerSMB::DBObject::Entity::Company')}){
        $company = $entity;
-    } elsif ($entity->isa('LedgerSMB::DBObject::Entity::Person')){
+    } elsif (eval {$entity->isa('LedgerSMB::DBObject::Entity::Person')}){
        $person = $entity;
     }
     _main_screen($request, $company, $person);

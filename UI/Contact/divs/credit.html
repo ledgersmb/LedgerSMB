@@ -3,10 +3,10 @@
 <?lsmb 
 
 FOREACH cl IN credit_list;
-   IF entity_class == 1;
-        account_class_label = text('Vendor');
-   ELSIF  entity_class == 2;
-        account_class_label = text('Customer');
+   IF cl.entity_class == 1;
+        cl.account_class_label = text('Vendor');
+   ELSIF  cl.entity_class == 2;
+        cl.account_class_label = text('Customer');
    END;
    cl.meta_number_href_suffix = 'account_class=' _ cl.entity_class _ 
       '&entity_id=' _ cl.entity_id _ '&meta_number=' _ cl.meta_number _
