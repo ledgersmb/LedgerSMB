@@ -28,12 +28,20 @@ General Enhancements:
 New RESTful Web Services Framework
 * Supports XML and JSON as input formats
 * Supports XML and JSON as output formats
+* Supports read/write for Contacts:
+   * Customers
+   * Vendors
+   * Employees
+   * Leads
+   * More
 
 New Reporting Framework
 * Easy bridge between SQL and display (Chris T)
 * All reports exportable to CSV (Chris T)
 * All reports exportable to PDF (Chris T)
 * Unified UI for reports (Chris T)
+* Enhanced trial balance allows for partial trial balance (Chris T)
+* Enhanced trial balance allows for saved criteria (Chris T)
 
 Customer/Vendor Handling 
 * Added sales tax id and license number fields for companies (Chris T)
