@@ -1,6 +1,6 @@
 <?lsmb import base.html?>
 
-<?lsmb IF user.username ?>
+<?lsmb IF group.group_name ?>
 
     <center><b>Edit Group</b></center>
 
@@ -14,23 +14,23 @@
     
     <table>
         <tr>
-            <td>Name:</td>
+            <th>Name:</th>
             <td><input type="textarea" name="name" value="<?lsmb user.username?>"/></td>
         </tr>
         <tr>
             <td>Description:</td>
-            <td><textarea cols="25" rows="4"><? lsmb user.description ?></textarea></td>
+            <td><textarea cols="25" rows="4"><? lsmb group.description ?></textarea></td>
         </tr>
     </table>
     <hr/>
     <table>
         <tr>
-        <?lsmb FOREACH group IN groups ?>
+        <?lsmb FOREACH GROUP IN groups ?>
         <?lsmb IF loop.count % 8 == 0?>
         </tr>
         <tr>
         <?lsmb END?>
-            <td><input type="checkbox" name="<?lsmb loop.index?>" value="1"/><?lsmb group.rolname?></td>
+            <td><input type="checkbox" name="role_<?lsmb loop.index?>" value="1"/><?lsmb GROUP.rolname?></td>
         <?lsmb END?>
         </tr>
     </table>
