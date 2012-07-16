@@ -2,28 +2,30 @@ Changelog for 1.4 Series
 Forthcoming
 
 General Enhancements:
-* scripts/* files moved to make inheritance possible (Chris T)
-* PostgreSQL contrib dependencies removed, now require Pg 8.4 (Chris T)
 * Performance enhancements on menu routines (Chris T and Steven M)
+* Added +/- selection indicators to menu CSS (Chris T)
+* Changing all auth calls to hit postgres db instead of template1 (Chris T)
+* invoice.unit is now unbounded varchar to reduce errors (Chris T, 3516235)
+* Invoices with inventory subject to draft/vouchers workflows (Chris T)
+* Added Equity (Temp) account type, closed at year-end (Chris T)
+* Added description field to transaction and invoice screens (Chris T)
+* Removed ability to repost/delete transactions (Chris T)
+* Partsgroups can now be nested though this is not yet used by LSMB (Chris T)
+* Session expiration now with configurable behavior (Chris T)
+
+Installation/Upgrade
+* PostgreSQL contrib dependencies removed, now require Pg 8.4 (Chris T)
+* LaTeX format detection now run-time call, not configured (Chris T)
+
+Code/API improvements
+* scripts/* files moved to make inheritance possible (Chris T)
 * Removed the Config::Std dependency and moved to Config::General (Chris T)
 * Improved error handling using Try::Tiny and die (Chris T)
-* Added +/- selection indicators to menu CSS (Chris T)
 * Added "dynatable.html" template that can be included in templates (Chris T)
 * Dynatable forms obtained through GET now show link back to form (Chris T)
 * LedgerSMB->error and Form->error now show db version and company (Chris T)
 * Simpler use of Log::Log4perl instead of LedgerSMB::Log (Chris T)
-* Changing all auth calls to hit postgres db instead of template1 (Chris T)
 * Centralized database commit for new code (Chris T)
-* invoice.unit is now unbounded numeric to reduce errors (Chris T, 3516235)
-* Invoices with inventory subject to draft/vouchers workflows (Chris T)
-* Added Equity (Temp) account type (Chris T)
-* Added description field to transaction and invoice screens (Chris T)
-* Removed ability to repost/delete transactions (Chris T)
-* Partsgroups can now be nested though this is not yet used by LSMB (Chris T)
-* Added file attachments to parts (Chris T)
-* Added file attachments to customers, vendors, employees, leads etc (Chris T)
-* LaTeX format detection now run-time call, not configured (Chris T)
-* Bringing back inactivity-based logouts (Chris T)
 
 New RESTful Web Services Framework
 * Supports XML and JSON as input formats
@@ -43,10 +45,12 @@ New Reporting Framework
 * Enhanced trial balance allows for partial trial balance (Chris T)
 * Enhanced trial balance allows for saved criteria (Chris T)
 
-Customer/Vendor Handling 
+Customer/Vendor/Employee Handling and CRM
 * Added sales tax id and license number fields for companies (Chris T)
 * Simpified database schema (Chris T)
 * Full text search of notes for customers/vendors (Chris T)
+* Added file attachments to customers, vendors, employees, leads etc (Chris T)
+* Added lead handling (Chris T)
 
 New CSV Import Module
 * Imports GL transactions (Chris T)
@@ -59,12 +63,12 @@ New CSV Import Module
 * Extensible
 * field maps can be overridden
 
-
 New Business Reporting Unit System (Chris T)
 * Replaces Projects and Departments
 * Business reporting units may be nested
 * Allows one to do funds accounting, track jobs separately from projects, etc
 * Report on any combination of business reporting units (up to one per class)
+
 
 Changelog for 1.3 Series
 Initial Release:  Monday, Oct 12 2011
