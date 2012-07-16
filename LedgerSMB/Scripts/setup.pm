@@ -26,6 +26,11 @@ use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 
+sub _set_dbh {
+    my ($dbh) = @_;
+    $LedgerSMB::App_State::DBH=$dbh;
+}
+
 sub __default {
 
     my ($request) = @_;
@@ -270,6 +275,7 @@ sub migrate_sl{
     # Credentials set above via environment variables --CT
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
     my $dbh = $request->{dbh};
+    _set_dbh($dbh);
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
     $dbh->do('CREATE SCHEMA PUBLIC');
     # Copying contrib script loading for now
@@ -301,6 +307,7 @@ sub migrate_sl{
     $rc ||= $rc2;
 
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    _set_dbh($request->{dbh});
 
    @{$request->{salutations}} 
     = $request->call_procedure(procname => 'person__list_salutations' ); 
@@ -345,6 +352,7 @@ sub upgrade{
 
     # Credentials set above via environment variables --CT
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    _set_dbh($request->{dbh});
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
@@ -483,6 +491,7 @@ sub fix_tests{
 
     # Credentials set above via environment variables --CT
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    _set_dbh($request->{dbh});
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
@@ -644,6 +653,7 @@ sub _render_new_user {
 
 
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    _set_dbh($request->{dbh});
     $request->{dbh}->{AutoCommit} = 0;
 
     @{$request->{salutations}} 
@@ -689,6 +699,7 @@ sub save_user {
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",
                                    $creds->{login},
                                    $creds->{password});
+    _set_dbh($request->{dbh});
     $request->{dbh}->{AutoCommit} = 0;
     $LedgerSMB::App_State::DBH = $request->{dbh};
     $request->{control_code} = $request->{employeenumber};
@@ -777,6 +788,7 @@ sub run_upgrade {
 
     # Credentials set above via environment variables --CT
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    _set_dbh($request->{dbh});
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO lsmb12');
     $dbh->do('CREATE SCHEMA PUBLIC');
@@ -796,6 +808,7 @@ sub run_upgrade {
     $rc ||= $rc2;
 
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    _set_dbh($request->{dbh});
 
    @{$request->{salutations}} 
     = $request->call_procedure(procname => 'person__list_salutations' ); 
@@ -853,6 +866,7 @@ sub rebuild_modules {
     # Credentials set above via environment variables --CT
     #avoid msg commit ineffective with AutoCommit enabled
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",$creds->{login},$creds->{password},{AutoCommit=>0});
+    _set_dbh($request->{dbh});
     my $dbh = $request->{dbh};
     my $sth = $dbh->prepare(
           'UPDATE defaults SET value = ? WHERE setting_key = ?'
