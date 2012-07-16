@@ -2607,14 +2607,11 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 10	Non-Taxable	4	5
 39	Invoice Vouchers	250	2
 5	Search	1	7
-17	Add  Budget	16	1
-18	Search	16	2
 22	Add Transaction	21	1
 27	AP Aging	24	3
 28	Taxable	24	4
 29	Non-taxable	24	5
 25	Search	21	7
-16	Budgets	73	8
 36	Receipt	35	1
 38	Payment	35	3
 223	Use Overpayment	35	4
@@ -2882,8 +2879,6 @@ SELECT pg_catalog.setval('menu_attribute_id_seq', 681, true);
 
 COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 205	menu	1	574
-206	module	vouchers.pl	575
-206	action	search_batch	576
 1	menu	1	1
 2	module	ar.pl	2
 2	action	add	3
@@ -2898,11 +2893,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 10	action	report	25
 10	report	nontaxable_sales	26
 12	action	add	29
-16	menu	1	38
-17	module	budgets.pl	39
-17	action	new_budget	40
-18	action	begin_search	42
-18	module	budgets.pl	43
 21	menu	1	50
 22	action	add	52
 22	module	ap.pl	51
@@ -2930,7 +2920,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 38	module	payment.pl	90
 38	action	payment	91
 38	type	check	92
-38	account_class	1	554
 194	module	ar.pl	538
 194	action	add	539
 40	module	gl.pl	96
@@ -2948,7 +2937,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 47	menu	1	112
 48	module	employee.pl	113
 48	action	add	114
-49	action	search	117
 50	menu	1	119
 51	module	oe.pl	120
 51	action	add	121
@@ -2989,7 +2977,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 68	action	add	157
 69	module	oe.pl	159
 69	action	add	160
-49	module	employee.pl	118
 68	type	sales_quotation	158
 69	type	request_quotation	161
 70	menu	1	162
@@ -3034,6 +3021,11 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 78	action	add	184
 78	item	part	185
 79	module	ic.pl	186
+206	module	reports.pl	575
+206	action	start_report	576
+38	account_class	1	39
+49	action	begin_report	117
+49	module	reports.pl	118
 79	action	add	187
 79	item	service	188
 80	module	ic.pl	189
@@ -3109,9 +3101,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 108	translation	project	271
 109	menu	1	272
 110	action	chart_of_accounts	274
-111	action	report	275
-111	module	rp.pl	276
-111	report	trial_balance	277
 112	action	report	278
 112	module	rp.pl	279
 112	report	income_statement	280
@@ -3174,10 +3163,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 128	menu	1	334
 129	module	am.pl	337
 130	module	am.pl	338
-131	module	am.pl	339
 129	action	audit_control	340
 130	taxes	audit_control	341
-131	action	defaults	342
 130	action	taxes	343
 132	module	account.pl	346
 132	action	yearend_info	347
@@ -3189,6 +3176,10 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 142	module	am.pl	364
 143	module	am.pl	365
 142	action	add_warehouse	366
+131	module	configuration.pl	339
+111	report_name	trial_balance	277
+111	action	start_report	275
+131	action	defaults_screen	342
 143	action	list_warehouse	367
 144	module	business_unit.pl	368
 144	action	list_classes	370
@@ -3376,8 +3367,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 204	module	vouchers.pl	571
 204	action	create_batch	572
 201	batch_type	payment	564
-210	action	search	585
-210	module	drafts.pl	586
 199	batch_type	ap	561
 45	module	recon.pl	106
 45	action	new_report	107
@@ -3403,12 +3392,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 221	action	search_users	604
 222	module	admin.pl	605
 222	action	list_sessions	606
-49	l_last_name	1	115
-49	l_employeenumber	1	116
-49	l_first_name	1	613
-49	l_id	1	614
-49	l_startdate	1	615
-49	l_enddate	1	616
 225	module	taxform.pl	613
 225	action	list_all	614
 226	module	taxform.pl	615
@@ -3457,7 +3440,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 248	module	import_csv.pl	665
 248	action	begin_import	666
 248	type	sic	667
-65	type	receive_order	149
 83	type	pricegroup	200
 82	type	partsgroup	197
 91	type	partsgroup	222
@@ -3491,8 +3473,21 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 15	entity_class	2	19
 5	entity_class	2	12
 25	entity_class	1	13
+210	module	reports.pl	586
+65	type	receive_order	34
+49	module_name	gl	115
+49	entity_class	3	43
+206	module_name	gl	14
+206	report_name	unapproved	18
+206	search_type	batches	30
+210	action	start_report	585
+210	module_name	gl	44
+210	report_name	unapproved	45
+210	search_type	batches	46
+49	report_name	contact_search	116
+111	module	reports.pl	276
+111	module_name	gl	40
 \.
-
 
 --
 
