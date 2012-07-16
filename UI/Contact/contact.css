@@ -117,4 +117,19 @@ div.input_group3 {
         width: 10em;
 }
 
+#user_div table {
+       width: 40em;
+}
 
+#user_div input[type=~'checkbox'] {
+       float: left;
+}
+
+#user_div label {
+      width: 8em;
+      text-align: right;
+}
+
+#user_div table label {
+      width: 15em;
+}

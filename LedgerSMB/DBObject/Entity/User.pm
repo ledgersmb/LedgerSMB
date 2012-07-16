@@ -6,6 +6,7 @@ LedgerSMB::DBObject::Entity::User - User management Logic for LedgerSMB
 
 package LedgerSMB::DBObject::Entity::User;
 use Moose;
+use LedgerSMB::App_State;
 extends 'LedgerSMB::DBObject_Moose';
 
 =head1 SYNOPSYS
@@ -142,7 +143,13 @@ Lists roles for database.
 
 sub list_roles{
     my ($self) = @_;
-    return __PACKAGE__->call_procedure(procname => 'admin__get_roles');
+    my @roles =  __PACKAGE__->call_procedure(procname => 'admin__get_roles');
+    for my $role (@roles){
+        $role->{description} = $role->{rolname};
+        $role->{description} =~ s/.*__//;
+        $role->{description} =~ s/_/ /g;
+    }
+    return @roles;
 }
 
 =back
