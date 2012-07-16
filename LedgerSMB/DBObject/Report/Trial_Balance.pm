@@ -124,17 +124,17 @@ sub columns {
     return [
       {col_id => 'account_number',
          type => 'href',
-    href_base => 'report.pl?action=',
+    href_base => 'journal.pl?action=search&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
          name => $locale->text('Account Number') },
 
       {col_id => 'account_desc',
          type => 'href',
-    href_base => 'report.pl?action=',
+    href_base => 'journal.pl?action=search&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
          name => $locale->text('Account Description') },
 
       {col_id => 'gifi_accno',
          type => 'href',
-    href_base => 'report.pl?action=',
+    href_base => 'journal.pl?action=search&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
          name => $locale->text('GIFI') } ,
 
       {col_id => 'starting_balance',
@@ -156,12 +156,18 @@ sub columns {
     ];
 }
 
-=item report_heading
+=item header_lines 
 
 =cut
 
-sub report_heading {
-    return;
+sub header_lines {
+    return [{name => 'date_from'
+             text => $locale->text('From date') },
+            {name => 'date_to',
+             text => $locale->text('To Date') },
+            {name => 'yearend',
+             text => $locale->text('Ignore Yearends') },
+            ];
 }
 
 =back
@@ -198,6 +204,31 @@ sub save {
 =item run_report
 
 Runs the trial balance report.
+
+=cut
+
+sub run_report {
+    my ($self) = @_;
+    my @rows = $self->exec_method({funcname => 'report__gl'});
+    my $total_debits;
+    my $total_credits;
+    for my $ref(@rows){
+        my $href_suffix = "from_date=" . $self->from_date . 
+                          "&to_date=" . $self->to_date .
+                          "&accno=" . $ref->{account_number};
+        $total_debits += $ref->{debits}; 
+        $total_credits += $ref->{credits}; 
+        $ref->{account_number_href_suffix} = $href_suffix;
+        $ref->{account_desc_href_suffix} = $href_suffix;
+        $ref->{gifi_accno_href_suffix} = $href_suffix;
+        
+    }
+    push @rows {class => 'total', 
+               debits => $total_debits,
+              credits => $total_credits, };
+
+    $self->rows(\@rows);
+}
 
 =back
 
