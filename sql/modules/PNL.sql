@@ -21,7 +21,9 @@ CREATE TYPE pnl_line AS (
     amount numeric
 );
 
-CREATE OR REPLACE FUNCTION pnl__customer(in_id int) RETURNS SETOF pnl_line AS
+CREATE OR REPLACE FUNCTION pnl__customer
+(in_id int, in_from_date date, in_to_date date)
+RETURNS SETOF pnl_line AS
 $$
 WITH gl (id) AS
  ( SELECT id FROM ap WHERE approved is true AND entity_credit_account = $1
@@ -34,7 +36,7 @@ SELECT a.id, a.accno, a.description, a.category,
   FROM account a
   JOIN acc_trans ac ON a.id = ac.chart_id
   JOIN gl ON ac.trans_id = gl.id
- WHERE ac.approved is true
+ WHERE ac.approved is true AND ac.transdate BETWEEN $2 AND $3
  GROUP BY a.id, a.accno, a.description, a.category, 
           ah.id, ah.accno, ah.description
  ORDER BY a.category DESC, a.accno ASC;
