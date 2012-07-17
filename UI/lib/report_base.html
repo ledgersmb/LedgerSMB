@@ -129,3 +129,62 @@ END # BLOCK -?>
 	</td>
       </tr>
 <?lsmb END #BLOCK ?>
+<?lsmb BLOCK date_row_div ?>
+	<div class="input_row">
+          <div class="input_group">
+	  <?lsmb PROCESS input element_data = {
+               label=text('From')
+               class="date" 
+               name="from_date" 
+               size="11" 
+               title=datestyle } ?></div>
+          <div class="input_group">
+	  <?lsmb PROCESS input element_data = {
+               label=text('To')
+                 class="date" 
+                 name="to_date" 
+                 size="11" 
+                 title=datestyle } ?></div>
+        <div class="input_row">
+          <div class="input_group">
+	<label align="right"><?lsmb text('Period') ?></label>
+
+        <?lsmb 
+        all_months.unshift({});
+        all_years.unshift({}); 
+        PROCESS select element_data = {
+               name = "from_month"
+               options = all_months
+        } ?>
+
+	<?lsmb PROCESS select element_data = {
+               name="year"
+               options = all_years
+               text_attr = "date_get_all_years"
+               value_attr = "date_get_all_years"
+        } ?>
+	<?lsmb PROCESS input element_data = {
+               name="interval"
+               class="radio"
+               type="radio"
+               value="none" 
+               checked="checked" } ?>&nbsp;<?lsmb text('Current') ?>
+	<?lsmb PROCESS input element_data = { 
+               name="interval" 
+               class="radio" 
+               type="radio" 
+               value="month" } ?>&nbsp;<?lsmb text('Month') ?>
+	<?lsmb PROCESS input element_data = {
+               name="interval"
+               class="radio"
+               type="radio"
+               value="quarter" } ?>&nbsp;<?lsmb text('Quarter') ?>
+        <?lsmb PROCESS input element_data = {
+               name="interval"
+               class="radio"
+               type="radio"
+               value="year" } ?>&nbsp;<?lsmb text('Year') ?>
+              
+	</div>
+      </div>
+<?lsmb END #BLOCK ?>

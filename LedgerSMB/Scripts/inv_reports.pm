@@ -20,10 +20,12 @@ Searches for inventory adjustment reports
 
 =cut
 
+package LedgerSMB::Scripts::inv_reports;
+
 sub search_adj{
     my ($request) = @_;
-    use LedgerSMB::DBObject::Reports::Inventory::Search_Adj;
-    my $rpt = LedgerSMB::DBObject::Reports::Inventory::Search_Adj->new(%$request);
+    use LedgerSMB::DBObject::Report::Inventory::Search_Adj;
+    my $rpt = LedgerSMB::DBObject::Report::Inventory::Search_Adj->new(%$request);
     $rpt->run_report;
     $rpt->render($request);
 }

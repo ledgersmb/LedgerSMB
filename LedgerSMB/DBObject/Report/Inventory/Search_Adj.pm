@@ -73,14 +73,14 @@ sub name { return $locale->text('Inventory Adjustments') };
 =cut
 
 sub header_lines {
-    return [{name => 'from_date'
+    return [{name => 'from_date',
              text => $locale->text('Start Date') },
             {name => 'to_date',
              text => $locale->text('End Date') },
             {name => 'partnumber',
-             text => $locale->text('Including partnumber'},
+             text => $locale->text('Including partnumber') },
             {name => 'source',
-             text => $locale->text('Source starting with'}.
+             text => $locale->text('Source starting with') },
            ];
 }
 
@@ -99,9 +99,11 @@ sub columns {
                name => $locale->text('Reference')},
             {col_id => 'ar_invnumber',
                type => 'href',
+               name => $locale->text('AR Invoice'),
           href_base => 'is.pl?action=edit&id='},
             {col_id => 'ap_invnumber',
                type => 'href',
+               name => $locale->text('AP Invoice'),
           href_base => 'ir.pl?action=edit&id='},
       ];
 }
@@ -116,7 +118,7 @@ sub columns {
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->execute_method({funcname => 'inventory_adj__search'});
+    my @rows = $self->exec_method({funcname => 'inventory_adj__search'});
     for my $row (@rows) {
         $row->{ar_invnumber_suffix} = $row->{ar_invoice_id};
         $row->{ap_invnumber_suffix} = $row->{ap_invoice_id};
