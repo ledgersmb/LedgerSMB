@@ -106,6 +106,7 @@ sub set_ordering {
 }
 
 sub exec_method {
+    use DBD::Pg qw(:pg_types);
     my $self   = shift @_;
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     my $funcname = $args{funcname};
@@ -120,7 +121,7 @@ sub exec_method {
     my @call_args;
      
     my $query = "
-	SELECT proname, pronargs, proargnames FROM pg_proc 
+	SELECT proname, pronargs, proargnames, proargtypes FROM pg_proc 
 	 WHERE proname = ? 
 	       AND pronamespace = 
 	       coalesce((SELECT oid FROM pg_namespace WHERE nspname = ?), 
@@ -137,6 +138,7 @@ sub exec_method {
     
     my $pargs = $ref->{proargnames};
     my @proc_args;
+    my @proargtypes = split / /, $ref->{proargtypes};
 
     if ( !$ref->{proname} ) {    # no such function
         # If the function doesn't exist, $funcname gets zeroed?
@@ -149,6 +151,7 @@ sub exec_method {
         @proc_args = $self->_parse_array($pargs);
         if (@proc_args) {
             for my $arg (@proc_args) {
+                my $atype = shift @proargtypes;
                 #print STDERR "User Provided Args: $arg\n";
                 if ( $arg =~ s/^in_// ) {
                      if ( defined $self->{$arg} )
@@ -160,7 +163,12 @@ sub exec_method {
                         $logger->debug("exec_method pushing \$arg defined $arg | \$self->{\$arg} is undefined");
                         #$self->{$arg} = undef; # Why was this being unset? --CT
                      }
-                     push ( @call_args, $self->{$arg} );
+                     if ($atype == 17){
+                         push ( @call_args, { value => $self->{$arg} ,
+                                               type => DBD::Pg::PG_BYTEA });
+                     } else {    
+                         push ( @call_args, $self->{$arg} );
+                     }
                 }
             }
         }
