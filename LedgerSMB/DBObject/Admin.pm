@@ -29,70 +29,12 @@ User/group management for LedgerSMB
 
 use base qw(LedgerSMB::DBObject);
 
-use LedgerSMB::Location;
-use LedgerSMB::Contact;
 use LedgerSMB::DBObject::Entity::Person::Employee;
 use LedgerSMB::DBObject::User;
 use Log::Log4perl;
 use strict;
 
 my $logger = Log::Log4perl->get_logger("LedgerSMB::DBObject::Admin");
-
-#[18:00:31] <aurynn> I'd like to split them employee/user and roles/prefs
-#[18:00:44] <aurynn> edit/create employee and add user features if needed.
-
-# Deleting "save" method.  There is no point to a routine that only raises
-# an error given that it is not inherited.  An error will be raised in a way
-# which is more developer-friendly.   --CT
-
-=item delete_user($delete_role)
-
-Deletes a user specified by $self->{user_id}.
-
-if $delete_role is true, deletes the role too.
-
-=cut
-
-sub delete_user {
-    my ($self, $delete_role) = @_;
-    $self->{drop_role} = $delete_role;
-    $self->exec_method({funcname => 'admin__delete_user'});
-    return $self->{dbh}->commit;
-
-}
-
-=item search_users
-
-Returns a list of users matching search criteria, and attaches that list to the 
-user_results hash value.
-
-Search criteria:
-
-=over
-
-=item username
-
-=item first_name
-
-=item last_name
-
-=item ssn
-
-=item dob
-
-=back
-
-Undef matches all values.  All matches exact except username which allows for
-partial matches.
-
-=cut
-
-sub search_users {
-   my $self = shift @_;
-   my @users = $self->exec_method(funcname => 'admin__search_users');
-   $self->{user_results} = \@users;
-   return @users;
-}
 
 =item list_sessions
 
@@ -220,47 +162,6 @@ sub get_roles {
 	};
     }
     return \@rows;
-}
-
-=item get_countries
-
-Returns a reference to an array of hashrefs including the country data in the db.
-
-Sets the same reference to the countries hash value.
-
-=cut
-
-sub get_countries {
-    
-    my $self = shift @_;
-    
-    @{$self->{countries}} 
-          =$self->exec_method(funcname => 'location_list_country'); 
-	# returns an array of hashrefs.
-    return $self->{countries};
-}
-
-=item get_contact_classes
-
-Returns a list of hashrefs ({id =>, class =>}) relating to the contact classes.
-
-=cut
-
-sub get_contact_classes {
-    
-    my $self = shift @_;
-
-    # There are a couple problems here:
-    # 1)  It's best to mix Perl and SQL as little as possible.  Mixing gets 
-    # around our centralized sql injection prevention measures.  While this 
-    # query poses no direct risk there, it's a bad habit to be in.
-    # 
-    # 2)  Lack of ordering means drop down list orders could change in the future
-    # which is nprobably not very good.
-    # --CT
-    my $sth = $self->{dbh}->prepare("select id, class as name from contact_class");
-    my $code = $sth->execute();
-    return $sth->fetchall_arrayref({});
 }
 
 =back
