@@ -18,7 +18,7 @@ to provide functionality for specific types of file attachments.
 
 package LedgerSMB::File;
 use Moose;
-extends 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::DBObject_Moose';
 use File::MimeInfo;
 binmode STDIN, ':bytes';
 
