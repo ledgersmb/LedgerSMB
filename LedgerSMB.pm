@@ -262,6 +262,10 @@ sub new {
      # are not parameters of the CGI query.
      %params = $query->Vars;
      for my $p(keys %params){
+         if (($params{$p} eq undef) or ($params{$p} eq '')){
+             delete $params{$p};
+             next;
+         }
          utf8::decode($params{$p});
          utf8::upgrade($params{$p});
      }

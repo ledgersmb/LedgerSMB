@@ -6,8 +6,8 @@ CREATE TYPE inventory_adjustment_line AS (
     parts_id int,
     partnumber text,
     description text,
-    qty  numeric,
-    unhand numeric,
+    counted  numeric,
+    expected numeric,
     variance numeric
 );
 

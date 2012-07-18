@@ -36,7 +36,7 @@ date formats.
 
 =cut
 
-subtype 'LedgerSMB::Moose::Date', as 'Maybe[LedgerSMB::PGDate]';
+subtype 'LedgerSMB::Moose::Date', as 'LedgerSMB::PGDate';
 
 
 
@@ -59,7 +59,7 @@ number formats.
 
 =cut
 
-subtype 'LedgerSMB::Moose::Number', as 'Maybe[LedgerSMB::PGNumber]';
+subtype 'LedgerSMB::Moose::Number', as 'LedgerSMB::PGNumber';
 
 
 =head3 Coercions

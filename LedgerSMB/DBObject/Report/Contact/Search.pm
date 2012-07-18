@@ -114,7 +114,7 @@ The account/entity class of the contact.  Required and an exact match.
 
 =cut
 
-has entity_class => (is => 'ro', isa => 'Int');
+has entity_class => (is => 'ro', isa => 'Int', required => 1);
 
 =item name_part
 
@@ -122,7 +122,7 @@ Full text search on contact name.
 
 =cut
 
-has name_part => (is => 'ro', isa => 'Maybe[Str]');
+has name_part => (is => 'ro', isa => 'Str', required => 0);
 
 =item control_code
 
@@ -130,7 +130,7 @@ Matches the beginning of the control code string
 
 =cut
 
-has control_code => (is => 'ro', isa => 'Maybe[Str]');
+has control_code => (is => 'ro', isa => 'Str', required => 0);
 
 =item contact_info 
 
@@ -138,7 +138,7 @@ Aggregated from email, phone, fax, etc.  Aggregated by this report (internal).
 
 =cut
 
-has contact_info => (is => 'ro', isa => 'Maybe[ArrayRef[Str]]');
+has contact_info => (is => 'ro', isa => 'ArrayRef[Str]]', required => 0);
 
 =item email
 
@@ -146,7 +146,7 @@ Email address, exact match on any email address.
 
 =cut
 
-has email => (is => 'ro', isa => 'Maybe[Str]');
+has email => (is => 'ro', isa => 'Str', required => 0);
 
 =item phone
 
@@ -154,7 +154,7 @@ Exact match on phone any phone number, fax, etc.
 
 =cut
 
-has phone => (is => 'ro', isa => 'Maybe[Str]');
+has phone => (is => 'ro', isa => 'Str', required => 0);
 
 =item meta_number
 
@@ -162,7 +162,7 @@ Matches beginning of customer/vendor/etc. number.
 
 =cut
 
-has meta_number => (is => 'ro', isa => 'Maybe[Str]');
+has meta_number => (is => 'ro', isa => 'Str', required => 0);
 
 =item notes
 
@@ -170,7 +170,7 @@ Full text search of all entity/eca notes
 
 =cut
 
-has notes => (is => 'ro', isa => 'Maybe[Str]');
+has notes => (is => 'ro', isa => 'Str', required => 0);
 
 =item address
 
@@ -178,7 +178,7 @@ Full text search (fully matching) on any address line.
 
 =cut
 
-has address => (is => 'ro', isa => 'Maybe[Str]');
+has address => (is => 'ro', isa => 'Str', required => 0);
 
 =item city
 
@@ -186,7 +186,7 @@ Exact match on city
 
 =cut
 
-has city => (is => 'ro', isa => 'Maybe[Str]');
+has city => (is => 'ro', isa => 'Str', required => 0);
 
 =item state
 
@@ -194,7 +194,7 @@ Exact match on state/province
 
 =cut
 
-has state => (is => 'ro', isa => 'Maybe[Str]');
+has state => (is => 'ro', isa => 'Str', required => 0);
 
 =item mail_code
 
@@ -202,7 +202,7 @@ Match on beginning of mail or post code
 
 =cut
 
-has mail_code => (is => 'ro', isa => 'Maybe[Str]');
+has mail_code => (is => 'ro', isa => 'Str', required => 0);
 
 =item country
 
@@ -210,7 +210,7 @@ Full or short name of country (i.e. US or United States, or CA or Canada).
 
 =cut
 
-has country => (is => 'ro', isa => 'Maybe[Str]'); 
+has country => (is => 'ro', isa => 'Str', required => 0); 
 
 =item active_date_from
 
@@ -224,10 +224,12 @@ Active items only to this date.
 
 has active_date_from => (is => 'ro', 
                         isa => 'LedgerSMB::Moose::Date', 
-                     coerce => 1);
+                     coerce => 1,
+                   required => 0);
 has active_date_to => (is => 'ro', 
                       isa => 'LedgerSMB::Moose::Date', 
-                   coerce => 1);
+                   coerce => 1,
+                 required => 0);
 
 =back
 
