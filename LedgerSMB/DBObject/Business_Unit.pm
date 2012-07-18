@@ -14,7 +14,7 @@ funds, and projects.
 package LedgerSMB::DBObject::Business_Unit;
 use Moose;
 use LedgerSMB::DBObject_Moose;
-extends 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::DBObject_Moose';
 
 =head1 PROPERTIES
 

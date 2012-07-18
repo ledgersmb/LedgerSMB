@@ -22,7 +22,7 @@ package LedgerSMB::DBObject::Entity::Location;
 use Moose;
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
-extends 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::DBObject_Moose';
 
 my $locale = $LedgerSMB::App_State::Locale;
 if (!$locale){

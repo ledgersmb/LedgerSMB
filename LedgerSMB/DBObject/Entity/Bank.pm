@@ -18,7 +18,7 @@ credit account being able to attach itself to a single bank account.
 
 package LedgerSMB::DBObject::Entity::Bank;
 use Moose;
-extends 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::DBObject_Moose';
 
 =head1 INHERITS
 

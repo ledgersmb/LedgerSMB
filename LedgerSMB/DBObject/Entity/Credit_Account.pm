@@ -24,7 +24,7 @@ TODO
 
 package LedgerSMB::DBObject::Entity::Credit_Account;
 use Moose;
-extends 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::DBObject_Moose';
 
 our $VERSION = '1.4.0';
 

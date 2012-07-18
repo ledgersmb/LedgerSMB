@@ -6,7 +6,7 @@ LedgerSMB::DBObject::Entity -- Entity Management base classes for LedgerSMB
 
 package LedgerSMB::DBObject::Entity;
 use Moose;
-extends 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::DBObject_Moose';
 
 =head1 SYNOPSYS
 

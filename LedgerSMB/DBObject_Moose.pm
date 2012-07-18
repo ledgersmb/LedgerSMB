@@ -10,7 +10,7 @@ This module creates object instances based on LedgerSMB's in-database ORM, using
 =cut
 
 package LedgerSMB::DBObject_Moose;
-use Moose;
+use Moose::Role;
 use LedgerSMB::DBObject;
 use LedgerSMB;
 use Scalar::Util;
@@ -137,7 +137,5 @@ option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
-
-__PACKAGE__->meta->make_immutable;
 
 1;

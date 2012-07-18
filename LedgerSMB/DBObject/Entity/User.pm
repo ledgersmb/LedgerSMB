@@ -7,7 +7,7 @@ LedgerSMB::DBObject::Entity::User - User management Logic for LedgerSMB
 package LedgerSMB::DBObject::Entity::User;
 use Moose;
 use LedgerSMB::App_State;
-extends 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::DBObject_Moose';
 
 =head1 SYNOPSYS
 

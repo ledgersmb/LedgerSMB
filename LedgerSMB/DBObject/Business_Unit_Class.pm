@@ -15,7 +15,7 @@ package LedgerSMB::DBObject::Business_Unit_Class;
 use Moose;
 use LedgerSMB::DBObject_Moose;
 use LedgerSMB::DBObject::App_Module;
-extends 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::DBObject_Moose';
 
 =head1 PROPERTIES
 

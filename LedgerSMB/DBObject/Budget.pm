@@ -29,7 +29,7 @@ LedgerSMB::DBObject::Budget_Report.
 =cut
 
 use Moose;
-extends 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::DBObject_Moose';
 
 =head1 PROPERTIES
 

@@ -27,7 +27,7 @@ A default module (id 0, label '') is available for doing lookups.
 
 package LedgerSMB::DBObject::App_Module;
 use Moose;
-extends 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::DBObject_Moose';
 
 =head1 PROPERTIES
 
