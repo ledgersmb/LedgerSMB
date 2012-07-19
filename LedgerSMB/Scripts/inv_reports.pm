@@ -34,6 +34,16 @@ sub search_adj{
 
 Shows adjustment details
 
+=cut 
+
+sub adj_details {
+    my ($request) = @_;
+    use LedgerSMB::DBObject::Report::Inventory::Adj_Detail;
+    my $rpt = LedgerSMB::DBObject::Report::Inventory::Adj_Detail->new(%$request);
+    $rpt->run_report;
+    $rpt->render($request);
+}
+
 =back
 
 =head1 COPYRIGHT
