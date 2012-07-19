@@ -20,8 +20,8 @@ our $VERSION = '1.0';
 use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Business_Unit;
-use LedgerSMB::DBObject::Report::GL;
-use LedgerSMB::DBObject::Report::COA;
+use LedgerSMB::Report::GL;
+use LedgerSMB::Report::COA;
 use strict;
 
 =pod
@@ -75,7 +75,7 @@ sub chart_of_accounts {
            $request->{"col_$col"} = '1'; 
        }
     }
-    my $report = LedgerSMB::DBObject::Report::COA->new(%$request);
+    my $report = LedgerSMB::Report::COA->new(%$request);
     $report->run_report();
     $report->render($request);
 }
@@ -111,7 +111,7 @@ sub search {
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
                if $request->{"business_unit_$count"};
     }
-    my $report = LedgerSMB::DBObject::Report::GL->new(%$request);
+    my $report = LedgerSMB::Report::GL->new(%$request);
     $report->run_report;
     $report->render($request);
 }
@@ -124,13 +124,13 @@ Runs a search of AR or AP transactions and displays results.
 
 sub search_purchases {
     my ($request) = @_;
-    use LedgerSMB::DBObject::Report::Contact::Purchase;
+    use LedgerSMB::Report::Contact::Purchase;
     $request->{business_units} = [];
     for my $count (1 .. $request->{bc_count}){
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
                if $request->{"business_unit_$count"};
     }
-    my $report = LedgerSMB::DBObject::Report::Contact::Purchase->new(%$request);
+    my $report = LedgerSMB::Report::Contact::Purchase->new(%$request);
     $report->run_report;
     $report->render($request);
 }

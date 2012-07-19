@@ -15,8 +15,8 @@ our $VERSION = '1.0';
 
 use LedgerSMB;
 use LedgerSMB::Template;
-use LedgerSMB::DBObject::Report::co::Caja_Diaria;
-use LedgerSMB::DBObject::Report::co::Balance_y_Mayor;
+use LedgerSMB::Report::co::Caja_Diaria;
+use LedgerSMB::Report::co::Balance_y_Mayor;
 use strict;
 
 =pod
@@ -67,7 +67,7 @@ Runs a Caja Diaria and displays results.
 
 sub run_caja_diaria {
     my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Report::co::Caja_Diaria->new(%$request);
+    my $report = LedgerSMB::Report::co::Caja_Diaria->new(%$request);
     $report->run_report;
     $report->render($request);
 }
@@ -80,7 +80,7 @@ Runs Balance y Mayor and displays results.
 
 sub run_bm {
     my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Report::co::Balance_y_Mayor->new(%$request);
+    my $report = LedgerSMB::Report::co::Balance_y_Mayor->new(%$request);
     $report->run_report;
     $report->render($request);
 }

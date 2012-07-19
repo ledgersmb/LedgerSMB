@@ -1,36 +1,34 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Report::Unapproved::Batch_Detail - List Vouchers by Batch 
-in LedgerSMB
+LedgerSMB::Report::Unapproved::Batch_Overview - Search Batches in 
+LedgerSMB
 
 =head1 SYNPOSIS
 
-  my $report = LedgerSMB::DBObject::Report::Unapproved::Batch_Detail->new(
-      %$request
-  );
+  my $report = LedgerSMB::Report::Unapproved::Batch_Overview->new(%$request);
   $report->run;
   $report->render($request, $format);
 
 =head1 DESCRIPTION
 
 This provides an ability to search for (and approve or delete) pending
-transactions grouped in batches.  This report only handles the vouchers in the 
-bach themselves. For searching for batches, use
-LedgerSMB::DBObject::Report::Unapproved::Batch_Overview instead.
+transactions grouped in batches.  This report only handles the batches 
+themselves.  You cannot delete individual vouchers in this report.  For that,
+use LedgerSMB::Report::Unapproved::Batch_Detail instead.
 
 =head1 INHERITS
 
 =over
 
-=item LedgerSMB::DBObject::Report;
+=item LedgerSMB::Report;
 
 =back
 
 =cut
 
-package LedgerSMB::DBObject::Report::Unapproved::Batch_Detail;
+package LedgerSMB::Report::Unapproved::Batch_Overview;
 use Moose;
-extends 'LedgerSMB::DBObject::Report';
+extends 'LedgerSMB::Report';
 
 use LedgerSMB::DBObject::Business_Unit_Class;
 use LedgerSMB::DBObject::Business_Unit;
@@ -56,14 +54,9 @@ Select boxes for selecting the returned items.
 
 ID of transaction
 
-=item batch_class
-
-Text description of batch class
-
-=item transdate
+=item post_date
 
 Post date of transaction
-use LedgerSMB::DBObject::Report::Unapproved::Batch_Overview;
 
 =item reference text
 
@@ -73,10 +66,15 @@ Invoice number or GL reference
 
 Description of transaction
 
-=item amount
+=item transaction_total
 
-Total on voucher.  For AR/AP amount, this is the total of the AR/AP account 
-before payments.  For payments, receipts, and GL, it is the sum of the credits.
+Total of AR/AP/GL vouchers (GL vouchers credit side only is counted)
+
+=item payment_total
+
+Total of payment lines (credit side)
+
+Amount
 
 =back
 
@@ -92,20 +90,15 @@ our @COLUMNS = (
        type => 'text',
      pwidth => 1, },
 
-    {col_id => 'batch_class',
-       name => $locale->text('Batch Class'),
-       type => 'text', 
-     pwidth => 2, },
-
     {col_id => 'default_date',
        name => $locale->text('Date'),
        type => 'text',
      pwidth => '4', },
 
-    {col_id => 'Reference',
-       name => $locale->text('Reference'),
+    {col_id => 'control_code',
+       name => $locale->text('Control Code'),
        type => 'href',
-  href_base => '',
+  href_base => 'vouchers.pl?action=get_batch&id=',
      pwidth => '3', },
 
     {col_id => 'description',
@@ -113,8 +106,13 @@ our @COLUMNS = (
        type => 'text',
      pwidth => '6', },
 
-    {col_id => 'amount',
-       name => $locale->text('Amount'),
+    {col_id => 'transaction_total',
+       name => $locale->text('AR/AP/GL Amount'),
+       type => 'text',
+     pwidth => '2', },
+
+    {col_id => 'payment_total',
+       name => $locale->text('Payment Amount'),
        type => 'text',
      pwidth => '2', },
 
@@ -133,7 +131,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return $locale->text('Voucher List');
+    return $locale->text('Batch Search');
 }
 
 =item header_lines
@@ -143,8 +141,14 @@ Returns the inputs to display on header.
 =cut
 
 sub header_lines {
-    return [{name => 'batch_id',
-             text => $locale->text('Batch ID')}, ]
+    return [{name => 'type',
+             text => $locale->text('Batch Type')},
+            {name => 'reference',
+             text => $locale->text('Reference')},
+            {name => 'amount_gt',
+             text => $locale->text('Amount Greater Than')},
+            {name => 'amount_lt',
+             text => $locale->text('Amount Less Than')}, ]
 }
 
 =item subtotal_cols
@@ -165,13 +169,37 @@ Note that in all cases, undef matches everything.
 
 =over
 
-=item batch_id (Int)
+=item reference (text)
 
-ID of batch to list vouchers of.
+Exact match on reference or invoice number.
 
 =cut
 
-has 'batch_id' => (is => 'rw', isa => 'Int');
+has 'reference' => (is => 'rw', isa => 'Maybe[Str]');
+
+=item type
+
+ar for AR drafts, ap for AP drafts, gl for GL ones.
+
+=cut
+
+has 'type' => (is => 'rw', isa => 'Maybe[Str]');
+
+=item amount_gt
+
+The amount of the draft must be greater than this for it to show up.
+
+=cut
+
+has 'amount_gt' => (is => 'rw', isa => 'Maybe[Str]');
+
+=item amount_lt
+
+The amount of the draft must be less than this for it to show up.
+
+=cut
+
+has 'amount_lt' => (is => 'rw', isa => 'Maybe[Str]');
 
 =back
 
@@ -190,35 +218,19 @@ sub run_report{
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',
-                    text  => $locale->text('Post Batch'),
+                    text  => $locale->text('Post'),
                     value => 'batch_approve',
                     class => 'submit',
                  },{
                     name  => 'action',
                     type  => 'submit',
-                    text  => $locale->text('Delete Batch'),
+                    text  => $locale->text('Delete'),
                     value => 'batch_delete',
-                    class => 'submit',
-                 },{
-                    name  => 'action',
-                    type  => 'submit',
-                    text  => $locale->text('Delete Vouchers'),
-                    value => 'vouchers_delete',
                     class => 'submit',
                 }]);
     my @rows = $self->exec_method({funcname => 'batch__search'});
     for my $r (@rows){
-    for my $ref (@rows){
-        my $script;
-        my $class_to_script = {
-           1 => 'ap',
-           2 => 'ar',
-           5 => 'gl',
-           8 => 'is',
-           9 => 'ir',
-        };
-        $script = $class_to_script->{$ref->{batch_class}};
-        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}";
+       $r->{row_id} = $r->{id};
     }
     $self->rows(\@rows);
 }

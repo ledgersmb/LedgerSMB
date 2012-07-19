@@ -16,7 +16,7 @@ our $VERSION = '1.0';
 use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Business_Unit;
-use LedgerSMB::DBObject::Report::Aging;
+use LedgerSMB::Report::Aging;
 use strict;
 
 =pod
@@ -38,7 +38,7 @@ sub run_report{
          push @{$request->{business_units}}, $request->{"business_unit_$count"}
                if $request->{"business_unit_$count"};
     }
-    my $report = LedgerSMB::DBObject::Report::Aging->new(%$request);
+    my $report = LedgerSMB::Report::Aging->new(%$request);
     $report->run_report;
     $report->render($request);
 }
@@ -98,8 +98,8 @@ sub generate_statement {
                  {entity_id => $entity_id, credit_id => $credit_act->{id} }
         );
         $request->{meta_number} = $meta_number;
-        LedgerSMB::DBObject::Report::Aging->prepare_criteria($request);
-        my $aging_report = LedgerSMB::DBObject::Report::Aging->new(%$request);
+        LedgerSMB::Report::Aging->prepare_criteria($request);
+        my $aging_report = LedgerSMB::Report::Aging->new(%$request);
         my $statement = {
               aging => $aging_report,
              entity => $company,

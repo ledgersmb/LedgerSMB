@@ -1,10 +1,10 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Report::COA - Chart of Accounts List for LedgerSMB
+LedgerSMB::Report::COA - Chart of Accounts List for LedgerSMB
 
 =head1 SYNPOSIS
 
-  my $report = LedgerSMB::DBObject::Report::COA->new(%$request);
+  my $report = LedgerSMB::Report::COA->new(%$request);
   $report->run;
   $report->render($request, $format);
 
@@ -18,15 +18,15 @@ Typically columns are displayed based on the permissions of the user.
 
 =over
 
-=item LedgerSMB::DBObject::Report;
+=item LedgerSMB::Report;
 
 =back
 
 =cut
 
-package LedgerSMB::DBObject::Report::COA;
+package LedgerSMB::Report::COA;
 use Moose;
-extends 'LedgerSMB::DBObject::Report';
+extends 'LedgerSMB::Report';
 
 use LedgerSMB::App_State;
 

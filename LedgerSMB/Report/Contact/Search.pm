@@ -1,11 +1,11 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Report::Contact::Search - Search for Customers, Vendors,
+LedgerSMB::Report::Contact::Search - Search for Customers, Vendors,
 and more.
 
 =head1 SYNPOSIS
 
-  my $report = LedgerSMB::DBObject::Report::GL->new(%$request);
+  my $report = LedgerSMB::Report::GL->new(%$request);
   $report->run;
   $report->render($request, $format);
 
@@ -19,15 +19,15 @@ referral.
 
 =over
 
-=item LedgerSMB::DBObject::Report;
+=item LedgerSMB::Report;
 
 =back
 
 =cut
 
-package LedgerSMB::DBObject::Report::Contact::Search;
+package LedgerSMB::Report::Contact::Search;
 use Moose;
-extends 'LedgerSMB::DBObject::Report';
+extends 'LedgerSMB::Report';
 use LedgerSMB::App_State;
 
 my $locale = $LedgerSMB::App_State::Locale;

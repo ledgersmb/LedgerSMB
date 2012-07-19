@@ -1,10 +1,10 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Report::Budget::Variance - Variance Report per Budget
+LedgerSMB::Report::Budget::Variance - Variance Report per Budget
 
 =head1 SYNPOSIS
 
-  my $report = LedgerSMB::DBObject::Report::Budget::Variance->new(%$request);
+  my $report = LedgerSMB::Report::Budget::Variance->new(%$request);
   $report->run;
   $report->render($request, $format);
 
@@ -17,9 +17,9 @@ against what was budgetted.
 
 =cut
 
-package LedgerSMB::DBObject::Report::Budget::Variance;
+package LedgerSMB::Report::Budget::Variance;
 use Moose;
-extends 'LedgerSMB::DBObject::Report';
+extends 'LedgerSMB::Report';
 use LedgerSMB::App_State;
 my $locale = $LedgerSMB::App_State::Locale;
 

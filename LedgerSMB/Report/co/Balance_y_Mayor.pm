@@ -1,32 +1,31 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Report::co::Caja_Diaria - Caja Diaria Reports (Colombia)
+LedgerSMB::Report::co::Balance_y_Mayor - Colombian Balance/Ledger Rpt
 
 =head1 SYNPOSIS
 
-  my $cdreport = LedgerSMB::DBObject::Report::co::Caja_Diaria->new(%$request);
-  $cdreport->run;
-  $cdreport->render($request, $format);
+  my $bmreport = LedgerSMB::Report::co::Balance_y_Mayor->new(%$request);
+  $bmreport->run;
+  $bmreport->render($request, $format);
 
 =head1 DESCRIPTION
 
-This module provides Caja Diaria eports for LedgerSMB to Colombian standards.
-These reports provide an overview of cash activity to a set of accounts for a
-specific period.
+This module provides Balance y Mayor reports for LedgerSMB to Colombian 
+standards. This report shows total activity over a time period.
 
 =head1 INHERITS
 
 =over
 
-=item LedgerSMB::DBObject::Report;
+=item LedgerSMB::Report;
 
 =back
 
 =cut
 
-package LedgerSMB::DBObject::Report::co::Caja_Diaria;
+package LedgerSMB::Report::co::Balance_y_Mayor;
 use Moose;
-extends 'LedgerSMB::DBObject::Report';
+extends 'LedgerSMB::Report';
 
 use LedgerSMB::App_State;
 
@@ -73,8 +72,8 @@ our @COLUMNS = (
        type => 'text',
      pwidth => '12', },
 
-    {col_id => 'document_type',
-       name => $locale->text('Document'),
+    {col_id => 'starting_balance',
+       name => $locale->text('Starting Balance'),
        type => 'text',
      pwidth => '3', },
 
@@ -87,6 +86,10 @@ our @COLUMNS = (
        name => $locale->text('Credit'),
        type => 'text',
      pwidth => '4', },
+    {col_id => 'ending_balance',
+       name => $locale->text('Balance'),
+       type => 'text',
+     pwidth => '3', },
 
 );
 
@@ -102,7 +105,7 @@ Returns the template name for the filter.
 =cut
 
 sub filter_template {
-    return 'Reports/co/cj_filter';
+    return 'Reports/co/bm_filter';
 }
 
 =item name
@@ -112,7 +115,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return $locale->text('Caja Diaria');
+    return $locale->text('Balance y Mayor');
 }
 
 =item header_lines
@@ -125,11 +128,7 @@ sub header_lines {
     return [{name => 'date_from',
              text => $locale->text('Start Date')},
             {name => 'date_to',
-             text => $locale->text('End Date')},
-            {name => 'accno',
-             text => $locale->text('Account Number Start')},
-            {name => 'reference',
-             text => $locale->text('Account Number End')},]
+             text => $locale->text('End Date')},]
 }
 
 =back
@@ -156,20 +155,6 @@ End date for the report
 
 has 'date_to'  => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
-
-=item from_accno
-
-=cut
-
-has 'from_accno' => (is => 'rw', isa => 'Maybe[Str]');
-
-=item to_accno
-
-
-=cut
-
-has 'to_accno' => (is => 'rw', isa => 'Maybe[Str]');
-
 =back
 
 =head1 METHODS
@@ -184,11 +169,7 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self) = @_;
-    my @rows = $self->exec_method({funcname => 'report__cash_summary'});
-    for my $ref(@rows){
-        $ref->{document_type} = $doctypes->{$ref->{document_type}} 
-                if $doctypes->{$ref->{document_type}};
-    }
+    my @rows = $self->exec_method({funcname => 'report__general_balance'});
     $self->rows(\@rows);
 }
 

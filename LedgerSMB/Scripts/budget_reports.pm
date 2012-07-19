@@ -11,23 +11,23 @@ our $VERSION = '1.0';
 
 use LedgerSMB;
 use LedgerSMB::Template;
-use LedgerSMB::DBObject::Report::Budget::Search;
-use LedgerSMB::DBObject::Report::Budget::Variance;
+use LedgerSMB::Report::Budget::Search;
+use LedgerSMB::Report::Budget::Variance;
 use strict;
 
 =over
 
 =item search
 
-Searches for budgets.  See LedgerSMB::DBObject::Report::Budget::Search for 
+Searches for budgets.  See LedgerSMB::Report::Budget::Search for 
 more.
 
 =cut
 
 sub search {
     my ($request) = @_;
-    LedgerSMB::DBObject::Report::Budget::Search->prepare_criteria($request);
-    my $report = LedgerSMB::DBObject::Report::Budget::Search->new(%$request);
+    LedgerSMB::Report::Budget::Search->prepare_criteria($request);
+    my $report = LedgerSMB::Report::Budget::Search->new(%$request);
     $report->run_report;
     $report->render($request);
 }
@@ -42,7 +42,7 @@ vs amounts used.
 sub variance_report {
     my ($request) = @_;
     my $id = $request->{id};
-    my $report = LedgerSMB::DBObject::Report::Budget::Variance->for_budget_id($id);
+    my $report = LedgerSMB::Report::Budget::Variance->for_budget_id($id);
     $report->run_report;
     $report->render($request);
 }

@@ -23,7 +23,7 @@ To run a trial balance:
 =cut
 
 package LedgerSMB::Scripts::trial_balance;
-use LedgerSMB::DBObject::Report::Trial_Balance;
+use LedgerSMB::Report::Trial_Balance;
 
 
 =head1 DESCRIPTION
@@ -31,7 +31,7 @@ use LedgerSMB::DBObject::Report::Trial_Balance;
 This module provides workflow scripts for trial balance functionality.  The
 filter screen is displayed by LedgerSMB::Scripts::reports.
 
-Please see LedgerSMB::DBObject::Report::Trial_Balance for a list of criteria
+Please see LedgerSMB::Report::Trial_Balance for a list of criteria
 that the methods expect.
 
 =head1 METHODS
@@ -46,7 +46,7 @@ Retrieves and runs a trial balance.  Only needs id to be set.
 
 sub get {
     my ($request) = @_;
-    $request->merge(LedgerSMB::DBObject::Report::Trial_Balance->get($request->{id});
+    $request->merge(LedgerSMB::Report::Trial_Balance->get($request->{id});
     run($request);
 }
 
@@ -58,7 +58,7 @@ Saves a trial balance.  All criteria are applicable.
 
 sub save {
     my ($request) = @_;
-    my $tb = LedgerSMB::DBObject::Report::Trial_Balance->new(%$request);
+    my $tb = LedgerSMB::Report::Trial_Balance->new(%$request);
     $tb->save;
     list($request);
 }
@@ -82,7 +82,7 @@ Runs the trial balance. All criteria are applicable except id and desc.
 
 sub run {
     my ($request) = @_;
-    my LedgerSMB::DBObject::Report::Trial_Balance->new(%$request);
+    my LedgerSMB::Report::Trial_Balance->new(%$request);
     $tb->run_report;
     $tb->render($request);
 }
@@ -93,9 +93,9 @@ sub run {
 
 =item LedgerSMB::Scripts::reports
 
-=item LedgerSMB::DBObject::Report
+=item LedgerSMB::Report
 
-=item LedgerSMB::DBObject::Report::Trial_Balance
+=item LedgerSMB::Report::Trial_Balance
 
 =back
 

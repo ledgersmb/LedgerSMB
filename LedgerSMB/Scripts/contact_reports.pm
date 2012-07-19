@@ -15,8 +15,8 @@ our $VERSION = '1.0';
 
 use LedgerSMB;
 use LedgerSMB::Template;
-use LedgerSMB::DBObject::Report::Contact::Search;
-use LedgerSMB::DBObject::Report::Contact::History;
+use LedgerSMB::Report::Contact::Search;
+use LedgerSMB::Report::Contact::History;
 use strict;
 
 =over
@@ -30,7 +30,7 @@ Runs the search report and displays it
 sub search{
     my ($request) = @_;
 
-    my $report = LedgerSMB::DBObject::Report::Contact::Search->new(%$request);
+    my $report = LedgerSMB::Report::Contact::Search->new(%$request);
     $report->run_report;
     $report->render($request);
 }
@@ -44,7 +44,7 @@ Runs the purchase history report and displays it
 sub history {
     my ($request) = @_;
 
-    my $report = LedgerSMB::DBObject::Report::Contact::History->new(%$request);
+    my $report = LedgerSMB::Report::Contact::History->new(%$request);
     $report->run_report;
     $report->render($request);
 }

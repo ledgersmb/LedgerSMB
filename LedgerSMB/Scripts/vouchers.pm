@@ -19,7 +19,7 @@ our $VERSION = '0.1';
 
 use LedgerSMB::Batch;
 use LedgerSMB::Template;
-use LedgerSMB::DBObject::Report::Unapproved::Batch_Overview;
+use LedgerSMB::Report::Unapproved::Batch_Overview;
 use strict;
 
 
@@ -224,7 +224,7 @@ class_id and created_by are exact matches
 
 sub list_batches {
     my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Report::Unapproved::Batch_Overview->new(
+    my $report = LedgerSMB::Report::Unapproved::Batch_Overview->new(
                  %$request);
     $report->run_report;
     $report->render($request);
@@ -241,8 +241,8 @@ Displays all vouchers from the batch by type, and includes amount.
 
 sub get_batch {
     my ($request)  = @_;
-    use LedgerSMB::DBObject::Report::Unapproved::Batch_Detail;
-    my $report = LedgerSMB::DBObject::Report::Unapproved::Batch_Detail->new(
+    use LedgerSMB::Report::Unapproved::Batch_Detail;
+    my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
                  %$request);
     $report->run_report;
     $report->render($request);

@@ -1,11 +1,11 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Report::Contact::History - Purchase history reports
+LedgerSMB::Report::Contact::History - Purchase history reports
 and more.
 
 =head1 SYNPOSIS
 
-  my $report = LedgerSMB::DBObject::Report::Contact::History->new(%$request);
+  my $report = LedgerSMB::Report::Contact::History->new(%$request);
   $report->run;
   $report->render($request, $format);
 
@@ -18,15 +18,15 @@ both customers and vendors.
 
 =over
 
-=item LedgerSMB::DBObject::Report;
+=item LedgerSMB::Report;
 
 =back
 
 =cut
 
-package LedgerSMB::DBObject::Report::Contact::History;
+package LedgerSMB::Report::Contact::History;
 use Moose;
-extends 'LedgerSMB::DBObject::Report';
+extends 'LedgerSMB::Report';
 use LedgerSMB::App_State;
 use LedgerSMB::PGDate;
 

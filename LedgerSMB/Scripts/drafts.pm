@@ -144,8 +144,8 @@ amount_ge: total greater than or equal to
 
 sub list_drafts {
     my ($request) = @_;
-    use LedgerSMB::DBObject::Report::Unapproved::Drafts;
-    my $report = LedgerSMB::DBObject::Report::Unapproved::Drafts->new(%$request);
+    use LedgerSMB::Report::Unapproved::Drafts;
+    my $report = LedgerSMB::Report::Unapproved::Drafts->new(%$request);
     $report->run_report;
     $report->render;
 }

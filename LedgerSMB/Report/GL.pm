@@ -1,10 +1,10 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Report::GL - GL Reports for LedgerSMB
+LedgerSMB::Report::GL - GL Reports for LedgerSMB
 
 =head1 SYNPOSIS
 
-  my $glreport = LedgerSMB::DBObject::Report::GL->new(%$request);
+  my $glreport = LedgerSMB::Report::GL->new(%$request);
   $glreport->run;
   $glreport->render($request, $format);
 
@@ -17,15 +17,15 @@ searching for and reporting financial transactions.
 
 =over
 
-=item LedgerSMB::DBObject::Report;
+=item LedgerSMB::Report;
 
 =back
 
 =cut
 
-package LedgerSMB::DBObject::Report::GL;
+package LedgerSMB::Report::GL;
 use Moose;
-extends 'LedgerSMB::DBObject::Report';
+extends 'LedgerSMB::Report';
 
 use LedgerSMB::DBObject::Business_Unit_Class;
 use LedgerSMB::DBObject::Business_Unit;

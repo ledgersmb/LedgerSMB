@@ -1,20 +1,20 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Report::Margin::Invoice - Report for profit vs COGS per 
+LedgerSMB::Report::Margin::Invoice - Report for profit vs COGS per 
 Invoice
 
 =head1 SYNOPSIS
 
- my $report = LedgerSMB::DBObject::Report::Margin::ECA->new(%$request);
+ my $report = LedgerSMB::Report::Margin::ECA->new(%$request);
  $report->run_report;
  $report->render($request);
 
 =cut
 
-package LedgerSMB::DBObject::Report::Margin::Invoice;
+package LedgerSMB::Report::Margin::Invoice;
 use Moose;
 use LedgerSMB::App_State;
-extends 'LedgerSMB::DBObject::Report';
+extends 'LedgerSMB::Report';
 
 my $locale = LedgerSMB::App_State::Locale;
 
@@ -105,9 +105,9 @@ sub run_report {
 
 =over
 
-=item LedgerSMB::DBObject::Report
+=item LedgerSMB::Report
 
-=item LedgerSMB::DBObject::Report::Margin::ECA
+=item LedgerSMB::Report::Margin::ECA
 
 =back
 

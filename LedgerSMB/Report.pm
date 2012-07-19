@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Report - Base Reporting Functionality for LedgerSMB
+LedgerSMB::Report - Base Reporting Functionality for LedgerSMB
 
 =head1 SYNPOSIS
 
@@ -35,17 +35,9 @@ UI/reports/display_report template will be used.
 
 =back
 
-=head1 INHERITS
-
-=over
-
-=item LedgerSMB::DBObject_Moose
-
-=back
-
 =cut
 
-package LedgerSMB::DBObject::Report;
+package LedgerSMB::Report;
 use Moose;
 with 'LedgerSMB::DBObject_Moose';
 use LedgerSMB::Template;

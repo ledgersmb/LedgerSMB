@@ -1,21 +1,21 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Report::Inventory::Adj_Details - Inventory Adjustment
+LedgerSMB::Report::Inventory::Adj_Details - Inventory Adjustment
 Details report for LedgerSMB
 
 =head1 SYNPOSIS
 
- my $rpt = LedgerSMB::DBObject::Report::Inventory::Adj_Details->new(%$request);
+ my $rpt = LedgerSMB::Report::Inventory::Adj_Details->new(%$request);
  $rpt->run_report;
  $rpt->render($request);
 
 =cut
 
-package LedgerSMB::DBObject::Report::Inventory::Adj_Details;
+package LedgerSMB::Report::Inventory::Adj_Details;
 use Moose;
 use LedgerSMB::App_State;
-use LedgerSMB::DBObject::Report::Inventory::Search_Adj;
-extends 'LedgerSMB::DBObject::Report';
+use LedgerSMB::Report::Inventory::Search_Adj;
+extends 'LedgerSMB::Report';
 
 my $locale = $LedgerSMB::App_State::Locale;
 
@@ -119,9 +119,9 @@ sub run_report {
 
 =over
 
-=item LedgerSMB::DBObject::Report;
+=item LedgerSMB::Report;
 
-=item LedgerSMB::DBObject::Report::Inventory::Search_Adj;
+=item LedgerSMB::Report::Inventory::Search_Adj;
 
 =back
 

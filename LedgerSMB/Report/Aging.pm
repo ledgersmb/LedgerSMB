@@ -1,10 +1,10 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Report::Aging - AR/AP Aging reports for LedgerSMB
+LedgerSMB::Report::Aging - AR/AP Aging reports for LedgerSMB
 
 =head1 SYNPOSIS
 
-  my $agereport = LedgerSMB::DBObject::Report::Aging->new(%$request);
+  my $agereport = LedgerSMB::Report::Aging->new(%$request);
   $agereport->run;
   $agereport->render($request, $format);
 
@@ -16,19 +16,11 @@ are.  This can be useful to help better manage collection of moneys owed, etc.
 This module is also capable of printing statements, which are basically aging
 reportins aimed at the customer in question.
 
-=head1 INHERITS
-
-=over
-
-=item LedgerSMB::DBObject::Report;
-
-=back
-
 =cut
 
-package LedgerSMB::DBObject::Report::Aging;
+package LedgerSMB::Report::Aging;
 use Moose;
-extends 'LedgerSMB::DBObject::Report';
+extends 'LedgerSMB::Report';
 
 use LedgerSMB::DBObject::Business_Unit_Class;
 use LedgerSMB::DBObject::Business_Unit;

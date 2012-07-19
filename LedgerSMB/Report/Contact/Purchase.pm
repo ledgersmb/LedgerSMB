@@ -1,11 +1,11 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Report::Contact::Purchase - Search AR/AP Transactions and
+LedgerSMB::Report::Contact::Purchase - Search AR/AP Transactions and
 generate Reports
 
 =head1 SYNPOSIS
 
-  my $report = LedgerSMB::DBObject::Report::Contact::Purchase->new(%$request);
+  my $report = LedgerSMB::Report::Contact::Purchase->new(%$request);
   $report->run;
   $report->render($request, $format);
 
@@ -20,15 +20,15 @@ certain point, and locating specific transactions.
 
 =over
 
-=item LedgerSMB::DBObject::Report;
+=item LedgerSMB::Report;
 
 =back
 
 =cut
 
-package LedgerSMB::DBObject::Report::Contact::Purchase;
+package LedgerSMB::Report::Contact::Purchase;
 use Moose;
-extends 'LedgerSMB::DBObject::Report';
+extends 'LedgerSMB::Report';
 use LedgerSMB::App_State;
 
 my $locale = $LedgerSMB::App_State::Locale;
@@ -244,7 +244,7 @@ Invoices posted starting on this date
 
 =cut
 
-has from_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::DBObject::Date');
+has from_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item to_date
 
@@ -252,7 +252,7 @@ Invoices posted no later than this date
 
 =cut
 
-has to_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::DBObject::Date');
+has to_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item as_of
 
@@ -260,7 +260,7 @@ Shows invoice balances as of this date.
 
 =cut
 
-has as_of => (is => 'ro', coerce => 1, isa => 'LedgerSMB::DBObject::Date');
+has as_of => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item summarize
 

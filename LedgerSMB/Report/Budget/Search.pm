@@ -1,10 +1,10 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Reports::Budget::Search - Search for Budgets
+LedgerSMB::Reports::Budget::Search - Search for Budgets
 
 =head1 SYNPOSIS
 
-  my $report = LedgerSMB::DBObject::Report::Budget::Search->new(%$request);
+  my $report = LedgerSMB::Report::Budget::Search->new(%$request);
   $report->run;
   $report->render($request, $format);
 
@@ -14,9 +14,9 @@ This is a basic search report for budgets.
 
 =cut
 
-package LedgerSMB::DBObject::Report::Budget::Search;
+package LedgerSMB::Report::Budget::Search;
 use Moose;
-extends 'LedgerSMB::DBObject::Report';
+extends 'LedgerSMB::Report';
 
 use LedgerSMB::App_State;
 my $locale = $LedgerSMB::App_State::Locale;

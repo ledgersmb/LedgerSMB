@@ -24,8 +24,8 @@ package LedgerSMB::Scripts::inv_reports;
 
 sub search_adj{
     my ($request) = @_;
-    use LedgerSMB::DBObject::Report::Inventory::Search_Adj;
-    my $rpt = LedgerSMB::DBObject::Report::Inventory::Search_Adj->new(%$request);
+    use LedgerSMB::Report::Inventory::Search_Adj;
+    my $rpt = LedgerSMB::Report::Inventory::Search_Adj->new(%$request);
     $rpt->run_report;
     $rpt->render($request);
 }
@@ -38,8 +38,8 @@ Shows adjustment details
 
 sub adj_details {
     my ($request) = @_;
-    use LedgerSMB::DBObject::Report::Inventory::Adj_Detail;
-    my $rpt = LedgerSMB::DBObject::Report::Inventory::Adj_Detail->new(%$request);
+    use LedgerSMB::Report::Inventory::Adj_Detail;
+    my $rpt = LedgerSMB::Report::Inventory::Adj_Detail->new(%$request);
     $rpt->run_report;
     $rpt->render($request);
 }

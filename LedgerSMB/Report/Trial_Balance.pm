@@ -1,12 +1,12 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Report::Trial_Balance - Trial Balance report for LedgerSMB
+LedgerSMB::Report::Trial_Balance - Trial Balance report for LedgerSMB
 
 =head1 SYNOPSYS
 
 Unlike other reports, trial balance reports can be saved:
 
- my $report = LedgerSMB::DBObject::Report::Trial_Balance->new(%$request);
+ my $report = LedgerSMB::Report::Trial_Balance->new(%$request);
  $report->save;
 
 We can then run it:
@@ -16,16 +16,16 @@ We can then run it:
 
 We can also retrieve a previous report from the database and run it:
 
- my $report = LedgerSMB::DBObject::Report::Trial_Balance->get($id);
+ my $report = LedgerSMB::Report::Trial_Balance->get($id);
  $report->run_report;
  $report->render($request);
 
 =cut
 
-package LedgerSMB::DBObject::Report::Trial_Balance;
+package LedgerSMB::Report::Trial_Balance;
 use Moose;
 use LedgerSMB::App_State;
-extends 'LedgerSMB::DBObject::Report';
+extends 'LedgerSMB::Report';
 
 my $locale = $LedgerSMB::App_State::Locale;
 
@@ -103,7 +103,7 @@ has accounts => (is => 'rw', isa => 'Maybe[ArrayRef[Int]]');
 
 =head1  REPORT CONSTANT FUNCTIONS
 
-See the documentation for LedgerSMB::DBObject::Report for details on these
+See the documentation for LedgerSMB::Report for details on these
 methods.
 
 =over
