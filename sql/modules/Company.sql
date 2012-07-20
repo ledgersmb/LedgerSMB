@@ -10,6 +10,7 @@ DROP TYPE IF EXISTS company_entity CASCADE;
 
 CREATE TYPE company_entity AS(
   entity_id int,
+  entity_class int,
   legal_name text,
   tax_id text,
   sales_tax_id text,
@@ -595,7 +596,7 @@ entity class.$$;
 CREATE OR REPLACE FUNCTION company__get (in_entity_id int) 
 RETURNS company_entity AS
 $$
-	SELECT c.entity_id, c.legal_name, c.tax_id, c.sales_tax_id,
+	SELECT c.entity_id, e.entity_class, c.legal_name, c.tax_id, c.sales_tax_id,
                c.license_number, c.sic_code, e.control_code, e.country_id 
           FROM company c
           JOIN entity e ON e.id = c.entity_id
@@ -608,7 +609,7 @@ $$ Returns all attributes for the company attached to the entity.$$;
 CREATE OR REPLACE FUNCTION company__get_by_cc (in_control_code text)
 RETURNS company_entity AS
 $$
-        SELECT c.entity_id, c.legal_name, c.tax_id, c.sales_tax_id,
+        SELECT c.entity_id, e.entity_class, c.legal_name, c.tax_id, c.sales_tax_id,
                c.license_number, c.sic_code, e.control_code, e.country_id
           FROM company c
           JOIN entity e ON e.id = c.entity_id

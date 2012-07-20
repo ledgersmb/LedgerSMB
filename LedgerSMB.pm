@@ -732,6 +732,7 @@ sub call_procedure {
             if ($types[$_] == 91 or $types[$_] == 11){
                 $ref->{$names[$_]} = LedgerSMB::PGDate->from_db($ref->{$names[$_]}, 'date') if defined $ref->{$names[$_]};
             }
+            delete $ref->{$names[$_]} unless defined $ref->{$names[$_]};
         }
         push @results, $ref;
     }

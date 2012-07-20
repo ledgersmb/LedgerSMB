@@ -121,6 +121,8 @@ sub get {
     my ($ref) = __PACKAGE__->call_procedure(procname => 'employee__get',
                                           args => [$id]);
     return undef unless $ref->{control_code};
+    $ref->{entity_class} = 3;
+    $ref->{name} = "$ref->{first_name} $ref->{last_name}";
     return __PACKAGE__->new(%$ref);
 }
 

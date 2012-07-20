@@ -41,7 +41,7 @@ This is the class id of the wage (when set)
 
 =cut
 
-has type_id => (is => 'rw', isa => 'Int'. required => 1);
+has type_id => (is => 'rw', isa => 'Int', required => 1);
 
 =item rate
 

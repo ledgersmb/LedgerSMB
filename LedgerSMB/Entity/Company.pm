@@ -98,6 +98,7 @@ sub get {
     my ($ref) = __PACKAGE__->call_procedure(procname => 'company__get',
                                           args => [$id]);
     return undef unless $ref->{control_code};
+    $ref->{name} = $ref->{legal_name};
     return __PACKAGE__->new(%$ref);
 }
 
@@ -113,6 +114,7 @@ sub get_by_cc {
     my ($ref) = __PACKAGE__->call_procedure(procname => 'company__get_by_cc',
                                           args => [$cc]);
     return undef unless $ref->{control_code};
+    $ref->{name} = $ref->{legal_name};
     return __PACKAGE__->new(%$ref);
 }
 

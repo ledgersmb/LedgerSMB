@@ -49,7 +49,7 @@ Date when the location became inactive.
 
 =cut
 
-has 'inactive_date' => (is => 'rw', coerce => 1isa => 'LedgerSMB::Moose::Date');
+has 'inactive_date' => (is => 'rw', coerce=>1, isa => 'LedgerSMB::Moose::Date');
 
 =item id
 

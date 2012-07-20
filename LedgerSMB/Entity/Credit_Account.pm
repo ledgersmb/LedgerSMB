@@ -126,7 +126,7 @@ operation.  Use get_current_debt() to set it.
 
 =cut
 
-has 'current_debt' => (is => 'rw', isa => 'LedgerSMB::Moose::Number'.
+has 'current_debt' => (is => 'rw', isa => 'LedgerSMB::Moose::Number',
                        coerce => 1, lazy => 1, builder => 'get_current_debt');
 
 =item terms
