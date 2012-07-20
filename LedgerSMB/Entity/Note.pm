@@ -1,11 +1,11 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Entity::Note - Notes handling for customers, vendors, 
+LedgerSMB::Entity::Note - Notes handling for customers, vendors, 
 employees, etc.
 
 =head1 SYNPOSIS
 
-  @notes = LedgerSMB::DBObject::Entity::Bank->list($entity_id, [$credit_id]);
+  @notes = LedgerSMB::Entity::Bank->list($entity_id, [$credit_id]);
   $note->add;
 
 =head1 DESCRIPTION
@@ -19,7 +19,7 @@ level.
 
 =cut
 
-package LedgerSMB::DBObject::Entity::Note;
+package LedgerSMB::Entity::Note;
 use Moose;
 with 'LedgerSMB::DBObject_Moose';
 
@@ -42,7 +42,7 @@ record attached to a credit account but is ignored in that case.
 
 =cut
 
-has 'entity_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'entity_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item credit_id Int
 
@@ -51,7 +51,7 @@ entity_id are set, entity_id is ignored.
 
 =cut
 
-has 'credit_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'credit_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item id
 
@@ -59,7 +59,7 @@ If set this indicates this has been saved to the db.
 
 =cut
 
-has 'id' => (is =>'ro', isa => 'Maybe[Int]');
+has 'id' => (is =>'ro', isa => 'Int', required => 0);
 
 =item subject
 
@@ -67,7 +67,7 @@ This is the subject of the note.
 
 =cut
 
-has 'subject' => (is =>'rw', isa => 'Maybe[Str]');
+has 'subject' => (is =>'rw', isa => 'Str', required => 0);
 
 =item note
 
@@ -75,7 +75,7 @@ The contents of the note.  Required
 
 =cut
 
-has 'note' => (is => 'rw', isa => 'Str');
+has 'note' => (is => 'rw', isa => 'Str', required => 1);
 
 =item 'note_class'
 
@@ -83,7 +83,7 @@ ID for note class (1 for entity, 3 for eca, etc)
 
 =cut
 
-has 'note_class'  => (is => 'rw', isa => 'Maybe[Int]');
+has 'note_class'  => (is => 'rw', isa => 'Int', required => 1);
 
 =back
 
@@ -102,15 +102,14 @@ sub list{
     my ($self, $entity_id, $credit_id) = @_;
     my @results;
     if ($credit_id){
-        @results = $self->call_procedure(procname =>
+        @results = __PACKAGE__->call_procedure(procname =>
              'eca__list_notes', args => [$credit_id]);
     } else {
-        @results = $self->call_procedure(procname =>
+        @results = __PACKAGE__->call_procedure(procname =>
              'entity__list_notes', args => [$entity_id]);
     }
     for my $row(@results){
-        $self->prepare_dbhash($row); 
-        $row = $self->new(%$row);
+        $row = __PACKAGE__->new(%$row);
     }
     return @results;
 }

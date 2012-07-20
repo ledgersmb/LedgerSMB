@@ -1,10 +1,10 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Entity::Contact - Contact info handling for LSMB
+LedgerSMB::Entity::Contact - Contact info handling for LSMB
 
 =head1 SYNPOSIS
 
-  @contact_list = LedgerSMB::DBObject::Entity::Contact->list(
+  @contact_list = LedgerSMB::Entity::Contact->list(
          {entity_id = $entity_id, credit_id = $credit_id }
   );
 
@@ -18,19 +18,11 @@ companies in LedgerSMB.
 
 =cut
 
-package LedgerSMB::DBObject::Entity::Contact;
+package LedgerSMB::Entity::Contact;
 use Moose;
 with 'LedgerSMB::DBObject_Moose';
 
-=head1 INHERITS
-
-=over
-
-=item LedgerSMB::DBObject_Moose;
-
-=back
-
-head1 PROPERTIES
+=head1 PROPERTIES
 
 =over
 
@@ -41,7 +33,7 @@ record attached to a credit account but is ignored in that case.
 
 =cut
 
-has 'entity_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'entity_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item credit_id Int
 
@@ -50,7 +42,7 @@ entity_id are set, entity_id is ignored.
 
 =cut
 
-has 'credit_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'credit_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item class_id Int
 
@@ -80,7 +72,7 @@ Currently that table contains:
 
 =cut
 
-has 'class_id' => (is => 'rw', isa => 'Int');
+has 'class_id' => (is => 'rw', isa => 'Int', required => 1);
 
 =item class Str
 
@@ -89,7 +81,7 @@ such as IRC, Fax, or Email.
 
 =cut
 
-has 'class' => (is => 'ro', isa => 'Maybe[Str]');
+has 'class' => (is => 'ro', isa => 'Str', required => 0);
 
 =item description Str
 
@@ -97,7 +89,7 @@ This is set to the description of the contact record.
 
 =cut
 
-has 'description' => (is => 'rw', isa => 'Maybe[Str]');
+has 'description' => (is => 'rw', isa => 'Str', required => 0);
 
 =item contact Str
 
@@ -106,7 +98,7 @@ or phone number.
 
 =cut
 
-has 'contact' => (is => 'rw', isa => 'Str');
+has 'contact' => (is => 'rw', isa => 'Str', required => 1);
 
 
 =item old_class_id
@@ -118,9 +110,9 @@ if possible.
 
 =cut
 
-has 'old_class_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'old_class_id' => (is => 'rw', isa => 'Int', required => 0);
 
-has 'old_contact' => (is => 'rw', isa => 'Maybe[Str]');
+has 'old_contact' => (is => 'rw', isa => 'Str', required => 0);
 
 =back
 
@@ -139,19 +131,18 @@ sub list {
 
     my @results;
 
-    for my $ref ($self->call_procedure(procname => 'entity__list_contacts',
+    for my $ref (__PACKAGE__->call_procedure(procname => 'entity__list_contacts',
                                              args => [$args->{entity_id}])
     ){
        $self->prepare_dbhash($ref);
        push @results, $self->new($ref);
     }
 
-    for my $ref ($self->call_procedure(procname => 'eca__list_contacts',
+    for my $ref (__PACKAGE__->call_procedure(procname => 'eca__list_contacts',
                                              args => [$args->{credit_id}])
     ){
-       $self->prepare_dbhash($ref);
        $ref->{credit_id} = $args->{credit_id};
-       push @results, $self->new($ref);
+       push @results, __PACKAGE__->new($ref);
     }
     return @results;
 }
@@ -198,7 +189,7 @@ Lists classes as unblessed hashrefs
 =cut
 
 sub list_classes {
-    return LedgerSMB::DBObject_Moose->call_procedure(
+    return __PACKAGE__->call_procedure(
           procname => 'contact_class__list'
     );
 }

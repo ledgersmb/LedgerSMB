@@ -1,10 +1,10 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Entity -- Entity Management base classes for LedgerSMB
+LedgerSMB::Entity -- Entity Management base classes for LedgerSMB
 
 =cut
 
-package LedgerSMB::DBObject::Entity;
+package LedgerSMB::Entity;
 use Moose;
 with 'LedgerSMB::DBObject_Moose';
 
@@ -12,17 +12,6 @@ with 'LedgerSMB::DBObject_Moose';
 
 This module anages basic entity management for persons and companies, both of which will
 likely inherit this class.
-
-=head1 INHERITS
-
-=over
-
-=item LedgerSMB::DBObject_Moose
-
-=back
-
-=cut
-
 
 =head1 PROPERTIES
 
@@ -36,7 +25,7 @@ retrieved.
 
 =cut
 
-has 'id' => (is => 'rw', isa => 'Maybe[Str]', required => '0');
+has 'id' => (is => 'rw', isa => 'Str', required => '0');
 
 =item control_code
 
@@ -55,7 +44,7 @@ person.last_name.
 
 =cut
 
-has 'name' => (is => 'rw', isa => 'Maybe[Str]');
+has 'name' => (is => 'rw', isa => 'Str', required => 1);
 
 =item country_id
 
@@ -63,7 +52,7 @@ ID of country of entiy.
 
 =cut
 
-has 'country_id' => (is => 'rw', isa => 'Int');
+has 'country_id' => (is => 'rw', isa => 'Int', required => 1);
 
 =item country_name
 
@@ -71,7 +60,7 @@ Name of country (optional)
 
 =cut
 
-has 'country_name' => (is => 'rw', isa => 'Maybe[Str]');
+has 'country_name' => (is => 'rw', isa => 'Str', required => 0);
 
 =item entity_class
 
@@ -83,7 +72,7 @@ table in database for list of valid values, but 1 is for vendors, 2 for customer
 
 =cut
 
-has 'entity_class' => (is => 'rw', isa => 'Int');
+has 'entity_class' => (is => 'rw', isa => 'Int', required => 1);
 
 =head1 METHODS
 

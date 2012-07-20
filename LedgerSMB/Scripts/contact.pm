@@ -16,13 +16,13 @@ This module is the UI controller for the customer, vendor, etc functions; it
 
 package LedgerSMB::Scripts::contact;
 
-use LedgerSMB::DBObject::Entity::Company;
-use LedgerSMB::DBObject::Entity::Person;
-use LedgerSMB::DBObject::Entity::Credit_Account;
-use LedgerSMB::DBObject::Entity::Location;
-use LedgerSMB::DBObject::Entity::Contact;
-use LedgerSMB::DBObject::Entity::Bank;
-use LedgerSMB::DBObject::Entity::Note;
+use LedgerSMB::Entity::Company;
+use LedgerSMB::Entity::Person;
+use LedgerSMB::Entity::Credit_Account;
+use LedgerSMB::Entity::Location;
+use LedgerSMB::Entity::Contact;
+use LedgerSMB::Entity::Bank;
+use LedgerSMB::Entity::Note;
 use LedgerSMB::File;
 use LedgerSMB::App_State;
 use LedgerSMB::Template;
@@ -54,12 +54,12 @@ control code
 sub get_by_cc {
     my ($request) = @_;
     my $entity = 
-           LedgerSMB::DBObject::Entity::Company->get_by_cc($request->{control_code});
-    $entity ||=  LedgerSMB::DBObject::Entity::Person->get_by_cc($request->{control_code});
+           LedgerSMB::Entity::Company->get_by_cc($request->{control_code});
+    $entity ||=  LedgerSMB::Entity::Person->get_by_cc($request->{control_code});
     my ($company, $person) = (undef, undef);
-    if (eval {$entity->isa('LedgerSMB::DBObject::Entity::Company')}){
+    if (eval {$entity->isa('LedgerSMB::Entity::Company')}){
        $company = $entity;
-    } elsif (eval {$entity->isa('LedgerSMB::DBObject::Entity::Person')}){
+    } elsif (eval {$entity->isa('LedgerSMB::Entity::Person')}){
        $person = $entity;
     }
     _main_screen($request, $company, $person);
@@ -78,12 +78,12 @@ of the company information.
 
 sub get {
     my ($request) = @_;
-    my $entity = LedgerSMB::DBObject::Entity::Company->get($request->{entity_id});
-    $entity ||= LedgerSMB::DBObject::Entity::Person->get($request->{entity_id});
+    my $entity = LedgerSMB::Entity::Company->get($request->{entity_id});
+    $entity ||= LedgerSMB::Entity::Person->get($request->{entity_id});
     my ($company, $person) = (undef, undef);
-    if ($entity->isa('LedgerSMB::DBObject::Entity::Company')){
+    if ($entity->isa('LedgerSMB::Entity::Company')){
        $company = $entity;
-    } elsif ($entity->isa('LedgerSMB::DBObject::Entity::Person')){
+    } elsif ($entity->isa('LedgerSMB::Entity::Person')){
        $person = $entity;
     }
     _main_screen($request, $company, $person);
@@ -131,7 +131,7 @@ sub _main_screen {
     my $entity_id = $company->{entity_id};
     $entity_id ||= $person->{entity_id};
     my @credit_list = 
-       LedgerSMB::DBObject::Entity::Credit_Account->list_for_entity(
+       LedgerSMB::Entity::Credit_Account->list_for_entity(
                           $entity_id,
                           $request->{entity_class}
         );
@@ -152,22 +152,22 @@ sub _main_screen {
     $entity_class ||= $company->{entity_class};
     $entity_class ||= $request->{entity_class};
     $entity_class ||= $request->{account_class};
-    my @locations = LedgerSMB::DBObject::Entity::Location->get_active(
+    my @locations = LedgerSMB::Entity::Location->get_active(
                        {entity_id => $entity_id,
                         credit_id => $credit_act->{id}}
           );
 
     my @contact_class_list =
-          LedgerSMB::DBObject::Entity::Contact->list_classes;
+          LedgerSMB::Entity::Contact->list_classes;
 
-    my @contacts = LedgerSMB::DBObject::Entity::Contact->list(
+    my @contacts = LedgerSMB::Entity::Contact->list(
               {entity_id => $entity_id,
                credit_id => $credit_act->{id}}
     );
     my @bank_account = 
-         LedgerSMB::DBObject::Entity::Bank->list($entity_id);
+         LedgerSMB::Entity::Bank->list($entity_id);
     my @notes =
-         LedgerSMB::DBObject::Entity::Note->list($entity_id,
+         LedgerSMB::Entity::Note->list($entity_id,
                                                  $credit_act->{id});
 
     # Globals for the template
@@ -444,7 +444,7 @@ Saves a company and moves on to the next screen
 
 sub save_company {
     my ($request) = @_;
-    my $company = LedgerSMB::DBObject::Entity::Company->new(%$request);
+    my $company = LedgerSMB::Entity::Company->new(%$request);
     $request->{target_div} = 'credit_div';
     _main_screen($request, $company->save);
 }
@@ -457,7 +457,7 @@ Saves a person and moves on to the next screen
 
 sub save_person {
     my ($request) = @_;
-    my $person = LedgerSMB::DBObject::Entity::Person->new(
+    my $person = LedgerSMB::Entity::Person->new(
               %$request
     );
     use Data::Dumper;
@@ -494,8 +494,7 @@ sub save_credit {
         }  
     }
     if ($request->close_form){
-        LedgerSMB::DBObject::Entity::Credit_Account->prepare_input($request);
-        my $credit = LedgerSMB::DBObject::Entity::Credit_Account->new(%$request);
+        my $credit = LedgerSMB::Entity::Credit_Account->new(%$request);
         $credit = $credit->save();
         $request->{meta_number} = $credit->{meta_number};
     }
@@ -524,7 +523,7 @@ Adds a location to the company as defined in the inherited object
 sub save_location {
     my ($request) = @_;
 
-    my $location = LedgerSMB::DBObject::Entity::Location->new(%$request);
+    my $location = LedgerSMB::Entity::Location->new(%$request);
     if ($request->{attach_to} eq '1'){
        $location->credit_id(undef);
     }
@@ -566,7 +565,7 @@ Deletes the specified location
 
 sub delete_location {
     my ($request) = @_;
-    my $location = LedgerSMB::DBObject::Entity::Location->new(%$request);
+    my $location = LedgerSMB::Entity::Location->new(%$request);
     $location->id($request->{location_id});
     if (!$request->{is_for_credit}){
        $location->credit_id(undef);
@@ -584,7 +583,7 @@ Saves the specified contact info
 
 sub save_contact {
     my ($request) = @_;
-    my $contact = LedgerSMB::DBObject::Entity::Contact->new(%$request);
+    my $contact = LedgerSMB::Entity::Contact->new(%$request);
     if ($request->{attach_to} == 1){
        $contact->credit_id(undef);
     }
@@ -603,7 +602,7 @@ credit id over in this case.
 
 sub delete_contact {
     my ($request) = @_;
-    my $contact = LedgerSMB::DBObject::Entity::Contact->new(%$request);
+    my $contact = LedgerSMB::Entity::Contact->new(%$request);
     $contact->credit_id($request->{for_credit});
     $contact->delete;
     $request->{target_div} = 'contact_info_div';
@@ -623,7 +622,7 @@ Required request variables:
 
 sub delete_bank_account{
     my ($request) = @_;
-    my $account = LedgerSMB::DBObject::Entity::Bank->new(%$request);
+    my $account = LedgerSMB::Entity::Bank->new(%$request);
     $account->delete;
     $request->{target_div} = 'bank_act_div';
     get($request);
@@ -637,7 +636,7 @@ Adds a bank account to a company and, if defined, an entity credit account.
 
 sub save_bank_account {
     my ($request) = @_;
-    my $bank = LedgerSMB::DBObject::Entity::Bank->new(%$request);
+    my $bank = LedgerSMB::Entity::Bank->new(%$request);
     $bank->save;
     $request->{target_div} = 'bank_act_div';
     get($request);
@@ -652,7 +651,7 @@ subject.
 
 sub save_notes {
     my ($request) = @_;
-    my $note = LedgerSMB::DBObject::Entity::Note->new(%$request);
+    my $note = LedgerSMB::Entity::Note->new(%$request);
     if ($request->{note_class} == 1){
        $note->credit_id(undef);
     }
@@ -668,7 +667,7 @@ This returns and displays the pricelist.  The id field is required.
 
 sub get_pricelist {
     my ($request) = @_;
-    my $credit = LedgerSMB::DBObject::Entity::Credit_Account->get_by_id(
+    my $credit = LedgerSMB::Entity::Credit_Account->get_by_id(
        $request->{credit_id}
     );
     my $pricelist = $credit->get_pricematrix;

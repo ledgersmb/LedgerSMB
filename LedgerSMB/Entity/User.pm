@@ -1,10 +1,10 @@
 =head1 NAME 
 
-LedgerSMB::DBObject::Entity::User - User management Logic for LedgerSMB
+LedgerSMB::Entity::User - User management Logic for LedgerSMB
 
 =cut
 
-package LedgerSMB::DBObject::Entity::User;
+package LedgerSMB::Entity::User;
 use Moose;
 use LedgerSMB::App_State;
 with 'LedgerSMB::DBObject_Moose';
@@ -12,15 +12,15 @@ with 'LedgerSMB::DBObject_Moose';
 =head1 SYNOPSYS
 
 Resetting a password (expires in 24 hrs):
-  my $user = LedgerSMB::DBObject::Entity::User->get($entity_id);
+  my $user = LedgerSMB::Entity::User->get($entity_id);
   my $user->reset_password('temporary_password');
 
 Creating a new user:
-  my $user = LedgerSMB::DBObject::Entity::User->new(%$request); 
+  my $user = LedgerSMB::Entity::User->new(%$request); 
   $user->save;
 
 Saving permissions:
-  my $user = LedgerSMB::DBObject::Entity::User->new(%$request);
+  my $user = LedgerSMB::Entity::User->new(%$request);
   $user->set_roles($request);
 
 =head1 PROPERTIES
@@ -33,7 +33,7 @@ This is the integer id of the entity of the user
 
 =cut 
 
-has entity_id => (is => 'ro', isa => 'Int');
+has entity_id => (is => 'ro', isa => 'Int', required => 1);
 
 =item username
 
@@ -41,7 +41,7 @@ Username of the individual.  Would be the name of a valid Pg role.
 
 =cut
 
-has username => (is => 'rw', isa => 'Str');
+has username => (is => 'rw', isa => 'Str', required => 1);
 
 =item pls_import
 
@@ -59,7 +59,7 @@ This is only used for new users. It sets a temporary password (good for 24 hrs)
 
 =cut
 
-has password => (is => 'rw', isa => 'Maybe[Str]');
+has password => (is => 'rw', isa => 'Str', required => 0);
 
 =item role_list
 
@@ -67,7 +67,7 @@ A list of role names granted to the user.
 
 =cut
 
-has role_list => (is => 'rw', isa => 'Maybe[ArrayRef[Str]]');
+has role_list => (is => 'rw', isa => 'ArrayRef[Str]', required => 0);
 
 
 =back

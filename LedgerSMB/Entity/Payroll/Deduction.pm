@@ -1,29 +1,29 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Entity::Payroll::Deduction - Payroll Deduction handling for
+LedgerSMB::Entity::Payroll::Deduction - Payroll Deduction handling for
 LedgerSMB
 
 =head1 SYNPOSIS
 
 To retrieve a list of deductions for an entity:
 
-  my @deducts = LedgerSMB::DBObject::Entity::Person::Deductions->list(
+  my @deducts = LedgerSMB::Entity::Person::Deductions->list(
              $entity_id
   );
 
 To retrieve a list of deduction categories for selection:
-  my @types = LedgerSMB::DBObject::Entity::Person::Deduction->types(
+  my @types = LedgerSMB::Entity::Person::Deduction->types(
               $country_id
   );
 
 To save a new deduction:
 
-  my $deduct= LedgerSMB::DBObject::Entity::Person::Deduction->new(%$request);
+  my $deduct= LedgerSMB::Entity::Person::Deduction->new(%$request);
   $deduct->save;
 
 =cut
 
-package LedgerSMB::DBObject::Entity::Payroll::Deduction;
+package LedgerSMB::Entity::Payroll::Deduction;
 use Moose;
 with 'LedgerSMB::DBObject_Moose';
 
@@ -37,7 +37,7 @@ This is the entry id (when set) of the deduction.
 
 =cut
 
-has entry_id => (is => 'rw', isa => 'Maybe[Int]');
+has entry_id => (is => 'rw', isa => 'Int', required => 0);
 
 =item type_id
 
@@ -45,7 +45,7 @@ This is the class id of the deduction
 
 =cut
 
-has type_id => (is => 'rw', isa => 'Int');
+has type_id => (is => 'rw', isa => 'Int', required => 1);
 
 =item rate
 
@@ -55,7 +55,8 @@ some other basis.  Therefore.....
 
 =cut 
 
-has rate => (is => 'rw', isa => 'Num');
+has rate => (is => 'rw', coerce => 1., isa => 'LedgerSMB::Moose::Number', 
+             required => 1);
 
 =back
 
@@ -71,7 +72,7 @@ Retrns a list of  deduction objects for entity
 
 sub list {
     my ($self, $entity_id) = @_;
-    return $self->call_procedure(procname => 'deduction__list_for_entity',
+    return __PACKAGE__->call_procedure(procname => 'deduction__list_for_entity',
                                      args => [$entity_id]);
 }
 
@@ -83,7 +84,7 @@ Returns a list of deduction classes
 
 sub types{
     my ($self, $country_id) = @_;
-    return $self->call_procedure(procname => 'deduction__list_types', 
+    return __PACKAGE__->call_procedure(procname => 'deduction__list_types', 
                                      args => [$country_id]);
 }
 

@@ -29,7 +29,7 @@ User/group management for LedgerSMB
 
 use base qw(LedgerSMB::DBObject);
 
-use LedgerSMB::DBObject::Entity::Person::Employee;
+use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::DBObject::User;
 use Log::Log4perl;
 use strict;

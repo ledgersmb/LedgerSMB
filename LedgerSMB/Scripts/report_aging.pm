@@ -63,10 +63,10 @@ email.
 
 sub generate_statement {
     my ($request) = @_;
-    use LedgerSMB::DBObject::Entity::Company;
-    use LedgerSMB::DBObject::Entity::Credit_Account;
-    use LedgerSMB::DBObject::Entity::Location;
-    use LedgerSMB::DBObject::Entity::Contact;
+    use LedgerSMB::Entity::Company;
+    use LedgerSMB::Entity::Credit_Account;
+    use LedgerSMB::Entity::Location;
+    use LedgerSMB::Entity::Contact;
 
     my $rtype = $request->{report_type}; # in case we need it later
     $request->{report_type} = 'detail'; # needed to generate statement
@@ -94,7 +94,7 @@ sub generate_statement {
                        only_class => 1}
         );
         my $location = pop @loc;
-        my @contact_info = LedgerSMB::DBObject::Entity::Contact->list(
+        my @contact_info = LedgerSMB::Entity::Contact->list(
                  {entity_id => $entity_id, credit_id => $credit_act->{id} }
         );
         $request->{meta_number} = $meta_number;

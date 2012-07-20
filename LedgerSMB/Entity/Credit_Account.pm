@@ -1,28 +1,33 @@
 =head1 NAME 
 
-LedgerSMB::DBObject::Entity::Credit_Account - Customer/Vendor Acct Management for LSMB
+LedgerSMB::Entity::Credit_Account - Customer/Vendor Acct Management for LSMB
 
 =head1 SYNOPSYS
+
+To get by ID:
+
+ my $eca = LedgerSMB::Entity::Credit_Account->get_by_id($id);
+
+To get by customer/vendor number:
+
+ my $eca = LedgerSMB::Entity::Credit_Account->get_by_meta_number(
+          $customernumber, $entity_class
+ );
+
+To save
+
+ $eca->save;
+
+=head1 DESCRIPTION
 
 This module provides customer/vendor credit account management features for
 LedgerSMB.  These include credit limit, credit limit remaining, terms, discounts
 and the like.
 
-=head1 DESCRIPTION
-
-TODO
-
-=head1 INHERITS
-
-=over
-
-=item LedgerSMB::DBObject_Moose
-
-=back
 
 =cut
 
-package LedgerSMB::DBObject::Entity::Credit_Account;
+package LedgerSMB::Entity::Credit_Account;
 use Moose;
 with 'LedgerSMB::DBObject_Moose';
 
@@ -38,7 +43,7 @@ This is the internal, machine readable id.
 
 =cut
 
-has 'id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item entity_id
 
@@ -46,7 +51,7 @@ The internal id for the entity to which this is attached.
 
 =cut
 
-has 'entity_id' => (is => 'ro', isa => 'Maybe[Int]');
+has 'entity_id' => (is => 'ro', isa => 'Int', required => 0);
 
 =item entity_class
 
@@ -55,7 +60,7 @@ are 1 for vendor and 2 for customer.
 
 =cut
 
-has 'entity_class' => (is => 'ro', isa => 'Maybe[Int]');
+has 'entity_class' => (is => 'ro', isa => 'Int', required => 1);
 
 =item pay_to_name
 
@@ -63,7 +68,7 @@ This is the name that checks are written to or from.
 
 =cut
 
-has 'pay_to_name' => (is => 'rw', isa => 'Maybe[Str]');
+has 'pay_to_name' => (is => 'rw', isa => 'Str', required => 0);
 
 =item discount
 
@@ -71,7 +76,7 @@ Early payment discount percent.
 
 =cut
 
-has 'discount' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGNumber]');
+has 'discount' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Number');
 
 =item description
 
@@ -79,7 +84,7 @@ This is the general description for the account.
 
 =cut
 
-has 'description' => (is => 'rw', isa => 'Maybe[Str]');
+has 'description' => (is => 'rw', isa => 'Str', required => 0);
 
 =item discount_terms
 
@@ -87,7 +92,7 @@ The number of days before the payment discount expires.
 
 =cut
 
-has 'discount_terms' => (is => 'rw', isa => 'Maybe[Int]');
+has 'discount_terms' => (is => 'rw', isa => 'Int', required => 0);
 
 =item discount_account_id
 
@@ -95,7 +100,7 @@ The id of the account that the discounts are tracked against.
 
 =cut
 
-has 'discount_account_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'discount_account_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item taxincluded
 
@@ -103,7 +108,7 @@ Whether taxes are included by default.
 
 =cut
 
-has 'taxincluded' => (is => 'rw', isa => 'Maybe[Bool]');
+has 'taxincluded' => (is => 'rw', isa => 'Bool');
 
 =item creditlimit
 
@@ -111,7 +116,7 @@ The total debt that is acceptable for the account
 
 =cut
 
-has 'creditlimit' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGNumber]');
+has 'creditlimit' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Number');
 
 =item current_debt
 
@@ -121,7 +126,8 @@ operation.  Use get_current_debt() to set it.
 
 =cut
 
-has 'current_debt' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGNumber]');
+has 'current_debt' => (is => 'rw', isa => 'LedgerSMB::Moose::Number'.
+                       coerce => 1, lazy => 1, builder => 'get_current_debt');
 
 =item terms
 
@@ -129,7 +135,7 @@ This is the number of days before an invoice is considered overdue.
 
 =cut
 
-has 'terms' => (is => 'rw', isa => 'Maybe[Int]');
+has 'terms' => (is => 'rw', isa => 'Int', required => 0);
 
 =item meta_number
 
@@ -137,7 +143,7 @@ This is the human readable account number.
 
 =cut
 
-has 'meta_number' => (is => 'rw', isa => 'Maybe[Str]');
+has 'meta_number' => (is => 'rw', isa => 'Str', required => 0);
 
 =item business_id
 
@@ -149,8 +155,8 @@ This is the name of the business type associated.
 
 =cut
 
-has 'business_id'   => (is => 'rw', isa => 'Maybe[Int]');
-has 'business_type' => (is => 'rw', isa => 'Maybe[Str]');
+has 'business_id'   => (is => 'rw', isa => 'Int', required => 0);
+has 'business_type' => (is => 'rw', isa => 'Str', required => 0);
 
 =item language_code
 
@@ -160,7 +166,7 @@ vendor.  This allows us to print localized invoices.  Values are ones such as
 
 =cut
 
-has 'language_code' => (is => 'rw', isa => 'Maybe[Str]');
+has 'language_code' => (is => 'rw', isa => 'Str', required => 0);
 
 =item pricegroup_id
 
@@ -169,7 +175,7 @@ has no effect for vendors.
 
 =cut
 
-has 'pricegroup_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'pricegroup_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item curr
 
@@ -178,7 +184,7 @@ vendor.
 
 =cut
 
-has 'curr' => (is => 'ro', isa => 'Maybe[Str]');
+has 'curr' => (is => 'ro', isa => 'Str', requird => 1);
 
 =item startdate
 
@@ -190,8 +196,8 @@ The last allowable date for invoices
 
 =cut
 
-has 'startdate' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
-has 'enddate'   => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'startdate' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has 'enddate'   => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item threshold
 
@@ -199,7 +205,7 @@ Do not show invoices as available for payment/receipt until over this threshold
 
 =cut
 
-has 'threshold' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGNumber]');
+has 'threshold' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Number');
 
 =item employee_id
 
@@ -208,7 +214,7 @@ some for commissions calculations and the like
 
 =cut
 
-has 'employee_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'employee_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item ar_ap_account_id
 
@@ -216,7 +222,7 @@ The id for the AR or AP account, use for payment reversals.  Required on save.
 
 =cut
 
-has 'ar_ap_account_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'ar_ap_account_id' => (is => 'rw', isa => 'Int', required => 1);
 
 =item cash_account_id
 
@@ -224,7 +230,7 @@ The id that is the default for the cash account.
 
 =cut
 
-has 'cash_account_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'cash_account_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item bank_account
 
@@ -238,7 +244,7 @@ This is an arrayref of ints for the tax accounts linked to the customer.
 
 =cut
 
-has 'tax_ids' => (is => 'rw', isa => 'Maybe[ArrayRef[Int]]');
+has 'tax_ids' => (is => 'rw', isa => 'ArrayRef[Int]', required => 0);
 
 =item bank_account
 
@@ -246,7 +252,7 @@ Bank account for the credit account
 
 =cut
 
-has 'bank_account' => (is => 'rw', isa => 'Maybe[Int]');
+has 'bank_account' => (is => 'rw', isa => 'Int', required => 0);
 
 =item taxform_id   
 
@@ -254,7 +260,7 @@ This is the tax reporting form associated with the account.
 
 =cut
 
-has 'taxform_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'taxform_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =back
 
@@ -297,11 +303,10 @@ mentioned.
 
 sub get_by_id {
     my ($self, $id) = @_;
-    my ($ref) = $self->call_procedure(procname => 'entity_credit__get',
+    my ($ref) = __PACKAGE__->call_procedure(procname => 'entity_credit__get',
                                           args => [$id]);
     $ref->{tax_ids} = $self->_get_tax_ids($id);
-    $self->prepare_dbhash($ref);
-    return $self->new(%$ref);
+    return __PACKAGE__->new(%$ref);
 }
 
 =item get_by_meta_number($meta_number string, $entity_class int)
@@ -313,12 +318,11 @@ identified by $meta_number
 
 sub get_by_meta_number {
     my ($self, $meta_number, $entity_class) = @_;
-    my ($ref) = $self->call_procedure(procname => 'eca__get_by_met_number',
+    my ($ref) = __PACKAGE__->call_procedure(procname => 'eca__get_by_met_number',
                                           args => [$meta_number, 
                                                    $entity_class]);
-    $self->prepare_dbhash($ref);
-    $ref->{tax_ids} = $self->_set_tax_ids($ref->{id});
-    return $self->new(%$ref);
+    $ref->{tax_ids} = __PACKAGE__->_set_tax_ids($ref->{id});
+    return __PACKAGE__->new(%$ref);
 }
 
 # Private methid _get_tax_ids
@@ -327,7 +331,7 @@ sub get_by_meta_number {
 sub _get_tax_ids {
     my ($self, $id) = @_;
     my @tax_ids;
-    my @results = $self->call_procedure(procname => 'eca__get_taxes',
+    my @results = __PACKAGE__->call_procedure(procname => 'eca__get_taxes',
                                             args => [$id]);
     for my $ref (@results){
         push @tax_ids, $ref->{chart_id};
@@ -344,13 +348,12 @@ identified by $entity_id
 
 sub list_for_entity {
     my ($self, $entity_id, $entity_class) = @_;
-    my @results = $self->call_procedure(procname => 'entity__list_credit',
+    my @results = __PACKAGE__->call_procedure(procname => 'entity__list_credit',
                                             args => [$entity_id, $entity_class]
     );
     for my $ref (@results){
         $ref->{tax_ids} = $self->_get_tax_ids($ref->{id});
-        $self->prepare_dbhash($ref);
-        $ref = $self->new(%$ref);
+        $ref = __PACKAGE__->new(%$ref);
     }
     return @results;
 }
@@ -381,8 +384,8 @@ sub save {
     if (@{$self->{tax_ids}}){
         $self->exec_method(funcname => 'eca__set_taxes');
     }
-    $self->prepare_dbhash($ref);
     $self = $self->new(%$ref);
+    return $self;
 }
 
 =item get_pricematrix
@@ -416,7 +419,7 @@ sub delete_pricematrix {
     my $self = shift @_;
     my ($entry_id) = @_;
     my ($retval) = $self->exec_method(funcname => 'eca__delete_pricematrix', 
-                           args => [$self->{credit_id}, $entry_id]
+                           args => [$self->credit_id, $entry_id]
     );
     return $retval;
 }

@@ -1,35 +1,35 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Entity::Person -- Natural Person handling for LedgerSMB
+LedgerSMB::Entity::Person -- Natural Person handling for LedgerSMB
 
 =head1 SYNOPSIS
 
 To save:
 
- my $person = LedgerSMB::DBObject::Entity::Person->new(\%$request);
+ my $person = LedgerSMB::Entity::Person->new(\%$request);
  $person->save;
 
 To get by entity id:
 
- my $person = LedgerSMB::DBObject::Entity::Person->get($entity_id);
+ my $person = LedgerSMB::Entity::Person->get($entity_id);
 
 To get by control code:
 
- my $person = LedgerSMB::DBObject::Entity::Person->get_by_cc($control_code);
+ my $person = LedgerSMB::Entity::Person->get_by_cc($control_code);
 
 =head1 INHERITS
 
 =over 
 
-=item LedgerSMB::DBObject::Entity
+=item LedgerSMB::Entity
 
 =back
 
 =cut
 
-package LedgerSMB::DBObject::Entity::Person;
+package LedgerSMB::Entity::Person;
 use Moose;
-extends 'LedgerSMB::DBObject::Entity';
+extends 'LedgerSMB::Entity';
 
 use LedgerSMB::App_State;
 my $locale = $LedgerSMB::App_State::Locale;
@@ -44,7 +44,7 @@ ID of entity attached.  This is also an interal reference to this person.
 
 =cut
 
-has 'entity_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'entity_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item first_name
 
@@ -52,7 +52,7 @@ Given name of the individual.
 
 =cut
 
-has 'first_name' => (is => 'rw', isa => 'Str');
+has 'first_name' => (is => 'rw', isa => 'Str', required => 1);
 
 =item middle_name
 
@@ -60,7 +60,7 @@ Middle name of individual
 
 =cut
 
-has 'middle_name' => (is => 'rw', isa => 'Maybe[Str]');
+has 'middle_name' => (is => 'rw', isa => 'Str', required => 0);
 
 =item last_name
 
@@ -68,7 +68,7 @@ Surname of individual
 
 =cut
 
-has 'last_name' => (is => 'rw', isa => 'Maybe[Str]');
+has 'last_name' => (is => 'rw', isa => 'Str', required => 1);
 
 =item salutation_id
 
@@ -87,7 +87,7 @@ Salutation id.  These are fixed as:
 
 =cut
 
-has 'salutation_id' => (is => 'rw', isa => 'Int');
+has 'salutation_id' => (is => 'rw', isa => 'Int', required => 1);
 
 =item salutations
 
@@ -114,7 +114,7 @@ Date when the  person was entered into LedgerSMB
 
 =cut
 
-has 'created' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'created' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =head1 METHODS
 
@@ -128,11 +128,10 @@ This retrieves and returns the item as a blessed reference
 
 sub get {
     my ($self, $id) = @_;
-    my ($ref) = $self->call_procedure(procname => 'person__get',
+    my ($ref) = __PACKAGE__->call_procedure(procname => 'person__get',
                                           args => [$id]);
     return undef unless $ref->{control_code};
-    $self->prepare_dbhash($ref);
-    return $self->new(%$ref);
+    return __PACKAGE__->new(%$ref);
 }
 
 =item get_by_cc($cc)
@@ -144,11 +143,10 @@ person does not exist.
 
 sub get_by_cc {
     my ($self, $cc) = @_;
-    my ($ref) = $self->call_procedure(procname => 'person__get_by_cc',
+    my ($ref) = __PACKAGE__->call_procedure(procname => 'person__get_by_cc',
                                           args => [$cc]);
     return undef unless $ref->{control_code};
-    $self->prepare_dbhash($ref);
-    return $self->new(%$ref);
+    return __PACKAGE__->new(%$ref);
 }
 
 

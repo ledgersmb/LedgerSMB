@@ -16,14 +16,14 @@ This module is the UI controller for the customer, vendor, etc functions; it
 
 package LedgerSMB::Scripts::employee;
 
-use LedgerSMB::DBObject::Entity::Person::Employee;
-use LedgerSMB::DBObject::Entity::Payroll::Wage;
-use LedgerSMB::DBObject::Entity::Payroll::Deduction;
-use LedgerSMB::DBObject::Entity::Location;
-use LedgerSMB::DBObject::Entity::Contact;
-use LedgerSMB::DBObject::Entity::Bank;
-use LedgerSMB::DBObject::Entity::Note;
-use LedgerSMB::DBObject::Entity::User;
+use LedgerSMB::Entity::Person::Employee;
+use LedgerSMB::Entity::Payroll::Wage;
+use LedgerSMB::Entity::Payroll::Deduction;
+use LedgerSMB::Entity::Location;
+use LedgerSMB::Entity::Contact;
+use LedgerSMB::Entity::Bank;
+use LedgerSMB::Entity::Note;
+use LedgerSMB::Entity::User;
 use LedgerSMB::App_State;
 use LedgerSMB::Template;
 use LedgerSMB::File;
@@ -54,7 +54,7 @@ Retrieves the employee based on control code.
 
 sub get_by_cc {
     my ($request) = @_;
-    my $emp = LedgerSMB::DBObject::Entity::Person::Employee->get_by_cc(
+    my $emp = LedgerSMB::Entity::Person::Employee->get_by_cc(
                             $request->{control_code}
     );
     _main_screen($request, $emp);
@@ -71,7 +71,7 @@ Retrieves the employee by id.
 
 sub get {
     my ($request) = @_;
-    my $emp = LedgerSMB::DBObject::Entity::Person::Employee->get(
+    my $emp = LedgerSMB::Entity::Person::Employee->get(
                           $request->{entity_id}
     );
     _main_screen($request, $emp);
@@ -87,7 +87,7 @@ sub _main_screen {
     my $user;
     my @entity_files;
     if ($employee->{entity_id}){
-        $user = LedgerSMB::DBObject::Entity::User->get($employee->{entity_id});
+        $user = LedgerSMB::Entity::User->get($employee->{entity_id});
         @entity_files = LedgerSMB::File->list(
                {ref_key => $employee->{entity_id}, file_class => '4'}
         );
@@ -128,22 +128,22 @@ sub _main_screen {
 
     my $entity_class = 3;
 
-    my @locations = LedgerSMB::DBObject::Entity::Location->get_active(
+    my @locations = LedgerSMB::Entity::Location->get_active(
                        {entity_id => $entity_id,
                         credit_id => undef}
           );
 
     my @contact_class_list =
-          LedgerSMB::DBObject::Entity::Contact->list_classes;
+          LedgerSMB::Entity::Contact->list_classes;
 
-    my @contacts = LedgerSMB::DBObject::Entity::Contact->list(
+    my @contacts = LedgerSMB::Entity::Contact->list(
               {entity_id => $entity_id,
                credit_id => undef}
     );
     my @bank_account = 
-         LedgerSMB::DBObject::Entity::Bank->list($entity_id);
+         LedgerSMB::Entity::Bank->list($entity_id);
     my @notes =
-         LedgerSMB::DBObject::Entity::Note->list($entity_id,
+         LedgerSMB::Entity::Note->list($entity_id,
                                                  undef);
 
     # Globals for the template
@@ -203,22 +203,20 @@ sub _main_screen {
     my @entity_classes = $request->call_procedure(
                       procname => 'entity__list_classes'
     );
-    my @roles = LedgerSMB::DBObject::Entity::User->list_roles;
+    my @roles = LedgerSMB::Entity::User->list_roles;
 
-    my @wage_types = LedgerSMB::DBObject::Entity::Payroll::Wage->types(
-                  $employee->country_id
+    my @wage_types = LedgerSMB::Entity::Payroll::Wage->types(
+                    $employee->country_id
           ) if $employee->can('country_id');
  
     my @deduction_types = 
-          LedgerSMB::DBObject::Entity::Payroll::Deduction->types(
-                 $employee->country_id
-          ) if $employee->can('country_id');
+          LedgerSMB::Entity::Payroll::Deduction->types($employee->country_id) 
+                if $employee->can('country_id');
 
-    my @wages = LedgerSMB::DBObject::Entity::Payroll::Wage->list(
-                 $employee->entity_id
-          ) if $employee->can('entity_id');  
+    my @wages = LedgerSMB::Entity::Payroll::Wage->list($employee->entity_id)
+                if $employee->can('entity_id');  
 
-    my @deductions = LedgerSMB::DBObject::Entity::Payroll::Deduction->list(
+    my @deductions = LedgerSMB::Entity::Payroll::Deduction->list(
                  $employee->entity_id
           ) if $employee->can('entity_id');  
 
@@ -295,7 +293,7 @@ sub save_employee {
          $request->{$key} = LedgerSMB::PGDate->from_input($request->{$key});
     }
     $request->{control_code} = $request->{employeenumber};
-    my $employee = LedgerSMB::DBObject::Entity::Person::Employee->new(%$request);
+    my $employee = LedgerSMB::Entity::Person::Employee->new(%$request);
     $request->{target_div} = 'credit_div';
     $employee->save;
     _main_screen($request, $employee);
@@ -310,7 +308,7 @@ Adds a location to the company as defined in the inherited object
 sub save_location {
     my ($request) = @_;
 
-    my $location = LedgerSMB::DBObject::Entity::Location->new(%$request);
+    my $location = LedgerSMB::Entity::Location->new(%$request);
     if ($request->{attach_to} eq '1'){
        $location->credit_id(undef);
     }
@@ -352,7 +350,7 @@ Deletes the specified location
 
 sub delete_location {
     my ($request) = @_;
-    my $location = LedgerSMB::DBObject::Entity::Location->new(%$request);
+    my $location = LedgerSMB::Entity::Location->new(%$request);
     $location->id($request->{location_id});
     if (!$request->{is_for_credit}){
        $location->credit_id(undef);
@@ -370,7 +368,7 @@ Saves the specified contact info
 
 sub save_contact {
     my ($request) = @_;
-    my $contact = LedgerSMB::DBObject::Entity::Contact->new(%$request);
+    my $contact = LedgerSMB::Entity::Contact->new(%$request);
     if ($request->{attach_to} == 1){
        $contact->credit_id(undef);
     }
@@ -389,7 +387,7 @@ credit id over in this case.
 
 sub delete_contact {
     my ($request) = @_;
-    my $contact = LedgerSMB::DBObject::Entity::Contact->new(%$request);
+    my $contact = LedgerSMB::Entity::Contact->new(%$request);
     $contact->credit_id($request->{for_credit});
     $contact->delete;
     $request->{target_div} = 'contact_info_div';
@@ -409,7 +407,7 @@ Required request variables:
 
 sub delete_bank_account{
     my ($request) = @_;
-    my $account = LedgerSMB::DBObject::Entity::Bank->new(%$request);
+    my $account = LedgerSMB::Entity::Bank->new(%$request);
     $account->delete;
     $request->{target_div} = 'bank_act_div';
     get($request);
@@ -423,7 +421,7 @@ Adds a bank account to a company and, if defined, an entity credit account.
 
 sub save_bank_account {
     my ($request) = @_;
-    my $bank = LedgerSMB::DBObject::Entity::Bank->new(%$request);
+    my $bank = LedgerSMB::Entity::Bank->new(%$request);
     $bank->save;
     $request->{target_div} = 'bank_act_div';
     get($request);
@@ -438,7 +436,7 @@ subject.
 
 sub save_notes {
     my ($request) = @_;
-    my $note = LedgerSMB::DBObject::Entity::Note->new(%$request);
+    my $note = LedgerSMB::Entity::Note->new(%$request);
     if ($request->{note_class} == 1){
        $note->credit_id(undef);
     }
@@ -455,7 +453,7 @@ This turns the employee into a user.
 sub create_user {
     my ($request) = @_;
     if ($request->close_form){
-       my $user = LedgerSMB::DBObject::Entity::User->new(%$request);
+       my $user = LedgerSMB::Entity::User->new(%$request);
        $user->create;
     }
     get($request);
@@ -470,7 +468,7 @@ This resets the user's password
 sub reset_password {
     my ($request) = @_;
     if ($request->close_form){
-       my $user = LedgerSMB::DBObject::Entity::User->new(%$request);
+       my $user = LedgerSMB::Entity::User->new(%$request);
        $user->reset_password($request->{password});
     }
     get($request);
@@ -485,7 +483,7 @@ Saves the user's permissions
 sub save_roles {
     my ($request) = @_;
     if ($request->close_form){
-       my $user = LedgerSMB::DBObject::Entity::User->get($request->{entity_id});
+       my $user = LedgerSMB::Entity::User->get($request->{entity_id});
        my $roles;
        for my $key(keys %$request){
            if ($key =~ $request->{_role_prefix} and $request->{key}){

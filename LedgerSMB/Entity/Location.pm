@@ -1,8 +1,13 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Entity::Location - Address Handling for LedgerSMB Contacts
+LedgerSMB::Entity::Location - Address Handling for LedgerSMB Contacts
 
 =head1 SYNPOSIS
+
+ my $loc = LedgerSMB::Entity::Location->new(%$request);
+ $loc->save;
+
+=head1 DESCRIPTION
 
 This contains a the basic handling of addresses for LedgerSMB contacts.
 
@@ -10,15 +15,9 @@ Addresses may be tacked for billing, marketing, and shipping, and may be
 attached either to the entity (person or company) or credit account
 (customer/vendor account).
 
-=head1 INHERITS
-
-=over
-
-=item LedgerSMB::DBObject_Moose
-
 =cut
 
-package LedgerSMB::DBObject::Entity::Location;
+package LedgerSMB::Entity::Location;
 use Moose;
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
@@ -42,7 +41,7 @@ Bool, whether the address is active.
 
 =cut
 
-has 'active' => (is => 'rw', isa => 'Maybe[Bool]');
+has 'active' => (is => 'rw', isa => 'Bool');
 
 =item inactive_date
 
@@ -50,7 +49,7 @@ Date when the location became inactive.
 
 =cut
 
-has 'inactive_date' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'inactive_date' => (is => 'rw', coerce => 1isa => 'LedgerSMB::Moose::Date');
 
 =item id
 
@@ -58,7 +57,7 @@ Internal id of the actual location entry.
 
 =cut
 
-has 'id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item entity_id
 
@@ -67,7 +66,7 @@ instead
 
 =cut
 
-has 'entity_id' => (is => 'ro', isa => 'Maybe[Int]');
+has 'entity_id' => (is => 'ro', isa => 'Int', required => 0);
 
 =item credit_id
 
@@ -76,7 +75,7 @@ instead.
 
 =cut
 
-has 'credit_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'credit_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item location_class
 
@@ -94,7 +93,7 @@ Internal id of location class.
 
 =cut
 
-has 'location_class' => (is => 'ro', isa => 'Maybe[Int]');
+has 'location_class' => (is => 'ro', isa => 'Int', required => 1);
 
 =item old_location_class
 
@@ -102,7 +101,7 @@ Old location class for updating
 
 =cut
 
-has 'old_location_class' => (is => 'ro', isa => 'Maybe[Int]');
+has 'old_location_class' => (is => 'ro', isa => 'Int', required => 1);
 
 =item class_name
 
@@ -116,7 +115,7 @@ our %classes = ( 1 => $locale->text('Billing'),
                  3 => $locale->text('Shipping'),
 );
 
-has 'class_name' => (is => 'rw', isa => 'Maybe[Str]');
+has 'class_name' => (is => 'rw', isa => 'Str', required => 0);
 
 =item line_one
 
@@ -124,7 +123,7 @@ The first line of the street address.
 
 =cut
 
-has 'line_one' => (is => 'rw', 'isa' => 'Maybe[Str]');
+has 'line_one' => (is => 'rw', 'isa' => 'Str', required => 1);
 
 =item line_two
 
@@ -132,7 +131,7 @@ The second line of the street address
 
 =cut
 
-has 'line_two' => (is => 'rw', 'isa' => 'Maybe[Str]');
+has 'line_two' => (is => 'rw', 'isa' => 'Str', required => 0);
 
 =item line_three
 
@@ -140,7 +139,7 @@ The third line of the street address
 
 =cut
 
-has 'line_three' => (is => 'rw', 'isa' => 'Maybe[Str]');
+has 'line_three' => (is => 'rw', 'isa' => 'Str', required => 0);
 
 =item city
 
@@ -148,7 +147,7 @@ Name of the city.
 
 =cut
 
-has 'city' => (is => 'rw', 'isa' => 'Maybe[Str]');
+has 'city' => (is => 'rw', 'isa' => 'Str', required => 1);
 
 =item state
 
@@ -156,7 +155,7 @@ Name of the state or province
 
 =cut
 
-has 'state' => (is => 'rw', 'isa' => 'Maybe[Str]');
+has 'state' => (is => 'rw', 'isa' => 'Str', required => 1);
 
 =item mail_code
 
@@ -164,7 +163,7 @@ Zip or postal code
 
 =cut
 
-has 'mail_code' => (is => 'rw', 'isa' => 'Maybe[Str]');
+has 'mail_code' => (is => 'rw', 'isa' => 'Str', required => 0);
 
 =item country_id
 
@@ -172,7 +171,7 @@ This is the internal id of the country for the address.
 
 =cut
 
-has 'country_id' => (is => 'rw', 'isa' => 'Maybe[Int]');
+has 'country_id' => (is => 'rw', 'isa' => 'Int', required => 1);
 
 =item counry_name
 
@@ -180,7 +179,7 @@ The name of the country
 
 =cut
 
-has 'country_name' => (is => 'rw', 'isa' => 'Maybe[Str]');
+has 'country_name' => (is => 'rw', 'isa' => 'Str', required => 0);
 
 =back
 
@@ -213,24 +212,22 @@ class (useful for retrieving billing info only).
 sub get_active {
     my ($self, $args) = @_;
     my @results;
-    for my $ref ($self->call_procedure(procname => 'entity__list_locations',
+    for my $ref (__PACKAGE__->call_procedure(procname => 'entity__list_locations',
                                            args => [$args->{entity_id}]))
     {
        next if ($args->{only_class}) 
                and ($args->{only_class} != $ref->{location_class});
-        $self->prepare_dbhash($ref);
-        push @results, $self->new(%$ref);
+        push @results, __PACKAGE__->new(%$ref);
     }
     return @results unless $args->{credit_id};
 
-    for my $ref ($self->call_procedure(procname => 'eca__list_locations',
+    for my $ref (__PACKAGE__->call_procedure(procname => 'eca__list_locations',
                                            args => [$args->{credit_id}]))
     {
        next if ($args->{only_class}) 
                and ($args->{only_class} != $ref->{location_class});
         $ref->{credit_id} = $args->{credit_id};
-        $self->prepare_dbhash($ref);
-        push @results, $self->new(%$ref);
+        push @results, __PACKAGE__->new(%$ref);
     }
 
     return @results;

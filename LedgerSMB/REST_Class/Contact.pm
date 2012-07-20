@@ -5,14 +5,14 @@ LedgerSMB::REST_Class::Contact - Customer/vendor web servicesA
 =cut
 
 package LedgerSMB::REST_Class::Contact;
-use LedgerSMB::DBObject::Entity;
-use LedgerSMB::DBObject::Entity::Credit_Account;
-use LedgerSMB::DBObject::Entity::Location;
-use LedgerSMB::DBObject::Entity::Contact;
-use LedgerSMB::DBObject::Entity::Company;
-use LedgerSMB::DBObject::Entity::Person;
-use LedgerSMB::DBObject::Entity::Bank;
-use LedgerSMB::DBObject::Report::Contact::Search;
+use LedgerSMB::Entity;
+use LedgerSMB::Entity::Credit_Account;
+use LedgerSMB::Entity::Location;
+use LedgerSMB::Entity::Contact;
+use LedgerSMB::Entity::Company;
+use LedgerSMB::Entity::Person;
+use LedgerSMB::Entity::Bank;
+use LedgerSMB::Report::Contact::Search;
 
 =head1 SYNOPSIS
 
@@ -51,7 +51,7 @@ sub get {
           return $data;
        } else {
             my @results = ();
-            for $ref (LedgerSMB::DBObject::Entity->call_procedure(
+            for $ref (LedgerSMB::Entity->call_procedure(
                           procname => 'entity__list_classes'
                       )
             ){
@@ -66,7 +66,7 @@ sub _search_entity_class {
     my ($request, $entity_class) = @_;
     my $args = $request->{args};
     $args->{entity_class} = $entity_class;
-    my $report = LedgerSMB::DBObject::Report::Contact::Search->new(%$args);
+    my $report = LedgerSMB::Report::Contact::Search->new(%$args);
     $report->run_report;
     my @results;
     for my $r (@{$report->rows}){
@@ -79,12 +79,12 @@ sub _search_entity_class {
 
 sub _get_entity {
     my ($request, $id) = @_;
-    my $company = LedgerSMB::DBObject::Entity::Company->get($id);
+    my $company = LedgerSMB::Entity::Company->get($id);
     if ($company){
        $data= $company;
        $data->{entity_type} = 'Company';
     } else {
-       my $person = LedgerSMB::DBObject::Entity::Person->get($id);
+       my $person = LedgerSMB::Entity::Person->get($id);
        if ($person){
           $data= $person;
           $data->{entity_type} = 'Person';
@@ -93,13 +93,13 @@ sub _get_entity {
        }
     }
     @{$data->{credit_accounts}} = 
-       LedgerSMB::DBObject::Entity::Credit_Account->list_for_entity($id);
+       LedgerSMB::Entity::Credit_Account->list_for_entity($id);
     @{$data->{locations}} = 
-      LedgerSMB::DBObject::Entity::Location->get_active({entity_id => $id});
+      LedgerSMB::Entity::Location->get_active({entity_id => $id});
     @{$data->{contact}} =
-      LedgerSMB::DBObject::Entity::Contact->list({{entity_id => $id}});
+      LedgerSMB::Entity::Contact->list({{entity_id => $id}});
     @{$data->{bank_accounts}} = 
-      LedgerSMB::DBObject::Entity::Bank-> list($id);
+      LedgerSMB::Entity::Bank-> list($id);
     return $data;
 }
 
@@ -113,7 +113,7 @@ sub post {
     my ($request, $id) = @_;
     if ($id or $request->{payload}->{entity_id}){
         $request->{payload}->{entity_id} = $id if $id;
-        if (LedgerSMB::DBObject::Entity->get($id)){
+        if (LedgerSMB::Entity->get($id)){
             die '409 Conflict';
         }
     }
@@ -131,14 +131,14 @@ sub put {
     my $payload = $request->{payload};
     $payload->{entity_id} = $id;
     if (lc($payload->{entity_type}) eq 'person') {
-        LedgerSMB::DBObject::Entity::Company->new(%$payload)->save();
+        LedgerSMB::Entity::Company->new(%$payload)->save();
     } elsif (lc($payload->{entity_type}) eq 'company'){
-        LedgerSMB::DBObject::Entity::Person->new(%$payload)->save();
+        LedgerSMB::Entity::Person->new(%$payload)->save();
     } else {
         die '400 Bad Request:  Must Specify entity_type';
     }
     for $act (@{$payload->{credit_accounts}}){
-        LedgerSMB::DBObject::Entity::Credit_Account->new(%$payload)->save();
+        LedgerSMB::Entity::Credit_Account->new(%$payload)->save();
     }
     if ($id){ 
         die "303 Contact/$id.$request->{format}";

@@ -1,11 +1,11 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Entity::Bank - Bank account info for customers, vendors, 
+LedgerSMB::Entity::Bank - Bank account info for customers, vendors, 
 employees, and more.
 
 =head1 SYNPOSIS
 
-  @bank_list = LedgerSMB::DBObject::Entity::Bank->list($entity_id);
+  @bank_list = LedgerSMB::Entity::Bank->list($entity_id);
   $bank->save;
 
 =head1 DESCRIPTION
@@ -16,7 +16,7 @@ credit account being able to attach itself to a single bank account.
 
 =cut
 
-package LedgerSMB::DBObject::Entity::Bank;
+package LedgerSMB::Entity::Bank;
 use Moose;
 with 'LedgerSMB::DBObject_Moose';
 
@@ -39,7 +39,7 @@ record attached to a credit account but is ignored in that case.
 
 =cut
 
-has 'entity_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'entity_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item credit_id Int
 
@@ -51,7 +51,7 @@ account for a given entity credit account.
 
 =cut
 
-has 'credit_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'credit_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item id
 
@@ -59,17 +59,17 @@ If set this indicates this has been saved to the db.
 
 =cut
 
-has 'id' => (is =>'ro', isa => 'Maybe[Int]');
+has 'id' => (is =>'ro', isa => 'Int', required => 0);
 
 =item bic
 
 Banking Institution Code, such as a SWIFT code or ABA routing number.  This can
-be set to undef because there are cases where the BIC is not needed for wire
+be omitted because there are cases where the BIC is not needed for wire
 transfers.
 
 =cut
 
-has 'bic' => (is =>'rw', isa => 'Maybe[Str]');
+has 'bic' => (is =>'rw', isa => 'Str', required => 0);
 
 =item iban
 
@@ -77,7 +77,7 @@ This is the bank account number.  It is required on all records.
 
 =cut
 
-has 'iban' => (is => 'rw', isa => 'Str');
+has 'iban' => (is => 'rw', isa => 'Str', required => 1);
 
 =back
 

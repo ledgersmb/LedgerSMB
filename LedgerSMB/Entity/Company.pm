@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Entity::Company -- Company (business) handling for LedgerSMB
+LedgerSMB::Entity::Company -- Company (business) handling for LedgerSMB
 
 =head1 SYNOPSIS
 
@@ -11,15 +11,15 @@ leads etc.
 
 =over 
 
-=item LedgerSMB::DBObject::Entity
+=item LedgerSMB::Entity
 
 =back
 
 =cut
 
-package LedgerSMB::DBObject::Entity::Company;
+package LedgerSMB::Entity::Company;
 use Moose;
-extends 'LedgerSMB::DBObject::Entity';
+extends 'LedgerSMB::Entity';
 
 =head1 PROPERTIES
 
@@ -31,7 +31,7 @@ ID of entity attached.  This is also an interal reference to this company.
 
 =cut
 
-has 'entity_id' => (is => 'rw', isa => 'Maybe[Int]');
+has 'entity_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item legal_name
 
@@ -39,7 +39,7 @@ Legal name of the company.  Will also map back to the entity's name field.
 
 =cut
 
-has 'legal_name' => (is => 'rw', isa => 'Str', default => '');
+has 'legal_name' => (is => 'rw', isa => 'Str', requird => 0);
 
 =item tax_id
 
@@ -47,7 +47,7 @@ Tax identifier for the company.
 
 =cut
 
-has 'tax_id' => (is => 'rw', isa => 'Maybe[Str]', default => '');
+has 'tax_id' => (is => 'rw', isa => 'Str', required => 0);
 
 =item sales_tax_id
 
@@ -55,7 +55,7 @@ Sales tax identifier for the company (like a GST or VAT number)
 
 =cut
 
-has 'sales_tax_id' => (is => 'rw', isa => 'Maybe[Str]', default => '');
+has 'sales_tax_id' => (is => 'rw', isa => 'Str', required => 0);
 
 =item license_number
 
@@ -63,7 +63,7 @@ Buisness license number for the company
 
 =cut
 
-has 'license_number' => (is => 'rw', isa => 'Maybe[Str]', default => '');
+has 'license_number' => (is => 'rw', isa => 'Str', required => 0);
 
 =item sic_code
 
@@ -71,7 +71,7 @@ Business categorization code.  SIC, NAICS, or other systems can be used.
 
 =cut
 
-has 'sic_code' => (is => 'rw', isa => 'Maybe[Str]', default => '');
+has 'sic_code' => (is => 'rw', isa => 'Str', required => 0);
 
 =item created 
 
@@ -81,7 +81,7 @@ Date when the company was entered into LedgerSMB
 
 =cut
 
-has 'created' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'created' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =head1 METHODS
 
@@ -95,10 +95,9 @@ This retrieves and returns the item as a blessed reference
 
 sub get {
     my ($self, $id) = @_;
-    my ($ref) = LedgerSMB::DBObject::Entity->call_procedure(procname => 'company__get',
+    my ($ref) = __PACKAGE__->call_procedure(procname => 'company__get',
                                           args => [$id]);
     return undef unless $ref->{control_code};
-    __PACKAGE__->prepare_dbhash($ref);
     return __PACKAGE__->new(%$ref);
 }
 
@@ -111,11 +110,10 @@ company does not exist.
 
 sub get_by_cc {
     my ($self, $cc) = @_;
-    my ($ref) = $self->call_procedure(procname => 'company__get_by_cc',
+    my ($ref) = __PACKAGE__->call_procedure(procname => 'company__get_by_cc',
                                           args => [$cc]);
     return undef unless $ref->{control_code};
-    $self->prepare_dbhash($ref);
-    return $self->new(%$ref);
+    return __PACKAGE__->new(%$ref);
 }
 
 
@@ -128,11 +126,11 @@ Saves the item and populates db defaults in id and created.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'company__save'});
-    $self->prepare_dbhash($ref);
     $ref->{control_code} = $self->{control_code};
     $ref->{entity_class} = $self->{entity_class};
     $ref->{country_id} = $self->{country_id};
     $self = $self->new(%$ref);
+    return ($self);
 }
 
 =back
