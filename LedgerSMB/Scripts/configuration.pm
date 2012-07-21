@@ -159,11 +159,11 @@ sub _get_template_directories {
     while( my $name = readdir(DIR)){
         next if ($name =~ /\./);
         if (-d $LedgerSMB::Sysconfig::templates.'/'.$name) {
-            $dirarray[$subdircount++] = {text => $name, value => $name};
+            push @dirarray, {text => $name, value => $name};
         }
     }
     closedir(DIR);
-    return @dirarray;
+    return \@dirarray;
 }
 
 =back
