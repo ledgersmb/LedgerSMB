@@ -185,5 +185,8 @@ sub accounts_by_link {
     my ($self, $link) = @_;
     my @results = $self->call_procedure(procname => 'account__get_by_link_desc',
                               args => [$link]);
+    for my $ref (@results){
+        $ref->{text} = "$ref->{accno} -- $ref->{description}";
+    }
     return \@results;
 }

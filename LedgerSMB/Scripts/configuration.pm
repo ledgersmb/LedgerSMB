@@ -84,18 +84,27 @@ sub defaults_screen{
     my @language_code_list =
              $request->call_procedure(procname=> 'person__list_languages');
 
-
     my %selects = (
         'fxloss_accno_id' => {name => 'fxloss_accno_id', 
-                           options => $setting_handle->accounts_by_link('FX_loss')},
+                           options => $setting_handle->accounts_by_link('FX_loss'),
+                         text_attr => 'text',
+                        value_attr => 'id'},
         'fxgain_accno_id' => {name => 'fxgain_accno_id', 
-                           options => $setting_handle->accounts_by_link('FX_gain')},
+                         text_attr => 'text',
+                           options => $setting_handle->accounts_by_link('FX_gain'),
+                        value_attr => 'id'},
         'expense_accno_id' => {name => 'expense_accno_id', 
-                            options => $setting_handle->accounts_by_link('IC_expense')},
+                            options =>  $setting_handle->accounts_by_link('IC_expense'),
+                         text_attr => 'text',
+                        value_attr => 'id'},
         'income_accno_id' => {name => 'income_accno_id',
-                           options => $setting_handle->accounts_by_link('IC_income')},
+                           options => $setting_handle->accounts_by_link('IC_income'),
+                         text_attr => 'text',
+                        value_attr => 'id'},
         'inventory_accno_id' => {name => 'inventory_accno_id', 
-                     options => $setting_handle->accounts_by_link('IC')},
+                     options => $setting_handle->accounts_by_link('IC'),
+                   text_attr => 'text',
+                  value_attr => 'id'},
 	'default_country' => {name   => 'default_country', 
 			     options => \@country_list,
 			     default_values => [$request->{'default_country'}],

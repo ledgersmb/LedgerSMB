@@ -10,6 +10,7 @@ license 'GPL';
 
 perl_version '5.8.1';
 
+requires 'Contextual::Return';
 requires 'Data::Dumper';
 requires 'Log::Log4perl';
 requires 'Locale::Maketext';

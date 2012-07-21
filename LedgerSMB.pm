@@ -207,7 +207,7 @@ use LedgerSMB::PGNumber;
 use LedgerSMB::PGDate;
 use LedgerSMB::Sysconfig;
 use Data::Dumper;
-use Error;
+use Contextual::Return;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
 use LedgerSMB::Session;
