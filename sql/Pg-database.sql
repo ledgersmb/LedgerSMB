@@ -1410,7 +1410,7 @@ COMMENT ON COLUMN voucher.id IS $$ This is simply a surrogate key for easy refer
 CREATE TABLE acc_trans (
   trans_id int NOT NULL REFERENCES transactions(id),
   chart_id int NOT NULL REFERENCES  account(id),
-  amount NUMERIC,
+  amount NUMERIC NOT NULL,
   transdate date DEFAULT current_date,
   source text,
   cleared bool DEFAULT 'f',
