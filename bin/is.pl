@@ -442,7 +442,8 @@ sub form_header {
     $form->header;
 
     print qq|
-<body onLoad="document.forms[0].${focus}.focus()" />
+<body onLoad="document.forms[0].${focus}.focus()" /> 
+| . $form->open_status_div . qq|
 
 <form method=post action="$form->{script}">
 |;
@@ -1083,7 +1084,7 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
 
     print qq|
 </form>
-
+| . $form->close_status_div . qq|
 </body>
 </html>
 |;

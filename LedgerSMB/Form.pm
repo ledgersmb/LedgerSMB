@@ -653,6 +653,37 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
     $self->{header} = 1;
 }
 
+=item $form->open_status_div
+
+Returns a div tag with an id of statusdiv.
+
+If $form->{id} is set and $form->{approved} the class is set to "posted" and if
+id is set but not approved, this is set to "saved."  If neither applies, we set
+to "new."
+
+=cut
+
+sub open_status_div {
+    my ($self) = @_;
+    my $class;
+    if ($self->{approved} and $self->{id}){
+        $class = "posted";
+    } elsif ($self->{id}){
+        $class = "saved";
+    } else {
+        $class = "new";
+    }
+    return "<div id='statusdiv' class='$class'>";
+}
+
+=item $form->close_status_div
+
+Simply returns a </div> tag.  This is included for clarity of code.
+
+=cut 
+
+sub close_status_div { return '</div>'; }
+
 =item $form->redirect([$msg]);
 
 If $form->{callback} is set or $msg is not set, call the redirect function in

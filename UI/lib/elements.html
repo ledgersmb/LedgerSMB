@@ -348,3 +348,15 @@
     <label<?lsmb label_id ?><?lsmb label_for ?><?lsmb label_class ?>><?lsmb text(element_data.label) ?></label>
   <?lsmb END ?>
 <?lsmb END ?>
+
+<?lsmb BLOCK OPEN_STATUS_DIV;
+   CLASS = 'new';
+   IF id and approved;
+       CLASS = 'posted';
+   ELSIF id; 
+       CLASS = 'saved';
+   END;
+?><div id='statusdiv' class='<?lsmb CLASS ?>'>
+<?lsmb END ?>
+
+<?lsmb BLOCK CLOSE_STATUS_DIV ?></div><?lsmb END ?>

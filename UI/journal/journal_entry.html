@@ -8,8 +8,8 @@
 
 <body>
 
+<?lsmb INCLUDE OPEN_STATUS_DIV id=form.id approved = form.approved ?>
 <form method="post" action="<?lsmb form.script ?>">
-
 <table width="100%">
 <tr>
     <th class="listtop" ><?lsmb form.title ?></th>
@@ -352,7 +352,6 @@ FOREACH link IN form.file_links;
 <?lsmb callback = "gl.pl?action=edit&id=" _ form.id -?>
 <a href="file.pl?action=show_attachment_screen&ref_key=<?lsmb form.id 
    ?>&file_class=1&callback=<?lsmb tt_url(callback) ?>">[<?lsmb text('Attach') ?>]</a>
-<?lsmb END # IF form.id ?>
-</form>
+<?lsmb END # IF for<?lsmb INCLUDE CLOSE_STATUS_DIV id=form.id approved = form.approved ?>
 </body>
-</html>
+<?lsmb INCLUDE OPEN_STATUS_DIV ?>

@@ -582,6 +582,7 @@ sub form_header {
 
     print qq|
 <body onLoad="document.forms[0].${focus}.focus()" />
+| . $form->open_status_div . qq|
 
 <form method=post action="$form->{script}">
 |;
@@ -957,7 +958,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 
     print qq| 
 </form>
-
+| . $form->close_status_div . qq|
 </body>
 </html>
 |;
