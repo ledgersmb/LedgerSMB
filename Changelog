@@ -8,6 +8,8 @@ Changelog for 1.3.21
 * Fixed an is_zero error saving purchase transactions (Nick P)
 * Fixed shipping selection not displaying customer info (Chris T, 3543932)
 * Fixed shipping redirection not displaying orders (Chris T, h/t Nigel T)
+* Recon screen now groups journal entries by transaction (Chris T, h/t Nick P)
+* Fixed empty string working as empty source for cash recon (Chris T)
 
 Changelog for 1.3.20
 * Fixes for es_AR translation, duplicate keys removed (Andres B)

@@ -379,7 +379,9 @@ RETURNS int as $$
 		INSERT INTO cr_report_line (report_id, scn, their_balance, 
 			our_balance, "user", voucher_id, ledger_id, post_date)
 		SELECT in_report_id, 
-		       COALESCE(ac.source, gl.ref),
+		       CASE WHEN ac.source IS NULL OR ac.source = '' 
+                            THEN gl.ref
+                            ELSE ac.source END,
 		       0, 
 		       sum(amount / CASE WHEN t_recon_fx IS NOT TRUE OR gl.table = 'gl'
                                          THEN 1
@@ -420,7 +422,8 @@ RETURNS int as $$
                                 AND (gl.table <> 'gl' OR ac.fx_transaction
                                                       IS TRUE))) 
 		GROUP BY gl.ref, ac.source, ac.transdate,
-			ac.memo, ac.voucher_id, gl.table
+			ac.memo, ac.voucher_id, gl.table, 
+                        case when gl.table = 'gl' then gl.id else 1 end
 		HAVING count(rl.id) = 0;
 
 		UPDATE cr_report set updated = now(),
