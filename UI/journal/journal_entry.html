@@ -8,7 +8,8 @@
 
 <body>
 
-<?lsmb INCLUDE OPEN_STATUS_DIV id=form.id approved = form.approved ?>
+<?lsmb INCLUDE OPEN_STATUS_DIV 
+             id=form.id approved = form.approved action=form.action ?>
 <form method="post" action="<?lsmb form.script ?>">
 <table width="100%">
 <tr>
@@ -354,4 +355,4 @@ FOREACH link IN form.file_links;
    ?>&file_class=1&callback=<?lsmb tt_url(callback) ?>">[<?lsmb text('Attach') ?>]</a>
 <?lsmb END # IF for<?lsmb INCLUDE CLOSE_STATUS_DIV id=form.id approved = form.approved ?>
 </body>
-<?lsmb INCLUDE OPEN_STATUS_DIV ?>
+<?lsmb INCLUDE CLOSE_STATUS_DIV ?>
