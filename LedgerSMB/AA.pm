@@ -121,7 +121,7 @@ sub post_transaction {
     my $tax         = 0;
     my $fxtax       = 0;
     my $amount;
-    my $diff;
+    my $diff = 0;
 
     my %tax = ();
     my $accno;
