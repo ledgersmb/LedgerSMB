@@ -61,6 +61,7 @@ use LedgerSMB::Locale;
 use LedgerSMB::Auth;
 use LedgerSMB::Session;
 use LedgerSMB::CancelFurtherProcessing;
+use LedgerSMB::App_State;
 use Data::Dumper;
 use LedgerSMB::App_State;
 
@@ -80,6 +81,8 @@ $script = substr( $0, $pos + 1 );
 
 $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
   or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
+
+
 
 # we use $script for the language module
 $form->{script} = $script;
@@ -136,6 +139,8 @@ if ($myconfig{language}){
     $locale   = LedgerSMB::Locale->get_handle( $myconfig{language} )
       or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 }
+
+$LedgerSMB::App_State::Locale = $locale;
 # pull in the main code
 $logger->trace("trying script=bin/$form->{script} action=$form->{action}");#trace flow
 try {

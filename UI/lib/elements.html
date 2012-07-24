@@ -357,6 +357,7 @@
        CLASS = 'saved';
    END;
 ?><div id='statusdiv' class='<?lsmb CLASS ?>'>
+<div id="history"><?lsmb text('Action: [_1], ID: [_2]', action, id); ?></div>
 <?lsmb END ?>
 
 <?lsmb BLOCK CLOSE_STATUS_DIV ?></div><?lsmb END ?>

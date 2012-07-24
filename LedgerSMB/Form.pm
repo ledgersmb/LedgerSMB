@@ -676,7 +676,11 @@ sub open_status_div {
     } else {
         $class = "new";
     }
-    return "<div id='statusdiv' class='$class'>";
+    my $status = $LedgerSMB::App_State::Locale->text(
+            'Action: [_1], ID: [_2]', $self->{action}, $self->{id}
+    );
+    return "<div id='statusdiv' class='$class'>
+            <div id='history'>$status</div>";
 }
 
 =item $form->close_status_div
