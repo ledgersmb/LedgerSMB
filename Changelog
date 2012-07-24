@@ -6,6 +6,8 @@ Changelog for 1.3.21
 * Added a default numberformat in Form.pm (Chris T)
 * Added a container div for theming saved and/or posted docs (Chris T)
 * Fixed an is_zero error saving purchase transactions (Nick P)
+* Fixed shipping selection not displaying customer info (Chris T, 3543932)
+* Fixed shipping redirection not displaying orders (Chris T, h/t Nigel T)
 
 Changelog for 1.3.20
 * Fixes for es_AR translation, duplicate keys removed (Andres B)
