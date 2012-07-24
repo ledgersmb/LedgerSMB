@@ -50,7 +50,9 @@ require "bin/ar.pl";
 require "bin/is.pl";
 require "bin/rp.pl";
 require "bin/pos.pl";
-require "pos.conf.pl";
+eval {require "pos.conf.pl"} || $form->error($locale->text(
+      "Could not open pos.conf.pl in [_1] line [_2]: [_3]", 
+       __FILE__, __LINE__, $!));
 
 # customizations
 if ( -f "bin/custom/pos.pl" ) {
@@ -78,7 +80,9 @@ sub till_closing {
     my $curren = $pos_config{'curren'};
 
     $form->{title} = $locale->text( "Closing Till For [_1]", $form->{login} );
-    require "pos.conf.pl";
+    eval {require "pos.conf.pl"} || $form->error($locale->text(
+      "Could not open pos.conf.pl in [_1] line [_2]: [_3]", 
+       __FILE__, __LINE__, $!));
     IS->getposlines( \%myconfig, \%$form );
     $form->header;
     print qq|
@@ -217,7 +221,9 @@ function check_errors(){
 
 sub close_till {
     use LedgerSMB::GL;
-    require 'pos.conf.pl';
+    eval {require "pos.conf.pl"} || $form->error($locale->text(
+      "Could not open pos.conf.pl in [_1] line [_2]: [_3]", 
+       __FILE__, __LINE__, $!));
     IS->clear_till( \%myconfig, \%$form );
     my $amount     = 0;
     my $expected   = 0;

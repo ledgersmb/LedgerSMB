@@ -86,7 +86,9 @@ $form->{login} = 'test';
 
 sub pos_adjust {
     $form->{rowcount} = 3;
-    require "pos.conf.pl";
+    eval {require "pos.conf.pl"} || $form->error($locale->text(
+      "Could not open pos.conf.pl in [_1] line [_2]: [_3]", 
+       __FILE__, __LINE__, $!));
     $form->{accno_1} = $pos_config{'close_cash_accno'};
     $form->{accno_2} = $pos_config{'coa_prefix'};
     $form->{accno_3} = $pos_config{'coa_prefix'};

@@ -51,7 +51,9 @@ $form->{currency} = 'USD';
 # end
 
 sub open_drawer{
-   require "pos.conf.pl";
+    eval {require "pos.conf.pl"} || $form->error($locale->text(
+      "Could not open pos.conf.pl in [_1] line [_2]: [_3]", 
+       __FILE__, __LINE__, $!));
    open (PRINTER, "|-", ${'LedgerSMB::Sysconfig::printer'}{Printer});
    print PRINTER $pos_config{'rp_cash_open'};
    close PRINTER;
