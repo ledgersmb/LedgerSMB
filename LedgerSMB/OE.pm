@@ -177,8 +177,10 @@ sub transactions {
         #HV alias company.ct changed to company.c
         $query = qq|
 			SELECT DISTINCT o.id, o.ordnumber, o.transdate,
-				o.reqdate, o.amount, c.legal_name, o.netamount, 
-				o.entity_credit_account as $form->{vc}_id, ex.$rate AS exchangerate,
+				o.reqdate, o.amount, c.legal_name as name, 
+                                eca.meta_number, o.netamount, eca.entity_id,
+                                o.entity_credit_account as $form->{vc}_id, 
+                                ex.$rate AS exchangerate,
 		 		o.closed, o.quonumber, o.shippingpoint, 
 				o.shipvia, ee.name AS employee, o.curr, 
 				o.ponumber
