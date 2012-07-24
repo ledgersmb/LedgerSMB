@@ -10,6 +10,7 @@ Changelog for 1.3.21
 * Fixed shipping redirection not displaying orders (Chris T, h/t Nigel T)
 * Recon screen now groups journal entries by transaction (Chris T, h/t Nick P)
 * Fixed empty string working as empty source for cash recon (Chris T)
+* Saving a part now returns to editing the same part (Chris T, h/t Brian W)
 
 Changelog for 1.3.20
 * Fixes for es_AR translation, duplicate keys removed (Andres B)
