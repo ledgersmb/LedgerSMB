@@ -164,6 +164,8 @@ sub render {
     my ($self, $request) = @_;
     my $template;
 
+    my $testref = $self->rows;
+    $self->run_report if !defined $testref;
     # This is a hook for other modules to use to override the default
     # template --CT
     eval {$template = $self->template};

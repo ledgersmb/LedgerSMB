@@ -25,6 +25,7 @@ We can also retrieve a previous report from the database and run it:
 package LedgerSMB::Report::Trial_Balance;
 use Moose;
 use LedgerSMB::App_State;
+with 'LedgerSMB::Report::Dates';
 extends 'LedgerSMB::Report';
 
 my $locale = $LedgerSMB::App_State::Locale;
@@ -67,13 +68,13 @@ Standard end date for report.
 has date_from => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 has date_to => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
-=item desc
+=item description
 
 Only used for saved criteria sets, is a human-readable description.
 
 =cut
 
-has desc => (is => 'rw', isa => 'Maybe[Str]');
+has description => (is => 'rw', isa => 'Str', required => 0);
 
 =item yearend
 
@@ -82,7 +83,7 @@ This value holds information related to yearend handling.  It can be either
 
 =cut
 
-has yearend => (is => 'rw', isa => 'Str');
+has ignore_yearend => (is => 'rw', isa => 'Str');
 
 
 =item heading
@@ -91,7 +92,7 @@ If set, only select accounts under this heading
 
 =cut
 
-has heading => (is => 'rw', isa => 'Maybe[Int]')l
+has heading => (is => 'rw', isa => 'Maybe[Int]');
 
 =item accounts
 
@@ -161,7 +162,7 @@ sub columns {
 =cut
 
 sub header_lines {
-    return [{name => 'date_from'
+    return [{name => 'date_from',
              text => $locale->text('From date') },
             {name => 'date_to',
              text => $locale->text('To Date') },
@@ -183,8 +184,8 @@ Retrieves the trial balance for review and possibly running it.
 =cut
 
 sub get {
-    my ($self) = @_;
-    my $ref = __PACKAGE__->call_procedure(procname => 'trial_balance__get', 
+    my ($self, $id) = @_;
+    my ($ref) = __PACKAGE__->call_procedure(procname => 'trial_balance__get', 
                                               args => [$id]);
     return __PACKAGE__->new(%$ref);
 }
@@ -198,7 +199,7 @@ Saves the trial balance to be run again with the same parameters another time
 sub save {
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'trial_balance__save'});
-    $self->id(shift (values @$ref));
+    $self->id(values %$ref);
 }
 
 =item run_report
@@ -209,7 +210,7 @@ Runs the trial balance report.
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->exec_method({funcname => 'report__gl'});
+    my @rows = $self->exec_method({funcname => 'trial_balance__generate'});
     my $total_debits;
     my $total_credits;
     for my $ref(@rows){
@@ -223,7 +224,7 @@ sub run_report {
         $ref->{gifi_accno_href_suffix} = $href_suffix;
         
     }
-    push @rows {class => 'total', 
+    push @rows, {class => 'total', 
                debits => $total_debits,
               credits => $total_credits, };
 

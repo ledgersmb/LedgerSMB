@@ -242,9 +242,9 @@ FOR retval IN
                    OR in_source is null)
               AND (ac.memo ilike '%' || in_memo || '%' OR in_memo is null)
              AND (in_description IS NULL OR
-                  to_tsvector(get_default_lang()::name, g.description)
+                  g.description
                   @@
-                  plainto_tsquery(get_default_lang()::name, in_description))
+                  plainto_tsquery(get_default_lang()::regconfig, in_description))
               AND (transdate BETWEEN in_from_date AND in_to_date
                    OR (transdate >= in_from_date AND  in_to_date IS NULL)
                    OR (transdate <= in_to_date AND in_from_date IS NULL)

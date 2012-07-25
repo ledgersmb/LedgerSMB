@@ -46,7 +46,7 @@ Retrieves and runs a trial balance.  Only needs id to be set.
 
 sub get {
     my ($request) = @_;
-    $request->merge(LedgerSMB::Report::Trial_Balance->get($request->{id});
+    $request->merge(LedgerSMB::Report::Trial_Balance->get($request->{id}));
     run($request);
 }
 
@@ -71,7 +71,9 @@ Lists trial balances.  No criteria are applicable
 
 sub list {
     my ($request) = @_;
-    ...
+    use LedgerSMB::Report::Trial_Balance::List;
+    my $rpt = LedgerSMB::Report::Trial_Balance::List->new(%$request);
+    $rpt->render($request);
 }
 
 =item run
@@ -82,7 +84,7 @@ Runs the trial balance. All criteria are applicable except id and desc.
 
 sub run {
     my ($request) = @_;
-    my LedgerSMB::Report::Trial_Balance->new(%$request);
+    my $tb = LedgerSMB::Report::Trial_Balance->new(%$request);
     $tb->run_report;
     $tb->render($request);
 }

@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE OR REPLACE FUNCTION unnest(anyarray)
   RETURNS SETOF anyelement AS
 $BODY$
@@ -7,7 +9,7 @@ SELECT $1[i] FROM
 $BODY$
   LANGUAGE 'sql' IMMUTABLE;
 
-
+DROP TYPE IF EXISTS tb_row CASCADE;
 create type tb_row AS (
    account_id int,
    account_number text,
@@ -22,7 +24,7 @@ create type tb_row AS (
 
 CREATE OR REPLACE FUNCTION trial_balance__generate 
 (in_date_from DATE, in_date_to DATE, in_heading INT, in_accounts INT[],
- in_ignore_yearend TEXT, in_department INT, in_business_units int[]) 
+ in_ignore_yearend TEXT, in_business_units int[]) 
 returns setof tb_row AS
 $$
 DECLARE
@@ -59,7 +61,9 @@ BEGIN
     END IF;
 
     IF t_roll_forward IS NULL THEN
-       SELECT min(transdate) INTO t_roll_forward FROM acc_trans;
+       SELECT min(transdate) - '1 day'::interval 
+         INTO t_roll_forward 
+         FROM acc_trans;
     END IF;
 
     IF in_ignore_yearend = 'last' THEN
@@ -84,9 +88,6 @@ BEGIN
             SELECT id, id::text AS path
               FROM business_unit
              WHERE parent_id = any(in_business_units)
-                   OR (parent_id = IS NULL 
-                       AND (in_business_units = '{}' 
-                             OR in_business_units IS NULL))
             UNION
             SELECT bu.id, bu_tree.path || ',' || bu.id
               FROM business_unit bu
@@ -94,19 +95,17 @@ BEGIN
             )
        SELECT ac.transdate, ac.amount, ac.chart_id
          FROM acc_trans ac
-         JOIN (SELECT id, approved, department_id FROM ar UNION ALL
-               SELECT id, approved, department_id FROM ap UNION ALL
-               SELECT id, approved, department_id FROM gl) gl
+         JOIN (SELECT id, approved FROM ar UNION ALL
+               SELECT id, approved FROM ap UNION ALL
+               SELECT id, approved FROM gl) gl
                    ON ac.approved and gl.approved and ac.trans_id = gl.id
     LEFT JOIN business_unit_ac buac ON ac.entry_id = buac.entry_id
     LEFT JOIN bu_tree ON buac.bu_id = bu_tree.id
         WHERE ac.transdate BETWEEN t_roll_forward + '1 day'::interval 
                                     AND t_end_date
-              AND ac.trans_id <> ALL(ignore_trans)
-              AND (in_department is null 
-                 or gl.department_id = in_department)
-              ((in_business_units = '{}' OR in_business_units IS NULL)
-                OR bu_tree.id IS NOT NULL)
+              AND (ignore_trans is null or ac.trans_id <> ALL(ignore_trans))
+              AND ((in_business_units = '{}' OR in_business_units IS NULL)
+               OR bu_tree.id IS NOT NULL)
        )
        SELECT a.id, a.accno, a.description, a.gifi_accno,
          case when in_date_from is null then 0 else
@@ -164,8 +163,8 @@ CREATE OR REPLACE FUNCTION trial_balance__save (
     in_id int,
     in_date_from date,
     in_date_to date,
-    in_desc text,
-    in_yearend text,
+    in_description text,
+    in_ignore_yearend text,
     in_heading int,
     in_accounts int[]
 ) RETURNS int AS $body$
@@ -185,8 +184,8 @@ CREATE OR REPLACE FUNCTION trial_balance__save (
             UPDATE trial_balance
                SET date_from   = in_date_from,
                    date_to     = in_date_to,
-                   description = in_desc,
-                   yearend     = in_yearend
+                   description = in_description,
+                   ignore_yearend     = in_ignore_yearend
              WHERE id = in_id;
             
             SELECT heading_id 
@@ -234,7 +233,8 @@ CREATE OR REPLACE FUNCTION trial_balance__save (
             -- We can just create a new one whole cloth. Woo!
             new_report_id := nextval('trial_balance_id_seq');
             INSERT INTO trial_balance (id, date_from, date_to, description, yearend)
-                 VALUES (new_report_id, in_date_from, in_date_to, in_desc, in_yearend);
+                 VALUES (new_report_id, in_date_from, in_date_to, 
+                        in_description, in_ignore_yearend);
             
             IF in_heading IS NOT NULL THEN
                 INSERT INTO trial_balance__heading_to_report (report_id, heading_id)
@@ -285,6 +285,7 @@ CREATE OR REPLACE FUNCTION trial_balance__list (
     SELECT * FROM trial_balance ORDER BY id ASC;
 $body$ LANGUAGE SQL STABLE;
 
+DROP TYPE IF EXISTS trial_balance__heading CASCADE;
 CREATE TYPE trial_balance__heading AS (
     id int,
     accno text,
@@ -321,3 +322,5 @@ CREATE OR REPLACE FUNCTION trial_balance__delete (
         RETURN FALSE;
     END;
 $body$ LANGUAGE PLPGSQL;
+
+COMMIT;
