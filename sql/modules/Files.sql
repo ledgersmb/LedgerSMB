@@ -233,14 +233,22 @@ CREATE OR REPLACE FUNCTION file__get_for_template
 RETURNS SETOF file_list_item AS
 $$ 
 
-SELECT m.mime_type, f.file_name, f.description, f.uploaded_by, e.name, 
+SELECT m.mime_type, CASE WHEN f.file_class = 3 THEN ref_key ||'-'|| f.file_name
+                         ELSE f.file_name END, 
+       f.description, f.uploaded_by, e.name, 
        f.uploaded_at, f.id, f.ref_key, f.file_class,  f.content
   FROM mime_type m
   JOIN file_base f ON f.mime_type_id = m.id
   JOIN entity e ON f.uploaded_by = e.id
  WHERE f.ref_key = $1 and f.file_class = $2
-       AND m.invoice_include;
-
+       AND m.invoice_include 
+       OR id IN (SELECT max(id) 
+                   FROM file_base fb
+                   JOIN mime_type m ON fb.mime_type_id = m.id
+                        AND m.mime_type ilike 'image%'
+                   JOIN invoice i ON i.trans_id = in_ref_key 
+                        AND i.parts_id = fb.ref_key
+                  WHERE fb.file_class = 3)
 $$ language sql;
 
 

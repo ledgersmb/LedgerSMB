@@ -88,6 +88,11 @@ Changelog for 1.3.21
 * Saving a part now returns to editing the same part (Chris T, h/t Brian W)
 * If pos.conf.pl is not found, now returns an intelligible error (Chris T)
 * Adding action/id div to top of many screens (Chris T, h/t Erik H)
+* File->get_for_template now gets most recent parts image (Chris T)
+* Fixed error on generate purchase orders (Chris T, 3544857, h/t Nigel T)
+* Fixed internal server errors with date parsing (Chris T, 3546698)
+* Fixed "Directory Transversal Not Allowed w/fs_cssdir (Chris T, h/t Robert C)
+* Fixed customer/vendor cleared on ship/receive update (Chris T, 3548104)
 
 Changelog for 1.3.20
 * Fixes for es_AR translation, duplicate keys removed (Andres B)

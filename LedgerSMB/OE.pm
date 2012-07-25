@@ -2332,9 +2332,10 @@ sub add_items_required {
 
         $query = qq|
 			SELECT pv.partnumber, pv.leadtime, pv.lastcost, pv.curr,
-				v.id as vendor_id, v.name
+				eca.id as vendor_id, e.name
 			FROM partsvendor pv
-			JOIN vendor v ON (v.id = pv.credit_id)
+			JOIN entity_credit_account eca ON (eca.id = pv.credit_id)
+                        JOIN entity e ON e.id = eca.entity_id
 			WHERE pv.parts_id = ?|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
 
@@ -2403,7 +2404,7 @@ sub generate_orders {
 
         $query = qq|
 			SELECT v.curr, v.taxincluded, t.rate, c.accno
-			FROM vendor v
+			FROM entity_credit_account v
 			LEFT JOIN eca_tax vt ON (v.id = vt.vendor_id)
 			LEFT JOIN tax t ON (t.chart_id = vt.chart_id)
 			LEFT JOIN chart c ON (c.id = t.chart_id)
@@ -2426,9 +2427,11 @@ sub generate_orders {
 
         # TODO:  Make this function insert as much as possible
         $query = qq|
-			INSERT INTO oe (ordnumber)
-			VALUES ('$uid')|;
-        $dbh->do($query) || $form->dberror($query);
+			INSERT INTO oe (ordnumber, entity_credit_account, 
+                                       oe_class_id)
+			VALUES (?, ?, 2)|;
+        $sth = $dbh->prepare($query);
+        $sth->execute($uid, $vendor_id) || $form->dberror($query);
 
         $query = qq|SELECT id FROM oe WHERE ordnumber = '$uid'|;
         $sth   = $dbh->prepare($query);
@@ -2518,7 +2521,7 @@ sub generate_orders {
 			UPDATE oe SET
 				ordnumber = ?,
 				transdate = current_date,
-				entity_id = ?
+				entity_id = ?,
 				amount = ?,
 				netamount = ?,
 				taxincluded = ?,
