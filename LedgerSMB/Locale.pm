@@ -123,7 +123,7 @@ sub date {
         return $date;
     }
     if ( $date =~ /\D/ ) {
-        if ($date  =~ /\d{4}/){ # db date in
+        if ($date  =~ /^\d{4}/){ # db date in
             ( $yy, $mm, $dd ) = split /\D/, $date;
         }
         elsif ( $myconfig->{dateformat} =~ /^yy/ ) {
