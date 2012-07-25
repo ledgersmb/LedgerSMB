@@ -259,14 +259,6 @@ sub show_cols {
     return \@retval;
 }
 
-=item prepare_input
-
-Handles from_date and to_date fields, as well as from_month, from_year, and 
-interval, setting from_date and to_date to LedgerSMB::PGDate types, and setting
-from_amount and to_amount to LedgerSMB::PGNumber types.
-
-Valid values for interval are:
-
 =over
 
 =item none 
