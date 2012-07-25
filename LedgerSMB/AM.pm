@@ -1501,6 +1501,11 @@ sub check_template_name {
 
     my @allowedsuff = qw(css tex txt html xml);
     my $test = $form->{file};
+    $test =~ s|^$LedgerSMB::Sysconfig::fs_cssdir||;
+    if ($LedgerSMB::Sysconfig::fs_cssdir 
+           and $LedgerSMB::Sysconfig::fs_cssdir !~ m|/$|){
+         $test =~ s|^/||;
+    }
     if ($LedgerSMB::Sysconfig::templates =~ /^(.:)*?\//){
         $test =~ s#^$LedgerSMB::Sysconfig::templates/?\\?##;
     }
