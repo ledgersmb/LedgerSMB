@@ -997,6 +997,10 @@ sub update {
         &rebuild_vc( $form->{vc}, $ARAP, $form->{transdate}, 1 );
     }
 
+    # I think this is safe because the shipping or receiving is tied to the 
+    # order which is tied to the customer or vendor.  -CT
+    $newname = 1 if $form->{type} =~ /(ship|receive)/;
+
     if ( $form->{transdate} ne $form->{oldtransdate} ) {
         $form->{reqdate} =
           ( $form->{terms} )
