@@ -14,6 +14,7 @@ Changelog for 1.3.21
 * If pos.conf.pl is not found, now returns an intelligible error (Chris T)
 * Adding action/id div to top of many screens (Chris T, h/t Erik H)
 * File->get_for_template now gets most recent parts image (Chris T)
+* Fixed error on generate purchase orders (Chris T, 3544857, h/t Nigel T)
 
 Changelog for 1.3.20
 * Fixes for es_AR translation, duplicate keys removed (Andres B)
