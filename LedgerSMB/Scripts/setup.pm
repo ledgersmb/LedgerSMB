@@ -104,14 +104,22 @@ sub login {
             $request->{operation} = $request->{_locale}->text('Cancel?');
             $request->{next_action} = 'cancel';
          
-         } elsif ($version_info->{version} eq '1.3') {
+         } elsif ($version_info->{version} eq '1.4') {
              $request->{message} = $request->{_locale}->text(
-                 'LedgerSMB 1.3 found'   
+                 'LedgerSMB 1.4 found'   
              );
              $request->{operation} = $request->{_locale}->text(
                     'Rebuild/Upgrade?'
              );
              $request->{next_action} = 'rebuild_modules';
+         } elsif ($version_info->{version} eq '1.3') {
+             $request->{message} = $request->{_locale}->text(
+                 'LedgerSMB 1.3 found'   
+             );
+             $request->{operation} = $request->{_locale}->text(
+                    'Upgrade?'
+             );
+             $request->{next_action} = 'upgrade';
          } else {
             $request->{message} = $request->{_locale}->text(
                  'Unknown version found.'
