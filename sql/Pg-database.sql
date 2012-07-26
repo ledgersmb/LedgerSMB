@@ -4739,4 +4739,39 @@ CREATE TYPE trial_balance__entry AS (
 );
 
 ALTER TABLE cr_report_line ADD FOREIGN KEY(ledger_id) REFERENCES acc_trans(entry_id);
+
+
+CREATE VIEW tx_report AS
+SELECT id, reference, null::int as entity_credit_account, 'gl' as table, 
+       approved
+  FROM gl
+UNION ALL
+SELECT id, invnumber, entity_credit_account, 'ap', approved
+  FROM ap
+UNION ALL
+SELECT id, invnumber, entity_credit_account, 'ar', approved
+  FROM ar;
+
+COMMENT ON VIEW tx_report IS
+$$ This view provides join and approval information for transactions.$$;
+
+CREATE VIEW cash_impact AS
+SELECT id, '1'::numeric, 'gl' as rel FROM gl
+UNION ALL
+SELECT id, gl.amount / (gl.amount - sum(ac.amount * -1)), 'ar' as rel
+  FROM ar gl
+  JOIN acc_trans ac ON ac.trans_id = gl.id
+  JOIN account_link al ON ac.chart_id = al.account_id and al.description = 'AR'
+ GROUP BY gl.id, gl.amount
+UNION ALL
+SELECT id, gl.amount / (gl.amount - sum(ac.amount)), 'ap' as rel
+  FROM ap gl
+  JOIN acc_trans ac ON ac.trans_id = gl.id
+  JOIN account_link al ON ac.chart_id = al.account_id and al.description = 'AP'
+ GROUP BY gl.id, gl.amount;
+
+COMMENT ON VIEW cash_impact IS
+$$ This view is used by cash basis reports to determine the fraction of a
+transaction to be counted.$$;
+
 commit;
