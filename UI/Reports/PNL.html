@@ -1,0 +1,74 @@
+<?lsmb INCLUDE 'ui-header.html';
+
+INCOME_ROWS = [];
+TOTAL_INCOME = 0;
+EXPENSE_ROWS = [];
+TOTAL_EXPENSE = 0;
+
+FORACH r IN rows;
+   IF r.category = 'E';
+       EXPENSE_ROWS.push(r);
+       TOTAL_EXPENSE = TOTAL_EXPENSE + r.amount;
+   ELSIF r.category = 'I';
+       INCOME_ROWS.push(r);
+       TOTAL_INCOME = TOTAL_INCOME + r.amount;
+   END;
+END;
+
+RETAINED_EARNINGS = TOTAL_INCOME - TOTAL_EXPENSE;
+
+IF RETAINED_EARNINGS < 0;
+   RETAINED_EARNINGS = '(' _ RETAINED_EARNINGS * -1 _ ')';
+END;
+?>
+<body>
+<div id="report_name" class="income_statement">
+<h1><?lsmb name ?></h1>
+<h2><?lsmb text('Accounting period: [_1] to [_2]', from_date, to_date); ?></h2>
+<table>
+<tbody>
+    <tr class="sectionhead">
+        <th><?lsmb text('Income Account') ?></th>
+        <th><?lsmb text('Amount') ?></th>
+    </tr>
+  <?lsmb FOREACH R IN INCOME_ROWS ?>
+    <tr class="incomerow">
+        <td class="label"><?lsmb R.accno _ '--' R.description ?></td>
+        <td class="amount"><?lsmb R.amount ?></td>
+    </tr>
+ <?lsmb END ?>
+   <tr class="sectionfoot">
+     <th><?lsmb text('Total Income') ?></th>
+     <td class="amount"><?lsmb TOTAL_INCOME ?></td>
+   </tr>
+    <tr class="sectionhead">
+        <th><?lsmb text('Expense Account') ?></th>
+        <th><?lsmb text('Amount') ?></th>
+    </tr>
+  <?lsmb FOREACH R IN EXPENSE_ROWS ?>
+    <tr class="incomerow">
+        <td class="label"><?lsmb R.accno _ '--' R.description ?></td>
+        <td class="amount"><?lsmb R.amount ?></td>
+    </tr>
+ <?lsmb END ?>
+   <tr class="sectionfoot">
+     <th><?lsmb text('Total Expense') ?></th>
+     <td class="amount"><?lsmb TOTAL_EXPENSE ?></td>
+   </tr>
+   <tr class="sectionfoot">
+     <th><?lsmb text('Total Income') ?></th>
+     <td class="amount"><?lsmb TOTAL_INCOME ?></td>
+   </tr>
+   <tr class="reportfoot">
+     <th><?lsmb text('Less Total Expense') ?></th>
+     <td class="amount"><?lsmb TOTAL_EXPENSE ?></td>
+   </tr>
+   <tr class="reportfoot">
+     <th><?lsmb text('Income (Loss)') ?></th>
+     <td class="amount"><?lsmb RETAINED_EARNINGS ?></td>
+   </tr>
+</tbody>
+</table>
+</body>
+</html>
+
