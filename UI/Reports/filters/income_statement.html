@@ -1,0 +1,53 @@
+<?lsmb INCLUDE 'ui-header.html' ?>
+<?lsmb PROCESS elements.html;
+       PROCESS 'report_base.html';
+<body>
+<form method="get" action="reports.pl">
+<table width="100%">
+  <tr><th class="listtop"><?lsmb text('Income Statement') ?></th></tr>
+  <tr><td> </td></tr>
+  <tr>
+    <td>
+      <table>
+       <?lsmb PROCESS business_units;
+       PROCESS date_row; # TODO add comparisons ?>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td>
+    <table>
+      <tr>
+        <th align="right"><?lsmb text('Method') ?></th>
+        <td colspan="3">
+<?lsmb PROCESS input element_data={
+  name = 'basis',
+  type = 'radio',
+  value = 'accrual',
+  label = text('Accrual'),
+  checked = 'checked',
+  } -?>
+<?lsmb PROCESS input element_data={
+  name = 'basis',
+  type = 'radio',
+  value = 'cash',
+  label = text('Accrual'),
+  } -?>
+        </td>
+      </tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td><hr size="3" noshade="noshade" /></td></tr>
+</table>
+<?lsmb PROCESS button element_data = {
+    name = 'action'
+   class = 'submit'
+    type = 'submit'
+    text = text('Continue'),
+   value = 'generate_income_statement'
+} ?>
+<br />
+</form>
+</body>
+</html>
