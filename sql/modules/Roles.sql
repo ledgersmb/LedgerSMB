@@ -529,6 +529,13 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__purchase_order_create"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
+CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_all"
+WITH INHERIT NOLOGIN
+IN ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_create",
+"lsmb_<?lsmb dbname ?>__ap_invoice_create",
+"lsmb_<?lsmb dbname ?>__ap_transaction_list",
+"lsmb_<?lsmb dbname ?>__file_attach_tx";
+
 -- Role created later; using the GRANT construct, we support upgrades
 GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
    TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
