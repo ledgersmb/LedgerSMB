@@ -1427,7 +1427,11 @@ sub db_init {
     # Roles tracking
     $self->{_roles} = [];
     $query = "select rolname from pg_roles 
-               where pg_has_role(SESSION_USER, 'USAGE')";
+               where pg_has_role(rolname, 'USAGE')
+                     and rolname like 
+                          coalesce((select value from defaults
+                                     where setting_key = 'role_prefix'), 
+                                   'lsmb_' || current_database() || '__') || '%'";
     $sth = $dbh->prepare($query);
     $sth->execute();
     while (my @roles = $sth->fetchrow_array){

@@ -1676,6 +1676,10 @@ sub save_defaults {
 
     my ( $self, $myconfig, $form, $defaults) = @_;
 
+    my @roles = @{$form->{_roles}};
+    $form->error('Access Denied') unless grep /system_settings_change/, @roles;
+    
+
     for (qw(inventory income expense fxgain fxloss)) {
         ( $form->{$_ . "_accno_id"} ) = split /--/, $form->{$_ . "_accno_id"};
     }
