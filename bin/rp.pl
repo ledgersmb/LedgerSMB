@@ -149,9 +149,6 @@ sub report {
         $gifi = 0;
         $hiddens{nextsub} = 'generate_inv_activity';
         $subform = 'generate_inv_activity';
-    } elsif ( $form->{report} eq "income_statement" ) {
-        $hiddens{nextsub} = 'generate_income_statement';
-        $subform = 'generate_income_statement';
     } elsif ( $form->{report} eq "balance_sheet" ) {
         $hiddens{nextsub} = 'generate_balance_sheet';
         $subform = 'generate_balance_sheet';
@@ -429,73 +426,6 @@ qq|rp.pl?path=$form->{path}&action=continue&accounttype=$form->{accounttype}&log
             expense => 'right',
             },
     });
-}
-
-sub generate_income_statement {
-    init_company_config($form);
-
-    RP->income_statement( \%myconfig, \%$form );
-
-    ( $form->{department} )    = split /--/, $form->{department};
-    ( $form->{projectnumber} ) = split /--/, $form->{projectnumber};
-
-    $form->{period} =
-      $locale->date( \%myconfig, $form->current_date( \%myconfig ), 1 );
-    $form->{todate} = $form->current_date( \%myconfig ) unless $form->{todate};
-
-    # if there are any dates construct a where
-    unless ( $form->{todate} ) {
-        $form->{todate} = $form->current_date( \%myconfig );
-    }
-
-    $longtodate  = $locale->date( \%myconfig, $form->{todate}, 1 );
-    $shorttodate = $locale->date( \%myconfig, $form->{todate}, 0 );
-
-    $longfromdate  = $locale->date( \%myconfig, $form->{fromdate}, 1 );
-    $shortfromdate = $locale->date( \%myconfig, $form->{fromdate}, 0 );
-
-    $form->{this_period_from} = $shortfromdate;
-    $form->{this_period_to} = $shorttodate;
-    # example output: 2006-01-01 To 2007-01-01
-    $form->{period} = $locale->text('[_1] To [_2]', $longfromdate, $longtodate);
-
-    if ( $form->{comparefromdate} || $form->{comparetodate} ) {
-        $longcomparefromdate =
-          $locale->date( \%myconfig, $form->{comparefromdate}, 1 );
-        $shortcomparefromdate =
-          $locale->date( \%myconfig, $form->{comparefromdate}, 0 );
-
-        $longcomparetodate =
-          $locale->date( \%myconfig, $form->{comparetodate}, 1 );
-        $shortcomparetodate =
-          $locale->date( \%myconfig, $form->{comparetodate}, 0 );
-
-        $form->{last_period_from} = $shortcomparefromdate;
-        $form->{last_period_to} = $shortcomparetodate;
-        $form->{compare_period} = $locale->text('[_1] To [_2]',
-            $longcomparefromdate, $longcomparetodate);
-    }
-
-    ##SC: The escaped form will be converted in-template
-    $form->{address} =~ s/\\n/<br>/g;
-
-
-    my $template = LedgerSMB::Template->new(
-        user => \%myconfig, 
-        locale => $locale, 
-        template => 'income_statement',
-        format => 'HTML',
-	#no_escape => '1'
-        );
-    try {
-        $template->render($form);
-        $template->output(%{$form});
-    }
-    catch Error::Simple with {
-        my $E = shift;
-        $form->error( $E->stacktrace );
-    };
-
 }
 
 sub generate_balance_sheet {
