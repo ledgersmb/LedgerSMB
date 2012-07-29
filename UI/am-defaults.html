@@ -17,170 +17,52 @@
 		 
 <body>
 <form method="post" action="<?lsmb form.script ?>">
-<table width="100%">
-  <tr><th class="listtop"><?lsmb text('System Defaults') ?></th></tr>
+<table width="100%"><col width="25%" align="right"><col><col>
+  <tr><th colspan="2" class="listtop"><?lsmb text('System Defaults') ?></th>
+  <?lsmb FOREACH GROUP IN default_settings ?>
+  <tr><th colspan="2" class="listheading"><?lsmb GROUP.title ?></th></tr>
+    <?lsmb FOREACH ITEM IN GROUP.items ?>
   <tr>
-    <td>
-      <table>
-	<tr>
-          <th align="right"><?lsmb text('Business Number') ?></th>
-          <td><input name="businessnumber" size="25" value="<?lsmb form.businessnumber ?>" /></td>
-	</tr>
-	<tr>
-	  <th align="right"><?lsmb text('Weight Unit') ?></th>
-	  <td><input name="weightunit" size="5" value="<?lsmb form.weightunit ?>" /></td>
-	</tr>
-	<tr>
-	  <th align="right"><?lsmb text('Separate Duties') ?></th>
-	  <td><input name="separate_duties" size="5" value="<?lsmb form.separate_duties ?>" /></td>
-	</tr>
-	<tr>
-	  <th align="right"><?lsmb text('Images in Templates') ?></th>
-	  <td><input name="template_images" size="5" value="<?lsmb form.template_images ?>" /></td>
-	</tr>
-        <tr>
-         <th align="right"><?lsmb text('default_language') ?></th>
-	  <td>
-           <?lsmb PROCESS select element_data=selects.default_language ?>
-         </td>
-	</tr>
-      </table>
+    <th align="right"><?lsmb ITEM.label ?></th>
+       <td>
+       <?lsmb 
+       IF ITEM.type == 'YES_NO';
+           IF form.${ITEM.name};
+              YES="CHECKED";
+              NO=undef;
+           ELSE;
+              NO="CHECKED";
+              YES=undef;
+           END;
+           PROCESS input element_data = {
+              name = ITEM.name
+              type = 'radio'
+             label = text('Yes')
+             value = 1
+           checked = YES
+           };
+           PROCESS input element_data = {
+              name = ITEM.name
+              type = 'radio'
+             label = text('No')
+             value = 0
+           checked = NO
+           };
+       ELSIF ITEM.type == 'SELECT_ONE';
+           PROCESS select element_data= selects.${ITEM.name};
+       ELSE;
+           PROCESS input element_data = {
+                   name = ITEM.name
+                   type = 'text'
+                  value = form.${ITEM.name}
+           }; 
+        END; ?>
     </td>
   </tr>
-  <tr>
-    <th class="listheading"><?lsmb text('Last Numbers & Default Accounts') ?></th>
-  </tr>
-  <tr>
-    <td>
-      <table>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Inventory') ?></th>
-	  <td>
-<?lsmb PROCESS select element_data=selects.inventory_accno_id ?>
-          </td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Income') ?></th>
-	  <td>
-<?lsmb PROCESS select element_data=selects.income_accno_id ?>
-         </td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Expense') ?></th>
-	  <td>
-<?lsmb PROCESS select element_data=selects.expense_accno_id ?>
-         </td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Foreign Exchange Gain') ?></th>
-	  <td>
-<?lsmb PROCESS select element_data=selects.fxgain_accno_id ?>
-         </td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Foreign Exchange Loss') ?></th>
-	  <td>
-<?lsmb PROCESS select element_data=selects.fxloss_accno_id ?>
-         </td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Default Country') ?></th>
-	  <td>
-<?lsmb selects.default_country.options.unshift({}) ?>
-<?lsmb PROCESS select element_data=selects.default_country ?>
-         </td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Templates directory') ?></th>
-	  <td>
-<?lsmb PROCESS select element_data=selects.templates ?>
-         </td>
-	</tr>
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <th align="left"><?lsmb text('Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native and foreign currencies') ?></th>
-  </tr>
-  <tr>
-    <td>
-      <input name="curr" size="40" value="<?lsmb form.curr ?>" />
-    </td>
-  </tr>
-  <tr>
-    <td>
-      <table>
-      <?lsmb FOREACH textbox IN default_textboxes ?>
-      <tr><th align="right" nowrap="nowrap"><?lsmb textbox.label ?></th>
-          <td><input name="<?lsmb textbox.name ?>" size="40" 
-                     value="<?lsmb form.${textbox.name} ?>" />
-          </td>
-      </tr>
-      <?lsmb END # FOR textbox ?>
-        <!-- From here, defaults in list in am.pl
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('GL Reference Number') ?></th>
-	  <td><input name="glnumber" size="40" value="<?lsmb form.glnumber ?>" /></td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Sales Invoice/AR Transaction Number') ?></th>
-	  <td><input name="sinumber" size="40" value="<?lsmb form.sinumber ?>" /></td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Sales Order Number') ?></th>
-	  <td><input name="sonumber" size="40" value="<?lsmb form.sonumber ?>" /></td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Vendor Invoice/AP Transaction Number') ?></th>
-	  <td><input name="vinumber" size="40" value="<?lsmb form.vinumber ?>" /></td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Purchase Order Number') ?></th>
-	  <td><input name="ponumber" size="40" value="<?lsmb form.ponumber ?>" /></td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Sales Quotation Number') ?></th>
-	  <td><input name="sqnumber" size="40" value="<?lsmb form.sqnumber ?>" /></td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('RFQ Number') ?></th>
-	  <td><input name="rfqnumber" size="40" value="<?lsmb form.rfqnumber ?>" /></td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Part Number') ?></th>
-	  <td><input name="partnumber" size="40" value="<?lsmb form.partnumber ?>" /></td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Job/Project Number') ?></th>
-	  <td><input name="projectnumber" size="40" value="<?lsmb form.projectnumber ?>" /></td>
-        </tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Employee Number') ?></th>
-	  <td><input name="employeenumber" size="40" value="<?lsmb form.employeenumber ?>" /></td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Customer Number') ?></th>
-	  <td><input name="customernumber" size="40" value="<?lsmb form.customernumber ?>" /></td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Vendor Number') ?></th>
-	  <td><input name="vendornumber" size="40" value="<?lsmb form.vendornumber ?>" /></td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Check Prefix') ?></th>
-	  <td><input name="check_prefix" size="40" value="<?lsmb form.check_prefix ?>" /></td>
-	</tr>
-	<tr>
-          <th align="right" nowrap="nowrap"><?lsmb text('Password Duration') ?></th>
-	  <td><input name="password_duration" size="40" value="<?lsmb form.password_duration ?>" /></td>
-	</tr> -->
-      </table>
-    </td>
-  </tr>
-  <tr>
-    <td><hr size="3" noshade="noshade" /></td>
-  </tr>
+    <?lsmb END # FOREACH ITEM ?>
+  <?lsmb END # FOREACH GROUP ?> 
 </table>
+<hr size="3" noshade="noshade" />
 
 <?lsmb FOREACH hidden IN hiddens.keys;
 	PROCESS input element_data={

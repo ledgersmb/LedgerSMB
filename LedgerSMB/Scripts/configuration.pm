@@ -15,48 +15,99 @@ use warnings;
 
 my $locale = $LedgerSMB::App_State::Locale;
 
-our @default_textboxes = (
-   { name => 'glnumber', label => $locale->text('GL Reference Number') },
-   { name => 'sinumber', 
+our @default_settings = (
+   { title => $locale->text('Company Information'),
+     items => [
+       { name => 'company_name', label => $locale->text('Company Name') },
+       { name => 'company_address', label => $locale->text('Company Address') },
+       { name => 'company_phone', label => $locale->text('Company Phone') },
+       { name => 'company_fax', label => $locale->text('Company Fax') },
+       { name => 'businessnumber', label => $locale->text('Business Number') },
+       { name => 'default_email_to', 
+        label => $locale->text('Default Email To') },
+       { name => 'default_email_cc', 
+        label => $locale->text('Default Email CC') },
+       { name => 'default_email_bcc', 
+        label => $locale->text('Default Email BCC') },
+       { name => 'default_email_from', 
+        label => $locale->text('Default Email From') },
+       { name => 'company_sales_tax_id', 
+        label =>  $locale->text('Company Sales Tax ID') },
+       { name => 'company_license_number',
+        label =>  $locale->text('Company License Number') },
+       { name => 'curr', 
+        label => $locale->text('Currencies (colon-separated)')},
+       { name => 'weightunit', label => $locale->text('Weight Unit') },
+       { name => 'default_country',
+        label => $locale->text('Default Country'),
+         type => 'SELECT_ONE', },
+       { name => 'default_language',
+        label => $locale->text('Default Language'),
+         type => 'SELECT_ONE', },
+       { name => 'templates',
+         type => 'SELECT_ONE',
+        label => $locale->text('Template Set'), },
+     ] },
+   { title => $locale->text('Security Settings'),
+     items => [
+       { name => 'password_duration',
+        label => $locale->text('Password Duration') },
+       { name => 'session_timeout',
+        label => $locale->text('Session Timeout'), },
+       { name => 'auto_logout',
+        label => $locale->text('Automatically Logout'),
+         type => 'YES_NO', },
+       { name => 'separate_duties',
+        label => $locale->text('Separate Duties'),
+         type => 'YES_NO', },
+     ] },
+ { title => $locale->text('Default Accounts'),
+   items => [
+       { name => 'inventory_accno_id',
+         type => 'SELECT_ONE',
+        label => $locale->text('Inventory'), },
+       { name => 'income_accno_id',
+         type => 'SELECT_ONE',
+        label => $locale->text('Income'), },
+       { name => 'expense_accno_id',
+         type => 'SELECT_ONE',
+        label => $locale->text('Cost of Goods Sold'), },
+       { name => 'fxgain_accno_id',
+         type => 'SELECT_ONE',
+        label => $locale->text('Foreign Exchange Gain') },
+       { name => 'fxloss_accno_id',
+         type => 'SELECT_ONE',
+        label => $locale->text('Foreign Exchange Loss') },
+   ] },
+ { title => $locale->text('Next in Sequence'),
+   items => [
+     { name => 'glnumber', label => $locale->text('GL Reference Number') },
+     { name => 'sinumber', 
       label => $locale->text('Sales Invoice/AR Transaction Number'), },
-   { name => 'vclimit', label => $locale->text('Max per dropdown') },
-   { name => 'sonumber', label => $locale->text('Sales Order Number') },
-   { name => 'vinumber' , 
-    label => $locale->text('Vendor Invoice/AP Transaction Number')},
-   { name => 'sqnumber', label => $locale->text('Sales Quotation Number') },
-   { name => 'rfqnumber', label => $locale->text('RFQ Number') },
-   { name => 'partnumber', label => $locale->text('Part Number') },
-   { name => 'projectnumber', label => $locale->text('Job/Project Number') },
-   { name => 'employeenumber', label => $locale->text('Employee Number') },
-   { name => 'customernumber', label => $locale->text('Customer Number') },
-   { name => 'vendornumber', label => $locale->text('Vendor Number') },
-   { name => 'check_prefix', label => $locale->text('Check Prefix') },
-   { name => 'password_duration', label => $locale->text('Password Duration') },
-   { name => 'default_email_to', label => $locale->text('Default Email To') },
-   { name => 'default_email_cc', label => $locale->text('Default Email CC') },
-   { name => 'default_email_bcc', label => $locale->text('Default Email BCC') },
-   { name => 'default_email_from', 
-     label => $locale->text('Default Email From') },
-   { name => 'company_name', label => $locale->text('Company Name') },
-   { name => 'company_address', label => $locale->text('Company Address') },
-   { name => 'company_phone', label => $locale->text('Company Phone') },
-   { name => 'company_fax', label => $locale->text('Company Fax') },
-   { name => 'company_sales_tax_id', 
-                             label =>  $locale->text('Company Sales Tax ID') },
-   { name => 'company_license_number',
-                           label =>  $locale->text('Company License Number') },
-   { name => 'check_max_invoices',
-                           label =>  $locale->text('Max Invoices per Check Stub') },
-   { name => 'decimal_places',
-                           label =>  $locale->text('Decimal Places for Money') },
+     { name => 'vclimit', label => $locale->text('Max per dropdown') },
+     { name => 'sonumber', label => $locale->text('Sales Order Number') },
+     { name => 'vinumber' , 
+      label => $locale->text('Vendor Invoice/AP Transaction Number')},
+     { name => 'sqnumber', label => $locale->text('Sales Quotation Number') },
+     { name => 'rfqnumber', label => $locale->text('RFQ Number') },
+     { name => 'partnumber', label => $locale->text('Part Number') },
+     { name => 'projectnumber', label => $locale->text('Job/Project Number') },
+     { name => 'employeenumber', label => $locale->text('Employee Number') },
+     { name => 'customernumber', label => $locale->text('Customer Number') },
+     { name => 'vendornumber', label => $locale->text('Vendor Number') },
+   ] },
+   { title => $locale->text('Misc Settings'),
+     items => [  
+       { name => 'check_prefix', label => $locale->text('Check Prefix') },
+       { name => 'check_max_invoices',
+        label =>  $locale->text('Max Invoices per Check Stub') },
+       { name => 'decimal_places',
+        label =>  $locale->text('Decimal Places for Money') },
+       { name => 'template_immages',
+        label => $locale->text('Images in Templates'),
+         type => 'YES_NO', },
+     ] },
 );
-
-our @default_others = qw(businessnumber weightunit separate_duties default_language
-                        inventory_accno_id income_accno_id expense_accno_id 
-                        fxgain_accno_id fxloss_accno_id default_country 
-                        templates curr template_images);
-
-
 
 =head1 METHODS/ACTIONS
 
@@ -71,9 +122,11 @@ Shows the defaults screen
 sub defaults_screen{
     my ($request) = @_;
     my $setting_handle = LedgerSMB::Setting->new({base => $request});
-    my @defaults = @default_others;
-    for my $tb (@default_textboxes){
-        push @defaults, $tb->{name};
+    my @defaults;
+    for my $dg (@default_settings){
+        for my $tb (@{$dg->{items}}){
+            push @defaults, $tb->{name};
+        }
     }
     for my $skey (@defaults){
         $request->{$skey} = $setting_handle->get($skey);
@@ -131,7 +184,7 @@ sub defaults_screen{
         form => $request,
 	# hiddens => \%hiddens,
 	selects => \%selects,
-        default_textboxes => \@default_textboxes,
+        default_settings => \@default_settings,
     });
 }
 
@@ -144,9 +197,11 @@ Saves settings from the defaults screen
 sub save_defaults {
     my ($request) = @_;
     my $setting_handle = LedgerSMB::Setting->new({base => $request});
-    my @defaults = @default_others;
-    for my $tb (@default_textboxes){
-        push @defaults, $tb->{name};
+    my @defaults;
+    for my $dg (@default_settings){
+        for my $tb (@{$dg->{items}}){
+            push @defaults, $tb->{name};
+        }
     }
     for my $skey (@defaults){
         $request->{$skey} =~ s/--.*$// if $skey =~ /accno_id/;
