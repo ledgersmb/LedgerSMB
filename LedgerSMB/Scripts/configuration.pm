@@ -196,6 +196,11 @@ Saves settings from the defaults screen
 
 sub save_defaults {
     my ($request) = @_;
+    if (!$request->is_allowed_role(
+        {allowed_roles => ['system_settings_change'] })
+    ){
+       die $locale->text('Access Denied');
+    }
     my $setting_handle = LedgerSMB::Setting->new({base => $request});
     my @defaults;
     for my $dg (@default_settings){
