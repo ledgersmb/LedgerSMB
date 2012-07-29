@@ -98,14 +98,12 @@ DECLARE out_row session%ROWTYPE;
 BEGIN
 	DELETE FROM session
 	 WHERE last_used < now() - coalesce((SELECT value FROM defaults
-                                    WHERE setting_key = 'timeout')::interval,
+                                    WHERE setting_key = 'session_timeout')::interval,
 	                            '90 minutes'::interval);
         UPDATE session 
            SET last_used = now()
          WHERE session_id = in_session_id
                AND token = in_token
-               AND last_used > now() - (SELECT value FROM defaults
-				WHERE setting_key = 'timeout')::interval
 	       AND users_id = (select id from users 
 			where username = SESSION_USER);
 	IF FOUND THEN
@@ -117,7 +115,24 @@ BEGIN
 		-- the above query also releases all discretionary locks by the
                 -- session
 
-                RETURN NULL;
+               PERFORM * 
+                  FROM defaults
+                 WHERE setting_key = 'auto_logout' and value = '1';
+
+                IF FOUND THEN
+                    RAISE NOTICE 'auto logout';
+                    RETURN NULL;
+                ELSE
+                    INSERT INTO session (users_id, token)
+                    SELECT id, md5(random()::text)
+                      FROM users 
+                     WHERE username = SESSION_USER;
+
+                    SELECT * INTO out_row FROM SESSION 
+                     WHERE users_id = (select id from users
+                                             where username = SESSION_USER);
+                    RETURN out_row;
+               END IF;
 	END IF;
 	RETURN out_row;
 END;
