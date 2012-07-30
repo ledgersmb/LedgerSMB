@@ -1,7 +1,7 @@
 RELEASE NOTES
 LedgerSMB 1.3
 
-Latest Revision:  1.3.20, June 17, 2012.
+Latest Revision:  1.3.21, June 17, 2012.
 
 1:  Welcome to LedgerSMB
 
@@ -118,6 +118,18 @@ is easier to implement local tax rules.  This includes a minimum tax value,
 exposed through  the user interface, and a maximum value which is not yet
 exposed.  The handling of these are module-specific.  The Simple tax module 
 treats these as operating on the subtotal of the invoice.
+
+
+2.8:  New CSS hooks
+
+As of 1.3.21, it is now possible to customize the look and feel of transaction,
+order, and part screens based on the status of the object.  Screens are enclosed
+in a div with an id of statusdiv and a class of either "new" (if no ID is
+present), "saved" (if ID is present but not a posted financial transaction) and
+"posted (if a posted financial transaction).  This can be used to give feedback
+to the user so that it is immediately clear what the status of a given screen
+is.  Future versions will include such hooks in at least the ledgersmb.css
+provided.
 
 3:  Known Issues
 

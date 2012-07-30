@@ -98,6 +98,13 @@ Changelog for 1.3.21
 * Fixed internal server error setting up user in setup.pl (Chris T)
 * Performance fix for templates and format detection (Chris T)
 
+Brian W is Brian Wolf
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+Nick P is Nick Prater
+Nigel T is Nigel Titley
+Robert C is Robert James Clay
+
 Changelog for 1.3.20
 * Fixes for es_AR translation, duplicate keys removed (Andres B)
 * Demo templates provide better handling of paragraph breaks in notes (Chris T)
