@@ -284,7 +284,7 @@ sub _preprocess {
 sub render {
 	my $self = shift;
 	my $vars = shift;
-        $vars->{FORMATS} = $self->available_formats;
+        $vars->{LIST_FORMATS} = sub { return $self->available_formats} ;
         $vars->{ENVARS} = \%ENV;
         $vars->{USER} = $LedgerSMB::App_State::User;
         $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;

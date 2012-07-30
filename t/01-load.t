@@ -23,7 +23,7 @@ use_ok('LedgerSMB::DBObject::Menu');
 use_ok('LedgerSMB::DBObject::Payment');
 use_ok('LedgerSMB::DBObject::Reconciliation');
 use_ok('LedgerSMB::DBObject::TaxForm');
-use_ok('LedgerSMB::DBObject::User');
+use_ok('LedgerSMB::Report');
 use_ok('LedgerSMB::Form');
 use_ok('LedgerSMB::GL');
 use_ok('LedgerSMB::IC');

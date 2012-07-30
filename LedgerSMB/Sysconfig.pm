@@ -123,7 +123,6 @@ for my $var (qw(PATH PERL5LIB)) {
      $ENV{$var} .= $pathsep . ( join $pathsep, $cfg->val('environment', $var));
 }
 
-warn $ENV{PERL5LIB};
 # Application-specific paths
 for my $var (qw(localepath spool templates images)) {
     ${$var} = $cfg->val('paths', $var) if $cfg->val('paths', $var);

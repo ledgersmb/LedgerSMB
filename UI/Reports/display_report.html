@@ -7,6 +7,8 @@ PROCESS "elements.html";
 
 PROCESS "dynatable.html";
 
+FORMATS = LIST_FORMATS();
+
 LINK = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME 
            _ '?' _ ENVARS.QUERY_STRING _ '&company=' _ DBNAME;
 

@@ -83,6 +83,8 @@ checking a price deal for a customer.
    value = "save_pricelist"
 } ;
 
+FORMATS = LIST_FORMATS();
+
 IF FORMATS.grep('PDF').size() ?> <a href="customer.pl?action=pricelist&format=PDF&credit_id=<?lsmb 
              credit_id ?>&entity_id=<?lsmb entity_id 
      ?>">[<?lsmb text('PDF') ?>]</a>
