@@ -783,6 +783,9 @@ sub call_procedure {
     my $schema   = $args{schema};
     my @call_args;
     my $dbh = $LedgerSMB::App_State::DBH;
+    if (!$dbh){
+        $dbh = $self->{dbh};
+    }	
     @call_args = @{ $args{args} } if defined $args{args};
     my $order_by = $args{order_by};
     my $query_rc;
