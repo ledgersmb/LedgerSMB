@@ -20,6 +20,7 @@ Changelog for 1.3.21
 * Fixed customer/vendor cleared on ship/receive update (Chris T, 3548104)
 * Fixed insufficient permissions check in System/Defaults (Chris T)
 * Added missing ap_transaction_all role (Chris T, h/t Erik H)
+* Fixed internal server error setting up user in setup.pl (Chris T)
 
 Changelog for 1.3.20
 * Fixes for es_AR translation, duplicate keys removed (Andres B)

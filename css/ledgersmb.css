@@ -229,7 +229,7 @@ tr.warning {
 }
 
 /* Theming controls based on transaction status */
-
+/* disabled for now to speed release 
 #statusdiv.new input {
 }
 
@@ -240,6 +240,8 @@ tr.warning {
 #statusdiv.saved input {
        background-color: #ccccff;
 }
+
+*/
 
 /* media stuff */
 
