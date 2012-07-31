@@ -52,7 +52,6 @@ use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
 use LedgerSMB::DBObject::Customer;
 use LedgerSMB::DBObject::Vendor;
-use LedgerSMB::CancelFurtherProcessing;
 use Error::Simple;
 use Error;
 use strict; 
@@ -521,14 +520,8 @@ sub print {
 	    no_auto_output => 1,
             output_args => $payment,
         );
-        #try {
             $template->render($payment);
             $template->output(%$payment);
-        #}
-        #catch Error::Simple with {
-        #    my $E = shift;
-        #    $payment->error( $E->stacktrace );
-        #};
         $request->{action} = 'update_payments';
         display_payments(@_);
 
@@ -791,13 +784,7 @@ if ($#array_options == -1) {
      path     => 'UI/payments',
      template => 'payment1_5',
      format   => 'HTML' );
-     try {$template->render($select); }
-     catch CancelFurtherProcessing with {
-       my $ex = shift;
-       print STDERR localtime()." payment.pl payment1_5 \$ex=".Data::Dumper::Dumper(\$ex)."\n";
-       throw $ex;
-     }
-     otherwise {print STDERR localtime()." payment.pl payment1_5 \$@=".Data::Dumper::Dumper(\$@)."\n"; $request->error("$@"); }; # PRINT ERRORS ON THE UI
+    $template->render($select); 
  }
 
 }
@@ -1173,16 +1160,7 @@ my $template = LedgerSMB::Template->new(
   path     => 'UI/payments',
   template => 'payment2',
   format => 'HTML' );
-try {
-   $template->render($select);
-}
-catch CancelFurtherProcessing with {
-  my $ex = shift;
-  throw $ex;
-}
-otherwise {
-    $request->error("$@");
-  }; # PRINT ERRORS ON THE UI
+  $template->render($select);
 }
 
 =item post_payment
@@ -1381,12 +1359,7 @@ sub print_payment {
       path     => $Payment->{templates_path},
       template => 'printPayment',
       format => 'HTML' );
-  try {$template->render($select) }
-  catch CancelFurtherProcessing with {
-    my $ex = shift;
-    throw $ex;
-  }
-  otherwise { $Payment->error("$@");  }; # PRINT ERRORS ON THE UI
+  $template->render($select);
 }
 
 =item post_and_print_payment
@@ -1449,12 +1422,7 @@ my $template = LedgerSMB::Template->new(
   path     => 'UI/payments',
   template => 'use_overpayment1',
   format => 'HTML' );
-try {$template->render($ui) }
-catch CancelFurtherProcessing with {
-  my $ex = shift;
-  throw $ex;
-}
-otherwise { $request->error("$@");  }; # PRINT ERRORS ON THE UI
+$template->render($ui);
 }
 
 
@@ -1738,14 +1706,8 @@ my $template =	LedgerSMB::Template->new(
   		template => 'use_overpayment2',
   		format => 'HTML' );
 
-try {$template->render($ui) }
-catch CancelFurtherProcessing with {
-  my $ex = shift;
-  throw $ex;
+$template->render($ui);
 }
-otherwise { $request->error("$@");  }; # PRINT ERRORS ON THE UI
-}
-
 
 =item post_overpayment
 

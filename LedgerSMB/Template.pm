@@ -154,7 +154,6 @@ use strict;
 use Carp;
 
 use Error qw(:try);
-use LedgerSMB::CancelFurtherProcessing;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Mailer;
 use LedgerSMB::Company_Config;
@@ -384,7 +383,6 @@ sub output {
 		$self->_lpr_output;
 	} elsif (defined $self->{output} or lc $method eq 'screen') {
 		$self->_http_output;
-		throw CancelFurtherProcessing();
 	} elsif (defined $method and $method ne '' ) {
 		$self->_lpr_output;
 	} else {
@@ -449,7 +447,6 @@ sub _http_output_file {
 	
 	unlink($self->{rendered}) or
 		throw Error::Simple 'Unable to delete output file';
-	throw CancelFurtherProcessing();
 }
 
 sub _email_output {

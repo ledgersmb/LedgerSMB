@@ -162,12 +162,7 @@ Ensures that the $ENV{REQUEST_METHOD} is defined and either "HEAD", "GET", "POST
 
 =item finalize_request()
 
-This function throws a CancelFurtherProcessing exception to be caught
-by the outermost processing script.  This construct allows the outer
-script and intermediate levels to clean up, if required.
-
-This construct replaces 'exit;' calls randomly scattered
-around the code everywhere.
+This zeroes out the App_State.
 
 =cut
 
@@ -211,7 +206,6 @@ use Contextual::Return;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
 use LedgerSMB::Session;
-use LedgerSMB::CancelFurtherProcessing;
 use LedgerSMB::Template;
 use LedgerSMB::Locale;
 use LedgerSMB::User;
@@ -811,8 +805,7 @@ sub sanitize_for_display {
 }
 
 sub finalize_request {
-    $logger->debug("throwing CancelFurtherProcessing()");#if trying to follow flow of request
-    throw CancelFurtherProcessing();
+    LedgerSMB::App_State->zero();
 }
 
 # To be replaced with a generic interface to an Error class
