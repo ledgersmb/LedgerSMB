@@ -947,8 +947,6 @@ GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__gl_transaction_cr
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (74, 'allow', 'lsmb_<?lsmb dbname ?>__gl_transaction_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (75, 'allow', 'lsmb_<?lsmb dbname ?>__gl_transaction_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (40, 'allow', 'lsmb_<?lsmb dbname ?>__gl_transaction_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (245, 'allow', 'lsmb_<?lsmb dbname ?>__gl_transaction_create');
@@ -974,8 +972,6 @@ TO "lsmb_<?lsmb dbname ?>__gl_reports";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (76, 'allow', 'lsmb_<?lsmb dbname ?>__gl_reports');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (105, 'allow', 'lsmb_<?lsmb dbname ?>__gl_reports');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (114, 'allow', 'lsmb_<?lsmb dbname ?>__gl_reports');
 
@@ -1094,6 +1090,10 @@ IN ROLE "lsmb_<?lsmb dbname ?>__gl_reports";
 GRANT select ON yearend TO "lsmb_<?lsmb dbname ?>__financial_reports";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (8, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (11, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (110, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (111, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
@@ -1166,8 +1166,6 @@ SELECT id, 'allow', 'lsmb_<?lsmb dbname ?>__tax_form_save'
 CREATE ROLE "lsmb_<?lsmb dbname ?>__system_settings_list"
 WITH INHERIT NOLOGIN;
 
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (129, 'allow', 'lsmb_<?lsmb dbname ?>__system_settings_list');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (131, 'allow', 'lsmb_<?lsmb dbname ?>__system_settings_list');
 

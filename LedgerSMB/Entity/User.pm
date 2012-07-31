@@ -59,7 +59,8 @@ This is only used for new users. It sets a temporary password (good for 24 hrs)
 
 =cut
 
-has password => (is => 'rw', isa => 'Str', required => 0);
+has password => (is => 'rw', isa => 'Str', required => 0, 
+                 clearer => 'clear_password');
 
 =item role_list
 
@@ -106,7 +107,7 @@ sub reset_password{
     my ($self, $password) = @_;
     $self->password($password);
     my ($ref) = $self->exec_method({funcname => 'admin__save_user'});
-    $self->password(undef);
+    $self->clear_password();
 }
 
 =item create
@@ -118,7 +119,7 @@ Creates the new user.
 sub create{
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'admin__save_user'});
-    $self->password(undef);
+    $self->clear_password();
 }
 
 =item save_roles($role_list)

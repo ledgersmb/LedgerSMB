@@ -700,6 +700,8 @@ Saves the administrative user, and then directs to the login page.
 
 sub save_user {
     my ($request) = @_;
+    $request->{entity_class} = 3;
+    $request->{name} = "$request->{last_name}, $request->{first_name}";
     use LedgerSMB::Entity::Person::Employee;
     use LedgerSMB::Entity::User;
     use LedgerSMB::PGDate;

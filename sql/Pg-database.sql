@@ -2668,12 +2668,10 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 102	Sales Orders	101	1
 103	Reports	98	4
 104	Search	103	1
-105	Transactions	103	2
 106	Time Cards	103	3
 107	Translations	98	5
 108	Description	107	1
 111	Trial Balance	109	2
-112	Income Statement	109	3
 113	Balance Sheet	109	4
 114	Inventory Activity	109	5
 117	Sales Invoices	116	1
@@ -2687,10 +2685,8 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 125	Bin Lists	116	9
 126	RFQs	116	10
 127	Time Cards	116	11
-129	Audit Control	128	1
 130	Taxes	128	2
 131	Defaults	128	3
-132	Yearend	128	4
 142	Add Warehouse	141	1
 143	List Warehouse	141	2
 148	Add Business	147	1
@@ -2747,6 +2743,8 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 40	Transfer	35	6
 41	Reports	35	8
 45	Reconciliation	35	7
+132	Year End	73	3
+112	Income Statement	6	1
 203	Receipts	200	3
 204	Reverse Receipts	200	4
 201	Payments	200	1
@@ -2790,7 +2788,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 194	Credit Note	1	5
 195	Credit Invoice	1	6
 245	Import	73	2
-75	Adjust Till	73	3
 76	Reports	73	4
 139	Add GIFI	136	4
 140	List GIFI	136	5
@@ -2818,6 +2815,9 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 190	Stylesheet	0	22
 128	System	0	21
 116	Batch Printing	0	20
+6	Profit and Loss	109	1
+8	Customer Margin	6	10
+11	Invoice Margin	6	11
 \.
 
 --
@@ -3010,12 +3010,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 73	menu	1	169
 74	module	gl.pl	170
 74	action	add	171
-75	module	gl.pl	172
-75	action	add_pos_adjust	174
-75	rowcount	3	175
-75	pos_adjust	1	176
-75	reference	Adjusting Till: (Till)  Source: (Source)	177
-75	descripton	Adjusting till due to data entry error	178
 77	menu	1	182
 78	module	ic.pl	183
 78	action	add	184
@@ -3088,9 +3082,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 104	module	pe.pl	256
 104	type	project	258
 104	action	search	257
-105	action	report	260
-105	report	projects	261
-105	module	rp.pl	262
 106	module	jc.pl	263
 106	action	search	264
 106	type	timecard	265
@@ -3101,9 +3092,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 108	translation	project	271
 109	menu	1	272
 110	action	chart_of_accounts	274
-112	action	report	278
-112	module	rp.pl	279
-112	report	income_statement	280
 113	action	report	281
 113	module	rp.pl	282
 113	report	balance_sheet	283
@@ -3161,9 +3149,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 126	type	request_quotation	328
 127	vc	employee	333
 128	menu	1	334
-129	module	am.pl	337
 130	module	am.pl	338
-129	action	audit_control	340
 130	taxes	audit_control	341
 130	action	taxes	343
 132	module	account.pl	346
@@ -3186,6 +3172,9 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 147	menu	1	372
 148	module	am.pl	373
 149	module	am.pl	374
+112	action	start_report	278
+112	module	reports.pl	279
+112	report_name	income_statement	280
 148	action	add_business	375
 149	action	list_business	376
 150	menu	1	377
@@ -3483,10 +3472,20 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 210	action	start_report	585
 210	module_name	gl	44
 210	report_name	unapproved	45
-210	search_type	batches	46
 49	report_name	contact_search	116
 111	module	reports.pl	276
 111	module_name	gl	40
+210	search_type	drafts	46
+6	menu	1	38
+6	module	menu.pl	41
+8	module	reports.pl	42
+8	action	start_report	47
+8	report_name	customer_margin	48
+8	module_name	gl	49
+11	module	reports.pl	60
+11	action	start_report	61
+11	report_name	invoice_margin	78
+112	module_name	gl	79
 \.
 
 --
