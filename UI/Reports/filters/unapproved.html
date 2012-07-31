@@ -8,12 +8,17 @@ PROCESS "elements.html";
 PROCESS 'report_base.html';
 
 IF search_type == 'drafts';
-   class_types = [
+   batch_classes = [
        { text = text('AP'), value = 'ap'},
        { text = text('AR'), value = 'ar'},
        { text = text('GL'), value = 'gl'},
    ];
    script = 'drafts.pl';
+ELSE;
+   FOR CLS IN batch_classes;
+       CLS.text = CLS.class;
+       CLS.value = CLS.class;
+   END;
 END;
 
  ?>
@@ -23,7 +28,7 @@ END;
 <div class="input" id="batch_class_div">
 	<?lsmb INCLUDE select element_data = {
 		label = text('Transaction Type') # '
-		options = class_types
+		options = batch_classes
 		value_attr = "value"
 		text_attr = "text"
 		name = "type"
