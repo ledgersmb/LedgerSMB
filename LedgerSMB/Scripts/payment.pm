@@ -177,7 +177,7 @@ sub pre_bulk_post_report {
                  }
              }
              # If vendor, this is debit-normal so multiply by -1
-             if ($request->{account_class} == 1){
+             if ($request->{account_class} == 1){ # vendor
                  $ref->{amount} *= -1;
               }
               if ($ref->{amount} < 0) {
@@ -202,7 +202,7 @@ sub pre_bulk_post_report {
        source    => $request->{_locale}->text('Total'),
        amount    => $total,
     };
-    if ($request->{account_class} == 1){
+    if ($request->{account_class} == 1){ # vendor
        $ref->{amount} *= -1;
     } 
 
@@ -967,7 +967,7 @@ for my $ref (0 .. $#array_options) {
  #Now its time to build the link to the invoice :)
  my $uri_module;
  #TODO move following code to sub getModuleForUri() ?
- if($Payment->{account_class} == 1)
+ if($Payment->{account_class} == 1) # 1 is vendor
  {
   if($array_options[$ref]->{invoice})
   {
@@ -978,7 +978,7 @@ for my $ref (0 .. $#array_options) {
    $uri_module='ap';
   }
  }#account_class 1
- elsif($Payment->{account_class} == 2)
+ elsif($Payment->{account_class} == 2) # 2 is customer
  {
   if($array_options[$ref]->{invoice})
   {
