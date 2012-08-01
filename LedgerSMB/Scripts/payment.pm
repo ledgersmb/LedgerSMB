@@ -50,8 +50,6 @@ use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
-use LedgerSMB::DBObject::Customer;
-use LedgerSMB::DBObject::Vendor;
 use Error::Simple;
 use Error;
 use strict; 
@@ -442,7 +440,6 @@ is not merged in, meaning that $request->{multiple} must be set to a true value.
 =cut
 
 sub print {
-    use LedgerSMB::DBObject::Company;
     use LedgerSMB::Batch;
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
@@ -469,12 +466,11 @@ sub print {
         for my $line (1 .. $payment->{contact_count}){
             my $id = $payment->{"contact_$line"};
             next if !defined $payment->{"id_$id"};
-            my $check = LedgerSMB::DBObject::Company->new(
-                                {base => $request, copy => 'base' }
+            my ($check) = $payment->call_procedure(
+                     procname => 'company__get_billing_info', args => [$id]
             );
             $check->{entity_class} = $payment->{account_class};
             $check->{id} = $id;
-            $check->get_billing_info;
             $check->{amount} = $check->parse_amount(amount => '0');
             $check->{invoices} = [];
             $check->{source} = $payment->{"source_$id"};
@@ -971,7 +967,7 @@ for my $ref (0 .. $#array_options) {
  #Now its time to build the link to the invoice :)
  my $uri_module;
  #TODO move following code to sub getModuleForUri() ?
- if($Payment->{account_class} == $LedgerSMB::DBObject::Vendor::ENTITY_CLASS)
+ if($Payment->{account_class} == 1)
  {
   if($array_options[$ref]->{invoice})
   {
@@ -982,7 +978,7 @@ for my $ref (0 .. $#array_options) {
    $uri_module='ap';
   }
  }#account_class 1
- elsif($Payment->{account_class} == $LedgerSMB::DBObject::Customer::ENTITY_CLASS)
+ elsif($Payment->{account_class} == 2)
  {
   if($array_options[$ref]->{invoice})
   {

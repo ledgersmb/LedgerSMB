@@ -657,7 +657,7 @@ $$Returns a list of tax forms for the entity's country.$$; --'
 
 DROP TYPE IF EXISTS company_billing_info CASCADE;
 CREATE TYPE company_billing_info AS (
-legal_name text,
+name text,
 meta_number text,
 control_code text,
 tax_id text,
@@ -680,7 +680,11 @@ BEGIN
 		e.control_code, c.tax_id, a.line_one, a.line_two, a.line_three, 
 		a.city, a.state, a.mail_code, cc.name
 	into out_var
-	FROM company c
+	FROM (select legal_name, tax_id, entity_id 
+                FROM company
+               UNION ALL
+              SELECT last_name || ', ' || first_name, null, entity_id 
+                FROM person) c
 	JOIN entity e ON (c.entity_id = e.id)
 	JOIN entity_credit_account eca ON (eca.entity_id = e.id)
 	LEFT JOIN eca_to_location cl ON (eca.id = cl.credit_id)
