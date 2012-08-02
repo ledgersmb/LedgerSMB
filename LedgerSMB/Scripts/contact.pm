@@ -130,6 +130,9 @@ sub _main_screen {
     # DIVS contents
     my $entity_id = $company->{entity_id};
     $entity_id ||= $person->{entity_id};
+    my @pricegroups = $company->call_procedure(
+        procname => 'pricegroups__list'
+    );
     my @credit_list = 
        LedgerSMB::Entity::Credit_Account->list_for_entity(
                           $entity_id,
@@ -262,6 +265,7 @@ sub _main_screen {
              country_list => \@country_list,
                credit_act => $credit_act,
               credit_list => \@credit_list,
+              pricegroups => \@pricegroups,
            entity_classes => \@entity_classes,
                 locations => \@locations,
                  contacts => \@contacts,

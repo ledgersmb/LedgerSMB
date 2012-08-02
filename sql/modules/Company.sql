@@ -770,6 +770,14 @@ COMMENT ON  FUNCTION company__save (
  ) is
 $$ Saves a company.  Returns the id number of the record stored.$$;
 
+CREATE OR REPLACE FUNCTION pricegroup__list() RETURNS SETOF pricegroup AS
+$$
+SELECT * FROM pricegroup ORDER BY pricegroup;
+$$ LANGUAGE SQL;
+
+COMMENT ON FUNCTION pricegroup__list() IS 
+$$ Returns an alphabetically ordered pricegroup list.$$;
+ 
 DROP FUNCTION IF EXISTS entity_credit_save (
     in_credit_id int, in_entity_class int,
     in_entity_id int, in_description text,

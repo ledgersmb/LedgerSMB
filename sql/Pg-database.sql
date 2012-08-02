@@ -4773,4 +4773,7 @@ COMMENT ON VIEW cash_impact IS
 $$ This view is used by cash basis reports to determine the fraction of a
 transaction to be counted.$$;
 
+-- helpful to keeping the selection of all years fast
+create index ac_transdate_year_idx on acc_trans(EXTRACT ('YEAR' FROM transdate));
+
 commit;
