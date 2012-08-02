@@ -467,3 +467,10 @@ BEGIN;
 ALTER TABLE makemodel DROP CONSTRAINT makemodel_pkey;
 ALTER TABLE makemodel ADD PRIMARY KEY(parts_id, make, model);
 COMMIT;
+
+BEGIN;
+-- performance fix for all years list  functions
+
+create index ac_transdate_year_idx on acc_trans(EXTRACT ('YEAR' FROM transdate));
+
+COMMIT;

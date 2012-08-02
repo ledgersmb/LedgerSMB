@@ -4716,5 +4716,9 @@ COMMENT ON TABLE payment_links IS $$
 
  This reasoning is hacky and i hope it can dissapear when we get to 1.4 - D.M.
 $$;
+
+-- helpful to keeping the selection of all years fast
+create index ac_transdate_year_idx on acc_trans(EXTRACT ('YEAR' FROM transdate));
+
  
 commit;
