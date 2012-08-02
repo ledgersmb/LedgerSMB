@@ -461,3 +461,9 @@ DELETE FROM menu_acl
  where node_id in (select node_id from menu_attribute where attribute = 'menu');
 
 COMMIT;
+
+BEGIN;
+-- fix primary key for make/model
+ALTER TABLE makemodel DROP CONSTRAINT makemodel_pkey;
+ALTER TABLE makemodel ADD PRIMARY KEY(parts_id, make, model);
+COMMIT;

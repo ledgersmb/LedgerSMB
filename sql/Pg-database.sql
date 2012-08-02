@@ -966,9 +966,10 @@ $$ references entity_credit_account.id$$;
 
 --
 CREATE TABLE makemodel (
-  parts_id int PRIMARY KEY,
+  parts_id int,
   make text,
-  model text
+  model text,
+  PRIMARY KEY (parts_id, make, model)
 );
 
 COMMENT ON TABLE makemodel IS
