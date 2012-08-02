@@ -21,6 +21,7 @@ package LedgerSMB::Scripts::recon;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Reconciliation;
 use LedgerSMB::Setting;
+use Try::Tiny;
 
 use Data::Dumper;
 use strict;
@@ -406,7 +407,11 @@ Displays the new report screen.
 =cut
 sub new_report {
     my ($request) = @_;
-
+    if ($request->{total} && $request->{total} =~ m|[/-]|){
+        $request->error($request->{_locale}->text(
+           'Invalid statement balance.  Hint: Try entering a number'
+        ));
+    }
     $request->{total} = $request->parse_amount(amount => $request->{total});
     my $template;
     my $return;
