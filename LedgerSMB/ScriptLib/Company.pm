@@ -739,6 +739,9 @@ sub _render_main_screen{
     $company->{dbh}->commit;
     $company->get_metadata();
     set_entity_class($company);
+    @{$company->{pricegroups}} = $company->call_procedure(
+        procname => 'pricegroup__list'
+    );
 
     $company->{creditlimit} = $company->format_amount({amount => $company->{creditlimit}}) unless !defined $company->{creditlimit}; 
     $company->{discount} = "$company->{discount}" unless !defined $company->{discount}; 
