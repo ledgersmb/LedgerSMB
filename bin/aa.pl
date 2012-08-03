@@ -108,7 +108,6 @@ sub new_screen {
 }
 
 sub add {
-
     $form->{title} = "Add";
 	
     $form->{callback} =
@@ -1008,6 +1007,8 @@ sub form_footer {
 
             'save_info' => 
               { ndx => 9, key => 'I', value => $locale->text('Save Info') },
+            'save_temp' =>
+              { ndx => 10, key => 'T', value => $locale->text('Save Template')},
             'new_screen' => # Create a blank ar/ap invoice.
              { ndx => 10, key=> 'N', value => $locale->text('New') }
         );
@@ -1133,6 +1134,41 @@ sub form_footer {
 </body>
 </html>
 |;
+}
+
+sub save_temp {
+    use LedgerSMB;
+    use LedgerSMB::DBObject::TransTemplate;
+    my $lsmb = LedgerSMB->new();
+    $lsmb->merge($form);
+    $lsmb->{is_invoice} = 1;
+    my ($department_name, $department_id) = split/--/, $form->{department};
+     if (!$lsmb->{language_code}){
+        delete $lsmb->{language_code};
+    }
+    $lsmb->{credit_id} = $form->{"$form->{vc}_id"};
+    $lsmb->{department_id} = $department_id;
+    if ($form->{arap} eq 'ar'){
+        $lsmb->{entity_class} = 2;
+    } else {
+        $lsmb->{entity_class} = 1;
+    }
+    $lsmb->{transaction_date} = $form->{transdate}; 
+    for my $iter (0 .. $form->{rowcount}){
+        if ($form->{"AP_amount_$iter"} and 
+                  ($form->{"amount_$iter"} != 0)){
+             my ($acc_id, $acc_name) = split /--/, $form->{"AP_amount_$iter"};
+             my $amount = $form->{"amount_$iter"};
+             push @{$lsmb->{journal_lines}}, 
+                  {accno => $acc_id,
+                   amount => $amount, 
+                   cleared => false,
+                  };
+        }
+    }
+    $template = LedgerSMB::DBObject::TransTemplate->new(base => $lsmb);
+    $template->save;
+    $form->redirect( $locale->text('Template Saved!') );
 }
 
 sub edit_and_approve {

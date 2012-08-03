@@ -242,14 +242,16 @@ IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
    TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 
-GRANT INSERT ON ar, invoice_note, business_unit_ac 
+GRANT INSERT ON ar, invoice_note, business_unit_ac, jounral_entry, journal_line,
+business_unit_jl
 TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 
 GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
-GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
+GRANT ALL ON acc_trans_entry_id_seq, journal_entry_id_seq, journal_line_id_seq 
+TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (2, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
@@ -425,12 +427,14 @@ GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
    TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 
 
-GRANT SELECT, INSERT ON ap, invoice_note 
+GRANT SELECT, INSERT ON ap, invoice_note, journal_entry, journal_line, 
+business_unit_jl
 TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 GRANT INSERT ON acc_trans, business_unit_ac
  TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
-GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
+GRANT ALL ON acc_trans_entry_id_seq, journal_entry_id_seq, journal_line_id_seq
+TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 
 GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 
@@ -940,9 +944,11 @@ WITH INHERIT NOLOGIN;
 
 GRANT SELECT, INSERT, UPDATe ON gl 
 TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
-GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
+GRANT INSERT ON acc_trans, journal_entry, journal_line 
+TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
 GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
-GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
+GRANT ALL ON acc_trans_entry_id_seq, journal_entry_id_seq, journal_line_id_seq
+TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (74, 'allow', 'lsmb_<?lsmb dbname ?>__gl_transaction_create');

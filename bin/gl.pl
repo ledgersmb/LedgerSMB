@@ -267,6 +267,10 @@ sub display_form
 		  'update' =>
 		    { ndx => 1, key => 'U', value => $locale->text('Update') },
 		  'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
+                  'save_temp' =>
+                    { ndx   => 9, 
+                      key   => 'T', 
+                      value => $locale->text('Save Template') },
 		  'post_as_new' =>
 		    { ndx => 6, key => 'N', value => $locale->text('Post as new') },
 		  'schedule' =>
@@ -280,19 +284,17 @@ sub display_form
 		  $button{post}->{value} = $locale->text('Save'); 
 	      }
 	      %a = ();
-              if ($form->{id}){
-                 $a{'new'} = 1;
-                 
-              } else {
-                 $a{'update'} = 1;
-              }
+              $a{'save_temp'} = 1;
+
 	      if ( $form->{id}) {
+                  $a{'new'} = 1;
 
 		  for ( 'post_as_new', 'schedule' ) { $a{$_} = 1 }
 
 		  for ( 'post', 'delete' ) { $a{$_} = 1 }
 	      }
 	      elsif (!$form->{id}){
+                 $a{'update'} = 1;
 		  if ( $transdate > $closedto ) {
 		      for ( "post", "schedule" ) { $a{$_} = 1 }
 		  }
@@ -360,6 +362,36 @@ sub display_form
 
 }
  
+
+sub save_temp {
+    use LedgerSMB;
+    use LedgerSMB::DBObject::TransTemplate;
+    my $lsmb = LedgerSMB->new();
+    my ($department_name, $department_id) = split/--/, $form->{department};
+    $lsmb->{department_id} = $department_id;
+    $lsmb->{source} = $form->{reference};
+    $lsmb->{description} = $form->{description};
+    $lsmb->{department_id} = $department_id;
+    $lsmb->{transaction_date} = $form->{transdate};
+    $lsmb->{type} = 'gl';
+    $lsmb->{journal_lines} = [];
+    for my $iter (0 .. $form->{rowcount}){
+        if ($form->{"accno_$iter"} and 
+                  (($form->{"credit_$iter"} != 0) or ($form->{"debit_$iter"} != 0))){
+             my ($acc_id, $acc_name) = split /--/, $form->{"accno_$iter"};
+             my $amount = $form->{"credit_$iter"} || ( $form->{"debit_$iter"} 
+                                                     * -1 );
+             push @{$lsmb->{journal_lines}}, 
+                  {accno => $acc_id,
+                   amount => $amount, 
+                   cleared => false,
+                  };
+        }
+    }
+    $template = LedgerSMB::DBObject::TransTemplate->new(base => $lsmb);
+    $template->save;
+    $form->redirect( $locale->text('Template Saved!') );
+}
 
 
 sub display_row
