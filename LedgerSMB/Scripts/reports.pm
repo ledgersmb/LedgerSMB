@@ -64,6 +64,10 @@ sub start_report {
     @{$request->{entity_classes}} = $request->call_procedure(
                       procname => 'entity__list_classes'
     );
+    @{$request->{heading_list}} =  $request->call_procedure(
+                      procname => 'account_heading_list');
+    @{$request->{account_list}} =  $request->call_procedure(
+                      procname => 'account__list_by_heading');
     @{$request->{batch_classes}} = $request->call_procedure(
                       procname => 'batch_list_classes'
     );

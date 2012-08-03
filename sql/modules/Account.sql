@@ -183,6 +183,11 @@ $$
 SELECT * FROM account_heading order by accno;
 $$ language sql;
 
+CREATE OR REPLACE FUNCTION account__list_by_heading()
+RETURNS SETOF account AS $$
+SELECT * FROM account ORDER BY heading;
+$$ LANGUAGE SQL;
+
 COMMENT ON FUNCTION account_heading_list() IS
 $$ Lists all existing account headings.$$;
 
