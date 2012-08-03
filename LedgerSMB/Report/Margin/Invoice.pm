@@ -13,10 +13,7 @@ Invoice
 
 package LedgerSMB::Report::Margin::Invoice;
 use Moose;
-use LedgerSMB::App_State;
 extends 'LedgerSMB::Report';
-
-my $locale = LedgerSMB::App_State::Locale;
 
 =head1 DESCRIPTION
 
@@ -53,7 +50,7 @@ has invnumber => (is => 'ro', isa => 'Maybe[Str]');
 
 =cut
 
-sub name { return $locale->text('Margin Report for Invoice') };
+sub name { return text('Margin Report for Invoice') };
 
 =item columns
 
@@ -69,7 +66,7 @@ sub columns { return [] }
 
 sub header_lines {
     return [{ name => 'invnumber',
-              text => $locale->text('Invoice Number')}
+              text => text('Invoice Number')}
           ];
 }
 

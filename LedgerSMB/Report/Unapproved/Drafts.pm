@@ -30,9 +30,6 @@ extends 'LedgerSMB::Report';
 
 use LedgerSMB::DBObject::Business_Unit_Class;
 use LedgerSMB::DBObject::Business_Unit;
-use LedgerSMB::App_State;
-
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 PROPERTIES
 
@@ -72,44 +69,41 @@ Amount
 
 =cut
 
-our @COLUMNS = (
+sub columns {
+    return [
     {col_id => 'select',
        name => '',
        type => 'checkbox' },
 
     {col_id => 'id',
-       name => $locale->text('ID'),
+       name => text('ID'),
        type => 'text',
      pwidth => 1, },
 
     {col_id => 'transdate',
-       name => $locale->text('Date'),
+       name => text('Date'),
        type => 'text',
      pwidth => '4', },
 
     {col_id => 'reference',
-       name => $locale->text('Reference'),
+       name => text('Reference'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
 
     {col_id => 'description',
-       name => $locale->text('Description'),
+       name => text('Description'),
        type => 'text',
      pwidth => '6', },
 
     {col_id => 'amount',
-       name => $locale->text('AR/AP/GL Amount'),
+       name => text('AR/AP/GL Amount'),
        type => 'text',
      pwidth => '2', },
-
-);
-
-sub columns {
-    return \@COLUMNS;
+    ];
+    # TODO:  business_units int[]
 }
 
-    # TODO:  business_units int[]
 
 =item name
 
@@ -118,7 +112,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return $locale->text('Draft Search');
+    return text('Draft Search');
 }
 
 =item header_lines
@@ -129,13 +123,13 @@ Returns the inputs to display on header.
 
 sub header_lines {
     return [{name => 'type',
-             text => $locale->text('Draft Type')},
+             text => text('Draft Type')},
             {name => 'reference',
-             text => $locale->text('Reference')},
+             text => text('Reference')},
             {name => 'amount_gt',
-             text => $locale->text('Amount Greater Than')},
+             text => text('Amount Greater Than')},
             {name => 'amount_lt',
-             text => $locale->text('Amount Less Than')}, ]
+             text => text('Amount Less Than')}, ]
 }
 
 =item subtotal_cols

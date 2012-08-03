@@ -13,11 +13,8 @@ Details report for LedgerSMB
 
 package LedgerSMB::Report::Inventory::Adj_Details;
 use Moose;
-use LedgerSMB::App_State;
 use LedgerSMB::Report::Inventory::Search_Adj;
 extends 'LedgerSMB::Report';
-
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 DESCRIPTION
 
@@ -59,14 +56,14 @@ has source => (is => 'ro', isa => 'Maybe[Str]');
 
 =cut
 
-sub name { return $locale->text('Inventory Adjustment Details') }
+sub name { return text('Inventory Adjustment Details') }
 
 =item header_lines
 
 =cut
 
 sub header_lines {
-    return [{name => 'source', text => $locale->text('Source') }];
+    return [{name => 'source', text => text('Source') }];
 }
 
 =item columns
@@ -78,19 +75,19 @@ sub columns {
       {col_id => 'partnumber',
          type => 'href',
     href_base => 'ic.pl?action=edit&id='.
-         name => $locale->text('Part Number') },
+         name => text('Part Number') },
       {col_id => 'description',
          type => 'text',
-         name => $locale->text('Description') },
+         name => text('Description') },
       {col_id => 'counted',
          type => 'text',
-         name => $locale->text('Counted') },
+         name => text('Counted') },
       {col_id => 'expected',
          type => 'text',
-         name => $locale->text('Expected') },
+         name => text('Expected') },
       {col_id => 'variance',
          type => 'text',
-         name => $locale->text('Variance') },
+         name => text('Variance') },
     ];
 }
 

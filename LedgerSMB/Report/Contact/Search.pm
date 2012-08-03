@@ -28,9 +28,6 @@ referral.
 package LedgerSMB::Report::Contact::Search;
 use Moose;
 extends 'LedgerSMB::Report';
-use LedgerSMB::App_State;
-
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 PROPERTIES
 
@@ -53,33 +50,33 @@ sub columns {
     return [
        {col_id => 'name',
             type => 'text',
-            name => $locale->text('Name') },
+            name => text('Name') },
 
        {col_id => 'entity_control_code',
             type => 'href',
        href_base =>($self->entity_class == 3)
                     ? "employee.pl?action=get"
                     :"contact.pl?action=get&entity_class=".$self->entity_class,
-            name => $locale->text('Control Code') },
+            name => text('Control Code') },
 
        {col_id => 'meta_number',
             type => 'href',
        href_base => ($self->entity_class == 3) 
                     ? "employee.pl?action=get"
                     : "contact.pl?action=get&entity_class=".$self->entity_class,
-            name => $locale->text('Credit Account Number') },
+            name => text('Credit Account Number') },
 
        {col_id => 'credit_description',
             type => 'text',
-            name => $locale->text('Description') },
+            name => text('Description') },
 
        {col_id => 'business_type',
             type => 'text',
-            name => $locale->text('Business Type') },
+            name => text('Business Type') },
 
        {col_id => 'curr',
             type => 'text',
-            name => $locale->text('Currency') },
+            name => text('Currency') },
     ];
 }
 
@@ -87,7 +84,7 @@ sub columns {
 
 =cut
 
-sub name { return $locale->text('Contact Search') }
+sub name { return text('Contact Search') }
 
 =item header_lines
 
@@ -96,9 +93,9 @@ sub name { return $locale->text('Contact Search') }
 sub header_lines {
      return [
             {name => 'name_part',
-             text => $locale->text('Name')},
+             text => text('Name')},
             {name => 'meta_number',
-             text => $locale->text('Account Number')}
+             text => text('Account Number')}
        ]; 
 }
 

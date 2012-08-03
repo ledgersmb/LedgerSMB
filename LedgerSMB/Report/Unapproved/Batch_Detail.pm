@@ -34,9 +34,7 @@ extends 'LedgerSMB::Report';
 
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
-use LedgerSMB::App_State;
 
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 PROPERTIES
 
@@ -82,49 +80,46 @@ before payments.  For payments, receipts, and GL, it is the sum of the credits.
 
 =cut
 
-our @COLUMNS = (
+sub columns {
+    return [
     {col_id => 'select',
        name => '',
        type => 'checkbox' },
 
     {col_id => 'id',
-       name => $locale->text('ID'),
+       name => text('ID'),
        type => 'text',
      pwidth => 1, },
 
     {col_id => 'batch_class',
-       name => $locale->text('Batch Class'),
+       name => text('Batch Class'),
        type => 'text', 
      pwidth => 2, },
 
     {col_id => 'default_date',
-       name => $locale->text('Date'),
+       name => text('Date'),
        type => 'text',
      pwidth => '4', },
 
     {col_id => 'Reference',
-       name => $locale->text('Reference'),
+       name => text('Reference'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
 
     {col_id => 'description',
-       name => $locale->text('Description'),
+       name => text('Description'),
        type => 'text',
      pwidth => '6', },
 
     {col_id => 'amount',
-       name => $locale->text('Amount'),
+       name => text('Amount'),
        type => 'text',
      pwidth => '2', },
-
-);
-
-sub columns {
-    return \@COLUMNS;
-}
+    ];
 
     # TODO:  business_units int[]
+}
 
 =item name
 
@@ -133,7 +128,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return $locale->text('Voucher List');
+    return text('Voucher List');
 }
 
 =item header_lines
@@ -144,7 +139,7 @@ Returns the inputs to display on header.
 
 sub header_lines {
     return [{name => 'batch_id',
-             text => $locale->text('Batch ID')}, ]
+             text => text('Batch ID')}, ]
 }
 
 =item subtotal_cols
@@ -190,19 +185,19 @@ sub run_report{
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',
-                    text  => $locale->text('Post Batch'),
+                    text  => text('Post Batch'),
                     value => 'batch_approve',
                     class => 'submit',
                  },{
                     name  => 'action',
                     type  => 'submit',
-                    text  => $locale->text('Delete Batch'),
+                    text  => text('Delete Batch'),
                     value => 'batch_delete',
                     class => 'submit',
                  },{
                     name  => 'action',
                     type  => 'submit',
-                    text  => $locale->text('Delete Vouchers'),
+                    text  => text('Delete Vouchers'),
                     value => 'vouchers_delete',
                     class => 'submit',
                 }]);

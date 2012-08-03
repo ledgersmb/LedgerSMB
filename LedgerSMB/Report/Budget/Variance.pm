@@ -20,8 +20,6 @@ against what was budgetted.
 package LedgerSMB::Report::Budget::Variance;
 use Moose;
 extends 'LedgerSMB::Report';
-use LedgerSMB::App_State;
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 PROPERTIES
 
@@ -65,27 +63,27 @@ sub columns {
    return [
       {col_id => 'budget_description', 
          type => 'text', 
-         name => $locale->text('Description')},
+         name => text('Description')},
 
       {col_id => 'accno', 
          type => 'text', 
-         name => $locale->text('Account Number')},
+         name => text('Account Number')},
 
       {col_id => 'account_label', 
          type => 'text', 
-         name => $locale->text('Account Label')},
+         name => text('Account Label')},
 
       {col_id => 'budget_amount', 
          type => 'text', 
-         name => $locale->text('Amount Budgetted')},
+         name => text('Amount Budgetted')},
 
       {col_id => 'used_amount', 
          type => 'text', 
-         name => '- ' . $locale->text('Used')},
+         name => '- ' . text('Used')},
 
       {col_id => 'variance', 
          type => 'text', 
-         name => '= ' . $locale->text('Variance')},
+         name => '= ' . text('Variance')},
    ];
 }
 
@@ -96,7 +94,7 @@ Returns name of report
 =cut
 
 sub name {
-    return $locale->text('Budget Variance Report');
+    return text('Budget Variance Report');
 }
 
 =item header_lines
@@ -107,13 +105,13 @@ Returns the inputs to display on header.
 
 sub header_lines {
     return [{name => 'reference',
-             text => $locale->text('Budget Number')},
+             text => text('Budget Number')},
             {name => 'description',
-             text => $locale->text('Description')},
+             text => text('Description')},
             {name => 'start_date',
-             text => $locale->text('Start Date')},
+             text => text('Start Date')},
             {name => 'end_date',
-             text => $locale->text('End Date')},];
+             text => text('End Date')},];
 }
 
 =back

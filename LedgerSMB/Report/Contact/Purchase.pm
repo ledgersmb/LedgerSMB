@@ -29,9 +29,6 @@ certain point, and locating specific transactions.
 package LedgerSMB::Report::Contact::Purchase;
 use Moose;
 extends 'LedgerSMB::Report';
-use LedgerSMB::App_State;
-
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 PROPERTIES
 
@@ -55,63 +52,63 @@ sub columns {
 
          {col_id => 'id',
             type => 'text',
-            name => $locale->text('ID') },
+            name => text('ID') },
          {col_id => 'entity_name',
             type => 'text',
-            name => $locale->text('Name') },
+            name => text('Name') },
 
          {col_id => 'invnumber',
             type => 'href',
        href_base => '',
-            name => $locale->text('Invoice Number') },
+            name => text('Invoice Number') },
 
          {col_id => 'ordnumber',
             type => 'text',
-            name => $locale->text('Order Number') },
+            name => text('Order Number') },
 
          {col_id => 'ponumber',
             type => 'text',
-            name => $locale->text('PO Number') },
+            name => text('PO Number') },
 
          {col_id => 'curr',
             type => 'text',
-            name => $locale->text('Currency') },
+            name => text('Currency') },
         
          {col_id => 'amount',
             type => 'text',
-            name => $locale->text('Amount') },
+            name => text('Amount') },
 
          {col_id => 'tax',
             type => 'text',
-            name => $locale->text('Tax') },
+            name => text('Tax') },
 
          {col_id => 'paid',
             type => 'text',
-            name => $locale->text('Paid') },
+            name => text('Paid') },
 
          {col_id => 'due',
             type => 'text',
-            name => $locale->text('Due') },
+            name => text('Due') },
 
          {col_id => 'date_paid',
             type => 'text',
-            name => $locale->text('Date Paid') },
+            name => text('Date Paid') },
 
          {col_id => 'due_date',
             type => 'text',
-            name => $locale->text('Due Date') },
+            name => text('Due Date') },
 
          {col_id => 'notes',
             type => 'text',
-            name => $locale->text('Notes') },
+            name => text('Notes') },
 
          {col_id => 'shipping_point',
             type => 'text',
-            name => $locale->text('Shipping Point') },
+            name => text('Shipping Point') },
 
          {col_id => 'ship_via',
             type => 'text',
-            name => $locale->text('Ship Via') },
+            name => text('Ship Via') },
     ];
 }
 
@@ -122,9 +119,9 @@ sub columns {
 sub name { 
    my ($self) = @_;
    if ($self->entity_class == 1){
-       return $locale->text('AP Transactions'); 
+       return text('AP Transactions'); 
    } elsif ($self->entity_class == 2){
-       return $locale->text('AR Transactions');
+       return text('AR Transactions');
    }
 }
 
@@ -135,9 +132,9 @@ sub name {
 sub header_lines {
      return [
             {name => 'name_part',
-             text => $locale->text('Name')},
+             text => text('Name')},
             {name => 'meta_number',
-             text => $locale->text('Account Number')}
+             text => text('Account Number')}
        ]; 
 }
 

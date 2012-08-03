@@ -30,7 +30,6 @@ extends 'LedgerSMB::Report';
 
 use LedgerSMB::App_State;
 
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 PROPERTIES
 
@@ -83,45 +82,45 @@ admin users.
 
 our @COLUMNS = (
     {col_id => 'accno',
-       name => $locale->text('Account Number'),
+       name => text('Account Number'),
        type => 'href',
    href_base => '',
      pwidth => '2', },
 
     {col_id => 'description',
-       name => $locale->text('Description'),
+       name => text('Description'),
        type => 'href',
   href_base => '',
      pwidth => '6', },
 
     {col_id => 'gifi_accno',
-       name => $locale->text('GIFI'),
+       name => text('GIFI'),
        type => 'text',
      pwidth => '1', },
 
     {col_id => 'debit_balance',
-       name => $locale->text('Debits'),
+       name => text('Debits'),
        type => 'text',
      pwidth => '2', },
 
     {col_id => 'credit_balance',
-       name => $locale->text('Credits'),
+       name => text('Credits'),
        type => 'text',
      pwidth => '2', },
 
     {col_id => 'link',
-       name => $locale->text('Dropdowns'),
+       name => text('Dropdowns'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'edit',
-       name => $locale->text('Edit'),
+       name => text('Edit'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
 
     {col_id => 'delete',
-       name => $locale->text('Delete'),
+       name => text('Delete'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
@@ -139,7 +138,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return $locale->text('Chart of Accounts');
+    return text('Chart of Accounts');
 }
 
 =item header_lines
@@ -188,8 +187,8 @@ sub run_report{
         } else {
            $ct = 'A';
         }
-        $r->{edit} = '['.$locale->text('Edit').']';
-        $r->{delete} = '['.$locale->text('Delete').']' 
+        $r->{edit} = '['.text('Edit').']';
+        $r->{delete} = '['.text('Delete').']' 
                   if !$r->{rowcount} and !$r->{is_heading};
         $r->{edit_href_suffix} = 'account.pl?action=edit&id='.$r->{id} . 
            "&charttype=$ct";

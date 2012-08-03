@@ -26,7 +26,6 @@ use LedgerSMB::DBObject::Business_Unit_Class;
 use LedgerSMB::DBObject::Business_Unit;
 use LedgerSMB::App_State;
 
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 PROPERTIES
 
@@ -76,9 +75,9 @@ sub columns {
     our @COLUMNS = ();
     my $credit_label;
     if ($self->entity_class == 1) {
-        $credit_label = $LedgerSMB::App_State::Locale->text('Vendor');
+        $credit_label = text('Vendor');
     } elsif ($self->entity_class == 2){
-        $credit_label = $LedgerSMB::App_State::Locale->text('Customer');
+        $credit_label = text('Customer');
     }
     push @COLUMNS,
       {col_id => 'select',
@@ -90,57 +89,57 @@ sub columns {
        pwidth => 1, },
 
       {col_id => 'language',
-         name => $locale->text('Language'),
+         name => text('Language'),
          type => 'select',
        pwidth => '0', };
 
    if ($self->report_type eq 'detail'){
      push @COLUMNS,
           {col_id => 'invnumber',
-             name => $locale->text('Invoice'),
+             name => text('Invoice'),
              type => 'href',
         href_base => '',
            pwidth => '3', },
 
           {col_id => 'ordnumber',
-             name => $locale->text('Description'),
+             name => text('Description'),
              type => 'text',
            pwidth => '6', },
 
           {col_id => 'transdate',
-             name => $locale->text('Date'),
+             name => text('Date'),
              type => 'text',
            pwidth => '1', },
 
           {col_id => 'duedate',
-             name => $locale->text('Due Date'),
+             name => text('Due Date'),
              type => 'text',
            pwidth => '2', };
     }
 
     push @COLUMNS,
     {col_id => 'c0',
-       name => $locale->text('Current'),
+       name => text('Current'),
        type => 'text',
      pwidth => '2', },
 
     {col_id => 'c30',
-       name => $locale->text('30'),
+       name => text('30'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'c60',
-       name => $locale->text('60'),
+       name => text('60'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'c90',
-       name => $locale->text('90'),
+       name => text('90'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'total',
-       name => $locale->text('Total'),
+       name => text('Total'),
        type => 'text',
      pwidth => '1', };
     return \@COLUMNS;
@@ -165,7 +164,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return $locale->text('Aging Report');
+    return text('Aging Report');
 }
 
 =item template

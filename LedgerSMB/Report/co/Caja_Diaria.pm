@@ -28,9 +28,6 @@ package LedgerSMB::Report::co::Caja_Diaria;
 use Moose;
 extends 'LedgerSMB::Report';
 
-use LedgerSMB::App_State;
-
-my $locale = $LedgerSMB::App_State::Locale;
 my $doctypes = {};
 
 =head1 PROPERTIES
@@ -61,37 +58,35 @@ Account name
 
 =cut
 
-our @COLUMNS = (
+
+sub columns {
+    return [
     {col_id => 'accno',
-       name => $locale->text('Account'),
+       name => text('Account'),
        type => 'href',
      pwidth => 3,
   href_base => '', },
 
     {col_id => 'description',
-       name => $locale->text('Description'),
+       name => text('Description'),
        type => 'text',
      pwidth => '12', },
 
     {col_id => 'document_type',
-       name => $locale->text('Document'),
+       name => text('Document'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'debits',
-       name => $locale->text('Debit'),
+       name => text('Debit'),
        type => 'text',
      pwidth => '4', },
 
     {col_id => 'credits',
-       name => $locale->text('Credit'),
+       name => text('Credit'),
        type => 'text',
      pwidth => '4', },
-
-);
-
-sub columns {
-    return \@COLUMNS;
+    ];
 }
 
 
@@ -112,7 +107,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return $locale->text('Caja Diaria');
+    return text('Caja Diaria');
 }
 
 =item header_lines
@@ -123,13 +118,13 @@ Returns the inputs to display on header.
 
 sub header_lines {
     return [{name => 'date_from',
-             text => $locale->text('Start Date')},
+             text => text('Start Date')},
             {name => 'date_to',
-             text => $locale->text('End Date')},
+             text => text('End Date')},
             {name => 'accno',
-             text => $locale->text('Account Number Start')},
+             text => text('Account Number Start')},
             {name => 'reference',
-             text => $locale->text('Account Number End')},]
+             text => text('Account Number End')},]
 }
 
 =back

@@ -31,8 +31,6 @@ use LedgerSMB::DBObject::Business_Unit_Class;
 use LedgerSMB::DBObject::Business_Unit;
 use LedgerSMB::App_State;
 
-my $locale = $LedgerSMB::App_State::Locale;
-
 =head1 PROPERTIES
 
 =over
@@ -77,95 +75,94 @@ Read-only accessor, returns a list of columns.
 
 =cut
 
-our @COLUMNS = (
+sub columns {
+
+    my @COLS = (
     {col_id => 'id',
-       name => $locale->text('ID'),
+       name => text('ID'),
        type => 'text',
      pwidth => 1, },
 
     {col_id => 'transdate',
-       name => $locale->text('Date'),
+       name => text('Date'),
        type => 'text',
      pwidth => '4', },
 
     {col_id => 'reference',
-       name => $locale->text('Reference'),
+       name => text('Reference'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
 
     {col_id => 'description',
-       name => $locale->text('Description'),
+       name => text('Description'),
        type => 'text',
      pwidth => '6', },
 
     {col_id => 'entry_id',
-       name => $locale->text('Entry ID'),
+       name => text('Entry ID'),
        type => 'text',
      pwidth => '1', },
 
     {col_id => 'debits',
-       name => $locale->text('Debits'),
+       name => text('Debits'),
        type => 'text',
      pwidth => '2', },
 
     {col_id => 'credits',
-       name => $locale->text('Credits'),
+       name => text('Credits'),
        type => 'text',
      pwidth => '2', },
 
     {col_id => 'source',
-       name => $locale->text('Source'),
+       name => text('Source'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'memo',
-       name => $locale->text('Memo'),
+       name => text('Memo'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'cleared',
-       name => $locale->text('Cleared'),
+       name => text('Cleared'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'till',
-       name => $locale->text('Till'),
+       name => text('Till'),
        type => 'text',
      pwidth => '1', },
 
     {col_id => 'chart_id',
-       name => $locale->text('Chart ID'),
+       name => text('Chart ID'),
        type => 'text',
      pwidth => '1', },
 
     {col_id => 'accno',
-       name => $locale->text('Account No.'),
+       name => text('Account No.'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'accname',
-       name => $locale->text('Account Name'),
+       name => text('Account Name'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'gifi_accno',
-       name => $locale->text('GIFI'),
+       name => text('GIFI'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'running_balance',
-       name => $locale->text('Balance'),
+       name => text('Balance'),
        type => 'text',
      pwidth => '3', },
-);
-
-sub columns {
+    );
     my @bclasses = LedgerSMB::DBObject::Business_Unit_Class->list('1', 'gl');
-    my @COLS = @COLUMNS;
     for my $class (@bclasses){
         push @COLS, {col_id =>  "bc_" . $class->id,
-                       name => $locale->text($class->label),
+                       name => text($class->label),
                        type => 'text',
                      pwidth => '2'};
     }
@@ -189,7 +186,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return $locale->text('General Ledger Report');
+    return text('General Ledger Report');
 }
 
 =item header_lines
@@ -200,15 +197,15 @@ Returns the inputs to display on header.
 
 sub header_lines {
     return [{name => 'from_date',
-             text => $locale->text('Start Date')},
+             text => text('Start Date')},
             {name => 'to_date',
-             text => $locale->text('End Date')},
+             text => text('End Date')},
             {name => 'accno',
-             text => $locale->text('Account Number')},
+             text => text('Account Number')},
             {name => 'reference',
-             text => $locale->text('Reference')},
+             text => text('Reference')},
             {name => 'source',
-             text => $locale->text('Source')}];
+             text => text('Source')}];
 }
 
 =item subtotal_cols

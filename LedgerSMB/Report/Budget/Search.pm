@@ -18,8 +18,6 @@ package LedgerSMB::Report::Budget::Search;
 use Moose;
 extends 'LedgerSMB::Report';
 
-use LedgerSMB::App_State;
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 PROPERTIES
 
@@ -67,34 +65,34 @@ sub columns {
    return [ {col_id => 'start_date',
                type => 'href',
           href_base => 'budget_reports.pl?action=variance_report&id=',
-               name => $locale->text('Start Date') },
+               name => text('Start Date') },
 
             {col_id => 'end_date', 
                type => 'href',
           href_base => 'budget_reports.pl?action=variance_report&id=',
-               name => $locale->text('End Date') },
+               name => text('End Date') },
 
             {col_id => 'reference', 
                type => 'href',
           href_base => 'budgets.pl?action=view_budget&id=',
-               name => $locale->text('Reference') },
+               name => text('Reference') },
 
             {col_id => 'description', 
                type => 'href',
           href_base => 'budgets.pl?action=view_budget&id=',
-               name => $locale->text('Description') },
+               name => text('Description') },
 
             {col_id => 'entered_by_name', 
                type => 'text',
-               name => $locale->text('Entered By') },
+               name => text('Entered By') },
 
             {col_id => 'approved_by_name', 
                type => 'text',
-               name => $locale->text('Approved By') },
+               name => text('Approved By') },
 
             {col_id => 'obsolete_by_name', 
                type => 'text',
-               name => $locale->text('Obsolete By') },
+               name => text('Obsolete By') },
    ];
 }
 
@@ -106,7 +104,7 @@ Returns the localized name of the template
 =cut
 
 sub name {
-   return $locale->text('Budget Search Results');
+   return text('Budget Search Results');
 }
 
 =item header_lines
@@ -117,15 +115,15 @@ Returns the inputs to display on header.
 
 sub header_lines {
     return [{name => 'date_from',
-             text => $locale->text('Start Date')},
+             text => text('Start Date')},
             {name => 'date_to',
-             text => $locale->text('End Date')},
+             text => text('End Date')},
             {name => 'accno',
-             text => $locale->text('Account Number')},
+             text => text('Account Number')},
             {name => 'reference',
-             text => $locale->text('Reference')},
+             text => text('Reference')},
             {name => 'source',
-             text => $locale->text('Source')}];
+             text => text('Source')}];
 }
 
 =back

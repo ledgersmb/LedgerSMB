@@ -14,8 +14,6 @@ inventory adjustments
 package LedgerSMB::Report::Inventory::Search_Adj;
 use Moose;
 extends 'LedgerSMB::Report';
-use LedgerSMB::App_State;
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 DESCRIPTION
 
@@ -66,7 +64,7 @@ has source => (is => 'ro', isa => 'Maybe[Str]');
 
 =cut
 
-sub name { return $locale->text('Inventory Adjustments') };
+sub name { return text('Inventory Adjustments') };
 
 =item header_lines
 
@@ -74,13 +72,13 @@ sub name { return $locale->text('Inventory Adjustments') };
 
 sub header_lines {
     return [{name => 'from_date',
-             text => $locale->text('Start Date') },
+             text => text('Start Date') },
             {name => 'to_date',
-             text => $locale->text('End Date') },
+             text => text('End Date') },
             {name => 'partnumber',
-             text => $locale->text('Including partnumber') },
+             text => text('Including partnumber') },
             {name => 'source',
-             text => $locale->text('Source starting with') },
+             text => text('Source starting with') },
            ];
 }
 
@@ -92,18 +90,18 @@ sub columns {
     return [{col_id => 'transdate',
                type => 'href',
           href_base => 'inv_reports.pl?action=adj_detail&id=',
-               name => $locale->text('Date')},
+               name => text('Date')},
             {col_id => 'source',
                type => 'href',
           href_base => 'inv_reports.pl?action=adj_detail&id=',
-               name => $locale->text('Reference')},
+               name => text('Reference')},
             {col_id => 'ar_invnumber',
                type => 'href',
-               name => $locale->text('AR Invoice'),
+               name => text('AR Invoice'),
           href_base => 'is.pl?action=edit&id='},
             {col_id => 'ap_invnumber',
                type => 'href',
-               name => $locale->text('AP Invoice'),
+               name => text('AP Invoice'),
           href_base => 'ir.pl?action=edit&id='},
       ];
 }

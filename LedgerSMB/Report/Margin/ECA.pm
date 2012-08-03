@@ -12,10 +12,7 @@ LedgerSMB::Report::Margin::ECA - Report for profit vs COGS per ECA
 
 package LedgerSMB::Report::Margin::ECA;
 use Moose;
-use LedgerSMB::App_State;
 extends 'LedgerSMB::Report';
-
-my $locale = LedgerSMB::App_State::Locale;
 
 =head1 DESCRIPTION
 
@@ -67,7 +64,7 @@ has 'to_date' => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =cut
 
-sub name { return $locale->text('Margin Report for Customer'); }
+sub name { return text('Margin Report for Customer'); }
 
 =item columns
 
@@ -83,7 +80,7 @@ sub columns {  return [] }
 
 sub header_lines {
     return [{ name => 'meta_number', 
-              text => $locale->text('Customer Number')}
+              text => text('Customer Number')}
           ];
 }
 

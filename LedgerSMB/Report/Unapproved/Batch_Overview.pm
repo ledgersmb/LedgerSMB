@@ -32,9 +32,6 @@ extends 'LedgerSMB::Report';
 
 use LedgerSMB::DBObject::Business_Unit_Class;
 use LedgerSMB::DBObject::Business_Unit;
-use LedgerSMB::App_State;
-
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 PROPERTIES
 
@@ -86,33 +83,33 @@ our @COLUMNS = (
        type => 'checkbox' },
 
     {col_id => 'id',
-       name => $locale->text('ID'),
+       name => text('ID'),
        type => 'text',
      pwidth => 1, },
 
     {col_id => 'default_date',
-       name => $locale->text('Date'),
+       name => text('Date'),
        type => 'text',
      pwidth => '4', },
 
     {col_id => 'control_code',
-       name => $locale->text('Control Code'),
+       name => text('Control Code'),
        type => 'href',
   href_base => 'vouchers.pl?action=get_batch&id=',
      pwidth => '3', },
 
     {col_id => 'description',
-       name => $locale->text('Description'),
+       name => text('Description'),
        type => 'text',
      pwidth => '6', },
 
     {col_id => 'transaction_total',
-       name => $locale->text('AR/AP/GL Amount'),
+       name => text('AR/AP/GL Amount'),
        type => 'text',
      pwidth => '2', },
 
     {col_id => 'payment_total',
-       name => $locale->text('Payment Amount'),
+       name => text('Payment Amount'),
        type => 'text',
      pwidth => '2', },
 
@@ -131,7 +128,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return $locale->text('Batch Search');
+    return text('Batch Search');
 }
 
 =item header_lines
@@ -142,13 +139,13 @@ Returns the inputs to display on header.
 
 sub header_lines {
     return [{name => 'type',
-             text => $locale->text('Batch Type')},
+             text => text('Batch Type')},
             {name => 'reference',
-             text => $locale->text('Reference')},
+             text => text('Reference')},
             {name => 'amount_gt',
-             text => $locale->text('Amount Greater Than')},
+             text => text('Amount Greater Than')},
             {name => 'amount_lt',
-             text => $locale->text('Amount Less Than')}, ]
+             text => text('Amount Less Than')}, ]
 }
 
 =item subtotal_cols
@@ -218,13 +215,13 @@ sub run_report{
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',
-                    text  => $locale->text('Post'),
+                    text  => text('Post'),
                     value => 'batch_approve',
                     class => 'submit',
                  },{
                     name  => 'action',
                     type  => 'submit',
-                    text  => $locale->text('Delete'),
+                    text  => text('Delete'),
                     value => 'batch_delete',
                     class => 'submit',
                 }]);

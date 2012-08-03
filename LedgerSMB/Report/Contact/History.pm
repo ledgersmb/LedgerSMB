@@ -27,10 +27,7 @@ both customers and vendors.
 package LedgerSMB::Report::Contact::History;
 use Moose;
 extends 'LedgerSMB::Report';
-use LedgerSMB::App_State;
 use LedgerSMB::PGDate;
-
-my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 PROPERTIES
 
@@ -52,60 +49,60 @@ sub columns {
     return [
          {col_id => 'name',
             type => 'text',
-            name => $locale->text('Name') },
+            name => text('Name') },
 
          {col_id => 'meta_number',
             type => 'text',
-            name => $locale->text('Account Number') },
+            name => text('Account Number') },
 
          {col_id => 'invnumber',
             type => 'href',
        href_base => 'is.pl?action=edit&id=',
-            name => $locale->text('Invoice Number') },
+            name => text('Invoice Number') },
 
          {col_id => 'curr',
             type => 'text',
-            name => $locale->text('Currency') },
+            name => text('Currency') },
 
          {col_id => 'partnumber',
             type => 'text',
-            name => $locale->text('Part Number') },
+            name => text('Part Number') },
 
          {col_id => 'description',
             type => 'text',
-            name => $locale->text('Description') },
+            name => text('Description') },
 
          {col_id => 'qty',
             type => 'text',
-            name => $locale->text('Qty') },
+            name => text('Qty') },
 
          {col_id => 'unit',
             type => 'text',
-            name => $locale->text('Unit') },
+            name => text('Unit') },
 
          {col_id => 'sellprice',
             type => 'text',
-            name => $locale->text('Sell Price') },
+            name => text('Sell Price') },
 
          {col_id => 'discount',
             type => 'text',
-            name => $locale->text('Disc') },
+            name => text('Disc') },
 
          {col_id => 'delivery_date',
             type => 'text',
-            name => $locale->text('Delivery Date') },
+            name => text('Delivery Date') },
 
          {col_id => 'serialnumber',
             type => 'text',
-            name => $locale->text('Serial Number') },
+            name => text('Serial Number') },
 
          {col_id => 'exchangerate',
             type => 'text',
-            name => $locale->text('Exchange Rate') },
+            name => text('Exchange Rate') },
 
          {col_id => 'salesperson_name',
             type => 'text',
-            name => $locale->text('Salesperson') },
+            name => text('Salesperson') },
 
     ];
 }
@@ -114,7 +111,7 @@ sub columns {
 
 =cut
 
-sub name { return $locale->text('Purchase History') }
+sub name { return text('Purchase History') }
 
 =item header_lines
 
@@ -123,15 +120,15 @@ sub name { return $locale->text('Purchase History') }
 sub header_lines {
      return [
             {name => 'name',
-             text => $locale->text('Name')},
+             text => text('Name')},
       
             {name => 'meta_number',
-             text => $locale->text('Account Number')},
+             text => text('Account Number')},
             {name => 'from_date',
-             text => $locale->text('Start Date')},
+             text => text('Start Date')},
 
             {name => 'to_date',
-             text => $locale->text('End Date')},
+             text => text('End Date')},
 
       
       ];

@@ -18,9 +18,6 @@ use Moose;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
 
-use LedgerSMB::App_State;
-my $locale = $LedgerSMB::App_State::Locale;
-
 =head1 CRITERIA PROPERTIES
 
 Standard dates plus
@@ -54,7 +51,7 @@ sub template { return 'PNL' }
 
 =cut
 
-sub name { return $locale->text('Income Statement') }
+sub name { return text('Income Statement') }
 
 =item header_lines
 
@@ -62,7 +59,7 @@ sub name { return $locale->text('Income Statement') }
 
 sub header_lines {
     return [{name => 'basis',
-            text => $locale->text('Reporting Basis') }];
+            text => text('Reporting Basis') }];
 }
 
 =item columns
@@ -84,7 +81,7 @@ sub columns { return $_[0]->_cols  }
 
 sub report_base {
     my ($self, $from_date, $to_date) = @_;
-    die $locale->text('Invalid Reporting Basis') 
+    die text('Invalid Reporting Basis') 
            if ($self->basis ne 'accrual') and ($self->basis ne 'cash');
     my $procname = 'pnl__income_statement_' . $self->basis;
     return $self->call_procedure(

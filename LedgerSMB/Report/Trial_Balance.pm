@@ -28,8 +28,6 @@ use LedgerSMB::App_State;
 with 'LedgerSMB::Report::Dates';
 extends 'LedgerSMB::Report';
 
-my $locale = $LedgerSMB::App_State::Locale;
-
 =head1 DESCRIPTION
 
 The trial balance is a report used to test the books and whether they balance 
@@ -114,7 +112,7 @@ methods.
 =cut
 
 sub name {
-    return $locale->text('Trial Balance');
+    return text('Trial Balance');
 };
 
 =item columns
@@ -126,33 +124,33 @@ sub columns {
       {col_id => 'account_number',
          type => 'href',
     href_base => 'journal.pl?action=search&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
-         name => $locale->text('Account Number') },
+         name => text('Account Number') },
 
       {col_id => 'account_desc',
          type => 'href',
     href_base => 'journal.pl?action=search&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
-         name => $locale->text('Account Description') },
+         name => text('Account Description') },
 
       {col_id => 'gifi_accno',
          type => 'href',
     href_base => 'journal.pl?action=search&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
-         name => $locale->text('GIFI') } ,
+         name => text('GIFI') } ,
 
       {col_id => 'starting_balance',
          type => 'text',
-         name => $locale->text('Starting Balance') } ,
+         name => text('Starting Balance') } ,
 
       {col_id => 'debits',
          type => 'text',
-         name => $locale->text('Debits') } ,
+         name => text('Debits') } ,
 
       {col_id => 'credits',
          type => 'text',
-         name => $locale->text('Credits') } ,
+         name => text('Credits') } ,
 
       {col_id => 'ending_balance',
          type => 'text',
-         name => $locale->text('Ending Balance') } ,
+         name => text('Ending Balance') } ,
 
     ];
 }
@@ -163,11 +161,11 @@ sub columns {
 
 sub header_lines {
     return [{name => 'date_from',
-             text => $locale->text('From date') },
+             text => text('From date') },
             {name => 'date_to',
-             text => $locale->text('To Date') },
+             text => text('To Date') },
             {name => 'yearend',
-             text => $locale->text('Ignore Yearends') },
+             text => text('Ignore Yearends') },
             ];
 }
 
