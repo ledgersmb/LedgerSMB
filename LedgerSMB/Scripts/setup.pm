@@ -22,6 +22,7 @@ package LedgerSMB::Scripts::setup;
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
 use LedgerSMB::App_State;
+use LedgerSMB::Upgrade_Tests;
 use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
@@ -364,62 +365,8 @@ sub upgrade{
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
-    my @pre_upgrade_checks = (
-       {query => "select id, customernumber, name, address1, city, state, zipcode
-                   from customer where customernumber in (SELECT customernumber from customer
-                   GROUP BY customernumber
-                   HAVING count(*) > 1)",
-         name => $locale->text('Unique Customernumber'),
-         cols => ['customernumber', 'name', 'address1', 'city', 'state', 'zip'],
-         edit => 'customernumber',
-        table => 'customer'},
-
-       {query => "SELECT id, vendornumber, name, address1, city, state, zipcode
-                   FROM vendor WHERE vendornumber IN 
-                   (SELECT vendornumber from vendor
-                   GROUP BY vendornumber
-                   HAVING count(*) > 1)",
-         name => $locale->text('Unique Vendornumber'),
-         cols => ['vendornumber', 'name', 'address1', 'city', 'state', 'zip'],
-         edit => 'vendornumber',
-        table => 'vendor'},
-
-       {query => 'SELECT * FROM employee where employeenumber IS NULL',
-         name => $locale->text('No null employeenumber'),
-         cols => ['login', 'name', 'employeenumber'],
-         edit => 'employeenumber',
-        table => 'employee'},
-
-       {query => 'SELECT * FROM employee 
-                   WHERE employeenumber IN 
-                         (SELECT employeenumber FROM employee 
-                        GROUP BY employeenumber
-                          HAVING count(*) > 1)',
-         name => $locale->text('Duplicte employee numbers'),
-         cols => ['login', 'name', 'employeenumber'],
-         edit => 'employeenumber',
-        table => 'employee'},
-
-       {query => "select * from parts where obsolete is not true 
-                  and partnumber in 
-                  (select partnumber from parts 
-                  WHERE obsolete is not true
-                  group by partnumber having count(*) > 1)",
-         name => $locale->text('Unique nonobsolete partnumbers'),
-         cols => ['partnumber', 'description', 'sellprice'],
-         edit => 'partnumber',
-        table => 'parts'},
-
-       {query => 'SELECT * from ar where invnumber in (
-                   select invnumber from ar
-                   group by invnumber having count(*) > 1)',
-         name => $locale->text('Unique AR Invoice numbers'),
-         cols =>  ['invnumber', 'transdate', 'amount', 'netamount', 'paid'],
-         edit =>  'invnumber',
-        table =>  'ar'},
-    );
-    for my $check (@pre_upgrade_checks){
-        my $sth = $request->{dbh}->prepare($check->{query});
+    for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
+        my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute();
         if ($sth->rows > 0){ # Check failed --CT
              _failed_check($request, $check, $sth);
