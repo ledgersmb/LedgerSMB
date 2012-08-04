@@ -596,6 +596,13 @@ Changelog for 1.2 Series
 Released 2007-04-04
 Currently supported, through at least 2012-03-01
 
+Changelog for 1.2.27
+* Corrected an issue with redirects (Turtle)
+
+Changelog for 1.2.26
+* Corrected is_zero errors updating ar/ap transactions (Chris T)
+* Corrected is_zero errors printing invoices (Chris T)
+
 Changelog for 1.2.25
 * Corrected sql injection issue (Chris T)
 
