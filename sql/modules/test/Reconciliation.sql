@@ -11,7 +11,7 @@ update defaults set value = 'Recon gl test ' where setting_key = 'check_prefix';
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Create Recon Report', 
-	reconciliation__new_report_id(test_get_account_id('-11111'), 100, now()::date) > 0;
+	reconciliation__new_report_id(test_get_account_id('-11111'), 100, now()::date, 'f') > 0;
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Pending Transactions Ran', reconciliation__pending_transactions(now()::date, test_get_account_id('-11111'), currval('cr_report_id_seq')::int, 110) > 0;
@@ -43,7 +43,7 @@ WHERE a.accno = '-11111' and cleared is false;
 
 INSERT INTO test_result(test_name, success)
 SELECT '1 Create Recon Report', 
-	reconciliation__new_report_id(test_get_account_id('-11112'), 100, now()::date) > 0;
+	reconciliation__new_report_id(test_get_account_id('-11112'), 100, now()::date, 'f') > 0;
 
 INSERT INTO test_result(test_name, success)
 SELECT '1 Pending Transactions Ran', reconciliation__pending_transactions(now()::date, test_get_account_id('-11112'), currval('cr_report_id_seq')::int, 110) > 0;
@@ -87,7 +87,7 @@ SELECT '1 Cleared balance post-approval is 10', reconciliation__get_cleared_bala
 
 INSERT INTO test_result(test_name, success)
 SELECT '1 Create Recon Report', 
-	reconciliation__new_report_id(test_get_account_id('-11112'), 100, now()::date) > 0;
+	reconciliation__new_report_id(test_get_account_id('-11112'), 100, now()::date, 'f') > 0;
 
 INSERT INTO test_result(test_name, success)
 SELECT '1 Pending Transactions Ran', reconciliation__pending_transactions(now()::date, test_get_account_id('-11112'), currval('cr_report_id_seq')::int, 110) > 0;

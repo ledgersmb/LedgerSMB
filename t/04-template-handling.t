@@ -136,7 +136,7 @@ $form->{file} = "/tmp/apples.txt";
 @r = trap{AM->check_template_name($myconfig, $form)};
 if ( $expStackTrace == 0 )
 {
-    is($trap->die, "Error: Directory transversal not allowed.\n",
+    is($trap->die, "Error: Not in a whitelisted directory: /tmp/apples.txt\n",
         'AM, check_template_name: Directory transversal denial 2');
 }
 else

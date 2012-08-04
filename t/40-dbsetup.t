@@ -3,6 +3,7 @@
 use Test::More;
 use LedgerSMB::Database;
 use LedgerSMB;
+use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Admin;
 use strict;
 use DBI;
@@ -15,6 +16,9 @@ HINT:  Set LSMB_NEW_DB environment variable and try running again.');
 
 my $temp = $ENV{TEMP} || '/tmp/';
 my $run_tests = 1;
+for my $log (qw(dblog dblog_stderr dblog_stdout)){
+    unlink "$LedgerSMB::Sysconfig::tempdir/$log";
+}
 for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB PG_CONTRIB_DIR)){
   if (!defined $ENV{$evar}){
       $run_tests = 0;
@@ -23,7 +27,7 @@ for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB PG_CONTRIB_DIR)){
 }
 
 if ($run_tests){
-	plan tests => 10;
+	plan tests => 11;
 	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 }
 
@@ -40,7 +44,7 @@ my $db = LedgerSMB::Database->new({
 
 # Manual tests
 my $rc = $db->create;
-ok(!$rc, 'Database Created') 
+ok($rc, 'Database Created') 
   || BAIL_OUT('Database could not be created! ' . $rc);
 
 ok($db->load_modules('LOADORDER'), 'Modules loaded');
@@ -50,7 +54,7 @@ if (!$ENV{LSMB_INSTALL_DB}){
     close (DBLOCK);
 }
 
-is($db->process_roles('Roles.sql'), 0, 'Roles processed');
+is($db->process_roles('Roles.sql'), 2, 'Roles processed');
 
 #Changed the COA and GIFI loading to use this, and move admin user to 
 #Database.pm --CT
@@ -90,6 +94,16 @@ SKIP: {
       $sth->finish;
       $dbh->commit;
 };
+
+open  my $log, "< $LedgerSMB::Sysconfig::tempdir/dblog";
+
+my $passed_no_errs = 1;
+while (my $line = <$log>){
+    last if $line =~ /Fixes/i; # Fixes roll back!
+    $passed_no_errs = 0 if $line =~ /Rollback/i;
+}
+
+is($passed_no_errs, 1, 'No rollbacks in db scripts');
 
 SKIP: {
      skip 'No COA specified', 1 if !defined $ENV{LSMB_LOAD_COA};
