@@ -242,11 +242,11 @@ SELECT m.mime_type, CASE WHEN f.file_class = 3 THEN ref_key ||'-'|| f.file_name
   JOIN entity e ON f.uploaded_by = e.id
  WHERE f.ref_key = $1 and f.file_class = $2
        AND m.invoice_include 
-       OR id IN (SELECT max(id) 
+       OR f.id IN (SELECT max(fb.id) 
                    FROM file_base fb
                    JOIN mime_type m ON fb.mime_type_id = m.id
                         AND m.mime_type ilike 'image%'
-                   JOIN invoice i ON i.trans_id = in_ref_key 
+                   JOIN invoice i ON i.trans_id = $1
                         AND i.parts_id = fb.ref_key
                   WHERE fb.file_class = 3)
 $$ language sql;

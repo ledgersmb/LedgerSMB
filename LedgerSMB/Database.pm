@@ -294,7 +294,7 @@ sub get_info {
            } else {
                 $retval->{status} = 'does not exist';
            }
-           my $sth = $dbh->prepare("SELECT SESSION_USER");
+           $sth = $dbh->prepare("SELECT SESSION_USER");
            $sth->execute;
            $retval->{username} = $sth->fetchrow_array();
            return $retval;

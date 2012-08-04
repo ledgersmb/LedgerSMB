@@ -82,6 +82,10 @@ Changelog for 1.3.22
 * Better error handling when date is entered into statement balance (Chris T)
 * Added pricegroup selection back to entity credit account (Chris T, 3550056)
 * Fix for slow performance with Form->all_years (Chris T, h/t Neil S)
+* Revamped database load test cases (Chris T)
+* Fixed error on some screens with function not found (Chris T)
+* Fixed some test case errors due to tests written against older API (Chris T)
+* Fixed error: parts search not loading into the db pn Pg 9.1 only (Chris T)
 
 Niel S is Neil Smith
 
@@ -667,6 +671,13 @@ Database:
 Changelog for 1.2 Series
 Released 2007-04-04
 Currently supported, through at least 2012-03-01
+
+Changelog for 1.2.27
+* Corrected an issue with redirects (Turtle)
+
+Changelog for 1.2.26
+* Corrected is_zero errors updating ar/ap transactions (Chris T)
+* Corrected is_zero errors printing invoices (Chris T)
 
 Changelog for 1.2.25
 * Corrected sql injection issue (Chris T)
