@@ -10,6 +10,7 @@ Changelog for 1.3.22
 * Revamped database load test cases (Chris T)
 * Fixed error on some screens with function not found (Chris T)
 * Fixed some test case errors due to tests written against older API (Chris T)
+* Fixed error: parts search not loading into the db pn Pg 9.1 only (Chris T)
 
 Niel S is Neil Smith
 
