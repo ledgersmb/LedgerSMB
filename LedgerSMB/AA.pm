@@ -526,10 +526,17 @@ sub post_transaction {
 			                  WHERE accno = ?), 
 			                  ?, ?)|;
         @queryargs =
-          ( $form->{id}, $accno, $invamount * -1 * $ml, $form->{transdate} );
+          ( $form->{id}, $accno, $invamount * -1 * $ml / $form->{exchangerate}, 
+            $form->{transdate} );
 
         $dbh->prepare($query)->execute(@queryargs)
           || $form->dberror($query);
+        if ($form->{exchangerate} != 1){
+           $dbh->prepare($query)->execute($form->{id}, $accno,
+                  ($invamount * -1 * $ml) - 
+                  ($invamount * -1 * $ml / $form->{exchangerate}),
+                  $form->{transdate} );
+        }
     }
 
     # if there is no amount force ar/ap
