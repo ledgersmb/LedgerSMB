@@ -353,6 +353,7 @@ sub upgrade{
             company_name => $request->{database},
                 password => $creds->{password}}
     );
+    my $dbinfo = $database->get_info();
 
     # ENVIRONMENT NECESSARY
     $ENV{PGUSER} = $creds->{login};
@@ -366,6 +367,8 @@ sub upgrade{
     my $locale = $request->{_locale};
 
     for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
+        next if ($check->min_version lt $dbinfo->{version}) or 
+                ($check->max_version gt $dbinfo->{version});
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute();
         if ($sth->rows > 0){ # Check failed --CT
@@ -752,16 +755,17 @@ sub run_upgrade {
 
     $database->load_modules('LOADORDER');
     $database->process_roles('Roles.sql');
+    my $dbinfo = $database->get_info();
     my $dbtemplate = LedgerSMB::Template->new(
         user => {}, 
         path => 'sql/upgrade',
-        template => '1.2-1.3',
+        template => "$dbinfo->{version}-1.4",
         no_auto_output => 1,
         format_options => {extension => 'sql'},
-        output_file => '1.2-1.3-upgrade',
+        output_file => 'to_1.4-upgrade',
         format => 'TXT' );
     $dbtemplate->render($request);
-    $rc2 = system("psql -f $temp/1.2-1.3-upgrade.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
+    $rc2 = system("psql -f $temp/to_1.4-upgrade.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
     $rc ||= $rc2;
 
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
