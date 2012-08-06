@@ -391,22 +391,12 @@ sub form_header {
     if (   $form->{defaultcurrency}
         && $form->{currency} ne $form->{defaultcurrency} )
     {
-        if ( $form->{forex} ) {
-            $exchangerate .= qq|
-                <th align=right nowrap>|
-              . $locale->text('Exchange Rate')
-              . qq|</th>
-                <td>$form->{exchangerate}<input type=hidden name=exchangerate value=$form->{exchangerate}></td>
-|;
-        }
-        else {
-            $exchangerate .= qq|
+        $exchangerate .= qq|
                 <th align=right nowrap>|
               . $locale->text('Exchange Rate')
               . qq|</th>
                 <td><input name=exchangerate size=10 value=$form->{exchangerate}></td>
 |;
-        }
     }
     $exchangerate .= qq|
 <input type=hidden name=forex value=$form->{forex}>

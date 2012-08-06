@@ -53,10 +53,10 @@ our $VERSION = '1.0.0';
 sub get {
     my $self = shift;
     my ($key) = @_;
-    $key ||= $self->{key};
+    $key = $self->{key} unless $key;
     my ($hashref) = $self->call_procedure( procname => 'setting_get',
                                                args => [$key]) ;
-    $self->{value} = $hashref->{value} if $self->{key};
+    $self->{value} = $hashref->{value} if eval {$self->{key} };
     return $hashref->{value};
 }
 

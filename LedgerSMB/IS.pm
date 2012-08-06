@@ -1008,16 +1008,8 @@ sub post_invoice {
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
         $form->{exchangerate} = 1;
     }
-    else {
-        $exchangerate =
-          $form->check_exchangerate( $myconfig, $form->{currency},
-            $form->{transdate}, 'buy' );
-    }
 
-    $form->{exchangerate} =
-      ($exchangerate)
-      ? $exchangerate
-      : $form->parse_amount( $myconfig, $form->{exchangerate} );
+    $form->{exchangerate} = $form->parse_amount( $myconfig, $form->{exchangerate} );
 
      my $return_cid = 0;
      if ($LedgerSMB::Sysconfig::return_accno and !$form->{void}){
@@ -1105,14 +1097,13 @@ sub post_invoice {
               $form->round_amount( $fxsellprice * $form->{"discount_$i"},
                 $decimalplaces );
 
-            # linetotal
-            my $fxlinetotal =
-              $form->round_amount( $form->{"sellprice_$i"} * $form->{"qty_$i"},
-                2 );
+            # linetotal - removing rounding due to fx issues
+            my $fxlinetotal = $form->{"sellprice_$i"} * $form->{"qty_$i"};
 
             $amount = $fxlinetotal * $form->{exchangerate};
             my $linetotal = $form->round_amount( $amount, 2 );
             $fxdiff += $amount - $linetotal;
+            $fxlinediff =  $amount - $fxlinetotal;
             if (!$form->{manual_tax}){
                 @taxaccounts = Tax::init_taxes(
                     $form,
@@ -1162,7 +1153,8 @@ sub post_invoice {
                 amount        => $amount,
                 fxgrossamount => $fxlinetotal + $fxtax,
                 grossamount   => $grossamount,
-                project_id    => $project_id
+                project_id    => $project_id,
+                fxdiff        => $fxlinediff
               };
 
             $ndx = $#{ @{ $form->{acc_trans}{lineitems} } };
@@ -1357,15 +1349,18 @@ sub post_invoice {
         @{ $form->{acc_trans}{lineitems} } )
     {
 
-        $amount = $ref->{amount} + $diff + $fxdiff;
+        $amount = $ref->{amount} + $diff; # Subtracting included taxes
         $query  = qq|
 			INSERT INTO acc_trans 
 			            (trans_id, chart_id, amount,
-			            transdate, invoice_id)
-			     VALUES (?, ?, ?, ?, ?)|;
+			            transdate, invoice_id, fx_transaction)
+			     VALUES (?, ?, ?, ?, ?, ?)|;
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id}, $ref->{chart_id}, $amount,
-            $form->{transdate}, $ref->{invoice_id} )
+        $sth->execute( $form->{id}, $ref->{chart_id}, $amount - $ref->{fxdiff},
+            $form->{transdate}, $ref->{invoice_id}, 0)
+          || $form->dberror($query);
+        $sth->execute( $form->{id}, $ref->{chart_id}, $ref->{fxdiff},
+            $form->{transdate}, $ref->{invoice_id}, 1)
           || $form->dberror($query);
         $diff   = 0;
         $fxdiff = 0;
@@ -1423,14 +1418,18 @@ sub post_invoice {
 
         $query = qq|
 			INSERT INTO acc_trans 
-			            (trans_id, chart_id, amount, transdate)
+			            (trans_id, chart_id, amount, transdate, 
+                                    fx_transaction)
 			     VALUES (?, (SELECT id FROM account WHERE accno = ?), 
-			            ?, ?)|;
+			            ?, ?, ?)|;
 
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id}, $accno, $form->{receivables},
-            $form->{transdate} )
+        $sth->execute( $form->{id}, $accno, $form->{receivables} / $form->{exchangerate},
+            $form->{transdate}, 0)
           || $form->dberror($query);
+        $sth->execute( $form->{id}, $accno, $form->{receivables} -
+               $form->{receivables} / $form->{exchangerate},
+               $form->{transdate}, 1) || $form->dberror($query);
     }
 
     foreach my $trans_id ( keys %{ $form->{acc_trans} } ) {

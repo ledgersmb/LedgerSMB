@@ -207,10 +207,7 @@ sub post_invoice {
             $form->{transdate}, 'sell' );
     }
 
-    $form->{exchangerate} =
-      ($exchangerate)
-      ? $exchangerate
-      : $form->parse_amount( $myconfig, $form->{exchangerate} );
+    $form->{exchangerate} = $form->parse_amount( $myconfig, $form->{exchangerate} );
 
     
     my $taxformfound=IR->taxform_exist($form,$form->{"vendor_id"});#tshvr this always returns true!!
@@ -416,6 +413,7 @@ sub post_invoice {
                   {
                     chart_id      => $form->{"inventory_accno_id_$i"},
                     amount        => $amount,
+                    fxlinetotal   => $fxlinetotal,
                     fxgrossamount => $fxlinetotal +
                       $form->round_amount( $fxtax, 2 ),
                     grossamount => $grossamount,
@@ -439,6 +437,7 @@ sub post_invoice {
                   {
                     chart_id      => $form->{"expense_accno_id_$i"},
                     amount        => $amount,
+                    fxlinetotal   => $fxlinetotal,
                     fxgrossamount => $fxlinetotal +
                       $form->round_amount( $fxtax, 2 ),
                     grossamount => $grossamount,
@@ -502,16 +501,22 @@ sub post_invoice {
         @{ $form->{acc_trans}{lineitems} } )
     {
 
-        $amount = $ref->{amount} + $diff + $fxdiff;
+        $amount = $ref->{amount} + $diff;
+        $fxlinetotal = $ref->{fxlinetotal} + $diff/$form->{exchangerate};
         $query  = qq|
 			INSERT INTO acc_trans (trans_id, chart_id, amount,
-			            transdate, invoice_id)
-			            VALUES (?, ?, ?, ?, ?)|;
+			            transdate, invoice_id, fx_transaction)
+			            VALUES (?, ?, ?, ?, ?, ?)|;
         $sth = $dbh->prepare($query);
         $sth->execute(
-            $form->{id},        $ref->{chart_id},   $amount * -1,
-            $form->{transdate}, $ref->{invoice_id}
+            $form->{id},        $ref->{chart_id},   $fxlinetotal * -1,
+            $form->{transdate}, $ref->{invoice_id}, 0
         ) || $form->dberror($query);
+        $sth->execute(
+            $form->{id},        $ref->{chart_id},   ($amount - $fxlinetotal) * -1,
+            $form->{transdate}, $ref->{invoice_id}, 1
+        ) || $form->dberror($query);
+        
         $diff   = 0;
         $fxdiff = 0;
         for my $cls(@{$form->{bu_class}}){
@@ -570,12 +575,18 @@ sub post_invoice {
 
         $query = qq|
 			INSERT INTO acc_trans (trans_id, chart_id, amount,
-                	            transdate)
+                	            transdate, fx_transaction)
                 	     VALUES (?, (SELECT id FROM chart WHERE accno = ?),
-                	            ?, ?)|;
+                	            ?, ?, ?)|;
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id}, $accno, $form->{payables},
-            $form->{transdate} )
+        $sth->execute( $form->{id}, $accno, 
+                    $form->{payables}/$form->{exchangerate},
+            $form->{transdate} , 0)
+          || $form->dberror($query);
+        $sth->execute( $form->{id}, $accno, 
+                    $form->{payables} - 
+                   ($form->{payables}/$form->{exchangerate}),
+            $form->{transdate} , 0)
           || $form->dberror($query);
     }
 
