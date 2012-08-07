@@ -47,7 +47,7 @@ $$
 SELECT * FROM payroll_deduction_type where country_id = $1
 $$ language sql;
 
-CREATE OR REPLACE FUNCTION deductin__save
+CREATE OR REPLACE FUNCTION deduction__save
 (in_rate numeric, in_entity_id int, in_type_id int)
 RETURNS SETOF payroll_deduction
 AS
@@ -69,5 +69,50 @@ RETURN QUERY SELECT * FROM payroll_deduction
 END;
 $$ language plpgsql;
 
+CREATE OR REPLACE FUNCTION payroll_income_type__get(in_id int)
+RETURNS payroll_income_type AS $$
+SELECT * FROM payroll_income_class WHERE id  = $1;
+$$ LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION payroll_income_category__list() 
+RETURNS SETOF payroll_income_category AS $$
+SELECT * FROM payroll_income_category order by id;
+$$ LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION payroll_income_class__for_country(in_country_id int)
+RETURNS SETOF payroll_income_class AS
+$$ 
+SELECT * FROM payroll_income_class where country_id = $1
+ORDER BY label;
+$$ language sql;
+
+CREATE OR REPLACE FUNCTION payroll_income_type__save(
+in_id int, in_account_id int, in_pic_id int, in_country_id int,
+in_label text, in_unit text, in_default_amount numeric
+) RETURNS payroll_income_type AS $$
+BEGIN
+
+   UPDATE payroll_income_type
+      SET account_id = in_account_id,
+          pic_id = in_pic_id,
+          country_id = in_country_id,
+          label = in_label,
+          unit = in_unit,
+          default_amount = in_default_amount
+    WHERE id = in_id;
+
+   IF FOUND THEN
+       RETURN payroll_income_type__get(in_id);
+   END IF;
+
+   INSERT INTO payroll_income_type
+          (account_id, pic_id, country_id, label, unit, default_amount)
+   VALUES (in_account_id, in_pic_id, in_country_id, in_label, in_unit, 
+           in_default_amount);
+
+   RETURN payroll_income_type__get(currval('payroll_income_type_id_seq')::int);
+
+END;
+$$ LANGUAGE PLPGSQL;
 
 COMMIT;
