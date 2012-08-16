@@ -38,6 +38,7 @@
 #
 #======================================================================
 
+package lsmb_legacy;
 use LedgerSMB::BP;
 use LedgerSMB::Template;
 

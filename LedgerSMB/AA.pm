@@ -1057,10 +1057,6 @@ sub get_name {
         }
 
         $sth->finish;
-        $query = "select description from department where id = ?";
-        $sth = $dbh->prepare($query);
-        $sth->execute($form->{department_id});
-        ($form->{department}) = $sth->fetchrow_array;
         $form->{rowcount} = $i if ( $i && !$form->{type} );
     }
 

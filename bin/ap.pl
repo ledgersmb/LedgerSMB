@@ -45,6 +45,7 @@
 #
 #======================================================================
 
+package lsmb_legacy;
 use LedgerSMB::PE;
 use LedgerSMB::IR;
 

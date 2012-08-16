@@ -39,6 +39,7 @@
 # printing routines for ar, ap
 #
 
+package lsmb_legacy;
 use Error qw(:try);
 use LedgerSMB::Template;
 use LedgerSMB::Company_Config;

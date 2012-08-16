@@ -46,7 +46,24 @@
 #
 #######################################################################
 
-use LedgerSMB::Sysconfig;
+# Clearing all namespaces for persistant code use
+for my $nsp (qw(lsmb_legacy Form GL AA IS IR OE RP JC PE IC AM BP CP PE User)) {    
+   for my $k (keys %{"${nsp}::"}){
+        next if $k =~ /[A-Z]+/;
+        next if $k eq 'try' or $k eq 'catch';
+        next if *{"${nsp}::{$k}"}{CODE};
+        if (*{"${nsp}::{$k}"}{ARRAY}) {
+            @{"${nsp}::{$k}"} = () unless /^(?:INC|ISA|EXPORT|EXPORT_OK|ARGV|_|\W)$/;
+        }
+        if (*{"${nsp}::{$k}"}{HASH}) {
+            %{"${nsp}::{$k}"} = ();
+        }
+        if (*{"${nsp}::{$k}"}{SCALAR}){
+           ${"${nsp}::{$k}"} = undef;
+        }
+    }   
+}
+package lsmb_legacy;
 use Digest::MD5;
 use Try::Tiny;
 use LedgerSMB::App_State;
@@ -61,17 +78,20 @@ use LedgerSMB::Locale;
 use LedgerSMB::Auth;
 use LedgerSMB::Session;
 use LedgerSMB::App_State;
-use Data::Dumper;
-use LedgerSMB::App_State;
 
 our $logger=Log::Log4perl->get_logger('old-handler-chain');#make logger available to other old programs
 
+#sleep 10000;
+
+use Data::Dumper;
 require "common.pl";
 
 # for custom preprocessing logic
 eval { require "custom.pl"; };
 
 $form = new Form;
+use Data::Dumper;
+use LedgerSMB::Sysconfig;
 
 # name of this script
 $0 =~ tr/\\/\//;
@@ -141,8 +161,8 @@ if ($myconfig{language}){
 
 $LedgerSMB::App_State::Locale = $locale;
 # pull in the main code
-$logger->trace("trying script=bin/$form->{script} action=$form->{action}");#trace flow
 try {
+#eval {
   require "bin/$form->{script}";
 
   # customized scripts
@@ -173,15 +193,16 @@ try {
     $form->error( __FILE__ . ':' . __LINE__ . ': '
           . $locale->text('action not defined!'));
   }
-
-}
-catch {
+#  1;
+#} ||
+ }catch  {
   # We have an exception here because otherwise we always get an exception
   # when output terminates.  A mere 'die' will no longer trigger an automatic
   # error, but die 'foo' will map to $form->error('foo')
   # -- CT
   $form->error($_)  unless $_ eq 'Died'; 
-};
+} 
+;
 
 $logger->trace("leaving after script=bin/$form->{script} action=$form->{action}");#trace flow
 

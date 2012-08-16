@@ -158,6 +158,10 @@ sub subtotal_cols {
     return [];
 }
 
+sub text {
+    return LedgerSMB::Report::text(@_);
+}
+
 =back
 
 =head2 Criteria Properties

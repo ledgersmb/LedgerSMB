@@ -32,6 +32,7 @@
 #
 #======================================================================
 
+package lsmb_legacy;
 use LedgerSMB::AM;
 use LedgerSMB::Form;
 use LedgerSMB::User;

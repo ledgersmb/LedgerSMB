@@ -39,6 +39,7 @@
 #
 #======================================================================
 
+package lsmb_legacy;
 use LedgerSMB::OE;
 use LedgerSMB::IR;
 use LedgerSMB::IS;

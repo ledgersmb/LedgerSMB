@@ -34,6 +34,7 @@
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #======================================================================
 
+package lsmb_legacy;
 use CGI::Simple;
 
 1;

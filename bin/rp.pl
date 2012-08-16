@@ -41,6 +41,7 @@
 #
 #======================================================================
 
+package lsmb_legacy;
 use Error qw(:try);
 
 require "bin/arap.pl";

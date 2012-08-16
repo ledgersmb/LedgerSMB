@@ -38,6 +38,7 @@
 #
 #######################################################################
 
+package lsmb_legacy;
 use Error qw(:try);
 use LedgerSMB::Tax;
 use LedgerSMB::Template;

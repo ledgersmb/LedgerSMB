@@ -44,6 +44,7 @@
 #
 #======================================================================
 
+package lsmb_legacy;
 use LedgerSMB::Tax;
 
 # any custom scripts for this one

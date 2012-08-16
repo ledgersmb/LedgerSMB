@@ -38,6 +38,7 @@
 # common routines for gl, ar, ap, is, ir, oe
 #
 
+package lsmb_legacy;
 use LedgerSMB::AA;
 
 # any custom scripts for this one

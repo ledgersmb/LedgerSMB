@@ -40,6 +40,7 @@
 #
 #======================================================================
 
+package lsmb_legacy;
 use LedgerSMB::IC;
 use LedgerSMB::Tax;
 

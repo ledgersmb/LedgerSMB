@@ -38,6 +38,7 @@
 #
 #======================================================================
 
+package lsmb_legacy;
 use LedgerSMB::IR;
 use LedgerSMB::PE;
 use LedgerSMB::Tax;

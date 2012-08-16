@@ -39,6 +39,7 @@
 #
 #======================================================================
 
+package lsmb_legacy;
 use Error qw(:try);
 
 use LedgerSMB::Template;
