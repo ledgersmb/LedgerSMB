@@ -1,0 +1,33 @@
+README for running LedgerSMB on Starlet
+
+Starlet is a light-weight, high-performance Plack web application server written
+in Perl.  Starlet allows you to run LedgerSMB caching important modules in
+memory, in compiled form, so it has a much lower latency.
+
+There are a few very important factors to consider when choosing Starlet.  The
+first is that Plack is a much less forgiving environment than is CGI.  A bug may
+merely raise log warnings in Apache/CGI but may cause a part of the application
+to stop working in Plack.   In both cases, the behavior may be a big.  Under
+Plack it may become more serious however.  As of the current writing, Plack is
+expected to require some additional support and support for LedgerSMB under it
+should be considered EXPERIMENTAL.  Those who value stability over performance
+are advised to hold off for a few minor releases while we get the more obvious
+problems fixed.
+
+The second important detail is that at the current writing there are portions of
+the code which are known to cause corruption over time under Plack.  These
+portions are all inherited from SQL-Ledger, and will be rewritten as we get
+around to it.  However at present for reliable performance under Starlet it is
+necessary to set --max-reqs-per-child=1 when starting Starlet.  Starman is not
+fully tested yet,
+
+A final important point is that running on port 80 requires root access.  If you
+run on port 80, Starlet will run as root, which means that the software will
+have full read-write access to the file system.  You are better off running on a
+port like 8080 and using limited permissions.  However in all cases it is
+vitally important that there is no database user with the same name which can
+log in without supplying a password.  if there is, you may find yourself
+allowing access regardless of the username and password supplied.  As always the
+pg_hba.conf should require a password on the port/interface used, and you really
+shouldn't run under a user with the same name as a database role that can log in
+anyway as an additional precaution.

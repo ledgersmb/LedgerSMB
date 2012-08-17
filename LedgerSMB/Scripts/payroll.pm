@@ -24,14 +24,14 @@ workflows.
 
 =over
 
-=item new_income_type
+=item show_income_type
 
 Displays the form for entering a new income type.  Update returns to this form
 with different inputs.
 
 =cut
 
-sub new_income_type {
+sub show_income_type {
     my ($request) = @_;
     @{$request->{countries}} = $request->call_procedure(
        procname => 'location_list_country'
@@ -60,25 +60,54 @@ sub save_income_type {
     my ($request) = @_;
     my $itype = LedgerSMB::Payroll::Income_Type->new(%$request);
     $itype->save;
-    new_income_type($request);
+    show_income_type($request);
 }
 
-=item show_income_type
+=item get_income_type
 
 Gets an income type and shows it
 
 =cut
 
-sub show_income_type {
+sub get_income_type {
     my ($request) = @_;
     my $itype = LedgerSMB::Payroll::Income_Type->get($request->{id});
-    new_income_type($itype);
+    show_income_type($itype);
 }
 
 
 =item search_income_type
 
+Displays the income type search screen
+
+=cut
+
+sub search_income_type {
+    my ($request) = @_;
+    @{$request->{countries}} = $request->call_procedure(
+       procname => 'location_list_country'
+    );
+
+    my $template = LedgerSMB::Template->new(
+        user     => $request->{_user},
+        locale   => $request->{_locale},
+        path     => 'UI/payroll',
+        template => 'income_type',
+        format   => 'HTML'
+    )->render($request);
+}
+
 =item income_type_results
+
+Displays income type search results
+
+=cut
+
+sub income_type_results {
+    my ($request) = @_;
+    use LedgerSMB::Report::Payroll::Income_Types;
+    LedgerSMB::Report::Payroll::Income_Types->new(%$request)->render($request);
+}
 
 =back
 

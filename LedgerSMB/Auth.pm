@@ -62,6 +62,9 @@ Send an http error to the browser.
 package LedgerSMB::Auth;
 
 use LedgerSMB::Sysconfig;
+use CGI::Simple;
+use strict;
+use warnings;
 
 if ( !${LedgerSMB::Sysconfig::auth} ) {
     ${LedgerSMB::Sysconfig::auth} = 'DB';
@@ -71,6 +74,7 @@ require "LedgerSMB/Auth/" . ${LedgerSMB::Sysconfig::auth} . ".pm";
 
 sub http_error {
     my ($errcode, $msg_plus) = @_;
+    my $cgi = CGI::Simple->new();
 
     my $err = {
 	'500' => {status  => '500 Internal Server Error', 
@@ -98,25 +102,19 @@ sub http_error {
            $err->{'401'}->{others}->{'WWW-Authenticate'}
                 = "Basic realm=\"LedgerSMB-$msg_plus\"";
         }
+        print $cgi->header(
+           -type               => 'text/text',
+           -status             => $err->{'401'}->{status},
+           "-WWW-Authenticate" => $err->{'401'}->{others}->{'WWW-Authenticate'}
+        );
+    } else {
+        print $cgi->header(
+           -type   => 'text/text',
+           -status => $err->{$errcode}->{status},
+        );
     }
-    my $status;
-    if ($err->{$errcode}->{status}){
-        $status = $err->{$errcode}->{status};
-    } elsif ($errcode) {
-        $status = $errcode;
-   } else {
-	print STDERR "Tried to generate http error without code!\n";
-        http_error('500');
-    }
-    print "Status: $status\n";
-    for my $h (keys %{$err->{$errcode}->{others}}){
-         print "$h: $err->{$errcode}->{others}->{$h}\n";
-    }
-    print "Content-Type: text/plain\n\n";
-    print "Status: $status\n$err->{$errcode}->{message}\n";
-    exit; 
-    
-
+    print $err->{$errcode}->{message};
+    return;
 }
 
 =head1 COPYRIGHT
