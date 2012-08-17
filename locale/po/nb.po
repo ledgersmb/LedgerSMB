@@ -9,6 +9,7 @@
 #          Finn-Arne Johansen <faj@bzz.no>
 #          Petter Reinholdtsen <pere@hungry.com>
 #          Erik Inge Bolsø <knan@tvilsom.org>
+#          Håvard Sørli <havard@anix.no>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -1679,7 +1680,7 @@ msgid "Part"
 msgstr "Del"
 
 msgid "Part Number"
-msgstr ""
+msgstr "Delenummer"
 
 msgid "Partnumber"
 msgstr "Delenummer"
@@ -1757,10 +1758,10 @@ msgid "Posted!"
 msgstr "Bokført!"
 
 msgid "Posting"
-msgstr ""
+msgstr "Bokfører"
 
 msgid "Posting failed!"
-msgstr ""
+msgstr "Bokføring feilet!"
 
 msgid "Postscript"
 msgstr "Postscript"
@@ -1802,19 +1803,19 @@ msgid "Print and Post"
 msgstr "Skriv ut og bokfør"
 
 msgid "Print and Post as new"
-msgstr ""
+msgstr "Skriv ut og bokfør som ny"
 
 msgid "Print and Save"
 msgstr "Skriv ut og lagre"
 
 msgid "Print and Save as new"
-msgstr ""
+msgstr "Skriv ut og lagre som ny"
 
 msgid "Print and post as new"
-msgstr ""
+msgstr "Skriv ut og bokfør som ny"
 
 msgid "Print and save as new"
-msgstr ""
+msgstr "Skriv ut og lagre som ny"
 
 msgid "Printed"
 msgstr "Skrevet ut"
