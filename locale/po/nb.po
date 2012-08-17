@@ -1,6 +1,6 @@
 ######################################################################
 # LedgerSMB Small Medium Business Accounting
-# Copyright (c) 2001, 2004
+# Copyright (c) 2001, 2004, 2012
 #
 # Norwegian Bokmål texts:
 #
@@ -24,13 +24,16 @@
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
 #######################################################################
-
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Håvard Sørli <havard@anix.no>\n"
+"Language-Team: \n"
 
 msgid "A"
 msgstr "A"
@@ -2124,7 +2127,7 @@ msgid "Select all"
 msgstr "Velg alt"
 
 msgid "Select from one of the items below"
-msgstr "Velg en fra listen under, og trykk "Fortsett""
+msgstr "Velg en fra listen under, og trykk \"Fortsett\""
 
 msgid "Select from one of the names below"
 msgstr "Velg ett av navnene under"
