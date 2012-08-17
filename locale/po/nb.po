@@ -867,7 +867,7 @@ msgid "E-mail address missing!"
 msgstr "Epost-adresse mangler!"
 
 msgid "E-mail message"
-msgstr ""
+msgstr "E-post melding"
 
 msgid "E-mailed"
 msgstr "Epost sendt"
@@ -1080,7 +1080,7 @@ msgid "Foreign Exchange Loss"
 msgstr "Tap på valutahandel"
 
 msgid "Friday"
-msgstr ""
+msgstr "Fredag"
 
 msgid "From"
 msgstr "Fra"
@@ -1470,16 +1470,16 @@ msgid "Model"
 msgstr "Modell"
 
 msgid "Monday"
-msgstr ""
+msgstr "Mandag"
 
 msgid "Month"
 msgstr "Måned"
 
 msgid "Month(s)"
-msgstr ""
+msgstr "Måned(er)"
 
 msgid "Months"
-msgstr ""
+msgstr "Måneder"
 
 msgid "Multibyte Encoding"
 msgstr "Tegnsett"
@@ -2076,7 +2076,7 @@ msgid "Salesperson"
 msgstr "Selger"
 
 msgid "Saturday"
-msgstr ""
+msgstr "Lørdag"
 
 msgid "Save"
 msgstr "Lagre"
@@ -2283,7 +2283,7 @@ msgid "Summary"
 msgstr "Oppsummert"
 
 msgid "Sunday"
-msgstr ""
+msgstr "Søndag"
 
 msgid "Supervisor"
 msgstr "Overordnet"
@@ -2343,7 +2343,7 @@ msgid "This is a preliminary check for existing sources. Nothing will be created
 msgstr "Dette er en innledende kontroll for eksisterende kilder. Ingenting vil bli opprettet eller slettet på dette trinnet!"
 
 msgid "Thursday"
-msgstr ""
+msgstr "Torsdag"
 
 msgid "Till"
 msgstr "Kasse"
@@ -2445,7 +2445,7 @@ msgid "Trial Balance"
 msgstr "Foreløpig balanse"
 
 msgid "Tuesday"
-msgstr ""
+msgstr "Tirsdag"
 
 msgid "Type of Business"
 msgstr "Organisasjonstype"
@@ -2544,7 +2544,7 @@ msgid "Warning!"
 msgstr "Advarsel"
 
 msgid "Wednesday"
-msgstr ""
+msgstr "Onsdag"
 
 msgid "Week"
 msgstr ""
