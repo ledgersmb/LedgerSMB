@@ -62,6 +62,9 @@ Send an http error to the browser.
 package LedgerSMB::Auth;
 
 use LedgerSMB::Sysconfig;
+use CGI::Simple;
+use strict;
+use warnings;
 
 if ( !${LedgerSMB::Sysconfig::auth} ) {
     ${LedgerSMB::Sysconfig::auth} = 'DB';
@@ -71,6 +74,7 @@ require "LedgerSMB/Auth/" . ${LedgerSMB::Sysconfig::auth} . ".pm";
 
 sub http_error {
     my ($errcode, $msg_plus) = @_;
+    my $cgi = CGI::Simple->new();
 
     my $err = {
 	'500' => {status  => '500 Internal Server Error', 
@@ -89,28 +93,20 @@ sub http_error {
         '454' => {status  => '454 Database Does Not Exist',
                   message => 'Database Does Not Exist' },
     };
-    # Ordinarily I would use $cgi->header to generate the headers
-    # but this doesn't seem to be working.  Although it is generally desirable
-    # to create the headers using the package, I think we should print them
-    # manually.  -CT
-    my $status;
-    if ($err->{$errcode}->{status}){
-        $status = $err->{$errcode}->{status};
-    } elsif ($errcode) {
-        $status = $errcode;
-   } else {
-	print STDERR "Tried to generate http error without code!\n";
-        http_error('500');
+    if ($errcode eq '401'){
+        print $cgi->header(
+           -type               => 'text/text',
+           -status             => $err->{'401'}->{status},
+           "-WWW-Authenticate" => $err->{'401'}->{others}->{'WWW-Authenticate'}
+        );
+    } else {
+        print $cgi->header(
+           -type   => 'text/text',
+           -status => $err->{$errcode}->{status},
+        );
     }
-    print "Status: $status\n";
-    for my $h (keys %{$err->{$errcode}->{others}}){
-         print "$h: $err->{$errcode}->{others}->{$h}\n";
-    }
-    print "Content-Type: text/plain\n\n";
-    print "Status: $status\n$err->{$errcode}->{message}\n";
-    exit; 
-    
-
+    print $err->{$errcode}->{message};
+    return;
 }
 
 =head1 COPYRIGHT
