@@ -104,19 +104,17 @@ sub new {
         die "Error: Request entity too large\n";
     }
 
-    read( STDIN, $_, $ENV{CONTENT_LENGTH} ) unless $ENV{CONTENT_LENGTH} == 0;
-
-    if ($argstr) {
+    if ($ENV{CONTENT_LENGTH}!= 0){
+        read( STDIN, $_, $ENV{CONTENT_LENGTH} );
+    }elsif ($argstr) {
         $_ = $argstr;
     }
     elsif ( $ENV{QUERY_STRING} ) {
         $_ = $ENV{QUERY_STRING};
     }
-
     elsif ( $ARGV[0] ) {
         $_ = $ARGV[0];
     }
-
     my $self = {};
     my $orig = {};
     %$orig = split /[&=]/ unless !defined $_;
