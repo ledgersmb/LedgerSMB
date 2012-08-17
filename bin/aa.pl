@@ -1114,7 +1114,7 @@ sub form_footer {
 
     print qq|
 </form>
-| . $form->close_status_header . qq|
+| . $form->close_status_div . qq|
 </body>
 </html>
 |;
