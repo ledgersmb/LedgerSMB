@@ -51,6 +51,7 @@ sub redirect {
     for (@common_attrs) {
         $temphash{$_} = $form->{$_};
     }
+    $temphash{action} = $form->{action};
 
     undef $form;
     $form = new Form($argv);
@@ -58,6 +59,7 @@ sub redirect {
     for (@common_attrs) {
         $form->{$_} = $temphash{$_};
     }
+    $form->{action} ||= $temphash{action}; # default to old action if not set
 
     $form->{script} = $script;
 
