@@ -7,6 +7,8 @@ Changelog for 1.3.23
 * Moved http error framework to use header methods (Chris T)
 * Fixed warning about incorrect method for ar/ap transactions (Chris T)
 * Fixed fatal gettext errors in ar_EG, fi, nb po's (Havard S)
+* Fixed prices being selected on RFQ (Chris T, h/t Erik H)
+* Fixed discount * 100 on multiple parts select (Chris T, h/T Istvan P)
 
 Changelog for 1.3.22
 * Fixed error when trying to save multiple make/models for a part (Chris T)

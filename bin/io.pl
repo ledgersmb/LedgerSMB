@@ -630,7 +630,7 @@ sub item_selected {
             $i++;
 
             $form->{"qty_$i"}      = $qty;
-            $form->{"discount_$i"} = $form->{discount} * 100;
+            $form->{"discount_$i"} = $form->{discount};
             $form->{"reqdate_$i"}  = $form->{reqdate}
               if $form->{type} !~ /_quotation/;
 
