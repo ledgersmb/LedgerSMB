@@ -1,6 +1,6 @@
 ######################################################################
 # LedgerSMB Small Medium Business Accounting
-# Copyright (c) 2001, 2004
+# Copyright (c) 2001, 2004, 2012
 #
 # Norwegian Bokmål texts:
 #
@@ -9,6 +9,7 @@
 #          Finn-Arne Johansen <faj@bzz.no>
 #          Petter Reinholdtsen <pere@hungry.com>
 #          Erik Inge Bolsø <knan@tvilsom.org>
+#          Håvard Sørli <havard@anix.no>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,13 +25,18 @@
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
 #######################################################################
-
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Håvard Sørli <havard@anix.no>\n"
+"Language-Team: \n"
+"X-Poedit-Language: Norwegian Bokmal\n"
+"X-Poedit-Country: NORWAY\n"
 
 msgid "A"
 msgstr "A"
@@ -408,7 +414,7 @@ msgid "COGS"
 msgstr "Innkjøp"
 
 msgid "COGS account does not exist!"
-msgstr ""
+msgstr "Innkjøps konto finnes ikke"
 
 msgid "Cannot add timecard for a completed job!"
 msgstr ""
@@ -417,19 +423,19 @@ msgid "Cannot change timecard for a completed job!"
 msgstr ""
 
 msgid "Cannot create Assembly"
-msgstr ""
+msgstr "Kan ikke opprette sammensetning"
 
 msgid "Cannot create Labor"
-msgstr ""
+msgstr "Kan ikke opprette arbeide"
 
 msgid "Cannot create Lock!"
 msgstr "Kan ikke opprette lås"
 
 msgid "Cannot create Part"
-msgstr ""
+msgstr "Kan ikke opprette vare"
 
 msgid "Cannot create Service"
-msgstr ""
+msgstr "Kan ikke opprette tjeneste"
 
 msgid "Cannot delete Timecard!"
 msgstr ""
@@ -480,7 +486,7 @@ msgid "Cannot post transaction for a closed period!"
 msgstr "Kan ikke bokføre postering for en avsluttet periode!"
 
 msgid "Cannot post transaction with a debit and credit entry for the same account!"
-msgstr ""
+msgstr "Kan ikke bokføre postering med debit og kredit på samme konto!"
 
 msgid "Cannot post transaction!"
 msgstr "Kan ikke bokføre postering!"
@@ -516,10 +522,10 @@ msgid "Cannot set multiple options for"
 msgstr "Kan ikke sette flere valg for"
 
 msgid "Cannot set multiple options for Item"
-msgstr ""
+msgstr "Kan ikke sette flere valg for vare"
 
 msgid "Cannot stock Assembly!"
-msgstr ""
+msgstr "Kan ikke plasere sammensetninger!"
 
 msgid "Cannot stock assemblies!"
 msgstr "Kan ikke plasere sammensetninger!"
@@ -558,7 +564,7 @@ msgid "City"
 msgstr "Poststed"
 
 msgid "Cleared"
-msgstr ""
+msgstr "Slettet"
 
 msgid "Click on login name to edit!"
 msgstr "Klikk på brukernavn for å redigere!"
@@ -588,7 +594,7 @@ msgid "Compare to"
 msgstr "Sammenlign med"
 
 msgid "Completed"
-msgstr ""
+msgstr "Fullført"
 
 msgid "Components"
 msgstr "Komponenter"
@@ -621,7 +627,7 @@ msgid "Cost"
 msgstr "Kostpris"
 
 msgid "Cost Center"
-msgstr ""
+msgstr "Kostnadssted"
 
 msgid "Could not save pricelist!"
 msgstr "Kunne ikke lagre prisliste!"
@@ -738,13 +744,13 @@ msgid "Date worked"
 msgstr ""
 
 msgid "Day"
-msgstr ""
+msgstr "Dag"
 
 msgid "Day(s)"
-msgstr ""
+msgstr "Dag(er)"
 
 msgid "Days"
-msgstr ""
+msgstr "Dager"
 
 msgid "Debit"
 msgstr "Debet"
@@ -774,7 +780,7 @@ msgid "Deductions"
 msgstr "Fradrag"
 
 msgid "Default Template"
-msgstr ""
+msgstr "Standard mal"
 
 msgid "Defaults"
 msgstr "Standardinnstillinger"
@@ -795,7 +801,7 @@ msgid "Delete Schedule"
 msgstr ""
 
 msgid "Deleting a language will also delete the templates for the language"
-msgstr ""
+msgstr "Å slette et språk vil også slette malene for det aktuelle språket"
 
 msgid "Delivery Date"
 msgstr "Leveringsdato"
@@ -864,7 +870,7 @@ msgid "E-mail address missing!"
 msgstr "Epost-adresse mangler!"
 
 msgid "E-mail message"
-msgstr ""
+msgstr "E-post melding"
 
 msgid "E-mailed"
 msgstr "Epost sendt"
@@ -915,7 +921,7 @@ msgid "Edit Group"
 msgstr "Endre gruppe"
 
 msgid "Edit Job"
-msgstr ""
+msgstr "Endre jobb"
 
 msgid "Edit Labor/Overhead"
 msgstr "Endre arbeide/overhead"
@@ -1077,7 +1083,7 @@ msgid "Foreign Exchange Loss"
 msgstr "Tap på valutahandel"
 
 msgid "Friday"
-msgstr ""
+msgstr "Fredag"
 
 msgid "From"
 msgstr "Fra"
@@ -1110,25 +1116,25 @@ msgid "General Ledger"
 msgstr "Hovedbok"
 
 msgid "Generate"
-msgstr ""
+msgstr "Generer"
 
 msgid "Generate Orders"
-msgstr ""
+msgstr "Generer orderere"
 
 msgid "Generate Purchase Orders"
-msgstr ""
+msgstr "Generer innkjøpsorderere"
 
 msgid "Generate Purchase Orders from Sales Order"
-msgstr ""
+msgstr "Generer innkjøpsorderere fra salgsordere"
 
 msgid "Generate Sales Order"
-msgstr ""
+msgstr "Generer salgsordere"
 
 msgid "Generate Sales Order from Purchase Orders"
-msgstr ""
+msgstr "Generer salgsordere fra innkjøpsorderer"
 
 msgid "Generate Sales Orders"
-msgstr ""
+msgstr "Generer salgsorderer"
 
 msgid "Goods & Services"
 msgstr "Varer og tjenester"
@@ -1194,7 +1200,7 @@ msgid "Include Exchange Rate Difference"
 msgstr "Inkluder forskjell i vekslingsrate"
 
 msgid "Include Payment"
-msgstr ""
+msgstr "Inkluder betaling"
 
 msgid "Include in Report"
 msgstr "Inkludér i rapport"
@@ -1209,7 +1215,7 @@ msgid "Income Statement"
 msgstr "Driftsregnskap"
 
 msgid "Income account does not exist!"
-msgstr ""
+msgstr "Inntektskonto finnes ikke."
 
 msgid "Incorrect Dataset version!"
 msgstr "Gal versjon av datasett!"
@@ -1284,25 +1290,25 @@ msgid "January"
 msgstr "januar"
 
 msgid "Job"
-msgstr ""
+msgstr "Jobb"
 
 msgid "Job Name"
-msgstr ""
+msgstr "Jobb navn"
 
 msgid "Job Number"
-msgstr ""
+msgstr "Jobb nummer"
 
 msgid "Job Number missing!"
-msgstr ""
+msgstr "Jobb nummer mangeler!"
 
 msgid "Job deleted!"
-msgstr ""
+msgstr "Jobb slettet"
 
 msgid "Job saved!"
-msgstr ""
+msgstr "Jobb lagret!"
 
 msgid "Jobs"
-msgstr ""
+msgstr "Jobber"
 
 msgid "Jul"
 msgstr "jul"
@@ -1467,16 +1473,16 @@ msgid "Model"
 msgstr "Modell"
 
 msgid "Monday"
-msgstr ""
+msgstr "Mandag"
 
 msgid "Month"
 msgstr "Måned"
 
 msgid "Month(s)"
-msgstr ""
+msgstr "Måned(er)"
 
 msgid "Months"
-msgstr ""
+msgstr "Måneder"
 
 msgid "Multibyte Encoding"
 msgstr "Tegnsett"
@@ -1494,16 +1500,16 @@ msgid "New Templates"
 msgstr "Nye maler"
 
 msgid "New Window"
-msgstr ""
+msgstr "Nytt vindu"
 
 msgid "Next"
-msgstr ""
+msgstr "Neste"
 
 msgid "Next Date"
-msgstr ""
+msgstr "Neste dato"
 
 msgid "Next Number"
-msgstr ""
+msgstr "Neste nr"
 
 msgid "No"
 msgstr "Nei"
@@ -1524,10 +1530,10 @@ msgid "No email address for"
 msgstr "Ingen emailadresse for"
 
 msgid "No open Jobs!"
-msgstr ""
+msgstr "Ingen åpne jobber!"
 
 msgid "No open Projects!"
-msgstr ""
+msgstr "Ignen åpne prosjekter!"
 
 msgid "No."
 msgstr "Nr."
@@ -1674,7 +1680,7 @@ msgid "Part"
 msgstr "Del"
 
 msgid "Part Number"
-msgstr ""
+msgstr "Delenummer"
 
 msgid "Partnumber"
 msgstr "Delenummer"
@@ -1710,7 +1716,7 @@ msgid "Payments"
 msgstr "Betalinger"
 
 msgid "Payments posted!"
-msgstr ""
+msgstr "Betalinger bokført!"
 
 msgid "Payroll Deduction"
 msgstr "Fradrag i lønn"
@@ -1752,10 +1758,10 @@ msgid "Posted!"
 msgstr "Bokført!"
 
 msgid "Posting"
-msgstr ""
+msgstr "Bokfører"
 
 msgid "Posting failed!"
-msgstr ""
+msgstr "Bokføring feilet!"
 
 msgid "Postscript"
 msgstr "Postscript"
@@ -1797,19 +1803,19 @@ msgid "Print and Post"
 msgstr "Skriv ut og bokfør"
 
 msgid "Print and Post as new"
-msgstr ""
+msgstr "Skriv ut og bokfør som ny"
 
 msgid "Print and Save"
 msgstr "Skriv ut og lagre"
 
 msgid "Print and Save as new"
-msgstr ""
+msgstr "Skriv ut og lagre som ny"
 
 msgid "Print and post as new"
-msgstr ""
+msgstr "Skriv ut og bokfør som ny"
 
 msgid "Print and save as new"
-msgstr ""
+msgstr "Skriv ut og lagre som ny"
 
 msgid "Printed"
 msgstr "Skrevet ut"
@@ -1818,19 +1824,19 @@ msgid "Printer"
 msgstr "Skriver"
 
 msgid "Printing"
-msgstr ""
-
-msgid "Printing ... "
 msgstr "Skriver ut"
 
+msgid "Printing ... "
+msgstr "Skriver ut ..."
+
 msgid "Process Transactions"
-msgstr ""
+msgstr "Behandle transaksjoner"
 
 msgid "Production"
-msgstr ""
+msgstr "Produksjon"
 
 msgid "Profit Center"
-msgstr ""
+msgstr "Resultatenhet"
 
 msgid "Project"
 msgstr "Prosjekt"
@@ -1839,7 +1845,7 @@ msgid "Project Description Translations"
 msgstr "Oversettelser av prosjektbeskrivelser"
 
 msgid "Project Name"
-msgstr ""
+msgstr "Prosjektnavn"
 
 msgid "Project Number"
 msgstr "Prosjektnummer"
@@ -1860,10 +1866,10 @@ msgid "Project saved!"
 msgstr "Prosjekt lagret!"
 
 msgid "Project/Job Name"
-msgstr ""
+msgstr "Prosjekt/Jobb navn"
 
 msgid "Project/Job Number"
-msgstr ""
+msgstr "Prosjekt/Jobb nummer"
 
 msgid "Projects"
 msgstr "Prosjekter"
@@ -2073,7 +2079,7 @@ msgid "Salesperson"
 msgstr "Selger"
 
 msgid "Saturday"
-msgstr ""
+msgstr "Lørdag"
 
 msgid "Save"
 msgstr "Lagre"
@@ -2109,22 +2115,22 @@ msgid "Select"
 msgstr "Velg"
 
 msgid "Select Customer"
-msgstr ""
+msgstr "Velg kunde"
 
 msgid "Select Vendor"
-msgstr ""
+msgstr "Velg leverandør"
 
 msgid "Select a Printer!"
-msgstr ""
+msgstr "Velg en skriver!"
 
 msgid "Select a printer!"
-msgstr ""
+msgstr "Velg en skriver!"
 
 msgid "Select all"
 msgstr "Velg alt"
 
 msgid "Select from one of the items below"
-msgstr "Velg en fra listen under, og trykk "Fortsett""
+msgstr "Velg en fra listen under, og trykk \"Fortsett\""
 
 msgid "Select from one of the names below"
 msgstr "Velg ett av navnene under"
@@ -2136,7 +2142,7 @@ msgid "Select items"
 msgstr ""
 
 msgid "Select payment"
-msgstr ""
+msgstr "Velg betaling"
 
 msgid "Select postscript or PDF!"
 msgstr "Velg postscript eller PDF!"
@@ -2172,10 +2178,10 @@ msgid "Service"
 msgstr "Tjeneste"
 
 msgid "Service Code"
-msgstr ""
+msgstr "Tjeneste kode"
 
 msgid "Service/Labor Code"
-msgstr ""
+msgstr "Tjeneste/Arbeids kode"
 
 msgid "Services"
 msgstr "Tjenester"
@@ -2280,7 +2286,7 @@ msgid "Summary"
 msgstr "Oppsummert"
 
 msgid "Sunday"
-msgstr ""
+msgstr "Søndag"
 
 msgid "Supervisor"
 msgstr "Overordnet"
@@ -2325,7 +2331,7 @@ msgid "Terms"
 msgstr "Vilkår"
 
 msgid "Text"
-msgstr ""
+msgstr "Tekst"
 
 msgid "Text Templates"
 msgstr "Tekstmaler"
@@ -2340,16 +2346,16 @@ msgid "This is a preliminary check for existing sources. Nothing will be created
 msgstr "Dette er en innledende kontroll for eksisterende kilder. Ingenting vil bli opprettet eller slettet på dette trinnet!"
 
 msgid "Thursday"
-msgstr ""
+msgstr "Torsdag"
 
 msgid "Till"
 msgstr "Kasse"
 
 msgid "Time In"
-msgstr ""
+msgstr "Tid in"
 
 msgid "Time Out"
-msgstr ""
+msgstr "Tid ut"
 
 msgid "Timecard"
 msgstr ""
@@ -2370,7 +2376,7 @@ msgid "To"
 msgstr "Til"
 
 msgid "To Warehouse"
-msgstr ""
+msgstr "Til lager"
 
 msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
 msgstr "For å tilføye en bruker til en gruppe må du endre et brukernavn og så lagre. Den nye brukeren vil så bli lagret med de samme variablene under det nye loginnavnet."
@@ -2418,7 +2424,7 @@ msgid "Transfer Inventory"
 msgstr "Overfør varebeholdning"
 
 msgid "Transfer from"
-msgstr ""
+msgstr "Overfør fra"
 
 msgid "Transfer to"
 msgstr "Overfør til"
@@ -2442,7 +2448,7 @@ msgid "Trial Balance"
 msgstr "Foreløpig balanse"
 
 msgid "Tuesday"
-msgstr ""
+msgstr "Tirsdag"
 
 msgid "Type of Business"
 msgstr "Organisasjonstype"
@@ -2541,16 +2547,16 @@ msgid "Warning!"
 msgstr "Advarsel"
 
 msgid "Wednesday"
-msgstr ""
+msgstr "Onsdag"
 
 msgid "Week"
-msgstr ""
+msgstr "Uke"
 
 msgid "Week(s)"
-msgstr ""
+msgstr "Uke(r)"
 
 msgid "Weeks"
-msgstr ""
+msgstr "Uker"
 
 msgid "Weight"
 msgstr "Vekt"
@@ -2574,7 +2580,7 @@ msgid "Year"
 msgstr "År"
 
 msgid "Year(s)"
-msgstr ""
+msgstr "År"
 
 msgid "Yearend"
 msgstr "Årsavslutning"
@@ -2589,7 +2595,7 @@ msgid "Yearend posting failed!"
 msgstr "Bokføring av årsavslutning feilet!"
 
 msgid "Years"
-msgstr ""
+msgstr "År"
 
 msgid "Yes"
 msgstr "Ja"
@@ -2685,7 +2691,7 @@ msgid "time(s)"
 msgstr ""
 
 msgid "unexpected error!"
-msgstr ""
+msgstr "uventet feil!"
 
 msgid "website"
 msgstr "nettsted"

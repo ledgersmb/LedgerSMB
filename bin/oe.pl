@@ -1087,6 +1087,12 @@ sub update {
         &{"$retrieve_item"}( "", \%myconfig, \%$form );
 
         $rows = scalar @{ $form->{item_list} };
+        if ($form->{type} eq 'request_quotation'){
+           for my $ref (@{ $form->{item_list} }){
+               $ref->{sellprice} = 0;
+               $ref->{lastcost} = 0;
+           }
+        }
 
         if ( $form->{language_code} && $rows == 0 ) {
             $language_code = $form->{language_code};

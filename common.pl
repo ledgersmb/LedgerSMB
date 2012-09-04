@@ -29,7 +29,6 @@ sub redirect {
 
     my @common_attrs = qw(
       dbh login favicon stylesheet titlebar password custom_db_fields vc header
-      action
     );
 
     if ( !$script ) {    # http redirect to login.pl if called w/no args
@@ -52,6 +51,7 @@ sub redirect {
     for (@common_attrs) {
         $temphash{$_} = $form->{$_};
     }
+    $temphash{action} = $form->{action};
 
     undef $form;
     $form = new Form($argv);
@@ -59,6 +59,7 @@ sub redirect {
     for (@common_attrs) {
         $form->{$_} = $temphash{$_};
     }
+    $form->{action} ||= $temphash{action}; # default to old action if not set
 
     $form->{script} = $script;
 
