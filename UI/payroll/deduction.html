@@ -1,0 +1,101 @@
+<?lsmb 
+
+INCLUDE "ui-header.html";
+
+PROCESS "elements.html";
+
+?>
+<div class="listtop"><?lsmb text('Deduction Type') ?></div>
+<div class="input_row">
+<div class="input_group"><?lsmb 
+
+countries.push({});
+
+PROCESS select element_data = {
+           default_values = [country_id]
+                  options = countries
+                     name = 'country_id',
+                text_attr = 'name',
+               value_attr = 'id',
+                    label = text('Country')
+}; ?></div></div>
+<div class="input_row">
+<div class="input_group"><?lsmb 
+
+ deduction_classes.push({});
+
+PROCESS select element_data = {
+           default_values = [pdc_id]
+                  options = deduction_classes
+                     name = 'pdc_id',
+                text_attr = 'label',
+               value_attr = 'id',
+                    label = text('Deduction Class') #'
+}; ?></div></div>
+<div class="input_row">
+<div class="input_group"><?lsmb 
+
+accounts.push({});
+
+FOREACH a IN accounts;
+   a.label = a.accno _ '--' _ a.description;
+END;
+
+PROCESS select element_data = {
+           default_values = [account_id]
+                  options = accounts
+                     name = 'account_id',
+                text_attr = 'label',
+               value_attr = 'id',
+                    label = text('Account')
+}; ?></div></div>
+<div class="input_row">
+<div class="input_group"><?lsmb 
+
+PROCESS input element_data = {
+    name = 'label'
+   value = label
+    type = 'text'
+    size = '20'
+   class = 'control_code'
+}; ?></div></div>
+<div class="input_row">
+<div class="input_group"><?lsmb 
+
+PROCESS input element_data = {
+    name = 'unit'
+   value = unit
+    type = 'text'
+    size = '10'
+   class = 'unit'
+}; ?></div></div>
+<div class="input_row">
+<div class="input_group"><?lsmb 
+
+PROCESS input element_data = {
+    name = 'default_amount'
+   value = default_amount
+    type = 'text'
+    size = '25'
+   class = 'amount'
+} ?></div></div>
+<div class="input_row">
+<?lsmb
+
+PROCESS button element_data = {
+    name = 'action'
+   value = 'show_deduction_type'
+   class = 'submit'
+    type = 'submit'
+    text = text('Update')
+};
+
+PROCESS button element_data = {
+    name = 'action'
+   value = 'save_deduction_type'
+   class = 'submit'
+    type = 'submit'
+    text = text('Save')
+]; ?></div>
+</body>
+</html>

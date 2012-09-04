@@ -973,14 +973,14 @@ CREATE TABLE payroll_deduction_class (
 CREATE TABLE payroll_deduction_type (
    id serial not null unique,
    account_id int not null references account(id),
-   pic_id int not null,
+   pdc_id int not null,
    country_id int not null,
    label text not null,
    unit text not null,
    default_amount numeric,
    calc_percent bool not null,
-   foreign key(pic_id, country_id) 
-              references payroll_income_class(id, country_id)
+   foreign key(pdc_id, country_id) 
+              references payroll_deduction_class(id, country_id)
 );
 
 CREATE TABLE payroll_deduction (
