@@ -115,4 +115,32 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION payroll_income_type__search
+(in_account_id int, in_pic_id int, in_country_id int, in_label text,
+in_unit text) RETURNS SETOF payroll_income_type
+LANGUAGE SQL STABLE AS
+$$ 
+SELECT * 
+  FROM payroll_income_type 
+ where (account_id = $1 OR $1 IS NULL) AND
+       (pic_id = $2 OR $2 IS NULL) AND
+       (country_id = $3 OR $3 IS NULL) AND
+       ($4 IS NULL OR label LIKE $4 || '%') AND
+       (unit = $5 or $5 IS NULL);
+$$;
+
+CREATE OR REPLACE FUNCTION payroll_deduction_type__search
+(in_account_id int, in_pdc_id int, in_country_id int, in_label text,
+in_unit text) RETURNS SETOF payroll_deduction_type
+LANGUAGE SQL STABLE AS
+$$ 
+SELECT * 
+  FROM payroll_deduction_type 
+ where (account_id = $1 OR $1 IS NULL) AND
+       (pdc_id = $2 OR $2 IS NULL) AND
+       (country_id = $3 OR $3 IS NULL) AND
+       ($4 IS NULL OR label LIKE $4 || '%') AND
+       (unit = $5 or $5 IS NULL);
+$$;
+
 COMMIT;

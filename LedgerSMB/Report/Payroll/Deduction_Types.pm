@@ -1,20 +1,20 @@
 =head1 NAME 
 
-LedgerSMB::Payroll::Income_Types - Income Types Searches for LedgerSMB
+LedgerSMB::Payroll::Deduction_Types - Deduction Types Searches for LedgerSMB
 
 =head1 SYNPOSIS
 
- LedgerSMB::Payroll::Income_Types->new(%$request)->render(%$request);
+ LedgerSMB::Payroll::Deduction_Types->new(%$request)->render(%$request);
 
 =cut
 
-package LedgerSMB::Payroll::Income_Types;
+package LedgerSMB::Payroll::Deduction_Types;
 use Moose;
 extends 'LedgerSMB::Payroll';
 
 =head1 DESCRIPTION
 
-This module provides for searching for income types.
+This module provides for searching for deduction types.
 
 =head1 CONSTANT METHODS
 
@@ -30,8 +30,8 @@ sub columns {
             name => text('Country'),
             type => 'text',
         },
-        { col_id => 'income_class',
-            name => text('Income Class'),
+        { col_id => 'deduction_class',
+            name => text('Deduction Class'),
             type => 'text' },
         { col_id => 'label',
             name => text('Label'),
@@ -52,7 +52,7 @@ sub header_lines {
 
 =cut
 
-sub name { return text('Income Types') }
+sub name { return text('Deduction Types') }
 
 =back
 
@@ -76,13 +76,13 @@ Matches the beginning of the label
 
 has label => (is => 'ro', isa => 'Str', required => '0');
 
-=item pic_id int
+=item pdc_id int
 
-Exact match on payroll income class id
+Exact match on payroll deduction class id
 
 =cut
 
-has pic_id => (is => 'ro', isa => 'Int', required => '0');
+has pdc_id => (is => 'ro', isa => 'Int', required => '0');
 
 
 =item account_id int
@@ -114,7 +114,7 @@ has unit => (is => 'ro', isa => 'Str', required => '0');
 
 sub run_report {
     my ($self) = $_;
-    my @rows = $self->exec_method(funcname => 'payroll_income_type__search');
+    my @rows = $self->exec_method(funcname => 'payroll_deduction_type__search');
     $_->{row_id} = $_->{id} for my (@rows);
     $self->rows(@rows);
 }
