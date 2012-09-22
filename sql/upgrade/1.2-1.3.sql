@@ -106,13 +106,13 @@ where v.company_id is not null and v.email is not null
        and v.email ~ '[[:alnum:]_]'::text 
 group by v.credit_id, v.email
 UNION
-select v.credit_id, 12, v.cc, 'Carbon Copy email address' as description 
+select v.credit_id, 13, v.cc, 'Carbon Copy email address' as description 
 from lsmb12.vendor v 
 where v.company_id is not null and v.cc is not null 
       and v.cc ~ '[[:alnum:]_]'::text 
 group by v.credit_id, v.cc
 UNION 
-select v.credit_id, 12, v.bcc, 'Blind Carbon Copy email address' as description 
+select v.credit_id, 14, v.bcc, 'Blind Carbon Copy email address' as description 
 from lsmb12.vendor v 
 where v.company_id is not null and v.bcc is not null 
        and v.bcc ~ '[[:alnum:]_]'::text 
@@ -138,13 +138,13 @@ where v.company_id is not null and v.email is not null
        and v.email ~ '[[:alnum:]_]'::text 
 group by v.credit_id, v.email
 UNION
-select v.credit_id, 12, v.cc, 'Carbon Copy email address' as description 
+select v.credit_id, 13, v.cc, 'Carbon Copy email address' as description 
 from lsmb12.customer v 
 where v.company_id is not null and v.cc is not null 
       and v.cc ~ '[[:alnum:]_]'::text 
 group by v.credit_id, v.cc
 UNION 
-select v.credit_id, 12, v.bcc, 'Blind Carbon Copy email address' as description 
+select v.credit_id, 14, v.bcc, 'Blind Carbon Copy email address' as description 
 from lsmb12.customer v 
 where v.company_id is not null and v.bcc is not null 
        and v.bcc ~ '[[:alnum:]_]'::text 
