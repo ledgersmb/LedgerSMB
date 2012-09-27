@@ -103,11 +103,10 @@ sub new {
         print "Status: 413\n Request entity too large\n\n";
         die "Error: Request entity too large\n";
     }
-
-    if ($ENV{CONTENT_LENGTH}!= 0){
-        read( STDIN, $_, $ENV{CONTENT_LENGTH} );
-    }elsif ($argstr) {
+    if ($argstr) {
         $_ = $argstr;
+    }elsif ($ENV{CONTENT_LENGTH}!= 0){
+        read( STDIN, $_, $ENV{CONTENT_LENGTH} );
     }
     elsif ( $ENV{QUERY_STRING} ) {
         $_ = $ENV{QUERY_STRING};
