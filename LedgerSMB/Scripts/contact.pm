@@ -448,6 +448,7 @@ Saves a company and moves on to the next screen
 
 sub save_company {
     my ($request) = @_;
+    $request->{name} ||= $request->{legal_name};
     my $company = LedgerSMB::Entity::Company->new(%$request);
     $request->{target_div} = 'credit_div';
     _main_screen($request, $company->save);
