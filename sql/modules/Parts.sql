@@ -15,4 +15,19 @@ SELECT *
 ORDER BY partnumber;
 $$ LANGUAGE SQL;
 
+CREATE OR REPLACE FUNCTION parts__get_by_id(in_id int) RETURNS parts AS
+$$
+SELECT * FROM parts WHERE id = $1;
+$$ LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION parts__get_by_partnumber(in_partnumber text)
+RETURNS parts LANGUAGE SQL AS $$
+SELECT * FROM PARTS WHERE partnumber = $1 and obsolete is not true; 
+$$;
+
+CREATE OR REPLACE FUNCTION pricegroups__list() RETURNS SETOF pricegroup
+LANGUAGE SQL AS $$
+SELECT * FROM pricegroup;
+$$;
+
 COMMIT;

@@ -130,7 +130,7 @@ sub _main_screen {
     # DIVS contents
     my $entity_id = $company->{entity_id};
     $entity_id ||= $person->{entity_id};
-    my @pricegroups = $company->call_procedure(
+    my @pricegroups = $request->call_procedure(
         procname => 'pricegroups__list'
     );
     my @credit_list = 
