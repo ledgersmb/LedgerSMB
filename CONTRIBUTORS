@@ -7,12 +7,12 @@ Chris Travers <chris @ metatrontech.com>
 Wrote the inventory activity report, helped with the session handling fix, 
 and other tasks.
 
-Joshua Drake <jd @ commandprompt . com>
-Contributed database fixes, the contact/company/entity schema, and other 
-db-centric changes.
-
 Erik Huelsmann <ehuels @ gmail.com> has provided numerous bugfixes and guidance for the
 project.
+
+Havard Sorli <havard @ anix no>
+Contributed documentation fixes, bug hunting, website updates and user support.
+
 
 Other Committers:
 ==================
@@ -30,8 +30,10 @@ Contributed code fixes and support for advanced tax rules.  She has also
 re-engineered the localization framework.  She has also provided support for 
 Excel, ODS, and other formats for reports.
 
-Havard Sorli <havard @ anix no>
-Contributed documentation fixes, bug hunting, website updates and user support.
+Joshua Drake <jd @ commandprompt . com>
+Contributed database fixes, the contact/company/entity schema, and other 
+db-centric changes.
+
 
 Other Contributors:
 ========================
