@@ -70,12 +70,15 @@ sub preprocess {
 			# Scalars or GMP objects (which are SCALAR refs) --CT
 		if ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
 			$vars = $$rawvars;
+			return unless defined $vars;
 		} else {
 			$vars = $rawvars;
 		}
 		$vars =~ s/(^ +| +$)//g;
 		$vars =~ s/"/""/g;
 		$vars = qq|"$vars"| if $vars =~ /[^0-9.+-]/;
+	} elsif ( $type eq 'CODE' ) { # a code reference makes no sense
+		return undef;
 	} else { # hashes and objects
 		for ( keys %{$rawvars} ) {
 			$vars->{$_} = preprocess( $rawvars->{$_} );
