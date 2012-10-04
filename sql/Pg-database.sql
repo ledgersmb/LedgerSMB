@@ -1062,6 +1062,7 @@ insert into batch_class (id,class) values (3,'payment');
 insert into batch_class (id,class) values (4,'payment_reversal');
 insert into batch_class (id,class) values (5,'gl');
 insert into batch_class (id,class) values (6,'receipt');
+insert into batch_class (id,class) values (7,'receipt_reversal');
 
 SELECT SETVAL('batch_class_id_seq',6);
 

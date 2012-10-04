@@ -474,3 +474,10 @@ BEGIN;
 create index ac_transdate_year_idx on acc_trans(EXTRACT ('YEAR' FROM transdate));
 
 COMMIT;
+
+BEGIN;
+-- RECEIPT REVERSAL broken:
+
+insert into batch_class (id,class) values (7,'receipt_reversal');
+
+COMMIT;
