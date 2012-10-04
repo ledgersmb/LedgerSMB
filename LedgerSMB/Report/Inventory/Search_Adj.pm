@@ -64,7 +64,7 @@ has source => (is => 'ro', isa => 'Maybe[Str]');
 
 =cut
 
-sub name { return text('Inventory Adjustments') };
+sub name { return LedgerSMB::Report::text('Inventory Adjustments') };
 
 =item header_lines
 
@@ -72,13 +72,13 @@ sub name { return text('Inventory Adjustments') };
 
 sub header_lines {
     return [{name => 'from_date',
-             text => text('Start Date') },
+             text => LedgerSMB::Report::text('Start Date') },
             {name => 'to_date',
-             text => text('End Date') },
+             text => LedgerSMB::Report::text('End Date') },
             {name => 'partnumber',
-             text => text('Including partnumber') },
+             text => LedgerSMB::Report::text('Including partnumber') },
             {name => 'source',
-             text => text('Source starting with') },
+             text => LedgerSMB::Report::text('Source starting with') },
            ];
 }
 
@@ -90,18 +90,18 @@ sub columns {
     return [{col_id => 'transdate',
                type => 'href',
           href_base => 'inv_reports.pl?action=adj_detail&id=',
-               name => text('Date')},
+               name => LedgerSMB::Report::text('Date')},
             {col_id => 'source',
                type => 'href',
           href_base => 'inv_reports.pl?action=adj_detail&id=',
-               name => text('Reference')},
+               name => LedgerSMB::Report::text('Reference')},
             {col_id => 'ar_invnumber',
                type => 'href',
-               name => text('AR Invoice'),
+               name => LedgerSMB::Report::text('AR Invoice'),
           href_base => 'is.pl?action=edit&id='},
             {col_id => 'ap_invnumber',
                type => 'href',
-               name => text('AP Invoice'),
+               name => LedgerSMB::Report::text('AP Invoice'),
           href_base => 'ir.pl?action=edit&id='},
       ];
 }

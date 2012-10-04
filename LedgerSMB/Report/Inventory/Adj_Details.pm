@@ -56,14 +56,14 @@ has source => (is => 'ro', isa => 'Maybe[Str]');
 
 =cut
 
-sub name { return text('Inventory Adjustment Details') }
+sub name { return LedgerSMB::Report::text('Inventory Adjustment Details') }
 
 =item header_lines
 
 =cut
 
 sub header_lines {
-    return [{name => 'source', text => text('Source') }];
+    return [{name => 'source', text => LedgerSMB::Report::text('Source') }];
 }
 
 =item columns
@@ -75,19 +75,19 @@ sub columns {
       {col_id => 'partnumber',
          type => 'href',
     href_base => 'ic.pl?action=edit&id='.
-         name => text('Part Number') },
+         name => LedgerSMB::Report::text('Part Number') },
       {col_id => 'description',
          type => 'text',
-         name => text('Description') },
+         name => LedgerSMB::Report::text('Description') },
       {col_id => 'counted',
          type => 'text',
-         name => text('Counted') },
+         name => LedgerSMB::Report::text('Counted') },
       {col_id => 'expected',
          type => 'text',
-         name => text('Expected') },
+         name => LedgerSMB::Report::text('Expected') },
       {col_id => 'variance',
          type => 'text',
-         name => text('Variance') },
+         name => LedgerSMB::Report::text('Variance') },
     ];
 }
 

@@ -64,7 +64,7 @@ has 'to_date' => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =cut
 
-sub name { return text('Margin Report for Customer'); }
+sub name { return LedgerSMB::Report::text('Margin Report for Customer'); }
 
 =item columns
 
@@ -80,7 +80,7 @@ sub columns {  return [] }
 
 sub header_lines {
     return [{ name => 'meta_number', 
-              text => text('Customer Number')}
+              text => LedgerSMB::Report::text('Customer Number')}
           ];
 }
 

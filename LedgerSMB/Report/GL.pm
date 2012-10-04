@@ -79,90 +79,90 @@ sub columns {
 
     my @COLS = (
     {col_id => 'id',
-       name => text('ID'),
+       name => LedgerSMB::Report::text('ID'),
        type => 'text',
      pwidth => 1, },
 
     {col_id => 'transdate',
-       name => text('Date'),
+       name => LedgerSMB::Report::text('Date'),
        type => 'text',
      pwidth => '4', },
 
     {col_id => 'reference',
-       name => text('Reference'),
+       name => LedgerSMB::Report::text('Reference'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
 
     {col_id => 'description',
-       name => text('Description'),
+       name => LedgerSMB::Report::text('Description'),
        type => 'text',
      pwidth => '6', },
 
     {col_id => 'entry_id',
-       name => text('Entry ID'),
+       name => LedgerSMB::Report::text('Entry ID'),
        type => 'text',
      pwidth => '1', },
 
     {col_id => 'debits',
-       name => text('Debits'),
+       name => LedgerSMB::Report::text('Debits'),
        type => 'text',
      pwidth => '2', },
 
     {col_id => 'credits',
-       name => text('Credits'),
+       name => LedgerSMB::Report::text('Credits'),
        type => 'text',
      pwidth => '2', },
 
     {col_id => 'source',
-       name => text('Source'),
+       name => LedgerSMB::Report::text('Source'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'memo',
-       name => text('Memo'),
+       name => LedgerSMB::Report::text('Memo'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'cleared',
-       name => text('Cleared'),
+       name => LedgerSMB::Report::text('Cleared'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'till',
-       name => text('Till'),
+       name => LedgerSMB::Report::text('Till'),
        type => 'text',
      pwidth => '1', },
 
     {col_id => 'chart_id',
-       name => text('Chart ID'),
+       name => LedgerSMB::Report::text('Chart ID'),
        type => 'text',
      pwidth => '1', },
 
     {col_id => 'accno',
-       name => text('Account No.'),
+       name => LedgerSMB::Report::text('Account No.'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'accname',
-       name => text('Account Name'),
+       name => LedgerSMB::Report::text('Account Name'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'gifi_accno',
-       name => text('GIFI'),
+       name => LedgerSMB::Report::text('GIFI'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'running_balance',
-       name => text('Balance'),
+       name => LedgerSMB::Report::text('Balance'),
        type => 'text',
      pwidth => '3', },
     );
     my @bclasses = LedgerSMB::DBObject::Business_Unit_Class->list('1', 'gl');
     for my $class (@bclasses){
         push @COLS, {col_id =>  "bc_" . $class->id,
-                       name => text($class->label),
+                       name => LedgerSMB::Report::text($class->label),
                        type => 'text',
                      pwidth => '2'};
     }
@@ -186,7 +186,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return text('General Ledger Report');
+    return LedgerSMB::Report::text('General Ledger Report');
 }
 
 =item header_lines
@@ -197,15 +197,15 @@ Returns the inputs to display on header.
 
 sub header_lines {
     return [{name => 'from_date',
-             text => text('Start Date')},
+             text => LedgerSMB::Report::text('Start Date')},
             {name => 'to_date',
-             text => text('End Date')},
+             text => LedgerSMB::Report::text('End Date')},
             {name => 'accno',
-             text => text('Account Number')},
+             text => LedgerSMB::Report::text('Account Number')},
             {name => 'reference',
-             text => text('Reference')},
+             text => LedgerSMB::Report::text('Reference')},
             {name => 'source',
-             text => text('Source')}];
+             text => LedgerSMB::Report::text('Source')}];
 }
 
 =item subtotal_cols

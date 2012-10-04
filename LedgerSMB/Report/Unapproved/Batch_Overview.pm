@@ -83,33 +83,33 @@ our @COLUMNS = (
        type => 'checkbox' },
 
     {col_id => 'id',
-       name => text('ID'),
+       name => LedgerSMB::Report::text('ID'),
        type => 'text',
      pwidth => 1, },
 
     {col_id => 'default_date',
-       name => text('Date'),
+       name => LedgerSMB::Report::text('Date'),
        type => 'text',
      pwidth => '4', },
 
     {col_id => 'control_code',
-       name => text('Control Code'),
+       name => LedgerSMB::Report::text('Control Code'),
        type => 'href',
   href_base => 'vouchers.pl?action=get_batch&id=',
      pwidth => '3', },
 
     {col_id => 'description',
-       name => text('Description'),
+       name => LedgerSMB::Report::text('Description'),
        type => 'text',
      pwidth => '6', },
 
     {col_id => 'transaction_total',
-       name => text('AR/AP/GL Amount'),
+       name => LedgerSMB::Report::text('AR/AP/GL Amount'),
        type => 'text',
      pwidth => '2', },
 
     {col_id => 'payment_total',
-       name => text('Payment Amount'),
+       name => LedgerSMB::Report::text('Payment Amount'),
        type => 'text',
      pwidth => '2', },
 
@@ -128,7 +128,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return text('Batch Search');
+    return LedgerSMB::Report::text('Batch Search');
 }
 
 =item header_lines
@@ -139,13 +139,13 @@ Returns the inputs to display on header.
 
 sub header_lines {
     return [{name => 'type',
-             text => text('Batch Type')},
+             text => LedgerSMB::Report::text('Batch Type')},
             {name => 'reference',
-             text => text('Reference')},
+             text => LedgerSMB::Report::text('Reference')},
             {name => 'amount_gt',
-             text => text('Amount Greater Than')},
+             text => LedgerSMB::Report::text('Amount Greater Than')},
             {name => 'amount_lt',
-             text => text('Amount Less Than')}, ]
+             text => LedgerSMB::Report::text('Amount Less Than')}, ]
 }
 
 =item subtotal_cols
@@ -159,7 +159,7 @@ sub subtotal_cols {
 }
 
 sub text {
-    return LedgerSMB::Report::text(@_);
+    return LedgerSMB::Report::LedgerSMB::Report::text(@_);
 }
 
 =back
@@ -219,13 +219,13 @@ sub run_report{
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',
-                    text  => text('Post'),
+                    text  => LedgerSMB::Report::text('Post'),
                     value => 'batch_approve',
                     class => 'submit',
                  },{
                     name  => 'action',
                     type  => 'submit',
-                    text  => text('Delete'),
+                    text  => LedgerSMB::Report::text('Delete'),
                     value => 'batch_delete',
                     class => 'submit',
                 }]);

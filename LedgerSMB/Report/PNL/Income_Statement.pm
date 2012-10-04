@@ -51,7 +51,7 @@ sub template { return 'PNL' }
 
 =cut
 
-sub name { return text('Income Statement') }
+sub name { return LedgerSMB::Report::text('Income Statement') }
 
 =item header_lines
 
@@ -59,7 +59,7 @@ sub name { return text('Income Statement') }
 
 sub header_lines {
     return [{name => 'basis',
-            text => text('Reporting Basis') }];
+            text => LedgerSMB::Report::text('Reporting Basis') }];
 }
 
 =item columns
@@ -81,7 +81,7 @@ sub columns { return $_[0]->_cols  }
 
 sub report_base {
     my ($self, $from_date, $to_date) = @_;
-    die text('Invalid Reporting Basis') 
+    die LedgerSMB::Report::text('Invalid Reporting Basis') 
            if ($self->basis ne 'accrual') and ($self->basis ne 'cash');
     my $procname = 'pnl__income_statement_' . $self->basis;
     return $self->call_procedure(

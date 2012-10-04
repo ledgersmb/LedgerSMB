@@ -61,32 +61,32 @@ sub columns {
 
     my @COLS = (
     {col_id => 'accno',
-       name => text('Account'),
+       name => LedgerSMB::Report::text('Account'),
        type => 'href',
      pwidth => 3,
   href_base => '', },
 
     {col_id => 'description',
-       name => text('Description'),
+       name => LedgerSMB::Report::text('Description'),
        type => 'text',
      pwidth => '12', },
 
     {col_id => 'starting_balance',
-       name => text('Starting Balance'),
+       name => LedgerSMB::Report::text('Starting Balance'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'debits',
-       name => text('Debit'),
+       name => LedgerSMB::Report::text('Debit'),
        type => 'text',
      pwidth => '4', },
 
     {col_id => 'credits',
-       name => text('Credit'),
+       name => LedgerSMB::Report::text('Credit'),
        type => 'text',
      pwidth => '4', },
     {col_id => 'ending_balance',
-       name => text('Balance'),
+       name => LedgerSMB::Report::text('Balance'),
        type => 'text',
      pwidth => '3', },
 
@@ -111,7 +111,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return text('Balance y Mayor');
+    return LedgerSMB::Report::text('Balance y Mayor');
 }
 
 =item header_lines
@@ -122,9 +122,9 @@ Returns the inputs to display on header.
 
 sub header_lines {
     return [{name => 'date_from',
-             text => text('Start Date')},
+             text => LedgerSMB::Report::text('Start Date')},
             {name => 'date_to',
-             text =>  text('End Date')},]
+             text =>  LedgerSMB::Report::text('End Date')},]
 }
 
 =back

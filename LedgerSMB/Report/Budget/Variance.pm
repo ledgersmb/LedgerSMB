@@ -63,27 +63,27 @@ sub columns {
    return [
       {col_id => 'budget_description', 
          type => 'text', 
-         name => text('Description')},
+         name => LedgerSMB::Report::text('Description')},
 
       {col_id => 'accno', 
          type => 'text', 
-         name => text('Account Number')},
+         name => LedgerSMB::Report::text('Account Number')},
 
       {col_id => 'account_label', 
          type => 'text', 
-         name => text('Account Label')},
+         name => LedgerSMB::Report::text('Account Label')},
 
       {col_id => 'budget_amount', 
          type => 'text', 
-         name => text('Amount Budgetted')},
+         name => LedgerSMB::Report::text('Amount Budgetted')},
 
       {col_id => 'used_amount', 
          type => 'text', 
-         name => '- ' . text('Used')},
+         name => '- ' . LedgerSMB::Report::text('Used')},
 
       {col_id => 'variance', 
          type => 'text', 
-         name => '= ' . text('Variance')},
+         name => '= ' . LedgerSMB::Report::text('Variance')},
    ];
 }
 
@@ -94,7 +94,7 @@ Returns name of report
 =cut
 
 sub name {
-    return text('Budget Variance Report');
+    return LedgerSMB::Report::text('Budget Variance Report');
 }
 
 =item header_lines
@@ -105,13 +105,13 @@ Returns the inputs to display on header.
 
 sub header_lines {
     return [{name => 'reference',
-             text => text('Budget Number')},
+             text => LedgerSMB::Report::text('Budget Number')},
             {name => 'description',
-             text => text('Description')},
+             text => LedgerSMB::Report::text('Description')},
             {name => 'start_date',
-             text => text('Start Date')},
+             text => LedgerSMB::Report::text('Start Date')},
             {name => 'end_date',
-             text => text('End Date')},];
+             text => LedgerSMB::Report::text('End Date')},];
 }
 
 =back

@@ -112,7 +112,7 @@ methods.
 =cut
 
 sub name {
-    return text('Trial Balance');
+    return LedgerSMB::Report::text('Trial Balance');
 };
 
 =item columns
@@ -124,33 +124,33 @@ sub columns {
       {col_id => 'account_number',
          type => 'href',
     href_base => 'journal.pl?action=search&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
-         name => text('Account Number') },
+         name => LedgerSMB::Report::text('Account Number') },
 
       {col_id => 'account_desc',
          type => 'href',
     href_base => 'journal.pl?action=search&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
-         name => text('Account Description') },
+         name => LedgerSMB::Report::text('Account Description') },
 
       {col_id => 'gifi_accno',
          type => 'href',
     href_base => 'journal.pl?action=search&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
-         name => text('GIFI') } ,
+         name => LedgerSMB::Report::text('GIFI') } ,
 
       {col_id => 'starting_balance',
          type => 'text',
-         name => text('Starting Balance') } ,
+         name => LedgerSMB::Report::text('Starting Balance') } ,
 
       {col_id => 'debits',
          type => 'text',
-         name => text('Debits') } ,
+         name => LedgerSMB::Report::text('Debits') } ,
 
       {col_id => 'credits',
          type => 'text',
-         name => text('Credits') } ,
+         name => LedgerSMB::Report::text('Credits') } ,
 
       {col_id => 'ending_balance',
          type => 'text',
-         name => text('Ending Balance') } ,
+         name => LedgerSMB::Report::text('Ending Balance') } ,
 
     ];
 }
@@ -161,11 +161,11 @@ sub columns {
 
 sub header_lines {
     return [{name => 'date_from',
-             text => text('From date') },
+             text => LedgerSMB::Report::text('From date') },
             {name => 'date_to',
-             text => text('To Date') },
+             text => LedgerSMB::Report::text('To Date') },
             {name => 'yearend',
-             text => text('Ignore Yearends') },
+             text => LedgerSMB::Report::text('Ignore Yearends') },
             ];
 }
 

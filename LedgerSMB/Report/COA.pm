@@ -82,45 +82,45 @@ admin users.
 
 our @COLUMNS = (
     {col_id => 'accno',
-       name => text('Account Number'),
+       name => LedgerSMB::Report::text('Account Number'),
        type => 'href',
    href_base => '',
      pwidth => '2', },
 
     {col_id => 'description',
-       name => text('Description'),
+       name => LedgerSMB::Report::text('Description'),
        type => 'href',
   href_base => '',
      pwidth => '6', },
 
     {col_id => 'gifi_accno',
-       name => text('GIFI'),
+       name => LedgerSMB::Report::text('GIFI'),
        type => 'text',
      pwidth => '1', },
 
     {col_id => 'debit_balance',
-       name => text('Debits'),
+       name => LedgerSMB::Report::text('Debits'),
        type => 'text',
      pwidth => '2', },
 
     {col_id => 'credit_balance',
-       name => text('Credits'),
+       name => LedgerSMB::Report::text('Credits'),
        type => 'text',
      pwidth => '2', },
 
     {col_id => 'link',
-       name => text('Dropdowns'),
+       name => LedgerSMB::Report::text('Dropdowns'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'edit',
-       name => text('Edit'),
+       name => LedgerSMB::Report::text('Edit'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
 
     {col_id => 'delete',
-       name => text('Delete'),
+       name => LedgerSMB::Report::text('Delete'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
@@ -138,7 +138,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return text('Chart of Accounts');
+    return LedgerSMB::Report::text('Chart of Accounts');
 }
 
 =item header_lines
@@ -187,8 +187,8 @@ sub run_report{
         } else {
            $ct = 'A';
         }
-        $r->{edit} = '['.text('Edit').']';
-        $r->{delete} = '['.text('Delete').']' 
+        $r->{edit} = '['.LedgerSMB::Report::text('Edit').']';
+        $r->{delete} = '['.LedgerSMB::Report::text('Delete').']' 
                   if !$r->{rowcount} and !$r->{is_heading};
         $r->{edit_href_suffix} = 'account.pl?action=edit&id='.$r->{id} . 
            "&charttype=$ct";

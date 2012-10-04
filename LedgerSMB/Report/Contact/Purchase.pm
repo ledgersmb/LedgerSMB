@@ -52,63 +52,63 @@ sub columns {
 
          {col_id => 'id',
             type => 'text',
-            name => text('ID') },
+            name => LedgerSMB::Report::text('ID') },
          {col_id => 'entity_name',
             type => 'text',
-            name => text('Name') },
+            name => LedgerSMB::Report::text('Name') },
 
          {col_id => 'invnumber',
             type => 'href',
        href_base => '',
-            name => text('Invoice Number') },
+            name => LedgerSMB::Report::text('Invoice Number') },
 
          {col_id => 'ordnumber',
             type => 'text',
-            name => text('Order Number') },
+            name => LedgerSMB::Report::text('Order Number') },
 
          {col_id => 'ponumber',
             type => 'text',
-            name => text('PO Number') },
+            name => LedgerSMB::Report::text('PO Number') },
 
          {col_id => 'curr',
             type => 'text',
-            name => text('Currency') },
+            name => LedgerSMB::Report::text('Currency') },
         
          {col_id => 'amount',
             type => 'text',
-            name => text('Amount') },
+            name => LedgerSMB::Report::text('Amount') },
 
          {col_id => 'tax',
             type => 'text',
-            name => text('Tax') },
+            name => LedgerSMB::Report::text('Tax') },
 
          {col_id => 'paid',
             type => 'text',
-            name => text('Paid') },
+            name => LedgerSMB::Report::text('Paid') },
 
          {col_id => 'due',
             type => 'text',
-            name => text('Due') },
+            name => LedgerSMB::Report::text('Due') },
 
          {col_id => 'date_paid',
             type => 'text',
-            name => text('Date Paid') },
+            name => LedgerSMB::Report::text('Date Paid') },
 
          {col_id => 'due_date',
             type => 'text',
-            name => text('Due Date') },
+            name => LedgerSMB::Report::text('Due Date') },
 
          {col_id => 'notes',
             type => 'text',
-            name => text('Notes') },
+            name => LedgerSMB::Report::text('Notes') },
 
          {col_id => 'shipping_point',
             type => 'text',
-            name => text('Shipping Point') },
+            name => LedgerSMB::Report::text('Shipping Point') },
 
          {col_id => 'ship_via',
             type => 'text',
-            name => text('Ship Via') },
+            name => LedgerSMB::Report::text('Ship Via') },
     ];
 }
 
@@ -119,9 +119,9 @@ sub columns {
 sub name { 
    my ($self) = @_;
    if ($self->entity_class == 1){
-       return text('AP Transactions'); 
+       return LedgerSMB::Report::text('AP Transactions'); 
    } elsif ($self->entity_class == 2){
-       return text('AR Transactions');
+       return LedgerSMB::Report::text('AR Transactions');
    }
 }
 
@@ -132,9 +132,9 @@ sub name {
 sub header_lines {
      return [
             {name => 'name_part',
-             text => text('Name')},
+             text => LedgerSMB::Report::text('Name')},
             {name => 'meta_number',
-             text => text('Account Number')}
+             text => LedgerSMB::Report::text('Account Number')}
        ]; 
 }
 

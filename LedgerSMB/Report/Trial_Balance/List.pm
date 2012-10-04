@@ -32,7 +32,7 @@ None used
 
 =cut
 
-sub name { return $locale->text('Trial Balance List') }
+sub name { return $locale->LedgerSMB::Report::text('Trial Balance List') }
 
 =item header_lines
 
@@ -48,16 +48,16 @@ sub columns {
     return [{ col_id => 'description',
                 type => 'href',
            href_base => 'trial_balance.pl?action=get&id=',
-                name => $locale->text('Description') },
+                name => $locale->LedgerSMB::Report::text('Description') },
             { col_id => 'date_from',
                 type => 'text',
-                name => $locale->text('Start Date') },
+                name => $locale->LedgerSMB::Report::text('Start Date') },
             { col_id => 'date_to',
                 type => 'text',
-                name => $locale->text('End Date') },
+                name => $locale->LedgerSMB::Report::text('End Date') },
             { col_id => 'yearend',
                 type => 'text',
-                name => $locale->text('Ignore Yearends') },
+                name => $locale->LedgerSMB::Report::text('Ignore Yearends') },
            ];
 }
 

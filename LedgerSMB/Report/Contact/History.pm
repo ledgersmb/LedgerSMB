@@ -49,60 +49,60 @@ sub columns {
     return [
          {col_id => 'name',
             type => 'text',
-            name => text('Name') },
+            name => LedgerSMB::Report::text('Name') },
 
          {col_id => 'meta_number',
             type => 'text',
-            name => text('Account Number') },
+            name => LedgerSMB::Report::text('Account Number') },
 
          {col_id => 'invnumber',
             type => 'href',
        href_base => 'is.pl?action=edit&id=',
-            name => text('Invoice Number') },
+            name => LedgerSMB::Report::text('Invoice Number') },
 
          {col_id => 'curr',
             type => 'text',
-            name => text('Currency') },
+            name => LedgerSMB::Report::text('Currency') },
 
          {col_id => 'partnumber',
             type => 'text',
-            name => text('Part Number') },
+            name => LedgerSMB::Report::text('Part Number') },
 
          {col_id => 'description',
             type => 'text',
-            name => text('Description') },
+            name => LedgerSMB::Report::text('Description') },
 
          {col_id => 'qty',
             type => 'text',
-            name => text('Qty') },
+            name => LedgerSMB::Report::text('Qty') },
 
          {col_id => 'unit',
             type => 'text',
-            name => text('Unit') },
+            name => LedgerSMB::Report::text('Unit') },
 
          {col_id => 'sellprice',
             type => 'text',
-            name => text('Sell Price') },
+            name => LedgerSMB::Report::text('Sell Price') },
 
          {col_id => 'discount',
             type => 'text',
-            name => text('Disc') },
+            name => LedgerSMB::Report::text('Disc') },
 
          {col_id => 'delivery_date',
             type => 'text',
-            name => text('Delivery Date') },
+            name => LedgerSMB::Report::text('Delivery Date') },
 
          {col_id => 'serialnumber',
             type => 'text',
-            name => text('Serial Number') },
+            name => LedgerSMB::Report::text('Serial Number') },
 
          {col_id => 'exchangerate',
             type => 'text',
-            name => text('Exchange Rate') },
+            name => LedgerSMB::Report::text('Exchange Rate') },
 
          {col_id => 'salesperson_name',
             type => 'text',
-            name => text('Salesperson') },
+            name => LedgerSMB::Report::text('Salesperson') },
 
     ];
 }
@@ -111,7 +111,7 @@ sub columns {
 
 =cut
 
-sub name { return text('Purchase History') }
+sub name { return LedgerSMB::Report::text('Purchase History') }
 
 =item header_lines
 
@@ -120,15 +120,15 @@ sub name { return text('Purchase History') }
 sub header_lines {
      return [
             {name => 'name',
-             text => text('Name')},
+             text => LedgerSMB::Report::text('Name')},
       
             {name => 'meta_number',
-             text => text('Account Number')},
+             text => LedgerSMB::Report::text('Account Number')},
             {name => 'from_date',
-             text => text('Start Date')},
+             text => LedgerSMB::Report::text('Start Date')},
 
             {name => 'to_date',
-             text => text('End Date')},
+             text => LedgerSMB::Report::text('End Date')},
 
       
       ];

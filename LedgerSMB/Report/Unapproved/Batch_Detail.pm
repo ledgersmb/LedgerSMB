@@ -87,33 +87,33 @@ sub columns {
        type => 'checkbox' },
 
     {col_id => 'id',
-       name => text('ID'),
+       name => LedgerSMB::Report::text('ID'),
        type => 'text',
      pwidth => 1, },
 
     {col_id => 'batch_class',
-       name => text('Batch Class'),
+       name => LedgerSMB::Report::text('Batch Class'),
        type => 'text', 
      pwidth => 2, },
 
     {col_id => 'default_date',
-       name => text('Date'),
+       name => LedgerSMB::Report::text('Date'),
        type => 'text',
      pwidth => '4', },
 
     {col_id => 'Reference',
-       name => text('Reference'),
+       name => LedgerSMB::Report::text('Reference'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
 
     {col_id => 'description',
-       name => text('Description'),
+       name => LedgerSMB::Report::text('Description'),
        type => 'text',
      pwidth => '6', },
 
     {col_id => 'amount',
-       name => text('Amount'),
+       name => LedgerSMB::Report::text('Amount'),
        type => 'text',
      pwidth => '2', },
     ];
@@ -128,7 +128,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return text('Voucher List');
+    return LedgerSMB::Report::text('Voucher List');
 }
 
 =item header_lines
@@ -139,7 +139,7 @@ Returns the inputs to display on header.
 
 sub header_lines {
     return [{name => 'batch_id',
-             text => text('Batch ID')}, ]
+             text => LedgerSMB::Report::text('Batch ID')}, ]
 }
 
 =item subtotal_cols
@@ -185,19 +185,19 @@ sub run_report{
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',
-                    text  => text('Post Batch'),
+                    text  => LedgerSMB::Report::text('Post Batch'),
                     value => 'batch_approve',
                     class => 'submit',
                  },{
                     name  => 'action',
                     type  => 'submit',
-                    text  => text('Delete Batch'),
+                    text  => LedgerSMB::Report::text('Delete Batch'),
                     value => 'batch_delete',
                     class => 'submit',
                  },{
                     name  => 'action',
                     type  => 'submit',
-                    text  => text('Delete Vouchers'),
+                    text  => LedgerSMB::Report::text('Delete Vouchers'),
                     value => 'vouchers_delete',
                     class => 'submit',
                 }]);

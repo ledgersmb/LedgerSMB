@@ -65,34 +65,34 @@ sub columns {
    return [ {col_id => 'start_date',
                type => 'href',
           href_base => 'budget_reports.pl?action=variance_report&id=',
-               name => text('Start Date') },
+               name => LedgerSMB::Report::text('Start Date') },
 
             {col_id => 'end_date', 
                type => 'href',
           href_base => 'budget_reports.pl?action=variance_report&id=',
-               name => text('End Date') },
+               name => LedgerSMB::Report::text('End Date') },
 
             {col_id => 'reference', 
                type => 'href',
           href_base => 'budgets.pl?action=view_budget&id=',
-               name => text('Reference') },
+               name => LedgerSMB::Report::text('Reference') },
 
             {col_id => 'description', 
                type => 'href',
           href_base => 'budgets.pl?action=view_budget&id=',
-               name => text('Description') },
+               name => LedgerSMB::Report::text('Description') },
 
             {col_id => 'entered_by_name', 
                type => 'text',
-               name => text('Entered By') },
+               name => LedgerSMB::Report::text('Entered By') },
 
             {col_id => 'approved_by_name', 
                type => 'text',
-               name => text('Approved By') },
+               name => LedgerSMB::Report::text('Approved By') },
 
             {col_id => 'obsolete_by_name', 
                type => 'text',
-               name => text('Obsolete By') },
+               name => LedgerSMB::Report::text('Obsolete By') },
    ];
 }
 
@@ -104,7 +104,7 @@ Returns the localized name of the template
 =cut
 
 sub name {
-   return text('Budget Search Results');
+   return LedgerSMB::Report::text('Budget Search Results');
 }
 
 =item header_lines
@@ -115,15 +115,15 @@ Returns the inputs to display on header.
 
 sub header_lines {
     return [{name => 'date_from',
-             text => text('Start Date')},
+             text => LedgerSMB::Report::text('Start Date')},
             {name => 'date_to',
-             text => text('End Date')},
+             text => LedgerSMB::Report::text('End Date')},
             {name => 'accno',
-             text => text('Account Number')},
+             text => LedgerSMB::Report::text('Account Number')},
             {name => 'reference',
-             text => text('Reference')},
+             text => LedgerSMB::Report::text('Reference')},
             {name => 'source',
-             text => text('Source')}];
+             text => LedgerSMB::Report::text('Source')}];
 }
 
 =back

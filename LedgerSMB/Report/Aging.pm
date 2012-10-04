@@ -75,9 +75,9 @@ sub columns {
     our @COLUMNS = ();
     my $credit_label;
     if ($self->entity_class == 1) {
-        $credit_label = text('Vendor');
+        $credit_label = LedgerSMB::Report::text('Vendor');
     } elsif ($self->entity_class == 2){
-        $credit_label = text('Customer');
+        $credit_label = LedgerSMB::Report::text('Customer');
     }
     push @COLUMNS,
       {col_id => 'select',
@@ -89,57 +89,57 @@ sub columns {
        pwidth => 1, },
 
       {col_id => 'language',
-         name => text('Language'),
+         name => LedgerSMB::Report::text('Language'),
          type => 'select',
        pwidth => '0', };
 
    if ($self->report_type eq 'detail'){
      push @COLUMNS,
           {col_id => 'invnumber',
-             name => text('Invoice'),
+             name => LedgerSMB::Report::text('Invoice'),
              type => 'href',
         href_base => '',
            pwidth => '3', },
 
           {col_id => 'ordnumber',
-             name => text('Description'),
+             name => LedgerSMB::Report::text('Description'),
              type => 'text',
            pwidth => '6', },
 
           {col_id => 'transdate',
-             name => text('Date'),
+             name => LedgerSMB::Report::text('Date'),
              type => 'text',
            pwidth => '1', },
 
           {col_id => 'duedate',
-             name => text('Due Date'),
+             name => LedgerSMB::Report::text('Due Date'),
              type => 'text',
            pwidth => '2', };
     }
 
     push @COLUMNS,
     {col_id => 'c0',
-       name => text('Current'),
+       name => LedgerSMB::Report::text('Current'),
        type => 'text',
      pwidth => '2', },
 
     {col_id => 'c30',
-       name => text('30'),
+       name => LedgerSMB::Report::text('30'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'c60',
-       name => text('60'),
+       name => LedgerSMB::Report::text('60'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'c90',
-       name => text('90'),
+       name => LedgerSMB::Report::text('90'),
        type => 'text',
      pwidth => '3', },
 
     {col_id => 'total',
-       name => text('Total'),
+       name => LedgerSMB::Report::text('Total'),
        type => 'text',
      pwidth => '1', };
     return \@COLUMNS;
@@ -164,7 +164,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return text('Aging Report');
+    return LedgerSMB::Report::text('Aging Report');
 }
 
 =item template

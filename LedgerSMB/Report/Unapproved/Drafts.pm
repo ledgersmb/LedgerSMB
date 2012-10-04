@@ -76,28 +76,28 @@ sub columns {
        type => 'checkbox' },
 
     {col_id => 'id',
-       name => text('ID'),
+       name => LedgerSMB::Report::text('ID'),
        type => 'text',
      pwidth => 1, },
 
     {col_id => 'transdate',
-       name => text('Date'),
+       name => LedgerSMB::Report::text('Date'),
        type => 'text',
      pwidth => '4', },
 
     {col_id => 'reference',
-       name => text('Reference'),
+       name => LedgerSMB::Report::text('Reference'),
        type => 'href',
   href_base => '',
      pwidth => '3', },
 
     {col_id => 'description',
-       name => text('Description'),
+       name => LedgerSMB::Report::text('Description'),
        type => 'text',
      pwidth => '6', },
 
     {col_id => 'amount',
-       name => text('AR/AP/GL Amount'),
+       name => LedgerSMB::Report::text('AR/AP/GL Amount'),
        type => 'text',
      pwidth => '2', },
     ];
@@ -112,7 +112,7 @@ Returns the localized template name
 =cut
 
 sub name {
-    return text('Draft Search');
+    return LedgerSMB::Report::text('Draft Search');
 }
 
 =item header_lines
@@ -123,13 +123,13 @@ Returns the inputs to display on header.
 
 sub header_lines {
     return [{name => 'type',
-             text => text('Draft Type')},
+             text => LedgerSMB::Report::text('Draft Type')},
             {name => 'reference',
-             text => text('Reference')},
+             text => LedgerSMB::Report::text('Reference')},
             {name => 'amount_gt',
-             text => text('Amount Greater Than')},
+             text => LedgerSMB::Report::text('Amount Greater Than')},
             {name => 'amount_lt',
-             text => text('Amount Less Than')}, ]
+             text => LedgerSMB::Report::text('Amount Less Than')}, ]
 }
 
 =item subtotal_cols

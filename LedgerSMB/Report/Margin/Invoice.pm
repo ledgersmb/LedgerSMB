@@ -50,7 +50,7 @@ has invnumber => (is => 'ro', isa => 'Maybe[Str]');
 
 =cut
 
-sub name { return text('Margin Report for Invoice') };
+sub name { return LedgerSMB::Report::text('Margin Report for Invoice') };
 
 =item columns
 
@@ -66,7 +66,7 @@ sub columns { return [] }
 
 sub header_lines {
     return [{ name => 'invnumber',
-              text => text('Invoice Number')}
+              text => LedgerSMB::Report::text('Invoice Number')}
           ];
 }
 

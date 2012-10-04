@@ -27,14 +27,14 @@ This module provides for searching for deduction types.
 sub columns {
     return [
         { col_id => 'country_name',
-            name => text('Country'),
+            name => LedgerSMB::Report::text('Country'),
             type => 'text',
         },
         { col_id => 'deduction_class',
-            name => text('Deduction Class'),
+            name => LedgerSMB::Report::text('Deduction Class'),
             type => 'text' },
         { col_id => 'label',
-            name => text('Label'),
+            name => LedgerSMB::Report::text('Label'),
             type => 'href',
        href_base => 'payrol.pl?action=edit&id=' },
     ];
@@ -52,7 +52,7 @@ sub header_lines {
 
 =cut
 
-sub name { return text('Deduction Types') }
+sub name { return LedgerSMB::Report::text('Deduction Types') }
 
 =back
 
