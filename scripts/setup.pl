@@ -223,6 +223,8 @@ sub run_backup {
         $request->error($request->{_locale}->text('Invalid backup request'));
     }
 
+    $backupfile or $request->error($request->{_locale}->text('Error creating backup file'));
+
     if ($request->{backup_type} eq 'email'){
         my $csettings = $LedgerSMB::Company_Config::settings;
 	my $mail = new LedgerSMB::Mailer(

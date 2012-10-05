@@ -89,6 +89,9 @@ users.
 The file is named roles_[date].sql by default where the date is in
 yyyy-mm-dd format.
 
+It returns the full path of the resulting backup file on success, or undef on 
+failure.
+
 =cut
 
 sub base_backup {
@@ -109,7 +112,12 @@ sub base_backup {
     my $backupfile = $LedgerSMB::Sysconfig::backuppath .
                      "/roles_${date}.sql";
 
-    system("pg_dumpall -r -f $backupfile");
+    my $exit_code = system("pg_dumpall -r -f $backupfile");
+
+    if($exit_code != 0) {
+        $backupfile = undef;
+        $logger->error("backup failed: non-zero exit code from pg_dumpall");
+    }
 
     $ENV{PGUSER} = $old_pguser;
     $ENV{PGPASSWORD} = $old_pgpass;
@@ -127,6 +135,9 @@ with the base_backup but not your database.
 
 The resulting file is named backup_[dbname]_[date].bak with the date in
 yyyy-mm-dd format.
+
+It returns the full path of the resulting backup file on success, or undef on 
+failure.
 
 =cut
 
@@ -148,7 +159,12 @@ sub db_backup {
     my $backupfile = $LedgerSMB::Sysconfig::backuppath .
                      "/backup_$self->{company_name}_${date}.bak";
 
-    system("pg_dump  -F c -f '$backupfile' '$self->{company_name}'");
+    my $exit_code = system("pg_dump  -F c -f '$backupfile' '$self->{company_name}'");
+
+    if($exit_code != 0) {
+        $backupfile = undef;
+        $logger->error("backup failed: non-zero exit code from pg_dump");
+    }
 
     $ENV{PGUSER} = $old_pguser;
     $ENV{PGPASSWORD} = $old_pgpass;
