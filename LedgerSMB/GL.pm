@@ -97,7 +97,6 @@ sub delete_transaction {
 sub post_transaction {
 
     my ( $self, $myconfig, $form, $locale) = @_;
-    $form->all_business_units;
     $form->{reference} = $form->update_defaults( $myconfig, 'glnumber', $dbh )
       unless $form->{reference};
     my $null;
@@ -196,10 +195,6 @@ sub post_transaction {
     my $debit;
     my $credit;
 
-    $b_sth = $dbh->prepare(
-            qq|INSERT INTO business_unit_ac (entry_id, class_id, bu_id) | . 
-            qq|VALUES (currval('acc_trans_entry_id_seq'), ?, ?)|
-    );
     # insert acc_trans transactions
     for $i ( 0 .. $form->{rowcount} ) {
 
@@ -249,12 +244,6 @@ sub post_transaction {
                 ($form->{"cleared_$i"} || 0)
             ) || $form->dberror($query);
 
-            for my $cls(@{$form->{bu_class}}){
-                if ($form->{"b_unit_$cls->{id}_$i"}){
-                    $b_sth->execute($cls->{id}, 
-                                     $form->{"b_unit_$cls->{id}_$i"});
-                }
-            }
             $posted = 1;
         }
     }
@@ -665,17 +654,7 @@ sub transaction {
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
-        my $bu_sth = $dbh->prepare(
-            qq|SELECT * FROM business_unit_ac 
-                WHERE entry_id = ?  |
-        );
-
         while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-            $bu_sth->execute($ref->{entry_id});
-            while ($buref = $bu_sth->fetchrow_hashref(NAME_lc) ) {
-                 $ref->{"b_unit_$buref->{class_id}"} = $buref->{bu_id};
-            }
-
 
             if ( $ref->{fx_transaction} ) {
                 $form->{transfer} = 1;

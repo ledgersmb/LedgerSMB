@@ -134,11 +134,6 @@
 	  <?lsmb IF form.projectset == 1 ?>
 	  <th class="listheading"><?lsmb text('Project') ?></th>
 	  <?lsmb END ?>
-          <?lsmb FOREACH cls IN form.bu_class ?>
-              <?lsmb IF form.b_units.${cls.id} ?>
-          <th><?lsmb text(cls.label) ?></th>
-               <?lsmb END ?>
-          <?lsmb END ?>
 	</tr>
 	<?lsmb FOREACH displayrow IN displayrows ?> 
 	<tr>
@@ -261,24 +256,6 @@
 			<?lsmb END ?>
 
 		   </td>
-                   <?lsmb END ?>
-                   <?lsmb FOREACH cls IN form.bu_class ?>
-                      <?lsmb IF form.b_units.${cls.id} ?>
-                   <td>
-                       
-                       <?lsmb clsid = cls.id;
-                              bucid = "b_unit_$clsid";
-                              burow = "${bucid}_$INDEX";
-                       form.b_units.${clsid}.unshift({});
-                       INCLUDE select element_data = {
-                              text_attr = "control_code"
-                             value_attr = "id"
-                         default_values = [displayrow.${bucid}]
-                                   name = "$burow"
-                                options = form.b_units.${clsid}
-                       } ?>
-                   </td>
-                   <?lsmb END ?>
 		  <?lsmb END ?>
 
         </tr>

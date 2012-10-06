@@ -179,7 +179,6 @@ sub add {
 sub display_form
 {
     #Add General Ledger Transaction
-    $form->all_business_units($form->{transdate}, undef, 'GL');
     $form->close_form;
     $form->open_form; 
     $form->{dbh}->commit;
@@ -406,11 +405,6 @@ sub display_row
 
 			      $temphash1->{debit}=$form->{"debit_$i"};
 			      $temphash1->{credit}=$form->{"credit_$i"};
-
-                              for my $cls(@{$form->{bu_class}}){
-                                  $temphash1->{"b_unit_$cls->{id}"} =
-                                         $form->{"b_unit_$cls->{id}_$i"};
-                              } 
 
 
 			      if ( $i < $form->{rowcount} )
@@ -933,8 +927,6 @@ sub edit {
 
     &create_links;
 
-    $form->all_business_units($form->{transdate}, undef, 'GL');
-
     $form->{locked} =
       ( $form->{revtrans} )
       ? '1'
@@ -962,10 +954,6 @@ sub edit {
         else {
             $form->{totalcredit} += $ref->{amount};
             $form->{"credit_$i"} = $ref->{amount};
-        }
-
-        for my $cls (@{$form->{bu_class}}){
-            $form->{"b_unit_$cls->{id}_$i"} = $ref->{"b_unit_$cls->{id}"};
         }
 
         $i++;

@@ -1977,45 +1977,6 @@ sub get_name {
     return $i;
 }
 
-=item $form->all_business_units([$transdate, $credit_id]);
-
-Returns a list at bu_class with class information, ordered by order information
-and a list of units in lists at bu_units->$class_id.  $transdate is used to
-filter projects active at specified date.  $credit_id is to filter out 
-units assigned to other customers.
-
-=cut
-
-sub all_business_units {
-
-    my ( $self, $transdate, $credit_id, $module_name) = @_;
-    $self->{bu_class} = [];
-    $self->{b_units} = {};
-
-    my $dbh       = $self->{dbh};
-    my $class_sth = $dbh->prepare(
-                q|SELECT * FROM business_unit__list_classes('1', ?)|
-    );
-    $class_sth->execute($module_name);
-
-    my $bu_sth    = $dbh->prepare(
-                q|SELECT * 
-                    FROM business_unit__list_by_class(?, ?, ?, 'false')|
-    );
-
-    while (my $classref = $class_sth->fetchrow_hashref('NAME_lc')){
-        push @{$self->{bu_class}}, $classref;
-        $bu_sth->execute($classref->{id}, $transdate, $credit_id);
-        $self->{b_units}->{$classref->{id}} = [];
-        while (my $buref = $bu_sth->fetchrow_hashref('NAME_lc')){
-           push @{$self->{b_units}->{$classref->{id}}}, $buref;
-        }
-    }
-    $class_sth->finish;
-    $bu_sth->finish;
-
-}
-
 =item $form->all_vc($myconfig, $vc, $module, $dbh, $transdate, $job);
 
 Populates the list referred to by $form->{all_${vc}} with hashes of either
@@ -2696,18 +2657,12 @@ sub create_links {
         $query = qq|
 			SELECT c.accno, c.description, a.source, a.amount,
 				a.memo,a.entry_id, a.transdate, a.cleared, a.project_id,
-				p.projectnumber,
-                                compound_array(ARRAY[ARRAY[bul.class_id, bul.bu_id]])
-                                AS bu_lines
+				p.projectnumber
 			FROM acc_trans a
 			JOIN chart c ON (c.id = a.chart_id)
 			LEFT JOIN project p ON (p.id = a.project_id)
-                   LEFT JOIN business_unit_ac bul ON a.entry_id = bul.entry_id
 			WHERE a.trans_id = ?
 				AND a.fx_transaction = '0'
-                        GROUP BY c.accno, c.description, a.source, a.amount,
-                                 a.memo,a.entry_id, a.transdate, a.cleared,
-                                 a.project_id, p.projectnumber
 			ORDER BY transdate|;
 
         $sth = $dbh->prepare($query);

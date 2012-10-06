@@ -435,10 +435,6 @@ sub form_header {
 
     $title = $form->{title};
 
-    $form->all_business_units($form->{transdate}, 
-                              $form->{"$form->{vc}_id"}, 
-                              $form->{ARAP});
-
     if($form->{batch_id})
     {
 		$form->{batch_control_code}=$form->get_batch_control_code($form->{dbh},$form->{batch_id});
@@ -748,13 +744,7 @@ $form->open_status_div . qq|
 	  <th>| . $locale->text('Account') . qq|</th>
 	  <th>| . $locale->text('Description') . qq|</th>
 	  <th>| . $locale->text('Tax Form Applied') . qq|</th>
-	  $project|;
-    for my $cls (@{$form->{bu_class}}){
-        if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
-            print qq|<th>| . $locale->text($cls->{label}) . qq|</th>|;
-        }
-    }
-       print qq|
+	  $project
 	</tr>
 |;
 
@@ -802,27 +792,7 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
 	  <td><select name="$form->{ARAP}_amount_$i">$selectamount</select></td>
 	  $description
           $taxformcheck
-	  $project|;
-
-        for my $cls (@{$form->{bu_class}}){
-            if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
-                print qq|<td><select name="b_unit_$cls->{id}_$i">
-                                    <option></option>|;
-                      for my $bu (@{$form->{b_units}->{"$cls->{id}"}}){
-                         my $selected = '';
-                         if ($form->{"b_unit_$cls->{id}_$i"} eq $bu->{id}){
-                            $selected = "SELECTED='SELECTED'";
-                         }
-                         print qq|  <option value="$bu->{id}" $selected>
-                                        $bu->{control_code}
-                                    </option>|;
-                      }
-                print qq|
-                             </select>
-                        </th>|;
-            }
-        }
-        print qq|
+	  $project
 	</tr>
 |;
 
@@ -1521,9 +1491,6 @@ sub search {
     else {
         $selectname = qq|<input name=$form->{vc} size=35>|;
     }
-
-    # Business Reporting Units
-    $form->all_business_units;
 
     # departments
     if ( @{ $form->{all_department} } ) {

@@ -910,7 +910,6 @@ sub customer_details {
 sub post_invoice {
 
     my ( $self, $myconfig, $form ) = @_;
-    $form->all_business_units;
     $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
       unless $form->{invnumber};
 
@@ -1037,10 +1036,6 @@ sub post_invoice {
 
     my $taxformfound=IS->taxform_exist($form,$form->{"customer_id"});
 
-    my $b_unit_sth = $dbh->prepare(
-         "INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
-          VALUES (currval('invoice_id_seq'), ?, ?)"
-    );
 
     foreach $i ( 1 .. $form->{rowcount} ) {
         my $allocated = 0;
@@ -1253,11 +1248,6 @@ sub post_invoice {
                 $invoice_id
             ) || $form->dberror($query);
 
-            for my $cls(@{$form->{bu_class}}){
-                if ($form->{"b_unit_$cls->{id}_$i"}){
-                 $b_unit_sth->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
-                }
-            }
 	   my $report=($taxformfound and $form->{"taxformcheck_$i"})?"true":"false";
 
 	   IS->update_invoice_tax_form($form,$dbh,$invoice_id,$report);
@@ -1308,29 +1298,6 @@ sub post_invoice {
     $invnetamount = $amount;
 
     $amount = 0;
-
-    $form->{paid} = 0;
-    for $i ( 1 .. $form->{paidaccounts} ) {
-        $form->{"paid_$i"} =
-          $form->parse_amount( $myconfig, $form->{"paid_$i"} )->bstr();
-        $form->{paid} += $form->{"paid_$i"};
-        $form->{datepaid} = $form->{"datepaid_$i"}
-          if ( $form->{"paid_$i"} );
-    }
-
-    # add lineitems + tax
-    $amount        = 0;
-    $grossamount   = 0;
-    $fxgrossamount = 0;
-
-    for ( @{ $form->{acc_trans}{lineitems} } ) {
-        $amount        += $_->{amount};
-        $grossamount   += $_->{grossamount};
-        $fxgrossamount += $_->{fxgrossamount};
-    }
-    $invnetamount = $amount;
-
-    $amount = 0;
     for ( split / /, $form->{taxaccounts} ) {
         $amount += $form->{acc_trans}{ $form->{id} }{$_}{amount} =
           $form->round_amount( $form->{acc_trans}{ $form->{id} }{$_}{amount},
@@ -1339,11 +1306,6 @@ sub post_invoice {
     $invamount = $invnetamount + $amount;
 
     $diff = 0;
-
-    $b_unit_sth = $dbh->prepare(
-         "INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
-          VALUES (currval('acc_trans_entry_id_seq'), ?, ?)"
-    );
 
     if ( $form->{taxincluded} ) {
         $diff = $form->round_amount( $grossamount - $invamount, 2 );
@@ -1377,11 +1339,6 @@ sub post_invoice {
           || $form->dberror($query);
         $diff   = 0;
         $fxdiff = 0;
-        for my $cls(@{$form->{bu_class}}){
-            if ($form->{"b_unit_$cls->{id}_$i"}){
-               $b_unit_sth->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
-            }
-        }
     }
 
     $form->{receivables} = $invamount * -1;
@@ -2204,12 +2161,6 @@ sub retrieve_invoice {
           || $form->dberror($query);
 
         
-        my $bu_sth = $dbh->prepare(
-            qq|SELECT * FROM business_unit_inv
-                WHERE entry_id = ?  |
-        );
-
-        
         # foreign currency
         &exchangerate_defaults( $dbh, $form );
 
@@ -2235,11 +2186,6 @@ sub retrieve_invoice {
             my ($dec) = ( $ref->{fxsellprice} =~ /\.(\d+)/ );
             $dec = length $dec;
             my $decimalplaces = ( $dec > 2 ) ? $dec : 2;
-
-            $bu_sth->execute($ref->{invoice_id});
-            while ( $buref = $bu_sth->fetchrow_hashref(NAME_lc) ) {
-                $ref->{"b_unit_$buref->{class_id}"} = $buref->{bu_id};
-            }
 
             $tth->execute( $ref->{id} );
 
