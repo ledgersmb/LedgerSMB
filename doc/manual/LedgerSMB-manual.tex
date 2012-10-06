@@ -308,12 +308,12 @@ sources:
 The script assumes your PostgreSQL server runs on 'localhost' with
 PostgreSQL's default port (5432).
 
-Upon completion, it'll have created a company database with the name
+Upon completion, it will have created a company database with the name
 'testinc', a user called 'ledgersmb' (password: 'LEDGERSMBINITIALPASSWORD'),
 a single user called 'admin' (password: 'admin') and the roles required to
 manage authorizations.
 
-Additionally, it'll have loaded a minimal list of languages required
+Additionally, it will have loaded a minimal list of languages required
 to succesfully navigate the various screens.
 
 All these can be adjusted using arguments provided to the setup script. See
@@ -325,7 +325,7 @@ In the database setup workflow, a simple application user will be created.  This
 user, by default, only has user management capabilities.  Ideally actual work 
 should be done with accounts which have fewer permissions.
 
-To set up a user, log in with you administrative credentials (created when
+To set up a user, log in with your administrative credentials (created when
 initializing the database) and then go to System/Admin Users/Add User.  From
 here you can create a user and add appropriate permissions.
 
@@ -337,9 +337,10 @@ They are assigned when adding/editing users.
 
 The roles follow a naming convention which allows several LSMB databases to
 exist on the same PostgreSQL instance.  Each role is named lsmb\_\lbrack
-dbname\rbrack\_\_ followed by the role name.  Note that two underscores separate
-the database and role names.  If these are followed then the interface will
-pick up on defined groups and display them along with other permissions.
+dbname\rbrack\_\_ followed by the role name.  Note that two underscores
+separate the database and role names.  If this naming convention is followed,
+then the interface will find the defined groups in the data base and display
+them along with other permissions.
 
 \subsubsection{List of Roles}
 
@@ -758,7 +759,7 @@ permissions it is possible to create additional roles and use them to manage
 groups.  There is not currently a way of doing this from the front-end, but as
 long as you follow the conventions, roles you create can be assigned to users
 through the front-end.  One can also create super-groups that the front-end
-cannot see but can assign permissions to broups of users on multiple databases.
+cannot see but can assign permissions to groups of users on multiple databases.
 This section will cover both of these approaches.
 
 \subsubsection{Naming Conventions}

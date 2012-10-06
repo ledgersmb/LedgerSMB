@@ -309,6 +309,7 @@ sub transactions {
 sub save {
     my ( $self, $myconfig, $form ) = @_;
   
+    $form->all_business_units;
     $form->db_prepare_vars(
         "quonumber", "transdate",     "vendor_id",     "entity_id",
         "reqdate",   "taxincluded",   "shippingpoint", "shipvia",
@@ -317,6 +318,10 @@ sub save {
     );
     # connect to database, turn off autocommit
     my $dbh = $form->{dbh};
+    my $b_unit_sth = $dbh->prepare(
+         "INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
+          VALUES (currval('orderitems_id_seq'), ?, ?)"
+    );
     my @queryargs;
     my $quotation;
     my $ordnumber;
@@ -572,6 +577,11 @@ sub save {
             $sth->execute(@queryargs) || $form->dberror($query);
 	    $dbh->commit;
             $form->{"sellprice_$i"} = $fxsellprice;
+            for my $cls(@{$form->{bu_class}}){
+                if ($form->{"b_unit_$cls->{id}_$i"}){
+                 $b_unit_sth->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
+                }
+            }
         }
         $form->{"discount_$i"} *= 100;
  
@@ -816,6 +826,11 @@ sub retrieve {
     # connect to database
     my $dbh = $form->{dbh};
 
+    my $bu_sth = $dbh->prepare(
+            qq|SELECT * FROM business_unit_oitem
+                WHERE entry_id = ?  |
+    );
+
     my $query;
     my $sth;
     my $var;
@@ -929,6 +944,11 @@ sub retrieve {
 
         while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
             $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
+
+            $bu_sth->execute($ref->{invoice_id});
+            while ( $buref = $bu_sth->fetchrow_hashref(NAME_lc) ) {
+                $ref->{"b_unit_$buref->{class_id}"} = $buref->{bu_id};
+            }
 
             ($decimalplaces) = ( $ref->{sellprice} =~ /\.(\d+)/ );
             $decimalplaces = length $decimalplaces;

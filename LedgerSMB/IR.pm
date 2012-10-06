@@ -69,6 +69,7 @@ sub get_files {
 sub post_invoice {
     my ( $self, $myconfig, $form ) = @_;
 
+    $form->all_business_units;
     if ($form->{id}){
         delete_invoice($self, $myconfig, $form);
     }
@@ -205,6 +206,15 @@ sub post_invoice {
     
     my $taxformfound=IR->taxform_exist($form,$form->{"vendor_id"});#tshvr this always returns true!!
   
+    my $b_unit_sth = $dbh->prepare(
+         "INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
+          VALUES (currval('invoice_id_seq'), ?, ?)"
+    );
+
+    my $b_unit_sth_ac = $dbh->prepare(
+         "INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
+          VALUES (currval('acc_trans_entry_id_seq'), ?, ?)"
+    );
     for my $i ( 1 .. $form->{rowcount} ) {
         $form->{"qty_$i"} = $form->parse_amount( $myconfig, $form->{"qty_$i"} );
 
@@ -336,6 +346,12 @@ sub post_invoice {
                 $form->{"precision_$i"},   $form->{"notes_$i"},       
                 $invoice_id
             ) || $form->dberror($query);
+
+            for my $cls(@{$form->{bu_class}}){
+                if ($form->{"b_unit_$cls->{id}_$i"}){
+                 $b_unit_sth->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
+                }
+            }
 
             if($taxformfound)
             {
@@ -483,6 +499,11 @@ sub post_invoice {
                             $ref->{transdate}, $ref->{transdate},
                         ) || $form->dberror($query);
 
+                        for my $cls(@{$form->{bu_class}}){
+                            if ($form->{"b_unit_$cls->{id}_$i"}){
+                             $b_unit_sth_ac->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
+                            }
+                        }
                         # add expense
                         $query = qq|
 				INSERT INTO acc_trans 
@@ -507,6 +528,12 @@ sub post_invoice {
                         ) || $form->dberror($query);
                     }
 
+
+                    for my $cls(@{$form->{bu_class}}){
+                        if ($form->{"b_unit_$cls->{id}_$i"}){
+                         $b_unit_sth_ac->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
+                        }
+                    }
                     # update allocated for sold item
                     $form->update_balance( $dbh, "invoice", "allocated",
                         qq|id = $ref->{id}|,
@@ -1275,6 +1302,12 @@ sub retrieve_invoice {
         $sth->execute( $form->{language_code}, $form->{id} )
           || $form->dberror($query);
 
+        my $bu_sth = $dbh->prepare(
+            qq|SELECT * FROM business_unit_inv
+                WHERE entry_id = ?  |
+        );
+
+        # exchangerate defaults
         # exchangerate defaults
         &exchangerate_defaults( $dbh, $form );
 
@@ -1299,6 +1332,11 @@ sub retrieve_invoice {
             my ($dec) = ( $ref->{fxsellprice} =~ /\.(\d+)/ );
             $dec = length $dec;
             my $decimalplaces = ( $dec > 2 ) ? $dec : 2;
+
+            $bu_sth->execute($ref->{invoice_id});
+            while ( $buref = $bu_sth->fetchrow_hashref(NAME_lc) ) {
+                $ref->{"b_unit_$buref->{class_id}"} = $buref->{bu_id};
+            }
 
             $tth->execute( $ref->{id} );
             $ref->{taxaccounts} = "";

@@ -60,6 +60,7 @@ sub post_transaction {
 	use strict;
 
     my ( $self, $myconfig, $form ) = @_;
+    $form->all_business_units;
 
     my $exchangerate;
     my $batch_class;
@@ -440,6 +441,12 @@ sub post_transaction {
 
     my $taxformfound=AA->taxform_exist($form,$form->{"$form->{vc}_id"});
 
+    my $b_unit_sth = $dbh->prepare(
+         "INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
+          VALUES (currval('acc_trans_entry_id_seq'), ?, ?)"
+    );
+
+
     foreach $ref ( @{ $form->{acc_trans}{lineitems} } ) {
         # insert detail records in acc_trans
         if ( $ref->{amount} ) {
@@ -461,6 +468,14 @@ sub post_transaction {
            $dbh->prepare($query)->execute(@queryargs)
               || $form->dberror($query);
 
+           if ($ref->{row_num} and !$ref->{fx_transaction}){
+              my $i = $ref->{row_num};
+              for my $cls(@{$form->{bu_class}}){
+                  if ($form->{"b_unit_$cls->{id}_$i"}){
+                     $b_unit_sth->execute($cls->{id}, $form->{"b_unit_$cls->{id}_$i"});
+                  }
+              }
+           }
            if($taxformfound)
            {
             $query="select max(entry_id) from acc_trans;";
