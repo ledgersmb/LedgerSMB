@@ -1263,7 +1263,7 @@ qq|$ref->{module}.pl?path=$form->{path}&action=edit&id=$ref->{id}&login=$form->{
         };
     }
     my $format;
-    if ($form->{action} =~ /^(continue|generate_)/) {
+    if ($form->{action} =~ /^(continue|generate_|select_)/) {
 	$format = 'HTML';
     } else {
         $format = uc substr $form->{action}, 0, 3;
