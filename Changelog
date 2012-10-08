@@ -17,6 +17,7 @@ Changelog for 1.3.23
 * Fixed query err when generating sales orders from time cards (Erik H, 3559621)
 * Fixed backup does not test for failure (Havard S, h/t Nick P, 3574876)
 * prepre_company_database.sh now only gives user mgmt rights (Berend T)
+* Fixed end date, etc not showing on summary list, (Chris T, 3556279)
 
 Berend T is Berent Tober
 Chris T is Chris Travers

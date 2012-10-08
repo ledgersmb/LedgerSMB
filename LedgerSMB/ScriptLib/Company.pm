@@ -743,6 +743,10 @@ sub _render_main_screen{
         procname => 'pricegroup__list'
     );
 
+    for $eca (@{$company->{credit_list}}){
+        $eca->{creditlimit} = $company->format_amount({amount => $eca->{creditlimit}});
+    }
+
     $company->{creditlimit} = $company->format_amount({amount => $company->{creditlimit}}) unless !defined $company->{creditlimit}; 
     $company->{discount} = "$company->{discount}" unless !defined $company->{discount}; 
     $company->{note_class_options} = [
