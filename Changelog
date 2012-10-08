@@ -16,7 +16,9 @@ Changelog for 1.3.23
 * Fixed select all button causing error on aging rpt (Chris T)
 * Fixed query err when generating sales orders from time cards (Erik H, 3559621)
 * Fixed backup does not test for failure (Havard S, h/t Nick P, 3574876)
+* prepre_company_database.sh now only gives user mgmt rights (Berend T)
 
+Berend T is Berent Tober
 Chris T is Chris Travers
 Havard S is Havard Sorli
 Erik H is Erik Huelsmann
