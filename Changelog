@@ -19,7 +19,7 @@ Changelog for 1.3.23
 * prepre_company_database.sh now only gives user mgmt rights (Berend T)
 * Fixed end date, etc not showing on summary list, (Chris T, 3556279)
 
-Berend T is Berent Tober
+Berend T is Berend Tober
 Chris T is Chris Travers
 Havard S is Havard Sorli
 Erik H is Erik Huelsmann
