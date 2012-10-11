@@ -18,6 +18,7 @@ Changelog for 1.3.23
 * Fixed backup does not test for failure (Havard S, h/t Nick P, 3574876)
 * prepre_company_database.sh now only gives user mgmt rights (Berend T)
 * Fixed end date, etc not showing on summary list, (Chris T, 3556279)
+* Fixed error in msgid for what should be "Add Language" (Havard S, h/t Robert C)
 
 Berend T is Berend Tober
 Chris T is Chris Travers
@@ -26,6 +27,7 @@ Erik H is Erik Huelsmann
 Istvan P is Istvan Pongracz
 Brian W is Brian Wolf 
 Nick P is Nick Prater
+Robert C is Robert James Clay
 
 Changelog for 1.3.22
 * Fixed error when trying to save multiple make/models for a part (Chris T)
