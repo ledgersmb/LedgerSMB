@@ -1149,7 +1149,7 @@ sub list_language {
     push @buttons, {
         name => 'action',
         value => 'add_language',
-        text => $locale->text('Add Lanugage'),
+        text => $locale->text('Add Language'),
         type => 'submit',
         class => 'submit',
     };

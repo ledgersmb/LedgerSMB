@@ -339,8 +339,8 @@ msgstr ""
 msgid "Languages"
 msgstr ""
 
-#: am.pl:1139
-msgid "Add Lanugage"
+#: am.pl:1152
+msgid "Add Language"
 msgstr ""
 
 #: am.pl:1162
