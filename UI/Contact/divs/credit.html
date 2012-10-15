@@ -20,9 +20,9 @@ PROCESS dynatable
         { col_id = 'meta_number', type = 'href', name = text("Number"), 
           href_base = "$script?action=get&" }
         { col_id = 'description', type = 'text', name = text("Description") }
-        { col_id = 'credit_limit', type = 'text', name = text('Credit Limit') }
-        { col_id = 'start_date', type = 'text', name = text('Start Date') }
-        { col_id = 'end_date', type = 'text', name = text('End Date') }
+        { col_id = 'creditlimit', type = 'text', name = text('Credit Limit') }
+        { col_id = 'startdate', type = 'text', name = text('Start Date') }
+        { col_id = 'enddate', type = 'text', name = text('End Date') }
     ], #'
     tbody = {rows = credit_list}; ?>
     <form id="credit_form" name="credit_form" method="post" 

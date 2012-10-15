@@ -1234,7 +1234,7 @@ CREATE TABLE journal_line (
 CREATE TABLE business_unit_jl (
     entry_id int references journal_line(id),
     bu_class int references business_unit_class(id),
-    bu_id int references business_unit(id) NOT NULL.
+    bu_id int references business_unit(id) NOT NULL,
     PRIMARY KEY(entry_id, bu_class)
 );
 
