@@ -2,6 +2,14 @@ Changelog for 1.3 Series
 Initial Release:  Monday, Oct 12 2011
 Supported Presently
 
+Changelog for 1.3.24
+* Fixed error in msgid for "Add Language" (Havard S, h/t Robert C)
+* Moved Makefile.PL to version_from to reduce errors (Chris T, h/t Robert C)
+
+Chris T is Chris Travers
+Havard S is Havard Sorli
+Robert C is Robert James Clay
+
 Changelog for 1.3.23
 * Fixed query string/stdin handling where both stdin and query string are set
 * Moved http error framework to use header methods (Chris T)
@@ -18,7 +26,6 @@ Changelog for 1.3.23
 * Fixed backup does not test for failure (Havard S, h/t Nick P, 3574876)
 * prepre_company_database.sh now only gives user mgmt rights (Berend T)
 * Fixed end date, etc not showing on summary list, (Chris T, 3556279)
-* Fixed error in msgid for what should be "Add Language" (Havard S, h/t Robert C)
 
 Berend T is Berend Tober
 Chris T is Chris Travers
