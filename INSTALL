@@ -274,12 +274,12 @@ sources:
 The script assumes your PostgreSQL server runs on 'localhost' with
 PostgreSQL's default port (5432).
 
-Upon completion, it'll have created a company database with the name
+Upon completion, it will have created a company database with the name
 'testinc', a user called 'ledgersmb' (password: 'LEDGERSMBINITIALPASSWORD'),
 a single user called 'admin' (password: 'admin') and the roles required to
 manage authorizations.
 
-Additionally, it'll have loaded a minimal list of languages required
+Additionally, it will have loaded a minimal list of languages required
 to succesfully navigate the various screens.
 
 All these can be adjusted using arguments provided to the setup script. See

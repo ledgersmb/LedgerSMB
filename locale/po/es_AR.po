@@ -244,7 +244,7 @@ msgstr "SIC eliminado!"
 msgid "Languages"
 msgstr "Idiomas"
 
-msgid "Add Lanugage"
+msgid "Add Language"
 msgstr "Agregar Idioma"
 
 msgid "%1 Language"

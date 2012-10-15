@@ -264,6 +264,6 @@ SELECT admin__save_user(NULL,
 
 SELECT admin__add_user_to_role('$ADMIN_USERNAME', rolname)
 FROM pg_roles
-WHERE rolname like 'lsmb_${company_name}_%';
+WHERE rolname like 'lsmb_${company_name}__users_manage';
 
 CREATE_USER

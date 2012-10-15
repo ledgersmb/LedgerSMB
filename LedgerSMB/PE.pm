@@ -1022,7 +1022,7 @@ sub get_jcitems {
                 LEFT JOIN company c ON eca.entity_id = c.entity_id
 		    WHERE pr.parts_id IS NULL
 		          AND j.allocated != j.qty $where
-		 ORDER BY pr.projectnumber, c.name, j.checkedin::date|;
+		 ORDER BY pr.projectnumber, c.legal_name, j.checkedin::date|;
     if ( $form->{summary} ) {
         $query =~ s/j\.description/p\.description/;
         $query =~ s/c\.name,/c\.name, j\.parts_id, /;

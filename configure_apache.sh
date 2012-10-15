@@ -4,13 +4,14 @@ CWD=`pwd`
 
 sed -i.orig "s|WORKING_DIR|$CWD|" ledgersmb-httpd.conf;
 
-echo "Which user does your web server run as?"
-read username
+username="apache"
+read -p "Which user does your web server run as? [$username]"
 
-chown $username spool templates css
+chown ${REPLY:-$username} spool templates css
 
-echo "Where do we copy the ledgersmb-httpd.conf file to?"
-read location
-cp ledgersmb-httpd.conf $location
+location="/etc/httpd/conf.d"
+read -p "Where do we copy the ledgersmb-httpd.conf file to? [$location] "
+
+cp ledgersmb-httpd.conf ${REPLY:-$location}
 
 echo "Please restart your web server for the changes to take effect."
