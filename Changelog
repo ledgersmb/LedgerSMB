@@ -6,6 +6,7 @@ Changelog for 1.3.24
 * Fixed error in msgid for "Add Language" (Havard S, h/t Robert C)
 * Moved Makefile.PL to version_from to reduce errors (Chris T, h/t Robert C)
 * Prompts added to configure_apache.sh (Berend T)
+* Corrected image not showable on html invoice (Chris T)
 
 berend T is Berend Tober
 Chris T is Chris Travers

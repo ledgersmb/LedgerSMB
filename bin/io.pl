@@ -1672,7 +1672,7 @@ sub print_form {
     }
     else {
         IS->invoice_details( \%myconfig, $form );
-    }
+    } 
     if ( exists $form->{longformat} ) {
         $form->{"${due}date"} = $duedate;
         for ( "${inv}date", "${due}date", "shippingdate", "transdate" ) {
@@ -1680,7 +1680,6 @@ sub print_form {
               $locale->date( \%myconfig, $form->{$_}, $form->{longformat} );
         }
     }
-
     @vars =
       qw(name address1 address2 city state zipcode country contact phone fax email);
 
