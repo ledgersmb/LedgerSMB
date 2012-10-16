@@ -772,6 +772,9 @@ sub gather_printable_info {
 my ($self) = @_;
 @{$self->{header_info}} = $self->exec_method(funcname => 'payment_gather_header_info');
 @{$self->{line_info}}   = $self->exec_method(funcname => 'payment_gather_line_info');
+for my $row(@{$self->{line_info}}){
+    $row->{invoice_date} = $row->{trans_date};
+}
 }
 
 =item get_open_overpayment_entities 

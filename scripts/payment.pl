@@ -498,7 +498,7 @@ sub print {
             for my $inv (1 .. $payment->{"invoice_count_$id"}){
                 my $invhash = {};
                 my $inv_id = $payment->{"invoice_${id}_$inv"};
-                for (qw(invnumber due)){
+                for (qw(invnumber due invoice_date)){
                     $invhash->{$_} = $payment->{"${_}_$inv_id"};
                 }
                 if ($payment->{"paid_$id"} eq 'some'){
