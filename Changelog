@@ -7,10 +7,12 @@ Changelog for 1.3.24
 * Moved Makefile.PL to version_from to reduce errors (Chris T, h/t Robert C)
 * Prompts added to configure_apache.sh (Berend T)
 * Corrected image not showable on html invoice (Chris T)
+* Fixed invoice date not printing on checks (Chris T, h/t Neil S)
 
 berend T is Berend Tober
 Chris T is Chris Travers
 Havard S is Havard Sorli
+Neil S is Neil Smith
 Robert C is Robert James Clay
 
 Changelog for 1.3.23
