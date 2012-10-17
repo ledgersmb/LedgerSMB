@@ -8,6 +8,7 @@ Changelog for 1.3.24
 * Prompts added to configure_apache.sh (Berend T)
 * Corrected image not showable on html invoice (Chris T)
 * Fixed invoice date not printing on checks (Chris T, h/t Neil S)
+* Changed INSTALL to do make test, not of make install (Chris T h/t Kevin B)
 
 berend T is Berend Tober
 Chris T is Chris Travers

@@ -151,7 +151,7 @@ When you have completed the distribution specific steps described below,
 you should proceed to run:
 
  $ perl Makefile.PL
- $ make install
+ $ make test
 
 which will ask you which modules it should download, if you didn't install
 - using your package manager - all of the required and optional modules
