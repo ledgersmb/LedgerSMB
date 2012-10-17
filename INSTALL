@@ -136,6 +136,9 @@ and these optional ones:
   XML::Twig               [Support for OpenOffice output]
   Excel::Template::Plus   [Support for Excel output]
 
+To build using the Makefile.PL you will also need:
+
+  Module::Install
 
 All these modules can be downloaded from CPAN, the modules distribution
 archive for Perl. However our experience has been that if your distribution
