@@ -9,6 +9,7 @@ Changelog for 1.3.24
 * Corrected image not showable on html invoice (Chris T)
 * Fixed invoice date not printing on checks (Chris T, h/t Neil S)
 * Changed INSTALL to do make test, not of make install (Chris T h/t Kevin B)
+* Fixed framework for printing parts tumbnails in invoices (Chris T)
 
 berend T is Berend Tober
 Chris T is Chris Travers

@@ -1592,7 +1592,17 @@ sub print_form {
         my @files = $file->get_for_template(
                 {ref_key => $form->{id}, file_class => $fc}
         );
-        $form->{file_list} = \@files;
+        my @main_files;
+        my %parts_files;
+        for my $f (@files){
+            if ($f->{file_class} == 3) {
+              $parts_files{$f->{ref_key}} = $f;
+            } else {
+               push @main_files, $f;
+            }
+        }
+        $form->{file_list} = \@main_files;
+        $form->{parts_files} = \%parts_files;
         $form->{file_path} = $file->file_path;
     }
 
@@ -1634,7 +1644,7 @@ sub print_form {
             "projectnumber_$i", "partsgroup_$i",
             "serialnumber_$i",  "bin_$i",
             "unit_$i",          "notes_$i", 
-            "image_$i",
+            "image_$i",         "id_$i"
           );
     }
     for ( split / /, $form->{taxaccounts} ) { push @vars, "${_}_description" }

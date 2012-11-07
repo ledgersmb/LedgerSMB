@@ -322,6 +322,12 @@ sub get_for_template{
            $result->{sizex} = $x;
            $result->{sizey} = $y;
         };
+        if ($result->{file_class} == 3){ 
+           $result->{ref_key} = $result->{file_name};
+           $result->{ref_key} =~ s/-.*//;
+        } else {
+           $result->{ref_key} = $args->{ref_key};
+        }
     }
 }
 
