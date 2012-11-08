@@ -148,6 +148,8 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
         <input type="hidden" value="<?lsmb row.invoice.id ?>" />                 </td>
     <?lsmb # we can use an href to link this invoice number to the invoice ?>
     <td><?lsmb row.invoice_date ?></td>
+    <input type="hidden" name="<?lsmb "invoice_date_$row.invoice.id" ?>" 
+          value="<?lsmb row.invoice_date ?>" />
     <td><?lsmb row.amount ?></td>
     <td><?lsmb row.paid ?></td>
     <td><?lsmb row.discount ?></td>

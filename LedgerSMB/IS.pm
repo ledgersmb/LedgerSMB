@@ -356,6 +356,7 @@ sub invoice_details {
             # add number, description and qty to $form->{number}...
             push( @{ $form->{runningnumber} }, $runningnumber++ );
             push( @{ $form->{number} },        $form->{"partnumber_$i"} );
+            push( @{ $form->{image} },        $form->{"image_$i"} );
             push( @{ $form->{sku} },           $form->{"sku_$i"} );
             push( @{ $form->{serialnumber} },  $form->{"serialnumber_$i"} );
 
@@ -1988,7 +1989,8 @@ sub retrieve_invoice {
 			          p.partnumber AS sku, p.listprice, p.lastcost,
 			          p.weight, p.onhand, p.inventory_accno_id, 
 			          p.income_accno_id, p.expense_accno_id,
-			          t.description AS partsgrouptranslation
+			          t.description AS partsgrouptranslation, 
+                                  p.image
 			     FROM invoice i
 		             JOIN parts p ON (i.parts_id = p.id)
 			LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
