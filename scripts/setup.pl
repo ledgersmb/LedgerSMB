@@ -830,13 +830,9 @@ sub save_user {
         $request->error($request->{_locale}->text('No Permissions Assigned'));
    }
    $request->{dbh}->commit;
+
+   rebuild_modules($request);
    
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'complete',
-	    format => 'HTML',
-    );
-    $template->render($request);
 }
 
 =item run_upgrade
