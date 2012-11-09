@@ -289,6 +289,7 @@ END;
 $$ language plpgsql;
 
 COMMENT ON FUNCTION account__save_tax
-(in_chart_id int, in_validto date, in_rate numeric, in_minval numeric, 
-in_taxnumber text, in_pass int, in_taxmodule_id int, in_old_validto date) IS
+(in_chart_id int, in_validto date, in_rate numeric, in_minvalue numeric, 
+in_maxvalue numeric, in_taxnumber text, 
+in_pass int, in_taxmodule_id int, in_old_validto date) IS
 $$ This saves tax rates.$$; 

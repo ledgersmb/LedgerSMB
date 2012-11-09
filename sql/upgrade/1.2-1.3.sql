@@ -376,6 +376,9 @@ SELECT entity_id, startdate, enddate, role, ssn, sales, employeenumber, dob,
 
 -- must rebuild this table due to changes since 1.2
 
+-- needed to handle null values
+UPDATE lsmb12.makemodel set model = '' where model is null;
+
 INSERT INTO makemodel
 SELECT * FROM lsmb12.makemodel;
 
