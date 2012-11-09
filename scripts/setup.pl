@@ -1,4 +1,3 @@
-
 =head1 NAME
 
 LedgerSMB::Scripts::setup
@@ -19,6 +18,7 @@ management tasks.
 #
 package LedgerSMB::Scripts::setup;
 
+use Locale::Country;
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
 use strict;
@@ -464,6 +464,16 @@ sub upgrade{
     @{$request->{ap_accounts}} = _get_linked_accounts($request, "AP");
     unshift @{$request->{ar_accounts}}, {};
     unshift @{$request->{ap_accounts}}, {};
+
+    @{$request->{countries}} = ();
+    foreach my $iso2 (all_country_codes()) {
+        push @{$request->{countries}}, { code    => uc($iso2),
+                                         country => code2country($iso2) };
+    }
+    @{$request->{countries}} =
+        sort { $a->{country} cmp $b->{country} } @{$request->{countries}};
+    unshift @{$request->{countries}}, {};
+
 
     my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
