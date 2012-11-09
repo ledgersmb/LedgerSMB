@@ -1,4 +1,3 @@
-
 =head1 NAME
 
 LedgerSMB::Scripts::setup
@@ -19,6 +18,7 @@ management tasks.
 #
 package LedgerSMB::Scripts::setup;
 
+use Locale::Country;
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
 use strict;
@@ -346,6 +346,34 @@ sub migrate_sl{
 
 }
 
+=item _get_linked_accounts
+
+Returns an array of hashrefs with keys ('id', 'accno', 'desc') identifying
+the accounts.
+
+Assumes a connected database.
+
+=cut
+
+sub _get_linked_accounts {
+    my ($request, $link) = @_;
+    my @accounts;
+
+    my $sth = $request->{dbh}->prepare("select id, accno, description
+                                          from chart
+                                         where link = '$link'");
+    $sth->execute();
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+        push @accounts, { accno => $row->{accno},
+                          desc => "$row->{accno} - $row->{description}",
+                          id => $row->{id}
+        };
+    }
+
+    return @accounts;
+}
+
+
 =item upgrade 
 
 Beginning of the upgrade from 1.2 logic
@@ -431,6 +459,22 @@ sub upgrade{
              _failed_check($request, $check, $sth);
         }
     }
+
+    @{$request->{ar_accounts}} = _get_linked_accounts($request, "AR");
+    @{$request->{ap_accounts}} = _get_linked_accounts($request, "AP");
+    unshift @{$request->{ar_accounts}}, {};
+    unshift @{$request->{ap_accounts}}, {};
+
+    @{$request->{countries}} = ();
+    foreach my $iso2 (all_country_codes()) {
+        push @{$request->{countries}}, { code    => uc($iso2),
+                                         country => code2country($iso2) };
+    }
+    @{$request->{countries}} =
+        sort { $a->{country} cmp $b->{country} } @{$request->{countries}};
+    unshift @{$request->{countries}}, {};
+
+
     my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'upgrade_info',
