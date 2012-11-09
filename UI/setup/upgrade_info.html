@@ -13,33 +13,27 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
 } ?>
 <div class="form">
 <div class="input_row">
-<?lsmb INCLUDE select element_data = {
-                          options = countries
-                       value_attr = 'code'
-                        text_attr = 'country'
+<?lsmb INCLUDE input element_data = {
                             name  = 'default_country'
+                            type  = 'text'
                            label  = text('Default Country') #'
                             class = 'country'
 } ?>
 </div>
 <div class="input_row">
-<?lsmb INCLUDE select element_data = {
+<?lsmb INCLUDE input element_data = {
                             name  = 'default_ar'
+                            type  = 'text'
                            label  = text('Default AR') #'
                             class = 'accno'
-                            options = ar_accounts
-                            value_attr = 'accno'
-                            text_attr = 'desc'
 } ?>
 </div>
 <div class="input_row">
-<?lsmb INCLUDE select element_data = {
+<?lsmb INCLUDE input element_data = {
                             name  = 'default_ap'
+                            type  = 'text'
                            label  = text('Default AP') #'
                             class = 'accno'
-                            options = ap_accounts
-                            value_attr = 'accno'
-                            text_attr = 'desc'
 } ?>
 </div>
 <div class="input_row">
