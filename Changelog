@@ -12,9 +12,11 @@ Changelog for 1.3.24
 * Fixed framework for printing parts tumbnails in invoices (Chris T)
 * Upgrade now handles nulls in model field of makemodel (Chris T)
 * Fixed issue with comment in account.sql (Chris T)
+* Removed unused Subcontractor GIFI field (Chris T, h/t Erik H)
 
-berend T is Berend Tober
+Berend T is Berend Tober
 Chris T is Chris Travers
+Erik H is Erik Huelsmann
 Havard S is Havard Sorli
 Kevin B is Kevin Bailey
 Neil S is Neil Smith
