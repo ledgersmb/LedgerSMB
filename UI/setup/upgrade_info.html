@@ -12,31 +12,65 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
    value = database
 } ?>
 <div class="form">
+<p>
+  LedgerSMB has introduced three new system wide default values which
+  you will need to set as part of the upgrade process.
+</p>
+<p>
+  In addition to these new defaults LedgerSMB 1.3 adds stricter
+  checks on data validity in the database. Because of these stricter checks
+  it's no longer valid to leave companies without a country or customers
+  without accounts receivable reference. The defaults you choose below will
+  be used to add values where these are currently missing but required.
+</p>
 <div class="input_row">
-<?lsmb INCLUDE input element_data = {
+<?lsmb INCLUDE select element_data = {
+                          options = countries
+                       value_attr = 'code'
+                        text_attr = 'country'
                             name  = 'default_country'
-                            type  = 'text'
                            label  = text('Default Country') #'
                             class = 'country'
 } ?>
 </div>
 <div class="input_row">
-<?lsmb INCLUDE input element_data = {
+<p>
+  LedgerSMB supports multiple <em>Accounts receivable (AR)</em> accounts
+per company. One of those must be the system default. Please select
+your default below in case of multiple. If the list below is empty,
+your database is in an inconsistent state and needs to be fixed first.
+</p>
+<?lsmb INCLUDE select element_data = {
                             name  = 'default_ar'
-                            type  = 'text'
                            label  = text('Default AR') #'
                             class = 'accno'
+                            options = ar_accounts
+                            value_attr = 'accno'
+                            text_attr = 'desc'
 } ?>
 </div>
 <div class="input_row">
-<?lsmb INCLUDE input element_data = {
+<p>
+  LedgerSMB supports multiple <em>Accounts payable (AP)</em> accounts
+per company. One of those must be the system default. Please select
+your default below in case of multiple. If the list below is empty,
+your database is in an inconsistent state and needs to be fixed first.
+</p>
+<?lsmb INCLUDE select element_data = {
                             name  = 'default_ap'
-                            type  = 'text'
                            label  = text('Default AP') #'
                             class = 'accno'
+                            options = ap_accounts
+                            value_attr = 'accno'
+                            text_attr = 'desc'
 } ?>
 </div>
 <div class="input_row">
+<p>
+  Note that the process invoked by hitting the button below might
+  take long to complete as it will run the upgrade process and will
+  copy all data from the 1.2 tables into the 1.3 tables.
+</p>
 <?lsmb INCLUDE button element_data = {
     text = text('Upgrade') 
     name = 'action'
