@@ -1350,9 +1350,8 @@ sub get_name {
     $form->{creditremaining} = $form->{creditlimit};
     $query = qq|
                 SELECT sum(used) FROM (
-		SELECT SUM((amount - paid) * coalesce(e.$buysell, 1)) as used
+		SELECT SUM(amount - paid) as used
 		  FROM $arap
-             LEFT JOIN exchangerate e ON $arap.transdate = e.transdate
 		 WHERE entity_credit_account = ?
                  UNION 
                 SELECT sum(o.amount * coalesce(e.$buysell, 1)) as used
