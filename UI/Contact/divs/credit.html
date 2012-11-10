@@ -177,7 +177,8 @@ PROCESS dynatable
            </td>
         </tr>
         <tr id="business-threshold-row">
-           <td> <?lsmb business_types.unshift({});
+           <td> <?lsmb IF business_types.size > 0 ?>
+                <?lsmb business_types.unshift({});
                        INCLUDE select element_data = {
 			name = "business_id"
 			options = business_types
@@ -186,6 +187,7 @@ PROCESS dynatable
 			value_attr = "id"
 			label = text('Business Type') #'
 			} ?> 
+                <?lsmb END ?>
 	  </td>
           <td> <?lsmb INCLUDE input element_data = {
 			name = "threshold"
@@ -195,7 +197,8 @@ PROCESS dynatable
 			label = text('Threshold')
 			class = "numeric"
                } ?></td>
-          <td><?lsmb pricegroups.unshift({});
+          <td><?lsmb IF pricegroups.size > 0 ?>
+              <?lsmb pricegroups.unshift({});
                 INCLUDE select element_data = {
                      default_values = [credit_act.pricegroup_id],
                                name = 'pricegroup_id'
@@ -203,13 +206,14 @@ PROCESS dynatable
                               label = text('Pricegroup')
                          value_attr = 'id'
                           text_attr = 'pricegroup'
-                } ?></td>
+                } ?>
+              <?lsmb END ?></td>
 	</tr>
 
 	<tr id="taxform-threshold-row">
-        <?lsmb taxform_list.unshift({}) ?>
-	
-	 <td> <?lsmb INCLUDE select element_data = {
+	 <td> <?lsmb IF taxform_list.size > 0 ?>
+              <?lsmb taxform_list.unshift({})
+                     INCLUDE select element_data = {
 			name = "taxform_id"
 			options = taxform_list
 			default_values = [credit_act.taxform_id]
@@ -217,6 +221,7 @@ PROCESS dynatable
 			value_attr = "id"
 			label = text('Taxforms') 
 			} ?> 
+              <?lsmb END ?>
 	  </td>
         <td> <?lsmb INCLUDE select element_data = {
 		label = text("Language")
