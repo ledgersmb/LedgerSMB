@@ -1349,38 +1349,23 @@ sub get_name {
 
     $form->{creditremaining} = $form->{creditlimit};
     $query = qq|
-		SELECT SUM(amount - paid)
+                SELECT sum(used) FROM (
+		SELECT SUM((amount - paid) * coalesce(e.$buysell, 1)) as used
 		  FROM $arap
-		 WHERE id = ?|;
+             LEFT JOIN exchangerate e ON $arap.transdate = e.transdate
+		 WHERE entity_credit_account = ?
+                 UNION 
+                SELECT sum(o.amount * coalesce(e.$buysell, 1)) as used
+                  FROM oe o
+             LEFT JOIN exchangerate e ON o.transdate = e.transdate
+                 WHERE not closed and oe_class_id in (1, 2)
+                       and entity_credit_account = ?) s|;
 
     $sth = $dbh->prepare($query);
-    $sth->execute( $form->{"$form->{vc}_id"} )
+    $sth->execute( $form->{"$form->{vc}_id"}, $form->{"$form->{vc}_id"})
       || $form->dberror($query);
     my ($credit_rem) = $sth->fetchrow_array;
     ( $form->{creditremaining} ) -= Math::BigFloat->new($credit_rem);
-
-    $sth->finish;
-    if ( $form->{vc} ne "customer" ) {
-        $form->{vc} = 'vendor';
-    }
-
-    $query = qq|
-		SELECT o.amount, (SELECT e.$buysell FROM exchangerate e
-		                   WHERE e.curr = o.curr
-		                         AND e.transdate = o.transdate)
-		  FROM oe o
-		 WHERE o.entity_id = ?
-		       AND o.quotation = '0' AND o.closed = '0'|;
-
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{"$form->{vc}_id"} ) || $form->dberror($query);
-
-    while ( my @ref = $sth->fetchrow_array ) {
-        $form->db_parse_numeric(sth => $sth, arrayref => \@ref);
-        my ($amount, $exch) = @ref;
-        $exch = 1 unless $exch;
-        $form->{creditremaining} -= $amount * $exch;
-    }
 
     $sth->finish;
 

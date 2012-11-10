@@ -15,6 +15,7 @@ Changelog for 1.3.24
 * Removed unused Subcontractor GIFI field (Chris T, h/t Erik H)
 * Changed upgrade screen to pull AR/AP numbers (Erik H)
 * Rebuild modules after upgrade, ensuring upgrade to latest version (Chris T)
+* Fixed credit limit usage calculations (Chris T, h/t Erik H)
 
 Berend T is Berend Tober
 Chris T is Chris Travers
