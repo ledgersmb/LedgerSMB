@@ -78,6 +78,7 @@ use LedgerSMB::Locale;
 use LedgerSMB::Auth;
 use LedgerSMB::Session;
 use LedgerSMB::App_State;
+use Data::Dumper;
 
 our $logger=Log::Log4perl->get_logger('old-handler-chain');#make logger available to other old programs
 
@@ -94,13 +95,22 @@ use Data::Dumper;
 use LedgerSMB::Sysconfig;
 
 # name of this script
-$0 =~ tr/\\/\//;
-$pos = rindex $0, '/';
-$script = substr( $0, $pos + 1 );
+my $script;
+if ($ENV{GATEWAY_INTERFACE} =~ /^CGI/){
+    $uri = $ENV{REQUEST_URI};
+    $uri =~ s/\?.*//;
+    $ENV{SCRIPT_NAME} = $uri;
+    $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
+    $script = $1;
+} else {
+    $0 =~ tr/\\/\//;
+    $pos = rindex $0, '/';
+    $script = substr( $0, $pos + 1 );
+}
+
 
 $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
   or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
-
 
 
 # we use $script for the language module

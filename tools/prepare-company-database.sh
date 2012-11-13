@@ -216,7 +216,7 @@ export PGPASSWORD
 # Load the required PostgreSQL contribs, if a directory was specified
 if ! test "x$pgsql_contrib_dir" = "xignored"
 then
-  for contrib in tsearch2.sql pg_trgm.sql tablefunc.sql
+  for contrib in tsearch2.sql tablefunc.sql
   do
     cat $pgsql_contrib_dir/$contrib | $psql_cmd 2>&1 | unchatter
   done
