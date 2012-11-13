@@ -74,6 +74,7 @@ require "LedgerSMB/Auth/" . ${LedgerSMB::Sysconfig::auth} . ".pm";
 
 sub http_error {
     my ($errcode, $msg_plus) = @_;
+    $msg_plus = '' if not defined $msg_plus;
     my $cgi = CGI::Simple->new();
 
     my $err = {

@@ -108,7 +108,6 @@ sub new_screen {
 }
 
 sub add {
-
     $form->{title} = "Add";
 	
     $form->{callback} =
