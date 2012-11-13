@@ -6,10 +6,6 @@
 -- during 1.4m2
 BEGIN; 
 
-ALTER TABLE makemodel ADD barcode TEXT;
-
-COMMIT;
-
 BEGIN;
 ALTER TABLE account ADD COLUMN is_temp BOOL NOT NULL DEFAULT FALSE;
 COMMIT;

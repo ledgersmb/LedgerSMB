@@ -140,7 +140,7 @@ CREATE TYPE batch_list_item AS (
 );
 
 CREATE OR REPLACE FUNCTION 
-batch__search(in_class_id int, in_description text, in_created_by_eid int, 
+batch_search(in_class_id int, in_description text, in_created_by_eid int, 
 	in_date_from date, in_date_to date,
 	in_amount_gt numeric, 
 	in_amount_lt numeric, in_approved bool) 
