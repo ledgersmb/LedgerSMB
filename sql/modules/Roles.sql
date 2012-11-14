@@ -242,7 +242,7 @@ IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
    TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 
-GRANT INSERT ON ar, invoice_note, business_unit_ac, jounral_entry, journal_line,
+GRANT INSERT ON ar, invoice_note, business_unit_ac, journal_entry, journal_line,
 business_unit_jl
 TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
 
