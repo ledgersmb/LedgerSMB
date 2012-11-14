@@ -11,7 +11,7 @@ in_is_template bool
 $$
 DECLARE retval journal;
 BEGIN
-	INSERT INTO journal (source, description, entry_type, transaction_date,
+	INSERT INTO journal_entry (source, description, entry_type, transaction_date,
 			approved, is_template)
 	VALUES (in_source, in_description, in_entry_type, in_transaction_date,
 			coalesce(in_approved, false), 
@@ -95,7 +95,7 @@ BEGIN
 			j.transaction_date, j.approved, 
 			j.is_template, eca.meta_number, 
 			e.name, ec.class
-		FROM journal j
+		FROM journal_entry j
 		LEFT JOIN eca_invoice i ON (i.journal_id = j.id)
 		LEFT JOIN entity_credit_account eca ON (eca.id = credit_id)
 		LEFT JOIN entity e ON (eca.entity_id = e.id)
@@ -127,7 +127,7 @@ $$ language sql;
 
 CREATE OR REPLACE FUNCTION journal__get_entry(in_id int) RETURNS journal AS
 $$
-SELECT * FROM journal where id = $1;
+SELECT * FROM journal_entry where id = $1;
 $$ language sql;
 
 CREATE OR REPLACE FUNCTION journal__lines(in_id int) RETURNS SETOF journal_line AS

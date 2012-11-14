@@ -71,7 +71,7 @@ $$ language plpgsql;
 
 CREATE OR REPLACE FUNCTION payroll_income_type__get(in_id int)
 RETURNS payroll_income_type AS $$
-SELECT * FROM payroll_income_class WHERE id  = $1;
+SELECT * FROM payroll_income_type WHERE id  = $1;
 $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION payroll_income_category__list() 
