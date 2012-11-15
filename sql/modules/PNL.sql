@@ -21,6 +21,49 @@ CREATE TYPE pnl_line AS (
     amount numeric
 );
 
+CREATE OR REPLACE FUNCTION pnl__product
+(in_from_date date, in_to_date date, in_parts_id int, in_business_units int[])
+RETURNS SETOF onl_line AS 
+$$
+WITH RECURSIVE bu_tree (id, parent) AS (
+      SELECT id, null FROM business_unit
+       WHERE id = any(in_business_units)
+      UNION ALL
+      SELECT id, parent 
+        FROM business_unit bu
+        JOIN bu_tree ON bu.parent = bu_tree.id
+)
+   SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
+          ah.description, 
+          ac.amount * -1 
+     FROM account a
+     JOIN account_heading ah on a.heading = ah.id
+     JOIN acc_trans ac ON ac.chart_id = a.id
+     JOIN invoice i ON i.id = ac.invoice_id
+     JOIN account_link l ON l.account_id = a.id
+     JOIN ar ON ar.id = ac.trans_id
+    WHERE i.parts_id = $3
+          AND (acc_trans.transdate >= $1 OR $1 IS NULL) 
+          AND (acc_trans.transdate <= $2 OR $2 IS NULL)
+          AND ar.approved
+          AND l.description = 'IC_expense'
+    UNION
+   SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
+          ah.description, 
+          i.sellprice * i.qty * (1 - coalesce(i.disc, 0))
+     FROM parts p
+     JOIN invoice i ON i.id = p.id
+     JOIN acc_trans ac ON ac.invoice_id = i.id
+     JOIN account a ON p.income_accno_id = a.id
+     JOIN ar ON ar.id = ac.trans_id
+     JOIN account_heading ah on a.heading = ah.id
+    WHERE i.parts_id = $3
+          AND (acc_trans.transdate >= $1 OR $1 IS NULL) 
+          AND (acc_trans.transdate <= $2 OR $2 IS NULL)
+          AND ar.approved;
+$$ language SQL;
+
+
 CREATE OR REPLACE FUNCTION pnl__income_statement_accrual
 (in_from_date date, in_to_date date, in_business_units int[])
 RETURNS SETOF pnl_line AS
@@ -45,7 +88,7 @@ LEFT JOIN (select array_agg(entry_id)
           ON (ac.entry_id = any(b_unit_ids))
     WHERE ac.approved is true AND ac.transdate BETWEEN $1 AND $2
           AND (in_business_units = '{}' 
-              OR in_business_units IS NULL OR ac.entry_id IN)
+              OR in_business_units IS NULL OR ac.entry_id)
  GROUP BY a.id, a.accno, a.description, a.category, 
           ah.id, ah.accno, ah.description
  ORDER BY a.category DESC, a.accno ASC;
@@ -77,7 +120,7 @@ LEFT JOIN (select array_agg(entry_id)
           ON (ac.entry_id = any(b_unit_ids))
     WHERE ac.approved is true AND ac.transdate BETWEEN $1 AND $2
           AND (in_business_units = '{}' 
-              OR in_business_units IS NULL OR ac.entry_id IN)
+              OR in_business_units IS NULL OR ac.entry_id)
  GROUP BY a.id, a.accno, a.description, a.category, 
           ah.id, ah.accno, ah.description
  ORDER BY a.category DESC, a.accno ASC;
