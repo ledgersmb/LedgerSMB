@@ -133,6 +133,7 @@ sub process {
 		DELIMITER => ';',
 		TRIM => 1,
                 COMPILE_DIR=> $tempdir,
+                COMPILE_EXT=> 'lttc',
 		DEBUG => ($parent->{debug})? 'dirs': undef,
 		DEBUG_FORMAT => '',
 		}) || throw Error::Simple Template->error(); 

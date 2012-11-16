@@ -72,6 +72,7 @@ div.input_group3 {
 }
 
 #company_div div.input_group2 {
+        width: 40em; 
 }
 
 #company_div label {

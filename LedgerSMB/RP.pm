@@ -1839,7 +1839,7 @@ sub aging {
 		  JOIN entity_credit_account c 
                        ON (a.entity_credit_account = c.id)
 		  JOIN company e ON e.entity_id = c.entity_id
-		 WHERE $where
+		 WHERE a.approved AND $where
               GROUP BY c.id, c.meta_number, e.legal_name, a.invnumber,
                        a.transdate, a.ordnumber, a.duedate, a.invoice, a.id,
                        a.curr, a.ponumber, a.notes, c.language_code

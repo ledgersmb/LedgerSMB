@@ -17,6 +17,9 @@ Changelog for 1.3.24
 * Rebuild modules after upgrade, ensuring upgrade to latest version (Chris T)
 * Fixed credit limit usage calculations (Chris T, h/t Erik H)
 * Fixes to get LedgerSMB running clearly using FCGI (Chris T)
+* Fixed unapproved transactions showing up on aging reports (Chris T)
+* Fixed new window menu item not showing up (Erik H)
+* Fixed alignment issue on Contact screen on Chrome (Chris T)
 * Fixed cannot reconcile account with negative balance(Havard S, Erik H, h/t Nick P,3586757)
 
 Berend T is Berend Tober
