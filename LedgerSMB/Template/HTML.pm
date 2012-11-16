@@ -131,7 +131,7 @@ sub process {
 		DEBUG_FORMAT => '',
         }; 
         if ($LedgerSMB::Sysconfig::cache_templates){
-            $arghash->{COMPILE_EXT} = 'lttc';
+            $arghash->{COMPILE_EXT} = '.lttc';
             $arghash->{COMPILE_DIR} = $LedgerSMB::Sysconfig::cache_template_dir;
         } 
        

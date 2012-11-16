@@ -21,6 +21,7 @@ Changelog for 1.3.24
 * Fixed new window menu item not showing up (Erik H)
 * Fixed alignment issue on Contact screen on Chrome (Chris T)
 * Fixed cannot reconcile account with negative balance(Havard S, Erik H, h/t Nick P,3586757)
+* Documented cache_templates option in ledgersmb.conf (Chris T)
 
 Berend T is Berend Tober
 Chris T is Chris Travers

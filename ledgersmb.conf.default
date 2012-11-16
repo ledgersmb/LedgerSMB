@@ -12,6 +12,11 @@ cssdir = css/
 # and selection.  An example might be /var/www/ledgersmb_css/
 fs_cssdir = css/
 
+# If set to a true value this caches templates.  Typically it will be set to 0 
+# to disable or 1 to enable.
+
+cache_templates = 0
+
 # Set language for login and admin pages
 language : en
 
