@@ -120,23 +120,24 @@ sub process {
 		$source = get_template($parent->{template});
 	}
         my $tempdir;
-        if ($LedgerSMB::Sysconfig::cache_templates){
-            $tempdir = $LedgerSMB::Sysconfig::cache_template_dir;
-        } else {
-            $tempdir = undef;
-        }
-	$template = Template->new({
+        my $arghash = {
 		INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path},'templates/demo','UI/lib'],
                 ENCODING => 'utf8',
 		START_TAG => quotemeta('<?lsmb'),
 		END_TAG => quotemeta('?>'),
 		DELIMITER => ';',
 		TRIM => 1,
-                COMPILE_DIR=> $tempdir,
-                COMPILE_EXT=> 'lttc',
 		DEBUG => ($parent->{debug})? 'dirs': undef,
 		DEBUG_FORMAT => '',
-		}) || throw Error::Simple Template->error(); 
+        }; 
+        if ($LedgerSMB::Sysconfig::cache_templates){
+            $arghash->{COMPILE_EXT} = 'lttc';
+            $arghash->{COMPILE_DIR} = $LedgerSMB::Sysconfig::cache_template_dir;
+        } 
+       
+	$template = Template->new(
+                    $arghash
+		) || throw Error::Simple Template->error(); 
 	if (not $template->process(
 		$source, 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
