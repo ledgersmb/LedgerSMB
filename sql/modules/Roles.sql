@@ -1568,5 +1568,8 @@ TO "lsmb_<?lsmb dbname ?>__voucher_delete";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (191, 'allow', 'public');
+-- "New Window" menu item
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (192, 'allow', 'public');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (193, 'allow', 'public');
