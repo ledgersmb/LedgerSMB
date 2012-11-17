@@ -1,7 +1,7 @@
 <?lsmb INCLUDE 'ui-header.html' ?>
 <body id="payment-1-body">
 
-<form name="search" method="post" action="payment.pl">
+<form name="search" method="get" action="payment.pl">
 <?lsmb PROCESS elements.html  # Include form elements helper. -?>
 <?lsmb login.type = 'hidden' ; INCLUDE input element_data=login -?>
 <?lsmb accountclass.type = 'hidden'; INCLUDE input element_data=accountclass -?>
