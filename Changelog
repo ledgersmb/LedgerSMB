@@ -22,6 +22,9 @@ Changelog for 1.3.24
 * Fixed alignment issue on Contact screen on Chrome (Chris T)
 * Fixed cannot reconcile account with negative balance(Havard S, Erik H, h/t Nick P,3586757)
 * Documented cache_templates option in ledgersmb.conf (Chris T)
+* Fixed internal server error on plack with backups (Chris T)
+* Added add user button to setup.pl when LedgerSMB 1.3 db detected (Chris T)
+* Backup buttons do not show when no db found (Chris T)
 
 Berend T is Berend Tober
 Chris T is Chris Travers

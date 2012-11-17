@@ -58,7 +58,6 @@ sub get {
     );
     print $file->content;
 
-    exit;
 }
 
 =item show_attachment_screen
