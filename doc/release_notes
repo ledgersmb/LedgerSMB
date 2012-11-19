@@ -1,7 +1,7 @@
 RELEASE NOTES
 LedgerSMB 1.3
 
-Latest Revision:  1.3.23, June 17, 2012.
+Latest Revision:  1.3.24, June 17, 2012.
 
 1:  Welcome to LedgerSMB
 
@@ -15,6 +15,7 @@ which it was derived, but the feature set is starting to diverge rapidly.
 
 * Perl 5.8.
 * Apache, IIS, or other web server that supports CGI.
+        * As of 1.3.24, FCGI is experimentally supported as is Plack-Starlet
 * PostgreSQL 8.3 or higher.
 * Any operating system that supports the above environment.
 * The following CPAN modules:
@@ -130,6 +131,27 @@ present), "saved" (if ID is present but not a posted financial transaction) and
 to the user so that it is immediately clear what the status of a given screen
 is.  Future versions will include such hooks in at least the ledgersmb.css
 provided.
+
+2.9:  Partial Support for Code Caching
+
+As of 1.3.24, LedgerSMB now supports caching of expensive dependencies in some
+environments so that response time is minimized.  Currently tested environments
+include Plack-based FCGI and the Perl web server Starlet.  Mod-perl might be
+possible to support at some point.
+
+The current approach is to daemonize the script, pre-load what can be preloaded,
+and then fork/execute/return so that the Perl interpreter does not have to worry
+about state issues and variable scopes in running scripts from the inherited 
+codebase.  This can increase speed greatly but it is still seen as somewhat
+experimental.  Code caching generally poses the possibility of some issues, and
+these are magnified in those areas of the code we have not replaced from
+SQL-Ledger.
+
+If you run into issues here, please file bug reports.  If there are
+showstoppers, you can always run the program via CGI.  Please see our addons
+repository or ask on the email lists if you'd like to run this.  The handler
+scripts are not includede out of the box but will likely be included in future
+versions.
 
 3:  Known Issues
 
