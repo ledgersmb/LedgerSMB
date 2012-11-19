@@ -4764,8 +4764,8 @@ $$ This view provides join and approval information for transactions.$$;
 CREATE VIEW cash_impact AS
 SELECT id, '1'::numeric AS portion, 'gl' as rel FROM gl
 UNION ALL
-SELECT id, CASE WHEN (gl.amount - sum(ac.amount * -1)) = 0 THEN 0 
-                ELSE gl.amount / (gl.amount - sum(ac.amount * -1))
+SELECT id, CASE WHEN (gl.amount - sum(ac.amount)) = 0 THEN 0 
+                ELSE gl.amount / (gl.amount - sum(ac.amount))
                 END , 'ar' as rel
   FROM ar gl
   JOIN acc_trans ac ON ac.trans_id = gl.id
