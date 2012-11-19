@@ -720,10 +720,10 @@ sub report_details {
     $report->get;
     if ($report->{report_class} == 2) {
       disposal_details($report);
-      exit;
+      return;
     } elsif ($report->{report_class} == 4) {
       partial_disposal_details($report);
-      exit;
+      return;
     }
     my @cols = qw(tag start_depreciation purchase_value method_short_name
                  usable_life basis prior_through prior_dep dep_this_time

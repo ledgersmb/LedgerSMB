@@ -255,7 +255,6 @@ sub run_backup {
             print $data;
         }
         unlink $backupfile;
-        exit;
     } else {
         $request->error($request->{_locale}->text("Don't know what to do with backup"));
     }
@@ -738,7 +737,7 @@ sub save_user {
          format => 'HTML',
         );
         $template->render($request);
-        exit;        
+        return;
     }
     if ($request->{perms} == 1){
          for my $role (

@@ -237,11 +237,11 @@ sub check_password {
         #check for valid session
         if ( !LedgerSMB::Session::check( $cookie{${LedgerSMB::Sysconfig::cookie_name}}, $form ) ) {
             &getpassword(1);
-            exit;
+            return;
         }
     }
     else {
-        exit;
+        return;
     }
 }
 

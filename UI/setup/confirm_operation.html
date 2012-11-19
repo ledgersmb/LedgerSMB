@@ -25,6 +25,19 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
     text = text('Yes') 
 } ?>
 </div>
+<div id="sep" class="listheading"><?lsmb text('Other Actions') ?></div>
+<?lsmb IF next_action == 'rebuild_modules' ?>
+<div id="user">
+<?lsmb INCLUDE button element_data = {
+    name = 'action'
+   value = 'skip_coa'
+    type = 'submit'
+   class = 'submit'
+    text = text('Add User') #'
+}; ?>
+</div>
+<?lsmb END ?> 
+<?lsmb IF next_action != 'create_db' ?>
 <div id="others"><?lsmb text('Backup') ?></div>
 <div class="inputrow">
 <?lsmb INCLUDE button element_data = {
@@ -42,6 +55,7 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
     text = text('Backup Roles') #' 
 } ?>
 </div>
+<?lsmb END ?>
 </form>
 </body>
 </html>
