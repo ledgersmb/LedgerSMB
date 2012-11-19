@@ -4762,7 +4762,7 @@ COMMENT ON VIEW tx_report IS
 $$ This view provides join and approval information for transactions.$$;
 
 CREATE VIEW cash_impact AS
-SELECT id, '1'::numeric, 'gl' as rel FROM gl
+SELECT id, '1'::numeric AS portion, 'gl' as rel FROM gl
 UNION ALL
 SELECT id, gl.amount / (gl.amount - sum(ac.amount * -1)), 'ar' as rel
   FROM ar gl

@@ -23,7 +23,7 @@ CREATE TYPE pnl_line AS (
 
 CREATE OR REPLACE FUNCTION pnl__product
 (in_from_date date, in_to_date date, in_parts_id int, in_business_units int[])
-RETURNS SETOF onl_line AS 
+RETURNS SETOF pnl_line AS 
 $$
 WITH RECURSIVE bu_tree (id, parent, path) AS (
       SELECT id, null, row(array[id])::tree_record FROM business_unit
@@ -42,39 +42,37 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
      JOIN invoice i ON i.id = ac.invoice_id
      JOIN account_link l ON l.account_id = a.id
      JOIN ar ON ar.id = ac.trans_id
-LEFT JOIN (select as_array(row(bu.path)) as bu_ids, entry_id
+LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
              from business_unit_inv bui 
              JOIN bu_tree bu ON bui.bu_id = bu.id
          GROUP BY entry_id) bui ON bui.entry_id = i.id
     WHERE i.parts_id = $3
-          AND (acc_trans.transdate >= $1 OR $1 IS NULL) 
-          AND (acc_trans.transdate <= $2 OR $2 IS NULL)
+          AND (ac.transdate >= $1 OR $1 IS NULL) 
+          AND (ac.transdate <= $2 OR $2 IS NULL)
           AND ar.approved
           AND l.description = 'IC_expense'
-          AND ($4 is null or $4 = '{}' OR
-              in_tree($4, bu_ids))
+          AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
  GROUP BY a.id, a.accno, a.description, a.category, ah.id, ah.accno,
           ah.description
     UNION
    SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
           ah.description, 
-          sum(i.sellprice * i.qty * (1 - coalesce(i.disc, 0)))
+          sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0)))
      FROM parts p
      JOIN invoice i ON i.id = p.id
      JOIN acc_trans ac ON ac.invoice_id = i.id
      JOIN account a ON p.income_accno_id = a.id
      JOIN ar ON ar.id = ac.trans_id
      JOIN account_heading ah on a.heading = ah.id
-LEFT JOIN (select as_array(row(bu.path)) as bu_ids, entry_id
+LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
              from business_unit_inv bui 
              JOIN bu_tree bu ON bui.bu_id = bu.id
          GROUP BY entry_id) bui ON bui.entry_id = i.id
     WHERE i.parts_id = $3
-          AND (acc_trans.transdate >= $1 OR $1 IS NULL) 
-          AND (acc_trans.transdate <= $2 OR $2 IS NULL)
-          AND ar.approved;
-          AND ($4 is null or $4 = '{}' OR
-              in_tree($4, bu_ids))
+          AND (ac.transdate >= $1 OR $1 IS NULL) 
+          AND (ac.transdate <= $2 OR $2 IS NULL)
+          AND ar.approved
+          AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
  GROUP BY a.id, a.accno, a.description, a.category, ah.id, ah.accno,
           ah.description
 $$ language SQL;
@@ -116,31 +114,33 @@ CREATE OR REPLACE FUNCTION pnl__income_statement_cash
 (in_from_date date, in_to_date date, in_business_units int[])
 RETURNS SETOF pnl_line AS
 $$
-WITH RECURSIVE bu_tree (id, parent) AS (
-      SELECT id, null FROM business_unit
-       WHERE id = any(in_business_units)
+WITH RECURSIVE bu_tree (id, parent, path) AS (
+      SELECT id, null, row(array[id])::tree_record FROM business_unit
+       WHERE id = any($3)
       UNION ALL
-      SELECT id, parent 
+      SELECT bu.id, parent, row((path).t || bu.id)::tree_record
         FROM business_unit bu
-        JOIN bu_tree ON bu.parent = bu_tree.id
+        JOIN bu_tree ON bu.parent_id = bu_tree.id
 )
    SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
           ah.description, 
           CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount) *
-          ca.impact
+          ca.portion
      FROM account a
+     JOIN account_heading ah on a.heading = ah.id
      JOIN acc_trans ac ON a.id = ac.chart_id AND ac.approved
      JOIN tx_report gl ON ac.trans_id = gl.id
      JOIN cash_impact ca ON gl.id = ca.id
-LEFT JOIN (select array_agg(path) 
+LEFT JOIN (select array_agg(path) as bu_ids, entry_id
              FROM business_unit_ac buac
-             JOIN bu_tree ON bu_tree.id = buac.bu_id) bu 
-          ON (ac.entry_id = any(b_unit_ids))
+             JOIN bu_tree ON bu_tree.id = buac.bu_id
+         GROUP BY entry_id) bu 
+          ON (ac.entry_id = bu.entry_id)
     WHERE ac.approved is true AND ac.transdate BETWEEN $1 AND $2
           AND ($3 = '{}' 
               OR $3 is null or in_tree($3, bu_ids))
  GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description
+          ah.id, ah.accno, ah.description, ca.portion
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
 
@@ -150,6 +150,7 @@ SELECT a.id, a.accno, a.description, a.category,
        ah.id, ah.accno, ah.description,
        CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount)
   FROM account a
+  JOIN account_heading ah on a.heading = ah.id
   JOIN acc_trans ac ON a.id = ac.chart_id
  WHERE ac.approved is true and ac.trans_id = $1
  GROUP BY a.id, a.accno, a.description, a.category, 
@@ -164,12 +165,13 @@ $$
 WITH gl (id) AS
  ( SELECT id FROM ap WHERE approved is true AND entity_credit_account = $1
 UNION ALL
-   SELECT id FROM ar approved is true AND entity_credit_account = $1
+   SELECT id FROM ar WHERE approved is true AND entity_credit_account = $1
 )
 SELECT a.id, a.accno, a.description, a.category, 
        ah.id, ah.accno, ah.description,
        CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount)
   FROM account a
+  JOIN account_heading ah on a.heading = ah.id
   JOIN acc_trans ac ON a.id = ac.chart_id
   JOIN gl ON ac.trans_id = gl.id
  WHERE ac.approved is true AND ac.transdate BETWEEN $2 AND $3
@@ -184,6 +186,7 @@ SELECT a.id, a.accno, a.description, a.category,
        ah.id, ah.accno, ah.description,
        CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount)
   FROM account a
+  JOIN account_heading ah on a.heading = ah.id
   JOIN acc_trans ac ON a.id = ac.chart_id
  WHERE ac.approved is true AND ac.trans_id = $1
  GROUP BY a.id, a.accno, a.description, a.category, 
