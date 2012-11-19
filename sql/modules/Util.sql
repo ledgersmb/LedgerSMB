@@ -49,3 +49,23 @@ BEGIN
 	RETURN retval;
 END;
 $$ LANGUAGE PLPGSQL;
+
+
+CREATE TYPE tree_record AS (t int[]);
+
+CREATE OR REPLACE FUNCTION in_tree 
+(in_node_id int, in_search_array tree_record[])
+RETURNS BOOL IMMUTABLE LANGUAGE SQL AS
+$$
+SELECT CASE WHEN count(*) > 0 THEN true ELSE false END
+  FROM unnest($2) r
+ WHERE t @> array[$1];
+$$;
+
+CREATE OR REPLACE FUNCTION in_tree
+(in_node_id int[], in_search_array tree_record[])
+RETURNS BOOL IMMUTABLE LANGUAGE SQL AS
+$$
+SELECT bool_and(in_tree(e, $2))
+  FROM unnest($1) e;
+$$;
