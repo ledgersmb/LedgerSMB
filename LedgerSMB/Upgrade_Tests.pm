@@ -188,6 +188,7 @@ push @tests, __PACKAGE__->new(
                   (select partnumber from parts 
                   WHERE obsolete is not true
                   group by partnumber having count(*) > 1)",
+         name => 'duplicate_partnumbers',
  display_name => $LedgerSMB::App_State::Locale->text('Unique nonobsolete partnumbers'),
  display_cols => ['partnumber', 'description', 'sellprice'],
        column => 'partnumber',
