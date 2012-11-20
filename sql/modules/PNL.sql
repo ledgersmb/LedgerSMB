@@ -102,9 +102,12 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
              JOIN bu_tree ON bu_tree.id = buac.bu_id
         GROUP BY buac.entry_id) bu
           ON (ac.entry_id = bu.entry_id)
-    WHERE ac.approved is true AND ac.transdate BETWEEN $1 AND $2
+    WHERE ac.approved is true 
+          AND ($1 IS NULL OR ac.transdate >= $1) 
+          AND ($2 IS NULL OR ac.transdate <= $2)
           AND ($3 = '{}' 
               OR $3 is null or in_tree($3, bu_ids))
+          AND a.category IN ('I', 'E')
  GROUP BY a.id, a.accno, a.description, a.category, 
           ah.id, ah.accno, ah.description
  ORDER BY a.category DESC, a.accno ASC;
@@ -124,8 +127,8 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
 )
    SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
           ah.description, 
-          CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount) *
-          ca.portion
+          CASE WHEN a.category = 'E' THEN -1 ELSE 1 END 
+               * sum(ac.amount * ca.portion)
      FROM account a
      JOIN account_heading ah on a.heading = ah.id
      JOIN acc_trans ac ON a.id = ac.chart_id AND ac.approved
@@ -136,11 +139,14 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
              JOIN bu_tree ON bu_tree.id = buac.bu_id
          GROUP BY entry_id) bu 
           ON (ac.entry_id = bu.entry_id)
-    WHERE ac.approved is true AND ac.transdate BETWEEN $1 AND $2
+    WHERE ac.approved is true 
           AND ($3 = '{}' 
               OR $3 is null or in_tree($3, bu_ids))
+          AND ($1 IS NULL OR ac.transdate >= $1) 
+          AND ($2 IS NULL OR ac.transdate <= $2)
+          AND a.category IN ('I', 'E')
  GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description, ca.portion
+          ah.id, ah.accno, ah.description
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
 
@@ -188,7 +194,7 @@ SELECT a.id, a.accno, a.description, a.category,
   FROM account a
   JOIN account_heading ah on a.heading = ah.id
   JOIN acc_trans ac ON a.id = ac.chart_id
- WHERE ac.approved is true AND ac.trans_id = $1
+ WHERE ac.approved AND ac.trans_id = $1 AND a.category IN ('I', 'E')
  GROUP BY a.id, a.accno, a.description, a.category, 
           ah.id, ah.accno, ah.description
  ORDER BY a.category DESC, a.accno ASC;
