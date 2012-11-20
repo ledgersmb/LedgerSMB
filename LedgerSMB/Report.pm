@@ -233,6 +233,7 @@ sub render {
                        hlines => $self->header_lines,
                       columns => $self->show_cols($request), 
                     order_url => $self->order_url,
+                      buttons => $self->buttons,
                          rows => $self->rows});
 }
 

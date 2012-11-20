@@ -180,7 +180,7 @@ The amount of the draft must be less than this for it to show up.
 
 =cut
 
-has 'amount_lt' => (is => 'rw', coerce => 1, isa =>'LedgerSMB::Moose::Number'););
+has 'amount_lt' => (is => 'rw', coerce => 1, isa =>'LedgerSMB::Moose::Number');
 
 =back
 
@@ -205,6 +205,19 @@ sub run_report{
         }
         $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}";
     }
+    $self->buttons([
+      {name => 'action',
+       type => 'submit',
+       text => LedgerSMB::Report::text('Approve'), 
+      value => 'approve',
+      class => 'submit', },
+    
+      {name => 'action',
+       type => 'submit',
+       text => LedgerSMB::Report::text('Delete'),
+      value => 'approve',
+      class => 'submit', },
+    ]);
     $self->rows(\@rows);
 }
 

@@ -147,7 +147,7 @@ sub list_drafts {
     use LedgerSMB::Report::Unapproved::Drafts;
     my $report = LedgerSMB::Report::Unapproved::Drafts->new(%$request);
     $report->run_report;
-    $report->render;
+    $report->render($request);
 }
 
 =back
