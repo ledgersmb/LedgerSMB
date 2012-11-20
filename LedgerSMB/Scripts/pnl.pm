@@ -23,7 +23,10 @@ Generates an income statement.
 
 =cut
 
+package LedgerSMB::Scripts::pnl;
+
 use LedgerSMB::Report::PNL::Income_Statement;
+
 
 sub generate_income_statement {
     my ($request) = @_;

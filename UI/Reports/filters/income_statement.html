@@ -1,15 +1,15 @@
 <?lsmb INCLUDE 'ui-header.html' ?>
 <?lsmb PROCESS elements.html;
-       PROCESS 'report_base.html';
+       PROCESS 'report_base.html'; ?>
 <body>
-<form method="get" action="reports.pl">
+<form method="get" action="pnl.pl">
 <table width="100%">
   <tr><th class="listtop"><?lsmb text('Income Statement') ?></th></tr>
   <tr><td> </td></tr>
   <tr>
     <td>
       <table>
-       <?lsmb PROCESS business_units;
+       <?lsmb PROCESS business_classes;
        PROCESS date_row; # TODO add comparisons ?>
     </table>
   </td>
@@ -31,7 +31,7 @@
   name = 'basis',
   type = 'radio',
   value = 'cash',
-  label = text('Accrual'),
+  label = text('Cash'),
   } -?>
         </td>
       </tr>
