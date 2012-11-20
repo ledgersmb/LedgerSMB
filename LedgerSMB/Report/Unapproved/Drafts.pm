@@ -199,6 +199,7 @@ sub run_report{
     my @rows = $self->exec_method({funcname => 'draft__search'});
     for my $ref (@rows){
         my $script = $self->type;
+        $ref->{row_id} = $ref->{id};
         if ($ref->{invoice}){
             $script = 'is' if $self->type eq 'ar';
             $script = 'ir' if $self->type eq 'ap';

@@ -130,7 +130,6 @@ Deletes all objects attached here.
 =cut
 
 sub cleanup {
-
     if ($DBH){
         $DBH->commit;
         $DBH->disconnect;

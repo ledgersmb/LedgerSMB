@@ -34,6 +34,11 @@ END;
 </div>
 <?lsmb END ?>
 <form method="post" action="<?lsmb ENVARS.SCRIPT_NAME ?>">
+<?lsmb PROCESS input element_data = {
+     name = 'form_id'
+    value = request.form_id
+     type = 'hidden'
+} ?>
 <?lsmb PROCESS dynatable tbody = {rows = rows } 
                attributes = {class = 'report', order_url = order_url } ?>
 

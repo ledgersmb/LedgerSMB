@@ -114,7 +114,7 @@ sub call_script {
       # when output terminates.  A mere 'die' will no longer trigger an 
       # automatic error, but die 'foo' will map to $request->error('foo')
       # -- CT
-     $LedgerSMB::App_State::DBH->rollback if $LedgerSMB::App_State::DBH;
+     $LedgerSMB::App_State::DBH->rollback if ($LedgerSMB::App_State::DBH and $_ eq 'Died');
      LedgerSMB::App_State->cleanup();
      $request->error($_) unless $_ eq 'Died';
   };

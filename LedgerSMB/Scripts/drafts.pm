@@ -41,23 +41,15 @@ amount_ge: total greater than or equal to
 =cut
 
 sub search {
-    my ($request) = @_;
-    $request->{class_types} = [
-	{text => $request->{_locale}->text('AR'),  value => 'ar'},
-	{text => $request->{_locale}->text('AP'),  value => 'ap'},
-	{text => $request->{_locale}->text('GL'),  value => 'gl'},
-    ];
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user}, 
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'batch/search_transactions',
-        format => 'HTML'
-    );
-    $template->render($request);
+    use LedgerSMB::Scripts::reports;
+   
+    my $request = shift @_;
+    $request->{search_type} = 'drafts';
+    $request->{report_name} = 'unapproved';
+    LedgerSMB::Scripts::reports::start_report($request);
 }
 
-=item list_drafts_draft_approve
+=item approve
 
 Required hash entries (global):
 
@@ -74,16 +66,16 @@ drafts again.
 =cut
 
 
-sub list_drafts_draft_approve {
+sub approve {
     my ($request) = @_;
     if (!$request->close_form){
         list_drafts($request);
-        $request->finalize_request();
+        return;
     }
     my $draft= LedgerSMB::DBObject::Draft->new(base => $request);
-    for my $row (1 .. $draft->{rowcount}){
-        if ($draft->{"draft_" .$draft->{"row_$row"}}){
-             $draft->{id} = $draft->{"row_$row"};
+    for my $row (1 .. $request->{rowcount_}){
+        if ($draft->{"select_$row"}){
+             $draft->{id} = $draft->{"select_$row"};
              $draft->approve;
         }
     }
@@ -91,7 +83,7 @@ sub list_drafts_draft_approve {
 }
 
 
-=item list_drafts_draft_delete
+=item delete
 
 Required hash entries (global):
 
@@ -107,16 +99,17 @@ drafts again.
 
 =cut
 
-sub list_drafts_draft_delete {
+sub delete {
     my ($request) = @_;
     if (!$request->close_form){
         list_drafts($request);
         $request->finalize_request();
+        return;
     }
     my $draft= LedgerSMB::DBObject::Draft->new(base => $request);
-    for my $row (1 .. $draft->{rowcount}){
-        if ($draft->{"draft_" .$draft->{"row_$row"}}){
-             $draft->{id} = $draft->{"row_$row"};
+    for my $row (1 .. $draft->{rowcount_}){
+        if ($draft->{"select_$row"}){
+             $draft->{id} = $draft->{"select_$row"};
              $draft->delete;
         }
     }
@@ -146,9 +139,12 @@ sub list_drafts {
     my ($request) = @_;
     use LedgerSMB::Report::Unapproved::Drafts;
     my $report = LedgerSMB::Report::Unapproved::Drafts->new(%$request);
+    $request->open_form;
     $report->run_report;
     $report->render($request);
 }
+
+
 
 =back
 
