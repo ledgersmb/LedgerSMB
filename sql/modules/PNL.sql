@@ -180,7 +180,10 @@ SELECT a.id, a.accno, a.description, a.category,
   JOIN account_heading ah on a.heading = ah.id
   JOIN acc_trans ac ON a.id = ac.chart_id
   JOIN gl ON ac.trans_id = gl.id
- WHERE ac.approved is true AND ac.transdate BETWEEN $2 AND $3
+ WHERE ac.approved is true 
+          AND ($2 IS NULL OR ac.transdate >= $2) 
+          AND ($3 IS NULL OR ac.transdate <= $3)
+          AND a.category IN ('I', 'E')
  GROUP BY a.id, a.accno, a.description, a.category, 
           ah.id, ah.accno, ah.description
  ORDER BY a.category DESC, a.accno ASC;
