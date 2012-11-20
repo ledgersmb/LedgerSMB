@@ -23,10 +23,11 @@ Generates an income statement.
 
 =cut
 
+use LedgerSMB::Report::PNL::Income_Statement;
+
 sub generate_income_statement {
     my ($request) = @_;
-    use LedgerSMB::DBObject::Report::PNL::Income_Statement;
-    my $rpt =LedgerSMB::DBObject::Report::PNL::Income_Statement->new(%$request);
+    my $rpt =LedgerSMB::Report::PNL::Income_Statement->new(%$request);
     $rpt->render($request);
 }
 
