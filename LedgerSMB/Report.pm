@@ -146,13 +146,25 @@ Buttons to show at the bottom of the screen
 
 =cut
 
-has buttons => (is => 'rw', isa => 'ArrayRef[Any]');
+has buttons => (is => 'rw', isa => 'ArrayRef[Any]',
+                lazy => 1, builder => 'set_buttons');
 
 =back
 
 =head1 METHODS
 
 =over
+
+=item set_buttons
+
+This returns an empty arrayref here but can be overridden by individual
+reports.
+
+=cut
+
+sub set_buttons {
+    return [];
+}
 
 =item render
 

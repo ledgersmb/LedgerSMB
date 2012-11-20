@@ -188,6 +188,26 @@ has 'amount_lt' => (is => 'rw', coerce => 1, isa =>'LedgerSMB::Moose::Number');
 
 =over
 
+=item set_buttons 
+
+=cut
+
+sub set_buttons {
+return [
+      {name => 'action',
+       type => 'submit',
+       text => LedgerSMB::Report::text('Approve'), 
+      value => 'approve',
+      class => 'submit', },
+    
+      {name => 'action',
+       type => 'submit',
+       text => LedgerSMB::Report::text('Delete'),
+      value => 'approve',
+      class => 'submit', },
+    ];
+}
+
 =item run_report()
 
 Runs the report, and assigns rows to $self->rows.
@@ -206,19 +226,6 @@ sub run_report{
         }
         $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}";
     }
-    $self->buttons([
-      {name => 'action',
-       type => 'submit',
-       text => LedgerSMB::Report::text('Approve'), 
-      value => 'approve',
-      class => 'submit', },
-    
-      {name => 'action',
-       type => 'submit',
-       text => LedgerSMB::Report::text('Delete'),
-      value => 'approve',
-      class => 'submit', },
-    ]);
     $self->rows(\@rows);
 }
 
