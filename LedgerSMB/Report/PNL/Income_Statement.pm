@@ -84,9 +84,9 @@ sub report_base {
     die LedgerSMB::Report::text('Invalid Reporting Basis') 
            if ($self->basis ne 'accrual') and ($self->basis ne 'cash');
     my $procname = 'pnl__income_statement_' . $self->basis;
-    return $self->call_procedure(
-             procname => $procname, args => [$from_date, $to_date]
-    );
+    return $self->exec_method({
+             funcname => $procname
+    });
 }
 
 =over
