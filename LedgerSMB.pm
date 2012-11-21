@@ -367,7 +367,7 @@ warn 'breakpoint:' . __LINE__;
        if (!LedgerSMB::Auth::session_check( $cookie{${LedgerSMB::Sysconfig::cookie_name}}, $self) ) {
             $logger->error("Session did not check");
             $self->_get_password("Session Expired");
-            exit;
+            die;
        }
        $logger->debug("session_check completed OK \$self->{session_id}=$self->{session_id} caller=\$filename=$filename \$line=$line");
     }
@@ -442,7 +442,7 @@ sub _get_password {
     my ($self) = shift @_;
     $self->{sessionexpired} = shift @_;
     LedgerSMB::Auth::credential_prompt();
-    exit;
+    die;
 }
 
 sub debug {
@@ -556,7 +556,7 @@ sub redirect {
     if ( $self->{callback} || !$msg ) {
 
         main::redirect();
-	exit;
+	die;
     }
     else {
 
