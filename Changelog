@@ -47,6 +47,8 @@ New Reporting Framework
 * Unified UI for reports (Chris T)
 * Enhanced trial balance allows for partial trial balance (Chris T)
 * Enhanced trial balance allows for saved criteria (Chris T)
+* New income-statement-like reports for customers and products (Chris T)
+* New income-statement-like reports for invoices (Chris T)
 
 Customer/Vendor/Employee Handling and CRM
 * Added sales tax id and license number fields for companies (Chris T)
