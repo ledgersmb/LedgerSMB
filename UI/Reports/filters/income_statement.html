@@ -3,6 +3,11 @@
        PROCESS 'report_base.html'; ?>
 <body>
 <form method="get" action="pnl.pl">
+<?lsmb PROCESS input element_data = {
+     name = 'pnl_type',
+     type = 'hidden',
+    value = pnl_type
+} ?>
 <table width="100%">
   <tr><th class="listtop"><?lsmb text('Income Statement') ?></th></tr>
   <tr><td> </td></tr>
@@ -10,7 +15,47 @@
     <td>
       <table>
        <?lsmb PROCESS business_classes;
-       PROCESS date_row; # TODO add comparisons ?>
+       PROCESS date_row; # TODO add comparisons
+      IF pnl_type == 'eca' ?>
+       <tr>
+       <th><?lsmb text('Name') ?></th>
+       <td colspan=3><?lsmb PROCESS input element_data = {
+                 name = 'name'
+                value = name
+                 type = 'text'
+                class = 'name'
+       } ?></td>
+       </tr>
+       <tr>
+       <th><?lsmb text('Account Number') ?></th>
+       <td colspan=3><?lsmb PROCESS input element_data = {
+                 name = 'meta_number'
+                value = meta_number
+                 type = 'text'
+                class = 'control_code'
+       } ?></td>
+      </tr>
+      <?lsmb END;
+      IF pnl_type == 'product'; ?>
+       <tr>
+       <th><?lsmb text('Part Number') ?></th>
+       <td colspan=3><?lsmb PROCESS input element_data = {
+                 name = 'partnumber'
+                value = partnumber
+                 type = 'text'
+                class = 'name'
+       } ?></td>
+       </tr>
+       <tr>
+       <th><?lsmb text('Account Number') ?></th>
+       <td colspan=3><?lsmb PROCESS input element_data = {
+                 name = 'meta_number'
+                value = meta_number
+                 type = 'text'
+                class = 'control_code'
+       } ?></td>
+       </tr>
+      <?lsmb END; ?>
     </table>
   </td>
 </tr>
