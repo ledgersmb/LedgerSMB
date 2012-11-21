@@ -1,71 +1,94 @@
-<?lsmb INCLUDE 'ui-header.html';
-
-INCOME_ROWS = [];
-TOTAL_INCOME = 0;
-EXPENSE_ROWS = [];
-TOTAL_EXPENSE = 0;
-
-FORACH r IN rows;
-   IF r.category = 'E';
-       EXPENSE_ROWS.push(r);
-       TOTAL_EXPENSE = TOTAL_EXPENSE + r.amount;
-   ELSIF r.category = 'I';
-       INCOME_ROWS.push(r);
-       TOTAL_INCOME = TOTAL_INCOME + r.amount;
-   END;
-END;
-
-RETAINED_EARNINGS = TOTAL_INCOME - TOTAL_EXPENSE;
-
-IF RETAINED_EARNINGS < 0;
-   RETAINED_EARNINGS = '(' _ RETAINED_EARNINGS * -1 _ ')';
-END;
-?>
+<?lsmb INCLUDE 'ui-header.html' include_stylesheet = ['UI/Reports/pnl.css'];
+account_data = report.account_data ?>
 <body>
-<div id="report_name" class="income_statement">
 <h1><?lsmb name ?></h1>
-<h2><?lsmb text('Accounting period: [_1] to [_2]', from_date, to_date); ?></h2>
+<h2><?lsmb text('Accounting period: [_1] to [_2]', report.from_date, report.to_date); ?></h2>
+<?lsmb 
+IF comparisons;
+    FOREACH COMP IN comparisons ?>
+<h2><?lsmb text('Compared to: [_1] to [_2]', COMP.from_date, COMP.to_date) ?>
+</h2>
+   <?lsmb END;
+END ?>
 <table>
 <tbody>
     <tr class="sectionhead">
         <th><?lsmb text('Income Account') ?></th>
-        <th><?lsmb text('Amount') ?></th>
+        <th><?lsmb report.from_date _ ' - ' _ report.to_date ?></th>
+    <?lsmb FOREACH COMP IN comparison ?>
+        <th><?lsmb COMP.from_date _ ' - ' _ COMP.to_date ?></th>
+    <?lsmb END ?>
     </tr>
-  <?lsmb FOREACH R IN INCOME_ROWS ?>
+  <?lsmb FOREACH k IN account_data.I.keys ?>
     <tr class="incomerow">
-        <td class="label"><?lsmb R.accno _ '--' R.description ?></td>
-        <td class="amount"><?lsmb R.amount ?></td>
+        <td class="label"><?lsmb k _ '--' 
+                             _ account_data.I.${k}.main.account_description ?></td>
+        <td class="amount"><?lsmb account_data.I.${k}.main.amount ?></td>
+       
+    <?lsmb FOREACH COMP IN comparison ?>
+        <td class="amount">
+            <?lsmb account_data.I.${k}.${COMP.label}.amount ?></td>
+    <?lsmb END ?>
     </tr>
  <?lsmb END ?>
    <tr class="sectionfoot">
      <th><?lsmb text('Total Income') ?></th>
-     <td class="amount"><?lsmb TOTAL_INCOME ?></td>
+     <td class="amount"><?lsmb account_data.totals.main.I ?></td>
+    <?lsmb FOREACH COMP IN comparison ?>
+        <td class="amount">
+            <?lsmb account_data.totals.${COMP.label}.I ?></td>
+    <?lsmb END ?>
    </tr>
     <tr class="sectionhead">
         <th><?lsmb text('Expense Account') ?></th>
-        <th><?lsmb text('Amount') ?></th>
+        <th>&nbsp;</th>
+    <?lsmb FOREACH COMP IN comparison ?>
+        <th>&nbsp;</th>
+    <?lsmb END ?>
     </tr>
-  <?lsmb FOREACH R IN EXPENSE_ROWS ?>
+  <?lsmb FOREACH k IN account_data.E.keys ?>
     <tr class="incomerow">
-        <td class="label"><?lsmb R.accno _ '--' R.description ?></td>
-        <td class="amount"><?lsmb R.amount ?></td>
+        <td class="label"><?lsmb k _ '--' _
+             account_data.E.${k}.main.account_description ?></td>
+        <td class="amount"><?lsmb account_data.E.${k}.main.amount ?></td>
+    <?lsmb FOREACH COMP IN comparison ?>
+        <td class="amount">
+            <?lsmb account_data.E.${k}.${COMP.label}.amount ?></td>
+    <?lsmb END ?>
     </tr>
  <?lsmb END ?>
    <tr class="sectionfoot">
      <th><?lsmb text('Total Expense') ?></th>
-     <td class="amount"><?lsmb TOTAL_EXPENSE ?></td>
+     <td class="amount"><?lsmb account_data.totals.main.E ?></td>
+    <?lsmb FOREACH COMP IN comparison ?>
+        <td class="amount">
+            <?lsmb account_data.totals.${COMP.label}.E ?></td>
+    <?lsmb END ?>
    </tr>
+   <tr class="separator"><td></td></tr>
    <tr class="sectionfoot">
      <th><?lsmb text('Total Income') ?></th>
-     <td class="amount"><?lsmb TOTAL_INCOME ?></td>
+     <td class="amount"><?lsmb account_data.totals.main.I ?></td>
+    <?lsmb FOREACH COMP IN comparison ?>
+        <td class="amount">
+            <?lsmb account_data.totals.${COMP.label}.I ?></td>
+    <?lsmb END ?>
    </tr>
    <tr class="reportfoot">
      <th><?lsmb text('Less Total Expense') ?></th>
-     <td class="amount"><?lsmb TOTAL_EXPENSE ?></td>
+     <td class="amount"><?lsmb account_data.totals.main.E ?></td>
+    <?lsmb FOREACH COMP IN comparison ?>
+        <td class="amount">
+            <?lsmb account_data.totals.${COMP.label}.E ?></td>
+    <?lsmb END ?>
    </tr>
    <tr class="reportfoot">
      <th><?lsmb text('Income (Loss)') ?></th>
-     <td class="amount"><?lsmb RETAINED_EARNINGS ?></td>
+     <td class="amount"><?lsmb account_data.totals.main.total ?></td>
+    <?lsmb FOREACH COMP IN comparison ?>
+        <td class="amount">
+            <?lsmb account_data.totals.${COMP.label}.total ?></td>
+    <?lsmb END ?>
    </tr>
 </tbody>
 </table>

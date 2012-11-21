@@ -35,6 +35,8 @@ has basis => (is => 'ro', isa =>'Str', required => 1);
 
 has '_cols' => (is => 'rw', isa => 'ArrayRef[Any]', required => 0);
 
+has 'account_data' =>  (is => 'rw', isa => 'HashRef[Any]');
+
 =back
 
 =head1 CONSTANT REPORT-RELATED FUNCTIONS
@@ -45,7 +47,7 @@ has '_cols' => (is => 'rw', isa => 'ArrayRef[Any]', required => 0);
 
 =cut
 
-sub template { return 'PNL' }
+sub template { return 'Reports/PNL' }
 
 =item name
 
@@ -66,7 +68,7 @@ sub header_lines {
 
 =cut
 
-sub columns { return $_[0]->_cols  }
+sub columns { return []  }
 
 =back
 
@@ -77,16 +79,14 @@ sub columns { return $_[0]->_cols  }
 # private method
 # report_base($from, $to)
 # returns an array of hashrefs of report results.  Used in adding comparison
-# as well ans the main report
+# as well as the main report
 
 sub report_base {
     my ($self, $from_date, $to_date) = @_;
     die LedgerSMB::Report::text('Invalid Reporting Basis') 
            if ($self->basis ne 'accrual') and ($self->basis ne 'cash');
     my $procname = 'pnl__income_statement_' . $self->basis;
-    return $self->exec_method({
-             funcname => $procname
-    });
+    return $self->exec_method({funcname => $procname});
 }
 
 =over
@@ -99,6 +99,25 @@ sub run_report {
     my ($self) = @_;
     my @rows = $self->report_base($self->from_date, $self->to_date);
     $self->rows(\@rows);
+    my $data = $self->account_data;
+    $data ||= $data = {'I' => {}, 'E' => {}};
+    for my $r (@rows){
+        $data->{$r->{account_category}}->{$r->{account_number}} = {'main' => $r};
+    }
+    my $i_total = 0;
+    my $e_total = 0;
+    my $total;
+    for my $k (keys %{$data->{I}}){
+       $i_total += $data->{I}->{$k}->{main}->{amount}; 
+    }
+    for my $k (keys %{$data->{E}}){
+       $e_total += $data->{E}->{$k}->{main}->{amount}; 
+    }
+    $data->{totals}->{main}->{I} = $i_total;
+    $data->{totals}->{main}->{E} = $e_total;
+    $data->{totals}->{main}->{total} = $i_total - $e_total;
+    $self->account_data($data);
+    return @rows;
 }
 
 =item add_comparison($from, $to)
