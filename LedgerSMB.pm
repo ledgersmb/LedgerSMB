@@ -238,6 +238,7 @@ sub new {
 
     $type = "" unless defined $type;
     $argstr = "" unless defined $argstr;
+warn 'breakpoint:' . __LINE__;
 
     $logger->debug("Begin called from \$filename=$filename \$line=$line \$type=$type \$argstr=$argstr ref argstr=".ref $argstr);
 
@@ -949,7 +950,7 @@ sub error {
         print
           qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></body>|;
 
-        exit;
+        die;
 
     }
     else {
@@ -1102,7 +1103,7 @@ sub dberror{
            . "\n" . 
           $locale->text('More information has been reported in the error logs'));
        $dbh->rollback;
-       exit;
+       die;
    }
    $self->error($dbh->state . ":" . $dbh->errstr);
 }
