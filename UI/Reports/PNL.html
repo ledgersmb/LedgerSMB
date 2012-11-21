@@ -1,5 +1,6 @@
 <?lsmb INCLUDE 'ui-header.html' include_stylesheet = ['UI/Reports/pnl.css'];
 account_data = report.account_data ?>
+<?lsmb COLS = comparison.length + 2 ?>
 <body>
 <h1><?lsmb name ?></h1>
 <h2><?lsmb text('Accounting period: [_1] to [_2]', report.from_date, report.to_date); ?></h2>
@@ -10,35 +11,46 @@ IF comparisons;
 </h2>
    <?lsmb END;
 END ?>
-<table>
+<table class="income_statement">
 <tbody>
     <tr class="sectionhead">
         <th><?lsmb text('Income Account') ?></th>
-        <th><?lsmb report.from_date _ ' - ' _ report.to_date ?></th>
+        <th><?lsmb report.from_date _ '<br /> - <br />' _ report.to_date ?></th>
     <?lsmb FOREACH COMP IN comparison ?>
-        <th><?lsmb COMP.from_date _ ' - ' _ COMP.to_date ?></th>
+        <th><?lsmb COMP.from_date _ '<br /> - <br />' _ COMP.to_date ?></th>
     <?lsmb END ?>
     </tr>
   <?lsmb FOREACH k IN account_data.I.keys ?>
     <tr class="incomerow">
-        <td class="label"><?lsmb k _ '--' 
-                             _ account_data.I.${k}.main.account_description ?></td>
-        <td class="amount"><?lsmb account_data.I.${k}.main.amount ?></td>
+        <td class="label"><a href="account.pl?action=edit&id=<?lsmb
+                                     account_data.I.${k}.main.account_id 
+                                  ?>&charttype=A"
+             ><?lsmb k _ '--' 
+                             _ account_data.I.${k}.main.account_description ?></td></a>
+        <td class="amount"><a href="journal.pl?sort=transdate&accno=<?lsmb k
+                                    ?>&from_date=<?lsmb report.from_date 
+                                    ?>&to_date=<?lsmb report.to_date 
+                                    ?>&category=X&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y&action=search"
+        ><?lsmb account_data.I.${k}.main.amount ?></a></td>
        
     <?lsmb FOREACH COMP IN comparison ?>
-        <td class="amount">
-            <?lsmb account_data.I.${k}.${COMP.label}.amount ?></td>
+        <td class="amount"><a href="journal.pl?sort=transdate&accno=<?lsmb k 
+                                   ?>&from_date=<?lsmb COMP.from_date 
+                                   ?>&to_date=<?lsmb COMP.to_date
+                                   ?>&category=X&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y&action=search"
+           ><?lsmb account_data.I.${k}.${COMP.label}.amount ?></a></td>
     <?lsmb END ?>
     </tr>
  <?lsmb END ?>
    <tr class="sectionfoot">
      <th><?lsmb text('Total Income') ?></th>
-     <td class="amount"><?lsmb account_data.totals.main.I ?></td>
+     <td class="amount total"><?lsmb account_data.totals.main.I ?></td>
     <?lsmb FOREACH COMP IN comparison ?>
-        <td class="amount">
+        <td class="amount total">
             <?lsmb account_data.totals.${COMP.label}.I ?></td>
     <?lsmb END ?>
    </tr>
+   <tr class="separator"><td colspan="<?lsmb COLS ?>"></td></tr>
     <tr class="sectionhead">
         <th><?lsmb text('Expense Account') ?></th>
         <th>&nbsp;</th>
@@ -48,24 +60,34 @@ END ?>
     </tr>
   <?lsmb FOREACH k IN account_data.E.keys ?>
     <tr class="incomerow">
-        <td class="label"><?lsmb k _ '--' _
-             account_data.E.${k}.main.account_description ?></td>
-        <td class="amount"><?lsmb account_data.E.${k}.main.amount ?></td>
+        <td class="label"><a href="account.pl?action=edit&id=<?lsmb
+                                     account_data.I.${k}.main.account_id 
+                                  ?>&charttype=A"
+             ><?lsmb k _ '--' _
+             account_data.E.${k}.main.account_description ?></a></td>
+        <td class="amount"><a href="journal.pl?sort=transdate&accno=<?lsmb k
+                                    ?>&from_date=<?lsmb report.from_date 
+                                    ?>&to_date=<?lsmb report.to_date 
+                                    ?>&category=X&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y&action=search"
+        ><?lsmb account_data.E.${k}.main.amount ?></a></td>
     <?lsmb FOREACH COMP IN comparison ?>
         <td class="amount">
-            <?lsmb account_data.E.${k}.${COMP.label}.amount ?></td>
+        <td class="amount"><a href="journal.pl?sort=transdate&accno=<?lsmb k 
+                                   ?>&from_date=<?lsmb COMP.from_date 
+                                   ?>&to_date=<?lsmb COMP.to_date
+                                   ?>&category=X&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y&action=search"
+	><?lsmb account_data.E.${k}.${COMP.label}.amount ?></a></td>
     <?lsmb END ?>
     </tr>
  <?lsmb END ?>
    <tr class="sectionfoot">
      <th><?lsmb text('Total Expense') ?></th>
-     <td class="amount"><?lsmb account_data.totals.main.E ?></td>
+     <td class="amount total"><?lsmb account_data.totals.main.E ?></td>
     <?lsmb FOREACH COMP IN comparison ?>
-        <td class="amount">
+        <td class="amount total">
             <?lsmb account_data.totals.${COMP.label}.E ?></td>
-    <?lsmb END ?>
-   </tr>
-   <tr class="separator"><td></td></tr>
+    <?lsmb END ?></tr>
+   <tr class="separator"><td colspan="<?lsmb COLS ?>"></td></tr>
    <tr class="sectionfoot">
      <th><?lsmb text('Total Income') ?></th>
      <td class="amount"><?lsmb account_data.totals.main.I ?></td>
@@ -83,10 +105,10 @@ END ?>
     <?lsmb END ?>
    </tr>
    <tr class="reportfoot">
-     <th><?lsmb text('Income (Loss)') ?></th>
-     <td class="amount"><?lsmb account_data.totals.main.total ?></td>
+     <th> = <?lsmb text('Net Income (Loss)') ?></th>
+     <td class="amount total"><?lsmb account_data.totals.main.total ?></td>
     <?lsmb FOREACH COMP IN comparison ?>
-        <td class="amount">
+        <td class="amount total">
             <?lsmb account_data.totals.${COMP.label}.total ?></td>
     <?lsmb END ?>
    </tr>

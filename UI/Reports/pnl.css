@@ -1,0 +1,37 @@
+a {
+	color: inherit;
+	background-color: inherit;
+	text-decoration: none;
+}
+a:link {
+	color: inherit;
+	background-color: inherit;
+	text-decoration: none;
+}
+a:visited {
+	color: inherit;
+	background-color: inherit;
+	text-decoration: none;
+}
+a:hover {
+	color: inherit;
+	background-color: inherit;
+	text-decoration: none;
+	border-bottom: thin dashed;
+}
+td.amount {
+	text-align: right;
+}
+tr.separator {
+	background-color: gray;
+}
+td.total {
+        border: 0px;
+	border-top: 1px;
+        border-color: black;
+        border-style: solid;
+}
+
+th {
+	vertical-align: bottom;	
+}
