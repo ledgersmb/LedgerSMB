@@ -15,47 +15,8 @@
     <td>
       <table>
        <?lsmb PROCESS business_classes;
-       PROCESS date_row; # TODO add comparisons
-      IF pnl_type == 'eca' ?>
-       <tr>
-       <th><?lsmb text('Name') ?></th>
-       <td colspan=3><?lsmb PROCESS input element_data = {
-                 name = 'name'
-                value = name
-                 type = 'text'
-                class = 'name'
-       } ?></td>
+       PROCESS date_row; # TODO add comparisons ?>
        </tr>
-       <tr>
-       <th><?lsmb text('Account Number') ?></th>
-       <td colspan=3><?lsmb PROCESS input element_data = {
-                 name = 'meta_number'
-                value = meta_number
-                 type = 'text'
-                class = 'control_code'
-       } ?></td>
-      </tr>
-      <?lsmb END;
-      IF pnl_type == 'product'; ?>
-       <tr>
-       <th><?lsmb text('Part Number') ?></th>
-       <td colspan=3><?lsmb PROCESS input element_data = {
-                 name = 'partnumber'
-                value = partnumber
-                 type = 'text'
-                class = 'name'
-       } ?></td>
-       </tr>
-       <tr>
-       <th><?lsmb text('Account Number') ?></th>
-       <td colspan=3><?lsmb PROCESS input element_data = {
-                 name = 'meta_number'
-                value = meta_number
-                 type = 'text'
-                class = 'control_code'
-       } ?></td>
-       </tr>
-      <?lsmb END; ?>
     </table>
   </td>
 </tr>

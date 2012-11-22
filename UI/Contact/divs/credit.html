@@ -212,7 +212,7 @@ PROCESS dynatable
 
 	<tr id="taxform-threshold-row">
 	 <td> <?lsmb IF taxform_list.size > 0 ?>
-              <?lsmb taxform_list.unshift({})
+              <?lsmb taxform_list.unshift({});
                      INCLUDE select element_data = {
 			name = "taxform_id"
 			options = taxform_list
@@ -326,4 +326,31 @@ PROCESS dynatable
 	
     </form>
 </div>
+<?lsmb IF credit_act.id ?>
+<div class="listtop"><?lsmb text('Profit and Loss') ?></div>
+<form action="pnl.pl" method="GET"?>
+<div class="inputrow">
+<?lsmb
+PROCESS 'report_base.html'; 
+PROCESS input element_data = {
+     type = "hidden"
+     name = "id"
+    value = credit_act.id
+};
+PROCESS input element_data = {
+     type = "hidden"
+     name = "pnl_type"
+    value = "eca"
+}; 
+PROCESS date_row_div; 
+PROCESS button element_data = {
+     text = text('Continue')
+     type = 'submit'
+    class = 'submit'
+     name = 'action'
+    value = 'generate_income_statement'
+};
+?>
 </div>
+</form>
+<?lsmb END # IF credit_act.id ?>

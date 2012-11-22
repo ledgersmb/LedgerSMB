@@ -26,11 +26,25 @@ Generates an income statement.
 package LedgerSMB::Scripts::pnl;
 
 use LedgerSMB::Report::PNL::Income_Statement;
+use LedgerSMB::Report::PNL::Product;
+use LedgerSMB::Report::PNL::ECA;
+use LedgerSMB::Report::PNL::Invoice;
+use LedgerSMB::Report;
+use LedgerSMB::App_State;
 
 
 sub generate_income_statement {
     my ($request) = @_;
-    my $rpt =LedgerSMB::Report::PNL::Income_Statement->new(%$request);
+    my $rpt;
+    if ($request->{pnl_type} eq 'invoice'){
+        $rpt = LedgerSMB::Report::PNL::Invoice->new(%$request);
+    } elsif ($request->{pnl_type} eq 'eca'){
+        $rpt = LedgerSMB::Report::PNL::ECA->new(%$request);
+    } elsif ($request->{pnl_type} eq 'product'){
+        $rpt = LedgerSMB::Report::PNL::Product->new(%$request);
+    } else {
+        my $rpt =LedgerSMB::Report::PNL::Income_Statement->new(%$request);
+    }
     $rpt->render($request);
 }
 
