@@ -234,6 +234,7 @@ sub new {
 
     $type = "" unless defined $type;
     $argstr = "" unless defined $argstr;
+warn 'breakpoint:' . __LINE__;
 
     $logger->debug("Begin called from \$filename=$filename \$line=$line \$type=$type \$argstr=$argstr ref argstr=".ref $argstr);
 
@@ -368,7 +369,7 @@ sub new {
        if (!LedgerSMB::Session::check( $cookie{${LedgerSMB::Sysconfig::cookie_name}}, $self) ) {
             $logger->error("Session did not check");
             $self->_get_password("Session Expired");
-            exit;
+            die;
        }
        $logger->debug("session_check completed OK \$self->{session_id}=$self->{session_id} caller=\$filename=$filename \$line=$line");
     }
@@ -447,7 +448,7 @@ sub _get_password {
     } else {
         LedgerSMB::Auth::credential_prompt();
     }
-    exit;
+    die;
 }
 
 sub debug {
@@ -561,7 +562,7 @@ sub redirect {
     if ( $self->{callback} || !$msg ) {
 
         main::redirect();
-	exit;
+	die;
     }
     else {
 
@@ -831,7 +832,7 @@ sub error {
              <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
              </body>|;
 
-        exit;
+        die;
 
     }
     else {
@@ -983,7 +984,7 @@ sub dberror{
            . "\n" . 
           $locale->text('More information has been reported in the error logs');
        $dbh->rollback;
-       exit;
+       die;
    }
    die $dbh->state . ":" . $dbh->errstr;
 }

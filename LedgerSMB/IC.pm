@@ -230,7 +230,7 @@ sub get_part {
 			LEFT JOIN entity_credit_account c 
                                   ON (c.id = pc.credit_id)
 			LEFT JOIN pricegroup g ON (g.id = pc.pricegroup_id)
-                 JOIN entity e ON (e.id = c.entity_id)
+                        LEFT JOIN entity e ON (e.id = c.entity_id)
 			    WHERE pc.parts_id = ?
 			 ORDER BY e.name, g.pricegroup, pc.pricebreak|;
         $sth = $dbh->prepare($query);
@@ -588,6 +588,7 @@ sub save {
 
             ( $null, $customer_id ) = split /--/, $form->{"customer_$i"};
             $customer_id *= 1;
+            $customer_id ||= undef; # 0 id is invalid anyway.
 
             ( $null, $pricegroup_id ) = split /--/, $form->{"pricegroup_$i"};
 
