@@ -955,8 +955,31 @@ sub form_footer {
         qw(login path sessionid callback previousform isassemblyitem));
 
     print qq|
-</form>
-| . $form->close_status_div . qq|
+</form> |;
+    if ($form->{id}){
+        print qq|<form action="pnl.pl" method="GET">
+        <input type="hidden" name="id" value="$form->{id}">
+        <input type="hidden" name="pnl_type" value="product">
+        <table width="100%">
+        <col width="20em"><col>
+        <tr class="listtop"><th colspan=2>| . $locale->text('Profit/Loss') . qq|
+                    </th>
+        </tr>
+        <tr><th>| . $locale->text('Date From') . qq|</th>
+            <td><input type="text" size="12" name="date_from" class="date"></td>
+        </tr><tr>
+            <th>| . $locale->text('Date To') . qq|</th>
+            <td><input type="text" size="12" name="date_to" class="date"></td>
+        </tr><tr>
+            <td><button type="submit" name="action" 
+                        value="generate_income_statement" 
+                        class="submit">| . $locale->text('Continue') .
+                        qq|</button><td>
+        </tr>
+        </table>
+        </form>|;
+    } 
+    print $form->close_status_div . qq|
 </body>
 </html>
 |;
