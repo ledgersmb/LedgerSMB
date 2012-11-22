@@ -7,9 +7,9 @@ in_entry_type int,
 in_transaction_date date,
 in_approved bool,
 in_is_template bool
-) RETURNS journal AS 
+) RETURNS journal_entry AS 
 $$
-DECLARE retval journal;
+DECLARE retval journal_entry;
 BEGIN
 	INSERT INTO journal_entry (source, description, entry_type, transaction_date,
 			approved, is_template)
@@ -17,14 +17,14 @@ BEGIN
 			coalesce(in_approved, false), 
 			coalesce(in_is_template, false));
 
-	SELECT * INTO retval FROM journal WHERE id = currval('journal_id_seq');
+	SELECT * INTO retval FROM journal_entry WHERE id = currval('journal_id_seq');
 	RETURN retval;
 END;
 $$ language plpgsql; 
 
 CREATE OR REPLACE FUNCTION journal__add_line(
 in_account_id int, in_journal_id int, in_amount numeric, 
-in_cleared bool, in_memo text, in_business_units int[],
+in_cleared bool, in_memo text, in_business_units int[]
 ) RETURNS journal_line AS $$
 DECLARE retval journal_line;
 BEGIN
@@ -125,7 +125,7 @@ $$
 SELECT * FROM eca_invoice where journal_id = $1;
 $$ language sql;
 
-CREATE OR REPLACE FUNCTION journal__get_entry(in_id int) RETURNS journal AS
+CREATE OR REPLACE FUNCTION journal__get_entry(in_id int) RETURNS journal_entry AS
 $$
 SELECT * FROM journal_entry where id = $1;
 $$ language sql;
