@@ -575,7 +575,7 @@ IN ROLE "lsmb_<?lsmb dbname ?>__ap_all_vouchers",
 CREATE ROLE "lsmb_<?lsmb dbname ?>__reconciliation_enter"
 WITH INHERIT NOLOGIN;
 
-GRANT SELECT ON recon_payee 
+GRANT SELECT ON recon_payee, cr_coa_to_account 
 TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
 
 GRANT UPDATE ON cr_report TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
