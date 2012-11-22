@@ -4,11 +4,6 @@
 -- Chris Travers
 
 -- during 1.4m2
-BEGIN; 
-
-BEGIN;
-ALTER TABLE account ADD COLUMN is_temp BOOL NOT NULL DEFAULT FALSE;
-COMMIT;
 
 BEGIN;
 
