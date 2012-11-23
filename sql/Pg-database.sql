@@ -2389,6 +2389,15 @@ COMMENT ON FUNCTION gl_audit_trail_append() IS
 $$ This provides centralized support for insertions into audittrail.
 $$;
 
+CREATE TRIGGER gl_audit_trail AFTER INSERT OR UPDATE OR DELETE ON gl
+FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
+
+CREATE TRIGGER ar_audit_trail AFTER INSERT OR UPDATE OR DELETE ON ar
+FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
+
+CREATE TRIGGER ap_audit_trail AFTER INSERT OR UPDATE OR DELETE ON ap
+FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
+
 CREATE TRIGGER je_audit_trail AFTER insert or update or delete ON journal_entry
 FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
 
