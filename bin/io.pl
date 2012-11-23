@@ -1500,18 +1500,11 @@ sub print_select { # Needed to print new printoptions output from non-template
 }
 sub print {
 
-    my $csettings = $LedgerSMB::Company_Config::settings;
-    $form->{company} = $csettings->{company_name};
-    $form->{businessnumber} = $csettings->{businessnumber};
-    $form->{email} = $csettings->{company_email};
-    $form->{address} = $csettings->{company_address};
-    $form->{tel} = $csettings->{company_phone};
-    #$form->{myCompanyFax} = $csettings->{company_fax};#fax should be named myCompanyFax ?
-    $form->{fax} = $csettings->{company_fax};
     $logger->trace("setting fax from LedgerSMB::Company_Config::settings \$form->{formname}=$form->{formname} \$form->{fax}=$form->{fax}");
 
 
     # if this goes to the printer pass through
+    my $old_form = undef;
     if ( $form->{media} !~ /(screen|email)/ ) {
         $form->error( $locale->text('Select txt, postscript or PDF!') )
           if ( $form->{format} !~ /(txt|postscript|pdf)/ );
@@ -1520,13 +1513,20 @@ sub print {
         for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
 
     }
-
     &print_form($old_form);
+
 
 }
 
 sub print_form {
     my ($old_form) = @_;
+    my $csettings = $LedgerSMB::Company_Config::settings;
+    $form->{company} = $csettings->{company_name};
+    $form->{businessnumber} = $csettings->{businessnumber};
+    $form->{address} = $csettings->{company_address};
+    $form->{tel} = $csettings->{company_phone};
+    #$form->{myCompanyFax} = $csettings->{company_fax};#fax should be named myCompanyFax ?
+    $form->{fax} = $csettings->{company_fax};
     my $inv = "inv";
     my $due = "due";
 
