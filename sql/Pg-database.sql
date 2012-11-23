@@ -1231,13 +1231,6 @@ CREATE TABLE journal_line (
     primary key (id)
 );
 
-CREATE TABLE business_unit_jl (
-    entry_id int references journal_line(id),
-    bu_class int references business_unit_class(id),
-    bu_id int references business_unit(id) NOT NULL,
-    PRIMARY KEY(entry_id, bu_class)
-);
-
 COMMENT ON TABLE journal_line IS
 $$ Replaces acc_trans as the main account transaction line table.$$;
 
@@ -1976,6 +1969,13 @@ CREATE TABLE job (
   parts_id int,
   production numeric default 0,
   completed numeric default 0
+);
+
+CREATE TABLE business_unit_jl (
+    entry_id int references journal_line(id),
+    bu_class int references business_unit_class(id),
+    bu_id int references business_unit(id) NOT NULL,
+    PRIMARY KEY(entry_id, bu_class)
 );
 
 CREATE TABLE business_unit_ac (

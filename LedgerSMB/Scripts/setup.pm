@@ -798,7 +798,8 @@ sub run_upgrade {
     my $dbinfo = $database->get_info();
     $dbh->do('ALTER SCHEMA public RENAME TO lsmb12');
     $dbh->do('CREATE SCHEMA PUBLIC');
-
+    $database->exec_script({script => "$database->{source_dir}sql/Pg-database.sql",
+                            log    => "$temp/dblog"});
     $database->load_modules('LOADORDER');
     $database->process_roles('Roles.sql');
     my $dbtemplate = LedgerSMB::Template->new(
