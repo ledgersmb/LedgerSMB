@@ -6,6 +6,10 @@ Changelog for 1.3.25
 * Fixed internal server errors on LedgerSMB->error() during new() (Chris T)
 * Fixed pricematrix rows not showing where pricegroups are used (Chris T)
 * Fixed missing grant in some cases on cr_coa_to_account (Chris T)
+* Fixed letterhead not showing up on emailed invoices (Chris T, h/t Kevin B)
+
+Chris T is Chris Travers
+Kevin B is Kevin Bailey
 
 Changelog for 1.3.24
 * Fixed error in msgid for "Add Language" (Havard S, h/t Robert C)
