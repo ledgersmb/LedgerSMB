@@ -402,6 +402,7 @@ sub upgrade{
         $sth->execute();
         if ($sth->rows > 0){ # Check failed --CT
              _failed_check($request, $check, $sth);
+             return;
         }
     }
 
@@ -443,13 +444,14 @@ sub _failed_check{
                     edit => $check->{edit},
                 database => $request->{database}};
     my $header = {};
-    for (@{$check->{cols}}){
+    for (@{$check->display_cols}){
         $header->{$_} = $_;
     }
     while (my $row = $sth->fetchrow_hashref('NAME_lc')){
-          $row->{$check->{'edit'}} = 
+          warn $check;
+          $row->{$check->column} = 
                     { input => {
-                                name => "$check->{edit}_$row->{id}",
+                                name => $check->column . "_$row->{id}",
                                 value => $row->{$check->{'edit'}},
                                 type => 'text',
                                 size => 15,
@@ -460,6 +462,7 @@ sub _failed_check{
           ++$count;
     }
     $hiddens->{count} = $count;
+    $hiddens->{edit} = $check->column;
     my $buttons = [
            { type => 'submit',
              name => 'action',
@@ -470,7 +473,7 @@ sub _failed_check{
     $template->render({
            form     => $request,
            heading  => $header,
-           columns  => $check->{cols},
+           columns  => $check->display_cols,
            rows     => $rows,
            hiddens  => $hiddens,
            buttons  => $buttons
@@ -505,6 +508,7 @@ sub fix_tests{
     );
     
     for my $count (1 .. $request->{count}){
+        warn $count;
         my $id = $request->{"id_$count"};
         $sth->execute($request->{"$request->{edit}_$id"}, $id) ||
             $request->error($sth->errstr);
@@ -791,12 +795,12 @@ sub run_upgrade {
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
     _set_dbh($request->{dbh});
     my $dbh = $request->{dbh};
+    my $dbinfo = $database->get_info();
     $dbh->do('ALTER SCHEMA public RENAME TO lsmb12');
     $dbh->do('CREATE SCHEMA PUBLIC');
 
     $database->load_modules('LOADORDER');
     $database->process_roles('Roles.sql');
-    my $dbinfo = $database->get_info();
     my $dbtemplate = LedgerSMB::Template->new(
         user => {}, 
         path => 'sql/upgrade',

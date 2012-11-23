@@ -128,7 +128,7 @@ push @tests, __PACKAGE__->new(
         test_query =>
            "select id, customernumber, name, address1, city, state, zipcode
                    from customer where customernumber in 
-                    (SELECT customernumberfrom customer
+                    (SELECT customernumber from customer
                    GROUP BY customernumber
                    HAVING count(*) > 1)",
  display_name => $LedgerSMB::App_State::Locale->text('Unique Customernumber'),

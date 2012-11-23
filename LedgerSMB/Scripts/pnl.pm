@@ -43,7 +43,7 @@ sub generate_income_statement {
     } elsif ($request->{pnl_type} eq 'product'){
         $rpt = LedgerSMB::Report::PNL::Product->new(%$request);
     } else {
-        my $rpt =LedgerSMB::Report::PNL::Income_Statement->new(%$request);
+        $rpt =LedgerSMB::Report::PNL::Income_Statement->new(%$request);
     }
     $rpt->render($request);
 }
