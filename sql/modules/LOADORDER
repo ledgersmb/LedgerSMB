@@ -1,5 +1,6 @@
 # This is a simple list of files to be loaded from sql/modules in the order
 # they shall be loaded.
+Util.sql
 App_Module.sql
 Menu.sql
 Drafts.sql
@@ -26,7 +27,6 @@ Reconciliation.sql
 TaxForm.sql
 1099_reports.sql
 EndOfYear.sql
-Util.sql
 Assets.sql
 Files.sql
 Parts.sql

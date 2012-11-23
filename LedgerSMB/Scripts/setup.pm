@@ -784,7 +784,7 @@ sub run_upgrade {
     );
     my $rc;
     my $rc2;
-    my $temp;
+    my $temp = $LedgerSMB::Sysconfig::tempdir;
 
     # ENVIRONMENT NECESSARY
     $ENV{PGUSER} = $creds->{login};
