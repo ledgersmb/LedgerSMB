@@ -1920,6 +1920,14 @@ sub get_name {
 
     my ( $self, $myconfig, $table, $transdate, $entity_class) = @_;
 
+    if (!$entity_class){
+       if ($table eq 'customer'){
+           $entity_class = 2;
+       } elsif ($table eq 'vendor') {
+           $entity_class = 1;
+       }
+    }
+
     my @queryargs;
     my $where;
     if ($transdate) {
@@ -1939,9 +1947,9 @@ sub get_name {
         $self->{"${table}number"} = $self->{$table};
     }
 
-    my $name = $self->like( lc $self->{$table} );
+    my $name = $self->like( lc $self->{$table} ) if $self->{$table};
 
-    $self->{"${table}number"}=$self->like(lc $self->{"${table}number"});#added % and % for searching key vendor/customer number.
+    $self->{"${table}number"}=$self->like(lc $self->{"${table}number"}) if $self->{"${table}number"};#added % and % for searching key vendor/customer number.
 
     # Vendor and Customer are now views into entity_credit_account.
     my $query = qq/
