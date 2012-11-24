@@ -341,8 +341,6 @@ foreach my $format (0 .. $#formats) {
 	cmp_ok($form->parse_amount(\%myconfig, ''), '==', 0,
 		"form: Empty string returns 0");
 	@r = trap{$form->parse_amount(\%myconfig, 'foo')};
-	is($trap->exit, undef,
-		'form: Invalid string does not exit');
 }
 
 foreach my $format (0 .. $#formats) {

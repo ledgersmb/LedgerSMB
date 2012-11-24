@@ -290,6 +290,8 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}\n|;
     $i = 1;
     foreach $ref ( @{ $form->{vendormatrix} } ) {
         $form->{"vendor_$i"} = qq|$ref->{name}--$ref->{id}|;
+        $form->{"vendor_mn_$i"} = $ref->{meta_number};
+        
 
         for (qw(partnumber lastcost leadtime vendorcurr)) {
             $form->{"${_}_$i"} = $ref->{$_};
@@ -324,6 +326,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}\n|;
     foreach $ref ( @{ $form->{customermatrix} } ) {
 
         $form->{"customer_$i"} = "$ref->{name}--$ref->{cid}" if $ref->{cid};
+        $form->{"customer_mn_$i"} = $ref->{meta_number};
         $form->{"pricegroup_$i"} = "$ref->{pricegroup}--$ref->{gid}"
           if $ref->{gid};
 
@@ -2839,6 +2842,7 @@ sub vendor_row {
       <table width=100%>
 	<tr>
 	  <th class="listheading">| . $locale->text('Vendor') . qq|</th>
+	  <th class="listheading">| . $locale->text('Account Number') . qq|</th>
 	  <th class="listheading">| . $locale->text('Vendor Reference Number') . qq|</th>
 	  <th class="listheading">| . $locale->text('Cost') . qq|</th>
 	  $currency
@@ -2860,6 +2864,7 @@ s/option>$form->{"vendorcurr_$i"}/option selected>$form->{"vendorcurr_$i"}/;
 
             $vendor = qq|
           <td><input name="vendor_$i" size=35 value="$form->{"vendor_$i"}"></td>
+          <td><input name="vendor_mn_$i" size=35 value="$form->{"vendor_mn_$i"}"></td>
 |;
 
             if ( $form->{selectvendor} ) {
@@ -2875,6 +2880,9 @@ s/option>$form->{"vendorcurr_$i"}/option selected>$form->{"vendorcurr_$i"}/;
             $vendor = qq|
           <td>$vendor
 	  <input type=hidden name="vendor_$i" value="$form->{"vendor_$i"}">
+	  </td>
+          <td>$form->{"vendor_mn_$i"}
+	  <input type=hidden name="vendor_$i" value="$form->{"vendor_mn_$i"}">
 	  </td>
 |;
         }
@@ -2935,6 +2943,7 @@ sub customer_row {
       <table width=100%>
 	<tr>
 	  <th class="listheading">| . $locale->text('Customer') . qq|</th>
+	  <th class="listheading">| . $locale->text('Account') . qq|</th>
 	  $pricegroup
 	  <th class="listheading">| . $locale->text('Break') . qq|</th>
 	  <th class="listheading">| . $locale->text('Sell Price') . qq|</th>
@@ -2957,6 +2966,9 @@ s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
         if ( $i == $numrows ) {
             $customer = qq|
           <td><input name="customer_$i" size=35 value="$form->{"customer_$i"}"></td>
+          <td>
+         <input name="customer_mn_$i" size=35 value="$form->{"customer_mn_$i"}">
+         </td>
 	  |;
 
             if ( $form->{selectcustomer} ) {
@@ -2977,6 +2989,8 @@ s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
             $customer = qq|
           <td>$customer</td>
 	  <input type=hidden name="customer_$i" value="$form->{"customer_$i"}">
+          <td>$form->{"customer_mn_$i"}</td>
+	  <input type=hidden name="customer_$i" value="$form->{"customer_mn_$i"}">
 	  |;
 
             if ( $form->{selectpricegroup} ) {
@@ -3355,13 +3369,15 @@ sub check_vendor {
     }
 
     $i = $form->{vendor_rows};
+    $form->{vendornumber} = $form->{"vendor_mn_$i"};
 
     if ( !$form->{selectvendor} ) {
 
-        if ( $form->{"vendor_$i"} && !$form->{"vendor_id_$i"} ) {
+        if ( ($form->{"vendor_$i"} || $form->{vendornumber}) 
+              && !$form->{"vendor_id_$i"} ) {
             ( $form->{vendor} ) = split /--/, $form->{"vendor_$i"};
-            if ( ( $j = $form->get_name( \%myconfig, vendor ) ) > 1 ) {
-                &select_name( vendor, $i );
+            if ( ( $j = $form->get_name( \%myconfig, "vendor" ) ) > 1 ) {
+                &select_name( "vendor", $i );
                 $form->finalize_request();
             }
 
@@ -3432,17 +3448,17 @@ sub check_customer {
     }
 
     $i = $form->{customer_rows};
+    $form->{customernumber} = $form->{"customer_mn_$i"};
 
     if ( !$form->{selectcustomer} ) {
 
         if ( $form->{"customer_$i"} && !$form->{"customer_id_$i"} ) {
             ( $form->{customer} ) = split /--/, $form->{"customer_$i"};
 
-            if ( ( $j = $form->get_name( \%myconfig, customer ) ) > 1 ) {
-                &select_name( customer, $i );
+            if ( ( $j = $form->get_name( \%myconfig, 'customer' ) ) > 1 ) {
+                &select_name( 'customer', $i );
                 $form->finalize_request();
             }
-
             if ( $j == 1 ) {
 
                 # we got one name
@@ -3480,12 +3496,14 @@ qq|$form->{name_list}[0]->{name}--$form->{name_list}[0]->{id}|;
 sub select_name {
     my ( $table, $vr ) = @_;
 
-    @column_index = qw(ndx name address);
+    @column_index = qw(ndx name meta_number address);
 
     $label = ucfirst $table;
     $column_data{ndx} = qq|<th>&nbsp;</th>|;
     $column_data{name} =
       qq|<th class=listheading>| . $locale->text($label) . qq|</th>|;
+    $column_data{meta_number} =
+      qq|<th class=listheading>| . $locale->text('Account Number') . qq|</th>|;
     $column_data{address} =
         qq|<th class=listheading colspan=5>|
       . $locale->text('Address')
@@ -3519,7 +3537,7 @@ sub select_name {
 	</tr>
 |;
 
-    @column_index = qw(ndx name address city state zipcode country);
+    @column_index = qw(ndx name meta_number address city state zipcode country);
 
     my $i = 0;
     foreach $ref ( @{ $form->{name_list} } ) {
@@ -3531,7 +3549,9 @@ sub select_name {
 qq|<td><input name=ndx class=radio type=radio value=$i $checked></td>|;
         $column_data{name} =
 qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</td>|;
-        $column_data{address} = qq|<td>$ref->{address1} $ref->{address2}|;
+        $column_data{meta_number} =
+qq|<td>$ref->{meta_number}</td>|;
+        $column_data{address} = qq|<td>$ref->{address1} $ref->{address2}&nbsp;</td>|;
         for (qw(city state zipcode country)) {
             $column_data{$_} = qq|<td>$ref->{$_}&nbsp;</td>|;
         }
