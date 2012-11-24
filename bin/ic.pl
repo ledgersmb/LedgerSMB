@@ -2882,7 +2882,7 @@ s/option>$form->{"vendorcurr_$i"}/option selected>$form->{"vendorcurr_$i"}/;
 	  <input type=hidden name="vendor_$i" value="$form->{"vendor_$i"}">
 	  </td>
           <td>$form->{"vendor_mn_$i"}
-	  <input type=hidden name="vendor_$i" value="$form->{"vendor_mn_$i"}">
+	  <input type=hidden name="vendor_mn_$i" value="$form->{"vendor_mn_$i"}">
 	  </td>
 |;
         }
@@ -2990,7 +2990,7 @@ s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
           <td>$customer</td>
 	  <input type=hidden name="customer_$i" value="$form->{"customer_$i"}">
           <td>$form->{"customer_mn_$i"}</td>
-	  <input type=hidden name="customer_$i" value="$form->{"customer_mn_$i"}">
+	  <input type=hidden name="customer_mn_$i" value="$form->{"customer_mn_$i"}">
 	  |;
 
             if ( $form->{selectpricegroup} ) {
@@ -3341,7 +3341,7 @@ qq|$form->{item_list}[0]{partsgroup}--$form->{item_list}[0]{partsgroup_id}|;
 
 sub check_vendor {
 
-    @flds  = qw(vendor partnumber lastcost leadtime vendorcurr);
+    @flds  = qw(vendor vendor_mn partnumber lastcost leadtime vendorcurr);
     @a     = ();
     $count = 0;
 
@@ -3376,7 +3376,7 @@ sub check_vendor {
         if ( ($form->{"vendor_$i"} || $form->{vendornumber}) 
               && !$form->{"vendor_id_$i"} ) {
             ( $form->{vendor} ) = split /--/, $form->{"vendor_$i"};
-            if ( ( $j = $form->get_name( \%myconfig, "vendor" ) ) > 1 ) {
+            if ( ( $j = $form->get_name( \%myconfig, "vendor", undef, 1) ) > 1 ) {
                 &select_name( "vendor", $i );
                 $form->finalize_request();
             }
@@ -3386,6 +3386,7 @@ sub check_vendor {
                 # we got one name
                 $form->{"vendor_$i"} =
 qq|$form->{name_list}[0]->{name}--$form->{name_list}[0]->{id}|;
+                $form->{"vendor_nm_$1"} = $form->{name_list}[0]->{meta_number};
             }
             else {
 
@@ -3415,7 +3416,7 @@ qq|$form->{name_list}[0]->{name}--$form->{name_list}[0]->{id}|;
 sub check_customer {
 
     @flds =
-      qw(customer validfrom validto pricebreak customerprice pricegroup customercurr);
+      qw(customer customer_mn validfrom validto pricebreak customerprice pricegroup customercurr);
     @a     = ();
     $count = 0;
 
