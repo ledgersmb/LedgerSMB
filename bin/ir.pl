@@ -1329,8 +1329,7 @@ sub post {
     ( $form->{AP_paid} ) = split /--/, $form->{AP_paid};
 
     if ( IR->post_invoice( \%myconfig, \%$form ) ) {
-        $form->redirect(
-            $locale->text( 'Invoice [_1] posted!', $form->{invnumber} ) );
+        edit();
     }
     else {
         $form->error( $locale->text('Cannot post invoice!') );
