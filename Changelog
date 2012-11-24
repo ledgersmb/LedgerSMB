@@ -7,6 +7,8 @@ Changelog for 1.3.25
 * Fixed pricematrix rows not showing where pricegroups are used (Chris T)
 * Fixed missing grant in some cases on cr_coa_to_account (Chris T)
 * Fixed letterhead not showing up on emailed invoices (Chris T, h/t Kevin B)
+* Fixed blank screen on posting AR/IS/OE (Chris T)
+* Fixed ECA's not distinct on parts screen and search (Chris T, 3550075)
 
 Chris T is Chris Travers
 Kevin B is Kevin Bailey

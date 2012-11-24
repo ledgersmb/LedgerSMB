@@ -202,7 +202,7 @@ sub get_part {
         $query = qq|
 			  SELECT v.id, e.name, pv.partnumber,
 			         pv.lastcost, pv.leadtime, 
-			         pv.curr AS vendorcurr
+			         pv.curr AS vendorcurr, v.meta_number
 			    FROM partsvendor pv
 			    JOIN entity_credit_account v 
                                  ON (v.id = pv.credit_id)
@@ -226,7 +226,7 @@ sub get_part {
 			   SELECT pc.pricebreak, pc.sellprice AS customerprice,
 			          pc.curr AS customercurr, pc.validfrom, 
 			          pc.validto, e.name, c.id AS cid, 
-			          g.pricegroup, g.id AS gid
+			          g.pricegroup, g.id AS gid, c.meta_number
 			     FROM partscustomer pc
 			LEFT JOIN entity_credit_account c 
                                   ON (c.id = pc.credit_id)
