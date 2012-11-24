@@ -1404,14 +1404,7 @@ sub post {
     ( $form->{AR_paid} ) = split /--/, $form->{AR_paid};
 
     if ( IS->post_invoice( \%myconfig, \%$form ) ) {
-        if ($form->{batch_id}){
-            $form->{callback} .= "&batch_id=$form->{batch_id}";
-        } else {
-   	    $form->{callback} =
-	    "$form->{script}?action=edit&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}&id=$form->{id}";
-        }
-        $form->redirect(
-            $locale->text( 'Invoice [_1] posted!', $form->{invnumber} ) );
+        &edit;
     }
     else {
         $form->error( $locale->text('Cannot post invoice!') );
