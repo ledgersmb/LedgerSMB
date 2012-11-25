@@ -138,6 +138,8 @@ This function inserts menu items at arbitrary positions.  The arguments are, in
 order:  parent, position, label.  The return value is the id number of the menu
 item created. $$;
 
+
+DROP VIEW IF EXISTS menu_friendly;
 CREATE VIEW menu_friendly AS
 WITH RECURSIVE tree (path, id, parent, level, positions)
                                AS (select id::text as path, id, parent, 

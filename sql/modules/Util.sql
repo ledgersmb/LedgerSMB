@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE OR REPLACE FUNCTION parse_date(in_date date) returns date AS
 $$ select $1; $$ language sql;
 
@@ -50,7 +52,7 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
-
+DROP TYPE if exists tree_record CASCADE;
 CREATE TYPE tree_record AS (t int[]);
 
 CREATE OR REPLACE FUNCTION in_tree 
@@ -69,3 +71,5 @@ $$
 SELECT bool_and(in_tree(e, $2))
   FROM unnest($1) e;
 $$;
+
+COMMIT;

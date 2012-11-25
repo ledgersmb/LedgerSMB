@@ -1,3 +1,5 @@
+BEGIN;
+
 DROP TYPE IF EXISTS draft_search_result CASCADE;
 
 CREATE TYPE draft_search_result AS (
@@ -135,3 +137,5 @@ $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 COMMENT ON FUNCTION draft_approve(in_id int) is
 $$ Deletes the draft from the book.  Only will delete unapproved transactions.
 Otherwise an exception is raised and the transaction terminated.$$;
+
+COMMIT;

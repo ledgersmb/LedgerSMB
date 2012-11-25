@@ -4,7 +4,6 @@ Util.sql
 App_Module.sql
 Menu.sql
 Drafts.sql
-chart.sql
 Account.sql
 Session.sql
 Business_type.sql
