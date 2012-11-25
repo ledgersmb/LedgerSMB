@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE OR REPLACE FUNCTION eoy_create_checkpoint(in_end_date date)
 RETURNS int AS
 $$
@@ -209,3 +211,5 @@ $$ language sql;
 
 COMMENT ON FUNCTION eoy_earnings_accounts() IS
 $$ Lists equity accounts for the retained earnings dropdown.$$;
+
+COMMIT;

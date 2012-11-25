@@ -1,5 +1,7 @@
 -- Many of these will have to be rewritten to work with 1.4
 
+BEGIN;
+
 CREATE OR REPLACE FUNCTION journal__add(
 in_source text,
 in_description text,
@@ -64,6 +66,8 @@ BEGIN
 END;
 $$ language plpgsql;
 
+
+DROP TYPE IF EXISTS journal_search_result CASCADE; 
 CREATE TYPE journal_search_result AS (
 id bigint,
 source text,
@@ -135,3 +139,5 @@ $$
 select * from journal_line where journal_id = $1;
 $$ language sql;
 -- orders with inventory not supported yet.
+
+COMMIT;

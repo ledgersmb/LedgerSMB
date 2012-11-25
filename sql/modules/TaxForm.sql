@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE OR REPLACE FUNCTION tax_form__save(in_id int, in_country_id int, 
                           in_form_name text, in_default_reportable bool)
 RETURNS int AS
@@ -43,6 +45,7 @@ $BODY$ LANGUAGE SQL;
 COMMENT ON FUNCTION tax_form__list_all() IS
 $$ Returns a set of all tax forms, ordered by country_id and id$$; 
 
+DROP TYPE IF EXISTS taxform_list CASCADE;
 CREATE TYPE taxform_list AS (
    id int,
    form_name text,
@@ -63,3 +66,5 @@ $BODY$ language sql;
 COMMENT ON function tax_form__list_ext() IS
 $$ Returns a list of tax forms with an added field, country_name, to specify the
 name of the country.$$;
+
+COMMIT;
