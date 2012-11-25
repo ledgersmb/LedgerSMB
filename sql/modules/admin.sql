@@ -367,7 +367,7 @@ CREATE OR REPLACE FUNCTION admin__save_user(
         elsif in_import is false AND t_is_user is false 
               AND in_password IS NULL THEN
                 RAISE EXCEPTION 'No password';
-        elsif  t_is_role is false THEN
+        elsif  t_is_role is false and in_import IS FALSE THEN
             -- create an actual user
                 execute 'CREATE USER ' || quote_ident( in_username ) || 
                      ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)
