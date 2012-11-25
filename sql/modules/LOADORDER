@@ -12,7 +12,6 @@ Location.sql
 Company.sql
 Customer.sql 
 Date.sql
-Defaults.sql
 Settings.sql
 Employee.sql
 Entity.sql

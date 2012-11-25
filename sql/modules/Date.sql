@@ -1,4 +1,4 @@
-
+BEGIN;
 -- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General 
 -- Public License v 2 or at your option any later version.
 
@@ -146,3 +146,4 @@ $$ language sql;
 COMMENT ON FUNCTION periods_get() IS
 $$ Returns dates for year to date, and last year.$$;
 
+COMMIT;

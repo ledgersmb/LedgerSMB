@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE OR REPLACE FUNCTION form_check(in_session_id int, in_form_id int)
 RETURNS BOOL AS
 $$
@@ -176,3 +178,5 @@ them or not.
 
 Returns true if the transaction was unlocked by this routine, false 
 otherwise.$$;
+
+COMMIT;
