@@ -420,14 +420,18 @@ sub upgrade{
         sort { $a->{country} cmp $b->{country} } @{$request->{countries}};
     unshift @{$request->{countries}}, {};
 
+    my $template;
 
-    my $template = LedgerSMB::Template->new(
+    if ($dbinfo->{version} eq '1.2'){
+        $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'upgrade_info',
             format => 'HTML',
-    );
-    $template->render($request);
-    
+        );
+        $template->render($request);
+    } else {
+        run_upgrade($request);
+    } 
 
 }
 
@@ -796,7 +800,9 @@ sub run_upgrade {
     _set_dbh($request->{dbh});
     my $dbh = $request->{dbh};
     my $dbinfo = $database->get_info();
-    $dbh->do('ALTER SCHEMA public RENAME TO lsmb12');
+    my $v = $dbinfo->{version};
+    $v =~ s/\.//;
+    $dbh->do("ALTER SCHEMA public RENAME TO lsmb$v");
     $dbh->do('CREATE SCHEMA PUBLIC');
     $database->exec_script({script => "$database->{source_dir}sql/Pg-database.sql",
                             log    => "$temp/dblog"});
