@@ -368,45 +368,130 @@ SELECT
 
 INSERT INTO eca_tax SELECT * FROM lsmb13.customertax 
 UNION SELECT * FROM lsmb13.vendortax;
-INSERT INTO oe SELECT * FROM lsmb13.oe;
-INSERT INTO orderitems SELECT * FROM lsmb13.orderitems;
+INSERT INTO oe (
+ id,
+ ordnumber,
+ transdate,
+ entity_id,
+ amount,
+ netamount,
+ reqdate,
+ taxincluded,
+ shippingpoint,
+ notes,
+ curr,
+ person_id,
+ closed,
+ quotation,
+ quonumber,
+ intnotes,
+ shipvia,
+ language_code,
+ ponumber,
+ terms,
+ entity_credit_account,
+ oe_class_id  
+)
+SELECT
+ id,
+ ordnumber,
+ transdate,
+ entity_id,
+ amount,
+ netamount,
+ reqdate,
+ taxincluded,
+ shippingpoint,
+ notes,
+ curr,
+ person_id,
+ closed,
+ quotation,
+ quonumber,
+ intnotes,
+ shipvia,
+ language_code,
+ ponumber,
+ terms,
+ entity_credit_account,
+ oe_class_id  
+  FROM lsmb13.oe;
+
+INSERT INTO orderitems(
+ id,
+ trans_id,
+ parts_id,
+ description,
+ qty,
+ sellprice,
+ precision,
+ discount,
+ unit,
+ reqdate,
+ ship,
+ serialnumber,
+ notes 
+) 
+SELECT
+ id,
+ trans_id,
+ parts_id,
+ description,
+ qty,
+ sellprice,
+ precision,
+ discount,
+ unit,
+ reqdate,
+ ship,
+ serialnumber,
+ notes 
+  FROM lsmb13.orderitems;
+
 INSERT INTO exchangerate SELECT * FROM lsmb13.exchangerate;
 
 INSERT INTO business_unit (id, class_id, control_code, description)
-SELECT (id, 1, description, description) from department;
+SELECT id, 1, id, description
+  FROM lsmb13.department;
+ 
 INSERT INTO business_unit 
        (id, class_id, control_code, description, start_date, end_date, 
        credit_id)
-SELECT (id + 1000, 2, projectnumber, description, start_date, end_date,
-        credit_id) from project;
+SELECT id + 1000, 2, projectnumber, description, startdate, enddate,
+        credit_id from lsmb13.project;
 
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 1, gl.department_id
   FROM acc_trans ac 
-  JOIN (SELECT id, department_id FROM ar UNION ALL
-        SELECT id, department_id FROM ap UNION ALL
-        SELECT id, department_id FROM gl) gl;
+  JOIN (SELECT id, department_id FROM lsmb13.ar UNION ALL
+        SELECT id, department_id FROM lsmb13.ap UNION ALL
+        SELECT id, department_id FROM lsmb13.gl) gl ON gl.id = ac.trans_id 
+ WHERE department_id > 0;
 
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
-SELECT entry_id, 2, project_id + 1000 FROM acc_trans;
+SELECT entry_id, 2, project_id + 1000 FROM lsmb13.acc_trans
+ WHERE project_id > 0;
 
 INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
 SELECT inv.id, 1, gl.department_id
   FROM invoice inv 
-  JOIN (SELECT id, department_id FROM ar UNION ALL
-        SELECT id, department_id FROM ap UNION ALL
-        SELECT id, department_id FROM gl) gl ON gl.id = ac.trans_id;
+  JOIN (SELECT id, department_id FROM lsmb13.ar UNION ALL
+        SELECT id, department_id FROM lsmb13.ap UNION ALL
+        SELECT id, department_id FROM lsmb13.gl) gl ON gl.id = inv.trans_id
+ WHERE department_id > 0;
 
 INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
-SELECT id, 2, project_id + 1000 FROM invoice
+SELECT id, 2, project_id + 1000 FROM lsmb13.invoice 
+ WHERE project_id > 0;
 
 INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
 SELECT oi.id, 1, oe.department_id 
   FROM orderitems oi
-  JOIN oe ON oi.trans_id = oe.id;
+  JOIN lsmb13.oe ON oi.trans_id = oe.id AND department_id > 0;
 
 INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
-SELECT id, 2, project_id + 1000 FROM orderitems;
+SELECT id, 2, project_id + 1000 FROM lsmb13.orderitems
+ WHERE project_id > 0;
 
 INSERT INTO partsgroup SELECT * FROM lsmb13.partsgroup;
 INSERT INTO status SELECT * FROM lsmb13.status;
@@ -420,31 +505,57 @@ INSERT INTO partscustomer SELECT * FROM lsmb13.partscustomer;
 INSERT INTO audittrail SELECT * FROM lsmb13.audittrail;
 INSERT INTO translation SELECT * FROM lsmb13.translation;
 INSERT INTO parts_translation SELECT * FROM lsmb13.parts_translation;
-INSERT INTO business_unit_translation SELECT * FROM lsmb13.business_unit_translation;
-INSERT INTO partsgroup_translation SELECT * FROM lsmb13.partsgroup_translation;
 INSERT INTO user_preference SELECT * FROM lsmb13.user_preference;
 INSERT INTO recurring SELECT * FROM lsmb13.recurring;
 INSERT INTO payment_type SELECT * FROM lsmb13.payment_type;
 INSERT INTO recurringemail SELECT * FROM lsmb13.recurringemail;
 INSERT INTO recurringprint SELECT * FROM lsmb13.recurringprint;
-INSERT INTO jcitems SELECT * FROM lsmb13.jcitems;
+INSERT INTO jcitems (
+ id,
+ business_unit_id,
+ parts_id,
+ description,
+ qty,
+ allocated,
+ sellprice,
+ fxsellprice,
+ serialnumber,
+ checkedin,
+ checkedout,
+ person_id,
+ notes,
+ total,
+ non_billable
+)
+SELECT 
+ id,
+ project_id + 1000,
+ parts_id,
+ description,
+ qty,
+ allocated,
+ sellprice,
+ fxsellprice,
+ serialnumber,
+ checkedin,
+ checkedout,
+ person_id,
+ notes,
+ total,
+ non_billable
+  FROM lsmb13.jcitems;
 INSERT INTO custom_table_catalog SELECT * FROM lsmb13.custom_table_catalog;
 INSERT INTO custom_field_catalog SELECT * FROM lsmb13.custom_field_catalog;
 INSERT INTO ac_tax_form SELECT * FROM lsmb13.ac_tax_form;
 INSERT INTO invoice_tax_form SELECT * FROM lsmb13.invoice_tax_form;
 INSERT INTO new_shipto SELECT * FROM lsmb13.new_shipto;
 INSERT INTO tax_extended SELECT * FROM lsmb13.tax_extended;
-INSERT INTO asset_unit_class SELECT * FROM lsmb13.asset_unit_class;
-INSERT INTO asset_dep_method SELECT * FROM lsmb13.asset_dep_method;
 INSERT INTO asset_class SELECT * FROM lsmb13.asset_class;
-INSERT INTO asset_disposal_method SELECT * FROM lsmb13.asset_disposal_method;
 INSERT INTO asset_item SELECT * FROM lsmb13.asset_item;
 INSERT INTO asset_note SELECT * FROM lsmb13.asset_note;
-INSERT INTO asset_report_class SELECT * FROM lsmb13.asset_report_class;
 INSERT INTO asset_report SELECT * FROM lsmb13.asset_report;
 INSERT INTO asset_report_line SELECT * FROM lsmb13.asset_report_line;
 INSERT INTO asset_rl_to_disposal_method SELECT * FROM lsmb13.asset_rl_to_disposal_method;
-INSERT INTO mime_type SELECT * FROM lsmb13.mime_type;
 INSERT INTO file_base SELECT * FROM lsmb13.file_base;
 INSERT INTO file_transaction SELECT * FROM lsmb13.file_transaction;
 INSERT INTO file_order SELECT * FROM lsmb13.file_order;
@@ -452,8 +563,31 @@ INSERT INTO file_secondary_attachment SELECT * FROM lsmb13.file_secondary_attach
 INSERT INTO file_tx_to_order SELECT * FROM lsmb13.file_tx_to_order;
 INSERT INTO file_order_to_order SELECT * FROM lsmb13.file_order_to_order;
 INSERT INTO file_order_to_tx SELECT * FROM lsmb13.file_order_to_tx;
-INSERT INTO file_view_catalog SELECT * FROM lsmb13.file_view_catalog;
-INSERT INTO payment SELECT * FROM lsmb13.payment;
+INSERT INTO payment (
+ id,
+ reference,
+ gl_id,
+ payment_class,
+ payment_date,
+ closed,
+ entity_credit_id,
+ employee_id,
+ currency,
+ notes  
+)
+SELECT
+ id,
+ reference,
+ gl_id,
+ payment_class,
+ payment_date,
+ closed,
+ entity_credit_id,
+ employee_id,
+ currency,
+ notes  
+  FROM lsmb13.payment;
+
 INSERT INTO payment_links SELECT * FROM lsmb13.payment_links;
 INSERT INTO cr_report SELECT * FROM lsmb13.cr_report;
 INSERT INTO cr_report_line SELECT * FROM lsmb13.cr_report_line;

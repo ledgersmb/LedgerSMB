@@ -4536,7 +4536,7 @@ CREATE TABLE file_transaction (
        check (file_class = 1),
        unique(id),
        primary key (ref_key, file_name, file_class),
-       foreign key (ref_key) REFERENCES journal_entry(id)
+       foreign key (ref_key) REFERENCES transactions(id)
 ) inherits (file_base);
 
 COMMENT ON TABLE file_transaction IS

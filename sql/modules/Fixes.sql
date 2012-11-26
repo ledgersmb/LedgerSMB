@@ -59,4 +59,9 @@ ALTER TABLE cr_report_line ADD FOREIGN KEY(ledger_id) REFERENCES acc_trans(entry
 
 COMMIT;
 
+BEGIN;
 
+ALTER TABLE file_transaction DROP CONSTRAINT  "file_transaction_ref_key_fkey";
+ALTER TABLE file_transaction ADD FOREIGN KEY (ref_key) REFERENCES transactions(id);
+
+COMMIT;
