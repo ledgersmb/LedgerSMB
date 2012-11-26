@@ -87,6 +87,8 @@ Changelog for 1.3.25
 * Fixed blank screen on posting AR/IS/OE (Chris T)
 * Fixed ECA's not distinct on parts screen and search (Chris T, 3550075)
 * Fixed error saving imported user with no existing db role (Chris T, 3559844)
+* Added ar-transation.csv and ap-transaction.csvn templates (Erik H)
+* Fixed blank screen processing recurring transactiosn in fcgi (Chris T)
 
 Chris T is Chris Travers
 Kevin B is Kevin Bailey

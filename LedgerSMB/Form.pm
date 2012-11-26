@@ -1114,7 +1114,6 @@ sub add_date {
     my $dd;
     $spc =~ s/\w//g;
     $spc = substr( $spc, 0, 1 );
-
     if ($date) {
 
         if ( $date =~ /\D/ ) {

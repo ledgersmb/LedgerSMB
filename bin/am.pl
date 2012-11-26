@@ -1874,7 +1874,6 @@ sub edit_recurring {
 }
 
 sub process_transactions {
-
     # save variables
     my $pt = new Form;
     for ( keys %$form ) { $pt->{$_} = $form->{$_} }
@@ -1895,7 +1894,7 @@ sub process_transactions {
             $id = $pt->{"ndx_$i"};
 
             # process transaction
-            AM->recurring_details( \%myconfig, \%$pt, $id );
+            AM->recurring_details( \%myconfig, $pt, $id );
 
 
             # reset $form
@@ -1973,9 +1972,7 @@ sub process_transactions {
                     # tax accounts
                     $form->all_taxaccounts( \%myconfig, undef,
                         $form->{transdate} );
-                    $form->{transdate} = $form->convert_date(
-                             $pt->{nextdate}, \%myconfig
-                    );
+                    $form->{transdate} = $pt->{nextdate};
                     # calculate duedate
                     $form->{duedate} =
                       $form->add_date( \%myconfig, $form->{transdate},
