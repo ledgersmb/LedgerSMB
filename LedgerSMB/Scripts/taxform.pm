@@ -126,6 +126,11 @@ sub generate_report {
        $request->{format} = 'HTML';
     }
 
+
+    my ($tf) = $request->call_procedure(
+              procname => 'taxform__get', args => $request->{'tax_form_id'});
+    my $sfx = '';
+    $stf = '_accrual' if $th->{is_accrual};
     # Business settings for 1099
     #
     my $cc = $LedgerSMB::Company_Config::settings;
@@ -139,7 +144,7 @@ sub generate_report {
                        $request->{begin_year}.'-'.$request->{begin_month}.'-'.$request->{begin_day}, $request->{end_year}.'-'.$request->{end_month}.'-'.$request->{end_day}, 
                        $request->{meta_number});
                        
-      my @results = $request->call_procedure(procname => 'tax_form_details_report', args => \@call_args);
+      my @results = $request->call_procedure(procname => "tax_form_details_report$sfx", args => \@call_args);
       my $credit_id;
       for my $r (@results){
           $r->{acc_sum} = $request->format_amount({amount => $r->{acc_sum}});
@@ -179,7 +184,7 @@ sub generate_report {
     else {
         
         my @call_args = ($request->{'tax_form_id'}, $request->{begin_year}.'-'.$request->{begin_month}.'-'.$request->{begin_day}, $request->{end_year}.'-'.$request->{end_month}.'-'.$request->{end_day});
-        my @results = $request->call_procedure(procname => 'tax_form_summary_report', args => \@call_args);
+        my @results = $request->call_procedure(procname => "tax_form_summary_report$sfx", args => \@call_args);
         for my $r (@results){
             my $company = LedgerSMB::DBObject::Vendor->new(base => $request);
             $company->{id} = $r->{credit_id};

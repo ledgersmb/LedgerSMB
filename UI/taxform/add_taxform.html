@@ -65,6 +65,21 @@
      ?>
 </div>
 
+<div class="labelledinput">
+  
+     <?lsmb IF is_accrual; CHECKED = 'CHECKED';
+            ELSE; CHECKED = ''; 
+            END;
+        PROCESS input element_data = {
+	name = "is_accrual"
+	type = "checkbox"
+	value = "1"
+	label = text("Accrual Basis:") #"
+	checked = CHECKED
+                                         } 
+     ?>
+</div>
+
 <div id="buttons">
 
 <?lsmb INCLUDE button element_data = {
