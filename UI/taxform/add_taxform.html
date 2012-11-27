@@ -52,7 +52,10 @@
 
 <div class="labelledinput">
   
-     <?lsmb PROCESS input element_data = {
+     <?lsmb IF default_reportable; CHECKED = 'CHECKED';
+            ELSE; CHECKED = ''; 
+            END;
+        PROCESS input element_data = {
 	name = "default_reportable"
 	type = "checkbox"
 	value = "1"
