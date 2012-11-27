@@ -2809,11 +2809,7 @@ sub display_ship_receive {
 | if $form->{selectwarehouse};
 
     $employee = qq|
- 	      <tr>
-	        <th align=right nowrap>| . $locale->text('Contact') . qq|</th>
-		<td><select name=employee>$form->{selectemployee}</select></td>
-		<input type=hidden name=selectemployee value="|
-      . $form->escape( $form->{selectemployee}, 1 ) . qq|">
+ 	      <tr><td>&nbsp;</td>
 	      </tr>
 |;
 

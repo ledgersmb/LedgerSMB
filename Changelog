@@ -89,6 +89,7 @@ Changelog for 1.3.25
 * Fixed error saving imported user with no existing db role (Chris T, 3559844)
 * Added ar-transation.csv and ap-transaction.csvn templates (Erik H)
 * Fixed blank screen processing recurring transactiosn in fcgi (Chris T)
+* Removed blank/unused Contact/Employee dropdown on shipping screen (Chris T)
 
 Chris T is Chris Travers
 Kevin B is Kevin Bailey
