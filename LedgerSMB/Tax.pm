@@ -69,6 +69,7 @@ sub init_taxes {
         }
         $sth->execute($taxaccount, $form->{transdate}) || $form->dberror($query);
         my $ref = $sth->fetchrow_hashref;
+        next unless $ref;
 
         my $module = $ref->{'taxmodulename'};
         require "LedgerSMB/Taxes/${module}.pm";
