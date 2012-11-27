@@ -1,9 +1,13 @@
 -- SQL Fixes for upgrades.  These must be safe to run repeatedly, or they must 
 -- fail transactionally.  Please:  one transaction per fix.  
 --
+-- These will be cleaned up going back no more than one beta.
+
 -- Chris Travers
 
 -- during 1.4m2
+
+-- BETA 1
 
 BEGIN;
 
@@ -63,5 +67,11 @@ BEGIN;
 
 ALTER TABLE file_transaction DROP CONSTRAINT  "file_transaction_ref_key_fkey";
 ALTER TABLE file_transaction ADD FOREIGN KEY (ref_key) REFERENCES transactions(id);
+
+COMMIT;
+
+BEGIN;
+
+ALTER TABLE country_tax_form ADD is_accrual bool not null default false;
 
 COMMIT;
