@@ -90,8 +90,10 @@ CREATE OR REPLACE FUNCTION payroll_income_type__save(
 in_id int, in_account_id int, in_pic_id int, in_country_id int,
 in_label text, in_unit text, in_default_amount numeric
 ) RETURNS payroll_income_type AS $$
-BEGIN
 
+   DECLARE retval payroll_income_type;
+
+BEGIN
    UPDATE payroll_income_type
       SET account_id = in_account_id,
           pic_id = in_pic_id,
@@ -102,7 +104,8 @@ BEGIN
     WHERE id = in_id;
 
    IF FOUND THEN
-       RETURN payroll_income_type__get(in_id);
+       retval := payroll_income_type__get(in_id);
+       RETURN retval;
    END IF;
 
    INSERT INTO payroll_income_type
@@ -110,7 +113,8 @@ BEGIN
    VALUES (in_account_id, in_pic_id, in_country_id, in_label, in_unit, 
            in_default_amount);
 
-   RETURN payroll_income_type__get(currval('payroll_income_type_id_seq')::int);
+   retval := payroll_income_type__get(currval('payroll_income_type_id_seq')::int);
+   RETURN retval;
 
 END;
 $$ LANGUAGE PLPGSQL;
