@@ -191,7 +191,7 @@ sub generate_report {
             $company->get_billing_info;
             delete $company->{id};
             for my $k (keys %$company){
-                 $r->{$k} = $company->{$k};
+                 $r->{$k} = $company->{$k} unless $k == 'entity_class';
             }
  
             $r->{acc_sum} = $request->format_amount({amount => $r->{acc_sum}});

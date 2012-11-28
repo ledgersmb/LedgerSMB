@@ -15,18 +15,25 @@
 
 <table width="100%">
   <tr class="listtop">
-    <th>Company</th>
-    <th>Vendor Number</th>
-    <th>Invoice Number</th>
-    <th>Due Date</th>
-    <th>acc_trans Sum</th>
-    <th>invoice Sum</th>
-    <th>Total</th>
+    <th><?lsmb text('Company') ?></th>
+    <th><?lsmb text('Account Type') ?></th>
+    <th><?lsmb text('Account Number') ?></th>
+    <th><?lsmb text('Invoice Number') ?></th>
+    <th><?lsmb text('Due Date') ?></th>
+    <th><?lsmb text('Acc_trans Sum') ?></th>
+    <th><?lsmb text('Invoice Sum') ?></th>
+    <th><?lsmb text('Total') ?></th>
   </tr>
   <tr height="5"><td></td></tr>
-<?lsmb FOREACH result IN results; i = loop.count ?>
+<?lsmb 
+FOREACH result IN results; i = loop.count;
+   IF result.entity_class == 1; RES_ROLE = text('Vendor');
+   ELSE; RES_ROLE = text('Customer');
+   END;
+?>
     <tr>
       <td><?lsmb result.legal_name ?></td>
+      <td><?lsmb RES_ROLE ?></td>
       <td><a href="vendor.pl?action=get&account_class=<?lsmb result.entity_class ?>&entity_id=<?lsmb result.entity_id ?>&meta_number=<?lsmb result.meta_number ?>"><?lsmb result.meta_number ?></a></td>
       <td><a href="ap.pl?AP=&vendor=&meta_number=<?lsmb result.meta_number ?>&invnumber=<?lsmb result.invnumber ?>&ordnumber=&ponumber=&source=&description=&notes=&shipvia=&transdatefrom=&transdateto=&month=&year=&interval=0&invoice_type=1&open=Y&summary=1&title=AP+Transactions&outstanding=&sort=transdate&l_invnumber=Y&l_transdate=Y&l_name=Y&l_amount=Y&l_paid=Y&action=continue&action=continue&nextsub=transactions&path=bin"><?lsmb result.invnumber ?></a></td>
       <td><?lsmb result.duedate ?></td>

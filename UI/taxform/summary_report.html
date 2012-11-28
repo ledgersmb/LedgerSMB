@@ -15,17 +15,24 @@
 
 <table width="100%">
   <tr class="listtop">
-    <th>Company</th>
-    <th>Vendor Number</th>
-    <th>Control Code</th>
-    <th>acc_trans Sum</th>
-    <th>invoice Sum</th>
-    <th>Total</th>
+    <th><?lsmb text('Company') ?></th>
+    <th><?lsmb text('Account Type') ?></th> 
+    <th><?lsmb text('Account Number') ?></th>
+    <th><?lsmb text('Control Code') ?></th>
+    <th><?lsmb text('Acc_trans Sum') ?></th>
+    <th><?lsmb text('Invoice Sum') ?></th>
+    <th><?lsmb text('Total') ?></th>
   </tr>
   <tr height="5"><td></td></tr>
-<?lsmb FOREACH result IN results; i = loop.count ?>
+<?lsmb 
+FOREACH result IN results; i = loop.count;
+   IF result.entity_class == 1; RES_ROLE = text('Vendor');
+   ELSE; RES_ROLE = text('Customer');
+   END;
+?>
     <tr>
       <td><?lsmb result.legal_name ?></td>
+      <td><?lsmb RES_ROLE ?></td>
       <td><a href="vendor.pl?action=get&account_class=<?lsmb result.entity_class ?>&entity_id=<?lsmb result.entity_id ?>&meta_number=<?lsmb result.meta_number ?>"><?lsmb result.meta_number ?></a></td>
       <td><?lsmb result.control_code ?></td>
       <td><?lsmb result.acc_sum ?></td>
