@@ -1285,6 +1285,7 @@ sub get_name {
       : "current_date + c.terms";
 
     $form->{"$form->{vc}_id"} *= 1;
+    
 
     # get customer/vendor
     my $query = qq|
@@ -1314,6 +1315,7 @@ sub get_name {
             delete $ref->{$_};
         }
     }
+    delete $ref->{duedate} if $form->{duedate};
 
     for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
     $sth->finish;
