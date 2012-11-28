@@ -133,7 +133,12 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
      JOIN account_heading ah on a.heading = ah.id
      JOIN acc_trans ac ON a.id = ac.chart_id AND ac.approved
      JOIN tx_report gl ON ac.trans_id = gl.id
-     JOIN cash_impact ca ON gl.id = ca.id
+     JOIN (SELECT id, sum(portion) as portion
+             FROM cash_impact ca 
+            WHERE ($1 IS NULL OR ca.transdate >= $1)
+                  AND ($2 IS NULL OR ca.transdate <= $2)
+           GROUP BY id
+          ) ca ON gl.id = ca.id 
 LEFT JOIN (select array_agg(path) as bu_ids, entry_id
              FROM business_unit_ac buac
              JOIN bu_tree ON bu_tree.id = buac.bu_id
@@ -142,8 +147,6 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
     WHERE ac.approved is true 
           AND ($3 = '{}' 
               OR $3 is null or in_tree($3, bu_ids))
-          AND ($1 IS NULL OR ac.transdate >= $1) 
-          AND ($2 IS NULL OR ac.transdate <= $2)
           AND a.category IN ('I', 'E')
  GROUP BY a.id, a.accno, a.description, a.category, 
           ah.id, ah.accno, ah.description
