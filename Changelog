@@ -18,9 +18,11 @@ Changelog for 1.3.25
 * Fixed labelling of vendor column on taxform reports (Chris T, 3581317)
 * Fixed terms of sales/purchase order not respected (Chris T, 3581337)
 * Added Perl equivalent to prepare-company-database.sh (Chris T, 3551127)
+* Fixed prepare-company-database.sh, test getopt version. (Havard S, 3551127)
 
 Chris T is Chris Travers
 Kevin B is Kevin Bailey
+Havard S is Havard Sorli
 
 Changelog for 1.3.24
 * Fixed error in msgid for "Add Language" (Havard S, h/t Robert C)
