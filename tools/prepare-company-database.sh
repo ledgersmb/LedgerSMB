@@ -120,6 +120,15 @@ ERROR:  language \"plpgsql\" already exists|\
 )/d" -
 }
 
+# Test getopt version. This script use the GNU 'getopt' version.
+getopt -T > /dev/null
+if [ $? -eq 0 ]; then
+    # Original getopt is available
+    echo "This script need the GNU enhanced getopt to work"
+    echo "Use prepare-company-database.pl on your platform"
+    exit 0
+fi
+
 # Am I root?
 if ! test `whoami` = "root"
 then
