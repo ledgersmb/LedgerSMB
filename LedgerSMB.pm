@@ -238,7 +238,6 @@ sub new {
 
     $type = "" unless defined $type;
     $argstr = "" unless defined $argstr;
-warn 'breakpoint:' . __LINE__;
 
     $logger->debug("Begin called from \$filename=$filename \$line=$line \$type=$type \$argstr=$argstr ref argstr=".ref $argstr);
 
