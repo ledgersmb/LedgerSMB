@@ -860,7 +860,6 @@ sub new_item {
 }
 
 sub display_form {
-
     $form->close_form();
     $form->open_form();
     $form->{dbh}->commit;
