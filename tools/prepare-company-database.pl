@@ -36,7 +36,8 @@ use Cwd;
 # Needed for creating a user
 
 use LedgerSMB;
-use LedgerSMB::DBObject::Admin;
+use LedgerSMB::Entity::User;
+use LedgerSMB::Entity::Employee;
 use DBI;
 
 # always use strict!
@@ -178,20 +179,28 @@ my $sth = $lsmb->{dbh}->prepare(
 $sth->execute($cc);
 my ($country_id) = $sth->fetchrow_array;
 
-# In 1.3 it is not possible really to directly invoke a new object like a new
-# user.  This is changing for some things in 1.4 so keep in mind this may change
-# to be easier to use.    However for now, this is the way it will need to be 
-# done.
+# This section is still untested and may be for some time.  Unlike in 1.3, we 
+# don't have to do $lsmb->merge() and then create new copies of the LedgerSMB 
+# archetype.  This leads to more direct, readable code, but there may still be
+# some bugs to work out --CT
 
-$lsmb->merge({
-     username    => $ADMIN_USERNAME,
-     password    => $ADMIN_PASSWORD,
+my $employee = LedgerSMB::Entity::Employee->new(
      first_name  => $ADMIN_FIRSTNAME,
      last_name   => $ADMIN_LASTNAME,
      middle_name => $ADMIN_MIDDLENAME,
      country_id  => $country_id,
+);
+
+$employee->save;
+
+my $user = LedgerSMB::Entity::User->new(
+     username    => $ADMIN_USERNAME,
+     password    => $ADMIN_PASSWORD,
      import      => 't',
-});
+     entity_id   => $employee->entity_id,
+);
+
+$user->save;
 
 my $user = LedgerSMB::DBObject::Admin->new({base => $lsmb});
 
