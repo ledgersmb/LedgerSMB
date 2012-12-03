@@ -21,6 +21,7 @@ Changelog for 1.3.25
 * Fixed prepare-company-database.sh, test getopt version. (Havard S, 3551127)
 
 Chris T is Chris Travers
+Erik H is Erik Huelsmann
 Kevin B is Kevin Bailey
 Havard S is Havard Sorli
 
