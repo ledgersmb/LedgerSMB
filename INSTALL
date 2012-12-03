@@ -274,7 +274,9 @@ still be necessary.
 An alternative method is the 'prepare-company-database.sh' script contributed by
 Erik Huelsmann.  This script can be useful in creating and populating databases
 from the command line and it offers a reference implementation written in BASH
-for how this process is done.
+for how this process is done.   The prepare-company-database.sh script is only
+supported on GNU environments, but a prepare-company-database.pl is included
+with nearly identical syntax which is supported everywhere LedgerSMB is.
 
 The 'prepare-company-database.sh' script in the tools/ directory will set
 up databases to be used for LedgerSMB. The script should be run as 'root'
