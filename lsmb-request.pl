@@ -49,7 +49,6 @@ eval { require "custom.pl"; };
 $logger->debug("getting new LedgerSMB");
 
 my $request = new LedgerSMB;
-warn 'breakpoint:' . __LINE__;
 
 $logger->debug("Got \$request=$request");
 $logger->trace("\$request=".Data::Dumper::Dumper($request));
