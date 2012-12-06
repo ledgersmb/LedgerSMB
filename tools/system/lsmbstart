@@ -1,0 +1,5 @@
+#!/usr/bin/bash
+
+cd /usr/share/ledgersmb
+plackup -s FCGI -D --listen /var/run/httpd/fastcgi/lsmb.sock
+
