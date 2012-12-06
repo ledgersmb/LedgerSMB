@@ -22,8 +22,8 @@ by hand.
  
 -----8<---- END APACHE CONFIG -----------
 
-Once you've done that, go to admin.pl (probably at
-http://${VHOST_HOSTNAME}/${VHOST_APPDIR}/admin.pl) and set your 
+Once you've done that, go to setup.pl (probably at
+http://${VHOST_HOSTNAME}/${VHOST_APPDIR}/setup.pl) and set your 
 initial password and users.
 
 Good luck!
