@@ -545,9 +545,62 @@ sub process_roles {
                         log    => "$temp/dblog"});
 }
 
-=item $db->log_from_logfile();
+=item $db->lsmb_info()
 
-Process log file and log relevant pieces via the log classes.
+This routine retrieves general stats about the database and returns the output
+as a hashref with the following key/value pairs:
+
+=over
+
+=item ar_rows 
+
+=item ap_rows
+
+=item gl_rows
+
+=item acc_trans_rows
+
+=item eca_rows
+
+=item oe_rows
+
+=item transactions_rows
+
+=item users_rows
+
+=back
+
+=cut
+
+sub lsmb_info {
+    my ($self) = @_;
+    my @tables = qw(ar ap gl acc_trans entity_credit_account oe transactions 
+                    users);
+    my $retval = {};
+    my $qtemp = 'SELECT count(*) FROM TABLE';
+    my $dbh = 
+    my $dbh = DBI->connect(
+        "dbi:Pg:dbname=$self->{company_name}",  
+         $self->{username}, $self->{password},
+         { AutoCommit => 0, PrintError => $logger->is_warn(), }
+    );
+    for my $t (@tables) {
+        my $query = $qtemp;
+        $query =~ s/TABLE/$t/;
+        my ($count) = $dbh->selectrow_array($query);
+        my $key = $t;
+        $key = 'eca' if $t eq 'entity_credit_account';
+        $retval->{"${key}_count"} = $count;
+    }
+    return $retval;
+}
+    
+
+=item $db->db_tests()
+
+This routine runs general db tests.
+
+TODO
 
 =cut
 
