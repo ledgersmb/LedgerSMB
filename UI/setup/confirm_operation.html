@@ -57,5 +57,23 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
 </div>
 <?lsmb END ?>
 </form>
+<?lsmb IF lsmb_info ?>
+<table class='lsmb_info'>
+  <thead>
+  <tr><th colspan="2"><?lsmb text('LedgerSMB Database Statistics') ?></th></tr>
+  <tr><th colspan="2"><?lsmb text('Row counts') ?></th></tr>
+  </thead>
+  <tbody>
+  <tr><th><?lsmb text('AP') ?></th><td><?lsmb lsmb_info.ap_count ?></td></tr>
+  <tr><th><?lsmb text('AR') ?></th><td><?lsmb lsmb_info.ar_count ?></td></tr>
+  <tr><th><?lsmb text('GL') ?></th><td><?lsmb lsmb_info.gl_count ?></td></tr>
+  <tr><th><?lsmb text('Journal Lines') ?></th><td><?lsmb lsmb_info.acc_trans_count ?></td></tr>
+  <tr><th><?lsmb text('Orders') ?></th><td><?lsmb lsmb_info.oe_count ?></td></tr>
+  <tr><th><?lsmb text('Customer/Vendor Accounts') ?></th><td><?lsmb lsmb_info.eca_count ?></td></tr>
+  <tr><th><?lsmb text('Transactions') ?></th><td><?lsmb lsmb_info.transactions_count ?></td></tr>
+  <tr><th><?lsmb text('Users') ?></th><td><?lsmb lsmb_info.users_count ?></td></tr>
+  </tbody>
+</table>
+<?lsmb END ?>
 </body>
 </html>

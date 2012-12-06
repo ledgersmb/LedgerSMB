@@ -128,6 +128,7 @@ sub login {
                     'Rebuild/Upgrade?'
              );
              $request->{next_action} = 'rebuild_modules';
+             $request->{lsmb_info} = $database->lsmb_info();
          } else {
             $request->{message} = $request->{_locale}->text(
                  'Unknown version found.'
@@ -942,6 +943,7 @@ sub rebuild_modules {
     
     $database->load_modules('LOADORDER');
     $database->process_roles('Roles.sql');
+    $request->{lsmb_info} = $database->lsmb_info();
     # Credentials set above via environment variables --CT
     #avoid msg commit ineffective with AutoCommit enabled
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",$creds->{login},$creds->{password},{AutoCommit=>0});
