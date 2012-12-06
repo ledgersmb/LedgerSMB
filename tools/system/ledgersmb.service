@@ -1,0 +1,18 @@
+[Unit]
+Description=LedgerSMB FCGI service
+After=syslog.target
+
+[Service]
+Type=forkking
+PIDfile=/var/run/httpd/lsmb.pid
+RemainAfterExit=yes
+ExecStart=/usr/bin/lsmbstart
+ExecStop=/usr/bin/lsmbstop
+Environment=BOOTUP=serial
+Environment=CONSOLETYPE=serial
+StandardOutput=syslog
+StandardError=syslog
+
+[Install]
+WantedBy=basic.target
+
