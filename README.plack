@@ -1,0 +1,56 @@
+README for Plack FCGI interface for LedgerSMB
+Chris Travers
+2012-11-13
+----------------
+
+WARNING:  Plack support for LedgerSMB is still designated as "expermental" which
+means that it may have bugs not found in the core distribution.  Serious bugs in
+this area were fixed as recently as 1.3.25.  Use at your own risk.  In addition,
+persistant code environments are more sensitive generally than the CGI
+environments and when the script dies one does not always get a helpful error.
+In particular, blank, white screens are typical of the software exiting before
+the standard output is returned to the web server.  There have been cases (which
+have been corrected) which caused these kinds of errors under plack only.
+
+----------------
+
+This addon provides an app.psgi for LedgerSMB which allows you to properly run
+servelets as fcgi scripts instead of as CGI scripts.  This makes LedgerSMB
+significantly more responsive but performance is more difficult to manage under
+load.
+
+The current module preloads a fair number of modules and then runs a
+fork/wait/execute loop where the less safe code is run.  This performs well on
+platforms which provide copy on write functionality, but may not perform as well
+on Windows.  The startup overhead for the dependencies is thus limited in this
+case to a one-time load on starting the servelet.  Tests suggest that this
+eliminates 2/3 or more of the startup overhead.
+
+This module has been tested on fcgi backends but has not been tested on other 
+backends.  I know of no reason it shouldn't work on starlet and other backends,
+so if it works for you, please let us know.
+
+The preloads are all set in the app.psgi.  You can adjust them there.  Note that
+preloaded modules are not reloaded when altered so you will have to restart the
+fcgi daemon if you change the preloads.  One solution is that for a performance
+cost you can comment out a preload, and restart the daemon when working on a
+preloaded module.
+
+Currently this will preload configuration settings so changes to the
+ledgersmb.conf will require a restart.
+
+By default this currently starts up to 10 processes.  This number can be
+tweaked.
+
+To run the servelet, you will need to run the following from a startup script
+somewhere:
+
+plackup -s FCGI -D --listen /var/run/httpd/fastcgi/lsmb.sock
+
+We have also packaged a few utilities here that are helpful, and these are
+included in the tools/system directory.  These include lsmbstart and lsmbstop,
+both bash scripts designed to start and stop the fcgi processes.  We also
+include ledgersmb.service which is a systemd config file for systemd systems
+(including Fedora) to use in starting/stopping the service.  A Sys V init script
+is not currently included but that is likely to be in future versions
+(contributions welcome).
