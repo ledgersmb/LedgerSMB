@@ -2402,26 +2402,26 @@ qq|<td>$ref->{meta_number}</td><td><a href=$form->{vc}.pl?path=$form->{path}&act
         $i = 1;
         if ( $form->{ARAP} eq 'AR' ) {
             $button{'AR--Add Transaction'}{code} =
-qq|<button class="submit" type="submit" name="action" value="ar_transaction">|
+qq|<a href="ar.pl?action=add">[|
               . $locale->text('AR Transaction')
-              . qq|</button> |;
+              . qq|]</a> |;
             $button{'AR--Add Transaction'}{order} = $i++;
             $button{'AR--Sales Invoice'}{code} =
-qq|<button class="submit" type="submit" name="action" value="sales_invoice_">|
+qq|<a href="is.pl?action=add">[|
               . $locale->text('Sales Invoice')
-              . qq|</button> |;
+              . qq|]</a> |;
             $button{'AR--Sales Invoice'}{order} = $i++;
         }
         else {
             $button{'AP--Add Transaction'}{code} =
-qq|<button class="submit" type="submit" name="action" value="ap_transaction">|
+qq|<a href="ap.pl?action=add">[|
               . $locale->text('AP Transaction')
-              . qq|</button> |;
+              . qq|]</a> |;
             $button{'AP--Add Transaction'}{order} = $i++;
             $button{'AP--Vendor Invoice'}{code} =
-qq|<button class="submit" type="submit" name="action" value="vendor_invoice_">|
+qq|<a href="ir.pl?action=add">[|
               . $locale->text('Vendor Invoice')
-              . qq|</button> |;
+              . qq|]</a> |;
             $button{'AP--Vendor Invoice'}{order} = $i++;
         }
 
@@ -2446,7 +2446,6 @@ qq|<button class="submit" type="submit" name="action" value="vendor_invoice_">|
 
     $form->hide_form(
         "callback",    "path", "login", "sessionid",
-        "$form->{vc}", "$form->{vc}_id"
     );
 
     if ( !$form->{till} ) {
