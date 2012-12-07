@@ -83,6 +83,7 @@ Changelog for 1.3.26
 * Added db statistics post-upgrade and pre/post rebuild (Chris T, 3586113)
 * Merged in fcgi support from addons (Chris T)
 * Clarified UI for changing password vs settings (Chris T, 3588810) 
+* Fixed eca selection issues when creating invoices (Chris T, 3588301)
 
 Changelog for 1.3.25
 * Fixed internal server errors on LedgerSMB->error() during new() (Chris T)
