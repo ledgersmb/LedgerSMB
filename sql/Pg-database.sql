@@ -967,6 +967,7 @@ CREATE TABLE payroll_deduction_class (
    id int not null,
    country_id int not null references country(id),
    label text not null,
+   stored_proc_name name not null,
    unique (id, country_id),
    primary key (country_id, label)
 );

@@ -107,3 +107,9 @@ COMMENT ON VIEW cash_impact IS
 $$ This view is used by cash basis reports to determine the fraction of a
 transaction to be counted.$$;
 COMMIT;
+
+BEGIN;
+
+ALTER TABLE payrol_deduction_class ADD stored_proc_name name not null;
+
+COMMIT;
