@@ -1,5 +1,44 @@
 BEGIN;
 
+DROP TYPE IF EXISTS lsmb_date_fields;
+
+CREATE TYPE lsmb_date_fields AS (
+    century double precision,
+    decade double precision,
+    year double precision,
+    month double precision,
+    day double precision, 
+    hour double precision,
+    minute double precision,
+    second double precision,
+    quarter double precision,
+    doy double precision,
+    dow double precision,
+    epoch double precision,
+    as_date date,
+    as_time time
+);
+
+CREATE OR REPLACE FUNCTION lsmb__decompose_timestamp 
+(in_timestamp timestamptz)
+RETURNS lsmb_date_fields language sql AS
+$$
+SELECT extract('century' from $1) as century, 
+       extract('decade' from $1) as decade,
+       extract('year' from $1) as year,
+       extract('month' from $1) as month,
+       extract('day' from $1) as day,
+       extract('hour' from $1) as hour,
+       extract('minute' from $1) as minute,
+       extract('second' from $1) as second,
+       extract('quarter' from $1) as quarter,
+       extract('doy' from $1) as doy,
+       extract('dow' from $1) as dow,
+       extract('epoch' from $1) as epoch,
+       $1::date as as_date,
+       $1::time as as_time;
+$$;
+
 CREATE OR REPLACE FUNCTION parse_date(in_date date) returns date AS
 $$ select $1; $$ language sql;
 
