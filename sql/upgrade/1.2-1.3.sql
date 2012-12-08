@@ -518,7 +518,7 @@ INSERT INTO project (id, projectnumber, description, startdate, enddate,
      SELECT p.id, projectnumber, description, p.startdate, p.enddate,
             parts_id, production, completed, c.credit_id
        FROM lsmb12.project p
-       JOIN lsmb12.customer c ON p.customer_id = c.id;
+  LEFT JOIN lsmb12.customer c ON p.customer_id = c.id;
 
 INSERT INTO partsgroup SELECT * FROM lsmb12.partsgroup;
 
