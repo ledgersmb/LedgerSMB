@@ -298,6 +298,7 @@ to a directive relative to tempdir where these files are stored.
 
 sub get_for_template{
     my ($self, $args) = @_;
+    warn 'entering get_for_template';
 
     my @results = $self->exec_method(
                  {funcname => 'file__get_for_template',
@@ -311,6 +312,7 @@ sub get_for_template{
     $self->file_path($LedgerSMB::Sysconfig::tempdir . '/' . $$);
     
     for my $result (@results) {
+        warn "File found: $result->{file_name}";
         open FILE, '>', $self->file_path . "/$result->{file_name}";
         binmode FILE, ':bytes';
         print FILE $result->{content};
@@ -329,6 +331,7 @@ sub get_for_template{
            $result->{ref_key} = $args->{ref_key};
         }
     }
+    return @results;
 }
 
 

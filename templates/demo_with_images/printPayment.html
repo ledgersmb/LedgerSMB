@@ -1,0 +1,129 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title><?lsmb titlebar ?></title>
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="-1" />
+  <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" />
+  <script language="JavaScript"  src="UI/payments/javascript/maximize_minimize.js"></script>
+  <meta http-equiv="content-type" content="text/html; charset=<?lsmb charset ?>" />  
+  <meta name="robots" content="noindex,nofollow" />
+</head>
+<body id="printPayment">
+ <?lsmb PROCESS elements.html  # Include form elements helper. ?>
+ <?lsmb accountclass.type = 'hidden';
+        INCLUDE input element_data=accountclass ?>
+ <?lsmb login.type = 'hidden' ; INCLUDE input element_data=login ?>
+ <?lsmb #WE NEED TO KNOW HOW MANY COLUMNS WE ARE USING, PLEASE DO NOT MOVE THE NEXT LINE -?>
+ <?lsmb column_count = 0 -?>
+ <table width="100%" id="header_table">
+   <tr id="header_bar">
+      <th id="top_bar_header" colspan="2" width="30%" align="left">
+		<h5>
+		LOGO AREA
+		<br/><?lsmb text('Address: [_1]', company.address) ?>
+		<br/><?lsmb text('Tel: [_1]', company.telephone) ?>
+		</h5>
+      </th>
+      <th align="left">
+     		 <h1 style="text-transform:uppercase">
+     		 <?lsmb text('Payment Order Number [_1]', header.payment_reference) ?>
+     		 </h1>
+      </th>
+   </tr>
+ </table>
+ 
+ <table class="datarow" width="100%" cellspacing="0" cellpadding="0" border="1" bordercolor="000000">
+   <tr>
+       <th class="titledatarow" align=center width=7%>
+       			<font color=000000><?lsmb text('Invoice') ?>&nbsp;<?lsmb text('Number')?></font>
+       </th>
+       <th class="titledatarow" align=center width=11%>
+       			<font  color=000000><?lsmb text('Account') ?></font>
+       </th>
+       <th class="titledatarow" align=center width=68%>
+		       <font color=000000><?lsmb text('Description') ?></font>
+       </th>
+       <th class="titledatarow" align=center width=14%>
+       			<font color=000000><?lsmb text('Source') ?></font>
+       </th>
+       <th class="titledatarow" align=center width=14%>
+       			<font color=000000><?lsmb text('Amount') ?></font>
+       </th>
+   </tr>
+      <?lsmb FOREACH row IN rows -?>
+           <tr valign="top">
+                 <td align="center"> <?lsmb row.invoice_number ?></td>
+                 <td align="center"> <?lsmb row.chart_description?>--<?lsmb row.chart_accno?></td>
+                 <td align="center"> <?lsmb row.memo -?>      </td>
+                 <td align="center"> <?lsmb row.source ?>            </td>
+                 <td align="center"> <?lsmb row.amount ?>            </td>
+           </tr>
+      <?lsmb END -?>
+	  <tr valign="top">
+          	<th align="right" colspan="4"> &nbsp; <?lsmb text('TOTAL') ?></th>
+          	<td align="center"> <?lsmb header.amount ?>     </td>
+          </tr>
+ </table>
+ 
+ 
+ <table width=100%>
+   <tr>
+       <th class="titledatarow" align="left" >
+		<font color=000000><?lsmb text('Currency') ?>: <?lsmb header.currency ?></font>
+       </th>
+       <th class="titledatarow" align="left">
+       		<font  color=000000><?lsmb text('Date') ?>: <?lsmb header.payment_date ?></font>
+       </th>
+       <th rowspan="5" width="30%" align="left">
+       <font size=3 style="text-transform:uppercase">
+              <?lsmb text('Signature') ?>
+              <br></br>
+              <br></br>
+              <br></br>
+              <br>___________________________________________</br>
+                  <?lsmb text('Identification') ?>
+
+       </font>
+       </th>
+   </tr>
+   <tr>                                                        
+     <td width="70%" align="left" colspan="3">
+        <font size="3">
+                      <b><?lsmb text('Pay in behalf of') ?>:</b> <?lsmb header.legal_name ?>
+        </font>
+     </td>
+   </tr>
+   <tr>
+     <td align="left" colspan="3">
+        <font size="3">
+                     <b><?lsmb text('The amount of') ?>:</b> <?lsmb   header.amount2text  -?>
+        </font>
+     </td>
+   </tr>
+   <tr>
+     <td align="left" colspan="3">
+        <font size="3">
+                      <b><?lsmb text('This document has been approved by')
+        -?>:</b><?lsmb header.employee_first_name -?>&nbsp;<?lsmb  header.employee_last_name -?> 
+        </font>
+     </td>
+   </tr>
+   <tr>
+       <td colspan="3" align="left">
+             <font size="3">
+                  <b><?lsmb text('Approved signature')?>:</b> ____________________________
+            
+              </font>
+       </td>
+   </tr>
+   <tr>
+       <td align="left" colspan="3">
+	      <font size="3"><b><?lsmb text('Notes') ?>:</b> <?lsmb header.notes ?></font> 
+       </td>
+   </tr>
+ </table>
+ </body>
+</html>
