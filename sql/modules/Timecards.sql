@@ -19,13 +19,13 @@ CREATE OR REPLACE FUNCTION timecard__save
   in_person_id integer,
   in_notes text,
   in_total numeric,
-  in_non_billable numeric,
+  in_non_billable numeric
 ) 
 RETURNS jcitems LANGUAGE PLPGSQL AS
 $$
 DECLARE retval jcitems;
 
-BEGIN;
+BEGIN
 
 UPDATE jcitems 
    SET description = in_description,
@@ -58,10 +58,11 @@ SELECT * INTO retval WHERE id = currval('jcitems_id_seq')::int;
 
 RETURN retval;
 
+END;
 $$;
 
 CREATE OR REPLACE FUNCTION timecard__parts(in_timecard bool, in_service bool)
-RETURNS SETOF parts AS
+RETURNS SETOF parts LANGUAGE SQL AS
 $$
 SELECT * 
   FROM parts
@@ -72,7 +73,7 @@ SELECT *
  ORDER BY partnumber;
 $$;
 
-DROP TYPE IF EXISTS timecard_report_line;
+DROP TYPE IF EXISTS timecard_report_line CASCADE;
 CREATE TYPE timecard_report_line AS (
    id int,
    description text,
@@ -81,8 +82,8 @@ CREATE TYPE timecard_report_line AS (
    checkedin time,
    checkedout time,
    transdate date,
-   weekday double,
-   workweek text,
+   weekday double precision,
+   workweek double precision,
    partnumber text,
    business_unit_code text,
    business_unit_description text,
@@ -101,9 +102,9 @@ $$
 WITH RECURSIVE bu_tree (id, path) AS (
      SELECT id, id::text AS path, control_code, description
        FROM business_unit
-      WHERE id = any(in_business_units)
+      WHERE id = any($1)
       UNION
-     SELECT bu.id, bu_tree.path || ',' || bu.id, control_code, description
+     SELECT bu.id, bu_tree.path || ',' || bu.id, bu.control_code, bu.description
        FROM business_unit bu
        JOIN bu_tree ON bu_tree.id = bu.parent_id
 )
@@ -115,9 +116,9 @@ SELECT j.id, j.description, j.qty, j.allocated, j.checkedin::time as checkedin,
        bu.description AS businessunit_description,
        ee.employeenumber, e.name AS employee, j.parts_id, j.sellprice
   FROM jcitems j
-  JOIN parts p ON p.id = jc.parts_id
-  JOIN person ON person.id = jc.person_id
-  JOIN employee_entity ee ON ee.entity_id = person.entity_id
+  JOIN parts p ON p.id = j.parts_id
+  JOIN person ON person.id = j.person_id
+  JOIN entity_employee ee ON ee.entity_id = person.entity_id
   JOIN entity e ON ee.entity_id = e.id
   JOIN bu_tree bu ON bu.id = j.business_unit_id
  WHERE (p.partnumber = $2 OR $2 IS NULL)
@@ -127,3 +128,5 @@ SELECT j.id, j.description, j.qty, j.allocated, j.checkedin::time as checkedin,
        AND (j.qty > j.allocated AND $6)
        AND (j.qty <= j.allocated AND $7);
 $$;
+
+COMMIT;

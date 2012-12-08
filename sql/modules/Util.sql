@@ -1,6 +1,6 @@
 BEGIN;
 
-DROP TYPE IF EXISTS lsmb_date_fields;
+DROP TYPE IF EXISTS lsmb_date_fields CASCADE;
 
 CREATE TYPE lsmb_date_fields AS (
     century double precision,
