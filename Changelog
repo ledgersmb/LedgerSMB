@@ -12,6 +12,7 @@ General Enhancements:
 * Removed ability to repost/delete transactions (Chris T)
 * Partsgroups can now be nested though this is not yet used by LSMB (Chris T)
 * Session expiration now with configurable behavior (Chris T)
+* Timecard system generalized to allow labor and materials cards too (Chris T)
 
 Enhancing data integrity
 * No longer allow NULL amounts in acc_trans (Chris T)

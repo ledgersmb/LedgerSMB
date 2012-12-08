@@ -19,7 +19,8 @@ CREATE OR REPLACE FUNCTION timecard__save
   in_person_id integer,
   in_notes text,
   in_total numeric,
-  in_non_billable numeric
+  in_non_billable numeric,
+  in_jctype int
 ) 
 RETURNS jcitems LANGUAGE PLPGSQL AS
 $$
@@ -48,11 +49,11 @@ END IF;
 INSERT INTO jcitems 
 (business_unit_id, parts_id, description, qty, allocated, sellprice,
   fxsellprice, serialnumber, checkedin, checkedout, person_id, notes,
-  total, non_billable)
+  total, non_billable, jctype)
 VALUES
 (in_business_unit_id, in_parts_id, in_description, in_qty, in_allocated, 
   in_sellprice, in_fxsellprice, in_serialnumber, in_checkedin, in_checkedout, 
-  in_person_id, in_notes, in_total, in_non_billable);
+  in_person_id, in_notes, in_total, in_non_billable, in_jctype);
 
 SELECT * INTO retval WHERE id = currval('jcitems_id_seq')::int;
 
@@ -61,7 +62,8 @@ RETURN retval;
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION timecard__parts(in_timecard bool, in_service bool)
+CREATE OR REPLACE FUNCTION timecard__parts
+(in_timecard bool, in_service bool, in_partnumber text)
 RETURNS SETOF parts LANGUAGE SQL AS
 $$
 SELECT * 
@@ -70,6 +72,7 @@ SELECT *
        AND ($1 OR inventory_accno_id IS NULL)
        AND ($2 OR (income_accno_id IS NOT NULL 
              AND inventory_accno_id IS NULL))
+       AND ($3 IS NULL OF partnumber like $3 || '%')
  ORDER BY partnumber;
 $$;
 
@@ -127,6 +130,31 @@ SELECT j.id, j.description, j.qty, j.allocated, j.checkedin::time as checkedin,
        AND (j.checkedin::date >= $5 OR $5 IS NULL)
        AND (j.qty > j.allocated AND $6)
        AND (j.qty <= j.allocated AND $7);
+$$;
+
+CREATE OR REPLACE FUNCTION timecard__allocate(in_id int, in_amount numeric)
+returns jcitems
+LANGUAGE PLPGSQL AS $$
+
+DECLARE retval jcitems;
+
+BEGIN
+
+UPDATE jcitems SET allocated = allocated + in_amount WHERE id = in_id;
+
+IF NOT FOUND THEN
+   RAISE EXCEPTION 'timecard not found';
+END IF;
+
+SELECT * INTO retval FROM jcitems WHERE id = in_id;
+
+IF allocated > qty THEN
+   RAISE EXCEPTION 'Too many allocated';
+END IF;
+
+RETURN retval;
+
+END;
 $$;
 
 COMMIT;

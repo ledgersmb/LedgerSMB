@@ -2262,6 +2262,14 @@ CREATE TABLE recurringprint (
 COMMENT ON TABLE recurringprint IS
 $$ Template, printer etc. to print to when recurring transaction posts.$$;
 --
+CREATE TABLE jctype (
+  id int not null unique, -- hand assigned
+  label text primary key,
+  description text not null,
+  is_service bool default true,
+  is_timecard bool default true
+);
+
 CREATE TABLE jcitems (
   id serial PRIMARY KEY,
   business_unit_id int references business_unit(id),
@@ -2277,7 +2285,9 @@ CREATE TABLE jcitems (
   person_id integer references person(id) not null,
   notes text,
   total numeric not null,
-  non_billable numeric not null default 0
+  non_billable numeric not null default 0,
+  jctype int not null,
+  curr char(3) not null
 );
 
 COMMENT ON TABLE jcitems IS $$ Time and materials cards. 
