@@ -14,6 +14,7 @@ CREATE TYPE lsmb_date_fields AS (
     quarter double precision,
     doy double precision,
     dow double precision,
+    week double precision,
     epoch double precision,
     as_date date,
     as_time time
@@ -34,6 +35,7 @@ SELECT extract('century' from $1) as century,
        extract('quarter' from $1) as quarter,
        extract('doy' from $1) as doy,
        extract('dow' from $1) as dow,
+       extract('week' from $1) as week,
        extract('epoch' from $1) as epoch,
        $1::date as as_date,
        $1::time as as_time;
