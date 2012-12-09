@@ -240,6 +240,10 @@ sub allocate {
 
 =head1 COPYRIGHT
 
+COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
+terms of the LedgerSMB General Public License version 2 or at your option any
+later version.  Please see enclosed LICENSE file for details.
+
 =cut
 
 __PACKAGE__->meta->make_immutable;

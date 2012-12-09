@@ -157,4 +157,20 @@ RETURN retval;
 END;
 $$;
 
+-- Timecard Types
+
+CREATE OR REPLACE FUNCTION timecard_type__get(in_id int) returns jctype 
+LANGUAGE sql AS $$
+
+SELECT * FROM jctype where id = $1;
+
+$$;
+
+CREATE OR REPLACE FUNCTION timecard_type__list() RETURNS SETOF jctype
+LANGUAGE SQL AS $$
+
+SELECT * FROM jctype ORDER BY label;
+
+$$;
+
 COMMIT;

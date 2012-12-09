@@ -2270,6 +2270,15 @@ CREATE TABLE jctype (
   is_timecard bool default true
 );
 
+INSERT INTO jctype (id, label, description, is_service, is_timecard)
+VALUES (1, 'time', 'Timecards for project services', true, true);
+
+INSERT INTO jctype (id, label, description, is_service, is_timecard)
+VALUES (2, 'materials', 'Materials for projects', false, false);
+
+INSERT INTO jctype (id, label, description, is_service, is_timecard)
+VALUES (3, 'overhead', 'Time/Overhead for payroll, manufacturing, etc', false, true);
+
 CREATE TABLE jcitems (
   id serial PRIMARY KEY,
   business_unit_id int references business_unit(id),
