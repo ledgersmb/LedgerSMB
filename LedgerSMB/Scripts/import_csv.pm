@@ -187,17 +187,16 @@ our $process = {
                $dbh->commit;
              },
  timecard => sub {
-               use LedgerSMB::JC;
+               use LedgerSMB::Timecard;
                my ($request, $entries) = @_;
                my $myconfig = {};
                for my $entry (@$entries) {
-                   my $jc = {dbh => $request->{dbh}};
                    my $counter = 0;
                    for my $col (@{$cols->{timecard}}){
                        $jc->{$col} = $entry->[$counter];
                        ++$counter;
                    }
-                   LedgerSMB::JC->save($myconfig, $jc);
+                   LedgerSMB::Timecard->new(%$jc)->save;
                }
              },
    inventory => sub {
