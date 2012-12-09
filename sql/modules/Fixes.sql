@@ -113,3 +113,24 @@ BEGIN;
 ALTER TABLE payrol_deduction_class ADD stored_proc_name name not null;
 
 COMMIT;
+
+BEGIN; -- Timecard types
+
+CREATE TABLE jctype (
+  id int not null unique, -- hand assigned
+  label text primary key,
+  description text not null,
+  is_service bool default true,
+  is_timecard bool default true
+);
+
+INSERT INTO jctype (id, label, description, is_service, is_timecard)
+VALUES (1, 'time', 'Timecards for project services', true, true);
+
+INSERT INTO jctype (id, label, description, is_service, is_timecard)
+VALUES (2, 'materials', 'Materials for projects', false, false);
+
+INSERT INTO jctype (id, label, description, is_service, is_timecard)
+VALUES (3, 'overhead', 'Time/Overhead for payroll, manufacturing, etc', false, true);
+
+COMMIT;

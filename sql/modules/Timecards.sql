@@ -35,7 +35,7 @@ UPDATE jcitems
        serialnumber = in_serialnumber,
        checkedin = in_checkedin,
        checkedout = in_checkedout,
-       person_id = person__get_my_entity_id(),
+       person_id = coalesce(in_person_id, person__get_my_entity_id()),
        notes = in_notes,
        total = in_total,
        non_billable = in_non_billable
@@ -53,7 +53,8 @@ INSERT INTO jcitems
 VALUES
 (in_business_unit_id, in_parts_id, in_description, in_qty, in_allocated, 
   in_sellprice, in_fxsellprice, in_serialnumber, in_checkedin, in_checkedout, 
-  in_person_id, in_notes, in_total, in_non_billable, in_jctype);
+  coalesce(in_person_id, person__get_my_entity_id()), in_notes, in_total, 
+  in_non_billable, in_jctype);
 
 SELECT * INTO retval WHERE id = currval('jcitems_id_seq')::int;
 
@@ -87,6 +88,7 @@ CREATE TYPE timecard_report_line AS (
    transdate date,
    weekday double precision,
    workweek double precision,
+   weekstarting date,
    partnumber text,
    business_unit_code text,
    business_unit_description text,
@@ -98,7 +100,8 @@ CREATE TYPE timecard_report_line AS (
 
 CREATE OR REPLACE FUNCTION timecard__report
 (in_business_units int[], in_partnumber text, in_person_id int, 
-in_date_from date, in_date_to date, in_open bool, in_closed bool)
+in_date_from date, in_date_to date, in_open bool, in_closed bool, 
+in_jctype int)
 RETURNS SETOF timecard_report_line
 LANGUAGE SQL AS
 $$
@@ -115,6 +118,7 @@ SELECT j.id, j.description, j.qty, j.allocated, j.checkedin::time as checkedin,
        j.checkedout::time as checkedout, j.checkedin::date as transdate,
        extract('dow' from j.checkedin) as weekday, 
        extract('week' from j.checkedin) as workweek,
+       date_trunc('week', j.checkedin) as weekstarting,
        p.partnumber, bu.control_code as business_unit_code, 
        bu.description AS businessunit_description,
        ee.employeenumber, e.name AS employee, j.parts_id, j.sellprice
@@ -129,7 +133,8 @@ SELECT j.id, j.description, j.qty, j.allocated, j.checkedin::time as checkedin,
        AND (j.checkedin::date <= $4 OR $4 IS NULL)
        AND (j.checkedin::date >= $5 OR $5 IS NULL)
        AND (j.qty > j.allocated AND $6)
-       AND (j.qty <= j.allocated AND $7);
+       AND (j.qty <= j.allocated AND $7)
+       AND (j.jctype = $8 OR $8 is null);
 $$;
 
 CREATE OR REPLACE FUNCTION timecard__allocate(in_id int, in_amount numeric)
