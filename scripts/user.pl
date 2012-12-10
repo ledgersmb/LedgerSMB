@@ -58,6 +58,7 @@ sub preference_screen {
 	    format   => 'HTML'
     );
     $user->{user} = $request->{_user};
+    $user->{password_expires} =~ s/:(\d|\.)*$//;
     $template->render($user);
 }
 
