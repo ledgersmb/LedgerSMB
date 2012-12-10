@@ -1,0 +1,135 @@
+<?lsmb INCLUDE 'ui-header.html';
+       PROCESS 'elements.html';
+       PROCESS 'report_base.html';
+       PROCESS 'utilities';
+?>
+<body>
+<form action="timecard.pl" method="post">
+<div class="listtop"><?lsmb text('Time or Materials Card') ?></div>
+<table>
+<?lsmb PROCESS employee; ?>
+<tr><th colspan="2" class="listtop"><?lsmb text('Business Units') ?> : 
+                                    <?lsmb text('Please select only one') ?>
+    </th>
+</tr>
+<?lsmb PROCESS business_units; ?>
+<tr><th><?lsmb text('Partnumber') ?></th>
+    <td><?lsmb PROCESS input element_data = {
+               name = 'partnumber'
+              value = partnumber
+               type = 'text'
+               size = '32'
+              class = 'control-code'
+         ?>
+    </td>
+</tr>
+<tr><th><?lsmb text('Description') ?></th>
+    <td><?lsmb PROCESS input element_data = {
+               name = 'description'
+              value = description
+               type = 'text'
+               size = '48'
+              class = 'description'
+         ?>
+    </td>
+</tr>
+<tr><th><?lsmb text('Date Worked') ?></th>
+    <td><?lsmb PROCESS input element_data = {
+               name = 'transdate'
+              value = transdate
+               type = 'text',
+               size = '15',
+              class = 'date'
+         } ?>
+     </td>
+</tr>
+<?lsmb IF jctype.is_timecard OR jctype.is_service ?>
+<tr>
+<th><?lsmb text('Time In') ?></th>
+<td><?lsmb PROCESS input element_data = {
+       name = 'in_hour'
+      value = in_hour
+       type = text
+      class = 'time-part'
+       size = 3
+  maxlength = 2 ?> : 
+    <?lsmb PROCESS input element_data = {
+       name = 'in_min'
+      value = in_min
+       type = text
+      class = 'time-part'
+       size = 3
+  maxlength = 2 ?>
+ </td> 
+<th><?lsmb text('Time Out') ?></th>
+<td><?lsmb PROCESS input element_data = {
+       name = 'out_hour'
+      value = out_hour
+       type = text
+      class = 'time-part'
+       size = 3
+  maxlength = 2 ?> : 
+    <?lsmb PROCESS input element_data = {
+       name = 'out_min'
+      value = out_min
+       type = text
+      class = 'time-part'
+       size = 3
+  maxlength = 2 ?>
+ </td> 
+</tr>
+<tr><th><?lsmb text('Clocked') ?></th>
+    <td><?lsmb total ?></td>
+</tr>
+<?lsmb END # if is_service or is_timecard ?>
+<tr><th><?lsmb text('Chargeable') ?></th>
+    <td><?lsmb PROCESS input element_data = {
+       name = 'qty'
+      value = qty
+       type = text
+      class = 'qty'
+       size = 16 ?></td>
+</td>
+<tr><th><?lsmb text('Non-Chargeable') ?></th>
+    <td><?lsmb PROCESS input element_data = {
+       name = 'non_billable'
+      value = non_billable
+       type = text
+      class = 'qty'
+       size = 16 ?></td>
+</tr>
+<tr><th><?lsmb text('Allocated') ?></th>
+    <td><?lsmb allocated ?></td>
+</tr>
+<tr><th align><?lsmb text('Notes') ?></th>
+    <td colspan=3><textarea name="notes" rows=2 cols=46 wrap=soft></textarea>
+    </td>
+</tr>
+</table>
+<?lsmb PROCESS print_options ?>
+<?lsmb PROCESS button element_data = {
+   name = 'action'
+   type = 'submit'
+  class = 'submit'
+   text = text('Update')
+  value = 'update' 
+} ?>
+<?lsmb PROCESS button element_data = {
+   name = 'action'
+   type = 'submit'
+  class = 'submit'
+   text = text('Save')
+  value = 'save'
+} ?>
+<?lsmb IF id ?>
+<?lsmb PROCESS button element_data = {
+   name = 'action'
+   type = 'submit'
+  class = 'submit'
+   text = text('Print')
+  value = 'print'
+} ?>
+<?lsmb END ?>
+</form>
+</body>
+</html>

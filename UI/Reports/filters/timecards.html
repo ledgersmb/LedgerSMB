@@ -1,0 +1,33 @@
+<?lsmb INCLUDE 'ui-header.html';
+       PROCESS 'elements.html';
+       PROCESS 'report_base.html'; ?>
+<body>
+<form action="timecard.pl" method="post">
+<div class="listtop"><?lsmb text('Time and Material Cards') ?></div>
+<table>
+<?lsmb PROCESS business_units ?>
+<tr>
+   <th><?lsmb text('Partnumber') ?></th>
+   <td><?lsmb PROCESS input element_data = {
+           name = 'partnumber' 
+          value = partnumber
+          class = 'control-code'
+           type = 'input'
+           size = '32'
+       } ?></td>
+</tr>
+<?lsmb PROCESS employee ?>
+<?lsmb PROCESS dates ?>
+<tr id="buttonrow">
+ <td><?lsmb PROCESS button element_data = {
+                 text = text('Search')
+                value = 'timecard_report'
+                 type = 'submit'
+                class = 'submit'
+            } ?>
+ </td>
+</tr>
+</table>
+</form>
+</body>
+</html>

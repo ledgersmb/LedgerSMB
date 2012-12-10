@@ -1,0 +1,26 @@
+<?lsmb BLOCK print_options ?>
+<div class="print-options"><?lsmb
+PROCESS select element_data = {
+           name = "template"
+        options = templates
+ default_values = [template]
+};
+
+languages.push({});
+PROCESS select element_data = {
+           name = "language"
+        options = languages
+ default_values = [language]
+};
+
+PROCESS select element_data = {
+           name = "format"
+        options = formats
+ default_values = [format]
+};
+
+PROCESS select element_data = {
+           name = "media"
+        options = printers
+ default_values = [media]
+}; ?></div>
