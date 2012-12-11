@@ -342,5 +342,100 @@ ORDER BY a.accno;
 
 $$ LANGUAGE SQL; 
 
+DROP TYPE IF EXISTS aa_report_line CASCADE;
+
+CREATE TYPE aa_transactions_line AS (
+    id int,
+    transdate date,
+    invnumber text,
+    amount numeric,
+    netamount numeric,
+    tax numeric,
+    paid numeric,
+    due numeric,
+    last_payment date,
+    due_payment date,
+    notes text,
+    till text,
+    salesperson text,
+    manager text,
+    shpping_point text,
+    ship_via text,
+    business_units text[];
+);
+
+CREATE OR REPLACE FUNCTION aa_transactions
+(in_entity_class int, in_account_id int, in_name text, in_meta_number text,
+ in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text
+ in_ponumber text, in_source text, in_description text, in_notes text, 
+ in_shipvia text, in_date_from text, in_date_to text, in_on_hold bool))
+RETURNS SETOF aa_transactions_line LANGUAGE PLPGSQL AS $$
+
+DECLARE retval aa_transaction_line;
+
+BEGIN
+
+FOR retval IN
+
+SELECT a.id, a.transdate, a.invnumber, a.amount, a.netamount, 
+       a.amount - a.netamount as tax, a.amount - p.due, p.last_payment, 
+       a.duedate, a.notes
+       a.till, eee.name as employee, mee.name as manager, a.shipping_point, 
+       a.shipvia, '{}'
+       
+  FROM (select id, transdate, invnumber, amount, netamount, duedate, notes, 
+               till, person_id, entity_credit_account
+          FROM ar
+         WHERE in_entity_class = 2
+         UNION
+        SELECT id, transdate, invnumber, amount, netamount, duedate, notes,
+               null, person_id, entity_credit_account
+          FROM ap 
+         WHERE in_entity_class = 1) a 
+  JOIN (select sum(amount) * case when in_entity_class = 1 THEN 1 ELSE -1 END
+               as due, trans_id, max(transdate) as last_payment
+          FROM acc_trans ac
+          JOIN account_link l ON ac.chart_id = l.account_id
+         WHERE l.description IN ('AR', 'AP')
+      GROUP BY ac.trans_id
+       ) p ON p.trans_id = a.id
+  JOIN person per ON per.id = a.person_id
+  JOIN entity_employee ee ON ee.person_id = per.id
+  JOIN entity eee ON eee.id = ee.entity_id
+  JOIN entity mee ON ee.manager_id = mee.id
+  JOIN entity_credit_account eca ON a.entity_credit_account = eca.id
+  JOIN entity eeca ON eca.entity_id = eeca.id
+ WHERE (in_account_id IS NULL OR 
+       EXISTS (select * from acc_trans 
+                where trans_id = a.id AND chart_id = in_account_id))
+       AND (in_name IS NULL OR eeca.name ilike in_name || '%')
+       AND (in_meta_number IS NULL OR eca.meta_number ilike in_meta_number)
+       AND (in_employee_id = ee.id OR in_employee_id IS NULL)
+       AND (in_manager_id = mee.id OR in_manager_id IS NULL)
+       AND (a.invnumber ilike in_invnumber || '%' OR in_invnumber IS NULL)
+       AND (a.ordnumber ilike in_ordnumber || '%' OR in_ordnumber IS NULL)
+       AND (a.ponumber ilike in_ponumber || '%' OR in_ponumber IS NULL)
+       AND (in_source IS NULL OR
+           EXISTS (
+              SELECT * from acc_trans where trans_id = a.id 
+                     AND source ilike in_source || '%'
+           ))
+       AND (in_description IS NULL 
+              OR plainto_tsquery(in_description) @@ a.description)
+       AND (in_notes IS NULL OR plainto_tsquery(in_notes) @@ a.notes)
+       AND (in_shipvia IS NULL OR plainto_tsquery(in_shipvia) @@ a.shipvia)
+       AND (in_date_from IS NULL OR a.transdate >= in_date_from)
+       AND (in_date_to IS NULL OR a.transdate <= in_date_to)
+       AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
+
+
+LOOP
+
+  RETURN NEXT retval;
+
+END LOOP;
+
+END;
+$$;
 
 COMMIT;
