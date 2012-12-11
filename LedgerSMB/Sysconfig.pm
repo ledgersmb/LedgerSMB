@@ -113,6 +113,7 @@ for my $var (
 if ($cssdir !~ m|/$|){
     $cssdir = "$cssdir/";
 }
+$fs_cssdir =~ s|/$||;
 
 for ($cfg->Parameters('printers')){
      $printer{$_} = $cfg->val('printers', $_);   
