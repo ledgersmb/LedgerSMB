@@ -88,6 +88,11 @@ Changelog for 1.3.26
 * Added demo templates with for invoices with attached images (Chris T)
 * Fixed attached images not appearing in templates (Chris T)
 * Fixed projects not attached to customers lost 1.2-1.3 (Chris T, h/t Ario)
+* Fixed the rpm file to make a valid ledgersmb-httpd.conf (Havard S, 3593393)
+* Dropped seconds/subsecs from password expiration notice (Chris T, 3593963)
+
+Chris T is Chris Travers
+Havard S is Havard Sorli
 
 Changelog for 1.3.25
 * Fixed internal server errors on LedgerSMB->error() during new() (Chris T)

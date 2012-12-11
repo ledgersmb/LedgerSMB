@@ -2,7 +2,7 @@
 Summary: LedgerSMB - Open Source accounting software
 Name: ledgersmb
 Version: 1.3.9990305076
-Release: 1
+Release: 2
 License: GPL
 URL: http://www.ledgersmb.org/
 Group: Applications/Productivity
@@ -44,9 +44,11 @@ postgres user:
 local   all         postgres                          ident sameuser
 local   all         all                               md5
 host    all         all         127.0.0.1/32          md5
-- Restart PostgreSQL to apply changes (service postgres restart)
+- Restart PostgreSQL to apply changes (service postgresql restart)
 
 - log in via psql, ALTER USER postgres WITH PASSWORD 'yada';
+
+- reload your Apache config (service httpd reload)
 
 Visit http://localhost/ledgersmb/setup.pl with username postgres and password 
 'yada' and create an application database.  This will also walk you through 
@@ -75,7 +77,24 @@ Alias /ledgersmb/doc/LedgerSMB-manual.pdf %{_docdir}/%{name}-%{version}/LedgerSM
 
 TAK
 
-perl -p -e "s,/some/path/to/ledgersmb,%{_datadir}/%{name},g" ledgersmb-httpd.conf >> rpm-ledgersmb-httpd.conf
+cat << 'HTTPDCONF' > fix-ledgersmb-httpd-conf-template.pl
+LINE: while (defined($_ = <ARGV>)) {
+    s[/ledgersmb WORKING_DIR/][/ledgersmb %{_datadir}/%{name}/]g;
+    s[Directory WORKING_DIR>][Directory %{_datadir}/%{name}>]g;
+    s[Directory WORKING_DIR/users>][Directory %{_datadir}/%{name}/users>]g;
+    s[Directory WORKING_DIR/bin>][Directory %{_datadir}/%{name}/bin>]g;
+    s[Directory WORKING_DIR/utils>][Directory %{_datadir}/%{name}/utils>]g;
+    s[Directory WORKING_DIR/spool>][Directory {_localstatedir}/spool/%{name}>]g;
+    s[Directory WORKING_DIR/templates>][Directory {_localstatedir}/lib/%{name}/templates>]g;
+    s[Directory WORKING_DIR/LedgerSMB>][Directory {_localstatedir}/lib/%{name}/LedgerSMB>]g;
+}
+continue {
+    print $_;
+}
+
+HTTPDCONF
+
+perl fix-ledgersmb-httpd-conf-template.pl ledgersmb-httpd.conf.template >> rpm-ledgersmb-httpd.conf
 
 
 %install
@@ -143,6 +162,12 @@ rm -rf $RPM_BUILD_ROOT
 
 
 %changelog
+# ToDo: SELinux, pos.conf.pl.template, reload of httpd config
+
+* Fri Dec 08 2012 Håvard Sørli <havard@anix.no> - 1.3.25
+- fix missing ledgersmb-httpd.conf.template 
+- add fix-ledgersmb-httpd-conf-template.pl
+
 * Mon Dec 31 2007 Christopher Murtagh <cmurtagh@ledgersmb.org> - 1.2.11
 - updating to 1.2.11
 - removing users directory
