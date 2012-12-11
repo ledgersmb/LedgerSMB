@@ -1636,6 +1636,8 @@ sub print_form {
     &{"$form->{vc}_details"};
 
     my @vars = ();
+
+    $form->{parts_id} = [];
     foreach $i ( 1 .. $form->{rowcount} ) {
         push @vars,
           (
@@ -1645,6 +1647,7 @@ sub print_form {
             "unit_$i",          "notes_$i", 
             "image_$i",         "id_$i"
           );
+          push @{$form->{parts_id}}, $form->{"id_$i"};
     }
     for ( split / /, $form->{taxaccounts} ) { push @vars, "${_}_description" }
 

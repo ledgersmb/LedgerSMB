@@ -116,6 +116,7 @@ for my $var (
 if ($cssdir !~ m|/$|){
     $cssdir = "$cssdir/";
 }
+$fs_cssdir =~ s|/$||;
 
 %printer = %{ $config{printers} } if $config{printers};
 

@@ -12,6 +12,8 @@ Changelog for 1.3.26
 * Fixed projects not attached to customers lost 1.2-1.3 (Chris T, h/t Ario)
 * Fixed the rpm file to make a valid ledgersmb-httpd.conf (Havard S, 3593393)
 * Dropped seconds/subsecs from password expiration notice (Chris T, 3593963)
+* Fixed parts images not available from template. (Chris T, h/t Brian W)
+* Fixed fs_cssdir not handling trailing / properly (Chris T, h/t Nigel T)
 
 Chris T is Chris Travers
 Havard S is Havard Sorli
