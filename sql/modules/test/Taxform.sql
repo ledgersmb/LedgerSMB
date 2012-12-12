@@ -48,8 +48,8 @@ INSERT INTO account (id, accno, category, heading ) VALUES (-256, '-billiontest'
 
 INSERT INTO country_tax_form (country_id, form_name, id) VALUES (232, 'Testing Form', -511);
 
-INSERT INTO parts (id, partnumber, description) values (-255, 'test1', 'test 1');
-INSERT INTO parts (id, partnumber, description) values (-256, 'test2', 'test 2');
+INSERT INTO parts (id, partnumber, description) values (-255, '-test1', 'test 1');
+INSERT INTO parts (id, partnumber, description) values (-256, '-test2', 'test 2');
 
 -- Set up an ECAs, for AP.
 

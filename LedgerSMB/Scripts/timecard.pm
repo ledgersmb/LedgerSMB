@@ -18,8 +18,8 @@ package LedgerSMB::Scripts::timecard;
 use LedgerSMB::Template;
 use LedgerSMB::Timecard;
 use LedgerSMB::Timecard::Type;
-use LedgerSMB::Report::Timecard;
-use LedgerSMB::Company::Config;
+use LedgerSMB::Report::Timecards;
+use LedgerSMB::Company_Config;
 use DateTime;
 
 =head1 ROUTINES

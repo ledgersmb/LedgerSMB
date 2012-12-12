@@ -18,6 +18,9 @@ if ($ENV{PGDATABASE}){
 } else {
     plan tests => 92;
 }
+$LedgerSMB::App_State::DBH =  DBI->connect('dbi:Pg:');
+
+
 
 sub redirect {
 	print "redirected\n";

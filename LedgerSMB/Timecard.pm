@@ -30,7 +30,8 @@ like.
 
 package LedgerSMB::Timecard;
 use Moose;
-with 'LedgerSMB::DBObject_Moose', 'LedgerSMB::MooseTypes';
+with 'LedgerSMB::DBObject_Moose';
+use LedgerSMB::MooseTypes;
 
 
 =head1 PROPERTIES
@@ -171,7 +172,7 @@ This is the ID of the LedgerSMB::Timecard::Type that the timecard is of.
 
 =cut
 
-jctype => (is => 'ro', isa => 'Int', required => 1);
+has jctype => (is => 'ro', isa => 'Int', required => 1);
 
 =item curr str
 

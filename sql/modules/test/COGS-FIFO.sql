@@ -616,18 +616,6 @@ SELECT 'multi-call-safe ap cogs, id ' || i.id, cogs__add_for_ap_line(i.id) = 0
   FROM invoice i JOIN ap ON ap.id = i.trans_id
  WHERE i.id < -1000;
 
--- finalization
-SELECT sum(amount) as balance, chart_id, trans_id from acc_trans 
- WHERE trans_id < -1000
-GROUP BY chart_id, trans_id
-order by trans_id, chart_id;
-
-SELECT id, parts_id, qty, allocated, sellprice from invoice
- WHERE trans_id < -1000
-ORDER BY id;
-
-
-
 SELECT * FROM test_result;
 
 SELECT (select count(*) from test_result where success is true)

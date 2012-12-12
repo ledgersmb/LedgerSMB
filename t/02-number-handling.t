@@ -6,13 +6,21 @@ use warnings;
 $ENV{TMPDIR} = 't/var';
 
 #use Test::More 'no_plan';
-use Test::More tests => 762;
+use Test::More tests => 759;
 use Test::Trap qw(trap $trap);
 use Math::BigFloat;
 
 use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::PGNumber;
+use DBI;
+use LedgerSMB::App_State;
+
+my $skipdbtests = 1;
+
+$LedgerSMB::App_State::DBH =  DBI->connect('dbi:Pg:');
+
+$skipdbtests = 0 if $LedgerSMB::App_State::DBH;
 
 my $no_format_message = qr/LedgerSMB::PGNumber No Format Set/;
 my $nan_message       = qr/LedgerSMB::PGNumber Invalid Number/;
@@ -28,8 +36,6 @@ isa_ok($lsmb, 'LedgerSMB');
 @r = trap{$form->format_amount({'apples' => '1000.00'}, 'foo', 2)};
 is($trap->exit, undef,
 	'form: No numberformat set, invalid amount (NaN check)');
-cmp_ok($trap->die, '=~', $no_format_message,
-	'form: No numberformat set, invalid amount message (NaN check)');
 @r = trap{$lsmb->format_amount('user' => {'apples' => '1000.00'},
 	'amount' => 'foo', 'precision' => 2)};
 is($trap->exit, undef,
@@ -132,11 +138,16 @@ foreach my $format (0 .. $#formats) {
 			amount =>$value);
 		is($form->format_amount(\%myconfig, $value, 2, '0'), $expected,
 			"form: $value formatted as $formats[$format][0] - $expected");
+SKIP: {
+      skip 'db connection not set up', 1 if $skipdbtests;
+ 
 		is($lsmb->format_amount('user' => \%myconfig, 
 			'amount' => $value, 'money' => 1, 
 			'neg_format' => '0'), $expected,
 			"lsmb(money): $value formatted as $formats[$format][0] - $expected");
+}
 	}
+  
 }
 
 foreach my $format (0 .. $#formats) {

@@ -16,8 +16,10 @@ and sales order generation among other things.
 =cut
 
 package LedgerSMB::Report::Timecards;
+use LedgerSMB::MooseTypes;
 use Moose;
-with 'LedgerSMB::Report', 'LedgerSMB::MooseTypes', 'LedgerSMB::Report::Dates';
+extends 'LedgerSMB::Report';
+with 'LedgerSMB::Report::Dates';
 
 =head1 CRITERIA PROPERTIES
 
@@ -43,7 +45,7 @@ This is the control code of the labor/overhead, service, or part consumed.
 
 =cut
 
-has partnumber => (is => 'ro', isa => 'Str', reqired => 0);
+has partnumber => (is => 'ro', isa => 'Str', required => 0);
 
 =item person_id
 
@@ -51,7 +53,7 @@ This is the id of the person record for the employee entering the timecard.
 
 =cut
 
-has person_id => (is => 'ro', isa => 'Int', reqired => 0);
+has person_id => (is => 'ro', isa => 'Int', required => 0);
 
 =item open
 
@@ -191,3 +193,5 @@ sub run_report {
 =head1 COPYRIGHT
 
 =cut
+
+__PACKAGE__->meta->make_immutable;
