@@ -342,7 +342,7 @@ ORDER BY a.accno;
 
 $$ LANGUAGE SQL; 
 
-DROP TYPE IF EXISTS aa_report_line CASCADE;
+DROP TYPE IF EXISTS aa_transactions_line CASCADE;
 
 CREATE TYPE aa_transactions_line AS (
     id int,
@@ -361,17 +361,17 @@ CREATE TYPE aa_transactions_line AS (
     manager text,
     shpping_point text,
     ship_via text,
-    business_units text[];
+    business_units text[]
 );
 
 CREATE OR REPLACE FUNCTION aa_transactions
 (in_entity_class int, in_account_id int, in_name text, in_meta_number text,
- in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text
+ in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
  in_ponumber text, in_source text, in_description text, in_notes text, 
- in_shipvia text, in_date_from text, in_date_to text, in_on_hold bool))
+ in_shipvia text, in_date_from text, in_date_to text, in_on_hold bool)
 RETURNS SETOF aa_transactions_line LANGUAGE PLPGSQL AS $$
 
-DECLARE retval aa_transaction_line;
+DECLARE retval aa_transactions_line;
 
 BEGIN
 
@@ -379,7 +379,7 @@ FOR retval IN
 
 SELECT a.id, a.transdate, a.invnumber, a.amount, a.netamount, 
        a.amount - a.netamount as tax, a.amount - p.due, p.last_payment, 
-       a.duedate, a.notes
+       a.duedate, a.notes,
        a.till, eee.name as employee, mee.name as manager, a.shipping_point, 
        a.shipvia, '{}'
        
