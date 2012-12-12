@@ -41,7 +41,7 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
      JOIN acc_trans ac ON ac.chart_id = a.id
      JOIN invoice i ON i.id = ac.invoice_id
      JOIN account_link l ON l.account_id = a.id
-     JOIN ar ON ar.id = ac.trans_id
+     JOIN ar ON ar.id = ac.trans_id 
 LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
              from business_unit_inv bui 
              JOIN bu_tree bu ON bui.bu_id = bu.id
@@ -79,12 +79,13 @@ $$ language SQL;
 
 
 CREATE OR REPLACE FUNCTION pnl__income_statement_accrual
-(in_from_date date, in_to_date date, in_business_units int[])
+(in_from_date date, in_to_date date, in_ignore_yearend text, 
+in_business_units int[])
 RETURNS SETOF pnl_line AS
 $$
 WITH RECURSIVE bu_tree (id, parent, path) AS (
       SELECT id, null, row(array[id])::tree_record FROM business_unit
-       WHERE id = any($3)
+       WHERE id = any($4)
       UNION ALL
       SELECT bu.id, parent, row((path).t || bu.id)::tree_record
         FROM business_unit bu
@@ -105,21 +106,30 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
     WHERE ac.approved is true 
           AND ($1 IS NULL OR ac.transdate >= $1) 
           AND ($2 IS NULL OR ac.transdate <= $2)
-          AND ($3 = '{}' 
-              OR $3 is null or in_tree($3, bu_ids))
+          AND ($4 = '{}' 
+              OR $4 is null or in_tree($4, bu_ids))
           AND a.category IN ('I', 'E')
+          AND ($3 = 'none' 
+               OR ($3 = 'all' 
+                   AND NOT EXISTS (SELECT * FROM yearend WHERE trans_id = gl.id
+                   ))
+               OR ($3 = 'last'
+                   AND NOT EXISTS (SELECT 1 FROM yearend 
+                                   HAVING max(trans_id) = gl.id))
+              )
  GROUP BY a.id, a.accno, a.description, a.category, 
           ah.id, ah.accno, ah.description
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION pnl__income_statement_cash
-(in_from_date date, in_to_date date, in_business_units int[])
+(in_from_date date, in_to_date date, in_ignore_yearend text, 
+in_business_units int[])
 RETURNS SETOF pnl_line AS
 $$
 WITH RECURSIVE bu_tree (id, parent, path) AS (
       SELECT id, null, row(array[id])::tree_record FROM business_unit
-       WHERE id = any($3)
+       WHERE id = any($4)
       UNION ALL
       SELECT bu.id, parent, row((path).t || bu.id)::tree_record
         FROM business_unit bu
@@ -145,9 +155,17 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
          GROUP BY entry_id) bu 
           ON (ac.entry_id = bu.entry_id)
     WHERE ac.approved is true 
-          AND ($3 = '{}' 
-              OR $3 is null or in_tree($3, bu_ids))
+          AND ($4 = '{}' 
+              OR $4 is null or in_tree($4, bu_ids))
           AND a.category IN ('I', 'E')
+          AND ($3 = 'none' 
+               OR ($3 = 'all' 
+                   AND NOT EXISTS (SELECT * FROM yearend WHERE trans_id = gl.id
+                   ))
+               OR ($3 = 'last'
+                   AND NOT EXISTS (SELECT 1 FROM yearend 
+                                   HAVING max(trans_id) = gl.id))
+              )
  GROUP BY a.id, a.accno, a.description, a.category, 
           ah.id, ah.accno, ah.description
  ORDER BY a.category DESC, a.accno ASC;

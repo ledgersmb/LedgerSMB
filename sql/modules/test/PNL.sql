@@ -15,8 +15,8 @@ INSERT INTO account (id, accno, category, heading ) VALUES (-256, '-billiontest'
 
 INSERT INTO country_tax_form (country_id, form_name, id) VALUES (232, 'Testing Form', -511);
 
-INSERT INTO parts (id, partnumber, description) values (-255, 'test1', 'test 1');
-INSERT INTO parts (id, partnumber, description) values (-256, 'test2', 'test 2');
+INSERT INTO parts (id, partnumber, description) values (-255, '-test1', 'test 1');
+INSERT INTO parts (id, partnumber, description) values (-256, '-test2', 'test 2');
 
 -- Set up an ECAs, for AP.
 
@@ -212,39 +212,39 @@ SELECT '-1027, one cash impact row', count(*) = 1
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Account -1001 shows up in accrual income statement', count(*) = 1
-  FROM pnl__income_statement_accrual(date1(), date2() - 1, ARRAY[]::int[])
+  FROM pnl__income_statement_accrual(date1(), date2() - 1, 'none', ARRAY[]::int[])
  WHERE account_id = -1001;
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Account -1001 accrual total 4040', amount = 4040
-  FROM pnl__income_statement_accrual(date1(), date2() - 1, ARRAY[]::int[])
+  FROM pnl__income_statement_accrual(date1(), date2() - 1, 'none', ARRAY[]::int[])
  WHERE account_id = -1001;
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Account -1001 does not show up in future accrual pnl', count(*) = 0
-  FROM pnl__income_statement_accrual(date2(), date2() + 365, ARRAY[]::int[])
+  FROM pnl__income_statement_accrual(date2(), date2() + 365, 'none', ARRAY[]::int[])
  WHERE account_id = -1001;
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Account -1001 shows up in cash income statement', count(*) = 1
-  FROM pnl__income_statement_cash(date1(), date2() - 1, ARRAY[]::int[])
+  FROM pnl__income_statement_cash(date1(), date2() - 1, 'none', ARRAY[]::int[])
  WHERE account_id = -1001;
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Account -1001 cash total 3030', amount = 3030
-  FROM pnl__income_statement_cash(date1(), date2() - 1, ARRAY[]::int[])
+  FROM pnl__income_statement_cash(date1(), date2() - 1, 'none', ARRAY[]::int[])
  WHERE account_id = -1001;
 
-SELECT * FROM pnl__income_statement_cash(date1(), date2() - 1, ARRAY[]::int[]);
+SELECT * FROM pnl__income_statement_cash(date1(), date2() - 1, 'none', ARRAY[]::int[]);
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Account -1001 shows up in future cash pnl', count(*) = 1
-  FROM pnl__income_statement_cash(date2() - 5, date2() + 20, ARRAY[]::int[])
+  FROM pnl__income_statement_cash(date2() - 5, date2() + 20, 'none', ARRAY[]::int[])
  WHERE account_id = -1001;
 
 INSERT INTO test_result(test_name, success)
 SELECT 'Account -1001 future cash total 505', sum(amount) = 505
-  FROM pnl__income_statement_cash(date2() - 5, date2() + 20, ARRAY[]::int[])
+  FROM pnl__income_statement_cash(date2() - 5, date2() + 20, 'none', ARRAY[]::int[])
  WHERE account_id = -1001;
 
 SELECT * FROM test_result;
