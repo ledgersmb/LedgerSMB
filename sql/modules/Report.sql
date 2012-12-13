@@ -346,6 +346,9 @@ DROP TYPE IF EXISTS aa_transactions_line CASCADE;
 
 CREATE TYPE aa_transactions_line AS (
     id int,
+    invoice bool,
+    meta_number text,
+    entity_name text,
     transdate date,
     invnumber text,
     amount numeric,
@@ -354,7 +357,7 @@ CREATE TYPE aa_transactions_line AS (
     paid numeric,
     due numeric,
     last_payment date,
-    due_payment date,
+    due_date date,
     notes text,
     till text,
     salesperson text,
@@ -364,11 +367,12 @@ CREATE TYPE aa_transactions_line AS (
     business_units text[]
 );
 
-CREATE OR REPLACE FUNCTION aa_transactions
+CREATE OR REPLACE FUNCTION report__aa_transactions
 (in_entity_class int, in_account_id int, in_name text, in_meta_number text,
  in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
  in_ponumber text, in_source text, in_description text, in_notes text, 
- in_shipvia text, in_date_from text, in_date_to text, in_on_hold bool)
+ in_shipvia text, in_date_from text, in_date_to text, in_on_hold bool,
+ in_taxable bool, in_tax_account int))
 RETURNS SETOF aa_transactions_line LANGUAGE PLPGSQL AS $$
 
 DECLARE retval aa_transactions_line;
@@ -377,7 +381,8 @@ BEGIN
 
 FOR retval IN
 
-SELECT a.id, a.transdate, a.invnumber, a.amount, a.netamount, 
+SELECT a.id, a.invoice, eca.meta_number eeca.name,
+       a.transdate, a.invnumber, a.amount, a.netamount, 
        a.amount - a.netamount as tax, a.amount - p.due, p.last_payment, 
        a.duedate, a.notes,
        a.till, eee.name as employee, mee.name as manager, a.shipping_point, 
@@ -427,6 +432,20 @@ SELECT a.id, a.transdate, a.invnumber, a.amount, a.netamount,
        AND (in_date_from IS NULL OR a.transdate >= in_date_from)
        AND (in_date_to IS NULL OR a.transdate <= in_date_to)
        AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
+       AND (in_taxable IS NULL OR 
+            OR (in_taxable 
+              AND (in_tax_account_id IS NULL 
+                 OR EXISTS (SELECT 1 FROM acc_trans 
+                             WHERE trans_id = a.id 
+                                   AND chart_id = in_tax_account_id)
+            ))
+            OR (NOT in_taxable
+                  AND NOT EXISTS (SELECT 1 
+                                    FROM acc_trans ac
+                                    JOIN account_link al 
+                                      ON al.account_id = ac.chart_id
+                                   WHERE ac.trans_id = a.id 
+                                         AND al.description ilike '%tax'))
 
 
 LOOP
