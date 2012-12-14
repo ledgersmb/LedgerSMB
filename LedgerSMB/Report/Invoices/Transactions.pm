@@ -1,16 +1,16 @@
 =head1 NAME
 
-LedgerSMB::Report::CashFlow::Transactions - AR/AP Transactions Reports for 
+LedgerSMB::Report::Invoices::Transactions - AR/AP Transactions Reports for 
 LedgerSMB
 
 =head1 SYNOPSIS
 
-  my $report = LedgerSMB::Report::CashFlow::Transactions(%$request);
+  my $report = LedgerSMB::Report::Invoices::Transactions(%$request);
   $report->render($request);
 
 =cut
 
-package LedgerSMB::Report::CashFlow::Transactions;
+package LedgerSMB::Report::Invoices::Transactions;
 use Moose;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';

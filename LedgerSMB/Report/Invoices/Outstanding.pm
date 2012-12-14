@@ -1,16 +1,16 @@
 =head1 NAME
 
-LedgerSMB::Report::CashFlow::Outstanding - Outstanding Invoice Reports for 
+LedgerSMB::Report::Invoices::Outstanding - Outstanding Invoice Reports for 
 LedgerSMB
 
 =head1 SYNOPSIS
 
- my $report = LedgerSMB::Report::CashFlow::Outstanding->new(%$request);
+ my $report = LedgerSMB::Report::Invoices::Outstanding->new(%$request);
  $report->render($request);
 
 =cut
 
-package LedgerSMB::Report::CashFlow::Outstanding;
+package LedgerSMB::Report::Invoices::Outstanding;
 use Moose;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::Dates';
