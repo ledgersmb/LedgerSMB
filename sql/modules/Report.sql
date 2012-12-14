@@ -347,6 +347,7 @@ DROP TYPE IF EXISTS aa_transactions_line CASCADE;
 CREATE TYPE aa_transactions_line AS (
     id int,
     invoice bool,
+    entity_id int,
     meta_number text,
     entity_name text,
     transdate date,
@@ -367,6 +368,71 @@ CREATE TYPE aa_transactions_line AS (
     business_units text[]
 );
 
+CREATE OR REPLACE FUNCTION report__aa_outstanding_details 
+(in_entity_class int, in_account_id int, in_name text, in_meta_number text,
+ in_employee_id int, in_business_units int[], in_ship_via text, in_on_hold bool,
+ in_date_from date, in_date_to date)
+RETURNS SETOF aa_transactions_line LANGUAGE PLPGSQL AS $$
+DECLARE retval aa_transactions_line;
+
+BEGIN
+
+FOR retval IN
+SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
+       a.invnumber, a.amount, a.netamount, a.netamount - a.amount as tax, 
+       a.amount - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
+       a.till, ee.name, me.name, a.shippingpoint, a.shipvia, 
+       '{}' as business_units -- TODO
+  FROM (SELECT id, invoice, transdate, amount, duedate, notes, till, on_hold
+               shippingpoint, shipvia, entity_credit_account, person_id
+          FROM ar WHERE in_entity_class = 2 and approved
+         UNION
+        SELECT id, invoice, transdate, amount, duedate, notes, null, on_hold
+               shippingpoint, shipvia, entity_credit_account, person_id
+          FROM ar WHERE in_entity_class = 1 and approved) a
+  JOIN (SELECT trans_id, sum(amount) AS due, max(transdate) as last_payment
+          FROM acc_trans ac
+          JOIN account_link al ON ac.chart_id = al.account_id
+         WHERE approved AND al.description IN ('AR', 'AP')
+               AND transdate <= in_date_to
+      GROUP BY trans_id) p ON p.trans_id = a.id
+  JOIN entity_credit_account eca ON a.entity_credit_account = eca.id
+  JOIN entity eeca ON eca.entity_id = eeca.id
+  JOIN person ON a.person_id = person.id
+  JOIN entity_employee ON entity_employee.entity_id = person.entity_id
+  JOIN entity ee ON entity_employee.entity_id = ee.id
+  LEFT
+  JOIN entity me ON entity_employee.manager_id = me.id
+ WHERE (in_account_id IS NULL 
+          OR EXISTS (select 1 FROM acc_trans 
+                      WHERE trans_id = a.id and chart_id = in_account_id))
+       AND (in_name IS NULL OR plainto_tsquery(in_name) @@ eeca.name)
+       AND (in_meta_number IS NULL 
+          OR eca.meta_number ilike in_meta_number || '%')
+       AND (in_employee_id IS NULL OR ee.entity_id = in_employee_id)
+       AND (in_ship_via IS NULL
+          OR plainto_tsquery(in_ship_via) @@ a.ship_via)
+       AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
+       AND (in_date_from IS NULL OR a.transdate >= in_date_from)
+       AND (in_date_to IS NULL OR a.transdate <= in_date_to);
+$$;
+
+CREATE OR REPLACE FUNCTION report__aa_outstanding
+(in_entity_class int, in_account_id int, in_name text, in_meta_number text,
+ in_employee_id int, in_business_units int[], in_ship_via text, in_on_hold bool)
+RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
+
+SELECT null as id, null as invoice, entity_id, meta_number, entity_name, 
+       null as transdate, count(*)::text as invnumber, sum(amount) as amount, 
+       sum(netamount) as netamount, sum(tax) as tax, sum(paid) as paid,
+       sum(due) as due, max(last_payment) as last_payment, null as duedate,
+       null as notes, null as till, null as salesperson, null as manager,
+       null as shipping_point, null as ship_via, null as business_units
+  FROM report__aa_outstanding_details($1, $2, $3, $4, $5, $6, $7, $8)
+ GROUP BY meta_number, name, entity_id;
+
+$$;
+
 CREATE OR REPLACE FUNCTION report__aa_transactions
 (in_entity_class int, in_account_id int, in_name text, in_meta_number text,
  in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
@@ -381,7 +447,7 @@ BEGIN
 
 FOR retval IN
 
-SELECT a.id, a.invoice, eca.meta_number eeca.name,
+SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
        a.transdate, a.invnumber, a.amount, a.netamount, 
        a.amount - a.netamount as tax, a.amount - p.due, p.last_payment, 
        a.duedate, a.notes,
