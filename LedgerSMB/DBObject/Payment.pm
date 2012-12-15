@@ -95,8 +95,6 @@ payment options.
 
 sub get_metadata {
     my ($self) = @_;
-    $self->list_open_projects();
-    @{$self->{departments}} = $self->exec_method(funcname => 'department_list');
     $self->get_open_currencies();
     $self->{currencies} = [];
     for my $c (@{$self->{openCurrencies}}){
