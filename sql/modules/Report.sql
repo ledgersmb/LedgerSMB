@@ -395,7 +395,9 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
                shipvia, ordnumber, ponumber, description, on_hold
           FROM ap 
          WHERE in_entity_class = 1 and approved) a 
-  JOIN (SELECT trans_id, sum(amount) AS due, max(transdate) as last_payment
+  JOIN (SELECT trans_id, sum(amount) * 
+               CASE WHEN in_entity_class = 1 THEN 1 ELSE -1 END AS due,
+               max(transdate) as last_payment
           FROM acc_trans ac
           JOIN account_link al ON ac.chart_id = al.account_id
          WHERE approved AND al.description IN ('AR', 'AP')
@@ -420,6 +422,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
        AND (in_date_from IS NULL OR a.transdate >= in_date_from)
        AND (in_date_to IS NULL OR a.transdate <= in_date_to)
+       AND p.due::numeric(100,2) <> 0
 LOOP
    RETURN NEXT retval;
 END LOOP;
