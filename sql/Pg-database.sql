@@ -2640,14 +2640,10 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 20	Invoice Vouchers	249	2
 2	Add Transaction	1	1
 7	AR Aging	4	3
-9	Taxable Sales	4	4
-10	Non-Taxable	4	5
 39	Invoice Vouchers	250	2
 5	Search	1	7
 22	Add Transaction	21	1
 27	AP Aging	24	3
-28	Taxable	24	4
-29	Non-taxable	24	5
 25	Search	21	7
 36	Receipt	35	1
 38	Payment	35	3
@@ -2855,7 +2851,10 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 6	Profit and Loss	109	1
 8	Customer Margin	6	10
 11	Invoice Margin	6	11
+9	Outstanding	4	1
+10	Outstanding	24	1
 \.
+
 
 --
 -- Name: menu_node_parent_key; Type: CONSTRAINT; Schema: public; Owner: ledgersmb; Tablespace: 
@@ -2923,12 +2922,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 3	module	is.pl	5
 3	type	invoice	6
 4	menu	1	7
-9	module	rp.pl	21
-9	action	report	22
-9	report	tax_collected	23
-10	module	rp.pl	24
-10	action	report	25
-10	report	nontaxable_sales	26
 12	action	add	29
 21	menu	1	50
 22	action	add	52
@@ -2937,12 +2930,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 23	type	invoice	55
 23	module	ir.pl	54
 24	menu	1	56
-28	module	rp.pl	66
-28	action	report	67
-28	report	tax_collected	68
-29	module	rp.pl	69
-29	action	report	70
-29	report	nontaxable_purchases	71
 35	menu	1	83
 36	module	payment.pl	84
 36	action	payment	85
@@ -3036,12 +3023,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 34	action	start_report	81
 34	report_name	purchase_history	82
 34	module	reports.pl	80
-5	module	reports.pl	8
 5	action	start_report	9
-5	report_name	search_purchases	10
-25	report_name	search_purchases	59
 25	action	start_report	58
-25	module	reports.pl	57
 72	action	search	168
 72	type	request_quotation	167
 73	menu	1	169
@@ -3070,6 +3053,10 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 83	action	add	198
 83	module	pe.pl	199
 84	module	ic.pl	202
+5	module	invoice.pl	8
+25	module	invoice.pl	57
+5	report_name	invoice_search	10
+25	report_name	invoice_search	59
 84	action	stock_assembly	203
 85	menu	1	204
 86	module	ic.pl	205
@@ -3523,7 +3510,16 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 11	action	start_report	61
 11	report_name	invoice_margin	78
 112	module_name	gl	79
+9	module	invoice.pl	21
+9	action	start_report	22
+9	entity_class	2	24
+10	module	invoice.pl	25
+10	action	start_report	26
+10	entity_class	1	67
+9	report_name	invoice_outstanding	23
+10	report_name	invoice_outstanding	66
 \.
+
 
 --
 

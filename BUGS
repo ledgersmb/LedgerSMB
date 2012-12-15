@@ -1,5 +1,7 @@
 CURRENT KNOWN BUGS:
 
-1)  Payment reversals don't properly handle fx gain/loss
-2)  Bulk payment interface doesn't properly handle foreign currencies
+1) Customer/vendor name not properly passed to invoice search routines
+
+2) Some of the template transactions tables do not have adequate permissions and
+so the System permission test fails
 
