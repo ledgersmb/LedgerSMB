@@ -1,7 +1,7 @@
 RELEASE NOTES
-LedgerSMB 1.3
+LedgerSMB 1.4
 
-Latest Revision:  1.3.26, June 17, 2012.
+Latest Revision:  1.4.0 beta 1, Dec 15, 2012
 
 1:  Welcome to LedgerSMB
 
@@ -16,7 +16,7 @@ which it was derived, but the feature set is starting to diverge rapidly.
 * Perl 5.8.
 * Apache, IIS, or other web server that supports CGI.
         * As of 1.3.24, FCGI is experimentally supported as is Plack-Starlet
-* PostgreSQL 8.3 or higher.
+* PostgreSQL 8.4 or higher.
 * Any operating system that supports the above environment.
 * The following CPAN modules:
 	* Data::Dumper
@@ -34,124 +34,45 @@ which it was derived, but the feature set is starting to diverge rapidly.
 	* Locale::Language
 	* Time::Local
 	* Cwd
-	* Config::Std
+	* Config::General
 	* MIME::Lite
         * TemplateToolkit
+        * Moose
 	
 
-2:  What's New in 1.3?
+2:  What's New in 1.4?
 
 2.1:  Framework Changes
-All new code has been moved to a new MVC-like framework.  This means that Perl,
-SQL, HTML, CSS, and Javascript are also now largely in separate files.
 
-The new code is also far more modular (and hence manageable) than the old code, 
-though it is expected that further improvements will occur in the move from 1.3
-to 1.4.
+New code in 1.4 now uses Moose to define classes.  Documentation is interlaced
+in code and this allows for easier maintenance as well as better documentation.
 
-With this we hope to make LedgerSMB into a stable platform for more agile business 
-application development.  With an ERP system it is often about the platform, not about
-the out-of-the-box functionality.
+1.4 also includes a new reporting framework which makes it relatively simple to
+create reports from SQL queries which can then be displayed in HTML, PDF, and
+CSV formats.
 
-2.2:  Security
+2.2:  New Features
 
-Prior to 1.3, security was not pervasively enforced in any real way through the
-database.  In 1.3, all user permissions are orchestrated via ROLES in the
-underlying database, and permissions are rigorously enforced in this way.
+LedgerSMB 1.4 now has a sophisticated and flexible business reporting dimensions
+system replacing the older project and department accounting code.  This
+approach allows a business to effectively tag line items of transactions with
+various designations and then use these for running reports later including 
+financial statements.  These dimensions are each hierarchical, allowing for
+nesting of projects and departments for accounting and reporting purposes.
 
-Role-based security provides a far better approach to security than the previous methods
-and since the permissions are now rigorously enforced, the overall security of the 
-application is much better.
+This can be used to do project and department accounting similar to the way
+things worked in previous versions, but additionally these can be used to do
+funds accounting and will be the basis of many new features in the future, from
+CRM task lists to heavy manufacturing.
 
-2.3:  New Features
-
-LedgerSMB 1.3 now supports separation of duties for transaction entry and bank
-reconciliation.  This means that permissions for data entry and posting of
-transactions are now separate.  By default, this means that a transaction now is
-entered first and then approved, and it only posts to the books when it is
-approved.  Bank reconciliation works on a similar principle.
-
-Note that in 1.3.x, AR/AP recurring transactions are saved rather than posted, 
-assuming that separation of duties is not disabled.  These are then approved or 
-deleted through the normal transaction approval workflows.
-
-Bank reconciliation also has been entirely redesigned to provide multi-user-safe
-workflows, and an ability to reasonably handle a much larger transaction load
-than was previously possible.  This includes a new user interface design, and a
-framework for building parsers for bank upload files.
-
-The single payment interface has been fully redesigned to provide a number of 
-additional features including the use of prepayments which are properly tracked.
-
-The multiple payment interface has been redesigned to handle a much larger 
-transaction load.
+We have also integrated the template transaction addon, allowing for better
+management of recurring transactions, as well as the budgets add-on.  The point
+of sale has been broken off into addons to allow for faster release cycles.
 
 2.4:  Database Changes
 
-The contact management and reconciliation portions of the database have been
-fully redesigned to provide more flexibility for customization.
-
-2.5:  Multicompany operations
-
-LedgerSMB 1.3 continues to use multiple physical databases for separate companies as
-did 1.2.  The major difference is that now users are database users, and since database
-users are global to the database cluster, they can now be shared (or not) between 
-companies.
-
-Global users can be imported into new companies (though first and last name, 
-and employee number need not be shared between the accounts).  Permissions can be 
-assigned separately on different databases.
-
-2.6:  Fixed Asset Handling
-
-LedgerSMB 1.3 comes with a fixed asset module, meaning you can now define your 
-assets, depreciate them, and dispose of them either entirely or partially.
-
-The fixed asset system is designed to be extensible.  Currently only time-based, 
-straight-line depreciations are included.  However the system is designed to 
-allow the creation of new depreciation methods including time-based and 
-production-based methods.
-
-2.7:  Tax Changes
-
-As of LedgerSMB 1.3.16, a few changes were made to the Sales Tax API so that it 
-is easier to implement local tax rules.  This includes a minimum tax value, 
-exposed through  the user interface, and a maximum value which is not yet
-exposed.  The handling of these are module-specific.  The Simple tax module 
-treats these as operating on the subtotal of the invoice.
-
-
-2.8:  New CSS hooks
-
-As of 1.3.21, it is now possible to customize the look and feel of transaction,
-order, and part screens based on the status of the object.  Screens are enclosed
-in a div with an id of statusdiv and a class of either "new" (if no ID is
-present), "saved" (if ID is present but not a posted financial transaction) and
-"posted (if a posted financial transaction).  This can be used to give feedback
-to the user so that it is immediately clear what the status of a given screen
-is.  Future versions will include such hooks in at least the ledgersmb.css
-provided.
-
-2.9:  Partial Support for Code Caching
-
-As of 1.3.24, LedgerSMB now supports caching of expensive dependencies in some
-environments so that response time is minimized.  Currently tested environments
-include Plack-based FCGI and the Perl web server Starlet.  Mod-perl might be
-possible to support at some point.
-
-The current approach is to daemonize the script, pre-load what can be preloaded,
-and then fork/execute/return so that the Perl interpreter does not have to worry
-about state issues and variable scopes in running scripts from the inherited 
-codebase.  This can increase speed greatly but it is still seen as somewhat
-experimental.  Code caching generally poses the possibility of some issues, and
-these are magnified in those areas of the code we have not replaced from
-SQL-Ledger.
-
-If you run into issues here, please file bug reports.  If there are
-showstoppers, you can always run the program via CGI.  Please see our addons
-repository or ask on the email lists if you'd like to run this.  The handler
-scripts are not includede out of the box but will likely be included in future
-versions.
+Projects and Departments have been replaced by the new reporting units
+framework.  
 
 3:  Known Issues
 
@@ -172,65 +93,6 @@ unless you are able to reverse on the same day.  If reversed on different days t
 gain/loss will be realized per the time when the payment was in effect and 
 not reversed.
 
-3.3:  Invoice unit column throws error when too long.
-
-The unit column in the invoice is limited to 5 characters and will throw an SQl error when it is too long.  The error looks like:
-
-UPDATE invoice
-SET trans_id = ?,
-parts_id = ?,
-description = ?,
-qty = ?,
-sellprice = ?,
-fxsellprice = ?,
-discount = ?,
-allocated = ?,
-unit = ?,
-deliverydate = ?,
-project_id = ?,
-serialnumber = ?,
-precision = ?,
-notes = ?
-WHERE id = ?
-ERROR: value too long for type character varying(5)
-
-Due to compatibility issues, a fix for this has been included for 1.4, but is
-not planned to be backported for 1.3.
-
-If you need change the maximum length, you can:
-
-ALTER TABLE invoice SET unit TYPE varchar([length]);
-
-4:  Differences between LedgerSMB and SQL-Ledger(TM)
-
-4.1: Login name restrictions
-Logins in SQL-Ledger can contain any printable characters.  In LedgerSMB these
-are restricted to alphanumeric characters and the symbols ., @, and -.
-
-4.2: Session handling
-SQL-Ledger as of 2.6.17 uses session tokens for authentication.  These tokens
-are based on the current timestamp and therefore insecure.  Furthermore, these
-tokens are not tracked on the server, so one can easily forge credentials for
-either the main application or the administrative interface.
-
-LedgerSMB 1.3 dispenses with sessions altogether except for handling
-discretionary locks (where they are stored in the db).  LedgerSMB uses http auth
-instead (preferably wrapped with Javascript to hide the credentials dialog from
-the end user).
-
-As of SQL-Ledger 2.8, the discretionary locking system can become stale,
-requiring manual cleaning.  In LedgerSMB 1.3, discretionary locks are tied to 
-active login sessions and cleared automatically after a period of inactivity.
-
-4.3: Template Changes
-
-SQL-Ledger uses custom routines for processing templates.  We use
-TemplateToolkit. As we move forward, the format of data sent to the templates
-will change accordingly.
-
-We have also dispensed with the old pagebreak functionality, moving instead to 
-the longtable package in LaTeX.
-
 5:  Roadmap
 This project has a losely defined roadmap and a set of statements and 
 objectives contained in the documentation manager and trackers of sourceforge.
@@ -246,16 +108,12 @@ they have outgrown the software.
 small to midsize market.
 
 The above being said, we have a set of targets for the next major release 
-(1.4.0).  There is no guarantee we will reach these targets but we have them
+(1.5.0).  There is no guarantee we will reach these targets but we have them
 anyway.  These include:
 
-* Integrated budgetting module (included already)
-* Rewritten reports
-* Rewritten project/department handling to include nested departments (already included)
-* Funds accounting (already included)
-* Rewritten Sales Orders (may be deferred)
-* Framework for web services
-* A framework for implementing payroll solutions
+* Rewritten Sales Orders 
+* Rewritten journal entry and invoicing system for easier reporting.
+* Heavy manufacturing support
 
 6:  Get Involved
 Contributors should start by joining the LedgerSMB users and devel lists.  Code
@@ -266,5 +124,3 @@ devel mailing lists.
 Additionally, we can use help in QA, documentation, advocacy, and many other
 places. 
 
-SQL-Ledger is a registered trademark of DWS systems and is not affiliated with 
-this project or its members in any way.
