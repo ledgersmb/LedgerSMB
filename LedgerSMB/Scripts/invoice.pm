@@ -63,6 +63,9 @@ LedgerSMB::Report::Invoices::Outstanding for expected properties.
 
 sub invoices_outstanding {
     my ($request) = @_;
+    # the line below is needed because we are using trinary boolean logic
+    # which does not work well with Moose
+    delete $request->{on_hold} if $request->{on_hold} eq 'on';
     my $report = LedgerSMB::Report::Invoices::Outstanding->new(%$request);
     $report->render($request);
 }
@@ -76,6 +79,9 @@ LedgerSMB::Report::Invoices::Transactions for expected properties.
 
 sub  invoice_search{
     my ($request) = @_;
+    # the line below is needed because we are using trinary boolean logic
+    # which does not work well with Moose
+    delete $request->{on_hold} if $request->{on_hold} eq 'on';
     my $report = LedgerSMB::Report::Invoices::Transactions->new(%$request);
     $report->render($request);
 }

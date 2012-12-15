@@ -416,23 +416,30 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
           OR plainto_tsquery(in_ship_via) @@ a.ship_via)
        AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
        AND (in_date_from IS NULL OR a.transdate >= in_date_from)
-       AND (in_date_to IS NULL OR a.transdate <= in_date_to);
+       AND (in_date_to IS NULL OR a.transdate <= in_date_to)
+LOOP
+   RETURN NEXT retval;
+END LOOP;
+END;
 $$;
 
 CREATE OR REPLACE FUNCTION report__aa_outstanding
 (in_entity_class int, in_account_id int, in_entity_name text, 
  in_meta_number text,
- in_employee_id int, in_business_units int[], in_ship_via text, in_on_hold bool)
+ in_employee_id int, in_business_units int[], in_ship_via text, in_on_hold bool,
+ in_date_from date, in_date_to date)
 RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
 
-SELECT null as id, null as invoice, entity_id, meta_number, entity_name, 
-       null as transdate, count(*)::text as invnumber, sum(amount) as amount, 
-       sum(netamount) as netamount, sum(tax) as tax, sum(paid) as paid,
-       sum(due) as due, max(last_payment) as last_payment, null as duedate,
-       null as notes, null as till, null as salesperson, null as manager,
-       null as shipping_point, null as ship_via, null as business_units
-  FROM report__aa_outstanding_details($1, $2, $3, $4, $5, $6, $7, $8)
- GROUP BY meta_number, name, entity_id;
+SELECT null::int as id, null::bool as invoice, entity_id, meta_number, 
+       entity_name, null::date as transdate, count(*)::text as invnumber, 
+       sum(amount) as amount, sum(netamount) as netamount, sum(tax) as tax, 
+       sum(paid) as paid, sum(due) as due, max(last_payment) as last_payment, 
+       null::date as duedate, null::text as notes, null::text as till, 
+       null::text as salesperson, null::text as manager, 
+       null::text as shipping_point, null::text as ship_via, 
+       null::text[] as business_units
+  FROM report__aa_outstanding_details($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+ GROUP BY meta_number, entity_name, entity_id;
 
 $$;
 
@@ -442,7 +449,7 @@ CREATE OR REPLACE FUNCTION report__aa_transactions
  in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
  in_ponumber text, in_source text, in_description text, in_notes text, 
  in_shipvia text, in_date_from text, in_date_to text, in_on_hold bool,
- in_taxable bool, in_tax_account int))
+ in_taxable bool, in_tax_account int)
 RETURNS SETOF aa_transactions_line LANGUAGE PLPGSQL AS $$
 
 DECLARE retval aa_transactions_line;
@@ -455,16 +462,18 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
        a.transdate, a.invnumber, a.amount, a.netamount, 
        a.amount - a.netamount as tax, a.amount - p.due, p.last_payment, 
        a.duedate, a.notes,
-       a.till, eee.name as employee, mee.name as manager, a.shipping_point, 
+       a.till, eee.name as employee, mee.name as manager, a.shippingpoint, 
        a.shipvia, '{}'
        
   FROM (select id, transdate, invnumber, amount, netamount, duedate, notes, 
-               till, person_id, entity_credit_account
+               till, person_id, entity_credit_account, invoice, shippingpoint,
+               shipvia, ordnumber, ponumber, description
           FROM ar
          WHERE in_entity_class = 2
          UNION
         SELECT id, transdate, invnumber, amount, netamount, duedate, notes,
-               null, person_id, entity_credit_account
+               null, person_id, entity_credit_account, invoice, shippingpoint,
+               shipvia, ordnumber, ponumber, description
           FROM ap 
          WHERE in_entity_class = 1) a 
   JOIN (select sum(amount) * case when in_entity_class = 1 THEN 1 ELSE -1 END
@@ -475,7 +484,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
       GROUP BY ac.trans_id
        ) p ON p.trans_id = a.id
   JOIN person per ON per.id = a.person_id
-  JOIN entity_employee ee ON ee.person_id = per.id
+  JOIN entity_employee ee ON ee.entity_id = per.entity_id
   JOIN entity eee ON eee.id = ee.entity_id
   JOIN entity mee ON ee.manager_id = mee.id
   JOIN entity_credit_account eca ON a.entity_credit_account = eca.id
@@ -486,7 +495,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
        AND (in_entity_name IS NULL 
            OR eeca.name ilike in_entity_name || '%')
        AND (in_meta_number IS NULL OR eca.meta_number ilike in_meta_number)
-       AND (in_employee_id = ee.id OR in_employee_id IS NULL)
+       AND (in_employee_id = ee.entity_id OR in_employee_id IS NULL)
        AND (in_manager_id = mee.id OR in_manager_id IS NULL)
        AND (a.invnumber ilike in_invnumber || '%' OR in_invnumber IS NULL)
        AND (a.ordnumber ilike in_ordnumber || '%' OR in_ordnumber IS NULL)
@@ -503,7 +512,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
        AND (in_date_from IS NULL OR a.transdate >= in_date_from)
        AND (in_date_to IS NULL OR a.transdate <= in_date_to)
        AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
-       AND (in_taxable IS NULL OR 
+       AND (in_taxable IS NULL 
             OR (in_taxable 
               AND (in_tax_account_id IS NULL 
                  OR EXISTS (SELECT 1 FROM acc_trans 
@@ -517,6 +526,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
                                       ON al.account_id = ac.chart_id
                                    WHERE ac.trans_id = a.id 
                                          AND al.description ilike '%tax'))
+            )
 
 
 LOOP
