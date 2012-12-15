@@ -32,8 +32,8 @@ package LedgerSMB::Report::Unapproved::Batch_Detail;
 use Moose;
 extends 'LedgerSMB::Report';
 
-use LedgerSMB::Business_Unit_Class;
-use LedgerSMB::Business_Unit;
+use LedgerSMB::DBObject::Business_Unit_Class;
+use LedgerSMB::DBObject::Business_Unit;
 
 
 =head1 PROPERTIES
@@ -202,7 +202,6 @@ sub run_report{
                     class => 'submit',
                 }]);
     my @rows = $self->exec_method({funcname => 'batch__search'});
-    for my $r (@rows){
     for my $ref (@rows){
         my $script;
         my $class_to_script = {
@@ -227,6 +226,5 @@ the terms of the GNU General Public License version 2 or at your option any
 later version.  Please see included LICENSE.TXT for details.
 
 =cut
-
 __PACKAGE__->meta->make_immutable;
 return 1;
