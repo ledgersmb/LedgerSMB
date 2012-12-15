@@ -17,6 +17,7 @@ our $VERSION = '0.1';
 use LedgerSMB::Batch;
 use LedgerSMB::Template;
 use LedgerSMB::Report::Unapproved::Batch_Overview;
+use LedgerSMB::Scripts::payment;
 use strict;
 
 
@@ -114,27 +115,27 @@ sub add_vouchers {
         gl         => {script => 'bin/gl.pl', function => sub {add()}},
      sales_invoice => {script => 'bin/is.pl', function => sub {add()}},
     vendor_invoice => {script => 'bin/ir.pl', function => sub {add()}},
-        receipt    => {script => 'scripts/payment.pl', 
+        receipt    => {script => undef, 
 	             function => sub {
 				my ($request) = @_;
 				$request->{account_class} = 2;
 				LedgerSMB::Scripts::payment::payments($request);
 				}},
-        payment   => {script => 'scripts/payment.pl', 
+        payment   => {script => undef, 
 	             function => sub {
 				my ($request) = @_;
 				$request->{account_class} = 1;
 				LedgerSMB::Scripts::payment::payments($request);
 				}},
         payment_reversal => {
-                      script => 'scripts/payment.pl',
+                      script => undef,
                     function => sub {
 				my ($request) = @_;
 				$request->{account_class} = 1;
 				LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
 				}},
         receipt_reversal => {
-                      script => 'scripts/payment.pl',
+                      script => undef,
                     function => sub {
 				my ($request) = @_;
 				$request->{account_class} = 2;
@@ -174,11 +175,6 @@ sub add_vouchers {
         # However, the code we are including is going to require it for now. 
         # -- CT
         { no strict; no warnings 'redefine'; do $script; }
-
-    } elsif ($script =~ /scripts/) {
-	# Maybe we should move this to a require statement?  --CT
-         { do $script } 
-
     }
 
     $vouchers_dispatch->{$request->{batch_type}}{function}($request);
