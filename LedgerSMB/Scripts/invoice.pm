@@ -48,6 +48,9 @@ sub begin_report {
         procname => 'account__get_by_link_desc', args => [$link]);
     @{$request->{tax_accounts}} = $request->call_procedure(
         procname => 'account__get_by_link_desc', args => ["${link}_tax"]);
+    @{$request->{employees}} =  $request->call_procedure(
+        procname => 'employee__all_salespeople'
+    );
     LedgerSMB::Scripts::reports::begin_report($request);
 }
 

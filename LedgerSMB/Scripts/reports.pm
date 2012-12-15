@@ -82,6 +82,9 @@ sub start_report {
     @{$request->{country_list}} = $request->call_procedure( 
                    procname => 'location_list_country'
     );
+    @{$request->{employees}} =  $request->call_procedure(
+        procname => 'employee__all_salespeople'
+    );
     my $template = LedgerSMB::Template->new(
         user => $request->{_user},
         locale => $request->{_locale},

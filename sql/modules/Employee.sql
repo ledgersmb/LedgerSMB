@@ -240,16 +240,20 @@ BEGIN
 END;
 $$ language plpgsql;
 
+CREATE OR REPLACE FUNCTION employee__all_salespeople()
+RETURNS setof employee_result LANGUAGE SQL AS
+$$
+   SELECT p.entity_id, e.control_code, p.id, s.salutation, s.id,
+          p.first_name, p.middle_name, p.last_name,
+          ee.startdate, ee.enddate, ee.role, ee.ssn, ee.sales, ee.manager_id,
+          mp.first_name, mp.last_name, ee.employeenumber, ee.dob, e.country_id
+     FROM person p
+     JOIN entity_employee ee on (ee.entity_id = p.entity_id)
+     JOIN entity e ON (p.entity_id = e.id)
+LEFT JOIN salutation s on (p.salutation_id = s.id)
+LEFT JOIN person mp ON ee.manager_id = p.entity_id
+    WHERE ee.sales
+ ORDER BY ee.employeenumber;
+$$;
 
--- I don't like this.  Wondering if we should unify this to another function.
--- person__location_save should be cleaner.  Not documenting yet, but not 
--- removing because user management code uses it.  --CT
-create or replace function employee_set_location 
-    (in_employee int, in_location int) 
-returns void as $$
-
-    INSERT INTO entity_to_location (entity_id,location_id) 
-    SELECT entity_id, $2
-      FROM person WHERE id = $1;
-$$ language 'sql';
 COMMIT;

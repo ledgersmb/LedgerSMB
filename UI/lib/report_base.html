@@ -188,3 +188,26 @@ END # BLOCK -?>
 	</div>
       </div>
 <?lsmb END #BLOCK ?>
+
+<?lsmb 
+
+  BLOCK employees;
+  # DEFAULTS
+  IF ! SELECTNAME.defined;
+     SELECTNAME = 'employee_id';
+  END;
+  FOREACH e IN employees;
+     e.text = e.first_name _ ' ' _ e.last_name;
+  END ?>
+<tr>
+  <th><?lsmb text('Employees') ?></th>
+  <td><?lsmb PROCESS select element_data = {
+                 name = SELECTNAME
+       default_values = [$SELECTNAME]
+              options = employees
+           value_attr = 'id'
+                class = 'employee'
+       } ?></td>
+</tr><?lsmb
+
+  END # BLOCK employees ?>
