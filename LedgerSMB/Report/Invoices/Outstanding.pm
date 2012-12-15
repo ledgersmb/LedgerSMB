@@ -307,7 +307,7 @@ sub run_report {
     }
     my @rows = $self->exec_method({funcname => $procname});
     # TODO, add hyperlinks for rows
-    $self->rows(@rows);
+    $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

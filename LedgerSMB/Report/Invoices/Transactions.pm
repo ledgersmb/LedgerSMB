@@ -295,8 +295,8 @@ sub header_lines {
 
 sub name {
     my $self = shift;
-    return LedgerSMB::Report::Text('Search AP') if $self->entity_class == 1;
-    return LedgerSMB::Report::Text('Search AR') if $self->entity_class == 2;
+    return LedgerSMB::Report::text('Search AP') if $self->entity_class == 1;
+    return LedgerSMB::Report::text('Search AR') if $self->entity_class == 2;
 }
 
 =head1 METHODS
@@ -311,7 +311,7 @@ sub run_report {
     my $self = shift;
     my @rows = $self->exec_method({funcname => 'report__aa_transactions'});
     # TODO add hyperlinks
-    $self->rows(@rows);
+    $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

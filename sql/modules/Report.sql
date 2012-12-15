@@ -385,11 +385,13 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        a.till, ee.name, me.name, a.shippingpoint, a.shipvia, 
        '{}' as business_units -- TODO
   FROM (SELECT id, invoice, transdate, amount, duedate, notes, till, on_hold
-               shippingpoint, shipvia, entity_credit_account, person_id
+               shippingpoint, shipvia, entity_credit_account, person_id,
+               on_hold
           FROM ar WHERE in_entity_class = 2 and approved
          UNION
         SELECT id, invoice, transdate, amount, duedate, notes, null, on_hold
-               shippingpoint, shipvia, entity_credit_account, person_id
+               shippingpoint, shipvia, entity_credit_account, person_id, 
+               on_hold
           FROM ar WHERE in_entity_class = 1 and approved) a
   JOIN (SELECT trans_id, sum(amount) AS due, max(transdate) as last_payment
           FROM acc_trans ac
@@ -408,12 +410,12 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
           OR EXISTS (select 1 FROM acc_trans 
                       WHERE trans_id = a.id and chart_id = in_account_id))
        AND (in_entity_name IS NULL 
-           OR plainto_tsquery(in_entity_name) @@ eeca.name)
+           OR eeca.name @@ plainto_tsquery(in_entity_name))
        AND (in_meta_number IS NULL 
           OR eca.meta_number ilike in_meta_number || '%')
        AND (in_employee_id IS NULL OR ee.entity_id = in_employee_id)
        AND (in_ship_via IS NULL
-          OR plainto_tsquery(in_ship_via) @@ a.ship_via)
+          OR a.shipvia @@ plainto_tsquery(in_ship_via))
        AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
        AND (in_date_from IS NULL OR a.transdate >= in_date_from)
        AND (in_date_to IS NULL OR a.transdate <= in_date_to)
@@ -448,8 +450,8 @@ CREATE OR REPLACE FUNCTION report__aa_transactions
  in_meta_number text,
  in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
  in_ponumber text, in_source text, in_description text, in_notes text, 
- in_shipvia text, in_date_from text, in_date_to text, in_on_hold bool,
- in_taxable bool, in_tax_account int)
+ in_shipvia text, in_date_from date, in_date_to date, in_on_hold bool,
+ in_taxable bool, in_tax_account_id int)
 RETURNS SETOF aa_transactions_line LANGUAGE PLPGSQL AS $$
 
 DECLARE retval aa_transactions_line;
@@ -467,13 +469,13 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
        
   FROM (select id, transdate, invnumber, amount, netamount, duedate, notes, 
                till, person_id, entity_credit_account, invoice, shippingpoint,
-               shipvia, ordnumber, ponumber, description
+               shipvia, ordnumber, ponumber, description, on_hold
           FROM ar
          WHERE in_entity_class = 2
          UNION
         SELECT id, transdate, invnumber, amount, netamount, duedate, notes,
                null, person_id, entity_credit_account, invoice, shippingpoint,
-               shipvia, ordnumber, ponumber, description
+               shipvia, ordnumber, ponumber, description, on_hold
           FROM ap 
          WHERE in_entity_class = 1) a 
   JOIN (select sum(amount) * case when in_entity_class = 1 THEN 1 ELSE -1 END
@@ -506,9 +508,9 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
                      AND source ilike in_source || '%'
            ))
        AND (in_description IS NULL 
-              OR plainto_tsquery(in_description) @@ a.description)
-       AND (in_notes IS NULL OR plainto_tsquery(in_notes) @@ a.notes)
-       AND (in_shipvia IS NULL OR plainto_tsquery(in_shipvia) @@ a.shipvia)
+              OR a.description @@ plainto_tsquery(in_description))
+       AND (in_notes IS NULL OR a.notes @@ plainto_tsquery(in_notes))
+       AND (in_shipvia IS NULL OR a.shipvia @@ plainto_tsquery(in_shipvia))
        AND (in_date_from IS NULL OR a.transdate >= in_date_from)
        AND (in_date_to IS NULL OR a.transdate <= in_date_to)
        AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
