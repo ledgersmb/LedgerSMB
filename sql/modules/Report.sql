@@ -491,45 +491,44 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
   JOIN entity eeca ON eca.entity_id = eeca.id
   LEFT
   JOIN entity mee ON ee.manager_id = mee.id
--- WHERE (in_account_id IS NULL OR 
---       EXISTS (select * from acc_trans 
---                where trans_id = a.id AND chart_id = in_account_id))
---       AND (in_entity_name IS NULL 
---           OR eeca.name ilike in_entity_name || '%')
---       AND (in_meta_number IS NULL OR eca.meta_number ilike in_meta_number)
---       AND (in_employee_id = ee.entity_id OR in_employee_id IS NULL)
---       AND (in_manager_id = mee.id OR in_manager_id IS NULL)
---       AND (a.invnumber ilike in_invnumber || '%' OR in_invnumber IS NULL)
---       AND (a.ordnumber ilike in_ordnumber || '%' OR in_ordnumber IS NULL)
---       AND (a.ponumber ilike in_ponumber || '%' OR in_ponumber IS NULL)
---       AND (in_source IS NULL OR
---           EXISTS (
---              SELECT * from acc_trans where trans_id = a.id 
---                     AND source ilike in_source || '%'
---           ))
---       AND (in_description IS NULL 
---              OR a.description @@ plainto_tsquery(in_description))
---       AND (in_notes IS NULL OR a.notes @@ plainto_tsquery(in_notes))
---       AND (in_shipvia IS NULL OR a.shipvia @@ plainto_tsquery(in_shipvia))
---       AND (in_date_from IS NULL OR a.transdate >= in_date_from)
---       AND (in_date_to IS NULL OR a.transdate <= in_date_to)
---       AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
---       AND (in_taxable IS NULL 
---            OR (in_taxable 
---              AND (in_tax_account_id IS NULL 
---                 OR EXISTS (SELECT 1 FROM acc_trans 
---                             WHERE trans_id = a.id 
---                                   AND chart_id = in_tax_account_id)
---            ))
---            OR (NOT in_taxable
---                  AND NOT EXISTS (SELECT 1 
---                                    FROM acc_trans ac
---                                    JOIN account_link al 
---                                      ON al.account_id = ac.chart_id
---                                   WHERE ac.trans_id = a.id 
---                                         AND al.description ilike '%tax'))
---            )
---
+ WHERE (in_account_id IS NULL OR 
+       EXISTS (select * from acc_trans 
+                where trans_id = a.id AND chart_id = in_account_id))
+       AND (in_entity_name IS NULL 
+           OR eeca.name ilike in_entity_name || '%')
+       AND (in_meta_number IS NULL OR eca.meta_number ilike in_meta_number)
+       AND (in_employee_id = ee.entity_id OR in_employee_id IS NULL)
+       AND (in_manager_id = mee.id OR in_manager_id IS NULL)
+       AND (a.invnumber ilike in_invnumber || '%' OR in_invnumber IS NULL)
+       AND (a.ordnumber ilike in_ordnumber || '%' OR in_ordnumber IS NULL)
+       AND (a.ponumber ilike in_ponumber || '%' OR in_ponumber IS NULL)
+       AND (in_source IS NULL OR
+           EXISTS (
+              SELECT * from acc_trans where trans_id = a.id 
+                     AND source ilike in_source || '%'
+           ))
+       AND (in_description IS NULL 
+              OR a.description @@ plainto_tsquery(in_description))
+       AND (in_notes IS NULL OR a.notes @@ plainto_tsquery(in_notes))
+       AND (in_shipvia IS NULL OR a.shipvia @@ plainto_tsquery(in_shipvia))
+       AND (in_date_from IS NULL OR a.transdate >= in_date_from)
+       AND (in_date_to IS NULL OR a.transdate <= in_date_to)
+       AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
+       AND (in_taxable IS NULL 
+            OR (in_taxable 
+              AND (in_tax_account_id IS NULL 
+                 OR EXISTS (SELECT 1 FROM acc_trans 
+                             WHERE trans_id = a.id 
+                                   AND chart_id = in_tax_account_id)
+            ))
+            OR (NOT in_taxable
+                  AND NOT EXISTS (SELECT 1 
+                                    FROM acc_trans ac
+                                    JOIN account_link al 
+                                      ON al.account_id = ac.chart_id
+                                   WHERE ac.trans_id = a.id 
+                                         AND al.description ilike '%tax'))
+            )
 
 LOOP
 
