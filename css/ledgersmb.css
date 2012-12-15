@@ -30,6 +30,14 @@ th {
   font-size: 10pt;
 }
 
+table.form th {
+  text-align: right;
+}
+
+table.form th.centered, th.centered {
+  text-align: center;
+}
+
 table.criteria td {
   text-align: right;
 }

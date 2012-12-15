@@ -191,14 +191,15 @@ END # BLOCK -?>
 
 <?lsmb 
 
-  BLOCK employees;
+  BLOCK employee_row;
   # DEFAULTS
   IF ! SELECTNAME.defined;
      SELECTNAME = 'employee_id';
   END;
   FOREACH e IN employees;
      e.text = e.first_name _ ' ' _ e.last_name;
-  END ?>
+  END;
+  employees.push({}) ?>
 <tr>
   <th><?lsmb text('Employees') ?></th>
   <td><?lsmb PROCESS select element_data = {

@@ -1,5 +1,5 @@
 <?lsmb INCLUDE "ui-header.html" ;
-       PROCESS "report-base.html";
+       PROCESS "report_base.html";
        PROCESS "elements.html";
        IF entity_class == 1;
            TITLE = text('Search AP Invoices'); #'
@@ -9,7 +9,12 @@
            TITLE = text('Search AR Invoices'); #' 
            NAME = text('Customer');
            META_NUMBER = text('Customer Number'); #'
-       END; ?>
+       END;
+        FOREACH T IN accounts;
+           T.text = T.accno _ '--' _ T.description;
+        END;
+        accounts.unshift({});
+?>
 <body>
 <form action="invoice.pl" method="GET">
 <?lsmb PROCESS input element_data = {
@@ -27,7 +32,7 @@
         text_attr = 'text',
    default_values = [account_id],
             class = 'account',
-          options = 'ar_ap_accounts'
+          options = accounts
        } ?></td>
 </tr>
 <tr id="name-row">
@@ -51,7 +56,7 @@
        } ?></td>
 </tr>
 <?lsmb PROCESS employee_row ?>
-<?lsmb PROCESS business_units ?>
+<?lsmb PROCESS business_classes ?>
 <tr id="taxable-row">
   <th><?lsmb text('Tax Status') ?></th>
   <td><?lsmb PROCESS select element_data = {
@@ -64,13 +69,18 @@
 </tr>
 <tr id="tax-account-row"> 
   <th><?lsmb text('Tax Account') ?></th>
-  <td><?lsmb PROCESS select element_data = {
+  <td><?lsmb 
+        FOREACH T IN tax_accounts;
+           T.text = T.accno _ '--' _ T.description;
+        END;
+        tax_accounts.unshift({});
+        PROCESS select element_data = {
              name = 'tax_account_id',
        value_attr = 'id',
         text_attr = 'text',
    default_values = [tax_account_id],
             class = 'account',
-          options = 'tax_accounts'
+          options = tax_accounts
        } ?></td>
 </tr>
 <tr id="invnumber-row">
@@ -146,7 +156,7 @@
 <?lsmb PROCESS date_row ?>
 <tr id="onhold-row">
   <th><?lsmb text('Invoice Status') ?></th>
-  <td><?lsmb PROCESS input element_data = {
+  <td><?lsmb label_pos = 1; PROCESS input element_data = {
         label = text('All')
          type = 'radio'
          name = 'on_hold'
@@ -167,11 +177,11 @@
      }; ?></td>
 </tr>
 <tr>
-<th colspan=2><?lsmb text('Include in Report') ?></th>
+<th colspan="4" class="centered"><?lsmb text('Include in Report') ?></th>
 </tr>
 <tr>
   <th>&nbsp;</th>
-  <td>
+  <td colspan="3">
     <table>
       <tr>
         <td><?lsmb PROCESS input element_data = {
@@ -356,6 +366,7 @@
    value = 'invoice_search'
     type = 'submit'
    class = 'submit'
+    text = text('Continue')
 } ?>
 </form>
 </body>

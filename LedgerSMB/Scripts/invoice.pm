@@ -27,14 +27,14 @@ module will probably also include various invoice creation routines.
 
 =over
 
-=item begin_report
+=item start_report
 
 This is a specialized preprocessor for LedgerSMB::Scripts::Report::begin_report
 which sets up various data structures for the report screens.
 
 =cut
 
-sub begin_report {
+sub start_report {
     my ($request) = @_;
     my $link;
     if ($request->{entity_class} == 1){
@@ -51,7 +51,7 @@ sub begin_report {
     @{$request->{employees}} =  $request->call_procedure(
         procname => 'employee__all_salespeople'
     );
-    LedgerSMB::Scripts::reports::begin_report($request);
+    LedgerSMB::Scripts::reports::start_report($request);
 }
 
 =item invoices_outstanding
@@ -63,20 +63,20 @@ LedgerSMB::Report::Invoices::Outstanding for expected properties.
 
 sub invoices_outstanding {
     my ($request) = @_;
-    my $report = LedgerSMB::Reports::Invoices::Outstanding->new(%$request);
+    my $report = LedgerSMB::Report::Invoices::Outstanding->new(%$request);
     $report->render($request);
 }
 
-=item search_transactions
+=item invoice_search
 
 This produces the transactions earch report.  See
 LedgerSMB::Report::Invoices::Transactions for expected properties.
 
 =cut
 
-sub search_transactions {
+sub  invoice_search{
     my ($request) = @_;
-    my $report = LedgerSMB::Reports::Invoices::Transactions->new(%$request);
+    my $report = LedgerSMB::Report::Invoices::Transactions->new(%$request);
     $report->render($request);
 }
 

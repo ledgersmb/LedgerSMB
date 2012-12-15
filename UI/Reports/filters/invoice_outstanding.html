@@ -1,5 +1,5 @@
 <?lsmb INCLUDE "ui-header.html" ;
-       PROCESS "report-base.html";
+       PROCESS "report_base.html";
        PROCESS "elements.html";
        IF entity_class == 1;
            TITLE = text('AP Outstanding'); #'
@@ -9,7 +9,16 @@
            TITLE = text('AR Outstanding'); #' 
            NAME = text('Customer');
            META_NUMBER = text('Customer Number'); #'
-       END; ?>
+       END;
+        FOREACH T IN accounts;
+           T.text = T.accno _ '--' _ T.description;
+        END;
+        accounts.unshift({});
+        FOREACH T IN tax_accounts;
+           T.text = T.accno _ '--' _ T.description;
+        END;
+        accounts.unshift({});
+?>
 <body>
 <form action="invoice.pl" method="GET">
 <?lsmb PROCESS input element_data = {
@@ -51,7 +60,7 @@
        } ?></td>
 </tr>
 <?lsmb PROCESS employee_row ?>
-<?lsmb PROCESS business_units ?>
+<?lsmb PROCESS business_classes ?>
 <tr id="ship-via-row">
   <th><?lsmb text('Ship Via') ?></th>
   <td><?lsmb PROCESS input element_data = {
@@ -62,7 +71,7 @@
           class = "text"
        } ?></td>
 </tr>
-<?lsmb PROCESS date_row ?>
+<?lsmb label_pos = 1; PROCESS date_row ?>
 <tr id="onhold-row">
   <th><?lsmb text('Invoice Status') ?></th>
   <td><?lsmb PROCESS input element_data = {
@@ -86,11 +95,11 @@
      }; ?></td>
 </tr>
 <tr>
-<th colspan=2><?lsmb text('Include in Report') ?></th>
+<th colspan="4" class="centered"><?lsmb text('Include in Report') ?></th>
 </tr>
 <tr>
   <th>&nbsp;</th>
-  <td>
+  <td colspan="3">
     <table>
       <tr>
         <td><?lsmb PROCESS input element_data = {
@@ -275,6 +284,7 @@
    value = 'invoice_outstanding'
     type = 'submit'
    class = 'submit'
+    text = text('Continue')
 } ?>
 </form>
 </body>
