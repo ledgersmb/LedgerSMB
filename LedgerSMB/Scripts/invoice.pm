@@ -16,7 +16,7 @@ package LedgerSMB::Scripts::invoice;
 use LedgerSMB::Template;
 use LedgerSMB::Report::Invoices::Transactions;
 use LedgerSMB::Report::Invoices::Outstanding;
-use LedgerSMB::Scripts::Report;
+use LedgerSMB::Scripts::reports;
 
 =head1 DESCRIPTION
 

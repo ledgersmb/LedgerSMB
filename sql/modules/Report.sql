@@ -369,7 +369,8 @@ CREATE TYPE aa_transactions_line AS (
 );
 
 CREATE OR REPLACE FUNCTION report__aa_outstanding_details 
-(in_entity_class int, in_account_id int, in_name text, in_meta_number text,
+(in_entity_class int, in_account_id int, in_entity_name text, 
+ in_meta_number text,
  in_employee_id int, in_business_units int[], in_ship_via text, in_on_hold bool,
  in_date_from date, in_date_to date)
 RETURNS SETOF aa_transactions_line LANGUAGE PLPGSQL AS $$
@@ -406,7 +407,8 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
  WHERE (in_account_id IS NULL 
           OR EXISTS (select 1 FROM acc_trans 
                       WHERE trans_id = a.id and chart_id = in_account_id))
-       AND (in_name IS NULL OR plainto_tsquery(in_name) @@ eeca.name)
+       AND (in_entity_name IS NULL 
+           OR plainto_tsquery(in_entity_name) @@ eeca.name)
        AND (in_meta_number IS NULL 
           OR eca.meta_number ilike in_meta_number || '%')
        AND (in_employee_id IS NULL OR ee.entity_id = in_employee_id)
@@ -418,7 +420,8 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
 $$;
 
 CREATE OR REPLACE FUNCTION report__aa_outstanding
-(in_entity_class int, in_account_id int, in_name text, in_meta_number text,
+(in_entity_class int, in_account_id int, in_entity_name text, 
+ in_meta_number text,
  in_employee_id int, in_business_units int[], in_ship_via text, in_on_hold bool)
 RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
 
@@ -434,7 +437,8 @@ SELECT null as id, null as invoice, entity_id, meta_number, entity_name,
 $$;
 
 CREATE OR REPLACE FUNCTION report__aa_transactions
-(in_entity_class int, in_account_id int, in_name text, in_meta_number text,
+(in_entity_class int, in_account_id int, in_entity_name text, 
+ in_meta_number text,
  in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
  in_ponumber text, in_source text, in_description text, in_notes text, 
  in_shipvia text, in_date_from text, in_date_to text, in_on_hold bool,
@@ -479,7 +483,8 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
  WHERE (in_account_id IS NULL OR 
        EXISTS (select * from acc_trans 
                 where trans_id = a.id AND chart_id = in_account_id))
-       AND (in_name IS NULL OR eeca.name ilike in_name || '%')
+       AND (in_entity_name IS NULL 
+           OR eeca.name ilike in_entity_name || '%')
        AND (in_meta_number IS NULL OR eca.meta_number ilike in_meta_number)
        AND (in_employee_id = ee.id OR in_employee_id IS NULL)
        AND (in_manager_id = mee.id OR in_manager_id IS NULL)

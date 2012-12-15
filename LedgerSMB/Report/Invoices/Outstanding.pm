@@ -50,13 +50,13 @@ Only show invoices or totals for specified AR/AP account.
 
 has account_id => (is => 'ro', isa => 'Int', required => 0);
 
-=item name
+=item entity_name
 
 Show invoices for customers or vendors with a name like this, full text search
 
 =cut
 
-has name => (is => 'ro', isa => 'Str', required => 0);
+has entity_name => (is => 'ro', isa => 'Str', required => 0);
 
 =item meta_number
 
@@ -203,7 +203,7 @@ sub columns {
         {col_id => 'entity_name',
            name => $entity_label,
            type => 'href', 
-      href_base => 'contact.pl?action=edit&'
+      href_base => 'contact.pl?action=edit&',
          pwidth => 15, },
         {col_id => 'amount',
            name => LedgerSMB::Report::text('Amount'),
@@ -284,7 +284,7 @@ sub name {
     my $self = shift;
     if ($self->entity_class == 1) {
         return LedgerSMB::Report::text('AP Outstanding');
-    } elsif $self->entity_class == 2) {
+    } elsif ($self->entity_class == 2) {
         return LedgerSMB::Report::text('AR Outstanding');
     }
 }

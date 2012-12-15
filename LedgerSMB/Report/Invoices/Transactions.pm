@@ -40,13 +40,13 @@ This is the account id of the AR or AP account
 
 has account_id => (is => 'ro', isa => 'Int', required => 0);
 
-=item name text
+=item entity_name text
 
 Full text search of entity name
 
 =cut
 
-has name => (is => 'ro', isa => 'Str', required => 0);
+has entity_name => (is => 'ro', isa => 'Str', required => 0);
 
 =item meta_number
 
@@ -62,7 +62,7 @@ The id of the employee entity
 
 =cut
 
-has employee_id => (is => 'ro', isa => 'Int', requird => 0);
+has employee_id => (is => 'ro', isa => 'Int', required => 0);
 
 =item manager_id
 
