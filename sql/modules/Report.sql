@@ -403,8 +403,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
       GROUP BY trans_id) p ON p.trans_id = a.id
   JOIN entity_credit_account eca ON a.entity_credit_account = eca.id
   JOIN entity eeca ON eca.entity_id = eeca.id
-  JOIN person ON a.person_id = person.id
-  JOIN entity_employee ON entity_employee.entity_id = person.entity_id
+  JOIN entity_employee ON entity_employee.entity_id = a.person_id
   JOIN entity ee ON entity_employee.entity_id = ee.id
   LEFT
   JOIN entity me ON entity_employee.manager_id = me.id
@@ -415,7 +414,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
            OR eeca.name @@ plainto_tsquery(in_entity_name))
        AND (in_meta_number IS NULL 
           OR eca.meta_number ilike in_meta_number || '%')
-       AND (in_employee_id IS NULL OR ee.entity_id = in_employee_id)
+       AND (in_employee_id IS NULL OR ee.id = in_employee_id)
        AND (in_ship_via IS NULL
           OR a.shipvia @@ plainto_tsquery(in_ship_via))
        AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
