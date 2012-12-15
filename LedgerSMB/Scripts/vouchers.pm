@@ -11,9 +11,6 @@ Voucher workflow scripts.
 
 =cut
 
-#!/usr/bin/perl
-
-
 package LedgerSMB::Scripts::vouchers;
 our $VERSION = '0.1';
 
