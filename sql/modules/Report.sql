@@ -384,15 +384,17 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        a.amount - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
        a.till, ee.name, me.name, a.shippingpoint, a.shipvia, 
        '{}' as business_units -- TODO
-  FROM (SELECT id, invoice, transdate, amount, duedate, notes, till, on_hold
-               shippingpoint, shipvia, entity_credit_account, person_id,
-               on_hold
-          FROM ar WHERE in_entity_class = 2 and approved
+  FROM (select id, transdate, invnumber, amount, netamount, duedate, notes, 
+               till, person_id, entity_credit_account, invoice, shippingpoint,
+               shipvia, ordnumber, ponumber, description, on_hold
+          FROM ar
+         WHERE in_entity_class = 2 and approved
          UNION
-        SELECT id, invoice, transdate, amount, duedate, notes, null, on_hold
-               shippingpoint, shipvia, entity_credit_account, person_id, 
-               on_hold
-          FROM ar WHERE in_entity_class = 1 and approved) a
+        SELECT id, transdate, invnumber, amount, netamount, duedate, notes,
+               null, person_id, entity_credit_account, invoice, shippingpoint,
+               shipvia, ordnumber, ponumber, description, on_hold
+          FROM ap 
+         WHERE in_entity_class = 1 and approved) a 
   JOIN (SELECT trans_id, sum(amount) AS due, max(transdate) as last_payment
           FROM acc_trans ac
           JOIN account_link al ON ac.chart_id = al.account_id
@@ -471,13 +473,13 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
                till, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold
           FROM ar
-         WHERE in_entity_class = 2
+         WHERE in_entity_class = 2 and approved
          UNION
         SELECT id, transdate, invnumber, amount, netamount, duedate, notes,
                null, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold
           FROM ap 
-         WHERE in_entity_class = 1) a 
+         WHERE in_entity_class = 1 and approved) a 
   JOIN (select sum(amount) * case when in_entity_class = 1 THEN 1 ELSE -1 END
                as due, trans_id, max(transdate) as last_payment
           FROM acc_trans ac
