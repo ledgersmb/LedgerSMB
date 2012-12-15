@@ -301,7 +301,7 @@ sub name {
 
 sub run_report {
     my $self = shift;
-    my $procname = 'report__outstanding';
+    my $procname = 'report__aa_outstanding';
     if ($self->is_detailed){
        $procname .= '_details';
     }

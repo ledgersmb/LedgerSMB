@@ -36,7 +36,7 @@
         text_attr = 'text',
    default_values = [account_id],
             class = 'account',
-          options = 'ar_ap_accounts'
+          options = accounts
        } ?></td>
 </tr>
 <tr id="name-row">
@@ -281,7 +281,7 @@
 <hr />
 <?lsmb PROCESS button element_data = {
     name = 'action'
-   value = 'invoice_outstanding'
+   value = 'invoices_outstanding'
     type = 'submit'
    class = 'submit'
     text = text('Continue')
