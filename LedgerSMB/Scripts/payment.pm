@@ -50,6 +50,7 @@ use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
+use LedgerSMB::Scripts::reports;
 use Error::Simple;
 use Error;
 use strict; 
@@ -112,14 +113,8 @@ sub get_search_criteria {
         $payment->{date_reversed} = $payment->{batch_date};
     }
     @{$payment->{currencies}} = $payment->get_open_currencies();
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/payments',
-        template => 'search',
-        format   => 'HTML', 
-    );
-    $template->render($payment);
+    $payment->{report_name} = 'payments';
+    LedgerSMB::Scripts::reports::start_report($payment);
 }
 
 =item pre_bulk_post_report 
