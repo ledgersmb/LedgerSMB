@@ -1040,13 +1040,9 @@ CREATE TYPE payment_record AS (
         date_paid date
 );
 
-DROP FUNCTION IF EXISTS payment__search 
-(in_source text, in_date_from date, in_date_to date, in_credit_id int,
-        in_cash_accno text, in_account_class int);
-
 CREATE OR REPLACE FUNCTION payment__search 
 (in_source text, in_date_from date, in_date_to date, in_credit_id int, 
-	in_cash_accno text, in_account_class int, in_currency char(3))
+	in_cash_accno text, in_entity_class int, in_currency char(3))
 RETURNS SETOF payment_record AS
 $$
 DECLARE 
@@ -1061,10 +1057,10 @@ BEGIN
 			b.control_code, b.description, a.voucher_id, a.transdate
 		FROM entity_credit_account c
 		JOIN ( select entity_credit_account, id, curr
-			FROM ar WHERE in_account_class = 2
+			FROM ar WHERE in_entity_class = 2
 			UNION
 			SELECT entity_credit_account, id, curr
-			FROM ap WHERE in_account_class = 1
+			FROM ap WHERE in_entity_class = 1
 			) arap ON (arap.entity_credit_account = c.id)
 		JOIN acc_trans a ON (arap.id = a.trans_id)
 		JOIN chart ch ON (ch.id = a.chart_id)
@@ -1090,7 +1086,7 @@ $$ language plpgsql;
 
 COMMENT ON FUNCTION payment__search
 (in_source text, in_date_from date, in_date_to date, in_credit_id int,
-        in_cash_accno text, in_account_class int, char(3)) IS
+        in_cash_accno text, in_entity_class int, char(3)) IS
 $$This searches for payments.  in_date_to and _date_from specify the acceptable
 date range.  All other matches are exact except that null matches all values.
 

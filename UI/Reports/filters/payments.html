@@ -5,7 +5,8 @@
 			'UI/payments/payments.css'
 		]
 		titlebar = text('Search Payments') # '
-?><?lsmb PROCESS 'elements.html' ?>
+?><?lsmb PROCESS 'elements.html';
+         IF ! entity_class.defined; entity_class = account_class; END ?>
 <body>
 <?lsmb IF    account_class == 2 ?><?lsmb contact_type = "Customer" -?>
 <?lsmb ELSIF account_class == 1 ?><?lsmb contact_type = "Vendor" -?>
@@ -25,8 +26,8 @@
 	} ?>
 	<?lsmb INCLUDE input element_data = {
 		type  = "hidden"
-		name  = "account_class"
-		value = account_class
+		name  = "entity_class"
+		value = entity_class
 	} ?>
 <div class="listtop" id="page_title"><?lsmb text('Search Payments') ?></div>
 <div class="input" id="vendor_input_div">

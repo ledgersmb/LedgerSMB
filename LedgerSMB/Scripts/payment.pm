@@ -51,6 +51,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
 use LedgerSMB::Scripts::reports;
+use LedgerSMB::Report::Invoices::Payments;
 use Error::Simple;
 use Error;
 use strict; 
@@ -274,123 +275,23 @@ inputs currently expected include
 
 sub get_search_results {
     my ($request) = @_;
-    my $rows = [];
-    my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
-    my @search_results = $payment->search;
-    $payment->close_form;
-    $payment->open_form;
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI',
-        template => 'form-dynatable',
-        format   => ($payment->{format}) ? $payment->{format} : 'HTML',
-    ); 
-
-    my $base_url = "payment.pl?";
-    my $search_url = "$base_url";
-    for my $key (keys %{$request->take_top_level}){
-        if ($base_url =~ /\?$/){
-            if ( defined $key && defined $request->{key} )
-            {
-               $base_url .= "$key=$request->{key}";
-            }
-        } else {
-            if ( defined $key && defined $request->{key} )
-            {
-               $base_url .= "&$key=$request->{key}";
-            }
-        }
-    }
-
-    my @columns = qw(selected meta_number date_paid amount source 
-		company_paid batch_description batch_control);
-    my $contact_type = ($payment->{account_class} == 1) ? 'Vendor' : 'Customer';
-
-    # CT:  Locale strings for gettext:
-    #  $request->{_locale}->text("Vendor Number");
-    #  $request->{_locale}->text("Customer Number");
-
-    my $column_names = {
-        selected => 'Selected',
-        company_paid => 'Company Name',
-        meta_number => "$contact_type Number",
-        date_paid => 'Date Paid',
-        amount => 'Total Paid',
-        source => 'Source',
-        batch_control => 'Batch',
-        batch_description => 'Batch Description'
-    };
-    my $sort_href = "$search_url&orderby";
-    my @sort_columns = qw(meta_number date_paid amount source 
-		company_paid batch_description batch_control);
-
-	my $column_heading = $template->column_heading($column_names, 
-	    {href => $sort_href, columns => \@sort_columns}
-	);	
-
-    my $classcount;
-    $classcount = 0;
-    my $rowcount;
-    $rowcount = 1;
-    for my $line (@search_results){
-        $classcount ||= 0;
-        $rowcount += 1;
-        push(@$rows, {
-          company_paid => $line->{company_paid},
-          amount       => $request->format_amount(amount => $line->{amount}),
-          i            => "$classcount",
-          date_paid    => $line->{date_paid},
-          source       => $line->{source},
-          meta_number  => $line->{meta_number},
-          batch_control => $line->{batch_control},
-          batch_description => $line->{batch_description},
-          selected     => {
-                          input => {
-                                    type  => "checkbox",
-                                    name  => "payment_$rowcount",
-                                    value => "1",
-                          },
-           }
-        });
-        $payment->{"credit_id_$rowcount"} = $line->{credit_id};
-        $payment->{"date_paid_$rowcount"} = $line->{date_paid};
-        $payment->{"source_$rowcount"} = $line->{source};
-        $payment->{"voucher_id_$rowcount"} = $line->{voucher_id};
-        $classcount = ($classcount + 1) % 2;
-        ++$rowcount;
-    }
-    $payment->{rowcount} = $rowcount;
-    $payment->{script} = 'payment.pl';
-    $payment->{title} = $request->{_locale}->text("Payment Results");
-    my $hiddens = $payment->take_top_level;
-    $template->render({
-        form    => $payment,
-        columns => \@columns,
-        heading => $column_heading,
-        hiddens => $payment->take_top_level,
-        rows    => $rows,
-        buttons => [{
-                    value => 'reverse_payments',
-                    name  => 'action',
-                    class => 'submit',
-                    type  => 'submit',
-                    text  => $request->{_locale}->text('Reverse Payments'),
-                   }]
-    }); 
+    my $report = LedgerSMB::Report::Invoices::Payments->new(%$request);
+    $report->render;
 }
 
-=item get_search_results_reverse_payments
+=item reverse_payments
 
 This reverses payments selected in the search results.
 
 =cut
 
-sub get_search_results_reverse_payments {
+sub reverse_payments {
     my ($request) = @_;
+    $request->{account_class} = 1;
     my $payment = LedgerSMB::DBObject::Payment->new({base => $request});
     for my $count (1 .. $payment->{rowcount}){
         if ($payment->{"payment_$count"}){
+           $payment->{account_class} = $payment->{"account_class_$count"};
            $payment->{credit_id} = $payment->{"credit_id_$count"};
            $payment->{date_paid} = $payment->{"date_paid_$count"};
            $payment->{source} = $payment->{"source_$count"};

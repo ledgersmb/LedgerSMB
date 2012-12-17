@@ -39,13 +39,13 @@ Customer or vendor account number, prefix search
 
 has meta_number => (is => 'ro', isa => 'Str', required => '0');
 
-=item cash_account_id
+=item cash_accno
 
-Account id, exact match
+Cash account number, exact match
 
 =cut
 
-has cash_account_id => (is => 'ro', isa => 'Int', required => 1);
+has cash_accno => (is => 'ro', isa => 'Str', required => 1);
 
 =item source
 
@@ -121,15 +121,14 @@ sub columns {
            type => 'checkbox'},
         {col_id => 'credit_id',
            type => 'hidden', },
+        {col_id => 'entity_class',
+           type => 'hidden', },
         {col_id => 'voucher_id',
            type => 'hidden', },
         {col_id => 'source',
            type => 'hidden', },
         {col_id => 'date_paid',
-           type => 'hidden', }
-        {col_id => 'meta_number', 
-           name => $meta_number,
-           type => 'text', },
+           type => 'hidden', },
         {col_id => 'date_paid',
            type => 'text',
            name => LedgerSMB::Report::text('Date Paid'), },
@@ -139,6 +138,9 @@ sub columns {
         {col_id => 'source',
            type => 'text',
            name => LedgerSMB::Report::text('Source'), },
+        {col_id => 'meta_number', 
+           name => $meta_number,
+           type => 'text', },
         {col_id => 'company_paid',
            type => 'text',
            name => LedgerSMB::Report::text('Company Name'), },
@@ -182,12 +184,13 @@ sub header_lines {
         die 'Invalid entity class';
     }
     return [{name => 'meta_number', text => $meta_number },
+            {name => 'cash_accno',  
+             text => LedgerSMB::Report::text('Account Number') },
             {name => 'date_from',   
              text => LedgerSMB::Report::text('From Date')},
             {name => 'date_to',
              text => LedgerSMB::Report::text('To Date')}
            ];
-];
 }
 
 =head2 name
@@ -219,9 +222,17 @@ sub run_report{
     my $count = 1;
     for my $r(@rows){
         $r->{row_id} = $count;
+        $r->{entity_class} = $self->entity_class;
         ++$count;
     }
     $self->rows(\@rows);
+    $self->buttons([{
+        text => LedgerSMB::Report::text('Reverse Payments'),
+        name => 'action',
+        type => 'submit',
+       class => 'submit',
+       value => 'reverse_payments',
+    }]);
 }
 
 =back
