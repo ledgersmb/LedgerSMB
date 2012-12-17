@@ -89,7 +89,6 @@ sub report {
     my $gifi = 1;
 
     # get departments
-    $form->all_departments(\%myconfig, undef, $report{$form->{report}}->{vc});
     if ( ref $form->{all_department} eq 'ARRAY' ) {
         $form->{selectdepartment} = {
             name => 'department',
@@ -124,7 +123,6 @@ sub report {
     }
 
     # get projects
-    $form->all_projects( \%myconfig );
     if (ref $form->{all_project} eq 'ARRAY') {
         $form->{selectproject} = {
             name => 'projectnumber',

@@ -6,6 +6,7 @@
 		]
 		titlebar = text('Search Payments') # '
 ?><?lsmb PROCESS 'elements.html';
+         PROCESS 'report_base.html';
          IF ! entity_class.defined; entity_class = account_class; END ?>
 <body>
 <?lsmb IF    account_class == 2 ?><?lsmb contact_type = "Customer" -?>
@@ -65,24 +66,8 @@
 		size  = "20"
 		label = text('Source')
 	} ?></div>
-<div class="input" id="date_input_div">
-	<?lsmb INCLUDE input element_data = {
-		name  = "date_from"
-		value = date_from
-		class = "date"
-		type  = "text"
-		size  = "20"
-		label = text('From Date') # '
-	} ?>
-	<?lsmb INCLUDE input element_data = {
-		name  = "date_to"
-		value = date_to
-		class = "date"
-		type  = "text"
-		size  = "20"
-		label = text('Through Date') # '
-	} ?></div>
-<?lsmb IF ! search_only ?>
+<?lsmb PROCESS date_row_div ?>
+<?lsmb IF batch_id ?>
 <div class="listtop"><?lsmb text('Payment Reversal Information') ?></div>
 <div class="input">
  	<?lsmb IF batch_id -?>
@@ -121,7 +106,7 @@
              class = 'fxrate'
       } ?>
 </div>
-<?lsmb END # if ! search_only -?>
+<?lsmb END # if batch_id -?>
 <div class="input" id="search_button_div">
 	<?lsmb INCLUDE button element_data = {
 		name  = "action"

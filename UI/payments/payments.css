@@ -8,3 +8,26 @@ table.detail_table_hidden{
 div.selectall {
        float: left;
 }
+
+div {
+	overflow: auto;
+}
+
+label {
+	text-align: right;
+        float: left;
+	width: 8em;
+	margin-right: 1em;
+}
+
+input {
+	float: left;
+}
+
+input[type="checkbox"], input[type="radio"]{
+	float: none;
+}
+
+select {
+	float: left;
+}
