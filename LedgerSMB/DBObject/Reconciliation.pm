@@ -263,26 +263,6 @@ sub add_entries {
     $self->{dbh}->commit;
 }
 
-=item search
-
-Searches for reconciliation reports.  No inputs mandatory.
-
-date_from and date_to specify ranges.
-balance_from and balance_to specify ranges
-chart_id specifies an account
-submitted and approved are exact matches to status.
-
-=cut
-
-sub search {
-    
-    my $self = shift @_;
-    my $type = shift @_;
-    return $self->exec_method(
-        funcname=>'reconciliation__search',
-    );
-}
-
 =item get
 
 Gets all information relating to a reconciliation report.

@@ -497,7 +497,7 @@ $$ Retrieves all header info from the reconciliation report.$$;
 CREATE OR REPLACE FUNCTION reconciliation__search
 (in_date_from date, in_date_to date, 
 	in_balance_from numeric, in_balance_to numeric, 
-	in_chart_id int, in_submitted bool, in_approved bool) 
+	in_account_id int, in_submitted bool, in_approved bool) 
 returns setof cr_report AS
 $$
 DECLARE report cr_report;
@@ -512,7 +512,7 @@ BEGIN
 				or in_balance_from <= their_total ) AND
 			(in_balance_to IS NULL 
 				OR in_balance_to >= their_total) AND
-			(in_chart_id IS NULL OR in_chart_id = chart_id) AND
+			(in_account_id IS NULL OR in_account_id = chart_id) AND
 			(in_submitted IS NULL or in_submitted = submitted) AND
 			(in_approved IS NULL OR in_approved = approved) AND
 			(r.deleted IS FALSE)

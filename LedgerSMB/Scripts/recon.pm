@@ -21,6 +21,8 @@ package LedgerSMB::Scripts::recon;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Reconciliation;
 use LedgerSMB::Setting;
+use LedgerSMB::Scripts::reports;
+use LedgerSMB::Report::Reconciliation::Summary;
 use Data::Dumper;
 use strict;
 
@@ -146,95 +148,8 @@ Displays the search results
 
 sub get_results {
     my ($request) = @_;
-    $request->close_form;
-    $request->open_form({commit =>1});
-        if ($request->{approved} ne '1' and $request->{approved} ne '0'){
-		$request->{approved} = undef;
-        }
-        if ($request->{submitted} ne '1' and $request->{submitted} ne '0'){
-		$request->{submitted} = undef;
-        }
-        my $search = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all');
-        if ($search->{order_by}){
-            $search->set_ordering({
-			method => 'reconciliation__search', 
-			column => $search->{order_by},
-            });
-        }
-        my @results = $search->search();
-        my @accounts = $search->get_accounts();
-        my $act_hash = {};
-        for my $act (@accounts){
-            $act_hash->{"$act->{id}"} = $act->{name};
-        }
-        for my $row (@results){
-            $row->{account} = $act_hash->{"$row->{chart_id}"};
-        }
-        my $base_url = "recon.pl?action=display_report";
-        my $search_url = "recon.pl?action=get_results".
-            "&date_from=$search->{date_from}&date_to=$search->{date_to}".
-             "&amount_from=$search->{amount_from}&".
-             "amount_to=$search->{amount_to}&chart_id=$search->{chart_id}".
-             "&approved=$search->{approved}&submitted=$search->{submitted}";
-        
-        my $column_names = {
-            "select" => 'Select',
-            account => 'Account',
-            their_total => 'Balance',
-            end_date => 'Statement Date',
-            submitted => 'Submitted',
-            approved => 'Approved',
-            updated => 'Last Updated',
-            entered_username => 'Entered By',
-            approved_username => 'Approved By'
-        };
-        my $sort_href = "$search_url&order_by";
-        my @sort_columns = qw(account their_total end_date submitted 
-            approved updated entered_username approved_username);
-        
-	my $cols = [];
-	my @acts = $search->get_accounts;
-	@$cols = qw(select account end_date their_total approved submitted 
-                    updated entered_username approved_username);
-	my $recon =$search;
-	for my $row(@results){
-            my $act = undef;
-            for (@acts){
-                if ($_->{id} == $row->{chart_id}){
-                    $act = $_->{name};
-                }
-                last if $act;
-            }
-            $row->{account} = $act;
-            $row->{their_total} = $recon->format_amount(
-		{amount => $row->{their_total}, money => 1}); 
-            $row->{end_date} = {
-                text => $row->{end_date}, 
-                href => "$base_url&report_id=$row->{id}"
-            };
-        }
-	$recon->{_results} = \@results;
-        $recon->{title} = $request->{_locale}->text('Reconciliation Sets');
-        my $template = LedgerSMB::Template->new( 
-            locale => $request->{_locale},
-            user => $request->{_user}, 
-    	    template => 'form-dynatable', 
-            locale => $request->{_locale},
-            format => 'HTML',
-            path=>"UI");
-        
-        my $column_heading = $template->column_heading($column_names,
-            {href => $sort_href, columns => \@sort_columns}
-        );
-        
-        return $template->render({
-		form     => $recon,
-		heading  => $column_heading,
-        	hiddens  => $recon,
-		columns  => $cols,
-		rows     => \@results
-	});
-        
+    my $report = LedgerSMB::Report::Reconciliation::Summary->new(%$request);
+    $report->render($request);
 }
 
 =item search
@@ -251,16 +166,10 @@ sub search {
             $recon->{show_approved} = 1;        
             $recon->{show_submitted} = 1;        
         }
-        @{$recon->{account_list}} = $recon->get_accounts();
-	unshift @{$recon->{account_list}}, {id => '', name => '' };
-        my $template = LedgerSMB::Template->new(
-            user => $request->{_user},
-            template=>'search',
-            locale => $request->{_locale},
-            format=>'HTML',
-            path=>"UI/reconciliation",
-        );
-        return $template->render($recon);
+        @{$recon->{recon_accounts}} = $recon->get_accounts();
+	unshift @{$recon->{recon_accounts}}, {id => '', name => '' };
+    $recon->{report_name} = 'reconciliation_search';
+    LedgerSMB::Scripts::reports::start_report($recon);
 }
 
 
