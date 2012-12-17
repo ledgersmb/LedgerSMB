@@ -23,6 +23,14 @@ the standard supported reporting formats.
 
 =over
 
+=item entity_class
+
+1 for vendor, 2 for customer.
+
+=cut
+
+has entity_class => (is => 'ro', isa => 'Int', required => 1);
+
 =item meta_number
 
 Customer or vendor account number, prefix search
@@ -91,11 +99,132 @@ has exchange_rate => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
 
 =head2 columns
 
+=over
+
+=back
+
+=cut
+
+sub columns {
+    my ($self) = @_;
+    my $meta_number;
+    if ($self->entity_class == 1){
+       $meta_number = LedgerSMB::Report::text('Vendor Number');
+    } elsif ($self->entity_class == 2){
+       $meta_number = LedgerSMB::Report::text('Customer Number');
+    } else {
+        die 'Invalid entity class';
+    }
+    return [
+        {col_id => 'select',
+           name => LedgerSMB::Report::text('Selected'),
+           type => 'checkbox'},
+        {col_id => 'credit_id',
+           type => 'hidden', },
+        {col_id => 'voucher_id',
+           type => 'hidden', },
+        {col_id => 'source',
+           type => 'hidden', },
+        {col_id => 'date_paid',
+           type => 'hidden', }
+        {col_id => 'meta_number', 
+           name => $meta_number,
+           type => 'text', },
+        {col_id => 'date_paid',
+           type => 'text',
+           name => LedgerSMB::Report::text('Date Paid'), },
+        {col_id => 'amount',
+           type => 'text',
+           name => LedgerSMB::Report::text('Total Paid'), },
+        {col_id => 'source',
+           type => 'text',
+           name => LedgerSMB::Report::text('Source'), },
+        {col_id => 'company_paid',
+           type => 'text',
+           name => LedgerSMB::Report::text('Company Name'), },
+        {col_id => 'batch_description',
+           type => 'text',
+           name => LedgerSMB::Report::text('Batch Description'), },
+        {col_id => 'batch_control',
+           type => 'text',
+           name => LedgerSMB::Report::text('Batch'), },
+    ];
+}
+
 =head2 header_lines
+
+=over
+
+=item meta_number
+
+Customer or vendor number
+
+=item date_from
+
+Start date
+
+=item date_to
+
+End date
+
+=back
+
+=cut
+
+sub header_lines {
+    my ($self) = @_;
+    my $meta_number;
+    if ($self->entity_class == 1){
+       $meta_number = LedgerSMB::Report::text('Vendor Number');
+    } elsif ($self->entity_class == 2){
+       $meta_number = LedgerSMB::Report::text('Customer Number');
+    } else {
+        die 'Invalid entity class';
+    }
+    return [{name => 'meta_number', text => $meta_number },
+            {name => 'date_from',   
+             text => LedgerSMB::Report::text('From Date')},
+            {name => 'date_to',
+             text => LedgerSMB::Report::text('To Date')}
+           ];
+];
+}
 
 =head2 name
 
+Either "Payment Results" or "Receipt Results" depending on entity_class
+
+=cut
+
+sub name {
+    my ($self) = @_;
+    return LedgerSMB::Report::text('Payment Results') if 1 == $self->entity_class;
+    return LedgerSMB::Report::text('Receipt Results') if 2 == $self->entity_class;
+    die 'Invalid Entity Class';
+}
+
 =head1 METHODS
+
+=over
+
+=item run_report
+
+Runs the report and sets $self->rows
+
+=cut
+
+sub run_report{
+    my ($self) = @_;
+    my @rows = $self->exec_method({funcname => 'payment__search'});
+    my $count = 1;
+    for my $r(@rows){
+        $r->{row_id} = $count;
+        ++$count;
+    }
+    $self->rows(\@rows);
+}
+
+=back
 
 =head1 COPYRIGHT
 
