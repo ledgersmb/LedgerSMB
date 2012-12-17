@@ -115,7 +115,7 @@ sub columns {
     } else {
         die 'Invalid entity class';
     }
-    return [
+    my $cols =  [
         {col_id => 'select',
            name => LedgerSMB::Report::text('Selected'),
            type => 'checkbox'},
@@ -151,6 +151,8 @@ sub columns {
            type => 'text',
            name => LedgerSMB::Report::text('Batch'), },
     ];
+    shift @$cols unless $self->batch_id;
+    return $cols;
 }
 
 =head2 header_lines

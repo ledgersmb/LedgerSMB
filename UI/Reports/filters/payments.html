@@ -9,9 +9,13 @@
          PROCESS 'report_base.html';
          IF ! entity_class.defined; entity_class = account_class; END ?>
 <body>
-<?lsmb IF    account_class == 2 ?><?lsmb contact_type = "Customer" -?>
-<?lsmb ELSIF account_class == 1 ?><?lsmb contact_type = "Vendor" -?>
-<?lsmb ELSE ?><?lsmb contact_type = "Unsupported" -?>
+<?lsmb IF account_class == 2;
+            CONTACT = "Customer Number";
+            TITLE = text('Search Receipts'); #'
+       ELSIF account_class == 1;
+            CONTACT = "Vendor Number";
+            TITLE = text('Search Payments'); #'
+       ELSE ?><?lsmb TITLE = "Unsupported" -?>
 <?lsmb END # if account_class -?>
 <!-- CT: Text strings for localization:
 	<?lsmb text('Customer Number') ?>
@@ -30,7 +34,7 @@
 		name  = "entity_class"
 		value = entity_class
 	} ?>
-<div class="listtop" id="page_title"><?lsmb text('Search Payments') ?></div>
+<div class="listtop" id="page_title"><?lsmb TITLE ?></div>
 <div class="input" id="vendor_input_div">
 	<?lsmb INCLUDE input element_data = {
 		name  = "meta_number"
@@ -38,7 +42,7 @@
 		class = "text"
 		type  = "text"
 		size  = "20"
-		label = text("$contact_type Number") # "
+		label = CONTACT
 	} ?><!-- CT:  Not yet working for search.
 	<?lsmb INCLUDE input element_data = {
 		name  = "name"

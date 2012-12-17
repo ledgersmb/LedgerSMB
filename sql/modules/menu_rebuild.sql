@@ -190,12 +190,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 40	action	add	97
 40	transfer	1	98
 41	menu	1	99
-42	module	rp.pl	100
-42	action	report	101
-42	report	receipts	102
-43	module	rp.pl	103
-43	action	report	104
-43	report	payments	105
 44	report	1	110
 46	menu	1	111
 47	menu	1	112
@@ -297,6 +291,12 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 25	module	invoice.pl	57
 5	report_name	invoice_search	10
 25	report_name	invoice_search	59
+42	module	payment.pl	100
+42	action	get_search_criteria	101
+42	account_class	2	102
+43	action	get_search_criteria	104
+43	module	payment.pl	103
+43	account_class	1	105
 84	action	stock_assembly	203
 85	menu	1	204
 86	module	ic.pl	205
