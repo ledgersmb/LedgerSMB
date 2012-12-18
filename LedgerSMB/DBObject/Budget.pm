@@ -211,7 +211,6 @@ sub save {
     }
     $self->exec_method({funcname => 'budget__save_details'});
     $self->get($ref->{id});
-    $self->{dbh}->commit;
 }
 
 
@@ -340,7 +339,6 @@ Marks the budget as approved.
 sub approve {
    my ($self) = @_;
    $self->exec_method({funcname => 'budget__approve'});
-   $self->{dbh}->commit;
 }
 
 =item reject
@@ -351,7 +349,6 @@ Reject and deletes the budget.
 sub reject {
    my ($self) = @_;
    $self->exec_method({funcname => 'budget__reject'});
-   $self->{dbh}->commit;
 }
 
 =item obsolete
@@ -362,7 +359,6 @@ Marks the budget as obsolete/superceded.
 sub obsolete {
    my ($self) = @_;
    $self->exec_method({funcname => 'budget__mark_obsolete'});
-   $self->{dbh}->commit;
 }
 
 =item save_note(subject string, note string)
