@@ -184,7 +184,7 @@ sub columns {
            name => LedgerSMB::Report::text('ID'),
            type => 'text', 
          pwidth => 2, },
-        {col_id => 'invoice',
+        {col_id => 'invnumber',
            name => $inv_label,
            type => $inv_type, 
          pwidth => 10, },
@@ -306,7 +306,15 @@ sub run_report {
        $procname .= '_details';
     }
     my @rows = $self->exec_method({funcname => $procname});
-    # TODO, add hyperlinks for rows
+    for my $r(@rows){
+        my $script;
+        if ($self->entity_class == 2) {
+             $script = ($r->{invoice}) ? 'is.pl' : 'aa.pl';
+        } else {
+             $script = ($r->{invoice}) ? 'ir.pl' : 'aa.pl';
+        }
+        $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{id}";
+    }
     $self->rows(\@rows);
 }
 

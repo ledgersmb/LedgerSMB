@@ -311,7 +311,15 @@ This runs the report and sets the $report->rows.
 sub run_report {
     my $self = shift;
     my @rows = $self->exec_method({funcname => 'report__aa_transactions'});
-    # TODO add hyperlinks
+    for my $r(@rows){
+        my $script;
+        if ($self->entity_class == 2) {
+             $script = ($r->{invoice}) ? 'is.pl' : 'aa.pl';
+        } else {
+             $script = ($r->{invoice}) ? 'ir.pl' : 'aa.pl';
+        }
+        $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{id}";
+    }
     $self->rows(\@rows);
 }
 
