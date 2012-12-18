@@ -272,7 +272,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 206	module	reports.pl	575
 206	action	start_report	576
 38	account_class	1	39
-49	action	begin_report	117
+49	action	start_report	117
 49	module	reports.pl	118
 79	action	add	187
 79	item	service	188

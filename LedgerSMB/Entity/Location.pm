@@ -101,7 +101,7 @@ Old location class for updating
 
 =cut
 
-has 'old_location_class' => (is => 'ro', isa => 'Int', required => 1);
+has 'old_location_class' => (is => 'ro', isa => 'Int', required => 0);
 
 =item class_name
 

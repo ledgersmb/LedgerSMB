@@ -88,7 +88,7 @@ sub get {
     my ($ref) = __PACKAGE__->call_procedure(
                  procname => 'admin__get_user', args => [$entity_id]
     );
-    $self->prepare_dbhash($ref);
+    return unless $ref->{entity_id};
     my @roles = __PACKAGE__->call_procedure(
                  procname => 'admin__get_roles_for_user', args => [$entity_id]
     );
