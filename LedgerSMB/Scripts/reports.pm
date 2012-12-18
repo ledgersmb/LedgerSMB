@@ -15,8 +15,8 @@ our $VERSION = '1.0';
 
 use LedgerSMB;
 use LedgerSMB::Template;
-use LedgerSMB::DBObject::Business_Unit;
-use LedgerSMB::DBObject::Business_Unit_Class;
+use LedgerSMB::Business_Unit;
+use LedgerSMB::Business_Unit_Class;
 use strict;
 
 =pod
@@ -50,8 +50,8 @@ sub start_report {
     if ($request->{module_name}){
         $request->{class_id} = 0 unless $request->{class_id};
         $request->{control_code} = '' unless $request->{control_code};
-        my $buc = LedgerSMB::DBObject::Business_Unit_Class->new(%$request);
-        my $bu = LedgerSMB::DBObject::Business_Unit->new(%$request);
+        my $buc = LedgerSMB::Business_Unit_Class->new(%$request);
+        my $bu = LedgerSMB::Business_Unit->new(%$request);
         @{$request->{bu_classes}} = $buc->list(1, $request->{module_name});
         for my $bc (@{$request->{bu_classes}}){
             @{$request->{b_units}->{$bc->{id}}}

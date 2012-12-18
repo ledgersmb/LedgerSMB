@@ -5,9 +5,9 @@ LedgerSMB::Scripts::business_unit
 =cut
 
 package LedgerSMB::Scripts::business_unit;
-use LedgerSMB::DBObject::Business_Unit_Class;
+use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::DBObject::App_Module;
-use LedgerSMB::DBObject::Business_Unit;
+use LedgerSMB::Business_Unit;
 use LedgerSMB::Template;
 use Carp;
 
@@ -29,7 +29,7 @@ All functions take a single $request object as their sole argument
 
 sub list_classes {
     my ($request) = @_;
-    my $bu_class = LedgerSMB::DBObject::Business_Unit_Class->new(%$request);
+    my $bu_class = LedgerSMB::Business_Unit_Class->new(%$request);
     my $lsmb_modules = LedgerSMB::DBObject::App_Module->new(%$request);
     @{$request->{classes}} = $bu_class->list;
     @{$request->{modules}} = $lsmb_modules->list;
@@ -55,7 +55,7 @@ sub add {
         $request->{class_id} = $request->{id};
     }
     $request->{control_code} = '';
-    my $b_unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
+    my $b_unit = LedgerSMB::Business_Unit->new(%$request);
     @{$request->{parent_options}} = $b_unit->list($request->{class_id});
     $request->{id} = undef;
     _display($request); 
@@ -71,7 +71,7 @@ sub edit {
     my ($request) = @_;
     $request->{control_code} = '';
     $request->{class_id} = 0 unless $request->{class_id} != 0;
-    my $b_unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
+    my $b_unit = LedgerSMB::Business_Unit->new(%$request);
     my $bu = $b_unit->get($request->{id});
     @{$bu->{parent_options}} = $b_unit->list($bu->{class_id});
     
@@ -123,7 +123,7 @@ sub list {
     my ($request) = @_;
     $request->{control_code} = '';
     $request->{class_id} = 0 unless $request->{class_id} = 0;
-    my $b_unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
+    my $b_unit = LedgerSMB::Business_Unit->new(%$request);
     my $template = LedgerSMB::Template->new(
         user =>$request->{_user},
         locale => $request->{_locale},
@@ -166,7 +166,7 @@ $request->{id} must be set.
 
 sub delete {
     my ($request) = @_;
-    my $unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
+    my $unit = LedgerSMB::Business_Unit->new(%$request);
     $unit->delete;
     list($request);
 }
@@ -181,7 +181,7 @@ $request->{id} must be set.
 
 sub delete_class {
     my ($request) = @_;
-    my $bu_class = LedgerSMB::DBObject::Business_Unit_Class->new($request);
+    my $bu_class = LedgerSMB::Business_Unit_Class->new($request);
     $bu_class->delete;
     list_classes($request);
 }
@@ -189,7 +189,7 @@ sub delete_class {
 =item save
 
 Saves the existing unit.  Standard properties of 
-LedgerSMB::DBObject::Business_Unit must be set for $request.
+LedgerSMB::Business_Unit must be set for $request.
 
 =cut
 
@@ -199,7 +199,7 @@ sub save {
                               if defined $request->{start_date};
     $request->{end_date} = LedgerSMB::PGDate->from_input($request->{end_date}, 0)
                               if defined $request->{end_date};
-    my $unit = LedgerSMB::DBObject::Business_Unit->new(%$request);
+    my $unit = LedgerSMB::Business_Unit->new(%$request);
     $unit->save;
     add($request);
 }
@@ -207,7 +207,7 @@ sub save {
 =item save_class
 
 Saves the existing unit class.  Standard properties for 
-LedgerSMB::DBObject::Business_Unit_Class must be set for $request.
+LedgerSMB::Business_Unit_Class must be set for $request.
 
 =cut
 
@@ -226,7 +226,7 @@ sub save_class {
             $request->{$key} = 0;
         }
     }
-    my $bu_class = LedgerSMB::DBObject::Business_Unit_Class->new(%$request);
+    my $bu_class = LedgerSMB::Business_Unit_Class->new(%$request);
     $bu_class->modules($modlist);
     $bu_class->save;
     list_classes($request);

@@ -28,8 +28,8 @@ package LedgerSMB::Report::Unapproved::Drafts;
 use Moose;
 extends 'LedgerSMB::Report';
 
-use LedgerSMB::DBObject::Business_Unit_Class;
-use LedgerSMB::DBObject::Business_Unit;
+use LedgerSMB::Business_Unit_Class;
+use LedgerSMB::Business_Unit;
 
 =head1 PROPERTIES
 

@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Business_Unit_Class
+LedgerSMB::Business_Unit_Class
 
 =head1 SYNOPSYS
 
@@ -11,7 +11,7 @@ funds, and projects.
 
 =cut
 
-package LedgerSMB::DBObject::Business_Unit_Class;
+package LedgerSMB::Business_Unit_Class;
 use Moose;
 use LedgerSMB::DBObject_Moose;
 use LedgerSMB::DBObject::App_Module;

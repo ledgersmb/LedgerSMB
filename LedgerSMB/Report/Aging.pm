@@ -22,8 +22,8 @@ package LedgerSMB::Report::Aging;
 use Moose;
 extends 'LedgerSMB::Report';
 
-use LedgerSMB::DBObject::Business_Unit_Class;
-use LedgerSMB::DBObject::Business_Unit;
+use LedgerSMB::Business_Unit_Class;
+use LedgerSMB::Business_Unit;
 use LedgerSMB::App_State;
 
 

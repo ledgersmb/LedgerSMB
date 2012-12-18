@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Business_Unit_Class
+LedgerSMB::Business_Unit_Class
 
 =head1 SYNOPSYS
 
@@ -11,7 +11,7 @@ funds, and projects.
 
 =cut
 
-package LedgerSMB::DBObject::Business_Unit;
+package LedgerSMB::Business_Unit;
 use Moose;
 use LedgerSMB::DBObject_Moose;
 with 'LedgerSMB::DBObject_Moose';
@@ -86,7 +86,7 @@ A reference to the parent business reporting unit
 
 =cut
 
-has 'parent' => (is => 'rw', isa => 'Maybe[LedgerSMB::DBObject::Business_Unit]');
+has 'parent' => (is => 'rw', isa => 'Maybe[LedgerSMB::Business_Unit]');
 
 =item credit_id
 
@@ -107,7 +107,7 @@ This is not set unless get_tree has already been called.
 
 =cut
 
-has 'children' => (is => 'rw', isa => 'Maybe[ArrayRef[LedgerSMB::DBObject::Business_Unit]]');
+has 'children' => (is => 'rw', isa => 'Maybe[ArrayRef[LedgerSMB::Business_Unit]]');
 
 =head1 METHODS
 

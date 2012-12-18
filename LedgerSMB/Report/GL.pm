@@ -27,8 +27,8 @@ package LedgerSMB::Report::GL;
 use Moose;
 extends 'LedgerSMB::Report';
 
-use LedgerSMB::DBObject::Business_Unit_Class;
-use LedgerSMB::DBObject::Business_Unit;
+use LedgerSMB::Business_Unit_Class;
+use LedgerSMB::Business_Unit;
 use LedgerSMB::App_State;
 
 =head1 PROPERTIES
@@ -159,7 +159,7 @@ sub columns {
        type => 'text',
      pwidth => '3', },
     );
-    my @bclasses = LedgerSMB::DBObject::Business_Unit_Class->list('1', 'gl');
+    my @bclasses = LedgerSMB::Business_Unit_Class->list('1', 'gl');
     for my $class (@bclasses){
         push @COLS, {col_id =>  "bc_" . $class->id,
                        name => LedgerSMB::Report::text($class->label),

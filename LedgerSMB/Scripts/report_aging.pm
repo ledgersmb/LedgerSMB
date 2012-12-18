@@ -15,7 +15,7 @@ our $VERSION = '1.0';
 
 use LedgerSMB;
 use LedgerSMB::Template;
-use LedgerSMB::DBObject::Business_Unit;
+use LedgerSMB::Business_Unit;
 use LedgerSMB::Report::Aging;
 use strict;
 
