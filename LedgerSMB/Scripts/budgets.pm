@@ -268,8 +268,8 @@ sub begin_search{
 
 =over
 
-=item LedgerSMB::DBObject::Budget
-=item LedgerSMB::DBObject::Budget_Report
+=item LedgerSMB::Budget
+=item LedgerSMB::Budget_Report
 
 =back
 
