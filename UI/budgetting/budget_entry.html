@@ -5,7 +5,8 @@
 		"UI/ajax/helpers.js"]
 	stylesheet=USER.stylesheet 
         include_stylesheet = ["UI/budgetting/budgetting.css"];
-    PROCESS elements.html; ?>
+    PROCESS elements.html; 
+    PROCESS report_base.html; ?>
 <body>
 
 <form method="post" action="<?lsmb script ?>">
@@ -56,49 +57,10 @@
 </div>
 
 </div></div>
-
-<?lsmb FOREACH BUC IN bu_classes ?>
-<div class="inputrow"><div class="inputgroup">
-          <?lsmb PROCESS select element_data = {
-                   name = 'business_unit_' _ loop.count
-                options = b_units.${BUC.id}
-              text_attr = 'text'
-             value_attr = 'id'
-                  class = 'business_unit'
-                  label = text(BUC.label)
-              } ?>
-</div></div>
-<?lsmb END # FOREACH BUC ?>
-
-         <!-- Move notes to bottom and add subject line 
-	<tr>
-	  <th align="right"><?lsmb text('Notes') ?></th>
-	  <td colspan="3">
-			<?lsmb IF colrownotes ==1 ?>
-			      <?lsmb INCLUDE textarea element_data={
-							name = "notes"
-							rows = form.rowsnotes
-							cols = form.colsnotes
-							value = form.notes
-							id = "not_1"
-                                                 	    } 
-			       ?>
-			<?lsmb ELSE ?>
-				  <?lsmb INCLUDE input element_data = {
-						      name = "notes",
-						      value = form.notes,
-						      type = "text",
-						      size = "50",
-						      class = 'notes'
-						      id = "not_1"
-                                                          } 
-				   ?>
-
-			<?lsmb END ?>
+<?lsmb PROCESS business_classes_div ?>
 
 
-	  </td>
-	</tr> -->
+
       <table width="100%">
 	  <tr class="listheading">
 	  <th class="listheading"><?lsmb text('Account') ?></th>
@@ -208,6 +170,22 @@
 }
 ?>
 </div></div>
+<div class="input_group"><?lsmb INCLUDE input element_data = {
+     name="subject"
+     size="50"
+     type="text"
+    class="subject" 
+} ?></div>
+    
+<div class="input_group"> <?lsmb INCLUDE textarea element_data={
+							name = "notes"
+							rows = form.rowsnotes
+							cols = form.colsnotes
+							value = form.notes
+							id = "not_1"
+    							label = text('Notes')
+                                                 	    } 
+			       ?></div>
 <div class="inputrow">
 <div class="inputgroup">
 <?lsmb PROCESS button element_data = {
