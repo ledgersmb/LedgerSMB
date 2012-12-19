@@ -46,6 +46,7 @@ sub get_criteria {
     my $locale = $LedgerSMB::App_State::Locale;
     $request->{entity_class} = $request->{oe_class_id} % 2 + 1;
     $request->{report_name} = 'orders';
+    $request->{open} = 1 if $request->{search_type} ne 'search';
     if ($request->{oe_class_id} == 1){
         if ($request->{search_type} eq 'search'){
             $request->{title} = $locale->text('Search Sales Orders');
@@ -60,6 +61,8 @@ sub get_criteria {
     } elsif ($request->{oe_class_id} == 2){
         if ($request->{search_type} eq 'search'){
             $request->{title} = $locale->text('Search Purchase Orders');
+        } elsif ($request->{search_type} eq 'combine'){
+            $request->{title} = $locale->text('Combine Purchase Orders');
         } elsif ($request->{search_type} eq 'generate'){
             $request->{title} = 
                    $locale->text('Generate Purchase Orders from Sales Orders');
@@ -84,13 +87,51 @@ sub get_criteria {
 
 sub search {
     my $request = shift @_;
-    if ($request->{search_type} eq 'combine' 
-         or $request->{search_type} eq 'generate'){
+    if ($request->{search_type} ne 'search'){
        $request->{selectable} = 1;
+       $request->{open} =1;
+       delete $request->{closed};
     }
     my $report = LedgerSMB::Report::Orders->new(%$request);
+    if ($request->{search_type} eq 'combine'){
+        $report->buttons([{
+            text => $LedgerSMB::App_State::Locale->text('Combine'),
+            type => 'submit',
+           class => 'submit',
+            name => 'action',
+           value => 'combine',
+        }]);
+    } elsif ($request->{search_type} eq 'generate'){
+        $report->buttons([{
+            text => $LedgerSMB::App_State::Locale->text('Generate'),
+            type => 'submit',
+           class => 'submit',
+            name => 'action',
+           value => 'generate',
+        }]);
+    }
     $report->render(%request);
 }
+
+=item combine
+
+This combines sales orders or purchase orders.  It could be easily supported for
+quotations and rfq's but this is not currently allowed.
+
+=cut
+
+sub combine {
+    my ($request) = @_;
+    my @ids;
+    for (1 .. $request->{rowcount_}){
+        push @ids, $request->{"selected_$_"} if $request->{"selected_$_"};
+    }
+    $request->call_procedure(procname => 'order__combine', args => [\@ids]);
+    $request->{search_type} = 'combine';
+    get_criteria($request);
+}
+
+=item generate
 
 =back
 

@@ -96,4 +96,91 @@ END;
 $$;
 
 
+CREATE OR REPLACE FUNCTION order__combine(in_ids int[])
+RETURNS SETOF oe LANGUAGE PLPGSQL AS
+$$
+
+DECLARE retval oe;
+        ordercount int;
+        ids int[];
+        loop_info record;
+        settings text[];
+        my_person_id int;
+BEGIN
+
+SELECT id INTO my_person_id 
+  FROM person 
+ WHERE entity_id = person__get_my_entity_id();
+
+settings := ARRAY['sonumber', 'ponumber', 'sqnumber', 'rfqnumber'];
+ids := array[]::int[];
+
+-- This approach of looping through insert/select operations will break down 
+-- if overly complex order consolidation jobs are run (think, hundreds of 
+-- combined orders in the *output*
+--
+-- The tradeoff is that if we address the huge complex runs here, then we have
+-- the possibility of having to lock the whole table which poses other issues.
+-- For that reason, I am going with this approach for now. --CT
+
+FOR loop_info IN
+       SELECT max(id) as id, taxincluded, entity_credit_account, oe_class_id,
+              curr
+         FROM oe WHERE id = any(in_ids)
+     GROUP BY taxincluded, entity_credit_account, oe_class_id, curr
+LOOP
+
+INSERT INTO oe
+       (ordnumber, transdate,   amount,        netamount,
+        reqdate,   taxincluded, shippingpoint, notes,
+        curr,      person_id,   closed,        quotation, 
+        quonumber, intnotes,    shipvia,       language_code,
+        ponumber,  terms,       oe_class_id,   entity_credit_account)
+SELECT CASE WHEN oe_class_id IN (1, 2) 
+            THEN setting_increment(settings[oe_class_id])
+            ELSE NULL
+        END,          now()::date,        sum(amount),        sum(netamount),
+        min(reqdate), taxincluded,        min(shippingpoint), '',
+        curr,         my_person_id, false, false,
+        CASE WHEN oe_class_id IN (3, 4)
+            THEN setting_increment(settings[oe_class_id])
+            ELSE NULL
+        END,          NULL,      NULL,          NULL,
+        null,       min(terms),  oe_class_id,  entity_credit_account
+  FROM oe 
+ WHERE id = any (in_ids)
+       AND taxincluded = loop_info.taxincluded
+       AND entity_credit_account = loop_info.entity_credit_account
+       AND oe_class_id = loop_info.oe_class_id
+ GROUP BY curr, taxincluded, oe_class_id, entity_credit_account;
+
+
+INSERT INTO orderitems
+       (trans_id,      parts_id,        description,         qty,
+        sellprice,     precision,       discount,            unit,
+        reqdate,       ship,            serialnumber,        notes)
+SELECT currval('oe_id_seq'), oi.parts_id, oi.description,     oi.qty,
+       oi.sellprice,   oi.precision,    oi.discount,         oi.unit,
+       oi.reqdate,     oi.ship,         oi.serialnumber,     oi.notes
+  FROM orderitems oi
+  JOIN oe ON oi.trans_id = oe.id
+ WHERE oe.id = any (in_ids)
+       AND taxincluded = loop_info.taxincluded
+       AND entity_credit_account = loop_info.entity_credit_account
+       AND oe_class_id = loop_info.oe_class_id;
+
+ids := ids || currval('oe_id_seq')::int;
+
+END LOOP;
+
+UPDATE oe SET closed = true WHERE id = any(in_ids);
+
+FOR retval IN select * from oe WHERE id =any(ids)
+LOOP
+   RETURN NEXT retval;
+END LOOP;
+
+END;
+$$;
+
 COMMIT;

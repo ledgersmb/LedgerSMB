@@ -211,12 +211,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 57	type	generate_sales_order	135
 58	type	generate_purchase_order	138
 60	menu	1	550
-61	module	oe.pl	140
-61	action	search	141
-62	module	oe.pl	143
-62	action	search	144
-62	type	consolidate_purchase_order	145
-61	type	consolidate_sales_order	142
 63	menu	1	146
 64	module	oe.pl	147
 64	action	search	148
@@ -297,6 +291,12 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 55	search_type	search	132
 71	search_type	search	165
 72	search_type	search	167
+61	action	get_criteria	141
+62	action	get_criteria	144
+62	search_type	combine	145
+61	search_type	combine	142
+61	module	order.pl	140
+62	module	order.pl	143
 84	action	stock_assembly	203
 85	menu	1	204
 86	module	ic.pl	205
@@ -753,6 +753,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 55	oe_class_id	2	68
 71	oe_class_id	3	69
 72	oe_class_id	4	70
+61	oe_class_id	1	38
+62	oe_class_id	2	41
 \.
 
 

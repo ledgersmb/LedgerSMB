@@ -2628,33 +2628,6 @@ sub generate_orders {
 
 }
 
-sub consolidate_orders {
-
-    for ( 1 .. $form->{rowcount} ) {
-        if ( $form->{"ndx_$_"} ) {
-            $ok = 1;
-            last;
-        }
-    }
-
-    $form->error( $locale->text('Nothing selected!') ) unless $ok;
-
-    ( $null, $argv ) = split /\?/, $form->{callback};
-
-    for ( split /\&/, $argv ) {
-        ( $key, $value ) = split /=/, $_;
-        $form->{$key} = $value;
-    }
-
-    if ( OE->consolidate_orders( \%myconfig, \%$form ) ) {
-        $form->redirect;
-    }
-    else {
-        $form->error( $locale->text('Order generation failed!') );
-    }
-
-}
-
 sub select_vendor {
 
     for ( 1 .. $form->{rowcount} ) {
