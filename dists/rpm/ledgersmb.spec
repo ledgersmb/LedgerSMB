@@ -84,9 +84,9 @@ LINE: while (defined($_ = <ARGV>)) {
     s[Directory WORKING_DIR/users>][Directory %{_datadir}/%{name}/users>]g;
     s[Directory WORKING_DIR/bin>][Directory %{_datadir}/%{name}/bin>]g;
     s[Directory WORKING_DIR/utils>][Directory %{_datadir}/%{name}/utils>]g;
-    s[Directory WORKING_DIR/spool>][Directory {_localstatedir}/spool/%{name}>]g;
-    s[Directory WORKING_DIR/templates>][Directory {_localstatedir}/lib/%{name}/templates>]g;
-    s[Directory WORKING_DIR/LedgerSMB>][Directory {_localstatedir}/lib/%{name}/LedgerSMB>]g;
+    s[Directory WORKING_DIR/spool>][Directory %{_localstatedir}/spool/%{name}>]g;
+    s[Directory WORKING_DIR/templates>][Directory %{_localstatedir}/lib/%{name}/templates>]g;
+    s[Directory WORKING_DIR/LedgerSMB>][Directory %{_localstatedir}/lib/%{name}/LedgerSMB>]g;
 }
 continue {
     print $_;

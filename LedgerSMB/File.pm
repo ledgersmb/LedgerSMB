@@ -240,7 +240,7 @@ sub get_for_template{
     $self->file_path($LedgerSMB::Sysconfig::tempdir . '/' . $$);
     
     for my $result (@results) {
-        warn "File found: $result->{file_name}";
+        $result->{file_name} =~ s/\_//g;
         open FILE, '>', $self->file_path . "/$result->{file_name}";
         binmode FILE, ':bytes';
         print FILE $result->{content};
