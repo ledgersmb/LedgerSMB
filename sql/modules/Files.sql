@@ -172,7 +172,8 @@ SELECT m.mime_type, CASE WHEN f.file_class = 3 THEN ref_key ||'-'|| f.file_name
                         AND m.mime_type ilike 'image%'
                    JOIN invoice i ON i.trans_id = $1
                         AND i.parts_id = fb.ref_key
-                  WHERE fb.file_class = 3)
+                  WHERE fb.file_class = 3
+               GROUP BY ref_key)
 $$ language sql;
 
 
