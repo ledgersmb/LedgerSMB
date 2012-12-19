@@ -1,0 +1,217 @@
+<?lsmb INCLUDE 'ui-header.html';
+       PROCESS 'report_base.html';
+       PROCESS 'elements.html'; 
+       IF entity_class == 1;
+           CV = text('Vendor');
+           ECA = text('Vendor Name'); #'
+       ELSE;
+           CV = text('Customer');
+           ECA = text('Customer Name'); #'
+       END;
+?>
+
+<body>
+<div class="listtop"><?lsmb title ?></div>
+<form action="order.pl" method="get">
+<table class="form">
+  <tr>
+    <th><?lsmb ECA ?></th>
+    <td colspan="2"><?lsmb PROCESS input element_data = {
+        name = 'entity_name'
+        type = 'text'
+       class = "name"
+       value = entity_name
+        size = 32
+    } ?></td>
+  </tr>
+  <tr>
+    <th><?lsmb text('Account') ?></th>
+    <td><?lsmb  PROCESS input element_data = {
+        name = 'meta_number'
+        size = 16
+       class = 'control-code'
+        type = 'text'
+       value = meta_number
+    } ?></td>
+  </tr>
+  <tr>
+    <th><?lsmb text('Order Number') ?></th>
+    <td><?lsmb  PROCESS input element_data = {
+        name = 'ordnumber'
+        size = 16
+       class = 'control-code'
+        type = 'text'
+       value = ordnumber
+    } ?></td>
+  </tr>
+  <tr>
+    <th><?lsmb text('PO Number') ?></th>
+    <td><?lsmb  PROCESS input element_data = {
+        name = 'ponumber'
+        size = 16
+       class = 'control-code'
+        type = 'text'
+       value = ponumber
+    } ?></td>
+  </tr>
+  <tr>
+    <th><?lsmb text('Ship Via') ?></th>
+    <td colspan="2"><?lsmb  PROCESS input element_data = {
+        name = 'shipvia'
+        size = 32
+       class = 'info'
+        type = 'text'
+       value = shipvia
+    } ?></td>
+  </tr>
+  <tr>
+    <th><?lsmb text('Description') ?></th>
+    <td colspan="2"><?lsmb  PROCESS input element_data = {
+        name = 'description'
+        size = 32
+       class = 'description'
+        type = 'text'
+       value = description
+    } ?></td>
+  </tr>
+  <?lsmb PROCESS date_row; label_pos = 1 ?>
+  <tr>
+  <th colspan="5" class="centered"><?lsmb text('Include in Report') ?></th>
+  </tr>
+  <tr>
+  <td>&nbsp;</td>
+  <td colspan="4"><table>
+      <?lsmb IF !open ?>
+      <tr>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'open'
+             type = 'checkbox'
+          checked = 'CHECKED' 
+            value = '1'
+            label = text('Open')
+         } ?></td>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'closed'
+             type = 'checkbox'
+            value = '1'
+            label = text('Closed')
+         } ?></td>
+      </tr>
+      <?lsmb END ?>
+      <tr>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'col_running_number'
+             type = 'checkbox'
+            value = '1'
+            label = text('No.')
+         } ?></td>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'col_id'
+             type = 'checkbox'
+            value = '1'
+            label = text('ID')
+         } ?></td>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'col_ordnumber'
+             type = 'checkbox'
+          checked = 'CHECKED' 
+            value = '1'
+            label = text('Order Number') #'
+         } ?></td>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'col_transdate'
+             type = 'checkbox'
+            value = '1'
+            label = text('Date')
+         } ?></td>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'col_ponumber'
+             type = 'checkbox'
+          checked = 'CHECKED' 
+            value = '1'
+            label = text('PO Number') #'
+         } ?></td>
+      </tr>
+      <tr>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'col_reqdate'
+          checked = 'CHECKED' 
+             type = 'checkbox'
+            value = '1'
+            label = text('Required By') #'
+         } ?></td>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'col_id'
+             type = 'checkbox'
+          checked = 'CHECKED' 
+            value = '1'
+            label = CV
+         } ?></td>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'col_meta_number'
+             type = 'checkbox'
+          checked = 'CHECKED' 
+            value = '1'
+            label = text('Account')
+         } ?></td>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'col_shipvia'
+             type = 'checkbox'
+            value = '1'
+            label = text('Ship Via') #'
+         } ?></td>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'col_amount'
+             type = 'checkbox'
+          checked = 'CHECKED' 
+            value = '1'
+            label = text('Amount') 
+         } ?></td>
+      </tr>
+      <tr>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'col_tax'
+             type = 'checkbox'
+            value = '1'
+            label = text('Tax')
+         } ?></td>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'col_curr'
+             type = 'checkbox'
+          checked = 'CHECKED' 
+            value = '1'
+            label = text('Currency')
+         } ?></td>
+      </tr>
+      <tr>
+         <td><?lsmb PROCESS input element_data = {
+             name = 'subtotal'
+             type = 'checkbox'
+            value = '1'
+            label = text('Subtotal')
+         } ?></td>
+      </tr>
+      </table></td>
+</table>
+<hr />
+<?lsmb PROCESS button element_data = {
+    text = text('Continue')
+    name = 'action'
+   value = 'search'
+   class = 'submit'
+    type = 'submit'
+};
+PROCESS input element_data = {
+    type = 'hidden'
+    name = 'search_type'
+   value = search_type
+};
+PROCESS input element_data = {
+    type = 'hidden'
+    name = 'oe_class_id'
+   value = oe_class_id
+} ?>
+
+</form>
+</body>
+</html>

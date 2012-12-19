@@ -203,12 +203,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 52	action	add	124
 52	type	purchase_order	125
 53	menu	1	126
-54	module	oe.pl	127
-54	type	sales_order	129
-54	action	search	128
-55	module	oe.pl	130
-55	type	purchase_order	132
-55	action	search	131
 56	menu	1	133
 57	module	oe.pl	134
 57	action	search	136
@@ -238,10 +232,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 68	type	sales_quotation	158
 69	type	request_quotation	161
 70	menu	1	162
-71	module	oe.pl	163
-71	type	sales_quotation	165
-71	action	search	164
-72	module	oe.pl	166
 7	module	reports.pl	15
 64	type	ship_order	149
 7	action	start_report	16
@@ -259,8 +249,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 34	module	reports.pl	80
 5	action	start_report	9
 25	action	start_report	58
-72	action	search	168
-72	type	request_quotation	167
 73	menu	1	169
 74	module	gl.pl	170
 74	action	add	171
@@ -272,7 +260,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 206	module	reports.pl	575
 206	action	start_report	576
 38	account_class	1	39
-49	action	start_report	117
 49	module	reports.pl	118
 79	action	add	187
 79	item	service	188
@@ -297,6 +284,19 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 43	action	get_search_criteria	104
 43	module	payment.pl	103
 43	account_class	1	105
+49	action	start_report	117
+54	module	order.pl	127
+55	module	order.pl	130
+71	module	order.pl	163
+72	module	order.pl	166
+54	action	get_criteria	128
+55	action	get_criteria	131
+71	action	get_criteria	164
+72	action	get_criteria	168
+54	search_type	search	129
+55	search_type	search	132
+71	search_type	search	165
+72	search_type	search	167
 84	action	stock_assembly	203
 85	menu	1	204
 86	module	ic.pl	205
@@ -740,15 +740,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 111	module	reports.pl	276
 111	module_name	gl	40
 210	search_type	drafts	46
-6	menu	1	38
-6	module	menu.pl	41
-8	module	reports.pl	42
-8	action	start_report	47
-8	report_name	customer_margin	48
-8	module_name	gl	49
-11	module	reports.pl	60
-11	action	start_report	61
-11	report_name	invoice_margin	78
 112	module_name	gl	79
 9	module	invoice.pl	21
 9	action	start_report	22
@@ -758,6 +749,10 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 10	entity_class	1	67
 9	report_name	invoice_outstanding	23
 10	report_name	invoice_outstanding	66
+54	oe_class_id	1	62
+55	oe_class_id	2	68
+71	oe_class_id	3	69
+72	oe_class_id	4	70
 \.
 
 
@@ -841,7 +836,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 106	Time Cards	103	3
 107	Translations	98	5
 108	Description	107	1
-111	Trial Balance	109	2
 113	Balance Sheet	109	4
 114	Inventory Activity	109	5
 117	Sales Invoices	116	1
@@ -914,9 +908,10 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 41	Reports	35	8
 45	Reconciliation	35	7
 132	Year End	73	3
-112	Income Statement	6	1
 203	Receipts	200	3
 204	Reverse Receipts	200	4
+111	Trial Balance	109	1
+112	Income Statement	109	2
 201	Payments	200	1
 202	Reverse Payment	200	2
 210	Drafts	205	2
@@ -985,9 +980,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 190	Stylesheet	0	22
 128	System	0	21
 116	Batch Printing	0	20
-6	Profit and Loss	109	1
-8	Customer Margin	6	10
-11	Invoice Margin	6	11
 9	Outstanding	4	1
 10	Outstanding	24	1
 \.
