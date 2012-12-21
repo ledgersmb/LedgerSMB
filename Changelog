@@ -17,8 +17,10 @@ Changelog for 1.3.26
 * Fixed file attachments not retrieving for all invoice parts (Chris T)
 * fixed file attachements for invoices not handling _ properly (Chris T)
 
+Brian W is Brian Wolf
 Chris T is Chris Travers
 Havard S is Havard Sorli
+Nigel T is Nigel Titley
 
 Changelog for 1.3.25
 * Fixed internal server errors on LedgerSMB->error() during new() (Chris T)
