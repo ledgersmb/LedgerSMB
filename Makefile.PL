@@ -3,6 +3,9 @@
 use strict;
 use warnings;
 use inc::Module::Install 0.65;
+use File::Copy;
+
+copy ('ledgersmb.conf.default', 'ledgersmb.conf') unless -f 'ledgersmb.conf';
 
 name 'LedgerSMB';
 version_from 'LedgerSMB.pm';
