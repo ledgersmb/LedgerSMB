@@ -233,8 +233,8 @@ then
   set -x
 fi
 
-sed -e "s|WORKING_DIR|$dstdir|g" \
-   $srcdir/ledgersmb-httpd.conf.template >$dstdir/ledgersmb-httpd.conf
+# sed -e "s|WORKING_DIR|$dstdir|g" \
+#   $srcdir/ledgersmb-httpd.conf.template >$dstdir/ledgersmb-httpd.conf
 cat <<EOF | su -c "psql -U postgres -d postgres "  postgres 2>&1 | unchatter
 CREATE ROLE $owner WITH SUPERUSER LOGIN NOINHERIT ENCRYPTED PASSWORD '$pass';
 CREATE DATABASE $company_name WITH ENCODING = 'UNICODE' OWNER = $owner TEMPLATE = template0;
