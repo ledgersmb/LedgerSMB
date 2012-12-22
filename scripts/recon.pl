@@ -156,7 +156,7 @@ sub get_results {
 		$request->{submitted} = undef;
         }
         my $search = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all');
-        if ($search->{order_by}){
+        if ($search->{order_by} and $search->{order_by} ne 'account'){
             $search->set_ordering({
 			method => 'reconciliation__search', 
 			column => $search->{order_by},
@@ -170,6 +170,9 @@ sub get_results {
         }
         for my $row (@results){
             $row->{account} = $act_hash->{"$row->{chart_id}"};
+        }
+        if ($search->{order_by} eq 'account'){
+            sort {$a->{account} cmp $b->{account}} @results;
         }
         my $base_url = "recon.pl?action=display_report";
         my $search_url = "recon.pl?action=get_results".
