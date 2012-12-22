@@ -8,6 +8,7 @@ Changelog for 1.3.27
   not (Chris T)
 * Fixed prepare-company-database.sh clobbering the Apache configuration on
   every run (Chris T, 3595000)
+* Fixed error sorting recon search by account (Chris T, h/t Erik H, 3589473)
 
 Changelog for 1.3.26
 * Added db statistics post-upgrade and pre/post rebuild (Chris T, 3586113)
