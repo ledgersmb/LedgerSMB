@@ -2,15 +2,15 @@
 
 CWD=`pwd`
 
-sed -i.orig "s|WORKING_DIR|$CWD|" ledgersmb-httpd.conf;
+sed -e "s|WORKING_DIR|$CWD|" ledgersmb-httpd.conf.template > ledgersmb-httpd.conf
 
 username="apache"
-read -p "Which user does your web server run as? [$username]"
+read -p "Which user does your web server run as? [$username]" REPLY
 
 chown ${REPLY:-$username} spool templates css
 
 location="/etc/httpd/conf.d"
-read -p "Where do we copy the ledgersmb-httpd.conf file to? [$location] "
+read -p "Where do we copy the ledgersmb-httpd.conf file to? [$location] " REPLY
 
 cp ledgersmb-httpd.conf ${REPLY:-$location}
 
