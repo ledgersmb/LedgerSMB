@@ -20,6 +20,8 @@ Enhancing data integrity
 Installation/Upgrade
 * PostgreSQL contrib dependencies removed, now require Pg 8.4 (Chris T)
 * LaTeX format detection now run-time call, not configured (Chris T)
+* configure_apache.sh: Add search for apache user & config path
+  Do not overwrite ledgersmb-httpd.conf without warning (Havard S)
 
 Code/API improvements
 * scripts/* files moved to make inheritance possible (Chris T)
