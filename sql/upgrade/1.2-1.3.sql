@@ -361,16 +361,28 @@ UPDATE lsmb12.employee set entity_id =
 INSERT INTO person (first_name, last_name, entity_id) 
 select name, name, entity_id FROM lsmb12.employee;
 
-INSERT INTO users (entity_id, username)
-     SELECT entity_id, login FROM lsmb12.employee em
-      WHERE login IS NOT NULL;
-
 INSERT 
   INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
        employeenumber, dob, manager_id)
 SELECT entity_id, startdate, enddate, role, ssn, sales, employeenumber, dob,
        (select entity_id from lsmb12.employee where id = em.managerid)
-  FROM lsmb12.employee em;
+  FROM lsmb12.employee em
+ WHERE id IN (select min(id) from lsmb12.employee group by entity_id);
+
+
+-- I would prefer stronger passwords here but the exposure is very short, since 
+-- the passwords time out after 24 hours anyway.  These are not assumed to be
+-- usable passwords. --CT
+
+SELECT admin__save_user(null, max(entity_id), login, random()::text, true)
+  FROM lsmb12.employee
+ WHERE login IN (select rolname FROM pg_roles)
+ GROUP BY login;
+
+SELECT 	admin__save_user(null, max(entity_id), login, random()::text, false)
+  FROM lsmb12.employee
+ WHERE login NOT IN (select rolname FROM pg_roles)
+ GROUP BY login;
 
 
 
@@ -565,9 +577,6 @@ INSERT INTO audittrail(trans_id, tablename, reference, formname, action,
        JOIN lsmb12.employee e ON a.employee_id = e.id
        JOIN person p on e.entity_id = p.entity_id;
 
-INSERT INTO user_preference(id)
-     SELECT id from users;
-
 INSERT INTO recurring SELECT * FROM lsmb12.recurring;
 
 INSERT INTO recurringemail SELECT * FROM lsmb12.recurringemail;
@@ -576,10 +585,10 @@ INSERT INTO recurringprint SELECT * FROM lsmb12.recurringprint;
 
 INSERT INTO jcitems(id, project_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            person_id, notes)
+            person_id, notes, total)
      SELECT j.id,  project_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            p.id, j.notes
+            p.id, j.notes, coalesce(qty, 0)
        FROM lsmb12.jcitems j
        JOIN lsmb12.employee e ON j.employee_id = e.id
        JOIN person p ON e.entity_id = p.entity_id;
