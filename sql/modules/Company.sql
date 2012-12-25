@@ -349,6 +349,7 @@ BEGIN
                                       WHERE note @@ plainto_tsquery(in_notes))
                                   OR ec.id IN (select ref_key FROM eca_note
                                      WHERE note @@ plainto_tsquery(in_notes)))
+               ORDER BY legal_name
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;
