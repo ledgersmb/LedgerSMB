@@ -2672,8 +2672,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 27	action	report	64
 28	module	rp.pl	66
 28	action	report	67
-28	report	tax_collected	68
-27	report	tax_paid	65
+28	report	tax_paid	68
+27	report	ap_aging	65
 29	module	rp.pl	69
 29	action	report	70
 29	report	nontaxable_purchases	71

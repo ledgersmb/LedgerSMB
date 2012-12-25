@@ -13,6 +13,7 @@ Changelog for 1.3.27
 * Fixed configure_apache.sh, read input, change of file name from 
   ledgersmb-httpd.conf to ledgersmb-httpd.conf.template (Havard S)
 * Update INSTALL - section "Adding configuration to Apache 2.x" (Havard S)
+* Fixed bad targets of AP Aging and Tax Paid reports (Chris T, 3594694)
 
 Chris T is Chris Travers
 Havard S is Havard Sorli

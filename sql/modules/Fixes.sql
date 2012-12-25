@@ -481,3 +481,13 @@ BEGIN;
 insert into batch_class (id,class) values (7,'receipt_reversal');
 
 COMMIT;
+
+BEGIN;
+
+-- FIXING AP MENU
+
+ update menu_attribute set value = 'tax_paid' where node_id = 28 and attribute = 'report';
+
+update menu_attribute set value = 'ap_aging' where node_id = 27 and attribute = 'report';
+
+COMMIT;
