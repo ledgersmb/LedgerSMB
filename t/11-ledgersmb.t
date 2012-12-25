@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 $ENV{TMPDIR} = 't/var';
+$ENV{LANG} = 'LANG=en_US.UTF8';
 
 use Test::More;
 use Test::Exception;
