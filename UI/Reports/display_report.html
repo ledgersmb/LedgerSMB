@@ -39,6 +39,13 @@ END;
     value = request.form_id
      type = 'hidden'
 } ?>
+<?lsmb FOREACH K IN request.hiddens.keys;
+    PROCESS input element_data = {
+         name = K
+         type = 'hidden'
+        value = request.hiddens.$K
+    };
+    END; ?>
 <?lsmb PROCESS dynatable tbody = {rows = rows } 
                attributes = {class = 'report', order_url = order_url } ?>
 

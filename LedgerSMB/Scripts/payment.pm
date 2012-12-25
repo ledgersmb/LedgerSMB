@@ -276,7 +276,11 @@ inputs currently expected include
 sub get_search_results {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Invoices::Payments->new(%$request);
-    $report->render;
+    $request->{hiddens} = { 
+        batch_id => $request->{batch_id},
+      cash_accno => $request->{cash_accno},
+    };
+    $report->render($request);
 }
 
 =item reverse_payments
@@ -289,9 +293,9 @@ sub reverse_payments {
     my ($request) = @_;
     $request->{account_class} = 1;
     my $payment = LedgerSMB::DBObject::Payment->new({base => $request});
-    for my $count (1 .. $payment->{rowcount}){
-        if ($payment->{"payment_$count"}){
-           $payment->{account_class} = $payment->{"account_class_$count"};
+    for my $count (1 .. $payment->{rowcount_}){
+        if ($payment->{"select_$count"}){
+           $payment->{account_class} = $payment->{"entity_class_$count"};
            $payment->{credit_id} = $payment->{"credit_id_$count"};
            $payment->{date_paid} = $payment->{"date_paid_$count"};
            $payment->{source} = $payment->{"source_$count"};
