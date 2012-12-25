@@ -19,6 +19,7 @@ echo "select 'text(''' || class || ''')' FROM location_class" |
 
 # SETTING UP FILE LIST
 find . -name '*.pl' | grep -v blib > tools/files
+find . -name '*.html' | grep -v blib >> tools/files
 find . -name '*.pm' | grep -v blib | grep -v Num2text | 
   grep -v LaTeX >> tools/files
 

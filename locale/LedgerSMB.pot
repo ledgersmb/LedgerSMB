@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-24 22:18-0800\n"
+"POT-Creation-Date: 2012-12-25 06:21-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -92,7 +92,7 @@ msgid "Employee Number"
 msgstr ""
 
 #: bin/am.pl:66 bin/io.pl:2002 bin/aa.pl:1614
-#: LedgerSMB/Scripts/configuration.pm:96
+#: UI/payments/payments_filter.html:65 LedgerSMB/Scripts/configuration.pm:96
 #: LedgerSMB/Report/Invoices/Payments.pm:114
 #: LedgerSMB/Report/Invoices/Payments.pm:184 LedgerSMB/Report/Margin/ECA.pm:83
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Margin/ECA.pm:83
@@ -100,7 +100,7 @@ msgid "Customer Number"
 msgstr ""
 
 #: bin/am.pl:67 bin/io.pl:2003 bin/aa.pl:1623
-#: LedgerSMB/Scripts/configuration.pm:97
+#: UI/payments/payments_filter.html:63 LedgerSMB/Scripts/configuration.pm:97
 #: LedgerSMB/Report/Invoices/Payments.pm:112
 #: LedgerSMB/Report/Invoices/Payments.pm:182
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:156
@@ -162,6 +162,11 @@ msgstr ""
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:138
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:138
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:138
+#: UI/business_units/edit.html:82 UI/asset/edit_asset.html:206
+#: UI/asset/import_asset.html:57 UI/asset/edit_class.html:56
+#: UI/import_csv/import_csv.html:62
+#: addons/1.3/extended_arap/trunk/UI/aa.html:587
+#: addons/1.3/import_trans/trunk/UI/import_trans/import_trans.html:62
 #: LedgerSMB/Scripts/budgets.pm:98 LedgerSMB/Scripts/asset.pm:548
 #: LedgerSMB/Scripts/account.pm:136 LedgerSMB/Scripts/account.pm:147
 msgid "Save"
@@ -173,8 +178,9 @@ msgstr ""
 
 #: bin/am.pl:117 bin/am.pl:339 bin/ic.pl:880 bin/pe.pl:467 bin/pe.pl:672
 #: bin/pe.pl:1044 bin/aa.pl:998 bin/oe.pl:840
-#: addons/1.4/pos/trunk/bin/pos.pl:625 LedgerSMB/Scripts/account.pm:142
-#: LedgerSMB/Report/Unapproved/Drafts.pm:205
+#: addons/1.4/pos/trunk/bin/pos.pl:625
+#: addons/1.3/extended_arap/trunk/UI/aa.html:620
+#: LedgerSMB/Scripts/account.pm:142 LedgerSMB/Report/Unapproved/Drafts.pm:205
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:228
 #: LedgerSMB/Report/COA.pm:123 LedgerSMB/Report/COA.pm:191
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:205
@@ -217,7 +223,6 @@ msgstr ""
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:137
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:97
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:153
-#: tools/dbstrings:139
 msgid "GIFI"
 msgstr ""
 
@@ -249,7 +254,7 @@ msgstr ""
 msgid "GIFI deleted!"
 msgstr ""
 
-#: bin/am.pl:474 tools/dbstrings:165
+#: bin/am.pl:474
 msgid "Type of Business"
 msgstr ""
 
@@ -268,6 +273,15 @@ msgstr ""
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:378
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:40
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:378
+#: UI/Reports/filters/trial_balance.html:84 UI/create_batch.html:22
+#: UI/Contact/divs/credit.html:22 UI/Contact/divs/credit.html:68
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:22
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:68
+#: addons/1.3/report_framework/trunk/UI/Reports/filters/trial_balance.html:84
+#: addons/1.3/extended_arap/trunk/UI/aa.html:290
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:17
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/search.html:100
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:16
 #: LedgerSMB/Scripts/asset.pm:166 LedgerSMB/Scripts/asset.pm:313
 #: LedgerSMB/Scripts/asset.pm:496 LedgerSMB/Scripts/asset.pm:799
 #: LedgerSMB/Scripts/asset.pm:870 LedgerSMB/Scripts/asset.pm:1006
@@ -305,8 +319,7 @@ msgstr ""
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:71
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:40
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:157
-#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:221 tools/dbstrings:66
-#: tools/dbstrings:76
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:221
 msgid "Description"
 msgstr ""
 
@@ -314,7 +327,7 @@ msgstr ""
 msgid "Discount %"
 msgstr ""
 
-#: bin/am.pl:514 tools/dbstrings:94
+#: bin/am.pl:514
 msgid "Add Business"
 msgstr ""
 
@@ -342,7 +355,7 @@ msgstr ""
 msgid "Code"
 msgstr ""
 
-#: bin/am.pl:681 tools/dbstrings:98
+#: bin/am.pl:681
 msgid "Add SIC"
 msgstr ""
 
@@ -366,7 +379,7 @@ msgstr ""
 msgid "Languages"
 msgstr ""
 
-#: bin/am.pl:843 tools/dbstrings:96
+#: bin/am.pl:843
 msgid "Add Language"
 msgstr ""
 
@@ -408,6 +421,7 @@ msgid "Edit Template"
 msgstr ""
 
 #: bin/am.pl:1114 bin/aa.pl:1003 bin/gl.pl:274
+#: addons/1.3/extended_arap/trunk/UI/aa.html:634
 msgid "Save Template"
 msgstr ""
 
@@ -415,7 +429,7 @@ msgstr ""
 msgid "Template saved!"
 msgstr ""
 
-#: bin/am.pl:1163 tools/dbstrings:90
+#: bin/am.pl:1163
 msgid "Taxes"
 msgstr ""
 
@@ -443,11 +457,11 @@ msgstr ""
 msgid "Cannot save preferences!"
 msgstr ""
 
-#: bin/am.pl:1491 tools/dbstrings:167
+#: bin/am.pl:1491
 msgid "Warehouses"
 msgstr ""
 
-#: bin/am.pl:1530 tools/dbstrings:92
+#: bin/am.pl:1530
 msgid "Add Warehouse"
 msgstr ""
 
@@ -471,7 +485,7 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: bin/am.pl:1617 tools/dbstrings:213
+#: bin/am.pl:1617
 msgid "Recurring Transactions"
 msgstr ""
 
@@ -500,6 +514,7 @@ msgstr ""
 
 #: bin/am.pl:1640 bin/bp.pl:384 bin/aa.pl:1634
 #: addons/1.3/b_units/trunk/scripts/business_unit.pl:132
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:14
 #: LedgerSMB/Scripts/asset.pm:165 LedgerSMB/Scripts/asset.pm:631
 #: LedgerSMB/Scripts/asset.pm:1004 LedgerSMB/Scripts/business_unit.pm:137
 #: LedgerSMB/Report/Unapproved/Drafts.pm:79
@@ -529,6 +544,8 @@ msgstr ""
 #: bin/am.pl:1650 bin/ir.pl:614 bin/ir.pl:790 bin/is.pl:675 bin/is.pl:835
 #: bin/pe.pl:1489 bin/aa.pl:722 bin/aa.pl:882 bin/aa.pl:1656
 #: addons/1.4/pos/trunk/bin/pos.pl:457
+#: addons/1.3/extended_arap/trunk/UI/aa.html:286
+#: addons/1.3/extended_arap/trunk/UI/aa.html:400
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:116
 #: LedgerSMB/Report/Invoices/Transactions.pm:239
 #: LedgerSMB/Report/Invoices/Outstanding.pm:209 LedgerSMB/Report/Orders.pm:229
@@ -551,15 +568,17 @@ msgid "E-mail"
 msgstr ""
 
 #: bin/am.pl:1655 bin/bp.pl:503 bin/arap.pl:658 bin/is.pl:957 bin/aa.pl:993
-#: bin/oe.pl:802 bin/oe.pl:2010
+#: bin/oe.pl:802 bin/oe.pl:2010 UI/taxform/details_report.html:55
+#: UI/taxform/summary_report.html:53
+#: addons/1.3/extended_arap/trunk/UI/aa.html:555
 msgid "Print"
 msgstr ""
 
-#: bin/am.pl:1659 tools/dbstrings:127
+#: bin/am.pl:1659
 msgid "AR"
 msgstr ""
 
-#: bin/am.pl:1660 tools/dbstrings:128
+#: bin/am.pl:1660
 msgid "AP"
 msgstr ""
 
@@ -568,14 +587,12 @@ msgid "GL"
 msgstr ""
 
 #: bin/am.pl:1662 bin/ic.pl:1070 LedgerSMB/Report/Orders.pm:186
-#: LedgerSMB/Report/Orders.pm:290 tools/dbstrings:32 tools/dbstrings:34
-#: tools/dbstrings:37 tools/dbstrings:71 tools/dbstrings:80
+#: LedgerSMB/Report/Orders.pm:290
 msgid "Sales Orders"
 msgstr ""
 
 #: bin/am.pl:1663 bin/ic.pl:1051 LedgerSMB/Report/Orders.pm:189
-#: LedgerSMB/Report/Orders.pm:292 tools/dbstrings:33 tools/dbstrings:35
-#: tools/dbstrings:38 tools/dbstrings:86
+#: LedgerSMB/Report/Orders.pm:292
 msgid "Purchase Orders"
 msgstr ""
 
@@ -615,14 +632,12 @@ msgid "done"
 msgstr ""
 
 #: bin/am.pl:2081 bin/ic.pl:1561 bin/io.pl:1363 bin/io.pl:1543 bin/is.pl:964
-#: bin/oe.pl:302 bin/oe.pl:823 bin/oe.pl:1259 tools/dbstrings:29
-#: tools/dbstrings:107 tools/dbstrings:121
+#: bin/oe.pl:302 bin/oe.pl:823 bin/oe.pl:1259
 msgid "Sales Order"
 msgstr ""
 
 #: bin/am.pl:2087 bin/ir.pl:897 bin/ic.pl:1556 bin/io.pl:1380 bin/io.pl:1591
-#: bin/oe.pl:316 bin/oe.pl:834 bin/oe.pl:1265 tools/dbstrings:30
-#: tools/dbstrings:109 tools/dbstrings:123
+#: bin/oe.pl:316 bin/oe.pl:834 bin/oe.pl:1265
 msgid "Purchase Order"
 msgstr ""
 
@@ -671,8 +686,10 @@ msgstr ""
 #: bin/arapprn.pl:469 bin/io.pl:643 bin/io.pl:849 bin/io.pl:1286
 #: bin/io.pl:2223 bin/pe.pl:209 bin/pe.pl:761 bin/pe.pl:1190 bin/pe.pl:1360
 #: bin/pe.pl:1637 bin/aa.pl:1775 bin/oe.pl:1580 bin/oe.pl:2147 bin/oe.pl:2657
-#: addons/1.4/pos/trunk/bin/pos.pl:1174 LedgerSMB/Scripts/payment.pm:603
-#: LedgerSMB/Scripts/payment.pm:670 LedgerSMB/Scripts/payment.pm:1310
+#: addons/1.4/pos/trunk/bin/pos.pl:1174
+#: UI/asset/begin_depreciation_all.html:25 UI/asset/begin_approval.html:66
+#: UI/asset/begin_report.html:58 LedgerSMB/Scripts/payment.pm:607
+#: LedgerSMB/Scripts/payment.pm:674 LedgerSMB/Scripts/payment.pm:1314
 msgid "Continue"
 msgstr ""
 
@@ -718,14 +735,16 @@ msgid "No currencies defined.  Please set these up under System/Defaults."
 msgstr ""
 
 #: bin/ir.pl:369 bin/pe.pl:821 bin/pe.pl:999
-#: addons/1.4/pos/trunk/bin/pos.pl:308 LedgerSMB/Report/Aging.pm:92
+#: addons/1.4/pos/trunk/bin/pos.pl:308 UI/Contact/divs/credit.html:227
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:222
+#: LedgerSMB/Report/Aging.pm:92
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:92
-#: tools/dbstrings:164
 msgid "Language"
 msgstr ""
 
 #: bin/ir.pl:384 bin/ic.pl:1117 bin/is.pl:362 bin/aa.pl:490 bin/aa.pl:1663
 #: bin/oe.pl:370 bin/oe.pl:1558 addons/1.4/pos/trunk/bin/pos.pl:213
+#: addons/1.3/extended_arap/trunk/UI/aa.html:129
 #: LedgerSMB/Report/Orders.pm:233 LedgerSMB/Report/Contact/Search.pm:79
 #: LedgerSMB/Report/Contact/Purchase.pm:75
 #: LedgerSMB/Report/Contact/History.pm:65
@@ -737,7 +756,7 @@ msgstr ""
 
 #: bin/ir.pl:397 bin/is.pl:375 bin/aa.pl:502 bin/oe.pl:384 bin/oe.pl:392
 #: bin/oe.pl:1566 addons/1.4/pos/trunk/bin/pos.pl:227
-#: addons/1.4/pos/trunk/bin/pos.pl:233 LedgerSMB/Scripts/payment.pm:770
+#: addons/1.4/pos/trunk/bin/pos.pl:233 LedgerSMB/Scripts/payment.pm:774
 #: LedgerSMB/Report/Contact/History.pm:101
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:101
 msgid "Exchange Rate"
@@ -753,6 +772,7 @@ msgstr ""
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:382
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:382
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:382
+#: addons/1.3/extended_arap/trunk/UI/aa.html:152
 #: LedgerSMB/Scripts/asset.pm:319
 msgid "Department"
 msgstr ""
@@ -768,11 +788,13 @@ msgstr ""
 
 #: bin/ir.pl:477 bin/is.pl:495 bin/aa.pl:628 bin/oe.pl:457
 #: addons/1.4/pos/trunk/bin/pos.pl:363
+#: addons/1.3/extended_arap/trunk/UI/aa.html:74
 msgid "Credit Limit"
 msgstr ""
 
 #: bin/ir.pl:482 bin/is.pl:500 bin/aa.pl:630 bin/oe.pl:462
 #: addons/1.4/pos/trunk/bin/pos.pl:366
+#: addons/1.3/extended_arap/trunk/UI/aa.html:81
 msgid "Remaining"
 msgstr ""
 
@@ -782,6 +804,10 @@ msgstr ""
 
 #: bin/ir.pl:495 bin/ir.pl:792 bin/ic.pl:2946 bin/is.pl:513 bin/is.pl:837
 #: bin/aa.pl:667 bin/aa.pl:724 bin/aa.pl:884 bin/aa.pl:1696 bin/oe.pl:474
+#: addons/1.3/extended_arap/trunk/UI/aa.html:117
+#: addons/1.3/extended_arap/trunk/UI/aa.html:289
+#: addons/1.3/extended_arap/trunk/UI/aa.html:404
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:13
 #: LedgerSMB/Report/Invoices/Outstanding.pm:200
 #: LedgerSMB/Report/co/Caja_Diaria.pm:65
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:64
@@ -798,8 +824,9 @@ msgid "Record in"
 msgstr ""
 
 #: bin/ir.pl:521 bin/ic.pl:1863 bin/bp.pl:100 bin/is.pl:551 bin/aa.pl:688
-#: bin/aa.pl:1523 bin/aa.pl:1637 LedgerSMB/Report/Margin/Invoice.pm:69
-#: LedgerSMB/Report/PNL/Invoice.pm:87 LedgerSMB/Report/Contact/Purchase.pm:63
+#: bin/aa.pl:1523 bin/aa.pl:1637 addons/1.3/extended_arap/trunk/UI/aa.html:209
+#: LedgerSMB/Report/Margin/Invoice.pm:69 LedgerSMB/Report/PNL/Invoice.pm:87
+#: LedgerSMB/Report/Contact/Purchase.pm:63
 #: LedgerSMB/Report/Contact/History.pm:61
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Margin/Invoice.pm:69
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:87
@@ -810,17 +837,20 @@ msgstr ""
 
 #: bin/ir.pl:525 bin/ic.pl:1867 bin/bp.pl:104 bin/is.pl:555 bin/aa.pl:692
 #: bin/aa.pl:1527 bin/aa.pl:1640 bin/oe.pl:431 bin/oe.pl:1857
+#: addons/1.3/extended_arap/trunk/UI/aa.html:222
 #: LedgerSMB/Report/Contact/Purchase.pm:67
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:67
 msgid "Order Number"
 msgstr ""
 
 #: bin/ir.pl:530 bin/is.pl:560 bin/aa.pl:696 bin/aa.pl:1644
+#: addons/1.3/extended_arap/trunk/UI/aa.html:235
 msgid "Invoice Date"
 msgstr ""
 
 #: bin/ir.pl:534 bin/is.pl:564 bin/aa.pl:700 bin/aa.pl:1670
-#: LedgerSMB/Report/Aging.pm:115 LedgerSMB/Report/Invoices/Transactions.pm:257
+#: addons/1.3/extended_arap/trunk/UI/aa.html:250 LedgerSMB/Report/Aging.pm:115
+#: LedgerSMB/Report/Invoices/Transactions.pm:257
 #: LedgerSMB/Report/Invoices/Outstanding.pm:237
 #: LedgerSMB/Report/Contact/Purchase.pm:99
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:115
@@ -829,8 +859,9 @@ msgid "Due Date"
 msgstr ""
 
 #: bin/ir.pl:538 bin/is.pl:568 bin/aa.pl:704 bin/aa.pl:1531 bin/aa.pl:1642
-#: bin/oe.pl:444 bin/oe.pl:1867 LedgerSMB/Report/Invoices/Outstanding.pm:196
-#: LedgerSMB/Report/Orders.pm:241 LedgerSMB/Report/Contact/Purchase.pm:71
+#: bin/oe.pl:444 bin/oe.pl:1867 addons/1.3/extended_arap/trunk/UI/aa.html:264
+#: LedgerSMB/Report/Invoices/Outstanding.pm:196 LedgerSMB/Report/Orders.pm:241
+#: LedgerSMB/Report/Contact/Purchase.pm:71
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:71
 msgid "PO Number"
 msgstr ""
@@ -861,8 +892,10 @@ msgid "Tax Code"
 msgstr ""
 
 #: bin/ir.pl:618 bin/ir.pl:794 bin/is.pl:679 bin/is.pl:839 bin/aa.pl:886
-#: addons/1.4/pos/trunk/bin/pos.pl:459 LedgerSMB/Scripts/payment.pm:151
-#: LedgerSMB/Scripts/payment.pm:764 LedgerSMB/Report/GL.pm:123
+#: addons/1.4/pos/trunk/bin/pos.pl:459
+#: addons/1.3/extended_arap/trunk/UI/aa.html:399
+#: LedgerSMB/Scripts/payment.pm:151 LedgerSMB/Scripts/payment.pm:768
+#: LedgerSMB/Report/GL.pm:123
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:123
 msgid "Memo"
 msgstr ""
@@ -876,6 +909,7 @@ msgstr ""
 #: bin/ir.pl:724 bin/ic.pl:794 bin/ic.pl:1289 bin/ic.pl:1817 bin/is.pl:773
 #: bin/aa.pl:852 bin/aa.pl:1543 bin/aa.pl:1674 bin/oe.pl:735
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:126
+#: addons/1.3/extended_arap/trunk/UI/aa.html:373
 #: LedgerSMB/Scripts/contact.pm:126 LedgerSMB/Scripts/employee.pm:111
 #: LedgerSMB/Report/Invoices/Transactions.pm:260
 #: LedgerSMB/Report/Invoices/Outstanding.pm:241
@@ -899,22 +933,24 @@ msgstr ""
 
 #: bin/ir.pl:765 bin/is.pl:809 bin/aa.pl:1661 bin/oe.pl:749
 #: addons/1.4/pos/trunk/bin/pos.pl:573 LedgerSMB/Scripts/payment.pm:198
-#: LedgerSMB/Scripts/payment.pm:760 LedgerSMB/Scripts/asset.pm:637
+#: LedgerSMB/Scripts/payment.pm:764 LedgerSMB/Scripts/asset.pm:637
 #: LedgerSMB/Report/Aging.pm:142 LedgerSMB/Report/Invoices/Transactions.pm:245
 #: LedgerSMB/Report/Invoices/Outstanding.pm:217
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:142
 msgid "Total"
 msgstr ""
 
-#: bin/ir.pl:778 bin/is.pl:823 bin/aa.pl:866 tools/dbstrings:24
-#: tools/dbstrings:154
+#: bin/ir.pl:778 bin/is.pl:823 bin/aa.pl:866
+#: addons/1.3/extended_arap/trunk/UI/aa.html:390
 msgid "Payments"
 msgstr ""
 
 #: bin/ir.pl:789 bin/bp.pl:364 bin/is.pl:834 bin/pe.pl:1474 bin/aa.pl:881
-#: bin/oe.pl:1562 LedgerSMB/Scripts/payment.pm:149
-#: LedgerSMB/Scripts/payment.pm:759 LedgerSMB/Scripts/asset.pm:632
-#: LedgerSMB/Report/Aging.pm:110 LedgerSMB/Report/Unapproved/Drafts.pm:84
+#: bin/oe.pl:1562 UI/asset/begin_depreciation_all.html:12
+#: UI/asset/begin_report.html:22 addons/1.3/extended_arap/trunk/UI/aa.html:397
+#: LedgerSMB/Scripts/payment.pm:149 LedgerSMB/Scripts/payment.pm:763
+#: LedgerSMB/Scripts/asset.pm:632 LedgerSMB/Report/Aging.pm:110
+#: LedgerSMB/Report/Unapproved/Drafts.pm:84
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:91
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:100
 #: LedgerSMB/Report/Invoices/Transactions.pm:227
@@ -931,12 +967,15 @@ msgid "Date"
 msgstr ""
 
 #: bin/ir.pl:791 bin/is.pl:836 bin/aa.pl:883
+#: addons/1.3/extended_arap/trunk/UI/aa.html:402
 msgid "Exch"
 msgstr ""
 
 #: bin/ir.pl:793 bin/is.pl:838 bin/aa.pl:885 bin/aa.pl:1535
-#: addons/1.4/pos/trunk/bin/pos.pl:458 LedgerSMB/Scripts/recon.pm:208
-#: LedgerSMB/Scripts/payment.pm:150 LedgerSMB/Report/Invoices/Payments.pm:140
+#: addons/1.4/pos/trunk/bin/pos.pl:458
+#: addons/1.3/extended_arap/trunk/UI/aa.html:398
+#: LedgerSMB/Scripts/recon.pm:208 LedgerSMB/Scripts/payment.pm:150
+#: LedgerSMB/Report/Invoices/Payments.pm:140
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:66
 #: LedgerSMB/Report/Budget/Search.pm:126 LedgerSMB/Report/GL.pm:118
 #: LedgerSMB/Report/GL.pm:208
@@ -953,6 +992,7 @@ msgstr ""
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:132
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:132
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:132
+#: UI/payments/payment2.html:324 addons/1.3/extended_arap/trunk/UI/aa.html:548
 #: LedgerSMB/Scripts/budgets.pm:92
 msgid "Update"
 msgstr ""
@@ -962,6 +1002,7 @@ msgid "Copy to New"
 msgstr ""
 
 #: bin/ir.pl:891 bin/is.pl:958 bin/aa.pl:994 bin/gl.pl:270
+#: UI/payments/payment2.html:330 addons/1.3/extended_arap/trunk/UI/aa.html:594
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:222
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:222
 msgid "Post"
@@ -972,6 +1013,7 @@ msgid "Post as new"
 msgstr ""
 
 #: bin/ir.pl:900 bin/is.pl:966 bin/aa.pl:996 bin/gl.pl:278 bin/oe.pl:838
+#: addons/1.3/extended_arap/trunk/UI/aa.html:614
 msgid "Schedule"
 msgstr ""
 
@@ -980,14 +1022,17 @@ msgid "On Hold"
 msgstr ""
 
 #: bin/ir.pl:904 bin/is.pl:972 bin/aa.pl:1001
+#: addons/1.3/extended_arap/trunk/UI/aa.html:627
 msgid "Save Info"
 msgstr ""
 
 #: bin/ir.pl:925 bin/is.pl:995 bin/aa.pl:1013 bin/gl.pl:308
+#: addons/1.3/extended_arap/trunk/UI/aa.html:564
 msgid "Post as Saved"
 msgstr ""
 
 #: bin/ir.pl:930 bin/is.pl:1000 bin/aa.pl:1018 bin/gl.pl:315
+#: addons/1.3/extended_arap/trunk/UI/aa.html:573
 msgid "Post as Shown"
 msgstr ""
 
@@ -1207,7 +1252,8 @@ msgstr ""
 #: bin/ic.pl:2503 bin/ic.pl:2559 bin/ic.pl:2604 bin/ic.pl:3083 bin/ic.pl:3841
 #: bin/ic.pl:3915 bin/arap.pl:389 bin/io.pl:205 bin/io.pl:526 bin/pe.pl:699
 #: bin/pe.pl:781 bin/pe.pl:813 bin/oe.pl:1906
-#: addons/1.4/pos/trunk/bin/pos.pl:744
+#: addons/1.4/pos/trunk/bin/pos.pl:744 UI/Contact/divs/credit.html:20
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:20
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:328
 msgid "Number"
 msgstr ""
@@ -1248,27 +1294,25 @@ msgid "Vendor Invoices"
 msgstr ""
 
 #: bin/ic.pl:1055 bin/ic.pl:1566 bin/io.pl:1358 bin/oe.pl:291 bin/oe.pl:836
-#: tools/dbstrings:43 tools/dbstrings:113 tools/dbstrings:133
 msgid "RFQ"
 msgstr ""
 
-#: bin/ic.pl:1066 tools/dbstrings:79
+#: bin/ic.pl:1066
 msgid "Sales Invoices"
 msgstr ""
 
 #: bin/ic.pl:1074 LedgerSMB/Report/Orders.pm:192
-#: LedgerSMB/Report/Orders.pm:294 tools/dbstrings:45 tools/dbstrings:83
-#: tools/dbstrings:208
+#: LedgerSMB/Report/Orders.pm:294
 msgid "Quotations"
 msgstr ""
 
 #: bin/ic.pl:1084 bin/ic.pl:1629 bin/ic.pl:2951 bin/pe.pl:103 bin/pe.pl:1277
-#: bin/aa.pl:1714 bin/oe.pl:2214
+#: bin/aa.pl:1714 bin/oe.pl:2214 UI/asset/begin_approval.html:23
 msgid "From"
 msgstr ""
 
 #: bin/ic.pl:1086 bin/ic.pl:1636 bin/ic.pl:2952 bin/pe.pl:105 bin/pe.pl:1280
-#: bin/oe.pl:2217
+#: bin/oe.pl:2217 UI/asset/begin_approval.html:31
 msgid "To"
 msgstr ""
 
@@ -1276,7 +1320,7 @@ msgstr ""
 msgid "Accrual"
 msgstr ""
 
-#: bin/ic.pl:1093 addons/1.4/pos/trunk/pos.conf.pl:42 tools/dbstrings:129
+#: bin/ic.pl:1093 addons/1.4/pos/trunk/pos.conf.pl:42
 msgid "Cash"
 msgstr ""
 
@@ -1383,16 +1427,15 @@ msgstr ""
 
 #: bin/ic.pl:1571 bin/ic.pl:1871 bin/bp.pl:376 bin/io.pl:1353 bin/io.pl:1605
 #: bin/io.pl:1612 bin/oe.pl:282 bin/oe.pl:825 bin/oe.pl:1276
-#: LedgerSMB/Report/Orders.pm:245 tools/dbstrings:42 tools/dbstrings:112
-#: tools/dbstrings:132
+#: LedgerSMB/Report/Orders.pm:245
 msgid "Quotation"
 msgstr ""
 
-#: bin/ic.pl:1576 bin/oe.pl:829 tools/dbstrings:187
+#: bin/ic.pl:1576 bin/oe.pl:829
 msgid "Vendor Invoice"
 msgstr ""
 
-#: bin/ic.pl:1581 bin/is.pl:918 bin/oe.pl:821 tools/dbstrings:191
+#: bin/ic.pl:1581 bin/is.pl:918 bin/oe.pl:821
 msgid "Sales Invoice"
 msgstr ""
 
@@ -1409,19 +1452,19 @@ msgstr ""
 msgid "Curr"
 msgstr ""
 
-#: bin/ic.pl:1921 tools/dbstrings:63
+#: bin/ic.pl:1921
 msgid "Assembly"
 msgstr ""
 
-#: bin/ic.pl:1946 tools/dbstrings:48
+#: bin/ic.pl:1946
 msgid "Add Part"
 msgstr ""
 
-#: bin/ic.pl:1953 tools/dbstrings:49
+#: bin/ic.pl:1953
 msgid "Add Service"
 msgstr ""
 
-#: bin/ic.pl:1960 tools/dbstrings:50
+#: bin/ic.pl:1960
 msgid "Add Assembly"
 msgstr ""
 
@@ -1471,6 +1514,8 @@ msgstr ""
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:41
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:41
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:41
+#: UI/Reports/filters/contact_search.html:70
+#: addons/1.3/report_framework/trunk/UI/Reports/filters/contact_search.html:70
 #: LedgerSMB/Scripts/payment.pm:147 LedgerSMB/Report/Trial_Balance.pm:127
 #: LedgerSMB/Report/Invoices/Payments.pm:190 LedgerSMB/Report/COA.pm:85
 #: LedgerSMB/Report/Budget/Variance.pm:70
@@ -1513,8 +1558,8 @@ msgid "Pricegroup"
 msgstr ""
 
 #: bin/ic.pl:2945 bin/is.pl:485 bin/pe.pl:1616 bin/aa.pl:590 bin/aa.pl:1613
-#: addons/1.4/pos/trunk/bin/pos.pl:355 LedgerSMB/Report/Aging.pm:80
-#: LedgerSMB/Report/Invoices/Transactions.pm:219
+#: addons/1.4/pos/trunk/bin/pos.pl:355 UI/business_units/edit.html:71
+#: LedgerSMB/Report/Aging.pm:80 LedgerSMB/Report/Invoices/Transactions.pm:219
 #: LedgerSMB/Report/Invoices/Outstanding.pm:170 LedgerSMB/Report/Orders.pm:187
 #: LedgerSMB/Report/Orders.pm:193
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:80
@@ -1573,7 +1618,7 @@ msgstr ""
 msgid "Cannot delete item!"
 msgstr ""
 
-#: bin/ic.pl:3823 bin/ic.pl:3935 tools/dbstrings:54
+#: bin/ic.pl:3823 bin/ic.pl:3935
 msgid "Stock Assembly"
 msgstr ""
 
@@ -1666,11 +1711,10 @@ msgid "To [_1]"
 msgstr ""
 
 #: bin/bp.pl:368 bin/io.pl:1347 bin/io.pl:1538 bin/is.pl:286 bin/is.pl:1394
-#: LedgerSMB/Scripts/payment.pm:758 LedgerSMB/Report/Aging.pm:99
+#: LedgerSMB/Scripts/payment.pm:762 LedgerSMB/Report/Aging.pm:99
 #: LedgerSMB/Report/Invoices/Transactions.pm:236
 #: LedgerSMB/Report/Invoices/Outstanding.pm:163
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:99
-#: tools/dbstrings:102 tools/dbstrings:116
 msgid "Invoice"
 msgstr ""
 
@@ -1815,7 +1859,7 @@ msgstr ""
 
 #: bin/arapprn.pl:521 bin/io.pl:1419 addons/1.4/pos/trunk/bin/pos.pl:1092
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:396
-#: LedgerSMB/Scripts/payment.pm:517 LedgerSMB/Template.pm:301
+#: LedgerSMB/Scripts/payment.pm:521 LedgerSMB/Template.pm:301
 msgid "Screen"
 msgstr ""
 
@@ -1825,10 +1869,11 @@ msgid "Queue"
 msgstr ""
 
 #: bin/arapprn.pl:558 addons/1.4/pos/trunk/bin/pos.pl:1112
+#: addons/1.3/extended_arap/trunk/UI/aa.html:532
 msgid "Printed"
 msgstr ""
 
-#: bin/arapprn.pl:562
+#: bin/arapprn.pl:562 addons/1.3/extended_arap/trunk/UI/aa.html:528
 msgid "Scheduled"
 msgstr ""
 
@@ -1838,7 +1883,6 @@ msgid "Select a Printer!"
 msgstr ""
 
 #: bin/io.pl:146 bin/oe.pl:1892 LedgerSMB/Scripts/order.pm:59
-#: tools/dbstrings:39
 msgid "Ship"
 msgstr ""
 
@@ -1871,6 +1915,7 @@ msgstr ""
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:383
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:383
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:383
+#: addons/1.3/extended_arap/trunk/UI/aa.html:293
 msgid "Project"
 msgstr ""
 
@@ -1922,23 +1967,21 @@ msgstr ""
 msgid "Add Quotation"
 msgstr ""
 
-#: bin/io.pl:1367 bin/io.pl:1550 bin/oe.pl:303 tools/dbstrings:108
-#: tools/dbstrings:122
+#: bin/io.pl:1367 bin/io.pl:1550 bin/oe.pl:303
 msgid "Work Order"
 msgstr ""
 
 #: bin/io.pl:1371 bin/io.pl:1389 bin/io.pl:1580 bin/is.pl:287 bin/oe.pl:304
-#: bin/oe.pl:323 tools/dbstrings:106 tools/dbstrings:120
+#: bin/oe.pl:323
 msgid "Pick List"
 msgstr ""
 
 #: bin/io.pl:1375 bin/io.pl:1393 bin/io.pl:1557 bin/is.pl:288 bin/oe.pl:305
-#: bin/oe.pl:324 tools/dbstrings:105 tools/dbstrings:119
+#: bin/oe.pl:324
 msgid "Packing List"
 msgstr ""
 
 #: bin/io.pl:1384 bin/io.pl:1398 bin/io.pl:1598 bin/oe.pl:317 bin/oe.pl:329
-#: tools/dbstrings:110 tools/dbstrings:124
 msgid "Bin List"
 msgstr ""
 
@@ -2074,7 +2117,7 @@ msgstr ""
 msgid "Edit Project"
 msgstr ""
 
-#: bin/pe.pl:64 tools/dbstrings:68
+#: bin/pe.pl:64
 msgid "Add Project"
 msgstr ""
 
@@ -2092,11 +2135,11 @@ msgstr ""
 msgid "Quarter"
 msgstr ""
 
-#: bin/pe.pl:136 bin/pe.pl:301 tools/dbstrings:61
+#: bin/pe.pl:136 bin/pe.pl:301
 msgid "Groups"
 msgstr ""
 
-#: bin/pe.pl:151 bin/pe.pl:518 tools/dbstrings:62
+#: bin/pe.pl:151 bin/pe.pl:518
 msgid "Pricegroups"
 msgstr ""
 
@@ -2136,7 +2179,7 @@ msgstr ""
 msgid "Pricegroup deleted!"
 msgstr ""
 
-#: bin/pe.pl:356 tools/dbstrings:52
+#: bin/pe.pl:356
 msgid "Add Group"
 msgstr ""
 
@@ -2144,7 +2187,7 @@ msgstr ""
 msgid "Parent"
 msgstr ""
 
-#: bin/pe.pl:573 tools/dbstrings:53
+#: bin/pe.pl:573
 msgid "Add Pricegroup"
 msgstr ""
 
@@ -2217,19 +2260,19 @@ msgstr ""
 msgid "Transaction"
 msgstr ""
 
-#: bin/aa.pl:643
+#: bin/aa.pl:643 addons/1.3/extended_arap/trunk/UI/aa.html:99
 msgid "Batch Control Code"
 msgstr ""
 
-#: bin/aa.pl:648
+#: bin/aa.pl:648 addons/1.3/extended_arap/trunk/UI/aa.html:104
 msgid "Batch Name"
 msgstr ""
 
-#: bin/aa.pl:662
+#: bin/aa.pl:662 addons/1.3/extended_arap/trunk/UI/aa.html:112
 msgid "Entity Control Code"
 msgstr ""
 
-#: bin/aa.pl:726
+#: bin/aa.pl:726 addons/1.3/extended_arap/trunk/UI/aa.html:291
 msgid "Tax Form Applied"
 msgstr ""
 
@@ -2241,7 +2284,7 @@ msgstr ""
 msgid "Template Saved!"
 msgstr ""
 
-#: bin/aa.pl:1329 LedgerSMB/Scripts/payment.pm:324
+#: bin/aa.pl:1329 LedgerSMB/Scripts/payment.pm:328
 msgid "Data not saved.  Please try again."
 msgstr ""
 
@@ -2302,7 +2345,7 @@ msgstr ""
 msgid "Date Paid"
 msgstr ""
 
-#: bin/aa.pl:1668 LedgerSMB/Scripts/payment.pm:761
+#: bin/aa.pl:1668 LedgerSMB/Scripts/payment.pm:765
 #: LedgerSMB/Report/Invoices/Transactions.pm:248
 #: LedgerSMB/Report/Invoices/Outstanding.pm:221
 #: LedgerSMB/Report/Contact/Purchase.pm:87
@@ -2310,8 +2353,8 @@ msgstr ""
 msgid "Paid"
 msgstr ""
 
-#: bin/aa.pl:1672 LedgerSMB/Scripts/payment.pm:765
-#: LedgerSMB/Scripts/payment.pm:771
+#: bin/aa.pl:1672 LedgerSMB/Scripts/payment.pm:769
+#: LedgerSMB/Scripts/payment.pm:775
 #: LedgerSMB/Report/Invoices/Outstanding.pm:225
 msgid "Amount Due"
 msgstr ""
@@ -2523,7 +2566,7 @@ msgstr ""
 msgid "Transfer to"
 msgstr ""
 
-#: bin/oe.pl:2221 bin/oe.pl:2337 tools/dbstrings:41 tools/dbstrings:145
+#: bin/oe.pl:2221 bin/oe.pl:2337
 msgid "Transfer"
 msgstr ""
 
@@ -2640,6 +2683,7 @@ msgid "Open Till"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/pos.pl:622
+#: addons/1.3/extended_arap/trunk/UI/aa.html:603
 msgid "Print and Post"
 msgstr ""
 
@@ -2647,7 +2691,7 @@ msgstr ""
 msgid "Posted!"
 msgstr ""
 
-#: addons/1.4/pos/trunk/bin/pos.pl:1125 tools/dbstrings:23 tools/dbstrings:149
+#: addons/1.4/pos/trunk/bin/pos.pl:1125
 msgid "Receipts"
 msgstr ""
 
@@ -2661,7 +2705,7 @@ msgstr ""
 
 #: addons/1.4/pos/trunk/pos.conf.pl:41
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:63
-#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:391 tools/dbstrings:130
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:391
 msgid "Check"
 msgstr ""
 
@@ -2736,7 +2780,7 @@ msgstr ""
 
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:59
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:388
-#: LedgerSMB/Scripts/payment.pm:991 tools/dbstrings:19 tools/dbstrings:131
+#: LedgerSMB/Scripts/payment.pm:995
 msgid "Receipt"
 msgstr ""
 
@@ -2744,6 +2788,8 @@ msgstr ""
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:375
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:375
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:375
+#: UI/business_units/edit.html:44
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:20
 #: LedgerSMB/Scripts/business_unit.pm:140
 #: LedgerSMB/Report/Trial_Balance/List.pm:54
 #: LedgerSMB/Report/co/Caja_Diaria.pm:121
@@ -2772,6 +2818,8 @@ msgstr ""
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:376
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:376
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:376
+#: UI/business_units/edit.html:52
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:24
 #: LedgerSMB/Scripts/business_unit.pm:141
 #: LedgerSMB/Report/Trial_Balance/List.pm:57
 #: LedgerSMB/Report/co/Caja_Diaria.pm:123
@@ -2868,6 +2916,216 @@ msgstr ""
 #: LedgerSMB/Report/Budget/Search.pm:95
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:95
 msgid "Obsolete By"
+msgstr ""
+
+#: t/data/04-complex_template.html:16 UI/Contact/contact.html:33
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:33
+msgid "Add Customer"
+msgstr ""
+
+#: t/data/04-complex_template.html:17 UI/Contact/contact.html:34
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:34
+msgid "Edit Customer"
+msgstr ""
+
+#: t/data/04-complex_template.html:18 UI/Contact/contact.html:35
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:35
+msgid "Add Vendor"
+msgstr ""
+
+#: t/data/04-complex_template.html:19 UI/Contact/contact.html:36
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:36
+msgid "Edit Vendor"
+msgstr ""
+
+#: t/data/04-complex_template.html:20 UI/Contact/contact.html:37
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:37
+msgid "Add Employee"
+msgstr ""
+
+#: t/data/04-complex_template.html:21 UI/Contact/contact.html:38
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:38
+msgid "Edit Employee"
+msgstr ""
+
+#: t/data/04-complex_template.html:43 UI/Contact/divs/employee.html:2
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/employee.html:2
+msgid "$operation Employee"
+msgstr ""
+
+#: t/data/04-complex_template.html:144 UI/Contact/divs/person.html:6
+#: UI/Contact/divs/company.html:6
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/person.html:6
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/company.html:6
+#: addons/1.3/colombia_general/trunk/UI/Contact/divs/colombia_company.html:6
+msgid "$operation $entity_classname"
+msgstr ""
+
+#: t/data/04-complex_template.html:167
+msgid "$entity_classname Number:"
+msgstr ""
+
+#: templates/demo_with_images/balance_sheet.html:128
+#: templates/xedemo/balance_sheet.html:128
+#: templates/demo/balance_sheet.html:128
+#: templates/with_images/balance_sheet.html:128
+msgid "Shareholder's Equity"
+msgstr ""
+
+#: UI/payments/use_overpayment2.html:278
+msgid "UPDATE"
+msgstr ""
+
+#: UI/payments/use_overpayment2.html:284
+msgid "POST"
+msgstr ""
+
+#: UI/payments/use_overpayment2.html:290 UI/payments/payment2.html:336
+msgid "POST AND PRINT"
+msgstr ""
+
+#: UI/payments/payments_filter.html:18
+msgid "Filtering $t"
+msgstr ""
+
+#: UI/payments/payments_detail.html:362
+msgid "Locked by [_1]"
+msgstr ""
+
+#: UI/file/attachment_screen.html:39
+msgid "File"
+msgstr ""
+
+#: UI/create_batch.html:15
+msgid "Batch Number"
+msgstr ""
+
+#: UI/create_batch.html:30
+msgid "Batch Date"
+msgstr ""
+
+#: UI/taxform/add_taxform.html:47 UI/business_units/edit.html:61
+#: UI/business_units/filter.html:26 UI/asset/edit_asset.html:61
+#: UI/asset/search_asset.html:55
+msgid "Description:"
+msgstr ""
+
+#: UI/taxform/add_taxform.html:62
+msgid "Select by Default:"
+msgstr ""
+
+#: UI/taxform/add_taxform.html:77
+msgid "Accrual Basis:"
+msgstr ""
+
+#: UI/menu/expanding.html:45
+msgid "Logged into [_1]"
+msgstr ""
+
+#: UI/business_units/filter.html:35
+msgid "Active On"
+msgstr ""
+
+#: UI/business_units/filter.html:45 UI/asset/search_class.html:65
+#: UI/asset/search_asset.html:185
+msgid "Search"
+msgstr ""
+
+#: UI/asset/edit_asset.html:56 UI/asset/search_asset.html:50
+msgid "Asset Class:"
+msgstr ""
+
+#: UI/asset/edit_asset.html:71 UI/asset/search_asset.html:65
+msgid "Purchase Date:"
+msgstr ""
+
+#: UI/asset/edit_asset.html:81 UI/asset/search_asset.html:75
+msgid "Purchase Value:"
+msgstr ""
+
+#: UI/asset/edit_asset.html:93 UI/asset/search_asset.html:87
+#: LedgerSMB/Scripts/asset.pm:317
+msgid "Usable Life"
+msgstr ""
+
+#: UI/asset/edit_asset.html:105 UI/asset/search_asset.html:96
+msgid "Salvage Value:"
+msgstr ""
+
+#: UI/asset/edit_asset.html:117 UI/asset/search_asset.html:108
+msgid "Depreciation Starts"
+msgstr ""
+
+#: UI/asset/import_asset.html:43
+msgid "Depreciate Through"
+msgstr ""
+
+#: UI/import_csv/import_csv.html:42
+#: addons/1.3/import_trans/trunk/UI/import_trans/import_trans.html:42
+#: LedgerSMB/Report/PNL/Invoice.pm:89
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:89
+msgid "Transaction Date"
+msgstr ""
+
+#: UI/login.html:30
+msgid "LedgerSMB [_1]"
+msgstr ""
+
+#: UI/Contact/divs/credit.html:61
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:61
+msgid "$entity_classname Number"
+msgstr ""
+
+#: UI/Contact/divs/notes.html:40
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/notes.html:40
+msgid "Note Class"
+msgstr ""
+
+#: UI/Contact/divs/notes.html:64
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/notes.html:64
+msgid "Author: [_1]"
+msgstr ""
+
+#: addons/1.3/company_person/trunk/UI/Contact/divs/person.html:2
+msgid "$operation Person"
+msgstr ""
+
+#: addons/1.3/extended_arap/trunk/UI/aa.html:165
+msgid "Tax Included?"
+msgstr ""
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:27
+msgid "Actions"
+msgstr ""
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:20
+msgid "Start Balance"
+msgstr ""
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:24
+#: LedgerSMB/Scripts/payment.pm:152 LedgerSMB/Report/Trial_Balance.pm:145
+#: LedgerSMB/Report/COA.pm:102 LedgerSMB/Report/GL.pm:108
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:145
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:102
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:108
+msgid "Debits"
+msgstr ""
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:27
+#: LedgerSMB/Scripts/payment.pm:153 LedgerSMB/Report/Trial_Balance.pm:149
+#: LedgerSMB/Report/COA.pm:107 LedgerSMB/Report/GL.pm:113
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:149
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:107
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:113
+msgid "Credits"
+msgstr ""
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:30
+msgid "End Balance"
+msgstr ""
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:109
+msgid "Save as"
 msgstr ""
 
 #: LedgerSMB.pm:494
@@ -3031,100 +3289,84 @@ msgstr ""
 msgid "Account Title"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:152 LedgerSMB/Report/Trial_Balance.pm:145
-#: LedgerSMB/Report/COA.pm:102 LedgerSMB/Report/GL.pm:108
-#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:145
-#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:102
-#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:108
-msgid "Debits"
-msgstr ""
-
-#: LedgerSMB/Scripts/payment.pm:153 LedgerSMB/Report/Trial_Balance.pm:149
-#: LedgerSMB/Report/COA.pm:107 LedgerSMB/Report/GL.pm:113
-#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:149
-#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:107
-#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:113
-msgid "Credits"
-msgstr ""
-
 #: LedgerSMB/Scripts/payment.pm:221
 msgid "Save Batch"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:762
+#: LedgerSMB/Scripts/payment.pm:766
 msgid "Discount"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:763
+#: LedgerSMB/Scripts/payment.pm:767
 msgid "Apply Disc"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:813
+#: LedgerSMB/Scripts/payment.pm:817
 msgid "To pay"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:991 tools/dbstrings:20
+#: LedgerSMB/Scripts/payment.pm:995
 msgid "Payment"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1071
+#: LedgerSMB/Scripts/payment.pm:1075
 msgid "Exchange rate hasn't been defined"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1085
+#: LedgerSMB/Scripts/payment.pm:1089
 msgid "This gl movement, is a consecuence of a payment transaction"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1145
+#: LedgerSMB/Scripts/payment.pm:1149
 msgid "Applied discount"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1182
+#: LedgerSMB/Scripts/payment.pm:1186
 msgid "No overpayment account selected.  Was one set up?"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1460 LedgerSMB/Scripts/payment.pm:1466
+#: LedgerSMB/Scripts/payment.pm:1464 LedgerSMB/Scripts/payment.pm:1470
 msgid "The amount of the invoice number"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1460
+#: LedgerSMB/Scripts/payment.pm:1464
 msgid "is lesser than the amount to be paid"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1466
+#: LedgerSMB/Scripts/payment.pm:1470
 msgid "is lesser than 0"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1587
+#: LedgerSMB/Scripts/payment.pm:1591
 msgid "Use overpayment/prepayment"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1680
+#: LedgerSMB/Scripts/payment.pm:1684
 msgid "The amount to be pay of the invoice number"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1680
+#: LedgerSMB/Scripts/payment.pm:1684
 msgid "is null"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1697 LedgerSMB/Scripts/payment.pm:1774
+#: LedgerSMB/Scripts/payment.pm:1701 LedgerSMB/Scripts/payment.pm:1778
 msgid "Applied discount by an overpayment"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1712
+#: LedgerSMB/Scripts/payment.pm:1716
 msgid "The amount to be pay from the accno"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1712
+#: LedgerSMB/Scripts/payment.pm:1716
 msgid "is bigger than the amount available"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1720 LedgerSMB/Scripts/payment.pm:1737
-#: LedgerSMB/Scripts/payment.pm:1791 LedgerSMB/Scripts/payment.pm:1808
+#: LedgerSMB/Scripts/payment.pm:1724 LedgerSMB/Scripts/payment.pm:1741
+#: LedgerSMB/Scripts/payment.pm:1795 LedgerSMB/Scripts/payment.pm:1812
 msgid "use of an overpayment"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:1764
+#: LedgerSMB/Scripts/payment.pm:1768
 msgid "This gl movement, is the result of a overpayment transaction"
 msgstr ""
 
@@ -3188,10 +3430,6 @@ msgstr ""
 msgid "Class"
 msgstr ""
 
-#: LedgerSMB/Scripts/asset.pm:317
-msgid "Usable Life"
-msgstr ""
-
 #: LedgerSMB/Scripts/asset.pm:318
 msgid "Location"
 msgstr ""
@@ -3244,11 +3482,11 @@ msgstr ""
 msgid "Approved at"
 msgstr ""
 
-#: LedgerSMB/Scripts/asset.pm:676 tools/dbstrings:184
+#: LedgerSMB/Scripts/asset.pm:676
 msgid "Depreciation"
 msgstr ""
 
-#: LedgerSMB/Scripts/asset.pm:678 tools/dbstrings:182 tools/dbstrings:185
+#: LedgerSMB/Scripts/asset.pm:678
 msgid "Disposal"
 msgstr ""
 
@@ -3513,7 +3751,7 @@ msgstr ""
 msgid "Generate Purchase Orders from Sales Orders"
 msgstr ""
 
-#: LedgerSMB/Scripts/order.pm:70 tools/dbstrings:40
+#: LedgerSMB/Scripts/order.pm:70
 msgid "Receive"
 msgstr ""
 
@@ -3525,11 +3763,11 @@ msgstr ""
 msgid "Search Requests for Quotation"
 msgstr ""
 
-#: LedgerSMB/Scripts/order.pm:98 tools/dbstrings:153
+#: LedgerSMB/Scripts/order.pm:98
 msgid "Combine"
 msgstr ""
 
-#: LedgerSMB/Scripts/order.pm:106 tools/dbstrings:36 tools/dbstrings:70
+#: LedgerSMB/Scripts/order.pm:106
 msgid "Generate"
 msgstr ""
 
@@ -3731,7 +3969,6 @@ msgstr ""
 
 #: LedgerSMB/Report/Trial_Balance.pm:115
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:115
-#: tools/dbstrings:151
 msgid "Trial Balance"
 msgstr ""
 
@@ -4008,7 +4245,6 @@ msgid "Margin Report for Customer"
 msgstr ""
 
 #: LedgerSMB/Report/Orders.pm:195 LedgerSMB/Report/Orders.pm:296
-#: tools/dbstrings:46 tools/dbstrings:88
 msgid "RFQs"
 msgstr ""
 
@@ -4069,7 +4305,6 @@ msgstr ""
 
 #: LedgerSMB/Report/COA.pm:141
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:141
-#: tools/dbstrings:8
 msgid "Chart of Accounts"
 msgstr ""
 
@@ -4180,7 +4415,6 @@ msgstr ""
 
 #: LedgerSMB/Report/PNL/Income_Statement.pm:51
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:51
-#: tools/dbstrings:100 tools/dbstrings:152
 msgid "Income Statement"
 msgstr ""
 
@@ -4197,11 +4431,6 @@ msgstr ""
 #: LedgerSMB/Report/PNL/Invoice.pm:77
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:77
 msgid "Invoice Profit/Loss"
-msgstr ""
-
-#: LedgerSMB/Report/PNL/Invoice.pm:89
-#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:89
-msgid "Transaction Date"
 msgstr ""
 
 #: LedgerSMB/Report/PNL/Product.pm:69
@@ -4306,19 +4535,16 @@ msgstr ""
 
 #: LedgerSMB/Entity/Location.pm:113
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:114
-#: tools/dbstrings:274
 msgid "Billing"
 msgstr ""
 
 #: LedgerSMB/Entity/Location.pm:114
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:115
-#: tools/dbstrings:275
 msgid "Sales"
 msgstr ""
 
 #: LedgerSMB/Entity/Location.pm:115
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:116
-#: tools/dbstrings:207 tools/dbstrings:276
 msgid "Shipping"
 msgstr ""
 
@@ -4411,448 +4637,4 @@ msgstr ""
 
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:331
 msgid "Created"
-msgstr ""
-
-#: tools/dbstrings:3
-msgid "Batches"
-msgstr ""
-
-#: tools/dbstrings:4 tools/dbstrings:15 tools/dbstrings:18 tools/dbstrings:28
-#: tools/dbstrings:73 tools/dbstrings:203
-msgid "Search"
-msgstr ""
-
-#: tools/dbstrings:5
-msgid "Add Contact"
-msgstr ""
-
-#: tools/dbstrings:6
-msgid "Customer History"
-msgstr ""
-
-#: tools/dbstrings:7
-msgid "Vendor History"
-msgstr ""
-
-#: tools/dbstrings:9
-msgid "Add Accounts"
-msgstr ""
-
-#: tools/dbstrings:10
-msgid "Top-level"
-msgstr ""
-
-#: tools/dbstrings:11 tools/dbstrings:14
-msgid "Invoice Vouchers"
-msgstr ""
-
-#: tools/dbstrings:12 tools/dbstrings:16
-msgid "Add Transaction"
-msgstr ""
-
-#: tools/dbstrings:13
-msgid "AR Aging"
-msgstr ""
-
-#: tools/dbstrings:17
-msgid "AP Aging"
-msgstr ""
-
-#: tools/dbstrings:21
-msgid "Use Overpayment"
-msgstr ""
-
-#: tools/dbstrings:22
-msgid "Use AR Overpayment"
-msgstr ""
-
-#: tools/dbstrings:25 tools/dbstrings:147 tools/dbstrings:157
-msgid "Reconciliation"
-msgstr ""
-
-#: tools/dbstrings:26
-msgid "Employees"
-msgstr ""
-
-#: tools/dbstrings:27
-msgid "Add Employee"
-msgstr ""
-
-#: tools/dbstrings:31 tools/dbstrings:44 tools/dbstrings:55 tools/dbstrings:72
-#: tools/dbstrings:140 tools/dbstrings:142 tools/dbstrings:146
-#: tools/dbstrings:172 tools/dbstrings:183 tools/dbstrings:195
-#: tools/dbstrings:212
-msgid "Reports"
-msgstr ""
-
-#: tools/dbstrings:47
-msgid "Journal Entry"
-msgstr ""
-
-#: tools/dbstrings:51
-msgid "Add Overhead"
-msgstr ""
-
-#: tools/dbstrings:56
-msgid "All Items"
-msgstr ""
-
-#: tools/dbstrings:57
-msgid "Parts"
-msgstr ""
-
-#: tools/dbstrings:58
-msgid "Requirements"
-msgstr ""
-
-#: tools/dbstrings:59
-msgid "Services"
-msgstr ""
-
-#: tools/dbstrings:60
-msgid "Labor"
-msgstr ""
-
-#: tools/dbstrings:64
-msgid "Components"
-msgstr ""
-
-#: tools/dbstrings:65 tools/dbstrings:75
-msgid "Translations"
-msgstr ""
-
-#: tools/dbstrings:67
-msgid "Partsgroup"
-msgstr ""
-
-#: tools/dbstrings:69
-msgid "Add Timecard"
-msgstr ""
-
-#: tools/dbstrings:74 tools/dbstrings:89
-msgid "Time Cards"
-msgstr ""
-
-#: tools/dbstrings:77 tools/dbstrings:101
-msgid "Balance Sheet"
-msgstr ""
-
-#: tools/dbstrings:78
-msgid "Inventory Activity"
-msgstr ""
-
-#: tools/dbstrings:81
-msgid "Checks"
-msgstr ""
-
-#: tools/dbstrings:82
-msgid "Work Orders"
-msgstr ""
-
-#: tools/dbstrings:84
-msgid "Packing Lists"
-msgstr ""
-
-#: tools/dbstrings:85
-msgid "Pick Lists"
-msgstr ""
-
-#: tools/dbstrings:87
-msgid "Bin Lists"
-msgstr ""
-
-#: tools/dbstrings:91
-msgid "Defaults"
-msgstr ""
-
-#: tools/dbstrings:93
-msgid "List Warehouse"
-msgstr ""
-
-#: tools/dbstrings:95
-msgid "List Businesses"
-msgstr ""
-
-#: tools/dbstrings:97
-msgid "List Languages"
-msgstr ""
-
-#: tools/dbstrings:99
-msgid "List SIC"
-msgstr ""
-
-#: tools/dbstrings:103 tools/dbstrings:117
-msgid "AR Transaction"
-msgstr ""
-
-#: tools/dbstrings:104 tools/dbstrings:118
-msgid "AP Transaction"
-msgstr ""
-
-#: tools/dbstrings:111 tools/dbstrings:125
-msgid "Statement"
-msgstr ""
-
-#: tools/dbstrings:114 tools/dbstrings:134
-msgid "Timecard"
-msgstr ""
-
-#: tools/dbstrings:115 tools/dbstrings:135
-msgid "Letterhead"
-msgstr ""
-
-#: tools/dbstrings:126
-msgid "Transaction Approval"
-msgstr ""
-
-#: tools/dbstrings:136
-msgid "POS Invoice"
-msgstr ""
-
-#: tools/dbstrings:137
-msgid "Contacts"
-msgstr ""
-
-#: tools/dbstrings:138
-msgid "Import Chart"
-msgstr ""
-
-#: tools/dbstrings:141 tools/dbstrings:143 tools/dbstrings:144
-msgid "Vouchers"
-msgstr ""
-
-#: tools/dbstrings:148
-msgid "Year End"
-msgstr ""
-
-#: tools/dbstrings:150
-msgid "Reverse Receipts"
-msgstr ""
-
-#: tools/dbstrings:155
-msgid "Reverse Payment"
-msgstr ""
-
-#: tools/dbstrings:156
-msgid "Drafts"
-msgstr ""
-
-#: tools/dbstrings:158
-msgid "Add Tax Form"
-msgstr ""
-
-#: tools/dbstrings:159
-msgid "Admin Users"
-msgstr ""
-
-#: tools/dbstrings:160
-msgid "Text Templates"
-msgstr ""
-
-#: tools/dbstrings:161
-msgid "LaTeX Templates"
-msgstr ""
-
-#: tools/dbstrings:162
-msgid "HTML Templates"
-msgstr ""
-
-#: tools/dbstrings:163
-msgid "SIC"
-msgstr ""
-
-#: tools/dbstrings:166
-msgid "Reporting Units"
-msgstr ""
-
-#: tools/dbstrings:168
-msgid "Add User"
-msgstr ""
-
-#: tools/dbstrings:169
-msgid "Search Users"
-msgstr ""
-
-#: tools/dbstrings:170
-msgid "Sessions"
-msgstr ""
-
-#: tools/dbstrings:171
-msgid "List Tax Forms"
-msgstr ""
-
-#: tools/dbstrings:173
-msgid "Asset Classes"
-msgstr ""
-
-#: tools/dbstrings:174
-msgid "Assets"
-msgstr ""
-
-#: tools/dbstrings:175
-msgid "Add Class"
-msgstr ""
-
-#: tools/dbstrings:176
-msgid "List Classes"
-msgstr ""
-
-#: tools/dbstrings:177
-msgid "Add Assets"
-msgstr ""
-
-#: tools/dbstrings:178
-msgid "Search Assets"
-msgstr ""
-
-#: tools/dbstrings:179 tools/dbstrings:194 tools/dbstrings:199
-msgid "Import"
-msgstr ""
-
-#: tools/dbstrings:180
-msgid "Depreciate"
-msgstr ""
-
-#: tools/dbstrings:181
-msgid "Net Book Value"
-msgstr ""
-
-#: tools/dbstrings:186 tools/dbstrings:190
-msgid "Import Batch"
-msgstr ""
-
-#: tools/dbstrings:188
-msgid "Debit Note"
-msgstr ""
-
-#: tools/dbstrings:189
-msgid "Debit Invoice"
-msgstr ""
-
-#: tools/dbstrings:192
-msgid "Credit Note"
-msgstr ""
-
-#: tools/dbstrings:193
-msgid "Credit Invoice"
-msgstr ""
-
-#: tools/dbstrings:196
-msgid "Add GIFI"
-msgstr ""
-
-#: tools/dbstrings:197
-msgid "List GIFI"
-msgstr ""
-
-#: tools/dbstrings:198
-msgid "Import GIFI"
-msgstr ""
-
-#: tools/dbstrings:200
-msgid "AR Voucher"
-msgstr ""
-
-#: tools/dbstrings:201
-msgid "AP Voucher"
-msgstr ""
-
-#: tools/dbstrings:202
-msgid "Add Budget"
-msgstr ""
-
-#: tools/dbstrings:204
-msgid "Budgets"
-msgstr ""
-
-#: tools/dbstrings:205
-msgid "HR"
-msgstr ""
-
-#: tools/dbstrings:206
-msgid "Order Entry"
-msgstr ""
-
-#: tools/dbstrings:209
-msgid "General Journal"
-msgstr ""
-
-#: tools/dbstrings:210
-msgid "Goods and Services"
-msgstr ""
-
-#: tools/dbstrings:211
-msgid "Projects"
-msgstr ""
-
-#: tools/dbstrings:214
-msgid "Tax Forms"
-msgstr ""
-
-#: tools/dbstrings:215
-msgid "Fixed Assets"
-msgstr ""
-
-#: tools/dbstrings:216
-msgid "Logout"
-msgstr ""
-
-#: tools/dbstrings:217
-msgid "New Window"
-msgstr ""
-
-#: tools/dbstrings:218
-msgid "Preferences"
-msgstr ""
-
-#: tools/dbstrings:219
-msgid "Stylesheet"
-msgstr ""
-
-#: tools/dbstrings:220
-msgid "System"
-msgstr ""
-
-#: tools/dbstrings:221
-msgid "Batch Printing"
-msgstr ""
-
-#: tools/dbstrings:222 tools/dbstrings:223
-msgid "Outstanding"
-msgstr ""
-
-#: tools/dbstrings:240
-msgid "ap"
-msgstr ""
-
-#: tools/dbstrings:241
-msgid "ar"
-msgstr ""
-
-#: tools/dbstrings:242
-msgid "payment"
-msgstr ""
-
-#: tools/dbstrings:243
-msgid "payment_reversal"
-msgstr ""
-
-#: tools/dbstrings:244
-msgid "gl"
-msgstr ""
-
-#: tools/dbstrings:245
-msgid "receipt"
-msgstr ""
-
-#: tools/dbstrings:246
-msgid "receipt_reversal"
-msgstr ""
-
-#: tools/dbstrings:247
-msgid "sales_invoice"
-msgstr ""
-
-#: tools/dbstrings:248
-msgid "vendor_invoice"
 msgstr ""

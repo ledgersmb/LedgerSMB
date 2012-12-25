@@ -614,7 +614,7 @@ sub delete_contact {
     get($request);
 }
 
-=item delete_bank_acct
+=item delete_bank_account
 
 Deletes the selected bank account record
 
