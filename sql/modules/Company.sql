@@ -281,6 +281,7 @@ BEGIN
 				OR (ec.enddate IS NULL))
 	 		AND (ec.meta_number = in_meta_number
 			     OR in_meta_number IS NULL)
+               ORDER BY legal_name
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;
