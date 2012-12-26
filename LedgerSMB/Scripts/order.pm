@@ -110,7 +110,7 @@ sub search {
            value => 'generate',
         }]);
     }
-    $report->render(%request);
+    $report->render($request);
 }
 
 =item combine
