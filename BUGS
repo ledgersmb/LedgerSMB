@@ -1,7 +1,7 @@
 CURRENT KNOWN BUGS:
 
-1) Customer/vendor name not properly passed to invoice search routines
+Current bug list for LedgerSMB 1.3
+http://sourceforge.net/tracker/?group_id=175965&atid=875350&status=1&artgroup=2085417
 
-2) Some of the template transactions tables do not have adequate permissions and
-so the System permission test fails
-
+Current bug list for LedgerSMB 1.4
+http://sourceforge.net/tracker/?group_id=175965&atid=875350&status=1&artgroup=2748140
