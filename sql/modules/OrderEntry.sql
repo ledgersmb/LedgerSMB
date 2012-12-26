@@ -70,8 +70,8 @@ FOR retval IN
              AND (in_ponumber IS NULL OR o.ponumber ILIKE in_ponumber || '%')
             AND (in_ordnumber IS NULL 
                      OR o.ordnumber ILIKE in_ordnumber || '%')
-             AND (in_open is true or o.closed is not true)
-             AND (in_closed is true or o.closed is not false)
+             AND (in_open is true or o.closed is false)
+             AND (in_closed is true or o.closed is true)
              AND (in_shipvia IS NULL 
                       OR o.shipvia @@ plainto_tsquery(in_shipvia))
              AND (in_description IS NULL AND in_shippable IS NULL OR
