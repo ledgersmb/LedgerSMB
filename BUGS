@@ -3,3 +3,10 @@ CURRENT KNOWN BUGS:
 1)  Payment reversals don't properly handle fx gain/loss
 2)  Bulk payment interface doesn't properly handle foreign currencies
 
+
+Current bug list for LedgerSMB 1.3
+http://sourceforge.net/tracker/?group_id=175965&atid=875350&status=1&artgroup=2085417
+
+Current bug list for LedgerSMB 1.4
+http://sourceforge.net/tracker/?group_id=175965&atid=875350&status=1&artgroup=2748140
+
