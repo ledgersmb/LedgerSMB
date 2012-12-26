@@ -1637,7 +1637,7 @@ qq|<input name="l_employee" class=checkbox type=checkbox value=Y> $employeelabel
     }
 
     $name = $locale->text('Customer');
-    my $msgid_vc_number="Customer Number";
+    my $vc_number=$locale->text("Customer Number");
     $l_name =
 qq|<input name="l_name" class=checkbox type=checkbox value=Y checked> $name|;
     $l_till =
@@ -1646,7 +1646,7 @@ qq|<input name="l_name" class=checkbox type=checkbox value=Y checked> $name|;
 
     if ( $form->{vc} eq 'vendor' ) {
         $name   = $locale->text('Vendor');
-        $msgid_vc_number="Vendor Number";
+        $vc_number=$locale->text("Vendor Number");
         $l_till = "";
         $l_name =
 qq|<input name="l_name" class=checkbox type=checkbox value=Y checked> $name|;
@@ -1726,7 +1726,7 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox value=Y checked> |
 	  <th align=right>$name</th>
 	  <td colspan=3>$selectname</td>
 	</tr>
-	<tr><th align="right">|.$locale->text("$msgid_vc_number").qq|</th>
+	<tr><th align="right">|.$vc_number.qq|</th>
 	    <td colspan="3"><input name="meta_number" size="36">
         </tr>
 	$employee
