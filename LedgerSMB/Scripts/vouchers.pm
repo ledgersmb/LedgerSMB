@@ -18,6 +18,7 @@ use LedgerSMB::Batch;
 use LedgerSMB::Template;
 use LedgerSMB::Report::Unapproved::Batch_Overview;
 use LedgerSMB::Scripts::payment;
+use LedgerSMB::Scripts::reports;
 use strict;
 
 
@@ -180,26 +181,6 @@ sub add_vouchers {
     $vouchers_dispatch->{$request->{batch_type}}{function}($request);
 }
 
-=item search_batch
-
-Displays the search criteria screen.  No inputs required.
-
-=cut
-
-sub search_batch {
-    my ($request) = @_;
-    my $batch_request = LedgerSMB::Batch->new(base => $request);
-    $batch_request->get_search_criteria($custom_batch_types);
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/batch',
-        template => 'filter',
-        format   => 'HTML', 
-    );
-    $template->render($batch_request);
-}
-
 =item list_batches
 
 This function displays the search results.
@@ -217,6 +198,7 @@ class_id and created_by are exact matches
 
 sub list_batches {
     my ($request) = @_;
+    $request->open_form;
     my $report = LedgerSMB::Report::Unapproved::Batch_Overview->new(
                  %$request);
     $report->run_report;
@@ -305,14 +287,15 @@ sub batch_approve {
     my $batch = LedgerSMB::Batch->new(base => $request);
     if (!$batch->close_form){
         list_batches($request);
-        $request->finalize_request();
     }
-    for my $count (1 .. $batch->{rowcount}){
-        next unless $batch->{"batch_" . $batch->{"row_$count"}};
+    for my $count (1 .. $batch->{rowcount_}){
+        next unless $batch->{"select_" . $count};
         $batch->{batch_id} = $batch->{"row_$count"};
         $batch->post;
     }
-    search_batch($request);
+    $request->{report_name} = 'unapproved'; 
+    $request->{search_type} = 'batches';
+    LedgerSMB::Scripts::reports::start_report($request);
 }
 
 =item batch_delete

@@ -50,6 +50,7 @@ use Scalar::Util;
 use base qw(LedgerSMB);
 use Log::Log4perl;
 use LedgerSMB::App_State;
+use Carp::Always;
 use strict;
 use warnings;
 
@@ -111,6 +112,7 @@ sub exec_method {
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     my $funcname = $args{funcname};
     my $dbh = $LedgerSMB::App_State::DBH;
+    die 'No Database Handle' unless $dbh;
     
     my $schema   = $args{schema} || $LedgerSMB::Sysconfig::db_namespace;
     
