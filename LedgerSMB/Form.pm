@@ -482,6 +482,7 @@ sub error {
         }
         die "Error: $msg\n";
     }
+    die;
 }
 
 =item $form->finalize_request();

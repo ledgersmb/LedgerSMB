@@ -89,10 +89,16 @@ sub get_criteria {
 sub search {
     my $request = shift @_;
     if ($request->{search_type} ne 'search'){
-       $request->{selectable} = 1;
        $request->{open} =1;
-       $request->{col_select} = 1;
        delete $request->{closed};
+    }
+    if (($request->{search_type} eq 'combine') or
+        ($request->{search_type} eq 'generate')
+    ){
+       $request->{selectable} = 1;
+       $request->{col_select} = 1;
+    } elsif ($request->{search_type} eq 'ship'){
+       $request->{href_action}='ship_receive';
     }
     my $report = LedgerSMB::Report::Orders->new(%$request);
     if ($request->{search_type} eq 'combine'){

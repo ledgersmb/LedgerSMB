@@ -39,7 +39,7 @@
 #######################################################################
 
 package lsmb_legacy;
-use Error qw(:try);
+use Try::Tiny;
 use LedgerSMB::Tax;
 use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
@@ -1932,9 +1932,8 @@ sub print_form {
     try {
         $template->render($form);
     }
-    catch Error::Simple with {
-        my $E = shift;
-        $form->error( $E->stacktrace );
+    catch {
+        $form->error( $_ );
     };
 
     # if we got back here restore the previous form

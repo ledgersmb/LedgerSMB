@@ -80,13 +80,6 @@ ALTER SEQUENCE menu_attribute_id_seq OWNED BY menu_attribute.id;
 
 
 --
--- Name: menu_attribute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('menu_attribute_id_seq', 681, true);
-
-
---
 -- Name: menu_node; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
 --
 
@@ -126,13 +119,6 @@ ALTER TABLE public.menu_node_id_seq OWNER TO postgres;
 --
 
 ALTER SEQUENCE menu_node_id_seq OWNED BY menu_node.id;
-
-
---
--- Name: menu_node_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
---
-
-SELECT pg_catalog.setval('menu_node_id_seq', 253, true);
 
 
 --
@@ -204,18 +190,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 52	type	purchase_order	125
 53	menu	1	126
 56	menu	1	133
-57	module	oe.pl	134
-57	action	search	136
-58	module	oe.pl	137
-58	action	search	139
-57	type	generate_sales_order	135
-58	type	generate_purchase_order	138
 60	menu	1	550
 63	menu	1	146
-64	module	oe.pl	147
-64	action	search	148
-65	module	oe.pl	150
-65	action	search	151
 66	module	oe.pl	153
 66	action	search_transfer	154
 67	menu	1	155
@@ -227,7 +203,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 69	type	request_quotation	161
 70	menu	1	162
 7	module	reports.pl	15
-64	type	ship_order	149
 7	action	start_report	16
 7	report_name	aging	17
 27	module	reports.pl	63
@@ -291,12 +266,23 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 55	search_type	search	132
 71	search_type	search	165
 72	search_type	search	167
+57	action	get_criteria	136
+58	action	get_criteria	139
 61	action	get_criteria	141
 62	action	get_criteria	144
 62	search_type	combine	145
 61	search_type	combine	142
 61	module	order.pl	140
 62	module	order.pl	143
+57	module	order.pl	134
+58	module	order.pl	137
+57	search_type	generate	135
+58	search_type	generate	138
+64	action	get_criteria	148
+65	action	get_criteria	151
+64	search_type	ship	149
+64	module	order.pl	147
+65	module	order.pl	150
 84	action	stock_assembly	203
 85	menu	1	204
 86	module	ic.pl	205
@@ -727,7 +713,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 5	entity_class	2	12
 25	entity_class	1	13
 210	module	reports.pl	586
-65	type	receive_order	34
 49	module_name	gl	115
 49	entity_class	3	43
 206	module_name	gl	14
@@ -741,6 +726,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 111	module_name	gl	40
 210	search_type	drafts	46
 112	module_name	gl	79
+65	search_type	ship	34
 9	module	invoice.pl	21
 9	action	start_report	22
 9	entity_class	2	24
@@ -755,7 +741,18 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 72	oe_class_id	4	70
 61	oe_class_id	1	38
 62	oe_class_id	2	41
+57	oe_class_id	2	42
+58	oe_class_id	1	47
+64	oe_class_id	1	48
+65	oe_class_id	2	49
 \.
+
+
+--
+-- Name: menu_attribute_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('menu_attribute_id_seq', 681, true);
 
 
 --
@@ -797,7 +794,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 57	Sales Orders	56	1
 58	Purchase Orders	56	2
 56	Generate	50	4
-60	Consolidate	50	5
 61	Sales Orders	60	1
 62	Purchase Orders	60	2
 64	Ship	63	1
@@ -914,6 +910,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 204	Reverse Receipts	200	4
 111	Trial Balance	109	1
 112	Income Statement	109	2
+60	Combine	50	5
 201	Payments	200	1
 202	Reverse Payment	200	2
 210	Drafts	205	2
@@ -985,6 +982,13 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 9	Outstanding	4	1
 10	Outstanding	24	1
 \.
+
+
+--
+-- Name: menu_node_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('menu_node_id_seq', 253, true);
 
 
 --

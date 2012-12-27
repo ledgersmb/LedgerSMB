@@ -629,10 +629,10 @@ sub retrieve {
 				o.notes, o.intnotes, o.curr AS currency, 
 				pe.first_name \|\| ' ' \|\| pe.last_name AS employee,
 				o.person_id AS employee_id,
-				o.entity_credit_account AS $form->{vc}_id, c.legal_name AS $form->{vc}, 
+				o.entity_credit_account, c.legal_name, 
 				o.amount AS invtotal, o.closed, o.reqdate, 
 				o.quonumber, o.language_code,
-				o.ponumber
+				o.ponumber, cr.entity_class
 			FROM oe o
 			JOIN entity_credit_account cr ON (cr.id = o.entity_credit_account)
 			JOIN company c ON (cr.entity_id = c.entity_id)
@@ -645,6 +645,13 @@ sub retrieve {
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         $ref = $sth->fetchrow_hashref('NAME_lc');
+        if ($ref->{entity_class} == 2){
+           $form->{vc} = 'customer';
+        } elsif ($ref->{entity_class} == 1){
+           $form->{vc} = 'vendor';
+        }
+        $form->{$form->{vc}} = $ref->{legal_name};
+        $form->{"$form->{vc}_id"} = $ref->{entity_credit_account};
         $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
