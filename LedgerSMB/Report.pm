@@ -226,7 +226,6 @@ sub render {
             push @newrows, $r;
         }
    } 
-    
     # Rendering
 
     if (!defined $self->format){

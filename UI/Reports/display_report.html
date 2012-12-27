@@ -49,13 +49,13 @@ END;
 <?lsmb PROCESS dynatable tbody = {rows = rows } 
                attributes = {class = 'report', order_url = order_url } ?>
 
-<?lsmb IF FORMATS.grep('PDF').size()
-?>
-<?lsmb 
+<?lsmb
 FOREACH BUTTON IN buttons;
   PROCESS button element_data = BUTTON;
-END; ?><br />
+END; ?><br /> 
 <a href="<?lsmb LINK ?>">[<?lsmb text('permalink') ?>]</a>&nbsp;
+<?lsmb IF FORMATS.grep('PDF').size()
+?> 
 <a href="<?lsmb LINK _ '&format=PDF' ?>">[<?lsmb text('PDF') ?>]</a>&nbsp;
 <?lsmb END;
 IF FORMATS.grep('TXT').size();
