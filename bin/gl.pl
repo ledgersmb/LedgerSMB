@@ -50,6 +50,7 @@ use LedgerSMB::GL;
 use LedgerSMB::PE;
 use LedgerSMB::Template;
 
+require 'bin/bridge.pl'; # needed for voucher dispatches
 require "bin/arap.pl";
 
 $form->{login} = 'test';

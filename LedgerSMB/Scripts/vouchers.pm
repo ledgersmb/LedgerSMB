@@ -176,6 +176,8 @@ sub add_vouchers {
         # However, the code we are including is going to require it for now. 
         # -- CT
         { no strict; no warnings 'redefine'; do $script; }
+        lsmb_legacy::locale($locale);
+        lsmb_legacy::form($form);
     }
 
     $vouchers_dispatch->{$request->{batch_type}}{function}($request);

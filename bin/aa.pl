@@ -47,6 +47,7 @@
 package lsmb_legacy;
 use LedgerSMB::Tax;
 
+require 'bin/bridge.pl'; # needed for voucher dispatches
 # any custom scripts for this one
 if ( -f "bin/custom/aa.pl" ) {
     eval { require "bin/custom/aa.pl"; };
