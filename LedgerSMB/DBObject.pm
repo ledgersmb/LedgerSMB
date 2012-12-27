@@ -50,7 +50,6 @@ use Scalar::Util;
 use base qw(LedgerSMB);
 use Log::Log4perl;
 use LedgerSMB::App_State;
-use Carp::Always;
 use strict;
 use warnings;
 
