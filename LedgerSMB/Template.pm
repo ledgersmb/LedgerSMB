@@ -288,10 +288,9 @@ sub render {
         $vars->{USER} = $LedgerSMB::App_State::User;
         $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
         $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
-
         my @stdformats = ();
         for (qw(HTML PDF PS)){
-           if (scalar(grep {/^$_$/} @{$vars->{FORMATS}})){
+           if (scalar(grep {/^$_$/} $self->available_formats)){
                push @stdformats, $_;
            }
         }
