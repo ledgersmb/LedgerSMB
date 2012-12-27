@@ -311,12 +311,14 @@ sub batch_delete {
         list_batches($request);
         $request->finalize_request();
     }
-    for my $count (1 .. $batch->{rowcount}){
-        next unless $batch->{"batch_" . $batch->{"row_$count"}};
+    for my $count (1 .. $batch->{rowcount_}){
+        next unless $batch->{"select_" . $count};
         $batch->{batch_id} = $batch->{"row_$count"};
         $batch->delete;
     }
-    search_batch($request);
+    $request->{report_name} = 'unapproved'; 
+    $request->{search_type} = 'batches';
+    LedgerSMB::Scripts::reports::start_report($request);
 }
 
 eval { do "scripts/custom/vouchers.pl"};
