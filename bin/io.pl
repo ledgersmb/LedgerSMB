@@ -1221,6 +1221,7 @@ sub e_mail {
     if ( $form->{formname} =~ /(pick|packing|bin)_list/ ) {
         $form->{email} = $form->{shiptoemail} if $form->{shiptoemail};
     }
+    $form->{oldlanguage_code} = $form->{language_code};
 
     $form->{oldmedia} = $form->{media};
     $form->{media}    = "email";
