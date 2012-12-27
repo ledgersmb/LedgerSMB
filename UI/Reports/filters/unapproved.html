@@ -14,7 +14,10 @@ IF search_type == 'drafts';
        { text = text('GL'), value = 'gl'},
    ];
    script = 'drafts.pl';
+   action = 'list_drafts';
 ELSE;
+   script = 'vouchers.pl';
+   action = 'list_batches';
    FOR CLS IN batch_classes;
        CLS.text = CLS.class;
        CLS.value = CLS.class;
@@ -77,7 +80,7 @@ Commenting this section out.  Does not seem to be used by API. -CT
 	<?lsmb INCLUDE button element_data = {
 		text = text('Search')
 		name = "action"
-		value = "list_drafts"
+		value = action
 		class = "submit"
 		type = "submit"
 	} ?> </div>
