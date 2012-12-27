@@ -2040,11 +2040,11 @@ sub get_soparts {
 		WHERE oi.trans_id = ?|;
     my $sth = $dbh->prepare($query) || $form->dberror($query);
 
-    for ( my $i = 1 ; $i <= $form->{rowcount} ; $i++ ) {
+    for ( 1 .. $form->{rowcount_} ) {
 
-        if ( $form->{"ndx_$i"} ) {
+        if ( $form->{"select_$i"} ) {
 
-            $sth->execute( $form->{"ndx_$i"} );
+            $sth->execute( $form->{"select_$i"} );
 
             while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
                 $form->db_parse_numeric(sth=>$sth, hashref=>$ref);

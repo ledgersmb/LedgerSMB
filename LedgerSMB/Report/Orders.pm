@@ -200,6 +200,10 @@ sub columns {
     my $HREF_ACTION = 'edit';
     $HREF_ACTION = $self->href_action if $self->href_action;
     my $cols = [
+        {col_id => 'select',
+           name => '',
+           type => 'checkbox' },
+
        {col_id => 'id',
           name => LedgerSMB::Report::text('ID'),
           type => 'text', },
@@ -261,14 +265,6 @@ sub columns {
           name => LedgerSMB::Report::text('Manager'),
           type => 'text', },
     ];
-    if ($self->selectable){
-        unshift @$cols, 
-       {col_id => 'id',
-          type => 'hidden', },
-       {col_id => 'selected',
-          type => 'checkbox',
-          name => LedgerSMB::Report::text('Selected')};
-    }
     return $cols;
 }
 

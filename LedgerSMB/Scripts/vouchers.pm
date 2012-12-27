@@ -111,11 +111,11 @@ sub add_vouchers {
     my $batch = LedgerSMB::Batch->new({base => $request});
     our $vouchers_dispatch = 
     {
-        ap         => {script => 'bin/ap.pl', function => sub {add()}},
-        ar         => {script => 'bin/ar.pl', function => sub {add()}},
-        gl         => {script => 'bin/gl.pl', function => sub {add()}},
-     sales_invoice => {script => 'bin/is.pl', function => sub {add()}},
-    vendor_invoice => {script => 'bin/ir.pl', function => sub {add()}},
+        ap         => {script => 'bin/ap.pl', function => sub {lsmb_legacy::add()}},
+        ar         => {script => 'bin/ar.pl', function => sub {lsmb_legacy::add()}},
+        gl         => {script => 'bin/gl.pl', function => sub {lsmb_legacy::add()}},
+     sales_invoice => {script => 'bin/is.pl', function => sub {lsmb_legacy::add()}},
+    vendor_invoice => {script => 'bin/ir.pl', function => sub {lsmb_legacy::add()}},
         receipt    => {script => undef, 
 	             function => sub {
 				my ($request) = @_;

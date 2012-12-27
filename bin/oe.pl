@@ -2364,9 +2364,10 @@ sub transfer {
 }
 
 sub generate_purchase_orders {
+    ($form, $locale) = @_;
 
-    for ( 1 .. $form->{rowcount} ) {
-        if ( $form->{"ndx_$_"} ) {
+    for ( 1 .. $form->{rowcount_} ) {
+        if ( $form->{"select_$_"} ) {
             $ok = 1;
             last;
         }

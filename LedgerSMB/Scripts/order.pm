@@ -17,6 +17,7 @@ package LedgerSMB::Scripts::order;
 use LedgerSMB::App_State;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Orders;
+use LedgerSMB::Form; # for dispatching to old code
 
 =head1 ROUTINES
 
@@ -52,7 +53,7 @@ sub get_criteria {
             $request->{title} = $locale->text('Search Sales Orders');
         } elsif ($request->{search_type} eq 'generate'){
             $request->{title} = 
-                   $locale->text('Generate Sales Orders from Purchase Orders');
+                   $locale->text('Generate Purchase Orders from Sales Orders');
         } elsif ($request->{search_type} eq 'combine'){
             $request->{title} = $locale->text('Combine Sales Orders');
         } elsif ($request->{search_type} eq 'ship'){
@@ -65,7 +66,7 @@ sub get_criteria {
             $request->{title} = $locale->text('Combine Purchase Orders');
         } elsif ($request->{search_type} eq 'generate'){
             $request->{title} = 
-                   $locale->text('Generate Purchase Orders from Sales Orders');
+                   $locale->text('Generate Sales Orders from Purchase Orders');
         } elsif ($request->{search_type} eq 'ship'){
             $request->{title} = $locale->text('Receive');
         }
@@ -90,6 +91,7 @@ sub search {
     if ($request->{search_type} ne 'search'){
        $request->{selectable} = 1;
        $request->{open} =1;
+       $request->{col_select} = 1;
        delete $request->{closed};
     }
     my $report = LedgerSMB::Report::Orders->new(%$request);
@@ -132,6 +134,22 @@ sub combine {
 }
 
 =item generate
+
+This is just a dispatch handle currently to bin/oe's generate_purchase_orders
+callback.
+
+=cut
+
+sub generate {
+    my ($request) = @_;
+    my $form = new Form;
+    for my $k (keys %$request){
+        $form->{$k} = $request->{$k};
+    }
+    { no strict; no warnings 'redefine'; do 'bin/oe.pl'; }
+    $locale = $LedgerSMB::App_State::Locale;
+    lsmb_legacy::generate_purchase_orders($form, $locale);
+}
 
 =back
 
