@@ -285,30 +285,12 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 65	module	order.pl	150
 84	action	stock_assembly	203
 85	menu	1	204
-86	module	ic.pl	205
-86	action	search	610
-86	searchitems	all	611
-87	module	ic.pl	612
-87	action	search	206
-87	searchitems	part	210
 88	module	ic.pl	211
 88	action	requirements	212
-89	action	search	213
-89	module	ic.pl	214
-89	searchitems	service	215
-90	action	search	216
-90	module	ic.pl	217
-90	searchitems	labor	218
 91	module	pe.pl	221
 91	action	search	220
 92	module	pe.pl	224
 92	action	search	223
-93	action	search	226
-93	module	ic.pl	227
-93	searchitems	assembly	228
-94	action	search	229
-94	module	ic.pl	230
-94	searchitems	component	231
 95	menu	1	232
 96	module	pe.pl	233
 96	action	translation	234
@@ -437,6 +419,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 155	module	am.pl	384
 154	action	add_sic	385
 155	action	list_sic	386
+86	action	search_screen	610
 156	menu	1	387
 157	module	am.pl	388
 158	module	am.pl	389
@@ -745,6 +728,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 58	oe_class_id	1	47
 64	oe_class_id	1	48
 65	oe_class_id	2	49
+86	module	goods.pl	205
 \.
 
 
@@ -805,24 +789,9 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 71	Quotations	70	1
 72	RFQs	70	2
 74	Journal Entry	73	1
-78	Add Part	77	1
-79	Add Service	77	2
-80	Add Assembly	77	3
-81	Add Overhead	77	4
-82	Add Group	77	5
-83	Add Pricegroup	77	6
-84	Stock Assembly	77	7
-85	Reports	77	8
-86	All Items	85	1
-87	Parts	85	2
 88	Requirements	85	3
-89	Services	85	4
-90	Labor	85	5
 91	Groups	85	6
 92	Pricegroups	85	7
-93	Assembly	85	8
-94	Components	85	9
-95	Translations	77	9
 96	Description	95	1
 97	Partsgroup	95	2
 99	Add Project	98	1
@@ -911,6 +880,10 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 111	Trial Balance	109	1
 112	Income Statement	109	2
 60	Combine	50	5
+78	Add Part	77	2
+79	Add Service	77	3
+80	Add Assembly	77	4
+86	Search	77	1
 201	Payments	200	1
 202	Reverse Payment	200	2
 210	Drafts	205	2
@@ -981,6 +954,12 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 116	Batch Printing	0	20
 9	Outstanding	4	1
 10	Outstanding	24	1
+81	Add Overhead	77	5
+82	Add Group	77	6
+83	Add Pricegroup	77	7
+84	Stock Assembly	77	8
+95	Translations	77	10
+85	Reports	77	9
 \.
 
 

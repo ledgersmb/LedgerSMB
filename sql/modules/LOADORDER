@@ -37,3 +37,4 @@ Inventory_Report.sql
 Payroll.sql
 Transaction_Templates.sql
 OrderEntry.sql
+Goods.sql

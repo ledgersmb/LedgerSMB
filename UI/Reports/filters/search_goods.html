@@ -1,0 +1,384 @@
+<?lsmb INCLUDE "ui-header.html";
+       PROCESS "report_base.html";
+       PROCESS "elements.html" ?>
+<body>
+<div class="listtop"><?lsmb text('Search Goods and Services') ?></div>
+<form action="goods.pl" method="GET">
+<table>
+<tr>
+ <th><?lsmb text('Part Number') ?></th>
+ <td><?lsmb PROCESS input element_data = {
+         name = 'partnumber'
+        class = 'control_code'
+         type = 'text'
+        value = partnumber
+         size = 16
+ } ?></td>
+</tr>
+<tr>
+ <th><?lsmb text('Description') ?></th>
+ <td colspan="3"><?lsmb PROCESS input element_data = {
+         name = 'description'
+        class = 'description'
+         type = 'text'
+        value = description
+         size = 32
+ } ?></td>
+</tr>
+<tr>
+ <th><?lsmb text('Part Group') ?></th>
+  <td><?lsmb PROCESS select element_data = {
+          name = 'partsgroup_id'
+         class = 'partsgroup'
+default_values = [partsgroup_id]
+     text_attr = 'partsgroup'
+    value_attr = 'id'
+ } ?></td>
+ <th><?lsmb text('Serial Number') ?></th>
+ <td><?lsmb PROCESS input element_data = {
+         name = 'serialnumber'
+        class = 'control_code'
+         type = 'text'
+        value = serialnumber
+         size = 16
+ } ?></td>
+</tr>
+<tr>
+ <th><?lsmb text('Make') ?></th>
+ <td><?lsmb PROCESS input element_data = {
+         name = 'make'
+        class = 'control_code'
+         type = 'text'
+        value = make
+         size = 16
+ } ?></td>
+ <th><?lsmb text('Model') ?></th>
+ <td><?lsmb PROCESS input element_data = {
+         name = 'model'
+        class = 'control_code'
+         type = 'text'
+        value = model
+         size = 16
+ } ?></td>
+</tr>
+<tr>
+ <th><?lsmb text('Drawing') ?></th>
+ <td><?lsmb PROCESS input element_data = {
+         name = 'drawing'
+        class = 'control_code'
+         type = 'text'
+        value = make
+         size = 16
+ } ?></td>
+ <th><?lsmb text('Microfiche') ?></th>
+ <td><?lsmb PROCESS input element_data = {
+         name = 'microfiche'
+        class = 'control_code'
+         type = 'text'
+        value = model
+         size = 16
+ } ?></td>
+</tr>
+<tr><th>&nbsp;</th>
+  <td colspan="3"><?lsmb
+    old_label_pos = label_pos;
+    label_pos = -1;
+    PROCESS input element_data = {
+        name = "status"
+        type = 'radio'
+     checked = 'CHECKED'
+       value = 'active'
+       label = text('Active')
+    };
+    PROCESS input element_data = {
+        name = "status"
+        type = 'radio'
+       value = 'onhand'
+       label = text('On Hand') #'
+    };
+    PROCESS input element_data = {
+        name = "status"
+        type = 'radio'
+       value = 'short'
+       label = text('Short')
+    };
+    PROCESS input element_data = {
+        name = "status"
+        type = 'radio'
+       value = 'obsolete'
+       label = text('Obsolete')
+    };
+    PROCESS input element_data = {
+        name = "status"
+        type = 'radio'
+       value = 'unused'
+       label = text('Unused')
+    };
+    label_pos = old_label_pos;
+  ?></td>
+</tr>
+<tr><th>&nbsp;</th><td colspan="3"><hr /></td></tr>
+<tr>
+  <th>&nbsp;</th>
+  <th class="centered" colspan="3"><?lsmb text('Items Found In') ?></td>
+</tr>
+<?lsmb PROCESS date_row ?>
+<tr><th rowspan="2">&nbsp;</th>
+  <td><?lsmb label_pos = 1;
+     PROCESS input element_data = {
+        type = "checkbox"
+        name = "sales_invoices"
+       value = 1
+       label = text('AR Invoices') #'
+     } ?></td>
+  <td><?lsmb 
+     PROCESS input element_data = {
+        type = "checkbox"
+        name = "sales_orders"
+       value = 1
+       label = text('Sales Orders') #'
+     } ?></td>
+  <td><?lsmb
+     PROCESS input element_data = {
+        type = "checkbox"
+        name = "quotations"
+       value = 1
+       label = text('Quotations') 
+     } ?></td>
+</tr>
+<tr>
+  <td><?lsmb
+     PROCESS input element_data = {
+        type = "checkbox"
+        name = "purchase_invoices"
+       value = 1
+       label = text('AP Invoices') #'
+     } ?></td>
+  <td><?lsmb 
+     PROCESS input element_data = {
+        type = "checkbox"
+        name = "purchase_orders"
+       value = 1
+       label = text('Purchase Orders') #'
+     } ?></td>
+  <td><?lsmb
+     PROCESS input element_data = {
+        type = "checkbox"
+        name = "rfqs"
+       value = 1
+       label = text('RFQs') 
+     } ?></td>
+</tr>
+<tr><th>&nbsp;</th><td colspan="3"><hr /></td></tr>
+<tr>
+  <th rowspan="2">&nbsp;</th>
+  <th class="centered" colspan="3"><?lsmb text('Include in Report') ?></td>
+</tr>
+<tr><td colspan="4">
+  <table>
+    <tr><td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_running_number'
+           type = 'checkbox'
+          value = '1'
+          label = text('No.')
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_partnumber'
+           type = 'checkbox'
+          value = '1'
+        checked = 'CHECKED'
+          label = text('Part Number') #'
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_description'
+           type = 'checkbox'
+          value = '1'
+        checked = 'CHECKED'
+          label = text('Description') 
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_qty'
+           type = 'checkbox'
+          value = '1'
+        checked = 'CHECKED'
+          label = text('Qty') 
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_unit'
+           type = 'checkbox'
+          value = '1'
+        checked = 'CHECKED'
+          label = text('Unit') 
+       } ?></td>
+    </tr>
+    <tr><td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_priceupdate'
+           type = 'checkbox'
+          value = '1'
+          label = text('Price Updated') #'
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_partgroup'
+           type = 'checkbox'
+          value = '1'
+          label = text('Part Group') #'
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_listprice'
+           type = 'checkbox'
+          value = '1'
+          label = text('List Price') #'
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_sellprice'
+           type = 'checkbox'
+          value = '1'
+        checked = 'CHECKED'
+          label = text('Sell Price') #'
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_lastcost'
+           type = 'checkbox'
+          value = '1'
+        checked = 'CHECKED'
+          label = text('Last Cost') #'
+       } ?></td>
+    </tr>
+    <tr><td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_avgcost'
+           type = 'checkbox'
+          value = '1'
+          label = text('Average Cost') #'
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_linetotal'
+           type = 'checkbox'
+          value = '1'
+          label = text('Line Total') #'
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_markup'
+           type = 'checkbox'
+          value = '1'
+          label = text('Markup') 
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_bin'
+           type = 'checkbox'
+          value = '1'
+          label = text('Bin') 
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_rop'
+           type = 'checkbox'
+          value = '1'
+          label = text('ROP') 
+       } ?></td>
+    </tr>
+    <tr><td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_weight'
+           type = 'checkbox'
+          value = '1'
+          label = text('Weight')
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_notes'
+           type = 'checkbox'
+          value = '1'
+          label = text('Notes')
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_image'
+           type = 'checkbox'
+          value = '1'
+          label = text('Image') 
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_drawing'
+           type = 'checkbox'
+          value = '1'
+          label = text('Drawing') 
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_microfiche'
+           type = 'checkbox'
+          value = '1'
+          label = text('Microfiche') 
+       } ?></td>
+    </tr>
+    <tr><td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_make'
+           type = 'checkbox'
+          value = '1'
+          label = text('Make')
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_model'
+           type = 'checkbox'
+          value = '1'
+          label = text('Model')
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_warehouse'
+           type = 'checkbox'
+          value = '1'
+          label = text('Warehouse') 
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_curr'
+           type = 'checkbox'
+          value = '1'
+          label = text('Currency') 
+       } ?></td>
+       <td>
+       <?lsmb PROCESS input element_data = {
+           name = 'col_serialnumber'
+           type = 'checkbox'
+          value = '1'
+          label = text('Serial Number') #'
+       } ?></td>
+    </tr>
+    <tr><td>
+       <?lsmb PROCESS input element_data = {
+           name = 'subtotal'
+           type = 'checkbox'
+          value = '1'
+          label = text('subtotal')
+       } ?></td>
+    </tr>
+  </table>
+</table>
+<?lsmb PROCESS button element_data = {
+   name = 'action'
+  class = 'submit'
+   type = 'submit'
+  value = 'search'
+   text = text('Search')
+} ?>
+</form>
+</body>
+</html>
