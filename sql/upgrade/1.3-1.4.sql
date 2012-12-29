@@ -6,6 +6,7 @@ ALTER TABLE entity_credit_account ENABLE TRIGGER ALL;
 DELETE FROM person;
 DELETE FROM company;
 DELETE FROM entity;
+DELETE FROM lsmb13.session; -- Cleares out locks
 
 INSERT INTO language SELECT * FROM lsmb13.language where code not in (select code from language);
 
