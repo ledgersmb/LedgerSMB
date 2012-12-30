@@ -96,8 +96,10 @@ Changelog for 1.3.27
 * Fixed bad targets of AP Aging and Tax Paid reports (Chris T, 3594694)
 * By default, customer/vendor search orders by name (Chris T, 3596195)
 * Fixed erroneous error in pod coverage test (Chris T)
-* Updated LedgerSMB.pot, added script to rebuilt (Chris T)
+* Updated LedgerSMB.pot, added script to rebuilt and merge to po's (Chris T)
+  -- includes item 3598644 filed by Havard S
 * Fixed xgettext error in aa.pl (Chris T)
+* Fixed Default language ignored when emailing rfq (Chris T, 3588998)
 
 Chris T is Chris Travers
 Havard S is Havard Sorli
