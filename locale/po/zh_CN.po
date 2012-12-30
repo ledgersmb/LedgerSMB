@@ -1,4 +1,4 @@
-######################################################################
+# #####################################################################
 # LedgerSMB Small Medium Business Accounting
 # Copyright (c) 2004
 #
@@ -20,2670 +20,6112 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 #
-#######################################################################
-
+# ######################################################################
 msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-12-29 19:35-0800\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-msgid "A"
+#: lsmb-request.pl:77
+msgid "No workflow script specified"
 msgstr ""
 
-msgid "AP"
-msgstr "应付帐款"
-
-msgid "AP Aging"
-msgstr "应付帐龄分析"
-
-msgid "AP Outstanding"
-msgstr "应付未付"
-
-msgid "AP Transaction"
-msgstr "应付交易"
-
-msgid "AP Transactions"
-msgstr "应付交易"
-
-msgid "AR"
-msgstr "应收帐款"
-
-msgid "AR Aging"
-msgstr "应收帐龄分析"
-
-msgid "AR Outstanding"
-msgstr "应收未收"
-
-msgid "AR Transaction"
-msgstr "应收交易"
-
-msgid "AR Transactions"
-msgstr "应收交易"
-
-msgid "AR/AP"
+#: lsmb-request.pl:104
+msgid "Unable to open script"
 msgstr ""
 
-msgid "About"
-msgstr "关于"
-
-msgid "Above"
-msgstr "上文"
-
-msgid "Access Control"
-msgstr "权限控制"
-
-msgid "Access Denied!"
-msgstr "非存取!"
-
-msgid "Account"
-msgstr "帐户"
-
-msgid "Account Number"
-msgstr "帐户编号"
-
-msgid "Account Number missing!"
-msgstr "未指明帐户编号!"
-
-msgid "Account Type"
-msgstr "帐户类别"
-
-msgid "Account Type missing!"
-msgstr "未指明帐户类别!"
-
-msgid "Account deleted!"
-msgstr "巳删除帐户"
-
-msgid "Account does not exist!"
-msgstr "不存在帐户"
-
-msgid "Account saved!"
-msgstr "巳储存帐户"
-
-msgid "Accounting"
-msgstr "会计"
-
-msgid "Accounting Menu"
-msgstr "会计选单"
-
-msgid "Accounts"
-msgstr "帐户"
-
-msgid "Accrual"
-msgstr "累积"
-
-msgid "Activate Audit trail"
-msgstr "活跃的审计线索"
-
-msgid "Activate Audit trails"
-msgstr "活跃的审计线索"
-
-msgid "Active"
-msgstr "活跃"
-
-msgid "Add"
-msgstr "新增"
-
-msgid "Add AP Transaction"
-msgstr "新增应付记录"
-
-msgid "Add AR Transaction"
-msgstr "新增应收记录"
-
-msgid "Add Account"
-msgstr "新增帐户"
-
-msgid "Add Assembly"
-msgstr "新增商品"
-
-msgid "Add Business"
-msgstr "新增业务"
-
-msgid "Add Cash Transfer Transaction"
-msgstr "新增现金转移帐目"
-
-msgid "Add Customer"
-msgstr "新增客户"
-
-msgid "Add Deduction"
-msgstr "新增扣除"
-
-msgid "Add Department"
-msgstr "新增部门"
-
-msgid "Add Employee"
-msgstr "新增职员"
-
-msgid "Add Exchange Rate"
-msgstr "新增外汇率"
-
-msgid "Add GIFI"
-msgstr "新增 GIFI"
-
-msgid "Add General Ledger Transaction"
-msgstr "新增总帐"
-
-msgid "Add Group"
-msgstr "新增组"
-
-msgid "Add Job"
+#: lsmb-request.pl:108
+msgid "Action Not Defined: "
 msgstr ""
 
-msgid "Add Labor/Overhead"
-msgstr "新增劳工/经常费用"
-
-msgid "Add Language"
-msgstr "新增语言"
-
-msgid "Add POS Invoice"
-msgstr "新增POS发票"
-
-msgid "Add Part"
-msgstr "新增原料"
-
-msgid "Add Pricegroup"
-msgstr "新增价格组"
-
-msgid "Add Project"
-msgstr "新增方案"
-
-msgid "Add Purchase Order"
-msgstr "新增采购单"
-
-msgid "Add Quotation"
-msgstr "新增报价单"
-
-msgid "Add Request for Quotation"
-msgstr "新增报价单要求"
-
-msgid "Add SIC"
-msgstr "新增原文"
-
-msgid "Add Sales Invoice"
-msgstr "新增销售发票"
-
-msgid "Add Sales Order"
-msgstr "新增销货单"
-
-msgid "Add Service"
-msgstr "新增服务"
-
-msgid "Add Timecard"
-msgstr ""
-
-msgid "Add Transaction"
-msgstr "新增交易"
-
-msgid "Add User"
-msgstr "新增使用者"
-
-msgid "Add Vendor"
-msgstr "新增供应商"
-
-msgid "Add Vendor Invoice"
-msgstr "新增供应商发票"
-
-msgid "Add Warehouse"
-msgstr "新增仓库"
-
-msgid "Address"
-msgstr "地址"
-
-msgid "Administration"
-msgstr "系统管理"
-
-msgid "Administrator"
-msgstr "管理人"
-
-msgid "After Deduction"
-msgstr "扣除以后"
-
-msgid "All"
-msgstr "全部"
-
-msgid "All Accounts"
-msgstr "全部帐户"
-
-msgid "All Datasets up to date!"
-msgstr "所有资料皆已更新!"
-
-msgid "All Items"
-msgstr "全部项目"
-
-msgid "Allowances"
-msgstr "津贴"
-
-msgid "Amount"
-msgstr "总计"
-
-msgid "Amount Due"
-msgstr "应得的总计"
-
-msgid "Amount missing!"
-msgstr "漏填的总计"
-
-msgid "Apr"
-msgstr "四月"
-
-msgid "April"
-msgstr "四月"
-
-msgid "Are you sure you want to delete Invoice Number"
-msgstr "您确定要删除发票编号"
-
-msgid "Are you sure you want to delete Order Number"
-msgstr "您是否确定要删除订单编号"
-
-msgid "Are you sure you want to delete Quotation Number"
-msgstr "您是否确定要删除报价单编号"
-
-msgid "Are you sure you want to delete Timecard for"
-msgstr ""
-
-msgid "Are you sure you want to delete Transaction"
-msgstr "您是否确定要删除交易"
-
-msgid "Are you sure you want to remove the marked entries from the queue?"
-msgstr "您是否确定要消除有记号的条目"
-
-msgid "Assemblies"
-msgstr "商品"
-
-msgid "Assemblies restocked!"
-msgstr "巳重新进货的商品"
-
-msgid "Assembly"
-msgstr "商品"
-
-msgid "Assembly stocked!"
-msgstr ""
-
-msgid "Asset"
-msgstr "资产"
-
-msgid "Attachment"
-msgstr "附档"
-
-msgid "Audit Control"
-msgstr "稽核控制"
-
-msgid "Audit trail disabled"
-msgstr "有效的审计线索"
-
-msgid "Audit trail enabled"
-msgstr "无效的审计线索"
-
-msgid "Audit trail removed up to"
-msgstr "移除到此为止的审计线索"
-
-msgid "Audit trails disabled"
-msgstr "有效的审计线索"
-
-msgid "Audit trails enabled"
-msgstr "无效的审计线索"
-
-msgid "Aug"
-msgstr "八月"
-
-msgid "August"
-msgstr "八月"
-
-msgid "Average Cost"
-msgstr "平均成本"
-
-msgid "Avg Cost"
-msgstr "平均成本"
-
-msgid "BIC"
-msgstr ""
-
-msgid "BOM"
-msgstr "材料清单"
-
-msgid "Backup"
-msgstr "备份"
-
-msgid "Backup sent to"
-msgstr "备份寄送到"
-
-msgid "Balance"
-msgstr "余额"
-
-msgid "Balance Sheet"
-msgstr "资产负债表"
-
-msgid "Based on"
-msgstr "基于"
-
-msgid "Bcc"
-msgstr "不显示抄送"
-
-msgid "Before Deduction"
-msgstr "扣除之前"
-
-msgid "Beginning Balance"
-msgstr "起始余额"
-
-msgid "Below"
-msgstr "以下"
-
-msgid "Billing Address"
-msgstr "帐单地址"
-
-msgid "Bin"
-msgstr "箱"
-
-msgid "Bin List"
-msgstr "箱的明细表"
-
-msgid "Bin Lists"
-msgstr "箱清单"
-
-msgid "Books are open"
-msgstr "帐簿已开启"
-
-msgid "Break"
-msgstr "休息"
-
-msgid "Business"
-msgstr "业务"
-
-msgid "Business Number"
-msgstr "业务编号"
-
-msgid "Business deleted!"
-msgstr "巳删除业务"
-
-msgid "Business saved!"
-msgstr "巳储存业务"
-
-msgid "C"
-msgstr ""
-
-msgid "COGS"
-msgstr "货销成本"
-
-msgid "COGS account does not exist!"
-msgstr ""
-
-msgid "Cannot add timecard for a completed job!"
-msgstr ""
-
-msgid "Cannot change timecard for a completed job!"
-msgstr ""
-
-msgid "Cannot create Assembly"
-msgstr "无法造成组件"
-
-msgid "Cannot create Labor"
-msgstr "无法造成劳工"
-
-msgid "Cannot create Lock!"
-msgstr "不能建立锁"
-
-msgid "Cannot create Part"
-msgstr "无法造成零件"
-
-msgid "Cannot create Service"
-msgstr "无法造成服务"
-
-msgid "Cannot delete Timecard!"
-msgstr ""
-
-msgid "Cannot delete account!"
-msgstr "不能删除帐户"
-
-msgid "Cannot delete customer!"
-msgstr "不能删除客户"
-
-msgid "Cannot delete default account!"
-msgstr "不能删除预设帐户"
-
-msgid "Cannot delete invoice!"
-msgstr "不能删除发票"
-
-msgid "Cannot delete item!"
-msgstr "不能删除项目"
-
-msgid "Cannot delete order!"
-msgstr "不能删除定单"
-
-msgid "Cannot delete quotation!"
-msgstr "不能删除报价单"
-
-msgid "Cannot delete transaction!"
-msgstr "不能删除交易"
-
-msgid "Cannot delete vendor!"
-msgstr "不能删除供应商"
-
-msgid "Cannot post Payment!"
-msgstr "不能加入款项"
-
-msgid "Cannot post Receipt!"
-msgstr "不能加入收据"
-
-msgid "Cannot post invoice for a closed period!"
-msgstr "不能在已关闭的时段内加入发票"
-
-msgid "Cannot post invoice!"
-msgstr "不能加入发票"
-
-msgid "Cannot post payment for a closed period!"
-msgstr "不能在已关闭的时段内加入款项"
-
-msgid "Cannot post transaction for a closed period!"
-msgstr "不能在已关闭的时段内加入交易!"
-
-msgid "Cannot post transaction with a debit and credit entry for the same account!"
-msgstr ""
-
-msgid "Cannot post transaction!"
-msgstr "不能加入交易"
-
-msgid "Cannot remove files!"
-msgstr "不能移除档案"
-
-msgid "Cannot save account!"
-msgstr "不能储存帐户"
-
-msgid "Cannot save defaults!"
-msgstr "不能储存预设"
-
-msgid "Cannot save order!"
-msgstr "不能储存定单"
-
-msgid "Cannot save preferences!"
-msgstr "不能储存优先选择 "
-
-msgid "Cannot save quotation!"
-msgstr "不能储存报价单"
-
-msgid "Cannot save timecard for a closed period!"
-msgstr ""
-
-msgid "Cannot save timecard!"
-msgstr ""
-
-msgid "Cannot set account for more than one of AR, AP or IC"
-msgstr "不能设置多于一个应收帐款, 应付帐款或IC"
-
-msgid "Cannot set multiple options for"
-msgstr ""
-
-msgid "Cannot set multiple options for Item"
-msgstr ""
-
-msgid "Cannot stock Assembly!"
-msgstr ""
-
-msgid "Cannot stock assemblies!"
-msgstr "不能常备的商品"
-
-msgid "Cash"
-msgstr "现金"
-
-msgid "Cc"
-msgstr "抄送"
-
-msgid "Change"
-msgstr "更改"
-
-msgid "Change Admin Password"
-msgstr "更改管理员密码"
-
-msgid "Change Password"
-msgstr "更改密码"
-
-msgid "Charge"
-msgstr ""
-
-msgid "Chart of Accounts"
-msgstr "会计科目表"
-
-msgid "Check"
-msgstr "检查"
-
-msgid "Check Inventory"
-msgstr "检查存货清单"
-
-msgid "Checks"
-msgstr "检查"
-
-msgid "City"
-msgstr "城市"
-
-msgid "Cleared"
-msgstr "已清除"
-
-msgid "Click on login name to edit!"
-msgstr "请按登入名称以进行修改!"
-
-msgid "Clocked"
-msgstr ""
-
-msgid "Close Books up to"
-msgstr "关闭到此为止的帐簿"
-
-msgid "Closed"
-msgstr "已关闭"
-
-msgid "Code"
-msgstr "编码"
-
-msgid "Code missing!"
-msgstr "未指明编码"
-
-msgid "Company"
-msgstr "公司"
-
-msgid "Company Name"
-msgstr "公司名称"
-
-msgid "Compare to"
-msgstr "对照"
-
-msgid "Completed"
-msgstr ""
-
-msgid "Components"
-msgstr "零件"
-
-msgid "Confirm"
-msgstr "确认密码"
-
-msgid "Confirm!"
-msgstr "入帐成功!"
-
-msgid "Connect to"
-msgstr "连结到"
-
-msgid "Contact"
-msgstr "连络人"
-
-msgid "Continue"
-msgstr "继续"
-
-msgid "Contra"
-msgstr "相反"
-
-msgid "Copies"
-msgstr "副本"
-
-msgid "Copy to COA"
-msgstr "复制到 COA"
-
-msgid "Cost"
-msgstr "成本"
-
-msgid "Cost Center"
-msgstr "成本中心"
-
-msgid "Could not save pricelist!"
-msgstr ""
-
-msgid "Could not save!"
-msgstr "不能储存"
-
-msgid "Could not transfer Inventory!"
-msgstr "存货清单不能转移"
-
-msgid "Country"
-msgstr "国家"
-
-msgid "Create Chart of Accounts"
-msgstr "建立帐户图表"
-
-msgid "Create Dataset"
-msgstr "建立资料集"
-
-msgid "Credit"
-msgstr "贷方"
-
-msgid "Credit Limit"
-msgstr "信用额度"
-
-msgid "Curr"
-msgstr "目前"
-
-msgid "Currency"
-msgstr "币别"
-
-msgid "Current"
-msgstr "现有"
-
-msgid "Current Earnings"
-msgstr "现有收益"
-
-msgid "Customer"
-msgstr "客户"
-
-msgid "Customer History"
-msgstr "客户历史"
-
-msgid "Customer Number"
-msgstr "客户编号"
-
-msgid "Customer deleted!"
-msgstr "巳删除客户"
-
-msgid "Customer missing!"
-msgstr "未指明客户"
-
-msgid "Customer not on file!"
-msgstr "客户未存档"
-
-msgid "Customer saved!"
-msgstr "巳储存客户"
-
-msgid "Customers"
-msgstr "客户"
-
-msgid "DBI not installed!"
-msgstr "未安装 DBI 模组!"
-
-msgid "DOB"
-msgstr "生日"
-
-msgid "Database"
-msgstr "资料库"
-
-msgid "Database Administration"
-msgstr "资料库管理"
-
-msgid "Database Driver not checked!"
-msgstr "未选定资料库驱动程式!"
-
-msgid "Database Host"
-msgstr "资料库主机"
-
-msgid "Database User missing!"
-msgstr "未指明资料库使用者!"
-
-msgid "Dataset"
-msgstr "资料集"
-
-msgid "Dataset is newer than version!"
-msgstr "较新资料集"
-
-msgid "Dataset missing!"
-msgstr "未指明资料集!"
-
-msgid "Dataset updated!"
-msgstr "巳更新资料集"
-
-msgid "Date"
-msgstr "日期"
-
-msgid "Date Format"
-msgstr "日期格式"
-
-msgid "Date Paid"
-msgstr "付款日期"
-
-msgid "Date Received"
-msgstr "收款日期"
-
-msgid "Date missing!"
-msgstr "未指明日期"
-
-msgid "Date received missing!"
-msgstr "未指明收款日期"
-
-msgid "Date worked"
-msgstr ""
-
-msgid "Day"
-msgstr "日"
-
-msgid "Day(s)"
-msgstr "日"
-
-msgid "Days"
-msgstr "日"
-
-msgid "Debit"
-msgstr "借方"
-
-msgid "Dec"
-msgstr "十二月"
-
-msgid "December"
-msgstr "十二月"
-
-msgid "Decimalplaces"
-msgstr "小数的位置"
-
-msgid "Decrease"
-msgstr "减少"
-
-msgid "Deduct after"
-msgstr "减少以后"
-
-msgid "Deduction deleted!"
-msgstr "巳删除减少"
-
-msgid "Deduction saved!"
-msgstr "巳储存减少"
-
-msgid "Deductions"
-msgstr "减除额"
-
-msgid "Default Template"
-msgstr ""
-
-msgid "Defaults"
-msgstr "预设"
-
-msgid "Defaults saved!"
-msgstr "巳储存预设"
-
-msgid "Delete"
-msgstr "删除"
-
-msgid "Delete Account"
-msgstr "删除帐户"
-
-msgid "Delete Dataset"
-msgstr "删除资料集"
-
-msgid "Delete Schedule"
-msgstr "删除预定"
-
-msgid "Deleting a language will also delete the templates for the language"
-msgstr ""
-
-msgid "Delivery Date"
-msgstr "到期日"
-
-msgid "Department"
-msgstr "部门"
-
-msgid "Department deleted!"
-msgstr "巳删除部门"
-
-msgid "Department saved!"
-msgstr "巳储存部门"
-
-msgid "Departments"
-msgstr "部门"
-
-msgid "Deposit"
-msgstr "存款"
-
-msgid "Description"
-msgstr "说明"
-
-msgid "Description Translations"
-msgstr "翻译描述"
-
-msgid "Description missing!"
-msgstr "未指明描述"
-
-msgid "Detail"
-msgstr "详情"
-
-msgid "Difference"
-msgstr "差异"
-
-msgid "Directory"
-msgstr "目录"
-
-msgid "Discount"
-msgstr "折扣"
-
-msgid "Done"
-msgstr "巳完成"
-
-msgid "Drawing"
-msgstr "图画"
-
-msgid "Driver"
-msgstr "驱动程式"
-
-msgid "Dropdown Limit"
-msgstr "限制"
-
-msgid "Due Date"
-msgstr "到期日"
-
-msgid "Due Date missing!"
-msgstr "未指明到期日!"
-
-msgid "E-mail"
-msgstr "电子邮件"
-
-msgid "E-mail Statement to"
-msgstr "电邮会计账到"
-
-msgid "E-mail address missing!"
-msgstr "未指明电子邮件位址!"
-
-msgid "E-mail message"
-msgstr "发送电邮"
-
-msgid "E-mailed"
-msgstr "巳电邮"
-
-msgid "Edit"
-msgstr "编辑"
-
-msgid "Edit AP Transaction"
-msgstr "编辑应付记录"
-
-msgid "Edit AR Transaction"
-msgstr "编辑应收记录"
-
-msgid "Edit Account"
-msgstr "编辑帐户"
-
-msgid "Edit Assembly"
-msgstr "编辑商品"
-
-msgid "Edit Business"
-msgstr "编辑业务"
-
-msgid "Edit Cash Transfer Transaction"
-msgstr "编辑现金转移"
-
-msgid "Edit Customer"
-msgstr "编辑客户"
-
-msgid "Edit Deduction"
-msgstr "编辑减除额"
-
-msgid "Edit Department"
-msgstr "编辑部门"
-
-msgid "Edit Description Translations"
-msgstr "编辑翻译描述"
-
-msgid "Edit Employee"
-msgstr "编辑职员"
-
-msgid "Edit GIFI"
-msgstr "编辑 GIFI"
-
-msgid "Edit General Ledger Transaction"
-msgstr "编辑总帐"
-
-msgid "Edit Group"
-msgstr "编辑组"
-
-msgid "Edit Job"
-msgstr ""
-
-msgid "Edit Labor/Overhead"
-msgstr "编辑劳工/经常费用"
-
-msgid "Edit Language"
-msgstr "编辑语言"
-
-msgid "Edit POS Invoice"
-msgstr "编辑POS"
-
-msgid "Edit Part"
-msgstr "编辑原料"
-
-msgid "Edit Preferences for"
-msgstr "设定使用者"
-
-msgid "Edit Pricegroup"
-msgstr "编辑价格组"
-
-msgid "Edit Project"
-msgstr "编辑方案"
-
-msgid "Edit Purchase Order"
-msgstr "编辑采购单"
-
-msgid "Edit Quotation"
-msgstr "编辑报价单"
-
-msgid "Edit Request for Quotation"
-msgstr "编辑报价单要求"
-
-msgid "Edit SIC"
-msgstr "编辑原文"
-
-msgid "Edit Sales Invoice"
-msgstr "编辑销售发票"
-
-msgid "Edit Sales Order"
-msgstr "编辑销货单"
-
-msgid "Edit Service"
-msgstr "编辑服务"
-
-msgid "Edit Template"
-msgstr "编辑模版"
-
-msgid "Edit Timecard"
-msgstr ""
-
-msgid "Edit User"
-msgstr "编辑使用者"
-
-msgid "Edit Vendor"
-msgstr "编辑供应商"
-
-msgid "Edit Vendor Invoice"
-msgstr "编辑供应商发票"
-
-msgid "Edit Warehouse"
-msgstr "编辑仓库"
-
-msgid "Employee"
-msgstr "职员"
-
-msgid "Employee Name"
-msgstr "职员姓名"
-
-msgid "Employee Number"
-msgstr "工号"
-
-msgid "Employee deleted!"
-msgstr "巳删除职员"
-
-msgid "Employee pays"
-msgstr "付款给职员"
-
-msgid "Employee saved!"
-msgstr "巳储存职员"
-
-msgid "Employees"
-msgstr "职员"
-
-msgid "Employer"
-msgstr "雇主"
-
-msgid "Employer pays"
-msgstr "付款给雇主"
-
-msgid "Enddate"
-msgstr "结束日"
-
-msgid "Ends"
-msgstr ""
-
-msgid "Enforce transaction reversal for all dates"
-msgstr "强制所有日期的交易回复"
-
-msgid "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native and foreign currencies"
-msgstr "请键入以冒号分隔的英文字母, 每项不超过三个字 (如 CAD:USD:EUR), 作为您的本国及外国货币"
-
-msgid "Equity"
-msgstr "股权"
-
-msgid "Every"
-msgstr ""
-
-msgid "Excempt age <"
-msgstr ""
-
-msgid "Exch"
-msgstr "汇率"
-
-msgid "Exchange Rate"
-msgstr "汇率"
-
-msgid "Exchange rate for payment missing!"
-msgstr "未指明付款的汇率"
-
-msgid "Exchange rate missing!"
-msgstr "未指明汇率"
-
-msgid "Existing Datasets"
-msgstr "既有的资料集"
-
-msgid "Expense"
-msgstr "费用"
-
-msgid "Expense account does not exist!"
-msgstr "费用科目勿存在"
-
-msgid "Expense/Asset"
-msgstr "费用/资产"
-
-msgid "Extended"
-msgstr "巳扩大"
-
-msgid "FX"
-msgstr ""
-
-msgid "Failed to save order!"
-msgstr ""
-
-msgid "Fax"
-msgstr "传真"
-
-msgid "Feb"
-msgstr "二月"
-
-msgid "February"
-msgstr "二月"
-
-msgid "For"
-msgstr ""
-
-msgid "Foreign Exchange Gain"
-msgstr "外汇收益"
-
-msgid "Foreign Exchange Loss"
-msgstr "外汇损失"
-
-msgid "Friday"
-msgstr ""
-
-msgid "From"
-msgstr "从"
-
-msgid "From Warehouse"
-msgstr "从仓库"
-
-msgid "GIFI"
-msgstr ""
-
-msgid "GIFI deleted!"
-msgstr "巳删除"
-
-msgid "GIFI missing!"
-msgstr "未指明 GIFI!"
-
-msgid "GIFI saved!"
-msgstr "巳储存"
-
-msgid "GL"
-msgstr ""
-
-msgid "GL Reference Number"
-msgstr ""
-
-msgid "GL Transaction"
-msgstr "GL交易"
-
-msgid "General Ledger"
-msgstr "总帐"
-
-msgid "Generate"
-msgstr "产生"
-
-msgid "Generate Orders"
-msgstr "产生订单"
-
-msgid "Generate Purchase Orders"
-msgstr "产生采购单"
-
-msgid "Generate Purchase Orders from Sales Order"
-msgstr "用销货单产生采购单"
-
-msgid "Generate Sales Order"
-msgstr "产生销货单"
-
-msgid "Generate Sales Order from Purchase Orders"
-msgstr "用销货单产生采购单"
-
-msgid "Generate Sales Orders"
-msgstr ""
-
-msgid "Goods & Services"
-msgstr "货物及服务"
-
-msgid "Group"
-msgstr "组"
-
-msgid "Group Items"
-msgstr "组的项目"
-
-msgid "Group Translations"
-msgstr "组的翻译"
-
-msgid "Group deleted!"
-msgstr "巳删除的组"
-
-msgid "Group missing!"
-msgstr "未指明的组"
-
-msgid "Group saved!"
-msgstr "巳储存的组"
-
-msgid "Groups"
-msgstr "组"
-
-msgid "HR"
-msgstr "人事管理"
-
-msgid "HTML Templates"
-msgstr "HTML 表单"
-
-msgid "Heading"
-msgstr "标题, "
-
-msgid "History"
-msgstr "历史"
-
-msgid "Home Phone"
-msgstr "住宅电话"
-
-msgid "Host"
-msgstr "主机"
-
-msgid "Hostname missing!"
-msgstr "未指明主机名称!"
-
-msgid "IBAN"
-msgstr ""
-
-msgid "ID"
-msgstr "编号"
-
-msgid "Image"
-msgstr "形像"
-
-msgid "In-line"
-msgstr "行内"
-
-msgid "Inactive"
-msgstr "消极"
-
-msgid "Include Exchange Rate Difference"
-msgstr "包含外汇差距"
-
-msgid "Include Payment"
-msgstr ""
-
-msgid "Include in Report"
-msgstr "一并显示"
-
-msgid "Include in drop-down menus"
-msgstr "包含在下拉式选单中"
-
-msgid "Income"
-msgstr "收入"
-
-msgid "Income Statement"
-msgstr "损益表"
-
-msgid "Income account does not exist!"
-msgstr "收入科目勿存在"
-
-msgid "Incorrect Dataset version!"
-msgstr "资料集版本错误!"
-
-msgid "Increase"
-msgstr "增加"
-
-msgid "Individual Items"
-msgstr "个别的项目"
-
-msgid "Internal Notes"
-msgstr "内部备忘录"
-
-msgid "Inventory"
-msgstr "库存"
-
-msgid "Inventory account does not exist!"
-msgstr "存货科目勿存在"
-
-msgid "Inventory quantity must be zero before you can set this assembly obsolete!"
-msgstr "在停用此项组合品之前, 存货数量必需为零!"
-
-msgid "Inventory quantity must be zero before you can set this part obsolete!"
-msgstr "停用此项零件之前, 存货数量必需为零!"
-
-msgid "Inventory saved!"
-msgstr "巳储存存货"
-
-msgid "Inventory transferred!"
-msgstr "转移的存货"
-
-msgid "Invoice"
-msgstr "发票"
-
-msgid "Invoice Date"
-msgstr "发票日期"
-
-msgid "Invoice Date missing!"
-msgstr "未指明发票日期!"
-
-msgid "Invoice Number"
-msgstr "发票编号"
-
-msgid "Invoice Number missing!"
-msgstr "未指明发票编号!"
-
-msgid "Invoice deleted!"
-msgstr "巳删除发票"
-
-msgid "Invoices"
-msgstr "发票"
-
-msgid "Is this a summary account to record"
-msgstr "此为总结科目吗?"
-
-msgid "Item already on pricelist!"
-msgstr ""
-
-msgid "Item deleted!"
-msgstr "巳删除项目"
-
-msgid "Item not on file!"
-msgstr "查无此项目"
-
-msgid "Items"
-msgstr "项目"
-
-msgid "Jan"
-msgstr "一月"
-
-msgid "January"
-msgstr "一月"
-
-msgid "Job"
-msgstr ""
-
-msgid "Job Name"
-msgstr ""
-
-msgid "Job Number"
-msgstr ""
-
-msgid "Job Number missing!"
-msgstr ""
-
-msgid "Job deleted!"
-msgstr ""
-
-msgid "Job saved!"
-msgstr ""
-
-msgid "Jobs"
-msgstr ""
-
-msgid "Jul"
-msgstr "七月"
-
-msgid "July"
-msgstr "七月"
-
-msgid "Jun"
-msgstr "六月"
-
-msgid "June"
-msgstr "六月"
-
-msgid "LaTeX Templates"
-msgstr "LaTex 模版"
-
-msgid "Labor Code"
-msgstr ""
-
-msgid "Labor/Overhead"
-msgstr "劳工/经常费用"
-
-msgid "Language"
-msgstr "语言"
-
-msgid "Language deleted!"
-msgstr "巳删除语言"
-
-msgid "Language saved!"
-msgstr "巳储存语言"
-
-msgid "Languages"
-msgstr "语言"
-
-msgid "Languages not defined!"
-msgstr "不能辨认语言"
-
-msgid "Last Cost"
-msgstr "最后成本"
-
-msgid "Last Numbers & Default Accounts"
-msgstr "上一笔编号及预设帐户"
-
-msgid "Lead"
-msgstr "交货期"
-
-msgid "Leadtime"
-msgstr "总需时"
-
-msgid "Leave host and port field empty unless you want to make a remote connection."
-msgstr "除非您想要进行远端连线, 否则请将主机及埠号留白."
-
-msgid "Liability"
-msgstr "负债"
-
-msgid "Licensed to"
-msgstr "授权予"
-
-msgid "Line Total"
-msgstr "总列数"
-
-msgid "Link"
-msgstr "连结"
-
-msgid "Link Accounts"
-msgstr "连结帐户"
-
-msgid "List"
-msgstr "牌价"
-
-msgid "List Accounts"
-msgstr "列出帐号"
-
-msgid "List Businesses"
-msgstr "列出业务"
-
-msgid "List Departments"
-msgstr "列出部门"
-
-msgid "List GIFI"
-msgstr "列出 GIFI"
-
-msgid "List Languages"
-msgstr "列出语言"
-
-msgid "List Price"
-msgstr "列出价"
-
-msgid "List Projects"
-msgstr "列出方案"
-
-msgid "List SIC"
-msgstr "列出SIC"
-
-msgid "List Transactions"
-msgstr "列出交易"
-
-msgid "List Warehouses"
-msgstr "列出仓库"
-
-msgid "Lock System"
-msgstr "系统锁上"
-
-msgid "Lockfile created!"
-msgstr "巳建立上锁档案!"
-
-msgid "Lockfile removed!"
-msgstr "巳移除上锁档案!"
-
+#: old-handler.pl:153
+#, fuzzy
+msgid "You are logged out!"
+msgstr "你已经注销"
+
+#: old-handler.pl:154
 msgid "Login"
 msgstr "登入"
 
-msgid "Login name missing!"
-msgstr "未指明登入名字"
-
-msgid "Logout"
-msgstr "登出"
-
-msgid "Make"
-msgstr "制造"
-
-msgid "Manager"
-msgstr "经理"
-
-msgid "Mar"
-msgstr "三月"
-
-msgid "March"
-msgstr "三月"
-
-msgid "Marked entries printed!"
-msgstr "巳列印有记号的会计项目"
-
-msgid "Markup"
-msgstr "涨价"
-
-msgid "Maximum"
-msgstr "最大"
-
-msgid "May"
-msgstr "五月"
-
-msgid "May "
-msgstr "五月"
-
-msgid "Memo"
-msgstr "备忘录"
-
-msgid "Menu Width"
-msgstr "选择单宽度"
-
-msgid "Message"
-msgstr "讯息"
-
-msgid "Method"
-msgstr "方法"
-
-msgid "Microfiche"
-msgstr "单片缩影胶片"
-
-msgid "Model"
-msgstr "型号"
-
-msgid "Monday"
-msgstr ""
-
-msgid "Month"
-msgstr "月份"
-
-msgid "Month(s)"
-msgstr "月"
-
-msgid "Months"
-msgstr "月"
-
-msgid "Multibyte Encoding"
-msgstr "Multibyte Encoding"
-
-msgid "N/A"
-msgstr "不适用"
-
-msgid "Name"
-msgstr "名称"
-
-msgid "Name missing!"
-msgstr "未指明名字"
-
-msgid "New Templates"
-msgstr "新增模版"
-
-msgid "New Window"
-msgstr "新视窗"
-
-msgid "Next"
-msgstr ""
-
-msgid "Next Date"
-msgstr ""
-
-msgid "Next Number"
-msgstr ""
-
-msgid "No"
-msgstr "否"
-
-msgid "No Database Drivers available!"
-msgstr "没有可用的驱动程式!"
-
-msgid "No Dataset selected!"
-msgstr "未选定资料集!"
-
-msgid "No Employees on file!"
-msgstr ""
-
-msgid "No Labor codes on file!"
-msgstr ""
-
-msgid "No email address for"
-msgstr "未指明电子邮件位置"
-
-msgid "No open Jobs!"
-msgstr ""
-
-msgid "No open Projects!"
-msgstr ""
-
-msgid "No."
-msgstr "否"
-
-msgid "Non-taxable"
-msgstr "不应课税"
-
-msgid "Non-taxable Purchases"
-msgstr "不应课税的采购"
-
-msgid "Non-taxable Sales"
-msgstr "不应课税的销售"
-
-msgid "Non-tracking Items"
-msgstr ""
-
-msgid "Notes"
-msgstr "备注"
-
-msgid "Nothing entered!"
-msgstr "没有巳输入"
-
-msgid "Nothing selected!"
-msgstr "没有巳选择"
-
-msgid "Nothing to delete!"
-msgstr "没有可删除的项目"
-
-msgid "Nothing to print!"
-msgstr ""
-
-msgid "Nothing to transfer!"
-msgstr "没有可转移的项目"
-
-msgid "Nov"
-msgstr "十一月"
-
-msgid "November"
-msgstr "十一月"
-
-msgid "Number"
-msgstr "编号"
-
-msgid "Number Format"
-msgstr "数字格式"
-
-msgid "Number missing in Row"
-msgstr "此列中缺少数值"
-
-msgid "O"
-msgstr ""
-
-msgid "OH"
-msgstr ""
-
-msgid "Obsolete"
-msgstr "停用"
-
-msgid "Oct"
-msgstr "十月"
-
-msgid "October"
-msgstr "十月"
-
-msgid "On Hand"
-msgstr "巳有存量"
-
-msgid "Open"
-msgstr "开启"
-
-msgid "Oracle Database Administration"
-msgstr "Oracle 资料库管理"
-
-msgid "Order"
-msgstr "订单"
-
-msgid "Order Date"
-msgstr "下单日期"
-
-msgid "Order Date missing!"
-msgstr "未指明下单日期!"
-
-msgid "Order Entry"
-msgstr "下单项目"
-
-msgid "Order Number"
-msgstr "订单编号"
-
-msgid "Order Number missing!"
-msgstr "未指明订单编号!"
-
-msgid "Order deleted!"
-msgstr "巳删除订单"
-
-msgid "Order generation failed!"
-msgstr "订单产生失败!"
-
-msgid "Order saved!"
-msgstr "巳储存订单"
-
-msgid "Orders generated!"
-msgstr ""
-
-msgid "Orphaned"
-msgstr "无主"
-
-msgid "Out of balance transaction!"
-msgstr "不协调交易"
-
-msgid "Out of balance!"
-msgstr "不协调"
-
-msgid "Outstanding"
-msgstr "未付"
-
-msgid "PDF"
-msgstr "PDF"
-
-msgid "PO Number"
-msgstr "采购单编号"
-
-msgid "POS"
-msgstr "收款台"
-
-msgid "POS Invoice"
-msgstr "POS发票"
-
-msgid "Packing List"
-msgstr "出货单"
-
-msgid "Packing List Date missing!"
-msgstr "未指明包装清单日期!"
-
-msgid "Packing List Number missing!"
-msgstr "未指明包装清单编号!"
-
-msgid "Packing Lists"
-msgstr "出货单"
-
-msgid "Paid"
-msgstr "已付"
-
-msgid "Part"
-msgstr "原料"
-
-msgid "Part Number"
-msgstr ""
-
-msgid "Partnumber"
-msgstr "料号"
-
-msgid "Parts"
-msgstr "原料"
-
-msgid "Password"
-msgstr "密码"
-
-msgid "Password changed!"
-msgstr "密码巳改"
-
-msgid "Password does not match!"
-msgstr "密码勿比配"
-
-msgid "Passwords do not match!"
-msgstr "密码勿比配!"
-
-msgid "Payables"
-msgstr "应付科目"
-
-msgid "Payment"
-msgstr "付款"
-
-msgid "Payment date missing!"
-msgstr "未指明付款日期!"
-
-msgid "Payment posted!"
-msgstr "巳加入付款"
-
-msgid "Payments"
-msgstr "付款"
-
-msgid "Payments posted!"
-msgstr ""
-
-msgid "Payroll Deduction"
-msgstr "薪金减除额"
-
-msgid "Period"
-msgstr "时期"
-
-msgid "Pg Database Administration"
-msgstr "Pg 资料库管理"
-
-msgid "PgPP Database Administration"
-msgstr "PgPP资料库管理"
-
-msgid "Phone"
-msgstr "电话号码"
-
-msgid "Pick List"
-msgstr "选择单"
-
-msgid "Pick Lists"
-msgstr "拣货清单"
-
-msgid "Port"
-msgstr "埠号"
-
-msgid "Port missing!"
-msgstr "未指明埠号!"
-
-msgid "Pos"
-msgstr ""
-
-msgid "Post"
-msgstr "加入"
-
-msgid "Post as new"
-msgstr "当新的加入"
-
-msgid "Posted!"
-msgstr "巳加入"
-
-msgid "Posting"
-msgstr "在过帐"
-
-msgid "Posting failed!"
-msgstr ""
-
-msgid "Postscript"
-msgstr "附言"
-
-msgid "Preferences"
-msgstr "个人设定"
-
-msgid "Preferences saved!"
-msgstr "个人设定已储存!"
-
-msgid "Prepayment"
-msgstr "预缴"
-
-msgid "Price"
-msgstr "价格"
-
-msgid "Pricegroup"
-msgstr "价格组"
-
-msgid "Pricegroup deleted!"
-msgstr "巳删除价格组"
-
-msgid "Pricegroup missing!"
-msgstr "未指明价格组"
-
-msgid "Pricegroup saved!"
-msgstr "巳储存价格组"
-
-msgid "Pricegroups"
-msgstr "价格组"
-
-msgid "Pricelist"
-msgstr ""
-
-msgid "Print"
-msgstr "列印"
-
-msgid "Print and Post"
-msgstr "列印及过帐"
-
-msgid "Print and Post as new"
-msgstr "列印及当新的过帐"
-
-msgid "Print and Save"
-msgstr "打印及储存"
-
-msgid "Print and Save as new"
-msgstr "列印及另存新档"
-
-msgid "Print and post as new"
-msgstr ""
-
-msgid "Print and save as new"
-msgstr ""
-
-msgid "Printed"
-msgstr "巳列印"
-
-msgid "Printer"
-msgstr "印表机"
-
-msgid "Printing"
-msgstr "在列印"
-
-msgid "Printing ... "
-msgstr "正列印"
-
-msgid "Process Transactions"
-msgstr ""
-
-msgid "Production"
-msgstr ""
-
-msgid "Profit Center"
-msgstr "利润中心"
-
-msgid "Project"
-msgstr "方案"
-
-msgid "Project Description Translations"
-msgstr "方案描述的翻译"
-
-msgid "Project Name"
-msgstr ""
-
-msgid "Project Number"
-msgstr "方案号码"
-
-msgid "Project Number missing!"
-msgstr "未指明方案号码"
-
-msgid "Project Transactions"
-msgstr "方案交易"
-
-msgid "Project deleted!"
-msgstr "巳删除方案"
-
-msgid "Project not on file!"
-msgstr "方案内无此档案"
-
-msgid "Project saved!"
-msgstr "巳储存方案"
-
-msgid "Project/Job Name"
-msgstr ""
-
-msgid "Project/Job Number"
-msgstr ""
-
-msgid "Projects"
-msgstr "方案"
-
-msgid "Purchase Order"
-msgstr "采购单"
-
-msgid "Purchase Order Number"
-msgstr "采购单编号"
-
-msgid "Purchase Orders"
-msgstr "采购单"
-
-msgid "Qty"
-msgstr "数量"
-
-msgid "Quantity exceeds available units to stock!"
-msgstr "超过可库存的数量"
-
-msgid "Quarter"
-msgstr "季度"
-
-msgid "Quotation"
-msgstr "报价单"
-
-msgid "Quotation "
-msgstr "报价单"
-
-msgid "Quotation Date"
-msgstr "报价单日期"
-
-msgid "Quotation Date missing!"
-msgstr "未指明报价单日期"
-
-msgid "Quotation Number"
-msgstr "报价单号码"
-
-msgid "Quotation Number missing!"
-msgstr "未指明报价单号码"
-
-msgid "Quotation deleted!"
-msgstr "巳删除报价单"
-
-msgid "Quotations"
-msgstr "报价单"
-
-msgid "R"
-msgstr "对"
-
-msgid "RFQ"
-msgstr "报价请求(RFQ) "
-
-msgid "RFQ "
-msgstr "供应商询价单"
-
-msgid "RFQ Number"
-msgstr "RFD号码"
-
-msgid "RFQs"
-msgstr "报价请求"
-
-msgid "ROP"
-msgstr "再订点"
-
-msgid "Rate"
-msgstr "税率"
-
-msgid "Rate missing!"
-msgstr "未指明税率"
-
-msgid "Recd"
-msgstr "巳收到"
-
-msgid "Receipt"
-msgstr "收据"
-
-msgid "Receipt posted!"
-msgstr "巳加入收据"
-
-msgid "Receipts"
-msgstr "收据"
-
-msgid "Receivables"
-msgstr "应收帐户"
-
-msgid "Receive"
-msgstr "收到"
-
-msgid "Receive Merchandise"
-msgstr "收到货物"
-
-msgid "Reconciliation"
-msgstr "调和"
-
-msgid "Reconciliation Report"
-msgstr "调和报告"
-
-msgid "Record in"
-msgstr "记录【◎Fix:◎于;◎於】"
-
-msgid "Recurring Transaction"
-msgstr "多次记录"
-
-msgid "Recurring Transactions"
-msgstr "多次记录"
-
-msgid "Reference"
-msgstr "参考资料"
-
-msgid "Remaining"
-msgstr "尚【◎Fix:◎余;◎馀】"
-
-msgid "Remove"
-msgstr "移除"
-
-msgid "Remove Audit trail up to"
-msgstr "移除审核线索直至"
-
-msgid "Remove Audit trails up to"
-msgstr "移除审核线索直至"
-
-msgid "Removed spoolfiles!"
-msgstr "移除线轴档案"
-
-msgid "Removing marked entries from queue ..."
-msgstr "正从长队中移除有记号的会计项目"
-
-msgid "Repeat"
-msgstr ""
-
-msgid "Report for"
-msgstr "报表来源"
-
-msgid "Reports"
-msgstr "报表"
-
-msgid "Req"
-msgstr ""
-
-msgid "Request for Quotation"
-msgstr "要求报价单"
-
-msgid "Request for Quotations"
-msgstr "要求报价单"
-
-msgid "Required by"
-msgstr "需要者"
-
-msgid "Retained Earnings"
-msgstr "保留盈余"
-
-msgid "Role"
-msgstr "任务"
-
-msgid "S"
-msgstr ""
-
-msgid "SIC"
-msgstr "原文"
-
-msgid "SIC deleted!"
-msgstr "巳删除原文"
-
-msgid "SIC saved!"
-msgstr "巳储存原文"
-
-msgid "SKU"
-msgstr "被指定的数量"
-
-msgid "SSN"
-msgstr "身分证编号"
-
-msgid "Sale"
-msgstr "销售"
-
-msgid "Sales"
-msgstr "销售"
-
-msgid "Sales Invoice"
-msgstr "销售发票"
-
-msgid "Sales Invoice "
-msgstr "销货发票"
-
-msgid "Sales Invoice."
-msgstr "销货发票"
-
-msgid "Sales Invoice/AR Transaction Number"
-msgstr ""
-
-msgid "Sales Invoices"
-msgstr "销售发票"
-
-msgid "Sales Order"
-msgstr "销货单"
-
-msgid "Sales Order Number"
-msgstr "销货单编号"
-
-msgid "Sales Orders"
-msgstr "销货单"
-
-msgid "Sales Quotation Number"
-msgstr "报价单编号"
-
-msgid "Salesperson"
-msgstr "销售人员"
-
-msgid "Saturday"
-msgstr ""
-
-msgid "Save"
-msgstr "储存"
-
-msgid "Save Pricelist"
-msgstr ""
-
-msgid "Save Schedule"
-msgstr "储存预定"
-
-msgid "Save as new"
-msgstr "当新的储存"
-
-msgid "Save to File"
-msgstr "储存至档案"
-
-msgid "Saving"
-msgstr ""
-
-msgid "Schedule"
-msgstr "预定"
-
-msgid "Scheduled"
-msgstr ""
-
-msgid "Screen"
-msgstr "萤幕"
-
-msgid "Search"
-msgstr "搜寻"
-
-msgid "Select"
-msgstr "选择"
-
-msgid "Select Customer"
-msgstr ""
-
-msgid "Select Vendor"
-msgstr "选厂商"
-
-msgid "Select a Printer!"
-msgstr ""
-
-msgid "Select a printer!"
-msgstr ""
-
-msgid "Select all"
-msgstr "全选"
-
-msgid "Select from one of the items below"
-msgstr "于下列项目中选择一项"
-
-msgid "Select from one of the names below"
-msgstr "于下列姓名中选择一个"
-
-msgid "Select from one of the projects below"
-msgstr "于下列方案中选择一个"
-
-msgid "Select items"
-msgstr ""
-
-msgid "Select payment"
-msgstr ""
-
-msgid "Select postscript or PDF!"
-msgstr "【◎Fix:◎于;◎於】附言或PDF中选一"
-
-msgid "Select txt, postscript or PDF!"
-msgstr ""
-
-msgid "Sell"
-msgstr "卖价"
-
-msgid "Sell Price"
-msgstr "售价"
-
-msgid "Send by E-Mail"
-msgstr "以电子邮件寄送"
-
-msgid "Sending"
-msgstr ""
-
-msgid "Sep"
-msgstr "九月"
-
-msgid "September"
-msgstr "九月"
-
-msgid "Serial No."
-msgstr "序号"
-
-msgid "Serial Number"
-msgstr "序号"
-
-msgid "Service"
-msgstr "服务"
-
-msgid "Service Code"
-msgstr ""
-
-msgid "Service/Labor Code"
-msgstr ""
-
-msgid "Services"
-msgstr "服务"
-
-msgid "Session Timeout"
-msgstr "会话超时"
-
-msgid "Session expired!"
-msgstr "会话过期"
-
-msgid "Setup Templates"
-msgstr "设定模版"
-
-msgid "Ship"
-msgstr "船"
-
-msgid "Ship Merchandise"
-msgstr "海运货物"
-
-msgid "Ship to"
-msgstr "海运至"
-
-msgid "Ship via"
-msgstr "由海运"
-
-msgid "Shipping"
-msgstr "海运"
-
-msgid "Shipping Address"
-msgstr "海运地址"
-
-msgid "Shipping Date"
-msgstr "海运日期"
-
-msgid "Shipping Date missing!"
-msgstr "未指明海运日期"
-
-msgid "Shipping Point"
-msgstr "海运地点"
-
-msgid "Short"
-msgstr "短"
-
-msgid "Signature"
-msgstr "签名"
-
-msgid "Source"
-msgstr "来源"
-
-msgid "Spoolfile"
-msgstr "线轴档案"
-
-msgid "Standard"
-msgstr "标准"
-
-msgid "Standard Industrial Codes"
-msgstr "标准工业编码"
-
-msgid "Startdate"
-msgstr "开始日期"
-
-msgid "State"
-msgstr ""
-
-msgid "State/Province"
-msgstr "省"
-
-msgid "Statement"
-msgstr "会计帐"
-
-msgid "Statement Balance"
-msgstr "会计帐余额"
-
-msgid "Statement sent to"
-msgstr "送会计帐至"
-
-msgid "Statements sent to printer!"
-msgstr "送会计帐至列印机"
-
-msgid "Stock"
-msgstr "库存"
-
-msgid "Stock Assembly"
-msgstr "盘点"
-
-msgid "Stocking Date"
-msgstr ""
-
-msgid "Stylesheet"
-msgstr "样式表"
-
-msgid "Sub-contract GIFI"
-msgstr "细合约GIFI"
-
-msgid "Subject"
-msgstr "标题"
-
-msgid "Subtotal"
-msgstr "小计"
-
-msgid "Summary"
-msgstr "摘要"
-
-msgid "Sunday"
-msgstr ""
-
-msgid "Supervisor"
-msgstr "管理人"
-
-msgid "System"
-msgstr "系统"
-
-msgid "System Defaults"
-msgstr "预设系统"
-
-msgid "Tax"
-msgstr "税金"
-
-msgid "Tax Accounts"
-msgstr "税金科目"
-
-msgid "Tax Included"
-msgstr "巳含税金"
-
-msgid "Tax Number"
-msgstr "税号"
-
-msgid "Tax Number / SSN"
-msgstr "税号"
-
-msgid "Tax collected"
-msgstr "巳收税金"
-
-msgid "Tax paid"
-msgstr "巳付税金"
-
-msgid "Taxable"
-msgstr "应税"
-
-msgid "Template saved!"
-msgstr "巳储存模版"
-
-msgid "Templates"
-msgstr "模版"
-
-msgid "Terms"
-msgstr "票期淨计"
-
-msgid "Text"
-msgstr ""
-
-msgid "Text Templates"
-msgstr "文字模版"
-
-msgid "The following Datasets are not in use and can be deleted"
-msgstr "下列资料集并未使用, 可以删除"
-
-msgid "The following Datasets need to be updated"
-msgstr "下列资料集需要更新"
-
-msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
-msgstr "这是对既存资料来源的初步检查. 在此阶段, 不会删除或新增任何资料!"
-
-msgid "Thursday"
-msgstr ""
-
-msgid "Till"
-msgstr "直到"
-
-msgid "Time In"
-msgstr ""
-
-msgid "Time Out"
-msgstr ""
-
-msgid "Timecard"
-msgstr ""
-
-msgid "Timecard deleted!"
-msgstr ""
-
-msgid "Timecard saved!"
-msgstr ""
-
-msgid "Timecards"
-msgstr ""
-
-msgid "Times"
-msgstr ""
-
-msgid "To"
-msgstr "至"
-
-msgid "To Warehouse"
-msgstr "到仓库"
-
-msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
-msgstr "若要新增群组内的使用者, 请编辑名称, 更改登入名, 然后储存.  这样一来, 新使用者会保留相同的变数, 并以新的登入名存入."
-
-msgid "Top Level"
-msgstr "高水准"
-
-msgid "Total"
-msgstr "总计"
-
-msgid "Tracking Items"
-msgstr ""
-
-msgid "Trade Discount"
-msgstr "贸易折扣"
-
-msgid "Transaction"
-msgstr "记录"
-
-msgid "Transaction Date missing!"
-msgstr "未指明交易日期!"
-
-msgid "Transaction Dates"
-msgstr ""
-
-msgid "Transaction deleted!"
-msgstr "巳删除交易"
-
-msgid "Transaction posted!"
-msgstr "巳加入交易"
-
-msgid "Transaction reversal enforced for all dates"
-msgstr "强制回复所有日期的交易"
-
-msgid "Transaction reversal enforced up to"
-msgstr "强制回复交易直到"
-
-msgid "Transactions"
-msgstr "交易"
-
-msgid "Transfer"
-msgstr "转移"
-
-msgid "Transfer Inventory"
-msgstr "转移存货"
-
-msgid "Transfer from"
-msgstr "调动从"
-
-msgid "Transfer to"
-msgstr "存货至"
-
-msgid "Translation"
-msgstr "翻译"
-
-msgid "Translation deleted!"
-msgstr "巳删除翻译"
-
-msgid "Translation not on file!"
-msgstr ""
-
-msgid "Translations"
-msgstr "翻译"
-
-msgid "Translations saved!"
-msgstr "巳储存翻译"
-
-msgid "Trial Balance"
-msgstr "试算表"
-
-msgid "Tuesday"
-msgstr ""
-
-msgid "Type of Business"
-msgstr "业务种类"
-
-msgid "Unit"
-msgstr "单位"
-
-msgid "Unit of measure"
-msgstr "度量单位"
-
-msgid "Unlock System"
-msgstr "开启系统"
-
-msgid "Update"
-msgstr "更新"
-
-msgid "Update Dataset"
-msgstr "更新资料集"
-
-msgid "Updated"
-msgstr "巳更新"
-
-msgid "Upgrading to Version"
-msgstr "正升级至新版"
-
-msgid "Use Templates"
-msgstr "使用模版"
-
-msgid "User"
-msgstr "使用者"
-
-msgid "User deleted!"
-msgstr "巳删除使用者"
-
-msgid "User saved!"
-msgstr "巳储存使用者"
-
-msgid "Valid until"
-msgstr "有效至"
-
-msgid "Vendor"
-msgstr "供应商"
-
-msgid "Vendor History"
-msgstr "供应商历史"
-
-msgid "Vendor Invoice"
-msgstr "供应商发票"
-
-msgid "Vendor Invoice "
-msgstr "供应商发票"
-
-msgid "Vendor Invoice."
-msgstr "供应商发票"
-
-msgid "Vendor Invoice/AP Transaction Number"
-msgstr ""
-
-msgid "Vendor Invoices"
-msgstr "供应商发票"
-
-msgid "Vendor Number"
-msgstr "供应商号码"
-
-msgid "Vendor deleted!"
-msgstr "巳删除供应商"
-
-msgid "Vendor missing!"
-msgstr "未指明供应商"
-
-msgid "Vendor not on file!"
-msgstr "档案没有此供应商"
-
-msgid "Vendor saved!"
-msgstr "巳储存供应商"
-
-msgid "Vendors"
-msgstr "供应商"
-
+#: old-handler.pl:195
 msgid "Version"
 msgstr "版本"
 
-msgid "Warehouse"
-msgstr "仓库"
+#: old-handler.pl:204
+#, fuzzy
+msgid "action not defined!"
+msgstr "不能辨认语言"
 
-msgid "Warehouse deleted!"
-msgstr "巳删除仓库"
-
-msgid "Warehouse saved!"
-msgstr "巳储存仓库"
-
-msgid "Warehouses"
-msgstr "仓库"
-
-msgid "Warning!"
-msgstr "警告"
-
-msgid "Wednesday"
+#: bin/am.pl:54 LedgerSMB/Scripts/configuration.pm:84
+msgid "GL Reference Number"
 msgstr ""
 
-msgid "Week"
-msgstr "周"
-
-msgid "Week(s)"
-msgstr "周"
-
-msgid "Weeks"
-msgstr "周"
-
-msgid "Weight"
-msgstr "重量"
-
-msgid "Weight Unit"
-msgstr "重量单位"
-
-msgid "What type of item is this?"
-msgstr "此项目的型态?"
-
-msgid "Work Order"
-msgstr "工作单"
-
-msgid "Work Orders"
-msgstr "工作单"
-
-msgid "Work Phone"
-msgstr "工作电话"
-
-msgid "Year"
-msgstr "年份"
-
-msgid "Year(s)"
-msgstr "年"
-
-msgid "Yearend"
-msgstr "年结"
-
-msgid "Yearend date missing!"
-msgstr "未指明年结日期"
-
-msgid "Yearend posted!"
-msgstr "巳加入年结"
-
-msgid "Yearend posting failed!"
-msgstr "年结加入失败"
-
-msgid "Years"
-msgstr "年"
-
-msgid "Yes"
-msgstr "是"
-
-msgid "You are logged out"
-msgstr "你已经注销"
-
-msgid "You are posting an existing transaction!"
+#: bin/am.pl:56 LedgerSMB/Scripts/configuration.pm:86
+msgid "Sales Invoice/AR Transaction Number"
 msgstr ""
 
-msgid "You are printing and posting an existing transaction!"
+#: bin/am.pl:57 LedgerSMB/Scripts/configuration.pm:87
+msgid "Max per dropdown"
 msgstr ""
 
-msgid "You are printing and saving an existing order"
+#: bin/am.pl:58 LedgerSMB/Scripts/configuration.pm:88
+msgid "Sales Order Number"
+msgstr "销货单编号"
+
+#: bin/am.pl:60 LedgerSMB/Scripts/configuration.pm:90
+msgid "Vendor Invoice/AP Transaction Number"
 msgstr ""
 
-msgid "You are printing and saving an existing quotation"
+#: bin/am.pl:61 LedgerSMB/Scripts/configuration.pm:91
+msgid "Sales Quotation Number"
+msgstr "报价单编号"
+
+#: bin/am.pl:62 bin/oe.pl:504 LedgerSMB/Scripts/configuration.pm:92
+msgid "RFQ Number"
+msgstr "RFD号码"
+
+#: bin/am.pl:63 bin/pe.pl:1479 bin/oe.pl:2125 bin/oe.pl:2203 bin/oe.pl:2237
+#: bin/oe.pl:2488 LedgerSMB/Scripts/configuration.pm:93
+#: LedgerSMB/Report/Inventory/Search.pm:193
+#: LedgerSMB/Report/Inventory/Adj_Details.pm:78
+#: LedgerSMB/Report/PNL/Product.pm:77 LedgerSMB/Report/Contact/History.pm:69
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:78
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Product.pm:77
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:69
+msgid "Part Number"
 msgstr ""
 
-msgid "You are printing and saving an existing transaction!"
+#: bin/am.pl:64 LedgerSMB/Scripts/configuration.pm:94
+#, fuzzy
+msgid "Job/Project Number"
+msgstr "方案号码"
+
+#: bin/am.pl:65 LedgerSMB/Scripts/configuration.pm:95
+msgid "Employee Number"
+msgstr "工号"
+
+#: bin/am.pl:66 bin/io.pl:2002 bin/aa.pl:1615
+#: UI/payments/payments_filter.html:65 LedgerSMB/Scripts/configuration.pm:96
+#: LedgerSMB/Report/Invoices/Payments.pm:114
+#: LedgerSMB/Report/Invoices/Payments.pm:184 LedgerSMB/Report/Margin/ECA.pm:83
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Margin/ECA.pm:83
+msgid "Customer Number"
+msgstr "客户编号"
+
+#: bin/am.pl:67 bin/io.pl:2003 bin/aa.pl:1624
+#: UI/payments/payments_filter.html:63 LedgerSMB/Scripts/configuration.pm:97
+#: LedgerSMB/Report/Invoices/Payments.pm:112
+#: LedgerSMB/Report/Invoices/Payments.pm:182
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:156
+msgid "Vendor Number"
+msgstr "供应商号码"
+
+#: bin/am.pl:68 LedgerSMB/Scripts/configuration.pm:101
+msgid "Check Prefix"
 msgstr ""
 
-msgid "You are saving an existing order"
+#: bin/am.pl:69 LedgerSMB/Scripts/configuration.pm:54
+#, fuzzy
+msgid "Password Duration"
+msgstr "密码巳改"
+
+#: bin/am.pl:70 LedgerSMB/Scripts/configuration.pm:27
+msgid "Default Email To"
 msgstr ""
 
-msgid "You are saving an existing quotation"
+#: bin/am.pl:71 LedgerSMB/Scripts/configuration.pm:29
+msgid "Default Email CC"
 msgstr ""
 
-msgid "You are saving an existing transaction!"
+#: bin/am.pl:72 LedgerSMB/Scripts/configuration.pm:31
+msgid "Default Email BCC"
 msgstr ""
 
-msgid "You did not enter a name!"
-msgstr "你并未键入名称!"
+#: bin/am.pl:74 LedgerSMB/Scripts/configuration.pm:33
+msgid "Default Email From"
+msgstr ""
 
-msgid "You must enter a host and port for local and remote connections!"
-msgstr "您必需键入主机及埠号, 以进行本机或远端连线!"
+#: bin/am.pl:75 LedgerSMB/Scripts/configuration.pm:21
+#: LedgerSMB/Report/Invoices/Payments.pm:146
+msgid "Company Name"
+msgstr "公司名称"
 
-msgid "Zip/Postal Code"
-msgstr "邮编"
+#: bin/am.pl:76 LedgerSMB/Scripts/configuration.pm:22
+#, fuzzy
+msgid "Company Address"
+msgstr "公司名称"
 
+#: bin/am.pl:77 LedgerSMB/Scripts/configuration.pm:23
+#, fuzzy
+msgid "Company Phone"
+msgstr "公司名称"
+
+#: bin/am.pl:78 LedgerSMB/Scripts/configuration.pm:24
+#, fuzzy
+msgid "Company Fax"
+msgstr "公司名称"
+
+#: bin/am.pl:80 LedgerSMB/Scripts/configuration.pm:35
+#, fuzzy
+msgid "Company Sales Tax ID"
+msgstr "公司名称"
+
+#: bin/am.pl:82 LedgerSMB/Scripts/configuration.pm:37
+#, fuzzy
+msgid "Company License Number"
+msgstr "工号"
+
+#: bin/am.pl:111 bin/am.pl:122 bin/am.pl:334 bin/ir.pl:911 bin/ic.pl:865
+#: bin/is.pl:981 bin/pe.pl:460 bin/pe.pl:665 bin/pe.pl:1043 bin/aa.pl:1026
+#: bin/gl.pl:286 bin/oe.pl:804
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:138
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:138
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:138
+#: UI/business_units/edit.html:82 UI/asset/edit_asset.html:206
+#: UI/asset/import_asset.html:57 UI/asset/edit_class.html:56
+#: UI/import_csv/import_csv.html:62
+#: addons/1.3/extended_arap/trunk/UI/aa.html:587
+#: addons/1.3/import_trans/trunk/UI/import_trans/import_trans.html:62
+#: LedgerSMB/Scripts/budgets.pm:98 LedgerSMB/Scripts/asset.pm:548
+#: LedgerSMB/Scripts/account.pm:136 LedgerSMB/Scripts/account.pm:147
+msgid "Save"
+msgstr "储存"
+
+#: bin/am.pl:113 bin/ic.pl:874 bin/oe.pl:815 LedgerSMB/Scripts/account.pm:138
+msgid "Save as new"
+msgstr "当新的储存"
+
+#: bin/am.pl:117 bin/am.pl:339 bin/ic.pl:880 bin/pe.pl:467 bin/pe.pl:672
+#: bin/pe.pl:1044 bin/aa.pl:999 bin/oe.pl:841
+#: addons/1.4/pos/trunk/bin/pos.pl:625
+#: addons/1.3/extended_arap/trunk/UI/aa.html:620
+#: LedgerSMB/Scripts/account.pm:142 LedgerSMB/Report/Unapproved/Drafts.pm:205
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:228
+#: LedgerSMB/Report/COA.pm:123 LedgerSMB/Report/COA.pm:191
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:205
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:228
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:123
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:191
+msgid "Delete"
+msgstr "删除"
+
+#: bin/am.pl:139
+msgid "Account Number missing!"
+msgstr "未指明帐户编号!"
+
+#: bin/am.pl:140
+msgid "Account Type missing!"
+msgstr "未指明帐户类别!"
+
+#: bin/am.pl:148
+msgid "Cannot set account for more than one of AR, AP or IC"
+msgstr "不能设置多于一个应收帐款, 应付帐款或IC"
+
+#: bin/am.pl:158
 msgid "account cannot be set to any other type of account"
 msgstr "帐户不能送去其他类型帐户"
 
-msgid "as at"
-msgstr "截至"
-
-msgid "days"
-msgstr "日"
-
-msgid "does not exist"
-msgstr "不存在"
-
-msgid "done"
-msgstr "完成"
-
-msgid "ea"
-msgstr "个"
-
-msgid "failed"
-msgstr "失败"
-
-msgid "for"
+#: bin/am.pl:169
+msgid "Cannot set multiple options for [_1]"
 msgstr ""
 
-msgid "for Period"
-msgstr "期间"
+#: bin/am.pl:174
+msgid "Account saved!"
+msgstr "巳储存帐户"
 
-msgid "is already a member!"
-msgstr "已经是成员了!"
+#: bin/am.pl:177
+msgid "Cannot save account!"
+msgstr "不能储存帐户"
 
+#: bin/am.pl:189 LedgerSMB/Report/Trial_Balance.pm:137
+#: LedgerSMB/Report/COA.pm:97 LedgerSMB/Report/GL.pm:153
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:137
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:97
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:153
+#: tools/dbstrings:124
+msgid "GIFI"
+msgstr ""
+
+#: bin/am.pl:230
+#, fuzzy
+msgid "CSV Report"
+msgstr "报表"
+
+#: bin/am.pl:288
+msgid "Account does not exist!"
+msgstr "不存在帐户"
+
+#: bin/am.pl:311
+msgid "[_1] GIFI"
+msgstr ""
+
+#: bin/am.pl:345
+msgid "Copy to COA"
+msgstr "复制到 COA"
+
+#: bin/am.pl:368 bin/am.pl:376
+msgid "GIFI missing!"
+msgstr "未指明 GIFI!"
+
+#: bin/am.pl:370
+msgid "GIFI saved!"
+msgstr "巳储存"
+
+#: bin/am.pl:407
+msgid "GIFI deleted!"
+msgstr "巳删除"
+
+#: bin/am.pl:474 tools/dbstrings:154
+msgid "Type of Business"
+msgstr "业务种类"
+
+#: bin/am.pl:479 bin/am.pl:644 bin/am.pl:809 bin/am.pl:1011 bin/am.pl:1641
+#: bin/ir.pl:512 bin/ic.pl:770 bin/ic.pl:1098 bin/ic.pl:1161 bin/ic.pl:1199
+#: bin/ic.pl:1677 bin/ic.pl:2438 bin/ic.pl:2510 bin/arap.pl:391 bin/io.pl:208
+#: bin/io.pl:530 bin/io.pl:2120 bin/is.pl:533 bin/pe.pl:742 bin/pe.pl:788
+#: bin/pe.pl:817 bin/pe.pl:1484 bin/aa.pl:678 bin/aa.pl:726 bin/aa.pl:1540
+#: bin/oe.pl:1910 bin/oe.pl:2129 bin/oe.pl:2207 bin/oe.pl:2241 bin/oe.pl:2490
+#: addons/1.4/pos/trunk/bin/pos.pl:747
+#: addons/1.3/b_units/trunk/scripts/business_unit.pl:134
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:40
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:378
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:40
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:378
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:40
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:378
+#: UI/Reports/filters/trial_balance.html:84 UI/create_batch.html:22
+#: UI/Contact/divs/credit.html:22 UI/Contact/divs/credit.html:68
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:22
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:68
+#: addons/1.3/report_framework/trunk/UI/Reports/filters/trial_balance.html:84
+#: addons/1.3/extended_arap/trunk/UI/aa.html:290
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:17
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/search.html:100
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:16
+#: LedgerSMB/Scripts/asset.pm:166 LedgerSMB/Scripts/asset.pm:313
+#: LedgerSMB/Scripts/asset.pm:496 LedgerSMB/Scripts/asset.pm:799
+#: LedgerSMB/Scripts/asset.pm:870 LedgerSMB/Scripts/asset.pm:1006
+#: LedgerSMB/Scripts/business_unit.pm:139
+#: LedgerSMB/Report/Trial_Balance/List.pm:51 LedgerSMB/Report/Aging.pm:105
+#: LedgerSMB/Report/Unapproved/Drafts.pm:95
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:102
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:111
+#: LedgerSMB/Report/co/Caja_Diaria.pm:71
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:70 LedgerSMB/Report/Timecards.pm:104
+#: LedgerSMB/Report/Timecards.pm:116 LedgerSMB/Report/COA.pm:91
+#: LedgerSMB/Report/Inventory/Search.pm:197
+#: LedgerSMB/Report/Inventory/Adj_Details.pm:81
+#: LedgerSMB/Report/Budget/Variance.pm:66
+#: LedgerSMB/Report/Budget/Variance.pm:110 LedgerSMB/Report/Budget/Search.pm:83
+#: LedgerSMB/Report/PNL/Product.pm:79 LedgerSMB/Report/GL.pm:98
+#: LedgerSMB/Report/Contact/Search.pm:71 LedgerSMB/Report/Contact/History.pm:73
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:51
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:105
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:95
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:102
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:111
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:71
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:70
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:91
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:81
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:66
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:110
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:83
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Product.pm:79
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:98
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:71
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:73
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:72
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:71
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:40
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:157
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:221 tools/dbstrings:51
+#: tools/dbstrings:61
+msgid "Description"
+msgstr "说明"
+
+#: bin/am.pl:481
+#, fuzzy
+msgid "Discount %"
+msgstr "折扣"
+
+#: bin/am.pl:514 tools/dbstrings:79
+msgid "Add Business"
+msgstr "新增业务"
+
+#: bin/am.pl:536
+#, fuzzy
+msgid "[_1] Business"
+msgstr "业务"
+
+#: bin/am.pl:552 bin/am.pl:721 bin/am.pl:880 bin/am.pl:1569
+msgid "Description missing!"
+msgstr "未指明描述"
+
+#: bin/am.pl:554
+msgid "Business saved!"
+msgstr "巳储存业务"
+
+#: bin/am.pl:561
+msgid "Business deleted!"
+msgstr "巳删除业务"
+
+#: bin/am.pl:633
+msgid "Standard Industrial Codes"
+msgstr "标准工业编码"
+
+#: bin/am.pl:640 bin/am.pl:807 bin/am.pl:1009
+msgid "Code"
+msgstr "编码"
+
+#: bin/am.pl:681 tools/dbstrings:83
+msgid "Add SIC"
+msgstr "新增原文"
+
+#: bin/am.pl:703
+msgid "[_1] SIC"
+msgstr ""
+
+#: bin/am.pl:720 bin/am.pl:879
+msgid "Code missing!"
+msgstr "未指明编码"
+
+#: bin/am.pl:723
+msgid "SIC saved!"
+msgstr "巳储存原文"
+
+#: bin/am.pl:730
+msgid "SIC deleted!"
+msgstr "巳删除原文"
+
+#: bin/am.pl:802
+msgid "Languages"
+msgstr "语言"
+
+#: bin/am.pl:843 tools/dbstrings:81
+msgid "Add Language"
+msgstr "新增语言"
+
+#: bin/am.pl:866
+#, fuzzy
+msgid "[_1] Language"
+msgstr "语言"
+
+#: bin/am.pl:921
+msgid "Language saved!"
+msgstr "巳储存语言"
+
+#: bin/am.pl:927 bin/bp.pl:194 bin/oe.pl:1351
+msgid "Confirm!"
+msgstr "入帐成功!"
+
+#: bin/am.pl:935
+#, fuzzy
+msgid "Delete Language"
+msgstr "编辑语言"
+
+#: bin/am.pl:946
+msgid "Deleting a language will also delete the templates for the language [_1]"
+msgstr ""
+
+#: bin/am.pl:961
+msgid "Language deleted!"
+msgstr "巳删除语言"
+
+#: bin/am.pl:990
+msgid "Default Template"
+msgstr ""
+
+#: bin/am.pl:1027
+#, fuzzy
+msgid "Default"
+msgstr "预设"
+
+#: bin/am.pl:1078 bin/am.pl:1096
+msgid "Edit Template"
+msgstr "编辑模版"
+
+#: bin/am.pl:1114 bin/aa.pl:1004 bin/gl.pl:275
+#: addons/1.3/extended_arap/trunk/UI/aa.html:634
+#, fuzzy
+msgid "Save Template"
+msgstr "LaTex 模版"
+
+#: bin/am.pl:1130
+msgid "Template saved!"
+msgstr "巳储存模版"
+
+#: bin/am.pl:1163 tools/dbstrings:75
+msgid "Taxes"
+msgstr ""
+
+#: bin/am.pl:1370
+#, fuzzy
+msgid "Edit Preferences for [_1]"
+msgstr "设定使用者"
+
+#: bin/am.pl:1401
+#, fuzzy
+msgid "Taxes saved!"
+msgstr "巳储存模版"
+
+#: bin/am.pl:1404
+#, fuzzy
+msgid "Cannot save taxes!"
+msgstr "不能储存定单"
+
+#: bin/am.pl:1414
+msgid "Password does not match!"
+msgstr "密码勿比配"
+
+#: bin/am.pl:1419
+msgid "Preferences saved!"
+msgstr "个人设定已储存!"
+
+#: bin/am.pl:1422
+msgid "Cannot save preferences!"
+msgstr "不能储存优先选择 "
+
+#: bin/am.pl:1491 tools/dbstrings:156
+msgid "Warehouses"
+msgstr "仓库"
+
+#: bin/am.pl:1530 tools/dbstrings:77
+msgid "Add Warehouse"
+msgstr "新增仓库"
+
+#: bin/am.pl:1553
+#, fuzzy
+msgid "[_1] Warehouse"
+msgstr "仓库"
+
+#: bin/am.pl:1571
+msgid "Warehouse saved!"
+msgstr "巳储存仓库"
+
+#: bin/am.pl:1578
+msgid "Warehouse deleted!"
+msgstr "巳删除仓库"
+
+#: bin/am.pl:1585
 msgid "localhost"
 msgstr "本地寄主"
 
-msgid "locked!"
-msgstr "巳锁上"
+#: bin/am.pl:1589
+msgid "About"
+msgstr "关于"
 
-msgid "partsgroup"
+#: bin/am.pl:1617 tools/dbstrings:202
+msgid "Recurring Transactions"
+msgstr "多次记录"
+
+#: bin/am.pl:1636 bin/arap.pl:759
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:377
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:377
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:377
+#: LedgerSMB/Report/Unapproved/Drafts.pm:89
+#: LedgerSMB/Report/Unapproved/Drafts.pm:128
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:144
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:105
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:97
+#: LedgerSMB/Report/Budget/Search.pm:78 LedgerSMB/Report/Budget/Search.pm:124
+#: LedgerSMB/Report/GL.pm:92 LedgerSMB/Report/GL.pm:206
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:89
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:128
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:144
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:105
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:97
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:78
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:124
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:92
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:206
+msgid "Reference"
+msgstr "参考资料"
+
+#: bin/am.pl:1640 bin/bp.pl:384 bin/aa.pl:1635
+#: addons/1.3/b_units/trunk/scripts/business_unit.pl:132
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:14
+#: LedgerSMB/Scripts/asset.pm:165 LedgerSMB/Scripts/asset.pm:631
+#: LedgerSMB/Scripts/asset.pm:1004 LedgerSMB/Scripts/business_unit.pm:137
+#: LedgerSMB/Report/Unapproved/Drafts.pm:79
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:86
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:90
+#: LedgerSMB/Report/Invoices/Transactions.pm:224
+#: LedgerSMB/Report/Invoices/Outstanding.pm:184 LedgerSMB/Report/Orders.pm:208
+#: LedgerSMB/Report/Timecards.pm:108 LedgerSMB/Report/Inventory/Search.pm:188
+#: LedgerSMB/Report/GL.pm:82 LedgerSMB/Report/Contact/Purchase.pm:55
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:79
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:86
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:90
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:82
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:55
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:39
+msgid "ID"
+msgstr "编号"
+
+#: bin/am.pl:1643
+msgid "Next"
 msgstr ""
 
-msgid "posted!"
+#: bin/am.pl:1647
+msgid "Ends"
+msgstr ""
+
+#: bin/am.pl:1650 bin/ir.pl:615 bin/ir.pl:791 bin/is.pl:676 bin/is.pl:836
+#: bin/pe.pl:1489 bin/aa.pl:723 bin/aa.pl:883 bin/aa.pl:1657
+#: addons/1.4/pos/trunk/bin/pos.pl:457
+#: addons/1.3/extended_arap/trunk/UI/aa.html:286
+#: addons/1.3/extended_arap/trunk/UI/aa.html:400
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:116
+#: LedgerSMB/Report/Invoices/Transactions.pm:239
+#: LedgerSMB/Report/Invoices/Outstanding.pm:209 LedgerSMB/Report/Orders.pm:233
+#: LedgerSMB/Report/Contact/Purchase.pm:79
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:116
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:79
+msgid "Amount"
+msgstr "总计"
+
+#: bin/am.pl:1652 bin/arap.pl:726
+msgid "Every"
+msgstr ""
+
+#: bin/am.pl:1653
+msgid "Times"
+msgstr ""
+
+#: bin/am.pl:1654 bin/arap.pl:583 bin/is.pl:963 bin/oe.pl:808 bin/oe.pl:2014
+msgid "E-mail"
+msgstr "电子邮件"
+
+#: bin/am.pl:1655 bin/bp.pl:503 bin/arap.pl:658 bin/is.pl:958 bin/aa.pl:994
+#: bin/oe.pl:803 bin/oe.pl:2011 UI/taxform/details_report.html:55
+#: UI/taxform/summary_report.html:53
+#: addons/1.3/extended_arap/trunk/UI/aa.html:555
+msgid "Print"
+msgstr "列印"
+
+#: bin/am.pl:1659 tools/dbstrings:112
+msgid "AR"
+msgstr "应收帐款"
+
+#: bin/am.pl:1660 tools/dbstrings:113
+msgid "AP"
+msgstr "应付帐款"
+
+#: bin/am.pl:1661
+msgid "GL"
+msgstr ""
+
+#: bin/am.pl:1662 LedgerSMB/Report/Orders.pm:186 LedgerSMB/Report/Orders.pm:286
+#: tools/dbstrings:32 tools/dbstrings:34 tools/dbstrings:37 tools/dbstrings:56
+#: tools/dbstrings:65
+msgid "Sales Orders"
+msgstr "销货单"
+
+#: bin/am.pl:1663 LedgerSMB/Report/Orders.pm:189 LedgerSMB/Report/Orders.pm:288
+#: tools/dbstrings:33 tools/dbstrings:35 tools/dbstrings:38 tools/dbstrings:71
+msgid "Purchase Orders"
+msgstr "采购单"
+
+#: bin/am.pl:1714
+msgid "Next Number"
+msgstr ""
+
+#: bin/am.pl:1791
+msgid "Process Transactions"
+msgstr ""
+
+#: bin/am.pl:1868 bin/arapprn.pl:534 bin/io.pl:1445
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:411
+msgid "Postscript"
+msgstr "附言"
+
+#: bin/am.pl:1869 bin/arapprn.pl:535 bin/io.pl:1449
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:412
+msgid "PDF"
+msgstr "PDF"
+
+#: bin/am.pl:2020
+#, fuzzy
+msgid "Posting Sales Invoice [_1]"
+msgstr "销货发票"
+
+#: bin/am.pl:2030
+#, fuzzy
+msgid "Posting Vendor Invoice [_1]"
+msgstr "供应商发票"
+
+#: bin/am.pl:2042 bin/am.pl:2051
+#, fuzzy
+msgid "Posting Transaction [_1]"
+msgstr "应付交易"
+
+#: bin/am.pl:2060 bin/am.pl:2131 bin/am.pl:2185 bin/am.pl:2228 bin/am.pl:2275
+#: bin/bp.pl:261
+msgid "done"
+msgstr "完成"
+
+#: bin/am.pl:2081 bin/io.pl:1364 bin/io.pl:1544 bin/is.pl:965 bin/oe.pl:302
+#: bin/oe.pl:824 bin/oe.pl:1260 tools/dbstrings:29 tools/dbstrings:92
+#: tools/dbstrings:106
+msgid "Sales Order"
+msgstr "销货单"
+
+#: bin/am.pl:2087 bin/ir.pl:898 bin/io.pl:1381 bin/io.pl:1592 bin/oe.pl:316
+#: bin/oe.pl:835 bin/oe.pl:1266 tools/dbstrings:30 tools/dbstrings:94
+#: tools/dbstrings:108
+msgid "Purchase Order"
+msgstr "采购单"
+
+#: bin/am.pl:2126
+msgid "Saving [_1] [_2]"
+msgstr ""
+
+#: bin/am.pl:2134 bin/am.pl:2231 bin/am.pl:2278
+msgid "failed"
+msgstr "失败"
+
+#: bin/am.pl:2180
+#, fuzzy
+msgid "Posting GL Transaction [_1]"
+msgstr "GL交易"
+
+#: bin/am.pl:2217 bin/bp.pl:253
+msgid "Printing"
+msgstr "在列印"
+
+#: bin/am.pl:2221 bin/am.pl:2268
+msgid "Invalid redirect"
+msgstr ""
+
+#: bin/am.pl:2255
+msgid "Sending"
+msgstr ""
+
+#: bin/am.pl:2262 bin/io.pl:1649
+msgid "E-mail address missing!"
+msgstr "未指明电子邮件位址!"
+
+#: bin/rp.pl:155 bin/pe.pl:187 bin/pe.pl:284 bin/pe.pl:500
+msgid "All"
+msgstr "全部"
+
+#: bin/rp.pl:156
+msgid "Last Only"
+msgstr ""
+
+#: bin/rp.pl:157
+msgid "None"
+msgstr ""
+
+#: bin/rp.pl:169 bin/ic.pl:979 bin/ic.pl:1118 bin/ic.pl:2190 bin/ic.pl:2464
+#: bin/ic.pl:2618 bin/bp.pl:163 bin/arap.pl:265 bin/arap.pl:473
+#: bin/arapprn.pl:469 bin/io.pl:643 bin/io.pl:849 bin/io.pl:1287 bin/io.pl:2223
+#: bin/pe.pl:209 bin/pe.pl:761 bin/pe.pl:1190 bin/pe.pl:1360 bin/pe.pl:1637
+#: bin/aa.pl:1776 bin/oe.pl:1581 bin/oe.pl:2148 bin/oe.pl:2659
+#: addons/1.4/pos/trunk/bin/pos.pl:1174 UI/asset/begin_depreciation_all.html:25
+#: UI/asset/begin_approval.html:66 UI/asset/begin_report.html:58
+#: LedgerSMB/Scripts/payment.pm:607 LedgerSMB/Scripts/payment.pm:674
+#: LedgerSMB/Scripts/payment.pm:1314
+msgid "Continue"
+msgstr "继续"
+
+#: bin/rp.pl:341
+msgid "Current Earnings"
+msgstr "现有收益"
+
+#: bin/rp.pl:401
+#, fuzzy
+msgid "Department: [_1]"
+msgstr "部门"
+
+#: bin/rp.pl:406
+#, fuzzy
+msgid "Project Number: [_1]"
+msgstr "方案号码"
+
+#: bin/rp.pl:457
+msgid "N/A"
+msgstr "不适用"
+
+#: bin/rp.pl:618
+#, fuzzy
+msgid "[_1] Report"
+msgstr "报表"
+
+#: bin/ir.pl:91 bin/ir.pl:1445 bin/is.pl:1491 bin/aa.pl:1199 bin/aa.pl:1454
+#: bin/gl.pl:129
+#, fuzzy
+msgid "Draft Posted"
 msgstr "巳加入"
 
-msgid "sent"
-msgstr "巳送出"
+#: bin/ir.pl:110 bin/ir.pl:129
+#, fuzzy
+msgid "Add Debit Invoice"
+msgstr "新增销售发票"
 
-msgid "successfully created!"
-msgstr "成功建立!"
+#: bin/ir.pl:114 bin/oe.pl:1449
+msgid "Add Vendor Invoice"
+msgstr "新增供应商发票"
 
-msgid "successfully deleted!"
-msgstr "成功删除!"
+#: bin/ir.pl:132
+msgid "Edit Vendor Invoice"
+msgstr "编辑供应商发票"
 
-msgid "time(s)"
-msgstr "次"
+#: bin/ir.pl:157 bin/is.pl:129 bin/aa.pl:199
+msgid "No currencies defined.  Please set these up under System/Defaults."
+msgstr ""
 
+#: bin/ir.pl:370 bin/pe.pl:821 bin/pe.pl:999
+#: addons/1.4/pos/trunk/bin/pos.pl:308 UI/Contact/divs/credit.html:227
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:222
+#: LedgerSMB/Report/Aging.pm:92
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:92
+#: tools/dbstrings:153
+msgid "Language"
+msgstr "语言"
+
+#: bin/ir.pl:385 bin/is.pl:363 bin/aa.pl:491 bin/aa.pl:1664 bin/oe.pl:370
+#: bin/oe.pl:1559 addons/1.4/pos/trunk/bin/pos.pl:213
+#: addons/1.3/extended_arap/trunk/UI/aa.html:129 LedgerSMB/Report/Orders.pm:237
+#: LedgerSMB/Report/Inventory/Search.pm:285
+#: LedgerSMB/Report/Contact/Search.pm:79
+#: LedgerSMB/Report/Contact/Purchase.pm:75
+#: LedgerSMB/Report/Contact/History.pm:65
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:79
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:75
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:65
+msgid "Currency"
+msgstr "币别"
+
+#: bin/ir.pl:398 bin/is.pl:376 bin/aa.pl:503 bin/oe.pl:384 bin/oe.pl:392
+#: bin/oe.pl:1567 addons/1.4/pos/trunk/bin/pos.pl:227
+#: addons/1.4/pos/trunk/bin/pos.pl:233 LedgerSMB/Scripts/payment.pm:774
+#: LedgerSMB/Report/Contact/History.pm:101
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:101
+msgid "Exchange Rate"
+msgstr "汇率"
+
+#: bin/ir.pl:417 bin/ir.pl:907 bin/is.pl:393 bin/is.pl:975 bin/aa.pl:547
+#: bin/aa.pl:1006 bin/gl.pl:281 bin/oe.pl:543
+msgid "New"
+msgstr ""
+
+#: bin/ir.pl:422 bin/is.pl:398 bin/aa.pl:531 bin/oe.pl:548
+#: addons/1.4/pos/trunk/bin/pos.pl:253
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:382
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:382
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:382
+#: addons/1.3/extended_arap/trunk/UI/aa.html:152 LedgerSMB/Scripts/asset.pm:319
+msgid "Department"
+msgstr "部门"
+
+#: bin/ir.pl:466 bin/ic.pl:1435 bin/pe.pl:1617 bin/aa.pl:594 bin/aa.pl:1623
+#: bin/oe.pl:2492 bin/oe.pl:2648 LedgerSMB/Report/Aging.pm:78
+#: LedgerSMB/Report/Invoices/Transactions.pm:216
+#: LedgerSMB/Report/Invoices/Outstanding.pm:168 LedgerSMB/Report/Orders.pm:190
+#: LedgerSMB/Report/Orders.pm:196
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:78
+msgid "Vendor"
+msgstr "供应商"
+
+#: bin/ir.pl:478 bin/is.pl:496 bin/aa.pl:629 bin/oe.pl:457
+#: addons/1.4/pos/trunk/bin/pos.pl:363
+#: addons/1.3/extended_arap/trunk/UI/aa.html:74
+msgid "Credit Limit"
+msgstr "信用额度"
+
+#: bin/ir.pl:483 bin/is.pl:501 bin/aa.pl:631 bin/oe.pl:462
+#: addons/1.4/pos/trunk/bin/pos.pl:366
+#: addons/1.3/extended_arap/trunk/UI/aa.html:81
+msgid "Remaining"
+msgstr "尚【◎Fix:◎余;◎馀】"
+
+#: bin/ir.pl:493 bin/is.pl:511 bin/oe.pl:471
+msgid "Entity Code"
+msgstr ""
+
+#: bin/ir.pl:496 bin/ir.pl:793 bin/ic.pl:1537 bin/is.pl:514 bin/is.pl:838
+#: bin/aa.pl:668 bin/aa.pl:725 bin/aa.pl:885 bin/aa.pl:1697 bin/oe.pl:474
+#: addons/1.3/extended_arap/trunk/UI/aa.html:117
+#: addons/1.3/extended_arap/trunk/UI/aa.html:289
+#: addons/1.3/extended_arap/trunk/UI/aa.html:404
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:13
+#: LedgerSMB/Report/Invoices/Outstanding.pm:200
+#: LedgerSMB/Report/co/Caja_Diaria.pm:65
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:64
+#: LedgerSMB/Report/Reconciliation/Summary.pm:131
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:65
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:64
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:66
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:65
+msgid "Account"
+msgstr "帐户"
+
+#: bin/ir.pl:505 bin/is.pl:526 addons/1.4/pos/trunk/bin/pos.pl:376
+msgid "Record in"
+msgstr "记录【◎Fix:◎于;◎於】"
+
+#: bin/ir.pl:522 bin/bp.pl:100 bin/is.pl:552 bin/aa.pl:689 bin/aa.pl:1524
+#: bin/aa.pl:1638 addons/1.3/extended_arap/trunk/UI/aa.html:209
+#: LedgerSMB/Report/Margin/Invoice.pm:69 LedgerSMB/Report/PNL/Invoice.pm:87
+#: LedgerSMB/Report/Contact/Purchase.pm:63
+#: LedgerSMB/Report/Contact/History.pm:61
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Margin/Invoice.pm:69
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:87
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:63
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:61
+msgid "Invoice Number"
+msgstr "发票编号"
+
+#: bin/ir.pl:526 bin/bp.pl:104 bin/is.pl:556 bin/aa.pl:693 bin/aa.pl:1528
+#: bin/aa.pl:1641 bin/oe.pl:431 bin/oe.pl:1858
+#: addons/1.3/extended_arap/trunk/UI/aa.html:222
+#: LedgerSMB/Report/Contact/Purchase.pm:67
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:67
+msgid "Order Number"
+msgstr "订单编号"
+
+#: bin/ir.pl:531 bin/is.pl:561 bin/aa.pl:697 bin/aa.pl:1645
+#: addons/1.3/extended_arap/trunk/UI/aa.html:235
+msgid "Invoice Date"
+msgstr "发票日期"
+
+#: bin/ir.pl:535 bin/is.pl:565 bin/aa.pl:701 bin/aa.pl:1671
+#: addons/1.3/extended_arap/trunk/UI/aa.html:250 LedgerSMB/Report/Aging.pm:115
+#: LedgerSMB/Report/Invoices/Transactions.pm:257
+#: LedgerSMB/Report/Invoices/Outstanding.pm:237
+#: LedgerSMB/Report/Contact/Purchase.pm:99
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:115
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:99
+msgid "Due Date"
+msgstr "到期日"
+
+#: bin/ir.pl:539 bin/is.pl:569 bin/aa.pl:705 bin/aa.pl:1532 bin/aa.pl:1643
+#: bin/oe.pl:444 bin/oe.pl:1868 addons/1.3/extended_arap/trunk/UI/aa.html:264
+#: LedgerSMB/Report/Invoices/Outstanding.pm:196 LedgerSMB/Report/Orders.pm:245
+#: LedgerSMB/Report/Contact/Purchase.pm:71
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:71
+msgid "PO Number"
+msgstr "采购单编号"
+
+#: bin/ir.pl:577 bin/is.pl:465 bin/is.pl:634
+msgid "Automatic"
+msgstr ""
+
+#: bin/ir.pl:581 bin/is.pl:469 bin/is.pl:638
+#, fuzzy
+msgid "Manual"
+msgstr "一月"
+
+#: bin/ir.pl:606 bin/is.pl:666 bin/aa.pl:516 bin/oe.pl:692
+#: addons/1.4/pos/trunk/bin/pos.pl:423
+msgid "Tax Included"
+msgstr "巳含税金"
+
+#: bin/ir.pl:616 bin/is.pl:677
+msgid "Rate"
+msgstr "税率"
+
+#: bin/ir.pl:617 bin/is.pl:678 LedgerSMB/Scripts/asset.pm:1010
+msgid "Basis"
+msgstr ""
+
+#: bin/ir.pl:618 bin/is.pl:679
+#, fuzzy
+msgid "Tax Code"
+msgstr "编码"
+
+#: bin/ir.pl:619 bin/ir.pl:795 bin/is.pl:680 bin/is.pl:840 bin/aa.pl:887
+#: addons/1.4/pos/trunk/bin/pos.pl:459
+#: addons/1.3/extended_arap/trunk/UI/aa.html:399
+#: LedgerSMB/Scripts/payment.pm:151 LedgerSMB/Scripts/payment.pm:768
+#: LedgerSMB/Report/GL.pm:123
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:123
+msgid "Memo"
+msgstr "备忘录"
+
+#: bin/ir.pl:697 bin/io.pl:1712 bin/is.pl:744 bin/aa.pl:1759 bin/oe.pl:717
+#: addons/1.4/pos/trunk/bin/ps.pl:203 addons/1.4/pos/trunk/bin/pos.pl:449
+msgid "Subtotal"
+msgstr "小计"
+
+#: bin/ir.pl:725 bin/ic.pl:794 bin/is.pl:774 bin/aa.pl:853 bin/aa.pl:1544
+#: bin/aa.pl:1675 bin/oe.pl:735
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:126
+#: addons/1.3/extended_arap/trunk/UI/aa.html:373
+#: LedgerSMB/Scripts/contact.pm:126 LedgerSMB/Scripts/employee.pm:111
+#: LedgerSMB/Report/Invoices/Transactions.pm:260
+#: LedgerSMB/Report/Invoices/Outstanding.pm:241
+#: LedgerSMB/Report/Inventory/Search.pm:265
+#: LedgerSMB/Report/Contact/Purchase.pm:103
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:103
+msgid "Notes"
+msgstr "备注"
+
+#: bin/ir.pl:728 bin/ir.pl:737 bin/is.pl:779 bin/is.pl:787 bin/aa.pl:854
+#: bin/oe.pl:736
+msgid "Internal Notes"
+msgstr "内部备忘录"
+
+#: bin/ir.pl:729 bin/ir.pl:740
+msgid "Import Text"
+msgstr ""
+
+#: bin/ir.pl:758 bin/is.pl:463 bin/is.pl:802
+msgid "Calculate Taxes"
+msgstr ""
+
+#: bin/ir.pl:766 bin/is.pl:810 bin/aa.pl:1662 bin/oe.pl:749
+#: addons/1.4/pos/trunk/bin/pos.pl:573 LedgerSMB/Scripts/payment.pm:198
+#: LedgerSMB/Scripts/payment.pm:764 LedgerSMB/Scripts/asset.pm:637
+#: LedgerSMB/Report/Aging.pm:142 LedgerSMB/Report/Invoices/Transactions.pm:245
+#: LedgerSMB/Report/Invoices/Outstanding.pm:217
+#: LedgerSMB/Report/Inventory/Search.pm:293
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:142
+msgid "Total"
+msgstr "总计"
+
+#: bin/ir.pl:779 bin/is.pl:824 bin/aa.pl:867
+#: addons/1.3/extended_arap/trunk/UI/aa.html:390 tools/dbstrings:24
+#: tools/dbstrings:143
+msgid "Payments"
+msgstr "付款"
+
+#: bin/ir.pl:790 bin/bp.pl:364 bin/is.pl:835 bin/pe.pl:1474 bin/aa.pl:882
+#: bin/oe.pl:1563 UI/asset/begin_depreciation_all.html:12
+#: UI/asset/begin_report.html:22 addons/1.3/extended_arap/trunk/UI/aa.html:397
+#: LedgerSMB/Scripts/payment.pm:149 LedgerSMB/Scripts/payment.pm:763
+#: LedgerSMB/Scripts/asset.pm:632 LedgerSMB/Report/Aging.pm:110
+#: LedgerSMB/Report/Unapproved/Drafts.pm:84
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:91
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:100
+#: LedgerSMB/Report/Invoices/Transactions.pm:227
+#: LedgerSMB/Report/Invoices/Outstanding.pm:180 LedgerSMB/Report/Orders.pm:212
+#: LedgerSMB/Report/Timecards.pm:96 LedgerSMB/Report/Inventory/Search_Adj.pm:93
+#: LedgerSMB/Report/GL.pm:87
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:110
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:84
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:91
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:100
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:93
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:87
+msgid "Date"
+msgstr "日期"
+
+#: bin/ir.pl:792 bin/is.pl:837 bin/aa.pl:884
+#: addons/1.3/extended_arap/trunk/UI/aa.html:402
+msgid "Exch"
+msgstr "汇率"
+
+#: bin/ir.pl:794 bin/is.pl:839 bin/aa.pl:886 bin/aa.pl:1536
+#: addons/1.4/pos/trunk/bin/pos.pl:458
+#: addons/1.3/extended_arap/trunk/UI/aa.html:398 LedgerSMB/Scripts/recon.pm:208
+#: LedgerSMB/Scripts/payment.pm:150 LedgerSMB/Report/Invoices/Payments.pm:140
+#: LedgerSMB/Report/Inventory/Adj_Details.pm:66
+#: LedgerSMB/Report/Budget/Search.pm:126 LedgerSMB/Report/GL.pm:118
+#: LedgerSMB/Report/GL.pm:208
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:66
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:126
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:118
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:208
+msgid "Source"
+msgstr "来源"
+
+#: bin/ir.pl:887 bin/ic.pl:864 bin/io.pl:2227 bin/is.pl:952 bin/pe.pl:1042
+#: bin/aa.pl:988 bin/gl.pl:270 bin/oe.pl:801 bin/oe.pl:2010
+#: addons/1.4/pos/trunk/bin/pos.pl:617
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:132
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:132
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:132
+#: UI/payments/payment2.html:324 addons/1.3/extended_arap/trunk/UI/aa.html:548
+#: LedgerSMB/Scripts/budgets.pm:92
+msgid "Update"
+msgstr "更新"
+
+#: bin/ir.pl:891 bin/is.pl:956 bin/aa.pl:992
+#, fuzzy
+msgid "Copy to New"
+msgstr "复制到 COA"
+
+#: bin/ir.pl:892 bin/is.pl:959 bin/aa.pl:995 bin/gl.pl:271
+#: UI/payments/payment2.html:330 addons/1.3/extended_arap/trunk/UI/aa.html:594
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:222
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:222
+msgid "Post"
+msgstr "加入"
+
+#: bin/ir.pl:894 bin/gl.pl:277
+msgid "Post as new"
+msgstr "当新的加入"
+
+#: bin/ir.pl:901 bin/is.pl:967 bin/aa.pl:997 bin/gl.pl:279 bin/oe.pl:839
+#: addons/1.3/extended_arap/trunk/UI/aa.html:614
+msgid "Schedule"
+msgstr "预定"
+
+#: bin/ir.pl:903 bin/is.pl:762 bin/aa.pl:1729
+#, fuzzy
+msgid "On Hold"
+msgstr "巳有存量"
+
+#: bin/ir.pl:905 bin/is.pl:973 bin/aa.pl:1002
+#: addons/1.3/extended_arap/trunk/UI/aa.html:627
+#, fuzzy
+msgid "Save Info"
+msgstr "储存"
+
+#: bin/ir.pl:926 bin/is.pl:996 bin/aa.pl:1014 bin/gl.pl:309
+#: addons/1.3/extended_arap/trunk/UI/aa.html:564
+#, fuzzy
+msgid "Post as Saved"
+msgstr "当新的加入"
+
+#: bin/ir.pl:931 bin/is.pl:1001 bin/aa.pl:1019 bin/gl.pl:316
+#: addons/1.3/extended_arap/trunk/UI/aa.html:573
+#, fuzzy
+msgid "Post as Shown"
+msgstr "当新的加入"
+
+#: bin/ir.pl:958 bin/ic.pl:968 bin/is.pl:1044 bin/aa.pl:1063
+msgid "Profit/Loss"
+msgstr ""
+
+#: bin/ir.pl:961 bin/ic.pl:895 bin/is.pl:1047 bin/aa.pl:1066 bin/oe.pl:907
+msgid "Attached and Linked Files"
+msgstr ""
+
+#: bin/ir.pl:963 bin/ir.pl:982 bin/ic.pl:897 bin/ic.pl:916 bin/is.pl:1049
+#: bin/is.pl:1068 bin/aa.pl:1068 bin/aa.pl:1087 bin/oe.pl:909 bin/oe.pl:928
+msgid "File name"
+msgstr ""
+
+#: bin/ir.pl:964 bin/ir.pl:983 bin/ic.pl:898 bin/ic.pl:917 bin/is.pl:1050
+#: bin/is.pl:1069 bin/aa.pl:1069 bin/aa.pl:1088 bin/oe.pl:910 bin/oe.pl:929
+msgid "File type"
+msgstr ""
+
+#: bin/ir.pl:965 bin/ir.pl:986 bin/ic.pl:899 bin/ic.pl:920 bin/is.pl:1051
+#: bin/is.pl:1072 bin/aa.pl:1070 bin/aa.pl:1091 bin/oe.pl:911 bin/oe.pl:932
+#, fuzzy
+msgid "Attached at"
+msgstr "附档"
+
+#: bin/ir.pl:966 bin/ir.pl:987 bin/ic.pl:900 bin/ic.pl:921 bin/is.pl:1052
+#: bin/is.pl:1073 bin/aa.pl:1071 bin/aa.pl:1092 bin/oe.pl:912 bin/oe.pl:933
+#, fuzzy
+msgid "Attached by"
+msgstr "附档"
+
+#: bin/ir.pl:984 bin/ic.pl:918 bin/is.pl:1070 bin/aa.pl:1089 bin/oe.pl:930
+msgid "Attached To Type"
+msgstr ""
+
+#: bin/ir.pl:985 bin/ic.pl:919 bin/is.pl:1071 bin/aa.pl:1090 bin/oe.pl:931
+#, fuzzy
+msgid "Attached To"
+msgstr "附档"
+
+#: bin/ir.pl:1011 bin/ic.pl:947 bin/is.pl:1097 bin/aa.pl:1118 bin/oe.pl:957
+#, fuzzy
+msgid "Attach"
+msgstr "附档"
+
+#: bin/ir.pl:1057 bin/ir.pl:1313 bin/is.pl:1334 bin/oe.pl:1209
+msgid "ea"
+msgstr "个"
+
+#: bin/ir.pl:1326 bin/is.pl:1346 bin/oe.pl:1221
+msgid "Could not save the data.  Please try again"
+msgstr ""
+
+#: bin/ir.pl:1335 bin/is.pl:1354 bin/aa.pl:1344
+msgid "Invoice Date missing!"
+msgstr "未指明发票日期!"
+
+#: bin/ir.pl:1336 bin/aa.pl:1341
+msgid "Vendor missing!"
+msgstr "未指明供应商"
+
+#: bin/ir.pl:1349 bin/is.pl:1368
+msgid "Cannot post invoice for a closed period!"
+msgstr "不能在已关闭的时段内加入发票"
+
+#: bin/ir.pl:1352 bin/is.pl:1371 bin/aa.pl:1355 bin/oe.pl:1245 bin/oe.pl:1594
+#: addons/1.4/pos/trunk/bin/pos.pl:699
+msgid "Exchange rate missing!"
+msgstr "未指明汇率"
+
+#: bin/ir.pl:1360 bin/is.pl:1380 bin/aa.pl:1363
+msgid "Payment date missing!"
+msgstr "未指明付款日期!"
+
+#: bin/ir.pl:1363 bin/is.pl:1383 bin/aa.pl:1366
+msgid "Cannot post payment for a closed period!"
+msgstr "不能在已关闭的时段内加入款项"
+
+#: bin/ir.pl:1370 bin/is.pl:1390 bin/aa.pl:1373
+msgid "Exchange rate for payment missing!"
+msgstr "未指明付款的汇率"
+
+#: bin/ir.pl:1389 bin/is.pl:1411
+msgid "Cannot post invoice!"
+msgstr "不能加入发票"
+
+#: bin/ic.pl:130
+#, fuzzy
+msgid "Cannot create Part; Inventory account does not exist!"
+msgstr "存货科目勿存在"
+
+#: bin/ic.pl:133
+#, fuzzy
+msgid "Cannot create Part; Income account does not exist!"
+msgstr "收入科目勿存在"
+
+#: bin/ic.pl:136
+#, fuzzy
+msgid "Cannot create Part; COGS account does not exist!"
+msgstr "收入科目勿存在"
+
+#: bin/ic.pl:145
+#, fuzzy
+msgid "Cannot create Service; Income account does not exist!"
+msgstr "收入科目勿存在"
+
+#: bin/ic.pl:149
+#, fuzzy
+msgid "Cannot create Service; Expense account does not exist!"
+msgstr "费用科目勿存在"
+
+#: bin/ic.pl:158
+#, fuzzy
+msgid "Cannot create Assembly; Income account does not exist!"
+msgstr "收入科目勿存在"
+
+#: bin/ic.pl:166
+#, fuzzy
+msgid "Cannot create Labor; Inventory account does not exist!"
+msgstr "存货科目勿存在"
+
+#: bin/ic.pl:169
+#, fuzzy
+msgid "Cannot create Labor; COGS account does not exist!"
+msgstr "存货科目勿存在"
+
+#: bin/ic.pl:430 bin/ic.pl:1008 bin/ic.pl:1014 bin/ic.pl:1154 bin/ic.pl:1686
+#: bin/io.pl:240 bin/io.pl:532 bin/pe.pl:142 bin/pe.pl:291 bin/pe.pl:298
+#: bin/pe.pl:438 bin/oe.pl:2133 bin/oe.pl:2211 bin/oe.pl:2246
+msgid "Group"
+msgstr "组"
+
+#: bin/ic.pl:443 bin/ic.pl:1540 LedgerSMB/Report/Inventory/Search.pm:225
+#: LedgerSMB/Report/Contact/History.pm:85
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:85
+msgid "Sell Price"
+msgstr "售价"
+
+#: bin/ic.pl:447 LedgerSMB/Report/Inventory/Search.pm:221
+msgid "List Price"
+msgstr "列出价"
+
+#: bin/ic.pl:455
+msgid "Average Cost"
+msgstr "平均成本"
+
+#: bin/ic.pl:464 bin/ic.pl:641 LedgerSMB/Report/Inventory/Search.pm:229
+msgid "Last Cost"
+msgstr "最后成本"
+
+#: bin/ic.pl:470 bin/ic.pl:647 LedgerSMB/Report/Inventory/Search.pm:237
+msgid "Markup"
+msgstr "涨价"
+
+#: bin/ic.pl:481 bin/ic.pl:707 LedgerSMB/Report/Inventory/Search.pm:205
+msgid "On Hand"
+msgstr "巳有存量"
+
+#: bin/ic.pl:490 bin/ic.pl:2519 LedgerSMB/Report/Inventory/Search.pm:209
+msgid "ROP"
+msgstr "再订点"
+
+#: bin/ic.pl:497 bin/ic.pl:2514 bin/io.pl:220 bin/oe.pl:1917
+#: LedgerSMB/Report/Inventory/Search.pm:213
+msgid "Bin"
+msgstr "箱"
+
+#: bin/ic.pl:507 LedgerSMB/Report/Inventory/Search.pm:253
+msgid "Image"
+msgstr "形像"
+
+#: bin/ic.pl:509 LedgerSMB/Report/Inventory/Search.pm:261
+msgid "Microfiche"
+msgstr "单片缩影胶片"
+
+#: bin/ic.pl:513 LedgerSMB/Report/Inventory/Search.pm:257
+msgid "Drawing"
+msgstr "图画"
+
+#: bin/ic.pl:526 LedgerSMB/Scripts/configuration.pm:68
+msgid "Inventory"
+msgstr "库存"
+
+#: bin/ic.pl:531 bin/ic.pl:658 bin/ic.pl:679
+#: LedgerSMB/Scripts/configuration.pm:71
+msgid "Income"
+msgstr "收入"
+
+#: bin/ic.pl:536 bin/ic.pl:722
+msgid "COGS"
+msgstr "货销成本"
+
+#: bin/ic.pl:545 bin/ic.pl:667 bin/ic.pl:693 bin/aa.pl:1659
+#: LedgerSMB/Report/Invoices/Transactions.pm:242
+#: LedgerSMB/Report/Invoices/Outstanding.pm:213
+#: LedgerSMB/Report/Contact/Purchase.pm:83
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:83
+msgid "Tax"
+msgstr "税金"
+
+#: bin/ic.pl:553 bin/ic.pl:580 bin/ic.pl:602
+#: LedgerSMB/Report/Inventory/Search.pm:217
+msgid "Weight"
+msgstr "重量"
+
+#: bin/ic.pl:633
+msgid "Stock"
+msgstr "库存"
+
+#: bin/ic.pl:684
+msgid "Expense"
+msgstr "费用"
+
+#: bin/ic.pl:716
+msgid "Labor/Overhead"
+msgstr "劳工/经常费用"
+
+#: bin/ic.pl:734
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:162
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:162
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:162
+#: LedgerSMB/Scripts/budgets.pm:122
+msgid "Obsolete"
+msgstr "停用"
+
+#: bin/ic.pl:769 bin/ic.pl:1094 bin/ic.pl:1150 bin/ic.pl:1195 bin/ic.pl:1674
+#: bin/ic.pl:2432 bin/ic.pl:2506 bin/arap.pl:389 bin/io.pl:205 bin/io.pl:526
+#: bin/pe.pl:699 bin/pe.pl:781 bin/pe.pl:813 bin/oe.pl:1907
+#: addons/1.4/pos/trunk/bin/pos.pl:744 UI/Contact/divs/credit.html:20
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:20
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:328
+msgid "Number"
+msgstr "编号"
+
+#: bin/ic.pl:789
+msgid "Link Accounts"
+msgstr "连结帐户"
+
+#: bin/ic.pl:806
+msgid "Updated"
+msgstr "巳更新"
+
+#: bin/ic.pl:813 bin/ic.pl:1671 bin/io.pl:213 bin/oe.pl:1915
+#: addons/1.4/pos/trunk/bin/pos.pl:752 LedgerSMB/Report/Inventory/Search.pm:201
+#: LedgerSMB/Report/Contact/History.pm:81
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:81
+msgid "Unit"
+msgstr "单位"
+
+#: bin/ic.pl:971
+#, fuzzy
+msgid "Date From"
+msgstr "日期格式"
+
+#: bin/ic.pl:974
+#, fuzzy
+msgid "Date To"
+msgstr "日期"
+
+#: bin/ic.pl:1027 bin/pe.pl:112 bin/pe.pl:1256 bin/aa.pl:1597
+msgid "Period"
+msgstr "时期"
+
+#: bin/ic.pl:1070
+#, fuzzy
+msgid "No History!"
+msgstr "历史"
+
+#: bin/ic.pl:1073 bin/ic.pl:1221
+msgid "Parts Requirements"
+msgstr ""
+
+#: bin/ic.pl:1189 bin/pe.pl:123 bin/pe.pl:1267 bin/aa.pl:1608
+#: LedgerSMB/DBObject/Date.pm:92
+msgid "Year"
+msgstr "年份"
+
+#: bin/ic.pl:1202
+msgid "Onhand"
+msgstr ""
+
+#: bin/ic.pl:1204
+msgid "SO"
+msgstr ""
+
+#: bin/ic.pl:1206
+#, fuzzy
+msgid "PO"
+msgstr "收款台"
+
+#: bin/ic.pl:1208 bin/bp.pl:372 bin/oe.pl:2494
+#: LedgerSMB/Report/Invoices/Outstanding.pm:192
+#: LedgerSMB/Report/Inventory/Search.pm:277
+msgid "Order"
+msgstr "订单"
+
+#: bin/ic.pl:1393 LedgerSMB/Report/Inventory/Search.pm:245
+msgid "Make"
+msgstr "制造"
+
+#: bin/ic.pl:1394 LedgerSMB/Report/Inventory/Search.pm:249
+msgid "Model"
+msgstr "型号"
+
+#: bin/ic.pl:1395
+#, fuzzy
+msgid "Bar Code"
+msgstr "编码"
+
+#: bin/ic.pl:1424 bin/ic.pl:1523 bin/oe.pl:2503
+#: LedgerSMB/Report/Invoices/Outstanding.pm:229
+msgid "Curr"
+msgstr "目前"
+
+#: bin/ic.pl:1436 bin/ic.pl:2098
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:41
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:41
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:41
+#: UI/Reports/filters/contact_search.html:70
+#: addons/1.3/report_framework/trunk/UI/Reports/filters/contact_search.html:70
+#: LedgerSMB/Scripts/payment.pm:147 LedgerSMB/Report/Trial_Balance.pm:127
+#: LedgerSMB/Report/Invoices/Payments.pm:190 LedgerSMB/Report/COA.pm:85
+#: LedgerSMB/Report/Budget/Variance.pm:70 LedgerSMB/Report/Budget/Search.pm:122
+#: LedgerSMB/Report/PNL/ECA.pm:90 LedgerSMB/Report/GL.pm:204
+#: LedgerSMB/Report/Contact/Search.pm:98
+#: LedgerSMB/Report/Contact/Purchase.pm:137
+#: LedgerSMB/Report/Contact/History.pm:56
+#: LedgerSMB/Report/Contact/History.pm:126
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:127
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:85
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:70
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:122
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/ECA.pm:90
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:204
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:98
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:137
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:56
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:126
+msgid "Account Number"
+msgstr "帐户编号"
+
+#: bin/ic.pl:1437
+#, fuzzy
+msgid "Vendor Reference Number"
+msgstr "供应商号码"
+
+#: bin/ic.pl:1438 bin/ic.pl:1683 bin/oe.pl:2498
+msgid "Cost"
+msgstr "成本"
+
+#: bin/ic.pl:1440
+msgid "Leadtime"
+msgstr "总需时"
+
+#: bin/ic.pl:1493 bin/oe.pl:408
+msgid "days"
+msgstr "日"
+
+#: bin/ic.pl:1513 bin/pe.pl:157 bin/pe.pl:508 bin/pe.pl:515 bin/pe.pl:643
+msgid "Pricegroup"
+msgstr "价格组"
+
+#: bin/ic.pl:1536 bin/is.pl:486 bin/pe.pl:1616 bin/aa.pl:591 bin/aa.pl:1614
+#: addons/1.4/pos/trunk/bin/pos.pl:355 UI/business_units/edit.html:71
+#: LedgerSMB/Report/Aging.pm:80 LedgerSMB/Report/Invoices/Transactions.pm:219
+#: LedgerSMB/Report/Invoices/Outstanding.pm:170 LedgerSMB/Report/Orders.pm:187
+#: LedgerSMB/Report/Orders.pm:193
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:80
+msgid "Customer"
+msgstr "客户"
+
+#: bin/ic.pl:1539
+msgid "Break"
+msgstr "休息"
+
+#: bin/ic.pl:1542 bin/pe.pl:103 bin/pe.pl:1277 bin/aa.pl:1715 bin/oe.pl:2215
+#: UI/asset/begin_approval.html:23
+msgid "From"
+msgstr "从"
+
+#: bin/ic.pl:1543 bin/pe.pl:105 bin/pe.pl:1280 bin/oe.pl:2218
+#: UI/asset/begin_approval.html:31
+msgid "To"
+msgstr "至"
+
+#: bin/ic.pl:1667 bin/io.pl:203
+#, fuzzy
+msgid "Item"
+msgstr "项目"
+
+#: bin/ic.pl:1669 bin/ic.pl:2517 bin/io.pl:211 bin/io.pl:536 bin/pe.pl:1487
+#: bin/oe.pl:1913 bin/oe.pl:2220 addons/1.4/pos/trunk/bin/pos.pl:750
+#: LedgerSMB/Report/Inventory/Search.pm:289
+#: LedgerSMB/Report/Contact/History.pm:77
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:77
+msgid "Qty"
+msgstr "数量"
+
+#: bin/ic.pl:1679
+msgid "Sell"
+msgstr "卖价"
+
+#: bin/ic.pl:1681
+msgid "List"
+msgstr "牌价"
+
+#: bin/ic.pl:1684
+msgid "BOM"
+msgstr "材料清单"
+
+#: bin/ic.pl:1685
+msgid "A"
+msgstr ""
+
+#: bin/ic.pl:1693
+msgid "Individual Items"
+msgstr "个别的项目"
+
+#: bin/ic.pl:1846
 msgid "unexpected error!"
 msgstr "意外错误!"
 
-msgid "website"
-msgstr "网站"
+#: bin/ic.pl:1987
+#, fuzzy
+msgid "[_1]: Vendor not on file!"
+msgstr "档案没有此供应商"
 
+#: bin/ic.pl:2065
+#, fuzzy
+msgid "[_1]: Customer not on file!"
+msgstr "客户未存档"
+
+#: bin/ic.pl:2101 bin/arap.pl:171 bin/pe.pl:1109
+msgid "Address"
+msgstr "地址"
+
+#: bin/ic.pl:2107 bin/arap.pl:180 bin/pe.pl:1113
+msgid "Select from one of the names below"
+msgstr "于下列姓名中选择一个"
+
+#: bin/ic.pl:2227
+#, fuzzy
+msgid "Inventory quantity must be zero before you can set this [_1] obsolete!"
+msgstr "停用此项零件之前, 存货数量必需为零!"
+
+#: bin/ic.pl:2404
+msgid "Item deleted!"
+msgstr "巳删除项目"
+
+#: bin/ic.pl:2407
+msgid "Cannot delete item!"
+msgstr "不能删除项目"
+
+#: bin/ic.pl:2414 bin/ic.pl:2526 tools/dbstrings:216
+msgid "Stock Assembly"
+msgstr "盘点"
+
+#: bin/ic.pl:2445
+msgid "Check Inventory"
+msgstr "检查存货清单"
+
+#: bin/ic.pl:2521
+msgid "Add"
+msgstr "新增"
+
+#: bin/ic.pl:2634
+msgid "Quantity exceeds available units to stock!"
+msgstr "超过可库存的数量"
+
+#: bin/ic.pl:2645
+msgid "Assemblies restocked!"
+msgstr "巳重新进货的商品"
+
+#: bin/ic.pl:2648
+msgid "Cannot stock assemblies!"
+msgstr "不能常备的商品"
+
+#: bin/bp.pl:108 bin/oe.pl:494
+msgid "Quotation Number"
+msgstr "报价单号码"
+
+#: bin/bp.pl:123
+#, fuzzy
+msgid "Print [_1]"
+msgstr "列印"
+
+#: bin/bp.pl:192 bin/pe.pl:1612 bin/oe.pl:2376 bin/oe.pl:2639
+msgid "Nothing selected!"
+msgstr "没有巳选择"
+
+#: bin/bp.pl:202
+msgid "Are you sure you want to remove the marked entries from the queue?"
+msgstr "您是否确定要消除有记号的条目"
+
+#: bin/bp.pl:207 bin/oe.pl:1356 LedgerSMB/Scripts/taxform.pm:282
+msgid "Yes"
+msgstr "是"
+
+#: bin/bp.pl:225
+msgid "Removing marked entries from queue ..."
+msgstr "正从长队中移除有记号的会计项目"
+
+#: bin/bp.pl:231
+msgid "Removed spoolfiles!"
+msgstr "移除线轴档案"
+
+#: bin/bp.pl:234
+msgid "Cannot remove files!"
+msgstr "不能移除档案"
+
+#: bin/bp.pl:262
+msgid "Marked entries printed!"
+msgstr "巳列印有记号的会计项目"
+
+#: bin/bp.pl:300
+#, fuzzy
+msgid "Customer: [_1]"
+msgstr "客户"
+
+#: bin/bp.pl:301
+#, fuzzy
+msgid "Vendor: [_1]"
+msgstr "供应商"
+
+#: bin/bp.pl:306
+#, fuzzy
+msgid "Account: [_1]"
+msgstr "帐户"
+
+#: bin/bp.pl:311
+#, fuzzy
+msgid "Invoice Number: [_1]"
+msgstr "发票编号"
+
+#: bin/bp.pl:316
+#, fuzzy
+msgid "Order Number: [_1]"
+msgstr "订单编号"
+
+#: bin/bp.pl:321
+#, fuzzy
+msgid "Quotation Number: [_1]"
+msgstr "报价单号码"
+
+#: bin/bp.pl:327
+#, fuzzy
+msgid "From [_1]"
+msgstr "从"
+
+#: bin/bp.pl:333
+msgid "To [_1]"
+msgstr ""
+
+#: bin/bp.pl:368 bin/io.pl:1348 bin/io.pl:1539 bin/is.pl:287 bin/is.pl:1395
+#: LedgerSMB/Scripts/payment.pm:762 LedgerSMB/Report/Aging.pm:99
+#: LedgerSMB/Report/Invoices/Transactions.pm:236
+#: LedgerSMB/Report/Invoices/Outstanding.pm:163
+#: LedgerSMB/Report/Inventory/Search.pm:273
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:99
+#: tools/dbstrings:87 tools/dbstrings:101
+msgid "Invoice"
+msgstr "发票"
+
+#: bin/bp.pl:376 bin/io.pl:1354 bin/io.pl:1606 bin/io.pl:1613 bin/oe.pl:282
+#: bin/oe.pl:826 bin/oe.pl:1277 LedgerSMB/Report/Orders.pm:249
+#: LedgerSMB/Report/Inventory/Search.pm:281 tools/dbstrings:42
+#: tools/dbstrings:97 tools/dbstrings:117
+msgid "Quotation"
+msgstr "报价单"
+
+#: bin/bp.pl:386
+msgid "Spoolfile"
+msgstr "线轴档案"
+
+#: bin/bp.pl:501
+msgid "Select all"
+msgstr "全选"
+
+#: bin/bp.pl:505
+msgid "Remove"
+msgstr "移除"
+
+#: bin/arap.pl:165 LedgerSMB/Report/Orders.pm:229
+#: LedgerSMB/Report/PNL/Invoice.pm:85 LedgerSMB/Report/PNL/ECA.pm:88
+#: LedgerSMB/Report/Contact/Search.pm:53 LedgerSMB/Report/Contact/Search.pm:96
+#: LedgerSMB/Report/Contact/Purchase.pm:58
+#: LedgerSMB/Report/Contact/Purchase.pm:135
+#: LedgerSMB/Report/Contact/History.pm:52
+#: LedgerSMB/Report/Contact/History.pm:123
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:85
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/ECA.pm:88
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:53
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:96
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:58
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:135
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:52
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:123
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:155
+msgid "Name"
+msgstr "名称"
+
+#: bin/arap.pl:167 addons/1.3/b_units/trunk/scripts/business_unit.pl:133
+#: LedgerSMB/Scripts/business_unit.pm:138
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:96
+#: LedgerSMB/Report/PNL/ECA.pm:92 LedgerSMB/Report/Contact/Search.pm:60
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:96
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/ECA.pm:92
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:60
+msgid "Control Code"
+msgstr ""
+
+#: bin/arap.pl:169
+#, fuzzy
+msgid "[_1] Number"
+msgstr "编号"
+
+#: bin/arap.pl:173 addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:329
+msgid "City"
+msgstr "城市"
+
+#: bin/arap.pl:372
+msgid "Project not on file!"
+msgstr "方案内无此档案"
+
+#: bin/arap.pl:396
+msgid "Select from one of the projects below"
+msgstr "于下列方案中选择一个"
+
+#: bin/arap.pl:527
+msgid "Reposting Not Allowed"
+msgstr ""
+
+#: bin/arap.pl:551
+msgid "Include Payment"
+msgstr ""
+
+#: bin/arap.pl:560
+msgid "Next Date"
+msgstr ""
+
+#: bin/arap.pl:625
+msgid "E-mail message"
+msgstr "发送电邮"
+
+#: bin/arap.pl:703
+msgid "Day(s)"
+msgstr "日"
+
+#: bin/arap.pl:704
+msgid "Week(s)"
+msgstr "周"
+
+#: bin/arap.pl:705
+msgid "Month(s)"
+msgstr "月"
+
+#: bin/arap.pl:706
+msgid "Year(s)"
+msgstr "年"
+
+#: bin/arap.pl:722
+msgid "Repeat"
+msgstr ""
+
+#: bin/arap.pl:731
+msgid "For"
+msgstr ""
+
+#: bin/arap.pl:733
+msgid "time(s)"
+msgstr "次"
+
+#: bin/arap.pl:738
+#, fuzzy
+msgid "Recurring Transaction for [_1]"
+msgstr "多次记录"
+
+#: bin/arap.pl:763 bin/pe.pl:101
+msgid "Startdate"
+msgstr "开始日期"
+
+#: bin/arap.pl:809
+msgid "Save Schedule"
+msgstr "储存预定"
+
+#: bin/arap.pl:811
+msgid "Delete Schedule"
+msgstr "删除预定"
+
+#: bin/arap.pl:966 bin/io.pl:1831
+msgid "Cc: [_1]"
+msgstr ""
+
+#: bin/arap.pl:967 bin/io.pl:1832
+msgid "Bcc: [_1]"
+msgstr ""
+
+#: bin/arap.pl:973 bin/io.pl:1850
+msgid "Date: [_1]"
+msgstr ""
+
+#: bin/arap.pl:974 bin/io.pl:1851
+msgid "To: [_1]"
+msgstr ""
+
+#: bin/arap.pl:976 bin/io.pl:1853
+#, fuzzy
+msgid "Subject: [_1]"
+msgstr "标题"
+
+#: bin/arap.pl:978
+#, fuzzy
+msgid "Message: "
+msgstr "讯息"
+
+#: bin/arap.pl:981 bin/io.pl:1857
+msgid "sent"
+msgstr "巳送出"
+
+#: bin/arapprn.pl:70 bin/arapprn.pl:78 bin/arapprn.pl:575 bin/is.pl:1418
+#: bin/oe.pl:1313
+msgid "Select postscript or PDF!"
+msgstr "【◎Fix:◎于;◎於】附言或PDF中选一"
+
+#: bin/arapprn.pl:121
+msgid "Nothing to print!"
+msgstr ""
+
+#: bin/arapprn.pl:421
+msgid "Select payment"
+msgstr ""
+
+#: bin/arapprn.pl:521 bin/io.pl:1420 addons/1.4/pos/trunk/bin/pos.pl:1092
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:396
+#: LedgerSMB/Scripts/payment.pm:521 LedgerSMB/Template.pm:300
+msgid "Screen"
+msgstr "萤幕"
+
+#: bin/arapprn.pl:536 bin/io.pl:1432
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:413
+msgid "Queue"
+msgstr ""
+
+#: bin/arapprn.pl:558 addons/1.4/pos/trunk/bin/pos.pl:1112
+#: addons/1.3/extended_arap/trunk/UI/aa.html:532
+msgid "Printed"
+msgstr "巳列印"
+
+#: bin/arapprn.pl:562 addons/1.3/extended_arap/trunk/UI/aa.html:528
+msgid "Scheduled"
+msgstr ""
+
+#: bin/arapprn.pl:577 bin/is.pl:1420 bin/oe.pl:1315
+#: addons/1.4/pos/trunk/bin/pos.pl:1047
+msgid "Select a Printer!"
+msgstr ""
+
+#: bin/io.pl:146 bin/oe.pl:1893 LedgerSMB/Scripts/order.pm:60
+#: tools/dbstrings:39
+msgid "Ship"
+msgstr "船"
+
+#: bin/io.pl:153 bin/oe.pl:1897
+msgid "Recd"
+msgstr "巳收到"
+
+#: bin/io.pl:215 bin/io.pl:534 addons/1.4/pos/trunk/bin/pos.pl:754
+msgid "Price"
+msgstr "价格"
+
+#: bin/io.pl:218 addons/1.4/pos/trunk/bin/pos.pl:756
+msgid "Extended"
+msgstr "巳扩大"
+
+#: bin/io.pl:222
+msgid "OH"
+msgstr ""
+
+#: bin/io.pl:224
+msgid "TaxForm"
+msgstr ""
+
+#: bin/io.pl:237 LedgerSMB/Report/Contact/History.pm:93
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:93
+msgid "Delivery Date"
+msgstr "到期日"
+
+#: bin/io.pl:238 bin/oe.pl:1920
+msgid "Serial No."
+msgstr "序号"
+
+#: bin/io.pl:239 bin/pe.pl:1332
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:383
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:383
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:383
+#: addons/1.3/extended_arap/trunk/UI/aa.html:293
+msgid "Project"
+msgstr "方案"
+
+#: bin/io.pl:241 bin/io.pl:528 bin/oe.pl:1899 bin/oe.pl:2486
+msgid "SKU"
+msgstr "被指定的数量"
+
+#: bin/io.pl:246 bin/oe.pl:440 bin/oe.pl:489
+msgid "Required by"
+msgstr "需要者"
+
+#: bin/io.pl:543
+msgid "Select items"
+msgstr ""
+
+#: bin/io.pl:819
+msgid "Item not on file!"
+msgstr "查无此项目"
+
+#: bin/io.pl:826
+msgid "What type of item is this?"
+msgstr "此项目的型态?"
+
+#: bin/io.pl:833
+msgid "Part"
+msgstr "原料"
+
+#: bin/io.pl:835
+msgid "Service"
+msgstr "服务"
+
+#: bin/io.pl:1155
+#, fuzzy
+msgid "Number missing in Row [_1]"
+msgstr "此列中缺少数值"
+
+#: bin/io.pl:1162 bin/oe.pl:60
+msgid "Add Purchase Order"
+msgstr "新增采购单"
+
+#: bin/io.pl:1173 bin/oe.pl:64
+msgid "Add Sales Order"
+msgstr "新增销货单"
+
+#: bin/io.pl:1184 bin/oe.pl:68
+msgid "Add Request for Quotation"
+msgstr "新增报价单要求"
+
+#: bin/io.pl:1195 bin/oe.pl:72
+msgid "Add Quotation"
+msgstr "新增报价单"
+
+#: bin/io.pl:1359 bin/oe.pl:291 bin/oe.pl:837 tools/dbstrings:43
+#: tools/dbstrings:98 tools/dbstrings:118
+msgid "RFQ"
+msgstr "报价请求(RFQ) "
+
+#: bin/io.pl:1368 bin/io.pl:1551 bin/oe.pl:303 tools/dbstrings:93
+#: tools/dbstrings:107
+msgid "Work Order"
+msgstr "工作单"
+
+#: bin/io.pl:1372 bin/io.pl:1390 bin/io.pl:1581 bin/is.pl:288 bin/oe.pl:304
+#: bin/oe.pl:323 tools/dbstrings:91 tools/dbstrings:105
+msgid "Pick List"
+msgstr "选择单"
+
+#: bin/io.pl:1376 bin/io.pl:1394 bin/io.pl:1558 bin/is.pl:289 bin/oe.pl:305
+#: bin/oe.pl:324 tools/dbstrings:90 tools/dbstrings:104
+msgid "Packing List"
+msgstr "出货单"
+
+#: bin/io.pl:1385 bin/io.pl:1399 bin/io.pl:1599 bin/oe.pl:317 bin/oe.pl:329
+#: tools/dbstrings:95 tools/dbstrings:109
+msgid "Bin List"
+msgstr "箱的明细表"
+
+#: bin/io.pl:1408
+msgid "Attachment"
+msgstr "附档"
+
+#: bin/io.pl:1410
+msgid "In-line"
+msgstr "行内"
+
+#: bin/io.pl:1509
+msgid "Select txt, postscript or PDF!"
+msgstr ""
+
+#: bin/io.pl:1652
+#, fuzzy
+msgid " Date missing!"
+msgstr "未指明日期"
+
+#: bin/io.pl:1855
+msgid "Message"
+msgstr "讯息"
+
+#: bin/io.pl:1985 bin/is.pl:961 bin/oe.pl:806 bin/oe.pl:2013
+msgid "Ship to"
+msgstr "海运至"
+
+#: bin/io.pl:2042
+msgid " "
+msgstr ""
+
+#: bin/io.pl:2045
+#, fuzzy
+msgid "Add line1"
+msgstr "新增业务"
+
+#: bin/io.pl:2048
+#, fuzzy
+msgid "Add line2"
+msgstr "新增业务"
+
+#: bin/io.pl:2052
+#, fuzzy
+msgid "Add line3 "
+msgstr "新增业务"
+
+#: bin/io.pl:2055
+msgid "city"
+msgstr ""
+
+#: bin/io.pl:2058
+msgid "State"
+msgstr ""
+
+#: bin/io.pl:2061
+#, fuzzy
+msgid "Zip Code"
+msgstr "邮编"
+
+#: bin/io.pl:2064 LedgerSMB/Scripts/taxform.pm:272
+#: LedgerSMB/Report/Payroll/Deduction_Types.pm:30
+#: LedgerSMB/Report/Payroll/Income_Types.pm:30
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Deduction_Types.pm:30
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Income_Types.pm:30
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:330
+msgid "Country"
+msgstr "国家"
+
+#: bin/io.pl:2114 LedgerSMB/Scripts/asset.pm:633
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:38
+msgid "Type"
+msgstr ""
+
+#: bin/io.pl:2117 addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:220
+msgid "Contact"
+msgstr "连络人"
+
+#: bin/is.pl:83 bin/is.pl:103
+#, fuzzy
+msgid "Add Credit Invoice"
+msgstr "新增供应商发票"
+
+#: bin/is.pl:87 bin/is.pl:106 bin/oe.pl:1457
+msgid "Add Sales Invoice"
+msgstr "新增销售发票"
+
+#: bin/is.pl:411 bin/oe.pl:416 addons/1.4/pos/trunk/bin/pos.pl:278
+msgid "Business"
+msgstr "业务"
+
+#: bin/is.pl:414 bin/oe.pl:420 addons/1.4/pos/trunk/bin/pos.pl:281
+msgid "Trade Discount"
+msgstr "贸易折扣"
+
+#: bin/is.pl:428 bin/aa.pl:556 bin/aa.pl:1499 bin/oe.pl:564
+#: addons/1.4/pos/trunk/bin/pos.pl:263
+#: LedgerSMB/Report/Invoices/Transactions.pm:266
+#: LedgerSMB/Report/Invoices/Outstanding.pm:249
+#: LedgerSMB/Report/Contact/History.pm:105
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:105
+msgid "Salesperson"
+msgstr "销售人员"
+
+#: bin/is.pl:539 bin/aa.pl:1679 bin/oe.pl:628 bin/oe.pl:1842
+#: LedgerSMB/Report/Invoices/Transactions.pm:272
+#: LedgerSMB/Report/Invoices/Outstanding.pm:257 LedgerSMB/Report/Orders.pm:253
+#: LedgerSMB/Report/Contact/Purchase.pm:107
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:107
+msgid "Shipping Point"
+msgstr "海运地点"
+
+#: bin/is.pl:543 bin/aa.pl:1681 bin/aa.pl:1711 bin/oe.pl:632 bin/oe.pl:1847
+msgid "Ship via"
+msgstr "由海运"
+
+#: bin/is.pl:598
+#, fuzzy
+msgid "Can't void a voided invoice!"
+msgstr "不能删除发票"
+
+#: bin/is.pl:609
+msgid "Payments associated with voided invoice may need to be reversed."
+msgstr ""
+
+#: bin/is.pl:760
+msgid "Off Hold"
+msgstr ""
+
+#: bin/is.pl:919 bin/oe.pl:822 tools/dbstrings:180
+msgid "Sales Invoice"
+msgstr "销售发票"
+
+#: bin/is.pl:971
+msgid "Void"
+msgstr ""
+
+#: bin/is.pl:1355 bin/pe.pl:1695 bin/aa.pl:1340
+#: addons/1.4/pos/trunk/bin/pos.pl:686
+msgid "Customer missing!"
+msgstr "未指明客户"
+
+#: bin/pe.pl:63
+msgid "Edit Project"
+msgstr "编辑方案"
+
+#: bin/pe.pl:64 tools/dbstrings:53
+msgid "Add Project"
+msgstr "新增方案"
+
+#: bin/pe.pl:117 bin/pe.pl:1261 bin/aa.pl:1602 LedgerSMB/DBObject/Date.pm:76
+#: LedgerSMB/Report/Aging.pm:122
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:122
+msgid "Current"
+msgstr "现有"
+
+#: bin/pe.pl:119 bin/pe.pl:1263 bin/aa.pl:1604 LedgerSMB/DBObject/Date.pm:81
+msgid "Month"
+msgstr "月份"
+
+#: bin/pe.pl:121 bin/pe.pl:1265 bin/aa.pl:1606 LedgerSMB/DBObject/Date.pm:87
+msgid "Quarter"
+msgstr "季度"
+
+#: bin/pe.pl:131 bin/pe.pl:287 bin/pe.pl:503
+msgid "Orphaned"
+msgstr "无主"
+
+#: bin/pe.pl:136 bin/pe.pl:301 tools/dbstrings:49
+msgid "Groups"
+msgstr "组"
+
+#: bin/pe.pl:151 bin/pe.pl:518 tools/dbstrings:50
+msgid "Pricegroups"
+msgstr "价格组"
+
+#: bin/pe.pl:189 bin/aa.pl:1728
+msgid "Active"
+msgstr "活跃"
+
+#: bin/pe.pl:191
+msgid "Inactive"
+msgstr "消极"
+
+#: bin/pe.pl:232
+msgid "Translations saved!"
+msgstr "巳储存翻译"
+
+#: bin/pe.pl:237
+msgid "Group missing!"
+msgstr "未指明的组"
+
+#: bin/pe.pl:239
+msgid "Group saved!"
+msgstr "巳储存的组"
+
+#: bin/pe.pl:243
+msgid "Pricegroup missing!"
+msgstr "未指明价格组"
+
+#: bin/pe.pl:245
+msgid "Pricegroup saved!"
+msgstr "巳储存价格组"
+
+#: bin/pe.pl:253
+msgid "Translation deleted!"
+msgstr "巳删除翻译"
+
+#: bin/pe.pl:260
+msgid "Group deleted!"
+msgstr "巳删除的组"
+
+#: bin/pe.pl:264
+msgid "Pricegroup deleted!"
+msgstr "巳删除价格组"
+
+#: bin/pe.pl:356 tools/dbstrings:214
+msgid "Add Group"
+msgstr "新增组"
+
+#: bin/pe.pl:428
+#, fuzzy
+msgid "Parent"
+msgstr "现有"
+
+#: bin/pe.pl:573 tools/dbstrings:215
+msgid "Add Pricegroup"
+msgstr "新增价格组"
+
+#: bin/pe.pl:694
+msgid "Description Translations"
+msgstr "翻译描述"
+
+#: bin/pe.pl:706
+msgid "Group Translations"
+msgstr "组的翻译"
+
+#: bin/pe.pl:711
+msgid "Project Description Translations"
+msgstr "方案描述的翻译"
+
+#: bin/pe.pl:716 bin/pe.pl:1482
+msgid "Project Number"
+msgstr "方案号码"
+
+#: bin/pe.pl:825 bin/pe.pl:1000
+msgid "Translation"
+msgstr "翻译"
+
+#: bin/pe.pl:922
+msgid "Languages not defined!"
+msgstr "不能辨认语言"
+
+#: bin/pe.pl:946
+msgid "Edit Description Translations"
+msgstr "编辑翻译描述"
+
+#: bin/pe.pl:1275
+msgid "Transaction Dates"
+msgstr ""
+
+#: bin/pe.pl:1294
+msgid "No open Projects!"
+msgstr ""
+
+#: bin/pe.pl:1306 bin/aa.pl:557 bin/aa.pl:1500 bin/oe.pl:576
+#: LedgerSMB/Scripts/employee.pm:105 LedgerSMB/Report/Orders.pm:261
+msgid "Employee"
+msgstr "职员"
+
+#: bin/pe.pl:1312 bin/pe.pl:1492 bin/pe.pl:1582
+msgid "Generate Sales Orders"
+msgstr ""
+
+#: bin/pe.pl:1340 bin/aa.pl:1572
+msgid "Summary"
+msgstr "摘要"
+
+#: bin/pe.pl:1342 bin/aa.pl:1575
+msgid "Detail"
+msgstr "详情"
+
+#: bin/pe.pl:1477
+msgid "Service Code"
+msgstr ""
+
+#: bin/pe.pl:1587
+msgid "Select Customer"
+msgstr ""
+
+#: bin/pe.pl:1670
+msgid "Customer not on file!"
+msgstr "客户未存档"
+
+#: bin/pe.pl:1671
+msgid "Vendor not on file!"
+msgstr "档案没有此供应商"
+
+#: bin/pe.pl:1763
+msgid "Failed to save order!"
+msgstr ""
+
+#: bin/pe.pl:1770
+msgid "Orders generated!"
+msgstr ""
+
+#: bin/aa.pl:194 addons/1.3/extended_arap/trunk/bin/custom/aa.pl:54
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:384
+msgid "Transaction"
+msgstr "记录"
+
+#: bin/aa.pl:644 addons/1.3/extended_arap/trunk/UI/aa.html:99
+msgid "Batch Control Code"
+msgstr ""
+
+#: bin/aa.pl:649 addons/1.3/extended_arap/trunk/UI/aa.html:104
+msgid "Batch Name"
+msgstr ""
+
+#: bin/aa.pl:663 addons/1.3/extended_arap/trunk/UI/aa.html:112
+#, fuzzy
+msgid "Entity Control Code"
+msgstr "稽核控制"
+
+#: bin/aa.pl:727 addons/1.3/extended_arap/trunk/UI/aa.html:291
+msgid "Tax Form Applied"
+msgstr ""
+
+#: bin/aa.pl:1027
+#, fuzzy
+msgid "Save as New"
+msgstr "当新的储存"
+
+#: bin/aa.pl:1165 bin/gl.pl:395
+#, fuzzy
+msgid "Template Saved!"
+msgstr "巳储存模版"
+
+#: bin/aa.pl:1330 LedgerSMB/Scripts/payment.pm:328
+msgid "Data not saved.  Please try again."
+msgstr ""
+
+#: bin/aa.pl:1345
+msgid "Due Date missing!"
+msgstr "未指明到期日!"
+
+#: bin/aa.pl:1352 bin/gl.pl:685
+msgid "Cannot post transaction for a closed period!"
+msgstr "不能在已关闭的时段内加入交易!"
+
+#: bin/aa.pl:1407
+msgid "Transaction posted!"
+msgstr "巳加入交易"
+
+#: bin/aa.pl:1410 bin/gl.pl:700 addons/1.4/pos/trunk/bin/pos.pl:728
+msgid "Cannot post transaction!"
+msgstr "不能加入交易"
+
+#: bin/aa.pl:1514 LedgerSMB/Report/Invoices/Transactions.pm:269
+#: LedgerSMB/Report/Invoices/Outstanding.pm:253 LedgerSMB/Report/Orders.pm:265
+msgid "Manager"
+msgstr "经理"
+
+#: bin/aa.pl:1519 LedgerSMB/Report/Contact/Purchase.pm:124
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:124
+msgid "AR Transactions"
+msgstr "应收交易"
+
+#: bin/aa.pl:1520 LedgerSMB/Report/Contact/Purchase.pm:122
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:122
+msgid "AP Transactions"
+msgstr "应付交易"
+
+#: bin/aa.pl:1552 bin/oe.pl:345 addons/1.4/pos/trunk/bin/pos.pl:157
+msgid "Open"
+msgstr "开启"
+
+#: bin/aa.pl:1555 bin/oe.pl:348 LedgerSMB/Report/Orders.pm:241
+msgid "Closed"
+msgstr "已关闭"
+
+#: bin/aa.pl:1563 LedgerSMB/Report/Invoices/Outstanding.pm:288
+msgid "AR Outstanding"
+msgstr "应收未收"
+
+#: bin/aa.pl:1564 LedgerSMB/Report/Invoices/Outstanding.pm:286
+msgid "AP Outstanding"
+msgstr "应付未付"
+
+#: bin/aa.pl:1620 LedgerSMB/Report/Invoices/Transactions.pm:263
+#: LedgerSMB/Report/Invoices/Outstanding.pm:245 LedgerSMB/Report/GL.pm:133
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:133
+msgid "Till"
+msgstr "直到"
+
+#: bin/aa.pl:1633
+msgid "No."
+msgstr "否"
+
+#: bin/aa.pl:1649
+#, fuzzy
+msgid "Project Numbers"
+msgstr "方案号码"
+
+#: bin/aa.pl:1666 LedgerSMB/Report/Invoices/Payments.pm:134
+#: LedgerSMB/Report/Invoices/Transactions.pm:254
+#: LedgerSMB/Report/Invoices/Outstanding.pm:233
+#: LedgerSMB/Report/Contact/Purchase.pm:95
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:95
+msgid "Date Paid"
+msgstr "付款日期"
+
+#: bin/aa.pl:1669 LedgerSMB/Scripts/payment.pm:765
+#: LedgerSMB/Report/Invoices/Transactions.pm:248
+#: LedgerSMB/Report/Invoices/Outstanding.pm:221
+#: LedgerSMB/Report/Contact/Purchase.pm:87
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:87
+msgid "Paid"
+msgstr "已付"
+
+#: bin/aa.pl:1673 LedgerSMB/Scripts/payment.pm:769
+#: LedgerSMB/Scripts/payment.pm:775
+#: LedgerSMB/Report/Invoices/Outstanding.pm:225
+msgid "Amount Due"
+msgstr "应得的总计"
+
+#: bin/aa.pl:1717
+#, fuzzy
+msgid "Date to"
+msgstr "日期"
+
+#: bin/aa.pl:1727
+#, fuzzy
+msgid "All Invoices"
+msgstr "发票"
+
+#: bin/aa.pl:1738
+msgid "Include in Report"
+msgstr "一并显示"
+
+#: bin/gl.pl:92 addons/1.4/pos/trunk/bin/ps.pl:54
+#: addons/1.4/pos/trunk/bin/ps.pl:84 addons/1.4/pos/trunk/bin/ps.pl:225
+#: addons/1.4/pos/trunk/bin/pos.pl:55
+msgid "Could not open pos.conf.pl in [_1] line [_2]: [_3]"
+msgstr ""
+
+#: bin/gl.pl:136
+msgid "Adjusting Till: (till) Source: (source)"
+msgstr ""
+
+#: bin/gl.pl:138
+msgid "Adjusting till due to data entry error."
+msgstr ""
+
+#: bin/gl.pl:198
+#, fuzzy
+msgid "[_1] Cash Transfer Transaction"
+msgstr "新增现金转移帐目"
+
+#: bin/gl.pl:201
+#, fuzzy
+msgid "[_1] General Ledger Transaction"
+msgstr "新增总帐"
+
+#: bin/gl.pl:638
+msgid "Account [_1] not found."
+msgstr ""
+
+#: bin/gl.pl:673
+#, fuzzy
+msgid "Cannot Repost Transaction"
+msgstr "不能加入交易"
+
+#: bin/gl.pl:679
+msgid "Transaction Date missing!"
+msgstr "未指明交易日期!"
+
+#: bin/gl.pl:715
+msgid ""
+"Cannot post transaction with a debit and credit entry for the same account!"
+msgstr ""
+
+#: bin/gl.pl:725
+msgid "Out of balance transaction!"
+msgstr "不协调交易"
+
+#: bin/oe.pl:91
+msgid "Edit Purchase Order"
+msgstr "编辑采购单"
+
+#: bin/oe.pl:96
+msgid "Edit Sales Order"
+msgstr "编辑销货单"
+
+#: bin/oe.pl:101
+msgid "Edit Request for Quotation"
+msgstr "编辑报价单要求"
+
+#: bin/oe.pl:105
+msgid "Edit Quotation"
+msgstr "编辑报价单"
+
+#: bin/oe.pl:406
+msgid "Terms"
+msgstr "票期淨计"
+
+#: bin/oe.pl:436 bin/oe.pl:1863
+msgid "Order Date"
+msgstr "下单日期"
+
+#: bin/oe.pl:488
+msgid "Valid until"
+msgstr "有效至"
+
+#: bin/oe.pl:515
+msgid "Quotation Date"
+msgstr "报价单日期"
+
+#: bin/oe.pl:812
+msgid "Print and Save"
+msgstr "打印及储存"
+
+#: bin/oe.pl:819
+msgid "Print and Save as new"
+msgstr "列印及另存新档"
+
+#: bin/oe.pl:830 tools/dbstrings:176
+msgid "Vendor Invoice"
+msgstr "供应商发票"
+
+#: bin/oe.pl:1229 bin/oe.pl:1393
+msgid "Order Date missing!"
+msgstr "未指明下单日期!"
+
+#: bin/oe.pl:1232 bin/oe.pl:1399
+msgid "Quotation Date missing!"
+msgstr "未指明报价单日期"
+
+#: bin/oe.pl:1239
+#, fuzzy
+msgid " missing!"
+msgstr "未指明编码"
+
+#: bin/oe.pl:1272
+msgid "Cannot save order!"
+msgstr "不能储存定单"
+
+#: bin/oe.pl:1283
+msgid "Request for Quotation"
+msgstr "要求报价单"
+
+#: bin/oe.pl:1289
+msgid "Cannot save quotation!"
+msgstr "不能储存报价单"
+
+#: bin/oe.pl:1332
+msgid "Are you sure you want to delete Order Number"
+msgstr "您是否确定要删除订单编号"
+
+#: bin/oe.pl:1337
+msgid "Are you sure you want to delete Quotation Number"
+msgstr "您是否确定要删除报价单编号"
+
+#: bin/oe.pl:1369
+msgid "Order deleted!"
+msgstr "巳删除订单"
+
+#: bin/oe.pl:1370
+msgid "Cannot delete order!"
+msgstr "不能删除定单"
+
+#: bin/oe.pl:1373
+msgid "Quotation deleted!"
+msgstr "巳删除报价单"
+
+#: bin/oe.pl:1374
+msgid "Cannot delete quotation!"
+msgstr "不能删除报价单"
+
+#: bin/oe.pl:1392
+msgid "Order Number missing!"
+msgstr "未指明订单编号!"
+
+#: bin/oe.pl:1398
+msgid "Quotation Number missing!"
+msgstr "未指明报价单号码"
+
+#: bin/oe.pl:1545
+msgid "Add Exchange Rate"
+msgstr "新增外汇率"
+
+#: bin/oe.pl:1779
+msgid "Ship Merchandise"
+msgstr "海运货物"
+
+#: bin/oe.pl:1780
+msgid "Shipping Date"
+msgstr "海运日期"
+
+#: bin/oe.pl:1783
+msgid "Receive Merchandise"
+msgstr "收到货物"
+
+#: bin/oe.pl:1784
+msgid "Date Received"
+msgstr "收款日期"
+
+#: bin/oe.pl:1796
+msgid "Warehouse"
+msgstr "仓库"
+
+#: bin/oe.pl:2015
+msgid "Done"
+msgstr "巳完成"
+
+#: bin/oe.pl:2047
+msgid "Shipping Date missing!"
+msgstr "未指明海运日期"
+
+#: bin/oe.pl:2051
+msgid "Date received missing!"
+msgstr "未指明收款日期"
+
+#: bin/oe.pl:2060
+msgid "Nothing entered!"
+msgstr "没有巳输入"
+
+#: bin/oe.pl:2063
+msgid "Inventory saved!"
+msgstr "巳储存存货"
+
+#: bin/oe.pl:2066
+msgid "Could not save!"
+msgstr "不能储存"
+
+#: bin/oe.pl:2087
+msgid "Nothing to transfer!"
+msgstr "没有可转移的项目"
+
+#: bin/oe.pl:2099 bin/oe.pl:2249
+msgid "Transfer Inventory"
+msgstr "转移存货"
+
+#: bin/oe.pl:2117
+msgid "Transfer from"
+msgstr "调动从"
+
+#: bin/oe.pl:2121
+msgid "Transfer to"
+msgstr "存货至"
+
+#: bin/oe.pl:2222 bin/oe.pl:2338 tools/dbstrings:41 tools/dbstrings:130
+msgid "Transfer"
+msgstr "转移"
+
+#: bin/oe.pl:2228
+msgid "From Warehouse"
+msgstr "从仓库"
+
+#: bin/oe.pl:2233
+msgid "To Warehouse"
+msgstr "到仓库"
+
+#: bin/oe.pl:2358
+msgid "Inventory transferred!"
+msgstr "转移的存货"
+
+#: bin/oe.pl:2361
+msgid "Could not transfer Inventory!"
+msgstr "存货清单不能转移"
+
+#: bin/oe.pl:2496
+msgid "Req"
+msgstr ""
+
+#: bin/oe.pl:2501
+msgid "Lead"
+msgstr "交货期"
+
+#: bin/oe.pl:2505
+msgid "Generate Purchase Orders"
+msgstr "产生采购单"
+
+#: bin/oe.pl:2600
+msgid "Generate Orders"
+msgstr "产生订单"
+
+#: bin/oe.pl:2605
+msgid "Select Vendor"
+msgstr "选厂商"
+
+#: bin/oe.pl:2628
+msgid "Order generation failed!"
+msgstr "订单产生失败!"
+
+#: addons/1.4/pos/trunk/bin/ps.pl:82
+msgid "Closing Till For [_1]"
+msgstr ""
+
+#: addons/1.4/pos/trunk/bin/ps.pl:181
+msgid "Cumulative Error:"
+msgstr ""
+
+#: addons/1.4/pos/trunk/bin/ps.pl:208
+msgid "Calculate"
+msgstr ""
+
+#: addons/1.4/pos/trunk/bin/ps.pl:211
+#, fuzzy
+msgid "Close Till"
+msgstr "已关闭"
+
+#: addons/1.4/pos/trunk/bin/ps.pl:287
+msgid "Cash Breakdown:"
+msgstr ""
+
+#: addons/1.4/pos/trunk/bin/ps.pl:299
+msgid "Total Cash in Drawer: [_1]"
+msgstr ""
+
+#: addons/1.4/pos/trunk/bin/ps.pl:301
+msgid "Less Cash in Till At Start: [_1]"
+msgstr ""
+
+#: addons/1.4/pos/trunk/bin/ps.pl:304
+msgid "Cumulative Error: [_1]"
+msgstr ""
+
+#: addons/1.4/pos/trunk/bin/ps.pl:306
+msgid "Reset Till By [_1]"
+msgstr ""
+
+#: addons/1.4/pos/trunk/bin/ps.pl:316
+msgid "You are over by [_1]"
+msgstr ""
+
+#: addons/1.4/pos/trunk/bin/ps.pl:319
+msgid "You are under by [_1]"
+msgstr ""
+
+#: addons/1.4/pos/trunk/bin/ps.pl:323
+msgid "Congratulations!  Your till is exactly balanced."
+msgstr ""
+
+#: addons/1.4/pos/trunk/bin/pos.pl:105
+msgid "Add POS Invoice"
+msgstr "新增POS发票"
+
+#: addons/1.4/pos/trunk/bin/pos.pl:164
+msgid "Edit POS Invoice"
+msgstr "编辑POS"
+
+#: addons/1.4/pos/trunk/bin/pos.pl:342
+#, fuzzy
+msgid "Check ID"
+msgstr "检查"
+
+#: addons/1.4/pos/trunk/bin/pos.pl:461
+msgid "Credit Card Track"
+msgstr ""
+
+#: addons/1.4/pos/trunk/bin/pos.pl:563
+msgid "Change"
+msgstr "更改"
+
+#: addons/1.4/pos/trunk/bin/pos.pl:618
+#, fuzzy
+msgid "Open Till"
+msgstr "开启"
+
+#: addons/1.4/pos/trunk/bin/pos.pl:622
+#: addons/1.3/extended_arap/trunk/UI/aa.html:603
+msgid "Print and Post"
+msgstr "列印及过帐"
+
+#: addons/1.4/pos/trunk/bin/pos.pl:725
+msgid "Posted!"
+msgstr "巳加入"
+
+#: addons/1.4/pos/trunk/bin/pos.pl:1125 tools/dbstrings:23 tools/dbstrings:134
+msgid "Receipts"
+msgstr "收据"
+
+#: addons/1.4/pos/trunk/pos.conf.pl:39
+msgid "Visa/MC"
+msgstr ""
+
+#: addons/1.4/pos/trunk/pos.conf.pl:40
+#, fuzzy
+msgid "Discover"
+msgstr "折扣"
+
+#: addons/1.4/pos/trunk/pos.conf.pl:41
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:63
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:391 tools/dbstrings:115
+msgid "Check"
+msgstr "检查"
+
+#: addons/1.4/pos/trunk/pos.conf.pl:42 tools/dbstrings:114
+msgid "Cash"
+msgstr "现金"
+
+#: addons/1.4/pos/trunk/pos.conf.pl:43
+msgid "Gift Cert"
+msgstr ""
+
+#: addons/1.3/templatetrans/trunk/scripts/transtemplate.pl:139
+#: addons/1.3/templatetrans/tags/1.0/scripts/transtemplate.pl:139
+#: LedgerSMB/Scripts/transtemplate.pm:139
+#, fuzzy
+msgid "Memorized Transaction List"
+msgstr "多次记录"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:120
+#: LedgerSMB/Scripts/contact.pm:120
+msgid "Company"
+msgstr "公司"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:121
+#: LedgerSMB/Scripts/contact.pm:121
+msgid "Person"
+msgstr ""
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:122
+#: LedgerSMB/Scripts/contact.pm:122
+#, fuzzy
+msgid "Credit Accounts"
+msgstr "编辑帐户"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:123
+#: LedgerSMB/Scripts/contact.pm:123 LedgerSMB/Scripts/employee.pm:108
+#, fuzzy
+msgid "Addresses"
+msgstr "地址"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:124
+#: LedgerSMB/Scripts/contact.pm:124 LedgerSMB/Scripts/employee.pm:109
+#, fuzzy
+msgid "Contact Info"
+msgstr "连络人"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:125
+#: LedgerSMB/Scripts/contact.pm:125 LedgerSMB/Scripts/employee.pm:110
+#, fuzzy
+msgid "Bank Accounts"
+msgstr "连结帐户"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:127
+#: LedgerSMB/Scripts/contact.pm:127 LedgerSMB/Scripts/employee.pm:112
+msgid "Files"
+msgstr ""
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:228
+#: LedgerSMB/Scripts/contact.pm:231 LedgerSMB/Scripts/employee.pm:186
+msgid "Entity"
+msgstr ""
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:230
+#: LedgerSMB/Scripts/contact.pm:233
+#, fuzzy
+msgid "Credit Account"
+msgstr "编辑帐户"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:338
+#: LedgerSMB/Scripts/contact.pm:342
+msgid "Unsupported account type"
+msgstr ""
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:485
+#: LedgerSMB/Scripts/contact.pm:490
+#, fuzzy
+msgid "No AR or AP Account Selected"
+msgstr "巳删除帐户"
+
+#: addons/1.3/audit/trunk/scripts/audit.pl:47
+msgid "Vendor audit information not found."
+msgstr ""
+
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:59
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:388
+#: LedgerSMB/Scripts/payment.pm:995 tools/dbstrings:19 tools/dbstrings:116
+msgid "Receipt"
+msgstr "收据"
+
+#: addons/1.3/b_units/trunk/scripts/business_unit.pl:135
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:375
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:375
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:375
+#: UI/business_units/edit.html:44
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:20
+#: LedgerSMB/Scripts/business_unit.pm:140
+#: LedgerSMB/Report/Trial_Balance/List.pm:54
+#: LedgerSMB/Report/co/Caja_Diaria.pm:121
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:125
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:75
+#: LedgerSMB/Report/Budget/Variance.pm:112 LedgerSMB/Report/Budget/Search.pm:68
+#: LedgerSMB/Report/Budget/Search.pm:118 LedgerSMB/Report/GL.pm:200
+#: LedgerSMB/Report/Contact/History.pm:128
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:54
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:121
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:125
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:75
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:112
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:68
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:118
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:200
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:128
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:126
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:129
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:41
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:158
+#, fuzzy
+msgid "Start Date"
+msgstr "开始日期"
+
+#: addons/1.3/b_units/trunk/scripts/business_unit.pl:136
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:376
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:376
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:376
+#: UI/business_units/edit.html:52
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:24
+#: LedgerSMB/Scripts/business_unit.pm:141
+#: LedgerSMB/Report/Trial_Balance/List.pm:57
+#: LedgerSMB/Report/co/Caja_Diaria.pm:123
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:127
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:77
+#: LedgerSMB/Report/Budget/Variance.pm:114 LedgerSMB/Report/Budget/Search.pm:73
+#: LedgerSMB/Report/Budget/Search.pm:120 LedgerSMB/Report/GL.pm:202
+#: LedgerSMB/Report/Contact/History.pm:131
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:57
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:123
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:127
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:77
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:114
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:73
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:120
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:202
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:131
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:128
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:131
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:42
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:159
+#, fuzzy
+msgid "End Date"
+msgstr "下单日期"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:42
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:42
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:42
+#: LedgerSMB/Report/Budget/Variance.pm:74
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:74
+#, fuzzy
+msgid "Account Label"
+msgstr "帐户编号"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:43
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:43
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:43
+#: LedgerSMB/Report/Budget/Variance.pm:78
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:78
+#, fuzzy
+msgid "Amount Budgetted"
+msgstr "应得的总计"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:44
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:44
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:44
+msgid "- Used"
+msgstr ""
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:45
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:45
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:45
+msgid "= Variance"
+msgstr ""
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:147
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:147
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:147
+#: LedgerSMB/Scripts/budgets.pm:107 LedgerSMB/Scripts/asset.pm:685
+#: LedgerSMB/Scripts/asset.pm:764 LedgerSMB/Scripts/asset.pm:835
+#: LedgerSMB/Scripts/asset.pm:902 LedgerSMB/Report/Unapproved/Drafts.pm:199
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:199
+msgid "Approve"
+msgstr ""
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:153
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:153
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:153
+#: LedgerSMB/Scripts/budgets.pm:113
+#, fuzzy
+msgid "Reject"
+msgstr "方案"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:259
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:259
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:259 LedgerSMB/Budget.pm:243
+msgid "Cannot specify both debits and credits for budget line [_1]"
+msgstr ""
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:379
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:379
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:379
+#, fuzzy
+msgid "Entered by"
+msgstr "需要者"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:380
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:380
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:380
+#: LedgerSMB/Report/Reconciliation/Summary.pm:153
+#: LedgerSMB/Report/Budget/Search.pm:91
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:91
+msgid "Approved By"
+msgstr ""
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:381
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:381
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:381
+#: LedgerSMB/Report/Budget/Search.pm:95
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:95
+#, fuzzy
+msgid "Obsolete By"
+msgstr "停用"
+
+#: t/data/04-complex_template.html:16 UI/Contact/contact.html:33
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:33
+msgid "Add Customer"
+msgstr "新增客户"
+
+#: t/data/04-complex_template.html:17 UI/Contact/contact.html:34
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:34
+msgid "Edit Customer"
+msgstr "编辑客户"
+
+#: t/data/04-complex_template.html:18 UI/Contact/contact.html:35
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:35
+msgid "Add Vendor"
+msgstr "新增供应商"
+
+#: t/data/04-complex_template.html:19 UI/Contact/contact.html:36
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:36
+msgid "Edit Vendor"
+msgstr "编辑供应商"
+
+#: t/data/04-complex_template.html:20 UI/Contact/contact.html:37
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:37 tools/dbstrings:27
+msgid "Add Employee"
+msgstr "新增职员"
+
+#: t/data/04-complex_template.html:21 UI/Contact/contact.html:38
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:38
+msgid "Edit Employee"
+msgstr "编辑职员"
+
+#: t/data/04-complex_template.html:43 UI/Contact/divs/employee.html:2
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/employee.html:2
+#, fuzzy
+msgid "$operation Employee"
+msgstr "编辑职员"
+
+#: t/data/04-complex_template.html:144 UI/Contact/divs/person.html:6
+#: UI/Contact/divs/company.html:6
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/person.html:6
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/company.html:6
+#: addons/1.3/colombia_general/trunk/UI/Contact/divs/colombia_company.html:6
+msgid "$operation $entity_classname"
+msgstr ""
+
+#: t/data/04-complex_template.html:167
+msgid "$entity_classname Number:"
+msgstr ""
+
+#: templates/demo_with_images/balance_sheet.html:128
+#: templates/xedemo/balance_sheet.html:128
+#: templates/demo/balance_sheet.html:128
+#: templates/with_images/balance_sheet.html:128
+msgid "Shareholder's Equity"
+msgstr ""
+
+#: UI/payments/use_overpayment2.html:278
+msgid "UPDATE"
+msgstr ""
+
+#: UI/payments/use_overpayment2.html:284
+msgid "POST"
+msgstr ""
+
+#: UI/payments/use_overpayment2.html:290 UI/payments/payment2.html:336
+msgid "POST AND PRINT"
+msgstr ""
+
+#: UI/payments/payments_filter.html:18
+msgid "Filtering $t"
+msgstr ""
+
+#: UI/payments/payments_detail.html:362
+msgid "Locked by [_1]"
+msgstr ""
+
+#: UI/file/attachment_screen.html:39
+msgid "File"
+msgstr ""
+
+#: UI/create_batch.html:15
+#, fuzzy
+msgid "Batch Number"
+msgstr "税号"
+
+#: UI/create_batch.html:30
+msgid "Batch Date"
+msgstr ""
+
+#: UI/taxform/add_taxform.html:47 UI/business_units/edit.html:61
+#: UI/business_units/filter.html:26 UI/asset/edit_asset.html:61
+#: UI/asset/search_asset.html:55
+#, fuzzy
+msgid "Description:"
+msgstr "说明"
+
+#: UI/taxform/add_taxform.html:62
+#, fuzzy
+msgid "Select by Default:"
+msgstr "全选"
+
+#: UI/taxform/add_taxform.html:77
+#, fuzzy
+msgid "Accrual Basis:"
+msgstr "累积"
+
+#: UI/menu/expanding.html:45
+msgid "Logged into [_1]"
+msgstr ""
+
+#: UI/business_units/filter.html:35
+#, fuzzy
+msgid "Active On"
+msgstr "活跃"
+
+#: UI/business_units/filter.html:45 UI/asset/search_class.html:65
+#: UI/asset/search_asset.html:185 tools/dbstrings:4 tools/dbstrings:15
+#: tools/dbstrings:18 tools/dbstrings:28 tools/dbstrings:58 tools/dbstrings:142
+#: tools/dbstrings:192
+msgid "Search"
+msgstr "搜寻"
+
+#: UI/asset/edit_asset.html:56 UI/asset/search_asset.html:50
+msgid "Asset Class:"
+msgstr ""
+
+#: UI/asset/edit_asset.html:71 UI/asset/search_asset.html:65
+#, fuzzy
+msgid "Purchase Date:"
+msgstr "采购单"
+
+#: UI/asset/edit_asset.html:81 UI/asset/search_asset.html:75
+#, fuzzy
+msgid "Purchase Value:"
+msgstr "采购单"
+
+#: UI/asset/edit_asset.html:93 UI/asset/search_asset.html:87
+#: LedgerSMB/Scripts/asset.pm:317
+msgid "Usable Life"
+msgstr ""
+
+#: UI/asset/edit_asset.html:105 UI/asset/search_asset.html:96
+msgid "Salvage Value:"
+msgstr ""
+
+#: UI/asset/edit_asset.html:117 UI/asset/search_asset.html:108
+msgid "Depreciation Starts"
+msgstr ""
+
+#: UI/asset/import_asset.html:43
+msgid "Depreciate Through"
+msgstr ""
+
+#: UI/import_csv/import_csv.html:42
+#: addons/1.3/import_trans/trunk/UI/import_trans/import_trans.html:42
+#: LedgerSMB/Report/PNL/Invoice.pm:89
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:89
+#, fuzzy
+msgid "Transaction Date"
+msgstr "记录"
+
+#: UI/login.html:30
+msgid "LedgerSMB [_1]"
+msgstr ""
+
+#: UI/Contact/divs/credit.html:61
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:61
+msgid "$entity_classname Number"
+msgstr ""
+
+#: UI/Contact/divs/notes.html:40
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/notes.html:40
+#, fuzzy
+msgid "Note Class"
+msgstr "备注"
+
+#: UI/Contact/divs/notes.html:64
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/notes.html:64
+msgid "Author: [_1]"
+msgstr ""
+
+#: addons/1.3/company_person/trunk/UI/Contact/divs/person.html:2
+msgid "$operation Person"
+msgstr ""
+
+#: addons/1.3/extended_arap/trunk/UI/aa.html:165
+#, fuzzy
+msgid "Tax Included?"
+msgstr "巳含税金"
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:27
+#, fuzzy
+msgid "Actions"
+msgstr "减除额"
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:20
+#, fuzzy
+msgid "Start Balance"
+msgstr "会计帐余额"
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:24
+#: LedgerSMB/Scripts/payment.pm:152 LedgerSMB/Report/Trial_Balance.pm:145
+#: LedgerSMB/Report/COA.pm:102 LedgerSMB/Report/GL.pm:108
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:145
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:102
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:108
+#, fuzzy
+msgid "Debits"
+msgstr "借方"
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:27
+#: LedgerSMB/Scripts/payment.pm:153 LedgerSMB/Report/Trial_Balance.pm:149
+#: LedgerSMB/Report/COA.pm:107 LedgerSMB/Report/GL.pm:113
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:149
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:107
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:113
+#, fuzzy
+msgid "Credits"
+msgstr "贷方"
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:30
+#, fuzzy
+msgid "End Balance"
+msgstr "余额"
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:109
+#, fuzzy
+msgid "Save as"
+msgstr "当新的储存"
+
+#: LedgerSMB.pm:494
+msgid "Field \\\"Name\\\" Not Defined"
+msgstr ""
+
+#: LedgerSMB.pm:968 LedgerSMB/SODA.pm:614
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:614
+msgid "Internal Database Error"
+msgstr ""
+
+#: LedgerSMB.pm:969 LedgerSMB.pm:970 LedgerSMB/Scripts/configuration.pm:202
+#: LedgerSMB/Scripts/setup.pm:589 LedgerSMB/SODA.pm:615 LedgerSMB/SODA.pm:617
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:615
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:617
+#, fuzzy
+msgid "Access Denied"
+msgstr "非存取!"
+
+#: LedgerSMB.pm:971 LedgerSMB/SODA.pm:618
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:618
+msgid "Invalid date/time entered"
+msgstr ""
+
+#: LedgerSMB.pm:972 LedgerSMB/SODA.pm:619
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:619
+msgid "Division by 0 error"
+msgstr ""
+
+#: LedgerSMB.pm:973 LedgerSMB.pm:974 LedgerSMB/SODA.pm:620
+#: LedgerSMB/SODA.pm:621
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:620
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:621
+msgid "Required input not provided"
+msgstr ""
+
+#: LedgerSMB.pm:975
+msgid "Conflict with Existing Data.  Perhaps you already entered this?"
+msgstr ""
+
+#: LedgerSMB.pm:976
+msgid "Error from Function:"
+msgstr ""
+
+#: LedgerSMB.pm:984
+msgid "More information has been reported in the error logs"
+msgstr ""
+
+#: LedgerSMB/Scripts/recon.pm:131
+msgid "Data not saved.  Please update again."
+msgstr ""
+
+#: LedgerSMB/Scripts/recon.pm:207
+#, fuzzy
+msgid "Clear date"
+msgstr "已清除"
+
+#: LedgerSMB/Scripts/recon.pm:209
+#, fuzzy
+msgid "Post Date"
+msgstr "当新的加入"
+
+#: LedgerSMB/Scripts/recon.pm:210
+#, fuzzy
+msgid "Our Balance"
+msgstr "余额"
+
+#: LedgerSMB/Scripts/recon.pm:211
+#, fuzzy
+msgid "Their Balance"
+msgstr "试算表"
+
+#: LedgerSMB/Scripts/recon.pm:319
+msgid "Invalid statement balance.  Hint: Try entering a number"
+msgstr ""
+
+#: LedgerSMB/Scripts/configuration.pm:19
+msgid "Company Information"
+msgstr ""
+
+#: LedgerSMB/Scripts/configuration.pm:25
+msgid "Business Number"
+msgstr "业务编号"
+
+#: LedgerSMB/Scripts/configuration.pm:39
+msgid "Currencies (colon-separated)"
+msgstr ""
+
+#: LedgerSMB/Scripts/configuration.pm:40
+msgid "Weight Unit"
+msgstr "重量单位"
+
+#: LedgerSMB/Scripts/configuration.pm:42
+#, fuzzy
+msgid "Default Country"
+msgstr "国家"
+
+#: LedgerSMB/Scripts/configuration.pm:45
+#, fuzzy
+msgid "Default Language"
+msgstr "编辑语言"
+
+#: LedgerSMB/Scripts/configuration.pm:49
+#, fuzzy
+msgid "Template Set"
+msgstr "模版"
+
+#: LedgerSMB/Scripts/configuration.pm:51
+msgid "Security Settings"
+msgstr ""
+
+#: LedgerSMB/Scripts/configuration.pm:56
+msgid "Session Timeout"
+msgstr "会话超时"
+
+#: LedgerSMB/Scripts/configuration.pm:58
+msgid "Automatically Logout"
+msgstr ""
+
+#: LedgerSMB/Scripts/configuration.pm:61
+#, fuzzy
+msgid "Separate Duties"
+msgstr "部门"
+
+#: LedgerSMB/Scripts/configuration.pm:64
+#, fuzzy
+msgid "Default Accounts"
+msgstr "删除帐户"
+
+#: LedgerSMB/Scripts/configuration.pm:74
+msgid "Cost of Goods Sold"
+msgstr ""
+
+#: LedgerSMB/Scripts/configuration.pm:77
+msgid "Foreign Exchange Gain"
+msgstr "外汇收益"
+
+#: LedgerSMB/Scripts/configuration.pm:80
+msgid "Foreign Exchange Loss"
+msgstr "外汇损失"
+
+#: LedgerSMB/Scripts/configuration.pm:82
+msgid "Next in Sequence"
+msgstr ""
+
+#: LedgerSMB/Scripts/configuration.pm:99
+msgid "Misc Settings"
+msgstr ""
+
+#: LedgerSMB/Scripts/configuration.pm:103
+msgid "Max Invoices per Check Stub"
+msgstr ""
+
+#: LedgerSMB/Scripts/configuration.pm:105
+#, fuzzy
+msgid "Decimal Places for Money"
+msgstr "小数的位置"
+
+#: LedgerSMB/Scripts/configuration.pm:107
+#, fuzzy
+msgid "Images in Templates"
+msgstr "LaTex 模版"
+
+#: LedgerSMB/Scripts/configuration.pm:227
+msgid "Error while opening directory: [_1]"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:146
+msgid "Pay To"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:148
+#, fuzzy
+msgid "Account Title"
+msgstr "帐户类别"
+
+#: LedgerSMB/Scripts/payment.pm:221
+#, fuzzy
+msgid "Save Batch"
+msgstr "储存预定"
+
+#: LedgerSMB/Scripts/payment.pm:766
+msgid "Discount"
+msgstr "折扣"
+
+#: LedgerSMB/Scripts/payment.pm:767
+msgid "Apply Disc"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:817
+msgid "To pay"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:995 tools/dbstrings:20
+msgid "Payment"
+msgstr "付款"
+
+#: LedgerSMB/Scripts/payment.pm:1075
+#, fuzzy
+msgid "Exchange rate hasn't been defined"
+msgstr "未指明汇率"
+
+#: LedgerSMB/Scripts/payment.pm:1089
+msgid "This gl movement, is a consecuence of a payment transaction"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:1149
+#, fuzzy
+msgid "Applied discount"
+msgstr "贸易折扣"
+
+#: LedgerSMB/Scripts/payment.pm:1186
+msgid "No overpayment account selected.  Was one set up?"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:1464 LedgerSMB/Scripts/payment.pm:1470
+#, fuzzy
+msgid "The amount of the invoice number"
+msgstr "您确定要删除发票编号"
+
+#: LedgerSMB/Scripts/payment.pm:1464
+msgid "is lesser than the amount to be paid"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:1470
+msgid "is lesser than 0"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:1591
+msgid "Use overpayment/prepayment"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:1684
+msgid "The amount to be pay of the invoice number"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:1684
+msgid "is null"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:1701 LedgerSMB/Scripts/payment.pm:1778
+msgid "Applied discount by an overpayment"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:1716
+msgid "The amount to be pay from the accno"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:1716
+msgid "is bigger than the amount available"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:1724 LedgerSMB/Scripts/payment.pm:1741
+#: LedgerSMB/Scripts/payment.pm:1795 LedgerSMB/Scripts/payment.pm:1812
+msgid "use of an overpayment"
+msgstr ""
+
+#: LedgerSMB/Scripts/payment.pm:1768
+msgid "This gl movement, is the result of a overpayment transaction"
+msgstr ""
+
+#: LedgerSMB/Scripts/admin.pm:148
+#, fuzzy
+msgid "delete"
+msgstr "删除"
+
+#: LedgerSMB/Scripts/admin.pm:153
+msgid "Active Sessions"
+msgstr ""
+
+#: LedgerSMB/Scripts/import_csv.pm:312
+#, fuzzy
+msgid "Invalid file"
+msgstr "有效至"
+
+#: LedgerSMB/Scripts/asset.pm:74
+msgid "Depreciation Successful"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:98
+#, fuzzy
+msgid "Edit Asset Class"
+msgstr "编辑商品"
+
+#: LedgerSMB/Scripts/asset.pm:100
+#, fuzzy
+msgid "Add Asset Class"
+msgstr "新增商品"
+
+#: LedgerSMB/Scripts/asset.pm:167
+#, fuzzy
+msgid "Asset Account"
+msgstr "列出帐号"
+
+#: LedgerSMB/Scripts/asset.pm:168
+#, fuzzy
+msgid "Depreciation Account"
+msgstr "删除帐户"
+
+#: LedgerSMB/Scripts/asset.pm:169
+msgid "Depreciation Method"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:253
+#, fuzzy
+msgid "Add Asset"
+msgstr "新增商品"
+
+#: LedgerSMB/Scripts/asset.pm:312 LedgerSMB/Scripts/asset.pm:734
+#: LedgerSMB/Scripts/asset.pm:798 LedgerSMB/Scripts/asset.pm:869
+#: LedgerSMB/Scripts/asset.pm:1005
+#, fuzzy
+msgid "Tag"
+msgstr "税金"
+
+#: LedgerSMB/Scripts/asset.pm:314 LedgerSMB/Scripts/asset.pm:497
+#, fuzzy
+msgid "Purchase Date"
+msgstr "采购单"
+
+#: LedgerSMB/Scripts/asset.pm:315 LedgerSMB/Scripts/asset.pm:498
+#, fuzzy
+msgid "Purchase Value"
+msgstr "采购单"
+
+#: LedgerSMB/Scripts/asset.pm:316
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:219
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:327
+msgid "Class"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:318
+#, fuzzy
+msgid "Location"
+msgstr "报价单"
+
+#: LedgerSMB/Scripts/asset.pm:495
+#, fuzzy
+msgid "Asset Tag"
+msgstr "资产"
+
+#: LedgerSMB/Scripts/asset.pm:499 LedgerSMB/Scripts/asset.pm:876
+msgid "Proceeds"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:500
+msgid "Disposal Method"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:501
+msgid "Percent"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:555
+#, fuzzy
+msgid "Asset Depreciation Report"
+msgstr "调和报告"
+
+#: LedgerSMB/Scripts/asset.pm:557
+msgid "Asset Disposal Report"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:562
+msgid "Asset Partial Disposal Report"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:599
+#, fuzzy
+msgid "Search reports"
+msgstr "搜寻"
+
+#: LedgerSMB/Scripts/asset.pm:625
+#, fuzzy
+msgid "Report Results"
+msgstr "报表"
+
+#: LedgerSMB/Scripts/asset.pm:634 LedgerSMB/DBObject/Asset_Class.pm:67
+#, fuzzy
+msgid "Asset Class"
+msgstr "资产"
+
+#: LedgerSMB/Scripts/asset.pm:635
+msgid "Entered at"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:636
+msgid "Approved at"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:676 tools/dbstrings:173
+#, fuzzy
+msgid "Depreciation"
+msgstr "说明"
+
+#: LedgerSMB/Scripts/asset.pm:678 tools/dbstrings:171 tools/dbstrings:174
+msgid "Disposal"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:731
+msgid "Report [_1] on date [_2]"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:735 LedgerSMB/Scripts/asset.pm:800
+#: LedgerSMB/Scripts/asset.pm:871
+msgid "Dep. Starts"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:736 LedgerSMB/Scripts/asset.pm:801
+#: LedgerSMB/Scripts/asset.pm:873
+msgid "Aquired Value"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:737
+#, fuzzy
+msgid "Dep. Method"
+msgstr "方法"
+
+#: LedgerSMB/Scripts/asset.pm:738
+msgid "Est. Life"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:739
+msgid "Dep. Basis"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:740
+msgid "Prior Through"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:741
+msgid "Prior Dep."
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:742
+msgid "Dep. this run"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:743
+msgid "Dep. YTD"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:744
+msgid "Total Accum. Dep."
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:795
+msgid "Partial Disposal Report [_1] on date [_2]"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:802
+#, fuzzy
+msgid "Percent Disposed"
+msgstr "巳加入付款"
+
+#: LedgerSMB/Scripts/asset.pm:804
+msgid "Disp. Aquired Value"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:805
+#, fuzzy
+msgid "Percent Remaining"
+msgstr "尚【◎Fix:◎余;◎馀】"
+
+#: LedgerSMB/Scripts/asset.pm:807
+msgid "Aquired Value Remaining"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:866
+msgid "Disposal Report [_1] on date [_2]"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:872
+msgid "Disposal Date"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:874
+msgid "D M"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:875
+msgid "Accum. Depreciation"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:877
+msgid "Adjusted Basis"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:878
+msgid "Gain (Loss)"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1007
+msgid "In Svc."
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1008
+msgid "Method"
+msgstr "方法"
+
+#: LedgerSMB/Scripts/asset.pm:1009
+msgid "Rem. Life"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1011
+msgid "(+) Salvage Value"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1012
+msgid "Dep. through"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1013
+msgid "(-) Accum. Dep."
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1014
+msgid "(=) NBV"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1015
+msgid "Pct. Dep."
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1153
+msgid "File Imported"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:61
+msgid "No database specified"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:75
+msgid "SQL-Ledger database detected."
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:78
+msgid "Would you like to migrate the database?"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:83
+msgid "Unsupported version.  Cancel?"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:90
+msgid "LedgerSMB 1.2 db found"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:92
+msgid "Would you like to upgrade the database?"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:97
+msgid "Development version found.  Please upgrade first"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:99 LedgerSMB/Scripts/setup.pm:105
+#: LedgerSMB/Scripts/setup.pm:129 LedgerSMB/Scripts/setup.pm:141
+msgid "Cancel?"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:103
+msgid "Legacy version found.  Please upgrade first"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:110
+msgid "LedgerSMB 1.4 found"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:113
+msgid "Rebuild/Upgrade?"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:118
+msgid "LedgerSMB 1.3 found"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:121
+msgid "Upgrade?"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:127
+msgid "Unknown version found."
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:134
+#, fuzzy
+msgid "Database does not exist."
+msgstr "不存在"
+
+#: LedgerSMB/Scripts/setup.pm:135
+#, fuzzy
+msgid "Create Database?"
+msgstr "建立资料集"
+
+#: LedgerSMB/Scripts/setup.pm:139
+msgid "Unknown database found."
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:217
+msgid "Invalid backup request"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:220
+msgid "Error creating backup file"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:260
+msgid "Don't know what to do with backup"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:332 LedgerSMB/Scripts/setup.pm:684
+#: LedgerSMB/Scripts/setup.pm:740 LedgerSMB/Scripts/setup.pm:836
+#, fuzzy
+msgid "Manage Users"
+msgstr "经理"
+
+#: LedgerSMB/Scripts/setup.pm:333 LedgerSMB/Scripts/setup.pm:685
+#: LedgerSMB/Scripts/setup.pm:741 LedgerSMB/Scripts/setup.pm:837
+msgid "Full Permissions"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:475
+#, fuzzy
+msgid "Save and Retry"
+msgstr "当新的储存"
+
+#: LedgerSMB/Scripts/setup.pm:727
+msgid "User already exists. Import?"
+msgstr ""
+
+#: LedgerSMB/Scripts/setup.pm:768
+msgid "No Permissions Assigned"
+msgstr ""
+
+#: LedgerSMB/Scripts/vouchers.pm:93
+msgid "Error creating batch.  Please try again."
+msgstr ""
+
+#: LedgerSMB/Scripts/file.pm:108
+msgid "No file uploaded"
+msgstr ""
+
+#: LedgerSMB/Scripts/order.pm:53
+#, fuzzy
+msgid "Search Sales Orders"
+msgstr "销货单"
+
+#: LedgerSMB/Scripts/order.pm:56
+#, fuzzy
+msgid "Generate Purchase Orders from Sales Orders"
+msgstr "用销货单产生采购单"
+
+#: LedgerSMB/Scripts/order.pm:58
+#, fuzzy
+msgid "Combine Sales Orders"
+msgstr "销货单"
+
+#: LedgerSMB/Scripts/order.pm:64
+#, fuzzy
+msgid "Search Purchase Orders"
+msgstr "采购单"
+
+#: LedgerSMB/Scripts/order.pm:66
+#, fuzzy
+msgid "Combine Purchase Orders"
+msgstr "采购单"
+
+#: LedgerSMB/Scripts/order.pm:69
+#, fuzzy
+msgid "Generate Sales Orders from Purchase Orders"
+msgstr "用销货单产生采购单"
+
+#: LedgerSMB/Scripts/order.pm:71 tools/dbstrings:40
+msgid "Receive"
+msgstr "收到"
+
+#: LedgerSMB/Scripts/order.pm:75
+#, fuzzy
+msgid "Search Quotations"
+msgstr "报价单"
+
+#: LedgerSMB/Scripts/order.pm:79
+#, fuzzy
+msgid "Search Requests for Quotation"
+msgstr "要求报价单"
+
+#: LedgerSMB/Scripts/order.pm:106 tools/dbstrings:138
+msgid "Combine"
+msgstr ""
+
+#: LedgerSMB/Scripts/order.pm:114 tools/dbstrings:36 tools/dbstrings:55
+msgid "Generate"
+msgstr "产生"
+
+#: LedgerSMB/Scripts/taxform.pm:258
+msgid "Tax Form List"
+msgstr ""
+
+#: LedgerSMB/Scripts/taxform.pm:271
+#, fuzzy
+msgid "Tax Form Name"
+msgstr "税号"
+
+#: LedgerSMB/Scripts/taxform.pm:273
+#, fuzzy
+msgid "Default Reportable"
+msgstr "巳储存预设"
+
+#: LedgerSMB/Scripts/taxform.pm:284
+msgid "No"
+msgstr "否"
+
+#: LedgerSMB/Scripts/employee.pm:106
+msgid "User"
+msgstr "使用者"
+
+#: LedgerSMB/Scripts/employee.pm:107
+#, fuzzy
+msgid "Wages/Deductions"
+msgstr "减除额"
+
+#: LedgerSMB/Scripts/account.pm:39
+msgid "Add Account"
+msgstr "新增帐户"
+
+#: LedgerSMB/Scripts/account.pm:64
+msgid "Bug: No such account"
+msgstr ""
+
+#: LedgerSMB/Scripts/account.pm:66
+msgid "Edit Account"
+msgstr "编辑帐户"
+
+#: LedgerSMB/Scripts/reports.pm:80
+msgid "No report specified"
+msgstr ""
+
+#: LedgerSMB/SODA.pm:622
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:622
+msgid "Conflict with Existing Data"
+msgstr ""
+
+#: LedgerSMB/SODA.pm:623
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:623
+msgid "Error from Function"
+msgstr ""
+
+#: LedgerSMB/IS.pm:1281 LedgerSMB/GL.pm:147 LedgerSMB/IR.pm:375
+#, fuzzy
+msgid "Batch ID Missing"
+msgstr "未指明日期"
+
+#: LedgerSMB/Upgrade_Tests.pm:134
+#, fuzzy
+msgid "Unique Customernumber"
+msgstr "客户编号"
+
+#: LedgerSMB/Upgrade_Tests.pm:150
+#, fuzzy
+msgid "Unique Vendornumber"
+msgstr "供应商号码"
+
+#: LedgerSMB/Upgrade_Tests.pm:161
+#, fuzzy
+msgid "No Null employeenumber"
+msgstr "工号"
+
+#: LedgerSMB/Upgrade_Tests.pm:177
+#, fuzzy
+msgid "Duplicate employee numbers"
+msgstr "工号"
+
+#: LedgerSMB/Upgrade_Tests.pm:192
+msgid "Unique nonobsolete partnumbers"
+msgstr ""
+
+#: LedgerSMB/Upgrade_Tests.pm:204
+#, fuzzy
+msgid "Unique AR Invoice numbers"
+msgstr "发票编号"
+
+#: LedgerSMB/Upgrade_Tests.pm:217
+msgid "No NULL Amounts"
+msgstr ""
+
+#: LedgerSMB/DBObject/Payment.pm:473
+msgid "cash"
+msgstr ""
+
+#: LedgerSMB/DBObject/Payment.pm:474
+#, fuzzy
+msgid "check"
+msgstr "检查"
+
+#: LedgerSMB/DBObject/Payment.pm:475
+#, fuzzy
+msgid "deposit"
+msgstr "存款"
+
+#: LedgerSMB/DBObject/Payment.pm:476
+msgid "other"
+msgstr ""
+
+#: LedgerSMB/DBObject/Payment.pm:752
+msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
+msgstr ""
+
+#: LedgerSMB/DBObject/Account.pm:73
+msgid "Error: Cannot include summary account in other dropdown menus"
+msgstr ""
+
+#: LedgerSMB/DBObject/Account.pm:77
+msgid "Internal Database Error."
+msgstr ""
+
+#: LedgerSMB/DBObject/Account.pm:191
+msgid "Too many links on summary account!"
+msgstr ""
+
+#: LedgerSMB/DBObject/TransTemplate.pm:23
+#: addons/1.3/templatetrans/trunk/LedgerSMB/DBObject/TransTemplate.pm:23
+#: addons/1.3/templatetrans/tags/1.0/LedgerSMB/DBObject/TransTemplate.pm:22
+msgid "No Account id for [_1]"
+msgstr ""
+
+#: LedgerSMB/DBObject/Asset.pm:109 LedgerSMB/DBObject/Asset_Class.pm:66
+msgid "Unable to save [_1] object"
+msgstr ""
+
+#: LedgerSMB/DBObject/Asset.pm:110
+msgid "Asset"
+msgstr "资产"
+
+#: LedgerSMB/DBObject/Asset.pm:294
+#, fuzzy
+msgid "Invoice not found"
+msgstr "发票日期"
+
+#: LedgerSMB/DBObject/Date.pm:59 LedgerSMB/App_State.pm:189
+msgid "January"
+msgstr "一月"
+
+#: LedgerSMB/DBObject/Date.pm:60 LedgerSMB/App_State.pm:190
+msgid "February"
+msgstr "二月"
+
+#: LedgerSMB/DBObject/Date.pm:61 LedgerSMB/App_State.pm:191
+msgid "March"
+msgstr "三月"
+
+#: LedgerSMB/DBObject/Date.pm:62 LedgerSMB/App_State.pm:192
+msgid "April"
+msgstr "四月"
+
+#: LedgerSMB/DBObject/Date.pm:63 LedgerSMB/App_State.pm:195
+msgid "May"
+msgstr "五月"
+
+#: LedgerSMB/DBObject/Date.pm:64 LedgerSMB/App_State.pm:196
+msgid "June"
+msgstr "六月"
+
+#: LedgerSMB/DBObject/Date.pm:65 LedgerSMB/App_State.pm:197
+msgid "July"
+msgstr "七月"
+
+#: LedgerSMB/DBObject/Date.pm:66 LedgerSMB/App_State.pm:198
+msgid "August"
+msgstr "八月"
+
+#: LedgerSMB/DBObject/Date.pm:67 LedgerSMB/App_State.pm:199
+msgid "September"
+msgstr "九月"
+
+#: LedgerSMB/DBObject/Date.pm:68 LedgerSMB/App_State.pm:200
+msgid "October"
+msgstr "十月"
+
+#: LedgerSMB/DBObject/Date.pm:69 LedgerSMB/App_State.pm:201
+msgid "November"
+msgstr "十一月"
+
+#: LedgerSMB/DBObject/Date.pm:70 LedgerSMB/App_State.pm:202
+msgid "December"
+msgstr "十二月"
+
+#: LedgerSMB/DBObject/Draft.pm:56 LedgerSMB/DBObject/Draft.pm:75
+msgid "No ID Set"
+msgstr ""
+
+#: LedgerSMB/DBObject/User.pm:74
+#, fuzzy
+msgid "Incorrect Password"
+msgstr "更改密码"
+
+#: LedgerSMB/DBObject/User.pm:77
+#, fuzzy
+msgid "Passwords must match."
+msgstr "密码勿比配!"
+
+#: LedgerSMB/DBObject/User.pm:146
+#, fuzzy
+msgid "Password required"
+msgstr "密码巳改"
+
+#: LedgerSMB/Report/Trial_Balance.pm:115
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:115
+#: tools/dbstrings:136
+msgid "Trial Balance"
+msgstr "试算表"
+
+#: LedgerSMB/Report/Trial_Balance.pm:132
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:132
+#, fuzzy
+msgid "Account Description"
+msgstr "说明"
+
+#: LedgerSMB/Report/Trial_Balance.pm:141
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:75
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:141
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:75
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:76
+#, fuzzy
+msgid "Starting Balance"
+msgstr "会计帐余额"
+
+#: LedgerSMB/Report/Trial_Balance.pm:153
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:153
+#, fuzzy
+msgid "Ending Balance"
+msgstr "起始余额"
+
+#: LedgerSMB/Report/Trial_Balance.pm:164
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:164
+#, fuzzy
+msgid "From date"
+msgstr "从"
+
+#: LedgerSMB/Report/Trial_Balance.pm:166
+#: LedgerSMB/Report/Invoices/Payments.pm:194 LedgerSMB/Report/Timecards.pm:158
+#: LedgerSMB/Report/Reconciliation/Summary.pm:176
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:166
+#, fuzzy
+msgid "To Date"
+msgstr "日期"
+
+#: LedgerSMB/Report/Trial_Balance.pm:168
+#: LedgerSMB/Report/Trial_Balance/List.pm:60
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:168
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:60
+#, fuzzy
+msgid "Ignore Yearends"
+msgstr "年结"
+
+#: LedgerSMB/Report/Trial_Balance/List.pm:35
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:35
+#, fuzzy
+msgid "Trial Balance List"
+msgstr "试算表"
+
+#: LedgerSMB/Report/Aging.pm:127
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:127
+msgid "30"
+msgstr ""
+
+#: LedgerSMB/Report/Aging.pm:132
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:132
+msgid "60"
+msgstr ""
+
+#: LedgerSMB/Report/Aging.pm:137
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:137
+msgid "90"
+msgstr ""
+
+#: LedgerSMB/Report/Aging.pm:167
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:167
+#, fuzzy
+msgid "Aging Report"
+msgstr "报表"
+
+#: LedgerSMB/Report/Unapproved/Drafts.pm:100
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:107
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:100
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:107
+msgid "AR/AP/GL Amount"
+msgstr ""
+
+#: LedgerSMB/Report/Unapproved/Drafts.pm:115
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:115
+#, fuzzy
+msgid "Draft Search"
+msgstr "搜寻"
+
+#: LedgerSMB/Report/Unapproved/Drafts.pm:126
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:126
+msgid "Draft Type"
+msgstr ""
+
+#: LedgerSMB/Report/Unapproved/Drafts.pm:130
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:146
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:130
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:146
+msgid "Amount Greater Than"
+msgstr ""
+
+#: LedgerSMB/Report/Unapproved/Drafts.pm:132
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:148
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:132
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:148
+#, fuzzy
+msgid "Amount Less Than"
+msgstr "漏填的总计"
+
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:112
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:112
+#, fuzzy
+msgid "Payment Amount"
+msgstr "巳加入付款"
+
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:131
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:131
+#, fuzzy
+msgid "Batch Search"
+msgstr "搜寻"
+
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:142
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:142
+msgid "Batch Type"
+msgstr ""
+
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:95
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:95
+msgid "Batch Class"
+msgstr ""
+
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:131
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:131
+msgid "Voucher List"
+msgstr ""
+
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:142
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:142
+msgid "Batch ID"
+msgstr ""
+
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:188
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:188
+msgid "Post Batch"
+msgstr ""
+
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:194
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:194
+#, fuzzy
+msgid "Delete Batch"
+msgstr "删除资料集"
+
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:200
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:200
+#, fuzzy
+msgid "Delete Vouchers"
+msgstr "删除预定"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:120
+#, fuzzy
+msgid "Selected"
+msgstr "选择"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:137
+#, fuzzy
+msgid "Total Paid"
+msgstr "总计"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:149
+#, fuzzy
+msgid "Batch Description"
+msgstr "说明"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:152
+msgid "Batch"
+msgstr ""
+
+#: LedgerSMB/Report/Invoices/Payments.pm:192 LedgerSMB/Report/Timecards.pm:156
+#: LedgerSMB/Report/Reconciliation/Summary.pm:174
+#, fuzzy
+msgid "From Date"
+msgstr "下单日期"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:206
+#, fuzzy
+msgid "Payment Results"
+msgstr "付款"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:207
+#, fuzzy
+msgid "Receipt Results"
+msgstr "收据"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:232
+#, fuzzy
+msgid "Reverse Payments"
+msgstr "付款"
+
+#: LedgerSMB/Report/Invoices/Transactions.pm:215
+#, fuzzy
+msgid "Vendor Account"
+msgstr "新增帐户"
+
+#: LedgerSMB/Report/Invoices/Transactions.pm:218
+#, fuzzy
+msgid "Customer Account"
+msgstr "列出帐号"
+
+#: LedgerSMB/Report/Invoices/Transactions.pm:251
+#: LedgerSMB/Report/Contact/Purchase.pm:91
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:91
+#, fuzzy
+msgid "Due"
+msgstr "十二月"
+
+#: LedgerSMB/Report/Invoices/Transactions.pm:275 LedgerSMB/Report/Orders.pm:257
+#: LedgerSMB/Report/Contact/Purchase.pm:111
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:111
+#, fuzzy
+msgid "Ship Via"
+msgstr "由海运"
+
+#: LedgerSMB/Report/Invoices/Transactions.pm:299
+#, fuzzy
+msgid "Search AP"
+msgstr "搜寻"
+
+#: LedgerSMB/Report/Invoices/Transactions.pm:300
+#, fuzzy
+msgid "Search AR"
+msgstr "搜寻"
+
+#: LedgerSMB/Report/Invoices/Outstanding.pm:160
+#, fuzzy
+msgid "# Invoices"
+msgstr "发票"
+
+#: LedgerSMB/Report/Invoices/Outstanding.pm:261
+#, fuzzy
+msgid "Ship_Via"
+msgstr "由海运"
+
+#: LedgerSMB/Report/co/Caja_Diaria.pm:76
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:76
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:77
+msgid "Document"
+msgstr ""
+
+#: LedgerSMB/Report/co/Caja_Diaria.pm:81
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:80
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:81
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:80
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:82
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:81
+msgid "Debit"
+msgstr "借方"
+
+#: LedgerSMB/Report/co/Caja_Diaria.pm:86
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:85
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:86
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:85
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:87
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:86
+msgid "Credit"
+msgstr "贷方"
+
+#: LedgerSMB/Report/co/Caja_Diaria.pm:110
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:110
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:115
+msgid "Caja Diaria"
+msgstr ""
+
+#: LedgerSMB/Report/co/Caja_Diaria.pm:125
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:125
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:130
+#, fuzzy
+msgid "Account Number Start"
+msgstr "帐户编号"
+
+#: LedgerSMB/Report/co/Caja_Diaria.pm:127
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:127
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:132
+#, fuzzy
+msgid "Account Number End"
+msgstr "帐户编号"
+
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:89 LedgerSMB/Report/GL.pm:158
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:89
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:158
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:90
+msgid "Balance"
+msgstr "余额"
+
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:114
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:114
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:118
+#, fuzzy
+msgid "Balance y Mayor"
+msgstr "余额"
+
+#: LedgerSMB/Report/Margin/Invoice.pm:53
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Margin/Invoice.pm:53
+msgid "Margin Report for Invoice"
+msgstr ""
+
+#: LedgerSMB/Report/Margin/ECA.pm:67
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Margin/ECA.pm:67
+msgid "Margin Report for Customer"
+msgstr ""
+
+#: LedgerSMB/Report/Orders.pm:192 LedgerSMB/Report/Orders.pm:290
+#: tools/dbstrings:45 tools/dbstrings:68 tools/dbstrings:197
+msgid "Quotations"
+msgstr "报价单"
+
+#: LedgerSMB/Report/Orders.pm:195 LedgerSMB/Report/Orders.pm:292
+#: tools/dbstrings:46 tools/dbstrings:73
+msgid "RFQs"
+msgstr "报价请求"
+
+#: LedgerSMB/Report/Orders.pm:221
+#, fuzzy
+msgid "Required Date"
+msgstr "需要者"
+
+#: LedgerSMB/Report/Timecards.pm:100
+#, fuzzy
+msgid "Project/Department Number"
+msgstr "方案号码"
+
+#: LedgerSMB/Report/Timecards.pm:112 LedgerSMB/Report/Timecards.pm:160
+msgid "Partnumber"
+msgstr "料号"
+
+#: LedgerSMB/Report/Timecards.pm:120
+#, fuzzy
+msgid "Sun"
+msgstr "六月"
+
+#: LedgerSMB/Report/Timecards.pm:124
+#, fuzzy
+msgid "Mon"
+msgstr "月份"
+
+#: LedgerSMB/Report/Timecards.pm:128
+msgid "Tue"
+msgstr ""
+
+#: LedgerSMB/Report/Timecards.pm:132
+msgid "Wed"
+msgstr ""
+
+#: LedgerSMB/Report/Timecards.pm:136
+msgid "Thu"
+msgstr ""
+
+#: LedgerSMB/Report/Timecards.pm:140
+msgid "Fri"
+msgstr ""
+
+#: LedgerSMB/Report/Timecards.pm:144
+msgid "Sat"
+msgstr ""
+
+#: LedgerSMB/Report/Timecards.pm:169
+msgid "Timecards"
+msgstr ""
+
+#: LedgerSMB/Report/COA.pm:112
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:112
+#, fuzzy
+msgid "Dropdowns"
+msgstr "限制"
+
+#: LedgerSMB/Report/COA.pm:117 LedgerSMB/Report/COA.pm:190
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:117
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:190
+msgid "Edit"
+msgstr "编辑"
+
+#: LedgerSMB/Report/COA.pm:141
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:141
+#: tools/dbstrings:8
+msgid "Chart of Accounts"
+msgstr "会计科目表"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:134
+#, fuzzy
+msgid "Statement Date"
+msgstr "会计帐"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:138
+msgid "Statement Balance"
+msgstr "会计帐余额"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:141
+msgid "Approved"
+msgstr ""
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:144
+msgid "Submitted"
+msgstr ""
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:147
+#, fuzzy
+msgid "Last Updated"
+msgstr "巳更新"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:150
+#: LedgerSMB/Report/Budget/Search.pm:87
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:87
+msgid "Entered By"
+msgstr ""
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:178
+#, fuzzy
+msgid "From Amount"
+msgstr "总计"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:180
+#, fuzzy
+msgid "To Amount"
+msgstr "总计"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:191
+#, fuzzy
+msgid "Reconciliation Reports"
+msgstr "调和报告"
+
+#: LedgerSMB/Report/Inventory/Search.pm:233
+#, fuzzy
+msgid "Avg. Cost"
+msgstr "平均成本"
+
+#: LedgerSMB/Report/Inventory/Search.pm:241
+#, fuzzy
+msgid "Price Updated"
+msgstr "巳更新"
+
+#: LedgerSMB/Report/Inventory/Search.pm:269 tools/dbstrings:52
+#, fuzzy
+msgid "Partsgroup"
+msgstr "价格组"
+
+#: LedgerSMB/Report/Inventory/Search.pm:297
+#: LedgerSMB/Report/Contact/History.pm:97
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:97
+msgid "Serial Number"
+msgstr "序号"
+
+#: LedgerSMB/Report/Inventory/Search.pm:319 tools/dbstrings:199
+#, fuzzy
+msgid "Goods and Services"
+msgstr "货物及服务"
+
+#: LedgerSMB/Report/Inventory/Adj_Details.pm:59
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:59
+#, fuzzy
+msgid "Inventory Adjustment Details"
+msgstr "存货科目勿存在"
+
+#: LedgerSMB/Report/Inventory/Adj_Details.pm:84
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:84
+#, fuzzy
+msgid "Counted"
+msgstr "国家"
+
+#: LedgerSMB/Report/Inventory/Adj_Details.pm:87
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:87
+#, fuzzy
+msgid "Expected"
+msgstr "费用"
+
+#: LedgerSMB/Report/Inventory/Adj_Details.pm:90
+#: LedgerSMB/Report/Budget/Variance.pm:86
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:90
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:86
+#, fuzzy
+msgid "Variance"
+msgstr "余额"
+
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:67
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:67
+#, fuzzy
+msgid "Inventory Adjustments"
+msgstr "巳储存存货"
+
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:79
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:79
+#, fuzzy
+msgid "Including partnumber"
+msgstr "一并显示"
+
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:81
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:81
+msgid "Source starting with"
+msgstr ""
+
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:100
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:100
+#, fuzzy
+msgid "AR Invoice"
+msgstr "发票"
+
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:104
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:104
+#, fuzzy
+msgid "AP Invoice"
+msgstr "POS发票"
+
+#: LedgerSMB/Report/Budget/Variance.pm:82
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:82
+msgid "Used"
+msgstr ""
+
+#: LedgerSMB/Report/Budget/Variance.pm:97
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:97
+#, fuzzy
+msgid "Budget Variance Report"
+msgstr "一并显示"
+
+#: LedgerSMB/Report/Budget/Variance.pm:108
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:108
+#, fuzzy
+msgid "Budget Number"
+msgstr "订单编号"
+
+#: LedgerSMB/Report/Budget/Search.pm:107
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:107
+msgid "Budget Search Results"
+msgstr ""
+
+#: LedgerSMB/Report/PNL/Income_Statement.pm:51
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:51
+#: tools/dbstrings:85 tools/dbstrings:137
+msgid "Income Statement"
+msgstr "损益表"
+
+#: LedgerSMB/Report/PNL/Income_Statement.pm:59
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:59
+#, fuzzy
+msgid "Reporting Basis"
+msgstr "报表"
+
+#: LedgerSMB/Report/PNL/Income_Statement.pm:81
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:81
+msgid "Invalid Reporting Basis"
+msgstr ""
+
+#: LedgerSMB/Report/PNL/Invoice.pm:77
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:77
+msgid "Invoice Profit/Loss"
+msgstr ""
+
+#: LedgerSMB/Report/PNL/Product.pm:69
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Product.pm:69
+msgid "Proft/Loss on Inventory Sales"
+msgstr ""
+
+#: LedgerSMB/Report/PNL/ECA.pm:80
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/ECA.pm:80
+#, fuzzy
+msgid "ECA Income Statement"
+msgstr "损益表"
+
+#: LedgerSMB/Report/Payroll/Deduction_Types.pm:34
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Deduction_Types.pm:34
+#, fuzzy
+msgid "Deduction Class"
+msgstr "减除额"
+
+#: LedgerSMB/Report/Payroll/Deduction_Types.pm:37
+#: LedgerSMB/Report/Payroll/Income_Types.pm:37
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Deduction_Types.pm:37
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Income_Types.pm:37
+msgid "Label"
+msgstr ""
+
+#: LedgerSMB/Report/Payroll/Deduction_Types.pm:55
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Deduction_Types.pm:55
+#, fuzzy
+msgid "Deduction Types"
+msgstr "减除额"
+
+#: LedgerSMB/Report/Payroll/Income_Types.pm:34
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Income_Types.pm:34
+#, fuzzy
+msgid "Income Class"
+msgstr "收入"
+
+#: LedgerSMB/Report/Payroll/Income_Types.pm:55
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Income_Types.pm:55
+#, fuzzy
+msgid "Income Types"
+msgstr "收入"
+
+#: LedgerSMB/Report/GL.pm:103
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:103
+msgid "Entry ID"
+msgstr ""
+
+#: LedgerSMB/Report/GL.pm:128
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:128
+msgid "Cleared"
+msgstr "已清除"
+
+#: LedgerSMB/Report/GL.pm:138
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:138
+msgid "Chart ID"
+msgstr ""
+
+#: LedgerSMB/Report/GL.pm:143
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:143
+#, fuzzy
+msgid "Account No."
+msgstr "帐户"
+
+#: LedgerSMB/Report/GL.pm:148
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:148
+#, fuzzy
+msgid "Account Name"
+msgstr "帐户编号"
+
+#: LedgerSMB/Report/GL.pm:189
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:189
+#, fuzzy
+msgid "General Ledger Report"
+msgstr "总帐"
+
+#: LedgerSMB/Report/Contact/Search.pm:67
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:67
+#, fuzzy
+msgid "Credit Account Number"
+msgstr "帐户编号"
+
+#: LedgerSMB/Report/Contact/Search.pm:75
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:75
+#, fuzzy
+msgid "Business Type"
+msgstr "业务"
+
+#: LedgerSMB/Report/Contact/Search.pm:87
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:87
+#, fuzzy
+msgid "Contact Search"
+msgstr "连络人"
+
+#: LedgerSMB/Report/Contact/History.pm:89
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:89
+#, fuzzy
+msgid "Disc"
+msgstr "折扣"
+
+#: LedgerSMB/Report/Contact/History.pm:114
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:114
+#, fuzzy
+msgid "Purchase History"
+msgstr "客户历史"
+
+#: LedgerSMB/Batch.pm:90
+msgid "Any"
+msgstr ""
+
+#: LedgerSMB/Form.pm:678
+msgid "Action: [_1], ID: [_2]"
+msgstr ""
+
+#: LedgerSMB/Entity/Location.pm:113
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:114
+#: tools/dbstrings:269
+#, fuzzy
+msgid "Billing"
+msgstr "帐单地址"
+
+#: LedgerSMB/Entity/Location.pm:114
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:115
+#: tools/dbstrings:270
+msgid "Sales"
+msgstr "销售"
+
+#: LedgerSMB/Entity/Location.pm:115
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:116
+#: tools/dbstrings:196 tools/dbstrings:271
+msgid "Shipping"
+msgstr "海运"
+
+#: LedgerSMB/Entity/Contact.pm:164
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Contact.pm:173
+msgid "Must have credit or entity id"
+msgstr ""
+
+#: LedgerSMB/Entity/Person.pm:100
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:100
+msgid "Dr."
+msgstr ""
+
+#: LedgerSMB/Entity/Person.pm:101
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:101
+msgid "Miss."
+msgstr ""
+
+#: LedgerSMB/Entity/Person.pm:102
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:102
+#, fuzzy
+msgid "Mr."
+msgstr "三月"
+
+#: LedgerSMB/Entity/Person.pm:103
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:103
+msgid "Mrs."
+msgstr ""
+
+#: LedgerSMB/Entity/Person.pm:104
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:104
+msgid "Ms."
+msgstr ""
+
+#: LedgerSMB/Entity/Person.pm:105
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:105
+msgid "Sir."
+msgstr ""
+
+#: LedgerSMB/Contact.pm:59
+msgid "Unable to save contact information"
+msgstr ""
+
+#: LedgerSMB/GL.pm:200
+msgid "Account [_1] not found"
+msgstr ""
+
+#: LedgerSMB/App_State.pm:189
+msgid "Jan"
+msgstr "一月"
+
+#: LedgerSMB/App_State.pm:190
+msgid "Feb"
+msgstr "二月"
+
+#: LedgerSMB/App_State.pm:191
+msgid "Mar"
+msgstr "三月"
+
+#: LedgerSMB/App_State.pm:192
+msgid "Apr"
+msgstr "四月"
+
+#: LedgerSMB/App_State.pm:196
+msgid "Jun"
+msgstr "六月"
+
+#: LedgerSMB/App_State.pm:197
+msgid "Jul"
+msgstr "七月"
+
+#: LedgerSMB/App_State.pm:198
+msgid "Aug"
+msgstr "八月"
+
+#: LedgerSMB/App_State.pm:199
+msgid "Sep"
+msgstr "九月"
+
+#: LedgerSMB/App_State.pm:200
+msgid "Oct"
+msgstr "十月"
+
+#: LedgerSMB/App_State.pm:201
+msgid "Nov"
+msgstr "十一月"
+
+#: LedgerSMB/App_State.pm:202
+msgid "Dec"
+msgstr "十二月"
+
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:331
+msgid "Created"
+msgstr ""
+
+#: tools/dbstrings:3
+msgid "Batches"
+msgstr ""
+
+#: tools/dbstrings:5
+#, fuzzy
+msgid "Add Contact"
+msgstr "连络人"
+
+#: tools/dbstrings:6
+msgid "Customer History"
+msgstr "客户历史"
+
+#: tools/dbstrings:7
+msgid "Vendor History"
+msgstr "供应商历史"
+
+#: tools/dbstrings:9
+#, fuzzy
+msgid "Add Accounts"
+msgstr "新增帐户"
+
+#: tools/dbstrings:10
+#, fuzzy
+msgid "Top-level"
+msgstr "高水准"
+
+#: tools/dbstrings:11 tools/dbstrings:14
+#, fuzzy
+msgid "Invoice Vouchers"
+msgstr "发票编号"
+
+#: tools/dbstrings:12 tools/dbstrings:16
+msgid "Add Transaction"
+msgstr "新增交易"
+
+#: tools/dbstrings:13
+msgid "AR Aging"
+msgstr "应收帐龄分析"
+
+#: tools/dbstrings:17
+msgid "AP Aging"
+msgstr "应付帐龄分析"
+
+#: tools/dbstrings:21
+#, fuzzy
+msgid "Use Overpayment"
+msgstr "预缴"
+
+#: tools/dbstrings:22
+msgid "Use AR Overpayment"
+msgstr ""
+
+#: tools/dbstrings:25 tools/dbstrings:132 tools/dbstrings:146
+msgid "Reconciliation"
+msgstr "调和"
+
+#: tools/dbstrings:26
+msgid "Employees"
+msgstr "职员"
+
+#: tools/dbstrings:31 tools/dbstrings:44 tools/dbstrings:57 tools/dbstrings:125
+#: tools/dbstrings:127 tools/dbstrings:131 tools/dbstrings:161
+#: tools/dbstrings:172 tools/dbstrings:184 tools/dbstrings:201
+#: tools/dbstrings:218
+msgid "Reports"
+msgstr "报表"
+
+#: tools/dbstrings:47
+#, fuzzy
+msgid "Journal Entry"
+msgstr "国家"
+
+#: tools/dbstrings:48
+#, fuzzy
+msgid "Requirements"
+msgstr "需要者"
+
+#: tools/dbstrings:54
+msgid "Add Timecard"
+msgstr ""
+
+#: tools/dbstrings:59 tools/dbstrings:74
+msgid "Time Cards"
+msgstr ""
+
+#: tools/dbstrings:60 tools/dbstrings:217
+msgid "Translations"
+msgstr "翻译"
+
+#: tools/dbstrings:62 tools/dbstrings:86
+msgid "Balance Sheet"
+msgstr "资产负债表"
+
+#: tools/dbstrings:63
+#, fuzzy
+msgid "Inventory Activity"
+msgstr "库存"
+
+#: tools/dbstrings:64
+msgid "Sales Invoices"
+msgstr "销售发票"
+
+#: tools/dbstrings:66
+msgid "Checks"
+msgstr "检查"
+
+#: tools/dbstrings:67
+msgid "Work Orders"
+msgstr "工作单"
+
+#: tools/dbstrings:69
+msgid "Packing Lists"
+msgstr "出货单"
+
+#: tools/dbstrings:70
+msgid "Pick Lists"
+msgstr "拣货清单"
+
+#: tools/dbstrings:72
+msgid "Bin Lists"
+msgstr "箱清单"
+
+#: tools/dbstrings:76
+msgid "Defaults"
+msgstr "预设"
+
+#: tools/dbstrings:78
+#, fuzzy
+msgid "List Warehouse"
+msgstr "列出仓库"
+
+#: tools/dbstrings:80
+msgid "List Businesses"
+msgstr "列出业务"
+
+#: tools/dbstrings:82
+msgid "List Languages"
+msgstr "列出语言"
+
+#: tools/dbstrings:84
+msgid "List SIC"
+msgstr "列出SIC"
+
+#: tools/dbstrings:88 tools/dbstrings:102
+msgid "AR Transaction"
+msgstr "应收交易"
+
+#: tools/dbstrings:89 tools/dbstrings:103
+msgid "AP Transaction"
+msgstr "应付交易"
+
+#: tools/dbstrings:96 tools/dbstrings:110
+msgid "Statement"
+msgstr "会计帐"
+
+#: tools/dbstrings:99 tools/dbstrings:119
+msgid "Timecard"
+msgstr ""
+
+#: tools/dbstrings:100 tools/dbstrings:120
+msgid "Letterhead"
+msgstr ""
+
+#: tools/dbstrings:111
+#, fuzzy
+msgid "Transaction Approval"
+msgstr "巳加入交易"
+
+#: tools/dbstrings:121
+msgid "POS Invoice"
+msgstr "POS发票"
+
+#: tools/dbstrings:122
+#, fuzzy
+msgid "Contacts"
+msgstr "连络人"
+
+#: tools/dbstrings:123
+msgid "Import Chart"
+msgstr ""
+
+#: tools/dbstrings:126 tools/dbstrings:128 tools/dbstrings:129
+msgid "Vouchers"
+msgstr ""
+
+#: tools/dbstrings:133
+#, fuzzy
+msgid "Year End"
+msgstr "年结"
+
+#: tools/dbstrings:135
+#, fuzzy
+msgid "Reverse Receipts"
+msgstr "收据"
+
+#: tools/dbstrings:139
+msgid "Add Part"
+msgstr "新增原料"
+
+#: tools/dbstrings:140
+msgid "Add Service"
+msgstr "新增服务"
+
+#: tools/dbstrings:141
+msgid "Add Assembly"
+msgstr "新增商品"
+
+#: tools/dbstrings:144
+#, fuzzy
+msgid "Reverse Payment"
+msgstr "预缴"
+
+#: tools/dbstrings:145
+msgid "Drafts"
+msgstr ""
+
+#: tools/dbstrings:147
+#, fuzzy
+msgid "Add Tax Form"
+msgstr "新增原料"
+
+#: tools/dbstrings:148
+#, fuzzy
+msgid "Admin Users"
+msgstr "新增使用者"
+
+#: tools/dbstrings:149
+msgid "Text Templates"
+msgstr "文字模版"
+
+#: tools/dbstrings:150
+msgid "LaTeX Templates"
+msgstr "LaTex 模版"
+
+#: tools/dbstrings:151
+msgid "HTML Templates"
+msgstr "HTML 表单"
+
+#: tools/dbstrings:152
+msgid "SIC"
+msgstr "原文"
+
+#: tools/dbstrings:155
+#, fuzzy
+msgid "Reporting Units"
+msgstr "报表"
+
+#: tools/dbstrings:157
+msgid "Add User"
+msgstr "新增使用者"
+
+#: tools/dbstrings:158
+#, fuzzy
+msgid "Search Users"
+msgstr "搜寻"
+
+#: tools/dbstrings:159
+#, fuzzy
+msgid "Sessions"
+msgstr "版本"
+
+#: tools/dbstrings:160
+#, fuzzy
+msgid "List Tax Forms"
+msgstr "列出部门"
+
+#: tools/dbstrings:162
+#, fuzzy
+msgid "Asset Classes"
+msgstr "商品"
+
+#: tools/dbstrings:163
+#, fuzzy
+msgid "Assets"
+msgstr "资产"
+
+#: tools/dbstrings:164
+#, fuzzy
+msgid "Add Class"
+msgstr "新增原文"
+
+#: tools/dbstrings:165
+#, fuzzy
+msgid "List Classes"
+msgstr "列出业务"
+
+#: tools/dbstrings:166
+#, fuzzy
+msgid "Add Assets"
+msgstr "新增商品"
+
+#: tools/dbstrings:167
+#, fuzzy
+msgid "Search Assets"
+msgstr "搜寻"
+
+#: tools/dbstrings:168 tools/dbstrings:183 tools/dbstrings:188
+#, fuzzy
+msgid "Import"
+msgstr "报表"
+
+#: tools/dbstrings:169
+msgid "Depreciate"
+msgstr ""
+
+#: tools/dbstrings:170
+msgid "Net Book Value"
+msgstr ""
+
+#: tools/dbstrings:175 tools/dbstrings:179
+msgid "Import Batch"
+msgstr ""
+
+#: tools/dbstrings:177
+#, fuzzy
+msgid "Debit Note"
+msgstr "借方"
+
+#: tools/dbstrings:178
+#, fuzzy
+msgid "Debit Invoice"
+msgstr "发票"
+
+#: tools/dbstrings:181
+#, fuzzy
+msgid "Credit Note"
+msgstr "贷方"
+
+#: tools/dbstrings:182
+#, fuzzy
+msgid "Credit Invoice"
+msgstr "编辑POS"
+
+#: tools/dbstrings:185
+msgid "Add GIFI"
+msgstr "新增 GIFI"
+
+#: tools/dbstrings:186
+msgid "List GIFI"
+msgstr "列出 GIFI"
+
+#: tools/dbstrings:187
+#, fuzzy
+msgid "Import GIFI"
+msgstr "编辑 GIFI"
+
+#: tools/dbstrings:189
+msgid "AR Voucher"
+msgstr ""
+
+#: tools/dbstrings:190
+msgid "AP Voucher"
+msgstr ""
+
+#: tools/dbstrings:191
+#, fuzzy
+msgid "Add Budget"
+msgstr "新增业务"
+
+#: tools/dbstrings:193
+msgid "Budgets"
+msgstr ""
+
+#: tools/dbstrings:194
+msgid "HR"
+msgstr "人事管理"
+
+#: tools/dbstrings:195
+msgid "Order Entry"
+msgstr "下单项目"
+
+#: tools/dbstrings:198
+#, fuzzy
+msgid "General Journal"
+msgstr "总帐"
+
+#: tools/dbstrings:200
+msgid "Projects"
+msgstr "方案"
+
+#: tools/dbstrings:203
+#, fuzzy
+msgid "Tax Forms"
+msgstr "日期格式"
+
+#: tools/dbstrings:204
+msgid "Fixed Assets"
+msgstr ""
+
+#: tools/dbstrings:205
+msgid "Logout"
+msgstr "登出"
+
+#: tools/dbstrings:206
+msgid "New Window"
+msgstr "新视窗"
+
+#: tools/dbstrings:207
+msgid "Preferences"
+msgstr "个人设定"
+
+#: tools/dbstrings:208
+msgid "Stylesheet"
+msgstr "样式表"
+
+#: tools/dbstrings:209
+msgid "System"
+msgstr "系统"
+
+#: tools/dbstrings:210
+#, fuzzy
+msgid "Batch Printing"
+msgstr "在列印"
+
+#: tools/dbstrings:211 tools/dbstrings:212
+msgid "Outstanding"
+msgstr "未付"
+
+#: tools/dbstrings:213
+#, fuzzy
+msgid "Add Overhead"
+msgstr "新增劳工/经常费用"
+
+#: tools/dbstrings:235
+msgid "ap"
+msgstr ""
+
+#: tools/dbstrings:236
+#, fuzzy
+msgid "ar"
+msgstr "三月"
+
+#: tools/dbstrings:237
+#, fuzzy
+msgid "payment"
+msgstr "付款"
+
+#: tools/dbstrings:238
+msgid "payment_reversal"
+msgstr ""
+
+#: tools/dbstrings:239
+msgid "gl"
+msgstr ""
+
+#: tools/dbstrings:240
+#, fuzzy
+msgid "receipt"
+msgstr "收据"
+
+#: tools/dbstrings:241
+msgid "receipt_reversal"
+msgstr ""
+
+#: tools/dbstrings:242
+#, fuzzy
+msgid "sales_invoice"
+msgstr "销售发票"
+
+#: tools/dbstrings:243
+#, fuzzy
+msgid "vendor_invoice"
+msgstr "供应商发票"
+
+#~ msgid "Above"
+#~ msgstr "上文"
+
+#~ msgid "Access Control"
+#~ msgstr "权限控制"
+
+#~ msgid "Accounting"
+#~ msgstr "会计"
+
+#~ msgid "Accounting Menu"
+#~ msgstr "会计选单"
+
+#~ msgid "Accounts"
+#~ msgstr "帐户"
+
+#~ msgid "Activate Audit trail"
+#~ msgstr "活跃的审计线索"
+
+#~ msgid "Activate Audit trails"
+#~ msgstr "活跃的审计线索"
+
+#~ msgid "Add AP Transaction"
+#~ msgstr "新增应付记录"
+
+#~ msgid "Add AR Transaction"
+#~ msgstr "新增应收记录"
+
+#~ msgid "Add Deduction"
+#~ msgstr "新增扣除"
+
+#~ msgid "Add Department"
+#~ msgstr "新增部门"
+
+#~ msgid "Administration"
+#~ msgstr "系统管理"
+
+#~ msgid "Administrator"
+#~ msgstr "管理人"
+
+#~ msgid "After Deduction"
+#~ msgstr "扣除以后"
+
+#~ msgid "All Accounts"
+#~ msgstr "全部帐户"
+
+#~ msgid "All Datasets up to date!"
+#~ msgstr "所有资料皆已更新!"
+
+#~ msgid "All Items"
+#~ msgstr "全部项目"
+
+#~ msgid "Allowances"
+#~ msgstr "津贴"
+
+#~ msgid "Are you sure you want to delete Transaction"
+#~ msgstr "您是否确定要删除交易"
+
+#~ msgid "Assembly"
+#~ msgstr "商品"
+
+#~ msgid "Audit trail disabled"
+#~ msgstr "有效的审计线索"
+
+#~ msgid "Audit trail enabled"
+#~ msgstr "无效的审计线索"
+
+#~ msgid "Audit trail removed up to"
+#~ msgstr "移除到此为止的审计线索"
+
+#~ msgid "Audit trails disabled"
+#~ msgstr "有效的审计线索"
+
+#~ msgid "Audit trails enabled"
+#~ msgstr "无效的审计线索"
+
+#~ msgid "Backup"
+#~ msgstr "备份"
+
+#~ msgid "Backup sent to"
+#~ msgstr "备份寄送到"
+
+#~ msgid "Based on"
+#~ msgstr "基于"
+
+#~ msgid "Bcc"
+#~ msgstr "不显示抄送"
+
+#~ msgid "Before Deduction"
+#~ msgstr "扣除之前"
+
+#~ msgid "Below"
+#~ msgstr "以下"
+
+#~ msgid "Books are open"
+#~ msgstr "帐簿已开启"
+
+#~ msgid "Cannot create Assembly"
+#~ msgstr "无法造成组件"
+
+#~ msgid "Cannot create Labor"
+#~ msgstr "无法造成劳工"
+
+#~ msgid "Cannot create Lock!"
+#~ msgstr "不能建立锁"
+
+#~ msgid "Cannot create Part"
+#~ msgstr "无法造成零件"
+
+#~ msgid "Cannot create Service"
+#~ msgstr "无法造成服务"
+
+#~ msgid "Cannot delete account!"
+#~ msgstr "不能删除帐户"
+
+#~ msgid "Cannot delete customer!"
+#~ msgstr "不能删除客户"
+
+#~ msgid "Cannot delete default account!"
+#~ msgstr "不能删除预设帐户"
+
+#~ msgid "Cannot delete transaction!"
+#~ msgstr "不能删除交易"
+
+#~ msgid "Cannot delete vendor!"
+#~ msgstr "不能删除供应商"
+
+#~ msgid "Cannot post Payment!"
+#~ msgstr "不能加入款项"
+
+#~ msgid "Cannot post Receipt!"
+#~ msgstr "不能加入收据"
+
+#~ msgid "Cannot save defaults!"
+#~ msgstr "不能储存预设"
+
+#~ msgid "Cc"
+#~ msgstr "抄送"
+
+#~ msgid "Change Admin Password"
+#~ msgstr "更改管理员密码"
+
+#~ msgid "Click on login name to edit!"
+#~ msgstr "请按登入名称以进行修改!"
+
+#~ msgid "Close Books up to"
+#~ msgstr "关闭到此为止的帐簿"
+
+#~ msgid "Compare to"
+#~ msgstr "对照"
+
+#~ msgid "Components"
+#~ msgstr "零件"
+
+#~ msgid "Confirm"
+#~ msgstr "确认密码"
+
+#~ msgid "Connect to"
+#~ msgstr "连结到"
+
+#~ msgid "Contra"
+#~ msgstr "相反"
+
+#~ msgid "Copies"
+#~ msgstr "副本"
+
+#~ msgid "Cost Center"
+#~ msgstr "成本中心"
+
+#~ msgid "Create Chart of Accounts"
+#~ msgstr "建立帐户图表"
+
+#~ msgid "Customer deleted!"
+#~ msgstr "巳删除客户"
+
+#~ msgid "Customer saved!"
+#~ msgstr "巳储存客户"
+
+#~ msgid "Customers"
+#~ msgstr "客户"
+
+#~ msgid "DBI not installed!"
+#~ msgstr "未安装 DBI 模组!"
+
+#~ msgid "DOB"
+#~ msgstr "生日"
+
+#~ msgid "Database"
+#~ msgstr "资料库"
+
+#~ msgid "Database Administration"
+#~ msgstr "资料库管理"
+
+#~ msgid "Database Driver not checked!"
+#~ msgstr "未选定资料库驱动程式!"
+
+#~ msgid "Database Host"
+#~ msgstr "资料库主机"
+
+#~ msgid "Database User missing!"
+#~ msgstr "未指明资料库使用者!"
+
+#~ msgid "Dataset"
+#~ msgstr "资料集"
+
+#~ msgid "Dataset is newer than version!"
+#~ msgstr "较新资料集"
+
+#~ msgid "Dataset missing!"
+#~ msgstr "未指明资料集!"
+
+#~ msgid "Dataset updated!"
+#~ msgstr "巳更新资料集"
+
+#~ msgid "Day"
+#~ msgstr "日"
+
+#~ msgid "Days"
+#~ msgstr "日"
+
+#~ msgid "Decrease"
+#~ msgstr "减少"
+
+#~ msgid "Deduct after"
+#~ msgstr "减少以后"
+
+#~ msgid "Deduction deleted!"
+#~ msgstr "巳删除减少"
+
+#~ msgid "Deduction saved!"
+#~ msgstr "巳储存减少"
+
+#~ msgid "Department deleted!"
+#~ msgstr "巳删除部门"
+
+#~ msgid "Department saved!"
+#~ msgstr "巳储存部门"
+
+#~ msgid "Difference"
+#~ msgstr "差异"
+
+#~ msgid "Directory"
+#~ msgstr "目录"
+
+#~ msgid "Driver"
+#~ msgstr "驱动程式"
+
+#~ msgid "E-mail Statement to"
+#~ msgstr "电邮会计账到"
+
+#~ msgid "E-mailed"
+#~ msgstr "巳电邮"
+
+#~ msgid "Edit AP Transaction"
+#~ msgstr "编辑应付记录"
+
+#~ msgid "Edit AR Transaction"
+#~ msgstr "编辑应收记录"
+
+#~ msgid "Edit Business"
+#~ msgstr "编辑业务"
+
+#~ msgid "Edit Cash Transfer Transaction"
+#~ msgstr "编辑现金转移"
+
+#~ msgid "Edit Deduction"
+#~ msgstr "编辑减除额"
+
+#~ msgid "Edit Department"
+#~ msgstr "编辑部门"
+
+#~ msgid "Edit General Ledger Transaction"
+#~ msgstr "编辑总帐"
+
+#~ msgid "Edit Group"
+#~ msgstr "编辑组"
+
+#~ msgid "Edit Labor/Overhead"
+#~ msgstr "编辑劳工/经常费用"
+
+#~ msgid "Edit Part"
+#~ msgstr "编辑原料"
+
+#~ msgid "Edit Pricegroup"
+#~ msgstr "编辑价格组"
+
+#~ msgid "Edit SIC"
+#~ msgstr "编辑原文"
+
+#~ msgid "Edit Sales Invoice"
+#~ msgstr "编辑销售发票"
+
+#~ msgid "Edit Service"
+#~ msgstr "编辑服务"
+
+#~ msgid "Edit User"
+#~ msgstr "编辑使用者"
+
+#~ msgid "Edit Warehouse"
+#~ msgstr "编辑仓库"
+
+#~ msgid "Employee Name"
+#~ msgstr "职员姓名"
+
+#~ msgid "Employee deleted!"
+#~ msgstr "巳删除职员"
+
+#~ msgid "Employee pays"
+#~ msgstr "付款给职员"
+
+#~ msgid "Employee saved!"
+#~ msgstr "巳储存职员"
+
+#~ msgid "Employer"
+#~ msgstr "雇主"
+
+#~ msgid "Employer pays"
+#~ msgstr "付款给雇主"
+
+#~ msgid "Enddate"
+#~ msgstr "结束日"
+
+#~ msgid "Enforce transaction reversal for all dates"
+#~ msgstr "强制所有日期的交易回复"
+
+#~ msgid ""
+#~ "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your "
+#~ "native and foreign currencies"
+#~ msgstr ""
+#~ "请键入以冒号分隔的英文字母, 每项不超过三个字 (如 CAD:USD:EUR), 作为您的本国"
+#~ "及外国货币"
+
+#~ msgid "Equity"
+#~ msgstr "股权"
+
+#~ msgid "Existing Datasets"
+#~ msgstr "既有的资料集"
+
+#~ msgid "Expense/Asset"
+#~ msgstr "费用/资产"
+
+#~ msgid "Fax"
+#~ msgstr "传真"
+
+#~ msgid "Generate Sales Order"
+#~ msgstr "产生销货单"
+
+#~ msgid "Group Items"
+#~ msgstr "组的项目"
+
+#~ msgid "Heading"
+#~ msgstr "标题, "
+
+#~ msgid "Home Phone"
+#~ msgstr "住宅电话"
+
+#~ msgid "Host"
+#~ msgstr "主机"
+
+#~ msgid "Hostname missing!"
+#~ msgstr "未指明主机名称!"
+
+#~ msgid "Include Exchange Rate Difference"
+#~ msgstr "包含外汇差距"
+
+#~ msgid "Include in drop-down menus"
+#~ msgstr "包含在下拉式选单中"
+
+#~ msgid "Incorrect Dataset version!"
+#~ msgstr "资料集版本错误!"
+
+#~ msgid "Increase"
+#~ msgstr "增加"
+
+#~ msgid ""
+#~ "Inventory quantity must be zero before you can set this assembly obsolete!"
+#~ msgstr "在停用此项组合品之前, 存货数量必需为零!"
+
+#~ msgid "Invoice Number missing!"
+#~ msgstr "未指明发票编号!"
+
+#~ msgid "Invoice deleted!"
+#~ msgstr "巳删除发票"
+
+#~ msgid "Is this a summary account to record"
+#~ msgstr "此为总结科目吗?"
+
+#~ msgid "Last Numbers & Default Accounts"
+#~ msgstr "上一笔编号及预设帐户"
+
+#~ msgid ""
+#~ "Leave host and port field empty unless you want to make a remote "
+#~ "connection."
+#~ msgstr "除非您想要进行远端连线, 否则请将主机及埠号留白."
+
+#~ msgid "Liability"
+#~ msgstr "负债"
+
+#~ msgid "Licensed to"
+#~ msgstr "授权予"
+
+#~ msgid "Line Total"
+#~ msgstr "总列数"
+
+#~ msgid "Link"
+#~ msgstr "连结"
+
+#~ msgid "List Projects"
+#~ msgstr "列出方案"
+
+#~ msgid "List Transactions"
+#~ msgstr "列出交易"
+
+#~ msgid "Lock System"
+#~ msgstr "系统锁上"
+
+#~ msgid "Lockfile created!"
+#~ msgstr "巳建立上锁档案!"
+
+#~ msgid "Lockfile removed!"
+#~ msgstr "巳移除上锁档案!"
+
+#~ msgid "Login name missing!"
+#~ msgstr "未指明登入名字"
+
+#~ msgid "Maximum"
+#~ msgstr "最大"
+
+#~ msgid "May "
+#~ msgstr "五月"
+
+#~ msgid "Menu Width"
+#~ msgstr "选择单宽度"
+
+#~ msgid "Months"
+#~ msgstr "月"
+
+#~ msgid "Multibyte Encoding"
+#~ msgstr "Multibyte Encoding"
+
+#~ msgid "Name missing!"
+#~ msgstr "未指明名字"
+
+#~ msgid "New Templates"
+#~ msgstr "新增模版"
+
+#~ msgid "No Database Drivers available!"
+#~ msgstr "没有可用的驱动程式!"
+
+#~ msgid "No Dataset selected!"
+#~ msgstr "未选定资料集!"
+
+#~ msgid "No email address for"
+#~ msgstr "未指明电子邮件位置"
+
+#~ msgid "Non-taxable"
+#~ msgstr "不应课税"
+
+#~ msgid "Non-taxable Purchases"
+#~ msgstr "不应课税的采购"
+
+#~ msgid "Non-taxable Sales"
+#~ msgstr "不应课税的销售"
+
+#~ msgid "Nothing to delete!"
+#~ msgstr "没有可删除的项目"
+
+#~ msgid "Number Format"
+#~ msgstr "数字格式"
+
+#~ msgid "Oracle Database Administration"
+#~ msgstr "Oracle 资料库管理"
+
+#~ msgid "Order saved!"
+#~ msgstr "巳储存订单"
+
+#~ msgid "Out of balance!"
+#~ msgstr "不协调"
+
+#~ msgid "Packing List Date missing!"
+#~ msgstr "未指明包装清单日期!"
+
+#~ msgid "Packing List Number missing!"
+#~ msgstr "未指明包装清单编号!"
+
+#~ msgid "Parts"
+#~ msgstr "原料"
+
+#~ msgid "Password"
+#~ msgstr "密码"
+
+#~ msgid "Payables"
+#~ msgstr "应付科目"
+
+#~ msgid "Payroll Deduction"
+#~ msgstr "薪金减除额"
+
+#~ msgid "Pg Database Administration"
+#~ msgstr "Pg 资料库管理"
+
+#~ msgid "PgPP Database Administration"
+#~ msgstr "PgPP资料库管理"
+
+#~ msgid "Phone"
+#~ msgstr "电话号码"
+
+#~ msgid "Port"
+#~ msgstr "埠号"
+
+#~ msgid "Port missing!"
+#~ msgstr "未指明埠号!"
+
+#~ msgid "Posting"
+#~ msgstr "在过帐"
+
+#~ msgid "Print and Post as new"
+#~ msgstr "列印及当新的过帐"
+
+#~ msgid "Printer"
+#~ msgstr "印表机"
+
+#~ msgid "Printing ... "
+#~ msgstr "正列印"
+
+#~ msgid "Profit Center"
+#~ msgstr "利润中心"
+
+#~ msgid "Project Number missing!"
+#~ msgstr "未指明方案号码"
+
+#~ msgid "Project Transactions"
+#~ msgstr "方案交易"
+
+#~ msgid "Project deleted!"
+#~ msgstr "巳删除方案"
+
+#~ msgid "Project saved!"
+#~ msgstr "巳储存方案"
+
+#~ msgid "Purchase Order Number"
+#~ msgstr "采购单编号"
+
+#~ msgid "Quotation "
+#~ msgstr "报价单"
+
+#~ msgid "R"
+#~ msgstr "对"
+
+#~ msgid "RFQ "
+#~ msgstr "供应商询价单"
+
+#~ msgid "Rate missing!"
+#~ msgstr "未指明税率"
+
+#~ msgid "Receipt posted!"
+#~ msgstr "巳加入收据"
+
+#~ msgid "Receivables"
+#~ msgstr "应收帐户"
+
+#~ msgid "Remove Audit trail up to"
+#~ msgstr "移除审核线索直至"
+
+#~ msgid "Remove Audit trails up to"
+#~ msgstr "移除审核线索直至"
+
+#~ msgid "Report for"
+#~ msgstr "报表来源"
+
+#~ msgid "Request for Quotations"
+#~ msgstr "要求报价单"
+
+#~ msgid "Retained Earnings"
+#~ msgstr "保留盈余"
+
+#~ msgid "Role"
+#~ msgstr "任务"
+
+#~ msgid "SSN"
+#~ msgstr "身分证编号"
+
+#~ msgid "Sale"
+#~ msgstr "销售"
+
+#~ msgid "Sales Invoice."
+#~ msgstr "销货发票"
+
+#~ msgid "Save to File"
+#~ msgstr "储存至档案"
+
+#~ msgid "Select from one of the items below"
+#~ msgstr "于下列项目中选择一项"
+
+#~ msgid "Send by E-Mail"
+#~ msgstr "以电子邮件寄送"
+
+#~ msgid "Services"
+#~ msgstr "服务"
+
+#~ msgid "Session expired!"
+#~ msgstr "会话过期"
+
+#~ msgid "Setup Templates"
+#~ msgstr "设定模版"
+
+#~ msgid "Shipping Address"
+#~ msgstr "海运地址"
+
+#~ msgid "Short"
+#~ msgstr "短"
+
+#~ msgid "Signature"
+#~ msgstr "签名"
+
+#~ msgid "Standard"
+#~ msgstr "标准"
+
+#~ msgid "State/Province"
+#~ msgstr "省"
+
+#~ msgid "Statement sent to"
+#~ msgstr "送会计帐至"
+
+#~ msgid "Statements sent to printer!"
+#~ msgstr "送会计帐至列印机"
+
+#~ msgid "Sub-contract GIFI"
+#~ msgstr "细合约GIFI"
+
+#~ msgid "Supervisor"
+#~ msgstr "管理人"
+
+#~ msgid "System Defaults"
+#~ msgstr "预设系统"
+
+#~ msgid "Tax Accounts"
+#~ msgstr "税金科目"
+
+#~ msgid "Tax Number / SSN"
+#~ msgstr "税号"
+
+#~ msgid "Tax collected"
+#~ msgstr "巳收税金"
+
+#~ msgid "Tax paid"
+#~ msgstr "巳付税金"
+
+#~ msgid "Taxable"
+#~ msgstr "应税"
+
+#~ msgid "The following Datasets are not in use and can be deleted"
+#~ msgstr "下列资料集并未使用, 可以删除"
+
+#~ msgid "The following Datasets need to be updated"
+#~ msgstr "下列资料集需要更新"
+
+#~ msgid ""
+#~ "This is a preliminary check for existing sources. Nothing will be created "
+#~ "or deleted at this stage!"
+#~ msgstr "这是对既存资料来源的初步检查. 在此阶段, 不会删除或新增任何资料!"
+
+#~ msgid ""
+#~ "To add a user to a group edit a name, change the login name and save.  A "
+#~ "new user with the same variables will then be saved under the new login "
+#~ "name."
+#~ msgstr ""
+#~ "若要新增群组内的使用者, 请编辑名称, 更改登入名, 然后储存.  这样一来, 新使用"
+#~ "者会保留相同的变数, 并以新的登入名存入."
+
+#~ msgid "Transaction deleted!"
+#~ msgstr "巳删除交易"
+
+#~ msgid "Transaction reversal enforced for all dates"
+#~ msgstr "强制回复所有日期的交易"
+
+#~ msgid "Transaction reversal enforced up to"
+#~ msgstr "强制回复交易直到"
+
+#~ msgid "Transactions"
+#~ msgstr "交易"
+
+#~ msgid "Unit of measure"
+#~ msgstr "度量单位"
+
+#~ msgid "Unlock System"
+#~ msgstr "开启系统"
+
+#~ msgid "Update Dataset"
+#~ msgstr "更新资料集"
+
+#~ msgid "Upgrading to Version"
+#~ msgstr "正升级至新版"
+
+#~ msgid "Use Templates"
+#~ msgstr "使用模版"
+
+#~ msgid "User deleted!"
+#~ msgstr "巳删除使用者"
+
+#~ msgid "User saved!"
+#~ msgstr "巳储存使用者"
+
+#~ msgid "Vendor Invoice."
+#~ msgstr "供应商发票"
+
+#~ msgid "Vendor Invoices"
+#~ msgstr "供应商发票"
+
+#~ msgid "Vendor deleted!"
+#~ msgstr "巳删除供应商"
+
+#~ msgid "Vendor saved!"
+#~ msgstr "巳储存供应商"
+
+#~ msgid "Vendors"
+#~ msgstr "供应商"
+
+#~ msgid "Warning!"
+#~ msgstr "警告"
+
+#~ msgid "Week"
+#~ msgstr "周"
+
+#~ msgid "Weeks"
+#~ msgstr "周"
+
+#~ msgid "Work Phone"
+#~ msgstr "工作电话"
+
+#~ msgid "Yearend date missing!"
+#~ msgstr "未指明年结日期"
+
+#~ msgid "Yearend posted!"
+#~ msgstr "巳加入年结"
+
+#~ msgid "Yearend posting failed!"
+#~ msgstr "年结加入失败"
+
+#~ msgid "Years"
+#~ msgstr "年"
+
+#~ msgid "You did not enter a name!"
+#~ msgstr "你并未键入名称!"
+
+#~ msgid "You must enter a host and port for local and remote connections!"
+#~ msgstr "您必需键入主机及埠号, 以进行本机或远端连线!"
+
+#~ msgid "as at"
+#~ msgstr "截至"
+
+#~ msgid "for Period"
+#~ msgstr "期间"
+
+#~ msgid "is already a member!"
+#~ msgstr "已经是成员了!"
+
+#~ msgid "locked!"
+#~ msgstr "巳锁上"
+
+#~ msgid "posted!"
+#~ msgstr "巳加入"
+
+#~ msgid "successfully created!"
+#~ msgstr "成功建立!"
+
+#~ msgid "successfully deleted!"
+#~ msgstr "成功删除!"
+
+#~ msgid "website"
+#~ msgstr "网站"

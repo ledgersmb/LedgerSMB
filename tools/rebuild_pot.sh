@@ -28,3 +28,10 @@ find . -name '*.pm' | grep -v blib | grep -v Num2text |
 xgettext -f tools/files -ktext -o locale/LedgerSMB.pot 
 
 xgettext -ktext -j -o locale/LedgerSMB.pot -a tools/dbstrings --language=perl
+
+# Merge with .po files
+
+for pofile in `find . -name '*.po'`
+do
+    msgmerge --width=80 --update $pofile locale/LedgerSMB.pot
+done
