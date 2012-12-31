@@ -413,11 +413,17 @@ sub list {
         "dbi:Pg:dbname=postgres", 
          "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
     );
-    my @results = $dbh->selectall_array(
+    my $resultref = $dbh->selectall_arrayref(
         "SELECT datname FROM pg_database 
           WHERE datname <> 'postgres' AND datname NOT LIKE 'template%'"
     );
+    my @results;
+    for my $r (@$resultref){
+        push @results, values @$r;
+    }
+
     $dbh->disconnect;
+    use Data::Dumper;
     return @results;
 }
 

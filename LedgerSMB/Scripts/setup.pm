@@ -58,7 +58,8 @@ sub login {
     $logger->trace("\$request=$request \$request->{dbh}=$request->{dbh} request=".Data::Dumper::Dumper(\$request));
     my $creds = LedgerSMB::Auth::get_credentials('setup');
     if (!$request->{database}){
-        $request->error($request->{_locale}->text('No database specified'));
+        list_databases($request);
+        return;
     }
     my $database = LedgerSMB::Database->new(
                {username => $creds->{login},
@@ -148,6 +149,32 @@ sub login {
     );
     $template->render($request);
 
+}
+
+=item list_databases
+Lists all databases as hyperlinks to continue operations.
+
+=cut
+
+sub list_databases {
+    my ($request) = @_;
+    my $creds = LedgerSMB::Auth::get_credentials('setup');
+    my $database = LedgerSMB::Database->new(
+               {username => $creds->{login},
+            company_name => $request->{database},
+                password => $creds->{password}}
+    );
+    my @results = $database->list;
+    $request->{dbs} = [];
+    for my $r (@results){
+       push @{$request->{dbs}}, {row_id => $r, db => $r };
+    }
+    my $template = LedgerSMB::Template->new(
+            path => 'UI/setup',
+            template => 'list_databases',
+	    format => 'HTML',
+    );
+    $template->render($request);
 }
 
 =item backup_db
