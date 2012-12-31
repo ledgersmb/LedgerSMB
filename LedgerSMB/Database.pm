@@ -22,6 +22,7 @@ version.  See the COPYRIGHT and LICENSE files for more information.
 # Methods are documented inline.  
 
 package LedgerSMB::Database;
+use DBI;
 
 our $VERSION = '1';
 
@@ -275,7 +276,6 @@ though the fullversion may give you an idea of what the actual version is run.
 =cut 
 
 sub get_info {
-    use DBI;
     use LedgerSMB::Auth;
     my $self = shift @_;
     my $retval = { # defaults
@@ -397,6 +397,32 @@ sub server_version {
     return $retval;
 }
 
+=item $db->list()
+
+Lists available databases except for those named "postgres" or starting with
+"template"
+
+Returns a list of strings of db names.
+
+=cut
+
+sub list {
+    my ($self) = @_;
+    my $creds = LedgerSMB::Auth->get_credentials();
+    my $dbh = DBI->connect(
+        "dbi:Pg:dbname=postgres", 
+         "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
+    );
+    my @results = $dbh->selectall_array(
+        "SELECT datname FROM pg_database 
+          WHERE datname <> 'postgres' AND datname NOT LIKE 'template%'"
+    );
+    $dbh->disconnect;
+    return @results;
+}
+
+
+    
 =item $db->create();
 
 Creates a database and loads the contrib files.  This is done from template0, 
@@ -425,7 +451,6 @@ sub create {
     # 
     # Hat tip:  irc user RhodiumToad on #postgresql -- CT
 
-    use DBI;
     my $dbh = DBI->connect('dbi:Pg:dbname=postgres');
 
     $dbh->{RaiseError} = 1;
@@ -458,6 +483,21 @@ sub create {
 
      return $rc;
 }
+
+=item $db->copy('new_name')
+
+Copies the existing database to a new name.
+
+=cut
+
+sub copy {
+    my ($self, $new_name) = @_;
+    my $dbh = DBI->connect('dbi:Pg:dbname=postgres');
+    my $dbname = $dbh->quote_ident($self->{dbname});
+    $new_name = $dbh->quote_ident($new_name);
+    $dbh->do("CREATE DATABASE $new_name WITH TEMPLATE $dbname");
+    $dbh->disconnect;
+}        
 
 =item $db->load_modules($loadorder)
 
