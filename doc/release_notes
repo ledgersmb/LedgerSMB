@@ -1,7 +1,7 @@
 RELEASE NOTES
 LedgerSMB 1.3
 
-Latest Revision:  1.3.26, Dec. 24 2012
+Latest Revision:  1.3.27, Jan 2, 2013
 
 1:  Welcome to LedgerSMB
 
@@ -59,9 +59,9 @@ Prior to 1.3, security was not pervasively enforced in any real way through the
 database.  In 1.3, all user permissions are orchestrated via ROLES in the
 underlying database, and permissions are rigorously enforced in this way.
 
-Role-based security provides a far better approach to security than the previous methods
-and since the permissions are now rigorously enforced, the overall security of the 
-application is much better.
+Role-based security provides a far better approach to security than the previous
+methods and since the permissions are now rigorously enforced, the overall
+security of the application is much better.
 
 2.3:  New Features
 
@@ -93,14 +93,14 @@ fully redesigned to provide more flexibility for customization.
 
 2.5:  Multicompany operations
 
-LedgerSMB 1.3 continues to use multiple physical databases for separate companies as
-did 1.2.  The major difference is that now users are database users, and since database
-users are global to the database cluster, they can now be shared (or not) between 
-companies.
+LedgerSMB 1.3 continues to use multiple physical databases for separate
+companies as did 1.2.  The major difference is that now users are database
+users, and since database users are global to the database cluster, they can now
+be shared (or not) between companies.
 
 Global users can be imported into new companies (though first and last name, 
-and employee number need not be shared between the accounts).  Permissions can be 
-assigned separately on different databases.
+and employee number need not be shared between the accounts).  Permissions can 
+be assigned separately on different databases.
 
 2.6:  Fixed Asset Handling
 
