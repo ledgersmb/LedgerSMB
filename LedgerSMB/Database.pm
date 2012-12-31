@@ -415,7 +415,8 @@ sub list {
     );
     my $resultref = $dbh->selectall_arrayref(
         "SELECT datname FROM pg_database 
-          WHERE datname <> 'postgres' AND datname NOT LIKE 'template%'"
+          WHERE datname <> 'postgres' AND datname NOT LIKE 'template%'
+       ORDER BY datname"
     );
     my @results;
     for my $r (@$resultref){
@@ -498,11 +499,15 @@ Copies the existing database to a new name.
 
 sub copy {
     my ($self, $new_name) = @_;
-    my $dbh = DBI->connect('dbi:Pg:dbname=postgres');
-    my $dbname = $dbh->quote_ident($self->{dbname});
-    $new_name = $dbh->quote_ident($new_name);
-    $dbh->do("CREATE DATABASE $new_name WITH TEMPLATE $dbname");
+    my $dbh = DBI->connect('dbi:Pg:dbname=postgres', 
+         $self->{username}, $self->{password},
+         { AutoCommit => 1, PrintError => 1, }
+    );
+    my $dbname = $dbh->quote_identifier($self->{company_name});
+    $new_name = $dbh->quote_identifier($new_name);
+    my $rc = $dbh->do("CREATE DATABASE $new_name WITH TEMPLATE $dbname");
     $dbh->disconnect;
+    return $rc;
 }        
 
 =item $db->load_modules($loadorder)

@@ -177,6 +177,31 @@ sub list_databases {
     $template->render($request);
 }
 
+=item copy_db
+
+Copies db to the name of $request->{new_name}
+
+=cut
+
+sub copy_db {
+    my ($request) = @_;
+    my $creds = LedgerSMB::Auth::get_credentials('setup');
+    my $database = LedgerSMB::Database->new(
+               {username => $creds->{login},
+            company_name => $request->{database},
+                password => $creds->{password}}
+    );
+    my $rc = $database->copy($request->{new_name}) 
+           || die 'An error occurred. Please check your database logs.' ;
+    my $template = LedgerSMB::Template->new(
+            path => 'UI/setup',
+            template => 'complete',
+            format => 'HTML',
+    );
+    $template->render($request);
+}
+
+
 =item backup_db
 
 Backs up a full db

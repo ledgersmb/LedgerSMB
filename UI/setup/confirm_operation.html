@@ -27,7 +27,23 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
 </div>
 <div id="sep" class="listheading"><?lsmb text('Other Actions') ?></div>
 <?lsmb IF next_action == 'rebuild_modules' ?>
+<div id="copy database">
+<?lsmb INCLUDE input element_data = {
+    name = 'new_name'
+    type = 'text'
+   class = 'dbname'
+   label = text('Copy to New Name') #'
+}; ?>
+<?lsmb INCLUDE button element_data = {
+    name = 'action'
+   value = 'copy_db'
+    type = 'submit'
+   class = 'submit'
+    text = text('Copy') #'
+}; ?>
+
 <div id="user">
+<div><?lsmb text('Users') ?></div>
 <?lsmb INCLUDE button element_data = {
     name = 'action'
    value = 'skip_coa'
