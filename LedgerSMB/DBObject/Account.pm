@@ -59,7 +59,7 @@ sub save {
        $self->{category} = 'Q';
     }
     $self->generate_links;
-    my $func = 'account_save';
+    my $func = 'account__save';
     if ($self->{charttype} and $self->{charttype} eq 'H') {
         $func = 'account_heading_save';
     }

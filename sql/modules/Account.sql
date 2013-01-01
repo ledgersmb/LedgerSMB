@@ -360,7 +360,7 @@ BEGIN
 		INSERT INTO account (accno, description, category, gifi_accno,
 			heading, contra, tax, is_temp)
 		VALUES (in_accno, in_description, in_category, in_gifi_accno,
-			t_heading_id, in_contra, in_tax, in_is_temp);
+			t_heading_id, in_contra, in_tax, coalesce(in_is_temp, 'f'));
 
 		t_id := currval('account_id_seq');
 	END IF;
