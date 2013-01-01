@@ -314,43 +314,10 @@ $myconfig is unused.
 
 sub partsgroups {
     my ( $self, $myconfig, $form ) = @_;
-
-    my $var;
-
     my $dbh = $form->{dbh};
-
-    $form->{sort} = "partsgroup" unless $form->{partsgroup};
-    my @a         = qw(partsgroup);
-    my $sortorder = $form->sort_order( \@a );
-
-    my $query = qq|SELECT g.* FROM partsgroup g|;
-
-    my $where = "1 = 1";
-
-    if ( $form->{partsgroup} ne "" ) {
-        $var = $dbh->quote( $form->like( lc $form->{partsgroup} ) );
-        $where .= " AND lower(partsgroup) LIKE $var";
-    }
-    $query .= qq| WHERE $where ORDER BY $sortorder|;
-
-    if ( $form->{status} eq 'orphaned' ) {
-        $query = qq|
-			   SELECT g.*
-			     FROM partsgroup g
-			LEFT JOIN parts p ON (p.partsgroup_id = g.id)
-			    WHERE $where
-			EXCEPT
-			   SELECT g.*
-			     FROM partsgroup g
-			     JOIN parts p ON (p.partsgroup_id = g.id)
-			    WHERE $where
-			 ORDER BY $sortorder|;
-    }
-
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    my $i = 0;
+    my $sth = $dbh->prepare("select * from partsgroup__search(null)");
+    $sth->execute;
+    
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
         push @{ $form->{item_list} }, $ref;
         $i++;
