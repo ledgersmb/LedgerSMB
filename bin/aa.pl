@@ -349,20 +349,6 @@ sub create_links {
 
     $form->{paidaccounts} = 1 if not defined $form->{paidaccounts};
 
-    if ( $form->{taxincluded} ) {
-        $diff = 0;
-
-        # add tax to individual amounts
-        # XXX needs alteration for conditional taxes
-        for $i ( 1 .. $form->{rowcount} ) {
-            if ($netamount) {
-                $amount = $form->{"amount_$i"} * ( 1 + $tax / $netamount );
-                $form->{"amount_$i"} = $form->round_amount( $amount, 2 );
-            }
-        }
-    }
-
-    $form->{invtotal} = $netamount + $tax;
 
     # check if calculated is equal to stored
     # taxincluded is terrible to calculate
@@ -370,29 +356,7 @@ sub create_links {
 
     @taxaccounts = Tax::init_taxes( $form, $form->{taxaccounts} );
 
-    if ( $form->{id} ) {
-        if ( $form->{taxincluded} ) {
-
-            $amount =
-              Tax::calculate_taxes( \@taxaccounts, $form, $form->{invtotal},
-                1 );
-            $tax = $form->round_amount( $amount, 2 );
-
-        }
-        else {
-            $tax =
-              $form->round_amount(
-                Tax::calculate_taxes( \@taxaccounts, $form, $netamount, 0 ) );
-        }
-        foreach $item (@taxaccounts) {
-            $tax{ $item->account } = $form->round_amount( $item->value, 2 );
-            $form->{ "calctax_" . $item->account } = 1
-              if $item->value
-              and
-              ( $tax{ $item->account } == $form->{ "tax_" . $item->account } );
-        }
-    }
-    else {
+    if ( !$form->{id} ) {
         for (@taxaccounts) { $form->{ "calctax_" . $_->account } = 1 }
     }
 
