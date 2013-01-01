@@ -161,6 +161,7 @@ $form->db_init( \%myconfig );
 
 # we get rid of myconfig and use User as a real object
 %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
+$LedgerSMB::App_State::User = \%myconfig;
 map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
   unless ( $form->{type} eq 'preferences' );
 
