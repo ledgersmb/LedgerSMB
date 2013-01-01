@@ -12,20 +12,78 @@ SET search_path = public, pg_catalog;
 
 ALTER TABLE ONLY public.menu_node DROP CONSTRAINT menu_node_parent_fkey;
 ALTER TABLE ONLY public.menu_attribute DROP CONSTRAINT menu_attribute_node_id_fkey;
+ALTER TABLE ONLY public.menu_acl DROP CONSTRAINT menu_acl_node_id_fkey;
 ALTER TABLE ONLY public.menu_node DROP CONSTRAINT menu_node_pkey;
 ALTER TABLE ONLY public.menu_node DROP CONSTRAINT menu_node_parent_key;
 ALTER TABLE ONLY public.menu_attribute DROP CONSTRAINT menu_attribute_pkey;
+ALTER TABLE ONLY public.menu_acl DROP CONSTRAINT menu_acl_pkey;
 ALTER TABLE public.menu_node ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.menu_attribute ALTER COLUMN id DROP DEFAULT;
+ALTER TABLE public.menu_acl ALTER COLUMN id DROP DEFAULT;
 DROP SEQUENCE public.menu_node_id_seq;
 DROP TABLE public.menu_node;
 DROP SEQUENCE public.menu_attribute_id_seq;
 DROP TABLE public.menu_attribute;
+DROP SEQUENCE public.menu_acl_id_seq;
+DROP TABLE public.menu_acl;
 SET search_path = public, pg_catalog;
 
 SET default_tablespace = '';
 
 SET default_with_oids = false;
+
+--
+-- Name: menu_acl; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE menu_acl (
+    id integer NOT NULL,
+    role_name character varying NOT NULL,
+    acl_type character varying,
+    node_id integer NOT NULL,
+    CONSTRAINT menu_acl_acl_type_check CHECK ((((acl_type)::text = 'allow'::text) OR ((acl_type)::text = 'deny'::text)))
+);
+
+
+ALTER TABLE public.menu_acl OWNER TO postgres;
+
+--
+-- Name: TABLE menu_acl; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON TABLE menu_acl IS 'Provides access control list entries for menu nodes.';
+
+
+--
+-- Name: COLUMN menu_acl.acl_type; Type: COMMENT; Schema: public; Owner: postgres
+--
+
+COMMENT ON COLUMN menu_acl.acl_type IS ' Nodes are hidden unless a role is found of which the user is a member, and
+where the acl_type for that role type and node is set to ''allow'' and no acl is 
+found for any role of which the user is a member, where the acl_type is set to
+''deny''.';
+
+
+--
+-- Name: menu_acl_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE menu_acl_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.menu_acl_id_seq OWNER TO postgres;
+
+--
+-- Name: menu_acl_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE menu_acl_id_seq OWNED BY menu_acl.id;
+
 
 --
 -- Name: menu_attribute; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
@@ -125,6 +183,13 @@ ALTER SEQUENCE menu_node_id_seq OWNED BY menu_node.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
 --
 
+ALTER TABLE ONLY menu_acl ALTER COLUMN id SET DEFAULT nextval('menu_acl_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
 ALTER TABLE ONLY menu_attribute ALTER COLUMN id SET DEFAULT nextval('menu_attribute_id_seq'::regclass);
 
 
@@ -133,6 +198,16 @@ ALTER TABLE ONLY menu_attribute ALTER COLUMN id SET DEFAULT nextval('menu_attrib
 --
 
 ALTER TABLE ONLY menu_node ALTER COLUMN id SET DEFAULT nextval('menu_node_id_seq'::regclass);
+
+
+--
+-- Data for Name: menu_acl; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+
+--
+-- Name: menu_acl_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
 
 
 --
@@ -287,14 +362,13 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 85	menu	1	204
 88	module	ic.pl	211
 88	action	requirements	212
-91	module	pe.pl	221
-91	action	search	220
 92	module	pe.pl	224
 92	action	search	223
 95	menu	1	232
 96	module	pe.pl	233
 96	action	translation	234
 96	translation	description	235
+91	action	start_report	220
 97	module	pe.pl	236
 97	action	translation	237
 97	translation	partsgroup	238
@@ -664,7 +738,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 248	type	sic	667
 83	type	pricegroup	200
 82	type	partsgroup	197
-91	type	partsgroup	222
 92	type	pricegroup	225
 203	batch_type	receipt	567
 250	menu	1	669
@@ -729,6 +802,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 64	oe_class_id	1	48
 65	oe_class_id	2	49
 86	module	goods.pl	205
+91	module	reports.pl	221
+91	report_name	search_partsgroups	222
 \.
 
 
@@ -744,6 +819,8 @@ SELECT pg_catalog.setval('menu_attribute_id_seq', 681, true);
 --
 
 COPY menu_node (id, label, parent, "position") FROM stdin;
+91	Search Groups	77	6
+92	Search Pricegroups	77	8
 206	Batches	205	1
 14	Search	19	2
 12	Add Contact	19	3
@@ -790,8 +867,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 72	RFQs	70	2
 74	Journal Entry	73	1
 88	Requirements	85	3
-91	Groups	85	6
-92	Pricegroups	85	7
 96	Description	95	1
 97	Partsgroup	95	2
 99	Add Project	98	1
@@ -955,11 +1030,11 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 9	Outstanding	4	1
 10	Outstanding	24	1
 81	Add Overhead	77	5
-82	Add Group	77	6
-83	Add Pricegroup	77	7
-84	Stock Assembly	77	8
-95	Translations	77	10
-85	Reports	77	9
+82	Add Group	77	7
+83	Add Pricegroup	77	9
+84	Stock Assembly	77	10
+95	Translations	77	12
+85	Reports	77	11
 \.
 
 
@@ -968,6 +1043,14 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 --
 
 SELECT pg_catalog.setval('menu_node_id_seq', 253, true);
+
+
+--
+-- Name: menu_acl_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY menu_acl
+    ADD CONSTRAINT menu_acl_pkey PRIMARY KEY (node_id, role_name);
 
 
 --
@@ -995,6 +1078,14 @@ ALTER TABLE ONLY menu_node
 
 
 --
+-- Name: menu_acl_node_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY menu_acl
+    ADD CONSTRAINT menu_acl_node_id_fkey FOREIGN KEY (node_id) REFERENCES menu_node(id);
+
+
+--
 -- Name: menu_attribute_node_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
@@ -1008,6 +1099,16 @@ ALTER TABLE ONLY menu_attribute
 
 ALTER TABLE ONLY menu_node
     ADD CONSTRAINT menu_node_parent_fkey FOREIGN KEY (parent) REFERENCES menu_node(id);
+
+
+--
+-- Name: menu_acl; Type: ACL; Schema: public; Owner: postgres
+--
+
+REVOKE ALL ON TABLE menu_acl FROM PUBLIC;
+REVOKE ALL ON TABLE menu_acl FROM postgres;
+GRANT ALL ON TABLE menu_acl TO postgres;
+GRANT SELECT ON TABLE menu_acl TO PUBLIC;
 
 
 --

@@ -118,11 +118,15 @@ RETURN QUERY
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION partsgroups__list_all()
-RETURNS SETOF partsgroup LANGUAGE SQL STABLE AS $$
+DROP FUNCTION IF EXISTS partsgroups__list_all();
 
-SELECT * FROM partsgroup ORDER BY partsgroup;
+CREATE OR REPLACE FUNCTION partsgroup__search(in_pricegroup text)
+RETURNS SETOF partsgroup LANGUAGE SQL STABLE AS $$
+  SELECT * FROM partsgroup 
+   WHERE $1 is null or partsgroup ilike $1 || '%'
+ORDER BY partsgroup;
 
 $$;
+
 
 COMMIT;

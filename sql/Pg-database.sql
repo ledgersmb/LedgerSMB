@@ -2629,6 +2629,8 @@ SELECT pg_catalog.setval('menu_node_id_seq', 253, true);
 --
 
 COPY menu_node (id, label, parent, "position") FROM stdin;
+91	Search Groups	77	6
+92	Search Pricegroups	77	8
 206	Batches	205	1
 14	Search	19	2
 12	Add Contact	19	3
@@ -2675,8 +2677,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 72	RFQs	70	2
 74	Journal Entry	73	1
 88	Requirements	85	3
-91	Groups	85	6
-92	Pricegroups	85	7
 96	Description	95	1
 97	Partsgroup	95	2
 99	Add Project	98	1
@@ -2840,11 +2840,11 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 9	Outstanding	4	1
 10	Outstanding	24	1
 81	Add Overhead	77	5
-82	Add Group	77	6
-83	Add Pricegroup	77	7
-84	Stock Assembly	77	8
-95	Translations	77	10
-85	Reports	77	9
+82	Add Group	77	7
+83	Add Pricegroup	77	9
+84	Stock Assembly	77	10
+95	Translations	77	12
+85	Reports	77	11
 \.
 
 --
@@ -3053,14 +3053,13 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 85	menu	1	204
 88	module	ic.pl	211
 88	action	requirements	212
-91	module	pe.pl	221
-91	action	search	220
 92	module	pe.pl	224
 92	action	search	223
 95	menu	1	232
 96	module	pe.pl	233
 96	action	translation	234
 96	translation	description	235
+91	action	start_report	220
 97	module	pe.pl	236
 97	action	translation	237
 97	translation	partsgroup	238
@@ -3430,7 +3429,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 248	type	sic	667
 83	type	pricegroup	200
 82	type	partsgroup	197
-91	type	partsgroup	222
 92	type	pricegroup	225
 203	batch_type	receipt	567
 250	menu	1	669
@@ -3495,6 +3493,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 64	oe_class_id	1	48
 65	oe_class_id	2	49
 86	module	goods.pl	205
+91	module	reports.pl	221
+91	report_name	search_partsgroups	222
 \.
 
 --
