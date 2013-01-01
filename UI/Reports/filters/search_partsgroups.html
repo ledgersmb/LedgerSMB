@@ -1,0 +1,22 @@
+<?lsmb INCLUDE 'ui-header.html';
+       PROCESS 'elements.html'; ?>
+<body>
+<div class="listtop"><?lsmb text('Search Parts Groups') ?></div>
+<form action="goods.pl" method="GET">
+<div><?lsmb PROCESS input element_data = {
+    name = 'partsgroup'
+   value = partsgroup
+    type = 'text'
+   class = 'name'
+    size = 16
+   label = text('Parts Group') #'
+} ?></div>
+<div><?lsmb PROCESS button element_data = {
+    type = 'submit'
+   class = 'submit'
+    name = 'action'
+    text = text('Search')
+   value = 'search_partsgroups'
+} ?></div>
+<form>
+</body>

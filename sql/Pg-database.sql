@@ -3053,13 +3053,12 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 85	menu	1	204
 88	module	ic.pl	211
 88	action	requirements	212
-92	module	pe.pl	224
-92	action	search	223
 95	menu	1	232
 96	module	pe.pl	233
 96	action	translation	234
 96	translation	description	235
 91	action	start_report	220
+92	action	start_report	223
 97	module	pe.pl	236
 97	action	translation	237
 97	translation	partsgroup	238
@@ -3429,7 +3428,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 248	type	sic	667
 83	type	pricegroup	200
 82	type	partsgroup	197
-92	type	pricegroup	225
 203	batch_type	receipt	567
 250	menu	1	669
 7	module_name	gl	671
@@ -3495,6 +3493,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 86	module	goods.pl	205
 91	module	reports.pl	221
 91	report_name	search_partsgroups	222
+92	module	reports.pl	224
+92	report_name	search_pricegroups	225
 \.
 
 --

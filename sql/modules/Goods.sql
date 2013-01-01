@@ -125,7 +125,13 @@ RETURNS SETOF partsgroup LANGUAGE SQL STABLE AS $$
   SELECT * FROM partsgroup 
    WHERE $1 is null or partsgroup ilike $1 || '%'
 ORDER BY partsgroup;
+$$;
 
+CREATE OR REPLACE FUNCTION pricegroup__search(in_pricegroup text)
+RETURNS SETOF pricegroup LANGUAGE SQL STABLE AS $$
+  SELECT * FROM pricegroup
+   WHERE $1 IS NULL OR pricegroup ilike $1 || '%'
+ORDER BY pricegroup;
 $$;
 
 

@@ -403,68 +403,6 @@ sub get_partsgroup {
 
 }
 
-=item PE->pricegroups($myconfig, $form);
-
-Populates the list referred to as $form->{item_list} with hashes containing
-details (id and pricegroup (description)) about pricegroups.  All the groups
-are added unless $form->{pricegroup} is set, in which case it will search for
-groups with that description, or $form->{status} is 'orphaned', which limits
-the results to those not related to any customers (partscustomer table).  The
-return value is the number of pricegroups added to the list.
-
-$myconfig is unused.
-
-=cut
-
-sub pricegroups {
-    my ( $self, $myconfig, $form ) = @_;
-
-    my $var;
-
-    my $dbh = $form->{dbh};
-
-    $form->{sort} = "pricegroup" unless $form->{sort};
-    my @a         = qw(pricegroup);
-    my $sortorder = $form->sort_order( \@a );
-
-    my $query = qq|SELECT g.* FROM pricegroup g|;
-
-    my $where = "1 = 1";
-
-    if ( $form->{pricegroup} ne "" ) {
-        $var = $dbh->quote( $form->like( lc $form->{pricegroup} ) );
-        $where .= " AND lower(pricegroup) LIKE $var";
-    }
-    $query .= qq|
-		WHERE $where ORDER BY $sortorder|;
-
-    if ( $form->{status} eq 'orphaned' ) {
-        $query = qq|
-			SELECT g.*
-			  FROM pricegroup g
-			 WHERE $where
-			       AND g.id NOT IN (SELECT DISTINCT pricegroup_id
-			                          FROM partscustomer
-			                         WHERE pricegroup_id > 0)
-		ORDER BY $sortorder|;
-    }
-
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    my $i = 0;
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        push @{ $form->{item_list} }, $ref;
-        $i++;
-    }
-
-    $sth->finish;
-    $dbh->commit;
-
-    $i;
-
-}
-
 =item PE->save_pricegroup($myconfig, $form);
 
 Adds or updates a pricegroup.  If $form->{id} is set, update the pricegroup

@@ -18,13 +18,13 @@ extends 'LedgerSMB::Report';
 
 =over
 
-=item pricegroup string
+=item partsgroup string
 
-Prefix match on pricegroup name
+Prefix match on partsgroup name
 
 =cut
 
-has pricegroup => (is => 'ro', isa => 'Str', required => '0');
+has partsgroup => (is => 'ro', isa => 'Str', required => '0');
 
 =back
 
