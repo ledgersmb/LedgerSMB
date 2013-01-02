@@ -22,6 +22,7 @@ version.  See the COPYRIGHT and LICENSE files for more information.
 # Methods are documented inline.  
 
 package LedgerSMB::Database;
+use DBI;
 
 our $VERSION = '1';
 
@@ -273,7 +274,6 @@ though the fullversion may give you an idea of what the actual version is run.
 =cut 
 
 sub get_info {
-    use DBI;
     use LedgerSMB::Auth;
     my $self = shift @_;
     my $retval = { # defaults
@@ -393,6 +393,39 @@ sub server_version {
     return $retval;
 }
 
+=item $db->list()
+
+Lists available databases except for those named "postgres" or starting with
+"template"
+
+Returns a list of strings of db names.
+
+=cut
+
+sub list {
+    my ($self) = @_;
+    my $creds = LedgerSMB::Auth->get_credentials();
+    my $dbh = DBI->connect(
+        "dbi:Pg:dbname=postgres", 
+         "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
+    );
+    my $resultref = $dbh->selectall_arrayref(
+        "SELECT datname FROM pg_database 
+          WHERE datname <> 'postgres' AND datname NOT LIKE 'template%'
+       ORDER BY datname"
+    );
+    my @results;
+    for my $r (@$resultref){
+        push @results, values @$r;
+    }
+
+    $dbh->disconnect;
+    use Data::Dumper;
+    return @results;
+}
+
+
+    
 =item $db->create();
 
 Creates a database and loads the contrib files.  This is done from template0, 
@@ -420,7 +453,6 @@ sub create {
     # 
     # Hat tip:  irc user nwnw -- CT
 
-    use DBI;
     my $dbh = DBI->connect('dbi:Pg:dbname=template1');
 
     $dbh->{RaiseError} = 1;
@@ -453,6 +485,25 @@ sub create {
 
      return $rc;
 }
+
+=item $db->copy('new_name')
+
+Copies the existing database to a new name.
+
+=cut
+
+sub copy {
+    my ($self, $new_name) = @_;
+    my $dbh = DBI->connect('dbi:Pg:dbname=postgres', 
+         $self->{username}, $self->{password},
+         { AutoCommit => 1, PrintError => 1, }
+    );
+    my $dbname = $dbh->quote_identifier($self->{company_name});
+    $new_name = $dbh->quote_identifier($new_name);
+    my $rc = $dbh->do("CREATE DATABASE $new_name WITH TEMPLATE $dbname");
+    $dbh->disconnect;
+    return $rc;
+}        
 
 =item $db->load_modules($loadorder)
 
