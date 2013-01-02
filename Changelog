@@ -87,6 +87,7 @@ Changelog for 1.3.28
   to "postgres" db. (Chris T)
 * Added copy db utility to setup.pl for testing dbs (Chris T)
 * Fixing is_zero errors on ar/ap transaction screens w/tax incldued (Chris T)
+* Fixing csv ar transactions not showing taxes (Chris T, 3589640)
 
 Changelog for 1.3.27
 * Detect whether ledgersmb.conf exists during Makefile.PL run and create if
