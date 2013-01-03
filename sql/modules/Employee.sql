@@ -134,7 +134,7 @@ $$;
 CREATE OR REPLACE FUNCTION employee__search
 (in_employeenumber text, in_startdate_from date, in_startdate_to date,
 in_first_name text, in_middle_name text, in_last_name text,
-in_notes text)
+in_notes text, in_is_user bool)
 RETURNS SETOF employee_result as
 $$
 SELECT p.entity_id, e.control_code, p.id, s.salutation, s.id, 
@@ -154,6 +154,8 @@ LEFT JOIN person mp ON ee.manager_id = p.entity_id
           and ($4 is null or p.first_name ilike '%' || $4 || '%')
           and ($5 is null or p.middle_name ilike '%' || $5 || '%')
           and ($6 is null or p.last_name ilike '%' || $6 || '%');
+          and ($7 is null 
+               or $7 = exists (select 1 from users where entity_id = e.id))
 $$ language sql;
 
 COMMENT ON FUNCTION employee__search
