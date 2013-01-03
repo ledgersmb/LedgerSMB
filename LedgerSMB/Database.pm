@@ -416,11 +416,10 @@ sub list {
     );
     my @results;
     for my $r (@$resultref){
-        push @results, values @$r;
+        push @results, @$r;
     }
 
     $dbh->disconnect;
-    use Data::Dumper;
     return @results;
 }
 
