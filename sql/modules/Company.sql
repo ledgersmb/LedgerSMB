@@ -241,13 +241,21 @@ DROP FUNCTION IF EXISTS  contact__search
         in_active_date_to date,
         in_business_id int, in_name_part text, in_control_code text);
 
+DROP FUNCTION IF EXISTS contact__search
+(in_entity_class int, in_contact text, in_contact_info text[], 
+	in_meta_number text, in_address text, in_city text, in_state text, 
+	in_mail_code text, in_country text, in_active_date_from date, 
+        in_active_date_to date,
+	in_business_id int, in_name_part text, in_control_code text,
+        in_notes text);
+
 CREATE OR REPLACE FUNCTION contact__search
 (in_entity_class int, in_contact text, in_contact_info text[], 
 	in_meta_number text, in_address text, in_city text, in_state text, 
 	in_mail_code text, in_country text, in_active_date_from date, 
         in_active_date_to date,
 	in_business_id int, in_name_part text, in_control_code text,
-        in_notes text)
+        in_notes text, in_users bool)
 RETURNS SETOF contact_search_result AS $$
 DECLARE
 	out_row contact_search_result;
@@ -349,6 +357,9 @@ BEGIN
                                       WHERE note @@ plainto_tsquery(in_notes))
                                   OR ec.id IN (select ref_key FROM eca_note
                                      WHERE note @@ plainto_tsquery(in_notes)))
+                        AND (in_users IS NULL OR in_users = 
+                             (exists (select 1 from users 
+                                       where entity_id = e.id)))
                ORDER BY legal_name
 	LOOP
 		RETURN NEXT out_row;
