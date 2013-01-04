@@ -28,7 +28,7 @@ package LedgerSMB::Report::Contact::History;
 use Moose;
 extends 'LedgerSMB::Report';
 use LedgerSMB::PGDate;
-use LedgerSMB::Moosetypes;
+use LedgerSMB::MooseTypes;
 
 =head1 PROPERTIES
 
