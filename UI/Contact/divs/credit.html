@@ -9,8 +9,8 @@ FOREACH cl IN credit_list;
         cl.account_class_label = text('Customer');
    END;
    cl.meta_number_href_suffix = 'account_class=' _ cl.entity_class _ 
-      '&entity_id=' _ cl.entity_id _ '&meta_number=' _ cl.meta_number _
-      '&target_div=credit_div';
+      '&amp;entity_id=' _ cl.entity_id _ '&amp;meta_number=' _ cl.meta_number _
+      '&amp;target_div=credit_div';
 END;
 
 PROCESS dynatable 
@@ -18,7 +18,7 @@ PROCESS dynatable
       columns = [ 
         { col_id = 'account_class_label', type = 'text', name = text('Type') }
         { col_id = 'meta_number', type = 'href', name = text("Number"), 
-          href_base = "$script?action=get&" }
+          href_base = "$script?action=get&amp;" }
         { col_id = 'description', type = 'text', name = text("Description") }
         { col_id = 'creditlimit', type = 'text', name = text('Credit Limit') }
         { col_id = 'startdate', type = 'text', name = text('Start Date') }
