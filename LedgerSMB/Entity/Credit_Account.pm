@@ -384,8 +384,7 @@ sub save {
     if (@{$self->{tax_ids}}){
         $self->exec_method(funcname => 'eca__set_taxes');
     }
-    $self = $self->new(%$ref);
-    return $self;
+    return $self->get_by_id($ref->{eca__save});
 }
 
 =item get_pricematrix
