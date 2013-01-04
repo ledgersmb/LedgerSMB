@@ -332,7 +332,7 @@ sub prepare_order {
 
 sub form_header {
 
-
+    $form->{nextsub} = 'update';
    
     $checkedopen   = ( $form->{closed} ) ? ""        : "checked";
     $checkedclosed = ( $form->{closed} ) ? "checked" : "";
@@ -583,6 +583,14 @@ sub form_header {
     print qq|
 <body onLoad="document.forms[0].${focus}.focus()" />
 | . $form->open_status_div . qq|
+<script> 
+function on_return_submit(){
+    if (window.event.keyCode == 13){
+        document.forms[0].submit()
+    }
+}
+</script>
+<form method=post action="$form->{script}" onkeypress="on_return_submit()">
 
 <form method=post action="$form->{script}">
 |;
@@ -592,7 +600,7 @@ sub form_header {
     }
     $form->hide_form(qw(entity_control_code meta_number));
     $form->hide_form(
-        qw(id type formname media format printed emailed queued vc title discount creditlimit creditremaining tradediscount business recurring form_id)
+        qw(id type formname media format printed emailed queued vc title discount creditlimit creditremaining tradediscount business recurring form_id nextsub)
     );
 
     print qq|
@@ -967,7 +975,9 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 }
 
 sub update {
+    $form->{nextsub} = 'update';
 
+    delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
     if ( $form->{type} eq 'generate_purchase_order' ) {
 
         for ( 1 .. $form->{rowcount} ) {

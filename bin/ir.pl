@@ -306,6 +306,7 @@ sub prepare_invoice {
 
 sub form_header {
 
+    $form->{nextsub} = 'update';
 
     # set option selected
     for (qw(AP currency)) {
@@ -408,6 +409,14 @@ sub form_header {
     print qq|
 <body onLoad="document.forms[0].${focus}.focus()" />
 | . $form->open_status_div . qq|
+<script> 
+function on_return_submit(){
+    if (window.event.keyCode == 13){
+        document.forms[0].submit()
+    }
+}
+</script>
+<form method=post action="$form->{script}" onkeypress="on_return_submit()">
 
 <form method=post action="$form->{script}">
 |;
@@ -415,9 +424,11 @@ sub form_header {
          print qq|$form->{notice}<br/>|;
     }
     $form->{vc} = "vendor";
+    $form->{nextsub} = 'update';
     $form->hide_form(
         qw(id title vc type terms creditlimit creditremaining closedto locked 
-           shipped oldtransdate recurring reverse batch_id subtype form_id)
+           shipped oldtransdate recurring reverse batch_id subtype form_id
+           nextsub)
     );
 
     print qq|
@@ -1055,6 +1066,7 @@ sub update {
     if ( $form->{import_text} ) {
         &import_text;
     }
+    delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
 

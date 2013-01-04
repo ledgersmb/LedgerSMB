@@ -338,6 +338,7 @@ sub prepare_invoice {
 }
 
 sub form_header {
+    $form->{nextsub} = 'update';
 
     # set option selected
     for (qw(AR currency)) {
@@ -444,15 +445,21 @@ sub form_header {
     print qq|
 <body onLoad="document.forms[0].${focus}.focus()" /> 
 | . $form->open_status_div . qq|
-
-<form method=post action="$form->{script}">
+<script> 
+function on_return_submit(){
+    if (window.event.keyCode == 13){
+        document.forms[0].submit()
+    }
+}
+</script>
+<form method=post action="$form->{script}" onkeypress="on_return_submit()">
 |;
 
     $form->hide_form(
         qw(form_id id type printed emailed queued title vc terms discount 
            creditlimit creditremaining tradediscount business closedto locked 
            shipped oldtransdate recurring reverse batch_id subtype 
-           meta_number)
+           meta_number nextsub)
     );
 
     if ($form->{notice}){
@@ -1096,6 +1103,8 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
 
 sub update {
     on_update();#TODO meaning ?
+    delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
+
     $form->{taxes} = {};
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
