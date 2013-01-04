@@ -228,6 +228,14 @@ has active_date_to => (is => 'ro',
                    coerce => 1,
                  required => 0);
 
+=item users
+
+If the entity_class is 3 then this restricts the report to only users.
+
+=cut
+
+has users => (is => 'ro', isa => 'Bool', required => 0);
+
 =back
 
 =head1 METHODS
