@@ -126,7 +126,11 @@ sub asset_category_save {
     asset_category_screen($ac);
 }
 
-# Is this even working at the moment?  Not documenting unil I know.
+=item asset_category_search
+
+Displays the asset category search screen
+
+=cut
 
 sub asset_category_search {
     my ($request) = @_;
@@ -234,7 +238,7 @@ sub asset_edit {
     asset_screen($asset);
 }
 
-=item
+=item asset_screen
 
 Screen to create a new asset.
 
@@ -969,20 +973,6 @@ sub report_results_approve {
     }
    search_reports($request);
 
-}
-
-# I don't believe this is used,  Not documenting for now. --CT
-
-sub begin_nbv {
-    my ($request) = @_;
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user}, 
-        locale => $request->{_locale},
-        path => 'UI/asset',
-        template => 'nbv_filter',
-        format => 'HTML'
-    );
-    $template->render($request);
 }
 
 =item display_nbv

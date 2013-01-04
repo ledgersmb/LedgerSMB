@@ -28,6 +28,7 @@ package LedgerSMB::Report::Contact::History;
 use Moose;
 extends 'LedgerSMB::Report';
 use LedgerSMB::PGDate;
+use LedgerSMB::Moosetypes;
 
 =head1 PROPERTIES
 
@@ -234,7 +235,7 @@ Include only invoices starting on this date
 
 =cut
 
-has from_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::DBObject::Date');
+has from_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item to_date
 
@@ -242,7 +243,7 @@ Include only invoices before this date
 
 =cut
 
-has to_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::DBObject::Date');
+has to_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item type
 

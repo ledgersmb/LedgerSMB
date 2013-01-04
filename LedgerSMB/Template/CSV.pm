@@ -19,6 +19,10 @@ Returns $vars.
 
 Processes the template for text.
 
+=item escape ($var)
+
+Escapes the variable for CSV inclusion
+
 =item postprocess ($parent)
 
 Returns the output filename.

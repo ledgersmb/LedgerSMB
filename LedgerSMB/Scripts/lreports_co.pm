@@ -23,7 +23,7 @@ use strict;
 
 =over
 
-=item begin_caja_diaria
+=item start_caja_diaria
 
 Displays the filter screen for Caja Diaria
 
@@ -41,7 +41,7 @@ sub start_caja_diaria {
     $template->render($request);
 }
 
-=item begin_bm
+=item start_bm
 
 Displays the filter screen for Balance y Mayor
 

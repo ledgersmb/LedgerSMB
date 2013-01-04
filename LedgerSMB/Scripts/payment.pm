@@ -70,7 +70,7 @@ use strict;
 
 =over
 
-=item payment
+=item payments
 
 This method is used to set the filter screen and prints it, using the 
 TT2 system.

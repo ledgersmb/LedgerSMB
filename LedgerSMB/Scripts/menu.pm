@@ -138,7 +138,7 @@ sub expanding_menu {
 
 =over
 
-=item drillown_menu
+=item drilldown_menu
 
 This function creates a single cross section of the menu.  Currently this is
 most useful for generating menus for small screen devices or devices where a

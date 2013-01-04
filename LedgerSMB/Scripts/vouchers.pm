@@ -2,9 +2,9 @@
 LedgerSMB::Scripts::vouchers
 
 =head1 SYNPOSIS
-Voucher workflow scripts.
 
-#      --CT
+ LedgerSMB::Scripts::vouchers::delete_batch($request);
+
 =head1 METHODS
 
 =over
@@ -72,7 +72,7 @@ sub create_batch {
     $template->render($batch);
 }
 
-=item create-vouchers
+=item create_vouchers
 
 Closes the form in the db, and if unsuccessful displays the batch info again.
 
@@ -94,6 +94,7 @@ sub create_vouchers {
         create_batch($request);
     }
 }
+
 =item add_vouchers
 
 Redirects to a script to add vouchers for the type.  batch_type must be set.
@@ -223,20 +224,6 @@ sub get_batch {
                  %$request);
     $report->run_report;
     $report->render($request);
-}
-
-# alias for batch_delete, needed for form-dynatable
-sub list_batches_batch_delete {
-    batch_delete(@_);
-}
-
-sub get_batch_batch_delete {
-    batch_delete(@_);
-}
-
-# alias for batch_post, needed for form-dynatable
-sub list_batches_batch_approve {
-    batch_approve(@_);
 }
 
 =item get_batch_batch_approve

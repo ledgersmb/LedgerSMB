@@ -31,7 +31,7 @@ use strict;
 
 my $slash = "::";
 
-=item preferences_screen
+=item preference_screen
 
 Displays the preferences screen.  No inputs needed.
 

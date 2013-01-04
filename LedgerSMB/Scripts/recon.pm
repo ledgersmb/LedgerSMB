@@ -44,7 +44,7 @@ sub display_report {
 
 =item search($self, $request, $user)
 
-Renders out a list of meta-reports based on the search criteria passed to the
+Renders out a list of reports based on the search criteria passed to the
 search function.
 Meta-reports are report_id, date_range, and likely errors.
 Search criteria accepted are 
@@ -60,6 +60,11 @@ Search criteria accepted are
 =item status
 
 =back
+
+=item update_recon_set
+
+Updates the reconciliation set, checks for new transactions to be included,
+and re-renders the reconciliation screen.
 
 =cut
 
@@ -369,7 +374,7 @@ sub new_report {
     
 }
 
-=item ($request)
+=item delete_report($request)
 
 Requires report_id
 

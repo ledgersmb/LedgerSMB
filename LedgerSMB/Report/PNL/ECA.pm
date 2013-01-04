@@ -37,13 +37,13 @@ This is the id of the customer account.
 
 has id => (is => 'rw', isa =>'Int');
 
-=item name 
+=item legal_name 
 
 Name of the customer
 
 =cut
 
-has 'name' => (is => 'rw', isa =>'Str'); 
+has 'legal_name' => (is => 'rw', isa =>'Str'); 
 
 =item meta_number
 

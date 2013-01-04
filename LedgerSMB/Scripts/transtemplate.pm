@@ -1,8 +1,27 @@
+=head1 NAME
+
+LedgerSMB::Scripts::transtemplate - Transaction Template Workflows for LedgerSMB
+
+=head1 SYNPOSIS
+
+ LedgerSMB::Scripts::transtemplate::view($request);
+
+=cut 
 
 package LedgerSMB::Scripts::transtemplate;
 use LedgerSMB::DBObject::TransTemplate;
 use LedgerSMB::Template;
 our $VERSION = '0.1';
+
+=head1 ROUTINES
+
+=over
+
+=item view
+
+Views the transaction template.  Requires that id be set.
+
+=cut
 
 sub view {
     my $request = shift @_;
@@ -45,6 +64,13 @@ sub view {
 
 }
 
+=item convert_to_form
+
+largely private function designed to convert the request object to a Form 
+object for old code.
+
+=cut
+
 sub convert_to_form{
     my ($trans, $form, $type) = @_;
     if ($type eq 'gl'){
@@ -78,6 +104,12 @@ sub convert_to_form{
         }
     }
 }
+
+=item search
+
+Displays transaction template filter
+
+=cut
    
 sub search {
     my ($request) = @_;
@@ -90,6 +122,12 @@ sub search {
    );
    $template->render($request);
 }
+
+=item display_results
+
+Displays a list of template transactions
+
+=cut
 
 sub display_results {
     my ($request) = @_;
@@ -141,4 +179,15 @@ sub display_results {
       form    => $request,
    });
 }
+
+=back
+
+=head1 COPYRIGHT
+
+COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
+terms of the LedgerSMB General Public License version 2 or at your option any
+later version.  Please see enclosed LICENSE file for details.
+
+=cut
+
 1;
