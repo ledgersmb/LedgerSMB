@@ -439,15 +439,19 @@ sub form_header {
 <body onLoad="document.forms[0].${focus}.focus()" />
 | . $form->open_status_div . qq|
 <script> 
-function on_return_submit(){
-    if (window.event.keyCode == 13){
-        document.forms[0].submit()
-    }
+function on_return_submit(event){
+  var kc;
+  if (window.event){
+    kc = window.event.keyCode;
+  } else {
+    kc = event.which;
+  }
+  if (kc == '13'){
+        document.forms[0].submit();
+  }
 }
 </script>
-<form method=post action="$form->{script}" onkeypress="on_return_submit()">
-
-<form method=post action="$form->{script}">
+<form method=post action="$form->{script}" onkeypress="on_return_submit(event)">
 |;
     if ($form->{notice}){
          print qq|$form->{notice}<br/>|;
