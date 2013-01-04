@@ -112,6 +112,7 @@ if ($ENV{GATEWAY_INTERFACE} =~ /^CGI/){
 $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} )
   or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 
+$form->{action} = $form->{nextsub} if (!$form->{action} and $form->{nextsub});
 
 # we use $script for the language module
 $form->{script} = $script;

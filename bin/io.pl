@@ -86,6 +86,7 @@ if ( -f "bin/custom/$form->{login}_io.pl" ) {
 # $locale->text('Oct')
 # $locale->text('Nov')
 # $locale->text('Dec')
+#
 
 sub _calc_taxes {
     $form->{subtotal} = $form->{invsubtotal};
@@ -375,8 +376,17 @@ qq|<td><input name="description_$i" size=48 value="$form->{"description_$i"}"></
 
 $column_data{runningnumber} =
           qq|<td><input name="runningnumber_$i" size=3 value=$i></td>|;
-        $column_data{partnumber} =
+        if ($form->{"partnumber_$i"}){
+           $column_data{partnumber} =
+           qq|<td> $form->{"partnumber_$i"} 
+                 <button type="submit" class="submit" value="$i" 
+                         name="delete_line">X</button>
+                 <input type="hidden" name="partnumber_$i"
+                       value="$form->{"partnumber_$i"}" /></td>|;
+        } else {
+            $column_data{partnumber} =
 qq|<td><input name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]">$skunumber</td>|;
+        }
         $column_data{qty} =
 qq|<td align=right><input name="qty_$i" title="$form->{"onhand_$i"}" size="5" value="|
           . $form->format_amount( \%myconfig, $form->{"qty_$i"} )
