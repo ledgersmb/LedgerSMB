@@ -184,7 +184,7 @@ vendor.
 
 =cut
 
-has 'curr' => (is => 'ro', isa => 'Str', requird => 1);
+has 'curr' => (is => 'ro', isa => 'Str', required => 1);
 
 =item startdate
 

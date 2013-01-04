@@ -31,7 +31,6 @@ pod_coverage_ok("LedgerSMB::Template::TXT");
 pod_coverage_ok("LedgerSMB::User");
 pod_coverage_ok("LedgerSMB::DBObject::Date");
 pod_coverage_ok("LedgerSMB::DBObject::Draft");
-pod_coverage_ok("LedgerSMB::DBObject::Company");
 pod_coverage_ok("LedgerSMB::Company_Config");
 pod_coverage_ok("LedgerSMB::DBObject::Admin");
 pod_coverage_ok("LedgerSMB::Scripts::contact");

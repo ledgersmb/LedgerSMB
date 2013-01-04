@@ -63,10 +63,6 @@ use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::User');
 
-sub dateformat {
-    my ($self) = @_;
-    return $self->{language};
-}
 
 =item LedgerSMB::User->new($login);
 

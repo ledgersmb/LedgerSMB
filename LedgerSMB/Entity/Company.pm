@@ -39,7 +39,7 @@ Legal name of the company.  Will also map back to the entity's name field.
 
 =cut
 
-has 'legal_name' => (is => 'rw', isa => 'Str', requird => 0);
+has 'legal_name' => (is => 'rw', isa => 'Str', required => 0);
 
 =item tax_id
 
