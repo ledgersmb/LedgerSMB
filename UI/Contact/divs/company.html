@@ -4,28 +4,33 @@
 	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
 	?><?lsmb END ?>
 	<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
-<form name="company" method="post" action="<?lsmb script ?>" method="post">
+<form name="company" method="post" action="<?lsmb script ?>">
 <?lsmb PROCESS input element_data = {
+                  id = 'company-target-div'
 		type = "hidden"
 		name = "target_div"
 		value = 'company_div'
 	} ?>
 	<?lsmb PROCESS input element_data = {
+                  id = 'company-entity-id'
 		type = "hidden"
 		name = "entity_id"
 		value = entity_id
 	} ?>	
 	<?lsmb PROCESS input element_data = {
+                  id = 'company-company-id'
 		type = "hidden"
 		name = "id"
 		value = company.id
 	} ?>	
 <?lsmb PROCESS input element_data = {
+                  id = 'company-form-id'
 		type = "hidden"
 		name = "form_id"
 		value = form_id
 	} ?>
 	<?lsmb PROCESS input element_data = {
+                  id = 'company-account-class'
 		type = "hidden"
 		name = "account_class"
 		value = account_class
@@ -34,7 +39,8 @@
 <div class="input_group1">
 	<?lsmb PROCESS input element_data = {
 		label = text('Control Code') #'
-		type= "text"
+                  id = 'company-control-code' 
+		type = "text"
 		name = "control_code"
 		value = company.control_code
 		size = "20"
@@ -49,6 +55,7 @@
               company_entity_class = request.entity_class;
         END;
         PROCESS select element_data = {
+                id = 'company-entity-class'
 		name = "entity_class"
 		options = entity_classes
 		default_values = [company_entity_class]
@@ -58,12 +65,14 @@
 	} ?>
 	<?lsmb PROCESS button element_data = {
 		text = text('Generate Control Code') #'
+                  id = 'company-generate-control-code'
 		type = "submit"
 		name = "action"
 		value = "generate_control_code"
 		class = "submit"
         } ?>
         <?lsmb PROCESS button element_data = {
+                  id = 'company-action-retireve'
                 text = text('Retrieve')
                 type = 'submit'
                 name = 'action'
@@ -89,6 +98,7 @@
                           company_country_id = default_country_id;
                 END;
 		INCLUDE select element_data = {
+                        id = 'company-country-id'
 			text_attr = "name"
 			value_attr = "id"
 			default_values = [company_country_id]

@@ -6,26 +6,31 @@
 	<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
 <form name="customer" method="post" action="<?lsmb script ?>">
 <?lsmb PROCESS input element_data = { # Only for generate_control_code
+                  id = 'person-target-div'
 		type = "hidden"
 		name = "target_div"
 		value = 'person_div'
 	} ?>
 	<?lsmb PROCESS input element_data = {
+                  id = 'person-entity-id'
 		type = "hidden"
 		name = "entity_id"
 		value = entity_id
 	} ?>	
 	<?lsmb PROCESS input element_data = {
+                  id = 'person-id'
 		type = "hidden"
 		name = "id"
 		value = person.id
 	} ?>	
 <?lsmb PROCESS input element_data = {
+                  id = 'person-form-id'
 		type = "hidden"
 		name = "form_id"
 		value = form_id
 	} ?>
 	<?lsmb PROCESS input element_data = {
+                  id = 'person-account-class'
 		type = "hidden"
 		name = "account_class"
 		value = account_class
@@ -33,6 +38,7 @@
 <div class="input_line">
 <div class="input_group1">
 	<?lsmb PROCESS input element_data = {
+                  id = 'person-control-code'
 		label = text('Control Code') #'
 		type= "text"
 		name = "control_code"
@@ -49,6 +55,7 @@
               company_entity_class = request.entity_class;
         END;
         PROCESS select element_data = {
+                id = 'person-entity-class'
 		name = "entity_class"
 		options = entity_classes
 		default_values = [person_entity_class]
@@ -57,6 +64,7 @@
 		label = text('Class')
 	} ?>
 	<?lsmb PROCESS button element_data = {
+                 id = 'person-generate-control-code'
 		text = text('Generate Control Code') #'
 		type = "submit"
 		name = "action"
@@ -64,6 +72,7 @@
 		class = "submit"
         } ?>
         <?lsmb PROCESS button element_data = {
+                  id = 'person-retrieve'
                 text = text('Retrieve')
                 type = 'submit'
                 name = 'action'
@@ -127,6 +136,7 @@
                           person_country_id = default_country_id;
                 END;
 		INCLUDE select element_data = {
+                        id = 'person-country-id'
 			text_attr = "name"
 			value_attr = "id"
 			default_values = [company_country_id]
