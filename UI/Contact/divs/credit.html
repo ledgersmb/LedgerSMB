@@ -49,13 +49,24 @@ PROCESS dynatable
                     ec=entity_class;
                  END;
               END;
-              PROCESS input element_data = {
-		type = "hidden"
-		name = "entity_class"
-		value = ec
-	} ?>	
+	?>	
         <table>
 	<tr class="eca_row">
+        <td>
+        <?lsmb 
+
+        PROCESS select element_data = {
+                   id = 'eca-entity-class-id'
+                 name = 'entity_class'
+                 name = "entity_class"
+              options = entity_classes
+       default_values = [ec]
+            text_attr = 'class'
+           value_attr = 'id'
+                label = text('Class')
+        } ?></td>
+
+                
 	<td>
  	<?lsmb PROCESS input element_data = {
 		label = text("$entity_classname Number"), #fixme for i18n

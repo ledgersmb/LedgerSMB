@@ -589,11 +589,6 @@ BEGIN
 		FROM entity e 
 		JOIN entity_credit_account ec ON (e.id = ec.entity_id)
 		WHERE e.id = in_entity_id
-			AND ec.entity_class = 
-				CASE WHEN in_entity_class = 3 THEN 2
-				     WHEN in_entity_class IS NULL 
-					THEN ec.entity_class
-				ELSE in_entity_class END
 	LOOP
 
 		RETURN NEXT out_row;
