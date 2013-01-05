@@ -1323,7 +1323,10 @@ sub post {
 	{
         	$form->{callback}.= qq|&batch_id=$form->{batch_id}|;
 	}
-        if($form->{separate_duties}){edit();}
+        if ($form->{separate_duties}){
+            $form->{rowcount} = 0;
+            edit();
+        }
         else {$form->redirect( $locale->text('Transaction posted!') );}
     }
     else {
