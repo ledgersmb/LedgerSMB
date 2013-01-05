@@ -90,6 +90,7 @@ Changelog for 1.3.28
 * Fixing csv ar transactions not showing taxes (Chris T, 3589640)
 * Fixing demo quotations having descriptions taking too much space (Chris T)
 * Moved to label/button system for deleting lines on invoices (Chris T)
+* Fixing extra blank lines showing up on ar/ap trans screen on save (Chris T)
 
 Changelog for 1.3.27
 * Detect whether ledgersmb.conf exists during Makefile.PL run and create if
