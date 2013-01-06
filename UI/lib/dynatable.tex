@@ -5,6 +5,9 @@ TOTAL_WIDTH=14; # cm. using A4 as a basis because it is slightly narrower than
                 # This assumes a 1cm margin on either side. --CT
 DECLARED_WIDTH=0; 
 
+SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
+
+
 FOREACH COL IN columns;
     DECLARED_WIDTH = DECLARED_WIDTH + COL.pwidth; # pwidth is arbitrary scale
 END; 
@@ -21,7 +24,9 @@ FOREACH COL IN columns;
    IF COL.psep_before;
       '|';
    END;
-   IF COL.pwidth;
+   IF 1 == SKIP_TYPES.grep(COL.type).size() or COL.html_only;
+      '';
+   ELSIF COL.pwidth;
        "p{" _ (COL.pwidth * WIDTH_PER_P) _ "cm}";
    ELSIF COL.palign;
         COL.palign;
@@ -38,52 +43,51 @@ END;
 <?lsmb IF head; head ?>\\<?lsmb- END ?>
 <?lsmb- -?>
 <?lsmb 
-SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
-
 ADD_SEP = 0;
 FOREACH COL IN columns;
-    IF ADD_SEP;
-      ' & ';
-    END;
-    ADD_SEP = 1;
-    IF 0 == SKIP_TYPES.grep(COL.type).size();
+    IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
+        IF ADD_SEP;
+           ' & ';
+        END;
         COL.name;
+        ADD_SEP = 1;
     END;
 END;
--?>\\
+-?>\tabularnewline
 \hline\hline
 \endfirsthead
 <?lsmb 
-SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
 
 ADD_SEP = 0;
 FOREACH COL IN columns;
-    IF ADD_SEP;
-      ' & ';
-    END;
-    ADD_SEP = 1;
-    IF 0 == SKIP_TYPES.grep(COL.type).size();
+    IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
+        IF ADD_SEP;
+           ' & ';
+        END;
         COL.name;
+        ADD_SEP = 1;
     END;
 END;
--?>\\
+-?>\tabularnewline
 \hline\hline
 \endhead
 <?lsmb
 
 FOREACH ROW IN tbody.rows;
-    ADD_SEP = 0;
+    ADD_SEP=0;
     FOREACH COL IN columns;
-        IF ADD_SEP;
-           ' & ';
+        COLID =  COL.col_id.replace('\\\\');
+        IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
+            IF ADD_SEP;
+               ' & ';
+            END;
+            ADD_SEP = 1;
+            ?>\begin{minipage}{<?lsmb (COL.pwidth * WIDTH_PER_P) _ "cm"; ?>}<?lsmb
+                ROW.${COLID}; #$
+            ?>\end{minipage}<?lsmb
         END;
-        ADD_SEP = 1;
-        COL_ID = COL.col_id;
-        IF 0 == SKIP_TYPES.grep(COL.type).size();
-            ROW.$COL_ID; #$
-        END;
-    END; 
-    ?>\\
+    END;
+    ?>\tabularnewline
 <?lsmb
 END; # FOREACH ?>
 \end{longtable}

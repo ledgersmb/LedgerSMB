@@ -3,16 +3,14 @@ IF !papersize;
    papersize = 'a4paper';
 END;
 
+SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
 COLNUMBER = 0;
 
-SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
-
 FOREACH COL IN columns;
-    IF 0 == SKIP_TYPES.grep(COL.type).size();
-        COLNUMBER = COLNUMBER + 1;
+    IF 0 == SKIP_TYPES.grep(COL.type).size() and ! COL.html_only.defined();
+            COLNUMBER = COLNUMBER + 1;
     END;
 END;
-
 FILTER latex;
 -?>
 \documentclass[<?lsmb papersize ?>]{article}
