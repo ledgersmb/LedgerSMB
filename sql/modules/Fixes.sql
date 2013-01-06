@@ -135,3 +135,13 @@ INSERT INTO jctype (id, label, description, is_service, is_timecard)
 VALUES (3, 'overhead', 'Time/Overhead for payroll, manufacturing, etc', false, true);
 
 COMMIT;
+
+-- BETA 2
+BEGIN;
+
+ALTER TABLE tax_extended DROP CONSTRAINT "tax_extended_entry_id_fkey";
+
+ALTER TABLE tax_extended ADD FOREIGN KEY (entry_id) 
+REFERENCES acc_trans(entry_id);
+
+COMMIT;
