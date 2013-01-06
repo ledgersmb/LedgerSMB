@@ -136,6 +136,27 @@
                          title = user.dateformat,
                          label = text('To') 
                   } ?></td>
+		    <tr> 
+		      <th><?lsmb text('Transaction Date') ?></th> 
+		      <td> <?lsmb
+                     INCLUDE input element_data = {
+                         name = "from_date",
+                         size = "11",
+                         type = "text",
+                         class = "date",
+                         title = user.dateformat,
+                         label = text('From') 
+                  } ;
+                     INCLUDE input element_data = {
+                         name = "to_date",
+                         size = "11",
+                         type = "text",
+                         class = "date",
+                         title = user.dateformat,
+                         label = text('To') 
+                  };
+                  label_pos=1 ?></td>
+		    </tr> 
  
 	    </table> 
 	  </td> 
@@ -144,21 +165,10 @@
     </td> 
   </tr> 
  
-  <tr> 
-    <td> 
-      <table> 
- 
-	
-	
- 	<tr> 
-	  <td></td> 
-	  <td> 
+  </table> 
 	    <table> 
-	      <tr> 
-	        <td> 
-		  <table> 
-		    <tr> 
-		      <td>
+              <tr><th rowspan="7"><?lsmb text("Include in Report") ?></th>
+		  <td>
                          <?lsmb INCLUDE input element_data = {
                                 checked = 'CHECKED',
                                 name    = 'type',
@@ -167,8 +177,7 @@
                                 value   = 'i'
                                 label   = text('Invoices'), 
                          } ?></td>
-		    </tr> 
-		    <tr> 
+		    <td> 
                          <?lsmb INCLUDE input element_data = {
                                 name    = 'type',
                                 type    = 'radio',
@@ -176,9 +185,8 @@
                                 value   = 'o'
                                 label   = text('Orders'), 
                          } ?></td>
-		    </tr> 
-		    <tr> 
-                    <tr> 
+		    </td> 
+                    <td> 
                          <?lsmb INCLUDE input element_data = {
                                 name    = 'type',
                                 type    = 'radio',
@@ -187,68 +195,10 @@
                                 label   = text('Quotations'), 
                          } ?></td>
 
-		    </tr> 
-		  </table> 
-		</td> 
-		<td> 
-		  <table> 
-		    <tr> 
-		      <th><?lsmb text('From') ?></th> 
-		      <td> <?lsmb
-                     INCLUDE input element_data = {
-                         name = "from_date",
-                         size = "11",
-                         type = "text",
-                         class = "date",
-                         title = user.dateformat,
-                         label = text('To') 
-                  } ?></td>
-		      <th><?lsmb text('To') ?></th> 
-		      <td><?lsmb             
-                     INCLUDE input element_data = {
-                         name = "to_date",
-                         size = "11",
-                         type = "text",
-                         class = "date",
-                         title = user.dateformat,
-                         label = text('To') 
-                  } ?></td>
-		    </tr> 
-		    <tr> 
-		      <td></td> 
-		      <td colspan="3"> 
-                      <?lsmb
-                      INCLUDE input element_data = {
-                              type = 'checkbox',
-                              name = 'inc_open',
-                              value = '1',
-                              label = text('Open'),
-                              class = 'checkbox',
-                              checked = 'CHECKED'
-                      };
-                      INCLUDE input element_data = {
-                              type = 'checkbox',
-                              name = 'inc_closed',
-                              value = '1',
-                              label = text('Closed'),
-                              class = 'checkbox',
-                              checked = 'CHECKED'
-                      }; ?>
-		      </td> 
-		    </tr> 
-		  </table> 
-		</td> 
-	      </tr> 
- 	    </table> 
-	  </td> 
-	</tr> 
+		 </tr> 
  
 	
 	<tr> 
-	  <th align="right" nowrap><?lsmb Text('Include in Report') ?></th> 
-	  <td> 
-	    <table> 
-	      <tr> 
 		<td><?lsmb
                      INCLUDE input element_data= {
                              label = text('Summary'),
@@ -267,6 +217,28 @@
                              class = 'radio',
                     } ?></td>
 	      </tr> 
+		  <tr> 
+		      <td> 
+                      <?lsmb
+                      INCLUDE input element_data = {
+                              type = 'checkbox',
+                              name = 'inc_open',
+                              value = '1',
+                              label = text('Open'),
+                              class = 'checkbox',
+                              checked = 'CHECKED'
+                      } ?></td>
+                      <td><?lsmb 
+                      INCLUDE input element_data = {
+                              type = 'checkbox',
+                              name = 'inc_closed',
+                              value = '1',
+                              label = text('Closed'),
+                              class = 'checkbox',
+                              checked = 'CHECKED'
+                      }; ?>
+		      </td> 
+		    </tr> 
 	      <tr> 
 		<td><?lsmb
                        INCLUDE input element_data = {
