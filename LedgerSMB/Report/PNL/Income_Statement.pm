@@ -31,6 +31,13 @@ This is either 'cash' or 'accrual'
 
 has basis => (is => 'ro', isa =>'Str', required => 1);
 
+=item ignore_yearend
+
+This is 'none', 'all', or 'last'
+
+=cut
+
+has ignore_yearend => (is => 'ro', 'isa' =>'Str', required =>1);
 
 =back
 

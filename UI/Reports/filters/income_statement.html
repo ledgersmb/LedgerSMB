@@ -25,7 +25,7 @@
     <table>
       <tr>
         <th align="right"><?lsmb text('Method') ?></th>
-        <td colspan="3">
+        <td>
 <?lsmb PROCESS input element_data={
   name = 'basis',
   type = 'radio',
@@ -41,6 +41,30 @@
   } -?>
         </td>
       </tr>
+                <tr>
+                  <th align="right"><?lsmb text('Ignore Year-ends'); ?></th>
+                  <td><?lsmb PROCESS select element_data = {
+                             options = [
+                                 {
+                                     label="All",
+                                     id="all",
+                                 },
+                                 {
+                                     label="Last Only",
+                                     id="last"
+                                 },
+                                 {
+                                     label="None",
+                                     id="none",
+                                 }
+                             ],
+                             default_values = [report.ignore_yearend],
+                             name = 'ignore_yearend',
+                             text_attr = 'label',
+                             value_attr = 'id',
+                             } ?>
+                    </td>
+                </tr>
       </table>
     </td>
   </tr>
