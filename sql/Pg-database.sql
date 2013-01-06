@@ -2631,6 +2631,10 @@ SELECT pg_catalog.setval('menu_node_id_seq', 253, true);
 COPY menu_node (id, label, parent, "position") FROM stdin;
 91	Search Groups	77	6
 92	Search Pricegroups	77	8
+6	Import Inventory	77	13
+106	Search	98	1
+101	Generate	98	4
+8	Import	98	3
 206	Batches	205	1
 14	Search	19	2
 12	Add Contact	19	3
@@ -2679,13 +2683,8 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 88	Requirements	85	3
 96	Description	95	1
 97	Partsgroup	95	2
-99	Add Project	98	1
 100	Add Timecard	98	2
-101	Generate	98	3
 102	Sales Orders	101	1
-103	Reports	98	4
-104	Search	103	1
-106	Time Cards	103	3
 107	Translations	98	5
 108	Description	107	1
 113	Balance Sheet	109	4
@@ -2826,7 +2825,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 67	Quotations	0	11
 73	General Journal	0	12
 77	Goods and Services	0	13
-98	Projects	0	14
 109	Reports	0	15
 115	Recurring Transactions	0	16
 217	Tax Forms	0	17
@@ -2845,6 +2843,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 84	Stock Assembly	77	10
 95	Translations	77	12
 85	Reports	77	11
+98	Timecards	0	14
 \.
 
 --
@@ -3063,21 +3062,13 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 97	action	translation	237
 97	translation	partsgroup	238
 98	menu	1	239
-99	module	pe.pl	240
-99	action	add	241
-99	type	project	242
 100	module	jc.pl	243
 100	action	add	244
-99	project	project	245
 100	project	project	246
 100	type	timecard	247
 101	menu	1	248
 102	module	pe.pl	249
 102	action	project_sales_order	250
-103	menu	1	255
-104	module	pe.pl	256
-104	type	project	258
-104	action	search	257
 106	module	jc.pl	263
 106	action	search	264
 106	type	timecard	265
@@ -3495,7 +3486,14 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 91	report_name	search_partsgroups	222
 92	module	reports.pl	224
 92	report_name	search_pricegroups	225
+6	module	import_csv.pl	60
+6	action	begin_import	61
+6	type	inventory	71
+8	module	import_csv.pl	78
+8	action	begin_import	93
+8	type	timecard	94
 \.
+
 
 --
 

@@ -845,6 +845,16 @@ values (88, 'allow', 'lsmb_<?lsmb dbname ?>__inventory_reports');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (94, 'allow', 'lsmb_<?lsmb dbname ?>__inventory_reports');
 
+CREATE ROLE "lsmb_<?lsmb dbname ?>__inventory_adjust"
+WITH INHERIT NOLOGIN;
+
+GRANT SELECT ON parts, ar, ap, invoice 
+TO "lsmb_<?lsmb dbname ?>__inventory_adjust";
+GRANT INSERT ON inventory_adjustment_info, inventory_adjustment_line
+TO "lsmb_<?lsmb dbname ?>__inventory_adjust";
+
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (6, 'allow',  'lsmb_<?lsmb dbname ?>__inventory_reports');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__pricegroup_create"
 WITH INHERIT NOLOGIN
@@ -1020,6 +1030,8 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (100, 'allow', 'lsmb_<?lsmb dbname ?>__project_timecard_add');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (106, 'allow', 'lsmb_<?lsmb dbname ?>__project_timecard_add');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (8, 'allow', 'lsmb_<?lsmb dbname ?>__project_timecard_add');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__project_timecard_list"
 WITH INHERIT NOLOGIN
