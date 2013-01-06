@@ -92,6 +92,7 @@ Changelog for 1.3.28
 * Moved to label/button system for deleting lines on invoices (Chris T)
 * Fixing extra blank lines showing up on ar/ap trans screen on save (Chris T)
 * Changing xetex demos to use Liberation font (Chris T, h/t Erik H)
+* Better appearance of customer history report filter screen (Chris T)
 
 Changelog for 1.3.27
 * Detect whether ledgersmb.conf exists during Makefile.PL run and create if
