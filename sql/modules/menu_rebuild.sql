@@ -21,7 +21,7 @@ ALTER TABLE public.menu_node ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.menu_attribute ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.menu_acl ALTER COLUMN id DROP DEFAULT;
 DROP SEQUENCE public.menu_node_id_seq;
-DROP TABLE public.menu_node;
+DROP TABLE public.menu_node CASCADE;
 DROP SEQUENCE public.menu_attribute_id_seq;
 DROP TABLE public.menu_attribute;
 DROP SEQUENCE public.menu_acl_id_seq;
