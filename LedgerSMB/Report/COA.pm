@@ -117,13 +117,13 @@ our @COLUMNS = (
        name => LedgerSMB::Report::text('Edit'),
        type => 'href',
   href_base => '',
-     pwidth => '3', },
+  html_only => 1, },
 
     {col_id => 'delete',
        name => LedgerSMB::Report::text('Delete'),
        type => 'href',
   href_base => '',
-     pwidth => '3', },
+  html_only => '1', },
 
 );
 
