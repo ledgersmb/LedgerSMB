@@ -282,6 +282,7 @@ sub _preprocess {
 sub render {
 	my $self = shift;
 	my $vars = shift;
+        my $do_not_escape = shift; # arrayref
         $vars->{LIST_FORMATS} = sub { return $self->available_formats} ;
         $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
@@ -302,7 +303,7 @@ sub render {
 		carp 'no_escape mode enabled in rendering';
 		$cleanvars = $vars;
 	} else {
-		$cleanvars = $format->can('preprocess')->($vars);
+		$cleanvars = $format->can('preprocess')->($vars, $do_not_escape);
 	}
         $cleanvars->{escape} = sub { return $format->escape(@_)};
 	if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
