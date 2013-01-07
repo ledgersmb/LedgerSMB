@@ -146,7 +146,7 @@ CREATE TYPE inv_activity_line AS (
 );
    
 CREATE OR REPLACE FUNCTION inventory__activity
-(in_date_from date, in_date_to date, in_partnumber text, in_descripiton text)
+(in_date_from date, in_date_to date, in_partnumber text, in_description text)
 RETURNS SETOF inv_activity_line LANGUAGE SQL AS
 $$
     SELECT p.id, p.description, p.partnumber,  

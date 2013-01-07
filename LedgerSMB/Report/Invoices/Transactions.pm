@@ -98,11 +98,19 @@ has ponumber => (is => 'ro', isa => 'Str', required => 0);
 
 =item partnumber string
 
-If set only include invoices including the relevant part number
+If set only include invoices including the relevant part number (prefix search)
 
 =cut
 
 has partnumber => (is => 'ro', isa => 'Str', required => 0);
+
+=item parts_id int
+
+If set only include invoices including the specified part (exact match_
+
+=cut
+
+has parts_id => (is => 'ro', isa => 'Int', required => 0);
 
 =item source string
 
