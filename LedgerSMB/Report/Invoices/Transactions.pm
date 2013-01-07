@@ -96,6 +96,14 @@ Prefix search on PO number
 
 has ponumber => (is => 'ro', isa => 'Str', required => 0);
 
+=item partnumber string
+
+If set only include invoices including the relevant part number
+
+=cut
+
+has partnumber => (is => 'ro', isa => 'Str', required => 0);
+
 =item source string
 
 Prefix string on source number

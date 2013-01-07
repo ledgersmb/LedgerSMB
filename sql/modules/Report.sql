@@ -372,7 +372,7 @@ CREATE OR REPLACE FUNCTION report__aa_outstanding_details
 (in_entity_class int, in_account_id int, in_entity_name text, 
  in_meta_number text,
  in_employee_id int, in_business_units int[], in_ship_via text, in_on_hold bool,
- in_date_from date, in_date_to date)
+ in_date_from date, in_date_to date, in_partnumber text)
 RETURNS SETOF aa_transactions_line LANGUAGE PLPGSQL AS $$
 DECLARE retval aa_transactions_line;
 
@@ -423,6 +423,11 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        AND (in_date_from IS NULL OR a.transdate >= in_date_from)
        AND (in_date_to IS NULL OR a.transdate <= in_date_to)
        AND p.due::numeric(100,2) <> 0
+       AND (in_partnumber IS NULL 
+          OR EXISTS(SELECT 1 FROM invoice inv 
+                      JOIN parts ON inv.parts_id = parts.id
+                     WHERE inv.trans_id = a.id))
+           
 LOOP
    RETURN NEXT retval;
 END LOOP;

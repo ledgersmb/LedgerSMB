@@ -134,5 +134,40 @@ RETURNS SETOF pricegroup LANGUAGE SQL STABLE AS $$
 ORDER BY pricegroup;
 $$;
 
+DROP TYPE IF EXISTS inv_activity_line CASCADE;
+CREATE TYPE inv_activity_line AS (
+   id int,
+   description text,
+   partnumber text,
+   sold numeric,
+   revenue numeric,
+   receivable numeric,
+   payable numeric
+);
+   
+CREATE OR REPLACE FUNCTION inventory__activity
+(in_date_from date, in_date_to date, in_partnumber text, in_descripiton text)
+RETURNS SETOF inv_activity_line LANGUAGE SQL AS
+$$
+    SELECT p.id, p.description, p.partnumber,  
+           SUM(CASE WHEN transtype = 'ar' THEN i.qty ELSE 0 END) AS sold,
+           SUM(CASE WHEN transtype = 'ar' THEN i.sellprice * i.qty ELSE 0 END)
+           AS receivable,
+           SUM(CASE WHEN transtype = 'ap' THEN i.qty * -1 ELSE 0 END) 
+           AS payable,
+           SUM(CASE WHEN transtype = 'ap' THEN -1 * i.sellprice * i.qty ELSE 0 
+                END) AS expenses
+      FROM invoice i
+      JOIN parts p ON (i.parts_id = p.id)
+      JOIN (select id, approved, transdate, 'ar' as transtype FROM ar
+             UNION
+            SELECT id, approved, transdate, 'ap' as transdate FROM ap) a
+            ON (a.id = i.trans_id AND a.approved)
+     WHERE ($1 IS NULL OR a.transdate >= $1)
+           AND ($2 IS NULL OR a.transdate <= $2)
+           AND ($3 IS NULL OR p.partnumber ilike $3 || '%')
+           AND ($4 IS NULL OR plainto_tsquery($4) @@ p.description); 
+  GROUP BY p.id, p.description, p.partnumber
+$$;
 
 COMMIT;
