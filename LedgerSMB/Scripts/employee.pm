@@ -289,10 +289,9 @@ Saves a company and moves on to the next screen
 
 sub save_employee {
     my ($request) = @_;
-    for my $key (qw(start_date end_date dob)){
-         $request->{$key} = LedgerSMB::PGDate->from_input($request->{$key});
-    }
+    $request->{entity_class} = 3;
     $request->{control_code} = $request->{employeenumber};
+    $request->{name} = "$request->{last_name}, $request->{first_name}";
     my $employee = LedgerSMB::Entity::Person::Employee->new(%$request);
     $request->{target_div} = 'credit_div';
     $employee->save;

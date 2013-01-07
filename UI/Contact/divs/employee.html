@@ -16,6 +16,20 @@
                 name = "entity_id"
                value = entity_id
 } ?>	
+<div class="input_line">
+<div class="input_group g1">
+     <?lsmb 
+        PROCESS select element_data = {
+                  label = text('Salutation')
+                   name = 'salutation_id'
+         default_values = [employee.salutation_id]
+                options = salutations
+                  class = 'salutations'
+              text_attr = 'salutation'
+             value_attr = 'id'
+    } ?>
+</div>
+</div>
 <div class="input_line" id="person_name_div"><?lsmb #text('Name:')?>&nbsp;
 <div class="input_group g1">
 <!-- TODO:  Add Saluatation -->
