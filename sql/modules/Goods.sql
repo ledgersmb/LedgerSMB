@@ -146,7 +146,7 @@ CREATE TYPE inv_activity_line AS (
 );
    
 CREATE OR REPLACE FUNCTION inventory__activity
-(in_date_from date, in_date_to date, in_partnumber text, in_description text)
+(in_from_date date, in_to_date date, in_partnumber text, in_description text)
 RETURNS SETOF inv_activity_line LANGUAGE SQL AS
 $$
     SELECT p.id, p.description, p.partnumber,  
@@ -166,7 +166,7 @@ $$
      WHERE ($1 IS NULL OR a.transdate >= $1)
            AND ($2 IS NULL OR a.transdate <= $2)
            AND ($3 IS NULL OR p.partnumber ilike $3 || '%')
-           AND ($4 IS NULL OR plainto_tsquery($4) @@ p.description); 
+           AND ($4 IS NULL OR p.description @@ plainto_tsquery($4))
   GROUP BY p.id, p.description, p.partnumber
 $$;
 

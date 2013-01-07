@@ -157,7 +157,7 @@ padding-left: 12px;
   background: #004a80;
 }
 
-.listtop { font-size: 10pt; background-color: black; color: white; }
+.listtop { font-size: 10pt; background-color: black; color: white; font-weight: bold}
 .listheading, thead th { font-size: 10pt; background-color: #004a80; color: white; }
 .listheading, thead A:link {
 text-decoration: none; color: white; font-weight: bold

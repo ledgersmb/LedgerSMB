@@ -1,0 +1,39 @@
+<?lsmb INCLUDE 'ui-header.html';
+       PROCESS 'elements.html';
+       PROCESS 'report_base.html'; ?>
+<body>
+<form action="goods.pl" method="get">
+<div class="listtop"><?lsmb text('Inventory Activity') ?></div>
+<table>
+<tr>
+</tr>
+<tr>
+<th align="right"><?lsmb text('Part Number') ?></th>
+<td><?lsmb PROCESS input element_data = {
+    type = 'text',
+    size = '16',
+   class = 'control_code',
+   value = partnumber
+    name = 'partnumber'
+} ?></td>
+<th align="right"><?lsmb text('Description') ?></th>
+<td><?lsmb PROCESS input element_data = {
+    type = 'text',
+    size = '32',
+   class = 'description',
+   value = description
+    name = 'description'
+} ?></td>
+<tr>
+</tr>
+<?lsmb PROCESS date_row ?>
+</table>
+<?lsmb PROCESS button element_data = {
+    text = text('Continue'),
+    name = 'action'
+    type = 'submit'
+   class = 'submit'
+   value = 'inventory_activity'
+} ?>
+</form>
+</body>

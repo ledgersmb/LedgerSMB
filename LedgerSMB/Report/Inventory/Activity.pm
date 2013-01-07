@@ -63,27 +63,31 @@ has description  => (is => 'ro', isa => 'Str', required => 0);
 
 sub columns {
     my $self = shift;
+    my $from_date = $self->from_date;
+    $from_date = $from_date->to_db if $from_date;
+    my $to_date = $self->to_date;
+    $to_date = $to_date->to_db if $to_date;
     return [
      {col_id => 'partnumber',
         type => 'text',
-        name => LedgerSMB::Report::text('Partnumber'), }
+        name => LedgerSMB::Report::text('Partnumber'), },
 
      {col_id => 'description',
         type => 'text',
-        name => LedgerSMB::Report::text('Description'), }
+        name => LedgerSMB::Report::text('Description'), },
 
      {col_id => 'sold',
         type => 'href',
         name => LedgerSMB::Report::text('Sold'), 
-   href_base => "invoice.pl&date_from=$self->date_from&date_to=$self->date_to"
+   href_base => "invoice.pl&from_date=$from_date&to_date=$to_date"
                 . "&open=1&closed=1&"
                 . 'col_invnumber=1&col_transdate=1&col_entity_name=1&'
                 . 'col_netamount=1&entity_class=2&parts_id=',
-     }
+     },
 
      {col_id => 'receivable',
         type => 'text',
-        name => LedgerSMB::Report::text('Receivable'), }
+        name => LedgerSMB::Report::text('Receivable'), },
 
      {col_id => 'purchased',
         type => 'href',
@@ -92,7 +96,7 @@ sub columns {
                 . "&open=1&closed=1&"
                 . 'col_invnumber=1&col_transdate=1&col_entity_name=1&'
                 . 'col_netamount=1&entity_class=1&parts_id=',
-     }
+     },
 
      {col_id => 'payable',
         type => 'text',
@@ -145,6 +149,7 @@ sub run_report {
     for my $r (@rows) {
        $r->{row_id} = $r->{parts_id};
     }
+    $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

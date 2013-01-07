@@ -9,6 +9,7 @@ use LedgerSMB::Report::Inventory::Search;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Inventory::Partsgroups;
 use LedgerSMB::Report::Inventory::Pricegroups;
+use LedgerSMB::Report::Inventory::Activity;
 
 =head1 SYNOPSIS
 
@@ -65,6 +66,18 @@ for a prefix search
 sub search_pricegroups {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Inventory::Pricegroups->new(%$request);
+    $report->render($request);
+}
+
+=item inventory_activity
+
+This routine runs the inventory activity report/
+
+=cut
+
+sub inventory_activity {
+    my ($request) = @_;
+    my $report = LedgerSMB::Report::Inventory::Activity->new(%$request);
     $report->render($request);
 }
 

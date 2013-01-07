@@ -2635,6 +2635,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 106	Search	98	1
 101	Generate	98	4
 8	Import	98	3
+114	Inventory Activity	85	2
 206	Batches	205	1
 14	Search	19	2
 12	Add Contact	19	3
@@ -2688,7 +2689,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 107	Translations	98	5
 108	Description	107	1
 113	Balance Sheet	109	4
-114	Inventory Activity	109	5
 117	Sales Invoices	116	1
 118	Sales Orders	116	2
 119	Checks	116	3
@@ -3082,9 +3082,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 113	action	report	281
 113	module	rp.pl	282
 113	report	balance_sheet	283
-114	action	report	284
-114	module	rp.pl	285
-114	report	inv_activity	286
 115	action	recurring_transactions	287
 115	module	am.pl	288
 116	menu	1	289
@@ -3203,6 +3200,9 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 165	action	list_templates	411
 166	action	list_templates	412
 167	action	list_templates	413
+114	module	reports.pl	285
+114	report_name	inventory_activity	286
+114	action	start_report	284
 168	action	list_templates	414
 169	action	list_templates	415
 170	action	list_templates	416
@@ -3493,7 +3493,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 8	action	begin_import	93
 8	type	timecard	94
 \.
-
 
 --
 
