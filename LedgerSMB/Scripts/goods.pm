@@ -1,0 +1,81 @@
+=head1 NAME
+
+LedgerSMB::Scripts::goods - Goods and Services workflows for LedgerSMB
+
+=cut
+
+package LedgerSMB::Scripts::goods;
+use LedgerSMB::Report::Inventory::Search;
+use LedgerSMB::Scripts::reports;
+use LedgerSMB::Report::Inventory::Partsgroups;
+use LedgerSMB::Report::Inventory::Pricegroups;
+
+=head1 SYNOPSIS
+
+ LedgerSMB::Scripts::goods::search_screen($request);
+ LedgerSMB::Scripts::goods::search($request);
+
+=head1 Routines
+
+=over
+
+=item search_screen
+
+=cut
+
+sub search_screen {
+    my ($request) = @_;
+    $request->{partsgroups} = $request->call_procedure(
+       procname => 'partsgroup__search', args => [undef]
+    );
+    $request->{report_name} = 'search_goods';
+    LedgerSMB::Scripts::reports::start_report($request);
+}
+
+=item search
+
+=cut
+
+sub search {
+    my ($request) = @_;
+    my $report = LedgerSMB::Report::Inventory::Search->new(%$request);
+    $report->render($request);
+};
+
+=item search_partsgroups
+
+This routine searches partsgroups.  The partsgroup input is optionally set 
+for a prefix search
+
+=cut
+
+sub search_partsgroups {
+    my ($request) = @_;
+    my $report = LedgerSMB::Report::Inventory::Partsgroups->new(%$request);
+    $report->render($request);
+}
+
+=item search_pricegroups
+
+This routine searches pricegroups.  The pricegroup input is optionally set 
+for a prefix search
+
+=cut
+
+sub search_pricegroups {
+    my ($request) = @_;
+    my $report = LedgerSMB::Report::Inventory::Pricegroups->new(%$request);
+    $report->render($request);
+}
+
+=back
+
+=head1 COPYRIGHT
+
+COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the
+terms of the LedgerSMB General Public License version 2 or at your option any
+later version.  Please see enclosed LICENSE file for details.
+
+=cut
+
+1;
