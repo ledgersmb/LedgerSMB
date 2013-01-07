@@ -2636,6 +2636,8 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 101	Generate	98	4
 8	Import	98	3
 114	Inventory Activity	85	2
+11	Import AR Batch	249	3
+13	Import AP Batch	250	3
 206	Batches	205	1
 14	Search	19	2
 12	Add Contact	19	3
@@ -3492,7 +3494,16 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 8	module	import_csv.pl	78
 8	action	begin_import	93
 8	type	timecard	94
+11	module	import_csv.pl	95
+13	module	import_csv.pl	152
+11	action	begin_import	172
+13	action	begin_import	173
+11	type	ar_multi	174
+13	type	ap_multi	175
+11	multi	1	176
+13	multi	1	177
 \.
+
 
 --
 

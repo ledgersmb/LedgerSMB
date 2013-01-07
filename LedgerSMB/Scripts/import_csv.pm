@@ -22,6 +22,8 @@ our $cols = {
    gl       =>  ['accno', 'debit', 'credit', 'source', 'memo'],
    ap_multi =>  ['vendor', 'amount', 'account', 'ap', 'description', 
                  'invnumber', 'transdate'],
+   ar_multi =>  ['customer', 'amount', 'account', 'ar', 'description', 
+                 'invnumber', 'transdate'],
    timecard =>  ['employee', 'projectnumber', 'transdate', 'partnumber',
                  'description', 'qty', 'noncharge', 'sellprice', 'allocated',
                 'notes'],
@@ -35,6 +37,70 @@ our $ap_eca_for_inventory = '00000'; # Built in inventory adjustment accounts
 our $ar_eca_for_inventory = '00000';
 our $preprocess = {};
 our $postprocess = {};
+
+our $aa_multi = sub {
+                   use LedgerSMB::AA;
+                   use LedgerSMB::Batch;
+                   my ($request, $entries, $arap) = @_;
+                   my $batch = LedgerSMB::Batch->new({base => $request});
+                   $batch->{batch_number} = $request->{reference};
+                   $batch->{batch_date} = $request->{transdate};
+                   $batch->{batch_class} = $arap;
+                   $batch->create(); 
+                   # Necessary to test things are found before starting to 
+                   # import! -- CT
+                   my $acst = $request->{dbh}->prepare(
+                        "select count(*) from account where accno = ?"
+                   );
+                   my $vcst = $request->{dbh}->prepare(
+                        "select count(*) from entity_credit_account where meta_number = ?"
+                   );
+                   for my $ref (@$entries){
+                       my $pass;
+                       next if $ref->[1] !~ /\d/;
+                       my ($acct) = split /--/, $ref->[2];
+                       $acst->execute($acct);
+                       ($pass) = $acst->fetchrow_array;
+                       $request->error("Account $acct not found") if !$pass;
+                       ($acct) = split /--/, $ref->[3];
+                       $acst->execute($acct);
+                       ($pass) = $acst->fetchrow_array;
+                       $request->error("Account $acct not found") if !$pass;
+                       $vcst->execute(uc($ref->[0]));
+                       ($pass) = $vcst->fetchrow_array;
+                       $request->error("Vendor $ref->[0] not found") if !$pass;
+                   }
+                   for my $ref (@$entries){
+                       my $form = Form->new();
+                       $form->{dbh} = $request->{dbh};
+                       $form->{rowcount} = 1;
+                       $form->{ARAP} = uc($arap);
+                       $form->{batch_id} = $batch->{id};
+                       $form->{vendornumber} = shift @$ref;
+                       $form->{amount_1} = shift @$ref;
+                       next if $form->{amount_1} !~ /\d/;
+                       $form->{amount_1} = $form->parse_amount(
+                              $request->{_user}, $form->{amount_1}); 
+                       $form->{"$form->{ARAP}_amount_1"} = shift @$ref;
+                       $form->{vc} = "vendor";
+                       $form->{arap} = $arap;
+                       $form->{uc($arap)} = shift @$ref;
+                       $form->{description_1} = shift @$ref;
+                       $form->{invnumber} = shift @$ref;
+                       $form->{transdate} = shift @$ref;
+                       $form->{currency} = $default_currency;
+                       $form->{approved} = '0';
+                       $form->{defaultcurrency} = $default_currency;
+                       my $sth = $form->{dbh}->prepare(
+                            "SELECT id FROM entity_credit_account
+                              WHERE entity_class = 1 and meta_number = ?"
+                       );
+                       $sth->execute(uc($form->{vendornumber}));
+                       ($form->{vendor_id}) = $sth->fetchrow_array;
+                      
+                       AA->post_transaction($request->{_user}, $form);
+                   }
+               };
 our $process = {
    gl       => sub {
                    use LedgerSMB::GL;
@@ -71,68 +137,13 @@ our $process = {
                    }
                    GL->post_transaction($request->{_user}, $form);
                 },
-   ap_multi => sub {
-                   use LedgerSMB::AA;
-                   use LedgerSMB::Batch;
-                   my ($request, $entries) = @_;
-                   my $batch = LedgerSMB::Batch->new({base => $request});
-                   $batch->{batch_number} = $request->{reference};
-                   $batch->{batch_date} = $request->{transdate};
-                   $batch->{batch_class} = 'ap';
-                   $batch->create(); 
-                   # Necessary to test things are found before starting to 
-                   # import! -- CT
-                   my $acst = $request->{dbh}->prepare(
-                        "select count(*) from account where accno = ?"
-                   );
-                   my $vcst = $request->{dbh}->prepare(
-                        "select count(*) from entity_credit_account where meta_number = ?"
-                   );
-                   for my $ref (@$entries){
-                       my $pass;
-                       next if $ref->[1] !~ /\d/;
-                       my ($acct) = split /--/, $ref->[2];
-                       $acst->execute($acct);
-                       ($pass) = $acst->fetchrow_array;
-                       $request->error("Account $acct not found") if !$pass;
-                       ($acct) = split /--/, $ref->[3];
-                       $acst->execute($acct);
-                       ($pass) = $acst->fetchrow_array;
-                       $request->error("Account $acct not found") if !$pass;
-                       $vcst->execute(uc($ref->[0]));
-                       ($pass) = $vcst->fetchrow_array;
-                       $request->error("Vendor $ref->[0] not found") if !$pass;
-                   }
-                   for my $ref (@$entries){
-                       my $form = Form->new();
-                       $form->{dbh} = $request->{dbh};
-                       $form->{rowcount} = 1;
-                       $form->{batch_id} = $batch->{id};
-                       $form->{vendornumber} = shift @$ref;
-                       $form->{amount_1} = shift @$ref;
-                       next if $form->{amount_1} !~ /\d/;
-                       $form->{amount_1} = $form->parse_amount(
-                              $request->{_user}, $form->{amount_1}); 
-                       $form->{AP_amount_1} = shift @$ref;
-                       $form->{ARAP} = 'AP';
-                       $form->{vc} = "vendor";
-                       $form->{arap} = 'ap';
-                       $form->{AP} = shift @$ref;
-                       $form->{description_1} = shift @$ref;
-                       $form->{invnumber} = shift @$ref;
-                       $form->{transdate} = shift @$ref;
-                       $form->{currency} = $default_currency;
-                       $form->{approved} = '0';
-                       $form->{defaultcurrency} = $default_currency;
-                       my $sth = $form->{dbh}->prepare(
-                            "SELECT id FROM entity_credit_account
-                              WHERE entity_class = 1 and meta_number = ?"
-                       );
-                       $sth->execute(uc($form->{vendornumber}));
-                       ($form->{vendor_id}) = $sth->fetchrow_array;
-                      
-                       AA->post_transaction($request->{_user}, $form);
-                   }
+   ar_multi => sub { 
+                   my  ($request, $entries) = @_;
+                   return $aa_multi($request, $entries, 'ar');
+               },
+   ap_multi => sub { 
+                   my  ($request, $entries) = @_;
+                   return $aa_multi($request, $entries, 'ap');
                },
     chart => sub {
                use LedgerSMB::DBObject::Account;
@@ -190,6 +201,7 @@ our $process = {
                use LedgerSMB::Timecard;
                my ($request, $entries) = @_;
                my $myconfig = {};
+               my $jc = {};
                for my $entry (@$entries) {
                    my $counter = 0;
                    for my $col (@{$cols->{timecard}}){

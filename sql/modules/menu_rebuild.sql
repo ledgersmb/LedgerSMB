@@ -21,11 +21,11 @@ ALTER TABLE public.menu_node ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.menu_attribute ALTER COLUMN id DROP DEFAULT;
 ALTER TABLE public.menu_acl ALTER COLUMN id DROP DEFAULT;
 DROP SEQUENCE public.menu_node_id_seq;
-DROP TABLE public.menu_node;
+DROP TABLE public.menu_node CASCADE;
 DROP SEQUENCE public.menu_attribute_id_seq;
 DROP TABLE public.menu_attribute;
 DROP SEQUENCE public.menu_acl_id_seq;
-DROP TABLE public.menu_acl CASCADE;
+DROP TABLE public.menu_acl;
 SET search_path = public, pg_catalog;
 
 SET default_tablespace = '';
@@ -204,11 +204,12 @@ ALTER TABLE ONLY menu_node ALTER COLUMN id SET DEFAULT nextval('menu_node_id_seq
 -- Data for Name: menu_acl; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
+
 --
 -- Name: menu_acl_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('menu_acl_id_seq', 947, true);
+SELECT pg_catalog.setval('menu_acl_id_seq', 949, true);
 
 
 --
@@ -803,6 +804,14 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 8	module	import_csv.pl	78
 8	action	begin_import	93
 8	type	timecard	94
+11	module	import_csv.pl	95
+13	module	import_csv.pl	152
+11	action	begin_import	172
+13	action	begin_import	173
+11	type	ar_multi	174
+13	type	ap_multi	175
+11	multi	1	176
+13	multi	1	177
 \.
 
 
@@ -825,6 +834,8 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 101	Generate	98	4
 8	Import	98	3
 114	Inventory Activity	85	2
+11	Import AR Batch	249	3
+13	Import AP Batch	250	3
 206	Batches	205	1
 14	Search	19	2
 12	Add Contact	19	3
