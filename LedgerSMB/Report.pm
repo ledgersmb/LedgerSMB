@@ -231,11 +231,17 @@ sub render {
     if (!defined $self->format){
         $self->format('html');
     }
+    my $name = $self->name;
+    $name =~ s/ /_/g;
+    $name = $name . '_' . $self->from_date->to_output if $self->{from_date};
+    $name = $name . '-' . $self->to_date->to_output if $self->{to_date};
+    $name = undef unless $request->{format};
     $template = LedgerSMB::Template->new(
         user => $LedgerSMB::App_State::User,
         locale => $LedgerSMB::App_State::Locale,
         path => 'UI',
         template => $template,
+        output_file => $name,
         format => uc($request->{format} || 'HTML'),
     );
     $template->render({report => $self, 
