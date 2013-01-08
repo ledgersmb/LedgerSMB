@@ -89,6 +89,7 @@ sub save_user {
             'import',
         ]
     );
+    $user->{id} = $user->{user_id} if $user->{user_id};
     $user->{entity_id} = $employee->{entity_id};
     if ($user->save() == 8){ # Duplicate User exception --CT
         $user->{dbh}->rollback;
