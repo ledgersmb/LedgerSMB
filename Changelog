@@ -94,6 +94,8 @@ Changelog for 1.3.28
 * Changing xetex demos to use Liberation font (Chris T, h/t Erik H)
 * Better appearance of customer history report filter screen (Chris T)
 * Fixed new Dynatable.tex not handling col ids with underscores (Chris T)
+* Fixed admin passwd reset directing to showing new user screen (Chris T)
+* Fixed admin passwd reset ineffective (Chris T, bug 3599803)
 
 Changelog for 1.3.27
 * Detect whether ledgersmb.conf exists during Makefile.PL run and create if
