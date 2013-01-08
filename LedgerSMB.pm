@@ -386,7 +386,7 @@ sub new {
     $self->{_locale}=LedgerSMB::Locale->get_handle($self->{_user}->{language})
      or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 
-    $self->{stylesheet} = $self->{_user}->{stylesheet};
+    $self->{stylesheet} = $self->{_user}->{stylesheet} unless $self->{stylesheet};
 
     $logger->debug("End");
 
