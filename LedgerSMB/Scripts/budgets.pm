@@ -14,14 +14,12 @@ Budget workflow scripts.
 =over
 
 =item LedgerSMB::Budget
-=item LedgerSMB::Budget_Report
 
 =back
 
 =cut
 
 use LedgerSMB::Budget;
-use LedgerSMB::DBObject::Budget_Report;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Business_Unit_Class;
 
@@ -269,7 +267,6 @@ sub begin_search{
 =over
 
 =item LedgerSMB::Budget
-=item LedgerSMB::Budget_Report
 
 =back
 
