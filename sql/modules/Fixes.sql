@@ -3,6 +3,13 @@
 --
 -- Chris Travers
 
+BEGIN; -- PRE-RC update
+
+ALTER TABLE partscustomer RENAME customer_id TO credit_id;
+ALTER TABLE partsvendor RENAME vendor_id TO credit_id;
+
+COMMIT;
+
 
 BEGIN; -- 1.3.4, fix for menu-- David Bandel
 update menu_attribute set value = 'receive_order' where value  =
