@@ -159,7 +159,7 @@ sub save {
     $self->adjust_id($adjustment_id);
     die 'No part specified' unless $self->parts_id;
     $self->check_variance unless defined $self->variance;
-    $self->exec_method({funcname => 'inventory__save_adjust_line'});
+    $self->exec_method({funcname => 'inventory_adjust__save_line'});
 }
 
 =head1 COPYRIGHT

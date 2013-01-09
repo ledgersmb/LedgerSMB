@@ -170,4 +170,175 @@ $$
   GROUP BY p.id, p.description, p.partnumber
 $$;
 
+
+--- INVENTORY ADJUSTMENT LOGIC
+
+CREATE TYPE part_at_date AS (
+  parts_id int,
+  partnumber text,
+  expected numeric
+);
+
+-- for now treating assemblies only as bundled deals not as manufactured
+-- items.  We need a good manufacturing solution. --CT
+
+DROP VIEW IF EXISTS invoice_sum CASCADE;
+DROP VIEW IF EXISTS order_sum CASCADE;
+
+-- since we are dealing with physical counts care must be taken with the 
+-- approval process during inventory counting.
+CREATE VIEW invoice_sum AS
+SELECT a.transdate, sum(i.qty) as qty, i.parts_id
+  FROM invoice i
+  JOIN (select id, transdate from ar WHERE APPROVED
+         union
+        select id, transdate FROM ap WHERE APPROVED) a ON i.trans_id
+ GROUP BY a.transdate, i.parts_id;
+
+CREATE VIEW order_sum AS
+SELECT o.transdate, 
+       sum(oi.shipped) * case when oe_id_class = 1 THEN 1 ELSE -1 END as qty,
+       oi.parts_id
+  FROM orderitems oi
+  JOIN oe ON oe.closed is false and oe_class_id in (1, 2);
+
+CREATE OR REPLACE FUNCTION inventory__search_part
+(in_parts_id int, in_partnumber text, in_counted_date date)
+RETURNS part_at_date language sql as
+$$
+WITH RECURSIVE assembly_comp (a_id, parts_id, qty) AS (
+     SELECT id, parts_id, qty FROM assembly
+      UNION ALL
+     SELECT ac.id, a.parts_id, ac.qty * a.qty
+       FROM assembly a JOIN assembly_com ac ON a.id = ac.parts_id
+),
+     SELECT p.id, p.partnumber, 
+            sum((coalesce(i.qty, 0) + coalesce(oi.qty, 0)) * a.qty ) 
+       FROM parts p
+  LEFT JOIN assembly_comp a ON a.id = p.id
+  LEFT JOIN invoice_sum i ON i.parts_id = o.id OR a.parts_id = i.parts_id
+  LEFT JOIN order_sum oi ON i.parts OR a.parts_id = i.parts_id
+      WHERE p.id = $1 OR p.partnumber = $2 
+            OR (p.id IN (select parts_id FROM makemodel WHERE barcode = $2)
+               AND NOT EXISTS (select id from parts where id = $2))
+            and (i.transdate is null or i.transdate <= $3)
+            AND (oi.transdate IS NULL OR oi.transdate <= $3)
+   GROUP BY p.id, p.partnumber;
+$$;
+
+CREATE OR REPLACE FUNCTION inventory_adjust__save_line
+(in_adjust_id int, in_parts_id int, 
+in_counted numeric, in_expected numeric, in_variance numeric)
+RETURNS inventory_adjustment_line
+LANGUAGE SQL AS
+$$
+INSERT INTO inventory_adjustment_line
+       (adjust_id, parts_id, counted, expected, variance)
+VALUES ($1, $2, $3, $4, $5)
+RETURNING *;
+$$;
+
+CREATE OR REPLACE FUNCTION inventory_adjust__save_info
+(in_transdate date, in_source text)
+RETURNS inventory_adjustment_info 
+LANGUAGE SQL AS
+$$
+INSERT INTO inventory_adjustment_info(transdate, source)
+VALUES ($1, $2)
+RETURNING *;
+$$;
+
+CREATE OR REPLACE FUNCTION inventory_adjust__approve(in_id)
+RETURNS inventory_adjustment_line language plpgsql as
+$$
+DECLARE inv inventory_adjustment_info;
+        t_ar ar;
+        t_ap ap;
+BEGIN
+
+SELECT * INTO inv FROM inventory_adjustment_info where id = in_id;
+
+INSERT INTO ar (entity_credit_account, invnumber, invoice, approved,
+                amount, netamount, transdate) 
+VALUES (setting__get('inventory_ar_eca'), setting_increment('sinumber'), 
+        't', 'f', 0, 0, inv.transdate);
+
+SELECT * INTO t_ar FROM ar WHERE id = currval('id');
+
+UPDATE inventory_adjustment_info 
+   set ar_trans_id = t_ar.id,
+       ar_invnumber = t_ar.invnumber
+ WHERE id = in_id;
+
+INSERT INTO invoice (trans_id, parts_id, description, qty, sellprice, precision,
+                    discount)
+SELECT t_ar.id, p.id, p.description, l.variance * -1, p.sellprice, 3, 1
+  FROM parts p
+  JOIN inventory_adjust_line l ON p.id = l.parts_id
+ WHERE l.adjust_id = in_id;
+
+INSERT INTO ap (entity_credit_account, invnumber, invoice, approved, amount,
+                netamount, transdate)
+SELECT setting__get('inventory_ap_eca'), setting_increment('vinumber'),
+       't', 'f', sum(l.variance * p.sellprice), sum(l.variance * p.sellprice),
+       inv.transdate
+  FROM parts p
+  JOIN inventory_adjust_line l ON p.id = l.parts_id
+ WHERE l.adjust_id = in_id;
+
+SELECT * INTO t_ap FROM ap WHERE id = currval('id');
+
+UPDATE inventory_adjustment_info 
+   set ap_trans_id = t_ap.id,
+       ap_invnumber = t_ap.invnumber
+ WHERE id = in_id;
+
+INSERT INTO invoice (trans_id, parts_id, description, qty, sellprice, precision,
+                    discount, transdate)
+SELECT t_ap.id, p.id, p.description, l.variance * -1, p.sellprice, 3, 0
+  FROM parts p
+  JOIN inventory_adjust_line l ON p.id = l.parts_id
+ WHERE l.adjust_id = in_id;
+
+INSERT INTO acc_trans (trans_id, chart_id, amount, transdate, approved)
+SELECT t_ap.id, p.expense_accno_id, sum(l.variance * -1 * p.lastcost), 
+       inv.transdate, true
+  FROM parts p
+  JOIN inventory_adjust_line l ON p.id = l.parts_id
+ WHERE l.adjust_id = in_id
+ GROUP BY p.expense_accno_id
+ UNION
+SELECT t_ap.id, eca.ar_ap_accno_id, sum(l.variance * -1 * p.lastcost), 
+       inv.transdate, true
+  FROM parts p
+  JOIN inventory_adjust_line l ON p.id = l.parts_id
+  JOIN entity_credit_account eca on eca_id = t_ap.entity_credit_account
+ WHERE l.adjust_id = in_id
+ GROUP BY eca.ar_ap_accno_id;
+
+SELECT * INTO inv FROM inventory_adjustment_info where id = in_id;
+
+RETURN inv;
+
+END;
+$$; 
+
+CREATE OR REPLACE FUNCTION inventory_adjust__delete(in_id)
+RETURNS BOOL LANGUAGE PLPGSQL AS
+$$
+DECLARE inv inventory_adjustemnt_info;
+BEGIN
+SELECT * INTO inv FROM inventory_adjustment_info where id = in_id;
+IF NOT FOUND THEN
+   RETURN FALSE;
+ELSIF inv.ap_trans_id IS NOT NULL OR inv.ar_trans_id IS NOT NULL THEN
+   RAISE EXCEPTION 'Set is Already Approved!';
+END IF;
+
+DELETE FROM inventory_adjustment_line where adjust_id = in_id;
+DELETE FROM inventory_adjustment_info where id = in_id;
+
+RETURN TRUE;
+$$;
+
 COMMIT;
