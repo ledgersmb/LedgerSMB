@@ -98,6 +98,7 @@ Changelog for 1.3.28
 * Fixed admin passwd reset ineffective (Chris T, bug 3599803)
 * Fixed stylesheet cannot be set on preferences screen (Chris T, 3599804)
 * Moved Fixes.sql to top of LOADORDER to fix some upgrade issues (Chris T)
+* Fixing handling of unknown browsers in logout (Chris T, 3599930)
 
 Changelog for 1.3.27
 * Detect whether ledgersmb.conf exists during Makefile.PL run and create if

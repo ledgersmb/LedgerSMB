@@ -1,5 +1,32 @@
-<?lsmb INCLUDE 'ui-header.html' include_script = scripts ?> 
+<?lsmb INCLUDE 'ui-header.html' ?> 
 <?lsmb PROCESS elements.html ?> 
+<!-- 
+  I am inlining the Javascript to clear credentials here.  Normally we try to
+  separate this out into different files, one file per language but in this 
+  case this makes localization of the Opera error message essentially impossible
+  so for this reason going to inline this functionality here. - Chris T -->
+<script>
+try{
+var agt=navigator.userAgent.toLowerCase();
+if (agt.indexOf("msie") != -1) {
+// IE clear HTTP Authentication
+    document.execCommand("ClearAuthenticationCache");
+}
+if (agt.indexOf("opera") != -1){ 
+   alert("<?lsmb text('Opera detected.  To complete this logout, please close your browser window or clear private/authentication information') ?>");
+}
+if (agt.indexOf("msie") == -1) {
+	var xhre = new XMLHttpRequest() ;
+        xhre.open("GET",window.location,true,"logout","logout");
+        xhre.send("");
+        xhre.abort();
+        //be aware, sometimes get-request reaches server despite abort.
+        // LedgerSMB::Auth::DB::get_credentials can have $auth=logout:logout
+}
+}
+catch (e) {
+}
+</script>
 <body>
 <h1 class="info">
    <?lsmb IF reason == 'timeout';
