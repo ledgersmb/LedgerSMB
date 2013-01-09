@@ -1,5 +1,6 @@
 # This is a simple list of files to be loaded from sql/modules in the order
 # they shall be loaded.
+Fixes.sql
 Drafts.sql
 chart.sql
 Account.sql
@@ -26,5 +27,4 @@ Util.sql
 Assets.sql
 Files.sql
 Parts.sql
-Fixes.sql
 
