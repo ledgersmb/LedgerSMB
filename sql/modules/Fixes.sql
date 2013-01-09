@@ -6,7 +6,7 @@
 BEGIN; -- PRE-RC update
 
 ALTER TABLE partscustomer RENAME customer_id TO credit_id;
-ALTER TABLE partsvendor RENAME vendor_id TO credit_id;
+ALTER TABLE partsvendor RENAME entity_id TO credit_id;
 
 COMMIT;
 
