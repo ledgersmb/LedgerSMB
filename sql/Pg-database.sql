@@ -1770,10 +1770,11 @@ CREATE TABLE inventory_report (
 );
 
 CREATE TABLE inventory_report_line (
-   report_id int REFERENCES inventory_report(id), 
+   adjust_id int REFERENCES inventory_report(id), 
    parts_id int REFERENCES parts(id),
    counted numeric,
    expected numeric,
+   variance numeric,
    PRIMARY KEY (report_id, parts_id)
 );
 

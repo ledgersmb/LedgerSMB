@@ -145,3 +145,12 @@ ALTER TABLE tax_extended ADD FOREIGN KEY (entry_id)
 REFERENCES acc_trans(entry_id);
 
 COMMIT;
+
+BEGIN;
+
+ALTER TABLE inventory_report_line add adjust_id int not null;
+
+ alter table inventory_report_line add variance numeric not null;
+
+
+COMMIT;
