@@ -598,7 +598,7 @@ function on_return_submit(event){
   } else {
     kc = event.which;
   }
-  if (kc == '13'){
+  if (kc == '13' and document.activeElement.nodeName != 'TEXTAREA'){
         document.forms[0].submit();
   }
 }
