@@ -28,7 +28,6 @@ package Taxes::Simple;
 
 use Class::Struct;
 use Math::BigFloat;
-use Carp::Always;
 
 struct Taxes::Simple => {
     taxnumber   => '$',
