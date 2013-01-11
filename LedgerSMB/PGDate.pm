@@ -7,6 +7,7 @@ package LedgerSMB::PGDate;
 use Moose;
 use DateTime::Format::Strptime;
 use Carp;
+use DateTime::Duration;
 
 BEGIN {
    use LedgerSMB::SODA;

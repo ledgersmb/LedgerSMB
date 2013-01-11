@@ -280,7 +280,7 @@ CREATE TYPE cash_summary_item AS (
 );
 
 CREATE OR REPLACE FUNCTION report__cash_summary
-(in_date_from date, in_date_to date, in_from_accno text, in_to_accno text)
+(in_from_date date, in_to_date date, in_from_accno text, in_to_accno text)
 RETURNS SETOF cash_summary_item AS 
 $$
 SELECT a.id, a.accno, a.is_heading, a.description, t.label, 
@@ -317,7 +317,7 @@ CREATE TYPE general_balance_line AS (
 );
 
 CREATE OR REPLACE FUNCTION report__general_balance 
-(in_date_from date, in_date_to date)
+(in_from_date date, in_to_date date)
 RETURNS SETOF general_balance_line AS
 $$
 
@@ -372,7 +372,7 @@ CREATE OR REPLACE FUNCTION report__aa_outstanding_details
 (in_entity_class int, in_account_id int, in_entity_name text, 
  in_meta_number text,
  in_employee_id int, in_business_units int[], in_ship_via text, in_on_hold bool,
- in_date_from date, in_date_to date, in_partnumber text, in_parts_id int)
+ in_from_date date, in_to_date date, in_partnumber text, in_parts_id int)
 RETURNS SETOF aa_transactions_line LANGUAGE PLPGSQL AS $$
 DECLARE retval aa_transactions_line;
 
@@ -401,7 +401,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
           FROM acc_trans ac
           JOIN account_link al ON ac.chart_id = al.account_id
          WHERE approved AND al.description IN ('AR', 'AP')
-               AND (in_date_to is null or transdate <= in_date_to)
+               AND (in_to_date is null or transdate <= in_to_date)
       GROUP BY trans_id) p ON p.trans_id = a.id
   JOIN entity_credit_account eca ON a.entity_credit_account = eca.id
   JOIN entity eeca ON eca.entity_id = eeca.id
@@ -420,8 +420,8 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        AND (in_ship_via IS NULL
           OR a.shipvia @@ plainto_tsquery(in_ship_via))
        AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
-       AND (in_date_from IS NULL OR a.transdate >= in_date_from)
-       AND (in_date_to IS NULL OR a.transdate <= in_date_to)
+       AND (in_from_date IS NULL OR a.transdate >= in_from_date)
+       AND (in_to_date IS NULL OR a.transdate <= in_to_date)
        AND p.due::numeric(100,2) <> 0
        AND (in_partnumber IS NULL 
           OR EXISTS(SELECT 1 FROM invoice inv 
@@ -441,7 +441,7 @@ CREATE OR REPLACE FUNCTION report__aa_outstanding
 (in_entity_class int, in_account_id int, in_entity_name text, 
  in_meta_number text,
  in_employee_id int, in_business_units int[], in_ship_via text, in_on_hold bool,
- in_date_from date, in_date_to date)
+ in_from_date date, in_to_date date, in_partnumber text, in_parts_id int)
 RETURNS SETOF aa_transactions_line LANGUAGE SQL AS $$
 
 SELECT null::int as id, null::bool as invoice, entity_id, meta_number, 
@@ -452,7 +452,8 @@ SELECT null::int as id, null::bool as invoice, entity_id, meta_number,
        null::text as salesperson, null::text as manager, 
        null::text as shipping_point, null::text as ship_via, 
        null::text[] as business_units
-  FROM report__aa_outstanding_details($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+  FROM report__aa_outstanding_details($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, 
+    $11, $12)
  GROUP BY meta_number, entity_name, entity_id;
 
 $$;
@@ -462,7 +463,7 @@ CREATE OR REPLACE FUNCTION report__aa_transactions
  in_meta_number text,
  in_employee_id int, in_manager_id int, in_invnumber text, in_ordnumber text,
  in_ponumber text, in_source text, in_description text, in_notes text, 
- in_shipvia text, in_date_from date, in_date_to date, in_on_hold bool,
+ in_shipvia text, in_from_date date, in_to_date date, in_on_hold bool,
  in_taxable bool, in_tax_account_id int)
 RETURNS SETOF aa_transactions_line LANGUAGE PLPGSQL AS $$
 
@@ -523,8 +524,8 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
               OR a.description @@ plainto_tsquery(in_description))
        AND (in_notes IS NULL OR a.notes @@ plainto_tsquery(in_notes))
        AND (in_shipvia IS NULL OR a.shipvia @@ plainto_tsquery(in_shipvia))
-       AND (in_date_from IS NULL OR a.transdate >= in_date_from)
-       AND (in_date_to IS NULL OR a.transdate <= in_date_to)
+       AND (in_from_date IS NULL OR a.transdate >= in_from_date)
+       AND (in_to_date IS NULL OR a.transdate <= in_to_date)
        AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
        AND (in_taxable IS NULL 
             OR (in_taxable 

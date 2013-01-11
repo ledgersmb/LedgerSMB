@@ -113,4 +113,12 @@ SELECT bool_and(in_tree(e, $2))
   FROM unnest($1) e;
 $$;
 
+CREATE OR REPLACE FUNCTION lsmb__min_date() RETURNS date
+LANGUAGE SQL AS
+$$ SELECT min(transdate) from acc_trans; $$;
+
+CREATE OR REPLACE FUNCTION lsmb__max_date() RETURNS date
+LANGUAGE SQL AS
+$$ SELECT max(transdate) FROM acc_trans; $$;
+
 COMMIT;
