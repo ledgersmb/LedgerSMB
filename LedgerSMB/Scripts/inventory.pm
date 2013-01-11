@@ -18,8 +18,9 @@ Save customer will update or create as needed.
 package LedgerSMB::Scripts::inventory;
 
 use LedgerSMB::Template;
-use LedgerSMB::Inventory::Adjust.pm
-use LedgerSMB::Inventory::Adjust_line.pm
+use LedgerSMB::Inventory::Adjust;
+use LedgerSMB::Inventory::Adjust_line;
+use LedgerSMB::Report::Inventory::Adjustments;
 
 #require 'lsmb-request.pl';
 
@@ -28,8 +29,6 @@ use LedgerSMB::Inventory::Adjust_line.pm
 =item begin_adjust
 
 This entry point specifies the screen for setting up an inventory adjustment.
-
-=back
 
 =cut
 
@@ -45,13 +44,9 @@ sub begin_adjust {
     $template->render($request);
 }
 
-=over
-
 =item enter_adjust
 
 This entry point specifies the screen for entering an inventory adjustment.
-
-=back
 
 =cut
 
@@ -68,15 +63,11 @@ sub enter_adjust {
 }
 
 
-=over
-
 =item adjustment_next
 
 This function is triggered on the next button on the adjustment entry screen.
 It retrieves inventory information, calculates adjustment values, and displays the
 screen.
-
-=back
 
 =cut
 
@@ -98,14 +89,10 @@ sub adjustment_next {
     enter_adjust($adjustment);
 }
 
-=over
-
 =item adjustment_save
 
 This function saves the inventory adjustment report and then creates the required
 invoices.
-
-=back
 
 =cut
 
@@ -115,4 +102,41 @@ sub adjustment_save {
     $adjustment->save;
     begin_adjust($request);
 } 
+
+=item adjustment_list
+
+=cut
+
+sub adjustment_list {
+    my ($request) = @_;
+    my $report = LedgerSMB::Report::Inventory::Adjustments->new(%$request);
+    $report->render($request);
+}
+
+=item adjustement_approve
+
+=cut
+
+sub adjustment_approve {
+    my ($request) = @_;
+    my $adjust = LedgerSMB::Inventory::Adjustment->new(%$request);
+    $adjust->approve;
+    $request->{report_name} = 'list_inventory_counts';
+    LedgerSMB::Scripts::report::begin_report($request);
+}
+
+=item adjustment_delete
+
+=back
+
+=cut
+
+sub adjustment_delete {
+    my ($request) = @_;
+    my $adjust = LedgerSMB::Inventory::Adjustment->new(%$request);
+    $adjust->delete;
+    $request->{report_name} = 'list_inventory_counts';
+    LedgerSMB::Scripts::report::begin_report($request);
+}
+
 1;

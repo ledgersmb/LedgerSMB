@@ -346,4 +346,29 @@ RETURN TRUE;
 END;
 $$;
 
+CREATE OR REPLACE FUNCTION inventory_adjust__list
+(in_from_date date, in_to_date date, in_approved bool)
+RETURNS SETOF inventory_report language sql as $$
+
+SELECT * FROM inventory_report
+ WHERE ($1 is null or transdate >= $1)
+       AND ($2 IS NULL OR transdate <= $2)
+       AND ($3 IS NULL OR $3 = (ar_trans_id IS NULL AND ap_trans_id IS NULL));
+
+$$;
+
+CREATE OR REPLACE FUNCTION inventory_adjust__get(in_id int)
+RETURNS SETOF inventory_report -- only 0-1....
+LANGUAGE SQL AS
+$$
+SELECT * FROM inventory_report WHERE id = $1;
+$$;
+
+CREATE OR REPLACE FUNCTION inventory_adjust__get_lines(in_id int)
+RETURNS SETOF inventory_report_line LANGUAGE SQL AS
+$$
+SELECT * FROM inventory_report_line l WHERE id = $1
+ ORDER BY parts_id;
+$$;
+
 COMMIT;
