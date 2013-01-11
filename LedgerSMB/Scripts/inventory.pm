@@ -15,10 +15,11 @@ Save customer will update or create as needed.
 =head1 METHODS
 
 =cut
-package LedgerSMB::Scripts::customer;
+package LedgerSMB::Scripts::inventory;
 
 use LedgerSMB::Template;
-use LedgerSMB::DBObject::Customer;
+use LedgerSMB::Inventory::Adjust.pm
+use LedgerSMB::Inventory::Adjust_line.pm
 
 #require 'lsmb-request.pl';
 
@@ -56,7 +57,6 @@ This entry point specifies the screen for entering an inventory adjustment.
 
 sub enter_adjust {
     my ($request) = @_;
-    my $adjustment = LedgerSMB::DBObject::Inventory->new(base => $request);
     my $template = LedgerSMB::Template->new(
 	user => $request->{_user}, 
     	template => 'adjustment_entry', 
@@ -64,7 +64,7 @@ sub enter_adjust {
 	path => 'UI/inventory',
         format => 'HTML'
     );
-    $template->render($adjustment);
+    $template->render($request);
 }
 
 
@@ -82,7 +82,7 @@ screen.
 
 sub adjustment_next {
     my ($request) = @_;
-    my $adjustment = LedgerSMB::DBObject::Inventory->new(base => $request);
+    my $adjustment = LedgerSMB::Inventory::Adjust->new(base => $request);
     for my $i (1 .. $adjustment->{rowcount}){
         if ($adjustment->{"row_$i"} eq "new"){
             my $item = $adjustment->retrieve_item_at_date(
@@ -111,7 +111,7 @@ invoices.
 
 sub adjustment_save {
     my ($request) = @_;
-    my $adjustment = LedgerSMB::DBObject::Inventory->new(base => $request);
+    my $adjustment = LedgerSMB::Inventory::Adjust->new(base => $request);
     $adjustment->save;
     begin_adjust($request);
 } 
