@@ -627,8 +627,6 @@ GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__pos_enter";
 GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__pos_enter";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (16, 'allow', 'lsmb_<?lsmb dbname ?>__pos_enter');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (17, 'allow', 'lsmb_<?lsmb dbname ?>__pos_enter');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (18, 'allow', 'lsmb_<?lsmb dbname ?>__pos_enter');
@@ -644,8 +642,6 @@ GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__close_till";
 GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__close_till";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (16, 'allow', 'lsmb_<?lsmb dbname ?>__close_till');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (20, 'allow', 'lsmb_<?lsmb dbname ?>__close_till');
 
 
@@ -656,8 +652,6 @@ GRANT SELECT ON ar TO "lsmb_<?lsmb dbname ?>__list_all_open";
 GRANT SELECT ON acc_trans, business_unit_ac
  TO "lsmb_<?lsmb dbname ?>__list_all_open";
 
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (16, 'allow', 'lsmb_<?lsmb dbname ?>__list_all_open');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (18, 'allow', 'lsmb_<?lsmb dbname ?>__list_all_open');
 
@@ -859,6 +853,8 @@ TO "lsmb_<?lsmb dbname ?>__inventory_adjust";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (6, 'allow',  'lsmb_<?lsmb dbname ?>__inventory_reports');
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (16, 'allow',  'lsmb_<?lsmb dbname ?>__inventory_reports');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__pricegroup_create"
 WITH INHERIT NOLOGIN

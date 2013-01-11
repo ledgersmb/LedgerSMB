@@ -204,7 +204,6 @@ ALTER TABLE ONLY menu_node ALTER COLUMN id SET DEFAULT nextval('menu_node_id_seq
 -- Data for Name: menu_acl; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-
 --
 -- Name: menu_acl_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
@@ -812,6 +811,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 13	type	ap_multi	175
 11	multi	1	176
 13	multi	1	177
+16	module	inventory.pl	178
+16	action	enter_adjust	179
 \.
 
 
@@ -836,6 +837,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 114	Inventory Activity	85	2
 11	Import AR Batch	249	3
 13	Import AP Batch	250	3
+16	Enter Inventory	77	14
 206	Batches	205	1
 14	Search	19	2
 12	Add Contact	19	3

@@ -2639,6 +2639,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 114	Inventory Activity	85	2
 11	Import AR Batch	249	3
 13	Import AP Batch	250	3
+16	Enter Inventory	77	14
 206	Batches	205	1
 14	Search	19	2
 12	Add Contact	19	3
@@ -2849,8 +2850,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 98	Timecards	0	14
 \.
 
---
--- Name: menu_node_parent_key; Type: CONSTRAINT; Schema: public; Owner: ledgersmb; Tablespace: 
+
 --
 
 ALTER TABLE ONLY menu_node
@@ -3503,6 +3503,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 13	type	ap_multi	175
 11	multi	1	176
 13	multi	1	177
+16	module	inventory.pl	178
+16	action	enter_adjust	179
 \.
 
 
