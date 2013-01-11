@@ -271,6 +271,8 @@ INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (198, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher');
 INSERT INTO menu_acl (node_id, acl_type, role_name) 
 values (20, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher');
+INSERT INTO menu_acl (node_id, acl_type, role_name) 
+values (11, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher');
 
 -- Activate when AR batch import is working
 --INSERT INTO menu_acl (node_id, acl_type, role_name) 
@@ -438,6 +440,8 @@ TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 
 GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
 
+INSERT INTO menu_acl (node_id, acl_type, role_name)
+values (13, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (22, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
@@ -1107,10 +1111,6 @@ IN ROLE "lsmb_<?lsmb dbname ?>__gl_reports";
 
 GRANT select ON yearend TO "lsmb_<?lsmb dbname ?>__financial_reports";
 
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (8, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (11, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (110, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
