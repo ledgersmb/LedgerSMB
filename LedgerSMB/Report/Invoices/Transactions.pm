@@ -169,6 +169,20 @@ If taxable is set this filters only transactions of a specific tax account.
 
 has tax_account_id => (is => 'ro', isa => 'Int', required => 0);
 
+=item open bool
+
+If true, show open invoices
+
+=item closed bool
+
+If true, show closed invoices.  Naturally if neither open or closed is set, no
+invoices will be shown.
+
+=cut
+
+has open => (is => 'ro', isa => 'Bool', required => 0);
+has closed => (is => 'ro', isa => 'Bool', required => 0);
+
 
 =back
 
