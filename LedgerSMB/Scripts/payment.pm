@@ -127,9 +127,6 @@ is saved.  For receipts, this just redirects to bulk_post currently.
 
 sub pre_bulk_post_report {
     my ($request) = @_;
-    if ($request->{account_class}  == 2){ # Not so helpful for receipts --CT
-       post_payments_bulk($request); 
-    }
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
@@ -198,9 +195,7 @@ sub pre_bulk_post_report {
        source    => $request->{_locale}->text('Total'),
        amount    => $total,
     };
-    if ($request->{account_class} == 1){ # vendor
        $ref->{amount} *= -1;
-    } 
 
     if ($ref->{amount} < 0) {
         $ref->{debits} = $ref->{amount} * -1;
