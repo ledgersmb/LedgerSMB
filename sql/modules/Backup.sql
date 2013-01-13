@@ -7,8 +7,7 @@
 -- Routines for role/permissions backups and restores per db users and roles
 --
 -- Note that these must be explicitly activated.  They are not done by default 
--- because they pose a security info leakage risk.  Typically this must be 
--- manually enabled by inserting a record into defaults.  This can be done by
+-- because they pose a security info leakage risk. 
 --
 --
 -- The default backup routines do not call these functions
