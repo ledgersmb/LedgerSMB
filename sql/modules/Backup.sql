@@ -19,7 +19,7 @@
 --
 -- lsmb__clear_role_backup() Removes the backup of roles and passwords
 --
--- lsmb__restore_roles() retores roles.
+-- lsmb__restore_roles() restores roles.
 
 BEGIN;
 
