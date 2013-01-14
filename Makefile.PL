@@ -6,6 +6,7 @@ use inc::Module::Install 0.65;
 use File::Copy;
 
 copy ('ledgersmb.conf.default', 'ledgersmb.conf') unless -f 'ledgersmb.conf';
+copy ('pos.conf.pl.template', 'pos.conf.pl') unless -f 'pos.conf.pl';
 
 name 'LedgerSMB';
 version_from 'LedgerSMB.pm';
