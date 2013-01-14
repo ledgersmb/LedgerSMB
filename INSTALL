@@ -122,11 +122,14 @@ Installing Perl module dependencies
 
 LedgerSMB depends on these required modules:
 
+  Test::More
+  Test::Trap
+  Test::Exception
+  Contextual::Return
   Data::Dumper
   Log::Log4perl
   Locale::Maketext
   DateTime
-  DateTime::Format:Strptime
   Locale::Maketext::Lexicon
   DBI
   MIME::Base64
@@ -135,25 +138,35 @@ LedgerSMB depends on these required modules:
   DBD::Pg
   Math::BigFloat
   IO::File
+  IO::Scalar
   Encode
-  Locale::Country
-  Locale::Language
   Time::Local
   Cwd
-  Config::General
+  Config::IniFiles
   MIME::Lite
   Template
-  Template::Plugin::Number::Format
+  Error
   CGI::Simple
   File::MimeInfo
+  Number::Format
+  DateTime::Format::Strptime
+  Moose
 
 and these optional ones:
 
+  XML::Simple
+  Image::Size
   Net::TCLink        [Support for TrustCommerce credit card processing]
   Parse::RecDescent  [Support for the *experimental* scripting engine]
+  Getopt::Long
+  FileHandle
+  Locale::Country
+  Locale::Language
   Template::Plugin::Latex [Support for Postscript and PDF output]
   XML::Twig               [Support for OpenOffice output]
-  Excel::Template::Plus   [Support for Excel output]
+  OpenOffice::OODoc
+  Module::AutoInstall
+
 
 To build using the Makefile.PL you will also need:
 
