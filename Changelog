@@ -85,6 +85,8 @@ Supported Presently
 Changelog for 1.3.29
 * Added db routines for role backup and restore for shared hosting
 environments (Chris T, 3598924, filed by Erik H)
+* Added provision in Makefile to instantiate pos.conf.pl if not exist (Chris
+T, 3599945)
 
 Changelog for 1.3.28
 * Added db list to setup.pl when no db is entered and credentials allow login
