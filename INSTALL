@@ -154,19 +154,17 @@ LedgerSMB depends on these required modules:
 
 and these optional ones:
 
-  XML::Simple
-  Image::Size
+  XML::Simple        [RESTful Web Services XML support]
+  Image::Size        [Size detection for images for embedding in LaTeX templates]
   Net::TCLink        [Support for TrustCommerce credit card processing]
   Parse::RecDescent  [Support for the *experimental* scripting engine]
-  Getopt::Long
-  FileHandle
-  Locale::Country
-  Locale::Language
+  Getopt::Long       [Developer tool dependencies]
+  FileHandle         [Developer tool dependencies]
+  Locale::Country    [Developer tool dependencies]
+  Locale::Language   [Developer tool dependencies]
   Template::Plugin::Latex [Support for Postscript and PDF output]
   XML::Twig               [Support for OpenOffice output]
-  OpenOffice::OODoc
-  Module::AutoInstall
-
+  OpenOffice::OODoc       [Support for OpenOffice output]
 
 To build using the Makefile.PL you will also need:
 
