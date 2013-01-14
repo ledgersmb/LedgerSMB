@@ -41,7 +41,7 @@ apacheconfpathlist="$CWD \
 /etc/apache2/conf.d \
 /etc/conf.d/apache2 \
 /usr/local/etc/httpd/conf.d \
-/usr/local/etc/apache2/conf.d/ \
+/usr/local/etc/apache2/conf.d \
 /usr/local/etc/apache22 \
 /usr/local/apache2/conf/extra" 
 
