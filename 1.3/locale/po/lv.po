@@ -1,0 +1,2688 @@
+######################################################################
+# LedgerSMB Small Medium Business Accounting
+# Copyright (c) 2003
+#
+# Latvian texts:
+#
+#  Author: Kaspars Melkis <info@isolis.lv>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#######################################################################
+
+msgid ""
+msgstr ""
+"Project-Id-Version: LedgerSMB 1.1.1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "A"
+msgstr "A"
+
+msgid "AP"
+msgstr "Kreditoru parādi"
+
+msgid "AP Aging"
+msgstr "KP novecojums"
+
+msgid "AP Outstanding"
+msgstr "KP Neapmaksātie"
+
+msgid "AP Transaction"
+msgstr "KP transakcija"
+
+msgid "AP Transactions"
+msgstr "KP transakcijas"
+
+msgid "AR"
+msgstr "Debitoru parādi"
+
+msgid "AR Aging"
+msgstr "DP novecojums"
+
+msgid "AR Outstanding"
+msgstr "DP Neapmaksātie"
+
+msgid "AR Transaction"
+msgstr "DP transakcija"
+
+msgid "AR Transactions"
+msgstr "DP transakcijas"
+
+msgid "AR/AP"
+msgstr ""
+
+msgid "About"
+msgstr "Par"
+
+msgid "Above"
+msgstr "Iepriekš"
+
+msgid "Access Control"
+msgstr "Piekļuves kontrole"
+
+msgid "Access Denied!"
+msgstr ""
+
+msgid "Account"
+msgstr "Konts"
+
+msgid "Account Number"
+msgstr "Konta numurs"
+
+msgid "Account Number missing!"
+msgstr "Nav norādīts konta numurs!"
+
+msgid "Account Type"
+msgstr "Konta tips"
+
+msgid "Account Type missing!"
+msgstr "Nav norādīts konta tips!"
+
+msgid "Account deleted!"
+msgstr "Kots izdzēsts!"
+
+msgid "Account does not exist!"
+msgstr "Konts neeksistē"
+
+msgid "Account saved!"
+msgstr "Konts saglabāts!"
+
+msgid "Accounting"
+msgstr "Kontēšana"
+
+msgid "Accounting Menu"
+msgstr "Kontēšanas izvēlne"
+
+msgid "Accounts"
+msgstr "Konti"
+
+msgid "Accrual"
+msgstr "Uzkrāšana"
+
+msgid "Activate Audit trail"
+msgstr "Aktivizēt audita atzīmes"
+
+msgid "Activate Audit trails"
+msgstr "Aktivizēt audita atzīmes"
+
+msgid "Active"
+msgstr "Aktīvs"
+
+msgid "Add"
+msgstr "Pievienot"
+
+msgid "Add AP Transaction"
+msgstr ""
+
+msgid "Add AR Transaction"
+msgstr ""
+
+msgid "Add Account"
+msgstr "Pievienot kontu"
+
+msgid "Add Assembly"
+msgstr "Pievienot komplektāciju"
+
+msgid "Add Business"
+msgstr "Pievienot komercdarbību"
+
+msgid "Add Cash Transfer Transaction"
+msgstr "Pievienot naudas transakciju"
+
+msgid "Add Customer"
+msgstr "Pievienot klientu"
+
+msgid "Add Deduction"
+msgstr "Pievienot atlaidi"
+
+msgid "Add Department"
+msgstr "Pievienot nodaļu"
+
+msgid "Add Employee"
+msgstr "Pievienot darbinieku"
+
+msgid "Add Exchange Rate"
+msgstr "Pievienot valūtas maiņas kursu"
+
+msgid "Add GIFI"
+msgstr "Pievienot GIFI"
+
+msgid "Add General Ledger Transaction"
+msgstr "Pievienot virsgrāmatas transakciju"
+
+msgid "Add Group"
+msgstr "Pievienot grupu"
+
+msgid "Add Job"
+msgstr ""
+
+msgid "Add Labor/Overhead"
+msgstr "Pievienot darbu/izmaksas"
+
+msgid "Add Language"
+msgstr "Pievienot valodu"
+
+msgid "Add POS Invoice"
+msgstr "Pievienot POS rēķinu"
+
+msgid "Add Part"
+msgstr "Pievienot daļu"
+
+msgid "Add Pricegroup"
+msgstr "Pieviento cenu grupu"
+
+msgid "Add Project"
+msgstr "Pievienot projektu"
+
+msgid "Add Purchase Order"
+msgstr "Pievienot pirkuma orderi"
+
+msgid "Add Quotation"
+msgstr "Pievienot tāmi"
+
+msgid "Add Request for Quotation"
+msgstr "Pievienot tāmes pieprasījumu"
+
+msgid "Add SIC"
+msgstr "Pievienot SIC"
+
+msgid "Add Sales Invoice"
+msgstr "Pievienot preču rēķinu"
+
+msgid "Add Sales Order"
+msgstr "Pievienot preču orderi"
+
+msgid "Add Service"
+msgstr "Pievienot pakalpojumu"
+
+msgid "Add Timecard"
+msgstr ""
+
+msgid "Add Transaction"
+msgstr "Pievienot transakciju"
+
+msgid "Add User"
+msgstr "Pievienot lietotāju"
+
+msgid "Add Vendor"
+msgstr "Pievienot pārdevēju"
+
+msgid "Add Vendor Invoice"
+msgstr "Pievienot pārdevēja rēķinu"
+
+msgid "Add Warehouse"
+msgstr "Pievienot noliktavu"
+
+msgid "Address"
+msgstr "Adrese"
+
+msgid "Administration"
+msgstr "Administrācija"
+
+msgid "Administrator"
+msgstr "Administrators"
+
+msgid "After Deduction"
+msgstr "Pēc atlaides"
+
+msgid "All"
+msgstr "Visi"
+
+msgid "All Accounts"
+msgstr "Visi konti"
+
+msgid "All Datasets up to date!"
+msgstr "Visas datu kopas ir atjauninātas!"
+
+msgid "All Items"
+msgstr "Visi "
+
+msgid "Allowances"
+msgstr "Kabatas nauda"
+
+msgid "Amount"
+msgstr "Summa"
+
+msgid "Amount Due"
+msgstr "Nesamaksātā summa"
+
+msgid "Amount missing!"
+msgstr "Nav norādīta summa"
+
+msgid "Apr"
+msgstr "Apr"
+
+msgid "April"
+msgstr "Aprīlī"
+
+msgid "Are you sure you want to delete Invoice Number"
+msgstr "Vai jūs patiešām vēlaties dzēst rēķina numuru"
+
+msgid "Are you sure you want to delete Order Number"
+msgstr "Vai jūs patiešām vēlaties dzēst ordera numuru"
+
+msgid "Are you sure you want to delete Quotation Number"
+msgstr "Vai jūs patiešām vēlaties dzēst tāmes numuru"
+
+msgid "Are you sure you want to delete Timecard for"
+msgstr ""
+
+msgid "Are you sure you want to delete Transaction"
+msgstr "Vai jūs patiešām vēlaties dzēst transakciju"
+
+msgid "Are you sure you want to remove the marked entries from the queue?"
+msgstr "Vai jūs patiešām vēlaties dzēst atzīmētos ierakstus rindā"
+
+msgid "Assemblies"
+msgstr "Komplektācijas"
+
+msgid "Assemblies restocked!"
+msgstr "Komplektācijas papildinātas!"
+
+msgid "Assembly"
+msgstr "Komplektācija"
+
+msgid "Assembly stocked!"
+msgstr ""
+
+msgid "Asset"
+msgstr "Aktīvs"
+
+msgid "Attachment"
+msgstr "Pielikums"
+
+msgid "Audit Control"
+msgstr "Audita kontrole"
+
+msgid "Audit trail disabled"
+msgstr "Audita atzīmes atslēgtas"
+
+msgid "Audit trail enabled"
+msgstr "Audita atzīmes ieslēgtas"
+
+msgid "Audit trail removed up to"
+msgstr "Audita atzīmes novāktas līdz"
+
+msgid "Audit trails disabled"
+msgstr "Audita atzīmes atslēgtas"
+
+msgid "Audit trails enabled"
+msgstr "Audita atzīmes ieslēgtas"
+
+msgid "Aug"
+msgstr "Aug"
+
+msgid "August"
+msgstr "Augustā"
+
+msgid "Average Cost"
+msgstr ""
+
+msgid "Avg Cost"
+msgstr ""
+
+msgid "BIC"
+msgstr "BIC"
+
+msgid "BOM"
+msgstr "Materiālu uzskaite"
+
+msgid "Backup"
+msgstr "Rezerves kopija"
+
+msgid "Backup sent to"
+msgstr "Rezerves kopija nosūtīta uz"
+
+msgid "Balance"
+msgstr "Bilance"
+
+msgid "Balance Sheet"
+msgstr "Bilances pārskats"
+
+msgid "Based on"
+msgstr "Pamatojoties uz"
+
+msgid "Bcc"
+msgstr "Bcc"
+
+msgid "Before Deduction"
+msgstr "Pirms atlaides"
+
+msgid "Beginning Balance"
+msgstr "Sākuma atlikums"
+
+msgid "Below"
+msgstr "Zemāk"
+
+msgid "Billing Address"
+msgstr "Rēķina adrese"
+
+msgid "Bin"
+msgstr "Bin"
+
+msgid "Bin List"
+msgstr "Bin saraksts"
+
+msgid "Bin Lists"
+msgstr ""
+
+msgid "Books are open"
+msgstr "Ieraksti ir atvērti"
+
+msgid "Break"
+msgstr "Pārtraukums"
+
+msgid "Business"
+msgstr "Komercdarbība"
+
+msgid "Business Number"
+msgstr "Reģistrācijas numurs"
+
+msgid "Business deleted!"
+msgstr "Komercdarbība izdzēsta"
+
+msgid "Business saved!"
+msgstr "Komercdarbība saglabāta"
+
+msgid "C"
+msgstr "cena"
+
+msgid "COGS"
+msgstr "Pašizmaksa"
+
+msgid "COGS account does not exist!"
+msgstr ""
+
+msgid "Cannot add timecard for a completed job!"
+msgstr ""
+
+msgid "Cannot change timecard for a completed job!"
+msgstr ""
+
+msgid "Cannot create Assembly"
+msgstr ""
+
+msgid "Cannot create Labor"
+msgstr ""
+
+msgid "Cannot create Lock!"
+msgstr "Cannot create Lock!"
+
+msgid "Cannot create Part"
+msgstr ""
+
+msgid "Cannot create Service"
+msgstr ""
+
+msgid "Cannot delete Timecard!"
+msgstr ""
+
+msgid "Cannot delete account!"
+msgstr "Kontu nevar izdzēst!"
+
+msgid "Cannot delete customer!"
+msgstr "Klientu nevar izdzēst!"
+
+msgid "Cannot delete default account!"
+msgstr "Noklusēto kontu nevar izdzēst!"
+
+msgid "Cannot delete invoice!"
+msgstr "Rēķinu nevar izdzēst!"
+
+msgid "Cannot delete item!"
+msgstr "Vienību nevar izdzēst!"
+
+msgid "Cannot delete order!"
+msgstr "Orderi nevar izdzēst!"
+
+msgid "Cannot delete quotation!"
+msgstr "Tāmi nevar izdzēst!"
+
+msgid "Cannot delete transaction!"
+msgstr "Transakciju nevar izdzēst!"
+
+msgid "Cannot delete vendor!"
+msgstr "Pārdevēju nevar izdzēst!"
+
+msgid "Cannot post Payment!"
+msgstr "Maksājumu nevar iegrāmatot!"
+
+msgid "Cannot post Receipt!"
+msgstr "Kvīti nevar iegrāmatot!"
+
+msgid "Cannot post invoice for a closed period!"
+msgstr "Nevar iegrāmatot rēķinu par slēgtu periodu!"
+
+msgid "Cannot post invoice!"
+msgstr "Nevar iegrāmatot rēķinu!"
+
+msgid "Cannot post payment for a closed period!"
+msgstr "Nevar iegrāmatot maksājumu par slēgtu periodu!"
+
+msgid "Cannot post transaction for a closed period!"
+msgstr "Nevar iegrāmatot transakciju par slēgtu periodu!"
+
+msgid "Cannot post transaction with a debit and credit entry for the same account!"
+msgstr ""
+
+msgid "Cannot post transaction!"
+msgstr "Nevar iegrāmatot transakciju!"
+
+msgid "Cannot remove files!"
+msgstr "Nevar izdzēst failus"
+
+msgid "Cannot save account!"
+msgstr "Kontu nevar saglabāt!"
+
+msgid "Cannot save defaults!"
+msgstr "Nevar saglabāt noklusētās vērtības"
+
+msgid "Cannot save order!"
+msgstr "Maksājuma uzdevumu nevar saglabāt!"
+
+msgid "Cannot save preferences!"
+msgstr "Nevar saglabāt izvēles!"
+
+msgid "Cannot save quotation!"
+msgstr "Nevar saglabāt tāmi"
+
+msgid "Cannot save timecard for a closed period!"
+msgstr ""
+
+msgid "Cannot save timecard!"
+msgstr ""
+
+msgid "Cannot set account for more than one of AR, AP or IC"
+msgstr "Konta nevar piesaistīt vairāk kā vienam DP, KP vai IC"
+
+msgid "Cannot set multiple options for"
+msgstr ""
+
+msgid "Cannot set multiple options for Item"
+msgstr ""
+
+msgid "Cannot stock Assembly!"
+msgstr ""
+
+msgid "Cannot stock assemblies!"
+msgstr "Nevar papildināt komplektāciju!"
+
+msgid "Cash"
+msgstr "Nauda"
+
+msgid "Cc"
+msgstr "Cc"
+
+msgid "Change"
+msgstr "Izmainīt"
+
+msgid "Change Admin Password"
+msgstr "Nomainīt administratora paroli"
+
+msgid "Change Password"
+msgstr "Nomainīt paroli"
+
+msgid "Charge"
+msgstr ""
+
+msgid "Chart of Accounts"
+msgstr "Kontu plāns"
+
+msgid "Check"
+msgstr "Čeks"
+
+msgid "Check Inventory"
+msgstr "Čeku inventūra"
+
+msgid "Checks"
+msgstr "Čeki"
+
+msgid "City"
+msgstr "Pilsēta"
+
+msgid "Cleared"
+msgstr "Apmaksāts"
+
+msgid "Click on login name to edit!"
+msgstr "Noklikšķināt uz lietotājvārda, lai mainītu!"
+
+msgid "Clocked"
+msgstr ""
+
+msgid "Close Books up to"
+msgstr "Aizvērt ierakstus līdz"
+
+msgid "Closed"
+msgstr "Aizvērts"
+
+msgid "Code"
+msgstr "Kods"
+
+msgid "Code missing!"
+msgstr "Nav norādīts kods"
+
+msgid "Company"
+msgstr "Uzņēmums"
+
+msgid "Company Name"
+msgstr "Uzņēmuma nosaukums"
+
+msgid "Compare to"
+msgstr "Salīdzināt ar"
+
+msgid "Completed"
+msgstr ""
+
+msgid "Components"
+msgstr "Komponentes"
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Confirm!"
+msgstr "Apstiprināt!"
+
+msgid "Connect to"
+msgstr "Pievienoties"
+
+msgid "Contact"
+msgstr "Kontaktpersona"
+
+msgid "Continue"
+msgstr "Turpināt"
+
+msgid "Contra"
+msgstr "Kontrārais konts"
+
+msgid "Copies"
+msgstr "Kopijas"
+
+msgid "Copy to COA"
+msgstr "Kopēt uz kontu plānu"
+
+msgid "Cost"
+msgstr "Izmaksas"
+
+msgid "Cost Center"
+msgstr "Galvenās izmaksas"
+
+msgid "Could not save pricelist!"
+msgstr ""
+
+msgid "Could not save!"
+msgstr "Nevarēja saglabāt"
+
+msgid "Could not transfer Inventory!"
+msgstr "Nevarēja pārsūtīt krājumu"
+
+msgid "Country"
+msgstr "Valsts"
+
+msgid "Create Chart of Accounts"
+msgstr "Izveidot kontu plānu"
+
+msgid "Create Dataset"
+msgstr "Izveidot datu kopu"
+
+msgid "Credit"
+msgstr "Kredīts"
+
+msgid "Credit Limit"
+msgstr "Kredīta limits"
+
+msgid "Curr"
+msgstr "Val."
+
+msgid "Currency"
+msgstr "Valūta"
+
+msgid "Current"
+msgstr "Pašreizējs"
+
+msgid "Current Earnings"
+msgstr "Pašreizējie ienākumi"
+
+msgid "Customer"
+msgstr "Klients"
+
+msgid "Customer History"
+msgstr "Klienta vēsture"
+
+msgid "Customer Number"
+msgstr "Klienta numurs"
+
+msgid "Customer deleted!"
+msgstr "Klients izdzēsts!"
+
+msgid "Customer missing!"
+msgstr "Nav norādīts klients!"
+
+msgid "Customer not on file!"
+msgstr "Nav tāda klienta!"
+
+msgid "Customer saved!"
+msgstr "Klients ir saglabāts!"
+
+msgid "Customers"
+msgstr "Klienti"
+
+msgid "DBI not installed!"
+msgstr "Nav instalēts DBI!"
+
+msgid "DOB"
+msgstr ""
+
+msgid "Database"
+msgstr "Datubāze"
+
+msgid "Database Administration"
+msgstr "Datubāzes administrators"
+
+msgid "Database Driver not checked!"
+msgstr "Datubāzes draiveris nav atzīmēts!"
+
+msgid "Database Host"
+msgstr "Datubāzes serveris"
+
+msgid "Database User missing!"
+msgstr "Nav norādīts datubāzes lietotājs!"
+
+msgid "Dataset"
+msgstr "Datukopa"
+
+msgid "Dataset is newer than version!"
+msgstr "Datukopa ir jaunāka par versiju!"
+
+msgid "Dataset missing!"
+msgstr "Nav atrasta datukopa!"
+
+msgid "Dataset updated!"
+msgstr "Datukopa atjaunināta!"
+
+msgid "Date"
+msgstr "Datums"
+
+msgid "Date Format"
+msgstr "Datuma formāts"
+
+msgid "Date Paid"
+msgstr "Maksājuma datums"
+
+msgid "Date Received"
+msgstr "Saņemšanas datums"
+
+msgid "Date missing!"
+msgstr "Nav norādīts datums!"
+
+msgid "Date received missing!"
+msgstr "Nav norādīts saņemšanas datums"
+
+msgid "Date worked"
+msgstr ""
+
+msgid "Day"
+msgstr ""
+
+msgid "Day(s)"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Debit"
+msgstr "Debets"
+
+msgid "Dec"
+msgstr "Dec"
+
+msgid "December"
+msgstr "Decembrī"
+
+msgid "Decimalplaces"
+msgstr "decimāldaļa"
+
+msgid "Decrease"
+msgstr "Samazināt"
+
+msgid "Deduct after"
+msgstr "Piešķirt atlaidi pēc"
+
+msgid "Deduction deleted!"
+msgstr "Atlaide izdzēsta"
+
+msgid "Deduction saved!"
+msgstr "Atlaide saglabāta"
+
+msgid "Deductions"
+msgstr "Atlaides"
+
+msgid "Default Template"
+msgstr ""
+
+msgid "Defaults"
+msgstr "Noklusētās vērtības"
+
+msgid "Defaults saved!"
+msgstr "Noklusētās vērtības saglabātas"
+
+msgid "Delete"
+msgstr "Dzēst"
+
+msgid "Delete Account"
+msgstr "Izdzēst Kontu"
+
+msgid "Delete Dataset"
+msgstr "Izdzēst datukopu"
+
+msgid "Delete Schedule"
+msgstr ""
+
+msgid "Deleting a language will also delete the templates for the language"
+msgstr ""
+
+msgid "Delivery Date"
+msgstr "Piegādes datums"
+
+msgid "Department"
+msgstr "Nodaļa"
+
+msgid "Department deleted!"
+msgstr "Nodaļa izdzēsta"
+
+msgid "Department saved!"
+msgstr "Nodaļa saglabāta"
+
+msgid "Departments"
+msgstr "Nodaļas"
+
+msgid "Deposit"
+msgstr "Depozīts"
+
+msgid "Description"
+msgstr "Apraksts"
+
+msgid "Description Translations"
+msgstr "Apraksta tulkojumi"
+
+msgid "Description missing!"
+msgstr "Nav norādīts apraksts"
+
+msgid "Detail"
+msgstr "Sīks apraksts"
+
+msgid "Difference"
+msgstr "Starpība"
+
+msgid "Directory"
+msgstr "Direktorija"
+
+msgid "Discount"
+msgstr "Atlaide"
+
+msgid "Done"
+msgstr "Izdarīts"
+
+msgid "Drawing"
+msgstr "Čeku izrakstīšana"
+
+msgid "Driver"
+msgstr "Draiveris"
+
+msgid "Dropdown Limit"
+msgstr "Maks. rindu skaits izvēlnē"
+
+msgid "Due Date"
+msgstr "Apmaksas termiņš"
+
+msgid "Due Date missing!"
+msgstr "Nav norādīts apmaksas termiņš!"
+
+msgid "E-mail"
+msgstr "E-pasts"
+
+msgid "E-mail Statement to"
+msgstr "Nosūtīt atskaiti pa e-pastu uz "
+
+msgid "E-mail address missing!"
+msgstr "Nepareiza E-pasta adrese!"
+
+msgid "E-mail message"
+msgstr ""
+
+msgid "E-mailed"
+msgstr "Nosūtīts pa e-pastu"
+
+msgid "Edit"
+msgstr "Labot"
+
+msgid "Edit AP Transaction"
+msgstr ""
+
+msgid "Edit AR Transaction"
+msgstr ""
+
+msgid "Edit Account"
+msgstr "Labot kontu"
+
+msgid "Edit Assembly"
+msgstr "Labot komplektāciju"
+
+msgid "Edit Business"
+msgstr "Izmainīt komercdarbību"
+
+msgid "Edit Cash Transfer Transaction"
+msgstr "Labot naudas pārsūtīšanas transakciju"
+
+msgid "Edit Customer"
+msgstr "Labot klientu"
+
+msgid "Edit Deduction"
+msgstr "Labot atlaidi"
+
+msgid "Edit Department"
+msgstr "Labot nodaļu"
+
+msgid "Edit Description Translations"
+msgstr "Labot tulkojumu aprakstus"
+
+msgid "Edit Employee"
+msgstr "Labot darbinieku"
+
+msgid "Edit GIFI"
+msgstr "Labot GIFI"
+
+msgid "Edit General Ledger Transaction"
+msgstr "Labot transakciju virsgrāmatā"
+
+msgid "Edit Group"
+msgstr "Labot grupu"
+
+msgid "Edit Job"
+msgstr ""
+
+msgid "Edit Labor/Overhead"
+msgstr "Labot darbu/izmaksas"
+
+msgid "Edit Language"
+msgstr "Labot valodu"
+
+msgid "Edit POS Invoice"
+msgstr "Labot POS rēķinu"
+
+msgid "Edit Part"
+msgstr "Labot daļu"
+
+msgid "Edit Preferences for"
+msgstr "Labot izvēles"
+
+msgid "Edit Pricegroup"
+msgstr "Labot cenu grupu"
+
+msgid "Edit Project"
+msgstr "Labot projektu"
+
+msgid "Edit Purchase Order"
+msgstr "Labot pirkuma orderi"
+
+msgid "Edit Quotation"
+msgstr "Labot tāmi"
+
+msgid "Edit Request for Quotation"
+msgstr "Labot tāmes pieprasījumu"
+
+msgid "Edit SIC"
+msgstr "Labot SIC"
+
+msgid "Edit Sales Invoice"
+msgstr "Labot pārdošanas rēķinu"
+
+msgid "Edit Sales Order"
+msgstr "Labot pārdošanas orderi"
+
+msgid "Edit Service"
+msgstr "Labot pakalpojumu"
+
+msgid "Edit Template"
+msgstr "Labot šablonu"
+
+msgid "Edit Timecard"
+msgstr ""
+
+msgid "Edit User"
+msgstr "Labot lietotāju"
+
+msgid "Edit Vendor"
+msgstr "Labot pārdevēju"
+
+msgid "Edit Vendor Invoice"
+msgstr "Labot pārdevēja rēķinu"
+
+msgid "Edit Warehouse"
+msgstr "Labot noliktavu"
+
+msgid "Employee"
+msgstr "Darbinieks"
+
+msgid "Employee Name"
+msgstr "Darbinieka vārds"
+
+msgid "Employee Number"
+msgstr ""
+
+msgid "Employee deleted!"
+msgstr "Darbinieks izdzēsts"
+
+msgid "Employee pays"
+msgstr "Darbinieku izmaksas"
+
+msgid "Employee saved!"
+msgstr "Darbinieks saglabāts"
+
+msgid "Employees"
+msgstr "Darbinieki"
+
+msgid "Employer"
+msgstr "Nodarbinātājs"
+
+msgid "Employer pays"
+msgstr "Nodarbinātāju izmaksas"
+
+msgid "Enddate"
+msgstr "Beigu datums"
+
+msgid "Ends"
+msgstr ""
+
+msgid "Enforce transaction reversal for all dates"
+msgstr "Izpildīt transakciju atcelšanu visos datumos"
+
+msgid "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native and foreign currencies"
+msgstr "Ierakstīt 3 simbolus kolonās (USD:LVL:EUR), lai definētu valūtas"
+
+msgid "Equity"
+msgstr "Pašu kapitāls"
+
+msgid "Every"
+msgstr ""
+
+msgid "Excempt age <"
+msgstr ""
+
+msgid "Exch"
+msgstr "Kurss"
+
+msgid "Exchange Rate"
+msgstr "Valūtas maiņas kurss"
+
+msgid "Exchange rate for payment missing!"
+msgstr "Nav norādīts valūtas maiņas kurss maksājumā!"
+
+msgid "Exchange rate missing!"
+msgstr "Nav norādīts valūtas maiņas kurss!"
+
+msgid "Existing Datasets"
+msgstr "Esošās datukopas"
+
+msgid "Expense"
+msgstr "Izdevumi"
+
+msgid "Expense account does not exist!"
+msgstr ""
+
+msgid "Expense/Asset"
+msgstr "Izdevumi/Aktīvi"
+
+msgid "Extended"
+msgstr "Kopā"
+
+msgid "FX"
+msgstr "FX"
+
+msgid "Failed to save order!"
+msgstr ""
+
+msgid "Fax"
+msgstr "Fakss"
+
+msgid "Feb"
+msgstr "Feb"
+
+msgid "February"
+msgstr "Februārī"
+
+msgid "For"
+msgstr ""
+
+msgid "Foreign Exchange Gain"
+msgstr "Ienākumi no valūtas maiņas"
+
+msgid "Foreign Exchange Loss"
+msgstr "Zaudējumi no valūtas maiņas"
+
+msgid "Friday"
+msgstr ""
+
+msgid "From"
+msgstr "No"
+
+msgid "From Warehouse"
+msgstr ""
+
+msgid "GIFI"
+msgstr "GIFI"
+
+msgid "GIFI deleted!"
+msgstr "GIFI izdzēsts"
+
+msgid "GIFI missing!"
+msgstr "Nav norādīts GIFI!"
+
+msgid "GIFI saved!"
+msgstr "GIFI saglabāts!"
+
+msgid "GL"
+msgstr ""
+
+msgid "GL Reference Number"
+msgstr ""
+
+msgid "GL Transaction"
+msgstr "Virsgrāmatas transakcija"
+
+msgid "General Ledger"
+msgstr "Virsgrāmata"
+
+msgid "Generate"
+msgstr ""
+
+msgid "Generate Orders"
+msgstr ""
+
+msgid "Generate Purchase Orders"
+msgstr ""
+
+msgid "Generate Purchase Orders from Sales Order"
+msgstr ""
+
+msgid "Generate Sales Order"
+msgstr ""
+
+msgid "Generate Sales Order from Purchase Orders"
+msgstr ""
+
+msgid "Generate Sales Orders"
+msgstr ""
+
+msgid "Goods & Services"
+msgstr "Preces un Pakalpojumi"
+
+msgid "Group"
+msgstr "Grupa"
+
+msgid "Group Items"
+msgstr "Ierakstu grupa"
+
+msgid "Group Translations"
+msgstr "Grupu transakcijas"
+
+msgid "Group deleted!"
+msgstr "Grupa izdzēsta!"
+
+msgid "Group missing!"
+msgstr "Grupa nav norādīta!"
+
+msgid "Group saved!"
+msgstr "Grupa saglabāta!"
+
+msgid "Groups"
+msgstr "Grupas"
+
+msgid "HR"
+msgstr "Personāldaļa"
+
+msgid "HTML Templates"
+msgstr "HTML šabloni"
+
+msgid "Heading"
+msgstr "Virsraksts"
+
+msgid "History"
+msgstr "Vēsture"
+
+msgid "Home Phone"
+msgstr "Mājas telefons"
+
+msgid "Host"
+msgstr "Serveris"
+
+msgid "Hostname missing!"
+msgstr "Nav norādīts servera nosaukums!"
+
+msgid "IBAN"
+msgstr "IBAN"
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Image"
+msgstr "Attēls"
+
+msgid "In-line"
+msgstr "Iekļauts"
+
+msgid "Inactive"
+msgstr ""
+
+msgid "Include Exchange Rate Difference"
+msgstr "Iekļaut valūtas kursu atšķirības"
+
+msgid "Include Payment"
+msgstr ""
+
+msgid "Include in Report"
+msgstr "Iekļaut atskaitē"
+
+msgid "Include in drop-down menus"
+msgstr "Iekļaut nolaižamo izvēlni"
+
+msgid "Income"
+msgstr "Ienākums"
+
+msgid "Income Statement"
+msgstr "Peļņas vai zaudējuma aprēķins"
+
+msgid "Income account does not exist!"
+msgstr ""
+
+msgid "Incorrect Dataset version!"
+msgstr "Nepareiza datukopas versija!"
+
+msgid "Increase"
+msgstr "Pieaugums"
+
+msgid "Individual Items"
+msgstr "Individuāli ieraksti"
+
+msgid "Internal Notes"
+msgstr "Iekšējās piezīmes"
+
+msgid "Inventory"
+msgstr "Krājumi"
+
+msgid "Inventory account does not exist!"
+msgstr ""
+
+msgid "Inventory quantity must be zero before you can set this assembly obsolete!"
+msgstr "Krājuma daudzumam jābūt nullei pirms jūs varat atcelt šo komplektāciju!"
+
+msgid "Inventory quantity must be zero before you can set this part obsolete!"
+msgstr "Krājuma daudzumam jābūt nullei pirms jūs varat atcelt šo preci!"
+
+msgid "Inventory saved!"
+msgstr "Krājums saglabāts"
+
+msgid "Inventory transferred!"
+msgstr "Krājums pārsūtīts"
+
+msgid "Invoice"
+msgstr "Rēķins"
+
+msgid "Invoice Date"
+msgstr "Rēķina datums"
+
+msgid "Invoice Date missing!"
+msgstr "Nav norādīts rēķina datums!"
+
+msgid "Invoice Number"
+msgstr "Rēķina numurs"
+
+msgid "Invoice Number missing!"
+msgstr "Nepareizs rēķina numurs"
+
+msgid "Invoice deleted!"
+msgstr "Rēķins izdzēsts!"
+
+msgid "Invoices"
+msgstr "Rēķini"
+
+msgid "Is this a summary account to record"
+msgstr "Vai šis ir summārais konts ierakstam"
+
+msgid "Item already on pricelist!"
+msgstr ""
+
+msgid "Item deleted!"
+msgstr "Vienība izdzēsts!"
+
+msgid "Item not on file!"
+msgstr "Nav tādas vienības!"
+
+msgid "Items"
+msgstr "Vienības"
+
+msgid "Jan"
+msgstr "Jan"
+
+msgid "January"
+msgstr "Janvārī"
+
+msgid "Job"
+msgstr ""
+
+msgid "Job Name"
+msgstr ""
+
+msgid "Job Number"
+msgstr ""
+
+msgid "Job Number missing!"
+msgstr ""
+
+msgid "Job deleted!"
+msgstr ""
+
+msgid "Job saved!"
+msgstr ""
+
+msgid "Jobs"
+msgstr ""
+
+msgid "Jul"
+msgstr "Jūl"
+
+msgid "July"
+msgstr "Jūlijā"
+
+msgid "Jun"
+msgstr "Jūn"
+
+msgid "June"
+msgstr "Jūnijā"
+
+msgid "LaTeX Templates"
+msgstr "LaTeX šablons"
+
+msgid "Labor Code"
+msgstr ""
+
+msgid "Labor/Overhead"
+msgstr "Darbs/izmaksas"
+
+msgid "Language"
+msgstr "Valoda"
+
+msgid "Language deleted!"
+msgstr "Valoda izdzēsta"
+
+msgid "Language saved!"
+msgstr "Valoda saglabāta"
+
+msgid "Languages"
+msgstr "Valodas"
+
+msgid "Languages not defined!"
+msgstr "Valodas nav definētas"
+
+msgid "Last Cost"
+msgstr ""
+
+msgid "Last Numbers & Default Accounts"
+msgstr "Pēdējais numurs un noklusētais konts"
+
+msgid "Lead"
+msgstr ""
+
+msgid "Leadtime"
+msgstr "Izlaides termiņš"
+
+msgid "Leave host and port field empty unless you want to make a remote connection."
+msgstr "Servera un porta laukus var atstāt tukšus, ja nevēlaties izveidot attālinātu konekciju"
+
+msgid "Liability"
+msgstr "Saistības"
+
+msgid "Licensed to"
+msgstr "Licencēts firmai"
+
+msgid "Line Total"
+msgstr "Kopsumma"
+
+msgid "Link"
+msgstr "Saite"
+
+msgid "Link Accounts"
+msgstr "Piesaistīt kontus"
+
+msgid "List"
+msgstr ""
+
+msgid "List Accounts"
+msgstr "Kontu saraksts"
+
+msgid "List Businesses"
+msgstr "Komerdarbību saraksts"
+
+msgid "List Departments"
+msgstr "Nodaļu saraksts"
+
+msgid "List GIFI"
+msgstr "GIFI saraksts"
+
+msgid "List Languages"
+msgstr "Valodu saraksts"
+
+msgid "List Price"
+msgstr "Cenrāža cena"
+
+msgid "List Projects"
+msgstr "Projektu saraksts"
+
+msgid "List SIC"
+msgstr "SIC saraksts"
+
+msgid "List Transactions"
+msgstr "Transakciju saraksts"
+
+msgid "List Warehouses"
+msgstr "Noliktavu saraksts"
+
+msgid "Lock System"
+msgstr "Lock System"
+
+msgid "Lockfile created!"
+msgstr "Lockfile created!"
+
+msgid "Lockfile removed!"
+msgstr "Lockfile removed!"
+
+msgid "Login"
+msgstr "Pieteikties"
+
+msgid "Login name missing!"
+msgstr "Nav norādīts pieteikumvārds"
+
+msgid "Logout"
+msgstr "Beigt darbu"
+
+msgid "Make"
+msgstr "Izveidot"
+
+msgid "Manager"
+msgstr "Vadītājs"
+
+msgid "Mar"
+msgstr "Mar"
+
+msgid "March"
+msgstr "Martā"
+
+msgid "Marked entries printed!"
+msgstr "Atzīmētie ieraksti izdrukāti"
+
+msgid "Markup"
+msgstr "Uzcenojums"
+
+msgid "Maximum"
+msgstr "Maksimālais"
+
+msgid "May"
+msgstr "Mai"
+
+msgid "May "
+msgstr "Maijā "
+
+msgid "Memo"
+msgstr "Memorands"
+
+msgid "Menu Width"
+msgstr "Izvēlnes Platums"
+
+msgid "Message"
+msgstr "Paziņojums"
+
+msgid "Method"
+msgstr "Metode"
+
+msgid "Microfiche"
+msgstr "Mikrofilma"
+
+msgid "Model"
+msgstr "Modelis"
+
+msgid "Monday"
+msgstr ""
+
+msgid "Month"
+msgstr ""
+
+msgid "Month(s)"
+msgstr ""
+
+msgid "Months"
+msgstr ""
+
+msgid "Multibyte Encoding"
+msgstr "Multibaitu kodēšana"
+
+msgid "N/A"
+msgstr "Nav"
+
+msgid "Name"
+msgstr "Nosaukums"
+
+msgid "Name missing!"
+msgstr "Nepareizs nosaukums"
+
+msgid "New Templates"
+msgstr "Jauni šabloni"
+
+msgid "New Window"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Next Date"
+msgstr ""
+
+msgid "Next Number"
+msgstr ""
+
+msgid "No"
+msgstr "Nē"
+
+msgid "No Database Drivers available!"
+msgstr "Nav pieejams datubāzes draiveris!"
+
+msgid "No Dataset selected!"
+msgstr "Nav iezīmēta datukopa!"
+
+msgid "No Employees on file!"
+msgstr ""
+
+msgid "No Labor codes on file!"
+msgstr ""
+
+msgid "No email address for"
+msgstr "Nav e-pasta adrese"
+
+msgid "No open Jobs!"
+msgstr ""
+
+msgid "No open Projects!"
+msgstr ""
+
+msgid "No."
+msgstr "Nr."
+
+msgid "Non-taxable"
+msgstr "Neapliekams ar nodokļiem"
+
+msgid "Non-taxable Purchases"
+msgstr "Pirkumi, kas nav apliekami ar nodokļiem"
+
+msgid "Non-taxable Sales"
+msgstr "Tirgošana, kas nav apliekama ar nodokļiem"
+
+msgid "Non-tracking Items"
+msgstr ""
+
+msgid "Notes"
+msgstr "Piezīmes"
+
+msgid "Nothing entered!"
+msgstr "Nekas nav ievadīts"
+
+msgid "Nothing selected!"
+msgstr "Nekas nav iezīmēts!"
+
+msgid "Nothing to delete!"
+msgstr "Nav nekā dzēšama!"
+
+msgid "Nothing to print!"
+msgstr ""
+
+msgid "Nothing to transfer!"
+msgstr "Nav nekā pārsūtīšanai"
+
+msgid "Nov"
+msgstr "Nov"
+
+msgid "November"
+msgstr "Novembrī"
+
+msgid "Number"
+msgstr "Numurs"
+
+msgid "Number Format"
+msgstr "Skaitļa formāts"
+
+msgid "Number missing in Row"
+msgstr "Rindā nav norādīts numurs"
+
+msgid "O"
+msgstr "O"
+
+msgid "OH"
+msgstr ""
+
+msgid "Obsolete"
+msgstr "Novecojis"
+
+msgid "Oct"
+msgstr "Okt"
+
+msgid "October"
+msgstr "Oktobrī"
+
+msgid "On Hand"
+msgstr "Pieejams"
+
+msgid "Open"
+msgstr "Atvērts"
+
+msgid "Oracle Database Administration"
+msgstr "Oracle datubāzes administrēšana"
+
+msgid "Order"
+msgstr "Orderis"
+
+msgid "Order Date"
+msgstr "Ordera datums"
+
+msgid "Order Date missing!"
+msgstr "Nav norādīts ordera datums!"
+
+msgid "Order Entry"
+msgstr "Ordera ieraksts"
+
+msgid "Order Number"
+msgstr "Ordera Nr."
+
+msgid "Order Number missing!"
+msgstr "Nav norādīts ordera numurs!"
+
+msgid "Order deleted!"
+msgstr "Orderis izdzēsts"
+
+msgid "Order generation failed!"
+msgstr ""
+
+msgid "Order saved!"
+msgstr "Orderis saglabāts!"
+
+msgid "Orders generated!"
+msgstr ""
+
+msgid "Orphaned"
+msgstr "Bez atbilstošā pāra"
+
+msgid "Out of balance transaction!"
+msgstr "Transakcija bez bilances"
+
+msgid "Out of balance!"
+msgstr "Nav bilances!"
+
+msgid "Outstanding"
+msgstr "Neapmaksātais"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "PO Number"
+msgstr ""
+
+msgid "POS"
+msgstr "POS"
+
+msgid "POS Invoice"
+msgstr "POS rēķins"
+
+msgid "Packing List"
+msgstr "Iesaiņojumu saraksts"
+
+msgid "Packing List Date missing!"
+msgstr "Nav norādīts iesaiņojumu datums!"
+
+msgid "Packing List Number missing!"
+msgstr "Nav norādīts iesaiņojumu numurs!"
+
+msgid "Packing Lists"
+msgstr "Iesaiņojumu saraksti"
+
+msgid "Paid"
+msgstr "Apmaksāts"
+
+msgid "Part"
+msgstr "Prece"
+
+msgid "Part Number"
+msgstr ""
+
+msgid "Partnumber"
+msgstr "Daļas numurs"
+
+msgid "Parts"
+msgstr "Daļas"
+
+msgid "Password"
+msgstr "Parole"
+
+msgid "Password changed!"
+msgstr "Mainīt paroli!"
+
+msgid "Password does not match!"
+msgstr ""
+
+msgid "Passwords do not match!"
+msgstr ""
+
+msgid "Payables"
+msgstr "Kreditoru parādi"
+
+msgid "Payment"
+msgstr "Maksājums"
+
+msgid "Payment date missing!"
+msgstr "Nav norādīts maksājuma datums"
+
+msgid "Payment posted!"
+msgstr "Maksājums iegrāmatots!"
+
+msgid "Payments"
+msgstr "Maksājumi"
+
+msgid "Payments posted!"
+msgstr ""
+
+msgid "Payroll Deduction"
+msgstr "Algu atlaides"
+
+msgid "Period"
+msgstr ""
+
+msgid "Pg Database Administration"
+msgstr "Pg datubāzes administrēšana"
+
+msgid "PgPP Database Administration"
+msgstr "PgPP Database Administration"
+
+msgid "Phone"
+msgstr "Tel."
+
+msgid "Pick List"
+msgstr "Izvēles saraksts"
+
+msgid "Pick Lists"
+msgstr ""
+
+msgid "Port"
+msgstr "Ports"
+
+msgid "Port missing!"
+msgstr "Nareizs porta numurs!"
+
+msgid "Pos"
+msgstr ""
+
+msgid "Post"
+msgstr "Iegrāmatot"
+
+msgid "Post as new"
+msgstr "Iegrāmatot kā jaunu"
+
+msgid "Posted!"
+msgstr "Iegrāmatots!"
+
+msgid "Posting"
+msgstr ""
+
+msgid "Posting failed!"
+msgstr ""
+
+msgid "Postscript"
+msgstr "Postscript"
+
+msgid "Preferences"
+msgstr "Izvēles"
+
+msgid "Preferences saved!"
+msgstr "Izvēles saglabātas!"
+
+msgid "Prepayment"
+msgstr "Avansa maksājums"
+
+msgid "Price"
+msgstr "Cena"
+
+msgid "Pricegroup"
+msgstr "Cenu grupa"
+
+msgid "Pricegroup deleted!"
+msgstr "Cenu grupa izdzēsta"
+
+msgid "Pricegroup missing!"
+msgstr "Cenu grupa nav norādīta"
+
+msgid "Pricegroup saved!"
+msgstr "Cenu grupa saglabāta"
+
+msgid "Pricegroups"
+msgstr "Cenu grupas"
+
+msgid "Pricelist"
+msgstr ""
+
+msgid "Print"
+msgstr "Drukāt"
+
+msgid "Print and Post"
+msgstr ""
+
+msgid "Print and Post as new"
+msgstr ""
+
+msgid "Print and Save"
+msgstr ""
+
+msgid "Print and Save as new"
+msgstr ""
+
+msgid "Print and post as new"
+msgstr ""
+
+msgid "Print and save as new"
+msgstr ""
+
+msgid "Printed"
+msgstr "Izdrukāts"
+
+msgid "Printer"
+msgstr "Printeris"
+
+msgid "Printing"
+msgstr ""
+
+msgid "Printing ... "
+msgstr "Drukā ..."
+
+msgid "Process Transactions"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Profit Center"
+msgstr "Galvenie ienākumi"
+
+msgid "Project"
+msgstr "Projekts"
+
+msgid "Project Description Translations"
+msgstr "Projekta apraksta tulkojumi"
+
+msgid "Project Name"
+msgstr ""
+
+msgid "Project Number"
+msgstr "Projekta numurs"
+
+msgid "Project Number missing!"
+msgstr "Nav norādīts projekta numurs!"
+
+msgid "Project Transactions"
+msgstr "Projekta transakcijas"
+
+msgid "Project deleted!"
+msgstr "Projekts izdzēsts!"
+
+msgid "Project not on file!"
+msgstr "Nav tāda projekta!"
+
+msgid "Project saved!"
+msgstr "Projekts saglabāts"
+
+msgid "Project/Job Name"
+msgstr ""
+
+msgid "Project/Job Number"
+msgstr ""
+
+msgid "Projects"
+msgstr "Projekti"
+
+msgid "Purchase Order"
+msgstr "Pirkšanas orderis"
+
+msgid "Purchase Order Number"
+msgstr ""
+
+msgid "Purchase Orders"
+msgstr "Pirkšanas orderi"
+
+msgid "Qty"
+msgstr "Skaits"
+
+msgid "Quantity exceeds available units to stock!"
+msgstr "Skaits pārsniedz noliktavā esošo priekšmetu skaitu"
+
+msgid "Quarter"
+msgstr ""
+
+msgid "Quotation"
+msgstr "Tāme"
+
+msgid "Quotation "
+msgstr ""
+
+msgid "Quotation Date"
+msgstr "Tāmes datums"
+
+msgid "Quotation Date missing!"
+msgstr "Nav norādīts tāmes datums"
+
+msgid "Quotation Number"
+msgstr "Tāmes numurs"
+
+msgid "Quotation Number missing!"
+msgstr "Nav norādīts tāmes numurs"
+
+msgid "Quotation deleted!"
+msgstr "Tāme izdzēsta"
+
+msgid "Quotations"
+msgstr "Tāmes"
+
+msgid "R"
+msgstr "R"
+
+msgid "RFQ"
+msgstr "Tāmes pieprasījums"
+
+msgid "RFQ "
+msgstr ""
+
+msgid "RFQ Number"
+msgstr "Tāmes pieprasījuma numurs"
+
+msgid "RFQs"
+msgstr "Tāmes pieprasījumu"
+
+msgid "ROP"
+msgstr "Pasūtīšanas limits"
+
+msgid "Rate"
+msgstr "Likme"
+
+msgid "Rate missing!"
+msgstr "Likme nav norādīta"
+
+msgid "Recd"
+msgstr "Saņemts"
+
+msgid "Receipt"
+msgstr "Kvīts"
+
+msgid "Receipt posted!"
+msgstr "Kvītis iegrāmatotas"
+
+msgid "Receipts"
+msgstr "Kvītis"
+
+msgid "Receivables"
+msgstr "Ienākošie maksājumi"
+
+msgid "Receive"
+msgstr "Saņemt"
+
+msgid "Receive Merchandise"
+msgstr "Saņemt preces"
+
+msgid "Reconciliation"
+msgstr "Izlīdzināšana"
+
+msgid "Reconciliation Report"
+msgstr "Izlīdzināšanas atskaite"
+
+msgid "Record in"
+msgstr "Ierakstīt"
+
+msgid "Recurring Transaction"
+msgstr ""
+
+msgid "Recurring Transactions"
+msgstr ""
+
+msgid "Reference"
+msgstr "Norāde"
+
+msgid "Remaining"
+msgstr "Atlikums"
+
+msgid "Remove"
+msgstr "Izdzēst"
+
+msgid "Remove Audit trail up to"
+msgstr "Izdzēst audita atzīmes līdz"
+
+msgid "Remove Audit trails up to"
+msgstr "Izdzēst audita atzīmes līdz"
+
+msgid "Removed spoolfiles!"
+msgstr "Izdzēst printera rindas failus"
+
+msgid "Removing marked entries from queue ..."
+msgstr "Izdzēšu atzīmētos ierakstus no rindas ..."
+
+msgid "Repeat"
+msgstr ""
+
+msgid "Report for"
+msgstr "Atskaite par"
+
+msgid "Reports"
+msgstr "Atskaites"
+
+msgid "Req"
+msgstr ""
+
+msgid "Request for Quotation"
+msgstr "Tāmes pieprasījums"
+
+msgid "Request for Quotations"
+msgstr "Tāmju pieprasījums"
+
+msgid "Required by"
+msgstr "Pieprasīja"
+
+msgid "Retained Earnings"
+msgstr "Nesadalītā peļņa"
+
+msgid "Role"
+msgstr "Loma"
+
+msgid "S"
+msgstr "S"
+
+msgid "SIC"
+msgstr "SIC"
+
+msgid "SIC deleted!"
+msgstr "SIC izdzēsts"
+
+msgid "SIC saved!"
+msgstr "SIC saglabāts"
+
+msgid "SKU"
+msgstr "SKU"
+
+msgid "SSN"
+msgstr ""
+
+msgid "Sale"
+msgstr "Pārdošana"
+
+msgid "Sales"
+msgstr "Pārdošanas"
+
+msgid "Sales Invoice"
+msgstr "Pārdošanas rēķins"
+
+msgid "Sales Invoice "
+msgstr ""
+
+msgid "Sales Invoice."
+msgstr ""
+
+msgid "Sales Invoice/AR Transaction Number"
+msgstr ""
+
+msgid "Sales Invoices"
+msgstr "Pārdošanas rēķini"
+
+msgid "Sales Order"
+msgstr "Pārdošanas orderis"
+
+msgid "Sales Order Number"
+msgstr ""
+
+msgid "Sales Orders"
+msgstr "Pārdošanas orderi"
+
+msgid "Sales Quotation Number"
+msgstr ""
+
+msgid "Salesperson"
+msgstr "Pārdevējs"
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Save"
+msgstr "Saglabāt"
+
+msgid "Save Pricelist"
+msgstr ""
+
+msgid "Save Schedule"
+msgstr ""
+
+msgid "Save as new"
+msgstr "Saglabāt kā jaunu"
+
+msgid "Save to File"
+msgstr "Saglabāt failā"
+
+msgid "Saving"
+msgstr ""
+
+msgid "Schedule"
+msgstr ""
+
+msgid "Scheduled"
+msgstr ""
+
+msgid "Screen"
+msgstr "Ekrāns"
+
+msgid "Search"
+msgstr "Meklēt"
+
+msgid "Select"
+msgstr "Atlasīt"
+
+msgid "Select Customer"
+msgstr ""
+
+msgid "Select Vendor"
+msgstr ""
+
+msgid "Select a Printer!"
+msgstr ""
+
+msgid "Select a printer!"
+msgstr ""
+
+msgid "Select all"
+msgstr "Atlasīt visu"
+
+msgid "Select from one of the items below"
+msgstr "Atlasīt vienu no sekojošiem ierakstiem"
+
+msgid "Select from one of the names below"
+msgstr "Atlasīt vienu no sekojošiem nosaukumiem"
+
+msgid "Select from one of the projects below"
+msgstr "Atlasīt vienu no sekojošiem projektiem"
+
+msgid "Select items"
+msgstr ""
+
+msgid "Select payment"
+msgstr ""
+
+msgid "Select postscript or PDF!"
+msgstr "Izvēlēties postscript vai PDF!"
+
+msgid "Select txt, postscript or PDF!"
+msgstr ""
+
+msgid "Sell"
+msgstr ""
+
+msgid "Sell Price"
+msgstr "Pārdošanas cena"
+
+msgid "Send by E-Mail"
+msgstr "Nosūtīt pa e-pastu"
+
+msgid "Sending"
+msgstr ""
+
+msgid "Sep"
+msgstr "Sep"
+
+msgid "September"
+msgstr "Septembrī"
+
+msgid "Serial No."
+msgstr "Seriālais Nr."
+
+msgid "Serial Number"
+msgstr "Seriālais numurs"
+
+msgid "Service"
+msgstr "Pakalpojums"
+
+msgid "Service Code"
+msgstr ""
+
+msgid "Service/Labor Code"
+msgstr ""
+
+msgid "Services"
+msgstr "Pakalpojumi"
+
+msgid "Session Timeout"
+msgstr ""
+
+msgid "Session expired!"
+msgstr ""
+
+msgid "Setup Templates"
+msgstr "Šablonu izveidošana"
+
+msgid "Ship"
+msgstr "Piegādāt"
+
+msgid "Ship Merchandise"
+msgstr "Piegādāt preces"
+
+msgid "Ship to"
+msgstr "Piegādes adrese"
+
+msgid "Ship via"
+msgstr "Piegādāt caur"
+
+msgid "Shipping"
+msgstr "Piegāde"
+
+msgid "Shipping Address"
+msgstr "Piegādes adrese"
+
+msgid "Shipping Date"
+msgstr "Nosūtīšanas datums"
+
+msgid "Shipping Date missing!"
+msgstr "Nav norādīts nosūtīšanas datums"
+
+msgid "Shipping Point"
+msgstr "Nosūtīšanas vietas"
+
+msgid "Short"
+msgstr "Aizdošana"
+
+msgid "Signature"
+msgstr "Paraksts"
+
+msgid "Source"
+msgstr "Dokuments"
+
+msgid "Spoolfile"
+msgstr "Printera rindas fails"
+
+msgid "Standard"
+msgstr "Standarts"
+
+msgid "Standard Industrial Codes"
+msgstr "Standarta industrijas kodi"
+
+msgid "Startdate"
+msgstr "Sākuma datums"
+
+msgid "State"
+msgstr ""
+
+msgid "State/Province"
+msgstr "Štats/Province"
+
+msgid "Statement"
+msgstr "Pārskats"
+
+msgid "Statement Balance"
+msgstr "Bilances atskaite"
+
+msgid "Statement sent to"
+msgstr "Nosūtīt pārskatu uz"
+
+msgid "Statements sent to printer!"
+msgstr "Nosūtīt pārskatu uz drukāšanu!"
+
+msgid "Stock"
+msgstr "Krājums"
+
+msgid "Stock Assembly"
+msgstr "Komplektācijas krājumā"
+
+msgid "Stocking Date"
+msgstr ""
+
+msgid "Stylesheet"
+msgstr "Stila lapa"
+
+msgid "Sub-contract GIFI"
+msgstr "Subkontrakta GIFI"
+
+msgid "Subject"
+msgstr "Temats"
+
+msgid "Subtotal"
+msgstr "Kopā"
+
+msgid "Summary"
+msgstr "Kopējais"
+
+msgid "Sunday"
+msgstr ""
+
+msgid "Supervisor"
+msgstr ""
+
+msgid "System"
+msgstr "Sistēma"
+
+msgid "System Defaults"
+msgstr "Sistēmas noklusētās vērtības"
+
+msgid "Tax"
+msgstr "Nodokļi"
+
+msgid "Tax Accounts"
+msgstr "Nodokļu konti"
+
+msgid "Tax Included"
+msgstr "Kopā ar nodokļiem"
+
+msgid "Tax Number"
+msgstr "Nodokļu maksātāja kods"
+
+msgid "Tax Number / SSN"
+msgstr "Nodokļu maksātāja kods / SSN"
+
+msgid "Tax collected"
+msgstr "Ieņemtie nodokļi"
+
+msgid "Tax paid"
+msgstr "Samaksātie nodokļi"
+
+msgid "Taxable"
+msgstr "Apliekams ar nodokli"
+
+msgid "Template saved!"
+msgstr "Šablons saglabāts!"
+
+msgid "Templates"
+msgstr "Šabloni"
+
+msgid "Terms"
+msgstr "Noteikumi: termiņš"
+
+msgid "Text"
+msgstr ""
+
+msgid "Text Templates"
+msgstr "Teksta šabloni"
+
+msgid "The following Datasets are not in use and can be deleted"
+msgstr "Sekojošās datukopas netiek lietotas un tās var izdzēst"
+
+msgid "The following Datasets need to be updated"
+msgstr "Sekojošās datukopas nepieciešams atjaunināt"
+
+msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
+msgstr "Šī ir sagatavošanās pārbaude esošiem datiem. Nekas netiks izveidots vai izdzēsts."
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Till"
+msgstr "līdz"
+
+msgid "Time In"
+msgstr ""
+
+msgid "Time Out"
+msgstr ""
+
+msgid "Timecard"
+msgstr ""
+
+msgid "Timecard deleted!"
+msgstr ""
+
+msgid "Timecard saved!"
+msgstr ""
+
+msgid "Timecards"
+msgstr ""
+
+msgid "Times"
+msgstr ""
+
+msgid "To"
+msgstr "uz"
+
+msgid "To Warehouse"
+msgstr ""
+
+msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
+msgstr "Lai pievienotu lietotāju grupai, izmainiet lietotājvārdu un saglabājiet."
+
+msgid "Top Level"
+msgstr "Augšējais līmenis"
+
+msgid "Total"
+msgstr "Pavisam Kopā"
+
+msgid "Tracking Items"
+msgstr ""
+
+msgid "Trade Discount"
+msgstr "Vairumtirgotāja atlaide"
+
+msgid "Transaction"
+msgstr ""
+
+msgid "Transaction Date missing!"
+msgstr "Nav norādīts transakcijas datums!"
+
+msgid "Transaction Dates"
+msgstr ""
+
+msgid "Transaction deleted!"
+msgstr "Transakcija izdzēsta!"
+
+msgid "Transaction posted!"
+msgstr "Transakcija iegrāmatota!"
+
+msgid "Transaction reversal enforced for all dates"
+msgstr "Veikt transakciju atcelšanu visiem datumiem"
+
+msgid "Transaction reversal enforced up to"
+msgstr "Transakcijas būs izmainītas līdz"
+
+msgid "Transactions"
+msgstr "Transakcijas"
+
+msgid "Transfer"
+msgstr "Pārsūtīšana"
+
+msgid "Transfer Inventory"
+msgstr "Krājuma pārsūtīšana"
+
+msgid "Transfer from"
+msgstr ""
+
+msgid "Transfer to"
+msgstr "Pārsūtīt uz"
+
+msgid "Translation"
+msgstr "Tulkojums"
+
+msgid "Translation deleted!"
+msgstr "Tulkojums izdzēsts"
+
+msgid "Translation not on file!"
+msgstr ""
+
+msgid "Translations"
+msgstr "Tulkojumi"
+
+msgid "Translations saved!"
+msgstr "Tulkojumi saglabāti"
+
+msgid "Trial Balance"
+msgstr "Kontu bilance"
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Type of Business"
+msgstr "Komercdarbības veids"
+
+msgid "Unit"
+msgstr "Vienība"
+
+msgid "Unit of measure"
+msgstr "Preces mērvienība"
+
+msgid "Unlock System"
+msgstr "Unlock System"
+
+msgid "Update"
+msgstr "Atjaunināt"
+
+msgid "Update Dataset"
+msgstr "Atjaunināt datu kopu"
+
+msgid "Updated"
+msgstr "Atjaunināts"
+
+msgid "Upgrading to Version"
+msgstr "Uzlabot līdz versijai"
+
+msgid "Use Templates"
+msgstr "Lietot šablonu"
+
+msgid "User"
+msgstr "Lietotājs"
+
+msgid "User deleted!"
+msgstr "Lietotājs izdzēsts!"
+
+msgid "User saved!"
+msgstr "Lietotājs saglabāts!"
+
+msgid "Valid until"
+msgstr "Derīgs līdz"
+
+msgid "Vendor"
+msgstr "Pārdevējs"
+
+msgid "Vendor History"
+msgstr "Pārdevēja vēsture"
+
+msgid "Vendor Invoice"
+msgstr "Pārdevēja rēķins"
+
+msgid "Vendor Invoice "
+msgstr ""
+
+msgid "Vendor Invoice."
+msgstr ""
+
+msgid "Vendor Invoice/AP Transaction Number"
+msgstr ""
+
+msgid "Vendor Invoices"
+msgstr "Pārdevēja rēķini"
+
+msgid "Vendor Number"
+msgstr "Pārdevēja numurs"
+
+msgid "Vendor deleted!"
+msgstr "Pārdevējs izdzēsts!"
+
+msgid "Vendor missing!"
+msgstr "Pārdevējs nav norādīts!"
+
+msgid "Vendor not on file!"
+msgstr "Nav tāda pārdevēja!"
+
+msgid "Vendor saved!"
+msgstr "Pārdevējs saglabāts"
+
+msgid "Vendors"
+msgstr "Pārdevēji"
+
+msgid "Version"
+msgstr "Versija"
+
+msgid "Warehouse"
+msgstr "Noliktava"
+
+msgid "Warehouse deleted!"
+msgstr "Noliktava izdzēsta"
+
+msgid "Warehouse saved!"
+msgstr "Noliktava saglabāta"
+
+msgid "Warehouses"
+msgstr "Noliktavas"
+
+msgid "Warning!"
+msgstr "Brīdinājums!"
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Week"
+msgstr ""
+
+msgid "Week(s)"
+msgstr ""
+
+msgid "Weeks"
+msgstr ""
+
+msgid "Weight"
+msgstr "Svars"
+
+msgid "Weight Unit"
+msgstr "Svara mērvienība"
+
+msgid "What type of item is this?"
+msgstr "Kāda veida vienība tā ir?"
+
+msgid "Work Order"
+msgstr "Darba orderis"
+
+msgid "Work Orders"
+msgstr ""
+
+msgid "Work Phone"
+msgstr "Darba telefons"
+
+msgid "Year"
+msgstr ""
+
+msgid "Year(s)"
+msgstr ""
+
+msgid "Yearend"
+msgstr "Finanšu gada beigas"
+
+msgid "Yearend date missing!"
+msgstr "Nav norādīts pārskata finanšu gada beigu datums"
+
+msgid "Yearend posted!"
+msgstr "Finanšu gada beigas iegrāmatotas"
+
+msgid "Yearend posting failed!"
+msgstr "Finanšu gada beigu iegrāmatošana neizdevās"
+
+msgid "Years"
+msgstr ""
+
+msgid "Yes"
+msgstr "Jā"
+
+msgid "You are logged out"
+msgstr ""
+
+msgid "You are posting an existing transaction!"
+msgstr ""
+
+msgid "You are printing and posting an existing transaction!"
+msgstr ""
+
+msgid "You are printing and saving an existing order"
+msgstr ""
+
+msgid "You are printing and saving an existing quotation"
+msgstr ""
+
+msgid "You are printing and saving an existing transaction!"
+msgstr ""
+
+msgid "You are saving an existing order"
+msgstr ""
+
+msgid "You are saving an existing quotation"
+msgstr ""
+
+msgid "You are saving an existing transaction!"
+msgstr ""
+
+msgid "You did not enter a name!"
+msgstr "Nav ievadīts vārds"
+
+msgid "You must enter a host and port for local and remote connections!"
+msgstr "Lokālam un attālinātam savienojumam jāievada vērtības servera un porta laukos!"
+
+msgid "Zip/Postal Code"
+msgstr ""
+
+msgid "account cannot be set to any other type of account"
+msgstr "kontu nevar nomainīt uz jebkuru citu konta tipu"
+
+msgid "as at"
+msgstr "uz"
+
+msgid "days"
+msgstr "dienas"
+
+msgid "does not exist"
+msgstr "neeksistē"
+
+msgid "done"
+msgstr "izdarīts"
+
+msgid "ea"
+msgstr "gb"
+
+msgid "failed"
+msgstr ""
+
+msgid "for"
+msgstr ""
+
+msgid "for Period"
+msgstr "periodam"
+
+msgid "is already a member!"
+msgstr "jau eksistē "
+
+msgid "localhost"
+msgstr "localhost"
+
+msgid "locked!"
+msgstr "slēgts!"
+
+msgid "partsgroup"
+msgstr ""
+
+msgid "posted!"
+msgstr "iegrāmatots!"
+
+msgid "sent"
+msgstr "nosūtīts"
+
+msgid "successfully created!"
+msgstr "veiksmīgi izveidots!"
+
+msgid "successfully deleted!"
+msgstr "veiksmīgi izdzēsts!"
+
+msgid "time(s)"
+msgstr ""
+
+msgid "unexpected error!"
+msgstr ""
+
+msgid "website"
+msgstr "interneta lapa"
+

@@ -1,0 +1,14 @@
+<?lsmb FILTER latex ?>
+<?lsmb PROCESS "taxform/1099-MISC-base.tex" ?>
+\begin{document}
+<?lsmb FOREACH tf IN results;
+INCLUDE taxform 
+legal_name = tf.legal_name
+street1 = tf.street1
+street2 = tf.street2
+street3 = tf.street3
+taxnumber = tf.taxnumber
+total_sum = tf.total_sum;
+END # FOR tf  ?>
+\end{document}
+<?lsmb END # FILTER latex ?>

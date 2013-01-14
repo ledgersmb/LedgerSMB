@@ -1,0 +1,2676 @@
+######################################################################
+# LedgerSMB Small Medium Business Accounting
+# Copyright (c) 2001
+#
+# Turkish texts:
+#
+#  Author: Mufit Eribol <meribol@deltagrup.com.tr>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#######################################################################
+
+msgid ""
+msgstr ""
+"Project-Id-Version: LedgerSMB 1.1.1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "A"
+msgstr ""
+
+msgid "AP"
+msgstr "Borçlar"
+
+msgid "AP Aging"
+msgstr "Gecikmiş Borçlar"
+
+msgid "AP Outstanding"
+msgstr ""
+
+msgid "AP Transaction"
+msgstr ""
+
+msgid "AP Transactions"
+msgstr "Borç İşlemleri"
+
+msgid "AR"
+msgstr "Alacaklar"
+
+msgid "AR Aging"
+msgstr "Gecikmiş Alacaklar"
+
+msgid "AR Outstanding"
+msgstr ""
+
+msgid "AR Transaction"
+msgstr ""
+
+msgid "AR Transactions"
+msgstr "Alacak İşlemleri"
+
+msgid "AR/AP"
+msgstr ""
+
+msgid "About"
+msgstr "Program bilgileri"
+
+msgid "Above"
+msgstr ""
+
+msgid "Access Control"
+msgstr "Giriş Kontrol"
+
+msgid "Access Denied!"
+msgstr ""
+
+msgid "Account"
+msgstr "Hesap"
+
+msgid "Account Number"
+msgstr "Hesap Numarası"
+
+msgid "Account Number missing!"
+msgstr "Hesap Numarası yok!"
+
+msgid "Account Type"
+msgstr "Hesap Türü"
+
+msgid "Account Type missing!"
+msgstr "Hesap Türü yok!"
+
+msgid "Account deleted!"
+msgstr ""
+
+msgid "Account does not exist!"
+msgstr ""
+
+msgid "Account saved!"
+msgstr ""
+
+msgid "Accounting"
+msgstr "Muhasebe"
+
+msgid "Accounting Menu"
+msgstr "Muhasebe Menüsü"
+
+msgid "Accounts"
+msgstr ""
+
+msgid "Accrual"
+msgstr ""
+
+msgid "Activate Audit trail"
+msgstr ""
+
+msgid "Active"
+msgstr ""
+
+msgid "Add"
+msgstr "Ekle"
+
+msgid "Add AP Transaction"
+msgstr ""
+
+msgid "Add AR Transaction"
+msgstr ""
+
+msgid "Add Account"
+msgstr "Hesap Ekle"
+
+msgid "Add Assembly"
+msgstr "Grup Ekle"
+
+msgid "Add Business"
+msgstr ""
+
+msgid "Add Cash Transfer Transaction"
+msgstr ""
+
+msgid "Add Customer"
+msgstr "Alıcı Ekle"
+
+msgid "Add Deduction"
+msgstr ""
+
+msgid "Add Department"
+msgstr ""
+
+msgid "Add Employee"
+msgstr ""
+
+msgid "Add Exchange Rate"
+msgstr ""
+
+msgid "Add GIFI"
+msgstr ""
+
+msgid "Add General Ledger Transaction"
+msgstr "Defteri Kebire İşlem Ekle"
+
+msgid "Add Group"
+msgstr ""
+
+msgid "Add Job"
+msgstr ""
+
+msgid "Add Labor/Overhead"
+msgstr ""
+
+msgid "Add Language"
+msgstr ""
+
+msgid "Add POS Invoice"
+msgstr ""
+
+msgid "Add Part"
+msgstr "Parça Ekle"
+
+msgid "Add Pricegroup"
+msgstr ""
+
+msgid "Add Project"
+msgstr ""
+
+msgid "Add Purchase Order"
+msgstr "Satınalma Sip. Ekle"
+
+msgid "Add Quotation"
+msgstr ""
+
+msgid "Add Request for Quotation"
+msgstr ""
+
+msgid "Add SIC"
+msgstr ""
+
+msgid "Add Sales Invoice"
+msgstr ""
+
+msgid "Add Sales Order"
+msgstr "Satış Siparişi Ekle"
+
+msgid "Add Service"
+msgstr "Hizmet Ekle"
+
+msgid "Add Timecard"
+msgstr ""
+
+msgid "Add Transaction"
+msgstr "İşlem Ekle"
+
+msgid "Add User"
+msgstr "Kullanıcı Ekle"
+
+msgid "Add Vendor"
+msgstr "Satıcı Ekle"
+
+msgid "Add Vendor Invoice"
+msgstr ""
+
+msgid "Add Warehouse"
+msgstr ""
+
+msgid "Address"
+msgstr "Adres"
+
+msgid "Administration"
+msgstr "Yönetim"
+
+msgid "Administrator"
+msgstr "Administrator"
+
+msgid "After Deduction"
+msgstr ""
+
+msgid "All"
+msgstr "Hepsi"
+
+msgid "All Accounts"
+msgstr ""
+
+msgid "All Datasets up to date!"
+msgstr "All Datasets up to date!"
+
+msgid "All Items"
+msgstr ""
+
+msgid "Allowances"
+msgstr ""
+
+msgid "Amount"
+msgstr "Miktar"
+
+msgid "Amount Due"
+msgstr ""
+
+msgid "Amount missing!"
+msgstr ""
+
+msgid "Apr"
+msgstr "Nis"
+
+msgid "April"
+msgstr "Nisan"
+
+msgid "Are you sure you want to delete Invoice Number"
+msgstr "Fatura Numarasını silmek istediğinizden emin misiniz? Fiş: "
+
+msgid "Are you sure you want to delete Order Number"
+msgstr "Sipariş Numarasını silmek istediğinizden emin misiniz? Fiş: "
+
+msgid "Are you sure you want to delete Quotation Number"
+msgstr ""
+
+msgid "Are you sure you want to delete Timecard for"
+msgstr ""
+
+msgid "Are you sure you want to delete Transaction"
+msgstr "İşlemi silmek istediğinizden emin misiniz? Fiş: "
+
+msgid "Are you sure you want to remove the marked entries from the queue?"
+msgstr ""
+
+msgid "Assemblies"
+msgstr "Gruplar"
+
+msgid "Assemblies restocked!"
+msgstr ""
+
+msgid "Assembly"
+msgstr ""
+
+msgid "Assembly stocked!"
+msgstr ""
+
+msgid "Asset"
+msgstr "Aktif"
+
+msgid "Attachment"
+msgstr ""
+
+msgid "Audit Control"
+msgstr ""
+
+msgid "Audit trail disabled"
+msgstr ""
+
+msgid "Audit trail enabled"
+msgstr ""
+
+msgid "Audit trail removed up to"
+msgstr ""
+
+msgid "Aug"
+msgstr "Ağu"
+
+msgid "August"
+msgstr "Ağustos"
+
+msgid "Average Cost"
+msgstr ""
+
+msgid "Avg Cost"
+msgstr ""
+
+msgid "BIC"
+msgstr ""
+
+msgid "BOM"
+msgstr ""
+
+msgid "Backup"
+msgstr "Yedekleme"
+
+msgid "Backup sent to"
+msgstr ""
+
+msgid "Balance"
+msgstr ""
+
+msgid "Balance Sheet"
+msgstr "Bilanço"
+
+msgid "Based on"
+msgstr ""
+
+msgid "Bcc"
+msgstr ""
+
+msgid "Before Deduction"
+msgstr ""
+
+msgid "Beginning Balance"
+msgstr ""
+
+msgid "Below"
+msgstr ""
+
+msgid "Billing Address"
+msgstr ""
+
+msgid "Bin"
+msgstr ""
+
+msgid "Bin List"
+msgstr ""
+
+msgid "Bin Lists"
+msgstr ""
+
+msgid "Books are open"
+msgstr ""
+
+msgid "Break"
+msgstr ""
+
+msgid "Business"
+msgstr ""
+
+msgid "Business Number"
+msgstr "ŞirketNo"
+
+msgid "Business deleted!"
+msgstr ""
+
+msgid "Business saved!"
+msgstr ""
+
+msgid "C"
+msgstr ""
+
+msgid "COGS"
+msgstr "SMM"
+
+msgid "COGS account does not exist!"
+msgstr ""
+
+msgid "Cannot add timecard for a completed job!"
+msgstr ""
+
+msgid "Cannot change timecard for a completed job!"
+msgstr ""
+
+msgid "Cannot create Assembly"
+msgstr ""
+
+msgid "Cannot create Labor"
+msgstr ""
+
+msgid "Cannot create Lock!"
+msgstr "Cannot create Lock!"
+
+msgid "Cannot create Part"
+msgstr ""
+
+msgid "Cannot create Service"
+msgstr ""
+
+msgid "Cannot delete Timecard!"
+msgstr ""
+
+msgid "Cannot delete account!"
+msgstr ""
+
+msgid "Cannot delete customer!"
+msgstr ""
+
+msgid "Cannot delete default account!"
+msgstr "Öntanımlı hesap silinmez!"
+
+msgid "Cannot delete invoice!"
+msgstr ""
+
+msgid "Cannot delete item!"
+msgstr ""
+
+msgid "Cannot delete order!"
+msgstr ""
+
+msgid "Cannot delete quotation!"
+msgstr ""
+
+msgid "Cannot delete transaction!"
+msgstr ""
+
+msgid "Cannot delete vendor!"
+msgstr ""
+
+msgid "Cannot post Payment!"
+msgstr ""
+
+msgid "Cannot post Receipt!"
+msgstr ""
+
+msgid "Cannot post invoice for a closed period!"
+msgstr ""
+
+msgid "Cannot post invoice!"
+msgstr ""
+
+msgid "Cannot post payment for a closed period!"
+msgstr ""
+
+msgid "Cannot post transaction for a closed period!"
+msgstr ""
+
+msgid "Cannot post transaction with a debit and credit entry for the same account!"
+msgstr ""
+
+msgid "Cannot post transaction!"
+msgstr ""
+
+msgid "Cannot remove files!"
+msgstr ""
+
+msgid "Cannot save account!"
+msgstr ""
+
+msgid "Cannot save defaults!"
+msgstr ""
+
+msgid "Cannot save order!"
+msgstr ""
+
+msgid "Cannot save preferences!"
+msgstr ""
+
+msgid "Cannot save quotation!"
+msgstr ""
+
+msgid "Cannot save timecard for a closed period!"
+msgstr ""
+
+msgid "Cannot save timecard!"
+msgstr ""
+
+msgid "Cannot set account for more than one of AR, AP or IC"
+msgstr ""
+
+msgid "Cannot set multiple options for"
+msgstr ""
+
+msgid "Cannot set multiple options for Item"
+msgstr ""
+
+msgid "Cannot stock Assembly!"
+msgstr ""
+
+msgid "Cannot stock assemblies!"
+msgstr ""
+
+msgid "Cash"
+msgstr ""
+
+msgid "Cc"
+msgstr ""
+
+msgid "Change"
+msgstr ""
+
+msgid "Change Admin Password"
+msgstr "Yönetici Şifresini Değiştir"
+
+msgid "Change Password"
+msgstr "Şifre Değiştir"
+
+msgid "Charge"
+msgstr ""
+
+msgid "Chart of Accounts"
+msgstr "Hesap Planı"
+
+msgid "Check"
+msgstr ""
+
+msgid "Check Inventory"
+msgstr ""
+
+msgid "Checks"
+msgstr ""
+
+msgid "City"
+msgstr ""
+
+msgid "Cleared"
+msgstr ""
+
+msgid "Click on login name to edit!"
+msgstr "Düzenlemek için giriş ismini tıklayın."
+
+msgid "Clocked"
+msgstr ""
+
+msgid "Close Books up to"
+msgstr ""
+
+msgid "Closed"
+msgstr ""
+
+msgid "Code"
+msgstr ""
+
+msgid "Code missing!"
+msgstr ""
+
+msgid "Company"
+msgstr "Şirket"
+
+msgid "Company Name"
+msgstr ""
+
+msgid "Compare to"
+msgstr "...kıyasla"
+
+msgid "Completed"
+msgstr ""
+
+msgid "Components"
+msgstr ""
+
+msgid "Confirm"
+msgstr ""
+
+msgid "Confirm!"
+msgstr "Onayla!"
+
+msgid "Connect to"
+msgstr "Bağlan"
+
+msgid "Contact"
+msgstr "Kontak"
+
+msgid "Continue"
+msgstr "Devam"
+
+msgid "Contra"
+msgstr ""
+
+msgid "Copies"
+msgstr ""
+
+msgid "Copy to COA"
+msgstr ""
+
+msgid "Cost"
+msgstr ""
+
+msgid "Cost Center"
+msgstr ""
+
+msgid "Could not save pricelist!"
+msgstr ""
+
+msgid "Could not save!"
+msgstr ""
+
+msgid "Could not transfer Inventory!"
+msgstr ""
+
+msgid "Country"
+msgstr ""
+
+msgid "Create Chart of Accounts"
+msgstr "Hesap Planı Oluştur"
+
+msgid "Create Dataset"
+msgstr "Veriseti Oluştur"
+
+msgid "Credit"
+msgstr "Alacak"
+
+msgid "Credit Limit"
+msgstr "Kredi Limiti"
+
+msgid "Curr"
+msgstr ""
+
+msgid "Currency"
+msgstr "Para Birimi"
+
+msgid "Current"
+msgstr ""
+
+msgid "Current Earnings"
+msgstr ""
+
+msgid "Customer"
+msgstr "Alıcı"
+
+msgid "Customer History"
+msgstr ""
+
+msgid "Customer Number"
+msgstr ""
+
+msgid "Customer deleted!"
+msgstr ""
+
+msgid "Customer missing!"
+msgstr ""
+
+msgid "Customer not on file!"
+msgstr ""
+
+msgid "Customer saved!"
+msgstr ""
+
+msgid "Customers"
+msgstr ""
+
+msgid "DBI not installed!"
+msgstr "DBJ kurulu değil"
+
+msgid "DOB"
+msgstr ""
+
+msgid "Database"
+msgstr "Veritabanı"
+
+msgid "Database Administration"
+msgstr "Veritabani Yonetimi"
+
+msgid "Database Driver not checked!"
+msgstr "Database Driver not checked!"
+
+msgid "Database Host"
+msgstr "Veritabanı Hostu"
+
+msgid "Database User missing!"
+msgstr "Veritabanı Kullanıcısı yok!"
+
+msgid "Dataset"
+msgstr "Veriseti"
+
+msgid "Dataset is newer than version!"
+msgstr ""
+
+msgid "Dataset missing!"
+msgstr "Veriseti Yok!"
+
+msgid "Dataset updated!"
+msgstr "Dataset updated!"
+
+msgid "Date"
+msgstr "Tarih"
+
+msgid "Date Format"
+msgstr "Tarih Formatı"
+
+msgid "Date Paid"
+msgstr "Ödendiği Tarih"
+
+msgid "Date Received"
+msgstr ""
+
+msgid "Date missing!"
+msgstr ""
+
+msgid "Date received missing!"
+msgstr ""
+
+msgid "Date worked"
+msgstr ""
+
+msgid "Day"
+msgstr ""
+
+msgid "Day(s)"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Debit"
+msgstr "Borç"
+
+msgid "Dec"
+msgstr "Ara"
+
+msgid "December"
+msgstr "Aralık"
+
+msgid "Decimalplaces"
+msgstr ""
+
+msgid "Decrease"
+msgstr ""
+
+msgid "Deduct after"
+msgstr ""
+
+msgid "Deduction deleted!"
+msgstr ""
+
+msgid "Deduction saved!"
+msgstr ""
+
+msgid "Deductions"
+msgstr ""
+
+msgid "Default Template"
+msgstr ""
+
+msgid "Defaults"
+msgstr ""
+
+msgid "Defaults saved!"
+msgstr ""
+
+msgid "Delete"
+msgstr "Sil"
+
+msgid "Delete Account"
+msgstr "Hesabı Sil"
+
+msgid "Delete Dataset"
+msgstr "Verisetini Sil"
+
+msgid "Delete Schedule"
+msgstr ""
+
+msgid "Deleting a language will also delete the templates for the language"
+msgstr ""
+
+msgid "Delivery Date"
+msgstr ""
+
+msgid "Department"
+msgstr ""
+
+msgid "Department deleted!"
+msgstr ""
+
+msgid "Department saved!"
+msgstr ""
+
+msgid "Departments"
+msgstr ""
+
+msgid "Deposit"
+msgstr ""
+
+msgid "Description"
+msgstr "Açıklama"
+
+msgid "Description Translations"
+msgstr ""
+
+msgid "Description missing!"
+msgstr ""
+
+msgid "Detail"
+msgstr ""
+
+msgid "Difference"
+msgstr ""
+
+msgid "Directory"
+msgstr "Dizin"
+
+msgid "Discount"
+msgstr "İndirim"
+
+msgid "Done"
+msgstr ""
+
+msgid "Drawing"
+msgstr ""
+
+msgid "Driver"
+msgstr "Sürücü"
+
+msgid "Dropdown Limit"
+msgstr ""
+
+msgid "Due Date"
+msgstr "Vade Tarihi"
+
+msgid "Due Date missing!"
+msgstr "Vade Tarihi yok!"
+
+msgid "E-mail"
+msgstr "Posta"
+
+msgid "E-mail Statement to"
+msgstr ""
+
+msgid "E-mail address missing!"
+msgstr "Posta adresi yok!"
+
+msgid "E-mail message"
+msgstr ""
+
+msgid "E-mailed"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Edit AP Transaction"
+msgstr ""
+
+msgid "Edit AR Transaction"
+msgstr ""
+
+msgid "Edit Account"
+msgstr "Hesabı Düzenle"
+
+msgid "Edit Assembly"
+msgstr "Grubu Düzenle"
+
+msgid "Edit Business"
+msgstr ""
+
+msgid "Edit Cash Transfer Transaction"
+msgstr ""
+
+msgid "Edit Customer"
+msgstr ""
+
+msgid "Edit Deduction"
+msgstr ""
+
+msgid "Edit Department"
+msgstr ""
+
+msgid "Edit Description Translations"
+msgstr ""
+
+msgid "Edit Employee"
+msgstr ""
+
+msgid "Edit GIFI"
+msgstr ""
+
+msgid "Edit General Ledger Transaction"
+msgstr "Defteri Kebir İşlemini Düzenle"
+
+msgid "Edit Group"
+msgstr ""
+
+msgid "Edit Job"
+msgstr ""
+
+msgid "Edit Labor/Overhead"
+msgstr ""
+
+msgid "Edit Language"
+msgstr ""
+
+msgid "Edit POS Invoice"
+msgstr ""
+
+msgid "Edit Part"
+msgstr "Parçayı Düzenle"
+
+msgid "Edit Preferences for"
+msgstr "Tercihleri Düzenle: "
+
+msgid "Edit Pricegroup"
+msgstr ""
+
+msgid "Edit Project"
+msgstr ""
+
+msgid "Edit Purchase Order"
+msgstr "Alış Siparişini Düzenle"
+
+msgid "Edit Quotation"
+msgstr ""
+
+msgid "Edit Request for Quotation"
+msgstr ""
+
+msgid "Edit SIC"
+msgstr ""
+
+msgid "Edit Sales Invoice"
+msgstr ""
+
+msgid "Edit Sales Order"
+msgstr "Satış Siparişini Düzenle"
+
+msgid "Edit Service"
+msgstr "Hizmeti Düzenle"
+
+msgid "Edit Template"
+msgstr "Şablonu Düzenle"
+
+msgid "Edit Timecard"
+msgstr ""
+
+msgid "Edit User"
+msgstr "Kullanıcı Bilgilerini Düzenle"
+
+msgid "Edit Vendor"
+msgstr ""
+
+msgid "Edit Vendor Invoice"
+msgstr ""
+
+msgid "Edit Warehouse"
+msgstr ""
+
+msgid "Employee"
+msgstr ""
+
+msgid "Employee Name"
+msgstr ""
+
+msgid "Employee Number"
+msgstr ""
+
+msgid "Employee deleted!"
+msgstr ""
+
+msgid "Employee pays"
+msgstr ""
+
+msgid "Employee saved!"
+msgstr ""
+
+msgid "Employees"
+msgstr ""
+
+msgid "Employer"
+msgstr ""
+
+msgid "Employer pays"
+msgstr ""
+
+msgid "Enddate"
+msgstr ""
+
+msgid "Ends"
+msgstr ""
+
+msgid "Enforce transaction reversal for all dates"
+msgstr ""
+
+msgid "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native and foreign currencies"
+msgstr "Yerel ve yabancı para birimleri için 3 harfli tanımlama giriniz yi tıklayınız (USD:TRL:EUR)"
+
+msgid "Equity"
+msgstr "Sermaye"
+
+msgid "Every"
+msgstr ""
+
+msgid "Excempt age <"
+msgstr ""
+
+msgid "Exch"
+msgstr "D.Kuru"
+
+msgid "Exchange Rate"
+msgstr "Döviz Kuru"
+
+msgid "Exchange rate for payment missing!"
+msgstr ""
+
+msgid "Exchange rate missing!"
+msgstr ""
+
+msgid "Existing Datasets"
+msgstr "Verisetleri"
+
+msgid "Expense"
+msgstr "Gider"
+
+msgid "Expense account does not exist!"
+msgstr ""
+
+msgid "Expense/Asset"
+msgstr "Gider/Varlıklar"
+
+msgid "Extended"
+msgstr ""
+
+msgid "FX"
+msgstr ""
+
+msgid "Failed to save order!"
+msgstr ""
+
+msgid "Fax"
+msgstr "Faks"
+
+msgid "Feb"
+msgstr "Şub"
+
+msgid "February"
+msgstr "Şubat"
+
+msgid "For"
+msgstr ""
+
+msgid "Foreign Exchange Gain"
+msgstr "Kur Kazancı"
+
+msgid "Foreign Exchange Loss"
+msgstr "Kur Kaybı"
+
+msgid "Friday"
+msgstr ""
+
+msgid "From"
+msgstr "Başlangıç"
+
+msgid "From Warehouse"
+msgstr ""
+
+msgid "GIFI"
+msgstr ""
+
+msgid "GIFI deleted!"
+msgstr ""
+
+msgid "GIFI missing!"
+msgstr ""
+
+msgid "GIFI saved!"
+msgstr ""
+
+msgid "GL"
+msgstr ""
+
+msgid "GL Reference Number"
+msgstr ""
+
+msgid "GL Transaction"
+msgstr ""
+
+msgid "General Ledger"
+msgstr "Defteri Kebir"
+
+msgid "Generate"
+msgstr ""
+
+msgid "Generate Orders"
+msgstr ""
+
+msgid "Generate Purchase Orders"
+msgstr ""
+
+msgid "Generate Purchase Orders from Sales Order"
+msgstr ""
+
+msgid "Generate Sales Order"
+msgstr ""
+
+msgid "Generate Sales Order from Purchase Orders"
+msgstr ""
+
+msgid "Generate Sales Orders"
+msgstr ""
+
+msgid "Goods & Services"
+msgstr ""
+
+msgid "Group"
+msgstr ""
+
+msgid "Group Items"
+msgstr ""
+
+msgid "Group Translations"
+msgstr ""
+
+msgid "Group deleted!"
+msgstr ""
+
+msgid "Group missing!"
+msgstr ""
+
+msgid "Group saved!"
+msgstr ""
+
+msgid "Groups"
+msgstr ""
+
+msgid "HR"
+msgstr ""
+
+msgid "HTML Templates"
+msgstr ""
+
+msgid "Heading"
+msgstr "Başlık"
+
+msgid "History"
+msgstr ""
+
+msgid "Home Phone"
+msgstr ""
+
+msgid "Host"
+msgstr "Host"
+
+msgid "Hostname missing!"
+msgstr "Host yok!"
+
+msgid "IBAN"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "In-line"
+msgstr ""
+
+msgid "Inactive"
+msgstr ""
+
+msgid "Include Exchange Rate Difference"
+msgstr ""
+
+msgid "Include Payment"
+msgstr ""
+
+msgid "Include in Report"
+msgstr "Raporla"
+
+msgid "Include in drop-down menus"
+msgstr "Seçmeli Menüye dahil et"
+
+msgid "Income"
+msgstr ""
+
+msgid "Income Statement"
+msgstr "Gelir Tablosu"
+
+msgid "Income account does not exist!"
+msgstr ""
+
+msgid "Incorrect Dataset version!"
+msgstr ""
+
+msgid "Increase"
+msgstr ""
+
+msgid "Individual Items"
+msgstr "Farklı Kalemler"
+
+msgid "Internal Notes"
+msgstr ""
+
+msgid "Inventory"
+msgstr "Stok"
+
+msgid "Inventory account does not exist!"
+msgstr ""
+
+msgid "Inventory quantity must be zero before you can set this assembly obsolete!"
+msgstr "Bu grubu çıkarmadan önce stok miktarı sıfır olmalıdır"
+
+msgid "Inventory quantity must be zero before you can set this part obsolete!"
+msgstr "Bu Parçayı çıkarmadan önce stok miktarı sıfır olmalıdır"
+
+msgid "Inventory saved!"
+msgstr ""
+
+msgid "Inventory transferred!"
+msgstr ""
+
+msgid "Invoice"
+msgstr "Fatura"
+
+msgid "Invoice Date"
+msgstr "Fatura Tarihi"
+
+msgid "Invoice Date missing!"
+msgstr "Fatura Tarihi yok!"
+
+msgid "Invoice Number"
+msgstr "Fatura No"
+
+msgid "Invoice Number missing!"
+msgstr "Fatura Numarası yok!"
+
+msgid "Invoice deleted!"
+msgstr ""
+
+msgid "Invoices"
+msgstr ""
+
+msgid "Is this a summary account to record"
+msgstr "Bu kaydedilecek hesap özeti mi"
+
+msgid "Item already on pricelist!"
+msgstr ""
+
+msgid "Item deleted!"
+msgstr ""
+
+msgid "Item not on file!"
+msgstr "Bu kalem dosyada yok!"
+
+msgid "Items"
+msgstr ""
+
+msgid "Jan"
+msgstr "Oca"
+
+msgid "January"
+msgstr "Ocak"
+
+msgid "Job"
+msgstr ""
+
+msgid "Job Name"
+msgstr ""
+
+msgid "Job Number"
+msgstr ""
+
+msgid "Job Number missing!"
+msgstr ""
+
+msgid "Job deleted!"
+msgstr ""
+
+msgid "Job saved!"
+msgstr ""
+
+msgid "Jobs"
+msgstr ""
+
+msgid "Jul"
+msgstr "Tem"
+
+msgid "July"
+msgstr "Temmuz"
+
+msgid "Jun"
+msgstr "Haz"
+
+msgid "June"
+msgstr "Haziran"
+
+msgid "LaTeX Templates"
+msgstr ""
+
+msgid "Labor Code"
+msgstr ""
+
+msgid "Labor/Overhead"
+msgstr ""
+
+msgid "Language"
+msgstr "Dil"
+
+msgid "Language deleted!"
+msgstr ""
+
+msgid "Language saved!"
+msgstr ""
+
+msgid "Languages"
+msgstr ""
+
+msgid "Languages not defined!"
+msgstr ""
+
+msgid "Last Cost"
+msgstr ""
+
+msgid "Last Numbers & Default Accounts"
+msgstr "Son Numaralar ve Öntanımlı Hesaplar"
+
+msgid "Lead"
+msgstr ""
+
+msgid "Leadtime"
+msgstr ""
+
+msgid "Leave host and port field empty unless you want to make a remote connection."
+msgstr "Uzakta baglantı yapmak istemiyorsanız host ve port alanlarını boş bırakınız."
+
+msgid "Liability"
+msgstr "Pasif"
+
+msgid "Licensed to"
+msgstr "Lisans Sahibi:"
+
+msgid "Line Total"
+msgstr ""
+
+msgid "Link"
+msgstr "Bağla"
+
+msgid "Link Accounts"
+msgstr "Bağlı Hesaplar"
+
+msgid "List"
+msgstr ""
+
+msgid "List Accounts"
+msgstr ""
+
+msgid "List Businesses"
+msgstr ""
+
+msgid "List Departments"
+msgstr ""
+
+msgid "List GIFI"
+msgstr ""
+
+msgid "List Languages"
+msgstr ""
+
+msgid "List Price"
+msgstr "Liste Fiyatı"
+
+msgid "List Projects"
+msgstr ""
+
+msgid "List SIC"
+msgstr ""
+
+msgid "List Transactions"
+msgstr "İşlemleri Listele"
+
+msgid "List Warehouses"
+msgstr ""
+
+msgid "Lock System"
+msgstr "Lock System"
+
+msgid "Lockfile created!"
+msgstr "Lockfile created!"
+
+msgid "Lockfile removed!"
+msgstr "Lockfile removed!"
+
+msgid "Login"
+msgstr "Giriş"
+
+msgid "Login name missing!"
+msgstr "Login name missing!"
+
+msgid "Logout"
+msgstr ""
+
+msgid "Make"
+msgstr "Marka"
+
+msgid "Manager"
+msgstr ""
+
+msgid "Mar"
+msgstr "Mar"
+
+msgid "March"
+msgstr "Mart"
+
+msgid "Marked entries printed!"
+msgstr ""
+
+msgid "Markup"
+msgstr ""
+
+msgid "Maximum"
+msgstr ""
+
+msgid "May"
+msgstr "May"
+
+msgid "May "
+msgstr "Mayıs"
+
+msgid "Memo"
+msgstr ""
+
+msgid "Menu Width"
+msgstr ""
+
+msgid "Message"
+msgstr ""
+
+msgid "Method"
+msgstr ""
+
+msgid "Microfiche"
+msgstr ""
+
+msgid "Model"
+msgstr "Model"
+
+msgid "Monday"
+msgstr ""
+
+msgid "Month"
+msgstr ""
+
+msgid "Month(s)"
+msgstr ""
+
+msgid "Months"
+msgstr ""
+
+msgid "Multibyte Encoding"
+msgstr "Multibyte Encoding"
+
+msgid "N/A"
+msgstr ""
+
+msgid "Name"
+msgstr "İsim"
+
+msgid "Name missing!"
+msgstr ""
+
+msgid "New Templates"
+msgstr "Yeni Şablonlar"
+
+msgid "New Window"
+msgstr ""
+
+msgid "Next"
+msgstr ""
+
+msgid "Next Date"
+msgstr ""
+
+msgid "Next Number"
+msgstr ""
+
+msgid "No"
+msgstr "Hayır"
+
+msgid "No Database Drivers available!"
+msgstr "Veritabanı Sürücüsü yok!"
+
+msgid "No Dataset selected!"
+msgstr "Veriseti seçilmedi!"
+
+msgid "No Employees on file!"
+msgstr ""
+
+msgid "No Labor codes on file!"
+msgstr ""
+
+msgid "No email address for"
+msgstr "E-posta adresi yok: "
+
+msgid "No open Jobs!"
+msgstr ""
+
+msgid "No open Projects!"
+msgstr ""
+
+msgid "No."
+msgstr ""
+
+msgid "Non-taxable"
+msgstr ""
+
+msgid "Non-taxable Purchases"
+msgstr ""
+
+msgid "Non-taxable Sales"
+msgstr ""
+
+msgid "Non-tracking Items"
+msgstr ""
+
+msgid "Notes"
+msgstr "Notlar:"
+
+msgid "Nothing entered!"
+msgstr ""
+
+msgid "Nothing selected!"
+msgstr ""
+
+msgid "Nothing to delete!"
+msgstr "Nothing to delete!"
+
+msgid "Nothing to print!"
+msgstr ""
+
+msgid "Nothing to transfer!"
+msgstr ""
+
+msgid "Nov"
+msgstr "Kas"
+
+msgid "November"
+msgstr "Kasım"
+
+msgid "Number"
+msgstr "Numara"
+
+msgid "Number Format"
+msgstr "Rakam Formatı"
+
+msgid "Number missing in Row"
+msgstr "Sırada Numara yok!"
+
+msgid "O"
+msgstr ""
+
+msgid "OH"
+msgstr ""
+
+msgid "Obsolete"
+msgstr "Eski"
+
+msgid "Oct"
+msgstr "Eki"
+
+msgid "October"
+msgstr "Ekim"
+
+msgid "On Hand"
+msgstr "Stok:"
+
+msgid "Open"
+msgstr ""
+
+msgid "Oracle Database Administration"
+msgstr "Oracle Veritabanı Yönetimi"
+
+msgid "Order"
+msgstr "Sipariş"
+
+msgid "Order Date"
+msgstr "Sipariş Tarihi"
+
+msgid "Order Date missing!"
+msgstr "Sipariş Tarihi yok!"
+
+msgid "Order Entry"
+msgstr "Sipariş Girişi"
+
+msgid "Order Number"
+msgstr "Sipariş No"
+
+msgid "Order Number missing!"
+msgstr "Sipariş Numarası yok!"
+
+msgid "Order deleted!"
+msgstr ""
+
+msgid "Order generation failed!"
+msgstr ""
+
+msgid "Order saved!"
+msgstr ""
+
+msgid "Orders generated!"
+msgstr ""
+
+msgid "Orphaned"
+msgstr ""
+
+msgid "Out of balance transaction!"
+msgstr ""
+
+msgid "Out of balance!"
+msgstr ""
+
+msgid "Outstanding"
+msgstr ""
+
+msgid "PDF"
+msgstr ""
+
+msgid "PO Number"
+msgstr ""
+
+msgid "POS"
+msgstr ""
+
+msgid "POS Invoice"
+msgstr ""
+
+msgid "Packing List"
+msgstr "Paketleme Listesi"
+
+msgid "Packing List Date missing!"
+msgstr ""
+
+msgid "Packing List Number missing!"
+msgstr ""
+
+msgid "Packing Lists"
+msgstr ""
+
+msgid "Paid"
+msgstr "Ödendi"
+
+msgid "Part"
+msgstr "Parça"
+
+msgid "Part Number"
+msgstr ""
+
+msgid "Partnumber"
+msgstr ""
+
+msgid "Parts"
+msgstr "Parçalar"
+
+msgid "Password"
+msgstr "Şifre"
+
+msgid "Password changed!"
+msgstr "Password changed!"
+
+msgid "Password does not match!"
+msgstr ""
+
+msgid "Passwords do not match!"
+msgstr ""
+
+msgid "Payables"
+msgstr "Borçlar"
+
+msgid "Payment"
+msgstr "Ödeme"
+
+msgid "Payment date missing!"
+msgstr "Ödeme Tarihi yok"
+
+msgid "Payment posted!"
+msgstr ""
+
+msgid "Payments"
+msgstr "Ödemeler"
+
+msgid "Payments posted!"
+msgstr ""
+
+msgid "Payroll Deduction"
+msgstr ""
+
+msgid "Period"
+msgstr ""
+
+msgid "Pg Database Administration"
+msgstr "Pg Veritabanı Yönetimi"
+
+msgid "PgPP Database Administration"
+msgstr "PgPP Database Administration"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Pick List"
+msgstr ""
+
+msgid "Pick Lists"
+msgstr ""
+
+msgid "Port"
+msgstr "Port"
+
+msgid "Port missing!"
+msgstr "Port yok!"
+
+msgid "Pos"
+msgstr ""
+
+msgid "Post"
+msgstr ""
+
+msgid "Post as new"
+msgstr ""
+
+msgid "Posted!"
+msgstr ""
+
+msgid "Posting"
+msgstr ""
+
+msgid "Posting failed!"
+msgstr ""
+
+msgid "Postscript"
+msgstr ""
+
+msgid "Preferences"
+msgstr "Tercihler"
+
+msgid "Preferences saved!"
+msgstr "Tercihler kaydedildi!"
+
+msgid "Prepayment"
+msgstr ""
+
+msgid "Price"
+msgstr "Fiyat"
+
+msgid "Pricegroup"
+msgstr ""
+
+msgid "Pricegroup deleted!"
+msgstr ""
+
+msgid "Pricegroup missing!"
+msgstr ""
+
+msgid "Pricegroup saved!"
+msgstr ""
+
+msgid "Pricegroups"
+msgstr ""
+
+msgid "Pricelist"
+msgstr ""
+
+msgid "Print"
+msgstr ""
+
+msgid "Print and Post"
+msgstr ""
+
+msgid "Print and Post as new"
+msgstr ""
+
+msgid "Print and Save"
+msgstr ""
+
+msgid "Print and Save as new"
+msgstr ""
+
+msgid "Print and post as new"
+msgstr ""
+
+msgid "Print and save as new"
+msgstr ""
+
+msgid "Printed"
+msgstr ""
+
+msgid "Printer"
+msgstr "Yazıcı"
+
+msgid "Printing"
+msgstr ""
+
+msgid "Printing ... "
+msgstr ""
+
+msgid "Process Transactions"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Profit Center"
+msgstr ""
+
+msgid "Project"
+msgstr ""
+
+msgid "Project Description Translations"
+msgstr ""
+
+msgid "Project Name"
+msgstr ""
+
+msgid "Project Number"
+msgstr ""
+
+msgid "Project Number missing!"
+msgstr ""
+
+msgid "Project Transactions"
+msgstr ""
+
+msgid "Project deleted!"
+msgstr ""
+
+msgid "Project not on file!"
+msgstr ""
+
+msgid "Project saved!"
+msgstr ""
+
+msgid "Project/Job Name"
+msgstr ""
+
+msgid "Project/Job Number"
+msgstr ""
+
+msgid "Projects"
+msgstr ""
+
+msgid "Purchase Order"
+msgstr "Satınalma Siparişi"
+
+msgid "Purchase Order Number"
+msgstr ""
+
+msgid "Purchase Orders"
+msgstr "Satınalma Siparişleri"
+
+msgid "Qty"
+msgstr "Adet"
+
+msgid "Quantity exceeds available units to stock!"
+msgstr ""
+
+msgid "Quarter"
+msgstr ""
+
+msgid "Quotation"
+msgstr ""
+
+msgid "Quotation "
+msgstr ""
+
+msgid "Quotation Date"
+msgstr ""
+
+msgid "Quotation Date missing!"
+msgstr ""
+
+msgid "Quotation Number"
+msgstr ""
+
+msgid "Quotation Number missing!"
+msgstr ""
+
+msgid "Quotation deleted!"
+msgstr ""
+
+msgid "Quotations"
+msgstr ""
+
+msgid "R"
+msgstr ""
+
+msgid "RFQ"
+msgstr ""
+
+msgid "RFQ "
+msgstr ""
+
+msgid "RFQ Number"
+msgstr ""
+
+msgid "RFQs"
+msgstr ""
+
+msgid "ROP"
+msgstr ""
+
+msgid "Rate"
+msgstr "Oran"
+
+msgid "Rate missing!"
+msgstr ""
+
+msgid "Recd"
+msgstr ""
+
+msgid "Receipt"
+msgstr ""
+
+msgid "Receipt posted!"
+msgstr ""
+
+msgid "Receipts"
+msgstr ""
+
+msgid "Receivables"
+msgstr "Alacaklar"
+
+msgid "Receive"
+msgstr ""
+
+msgid "Receive Merchandise"
+msgstr ""
+
+msgid "Reconciliation"
+msgstr ""
+
+msgid "Reconciliation Report"
+msgstr ""
+
+msgid "Record in"
+msgstr "Kaydet"
+
+msgid "Recurring Transaction"
+msgstr ""
+
+msgid "Recurring Transactions"
+msgstr ""
+
+msgid "Reference"
+msgstr ""
+
+msgid "Remaining"
+msgstr ""
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove Audit trail up to"
+msgstr ""
+
+msgid "Removed spoolfiles!"
+msgstr ""
+
+msgid "Removing marked entries from queue ..."
+msgstr ""
+
+msgid "Repeat"
+msgstr ""
+
+msgid "Report for"
+msgstr ""
+
+msgid "Reports"
+msgstr "Raporlar"
+
+msgid "Req"
+msgstr ""
+
+msgid "Request for Quotation"
+msgstr ""
+
+msgid "Request for Quotations"
+msgstr ""
+
+msgid "Required by"
+msgstr "Talep tarihi:"
+
+msgid "Retained Earnings"
+msgstr "Net Dönem Karı (Zararı)"
+
+msgid "Role"
+msgstr ""
+
+msgid "S"
+msgstr ""
+
+msgid "SIC"
+msgstr ""
+
+msgid "SIC deleted!"
+msgstr ""
+
+msgid "SIC saved!"
+msgstr ""
+
+msgid "SKU"
+msgstr ""
+
+msgid "SSN"
+msgstr ""
+
+msgid "Sale"
+msgstr ""
+
+msgid "Sales"
+msgstr "Satışlar"
+
+msgid "Sales Invoice"
+msgstr ""
+
+msgid "Sales Invoice "
+msgstr ""
+
+msgid "Sales Invoice."
+msgstr ""
+
+msgid "Sales Invoice/AR Transaction Number"
+msgstr ""
+
+msgid "Sales Invoices"
+msgstr ""
+
+msgid "Sales Order"
+msgstr "Satış Siparişi"
+
+msgid "Sales Order Number"
+msgstr ""
+
+msgid "Sales Orders"
+msgstr "Satış Siparişleri"
+
+msgid "Sales Quotation Number"
+msgstr ""
+
+msgid "Salesperson"
+msgstr ""
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Save"
+msgstr "Kaydet"
+
+msgid "Save Pricelist"
+msgstr ""
+
+msgid "Save Schedule"
+msgstr ""
+
+msgid "Save as new"
+msgstr ""
+
+msgid "Save to File"
+msgstr "Dosyaya Kaydet"
+
+msgid "Saving"
+msgstr ""
+
+msgid "Schedule"
+msgstr ""
+
+msgid "Scheduled"
+msgstr ""
+
+msgid "Screen"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Select"
+msgstr ""
+
+msgid "Select Customer"
+msgstr ""
+
+msgid "Select Vendor"
+msgstr ""
+
+msgid "Select a Printer!"
+msgstr ""
+
+msgid "Select a printer!"
+msgstr ""
+
+msgid "Select all"
+msgstr ""
+
+msgid "Select from one of the items below"
+msgstr "Aşağıdaki kalemlerden birini seç"
+
+msgid "Select from one of the names below"
+msgstr ""
+
+msgid "Select from one of the projects below"
+msgstr ""
+
+msgid "Select items"
+msgstr ""
+
+msgid "Select payment"
+msgstr ""
+
+msgid "Select postscript or PDF!"
+msgstr ""
+
+msgid "Select txt, postscript or PDF!"
+msgstr ""
+
+msgid "Sell"
+msgstr ""
+
+msgid "Sell Price"
+msgstr "Satış Fiyatı"
+
+msgid "Send by E-Mail"
+msgstr "E-postayla gönder"
+
+msgid "Sending"
+msgstr ""
+
+msgid "Sep"
+msgstr "Eyl"
+
+msgid "September"
+msgstr "Eylül"
+
+msgid "Serial No."
+msgstr ""
+
+msgid "Serial Number"
+msgstr ""
+
+msgid "Service"
+msgstr "servis"
+
+msgid "Service Code"
+msgstr ""
+
+msgid "Service/Labor Code"
+msgstr ""
+
+msgid "Services"
+msgstr "Servisler"
+
+msgid "Session Timeout"
+msgstr ""
+
+msgid "Session expired!"
+msgstr ""
+
+msgid "Setup Templates"
+msgstr "Şablon Kur"
+
+msgid "Ship"
+msgstr ""
+
+msgid "Ship Merchandise"
+msgstr ""
+
+msgid "Ship to"
+msgstr ""
+
+msgid "Ship via"
+msgstr ""
+
+msgid "Shipping"
+msgstr ""
+
+msgid "Shipping Address"
+msgstr ""
+
+msgid "Shipping Date"
+msgstr ""
+
+msgid "Shipping Date missing!"
+msgstr ""
+
+msgid "Shipping Point"
+msgstr ""
+
+msgid "Short"
+msgstr "Kısa"
+
+msgid "Signature"
+msgstr "İmza"
+
+msgid "Source"
+msgstr "Kaynak"
+
+msgid "Spoolfile"
+msgstr ""
+
+msgid "Standard"
+msgstr ""
+
+msgid "Standard Industrial Codes"
+msgstr ""
+
+msgid "Startdate"
+msgstr ""
+
+msgid "State"
+msgstr ""
+
+msgid "State/Province"
+msgstr ""
+
+msgid "Statement"
+msgstr ""
+
+msgid "Statement Balance"
+msgstr ""
+
+msgid "Statement sent to"
+msgstr ""
+
+msgid "Statements sent to printer!"
+msgstr ""
+
+msgid "Stock"
+msgstr ""
+
+msgid "Stock Assembly"
+msgstr "Grubu Stokla"
+
+msgid "Stocking Date"
+msgstr ""
+
+msgid "Stylesheet"
+msgstr "Düzen Sayfası"
+
+msgid "Sub-contract GIFI"
+msgstr ""
+
+msgid "Subject"
+msgstr ""
+
+msgid "Subtotal"
+msgstr "Aratoplam"
+
+msgid "Summary"
+msgstr ""
+
+msgid "Sunday"
+msgstr ""
+
+msgid "Supervisor"
+msgstr ""
+
+msgid "System"
+msgstr ""
+
+msgid "System Defaults"
+msgstr ""
+
+msgid "Tax"
+msgstr "Vergi"
+
+msgid "Tax Accounts"
+msgstr "Vergi Hesapları"
+
+msgid "Tax Included"
+msgstr "Vergi Dahil"
+
+msgid "Tax Number"
+msgstr ""
+
+msgid "Tax Number / SSN"
+msgstr ""
+
+msgid "Tax collected"
+msgstr ""
+
+msgid "Tax paid"
+msgstr ""
+
+msgid "Taxable"
+msgstr "Vergiye tabi"
+
+msgid "Template saved!"
+msgstr ""
+
+msgid "Templates"
+msgstr "Şablonlar"
+
+msgid "Terms"
+msgstr "Şartlar"
+
+msgid "Text"
+msgstr ""
+
+msgid "Text Templates"
+msgstr ""
+
+msgid "The following Datasets are not in use and can be deleted"
+msgstr "Aşağıdaki Verisetleri kullanılmamaktadır ve silinebilir"
+
+msgid "The following Datasets need to be updated"
+msgstr "The following Datasets need to be updated"
+
+msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
+msgstr "Mevcut fiş bilgileri için bu bir ön kontroldür. Bu aşamada hiçbirşey oluşturulmaz ve silinemez"
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Till"
+msgstr ""
+
+msgid "Time In"
+msgstr ""
+
+msgid "Time Out"
+msgstr ""
+
+msgid "Timecard"
+msgstr ""
+
+msgid "Timecard deleted!"
+msgstr ""
+
+msgid "Timecard saved!"
+msgstr ""
+
+msgid "Timecards"
+msgstr ""
+
+msgid "Times"
+msgstr ""
+
+msgid "To"
+msgstr "Bitiş"
+
+msgid "To Warehouse"
+msgstr ""
+
+msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
+msgstr "Gruba yeni kullanıcı eklemek için, giriş ismini değiştirin ve kaydedin. Yeni kullanıcı yeni giriş altında aynı parametrelerle kaydedilecektir."
+
+msgid "Top Level"
+msgstr ""
+
+msgid "Total"
+msgstr "Toplam"
+
+msgid "Tracking Items"
+msgstr ""
+
+msgid "Trade Discount"
+msgstr ""
+
+msgid "Transaction"
+msgstr ""
+
+msgid "Transaction Date missing!"
+msgstr "İşlem Tarihi yok!"
+
+msgid "Transaction Dates"
+msgstr ""
+
+msgid "Transaction deleted!"
+msgstr ""
+
+msgid "Transaction posted!"
+msgstr ""
+
+msgid "Transaction reversal enforced for all dates"
+msgstr ""
+
+msgid "Transaction reversal enforced up to"
+msgstr ""
+
+msgid "Transactions"
+msgstr "İşlemler"
+
+msgid "Transfer"
+msgstr ""
+
+msgid "Transfer Inventory"
+msgstr ""
+
+msgid "Transfer from"
+msgstr ""
+
+msgid "Transfer to"
+msgstr ""
+
+msgid "Translation"
+msgstr ""
+
+msgid "Translation deleted!"
+msgstr ""
+
+msgid "Translation not on file!"
+msgstr ""
+
+msgid "Translations"
+msgstr ""
+
+msgid "Translations saved!"
+msgstr ""
+
+msgid "Trial Balance"
+msgstr "Proforma Bilanço"
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Type of Business"
+msgstr ""
+
+msgid "Unit"
+msgstr "Birim"
+
+msgid "Unit of measure"
+msgstr "Ölçme Birimi"
+
+msgid "Unlock System"
+msgstr "Unlock System"
+
+msgid "Update"
+msgstr ""
+
+msgid "Update Dataset"
+msgstr "Update Dataset"
+
+msgid "Updated"
+msgstr ""
+
+msgid "Upgrading to Version"
+msgstr ""
+
+msgid "Use Templates"
+msgstr "Şablon Kullan"
+
+msgid "User"
+msgstr "Kullanıcı"
+
+msgid "User deleted!"
+msgstr "User deleted!"
+
+msgid "User saved!"
+msgstr "User saved!"
+
+msgid "Valid until"
+msgstr ""
+
+msgid "Vendor"
+msgstr "Satıcı"
+
+msgid "Vendor History"
+msgstr ""
+
+msgid "Vendor Invoice"
+msgstr ""
+
+msgid "Vendor Invoice "
+msgstr ""
+
+msgid "Vendor Invoice."
+msgstr ""
+
+msgid "Vendor Invoice/AP Transaction Number"
+msgstr ""
+
+msgid "Vendor Invoices"
+msgstr ""
+
+msgid "Vendor Number"
+msgstr ""
+
+msgid "Vendor deleted!"
+msgstr ""
+
+msgid "Vendor missing!"
+msgstr ""
+
+msgid "Vendor not on file!"
+msgstr ""
+
+msgid "Vendor saved!"
+msgstr ""
+
+msgid "Vendors"
+msgstr ""
+
+msgid "Version"
+msgstr "Versiyon"
+
+msgid "Warehouse"
+msgstr ""
+
+msgid "Warehouse deleted!"
+msgstr ""
+
+msgid "Warehouse saved!"
+msgstr ""
+
+msgid "Warehouses"
+msgstr ""
+
+msgid "Warning!"
+msgstr ""
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Week"
+msgstr ""
+
+msgid "Week(s)"
+msgstr ""
+
+msgid "Weeks"
+msgstr ""
+
+msgid "Weight"
+msgstr "Ağırlık"
+
+msgid "Weight Unit"
+msgstr "Ağırlık Birimi"
+
+msgid "What type of item is this?"
+msgstr "Bu ne çeşit bir kalemdir?"
+
+msgid "Work Order"
+msgstr ""
+
+msgid "Work Orders"
+msgstr ""
+
+msgid "Work Phone"
+msgstr ""
+
+msgid "Year"
+msgstr ""
+
+msgid "Year(s)"
+msgstr ""
+
+msgid "Yearend"
+msgstr ""
+
+msgid "Yearend date missing!"
+msgstr ""
+
+msgid "Yearend posted!"
+msgstr ""
+
+msgid "Yearend posting failed!"
+msgstr ""
+
+msgid "Years"
+msgstr ""
+
+msgid "Yes"
+msgstr "Evet"
+
+msgid "You are logged out"
+msgstr ""
+
+msgid "You are posting an existing transaction!"
+msgstr ""
+
+msgid "You are printing and posting an existing transaction!"
+msgstr ""
+
+msgid "You are printing and saving an existing order"
+msgstr ""
+
+msgid "You are printing and saving an existing quotation"
+msgstr ""
+
+msgid "You are printing and saving an existing transaction!"
+msgstr ""
+
+msgid "You are saving an existing order"
+msgstr ""
+
+msgid "You are saving an existing quotation"
+msgstr ""
+
+msgid "You are saving an existing transaction!"
+msgstr ""
+
+msgid "You did not enter a name!"
+msgstr "İsim girmediniz!"
+
+msgid "You must enter a host and port for local and remote connections!"
+msgstr "Yerel ve uzak bağlantılar için bir host ve port girmek zorundasınız!"
+
+msgid "Zip/Postal Code"
+msgstr ""
+
+msgid "account cannot be set to any other type of account"
+msgstr ""
+
+msgid "as at"
+msgstr ""
+
+msgid "days"
+msgstr "gün. "
+
+msgid "does not exist"
+msgstr "mevcut değil"
+
+msgid "done"
+msgstr ""
+
+msgid "ea"
+msgstr "ad"
+
+msgid "failed"
+msgstr ""
+
+msgid "for"
+msgstr ""
+
+msgid "for Period"
+msgstr "Dönem:"
+
+msgid "is already a member!"
+msgstr "üyedir!"
+
+msgid "localhost"
+msgstr "Yerelhost"
+
+msgid "locked!"
+msgstr ""
+
+msgid "partsgroup"
+msgstr ""
+
+msgid "posted!"
+msgstr ""
+
+msgid "sent"
+msgstr ""
+
+msgid "successfully created!"
+msgstr "başarıyla oluşturuldu!"
+
+msgid "successfully deleted!"
+msgstr "başarıyla silindi!"
+
+msgid "time(s)"
+msgstr ""
+
+msgid "unexpected error!"
+msgstr ""
+
+msgid "website"
+msgstr "Websitesi"
+

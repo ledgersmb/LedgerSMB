@@ -1,0 +1,21 @@
+README for SQL-Ledger Users
+===============================
+
+LedgerSMB is largely a drop-in replacement for SQL-Ledger.  The initial release
+includes a number of security and data integrity improvements, and future
+versions will likely add new features as well.
+
+As of SQL-Ledger 2.8, upgrading has not been as simple as converting files and 
+importing users.  Both data and users must be imported.  Currently we have no 
+native tool to import users, though with some effort the 1.2 import_users.pl 
+could be tweaked to insert users with preset passwords (perhaps valid for a 
+week).
+
+* Backup your SQL-Ledger db
+* Install LedgerSMB --> Read INSTALL
+* direct your browser to the setup.pl script in your ledgersmb directory (via
+  http) and follow the prompts.
+  --> Follow UPGRADE ("From LedgerSMB 1.2.x", after the setup.pl line)
+
+------------------------------
+http://www.ledgersmb.org/help

@@ -1,0 +1,33 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?> 
+<body>
+<form method="post" action="<?lsmb form.script ?>">
+<table width="100%">
+  <tr><th class="listtop"><?lsmb form.title ?></th></tr>
+  <tr><td> </td></tr>
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <th align="right"><?lsmb text('Type of Business') ?></th>
+	  <td><?lsmb PROCESS input element_data={name => 'description', size => 30, value => form.description} ?></td>
+        </tr>
+        <tr>
+          <th align="right"><?lsmb text('Discount') ?></th>
+          <td><?lsmb PROCESS input element_data={name => 'discount', size => 5, value => form.discount} ?></td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td colspan="2"><hr size="3" noshade="noshade" /></td></tr>
+</table>
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END ?>
+<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+</form>
+</body>
+</html>

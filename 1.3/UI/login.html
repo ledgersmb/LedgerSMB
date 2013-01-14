@@ -1,0 +1,58 @@
+<?lsmb INCLUDE 'ui-header.html' 
+	titlebar = "LedgerSMB $VERSION"
+	include_stylesheet = ["UI/login.css", "css/ledgersmb.css"]
+	include_script = ['UI/util.js', "UI/login.js"]
+?>
+<?lsmb PROCESS elements.html ?>
+
+		 
+
+
+<body class="login" onload="setup_page('<?lsmb text('Name')?>',
+	'<?lsmb text('Password') ?>');">
+	<br /><br />
+	<center>
+		<form method="post" action="login.pl" name="login"
+			onsubmit="return submit_form()">
+		<?lsmb INCLUDE input element_data = {
+			type = "hidden",
+			name = "menubar",
+			value = menubar
+		} ?> 
+		<?lsmb INCLUDE input element_data = {
+			type = "hidden",
+			name = "blacklisted",
+			value = blacklisted
+		} ?> 
+		<div class="login">
+			<div class="login" align="center">
+				<a href="http://www.ledgersmb.org/" target="_top"><img src="images/ledgersmb.png" class="logo" alt="LedgerSMB Logo" /></a>
+				<h1 class="login" align="center"><?lsmb text("LedgerSMB [_1]", VERSION) ?></h1>
+				<div align="center">
+					<div id="credentials"></div>
+					<div id="company_div">
+					  <div class="labelledinput">
+						<div class="label">
+							<label for="company">
+							<?lsmb text('Company') 
+							?>:
+							</label>
+						</div>
+						<div class="input">
+							<input class="login" 
+							type="text" 
+							name="company" 
+							size="30"
+							id="company" 
+                                                        value = "<?lsmb company ?>"
+							accesskey="c" />
+						</div>
+					</div>
+				</div>
+				<button type="submit" name="action" value="login" accesskey="l"><?lsmb text('Login') ?></button>
+			</div>
+		</div></div>
+		</form>
+	</center>
+</body>
+</html>

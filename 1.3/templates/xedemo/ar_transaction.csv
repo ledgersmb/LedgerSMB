@@ -1,0 +1,5 @@
+account,description,amount,memo,project
+<?lsmb FOREACH amount ?><?lsmb lc = loop.count - 1 ?><?lsmb accno.${lc} ?>,<?lsmb account.${lc} ?>,<?lsmb amount.${lc} ?>,<?lsmb description.${lc} ?>,<?lsmb projectnumber.${lc} ?>
+<?lsmb END ?><?lsmb FOREACH t IN taxaccounts.split(' ') ?><?lsmb loop_count = loop.count - 1 -?>
+<?lsmb t.remove('"') ?>,<?lsmb taxdescription.${loop_count} ?>,<?lsmb tax.${loop_count} ?>,,,
+<?lsmb END ?>

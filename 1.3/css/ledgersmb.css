@@ -1,0 +1,290 @@
+/* stylesheet for ledger-smb */
+
+/* general stuff */
+A:link { text-decoration: none; }
+A:visited {text-decoration: none; }
+A:active { text-decoration: underline; }
+A:hover { 
+  background-color: transparent;
+  text-decoration: underline;
+}
+
+body {
+  font-family: Arial, Verdana, Helvetica, sans-serif;
+  color: #444444;
+  font-size: 10pt;
+  background-color: #ffffff;
+}
+
+span.warning_label {
+  font-weight: bold;
+  color: red
+}
+td {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+}
+
+th {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+}
+
+#company_info {
+   font-weight: bold;
+   font-size: 9pt;
+}
+
+/* login and admin */
+.login {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+body.login {
+  background: #5a7d9b;
+  color: black;
+}
+h1.login {
+  font-size: 18pt;
+}
+table.login {
+  background-color: #FFFFFF;
+  padding: 20px;
+}
+td.login {
+  text-align: center;
+}
+th.login {
+  text-align: right;
+}
+
+body.admin {
+  background-color: #FFFFFF;
+  color: black;
+}
+
+body.menu {
+  background-color: #eeeeee;
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 11px;
+  color: black;
+}
+
+cornerlogo {
+	border: 1px solid #000000;
+	margin-left: auto;
+	margin-right: auto;
+	background: #ffffff;
+	padding: 4px;
+}
+
+.menuOut {
+  cursor: pointer;
+  background-color: #eeeeee;
+  font-size: 11px;
+  color: #000084;
+  padding: 2px;
+  text-align: left;
+}
+
+.menuOver {
+  cursor: pointer;
+  background-color: #004a80;
+  font-size: 11px;
+  color: #ffffff;
+  padding: 2px;
+  text-align: left;
+}
+
+.submenu {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  padding-left: 5px;
+}
+
+.menuOut a {
+  cursor: pointer;
+  margin: 0px;
+  background-color: #eeeeee;
+  font-size: 11px;
+  color: #000084;
+  border: 0px solid #000000;
+  padding: 0px;
+  text-align: left;
+}
+
+.menuOver a {
+  margin: 0px;
+  background-color: transparent;
+  font-size: 11px;
+  color: #ffffff;
+  padding: 0px;
+  text-align: left;
+}
+
+.submenu a {
+  color: #004a80;
+  text-decoration: none;
+}
+
+.submenu a:hover {
+  text-decoration: none;
+  color: #eeeeee;
+  background: #004a80;
+}
+
+.listtop { font-size: 10pt; background-color: black; color: white; }
+.listheading, thead th { font-size: 10pt; background-color: #004a80; color: white; }
+A.listheading:link, A.listheading:active, A.listheading:visited {
+  text-decoration: none; }
+.listrow1, table.dynatable tr:nth-child(odd) { font-size: 10pt; background-color: #e6e6fa; color: black; vertical-align: top; }
+.listrow0, table.dynatable tr:nth-child(even) { font-size: 10pt; background-color: #ffe4e1; color: black; vertical-align: top; }
+.listsubtotal { font-size: 10pt; background-color: #5a7d9b; color: white; }
+.listtotal { font-size: 10pt; background-color: #004d99; color: white; }
+
+textarea {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  border: 1px solid #888888;
+  font-size: 11px;
+  background-color: #eeeeee;
+  font-weight: bold;
+}
+
+input {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  border: 1px solid #888888;
+  font-size: 11px;
+  background-color: #eeeeee;
+  font-weight: bold;
+}
+
+select {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+}
+
+.submit {
+  font-size: 10pt;
+  color: #000080;
+  font-weight: normal;
+}
+
+.checkbox, .radio {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+}
+
+.plus0 {    /* font color for negative numbers */
+  color: red;
+}
+
+.plus1 {
+  color: green;
+}
+
+h2.confirm {
+  color: blue;
+  font-size: 14pt;
+}
+
+h2.error {
+  color: red;
+  font-size: 14pt;
+}
+
+#notes_div div.note {
+	margin: 1em;
+	padding: 1em;
+	border: 2px;
+	height: 5em;
+	width: 90%;
+	overflow: hidden;
+	background-color: #ddd;
+	border-style: groove;
+}
+
+#notes_div div.note:hover {
+	overflow:visible;
+	background-color: #ddd;
+	border-style: groove;
+	height: 100%;
+	width: 90%;
+	min-height: 5em;
+	overflow: auto;
+}
+
+#company_div div.note {
+	display: none;
+}
+
+tr.active {
+	background-color: #ddd;
+}
+
+tr.record {
+	background-color: pink;
+}
+
+tr.warning {
+	background-color: yellow;
+}
+
+/* Theming controls based on transaction status */
+/* disabled for now to speed release 
+#statusdiv.new input {
+}
+
+#statusdiv.posted input {
+       background-color: white;
+}
+
+#statusdiv.saved input {
+       background-color: #ccccff;
+}
+
+*/
+
+/* media stuff */
+
+@media screen {
+  .noscreen {   /* items with this class won't display */
+    display: none;
+  }
+}
+
+@media print {
+  .noprint {   /* items with this class won't print */
+    display: none;
+  }
+}
+
+/* ajax-specific styling */
+
+div.autocomplete {
+  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0px; padding:0px;
+}
+div.autocomplete ul {
+  list-style-type:none; margin:0px; padding:0px;
+}
+div.autocomplete ul li.selected { background-color: #ccc;}
+div.autocomplete ul li {
+  list-style-type:none; display:block; margin:0; padding:2px; height:16px; font-size: 10px; cursor:pointer;
+}
+span.indicator {
+  border: 1px solid black; font-size: 10px; padding: 2px; background-color: #eee;
+}
+
+/* ajax-specific styling */
+
+div.autocomplete {
+  position:absolute; width:350px; background-color:white; border:1px solid #888; margin:0px; padding:0px;
+}
+div.autocomplete ul {
+  list-style-type:none; margin:0px; padding:0px;
+}
+div.autocomplete ul li.selected { background-color: #ccc;}
+div.autocomplete ul li {
+  list-style-type:none; display:block; margin:0; padding:2px; height:16px; font-size: 10px; cursor:pointer;
+}
+span.indicator {
+  border: 1px solid black; font-size: 10px; padding: 2px; background-color: #eee;
+}

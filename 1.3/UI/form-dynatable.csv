@@ -1,0 +1,29 @@
+<?lsmb FOREACH column IN columns;
+	IF heading.$column.exists('text');
+		heading.$column.text;
+	ELSE;
+		heading.$column;
+	END;
+	IF NOT loop.last
+		?>,<?lsmb
+	END;
+END ?>
+<?lsmb FOREACH row IN rows;
+	FOREACH column IN columns;
+		IF row.$column.exists('text');
+			row.$column.text;
+		ELSE;
+			row.$column;
+		END;
+		IF NOT loop.last
+			?>,<?lsmb
+		END;
+	END ?>
+<?lsmb END;
+IF totals;
+	t = [];
+	FOREACH column IN columns;
+		t.push(totals.$column);
+	END;
+	t.join(',');
+END ?>

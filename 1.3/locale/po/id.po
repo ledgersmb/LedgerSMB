@@ -1,0 +1,2676 @@
+######################################################################
+# LedgerSMB Small Medium Business Accounting
+# Copyright (c) 2005
+#
+# Indonesian texts:
+#
+#     Author: Akhmad Daniel Sembiring <daniel@vitraining.com>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+#######################################################################
+
+msgid ""
+msgstr ""
+"Project-Id-Version: LedgerSMB 1.1.1\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "A"
+msgstr "A"
+
+msgid "AP"
+msgstr "Hutang"
+
+msgid "AP Aging"
+msgstr "Umur Hutang"
+
+msgid "AP Outstanding"
+msgstr "Hutang Belum Lunas"
+
+msgid "AP Transaction"
+msgstr "Transkasi Hutang"
+
+msgid "AP Transactions"
+msgstr "Transkasi Hutang"
+
+msgid "AR"
+msgstr "Piutang"
+
+msgid "AR Aging"
+msgstr "Umur Piutang"
+
+msgid "AR Outstanding"
+msgstr "Piutang Belum Lunas"
+
+msgid "AR Transaction"
+msgstr "Transaksi Piutang"
+
+msgid "AR Transactions"
+msgstr "Transaksi Piutang"
+
+msgid "AR/AP"
+msgstr ""
+
+msgid "About"
+msgstr ""
+
+msgid "Above"
+msgstr "Di atas"
+
+msgid "Access Control"
+msgstr "Kontrol Aksess"
+
+msgid "Access Denied!"
+msgstr ""
+
+msgid "Account"
+msgstr "Akun"
+
+msgid "Account Number"
+msgstr "Nomor Akun"
+
+msgid "Account Number missing!"
+msgstr "Nomor Akun harap diisi!"
+
+msgid "Account Type"
+msgstr "Jenis Akun"
+
+msgid "Account Type missing!"
+msgstr "Jenis Akun harap diisi"
+
+msgid "Account deleted!"
+msgstr "Kode Akun sudah dihapus!"
+
+msgid "Account does not exist!"
+msgstr "Kode Akun tidak ditemukan"
+
+msgid "Account saved!"
+msgstr "Kode Akun sudah disimpan"
+
+msgid "Accounting"
+msgstr "Akunting"
+
+msgid "Accounting Menu"
+msgstr "Menu Akunting"
+
+msgid "Accounts"
+msgstr "Daftar Akun"
+
+msgid "Accrual"
+msgstr ""
+
+msgid "Activate Audit trail"
+msgstr ""
+
+msgid "Active"
+msgstr "Aktif"
+
+msgid "Add"
+msgstr "Tambah"
+
+msgid "Add AP Transaction"
+msgstr "Tambah Transaksi Hutang"
+
+msgid "Add AR Transaction"
+msgstr "Tambah Transaksi Piutang"
+
+msgid "Add Account"
+msgstr "Tambah Akun"
+
+msgid "Add Assembly"
+msgstr "Tambah Rakitan"
+
+msgid "Add Business"
+msgstr "Tambah Jenis Bisnis"
+
+msgid "Add Cash Transfer Transaction"
+msgstr "Tambah Transaksi Transfer Kas"
+
+msgid "Add Customer"
+msgstr "Tambah Pelanggan"
+
+msgid "Add Deduction"
+msgstr "Tambah Deduksi"
+
+msgid "Add Department"
+msgstr "Tambah Departemen"
+
+msgid "Add Employee"
+msgstr "Tambah Karyawan"
+
+msgid "Add Exchange Rate"
+msgstr "Tambah Kurs"
+
+msgid "Add GIFI"
+msgstr "Tambah GIFI"
+
+msgid "Add General Ledger Transaction"
+msgstr "Tambah Transaksi GL"
+
+msgid "Add Group"
+msgstr "Tambah Kelompok Rakitan"
+
+msgid "Add Job"
+msgstr ""
+
+msgid "Add Labor/Overhead"
+msgstr "Tambah Tenaga Kerja/ Overhead"
+
+msgid "Add Language"
+msgstr "Tambah Bahasa"
+
+msgid "Add POS Invoice"
+msgstr "Tambah Invoice Kasir"
+
+msgid "Add Part"
+msgstr "Tambah Barang"
+
+msgid "Add Pricegroup"
+msgstr "Tambah Kelompok Harga"
+
+msgid "Add Project"
+msgstr "Tambah Proyek"
+
+msgid "Add Purchase Order"
+msgstr "Tambah Pesanan Pembelian (PO)"
+
+msgid "Add Quotation"
+msgstr "Tambah Quotation"
+
+msgid "Add Request for Quotation"
+msgstr "Tambah Request for Quotation"
+
+msgid "Add SIC"
+msgstr "Tambah SIC"
+
+msgid "Add Sales Invoice"
+msgstr "Tambah Invoice Penjualan"
+
+msgid "Add Sales Order"
+msgstr "Tambah Pesanan Penjualan (SO)"
+
+msgid "Add Service"
+msgstr "Tambah Jasa"
+
+msgid "Add Timecard"
+msgstr ""
+
+msgid "Add Transaction"
+msgstr "Tambah Transaksi"
+
+msgid "Add User"
+msgstr "Tambah User"
+
+msgid "Add Vendor"
+msgstr "Tambah Supplier"
+
+msgid "Add Vendor Invoice"
+msgstr "Tambah Invoice Supplier"
+
+msgid "Add Warehouse"
+msgstr "Tambah Gudang"
+
+msgid "Address"
+msgstr "Alamat"
+
+msgid "Administration"
+msgstr "Administrasi"
+
+msgid "Administrator"
+msgstr "Administrator"
+
+msgid "After Deduction"
+msgstr "Setelah Deduksi"
+
+msgid "All"
+msgstr "Semua"
+
+msgid "All Accounts"
+msgstr "Semua Akun"
+
+msgid "All Datasets up to date!"
+msgstr "Semua Dataset up to date!"
+
+msgid "All Items"
+msgstr "Semua Item"
+
+msgid "Allowances"
+msgstr ""
+
+msgid "Amount"
+msgstr "Jumlah"
+
+msgid "Amount Due"
+msgstr "Jumlah Terhutang"
+
+msgid "Amount missing!"
+msgstr "Jumlah harap diisi!"
+
+msgid "Apr"
+msgstr ""
+
+msgid "April"
+msgstr ""
+
+msgid "Are you sure you want to delete Invoice Number"
+msgstr "Apakah anda yakin akan menghapus Nomor Invoice"
+
+msgid "Are you sure you want to delete Order Number"
+msgstr "Apakah anda yakin akan menghapus Nomor Order"
+
+msgid "Are you sure you want to delete Quotation Number"
+msgstr "Apakah anda yakin akan menghapus Nomor Quotasi"
+
+msgid "Are you sure you want to delete Timecard for"
+msgstr ""
+
+msgid "Are you sure you want to delete Transaction"
+msgstr "Apakah anda yakin akan menghapus Nomor Transaksi"
+
+msgid "Are you sure you want to remove the marked entries from the queue?"
+msgstr "Apakah anda yakin akan menghapus entri terpilih pada antrian"
+
+msgid "Assemblies"
+msgstr "Rakitan"
+
+msgid "Assemblies restocked!"
+msgstr "Barang Rakitan telah di stock ulang!"
+
+msgid "Assembly"
+msgstr "Rakitan"
+
+msgid "Assembly stocked!"
+msgstr ""
+
+msgid "Asset"
+msgstr "Aktiva"
+
+msgid "Attachment"
+msgstr "Lampiran"
+
+msgid "Audit Control"
+msgstr "Kontrol Audit"
+
+msgid "Audit trail disabled"
+msgstr ""
+
+msgid "Audit trail enabled"
+msgstr ""
+
+msgid "Audit trail removed up to"
+msgstr ""
+
+msgid "Aug"
+msgstr ""
+
+msgid "August"
+msgstr "Agustus"
+
+msgid "Average Cost"
+msgstr ""
+
+msgid "Avg Cost"
+msgstr ""
+
+msgid "BIC"
+msgstr ""
+
+msgid "BOM"
+msgstr ""
+
+msgid "Backup"
+msgstr ""
+
+msgid "Backup sent to"
+msgstr "Backup dikirim kepada"
+
+msgid "Balance"
+msgstr "Saldo"
+
+msgid "Balance Sheet"
+msgstr "Neraca"
+
+msgid "Based on"
+msgstr "Berdasarkan"
+
+msgid "Bcc"
+msgstr ""
+
+msgid "Before Deduction"
+msgstr "Sebelum Deduksi"
+
+msgid "Beginning Balance"
+msgstr "Saldo Awal"
+
+msgid "Below"
+msgstr "Dibawah"
+
+msgid "Billing Address"
+msgstr "Alamat Penagihan"
+
+msgid "Bin"
+msgstr ""
+
+msgid "Bin List"
+msgstr ""
+
+msgid "Bin Lists"
+msgstr ""
+
+msgid "Books are open"
+msgstr ""
+
+msgid "Break"
+msgstr ""
+
+msgid "Business"
+msgstr "Bisnis"
+
+msgid "Business Number"
+msgstr "Nomor Bisnis"
+
+msgid "Business deleted!"
+msgstr "Bisnis telah dihapus!"
+
+msgid "Business saved!"
+msgstr "Bisnis telah disimpan!"
+
+msgid "C"
+msgstr ""
+
+msgid "COGS"
+msgstr ""
+
+msgid "COGS account does not exist!"
+msgstr ""
+
+msgid "Cannot add timecard for a completed job!"
+msgstr ""
+
+msgid "Cannot change timecard for a completed job!"
+msgstr ""
+
+msgid "Cannot create Assembly"
+msgstr ""
+
+msgid "Cannot create Labor"
+msgstr ""
+
+msgid "Cannot create Lock!"
+msgstr "Tidak dapat membuat Lock!"
+
+msgid "Cannot create Part"
+msgstr ""
+
+msgid "Cannot create Service"
+msgstr ""
+
+msgid "Cannot delete Timecard!"
+msgstr ""
+
+msgid "Cannot delete account!"
+msgstr "Tidak dapat menghapus Akun"
+
+msgid "Cannot delete customer!"
+msgstr "Tidak dapat menghapus Pelanggan!"
+
+msgid "Cannot delete default account!"
+msgstr "Tidak dapat menghapus default account!"
+
+msgid "Cannot delete invoice!"
+msgstr "Tidak dapat menghapus Invoice!"
+
+msgid "Cannot delete item!"
+msgstr "Tidak dapat menghapus Item!"
+
+msgid "Cannot delete order!"
+msgstr "Tidak dapat menghapus Pesanan!"
+
+msgid "Cannot delete quotation!"
+msgstr "Tidak dapat menghapus Quotation!"
+
+msgid "Cannot delete transaction!"
+msgstr "Tidak dapat menghapus Transaksi!"
+
+msgid "Cannot delete vendor!"
+msgstr "Tidak dapat menghapus Supplier!"
+
+msgid "Cannot post Payment!"
+msgstr "Tidak dapat posting Pembayaran!"
+
+msgid "Cannot post Receipt!"
+msgstr "Tidak dapat posting Penerimaan!"
+
+msgid "Cannot post invoice for a closed period!"
+msgstr "Tidak dapat posting invoice untuk perioda yang sudah ditutup!"
+
+msgid "Cannot post invoice!"
+msgstr "Tidak dapat posting Invoice!"
+
+msgid "Cannot post payment for a closed period!"
+msgstr "Tidak dapat posting pembayaran untuk perioda yang sudah ditutup!"
+
+msgid "Cannot post transaction for a closed period!"
+msgstr "Tidak dapat posting transaksi untuk perioda yang sudah ditutup!"
+
+msgid "Cannot post transaction with a debit and credit entry for the same account!"
+msgstr ""
+
+msgid "Cannot post transaction!"
+msgstr "Tidak dapat posting transaksi!"
+
+msgid "Cannot remove files!"
+msgstr "Tidak dapat menghapus file!"
+
+msgid "Cannot save account!"
+msgstr "Tidak dapat menyimpan akun!"
+
+msgid "Cannot save defaults!"
+msgstr "Tidak dapat menyimpan nilai default!"
+
+msgid "Cannot save order!"
+msgstr "Tidak dapat menyimpan pesanan!"
+
+msgid "Cannot save preferences!"
+msgstr "Tidak dapat menyimpan preference!"
+
+msgid "Cannot save quotation!"
+msgstr "Tidak dapat menyimpan quotation!"
+
+msgid "Cannot save timecard for a closed period!"
+msgstr ""
+
+msgid "Cannot save timecard!"
+msgstr ""
+
+msgid "Cannot set account for more than one of AR, AP or IC"
+msgstr "Tidak dapat men-set akun untuk selain AR (Piutang), AP (Hutang) or IC"
+
+msgid "Cannot set multiple options for"
+msgstr "Tidak dapat men-set multiple option untuk "
+
+msgid "Cannot set multiple options for Item"
+msgstr ""
+
+msgid "Cannot stock Assembly!"
+msgstr ""
+
+msgid "Cannot stock assemblies!"
+msgstr "Tidak dapat men-stock barang rakitan!"
+
+msgid "Cash"
+msgstr "Kas dan Bank"
+
+msgid "Cc"
+msgstr ""
+
+msgid "Change"
+msgstr "Kembalian"
+
+msgid "Change Admin Password"
+msgstr "Ganti Password Admin"
+
+msgid "Change Password"
+msgstr "Ganti Password"
+
+msgid "Charge"
+msgstr ""
+
+msgid "Chart of Accounts"
+msgstr "Bagan Akun"
+
+msgid "Check"
+msgstr ""
+
+msgid "Check Inventory"
+msgstr ""
+
+msgid "Checks"
+msgstr ""
+
+msgid "City"
+msgstr "Kota"
+
+msgid "Cleared"
+msgstr ""
+
+msgid "Click on login name to edit!"
+msgstr "Klik pada nama login untuk mengedit!"
+
+msgid "Clocked"
+msgstr ""
+
+msgid "Close Books up to"
+msgstr ""
+
+msgid "Closed"
+msgstr ""
+
+msgid "Code"
+msgstr "Kode"
+
+msgid "Code missing!"
+msgstr "Kode harap diisi!"
+
+msgid "Company"
+msgstr "Perusahaan"
+
+msgid "Company Name"
+msgstr "Nama Perusahaan"
+
+msgid "Compare to"
+msgstr "Dibandingkan kepada"
+
+msgid "Completed"
+msgstr ""
+
+msgid "Components"
+msgstr "Komponen"
+
+msgid "Confirm"
+msgstr "Konfirmasi"
+
+msgid "Confirm!"
+msgstr "Konfirmasi!"
+
+msgid "Connect to"
+msgstr "Connect ke"
+
+msgid "Contact"
+msgstr ""
+
+msgid "Continue"
+msgstr "Lanjut"
+
+msgid "Contra"
+msgstr "Kontra"
+
+msgid "Copies"
+msgstr "Jumlah Copy"
+
+msgid "Copy to COA"
+msgstr "Copy ke Bagan Akun"
+
+msgid "Cost"
+msgstr "Biaya"
+
+msgid "Cost Center"
+msgstr ""
+
+msgid "Could not save pricelist!"
+msgstr "Tidak dapat menyimpan daftar harga"
+
+msgid "Could not save!"
+msgstr "Tidak dapat menyimpan"
+
+msgid "Could not transfer Inventory!"
+msgstr "Tidak dapat mentransfer Inventory"
+
+msgid "Country"
+msgstr "Negara"
+
+msgid "Create Chart of Accounts"
+msgstr "Buat Bagan Akun"
+
+msgid "Create Dataset"
+msgstr "Buat Dataase"
+
+msgid "Credit"
+msgstr "Kredit"
+
+msgid "Credit Limit"
+msgstr "Batas Kredit"
+
+msgid "Curr"
+msgstr "Mata Uang"
+
+msgid "Currency"
+msgstr "Mata Uang"
+
+msgid "Current"
+msgstr ""
+
+msgid "Current Earnings"
+msgstr ""
+
+msgid "Customer"
+msgstr "Pelanggan"
+
+msgid "Customer History"
+msgstr "Historis Pelanggan"
+
+msgid "Customer Number"
+msgstr "Nomor Pelanggan"
+
+msgid "Customer deleted!"
+msgstr "Pelanggan sudah dihapus!"
+
+msgid "Customer missing!"
+msgstr "Pelanggan harap diisi!"
+
+msgid "Customer not on file!"
+msgstr "Pelanggan tidak ditemukan!"
+
+msgid "Customer saved!"
+msgstr "Pelanggan telah disimpan!"
+
+msgid "Customers"
+msgstr "Pelanggan"
+
+msgid "DBI not installed!"
+msgstr "DBI belum ter-install"
+
+msgid "DOB"
+msgstr ""
+
+msgid "Database"
+msgstr ""
+
+msgid "Database Administration"
+msgstr ""
+
+msgid "Database Driver not checked!"
+msgstr ""
+
+msgid "Database Host"
+msgstr ""
+
+msgid "Database User missing!"
+msgstr "Database User harap diisi!"
+
+msgid "Dataset"
+msgstr ""
+
+msgid "Dataset is newer than version!"
+msgstr "Dataset lebih baru daripada versi!"
+
+msgid "Dataset missing!"
+msgstr "Dataset harap diisi!"
+
+msgid "Dataset updated!"
+msgstr "Dataset sudah diupdate!"
+
+msgid "Date"
+msgstr "Tanggal"
+
+msgid "Date Format"
+msgstr "Format Tanggal"
+
+msgid "Date Paid"
+msgstr "Tanggal Bayar"
+
+msgid "Date Received"
+msgstr "Tanggal Diterima"
+
+msgid "Date missing!"
+msgstr "Tanggal harap diisi!"
+
+msgid "Date received missing!"
+msgstr "Tanggal diterima harap diisi!"
+
+msgid "Date worked"
+msgstr ""
+
+msgid "Day"
+msgstr ""
+
+msgid "Day(s)"
+msgstr ""
+
+msgid "Days"
+msgstr ""
+
+msgid "Debit"
+msgstr ""
+
+msgid "Dec"
+msgstr ""
+
+msgid "December"
+msgstr "Desember"
+
+msgid "Decimalplaces"
+msgstr "Angka Desimal"
+
+msgid "Decrease"
+msgstr ""
+
+msgid "Deduct after"
+msgstr ""
+
+msgid "Deduction deleted!"
+msgstr "Deduksi sudah dihapus!"
+
+msgid "Deduction saved!"
+msgstr "Deduksi sudah disimpan!"
+
+msgid "Deductions"
+msgstr "Deduksi"
+
+msgid "Default Template"
+msgstr ""
+
+msgid "Defaults"
+msgstr "Default"
+
+msgid "Defaults saved!"
+msgstr "Default sudah disimpan!"
+
+msgid "Delete"
+msgstr "Hapus"
+
+msgid "Delete Account"
+msgstr "Hapus Akun"
+
+msgid "Delete Dataset"
+msgstr "Hapus Dataset"
+
+msgid "Delete Schedule"
+msgstr ""
+
+msgid "Deleting a language will also delete the templates for the language"
+msgstr ""
+
+msgid "Delivery Date"
+msgstr "Tanggal Kirim"
+
+msgid "Department"
+msgstr "Departemen"
+
+msgid "Department deleted!"
+msgstr "Departemen telah dihapus"
+
+msgid "Department saved!"
+msgstr "Departemen telah disimpan"
+
+msgid "Departments"
+msgstr "Departemen"
+
+msgid "Deposit"
+msgstr ""
+
+msgid "Description"
+msgstr "Keterangan"
+
+msgid "Description Translations"
+msgstr ""
+
+msgid "Description missing!"
+msgstr "Keterangan harap diisi!"
+
+msgid "Detail"
+msgstr "Detil"
+
+msgid "Difference"
+msgstr "Selisih"
+
+msgid "Directory"
+msgstr "Direktori"
+
+msgid "Discount"
+msgstr "Diskon"
+
+msgid "Done"
+msgstr "Selesai"
+
+msgid "Drawing"
+msgstr ""
+
+msgid "Driver"
+msgstr ""
+
+msgid "Dropdown Limit"
+msgstr "Batas Dropdown"
+
+msgid "Due Date"
+msgstr "Jatuh Tempo"
+
+msgid "Due Date missing!"
+msgstr "Tanggal Jatuh Tempo harap diisi!"
+
+msgid "E-mail"
+msgstr ""
+
+msgid "E-mail Statement to"
+msgstr ""
+
+msgid "E-mail address missing!"
+msgstr ""
+
+msgid "E-mail message"
+msgstr ""
+
+msgid "E-mailed"
+msgstr ""
+
+msgid "Edit"
+msgstr ""
+
+msgid "Edit AP Transaction"
+msgstr "Edit Transaksi Hutang"
+
+msgid "Edit AR Transaction"
+msgstr "Edit Transaksi Piutang"
+
+msgid "Edit Account"
+msgstr "Edit Akun"
+
+msgid "Edit Assembly"
+msgstr "Edit Rakitan"
+
+msgid "Edit Business"
+msgstr "Edit Jenis Bisnis"
+
+msgid "Edit Cash Transfer Transaction"
+msgstr "Edit Transaksi Transfer Kas"
+
+msgid "Edit Customer"
+msgstr "Edit Pelanggan"
+
+msgid "Edit Deduction"
+msgstr ""
+
+msgid "Edit Department"
+msgstr "Edit Departemen"
+
+msgid "Edit Description Translations"
+msgstr ""
+
+msgid "Edit Employee"
+msgstr "Edit Karyawan"
+
+msgid "Edit GIFI"
+msgstr ""
+
+msgid "Edit General Ledger Transaction"
+msgstr "Edit Transaksi GL"
+
+msgid "Edit Group"
+msgstr "Edit Kelompok Rakitan"
+
+msgid "Edit Job"
+msgstr ""
+
+msgid "Edit Labor/Overhead"
+msgstr "Edit Tenaga Kerja/ Overhead"
+
+msgid "Edit Language"
+msgstr "Edit Bahasa"
+
+msgid "Edit POS Invoice"
+msgstr "Edit Invoice Kasir"
+
+msgid "Edit Part"
+msgstr "Edit Barang"
+
+msgid "Edit Preferences for"
+msgstr "Edit Preferences untuk"
+
+msgid "Edit Pricegroup"
+msgstr "Edit Kelompok Harga"
+
+msgid "Edit Project"
+msgstr "Edit Proyek"
+
+msgid "Edit Purchase Order"
+msgstr "Edit Pesanan Pembelian (PO)"
+
+msgid "Edit Quotation"
+msgstr ""
+
+msgid "Edit Request for Quotation"
+msgstr ""
+
+msgid "Edit SIC"
+msgstr ""
+
+msgid "Edit Sales Invoice"
+msgstr "Edit Invoice Penjualan"
+
+msgid "Edit Sales Order"
+msgstr "Edit Pesanan Penjualan (SO)"
+
+msgid "Edit Service"
+msgstr "Edit Jasa"
+
+msgid "Edit Template"
+msgstr ""
+
+msgid "Edit Timecard"
+msgstr ""
+
+msgid "Edit User"
+msgstr ""
+
+msgid "Edit Vendor"
+msgstr "Edit Supplier"
+
+msgid "Edit Vendor Invoice"
+msgstr "Edit Invoice Supplier"
+
+msgid "Edit Warehouse"
+msgstr ""
+
+msgid "Employee"
+msgstr "Karyawan"
+
+msgid "Employee Name"
+msgstr "Nama Karyawan"
+
+msgid "Employee Number"
+msgstr "Nomor Karyawan"
+
+msgid "Employee deleted!"
+msgstr "Karyawan sudah dihapus!"
+
+msgid "Employee pays"
+msgstr ""
+
+msgid "Employee saved!"
+msgstr "Karyawan sudah disimpan"
+
+msgid "Employees"
+msgstr "Karyawan"
+
+msgid "Employer"
+msgstr ""
+
+msgid "Employer pays"
+msgstr ""
+
+msgid "Enddate"
+msgstr "Tanggal Akhir"
+
+msgid "Ends"
+msgstr ""
+
+msgid "Enforce transaction reversal for all dates"
+msgstr ""
+
+msgid "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native and foreign currencies"
+msgstr "Masukkan sd. 3 huruf nama mata uang dipisahkan oleh tanda titik dua (mis. IDR:USD:EUR) untuk mata uang yang digunakan"
+
+msgid "Equity"
+msgstr "Modal"
+
+msgid "Every"
+msgstr ""
+
+msgid "Excempt age <"
+msgstr ""
+
+msgid "Exch"
+msgstr ""
+
+msgid "Exchange Rate"
+msgstr "Kurs"
+
+msgid "Exchange rate for payment missing!"
+msgstr ""
+
+msgid "Exchange rate missing!"
+msgstr "Kurs harap diisi!"
+
+msgid "Existing Datasets"
+msgstr ""
+
+msgid "Expense"
+msgstr "Biaya"
+
+msgid "Expense account does not exist!"
+msgstr ""
+
+msgid "Expense/Asset"
+msgstr "Biaya/Aktiva"
+
+msgid "Extended"
+msgstr "Jumlah"
+
+msgid "FX"
+msgstr ""
+
+msgid "Failed to save order!"
+msgstr ""
+
+msgid "Fax"
+msgstr ""
+
+msgid "Feb"
+msgstr ""
+
+msgid "February"
+msgstr "Februari"
+
+msgid "For"
+msgstr ""
+
+msgid "Foreign Exchange Gain"
+msgstr "Keuntungan Selisih Kurs"
+
+msgid "Foreign Exchange Loss"
+msgstr "Kerugian Selisih Kurs"
+
+msgid "Friday"
+msgstr ""
+
+msgid "From"
+msgstr "Dari"
+
+msgid "From Warehouse"
+msgstr ""
+
+msgid "GIFI"
+msgstr ""
+
+msgid "GIFI deleted!"
+msgstr ""
+
+msgid "GIFI missing!"
+msgstr ""
+
+msgid "GIFI saved!"
+msgstr ""
+
+msgid "GL"
+msgstr ""
+
+msgid "GL Reference Number"
+msgstr ""
+
+msgid "GL Transaction"
+msgstr "Transaksi GL"
+
+msgid "General Ledger"
+msgstr ""
+
+msgid "Generate"
+msgstr ""
+
+msgid "Generate Orders"
+msgstr ""
+
+msgid "Generate Purchase Orders"
+msgstr ""
+
+msgid "Generate Purchase Orders from Sales Order"
+msgstr ""
+
+msgid "Generate Sales Order"
+msgstr ""
+
+msgid "Generate Sales Order from Purchase Orders"
+msgstr ""
+
+msgid "Generate Sales Orders"
+msgstr ""
+
+msgid "Goods & Services"
+msgstr "Barang dan Jasa"
+
+msgid "Group"
+msgstr ""
+
+msgid "Group Items"
+msgstr ""
+
+msgid "Group Translations"
+msgstr ""
+
+msgid "Group deleted!"
+msgstr ""
+
+msgid "Group missing!"
+msgstr ""
+
+msgid "Group saved!"
+msgstr ""
+
+msgid "Groups"
+msgstr "Kelompok Rakitan"
+
+msgid "HR"
+msgstr ""
+
+msgid "HTML Templates"
+msgstr ""
+
+msgid "Heading"
+msgstr ""
+
+msgid "History"
+msgstr "Historis"
+
+msgid "Home Phone"
+msgstr "Telephone Rumah"
+
+msgid "Host"
+msgstr ""
+
+msgid "Hostname missing!"
+msgstr "Hostname harap diisi!"
+
+msgid "IBAN"
+msgstr ""
+
+msgid "ID"
+msgstr ""
+
+msgid "Image"
+msgstr ""
+
+msgid "In-line"
+msgstr ""
+
+msgid "Inactive"
+msgstr ""
+
+msgid "Include Exchange Rate Difference"
+msgstr ""
+
+msgid "Include Payment"
+msgstr ""
+
+msgid "Include in Report"
+msgstr "Tampilkan pada <br>laporan"
+
+msgid "Include in drop-down menus"
+msgstr "Tampilkan pada menu drop-down"
+
+msgid "Income"
+msgstr "Pendapatan"
+
+msgid "Income Statement"
+msgstr "Laba Rugi"
+
+msgid "Income account does not exist!"
+msgstr ""
+
+msgid "Incorrect Dataset version!"
+msgstr "Versi Dataset tidak benar!"
+
+msgid "Increase"
+msgstr ""
+
+msgid "Individual Items"
+msgstr ""
+
+msgid "Internal Notes"
+msgstr ""
+
+msgid "Inventory"
+msgstr ""
+
+msgid "Inventory account does not exist!"
+msgstr ""
+
+msgid "Inventory quantity must be zero before you can set this assembly obsolete!"
+msgstr ""
+
+msgid "Inventory quantity must be zero before you can set this part obsolete!"
+msgstr ""
+
+msgid "Inventory saved!"
+msgstr "Inventory sudah disimpan!"
+
+msgid "Inventory transferred!"
+msgstr "Inventory sudah di-transfer"
+
+msgid "Invoice"
+msgstr "Invoice"
+
+msgid "Invoice Date"
+msgstr "Tanggal Invoice"
+
+msgid "Invoice Date missing!"
+msgstr "Tanggal Invoice harap diisi!"
+
+msgid "Invoice Number"
+msgstr "Nomor Invoice"
+
+msgid "Invoice Number missing!"
+msgstr "Nomor Invoice harap diisi"
+
+msgid "Invoice deleted!"
+msgstr "Invoice sudah dihapus"
+
+msgid "Invoices"
+msgstr "Invoice"
+
+msgid "Is this a summary account to record"
+msgstr "Akun ini adalah akun ringkasan untuk mencatat"
+
+msgid "Item already on pricelist!"
+msgstr "Barang sudah terdapat pada daftar harga"
+
+msgid "Item deleted!"
+msgstr "Barang sudah dihapus!"
+
+msgid "Item not on file!"
+msgstr "Item ini tidak ditemukan!"
+
+msgid "Items"
+msgstr "Item"
+
+msgid "Jan"
+msgstr ""
+
+msgid "January"
+msgstr "Januari"
+
+msgid "Job"
+msgstr ""
+
+msgid "Job Name"
+msgstr ""
+
+msgid "Job Number"
+msgstr ""
+
+msgid "Job Number missing!"
+msgstr ""
+
+msgid "Job deleted!"
+msgstr ""
+
+msgid "Job saved!"
+msgstr ""
+
+msgid "Jobs"
+msgstr ""
+
+msgid "Jul"
+msgstr ""
+
+msgid "July"
+msgstr "Juli"
+
+msgid "Jun"
+msgstr ""
+
+msgid "June"
+msgstr "Juni"
+
+msgid "LaTeX Templates"
+msgstr "Template LaTeX"
+
+msgid "Labor Code"
+msgstr ""
+
+msgid "Labor/Overhead"
+msgstr "Tenaga Kerja/ Overhead"
+
+msgid "Language"
+msgstr "Bahasa"
+
+msgid "Language deleted!"
+msgstr "Bahasa sudah dihapus!"
+
+msgid "Language saved!"
+msgstr "Bahasa sudah disimpan!"
+
+msgid "Languages"
+msgstr "Bahasa"
+
+msgid "Languages not defined!"
+msgstr "Bahasa tidak terdefinisi!"
+
+msgid "Last Cost"
+msgstr ""
+
+msgid "Last Numbers & Default Accounts"
+msgstr ""
+
+msgid "Lead"
+msgstr ""
+
+msgid "Leadtime"
+msgstr ""
+
+msgid "Leave host and port field empty unless you want to make a remote connection."
+msgstr ""
+
+msgid "Liability"
+msgstr "Hutang"
+
+msgid "Licensed to"
+msgstr "Lisensi kepada"
+
+msgid "Line Total"
+msgstr "Total Baris"
+
+msgid "Link"
+msgstr ""
+
+msgid "Link Accounts"
+msgstr "Akun yg Berhubungan"
+
+msgid "List"
+msgstr "Daftar"
+
+msgid "List Accounts"
+msgstr "Daftar Akun"
+
+msgid "List Businesses"
+msgstr "Daftar Bisnis"
+
+msgid "List Departments"
+msgstr "Daftar Departemen"
+
+msgid "List GIFI"
+msgstr "Daftar GIFI"
+
+msgid "List Languages"
+msgstr "Daftar Bahasa"
+
+msgid "List Price"
+msgstr "Daftar Harga"
+
+msgid "List Projects"
+msgstr "Daftar Proyek"
+
+msgid "List SIC"
+msgstr "Daftar SIC"
+
+msgid "List Transactions"
+msgstr "Daftar Transaksi"
+
+msgid "List Warehouses"
+msgstr "Daftar Gudang"
+
+msgid "Lock System"
+msgstr ""
+
+msgid "Lockfile created!"
+msgstr ""
+
+msgid "Lockfile removed!"
+msgstr ""
+
+msgid "Login"
+msgstr ""
+
+msgid "Login name missing!"
+msgstr "Nama Login harap diisi"
+
+msgid "Logout"
+msgstr ""
+
+msgid "Make"
+msgstr "Pembuatan"
+
+msgid "Manager"
+msgstr ""
+
+msgid "Mar"
+msgstr ""
+
+msgid "March"
+msgstr "Maret"
+
+msgid "Marked entries printed!"
+msgstr ""
+
+msgid "Markup"
+msgstr ""
+
+msgid "Maximum"
+msgstr ""
+
+msgid "May"
+msgstr ""
+
+msgid "May "
+msgstr "Mei"
+
+msgid "Memo"
+msgstr ""
+
+msgid "Menu Width"
+msgstr "Lebar Menu"
+
+msgid "Message"
+msgstr "Pesan"
+
+msgid "Method"
+msgstr "Metoda"
+
+msgid "Microfiche"
+msgstr ""
+
+msgid "Model"
+msgstr ""
+
+msgid "Monday"
+msgstr ""
+
+msgid "Month"
+msgstr "Bulan"
+
+msgid "Month(s)"
+msgstr ""
+
+msgid "Months"
+msgstr ""
+
+msgid "Multibyte Encoding"
+msgstr ""
+
+msgid "N/A"
+msgstr ""
+
+msgid "Name"
+msgstr "Nama"
+
+msgid "Name missing!"
+msgstr "Nama harap diisi!"
+
+msgid "New Templates"
+msgstr "Template Baru"
+
+msgid "New Window"
+msgstr "Buka Window Baru"
+
+msgid "Next"
+msgstr ""
+
+msgid "Next Date"
+msgstr ""
+
+msgid "Next Number"
+msgstr ""
+
+msgid "No"
+msgstr "Tidak"
+
+msgid "No Database Drivers available!"
+msgstr "Tidak ada Database Driver yang tersedia!"
+
+msgid "No Dataset selected!"
+msgstr "Tidak ada Dataset yang dipilih!"
+
+msgid "No Employees on file!"
+msgstr ""
+
+msgid "No Labor codes on file!"
+msgstr ""
+
+msgid "No email address for"
+msgstr "Tidak ada alamat email untuk"
+
+msgid "No open Jobs!"
+msgstr ""
+
+msgid "No open Projects!"
+msgstr ""
+
+msgid "No."
+msgstr "No."
+
+msgid "Non-taxable"
+msgstr "Tanpa Pajak"
+
+msgid "Non-taxable Purchases"
+msgstr "Pembelian Tanpa Pajak"
+
+msgid "Non-taxable Sales"
+msgstr "Penjualan Tanpa Pajak"
+
+msgid "Non-tracking Items"
+msgstr ""
+
+msgid "Notes"
+msgstr "Catatan"
+
+msgid "Nothing entered!"
+msgstr "Catatan sudah dimasukkan!"
+
+msgid "Nothing selected!"
+msgstr "Tidak ada yang dipilih!"
+
+msgid "Nothing to delete!"
+msgstr "Tidak ada yang akan dihapus!"
+
+msgid "Nothing to print!"
+msgstr "Tidak ada yang akan dicetak!"
+
+msgid "Nothing to transfer!"
+msgstr "Tidak ada yang akan di-transfer!"
+
+msgid "Nov"
+msgstr ""
+
+msgid "November"
+msgstr ""
+
+msgid "Number"
+msgstr "Nomor"
+
+msgid "Number Format"
+msgstr "Format Angka"
+
+msgid "Number missing in Row"
+msgstr ""
+
+msgid "O"
+msgstr ""
+
+msgid "OH"
+msgstr ""
+
+msgid "Obsolete"
+msgstr "Kadaluarsa"
+
+msgid "Oct"
+msgstr ""
+
+msgid "October"
+msgstr "Oktober"
+
+msgid "On Hand"
+msgstr ""
+
+msgid "Open"
+msgstr ""
+
+msgid "Oracle Database Administration"
+msgstr ""
+
+msgid "Order"
+msgstr "No. Pesanan"
+
+msgid "Order Date"
+msgstr "Tanggal Pesanan"
+
+msgid "Order Date missing!"
+msgstr "Tanggal Pesanan harap diisi!"
+
+msgid "Order Entry"
+msgstr "Pesanan"
+
+msgid "Order Number"
+msgstr "Nomor Pesanan"
+
+msgid "Order Number missing!"
+msgstr "Nomor Pesanan harap diisi"
+
+msgid "Order deleted!"
+msgstr "Pesanan sudah dihapus!"
+
+msgid "Order generation failed!"
+msgstr ""
+
+msgid "Order saved!"
+msgstr "Pesanan sudah disimpan!"
+
+msgid "Orders generated!"
+msgstr ""
+
+msgid "Orphaned"
+msgstr ""
+
+msgid "Out of balance transaction!"
+msgstr ""
+
+msgid "Out of balance!"
+msgstr ""
+
+msgid "Outstanding"
+msgstr "Belum Lunas"
+
+msgid "PDF"
+msgstr ""
+
+msgid "PO Number"
+msgstr ""
+
+msgid "POS"
+msgstr "Kasir (POS)"
+
+msgid "POS Invoice"
+msgstr "Invoice Kasir"
+
+msgid "Packing List"
+msgstr ""
+
+msgid "Packing List Date missing!"
+msgstr "Tanggal Packing List harap diisi!"
+
+msgid "Packing List Number missing!"
+msgstr "Nomor Packing List harap diisi!"
+
+msgid "Packing Lists"
+msgstr ""
+
+msgid "Paid"
+msgstr "Dibayar"
+
+msgid "Part"
+msgstr "Barang"
+
+msgid "Part Number"
+msgstr ""
+
+msgid "Partnumber"
+msgstr "Nomor Barang"
+
+msgid "Parts"
+msgstr "Barang"
+
+msgid "Password"
+msgstr ""
+
+msgid "Password changed!"
+msgstr "Password sudah dirubah!"
+
+msgid "Password does not match!"
+msgstr "Password tidak cocok!"
+
+msgid "Passwords do not match!"
+msgstr "Password tidak cocok!"
+
+msgid "Payables"
+msgstr "Hutang"
+
+msgid "Payment"
+msgstr "Pembayaran"
+
+msgid "Payment date missing!"
+msgstr "Tanggal Pembayaran harap diisi!"
+
+msgid "Payment posted!"
+msgstr "Pembayaran sudah di-posting"
+
+msgid "Payments"
+msgstr "Pembayaran"
+
+msgid "Payments posted!"
+msgstr ""
+
+msgid "Payroll Deduction"
+msgstr "Pengurangan Pembayaran"
+
+msgid "Period"
+msgstr "Perioda"
+
+msgid "Pg Database Administration"
+msgstr ""
+
+msgid "PgPP Database Administration"
+msgstr ""
+
+msgid "Phone"
+msgstr "Telephone"
+
+msgid "Pick List"
+msgstr ""
+
+msgid "Pick Lists"
+msgstr ""
+
+msgid "Port"
+msgstr ""
+
+msgid "Port missing!"
+msgstr "Port harap diisi!"
+
+msgid "Pos"
+msgstr ""
+
+msgid "Post"
+msgstr "Posting"
+
+msgid "Post as new"
+msgstr "Posting sbg yang baru"
+
+msgid "Posted!"
+msgstr "Sudah Diposting!"
+
+msgid "Posting"
+msgstr ""
+
+msgid "Posting failed!"
+msgstr ""
+
+msgid "Postscript"
+msgstr ""
+
+msgid "Preferences"
+msgstr ""
+
+msgid "Preferences saved!"
+msgstr "Preferences sudah disimpan!"
+
+msgid "Prepayment"
+msgstr ""
+
+msgid "Price"
+msgstr "Harga"
+
+msgid "Pricegroup"
+msgstr "Kelompok Harga"
+
+msgid "Pricegroup deleted!"
+msgstr "Kelompok Harga sudah dihapus!"
+
+msgid "Pricegroup missing!"
+msgstr "Kelompok Harga harap diisi!"
+
+msgid "Pricegroup saved!"
+msgstr "Kelompok Harga sudah disimpan!"
+
+msgid "Pricegroups"
+msgstr "Kelompok Harga"
+
+msgid "Pricelist"
+msgstr "Daftar Harga"
+
+msgid "Print"
+msgstr "Cetak"
+
+msgid "Print and Post"
+msgstr "Cetak dan Posting"
+
+msgid "Print and Post as new"
+msgstr ""
+
+msgid "Print and Save"
+msgstr "Cetak dan Simpan"
+
+msgid "Print and Save as new"
+msgstr ""
+
+msgid "Print and post as new"
+msgstr ""
+
+msgid "Print and save as new"
+msgstr ""
+
+msgid "Printed"
+msgstr "Sudah dicetak"
+
+msgid "Printer"
+msgstr ""
+
+msgid "Printing"
+msgstr ""
+
+msgid "Printing ... "
+msgstr "Sedang mencetak..."
+
+msgid "Process Transactions"
+msgstr ""
+
+msgid "Production"
+msgstr ""
+
+msgid "Profit Center"
+msgstr ""
+
+msgid "Project"
+msgstr "Proyek"
+
+msgid "Project Description Translations"
+msgstr ""
+
+msgid "Project Name"
+msgstr ""
+
+msgid "Project Number"
+msgstr "Nomor Proyek"
+
+msgid "Project Number missing!"
+msgstr "Nomor Proyek harap diisi!"
+
+msgid "Project Transactions"
+msgstr "Transaksi Proyek"
+
+msgid "Project deleted!"
+msgstr "Data Proyek sudah dihapus!"
+
+msgid "Project not on file!"
+msgstr "Data Proyek tidak ditemukan!"
+
+msgid "Project saved!"
+msgstr "Data Proyek sudah disimpan!"
+
+msgid "Project/Job Name"
+msgstr ""
+
+msgid "Project/Job Number"
+msgstr ""
+
+msgid "Projects"
+msgstr "Proyek"
+
+msgid "Purchase Order"
+msgstr "Pesanan Pembelian (PO)"
+
+msgid "Purchase Order Number"
+msgstr "Nomor Pesanan Pembelian (PO)"
+
+msgid "Purchase Orders"
+msgstr "Pesanan Pembelian (PO)"
+
+msgid "Qty"
+msgstr "Banyak"
+
+msgid "Quantity exceeds available units to stock!"
+msgstr "Jumlah melebihi unit yang tersedia pada inventory!"
+
+msgid "Quarter"
+msgstr ""
+
+msgid "Quotation"
+msgstr "Quotation"
+
+msgid "Quotation "
+msgstr "No.Quotation"
+
+msgid "Quotation Date"
+msgstr "Tanggal Quotation"
+
+msgid "Quotation Date missing!"
+msgstr "Tanggal Quotation harap diisi!"
+
+msgid "Quotation Number"
+msgstr "Nomor Quotation"
+
+msgid "Quotation Number missing!"
+msgstr "Nomor Quotation harap diisi!"
+
+msgid "Quotation deleted!"
+msgstr "Nomor Quotation sudah dihapus!"
+
+msgid "Quotations"
+msgstr "Quotation"
+
+msgid "R"
+msgstr ""
+
+msgid "RFQ"
+msgstr ""
+
+msgid "RFQ "
+msgstr ""
+
+msgid "RFQ Number"
+msgstr ""
+
+msgid "RFQs"
+msgstr ""
+
+msgid "ROP"
+msgstr ""
+
+msgid "Rate"
+msgstr ""
+
+msgid "Rate missing!"
+msgstr ""
+
+msgid "Recd"
+msgstr "Terima"
+
+msgid "Receipt"
+msgstr "Penerimaan"
+
+msgid "Receipt posted!"
+msgstr "Penerimaan sudah diposting!"
+
+msgid "Receipts"
+msgstr "Penerimaan"
+
+msgid "Receivables"
+msgstr "Piutang"
+
+msgid "Receive"
+msgstr "Penerimaan"
+
+msgid "Receive Merchandise"
+msgstr "Penerimaan Barang"
+
+msgid "Reconciliation"
+msgstr "Rekonsiliasi"
+
+msgid "Reconciliation Report"
+msgstr "Laporan Rekonsiliasi"
+
+msgid "Record in"
+msgstr "Catat pada"
+
+msgid "Recurring Transaction"
+msgstr ""
+
+msgid "Recurring Transactions"
+msgstr ""
+
+msgid "Reference"
+msgstr "Referensi"
+
+msgid "Remaining"
+msgstr "Sisa"
+
+msgid "Remove"
+msgstr ""
+
+msgid "Remove Audit trail up to"
+msgstr ""
+
+msgid "Removed spoolfiles!"
+msgstr ""
+
+msgid "Removing marked entries from queue ..."
+msgstr ""
+
+msgid "Repeat"
+msgstr ""
+
+msgid "Report for"
+msgstr ""
+
+msgid "Reports"
+msgstr "Laporan"
+
+msgid "Req"
+msgstr ""
+
+msgid "Request for Quotation"
+msgstr ""
+
+msgid "Request for Quotations"
+msgstr ""
+
+msgid "Required by"
+msgstr "Tanggal Kirim"
+
+msgid "Retained Earnings"
+msgstr "Pendapatan Ditahan"
+
+msgid "Role"
+msgstr ""
+
+msgid "S"
+msgstr ""
+
+msgid "SIC"
+msgstr ""
+
+msgid "SIC deleted!"
+msgstr ""
+
+msgid "SIC saved!"
+msgstr ""
+
+msgid "SKU"
+msgstr ""
+
+msgid "SSN"
+msgstr ""
+
+msgid "Sale"
+msgstr "Penjualan"
+
+msgid "Sales"
+msgstr "Penjualan"
+
+msgid "Sales Invoice"
+msgstr "Invoice Penjualan"
+
+msgid "Sales Invoice "
+msgstr "Invoice Penjualan "
+
+msgid "Sales Invoice."
+msgstr "Invoice Penjualan."
+
+msgid "Sales Invoice/AR Transaction Number"
+msgstr ""
+
+msgid "Sales Invoices"
+msgstr "Invoice Penjualan"
+
+msgid "Sales Order"
+msgstr "Pesanan Penjualan (SO)"
+
+msgid "Sales Order Number"
+msgstr "Nomor Pesanan Penjualan (SO)"
+
+msgid "Sales Orders"
+msgstr "Pesanan Penjualan (SO)"
+
+msgid "Sales Quotation Number"
+msgstr "Nomor Sales Quotation"
+
+msgid "Salesperson"
+msgstr "Salesman"
+
+msgid "Saturday"
+msgstr ""
+
+msgid "Save"
+msgstr "Simpan"
+
+msgid "Save Pricelist"
+msgstr "Simpan Daftar Harga"
+
+msgid "Save Schedule"
+msgstr ""
+
+msgid "Save as new"
+msgstr "Simpan sbg yg baru"
+
+msgid "Save to File"
+msgstr "Simpan ke File"
+
+msgid "Saving"
+msgstr ""
+
+msgid "Schedule"
+msgstr ""
+
+msgid "Scheduled"
+msgstr ""
+
+msgid "Screen"
+msgstr "Layar"
+
+msgid "Search"
+msgstr "Cari"
+
+msgid "Select"
+msgstr "Pilih"
+
+msgid "Select Customer"
+msgstr ""
+
+msgid "Select Vendor"
+msgstr ""
+
+msgid "Select a Printer!"
+msgstr ""
+
+msgid "Select a printer!"
+msgstr ""
+
+msgid "Select all"
+msgstr "Pilih semua"
+
+msgid "Select from one of the items below"
+msgstr "Pilih dari salah satu item di bawah"
+
+msgid "Select from one of the names below"
+msgstr "Pilih dari salah satu nama di bawah"
+
+msgid "Select from one of the projects below"
+msgstr "Pilih dari salah satu proyek di bawah"
+
+msgid "Select items"
+msgstr ""
+
+msgid "Select payment"
+msgstr "Pilih pembayaran"
+
+msgid "Select postscript or PDF!"
+msgstr "Pilih postscript atau PDF!"
+
+msgid "Select txt, postscript or PDF!"
+msgstr "Pilih txt, postscript atau PDF!"
+
+msgid "Sell"
+msgstr "Jual"
+
+msgid "Sell Price"
+msgstr "Harga Jual"
+
+msgid "Send by E-Mail"
+msgstr "Kirim melalui E-mail"
+
+msgid "Sending"
+msgstr ""
+
+msgid "Sep"
+msgstr ""
+
+msgid "September"
+msgstr ""
+
+msgid "Serial No."
+msgstr "No. Seri"
+
+msgid "Serial Number"
+msgstr "Nomor Seri"
+
+msgid "Service"
+msgstr "Jasa"
+
+msgid "Service Code"
+msgstr ""
+
+msgid "Service/Labor Code"
+msgstr ""
+
+msgid "Services"
+msgstr "Jasa"
+
+msgid "Session Timeout"
+msgstr ""
+
+msgid "Session expired!"
+msgstr ""
+
+msgid "Setup Templates"
+msgstr "Setup Template"
+
+msgid "Ship"
+msgstr "Kirim"
+
+msgid "Ship Merchandise"
+msgstr "Pengiriman Barang"
+
+msgid "Ship to"
+msgstr "Kirim kepada"
+
+msgid "Ship via"
+msgstr "Kirim melalui"
+
+msgid "Shipping"
+msgstr "Kirim dan Terima"
+
+msgid "Shipping Address"
+msgstr "Alamat Pengiriman"
+
+msgid "Shipping Date"
+msgstr "Tanggal Pengiriman"
+
+msgid "Shipping Date missing!"
+msgstr "Tanggal Pengiriman harap diisi!"
+
+msgid "Shipping Point"
+msgstr "Titik Pengiriman"
+
+msgid "Short"
+msgstr ""
+
+msgid "Signature"
+msgstr ""
+
+msgid "Source"
+msgstr "Bukti"
+
+msgid "Spoolfile"
+msgstr ""
+
+msgid "Standard"
+msgstr ""
+
+msgid "Standard Industrial Codes"
+msgstr ""
+
+msgid "Startdate"
+msgstr "Tanggal Mulai"
+
+msgid "State"
+msgstr "Negara Bagian"
+
+msgid "State/Province"
+msgstr "Provinsi"
+
+msgid "Statement"
+msgstr ""
+
+msgid "Statement Balance"
+msgstr ""
+
+msgid "Statement sent to"
+msgstr ""
+
+msgid "Statements sent to printer!"
+msgstr ""
+
+msgid "Stock"
+msgstr ""
+
+msgid "Stock Assembly"
+msgstr ""
+
+msgid "Stocking Date"
+msgstr ""
+
+msgid "Stylesheet"
+msgstr ""
+
+msgid "Sub-contract GIFI"
+msgstr ""
+
+msgid "Subject"
+msgstr ""
+
+msgid "Subtotal"
+msgstr ""
+
+msgid "Summary"
+msgstr "Ringkasan"
+
+msgid "Sunday"
+msgstr ""
+
+msgid "Supervisor"
+msgstr "Supervisor"
+
+msgid "System"
+msgstr "Sistem"
+
+msgid "System Defaults"
+msgstr "Default Sistem"
+
+msgid "Tax"
+msgstr "Pajak"
+
+msgid "Tax Accounts"
+msgstr "No. Rekening Pajak"
+
+msgid "Tax Included"
+msgstr "Termasuk Pajak"
+
+msgid "Tax Number"
+msgstr "Nomor Pajak"
+
+msgid "Tax Number / SSN"
+msgstr "Nomor Pajak/ SSN"
+
+msgid "Tax collected"
+msgstr "Pajak Terkumpul"
+
+msgid "Tax paid"
+msgstr "Pajak Dibayar"
+
+msgid "Taxable"
+msgstr "Kena Pajak"
+
+msgid "Template saved!"
+msgstr "Template sudah disimpan!"
+
+msgid "Templates"
+msgstr "Template"
+
+msgid "Terms"
+msgstr "Termin"
+
+msgid "Text"
+msgstr ""
+
+msgid "Text Templates"
+msgstr "Template Text"
+
+msgid "The following Datasets are not in use and can be deleted"
+msgstr ""
+
+msgid "The following Datasets need to be updated"
+msgstr "Dataset berikut ini perlu di-update"
+
+msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
+msgstr ""
+
+msgid "Thursday"
+msgstr ""
+
+msgid "Till"
+msgstr ""
+
+msgid "Time In"
+msgstr ""
+
+msgid "Time Out"
+msgstr ""
+
+msgid "Timecard"
+msgstr ""
+
+msgid "Timecard deleted!"
+msgstr ""
+
+msgid "Timecard saved!"
+msgstr ""
+
+msgid "Timecards"
+msgstr ""
+
+msgid "Times"
+msgstr ""
+
+msgid "To"
+msgstr "Sampai"
+
+msgid "To Warehouse"
+msgstr ""
+
+msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
+msgstr "Untuk menambah user ke suatu group, edit nama user, ganti loginnya, dan simpan. User baru dengan variabel yang sama akan tersimpan di bawah nama login yang baru."
+
+msgid "Top Level"
+msgstr ""
+
+msgid "Total"
+msgstr "Total"
+
+msgid "Tracking Items"
+msgstr ""
+
+msgid "Trade Discount"
+msgstr ""
+
+msgid "Transaction"
+msgstr "Transaksi"
+
+msgid "Transaction Date missing!"
+msgstr "Tanggal Transaksi harap diisi"
+
+msgid "Transaction Dates"
+msgstr ""
+
+msgid "Transaction deleted!"
+msgstr "Transaksi sudah dihapus"
+
+msgid "Transaction posted!"
+msgstr "Transaksi sudah diposting"
+
+msgid "Transaction reversal enforced for all dates"
+msgstr ""
+
+msgid "Transaction reversal enforced up to"
+msgstr ""
+
+msgid "Transactions"
+msgstr "Transaksi"
+
+msgid "Transfer"
+msgstr ""
+
+msgid "Transfer Inventory"
+msgstr ""
+
+msgid "Transfer from"
+msgstr ""
+
+msgid "Transfer to"
+msgstr "Transfer ke"
+
+msgid "Translation"
+msgstr ""
+
+msgid "Translation deleted!"
+msgstr ""
+
+msgid "Translation not on file!"
+msgstr ""
+
+msgid "Translations"
+msgstr ""
+
+msgid "Translations saved!"
+msgstr ""
+
+msgid "Trial Balance"
+msgstr "Neraca Percobaan"
+
+msgid "Tuesday"
+msgstr ""
+
+msgid "Type of Business"
+msgstr "Jenis Bisnis"
+
+msgid "Unit"
+msgstr "Satuan"
+
+msgid "Unit of measure"
+msgstr "Satuan pengukuran"
+
+msgid "Unlock System"
+msgstr ""
+
+msgid "Update"
+msgstr ""
+
+msgid "Update Dataset"
+msgstr ""
+
+msgid "Updated"
+msgstr "Diupdate"
+
+msgid "Upgrading to Version"
+msgstr ""
+
+msgid "Use Templates"
+msgstr ""
+
+msgid "User"
+msgstr ""
+
+msgid "User deleted!"
+msgstr "User sudah dihapus!"
+
+msgid "User saved!"
+msgstr "User sudah disimpan!"
+
+msgid "Valid until"
+msgstr "Valid hingga"
+
+msgid "Vendor"
+msgstr "Supplier"
+
+msgid "Vendor History"
+msgstr "Historis Supplier"
+
+msgid "Vendor Invoice"
+msgstr "Invoice Supplier"
+
+msgid "Vendor Invoice "
+msgstr "Invoice Supplier "
+
+msgid "Vendor Invoice."
+msgstr "Invoice Supplier."
+
+msgid "Vendor Invoice/AP Transaction Number"
+msgstr ""
+
+msgid "Vendor Invoices"
+msgstr "Invoice Supplier"
+
+msgid "Vendor Number"
+msgstr "Nomor Supplier"
+
+msgid "Vendor deleted!"
+msgstr "Data Supplier sudah dihapus!"
+
+msgid "Vendor missing!"
+msgstr "Data Supplier harap diisi!"
+
+msgid "Vendor not on file!"
+msgstr "Data Supplier tidak ditemukan!"
+
+msgid "Vendor saved!"
+msgstr "Data Supplier sudah disimpan!"
+
+msgid "Vendors"
+msgstr "Supplier"
+
+msgid "Version"
+msgstr "Versi"
+
+msgid "Warehouse"
+msgstr "Gudang"
+
+msgid "Warehouse deleted!"
+msgstr "Data Gudang sudah dihapus!"
+
+msgid "Warehouse saved!"
+msgstr "Data Gudang sudah disimpan"
+
+msgid "Warehouses"
+msgstr "Gudang"
+
+msgid "Warning!"
+msgstr "Peringatan!"
+
+msgid "Wednesday"
+msgstr ""
+
+msgid "Week"
+msgstr ""
+
+msgid "Week(s)"
+msgstr ""
+
+msgid "Weeks"
+msgstr ""
+
+msgid "Weight"
+msgstr "Berat"
+
+msgid "Weight Unit"
+msgstr "Satuan Berat"
+
+msgid "What type of item is this?"
+msgstr "Jenis item ini ?"
+
+msgid "Work Order"
+msgstr ""
+
+msgid "Work Orders"
+msgstr ""
+
+msgid "Work Phone"
+msgstr "Telephone Kantor"
+
+msgid "Year"
+msgstr "Tahun"
+
+msgid "Year(s)"
+msgstr ""
+
+msgid "Yearend"
+msgstr "Akhir Tahun"
+
+msgid "Yearend date missing!"
+msgstr "Tanggal Akhir Tahun harap diisi!"
+
+msgid "Yearend posted!"
+msgstr "Akhir Tahun sudah di-posting!"
+
+msgid "Yearend posting failed!"
+msgstr "Akhir Tahun gagal di-posting!"
+
+msgid "Years"
+msgstr ""
+
+msgid "Yes"
+msgstr "Ya"
+
+msgid "You are logged out"
+msgstr "Anda sudah Logout"
+
+msgid "You are posting an existing transaction!"
+msgstr ""
+
+msgid "You are printing and posting an existing transaction!"
+msgstr ""
+
+msgid "You are printing and saving an existing order"
+msgstr ""
+
+msgid "You are printing and saving an existing quotation"
+msgstr ""
+
+msgid "You are printing and saving an existing transaction!"
+msgstr ""
+
+msgid "You are saving an existing order"
+msgstr ""
+
+msgid "You are saving an existing quotation"
+msgstr ""
+
+msgid "You are saving an existing transaction!"
+msgstr ""
+
+msgid "You did not enter a name!"
+msgstr "Anda tidak memasukkan nama!"
+
+msgid "You must enter a host and port for local and remote connections!"
+msgstr ""
+
+msgid "Zip/Postal Code"
+msgstr "Kode Pos"
+
+msgid "account cannot be set to any other type of account"
+msgstr "akun tidak dapat diset menjadi jenis akun lainnya"
+
+msgid "as at"
+msgstr "per"
+
+msgid "days"
+msgstr "hari"
+
+msgid "does not exist"
+msgstr ""
+
+msgid "done"
+msgstr "selesai"
+
+msgid "ea"
+msgstr ""
+
+msgid "failed"
+msgstr ""
+
+msgid "for"
+msgstr ""
+
+msgid "for Period"
+msgstr "untuk Perioda"
+
+msgid "is already a member!"
+msgstr "sudah tercatat sebagai member"
+
+msgid "localhost"
+msgstr ""
+
+msgid "locked!"
+msgstr ""
+
+msgid "partsgroup"
+msgstr ""
+
+msgid "posted!"
+msgstr "sudah diposting!"
+
+msgid "sent"
+msgstr "sudah dikirim"
+
+msgid "successfully created!"
+msgstr "berhasil dibuat!"
+
+msgid "successfully deleted!"
+msgstr "berhasil dihapus!"
+
+msgid "time(s)"
+msgstr ""
+
+msgid "unexpected error!"
+msgstr ""
+
+msgid "website"
+msgstr "situs web"
+

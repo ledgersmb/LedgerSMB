@@ -1,0 +1,52 @@
+div.login {
+    background-color: white;
+    margin-right: auto;
+    margin-left: auto;
+    width: 25em;
+    padding: 2em;
+    padding-bottom: 2em;
+    border-style: outset;
+}
+
+div.login div.login {
+    width: 21em;
+    height: 23em;
+    border-width: 1px;
+    border-style: solid;
+    padding-bottom: 2em;
+}
+div.labelledinput {
+    width: 100%;
+    clear: both;
+}
+div.label {
+    width: 5em;
+    text-align: right;
+    float: left;
+    border-width: 1px;
+    margin: 0em;
+    padding-right: 0.5em;
+    margin-top: 0.5em;
+}
+div.input {
+    width: 14em;
+    margin: 0px;
+    text-align: left;
+    float: left;
+    border-width: 3px;
+    margin: 0em;
+    margin-top: 0.5em;
+}
+img.logo {
+    border-style: none;
+    width: 16em;
+    height: 8em;
+}
+
+input {
+    width: 16em;
+}
+
+button {
+    margin-top: 10px;
+}

@@ -1,0 +1,35 @@
+  <tr>
+    <td width=10>&nbsp;</td>
+
+    <td>
+      <table width="100%">
+        <tr>
+          <td>
+            <h4>
+            <?lsmb company ?><br>
+            <?lsmb address ?>
+            </h4>
+          </td>
+          <!-- Commenting out the image tag for now.  In general, folks can
+               customize this to their servers, but if the server is behind a 
+               firewall, then this won't work.  Recommend that if people do this,
+               they hardwire in a link to a publically accessible image. - CT -->
+          <th><!-- <img src=<?lsmb images ?>/logo.png border=0 height=58> --></th>
+
+          <td align=right>
+            <h4>
+            <?lsmb text('Tel: [_1]', tel) ?><br>
+            <?lsmb text('Fax: [_1]', fax) ?>
+            </h4>
+          </td>
+        </tr>
+
+        <tr>
+          <td colspan=3>
+	    <hr noshade>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+

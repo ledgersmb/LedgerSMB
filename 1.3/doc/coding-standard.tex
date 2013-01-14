@@ -1,0 +1,74 @@
+\documentclass{article}
+\usepackage{metatron}
+\title{LedgerSMB Coding Standards}
+\author{The LedgerSMB Development Team}
+\begin{document}
+\maketitle
+
+\tableofcontents
+
+\section{Introduction}
+Consistent coding style contributes to readability of code.  This contributes in
+turn to fewer bugs and easier debugging.
+
+While consultants which implement custom solutions for their customers are not
+required to follow these coding guidelines, doing so will likely contribute to
+efficiency of the project and, if desired, the likelihood of having the changes
+accepted in the main source tree.
+
+\section{File Organization and Whitespace}
+
+Files should be organized according to three principles: atomicity, performance,
+and readability.  While there is no stated maximum file size, there is no reason to
+group large amounts of code together when only a small subset of that code will
+be executed on any given run of the program.  Similarly, core API for a single
+data structure entity may be grouped together even if each run may touch only a
+small part of the code so that these functions can be maintained together in a
+logical way.
+
+Nested blocks of code should be indented with a single tab.  This way,
+programmers can adjust the tab width of their editors to their preferences.
+
+Lines longer than 79 characters are not handled well by many terminals and
+should generally be avoided.  Continued lines should be indented by one more tab
+than either the line above or below (i.e. if the line above is indented by two
+tabs and the line below by three, indent the continued segment by four).
+
+Lines longer than 79 characters cause problems in some terminals and should be
+avoided.
+
+\section{Comments}
+
+In an ideal world, the code should be sufficiently readable to be
+entirely understandable without comments.  Unfortunately, this sort of
+ideal is seldom attained.  Comments should be used to annotate code
+and add information that is not already a part of code or programming
+logic itself.
+
+Comments may include arguments and return values of functions (for
+easy reference), a summary as to why a particular design choice was
+made, or a note to alert future programmers that a particular chunk of
+code deserves additional attention.  Comments should not, however,
+merely indicate what the program is doing or how it does something.
+If such comments are required, that is a good indication that a block
+of code requires rewriting.
+
+Additionally it is a good idea to provide a brief description at the top of each
+file describing, in general terms, what its function is.
+
+\section{Function Organization}
+
+Functions should be atomic.  While there is no maximum length to functions, long
+functions may be an indication that a function may be non-atomic.
+
+In general, when more than one line of code is being copied and
+pasted, it should instead be moved into its own function where it can
+be called by all entry points.
+
+\section{Security Practices}
+\subsection{Open}
+Perl's Open command should be called using its 3-argument form.  The 2-argument 
+form is considered dangerous because input could be used to override the file 
+mode.
+
+\end{document}

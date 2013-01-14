@@ -1,0 +1,187 @@
+      <tr>
+        <th align="right"><?lsmb text('From') ?></th>
+        <td><?lsmb PROCESS input element_data={
+        class => 'date',
+        name => 'fromdate',
+        size => '11',
+        title => user.dateformat,
+        value => form.fromdate,
+        } ?></td>
+        <th align="right"><?lsmb text('To') ?></th>
+        <td><?lsmb PROCESS input element_data={
+        class => 'date',
+        name => 'todate',
+        size => '11',
+        title => user.dateformat,
+        value => form.todate,
+        } ?></td>
+      </tr>
+<?lsmb IF form.selectaccountingyear.defined ?>
+      <tr>
+        <th align="right"><?lsmb text('Period') ?></th>
+        <td colspan="3">
+  <?lsmb PROCESS select element_data=form.selectaccountingmonth -?>
+  <?lsmb PROCESS select element_data=form.selectaccountingyear -?>
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'interval',
+    value => '0',
+    label => text('Current'),
+    checked => 'checked',
+    } -?>
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'interval',
+    value => '1',
+    label => text('Month'),
+    } -?>
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'interval',
+    value => '3',
+    label => text('Quarter'),
+    } -?>
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'interval',
+    value => '12',
+    label => text('Year'),
+    } -?>
+        </td>
+      </tr>
+<?lsmb END ?>
+      <tr>
+        <th></th>
+        <td>
+<?lsmb PROCESS input element_data={
+  type => 'radio',
+  name => 'summary',
+  value => '1',
+  label => text('Summary'),
+  checked => 'checked',
+  } -?> 
+        </td>
+      </tr>
+<?lsmb IF form.report.match('^tax_') ?>
+      <tr>
+        <th align="right"><?lsmb text('Report for') ?></th>
+        <td colspan="3">
+  <?lsmb FOREACH account IN form.taxaccountlist;
+    PROCESS input element_data=account;
+  END -?>
+        </td>
+      </tr>
+  <?lsmb IF form.gifitaxaccountlist.defined -?>
+      <tr>
+        <th align="right"><?lsmb text('GIFI') ?></th>
+        <td colspan="3">
+    <?lsmb FOREACH account IN form.gifitaxaccountlist;
+      PROCESS input element_data=account;
+    END -?>
+        </td>
+      </tr>
+  <?lsmb END -?>
+<?lsmb END -?>
+      <tr>
+        <th align="right"><?lsmb text('Method') ?></th>
+        <td colspan="3">
+<?lsmb PROCESS input element_data={
+  name => 'method',
+  type => 'radio',
+  value => 'accrual',
+  label => text('Accrual'),
+  checked => 'checked',
+  } -?>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td>
+    <table>
+      <tr>
+        <th align="right"><?lsmb text('Include in Report') ?></th>
+        <td>
+<?lsmb PROCESS input element_data={
+  name => 'l_id',
+  type => 'checkbox',
+  value => 'Y',
+  } -?>
+        </td><td><?lsmb text('ID') ?></td>
+        <td>
+<?lsmb PROCESS input element_data={
+  name => 'l_invnumber',
+  type => 'checkbox',
+  value => 'Y',
+  checked => 'checked',
+  } -?>
+        </td><td><?lsmb text('Invoice') ?></td>
+        <td>
+<?lsmb PROCESS input element_data={
+  name => 'l_transdate',
+  type => 'checkbox',
+  value => 'Y',
+  checked => 'checked',
+  } -?>
+        </td><td><?lsmb text('Date') ?></td>
+      </tr>
+      <tr>
+        <td />
+        <td>
+<?lsmb PROCESS input element_data={
+  name => 'l_name',
+  type => 'checkbox',
+  value => 'Y',
+  checked => 'checked',
+  } -?>
+        </td><td><?lsmb IF form.db == 'ar';
+  text('Customer');
+ELSIF form.db == 'ap';
+  text('Vendor');
+END ?></td>
+        <td>
+<?lsmb PROCESS input element_data={
+  name => 'l_description',
+  type => 'checkbox',
+  value => 'Y',
+  checked => 'checked',
+  } -?>
+        </td><td><?lsmb text('Description') ?></td>
+        <td>
+<?lsmb PROCESS input element_data={
+  name => 'l_netamount',
+  type => 'checkbox',
+  value => 'Y',
+  checked => 'checked',
+  } -?>
+        </td><td><?lsmb text('Amount') ?></td>
+<?lsmb IF form.report.match('^tax_') ?>
+        <td>
+  <?lsmb PROCESS input element_data={
+    name => 'l_tax',
+    type => 'checkbox',
+    value => 'Y',
+    checked => 'checked',
+    } -?>
+        </td><td><?lsmb text('Tax') ?></td>
+        <td>
+  <?lsmb PROCESS input element_data={
+    name => 'l_total',
+    type => 'checkbox',
+    value => 'Y',
+    checked => 'checked',
+    } -?>
+        </td><td><?lsmb text('Total') ?></td>
+      </tr>
+      <tr>
+        <td />
+<?lsmb END ?>
+        <td>
+<?lsmb PROCESS input element_data={
+  name => 'l_subtotal',
+  type => 'checkbox',
+  value => 'Y',
+  } -?>
+        </td><td><?lsmb text('Subtotal') ?></td>
+      </tr>

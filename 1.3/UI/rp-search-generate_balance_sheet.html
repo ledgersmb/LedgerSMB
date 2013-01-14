@@ -1,0 +1,91 @@
+      <tr>
+        <th align="right"><?lsmb text('as at') ?></th>
+        <td><?lsmb PROCESS input element_data={
+        class => 'date',
+        name => 'asofdate',
+        size => '11',
+        title => user.dateformat,
+        value => form.asofdate,
+        } ?></td>
+        <td colspan="2">
+<?lsmb IF form.selectaccountingyear.defined ?>
+  <?lsmb PROCESS select element_data=form.selectaccountingmonth -?>
+  <?lsmb PROCESS select element_data=form.selectaccountingyear -?>
+<?lsmb END ?>
+        </td>
+      </tr>
+      <tr><th align="right"><?lsmb text('Compare to') ?></th><td colspan="3" /></tr>
+      <tr>
+        <th align="right"><?lsmb text('From') ?></th>
+        <td><?lsmb PROCESS input element_data={
+        class => 'date',
+        name => 'compareasofdate',
+        size => '11',
+        title => user.dateformat,
+        } ?></td>
+        <td>
+<?lsmb IF form.selectaccountingyear.defined;
+  compare_month = {
+    options => form.selectaccountingmonth.options,
+    name => 'compareasofmonth',
+    };
+  compare_year = {
+    options => form.selectaccountingyear.options,
+    name => 'compareasofyear',
+    };
+ -?>
+  <?lsmb PROCESS select element_data=compare_month -?>
+  <?lsmb PROCESS select element_data=compare_year -?>
+<?lsmb END ?>
+        </td>
+      </tr>
+      <tr>
+        <th align="right"><?lsmb text('Decimal Places') ?></th>
+        <td colspan="3"><?lsmb PROCESS input element_data={
+  name => 'decimalplaces',
+  size => '3',
+  value => '2',
+  } ?>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td>
+    <table>
+      <tr>
+        <th align="right"><?lsmb text('Method') ?></th>
+        <td colspan="3">
+<?lsmb PROCESS input element_data={
+  name => 'method',
+  type => 'radio',
+  value => 'accrual',
+  label => text('Accrual'),
+  checked => 'checked',
+  } -?>
+        </td>
+      </tr>
+      <tr>
+        <th align="right"><?lsmb text('Include in Report') ?></th>
+        <td colspan="3">
+<?lsmb PROCESS input element_data={
+  name => 'l_heading',
+  type => 'checkbox',
+  value => 'Y',
+  label => text('Heading'),
+  } -?>
+<?lsmb PROCESS input element_data={
+  name => 'l_subtotal',
+  type => 'checkbox',
+  value => 'Y',
+  label => text('Subtotal'),
+  } -?>
+<?lsmb PROCESS input element_data={
+  name => 'l_accno',
+  type => 'checkbox',
+  value => 'Y',
+  label => text('Account Number'),
+  } -?>
+        </td>
+      </tr>

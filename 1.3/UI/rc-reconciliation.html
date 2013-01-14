@@ -1,0 +1,129 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?> 
+<body>
+<form method="post" action="<?lsmb form.script ?>">
+<table width="100%">
+  <tr><th class="listtop"><?lsmb form.title ?></th></tr>
+  <tr><td> </td></tr>
+  <tr>
+    <td>
+      <table>
+        <tr>
+          <th align="right"><?lsmb text('Account') ?></th>
+          <td colspan="3"><?lsmb PROCESS select element_data=form.accountselect ?></td>
+        </tr>
+        <tr>
+          <th align="right"><?lsmb text('From') ?></th>
+          <td colspan="3"><?lsmb PROCESS input element_data={
+  class => 'date',
+  name => 'fromdate',
+  size => '11',
+  title => user.dateformat,
+  } ?> <?lsmb text('To') ?> <?lsmb PROCESS input element_data={
+  class => 'date',
+  name => 'todate',
+  size => '11',
+  title => user.dateformat,
+  } ?>
+          </td>
+        </tr>
+<?lsmb IF form.all_years ?>
+        <tr>
+          <th align="right"><?lsmb text('Period') ?></th>
+          <td colspan="3">
+  <?lsmb PROCESS select element_data=form.selectaccountingmonth -?>
+  <?lsmb PROCESS select element_data=form.selectaccountingyear -?>
+  <?lsmb PROCESS input element_data={
+    name => 'interval',
+    type => 'radio',
+    value => '0',
+    label => text('Current'),
+    checked => 'checked',
+    } -?>
+  <?lsmb PROCESS input element_data={
+    name => 'interval',
+    type => 'radio',
+    value => '1',
+    label => text('Month'),
+    } -?>
+  <?lsmb PROCESS input element_data={
+    name => 'interval',
+    type => 'radio',
+    value => '3',
+    label => text('Quarter'),
+    } -?>
+  <?lsmb PROCESS input element_data={
+    name => 'interval',
+    type => 'radio',
+    value => '12',
+    label => text('Year'),
+    } -?>
+          </td>
+        </tr>
+<?lsmb END -?>
+<?lsmb IF form.report ?>
+        <tr>
+          <td colspan="2" align="right">
+  <?lsmb PROCESS input element_data={
+    type => 'checkbox',
+    name => 'outstanding',
+    value => '1',
+    label => text('Outstanding'),
+    checked => 'checked',
+    }; ?>
+          </td>
+          <td colspan="2" align="right">
+  <?lsmb PROCESS input element_data={
+    type => 'checkbox',
+    name => 'cleared',
+    value => '1',
+    label => text('Cleared'),
+    }; ?>
+          </td>
+        </tr>
+<?lsmb END ?>
+        <tr>
+          <td />
+          <td colspan="3">
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'summary',
+    value => '1',
+    label => text('Summary'),
+    checked => 'checked',
+    };
+  PROCESS input element_data={
+    type => 'radio',
+    name => 'summary',
+    value => '0',
+    label => text('Detail'),
+    }; ?>
+          </td>
+        </tr>
+        <tr>
+          <td />
+          <td colspan="3">
+  <?lsmb PROCESS input element_data={
+    type => 'checkbox',
+    name => 'fx_transaction',
+    value => '1',
+    label => text('Include Exchange Rate Difference'),
+    checked => 'checked',
+    }; ?>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td colspan="2"><hr size="3" noshade="noshade" /></td></tr>
+</table>
+<?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END ?>
+<?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+</form>
+</body>
+</html>

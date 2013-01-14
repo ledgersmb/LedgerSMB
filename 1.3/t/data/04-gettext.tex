@@ -1,0 +1,12 @@
+<?lsmb FILTER latex ?>
+\documentclass{scrartcl}
+\usepackage[utf8]{inputenc}
+\font\han="STSong" at 16pt
+\font\rom="Gentium" at 16pt
+\begin{document}
+I am a <?lsmb login ?>.
+test: {\han <?lsmb gettext('zh_CN', "June") ?>.}
+Foo
+\rom <?lsmb escape(gettext('fr', "Goods & Services")) ?>
+\end{document}
+<?lsmb END ?>

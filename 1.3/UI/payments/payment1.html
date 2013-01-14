@@ -1,0 +1,106 @@
+<?lsmb INCLUDE 'ui-header.html' ?>
+<body id="payment-1-body">
+
+<form name="search" method="get" action="payment.pl">
+<?lsmb PROCESS elements.html  # Include form elements helper. -?>
+<?lsmb login.type = 'hidden' ; INCLUDE input element_data=login -?>
+<?lsmb accountclass.type = 'hidden'; INCLUDE input element_data=accountclass -?>
+<?lsmb # The first_load field is required on payment2.html to initialize discounts the first time, on each subsequent update it wont exist-?>
+<?lsmb INCLUDE input element_data={
+            name => 'first_load',
+            id   => 'first_load',
+            type => 'hidden',
+            value => 'on'} ?>
+<?lsmb type.type = "hidden"; INCLUDE input element_data=type; -?>
+<table width="100%">
+  <tr id="top-bar" class="listtop">
+    <th id="top-bar-header" class="listtop"><label  id="top-bar-header-label">
+     <?lsmb IF (type.value == 'receipt') -?>
+      <?lsmb text('Receipts') ?>
+     <?lsmb ELSE; text('Payments') -?>
+     <?lsmb END -?>                     		 
+    </th>
+  </tr>
+</table>
+
+<table id="search-form-table">
+	<tr id="cost-center-row">
+		<td id="cost-center-label-column" class="label-left"><?lsmb text('Departments') ?></td>
+		<td id="department-column">
+			<?lsmb PROCESS select element_data=department ?>
+  	</td>
+	</tr>
+	<tr id="vc-currency-row">
+		<td id="vc-label-column" class="label-left">
+		 <?lsmb IF (type.value == 'receipt') -?>
+		   <?lsmb text('Customer Name') -?>
+		 <?lsmb ELSE; text('Vendor Name') -?>
+		 <?lsmb END -?>                     		 
+		</td>
+		<td id="vc-column">
+			<input id="vc_name" name="vc_name"/>
+		</td>
+		<td id="vc-label-column2" align="right">
+			<?lsmb text('SSN')?>
+		</td>
+		<td id="vc-column2">
+			<input id="vc_ssn" name="vc_ssn" size="10"/>	
+		</td>
+	</tr>	
+	<tr>	
+  	<td id="currency-label-column" class="label-left"><?lsmb text('Currency') ?></td>
+		<td id="currency-column">
+			<?lsmb PROCESS select element_data=curr ?>
+		</td>
+	</tr>
+  	<tr id="daterange-row">
+		<td id="datefrom-label-column" class="label-left"><?lsmb text('Date from') ?> &gt;=</td>
+		<td id="datefrom-gt-column">
+			<?lsmb 
+			     datefrom.type      = "text";
+			     datefrom.size      = "10"  ;
+			     datefrom.maxlenght = "10"  ;
+			     datefrom.name      = "datefrom";
+			     INCLUDE input element_data=datefrom;
+		         -?>
+		</td>
+		<td id="dateto-label-column" class="label-left" align=right><?lsmb text('Date to') ?> &lt;=</td>
+		<td id="dateto-column">
+			<?lsmb 
+			     dateto.type        = "text";
+			     dateto.size        = "10"  ;
+			     dateto.maxlenght   = "10"  ;
+			     dateto.name	= "dateto";
+			     INCLUDE input element_data=dateto;
+			-?>
+		</td>
+	</tr>
+	<tr id="total-row">
+		<td id="total-gt-label-column" class="label-left"><?lsmb text('Total') ?> &gt;=</td>
+		<td id="total-gt-column">
+			<?lsmb 
+			     amountfrom.type      = "text";
+			     amountfrom.size      = "10"  ;
+			     amountfrom.maxlenght = "10"  ;
+			     PROCESS input element_data=amountfrom;
+		         ?>
+		</td>
+		<td id="total-lt-label-column" class="label-left" align=right><?lsmb text('Total') ?> &lt;=</td>
+		<td id="total-lt-column">
+			<?lsmb 
+			     amountto.type        = "text";
+			     amountto.size        = "10"  ;
+			     amountto.maxlenght   = "10"  ;
+			     PROCESS input element_data=amountto;
+			?>
+		</td>
+	</tr>
+</table>
+			
+<hr />
+
+<?lsmb PROCESS button element_data=action ?>
+
+</form>
+</body>
+</html>

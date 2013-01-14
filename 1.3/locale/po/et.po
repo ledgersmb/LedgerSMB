@@ -1,0 +1,2833 @@
+# #-#-#-#-#  et.po (LedgerSMB 1.1.1)  #-#-#-#-#
+# #####################################################################
+# LedgerSMB Small Medium Business Accounting
+# Copyright (c) 2006
+#
+# Estonian texts:
+#
+#  Author: Andrei Kolu <andrei.kolu@mail.ee>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+#
+# ######################################################################
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: LedgerSMB 1.1.1\n"
+"Last-Translator: Andrei Kolu <andrei.kolu@mail.ee>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "A"
+msgstr "A"
+
+msgid "AP"
+msgstr "OstuReskontro"
+
+msgid "AP Aging"
+msgstr "OR Aegunud"
+
+msgid "AP Outstanding"
+msgstr "OR Laekumata"
+
+msgid "AP Transaction"
+msgstr "OR Tehing"
+
+msgid "AP Transactions"
+msgstr "OR Tehingud"
+
+msgid "AR"
+msgstr "MüügiReskontro"
+
+msgid "AR Aging"
+msgstr "MR Aegunud"
+
+msgid "AR Outstanding"
+msgstr "MR Laekumata"
+
+msgid "AR Transaction"
+msgstr "MR Tehing"
+
+msgid "AR Transactions"
+msgstr "MR Tehingud"
+
+msgid "AR/AP"
+msgstr "MR/OR"
+
+msgid "About"
+msgstr "Programmi Info"
+
+msgid "Above"
+msgstr "Alla"
+
+msgid "Access Control"
+msgstr "Ligipääsukontroll"
+
+msgid "Access Denied!"
+msgstr "Ligipääs Keelatud!"
+
+msgid "Account"
+msgstr "Konto"
+
+msgid "Account Number"
+msgstr "Konto Number"
+
+msgid "Account Number missing!"
+msgstr "Konto Number puudu"
+
+msgid "Account Type"
+msgstr "Konto Tüüp"
+
+msgid "Account Type missing!"
+msgstr "Konto Tüüp puudu!"
+
+msgid "Account deleted!"
+msgstr "Konto on kustutatud!"
+
+msgid "Account does not exist!"
+msgstr "Konto ei eksisteeri"
+
+msgid "Account saved!"
+msgstr "Konto on salvestatud"
+
+msgid "Accounting"
+msgstr "Raamatupidamisarvestus"
+
+msgid "Accounting Menu"
+msgstr "Raamatupidamisarvestuse Menüü"
+
+msgid "Accounts"
+msgstr "Kontod"
+
+msgid "Accrual"
+msgstr "Kapitalisatsioon"
+
+msgid "Activate Audit trail"
+msgstr "Aktiveeri Auditi jälgimine"
+
+msgid "Activate Audit trails"
+msgstr "Aktiveeri Auditi jälgimine"
+
+msgid "Active"
+msgstr "Aktiiv"
+
+msgid "Add"
+msgstr "Lisa"
+
+msgid "Add AP Transaction"
+msgstr "Lisa OR Tehing"
+
+msgid "Add AR Transaction"
+msgstr "Lisa MR Tehing"
+
+msgid "Add Account"
+msgstr "Lisa Konto"
+
+msgid "Add Assembly"
+msgstr "Lisa Komplekt"
+
+msgid "Add Business"
+msgstr "Lisa Ettevõte"
+
+msgid "Add Cash Transfer Transaction"
+msgstr "Lisa Sularahamüügi Tehing"
+
+msgid "Add Customer"
+msgstr "Lisa Klient"
+
+msgid "Add Deduction"
+msgstr "Lisa Hinnaaland"
+
+msgid "Add Department"
+msgstr "Lisa Osakond"
+
+msgid "Add Employee"
+msgstr "Lisa Töötaja"
+
+msgid "Add Exchange Rate"
+msgstr "Lisa Valuutakurss"
+
+msgid "Add GIFI"
+msgstr "Lisa GIFI"
+
+msgid "Add General Ledger Transaction"
+msgstr "Lisa Pearaamatu Tehing"
+
+msgid "Add Group"
+msgstr "Lisa Grupp"
+
+msgid "Add Job"
+msgstr "Lisa Ülesanne"
+
+msgid "Add Labor/Overhead"
+msgstr "Lisa Tööjõud/Kulud"
+
+msgid "Add Language"
+msgstr "Lisa Keel"
+
+msgid "Add POS Invoice"
+msgstr "Lisa Müügipunkti Kaubaarve"
+
+msgid "Add Part"
+msgstr "Lisa Detail"
+
+msgid "Add Pricegroup"
+msgstr "Lisa Hinnagrupp"
+
+msgid "Add Project"
+msgstr "Lisa Projekt"
+
+msgid "Add Purchase Order"
+msgstr "Lisa Hanketellimus"
+
+msgid "Add Quotation"
+msgstr "Lisa Koteering"
+
+msgid "Add Request for Quotation"
+msgstr "Lisa Hinnapakkumuse Taotlus"
+
+msgid "Add SIC"
+msgstr "Lisa Standardiseeritud Tööstuskood"
+
+msgid "Add Sales Invoice"
+msgstr "Lisa Müügiarve"
+
+msgid "Add Sales Order"
+msgstr "Lisa Müügitellimus"
+
+msgid "Add Service"
+msgstr "Lisa Teenus"
+
+msgid "Add Stores Card"
+msgstr "Lisa Tagavarade Kaart"
+
+msgid "Add Time Card"
+msgstr "Lisa Ajakaart"
+
+msgid "Add Transaction"
+msgstr "Lisa Kanne"
+
+msgid "Add User"
+msgstr "Lisa Kasutaja"
+
+msgid "Add Vendor"
+msgstr "Lisa Tarnija"
+
+msgid "Add Vendor Invoice"
+msgstr "Lisa Ostuarve"
+
+msgid "Add Warehouse"
+msgstr "Lisa Kaubaladu"
+
+msgid "Address"
+msgstr "Aadress"
+
+msgid "Administration"
+msgstr "Arvepidamine"
+
+msgid "Administrator"
+msgstr "Arvepidaja"
+
+msgid "After Deduction"
+msgstr "Pärast Mahaarvatist"
+
+msgid "Aged"
+msgstr "Aegunud"
+
+msgid "Aged Overdue"
+msgstr "Aegunud Võlgnevused"
+
+msgid "All"
+msgstr "Kõik"
+
+msgid "All Accounts"
+msgstr "Kõik Kontod"
+
+msgid "All Datasets up to date!"
+msgstr "Kõik Andmehulgad on kaasaegsed!"
+
+msgid "All Items"
+msgstr "Kõik Kaubaartiklid"
+
+msgid "Allocated"
+msgstr "Reserveeritud"
+
+msgid "Allowances"
+msgstr "Diskontod"
+
+msgid "Amount"
+msgstr "Summa"
+
+msgid "Amount Due"
+msgstr "Maksmisele kuuluv summa"
+
+msgid "Amount missing!"
+msgstr "Summa puudub!"
+
+msgid "Apr"
+msgstr "Apr"
+
+msgid "April"
+msgstr "Aprill"
+
+msgid "Are you sure you want to delete Invoice Number"
+msgstr "Kas oled kindel, et soovid kustutada Kaubaarve Number"
+
+msgid "Are you sure you want to delete Order Number"
+msgstr "Kas oled kindel, et soovid kustutada Tellimuse Number"
+
+msgid "Are you sure you want to delete Quotation Number"
+msgstr "Kas oled kindel, et soovid Koteeringu Number"
+
+msgid "Are you sure you want to delete Transaction"
+msgstr "Kas oled kindel, et soovid kustutada kande"
+
+msgid "Are you sure you want to delete time card for"
+msgstr "Oled kindel, et soovid kustutada ajakardi"
+
+msgid "Are you sure you want to remove the marked entries from the queue?"
+msgstr "Kas olete kindel, et soovite eemaldada märgitud väljad järjekorrast?"
+
+msgid "As of"
+msgstr "nagu"
+
+msgid "Assemblies"
+msgstr "Koosteosad"
+
+msgid "Assemblies restocked!"
+msgstr "Koosteosade laovaru täiendatud!"
+
+msgid "Assembly"
+msgstr "Komplekt"
+
+msgid "Assembly stocked!"
+msgstr "Komplekt ladustatud"
+
+msgid "Asset"
+msgstr "Vara"
+
+msgid "Attachment"
+msgstr "Manus"
+
+msgid "Audit Control"
+msgstr "Audiitorkontroll"
+
+msgid "Audit trail disabled"
+msgstr "Auditi jälgimine välja lülitatud"
+
+msgid "Audit trail enabled"
+msgstr "Auditi jälgimine sisse lülitatud"
+
+msgid "Audit trail removed up to"
+msgstr "Auditi jäljed kustutatud kuni"
+
+msgid "Audit trails disabled"
+msgstr "Auditi jälgimine välja lülitatud"
+
+msgid "Audit trails enabled"
+msgstr "Auditi jälgimine sisse lülitatud"
+
+msgid "Aug"
+msgstr "Aug"
+
+msgid "August"
+msgstr "August"
+
+msgid "Average Cost"
+msgstr "Keskmised Kulud"
+
+msgid "Avg Cost"
+msgstr "Kesk. Kulud"
+
+msgid "BIC"
+msgstr "BIC (S.W.I.F.T)"
+
+msgid "BOM"
+msgstr "Materjaliarvestus"
+
+msgid "Backup"
+msgstr "Varukoopia"
+
+msgid "Backup sent to"
+msgstr "Varukoopia saadetud"
+
+msgid "Balance"
+msgstr "Bilanss"
+
+msgid "Balance Sheet"
+msgstr "Bilansiaruanne"
+
+msgid "Based on"
+msgstr "Põhineb"
+
+msgid "Batch Printing"
+msgstr "Mass. Väljatrükk"
+
+msgid "Bcc"
+msgstr "Bcc"
+
+msgid "Before Deduction"
+msgstr "Enne Hinnaalandust"
+
+msgid "Beginning Balance"
+msgstr "Algsaldo"
+
+msgid "Below"
+msgstr "All"
+
+msgid "Billing Address"
+msgstr "Arve Esitamise Aadress"
+
+msgid "Billion"
+msgstr "miljard"
+
+msgid "Bin"
+msgstr "Pakendit"
+
+msgid "Bin List"
+msgstr "Pakendi Saateleht"
+
+msgid "Bin Lists"
+msgstr "Pakendi Saatelehed"
+
+msgid "Books are open"
+msgstr "Žurnaalid on avatud"
+
+msgid "Break"
+msgstr "Katkestus"
+
+msgid "Business"
+msgstr "Ettevõte"
+
+msgid "Business Number"
+msgstr "Ettevõtte Registrinumber"
+
+msgid "Business deleted!"
+msgstr "Ettevõte kustutatud!"
+
+msgid "Business saved!"
+msgstr "Ettevõte salvestatud"
+
+msgid "C"
+msgstr "C"
+
+msgid "COGS"
+msgstr "Müügikulud"
+
+msgid "COGS account does not exist!"
+msgstr "Müügikulude kontot puudu!"
+
+msgid "Cannot add stores card for a completed job!"
+msgstr "Ei saa lisada tagavarade kaarti juba lõpetatud tööülesandele!"
+
+msgid "Cannot add time card for a completed job!"
+msgstr "Ei saa lisada ajakaarti juba lõpetatud tööülesandele!"
+
+msgid "Cannot change stores card for a completed job!"
+msgstr "Ei saa muuta tagavarade kaarti juba lõpetatud tööülesandele!"
+
+msgid "Cannot change time card for a completed job!"
+msgstr "Ei saa muuta ajakaarti juba lõpetatud tööülesandele!"
+
+msgid "Cannot create Assembly"
+msgstr "Ei saa luua Komplekti"
+
+msgid "Cannot create Labor"
+msgstr "Ei saa luua Tööjõudu"
+
+msgid "Cannot create Lock!"
+msgstr "Ei saa Lukustada!"
+
+msgid "Cannot create Part"
+msgstr "Ei saa luua Detaili"
+
+msgid "Cannot create Service"
+msgstr "Ei saa luua Teenust"
+
+msgid "Cannot delete account!"
+msgstr "Kontot ei saa kustutada!"
+
+msgid "Cannot delete customer!"
+msgstr "Kienti ei saa kustutada!"
+
+msgid "Cannot delete default account!"
+msgstr "Tähtaegunud võla kontot ei saa kustutada!"
+
+msgid "Cannot delete invoice!"
+msgstr "Arvet ei saa kustutada"
+
+msgid "Cannot delete item!"
+msgstr "Kaubaartiklit ei saa kustutada!"
+
+msgid "Cannot delete order!"
+msgstr "Tellimust ei saa kustutada!"
+
+msgid "Cannot delete quotation!"
+msgstr "Koteeringut ei saa kustutada!"
+
+msgid "Cannot delete time card!"
+msgstr "Ei saa kustutada ajakaarti!"
+
+msgid "Cannot delete transaction!"
+msgstr "Kannet ei saa kustutada!"
+
+msgid "Cannot delete vendor!"
+msgstr "Tarnijat ei saa kustutada!"
+
+msgid "Cannot post Payment!"
+msgstr "Makset ei saa salvestada!"
+
+msgid "Cannot post Receipt!"
+msgstr "Sisetulekuarderit ei saa salvestada!"
+
+msgid "Cannot post invoice for a closed period!"
+msgstr "Arvet ei saa salvestada suletud perioodile!"
+
+msgid "Cannot post invoice!"
+msgstr "Arvet ei saa salvestada!"
+
+msgid "Cannot post payment for a closed period!"
+msgstr "Makset ei saa salvestada suletud perioodile!"
+
+msgid "Cannot post transaction for a closed period!"
+msgstr "Kannet ei saa salvestada suletud perioodile!"
+
+msgid "Cannot post transaction with a debit and credit entry for the same account!"
+msgstr "Ei saa postitada tehingut deebeti ja kreediti väljadega samal kontol!"
+
+msgid "Cannot post transaction!"
+msgstr "Tehingut ei saa salvestada!"
+
+msgid "Cannot remove files!"
+msgstr "Faile ei saa kustutada!"
+
+msgid "Cannot save account!"
+msgstr "Kontot ei saa salvestada!"
+
+msgid "Cannot save defaults!"
+msgstr "Ei saa salvestada tähtaegunud võlgu!"
+
+msgid "Cannot save order!"
+msgstr "Tellimust ei saa salvestada!"
+
+msgid "Cannot save preferences!"
+msgstr "Määranguid ei saa salvestada!"
+
+msgid "Cannot save quotation!"
+msgstr "Koteeringut ei saa salvestada!"
+
+msgid "Cannot save stores card for a closed period!"
+msgstr "Ei saa salvestada tagavarade kaarti juba suletud perioodil!"
+
+msgid "Cannot save stores card!"
+msgstr "Ei saa salvestada tagavarade kaarti!"
+
+msgid "Cannot save time card for a closed period!"
+msgstr "Ei saa salvestada ajakaarti juba suletud perioodil!"
+
+msgid "Cannot save time card!"
+msgstr "Ajakaarti ei saa salvestada!"
+
+msgid "Cannot set account for more than one of AR, AP or IC"
+msgstr "Konto saab olla, kas Nõue, Kohustuse või Tulu/Kulu tüüpi"
+
+msgid "Cannot set multiple options for"
+msgstr "Ei saa märgistada mitut valikut"
+
+msgid "Cannot set multiple options for Item"
+msgstr "Ei saa märgistada mitut valikut Kaubaartiklile"
+
+msgid "Cannot stock Assembly!"
+msgstr "Komplekti pole võimalik ladustada!"
+
+msgid "Cannot stock assemblies!"
+msgstr "Ei saa ladustada koosteosi"
+
+msgid "Cash"
+msgstr "Kassaseis"
+
+msgid "Cc"
+msgstr "Cc"
+
+msgid "Change"
+msgstr "Tagasi"
+
+msgid "Change Admin Password"
+msgstr "Muuda Adminni Parool"
+
+msgid "Change Password"
+msgstr "Muuda Parool"
+
+msgid "Chargeable"
+msgstr "Maksustatav"
+
+msgid "Chart of Accounts"
+msgstr "Kontoplaan"
+
+msgid "Check"
+msgstr "Kontrolli"
+
+msgid "Check Inventory"
+msgstr "Kontrolli Laoseisu"
+
+msgid "City"
+msgstr "Linn"
+
+msgid "Cleared"
+msgstr "Laekunud"
+
+msgid "Click on login name to edit!"
+msgstr "Redigeerimiseks kliki kasutajanimel"
+
+msgid "Clocked"
+msgstr "Kulunud aeg"
+
+msgid "Close Books up to"
+msgstr "Sulge Žurnaalid kuni"
+
+msgid "Closed"
+msgstr "Suletud"
+
+msgid "Code"
+msgstr "Kood"
+
+msgid "Code missing!"
+msgstr "Kood puudu!"
+
+msgid "Company"
+msgstr "Firma"
+
+msgid "Company Name"
+msgstr "Firma Nimi"
+
+msgid "Compare to"
+msgstr "Võrdlus perioodiga"
+
+msgid "Completed"
+msgstr "Lõpetatud"
+
+msgid "Components"
+msgstr "Komponendid"
+
+msgid "Confirm"
+msgstr "Kinnita"
+
+msgid "Confirm!"
+msgstr "Kinnita!"
+
+msgid "Connect to"
+msgstr "Ühenda"
+
+msgid "Consolidate"
+msgstr "Koonda"
+
+msgid "Consolidate Orders"
+msgstr "Tellimuste Koondamine"
+
+msgid "Consolidate Purchase Orders"
+msgstr "Ostutellimuste Koondamine"
+
+msgid "Consolidate Sales Orders"
+msgstr "Müügitellimuste Koondamine"
+
+msgid "Contact"
+msgstr "Kontakt"
+
+msgid "Continue"
+msgstr "Jätka"
+
+msgid "Contra"
+msgstr "Ammortisatsioon"
+
+msgid "Copies"
+msgstr "Koopiat"
+
+msgid "Copy to COA"
+msgstr "Kopeeri kontoplaani"
+
+msgid "Cost"
+msgstr "Omahind"
+
+msgid "Cost Center"
+msgstr "Kulukeskus"
+
+msgid "Could not save pricelist!"
+msgstr "Hinnakirja salvestamine ebaõnnestus!"
+
+msgid "Could not save!"
+msgstr "Ei saa salvestada!"
+
+msgid "Could not transfer Inventory!"
+msgstr "Laoseisu ei saa ümber paigutada!"
+
+msgid "Country"
+msgstr "Riik"
+
+msgid "Create Chart of Accounts"
+msgstr "Uus kontoplaan"
+
+msgid "Create Dataset"
+msgstr "Uus Andmekogu"
+
+msgid "Credit"
+msgstr "Kreedit"
+
+msgid "Credit Invoice"
+msgstr "Kreeditarve"
+
+msgid "Credit Limit"
+msgstr "Krediidilimiit"
+
+msgid "Curr"
+msgstr "Val."
+
+msgid "Currency"
+msgstr "Valuuta"
+
+msgid "Current"
+msgstr "Jooksev"
+
+msgid "Current Earnings"
+msgstr "Jooksev Kasum/Kahjum"
+
+msgid "Customer"
+msgstr "Klient"
+
+msgid "Customer History"
+msgstr "Kliendi Ajalugu"
+
+msgid "Customer Number"
+msgstr "Kliendi Number"
+
+msgid "Customer deleted!"
+msgstr "Klient on kustutatud!"
+
+msgid "Customer missing!"
+msgstr "Klienti puudu!"
+
+msgid "Customer not on file!"
+msgstr "Klient puudub failis!"
+
+msgid "Customer saved!"
+msgstr "Klient salvestatud!"
+
+msgid "Customers"
+msgstr "Kliendid"
+
+msgid "DBA"
+msgstr "DBA"
+
+msgid "DBI not installed!"
+msgstr "DBI on installeerimata"
+
+msgid "DOB"
+msgstr "Sünniaeg"
+
+msgid "Database"
+msgstr "Andmebaas"
+
+msgid "Database Administration"
+msgstr "Andmebaasi administreerimine"
+
+msgid "Database Driver not checked!"
+msgstr "Andmebaasi draiver valimata!"
+
+msgid "Database Host"
+msgstr "Andmebaasiserver"
+
+msgid "Database User missing!"
+msgstr "Andmebaasi kasutaja puudub!"
+
+msgid "Dataset"
+msgstr "Andmekogu"
+
+msgid "Dataset is newer than version!"
+msgstr "Andmekogu versioon, on uuem süsteemi omast!"
+
+msgid "Dataset missing!"
+msgstr "Andmekogu puudub!"
+
+msgid "Dataset updated!"
+msgstr "Andmekogu uuendatud!"
+
+msgid "Date"
+msgstr "Kuupäev"
+
+msgid "Date Format"
+msgstr "Kuupäeva Formaat"
+
+msgid "Date Paid"
+msgstr "Maksekuupäev"
+
+msgid "Date Received"
+msgstr "Kättesaamise kuupäev"
+
+msgid "Date missing!"
+msgstr "Kuupäev puudub!"
+
+msgid "Date received missing!"
+msgstr "Kattesaamise kuupäev puudub!"
+
+msgid "Date worked"
+msgstr "Töötatud kuupäeval"
+
+msgid "Day"
+msgstr "Päev"
+
+msgid "Day(s)"
+msgstr "Päev(a)"
+
+msgid "Days"
+msgstr "Päeva"
+
+msgid "Debit"
+msgstr "Deebet"
+
+msgid "Debit Invoice"
+msgstr "Deebitarve"
+
+msgid "Dec"
+msgstr "Dets"
+
+msgid "December"
+msgstr "Detsember"
+
+msgid "Decimalplaces"
+msgstr "Komakohad"
+
+msgid "Deduct after"
+msgstr "Hinnaaland pärast"
+
+msgid "Deduction deleted!"
+msgstr "Hinnaaland kustutatud!"
+
+msgid "Deduction saved!"
+msgstr "Hinnaaland salvestatud!"
+
+msgid "Deductions"
+msgstr "Hinnaalandused"
+
+msgid "Default Template"
+msgstr "Vaikimisi Dokumendipõhi"
+
+msgid "Defaults"
+msgstr "Vaikeväärtused"
+
+msgid "Defaults saved!"
+msgstr "Vaikeväärtused salvestatud!"
+
+msgid "Delete"
+msgstr "Kustuta"
+
+msgid "Delete Account"
+msgstr "Kustuta Lonto"
+
+msgid "Delete Dataset"
+msgstr "Kustuta Andmekogu"
+
+msgid "Delete Schedule"
+msgstr "Kustutata Ajakava"
+
+msgid "Deleting a language will also delete the templates for the language"
+msgstr "Keele kustutamisele järgneb kõigi selle keele dokumendipõhjade kustutamine"
+
+msgid "Delivery Date"
+msgstr "Tarnetähtaeg"
+
+msgid "Department"
+msgstr "Osakond"
+
+msgid "Department deleted!"
+msgstr "Osakond kustutatud!"
+
+msgid "Department saved!"
+msgstr "Osakond salvestatud!"
+
+msgid "Departments"
+msgstr "Osakonnad"
+
+msgid "Deposit"
+msgstr "Deposiit"
+
+msgid "Description"
+msgstr "Selgitus"
+
+msgid "Description Translations"
+msgstr "Tõlgete Selgitus"
+
+msgid "Description missing!"
+msgstr "Selgitus puudub!"
+
+msgid "Detail"
+msgstr "Detail"
+
+msgid "Difference"
+msgstr "Erinevus"
+
+msgid "Directory"
+msgstr "Aadressiraamat"
+
+msgid "Discount"
+msgstr "Diskonto"
+
+msgid "Done"
+msgstr "Valmis"
+
+msgid "Drawing"
+msgstr "Joonis"
+
+msgid "Driver"
+msgstr "Ohjur"
+
+msgid "Dropdown Limit"
+msgstr "Rippmenüü Piirang"
+
+msgid "Due Date"
+msgstr "Maksetähtaeg"
+
+msgid "Due Date missing!"
+msgstr "Maksetähtaeg puudub!"
+
+msgid "E-mail"
+msgstr "E-post"
+
+msgid "E-mail Statement to"
+msgstr "Saata E-postiga Kasumiaruanne aadressil"
+
+msgid "E-mail address missing!"
+msgstr "E-posti aadress puudub"
+
+msgid "E-mail message"
+msgstr "E-posti teade"
+
+msgid "E-mailed"
+msgstr "E-postiga saadetud"
+
+msgid "Edit"
+msgstr "Muudatused"
+
+msgid "Edit AP Transaction"
+msgstr "Muuda OR Tehing"
+
+msgid "Edit AR Transaction"
+msgstr "Muuda MR Tehing"
+
+msgid "Edit Account"
+msgstr "Muuda Konto"
+
+msgid "Edit Assembly"
+msgstr "Muuda Komplekti"
+
+msgid "Edit Business"
+msgstr "Muuda Ettevõtte"
+
+msgid "Edit Cash Transfer Transaction"
+msgstr "Muuda Raha Ülekande Tehing"
+
+msgid "Edit Customer"
+msgstr "Muuda Klienti"
+
+msgid "Edit Deduction"
+msgstr "Muuda Hinnaaland"
+
+msgid "Edit Department"
+msgstr "Muuda Osakonna"
+
+msgid "Edit Description Translations"
+msgstr "Muuda Tõlgete Selgitus"
+
+msgid "Edit Employee"
+msgstr "Muuda Töötaja"
+
+msgid "Edit GIFI"
+msgstr "Muuda GIFI"
+
+msgid "Edit General Ledger Transaction"
+msgstr "Muuda Pearaamatu Tehing"
+
+msgid "Edit Group"
+msgstr "Muuda Gruppi andmed"
+
+msgid "Edit Job"
+msgstr "Redigeeri Tööülesanne"
+
+msgid "Edit Labor/Overhead"
+msgstr "Muuda Tööjõukulu"
+
+msgid "Edit Language"
+msgstr "Muuda Keel"
+
+msgid "Edit POS Invoice"
+msgstr "Muuda Müügipunkti Müügiarve"
+
+msgid "Edit Part"
+msgstr "Muuda Detail"
+
+msgid "Edit Preferences for"
+msgstr "Muuda Määrangud: "
+
+msgid "Edit Pricegroup"
+msgstr "Muuda Hinnagrupp"
+
+msgid "Edit Project"
+msgstr "Muuda Projekt"
+
+msgid "Edit Purchase Order"
+msgstr "Muuda Ostutellimus"
+
+msgid "Edit Quotation"
+msgstr "Muuda Koteering"
+
+msgid "Edit Request for Quotation"
+msgstr "Muuda Koteeringu Taotlus"
+
+msgid "Edit SIC"
+msgstr "Muuda SIC-Standardiseeritud Tööstuskood"
+
+msgid "Edit Sales Invoice"
+msgstr "Muuda Müügiarve"
+
+msgid "Edit Sales Order"
+msgstr "Muuda Müügitellimus"
+
+msgid "Edit Service"
+msgstr "Muuda Teenus"
+
+msgid "Edit Template"
+msgstr "Muuda Dokumendipõhi"
+
+msgid "Edit Time Card"
+msgstr "Muuda Ajakaarti"
+
+msgid "Edit User"
+msgstr "Muuda Kasutaja"
+
+msgid "Edit Vendor"
+msgstr "Muuda Tarnija"
+
+msgid "Edit Vendor Invoice"
+msgstr "Muuda Ostuarve"
+
+msgid "Edit Warehouse"
+msgstr "Muuda Kaubaladu"
+
+msgid "Eight"
+msgstr "kaheksa"
+
+msgid "Employee"
+msgstr "Töötaja"
+
+msgid "Employee Name"
+msgstr "Teenistuja Nimi"
+
+msgid "Employee Number"
+msgstr "Teenistuja Number"
+
+msgid "Employee deleted!"
+msgstr "Teenistuja kustutatud"
+
+msgid "Employee pays"
+msgstr "Teenistuja töötasu"
+
+msgid "Employee saved!"
+msgstr "Teenistuja salvestatud"
+
+msgid "Employees"
+msgstr "Teenistujad"
+
+msgid "Employer"
+msgstr "Tööandja"
+
+msgid "Employer pays"
+msgstr "Tööandja töötasu"
+
+msgid "Enddate"
+msgstr "Lõputähtaeg"
+
+msgid "Ends"
+msgstr "Lõpeb"
+
+msgid "Enforce transaction reversal for all dates"
+msgstr "Kohustuslik tehingute storneerimine kõikide kuupäevade ulatuses"
+
+msgid "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your native and foreign currencies"
+msgstr "Sisesta kohalikud- ja välisvaluutad (kuni 3 tähemärki, koolonitega eraltatud, nt. CAD:USD:EUR)"
+
+msgid "Equity"
+msgstr "Omandiõigus"
+
+msgid "Every"
+msgstr "Iga"
+
+msgid "Exch"
+msgstr "Kurss"
+
+msgid "Exchange Rate"
+msgstr "Valuutakurss"
+
+msgid "Exchange rate for payment missing!"
+msgstr "Maksel puudub valuutakurss!"
+
+msgid "Exchange rate missing!"
+msgstr "Valuutakurss puudu!"
+
+msgid "Exempt age <"
+msgstr "Vabastatud aeg <"
+
+msgid "Existing Datasets"
+msgstr "Olemasolevad Andmekogud"
+
+msgid "Expense"
+msgstr "Kulu"
+
+msgid "Expense account does not exist!"
+msgstr "Kulude konto puudu!"
+
+msgid "Expense/Asset"
+msgstr "Kulu/Vara"
+
+msgid "Extended"
+msgstr "Summa"
+
+msgid "FX"
+msgstr "Valuutavahetus"
+
+msgid "Failed to save order!"
+msgstr "Viga tellimuse salvestamisel!"
+
+msgid "Fax"
+msgstr "Faks"
+
+msgid "Feb"
+msgstr "Veebr"
+
+msgid "February"
+msgstr "Veebruar"
+
+msgid "Five"
+msgstr "viis"
+
+msgid "For"
+msgstr "Saata"
+
+msgid "Foreign Exchange Gain"
+msgstr "Valuutavahetuse Kasum"
+
+msgid "Foreign Exchange Loss"
+msgstr "Valuutavahetuse Kahjum"
+
+msgid "Four"
+msgstr "neli"
+
+msgid "Friday"
+msgstr "Reede"
+
+msgid "From"
+msgstr "Alates"
+
+msgid "From Warehouse"
+msgstr "Tuleb Kaubalaost"
+
+msgid "GIFI"
+msgstr "GIFI"
+
+msgid "GIFI deleted!"
+msgstr "GIFI kustutatud!"
+
+msgid "GIFI missing!"
+msgstr "GIFI puudub!"
+
+msgid "GIFI saved!"
+msgstr "GIFI salvestatud!"
+
+msgid "GL"
+msgstr "Pearaamat"
+
+msgid "GL Reference Number"
+msgstr "Pearaamatu Viitenumber"
+
+msgid "GL Transaction"
+msgstr "Pearaamatu Kanne"
+
+msgid "General Ledger"
+msgstr "Pearaamat"
+
+msgid "Generate"
+msgstr "Genereeri"
+
+msgid "Generate Orders"
+msgstr "Genereeri Tellimused"
+
+msgid "Generate Purchase Orders"
+msgstr "Genereeri Ostutellimused"
+
+msgid "Generate Purchase Orders from Sales Order"
+msgstr "Genereeri Ostutellimused Müügitellimustest"
+
+msgid "Generate Sales Order"
+msgstr "Genereeri Müügitellimused"
+
+msgid "Generate Sales Order from Purchase Orders"
+msgstr "Genereeri Müügitellimused Ostutellimustest"
+
+msgid "Generate Sales Orders"
+msgstr "Genereeri Müügitellimused"
+
+msgid "Goods & Services"
+msgstr "Tooted ja Teenused"
+
+msgid "Group"
+msgstr "Grupeeri"
+
+msgid "Group Items"
+msgstr "Grupeeri Kaubaartiklid"
+
+msgid "Group Translations"
+msgstr "Grupeeri Tõlked"
+
+msgid "Group deleted!"
+msgstr "Grupp kustutatud!"
+
+msgid "Group missing!"
+msgstr "Grupp puudub!"
+
+msgid "Group saved!"
+msgstr "Grupp salvestatud!"
+
+msgid "Groups"
+msgstr "Grupid"
+
+msgid "HR"
+msgstr "Personal"
+
+msgid "HTML Templates"
+msgstr "HTML Dokumendipõhjad"
+
+msgid "Heading"
+msgstr "Päis"
+
+msgid "History"
+msgstr "Ajalugu"
+
+msgid "Home Phone"
+msgstr "Kodune Telefon"
+
+msgid "Host"
+msgstr "Server"
+
+msgid "Hostname missing!"
+msgstr "Serveri nimi puudu!"
+
+msgid "Hundred"
+msgstr "sada"
+
+msgid "IBAN"
+msgstr "Pangaarve NR."
+
+msgid "ID"
+msgstr "ID"
+
+msgid "Image"
+msgstr "Pilt"
+
+msgid "In-line"
+msgstr "Dokumendisisene"
+
+msgid "Inactive"
+msgstr "Vähenõutav"
+
+msgid "Include Exchange Rate Difference"
+msgstr "Lisa Valuutavahetuskursside erinevus"
+
+msgid "Include Payment"
+msgstr "Lisa Makse"
+
+msgid "Include in Report"
+msgstr "Kaasa Aruandesse"
+
+msgid "Include in drop-down menus"
+msgstr "Kaasa rippmenüüdesse"
+
+msgid "Income"
+msgstr "Tulu"
+
+msgid "Income Statement"
+msgstr "Kasumiaruanne"
+
+msgid "Income account does not exist!"
+msgstr "Tulude konto puudu!"
+
+msgid "Incorrect Dataset version!"
+msgstr "Vale Andmekogu versioon"
+
+msgid "Individual Items"
+msgstr "Eraldiseisvad Kaubaartiklid"
+
+msgid "Internal Notes"
+msgstr "Sisemärkused"
+
+msgid "Inventory"
+msgstr "Laoseis"
+
+msgid "Inventory account does not exist!"
+msgstr "Laoseisu konto puudu!"
+
+msgid "Inventory quantity must be zero before you can set this assembly obsolete!"
+msgstr "Enne komplekti aegunuks märkimist peab laoseis null olema!"
+
+msgid "Inventory quantity must be zero before you can set this part obsolete!"
+msgstr "Enne toote aegunuks märkimist peab laoseis null olema!"
+
+msgid "Inventory saved!"
+msgstr "Laoseis salvestatud!"
+
+msgid "Inventory transferred!"
+msgstr "Laoseis üle kantud!"
+
+msgid "Invoice"
+msgstr "Kaubaarve"
+
+msgid "Invoice Date"
+msgstr "Kaubaarve Kuupäev"
+
+msgid "Invoice Date missing!"
+msgstr "Kaubaarvel Kuupäev puudu!"
+
+msgid "Invoice Number"
+msgstr "Kaubaarve Number"
+
+msgid "Invoice Number missing!"
+msgstr "Kaubaarve Number puudu!"
+
+msgid "Invoice deleted!"
+msgstr "Kaubaarve kustutatud!"
+
+msgid "Invoices"
+msgstr "Kaubaarved"
+
+msgid "Is this a summary account to record"
+msgstr "Kirje summaarne konto"
+
+msgid "Item"
+msgstr "AR."
+
+msgid "Item already on pricelist!"
+msgstr "Kaubaartikkel on juba hinnakirjas!"
+
+msgid "Item deleted!"
+msgstr "Kaubaartikkel kustutatud!"
+
+msgid "Item not on file!"
+msgstr "Kaubaartikkel pole failis !"
+
+msgid "Items"
+msgstr "Kaubaartiklid"
+
+msgid "Jan"
+msgstr "Jaan"
+
+msgid "January"
+msgstr "Jaanuar"
+
+msgid "Job"
+msgstr "Tööülesanne"
+
+msgid "Job Description"
+msgstr "Tööülesande Kirjeldus"
+
+msgid "Job Name"
+msgstr "Tööülesande Nimetus"
+
+msgid "Job Number"
+msgstr "Tööülesande Number"
+
+msgid "Job Number missing!"
+msgstr "Tööülesande Number puudu!"
+
+msgid "Job deleted!"
+msgstr "Tööülesanne kustutatud!"
+
+msgid "Job saved!"
+msgstr "Tööülesanne salvestatud!"
+
+msgid "Job/Project Number"
+msgstr "Töö/Projekti Number"
+
+msgid "Jobs"
+msgstr "Tööülesanded"
+
+msgid "Jul"
+msgstr "Juul"
+
+msgid "July"
+msgstr "Juuli"
+
+msgid "Jun"
+msgstr "Juun"
+
+msgid "June"
+msgstr "Juuni"
+
+msgid "LaTeX Templates"
+msgstr "LaTeX Dokumendipõhjad"
+
+msgid "Labor Code"
+msgstr "Tööseadusandlus"
+
+msgid "Labor Code missing!"
+msgstr "Tööseadusandluse Kood puudu!"
+
+msgid "Labor/Overhead"
+msgstr "Tööjõud/Kulud"
+
+msgid "Language"
+msgstr "Keel"
+
+msgid "Language deleted!"
+msgstr "Keel kustutatud!"
+
+msgid "Language saved!"
+msgstr "Keel salvestatud!"
+
+msgid "Languages"
+msgstr "Keeled"
+
+msgid "Languages not defined!"
+msgstr "Keeled pole defineeritud!"
+
+msgid "Last Cost"
+msgstr "Viimane Maksumus"
+
+msgid "Last Numbers & Default Accounts"
+msgstr "Viimased Numbrid ja Vaikimisi Kontod"
+
+msgid "Lead"
+msgstr "Juhtimine"
+
+msgid "Leadtime"
+msgstr "Tellimuse täitmisaeg"
+
+msgid "Liability"
+msgstr "Võlg"
+
+msgid "Licensed to"
+msgstr "Litsentsi omanik"
+
+msgid "Line Total"
+msgstr "Rea Summa"
+
+msgid "Link"
+msgstr "Seosed"
+
+msgid "Link Accounts"
+msgstr "Seosta Kontod"
+
+msgid "List"
+msgstr "Nimekiri"
+
+msgid "List Accounts"
+msgstr "Kontode Nimekiri"
+
+msgid "List Businesses"
+msgstr "Ettevõtete Nimekiri"
+
+msgid "List Departments"
+msgstr "Osakondade Nimekiri"
+
+msgid "List GIFI"
+msgstr "GIFI nimekiri"
+
+msgid "List Languages"
+msgstr "Keelte Nimekiri"
+
+msgid "List Price"
+msgstr "Hinnakirjahind"
+
+msgid "List Projects"
+msgstr "Projektide Nimekiri"
+
+msgid "List SIC"
+msgstr "SIC-Standardiseeritud Tööstuskoodide Nimekiri"
+
+msgid "List Transactions"
+msgstr "Tehingute Nimekiri"
+
+msgid "List Warehouses"
+msgstr "Kaubaladude Nimekiri"
+
+msgid "Lock System"
+msgstr "Lukusta Süsteem"
+
+msgid "Lockfile created!"
+msgstr "Lukustusfail loodud!"
+
+msgid "Lockfile removed!"
+msgstr "Lukustusfail eemaldatud!"
+
+msgid "Login"
+msgstr "Logi sisse"
+
+msgid "Login name missing!"
+msgstr "Kasutajanimi puudu!"
+
+msgid "Logout"
+msgstr "Logi välja"
+
+msgid "Make"
+msgstr "Tootja"
+
+msgid "Manager"
+msgstr "Juhataja"
+
+msgid "Mar"
+msgstr "Mär"
+
+msgid "March"
+msgstr "Märts"
+
+msgid "Marked entries printed!"
+msgstr "Märgitud kanded välja trükitud!"
+
+msgid "Markup"
+msgstr "Kate"
+
+msgid "Maximum"
+msgstr "Maksimum"
+
+msgid "May"
+msgstr "Mai"
+
+msgid "May "
+msgstr "Mai "
+
+msgid "Memo"
+msgstr "Memo"
+
+msgid "Menu Width"
+msgstr "Menüü Laius"
+
+msgid "Message"
+msgstr "Sõnum"
+
+msgid "Method"
+msgstr "Meetod"
+
+msgid "Microfiche"
+msgstr "Mikrofišš"
+
+msgid "Million"
+msgstr "miljon"
+
+msgid "Model"
+msgstr "Mudel"
+
+msgid "Monday"
+msgstr "Esmaspäev"
+
+msgid "Month"
+msgstr "Kuu"
+
+msgid "Month(s)"
+msgstr "Kuu(d)"
+
+msgid "Months"
+msgstr "Kuud"
+
+msgid "Multibyte Encoding"
+msgstr "Multibyte Encoding"
+
+msgid "N/A"
+msgstr "Puudub"
+
+msgid "Name"
+msgstr "Nimi"
+
+msgid "Name missing!"
+msgstr "Nimi puudu!"
+
+msgid "New Templates"
+msgstr "Uus Dokumendipõhi"
+
+msgid "New Window"
+msgstr "Uus Aken"
+
+msgid "Next"
+msgstr "Järgmine"
+
+msgid "Next Date"
+msgstr "Järgmine Kuupäev"
+
+msgid "Next Number"
+msgstr "Järgmine Number"
+
+msgid "Nine"
+msgstr "üheksa"
+
+msgid "No"
+msgstr "Ei"
+
+msgid "No Database Drivers available!"
+msgstr "Ühtegi Andmebaasiohjurit pole saadaval!"
+
+msgid "No Dataset selected!"
+msgstr "Andmekogu valimata!"
+
+msgid "No Employees on file!"
+msgstr "Failis puuduvad Töötajad"
+
+msgid "No History!"
+msgstr "Ajalugu Puudub!"
+
+msgid "No Labor codes on file!"
+msgstr "Failis puuduvad Tööseadusandluse koodid"
+
+msgid "No Parts on file!"
+msgstr "Failis puuduvad Detailid"
+
+msgid "No Services on file!"
+msgstr "Failis puuduvad Teenused"
+
+msgid "No email address for"
+msgstr "E-posti aadress puudu"
+
+msgid "No open Jobs!"
+msgstr "Puuduvad alustatud Tööülesanded"
+
+msgid "No open Projects!"
+msgstr "Puuduvad avatud Projektid!"
+
+msgid "No."
+msgstr "Nr."
+
+msgid "Non-chargeable"
+msgstr "Maksuvaba"
+
+msgid "Non-taxable"
+msgstr "Maksuvaba"
+
+msgid "Non-taxable Purchases"
+msgstr "Maksuvaba Ostud"
+
+msgid "Non-taxable Sales"
+msgstr "Maksuvaba Müük"
+
+msgid "Non-tracking Items"
+msgstr "Mitte jälgitavad Kaubaartiklid"
+
+msgid "Notes"
+msgstr "Märkused"
+
+msgid "Nothing entered!"
+msgstr "Midagi pole sisestatud!"
+
+msgid "Nothing open!"
+msgstr "Midagi ei avane!"
+
+msgid "Nothing selected!"
+msgstr "Valik puudub!"
+
+msgid "Nothing to delete!"
+msgstr "Midagi pole kustutada!"
+
+msgid "Nothing to print!"
+msgstr "Pole midagi trükkida!"
+
+msgid "Nothing to transfer!"
+msgstr "Pole midagi ümber paigutada!"
+
+msgid "Nov"
+msgstr "Nov"
+
+msgid "November"
+msgstr "November"
+
+msgid "Number"
+msgstr "Number"
+
+msgid "Number Format"
+msgstr "Numbri Formaat"
+
+msgid "Number missing in Row"
+msgstr "Antud real puudub Number"
+
+msgid "O"
+msgstr "Avatud"
+
+msgid "OH"
+msgstr "Ülekulud"
+
+msgid "Obsolete"
+msgstr "Aegunud"
+
+msgid "Oct"
+msgstr "Okt"
+
+msgid "October"
+msgstr "Oktoober"
+
+msgid "On Hand"
+msgstr "Saadaval"
+
+msgid "One"
+msgstr "üks"
+
+msgid "Onhand"
+msgstr "Käepärast"
+
+msgid "Open"
+msgstr "Avatud"
+
+msgid "Oracle Database Administration"
+msgstr "Oracle Andmebaasi Administreerimine"
+
+msgid "Order"
+msgstr "Tellimus"
+
+msgid "Order Date"
+msgstr "Tellimuse Kuupäev"
+
+msgid "Order Date missing!"
+msgstr "Tellimuse Kuupäev puudub!"
+
+msgid "Order Entry"
+msgstr "Tellimuse Sisestus"
+
+msgid "Order Number"
+msgstr "Tellimuse Number"
+
+msgid "Order Number missing!"
+msgstr "Tellimuse Number puudub"
+
+msgid "Order deleted!"
+msgstr "Tellimus kustutatud!"
+
+msgid "Order generation failed!"
+msgstr "Arve genereerimine ebaõnnestus!"
+
+msgid "Order saved!"
+msgstr "Tellimus salvestatud!"
+
+msgid "Orders generated!"
+msgstr "Arved genereeritud"
+
+msgid "Orphaned"
+msgstr "Seosteta"
+
+msgid "Out of balance transaction!"
+msgstr "Bilansiväline tehing!"
+
+msgid "Out of balance!"
+msgstr "Bilanss ei klapi!"
+
+msgid "Outstanding"
+msgstr "Laekumata"
+
+msgid "Overdue"
+msgstr "Tähtaegunud"
+
+msgid "PDF"
+msgstr "PDF"
+
+msgid "PO"
+msgstr "Hanketellimus"
+
+msgid "PO Number"
+msgstr "Ostutellimuse Number"
+
+msgid "POS"
+msgstr "MüügiPunkt"
+
+msgid "POS Invoice"
+msgstr "MP Kaubaarve"
+
+msgid "Packing List"
+msgstr "Saateleht"
+
+msgid "Packing List Date missing!"
+msgstr "Saatelehe Kuupäev puudu!"
+
+msgid "Packing List Number missing!"
+msgstr "Saateelehe Number puudu!"
+
+msgid "Packing Lists"
+msgstr "Saatelehed"
+
+msgid "Paid"
+msgstr "Makstud"
+
+msgid "Part"
+msgstr "Detail"
+
+msgid "Part Number"
+msgstr "Detaili Number"
+
+msgid "Partnumber"
+msgstr "Detailinumber"
+
+msgid "Parts"
+msgstr "Detailid"
+
+msgid "Parts Requirements"
+msgstr "Detailide Vajadus"
+
+msgid "Password"
+msgstr "Parool"
+
+msgid "Password changed!"
+msgstr "Parool muudetud!"
+
+msgid "Password does not match!"
+msgstr "Vale parool!"
+
+msgid "Passwords do not match!"
+msgstr "Paroolid ei klapi!"
+
+msgid "Payables"
+msgstr "Kreditoorne võlgnevus"
+
+msgid "Payment"
+msgstr "Makse"
+
+msgid "Payment date missing!"
+msgstr "Maksekuupäev puudu!"
+
+msgid "Payment posted!"
+msgstr "Makse saadetud!"
+
+msgid "Payments"
+msgstr "Maksed"
+
+msgid "Payments posted!"
+msgstr "Maksed postitatud!"
+
+msgid "Payroll Deduction"
+msgstr "Palga Mahaarvatis"
+
+msgid "Period"
+msgstr "Periood"
+
+msgid "Pg Database Administration"
+msgstr "Pg Andmebaasi Administreerimine"
+
+msgid "PgPP Database Administration"
+msgstr "PgPP Database Administration"
+
+msgid "Phone"
+msgstr "Telefon"
+
+msgid "Pick List"
+msgstr "Veose Saateleht"
+
+msgid "Pick Lists"
+msgstr "Veose Saatelehed"
+
+msgid "Port"
+msgstr "Port"
+
+msgid "Port missing!"
+msgstr "Port puudub!"
+
+msgid "Pos"
+msgstr "NR."
+
+msgid "Post"
+msgstr "Postita"
+
+msgid "Post as new"
+msgstr "Postita uuena"
+
+msgid "Posted!"
+msgstr "Postitatud!"
+
+msgid "Posting"
+msgstr "Postitamine"
+
+msgid "Posting failed!"
+msgstr "Postitamine ebaõnnestus"
+
+msgid "Postscript"
+msgstr "Postscript"
+
+msgid "Preferences"
+msgstr "Eelistused"
+
+msgid "Preferences saved!"
+msgstr "Eelistused salvestatud!"
+
+msgid "Prepayment"
+msgstr "Ettemaksmine"
+
+msgid "Price"
+msgstr "Hind"
+
+msgid "Pricegroup"
+msgstr "Hinnagrupp"
+
+msgid "Pricegroup deleted!"
+msgstr "Hinnagrupp kustutatud!"
+
+msgid "Pricegroup missing!"
+msgstr "Hinnagrupp puudu!"
+
+msgid "Pricegroup saved!"
+msgstr "Hinnagrup salvestatud!"
+
+msgid "Pricegroups"
+msgstr "Hinnagrupid"
+
+msgid "Pricelist"
+msgstr "Hinnakiri"
+
+msgid "Print"
+msgstr "Trüki"
+
+msgid "Print and Post"
+msgstr "Trüki ja Postita"
+
+msgid "Print and Post as new"
+msgstr "Trüki ja Postita uuena"
+
+msgid "Print and Save"
+msgstr "Trüki ja Salvesta"
+
+msgid "Print and Save as new"
+msgstr "Trüki ja Salvesta uuena"
+
+msgid "Printed"
+msgstr "Trükitud"
+
+msgid "Printer"
+msgstr "Printer"
+
+msgid "Printing"
+msgstr "Trükib"
+
+msgid "Printing ... "
+msgstr "Trükib ..."
+
+msgid "Process Transactions"
+msgstr "Viia läbi Tehing"
+
+msgid "Production"
+msgstr "Tootmine"
+
+msgid "Profit Center"
+msgstr "Kasumikeskus"
+
+msgid "Project"
+msgstr "Projekt"
+
+msgid "Project Description Translations"
+msgstr "Projekti Kirjelduse Selgitus"
+
+msgid "Project Name"
+msgstr "Projekti Nimi"
+
+msgid "Project Number"
+msgstr "Projekti Number"
+
+msgid "Project Number missing!"
+msgstr "Projekti Number puudu!"
+
+msgid "Project Transactions"
+msgstr "Projekti Kanded"
+
+msgid "Project deleted!"
+msgstr "Projekt kustutatud!"
+
+msgid "Project not on file!"
+msgstr "Projekti pole failis!"
+
+msgid "Project saved!"
+msgstr "Projekt salvestatud!"
+
+msgid "Project/Job Name"
+msgstr "Projekti/Tööülesande Nimi"
+
+msgid "Project/Job Number"
+msgstr "Projekti/Tööülesande Number"
+
+msgid "Projects"
+msgstr "Projektid"
+
+msgid "Purchase Order"
+msgstr "Hanketellimus"
+
+msgid "Purchase Order Number"
+msgstr "Hanketellimuse Number"
+
+msgid "Purchase Orders"
+msgstr "Hanketellimused"
+
+msgid "Qty"
+msgstr "Kogus"
+
+msgid "Quantity exceeds available units to stock!"
+msgstr "Kogus ületab laos olevad ühikud!"
+
+msgid "Quarter"
+msgstr "Kvartal"
+
+msgid "Queue"
+msgstr "Järjekord"
+
+msgid "Queued"
+msgstr "Järjekorras"
+
+msgid "Quotation"
+msgstr "Koteering"
+
+msgid "Quotation "
+msgstr "Koteering"
+
+msgid "Quotation Date"
+msgstr "Koteeringu kuupäev"
+
+msgid "Quotation Date missing!"
+msgstr "Koteeringu Kuupäev puudu!"
+
+msgid "Quotation Number"
+msgstr "Koteeringu Number"
+
+msgid "Quotation Number missing!"
+msgstr "Koteeringu Number puudub!"
+
+msgid "Quotation deleted!"
+msgstr "Koteering kustutatud!"
+
+msgid "Quotations"
+msgstr "Koteeringud"
+
+msgid "R"
+msgstr "M"
+
+msgid "RFQ"
+msgstr "Hinnapakkumuse Taotlus"
+
+msgid "RFQ "
+msgstr "Hinnapakkumuse Taotlus"
+
+msgid "RFQ Number"
+msgstr "Hinnapakkumuse Taotluse NR."
+
+msgid "RFQs"
+msgstr "Hinnapakkumuse Taotlused"
+
+msgid "ROP"
+msgstr "Pakendis tk."
+
+msgid "Rate"
+msgstr "Tariif"
+
+msgid "Rate missing!"
+msgstr "Tariif puudu!"
+
+msgid "Recd"
+msgstr "Kätte saadud"
+
+msgid "Receipt"
+msgstr "Kviitung"
+
+msgid "Receipt posted!"
+msgstr "Kviitung postitatud"
+
+msgid "Receipts"
+msgstr "Laekumid"
+
+msgid "Receivables"
+msgstr "Debitoorne võlgnevus"
+
+msgid "Receive"
+msgstr "Vastuvõtt"
+
+msgid "Receive Merchandise"
+msgstr "Kauba Vastuvõtt"
+
+msgid "Reconciliation"
+msgstr "Kooskõlastamine"
+
+msgid "Reconciliation Report"
+msgstr "Kooskõlastamise Raport"
+
+msgid "Record in"
+msgstr "Sihtkonto"
+
+msgid "Recurring Transaction"
+msgstr "Korduvad Tehingud"
+
+msgid "Recurring Transactions"
+msgstr "Korduvad Tehingud"
+
+msgid "Reference"
+msgstr "Teatis"
+
+msgid "Remaining"
+msgstr "Jääk"
+
+msgid "Remove"
+msgstr "Eemalda"
+
+msgid "Remove Audit trail up to"
+msgstr "Eemaldada Auditi jäljed kuni"
+
+msgid "Remove Audit trails up to"
+msgstr "Kustuta Auditi jäljed kuni"
+
+msgid "Removed spoolfiles!"
+msgstr "Trükijärjekorra failid eemaldatud!"
+
+msgid "Removing marked entries from queue ..."
+msgstr "Eemaldan märgitud kanded järjekorrast..."
+
+msgid "Repeat"
+msgstr "Korrata"
+
+msgid "Report for"
+msgstr "Aruanne"
+
+msgid "Reports"
+msgstr "Aruanded"
+
+msgid "Req"
+msgstr "Vajalik"
+
+msgid "Request for Quotation"
+msgstr "Hinnapakkumuse Taotlus"
+
+msgid "Request for Quotations"
+msgstr "Hinnapakkumuse Taotlused"
+
+msgid "Required by"
+msgstr "Tarnetähtaeg"
+
+msgid "Requirements"
+msgstr "Nõudmised"
+
+msgid "Retained Earnings"
+msgstr "Jaotamata Kasum"
+
+msgid "Role"
+msgstr "Roll"
+
+msgid "S"
+msgstr "Laupäev/Pühapäev"
+
+msgid "SIC"
+msgstr "Standardiseeritud Tööstuskood"
+
+msgid "SIC deleted!"
+msgstr "Standardiseeritud Tööstuskood Kustutatud!"
+
+msgid "SIC saved!"
+msgstr "Standardiseeritud Tööstuskood Salvestatud!"
+
+msgid "SKU"
+msgstr "Asenduskaup"
+
+msgid "SO"
+msgstr "Müügitellimus"
+
+msgid "SSN"
+msgstr "Isikukood"
+
+msgid "Sale"
+msgstr "Müük"
+
+msgid "Sales"
+msgstr "Müük"
+
+msgid "Sales Invoice"
+msgstr "Müügiarve"
+
+msgid "Sales Invoice "
+msgstr "Müügiarve"
+
+msgid "Sales Invoice."
+msgstr "Müügiarve."
+
+msgid "Sales Invoice/AR Transaction Number"
+msgstr "Müügiarve/MR Tehingu Number"
+
+msgid "Sales Invoices"
+msgstr "Müügiarved"
+
+msgid "Sales Order"
+msgstr "Müügitellimus"
+
+msgid "Sales Order Number"
+msgstr "Müügiarve Number"
+
+msgid "Sales Orders"
+msgstr "Müügitellimused"
+
+msgid "Sales Quotation Number"
+msgstr "Müügipakkumuse Number"
+
+msgid "Salesperson"
+msgstr "Müüja"
+
+msgid "Saturday"
+msgstr "Laupäev"
+
+msgid "Save"
+msgstr "Salvesta"
+
+msgid "Save Pricelist"
+msgstr "Salvesta Hinnakiri"
+
+msgid "Save Schedule"
+msgstr "Salvestada Ajakava"
+
+msgid "Save as new"
+msgstr "Salvesta uuena"
+
+msgid "Save to File"
+msgstr "Salvesta Faili"
+
+msgid "Saving"
+msgstr "Salvestab"
+
+msgid "Schedule"
+msgstr "Ajakava"
+
+msgid "Scheduled"
+msgstr "Planeeritud"
+
+msgid "Screen"
+msgstr "Ekraan"
+
+msgid "Search"
+msgstr "Otsi"
+
+msgid "Select"
+msgstr "Vali"
+
+msgid "Select Customer"
+msgstr "Vali Klient"
+
+msgid "Select Vendor"
+msgstr "Vali Tarnija"
+
+msgid "Select a Printer!"
+msgstr "Vali Printer"
+
+msgid "Select a printer!"
+msgstr "Vali printer!"
+
+msgid "Select all"
+msgstr "Vali kõik"
+
+msgid "Select from one of the names below"
+msgstr "Vali üks alltoodud nimedest"
+
+msgid "Select from one of the projects below"
+msgstr "Vali üks alltoodud projektidest"
+
+msgid "Select items"
+msgstr "Vali kaubaartikkel"
+
+msgid "Select payment"
+msgstr "Vali makse"
+
+msgid "Select postscript or PDF!"
+msgstr "Vali kas postscript või PDF"
+
+msgid "Select txt, postscript or PDF!"
+msgstr "Valida .txt, postscript või PDF!"
+
+msgid "Sell"
+msgstr "Müüma"
+
+msgid "Sell Price"
+msgstr "Müügihind"
+
+msgid "Send by E-Mail"
+msgstr "Saada E-postiga"
+
+msgid "Sending"
+msgstr "Saadab"
+
+msgid "Sep"
+msgstr "Sept"
+
+msgid "September"
+msgstr "September"
+
+msgid "Serial No."
+msgstr "Seerianr."
+
+msgid "Serial Number"
+msgstr "Seerianumber"
+
+msgid "Service"
+msgstr "Teenus"
+
+msgid "Service Code"
+msgstr "Teenuse Kood"
+
+msgid "Service Code missing!"
+msgstr "Teenuse Kood puudu!"
+
+msgid "Service/Labor Code"
+msgstr "Teenuse/Töö Kood"
+
+msgid "Services"
+msgstr "Teenused"
+
+msgid "Session Timeout"
+msgstr "Sessiooni aegumine"
+
+msgid "Session expired!"
+msgstr "Sessioon aegunud!"
+
+msgid "Setup Templates"
+msgstr "Dokumendipõhjade seadistamine"
+
+msgid "Seven"
+msgstr "seitse"
+
+msgid "Ship"
+msgstr "Saatmine"
+
+msgid "Ship Merchandise"
+msgstr "Kauba Saatmine"
+
+msgid "Ship to"
+msgstr "Kaubasaaja"
+
+msgid "Ship via"
+msgstr "Tarneviis"
+
+msgid "Shipping"
+msgstr "Saadetised"
+
+msgid "Shipping Address"
+msgstr "Tarneaadress"
+
+msgid "Shipping Date"
+msgstr "Saatmise Kuupäev"
+
+msgid "Shipping Date missing!"
+msgstr "Saatmise Kuupäev puudub"
+
+msgid "Shipping Point"
+msgstr "Saadetise Sihtpunkt"
+
+msgid "Short"
+msgstr "Puudu"
+
+msgid "Signature"
+msgstr "Allkiri"
+
+msgid "Six"
+msgstr "kuus"
+
+msgid "Source"
+msgstr "Allikas"
+
+msgid "Spoolfile"
+msgstr "Trükijärjekorra fail"
+
+msgid "Standard"
+msgstr "Standard"
+
+msgid "Standard Industrial Codes"
+msgstr "Standardiseeritud Tööstuskood"
+
+msgid "Startdate"
+msgstr "Alguskuupäev"
+
+msgid "State"
+msgstr "Riik"
+
+msgid "State/Province"
+msgstr "Riik/Maakond"
+
+msgid "Statement"
+msgstr "Aruanne"
+
+msgid "Statement Balance"
+msgstr "Bilansiaruanne"
+
+msgid "Statement sent to"
+msgstr "Aruanne saadetud"
+
+msgid "Statements sent to printer!"
+msgstr "Aruanded saadetud printerile"
+
+msgid "Stock"
+msgstr "Kaubavaru"
+
+msgid "Stock Assembly"
+msgstr "Komplekti Ladustamine"
+
+msgid "Stock Finished Goods"
+msgstr "Ladusta Valmistoodang"
+
+msgid "Stores Card"
+msgstr "Tagavarade Kaart"
+
+msgid "Stores Card saved!"
+msgstr "Tagavarade Kaart salvestatud!"
+
+msgid "Stores Cards"
+msgstr "Tagavarade Kaardid"
+
+msgid "Stylesheet"
+msgstr "Laaditabel"
+
+msgid "Sub-contract GIFI"
+msgstr "Allhanke GIFI"
+
+msgid "Subject"
+msgstr "Pealkiri"
+
+msgid "Subtotal"
+msgstr "Vahekokkuvõte"
+
+msgid "Summary"
+msgstr "Kokkuvõte"
+
+msgid "Sunday"
+msgstr "Pühapäev"
+
+msgid "Supervisor"
+msgstr "Ülevaataja"
+
+msgid "System"
+msgstr "Süsteem"
+
+msgid "System Defaults"
+msgstr "Süsteemi Vaikeväärtused"
+
+msgid "Tax"
+msgstr "Maks"
+
+msgid "Tax Account"
+msgstr "Maksukonto"
+
+msgid "Tax Accounts"
+msgstr "Maksukontod"
+
+msgid "Tax Included"
+msgstr "Sisaldab Käibemaksu"
+
+msgid "Tax Number"
+msgstr "Maks Nnumber "
+
+msgid "Tax Number / SSN"
+msgstr "Maksu Number / Isikukood"
+
+msgid "Tax collected"
+msgstr "Kogutud maksud"
+
+msgid "Tax paid"
+msgstr "Makstud maksud"
+
+msgid "Taxable"
+msgstr "Maksustatav"
+
+msgid "Template saved!"
+msgstr "Dokumendipõhjad salvestatud!"
+
+msgid "Templates"
+msgstr "Dokumendipõhjad"
+
+msgid "Ten"
+msgstr "kümme"
+
+msgid "Terms"
+msgstr "Tingimused"
+
+msgid "Text"
+msgstr "Tekst"
+
+msgid "Text Templates"
+msgstr "Tekstipõhised Dokumendipõhjad"
+
+msgid "The following Datasets are not in use and can be deleted"
+msgstr "Järgnevad andmebaasid ei ole kasutusel ning võib kustutada"
+
+msgid "The following Datasets need to be updated"
+msgstr "Järgmised andmebaasid vajavad uuendamist"
+
+msgid "This is a preliminary check for existing sources. Nothing will be created or deleted at this stage!"
+msgstr "Olemasolevate allikate eelkontroll. Praeguses staadiumis ei toimu andmete lisamist ega kustutamist."
+
+msgid "Thousand"
+msgstr "tuhat"
+
+msgid "Three"
+msgstr "kolm"
+
+msgid "Thursday"
+msgstr "Neljapäev"
+
+msgid "Till"
+msgstr "Rahalaegas"
+
+msgid "Time"
+msgstr "Aeg"
+
+msgid "Time Card"
+msgstr "Aja Kaart"
+
+msgid "Time Card deleted!"
+msgstr "Ajakaart kustutatud!"
+
+msgid "Time Card saved!"
+msgstr "Ajakaart salvestatud!"
+
+msgid "Time Cards"
+msgstr "Aja Kaardid"
+
+msgid "Time In"
+msgstr "Aeg sisse"
+
+msgid "Time Out"
+msgstr "Aeg välja"
+
+msgid "Times"
+msgstr "Korda"
+
+msgid "To"
+msgstr "Kuni"
+
+msgid "To Warehouse"
+msgstr "Kaubalattu"
+
+msgid "To add a user to a group edit a name, change the login name and save.  A new user with the same variables will then be saved under the new login name."
+msgstr "Kasutaja gruppi lisamiseks redigeeri nime, muuda kasutajanimi ja salvesta. Luuakse samade parameetritega uus kasutaja"
+
+msgid "Top Level"
+msgstr "Kõrgtase"
+
+msgid "Total"
+msgstr "Kokku"
+
+msgid "Tracking Items"
+msgstr "Jälgitavad Kaubaartikleid"
+
+msgid "Trade Discount"
+msgstr "Kaubanduslik Mahahindlus"
+
+msgid "Transaction"
+msgstr "Tehing"
+
+msgid "Transaction Date missing!"
+msgstr "Tehingu Kuupäev puudu!"
+
+msgid "Transaction Dates"
+msgstr "Tehingte Kuupäevad"
+
+msgid "Transaction deleted!"
+msgstr "Tehing kustutatud!"
+
+msgid "Transaction posted!"
+msgstr "Tehing saadetud!"
+
+msgid "Transaction reversal enforced for all dates"
+msgstr "Tehingute storneerimine on kohustuslik kõikide kuupäevade ulatuses"
+
+msgid "Transaction reversal enforced up to"
+msgstr "Tehingute storneerimine on kohustuslik kuni"
+
+msgid "Transactions"
+msgstr "Tehingud"
+
+msgid "Transfer"
+msgstr "Tsessioon"
+
+msgid "Transfer Inventory"
+msgstr "Laoliikumine"
+
+msgid "Transfer from"
+msgstr "Liikumine laost"
+
+msgid "Transfer to"
+msgstr "Liikumine lattu"
+
+msgid "Translation"
+msgstr "Tõlge"
+
+msgid "Translation deleted!"
+msgstr "Tõlge kustutatud"
+
+msgid "Translation not on file!"
+msgstr "Tõlget puudub failis!"
+
+msgid "Translations"
+msgstr "Tõlked"
+
+msgid "Translations saved!"
+msgstr "Tõlked salvestatud"
+
+msgid "Trial Balance"
+msgstr "Proovibilanss"
+
+msgid "Trillion"
+msgstr "biljon"
+
+msgid "Tuesday"
+msgstr "Teisipäev"
+
+msgid "Two"
+msgstr "kaks"
+
+msgid "Type of Business"
+msgstr "Ettevõtte tüüp"
+
+msgid "Unit"
+msgstr "Ühik"
+
+msgid "Unit Rate"
+msgstr "Ühiku Tase"
+
+msgid "Unit of measure"
+msgstr "Mõõtühik"
+
+msgid "Unlock System"
+msgstr "Avada Süsteem"
+
+msgid "Update"
+msgstr "Värskenda"
+
+msgid "Update Dataset"
+msgstr "Värkenda Andmekogu"
+
+msgid "Updated"
+msgstr "Värskendatud"
+
+msgid "Upgrading to Version"
+msgstr "Täiustamine Versioonini"
+
+msgid "Use Templates"
+msgstr "Kasuta Dokumendipõhju"
+
+msgid "User"
+msgstr "Kasutaja"
+
+msgid "User deleted!"
+msgstr "Kasutaja kustutatud!"
+
+msgid "User saved!"
+msgstr "Kasutaja salvestatud!"
+
+msgid "Valid until"
+msgstr "Kehtiv kuni"
+
+msgid "Vendor"
+msgstr "Tarnija"
+
+msgid "Vendor History"
+msgstr "Tarnija Ajalugu"
+
+msgid "Vendor Invoice"
+msgstr "Tarnija Kaubaarve"
+
+msgid "Vendor Invoice "
+msgstr "Tarnija Kaubaarve "
+
+msgid "Vendor Invoice."
+msgstr "Tarnija Kaubaarve."
+
+msgid "Vendor Invoice/AP Transaction Number"
+msgstr "Tarnija Kaubaarve/OR Number"
+
+msgid "Vendor Invoices"
+msgstr "Tarnija Kaubaarved"
+
+msgid "Vendor Number"
+msgstr "Tarnija Number"
+
+msgid "Vendor deleted!"
+msgstr "Tarnija kustutatud!"
+
+msgid "Vendor missing!"
+msgstr "Tarnija puudu!"
+
+msgid "Vendor not on file!"
+msgstr "Tarnija pole failis!"
+
+msgid "Vendor saved!"
+msgstr "Tarnija salvestatud!"
+
+msgid "Vendors"
+msgstr "Tarnijad"
+
+msgid "Version"
+msgstr "Versioon"
+
+msgid "Warehouse"
+msgstr "Kaubaladu"
+
+msgid "Warehouse deleted!"
+msgstr "Kaubaladu kustutatud!"
+
+msgid "Warehouse saved!"
+msgstr "Kaubaladu salvestatud!"
+
+msgid "Warehouses"
+msgstr "Kaubalaod"
+
+msgid "Warning!"
+msgstr "Tähelepanu!"
+
+msgid "Wednesday"
+msgstr "Kolmapäev"
+
+msgid "Week"
+msgstr "Nädal"
+
+msgid "Week(s)"
+msgstr "Nädal(at)"
+
+msgid "Weeks"
+msgstr "Nädalat"
+
+msgid "Weight"
+msgstr "Kaal"
+
+msgid "Weight Unit"
+msgstr "Kaaluühik"
+
+msgid "What type of item is this?"
+msgstr "Mis tüüpi kaubaartikliga on tegemist?"
+
+msgid "Work Order"
+msgstr "Töökäsk"
+
+msgid "Work Orders"
+msgstr "Töökäsud"
+
+msgid "Work Phone"
+msgstr "Töötelefon"
+
+msgid "Year"
+msgstr "Aasta"
+
+msgid "Year(s)"
+msgstr "Aasta(t)"
+
+msgid "Yearend"
+msgstr "Aastalõpp"
+
+msgid "Yearend date missing!"
+msgstr "Aastalõpu kuupäev puudub!"
+
+msgid "Yearend posted!"
+msgstr "Aastalõpp postitatud!"
+
+msgid "Yearend posting failed!"
+msgstr "Aastalõpu postitus ebaõnnestus!"
+
+msgid "Years"
+msgstr "Aastat"
+
+msgid "Yes"
+msgstr "Jah"
+
+msgid "You are logged out"
+msgstr "Oled välja logitud"
+
+msgid "You are posting an existing transaction!"
+msgstr "Postitad juba olemasolevat tehingut"
+
+msgid "You are printing and posting an existing transaction!"
+msgstr "Trükida ja postitad juba olemasolevat tehingut"
+
+msgid "You are printing and saving an existing order"
+msgstr "Trükid ja salvestad juba olemasolevat tellimust"
+
+msgid "You are printing and saving an existing quotation"
+msgstr "Trükid ja salvestad juba olemasolevat pakkumust"
+
+msgid "You are printing and saving an existing transaction!"
+msgstr "Trükid ja salvestad juba olemasolevat tehingut!"
+
+msgid "You are saving an existing order"
+msgstr "Salvestad juba olemasolevat tellimust"
+
+msgid "You are saving an existing quotation"
+msgstr "Salvestad juba olemasolevat pakkumust"
+
+msgid "You are saving an existing transaction!"
+msgstr "Salvestad juba olemasolevat tehingut\""
+
+msgid "You did not enter a name!"
+msgstr "Jätsid nime sisestamata!"
+
+msgid "Zero"
+msgstr "null"
+
+msgid "Zip/Postal Code"
+msgstr "Postiindex"
+
+msgid "account cannot be set to any other type of account"
+msgstr "konto tüüpi ei saa muuta teiseks kontotüübiks"
+
+msgid "as at"
+msgstr "seisuga"
+
+msgid "days"
+msgstr "päeva"
+
+msgid "does not exist"
+msgstr "ei eksisteeri"
+
+msgid "done"
+msgstr "tehtud"
+
+msgid "ea"
+msgstr "tk"
+
+msgid "failed"
+msgstr "nurjus"
+
+msgid "for"
+msgstr "läheb"
+
+msgid "for Period"
+msgstr "Periood"
+
+msgid "is already a member!"
+msgstr "on juba kasutaja!"
+
+msgid "localhost"
+msgstr "localhost"
+
+msgid "locked!"
+msgstr "lukustatud!"
+
+msgid "posted!"
+msgstr "salvestatud!"
+
+msgid "sent"
+msgstr "saadetud"
+
+msgid "successfully created!"
+msgstr "loodud!"
+
+msgid "successfully deleted!"
+msgstr "kustutatud!"
+
+msgid "time(s)"
+msgstr "Kord(a)"
+
+msgid "unexpected error!"
+msgstr "ootamatu viga!"
+
+msgid "website"
+msgstr "kodulehekülg"

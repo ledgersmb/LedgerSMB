@@ -1,0 +1,46 @@
+<workbook>
+	<worksheet name="test" rows="<?lsmb rows.size + 1 ?>" columns="<?lsmb columns.size + 1 ?>">
+		<format bottom="5" bg_color="lime" bottom_color="magenta"><row>
+	<?lsmb FOREACH column IN columns ?>
+	<?lsmb IF heading.$column.text ?><format italic="1">
+			<cell text="<?lsmb heading.$column.text ?>" /></format>
+	<?lsmb ELSE ?><format bold="1">
+			<cell text="<?lsmb heading.$column ?>" /></format>
+	<?lsmb END; END ?>
+	<format num_format="17">
+	<cell text="2007-08-05" />
+	</format>
+		</row></format>
+		<format align="right">
+	<?lsmb FOREACH row IN rows ?>
+		<row>
+		<?lsmb FOREACH column IN columns ?>
+		<?lsmb IF loop.first ?><format num_format="3">
+		<?lsmb END ?>
+			<?lsmb IF row.$column.text.defined ?>
+			<italic>
+			<cell text="<?lsmb row.$column.text ?>" />
+			</italic>
+			<?lsmb ELSE ?>
+			<format font_outline="1">
+			<cell text="<?lsmb row.$column ?>" />
+			</format>
+			<?lsmb END ?>
+		<?lsmb IF loop.first ?></format><?lsmb END ?>
+		<?lsmb END ?>
+		</row>
+	<?lsmb END ?></format>
+	<?lsmb IF totals; t = [] ?>
+	<row>
+		<?lsmb FOREACH column IN columns ?>
+		<cell text="<?lsmb totals.$column ?>" />
+		<?lsmb END ?>
+	</row>
+	<?lsmb END ?>
+	</worksheet>
+	<worksheet name="test2" rows='3' columns='1'>
+	<row><cell text='1' type='number' /></row>
+	<row><cell text='2' type='number' /></row>
+	<row><formula text='sum(A1:A2)' type='formula' /></row>
+	</worksheet>
+</workbook>

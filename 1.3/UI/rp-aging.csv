@@ -1,0 +1,22 @@
+<?lsmb FOREACH column IN columns;
+    IF heading.$column.text.defined;
+        heading.$column.text;
+    ELSE;
+        heading.$column;
+    END ?>,<?lsmb END; text('Currency') ?>
+<?lsmb FOREACH currency IN currencies;
+    FOREACH row IN currency.rows;
+        FOREACH column IN columns;
+            IF row.$column.text.defined;
+                row.$column.text;
+            ELSE;
+                row.$column;
+            END ?>,<?lsmb
+        END; currency.curr ?>
+<?lsmb END;
+    IF currency.totals;
+        FOREACH column IN columns;
+            currency.totals.$column ?>,<?lsmb
+        END ?>,<?lsmb currency.curr;
+    END;
+END ?>

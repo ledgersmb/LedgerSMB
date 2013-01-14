@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<title><?lsmb titlebar ?></title>
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Expires" content="-1" />
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="css/<?lsmb stylesheet ?>" type="text/css" title="LedgerSMB stylesheet" />
+
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta name="robots" content="noindex,nofollow" />
+	<style type="text/css">
+		a {
+			color: inherit;
+			background-color: inherit;
+			text-decoration: none;
+		}
+		a:link {
+			color: inherit;
+			background-color: inherit;
+			text-decoration: none;
+		}
+		a:visited {
+			color: inherit;
+			background-color: inherit;
+			text-decoration: none;
+		}
+		a:hover {
+			color: inherit;
+			background-color: inherit;
+			text-decoration: none;
+			border-bottom: thin dashed;
+		}
+	</style>
+</head>
+
+<?lsmb USE dumper(indent=0, pad="<br />") ?>
+<?lsmb BLOCK account; # Handle account labels
+	RETURN UNLESS account_data.defined;
+	IF account_data.heading; ?><br /><b><?lsmb
+		account_data.text; ?></b><?lsmb
+	ELSIF account_data.gifi_account; ?><a href="gl.pl?action=generate_report&amp;path=<?lsmb path ?>&amp;login=<?lsmb login ?>&amp;sessionid=<?lsmb sessionid ?>&amp;l_transdate=Y&amp;l_reference=Y&amp;l_description=Y&amp;l_source=Y&amp;l_debit=Y&amp;l_credit=Y&amp;l_gifi_accno=Y&amp;category=X&amp;gifi_accno=<?lsmb account_data.account ?>"><?lsmb
+		account_data.text; ?></a><?lsmb
+	ELSIF account_data.account; ?><a href="gl.pl?action=generate_report&amp;path=<?lsmb path ?>&amp;login=<?lsmb login ?>&amp;sessionid=<?lsmb sessionid ?>&amp;l_transdate=Y&amp;l_reference=Y&amp;l_description=Y&amp;l_source=Y&amp;l_debit=Y&amp;l_credit=Y&amp;l_accno=Y&amp;category=X&amp;accno=<?lsmb account_data.account ?>"><?lsmb
+		account_data.text; ?></a><?lsmb
+	ELSIF account_data.subtotal; ?><b>&nbsp;&nbsp;<?lsmb
+		account_data.text; ?></b><?lsmb
+	ELSIF account_data.current_earnings; IF l_heading ?>&nbsp;&nbsp;<?lsmb END;
+		account_data.text;
+	ELSE;
+		account_data;
+	END;
+END ?>
+
+<body>
+
+<h2 align="center">
+<?lsmb company -?>
+<?lsmb #SC: This is to convert a line termination indicator to a real br ?>
+<br /><?lsmb address.split('&lt;br&gt;').join('<br />') ?>
+
+<br /><?lsmb text('Income Statement') ?>
+<br /><?lsmb text('for Period') ?>
+<br /><?lsmb period ?>
+<?lsmb IF compare_period ?>
+<br /><?lsmb compare_period ?>
+<?lsmb END ?>
+</h2>
+
+<?lsmb IF department ?>
+<h4><?lsmb text('Department: [_1]', department) ?></h4>
+<?lsmb END ?>
+
+<?lsmb IF projectnumber ?>
+<h4><?lsmb text('Project Number: [_1]', projectnumber) ?></h4>
+<?lsmb END ?>
+
+<table width="100%" border="0">
+<tr>
+  <th width="400" align="left" colspan="2" style="text-transform: uppercase"><?lsmb text('Income') ?><br /><hr width="300" size="5" align="left" noshade="noshade" /></th>
+  <th><?lsmb this_period_from ?><br /><?lsmb this_period_to ?></th>
+  <th><?lsmb last_period_from ?><br /><?lsmb last_period_to ?></th>
+</tr>
+
+<?lsmb FOREACH income_account ?>
+<?lsmb loop_count = loop.count - 1 ?>
+<tr>
+  <td width="4"> </td>
+  <td><?lsmb PROCESS account account_data=income_account.${loop_count} ?></td>
+  <td align="right"><?lsmb income_this_period.${loop_count} ?></td>
+  <td align="right"><?lsmb income_last_period.${loop_count} ?></td>
+</tr>
+<?lsmb END ?>
+
+<tr>
+  <td colspan="2"> </td>
+  <td><hr noshade="noshade" size="1" /></td>
+  <td><hr noshade="noshade" size="1" /></td>
+</tr>
+
+<tr valign="top">
+  <td> </td>
+  <th align="left" style="text-transform: uppercase"><?lsmb text('Total Income') ?></th>
+  <td align="right"><?lsmb total_income_this_period ?><hr noshade="noshade" size="2" /></td>
+  <td align="right"><?lsmb total_income_last_period ?><hr noshade="noshade" size="2" /></td>
+</tr>
+
+<tr>
+  <th align="left" colspan="2" style="text-transform: uppercase"><?lsmb text('Expenses') ?><br /><hr width="300" size="5" align="left" noshade="noshade" /></th>
+</tr>
+
+<?lsmb FOREACH expense_account ?>
+<?lsmb loop_count = loop.count - 1 ?>
+<tr>
+  <td> </td>
+  <td><?lsmb PROCESS account account_data=expense_account.${loop_count} ?></td>
+  <td align="right"><?lsmb expenses_this_period.${loop_count} ?></td>
+  <td align="right"><?lsmb expenses_last_period.${loop_count} ?></td>
+</tr>
+<?lsmb END ?>
+
+<tr>
+  <td colspan="2"> </td>
+  <td><hr noshade="noshade" size="1" /></td>
+  <td><hr noshade="noshade" size="1" /></td>
+</tr>
+
+<tr valign="top">
+  <td> </td>
+  <th align="left" style="text-transform: uppercase"><?lsmb text('Total Expenses') ?></th>
+  <td align="right"><?lsmb total_expenses_this_period ?><br /><hr noshade="noshade" size="2" /></td>
+  <td align="right"><?lsmb total_expenses_last_period ?><br /><hr noshade="noshade" size="2" /></td>
+</tr>
+
+<tr valign="top">
+  <th align="left" colspan="2" style="text-transform: uppercase"><?lsmb text('Income / (Loss)') ?></th>
+  <td align="right"><?lsmb total_this_period ?><br /><hr noshade="noshade" size="2" /></td>
+  <td align="right"><?lsmb total_last_period ?><br /><hr noshade="noshade" size="2" /></td>
+</tr>
+
+</table>
+
+</body>
+</html>
+

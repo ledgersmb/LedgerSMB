@@ -1,0 +1,43 @@
+\documentclass[usletter]{article}
+\usepackage{textpos}
+\usepackage[top=0.0in, bottom=0in, left=0in, right=0in]{geometry}
+\setlength{\parindent}{0pt}
+\setlength{\TPHorizModule}{1in}
+\setlength{\TPVertModule}{1in}
+<?lsmb BLOCK taxformpart ?>
+\begin{textblock}{4}[0,1](1, 1.5)
+<?lsmb company_name ?>\\
+<?lsmb company_address ?>\\
+Tel: <?lsmb company_telephone ?>
+\end{textblock}
+
+\begin{textblock}{2}[0,1](1, 3.5)
+<?lsmb my_tax_code ?>
+\end{textblock}
+
+\begin{textblock}{2}[0,1](3, 3.5)
+<?lsmb taxnumber ?>
+\end{textblock}
+
+\begin{textblock}{4}[0,1](1, 4)
+<?lsmb legal_name ?>\\
+<?lsmb IF street1 ?><?lsmb street1 ?>\\ <?lsmb END ?>
+<?lsmb IF street2 ?><?lsmb street2 ?>\\ <?lsmb END ?>
+<?lsmb IF street3 ?><?lsmb street3 ?>\\ <?lsmb END ?>
+<?lsmb city ?>, <?lsmb state ?> <?lsmb mail_code ?>
+\end{textblock}
+
+\begin{textblock}{2}[0,1](4.5, 1.5)
+<?lsmb total_sum ?>
+\end{textblock}
+<?lsmb END # Block taxformpart ?>
+<?lsmb BLOCK taxform ?>
+<?lsmb PROCESS taxformpart ?>
+\clearpage
+<?lsmb PROCESS taxformpart ?>
+\clearpage
+<?lsmb PROCESS taxformpart ?>
+\clearpage
+<?lsmb PROCESS taxformpart ?>
+\clearpage
+<?lsmb END #BLOCK taxform ?>

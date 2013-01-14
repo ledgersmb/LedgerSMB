@@ -1,0 +1,66 @@
+<?lsmb INCLUDE 'ui-header.html' 
+      include_stylesheet = ["UI/asset/asset.css"] 
+      include_script = ["UI/asset/asset.js"] 
+?>
+<?lsmb PROCESS 'elements.html' ?>
+<body onLoad="init()">
+<div class="listtop"><?lsmb title ?></div>
+<div class="info"><?lsmb info ?></div>
+<form action="<?lsmb script ?>" method="post" enctype="multipart/form-data">
+<!-- These are for Javascript automation of defaults -CT -->
+<?lsmb PROCESS input element_data = {
+	type = "hidden"
+	name = "id"
+	value = id
+} ?>
+<?lsmb FOREACH a_class IN asset_classes -?>
+<?lsmb PROCESS input element_data = {
+       type = "hidden",
+       name = "asset_account_default_$a_class.id",
+       value = a_class.asset_account_id,
+} ?>
+<?lsmb PROCESS input element_data = {
+       type = "hidden",
+       name = "dep_account_default_$a_class.id",
+       value = a_class.dep_account_id,
+} ?>
+<?lsmb PROCESS input element_data = {
+       type = "hidden",
+       name = "unit_label_$a_class.id",
+       value = dep_method.${a_class.id}.unit_label,
+} ?>
+<?lsmb- END # For a_class ?>
+<?lsmb PROCESS input element_data = {
+       type = "hidden"
+       name = "last_class_id"
+       value = asset_class
+} ?>
+<!-- end set for javascript automation -CT -->
+<div class="inputrow" id="daterow">
+<?lsmb PROCESS input element_data = {
+     type = "text"
+     class = "date"
+     label = text("Depreciate Through") #"
+     name = "report_date"
+     value = report_date
+} ?>
+<div class="inputrow" id="filerow">
+<?lsmb PROCESS input element_data = {
+       name = "import_file"
+       type = "file"
+       label = text('From File') #'
+       class = "file"
+} ?>
+</div>
+<div class="inputrow" id="buttonrow">
+<?lsmb PROCESS button element_data = {
+	text = text("Save")
+	type = "submit"
+	class = "submit"
+	name = "action"
+	value = "run_import"
+} ?>
+</div>
+</form>
+</body>
+</html>

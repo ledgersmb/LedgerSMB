@@ -1,0 +1,44 @@
+<?lsmb company FILTER format('%-40.40s') ?>
+<?lsmb address FILTER format('%-40.40s') ?>
+
+Till: <?lsmb till FILTER format('%-3.3s') ?>         Phone#: <?lsmb tel ?>
+Cashier: <?lsmb employee ?>
+Inv #/Date: <?lsmb invnumber ?> / <?lsmb invdate ?>
+Printed: <?lsmb dateprinted ?>
+
+  Qty Description                 Amount
+<?lsmb FOREACH number ?><?lsmb loop_count = loop.count - 1 ?>
+<?lsmb qty FILTER format('%5.5s') ?>       <?lsmb description.loop_count FILTER format('%-18.18s') ?> <?lsmb linetotal.loop_count FILTER format('%9.9s') ?>
+      <?lsmb number.loop_count ?> @ <?lsmb sellprice.loop_count ?>/<?lsmb unit.loop_count ?>
+<?lsmb END # number ?>
+
+Number of items: <?lsmb totalqty ?>
+<?lsmb IF taxincluded ?>
+                         ---------------
+                        Total: <?lsmb invtotal FILTER format('%9.9s') ?>
+<?lsmb ELSE ?>
+                            ------------
+                     Subtotal: <?lsmb subtotal FILTER format('%9.9s') ?>
+<?lsmb END # taxincluded ?>
+<?lsmb FOREACH tax ?><?lsmb loop_count = loop.count - 1 ?>
+<?lsmb taxdescription.loop_count FILTER format('%-23.23s') ?> @ <?lsmb taxrate.loop_count FILTER format('%2.2s') ?>%: <?lsmb tax.loop_count FILTER format('%9.9s') ?>
+<?lsmb END # tax ?>
+<?lsmb FOREACH payment ?><?lsmb loop_count = loop.count - 1 ?>
+                         Paid: <?lsmb payment.loop_count FILTER format('%9.9s') ?> <?lsmb currency.loop_count ?>
+<?lsmb END # payment ?>
+<?lsmb IF change ?>
+                       Change: <?lsmb change FILTER format('%9.9s') ?>
+<?lsmb END # change ?>
+<?lsmb IF total ?>
+                  Balance Due: <?lsmb total FILTER format('%9.9s') ?>
+<?lsmb END # total ?>
+<?lsmb IF discount ?>
+
+<?lsmb discount ?> % Discount applied
+<?lsmb END # discount ?>
+
+   Thank you for your valued business!
+
+<?lsmb IF taxincluded ?>
+Taxes are included in price.
+<?lsmb END # taxincluded ?>

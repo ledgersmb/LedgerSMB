@@ -1,0 +1,1213 @@
+Microsoft (R) Windows Installer Xml Tool version 2.0.4611.0
+Copyright (C) Microsoft Corporation 2003. All rights reserved.
+
+<Wix xmlns="http://schemas.microsoft.com/wix/2003/01/wi">
+  <Fragment>
+    <DirectoryRef Id="TARGETDIR">
+      <Directory Id="directory0" Name="apache2">
+
+          <File Id="file0" Name="README_1.TXT" LongName="Read Me First.txt" src="c:\apache2\Read Me First.txt" />
+
+        <Directory Id="directory1" Name="Apache2">
+
+            <File Id="file1" Name="ABOUT__1.TXT" LongName="ABOUT_APACHE.txt" src="c:\apache2\Apache2\ABOUT_APACHE.txt" />
+            <File Id="file2" Name="CHANGES.txt" src="c:\apache2\Apache2\CHANGES.txt" />
+            <File Id="file3" Name="INSTALL.txt" src="c:\apache2\Apache2\INSTALL.txt" />
+            <File Id="file4" Name="LICENSE.txt" src="c:\apache2\Apache2\LICENSE.txt" />
+            <File Id="file5" Name="NOTICE.txt" src="c:\apache2\Apache2\NOTICE.txt" />
+            <File Id="file6" Name="OPENSS_1.TXT" LongName="OPENSSL-NEWS.txt" src="c:\apache2\Apache2\OPENSSL-NEWS.txt" />
+            <File Id="file7" Name="OPENSS_2.TXT" LongName="OPENSSL-README.txt" src="c:\apache2\Apache2\OPENSSL-README.txt" />
+            <File Id="file8" Name="README.txt" src="c:\apache2\Apache2\README.txt" />
+
+          <Directory Id="directory2" Name="bin">
+
+              <File Id="file9" Name="ab.exe" src="c:\apache2\Apache2\bin\ab.exe" />
+              <File Id="file10" Name="APACHE_1.EXE" LongName="ApacheMonitor.exe" src="c:\apache2\Apache2\bin\ApacheMonitor.exe" />
+              <File Id="file11" Name="DBMMAN_1.PL" LongName="dbmmanage.pl" src="c:\apache2\Apache2\bin\dbmmanage.pl" />
+              <File Id="file12" Name="HTCACH_1.EXE" LongName="htcacheclean.exe" src="c:\apache2\Apache2\bin\htcacheclean.exe" />
+              <File Id="file13" Name="htdbm.exe" src="c:\apache2\Apache2\bin\htdbm.exe" />
+              <File Id="file14" Name="htdigest.exe" src="c:\apache2\Apache2\bin\htdigest.exe" />
+              <File Id="file15" Name="htpasswd.exe" src="c:\apache2\Apache2\bin\htpasswd.exe" />
+              <File Id="file16" Name="httpd.exe" src="c:\apache2\Apache2\bin\httpd.exe" />
+              <File Id="file17" Name="libapr-1.dll" src="c:\apache2\Apache2\bin\libapr-1.dll" />
+              <File Id="file18" Name="LIBAPR_1.DLL" LongName="libapriconv-1.dll" src="c:\apache2\Apache2\bin\libapriconv-1.dll" />
+              <File Id="file19" Name="LIBAPR_2.DLL" LongName="libaprutil-1.dll" src="c:\apache2\Apache2\bin\libaprutil-1.dll" />
+              <File Id="file20" Name="libeay32.dll" src="c:\apache2\Apache2\bin\libeay32.dll" />
+              <File Id="file21" Name="libhttpd.dll" src="c:\apache2\Apache2\bin\libhttpd.dll" />
+              <File Id="file22" Name="LOGRES_1.EXE" LongName="logresolve.exe" src="c:\apache2\Apache2\bin\logresolve.exe" />
+              <File Id="file23" Name="openssl.exe" src="c:\apache2\Apache2\bin\openssl.exe" />
+              <File Id="file24" Name="ROTATE_1.EXE" LongName="rotatelogs.exe" src="c:\apache2\Apache2\bin\rotatelogs.exe" />
+              <File Id="file25" Name="ssleay32.dll" src="c:\apache2\Apache2\bin\ssleay32.dll" />
+              <File Id="file26" Name="wintty.exe" src="c:\apache2\Apache2\bin\wintty.exe" />
+
+          </Directory>
+          <Directory Id="directory3" Name="cgi-bin">
+
+              <File Id="file27" Name="printenv.pl" src="c:\apache2\Apache2\cgi-bin\printenv.pl" />
+
+          </Directory>
+          <Directory Id="directory4" Name="conf">
+
+              <File Id="file28" Name="CHARSE_1.CON" LongName="charset.conv" src="c:\apache2\Apache2\conf\charset.conv" />
+              <File Id="file29" Name="CHARSE_1.DEF" LongName="charset.conv.default" src="c:\apache2\Apache2\conf\charset.conv.default" />
+              <File Id="file30" Name="HTTPD_1.CON" LongName="httpd.conf" src="c:\apache2\Apache2\conf\httpd.conf" />
+              <File Id="file31" Name="HTTPDC_1.DEF" LongName="httpd.conf.default" src="c:\apache2\Apache2\conf\httpd.conf.default" />
+              <File Id="file32" Name="magic" src="c:\apache2\Apache2\conf\magic" />
+              <File Id="file33" Name="MAGIC_1.DEF" LongName="magic.default" src="c:\apache2\Apache2\conf\magic.default" />
+              <File Id="file34" Name="MIME_1.TYP" LongName="mime.types" src="c:\apache2\Apache2\conf\mime.types" />
+              <File Id="file35" Name="MIMETY_1.DEF" LongName="mime.types.default" src="c:\apache2\Apache2\conf\mime.types.default" />
+              <File Id="file36" Name="openssl.cnf" src="c:\apache2\Apache2\conf\openssl.cnf" />
+
+            <Directory Id="directory5" Name="extra">
+
+                <File Id="file37" Name="HTTPD-_1.CON" LongName="httpd-autoindex.conf" src="c:\apache2\Apache2\conf\extra\httpd-autoindex.conf" />
+                <File Id="file38" Name="HTTPD-_1.DEF" LongName="httpd-autoindex.conf.default" src="c:\apache2\Apache2\conf\extra\httpd-autoindex.conf.default" />
+                <File Id="file39" Name="HTTPD-_2.CON" LongName="httpd-dav.conf" src="c:\apache2\Apache2\conf\extra\httpd-dav.conf" />
+                <File Id="file40" Name="HTTPD-_2.DEF" LongName="httpd-dav.conf.default" src="c:\apache2\Apache2\conf\extra\httpd-dav.conf.default" />
+                <File Id="file41" Name="HTTPD-_3.CON" LongName="httpd-default.conf" src="c:\apache2\Apache2\conf\extra\httpd-default.conf" />
+                <File Id="file42" Name="HTTPD-_3.DEF" LongName="httpd-default.conf.default" src="c:\apache2\Apache2\conf\extra\httpd-default.conf.default" />
+                <File Id="file43" Name="HTTPD-_4.CON" LongName="httpd-info.conf" src="c:\apache2\Apache2\conf\extra\httpd-info.conf" />
+                <File Id="file44" Name="HTTPD-_4.DEF" LongName="httpd-info.conf.default" src="c:\apache2\Apache2\conf\extra\httpd-info.conf.default" />
+                <File Id="file45" Name="HT1C7E_1.CON" LongName="httpd-languages.conf" src="c:\apache2\Apache2\conf\extra\httpd-languages.conf" />
+                <File Id="file46" Name="HT0DA3_1.DEF" LongName="httpd-languages.conf.default" src="c:\apache2\Apache2\conf\extra\httpd-languages.conf.default" />
+                <File Id="file47" Name="HT1B22_1.CON" LongName="httpd-manual.conf" src="c:\apache2\Apache2\conf\extra\httpd-manual.conf" />
+                <File Id="file48" Name="HT8072_1.DEF" LongName="httpd-manual.conf.default" src="c:\apache2\Apache2\conf\extra\httpd-manual.conf.default" />
+                <File Id="file49" Name="HTF94B_1.CON" LongName="httpd-mpm.conf" src="c:\apache2\Apache2\conf\extra\httpd-mpm.conf" />
+                <File Id="file50" Name="HTE979_1.DEF" LongName="httpd-mpm.conf.default" src="c:\apache2\Apache2\conf\extra\httpd-mpm.conf.default" />
+                <File Id="file51" Name="HT4659_1.CON" LongName="httpd-multilang-errordoc.conf" src="c:\apache2\Apache2\conf\extra\httpd-multilang-errordoc.conf" />
+                <File Id="file52" Name="HT43ED_1.DEF" LongName="httpd-multilang-errordoc.conf.default" src="c:\apache2\Apache2\conf\extra\httpd-multilang-errordoc.conf.default" />
+                <File Id="file53" Name="HTF155_1.CON" LongName="httpd-ssl.conf" src="c:\apache2\Apache2\conf\extra\httpd-ssl.conf" />
+                <File Id="file54" Name="HT6A17_1.DEF" LongName="httpd-ssl.conf.default" src="c:\apache2\Apache2\conf\extra\httpd-ssl.conf.default" />
+                <File Id="file55" Name="HTA16F_1.CON" LongName="httpd-userdir.conf" src="c:\apache2\Apache2\conf\extra\httpd-userdir.conf" />
+                <File Id="file56" Name="HT6BBA_1.DEF" LongName="httpd-userdir.conf.default" src="c:\apache2\Apache2\conf\extra\httpd-userdir.conf.default" />
+                <File Id="file57" Name="HTA6D2_1.CON" LongName="httpd-vhosts.conf" src="c:\apache2\Apache2\conf\extra\httpd-vhosts.conf" />
+                <File Id="file58" Name="HT4B77_1.DEF" LongName="httpd-vhosts.conf.default" src="c:\apache2\Apache2\conf\extra\httpd-vhosts.conf.default" />
+
+            </Directory>
+          </Directory>
+          <Directory Id="directory6" Name="error">
+
+              <File Id="file59" Name="CONTAC_1.VAR" LongName="contact.html.var" src="c:\apache2\Apache2\error\contact.html.var" />
+              <File Id="file60" Name="HTTP_B_1.VAR" LongName="HTTP_BAD_GATEWAY.html.var" src="c:\apache2\Apache2\error\HTTP_BAD_GATEWAY.html.var" />
+              <File Id="file61" Name="HTTP_B_2.VAR" LongName="HTTP_BAD_REQUEST.html.var" src="c:\apache2\Apache2\error\HTTP_BAD_REQUEST.html.var" />
+              <File Id="file62" Name="HTTP_F_1.VAR" LongName="HTTP_FORBIDDEN.html.var" src="c:\apache2\Apache2\error\HTTP_FORBIDDEN.html.var" />
+              <File Id="file63" Name="HTTP_G_1.VAR" LongName="HTTP_GONE.html.var" src="c:\apache2\Apache2\error\HTTP_GONE.html.var" />
+              <File Id="file64" Name="HTTP_I_1.VAR" LongName="HTTP_INTERNAL_SERVER_ERROR.html.var" src="c:\apache2\Apache2\error\HTTP_INTERNAL_SERVER_ERROR.html.var" />
+              <File Id="file65" Name="HTTP_L_1.VAR" LongName="HTTP_LENGTH_REQUIRED.html.var" src="c:\apache2\Apache2\error\HTTP_LENGTH_REQUIRED.html.var" />
+              <File Id="file66" Name="HTTP_M_1.VAR" LongName="HTTP_METHOD_NOT_ALLOWED.html.var" src="c:\apache2\Apache2\error\HTTP_METHOD_NOT_ALLOWED.html.var" />
+              <File Id="file67" Name="HTTP_N_1.VAR" LongName="HTTP_NOT_FOUND.html.var" src="c:\apache2\Apache2\error\HTTP_NOT_FOUND.html.var" />
+              <File Id="file68" Name="HTTP_N_2.VAR" LongName="HTTP_NOT_IMPLEMENTED.html.var" src="c:\apache2\Apache2\error\HTTP_NOT_IMPLEMENTED.html.var" />
+              <File Id="file69" Name="HTTP_P_1.VAR" LongName="HTTP_PRECONDITION_FAILED.html.var" src="c:\apache2\Apache2\error\HTTP_PRECONDITION_FAILED.html.var" />
+              <File Id="file70" Name="HTTP_R_1.VAR" LongName="HTTP_REQUEST_ENTITY_TOO_LARGE.html.var" src="c:\apache2\Apache2\error\HTTP_REQUEST_ENTITY_TOO_LARGE.html.var" />
+              <File Id="file71" Name="HTTP_R_2.VAR" LongName="HTTP_REQUEST_TIME_OUT.html.var" src="c:\apache2\Apache2\error\HTTP_REQUEST_TIME_OUT.html.var" />
+              <File Id="file72" Name="HTTP_R_3.VAR" LongName="HTTP_REQUEST_URI_TOO_LARGE.html.var" src="c:\apache2\Apache2\error\HTTP_REQUEST_URI_TOO_LARGE.html.var" />
+              <File Id="file73" Name="HTTP_S_1.VAR" LongName="HTTP_SERVICE_UNAVAILABLE.html.var" src="c:\apache2\Apache2\error\HTTP_SERVICE_UNAVAILABLE.html.var" />
+              <File Id="file74" Name="HTTP_U_1.VAR" LongName="HTTP_UNAUTHORIZED.html.var" src="c:\apache2\Apache2\error\HTTP_UNAUTHORIZED.html.var" />
+              <File Id="file75" Name="HTTP_U_2.VAR" LongName="HTTP_UNSUPPORTED_MEDIA_TYPE.html.var" src="c:\apache2\Apache2\error\HTTP_UNSUPPORTED_MEDIA_TYPE.html.var" />
+              <File Id="file76" Name="HTTP_V_1.VAR" LongName="HTTP_VARIANT_ALSO_VARIES.html.var" src="c:\apache2\Apache2\error\HTTP_VARIANT_ALSO_VARIES.html.var" />
+              <File Id="file77" Name="README" src="c:\apache2\Apache2\error\README" />
+
+            <Directory Id="directory7" Name="include">
+
+                <File Id="file78" Name="BOTTOM_1.HTM" LongName="bottom.html" src="c:\apache2\Apache2\error\include\bottom.html" />
+                <File Id="file79" Name="SPACER_1.HTM" LongName="spacer.html" src="c:\apache2\Apache2\error\include\spacer.html" />
+                <File Id="file80" Name="TOP_1.HTM" LongName="top.html" src="c:\apache2\Apache2\error\include\top.html" />
+
+            </Directory>
+          </Directory>
+          <Directory Id="directory8" Name="htdocs">
+
+              <File Id="file81" Name="APACHE_1.GIF" LongName="apache_pb.gif" src="c:\apache2\Apache2\htdocs\apache_pb.gif" />
+              <File Id="file82" Name="APACHE_1.PNG" LongName="apache_pb.png" src="c:\apache2\Apache2\htdocs\apache_pb.png" />
+              <File Id="file83" Name="APACHE_2.GIF" LongName="apache_pb22.gif" src="c:\apache2\Apache2\htdocs\apache_pb22.gif" />
+              <File Id="file84" Name="APACHE_2.PNG" LongName="apache_pb22.png" src="c:\apache2\Apache2\htdocs\apache_pb22.png" />
+              <File Id="file85" Name="APACHE_3.GIF" LongName="apache_pb22_ani.gif" src="c:\apache2\Apache2\htdocs\apache_pb22_ani.gif" />
+              <File Id="file86" Name="INDEX_1.HTM" LongName="index.html" src="c:\apache2\Apache2\htdocs\index.html" />
+
+          </Directory>
+          <Directory Id="directory9" Name="icons">
+
+              <File Id="file87" Name="a.gif" src="c:\apache2\Apache2\icons\a.gif" />
+              <File Id="file88" Name="a.png" src="c:\apache2\Apache2\icons\a.png" />
+              <File Id="file89" Name="ALERTB_1.GIF" LongName="alert.black.gif" src="c:\apache2\Apache2\icons\alert.black.gif" />
+              <File Id="file90" Name="ALERTB_1.PNG" LongName="alert.black.png" src="c:\apache2\Apache2\icons\alert.black.png" />
+              <File Id="file91" Name="ALERTR_1.GIF" LongName="alert.red.gif" src="c:\apache2\Apache2\icons\alert.red.gif" />
+              <File Id="file92" Name="ALERTR_1.PNG" LongName="alert.red.png" src="c:\apache2\Apache2\icons\alert.red.png" />
+              <File Id="file93" Name="APACHE_1.GIF" LongName="apache_pb.gif" src="c:\apache2\Apache2\icons\apache_pb.gif" />
+              <File Id="file94" Name="APACHE_1.PNG" LongName="apache_pb.png" src="c:\apache2\Apache2\icons\apache_pb.png" />
+              <File Id="file95" Name="APACHE_2.GIF" LongName="apache_pb2.gif" src="c:\apache2\Apache2\icons\apache_pb2.gif" />
+              <File Id="file96" Name="APACHE_2.PNG" LongName="apache_pb2.png" src="c:\apache2\Apache2\icons\apache_pb2.png" />
+              <File Id="file97" Name="APACHE_3.GIF" LongName="apache_pb2_ani.gif" src="c:\apache2\Apache2\icons\apache_pb2_ani.gif" />
+              <File Id="file98" Name="back.gif" src="c:\apache2\Apache2\icons\back.gif" />
+              <File Id="file99" Name="back.png" src="c:\apache2\Apache2\icons\back.png" />
+              <File Id="file100" Name="BALLGR_1.GIF" LongName="ball.gray.gif" src="c:\apache2\Apache2\icons\ball.gray.gif" />
+              <File Id="file101" Name="BALLGR_1.PNG" LongName="ball.gray.png" src="c:\apache2\Apache2\icons\ball.gray.png" />
+              <File Id="file102" Name="BALLRE_1.GIF" LongName="ball.red.gif" src="c:\apache2\Apache2\icons\ball.red.gif" />
+              <File Id="file103" Name="BALLRE_1.PNG" LongName="ball.red.png" src="c:\apache2\Apache2\icons\ball.red.png" />
+              <File Id="file104" Name="binary.gif" src="c:\apache2\Apache2\icons\binary.gif" />
+              <File Id="file105" Name="binary.png" src="c:\apache2\Apache2\icons\binary.png" />
+              <File Id="file106" Name="binhex.gif" src="c:\apache2\Apache2\icons\binhex.gif" />
+              <File Id="file107" Name="binhex.png" src="c:\apache2\Apache2\icons\binhex.png" />
+              <File Id="file108" Name="blank.gif" src="c:\apache2\Apache2\icons\blank.gif" />
+              <File Id="file109" Name="blank.png" src="c:\apache2\Apache2\icons\blank.png" />
+              <File Id="file110" Name="bomb.gif" src="c:\apache2\Apache2\icons\bomb.gif" />
+              <File Id="file111" Name="bomb.png" src="c:\apache2\Apache2\icons\bomb.png" />
+              <File Id="file112" Name="box1.gif" src="c:\apache2\Apache2\icons\box1.gif" />
+              <File Id="file113" Name="box1.png" src="c:\apache2\Apache2\icons\box1.png" />
+              <File Id="file114" Name="box2.gif" src="c:\apache2\Apache2\icons\box2.gif" />
+              <File Id="file115" Name="box2.png" src="c:\apache2\Apache2\icons\box2.png" />
+              <File Id="file116" Name="broken.gif" src="c:\apache2\Apache2\icons\broken.gif" />
+              <File Id="file117" Name="broken.png" src="c:\apache2\Apache2\icons\broken.png" />
+              <File Id="file118" Name="burst.gif" src="c:\apache2\Apache2\icons\burst.gif" />
+              <File Id="file119" Name="burst.png" src="c:\apache2\Apache2\icons\burst.png" />
+              <File Id="file120" Name="c.gif" src="c:\apache2\Apache2\icons\c.gif" />
+              <File Id="file121" Name="c.png" src="c:\apache2\Apache2\icons\c.png" />
+              <File Id="file122" Name="COMPBL_1.GIF" LongName="comp.blue.gif" src="c:\apache2\Apache2\icons\comp.blue.gif" />
+              <File Id="file123" Name="COMPBL_1.PNG" LongName="comp.blue.png" src="c:\apache2\Apache2\icons\comp.blue.png" />
+              <File Id="file124" Name="COMPGR_1.GIF" LongName="comp.gray.gif" src="c:\apache2\Apache2\icons\comp.gray.gif" />
+              <File Id="file125" Name="COMPGR_1.PNG" LongName="comp.gray.png" src="c:\apache2\Apache2\icons\comp.gray.png" />
+              <File Id="file126" Name="COMPRE_1.GIF" LongName="compressed.gif" src="c:\apache2\Apache2\icons\compressed.gif" />
+              <File Id="file127" Name="COMPRE_1.PNG" LongName="compressed.png" src="c:\apache2\Apache2\icons\compressed.png" />
+              <File Id="file128" Name="CONTIN_1.GIF" LongName="continued.gif" src="c:\apache2\Apache2\icons\continued.gif" />
+              <File Id="file129" Name="CONTIN_1.PNG" LongName="continued.png" src="c:\apache2\Apache2\icons\continued.png" />
+              <File Id="file130" Name="dir.gif" src="c:\apache2\Apache2\icons\dir.gif" />
+              <File Id="file131" Name="dir.png" src="c:\apache2\Apache2\icons\dir.png" />
+              <File Id="file132" Name="diskimg.gif" src="c:\apache2\Apache2\icons\diskimg.gif" />
+              <File Id="file133" Name="diskimg.png" src="c:\apache2\Apache2\icons\diskimg.png" />
+              <File Id="file134" Name="down.gif" src="c:\apache2\Apache2\icons\down.gif" />
+              <File Id="file135" Name="down.png" src="c:\apache2\Apache2\icons\down.png" />
+              <File Id="file136" Name="dvi.gif" src="c:\apache2\Apache2\icons\dvi.gif" />
+              <File Id="file137" Name="dvi.png" src="c:\apache2\Apache2\icons\dvi.png" />
+              <File Id="file138" Name="f.gif" src="c:\apache2\Apache2\icons\f.gif" />
+              <File Id="file139" Name="f.png" src="c:\apache2\Apache2\icons\f.png" />
+              <File Id="file140" Name="folder.gif" src="c:\apache2\Apache2\icons\folder.gif" />
+              <File Id="file141" Name="FOLDER_1.GIF" LongName="folder.open.gif" src="c:\apache2\Apache2\icons\folder.open.gif" />
+              <File Id="file142" Name="FOLDER_1.PNG" LongName="folder.open.png" src="c:\apache2\Apache2\icons\folder.open.png" />
+              <File Id="file143" Name="folder.png" src="c:\apache2\Apache2\icons\folder.png" />
+              <File Id="file144" Name="FOLDER_2.GIF" LongName="folder.sec.gif" src="c:\apache2\Apache2\icons\folder.sec.gif" />
+              <File Id="file145" Name="FOLDER_2.PNG" LongName="folder.sec.png" src="c:\apache2\Apache2\icons\folder.sec.png" />
+              <File Id="file146" Name="forward.gif" src="c:\apache2\Apache2\icons\forward.gif" />
+              <File Id="file147" Name="forward.png" src="c:\apache2\Apache2\icons\forward.png" />
+              <File Id="file148" Name="generic.gif" src="c:\apache2\Apache2\icons\generic.gif" />
+              <File Id="file149" Name="generic.png" src="c:\apache2\Apache2\icons\generic.png" />
+              <File Id="file150" Name="GENERI_1.GIF" LongName="generic.red.gif" src="c:\apache2\Apache2\icons\generic.red.gif" />
+              <File Id="file151" Name="GENERI_1.PNG" LongName="generic.red.png" src="c:\apache2\Apache2\icons\generic.red.png" />
+              <File Id="file152" Name="GENERI_2.GIF" LongName="generic.sec.gif" src="c:\apache2\Apache2\icons\generic.sec.gif" />
+              <File Id="file153" Name="GENERI_2.PNG" LongName="generic.sec.png" src="c:\apache2\Apache2\icons\generic.sec.png" />
+              <File Id="file154" Name="HANDRI_1.GIF" LongName="hand.right.gif" src="c:\apache2\Apache2\icons\hand.right.gif" />
+              <File Id="file155" Name="HANDRI_1.PNG" LongName="hand.right.png" src="c:\apache2\Apache2\icons\hand.right.png" />
+              <File Id="file156" Name="HANDUP_1.GIF" LongName="hand.up.gif" src="c:\apache2\Apache2\icons\hand.up.gif" />
+              <File Id="file157" Name="HANDUP_1.PNG" LongName="hand.up.png" src="c:\apache2\Apache2\icons\hand.up.png" />
+              <File Id="file158" Name="ICONSH_1.GIF" LongName="icon.sheet.gif" src="c:\apache2\Apache2\icons\icon.sheet.gif" />
+              <File Id="file159" Name="ICONSH_1.PNG" LongName="icon.sheet.png" src="c:\apache2\Apache2\icons\icon.sheet.png" />
+              <File Id="file160" Name="image1.gif" src="c:\apache2\Apache2\icons\image1.gif" />
+              <File Id="file161" Name="image1.png" src="c:\apache2\Apache2\icons\image1.png" />
+              <File Id="file162" Name="image2.gif" src="c:\apache2\Apache2\icons\image2.gif" />
+              <File Id="file163" Name="image2.png" src="c:\apache2\Apache2\icons\image2.png" />
+              <File Id="file164" Name="image3.gif" src="c:\apache2\Apache2\icons\image3.gif" />
+              <File Id="file165" Name="image3.png" src="c:\apache2\Apache2\icons\image3.png" />
+              <File Id="file166" Name="index.gif" src="c:\apache2\Apache2\icons\index.gif" />
+              <File Id="file167" Name="index.png" src="c:\apache2\Apache2\icons\index.png" />
+              <File Id="file168" Name="layout.gif" src="c:\apache2\Apache2\icons\layout.gif" />
+              <File Id="file169" Name="layout.png" src="c:\apache2\Apache2\icons\layout.png" />
+              <File Id="file170" Name="left.gif" src="c:\apache2\Apache2\icons\left.gif" />
+              <File Id="file171" Name="left.png" src="c:\apache2\Apache2\icons\left.png" />
+              <File Id="file172" Name="link.gif" src="c:\apache2\Apache2\icons\link.gif" />
+              <File Id="file173" Name="link.png" src="c:\apache2\Apache2\icons\link.png" />
+              <File Id="file174" Name="movie.gif" src="c:\apache2\Apache2\icons\movie.gif" />
+              <File Id="file175" Name="movie.png" src="c:\apache2\Apache2\icons\movie.png" />
+              <File Id="file176" Name="p.gif" src="c:\apache2\Apache2\icons\p.gif" />
+              <File Id="file177" Name="p.png" src="c:\apache2\Apache2\icons\p.png" />
+              <File Id="file178" Name="patch.gif" src="c:\apache2\Apache2\icons\patch.gif" />
+              <File Id="file179" Name="patch.png" src="c:\apache2\Apache2\icons\patch.png" />
+              <File Id="file180" Name="pdf.gif" src="c:\apache2\Apache2\icons\pdf.gif" />
+              <File Id="file181" Name="pdf.png" src="c:\apache2\Apache2\icons\pdf.png" />
+              <File Id="file182" Name="pie0.gif" src="c:\apache2\Apache2\icons\pie0.gif" />
+              <File Id="file183" Name="pie0.png" src="c:\apache2\Apache2\icons\pie0.png" />
+              <File Id="file184" Name="pie1.gif" src="c:\apache2\Apache2\icons\pie1.gif" />
+              <File Id="file185" Name="pie1.png" src="c:\apache2\Apache2\icons\pie1.png" />
+              <File Id="file186" Name="pie2.gif" src="c:\apache2\Apache2\icons\pie2.gif" />
+              <File Id="file187" Name="pie2.png" src="c:\apache2\Apache2\icons\pie2.png" />
+              <File Id="file188" Name="pie3.gif" src="c:\apache2\Apache2\icons\pie3.gif" />
+              <File Id="file189" Name="pie3.png" src="c:\apache2\Apache2\icons\pie3.png" />
+              <File Id="file190" Name="pie4.gif" src="c:\apache2\Apache2\icons\pie4.gif" />
+              <File Id="file191" Name="pie4.png" src="c:\apache2\Apache2\icons\pie4.png" />
+              <File Id="file192" Name="pie5.gif" src="c:\apache2\Apache2\icons\pie5.gif" />
+              <File Id="file193" Name="pie5.png" src="c:\apache2\Apache2\icons\pie5.png" />
+              <File Id="file194" Name="pie6.gif" src="c:\apache2\Apache2\icons\pie6.gif" />
+              <File Id="file195" Name="pie6.png" src="c:\apache2\Apache2\icons\pie6.png" />
+              <File Id="file196" Name="pie7.gif" src="c:\apache2\Apache2\icons\pie7.gif" />
+              <File Id="file197" Name="pie7.png" src="c:\apache2\Apache2\icons\pie7.png" />
+              <File Id="file198" Name="pie8.gif" src="c:\apache2\Apache2\icons\pie8.gif" />
+              <File Id="file199" Name="pie8.png" src="c:\apache2\Apache2\icons\pie8.png" />
+              <File Id="file200" Name="portal.gif" src="c:\apache2\Apache2\icons\portal.gif" />
+              <File Id="file201" Name="portal.png" src="c:\apache2\Apache2\icons\portal.png" />
+              <File Id="file202" Name="ps.gif" src="c:\apache2\Apache2\icons\ps.gif" />
+              <File Id="file203" Name="ps.png" src="c:\apache2\Apache2\icons\ps.png" />
+              <File Id="file204" Name="quill.gif" src="c:\apache2\Apache2\icons\quill.gif" />
+              <File Id="file205" Name="quill.png" src="c:\apache2\Apache2\icons\quill.png" />
+              <File Id="file206" Name="README" src="c:\apache2\Apache2\icons\README" />
+              <File Id="file207" Name="right.gif" src="c:\apache2\Apache2\icons\right.gif" />
+              <File Id="file208" Name="right.png" src="c:\apache2\Apache2\icons\right.png" />
+              <File Id="file209" Name="screw1.gif" src="c:\apache2\Apache2\icons\screw1.gif" />
+              <File Id="file210" Name="screw1.png" src="c:\apache2\Apache2\icons\screw1.png" />
+              <File Id="file211" Name="screw2.gif" src="c:\apache2\Apache2\icons\screw2.gif" />
+              <File Id="file212" Name="screw2.png" src="c:\apache2\Apache2\icons\screw2.png" />
+              <File Id="file213" Name="script.gif" src="c:\apache2\Apache2\icons\script.gif" />
+              <File Id="file214" Name="script.png" src="c:\apache2\Apache2\icons\script.png" />
+              <File Id="file215" Name="sound1.gif" src="c:\apache2\Apache2\icons\sound1.gif" />
+              <File Id="file216" Name="sound1.png" src="c:\apache2\Apache2\icons\sound1.png" />
+              <File Id="file217" Name="sound2.gif" src="c:\apache2\Apache2\icons\sound2.gif" />
+              <File Id="file218" Name="sound2.png" src="c:\apache2\Apache2\icons\sound2.png" />
+              <File Id="file219" Name="sphere1.gif" src="c:\apache2\Apache2\icons\sphere1.gif" />
+              <File Id="file220" Name="sphere1.png" src="c:\apache2\Apache2\icons\sphere1.png" />
+              <File Id="file221" Name="sphere2.gif" src="c:\apache2\Apache2\icons\sphere2.gif" />
+              <File Id="file222" Name="sphere2.png" src="c:\apache2\Apache2\icons\sphere2.png" />
+              <File Id="file223" Name="tar.gif" src="c:\apache2\Apache2\icons\tar.gif" />
+              <File Id="file224" Name="tar.png" src="c:\apache2\Apache2\icons\tar.png" />
+              <File Id="file225" Name="tex.gif" src="c:\apache2\Apache2\icons\tex.gif" />
+              <File Id="file226" Name="tex.png" src="c:\apache2\Apache2\icons\tex.png" />
+              <File Id="file227" Name="text.gif" src="c:\apache2\Apache2\icons\text.gif" />
+              <File Id="file228" Name="text.png" src="c:\apache2\Apache2\icons\text.png" />
+              <File Id="file229" Name="transfer.gif" src="c:\apache2\Apache2\icons\transfer.gif" />
+              <File Id="file230" Name="transfer.png" src="c:\apache2\Apache2\icons\transfer.png" />
+              <File Id="file231" Name="unknown.gif" src="c:\apache2\Apache2\icons\unknown.gif" />
+              <File Id="file232" Name="unknown.png" src="c:\apache2\Apache2\icons\unknown.png" />
+              <File Id="file233" Name="up.gif" src="c:\apache2\Apache2\icons\up.gif" />
+              <File Id="file234" Name="up.png" src="c:\apache2\Apache2\icons\up.png" />
+              <File Id="file235" Name="uu.gif" src="c:\apache2\Apache2\icons\uu.gif" />
+              <File Id="file236" Name="uu.png" src="c:\apache2\Apache2\icons\uu.png" />
+              <File Id="file237" Name="UUENCO_1.GIF" LongName="uuencoded.gif" src="c:\apache2\Apache2\icons\uuencoded.gif" />
+              <File Id="file238" Name="UUENCO_1.PNG" LongName="uuencoded.png" src="c:\apache2\Apache2\icons\uuencoded.png" />
+              <File Id="file239" Name="world1.gif" src="c:\apache2\Apache2\icons\world1.gif" />
+              <File Id="file240" Name="world1.png" src="c:\apache2\Apache2\icons\world1.png" />
+              <File Id="file241" Name="world2.gif" src="c:\apache2\Apache2\icons\world2.gif" />
+              <File Id="file242" Name="world2.png" src="c:\apache2\Apache2\icons\world2.png" />
+
+            <Directory Id="directory10" Name="small">
+
+                <File Id="file243" Name="back.gif" src="c:\apache2\Apache2\icons\small\back.gif" />
+                <File Id="file244" Name="back.png" src="c:\apache2\Apache2\icons\small\back.png" />
+                <File Id="file245" Name="binary.gif" src="c:\apache2\Apache2\icons\small\binary.gif" />
+                <File Id="file246" Name="binary.png" src="c:\apache2\Apache2\icons\small\binary.png" />
+                <File Id="file247" Name="binhex.gif" src="c:\apache2\Apache2\icons\small\binhex.gif" />
+                <File Id="file248" Name="binhex.png" src="c:\apache2\Apache2\icons\small\binhex.png" />
+                <File Id="file249" Name="blank.gif" src="c:\apache2\Apache2\icons\small\blank.gif" />
+                <File Id="file250" Name="blank.png" src="c:\apache2\Apache2\icons\small\blank.png" />
+                <File Id="file251" Name="broken.gif" src="c:\apache2\Apache2\icons\small\broken.gif" />
+                <File Id="file252" Name="broken.png" src="c:\apache2\Apache2\icons\small\broken.png" />
+                <File Id="file253" Name="burst.gif" src="c:\apache2\Apache2\icons\small\burst.gif" />
+                <File Id="file254" Name="burst.png" src="c:\apache2\Apache2\icons\small\burst.png" />
+                <File Id="file255" Name="comp1.gif" src="c:\apache2\Apache2\icons\small\comp1.gif" />
+                <File Id="file256" Name="comp1.png" src="c:\apache2\Apache2\icons\small\comp1.png" />
+                <File Id="file257" Name="comp2.gif" src="c:\apache2\Apache2\icons\small\comp2.gif" />
+                <File Id="file258" Name="comp2.png" src="c:\apache2\Apache2\icons\small\comp2.png" />
+                <File Id="file259" Name="COMPRE_1.GIF" LongName="compressed.gif" src="c:\apache2\Apache2\icons\small\compressed.gif" />
+                <File Id="file260" Name="COMPRE_1.PNG" LongName="compressed.png" src="c:\apache2\Apache2\icons\small\compressed.png" />
+                <File Id="file261" Name="CONTIN_1.GIF" LongName="continued.gif" src="c:\apache2\Apache2\icons\small\continued.gif" />
+                <File Id="file262" Name="CONTIN_1.PNG" LongName="continued.png" src="c:\apache2\Apache2\icons\small\continued.png" />
+                <File Id="file263" Name="dir.gif" src="c:\apache2\Apache2\icons\small\dir.gif" />
+                <File Id="file264" Name="dir.png" src="c:\apache2\Apache2\icons\small\dir.png" />
+                <File Id="file265" Name="dir2.gif" src="c:\apache2\Apache2\icons\small\dir2.gif" />
+                <File Id="file266" Name="dir2.png" src="c:\apache2\Apache2\icons\small\dir2.png" />
+                <File Id="file267" Name="doc.gif" src="c:\apache2\Apache2\icons\small\doc.gif" />
+                <File Id="file268" Name="doc.png" src="c:\apache2\Apache2\icons\small\doc.png" />
+                <File Id="file269" Name="forward.gif" src="c:\apache2\Apache2\icons\small\forward.gif" />
+                <File Id="file270" Name="forward.png" src="c:\apache2\Apache2\icons\small\forward.png" />
+                <File Id="file271" Name="generic.gif" src="c:\apache2\Apache2\icons\small\generic.gif" />
+                <File Id="file272" Name="generic.png" src="c:\apache2\Apache2\icons\small\generic.png" />
+                <File Id="file273" Name="generic2.gif" src="c:\apache2\Apache2\icons\small\generic2.gif" />
+                <File Id="file274" Name="generic2.png" src="c:\apache2\Apache2\icons\small\generic2.png" />
+                <File Id="file275" Name="generic3.gif" src="c:\apache2\Apache2\icons\small\generic3.gif" />
+                <File Id="file276" Name="generic3.png" src="c:\apache2\Apache2\icons\small\generic3.png" />
+                <File Id="file277" Name="image.gif" src="c:\apache2\Apache2\icons\small\image.gif" />
+                <File Id="file278" Name="image.png" src="c:\apache2\Apache2\icons\small\image.png" />
+                <File Id="file279" Name="image2.gif" src="c:\apache2\Apache2\icons\small\image2.gif" />
+                <File Id="file280" Name="image2.png" src="c:\apache2\Apache2\icons\small\image2.png" />
+                <File Id="file281" Name="index.gif" src="c:\apache2\Apache2\icons\small\index.gif" />
+                <File Id="file282" Name="index.png" src="c:\apache2\Apache2\icons\small\index.png" />
+                <File Id="file283" Name="key.gif" src="c:\apache2\Apache2\icons\small\key.gif" />
+                <File Id="file284" Name="key.png" src="c:\apache2\Apache2\icons\small\key.png" />
+                <File Id="file285" Name="movie.gif" src="c:\apache2\Apache2\icons\small\movie.gif" />
+                <File Id="file286" Name="movie.png" src="c:\apache2\Apache2\icons\small\movie.png" />
+                <File Id="file287" Name="patch.gif" src="c:\apache2\Apache2\icons\small\patch.gif" />
+                <File Id="file288" Name="patch.png" src="c:\apache2\Apache2\icons\small\patch.png" />
+                <File Id="file289" Name="ps.gif" src="c:\apache2\Apache2\icons\small\ps.gif" />
+                <File Id="file290" Name="ps.png" src="c:\apache2\Apache2\icons\small\ps.png" />
+                <File Id="file291" Name="rainbow.gif" src="c:\apache2\Apache2\icons\small\rainbow.gif" />
+                <File Id="file292" Name="rainbow.png" src="c:\apache2\Apache2\icons\small\rainbow.png" />
+                <File Id="file293" Name="README.txt" src="c:\apache2\Apache2\icons\small\README.txt" />
+                <File Id="file294" Name="sound.gif" src="c:\apache2\Apache2\icons\small\sound.gif" />
+                <File Id="file295" Name="sound.png" src="c:\apache2\Apache2\icons\small\sound.png" />
+                <File Id="file296" Name="sound2.gif" src="c:\apache2\Apache2\icons\small\sound2.gif" />
+                <File Id="file297" Name="sound2.png" src="c:\apache2\Apache2\icons\small\sound2.png" />
+                <File Id="file298" Name="tar.gif" src="c:\apache2\Apache2\icons\small\tar.gif" />
+                <File Id="file299" Name="tar.png" src="c:\apache2\Apache2\icons\small\tar.png" />
+                <File Id="file300" Name="text.gif" src="c:\apache2\Apache2\icons\small\text.gif" />
+                <File Id="file301" Name="text.png" src="c:\apache2\Apache2\icons\small\text.png" />
+                <File Id="file302" Name="transfer.gif" src="c:\apache2\Apache2\icons\small\transfer.gif" />
+                <File Id="file303" Name="transfer.png" src="c:\apache2\Apache2\icons\small\transfer.png" />
+                <File Id="file304" Name="unknown.gif" src="c:\apache2\Apache2\icons\small\unknown.gif" />
+                <File Id="file305" Name="unknown.png" src="c:\apache2\Apache2\icons\small\unknown.png" />
+                <File Id="file306" Name="uu.gif" src="c:\apache2\Apache2\icons\small\uu.gif" />
+                <File Id="file307" Name="uu.png" src="c:\apache2\Apache2\icons\small\uu.png" />
+
+            </Directory>
+          </Directory>
+          <Directory Id="directory11" Name="logs" />
+          <Directory Id="directory12" Name="manual">
+
+              <File Id="file308" Name="BIND_1.HTM" LongName="bind.html" src="c:\apache2\Apache2\manual\bind.html" />
+              <File Id="file309" Name="BINDHT_1.DE" LongName="bind.html.de" src="c:\apache2\Apache2\manual\bind.html.de" />
+              <File Id="file310" Name="BINDHT_1.EN" LongName="bind.html.en" src="c:\apache2\Apache2\manual\bind.html.en" />
+              <File Id="file311" Name="BINDHT_1.FR" LongName="bind.html.fr" src="c:\apache2\Apache2\manual\bind.html.fr" />
+              <File Id="file312" Name="BINDHT_1.EUC" LongName="bind.html.ja.euc-jp" src="c:\apache2\Apache2\manual\bind.html.ja.euc-jp" />
+              <File Id="file313" Name="BINDHT_2.EUC" LongName="bind.html.ko.euc-kr" src="c:\apache2\Apache2\manual\bind.html.ko.euc-kr" />
+              <File Id="file314" Name="CACHIN_1.HTM" LongName="caching.html" src="c:\apache2\Apache2\manual\caching.html" />
+              <File Id="file315" Name="CACHIN_1.EN" LongName="caching.html.en" src="c:\apache2\Apache2\manual\caching.html.en" />
+              <File Id="file316" Name="CONFIG_1.HTM" LongName="configuring.html" src="c:\apache2\Apache2\manual\configuring.html" />
+              <File Id="file317" Name="CONFIG_1.DE" LongName="configuring.html.de" src="c:\apache2\Apache2\manual\configuring.html.de" />
+              <File Id="file318" Name="CONFIG_1.EN" LongName="configuring.html.en" src="c:\apache2\Apache2\manual\configuring.html.en" />
+              <File Id="file319" Name="CONFIG_1.EUC" LongName="configuring.html.ja.euc-jp" src="c:\apache2\Apache2\manual\configuring.html.ja.euc-jp" />
+              <File Id="file320" Name="CONFIG_2.EUC" LongName="configuring.html.ko.euc-kr" src="c:\apache2\Apache2\manual\configuring.html.ko.euc-kr" />
+              <File Id="file321" Name="CONTEN_1.HTM" LongName="content-negotiation.html" src="c:\apache2\Apache2\manual\content-negotiation.html" />
+              <File Id="file322" Name="CONTEN_1.EN" LongName="content-negotiation.html.en" src="c:\apache2\Apache2\manual\content-negotiation.html.en" />
+              <File Id="file323" Name="CONTEN_1.EUC" LongName="content-negotiation.html.ja.euc-jp" src="c:\apache2\Apache2\manual\content-negotiation.html.ja.euc-jp" />
+              <File Id="file324" Name="CONTEN_2.EUC" LongName="content-negotiation.html.ko.euc-kr" src="c:\apache2\Apache2\manual\content-negotiation.html.ko.euc-kr" />
+              <File Id="file325" Name="CONVEN_1.MAP" LongName="convenience.map" src="c:\apache2\Apache2\manual\convenience.map" />
+              <File Id="file326" Name="CUSTOM_1.HTM" LongName="custom-error.html" src="c:\apache2\Apache2\manual\custom-error.html" />
+              <File Id="file327" Name="CUSTOM_1.EN" LongName="custom-error.html.en" src="c:\apache2\Apache2\manual\custom-error.html.en" />
+              <File Id="file328" Name="CUSTOM_1.ES" LongName="custom-error.html.es" src="c:\apache2\Apache2\manual\custom-error.html.es" />
+              <File Id="file329" Name="CUSTOM_1.EUC" LongName="custom-error.html.ja.euc-jp" src="c:\apache2\Apache2\manual\custom-error.html.ja.euc-jp" />
+              <File Id="file330" Name="CUSTOM_2.EUC" LongName="custom-error.html.ko.euc-kr" src="c:\apache2\Apache2\manual\custom-error.html.ko.euc-kr" />
+              <File Id="file331" Name="DNS-CA_1.HTM" LongName="dns-caveats.html" src="c:\apache2\Apache2\manual\dns-caveats.html" />
+              <File Id="file332" Name="DNS-CA_1.EN" LongName="dns-caveats.html.en" src="c:\apache2\Apache2\manual\dns-caveats.html.en" />
+              <File Id="file333" Name="DNS-CA_1.EUC" LongName="dns-caveats.html.ja.euc-jp" src="c:\apache2\Apache2\manual\dns-caveats.html.ja.euc-jp" />
+              <File Id="file334" Name="DNS-CA_2.EUC" LongName="dns-caveats.html.ko.euc-kr" src="c:\apache2\Apache2\manual\dns-caveats.html.ko.euc-kr" />
+              <File Id="file335" Name="DSO_1.HTM" LongName="dso.html" src="c:\apache2\Apache2\manual\dso.html" />
+              <File Id="file336" Name="DSOHTM_1.EN" LongName="dso.html.en" src="c:\apache2\Apache2\manual\dso.html.en" />
+              <File Id="file337" Name="DSOHTM_1.EUC" LongName="dso.html.ja.euc-jp" src="c:\apache2\Apache2\manual\dso.html.ja.euc-jp" />
+              <File Id="file338" Name="DSOHTM_2.EUC" LongName="dso.html.ko.euc-kr" src="c:\apache2\Apache2\manual\dso.html.ko.euc-kr" />
+              <File Id="file339" Name="ENV_1.HTM" LongName="env.html" src="c:\apache2\Apache2\manual\env.html" />
+              <File Id="file340" Name="ENVHTM_1.EN" LongName="env.html.en" src="c:\apache2\Apache2\manual\env.html.en" />
+              <File Id="file341" Name="ENVHTM_1.EUC" LongName="env.html.ja.euc-jp" src="c:\apache2\Apache2\manual\env.html.ja.euc-jp" />
+              <File Id="file342" Name="ENVHTM_2.EUC" LongName="env.html.ko.euc-kr" src="c:\apache2\Apache2\manual\env.html.ko.euc-kr" />
+              <File Id="file343" Name="FILTER_1.HTM" LongName="filter.html" src="c:\apache2\Apache2\manual\filter.html" />
+              <File Id="file344" Name="FILTER_1.EN" LongName="filter.html.en" src="c:\apache2\Apache2\manual\filter.html.en" />
+              <File Id="file345" Name="FILTER_1.ES" LongName="filter.html.es" src="c:\apache2\Apache2\manual\filter.html.es" />
+              <File Id="file346" Name="FILTER_1.FR" LongName="filter.html.fr" src="c:\apache2\Apache2\manual\filter.html.fr" />
+              <File Id="file347" Name="FILTER_1.EUC" LongName="filter.html.ja.euc-jp" src="c:\apache2\Apache2\manual\filter.html.ja.euc-jp" />
+              <File Id="file348" Name="FILTER_2.EUC" LongName="filter.html.ko.euc-kr" src="c:\apache2\Apache2\manual\filter.html.ko.euc-kr" />
+              <File Id="file349" Name="GLOSSA_1.HTM" LongName="glossary.html" src="c:\apache2\Apache2\manual\glossary.html" />
+              <File Id="file350" Name="GLOSSA_1.DE" LongName="glossary.html.de" src="c:\apache2\Apache2\manual\glossary.html.de" />
+              <File Id="file351" Name="GLOSSA_1.EN" LongName="glossary.html.en" src="c:\apache2\Apache2\manual\glossary.html.en" />
+              <File Id="file352" Name="GLOSSA_1.ES" LongName="glossary.html.es" src="c:\apache2\Apache2\manual\glossary.html.es" />
+              <File Id="file353" Name="GLOSSA_1.EUC" LongName="glossary.html.ko.euc-kr" src="c:\apache2\Apache2\manual\glossary.html.ko.euc-kr" />
+              <File Id="file354" Name="HANDLE_1.HTM" LongName="handler.html" src="c:\apache2\Apache2\manual\handler.html" />
+              <File Id="file355" Name="HANDLE_1.EN" LongName="handler.html.en" src="c:\apache2\Apache2\manual\handler.html.en" />
+              <File Id="file356" Name="HANDLE_1.ES" LongName="handler.html.es" src="c:\apache2\Apache2\manual\handler.html.es" />
+              <File Id="file357" Name="HANDLE_1.EUC" LongName="handler.html.ja.euc-jp" src="c:\apache2\Apache2\manual\handler.html.ja.euc-jp" />
+              <File Id="file358" Name="HANDLE_2.EUC" LongName="handler.html.ko.euc-kr" src="c:\apache2\Apache2\manual\handler.html.ko.euc-kr" />
+              <File Id="file359" Name="HANDLE_1.KOI" LongName="handler.html.ru.koi8-r" src="c:\apache2\Apache2\manual\handler.html.ru.koi8-r" />
+              <File Id="file360" Name="INDEX_1.HTM" LongName="index.html" src="c:\apache2\Apache2\manual\index.html" />
+              <File Id="file361" Name="INDEXH_1.DE" LongName="index.html.de" src="c:\apache2\Apache2\manual\index.html.de" />
+              <File Id="file362" Name="INDEXH_1.EN" LongName="index.html.en" src="c:\apache2\Apache2\manual\index.html.en" />
+              <File Id="file363" Name="INDEXH_1.ES" LongName="index.html.es" src="c:\apache2\Apache2\manual\index.html.es" />
+              <File Id="file364" Name="INDEXH_1.FR" LongName="index.html.fr" src="c:\apache2\Apache2\manual\index.html.fr" />
+              <File Id="file365" Name="INDEXH_1.EUC" LongName="index.html.ja.euc-jp" src="c:\apache2\Apache2\manual\index.html.ja.euc-jp" />
+              <File Id="file366" Name="INDEXH_2.EUC" LongName="index.html.ko.euc-kr" src="c:\apache2\Apache2\manual\index.html.ko.euc-kr" />
+              <File Id="file367" Name="INDEXH_1.PT-" LongName="index.html.pt-br" src="c:\apache2\Apache2\manual\index.html.pt-br" />
+              <File Id="file368" Name="INSTAL_1.HTM" LongName="install.html" src="c:\apache2\Apache2\manual\install.html" />
+              <File Id="file369" Name="INSTAL_1.DE" LongName="install.html.de" src="c:\apache2\Apache2\manual\install.html.de" />
+              <File Id="file370" Name="INSTAL_1.EN" LongName="install.html.en" src="c:\apache2\Apache2\manual\install.html.en" />
+              <File Id="file371" Name="INSTAL_1.ES" LongName="install.html.es" src="c:\apache2\Apache2\manual\install.html.es" />
+              <File Id="file372" Name="INSTAL_1.FR" LongName="install.html.fr" src="c:\apache2\Apache2\manual\install.html.fr" />
+              <File Id="file373" Name="INSTAL_1.EUC" LongName="install.html.ja.euc-jp" src="c:\apache2\Apache2\manual\install.html.ja.euc-jp" />
+              <File Id="file374" Name="INSTAL_2.EUC" LongName="install.html.ko.euc-kr" src="c:\apache2\Apache2\manual\install.html.ko.euc-kr" />
+              <File Id="file375" Name="INVOKI_1.HTM" LongName="invoking.html" src="c:\apache2\Apache2\manual\invoking.html" />
+              <File Id="file376" Name="INVOKI_1.DE" LongName="invoking.html.de" src="c:\apache2\Apache2\manual\invoking.html.de" />
+              <File Id="file377" Name="INVOKI_1.EN" LongName="invoking.html.en" src="c:\apache2\Apache2\manual\invoking.html.en" />
+              <File Id="file378" Name="INVOKI_1.ES" LongName="invoking.html.es" src="c:\apache2\Apache2\manual\invoking.html.es" />
+              <File Id="file379" Name="INVOKI_1.EUC" LongName="invoking.html.ja.euc-jp" src="c:\apache2\Apache2\manual\invoking.html.ja.euc-jp" />
+              <File Id="file380" Name="INVOKI_2.EUC" LongName="invoking.html.ko.euc-kr" src="c:\apache2\Apache2\manual\invoking.html.ko.euc-kr" />
+              <File Id="file381" Name="INVOKI_1.KOI" LongName="invoking.html.ru.koi8-r" src="c:\apache2\Apache2\manual\invoking.html.ru.koi8-r" />
+              <File Id="file382" Name="LICENSE" src="c:\apache2\Apache2\manual\LICENSE" />
+              <File Id="file383" Name="LICENS_1.HTM" LongName="license.html" src="c:\apache2\Apache2\manual\license.html" />
+              <File Id="file384" Name="LICENS_1.EN" LongName="license.html.en" src="c:\apache2\Apache2\manual\license.html.en" />
+              <File Id="file385" Name="LOGS_1.HTM" LongName="logs.html" src="c:\apache2\Apache2\manual\logs.html" />
+              <File Id="file386" Name="LOGSHT_1.EN" LongName="logs.html.en" src="c:\apache2\Apache2\manual\logs.html.en" />
+              <File Id="file387" Name="LOGSHT_1.EUC" LongName="logs.html.ja.euc-jp" src="c:\apache2\Apache2\manual\logs.html.ja.euc-jp" />
+              <File Id="file388" Name="LOGSHT_2.EUC" LongName="logs.html.ko.euc-kr" src="c:\apache2\Apache2\manual\logs.html.ko.euc-kr" />
+              <File Id="file389" Name="MPM_1.HTM" LongName="mpm.html" src="c:\apache2\Apache2\manual\mpm.html" />
+              <File Id="file390" Name="MPMHTM_1.DE" LongName="mpm.html.de" src="c:\apache2\Apache2\manual\mpm.html.de" />
+              <File Id="file391" Name="MPMHTM_1.EN" LongName="mpm.html.en" src="c:\apache2\Apache2\manual\mpm.html.en" />
+              <File Id="file392" Name="MPMHTM_1.ES" LongName="mpm.html.es" src="c:\apache2\Apache2\manual\mpm.html.es" />
+              <File Id="file393" Name="MPMHTM_1.EUC" LongName="mpm.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mpm.html.ja.euc-jp" />
+              <File Id="file394" Name="MPMHTM_2.EUC" LongName="mpm.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mpm.html.ko.euc-kr" />
+              <File Id="file395" Name="NEW_FE_1.HTM" LongName="new_features_2_0.html" src="c:\apache2\Apache2\manual\new_features_2_0.html" />
+              <File Id="file396" Name="NEW_FE_1.DE" LongName="new_features_2_0.html.de" src="c:\apache2\Apache2\manual\new_features_2_0.html.de" />
+              <File Id="file397" Name="NEW_FE_1.EN" LongName="new_features_2_0.html.en" src="c:\apache2\Apache2\manual\new_features_2_0.html.en" />
+              <File Id="file398" Name="NEW_FE_1.FR" LongName="new_features_2_0.html.fr" src="c:\apache2\Apache2\manual\new_features_2_0.html.fr" />
+              <File Id="file399" Name="NEW_FE_1.EUC" LongName="new_features_2_0.html.ja.euc-jp" src="c:\apache2\Apache2\manual\new_features_2_0.html.ja.euc-jp" />
+              <File Id="file400" Name="NEW_FE_2.EUC" LongName="new_features_2_0.html.ko.euc-kr" src="c:\apache2\Apache2\manual\new_features_2_0.html.ko.euc-kr" />
+              <File Id="file401" Name="NEW_FE_1.PT-" LongName="new_features_2_0.html.pt-br" src="c:\apache2\Apache2\manual\new_features_2_0.html.pt-br" />
+              <File Id="file402" Name="NEW_FE_1.KOI" LongName="new_features_2_0.html.ru.koi8-r" src="c:\apache2\Apache2\manual\new_features_2_0.html.ru.koi8-r" />
+              <File Id="file403" Name="NEW_FE_2.HTM" LongName="new_features_2_2.html" src="c:\apache2\Apache2\manual\new_features_2_2.html" />
+              <File Id="file404" Name="NEW_FE_2.EN" LongName="new_features_2_2.html.en" src="c:\apache2\Apache2\manual\new_features_2_2.html.en" />
+              <File Id="file405" Name="NEW_FE_3.EUC" LongName="new_features_2_2.html.ko.euc-kr" src="c:\apache2\Apache2\manual\new_features_2_2.html.ko.euc-kr" />
+              <File Id="file406" Name="NEW_FE_2.PT-" LongName="new_features_2_2.html.pt-br" src="c:\apache2\Apache2\manual\new_features_2_2.html.pt-br" />
+              <File Id="file407" Name="SECTIO_1.HTM" LongName="sections.html" src="c:\apache2\Apache2\manual\sections.html" />
+              <File Id="file408" Name="SECTIO_1.EN" LongName="sections.html.en" src="c:\apache2\Apache2\manual\sections.html.en" />
+              <File Id="file409" Name="SECTIO_1.EUC" LongName="sections.html.ja.euc-jp" src="c:\apache2\Apache2\manual\sections.html.ja.euc-jp" />
+              <File Id="file410" Name="SECTIO_2.EUC" LongName="sections.html.ko.euc-kr" src="c:\apache2\Apache2\manual\sections.html.ko.euc-kr" />
+              <File Id="file411" Name="SERVER_1.HTM" LongName="server-wide.html" src="c:\apache2\Apache2\manual\server-wide.html" />
+              <File Id="file412" Name="SERVER_1.EN" LongName="server-wide.html.en" src="c:\apache2\Apache2\manual\server-wide.html.en" />
+              <File Id="file413" Name="SERVER_1.EUC" LongName="server-wide.html.ja.euc-jp" src="c:\apache2\Apache2\manual\server-wide.html.ja.euc-jp" />
+              <File Id="file414" Name="SERVER_2.EUC" LongName="server-wide.html.ko.euc-kr" src="c:\apache2\Apache2\manual\server-wide.html.ko.euc-kr" />
+              <File Id="file415" Name="SITEMA_1.HTM" LongName="sitemap.html" src="c:\apache2\Apache2\manual\sitemap.html" />
+              <File Id="file416" Name="SITEMA_1.DE" LongName="sitemap.html.de" src="c:\apache2\Apache2\manual\sitemap.html.de" />
+              <File Id="file417" Name="SITEMA_1.EN" LongName="sitemap.html.en" src="c:\apache2\Apache2\manual\sitemap.html.en" />
+              <File Id="file418" Name="SITEMA_1.ES" LongName="sitemap.html.es" src="c:\apache2\Apache2\manual\sitemap.html.es" />
+              <File Id="file419" Name="SITEMA_1.EUC" LongName="sitemap.html.ja.euc-jp" src="c:\apache2\Apache2\manual\sitemap.html.ja.euc-jp" />
+              <File Id="file420" Name="SITEMA_2.EUC" LongName="sitemap.html.ko.euc-kr" src="c:\apache2\Apache2\manual\sitemap.html.ko.euc-kr" />
+              <File Id="file421" Name="STOPPI_1.HTM" LongName="stopping.html" src="c:\apache2\Apache2\manual\stopping.html" />
+              <File Id="file422" Name="STOPPI_1.DE" LongName="stopping.html.de" src="c:\apache2\Apache2\manual\stopping.html.de" />
+              <File Id="file423" Name="STOPPI_1.EN" LongName="stopping.html.en" src="c:\apache2\Apache2\manual\stopping.html.en" />
+              <File Id="file424" Name="STOPPI_1.ES" LongName="stopping.html.es" src="c:\apache2\Apache2\manual\stopping.html.es" />
+              <File Id="file425" Name="STOPPI_1.EUC" LongName="stopping.html.ja.euc-jp" src="c:\apache2\Apache2\manual\stopping.html.ja.euc-jp" />
+              <File Id="file426" Name="STOPPI_2.EUC" LongName="stopping.html.ko.euc-kr" src="c:\apache2\Apache2\manual\stopping.html.ko.euc-kr" />
+              <File Id="file427" Name="SUEXEC_1.HTM" LongName="suexec.html" src="c:\apache2\Apache2\manual\suexec.html" />
+              <File Id="file428" Name="SUEXEC_1.EN" LongName="suexec.html.en" src="c:\apache2\Apache2\manual\suexec.html.en" />
+              <File Id="file429" Name="SUEXEC_1.EUC" LongName="suexec.html.ja.euc-jp" src="c:\apache2\Apache2\manual\suexec.html.ja.euc-jp" />
+              <File Id="file430" Name="SUEXEC_2.EUC" LongName="suexec.html.ko.euc-kr" src="c:\apache2\Apache2\manual\suexec.html.ko.euc-kr" />
+              <File Id="file431" Name="UPGRAD_1.HTM" LongName="upgrading.html" src="c:\apache2\Apache2\manual\upgrading.html" />
+              <File Id="file432" Name="UPGRAD_1.DE" LongName="upgrading.html.de" src="c:\apache2\Apache2\manual\upgrading.html.de" />
+              <File Id="file433" Name="UPGRAD_1.EN" LongName="upgrading.html.en" src="c:\apache2\Apache2\manual\upgrading.html.en" />
+              <File Id="file434" Name="UPGRAD_1.EUC" LongName="upgrading.html.ja.euc-jp" src="c:\apache2\Apache2\manual\upgrading.html.ja.euc-jp" />
+              <File Id="file435" Name="UPGRAD_2.EUC" LongName="upgrading.html.ko.euc-kr" src="c:\apache2\Apache2\manual\upgrading.html.ko.euc-kr" />
+              <File Id="file436" Name="UPGRAD_1.PT-" LongName="upgrading.html.pt-br" src="c:\apache2\Apache2\manual\upgrading.html.pt-br" />
+              <File Id="file437" Name="UPGRAD_1.KOI" LongName="upgrading.html.ru.koi8-r" src="c:\apache2\Apache2\manual\upgrading.html.ru.koi8-r" />
+              <File Id="file438" Name="URLMAP_1.HTM" LongName="urlmapping.html" src="c:\apache2\Apache2\manual\urlmapping.html" />
+              <File Id="file439" Name="URLMAP_1.EN" LongName="urlmapping.html.en" src="c:\apache2\Apache2\manual\urlmapping.html.en" />
+              <File Id="file440" Name="URLMAP_1.EUC" LongName="urlmapping.html.ja.euc-jp" src="c:\apache2\Apache2\manual\urlmapping.html.ja.euc-jp" />
+              <File Id="file441" Name="URLMAP_2.EUC" LongName="urlmapping.html.ko.euc-kr" src="c:\apache2\Apache2\manual\urlmapping.html.ko.euc-kr" />
+
+            <Directory Id="directory13" Name="DEVELO_1" LongName="developer">
+
+                <File Id="file442" Name="API_1.HTM" LongName="API.html" src="c:\apache2\Apache2\manual\developer\API.html" />
+                <File Id="file443" Name="APIHTM_1.EN" LongName="API.html.en" src="c:\apache2\Apache2\manual\developer\API.html.en" />
+                <File Id="file444" Name="DEBUGG_1.HTM" LongName="debugging.html" src="c:\apache2\Apache2\manual\developer\debugging.html" />
+                <File Id="file445" Name="DEBUGG_1.EN" LongName="debugging.html.en" src="c:\apache2\Apache2\manual\developer\debugging.html.en" />
+                <File Id="file446" Name="DOCUME_1.HTM" LongName="documenting.html" src="c:\apache2\Apache2\manual\developer\documenting.html" />
+                <File Id="file447" Name="DOCUME_1.EN" LongName="documenting.html.en" src="c:\apache2\Apache2\manual\developer\documenting.html.en" />
+                <File Id="file448" Name="FILTER_1.HTM" LongName="filters.html" src="c:\apache2\Apache2\manual\developer\filters.html" />
+                <File Id="file449" Name="FILTER_1.EN" LongName="filters.html.en" src="c:\apache2\Apache2\manual\developer\filters.html.en" />
+                <File Id="file450" Name="HOOKS_1.HTM" LongName="hooks.html" src="c:\apache2\Apache2\manual\developer\hooks.html" />
+                <File Id="file451" Name="HOOKSH_1.EN" LongName="hooks.html.en" src="c:\apache2\Apache2\manual\developer\hooks.html.en" />
+                <File Id="file452" Name="INDEX_1.HTM" LongName="index.html" src="c:\apache2\Apache2\manual\developer\index.html" />
+                <File Id="file453" Name="INDEXH_1.EN" LongName="index.html.en" src="c:\apache2\Apache2\manual\developer\index.html.en" />
+                <File Id="file454" Name="MODULE_1.HTM" LongName="modules.html" src="c:\apache2\Apache2\manual\developer\modules.html" />
+                <File Id="file455" Name="MODULE_1.EN" LongName="modules.html.en" src="c:\apache2\Apache2\manual\developer\modules.html.en" />
+                <File Id="file456" Name="MODULE_1.EUC" LongName="modules.html.ja.euc-jp" src="c:\apache2\Apache2\manual\developer\modules.html.ja.euc-jp" />
+                <File Id="file457" Name="REQUES_1.HTM" LongName="request.html" src="c:\apache2\Apache2\manual\developer\request.html" />
+                <File Id="file458" Name="REQUES_1.EN" LongName="request.html.en" src="c:\apache2\Apache2\manual\developer\request.html.en" />
+                <File Id="file459" Name="THREAD_1.HTM" LongName="thread_safety.html" src="c:\apache2\Apache2\manual\developer\thread_safety.html" />
+                <File Id="file460" Name="THREAD_1.EN" LongName="thread_safety.html.en" src="c:\apache2\Apache2\manual\developer\thread_safety.html.en" />
+
+            </Directory>
+            <Directory Id="directory14" Name="faq">
+
+                <File Id="file461" Name="ALL_IN_1.HTM" LongName="all_in_one.html" src="c:\apache2\Apache2\manual\faq\all_in_one.html" />
+                <File Id="file462" Name="ALL_IN_1.EN" LongName="all_in_one.html.en" src="c:\apache2\Apache2\manual\faq\all_in_one.html.en" />
+                <File Id="file463" Name="ALL_IN_1.EUC" LongName="all_in_one.html.ja.euc-jp" src="c:\apache2\Apache2\manual\faq\all_in_one.html.ja.euc-jp" />
+                <File Id="file464" Name="ALL_IN_2.EUC" LongName="all_in_one.html.ko.euc-kr" src="c:\apache2\Apache2\manual\faq\all_in_one.html.ko.euc-kr" />
+                <File Id="file465" Name="BACKGR_1.HTM" LongName="background.html" src="c:\apache2\Apache2\manual\faq\background.html" />
+                <File Id="file466" Name="BACKGR_1.EN" LongName="background.html.en" src="c:\apache2\Apache2\manual\faq\background.html.en" />
+                <File Id="file467" Name="ERROR_1.HTM" LongName="error.html" src="c:\apache2\Apache2\manual\faq\error.html" />
+                <File Id="file468" Name="ERRORH_1.EN" LongName="error.html.en" src="c:\apache2\Apache2\manual\faq\error.html.en" />
+                <File Id="file469" Name="ERRORH_1.EUC" LongName="error.html.ja.euc-jp" src="c:\apache2\Apache2\manual\faq\error.html.ja.euc-jp" />
+                <File Id="file470" Name="ERRORH_2.EUC" LongName="error.html.ko.euc-kr" src="c:\apache2\Apache2\manual\faq\error.html.ko.euc-kr" />
+                <File Id="file471" Name="INDEX_1.HTM" LongName="index.html" src="c:\apache2\Apache2\manual\faq\index.html" />
+                <File Id="file472" Name="INDEXH_1.EN" LongName="index.html.en" src="c:\apache2\Apache2\manual\faq\index.html.en" />
+                <File Id="file473" Name="INDEXH_1.EUC" LongName="index.html.ja.euc-jp" src="c:\apache2\Apache2\manual\faq\index.html.ja.euc-jp" />
+                <File Id="file474" Name="INDEXH_2.EUC" LongName="index.html.ko.euc-kr" src="c:\apache2\Apache2\manual\faq\index.html.ko.euc-kr" />
+                <File Id="file475" Name="SUPPOR_1.HTM" LongName="support.html" src="c:\apache2\Apache2\manual\faq\support.html" />
+                <File Id="file476" Name="SUPPOR_1.EN" LongName="support.html.en" src="c:\apache2\Apache2\manual\faq\support.html.en" />
+                <File Id="file477" Name="SUPPOR_1.EUC" LongName="support.html.ja.euc-jp" src="c:\apache2\Apache2\manual\faq\support.html.ja.euc-jp" />
+                <File Id="file478" Name="SUPPOR_2.EUC" LongName="support.html.ko.euc-kr" src="c:\apache2\Apache2\manual\faq\support.html.ko.euc-kr" />
+
+            </Directory>
+            <Directory Id="directory15" Name="howto">
+
+                <File Id="file479" Name="ACCESS_1.HTM" LongName="access.html" src="c:\apache2\Apache2\manual\howto\access.html" />
+                <File Id="file480" Name="ACCESS_1.EN" LongName="access.html.en" src="c:\apache2\Apache2\manual\howto\access.html.en" />
+                <File Id="file481" Name="AUTH_1.HTM" LongName="auth.html" src="c:\apache2\Apache2\manual\howto\auth.html" />
+                <File Id="file482" Name="AUTHHT_1.EN" LongName="auth.html.en" src="c:\apache2\Apache2\manual\howto\auth.html.en" />
+                <File Id="file483" Name="AUTHHT_1.EUC" LongName="auth.html.ja.euc-jp" src="c:\apache2\Apache2\manual\howto\auth.html.ja.euc-jp" />
+                <File Id="file484" Name="AUTHHT_2.EUC" LongName="auth.html.ko.euc-kr" src="c:\apache2\Apache2\manual\howto\auth.html.ko.euc-kr" />
+                <File Id="file485" Name="CGI_1.HTM" LongName="cgi.html" src="c:\apache2\Apache2\manual\howto\cgi.html" />
+                <File Id="file486" Name="CGIHTM_1.EN" LongName="cgi.html.en" src="c:\apache2\Apache2\manual\howto\cgi.html.en" />
+                <File Id="file487" Name="CGIHTM_1.EUC" LongName="cgi.html.ja.euc-jp" src="c:\apache2\Apache2\manual\howto\cgi.html.ja.euc-jp" />
+                <File Id="file488" Name="CGIHTM_2.EUC" LongName="cgi.html.ko.euc-kr" src="c:\apache2\Apache2\manual\howto\cgi.html.ko.euc-kr" />
+                <File Id="file489" Name="HTACCE_1.HTM" LongName="htaccess.html" src="c:\apache2\Apache2\manual\howto\htaccess.html" />
+                <File Id="file490" Name="HTACCE_1.EN" LongName="htaccess.html.en" src="c:\apache2\Apache2\manual\howto\htaccess.html.en" />
+                <File Id="file491" Name="HTACCE_1.EUC" LongName="htaccess.html.ja.euc-jp" src="c:\apache2\Apache2\manual\howto\htaccess.html.ja.euc-jp" />
+                <File Id="file492" Name="HTACCE_2.EUC" LongName="htaccess.html.ko.euc-kr" src="c:\apache2\Apache2\manual\howto\htaccess.html.ko.euc-kr" />
+                <File Id="file493" Name="HTACCE_1.PT-" LongName="htaccess.html.pt-br" src="c:\apache2\Apache2\manual\howto\htaccess.html.pt-br" />
+                <File Id="file494" Name="INDEX_1.HTM" LongName="index.html" src="c:\apache2\Apache2\manual\howto\index.html" />
+                <File Id="file495" Name="INDEXH_1.EN" LongName="index.html.en" src="c:\apache2\Apache2\manual\howto\index.html.en" />
+                <File Id="file496" Name="INDEXH_1.EUC" LongName="index.html.ja.euc-jp" src="c:\apache2\Apache2\manual\howto\index.html.ja.euc-jp" />
+                <File Id="file497" Name="INDEXH_2.EUC" LongName="index.html.ko.euc-kr" src="c:\apache2\Apache2\manual\howto\index.html.ko.euc-kr" />
+                <File Id="file498" Name="PUBLIC_1.HTM" LongName="public_html.html" src="c:\apache2\Apache2\manual\howto\public_html.html" />
+                <File Id="file499" Name="PUBLIC_1.EN" LongName="public_html.html.en" src="c:\apache2\Apache2\manual\howto\public_html.html.en" />
+                <File Id="file500" Name="PUBLIC_1.EUC" LongName="public_html.html.ja.euc-jp" src="c:\apache2\Apache2\manual\howto\public_html.html.ja.euc-jp" />
+                <File Id="file501" Name="PUBLIC_2.EUC" LongName="public_html.html.ko.euc-kr" src="c:\apache2\Apache2\manual\howto\public_html.html.ko.euc-kr" />
+                <File Id="file502" Name="SSI_1.HTM" LongName="ssi.html" src="c:\apache2\Apache2\manual\howto\ssi.html" />
+                <File Id="file503" Name="SSIHTM_1.EN" LongName="ssi.html.en" src="c:\apache2\Apache2\manual\howto\ssi.html.en" />
+                <File Id="file504" Name="SSIHTM_1.EUC" LongName="ssi.html.ja.euc-jp" src="c:\apache2\Apache2\manual\howto\ssi.html.ja.euc-jp" />
+                <File Id="file505" Name="SSIHTM_2.EUC" LongName="ssi.html.ko.euc-kr" src="c:\apache2\Apache2\manual\howto\ssi.html.ko.euc-kr" />
+
+            </Directory>
+            <Directory Id="directory16" Name="images">
+
+                <File Id="file506" Name="APACHE_1.GIF" LongName="apache_header.gif" src="c:\apache2\Apache2\manual\images\apache_header.gif" />
+                <File Id="file507" Name="CACHIN_1.GIF" LongName="caching_fig1.gif" src="c:\apache2\Apache2\manual\images\caching_fig1.gif" />
+                <File Id="file508" Name="CACHIN_1.PNG" LongName="caching_fig1.png" src="c:\apache2\Apache2\manual\images\caching_fig1.png" />
+                <File Id="file509" Name="CUSTOM_1.PNG" LongName="custom_errordocs.png" src="c:\apache2\Apache2\manual\images\custom_errordocs.png" />
+                <File Id="file510" Name="down.gif" src="c:\apache2\Apache2\manual\images\down.gif" />
+                <File Id="file511" Name="favicon.ico" src="c:\apache2\Apache2\manual\images\favicon.ico" />
+                <File Id="file512" Name="feather.gif" src="c:\apache2\Apache2\manual\images\feather.gif" />
+                <File Id="file513" Name="feather.png" src="c:\apache2\Apache2\manual\images\feather.png" />
+                <File Id="file514" Name="FILTER_1.PNG" LongName="filter_arch.png" src="c:\apache2\Apache2\manual\images\filter_arch.png" />
+                <File Id="file515" Name="home.gif" src="c:\apache2\Apache2\manual\images\home.gif" />
+                <File Id="file516" Name="index.gif" src="c:\apache2\Apache2\manual\images\index.gif" />
+                <File Id="file517" Name="left.gif" src="c:\apache2\Apache2\manual\images\left.gif" />
+                <File Id="file518" Name="MOD_FI_1.GIF" LongName="mod_filter_new.gif" src="c:\apache2\Apache2\manual\images\mod_filter_new.gif" />
+                <File Id="file519" Name="MOD_FI_1.PNG" LongName="mod_filter_new.png" src="c:\apache2\Apache2\manual\images\mod_filter_new.png" />
+                <File Id="file520" Name="MOD_FI_2.GIF" LongName="mod_filter_old.gif" src="c:\apache2\Apache2\manual\images\mod_filter_old.gif" />
+                <File Id="file521" Name="MOD_RE_1.GIF" LongName="mod_rewrite_fig1.gif" src="c:\apache2\Apache2\manual\images\mod_rewrite_fig1.gif" />
+                <File Id="file522" Name="MOD_RE_1.PNG" LongName="mod_rewrite_fig1.png" src="c:\apache2\Apache2\manual\images\mod_rewrite_fig1.png" />
+                <File Id="file523" Name="MOD_RE_2.GIF" LongName="mod_rewrite_fig2.gif" src="c:\apache2\Apache2\manual\images\mod_rewrite_fig2.gif" />
+                <File Id="file524" Name="MOD_RE_2.PNG" LongName="mod_rewrite_fig2.png" src="c:\apache2\Apache2\manual\images\mod_rewrite_fig2.png" />
+                <File Id="file525" Name="pixel.gif" src="c:\apache2\Apache2\manual\images\pixel.gif" />
+                <File Id="file526" Name="right.gif" src="c:\apache2\Apache2\manual\images\right.gif" />
+                <File Id="file527" Name="SSL_IN_1.GIF" LongName="ssl_intro_fig1.gif" src="c:\apache2\Apache2\manual\images\ssl_intro_fig1.gif" />
+                <File Id="file528" Name="SSL_IN_1.PNG" LongName="ssl_intro_fig1.png" src="c:\apache2\Apache2\manual\images\ssl_intro_fig1.png" />
+                <File Id="file529" Name="SSL_IN_2.GIF" LongName="ssl_intro_fig2.gif" src="c:\apache2\Apache2\manual\images\ssl_intro_fig2.gif" />
+                <File Id="file530" Name="SSL_IN_2.PNG" LongName="ssl_intro_fig2.png" src="c:\apache2\Apache2\manual\images\ssl_intro_fig2.png" />
+                <File Id="file531" Name="SSL_IN_3.GIF" LongName="ssl_intro_fig3.gif" src="c:\apache2\Apache2\manual\images\ssl_intro_fig3.gif" />
+                <File Id="file532" Name="SSL_IN_3.PNG" LongName="ssl_intro_fig3.png" src="c:\apache2\Apache2\manual\images\ssl_intro_fig3.png" />
+                <File Id="file533" Name="sub.gif" src="c:\apache2\Apache2\manual\images\sub.gif" />
+                <File Id="file534" Name="up.gif" src="c:\apache2\Apache2\manual\images\up.gif" />
+
+            </Directory>
+            <Directory Id="directory17" Name="misc">
+
+                <File Id="file535" Name="INDEX_1.HTM" LongName="index.html" src="c:\apache2\Apache2\manual\misc\index.html" />
+                <File Id="file536" Name="INDEXH_1.EN" LongName="index.html.en" src="c:\apache2\Apache2\manual\misc\index.html.en" />
+                <File Id="file537" Name="INDEXH_1.EUC" LongName="index.html.ko.euc-kr" src="c:\apache2\Apache2\manual\misc\index.html.ko.euc-kr" />
+                <File Id="file538" Name="PERF-T_1.HTM" LongName="perf-tuning.html" src="c:\apache2\Apache2\manual\misc\perf-tuning.html" />
+                <File Id="file539" Name="PERF-T_1.EN" LongName="perf-tuning.html.en" src="c:\apache2\Apache2\manual\misc\perf-tuning.html.en" />
+                <File Id="file540" Name="PERF-T_1.EUC" LongName="perf-tuning.html.ko.euc-kr" src="c:\apache2\Apache2\manual\misc\perf-tuning.html.ko.euc-kr" />
+                <File Id="file541" Name="RELEVA_1.HTM" LongName="relevant_standards.html" src="c:\apache2\Apache2\manual\misc\relevant_standards.html" />
+                <File Id="file542" Name="RELEVA_1.EN" LongName="relevant_standards.html.en" src="c:\apache2\Apache2\manual\misc\relevant_standards.html.en" />
+                <File Id="file543" Name="RELEVA_1.EUC" LongName="relevant_standards.html.ko.euc-kr" src="c:\apache2\Apache2\manual\misc\relevant_standards.html.ko.euc-kr" />
+                <File Id="file544" Name="REWRIT_1.HTM" LongName="rewriteguide.html" src="c:\apache2\Apache2\manual\misc\rewriteguide.html" />
+                <File Id="file545" Name="REWRIT_1.EN" LongName="rewriteguide.html.en" src="c:\apache2\Apache2\manual\misc\rewriteguide.html.en" />
+                <File Id="file546" Name="REWRIT_1.EUC" LongName="rewriteguide.html.ko.euc-kr" src="c:\apache2\Apache2\manual\misc\rewriteguide.html.ko.euc-kr" />
+                <File Id="file547" Name="SECURI_1.HTM" LongName="security_tips.html" src="c:\apache2\Apache2\manual\misc\security_tips.html" />
+                <File Id="file548" Name="SECURI_1.EN" LongName="security_tips.html.en" src="c:\apache2\Apache2\manual\misc\security_tips.html.en" />
+                <File Id="file549" Name="SECURI_1.EUC" LongName="security_tips.html.ko.euc-kr" src="c:\apache2\Apache2\manual\misc\security_tips.html.ko.euc-kr" />
+
+            </Directory>
+            <Directory Id="directory18" Name="mod">
+
+                <File Id="file550" Name="BEOS_1.HTM" LongName="beos.html" src="c:\apache2\Apache2\manual\mod\beos.html" />
+                <File Id="file551" Name="BEOSHT_1.DE" LongName="beos.html.de" src="c:\apache2\Apache2\manual\mod\beos.html.de" />
+                <File Id="file552" Name="BEOSHT_1.EN" LongName="beos.html.en" src="c:\apache2\Apache2\manual\mod\beos.html.en" />
+                <File Id="file553" Name="BEOSHT_1.ES" LongName="beos.html.es" src="c:\apache2\Apache2\manual\mod\beos.html.es" />
+                <File Id="file554" Name="BEOSHT_1.EUC" LongName="beos.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\beos.html.ko.euc-kr" />
+                <File Id="file555" Name="CORE_1.HTM" LongName="core.html" src="c:\apache2\Apache2\manual\mod\core.html" />
+                <File Id="file556" Name="COREHT_1.DE" LongName="core.html.de" src="c:\apache2\Apache2\manual\mod\core.html.de" />
+                <File Id="file557" Name="COREHT_1.EN" LongName="core.html.en" src="c:\apache2\Apache2\manual\mod\core.html.en" />
+                <File Id="file558" Name="COREHT_1.EUC" LongName="core.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\core.html.ja.euc-jp" />
+                <File Id="file559" Name="DIRECT_1.HTM" LongName="directive-dict.html" src="c:\apache2\Apache2\manual\mod\directive-dict.html" />
+                <File Id="file560" Name="DIRECT_1.EN" LongName="directive-dict.html.en" src="c:\apache2\Apache2\manual\mod\directive-dict.html.en" />
+                <File Id="file561" Name="DIRECT_1.EUC" LongName="directive-dict.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\directive-dict.html.ja.euc-jp" />
+                <File Id="file562" Name="DIRECT_2.EUC" LongName="directive-dict.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\directive-dict.html.ko.euc-kr" />
+                <File Id="file563" Name="DIRECT_2.HTM" LongName="directives.html" src="c:\apache2\Apache2\manual\mod\directives.html" />
+                <File Id="file564" Name="DIRECT_1.DE" LongName="directives.html.de" src="c:\apache2\Apache2\manual\mod\directives.html.de" />
+                <File Id="file565" Name="DIRECT_2.EN" LongName="directives.html.en" src="c:\apache2\Apache2\manual\mod\directives.html.en" />
+                <File Id="file566" Name="DIRECT_1.ES" LongName="directives.html.es" src="c:\apache2\Apache2\manual\mod\directives.html.es" />
+                <File Id="file567" Name="DIRECT_3.EUC" LongName="directives.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\directives.html.ja.euc-jp" />
+                <File Id="file568" Name="DIRECT_4.EUC" LongName="directives.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\directives.html.ko.euc-kr" />
+                <File Id="file569" Name="DIRECT_1.KOI" LongName="directives.html.ru.koi8-r" src="c:\apache2\Apache2\manual\mod\directives.html.ru.koi8-r" />
+                <File Id="file570" Name="EVENT_1.HTM" LongName="event.html" src="c:\apache2\Apache2\manual\mod\event.html" />
+                <File Id="file571" Name="EVENTH_1.EN" LongName="event.html.en" src="c:\apache2\Apache2\manual\mod\event.html.en" />
+                <File Id="file572" Name="INDEX_1.HTM" LongName="index.html" src="c:\apache2\Apache2\manual\mod\index.html" />
+                <File Id="file573" Name="INDEXH_1.DE" LongName="index.html.de" src="c:\apache2\Apache2\manual\mod\index.html.de" />
+                <File Id="file574" Name="INDEXH_1.EN" LongName="index.html.en" src="c:\apache2\Apache2\manual\mod\index.html.en" />
+                <File Id="file575" Name="INDEXH_1.ES" LongName="index.html.es" src="c:\apache2\Apache2\manual\mod\index.html.es" />
+                <File Id="file576" Name="INDEXH_1.EUC" LongName="index.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\index.html.ja.euc-jp" />
+                <File Id="file577" Name="INDEXH_2.EUC" LongName="index.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\index.html.ko.euc-kr" />
+                <File Id="file578" Name="MODULE_1.HTM" LongName="module-dict.html" src="c:\apache2\Apache2\manual\mod\module-dict.html" />
+                <File Id="file579" Name="MODULE_1.EN" LongName="module-dict.html.en" src="c:\apache2\Apache2\manual\mod\module-dict.html.en" />
+                <File Id="file580" Name="MODULE_1.EUC" LongName="module-dict.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\module-dict.html.ja.euc-jp" />
+                <File Id="file581" Name="MODULE_2.EUC" LongName="module-dict.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\module-dict.html.ko.euc-kr" />
+                <File Id="file582" Name="MOD_AC_1.HTM" LongName="mod_actions.html" src="c:\apache2\Apache2\manual\mod\mod_actions.html" />
+                <File Id="file583" Name="MOD_AC_1.DE" LongName="mod_actions.html.de" src="c:\apache2\Apache2\manual\mod\mod_actions.html.de" />
+                <File Id="file584" Name="MOD_AC_1.EN" LongName="mod_actions.html.en" src="c:\apache2\Apache2\manual\mod\mod_actions.html.en" />
+                <File Id="file585" Name="MOD_AC_1.EUC" LongName="mod_actions.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_actions.html.ja.euc-jp" />
+                <File Id="file586" Name="MOD_AC_2.EUC" LongName="mod_actions.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_actions.html.ko.euc-kr" />
+                <File Id="file587" Name="MOD_AL_1.HTM" LongName="mod_alias.html" src="c:\apache2\Apache2\manual\mod\mod_alias.html" />
+                <File Id="file588" Name="MOD_AL_1.EN" LongName="mod_alias.html.en" src="c:\apache2\Apache2\manual\mod\mod_alias.html.en" />
+                <File Id="file589" Name="MOD_AL_1.EUC" LongName="mod_alias.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_alias.html.ja.euc-jp" />
+                <File Id="file590" Name="MOD_AL_2.EUC" LongName="mod_alias.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_alias.html.ko.euc-kr" />
+                <File Id="file591" Name="MOD_AS_1.HTM" LongName="mod_asis.html" src="c:\apache2\Apache2\manual\mod\mod_asis.html" />
+                <File Id="file592" Name="MOD_AS_1.EN" LongName="mod_asis.html.en" src="c:\apache2\Apache2\manual\mod\mod_asis.html.en" />
+                <File Id="file593" Name="MOD_AS_1.EUC" LongName="mod_asis.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_asis.html.ja.euc-jp" />
+                <File Id="file594" Name="MOD_AS_2.EUC" LongName="mod_asis.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_asis.html.ko.euc-kr" />
+                <File Id="file595" Name="MOD_AU_1.HTM" LongName="mod_authnz_ldap.html" src="c:\apache2\Apache2\manual\mod\mod_authnz_ldap.html" />
+                <File Id="file596" Name="MOD_AU_1.EN" LongName="mod_authnz_ldap.html.en" src="c:\apache2\Apache2\manual\mod\mod_authnz_ldap.html.en" />
+                <File Id="file597" Name="MOD_AU_2.HTM" LongName="mod_authn_alias.html" src="c:\apache2\Apache2\manual\mod\mod_authn_alias.html" />
+                <File Id="file598" Name="MOD_AU_2.EN" LongName="mod_authn_alias.html.en" src="c:\apache2\Apache2\manual\mod\mod_authn_alias.html.en" />
+                <File Id="file599" Name="MOD_AU_3.HTM" LongName="mod_authn_anon.html" src="c:\apache2\Apache2\manual\mod\mod_authn_anon.html" />
+                <File Id="file600" Name="MOD_AU_3.EN" LongName="mod_authn_anon.html.en" src="c:\apache2\Apache2\manual\mod\mod_authn_anon.html.en" />
+                <File Id="file601" Name="MOD_AU_1.EUC" LongName="mod_authn_anon.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_authn_anon.html.ja.euc-jp" />
+                <File Id="file602" Name="MOD_AU_2.EUC" LongName="mod_authn_anon.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_authn_anon.html.ko.euc-kr" />
+                <File Id="file603" Name="MOD_AU_4.HTM" LongName="mod_authn_dbd.html" src="c:\apache2\Apache2\manual\mod\mod_authn_dbd.html" />
+                <File Id="file604" Name="MOD_AU_4.EN" LongName="mod_authn_dbd.html.en" src="c:\apache2\Apache2\manual\mod\mod_authn_dbd.html.en" />
+                <File Id="file605" Name="MO2C56_1.HTM" LongName="mod_authn_dbm.html" src="c:\apache2\Apache2\manual\mod\mod_authn_dbm.html" />
+                <File Id="file606" Name="MO3AE9_1.EN" LongName="mod_authn_dbm.html.en" src="c:\apache2\Apache2\manual\mod\mod_authn_dbm.html.en" />
+                <File Id="file607" Name="MOD_AU_3.EUC" LongName="mod_authn_dbm.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_authn_dbm.html.ja.euc-jp" />
+                <File Id="file608" Name="MOD_AU_4.EUC" LongName="mod_authn_dbm.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_authn_dbm.html.ko.euc-kr" />
+                <File Id="file609" Name="MO9F55_1.HTM" LongName="mod_authn_default.html" src="c:\apache2\Apache2\manual\mod\mod_authn_default.html" />
+                <File Id="file610" Name="MO0BA5_1.EN" LongName="mod_authn_default.html.en" src="c:\apache2\Apache2\manual\mod\mod_authn_default.html.en" />
+                <File Id="file611" Name="MOF1FE_1.EUC" LongName="mod_authn_default.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_authn_default.html.ja.euc-jp" />
+                <File Id="file612" Name="MO1E16_1.EUC" LongName="mod_authn_default.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_authn_default.html.ko.euc-kr" />
+                <File Id="file613" Name="MO6E38_1.HTM" LongName="mod_authn_file.html" src="c:\apache2\Apache2\manual\mod\mod_authn_file.html" />
+                <File Id="file614" Name="MO877A_1.EN" LongName="mod_authn_file.html.en" src="c:\apache2\Apache2\manual\mod\mod_authn_file.html.en" />
+                <File Id="file615" Name="MO1A4A_1.EUC" LongName="mod_authn_file.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_authn_file.html.ja.euc-jp" />
+                <File Id="file616" Name="MO2B68_1.EUC" LongName="mod_authn_file.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_authn_file.html.ko.euc-kr" />
+                <File Id="file617" Name="MO2866_1.HTM" LongName="mod_authz_dbm.html" src="c:\apache2\Apache2\manual\mod\mod_authz_dbm.html" />
+                <File Id="file618" Name="MO3DE9_1.EN" LongName="mod_authz_dbm.html.en" src="c:\apache2\Apache2\manual\mod\mod_authz_dbm.html.en" />
+                <File Id="file619" Name="MO66A8_1.EUC" LongName="mod_authz_dbm.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_authz_dbm.html.ko.euc-kr" />
+                <File Id="file620" Name="MO9265_1.HTM" LongName="mod_authz_default.html" src="c:\apache2\Apache2\manual\mod\mod_authz_default.html" />
+                <File Id="file621" Name="MOCBA5_1.EN" LongName="mod_authz_default.html.en" src="c:\apache2\Apache2\manual\mod\mod_authz_default.html.en" />
+                <File Id="file622" Name="MO12F6_1.EUC" LongName="mod_authz_default.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_authz_default.html.ja.euc-jp" />
+                <File Id="file623" Name="MO3E1E_1.EUC" LongName="mod_authz_default.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_authz_default.html.ko.euc-kr" />
+                <File Id="file624" Name="MOFDF9_1.HTM" LongName="mod_authz_groupfile.html" src="c:\apache2\Apache2\manual\mod\mod_authz_groupfile.html" />
+                <File Id="file625" Name="MOA2DE_1.EN" LongName="mod_authz_groupfile.html.en" src="c:\apache2\Apache2\manual\mod\mod_authz_groupfile.html.en" />
+                <File Id="file626" Name="MOF61C_1.EUC" LongName="mod_authz_groupfile.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_authz_groupfile.html.ja.euc-jp" />
+                <File Id="file627" Name="MO134B_1.EUC" LongName="mod_authz_groupfile.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_authz_groupfile.html.ko.euc-kr" />
+                <File Id="file628" Name="MO8454_1.HTM" LongName="mod_authz_host.html" src="c:\apache2\Apache2\manual\mod\mod_authz_host.html" />
+                <File Id="file629" Name="MO9288_1.EN" LongName="mod_authz_host.html.en" src="c:\apache2\Apache2\manual\mod\mod_authz_host.html.en" />
+                <File Id="file630" Name="MOCA29_1.EUC" LongName="mod_authz_host.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_authz_host.html.ja.euc-jp" />
+                <File Id="file631" Name="MODB43_1.EUC" LongName="mod_authz_host.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_authz_host.html.ko.euc-kr" />
+                <File Id="file632" Name="MO871B_1.HTM" LongName="mod_authz_owner.html" src="c:\apache2\Apache2\manual\mod\mod_authz_owner.html" />
+                <File Id="file633" Name="MO0913_1.EN" LongName="mod_authz_owner.html.en" src="c:\apache2\Apache2\manual\mod\mod_authz_owner.html.en" />
+                <File Id="file634" Name="MOBF96_1.EUC" LongName="mod_authz_owner.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_authz_owner.html.ja.euc-jp" />
+                <File Id="file635" Name="MODBC1_1.EUC" LongName="mod_authz_owner.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_authz_owner.html.ko.euc-kr" />
+                <File Id="file636" Name="MO8544_1.HTM" LongName="mod_authz_user.html" src="c:\apache2\Apache2\manual\mod\mod_authz_user.html" />
+                <File Id="file637" Name="MO1B78_1.EN" LongName="mod_authz_user.html.en" src="c:\apache2\Apache2\manual\mod\mod_authz_user.html.en" />
+                <File Id="file638" Name="MO4A21_1.EUC" LongName="mod_authz_user.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_authz_user.html.ja.euc-jp" />
+                <File Id="file639" Name="MO6B4B_1.EUC" LongName="mod_authz_user.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_authz_user.html.ko.euc-kr" />
+                <File Id="file640" Name="MOEBA0_1.HTM" LongName="mod_auth_basic.html" src="c:\apache2\Apache2\manual\mod\mod_auth_basic.html" />
+                <File Id="file641" Name="MO4EA6_1.EN" LongName="mod_auth_basic.html.en" src="c:\apache2\Apache2\manual\mod\mod_auth_basic.html.en" />
+                <File Id="file642" Name="MO7D00_1.EUC" LongName="mod_auth_basic.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_auth_basic.html.ja.euc-jp" />
+                <File Id="file643" Name="MO9E2A_1.EUC" LongName="mod_auth_basic.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_auth_basic.html.ko.euc-kr" />
+                <File Id="file644" Name="MO1A7C_1.HTM" LongName="mod_auth_digest.html" src="c:\apache2\Apache2\manual\mod\mod_auth_digest.html" />
+                <File Id="file645" Name="MOA17F_1.EN" LongName="mod_auth_digest.html.en" src="c:\apache2\Apache2\manual\mod\mod_auth_digest.html.en" />
+                <File Id="file646" Name="MOF65B_1.EUC" LongName="mod_auth_digest.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_auth_digest.html.ko.euc-kr" />
+                <File Id="file647" Name="MO430A_1.HTM" LongName="mod_autoindex.html" src="c:\apache2\Apache2\manual\mod\mod_autoindex.html" />
+                <File Id="file648" Name="MOF3D2_1.EN" LongName="mod_autoindex.html.en" src="c:\apache2\Apache2\manual\mod\mod_autoindex.html.en" />
+                <File Id="file649" Name="MO1790_1.EUC" LongName="mod_autoindex.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_autoindex.html.ja.euc-jp" />
+                <File Id="file650" Name="MO33CF_1.EUC" LongName="mod_autoindex.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_autoindex.html.ko.euc-kr" />
+                <File Id="file651" Name="MOD_CA_1.HTM" LongName="mod_cache.html" src="c:\apache2\Apache2\manual\mod\mod_cache.html" />
+                <File Id="file652" Name="MOD_CA_1.EN" LongName="mod_cache.html.en" src="c:\apache2\Apache2\manual\mod\mod_cache.html.en" />
+                <File Id="file653" Name="MOD_CA_1.EUC" LongName="mod_cache.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_cache.html.ja.euc-jp" />
+                <File Id="file654" Name="MOD_CA_2.EUC" LongName="mod_cache.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_cache.html.ko.euc-kr" />
+                <File Id="file655" Name="MOD_CE_1.HTM" LongName="mod_cern_meta.html" src="c:\apache2\Apache2\manual\mod\mod_cern_meta.html" />
+                <File Id="file656" Name="MOD_CE_1.EN" LongName="mod_cern_meta.html.en" src="c:\apache2\Apache2\manual\mod\mod_cern_meta.html.en" />
+                <File Id="file657" Name="MOD_CE_1.EUC" LongName="mod_cern_meta.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_cern_meta.html.ko.euc-kr" />
+                <File Id="file658" Name="MOD_CG_1.HTM" LongName="mod_cgi.html" src="c:\apache2\Apache2\manual\mod\mod_cgi.html" />
+                <File Id="file659" Name="MOD_CG_1.EN" LongName="mod_cgi.html.en" src="c:\apache2\Apache2\manual\mod\mod_cgi.html.en" />
+                <File Id="file660" Name="MOD_CG_1.EUC" LongName="mod_cgi.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_cgi.html.ja.euc-jp" />
+                <File Id="file661" Name="MOD_CG_2.EUC" LongName="mod_cgi.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_cgi.html.ko.euc-kr" />
+                <File Id="file662" Name="MOD_CG_2.HTM" LongName="mod_cgid.html" src="c:\apache2\Apache2\manual\mod\mod_cgid.html" />
+                <File Id="file663" Name="MOD_CG_2.EN" LongName="mod_cgid.html.en" src="c:\apache2\Apache2\manual\mod\mod_cgid.html.en" />
+                <File Id="file664" Name="MOD_CG_3.EUC" LongName="mod_cgid.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_cgid.html.ja.euc-jp" />
+                <File Id="file665" Name="MOD_CG_4.EUC" LongName="mod_cgid.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_cgid.html.ko.euc-kr" />
+                <File Id="file666" Name="MOD_CH_1.HTM" LongName="mod_charset_lite.html" src="c:\apache2\Apache2\manual\mod\mod_charset_lite.html" />
+                <File Id="file667" Name="MOD_CH_1.EN" LongName="mod_charset_lite.html.en" src="c:\apache2\Apache2\manual\mod\mod_charset_lite.html.en" />
+                <File Id="file668" Name="MOD_CH_1.EUC" LongName="mod_charset_lite.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_charset_lite.html.ko.euc-kr" />
+                <File Id="file669" Name="MOD_DA_1.HTM" LongName="mod_dav.html" src="c:\apache2\Apache2\manual\mod\mod_dav.html" />
+                <File Id="file670" Name="MOD_DA_1.EN" LongName="mod_dav.html.en" src="c:\apache2\Apache2\manual\mod\mod_dav.html.en" />
+                <File Id="file671" Name="MOD_DA_1.EUC" LongName="mod_dav.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_dav.html.ja.euc-jp" />
+                <File Id="file672" Name="MOD_DA_2.EUC" LongName="mod_dav.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_dav.html.ko.euc-kr" />
+                <File Id="file673" Name="MOD_DA_2.HTM" LongName="mod_dav_fs.html" src="c:\apache2\Apache2\manual\mod\mod_dav_fs.html" />
+                <File Id="file674" Name="MOD_DA_2.EN" LongName="mod_dav_fs.html.en" src="c:\apache2\Apache2\manual\mod\mod_dav_fs.html.en" />
+                <File Id="file675" Name="MOD_DA_3.EUC" LongName="mod_dav_fs.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_dav_fs.html.ja.euc-jp" />
+                <File Id="file676" Name="MOD_DA_4.EUC" LongName="mod_dav_fs.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_dav_fs.html.ko.euc-kr" />
+                <File Id="file677" Name="MOD_DA_3.HTM" LongName="mod_dav_lock.html" src="c:\apache2\Apache2\manual\mod\mod_dav_lock.html" />
+                <File Id="file678" Name="MOD_DA_3.EN" LongName="mod_dav_lock.html.en" src="c:\apache2\Apache2\manual\mod\mod_dav_lock.html.en" />
+                <File Id="file679" Name="MO51DF_1.EUC" LongName="mod_dav_lock.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_dav_lock.html.ja.euc-jp" />
+                <File Id="file680" Name="MOD_DB_1.HTM" LongName="mod_dbd.html" src="c:\apache2\Apache2\manual\mod\mod_dbd.html" />
+                <File Id="file681" Name="MOD_DB_1.EN" LongName="mod_dbd.html.en" src="c:\apache2\Apache2\manual\mod\mod_dbd.html.en" />
+                <File Id="file682" Name="MOD_DE_1.HTM" LongName="mod_deflate.html" src="c:\apache2\Apache2\manual\mod\mod_deflate.html" />
+                <File Id="file683" Name="MOD_DE_1.EN" LongName="mod_deflate.html.en" src="c:\apache2\Apache2\manual\mod\mod_deflate.html.en" />
+                <File Id="file684" Name="MOD_DE_1.EUC" LongName="mod_deflate.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_deflate.html.ja.euc-jp" />
+                <File Id="file685" Name="MOD_DE_2.EUC" LongName="mod_deflate.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_deflate.html.ko.euc-kr" />
+                <File Id="file686" Name="MOD_DI_1.HTM" LongName="mod_dir.html" src="c:\apache2\Apache2\manual\mod\mod_dir.html" />
+                <File Id="file687" Name="MOD_DI_1.EN" LongName="mod_dir.html.en" src="c:\apache2\Apache2\manual\mod\mod_dir.html.en" />
+                <File Id="file688" Name="MOD_DI_1.EUC" LongName="mod_dir.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_dir.html.ja.euc-jp" />
+                <File Id="file689" Name="MOD_DI_2.EUC" LongName="mod_dir.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_dir.html.ko.euc-kr" />
+                <File Id="file690" Name="MOD_DI_2.HTM" LongName="mod_disk_cache.html" src="c:\apache2\Apache2\manual\mod\mod_disk_cache.html" />
+                <File Id="file691" Name="MOD_DI_2.EN" LongName="mod_disk_cache.html.en" src="c:\apache2\Apache2\manual\mod\mod_disk_cache.html.en" />
+                <File Id="file692" Name="MOD_DI_3.EUC" LongName="mod_disk_cache.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_disk_cache.html.ja.euc-jp" />
+                <File Id="file693" Name="MOD_DI_4.EUC" LongName="mod_disk_cache.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_disk_cache.html.ko.euc-kr" />
+                <File Id="file694" Name="MOD_DU_1.HTM" LongName="mod_dumpio.html" src="c:\apache2\Apache2\manual\mod\mod_dumpio.html" />
+                <File Id="file695" Name="MOD_DU_1.EN" LongName="mod_dumpio.html.en" src="c:\apache2\Apache2\manual\mod\mod_dumpio.html.en" />
+                <File Id="file696" Name="MOD_DU_1.EUC" LongName="mod_dumpio.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_dumpio.html.ja.euc-jp" />
+                <File Id="file697" Name="MOD_EC_1.HTM" LongName="mod_echo.html" src="c:\apache2\Apache2\manual\mod\mod_echo.html" />
+                <File Id="file698" Name="MOD_EC_1.EN" LongName="mod_echo.html.en" src="c:\apache2\Apache2\manual\mod\mod_echo.html.en" />
+                <File Id="file699" Name="MOD_EC_1.EUC" LongName="mod_echo.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_echo.html.ja.euc-jp" />
+                <File Id="file700" Name="MOD_EC_2.EUC" LongName="mod_echo.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_echo.html.ko.euc-kr" />
+                <File Id="file701" Name="MOD_EN_1.HTM" LongName="mod_env.html" src="c:\apache2\Apache2\manual\mod\mod_env.html" />
+                <File Id="file702" Name="MOD_EN_1.EN" LongName="mod_env.html.en" src="c:\apache2\Apache2\manual\mod\mod_env.html.en" />
+                <File Id="file703" Name="MOD_EN_1.EUC" LongName="mod_env.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_env.html.ja.euc-jp" />
+                <File Id="file704" Name="MOD_EN_2.EUC" LongName="mod_env.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_env.html.ko.euc-kr" />
+                <File Id="file705" Name="MOD_EX_1.HTM" LongName="mod_example.html" src="c:\apache2\Apache2\manual\mod\mod_example.html" />
+                <File Id="file706" Name="MOD_EX_1.EN" LongName="mod_example.html.en" src="c:\apache2\Apache2\manual\mod\mod_example.html.en" />
+                <File Id="file707" Name="MOD_EX_1.EUC" LongName="mod_example.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_example.html.ko.euc-kr" />
+                <File Id="file708" Name="MOD_EX_2.HTM" LongName="mod_expires.html" src="c:\apache2\Apache2\manual\mod\mod_expires.html" />
+                <File Id="file709" Name="MOD_EX_2.EN" LongName="mod_expires.html.en" src="c:\apache2\Apache2\manual\mod\mod_expires.html.en" />
+                <File Id="file710" Name="MOD_EX_2.EUC" LongName="mod_expires.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_expires.html.ja.euc-jp" />
+                <File Id="file711" Name="MOD_EX_3.EUC" LongName="mod_expires.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_expires.html.ko.euc-kr" />
+                <File Id="file712" Name="MOD_EX_3.HTM" LongName="mod_ext_filter.html" src="c:\apache2\Apache2\manual\mod\mod_ext_filter.html" />
+                <File Id="file713" Name="MOD_EX_3.EN" LongName="mod_ext_filter.html.en" src="c:\apache2\Apache2\manual\mod\mod_ext_filter.html.en" />
+                <File Id="file714" Name="MOD_EX_4.EUC" LongName="mod_ext_filter.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_ext_filter.html.ja.euc-jp" />
+                <File Id="file715" Name="MOC92F_1.EUC" LongName="mod_ext_filter.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_ext_filter.html.ko.euc-kr" />
+                <File Id="file716" Name="MOD_FI_1.HTM" LongName="mod_file_cache.html" src="c:\apache2\Apache2\manual\mod\mod_file_cache.html" />
+                <File Id="file717" Name="MOD_FI_1.EN" LongName="mod_file_cache.html.en" src="c:\apache2\Apache2\manual\mod\mod_file_cache.html.en" />
+                <File Id="file718" Name="MOD_FI_1.EUC" LongName="mod_file_cache.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_file_cache.html.ko.euc-kr" />
+                <File Id="file719" Name="MOD_FI_2.HTM" LongName="mod_filter.html" src="c:\apache2\Apache2\manual\mod\mod_filter.html" />
+                <File Id="file720" Name="MOD_FI_2.EN" LongName="mod_filter.html.en" src="c:\apache2\Apache2\manual\mod\mod_filter.html.en" />
+                <File Id="file721" Name="MOD_HE_1.HTM" LongName="mod_headers.html" src="c:\apache2\Apache2\manual\mod\mod_headers.html" />
+                <File Id="file722" Name="MOD_HE_1.EN" LongName="mod_headers.html.en" src="c:\apache2\Apache2\manual\mod\mod_headers.html.en" />
+                <File Id="file723" Name="MOD_HE_1.EUC" LongName="mod_headers.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_headers.html.ja.euc-jp" />
+                <File Id="file724" Name="MOD_HE_2.EUC" LongName="mod_headers.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_headers.html.ko.euc-kr" />
+                <File Id="file725" Name="MOD_ID_1.HTM" LongName="mod_ident.html" src="c:\apache2\Apache2\manual\mod\mod_ident.html" />
+                <File Id="file726" Name="MOD_ID_1.EN" LongName="mod_ident.html.en" src="c:\apache2\Apache2\manual\mod\mod_ident.html.en" />
+                <File Id="file727" Name="MOD_ID_1.EUC" LongName="mod_ident.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_ident.html.ko.euc-kr" />
+                <File Id="file728" Name="MOD_IM_1.HTM" LongName="mod_imagemap.html" src="c:\apache2\Apache2\manual\mod\mod_imagemap.html" />
+                <File Id="file729" Name="MOD_IM_1.EN" LongName="mod_imagemap.html.en" src="c:\apache2\Apache2\manual\mod\mod_imagemap.html.en" />
+                <File Id="file730" Name="MOD_IM_1.EUC" LongName="mod_imagemap.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_imagemap.html.ko.euc-kr" />
+                <File Id="file731" Name="MOD_IN_1.HTM" LongName="mod_include.html" src="c:\apache2\Apache2\manual\mod\mod_include.html" />
+                <File Id="file732" Name="MOD_IN_1.EN" LongName="mod_include.html.en" src="c:\apache2\Apache2\manual\mod\mod_include.html.en" />
+                <File Id="file733" Name="MOD_IN_1.EUC" LongName="mod_include.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_include.html.ja.euc-jp" />
+                <File Id="file734" Name="MOD_IN_2.HTM" LongName="mod_info.html" src="c:\apache2\Apache2\manual\mod\mod_info.html" />
+                <File Id="file735" Name="MOD_IN_2.EN" LongName="mod_info.html.en" src="c:\apache2\Apache2\manual\mod\mod_info.html.en" />
+                <File Id="file736" Name="MOD_IN_2.EUC" LongName="mod_info.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_info.html.ja.euc-jp" />
+                <File Id="file737" Name="MOD_IN_3.EUC" LongName="mod_info.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_info.html.ko.euc-kr" />
+                <File Id="file738" Name="MOD_IS_1.HTM" LongName="mod_isapi.html" src="c:\apache2\Apache2\manual\mod\mod_isapi.html" />
+                <File Id="file739" Name="MOD_IS_1.EN" LongName="mod_isapi.html.en" src="c:\apache2\Apache2\manual\mod\mod_isapi.html.en" />
+                <File Id="file740" Name="MOD_IS_1.EUC" LongName="mod_isapi.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_isapi.html.ko.euc-kr" />
+                <File Id="file741" Name="MOD_LD_1.HTM" LongName="mod_ldap.html" src="c:\apache2\Apache2\manual\mod\mod_ldap.html" />
+                <File Id="file742" Name="MOD_LD_1.EN" LongName="mod_ldap.html.en" src="c:\apache2\Apache2\manual\mod\mod_ldap.html.en" />
+                <File Id="file743" Name="MOD_LO_1.HTM" LongName="mod_logio.html" src="c:\apache2\Apache2\manual\mod\mod_logio.html" />
+                <File Id="file744" Name="MOD_LO_1.EN" LongName="mod_logio.html.en" src="c:\apache2\Apache2\manual\mod\mod_logio.html.en" />
+                <File Id="file745" Name="MOD_LO_1.EUC" LongName="mod_logio.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_logio.html.ja.euc-jp" />
+                <File Id="file746" Name="MOD_LO_2.EUC" LongName="mod_logio.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_logio.html.ko.euc-kr" />
+                <File Id="file747" Name="MOD_LO_2.HTM" LongName="mod_log_config.html" src="c:\apache2\Apache2\manual\mod\mod_log_config.html" />
+                <File Id="file748" Name="MOD_LO_2.EN" LongName="mod_log_config.html.en" src="c:\apache2\Apache2\manual\mod\mod_log_config.html.en" />
+                <File Id="file749" Name="MOD_LO_3.EUC" LongName="mod_log_config.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_log_config.html.ja.euc-jp" />
+                <File Id="file750" Name="MOD_LO_4.EUC" LongName="mod_log_config.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_log_config.html.ko.euc-kr" />
+                <File Id="file751" Name="MOD_LO_3.HTM" LongName="mod_log_forensic.html" src="c:\apache2\Apache2\manual\mod\mod_log_forensic.html" />
+                <File Id="file752" Name="MOD_LO_3.EN" LongName="mod_log_forensic.html.en" src="c:\apache2\Apache2\manual\mod\mod_log_forensic.html.en" />
+                <File Id="file753" Name="MO48B0_1.EUC" LongName="mod_log_forensic.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_log_forensic.html.ja.euc-jp" />
+                <File Id="file754" Name="MOD_ME_1.HTM" LongName="mod_mem_cache.html" src="c:\apache2\Apache2\manual\mod\mod_mem_cache.html" />
+                <File Id="file755" Name="MOD_ME_1.EN" LongName="mod_mem_cache.html.en" src="c:\apache2\Apache2\manual\mod\mod_mem_cache.html.en" />
+                <File Id="file756" Name="MOD_ME_1.EUC" LongName="mod_mem_cache.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_mem_cache.html.ja.euc-jp" />
+                <File Id="file757" Name="MOD_ME_2.EUC" LongName="mod_mem_cache.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_mem_cache.html.ko.euc-kr" />
+                <File Id="file758" Name="MOD_MI_1.HTM" LongName="mod_mime.html" src="c:\apache2\Apache2\manual\mod\mod_mime.html" />
+                <File Id="file759" Name="MOD_MI_1.EN" LongName="mod_mime.html.en" src="c:\apache2\Apache2\manual\mod\mod_mime.html.en" />
+                <File Id="file760" Name="MOD_MI_1.EUC" LongName="mod_mime.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_mime.html.ja.euc-jp" />
+                <File Id="file761" Name="MOD_MI_2.HTM" LongName="mod_mime_magic.html" src="c:\apache2\Apache2\manual\mod\mod_mime_magic.html" />
+                <File Id="file762" Name="MOD_MI_2.EN" LongName="mod_mime_magic.html.en" src="c:\apache2\Apache2\manual\mod\mod_mime_magic.html.en" />
+                <File Id="file763" Name="MOD_NE_1.HTM" LongName="mod_negotiation.html" src="c:\apache2\Apache2\manual\mod\mod_negotiation.html" />
+                <File Id="file764" Name="MOD_NE_1.EN" LongName="mod_negotiation.html.en" src="c:\apache2\Apache2\manual\mod\mod_negotiation.html.en" />
+                <File Id="file765" Name="MOD_NE_1.EUC" LongName="mod_negotiation.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_negotiation.html.ja.euc-jp" />
+                <File Id="file766" Name="MOD_NW_1.HTM" LongName="mod_nw_ssl.html" src="c:\apache2\Apache2\manual\mod\mod_nw_ssl.html" />
+                <File Id="file767" Name="MOD_NW_1.EN" LongName="mod_nw_ssl.html.en" src="c:\apache2\Apache2\manual\mod\mod_nw_ssl.html.en" />
+                <File Id="file768" Name="MOD_PR_1.HTM" LongName="mod_proxy.html" src="c:\apache2\Apache2\manual\mod\mod_proxy.html" />
+                <File Id="file769" Name="MOD_PR_1.EN" LongName="mod_proxy.html.en" src="c:\apache2\Apache2\manual\mod\mod_proxy.html.en" />
+                <File Id="file770" Name="MOD_PR_1.EUC" LongName="mod_proxy.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_proxy.html.ja.euc-jp" />
+                <File Id="file771" Name="MOD_PR_2.HTM" LongName="mod_proxy_ajp.html" src="c:\apache2\Apache2\manual\mod\mod_proxy_ajp.html" />
+                <File Id="file772" Name="MOD_PR_2.EN" LongName="mod_proxy_ajp.html.en" src="c:\apache2\Apache2\manual\mod\mod_proxy_ajp.html.en" />
+                <File Id="file773" Name="MOD_PR_2.EUC" LongName="mod_proxy_ajp.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_proxy_ajp.html.ja.euc-jp" />
+                <File Id="file774" Name="MOD_PR_3.HTM" LongName="mod_proxy_balancer.html" src="c:\apache2\Apache2\manual\mod\mod_proxy_balancer.html" />
+                <File Id="file775" Name="MOD_PR_3.EN" LongName="mod_proxy_balancer.html.en" src="c:\apache2\Apache2\manual\mod\mod_proxy_balancer.html.en" />
+                <File Id="file776" Name="MOD_PR_3.EUC" LongName="mod_proxy_balancer.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_proxy_balancer.html.ja.euc-jp" />
+                <File Id="file777" Name="MOD_PR_4.HTM" LongName="mod_proxy_connect.html" src="c:\apache2\Apache2\manual\mod\mod_proxy_connect.html" />
+                <File Id="file778" Name="MOD_PR_4.EN" LongName="mod_proxy_connect.html.en" src="c:\apache2\Apache2\manual\mod\mod_proxy_connect.html.en" />
+                <File Id="file779" Name="MO9833_1.HTM" LongName="mod_proxy_ftp.html" src="c:\apache2\Apache2\manual\mod\mod_proxy_ftp.html" />
+                <File Id="file780" Name="MO4125_1.EN" LongName="mod_proxy_ftp.html.en" src="c:\apache2\Apache2\manual\mod\mod_proxy_ftp.html.en" />
+                <File Id="file781" Name="MOA6B3_1.HTM" LongName="mod_proxy_http.html" src="c:\apache2\Apache2\manual\mod\mod_proxy_http.html" />
+                <File Id="file782" Name="MOA338_1.EN" LongName="mod_proxy_http.html.en" src="c:\apache2\Apache2\manual\mod\mod_proxy_http.html.en" />
+                <File Id="file783" Name="MOD_RE_1.HTM" LongName="mod_rewrite.html" src="c:\apache2\Apache2\manual\mod\mod_rewrite.html" />
+                <File Id="file784" Name="MOD_RE_1.EN" LongName="mod_rewrite.html.en" src="c:\apache2\Apache2\manual\mod\mod_rewrite.html.en" />
+                <File Id="file785" Name="MOD_SE_1.HTM" LongName="mod_setenvif.html" src="c:\apache2\Apache2\manual\mod\mod_setenvif.html" />
+                <File Id="file786" Name="MOD_SE_1.EN" LongName="mod_setenvif.html.en" src="c:\apache2\Apache2\manual\mod\mod_setenvif.html.en" />
+                <File Id="file787" Name="MOD_SE_1.EUC" LongName="mod_setenvif.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_setenvif.html.ja.euc-jp" />
+                <File Id="file788" Name="MOD_SE_2.EUC" LongName="mod_setenvif.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_setenvif.html.ko.euc-kr" />
+                <File Id="file789" Name="MOD_SO_1.HTM" LongName="mod_so.html" src="c:\apache2\Apache2\manual\mod\mod_so.html" />
+                <File Id="file790" Name="MOD_SO_1.EN" LongName="mod_so.html.en" src="c:\apache2\Apache2\manual\mod\mod_so.html.en" />
+                <File Id="file791" Name="MOD_SO_1.EUC" LongName="mod_so.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_so.html.ja.euc-jp" />
+                <File Id="file792" Name="MOD_SO_2.EUC" LongName="mod_so.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_so.html.ko.euc-kr" />
+                <File Id="file793" Name="MOD_SP_1.HTM" LongName="mod_speling.html" src="c:\apache2\Apache2\manual\mod\mod_speling.html" />
+                <File Id="file794" Name="MOD_SP_1.EN" LongName="mod_speling.html.en" src="c:\apache2\Apache2\manual\mod\mod_speling.html.en" />
+                <File Id="file795" Name="MOD_SP_1.EUC" LongName="mod_speling.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_speling.html.ja.euc-jp" />
+                <File Id="file796" Name="MOD_SP_2.EUC" LongName="mod_speling.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_speling.html.ko.euc-kr" />
+                <File Id="file797" Name="MOD_SS_1.HTM" LongName="mod_ssl.html" src="c:\apache2\Apache2\manual\mod\mod_ssl.html" />
+                <File Id="file798" Name="MOD_SS_1.EN" LongName="mod_ssl.html.en" src="c:\apache2\Apache2\manual\mod\mod_ssl.html.en" />
+                <File Id="file799" Name="MOD_ST_1.HTM" LongName="mod_status.html" src="c:\apache2\Apache2\manual\mod\mod_status.html" />
+                <File Id="file800" Name="MOD_ST_1.EN" LongName="mod_status.html.en" src="c:\apache2\Apache2\manual\mod\mod_status.html.en" />
+                <File Id="file801" Name="MOD_ST_1.EUC" LongName="mod_status.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_status.html.ja.euc-jp" />
+                <File Id="file802" Name="MOD_ST_2.EUC" LongName="mod_status.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_status.html.ko.euc-kr" />
+                <File Id="file803" Name="MOD_SU_1.HTM" LongName="mod_suexec.html" src="c:\apache2\Apache2\manual\mod\mod_suexec.html" />
+                <File Id="file804" Name="MOD_SU_1.EN" LongName="mod_suexec.html.en" src="c:\apache2\Apache2\manual\mod\mod_suexec.html.en" />
+                <File Id="file805" Name="MOD_SU_1.EUC" LongName="mod_suexec.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_suexec.html.ja.euc-jp" />
+                <File Id="file806" Name="MOD_SU_2.EUC" LongName="mod_suexec.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_suexec.html.ko.euc-kr" />
+                <File Id="file807" Name="MOD_UN_1.HTM" LongName="mod_unique_id.html" src="c:\apache2\Apache2\manual\mod\mod_unique_id.html" />
+                <File Id="file808" Name="MOD_UN_1.EN" LongName="mod_unique_id.html.en" src="c:\apache2\Apache2\manual\mod\mod_unique_id.html.en" />
+                <File Id="file809" Name="MOD_UN_1.EUC" LongName="mod_unique_id.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_unique_id.html.ja.euc-jp" />
+                <File Id="file810" Name="MOD_UN_2.EUC" LongName="mod_unique_id.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_unique_id.html.ko.euc-kr" />
+                <File Id="file811" Name="MOD_US_1.HTM" LongName="mod_userdir.html" src="c:\apache2\Apache2\manual\mod\mod_userdir.html" />
+                <File Id="file812" Name="MOD_US_1.EN" LongName="mod_userdir.html.en" src="c:\apache2\Apache2\manual\mod\mod_userdir.html.en" />
+                <File Id="file813" Name="MOD_US_1.EUC" LongName="mod_userdir.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_userdir.html.ja.euc-jp" />
+                <File Id="file814" Name="MOD_US_2.EUC" LongName="mod_userdir.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_userdir.html.ko.euc-kr" />
+                <File Id="file815" Name="MOD_US_2.HTM" LongName="mod_usertrack.html" src="c:\apache2\Apache2\manual\mod\mod_usertrack.html" />
+                <File Id="file816" Name="MOD_US_2.EN" LongName="mod_usertrack.html.en" src="c:\apache2\Apache2\manual\mod\mod_usertrack.html.en" />
+                <File Id="file817" Name="MOD_VE_1.HTM" LongName="mod_version.html" src="c:\apache2\Apache2\manual\mod\mod_version.html" />
+                <File Id="file818" Name="MOD_VE_1.EN" LongName="mod_version.html.en" src="c:\apache2\Apache2\manual\mod\mod_version.html.en" />
+                <File Id="file819" Name="MOD_VE_1.EUC" LongName="mod_version.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mod_version.html.ja.euc-jp" />
+                <File Id="file820" Name="MOD_VE_2.EUC" LongName="mod_version.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\mod_version.html.ko.euc-kr" />
+                <File Id="file821" Name="MOD_VH_1.HTM" LongName="mod_vhost_alias.html" src="c:\apache2\Apache2\manual\mod\mod_vhost_alias.html" />
+                <File Id="file822" Name="MOD_VH_1.EN" LongName="mod_vhost_alias.html.en" src="c:\apache2\Apache2\manual\mod\mod_vhost_alias.html.en" />
+                <File Id="file823" Name="MPMT_O_1.HTM" LongName="mpmt_os2.html" src="c:\apache2\Apache2\manual\mod\mpmt_os2.html" />
+                <File Id="file824" Name="MPMT_O_1.EN" LongName="mpmt_os2.html.en" src="c:\apache2\Apache2\manual\mod\mpmt_os2.html.en" />
+                <File Id="file825" Name="MPM_CO_1.HTM" LongName="mpm_common.html" src="c:\apache2\Apache2\manual\mod\mpm_common.html" />
+                <File Id="file826" Name="MPM_CO_1.DE" LongName="mpm_common.html.de" src="c:\apache2\Apache2\manual\mod\mpm_common.html.de" />
+                <File Id="file827" Name="MPM_CO_1.EN" LongName="mpm_common.html.en" src="c:\apache2\Apache2\manual\mod\mpm_common.html.en" />
+                <File Id="file828" Name="MPM_CO_1.EUC" LongName="mpm_common.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mpm_common.html.ja.euc-jp" />
+                <File Id="file829" Name="MPM_NE_1.HTM" LongName="mpm_netware.html" src="c:\apache2\Apache2\manual\mod\mpm_netware.html" />
+                <File Id="file830" Name="MPM_NE_1.EN" LongName="mpm_netware.html.en" src="c:\apache2\Apache2\manual\mod\mpm_netware.html.en" />
+                <File Id="file831" Name="MPM_WI_1.HTM" LongName="mpm_winnt.html" src="c:\apache2\Apache2\manual\mod\mpm_winnt.html" />
+                <File Id="file832" Name="MPM_WI_1.DE" LongName="mpm_winnt.html.de" src="c:\apache2\Apache2\manual\mod\mpm_winnt.html.de" />
+                <File Id="file833" Name="MPM_WI_1.EN" LongName="mpm_winnt.html.en" src="c:\apache2\Apache2\manual\mod\mpm_winnt.html.en" />
+                <File Id="file834" Name="MPM_WI_1.EUC" LongName="mpm_winnt.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\mpm_winnt.html.ja.euc-jp" />
+                <File Id="file835" Name="PREFOR_1.HTM" LongName="prefork.html" src="c:\apache2\Apache2\manual\mod\prefork.html" />
+                <File Id="file836" Name="PREFOR_1.DE" LongName="prefork.html.de" src="c:\apache2\Apache2\manual\mod\prefork.html.de" />
+                <File Id="file837" Name="PREFOR_1.EN" LongName="prefork.html.en" src="c:\apache2\Apache2\manual\mod\prefork.html.en" />
+                <File Id="file838" Name="PREFOR_1.EUC" LongName="prefork.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\prefork.html.ja.euc-jp" />
+                <File Id="file839" Name="QUICKR_1.HTM" LongName="quickreference.html" src="c:\apache2\Apache2\manual\mod\quickreference.html" />
+                <File Id="file840" Name="QUICKR_1.DE" LongName="quickreference.html.de" src="c:\apache2\Apache2\manual\mod\quickreference.html.de" />
+                <File Id="file841" Name="QUICKR_1.EN" LongName="quickreference.html.en" src="c:\apache2\Apache2\manual\mod\quickreference.html.en" />
+                <File Id="file842" Name="QUICKR_1.ES" LongName="quickreference.html.es" src="c:\apache2\Apache2\manual\mod\quickreference.html.es" />
+                <File Id="file843" Name="QUICKR_1.EUC" LongName="quickreference.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\quickreference.html.ja.euc-jp" />
+                <File Id="file844" Name="QUICKR_2.EUC" LongName="quickreference.html.ko.euc-kr" src="c:\apache2\Apache2\manual\mod\quickreference.html.ko.euc-kr" />
+                <File Id="file845" Name="QUICKR_1.KOI" LongName="quickreference.html.ru.koi8-r" src="c:\apache2\Apache2\manual\mod\quickreference.html.ru.koi8-r" />
+                <File Id="file846" Name="WORKER_1.HTM" LongName="worker.html" src="c:\apache2\Apache2\manual\mod\worker.html" />
+                <File Id="file847" Name="WORKER_1.DE" LongName="worker.html.de" src="c:\apache2\Apache2\manual\mod\worker.html.de" />
+                <File Id="file848" Name="WORKER_1.EN" LongName="worker.html.en" src="c:\apache2\Apache2\manual\mod\worker.html.en" />
+                <File Id="file849" Name="WORKER_1.EUC" LongName="worker.html.ja.euc-jp" src="c:\apache2\Apache2\manual\mod\worker.html.ja.euc-jp" />
+
+            </Directory>
+            <Directory Id="directory19" Name="platform">
+
+                <File Id="file850" Name="EBCDIC_1.HTM" LongName="ebcdic.html" src="c:\apache2\Apache2\manual\platform\ebcdic.html" />
+                <File Id="file851" Name="EBCDIC_1.EN" LongName="ebcdic.html.en" src="c:\apache2\Apache2\manual\platform\ebcdic.html.en" />
+                <File Id="file852" Name="EBCDIC_1.EUC" LongName="ebcdic.html.ko.euc-kr" src="c:\apache2\Apache2\manual\platform\ebcdic.html.ko.euc-kr" />
+                <File Id="file853" Name="INDEX_1.HTM" LongName="index.html" src="c:\apache2\Apache2\manual\platform\index.html" />
+                <File Id="file854" Name="INDEXH_1.EN" LongName="index.html.en" src="c:\apache2\Apache2\manual\platform\index.html.en" />
+                <File Id="file855" Name="INDEXH_1.EUC" LongName="index.html.ko.euc-kr" src="c:\apache2\Apache2\manual\platform\index.html.ko.euc-kr" />
+                <File Id="file856" Name="NETWAR_1.HTM" LongName="netware.html" src="c:\apache2\Apache2\manual\platform\netware.html" />
+                <File Id="file857" Name="NETWAR_1.EN" LongName="netware.html.en" src="c:\apache2\Apache2\manual\platform\netware.html.en" />
+                <File Id="file858" Name="NETWAR_1.EUC" LongName="netware.html.ko.euc-kr" src="c:\apache2\Apache2\manual\platform\netware.html.ko.euc-kr" />
+                <File Id="file859" Name="PERF-H_1.HTM" LongName="perf-hp.html" src="c:\apache2\Apache2\manual\platform\perf-hp.html" />
+                <File Id="file860" Name="PERF-H_1.EN" LongName="perf-hp.html.en" src="c:\apache2\Apache2\manual\platform\perf-hp.html.en" />
+                <File Id="file861" Name="PERF-H_1.EUC" LongName="perf-hp.html.ko.euc-kr" src="c:\apache2\Apache2\manual\platform\perf-hp.html.ko.euc-kr" />
+                <File Id="file862" Name="WINDOW_1.HTM" LongName="windows.html" src="c:\apache2\Apache2\manual\platform\windows.html" />
+                <File Id="file863" Name="WINDOW_1.EN" LongName="windows.html.en" src="c:\apache2\Apache2\manual\platform\windows.html.en" />
+                <File Id="file864" Name="WINDOW_1.EUC" LongName="windows.html.ko.euc-kr" src="c:\apache2\Apache2\manual\platform\windows.html.ko.euc-kr" />
+                <File Id="file865" Name="WIN_CO_1.HTM" LongName="win_compiling.html" src="c:\apache2\Apache2\manual\platform\win_compiling.html" />
+                <File Id="file866" Name="WIN_CO_1.EN" LongName="win_compiling.html.en" src="c:\apache2\Apache2\manual\platform\win_compiling.html.en" />
+                <File Id="file867" Name="WIN_CO_1.EUC" LongName="win_compiling.html.ko.euc-kr" src="c:\apache2\Apache2\manual\platform\win_compiling.html.ko.euc-kr" />
+
+            </Directory>
+            <Directory Id="directory20" Name="programs">
+
+                <File Id="file868" Name="ABCFDF_1.HTM" LongName="ab.html" src="c:\apache2\Apache2\manual\programs\ab.html" />
+                <File Id="file869" Name="ABHTML_1.EN" LongName="ab.html.en" src="c:\apache2\Apache2\manual\programs\ab.html.en" />
+                <File Id="file870" Name="ABHTML_1.EUC" LongName="ab.html.ko.euc-kr" src="c:\apache2\Apache2\manual\programs\ab.html.ko.euc-kr" />
+                <File Id="file871" Name="APACHE_1.HTM" LongName="apachectl.html" src="c:\apache2\Apache2\manual\programs\apachectl.html" />
+                <File Id="file872" Name="APACHE_1.EN" LongName="apachectl.html.en" src="c:\apache2\Apache2\manual\programs\apachectl.html.en" />
+                <File Id="file873" Name="APACHE_1.EUC" LongName="apachectl.html.ko.euc-kr" src="c:\apache2\Apache2\manual\programs\apachectl.html.ko.euc-kr" />
+                <File Id="file874" Name="APXS_1.HTM" LongName="apxs.html" src="c:\apache2\Apache2\manual\programs\apxs.html" />
+                <File Id="file875" Name="APXSHT_1.EN" LongName="apxs.html.en" src="c:\apache2\Apache2\manual\programs\apxs.html.en" />
+                <File Id="file876" Name="APXSHT_1.EUC" LongName="apxs.html.ko.euc-kr" src="c:\apache2\Apache2\manual\programs\apxs.html.ko.euc-kr" />
+                <File Id="file877" Name="CONFIG_1.HTM" LongName="configure.html" src="c:\apache2\Apache2\manual\programs\configure.html" />
+                <File Id="file878" Name="CONFIG_1.EN" LongName="configure.html.en" src="c:\apache2\Apache2\manual\programs\configure.html.en" />
+                <File Id="file879" Name="CONFIG_1.EUC" LongName="configure.html.ko.euc-kr" src="c:\apache2\Apache2\manual\programs\configure.html.ko.euc-kr" />
+                <File Id="file880" Name="DBMMAN_1.HTM" LongName="dbmmanage.html" src="c:\apache2\Apache2\manual\programs\dbmmanage.html" />
+                <File Id="file881" Name="DBMMAN_1.EN" LongName="dbmmanage.html.en" src="c:\apache2\Apache2\manual\programs\dbmmanage.html.en" />
+                <File Id="file882" Name="DBMMAN_1.EUC" LongName="dbmmanage.html.ko.euc-kr" src="c:\apache2\Apache2\manual\programs\dbmmanage.html.ko.euc-kr" />
+                <File Id="file883" Name="HTCACH_1.HTM" LongName="htcacheclean.html" src="c:\apache2\Apache2\manual\programs\htcacheclean.html" />
+                <File Id="file884" Name="HTCACH_1.EN" LongName="htcacheclean.html.en" src="c:\apache2\Apache2\manual\programs\htcacheclean.html.en" />
+                <File Id="file885" Name="HTCACH_1.EUC" LongName="htcacheclean.html.ko.euc-kr" src="c:\apache2\Apache2\manual\programs\htcacheclean.html.ko.euc-kr" />
+                <File Id="file886" Name="HTDBM_1.HTM" LongName="htdbm.html" src="c:\apache2\Apache2\manual\programs\htdbm.html" />
+                <File Id="file887" Name="HTDBMH_1.EN" LongName="htdbm.html.en" src="c:\apache2\Apache2\manual\programs\htdbm.html.en" />
+                <File Id="file888" Name="HTDIGE_1.HTM" LongName="htdigest.html" src="c:\apache2\Apache2\manual\programs\htdigest.html" />
+                <File Id="file889" Name="HTDIGE_1.EN" LongName="htdigest.html.en" src="c:\apache2\Apache2\manual\programs\htdigest.html.en" />
+                <File Id="file890" Name="HTDIGE_1.EUC" LongName="htdigest.html.ko.euc-kr" src="c:\apache2\Apache2\manual\programs\htdigest.html.ko.euc-kr" />
+                <File Id="file891" Name="HTPASS_1.HTM" LongName="htpasswd.html" src="c:\apache2\Apache2\manual\programs\htpasswd.html" />
+                <File Id="file892" Name="HTPASS_1.EN" LongName="htpasswd.html.en" src="c:\apache2\Apache2\manual\programs\htpasswd.html.en" />
+                <File Id="file893" Name="HTPASS_1.EUC" LongName="htpasswd.html.ko.euc-kr" src="c:\apache2\Apache2\manual\programs\htpasswd.html.ko.euc-kr" />
+                <File Id="file894" Name="HTTPD_1.HTM" LongName="httpd.html" src="c:\apache2\Apache2\manual\programs\httpd.html" />
+                <File Id="file895" Name="HTTPDH_1.EN" LongName="httpd.html.en" src="c:\apache2\Apache2\manual\programs\httpd.html.en" />
+                <File Id="file896" Name="HTTPDH_1.EUC" LongName="httpd.html.ko.euc-kr" src="c:\apache2\Apache2\manual\programs\httpd.html.ko.euc-kr" />
+                <File Id="file897" Name="HTTXT2_1.HTM" LongName="httxt2dbm.html" src="c:\apache2\Apache2\manual\programs\httxt2dbm.html" />
+                <File Id="file898" Name="HTTXT2_1.EN" LongName="httxt2dbm.html.en" src="c:\apache2\Apache2\manual\programs\httxt2dbm.html.en" />
+                <File Id="file899" Name="INDEX_1.HTM" LongName="index.html" src="c:\apache2\Apache2\manual\programs\index.html" />
+                <File Id="file900" Name="INDEXH_1.EN" LongName="index.html.en" src="c:\apache2\Apache2\manual\programs\index.html.en" />
+                <File Id="file901" Name="INDEXH_1.ES" LongName="index.html.es" src="c:\apache2\Apache2\manual\programs\index.html.es" />
+                <File Id="file902" Name="INDEXH_1.EUC" LongName="index.html.ko.euc-kr" src="c:\apache2\Apache2\manual\programs\index.html.ko.euc-kr" />
+                <File Id="file903" Name="INDEXH_1.KOI" LongName="index.html.ru.koi8-r" src="c:\apache2\Apache2\manual\programs\index.html.ru.koi8-r" />
+                <File Id="file904" Name="LOGRES_1.HTM" LongName="logresolve.html" src="c:\apache2\Apache2\manual\programs\logresolve.html" />
+                <File Id="file905" Name="LOGRES_1.EN" LongName="logresolve.html.en" src="c:\apache2\Apache2\manual\programs\logresolve.html.en" />
+                <File Id="file906" Name="LOGRES_1.EUC" LongName="logresolve.html.ko.euc-kr" src="c:\apache2\Apache2\manual\programs\logresolve.html.ko.euc-kr" />
+                <File Id="file907" Name="OTHER_1.HTM" LongName="other.html" src="c:\apache2\Apache2\manual\programs\other.html" />
+                <File Id="file908" Name="OTHERH_1.EN" LongName="other.html.en" src="c:\apache2\Apache2\manual\programs\other.html.en" />
+                <File Id="file909" Name="OTHERH_1.EUC" LongName="other.html.ko.euc-kr" src="c:\apache2\Apache2\manual\programs\other.html.ko.euc-kr" />
+                <File Id="file910" Name="ROTATE_1.HTM" LongName="rotatelogs.html" src="c:\apache2\Apache2\manual\programs\rotatelogs.html" />
+                <File Id="file911" Name="ROTATE_1.EN" LongName="rotatelogs.html.en" src="c:\apache2\Apache2\manual\programs\rotatelogs.html.en" />
+                <File Id="file912" Name="ROTATE_1.EUC" LongName="rotatelogs.html.ko.euc-kr" src="c:\apache2\Apache2\manual\programs\rotatelogs.html.ko.euc-kr" />
+                <File Id="file913" Name="SUEXEC_1.HTM" LongName="suexec.html" src="c:\apache2\Apache2\manual\programs\suexec.html" />
+                <File Id="file914" Name="SUEXEC_1.EN" LongName="suexec.html.en" src="c:\apache2\Apache2\manual\programs\suexec.html.en" />
+                <File Id="file915" Name="SUEXEC_1.EUC" LongName="suexec.html.ko.euc-kr" src="c:\apache2\Apache2\manual\programs\suexec.html.ko.euc-kr" />
+
+            </Directory>
+            <Directory Id="directory21" Name="rewrite">
+
+                <File Id="file916" Name="INDEX_1.HTM" LongName="index.html" src="c:\apache2\Apache2\manual\rewrite\index.html" />
+                <File Id="file917" Name="INDEXH_1.EN" LongName="index.html.en" src="c:\apache2\Apache2\manual\rewrite\index.html.en" />
+                <File Id="file918" Name="REWRIT_1.HTM" LongName="rewrite_guide.html" src="c:\apache2\Apache2\manual\rewrite\rewrite_guide.html" />
+                <File Id="file919" Name="REWRIT_1.EN" LongName="rewrite_guide.html.en" src="c:\apache2\Apache2\manual\rewrite\rewrite_guide.html.en" />
+                <File Id="file920" Name="REWRIT_2.HTM" LongName="rewrite_guide_advanced.html" src="c:\apache2\Apache2\manual\rewrite\rewrite_guide_advanced.html" />
+                <File Id="file921" Name="REWRIT_2.EN" LongName="rewrite_guide_advanced.html.en" src="c:\apache2\Apache2\manual\rewrite\rewrite_guide_advanced.html.en" />
+                <File Id="file922" Name="REWRIT_3.HTM" LongName="rewrite_intro.html" src="c:\apache2\Apache2\manual\rewrite\rewrite_intro.html" />
+                <File Id="file923" Name="REWRIT_3.EN" LongName="rewrite_intro.html.en" src="c:\apache2\Apache2\manual\rewrite\rewrite_intro.html.en" />
+                <File Id="file924" Name="REWRIT_4.HTM" LongName="rewrite_tech.html" src="c:\apache2\Apache2\manual\rewrite\rewrite_tech.html" />
+                <File Id="file925" Name="REWRIT_4.EN" LongName="rewrite_tech.html.en" src="c:\apache2\Apache2\manual\rewrite\rewrite_tech.html.en" />
+
+            </Directory>
+            <Directory Id="directory22" Name="ssl">
+
+                <File Id="file926" Name="INDEX_1.HTM" LongName="index.html" src="c:\apache2\Apache2\manual\ssl\index.html" />
+                <File Id="file927" Name="INDEXH_1.EN" LongName="index.html.en" src="c:\apache2\Apache2\manual\ssl\index.html.en" />
+                <File Id="file928" Name="INDEXH_1.EUC" LongName="index.html.ja.euc-jp" src="c:\apache2\Apache2\manual\ssl\index.html.ja.euc-jp" />
+                <File Id="file929" Name="SSL_CO_1.HTM" LongName="ssl_compat.html" src="c:\apache2\Apache2\manual\ssl\ssl_compat.html" />
+                <File Id="file930" Name="SSL_CO_1.EN" LongName="ssl_compat.html.en" src="c:\apache2\Apache2\manual\ssl\ssl_compat.html.en" />
+                <File Id="file931" Name="SSL_FA_1.HTM" LongName="ssl_faq.html" src="c:\apache2\Apache2\manual\ssl\ssl_faq.html" />
+                <File Id="file932" Name="SSL_FA_1.EN" LongName="ssl_faq.html.en" src="c:\apache2\Apache2\manual\ssl\ssl_faq.html.en" />
+                <File Id="file933" Name="SSL_HO_1.HTM" LongName="ssl_howto.html" src="c:\apache2\Apache2\manual\ssl\ssl_howto.html" />
+                <File Id="file934" Name="SSL_HO_1.EN" LongName="ssl_howto.html.en" src="c:\apache2\Apache2\manual\ssl\ssl_howto.html.en" />
+                <File Id="file935" Name="SSL_IN_1.HTM" LongName="ssl_intro.html" src="c:\apache2\Apache2\manual\ssl\ssl_intro.html" />
+                <File Id="file936" Name="SSL_IN_1.EN" LongName="ssl_intro.html.en" src="c:\apache2\Apache2\manual\ssl\ssl_intro.html.en" />
+                <File Id="file937" Name="SSL_IN_1.EUC" LongName="ssl_intro.html.ja.euc-jp" src="c:\apache2\Apache2\manual\ssl\ssl_intro.html.ja.euc-jp" />
+
+            </Directory>
+            <Directory Id="directory23" Name="style">
+
+                <File Id="file938" Name="BUILD_1.PRO" LongName="build.properties" src="c:\apache2\Apache2\manual\style\build.properties" />
+                <File Id="file939" Name="common.dtd" src="c:\apache2\Apache2\manual\style\common.dtd" />
+                <File Id="file940" Name="faq.dtd" src="c:\apache2\Apache2\manual\style\faq.dtd" />
+                <File Id="file941" Name="lang.dtd" src="c:\apache2\Apache2\manual\style\lang.dtd" />
+                <File Id="file942" Name="MANUAL_1.XSL" LongName="manual.de.xsl" src="c:\apache2\Apache2\manual\style\manual.de.xsl" />
+                <File Id="file943" Name="MANUAL_2.XSL" LongName="manual.en.xsl" src="c:\apache2\Apache2\manual\style\manual.en.xsl" />
+                <File Id="file944" Name="MANUAL_3.XSL" LongName="manual.es.xsl" src="c:\apache2\Apache2\manual\style\manual.es.xsl" />
+                <File Id="file945" Name="MANUAL_4.XSL" LongName="manual.fr.xsl" src="c:\apache2\Apache2\manual\style\manual.fr.xsl" />
+                <File Id="file946" Name="MA295B_1.XSL" LongName="manual.ja.xsl" src="c:\apache2\Apache2\manual\style\manual.ja.xsl" />
+                <File Id="file947" Name="MA2199_1.XSL" LongName="manual.ko.xsl" src="c:\apache2\Apache2\manual\style\manual.ko.xsl" />
+                <File Id="file948" Name="MA15CA_1.XSL" LongName="manual.pt-br.xsl" src="c:\apache2\Apache2\manual\style\manual.pt-br.xsl" />
+                <File Id="file949" Name="MA39AB_1.XSL" LongName="manual.ru.xsl" src="c:\apache2\Apache2\manual\style\manual.ru.xsl" />
+                <File Id="file950" Name="MANUAL_1.DTD" LongName="manualpage.dtd" src="c:\apache2\Apache2\manual\style\manualpage.dtd" />
+                <File Id="file951" Name="MODULE_1.DTD" LongName="modulesynopsis.dtd" src="c:\apache2\Apache2\manual\style\modulesynopsis.dtd" />
+                <File Id="file952" Name="sitemap.dtd" src="c:\apache2\Apache2\manual\style\sitemap.dtd" />
+                <File Id="file953" Name="version.ent" src="c:\apache2\Apache2\manual\style\version.ent" />
+
+              <Directory Id="directory24" Name="css">
+
+                  <File Id="file954" Name="MANUAL_1.CSS" LongName="manual-chm.css" src="c:\apache2\Apache2\manual\style\css\manual-chm.css" />
+                  <File Id="file955" Name="MANUAL_2.CSS" LongName="manual-loose-100pc.css" src="c:\apache2\Apache2\manual\style\css\manual-loose-100pc.css" />
+                  <File Id="file956" Name="MANUAL_3.CSS" LongName="manual-print.css" src="c:\apache2\Apache2\manual\style\css\manual-print.css" />
+                  <File Id="file957" Name="MANUAL_4.CSS" LongName="manual-zip-100pc.css" src="c:\apache2\Apache2\manual\style\css\manual-zip-100pc.css" />
+                  <File Id="file958" Name="MAFE91_1.CSS" LongName="manual-zip.css" src="c:\apache2\Apache2\manual\style\css\manual-zip.css" />
+                  <File Id="file959" Name="manual.css" src="c:\apache2\Apache2\manual\style\css\manual.css" />
+
+              </Directory>
+              <Directory Id="directory25" Name="latex">
+
+                  <File Id="file960" Name="ATBEGI_1.STY" LongName="atbeginend.sty" src="c:\apache2\Apache2\manual\style\latex\atbeginend.sty" />
+                  <File Id="file961" Name="common.xsl" src="c:\apache2\Apache2\manual\style\latex\common.xsl" />
+                  <File Id="file962" Name="DIRECT_1.XSL" LongName="directiveindex.xsl" src="c:\apache2\Apache2\manual\style\latex\directiveindex.xsl" />
+                  <File Id="file963" Name="faq.xsl" src="c:\apache2\Apache2\manual\style\latex\faq.xsl" />
+                  <File Id="file964" Name="html.xsl" src="c:\apache2\Apache2\manual\style\latex\html.xsl" />
+                  <File Id="file965" Name="latex.xsl" src="c:\apache2\Apache2\manual\style\latex\latex.xsl" />
+                  <File Id="file966" Name="MANUAL_1.XSL" LongName="manualpage.xsl" src="c:\apache2\Apache2\manual\style\latex\manualpage.xsl" />
+                  <File Id="file967" Name="MODULE_1.XSL" LongName="moduleindex.xsl" src="c:\apache2\Apache2\manual\style\latex\moduleindex.xsl" />
+                  <File Id="file968" Name="QUICKR_1.XSL" LongName="quickreference.xsl" src="c:\apache2\Apache2\manual\style\latex\quickreference.xsl" />
+                  <File Id="file969" Name="synopsis.xsl" src="c:\apache2\Apache2\manual\style\latex\synopsis.xsl" />
+
+              </Directory>
+              <Directory Id="directory26" Name="xsl">
+
+                  <File Id="file970" Name="common.xsl" src="c:\apache2\Apache2\manual\style\xsl\common.xsl" />
+                  <File Id="file971" Name="convmap.xsl" src="c:\apache2\Apache2\manual\style\xsl\convmap.xsl" />
+                  <File Id="file972" Name="DIRECT_1.XSL" LongName="directiveindex.xsl" src="c:\apache2\Apache2\manual\style\xsl\directiveindex.xsl" />
+                  <File Id="file973" Name="faq.xsl" src="c:\apache2\Apache2\manual\style\xsl\faq.xsl" />
+                  <File Id="file974" Name="hhc.xsl" src="c:\apache2\Apache2\manual\style\xsl\hhc.xsl" />
+                  <File Id="file975" Name="hhp.xsl" src="c:\apache2\Apache2\manual\style\xsl\hhp.xsl" />
+                  <File Id="file976" Name="INDEXP_1.XSL" LongName="indexpage.xsl" src="c:\apache2\Apache2\manual\style\xsl\indexpage.xsl" />
+                  <File Id="file977" Name="language.xsl" src="c:\apache2\Apache2\manual\style\xsl\language.xsl" />
+                  <File Id="file978" Name="maf.xsl" src="c:\apache2\Apache2\manual\style\xsl\maf.xsl" />
+                  <File Id="file979" Name="MANUAL_1.XSL" LongName="manualpage.xsl" src="c:\apache2\Apache2\manual\style\xsl\manualpage.xsl" />
+                  <File Id="file980" Name="MODULE_1.XSL" LongName="moduleindex.xsl" src="c:\apache2\Apache2\manual\style\xsl\moduleindex.xsl" />
+                  <File Id="file981" Name="nroff.xsl" src="c:\apache2\Apache2\manual\style\xsl\nroff.xsl" />
+                  <File Id="file982" Name="QUICKR_1.XSL" LongName="quickreference.xsl" src="c:\apache2\Apache2\manual\style\xsl\quickreference.xsl" />
+                  <File Id="file983" Name="sitemap.xsl" src="c:\apache2\Apache2\manual\style\xsl\sitemap.xsl" />
+                  <File Id="file984" Name="synopsis.xsl" src="c:\apache2\Apache2\manual\style\xsl\synopsis.xsl" />
+                  <File Id="file985" Name="typemap.xsl" src="c:\apache2\Apache2\manual\style\xsl\typemap.xsl" />
+
+                <Directory Id="directory27" Name="util">
+
+                    <File Id="file986" Name="modtrans.xsl" src="c:\apache2\Apache2\manual\style\xsl\util\modtrans.xsl" />
+
+                </Directory>
+              </Directory>
+            </Directory>
+            <Directory Id="directory28" Name="vhosts">
+
+                <File Id="file987" Name="DETAIL_1.HTM" LongName="details.html" src="c:\apache2\Apache2\manual\vhosts\details.html" />
+                <File Id="file988" Name="DETAIL_1.EN" LongName="details.html.en" src="c:\apache2\Apache2\manual\vhosts\details.html.en" />
+                <File Id="file989" Name="DETAIL_1.FR" LongName="details.html.fr" src="c:\apache2\Apache2\manual\vhosts\details.html.fr" />
+                <File Id="file990" Name="DETAIL_1.EUC" LongName="details.html.ko.euc-kr" src="c:\apache2\Apache2\manual\vhosts\details.html.ko.euc-kr" />
+                <File Id="file991" Name="EXAMPL_1.HTM" LongName="examples.html" src="c:\apache2\Apache2\manual\vhosts\examples.html" />
+                <File Id="file992" Name="EXAMPL_1.EN" LongName="examples.html.en" src="c:\apache2\Apache2\manual\vhosts\examples.html.en" />
+                <File Id="file993" Name="EXAMPL_1.FR" LongName="examples.html.fr" src="c:\apache2\Apache2\manual\vhosts\examples.html.fr" />
+                <File Id="file994" Name="EXAMPL_1.EUC" LongName="examples.html.ja.euc-jp" src="c:\apache2\Apache2\manual\vhosts\examples.html.ja.euc-jp" />
+                <File Id="file995" Name="EXAMPL_2.EUC" LongName="examples.html.ko.euc-kr" src="c:\apache2\Apache2\manual\vhosts\examples.html.ko.euc-kr" />
+                <File Id="file996" Name="FD-LIM_1.HTM" LongName="fd-limits.html" src="c:\apache2\Apache2\manual\vhosts\fd-limits.html" />
+                <File Id="file997" Name="FD-LIM_1.EN" LongName="fd-limits.html.en" src="c:\apache2\Apache2\manual\vhosts\fd-limits.html.en" />
+                <File Id="file998" Name="FD-LIM_1.FR" LongName="fd-limits.html.fr" src="c:\apache2\Apache2\manual\vhosts\fd-limits.html.fr" />
+                <File Id="file999" Name="FD-LIM_1.EUC" LongName="fd-limits.html.ja.euc-jp" src="c:\apache2\Apache2\manual\vhosts\fd-limits.html.ja.euc-jp" />
+                <File Id="file1000" Name="FD-LIM_2.EUC" LongName="fd-limits.html.ko.euc-kr" src="c:\apache2\Apache2\manual\vhosts\fd-limits.html.ko.euc-kr" />
+                <File Id="file1001" Name="INDEX_1.HTM" LongName="index.html" src="c:\apache2\Apache2\manual\vhosts\index.html" />
+                <File Id="file1002" Name="INDEXH_1.DE" LongName="index.html.de" src="c:\apache2\Apache2\manual\vhosts\index.html.de" />
+                <File Id="file1003" Name="INDEXH_1.EN" LongName="index.html.en" src="c:\apache2\Apache2\manual\vhosts\index.html.en" />
+                <File Id="file1004" Name="INDEXH_1.FR" LongName="index.html.fr" src="c:\apache2\Apache2\manual\vhosts\index.html.fr" />
+                <File Id="file1005" Name="INDEXH_1.EUC" LongName="index.html.ja.euc-jp" src="c:\apache2\Apache2\manual\vhosts\index.html.ja.euc-jp" />
+                <File Id="file1006" Name="INDEXH_2.EUC" LongName="index.html.ko.euc-kr" src="c:\apache2\Apache2\manual\vhosts\index.html.ko.euc-kr" />
+                <File Id="file1007" Name="INDEXH_1.KOI" LongName="index.html.ru.koi8-r" src="c:\apache2\Apache2\manual\vhosts\index.html.ru.koi8-r" />
+                <File Id="file1008" Name="IP-BAS_1.HTM" LongName="ip-based.html" src="c:\apache2\Apache2\manual\vhosts\ip-based.html" />
+                <File Id="file1009" Name="IP-BAS_1.EN" LongName="ip-based.html.en" src="c:\apache2\Apache2\manual\vhosts\ip-based.html.en" />
+                <File Id="file1010" Name="IP-BAS_1.FR" LongName="ip-based.html.fr" src="c:\apache2\Apache2\manual\vhosts\ip-based.html.fr" />
+                <File Id="file1011" Name="IP-BAS_1.EUC" LongName="ip-based.html.ja.euc-jp" src="c:\apache2\Apache2\manual\vhosts\ip-based.html.ja.euc-jp" />
+                <File Id="file1012" Name="IP-BAS_2.EUC" LongName="ip-based.html.ko.euc-kr" src="c:\apache2\Apache2\manual\vhosts\ip-based.html.ko.euc-kr" />
+                <File Id="file1013" Name="MASS_1.HTM" LongName="mass.html" src="c:\apache2\Apache2\manual\vhosts\mass.html" />
+                <File Id="file1014" Name="MASSHT_1.EN" LongName="mass.html.en" src="c:\apache2\Apache2\manual\vhosts\mass.html.en" />
+                <File Id="file1015" Name="MASSHT_1.EUC" LongName="mass.html.ko.euc-kr" src="c:\apache2\Apache2\manual\vhosts\mass.html.ko.euc-kr" />
+                <File Id="file1016" Name="NAME-B_1.HTM" LongName="name-based.html" src="c:\apache2\Apache2\manual\vhosts\name-based.html" />
+                <File Id="file1017" Name="NAME-B_1.DE" LongName="name-based.html.de" src="c:\apache2\Apache2\manual\vhosts\name-based.html.de" />
+                <File Id="file1018" Name="NAME-B_1.EN" LongName="name-based.html.en" src="c:\apache2\Apache2\manual\vhosts\name-based.html.en" />
+                <File Id="file1019" Name="NAME-B_1.FR" LongName="name-based.html.fr" src="c:\apache2\Apache2\manual\vhosts\name-based.html.fr" />
+                <File Id="file1020" Name="NAME-B_1.EUC" LongName="name-based.html.ja.euc-jp" src="c:\apache2\Apache2\manual\vhosts\name-based.html.ja.euc-jp" />
+                <File Id="file1021" Name="NAME-B_2.EUC" LongName="name-based.html.ko.euc-kr" src="c:\apache2\Apache2\manual\vhosts\name-based.html.ko.euc-kr" />
+
+            </Directory>
+          </Directory>
+          <Directory Id="directory29" Name="modules">
+
+              <File Id="file1022" Name="MOD_AC_1.SO" LongName="mod_actions.so" src="c:\apache2\Apache2\modules\mod_actions.so" />
+              <File Id="file1023" Name="MOD_AL_1.SO" LongName="mod_alias.so" src="c:\apache2\Apache2\modules\mod_alias.so" />
+              <File Id="file1024" Name="mod_asis.so" src="c:\apache2\Apache2\modules\mod_asis.so" />
+              <File Id="file1025" Name="MOD_AU_1.SO" LongName="mod_authnz_ldap.so" src="c:\apache2\Apache2\modules\mod_authnz_ldap.so" />
+              <File Id="file1026" Name="MOD_AU_2.SO" LongName="mod_authn_alias.so" src="c:\apache2\Apache2\modules\mod_authn_alias.so" />
+              <File Id="file1027" Name="MOD_AU_3.SO" LongName="mod_authn_anon.so" src="c:\apache2\Apache2\modules\mod_authn_anon.so" />
+              <File Id="file1028" Name="MOD_AU_4.SO" LongName="mod_authn_dbd.so" src="c:\apache2\Apache2\modules\mod_authn_dbd.so" />
+              <File Id="file1029" Name="MO8ABF_1.SO" LongName="mod_authn_dbm.so" src="c:\apache2\Apache2\modules\mod_authn_dbm.so" />
+              <File Id="file1030" Name="MO61CD_1.SO" LongName="mod_authn_default.so" src="c:\apache2\Apache2\modules\mod_authn_default.so" />
+              <File Id="file1031" Name="MO56AA_1.SO" LongName="mod_authn_file.so" src="c:\apache2\Apache2\modules\mod_authn_file.so" />
+              <File Id="file1032" Name="MO82DF_1.SO" LongName="mod_authz_dbm.so" src="c:\apache2\Apache2\modules\mod_authz_dbm.so" />
+              <File Id="file1033" Name="MO67CD_1.SO" LongName="mod_authz_default.so" src="c:\apache2\Apache2\modules\mod_authz_default.so" />
+              <File Id="file1034" Name="MO1EF6_1.SO" LongName="mod_authz_groupfile.so" src="c:\apache2\Apache2\modules\mod_authz_groupfile.so" />
+              <File Id="file1035" Name="MO92D2_1.SO" LongName="mod_authz_host.so" src="c:\apache2\Apache2\modules\mod_authz_host.so" />
+              <File Id="file1036" Name="MO3139_1.SO" LongName="mod_authz_owner.so" src="c:\apache2\Apache2\modules\mod_authz_owner.so" />
+              <File Id="file1037" Name="MO94B2_1.SO" LongName="mod_authz_user.so" src="c:\apache2\Apache2\modules\mod_authz_user.so" />
+              <File Id="file1038" Name="MO618B_1.SO" LongName="mod_auth_basic.so" src="c:\apache2\Apache2\modules\mod_auth_basic.so" />
+              <File Id="file1039" Name="MO56FB_1.SO" LongName="mod_auth_digest.so" src="c:\apache2\Apache2\modules\mod_auth_digest.so" />
+              <File Id="file1040" Name="MOB807_1.SO" LongName="mod_autoindex.so" src="c:\apache2\Apache2\modules\mod_autoindex.so" />
+              <File Id="file1041" Name="MOD_BU_1.SO" LongName="mod_bucketeer.so" src="c:\apache2\Apache2\modules\mod_bucketeer.so" />
+              <File Id="file1042" Name="MOD_CA_1.SO" LongName="mod_cache.so" src="c:\apache2\Apache2\modules\mod_cache.so" />
+              <File Id="file1043" Name="MOD_CE_1.SO" LongName="mod_cern_meta.so" src="c:\apache2\Apache2\modules\mod_cern_meta.so" />
+              <File Id="file1044" Name="mod_cgi.so" src="c:\apache2\Apache2\modules\mod_cgi.so" />
+              <File Id="file1045" Name="MOD_CH_1.SO" LongName="mod_charset_lite.so" src="c:\apache2\Apache2\modules\mod_charset_lite.so" />
+              <File Id="file1046" Name="mod_dav.so" src="c:\apache2\Apache2\modules\mod_dav.so" />
+              <File Id="file1047" Name="MOD_DA_1.SO" LongName="mod_dav_fs.so" src="c:\apache2\Apache2\modules\mod_dav_fs.so" />
+              <File Id="file1048" Name="mod_dbd.so" src="c:\apache2\Apache2\modules\mod_dbd.so" />
+              <File Id="file1049" Name="MOD_DE_1.SO" LongName="mod_deflate.so" src="c:\apache2\Apache2\modules\mod_deflate.so" />
+              <File Id="file1050" Name="mod_dir.so" src="c:\apache2\Apache2\modules\mod_dir.so" />
+              <File Id="file1051" Name="MOD_DI_1.SO" LongName="mod_disk_cache.so" src="c:\apache2\Apache2\modules\mod_disk_cache.so" />
+              <File Id="file1052" Name="MOD_DU_1.SO" LongName="mod_dumpio.so" src="c:\apache2\Apache2\modules\mod_dumpio.so" />
+              <File Id="file1053" Name="mod_env.so" src="c:\apache2\Apache2\modules\mod_env.so" />
+              <File Id="file1054" Name="MOD_EX_1.SO" LongName="mod_expires.so" src="c:\apache2\Apache2\modules\mod_expires.so" />
+              <File Id="file1055" Name="MOD_EX_2.SO" LongName="mod_ext_filter.so" src="c:\apache2\Apache2\modules\mod_ext_filter.so" />
+              <File Id="file1056" Name="MOD_FI_1.SO" LongName="mod_file_cache.so" src="c:\apache2\Apache2\modules\mod_file_cache.so" />
+              <File Id="file1057" Name="MOD_HE_1.SO" LongName="mod_headers.so" src="c:\apache2\Apache2\modules\mod_headers.so" />
+              <File Id="file1058" Name="MOD_ID_1.SO" LongName="mod_ident.so" src="c:\apache2\Apache2\modules\mod_ident.so" />
+              <File Id="file1059" Name="MOD_IM_1.SO" LongName="mod_imagemap.so" src="c:\apache2\Apache2\modules\mod_imagemap.so" />
+              <File Id="file1060" Name="MOD_IN_1.SO" LongName="mod_include.so" src="c:\apache2\Apache2\modules\mod_include.so" />
+              <File Id="file1061" Name="mod_info.so" src="c:\apache2\Apache2\modules\mod_info.so" />
+              <File Id="file1062" Name="MOD_IS_1.SO" LongName="mod_isapi.so" src="c:\apache2\Apache2\modules\mod_isapi.so" />
+              <File Id="file1063" Name="mod_ldap.so" src="c:\apache2\Apache2\modules\mod_ldap.so" />
+              <File Id="file1064" Name="MOD_LO_1.SO" LongName="mod_logio.so" src="c:\apache2\Apache2\modules\mod_logio.so" />
+              <File Id="file1065" Name="MOD_LO_2.SO" LongName="mod_log_config.so" src="c:\apache2\Apache2\modules\mod_log_config.so" />
+              <File Id="file1066" Name="MOD_LO_3.SO" LongName="mod_log_forensic.so" src="c:\apache2\Apache2\modules\mod_log_forensic.so" />
+              <File Id="file1067" Name="MOD_ME_1.SO" LongName="mod_mem_cache.so" src="c:\apache2\Apache2\modules\mod_mem_cache.so" />
+              <File Id="file1068" Name="mod_mime.so" src="c:\apache2\Apache2\modules\mod_mime.so" />
+              <File Id="file1069" Name="MOD_MI_1.SO" LongName="mod_mime_magic.so" src="c:\apache2\Apache2\modules\mod_mime_magic.so" />
+              <File Id="file1070" Name="MOD_NE_1.SO" LongName="mod_negotiation.so" src="c:\apache2\Apache2\modules\mod_negotiation.so" />
+              <File Id="file1071" Name="MOD_PR_1.SO" LongName="mod_proxy.so" src="c:\apache2\Apache2\modules\mod_proxy.so" />
+              <File Id="file1072" Name="MOD_PR_2.SO" LongName="mod_proxy_ajp.so" src="c:\apache2\Apache2\modules\mod_proxy_ajp.so" />
+              <File Id="file1073" Name="MOD_PR_3.SO" LongName="mod_proxy_balancer.so" src="c:\apache2\Apache2\modules\mod_proxy_balancer.so" />
+              <File Id="file1074" Name="MOD_PR_4.SO" LongName="mod_proxy_connect.so" src="c:\apache2\Apache2\modules\mod_proxy_connect.so" />
+              <File Id="file1075" Name="MO6379_1.SO" LongName="mod_proxy_ftp.so" src="c:\apache2\Apache2\modules\mod_proxy_ftp.so" />
+              <File Id="file1076" Name="MOD691_1.SO" LongName="mod_proxy_http.so" src="c:\apache2\Apache2\modules\mod_proxy_http.so" />
+              <File Id="file1077" Name="MOD_RE_1.SO" LongName="mod_rewrite.so" src="c:\apache2\Apache2\modules\mod_rewrite.so" />
+              <File Id="file1078" Name="MOD_SE_1.SO" LongName="mod_setenvif.so" src="c:\apache2\Apache2\modules\mod_setenvif.so" />
+              <File Id="file1079" Name="MOD_SP_1.SO" LongName="mod_speling.so" src="c:\apache2\Apache2\modules\mod_speling.so" />
+              <File Id="file1080" Name="mod_ssl.so" src="c:\apache2\Apache2\modules\mod_ssl.so" />
+              <File Id="file1081" Name="MOD_ST_1.SO" LongName="mod_status.so" src="c:\apache2\Apache2\modules\mod_status.so" />
+              <File Id="file1082" Name="MOD_UN_1.SO" LongName="mod_unique_id.so" src="c:\apache2\Apache2\modules\mod_unique_id.so" />
+              <File Id="file1083" Name="MOD_US_1.SO" LongName="mod_userdir.so" src="c:\apache2\Apache2\modules\mod_userdir.so" />
+              <File Id="file1084" Name="MOD_US_2.SO" LongName="mod_usertrack.so" src="c:\apache2\Apache2\modules\mod_usertrack.so" />
+              <File Id="file1085" Name="MOD_VE_1.SO" LongName="mod_version.so" src="c:\apache2\Apache2\modules\mod_version.so" />
+              <File Id="file1086" Name="MOD_VH_1.SO" LongName="mod_vhost_alias.so" src="c:\apache2\Apache2\modules\mod_vhost_alias.so" />
+
+          </Directory>
+        </Directory>
+      </Directory>
+    </DirectoryRef>
+  </Fragment>
+</Wix>

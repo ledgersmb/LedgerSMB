@@ -1,0 +1,141 @@
+      <tr>
+        <th align="right"><?lsmb text('Project') ?></th>
+        <td colspan="3"><?lsmb PROCESS select element_data=form.selectproject ?></td>
+      </tr>
+      <tr>
+        <th align="right"><?lsmb text('From') ?></th>
+        <td><?lsmb PROCESS input element_data={
+        class => 'date',
+        name => 'fromdate',
+        size => '11',
+        title => user.dateformat,
+        value => form.fromdate,
+        } ?></td>
+        <th align="right"><?lsmb text('To') ?></th>
+        <td><?lsmb PROCESS input element_data={
+        class => 'date',
+        name => 'todate',
+        size => '11',
+        title => user.dateformat,
+        value => form.todate,
+        } ?></td>
+      </tr>
+<?lsmb IF form.selectaccountingyear.defined ?>
+      <tr>
+        <th align="right"><?lsmb text('Period') ?></th>
+        <td colspan="3">
+  <?lsmb PROCESS select element_data=form.selectaccountingmonth -?>
+  <?lsmb PROCESS select element_data=form.selectaccountingyear -?>
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'interval',
+    value => '0',
+    label => text('Current'),
+    checked => 'checked',
+    } -?>
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'interval',
+    value => '1',
+    label => text('Month'),
+    } -?>
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'interval',
+    value => '3',
+    label => text('Quarter'),
+    } -?>
+  <?lsmb PROCESS input element_data={
+    type => 'radio',
+    name => 'interval',
+    value => '12',
+    label => text('Year'),
+    } -?>
+        </td>
+      </tr>
+<?lsmb END ?>
+      <tr><th align="right"><?lsmb text('Compare to') ?></th><td colspan="3" /></tr>
+      <tr>
+        <th align="right"><?lsmb text('From') ?></th>
+        <td><?lsmb PROCESS input element_data={
+        class => 'date',
+        name => 'comparefromdate',
+        size => '11',
+        title => user.dateformat,
+        } ?></td>
+        <th align="right"><?lsmb text('To') ?></th>
+        <td><?lsmb PROCESS input element_data={
+        class => 'date',
+        name => 'comparetodate',
+        size => '11',
+        title => user.dateformat,
+        } ?></td>
+      </tr>
+<?lsmb IF form.selectaccountingyear.defined;
+  compare_month = {
+    options => form.selectaccountingmonth.options,
+    name => 'comparemonth',
+    };
+  compare_year = {
+    options => form.selectaccountingyear.options,
+    name => 'compareyear',
+    };
+ -?>
+      <tr>
+        <th align="right"><?lsmb text('Period') ?></th>
+        <td colspan="3">
+  <?lsmb PROCESS select element_data=compare_month -?>
+  <?lsmb PROCESS select element_data=compare_year -?>
+        </td>
+      </tr>
+<?lsmb END ?>
+      <tr>
+        <th align="right"><?lsmb text('Decimal Places') ?></th>
+        <td colspan="3"><?lsmb PROCESS input element_data={
+  name => 'decimalplaces',
+  size => '3',
+  value => '2',
+  } ?>
+        </td>
+      </tr>
+    </table>
+  </td>
+</tr>
+<tr>
+  <td>
+    <table>
+      <tr>
+        <th align="right"><?lsmb text('Method') ?></th>
+        <td colspan="3">
+<?lsmb PROCESS input element_data={
+  name => 'method',
+  type => 'radio',
+  value => 'accrual',
+  label => text('Accrual'),
+  checked => 'checked',
+  } -?>
+        </td>
+      </tr>
+      <tr>
+        <th align="right"><?lsmb text('Include in Report') ?></th>
+        <td colspan="3">
+<?lsmb PROCESS input element_data={
+  name => 'l_heading',
+  type => 'checkbox',
+  value => 'Y',
+  label => text('Heading'),
+  } -?>
+<?lsmb PROCESS input element_data={
+  name => 'l_subtotal',
+  type => 'checkbox',
+  value => 'Y',
+  label => text('Subtotal'),
+  } -?>
+<?lsmb PROCESS input element_data={
+  name => 'l_accno',
+  type => 'checkbox',
+  value => 'Y',
+  label => text('Account Number'),
+  } -?>
+        </td>
+      </tr>

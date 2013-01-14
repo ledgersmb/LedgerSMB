@@ -1,0 +1,49 @@
+<?lsmb- PROCESS 'dynatable.csv' -?>
+<?lsmb-
+    columns = [ 
+              { col_id = 'parts_id',
+                  type = 'hidden' },
+              { col_id = 'int_partnumber'
+                  name = text('Partnumber')
+                  type = 'text'
+                },
+                { col_id = 'description'
+                  name = text('Description')
+                  type = 'text'
+                } ];
+     IF account_class == 1;
+         columns.push(
+                  {col_id = 'lastcost'
+                     name = text('Last Cost') 
+                     type = 'text_input'},
+                  {col_id = 'partnumber',
+                     name = text('Vendor Partnumber') 
+                     type = 'text_input'},
+                  {col_id = 'leadtime',
+                     name = text('Lead Time') 
+                     type = 'input_text'}
+         );
+
+     ELSE;
+
+         columns.push(
+                  {col_id = 'sellprice'
+                     name = text('Sell Price') 
+                     type = 'input_text'},
+                  {col_id = 'validfrom',
+                     name = text('Valid From') 
+                     type = 'input_text'},
+                  {col_id = 'validto',
+                     name = text('Valid To') 
+                     type = 'input_text'},
+         );
+                        
+     END;
+     columns.push({col_id = 'currency',
+                     name = text('Currency'),
+                     type = 'text'},
+     );
+      PROCESS dynatable
+         tbody = { rows = pricematrix }
+
+-?>

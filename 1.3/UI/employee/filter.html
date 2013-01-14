@@ -1,0 +1,309 @@
+<?lsmb INCLUDE 'ui-header.html' 
+	include_stylesheet = [
+		'UI/employee/filter.css'
+	] 
+?>
+<?lsmb PROCESS 'elements.html' ?>
+<body>
+<div class="listtop"><?lsmb text('Search Employees') ?></div>
+<form action="employee.pl" method="POST" name="search_filter">
+<div class="inputrow">
+<div class="inputgroup">
+<?lsmb INCLUDE input element_data = {
+    name = 'employeenumber'
+    value = employeenumber
+    size = '32'
+    type = 'text'
+    class = 'controlcode'
+    label = text('Employee Number') #'
+} ?>
+</div>
+</div>
+<div class="inputrow" id="namerow">
+<div class="inputgroup">
+<?lsmb INCLUDE input element_data = {
+    name = 'first_name'
+   value = first_name
+    type = 'text'
+   class = 'name'
+   label = text('First Name')#'
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb INCLUDE input element_data = {
+    name = 'middle_name'
+   value = middle_name
+    type = 'text'
+   class = 'name'
+   label = text('Middle Name')#'
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb INCLUDE input element_data = {
+    name = 'last_name'
+   value = last_name
+    type = 'text'
+   class = 'name'
+   label = text('Last Name')#'
+} ?>
+</div>
+</div>
+<div class="inputrow" id="startdaterow">
+<label><?lsmb text('Start Date') ?></label>
+<div class="inputgroup">
+<?lsmb INCLUDE input element_data = {
+    name = 'startdate_from'
+   value = startdate_from
+    type = 'text'
+   class = 'date'
+   label = text('From')
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb INCLUDE input element_data = {
+    name = 'startdate_to'
+   value = startdate_to
+    type = 'text'
+   class = 'date'
+   label = text('To')
+} ?>
+</div>
+</div>
+<div class="listtop"><?lsmb text('Include In Report') ?></div>
+<div id="include_cols">
+<div class="inputgroup">
+<?lsmb IF l_position; 
+             c_position = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_position'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('Position')
+ checked = c_position
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_id; 
+             c_id = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_id'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('ID')
+ checked = c_id
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_employeenumber; 
+             c_employeenumber = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_employeenumber'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('Employee Number') #'
+ checked = c_employeenumber
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_salutation; 
+             c_salutation = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_salutation'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('Salutation')
+ checked = c_salutation
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_first_name; 
+             c_first_name = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_first_name'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('First Name') #'
+ checked = c_first_name
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_middle_name; 
+             c_middle_name = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_middle_name'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('Middle Name') #'
+ checked = c_middle_name
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_last_name; 
+             c_last_name = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_last_name'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('Last Name') #'
+ checked = c_last_name
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_dob; 
+             c_dob = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_dob'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('DOB')
+ checked = c_dob
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_startdate; 
+             c_id = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_startdate'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('Start Date') #'
+ checked = c_startdate
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_enddate; 
+             c_enddate = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_enddate'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('End Date') #'
+ checked = c_enddate
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_role; 
+             c_role = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_role'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('Role')
+ checked = c_role
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_ssn; 
+             c_ssn = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_ssn'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('SSN')
+ checked = c_ssn
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_sales; 
+             c_sales = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_sales'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('Sales')
+ checked = c_sales
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_manager_id; 
+             c_manager_id = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_manager_id'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('Manager ID') #'
+ checked = c_manager_id
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_manager_first_name; 
+             c_manager_first_name = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_manager_first_name'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('Manager First Name') #'
+ checked = c_manager_first_name
+} ?>
+</div>
+<div class="inputgroup">
+<?lsmb IF l_manager_last_name; 
+             c_manager_last_name = 'CHECKED';
+       END 
+?> 
+<?lsmb INCLUDE input element_data = {
+    name = 'l_manager_last_name'
+   value = '1'
+    type = 'checkbox'
+   class = 'checkbox'
+   label = text('Manager Last Name') #'
+ checked = c_manager_last_name
+} ?>
+</div>
+</div>
+<hr>
+<?lsmb INCLUDE button element_data = {
+    name = 'action'
+   value = 'search_results'
+   class = 'submit'
+   type  = 'submit'
+   text  = text('Continue')
+} ?>
+</form>
+</body>
+</html>

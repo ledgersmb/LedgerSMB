@@ -1,0 +1,4 @@
+#!/usr/bin/bash
+
+killall perl-fcgi-pm
+

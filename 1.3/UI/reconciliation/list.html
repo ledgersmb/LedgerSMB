@@ -1,0 +1,20 @@
+<?lsmb import base.html?>
+
+<div class="content">
+    <table>
+        <tr>
+            <td>ID</td>
+            <td>Account</td>
+            <td>Date Range</td>
+            <td>Total</td>
+        </tr>
+    <?lsmb FOR item IN reports?>
+        <tr>
+            <td><a href="recon.pl?action=report&amp;report_id=<?lsmb item.report_id?>"><?lsmb item.report_id?></a></td>
+            <td><?lsmb item.account?></td>
+            <td><?lsmb item.range?></td>
+            <td><?lsmb item.total?></td>
+        </tr>
+    <?lsmb END?>
+    </table>
+</div>

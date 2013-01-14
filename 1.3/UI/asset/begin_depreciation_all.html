@@ -1,0 +1,33 @@
+<?lsmb INCLUDE "ui-header.html"
+       include_stylesheet = ["UI/asset/asset.css"] -?>
+<?lsmb PROCESS "elements.html" -?>
+<body>
+<div class="listtop"><?lsmb text('Depreciate All') ?></div>
+<form action="asset.pl" method="post">
+<div class="inputrow" id="daterow"><div class="inputgroup" id="dategroup">
+<?lsmb PROCESS input element_data = {
+     name = "report_date"
+     class = "date"
+     value = report_date
+     label = text("Date")
+} ?>
+</div></div>
+<?lsmb PROCESS input element_data = {
+     name = "depreciation"
+     type = "hidden"
+     value = 1
+} ?>
+<div class="inputrow" id="buttonrow">
+<div class="inputgroup" id="buttongroupnext">
+<label>&nbsp;</label>
+<?lsmb PROCESS button element_data = {
+     name = "action"
+     text = text("Continue")
+     value = "depreciate_all"
+     type = "submit"
+     class = "submit"
+} ?>
+</div></div>
+</form>
+</body>
+</html>

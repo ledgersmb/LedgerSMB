@@ -1,0 +1,84 @@
+<?lsmb INCLUDE "ui-header.html"
+       include_stylesheet = ["UI/asset/asset.css"] -?>
+<?lsmb PROCESS "elements.html" -?>
+<body>
+<form action="asset.pl" method="post">
+<div class="listtop"><?lsmb text('New Asset Report Search') ?></div>
+<div class="inputrow" id="classrow"><div class="inputgroup" id="classgrp">
+<?lsmb asset_classes.unshift({}) ?>
+<?lsmb PROCESS select element_data = {
+     name = "asset_class"
+     default_values = [asset_class]
+     options = asset_classes
+     text_attr = "label"
+     value_attr = "id"
+     label = text('Asset Class') #'
+} ?>
+</div></div>
+<div class="inputrow" id="daterow"><div class="inputgroup" id="startdategrp">
+<?lsmb PROCESS input element_data = {
+     name = "start_date"
+     class = "date"
+     value = start_date
+     label = text("From")
+} ?>
+</div>
+<div class="inputgroup" id="todategroup">
+<?lsmb PROCESS input element_data = {
+     name = "end_date"
+     class = "date"
+     value = end_date
+     label = text("To")
+} ?>
+</div>
+</div>
+<div class="inputrow" id="accountrow">
+<?lsmb IF depreciation ?>
+<!-- moved expense acct drop down to asset screen -->
+<?lsmb ELSE ?>
+<div class="inputgroup" id="gaingroup">
+<?lsmb PROCESS select element_data = {
+     name = "gain_acct"
+     class = "account"
+     value_attr = "id"
+     options = gain_accounts
+     default_values = [gain_acct]
+     label = text('Gain Account') #'
+} ?>
+</div>
+<div class="inputgroup" id="lossgroup">
+<?lsmb PROCESS select element_data = {
+     name = "loss_acct"
+     class = "account"
+     options = loss_accounts
+     value_attr = "id"
+     default_values = [loss_acct]
+     label = text('Loss Account') #'
+} ?>
+</div>
+<?lsmb END ?>
+</div>
+<div class="inputrow" id="buttonrow">
+<div class="inputgroup" id="buttongroupnext">
+<label>&nbsp;</label>
+<?lsmb PROCESS button element_data = {
+     name = "action"
+     text = text("Continue")
+     value = "report_results"
+     type = "submit"
+     class = "submit"
+} ?>
+</div></div>
+<?lsmb PROCESS input element_data = {
+     name = "approved"
+     type = "hidden"
+     value = "0"
+} ?>
+<?lsmb PROCESS input element_data = {
+     name = "depreciation"
+     type = "hidden"
+     value = depreciation
+} ?>
+</form>
+</body>
+</html>

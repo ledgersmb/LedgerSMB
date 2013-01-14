@@ -1,0 +1,39 @@
+<table border=0>
+	<tr>
+		<td>Clear date</td>
+		<td>Transaction Type</td>
+		<td>Our Balance</td>
+		<td>Their Balance</td>
+	</tr>
+	<tr>
+		<td><?lsmb entry.clear_time ?></td>
+		<td><?lsmb entry.transaction_type ?> </td>
+		<td><?lsmb entry.our_balance ?></td>
+		<td><?lsmb entry.their_balance?></td>
+	</tr>
+</table>
+
+<?lsmb IF NOT corrections ?>
+Corrections:
+<table border=0>	
+	<?lsmb FOREACH row = corrections ?>
+	<tr>
+		<td>
+			<div>
+				<span><?lsmbrow.user?> at <?lsmbrow.insert_time?></span>
+				<div>
+					<?lsmbrow.reason?>
+				</div>
+			</div>
+		</td>
+	</tr>
+	<?lsmbEND?>
+	
+</table>
+<?lsmbELSE?>
+
+<div>
+	No corrections found.
+</div>
+
+<?lsmbEND?>

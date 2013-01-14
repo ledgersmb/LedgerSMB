@@ -1,0 +1,241 @@
+% Copyright (C) 2007, The LedgerSMB core team.
+%
+% This program is free software; you can redistribute it and/or modify
+% it under the terms of the GNU General Public License as published by
+% the Free Software Foundation; version 2 of the License.
+%
+% This program is distributed in the hope that it will be useful,
+% but WITHOUT ANY WARRANTY; without even the implied warranty of
+% MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+% GNU General Public License for more details.
+%
+% You should have received a copy of the GNU General Public License
+% along with this program; if not, write to the Free Software
+% Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+
+\documentclass[english]{article}
+\usepackage[utf8]{inputenc}
+\hyphenation{LedgerSMB}
+\newcommand{\pitag}[1]{\textless?lsmb #1 ?\textgreater}
+\newcommand{\tg}{\textgreater}
+\newcommand{\tl}{\textless}
+\newcommand{\version}{1.3}
+\newcommand{\lsmb}{LedgerSMB }
+\newcommand{\lsmbn}{LedgerSMB}
+\newcommand{\lsmbt}{LedgerSMB::Template}
+
+\title{Templating for LedgerSMB v. \version}
+\author{The LedgerSMB Core Team}
+\date{\today}
+
+\begin{document}
+\maketitle
+Copyright \copyright 2007 The LedgerSMB Core Team. Permission
+is granted to copy, distribute and/or modify this document under the
+terms of the GNU General Public License version 2.
+
+\tableofcontents{}
+%\listoffigures
+\clearpage
+
+\part{Template Syntax}
+
+As in \lsmb 1.2, templating directives in \version{ }are expressed with the base
+form of \pitag{foo}.  That, and basic variable substitution, is about the only
+part of templating that has remained unchanged.  Starting with 1.3, the primary
+rendering engine is Template Toolkit, with START\_TAG changed to
+``\textless?lsmb'' and END\_TAG changed to ``?\textgreater''.
+
+\section{Variable Substitution}
+For simple output, the name of the variable is placed on its own, as in
+\pitag{foo}.  Hash elements are accessed using the form \pitag{hash.key}. 
+Arrays are treated as a form of hash where the key is the index of the element,
+indexed from zero.  In more complex cases, such as where the desired hash key
+is the value of another variable, values can be extracted by prefixing the name
+of the other variable with \$.  This results in the form \pitag{row.\$column}.
+
+Through Template Toolkit, \lsmbt{ }has the concept of private variables.  If
+any component of the variable name starts with an underscore, it is private and
+will not be output to the rendered document.
+
+Something to watch for when dealing with variable substitution for hashes is
+that in some cases, the key name conflicts with one of TT's VMethods for the
+type.  When that occurs and the value is not defined, the VMethod is executed
+instead of retrieving the value.  An example of where this could happen is when
+retreiving the value of form.sort.  As it is often undefined and included in
+``hidden'' HTML elements, it can cause application errors when a templater
+attempts to retrieve it using form.sort instead of form.item('sort').
+
+\section{Functions}
+
+\subsection{Internationalisation}
+In addition to the regular Template Toolkit functions, \lsmb has the
+additional functions text and gettext.  Both of these functions are interfaces
+to the underlying gettext infrastructure and both can handle simple gettext
+substitutions.  The difference between these functions is that text makes use
+of the locale of the current user, while gettext must be passed a string that
+identifies one of the gettext translations.
+
+These gettext lookups can take placeholders in the same syntax that the
+underlying Perl does, ``[\_\emph{n}]''.  The output of the i18n functions is
+not escaped and the input values are not unescaped.
+
+\pitag{gettext('fr\_CA', 'Item \#[\_1]', value)}
+
+\subsection{Formatting}
+
+The only formatting function that is added is \emph{escape}.  The escape
+function escapes a value using the rules for the template format.
+
+\section{Control Structures}
+The base 
+IF, ELSIF, ELSE
+FOREACH
+
+\section{Debugging}
+Two template-side tools that can help with debugging are the interface to
+Data::Dumper and setting a debug message format.
+
+\subsection{Variable Dumping}
+The Data::Dumper interface is loaded using \pitag{USE dumper()} and used with
+either \pitag{dumper.dump(\emph{var})} or \pitag{dumper.dump\_html(\emph{var})}.
+Both dumper.dump and dumper.dump\_html perform the same basic dumping, however
+dump\_html also escapes the values and applies basic formatting.  See
+Template::Plugin::Dumper for details.
+
+\subsection{Line Specification}
+Template Toolkit has a DEBUG directive that can cause line-based logging
+messages to appear in the rendered output when the debug flag to \lsmbt{ }is
+true.   A sample tag to start a debugging region with \LaTeX{ }templates is
+\pitag{DEBUG format '\% \$file:\$line \$text'}.  The debugging messages will
+start with the line that has the directive and a debugging region can be
+optionally terminated with \pitag{DEBUG format ''}, which tells TT to use an
+empty message.
+
+\part{The Templating API}
+\section{\lsmbt}
+A new templating API was added in \lsmb 1.3.  This API is accessed through
+\lsmbt, and has several support modules.  Typical usage of this API is fairly
+simple in that most places that use it instantiate a \lsmbt{ }object in
+auto-output mode then use the resulting object's render method.  The
+constructor options are detailed in the POD for \lsmbt{ }with the most
+interesting one for designing and testing user interface templates probably
+being ``debug'', which enables the display of debugging messages.  The render
+method handles escaping the passed in template data for the selected output
+format and the actual rendering with the appropriate support module.
+
+\subsection{Options}
+\subsection{Input}
+\subsection{Output}
+
+\section{\lsmbt{ }Support Modules}
+\subsection{\lsmbt::LaTeX}
+This module uses Template::Latex to generate DVI, PDF, or Postscript output.
+It looks for template files that end in ``.tex'' and take marked-up \LaTeX.
+Rendering of templates by these modules happens in two phases: the TT phase
+and the \LaTeX phase.  All templates that are directly called by \lsmbt{ }that
+use these modules must be enclosed by the tag pair \pitag{FILTER latex} and
+\pitag{END} for the second rendering phase to occur.  The final output file
+format is determined by the format\_option filetype.
+
+\subsection{\lsmbt::HTML}
+This is the most frequently used \lsmbt{ }module as the migration of the user
+interface to templates has started.  It looks for template files that end in
+``.html''.
+
+\subsection{\lsmbt::CSV}
+A new form of output with \lsmb 1.3, this module is used by some reports to
+give output in a standard form.  It looks for template files that end in
+``.csv''.
+
+\subsection{\lsmbt::ODS, \lsmbt::XLS}
+This pair of module outputs spreadsheets.  Their input is specially formatted
+XML files that are processed by TT before the final conversion from XML to
+their respective formats.  Details about the XML format are available in the
+documentation for Excel::Template.
+
+The templates used by these modules have the extensions ``.odst'' and
+``.xlst''.
+
+\subsection{\lsmbt::TXT}
+A format infrequently used by \lsmbn, this is used for Point Of Sale invoices.
+It looks for templates that end in ``.txt''.
+
+\subsection{\lsmbt::TTI18N}
+This module defines some internationalisation functions that can be called in
+templates that use Template Toolkit.
+
+\subsection{\lsmbn::Mailer}
+This module provides the functions used by \lsmbt{ }and the backup routines
+in the administration module to email files and documents.
+
+\part{Appendix}
+\appendix
+\section{Quick Reference}
+\begin{tabular}{|l|p{7cm}|}
+\hline
+\multicolumn{2}{|c|}{Variable Access}\\
+\hline
+varname & The value of the scalar varname\\
+listname.\emph{i} & Element \emph{i} of the list, lists are indexed from 0\\
+hashname.key & The value of the hash with the key \emph{key}\\
+hashname.\$key & The value of the hash with the key whose name is stored in \$key\\
+\hline
+\multicolumn{2}{|c|}{Flow Control}\\
+\hline
+IF \emph{condition}; ELSIF; ELSE & A basic if/else block \\ 
+FOREACH \emph{var} IN \emph{list} & Iterate over the members of \emph{list}\\
+END & Conclude an open block \\
+\hline
+\multicolumn{2}{|c|}{Special Variables}\\
+\hline
+loop & Refers to the immediately containing loop\\
+\hline
+\multicolumn{2}{|c|}{Built-in Methods}\\
+\hline
+any.defined & Returns true if \emph{any} is defined\\
+scalar.split(delimiter) & Returns a list of elements from the split string\\
+list.size & Returns the number of elements in the list\\
+list.join(delimiter) & Returns the list's elements joined together\\
+list.defined(\emph{i}) & Returns true if the specified element is defined\\
+hash.item(name) & Returns the value of the element name from hash\\
+hash.keys & Returns a list containing the hash's keys\\
+hash.pairs & Returns a list of key/value pairs, sorted by key\\
+hash.size & Returns the number of key/value pairs in the hash\\
+loop.count & Returns the iteration number\\
+loop.last & Returns true if it is the final iteration\\
+loop.first & Returns true if it is the first iteration\\
+\hline
+\multicolumn{2}{|c|}{Internationalisation}\\
+\hline
+text(string, @args) & Returns the LSMB locale's gettext value for string\\
+gettext(locale, string, @args) & Returns the locale's gettext value for string\\
+\hline
+\multicolumn{2}{|c|}{Debugging}\\
+\hline
+DEBUG format '\$file:\$line' & Starts and specifies the format of a debug region\\
+DEBUG format '' & Ends a region of debug output\\
+USE dumper() & Load the dumper plugin\\
+dumper.dump\_html(var) & Dump variables\\
+\hline
+\end{tabular}
+
+\section{Templating Changes Between Versions}
+\subsection{\lsmb 1.3 to \lsmb 1.2}
+\begin{itemize}
+\item A new templating API was added to replace Form::parse\_template
+\item The main rendering engine was changed to Template Toolkit
+\item Migration of the user interface to using \lsmbt{ }was started
+\item DVI, Excel, OpenDocument Spreadsheet, and CSV output support was added
+\item The \lsmbn::Mailer API was changed and documented
+\end{itemize}
+
+\subsection{\lsmb 1.2 to \lsmb 1.1}
+\begin{itemize}
+\item Tags were changed from the form \tl\% foo \%\tg to \pitag{foo}
+\item The ability to compare two variables in templates was removed
+\item \lsmbn::Mailer was rewritten to use MIME::Lite while retaining the old API
+\item SMTP support was added to \lsmbn::Mailer
+\end{itemize}
+
+\end{document}

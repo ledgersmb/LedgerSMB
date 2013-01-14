@@ -1,0 +1,26 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?> 
+<body>
+<center>
+<a href="http://www.ledgersmb.org" target="_blank"><img src="images/ledgersmb.png" width="200" height="100" border="0" alt="LedgerSMB Logo" /></a>
+<h1 class="login"><?lsmb text('Version [_1]', form.version) ?></h1>
+<p><?lsmb text('Company: [_1]', user.company) ?><br />
+<?lsmb user.address.replace('&lt;br&gt;', '<br />') ?></p>
+
+<table border="0">
+  <tr>
+    <th align="right"><?lsmb text('User') ?></th>
+    <td><?lsmb user.name ?></td>
+  </tr>
+  <tr>
+    <th align="right"><?lsmb text('Dataset') ?></th>
+    <td><?lsmb user.dbname ?></td>
+  </tr>
+  <tr>
+    <th align="right"><?lsmb text('Database Host') ?></th>
+    <td><?lsmb user.dbhost ?></td>
+  </tr>
+</table>
+</center>
+</body>
+</html>

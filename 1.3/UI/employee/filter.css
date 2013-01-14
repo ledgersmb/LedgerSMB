@@ -1,0 +1,23 @@
+label {
+	width: 9em;
+	display: block;
+	float: left;
+	text-align: right;
+        margin-right: 3px;
+}
+
+div {
+	overflow: auto;
+}
+
+input.name {
+	width: 15em;
+}
+
+input.date {
+	width: 10em;
+}
+
+div.inputgroup {
+	float: left
+}	

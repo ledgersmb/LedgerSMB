@@ -1,0 +1,12 @@
+# .gitignore for LedgerSMB
+#
+# Vim swap files
+*.swp
+#
+# Perl Module::Build, Module::Install, ExtUtils::MakeMaker
+META.yml
+Makefile
+inc/
+#
+# LedgerSMB runtime files
+ledgersmb.conf

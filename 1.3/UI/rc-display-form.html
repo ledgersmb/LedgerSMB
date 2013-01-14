@@ -1,0 +1,126 @@
+<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb PROCESS elements.html ?> 
+
+<body>
+<form method="post" action="<?lsmb form.script ?>">
+<table width="100%">
+  <tr>
+    <th class="listtop" colspan="<?lsmb columns.size ?>"><?lsmb form.title ?></th>
+  </tr>
+  <tr>
+  <?lsmb IF options.defined ?>
+    <td><?lsmb FOREACH option IN options; option ?><br /><?lsmb END ?></td>
+  <?lsmb ELSE ?>
+    <td colspan="<?lsmb columns.size ?>"></td>
+  <?lsmb END ?>
+  </tr>
+  <tr>
+    <td>
+      <table width="100%">
+        <tr class="listheading">
+<?lsmb FOREACH column IN columns ?>
+          <th class="listtop">
+	<?lsmb IF heading.$column.href ?><a class="listtop" href="<?lsmb heading.$column.href ?>"><?lsmb heading.$column.text ?></a>
+	<?lsmb ELSE; heading.$column; END ?>
+          </th>
+<?lsmb END ?>
+        </tr>
+<?lsmb FOREACH row IN rows ?>
+<?lsmb IF row.class == 'heading';      s = 'th'; c = 'listheading';
+	ELSIF row.class == 'subtotal'; s = 'th'; c = 'listsubtotal';
+	ELSE;                          s = 'td'; c = "listrow${row.i}"; END ?>
+        <tr class="<?lsmb c ?>">
+  <?lsmb FOREACH column IN columns ?>
+  <<?lsmb s ?> class="<?lsmb c ?>" <?lsmb IF (!row.class.defined || row.class != 'heading') && row_alignment.$column ?>align="<?lsmb row_alignment.$column ?>"<?lsmb END ?>>
+    <?lsmb IF row.$column.href.defined ?>
+    <a href="<?lsmb row.$column.href?>"><?lsmb row.$column.text ?></a>
+    <?lsmb ELSIF row.$column.delimiter;
+	FOREACH l IN row.$column.text.split(row.$column.delimiter); l ?><br /><?lsmb END ?>
+    <?lsmb ELSIF row.$column.input.defined;
+	PROCESS input element_data=row.$column.input ?>
+    <?lsmb ELSE; row.$column; END ?>
+  </<?lsmb s ?>>
+  <?lsmb END ?>
+        </tr>
+<?lsmb END ?>
+<?lsmb IF totals ?>
+        <tr class="listtotal">
+  <?lsmb FOREACH column IN columns ?>
+  <th class="listtotal" align="right"><?lsmb totals.$column ?></th>
+  <?lsmb END ?>
+        </tr>
+<?lsmb END ?>
+      </table>
+    </td>
+  </tr>
+<?lsmb IF form.report ?>
+</table>
+<?lsmb ELSE ?>
+  <tr>
+    <td>
+      <table width="100%">
+        <tr>
+          <td align="right">
+            <table>
+              <tr>
+                <th align="right"><?lsmb text('Statement Balance') ?></th>
+                <td width="10%" />
+                <td><?lsmb PROCESS input element_data={
+  name => 'statementbalance',
+  size => '11',
+  value => form.statementbalance,
+  } -?>
+                </td>
+              </tr>
+  <?lsmb IF form.pos ?>
+              <tr>
+                <th align="right"><?lsmb options = 
+      [{text => text('Under'), value => 'under'},
+       {text => text('Over'), value => 'over'}];
+    IF form.over_under == 'under';
+      options.0.selected = 'selected';
+    ELSIF form.over_under == 'over';
+      options.1.selected = 'selected';
+    END;
+    PROCESS select element_data={
+      name => 'over_under',
+      options => options,
+      } ?></th>
+                <td width="10%" />
+                <td align="right"><?lsmb PROCESS input element_data={
+    name => 'null',
+    size => '11',
+    value => form.null2,
+    } ?></td>
+              </tr>
+  <?lsmb ELSE ?>
+              <tr>
+                <th align="right"><?lsmb text('Difference') ?></th>
+                <td width="10%" />
+                <td align="right"><?lsmb PROCESS input element_data={
+    name => 'null',
+    size => '11',
+    value => hiddens.difference,
+    } ?></td>
+              </tr>
+  <?lsmb END ?>
+            </table>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td colspan="<?lsmb columns.size ?>"><hr size="3" /></td></tr>
+</table>
+<br />
+  <?lsmb FOREACH hidden IN hiddens.keys;
+	PROCESS input element_data={
+		type => 'hidden',
+		name => hidden,
+		value => hiddens.item(hidden)
+		}; END ?>
+  <?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
+<?lsmb END ?>
+</form>
+</body>
+</html>

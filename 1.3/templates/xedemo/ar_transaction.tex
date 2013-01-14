@@ -1,0 +1,147 @@
+<?lsmb FILTER latex -?>
+\documentclass{scrartcl}
+ \usepackage{xltxtra}
+ \usepackage{fontspec}
+ \setmainfont{LiberationSans-Regular.ttf}
+\usepackage{tabularx}
+\usepackage[top=2cm,bottom=1.5cm,left=2cm,right=1cm]{geometry}
+\usepackage{graphicx}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\pagestyle{empty}
+
+\parbox{\textwidth}{%
+  \parbox[b]{.42\textwidth}{%
+    <?lsmb company ?>
+   
+    <?lsmb address ?>
+  }
+  %\parbox[b]{.2\textwidth}{
+    %\includegraphics[scale=0.3]{ledger-smb}
+  %}
+  \hfill
+  \begin{tabular}[b]{rr@{}}
+  <?lsmb text('Tel:') ?> & <?lsmb tel ?>\\
+  <?lsmb text('Fax:') ?> & <?lsmb fax ?>
+  \end{tabular}
+
+  \rule[1.5em]{\textwidth}{0.5pt}
+}
+
+\centerline{\MakeUppercase{<?lsmb text('AR Transaction') ?>}}
+
+\vspace*{0.5cm}
+
+\parbox[t]{.5\textwidth}{
+<?lsmb name ?>
+
+<?lsmb address1 ?>
+
+<?lsmb address2 ?>
+
+<?lsmb city ?>
+<?lsmb IF state ?>
+, <?lsmb state ?>
+<?lsmb END ?>
+<?lsmb zipcode ?>
+
+<?lsmb country ?>
+
+\vspace{0.3cm}
+
+<?lsmb IF contact ?>
+<?lsmb contact ?>
+<?lsmb END ?>
+
+\vspace{0.2cm}
+
+<?lsmb IF customerphone ?>
+<?lsmb text('Tel: [_1]', customerphone) ?>
+<?lsmb END ?>
+
+<?lsmb IF customerfax ?>
+<?lsmb text('Fax: [_1]', customerfax) ?>
+<?lsmb END ?>
+
+<?lsmb email ?>
+
+<?lsmb IF customertaxnumber ?>
+<?lsmb text('Tax Number: [_1]', customertaxnumber) ?>
+<?lsmb END ?>
+}
+\hfill
+\begin{tabular}[t]{ll}
+  \textbf{<?lsmb text('Invoice #') ?>} & <?lsmb invnumber ?> \\
+  \textbf{<?lsmb text('Date') ?>} & <?lsmb invdate ?> \\
+  \textbf{<?lsmb text('Due') ?>} & <?lsmb duedate ?> \\
+  <?lsmb IF ponumber ?>
+    \textbf{PO \#} & <?lsmb ponumber ?> \\
+  <?lsmb END ?>
+  <?lsmb IF ordnumber ?>
+    \textbf{<?lsmb text('Order #') ?>} & <?lsmb ordnumber ?> \\
+  <?lsmb END ?>
+  \textbf{<?lsmb text('Employee') ?>} & <?lsmb employee ?> \\
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabularx}{\textwidth}[t]{@{}llrX@{\hspace{1cm}}l@{}}
+<?lsmb FOREACH amount ?>
+<?lsmb lc = loop.count - 1 ?>
+  <?lsmb accno.${lc} ?> &
+  <?lsmb account.${lc} ?> &
+  <?lsmb amount.${lc} ?> &
+  <?lsmb description.${lc} ?> &
+  <?lsmb projectnumber.${lc} ?> \\
+<?lsmb END ?>
+
+  \multicolumn{2}{r}{\textbf{Subtotal}} & <?lsmb subtotal ?> & \\
+<?lsmb FOREACH tax ?>
+<?lsmb lc = loop.count - 1 ?>
+  \multicolumn{2}{r}{\textbf{<?lsmb taxdescription.${lc} ?> @ <?lsmb taxrate.${lc} ?> \%}} & <?lsmb tax.${lc} ?> & \\
+<?lsmb END ?>
+
+  \multicolumn{2}{r}{\textbf{Total}} & <?lsmb invtotal ?> & \\
+  
+\end{tabularx}
+
+\vspace{0.3cm}
+
+<?lsmb text_amount ?> ***** <?lsmb decimal ?>/100 <?lsmb currency ?>
+
+<?lsmb IF notes ?>
+\vspace{0.3cm}
+<?lsmb FOREACH P IN notes.split('\n\n') ?>
+<?lsmb P ?>\medskip
+
+<?lsmb END ?>
+<?lsmb END ?>
+
+\vspace{0.3cm}
+
+<?lsmb IF paid_1 ?>
+\begin{tabular}{@{}lllr@{}}
+  \multicolumn{5}{c}{\textbf{<?lsmb text('Payments') ?>}} \\
+  \hline
+  \textbf{<?lsmb text('Date') ?>} & & \textbf{<?lsmb text('Source') ?>} & 
+        \textbf{<?lsmb text('Amount') ?>} \\
+<?lsmb END ?>
+<?lsmb FOREACH payment ?>
+<?lsmb lc = loop.count - 1 ?>
+  <?lsmb paymentdate.${lc} ?> & <?lsmb paymentaccount.${lc} ?> & <?lsmb paymentsource.${lc} ?> & <?lsmb payment.${lc} ?> \\
+<?lsmb END ?>
+<?lsmb IF paid_1 ?>
+\end{tabular}
+<?lsmb END ?>
+
+\vspace{0.5cm}
+
+<?lsmb FOREACH tax ?>
+<?lsmb lc = loop.count - 1 ?>
+\textbf{\scriptsize <?lsmb taxdescription.${lc} _ ' ' _ text('Registration') _ ' ' _  taxnumber.${lc} ?>} \\
+<?lsmb END ?>
+  
+\end{document}
+<?lsmb END ?>

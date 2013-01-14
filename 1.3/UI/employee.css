@@ -1,0 +1,25 @@
+div.2column { 
+	display: block; 
+	width: 50%;
+	direction: rtl;
+	unicode-bidi: bidi-override;
+}
+span.group_input_field {
+	display: block;
+}
+#form_column1 {
+	float: left;
+}
+#form_column2 {
+	float: left;
+	margin-right: 20%;
+}
+#notes_div{
+	float: left;
+}
+.input_label {
+	
+}
+.input_field {
+
+}

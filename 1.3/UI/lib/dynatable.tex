@@ -1,0 +1,94 @@
+<?lsmb- BLOCK dynatable;
+
+TOTAL_WIDTH=14; # cm. using A4 as a basis because it is slightly narrower than
+                # US Letter. This way the dynatable works for both paper sizes.
+                # This assumes a 1cm margin on either side. --CT
+DECLARED_WIDTH=0; 
+
+SKIP_TYPES = ['hidden', 'radio', 'checkbox'];
+
+
+FOREACH COL IN columns;
+    DECLARED_WIDTH = DECLARED_WIDTH + COL.pwidth; # pwidth is arbitrary scale
+END; 
+
+IF DECLARED_WIDTH > 0;
+    WIDTH_PER_P = TOTAL_WIDTH / DECLARED_WIDTH;
+ELSE;
+    WIDTH_PER_P = 1;
+END;
+ ?>
+\begin{longtable}{<?lsmb-
+
+FOREACH COL IN columns;
+   IF COL.psep_before;
+      '|';
+   END;
+   IF 1 == SKIP_TYPES.grep(COL.type).size() or COL.html_only;
+      '';
+   ELSIF COL.pwidth;
+       "p{" _ (COL.pwidth * WIDTH_PER_P) _ "cm}";
+   ELSIF COL.palign;
+        COL.palign;
+   ELSE;
+        'l';
+   END;
+   IF COL.psep_after;
+      '|';
+   END;
+END; 
+-?>}
+<?lsmb IF firsthead; firsthead ?>\\
+<?lsmb- END ?>
+<?lsmb IF head; head ?>\\<?lsmb- END ?>
+<?lsmb- -?>
+<?lsmb 
+ADD_SEP = 0;
+FOREACH COL IN columns;
+    IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
+        IF ADD_SEP;
+           ' & ';
+        END;
+        COL.name;
+        ADD_SEP = 1;
+    END;
+END;
+-?>\tabularnewline
+\hline\hline
+\endfirsthead
+<?lsmb 
+
+ADD_SEP = 0;
+FOREACH COL IN columns;
+    IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
+        IF ADD_SEP;
+           ' & ';
+        END;
+        COL.name;
+        ADD_SEP = 1;
+    END;
+END;
+-?>\tabularnewline
+\hline\hline
+\endhead
+<?lsmb
+
+FOREACH ROW IN tbody.rows;
+    ADD_SEP=0;
+    FOREACH COL IN columns;
+        COLID =  COL.col_id.replace('\\\\');
+        IF 0 == SKIP_TYPES.grep(COL.type).size() AND ! COL.html_only;
+            IF ADD_SEP;
+               ' & ';
+            END;
+            ADD_SEP = 1;
+            ?>\begin{minipage}{<?lsmb (COL.pwidth * WIDTH_PER_P) _ "cm"; ?>}<?lsmb
+                ROW.${COLID}; #$
+            ?>\end{minipage}<?lsmb
+        END;
+    END;
+    ?>\tabularnewline
+<?lsmb
+END; # FOREACH ?>
+\end{longtable}
+<?lsmb END;  # block dynatable -?>

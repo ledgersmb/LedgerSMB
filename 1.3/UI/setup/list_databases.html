@@ -1,0 +1,17 @@
+<?lsmb INCLUDE "ui-header.html"
+stylesheet="ledgersmb.css"
+include_stylesheet=["UI/setup/stylesheet.css"];
+       PROCESS "elements.html";
+       PROCESS "dynatable.html"; ?>
+<body>
+<div class="listtop"><?lsmb text('Available Databases') ?></div>
+<?lsmb 
+    INCLUDE dynatable
+            columns = [{col_id = 'db', 
+                       name = text('Database'), 
+                       type = 'href'
+                  href_base = 'setup.pl?action=login&database='}]
+            tbody = {rows = dbs}
+              id = 'db_list' ?>
+</body>
+</html>

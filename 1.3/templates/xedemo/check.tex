@@ -1,0 +1,20 @@
+<?lsmb FILTER latex ?>
+\documentclass{scrartcl}
+ \usepackage{xltxtra}
+ \usepackage{fontspec}
+ \setmainfont{LiberationSans-Regular.ttf}
+\usepackage{tabularx}
+\usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
+\usepackage{graphicx}
+
+<?lsmb REQUIRE check_base.tex ?>
+
+\begin{document}
+
+\pagestyle{myheadings}
+\thispagestyle{empty}
+
+<?lsmb PROCESS check_single ?>
+
+\end{document}
+<?lsmb END # FILTER latex ?>
