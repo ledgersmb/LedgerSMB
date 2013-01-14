@@ -2460,7 +2460,7 @@ sub createlocation
 
   my $dbh=$form->{dbh};
 
-  my $query="select * from eca__location_save(?,?,?,?,?,?,?,?,?,?);";
+  my $query="select * from eca__location_save(?,?,?,?,?,?,?,?,?,?, null);";
 
   my $sth=$dbh->prepare("$query");
 
