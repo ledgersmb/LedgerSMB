@@ -116,6 +116,7 @@ else
         exit 0
       else
         echo  "cp ledgersmb-httpd.conf $apacheconf"
+        cp ledgersmb-httpd.conf $apacheconf
         newconfig=true
      fi
    fi
