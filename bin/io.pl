@@ -2347,10 +2347,10 @@ sub createlocations
 sub validatelocation
 {
 
-   	my @Newlocation=("shiptoaddress1_new","shiptoaddress2_new","shiptoaddress3_new","shiptocity_new","shiptostate_new","shiptozipcode_new","shiptocountry_new");
+   	my @Newlocation=("shiptoaddress1_new","shiptocity_new","shiptostate_new","shiptocountry_new");
         foreach(@Newlocation)
 	{
-		$form->error( " Don not keep field empty $_") unless($form->{"$_"});
+		$form->error( $locale->text("Do not keep field empty [_1]", $_)) unless($form->{"$_"});
 	}
 
 
