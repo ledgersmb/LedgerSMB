@@ -53,7 +53,8 @@ is as simple as running:
 
  $ apt-get install apache2
 
-On Fedora systems the following command does the same:
+On Fedora and its derivatives (RedHat, Centos ++) the following command
+does the same:
 
  $ yum install httpd
 
@@ -68,7 +69,7 @@ On Debian and its derivatives installing PostgreSQL works with:
 
  $ apt-get install postgresql-server postgresql-client postgresql-contrib
 
-On Fedora systems this command does the same:
+On Fedora and its derivatives this command does the same:
 
  $ yum install postgresql postgresql-server postgresql-contrib
 
@@ -200,7 +201,7 @@ CPAN module (the Perl module downloader) as well.
 
 >>> Perl module dependencies for Debian
 
----- Actions for Debian Squeeze
+---- Actions for Debian Squeeze  (6.x stable)
 
 To install all the required packages which Squeeze supports, execute the
 following command:
@@ -211,12 +212,19 @@ following command:
    libtest-trap-perl liblog-log4perl-perl libmath-bigint-gmp-perl \
    libfile-mimeinfo-perl libtemplate-plugin-number-format-perl \
    libdatetime-format-strptime-perl libconfig-general-perl
+   (@@@ have to TEST for trunk / 1.4 @@@)
+
+Extra for trunk (1.4) (@@@ tested @@@):
+  $ aptitude install libdatetime-format-strptime-perl \ 
+    libconfig-inifiles-perl libcontextual-return-perl
+
 
 This installs the modules available from the Squeeze repository.
 
 As far as the optional packages are concerned on Squeeze, the Excel and
 PDF/Postscript output options are not directly available. If you want
-these output options, you'll need to download them from CPAN.
+these output options, you'll need to download them from CPAN. 
+(@@@ TEST (Excel gone in 1.4) @@@)
 
 Please note that the PDF/Postscript module depends on the TeX/LaTeX
 package which *is* in the Squeeze package repository:
@@ -232,6 +240,18 @@ The Open Office output option is available from the Squeeze repository
 as well through the command:
 
  $ aptitude install libxml-twig-perl
+
+
+(@@@ ADD info about xelatex @@@)
+http://ledgersmb.org/faq/localization/im-using-non-ascii-unicode-characters-why-cant-i-generate-pdf-output
+
+
+
+>>> Perl module dependencies for Fedora and its derivatives (RedHat, Centos ++)
+
+---- Actions for Fedora 
+Install rpm or look at dists/rpm/ledgersmb.spec for perl module dependencies
+(@@@ update for 1.4 @@@)
 
 
 Initializing a company database
