@@ -105,6 +105,7 @@ GRANT SELECT ON entity_to_contact TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT SELECT ON entity_to_location TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT SELECT ON eca_to_location TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT SELECT ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__contact_read";
+GRANT SELECT ON eca_note TO "lsmb_<?lsmb dbname ?>__contact_read";
 GRANT EXECUTE ON FUNCTION eca__list_notes(int)  TO "lsmb_<?lsmb dbname ?>__contact_read";
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_vendor" WITH INHERIT NOLOGIN;
@@ -1106,6 +1107,8 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__gl_reports";
 
 GRANT select ON yearend TO "lsmb_<?lsmb dbname ?>__financial_reports";
+GRANT select ON cash_impact TO "lsmb_<?lsmb dbname ?>__financial_reports";
+GRANT select ON tx_report TO "lsmb_<?lsmb dbname ?>__financial_reports";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (110, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
