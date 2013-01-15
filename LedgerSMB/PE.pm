@@ -1,4 +1,5 @@
 # SLATED TO BE GREATLY REDUCED IN 1.4
+
 =head1 NAME
 
 LedgerSMB::PE - Support functions for projects, partsgroups, and parts
@@ -748,12 +749,20 @@ sub save_translation {
 
     my $dbh = $form->{dbh};
 
-    my $query = qq|DELETE FROM translation WHERE trans_id = ?|;
+    my %tables = (
+        partsgroup => 'partsgroup_translation',
+        description => 'parts_translation'
+    );
+
+    my $table = $tables{$form->{translation}};
+
+    # table is whitelisted below, so safe.
+    my $query = qq|DELETE FROM $table WHERE trans_id = ?|;
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
     $query = qq|
-		INSERT INTO translation (trans_id, language_code, description)
+		INSERT INTO $table (trans_id, language_code, description)
 		     VALUES (?, ?, ?)|;
     my $sth = $dbh->prepare($query) || $form->dberror($query);
 
