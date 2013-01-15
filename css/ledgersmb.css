@@ -42,7 +42,7 @@ table.criteria td {
   text-align: right;
 }
 
-#company_info {
+#company_info, #version_info {
    font-weight: bold;
    font-size: 9pt;
 }
