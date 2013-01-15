@@ -1775,7 +1775,7 @@ CREATE TABLE inventory_report_line (
    counted numeric,
    expected numeric,
    variance numeric,
-   PRIMARY KEY (report_id, parts_id)
+   PRIMARY KEY (adjust_id, parts_id)
 );
 
 --
