@@ -87,7 +87,8 @@ Changelog for 1.3.29
 environments (Chris T, 3598924, filed by Erik H)
 * Added provision in Makefile to instantiate pos.conf.pl if not exist (Chris
 T, 3599945)
-* Fixing eca__location_save not found (Chris T, 3599908)
+* Fixed errors adding shipto on invoice screen (Chris T, 3599908)
+* Fixed permission denied errors adding translations (Chris T, 3599943)
 
 Changelog for 1.3.28
 * Added db list to setup.pl when no db is entered and credentials allow login
