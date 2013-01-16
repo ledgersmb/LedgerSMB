@@ -93,12 +93,12 @@ sub _main_screen {
         );
     }
     # DIVS logic
-    my @DIVS;
-    if ($employee->{entity_id}){
-       @DIVS = qw(employee user wage address contact_info bank_act notes files);
-    } else {
-       @DIVS = qw(employee);
-    }
+    my @DIVS = qw(employee);
+    push @DIVS, 'user' 
+        if $request->is_allowed_role({ allowed_roles => ['users_manage']});
+    push @DIVS, qw(wage address contact_info bank_act notes files)
+        if ($employee->{entity_id});
+
     $request->{target_div} ||= 'employee_div';
 
     my %DIV_LABEL = (

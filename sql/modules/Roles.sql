@@ -1396,9 +1396,7 @@ values (242, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
 
 CREATE ROLE "lsmb_<?lsmb dbname ?>__users_manage"
 WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_edit",
-"lsmb_<?lsmb dbname ?>__contact_create",
-"lsmb_<?lsmb dbname ?>__employees_manage";
+IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
 GRANT SELECT ON role_view TO "lsmb_<?lsmb dbname ?>__users_manage";
 GRANT EXECUTE ON FUNCTION  admin__add_user_to_role(TEXT, TEXT) 
