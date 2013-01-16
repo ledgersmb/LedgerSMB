@@ -92,6 +92,7 @@ T, 3599945)
 * Added version number to message at top of menu (Chris T, 3600009)
 * Added wrapper div around pricegroup field in contact screen to allow cssp,
 Chris T.
+* Fixed inverted tax numbers in vendor taxable sales report (Chris T, 3600002)
 
 Changelog for 1.3.28
 * Added db list to setup.pl when no db is entered and credentials allow login
