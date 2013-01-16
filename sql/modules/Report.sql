@@ -395,6 +395,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
                shipvia, ordnumber, ponumber, description, on_hold
           FROM ap 
          WHERE in_entity_class = 1 and approved) a 
+  LEFT
   JOIN (SELECT trans_id, sum(amount) * 
                CASE WHEN in_entity_class = 1 THEN 1 ELSE -1 END AS due,
                max(transdate) as last_payment
@@ -491,6 +492,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
                shipvia, ordnumber, ponumber, description, on_hold
           FROM ap 
          WHERE in_entity_class = 1 and approved) a 
+  LEFT
   JOIN (select sum(amount) * case when in_entity_class = 1 THEN 1 ELSE -1 END
                as due, trans_id, max(transdate) as last_payment
           FROM acc_trans ac
@@ -506,7 +508,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
   JOIN entity mee ON ee.manager_id = mee.id
  WHERE (in_account_id IS NULL OR 
        EXISTS (select * from acc_trans 
-                where trans_id = a.id AND chart_id = in_account_id))
+               where trans_id = a.id AND chart_id = in_account_id))
        AND (in_entity_name IS NULL 
            OR eeca.name ilike in_entity_name || '%')
        AND (in_meta_number IS NULL OR eca.meta_number ilike in_meta_number)
@@ -544,7 +546,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
             )
             AND ( -- open/closed handling
               (in_open IS TRUE AND p.due <> 0) 
-              OR (in_closed IS TRUE AND p.due = 0)
+              OR (in_closed IS TRUE AND p.due = 0 or p.due is null)
             )
 
 LOOP
