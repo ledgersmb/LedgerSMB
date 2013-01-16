@@ -528,11 +528,13 @@ Adds a location to the company as defined in the inherited object
 sub save_location {
     my ($request) = @_;
 
-    my $location = LedgerSMB::Entity::Location->new(%$request);
-    if ($request->{attach_to} eq '1'){
-       $location->credit_id(undef);
+    my $credit_id = $request->{credit_id};
+    if ($request->{attach_to} == 1){
+       delete $request->{credit_id};
     }
-    $location->id($request->{location_id});
+    my $location = LedgerSMB::Entity::Location->new(%$request);
+    $request->{credit_id} = $credit_id;
+    $location->id($request->{location_id}) if $request->{location_id};
     $location->save;
     $request->{target_div} = 'address_div';
     get($request);

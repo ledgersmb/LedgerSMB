@@ -55,6 +55,17 @@
              DISPLAY = LOC;
         END;
     END; ?><?lsmb
+
+    FOREACH loc IN locations;
+         loc.address = loc.line_one;
+         IF loc.line_two;
+            loc.address = loc.address _ '<br />' _ loc.line_two;
+         END;
+         IF loc.line_three;
+            loc.address = loc.address _ '<br />' _ loc.line_three;
+         END;
+    END;
+
     PROCESS dynatable 
                tbody = {rows = locations}
           attributes = {id = 'location_table'
@@ -62,7 +73,7 @@
              columns = [
        {col_id = 'is_for_credit', type = 'text', name = text('This Account') } #'
        {col_id = 'type', type = 'text', name=text('Type') }
-       {col_id = 'line_one', type='text', name=text('Address1') }
+       {col_id = 'address', type='text', name=text('Address') }
        {col_id = 'city', type='text', name=text('City') }
        {col_id = 'state', type='text', name=text('State/Province') }
        {col_id = 'mail_code', type='text', name=text('Zip/Post Code') } #'
