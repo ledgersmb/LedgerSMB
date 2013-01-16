@@ -209,7 +209,7 @@ PROCESS dynatable
 			class = "numeric"
                } ?></td>
           <td><?lsmb IF pricegroups.size > 0 ?>
-              <?lsmb pricegroups.unshift({});
+              <div id="pricegroup-div"><?lsmb pricegroups.unshift({});
                 INCLUDE select element_data = {
                      default_values = [credit_act.pricegroup_id],
                                name = 'pricegroup_id'
@@ -217,7 +217,7 @@ PROCESS dynatable
                               label = text('Pricegroup')
                          value_attr = 'id'
                           text_attr = 'pricegroup'
-                } ?>
+                } ?></div>
               <?lsmb END ?></td>
 	</tr>
 

@@ -90,6 +90,8 @@ T, 3599945)
 * Fixed errors adding shipto on invoice screen (Chris T, 3599908)
 * Fixed permission denied errors adding translations (Chris T, 3599943)
 * Added version number to message at top of menu (Chris T, 3600009)
+* Added wrapper div around pricegroup field in contact screen to allow cssp,
+Chris T.
 
 Changelog for 1.3.28
 * Added db list to setup.pl when no db is entered and credentials allow login
