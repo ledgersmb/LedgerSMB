@@ -41,7 +41,7 @@ requires 'DateTime::Format::Strptime';
 requires 'Moose';
 
 
-recommends 'perl-Math-BigInt-GMP';
+recommends 'Math::BigInt::GMP';
 
 test_requires 'Test::More';
 test_requires 'Test::Trap';
