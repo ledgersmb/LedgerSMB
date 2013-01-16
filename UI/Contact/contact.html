@@ -758,23 +758,30 @@ END ?>
     <table width="100%">
     <tr class="listheading">
         <th class="type"><?lsmb text('Type') ?></th>
-        <th class="line_one"><?lsmb text('Address1') ?></th>
+        <th class="address"><?lsmb text('Address') ?></th>
         <th class="city"><?lsmb text('City') ?></th>
         <th class="state"><?lsmb text('State/Province') ?></th>
         <th class="mail_code"><?lsmb text('ZIP/Post Code') ?></th>
         <th class="country"><?lsmb text('Country') ?></th>
 	<th class="actions"><?lsmb text('Actions') ?></th>
     </tr>
-	<?lsmb FOREACH loc = locations ?>
-    <?lsmb IF location_id == loc.id;
+	<?lsmb FOREACH loc = locations;
+           IF location_id == loc.id;
                  FOREACH key = loc.keys();
                       $key = loc.$key;
                  END;
            END;
+         loc.address = loc.line_one;
+         IF loc.line_two;
+            loc.address = loc.address _ '<br />' _ loc.line_two;
+         END;
+         IF loc.line_three;
+            loc.address = loc.address _ '<br />' _ loc.line_three;
+         END;
     ?>
     <tr <?lsmb IF location_id == loc.id ?> class="active" <?lsmb END ?>>
 	<td class="type"><?lsmb loc.class ?></td>
-	<td class="line_one"><?lsmb loc.line_one ?></td>
+	<td class="line_one"><?lsmb loc.address ?></td>
 	<td class="city"><?lsmb loc.city ?></td>
 	<td class="state"><?lsmb loc.state ?></td>
 	<td class="mail_code"><?lsmb loc.mail_code ?></td>
