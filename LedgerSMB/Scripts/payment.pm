@@ -824,7 +824,7 @@ for my $ref (0 .. $#array_options) {
       $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} = $request->{first_load}? "on":  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"};
 
 # LETS SET THE EXCHANGERATE VALUES
-   my $due_fx = $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} ? $request->round_amount($array_options[$ref]->{due_fx}) : $request->round_amount($array_options[$ref]->{due_fx}) +  $array_options[$ref]->{discount_fx} ;
+   my $due_fx = $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} ? $request->round_amount($array_options[$ref]->{due_fx}) : $request->round_amount($array_options[$ref]->{due_fx});
    my $topay_fx_value;
    if ("$exchangerate") {
        $topay_fx_value =   $due_fx;
