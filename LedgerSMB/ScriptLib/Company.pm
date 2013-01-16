@@ -816,6 +816,8 @@ sub save_contact {
         $company->save_contact();
     }
     $company->get;
+    delete $company->{description};
+    delete $company->{contact};
     _render_main_screen( $company );
 }
 
