@@ -581,6 +581,7 @@ END ?>
 			class = "numeric"
                } ?>
           <td> <?lsmb IF pricegroups.size > 0 ?>
+               <div id="pricegroup-div">
                <?lsmb pricegroups.unshift({});
                 INCLUDE select element_data = {
                      default_values = [pricegroup_id],
@@ -589,7 +590,7 @@ END ?>
                               label = text('Pricegroup')
                          value_attr = 'id'
                           text_attr = 'pricegroup'
-                } ?>
+                } ?></div>
                <?lsmb END ?></td>
 	</tr>
 
