@@ -1987,9 +1987,11 @@ sub tax_report {
 
    SELECT gl.transdate, gl.id, gl.invnumber, e.name, e.id as entity_id, 
           eca.id as credit_id, eca.meta_number, gl.netamount, 
-          sum(CASE WHEN a.id IS NOT NULL then ac.amount ELSE 0 END) as tax, 
-          gl.invoice, gl.netamount 
-          + sum(CASE WHEN a.id IS NOT NULL then ac.amount ELSE 0 END) as total
+          sum(CASE WHEN a.id IS NOT NULL then ac.amount ELSE 0 END) *
+          CASE WHEN $account_class = 1 THEN -1 ELSE 1 END as tax, 
+          gl.invoice, (gl.netamount 
+          + sum(CASE WHEN a.id IS NOT NULL then ac.amount ELSE 0 END)) 
+          * CASE WHEN $account_class = 1 THEN -1 ELSE 1 END as total
      FROM (select id, transdate, amount, netamount, entity_credit_account,
                   invnumber, invoice
              from ar where ? = 2
@@ -2009,7 +2011,8 @@ LEFT JOIN dpt_trans dpt ON (gl.id = dpt.trans_id)
           AND (gl.transdate >= ? or ? is null)
           AND (gl.transdate <= ? or ? is null)
  GROUP BY gl.transdate, gl.id, gl.invnumber, e.name, e.id, eca.id,
-           eca.meta_number, gl.amount, gl.netamount, gl.invoice
+           eca.meta_number, gl.amount, gl.netamount, gl.invoice, 
+           eca.entity_class
    HAVING (sum(CASE WHEN a.id is not null then ac.amount else 0 end) 
            <> 0 AND ? IS NOT NULL) 
           OR (? IS NULL and sum(CASE WHEN a.id is not null then ac.amount
