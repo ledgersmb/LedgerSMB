@@ -953,7 +953,7 @@ sub transactions {
 		          a.ponumber $acc_trans_flds
 		     FROM $table a
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
-		     JOIN acc_trans acs ON (acs.trans_id = a.id)
+		LEFT JOIN acc_trans acs ON (acs.trans_id = a.id)
 		     JOIN entity vce ON (vc.entity_id = vce.id)
 		     JOIN chart c ON (acs.chart_id = c.id
                                       AND charttype='A')
@@ -991,7 +991,7 @@ sub transactions {
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
                      JOIN acc_trans ac ON (a.id = ac.trans_id)
                      JOIN chart c ON (c.id = ac.chart_id)
-                     JOIN (SELECT acc_trans.trans_id,
+                LEFT JOIN (SELECT acc_trans.trans_id,
                                 sum(CASE WHEN '$table' = 'ap' THEN amount
                                          WHEN '$table' = 'ar'
                                          THEN amount * -1
