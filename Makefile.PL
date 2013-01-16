@@ -37,7 +37,7 @@ requires 'Error';
 requires 'CGI::Simple';
 requires 'File::MimeInfo';
 
-recommends 'perl-Math-BigInt-GMP';
+recommends 'Math::BigInt::GMP';
 
 test_requires 'Test::More';
 test_requires 'Test::Trap';
