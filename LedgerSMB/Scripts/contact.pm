@@ -588,13 +588,17 @@ Saves the specified contact info
 
 sub save_contact {
     my ($request) = @_;
-    my $contact = LedgerSMB::Entity::Contact->new(%$request);
+    my $credit_id = $request->{credit_id};
     if ($request->{attach_to} == 1){
-       $contact->credit_id(undef);
+       delete $request->{credit_id};
     }
+    my $contact = LedgerSMB::Entity::Contact->new(%$request);
+    $request->{credit_id} = $credit_id;
     $contact->save;
     $request->{target_div} = 'address_div';
     $request->{target_div} = 'contact_info_div';
+    delete $request->{description};
+    delete $request->{contact};
     get($request);
 } 
 

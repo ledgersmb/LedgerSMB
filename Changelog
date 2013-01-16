@@ -96,6 +96,10 @@ Chris T.
 * Fixed cash/receipt and payment screen calculating to pay wrong (Chris T,
 3599995)
 * Fixed net-0 transactions not showing up on search (Chris T, 3600700)
+* Fixed incorrect recommendation in Makefile.PL (Chris T, h.t Havard S and
+Robert C)
+* Fixed contact info addition workflow.  Now entering multiple contact records 
+is not a total pain(Chris T)
 
 Changelog for 1.3.28
 * Added db list to setup.pl when no db is entered and credentials allow login
