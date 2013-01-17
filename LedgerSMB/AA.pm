@@ -1350,12 +1350,15 @@ sub get_name {
     my $ARAP = uc $arap;
 
     $form->{creditremaining} = $form->{creditlimit};
+    # acc_trans.approved is only false in the case of batch payments which 
+    # have not yet been approved.  Unapproved transactions set approved on the
+    # ar or ap record level.  --CT
     $query = qq|
                 SELECT sum(used) FROM (
 		SELECT SUM(ac.amount) 
                        * CASE WHEN '$arap' = 'ar' THEN -1 ELSE 1 END as used
 		  FROM $arap a
-                  JOIN acc_trans ac ON a.id = ac.trans_id
+                  JOIN acc_trans ac ON a.id = ac.trans_id and approved
                   JOIN account_link al ON al.account_id = ac.chart_id
                                        AND al.description IN ('AR', 'AP')
 		 WHERE entity_credit_account = ?
