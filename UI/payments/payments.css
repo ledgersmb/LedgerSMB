@@ -28,6 +28,9 @@ input[type="checkbox"], input[type="radio"]{
 	float: none;
 }
 
+.details_select input[type="radio"] {
+        float: left;
+}
 select {
 	float: left;
 }
