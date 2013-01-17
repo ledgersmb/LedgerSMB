@@ -890,6 +890,9 @@ sub get_name {
     my $ARAP = uc $arap;
 
     $form->{creditremaining} = $form->{creditlimit};
+    # acc_trans.approved is only false in the case of batch payments which 
+    # have not yet been approved.  Unapproved transactions set approved on the
+    # ar or ap record level.  --CT
     $query = qq|
                 SELECT sum(used) FROM (
 		SELECT SUM(ac.amount) 
