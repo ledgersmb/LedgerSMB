@@ -54,6 +54,7 @@ use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Invoices::Payments;
 use Error::Simple;
 use Error;
+use Carp::Always;
 use strict; 
 
 # CT:  A few notes for future refactoring of this code:
@@ -321,7 +322,7 @@ sub post_payments_bulk {
     } else {
         $payment->{notice} = 
            $payment->{_locale}->text('Data not saved.  Please try again.');
-        display_payments($request);
+        return display_payments($request);
     }
     
     payments($request);

@@ -187,6 +187,7 @@ sub to_output {
 
     my $format = ($args{format}) ? $args{format}
                               : $LedgerSMB::App_State::User->{numberformat};
+
     my $places = undef;
     $places = LedgerSMB::Setting->get('decimal_places') if $args{money};
     $places = ($args{places}) ? $args{places} : $places;
@@ -201,6 +202,8 @@ sub to_output {
                   -decimal_fill => $zfill,
                   -neg_format => 'x'
         );
+        $str = $formatter->format_number($str, $dplaces);
+        $str =~ s/,//g;
     } else {
         $formatter = new Number::Format(
                     -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
@@ -208,8 +211,8 @@ sub to_output {
                      -decimal_fill => $zfill,
                        -neg_format => 'x'
         );   
+        $str = $formatter->format_number($str, $dplaces);
     }
-    $str = $formatter->format_number($str, $dplaces);
 
     my $neg_format = ($args{neg_format}) ? $args{neg_format} : 'def';
     my $fmt = ($is_neg) ? $lsmb_neg_formats->{$neg_format}->{neg}

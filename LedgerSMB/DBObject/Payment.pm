@@ -687,7 +687,7 @@ sub post_bulk {
             $pay_amount = $self->format_amount({amount => $pay_amount, format => '1000.00'});
             my $invoice_subarray = "{$invoice_id,$pay_amount}";
             if ($invoice_subarray !~ /^\{\d+\,\-?\d*\.?\d+\}$/){
-                $self->error("Invalid subarray: $invoice_subarray");
+                die "Invalid subarray: $invoice_subarray";
             }
             $invoice_subarray =~ s/[^0123456789{},.-]//; 
 	    if ($invoice_array eq '{}'){ # Omit comma
