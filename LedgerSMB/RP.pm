@@ -1968,6 +1968,21 @@ sub tax_report {
     use strict;
     my ( $self, $myconfig, $form ) = @_;
 
+    my %orderings = (
+      transdate => 'gl.transdate',
+      invnumber => 'gl.invnumber',
+      name      => 'e.name',
+      id        => 'gl.id'
+    );
+
+    my $order = $form->{"sort"};
+    my $order_by;
+    if (defined $orderings{$order}) {
+       $order_by = "ORDER BY $orderings{$order}";
+    } else {
+       $order_by = "";
+    }
+
     my $dbh = $form->{dbh};
 
     my ( $null, $department_id ) = split /--/, $form->{department};
@@ -2016,7 +2031,9 @@ LEFT JOIN dpt_trans dpt ON (gl.id = dpt.trans_id)
    HAVING (sum(CASE WHEN a.id is not null then ac.amount else 0 end) 
            <> 0 AND ? IS NOT NULL) 
           OR (? IS NULL and sum(CASE WHEN a.id is not null then ac.amount
-                                ELSE 0 END) = 0)|;
+                                ELSE 0 END) = 0)
+ $order_by
+|;
 
     my $sth = $dbh->prepare($query);
     $sth->execute($account_class, $account_class, 
