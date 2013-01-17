@@ -541,8 +541,7 @@ sub get_payment_detail_data {
     my ($self) = @_;
     $self->get_metadata();
     if ( $self->{account_class} != 2 && !defined $self->{source_start} ){
-        $self->error('No source start defined!');
-        $self->finalize_request();
+        die 'No source start defined!';
     }
     #$self->error('No source start defined!') unless defined $self->{source_start}; 
 

@@ -168,7 +168,7 @@ map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
 
 if ($myconfig{language}){
     $locale   = LedgerSMB::Locale->get_handle( $myconfig{language} )
-      or $form->error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
+      or $form->_error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 }
 
 $LedgerSMB::App_State::Locale = $locale;

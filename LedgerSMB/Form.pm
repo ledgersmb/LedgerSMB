@@ -438,6 +438,9 @@ sub hide_form {
 
 =item $form->error($msg);
 
+The function simply dies with message $msg however this is wrapped so that older
+behavior occurs, from the handler, see below for this older behavior. 
+
 Output an error message, $msg.  If a CGI environment is detected, this outputs
 an HTTP and HTML header section if required, and displays the message after
 running it through $form->format_string.  If it is not a CGI environment and
@@ -448,6 +451,11 @@ This function does not return.  Execution is terminated at the end of the
 appropriate path.
 
 =cut
+
+sub error {
+    my ( $self, $msg ) = @_;
+    die $msg;
+}
 
 sub error {
 

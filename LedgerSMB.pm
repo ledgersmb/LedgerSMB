@@ -810,6 +810,11 @@ sub finalize_request {
 
 # To be replaced with a generic interface to an Error class
 sub error {
+    my ($self, $msg);
+    die $msg;
+}
+
+sub _error {
 
     my ( $self, $msg ) = @_;
     #Carp::confess();
