@@ -892,8 +892,12 @@ sub get_name {
     $form->{creditremaining} = $form->{creditlimit};
     $query = qq|
                 SELECT sum(used) FROM (
-		SELECT SUM(amount - paid) as used
-		  FROM $arap
+		SELECT SUM(ac.amount) 
+                       * CASE WHEN '$arap' = 'ar' THEN -1 ELSE 1 END as used
+		  FROM $arap a
+                  JOIN acc_trans ac ON a.id = ac.trans_id
+                  JOIN account_link al ON al.account_id = ac.chart_id
+                                       AND al.description IN ('AR', 'AP')
 		 WHERE entity_credit_account = ?
                  UNION 
                 SELECT sum(o.amount * coalesce(e.$buysell, 1)) as used
