@@ -526,7 +526,9 @@ INSERT INTO jcitems (
  person_id,
  notes,
  total,
- non_billable
+ non_billable,
+ jctype, 
+ curr
 )
 SELECT 
  id,
@@ -543,7 +545,10 @@ SELECT
  person_id,
  notes,
  total,
- non_billable
+ non_billable,
+ 1,
+  (SELECT (string_to_array(value, ':'))[1] 
+     FROM lsmb13.defaults WHERE setting_key = 'curr')
   FROM lsmb13.jcitems;
 INSERT INTO custom_table_catalog SELECT * FROM lsmb13.custom_table_catalog;
 INSERT INTO custom_field_catalog SELECT * FROM lsmb13.custom_field_catalog;

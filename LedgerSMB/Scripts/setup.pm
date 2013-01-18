@@ -888,12 +888,16 @@ sub run_upgrade {
        {id => '0', label => $locale->text('Manage Users')},
        {id => '1', label => $locale->text('Full Permissions')},
    );
-    my $template = LedgerSMB::Template->new(
+   if ($v eq '1.2'){
+        my $template = LedgerSMB::Template->new(
                    path => 'UI/setup',
                    template => 'new_user',
                    format => 'HTML',
-     );
-     $template->render($request);
+         );
+         $template->render($request);
+   } else {
+         rebuild_modules($request);
+   }
 }
 
 =item cancel
