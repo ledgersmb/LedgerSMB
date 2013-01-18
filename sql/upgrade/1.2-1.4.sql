@@ -684,10 +684,12 @@ INSERT INTO recurringprint SELECT * FROM lsmb12.recurringprint;
 
 INSERT INTO jcitems(id, business_unit_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            person_id, notes, total)
+            person_id, notes, total, jctype, curr)
      SELECT j.id,  project_id + 1000, parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            p.id, j.notes, coalesce(qty, 0)
+            p.id, j.notes, coalesce(qty, 0), 1, 
+            (SELECT (string_to_array(value, ':'))[1]
+               FROM lsmb12.defaults WHERE setting_key = 'curr')
        FROM lsmb12.jcitems j
        JOIN lsmb12.employee e ON j.employee_id = e.id
        JOIN person p ON e.entity_id = p.entity_id;
