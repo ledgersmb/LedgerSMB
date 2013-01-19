@@ -827,11 +827,11 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
     </td>
   </tr>
 
-  <tr class=listheading>
+  <tr class=listheading id="transaction-payments-label">
     <th class=listheading>| . $locale->text('Payments') . qq|</th>
   </tr>
 
-  <tr>
+  <tr id="invoice-payments-table">
     <td>
       <table width=100%>
 |;

@@ -832,7 +832,7 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
   </tr>
   <tr>
     <td>
-      <table width=100%>
+      <table width=100% id="invoice-payments-table">
 	<tr class=listheading>
 	  <th colspan=6 class=listheading>| . $locale->text('Payments') . qq|</th>
 	</tr>

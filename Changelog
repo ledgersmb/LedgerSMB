@@ -102,6 +102,8 @@ Robert C)
 is not a total pain(Chris T)
 * Fixed lines 2 and 3 not showing on address div for contacts (Chris T)
 * Fixed credit limit not accounting for some payments (Chris T, 3600679)
+* Payments tables in invoice/transaction screens can be references in CSS
+(Chris T)
 
 Changelog for 1.3.28
 * Added db list to setup.pl when no db is entered and credentials allow login
