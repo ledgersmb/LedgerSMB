@@ -105,6 +105,9 @@ is not a total pain(Chris T)
 * Payments tables in invoice/transaction screens can be referenced in CSS
 (Chris T)
 
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+
 Changelog for 1.3.28
 * Added db list to setup.pl when no db is entered and credentials allow login
   to "postgres" db. (Chris T)
