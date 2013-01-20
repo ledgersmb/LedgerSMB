@@ -898,7 +898,7 @@ sub get_name {
 		SELECT SUM(ac.amount) 
                        * CASE WHEN '$arap' = 'ar' THEN -1 ELSE 1 END as used
 		  FROM $arap a
-                  JOIN acc_trans ac ON a.id = ac.trans_id and approved
+                  JOIN acc_trans ac ON a.id = ac.trans_id and ac.approved
                   JOIN account_link al ON al.account_id = ac.chart_id
                                        AND al.description IN ('AR', 'AP')
 		 WHERE entity_credit_account = ?
