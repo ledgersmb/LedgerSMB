@@ -1020,7 +1020,7 @@ sinumber|1
 sonumber|1
 yearend|1
 businessnumber|1
-version|1.3.28
+version|1.3.29
 closedto|\N
 revtrans|1
 ponumber|1
