@@ -671,7 +671,7 @@ sub project_translations {
     my $query = qq|
 		  SELECT l.description AS language, 
 		         t.description AS translation, l.code
-		    FROM project_translation t
+		    FROM business_unit_translation t
 		    JOIN language l ON (l.code = t.language_code)
 		   WHERE trans_id = ?
 		ORDER BY 1|;
