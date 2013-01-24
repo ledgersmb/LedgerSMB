@@ -104,6 +104,7 @@ is not a total pain(Chris T)
 * Fixed credit limit not accounting for some payments (Chris T, 3600679)
 * Payments tables in invoice/transaction screens can be referenced in CSS
 (Chris T)
+* Updated Hungarian translation (Pongracz Istvan)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
