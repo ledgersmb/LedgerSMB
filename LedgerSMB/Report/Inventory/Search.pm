@@ -218,18 +218,22 @@ sub columns {
    
     {col_id => 'listprice',
        type => 'text',
+      money => 1,
        name => LedgerSMB::Report::text('List Price'),},
    
     {col_id => 'sellprice',
        type => 'text',
+      money => 1,
        name => LedgerSMB::Report::text('Sell Price'),},
    
     {col_id => 'lastcost',
        type => 'text',
+      money => 1,
        name => LedgerSMB::Report::text('Last Cost'),},
    
     {col_id => 'avgcost',
        type => 'text',
+      money => 1,
        name => LedgerSMB::Report::text('Avg. Cost'),},
    
     {col_id => 'markup',
@@ -290,6 +294,7 @@ sub columns {
  
     {col_id => 'linetotal',
        type => 'text',
+      money => 1,
        name => LedgerSMB::Report::text('Total'),},
  
     {col_id => 'serialnumber',

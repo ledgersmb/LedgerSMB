@@ -136,6 +136,7 @@ sub columns {
            href_base => "recon.pl?action=display_report&report_id=", },
              {col_id => 'their_total',
                 name => LedgerSMB::Report::text('Statement Balance'),
+               money => 1,
                 type => 'text', },
              {col_id => 'approved',
                 name => LedgerSMB::Report::text('Approved'),

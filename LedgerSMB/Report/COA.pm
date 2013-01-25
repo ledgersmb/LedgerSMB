@@ -101,11 +101,13 @@ our @COLUMNS = (
     {col_id => 'debit_balance',
        name => LedgerSMB::Report::text('Debits'),
        type => 'text',
+      money => 1,
      pwidth => '2', },
 
     {col_id => 'credit_balance',
        name => LedgerSMB::Report::text('Credits'),
        type => 'text',
+      money => 1,
      pwidth => '2', },
 
     {col_id => 'link',

@@ -231,6 +231,7 @@ sub columns {
 
        {col_id => 'amount',
           name => LedgerSMB::Report::text('Amount'),
+         money => 1,
           type => 'text', },
 
        {col_id => 'curr',

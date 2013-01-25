@@ -76,18 +76,22 @@ sub columns {
         
          {col_id => 'amount',
             type => 'text',
+           money => 1,
             name => LedgerSMB::Report::text('Amount') },
 
          {col_id => 'tax',
             type => 'text',
+           money => 1,
             name => LedgerSMB::Report::text('Tax') },
 
          {col_id => 'paid',
             type => 'text',
+           money => 1,
             name => LedgerSMB::Report::text('Paid') },
 
          {col_id => 'due',
             type => 'text',
+           money => 1,
             name => LedgerSMB::Report::text('Due') },
 
          {col_id => 'date_paid',

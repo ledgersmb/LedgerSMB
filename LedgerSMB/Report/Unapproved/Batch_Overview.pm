@@ -106,11 +106,13 @@ our @COLUMNS = (
     {col_id => 'transaction_total',
        name => LedgerSMB::Report::text('AR/AP/GL Amount'),
        type => 'text',
+      money => 1,
      pwidth => '2', },
 
     {col_id => 'payment_total',
        name => LedgerSMB::Report::text('Payment Amount'),
        type => 'text',
+      money => 1,
      pwidth => '2', },
 
 );

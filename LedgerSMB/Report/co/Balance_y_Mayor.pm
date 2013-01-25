@@ -74,20 +74,24 @@ sub columns {
     {col_id => 'starting_balance',
        name => LedgerSMB::Report::text('Starting Balance'),
        type => 'text',
+      money => 1,
      pwidth => '3', },
 
     {col_id => 'debits',
        name => LedgerSMB::Report::text('Debit'),
        type => 'text',
+      money => 1,
      pwidth => '4', },
 
     {col_id => 'credits',
        name => LedgerSMB::Report::text('Credit'),
        type => 'text',
+      money => 1,
      pwidth => '4', },
     {col_id => 'ending_balance',
        name => LedgerSMB::Report::text('Balance'),
        type => 'text',
+      money => 1,
      pwidth => '3', },
 
     );

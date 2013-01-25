@@ -83,6 +83,7 @@ sub columns {
 
          {col_id => 'sellprice',
             type => 'text',
+           money => 1,
             name => LedgerSMB::Report::text('Sell Price') },
 
          {col_id => 'discount',

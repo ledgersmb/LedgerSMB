@@ -121,26 +121,31 @@ sub columns {
     {col_id => 'c0',
        name => LedgerSMB::Report::text('Current'),
        type => 'text',
+      money => 1,
      pwidth => '2', },
 
     {col_id => 'c30',
        name => LedgerSMB::Report::text('30'),
        type => 'text',
+      money => 1,
      pwidth => '3', },
 
     {col_id => 'c60',
        name => LedgerSMB::Report::text('60'),
        type => 'text',
+      money => 1,
      pwidth => '3', },
 
     {col_id => 'c90',
        name => LedgerSMB::Report::text('90'),
        type => 'text',
+      money => 1,
      pwidth => '3', },
 
     {col_id => 'total',
        name => LedgerSMB::Report::text('Total'),
        type => 'text',
+      money => 1,
      pwidth => '1', };
     return \@COLUMNS;
 }

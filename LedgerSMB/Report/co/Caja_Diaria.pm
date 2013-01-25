@@ -80,11 +80,13 @@ sub columns {
     {col_id => 'debits',
        name => LedgerSMB::Report::text('Debit'),
        type => 'text',
+      money => 1,
      pwidth => '4', },
 
     {col_id => 'credits',
        name => LedgerSMB::Report::text('Credit'),
        type => 'text',
+      money => 1,
      pwidth => '4', },
     ];
 }

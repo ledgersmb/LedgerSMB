@@ -87,6 +87,7 @@ sub columns {
 
      {col_id => 'receivable',
         type => 'text',
+       money => 1,
         name => LedgerSMB::Report::text('Receivable'), },
 
      {col_id => 'purchased',
@@ -100,6 +101,7 @@ sub columns {
 
      {col_id => 'payable',
         type => 'text',
+       money => 1,
         name => LedgerSMB::Report::text('Payable'), }
     ];
 }

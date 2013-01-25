@@ -138,18 +138,22 @@ sub columns {
 
       {col_id => 'starting_balance',
          type => 'text',
+         money => 1,
          name => LedgerSMB::Report::text('Starting Balance') } ,
 
       {col_id => 'debits',
          type => 'text',
+         money => 1,
          name => LedgerSMB::Report::text('Debits') } ,
 
       {col_id => 'credits',
          type => 'text',
+         money => 1,
          name => LedgerSMB::Report::text('Credits') } ,
 
       {col_id => 'ending_balance',
          type => 'text',
+         money => 1,
          name => LedgerSMB::Report::text('Ending Balance') } ,
 
     ];

@@ -75,14 +75,17 @@ sub columns {
 
       {col_id => 'budget_amount', 
          type => 'text', 
+         money => 1,
          name => LedgerSMB::Report::text('Amount Budgetted')},
 
       {col_id => 'used_amount', 
          type => 'text', 
+         money => 1,
          name => '- ' . LedgerSMB::Report::text('Used')},
 
       {col_id => 'variance', 
          type => 'text', 
+         money => 1,
          name => '= ' . LedgerSMB::Report::text('Variance')},
    ];
 }

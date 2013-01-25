@@ -115,6 +115,7 @@ sub columns {
     {col_id => 'amount',
        name => LedgerSMB::Report::text('Amount'),
        type => 'text',
+      money => 1,
      pwidth => '2', },
     ];
 
