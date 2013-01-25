@@ -82,7 +82,9 @@ sub template { return 'Reports/PNL' }
 
 =cut
 
-sub columns { return []  }
+sub columns { [{col_id => 'amount',
+                money => 1  }]
+}
 
 =back
 
@@ -121,9 +123,9 @@ sub _merge_rows {
     for my $k (keys %{$data->{E}}){
        $e_total += $data->{E}->{$k}->{$label}->{amount}; 
     }
-    $data->{totals}->{$label}->{I} = $i_total;
-    $data->{totals}->{$label}->{E} = $e_total;
-    $data->{totals}->{$label}->{total} = $i_total - $e_total;
+    $data->{totals}->{$label}->{I} = $i_total->to_output(money => 1);
+    $data->{totals}->{$label}->{E} = $e_total->to_output(money => 1);
+    $data->{totals}->{$label}->{total} = ($i_total - $e_total)->to_output(money => 1);
     $self->account_data($data);
 }
 

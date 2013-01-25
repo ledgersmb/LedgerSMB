@@ -1,5 +1,8 @@
 /* stylesheet for ledger-smb */
 
+td.money {
+   text-align: right;
+}
 /* general stuff */
 A:link { text-decoration: none; }
 A:visited {text-decoration: none; }

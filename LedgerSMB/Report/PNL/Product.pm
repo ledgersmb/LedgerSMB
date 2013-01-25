@@ -80,12 +80,6 @@ sub header_lines {
     ];
 }
 
-=item columns
-
-=cut
-
-sub columns { return []  }
-
 =back
 
 =head1 METHODS

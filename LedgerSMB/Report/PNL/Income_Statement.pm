@@ -66,12 +66,6 @@ sub header_lines {
             text => LedgerSMB::Report::text('Reporting Basis') }];
 }
 
-=item columns
-
-=cut
-
-sub columns { return []  }
-
 =back
 
 =head1 METHODS

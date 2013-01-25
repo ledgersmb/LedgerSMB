@@ -107,11 +107,13 @@ sub columns {
     {col_id => 'debits',
        name => LedgerSMB::Report::text('Debits'),
        type => 'text',
+      money => 1,
      pwidth => '2', },
 
     {col_id => 'credits',
        name => LedgerSMB::Report::text('Credits'),
        type => 'text',
+      money => 1,
      pwidth => '2', },
 
     {col_id => 'source',
@@ -157,6 +159,7 @@ sub columns {
     {col_id => 'running_balance',
        name => LedgerSMB::Report::text('Balance'),
        type => 'text',
+      money => 1,
      pwidth => '3', },
     );
     my @bclasses = LedgerSMB::Business_Unit_Class->list('1', 'gl');

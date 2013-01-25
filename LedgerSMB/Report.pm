@@ -236,6 +236,19 @@ sub render {
     $name = $name . '_' . $self->from_date->to_output if $self->{from_date};
     $name = $name . '-' . $self->to_date->to_output if $self->{to_date};
     $name = undef unless $request->{format};
+    my $columns = $self->show_cols($request);
+
+    for my $col (@$columns){
+        if ($col->{money}) {
+            $col->{class} = 'money';
+            for my $row(@{$self->rows}){
+                 if ( eval {$row->{$col->{col_id}}->can('to_output')}){
+                    $row->{$col->{col_id}} = $row->{$col->{col_id}}->to_output(money => 1);
+                 }       
+            }
+        }
+    } 
+
     $template = LedgerSMB::Template->new(
         user => $LedgerSMB::App_State::User,
         locale => $LedgerSMB::App_State::Locale,
@@ -248,7 +261,7 @@ sub render {
                       request => $request,
                          name => $self->name,
                        hlines => $self->header_lines,
-                      columns => $self->show_cols($request), 
+                      columns => $columns, 
                     order_url => $self->order_url,
                       buttons => $self->buttons,
                          rows => $self->rows});
