@@ -61,7 +61,7 @@ END ?>
   <?lsmb FOREACH k IN account_data.E.keys ?>
     <tr class="incomerow">
         <td class="label"><a href="account.pl?action=edit&id=<?lsmb
-                                     account_data.I.${k}.main.account_id 
+                                     account_data.E.${k}.main.account_id 
                                   ?>&charttype=A"
              ><?lsmb k _ '--' _
              account_data.E.${k}.main.account_description ?></a></td>
