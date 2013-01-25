@@ -2,7 +2,7 @@
 Mixed by: Andres Basile <basile@gmail.com>
 Original file: ledgersmb.css
 Icons: http://download.gnome.org/sources/gnome-icon-theme
-Copyright: Ulisse Perusin <uli.peru@gmail.com>; Riccardo Buzzotta <raozuzu@yahoo.it>; Josef VybaÂ­ral <cornelius@vybiral.info>; Hylke Bons <h.bons@student.rug.nl>; Ricardo Gonzalez <rick@jinlabs.com>; Lapo Calamandrei <calamandrei@gmail.com>; Rodney Dawes <dobey@novell.com>; Luca Ferretti <elle.uca@libero.it>; Tuomas Kuosmanen <tigert@gimp.org>; Andreas Nilsson <nisses.mail@home.se>; Jakub Steiner <jimmac@novell.com>
+Copyright: Ulisse Perusin <uli.peru@gmail.com>; Riccardo Buzzotta <raozuzu@yahoo.it>; Josef Vyba­ral <cornelius@vybiral.info>; Hylke Bons <h.bons@student.rug.nl>; Ricardo Gonzalez <rick@jinlabs.com>; Lapo Calamandrei <calamandrei@gmail.com>; Rodney Dawes <dobey@novell.com>; Luca Ferretti <elle.uca@libero.it>; Tuomas Kuosmanen <tigert@gimp.org>; Andreas Nilsson <nisses.mail@home.se>; Jakub Steiner <jimmac@novell.com>
 This package is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; version 2 dated June, 1991.
 */
 
@@ -66,7 +66,7 @@ li#menu_4, li#menu_13, li#menu_24, li#menu_32, li#menu_41, li#menu_53, li#menu_7
 
 /* Search
 Buscar */
-li#menu_14, li#menu_33, li#menu_49, li#menu_104, li#menu_221, li#menu_233 {
+li#menu_14, li#menu_33, li#menu_49, li#menu_104, li#menu_221, li#menu_233, li#menu_222 {
  background: #eee url('gnome/system-search.png') center left no-repeat;
 }
 
@@ -78,16 +78,21 @@ li#menu_15, li#menu_34 {
 
 /* Add
 Nuevo */
-li#menu_2, li#menu_12, li#menu_22, li#menu_31, li#menu_36, li#menu_38, li#menu_48, li#menu_78, li#menu_79, li#menu_80, li#menu_81, li#menu_82, li#menu_83, li#menu_99, li#menu_100, li#menu_137, li#menu_139, li#menu_142, li#menu_145, li#menu_148, li#menu_151, li#menu_154, li#menu_218, li#menu_220, li#menu_230, li#menu_232 {
+li#menu_2, li#menu_12, li#menu_22, li#menu_31, li#menu_36, li#menu_38, li#menu_48, li#menu_78, li#menu_79, li#menu_80, li#menu_81, li#menu_82, li#menu_83, li#menu_99, li#menu_100, li#menu_137, li#menu_139, li#menu_142, li#menu_145, li#menu_148, li#menu_151, li#menu_154, li#menu_218, li#menu_220, li#menu_230, li#menu_232, li#menu_198, li#menu_3, li#menu_194, li#menu_195, li#menu_199, li#menu_23, li#menu_196, li#menu_197, li#menu_68, li#menu_69, li#menu_51, li#menu_52 {
  background: #eee url('gnome/list-add.png') center left no-repeat;
 }
 
 /* List
 Lista */
 li#menu_138, li#menu_140, li#menu_143, li#menu_146, li#menu_149, li#menu_152, li#menu_155, li#menu_225, li#menu_231 {
- background: #eee url('gnome/text-x-preview.png') top left no-repeat;
+ background: #eee url('gnome/libreoffice-text.png') top left no-repeat;
 }
 
+
+/* Templates */
+ li#menu_157, li#menu_158, li#menu_159, li#menu_160, li#menu_161, li#menu_162, li#menu_163, li#menu_164, li#menu_165, li#menu_166, li#menu_167, li#menu_168, li#menu_169, li#menu_170, li#menu_171, li#menu_241, li#menu_173, li#menu_174, li#menu_175, li#menu_176, li#menu_177, li#menu_178, li#menu_179, li#menu_180, li#menu_181, li#menu_182, li#menu_183, li#menu_184, li#menu_185, li#menu_186, li#menu_187, li#menu_242, li#menu_189 {
+ background: #eee url('gnome/text-x-preview.png') top left no-repeat;
+}
 /* Contacts
 Contactos */
 li#menu_11, li#menu_30, li#menu_47 {
@@ -98,6 +103,12 @@ li#menu_11, li#menu_30, li#menu_47 {
 Inventario */
 li#menu_114 {
  background: #eee url('gnome/package-x-generic.png') center left no-repeat;
+}
+
+/* Printing
+ */
+li#menu_114, li#menu_117, li#menu_118, li#menu_119, li#menu_120, li#menu_121, li#menu_122, li#menu_123, li#menu_124, li#menu_125, li#menu_126, li#menu_127 {
+ background: #eee url('gnome/document-print.png') center left no-repeat;
 }
 
 /* Recurrents
@@ -234,7 +245,7 @@ body.admin {
   background: #004a80;
 }
 
-.listtop { font-size: 10pt; background-color: #F5F5B5; color: #1A1A1A; }
+.listtop { font-size: 11pt; background-color: #F5F5B5; color: #1A1A1A;   font-weight: bold; margin: 3px; }
 
 .listheading { font-size: 10pt; background-color: #86ABD9; color: #1A1A1A; }
 
@@ -244,7 +255,7 @@ A.listheading:link, A.listheading:active, A.listheading:visited {
 .listrow1 { font-size: 10pt; background-color: #e6e6fa; color: black; vertical-align: top; }
 .listrow0 { font-size: 10pt; background-color: #ffe4e1; color: black; vertical-align: top; }
 .listsubtotal { font-size: 10pt; background-color: #5a7d9b; color: white; }
-.listtotal { font-size: 10pt; background-color: #EDECEB; color: white; }
+.listtotal { font-size: 10pt; background-color: #EDECEB; color: green; vertical-align: top; text-align: right;  }
 
 textarea {
   font-family: Verdana, Arial, Helvetica, sans-serif;

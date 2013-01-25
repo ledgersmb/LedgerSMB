@@ -81,7 +81,37 @@ This is the parser, automatically generated via builder.
 
 =cut
 
-has parser => (is => 'ro', isa => 'X12::Parser', lazy => 1, builder => 'parse');
+has parser => (is => 'ro', isa => 'X12::Parser', lazy => 1, builder => '_parser');
+
+=item ISA
+
+This is the exchange security and routing information header.
+
+=cut
+
+has ISA => (is => 'ro', isa => 'HashRef[Any]', lazy => 1, builder => '_ISA');
+
+sub ISA {
+    my ($self) = @_;
+    my @segments = $self->parser->get_loop_segments;
+    @segments = $self->parser->get_loop_segments unless @segments;
+    if ($segments[0] != 'ISA'){
+        $self->parse;  # re-initialize parser, we don't have an ISA!
+        die 'No ISA';
+    }
+
+    my $isa = {};
+
+    my @keys;
+    
+    push @keys, sprintf('ISA%02d', $_) for (1 .. 16);
+
+    for my $key (@keys){
+       $isa->{$key} = unshift @segments;
+    }
+    return $isa;
+}
+
 
 =head1 METHODS
 
@@ -113,10 +143,13 @@ $self->parser.
 
 =cut
 
-sub parse {
+sub _parser {
     my ($self) = @_;
     my $parser = new X12::Parser;
     my $file = $self->message;
+}
+
+sub parse {
     if (!$self->is_message_file){
         $file = $LedgerSMB::Sysconfig::tempdir . '/' . $$ . '-' . $self->message;
         open TMPFILE, '>', $file;
