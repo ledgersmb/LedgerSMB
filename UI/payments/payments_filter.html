@@ -86,14 +86,19 @@
 <?lsmb END ?>
 </div>
 <div class="input" id="account_input">
-	<label for="account"><?lsmb text('Account') ?>
-	<select name="ar_ap_accno">
-	<?lsmb FOREACH a = debt_accounts ?>
-	<option value="<?lsmb a.accno ?>" <?lsmb 
-		IF a.id == account ?> SELECTED <?lsmb END ?>>
-			<?lsmb a.accno ?>--<?lsmb a.description ?></option>
-	<?lsmb END ?>
-	</select>
+    <?lsmb
+     FOREACH a = debt_accounts;
+       a.text = a.accno _ '--' _ a.description;
+     END;
+     PROCESS select element_data = {
+          label = text('Account')
+           name = "ar_ap_accno"
+        options = debt_accounts
+     value_attr = 'accno'
+      text_attr = 'text'
+ default_values = [account]
+    } ?>
+</div>
 <div id = "payments-filter-daterow" class = "inputgroup">
 <?lsmb PROCESS input element_data = {
 	label = text('Date From:')
