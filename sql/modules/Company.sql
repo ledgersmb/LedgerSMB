@@ -605,6 +605,7 @@ CREATE TYPE company_billing_info AS (
 legal_name text,
 meta_number text,
 control_code text,
+cash_account_id int,
 tax_id text,
 street1 text,
 street2 text,
@@ -622,7 +623,8 @@ DECLARE out_var company_billing_info;
 	t_id INT;
 BEGIN
 	select coalesce(eca.pay_to_name, c.legal_name), eca.meta_number, 
-		e.control_code, c.tax_id, a.line_one, a.line_two, a.line_three, 
+		e.control_code, eca.cash_account_id, c.tax_id, 
+                a.line_one, a.line_two, a.line_three, 
 		a.city, a.state, a.mail_code, cc.name
 	into out_var
 	FROM company c

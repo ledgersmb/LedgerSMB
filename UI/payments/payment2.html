@@ -79,11 +79,14 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
      <?lsmb  #here goes all the posible accounts were the paid can be done  ?>
       <th align="right" nowrap id="account_label_column"><?lsmb text('Account') ?></th>
       <td colspan="2" id="account_column">
-       <select id="account" name="account">
-        <?lsmb FOREACH item IN account -?>
-         <option value="<?lsmb item.id -?>" <?lsmb IF item.id ==  selected_account -?> selected <?lsmb END ?>><?lsmb item.description -?></option>
-        <?lsmb END -?>
-       </select> 
+       <?lsmb 
+      PROCESS select element_data = {
+                  name = 'account'
+               options = account
+             text_attr = 'description'
+            value_attr = 'id'
+        default_values = [selected_account]
+       } ?>
      </td>
      </tr>
      <tr id="date_row"><?lsmb # here goes an input where the date can be written, we can also use a java calendar :). We can use an ajax script to call the Exchange rate of the input date wich can be called with the onChange Method	  ?>
