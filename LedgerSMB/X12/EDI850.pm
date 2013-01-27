@@ -28,15 +28,23 @@ structures compatible with LedgerSMB's order entry system.  The API is simple.
 
 =over
 
-=item orders
+=item order
 
-This is an array of orders using the same data structures that a form screen
+This is an order hashref using the same data structures that a form screen
 would submit (flat format).
 
 =cut 
 
-has orders => (is => 'ro', isa => 'ArrayRef[HashRef[Any]]', lazy => 1, 
-          builder => '_orders');
+has order => (is => 'ro', isa => 'HashRef[Any]', lazy => 1, 
+          builder => '_order');
 
-sub _orders {
+sub _order {
+    my ($self) = $_;
+    $self->parse;
+    eval {$self->ISA}; # if throws error, ignore
+    $self->parse;
+
+    
 }
+
+
