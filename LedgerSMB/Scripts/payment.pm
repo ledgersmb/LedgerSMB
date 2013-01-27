@@ -1046,6 +1046,9 @@ my $select = {
  overpayment_account => \@overpayment_account,
  format_amount => sub {return $Payment->format_amount(amount=>@_)}
 };
+
+$select->{selected_account} = $vc_options[0]->{cash_account_id} 
+      unless defined $select->{selected_account};
 my $template = LedgerSMB::Template->new(
   user     => $request->{_user},
   locale   => $request->{_locale},
