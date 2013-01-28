@@ -819,18 +819,8 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
               { ndx => 4, key => 'T', value => $locale->text('Ship to') },
             'e_mail' =>
               { ndx => 5, key => 'E', value => $locale->text('E-mail') },
-            'print_and_save' => {
-                ndx   => 6,
-                key   => 'R',
-                value => $locale->text('Print and Save')
-            },
             'save_as_new' =>
               { ndx => 7, key => 'N', value => $locale->text('Save as new') },
-            'print_and_save_as_new' => {
-                ndx   => 8,
-                key   => 'W',
-                value => $locale->text('Print and Save as new')
-            },
             'sales_invoice' =>
               { ndx => 9, key => 'I', value => $locale->text('Sales Invoice') },
             'sales_order' =>
