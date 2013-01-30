@@ -161,6 +161,23 @@ sub parse {
     return $parser;
 }
 
+=item set_segment_sep(char $sep)
+
+In certain cases, people have been known to generate EDI files using illegal 
+characters as separators, or otherwise have EDI files where the parser cannot 
+properly define the segment separator (the element separator poses no such 
+problems).
+
+In these cases one needs to set it manually.  Use this function to do this.
+
+=cut
+
+sub set_segement_sep {
+    my ($self, $sep) = @_;
+    # ick, ai don't like how this involves messing around with internals.
+    $self->parser->{_SEGMENT_SEPARATOR} = $seg;
+}
+
 =back
 
 =head1 COPYRIGHT
