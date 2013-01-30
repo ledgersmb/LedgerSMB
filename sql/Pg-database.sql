@@ -796,8 +796,10 @@ INSERT INTO contact_class (id,class) values (14,'BCC');
 INSERT INTO contact_class (id,class) values (15,'Billing Email');
 INSERT INTO contact_class (id,class) values (16,'Billing CC');
 INSERT INTO contact_class (id,class) values (17,'Billing BCC');
+INSERT INTO contact_class (id,class) values (18,'EDI Interchange ID');
+INSERT INTO contact_class (id,class) values (19,'EDI ID');
 
-SELECT SETVAL('contact_class_id_seq',17);
+SELECT SETVAL('contact_class_id_seq',19);
 
 CREATE TABLE entity_to_contact (
   entity_id integer not null references entity(id) ON DELETE CASCADE,

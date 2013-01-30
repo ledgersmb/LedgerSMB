@@ -154,3 +154,15 @@ ALTER TABLE inventory_report_line add adjust_id int not null;
 
 
 COMMIT;
+
+BEGIN;
+
+--- EDI contact fixes
+
+
+INSERT INTO contact_class (id,class) values (18,'EDI Interchange ID');
+INSERT INTO contact_class (id,class) values (19,'EDI ID');
+
+SELECT SETVAL('contact_class_id_seq',19);
+
+COMMIT;
