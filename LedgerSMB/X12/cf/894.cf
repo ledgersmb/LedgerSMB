@@ -1,0 +1,61 @@
+# 894 Purchase Order for X12 format by Chris Travers
+# chris@metatrontech.com
+
+[LOOPS]
+ISA
+GS
+ST
+G82
+LS
+0100
+LE
+G72
+G84
+G86
+G85
+SE
+GE
+IEA
+
+[ISA]
+segment=ISA:::ISA:R:1
+
+[GS]
+segment=GS:::GS:R:1
+
+#LOOP ID - HEADER
+[ST]
+segment=ST:1:894:Transaction Set Header:R:1
+
+[G82]
+segment=G82:::Delivery/Return Base Record ID:R:1
+
+[0100]
+segment=G83:::Line Item Detail/Direct Store Delivery:S:1
+segment=G72:::Allowance of Charge:S:10
+
+[LE]
+segment=LE:::Loop Trailer:R:1
+
+[G72]
+segment=G72:::Allowance of Charge:S:20
+
+
+[G84]
+segment=G84:::Delivery/Return Record of Totals:R:1
+
+[G86]
+segment=G86:::Signature Identification:R:1
+
+[G85]
+segment=G85::Record Integrity Check:R:1
+
+[SE]
+segment=SE:::Transaction Set Trailer:R:1
+
+[GE]
+segment=GE:::GE:R:1
+
+[IEA]
+segment=IEA:::IEA:R:1
+

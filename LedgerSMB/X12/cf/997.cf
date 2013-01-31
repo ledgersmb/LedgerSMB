@@ -1,0 +1,57 @@
+[LOOPS]
+ISA
+GS
+ST
+AK1
+AK2
+AK2/AK3
+AK5
+AK9
+SE
+GE
+IEA
+
+#--- start of loop details ---#
+
+[ISA]
+segment=ISA:::ISA:R:1
+
+[GS]
+segment=GS:::GS:R:1
+
+#LOOP ID - HEADER
+[ST]
+segment=ST:1:997:Transaction Set Header:R:1
+
+#LOOP ID - AK1
+[AK1]
+segment=AK1:::Functional Group Response Header:S:1
+
+#LOOP ID - AK2 999999
+[AK2]
+segment=AK2:::Transaction Set Response Header:S:1
+loop=AK2/AK3
+
+#LOOP ID - AK2/AK3 999999
+[AK2/AK3]
+segment=AK3:::Data Segment Note:S:99
+segment=AK4:::Data Element Note:S:99
+
+#LOOP ID - AK5
+[AK5]
+segment=AK5:::Transaction Set Response Trailer:R:1
+
+#LOOP ID - AK9
+[AK9]
+segment=AK9:::Functional Group Response Trailer:R:1
+
+#LOOP ID - TRAILER
+[SE]
+segment=SE:::Transaction Set Trailer:R:1
+
+[GE]
+segment=GE:::GE:R:1
+
+[IEA]
+segment=IEA:::IEA:R:1
+

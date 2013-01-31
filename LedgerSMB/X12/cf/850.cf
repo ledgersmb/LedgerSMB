@@ -1,0 +1,76 @@
+# 850 Purchase Order for X12 format by Chris Travers
+# chris@metatrontech.com
+
+[LOOPS]
+ISA
+GS
+ST
+BEG
+PER
+SAC
+DTM
+N9
+PO1
+PID
+SAC
+SDQ
+CTT
+SE
+GE
+IEA
+
+[ISA]
+segment=ISA:::ISA:R:1
+
+[GS]
+segment=GS:::GS:R:1
+
+#LOOP ID - HEADER
+[ST]
+segment=ST:1:850:Transaction Set Header:R:1
+
+[BEG]
+segment=BEG:::Begin Transaction:R:1
+
+[PER]
+segment=PER:::Administrative Contact (Person):S:3
+
+[SAC]
+segment=SAC:::Service, Promotion, Allowance, and Charge:S:1
+
+[DTM]
+segment=DTM:::Date/Time Reference:S:10
+
+[N9]
+segment=N9:::Extended Reference Information:S:1
+segment=MTX:::Text:S:1
+loop=N1
+
+[N1]
+segment=N1:::Party Identification:S:1
+
+[PO1]
+segment=PO1:::Baseline Item Data:M:1
+loop=PID
+loop=SAC
+loop=SDQ
+
+[PID]
+segment=PID:::Product/Item Description:S:1
+
+[SDQ]
+segment=SDQ:::Destination Quantity:S:1
+
+
+[CTT]
+segment=CTT:::Transaction Totals:S:1
+
+[SE]
+segment=SE:::Transaction Set Trailer:R:1
+
+[GE]
+segment=GE:::GE:R:1
+
+[IEA]
+segment=IEA:::IEA:R:1
+
