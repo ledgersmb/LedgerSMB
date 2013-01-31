@@ -6,8 +6,7 @@ structures
 =head1 SYNOPSIS
 
  my $edi = LedgerSMB::X12::EDI850->new(message => 'message.edi');
- my $ISA = $edi->ISA;
- my @orders = $edi->orders;
+ my $form = $edi->order;
 
 =cut
 
