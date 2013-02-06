@@ -15,12 +15,11 @@ Requires: perl-version, perl-Smart-Comments
 Requires: perl-HTML-Parser, perl-Template-Toolkit, 
 Requires: perl-Error, perl-CGI-Simple
 Requires: perl-File-MimeInfo, perl-IO-stringy
-Requires: perl-MIME-Lite, perl-Class-Std >= 0.0.8
+Requires: perl-MIME-Lite
 Requires: perl-Locale-Maketext-Lexicon >= 0.62
 Requires: perl-IO-String 
 Requires: perl-Math-BigInt-GMP
 Requires: perl-Log-Log4perl perl-DateTime
-Requires: perl-Config-Std
 BuildRequires: perl
 # avoid bogus autodetection of perl modules:
 AutoReqProv: no

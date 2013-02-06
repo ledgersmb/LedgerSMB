@@ -1601,7 +1601,7 @@ sub print_form {
         }
         my @files = $file->get_for_template(
                 {ref_key => $form->{id}, file_class => $fc}
-        );
+        ) if $form->{id};
         my @main_files;
         my %parts_files;
         for my $f (@files){
