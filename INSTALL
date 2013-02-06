@@ -4,9 +4,6 @@ Contents
 --------
 
  * System requirements
- * The fast route - package install
-   * for Debian
-   
  * Installing Apache 2
  * Installing PostgreSQL
  * PostgreSQL authorization settings
