@@ -4,6 +4,9 @@ Contents
 --------
 
  * System requirements
+ * The fast route - package install
+   * for Debian
+   
  * Installing Apache 2
  * Installing PostgreSQL
  * PostgreSQL authorization settings
@@ -240,6 +243,27 @@ The Open Office output option is available from the Lenny repository
 as well through the command:
 
  $ aptitude install libxml-twig-perl
+
+
+
+---- Actions for Fedora 18
+
+ $ sudo yum install mlocate perl perl-Class-Std perl-ExtUtils-MakeMaker \
+   perl-Test-Base perl-Test-Pod perl-Test-Pod-Coverage tar
+
+Get repoforge's perl-Config-Std (0.900-1 or newer version):
+ $ curl http://apt.sw.be/source/perl-Config-Std-0.900-1.rf.src.rpm --O \ 
+   perl-Config-Std-0.900-1.rf.src.rpm
+
+Rebuild the source rpm:
+
+As root do:
+ $ rpmbuild --rebuild perl-Config-Std-0.900-1.rf.src.rpm
+
+ $ yum localinstall /path/to/new-rpm/perl-Config-Std-XXXXX.rpm
+
+ $ yum localinstall ledgersmb-1.3.XX.noarch.rpm
+
 
 
 Initializing a company database
