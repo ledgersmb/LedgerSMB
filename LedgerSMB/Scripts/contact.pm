@@ -537,6 +537,9 @@ sub save_location {
     $location->id($request->{location_id}) if $request->{location_id};
     $location->save;
     $request->{target_div} = 'address_div';
+    # Assumption alert!  Assuming additional addresses share a city, state
+    # and country more often than not -- CT
+    delete $request->{"$_"} for (qw(line_one line_two line_three mail_code));
     get($request);
 	
 }
