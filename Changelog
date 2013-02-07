@@ -8,6 +8,7 @@ Changelog for 1.3.30
 * Updated gnome.css (Pongracz Istvan)
 * Fixed vendor cash account link not respected in payment interface (Chris T)
 * Updated INSTALL with "Actions for Fedora 18" (Havard S)
+* Fixed print and save buttons on orders (Chris T, 3602071)
 
 Chris T is Chris Travers
 Havard S is Havard Sorli

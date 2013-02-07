@@ -2233,6 +2233,7 @@ sub subtotal {
 }
 
 sub save {
+    delete $form->{display_form};
     if (!$form->close_form()){
        $form->{notice} = $locale->text(
                 'Could not save the data.  Please try again'
