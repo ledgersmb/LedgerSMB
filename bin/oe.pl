@@ -1231,6 +1231,7 @@ sub update {
 }
 
 sub save {
+    delete $form->{display_form};
     if (!$form->close_form()){
        $form->{notice} = $locale->text(
                 'Could not save the data.  Please try again'
@@ -1306,6 +1307,7 @@ sub save {
     }
 
     if ( !$form->{repost} ) {
+       $form->{repost} = 1;
        my $template = LedgerSMB::Template->new_UI(
         user => \%myconfig,
         locale => $locale,
