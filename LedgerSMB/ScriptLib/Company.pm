@@ -247,6 +247,9 @@ sub add_location {
 
     
     $company->get_metadata();
+    # Assumption alert!  Assuming additional addresses share a city, state
+    # and country more often than not -- CT
+    delete $company->{"$_"} for (qw(line_one line_two line_three mail_code));
 
     _render_main_screen($company);
 	
