@@ -1306,10 +1306,15 @@ sub save {
     }
 
     if ( !$form->{repost} ) {
-        if ( $form->{id} ) {
-            &repost("Save");
-            $form->finalize_request();
-        }
+       my $template = LedgerSMB::Template->new_UI(
+        user => \%myconfig,
+        locale => $locale,
+        template => 'oe-save_warn',
+       );
+
+       return $template->render({
+          hiddens => $form
+       });
     }
 
  

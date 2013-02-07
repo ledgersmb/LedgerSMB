@@ -1,0 +1,24 @@
+<?lsmb INCLUDE "ui-header.html";
+PROCESS elements.html ?>
+<body>
+<form method=post action="oe.pl">
+<h2 class=confirm> <?lsmb text('Warning!') ?></h2>
+<?lsmb FOR h IN hiddens.keys;
+  PROCESS input element_data = {
+    type = "hidden"
+    name = h
+    value = hiddens.$h 
+  };
+END ?>
+<h4><?lsmb text('Saving over an existing document.  Continue?') ?></h4>
+<?lsmb PROCESS button element_data = {
+      name="action" 
+     class="submit" 
+      type="submit" 
+     value="continue"
+      text=text('Continue')
+} ?>
+</form>
+</body>
+</html>
+
