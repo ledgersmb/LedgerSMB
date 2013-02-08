@@ -80,7 +80,7 @@ $$
             i.description, i.qty, i.unit::text, i.sellprice, i.discount, 
             i.deliverydate, pr.id as project_id, pr.projectnumber,
             i.serialnumber, 
-            case when $16 = 1 then xr.buy else xr.sell end as exchange_rate,
+            case when $16 = 1 THEN xr.buy else xr.sell end as exchange_rate,
             ee.id as salesperson_id, 
             ep.last_name || ', ' || ep.first_name as salesperson_name
      FROM (select * from entity_credit_account 
@@ -118,7 +118,7 @@ $$
            select quonumber, curr, transdate, entity_credit_account, id,
                   person_id
            from oe 
-           where($16= 1 and oe.oe_class_id = 4 and $13 = 'q'
+           where($16= 1 and oe.oe_class_id = 3 and $13 = 'q'
                 and quotation is true)
                   and (($17 and not closed) or ($18 and closed))
            union 
@@ -139,11 +139,10 @@ $$
              FROM orderitems where $13 <> 'i'
           ) i on i.trans_id = a.id
      JOIN parts p ON (p.id = i.parts_id)
-LEFT JOIN exchangerate ex ON (ex.transdate = a.transdate)
 LEFT JOIN project pr ON (pr.id = i.project_id)
 LEFT JOIN entity ee ON (a.person_id = ee.id)
 LEFT JOIN person ep ON (ep.entity_id = ee.id)
-     JOIN exchangerate xr ON a.transdate = xr.transdate
+LEFT JOIN exchangerate xr ON a.transdate = xr.transdate
     -- these filters don't perform as well on large databases
     WHERE (e.name ilike '%' || $1 || '%' or $1 is null)
           and ($3 is null or eca.id in 
