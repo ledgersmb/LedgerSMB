@@ -365,7 +365,7 @@ sub form_header {
     $form->{exchangerate} =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
 
-    $exchangerate = qq|<tr>|;
+    $exchangerate = qq|<tr id="exchangerate-row">|;
     $exchangerate .= qq|
                 <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
 		<td><select name=currency>$form->{selectcurrency}</select></td> |
@@ -402,7 +402,7 @@ sub form_header {
     $vclabel = $locale->text($vclabel);
 
     $terms = qq|
-                    <tr>
+                    <tr id="terms-row">
 		      <th align=right nowrap>| . $locale->text('Terms') . qq|</th>
 		      <td nowrap><input name=terms size="3" maxlength="3" value=$form->{terms}> |
       . $locale->text('days')
@@ -412,7 +412,7 @@ sub form_header {
 
     if ( $form->{business} ) {
         $business = qq|
-	      <tr>
+	      <tr class="business-row">
 		<th align=right nowrap>| . $locale->text('Business') . qq|</th>
 		<td colspan=3>$form->{business}
 		&nbsp;&nbsp;&nbsp;|;
@@ -427,20 +427,20 @@ sub form_header {
 
     if ( $form->{type} !~ /_quotation$/ ) {
         $ordnumber = qq|
-	      <tr>
+	      <tr class="ordnumber-row">
 		<th width=70% align=right nowrap>| . $locale->text('Order Number') . qq|</th>
                 <td><input name=ordnumber size=20 value="$form->{ordnumber}"></td>
 		<input type=hidden name=quonumber value="$form->{quonumber}">
 	      </tr>
-	      <tr>
+	      <tr class="transdate-row">
 		<th align=right nowrap>| . $locale->text('Order Date') . qq|</th>
 		<td><input class="date" name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
 	      </tr>
-	      <tr>
+	      <tr class="reqdate-row">
 		<th align=right nowrap=true>| . $locale->text('Required by') . qq|</th>
 		<td><input class="date" name=reqdate size=11 title="$myconfig{dateformat}" value=$form->{reqdate}></td>
 	      </tr>
-	      <tr>
+	      <tr class="ponunber-row">
 		<th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
 		<td><input name=ponumber size=20 value="$form->{ponumber}"></td>
 	      </tr>
@@ -452,7 +452,7 @@ sub form_header {
 	      <tr>
 		<td></td>
 		<td colspan=3>
-		  <table>
+		  <table class="creditlimit">
 		    <tr>
 		      <th align=right nowrap>| . $locale->text('Credit Limit') . qq|</th>
 		      <td>|
@@ -466,7 +466,7 @@ sub form_header {
 		    </tr>|;
 		if ($form->{entity_control_code}){
 			$creditremaining .= qq|
-	        <tr>
+	        <tr class="control-code-field">
 		<th align="right" nowrap>| . 
 			$locale->text('Entity Code') . qq|</th>
 		<td colspan="2">$form->{entity_control_code}</td>
@@ -489,7 +489,7 @@ sub form_header {
           : $locale->text('Required by');
         if ( $form->{type} eq 'sales_quotation' ) {
             $ordnumber = qq|
-	      <tr>
+	      <tr class="quonumber-row">
 		<th width=70% align=right nowrap>|
               . $locale->text('Quotation Number')
               . qq|</th>
@@ -500,7 +500,7 @@ sub form_header {
         }
         else {
             $ordnumber = qq|
-	      <tr>
+	      <tr class="rfqnumber-row">
 		<th width=70% align=right nowrap>| . $locale->text('RFQ Number') . qq|</th>
 		<td><input name=quonumber size=20 value="$form->{quonumber}"></td>
 		<input type=hidden name=ordnumber value="$form->{ordnumber}">
@@ -511,7 +511,7 @@ sub form_header {
         }
 
         $ordnumber .= qq|
-	      <tr>
+	      <tr class="transdate-row">
 		<th align=right nowrap>| . $locale->text('Quotation Date') . qq|</th>
 		<td><input class="date" name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
 	      </tr>
@@ -544,7 +544,7 @@ sub form_header {
     }
 
     $department = qq|
-              <tr>
+              <tr class="department-row">
 	        <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
 		<td colspan=3><select name=department>$form->{selectdepartment}</select>
 		<input type=hidden name=selectdepartment value="|
@@ -560,7 +560,7 @@ sub form_header {
     if ( $form->{type} eq 'sales_order' ) {
         if ( $form->{selectemployee} ) {
             $employee = qq|
- 	      <tr>
+ 	      <tr class="employee-row">
 	        <th align=right nowrap>| . $locale->text('Salesperson') . qq|</th>
 		<td><select name=employee>$form->{selectemployee}</select></td>
 		<input type=hidden name=selectemployee value="|
@@ -572,7 +572,7 @@ sub form_header {
     else {
         if ( $form->{selectemployee} ) {
             $employee = qq|
- 	      <tr>
+ 	      <tr class="employee-row">
 	        <th align=right nowrap>| . $locale->text('Employee') . qq|</th>
 		<td><select name=employee>$form->{selectemployee}</select></td>
 		<input type=hidden name=selectemployee value="|
@@ -637,11 +637,11 @@ function on_return_submit(event){
 	      $business
 	      $department
 	      $exchangerate
-	      <tr>
+	      <tr class="shippingpoint-row">
 		<th align=right>| . $locale->text('Shipping Point') . qq|</th>
 		<td colspan=3><input name=shippingpoint size=35 value="$form->{shippingpoint}"></td>
 	      </tr>
-	      <tr>
+	      <tr class="shipvia-row">
 		<th align=right>| . $locale->text('Ship via') . qq|</th>
 		<td colspan=3><input name=shipvia size=35 value="$form->{shipvia}"></td>
 	      </tr>
