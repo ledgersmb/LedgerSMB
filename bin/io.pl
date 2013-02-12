@@ -143,14 +143,14 @@ sub display_row {
     if ( $form->{type} eq "sales_order" ) {
         push @column_index, "ship";
         $column_data{ship} =
-            qq|<th class=listheading align=center width="auto" class="ship">|
+            qq|<th class="listheading ship" align=center width="auto">|
           . $locale->text('Ship')
           . qq|</th>|;
     }
     if ( $form->{type} eq "purchase_order" ) {
         push @column_index, "ship";
         $column_data{ship} =
-            qq|<th class=listheading align=center width="auto" class="ship">|
+            qq|<th class="listheading ship" align=center width="auto">|
           . $locale->text('Recd')
           . qq|</th>|;
     }
@@ -201,28 +201,28 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     for ( split / /, $form->{taxaccounts} ) { $form->{"${_}_base"} = 0 }
 
     $column_data{runningnumber} =
-      qq|<th class=listheading nowrap class="runningnumber">| . $locale->text('Item') . qq|</th>|;
+      qq|<th class="listheading runningnumber" nowrap>| . $locale->text('Item') . qq|</th>|;
     $column_data{partnumber} =
-      qq|<th class=listheading nowrap class="partnumber">| . $locale->text('Number') . qq|</th>|;
+      qq|<th class="listheading partnumber" nowrap>| . $locale->text('Number') . qq|</th>|;
     $column_data{description} =
-        qq|<th class=listheading nowrap class="description">|
+        qq|<th class="listheading description" nowrap class="description">|
       . $locale->text('Description')
       . qq|</th>|;
     $column_data{qty} =
-      qq|<th class=listheading nowrap class="qty">| . $locale->text('Qty') . qq|</th>|;
+      qq|<th class="listheading qty" nowrap>| . $locale->text('Qty') . qq|</th>|;
     $column_data{unit} =
-      qq|<th class=listheading nowrap class="unit">| . $locale->text('Unit') . qq|</th>|;
+      qq|<th class="listheading unit" nowrap>| . $locale->text('Unit') . qq|</th>|;
     $column_data{sellprice} =
-      qq|<th class=listheading nowrap class="price">| . $locale->text('Price') . qq|</th>|;
-    $column_data{discount} = qq|<th class=listheading class="discount">%</th>|;
+      qq|<th class="listheading sellprice" nowrap>| . $locale->text('Price') . qq|</th>|;
+    $column_data{discount} = qq|<th class="listheading discount">%</th>|;
     $column_data{linetotal} =
-      qq|<th class=listheading nowrap class="linetotal">| . $locale->text('Extended') . qq|</th>|;
+      qq|<th class="listheading linetotal" nowrap>| . $locale->text('Extended') . qq|</th>|;
     $column_data{bin} =
-      qq|<th class=listheading nowrap class="bin">| . $locale->text('Bin') . qq|</th>|;
+      qq|<th class="listheading bin" nowrap>| . $locale->text('Bin') . qq|</th>|;
     $column_data{onhand} =
-      qq|<th class=listheading nowrap class="onhand">| . $locale->text('OH') . qq|</th>|;
+      qq|<th class="listheading onhand" nowrap>| . $locale->text('OH') . qq|</th>|;
     $column_data{taxformcheck} =
-      qq|<th class=listheading nowrap class="taxform">| . $locale->text('TaxForm') . qq|</th>|;
+      qq|<th class="listheading taxform" nowrap>| . $locale->text('TaxForm') . qq|</th>|;
     print qq|
   <tr>
     <td>
@@ -531,19 +531,19 @@ sub select_item {
           qw(ndx partnumber description partsgroup onhand sellprice);
     }
 
-    $column_data{ndx} = qq|<th>&nbsp;</th>|;
+    $column_data{ndx} = qq|<th class="listheading runningnumber">&nbsp;</th>|;
     $column_data{partnumber} =
-      qq|<th class=listheading>| . $locale->text('Number') . qq|</th>|;
+      qq|<th class="listheading partnumber">| . $locale->text('Number') . qq|</th>|;
     $column_data{sku} =
-      qq|<th class=listheading>| . $locale->text('SKU') . qq|</th>|;
+      qq|<th class="listheading sku">| . $locale->text('SKU') . qq|</th>|;
     $column_data{description} =
-      qq|<th class=listheading>| . $locale->text('Description') . qq|</th>|;
+      qq|<th class="listheading description">| . $locale->text('Description') . qq|</th>|;
     $column_data{partsgroup} =
-      qq|<th class=listheading>| . $locale->text('Group') . qq|</th>|;
+      qq|<th class="listheading partsgroup">| . $locale->text('Group') . qq|</th>|;
     $column_data{sellprice} =
-      qq|<th class=listheading>| . $locale->text('Price') . qq|</th>|;
+      qq|<th class="listheading sellprice">| . $locale->text('Price') . qq|</th>|;
     $column_data{onhand} =
-      qq|<th class=listheading>| . $locale->text('Qty') . qq|</th>|;
+      qq|<th class="listheading onhand">| . $locale->text('Qty') . qq|</th>|;
 
     $exchangerate = ( $form->{exchangerate} ) ? $form->{exchangerate} : 1;
 
