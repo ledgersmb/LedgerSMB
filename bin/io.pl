@@ -143,14 +143,14 @@ sub display_row {
     if ( $form->{type} eq "sales_order" ) {
         push @column_index, "ship";
         $column_data{ship} =
-            qq|<th class=listheading align=center width="auto">|
+            qq|<th class=listheading align=center width="auto" class="ship">|
           . $locale->text('Ship')
           . qq|</th>|;
     }
     if ( $form->{type} eq "purchase_order" ) {
         push @column_index, "ship";
         $column_data{ship} =
-            qq|<th class=listheading align=center width="auto">|
+            qq|<th class=listheading align=center width="auto" class="ship">|
           . $locale->text('Recd')
           . qq|</th>|;
     }
@@ -201,28 +201,28 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     for ( split / /, $form->{taxaccounts} ) { $form->{"${_}_base"} = 0 }
 
     $column_data{runningnumber} =
-      qq|<th class=listheading nowrap>| . $locale->text('Item') . qq|</th>|;
+      qq|<th class=listheading nowrap class="runningnumber">| . $locale->text('Item') . qq|</th>|;
     $column_data{partnumber} =
-      qq|<th class=listheading nowrap>| . $locale->text('Number') . qq|</th>|;
+      qq|<th class=listheading nowrap class="partnumber">| . $locale->text('Number') . qq|</th>|;
     $column_data{description} =
-        qq|<th class=listheading nowrap>|
+        qq|<th class=listheading nowrap class="description">|
       . $locale->text('Description')
       . qq|</th>|;
     $column_data{qty} =
-      qq|<th class=listheading nowrap>| . $locale->text('Qty') . qq|</th>|;
+      qq|<th class=listheading nowrap class="qty">| . $locale->text('Qty') . qq|</th>|;
     $column_data{unit} =
-      qq|<th class=listheading nowrap>| . $locale->text('Unit') . qq|</th>|;
+      qq|<th class=listheading nowrap class="unit">| . $locale->text('Unit') . qq|</th>|;
     $column_data{sellprice} =
-      qq|<th class=listheading nowrap>| . $locale->text('Price') . qq|</th>|;
-    $column_data{discount} = qq|<th class=listheading>%</th>|;
+      qq|<th class=listheading nowrap class="price">| . $locale->text('Price') . qq|</th>|;
+    $column_data{discount} = qq|<th class=listheading class="discount">%</th>|;
     $column_data{linetotal} =
-      qq|<th class=listheading nowrap>| . $locale->text('Extended') . qq|</th>|;
+      qq|<th class=listheading nowrap class="linetotal">| . $locale->text('Extended') . qq|</th>|;
     $column_data{bin} =
-      qq|<th class=listheading nowrap>| . $locale->text('Bin') . qq|</th>|;
+      qq|<th class=listheading nowrap class="bin">| . $locale->text('Bin') . qq|</th>|;
     $column_data{onhand} =
-      qq|<th class=listheading nowrap>| . $locale->text('OH') . qq|</th>|;
+      qq|<th class=listheading nowrap class="onhand">| . $locale->text('OH') . qq|</th>|;
     $column_data{taxformcheck} =
-      qq|<th class=listheading nowrap>| . $locale->text('TaxForm') . qq|</th>|;
+      qq|<th class=listheading nowrap class="taxform">| . $locale->text('TaxForm') . qq|</th>|;
     print qq|
   <tr>
     <td>
@@ -375,7 +375,7 @@ qq|<td><input name="description_$i" size=48 value="$form->{"description_$i"}"></
         }
 
 $column_data{runningnumber} =
-          qq|<td><input name="runningnumber_$i" size=3 value=$i></td>|;
+          qq|<td class="runningnumber"><input name="runningnumber_$i" size=3 value=$i></td>|;
         if ($form->{"partnumber_$i"}){
            $column_data{partnumber} =
            qq|<td> $form->{"partnumber_$i"} 
@@ -385,34 +385,34 @@ $column_data{runningnumber} =
                        value="$form->{"partnumber_$i"}" /></td>|;
         } else {
             $column_data{partnumber} =
-qq|<td><input name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]">$skunumber</td>|;
+qq|<td class="partnumber"><input name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]">$skunumber</td>|;
         }
         $column_data{qty} =
-qq|<td align=right><input name="qty_$i" title="$form->{"onhand_$i"}" size="5" value="|
+qq|<td align=right class="qty"><input name="qty_$i" title="$form->{"onhand_$i"}" size="5" value="|
           . $form->format_amount( \%myconfig, $form->{"qty_$i"} )
           . qq|"></td>|;
         $column_data{ship} =
-            qq|<td align=right><input name="ship_$i" size="5" value="|
+            qq|<td align=right class="ship"><input name="ship_$i" size="5" value="|
           . $form->format_amount( \%myconfig, $form->{"ship_$i"} )
           . qq|"></td>|;
         $column_data{unit} =
-          qq|<td><input name="unit_$i" size=5 value="$form->{"unit_$i"}"></td>|;
+          qq|<td class="unit"><input name="unit_$i" size=5 value="$form->{"unit_$i"}"></td>|;
         $column_data{sellprice} =
-          qq|<td align=right><input name="sellprice_$i" size="9" value="|
+          qq|<td align=right class="sellprice"><input name="sellprice_$i" size="9" value="|
           . $form->format_amount( \%myconfig, $form->{"sellprice_$i"},
             $form->{"precision_$i"} )
           . qq|"></td>|;
         $column_data{discount} =
-            qq|<td align=right><input name="discount_$i" size="3" value="|
+            qq|<td align=right class="discount"><input name="discount_$i" size="3" value="|
           . $form->format_amount( \%myconfig, $form->{"discount_$i"} )
           . qq|"></td>|;
         $column_data{linetotal} =
-            qq|<td align=right>|
+            qq|<td align=right class="linetotal">|
           . $form->format_amount( \%myconfig, $linetotal, 2 )
           . qq|</td>|;
-        $column_data{bin}    = qq|<td>$form->{"bin_$i"}</td>|;
-        $column_data{onhand} = qq|<td>$form->{"onhand_$i"}</td>|;
-        $column_data{taxformcheck} = qq|<td><input type="checkbox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
+        $column_data{bin}    = qq|<td class="bin">$form->{"bin_$i"}</td>|;
+        $column_data{onhand} = qq|<td class="onhand">$form->{"onhand_$i"}</td>|;
+        $column_data{taxformcheck} = qq|<td class="taxform"><input type="checkbox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
         print qq|
         <tr valign=top>|;
 
@@ -474,12 +474,12 @@ qq|<td><input name="notes_$i" size=38 value="$form->{"notes_$i"}"></td>|;
 
         # print second and third row
         print qq|
-        <tr valign=top>
+        <tr valign=top class="ext2">
 	  $delivery
 	  $notes
 	  $serial
 	</tr>
-        <tr valign=top>
+        <tr valign=top class="ext3">
 	  <td colspan=$colspan>
 	  $project
 	  $partsgroup
