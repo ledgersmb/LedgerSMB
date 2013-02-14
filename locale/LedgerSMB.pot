@@ -208,7 +208,7 @@ msgid "account cannot be set to any other type of account"
 msgstr ""
 
 #: bin/am.pl:169
-msgid "Cannot set multiple options for [_1]"
+msgid "Cannot set multiple options for %1"
 msgstr ""
 
 #: bin/am.pl:174
@@ -237,7 +237,7 @@ msgid "Account does not exist!"
 msgstr ""
 
 #: bin/am.pl:311
-msgid "[_1] GIFI"
+msgid "%1 GIFI"
 msgstr ""
 
 #: bin/am.pl:345
@@ -335,7 +335,7 @@ msgid "Add Business"
 msgstr ""
 
 #: bin/am.pl:536
-msgid "[_1] Business"
+msgid "%1 Business"
 msgstr ""
 
 #: bin/am.pl:552 bin/am.pl:721 bin/am.pl:880 bin/am.pl:1569
@@ -363,7 +363,7 @@ msgid "Add SIC"
 msgstr ""
 
 #: bin/am.pl:703
-msgid "[_1] SIC"
+msgid "%1 SIC"
 msgstr ""
 
 #: bin/am.pl:720 bin/am.pl:879
@@ -387,7 +387,7 @@ msgid "Add Language"
 msgstr ""
 
 #: bin/am.pl:866
-msgid "[_1] Language"
+msgid "%1 Language"
 msgstr ""
 
 #: bin/am.pl:921
@@ -404,7 +404,7 @@ msgstr ""
 
 #: bin/am.pl:946
 msgid ""
-"Deleting a language will also delete the templates for the language [_1]"
+"Deleting a language will also delete the templates for the language %1"
 msgstr ""
 
 #: bin/am.pl:961
@@ -437,7 +437,7 @@ msgid "Taxes"
 msgstr ""
 
 #: bin/am.pl:1370
-msgid "Edit Preferences for [_1]"
+msgid "Edit Preferences for %1"
 msgstr ""
 
 #: bin/am.pl:1401
@@ -469,7 +469,7 @@ msgid "Add Warehouse"
 msgstr ""
 
 #: bin/am.pl:1553
-msgid "[_1] Warehouse"
+msgid "%1 Warehouse"
 msgstr ""
 
 #: bin/am.pl:1571
@@ -620,15 +620,15 @@ msgid "PDF"
 msgstr ""
 
 #: bin/am.pl:2020
-msgid "Posting Sales Invoice [_1]"
+msgid "Posting Sales Invoice %1"
 msgstr ""
 
 #: bin/am.pl:2030
-msgid "Posting Vendor Invoice [_1]"
+msgid "Posting Vendor Invoice %1"
 msgstr ""
 
 #: bin/am.pl:2042 bin/am.pl:2051
-msgid "Posting Transaction [_1]"
+msgid "Posting Transaction %1"
 msgstr ""
 
 #: bin/am.pl:2060 bin/am.pl:2131 bin/am.pl:2185 bin/am.pl:2228 bin/am.pl:2275
@@ -649,7 +649,7 @@ msgid "Purchase Order"
 msgstr ""
 
 #: bin/am.pl:2126
-msgid "Saving [_1] [_2]"
+msgid "Saving %1 [_2]"
 msgstr ""
 
 #: bin/am.pl:2134 bin/am.pl:2231 bin/am.pl:2278
@@ -657,7 +657,7 @@ msgid "failed"
 msgstr ""
 
 #: bin/am.pl:2180
-msgid "Posting GL Transaction [_1]"
+msgid "Posting GL Transaction %1"
 msgstr ""
 
 #: bin/am.pl:2217 bin/bp.pl:253
@@ -705,11 +705,11 @@ msgid "Current Earnings"
 msgstr ""
 
 #: bin/rp.pl:401
-msgid "Department: [_1]"
+msgid "Department: %1"
 msgstr ""
 
 #: bin/rp.pl:406
-msgid "Project Number: [_1]"
+msgid "Project Number: %1"
 msgstr ""
 
 #: bin/rp.pl:457
@@ -717,7 +717,7 @@ msgid "N/A"
 msgstr ""
 
 #: bin/rp.pl:618
-msgid "[_1] Report"
+msgid "%1 Report"
 msgstr ""
 
 #: bin/ir.pl:91 bin/ir.pl:1445 bin/is.pl:1491 bin/aa.pl:1199 bin/aa.pl:1454
@@ -1451,11 +1451,11 @@ msgid "unexpected error!"
 msgstr ""
 
 #: bin/ic.pl:1987
-msgid "[_1]: Vendor not on file!"
+msgid "%1: Vendor not on file!"
 msgstr ""
 
 #: bin/ic.pl:2065
-msgid "[_1]: Customer not on file!"
+msgid "%1: Customer not on file!"
 msgstr ""
 
 #: bin/ic.pl:2101 bin/arap.pl:171 bin/pe.pl:1109
@@ -1467,7 +1467,7 @@ msgid "Select from one of the names below"
 msgstr ""
 
 #: bin/ic.pl:2227
-msgid "Inventory quantity must be zero before you can set this [_1] obsolete!"
+msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
 msgstr ""
 
 #: bin/ic.pl:2404
@@ -1507,7 +1507,7 @@ msgid "Quotation Number"
 msgstr ""
 
 #: bin/bp.pl:123
-msgid "Print [_1]"
+msgid "Print %1"
 msgstr ""
 
 #: bin/bp.pl:192 bin/pe.pl:1612 bin/oe.pl:2376 bin/oe.pl:2639
@@ -1539,35 +1539,35 @@ msgid "Marked entries printed!"
 msgstr ""
 
 #: bin/bp.pl:300
-msgid "Customer: [_1]"
+msgid "Customer: %1"
 msgstr ""
 
 #: bin/bp.pl:301
-msgid "Vendor: [_1]"
+msgid "Vendor: %1"
 msgstr ""
 
 #: bin/bp.pl:306
-msgid "Account: [_1]"
+msgid "Account: %1"
 msgstr ""
 
 #: bin/bp.pl:311
-msgid "Invoice Number: [_1]"
+msgid "Invoice Number: %1"
 msgstr ""
 
 #: bin/bp.pl:316
-msgid "Order Number: [_1]"
+msgid "Order Number: %1"
 msgstr ""
 
 #: bin/bp.pl:321
-msgid "Quotation Number: [_1]"
+msgid "Quotation Number: %1"
 msgstr ""
 
 #: bin/bp.pl:327
-msgid "From [_1]"
+msgid "From %1"
 msgstr ""
 
 #: bin/bp.pl:333
-msgid "To [_1]"
+msgid "To %1"
 msgstr ""
 
 #: bin/bp.pl:368 bin/io.pl:1348 bin/io.pl:1539 bin/is.pl:287 bin/is.pl:1395
@@ -1629,7 +1629,7 @@ msgid "Control Code"
 msgstr ""
 
 #: bin/arap.pl:169
-msgid "[_1] Number"
+msgid "%1 Number"
 msgstr ""
 
 #: bin/arap.pl:173 addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:329
@@ -1689,7 +1689,7 @@ msgid "time(s)"
 msgstr ""
 
 #: bin/arap.pl:738
-msgid "Recurring Transaction for [_1]"
+msgid "Recurring Transaction for %1"
 msgstr ""
 
 #: bin/arap.pl:763 bin/pe.pl:101
@@ -1705,23 +1705,23 @@ msgid "Delete Schedule"
 msgstr ""
 
 #: bin/arap.pl:966 bin/io.pl:1831
-msgid "Cc: [_1]"
+msgid "Cc: %1"
 msgstr ""
 
 #: bin/arap.pl:967 bin/io.pl:1832
-msgid "Bcc: [_1]"
+msgid "Bcc: %1"
 msgstr ""
 
 #: bin/arap.pl:973 bin/io.pl:1850
-msgid "Date: [_1]"
+msgid "Date: %1"
 msgstr ""
 
 #: bin/arap.pl:974 bin/io.pl:1851
-msgid "To: [_1]"
+msgid "To: %1"
 msgstr ""
 
 #: bin/arap.pl:976 bin/io.pl:1853
-msgid "Subject: [_1]"
+msgid "Subject: %1"
 msgstr ""
 
 #: bin/arap.pl:978
@@ -1841,7 +1841,7 @@ msgid "Service"
 msgstr ""
 
 #: bin/io.pl:1155
-msgid "Number missing in Row [_1]"
+msgid "Number missing in Row %1"
 msgstr ""
 
 #: bin/io.pl:1162 bin/oe.pl:60
@@ -2311,7 +2311,7 @@ msgstr ""
 #: bin/gl.pl:92 addons/1.4/pos/trunk/bin/ps.pl:54
 #: addons/1.4/pos/trunk/bin/ps.pl:84 addons/1.4/pos/trunk/bin/ps.pl:225
 #: addons/1.4/pos/trunk/bin/pos.pl:55
-msgid "Could not open pos.conf.pl in [_1] line [_2]: [_3]"
+msgid "Could not open pos.conf.pl in %1 line [_2]: [_3]"
 msgstr ""
 
 #: bin/gl.pl:136
@@ -2323,15 +2323,15 @@ msgid "Adjusting till due to data entry error."
 msgstr ""
 
 #: bin/gl.pl:198
-msgid "[_1] Cash Transfer Transaction"
+msgid "%1 Cash Transfer Transaction"
 msgstr ""
 
 #: bin/gl.pl:201
-msgid "[_1] General Ledger Transaction"
+msgid "%1 General Ledger Transaction"
 msgstr ""
 
 #: bin/gl.pl:638
-msgid "Account [_1] not found."
+msgid "Account %1 not found."
 msgstr ""
 
 #: bin/gl.pl:673
@@ -2560,7 +2560,7 @@ msgid "Order generation failed!"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:82
-msgid "Closing Till For [_1]"
+msgid "Closing Till For %1"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:181
@@ -2580,27 +2580,27 @@ msgid "Cash Breakdown:"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:299
-msgid "Total Cash in Drawer: [_1]"
+msgid "Total Cash in Drawer: %1"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:301
-msgid "Less Cash in Till At Start: [_1]"
+msgid "Less Cash in Till At Start: %1"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:304
-msgid "Cumulative Error: [_1]"
+msgid "Cumulative Error: %1"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:306
-msgid "Reset Till By [_1]"
+msgid "Reset Till By %1"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:316
-msgid "You are over by [_1]"
+msgid "You are over by %1"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:319
-msgid "You are under by [_1]"
+msgid "You are under by %1"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:323
@@ -2845,7 +2845,7 @@ msgstr ""
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:259
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:259
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:259 LedgerSMB/Budget.pm:243
-msgid "Cannot specify both debits and credits for budget line [_1]"
+msgid "Cannot specify both debits and credits for budget line %1"
 msgstr ""
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:379
@@ -2942,7 +2942,7 @@ msgid "Filtering $t"
 msgstr ""
 
 #: UI/payments/payments_detail.html:362
-msgid "Locked by [_1]"
+msgid "Locked by %1"
 msgstr ""
 
 #: UI/file/attachment_screen.html:39
@@ -2972,7 +2972,7 @@ msgid "Accrual Basis:"
 msgstr ""
 
 #: UI/menu/expanding.html:45
-msgid "Logged into [_1]"
+msgid "Logged into %1"
 msgstr ""
 
 #: UI/business_units/filter.html:35
@@ -3023,7 +3023,7 @@ msgid "Transaction Date"
 msgstr ""
 
 #: UI/login.html:30
-msgid "LedgerSMB [_1]"
+msgid "LedgerSMB %1"
 msgstr ""
 
 #: UI/Contact/divs/credit.html:61
@@ -3038,7 +3038,7 @@ msgstr ""
 
 #: UI/Contact/divs/notes.html:64
 #: addons/1.3/crm-basic/trunk/UI/crm/divs/notes.html:64
-msgid "Author: [_1]"
+msgid "Author: %1"
 msgstr ""
 
 #: addons/1.3/company_person/trunk/UI/Contact/divs/person.html:2
@@ -3233,7 +3233,7 @@ msgid "Images in Templates"
 msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:227
-msgid "Error while opening directory: [_1]"
+msgid "Error while opening directory: %1"
 msgstr ""
 
 #: LedgerSMB/Scripts/payment.pm:146
@@ -3446,7 +3446,7 @@ msgid "Disposal"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:731
-msgid "Report [_1] on date [_2]"
+msgid "Report %1 on date [_2]"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:735 LedgerSMB/Scripts/asset.pm:800
@@ -3492,7 +3492,7 @@ msgid "Total Accum. Dep."
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:795
-msgid "Partial Disposal Report [_1] on date [_2]"
+msgid "Partial Disposal Report %1 on date [_2]"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:802
@@ -3512,7 +3512,7 @@ msgid "Aquired Value Remaining"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:866
-msgid "Disposal Report [_1] on date [_2]"
+msgid "Disposal Report %1 on date [_2]"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:872
@@ -3825,7 +3825,7 @@ msgid "other"
 msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:752
-msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
+msgid "Exchange rate inconsistency with database.  Got %1, expected [_2]"
 msgstr ""
 
 #: LedgerSMB/DBObject/Account.pm:73
@@ -3843,11 +3843,11 @@ msgstr ""
 #: LedgerSMB/DBObject/TransTemplate.pm:23
 #: addons/1.3/templatetrans/trunk/LedgerSMB/DBObject/TransTemplate.pm:23
 #: addons/1.3/templatetrans/tags/1.0/LedgerSMB/DBObject/TransTemplate.pm:22
-msgid "No Account id for [_1]"
+msgid "No Account id for %1"
 msgstr ""
 
 #: LedgerSMB/DBObject/Asset.pm:109 LedgerSMB/DBObject/Asset_Class.pm:66
-msgid "Unable to save [_1] object"
+msgid "Unable to save %1 object"
 msgstr ""
 
 #: LedgerSMB/DBObject/Asset.pm:110
@@ -4516,7 +4516,7 @@ msgid "Any"
 msgstr ""
 
 #: LedgerSMB/Form.pm:678
-msgid "Action: [_1], ID: [_2]"
+msgid "Action: %1, ID: [_2]"
 msgstr ""
 
 #: LedgerSMB/Entity/Location.pm:113
@@ -4577,7 +4577,7 @@ msgid "Unable to save contact information"
 msgstr ""
 
 #: LedgerSMB/GL.pm:200
-msgid "Account [_1] not found"
+msgid "Account %1 not found"
 msgstr ""
 
 #: LedgerSMB/App_State.pm:189
