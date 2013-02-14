@@ -852,6 +852,8 @@ for my $ref (0 .. $#array_options) {
        
 # XXX:  This causes issues currently, so display of unhandled overpayment has
 # disabled.  Was getting numbers that didn't make a lot of sense to me. --CT
+      $due_fx ||= 0;
+      $request_topay_fx_bigfloat ||= 0;
       if ( $due_fx <  $request_topay_fx_bigfloat) {
          # We need to store all the overpayments so we can use it on the screen
          $unhandled_overpayment = $request->round_amount($unhandled_overpayment + $request_topay_fx_bigfloat - $due_fx );
