@@ -818,6 +818,7 @@ my @topay_state; # WE WILL USE THIS TO HELP UI TO DETERMINE WHAT IS VISIBLE
 @array_options  = $Payment->get_open_invoices(); 
 my $unhandled_overpayment;
 for my $ref (0 .. $#array_options) {
+ $array_options[$ref]->{invoice_date} = $array_options[$ref]->{invoice_date}->to_output;
  if (  !$request->{"checkbox_$array_options[$ref]->{invoice_id}"}) {
    my $request_topay_fx_bigfloat=$Payment->parse_amount(amount=>$request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
 # SHOULD I APPLY DISCCOUNTS?   

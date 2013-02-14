@@ -259,8 +259,11 @@ properties.  Account classes follow the conventions above.  This list is hence
 specific to a customer or vendor and currency as well.
 
 The returned list of hashrefs is stored in the $payment->{open_invoices} 
-property. Each hashref has the following keys:  id (entity id), name, and 
-entity_class.
+property. Each hashref has the following keys:  invoice_id int, invnumber text,
+invoice bool, invoice_date date, amount numeric, amount_fx numeric, 
+discount numeric, discount_fx numeric, due numeric, due_fx numeric,
+ exchangerate numeric
+
 
 =back
 
