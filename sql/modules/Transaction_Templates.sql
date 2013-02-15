@@ -123,7 +123,10 @@ BEGIN
 			(in_meta_number is null 
 				or eca.meta_number = in_meta_number) and
 			(in_entity_class is null
-				or eca.entity_class = in_entity_class)
+				or eca.entity_class = in_entity_class) AND
+                        (in_recurring IS NOT TRUE OR
+                                coalesce(r.startdate, r.nextdate) <= now()::date
+                        )
 	LOOP
 		RETURN NEXT retval;
 	END LOOP;
@@ -153,7 +156,7 @@ RETURNS recurring LANGUAGE SQL AS
 $$
 delete from recurringprint where id = $5;
 delete from recurring where id = $5;
-insert into recurring (id, reference, startdate, interval, howmany)
+insert into recurring (id, reference, startdate, recurring_interval, howmany)
 values ($5, $1, $2, $3, $4);
 $$;
 
@@ -163,6 +166,17 @@ RETURNS recurringprint LANGUAGE SQL AS
 $$
 insert into recurringprint (id, formname, format, printer)
 values ($1, $2, 'PDF', $3);
+$$;
+
+CREATE OR REPLACE FUNCTION journal__increment_recurring
+(in_id int, in_transdate date)
+RETURNS recurring LANGUAGE SQL AS
+$$
+UPDATE recurring
+   SET howmany = howmany - 1,
+       nextdate = $2::timestamp + recurring_interval
+ WHERE id = $1 AND howmany > 0
+RETURNING *;
 $$;
 
 COMMIT;

@@ -2225,8 +2225,7 @@ CREATE TABLE recurring (
   startdate date,
   nextdate date,
   enddate date,
-  repeat int2,
-  unit varchar(6),
+  recurring_interval interval, 
   howmany int,
   payment bool default 'f'
 );
