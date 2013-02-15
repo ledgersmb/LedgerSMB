@@ -1676,8 +1676,6 @@ sub post_invoice {
 
     $form->audittrail( $dbh, "", \%audittrail );
 
-    $form->save_recurring( $dbh, $myconfig );
-
     my $rc = $dbh->commit;
 
     $rc;

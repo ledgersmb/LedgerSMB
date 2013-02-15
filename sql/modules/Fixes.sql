@@ -166,3 +166,13 @@ INSERT INTO contact_class (id,class) values (19,'EDI ID');
 SELECT SETVAL('contact_class_id_seq',19);
 
 COMMIT;
+
+BEGIN;
+
+ALTER TABLE asset_report DROP CONSTRAINT "asset_report_gl_id_fkey";
+ALTER TABLE asset_report ADD FOREIGN KEY gl_id REFERENCES gl(id);
+
+ALTER TABLE file_order_to_tx DROP CONSTRAINT "file_order_to_tx_ref_key_fkey";
+ALTER TABLE file_order_to_tx ADD FOREIGN KEY ref_key REFERENCES gl(id);
+
+COMMIT;

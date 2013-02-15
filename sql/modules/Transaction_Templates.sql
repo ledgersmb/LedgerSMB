@@ -78,7 +78,8 @@ approved bool,
 is_template bool,
 meta_number text,
 entity_name text,
-entity_class text
+entity_class text,
+nextdate date,
 );
 
 CREATE OR REPLACE FUNCTION journal__search(
@@ -90,7 +91,8 @@ in_approved bool,
 in_department_id int, 
 in_is_template bool,
 in_meta_number text,
-in_entity_class int	
+in_entity_class int,
+in_recurring bool
 ) RETURNS SETOF journal_search_result AS $$
 DECLARE retval journal_search_result;
 BEGIN
@@ -98,12 +100,16 @@ BEGIN
 		SELECT j.id, j.source, j.description, j.entry_type, 
 			j.transaction_date, j.approved, 
 			j.is_template, eca.meta_number, 
-			e.name, ec.class
+			e.name, ec.class, 
+                        coalesce(
+                          r.startdate + r.recurring_interval,
+                          j.transaction_date);
 		FROM journal_entry j
 		LEFT JOIN eca_invoice i ON (i.journal_id = j.id)
 		LEFT JOIN entity_credit_account eca ON (eca.id = credit_id)
 		LEFT JOIN entity e ON (eca.entity_id = e.id)
 		LEFT JOIN entity_class ec ON (eca.entity_class = ec.id)
+                LEFT JOIN recurring r ON j.id = r.id
 		WHERE (in_source IS NULL OR in_source = j.source) AND
 			(in_description IS NULL 
 				or in_description = j.description) AND
@@ -139,5 +145,24 @@ $$
 select * from journal_line where journal_id = $1;
 $$ language sql;
 -- orders with inventory not supported yet.
+
+CREATE OR REPLACE FUNCTION journal__save_recurring
+(in_recurringreference text, in_recurringstartdate date, 
+in_recurring_interval interval, in_recurringhowmany int, in_id int) 
+RETURNS recurring LANGUAGE SQL AS
+$$
+delete from recurringprint where id = $5;
+delete from recurring where id = $5;
+insert into recurring (id, reference, startdate, interval, howmany)
+values ($5, $1, $2, $3, $4);
+$$;
+
+CREATE OR REPLACE FUNCTION journal__save_recurring_print
+(in_id int, in_formname text, in_printer text)
+RETURNS recurringprint LANGUAGE SQL AS
+$$
+insert into recurringprint (id, formname, format, printer)
+values ($1, $2, 'PDF', $3);
+$$;
 
 COMMIT;

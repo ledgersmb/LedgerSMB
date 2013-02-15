@@ -1161,7 +1161,7 @@ $$ This stores line item data on transaction lines and whether they are
 cleared.$$;
 
 COMMENT ON COLUMN cr_report_line.scn IS
-$$ This is the check number.  Maps to journal_entry.reference $$;
+$$ This is the check number.  Maps to gl.reference $$;
 
 CREATE TABLE cr_coa_to_account (
     chart_id int not null references account(id),
@@ -2220,7 +2220,7 @@ COMMENT ON TABLE user_preference IS
 $$ This table sets the basic preferences for formats, languages, printers, and user-selected stylesheets.$$;
 
 CREATE TABLE recurring (
-  id int DEFAULT nextval ( 'id' ) PRIMARY KEY,
+  id int references journal_entry(id),
   reference text,
   startdate date,
   nextdate date,
@@ -2244,7 +2244,7 @@ CREATE TABLE payment_type (
 
 --
 CREATE TABLE recurringemail (
-  id int,
+  id int references recurring(id), 
   formname text,
   format text,
   message text,
@@ -2255,7 +2255,7 @@ COMMENT ON TABLE recurringemail IS
 $$Email  to be sent out when recurring transaction is posted.$$;
 --
 CREATE TABLE recurringprint (
-  id int,
+  id int references recurring(id),
   formname text,
   format text,
   printer text,
@@ -3760,7 +3760,7 @@ others may be added.  Please correspond on the list before adding more types.$$;
 CREATE TABLE asset_report (
 	id serial primary key,
 	report_date date,
-	gl_id bigint references journal_entry(id) unique,
+	gl_id bigint references gl(id) unique,
 	asset_class bigint references asset_class(id),
 	report_class int references asset_report_class(id),
 	entered_by bigint not null references entity(id),
@@ -4650,7 +4650,7 @@ VALUES (new.file_id, 2, new.ref_key, 2,
 CREATE TABLE file_order_to_tx (
        PRIMARY KEY(file_id, source_class, dest_class, ref_key),
        foreign key (file_id) references file_order(id),
-       foreign key (ref_key) references journal_entry(id),
+       foreign key (ref_key) references gl(id),
        check (source_class = 2),
        check (dest_class = 1)
 ) INHERITS (file_secondary_attachment);

@@ -27,6 +27,10 @@ sub save {
    if ($self->{is_invoice}){
        $self->exec_method(funcname => 'journal__make_invoice');
    }
+   if ($self->{recurringreference}){
+       $self->exec_method(funcname => 'journal__save_recurring');
+       $self->exec_method(funcname => 'journal__save_recurring_print');
+   }
    $self->{dbh}->commit;
 }
 
