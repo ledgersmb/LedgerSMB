@@ -19,6 +19,9 @@ ALTER TABLE sl28.customer ADD COLUMN credit_id int;
 
 
 --Accounts
+
+insert into account_link_description values ('CT_tax', false, false);
+
 INSERT INTO account_heading(id, accno, description)
 SELECT id, accno, description
   FROM sl28.chart WHERE charttype = 'H';
@@ -28,6 +31,9 @@ SELECT account_save(id, accno, description, category, gifi_accno, NULL, contra,
                     string_to_array(link,':'))
   FROM sl28.chart 
  WHERE charttype = 'A';
+
+delete from account_link where description = 'CT_tax';
+
 --Entity
 
 INSERT INTO entity (name, control_code, entity_class, country_id)
@@ -164,7 +170,7 @@ SELECT eca.id, 1,
     min(location_save(NULL,
 
     case 
-        when oa.address1 = '' then 'Null' 
+        when oa.address1 !~ '[[:alnum:]_]' then 'Null'
         when oa.address1 is null then 'Null'
         else oa.address1 
     end,
@@ -208,7 +214,7 @@ SELECT eca.id, 2,
     min(location_save(NULL,
 
     case 
-        when oa.shiptoaddress1 = '' then 'Null' 
+        when oa.shiptoaddress1 !~ '[[:alnum:]_]' then 'Null'
         when oa.shiptoaddress1 is null then 'Null'
         else oa.shiptoaddress1 
     end,
@@ -383,10 +389,10 @@ SELECT trans_id, chart_id, amount, transdate, source,
 
 INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, discount, assemblyitem, unit, project_id,
-            deliverydate, serialnumber, notes)
+            deliverydate, serialnumber)
     SELECT  id, trans_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, discount, assemblyitem, unit, project_id,
-            deliverydate, serialnumber, notes
+            deliverydate, serialnumber
        FROM sl28.invoice;
 
 INSERT INTO partstax (parts_id, chart_id)
@@ -452,9 +458,9 @@ INSERT INTO project (id, projectnumber, description, startdate, enddate,
        FROM sl28.project p
        JOIN sl28.customer c ON p.customer_id = c.id;
 
-INSERT INTO partsgroup SELECT * FROM sl28.partsgroup;
+INSERT INTO partsgroup (id, partsgroup) SELECT id, partsgroup FROM sl28.partsgroup;
 
-INSERT INTO status SELECT * FROM sl28.status;
+INSERT INTO status SELECT * FROM sl28.status; -- may need to comment this one out sometimes
 
 INSERT INTO department SELECT * FROM sl28.department;
 
