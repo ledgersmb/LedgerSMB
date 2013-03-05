@@ -154,7 +154,7 @@ BEGIN
 
 		INSERT INTO acc_trans (chart_id, amount, transdate, trans_id,
 			approved)
-		SELECT chart_id, amount * -1, currval('id'), true
+		SELECT chart_id, amount * -1, in_end_date, currval('id'), true
 		FROM acc_trans where trans_id = (select trans_id from yearend
 			where transdate = in_end_date and reversed is not true);
 
