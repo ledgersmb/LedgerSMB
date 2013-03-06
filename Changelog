@@ -92,6 +92,7 @@ Changelog for 1.3.30
 * Fixing history report blank when no fx (Chris T, 3602084)
 * More CSS hooks (Chris T)
 * Fixed DB API for reopening books (Chris T)
+* Fixed menu-selected vendors and customers not working (Chris T)
 
 Changelog for 1.3.29
 * Added db routines for role backup and restore for shared hosting

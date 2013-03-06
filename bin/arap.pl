@@ -90,7 +90,9 @@ sub check_name {
         # check name, combine name and id
         #HV $form->{$name} , form->vendor or form->customer , should be at least ' ' for comparison 'ne' to work.('' ne undef) returns undef.(' ' ne undef) returns 1
         if(! $form->{$name}){$form->{$name}=' ';}
-        if ( $form->{"old$name"} ne qq|$form->{$name}--$form->{"${name}_id"}| )
+        if ( $form->{"old$name"} ne qq|$form->{$name}--$form->{"${name}_id"}| 
+             or !$form->{"${name}_id"}
+        )
         {
 
             # this is needed for is, ir and oe
