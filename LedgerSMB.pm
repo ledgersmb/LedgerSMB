@@ -242,7 +242,7 @@ sub new {
     $logger->debug("Begin called from \$filename=$filename \$line=$line \$type=$type \$argstr=$argstr ref argstr=".ref $argstr);
 
     $self->{version} = $VERSION;
-    $self->{dbversion} = "1.3.30';
+    $self->{dbversion} = "1.3.30";
     
     bless $self, $type;
 
