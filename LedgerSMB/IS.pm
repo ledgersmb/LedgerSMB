@@ -1885,7 +1885,7 @@ sub cogs {
         # this error, they will require more work to address and will not work
         # safely with the current system.  -- CT
         if ($totalqty < 0){
-            $form->error("Too many reversed items on an invoice");
+            # $form->error("Too many reversed items on an invoice");
         }
         elsif ($totalqty > 0){
             $form->error("Unexpected and invalid quantity allocated.".
