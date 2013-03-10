@@ -1734,11 +1734,17 @@ sub save_inventory {
             $sth2->finish;
 
             # update onhand for parts
-            $form->update_balance(
-                $dbh, "parts", "onhand",
-                qq|id = $form->{"id_$i"}|,
-                $form->{"ship_$i"} * $ml
-            );
+            # REMOVING THIS
+            #
+            # This leads to corner cases regarding inventory not being adjusted
+            # correctly.  Going to look at how to provide a report which shows
+            # inventory shipping/recieving numbers  for adjusting inventory 
+            # instead. --CT
+            # $form->update_balance(
+            #    $dbh, "parts", "onhand",
+            #    qq|id = $form->{"id_$i"}|,
+            #    $form->{"ship_$i"} * $ml
+            # );
 
         }
     }
