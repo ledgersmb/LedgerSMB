@@ -570,7 +570,6 @@ sub save {
                 $form->{"precision_$i"}
             );
             $sth->execute(@queryargs) || $form->dberror($query);
-	    $dbh->commit;
             $form->{"sellprice_$i"} = $fxsellprice;
         }
         $form->{"discount_$i"} *= 100;
