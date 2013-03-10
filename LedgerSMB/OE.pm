@@ -354,7 +354,6 @@ sub save {
                 $form->{"precision_$i"}
             );
             $sth->execute(@queryargs) || $form->dberror($query);
-	    $dbh->commit;
             $form->{"sellprice_$i"} = $fxsellprice;
             for my $cls(@{$form->{bu_class}}){
                 if ($form->{"b_unit_$cls->{id}_$i"}){
