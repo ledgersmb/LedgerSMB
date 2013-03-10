@@ -425,8 +425,8 @@ sub post_invoice {
                 # update parts table
                 $form->update_balance( $dbh, "parts", "onhand",
                     qq|id = $form->{"id_$i"}|,
-                    $form->{"qty_$i"} )
-                  unless $form->{shipped};
+                    $form->{"qty_$i"} );
+                 # unless $form->{shipped};
 
                 # check if we sold the item
                 $query = qq|

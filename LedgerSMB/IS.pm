@@ -1182,7 +1182,7 @@ sub post_invoice {
                             $dbh, "parts", "onhand",
                             qq|id = | . qq|$form->{"id_$i"}|,
                             $form->{"qty_$i"} * -1
-                        ) unless $form->{shipped};
+                        ); # unless $form->{shipped};
                     }
 
                     &process_assembly( $dbh, $form, $form->{"id_$i"},
@@ -1193,7 +1193,7 @@ sub post_invoice {
                         $dbh, "parts", "onhand",
                         qq|id = $form->{"id_$i"}|,
                         $form->{"qty_$i"} * -1
-                    ) unless $form->{shipped};
+                    ); # unless $form->{shipped};
 
                     $allocated = cogs(
                         $dbh,              $form,      
