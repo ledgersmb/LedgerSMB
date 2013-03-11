@@ -1857,7 +1857,7 @@ sub get_name {
                                l.city, etl.credit_id
                           FROM eca_to_location etl
                           JOIN location l ON etl.location_id = l.id
-                          WHERE etl.location_class = 2) ecl
+                          WHERE etl.location_class = 1) ecl
                         ON (c.id = ecl.credit_id)
              LEFT JOIN country_tax_form ctf ON (c.taxform_id = ctf.id)
 		 WHERE (lower(e.name) LIKE ?
