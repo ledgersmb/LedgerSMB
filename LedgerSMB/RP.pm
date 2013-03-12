@@ -71,8 +71,7 @@ sub inventory_activity {
     $where =~ s/^\s?AND/WHERE/;
 
     my $query = qq|
-		   SELECT min(p.description) AS description, 
-		          min(p.partnumber) AS partnumber, sum(
+		   SELECT p.description, p.partnumber, sum(
 		          CASE WHEN i.qty > 0 THEN i.qty ELSE 0 END) AS sold, 
 		          sum (CASE WHEN i.qty > 0 
 		                    THEN i.sellprice * i.qty 
@@ -87,7 +86,7 @@ sub inventory_activity {
 		LEFT JOIN ar ON (ar.id = i.trans_id)
 		LEFT JOIN ap ON (ap.id = i.trans_id)
 		   $where
-		 GROUP BY i.parts_id
+		 GROUP BY i.parts_id, p.partnumber, p.description
 		 ORDER BY $form->{sort_col}|;
     my $sth = $dbh->prepare($query) || $form->dberror($query);
     $sth->execute() || $form->dberror($query);
