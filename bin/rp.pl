@@ -402,6 +402,7 @@ qq|rp.pl?path=$form->{path}&action=continue&accounttype=$form->{accounttype}&log
             text => $ref->{partnumber},
             href => $pnumhref,
             };
+        $column_data{description} = $ref->{description};
         $column_data{sold} = {
             text => $ref->{sold},
             href => $soldhref,
