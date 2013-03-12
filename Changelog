@@ -88,6 +88,7 @@ Changelog for 1.3.31
   in corner cases with no good solutions (Chris T)
 * R5680-1, (tentatively) fixes to shipping/invoice onhand numbers (Chris T)
 * Fixed customer search showing sales rather than billing addresses (Chris T)
+* Fixed parts descriptions not showing on inventory actibity report (Chris T)
 
 Changelog for 1.3.30
 * Documented behavior of Outstanding Summary report (Chris T, 3601314)
