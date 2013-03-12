@@ -258,6 +258,9 @@ sub print {
                 )
               )
             {
+                my $binmode = ':utf8';
+                binmode STDOUT, $binmode;
+                binmode STDERR, $binmode;
                 print $locale->text('done');
                 $form->redirect( $locale->text('Marked entries printed!') );
             }
