@@ -1181,7 +1181,6 @@ sub save_intnotes {
     my $sth = $form->{dbh}->prepare("UPDATE $table SET intnotes = ? " .
                                       "where id = ?");
     $sth->execute($form->{intnotes}, $form->{id});
-    $form->{dbh}->commit;
 }
 
 =back

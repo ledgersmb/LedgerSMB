@@ -1493,7 +1493,7 @@ sub save_info {
 
 		}
 		
-	    }    
+	    }   
 
 	    if ($form->{callback}){
 		print "Location: $form->{callback}\n";
