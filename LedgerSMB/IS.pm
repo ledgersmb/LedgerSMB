@@ -2704,8 +2704,6 @@ sub update_invoice_tax_form
           $sth->execute($invoice_id,$report) || $form->dberror("$query");
    }
 
-   $dbh->commit();
-
 }
 
 
