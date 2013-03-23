@@ -26,6 +26,7 @@ package LedgerSMB::Scripts::user;
 use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::User;
+use LedgerSMB::App_State;
 our $VERSION = 1.0;
 use strict;
 
@@ -71,6 +72,10 @@ screen.
 
 sub save_preferences {
     my ($request) = @_;
+    $request->{_user}->{language} = $request->{language};
+    $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
+    $request->{_locale} = $locale;
+    $LedgerSMB::App_State::Locale = $locale;
     my $user = LedgerSMB::DBObject::User->new({base => $request});
     $user->{dateformat} =~ s/$slash/\//g;
     if ($user->{confirm_password}){
