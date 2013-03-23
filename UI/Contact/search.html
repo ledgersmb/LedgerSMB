@@ -3,15 +3,14 @@
 <?lsmb account_class = entity_class ?>
 <body>
 <?lsmb IF account_class == 1 -?>
-<?lsmb entity_type = 'Vendor' -?>
+<?lsmb title = text('Vendor Search') #' -?>
 <?lsmb ELSIF account_class == 2 -?>
-<?lsmb entity_type = 'Customer' -?>
+<?lsmb title = text('Customer Search') #' -?>
 <?lsmb ELSIF account_class == 3 -?>
-<?lsmb entity_type = 'Employee' -?>
+<?lsmb title = text('Employee Search') #' -?>
 <?lsmb ELSE -?>
-<?lsmb entity_type = 'Unsupported' -?>
+<?lsmb title = text('Unsupported Search') #' -?>
 <?lsmb END -?>
-<?lsmb title = text("$entity_type Search") # " -?>
 <form method="get" action="<?lsmb script ?>">
 <?lsmb INCLUDE input element_data = {
 	type = "hidden"
