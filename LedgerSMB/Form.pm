@@ -3343,11 +3343,11 @@ sub save_recurring {
 			INSERT INTO recurring 
 				(id, reference, startdate, enddate, nextdate, 
 				repeat, unit, howmany, payment)
-			VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)|;
+			VALUES (?, null, ?, ?, ?, ?, ?, ?, ?)|;
 
         $sth = $dbh->prepare($query);
         $sth->execute(
-            $self->{id}, $s{reference}, $s{startdate},
+            $self->{id}, $s{startdate},
             $enddate,    $nextdate,     $s{repeat},
             $s{unit},    $s{howmany},   $s{payment}
         );
