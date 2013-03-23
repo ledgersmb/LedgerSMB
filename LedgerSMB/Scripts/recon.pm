@@ -75,7 +75,7 @@ sub update_recon_set {
     $recon->{dbh}->commit;
     if ($recon->{line_order}){
        $recon->set_ordering(
-		{method => 'reconciliation__report_details', 
+		{method => 'reconciliation__report_details_payee', 
 		column  => $recon->{line_order}}
        );
     }

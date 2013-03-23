@@ -96,6 +96,7 @@ Changelog for 1.3.31
 * Fixed handling of spaces in debit/credit cols/gl (Chris T, 3607219)
 * Fixed handling of invoice numbers on recurring (Chris T, 3602382)
 * Fixed language code changes delayed (Chris T, 3607220) 
+* Fixed order by on reconciliation screen not working (Chris T, 3607223)
 
 Changelog for 1.3.30
 * Documented behavior of Outstanding Summary report (Chris T, 3601314)
