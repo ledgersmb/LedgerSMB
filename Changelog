@@ -92,7 +92,8 @@ Changelog for 1.3.31
 * Fixed encoding issues when printing from the queue (Chris T, 3602073)
 * Fixed spurious commit in Invoice Shipped (Chris T)
 * Fixed handling of long notes/descriptions on GL (Chris T, 3603939)
-* Correcting handling of translation strings in Conatact Search (CT, 3604721)
+* Fixed handling of translation strings in Conatact Search (Chris T, 3604721)
+* Fixed handling of spaces in debit/credit cols/gl (Chris T, 3607219)
 
 Changelog for 1.3.30
 * Documented behavior of Outstanding Summary report (Chris T, 3601314)
