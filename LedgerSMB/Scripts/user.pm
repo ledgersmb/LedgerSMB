@@ -73,7 +73,7 @@ screen.
 sub save_preferences {
     my ($request) = @_;
     $request->{_user}->{language} = $request->{language};
-    $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
+    my $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
     $request->{_locale} = $locale;
     $LedgerSMB::App_State::Locale = $locale;
     my $user = LedgerSMB::DBObject::User->new({base => $request});
