@@ -1061,6 +1061,8 @@ sub update {
     @flds  = qw(accno debit credit projectnumber fx_transaction source memo);
 
     for $i ( 0 .. $form->{rowcount} ) {
+        $form->{"debit_$i"} =~ s/\s+//g; 
+        $form->{"credit_$i"} =~ s/\s+//g; 
         unless ( ( $form->{"debit_$i"} eq "" )
             && ( $form->{"credit_$i"} eq "" ) )
         {
@@ -1186,6 +1188,8 @@ sub check_balanced {
     my ($form) = @_;
     # add up debits and credits
     for $i ( 0 .. $form->{rowcount} ) {
+        $form->{"debit_$i"} =~ s/\s+//g; 
+        $form->{"credit_$i"} =~ s/\s+//g; 
         $dr = $form->parse_amount( \%myconfig, $form->{"debit_$i"} );
         $cr = $form->parse_amount( \%myconfig, $form->{"credit_$i"} );
 
