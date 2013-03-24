@@ -664,6 +664,7 @@ BEGIN
 	UPDATE entity 
 	SET name = in_name, 
 		entity_class = in_entity_class,
+                country_id   = in_country_id,
 		control_code = in_control_code
 	WHERE id = in_entity_id;
 

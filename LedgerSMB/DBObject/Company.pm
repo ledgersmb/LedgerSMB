@@ -657,6 +657,8 @@ sub get {
             last;
         }
     }
+    my ($ref) = $self->exec_method({funcname => 'entity__get_by_cc'});
+    $self->merge($ref);
     $self->{name} = $self->{legal_name};
     if ($self->{credit_id} and $self->{meta_number}){
         $self->get_credit_id;
