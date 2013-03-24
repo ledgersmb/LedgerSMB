@@ -231,44 +231,42 @@ BEGIN
 		LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
 		LEFT JOIN business b ON (ec.business_id = b.id)
 		WHERE coalesce(ec.entity_class,e.entity_class) = in_account_class
-			AND (c.id IN (select company_id FROM company_to_contact
-				WHERE contact ILIKE ALL(t_contact_info))
-				OR '' ILIKE ALL(t_contact_info)
-				OR t_contact_info IS NULL)
+			AND (e.id IN 
+                            (select entity_id 
+                               FROM entity_credit_account leca
+                               JOIN eca_to_contact le2c 
+                                 ON le2c.credit_id = leca.id
+			      WHERE contact ILIKE ALL(t_contact_info))
+			OR '' ILIKE ALL(t_contact_info)
+			OR t_contact_info IS NULL)
 			
 			AND (c.legal_name ilike '%' || in_legal_name || '%'
 				OR in_legal_name IS NULL)
 			AND ((in_address IS NULL AND in_city IS NULL 
 					AND in_state IS NULL 
+                                        AND in_mail_code IS NULL
 					AND in_country IS NULL)
-				OR (c.id IN 
-				(select company_id FROM company_to_location
-				WHERE location_id IN 
-					(SELECT id FROM location
-					WHERE line_one 
-						ilike '%' || 
-							coalesce(in_address, '')
-							|| '%'
-						AND city ILIKE 
-							'%' || 
-							coalesce(in_city, '') 
-							|| '%'
-						AND state ILIKE
-							'%' || 
-							coalesce(in_state, '') 
-							|| '%'
-						AND mail_code ILIKE
-							'%' || 
-							coalesce(in_mail_code,
-								'')
-							|| '%'
-						AND country_id IN 
-							(SELECT id FROM country
-							WHERE name ILIKE '%' ||
-								in_country ||'%'
-								OR short_name
-								ilike 
-								in_country)))))
+				OR (e.id IN 
+			(SELECT entity_id 
+                           FROM entity_credit_account leca 
+                           JOIN eca_to_location le2l 
+                             ON (leca.id = le2l.credit_id)
+                           JOIN location ll ON ll.id = le2l.location_id
+                          WHERE e.id = leca.entity_id 
+                                AND  line_one ilike 
+                                     '%' || coalesce(in_address, '') || '%'
+				AND city ILIKE 
+                                     '%' || coalesce(in_city, '') || '%'
+				AND state ILIKE
+		                     '%' || coalesce(in_state, '') || '%'
+				AND mail_code ILIKE
+                                     '%' || coalesce(in_mail_code, '') || '%'
+				AND country_id IN (SELECT id FROM country
+						    WHERE name ILIKE '%' ||
+					 		  in_country ||'%'
+							  OR short_name
+							  ilike 
+							  in_country))))
 			AND (ec.business_id = 
 				coalesce(in_business_id, ec.business_id)
 				OR (ec.business_id IS NULL 
