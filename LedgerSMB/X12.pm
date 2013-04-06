@@ -91,13 +91,13 @@ This is the exchange security and routing information header.
 
 has ISA => (is => 'ro', isa => 'HashRef[Any]', lazy => 1, builder => '_ISA');
 
-sub ISA {
+sub _ISA {
     my ($self) = @_;
     my @segments = $self->parser->get_loop_segments;
     @segments = $self->parser->get_loop_segments unless @segments;
     if ($segments[0] != 'ISA'){
         $self->parse;  # re-initialize parser, we don't have an ISA!
-        die 'No ISA';
+        die 'No ISA'; # Trappable error.
     }
 
     my $isa = {};
@@ -107,7 +107,7 @@ sub ISA {
     push @keys, sprintf('ISA%02d', $_) for (1 .. 16);
 
     for my $key (@keys){
-       $isa->{$key} = unshift @segments;
+       $isa->{$key} = shift @segments;
     }
     return $isa;
 }
@@ -147,9 +147,13 @@ sub _parser {
     my ($self) = @_;
     my $parser = new X12::Parser;
     my $file = $self->message;
+    return $parser;
 }
 
 sub parse {
+    my ($self) = @_;
+    my $file;
+    my $parser = $self->parser;
     if (!$self->is_message_file){
         $file = $LedgerSMB::Sysconfig::tempdir . '/' . $$ . '-' . $self->message;
         open TMPFILE, '>', $file;
@@ -175,7 +179,7 @@ In these cases one needs to set it manually.  Use this function to do this.
 sub set_segement_sep {
     my ($self, $sep) = @_;
     # ick, ai don't like how this involves messing around with internals.
-    $self->parser->{_SEGMENT_SEPARATOR} = $seg;
+    $self->parser->{_SEGMENT_SEPARATOR} = $sep;
 }
 
 =back

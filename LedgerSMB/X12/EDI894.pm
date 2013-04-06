@@ -40,6 +40,7 @@ has order => (is => 'ro', isa => 'HashRef[Any]', lazy => 1,
           builder => '_order');
 
 sub _order {
+    my ($self) = @_;
     my $sep = $self->parser->get_element_separator;
     my $form = new Form;
     my $sender_idx;
@@ -52,8 +53,8 @@ sub _order {
             when ('ISA'){
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
-                $sender_idx = $elements[5]
-                $sender_id = $elements[6]
+                $sender_idx = $elements[5];
+                $sender_id = $elements[6];
             }
             when ('G82') { 
                 my ($segment) = $self->parser->get_loop_segments;
@@ -63,6 +64,8 @@ sub _order {
             }
             when ('G83') {
                 ++$i;
+                my ($segment) = $self->parser->get_loop_segments;
+                my @elements = split(/\Q$sep\E/, $segment);
                 $form->{"qty_$i"} = $elements[2];
                 $form->{"unit_$i"} = $elements[3];
                 $form->{"partnumber_$i"} = $elements[5];

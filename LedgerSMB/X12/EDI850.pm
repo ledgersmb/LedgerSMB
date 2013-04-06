@@ -54,8 +54,8 @@ sub _order {
             when ('ISA'){
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
-                $sender_idx = $elements[5]
-                $sender_id = $elements[6]
+                $sender_idx = $elements[5];
+                $sender_id = $elements[6];
             }
             when ('BEG'){
                 my ($segment) = $self->parser->get_loop_segments;
@@ -82,9 +82,9 @@ sub _order {
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 my $invtotal;
-                $invtotal += ($form->{"qty_$_"} * $form->{"sellprice_$_"} 
+                $invtotal += ($form->{"qty_$_"} * $form->{"sellprice_$_"})
                      for (1 .. $i);
-                die 'Incorrect number of line items' if $i ~= $elements[1];
+                die 'Incorrect number of line items' if $i =~ $elements[1];
                 die 'Incorrect total' if $elements[2] and $elements[2] != $invtotal;
             }
         }

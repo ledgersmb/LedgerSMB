@@ -298,49 +298,39 @@ BEGIN
 		LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
 		LEFT JOIN business b ON (ec.business_id = b.id)
 		WHERE coalesce(ec.entity_class,e.entity_class) = in_entity_class
-			AND (c.entity_id IN (select entity_id 
-                                               FROM entity_to_contact
-                                              WHERE contact ILIKE 
-                                                            ANY(t_contact_info))
-				                    OR '' ILIKE 
-                                                          ALL(t_contact_info)
-                                                    OR t_contact_info IS NULL)
+			AND (c.entity_id IN 
+                       (select entity_id 
+                          FROM entity_credit_account leca
+                          JOIN eca_to_contact le2c ON leca.id = le2c.credit_id
+                         WHERE contact ILIKE ANY(t_contact_info))
+                      OR '' ILIKE ALL(t_contact_info)
+                      OR t_contact_info IS NULL)
 			
 			AND ((in_address IS NULL AND in_city IS NULL 
 					AND in_state IS NULL 
 					AND in_country IS NULL)
 				OR (c.entity_id IN 
-				(select entity_id FROM entity_to_location
-				WHERE location_id IN 
-					(SELECT id FROM location
-					WHERE (line_one @@ plainto_tsquery(
-                                                              in_address)
-                                               OR
-					       line_two @@ plainto_tsquery(
-                                                              in_address)
-                                               OR
-					       line_three @@ plainto_tsquery(
-                                                              in_address))
-						AND city ILIKE 
-							'%' || 
-							coalesce(in_city, '') 
-							|| '%'
-						AND state ILIKE
-							'%' || 
-							coalesce(in_state, '') 
-							|| '%'
-						AND mail_code ILIKE
-							'%' || 
-							coalesce(in_mail_code,
-								'')
-							|| '%'
-						AND country_id IN 
-							(SELECT id FROM country
-							WHERE name ilike
-                                                              in_country
-								OR short_name
-								ilike 
-								in_country)))))
+				(select entity_id 
+                                   FROM entity_credit_account leca
+                                   JOIN eca_to_location le2a 
+                                     ON leca.id = le2a.credit_id
+                                   JOIN location ll ON le2a.location_id = ll.id
+			          WHERE (line_one @@ plainto_tsquery(in_address)
+                                        OR
+				        line_two @@ plainto_tsquery(in_address)
+                                        OR
+					line_three @@ plainto_tsquery(in_address))
+					AND city ILIKE 
+                                            '%' || coalesce(in_city, '') || '%'
+					AND state ILIKE
+					    '%' || coalesce(in_state, '') || '%'
+					AND mail_code ILIKE
+		   			    '%' || coalesce(in_mail_code, '') || '%'
+					AND country_id 
+                                            IN (SELECT id FROM country
+						 WHERE name ilike in_country
+						       OR short_name 
+                                                       ilike in_country)))
 			AND (ec.business_id = 
 				coalesce(in_business_id, ec.business_id)
 				OR (ec.business_id IS NULL 
@@ -739,7 +729,8 @@ BEGIN
 	UPDATE entity 
 	SET name = in_legal_name, 
 		entity_class = in_entity_class,
-		control_code = in_control_code
+		control_code = in_control_code,
+                country_id   = in_country_id
 	WHERE id = in_entity_id;
 
 	IF FOUND THEN
