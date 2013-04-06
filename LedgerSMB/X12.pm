@@ -159,6 +159,8 @@ sub parse {
         open TMPFILE, '>', $file;
         print TMPFILE $self->message;
         close TMPFILE;
+    } else {
+        $file = $self->message;
     }
     $parser->parsefile( file => $file,
                         conf => $self->config_file);

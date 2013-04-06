@@ -36,11 +36,11 @@ would submit (flat format).
 
 =cut 
 
-has order => (is => 'ro', isa => 'HashRef[Any]', lazy => 1, 
+has order => (is => 'ro', isa => 'Form', lazy => 1, 
           builder => '_order');
 
 sub _order {
-    my ($self) = $_;
+    my ($self) = @_;
     $self->parse;
     my $sep = $self->parser->get_element_separator;
     my $form = new Form;
@@ -92,4 +92,4 @@ sub _order {
     }
 }
 
-
+__PACKAGE__->meta->make_immutable;
