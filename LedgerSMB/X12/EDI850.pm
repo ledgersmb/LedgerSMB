@@ -61,7 +61,7 @@ sub _order {
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 $form->{ordnumber} = $elements[3];
-                $form->{transdate} = $elements[4];
+                $form->{transdate} = $elements[5];
                 $form->{transdate} =~ s/(\d{4})(\d{2})(\d{2})/$1-$2-$3/;
             }
             when ('PO1'){
@@ -69,8 +69,8 @@ sub _order {
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 $form->{"qty_$i"} = $elements[2];
-                $form->{"sellprice_$i"} = $elements[3];
-                $form->{"partnumber_$i"} = $elements[6];
+                $form->{"sellprice_$i"} = $elements[4];
+                $form->{"partnumber_$i"} = $elements[7];
             }
             when ('PID'){
                 my ($segment) = $self->parser->get_loop_segments;
@@ -84,12 +84,11 @@ sub _order {
                 my $invtotal;
                 $invtotal += ($form->{"qty_$_"} * $form->{"sellprice_$_"})
                      for (1 .. $i);
-                die 'Incorrect number of line items' if $i =~ $elements[1];
-                die 'Incorrect total' if $elements[2] and $elements[2] != $invtotal;
+                #die 'Incorrect total: got ' . $elements[2] . " expected $invtotal" if $elements[2] and $elements[2] != $invtotal;
             }
         }
-        return $form;
     }
+    return $form;
 }
 
 __PACKAGE__->meta->make_immutable;
