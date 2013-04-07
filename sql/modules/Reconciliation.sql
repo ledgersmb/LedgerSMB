@@ -253,7 +253,7 @@ create or replace function reconciliation__add_entry(
 	IF t_scn IS NOT NULL THEN
 		SELECT count(*) INTO in_count FROM cr_report_line
 		WHERE scn ilike t_scn AND report_id = in_report_id 
-			AND their_balance = 0;
+			AND their_balance = 0 AND post_date = in_date;
 
 		IF in_count = 0 THEN
 			INSERT INTO cr_report_line
@@ -267,15 +267,18 @@ create or replace function reconciliation__add_entry(
 			SET their_balance = t_amount, clear_time = in_date,
 				cleared = true
 			WHERE t_scn = scn AND report_id = in_report_id
-				AND their_balance = 0;
+				AND their_balance = 0 AND post_date = in_date;
 		ELSE 
 			SELECT count(*) INTO in_count FROM cr_report_line
 			WHERE t_scn ilike scn AND report_id = in_report_id
-				AND our_value = t_amount and their_balance = 0;
+				AND our_value = t_amount and their_balance = 0
+                                AND post_date = in_date;
 
 			IF in_count = 0 THEN -- no match among many of values
 				SELECT id INTO lid FROM cr_report_line
-                        	WHERE t_scn ilike scn AND report_id = in_report_id
+                        	WHERE t_scn ilike scn
+                                      AND report_id = in_report_id
+                                      AND post_date = in_date
 				ORDER BY our_balance ASC limit 1;
 
 				UPDATE cr_report_line
@@ -293,11 +296,13 @@ create or replace function reconciliation__add_entry(
 					cleared = true
 				WHERE t_scn = scn AND report_id = in_report_id
                                 	AND our_value = t_amount 
-					AND their_balance = 0;
+					AND their_balance = 0
+                                        AND post_date = in_date;
 			ELSE -- More than one match
 				SELECT id INTO lid FROM cr_report_line
                         	WHERE t_scn ilike scn AND report_id = in_report_id
                                 	AND our_value = t_amount
+                                        AND post_date = in_date
 				ORDER BY id ASC limit 1;
 
 				UPDATE cr_report_line
@@ -312,7 +317,7 @@ create or replace function reconciliation__add_entry(
 	ELSE -- scn IS NULL, check on amount instead
 		SELECT count(*) INTO in_count FROM cr_report_line
 		WHERE report_id = in_report_id AND our_balance = t_amount
-			AND their_balance = 0 and post_date = in_date
+			AND their_balance = 0 AND post_date = in_date
 			and scn NOT LIKE t_prefix || '%';
 
 		IF in_count = 0 THEN -- no match
@@ -327,13 +332,15 @@ create or replace function reconciliation__add_entry(
 					trans_type = in_type,
 					clear_time = in_date,
 					cleared = true
-			WHERE report_id = in_report_id AND our_balance = t_amount
-                        	AND their_balance = 0 and
+			WHERE report_id = in_report_id
+                                AND our_balance = t_amount
+                        	AND their_balance = 0
+                                AND post_date = in_date
 				in_scn NOT LIKE t_prefix || '%';
 		ELSE -- more than one match
 			SELECT min(id) INTO lid FROM cr_report_line
 			WHERE report_id = in_report_id AND our_balance = t_amount
-                        	AND their_balance = 0 and post_date = in_date
+                        	AND their_balance = 0 AND post_date = in_date
 				AND scn NOT LIKE t_prefix || '%'
 			LIMIT 1;
 
