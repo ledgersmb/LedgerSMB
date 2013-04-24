@@ -458,7 +458,7 @@ function on_return_submit(event){
 	      <tr>
 	        <td></td>
 		<td colspan=3>
-		  <table>
+		  <table class="creditlimit">
 		    <tr>
 		      <th nowrap>| . $locale->text('Credit Limit') . qq|</th>
 		      <td>|

@@ -498,3 +498,21 @@ BEGIN;
 update menu_attribute set value = 'ap_aging' where node_id = 27 and attribute = 'report';
 
 COMMIT;
+
+BEGIN;
+
+-- inventory from 1.3.30 and lower
+
+UPDATE parts 
+   SET onhand = onhand + coalesce((select sum(qty) 
+                            from inventory 
+                           where orderitems_id 
+                                 IN (select id 
+                                       from orderitems oi
+                                       join oe on oi.trans_id = oe.id
+                                      where closed is not true)
+                                 and parts_id = parts.id), 0)
+ WHERE string_to_array((setting_get('version')).value::text, '.')::int[] 
+       < '{1,3,31}';
+
+COMMIT;

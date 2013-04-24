@@ -439,7 +439,7 @@ sub form_header {
 		<th align=right nowrap=true>| . $locale->text('Required by') . qq|</th>
 		<td><input class="date" name=reqdate size=11 title="$myconfig{dateformat}" value=$form->{reqdate}></td>
 	      </tr>
-	      <tr class="ponunber-row">
+	      <tr class="ponumber-row">
 		<th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
 		<td><input name=ponumber size=20 value="$form->{ponumber}"></td>
 	      </tr>

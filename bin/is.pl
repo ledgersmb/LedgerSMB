@@ -508,7 +508,7 @@ function on_return_submit(event){
 	      <tr>
 		<td></td>
 		<td colspan=3>
-		  <table>
+		  <table class="creditlimit">
 		    <tr>
 		      <th align=right nowrap>| . $locale->text('Credit Limit') . qq|</th>
 		      <td>|
@@ -546,11 +546,11 @@ function on_return_submit(event){
 	      </tr>
 	      $department
 	      $exchangerate
-	      <tr>
+	      <tr class="shippingpoint-row">
 		<th align=right nowrap>| . $locale->text('Shipping Point') . qq|</th>
 		<td colspan=3><input name="shippingpoint" size="35" value="$form->{shippingpoint}"></td>
 	      </tr>
-	      <tr>
+	      <tr class="shipvia-row">
 		<th align=right nowrap>| . $locale->text('Ship via') . qq|</th>
 		<td colspan=3><input name="shipvia" size="35" value="$form->{shipvia}"></td>
 	      </tr>
@@ -559,24 +559,24 @@ function on_return_submit(event){
 	  <td align=right>
 	    <table>
 	      $employee
-	      <tr>
+	      <tr class="invnumber-row">
 		<th align=right nowrap>| . $locale->text('Invoice Number') . qq|</th>
 		<td><input name="invnumber" size="20" value="$form->{invnumber}"></td>
 	      </tr>
-	      <tr>
+	      <tr class="ordnumber-row">
 		<th align=right nowrap>| . $locale->text('Order Number') . qq|</th>
 		<td><input name="ordnumber" size="20" value="$form->{ordnumber}"></td>
 <input type=hidden name="quonumber" value="$form->{quonumber}">
 	      </tr>
-	      <tr>
+	      <tr class="transdate-row">
 		<th align=right>| . $locale->text('Invoice Date') . qq|</th>
 		<td><input class="date" name="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}"></td>
 	      </tr>
-	      <tr>
+	      <tr class="duedate-row">
 		<th align=right>| . $locale->text('Due Date') . qq|</th>
 		<td><input class="date" name="duedate" size="11" title="$myconfig{dateformat}" value="$form->{duedate}"></td>
 	      </tr>
-	      <tr>
+	      <tr class="ponumber-row">
 		<th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
 		<td><input name="ponumber" size="20" value="$form->{ponumber}"></td>
 	      </tr>
