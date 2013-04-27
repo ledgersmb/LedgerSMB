@@ -165,7 +165,7 @@ our $process = {
 
                   if ($entry->[6] !~ /:/) {
                     $settings->{$entry->[6]} = 1
-                      if ($entry->[6] != "");
+                      if ($entry->[6] ne "");
                   } else {
                     foreach my $link (split( /:/, $entry->[6])) {
                        $settings->{$link} = 1;
