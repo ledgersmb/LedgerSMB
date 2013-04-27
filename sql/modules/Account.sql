@@ -347,9 +347,9 @@ BEGIN
 		gifi_accno = in_gifi_accno,
 		heading = t_heading_id,
 		contra = in_contra,
-                obsolete = in_obsolete,
+                obsolete = coalesce(in_obsolete,'f'),
                 tax = t_tax,
-                is_temp = in_is_temp
+                is_temp = coalesce(in_is_temp,'f')
 	WHERE id = in_id;
 
 	IF FOUND THEN
