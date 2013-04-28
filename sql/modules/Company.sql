@@ -330,7 +330,7 @@ BEGIN
                                             IN (SELECT id FROM country
 						 WHERE name ilike in_country
 						       OR short_name 
-                                                       ilike in_country)))
+                                                       ilike in_country))))
 			AND (ec.business_id = 
 				coalesce(in_business_id, ec.business_id)
 				OR (ec.business_id IS NULL 
