@@ -462,7 +462,7 @@ CREATE OR REPLACE FUNCTION admin__create_group(in_group_name TEXT) RETURNS int a
         stmt := 'create role '|| quote_ident(group_name);
         execute stmt;
         INSERT INTO lsmb_group (role_name) 
-             values (group_name));
+             values (group_name);
         return 1;
     END;
     
@@ -473,19 +473,24 @@ REVOKE EXECUTE ON FUNCTION  admin__create_group(TEXT) FROM PUBLIC;
 CREATE OR REPLACE FUNCTION admin__add_group_to_role
 (in_group_name text, in_role_name text)
 RETURNS BOOL AS
-$$ 
+$$
+DECLARE
+   t_group_name text;
+   t_role_name  text;
 BEGIN
-   PERFORM * FROM lsmb_group_grants 
-     WHERE group_name = in_group_name AND
-           granted_role = in_role_name;
+   t_group_name := lsmb__role(in_group_name);
+   t_role_name := lsmb__role(in_role_name);
+   PERFORM * FROM lsmb_group_grants
+     WHERE group_name = t_group_name AND
+           granted_role = t_role_name;
 
- IF NOT FOUND THEN
-   INSERT INTO lsmb_group_grants(group_name, granted_role) 
-   VALUES (in_group_name, in_role_name);
- END IF;
+   IF NOT FOUND THEN
+      INSERT INTO lsmb_group_grants(group_name, granted_role) 
+           VALUES (t_group_name, t_role_name);
+   END IF;
 
-   EXECUTE 'GRANT ' || quote_ident(in_role_name) || ' TO ' ||
-           quote_literal('lsmb_' || t_dbname || '__' || in_group_name);
+   EXECUTE 'GRANT ' || quote_ident(t_role_name) || ' TO ' ||
+           quote_literal(t_group_name);
    RETURN TRUE;
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
