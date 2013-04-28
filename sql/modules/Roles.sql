@@ -1626,19 +1626,16 @@ CREATE OR REPLACE FUNCTION tg_enforce_perms_eclass () RETURNS TRIGGER AS
 $$
 DECLARE
    r_eclass entity_class;
-   roll_pfx text;
 BEGIN
 IF TG_OP = 'DELETE' THEN
    RETURN OLD;
 ELSE 
-   SELECT value INTO roll_pfx FROM defaults WHERE setting_key = 'roll_prefix';
    SELECT * INTO r_eclass from entity_class WHERE id = NEW.entity_class;
-   IF pg_has_role(SESSION_USER, coalesce(roll_pfx, 
-                                         'lsmb_' || current_database() || '__')
-                                || 'contact_class_' || lower(regexp_replace(
-                                                        r_eclass.class, 
-                                                        ' ', 
-                                                        '_')), 'USAGE')
+   IF pg_has_role(SESSION_USER,
+                  lsmb__role('contact_class_'
+                             || lower(regexp_replace(r_eclass.class,
+                                                     ' ', '_'))),
+                  'USAGE')
    THEN
       RETURN NEW;
    ELSE

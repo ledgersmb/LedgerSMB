@@ -103,7 +103,7 @@ DECLARE
 BEGIN
 
 -- error handling and checks before we begin
-IF (pg_has_role('lsmb_'||current_database()||'__draft_modify') IS NOT TRUE THEN
+IF (pg_has_role(lsmb_role('draft_modify')) IS NOT TRUE THEN
     RAISE EXCEPTION 'Access denied';
 END IF;
 

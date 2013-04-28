@@ -121,4 +121,13 @@ CREATE OR REPLACE FUNCTION lsmb__max_date() RETURNS date
 LANGUAGE SQL AS
 $$ SELECT max(transdate) FROM acc_trans; $$;
 
+CREATE OR REPLACE FUNCTION lsmb__role_prefix() RETURNS text
+LANGUAGE SQL AS
+$$ select coalesce((setting_get('role_prefix')).value,
+                   'lsmb_' || current_database() || '__'); $$;
+
+CREATE OR REPLACE FUNCTION lsmb__role(global_role text) RETURNS text
+LANGUAGE SQL AS
+$$ select lsmb__role_prefix() || $1; $$;
+
 COMMIT;

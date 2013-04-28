@@ -455,15 +455,14 @@ $$ language 'plpgsql';
 CREATE OR REPLACE FUNCTION admin__create_group(in_group_name TEXT) RETURNS int as $$
     
     DECLARE
-        
         stmt text;
-        t_dbname text;
+        group_name text;
     BEGIN
-	t_dbname := current_database();
-        stmt := 'create role '|| quote_ident('lsmb_' || t_dbname || '__' || in_group_name);
+        group_name := lsmb__role(in_group_name);
+        stmt := 'create role '|| quote_ident(group_name);
         execute stmt;
         INSERT INTO lsmb_group (role_name) 
-             values (quote_literal('lsmb_' || t_dbname || '__' || in_group_name));
+             values (group_name));
         return 1;
     END;
     
@@ -569,23 +568,21 @@ It leaves the entity and person references.
 If in_drop_role is set, it drops the role too.
 $$;
 
--- Work oin progress, not for ducmenting yet.
+-- Work in progress, not for ducmenting yet.
 CREATE OR REPLACE FUNCTION admin__delete_group (in_group_name TEXT) returns bool as $$
     
     DECLARE
         stmt text;
         a_role role_view;
-        t_dbname text;
+        group_name text;
     BEGIN
-        t_dbname := current_database();
-        
-
         select * into a_role from role_view where rolname = in_group_name;
-        
+
         if not found then
             return 'f'::bool;
         else
-            stmt := 'drop role lsmb_' || quote_ident(t_dbname || '__' || in_group_name);
+            group_name := lsmb__role(in_group_name);
+            stmt := 'drop role lsmb_' || quote_ident(group_name);
             execute stmt;
             return 't'::bool;
         end if;
@@ -638,17 +635,15 @@ $$ language sql;
 create or replace function admin__get_roles () returns setof pg_roles as $$
 DECLARE
     v_rol record;
-    t_dbname text;
 BEGIN
-    t_dbname := current_database();
-    FOR v_rol in 
+    FOR v_rol in
         SELECT *
-        from 
+        FROM
             pg_roles
-        where 
-            rolname ~ ('^lsmb_' || t_dbname || '__') 
-            and rolcanlogin is false
-        order by rolname ASC
+        WHERE
+            rolname ~ ('^' || lsmb__role_prefix())
+            AND NOT rolcanlogin
+        ORDER BY rolname ASC
     LOOP
         RETURN NEXT v_rol;
     END LOOP;

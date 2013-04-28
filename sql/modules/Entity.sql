@@ -59,7 +59,7 @@ BEGIN
              LEFT JOIN defaults ON setting_key = 'roll_prefix'
 		WHERE active and pg_has_role(SESSION_USER, 
                                      coalesce(defaults.value, 
-                                     'lsmb_' || current_database() || '__') ||
+                                     lsmb__role_prefix() ||
                                      'contact_class_' ||
                                      lower(regexp_replace(class, ' ', '_')), 
                                      'USAGE')
