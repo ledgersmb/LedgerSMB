@@ -163,7 +163,7 @@ PROCESS dynatable
 			name = "ar_ap_account_id"
 			default_values = [credit_act.ar_ap_account_id]
 			options = ar_ap_acc_list
-			label = text((account_class == 1) ? 'AP' : 'AR')
+			label = text((ec == 1) ? 'AP' : 'AR')
 			text_attr = "text"
 			value_attr = "id"
                 } ?>
