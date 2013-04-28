@@ -172,7 +172,7 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__employees_manage"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
 
-GRANT ALL ON entity_employee, person, entity, entity_id_seq
+GRANT ALL ON entity_employee, person, entity, entity_id_seq,
 payroll_income_type, payroll_deduction_type, payroll_wage, payroll_deduction
 TO "lsmb_<?lsmb dbname ?>__employees_manage";
 
