@@ -61,7 +61,7 @@ BEGIN
                                      coalesce(defaults.value, 
                                      lsmb__role_prefix() ||
                                      'contact_class_' ||
-                                     lower(regexp_replace(class, ' ', '_')), 
+                                     lower(regexp_replace(class, ' ', '_'))), 
                                      'USAGE')
 		ORDER BY id
 	LOOP
