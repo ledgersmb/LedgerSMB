@@ -142,44 +142,61 @@ sub defaults_screen{
     unshift @language_code_list, {}
         if ! defined $request->{default_language};
 
+    my $expense_accounts = $setting_handle->accounts_by_link('IC_expense');
+    my $income_accounts = $setting_handle->accounts_by_link('IC_income');
+    my $fx_loss_accounts = $setting_handle->accounts_by_link('FX_loss');
+    my $fx_gain_accounts = $setting_handle->accounts_by_link('FX_gain');
+    my $inventory_accounts = $setting_handle->accounts_by_link('IC');
+
+    unshift @$expense_accounts, {}
+        if ! defined $request->{expense_accno_id};
+    unshift @$income_accounts, {}
+        if ! defined $request->{income_accno_id};
+    unshift @$fx_loss_accounts, {}
+        if ! defined $request->{fxloss_accno_id};
+    unshift @$fx_gain_accounts, {}
+        if ! defined $request->{fxgain_accno_id};
+    unshift @$inventory_accounts, {}
+        if ! defined $request->{inventory_accno_id};
+
     my %selects = (
-        'fxloss_accno_id' => {name => 'fxloss_accno_id', 
-                           options => $setting_handle->accounts_by_link('FX_loss'),
+        'fxloss_accno_id' => {name => 'fxloss_accno_id',
+                           options => $fx_loss_accounts,
                          text_attr => 'text',
                         value_attr => 'id'},
-        'fxgain_accno_id' => {name => 'fxgain_accno_id', 
+        'fxgain_accno_id' => {name => 'fxgain_accno_id',
                          text_attr => 'text',
-                           options => $setting_handle->accounts_by_link('FX_gain'),
+                           options => $fx_gain_accounts,
                         value_attr => 'id'},
-        'expense_accno_id' => {name => 'expense_accno_id', 
-                            options =>  $setting_handle->accounts_by_link('IC_expense'),
+        'expense_accno_id' => {name => 'expense_accno_id',
+                            options =>  $expense_accounts,
                          text_attr => 'text',
                         value_attr => 'id'},
         'income_accno_id' => {name => 'income_accno_id',
-                           options => $setting_handle->accounts_by_link('IC_income'),
+                           options => $income_accounts,
                          text_attr => 'text',
                         value_attr => 'id'},
-        'inventory_accno_id' => {name => 'inventory_accno_id', 
-                     options => $setting_handle->accounts_by_link('IC'),
+        'inventory_accno_id' => {name => 'inventory_accno_id',
+                     options => $inventory_accounts,
                    text_attr => 'text',
                   value_attr => 'id'},
-	'default_country' => {name   => 'default_country', 
+	'default_country' => {name   => 'default_country',
 			     options => \@country_list,
 			     default_values => [$request->{'default_country'}],
 			     text_attr => 'name',
 			     value_attr => 'id',
 		},
-	'default_language' => {name   => 'default_language', 
+	'default_language' => {name   => 'default_language',
 			     options => \@language_code_list,
 			     default_values => [$request->{'default_language'}],
 			     text_attr => 'description',
 			     value_attr => 'code',
 		},
 	'templates'       => {name => 'templates',
-                           options => _get_template_directories(), 
+                           options => _get_template_directories(),
                          text_attr => 'text',
-                        value_attr => 'value' 
-               },	
+                        value_attr => 'value'
+               },
         );
     my $template = LedgerSMB::Template->new_UI(
         user => $LedgerSMB::App_State::User, 
