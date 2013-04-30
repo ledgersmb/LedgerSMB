@@ -1630,6 +1630,8 @@ BEGIN
 IF TG_OP = 'DELETE' THEN
    RETURN OLD;
 ELSE 
+   IF pg_has_role('postgres', 'USAGE') THEN RETURN NEW -- is superuser
+   END IF;
    SELECT * INTO r_eclass from entity_class WHERE id = NEW.entity_class;
    IF pg_has_role(SESSION_USER,
                   lsmb__role('contact_class_'
