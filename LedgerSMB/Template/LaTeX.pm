@@ -112,7 +112,7 @@ my %escapes = (
    '%' => '\\%',
    '{' => '\\{',
    '}' => '\\}',
-   '–' => '---',
+   '–' => '--',
   );
 
 # Breaking this off to be used separately.
@@ -120,7 +120,7 @@ sub escape {
     my ($vars) = shift @_;
 
     if (defined $vars){
-            $vars =~ s/([&\$\\_<>~^#\%\{\}])/$escapes{$1}/g;
+            $vars =~ s/([&\$\\_<>~^#\%\{\}–])/$escapes{$1}/g;
             $vars =~ s/–/--/g;
             $vars =~ s/[—―]/---/g;
             $vars =~ s/"(.*)"/``$1''/gs;
