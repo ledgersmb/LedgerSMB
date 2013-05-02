@@ -441,7 +441,6 @@ sub display_row
 			      if ( $i < $form->{rowcount} )
 			      {					      
 						    $temphash1->{accno}=$form->{"accno_$i"};
-						    $temhash1->{fx_transaction}=$form->{"fx_transaction_$i"};
 
 						    if ( $form->{projectset} and $form->{"projectnumber_$i"} ) {
 							$temphash1->{projectnumber}=$form->{"projectnumber_$i"}; 
@@ -451,7 +450,7 @@ sub display_row
 						    
 						    if ( $form->{transfer} and $form->{"fx_transaction_$i"})
 						    {
-							  $hiddens{"fx_transaction_$i"}=1; 
+							$temphash1->{fx_transactionset}=1; 
 						    }
 						    else 
 						    {

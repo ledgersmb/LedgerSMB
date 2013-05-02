@@ -170,18 +170,18 @@
 		      <td>
 
 			    <?lsmb IF  displayrow.fx_transactionset == 1 ?>
-					    <?lsmb PROCESS label element_data = {
-					      text = text('x')
-					      align = 'right'
-				              id = "fxt_$INDEX"
-                                               } 
-					      ?>
-			   
+			                   <?lsmb PROCESS input element_data = {
+					      value = 1
+					      type = "checkbox"
+					      checked = "true"
+					      name = "fx_transaction_$INDEX"
+					      id = "fxt_$INDEX"
+                                              } ?>
 			    <?lsmb ELSE ?>
 			                   <?lsmb PROCESS input element_data = {
 					      value = 1
 					      type = "checkbox"
-					      checked = 1
+					      checked = ""
 					      name = "fx_transaction_$INDEX"
 					      id = "fxt_$INDEX"
                                               } ?>

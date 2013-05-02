@@ -87,6 +87,7 @@ Changelog for 1.3.32
 * Fixed multiple blank line handling for pdfs (Chris T)
 * Fixed multiple repeat entries in chart of accounts drop down (Nick P, 812)
 * Fixed transaction list empty if searched by creditor name (Nick P, 806)
+* Fixed cash transfer enforces ticked 'FX' boxes (Nick P, 802)
 
 Nick P is Nick Prater
 
