@@ -113,7 +113,7 @@
 
 <?lsmb IF notes ?>
 \vspace{0.3cm}
-<?lsmb FOREACH P IN notes.split('\n\n') ?>
+<?lsmb FOREACH P IN notes.split('\n{2,}') ?>
 <?lsmb P ?>\medskip
 
 <?lsmb END ?>
