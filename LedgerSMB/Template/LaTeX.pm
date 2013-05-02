@@ -112,6 +112,7 @@ my %escapes = (
    '%' => '\\%',
    '{' => '\\{',
    '}' => '\\}',
+   '–' => '---',
   );
 
 # Breaking this off to be used separately.
