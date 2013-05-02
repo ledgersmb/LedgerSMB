@@ -1059,8 +1059,12 @@ sub transactions {
         $where .= " AND vc.meta_number = " . $dbh->quote($form->{meta_number});
     }
     if ( $form->{"$form->{vc}_id"} ) {
-        $form->{entity_id} = $form->{$form->{vc}."_id"};
-        $where .= qq| AND a.entity_id = $form->{entity_id}|;
+        # This was looking at entity_id (a.entity_id = $form->{entity_id}...)
+        # but on a 1.3.30 database, both ar.entity_id and ap.entity_id colums are NULL
+        # so it seems that entity_credit_account is what we actually want
+        # fix for bug 806
+        $form->{entity_credit_account} = $form->{$form->{vc}."_id"};
+        $where .= qq| AND a.entity_credit_account = $form->{entity_credit_account}|;
     }
     else {
         if ( $form->{ $form->{vc} } ) {
@@ -1069,7 +1073,7 @@ sub transactions {
         }
     }
 
-    for (qw(department_id entity_credit_account)) {
+    for (qw(department_id)) {
         if ( $form->{$_} ) {
             ( $null, $var ) = split /--/, $form->{$_};
             $var = $dbh->quote($var);
