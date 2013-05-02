@@ -2,7 +2,6 @@ package LedgerSMB::RESTXML::Document::Customer_Search;
 use strict;
 use warnings;
 use base qw(LedgerSMB::RESTXML::Document::Base);
-use LedgerSMB::Log;
 
 sub handle_get {
     my ( $self, $args ) = @_;

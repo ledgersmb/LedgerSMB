@@ -11,7 +11,6 @@ use warnings;
 use Carp;
 use LedgerSMB::User;
 use LedgerSMB::Sysconfig;
-use LedgerSMB::Log;
 use Scalar::Util qw(blessed);
 use DBI;
 

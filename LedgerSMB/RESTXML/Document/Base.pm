@@ -8,7 +8,6 @@ package LedgerSMB::RESTXML::Document::Base;
 use strict;
 use warnings;
 use XML::Twig;
-use LedgerSMB::Log;
 use Carp;
 
 sub handle_post {
