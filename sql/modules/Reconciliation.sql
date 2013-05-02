@@ -549,7 +549,7 @@ create type recon_accounts as (
 );
 
 create or replace function reconciliation__account_list () returns setof recon_accounts as $$
-    SELECT
+    SELECT DISTINCT
         coa.accno || ' ' || coa.description as name,
         coa.accno, coa.id as id
     FROM account coa
