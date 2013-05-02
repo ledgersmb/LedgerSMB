@@ -185,7 +185,7 @@ Fax: <?lsmb shiptofax ?>
 <?lsmb text('All prices in [_1].', currency) ?>
 
 \vspace{12pt}
-<?lsmb FOREACH P IN notes.split('\n\n') ?>
+<?lsmb FOREACH P IN notes.split('\n{2,}') ?>
 <?lsmb P ?>\medskip
 
 <?lsmb END ?>
