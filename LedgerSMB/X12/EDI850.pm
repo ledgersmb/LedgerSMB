@@ -56,6 +56,45 @@ sub _order {
                 my @elements = split(/\Q$sep\E/, $segment);
                 $sender_idx = $elements[5];
                 $sender_id = $elements[6];
+                $form->{edi_isa} = \@elements;
+                my @new_elements = (
+                   $elements[0],
+                   $elements[1],
+                   $elements[2],
+                   $elements[3],
+                   $elements[4],
+                   $elements[7],
+                   $elements[8],
+                   $elements[5],
+                   $elements[6],
+                   $elements[9],
+                   $elements[10],
+                   $elements[11],
+                   $elements[12],
+                   $elements[13],
+                   $elements[14],
+                   $elements[15],
+                   $elements[16],
+                );
+                $form->{edi_isa_return} = join $sep, @new_elements;
+            }
+            when ('ST'){
+                my ($segment) = $self->parser->get_loop_segments;
+                my @elements = split(/\Q$sep\E/, $segment);
+                $form->{edi_st_id} = $elements[2];
+                $form->{edi_spec} = '850';
+            }
+            when ('GS'){
+                my ($segment) = $self->parser->get_loop_segments;
+                my @elements = split(/\Q$sep\E/, $segment);
+                $form->{edi_gs} = \@elements;
+                $form->{edi_f_id} = $elements[1];
+                $form->{edi_g_cc} = $elements[6];
+            }
+            when ('GE'){
+                my ($segment) = $self->parser->get_loop_segments;
+                my @elements = split(/\Q$sep\E/, $segment);
+                $form->{edi_ge} = \@elements;
             }
             when ('BEG'){
                 my ($segment) = $self->parser->get_loop_segments;

@@ -31,6 +31,12 @@ package LedgerSMB::X12;
 use Moose;
 use X12::Parser;
 use LedgerSMB::Sysconfig;
+use DateTime;
+
+my $counter = 1000; #for 997 generation
+my $dt = DateTime->now;
+my $date = sprintf('%04d%02d%02d', $dt->year, $dt->month, $dt->day);
+my $time = sprintf('%02d%02d', $dt->hour, $dt->min);
 
 =head1 REQUIRED PROPERTIES FOR PARSING
 
@@ -182,6 +188,34 @@ sub set_segement_sep {
     my ($self, $sep) = @_;
     # ick, ai don't like how this involves messing around with internals.
     $self->parser->{_SEGMENT_SEPARATOR} = $sep;
+}
+
+=item write_997($form, $success)
+
+Returns the test of a 997 document from the current document.
+
+=cut
+
+sub write_997{
+    my ($self, $form, $success) = @_;
+     my $status;
+    if ($success){
+       $status = 'A';
+    } else {
+       $status = 'R';
+    }
+    my $sep = $self->parser->get_element_separator;
+    my $seg = $self->parser->{_SEGMENT_SEPARATOR}; 
+    my $x12_997 = "$form->{edi_isa_return}$seg";
+    $x12_997 .= "GS${sep}FA${sep}$form->{edi_gs}->[3]${sep}$form->{edi_gs}->[2]${sep}${date}${sep}${time}${sep}1${sep}X${sep}$form->{edi_gs}->[8]$seg"
+             .  "ST${sep}997${sep}${counter}${seg}"
+             .  "AK1${sep}$form->{edi_f_id}${sep}$form->{edi_g_cc}${seg}"
+             .  "AK9${sep}${status}${sep}1${sep}${success}${sep}$form->{edi_ge}->[1]${seg}"
+             .  "SE${sep}4${sep}${counter}$seg"
+             .  "GE${sep}1${sep}1$seg"
+             .  "IEA${sep}1${sep}$form->{edi_isa}->[13]$seg";
+   
+    return $x12_997;
 }
 
 =back
