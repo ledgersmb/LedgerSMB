@@ -56,7 +56,7 @@ sub get {
     $key = $self->{key} unless $key;
     my ($hashref) = $self->call_procedure( procname => 'setting_get',
                                                args => [$key]) ;
-    $self->{value} = $hashref->{value} if eval {$self->{key} };
+    $self->{value} = $hashref->{value} if ref $self !~ /hash/i;
     return $hashref->{value};
 }
 

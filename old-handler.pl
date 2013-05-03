@@ -212,7 +212,7 @@ try {
   # when output terminates.  A mere 'die' will no longer trigger an automatic
   # error, but die 'foo' will map to $form->error('foo')
   # -- CT
-  $form->error($_)  unless $_ eq 'Died'; 
+  $form->error("'$_'")  unless $_ =~ /^Died at/i; 
 } 
 ;
 
