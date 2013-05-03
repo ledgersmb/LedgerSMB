@@ -47,6 +47,12 @@ use strict;
 use Error qw(:try);
 use Template;
 use LedgerSMB::Template::TTI18N;
+use DateTime;
+
+# The following are for EDI only
+my $dt = DateTime->now;
+my $date = sprintf('%04d%02d%02d', $dt->year, $dt->month, $dt->day);
+my $time = sprintf('%02d%02d', $dt->hour, $dt->min);
 
 my $binmode = ':utf8';
 binmode STDOUT, $binmode;
@@ -103,14 +109,15 @@ sub preprocess {
 sub process {
 	my $parent = shift;
 	my $cleanvars = shift;
+        $cleanvars->{EDI_CURRENT_DATE} = $date;
+        $cleanvars->{EDI_CURRENT_TIME} = $time;
 	my $template;
 	my $source;
 	my $output;
         $parent->{binmode} = $binmode;
 	if ($parent->{outputfile}) {
 		$output = "$parent->{outputfile}.". get_extension($parent);
-	} else {
-		$output = \$parent->{output};
+                $parent->{outputfile} = $output;
 	}
 	if (ref $parent->{template} eq 'SCALAR') {
 		$source = $parent->{template};
@@ -132,9 +139,14 @@ sub process {
 		$source, 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
-		$output, binmode => ':utf8')) {
-		throw Error::Simple $template->error();
+		\$parent->{output}, binmode => ':utf8')) {
+		die $template->error();
 	}
+        if ($output){
+            open(OUT, '>', $output);
+            print OUT $parent->{output};
+            close OUT;
+        }
 	$parent->{mimetype} = 'text/plain';
 }
 

@@ -1460,6 +1460,12 @@ sub print_options {
             value => 'pdf',
             };
     }
+    if ($form->{type} eq 'invoice'){
+       push @{$options{format}{options}}, {
+            text => $locale->text('894.EDI'),
+            value => '894.edi',
+            };
+    }
 
     if (   %{LedgerSMB::Sysconfig::printer}
         && ${LedgerSMB::Sysconfig::latex}

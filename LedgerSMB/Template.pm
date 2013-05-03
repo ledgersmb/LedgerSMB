@@ -220,6 +220,9 @@ sub new {
         } elsif (lc $self->{format} eq 'XML'){
                 $self->{format} = 'XML';
                 $self->{format_args}{filetype} = 'xml';
+        } elsif ($self->{format} =~ /edi$/i){
+                $self->{format_args}{extension} = lc $self->{format};
+                $self->{format} = 'TXT';
         }
 	bless $self, $class;
 
@@ -340,6 +343,9 @@ sub render {
                $str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
                return $str;
         };
+
+        use Data::Dumper;
+        $Data::Dumper::Sortkeys = 1;
 
 	$format->can('process')->($self, $cleanvars);
 	#return $format->can('postprocess')->($self);
