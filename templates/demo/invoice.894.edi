@@ -1,0 +1,13 @@
+ISA*00*          *00*          *12*XXXXXXXXXX     *01*XXXXXXXXXX     *<?lsmb EDI_CURRENT_DATE ?>*<?lsmb EDI_CURRENT_TIME ?>*^*00501*<?lsmb FILTER format('%09d'); id ; END ?>*0*P*>~
+GS*DX*7196333434*031958655*<?lsmb EDI_CURRENT_DATE ?>*<?lsmb EDI_CURRENT_TIME ?>*0001*X*005010~
+ST*894*<?lsmb id ?>~
+G82*<?lsmb IF reverse; 'C'; ELSE; 'X'; END ?>*<?lsmb invnumber ?>*0001*0000*<?lsmb edidate(transdate) ?>~
+<?lsmb t_qty = 0; FOREACH n IN number; lc = loop.count - 1; t_qty = t_qty + qty.${lc} -?>
+LS*<?lsmb loop.count ?>~
+G83*<?lsmb loop.count?>*<?lsmb qty.${lc} ?>*UC*<?lsmb number.${lc} ?>*<?lsmb FILTER format('%.4f'); sellprice.${lc}; END ?>**~
+LE*<?lsmb loop.count ?>~
+<?lsmb END # FOREACH n in number -?>
+G84*<?lsmb t_qty?>*<?lsmb invtotal ?>~
+SE*<?lsmb (3 * lc) + 7 ?>*<?lsmb id ?>~
+GE*1*0001~
+IEA*1*<?lsmb FILTER format('%09d'); id ; END ?>~
