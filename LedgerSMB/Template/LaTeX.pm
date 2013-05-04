@@ -129,7 +129,8 @@ sub escape {
             $vars =~ s/[—―]/---/g;
             $vars =~ s/"(.*)"/``$1''/gs;
             $vars =~ s/\n/\\\\/gm;
-            $vars =~ s/\\\\\\\\/\n\n/g;
+            $vars =~ s/(\\)*$//g;
+            $vars =~ s/(\\\\){2,}/\n\n/g;
     }
     return $vars;
 }
