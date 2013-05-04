@@ -125,8 +125,25 @@ sub escape {
 
     if (defined $vars){
             $vars =~ s/([&\$\\_<>~^#\%\{\}])/$escapes{$1}/g;
-            $vars =~ s/–/--/g;
             $vars =~ s/[—―]/---/g;
+            $vars =~ s/\xa0/ /g;
+            $vars =~ s/\x91/'/g;
+            $vars =~ s/\x92/'/g;
+            $vars =~ s/\x93/"/g;
+            $vars =~ s/\x94/"/g;
+            $vars =~ s/\x97/-/g;
+            $vars =~ s/\xab/"/g;
+            $vars =~ s/\xa9//g;
+            $vars =~ s/\xae//g;
+            $vars =~ s/\x{2018}/'/g;
+            $vars =~ s/\x{2019}/'/g;
+            $vars =~ s/\x{201C}/"/g;
+            $vars =~ s/\x{201D}/"/g;
+            $vars =~ s/\x{2022}//g;
+            $vars =~ s/\x{2013}/-/g;
+            $vars =~ s/\x{2014}/-/g;
+            $vars =~ s/\x{2122}//g; 
+            $vars =~ s/–/--/g;
             $vars =~ s/"(.*)"/``$1''/gs;
             $vars =~ s/\n/\\\\/gm;
             $vars =~ s/(\\)*$//g;
