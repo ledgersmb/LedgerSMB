@@ -89,6 +89,7 @@ Changelog for 1.3.32
 * Fixed transaction list empty if searched by creditor name (Nick P, 806)
 * Fixed cash transfer enforces ticked 'FX' boxes (Nick P, 802)
 * Fixed extra newline-related errors in tex template engine (Chris T)
+* Added updated Hungarian charts of accounts (Pongracz Istvan, 813)
 
 Nick P is Nick Prater
 
