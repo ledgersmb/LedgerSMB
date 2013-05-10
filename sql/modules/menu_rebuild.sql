@@ -673,11 +673,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 218	module	taxform.pl	599
 137	module	account.pl	355
 137	action	new	359
-219	menu	1	600
-220	module	admin.pl	601
-220	action	new_user	602
-221	module	admin.pl	603
-221	action	search_users	604
 222	module	admin.pl	605
 222	action	list_sessions	606
 225	module	taxform.pl	613
@@ -975,7 +970,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 210	Drafts	205	2
 211	Reconciliation	205	3
 218	Add Tax Form	217	1
-219	Admin Users	128	5
 188	Text Templates	128	15
 172	LaTeX Templates	128	14
 156	HTML Templates	128	13
@@ -984,9 +978,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 147	Type of Business	128	10
 144	Reporting Units	128	9
 141	Warehouses	128	8
-220	Add User	219	1
-221	Search Users	219	2
-222	Sessions	219	3
+222	Sessions	128	5
 225	List Tax Forms	217	2
 226	Reports	217	3
 228	Asset Classes	227	1
