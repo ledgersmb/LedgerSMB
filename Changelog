@@ -10,6 +10,7 @@ Changelog for 1.3.32
 * Fixed cash transfer enforces ticked 'FX' boxes (Nick P, 802)
 * Fixed extra newline-related errors in tex template engine (Chris T)
 * Reopen books now works again (Chris T, 792)
+* Added address line to ar/ap transaction and invoice screens (Chris T)
 
 Nick P is Nick Prater
 
