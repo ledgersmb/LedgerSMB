@@ -71,26 +71,26 @@
 	  <th class="listheading"><?lsmb text('Credit') ?></th>
 	  <th class="listheading"><?lsmb text('Description') ?></th>
 	</tr>
-	<?lsmb FOREACH displayrow IN display_rows ?> 
+	<?lsmb FOREACH displayrow IN lines ?> 
 	<tr>
 		<?lsmb INDEX= loop.count ?>
 		  <td>
 			<?lsmb IF displayrow.accnoset == 0 ?>
               			<?lsmb PROCESS ajaxselect element_data = {
-		                     name = "account_id_$INDEX"
-		                     initial_value = ${"accno_$INDEX"}
+		                     name = "accno_$INDEX"
+		                     initial_value = displayrow.accno
 		                     text_attr = 'accno'
-		                     value_attr = 'id'
+		                     value_attr = 'accno'
 		                     ajax_target = 'journal.pl'
 		              } ?> 
 			   
 			  <?lsmb ELSE ?>
 			      
 				      <?lsmb PROCESS input element_data = {
-					label = displayrow.account_id
+					label = displayrow.accno _ '--' _ displayrow.acc_desc
                                         type = "hidden"
-                                        value = displayrow.account_id
-                                        name = "account_id_$INDEX"
+                                        value = displayrow.accno
+                                        name = "accno_$INDEX"
 					id = "acc_$INDEX"
 				      } ?>
 			      
@@ -170,24 +170,7 @@
 }
 ?>
 </div></div>
-<div class="input_group"><?lsmb INCLUDE input element_data = {
-     name="subject"
-     size="50"
-     type="text"
-    class="subject" 
-} ?></div>
-    
-<div class="input_group"> <?lsmb INCLUDE textarea element_data={
-							name = "notes"
-							rows = form.rowsnotes
-							cols = form.colsnotes
-							value = form.notes
-							id = "not_1"
-    							label = text('Notes')
-                                                 	    } 
-			       ?></div>
 <div class="inputrow">
-<div class="inputgroup">
 <?lsmb PROCESS button element_data = {
         name = "action"
        value = 'add_note'
@@ -196,7 +179,7 @@
         text = text('Add Note') #'
 }
 ?>
-</div></div>
+</div>
 </form>
 <?lsmb END # IF id ?>
 <?lsmb FOREACH note IN notes ?>

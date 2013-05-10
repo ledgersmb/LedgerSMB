@@ -195,10 +195,31 @@ $$ This saves the line items for the budget.  in_details is an array n long
 where each entry is {int account_id, text description, numeric amount}.  The
 in_id parameter is the budget_id.$$;
 
+DROP TYPE IF EXISTS budget_line_details CASCADE;
+
+CREATE TYPE budget_line_details AS (
+    budget_id int,
+    account_id int,
+    description text,
+    amount numeric,
+    accno text,
+    acc_desc text,
+    debit numeric,
+    credit numeric
+);
+
+
+DROP FUNCTION IF EXISTS budget__get_details(int) CASCADE;
 CREATE OR REPLACE FUNCTION budget__get_details(in_id int)
-RETURNS SETOF budget_line AS
+RETURNS SETOF budget_line_details AS
 $$
-  SELECT * FROM budget_line where budget_id = $1;
+  SELECT l.budget_id, l.account_id, l.description, l.amount,
+         a.accno, a.description,
+         CASE WHEN l.amount < 0 THEN l.amount * -1 ELSE NULL END,
+         CASE WHEN l.amount > 0 THEN l.amount ELSE NULL END
+    FROM budget_line l
+    JOIN account a ON a.id = l.account_id
+   where budget_id = $1;
 $$ language sql;
 
 COMMENT ON FUNCTION budget__get_details(in_id int) IS

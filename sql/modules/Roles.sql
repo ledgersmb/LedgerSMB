@@ -5,6 +5,9 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_view" WITH INHERIT NOLOGIN;
 CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_approve" WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__budget_view";
 
+GRANT INSERT ON budget_info, budget_to_business_unit, budget_line, budget_note 
+TO "lsmb_<?lsmb dbname ?>__budget_enter";
+
 CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_obsolete" WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__budget_view";
 

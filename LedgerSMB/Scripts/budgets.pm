@@ -28,14 +28,14 @@ use LedgerSMB::Business_Unit_Class;
 =over
 
 =item new_budget 
-No inputs provided.  LedgerSMB::DBObject::Budget properties can be used to set
+No inputs provided.  LedgerSMB::Budget properties can be used to set
 defaults however.
 
 =cut
 
 sub new_budget {
     my ($request) = @_;
-    my $budget = LedgerSMB::DBObject::Budget->from_input($request);
+    my $budget = LedgerSMB::Budget->from_input($request);
     _render_screen($budget);
 }
 
@@ -47,12 +47,12 @@ sub new_budget {
 sub _render_screen {
     my ($budget) = @_;
     my $additional_rows = 5;
-    $additional_rows +=20 unless $budget->{rowcount};
-    $additional_rows = 0 if $budget->{id};
-    $budget->{class_id} = 0 unless $budget->{class_id};
-    $budget->{control_code} = '' unless $budget->{control_code};
-    my $buc = LedgerSMB::Business_Unit_Class->new(%$budget);
-    my $bu = LedgerSMB::Business_Unit->new(%$budget);
+    $additional_rows +=20 unless $budget->lines;
+    $additional_rows = 0 if $budget->id;
+    my $buc = LedgerSMB::Business_Unit_Class->new(
+           control_code => '', class_id => 0
+    );
+    my $bu = LedgerSMB::Business_Unit->new(control_code => '', class_id => 0);
     @{$budget->{bu_classes}} = $buc->list(1, 'gl');
     for my $bc (@{$budget->{bu_classes}}){
         @{$budget->{b_units}->{$bc->{id}}}
@@ -63,12 +63,14 @@ sub _render_screen {
     }
     $budget->{rowcount} ||= 0;
     for (1 .. $additional_rows) {
-        push @{$budget->{display_rows}}, 
+        my $lines = $budget->lines;
+        push @{$lines}, 
              {accnoset => 0, index => $_ + $budget->{rowcount}};
         ++$budget->{rowcount};
+        $budget->lines($lines);
     }
     $budget->error('Invalid object') 
-         unless $budget->isa('LedgerSMB::DBObject::Budget');
+         unless $budget->isa('LedgerSMB::Budget');
     # The button logic is kinda complicated here.  The basic idea is that there
     # are three stages in the handling of the budget:  Initial entry, review and
     # approval, and review with the possibility of obsolescence.
@@ -145,6 +147,7 @@ Updates the screen.  Part of initial entry workflow only.
 
 sub update {
     my ($request) = @_;
+    $request->{display_rows} = [];
     for (1 .. $request->{rowcount}){
         push @{$request->{display_rows}}, 
              { account_id => $request->{"account_id_$_"},
@@ -154,7 +157,7 @@ sub update {
              } if ($request->{"debit_$_"} or $request->{"credit_$_"});
              
     }
-    $request->{rowcount} = scalar @{$request->{display_rows}};
+    $request->{rowcount} = scalar @{$request->{display_rows}} + 1;
     new_budget(@_); 
 }
 
@@ -165,7 +168,7 @@ Reuuires id to be set.  Displays a budget for review.
 
 sub view_budget {
     my ($request) = @_;
-    my $budget = LedgerSMB::DBObject::Budget->new(%$request);
+    my $budget = LedgerSMB::Budget->new(%$request);
     $budget = $budget->get($request->{id});
     $budget->{display_rows} = [];
     for my $line (@{$budget->{lines}}){
@@ -187,14 +190,14 @@ sub view_budget {
 }
 
 =item save
-LedgerSMB::DBObject::Budget properties required.  Lines represented by
+LedgerSMB::Budget properties required.  Lines represented by
 [property]_[line number] notation.
 
 =cut
 
 sub save {
     my ($request) = @_;
-    my $budget = LedgerSMB::DBObject::Budget->from_input($request);
+    my $budget = LedgerSMB::Budget->from_input($request);
     $budget->save();
     view_budget($budget); 
 } 
@@ -206,7 +209,7 @@ Requires id.  Approves the budget.
 
 sub approve {
     my ($request) = @_;
-    my $budget = LedgerSMB::DBObject::Budget->new(%$request);
+    my $budget = LedgerSMB::Budget->new(%$request);
     $budget->approve;
     view_budget($request);
 } 
@@ -218,7 +221,7 @@ Requires id.  Rejects unapproved budget and deletes it.
 
 sub reject {
     my ($request) = @_;
-    my $budget = LedgerSMB::DBObject::Budget->new(%$request);
+    my $budget = LedgerSMB::Budget->new(%$request);
     $budget->reject;
     begin_search($request);
 } 
@@ -230,7 +233,7 @@ Requires id, Marks budget obsolete.
 
 sub obsolete {
     my ($request) = @_;
-    my $budget = LedgerSMB::DBObject::Budget->new(%$request);
+    my $budget = LedgerSMB::Budget->new(%$request);
     $budget->obsolete;
     view_budget($request);
 } 
@@ -242,7 +245,7 @@ Requires id, subject, and note.  Adds a note to the budget.
 
 sub add_note {
     my ($request) = @_;
-    my $budget = LedgerSMB::DBObject::Budget->new(%$request);
+    my $budget = LedgerSMB::Budget->new(%$request);
     $budget->save_note($request->{subject}, $request->{note});
     view_budget($request);
 } 

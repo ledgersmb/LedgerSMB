@@ -20,6 +20,7 @@ against what was budgetted.
 package LedgerSMB::Report::Budget::Variance;
 use Moose;
 extends 'LedgerSMB::Report';
+use LedgerSMB::Budget;
 
 =head1 PROPERTIES
 
@@ -179,9 +180,8 @@ Retrieves budget info and creates variance report object for it.
 
 sub for_budget_id {
     my ($self, $id) = @_;
-    use LedgerSMB::DBObject::Budget;
 
-    my $budget = LedgerSMB::DBObject::Budget->get($id);
+    my $budget = LedgerSMB::Budget->get($id);
     my $report = $self->new(%$budget); 
     return $report;
 }

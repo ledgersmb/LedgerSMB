@@ -1,10 +1,10 @@
 =head1 NAME
 
-LedgerSMB::DBObject::Budget
+LedgerSMB::Budget
 
 =cut
 
-package LedgerSMB::DBObject::Budget;
+package LedgerSMB::Budget;
 use LedgerSMB::PGDate;
 use strict;
 our $VERSION = 0.1;
@@ -14,7 +14,7 @@ our $VERSION = 0.1;
 This module provides budget management routines, such as entering budgets,
 approving or rejecting them, and marking them obsolete.  It does not include
 more free-form areas like reporting.  For those, see
-LedgerSMB::DBObject::Budget_Report.
+LedgerSMB::Budget_Report.
 
 =head1 INHERITANCE
 
@@ -22,7 +22,7 @@ LedgerSMB::DBObject::Budget_Report.
 
 =item LedgerSMB
 
-=item LedgerSMB::DBObject
+=item LedgerSMB::DBObject_Moose
 
 =back
 
@@ -158,6 +158,9 @@ has 'lines' => (is => 'rw', isa => 'Maybe[ArrayRef[HashRef[Any]]]');
 =item $accno text
    The account number for the coa entry
 
+=item $acc_desc text
+   Description of COA entry.
+
 =item $amount numeric
    The amount budgetted
 
@@ -246,16 +249,20 @@ sub from_input {
          } elsif(!$input->{"debit_$rownum"} and !$input->{"credit_$rownum"}){
              next;
          } else {
-             $line->{amount} = $input->{"credit_$rownum"} 
-                             - $input->{"debit_$rownum"};
+             $line->{amount} =   $input->{"credit_$rownum"} 
+                               - $input->{"debit_$rownum"};
+             $line->{credit} = $line->{amount} if $line->{amount} > 0;
+             $line->{debit}  = $line->{amount} * -1 if $line->{amount} < 0;
          }
-         my ($accno) = split /--/, $input->{"account_id_$rownum"};
+         my ($accno) = split /--/, $input->{"accno_$rownum"};
          my ($ref) = $input->call_procedure(
                        procname => 'account__get_from_accno',
                            args => [$accno]
           );
          $line->{description} = $input->{"description_$rownum"};
          $line->{account_id} = $ref->{id};
+         $line->{accno} = $ref->{accno};
+         $line->{acc_desc} = $ref->{description};
          push @{$input->{lines}}, $line;
     }
     return $self->new(%$input);
@@ -382,9 +389,7 @@ sub save_note {
 
 =item LedgerSMB
 
-=item LedgerSMB::DBObject
-
-=item LedgerSMB::DBObject::Budget_Report
+=item LedgerSMB::DBObject_Moose
 
 =back
 
@@ -397,7 +402,4 @@ see the included License.txt for details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
-return 1;
-
-
 
