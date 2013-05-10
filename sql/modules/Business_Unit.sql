@@ -201,7 +201,7 @@ BEGIN
   END IF;
   RETURN NEW;
 END;
-$$ LANGUAGE PLPGSQL;
+$$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
 DROP TRIGGER IF EXISTS eca_maintain_b_units ON entity_credit_account;
 DROP TRIGGER IF EXISTS eca_maintain_b_units_del ON entity_credit_account;
