@@ -712,7 +712,7 @@ sub redirect {
 
     if ( $self->{callback} || !$msg ) {
 	$logger->trace("Full redirect \$self->{callback}=$self->{callback} \$msg=$msg");
-        main::redirect();
+        lsmb_legacy::redirect();
 	$self->finalize_request();
     }
     else {

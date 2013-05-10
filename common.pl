@@ -20,6 +20,7 @@
 #
 #####################################################################
 
+package lsmb_legacy;
 use LedgerSMB::Sysconfig;
 
 sub redirect {
