@@ -1,5 +1,6 @@
 use Template;
 use LedgerSMB::DBObject::Account;
+use LedgerSMB::DBObject::EOY;
 package LedgerSMB::Scripts::account;
 use Log::Log4perl;
 use Data::Dumper;
@@ -176,10 +177,10 @@ Shows the yearend screen.  No expected inputs.
 =cut
 
 sub yearend_info {
-    use LedgerSMB::DBObject::EOY;
     my ($request) = @_;
     my $eoy =  LedgerSMB::DBObject::EOY->new(base => $request);
     $eoy->list_earnings_accounts;
+    $eoy->{closed_date} = $eoy->latest_closing;
     $eoy->{user} = $request->{_user};    
     my $template = LedgerSMB::Template->new_UI(
         user => $request->{_user}, 
@@ -202,7 +203,6 @@ in_retention_acc_id: Account id to post retained earnings into
 =cut
 
 sub post_yearend {
-    use LedgerSMB::DBObject::EOY;
     my ($request) = @_;
     my $eoy =  LedgerSMB::DBObject::EOY->new(base => $request);
     $eoy->close_books;
@@ -213,6 +213,20 @@ sub post_yearend {
     );
     $template->render($eoy);
     
+}
+
+=item reopen_books
+
+This reopens books as of $request->{reopen_date}
+
+=cut
+
+sub reopen_books {
+    my ($request) = @_;
+    my $eoy =  LedgerSMB::DBObject::EOY->new(base => $request);
+    $eoy->reopen_books;
+    delete $request->{reopen_date};
+    yearend_info($request);
 }
 
 =back

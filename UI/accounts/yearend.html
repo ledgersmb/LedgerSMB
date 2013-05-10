@@ -3,11 +3,11 @@
 <body>
 <form method="post" action="<?lsmb script ?>">
 <table width="100%">
-  <tr><th class="listtop"><?lsmb title ?></th></tr>
+  <tr><th class="listtop"><?lsmb text('Post Yearend') ?></th></tr>
   <tr><td> </td></tr>
   <tr>
     <td>
-      <table>
+      <table width="100%">
         <tr>
           <th align="right"><?lsmb text('Yearend') ?></th>
           <td><?lsmb PROCESS input element_data={
@@ -44,24 +44,50 @@
                      value_attr = "id"
                 } -?></td>
         </tr>
-      </table>
-    </td>
-  </tr>
-</table>
+<tr><td colspan="2">
 <hr size="3" noshade="noshade" />
 <?lsmb FOREACH hidden IN hiddens.keys;
 	PROCESS input element_data={
 		type = 'hidden',
 		name = hidden,
 		value = hiddens.item(hidden)
-		}; END ?>
+		}; END ?></td>
+</tr>
+<tr>
+<td align="right">
 <?lsmb PROCESS button element_data = {
 	name = "action"
 	type = "submit"
 	class = "submit"
 	value = "post_yearend"
 	text = text('Post Yearend') #'
-} ?>
+} ?></td></tr>
+<tr><th colspan="2" class="listtop"><?lsmb text('Re-open Books') ?></th></tr>
+<tr><th align="right"><?lsmb text('Books closed on') ?></th>
+    <td><?lsmb closed_date ?></td>
+<tr>
+          <th align="right"><?lsmb text('Re-Open As Of') ?></th>
+          <td><?lsmb PROCESS input element_data={
+            class = 'date',
+            name = 'reopen_date',
+            size = 11,
+            title = user.dateformat,
+            } -?></td></tr>
+<tr>
+<tr><td colspan="2">
+<hr size="3" noshade="noshade" /></td></tr>
+<td align="right">
+<?lsmb PROCESS button element_data = {
+	name = "action"
+	type = "submit"
+	class = "submit"
+	value = "reopen_books"
+	text = text('Reopen Books') #'
+} ?></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
 </form>
 </body>
 </html>

@@ -1,5 +1,32 @@
 BEGIN;
 
+CREATE OR REPLACE FUNCTION eoy__latest_checkpoint() RETURNS account_checkpoint
+LANGUAGE SQL AS
+$$
+   SELECT * FROM account_checkpoint ORDER BY end_date DESC LIMIT 1;
+$$;
+
+COMMENT ON FUNCTION eoy__latest_checkpoint() IS $$
+This returns a single checkpoint from the latest set.  Which account and info 
+is returned is non-determinative and so only the end date shoudl be relied on.
+$$;
+
+CREATE OR REPLACE FUNCTION eoy__reopen_books_at(in_reopen_date date) 
+RETURNS BOOL
+LANGUAGE SQL AS
+$$
+
+    SELECT eoy_reopen_books(end_date) 
+      FROM (SELECT end_date 
+              FROM account_checkpoint
+             WHERE end_date >= $1
+             GROUP BY end_date) eoy_dates
+  ORDER BY end_date;
+
+SELECT eoy_create_checkpoint($1 - 1) > 0;
+
+$$;
+
 CREATE OR REPLACE FUNCTION eoy_create_checkpoint(in_end_date date)
 RETURNS int AS
 $$

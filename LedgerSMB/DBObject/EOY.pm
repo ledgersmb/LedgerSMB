@@ -50,15 +50,28 @@ sub checkpoint_only {
 
 =item $eoy->reopen_books()
 
-This reverses any end of year transaction on $eoy->{end_date}, and deletes 
-checkpoints for that day.
+This reverses any end of year transaction on $eoy->{reopen_date}, and deletes 
+checkpoints later than that and creates a checkpoint for the prior day.
 
 =cut
 
 sub reopen_books {
     my ($self) = @_;
-   $self->exec_method(funcname => 'eoy_reopen_books');
+   $self->exec_method(funcname => 'eoy__reopen_books_at');
    $self->{dbh}->commit;
+}
+
+=item $eoy->latest_closing()
+
+Needs no properties set (other than internal private ones).  Retrieves the 
+latest closing date and returns it.
+
+=cut
+
+sub latest_closing {
+    my ($self) = @_;
+    my ($ref) = $self->exec_method(funcname => 'eoy__latest_checkpoint');
+    return $ref->{end_date};
 }
 
 =item $eoy->close_books()
