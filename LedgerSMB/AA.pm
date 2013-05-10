@@ -827,7 +827,7 @@ sub get_name {
     
 
     # get customer/vendor
-    my $query = qq|
+    my $query = qq/
 		   SELECT entity.name AS $form->{vc}, c.discount, 
 		          c.creditlimit, 
 		          c.terms, c.taxincluded,
@@ -836,11 +836,18 @@ sub get_name {
 			  b.discount AS tradediscount, 
 		          b.description AS business, 
 			  entity.control_code as entity_control_code,
-			  c.meta_number
+			  c.meta_number, ecl.*
 		     FROM entity_credit_account c
 		     JOIN entity ON (entity.id = c.entity_id)
 		LEFT JOIN business b ON (b.id = c.business_id)
-		    WHERE c.id = ?|;
+                LEFT JOIN (SELECT coalesce(line_one, '')
+                               || ' ' || coalesce(line_two, '') as address,
+                               l.city, etl.credit_id
+                          FROM eca_to_location etl
+                          JOIN location l ON etl.location_id = l.id
+                          WHERE etl.location_class = 1) ecl
+                        ON (c.id = ecl.credit_id)
+		    WHERE c.id = ?/;
     # TODO:  Add location join
 
     @queryargs = ( $form->{"$form->{vc}_id"} );

@@ -632,6 +632,11 @@ $form->open_status_div . qq|
 			$locale->text('Account') . qq|</th>
 		<td colspan=3>$form->{meta_number}</td>
 	      </tr>
+              <tr class="address_row">
+                <th align="right" nowrap>| .
+                        $locale->text('Address'). qq|</th>
+                <td colspan=3>$form->{address}, $form->{city}</td>
+              </tr>
 		|;
 	       }
 	print qq|
