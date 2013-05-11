@@ -1,10 +1,11 @@
 # This is a simple list of files to be loaded from sql/modules in the order
 # they shall be loaded.
 Fixes.sql
+Settings.sql
 Util.sql
 App_Module.sql
 # Remove the one below once we get into rc
-menu_rebuild.sql 
+menu_rebuild.sql
 Menu.sql
 Drafts.sql
 Account.sql
@@ -13,9 +14,8 @@ Business_type.sql
 Business_Unit.sql
 Location.sql
 Company.sql
-Customer.sql 
+Customer.sql
 Date.sql
-Settings.sql
 Employee.sql
 Entity.sql
 Payment.sql
