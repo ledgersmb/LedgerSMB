@@ -38,7 +38,7 @@
                     <input type="text" name="username" value="<?lsmb user.username ?>"/>
                 </td>
             </tr>
-            <?lsmb END?>
+            <?lsmb END ?>
             <tr>
                 <td><?lsmb text('Password') ?></td>
                 <td>
@@ -114,7 +114,7 @@
                 <?lsmb IF loop.count % 2 == 0?>
                 </tr>
                 <tr>
-                <?lsmb END?>
+                <?lsmb END ?>
                     <td>
                         <?lsmb rolcheck = undef; 
                            IF user.role_list.grep(role.rolname).size;
@@ -143,5 +143,5 @@
                 </tr>
             </table>
         </form>   
-<?lsmb END?>
+<?lsmb END ?>
 </div>
