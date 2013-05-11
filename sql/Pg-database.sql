@@ -2686,7 +2686,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 71	Quotations	70	1
 72	RFQs	70	2
 74	Journal Entry	73	1
-88	Requirements	85	3
 96	Description	95	1
 97	Partsgroup	95	2
 100	Add Timecard	98	2
@@ -3051,8 +3050,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 65	module	order.pl	150
 84	action	stock_assembly	203
 85	menu	1	204
-88	module	ic.pl	211
-88	action	requirements	212
 95	menu	1	232
 96	module	pe.pl	233
 96	action	translation	234
