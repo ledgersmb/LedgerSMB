@@ -101,11 +101,10 @@ sub call_script {
     $request->{_script_handle} = $script;
 
     eval "require $script;"
-      || $request->error($locale->text('Unable to open script') . 
-                          ": $script : $!: $@"
-          );
+      || die $locale->text('Unable to open script') . 
+                          ": $script : $!: $@";
     $script->can($request->{action}) 
-      || $request->error($locale->text("Action Not Defined: ") . $request->{action});
+      || die $locale->text("Action Not Defined: ") . $request->{action};
     $script->can( $request->{action} )->($request);
     LedgerSMB::App_State->cleanup();
   }
@@ -116,7 +115,7 @@ sub call_script {
       # -- CT
      $LedgerSMB::App_State::DBH->rollback if ($LedgerSMB::App_State::DBH and $_ eq 'Died');
      LedgerSMB::App_State->cleanup();
-     $request->_error($_) unless $_ eq 'Died';
+     $request->_error($_) unless $_ =~ 'Died at';
   };
 }
 1;

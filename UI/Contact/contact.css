@@ -122,13 +122,26 @@ div.input_group3 {
        width: 40em;
 }
 
-#user_div input[type=~'checkbox'] {
+#user_div input[type=~'checkbox'], #user_div input[type=~'radio'] {
        float: left;
+}
+
+#user_div div.input_group {
+       float: left;
+       overflow: auto;
+}
+#user_div div.input_line {
+       overflow: auto;
+       display: block;
 }
 
 #user_div label {
       width: 8em;
       text-align: right;
+}
+
+#user_div table .input_group label {
+      width: 2em;
 }
 
 #user_div table label {

@@ -14,7 +14,7 @@
                 END ?>
         </div>
     
-    <form method="POST" action="admin.pl">
+    <form method="POST" action="employee.pl">
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
         <table>
 
@@ -39,7 +39,6 @@
                 </td>
             </tr>
             <?lsmb END?>
-            <?lsmb UNLESS request.import ?>
             <tr>
                 <td><?lsmb text('Password') ?></td>
                 <td>
@@ -58,20 +57,21 @@
                       importc1 = '';
                       importc0 = 'CHECKED';
                   END; ?> 
-                <td><?lsmb INCLUDE input element_data = {
+                <td><div class="input_line"><div overflow="auto" class="input_group">
+                  <?lsmb INCLUDE input element_data = {
                            label   = 'Yes'
                            value   = '1'
                            checked = importc1
                            name    = 'import'
                            type    = 'radio'
-                   };
+                   } ?></div><div overflow="auto" class="input_group"><?lsmb
                    INCLUDE input element_data = {
                            label   = 'No'
                            value   = '0'
                            checked = importc0
                            name    = 'import'
                            type    = 'radio'
-                   } ?>
+                   } ?></div></div>
             </tr>
             <?lsmb END # unless employee.entity_id ?>
         </table>
@@ -92,11 +92,16 @@
                         value = 'create_user'
                 };
            END;
+                PROCESS input element_data = {
+                         type = 'hidden'
+                         name = 'form_id'
+                        value = form_id
+                };
     ?>
     </form>
     <?lsmb IF user.username AND request.import != 1 ?>
         <hr /> 
-        <form name="groups" method="POST" action="admin.pl">
+        <form name="groups" method="POST" action="employee.pl">
             <?lsmb PROCESS input element_data = {
                type="hidden"
                name="user_id"
