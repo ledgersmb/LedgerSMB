@@ -118,4 +118,25 @@ $$ Returns an array of currencies from the defaults table.$$;
 
 ALTER TABLE entity ALTER control_code SET default setting_increment('entity_control');
 
+
+CREATE OR REPLACE FUNCTION lsmb__role_prefix() RETURNS text
+LANGUAGE SQL AS
+$$ select coalesce((setting_get('role_prefix')).value,
+                   'lsmb_' || current_database() || '__'); $$;
+
+COMMENT ON FUNCTION lsmb__role_prefix() IS
+$$ Returns the prefix text to be used for roles. E.g.  'lsmb__mycompany_' $$;
+
+
+CREATE OR REPLACE FUNCTION lsmb__role(global_role text) RETURNS text
+LANGUAGE SQL AS
+$$ select lsmb__role_prefix() || $1; $$;
+
+COMMENT ON FUNCTION lsmb__role(global_role text) IS
+$$ Prepends the role prefix to a role name.
+
+E.g. 'contact_edit' is converted to 'lsmb_mycompany__contact_edit'
+$$;
+
+
 COMMIT;
