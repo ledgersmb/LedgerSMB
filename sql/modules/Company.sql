@@ -276,6 +276,7 @@ BEGIN
 		JOIN (SELECT legal_name, sic_code, entity_id 
                         FROM company 
                        WHERE legal_name @@ plainto_tsquery(in_name_part)
+                             OR legal_name ilike 'in_name_part' || '%'
                       UNION ALL
                       SELECT legal_name, sic_code, entity_id
                         FROM company
@@ -325,7 +326,7 @@ BEGIN
 					AND state ILIKE
 					    '%' || coalesce(in_state, '') || '%'
 					AND mail_code ILIKE
-		   			    '%' || coalesce(in_mail_code, '') || '%'
+		   			    coalesce(in_mail_code, '') || '%'
 					AND country_id 
                                             IN (SELECT id FROM country
 						 WHERE name ilike in_country
@@ -356,6 +357,8 @@ BEGIN
 	END LOOP;
 END;
 $$ language plpgsql;
+
+
 
 DROP FUNCTION IF EXISTS eca__get_taxes(in_credit_id int);
 

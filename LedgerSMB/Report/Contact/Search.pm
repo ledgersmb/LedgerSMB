@@ -115,7 +115,9 @@ has entity_class => (is => 'ro', isa => 'Int', required => 1);
 
 =item name_part
 
-Full text search on contact name.
+Full text search on contact name.  This also matches the beginning of a 
+company's name.  So Acme Software Testing Inc would come up under searches of
+'Ac', 'Software', 'Software Tester', and so forth but not 'Sting' or 'are.'
 
 =cut
 
@@ -179,7 +181,7 @@ has address => (is => 'ro', isa => 'Str', required => 0);
 
 =item city
 
-Exact match on city
+City contains this string.
 
 =cut
 
@@ -187,7 +189,7 @@ has city => (is => 'ro', isa => 'Str', required => 0);
 
 =item state
 
-Exact match on state/province
+State or province contains this string
 
 =cut
 
