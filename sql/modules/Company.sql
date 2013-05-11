@@ -276,7 +276,7 @@ BEGIN
 		JOIN (SELECT legal_name, sic_code, entity_id 
                         FROM company 
                        WHERE legal_name @@ plainto_tsquery(in_name_part)
-                             OR legal_name ilike 'in_name_part' || '%'
+                             OR legal_name ilike in_name_part || '%'
                       UNION ALL
                       SELECT legal_name, sic_code, entity_id
                         FROM company
