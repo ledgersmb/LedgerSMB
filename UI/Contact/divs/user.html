@@ -45,7 +45,7 @@
                     <input type="password" name="password" value="<?lsmb user.user.password ?>"/>
                 </td>
             </tr>
-            <?lsmb END ?>
+
             <?lsmb IF (request.import == 1) OR !user.username ?>
             <tr>
                 <td><?lsmb text('Import') ?></td>
