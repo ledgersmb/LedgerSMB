@@ -650,7 +650,6 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('menu_node_id_seq', max(id)) FROM menu_node;
  SELECT setval('menu_attribute_id_seq', max(id)) FROM menu_attribute;
  SELECT setval('menu_acl_id_seq', max(id)) FROM menu_acl;
- SELECT setval('pending_job_id_seq', max(id)) FROM pending_job;
  SELECT setval('new_shipto_id_seq', max(id)) FROM new_shipto;
  SELECT setval('payment_id_seq', max(id)) FROM payment;
  SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
