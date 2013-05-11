@@ -747,7 +747,7 @@ BEGIN
 		sic_code = in_sic_code,
                 sales_tax_id = in_sales_tax_id,
                 license_number = in_license_number
-	WHERE id = t_company_id;
+	WHERE entity_id = t_entity_id;
 
 
 	IF NOT FOUND THEN

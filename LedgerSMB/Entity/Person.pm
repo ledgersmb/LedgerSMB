@@ -84,10 +84,12 @@ Salutation id.  These are fixed as:
    6 | Sir.
  (6 rows)
 
+It is highly recommended that this is used, but for backward compatibility and
+upgrade reasons it is not enforced at this time.  This may change at some point as our user interface does not allow this to be left blank.
 
 =cut
 
-has 'salutation_id' => (is => 'rw', isa => 'Int', required => 1);
+has 'salutation_id' => (is => 'rw', isa => 'Int');
 
 =item salutations
 
