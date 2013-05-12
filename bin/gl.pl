@@ -1175,6 +1175,10 @@ sub post {
     }
 
     if ( GL->post_transaction( \%myconfig, \%$form, $locale) ) {
+        for (0 .. $form->{rowcount}){
+            delete $form->{"credit_$_"};
+            delete $form->{"debit_$_"};
+        }
         edit();
     }
     else {
