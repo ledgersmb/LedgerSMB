@@ -95,6 +95,7 @@ Changelog for 1.3.32
 * Fixed draft review issues for Cash Transfer GL drafts (Chris T, 802)
 * Added fx boxes for GL transactions (Chris T, required to fix 802)
 * Fixed odd UI issues with voiding GL transactions (Chris T, 803)
+* Fixed department dropdown not showing values (Chris T, 805)
 
 
 Nick P is Nick Prater
