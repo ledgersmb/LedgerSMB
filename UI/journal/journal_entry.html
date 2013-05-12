@@ -124,9 +124,7 @@
       <table width="100%">
 	  <tr class="listheading">
 	  <th class="listheading"><?lsmb text('Account') ?></th>
-	  <?lsmb IF form.transfer == 1 ?>
-	     <th class="listheading"><?lsmb text('FX') ?></th>
-	  <?lsmb END ?>
+	  <th class="listheading"><?lsmb text('FX') ?></th>
           <th class="listheading"><?lsmb text('Debit') ?></th>
 	  <th class="listheading"><?lsmb text('Credit') ?></th>
 	  <th class="listheading"><?lsmb text('Source') ?></th>
@@ -166,7 +164,6 @@
 	  
 		 </td>
 	      
-		  <?lsmb IF form.transfer == 1 ?>
 		      <td>
 
 			    <?lsmb IF  displayrow.fx_transactionset == 1 ?>
@@ -190,7 +187,6 @@
 
 		      </td>
 		
-		  <?lsmb END ?>
 		  
 		  <td>
 			  <?lsmb PROCESS input element_data = {
@@ -285,9 +281,7 @@
 	<?lsmb END ?>
         <tr class="listtotal">
 	  <th>&nbsp;</th>
-	  <?lsmb IF form.transfer == 1 ?>
 	     <th class="listheading">&nbsp;</th>
-	  <?lsmb END ?>
 	  <th class="listtotal" align="right">
 			<?lsmb form.totaldebit ?>
 	  </th>
