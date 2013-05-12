@@ -939,7 +939,7 @@ sub edit {
     $form->{title} = "Edit";
     if($form->{department_id})
     {
-         $form->{department}=$form->{departmentdesc}."--".$form->{department_id};
+         $form->{department}=$form->{department}."--".$form->{department_id};
     }
     $i = 0;
     foreach $ref ( @{ $form->{GL} } ) {
