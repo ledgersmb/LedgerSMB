@@ -935,7 +935,9 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
     my $formname = { name => 'formname',
                      options => [
                                   {text=> $locale->text('Sales Invoice'), value => 'invoice'},
-                                  {text=> $locale->text('Packing List'), value => 'packing_list'},
+                                  {text=> $locale->text('Packing List'),  value => 'packing_list'},
+                                  {text=> $locale->text('Envelope'),      value => 'envelope'},
+                                  {text=> $locale->text('Shipping Label'), value=> 'shipping_label'},
                                 ]
                    };
     print_select($form, $formname);

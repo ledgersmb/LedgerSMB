@@ -1410,6 +1410,14 @@ sub print_options {
             value => 'bin_list',
             };
     }
+    push @{$options{formname}{options}}, {
+            text => $locale->text('Envelope'),
+            value => 'envelope',
+            };
+    push @{$options{formname}{options}}, {
+            text => $locale->text('Shipping Label'),
+            value => 'shipping_label',
+            };
 
     if ( $form->{media} eq 'email' ) {
         $options{media} = {
@@ -1630,6 +1638,11 @@ sub print_form {
         $numberfld     = "rfqnumber";
         $order         = 1;
     }
+    if (($form->{formname} eq 'envelope') 
+        or ($form->{formname} eq 'shipping_label')){
+
+       $inv = undef;
+    }
 
     if ($form->test_should_get_images){
         my $file = LedgerSMB::File->new();
@@ -1657,7 +1670,6 @@ sub print_form {
         $form->{parts_files} = \%parts_files;
         $form->{file_path} = $file->file_path;
     }
-
     &validate_items;
 
     $form->{"${inv}date"} = $form->{transdate};
@@ -1668,7 +1680,7 @@ sub print_form {
         $locale->text( $form->{label} . ' Date missing!' ) );
 
     # get next number
-    if ( !$form->{"${inv}number"} ) {
+    if ( !$form->{"${inv}number"} and $inv) {
         $form->{"${inv}number"} =
           $form->update_defaults( \%myconfig, $numberfld );
         if ( $form->{media} eq 'screen' ) {
