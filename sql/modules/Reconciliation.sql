@@ -337,7 +337,7 @@ create or replace function reconciliation__add_entry(
                                 AND our_balance = t_amount
                         	AND their_balance = 0
                                 AND post_date = in_date
-				in_scn NOT LIKE t_prefix || '%';
+				AND in_scn NOT LIKE t_prefix || '%';
 		ELSE -- more than one match
 			SELECT min(id) INTO lid FROM cr_report_line
 			WHERE report_id = in_report_id AND our_balance = t_amount

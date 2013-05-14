@@ -97,6 +97,7 @@ Changelog for 1.3.32
 * Added fx boxes for GL transactions (Chris T, required to fix 802)
 * Fixed odd UI issues with voiding GL transactions (Chris T, 803)
 * Fixed department dropdown not showing values (Chris T, 805)
+* Fixed error causing Reconciliation.sql not to be loaded/reloaded (Chris T)
 
 
 Nick P is Nick Prater
