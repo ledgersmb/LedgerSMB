@@ -4776,7 +4776,7 @@ SELECT id, CASE WHEN gl.amount = 0 THEN 0 -- avoid div by 0
   FROM ar gl
   JOIN acc_trans ac ON ac.trans_id = gl.id
   JOIN account_link al ON ac.chart_id = al.account_id and al.description = 'AR'
- GROUP BY gl.id, gl.amount, ac.transdate
+ GROUP BY gl.id, gl.amount, ac.transdate, gl.transdate
 UNION ALL
 SELECT id, CASE WHEN gl.amount = 0 THEN 0
                 WHEN gl.transdate = ac.transdate
@@ -4787,7 +4787,7 @@ SELECT id, CASE WHEN gl.amount = 0 THEN 0
   FROM ap gl
   JOIN acc_trans ac ON ac.trans_id = gl.id
   JOIN account_link al ON ac.chart_id = al.account_id and al.description = 'AP'
- GROUP BY gl.id, gl.amount, ac.transdate;
+ GROUP BY gl.id, gl.amount, ac.transdate, gl.transdate;
 
 COMMENT ON VIEW cash_impact IS
 $$ This view is used by cash basis reports to determine the fraction of a
