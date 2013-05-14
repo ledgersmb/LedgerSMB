@@ -140,20 +140,17 @@ sub increment {
             }
 
             if ( $param =~ /<\?lsmb (yy|mm|dd)/i ) {
-
+		# SC: XXX Does this even work anymore?
                 my $p = $param;
-                $p =~ s/(<|>|%)//g;
-                my $spc = $p;
-                $spc =~ s/\w//g;
-                $spc = substr( $spc, 0, 1 );
+                $p =~ s/lsmb//;
+                $p =~ s/[^YyMmDd]//g;
                 my %d = ( yy => 1, mm => 2, dd => 3 );
-                my @p = ();
+                my $str = $p;
 
                 my @a = $self->split_date( $myconfig->{dateformat},
                     $self->{transdate} );
-                for ( sort keys %d ) { push @p, $a[ $d{$_} ] if ( $p =~ /$_/ ) }
-                $str = join $spc, @p;
-                $var =~ s/$param/$str/;
+                for my $k( keys %d ) { $str =~ s/$k/$a[ $d{$k} ]/i}
+                $var =~ s/\Q$param\E/$str/i;
             }
 
             if ( $param =~ /<\?lsmb curr/i ) {
