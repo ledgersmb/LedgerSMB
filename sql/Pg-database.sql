@@ -3153,12 +3153,12 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 144	action	list_classes	370
 147	menu	1	372
 148	module	am.pl	373
-149	module	am.pl	374
+149	module	reports.pl	374
 112	action	start_report	278
 112	module	reports.pl	279
 112	report_name	income_statement	280
 148	action	add_business	375
-149	action	list_business	376
+149	action	list_business_types	376
 150	menu	1	377
 151	module	am.pl	378
 152	module	am.pl	379

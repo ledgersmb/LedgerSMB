@@ -369,43 +369,6 @@ sub delete_warehouse {
 
 }
 
-=item AM->business($myconfig, $form);
-
-Populates the list referred to as $form->{ALL} with hashes containing details
-about all known types of business.  Each hash contains the id, description, and
-discount for businesses of this type.  The discount is represented in numeric
-form, such that a 10% discount is stored and retrieved as 0.1.  The hashes are
-sorted by the business description.
-
-$myconfig is unused.
-
-=cut
-
-sub business {
-
-    my ( $self, $myconfig, $form ) = @_;
-
-    # connect to database
-    my $dbh = $form->{dbh};
-
-    $form->sort_order();
-    my $query = qq|
-		  SELECT id, description, discount
-		    FROM business
-		ORDER BY description $form->{direction}|;
-
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        push @{ $form->{ALL} }, $ref;
-    }
-
-    $sth->finish;
-    $dbh->commit;
-
-}
-
 =item AM->get_business($myconfig, $form);
 
 Places the description and discount for the business with an id of $form->{id}

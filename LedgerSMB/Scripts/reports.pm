@@ -17,6 +17,7 @@ use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Business_Unit_Class;
+use LedgerSMB::Report::Listings::Business_Type;
 use strict;
 
 =pod
@@ -94,6 +95,18 @@ sub start_report {
     );
     $template->render($request);
 }   
+
+=item list_business_types 
+
+Lists the business types.  No inputs expected or used.
+
+=cut
+
+sub list_business_types {
+    my ($request) = @_;
+    my $report = LedgerSMB::Report::Listings::Business_Type->new(%$request);
+    $report->render($request);
+}
 
 =back
 
