@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Business_Unit_Class
+LedgerSMB::Business_Unit - Accounting Reporting Dimensions for LedgerSMB
 
 =head1 SYNOPSYS
 
