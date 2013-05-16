@@ -466,10 +466,6 @@ qq|<td><input name="notes_$i" size=38 value="$form->{"notes_$i"}"></td>|;
 |;
             }
 
-            $serial   = "";
-            $project  = "";
-            $delivery = "";
-            $notes    = "";
         }
 
         # print second and third row
