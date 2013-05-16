@@ -320,32 +320,22 @@ $$ Returns a set of taxable account id's.$$; --'
 CREATE OR REPLACE FUNCTION eca__set_taxes(in_credit_id int, in_tax_ids int[])
 RETURNS bool AS
 $$
-DECLARE 
-    eca entity_credit_account;
-    iter int;
-BEGIN
-     SELECT * FROM entity_credit_account into eca WHERE id = in_credit_id;
+     DELETE FROM customertax WHERE customer_id = $1;
+     DELETE FROM vendortax WHERE vendor_id = $1;
 
-     IF eca.entity_class = 1 then
-        DELETE FROM vendortax WHERE vendor_id = in_credit_id;
-        FOR iter in array_lower(in_tax_ids, 1) .. array_upper(in_tax_ids, 1)
-        LOOP
-             INSERT INTO vendortax (vendor_id, chart_id)
-             values (in_credit_id, in_tax_ids[iter]);
-        END LOOP;
-     ELSIF eca.entity_class = 2 then
-        DELETE FROM customertax WHERE customer_id = in_credit_id;
-        FOR iter in array_lower(in_tax_ids, 1) .. array_upper(in_tax_ids, 1)
-        LOOP
-             INSERT INTO customertax (customer_id, chart_id)
-             values (in_credit_id, in_tax_ids[iter]);
-        END LOOP;
-     ELSE 
-        RAISE EXCEPTION 'Wrong entity class or credit account not found!';
-     END IF;
-     RETURN TRUE;
-end;
-$$ language plpgsql;
+     INSERT INTO customertax (customer_id, chart_id)
+     SELECT $1, tax_id
+       FROM unnest($2) tax_id
+      WHERE exists (select * from entity_credit_account 
+                     where entity_class = 2 AND id = $1);
+
+     INSERT INTO vendortax (vendor_id, chart_id)
+     SELECT $1, tax_id
+       FROM unnest($2) tax_id
+      WHERE exists (select * from entity_credit_account 
+                     where entity_class = 1 AND id = $1);
+     SELECT TRUE;
+$$ language sql;
 
 comment on function eca__set_taxes(in_credit_id int, in_tax_ids int[]) is
 $$Sets the tax values for the customer or vendor.
