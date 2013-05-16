@@ -155,6 +155,15 @@ Exact match on phone any phone number, fax, etc.
 
 has phone => (is => 'ro', isa => 'Str', required => 0);
 
+=item contact
+
+Full text search on contact string
+
+=cut
+
+has contact => (is => 'ro', isa => 'Str', required => 0);
+
+
 =item meta_number
 
 Matches beginning of customer/vendor/etc. number.

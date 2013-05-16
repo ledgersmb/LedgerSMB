@@ -351,6 +351,16 @@ BEGIN
                         AND (in_users IS NULL OR in_users = 
                              (exists (select 1 from users 
                                        where entity_id = e.id)))
+                        AND (in_contact IS NULL 
+                             OR e.id IN (select entity_id 
+                                           FROM entity_to_contact 
+                                          WHERE description 
+                                                @@ plainto_tsquery(in_contact))
+                             OR ec.id IN (SELECT credit_id
+                                            FROM eca_to_contact
+                                           WHERE description
+                                                 @@ plainto_tsquery(in_contact))
+                       )
                ORDER BY legal_name
 	LOOP
 		RETURN NEXT out_row;
