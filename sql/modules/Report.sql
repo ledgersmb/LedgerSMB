@@ -558,4 +558,60 @@ END LOOP;
 END;
 $$;
 
+DROP TYPE IF EXISTS balance_sheet_line;
+
+CREATE TYPE balance_sheet_line AS (
+    account_id int,
+    account_desc text,
+    account_type char,
+    account_category char,
+    balance numeric,
+    path text[]
+);
+
+/*
+CREATE OR REPLACE FUNCTION report__balance_sheet(in_report_date date)
+RETURNS SETOF balance_sheet_line LANGUAGE SQL AS
+$$
+WITH basic_balance_sheet AS (
+     SELECT a.id, a.description, a.category::char, sum(ac.amount) as balance, 
+       FROM acc_trans ac
+       JOIN tx_report gl ON ac.trans_id = gl.id
+       JOIN account a ON ac.chart_id = a.id
+      WHERE ac.transdate <= $1 or $1 IS NULL AND ac.approved AND gl.approved
+), 
+RECURSIVE account_tree AS (
+    SELECT id, accno, 1 as level, accno as path
+    UNION ALL 
+    SELECT ah.id, ah.accno, at.level + 1 as level, at.path  || '||||' accno
+      FROM account_heading
+    UNION ALL 
+    SELECT a.id, a.accno, at.level + 1 as level, at.path || '||||' a.accno
+      FROM account a 
+      JOIN account_tree at ON at.id = a.heading
+    ORDER BY 
+)
+SELECT ht.id, ht.description, 'H', null, null, string_to_array(ht.path, ',')
+  FROM heading_tree ht2
+  JOIN basic_balance_sheet bs 
+        ON array[bs.heading] <@ string_to_array(ht2.path, ',')
+  JOIN heading_tree ht -- extra join needed to traverse to parents
+        ON string_to_array(ht.path, ',') <@ string_to_array(ht2.path, ',')
+UNION ALL
+SELECT bs.id, bs.description, 'A', bs.category, bs.balance, 
+       string_to_array(ht.path || ',' bs.id::text, ',')
+  FROM basic_balance_sheet bs
+  JOIN heading_tree ON array[bs.heading] <@ string_to_array(ht.path, ',')
+ WHERE bs.account_category IN ('E', 'I', 'Q')
+UNION ALL
+SELECT null, 'Retained Earnings', 'A', 'Q', sum(bs.balance), '{}'
+  FROM basic_balance_sheet bs
+ WHERE bs.category IN ('E', 'I'));
+$$;
+
+COMMENT ON report__balance_sheet(date) IS
+$$ This produces a balance sheet and all headings required for display.
+Headings are designated with an H as account_type, while accounts are 
+designated with the 'A' type. $$;
+*/
 COMMIT;
