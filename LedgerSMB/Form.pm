@@ -2372,13 +2372,8 @@ sub all_departments {
     my $query = qq|SELECT id, description
 					 FROM department
 					WHERE $where
-				 ORDER BY id|;
+				 ORDER BY description|;
 
-#temporary
- $query = qq|SELECT id, description
-					 FROM department
-				 ORDER BY id|;
-#end
 
     my $sth = $dbh->prepare($query);
     $sth->execute || $self->dberror($query);
@@ -3572,22 +3567,17 @@ sub update_defaults {
             }
 
             if ( $param =~ /<\?lsmb (yy|mm|dd)/i ) {
-                my $test_param = $1;
 		# SC: XXX Does this even work anymore?
                 my $p = $param;
-                $p =~ s/(<|>|%)//g;
-                my $spc = $p;
-                $spc =~ s/\w//g;
-                $spc = substr( $spc, 0, 1 );
+                $p =~ s/lsmb//;
+                $p =~ s/[^YyMmDd]//g;
                 my %d = ( yy => 1, mm => 2, dd => 3 );
-                my @p = ();
+                my $str = $p;
 
                 my @a = $self->split_date( $myconfig->{dateformat},
                     $self->{transdate} );
-                for my $k( sort keys %d ) { push @p, $a[ $d{$k} ] 
-                                 if ( $param =~ /$k/i ) }
-                $str = join $spc, @p;
-                $var =~ s/<\?lsmb $test_param \?>/$str/i;
+                for my $k( keys %d ) { $str =~ s/$k/$a[ $d{$k} ]/i}
+                $var =~ s/\Q$param\E/$str/i;
             }
 
             if ( $param =~ /<\?lsmb curr/i ) {
@@ -3607,7 +3597,7 @@ sub update_defaults {
 
     $self->{dbh}->commit if !defined $nocommit;
 
-    $var;
+    return $var;
 }
 
 =item $form->db_prepare_vars(var1, var2, ..., varI<n>)
@@ -3656,6 +3646,7 @@ sub split_date {
         $mm = substr( "0$mm", -2 );
         $dd = substr( "0$dd", -2 );
     }
+    $dateformat = 'yyyy-mm-dd' if $date =~ /\d{4}\D\d{2}\D\d{2}/;
 
     if ( $dateformat =~ /^yy/ ) {
 
