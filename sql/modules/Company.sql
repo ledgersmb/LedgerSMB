@@ -278,6 +278,16 @@ BEGIN
 				OR (ec.enddate IS NULL))
 	 		AND (ec.meta_number = in_meta_number
 			     OR in_meta_number IS NULL)
+                        AND (in_contact IS NULL 
+                             OR c.id IN (select company_id 
+                                           FROM company_to_contact 
+                                          WHERE description 
+                                                @@ plainto_tsquery(in_contact))
+                             OR ec.id IN (SELECT credit_id
+                                            FROM eca_to_contact
+                                           WHERE description
+                                                 @@ plainto_tsquery(in_contact))
+                       )
                ORDER BY legal_name
 	LOOP
 		RETURN NEXT out_row;
