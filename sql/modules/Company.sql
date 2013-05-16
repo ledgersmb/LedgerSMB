@@ -385,24 +385,12 @@ DROP FUNCTION IF EXISTS eca__set_taxes(int, int[]);
 CREATE OR REPLACE FUNCTION eca__set_taxes(in_id int, in_tax_ids int[])
 RETURNS bool AS
 $$
-DECLARE 
-    eca entity_credit_account;
-    iter int;
-BEGIN
-     IF in_tax_ids = '{}' THEN
-         RETURN NULL;
-     END IF;
-     SELECT * FROM entity_credit_account into eca WHERE id = in_id;
-
-     DELETE FROM eca_tax WHERE eca_id = in_id;
-     FOR iter in array_lower(in_tax_ids, 1) .. array_upper(in_tax_ids, 1)
-     LOOP
-          INSERT INTO eca_tax (eca_id, chart_id)
-          values (in_id, in_tax_ids[iter]);
-     END LOOP;
-     RETURN TRUE;
-end;
-$$ language plpgsql;
+     DELETE FROM eca_tax WHERE eca_id = $1;
+     INSERT INTO eca_tax (eca_id, chart_id)
+     SELECT $1, tax_id
+       FROM unnest($2) tax_id;
+     SELECT TRUE;
+$$ language sql;
 
 comment on function eca__set_taxes(in_id int, in_tax_ids int[]) is
 $$Sets the tax values for the customer or vendor.
