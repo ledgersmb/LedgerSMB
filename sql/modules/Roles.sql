@@ -989,8 +989,6 @@ WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__orders_generate";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (60, 'allow', 'lsmb_<?lsmb dbname ?>__orders_purchase_consolidate');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (62, 'allow', 'lsmb_<?lsmb dbname ?>__orders_purchase_consolidate');
 
 
@@ -998,8 +996,6 @@ CREATE ROLE "lsmb_<?lsmb dbname ?>__orders_sales_consolidate"
 WITH INHERIT NOLOGIN
 IN ROLE "lsmb_<?lsmb dbname ?>__orders_generate";
 
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (60, 'allow', 'lsmb_<?lsmb dbname ?>__orders_sales_consolidate');
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (61, 'allow', 'lsmb_<?lsmb dbname ?>__orders_sales_consolidate');
 

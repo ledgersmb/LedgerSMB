@@ -516,3 +516,10 @@ UPDATE parts
        < '{1,3,31}';
 
 COMMIT;
+
+BEGIN;
+delete from menu_attribute where node_id = 192 and attribute = 'menu';
+
+DELETE FROM menu_acl WHERE node_id = 60 AND exists (select 1 from menu_attribute where node_id = 60 and attribute = 'menu');
+
+COMMIT;
