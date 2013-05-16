@@ -1126,6 +1126,7 @@ sub approve {
 sub update {
     my $display = shift;
     $is_update = 1;
+    &create_links;
     if ( !$display ) {
 
         $form->{invtotal} = 0;

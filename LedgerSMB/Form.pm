@@ -2304,7 +2304,7 @@ sub all_projects {
 			SELECT pr.*, t.description AS translation
 			FROM project pr
 			LEFT JOIN translation t ON (t.trans_id = pr.id)
-			WHERE t.language_code = ?|;
+			          AND t.language_code = ?|;
         push( @queryargs, $self->{language_code} );
     }
 
@@ -2316,21 +2316,8 @@ sub all_projects {
 
     $query .= qq| ORDER BY projectnumber|;
  
-    #my $sth = $dbh->prepare($query);
-    #$sth->execute(@queryargs) || $self->dberror($query);
-    
-     #temporary query
-
-     $query=qq|SELECT pr.*, e.name AS customer
-               FROM project pr
-               LEFT JOIN entity_credit_account c ON (c.id = pr.credit_id) 
-               left join entity e on(e.id=c.entity_id)
-              |;
-my $sth = $dbh->prepare($query);
-    $sth->execute() || $self->dberror($query);
-    #temparary query	
-
-    
+    my $sth = $dbh->prepare($query);
+    $sth->execute(@queryargs) || $self->dberror($query);
 
     @{ $self->{all_project} } = ();
 

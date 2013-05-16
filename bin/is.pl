@@ -114,6 +114,7 @@ sub invoice_links {
     $form->{type} = "invoice";
 
     # create links
+    $form->all_projects;
     $form->create_links( module => "AR",
 			 myconfig => \%myconfig,
 			 vc => "customer",
