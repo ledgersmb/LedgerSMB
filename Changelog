@@ -91,6 +91,7 @@ Changelog for 1.3.33
 * Fixed UI inconsistency re: language dropdown (Chris T, 816)
 * Fixed grants to menus (which can cause problems for submenus (Chris T, 820)
 * Fixed tax boxes cannot be all unset (Chris T, 818)
+* Project, serial number, and notes now appear initially (Chris T, 824)
 
 Changelog for 1.3.32
 * Fixed em-dash handling for pdfs (Chris T)
