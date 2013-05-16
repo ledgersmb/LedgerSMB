@@ -286,6 +286,7 @@ sub _main_screen {
              entity_class => $entity_class,
       location_class_list => \@location_class_list,
        contact_class_list => \@contact_class_list,
+                all_taxes => \@all_taxes,
     });
 }
 
