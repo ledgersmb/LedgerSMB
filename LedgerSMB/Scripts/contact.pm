@@ -200,7 +200,7 @@ sub _main_screen {
              $request->call_procedure(procname=> 'person__list_languages');
 
     for my $ref (@language_code_list){
-        $ref->{text} = "$ref->{code}--$ref->{description}";
+        $ref->{text} = "$ref->{description}";
     }
     
     my @location_class_list = 
