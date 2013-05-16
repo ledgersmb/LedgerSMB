@@ -32,7 +32,7 @@ $$
    SELECT r.id, r.transdate, r.source, r.ar_trans_id, r.ap_trans_id,
           ar.invnumber, ap.invnumber
      FROM inventory_report r
-     JOIN inventory_report_line l ON l.report_id = r.id 
+     JOIN inventory_report_line l ON l.adjust_id = r.id 
      JOIN parts p ON l.parts_id = p.id
 LEFT JOIN ar ON ar.id = r.ar_trans_id
 LEFT JOIN ap ON ap.id = r.ap_trans_id

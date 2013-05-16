@@ -367,7 +367,7 @@ $$;
 CREATE OR REPLACE FUNCTION inventory_adjust__get_lines(in_id int)
 RETURNS SETOF inventory_report_line LANGUAGE SQL AS
 $$
-SELECT * FROM inventory_report_line l WHERE id = $1
+SELECT * FROM inventory_report_line l WHERE adjust_id = $1
  ORDER BY parts_id;
 $$;
 

@@ -79,7 +79,7 @@ is_template bool,
 meta_number text,
 entity_name text,
 entity_class text,
-nextdate date,
+nextdate date
 );
 
 CREATE OR REPLACE FUNCTION journal__search(

@@ -1419,8 +1419,6 @@ GRANT EXECUTE ON FUNCTION  admin__create_group(TEXT)
 TO "lsmb_<?lsmb dbname ?>__users_manage";
 GRANT EXECUTE ON FUNCTION  admin__delete_user(text, bool)
 TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__list_roles(text)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
 GRANT EXECUTE ON FUNCTION  admin__delete_group(text)
 TO "lsmb_<?lsmb dbname ?>__users_manage";
 
