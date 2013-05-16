@@ -415,7 +415,7 @@ sub get_metadata {
          $self->exec_method(funcname => 'person__list_languages');
 
     for my $ref (@{$self->{language_code_list}}){
-        $ref->{text} = "$ref->{code}--$ref->{description}";
+        $ref->{text} = "$ref->{description}";
     }
     
     @{$self->{discount_acc_list}} =
