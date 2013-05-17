@@ -571,30 +571,6 @@ sub create_and_load(){
 }
 
 
-=item $db->process_roles($rolefile);
-
-Loads database Roles templates.
-
-=cut
-
-sub process_roles {
-    my ($self, $rolefile) = @_;
-
-    open (ROLES, '<', "sql/modules/$rolefile");
-    open (TROLES, '>', "$temp/lsmb_roles.sql");
-
-    for my $line (<ROLES>){
-        $line =~ s/<\?lsmb dbname \?>/$self->{company_name}/;
-        print TROLES $line;
-    }
-
-    close ROLES;
-    close TROLES;
-
-    $self->exec_script({script => "$temp/lsmb_roles.sql", 
-                        log    => "$temp/dblog"});
-}
-
 =item $db->lsmb_info()
 
 This routine retrieves general stats about the database and returns the output

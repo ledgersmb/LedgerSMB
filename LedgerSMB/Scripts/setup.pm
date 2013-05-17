@@ -356,7 +356,6 @@ sub migrate_sl{
      $rc ||= $rc2;
 
     $database->load_modules('LOADORDER');
-    $database->process_roles('Roles.sql');
     my $dbtemplate = LedgerSMB::Template->new(
         user => {}, 
         path => 'sql/upgrade',
@@ -599,7 +598,6 @@ sub create_db{
     );
     $rc=$database->create_and_load();#TODO what if createdb fails?
     $logger->info("create_and_load rc=$rc");
-    $database->process_roles('Roles.sql');
 
     #COA Directories
     opendir(COA, 'sql/coa');
@@ -860,7 +858,6 @@ sub run_upgrade {
     $database->exec_script({script => "$database->{source_dir}sql/Pg-database.sql",
                             log    => "$temp/dblog"});
     $database->load_modules('LOADORDER');
-    $database->process_roles('Roles.sql');
     my $dbtemplate = LedgerSMB::Template->new(
         user => {}, 
         path => 'sql/upgrade',
@@ -932,7 +929,6 @@ sub rebuild_modules {
     $ENV{PGDATABASE} = $request->{database};
     
     $database->load_modules('LOADORDER');
-    $database->process_roles('Roles.sql');
     $request->{lsmb_info} = $database->lsmb_info();
     # Credentials set above via environment variables --CT
     #avoid msg commit ineffective with AutoCommit enabled

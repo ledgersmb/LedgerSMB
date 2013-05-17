@@ -1,1550 +1,1011 @@
-GRANT ALL ON SCHEMA public TO public; -- required for Pg 8.2
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_enter" WITH INHERIT NOLOGIN;
-CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_view" WITH INHERIT NOLOGIN;
-CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_approve" WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__budget_view";
-
-GRANT INSERT ON budget_info, budget_to_business_unit, budget_line, budget_note 
-TO "lsmb_<?lsmb dbname ?>__budget_enter";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__budget_obsolete" WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__budget_view";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (252, 'allow', 'lsmb_<?lsmb dbname ?>__budget_enter');
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (253, 'allow', 'lsmb_<?lsmb dbname ?>__budget_view');
-
-GRANT UPDATE (approved_at, approved_by) on budget_info 
-TO "lsmb_<?lsmb dbname ?>__budget_approve";
-
-GRANT UPDATE (obsolete_at, obsolete_by) on budget_info
-TO "lsmb_<?lsmb dbname ?>__budget_obsolete";
-
-GRANT EXECUTE ON FUNCTION budget__reject(in_id int) 
-TO "lsmb_<?lsmb dbname ?>__budget_approve";
-CREATE ROLE "lsmb_<?lsmb dbname ?>__business_units_manage"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT, UPDATE, DELETE ON business_unit_class, business_unit, bu_class_to_module
-TO "lsmb_<?lsmb dbname ?>__business_units_manage";
-
-GRANT SELECT ON business_unit_class, business_unit, bu_class_to_module TO PUBLIC;
-
--- Exchange rate creation (required insert and update on 'exchangerate' table)
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__exchangerate_edit"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT, UPDATE ON exchangerate
-TO "lsmb_<?lsmb dbname ?>__exchangerate_edit";
-
--- Basic file attachments
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__file_read"
-WITH INHERIT NOLOGIN;
-
-GRANT SELECT ON file_base, file_secondary_attachment, file_transaction,
-file_order, file_links, file_part
-      TO "lsmb_<?lsmb dbname ?>__file_read";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__file_attach_tx"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT, UPDATE ON file_transaction, file_order_to_tx TO
- "lsmb_<?lsmb dbname ?>__file_attach_tx";
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__file_attach_order"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT, UPDATE 
-      ON file_order, 
-         file_order_to_order,
-         file_tx_to_order
-      TO "lsmb_<?lsmb dbname ?>__file_attach_order";
-
-GRANT INSERT, UPDATE ON file_transaction, file_order_to_tx TO
- "lsmb_<?lsmb dbname ?>__file_attach_tx";
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__file_attach_part"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT, UPDATE 
-      ON file_part
-      TO "lsmb_<?lsmb dbname ?>__file_attach_part";
-
-
-GRANT ALL ON file_base_id_seq TO "lsmb_<?lsmb dbname ?>__file_attach_tx";
-GRANT ALL ON file_base_id_seq TO "lsmb_<?lsmb dbname ?>__file_attach_part";
-GRANT ALL ON file_base_id_seq TO "lsmb_<?lsmb dbname ?>__file_attach_order";
-
--- Contacts
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_read"
-WITH INHERIT NOLOGIN;
-
-GRANT SELECT ON partsvendor, partscustomer, taxcategory
-TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON entity TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON company TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON location TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON person TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON entity_credit_account TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON entity_to_location TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON eca_tax TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON contact_class TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON entity_class TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON entity_bank_account TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON entity_note TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON entity_other_name TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON location_class TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON person_to_company TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON entity_to_contact TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON entity_to_contact TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON entity_to_location TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON eca_to_location TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT SELECT ON eca_note TO "lsmb_<?lsmb dbname ?>__contact_read";
-GRANT EXECUTE ON FUNCTION eca__list_notes(int)  TO "lsmb_<?lsmb dbname ?>__contact_read";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_vendor" WITH INHERIT NOLOGIN;
-CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_customer" 
-WITH INHERIT NOLOGIN;
-CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_employee" 
-WITH INHERIT NOLOGIN;
-CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_contact" WITH INHERIT NOLOGIN;
-CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_referral" 
-WITH INHERIT NOLOGIN;
-CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_lead" WITH INHERIT NOLOGIN;
-CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_hot_lead" 
-WITH INHERIT NOLOGIN;
-CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_class_cold_lead"
-WITH INHERIT NOLOGIN;
-
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (14, 'allow', 'lsmb_<?lsmb dbname ?>__contact_read');
-
-DELETE FROM menu_acl
-WHERE node_id = 49 AND role_name = 'lsmb_<?lsmb dbname ?>__contact_read';
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_create"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
-GRANT INSERT ON entity TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT ALL ON entity_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON company TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT ALL ON company_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON location TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT ALL ON location_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON person TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT ALL ON person_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON entity_credit_account TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT ALL ON entity_credit_account_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT ALL ON note_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON entity_to_location TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON eca_tax TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON entity_bank_account TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT ALL ON entity_bank_account_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON entity_note TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON entity_other_name TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON person_to_company TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON entity_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON entity_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON entity_to_location TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT DELETE ON entity_to_location TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON eca_to_location TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT DELETE ON eca_to_location TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT DELETE ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT UPDATE ON eca_to_contact TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT INSERT ON eca_note TO "lsmb_<?lsmb dbname ?>__contact_create";
-GRANT ALL ON eca_tax TO"lsmb_<?lsmb dbname ?>__contact_create";
-
-
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (12, 'allow', 'lsmb_<?lsmb dbname ?>__contact_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__employees_manage"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
-GRANT ALL ON entity_employee, person, entity, entity_id_seq,
-payroll_income_type, payroll_deduction_type, payroll_wage, payroll_deduction
-TO "lsmb_<?lsmb dbname ?>__employees_manage";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (48, 'allow', 'lsmb_<?lsmb dbname ?>__employees_manage');
-
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (49, 'allow', 'lsmb_<?lsmb dbname ?>__employees_manage');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_edit"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
-GRANT UPDATE ON entity TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT UPDATE ON company TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT UPDATE ON location TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT UPDATE ON person TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT UPDATE ON entity_credit_account TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT UPDATE ON entity_to_location TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT UPDATE ON eca_tax TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT UPDATE ON entity_bank_account TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT UPDATE ON entity_note TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT UPDATE ON entity_other_name TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT UPDATE ON person_to_company TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT UPDATE ON entity_to_contact TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT UPDATE ON entity_to_contact TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT UPDATE ON eca_to_location TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT DELETE, INSERT  ON entity_bank_account TO "lsmb_<?lsmb dbname ?>__contact_edit";
-GRANT ALL ON eca_tax TO"lsmb_<?lsmb dbname ?>__contact_edit";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__contact_all_rights"
-WITH INHERIT NOLOGIN 
-in role "lsmb_<?lsmb dbname ?>__contact_create", 
-"lsmb_<?lsmb dbname ?>__contact_edit",
-"lsmb_<?lsmb dbname ?>__contact_read";
-
--- Batches and VOuchers
-CREATE ROLE "lsmb_<?lsmb dbname ?>__batch_create"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT ON batch TO "lsmb_<?lsmb dbname ?>__batch_create";
-GRANT ALL ON batch_id_seq TO "lsmb_<?lsmb dbname ?>__batch_create";
-GRANT SELECT ON batch_class TO "lsmb_<?lsmb dbname ?>__batch_create";
-GRANT INSERT ON voucher TO "lsmb_<?lsmb dbname ?>__batch_create";
-GRANT ALL ON voucher_id_seq TO "lsmb_<?lsmb dbname ?>__contact_create";
-
--- No menu acls
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__batch_post"
-WITH INHERIT NOLOGIN;
-
-GRANT EXECUTE ON FUNCTION batch_post(int) TO "lsmb_<?lsmb dbname ?>__batch_post";
-
-DELETE FROM menu_acl 
- WHERE node_id in (206, 210) 
-       AND role_name = 'lsmb_<?lsmb dbname ?>__contact_create';
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (206, 'allow', 'lsmb_<?lsmb dbname ?>__batch_post'),
-       (210, 'allow', 'lsmb_<?lsmb dbname ?>__batch_post');
-
--- AR
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
--- Role created later; using the GRANT construct, we support upgrades
-GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
-   TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
-
-GRANT INSERT ON ar, invoice_note, business_unit_ac, journal_entry, journal_line,
-business_unit_jl
-TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
-
-GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
-
-GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
-GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
-GRANT ALL ON acc_trans_entry_id_seq, journal_entry_id_seq, journal_line_id_seq 
-TO "lsmb_<?lsmb dbname ?>__ar_transaction_create";
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (2, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (194, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create');
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
-"lsmb_<?lsmb dbname ?>__batch_create";
-
-GRANT INSERT ON ar TO "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
-GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
-GRANT INSERT ON acc_trans, business_unit_ac TO "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
-GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (198, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher');
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (20, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher');
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (11, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher');
-
--- Activate when AR batch import is working
---INSERT INTO menu_acl (node_id, acl_type, role_name) 
---values (244, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_invoice_create"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create";
-
---### oldcode: UPDATE granted because old code wants it
-GRANT SELECT, INSERT, UPDATE ON invoice, new_shipto,  business_unit_inv,
-new_shipto_id_seq
-TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
-GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
-GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
-GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
-GRANT INSERT ON tax_extended TO "lsmb_<?lsmb dbname ?>__ar_invoice_create";
-
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (3, 'allow', 'lsmb_<?lsmb dbname ?>__ar_invoice_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (195, 'allow', 'lsmb_<?lsmb dbname ?>__ar_invoice_create');
-
-
---CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher"
---WITH INHERIT NOLOGIN
---IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
---"lsmb_<?lsmb dbname ?>__batch_create",
---"lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher";
-
---GRANT INSERT ON invoice TO "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
---GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
---GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
---GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
-
+BEGIN;
+
+DELETE FROM menu_acl WHERE node_id in (206, 210);
+
+DROP FUNCTION IF EXISTS lsmb__create_role(text);
+CREATE OR REPLACE FUNCTION lsmb__create_role(in_role text) RETURNS bool
+LANGUAGE PLPGSQL AS 
+$$
+BEGIN
+  PERFORM * FROM pg_roles WHERE rolname = lsmb__role(in_role);
+  IF FOUND THEN
+     RETURN TRUE;
+  END IF;
+
+  EXECUTE 'CREATE ROLE ' || quote_ident(lsmb__role(in_role)) 
+  || ' WITH INHERIT NOLOGIN';
+
+  RETURN TRUE;
+END;
+$$ SECURITY INVOKER; -- intended only to be used for setup scripts
+
+DROP FUNCTION IF EXISTS lsmb__grant_role(text, text);
+CREATE OR REPLACE FUNCTION lsmb__grant_role(in_child text, in_parent text)
+RETURNS BOOL LANGUAGE PLPGSQL SECURITY INVOKER AS 
+$$
+BEGIN
+   EXECUTE 'GRANT ' || quote_ident(lsmb__role(in_parent)) || ' TO ' 
+   || quote_ident(lsmb__role(in_child));
+   RETURN TRUE;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION lsmb__grant_exec(in_role text, in_func text)
+RETURNS BOOL LANGUAGE PLPGSQL SECURITY INVOKER AS
+$$
+BEGIN
+   EXECUTE 'GRANT EXECUTE ON FUNCTION ' || in_func || ' TO ' 
+   || quote_ident(lsmb__role(in_role));
+   RETURN TRUE;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION lsmb__grant_perms
+(in_role text, in_table text, in_perms text) RETURNS BOOL
+SECURITY INVOKER 
+LANGUAGE PLPGSQL AS
+$$
+BEGIN
+   IF upper(in_perms) NOT IN ('ALL', 'INSERT', 'UPDATE', 'SELECT', 'DELETE') THEN
+      RAISE EXCEPTION 'Invalid permission';
+   END IF;
+   EXECUTE 'GRANT ' || in_perms || ' ON ' || quote_ident(in_table)
+   || ' TO ' ||  quote_ident(lsmb__role(in_role));
+
+   RETURN TRUE;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION quote_ident_array(text[]) returns text[]
+language sql as $$
+   SELECT array_agg(quote_ident(e))
+     FROM unnest($1) e;
+$$;
+
+CREATE OR REPLACE FUNCTION lsmb__grant_perms
+(in_role text, in_table text, in_perms text, in_cols text[]) RETURNS BOOL
+SECURITY INVOKER 
+LANGUAGE PLPGSQL AS
+$$
+BEGIN
+   IF upper(in_perms) NOT IN ('ALL', 'INSERT', 'UPDATE', 'SELECT', 'DELETE') THEN
+      RAISE EXCEPTION 'Invalid permission';
+   END IF;
+   EXECUTE 'GRANT ' || in_perms 
+   || '(' || array_to_string(quote_ident_array(in_cols), ', ') 
+   || ') ON ' || quote_ident(in_table)|| ' TO ' 
+   ||  quote_ident(lsmb__role(in_role));
+   RETURN TRUE;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION lsmb__grant_menu
+(in_role text, in_node_id int, in_perm_type text)
+RETURNS BOOL
+LANGUAGE PLPGSQL SECURITY INVOKER AS
+$$
+BEGIN
+   PERFORM * FROM pg_roles WHERE rolname = lsmb__role(in_role);
+   IF NOT FOUND THEN
+      RAISE EXCEPTION 'Role not found';
+   END IF;
+   PERFORM * FROM menu_attribute 
+     WHERE attribute = 'menu' AND node_id = in_node_id;
+   IF FOUND THEN
+      RAISE EXCEPTION 'Cannot grant to submenu';
+   END IF;
+   IF in_perm_type NOT IN ('allow', 'deny') THEN
+      RAISE EXCEPTION 'Invalid perm type';
+   END IF;
+   PERFORM * FROM menu_acl 
+     WHERE node_id = in_node_id AND role_name = lsmb__role(in_role)
+           AND acl_type = in_perm_type;
+   IF FOUND THEN RETURN TRUE;
+   END IF;
+   INSERT INTO menu_acl (node_id, role_name, acl_type)
+   VALUES (in_node_id, lsmb__role(in_role), in_perm_type);
+   RETURN TRUE;
+END;
+$$;
+
+GRANT ALL ON SCHEMA public TO public;
+
+
+\echo BUDGETS
+SELECT lsmb__create_role('budget_enter');
+SELECT lsmb__create_role('budget_view');
+SELECT lsmb__create_role('budget_approve');
+SELECT lsmb__grant_role('budget_approve', 'budget_view');
+SELECT lsmb__create_role('budget_obsolete');
+
+SELECT lsmb__grant_role('budget_obsolete', 'budget_view');
+SELECT lsmb__grant_perms('budget_enter', 'budget_info', 'INSERT');
+SELECT lsmb__grant_perms('budget_enter', 'budget_to_business_unit', 'INSERT');
+SELECT lsmb__grant_perms('budget_enter', 'budget_line', 'INSERT');
+SELECT lsmb__grant_perms('budget_enter', 'budget_note', 'INSERT');
+SELECT lsmb__grant_perms('budget_approve', 'budget_info', 'UPDATE', 
+       array['approved_at'::text, 'approved_by']);
+SELECT lsmb__grant_perms('budget_obsolete', 'budget_info', 'UPDATE', 
+       array['approved_at'::text, 'approved_by']);
+
+SELECT lsmb__grant_menu('budget_enter', 252, 'allow');
+SELECT lsmb__grant_menu('budget_view', 253, 'allow');
+
+SELECT lsmb__grant_exec('budget_approve', 'budget__reject(in_id int)');
+
+\echo BUSINESS UNITS
+SELECT lsmb__create_role('business_units_manage');
+SELECT lsmb__grant_perms('business_units_manage', 'business_unit_class', 
+       'INSERT');
+SELECT lsmb__grant_perms('business_units_manage', 'business_unit_class', 
+       'UPDATE');
+SELECT lsmb__grant_perms('business_units_manage', 'business_unit_class', 
+       'DELETE');
+SELECT lsmb__grant_perms('business_units_manage', 'business_unit', 'INSERT');
+SELECT lsmb__grant_perms('business_units_manage', 'business_unit', 'UPDATE');
+SELECT lsmb__grant_perms('business_units_manage', 'business_unit', 'DELETE');
+SELECT lsmb__grant_perms('business_units_manage', 'bu_class_to_module', 
+       'INSERT');
+SELECT lsmb__grant_perms('business_units_manage', 'bu_class_to_module', 
+       'UPDATE');
+SELECT lsmb__grant_perms('business_units_manage', 'bu_class_to_module', 
+       'DELETE');
+SELECT lsmb__grant_menu('business_units_manage', 144, 'allow');
+
+GRANT SELECT ON business_unit_class, business_unit, bu_class_to_module 
+   TO PUBLIC;
+
+\echo Exchange rate creation (requires insert/update on exchangerate table)
+SELECT lsmb__create_role('exchangerate_edit');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'INSERT');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'UPDATE');
+
+\echo Basic file attachments
+SELECT lsmb__create_role('file_read');
+SELECT lsmb__grant_perms('file_read', 'file_base', 'SELECT');
+SELECT lsmb__grant_perms('file_read', 'file_secondary_attachment', 'SELECT');
+SELECT lsmb__grant_perms('file_read', 'file_transaction', 'SELECT');
+SELECT lsmb__grant_perms('file_read', 'file_order', 'SELECT');
+SELECT lsmb__grant_perms('file_read', 'file_links', 'SELECT');
+SELECT lsmb__grant_perms('file_read', 'file_part', 'SELECT');
+
+SELECT lsmb__create_role('file_attach_tx');
+SELECT lsmb__grant_perms('file_attach_tx', 'file_transaction', 'INSERT');
+SELECT lsmb__grant_perms('file_attach_tx', 'file_transaction', 'UPDATE');
+SELECT lsmb__grant_perms('file_attach_tx', 'file_order_to_tx', 'INSERT');
+SELECT lsmb__grant_perms('file_attach_tx', 'file_order_to_tx', 'UPDATE');
+
+SELECT lsmb__create_role('file_attach_order');
+SELECT lsmb__grant_perms('file_attach_order', 'file_order', 'INSERT');
+SELECT lsmb__grant_perms('file_attach_order', 'file_order', 'UPDATE');
+SELECT lsmb__grant_perms('file_attach_order', 'file_order_to_order', 'INSERT');
+SELECT lsmb__grant_perms('file_attach_order', 'file_order_to_order', 'UPDATE');
+SELECT lsmb__grant_perms('file_attach_order', 'file_tx_to_order', 'INSERT');
+SELECT lsmb__grant_perms('file_attach_order', 'file_tx_to_order', 'UPDATE');
+
+SELECT lsmb__create_role('file_attach_part');
+SELECT lsmb__grant_perms('file_attach_part', 'file_part', 'INSERT');
+SELECT lsmb__grant_perms('file_attach_part', 'file_part', 'UPDATE');
+
+SELECT lsmb__grant_perms('file_attach_tx', 'file_base_id_seq', 'ALL');
+SELECT lsmb__grant_perms('file_attach_order', 'file_base_id_seq', 'ALL');
+SELECT lsmb__grant_perms('file_attach_part', 'file_base_id_seq', 'ALL');
+
+\echo Contact Management
+SELECT lsmb__create_role('contact_read');
+SELECT lsmb__grant_perms('contact_read', 'partsvendor', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'partscustomer', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'taxcategory', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'entity', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'company', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'location', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'person', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'entity_credit_account', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'entity_to_location', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'eca_tax', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'contact_class', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'entity_class', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'entity_bank_account', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'entity_note', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'entity_other_name', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'location_class', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'person_to_company', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'entity_to_contact', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'entity_to_location', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'eca_to_location', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'eca_to_contact', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'eca_note', 'SELECT');
+SELECT lsmb__grant_exec('contact_read', 'eca__list_notes(int)');
+SELECT lsmb__grant_menu('contact_read', 14, 'allow');
+
+SELECT lsmb__create_role('contact_class_vendor');
+SELECT lsmb__create_role('contact_class_customer');
+SELECT lsmb__create_role('contact_class_employee');
+SELECT lsmb__create_role('contact_class_contact');
+SELECT lsmb__create_role('contact_class_referral');
+SELECT lsmb__create_role('contact_class_lead');
+SELECT lsmb__create_role('contact_class_hot_lead');
+SELECT lsmb__create_role('contact_class_cold_lead');
+
+SELECT lsmb__create_role('contact_create');
+SELECT lsmb__grant_role('contact_create', 'contact_read');
+SELECT lsmb__grant_perms('contact_create', 'entity', 'INSERT');
+SELECT lsmb__grant_perms('contact_create', 'entity_id_seq', 'ALL');
+SELECT lsmb__grant_perms('contact_create', 'company', 'INSERT');
+SELECT lsmb__grant_perms('contact_create', 'company_id_seq', 'ALL');
+SELECT lsmb__grant_perms('contact_create', 'location', 'INSERT');
+SELECT lsmb__grant_perms('contact_create', 'location_id_seq', 'ALL');
+SELECT lsmb__grant_perms('contact_create', 'person', 'INSERT');
+SELECT lsmb__grant_perms('contact_create', 'person_id_seq', 'ALL');
+SELECT lsmb__grant_perms('contact_create', 'entity_credit_account', 'INSERT');
+SELECT lsmb__grant_perms('contact_create', 'entity_credit_account_id_seq', 'ALL');
+SELECT lsmb__grant_perms('contact_create', 'note_id_seq', 'ALL');
+SELECT lsmb__grant_perms('contact_create', 'entity_bank_account', 'INSERT');
+SELECT lsmb__grant_perms('contact_create', 'entity_bank_account_id_seq', 'ALL');
+SELECT lsmb__grant_perms('contact_create', 'entity_to_location', 'INSERT');
+SELECT lsmb__grant_perms('contact_create', 'eca_tax', 'ALL');
+SELECT lsmb__grant_perms('contact_create', 'entity_note', 'INSERT');
+SELECT lsmb__grant_perms('contact_create', 'entity_other_name', 'INSERT');
+SELECT lsmb__grant_perms('contact_create', 'person_to_company', 'INSERT');
+SELECT lsmb__grant_perms('contact_create', 'entity_to_contact', 'INSERT');
+SELECT lsmb__grant_perms('contact_create', 'entity_to_location', 'INSERT');
+SELECT lsmb__grant_perms('contact_create', 'entity_to_location', 'DELETE');
+SELECT lsmb__grant_perms('contact_create', 'eca_to_location', 'INSERT');
+SELECT lsmb__grant_perms('contact_create', 'eca_to_location', 'DELETE');
+SELECT lsmb__grant_perms('contact_create', 'eca_to_contact', 'ALL');
+SELECT lsmb__grant_perms('contact_create', 'eca_note', 'INSERT');
+SELECT lsmb__grant_perms('contact_create', obj, 'ALL')
+  FROM unnest(array['partsvendor_entry_id_seq'::text, 
+                    'partscustomer_entry_id_seq']) obj;
+
+SELECT lsmb__grant_menu('contact_create', 12, 'allow');
+
+SELECT lsmb__create_role('employees_manage');
+SELECT lsmb__grant_role('employees_manage', 'contact_read');
+SELECT lsmb__grant_perms('employees_manage', 'entity_employee', 'ALL');
+SELECT lsmb__grant_perms('employees_manage', 'person', 'ALL');
+SELECT lsmb__grant_perms('employees_manage', 'entity', 'ALL');
+SELECT lsmb__grant_perms('employees_manage', 'entity_id_seq', 'ALL');
+SELECT lsmb__grant_perms('employees_manage', 'payroll_income_type', 'ALL');
+SELECT lsmb__grant_perms('employees_manage', 'payroll_deduction_type', 'ALL');
+SELECT lsmb__grant_perms('employees_manage', 'payroll_wage', 'ALL');
+SELECT lsmb__grant_perms('employees_manage', 'payroll_deduction', 'ALL');
+SELECT lsmb__grant_menu('employees_manage', 48, 'allow');
+SELECT lsmb__grant_menu('employees_manage', 49, 'allow');
+
+SELECT lsmb__create_role('contact_edit');
+SELECT lsmb__grant_role('contact_edit', 'contact_read');
+SELECT lsmb__grant_perms('contact_edit', 'entity', 'UPDATE');
+SELECT lsmb__grant_perms('contact_edit', 'company', 'UPDATE');
+SELECT lsmb__grant_perms('contact_edit', 'location', 'UPDATE');
+SELECT lsmb__grant_perms('contact_edit', 'person', 'UPDATE');
+SELECT lsmb__grant_perms('contact_edit', 'entity_credit_account', 'UPDATE');
+SELECT lsmb__grant_perms('contact_edit', 'entity_to_location', 'UPDATE');
+SELECT lsmb__grant_perms('contact_edit', 'eca_tax', 'UPDATE');
+SELECT lsmb__grant_perms('contact_edit', 'entity_bank_account', 'ALL');
+SELECT lsmb__grant_perms('contact_edit', 'entity_note', 'UPDATE');
+SELECT lsmb__grant_perms('contact_edit', 'entity_other_name', 'UPDATE');
+SELECT lsmb__grant_perms('contact_edit', 'person_to_company', 'UPDATE');
+SELECT lsmb__grant_perms('contact_edit', 'entity_to_contact', 'UPDATE');
+SELECT lsmb__grant_perms('contact_edit', 'eca_to_location', 'UPDATE');
+SELECT lsmb__grant_perms('contact_edit', 'eca_tax', 'ALL');
+
+SELECT lsmb__create_role('contact_all_rights');
+SELECT lsmb__grant_role('contact_all_rights', 'contact_create');
+SELECT lsmb__grant_role('contact_all_rights', 'contact_edit');
+SELECT lsmb__grant_role('contact_all_rights', 'contact_read');
+
+\echo Batches and Vouchers
+SELECT lsmb__create_role('batch_create');
+SELECT lsmb__grant_perms('batch_create', 'batch', 'INSERT');
+SELECT lsmb__grant_perms('batch_create', 'batch_id_seq', 'ALL');
+SELECT lsmb__grant_perms('batch_create', 'batch_class', 'SELECT');
+SELECT lsmb__grant_perms('batch_create', 'voucher', 'INSERT');
+SELECT lsmb__grant_perms('batch_create', 'voucher_id_seq', 'ALL');
+
+SELECT lsmb__create_role('batch_post');
+SELECT lsmb__grant_exec('batch_post', 'batch_post(int)');
+SELECT lsmb__grant_menu('batch_post', 206, 'allow');
+SELECT lsmb__grant_menu('batch_post', 210, 'allow');
+
+SELECT lsmb__create_role('voucher_delete');
+SELECT lsmb__grant_exec('voucher_delete', 'voucher__delete(int)');
+SELECT lsmb__grant_exec('voucher_delete', 'batch_delete(int)');
+
+SELECT lsmb__create_role('draft_modify');
+SELECT lsmb__create_role('draft_post');
+SELECT lsmb__grant_menu('draft_post', 210, 'allow');
+
+
+\echo AR
+SELECT lsmb__create_role('ar_transaction_create');
+SELECT lsmb__grant_role('ar_transaction_create', 'contact_read');
+SELECT lsmb__grant_role('ar_transaction_create', 'exchangerate_edit');
+SELECT lsmb__grant_perms('ar_transaction_create', 'ar', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create', 'invoice_note', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create', 'business_unit_ac', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create', 'journal_entry', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create', 'journal_line', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create', 'business_unit_jl', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create', 'oe', 'SELECT');
+SELECT lsmb__grant_perms('ar_transaction_create', 'id', 'ALL');
+SELECT lsmb__grant_perms('ar_transaction_create', 'acc_trans', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create', 'acc_trans_entry_id_seq', 'ALL');
+SELECT lsmb__grant_perms('ar_transaction_create', 'journal_entry_id_seq', 'ALL');
+SELECT lsmb__grant_perms('ar_transaction_create', 'journal_line_id_seq', 'ALL');
+SELECT lsmb__grant_menu('ar_transaction_create', 2, 'allow');
+SELECT lsmb__grant_menu('ar_transaction_create', 194, 'allow');
+
+SELECT lsmb__create_role('ar_transaction_create_voucher');
+SELECT lsmb__grant_role('ar_transaction_create_voucher', 'contact_read');
+SELECT lsmb__grant_role('ar_transaction_create_voucher', 'batch_create');
+SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'ar', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'inventory', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'acc_trans', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'tax_extended', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'business_unit_ac', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'id', 'all');
+SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'invoice_id_seq', 'all');
+SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'acc_trans_entry_id_seq', 'all');
+SELECT lsmb__grant_perms('ar_transaction_create_voucher', 'inventory_entry_id_seq', 'all');
+SELECT lsmb__grant_menu('ar_transaction_create_voucher',198,'allow');
+SELECT lsmb__grant_menu('ar_transaction_create_voucher',20,'allow');
+SELECT lsmb__grant_menu('ar_transaction_create_voucher',11,'allow');
+SELECT lsmb__grant_menu('ar_transaction_create_voucher',244,'allow');
+
+SELECT lsmb__create_role('ar_invoice_create');
+SELECT lsmb__grant_role('ar_invoice_create', 'ar_transaction_create');
+-- ### old code needs update
+SELECT lsmb__grant_perms('ar_invoice_create', tname, ptype)
+  FROM unnest('{invoice,new_shipto,business_unit_inv}'::text[]) tname
+ CROSS JOIN unnest('{SELECT,INSERT,UPDATE}'::text[]) ptype; 
+SELECT lsmb__grant_menu('ar_invoice_create', 3, 'allow');
+SELECT lsmb__grant_menu('ar_invoice_create', 195, 'allow');
+
+SELECT lsmb__create_role('ar_invoice_create_voucher');
+SELECT lsmb__grant_role('ar_invoice_create_voucher', 'contact_read');
+SELECT lsmb__grant_role('ar_invoice_create_voucher', 'batch_create');
+SELECT lsmb__grant_role('ar_invoice_create_voucher', 'ar_transaction_create_voucher');
+SELECT lsmb__grant_perms('ar_invoice_create_voucher', 'invoice', 'INSERT');
+SELECT lsmb__grant_perms('ar_invoice_create_voucher', 'inventory', 'INSERT');
+SELECT lsmb__grant_perms('ar_invoice_create_voucher', 'invoice_id_seq', 'ALL');
+SELECT lsmb__grant_perms('ar_invoice_create_voucher', 'inventory_entry_id_seq', 'ALL');
 -- TODO add Menu ACLs
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_list"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
-"lsmb_<?lsmb dbname ?>__file_read";
+SELECT lsmb__create_role('ar_transaction_list');
+SELECT lsmb__grant_role('ar_transaction_list', 'contact_read');
+SELECT lsmb__grant_role('ar_transaction_list', 'file_read');
+SELECT lsmb__grant_perms('ar_transaction_list', tname, 'SELECT')
+  FROM unnest(
+         array['ar'::text, 'acc_trans', 'business_unit_ac', 'invoice', 
+               'business_unit_inv', 'inventory', 'tax_extended']
+       ) tname;
 
-GRANT SELECT ON ar TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
-GRANT SELECT ON acc_trans, business_unit_ac
- TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
-GRANT SELECT ON invoice, business_unit_inv TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
-GRANT SELECT ON inventory TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
-GRANT SELECT ON tax_extended TO "lsmb_<?lsmb dbname ?>__ar_transaction_list";
+SELECT lsmb__grant_menu('ar_transaction_list', node_id, 'allow')
+  FROM unnest( array[5,7,9,10,15]) node_id;
 
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (4, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (5, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (7, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (9, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (10, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (15, 'allow', 'lsmb_<?lsmb dbname ?>__ar_transaction_list');
+SELECT lsmb__create_role('ar_voucher_all');
+SELECT lsmb__grant_role('ar_voucher_all', 'ar_transaction_create_voucher');
+SELECT lsmb__grant_role('ar_voucher_all', 'ar_invoice_create_voucher');
 
---CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_voucher_all"
---WITH INHERIT NOLOGIN 
---IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create_voucher",
---"lsmb_<?lsmb dbname ?>__ar_invoice_create_voucher";
+SELECT lsmb__create_role('ar_transaction_all');
+SELECT lsmb__grant_role('ar_transaction_all', rname)
+  FROM unnest(ARRAY['ar_transaction_create'::text, 'ar_invoice_create', 
+                    'ar_transaction_list', 'file_attach_tx']) rname;
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_all"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_create",
-"lsmb_<?lsmb dbname ?>__ar_invoice_create",
-"lsmb_<?lsmb dbname ?>__ar_transaction_list",
-"lsmb_<?lsmb dbname ?>__file_attach_tx";
+SELECT lsmb__create_role('sales_order_create');
+SELECT lsmb__grant_role('sales_order_create', 'contact_read');
+SELECT lsmb__grant_role('sales_order_create', 'exchangerate_edit');
+SELECT lsmb__grant_perms('sales_order_create', obj, 'ALL')
+  FROM unnest(array['oe'::text, 'oe_id_seq', 'inventory', 'orderitems_id_seq'])
+       obj;
+SELECT lsmb__grant_perms('sales_order_create', 'oe_id_seq', 'ALL');
+SELECT lsmb__grant_perms('sales_order_create', 'orderitems', 'INSERT');
+SELECT lsmb__grant_perms('sales_order_create', 'orderitems', 'UPDATE');
+SELECT lsmb__grant_perms('sales_order_create', 'business_unit_oitem', 'INSERT');
+SELECT lsmb__grant_perms('sales_order_create', 'business_unit_oitem', 'UPDATE');
+SELECT lsmb__grant_menu('sales_order_create', '51', 'allow');
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__sales_order_create"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
+SELECT lsmb__create_role('sales_order_edit');
+SELECT lsmb__grant_perms('sales_order_edit', 'orderitems', 'DELETE');
+SELECT lsmb__grant_perms('sales_order_edit', 'business_unit_oitem', 'DELETE');
+SELECT lsmb__grant_perms('sales_order_edit', 'new_shipto', 'DELETE');
 
--- Role created later; using the GRANT construct, we support upgrades
-GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
-   TO "lsmb_<?lsmb dbname ?>__sales_order_create";
+SELECT lsmb__create_role('sales_quotation_create');
+SELECT lsmb__grant_role('sales_quotation_create', 'contact_read');
+SELECT lsmb__grant_role('sales_quotation_create', 'exchangerate_edit');
+SELECT lsmb__grant_perms('sales_quotation_create', obj, 'ALL')
+  FROM unnest(array['oe'::text, 'oe_id_seq', 'orderitems_id_seq']) obj;
 
+SELECT lsmb__grant_perms('sales_quotation_create', obj, ptype)
+  FROM unnest(array['orderitems'::text, 'business_unit_oitem']) obj,
+       unnest(array['INSERT'::text, 'UPDATE']) ptype;
 
-GRANT ALL ON oe TO "lsmb_<?lsmb dbname ?>__sales_order_create";
-GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__sales_order_create";
-GRANT INSERT, UPDATE ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__sales_order_create";
-GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__sales_order_create";
-GRANT ALL on inventory TO "lsmb_<?lsmb dbname ?>__sales_order_create";
+SELECT lsmb__grant_menu('sales_quotation_create', 68, 'allow');
 
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (51, 'allow', 'lsmb_<?lsmb dbname ?>__sales_order_create');
+SELECT lsmb__create_role('sales_order_list');
+SELECT lsmb__grant_role('sales_order_list', 'contact_read');
+SELECT lsmb__grant_role('sales_order_list', 'file_read');
+SELECT lsmb__grant_perms('sales_order_list', obj, 'SELECT')
+  FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem']) obj;
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__sales_order_edit";
-GRANT DELETE ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__sales_order_edit";
-GRANT DELETE ON new_shipto TO "lsmb_<?lsmb dbname ?>__sales_order_edit";
+SELECT lsmb__grant_menu('sales_order_list', 54, 'allow');
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__sales_quotation_create"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
+SELECT lsmb__create_role('sales_quotation_list');
+SELECT lsmb__grant_role('sales_quotation_list', 'contact_read');
+SELECT lsmb__grant_role('sales_quotation_list', 'file_read');
+SELECT lsmb__grant_perms('sales_quotation_list', obj, 'SELECT')
+  FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem']) obj;
 
--- Role created later; using the GRANT construct, we support upgrades
-GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
-   TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
+SELECT lsmb__grant_menu('sales_quotation_list', 54, 'allow');
 
-GRANT ALL ON oe TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
-GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
-GRANT INSERT, UPDATE ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
-GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__sales_quotation_create";
+SELECT lsmb__create_role('ar_all');
+SELECT lsmb__grant_role('ar_all', rname)
+  FROM unnest(array['ar_voucher_all'::text, 'ar_transaction_all', 
+                    'file_attach_tx']) rname;
 
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (68, 'allow', 'lsmb_<?lsmb dbname ?>__sales_quotation_create');
+\echo AP
+SELECT lsmb__create_role('ap_transaction_create');
+SELECT lsmb__grant_role('ap_transaction_create', 'contact_read');
+SELECT lsmb__grant_role('ap_transaction_create', 'exchangerate_edit');
+SELECT lsmb__grant_perms('ap_transaction_create', obj, ptype)
+  FROM unnest(array['ap'::text, 'invoice_note', 'journal_entry', 'journal_line',
+                    'business_unit_jl']) obj
+ CROSS JOIN unnest(array['SELECT'::text, 'INSERT']) ptype;
 
+SELECT lsmb__grant_perms('ap_transaction_create', obj, 'ALL') 
+  FROM unnest(array['id'::text, 'acc_trans_entry_id_seq', 
+                    'journal_entry_id_seq', 'journal_line_id_seq']) obj;
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__sales_order_list"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
-"lsmb_<?lsmb dbname ?>__file_read";
+SELECT lsmb__grant_perms('ap_transaction_create', 'acc_trans', 'INSERT');
+SELECT lsmb__grant_perms('ap_transaction_create', 'business_unit_ac', 'INSERT');
+SELECT lsmb__grant_perms('ap_transaction_create', 'oe', 'SELECT');
+SELECT lsmb__grant_menu('ap_transaction_create', node_id, 'allow')
+  FROM unnest(array[13,22,196]) node_id;
 
-GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__sales_order_list";
-GRANT SELECT ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__sales_order_list";
+SELECT lsmb__create_role('ap_transaction_create_voucher');
+SELECT lsmb__grant_role('ap_transaction_create_voucher', 'contact_read');
+SELECT lsmb__grant_role('ap_transaction_create_voucher', 'batch_create');
+SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'oe', 'SELECT');
+SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'business_unit_ac', 'INSERT');
+SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'acc_trans', 'INSERT');
+SELECT lsmb__grant_perms('ap_transaction_create_voucher', obj, ptype)
+  FROM unnest(array['ap'::text, 'invoice', 'business_unit_inv']) obj
+ CROSS JOIN unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) ptype;
 
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (54, 'allow', 'lsmb_<?lsmb dbname ?>__sales_order_list');
+SELECT lsmb__grant_perms('ap_transaction_create_voucher', obj, 'ALL')
+  FROM unnest(array['id'::text, 'acc_trans_entry_id_seq']) obj;
 
+SELECT lsmb__grant_menu('ap_transaction_create_voucher', node_id, 'allow')
+  FROM unnest(array[199, 243, 39]) node_id;
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__sales_quotation_list"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
-"lsmb_<?lsmb dbname ?>__file_read";
+SELECT lsmb__create_role('ap_invoice_create');
+SELECT lsmb__grant_role('ap_invoice_create', 'ap_transaction_create');
+SELECT lsmb__grant_perms('ap_invoice_create', obj, 'INSERT')
+  FROM unnest(array['invoice'::text, 'business_unit_inv', 'inventory', 
+                    'tax_extended']) obj;
+SELECT lsmb__grant_perms('ap_invoice_create', obj, 'ALL')
+  FROM unnest(array['inventory_entry_id_seq'::text, 'invoice_id_seq']) obj;
 
-GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__sales_quotation_list";
-GRANT SELECT ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__sales_quotation_list";
+SELECT lsmb__grant_menu('ap_invoice_create', node_id, 'allow')
+  FROM unnest(array[23,197]) node_id;
 
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (71, 'allow', 'lsmb_<?lsmb dbname ?>__sales_quotation_list');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ar_all"
-WITH INHERIT NOLOGIN 
-IN ROLE
---### "lsmb_<?lsmb dbname ?>__ar_voucher_all",
-"lsmb_<?lsmb dbname ?>__ar_transaction_all",
-"lsmb_<?lsmb dbname ?>__file_attach_tx";
-
--- AP
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_create"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
--- Role created later; using the GRANT construct, we support upgrades
-GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
-   TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
-
-
-GRANT SELECT, INSERT ON ap, invoice_note, journal_entry, journal_line, 
-business_unit_jl
-TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
-GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
-GRANT INSERT ON acc_trans, business_unit_ac
- TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
-GRANT ALL ON acc_trans_entry_id_seq, journal_entry_id_seq, journal_line_id_seq
-TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
-
-GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__ap_transaction_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (13, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (22, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (196, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create');
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
-"lsmb_<?lsmb dbname ?>__batch_create";
-
-GRANT SELECT,INSERT, UPDATE ON ap, invoice, business_unit_inv TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
-GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
-GRANT INSERT ON acc_trans, business_unit_ac
- TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
-GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
-
-GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (199, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher');
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (243, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher');
-INSERT INTO menu_acl (node_id, acl_type, role_name) 
-values (39, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher');
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_invoice_create"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_create";
-
-GRANT INSERT ON invoice, business_unit_inv TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
-GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
-GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
-GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
-GRANT INSERT ON tax_extended TO "lsmb_<?lsmb dbname ?>__ap_invoice_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (23, 'allow', 'lsmb_<?lsmb dbname ?>__ap_invoice_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (197, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_invoice_create_voucher"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
-"lsmb_<?lsmb dbname ?>__batch_create";
-
-GRANT INSERT ON invoice TO "lsmb_<?lsmb dbname ?>__ap_invoice_create_voucher";
-GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__ap_invoice_create_voucher";
-GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__ap_invoice_create_voucher";
-GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__ap_invoice_create_voucher";
-
+SELECT lsmb__create_role('ap_invoice_create_voucher');
+SELECT lsmb__grant_role('ap_invoice_create_voucher', 'contact_read');
+SELECT lsmb__grant_role('ap_invoice_create_voucher', 'batch_create');
+SELECT lsmb__grant_perms('ap_invoice_create_voucher', 'invoice', 'INSERT');
+SELECT lsmb__grant_perms('ap_invoice_create_voucher', 'inventory', 'INSERT');
+SELECT lsmb__grant_perms('ap_invoice_create_voucher', 'invoice_id_seq', 'ALL');
+SELECT lsmb__grant_perms('ap_invoice_create_voucher', 'inventory_entry_id_seq', 'ALL');
 -- TODO add Menu ACLs
 
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_list"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read",
-"lsmb_<?lsmb dbname ?>__file_read";
-
-GRANT SELECT ON ap TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
-GRANT SELECT ON acc_trans, business_unit_ac
- TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
-GRANT SELECT ON invoice TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
-GRANT SELECT ON inventory TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
-GRANT SELECT ON tax_extended TO "lsmb_<?lsmb dbname ?>__ap_transaction_list";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (24, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (25, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (27, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (28, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (29, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (34, 'allow', 'lsmb_<?lsmb dbname ?>__ap_transaction_list');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_all_vouchers"
-WITH INHERIT NOLOGIN 
-IN ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_create_voucher",
-"lsmb_<?lsmb dbname ?>__ap_invoice_create_voucher";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_all_transactions"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_create",
-"lsmb_<?lsmb dbname ?>__ap_invoice_create",
-"lsmb_<?lsmb dbname ?>__ap_transaction_list";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__purchase_order_create"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_all"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_create",
-"lsmb_<?lsmb dbname ?>__ap_invoice_create",
-"lsmb_<?lsmb dbname ?>__ap_transaction_list",
-"lsmb_<?lsmb dbname ?>__file_attach_tx";
-
--- Role created later; using the GRANT construct, we support upgrades
-GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
-   TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
-
-GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
-GRANT INSERT, UPDATE ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
-GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
-GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
-GRANT ALL on inventory TO "lsmb_<?lsmb dbname ?>__purchase_order_create";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__purchase_order_edit";
-GRANT DELETE ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__purchase_order_edit";
-GRANT DELETE ON new_shipto TO "lsmb_<?lsmb dbname ?>__purchase_order_edit";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (52, 'allow', 'lsmb_<?lsmb dbname ?>__purchase_order_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__rfq_create"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
--- Role created later; using the GRANT construct, we support upgrades
-GRANT "lsmb_<?lsmb dbname ?>__exchangerate_edit"
-   TO "lsmb_<?lsmb dbname ?>__rfq_create";
-
-GRANT INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__rfq_create";
-GRANT INSERT, UPDATE ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__rfq_create";
-GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__rfq_create";
-GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__rfq_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (69, 'allow', 'lsmb_<?lsmb dbname ?>__rfq_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__purchase_order_list"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
-GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__purchase_order_list";
-GRANT SELECT ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__purchase_order_list";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (55, 'allow', 'lsmb_<?lsmb dbname ?>__purchase_order_list');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__rfq_list"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
-GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__rfq_list";
-GRANT SELECT ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__rfq_list";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (72, 'allow', 'lsmb_<?lsmb dbname ?>__rfq_list');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__ap_all"
-WITH INHERIT NOLOGIN 
-IN ROLE "lsmb_<?lsmb dbname ?>__ap_all_vouchers",
-"lsmb_<?lsmb dbname ?>__file_attach_tx",
-"lsmb_<?lsmb dbname ?>__ap_all_transactions";
-
--- POS
-CREATE ROLE "lsmb_<?lsmb dbname ?>__pos_enter"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
-GRANT "lsmb_<?lsmb dbname ?>__ar_transaction_create" TO "lsmb_<?lsmb dbname ?>__pos_enter";
-
-GRANT SELECT, INSERT ON invoice TO "lsmb_<?lsmb dbname ?>__pos_enter";
-GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__pos_enter";
-GRANT SELECT, INSERT ON ar TO "lsmb_<?lsmb dbname ?>__pos_enter";
-GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__pos_enter";
-GRANT INSERT ON acc_trans, business_unit_ac
- TO "lsmb_<?lsmb dbname ?>__pos_enter";
-GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__pos_enter";
-GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__pos_enter";
-GRANT ALL ON invoice_id_seq TO "lsmb_<?lsmb dbname ?>__pos_enter";
-GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__pos_enter";
-GRANT SELECT ON oe TO "lsmb_<?lsmb dbname ?>__pos_enter";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (17, 'allow', 'lsmb_<?lsmb dbname ?>__pos_enter');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (18, 'allow', 'lsmb_<?lsmb dbname ?>__pos_enter');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__close_till"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT ON gl TO "lsmb_<?lsmb dbname ?>__close_till";
-GRANT INSERT ON acc_trans, business_unit_ac
- TO "lsmb_<?lsmb dbname ?>__close_till";
-GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__close_till";
-GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__close_till";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (20, 'allow', 'lsmb_<?lsmb dbname ?>__close_till');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__list_all_open"
-WITH INHERIT NOLOGIN;
-
-GRANT SELECT ON ar TO "lsmb_<?lsmb dbname ?>__list_all_open";
-GRANT SELECT ON acc_trans, business_unit_ac
- TO "lsmb_<?lsmb dbname ?>__list_all_open";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (18, 'allow', 'lsmb_<?lsmb dbname ?>__list_all_open');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__pos_cashier"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__pos_enter",
-"lsmb_<?lsmb dbname ?>__close_till";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__pos_all"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__pos_cashier",
-"lsmb_<?lsmb dbname ?>__list_all_open";
-
--- CASH
-CREATE ROLE "lsmb_<?lsmb dbname ?>__reconciliation_enter"
-WITH INHERIT NOLOGIN;
-
-GRANT SELECT ON recon_payee, cr_coa_to_account 
-TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
-
-GRANT UPDATE ON cr_report TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
-GRANT ALL ON cr_report_line_id_seq TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
- 
- GRANT INSERT, SELECT ON cr_report, cr_report_line 
-TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
-GRANT DELETE, UPDATE ON cr_report_line
-TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
-GRANT SELECT ON acc_trans, account_checkpoint 
-TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
-
- GRANT ALL ON cr_report_id_seq TO "lsmb_<?lsmb dbname ?>__reconciliation_enter";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (45, 'allow', 'lsmb_<?lsmb dbname ?>__reconciliation_enter');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__reconciliation_approve"
-WITH INHERIT NOLOGIN;
-
-GRANT SELECT ON recon_payee 
-TO "lsmb_<?lsmb dbname ?>__reconciliation_approve";
-
-GRANT EXECUTE ON FUNCTION reconciliation__delete_unapproved(in_report_id int)
-TO "lsmb_<?lsmb dbname ?>__reconciliation_approve";
-
-GRANT DELETE ON cr_report_line TO "lsmb_<?lsmb dbname ?>__reconciliation_approve";
-GRANT UPDATE ON cr_report TO "lsmb_<?lsmb dbname ?>__reconciliation_approve";
-GRANT SELECT ON acc_trans, account_checkpoint TO 
-"lsmb_<?lsmb dbname ?>__reconciliation_approve";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (44, 'allow', 'lsmb_<?lsmb dbname ?>__reconciliation_approve');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (211, 'allow', 'lsmb_<?lsmb dbname ?>__reconciliation_approve');
-
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__reconciliation_all"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__reconciliation_enter",
-"lsmb_<?lsmb dbname ?>__reconciliation_approve";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__payment_process"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__ap_transaction_list";
-
-GRANT INSERT, SELECT ON payment, payment_links, overpayments
-TO "lsmb_<?lsmb dbname ?>__payment_process";
-
-GRANT SELECT, INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__payment_process";
-GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__payment_process";
-GRANT UPDATE ON ap TO "lsmb_<?lsmb dbname ?>__payment_process";
-GRANT ALL ON payment, payment_id_seq TO "lsmb_<?lsmb dbname ?>__payment_process";
-
-
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (38, 'allow', 'lsmb_<?lsmb dbname ?>__payment_process');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (43, 'allow', 'lsmb_<?lsmb dbname ?>__payment_process');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (201, 'allow', 'lsmb_<?lsmb dbname ?>__payment_process');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (202, 'allow', 'lsmb_<?lsmb dbname ?>__payment_process');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (223, 'allow', 'lsmb_<?lsmb dbname ?>__payment_process');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__receipt_process"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_list";
-
-GRANT INSERT, SELECT ON payment, payment_links, overpayments
-TO "lsmb_<?lsmb dbname ?>__receipt_process";
-
-GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__receipt_process";
-GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__receipt_process";
-GRANT UPDATE ON ar TO "lsmb_<?lsmb dbname ?>__receipt_process";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (36, 'allow', 'lsmb_<?lsmb dbname ?>__receipt_process');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (37, 'allow', 'lsmb_<?lsmb dbname ?>__receipt_process');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (42, 'allow', 'lsmb_<?lsmb dbname ?>__receipt_process');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (203, 'allow', 'lsmb_<?lsmb dbname ?>__receipt_process');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (204, 'allow', 'lsmb_<?lsmb dbname ?>__receipt_process');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__cash_all"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__reconciliation_all",
-"lsmb_<?lsmb dbname ?>__payment_process",
-"lsmb_<?lsmb dbname ?>__receipt_process";
-
--- Inventory Control
-CREATE ROLE "lsmb_<?lsmb dbname ?>__part_create"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
-GRANT ALL ON partsvendor, partscustomer TO "lsmb_<?lsmb dbname ?>__part_create";
-GRANT INSERT ON parts, makemodel, partsgroup, assembly TO "lsmb_<?lsmb dbname ?>__part_create";
-GRANT ALL ON parts_id_seq, partsgroup_id_seq TO "lsmb_<?lsmb dbname ?>__part_create";
-GRANT INSERT ON partstax TO "lsmb_<?lsmb dbname ?>__part_create";
-
-GRANT ALL ON partsvendor_entry_id_seq, partscustomer_entry_id_seq
-TO "lsmb_<?lsmb dbname ?>__part_create", 
-   "lsmb_<?lsmb dbname ?>__contact_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (78, 'allow', 'lsmb_<?lsmb dbname ?>__part_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (79, 'allow', 'lsmb_<?lsmb dbname ?>__part_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (80, 'allow', 'lsmb_<?lsmb dbname ?>__part_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (81, 'allow', 'lsmb_<?lsmb dbname ?>__part_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (82, 'allow', 'lsmb_<?lsmb dbname ?>__part_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__part_edit"
-WITH INHERIT NOLOGIN;
-
-GRANT "lsmb_<?lsmb dbname ?>__file_read" TO "lsmb_<?lsmb dbname ?>__part_edit";
-
-GRANT ALL ON partscustomer_entry_id_seq 
-TO "lsmb_<?lsmb dbname ?>__contact_edit", "lsmb_<?lsmb dbname ?>__part_edit";
-
-GRANT SELECT ON assembly, orderitems, jcitems, invoice, business_unit_oitem 
-TO "lsmb_<?lsmb dbname ?>__part_edit";
-
-GRANT DELETE ON assembly TO "lsmb_<?lsmb dbname ?>__part_edit";
-GRANT UPDATE ON parts, partsgroup, assembly TO "lsmb_<?lsmb dbname ?>__part_edit";
-GRANT ALL ON makemodel TO "lsmb_<?lsmb dbname ?>__part_edit";
---###oldcode: Should have been UPDATE
-GRANT ALL ON partstax TO "lsmb_<?lsmb dbname ?>__part_edit";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (86, 'allow', 'lsmb_<?lsmb dbname ?>__part_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (87, 'allow', 'lsmb_<?lsmb dbname ?>__part_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (88, 'allow', 'lsmb_<?lsmb dbname ?>__part_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (89, 'allow', 'lsmb_<?lsmb dbname ?>__part_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (90, 'allow', 'lsmb_<?lsmb dbname ?>__part_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (91, 'allow', 'lsmb_<?lsmb dbname ?>__part_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (93, 'allow', 'lsmb_<?lsmb dbname ?>__part_edit');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__inventory_reports"
-WITH INHERIT NOLOGIN;
-
-GRANT SELECT ON ar TO "lsmb_<?lsmb dbname ?>__inventory_reports";
-GRANT SELECT ON ap TO "lsmb_<?lsmb dbname ?>__inventory_reports";
-GRANT SELECT ON inventory TO "lsmb_<?lsmb dbname ?>__inventory_reports";
-GRANT SELECT ON invoice TO "lsmb_<?lsmb dbname ?>__inventory_reports";
-GRANT SELECT ON acc_trans TO "lsmb_<?lsmb dbname ?>__inventory_reports";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (88, 'allow', 'lsmb_<?lsmb dbname ?>__inventory_reports');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (94, 'allow', 'lsmb_<?lsmb dbname ?>__inventory_reports');
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__inventory_adjust"
-WITH INHERIT NOLOGIN;
-
-GRANT SELECT ON parts, ar, ap, invoice 
-TO "lsmb_<?lsmb dbname ?>__inventory_adjust";
-GRANT INSERT ON inventory_adjustment_info, inventory_adjustment_line
-TO "lsmb_<?lsmb dbname ?>__inventory_adjust";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (6, 'allow',  'lsmb_<?lsmb dbname ?>__inventory_reports');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (16, 'allow',  'lsmb_<?lsmb dbname ?>__inventory_reports');
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__pricegroup_create"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
-GRANT INSERT ON pricegroup TO "lsmb_<?lsmb dbname ?>__pricegroup_create";
-GRANT ALL ON pricegroup_id_seq TO "lsmb_<?lsmb dbname ?>__pricegroup_create";
-GRANT UPDATE ON entity_credit_account TO "lsmb_<?lsmb dbname ?>__pricegroup_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (83, 'allow', 'lsmb_<?lsmb dbname ?>__pricegroup_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__pricegroup_edit"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
-GRANT UPDATE ON pricegroup TO "lsmb_<?lsmb dbname ?>__pricegroup_edit";
-GRANT UPDATE ON entity_credit_account TO "lsmb_<?lsmb dbname ?>__pricegroup_edit";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (92, 'allow', 'lsmb_<?lsmb dbname ?>__pricegroup_edit');
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__assembly_stock"
-WITH INHERIT NOLOGIN;
-
-GRANT UPDATE ON parts TO "lsmb_<?lsmb dbname ?>__assembly_stock";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (84, 'allow', 'lsmb_<?lsmb dbname ?>__assembly_stock');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__inventory_ship"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__sales_order_list";
-
-GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__inventory_ship";
-GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__inventory_ship";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (64, 'allow', 'lsmb_<?lsmb dbname ?>__inventory_ship');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__inventory_receive"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__purchase_order_list";
-
-GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__inventory_receive";
-GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__inventory_receive";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (65, 'allow', 'lsmb_<?lsmb dbname ?>__inventory_receive');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__inventory_transfer"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT ON inventory TO "lsmb_<?lsmb dbname ?>__inventory_transfer";
-GRANT ALL ON inventory_entry_id_seq TO "lsmb_<?lsmb dbname ?>__inventory_transfer";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (66, 'allow', 'lsmb_<?lsmb dbname ?>__inventory_transfer');
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__warehouse_create"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT ON warehouse TO "lsmb_<?lsmb dbname ?>__warehouse_create";
-GRANT ALL ON warehouse_id_seq TO "lsmb_<?lsmb dbname ?>__warehouse_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (142, 'allow', 'lsmb_<?lsmb dbname ?>__warehouse_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__warehouse_edit"
-WITH INHERIT NOLOGIN;
-
-GRANT UPDATE ON warehouse TO "lsmb_<?lsmb dbname ?>__warehouse_edit";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (143, 'allow', 'lsmb_<?lsmb dbname ?>__warehouse_edit');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__inventory_all"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__part_create",
-"lsmb_<?lsmb dbname ?>__inventory_reports",
-"lsmb_<?lsmb dbname ?>__assembly_stock",
-"lsmb_<?lsmb dbname ?>__inventory_ship",
-"lsmb_<?lsmb dbname ?>__inventory_receive",
-"lsmb_<?lsmb dbname ?>__inventory_transfer",
-"lsmb_<?lsmb dbname ?>__warehouse_edit",
-"lsmb_<?lsmb dbname ?>__warehouse_create";
-
--- GL 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__gl_transaction_create"
-WITH INHERIT NOLOGIN;
-
-GRANT SELECT, INSERT, UPDATe ON gl 
-TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
-GRANT INSERT ON acc_trans, journal_entry, journal_line 
-TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
-GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
-GRANT ALL ON acc_trans_entry_id_seq, journal_entry_id_seq, journal_line_id_seq
-TO "lsmb_<?lsmb dbname ?>__gl_transaction_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (74, 'allow', 'lsmb_<?lsmb dbname ?>__gl_transaction_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (40, 'allow', 'lsmb_<?lsmb dbname ?>__gl_transaction_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (245, 'allow', 'lsmb_<?lsmb dbname ?>__gl_transaction_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__gl_voucher_create"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT ON gl TO "lsmb_<?lsmb dbname ?>__gl_voucher_create";
-GRANT INSERT ON acc_trans TO "lsmb_<?lsmb dbname ?>__gl_voucher_create";
-GRANT ALL ON id TO "lsmb_<?lsmb dbname ?>__gl_voucher_create";
-GRANT ALL ON acc_trans_entry_id_seq TO "lsmb_<?lsmb dbname ?>__gl_voucher_create";
-
+SELECT lsmb__create_role('ap_transaction_list');
+SELECT lsmb__grant_role('ap_transaction_list', 'contact_read');
+SELECT lsmb__grant_role('ap_transaction_list', 'file_read');
+SELECT lsmb__grant_perms('ap_transaction_list', obj, 'SELECT')
+  FROM unnest(array['ap'::text, 'acc_trans', 'invoice', 'inventory', 
+                    'tax_extended']) obj;
+SELECT lsmb__grant_menu('ap_transaction_list', node_id, 'allow')
+  FROM unnest(array[25,27,34]) node_id;
+
+SELECT lsmb__create_role('ap_all_vouchers');
+SELECT lsmb__grant_role('ap_all_vouchers', 'ap_transaction_create_voucher');
+SELECT lsmb__grant_role('ap_all_vouchers', 'ap_invoice_create_voucher');
+
+SELECT lsmb__create_role('ap_all_transactions');
+SELECT lsmb__grant_role('ap_all_transactions', 'ap_transaction_create');
+SELECT lsmb__grant_role('ap_all_transactions', 'ap_invoice_create');
+SELECT lsmb__grant_role('ap_all_transactions', 'ap_transaction_list');
+
+SELECT lsmb__create_role('ap_transaction_all');
+SELECT lsmb__grant_role('ap_transaction_all', rname)
+  FROM unnest(array['ap_transaction_create'::text, 'ap_invoice_create', 
+                    'ap_transaction_list', 'file_attach_tx', 'exchangerate_edit'
+             ]) rname;
+
+SELECT lsmb__create_role('purchase_order_create');
+SELECT lsmb__grant_role('purchase_order_create', 'contact_read');
+SELECT lsmb__grant_perms('purchase_order_create', obj, ptype)
+  FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem']) obj
+ CROSS JOIN unnest(array['INSERT'::text, 'UPDATE']) ptype;
+
+SELECT lsmb__grant_perms('purchase_order_create', obj, 'ALL')
+  FROM unnest(array['oe_id_seq'::text, 'orderitems_id_seq', 'inventory',
+                    'inventory_entry_id_seq']) obj;
+SELECT lsmb__grant_menu('purchase_order_create', 52, 'allow');
+
+SELECT lsmb__create_role('purchase_order_edit');
+SELECT lsmb__grant_perms('purchase_order_edit', obj, 'DELETE')
+  FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem', 
+                    'new_shipto']) obj;
+
+SELECT lsmb__create_role('rfq_create');
+SELECT lsmb__grant_role('rfq_create', 'contact_read');
+SELECT lsmb__grant_role('rfq_create', 'exchangerate_edit');
+SELECT lsmb__grant_menu('rfq_create', 69, 'allow');
+SELECT lsmb__grant_perms('rfq_create', 'oe_id_seq', 'ALL');
+SELECT lsmb__grant_perms('rfq_create', 'orderitems_id_seq', 'ALL');
+SELECT lsmb__grant_perms('rfq_create', obj, ptype)
+  FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem']) obj,
+       unnest(array['INSERT'::text, 'UPDATE']) ptype;
+
+SELECT lsmb__create_role('purchase_order_list');
+SELECT lsmb__grant_role('purchase_order_list', 'contact_read');
+SELECT lsmb__grant_menu('purchase_order_list', 55, 'allow');
+SELECT lsmb__grant_perms('purchase_order_list', obj, 'SELECT')
+  FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem']) obj;
+
+SELECT lsmb__create_role('rfq_list');
+SELECT lsmb__grant_role('rfq_list', 'contact_read');
+SELECT lsmb__grant_menu('rfq_list', 72, 'allow');
+SELECT lsmb__grant_perms('rfq_list', obj, 'SELECT')
+  FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem']) obj;
+
+SELECT lsmb__create_role('ap_all');
+SELECT lsmb__grant_role('ap_all', rname)
+  FROM unnest(array['ap_all_vouchers'::text, 'file_attach_tx', 
+       'ap_all_transactions']) rname;
+
+\echo CASH
+
+SELECT lsmb__create_role('reconciliation_enter');
+SELECT lsmb__grant_perms('reconciliation_enter', 'recon_payee', 'SELECT');
+SELECT lsmb__grant_perms('reconciliation_enter', 'cr_report', ptype)
+  FROM unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) ptype;
+
+SELECT lsmb__grant_perms('reconciliation_enter', obj, 'SELECT')
+  FROM unnest(array['cr_coa_to_account'::text, 'acc_trans', 'account_checkpoint'
+             ]) obj;
+
+SELECT lsmb__grant_perms('reconciliation_enter', obj, 'ALL')
+  FROM unnest(array['cr_report_line'::text, 'cr_report_line_id_seq',
+                    'cr_report_id_seq']) obj;
+
+SELECT lsmb__grant_menu('reconciliation_enter', 45, 'allow');
+
+SELECT lsmb__create_role('reconciliation_approve');
+SELECT lsmb__grant_perms('reconciliation_approve', 'cr_report_line', 'DELETE');
+SELECT lsmb__grant_perms('reconciliation_approve', 'cr_report', 'UPDATE');
+SELECT lsmb__grant_perms('reconciliation_approve', obj, 'SELECT')
+  FROM unnest(array['recon_payee'::text, 'acc_trans', 'account_checkpoint']) obj;
+
+SELECT lsmb__grant_menu('reconciliation_approve', 44, 'allow');
+SELECT lsmb__grant_menu('reconciliation_approve', 211, 'allow');
+SELECT lsmb__grant_exec('reconciliation_approve', 'reconciliation__delete_unapproved(in_report_id int)');
+
+SELECT lsmb__create_role('reconciliation_all');
+SELECT lsmb__grant_role('reconciliation_all', 'reconciliation_approve');
+SELECT lsmb__grant_role('reconciliation_all', 'reconciliation_enter');
+
+SELECT lsmb__create_role('payment_process');
+SELECT lsmb__grant_role('payment_process', 'ap_transaction_list');
+SELECT lsmb__grant_role('payment_process', 'exchangerate_edit');
+SELECT lsmb__grant_menu('payment_process', node_id, 'allow')
+  FROM unnest(array[38, 43, 201, 202, 223]) node_id;
+
+SELECT lsmb__grant_perms('payment_process', 'ap', 'UPDATE');
+SELECT lsmb__grant_perms('payment_process', obj, 'ALL')
+  FROM unnest(array['payment'::text, 'payment_id_seq', 'acc_trans_entry_id_seq']
+       ) obj;
+
+SELECT lsmb__grant_perms('payment_process', obj, ptype)
+  FROM unnest(array['payment_links'::text, 'overpayments', 'acc_trans']) obj,
+       unnest(array['SELECT'::text, 'INSERT']) ptype;
+
+SELECT lsmb__create_role('receipt_process');
+SELECT lsmb__grant_role('receipt_process', 'ap_transaction_list');
+SELECT lsmb__grant_role('receipt_process', 'exchangerate_edit');
+SELECT lsmb__grant_menu('receipt_process', node_id, 'allow')
+  FROM unnest(array[36, 37, 42, 203, 204]) node_id;
+
+SELECT lsmb__grant_perms('receipt_process', 'ar', 'UPDATE');
+SELECT lsmb__grant_perms('receipt_process', obj, 'ALL')
+  FROM unnest(array['payment'::text, 'payment_id_seq', 'acc_trans_entry_id_seq']
+       ) obj;
+
+SELECT lsmb__grant_perms('receipt_process', obj, ptype)
+  FROM unnest(array['payment_links'::text, 'overpayments', 'acc_trans']) obj,
+       unnest(array['SELECT'::text, 'INSERT']) ptype;
+
+SELECT lsmb__create_role('cash_all');
+SELECT lsmb__grant_role('cash_all', rname) 
+  FROM unnest(array['reconciliation_all'::text, 'payment_process', 
+              'receipt_process']) rname;
+
+\echo INVENTORY CONTROL
+
+SELECT lsmb__create_role('part_create');
+SELECT lsmb__grant_role('part_create', 'contact_read');
+SELECT lsmb__grant_menu('part_create', node_id, 'allow')
+  FROM unnest(array[78,79,80,81,82]) node_id;
+
+SELECT lsmb__grant_perms('part_create', obj, 'ALL')
+  FROM unnest(array['partsvendor'::text, 'partscustomer', 'parts_id_seq',
+                    'partsgroup_id_seq', 'partsvendor_entry_id_seq', 
+                    'partscustomer_entry_id_seq']) obj;
+
+SELECT lsmb__grant_perms('part_create', obj, 'INSERT')
+  FROM unnest(array['parts'::text, 'makemodel', 'partsgroup', 'assembly', 
+                    'partstax']) obj;
+
+SELECT lsmb__create_role('part_edit');
+SELECT lsmb__grant_role('part_edit', 'file_read');
+SELECT lsmb__grant_menu('part_edit', node_id, 'allow')
+  FROM unnest(array[86,91]) node_id;
+
+SELECT lsmb__grant_perms('part_edit', 'assembly', 'DELETE');
+SELECT lsmb__grant_perms('part_edit', obj, 'ALL')
+  FROM unnest(array['makemodel'::text, 'partstax', 'partscustomer_entry_id_seq']
+       )obj;
+
+SELECT lsmb__grant_perms('part_edit', obj, 'UPDATE')
+  FROM unnest(array['parts'::text, 'partsgroup', 'assembly']) obj;
+
+SELECT lsmb__grant_perms('part_edit', obj, 'SELECT')
+  FROM unnest(array['assembly'::text, 'orderitems', 'jcitems', 'invoice', 
+                    'business_unit_oitem']) obj;
+
+SELECT lsmb__create_role('inventory_reports');
+SELECT lsmb__grant_perms('inventory_reports', obj, 'SELECT')
+  FROM unnest(array['ar'::text, 'ap', 'inventory', 'invoice', 'acc_trans']) obj;
+
+SELECT lsmb__grant_menu('inventory_reports', 114, 'allow');
+
+SELECT lsmb__create_role('inventory_adjust');
+SELECT lsmb__grant_perms('inventory_adjust', obj, 'SELECT')
+  FROM unnest(array['parts'::text, 'ar', 'ap', 'invoice']) obj;
+
+SELECT lsmb__grant_perms('inventory_adjust', obj, 'INSERT')
+  FROM unnest(array['inventory_report'::text, 'inventory_report_line']) obj;
+
+SELECT lsmb__grant_menu('inventory_adjust', node_id, 'allow')
+  FROM unnest(array[6,16]) node_id;
+
+SELECT lsmb__create_role('pricegroup_create');
+SELECT lsmb__grant_role('pricegroup_create', 'contact_read');
+SELECT lsmb__grant_menu('pricegroup_create', 83, 'allow');
+SELECT lsmb__grant_perms('pricegroup_create', 'pricegroup', 'INSERT');
+SELECT lsmb__grant_perms('pricegroup_create', 'pricegroup_id_seq', 'ALL');
+SELECT lsmb__grant_perms('pricegroup_create', 'entity_credit_account', 'UPDATE');
+
+SELECT lsmb__create_role('pricegroup_edit');
+SELECT lsmb__grant_role('pricegroup_edit', 'contact_read');
+SELECT lsmb__grant_menu('pricegroup_edit', 92, 'allow');
+SELECT lsmb__grant_perms('pricegroup_edit', 'pricegroup', 'UPDATE');
+SELECT lsmb__grant_perms('pricegroup_edit', 'entity_credit_account', 'UPDATE');
+
+SELECT lsmb__create_role('assembly_stock');
+SELECT lsmb__grant_perms('assembly_stock', 'parts', 'UPDATE');
+SELECT lsmb__grant_menu('assembly_stock', 84, 'allow');
+
+SELECT lsmb__create_role('inventory_ship');
+SELECT lsmb__grant_role('inventory_ship', 'sales_order_list');
+SELECT lsmb__grant_menu('inventory_ship', 64, 'allow');
+SELECT lsmb__grant_perms('inventory_ship', 'inventory', 'INSERT');
+SELECT lsmb__grant_perms('inventory_ship', 'inventory_entry_id_seq', 'ALL');
+
+SELECT lsmb__create_role('inventory_receive');
+SELECT lsmb__grant_role('inventory_receive', 'purchase_order_list');
+SELECT lsmb__grant_menu('inventory_receive', 65, 'allow');
+SELECT lsmb__grant_perms('inventory_receive', 'inventory', 'INSERT');
+SELECT lsmb__grant_perms('inventory_receive', 'inventory_entry_id_seq', 'ALL');
+
+SELECT lsmb__create_role('inventory_transfer');
+SELECT lsmb__grant_perms('inventory_transfer', 'inventory', 'INSERT');
+SELECT lsmb__grant_perms('inventory_transfer', 'inventory_entry_id_seq', 'ALL');
+SELECT lsmb__grant_menu('inventory_transfer', 66, 'allow');
+
+SELECT lsmb__create_role('warehouse_create');
+SELECT lsmb__grant_perms('warehouse_create', 'warehouse', 'INSERT');
+SELECT lsmb__grant_perms('warehouse_create', 'warehouse_id_seq', 'ALL');
+SELECT lsmb__grant_menu('warehouse_create', 142, 'allow');
+
+SELECT lsmb__create_role('warehouse_edit');
+SELECT lsmb__grant_perms('warehouse_edit', 'warehouse', 'UPDATE');
+SELECT lsmb__grant_menu('warehouse_edit', 143, 'allow');
+
+SELECT lsmb__create_role('inventory_all');
+SELECT lsmb__grant_role('inventory_all', rname) 
+  FROM unnest(array['warehouse_create'::text, 'warehouse_edit', 
+              'inventory_transfer', 'inventory_receive', 'inventory_ship',
+              'assembly_stock', 'inventory_reports', 'part_create', 'part_edit']
+      ) rname;
+
+\echo GL
+SELECT lsmb__create_role('gl_transaction_create');
+SELECT lsmb__grant_perms('gl_transaction_create', 'gl', ptype)
+  FROM unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) ptype;
+
+SELECT lsmb__grant_perms('gl_transaction_create', obj, 'INSERT')
+  FROM unnest(array['acc_trans'::text, 'journal_entry', 'journal_line']) obj;
+
+SELECT lsmb__grant_perms('gl_transaction_create', obj, 'ALL')
+  FROM unnest(array['id'::text, 'acc_trans_entry_id_seq', 
+                   'journal_entry_id_seq', 'journal_line_id_seq'])obj;
+
+SELECT lsmb__grant_menu('gl_transaction_create', node_id, 'allow')
+  FROM unnest(array[74,40,245]) node_id;
+
+SELECT lsmb__create_role('gl_voucher_create');
+SELECT lsmb__grant_perms('gl_voucher_create', obj, 'INSERT')
+  FROM unnest(array['gl'::text, 'acc_trans', 'business_unit_ac']) obj;
+
+SELECT lsmb__grant_perms('gl_voucher_create', obj, 'ALL')
+  FROM unnest(array['id'::text, 'acc_trans_entry_id_seq']) obj;
 -- TODO Add menu permissions
 
-CREATE ROLE "lsmb_<?lsmb dbname ?>__gl_reports"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__ar_transaction_list",
-"lsmb_<?lsmb dbname ?>__ap_transaction_list";
-
-GRANT SELECT ON gl, acc_trans, account_checkpoint 
-TO "lsmb_<?lsmb dbname ?>__gl_reports";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (76, 'allow', 'lsmb_<?lsmb dbname ?>__gl_reports');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (114, 'allow', 'lsmb_<?lsmb dbname ?>__gl_reports');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__yearend_run"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT, SELECT ON acc_trans, account_checkpoint, yearend
-TO "lsmb_<?lsmb dbname ?>__yearend_run";
-
-GRANT ALL ON account_checkpoint_id_seq TO "lsmb_<?lsmb dbname ?>__yearend_run";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (132, 'allow', 'lsmb_<?lsmb dbname ?>__yearend_run');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__batch_list"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__gl_reports";
-
-GRANT SELECT ON batch TO "lsmb_<?lsmb dbname ?>__batch_list";
-GRANT SELECT ON batch_class TO "lsmb_<?lsmb dbname ?>__batch_list";
-GRANT SELECT ON voucher TO "lsmb_<?lsmb dbname ?>__batch_list";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__gl_all"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__gl_transaction_create",
-"lsmb_<?lsmb dbname ?>__gl_voucher_create",
-"lsmb_<?lsmb dbname ?>__yearend_run",
-"lsmb_<?lsmb dbname ?>__gl_reports";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__project_timecard_add"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
-GRANT INSERT, UPDATE ON jcitems TO "lsmb_<?lsmb dbname ?>__project_timecard_add";
-GRANT ALL ON jcitems_id_seq TO "lsmb_<?lsmb dbname ?>__project_timecard_add";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (100, 'allow', 'lsmb_<?lsmb dbname ?>__project_timecard_add');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (106, 'allow', 'lsmb_<?lsmb dbname ?>__project_timecard_add');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (8, 'allow', 'lsmb_<?lsmb dbname ?>__project_timecard_add');
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__project_timecard_list"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
-GRANT SELECT ON jcitems TO "lsmb_<?lsmb dbname ?>__project_timecard_list";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (106, 'allow', 'lsmb_<?lsmb dbname ?>__project_timecard_list');
-
-
-
--- ORDER GENERATION
-CREATE ROLE "lsmb_<?lsmb dbname ?>__orders_generate"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
-GRANT SELECT, INSERT, UPDATE ON oe TO "lsmb_<?lsmb dbname ?>__orders_generate";
-GRANT SELECT, INSERT, UPDATE ON orderitems, business_unit_oitem TO "lsmb_<?lsmb dbname ?>__orders_generate";
-GRANT ALL ON oe_id_seq TO "lsmb_<?lsmb dbname ?>__orders_generate";
-GRANT ALL ON orderitems_id_seq TO "lsmb_<?lsmb dbname ?>__orders_generate";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__project_order_generate"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__orders_generate",
-"lsmb_<?lsmb dbname ?>__project_timecard_list";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (102, 'allow', 'lsmb_<?lsmb dbname ?>__project_order_generate');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__orders_sales_to_purchase"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__orders_generate";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (57, 'allow', 'lsmb_<?lsmb dbname ?>__orders_sales_to_purchase');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (58, 'allow', 'lsmb_<?lsmb dbname ?>__orders_sales_to_purchase');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__orders_purchase_consolidate"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__orders_generate";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (60, 'allow', 'lsmb_<?lsmb dbname ?>__orders_purchase_consolidate');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (62, 'allow', 'lsmb_<?lsmb dbname ?>__orders_purchase_consolidate');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__orders_sales_consolidate"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__orders_generate";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (60, 'allow', 'lsmb_<?lsmb dbname ?>__orders_sales_consolidate');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (61, 'allow', 'lsmb_<?lsmb dbname ?>__orders_sales_consolidate');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__orders_manage"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__project_order_generate",
-"lsmb_<?lsmb dbname ?>__orders_sales_to_purchase",
-"lsmb_<?lsmb dbname ?>__orders_purchase_consolidate",
-"lsmb_<?lsmb dbname ?>__orders_sales_consolidate";
-
--- FINANCIAL REPORTS
-CREATE ROLE "lsmb_<?lsmb dbname ?>__financial_reports"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__gl_reports";
-
-GRANT select ON yearend TO "lsmb_<?lsmb dbname ?>__financial_reports";
-GRANT select ON cash_impact TO "lsmb_<?lsmb dbname ?>__financial_reports";
-GRANT select ON tx_report TO "lsmb_<?lsmb dbname ?>__financial_reports";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (110, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (111, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (112, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (113, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (114, 'allow', 'lsmb_<?lsmb dbname ?>__financial_reports');
-
-
--- RECURRING TRANSACTIONS
-CREATE ROLE "lsmb_<?lsmb dbname ?>__recurring"
-WITH INHERIT NOLOGIN;
-
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (115, 'allow', 'lsmb_<?lsmb dbname ?>__print_jobs_list');
-
--- BATCH PRINTING
-CREATE ROLE "lsmb_<?lsmb dbname ?>__print_jobs_list"
-WITH INHERIT NOLOGIN;
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (117, 'allow', 'lsmb_<?lsmb dbname ?>__print_jobs_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (118, 'allow', 'lsmb_<?lsmb dbname ?>__print_jobs_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (119, 'allow', 'lsmb_<?lsmb dbname ?>__print_jobs_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (120, 'allow', 'lsmb_<?lsmb dbname ?>__print_jobs_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (121, 'allow', 'lsmb_<?lsmb dbname ?>__print_jobs_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (122, 'allow', 'lsmb_<?lsmb dbname ?>__print_jobs_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (123, 'allow', 'lsmb_<?lsmb dbname ?>__print_jobs_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (124, 'allow', 'lsmb_<?lsmb dbname ?>__print_jobs_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (125, 'allow', 'lsmb_<?lsmb dbname ?>__print_jobs_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (126, 'allow', 'lsmb_<?lsmb dbname ?>__print_jobs_list');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (127, 'allow', 'lsmb_<?lsmb dbname ?>__print_jobs_list');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__print_jobs"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__print_jobs_list";
-
-
---Tax Forms
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__tax_form_save"
-WITH INHERIT NOLOGIN;
-
-GRANT ALL ON country_tax_form  TO "lsmb_<?lsmb dbname ?>__tax_form_save"; 
-GRANT ALL ON country_tax_form_id_seq TO "lsmb_<?lsmb dbname ?>__tax_form_save";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (218, 'allow', 'lsmb_<?lsmb dbname ?>__tax_form_save');
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-SELECT id, 'allow', 'lsmb_<?lsmb dbname ?>__tax_form_save'
-  FROM menu_node WHERE parent = 217 and position in (2,3);
---
-
--- SYSTEM SETTINGS	
-CREATE ROLE "lsmb_<?lsmb dbname ?>__system_settings_list"
-WITH INHERIT NOLOGIN;
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (131, 'allow', 'lsmb_<?lsmb dbname ?>__system_settings_list');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__system_settings_change"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__system_settings_list";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__taxes_set"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT, UPDATE ON tax TO "lsmb_<?lsmb dbname ?>__taxes_set";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (130, 'allow', 'lsmb_<?lsmb dbname ?>__taxes_set');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__account_create"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT ON chart TO "lsmb_<?lsmb dbname ?>__account_create";
-GRANT INSERT ON account, cr_coa_to_account 
-TO "lsmb_<?lsmb dbname ?>__account_create";
-
-GRANT ALL ON account_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
-GRANT INSERT ON account_heading TO "lsmb_<?lsmb dbname ?>__account_create";
-GRANT ALL ON account_heading_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
-GRANT INSERT ON account_link TO "lsmb_<?lsmb dbname ?>__account_create";
--- account_link no longer appears to have a sequence and references account(id)
---GRANT ALL ON account_link_id_seq TO "lsmb_<?lsmb dbname ?>__account_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (137, 'allow', 'lsmb_<?lsmb dbname ?>__account_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (246, 'allow', 'lsmb_<?lsmb dbname ?>__account_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__account_edit"
-WITH INHERIT NOLOGIN;
-
-GRANT ALL ON account, account_heading, account_link, cr_coa_to_account 
-TO "lsmb_<?lsmb dbname ?>__account_edit";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (128, 'allow', 'lsmb_<?lsmb dbname ?>__account_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (136, 'allow', 'lsmb_<?lsmb dbname ?>__account_edit');
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__auditor"
-WITH INHERIT NOLOGIN;
-
-GRANT SELECT ON audittrail TO "lsmb_<?lsmb dbname ?>__auditor";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__audit_trail_maintenance"
-WITH INHERIT NOLOGIN;
-
-GRANT DELETE ON audittrail TO "lsmb_<?lsmb dbname ?>__audit_trail_maintenance";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__gifi_create"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT ON gifi TO "lsmb_<?lsmb dbname ?>__gifi_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (139, 'allow', 'lsmb_<?lsmb dbname ?>__gifi_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (247, 'allow', 'lsmb_<?lsmb dbname ?>__gifi_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__gifi_edit"
-WITH INHERIT NOLOGIN;
-
-GRANT UPDATE ON gifi TO "lsmb_<?lsmb dbname ?>__gifi_edit";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (140, 'allow', 'lsmb_<?lsmb dbname ?>__gifi_edit');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__account_all"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__account_create",
-"lsmb_<?lsmb dbname ?>__taxes_set",
-"lsmb_<?lsmb dbname ?>__account_edit",
-"lsmb_<?lsmb dbname ?>__gifi_create",
-"lsmb_<?lsmb dbname ?>__gifi_edit";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__business_type_create"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT ON business TO "lsmb_<?lsmb dbname ?>__business_type_create";
-GRANT ALL ON business_id_seq TO "lsmb_<?lsmb dbname ?>__business_type_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (148, 'allow', 'lsmb_<?lsmb dbname ?>__business_type_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__business_type_edit"
-WITH INHERIT NOLOGIN;
-
-GRANT UPDATE, DELETE ON business TO "lsmb_<?lsmb dbname ?>__business_type_edit";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (149, 'allow', 'lsmb_<?lsmb dbname ?>__business_type_edit');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__business_type_all"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__business_type_create",
-"lsmb_<?lsmb dbname ?>__business_type_edit";
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__sic_create"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT ON sic TO "lsmb_<?lsmb dbname ?>__sic_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (154, 'allow', 'lsmb_<?lsmb dbname ?>__sic_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (248, 'allow', 'lsmb_<?lsmb dbname ?>__sic_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__sic_edit"
-WITH INHERIT NOLOGIN;
-
-GRANT UPDATE ON sic TO "lsmb_<?lsmb dbname ?>__sic_edit";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (155, 'allow', 'lsmb_<?lsmb dbname ?>__sic_edit');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__sic_all"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__sic_create",
-"lsmb_<?lsmb dbname ?>__sic_edit";
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__template_edit"
-WITH INHERIT NOLOGIN;
-
-
--- TODO Add db permissions as templates get moved into db.
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (157, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (158, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (159, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (160, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (161, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (162, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (163, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (164, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (165, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (166, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (167, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (168, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (169, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (170, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (171, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (173, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (174, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (175, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (176, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (177, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (178, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (179, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (180, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (181, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (182, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (183, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (184, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (185, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (186, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (187, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (189, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (190, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (241, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (242, 'allow', 'lsmb_<?lsmb dbname ?>__template_edit');
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__users_manage"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__contact_read";
-
-GRANT SELECT ON role_view TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__add_user_to_role(TEXT, TEXT) 
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__remove_user_from_role(TEXT, TEXT)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__add_function_to_group(TEXT, TEXT)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__remove_function_from_group(text, text)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__get_roles_for_user(INT)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__save_user(int, INT, text, TEXT, BOOL) 
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__create_group(TEXT)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__delete_user(text, bool)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-GRANT EXECUTE ON FUNCTION  admin__delete_group(text)
-TO "lsmb_<?lsmb dbname ?>__users_manage";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (220, 'allow', 'lsmb_<?lsmb dbname ?>__users_manage');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (221, 'allow', 'lsmb_<?lsmb dbname ?>__users_manage');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (222, 'allow', 'lsmb_<?lsmb dbname ?>__users_manage');
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__system_admin"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__system_settings_change",
-"lsmb_<?lsmb dbname ?>__account_all",
-"lsmb_<?lsmb dbname ?>__business_type_all",
-"lsmb_<?lsmb dbname ?>__sic_all",
-"lsmb_<?lsmb dbname ?>__template_edit",
-"lsmb_<?lsmb dbname ?>__users_manage",
-"lsmb_<?lsmb dbname ?>__tax_form_save";
-
--- Manual Translation
-CREATE ROLE "lsmb_<?lsmb dbname ?>__language_create"
-WITH INHERIT NOLOGIN;
-
-GRANT INSERT ON language TO "lsmb_<?lsmb dbname ?>__language_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (151, 'allow', 'lsmb_<?lsmb dbname ?>__language_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__language_edit"
-WITH INHERIT NOLOGIN;
-
-GRANT UPDATE ON language TO "lsmb_<?lsmb dbname ?>__language_edit";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (152, 'allow', 'lsmb_<?lsmb dbname ?>__language_edit');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__part_translation_create"
-WITH INHERIT NOLOGIN;
-
-GRANT ALL ON parts_translation 
-TO "lsmb_<?lsmb dbname ?>__part_translation_create";
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (96, 'allow', 'lsmb_<?lsmb dbname ?>__part_translation_create');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (97, 'allow', 'lsmb_<?lsmb dbname ?>__part_translation_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__partsgroup_translation_create"
-WITH INHERIT NOLOGIN;
-
-GRANT ALL ON partsgroup_translation
-TO "lsmb_<?lsmb dbname ?>__partsgroup_translation_create";
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (108, 'allow', 'lsmb_<?lsmb dbname ?>__partsgroup_translation_create');
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__manual_translation_all"
-WITH INHERIT NOLOGIN
-IN ROLE "lsmb_<?lsmb dbname ?>__language_create",
-"lsmb_<?lsmb dbname ?>__part_translation_create",
-"lsmb_<?lsmb dbname ?>__partsgroup_translation_create";
-
--- Fixed Assets
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_administer" NOLOGIN INHERIT;
-
-GRANT INSERT, UPDATE, SELECT, DELETE ON asset_class 
-TO "lsmb_<?lsmb dbname ?>__assets_administer";
-GRANT SELECT, UPDATE ON asset_class_id_seq
-TO "lsmb_<?lsmb dbname ?>__assets_administer";
-
-INSERT INTO menu_acl(role_name, acl_type, node_id)
-values('lsmb_<?lsmb dbname ?>__assets_administer', 'allow', 237);
-
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_enter" NOLOGIN INHERIT;
-
-GRANT ALL ON asset_item_id_seq TO "lsmb_<?lsmb dbname ?>__assets_enter";
-GRANT INSERT, UPDATE ON asset_item
-TO "lsmb_<?lsmb dbname ?>__assets_enter";
-
-GRANT INSERT, SELECT ON asset_note TO "lsmb_<?lsmb dbname ?>__assets_enter";
-
-INSERT INTO menu_acl(role_name, acl_type, node_id)
-values('lsmb_<?lsmb dbname ?>__assets_enter', 'allow', 230);
-INSERT INTO menu_acl(role_name, acl_type, node_id)
-values('lsmb_<?lsmb dbname ?>__assets_enter', 'allow', 231);
-INSERT INTO menu_acl(role_name, acl_type, node_id)
-values('lsmb_<?lsmb dbname ?>__assets_enter', 'allow', 232);
-INSERT INTO menu_acl(role_name, acl_type, node_id)
-values('lsmb_<?lsmb dbname ?>__assets_enter', 'allow', 233);
-INSERT INTO menu_acl(role_name, acl_type, node_id)
-values('lsmb_<?lsmb dbname ?>__assets_enter', 'allow', 235);
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_depreciate" NOLOGIN INHERIT;
-GRANT SELECT, INSERT ON asset_report, asset_report_line, asset_item, asset_class
-TO "lsmb_<?lsmb dbname ?>__assets_depreciate";
-GRANT UPDATE ON asset_report TO "lsmb_<?lsmb dbname ?>__assets_depreciate";
-
-GRANT ALL ON asset_report_id_seq TO "lsmb_<?lsmb dbname ?>__assets_depreciate"; 
-
-INSERT INTO menu_acl(role_name, acl_type, node_id)
-values('lsmb_<?lsmb dbname ?>__assets_depreciate', 'allow', 238);
-INSERT INTO menu_acl(role_name, acl_type, node_id)
-values('lsmb_<?lsmb dbname ?>__assets_depreciate', 'allow', 234);
-
-CREATE ROLE "lsmb_<?lsmb dbname ?>__assets_approve" NOLOGIN INHERIT;
-GRANT SELECT ON asset_report, asset_report_line, asset_item, asset_class
-TO "lsmb_<?lsmb dbname ?>__assets_approve";
-GRANT EXECUTE ON FUNCTION  asset_report__approve(int, int, int, int)
-TO "lsmb_<?lsmb dbname ?>__assets_approve";
-
-INSERT INTO menu_acl (role_name, acl_type, node_id)
-values('lsmb_<?lsmb dbname ?>__assets_approve', 'allow', 239),
-      ('lsmb_<?lsmb dbname ?>__assets_approve', 'allow', 240);
-
-
-GRANT SELECT ON asset_class, asset_item to public;
-GRANT SELECT ON asset_unit_class TO public;
-GRANT SELECT ON asset_dep_method TO public;
+SELECT lsmb__create_role('gl_reports');
+SELECT lsmb__grant_role('gl_reports', 'ar_transaction_list');
+SELECT lsmb__grant_role('gl_reports', 'ap_transaction_list');
+SELECT lsmb__grant_menu('gl_reports', node_id, 'allow')
+  FROM unnest(array[76,114]) node_id;
+
+SELECT lsmb__grant_perms('gl_reports', obj, 'SELECT')
+  FROM unnest(array['gl'::text, 'acc_trans', 'account_checkpoint']) obj;
+
+SELECT lsmb__create_role('yearend_run');
+SELECT lsmb__grant_perms('yearend_run', obj, ptype)
+  FROM unnest(array['acc_trans'::text, 'account_checkpoint', 'yearend']) obj,
+       unnest(array['SELECT'::text, 'INSERT']) ptype;
+SELECT lsmb__grant_menu('yearend_run', 132, 'allow');
+
+SELECT lsmb__create_role('batch_list');
+SELECT lsmb__grant_role('batch_list', 'gl_reports');
+SELECT lsmb__grant_perms('batch_list', obj, 'SELECT')
+  FROM unnest(array['batch'::text, 'batch_class', 'voucher']) obj;
+
+SELECT lsmb__create_role('gl_all');
+SELECT lsmb__grant_role('gl_all', rname)
+  FROM unnest(array['gl_transaction_create'::text, 'gl_voucher_create', 
+                    'yearend_run', 'gl_reports']) rname;
+
+SELECT lsmb__create_role('timecard_add');
+SELECT lsmb__grant_role('timecard_add', 'contact_read');
+SELECT lsmb__grant_menu('timecard_add', node_id, 'allow')
+  FROM unnest(array[100, 106, 8]) node_id;
+
+SELECT lsmb__grant_perms('timecard_add', 'jcitems_id_seq', 'ALL');
+SELECT lsmb__grant_perms('timecard_add', 'jcitems', 'INSERT');
+SELECT lsmb__grant_perms('timecard_add', 'jcitems', 'UPDATE');
+
+SELECT lsmb__create_role('timecard_list');
+SELECT lsmb__grant_role('timecard_list', 'contact_read');
+SELECT lsmb__grant_menu('timecard_list', 106, 'allow');
+SELECT lsmb__grant_perms('timecard_list', 'jcitems', 'SELECT');
+
+\echo ORDER GENERATION
+SELECT lsmb__create_role('orders_generate');
+SELECT lsmb__grant_role('orders_generate', 'contact_read');
+SELECT lsmb__grant_perms('orders_generate', obj, ptype)
+  FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem']) obj,
+       unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) ptype;
+
+SELECT lsmb__grant_perms('orders_generate', obj, 'ALL')
+  FROM unnest(array['oe_id_seq'::text, 'orderitems_id_seq']) obj;
+
+SELECT lsmb__create_role('timecard_order_generate');
+SELECT lsmb__grant_role('timecard_order_generate', 'orders_generate');
+SELECT lsmb__grant_role('timecard_order_generate', 'timecard_list');
+SELECT lsmb__grant_menu('timecard_order_generate', 102, 'allow');
+
+SELECT lsmb__create_role('orders_sales_to_purchase');
+SELECT lsmb__grant_role('orders_sales_to_purchase', 'orders_generate');
+SELECT lsmb__grant_menu('orders_sales_to_purchase', node_id, 'allow')
+  FROM unnest(array[57,58]) node_id;
+
+SELECT lsmb__create_role('orders_purchase_consolidate');
+SELECT lsmb__grant_role('orders_purchase_consolidate', 'orders_generate');
+SELECT lsmb__grant_menu('orders_purchase_consolidate', 62, 'allow');
+
+SELECT lsmb__create_role('orders_sales_consolidate');
+SELECT lsmb__grant_role('orders_sales_consolidate', 'orders_generate');
+SELECT lsmb__grant_menu('orders_sales_consolidate', 61, 'allow');
+
+SELECT lsmb__create_role('orders_manage');
+SELECT lsmb__grant_role('orders_manage', rname)
+  FROM unnest(array['timecard_order_generate'::text, 'orders_sales_to_purchase',
+                    'orders_purchase_consolidate', 'orders_sales_consolidate']
+       ) rname;
+
+\echo FINANCIAL REPORTS
+SELECT lsmb__create_role('financial_reports');
+SELECT lsmb__grant_role('financial_reports', 'gl_reports');
+SELECT lsmb__grant_menu('financial_reports', node_id, 'allow')
+  FROM unnest(array[110,111,112,113,114]) node_id;
+
+SELECT lsmb__grant_perms('financial_reports', obj, 'SELECT')
+  FROM unnest(array['yearend'::text, 'cash_impact', 'tx_report']) obj;
+
+\echo RECURRING TRANSACTIONS
+SELECT lsmb__create_role('recurring');
+SELECT lsmb__grant_menu('recurring', 115, 'allow');
+
+\echo BATCH PRINTING
+SELECT lsmb__create_role('print_jobs_list');
+SELECT lsmb__grant_menu('print_jobs_list', id, 'allow')
+  FROM unnest(array[117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127]) id;
+
+SELECT lsmb__create_role('print_jobs');
+SELECT lsmb__grant_role('print_jobs', 'print_jobs_list');
+
+\echo TAX FORMS
+SELECT lsmb__create_role('tax_form_save');
+SELECT lsmb__grant_perms('tax_form_save', 'country_tax_form', 'ALL');
+SELECT lsmb__grant_perms('tax_form_save', 'country_tax_form_id_seq', 'ALL');
+SELECT lsmb__grant_menu('tax_form_save', id, 'allow')
+  FROM unnest(array[218, 225, 226]) id;
+
+\echo SYSTEM SETTINGS
+SELECT lsmb__create_role('system_settings_list');
+SELECT lsmb__grant_menu('system_settings_list', 131, 'allow');
+
+SELECT lsmb__create_role('system_settings_change');
+SELECT lsmb__grant_role('system_settings_change', 'system_settings_list');
+
+SELECT lsmb__create_role('taxes_set');
+SELECT lsmb__grant_perms('taxes_set', 'tax', 'INSERT');
+SELECT lsmb__grant_perms('taxes_set', 'tax', 'UPDATE');
+SELECT lsmb__grant_menu('taxes_set', 130, 'allow');
+
+SELECT lsmb__create_role('account_create');
+SELECT lsmb__grant_perms('account_create', obj, 'INSERT')
+  FROM unnest(array['chart'::text, 'account', 'cr_coa_to_account', 
+                    'account_heading', 'account_link']) obj;
+
+SELECT lsmb__grant_perms('account_create', obj, 'ALL')
+  FROM unnest(array['account_id_seq'::text, 'account_heading_id_seq']) obj;
+SELECT lsmb__grant_menu('account_create', id, 'allow')
+  FROM unnest(array[137,246]) id;
+
+SELECT lsmb__create_role('account_edit');
+SELECT lsmb__grant_perms('account_edit', obj, 'ALL')
+  FROM unnest(array['account'::text, 'account_heading', 'account_link', 
+                    'cr_coa_to_account']) obj;
+
+SELECT lsmb__create_role('auditor');
+SELECT lsmb__grant_perms('auditor', 'audittrail', 'SELECT');
+
+SELECT lsmb__create_role('audit_trail_maintenance');
+SELECT lsmb__grant_perms('audit_trail_maintenance', 'audittrail', 'DELETE');
+
+SELECT lsmb__create_role('gifi_create');
+SELECT lsmb__grant_perms('gifi_create', 'gifi', 'INSERT');
+SELECT lsmb__grant_menu('gifi_create', id, 'allow')
+  FROM unnest(array[139,247]) id;
+
+SELECT lsmb__create_role('gifi_edit');
+SELECT lsmb__grant_perms('gifi_edit', 'gifi', 'UPDATE');
+SELECT lsmb__grant_menu('gifi_edit', 140, 'allow');
+
+SELECT lsmb__create_role('account_all');
+SELECT lsmb__grant_role('account_all', rname)
+  FROM unnest(array['account_create'::text, 'taxes_set', 'account_edit', 
+                    'gifi_create', 'gifi_edit']) rname;
+
+SELECT lsmb__create_role('business_type_create');
+SELECT lsmb__grant_perms('business_type_create', 'business', 'INSERT');
+SELECT lsmb__grant_perms('business_type_create', 'business_id_seq', 'ALL');
+SELECT lsmb__grant_menu('business_type_create', 148, 'allow');
+
+SELECT lsmb__create_role('business_type_edit');
+SELECT lsmb__grant_perms('business_type_edit', 'business', ptype)
+  FROM unnest(array['UPDATE'::text, 'DELETE'::text]) ptype;
+
+SELECT lsmb__grant_menu('business_type_edit', 149, 'allow');
+
+SELECT lsmb__create_role('business_type_all');
+SELECT lsmb__grant_role('business_type_all', 'business_type_create');
+SELECT lsmb__grant_role('business_type_all', 'business_type_edit');
+
+SELECT lsmb__create_role('sic_create');
+SELECT lsmb__grant_perms('sic_create', 'sic', 'INSERT');
+SELECT lsmb__grant_menu('sic_create', id, 'allow')
+  FROM unnest(array[154,248]) id;
+
+SELECT lsmb__create_role('sic_edit');
+SELECT lsmb__grant_perms('sic_edit', 'sic', 'UPDATE');
+SELECT lsmb__grant_menu('sic_edit', 155, 'allow');
+
+SELECT lsmb__create_role('sic_all');
+SELECT lsmb__grant_role('sic_all', 'sic_create');
+SELECT lsmb__grant_role('sic_all', 'sic_edit');
+
+SELECT lsmb__create_role('template_edit');
+SELECT lsmb__grant_menu('template_edit', id, 'allow')
+  FROM unnest(array[157,158,159,160,161,162,163,164,165,166,167,168,169,170,
+                    171,173,174,175,176,177,178,179,180,181,182,183,184,
+                    185,186,187,189,190,241,242]) id;
+
+SELECT lsmb__create_role('users_manage');
+SELECT lsmb__grant_role('users_manage', 'contact_read');
+SELECT lsmb__grant_exec('users_manage', 'admin__add_user_to_role(TEXT, TEXT)');
+SELECT lsmb__grant_exec('users_manage', 'admin__remove_user_from_role(TEXT, TEXT)');
+SELECT lsmb__grant_exec('users_manage', 'admin__get_roles_for_user(int)');
+SELECT lsmb__grant_exec('users_manage', 'admin__save_user(int,int,text,text,bool)');
+SELECT lsmb__grant_exec('users_manage', 'admin__delete_user(TEXT, bool)');
+SELECT lsmb__grant_perms('users_manage', 'role_view', 'SELECT');
+
+SELECT lsmb__create_role('system_admin');
+SELECT lsmb__grant_role('system_admin', rname)
+  FROM unnest(array['system_settings_change'::text, 'account_all', 
+                    'business_type_all', 'sic_all', 'users_manage', 
+                    'tax_form_save']) rname;
+
+\echo MANUAL TRANSLATION
+SELECT lsmb__create_role('language_create');
+SELECT lsmb__grant_perms('language_create', 'language', 'INSERT');
+SELECT lsmb__grant_menu('language_create', 151, 'allow');
+
+SELECT lsmb__create_role('language_edit');
+SELECT lsmb__grant_perms('language_edit', 'language', 'UPDATE');
+SELECT lsmb__grant_menu('language_edit', 152, 'allow');
+
+SELECT lsmb__create_role('translation_create');
+SELECT lsmb__grant_perms('translation_create', obj, 'ALL')
+  FROM unnest(array['parts_translation'::text, 'partsgroup_translation', 
+                    'business_unit_translation']) obj;
+
+SELECT lsmb__grant_menu('translation_create', id, 'allow')
+  FROM unnest(array[96,97,108]) id;
+
+\echo FIXED ASSETS
+SELECT lsmb__create_role('assets_administer');
+SELECT lsmb__grant_perms('assets_administer', 'asset_class', 'ALL');
+SELECT lsmb__grant_perms('assets_administer', 'asset_class_id_seq', 'ALL');
+SELECT lsmb__grant_menu('assets_administer', 237, 'allow');
+
+SELECT lsmb__create_role('assets_enter');
+SELECT lsmb__grant_perms('assets_enter', 'asset_item_id_seq', 'ALL');
+SELECT lsmb__grant_perms('assets_enter', 'asset_class', 'SELECT');
+SELECT lsmb__grant_perms('assets_enter', 'asset_item', ptype)
+  FROM unnest(array['SELECT'::text, 'INSERT']) ptype;
+
+SELECT lsmb__grant_menu('assets_enter', id, 'allow')
+  FROM unnest(array[230, 231, 232, 233, 235]) id;
+
+SELECT lsmb__create_role('assets_depreciate');
+SELECT lsmb__grant_perms('assets_depreciate', 'asset_report_id_seq', 'ALL');
+SELECT lsmb__grant_perms('assets_depreciate', 'asset_report', 'UPDATE');
+SELECT lsmb__grant_perms('assets_depreciate', obj, ptype)
+  FROM unnest(array['SELECT'::text, 'INSERT']) ptype,
+       unnest(array['asset_report'::text, 'asset_report_line', 'asset_item',
+                    'asset_class']) obj;
+
+SELECT lsmb__grant_menu('assets_depreciate', 238, 'allow');
+SELECT lsmb__grant_menu('assets_depreciate', 234, 'allow');
+
+SELECT lsmb__create_role('assets_approve');
+SELECT lsmb__grant_perms('assets_approve', obj, 'SELECT')
+  FROM unnest(array['asset_report'::text, 'asset_report_line', 'asset_item', 
+                    'asset_class']) obj;
+
+SELECT lsmb__grant_exec('assets_approve', 'asset_report__approve(int, int, int, int)');
+SELECT lsmb__grant_menu('assets_approve', id, 'allow')
+  FROM unnest(array[239,240]) id;
 
 -- Grants to all users;
+GRANT SELECT ON asset_unit_class TO public;
+GRANT SELECT ON asset_dep_method TO public;
 GRANT SELECT ON lsmb_module TO public; -- everyone needs to read this table and nothing
 -- sensitive in that table.
 GRANT SELECT ON makemodel TO public;
@@ -1595,34 +1056,13 @@ GRANT SELECT ON jctype TO PUBLIC;
 
 GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 
---TODO, lock recurring, pending_job, payment_queue down more
--- Roles with no db permissions:
-CREATE ROLE "lsmb_<?lsmb dbname ?>__draft_edit" WITH INHERIT NOLOGIN;
-
 INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (210, 'allow', 'lsmb_<?lsmb dbname ?>__draft_edit');
+SELECT i_id, 'allow', 'public'
+  FROM unnest(array[191,192,193]) i_id
+ WHERE NOT EXISTS (select * from menu_acl 
+                    WHERE node_id = i_id AND role_name = 'public');
 
--- Roles dependant on FUNCTIONS
-CREATE ROLE "lsmb_<?lsmb dbname ?>__voucher_delete" 
-WITH INHERIT NOLOGIN;
-
-GRANT EXECUTE ON FUNCTION voucher__delete(int) 
-TO "lsmb_<?lsmb dbname ?>__voucher_delete";
-
-GRANT EXECUTE ON FUNCTION batch_delete(int) 
-TO "lsmb_<?lsmb dbname ?>__voucher_delete";
-
-
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (191, 'allow', 'public');
--- "New Window" menu item
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (192, 'allow', 'public');
-INSERT INTO menu_acl (node_id, acl_type, role_name)
-values (193, 'allow', 'public');
-
--- PERMISSIONS ENFORCEMENT PER ENTITY CLASS
-
+\echo PERMISSIONS ENFORCEMENT PER ENTITY CLASS
 CREATE OR REPLACE FUNCTION tg_enforce_perms_eclass () RETURNS TRIGGER AS 
 $$
 DECLARE
@@ -1631,8 +1071,7 @@ BEGIN
 IF TG_OP = 'DELETE' THEN
    RETURN OLD;
 ELSE 
-   IF pg_has_role('postgres', 'USAGE') THEN
-      RETURN NEW; -- is superuser
+   IF pg_has_role('postgres', 'USAGE') THEN RETURN NEW; -- is superuser
    END IF;
    SELECT * INTO r_eclass from entity_class WHERE id = NEW.entity_class;
    IF pg_has_role(SESSION_USER,
@@ -1649,11 +1088,14 @@ END IF;
 END;
 $$ LANGUAGE PLPGSQL;
 
+DROP TRIGGER IF EXISTS eclass_perms_check ON entity;
 CREATE TRIGGER eclass_perms_check 
 BEFORE INSERT OR UPDATE OR DELETE ON entity 
 FOR EACH ROW EXECUTE PROCEDURE tg_enforce_perms_eclass();
   
+DROP TRIGGER IF EXISTS eclass_perms_check ON entity_credit_account;
 CREATE TRIGGER eclass_perms_check 
 BEFORE INSERT OR UPDATE OR DELETE ON entity_credit_account
 FOR EACH ROW EXECUTE PROCEDURE tg_enforce_perms_eclass();
-  
+
+COMMIT;

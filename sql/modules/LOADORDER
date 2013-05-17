@@ -38,3 +38,4 @@ Payroll.sql
 Transaction_Templates.sql
 OrderEntry.sql
 Goods.sql
+Roles.sql
