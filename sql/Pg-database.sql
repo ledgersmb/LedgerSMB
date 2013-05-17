@@ -3519,14 +3519,10 @@ found for any role of which the user is a member, where the acl_type is set to
 'deny'.$$;
 
 
-
 ALTER TABLE ONLY menu_acl
     ADD CONSTRAINT menu_acl_node_id_fkey FOREIGN KEY (node_id) REFERENCES menu_node(id);
 
-
---
--- PostgreSQL database dump complete
---
+CREATE INDEX menu_acl_node_id_idx ON menu_acl (node_id);
 
 CREATE OR REPLACE FUNCTION to_args (in_base text[], in_args text[])
 RETURNS text[] AS

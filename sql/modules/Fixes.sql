@@ -176,3 +176,7 @@ ALTER TABLE file_order_to_tx DROP CONSTRAINT "file_order_to_tx_ref_key_fkey";
 ALTER TABLE file_order_to_tx ADD FOREIGN KEY ref_key REFERENCES gl(id);
 
 COMMIT;
+
+BEGIN;
+CREATE INDEX menu_acl_node_id_idx ON menu_acl (node_id);
+COMMIT;
