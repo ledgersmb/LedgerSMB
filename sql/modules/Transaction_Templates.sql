@@ -166,7 +166,8 @@ CREATE OR REPLACE FUNCTION journal__save_recurring_print
 RETURNS recurringprint LANGUAGE SQL AS
 $$
 insert into recurringprint (id, formname, format, printer)
-values ($1, $2, 'PDF', $3);
+values ($1, $2, 'PDF', $3)
+returning *;
 $$;
 
 CREATE OR REPLACE FUNCTION journal__increment_recurring
