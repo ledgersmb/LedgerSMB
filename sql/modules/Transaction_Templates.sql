@@ -103,7 +103,7 @@ BEGIN
 			e.name, ec.class, 
                         coalesce(
                           r.startdate + r.recurring_interval,
-                          j.transaction_date);
+                          j.transaction_date)
 		FROM journal_entry j
 		LEFT JOIN eca_invoice i ON (i.journal_id = j.id)
 		LEFT JOIN entity_credit_account eca ON (eca.id = credit_id)
