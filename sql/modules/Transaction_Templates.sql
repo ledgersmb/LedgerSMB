@@ -157,7 +157,8 @@ $$
 delete from recurringprint where id = $5;
 delete from recurring where id = $5;
 insert into recurring (id, reference, startdate, recurring_interval, howmany)
-values ($5, $1, $2, $3, $4);
+values ($5, $1, $2, $3, $4)
+returning *;
 $$;
 
 CREATE OR REPLACE FUNCTION journal__save_recurring_print
