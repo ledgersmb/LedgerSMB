@@ -562,6 +562,8 @@ INSERT INTO asset_note SELECT * FROM lsmb13.asset_note;
 INSERT INTO asset_report SELECT * FROM lsmb13.asset_report;
 INSERT INTO asset_report_line SELECT * FROM lsmb13.asset_report_line;
 INSERT INTO asset_rl_to_disposal_method SELECT * FROM lsmb13.asset_rl_to_disposal_method;
+DELETE FROM mime_type;
+INSERT INTO mime_type SELECT * FROM lsmb13.mime_type;
 INSERT INTO file_base SELECT * FROM lsmb13.file_base;
 INSERT INTO file_transaction SELECT * FROM lsmb13.file_transaction;
 INSERT INTO file_order SELECT * FROM lsmb13.file_order;
