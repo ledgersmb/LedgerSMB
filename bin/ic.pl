@@ -905,7 +905,7 @@ sub form_footer {
 <td><a href="file.pl?action=get&file_class=3&ref_key=$form->{id}&id=$file->{id}"
             >$file->{file_name}</a></td> 
 <td>$file->{mime_type}</td> 
-<td>$file->{uploaded_at}</td> 
+<td>|.$file->{uploaded_at}->to_output . qq|</td> 
 <td>$file->{uploaded_by_name}</td> 
 </tr>
               |;

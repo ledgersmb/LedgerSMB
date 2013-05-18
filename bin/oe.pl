@@ -935,7 +935,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 <td><a href="file.pl?action=get&file_class=2&ref_key=$form->{id}&id=$file->{id}&type=sales_quotation&additional=type"
             >$file->{file_name}</a></td> 
 <td>$file->{mime_type}</td> 
-<td>$file->{uploaded_at}</td> 
+<td>|.$file->{uploaded_at}.qq|</td> 
 <td>$file->{uploaded_by_name}</td> 
 </tr>
               |;
