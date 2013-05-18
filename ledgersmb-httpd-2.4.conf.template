@@ -1,0 +1,66 @@
+# This file must be edited to substitute the current path with WORKING_DIR
+
+Alias /ledgersmb WORKING_DIR/
+
+<Directory WORKING_DIR>
+
+  # Rewrite rule to allow HTTP Authorization information to the scripts only
+  # from this directory.
+  RewriteEngine On
+
+  # Redirect the /ledgersmb and /ledgersmb/ URL paths to
+  # the true login script: /ledgersmb/login.pl
+  RewriteRule ^/ledgersmb/?$ /ledgersmb/login.pl [R]
+
+  # Indicate that the HTTP Authorization data should be passed
+  # to the CGI scripts running from this directory
+  RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
+
+
+  AllowOverride All
+  AddHandler cgi-script .pl
+  Options ExecCGI Includes FollowSymlinks
+
+  # By default, only allow from localhost.  If you change this, please be
+  # advised that you should use SSL protection on any and all network
+  # connections that access this application in order to protect usernames and
+  # passwords.
+  Require ip 127.0.0.1
+  Require host localhost
+  Require all denied
+
+  # The rest of this file just tightens up security.
+  <Files ~ "\.conf$">
+    Require all denied
+  </Files>
+</Directory>
+
+<Directory WORKING_DIR/rest>
+   RewriteEngine On
+   RewriteBase /ledgersmb/rest/
+   RewriteRule .* ../rest-handler.pl
+</Directory>
+
+<Directory WORKING_DIR/users>
+  Require all denied
+</Directory>
+
+<Directory WORKING_DIR/bin>
+  Require all denied
+</Directory>
+
+<Directory WORKING_DIR/utils>
+  Require all denied
+</Directory>
+
+<Directory WORKING_DIR/spool>
+  Require all denied
+</Directory>
+
+<Directory WORKING_DIR/templates>
+  Require all denied
+</Directory>
+
+<Directory WORKING_DIR/LedgerSMB>
+  Require all denied
+</Directory>
