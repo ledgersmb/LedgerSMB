@@ -1320,6 +1320,7 @@ sub print_options {
 
     my $hiddens = shift;
     my %options;
+    $form->{format} = $form->get_setting('format') unless $form->{format};
     $form->{sendmode} = "attachment";
     $form->{copies} = 1 unless $form->{copies};
 

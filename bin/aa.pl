@@ -157,6 +157,7 @@ sub edit {
 }
 
 sub display_form {
+    $form->{format} = $form->get_setting('format') unless $form->{format};
     $form->close_form;
     $form->open_form;
     $form->{dbh}->commit;
@@ -187,7 +188,6 @@ sub create_links {
     $taxincluded = $form->{taxincluded};
 
     $form->{formname} = "transaction";
-    $form->{format}   = "postscript" if $myconfig{printer};
     $form->{media}    = $myconfig{printer};
 
     $form->{selectformname} =

@@ -279,7 +279,6 @@ sub prepare_invoice {
     $form->{type}     = "invoice";
     $form->{formname} = "invoice";
     $form->{sortby} ||= "runningnumber";
-    $form->{format} = "postscript" if $myconfig{printer};
     $form->{media} = $myconfig{printer};
 
     $form->{selectformname} =

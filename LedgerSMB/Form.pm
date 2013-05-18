@@ -2550,6 +2550,20 @@ sub create_links {
     $self->all_vc( $myconfig, $vc, $module, $dbh, $self->{transdate}, $job );
 }
 
+=item $form->get_setting($setting_name)
+
+Looks up the value in the defaults table and returns it.
+
+=cut
+
+sub get_setting {
+    my ($self, $setting) = @_; 
+    my $sth = $self->{dbh}->prepare('select * from setting_get(?)');
+    $sth->execute($setting);
+    my $ref = $sth->fetchrow_hashref('NAME_lc');
+    return $ref->{value};
+}
+
 =item $form->lastname_used($myconfig, $dbh2, $vc, $module);
 
 Fills the name, currency, ${vc}_id, duedate, and possibly invoice_notes

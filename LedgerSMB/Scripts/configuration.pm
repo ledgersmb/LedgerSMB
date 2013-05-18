@@ -47,6 +47,9 @@ our @default_settings = (
        { name => 'templates',
          type => 'SELECT_ONE',
         label => $locale->text('Template Set'), },
+       { name => 'format',
+         type => 'SELECT_ONE',
+        label => $locale->text('Default Format'), },
      ] },
    { title => $locale->text('Security Settings'),
      items => [
@@ -192,11 +195,22 @@ sub defaults_screen{
 			     text_attr => 'description',
 			     value_attr => 'code',
 		},
-	'templates'       => {name => 'templates',
+	'templates'        => {name => 'templates',
                            options => _get_template_directories(),
                          text_attr => 'text',
                         value_attr => 'value'
                },
+        'format'           => {name => 'format',
+                           text_attr => 'text',
+                          value_attr => 'value',
+                      default_values => [$request->{'format'}],
+                             options => [{ text => 'HTML',
+                                          value => 'html'},
+                                         { text => 'PDF',
+                                          value => 'pdf'},
+                                         { text => 'Postscript',
+                                          value => 'postscript'}]
+               }
         );
     my $template = LedgerSMB::Template->new_UI(
         user => $LedgerSMB::App_State::User, 

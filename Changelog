@@ -14,6 +14,7 @@ General Enhancements:
 * Session expiration now with configurable behavior (Chris T)
 * Timecard system generalized to allow labor and materials cards too (Chris T)
 * Can now print envelopes or shipping labels from many screens (Chris T)
+* Can now select default formats for printed invoices (Chris T)
 
 Enhancing data integrity
 * No longer allow NULL amounts in acc_trans (Chris T)
