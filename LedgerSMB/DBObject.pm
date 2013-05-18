@@ -139,7 +139,7 @@ sub exec_method {
     
     my $pargs = $ref->{proargnames};
     my @proc_args;
-    my @proargtypes = split / /, $ref->{proargtypes};
+    my @proargtypes = split / /, $ref->{proargtypes} if $ref->{proargtypes};
 
     if ( !$ref->{proname} ) {    # no such function
         # If the function doesn't exist, $funcname gets zeroed?
