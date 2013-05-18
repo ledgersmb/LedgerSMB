@@ -331,12 +331,14 @@ COMMENT ON FUNCTION user__change_password(in_new_password text) IS
 $$ Alloes a user to change his or her own password.  The password is set to 
 expire setting_get('password_duration') days after the password change.$$;
 
+DROP FUNCTION IF EXISTS admin__save_user(int, int, text, text, bool);
+
 CREATE OR REPLACE FUNCTION admin__save_user(
     in_id int, 
     in_entity_id INT,
     in_username text, 
     in_password TEXT,
-    in_import BOOL
+    in_pls_import BOOL
 ) returns int AS $$
     DECLARE
     
@@ -356,7 +358,7 @@ CREATE OR REPLACE FUNCTION admin__save_user(
        t_is_role := found;
        t_is_user := admin__is_user(in_username);
 
-       IF t_is_role is true and t_is_user is false and in_import is false THEN
+       IF t_is_role is true and t_is_user is false and in_pls_import is false THEN
           RAISE EXCEPTION 'Duplicate user';
         END IF;
 
@@ -365,10 +367,10 @@ CREATE OR REPLACE FUNCTION admin__save_user(
                      ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)
                      || $e$ valid until $e$ || 
                       quote_literal(now() + '1 day'::interval);
-        elsif in_import is false AND t_is_user is false 
+        elsif in_pls_import is false AND t_is_user is false 
               AND in_password IS NULL THEN
                 RAISE EXCEPTION 'No password';
-        elsif  t_is_role is false and in_import IS FALSE THEN
+        elsif  t_is_role is false and in_pls_import IS FALSE THEN
             -- create an actual user
                 execute 'CREATE USER ' || quote_ident( in_username ) || 
                      ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)

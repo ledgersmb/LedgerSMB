@@ -2,7 +2,7 @@
 <div id="user_div" class="container">
 	<div class="listtop">
             <?lsmb 
-               IF request.import;
+               IF request.pls_import;
                        text('Importing User');
                        action = 'save_user';
                 ELSIF user.username;
@@ -50,7 +50,7 @@
             <tr>
                 <td><?lsmb text('Import') ?></td>
                 <?lsmb 
-                  IF request.import;
+                  IF request.pls_import;
                       importc1 = 'CHECKED';
                       importc0 = '';
                   ELSE;
@@ -99,13 +99,13 @@
                 };
     ?>
     </form>
-    <?lsmb IF user.username AND request.import != 1 ?>
+    <?lsmb IF user.entity_id ?>
         <hr /> 
         <form name="groups" method="POST" action="employee.pl">
             <?lsmb PROCESS input element_data = {
                type="hidden"
                name="user_id"
-               value= user.user.id 
+               value= user.id 
            } ?>
             <table>
                 <!-- Groups section -->
