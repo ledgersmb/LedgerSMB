@@ -421,7 +421,7 @@ sub all_transactions {
 
         if ( $form->{datefrom} ) {
             $query = qq|
-			SELECT account__obtain_balance(?, id) from chart
+			SELECT account__obtain_balance(?::date - 1, id) from chart
 			WHERE accno = ? |;
             my $sth = $dbh->prepare($query);
             $sth->execute($form->{datefrom}, $form->{chart_accno});
