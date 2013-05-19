@@ -252,7 +252,7 @@ SELECT lsmb__grant_perms('contact_create', 'entity_to_location', 'INSERT');
 SELECT lsmb__grant_perms('contact_create', 'entity_to_location', 'DELETE');
 SELECT lsmb__grant_perms('contact_create', 'eca_to_location', 'INSERT');
 SELECT lsmb__grant_perms('contact_create', 'eca_to_location', 'DELETE');
-SELECT lsmb__grant_perms('contact_create', 'eca_to_contact', 'ALL');
+SELECT lsmb__grant_perms('contact_create', 'eca_to_contact', 'INSERT');
 SELECT lsmb__grant_perms('contact_create', 'eca_note', 'INSERT');
 SELECT lsmb__grant_perms('contact_create', obj, 'ALL')
   FROM unnest(array['partsvendor_entry_id_seq'::text, 
@@ -286,8 +286,9 @@ SELECT lsmb__grant_perms('contact_edit', 'entity_bank_account', 'ALL');
 SELECT lsmb__grant_perms('contact_edit', 'entity_note', 'UPDATE');
 SELECT lsmb__grant_perms('contact_edit', 'entity_other_name', 'UPDATE');
 SELECT lsmb__grant_perms('contact_edit', 'person_to_company', 'UPDATE');
-SELECT lsmb__grant_perms('contact_edit', 'entity_to_contact', 'UPDATE');
-SELECT lsmb__grant_perms('contact_edit', 'eca_to_location', 'UPDATE');
+SELECT lsmb__grant_perms('contact_edit', 'entity_to_contact', 'ALL');
+SELECT lsmb__grant_perms('contact_edit', 'eca_to_contact', 'ALL');
+SELECT lsmb__grant_perms('contact_edit', 'eca_to_location', 'ALL');
 SELECT lsmb__grant_perms('contact_edit', 'eca_tax', 'ALL');
 
 SELECT lsmb__create_role('contact_all_rights');
