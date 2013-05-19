@@ -227,7 +227,15 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION account__obtain_balance 
 (in_transdate date, in_account_id int) is
 $$Returns the account balance at a given point in time, calculating forward 
-from most recent check point.$$;
+from most recent check point.  This function is inclusive of in_transdate.  For
+an exclusive function see account__obtain_starting_balance below.$$;
+
+CREATE OR REPLACE FUNCTION account__obtain_starting_balance
+(in_transdate date, in_account_id int)
+RETURNS numeric LANGUAGE SQL AS
+$$
+SELECT account__obtain_balance($1 - 1, $2);
+$$;
 
 CREATE OR REPLACE FUNCTION eoy_earnings_accounts() RETURNS setof account AS 
 $$

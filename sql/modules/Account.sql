@@ -482,6 +482,11 @@ COMMENT ON FUNCTION cr_coa_to_account_save(in_accno text, in_description text)
 IS $$ Provides default rules for setting reconciliation labels.  Currently 
 saves a label of accno ||'--' || description.$$;
 
+CREATE OR REPLACE FUNCTION account__get_by_accno(in_accno text)
+RETURNS account AS $$
+SELECT * FROM account WHERE accno = $1;
+$$ language sql;
+
 CREATE OR REPLACE FUNCTION account__get_by_link_desc(in_description text)
 RETURNS SETOF account AS $$
 SELECT * FROM account
