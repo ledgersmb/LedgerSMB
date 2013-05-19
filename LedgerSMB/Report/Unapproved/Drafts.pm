@@ -204,7 +204,7 @@ return [
       {name => 'action',
        type => 'submit',
        text => LedgerSMB::Report::text('Delete'),
-      value => 'approve',
+      value => 'delete',
       class => 'submit', },
     ];
 }

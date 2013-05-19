@@ -52,8 +52,6 @@ LOOP
    END IF;
 END LOOP;
 
-RAISE EXCEPTION 'TOO FEW TO REVERSE';
-
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -274,6 +272,10 @@ BEGIN
 SELECT * INTO t_inv FROM invoice WHERE id = in_invoice_id;
 SELECT * INTO t_part FROM parts WHERE id = t_inv.parts_id;
 SELECT * INTO t_ar FROM ar WHERE id = t_inv.trans_id;
+
+IF t_part.inventory_accno_id IS NULL THEN
+   RETURN 0;
+END IF;
 
 IF t_inv.qty + t_inv.allocated = 0 THEN
    return 0;

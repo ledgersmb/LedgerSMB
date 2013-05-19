@@ -134,7 +134,7 @@ begin
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
-COMMENT ON FUNCTION draft_approve(in_id int) is
+COMMENT ON FUNCTION draft_delete(in_id int) is
 $$ Deletes the draft from the book.  Only will delete unapproved transactions.
 Otherwise an exception is raised and the transaction terminated.$$;
 
