@@ -116,6 +116,12 @@ sub _main_screen {
     }
     $request->{target_div} ||= 'company';
 
+    my @all_years =  $request->call_procedure(
+              procname => 'date_get_all_years'
+    );
+
+
+
     my %DIV_LABEL = (
              company => $locale->text('Company'),
               person => $locale->text('Person'),
@@ -287,6 +293,8 @@ sub _main_screen {
       location_class_list => \@location_class_list,
        contact_class_list => \@contact_class_list,
                 all_taxes => \@all_taxes,
+                all_years => \@all_years,
+               all_months =>  LedgerSMB::App_State::all_months()->{dropdown},
     });
 }
 
