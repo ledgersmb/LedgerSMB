@@ -343,6 +343,9 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self) = @_;
+    my $accno = $self->accno;
+    $accno =~ s/--.*//;
+    $self->accno($accno);
     my @rows = $self->exec_method({funcname => 'report__gl'});
     for my $ref(@rows){
         if ($ref->{amount} < 0){
