@@ -168,7 +168,7 @@ LEFT JOIN exchangerate xr ON a.transdate = xr.transdate
           and (a.transdate <= $12 or $12 is null)
           and (eca.startdate >= $14 or $14 is null)
           and (eca.startdate <= $15 or $15 is null)
- ORDER BY eca.meta_number;
+ ORDER BY eca.meta_number, p.partnumber;
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION eca_history
