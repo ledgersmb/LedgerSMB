@@ -1667,6 +1667,11 @@ sub print {
 
 
 sub generate_tax_report {
+    if ($form->{fromyear} and $form->{frommonth}){
+        ($form->{fromdate}, $form->{todate}) = $form->from_to(
+              $form->{fromyear}, $form->{frommonth}, $form->{interval}
+        );
+    }
     RP->tax_report( \%myconfig, $form );
 
     my %hiddens;
