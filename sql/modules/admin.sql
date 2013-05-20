@@ -302,7 +302,7 @@ $$ Returns true if the password of the current logged in user is set to expire
 within on week.$$;
 
 CREATE OR REPLACE FUNCTION user__change_password(in_new_password text)
-returns int SET datestyle = 'ISO, YMD' as
+returns int SET datestyle = 'ISO, YMD' as -- datestyle needed due to legacy code
 $$
 DECLARE
 	t_expires timestamp;
@@ -340,7 +340,7 @@ CREATE OR REPLACE FUNCTION admin__save_user(
     in_password TEXT,
     in_pls_import BOOL
 ) returns int 
-SET datestyle = 'ISO, YMD'
+SET datestyle = 'ISO, YMD' -- needed due to legacy code regarding datestyles
 AS $$
     DECLARE
     

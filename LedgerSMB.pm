@@ -375,11 +375,11 @@ sub new {
     $self->get_user_info;
 
     my %date_setting = (
-        'mm/dd/yy' => "SQL, US",
-        'mm-dd-yy' => "POSTGRES, US",
-        'dd/mm/yy' => "SQL, EUROPEAN",
-        'dd-mm-yy' => "POSTGRES, EUROPEAN",
-        'dd.mm.yy' => "GERMAN",
+        'mm/dd/yy' => "ISO, MDY",
+        'mm-dd-yy' => "ISO, MDY",
+        'dd/mm/yy' => "ISO, DMY",
+        'dd-mm-yy' => "ISO, DMY",
+        'dd.mm.yy' => "ISO, DMY",
     );
 
     $self->{dbh}->do("set DateStyle to '".$date_setting{$self->{_user}->{dateformat}}."'");
