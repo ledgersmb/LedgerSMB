@@ -189,7 +189,7 @@ LEFT JOIN person ep ON (ep.entity_id = ee.id)
 --          and (eca.startdate >= $14 or $14 is null)
 --          and (eca.startdate <= $15 or $15 is null)
 --          and (a.notes @@ plainto_tsquery($9) or $9 is null)
- ORDER BY eca.meta_number;
+ ORDER BY eca.meta_number, p.partnumber;
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION eca__history 
