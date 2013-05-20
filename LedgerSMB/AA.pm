@@ -836,10 +836,11 @@ sub get_name {
 			  b.discount AS tradediscount, 
 		          b.description AS business, 
 			  entity.control_code as entity_control_code,
-			  c.meta_number, ecl.*
+			  c.meta_number, ecl.*, ctf.default_reportable
 		     FROM entity_credit_account c
 		     JOIN entity ON (entity.id = c.entity_id)
 		LEFT JOIN business b ON (b.id = c.business_id)
+                LEFT JOIN country_tax_form ctf ON ctf.id = c.taxform_id
                 LEFT JOIN (SELECT coalesce(line_one, '')
                                || ' ' || coalesce(line_two, '') as address,
                                l.city, etl.credit_id

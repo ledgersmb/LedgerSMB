@@ -96,6 +96,7 @@ Changelog for 1.3.33
 * Fixed double-counting first date's balance on gl report (Chris T)
 * Fixed user creation failing on some timezones with some datestyles (Chris T)
 * Added secondary partnumber ordering to eca history report (Chris T)
+* Fixed default_reportable not respected for invoices (Chris T, 799)
 
 Changelog for 1.3.32
 * Fixed em-dash handling for pdfs (Chris T)

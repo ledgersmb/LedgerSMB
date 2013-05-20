@@ -461,7 +461,7 @@ function on_return_submit(event){
     $form->hide_form(
         qw(id title vc type terms creditlimit creditremaining closedto locked 
            shipped oldtransdate recurring reverse batch_id subtype form_id
-           separate_duties nextsub)
+           separate_duties nextsub default_reportable)
     );
 
     print qq|

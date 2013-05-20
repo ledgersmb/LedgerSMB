@@ -348,7 +348,7 @@ qq|<td><input name="description_$i" size=48 value="$form->{"description_$i"}"></
 
         
         $taxchecked="";
-	if($form->{"taxformcheck_$i"})
+	if($form->{"taxformcheck_$i"} or ($i == $form->{rowcount} and $form->{default_reportable}))
 	{
 		$taxchecked="checked";
 
