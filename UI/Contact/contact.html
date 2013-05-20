@@ -635,20 +635,36 @@ END ?>
         <div class="listtop"><?lsmb text('Taxes') ?></div>
         <?lsmb FOR tx = all_taxes ?> 
         <div class="inputrow" id="taxrow-<?lsmb tx.chart_id ?>">
-        <span class="lable" id="txlabel-<?lsmb tx.chart_id ?>">
-            <?lsmb tx.accno ?>--<?lsmb tx.description ?></span>
         <span class="input" id="txinput-<?lsmb tx.id ?>">
             <?lsmb checked = "";  
                    IF eca_tax.grep(tx.id).size == 1;
                        checked = "CHECKED";
                    END;
                    INCLUDE input element_data = {
+                           label = tx.accno _ '--' _  tx.description
                            type = "checkbox"
                            checked = checked
                            name = "taxact_$tx.id"
                            value = tx.id
                    } ?><span></div>
         <?lsmb END # FOR tx ?>
+         </div>
+        <div class="inputrow" id="taxincludedrow">
+            <?lsmb 
+
+               checked = '';
+               IF taxincluded;
+                   checked='CHECKED';
+               END;
+               INCLUDE input
+                           element_data = {
+                                 label =  text('Tax Included') #'
+                                  type = "checkbox"
+                               checked = checked
+                                  name = "taxincluded"
+                                 value = '1'
+                            } 
+            ?> 
          </div>
 		<?lsmb IF credit_id;
 		INCLUDE button element_data = {
