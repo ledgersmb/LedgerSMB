@@ -523,3 +523,8 @@ delete from menu_attribute where node_id = 192 and attribute = 'menu';
 DELETE FROM menu_acl WHERE node_id = 60 AND exists (select 1 from menu_attribute where node_id = 60 and attribute = 'menu');
 
 COMMIT;
+
+BEGIN;
+ALTER FUNCTION admin__save_user(int, int, text, text, bool) SET datestyle = 'ISO,YMD';
+ALTER FUNCTION user__change_password(text) SET datestyle = 'ISO,YMD';
+COMMIT;
