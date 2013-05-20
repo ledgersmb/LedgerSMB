@@ -339,7 +339,9 @@ CREATE OR REPLACE FUNCTION admin__save_user(
     in_username text, 
     in_password TEXT,
     in_pls_import BOOL
-) returns int AS $$
+) returns int 
+SET datestyle = 'ISO, YMD'
+AS $$
     DECLARE
     
         a_user users;
