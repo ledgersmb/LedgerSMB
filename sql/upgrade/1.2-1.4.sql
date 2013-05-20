@@ -57,10 +57,11 @@ UPDATE lsmb12.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHER
 
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id, 
-	cash_account_id, startdate, enddate, threshold, entity_class)
+	cash_account_id, startdate, enddate, threshold, entity_class,
+        taxincluded)
 SELECT entity_id, vendornumber, business_id, creditlimit, 
        (select id from account where accno = :ap), 
-	NULL, startdate, enddate, 0, 1
+	NULL, startdate, enddate, 0, 1, taxincluded
 FROM lsmb12.vendor WHERE entity_id IS NOT NULL;
 
 UPDATE lsmb12.vendor SET credit_id = 
@@ -71,10 +72,11 @@ UPDATE lsmb12.vendor SET credit_id =
 
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id, 
-	cash_account_id, startdate, enddate, threshold, entity_class)
+	cash_account_id, startdate, enddate, threshold, entity_class, 
+        taxincluded)
 SELECT entity_id, customernumber, business_id, creditlimit,
        (select id from account where accno = :ar),
-	NULL, startdate, enddate, 0, 2
+	NULL, startdate, enddate, 0, 2, taxincluded
 FROM lsmb12.customer WHERE entity_id IS NOT NULL;
 
 UPDATE lsmb12.customer SET credit_id = 
