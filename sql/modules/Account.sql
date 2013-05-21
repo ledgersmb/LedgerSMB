@@ -603,4 +603,16 @@ SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
 
 $$ LANGUAGE SQL;
 
+DROP VIEW IF EXISTS account_heading_tree CASCADE;
+CREATE VIEW account_heading_tree AS
+WITH RECURSIVE account_headings AS (
+    SELECT id, accno, 1 as level, accno as path
+      FROM account_heading
+    UNION ALL
+    SELECT ah.id, ah.accno, at.level + 1 as level, at.path  || '||||' accno
+      FROM account_heading ah
+      JOIN account_headings at ON ah.parent_id = at.id
+)
+SELECT id, accno, level, string_to_array(path, '||||') as path
+  FROM account_headings;
 COMMIT;

@@ -558,60 +558,53 @@ END LOOP;
 END;
 $$;
 
-DROP TYPE IF EXISTS balance_sheet_line;
+DROP TYPE IF EXISTS balance_sheet_line CASCADE;
 
 CREATE TYPE balance_sheet_line AS (
     account_id int,
+    account_number text,
     account_desc text,
-    account_type char,
     account_category char,
     balance numeric,
-    path text[]
+    heading_path text[]
 );
 
-/*
 CREATE OR REPLACE FUNCTION report__balance_sheet(in_report_date date)
 RETURNS SETOF balance_sheet_line LANGUAGE SQL AS
 $$
-WITH basic_balance_sheet AS (
-     SELECT a.id, a.description, a.category::char, sum(ac.amount) as balance, 
-       FROM acc_trans ac
-       JOIN tx_report gl ON ac.trans_id = gl.id
-       JOIN account a ON ac.chart_id = a.id
-      WHERE ac.transdate <= $1 or $1 IS NULL AND ac.approved AND gl.approved
-), 
-RECURSIVE account_tree AS (
-    SELECT id, accno, 1 as level, accno as path
-    UNION ALL 
-    SELECT ah.id, ah.accno, at.level + 1 as level, at.path  || '||||' accno
-      FROM account_heading
-    UNION ALL 
-    SELECT a.id, a.accno, at.level + 1 as level, at.path || '||||' a.accno
-      FROM account a 
-      JOIN account_tree at ON at.id = a.heading
-    ORDER BY 
+WITH a_bs AS (
+   SELECT a.id,
+          CASE WHEN a.category IN ('I', 'E') THEN 'Q' ELSE a.category END
+          AS category,
+          CASE WHEN a.category NOT IN ('I', 'E') THEN a.description
+               ELSE 'Current Earnings'
+          END as description,
+          CASE WHEN a.category IN ('I', 'E') THEN NULL ELSE a.accno END
+          AS accno, 
+          CASE WHEN a.category IN ('I', 'E') THEN NULL ELSE a.heading END
+          AS heading
+     FROM account a
 )
-SELECT ht.id, ht.description, 'H', null, null, string_to_array(ht.path, ',')
-  FROM heading_tree ht2
-  JOIN basic_balance_sheet bs 
-        ON array[bs.heading] <@ string_to_array(ht2.path, ',')
-  JOIN heading_tree ht -- extra join needed to traverse to parents
-        ON string_to_array(ht.path, ',') <@ string_to_array(ht2.path, ',')
-UNION ALL
-SELECT bs.id, bs.description, 'A', bs.category, bs.balance, 
-       string_to_array(ht.path || ',' bs.id::text, ',')
-  FROM basic_balance_sheet bs
-  JOIN heading_tree ON array[bs.heading] <@ string_to_array(ht.path, ',')
- WHERE bs.account_category IN ('E', 'I', 'Q')
-UNION ALL
-SELECT null, 'Retained Earnings', 'A', 'Q', sum(bs.balance), '{}'
-  FROM basic_balance_sheet bs
- WHERE bs.category IN ('E', 'I'));
+   SELECT a2.id, a.description, a.accno, a.category, 
+          sum(ac.amount * CASE WHEN  a.category = 'A' THEN -1 ELSE 1 END), 
+          at.path
+     FROM a_bs a
+LEFT JOIN account_heading_tree at ON a.heading = at.id
+     JOIN acc_trans ac ON ac.approved AND a.id = ac.chart_id
+     JOIN tx_report t ON t.approved AND t.id = ac.trans_id
+LEFT JOIN account a2 ON a.id = a2.id AND a2.category NOT IN ('I', 'E')
+    WHERE ac.transdate <= $1
+ GROUP BY a2.id, a.accno, a.description, a.category, at.path
+ ORDER BY CASE WHEN a.category = 'A' THEN 1
+               WHEN a.category = 'L' THEN 2
+               ELSE 3
+          END,
+          at.path,
+          a.accno NULLS LAST;
 $$;
 
-COMMENT ON report__balance_sheet(date) IS
-$$ This produces a balance sheet and all headings required for display.
-Headings are designated with an H as account_type, while accounts are 
-designated with the 'A' type. $$;
-*/
+COMMENT ON function report__balance_sheet(date) IS
+$$ This produces a balance sheet and the paths (acount numbers) of all headings
+necessary. $$;
+
 COMMIT;
