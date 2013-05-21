@@ -603,6 +603,12 @@ SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
 
 $$ LANGUAGE SQL;
 
+CREATE OR REPLACE FUNCTION account__all_headings() RETURNS SETOF account_heading
+LANGUAGE SQL AS
+$$ 
+SELECT * FROM account_heading ORDER BY accno;
+$$;
+
 DROP VIEW IF EXISTS account_heading_tree CASCADE;
 CREATE VIEW account_heading_tree AS
 WITH RECURSIVE account_headings AS (
