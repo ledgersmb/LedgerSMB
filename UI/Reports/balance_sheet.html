@@ -1,0 +1,61 @@
+<?lsmb include 'ui-header.html' ?>
+<body class="financial-statement balance-sheet">
+<h1><?lsmb text('Balance Sheet') ?></h1>
+<h2><?lsmb text('Through date:') _ ' ' _ report/to_date ?></h2>
+<?lsmb # TODO:  header hierarchy handling ?>
+<table>
+<tr class="section-head">
+   <th colspan="2"><?lsmb text('Assets') ?></th>
+</tr>
+<?lsmb FOREACH line IN report.balance_sheet.A.lines ?> 
+<tr><th><a href="journal.pl?action=search&to_date=<?lsmb to_date 
+       ?>&accno=account_number"
+       ><?lsmb line.account_number _ ': ' _ line.account_description ?></a></th>
+    <td class="amount"><?lsmb line.balance ?> </td>
+</tr>
+<?lsmb END ?>
+<tr><th><?lsmb text('Total Assets') ?></th>
+    <td><?lsmb report.balance_sheet.A.total ?></td>
+</tr>
+<tr class="section-head">
+   <th colspan="2"><?lsmb text('Liabilities') ?></th>
+</tr>
+<?lsmb FOREACH line IN report.balance_sheet.A.lines ?> 
+<tr><th><a href="journal.pl?action=search&to_date=<?lsmb to_date 
+       ?>&accno=account_number"
+       ><?lsmb line.account_number _ ': ' _ line.account_description ?></a></th>
+    <td class="amount"><?lsmb line.balance ?> </td>
+</tr>
+<?lsmb END ?>
+<tr><th><?lsmb text('Total Liabilities') ?></th>
+    <td><?lsmb report.balance_sheet.L.total ?></td>
+</tr>
+<tr class="section-head">
+   <th colspan="2"><?lsmb text('Equity') ?></th>
+</tr>
+<?lsmb FOREACH line IN report.balance_sheet.A.lines ?> 
+<tr><th><a href="journal.pl?action=search&to_date=<?lsmb to_date 
+       ?>&accno=account_number"
+       ><?lsmb line.account_number _ ': ' _ line.account_description ?></a></th>
+    <td class="amount"><?lsmb line.balance ?> </td>
+</tr>
+<?lsmb END ?>
+<tr><th><?lsmb text('Total Equity') ?></th>
+    <td><?lsmb report.balance_sheet.Q.total ?></td>
+</tr>
+</table>
+
+<h2>Key Ratios</h2>
+<table>
+<tr><th><?lsmb text('Assets to Liabilities') ?></th>
+    <td><?lsmb report.balance_sheet.ratios.AL ?></td>
+</tr>
+<tr><th><?lsmb text('Assets to Equity') ?></th>
+    <td><?lsmb report.balance_sheet.ratios.AQ ?></td>
+</tr>
+<tr><th><?lsmb text('Liabilities to Equity') ?></th>
+    <td><?lsmb report.balance_sheet.ratios.LQ ?></td>
+</tr>
+</table>
+</body>
+</html>
