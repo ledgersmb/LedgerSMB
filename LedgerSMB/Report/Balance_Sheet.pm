@@ -133,6 +133,7 @@ sub run_report {
         if $sheet->{Q}->{total};
     $sheet->{ratios}->{QL} = $sheet->{Q}->{total} / $sheet->{L}->{total} 
         if $sheet->{L}->{total};
+    $sheet->{total_LQ} = $sheet->{L}->{total} + $sheet->{Q}->{total};
     $self->headings($head);
     $self->balance_sheet($sheet);
     $self->rows([]);

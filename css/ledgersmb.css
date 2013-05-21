@@ -319,3 +319,37 @@ div.autocomplete ul li {
 span.indicator {
   border: 1px solid black; font-size: 10px; padding: 2px; background-color: #eee;
 }
+
+.financial-statement h1, .financial-statement h2 {
+   text-align: center;
+}   
+
+.financial-statement table {
+   margin-left: auto;
+   margin-right: auto;
+}
+
+.financial-statement td.amount{
+   text-align: right;
+   padding-left: 4em;
+}
+
+.financial-statement tr.total td, .financial-statement tr.total th {
+   padding-bottom: 2em;
+}
+.financial-statement tr.total td.amount {
+   border-top: thick double black;
+}
+
+.financial-statement th {
+   text-align: left;
+}
+
+.financial-statement tr.section-head th, .financial-statement tr.total th {
+   text-align: center;
+}
+
+.financial-statement a, .financial-statement a:visited {
+   color: black;
+   text-decoration: none;
+}

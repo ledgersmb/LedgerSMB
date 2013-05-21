@@ -1,0 +1,23 @@
+<?lsmb INCLUDE 'ui-header.html';
+       PROCESS 'elements.html'; ?>
+<body>
+<div class="listtop"><?lsmb text('Balance Sheet') ?></div>
+<form action="reports.pl" method="get">
+<?lsmb 
+PROCESS input element_data = {
+           label = text('Through date') #'
+            name = 'to_date'
+           value = to_date
+           class = 'date'
+            size = 12
+}; 
+PROCESS button element_data = {
+            text = text('Generate')
+            name = 'action'
+           value = 'balance_sheet'
+            type = 'submit'
+           class = 'submit'
+} ?>
+</form>
+</body>
+</html>
