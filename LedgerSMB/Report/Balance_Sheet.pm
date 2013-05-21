@@ -108,8 +108,9 @@ sub run_report {
     my @headings = $self->exec_method({funcname => 'account__all_headings'});
     my $head = {};
     $head->{$_->{accno}} = $_ for (@headings);
-    my @lines = $self->exec_method({funcname => 'report__balance_sheet'});
    
+    my @lines = $self->exec_method({funcname => 'report__balance_sheet'});
+
     my $sheet = {A => { # Assets
                        lines => [], 
                        total => 0, },

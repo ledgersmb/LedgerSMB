@@ -593,7 +593,7 @@ LEFT JOIN account_heading_tree at ON a.heading = at.id
      JOIN acc_trans ac ON ac.approved AND a.id = ac.chart_id
      JOIN tx_report t ON t.approved AND t.id = ac.trans_id
 LEFT JOIN account a2 ON a.id = a2.id AND a2.category NOT IN ('I', 'E')
-    WHERE ac.transdate <= $1
+    WHERE ac.transdate <= coalesce($1, (select max(transdate) from acc_trans))
  GROUP BY a2.id, a.accno, a.description, a.category, at.path
  ORDER BY CASE WHEN a.category = 'A' THEN 1
                WHEN a.category = 'L' THEN 2
