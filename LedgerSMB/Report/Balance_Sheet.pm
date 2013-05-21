@@ -37,6 +37,15 @@ This stores the account headings for handling the hierarchy in a single hashref
 
 has 'headings' => (is => 'rw', isa => 'HashRef[Any]', required => 0);
 
+=head2 balance_sheet
+
+This is the hashref that holds the main balance sheet data structure
+
+=cut
+
+has 'balance_sheet' => (is => 'rw', isa => 'HashRef[Any]', required => 0);
+
+
 =head1 STATIC METHODS
 
 =over
@@ -60,6 +69,8 @@ Returns none since this is not applicable to this.
 sub heading_lines {
     return [];
 }
+
+
 
 =item name
 
@@ -86,6 +97,42 @@ sub templates {
 =head1 SEMI-PUBLIC METHODS
 
 =head2 run_report()
+
+This sets rows to an empty hashref, and sets balance_sheet to the structure of 
+the balance sheet. 
+
+=cut
+
+sub run_report {
+    my ($self) = @_;
+    my @headings = $self->exec_method({funcname => 'account__all_headings'});
+    my $head = {};
+    $head->{$_->{accno}} = $_ for (@headings);
+    my @lines = $self->exec_method({funcname => 'report__balance_sheet'});
+   
+    my $sheet = {A => { # Assets
+                       lines => [], 
+                       total => 0, },
+                 L => { # Liabilities 
+                       lines => [], 
+                       total => 0, },
+                 Q => { # Equity 
+                       lines => [], 
+                       total => 0, },
+                 ratios => {},
+    };
+    for my $ref(@lines){
+        my $cat = $ref->{account_category};
+        push @{$sheet->{$cat}->{lines}},  $ref;
+        $sheet->{$cat}->{total} += $ref->{balance}; 
+    }
+    $sheet->{ratios}->{AL} = $sheet->{A}->{total} / $sheet->{L}->{total};
+    $sheet->{ratios}->{AQ} = $sheet->{A}->{total} / $sheet->{Q}->{total};
+    $sheet->{ratios}->{QL} = $sheet->{Q}->{total} / $sheet->{L}->{total};
+    $self->headings($head);
+    $self->balance_sheet($sheet);
+    $self->rows([]);
+}
 
 =head1 COPYRIGHT
 
