@@ -388,9 +388,9 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 108	translation	project	271
 109	menu	1	272
 110	action	chart_of_accounts	274
-113	action	report	281
-113	module	rp.pl	282
-113	report	balance_sheet	283
+113	action	start_report	281
+113	module	reports.pl	282
+113	report_name	balance_sheet	283
 115	action	recurring_transactions	287
 115	module	am.pl	288
 116	menu	1	289

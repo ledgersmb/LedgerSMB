@@ -22,7 +22,7 @@
 </tr>
 <?lsmb FOREACH line IN report.balance_sheet.L.lines ?> 
 <tr><th><a href="journal.pl?action=search&to_date=<?lsmb to_date 
-       ?>&accno=account_number"
+       ?>&accno=<?lsmb line.account_number ?>"
        ><?lsmb line.account_number _ ': ' _ line.account_description ?></a></th>
     <td class="amount"><?lsmb line.balance ?> </td>
 </tr>
