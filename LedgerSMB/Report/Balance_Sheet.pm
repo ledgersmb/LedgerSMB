@@ -60,13 +60,13 @@ sub columns {
     return [];
 };
 
-=item heading_lines
+=item header_lines
 
 Returns none since this is not applicable to this.
 
 =cut 
 
-sub heading_lines {
+sub header_lines {
     return [];
 }
 
@@ -88,7 +88,7 @@ Returns 'Reports/balance_sheet'
 
 =cut
 
-sub templates {
+sub template {
     return 'Reports/balance_sheet';
 }
 
@@ -126,9 +126,12 @@ sub run_report {
         push @{$sheet->{$cat}->{lines}},  $ref;
         $sheet->{$cat}->{total} += $ref->{balance}; 
     }
-    $sheet->{ratios}->{AL} = $sheet->{A}->{total} / $sheet->{L}->{total};
-    $sheet->{ratios}->{AQ} = $sheet->{A}->{total} / $sheet->{Q}->{total};
-    $sheet->{ratios}->{QL} = $sheet->{Q}->{total} / $sheet->{L}->{total};
+    $sheet->{ratios}->{AL} = $sheet->{A}->{total} / $sheet->{L}->{total} 
+        if $sheet->{L}->{total};
+    $sheet->{ratios}->{AQ} = $sheet->{A}->{total} / $sheet->{Q}->{total} 
+        if $sheet->{Q}->{total};
+    $sheet->{ratios}->{QL} = $sheet->{Q}->{total} / $sheet->{L}->{total} 
+        if $sheet->{L}->{total};
     $self->headings($head);
     $self->balance_sheet($sheet);
     $self->rows([]);
