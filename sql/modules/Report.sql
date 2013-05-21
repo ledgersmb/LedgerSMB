@@ -569,7 +569,7 @@ CREATE TYPE balance_sheet_line AS (
     heading_path text[]
 );
 
-CREATE OR REPLACE FUNCTION report__balance_sheet(in_report_date date)
+CREATE OR REPLACE FUNCTION report__balance_sheet(in_to_date date)
 RETURNS SETOF balance_sheet_line LANGUAGE SQL AS
 $$
 WITH a_bs AS (
