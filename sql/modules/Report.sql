@@ -585,7 +585,7 @@ WITH a_bs AS (
           AS heading
      FROM account a
 )
-   SELECT a2.id, a.description, a.accno, a.category, 
+   SELECT a2.id, a2.accno, a.description, a.category, 
           sum(ac.amount * CASE WHEN  a.category = 'A' THEN -1 ELSE 1 END), 
           at.path
      FROM a_bs a
@@ -594,13 +594,13 @@ LEFT JOIN account_heading_tree at ON a.heading = at.id
      JOIN tx_report t ON t.approved AND t.id = ac.trans_id
 LEFT JOIN account a2 ON a.id = a2.id AND a2.category NOT IN ('I', 'E')
     WHERE ac.transdate <= coalesce($1, (select max(transdate) from acc_trans))
- GROUP BY a2.id, a.accno, a.description, a.category, at.path
+ GROUP BY a2.id, a2.accno, a.description, a.category, at.path
  ORDER BY CASE WHEN a.category = 'A' THEN 1
                WHEN a.category = 'L' THEN 2
                ELSE 3
           END,
           at.path,
-          a.accno NULLS LAST;
+          a2.accno NULLS LAST;
 $$;
 
 COMMENT ON function report__balance_sheet(date) IS

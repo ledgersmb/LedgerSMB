@@ -8,9 +8,9 @@
    <th colspan="2"><?lsmb text('Assets') ?></th>
 </tr>
 <?lsmb FOREACH line IN report.balance_sheet.A.lines ?> 
-<tr><th><a href="journal.pl?action=search&to_date=<?lsmb to_date 
-       ?>&accno=account_number"
-       ><?lsmb line.account_number _ ': ' _ line.account_description ?></a></th>
+<tr><th><a href="journal.pl?action=search&to_date=<?lsmb report.to_date 
+       ?>&accno=<?lsmb line.account_number ?>"
+       ><?lsmb line.account_number _ ' - ' _ line.account_desc ?></a></th>
     <td class="amount"><?lsmb line.balance ?> </td>
 </tr>
 <?lsmb END ?>
@@ -21,9 +21,9 @@
    <th colspan="2"><?lsmb text('Liabilities') ?></th>
 </tr>
 <?lsmb FOREACH line IN report.balance_sheet.L.lines ?> 
-<tr><th><a href="journal.pl?action=search&to_date=<?lsmb to_date 
+<tr><th><a href="journal.pl?action=search&to_date=<?lsmb report.to_date 
        ?>&accno=<?lsmb line.account_number ?>"
-       ><?lsmb line.account_number _ ': ' _ line.account_description ?></a></th>
+       ><?lsmb line.account_number _ ' - ' _ line.account_desc ?></a></th>
     <td class="amount"><?lsmb line.balance ?> </td>
 </tr>
 <?lsmb END ?>
@@ -34,9 +34,9 @@
    <th colspan="2"><?lsmb text('Equity') ?></th>
 </tr>
 <?lsmb FOREACH line IN report.balance_sheet.Q.lines ?> 
-<tr><th><a href="journal.pl?action=search&to_date=<?lsmb to_date 
-       ?>&accno=account_number"
-       ><?lsmb line.account_number _ ': ' _ line.account_description ?></a></th>
+<tr><th><a href="journal.pl?action=search&to_date=<?lsmb report.to_date 
+       ?>&accno=<?lsmb account_number ?>"
+       ><?lsmb IF line.account_number; line.account_number _ ' - '; END; line.account_desc ?></a></th>
     <td class="amount"><?lsmb line.balance ?> </td>
 </tr>
 <?lsmb END ?>
