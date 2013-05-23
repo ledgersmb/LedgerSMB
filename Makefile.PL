@@ -70,10 +70,14 @@ feature 'Developer tool dependencies',
     'Locale::Country' => 0,
     'Locale::Language' => 0;
 
+feature 'X12 EDI support',
+    -default => 0,
+    'X12::Parser' => 0;
+
 # Rendering options
 feature 'PDF and Postscript output',
     -default => 0,
-    'Template::Plugin::Latex' => 1;
+    'Template::Plugin::Latex' => 0;
 
 feature 'OpenOffice.org output',
     -default => 0,
