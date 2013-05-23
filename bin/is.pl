@@ -64,6 +64,18 @@ sub copy_to_new{
     update();
 }
 
+sub edit_and_approve {
+    use LedgerSMB::DBObject::Draft;
+    use LedgerSMB;
+    my $lsmb = LedgerSMB->new();
+    $lsmb->merge($form);
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    $draft->delete();
+    delete $form->{id};
+    IS->post_invoice( \%myconfig, \%$form );
+    approve();
+}
+
 sub new_screen {
     use LedgerSMB::Form;
     my @reqprops = qw(ARAP vc dbh stylesheet type);

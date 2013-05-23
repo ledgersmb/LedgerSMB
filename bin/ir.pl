@@ -65,8 +65,8 @@ sub edit_and_approve {
     my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
     $draft->delete();
     delete $form->{id};
-    $form->{approved} = 1;
-    &post;
+    IR->post_invoice( \%myconfig, \%$form );
+    approve();
 }
 
 sub approve {
