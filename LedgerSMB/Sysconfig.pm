@@ -36,12 +36,10 @@ file.pl      menu.pl       taxform.pl);
 
 our @scripts = (
     'aa.pl', 'am.pl',      'ap.pl',
-    'ar.pl', 'arap.pl',  'arapprn.pl', 'bp.pl',
-    'ca.pl', 'gl.pl',
+    'ar.pl', 'arap.pl',  'arapprn.pl', 'bp.pl',   'gl.pl',
     'ic.pl',  'ir.pl',
-    'is.pl', 'jc.pl',    'login.pl',   'menu.pl',
-    'oe.pl', 'pe.pl',    'pos.pl',     'ps.pl',
-    'pw.pl', 'rc.pl',    'rp.pl', 	'initiate.pl'
+    'is.pl', 'jc.pl',    'oe.pl',       'pe.pl',  'pos.pl',     'ps.pl',
+    'pw.pl',
 );
 
 # if you have latex installed set to 1
