@@ -99,6 +99,7 @@ Changelog for 1.3.33
 * Fixed default_reportable not respected for invoices (Chris T, 799)
 * Fixed dropdowns not affecting date range in tax reports (Chris T, 811)
 * Added missing taxincluded handling, added script to populate (Chris T, 832)
+* Fixed code references stringified on LaTeX templates (Chris T, 843)
 
 Changelog for 1.3.32
 * Fixed em-dash handling for pdfs (Chris T)
