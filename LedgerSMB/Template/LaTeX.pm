@@ -90,7 +90,7 @@ sub preprocess {
 			$vars = $rawvars;
 		}
 		#XXX Fix escaping
-		$vars = escape($vars);
+		$vars = escape($vars) unless $type eq 'CODE';
 	} else {
 		for ( keys %{$rawvars} ) {
 			$vars->{$_} = preprocess($rawvars->{$_});
