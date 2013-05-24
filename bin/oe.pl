@@ -1036,7 +1036,6 @@ sub update {
             $form->{terms} * 1 )
           : $form->{reqdate};
         $form->{oldtransdate} = $form->{transdate};
-        &rebuild_vc( $form->{vc}, $ARAP, $form->{transdate}, 1 ) if !$newname;
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};
