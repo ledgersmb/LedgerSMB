@@ -570,7 +570,9 @@ function on_return_submit(event){
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Ship via') . qq|</th>
-		<td colspan=3><input name="shipvia" size="35" value="$form->{shipvia}"></td>
+		<td colspan=3>
+                   <textarea name="shipvia" cols="35" rows="3"
+                       >$form->{shipvia}</textarea></td>
 	      </tr>
 	    </table>
 	  </td>
