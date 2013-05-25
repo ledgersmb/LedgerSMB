@@ -40,6 +40,7 @@
 
 package lsmb_legacy;
 use LedgerSMB::IR;
+use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Tax;
 use LedgerSMB::Setting;
@@ -1415,7 +1416,7 @@ sub on_hold {
     
     if ($form->{id}) {
         
-        my $toggled = IS->toggle_on_old($form);
+        my $toggled = IS->toggle_on_hold($form);
     
         #&invoice_links(); # is that it?
         &edit(); # it was already IN edit for this to be reached.
