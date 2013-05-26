@@ -96,13 +96,6 @@ This function redirects to the script and argument set determined by
 $self->{callback}, and if this is not set, goes to an info screen and prints
 $msg.
 
-=item redo_rows (fields => \@list, count => $integer, [index => $string);
-
-This function is undergoing serious redesign at the moment.  If index is 
-defined, that field is used for ordering the rows.  If not, runningnumber is 
-used.  Behavior is not defined when index points to a field containing 
-non-numbers.
-
 =item set (@attrs)
 
 Copies the given key=>vars to $self. Allows for finer control of 
@@ -991,32 +984,6 @@ sub dberror{
        die;
    }
    die $dbh->state . ":" . $dbh->errstr;
-}
-
-sub redo_rows {
-
-    my $self  = shift @_;
-    my %args  = @_;
-    my @flds  = @{ $args{fields} };
-    my $count = $args{count};
-    my $index = ( $args{index} ) ? $args{index} : 'runningnumber';
-
-    my @rows;
-    my $i;    # increment counter use only
-    for $i ( 1 .. $count ) {
-        my $temphash = { _inc => $i };
-        for my $fld (@flds) {
-            $temphash->{$fld} = $self->{ "$fld" . "_$i" };
-        }
-        push @rows, $temphash;
-    }
-    $i = 1;
-    for my $row ( sort { $a->{$index} <=> $b->{$index} } @rows ) {
-        for my $fld (@flds) {
-            $self->{ "$fld" . "_$i" } = $row->{$fld};
-        }
-        ++$i;
-    }
 }
 
 sub merge {
