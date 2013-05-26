@@ -102,6 +102,10 @@ Changelog for 1.3.33
 * Added missing taxincluded handling, added script to populate (Chris T, 832)
 * Fixed code references stringified on LaTeX templates (Chris T, 843)
 * Orders no longer change customer when changing date (Chris T)
+* Fixed toggling on-hold vendor invoices (Herman V)
+
+Herman V is Herman Vierendeels
+Chris T is Chris Travers
 
 Changelog for 1.3.32
 * Fixed em-dash handling for pdfs (Chris T)
