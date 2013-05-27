@@ -103,6 +103,7 @@ Changelog for 1.3.33
 * Fixed code references stringified on LaTeX templates (Chris T, 843)
 * Orders no longer change customer when changing date (Chris T)
 * Fixed toggling on-hold vendor invoices (Herman V)
+* Fixed disappearing addresses on update on invoice screen (Chris T)
 
 Herman V is Herman Vierendeels
 Chris T is Chris Travers

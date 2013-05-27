@@ -548,7 +548,7 @@ $form->open_status_div . qq|
     $form->hide_form(
         qw(batch_id approved id printed emailed sort closedto locked 
            oldtransdate audittrail recurring checktax reverse batch_id subtype
-           entity_control_code meta_number default_reportable)
+           entity_control_code meta_number default_reportable address city)
     );
 
     if ( $form->{vc} eq 'customer' ) {
