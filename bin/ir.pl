@@ -1416,7 +1416,7 @@ sub on_hold {
     
     if ($form->{id}) {
         
-        my $toggled = IS->toggle_on_hold($form);
+        my $toggled = IR->toggle_on_hold($form);#tshvr4
     
         #&invoice_links(); # is that it?
         &edit(); # it was already IN edit for this to be reached.
