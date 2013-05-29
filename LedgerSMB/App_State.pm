@@ -7,7 +7,6 @@ package LedgerSMB::App_State;
 use strict;
 use warnings;
 use LedgerSMB::Sysconfig;
-use LedgerSMB::SODA;
 use LedgerSMB::User;
 use LedgerSMB::Locale;
 
@@ -41,13 +40,6 @@ Stores a LedgerSMB::User object for the currently logged in user.
 
 =cut
 
-our $SODA;
-
-=item SODA
-
-Stores the SODA database access handle.
-
-=cut
 
 our $Company_Settings;
 
@@ -92,21 +84,6 @@ our $DBName;
 
 =head1 METHODS 
 
-=over
-
-=item init(string $username, string $credential, string $company)
-
-=cut
-
-sub init {
-    my ($username, $credential, $company) = @_;
-    $SODA   = LedgerSMB::SODA->new({db => $company, 
-                              username => $username,
-                                  cred => $credential});
-    $User   = LedgerSMB::User->fetch_config($SODA);
-    $Locale = LedgerSMB::Locale->get_handle($User->{language});
-}
-
 =item zero()
 
 zeroes out all majro parts.
@@ -114,7 +91,6 @@ zeroes out all majro parts.
 =cut
 
 sub zero() {
-    $SODA = undef;
     $User = undef;
     $Locale = undef;
     $DBH = undef;
@@ -138,7 +114,6 @@ sub cleanup {
                             $LedgerSMB::Sysconfig::language
                         );
     $User             = {};
-    $SODA             = {};
     $Company_Settings = {};
     $DBH = undef;
     $DBName = undef;

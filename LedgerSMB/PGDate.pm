@@ -9,16 +9,6 @@ use DateTime::Format::Strptime;
 use Carp;
 use DateTime::Duration;
 
-BEGIN {
-   use LedgerSMB::SODA;
-   LedgerSMB::SODA->register_type({sql_type => 'date', 
-                                 perl_class => 'LedgerSMB::PGDate'});
-   LedgerSMB::SODA->register_type({sql_type => 'datetime', 
-                                 perl_class => 'LedgerSMB::PGDate'});
-   LedgerSMB::SODA->register_type({sql_type => 'timestamp', 
-                                 perl_class => 'LedgerSMB::PGDate'});
-}
-
 =head1 SYNPOSIS
 This class handles formatting and mapping between the DateTime module and
 PostgreSQL. It provides a handler for date and timestamp datatypes.

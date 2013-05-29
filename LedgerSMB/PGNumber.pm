@@ -11,16 +11,6 @@ use LedgerSMB::Setting;
 
 package LedgerSMB::PGNumber;
 
-BEGIN {
-   use LedgerSMB::SODA;
-   LedgerSMB::SODA->register_type({sql_type => 'float', 
-                                 perl_class => 'LedgerSMB::PGNumber'});
-   LedgerSMB::SODA->register_type({sql_type => 'double', 
-                                 perl_class => 'LedgerSMB::PGNumber'});
-   LedgerSMB::SODA->register_type({sql_type => 'numeric', 
-                                 perl_class => 'LedgerSMB::PGNumber'});
-}
-
 =head1 SYNPOSIS
 
 This is a wrapper class for handling a database interface for numeric (int, 
