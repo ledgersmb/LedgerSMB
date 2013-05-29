@@ -143,17 +143,6 @@ sub get {
     return;
 }
 
-=item get_nbv
-
-Returns line items for the Net Book Value report.
-
-=cut
-
-sub get_nbv {
-    my ($self) = @_;
-    return $self->exec_method(funcname => 'asset_nbv_report');
-}
-
 =item generate
 
 Properties used:

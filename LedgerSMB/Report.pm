@@ -356,6 +356,22 @@ sub process_bclasses {
 
 =back
 
+=head1 WRITING REPORTS 
+
+LedgerSMB::Report subclasses are written typically in a few parts:
+
+=over
+
+=item SQL or PL/PGSQL function
+
+=item Criteria Properties
+
+=item Method overrides
+
+=item Main processing function(s)
+
+=back
+
 =head1 COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the

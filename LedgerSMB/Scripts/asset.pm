@@ -19,6 +19,7 @@ use LedgerSMB::Template;
 use LedgerSMB::DBObject::Asset_Class;
 use LedgerSMB::DBObject::Asset;
 use LedgerSMB::DBObject::Asset_Report;
+use LedgerSMB::Report::Assets::Net_Book_Value;
 use strict;
 
 our @file_columns = qw(tag purchase_date description asset_class location vendor 
@@ -986,47 +987,8 @@ No inputs required or used.
 
 sub display_nbv {
     my ($request) = @_;
-    my $locale = $request->{_locale};
-    my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request });
-    my @cols = qw(id tag description begin_depreciation method remaining_life basis salvage_value
-                  through_date accum_depreciation net_book_value);
-    my $header = {
-                   id                  => $locale->text('ID'),
-                   tag                 => $locale->text('Tag'),
-                   description         => $locale->text('Description'),
-                   begin_depreciation  => $locale->text('In Svc.'),
-                   method              => $locale->text('Method'),
-                   remaining_life      => $locale->text('Rem. Life'), 
-                   basis               => $locale->text('Basis'),
-                   salvage_value       => $locale->text('(+) Salvage Value'),
-                   through_date        => $locale->text('Dep. through'),
-                   accum_depreciation  => $locale->text('(-) Accum. Dep.'),
-                   net_book_value      => $locale->text('(=) NBV'),
-                   percent_depreciated => $locale->text('Pct. Dep.'),
-    };
-    my @results = $report->get_nbv;
-    my $rows = [];
-    for my $r(@results){
-        for my $amt (qw(basis salvage_value accum_depreciation net_book_value)){
-            $r->{$amt} = $request->format_amount({amount => $r->{$amt}, money => 1});
-        }
-        for my $amt (qw(percent_depreciated remaining_life)){
-            $r->{$amt} = $request->format_amount({amount => $r->{$amt}});
-        }
-        push @$rows, $r;
-    }
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user}, 
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'form-dynatable',
-        format => 'HTML'
-    );
-    $template->render({form => $report, 
-                    columns => \@cols, 
-                    heading => $header,
-                       rows => $rows,
-    });
+    my $report = LedgerSMB::Report::Assets::Net_Book_Value->new(%$request);
+    $report->render($request);
 }
 
 =item begin_import 
