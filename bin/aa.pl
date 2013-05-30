@@ -982,7 +982,7 @@ sub form_footer {
                    key   => 'O', 
                    value => $locale->text('Post as Saved') };
            if (grep /^lsmb_$form->{company}__draft_edit$/, @{$form->{_roles}}){
-               $button{edit_and_approve} = { 
+               $button{edit_and_save} = { 
                    ndx   => 4, 
                    key   => 'E', 
                    value => $locale->text('Post as Shown') };
@@ -1134,7 +1134,7 @@ sub save_temp {
     $form->redirect( $locale->text('Template Saved!') );
 }
 
-sub edit_and_approve {
+sub edit_and_save {
     use LedgerSMB::DBObject::Draft;
     use LedgerSMB;
     my $lsmb = LedgerSMB->new();
@@ -1143,7 +1143,7 @@ sub edit_and_approve {
     $draft->delete();
     delete $form->{id};
     AA->post_transaction( \%myconfig, \%$form );
-    approve();
+    edit();
 }
 
 sub approve {

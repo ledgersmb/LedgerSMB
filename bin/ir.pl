@@ -58,7 +58,7 @@ sub copy_to_new{
     update();
 }
 
-sub edit_and_approve {
+sub edit_and_save {
     use LedgerSMB::DBObject::Draft;
     use LedgerSMB;
     my $lsmb = LedgerSMB->new();
@@ -67,7 +67,7 @@ sub edit_and_approve {
     $draft->delete();
     delete $form->{id};
     IR->post_invoice( \%myconfig, \%$form );
-    approve();
+    edit();
 }
 
 sub approve {
@@ -945,10 +945,10 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
                        key   => 'O', 
                        value => $locale->text('Post as Saved') };
                if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
-                   $button{edit_and_approve} = { 
+                   $button{edit_and_save} = { 
                        ndx   => 4, 
                        key   => 'E', 
-                       value => $locale->text('Post as Shown') };
+                       value => $locale->text('Save as Shown') };
               }
                delete $button{post_as_new};
                delete $button{post};

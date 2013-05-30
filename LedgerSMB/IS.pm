@@ -1246,7 +1246,7 @@ sub post_invoice {
             $sth->execute(
                 $form->{id},               $form->{"id_$i"},
                 $form->{"description_$i"}, $form->{"qty_$i"},
-                $form->{"sellprice_$i"},   $form->{"precision_$i"},
+                $form->{"sellprice_$i"},   $decimalplaces,
                 $fxsellprice,              $form->{"discount_$i"},
                 $allocated,                $form->{"unit_$i"},        
                 $form->{"deliverydate_$i"}, 

@@ -64,7 +64,7 @@ sub copy_to_new{
     update();
 }
 
-sub edit_and_approve {
+sub edit_and_save {
     use LedgerSMB::DBObject::Draft;
     use LedgerSMB;
     my $lsmb = LedgerSMB->new();
@@ -73,7 +73,7 @@ sub edit_and_approve {
     $draft->delete();
     delete $form->{id};
     IS->post_invoice( \%myconfig, \%$form );
-    approve();
+    edit();
 }
 
 sub new_screen {
@@ -1012,7 +1012,7 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
 
 
         if ($from->{separate_duties} or $form->{batch_id}){
-           $button{'post'}->{value} = $locale->text('Save') unless $form->{id};
+           $button{'post'}->{value} = $locale->text('Save');
         }
        delete $button{void} if $form->{invnumber} =~ /-VOID/;
 
@@ -1029,10 +1029,10 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
                        key   => 'O', 
                        value => $locale->text('Post as Saved') };
                if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
-                   $button{edit_and_approve} = { 
+                   $button{edit_and_save} = { 
                        ndx   => 4, 
                        key   => 'E', 
-                       value => $locale->text('Post as Shown') };
+                       value => $locale->text('Save as Shown') };
               }
                delete $button{post_as_new};
                delete $button{post};

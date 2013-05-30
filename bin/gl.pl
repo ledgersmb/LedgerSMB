@@ -96,7 +96,7 @@ sub pos_adjust {
     $form->{accno_3} = $pos_config{'coa_prefix'};
 }
 
-sub edit_and_approve {
+sub edit_and_save {
     use LedgerSMB::DBObject::Draft;
     use LedgerSMB;
     check_balanced($form);
@@ -105,7 +105,7 @@ sub edit_and_approve {
     my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
     $draft->delete();
     GL->post_transaction( \%myconfig, \%$form, $locale);
-    approve();
+    edit();
 }
 
 sub approve {
@@ -308,9 +308,9 @@ sub display_form
 			key   => 'S', 
 			value => $locale->text('Post as Saved') };
 		$a{approve} = 1;
-		$a{edit_and_approve} = 1;
+		$a{edit_and_save} = 1;
 		if (grep /__draft_edit$/, @{$form->{_roles}}){
-		    $button{edit_and_approve} = { 
+		    $button{edit_and_save} = { 
 			ndx   => 4, 
 			key   => 'O', 
 			value => $locale->text('Post as Shown') };
