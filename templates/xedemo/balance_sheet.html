@@ -40,9 +40,9 @@
 	RETURN UNLESS account_data.defined;
 	IF account_data.heading; ?><b><?lsmb
 		account_data.text; ?></b><?lsmb
-	ELSIF account_data.gifi_account; ?><a href="gl.pl?action=generate_report&amp;path=<?lsmb path ?>&amp;login=<?lsmb login ?>&amp;sessionid=<?lsmb sessionid ?>&amp;l_transdate=Y&amp;l_reference=Y&amp;l_description=Y&amp;l_source=Y&amp;l_debit=Y&amp;l_credit=Y&amp;l_gifi_accno=Y&amp;category=X&amp;gifi_accno=<?lsmb account_data.account ?>"><?lsmb
+	ELSIF account_data.gifi_account; ?><a href="gl.pl?action=generate_report&amp;path=<?lsmb path ?>&amp;l_transdate=Y&amp;dateto=<?lsmb asofdate ?>&amp;l_reference=Y&amp;l_description=Y&amp;l_source=Y&amp;l_debit=Y&amp;l_credit=Y&amp;l_gifi_accno=Y&amp;category=X&amp;gifi_accno=<?lsmb account_data.account ?>"><?lsmb
 		account_data.text; ?></a><?lsmb
-	ELSIF account_data.account; ?><a href="gl.pl?action=generate_report&amp;path=<?lsmb path ?>&amp;login=<?lsmb login ?>&amp;sessionid=<?lsmb sessionid ?>&amp;l_transdate=Y&amp;l_reference=Y&amp;l_description=Y&amp;l_source=Y&amp;l_debit=Y&amp;l_credit=Y&amp;l_accno=Y&amp;category=X&amp;accno=<?lsmb account_data.account ?>"><?lsmb
+	ELSIF account_data.account; ?><a href="gl.pl?action=generate_report&amp;path=<?lsmb path ?>&amp;dateto=<?lsmb asofdate ?>&amp;l_transdate=Y&amp;l_reference=Y&amp;l_description=Y&amp;l_source=Y&amp;l_debit=Y&amp;l_credit=Y&amp;l_accno=Y&amp;category=X&amp;accno=<?lsmb account_data.account ?>"><?lsmb
 		account_data.text; ?></a><?lsmb
 	ELSIF account_data.subtotal; ?><b>&nbsp;&nbsp;<?lsmb
 		account_data.text; ?></b><?lsmb
