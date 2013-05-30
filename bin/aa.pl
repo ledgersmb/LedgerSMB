@@ -985,7 +985,7 @@ sub form_footer {
                $button{edit_and_save} = { 
                    ndx   => 4, 
                    key   => 'E', 
-                   value => $locale->text('Post as Shown') };
+                   value => $locale->text('Save as Shown') };
           }
            delete $button{post_as_new};
            delete $button{post};

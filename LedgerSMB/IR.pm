@@ -42,6 +42,7 @@ use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
+use LedgerSMB::App_State;
 use Math::BigFloat;
 
 =over
@@ -82,7 +83,7 @@ sub post_invoice {
     if ($form->{id}){
         delete_invoice($self, $myconfig, $form);
     }
-    my $dbh = $form->{dbh};
+    my $dbh = $LedgerSMB::App_State::DBH;
     $form->{invnumber} = $form->update_defaults( $myconfig, "vinumber", $dbh )
       unless $form->{invnumber};
 

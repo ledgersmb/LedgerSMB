@@ -41,6 +41,7 @@ use LedgerSMB::Tax;
 use LedgerSMB::PriceMatrix;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
+use LedgerSMB::App_State;
 use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::IS');
@@ -929,7 +930,7 @@ sub post_invoice {
     $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
       unless $form->{invnumber};
 
-    my $dbh = $form->{dbh};
+    my $dbh = $LedgerSMB::App_State::DBH;;
 
     my $query;
     my $sth;

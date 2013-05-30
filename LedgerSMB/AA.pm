@@ -28,6 +28,7 @@ replacement is available.
 
 package AA;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::App_State;
 use Log::Log4perl;
 use LedgerSMB::File;
 use Math::BigFloat;
@@ -78,7 +79,7 @@ sub post_transaction {
     }
 
     # connect to database
-    my $dbh = $form->{dbh};
+    my $dbh = $LedgerSMB::App_State::DBH;
 
     my $query;
     my $sth;

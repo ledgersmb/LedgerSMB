@@ -313,7 +313,7 @@ sub display_form
 		    $button{edit_and_save} = { 
 			ndx   => 4, 
 			key   => 'O', 
-			value => $locale->text('Post as Shown') };
+			value => $locale->text('Save as Shown') };
 		}
 		delete $button{post_as_new};
 		delete $button{post};
