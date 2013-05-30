@@ -1701,8 +1701,8 @@ while ($request->{"entity_id_$count"})
         push @{$entity_list{"$entity_id"}->{"array_cash_account_id"}}, $entity_list{"$entity_id"}->{"vc_discount_accno_$count"};
         push @{$entity_list{"$entity_id"}->{"array_source"}}, $locale->text('Applied discount by an overpayment');
 	push @{$entity_list{"$entity_id"}->{"array_transaction_id"}}, $entity_list{"$entity_id"}->{"invoice_id_$count"};
-	push @{$entity_list{"$entity_id"}->{"array_memo"}}, 'NULL';
-	push @{$entity_list{"$entity_id"}->{"ovp_payment_id"}}, 'NULL';
+	push @{$entity_list{"$entity_id"}->{"array_memo"}}, undef;
+	push @{$entity_list{"$entity_id"}->{"ovp_payment_id"}}, undef;
     }
 
     #this is the amount of the present invoice that will be paid from the $ovp_chart_id accno  
@@ -1724,7 +1724,7 @@ while ($request->{"entity_id_$count"})
         push @{$entity_list{"$entity_id"}->{"array_cash_account_id"}}, $ovp_chart_id;
         push @{$entity_list{"$entity_id"}->{"array_source"}}, $locale->text('use of an overpayment');
         push @{$entity_list{"$entity_id"}->{"array_transaction_id"}}, $entity_list{"$entity_id"}->{"invoice_id_$count"};
-        push @{$entity_list{"$entity_id"}->{"array_memo"}}, 'NULL';
+        push @{$entity_list{"$entity_id"}->{"array_memo"}}, undef;
         push @{$entity_list{"$entity_id"}->{"ovp_payment_id"}}, @{$entity_unused_ovp{"$ovp_chart_id"}->{"unused_overpayment"}}[$unused_ovp_index]->{"payment_id"};
         
         $tmp_ovp_amount = 0;
@@ -1741,7 +1741,7 @@ while ($request->{"entity_id_$count"})
         push @{$entity_list{"$entity_id"}->{"array_cash_account_id"}}, $ovp_chart_id;
         push @{$entity_list{"$entity_id"}->{"array_source"}}, $locale->text('use of an overpayment');
         push @{$entity_list{"$entity_id"}->{"array_transaction_id"}}, $entity_list{"$entity_id"}->{"invoice_id_$count"};
-        push @{$entity_list{"$entity_id"}->{"array_memo"}}, 'NULL';
+        push @{$entity_list{"$entity_id"}->{"array_memo"}}, undef;
         push @{$entity_list{"$entity_id"}->{"ovp_payment_id"}}, @{$entity_unused_ovp{"$ovp_chart_id"}->{"unused_overpayment"}}[$unused_ovp_index]->{"payment_id"};
         
         $unused_ovp_index = $entity_unused_ovp{"$ovp_chart_id"}->{"unused_ovp_index"}++;
@@ -1754,6 +1754,7 @@ while ($request->{"entity_id_$count"})
     #call the sql payment_post method  
     $entity_list{"$entity_id"} = LedgerSMB::DBObject::Payment->new({'base' => $request});
     $entity_list{"$entity_id"}->{"entity_credit_id"} = $entity_id;
+
     
     # LETS GET THE DEPARTMENT INFO
     # ******************************************, Falta implementarlo!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -1778,8 +1779,8 @@ while ($request->{"entity_id_$count"})
         push @{$entity_list{"$entity_id"}->{"array_cash_account_id"}}, $entity_list{"$entity_id"}->{"vc_discount_accno_$count"};
         push @{$entity_list{"$entity_id"}->{"array_source"}}, $locale->text('Applied discount by an overpayment');
 	push @{$entity_list{"$entity_id"}->{"array_transaction_id"}}, $entity_list{"$entity_id"}->{"invoice_id_$count"};
-	push @{$entity_list{"$entity_id"}->{"array_memo"}}, 'NULL';
-	push @{$entity_list{"$entity_id"}->{"ovp_payment_id"}}, 'NULL';
+	push @{$entity_list{"$entity_id"}->{"array_memo"}}, undef;
+	push @{$entity_list{"$entity_id"}->{"ovp_payment_id"}}, undef;
 
     }
   
@@ -1795,7 +1796,7 @@ while ($request->{"entity_id_$count"})
         push @{$entity_list{"$entity_id"}->{"array_cash_account_id"}}, $ovp_chart_id;
         push @{$entity_list{"$entity_id"}->{"array_source"}}, $locale->text('use of an overpayment');
         push @{$entity_list{"$entity_id"}->{"array_transaction_id"}}, $entity_list{"$entity_id"}->{"invoice_id_$count"};
-        push @{$entity_list{"$entity_id"}->{"array_memo"}}, 'NULL';
+        push @{$entity_list{"$entity_id"}->{"array_memo"}}, undef;
         push @{$entity_list{"$entity_id"}->{"ovp_payment_id"}}, @{$entity_unused_ovp{"$ovp_chart_id"}->{"unused_overpayment"}}[$unused_ovp_index]->{"payment_id"};
         
         $tmp_ovp_amount = 0;
@@ -1812,7 +1813,7 @@ while ($request->{"entity_id_$count"})
         push @{$entity_list{"$entity_id"}->{"array_cash_account_id"}}, $ovp_chart_id;
         push @{$entity_list{"$entity_id"}->{"array_source"}}, $locale->text('use of an overpayment');
         push @{$entity_list{"$entity_id"}->{"array_transaction_id"}}, $entity_list{"$entity_id"}->{"invoice_id_$count"};
-        push @{$entity_list{"$entity_id"}->{"array_memo"}}, 'NULL';
+        push @{$entity_list{"$entity_id"}->{"array_memo"}}, undef;
         push @{$entity_list{"$entity_id"}->{"ovp_payment_id"}}, @{$entity_unused_ovp{"$ovp_chart_id"}->{"unused_overpayment"}}[$unused_ovp_index]->{"payment_id"};
 
         $unused_ovp_index = $entity_unused_ovp{"$ovp_chart_id"}->{"unused_ovp_index"}++;
