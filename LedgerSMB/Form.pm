@@ -2234,6 +2234,8 @@ sub all_employees {
     my $dbh       = $self->{dbh};
     my @whereargs = ();
 
+    $self->{all_employee}=();#tshvr4 init properly
+
     # setup employees/sales contacts
     my $query = qq|
 		SELECT id, name
@@ -2289,6 +2291,8 @@ sub all_projects {
     my @queryargs = ();
 
     my $where = "1 = 1";
+
+    $self->{all_project}=();#tshvr4 init properly
 
     $where = qq|id NOT IN (SELECT id
 							 FROM parts
@@ -2349,6 +2353,8 @@ sub all_departments {
     my $dbh = $self->{dbh};
 
     my $where = "1 = 1";
+
+    $self->{all_department}=();#tshvr4 init properly 
 
     if ($vc) {
         if ( $vc eq 'customer' ) {
@@ -2419,6 +2425,8 @@ sub all_years {
 
     my ( $self, $myconfig ) = @_;
 
+    $self->{all_month}=();#tshvr4 init properly
+ 
     my $dbh = $self->{dbh};
     $self->{all_years} = [];
 
@@ -2511,6 +2519,8 @@ sub create_links {
     my $val;
     my $ref;
     my $key;
+
+    $self->{"${module}_links"}=();#tshvr4 init properly
 
     # now get the account numbers
     $query = qq|SELECT accno, description, link
