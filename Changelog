@@ -89,6 +89,7 @@ Changelog for 1.3.34
 * Fixed some SQL syntax issues on using overpayments (Chris T)
 * Fixed date range when clicking through income statement to gl (Chris T, 836)
 * Fixed invoice screens not recognizing default payment account (Chris T, 837)
+* Fixed gl report criteria lost when returning from transaction (Chris T, 839)
 
 Changelog for 1.3.33
 * Fixed <?lsmb YYMMMDD ?> interpolation in settings (Chris T)
