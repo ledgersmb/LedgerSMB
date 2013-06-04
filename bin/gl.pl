@@ -507,12 +507,12 @@ sub generate_report {
     GL->all_transactions( \%myconfig, \%$form );
 
     $href =
-"$form->{script}?action=generate_report&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
+"$form->{script}?action=generate_report&account=$form->{account}&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
     $form->sort_order();
 
     $callback =
-"$form->{script}?action=generate_report&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
+"$form->{script}?action=generate_report&account=$form->{account}&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
 
     my %hiddens = (
         'action' => 'generate_report',
