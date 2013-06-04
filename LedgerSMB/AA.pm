@@ -837,9 +837,11 @@ sub get_name {
 			  b.discount AS tradediscount, 
 		          b.description AS business, 
 			  entity.control_code as entity_control_code,
-			  c.meta_number, ecl.*, ctf.default_reportable
+			  c.meta_number, ecl.*, ctf.default_reportable,
+                          c.cash_account_id, ca.accno as cash_accno
 		     FROM entity_credit_account c
 		     JOIN entity ON (entity.id = c.entity_id)
+                LEFT JOIN account ca ON c.cash_account_id = ca.id
 		LEFT JOIN business b ON (b.id = c.business_id)
                 LEFT JOIN country_tax_form ctf ON ctf.id = c.taxform_id
                 LEFT JOIN (SELECT coalesce(line_one, '')

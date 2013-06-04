@@ -822,6 +822,8 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 	</tr>
 |;
 
+    $form->{"selectAP_paid"} =~ /($form->{cash_accno}--[^<]*)/;
+    $form->{"AP_paid_$form->{paidaccounts}"} = $1;
     $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
     for $i ( 1 .. $form->{paidaccounts} ) {
 
