@@ -349,9 +349,7 @@ UPDATE defaults
  WHERE setting_key IN (select fldname FROM sl28.defaults);
 
 
-INSERT INTO parts SELECT * FROM sl28.parts;
-
-INSERT INTO assembly SELECT * FROM sl28.assembly;
+--INSERT INTO assembly SELECT * FROM sl28.assembly;
 
 ALTER TABLE gl DISABLE TRIGGER gl_audit_trail;
 
