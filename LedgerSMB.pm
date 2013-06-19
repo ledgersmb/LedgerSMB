@@ -866,13 +866,7 @@ sub _db_init {
     $self->{dbh} = DBI->connect(
         "dbi:Pg:dbname=$dbname", "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
     ); 
-    $logger->debug("DBI->connect dbh=$self->{dbh}");
-    my $dbi_trace=$LedgerSMB::Sysconfig::DBI_TRACE;
-    if($dbi_trace)
-    {
-     $logger->debug("\$dbi_trace=$dbi_trace");
-     $self->{dbh}->trace(split /=/,$dbi_trace,2);#http://search.cpan.org/~timb/DBI-1.616/DBI.pm#TRACING
-    }
+    #move dbi_trace further on , dbh may not have been acquired because of authentication error
 
 
     if (($self->{script} eq 'login.pl') && ($self->{action} eq 
@@ -885,6 +879,15 @@ sub _db_init {
     elsif (!$self->{dbh}){
         $self->_get_password;
     }
+
+    $logger->debug("DBI->connect dbh=$self->{dbh}");
+    my $dbi_trace=$LedgerSMB::Sysconfig::DBI_TRACE;
+    if($dbi_trace)
+    {
+     $logger->debug("\$dbi_trace=$dbi_trace");
+     $self->{dbh}->trace(split /=/,$dbi_trace,2);#http://search.cpan.org/~timb/DBI-1.616/DBI.pm#TRACING
+    }
+
     $self->{dbh}->{pg_server_prepare} = 0;
     $self->{dbh}->{pg_enable_utf8} = 1;
     $LedgerSMB::App_State::DBH = $self->{dbh};
