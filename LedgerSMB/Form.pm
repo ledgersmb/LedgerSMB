@@ -2518,7 +2518,7 @@ sub create_links {
             $self->lastname_used( $myconfig, $dbh, $vc, $module );
         }
     }
-    for (qw(separate_duties current_date curr closedto revtrans)) {
+    for (qw(separate_duties current_date curr closedto revtrans lock_description)) {
         if ($_ eq 'closedto'){
             $query = qq|
 				SELECT value::date FROM defaults

@@ -63,6 +63,9 @@ our @default_settings = (
        { name => 'separate_duties',
         label => $locale->text('Separate Duties'),
          type => 'YES_NO', },
+       { name => 'lock_description',
+        label => 'Lock Item Description',
+         type => 'YES_NO', },
      ] },
  { title => $locale->text('Default Accounts'),
    items => [

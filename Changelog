@@ -16,6 +16,7 @@ General Enhancements:
 * Can now print envelopes or shipping labels from many screens (Chris T)
 * Can now select default formats for printed invoices (Chris T)
 * Shipvia is now a text area. (Chris T)
+* Descriptions can now be locked on invoices and orders (Chris T)
 
 Enhancing data integrity
 * No longer allow NULL amounts in acc_trans (Chris T)

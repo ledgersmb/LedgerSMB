@@ -153,6 +153,8 @@ sub approve {
 sub display_row {
     my $numrows = shift;
     my $lsmb_module;
+    my $desc_disabled = "";
+    $desc_disabled = 'DISABLED="DISABLED"' if $form->{lock_description};
     if ($form->{vc} eq 'customer'){
        $lsmb_module = 'AR';
     } elsif ($form->{vc} eq 'vendor'){
@@ -276,6 +278,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
 
     $spc = substr( $myconfig{numberformat}, -3, 1 );
     for $i ( 1 .. $numrows ) {
+        $desc_disabled = '' if $i == $numrows;
         if ( $spc eq '.' ) {
             ( $null, $dec ) = split /\./, $form->{"sellprice_$i"};
         }
@@ -330,13 +333,13 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
             $form->{"description_$i"} =
               $form->quote( $form->{"description_$i"} );
             $column_data{description} =
-qq|<td><textarea name="description_$i" rows=$rows cols=46 wrap=soft>$form->{"description_$i"}</textarea></td>|;
+qq|<td><textarea name="description_$i" rows=$rows $desc_disabled cols=46 wrap=soft>$form->{"description_$i"}</textarea></td>|;
         }
         else {
             $form->{"description_$i"} =
               $form->quote( $form->{"description_$i"} );
             $column_data{description} =
-qq|<td><input name="description_$i" size=48 value="$form->{"description_$i"}"></td>|;
+qq|<td><input name="description_$i" $desc_disabled size=48 value="$form->{"description_$i"}"></td>|;
         }
 
         for (qw(partnumber sku unit)) {
