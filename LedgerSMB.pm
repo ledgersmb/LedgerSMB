@@ -965,6 +965,7 @@ sub dberror{
    my $self = shift @_;
    my $state_error = {};
    my $locale = $LedgerSMB::App_State::Locale;
+   if(! $locale){$locale=$self->{_locale};}#tshvr4
    my $dbh = $LedgerSMB::App_State::DBH;
    $state_error = {
             '42883' => $locale->text('Internal Database Error'),
