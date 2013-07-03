@@ -1128,7 +1128,7 @@ sub approve {
 sub update {
     my $display = shift;
     $is_update = 1;
-    &create_links;
+    #&create_links;#tshvr4 In r5799 statement &create_links was added to bin/aa.pl  'sub update' But this makes that AA->get_name is called again from create_links and already user-filled in fields like $form->{AP_amount_1}     $form->{amount_1}     $form->{AP} are overridden again in get_name
     if ( !$display ) {
 
         $form->{invtotal} = 0;
