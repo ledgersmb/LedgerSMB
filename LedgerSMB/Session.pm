@@ -166,7 +166,8 @@ sub create {
     my ( $userID ) = $fetchUserID->fetchrow_array;
     unless($userID) {
         $logger->error(__FILE__ . ':' . __LINE__ . ": no such user: $login");
-        http_error('401');
+        LedgerSMB::Auth->http_error('401');#tshvr4
+        return;#tshvr4?
     }
 
 # this is assuming that the login is safe, which might be a bad assumption
@@ -199,7 +200,7 @@ sub create {
 
     #create a new session
     $createNew->execute( $newSessionID, $newToken )
-      || http_error('401');
+      || LedgerSMB::Auth->http_error('401');#tshvr4
     $lsmb->{session_id} = $newSessionID;
 
     #reseed the random number generator

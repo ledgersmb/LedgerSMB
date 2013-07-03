@@ -73,9 +73,11 @@ if ( !${LedgerSMB::Sysconfig::auth} ) {
 require "LedgerSMB/Auth/" . ${LedgerSMB::Sysconfig::auth} . ".pm";
 
 sub http_error {
-    my ($errcode, $msg_plus) = @_;
+    #my ($errcode, $msg_plus) = @_;
+    my ($unknown,$errcode, $msg_plus) = @_;#tshvr4 called as LedgerSMB::Auth->http_error('401');
     $msg_plus = '' if not defined $msg_plus;
     my $cgi = CGI::Simple->new();
+    print STDERR localtime()." tshvr4 Auth.pm http_error \$errcode=$errcode\n";
 
     my $err = {
 	'500' => {status  => '500 Internal Server Error', 

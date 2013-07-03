@@ -63,7 +63,7 @@ Sends a 401 error to the browser popping up browser credential prompt.
 
 sub credential_prompt{
     my ($suffix) = @_;
-    http_error(401, $suffix);
+    LedgerSMB::Auth->http_error(401, $suffix);#tshvr4
 }
 
 sub password_check { # Old routine, leaving in at the moment
