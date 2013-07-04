@@ -50,7 +50,6 @@ require "bin/io.pl";
 # end of main
 
 sub add {
-
     %label = (
         part     => 'Part',
         service  => 'Service',
@@ -3602,7 +3601,6 @@ sub name_selected {
 }
 
 sub save {
-
     if ( $form->{obsolete} ) {
         $form->error(
             $locale->text(
@@ -3762,9 +3760,14 @@ sub save {
     }
 
     if ($rc) {
-        edit();
-        # redirect
-        # $form->redirect("Part Saved");
+        #if(!$form->{id}){$form->{id}=$parts_id;}#tshvr4 form->id lost somewhere before but needed for edit IC->get_part
+        if($form->{id}){
+         edit();
+        }
+        # redirect, after having set values for last added invoice/order item 
+        else{
+         $form->redirect("Part Saved");
+       }
     }
     else {
         $form->error;
