@@ -13,7 +13,7 @@ BEGIN
 	UPDATE defaults SET value = in_value WHERE setting_key = in_key;
         IF NOT FOUND THEN
              INSERT INTO defaults (setting_key, value) 
-                  VALUES (in_setting_key, in_value);
+                  VALUES (in_key, in_value);
         END IF;
 	RETURN TRUE;
 END;

@@ -466,7 +466,7 @@ function on_return_submit(event){
         qw(form_id id type printed emailed queued title vc terms discount 
            creditlimit creditremaining tradediscount business closedto locked 
            shipped oldtransdate recurring reverse batch_id subtype 
-           meta_number nextsub default_reportable address city)
+           meta_number nextsub default_reportable address city lock_description)
     );
 
     if ($form->{notice}){
