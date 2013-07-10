@@ -8,6 +8,10 @@ DELETE FROM company;
 DELETE FROM entity;
 DELETE FROM lsmb13.session; -- Cleares out locks
 
+--to preserve user modifications tshvr4
+DELETE FROM country;
+INSERT INTO country SELECT * FROM lsmb13.country;
+
 INSERT INTO language SELECT * FROM lsmb13.language where code not in (select code from language);
 
 INSERT INTO account_heading SELECT * FROM lsmb13.account_heading;
@@ -145,7 +149,7 @@ INSERT INTO ar (
  id,
  invnumber,
  transdate,
- entity_id,
+ --entity_id, --tshvr4 might may be dropped
  taxincluded,
  amount,
  netamount,
@@ -176,7 +180,7 @@ SELECT
  id,
  invnumber,
  transdate,
- entity_id,
+ --entity_id, --tshvr4 might may be dropped
  taxincluded,
  amount,
  netamount,
@@ -210,7 +214,7 @@ INSERT INTO ap (
  id,
  invnumber,
  transdate,
- entity_id,
+ --entity_id, --tshvr4 might may be dropped
  taxincluded ,
  amount,
  netamount,
@@ -241,7 +245,7 @@ SELECT
  id,
  invnumber,
  transdate,
- entity_id,
+ --entity_id, --tshvr4 might may be dropped
  taxincluded ,
  amount,
  netamount,
@@ -507,7 +511,8 @@ INSERT INTO audittrail SELECT * FROM lsmb13.audittrail;
 INSERT INTO translation SELECT * FROM lsmb13.translation;
 INSERT INTO parts_translation SELECT * FROM lsmb13.parts_translation;
 INSERT INTO user_preference SELECT * FROM lsmb13.user_preference;
-INSERT INTO recurring SELECT * FROM lsmb13.recurring;
+--INSERT INTO recurring SELECT * FROM lsmb13.recurring;--tshvr4 fields differ
+INSERT INTO recurring(id,reference,startdate,nextdate,enddate,howmany,payment) SELECT id,reference,startdate,nextdate,enddate,howmany,payment FROM lsmb13.recurring;
 INSERT INTO payment_type SELECT * FROM lsmb13.payment_type;
 INSERT INTO recurringemail SELECT * FROM lsmb13.recurringemail;
 INSERT INTO recurringprint SELECT * FROM lsmb13.recurringprint;
