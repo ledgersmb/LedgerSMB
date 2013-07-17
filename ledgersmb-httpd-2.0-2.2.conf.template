@@ -75,6 +75,7 @@ Alias /ledgersmb WORKING_DIR/
 
 #to avoid 'Directory index forbidden by Options directive' , i had to code follwoing with trailing slash ,tshvr4
 <Directory WORKING_DIR/css/>
+   Options Indexes FollowSymLinks
    Order Deny,Allow
    Allow from All
 </Directory>
