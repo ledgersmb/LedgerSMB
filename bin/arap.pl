@@ -140,6 +140,8 @@ sub check_name {
                   if $form->{employee_id};
 
             }
+            elsif ( $rv > 1 ) {#tshvr4 we got more than one name, NO error, may disappear if finalize_request() does not return
+            }
             else {
 
                 # name is not on file
