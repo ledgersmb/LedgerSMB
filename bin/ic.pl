@@ -156,7 +156,7 @@ sub link_part {
         $form->error(
             $locale->text(
                 'Cannot create Assembly; Income account does not exist!')
-        ) if !@{ $form->{IC_links}{IC_income} };
+        ) if !@{ $form->{IC_links}{IC_sale} };
     }
     if ( $form->{item} eq 'labor' ) {
         $form->{readonly} = 1
