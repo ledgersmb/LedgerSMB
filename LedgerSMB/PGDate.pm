@@ -6,6 +6,7 @@ LedgerSMB::PgDate
 package LedgerSMB::PGDate;
 use Moose;
 use DateTime::Format::Strptime;
+use LedgerSMB::App_State;
 use Carp;
 use DateTime::Duration;
 
@@ -149,6 +150,8 @@ sub from_input{
     return undef if !defined $input;
     my $format = $LedgerSMB::App_State::User->{dateformat};
     my $dt =  _parse_string($self, $input, uc($format), $has_time);
+    croak $LedgerSMB::App_State::Locale->text("Invalid date/date: [_1]", $input)
+        unless $dt;
     return $self->new({date => $dt});
 }
 
