@@ -149,7 +149,6 @@ sub edit {
         }
 
     }
-
     &display_form;
 
 }
@@ -854,9 +853,9 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
         </tr>
 ";
 
+    $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
     $form->{"select$form->{ARAP}_paid"} =~ /($form->{cash_accno}--[^<]*)/;
     $form->{"$form->{ARAP}_paid_$form->{paidaccounts}"} = $1;
-    $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
     for $i ( 1 .. $form->{paidaccounts} ) {
 
         $form->hide_form("cleared_$i");
