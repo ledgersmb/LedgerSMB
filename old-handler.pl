@@ -46,6 +46,9 @@
 #
 #######################################################################
 
+our $logger=Log::Log4perl->get_logger('old-handler-chain');#make logger available to other old programs
+Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+
 # Clearing all namespaces for persistant code use
 for my $nsp (qw(lsmb_legacy Form GL AA IS IR OE RP JC PE IC AM BP CP PE User)) {    
    for my $k (keys %{"${nsp}::"}){
@@ -80,7 +83,8 @@ use LedgerSMB::Session;
 use LedgerSMB::App_State;
 use Data::Dumper;
 
-our $logger=Log::Log4perl->get_logger('old-handler-chain');#make logger available to other old programs
+#our $logger=Log::Log4perl->get_logger('old-handler-chain');#make logger available to other old programs
+#Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 #sleep 10000;
 
