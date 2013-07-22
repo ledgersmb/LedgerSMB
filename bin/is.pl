@@ -877,9 +877,9 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
     print "
         </tr>
 ";
+    $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
     $form->{"selectAR_paid"} =~ /($form->{cash_accno}--[^<]*)/;
     $form->{"AR_paid_$form->{paidaccounts}"} = $1;
-    $form->{paidaccounts}++ if ( $form->{"paid_$form->{paidaccounts}"} );
     for $i ( 1 .. $form->{paidaccounts} ) {
 
         $form->hide_form("cleared_$i");
