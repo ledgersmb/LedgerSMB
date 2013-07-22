@@ -92,7 +92,9 @@ zeroes out all majro parts.
 
 sub zero() {
     $User = undef;
-    $Locale = undef;
+    #tshvr4 leave it initialised, otherwise 'Can't call method "text" on an undefined value' if
+    # still errors between calling this method and and end of script
+    #$Locale = undef;
     $DBH = undef;
     @Roles = ();
     $DBName = undef;
