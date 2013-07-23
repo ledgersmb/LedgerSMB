@@ -1042,6 +1042,7 @@ GRANT SELECT ON salutation TO public;
 GRANT SELECT ON partscustomer TO public;
 GRANT SELECT ON assembly TO public;
 GRANT SELECT ON jcitems TO public;
+GRANT SELECT ON account_heading_tree TO public;
 GRANT SELECT ON payment_type TO public;
 GRANT SELECT ON lsmb_roles TO public;
 GRANT SELECT ON employee_search TO PUBLIC;
