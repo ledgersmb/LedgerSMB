@@ -693,6 +693,13 @@ sub call_procedure {
             $sth->bind_param($place, $carg->{value}, 
                        { pg_type => $carg->{type} });
         } else {
+            if (ref($carg) eq 'ARRAY'){
+               if (eval{$carg->[0]->can('to_db')}){
+                  for my $ref(@$carg){
+                       $ref = $ref->to_db;
+                  }
+               }
+            }
             $sth->bind_param($place, $carg);
         }
         ++$place;
