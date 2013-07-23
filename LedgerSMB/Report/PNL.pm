@@ -163,7 +163,7 @@ sub add_comparison {
     my @rows = $new_report->run_report;
     my $comparisons = $self->comparisons;
     $comparisons ||= [];
-    push $comparisons, {label => $label, from_date => $from, to_date => $to}; 
+    push @$comparisons, {label => $label, from_date => $from, to_date => $to}; 
     $self->_merge_rows($label, @rows);
 }
 
