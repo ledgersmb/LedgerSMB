@@ -616,6 +616,12 @@ sub retrieve {
 		SELECT value, current_date FROM defaults
 		 WHERE setting_key = 'curr'|;
     ( $form->{currencies}, $form->{transdate} ) = $dbh->selectrow_array($query);
+    
+    $query = qq|
+		SELECT value FROM defaults
+		 WHERE setting_key = 'lock_description'|;
+    ( $form->{lock_description}) = $dbh->selectrow_array($query);
+    
 
     if ( $form->{id} ) {
 

@@ -617,7 +617,8 @@ function on_return_submit(event){
     }
     $form->hide_form(qw(entity_control_code meta_number address city));
     $form->hide_form(
-        qw(id type formname media format printed emailed queued vc title discount creditlimit creditremaining tradediscount business recurring form_id nextsub)
+        qw(id type formname media format printed emailed queued vc title discount creditlimit creditremaining tradediscount business recurring form_id nextsub
+   lock_description)
     );
 
     print qq|

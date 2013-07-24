@@ -326,20 +326,23 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
         $linetotal = $form->round_amount( $linetotal * $form->{"qty_$i"}, 
                                          $moneyplaces);
 
-        if (
-            ( $rows = $form->numtextrows( $form->{"description_$i"}, 46, 6 ) ) >
-            1 )
-        {
-            $form->{"description_$i"} =
-              $form->quote( $form->{"description_$i"} );
-            $column_data{description} =
-qq|<td><textarea name="description_$i" rows=$rows $desc_disabled cols=46 wrap=soft>$form->{"description_$i"}</textarea></td>|;
-        }
-        else {
-            $form->{"description_$i"} =
-              $form->quote( $form->{"description_$i"} );
-            $column_data{description} =
+        $form->{"description_$i"} = $form->quote( $form->{"description_$i"} );
+        if ($desc_disabled){
+            $column_data{description} = qq|<td>$form->{"description_$i"} |
+             . qq|<input type="hidden" name="description_$i"
+                        value="$form->{"description_$i"}" /></td>|
+        } else {
+            if (
+                ( $rows = $form->numtextrows( $form->{"description_$i"}, 46, 6 ) ) >
+                1 )
+            {
+                    $column_data{description} =
+qq|<td><textarea name="description_$i" rows=$rows cols=46 wrap=soft>$form->{"description_$i"}</textarea></td>|;
+            }
+            else {
+                 $column_data{description} =
 qq|<td><input name="description_$i" $desc_disabled size=48 value="$form->{"description_$i"}"></td>|;
+            }
         }
 
         for (qw(partnumber sku unit)) {
