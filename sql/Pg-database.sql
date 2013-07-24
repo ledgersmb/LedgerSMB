@@ -2000,7 +2000,7 @@ CREATE TABLE business_unit_inv (
 );
 
 CREATE TABLE business_unit_oitem (
-  entry_id int references orderitems(id),
+  entry_id int references orderitems(id) on delete cascade,
   class_id int references business_unit_class(id),
   bu_id int,
   primary key(bu_id, class_id, entry_id),

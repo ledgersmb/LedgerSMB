@@ -180,3 +180,13 @@ COMMIT;
 BEGIN;
 CREATE INDEX menu_acl_node_id_idx ON menu_acl (node_id);
 COMMIT;
+
+BEGIN;
+
+alter table business_unit_oitem 
+drop constraint business_unit_oitem_entry_id_fkey;
+
+alter table business_unit_oitem 
+add foreign key (entry_id) references orderitems(id) on delete cascade;
+
+COMMIT;
