@@ -111,12 +111,16 @@ The input is formatted.
 sub from_input {
     my $self   = shift @_;
     my $string = shift @_;
-    $string = undef if $string eq '';
+    #tshvr4 avoid 'Use of uninitialized value $string in string eq'
+    if(!defined $string || $string eq ''){
+     return undef;
+    }
+    #$string = undef if $string eq '';
     my %args   = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;  
     my $format = ($args{format}) ? $args{format}
                               : $LedgerSMB::App_State::User->{numberformat};
     die 'LedgerSMB::PGNumber No Format Set' if !$format;
-    return undef if !defined $string;
+    #return undef if !defined $string;
     my $negate;
     my $pgnum;
     my $newval;
