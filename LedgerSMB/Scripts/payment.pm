@@ -825,7 +825,10 @@ for my $ref (0 .. $#array_options) {
       $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} = $request->{first_load}? "on":  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"};
 
 # LETS SET THE EXCHANGERATE VALUES
-   my $due_fx = $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} ? $request->round_amount($array_options[$ref]->{due_fx}) : $request->round_amount($array_options[$ref]->{due_fx});
+   #tshvr4 meaning of next statement? does the same in either case!
+   #my $due_fx = $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} ? $request->round_amount($array_options[$ref]->{due_fx}) : $request->round_amount($array_options[$ref]->{due_fx});
+   my $due_fx = $request->round_amount($array_options[$ref]->{due_fx});
+
    my $topay_fx_value;
    if ("$exchangerate") {
        $topay_fx_value =   $due_fx;
@@ -1046,7 +1049,10 @@ my $select = {
  notes => $request->{notes},
  overpayment         => \@overpayment,
  overpayment_account => \@overpayment_account,
- format_amount => sub {return $Payment->format_amount(amount=>@_)}
+ #tshvr4 format_amount() should be passed PGNumber to format correctly
+ #tshvr4 e.g  $request_topay_fx_bigfloat, passed as string to template, passed back as string to format_amount , '3.14' then bad formatted if numberformat '1.000,00'
+ #format_amount => sub {return $Payment->format_amount(amount=>@_)}
+ format_amount => sub {return $Payment->format_amount(amount=>new LedgerSMB::PGNumber(@_))} #tshvr4
 };
 
 $select->{selected_account} = $vc_options[0]->{cash_account_id} 
