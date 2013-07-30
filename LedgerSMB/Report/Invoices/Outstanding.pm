@@ -318,7 +318,10 @@ sub run_report {
         } else {
              $script = ($r->{invoice}) ? 'ir.pl' : 'aa.pl';
         }
-        $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{id}";
+        #tshvr4 avoid 'Use of uninitialized value in concatenation (.) or string at LedgerSMB/Report/Invoices/Outstanding.pm'
+        if($r->{id}){
+         $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{id}";
+        }        
     }
     $self->rows(\@rows);
 }
