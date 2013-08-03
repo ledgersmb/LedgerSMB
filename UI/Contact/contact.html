@@ -2,10 +2,12 @@
  INCLUDE 'ui-header.html'
         stylesheet = USER.stylesheet
 	include_stylesheet = [
+		'UI/lib/dojo/dijit/themes/claro/claro.css',
+	        'UI/lib/dojo/dojo/resources/dojo.css',
 		'UI/Contact/contact.css'
 	] 
-	include_script = [
-		'UI/Contact/contact.js'
+	include_dojo = [
+		'lsmb/Contact/tabs'
 	]
 ?>
 <?lsmb PROCESS 'elements.html';
@@ -14,7 +16,7 @@ PROCESS "dynatable.html"  ?>
 <?lsmb IF !country_id_t; country_id_t = default_country; END -?>
 <?lsmb  # Target_div handling now moved to controller script -- CT -?>
 
-<body onload="init('<?lsmb request.target_div ?>')">
+<body class="claro">
     <?lsmb IF name ?> 
 <div class="pageheading"><?lsmb text('Company') ?>: <?lsmb name ?></div>
     <?lsmb END ?>
@@ -37,18 +39,13 @@ PROCESS "dynatable.html"  ?>
 <?lsmb text("Add Employee") ?>
 <?lsmb text("Edit Employee") ?>
 -->
-<ul class="navigation">
-        <?lsmb FOREACH nav IN DIVS ?>
-         <li class="nav"><a href="#<?lsmb nav ?>_div"><?lsmb DIV_LABEL.$nav 
-          ?></a></li>
-        <?lsmb  END ?>
-</ul>
 </div>
-
+<div data-dojo-type="dijit/layout/TabContainer" style="height:500px;">
   <?lsmb FOREACH ITEM IN DIVS; 
       INCLUDEDIV = "divs/" _ ITEM _ ".html";
       INCLUDE $INCLUDEDIV;
   END 
-?>
+  ?>
+</div>
 </body>
 </html>
