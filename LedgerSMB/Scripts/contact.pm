@@ -707,6 +707,80 @@ sub get_pricelist {
     $template->render($request);
 }
 
+
+=item save_pricelist
+
+This routine saves the price matrix.  For existing rows, valid_to, valid_from,
+price fields are saved.
+
+For the new row, the partnumber field matches the beginning of the part number,
+and the description is a full text search.
+
+=cut
+
+sub save_pricelist {
+    my ($request) = @_;
+    use LedgerSMB::ScriptLib::Common_Search::Part;
+    use LedgerSMB::DBObject::Pricelist;
+    my $count = $request->{rowcount_pricematrix};
+
+    my $pricelist = LedgerSMB::DBObject::Pricelist->new({base => $request});
+    my @lines;
+    my $redirect_to_selection = 0;
+    my $psearch;
+
+    # Search and populate
+    if (defined $request->{"int_partnumber_tfoot_$count"}
+         or defined $request->{"description_tfoot_$count"})
+    {
+        $psearch = LedgerSMB::ScriptLib::Common_Search::Part->new($request);
+        my @parts = $psearch->search(
+                   { partnumber => $request->{"int_partnumber_tfoot_$count"},
+                    description => $request->{"description_tfoot_$count"}, }
+        );
+
+        if (scalar @parts == 0) {
+            $request->error($request->{_locale}->text('Part not found'));
+        } elsif (scalar @parts > 1){
+            $redirect_to_selection = 1;
+        } else {
+            my $part = shift @parts;
+            push @lines, {
+                   parts_id => $part->{id},
+                  validfrom => $request->{"validfrom_tfoot_$count"},
+                    validto => $request->{"validto_tfoot_$count"},
+                      price => $request->{"lastcost_tfoot_$count"} ||
+                               $request->{"sellprice_tfoot_$count"},
+                   leadtime => $request->{"leadtime_tfoot_$count"},
+             };
+        }
+    }
+
+    # Save rows
+    for (1 .. ($count - 1)){
+        my $id = $request->{"row_$_"};
+        push @lines, {
+                entry_id => $id,
+                parts_id => $request->{"parts_id_$id"},
+               validfrom => $request->{"validfrom_$id"},
+                 validto => $request->{"validto_$id"},
+                   price => $request->{"lastcost_$id"} ||
+                            $request->{"sellprice_$id"},
+                leadtime => $request->{"leadtime_$id"},
+        };
+    }
+
+    $pricelist->save(\@lines);
+
+    # Return to UI
+
+    get_pricelist($request) unless $redirect_to_selection;
+
+    $request->{search_redirect} = 'pricelist_search_handle';
+    $psearch->render($request);
+}
+
+
 =back
 
 =head1 COPYRIGHT
