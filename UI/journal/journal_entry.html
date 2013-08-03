@@ -1,12 +1,15 @@
 <?lsmb INCLUDE 'ui-header.html' 
-	include_script = [
-		"UI/ajax/scriptaculous/lib/prototype.js",
-		"UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls",
-		"UI/ajax/helpers.js"]
+        include_dojo = [
+	  'lsmb/accounts/init'
+	  ]
+	include_stylesheet = [
+		'UI/lib/dojo/dijit/themes/claro/claro.css',
+	        'UI/lib/dojo/dojo/resources/dojo.css'
+		]
 	stylesheet=form.stylesheet ?>
 <?lsmb PROCESS elements.html ?> 
 
-<body>
+<body class="claro">
 
 <?lsmb INCLUDE OPEN_STATUS_DIV 
              id=form.id approved = form.approved action=form.action ?>
@@ -38,6 +41,7 @@
 			name = "transdate"
 			value = form.transdate
 			type = "text"
+			dojo_type = 'dijit/form/DateTextBox'
 			size = "11"
 			class = 'date'
 			id = "tra_1"
@@ -143,12 +147,15 @@
 		<?lsmb INDEX=displayrow.index ?>
 		  <td>
 			<?lsmb IF displayrow.accnoset == 0 ?>
-              			<?lsmb PROCESS ajaxselect element_data = {
+              			<?lsmb PROCESS input element_data = {
 		                     name = "accno_$INDEX"
+				     type = "text"
 		                     initial_value = ${"accno_$INDEX"}
+		                     value = ${"accno_$INDEX"}
 		                     text_attr = 'accno'
 		                     value_attr = 'id'
-		                     ajax_target = 'journal.pl'
+				     class = 'AccountBox'
+				     dojo_type = 'lsmb/accounts/AccountSelector'
 		              } ?> 
 			   
 			  <?lsmb ELSE ?>

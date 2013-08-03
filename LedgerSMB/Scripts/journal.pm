@@ -22,6 +22,8 @@ use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Report::GL;
 use LedgerSMB::Report::COA;
+use LedgerSMB::REST_Format::json;
+use CGI::Simple;
 use strict;
 
 =pod
@@ -57,6 +59,23 @@ sub __default {
     
     $request->{results} = \%results_hash;
     $template->render($request);
+}
+
+=item chart_json
+
+Returns a json array of all accounts
+
+=cut
+
+sub chart_json {
+    my ($request) = @_;
+    my $funcname = 'chart_list_all';
+    my @results = $request->call_procedure( procname => $funcname, order_by => 'accno' );
+    
+    my $json = LedgerSMB::REST_Format::json->to_output(\@results);
+    my $cgi = CGI::Simple->new();
+    print $cgi->header('application/json', '200 Success');
+    $cgi->put($json);
 }
 
 =item chart_of_accounts
