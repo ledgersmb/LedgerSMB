@@ -22,7 +22,7 @@
 	<?lsmb FOREACH s = include_script ?>
 	<script type="text/javascript" language="JavaScript" src="<?lsmb s ?>" ></script>
 	<?lsmb END ?>
-	<?lsmb IF include_dojo ?>
+	<?lsmb IF dojo_require || dojo_load ?>
 	<script type="text/javascript">    
 	  var dojoConfig = {
 	       async: 1,
@@ -30,14 +30,27 @@
 	       packages: [{"name":"lsmb","location":"../../.."}]
 	   }
        </script>
-       <script type="text/javascript" language="JavaScript" src="UI/lib/dojo/dojo/dojo.js"></script>
-        <?lsmb FOREACH s = include_dojo ?>
+       <script type="text/javascript" language="JavaScript" src="UI/lib/dojo/dojo/dojo.js.uncompressed.js"></script>
        <script type="text/javascript">
-	require(['<?lsmb s ?>','dojo/ready'], function(obj){
+	       require([
+	          <?lsmb IF dojo_load ?>
+	          '<?lsmb dojo_load ?>',
+		  <?lsmb END ?>
+		  'dojo/parser',
+ 		  <?lsmb FOREACH s = dojo_require ?>
+		  '<?lsmb s ?>',
+                  <?lsmb END ?>
+		  'dojo/ready'], function(
+	          <?lsmb IF dojo_load ?>
+		  obj,
+		  <?lsmb END ?>
+		  parser){
+			parser.parse();
+	          <?lsmb IF dojo_load ?>
 			obj.init();
+		  <?lsmb END ?>
 			});
         </script>
-	<?lsmb END ?>
 	<?lsmb END ?>
 	
 	<?lsmb IF warn_expire ?>
