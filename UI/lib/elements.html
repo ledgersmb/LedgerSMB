@@ -1,6 +1,6 @@
 <?lsmb 
   default_keys = ['id', 'class', 'title']  # Defaults for all attributes
-  input_keys = ['type', 'name', 'disabled', 'size', 'value', 'dojo_type']  # Defaults for input attributes 
+  input_keys = ['type', 'name', 'disabled', 'size', 'value', 'dojo_type', 'dojo_params']  # Defaults for input attributes 
 
   # ELEMENT DEFAULTS
 
@@ -290,6 +290,8 @@
     <?lsmb 
       IF element_attribute == 'dojo_type' and (attribute_data.dojo_type != "");
         all_attributes = all_attributes _ " " _ 'data-dojo-type="' _ attribute_data.${element_attribute} _ '"';
+      ELSIF element_attribute == 'dojo_params' and (attribute_data.dojo_params != "");
+        all_attributes = all_attributes _ " " _ 'data-dojo-props="' _ attribute_data.${element_attribute} _ '"';
       ELSIF attribute_data.defined(element_attribute) and (attribute_data.${element_attribute} != "");  # Add the attribute to the element if it's been set.
         all_attributes = all_attributes _ " " _ element_attribute _ '="' _ attribute_data.${element_attribute} _ '"';
       ELSIF attribute_defaults.defined(element_attribute);  # Fall back to default value if one is supplied.
