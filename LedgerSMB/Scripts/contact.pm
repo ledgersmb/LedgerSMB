@@ -720,8 +720,10 @@ and the description is a full text search.
 
 sub save_pricelist {
     my ($request) = @_;
+    use LedgerSMB::App_State;
     use LedgerSMB::ScriptLib::Common_Search::Part;
     use LedgerSMB::DBObject::Pricelist;
+
     my $count = $request->{rowcount_pricematrix};
 
     my $pricelist = LedgerSMB::DBObject::Pricelist->new({base => $request});
@@ -773,11 +775,12 @@ sub save_pricelist {
     $pricelist->save(\@lines);
 
     # Return to UI
-
-    get_pricelist($request) unless $redirect_to_selection;
-
-    $request->{search_redirect} = 'pricelist_search_handle';
-    $psearch->render($request);
+    if (!$redirect_to_selection){
+        get_pricelist($request);
+    } else { 
+        $request->{search_redirect} = 'pricelist_search_handle';
+        $psearch->render($request);
+   }
 }
 
 
