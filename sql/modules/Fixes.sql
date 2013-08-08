@@ -190,3 +190,6 @@ alter table business_unit_oitem
 add foreign key (entry_id) references orderitems(id) on delete cascade;
 
 COMMIT;
+
+-- Required for parameter rename
+DROP FUNCTION pricelist__delete(int,int);

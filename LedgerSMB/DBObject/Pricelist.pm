@@ -58,6 +58,28 @@ sub save {
 
 =back
 
+=over
+
+=item delete(entry_id);
+
+Deletes the referred pricelist entry.
+
+=cut
+
+sub delete {
+    my ($self, $entry_id) = @_;
+
+    my $line = __PACKAGE__->new({base => $self,
+                                 merge => ['credit_id', 'entry_id'] }
+        );
+    $line->exec_method({funcname => 'pricelist__delete'});
+}
+
+
+
+=back
+
+
 =head1 COPYRIGHT
 
 Copyright (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the

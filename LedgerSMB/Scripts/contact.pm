@@ -785,6 +785,22 @@ sub save_pricelist {
 
 
 =back
+=item delete_pricelist
+
+=cut
+
+sub delete_pricelist {
+    my ($request) = @_;
+
+    use LedgerSMB::DBObject::Pricelist;
+    my $pricelist = LedgerSMB::DBObject::Pricelist->new({base => $request});
+
+    $pricelist->delete;
+
+    # Return to UI
+    get_pricelist($request);
+}
+
 
 =head1 COPYRIGHT
 

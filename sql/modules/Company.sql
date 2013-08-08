@@ -1687,7 +1687,7 @@ END IF;
 END;
 $$ LANGUAGE PLPGSQL;
 
-CREATE OR REPLACE FUNCTION pricelist__delete(entry_id int, credit_id int)
+CREATE OR REPLACE FUNCTION pricelist__delete(in_entry_id int, in_credit_id int)
 returns bool as
 $$
 delete from partscustomer where entry_id = $1 and credit_id = $2;
