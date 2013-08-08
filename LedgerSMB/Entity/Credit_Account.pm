@@ -397,13 +397,16 @@ sub get_pricematrix {
     my $self = shift @_;
     my $retval = {};
     @{$retval->{pricematrix}} = $self->exec_method(
-               funcname => 'eca__get_pricematrix'
+               funcname => 'eca__get_pricematrix',
+        args => [$self->{id}]
     );
     if ($self->{entity_class} == 1){
         @{$retval->{pricematrix_pricegroup}}= $self->exec_method(
-               funcname => 'eca__get_pricematrix_by_pricegroup'
+               funcname => 'eca__get_pricematrix_by_pricegroup',
+        args => [$self->{id}]
         );
     }
+    return $retval;
 }
 
 =item delete_pricematrix($entry_id)
