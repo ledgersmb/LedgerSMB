@@ -85,17 +85,17 @@ checking a price deal for a customer.
 
 FORMATS = LIST_FORMATS();
 
-IF FORMATS.grep('PDF').size() ?> <a href="customer.pl?action=pricelist&format=PDF&credit_id=<?lsmb 
+IF FORMATS.grep('PDF').size() ?> <a href="<?lsmb script ?>?action=get_pricelist&format=PDF&credit_id=<?lsmb 
              credit_id ?>&entity_id=<?lsmb entity_id 
      ?>">[<?lsmb text('PDF') ?>]</a>
 <?lsmb END;
 
 IF FORMATS.grep('ODS').size() 
-?> <a href="customer.pl?action=pricelist&format=ODS&credit_id=<?lsmb 
+?> <a href="<?lsmb script ?>?action=get_pricelist&format=ODS&credit_id=<?lsmb 
              credit_id ?>&entity_id=<?lsmb entity_id 
      ?>">[<?lsmb text('ODS') ?>]</a>
 <?lsmb END ?>
- <a href="customer.pl?action=pricelist&format=CSV&credit_id=<?lsmb 
+ <a href="<?lsmb script ?>?action=get_pricelist&format=CSV&credit_id=<?lsmb 
              credit_id ?>&entity_id=<?lsmb entity_id 
      ?>">[<?lsmb text('CSV') ?>]</a>
 <?lsmb IF pricematrix_pricegroup;
