@@ -144,6 +144,8 @@ SELECT lsmb__grant_perms('business_units_manage', 'business_unit_class',
 SELECT lsmb__grant_perms('business_units_manage', 'business_unit', 'INSERT');
 SELECT lsmb__grant_perms('business_units_manage', 'business_unit', 'UPDATE');
 SELECT lsmb__grant_perms('business_units_manage', 'business_unit', 'DELETE');
+SELECT lsmb__grant_perms('business_units_manage', 'business_unit_id_seq', 'ALL');
+SELECT lsmb__grant_perms('business_units_manage', 'business_unit_class_id_seq', 'ALL');
 SELECT lsmb__grant_perms('business_units_manage', 'bu_class_to_module', 
        'INSERT');
 SELECT lsmb__grant_perms('business_units_manage', 'bu_class_to_module', 
