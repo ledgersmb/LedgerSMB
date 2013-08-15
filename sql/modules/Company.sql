@@ -678,7 +678,7 @@ BEGIN
 	SET legal_name = in_name,
 		tax_id = in_tax_id,
 		sic_code = in_sic_code
-	WHERE id = t_company_id;
+	WHERE entity_id = t_entity_id;
 
 
 	IF NOT FOUND THEN
