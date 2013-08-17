@@ -36,6 +36,7 @@ Code/API improvements
 * LedgerSMB->error and Form->error now show db version and company (Chris T)
 * Simpler use of Log::Log4perl instead of LedgerSMB::Log (Chris T)
 * Centralized database commit for new code (Chris T)
+* Plugin model for Contact management screen (Chris T)
 
 New RESTful Web Services Framework
 * Supports XML and JSON as input formats
