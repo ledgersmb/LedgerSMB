@@ -44,6 +44,11 @@ PROCESS "dynatable.html"  ?>
       INCLUDE $INCLUDEDIV;
   END 
   ?>
+  <?lsmb FOREACH ITEM IN PLUGINS;
+      INCLUDEDIV = "plugins/" _ ITEM;
+      INCLUDE $INCLUDEDIV;
+  END;
+  ?>
 </div>
 </body>
 </html>

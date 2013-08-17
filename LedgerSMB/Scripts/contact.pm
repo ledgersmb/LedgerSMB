@@ -242,6 +242,9 @@ sub _main_screen {
 
     $request->close_form() if eval {$request->can('close_form')};
     $request->open_form() if eval {$request->can('close_form')};
+    opendir(my $dh, 'UI/Contact/plugins') || die "can't opendir plugins directory: $!";
+    my @plugins = grep { /^[^.]/ && -f "UI/Contact/plugins/$_" } readdir($dh);
+    closedir $dh;
 
     # Template info and rendering 
     my $template = LedgerSMB::Template->new(
@@ -265,6 +268,7 @@ sub _main_screen {
     $template->render({
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,
+                  PLUGINS => \@plugins,
                   request => $request,
                   company => $company,
                    person => $person,
