@@ -25,10 +25,13 @@ PROCESS "dynatable.html"  ?>
     <?lsmb IF notice ?>
     <div class="notice"><?lsmb notice ?></div>
     <?lsmb END ?>
-<div class="navigation" id="nav_div">
+    <div class="navigation" id="nav_div"><?lsmb target_div ?>
 <?lsmb IF entity_id ?><?lsmb operation = "Edit" ?><?lsmb ELSE
 ?><?lsmb operation = "Add"
-?><?lsmb END ?> 
+?><?lsmb END ?>
+<script type="text/javascript">
+	var activeDiv = '<?lsmb request.target_div ?>';
+</script>
 <!-- CT: Keys for localization scripts:
 <?lsmb text("Add Customer") ?>
 <?lsmb text("Edit Customer") ?>
@@ -38,7 +41,7 @@ PROCESS "dynatable.html"  ?>
 <?lsmb text("Edit Employee") ?>
 -->
 </div>
-<div data-dojo-type="dijit/layout/TabContainer" style="height:500px;">
+<div data-dojo-type="dijit/layout/TabContainer" id="contact_tabs" style="height:500px;">
   <?lsmb FOREACH ITEM IN DIVS; 
       INCLUDEDIV = "divs/" _ ITEM _ ".html";
       INCLUDE $INCLUDEDIV;
