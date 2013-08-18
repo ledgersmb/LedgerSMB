@@ -1,6 +1,6 @@
 <?lsmb 
   default_keys = ['id', 'class', 'title']  # Defaults for all attributes
-  input_keys = ['type', 'name', 'disabled', 'size', 'value', 'dojo_type', 'dojo_params']  # Defaults for input attributes 
+  input_keys = ['type', 'name', 'disabled', 'size', 'value', 'dojo_type', 'dojo_params', 'data-dojo-type','data-dojo-props']  # Defaults for input attributes 
 
   # ELEMENT DEFAULTS
 
@@ -24,11 +24,24 @@
     size = '60',
     maxlength = '255'
   }
+
+  # default currency
+  currency_defaults = {
+    "data-dojo-type" = 'dijit/form/CurrencyTextBox',
+    "data-dojo-props" = "currency:'USD'"
+  }    
+
+  # date
+  date_defaults = {
+    "data-dojo-type" = 'lsmb/lib/DateTextBox',
+    'data-dojo-props' = "constraints: {datePattern: '$USER.dateformat'}"
+  }
   
   # textarea
   textarea_defaults = {
-    rows = '5',
-    cols = '60'
+    rows = '1',
+    cols = '60',
+    "data-dojo-type" = 'dijit/form/Textarea'
   }
   
   #button
@@ -64,6 +77,12 @@
 	      CASE 'text';
 	        input_type_keys = input_keys.merge(['maxlength', 'readonly']);
 	        input_defaults = text_defaults;
+	      CASE 'currency';
+	        input_type_keys = input_keys;
+		input_defaults = currency_defaults;
+ 	      CASE 'date';
+	        input_type_keys = input_keys;
+		input_defaults = date_defaults;
 	      CASE;
 	        input_type_keys = input_keys;
 	    END;
@@ -96,7 +115,7 @@
 	  <?lsmb PROCESS attributes  # Process regular attributes.
 	    attribute_data=element_data 
 	    attribute_defaults = textarea_defaults
-	    element_keys = ['name', 'cols', 'rows', 'disabled', 'readonly', 'tabindex', 'accesskey', 'value']  # Attributes that apply to textareas.
+	    element_keys = ['name', 'cols', 'rows', 'disabled', 'readonly', 'tabindex', 'accesskey', 'value', 'data-dojo-type', 'data-dojo-props']  # Attributes that apply to textareas.
 	  ?>
 	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
 	    custom_attribute_data=element_data.attributes 
@@ -314,7 +333,7 @@
 <?lsmb BLOCK auto_id  # Automatically builds the id tag for the element if possible. ?>
   <?lsmb UNLESS element_data.defined('id') # id attribute should always be set, so auto-set it if it's not defined. ?>
     <?lsmb element_id = "" ?>
-    <?lsmb  # Labal id's default to [for]-label.
+    <?lsmb  # Label id's default to [for]-label.
       IF element_type == 'label' AND element_data.defined('for');
         element_id = element_data.for _ "-label";
       ELSIF ((element_type == 'input' AND element_data.type == 'radio') OR element_type == 'button') AND element_data.defined('name') AND element_data.defined('value');
@@ -360,7 +379,7 @@
    ELSIF id; 
        CLASS = 'saved';
    END;
-?><div id='statusdiv' class='<?lsmb CLASS ?>'>
+?><div id="statusdiv" class="<?lsmb CLASS ?>">
 <div id="history"><?lsmb text('Action: [_1], ID: [_2]', action, id); ?></div>
 <?lsmb END ?>
 
