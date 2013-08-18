@@ -1,7 +1,5 @@
 <?lsmb INCLUDE 'ui-header.html' 
         dojo_require = [
-	  'lsmb/accounts/AccountSelector',
-	  'dijit/form/DateTextBox'
 	  ]
 	include_stylesheet = [
 		'UI/lib/dojo/dijit/themes/claro/claro.css',
@@ -41,8 +39,7 @@
               <?lsmb INCLUDE input element_data = {
 			name = "transdate"
 			value = form.transdate
-			type = "text"
-			dojo_type = 'dijit/form/DateTextBox'
+			type = "date"
 			size = "11"
 			class = 'date'
 			id = "tra_1"
@@ -79,7 +76,7 @@
 								    } 
 			       ?>
 			<?lsmb ELSE ?>
-				  <?lsmb INCLUDE input element_data = {
+				  <?lsmb INCLUDE textarea element_data = {
 						      name = "description",
 						      value = form.description,
 						      type = "text",
@@ -110,6 +107,7 @@
 						      value = form.notes,
 						      type = "text",
 						      size = "50",
+						      dojo_type = 'dijit/form/Textarea',
 						      class = 'notes'
 						      id = "not_1"
                                                           } 
@@ -200,7 +198,7 @@
 			  <?lsmb PROCESS input element_data = {
 				  value = displayrow.debit
 				  name = "debit_$INDEX"
-				  type = "text"
+				  type = "currency"
 				  size = 12
 				  accesskey = displayrow.index
 			          id = "deb_$INDEX"
@@ -212,7 +210,7 @@
 			  <?lsmb PROCESS input element_data = {
 				  value = displayrow.credit
 				  name = "credit_$INDEX"
-				  type = "text"
+				  type = "currency"
 				  size = 12
 			          id = "cre_$INDEX"
                                       }  ?>
@@ -223,6 +221,7 @@
 			  <?lsmb PROCESS input element_data = {
 				  value = displayrow.source
 				  name = "source_$INDEX"
+				  dojo_type = 'dijit/form/TextBox'
 				  type = "text"
 				  size = 10
 				  id = "sou_$INDEX"
@@ -235,6 +234,7 @@
 			  <?lsmb PROCESS input element_data = {
 				  value = displayrow.memo
 				  name = "memo_$INDEX"
+				  dojo_type = 'dijit/form/Textarea'
 				  type = "text"
 				  size = 30
 			          id = "mem_$INDEX"
@@ -290,11 +290,11 @@
         <tr class="listtotal">
 	  <th>&nbsp;</th>
 	     <th class="listheading">&nbsp;</th>
-	  <th class="listtotal" align="right">
+	  <th class="listtotal debitsubtotal" align="right">
 			<?lsmb form.totaldebit ?>
 	  </th>
 	  
-	  <th class="listtotal" align="right">
+	  <th class="listtotal creditsubtotal" align="right">
 			<?lsmb form.totalcredit ?>
 	  </th>
 	  <th>&nbsp;</th>
@@ -311,7 +311,6 @@
     <td><hr size="3"></hr></td>
   </tr>
 </table>
-
 <?lsmb FOREACH hidden IN hiddens.keys;
 	PROCESS input element_data={
 		type => 'hidden',
