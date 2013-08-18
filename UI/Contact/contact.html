@@ -2,8 +2,6 @@
  INCLUDE 'ui-header.html'
         stylesheet = USER.stylesheet
 	include_stylesheet = [
-		'UI/lib/dojo/dijit/themes/claro/claro.css',
-	        'UI/lib/dojo/dojo/resources/dojo.css',
 		'UI/Contact/contact.css'
 	] 
 	dojo_load = 'lsmb/Contact/tabs'
@@ -14,7 +12,7 @@ PROCESS "dynatable.html"  ?>
 <?lsmb IF !country_id_t; country_id_t = default_country; END -?>
 <?lsmb  # Target_div handling now moved to controller script -- CT -?>
 
-<body class="claro">
+<body class="<?lsmb dojo_theme ?>">
     <?lsmb IF name ?> 
 <div class="pageheading"><?lsmb text('Company') ?>: <?lsmb name ?></div>
     <?lsmb END ?>

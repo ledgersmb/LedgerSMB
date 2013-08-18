@@ -1,14 +1,8 @@
 <?lsmb INCLUDE 'ui-header.html' 
-        dojo_require = [
-	  ]
-	include_stylesheet = [
-		'UI/lib/dojo/dijit/themes/claro/claro.css',
-	        'UI/lib/dojo/dojo/resources/dojo.css'
-		]
 	stylesheet=form.stylesheet ?>
 <?lsmb PROCESS elements.html ?> 
 
-<body class="claro">
+<body class="<?lsmb dojo_theme ?>">
 
 <?lsmb INCLUDE OPEN_STATUS_DIV 
              id=form.id approved = form.approved action=form.action ?>

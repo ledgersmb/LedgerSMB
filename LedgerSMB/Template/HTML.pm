@@ -109,6 +109,7 @@ sub process {
 	my $source;
         $parent->{binmode} = $binmode;
          
+	$cleanvars->{dojo_theme} = 'claro';
 	
 	if ($parent->{outputfile}) {
 		$output = "$parent->{outputfile}.html";
