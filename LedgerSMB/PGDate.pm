@@ -149,6 +149,7 @@ sub from_input{
     $input = undef if $input eq '';
     return undef if !defined $input;
     my $format = $LedgerSMB::App_State::User->{dateformat};
+    $format ||= 'yyyy-mm-dd';
     my $dt =  _parse_string($self, $input, uc($format), $has_time);
     die $LedgerSMB::App_State::Locale->text("Invalid date/date: [_1]", $input)
         unless $dt;
