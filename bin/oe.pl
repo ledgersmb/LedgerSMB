@@ -1313,7 +1313,7 @@ sub save {
 
     }
 
-    if ( !$form->{repost} ) {
+    if ( !$form->{repost}  && $form->{id}) {
        $form->{repost} = 1;
        my $template = LedgerSMB::Template->new_UI(
         user => \%myconfig,
