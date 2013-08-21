@@ -1582,7 +1582,7 @@ IF t_entity_class = 1 THEN -- VENDOR
     IF NOT FOUND THEN
         INSERT INTO partsvendor
                (parts_id, credit_id, lastcost, leadtime, partnumber, curr)
-        VALUES (in_parts_id, in_credit_id, in_price, in_leadtime::int2, 
+        VALUES (in_parts_id, in_credit_id, in_price, in_lead_time::int2, 
                in_partnumber, in_curr);
     END IF;
 
