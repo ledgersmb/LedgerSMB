@@ -95,7 +95,6 @@ sub escape {
     my $vars = shift @_;
     if (defined $vars){
         $vars = escapeHTML($vars);
-        $vars =~ s|\n|<br \/>|gm;#better syntax-look under gvim with escaped slash
         return $vars;
     }
     return undef;

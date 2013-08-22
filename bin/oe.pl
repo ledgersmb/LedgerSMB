@@ -46,6 +46,7 @@ use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Tax;
 use LedgerSMB::Locale;
+use Carp::Always;
 
 require "bin/arap.pl";
 require "bin/io.pl";
@@ -1239,13 +1240,6 @@ sub update {
 
 sub save {
     delete $form->{display_form};
-    if (!$form->close_form()){
-       $form->{notice} = $locale->text(
-                'Could not save the data.  Please try again'
-       );
-       &update;
-       $form->finalize_request();
-    }
 
      
     if ( $form->{type} =~ /_order$/ ) {
@@ -1325,9 +1319,15 @@ sub save {
           hiddens => $form
        });
     }
+    if (!$form->close_form()){
+       $form->{notice} = $locale->text(
+                'Could not save the data.  Please try again'
+       );
+       &update;
+       $form->finalize_request();
+    }
 
  
-
     if ( OE->save( \%myconfig, \%$form ) ) {
        edit(); 
     }

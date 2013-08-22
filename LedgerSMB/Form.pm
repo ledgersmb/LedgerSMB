@@ -189,7 +189,6 @@ sub new {
     if ( ($self->{action} eq 'redirect') || ($self->{nextsub} eq 'redirect') ) {
         $self->error( "Access Denied", __LINE__, __FILE__ );
     }
-    
     $self;
 }
 
