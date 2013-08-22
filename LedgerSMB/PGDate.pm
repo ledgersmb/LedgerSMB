@@ -19,11 +19,20 @@ PostgreSQL. It provides a handler for date and timestamp datatypes.
 =over
 
 =item date
+
 A DateTime object for internal storage and processing.
 
 =cut
 
 has date => (isa => 'DateTime', is=> 'ro', required => '0');
+
+=item dummy
+
+If set to 1, this is a dummy value for an unknown value
+
+=cut
+
+has dummy => (isa => 'Bool', is=> 'ro', required => '0');
 
 =back
 
@@ -150,7 +159,7 @@ sub from_input{
     my $format = $LedgerSMB::App_State::User->{dateformat};
     $format ||= 'yyyy-mm-dd';
     my $dt =  _parse_string($self, $input, uc($format), $has_time);
-    return $self->new({date => $dt});
+    return $self->new(date => $dt, dummy => !defined $dt);
 }
 
 
@@ -200,7 +209,7 @@ sub from_db {
        confess 'LedgerSMB::PGDate Invalid DB Type';
     }
     my $dt =  _parse_string($self, $input, $format, $has_time);
-    return $self->new({date => $dt});
+    return $self->new(date => $dt, dummy => !defined $dt);
 }
 
 =item to_db
