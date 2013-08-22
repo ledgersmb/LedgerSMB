@@ -1326,7 +1326,6 @@ sub save {
        &update;
        $form->finalize_request();
     }
-
  
     if ( OE->save( \%myconfig, \%$form ) ) {
        edit(); 
