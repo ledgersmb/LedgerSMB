@@ -164,7 +164,7 @@ sub list_drafts {
     $draft->{script} = "drafts.pl";
     $draft->{callback} = $draft->escape(string => $callback);
     my @columns = 
-        qw(select id transdate reference description amount);
+        qw(select type id transdate reference description amount);
 
     my $base_href = "drafts.pl";
     my $search_href = "$base_href?action=list_drafts";
@@ -178,6 +178,7 @@ sub list_drafts {
 
     my $column_names = {
         'select' => 'Select',
+         type => 'Type',
          amount =>  'AR/AP/GL Total',
          description => 'Description',
          id => 'ID',
@@ -186,7 +187,13 @@ sub list_drafts {
     };
     my $sort_href = "$search_href&order_by";
     my @sort_columns = qw(id transdate reference description amount);
-    
+
+    my %type_descriptions = (
+        'ar' => $request->{_locale}->text('AR'),
+        'ap' => $request->{_locale}->text('AP'),
+        'gl' => $request->{_locale}->text('GL')
+    );
+
     my $count = 0;
     my @rows;
     for my $result (@search_results){
@@ -200,9 +207,10 @@ sub list_drafts {
                                            name  => "draft_$result->{id}"
                                  }
             },
+            type => $type_descriptions{$result->{type}},
             amount => $draft->format_amount(
-                                     amount => $result->{amount}
-				),
+                amount => $result->{amount}
+                ),
             reference => { 
                   text => $result->{reference},
                   href => "$request->{type}.pl?action=edit&id=$result->{id}" .

@@ -14,30 +14,33 @@ DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN
 		SELECT trans.id, trans.transdate, trans.reference, 
-			trans.description, 
-			sum(case when lower(in_type) = 'ap' AND chart.link = 'AP'
+			trans.description, trans.type,
+			sum(case when (lower(in_type) = 'ap' or in_type is null)
+                                       AND chart.link = 'AP'
 				 THEN line.amount
-				 WHEN lower(in_type) = 'ar' AND chart.link = 'AR'
+				 WHEN (lower(in_type) = 'ar' or in_type is null)
+                                       AND chart.link = 'AR'
 				 THEN line.amount * -1
-				 WHEN lower(in_type) = 'gl' AND line.amount > 0
+				 WHEN (lower(in_type) = 'gl' or in_type is null)
+                                       AND line.amount > 0
 				 THEN line.amount
 			 	 ELSE 0
 			    END) as amount
 		FROM (
 			SELECT id, transdate, reference, 
 				description,
-                                approved from gl
-			WHERE lower(in_type) = 'gl'
+                                approved, 'gl' as type from gl
+			WHERE lower(in_type) = 'gl' or in_type is null
 			UNION
 			SELECT id, transdate, invnumber as reference, 
 				(SELECT name FROM eca__get_entity(entity_credit_account)),
-				approved from ap
-			WHERE lower(in_type) = 'ap'
+				approved, 'ap' as type from ap
+			WHERE lower(in_type) = 'ap' or in_type is null
 			UNION
 			SELECT id, transdate, invnumber as reference,
 				description, 
-				approved from ar
-			WHERE lower(in_type) = 'ar'
+				approved, 'ar' as type from ar
+			WHERE lower(in_type) = 'ar' or in_type is null
 			) trans
 		JOIN acc_trans line ON (trans.id = line.trans_id)
 		JOIN chart ON (line.chart_id = chart.id and charttype = 'A')
@@ -47,7 +50,8 @@ BEGIN
 				or trans.transdate <= in_to_date)
 			AND trans.approved IS FALSE
 			AND v.id IS NULL
-		GROUP BY trans.id, trans.transdate, trans.description, trans.reference
+		GROUP BY trans.id, trans.transdate, trans.description, trans.reference,
+                         trans.type
 		HAVING (in_with_accno IS NULL or in_with_accno = 
 			ANY(as_array(chart.accno)))
 		ORDER BY trans.reference
