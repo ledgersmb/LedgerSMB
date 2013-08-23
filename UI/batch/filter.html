@@ -6,7 +6,7 @@
 <form action="vouchers.pl" method="post">
 <div class="listtop" id="title_div"><?lsmb text('Batch Selection') ?></div>
 <div class="input" id="batch_class_div">
-        <?lsmb unshift batch_classes, {}; ?>
+        <?lsmb batch_classes.unshift({}) ?>
 	<?lsmb INCLUDE select element_data = {
 		label = text('Batch Type') # '
 		options = batch_classes
