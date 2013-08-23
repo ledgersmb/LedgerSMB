@@ -236,7 +236,7 @@ sub list_batches {
     $batch->{script} = "vouchers.pl";
 
     my @columns = 
-        qw(select id control_code description transaction_total payment_total default_date);
+        qw(select class id control_code description transaction_total payment_total default_date);
 
     my $base_href = "vouchers.pl";
     my $search_href = "$base_href?action=list_batches";
@@ -252,6 +252,7 @@ sub list_batches {
 	
     my $column_names = {
         'select'          => 'Select',
+        class             => 'Class',
         transaction_total => 'AR/AP/GL Total',
         payment_total => 'Paid/Received Total',
         description => 'Description',
@@ -274,6 +275,7 @@ sub list_batches {
                                            name  => "batch_$result->{id}"
                                  }
             },
+            class => $result->{batch_class},
             transaction_total => $batch->format_amount(
                                      amount => $result->{transaction_total}
 				),
