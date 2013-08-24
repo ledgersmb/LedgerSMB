@@ -111,7 +111,7 @@ COMMIT;
 
 BEGIN;
 
-ALTER TABLE payrol_deduction_class ADD stored_proc_name name not null;
+ALTER TABLE payroll_deduction_class ADD stored_proc_name name not null;
 
 COMMIT;
 

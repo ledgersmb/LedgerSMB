@@ -173,6 +173,7 @@ $$;
 
 --- INVENTORY ADJUSTMENT LOGIC
 
+DROP TYPE part_at_date IF EXISTS;
 CREATE TYPE part_at_date AS (
   parts_id int,
   partnumber text,

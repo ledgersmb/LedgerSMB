@@ -55,7 +55,7 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
           AND l.description = 'IC_expense'
           AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
  GROUP BY a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description
+          ah.description, at.path
     UNION
    SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
           ah.description, 
@@ -77,7 +77,7 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
           AND ar.approved
           AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
  GROUP BY a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description
+          ah.description, at.path
 $$ language SQL;
 
 
@@ -123,7 +123,7 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
                                    HAVING max(trans_id) = gl.id))
               )
  GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description
+          ah.id, ah.accno, ah.description, at.path
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
 
@@ -173,7 +173,7 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
                                    HAVING max(trans_id) = gl.id))
               )
  GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description
+          ah.id, ah.accno, ah.description, at.path
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
 
@@ -214,7 +214,7 @@ SELECT a.id, a.accno, a.description, a.category,
           AND ($3 IS NULL OR ac.transdate <= $3)
           AND a.category IN ('I', 'E')
  GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description
+          ah.id, ah.accno, ah.description, at.path
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
 
@@ -229,7 +229,7 @@ SELECT a.id, a.accno, a.description, a.category,
   JOIN account_heading_tree at ON a.heading = at.id
  WHERE ac.approved AND ac.trans_id = $1 AND a.category IN ('I', 'E')
  GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description
+          ah.id, ah.accno, ah.description, at.path
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
 
