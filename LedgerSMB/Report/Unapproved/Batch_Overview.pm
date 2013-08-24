@@ -82,7 +82,7 @@ our @COLUMNS = (
        name => '',
        type => 'checkbox' },
 
-    {col_id => 'class',
+    {col_id => 'batch_class',
        name => LedgerSMB::Report::text('Type'),
        type => 'text'},
 
@@ -144,7 +144,7 @@ Returns the inputs to display on header.
 =cut
 
 sub header_lines {
-    return [{name => 'class',
+    return [{name => 'batch_class',
              text => LedgerSMB::Report::text('Batch Type')},
             {name => 'reference',
              text => LedgerSMB::Report::text('Reference')},
@@ -190,7 +190,7 @@ ar for AR drafts, ap for AP drafts, gl for GL ones.
 
 =cut
 
-has 'class' => (is => 'rw', isa => 'Maybe[Str]');
+has 'batch_class' => (is => 'rw', isa => 'Maybe[Str]');
 
 =item amount_gt
 
