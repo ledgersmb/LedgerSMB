@@ -201,6 +201,7 @@ sub defaults_screen{
 	'templates'        => {name => 'templates',
                            options => _get_template_directories(),
                          text_attr => 'text',
+                    default_values => [$request->{'templates'}],
                         value_attr => 'value'
                },
         'format'           => {name => 'format',
