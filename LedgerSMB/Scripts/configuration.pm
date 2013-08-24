@@ -19,7 +19,9 @@ our @default_settings = (
    { title => $locale->text('Company Information'),
      items => [
        { name => 'company_name', label => $locale->text('Company Name') },
-       { name => 'company_address', label => $locale->text('Company Address') },
+       { name => 'company_address', 
+         type => 'TEXTAREA',
+        label => $locale->text('Company Address') },
        { name => 'company_phone', label => $locale->text('Company Phone') },
        { name => 'company_fax', label => $locale->text('Company Fax') },
        { name => 'businessnumber', label => $locale->text('Business Number') },

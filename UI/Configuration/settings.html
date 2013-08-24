@@ -50,6 +50,12 @@
            };
        ELSIF ITEM.type == 'SELECT_ONE';
            PROCESS select element_data= selects.${ITEM.name};
+       ELSIF ITEM.type == 'TEXTAREA';
+           PROCESS textarea element_data = {
+                    rows = 3
+                    cols = 33
+                    text = form.${ITEM.name} 
+           };
        ELSE;
            PROCESS input element_data = {
                    name = ITEM.name
