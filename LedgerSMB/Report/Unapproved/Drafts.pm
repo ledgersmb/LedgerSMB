@@ -75,6 +75,10 @@ sub columns {
        name => '',
        type => 'checkbox' },
 
+    {col_id => 'type',
+       name => LedgerSMB::Report::text('Type'),
+       type => 'text' },
+
     {col_id => 'id',
        name => LedgerSMB::Report::text('ID'),
        type => 'text',
