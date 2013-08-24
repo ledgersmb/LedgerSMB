@@ -9,6 +9,7 @@ PROCESS 'report_base.html';
 
 IF search_type == 'drafts';
    batch_classes = [
+       {},
        { text = text('AP'), value = 'ap'},
        { text = text('AR'), value = 'ar'},
        { text = text('GL'), value = 'gl'},
@@ -22,6 +23,7 @@ ELSE;
        CLS.text = CLS.class;
        CLS.value = CLS.class;
    END;
+   batch_classes.unshift({});
 END;
 
  ?>
