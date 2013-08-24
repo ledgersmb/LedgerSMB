@@ -529,4 +529,3 @@ ALTER FUNCTION admin__save_user(int, int, text, text, bool) SET datestyle = 'ISO
 ALTER FUNCTION user__change_password(text) SET datestyle = 'ISO,YMD';
 COMMIT;
 
-DROP TYPE draft_search_result CASCADE;

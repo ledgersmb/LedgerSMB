@@ -1,8 +1,12 @@
+
+DROP TYPE draft_search_result CASCADE;
+
 CREATE TYPE draft_search_result AS (
 	id int,
 	transdate date,
 	reference text,
 	description text,
+	type text,
 	amount numeric
 );
 
