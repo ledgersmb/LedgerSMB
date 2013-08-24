@@ -190,7 +190,15 @@ ar for AR drafts, ap for AP drafts, gl for GL ones.
 
 =cut
 
-has 'batch_class' => (is => 'rw', isa => 'Maybe[Str]');
+has 'type' => (is => 'rw', isa => 'Int');
+
+=item class_id
+
+class id associated with type
+
+=cut
+
+has class_id => (is => 'rw', isa => 'Int');
 
 =item amount_gt
 
@@ -222,6 +230,7 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self) = @_;
+    $self->class_id($self->type) if $self->type;
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',

@@ -21,7 +21,7 @@ ELSE;
    action = 'list_batches';
    FOR CLS IN batch_classes;
        CLS.text = CLS.class;
-       CLS.value = CLS.class;
+       CLS.value = CLS.id;
    END;
    batch_classes.unshift({});
 END;
