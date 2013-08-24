@@ -219,7 +219,7 @@ sub defaults_screen{
     my $template = LedgerSMB::Template->new_UI(
         user => $LedgerSMB::App_State::User, 
         locale => $locale,
-        template => 'am-defaults');
+        template => 'Configuration/settings');
     $template->render({
         form => $request,
 	# hiddens => \%hiddens,
