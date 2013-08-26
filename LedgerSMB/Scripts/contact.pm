@@ -31,7 +31,7 @@ use strict;
 use warnings;
 
 #Plugins
-opendir($dh, 'LedgerSMB/Entity/Plugins') 
+opendir(my $dh, 'LedgerSMB/Entity/Plugins') 
     || die "can't opendir plugins directory: $!";
 my @pluginmods = grep { /^[^.]/ && -f "LedgerSMB/Entity/Plugins/$_" } readdir($dh);
 closedir $dh;
@@ -252,9 +252,9 @@ sub _main_screen {
 
     $request->close_form() if eval {$request->can('close_form')};
     $request->open_form() if eval {$request->can('close_form')};
-    opendir(my $dh, 'UI/Contact/plugins') || die "can't opendir plugins directory: $!";
-    my @plugins = grep { /^[^.]/ && -f "UI/Contact/plugins/$_" } readdir($dh);
-    closedir $dh;
+    opendir(my $dh2, 'UI/Contact/plugins') || die "can't opendir plugins directory: $!";
+    my @plugins = grep { /^[^.]/ && -f "UI/Contact/plugins/$_" } readdir($dh2);
+    closedir $dh2;
 
     # Template info and rendering 
     my $template = LedgerSMB::Template->new(

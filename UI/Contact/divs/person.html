@@ -1,4 +1,5 @@
-<div class="container" id="person_div">
+<div class="container" id="person_div" title="<?lsmb text('Person') ?>"
+data-dojo-type="dijit/layout/ContentPane">
 <?lsmb SWITCH entity_class
 	?><?lsmb CASE 1 ?><?lsmb entity_classname = "Vendor" 
 	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
