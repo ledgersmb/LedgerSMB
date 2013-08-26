@@ -30,6 +30,16 @@ use LedgerSMB::Template;
 use strict;
 use warnings;
 
+#Plugins
+opendir($dh, 'LedgerSMB/Entity/Plugins') 
+    || die "can't opendir plugins directory: $!";
+my @pluginmods = grep { /^[^.]/ && -f "LedgerSMB/Entity/Plugins/$_" } readdir($dh);
+closedir $dh;
+
+for (@pluginmods){
+  do "LedgerSMB/Entity/Plugins/$_";
+}
+
 my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 COPYRIGHT
@@ -245,12 +255,6 @@ sub _main_screen {
     opendir(my $dh, 'UI/Contact/plugins') || die "can't opendir plugins directory: $!";
     my @plugins = grep { /^[^.]/ && -f "UI/Contact/plugins/$_" } readdir($dh);
     closedir $dh;
-    opendir($dh, 'LedgerSMB/Entity/Plugins') || die "can't opendir plugins directory: $!";
-    my @pluginmods = grep { /^[^.]/ && -f "LedgerSMB/Entity/Plugins/$_" } readdir($dh);
-    closedir $dh;
-    for (@pluginmods){
-        do "LedgerSMB/Entity/Plugins/$_";
-    }
 
     # Template info and rendering 
     my $template = LedgerSMB::Template->new(
