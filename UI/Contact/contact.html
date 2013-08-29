@@ -633,6 +633,7 @@ END ?>
         </table>
         <div class="input_container" id="tax-credit-div">
         <div class="listtop"><?lsmb text('Taxes') ?></div>
+	<div id="credittax_div">
         <?lsmb FOR tx = all_taxes ?> 
         <div class="inputrow" id="taxrow-<?lsmb tx.chart_id ?>">
         <span class="input" id="txinput-<?lsmb tx.id ?>">
@@ -649,6 +650,8 @@ END ?>
                    } ?><span></div>
         <?lsmb END # FOR tx ?>
          </div>
+         </div>
+	<div id="credittax_div">
         <div class="inputrow" id="taxincludedrow">
             <?lsmb 
 
@@ -666,6 +669,8 @@ END ?>
                             } 
             ?> 
          </div>
+         </div>
+
 		<?lsmb IF credit_id;
 		INCLUDE button element_data = {
 			text = text('Save Changes'),
@@ -838,7 +843,7 @@ END ?>
 			name = "line_one",
 			value = line_one,
 			type = "text",
-			size = "20"
+			size = "30"
 		} ?>
 	</div>
 	<div> 
@@ -848,7 +853,7 @@ END ?>
 			class = "addl-address"
 			value = line_two
 			type = "text"
-			size = "20"
+			size = "30"
 		} ?>
 	</div>
 	<div> 
@@ -858,7 +863,7 @@ END ?>
 			class = "addl-address"
 			value = line_three
 			type = "text"
-			size = "20"
+			size = "30"
 		} ?>
 	</div>
 	<div> 
@@ -867,7 +872,7 @@ END ?>
 			name = "city",
 			value = city,
 			type = "text",
-			size = "20"
+			size = "30"
 		} ?>
 	</div>
 	<div> 
@@ -876,7 +881,7 @@ END ?>
 			name = "state",
 			value = state,
 			type = "text",
-			size = "20"
+			size = "30"
 		} ?>
 	</div>
 	<div> 
@@ -885,7 +890,7 @@ END ?>
 			name = "mail_code",
 			value = mail_code,
 			type = "text",
-			size = "20"
+			size = "30"
 		} #' ?>
 	</div>
 	<div> 
@@ -1008,7 +1013,7 @@ END ?>
 			name = "description"
 			value = description
 			type = "text"
-			size = "20"
+			size = "30"
 		} #' ?>
 	</div>
 	<div>
@@ -1017,7 +1022,7 @@ END ?>
 			name = "contact"
 			value = contact
 			type = "text"
-			size = "20"
+			size = "30"
 		} #' ?>
 	</div>
 	<div><?lsmb PROCESS button element_data = {
@@ -1092,7 +1097,7 @@ END ?>
 		label = text('BIC/SWIFT Code')
 		name="bic" 
 		value=bic
-		size=20
+		size=30
 	} #' ?>
 	</div>
 	<div>
@@ -1143,7 +1148,7 @@ END ?>
       name = "subject"
       value = subject
       type = "text"
-      size = "20"
+      size = "40"
 	} ?>
 </div>
 <div class="input"><?lsmb PROCESS select element_data = {

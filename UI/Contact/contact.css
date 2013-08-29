@@ -1,7 +1,7 @@
 label {
 	text-align: right;
 	margin-left: auto;
-        margin-right: 1em
+        margin-right: 1em;
 }
 
 input { margin-left: 0em;
@@ -84,23 +84,30 @@ div.input_group3 {
 }
 
 #credit_div label {
+	width: 8em;
+}
+
+#credittax_div label {
+	width: 24em;
+}
+
+
+
+
+#location_div label {
 	width: 10em;
 }
 
-#location_div label {
-	width: 6em;
-}
-
 #contact_div label {
-	width: 6em;
+	width: 10em;
 }
 
 #bank_div label {
-	width: 9em;
+	width: 10em;
 }
 
 #notes_div label {
-	width: 6em;
+	width: 10em;
 }
 
 
