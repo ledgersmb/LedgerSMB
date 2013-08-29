@@ -120,8 +120,11 @@ sub process {
 		$source = get_template($parent->{template});
 	}
         my $tempdir;
+        my $paths = [$parent->{include_path},'templates/demo','UI/lib'];
+        unshift @$paths, $parent->{include_path_lang} 
+            if defined $parent->{include_path_lang};
         my $arghash = {
-		INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path},'templates/demo','UI/lib'],
+		INCLUDE_PATH => $paths,
                 ENCODING => 'utf8',
 		START_TAG => quotemeta('<?lsmb'),
 		END_TAG => quotemeta('?>'),
