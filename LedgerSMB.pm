@@ -972,6 +972,7 @@ sub _db_init {
     }
 
     my $creds = LedgerSMB::Auth::get_credentials();
+    return unless $creds->{login};
   
     $self->{login} = $creds->{login};
     if (!$self->{company}){ 
