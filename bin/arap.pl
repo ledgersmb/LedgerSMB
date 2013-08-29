@@ -158,7 +158,7 @@ sub check_name {
 sub select_name {
     my ($table) = @_;
 
-    @column_index = qw(ndx name control_code meta_number address city);
+    @column_index = qw(ndx name control_code meta_number description address city);
 
     $label = ucfirst $table;
     %column_data = (ndx => qq|<th>&nbsp;</th>|,
@@ -168,6 +168,8 @@ sub select_name {
                                $locale->text('Control Code') . qq|</th>|,
             meta_number => qq|<th class=listheading>| .
                                $locale->text('[_1] Number', $label) . qq|</th>|,
+            description => qq|<th class=listheading>| .
+                               $locale->text('Description') . '</th>',
             address => qq|<th class=listheading>| .
                                $locale->text('Address') . '</th>',
             city => qq|<th class=listheading>| .
@@ -217,6 +219,7 @@ qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</
 qq|<td><input name="new_control_code_$i" type=hidden value="$ref->{control_code}">$ref->{control_code}</td>|;
         $column_data{meta_number} =
 qq|<td><input name="new_meta_number_$i" type=hidden value="$ref->{meta_number}">$ref->{meta_number}</td>|;
+        $column_data{description} = qq|<td>$ref->{description}</td>|;
         $column_data{address} = qq|<td>$ref->{address}</td>|;
         for (qw(city state zipcode country)) {
             $column_data{$_} = qq|<td>$ref->{$_}&nbsp;</td>|;
