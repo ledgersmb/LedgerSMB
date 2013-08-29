@@ -30,7 +30,7 @@ th {
   font-size: 10pt;
 }
 
-#company_info, #version_info {
+#company_info {
    font-weight: bold;
    font-size: 9pt;
 }
@@ -65,7 +65,7 @@ body.admin {
 body.menu {
   background-color: #eeeeee;
   font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 11px;
+  font-size: 12px;
   color: black;
 }
 
@@ -80,7 +80,7 @@ cornerlogo {
 .menuOut {
   cursor: pointer;
   background-color: #eeeeee;
-  font-size: 11px;
+  font-size: 12px;
   color: #000084;
   padding: 2px;
   text-align: left;
@@ -89,7 +89,7 @@ cornerlogo {
 .menuOver {
   cursor: pointer;
   background-color: #004a80;
-  font-size: 11px;
+  font-size: 12px;
   color: #ffffff;
   padding: 2px;
   text-align: left;
@@ -97,7 +97,7 @@ cornerlogo {
 
 .submenu {
   font-family: Verdana, Arial, Helvetica, sans-serif;
-  font-size: 12px;
+  font-size: 11px;
   padding-left: 5px;
 }
 
@@ -105,7 +105,7 @@ cornerlogo {
   cursor: pointer;
   margin: 0px;
   background-color: #eeeeee;
-  font-size: 11px;
+  font-size: 12px;
   color: #000084;
   border: 0px solid #000000;
   padding: 0px;
@@ -115,7 +115,7 @@ cornerlogo {
 .menuOver a {
   margin: 0px;
   background-color: transparent;
-  font-size: 11px;
+  font-size: 12px;
   color: #ffffff;
   padding: 0px;
   text-align: left;
