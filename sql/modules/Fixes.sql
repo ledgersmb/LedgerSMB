@@ -529,3 +529,33 @@ ALTER FUNCTION admin__save_user(int, int, text, text, bool) SET datestyle = 'ISO
 ALTER FUNCTION user__change_password(text) SET datestyle = 'ISO,YMD';
 COMMIT;
 
+BEGIN;
+ALTER TABLE ar DISABLE TRIGGER ALL;
+ALTER TABLE ap DISABLE TRIGGER ALL;
+
+ALTER TABLE ap ADD COLUMN crdate date;
+ALTER TABLE ar ADD COLUMN crdate date;
+
+UPDATE ap SET crdate=transdate;
+UPDATE ar SET crdate=transdate;
+
+COMMENT ON COLUMN ap.crdate IS
+$$ This is for recording the AR/AP creation date, which is always that date, when the invoice created. This is different, than transdate or duedate.
+This kind of date does not effect on ledger/financial data, but for administrative purposes in Hungary, probably in other countries, too.
+Use case:
+if somebody pay in cash, crdate=transdate=duedate
+if somebody will receive goods T+5 days and have 15 days term, the dates are the following:  crdate: now,  transdate=crdate+5,  duedate=transdate+15.
+There are rules in Hungary, how to fill out a correct invoice, where the crdate and transdate should be important.$$;
+
+COMMENT ON COLUMN ar.crdate IS
+$$ This is for recording the AR/AP creation date, which is always that date, when the invoice created. This is different, than transdate or duedate.
+This kind of date does not effect on ledger/financial data, but for administrative purposes in Hungary, probably in other countries, too.
+Use case:
+if somebody pay in cash, crdate=transdate=duedate
+if somebody will receive goods T+5 days and have 15 days term, the dates are the following:  crdate: now,  transdate=crdate+5,  duedate=transdate+15.
+There are rules in Hungary, how to fill out a correct invoice, where the crdate and transdate should be important.$$;
+
+ALTER TABLE ar ENABLE TRIGGER ALL;
+ALTER TABLE ap ENABLE TRIGGER ALL;
+
+COMMIT;

@@ -1292,7 +1292,8 @@ CREATE TABLE ar (
   entity_credit_account int references entity_credit_account(id) not null,
   force_closed bool,
   description text,
-  unique(invnumber) -- probably a good idea as per Erik's request --CT
+  unique(invnumber), -- probably a good idea as per Erik's request --CT
+  crdate date
 );
 
 COMMENT ON TABLE ar IS
@@ -1345,6 +1346,14 @@ COMMENT ON COLUMN ar.force_closed IS
 $$ Not exposed to the UI, but can be set to prevent an invoice from showing up
 for payment or in outstanding reports.$$;
 
+COMMENT ON COLUMN ar.crdate IS
+$$ This is for recording the AR/AP creation date, which is always that date, when the invoice created. This is different, than transdate or duedate.
+This kind of date does not effect on ledger/financial data, but for administrative purposes in Hungary, probably in other countries, too.
+Use case: 
+if somebody pay in cash, crdate=transdate=duedate
+if somebody will receive goods T+5 days and have 15 days term, the dates are the following:  crdate: now,  transdate=crdate+5,  duedate=transdate+15.
+There are rules in Hungary, how to fill out a correct invoice, where the crdate and transdate should be important.$$;
+
 --
 CREATE TABLE ap (
   id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),
@@ -1377,7 +1386,8 @@ CREATE TABLE ap (
   terms int2 DEFAULT 0,
   description text,
   force_closed bool,
-  entity_credit_account int references entity_credit_account(id) NOT NULL
+  entity_credit_account int references entity_credit_account(id) NOT NULL,
+  crdate date
 );
 
 COMMENT ON TABLE ap IS
@@ -1429,6 +1439,14 @@ $$ reference for the vendor account used.$$;
 COMMENT ON COLUMN ap.force_closed IS
 $$ Not exposed to the UI, but can be set to prevent an invoice from showing up
 for payment or in outstanding reports.$$;
+
+COMMENT ON COLUMN ap.crdate IS
+$$ This is for recording the AR/AP creation date, which is always that date, when the invoice created. This is different, than transdate or duedate.
+This kind of date does not effect on ledger/financial data, but for administrative purposes in Hungary, probably in other countries, too.
+Use case: 
+if somebody pay in cash, crdate=transdate=duedate
+if somebody will receive goods T+5 days and have 15 days term, the dates are the following:  crdate: now,  transdate=crdate+5,  duedate=transdate+15.
+There are rules in Hungary, how to fill out a correct invoice, where the crdate and transdate should be important.$$;
 
 --
 CREATE TABLE taxmodule (
