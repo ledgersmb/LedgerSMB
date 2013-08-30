@@ -179,6 +179,8 @@ Required data:
 
 =item iban
 
+=item remark
+
 =back
 
 =cut
@@ -395,7 +397,7 @@ sub save_contact {
 
 =item save_bank_account
 
-Saves bank account information (bic, iban, id required) and returns to the 
+Saves bank account information (bic, iban, remark, id required) and returns to the 
 edit employee screen
 
 =cut

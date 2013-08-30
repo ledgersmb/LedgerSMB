@@ -1049,12 +1049,14 @@ END ?>
 <tr class="listheading">
 	<th class="bic"><?lsmb text('BIC/SWIFT Code') ?></th>
 	<th class="iban"><?lsmb text('Account Number') ?></th>
+	<th class="remark"><?lsmb text('Remark') ?></th>
 	<th class="actions"><?lsmb text('Actions') ?></th>
 </tr>
 <?lsmb FOREACH ba = bank_account ?>
 <tr>
 	<td class="bic"><?lsmb ba.bic ?></td>
 	<td class="iban"><?lsmb ba.iban ?></td>
+	<td class="remark"><?lsmb ba.remark ?></td>
 	<td class="actions">
 		<a href="<?lsmb script ?>?action=delete_bank_acct&entity_id=<?lsmb
 			entity_id ?>&bank_account_id=<?lsmb ba.id 
@@ -1106,7 +1108,16 @@ END ?>
 		label = text('Bank Account')
 		name="iban" 
 		value=iban
-		size=20
+		size=30
+	} #' ?>
+	</div>
+	<div>
+	<?lsmb PROCESS input element_data = {
+		type="text" 
+		label = text('Remark')
+		name="remark" 
+		value=remark
+		size=30
 	} #' ?>
 	</div>
 	<div><?lsmb PROCESS button element_data = {

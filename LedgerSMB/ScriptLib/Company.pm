@@ -919,6 +919,7 @@ Required data:
 bank_account_id
 bic
 iban
+remark
 
 =back
 

@@ -90,7 +90,7 @@ sub inventory_activity {
 		 ORDER BY $form->{sort_col}|;
     my $sth = $dbh->prepare($query) || $form->dberror($query);
     $sth->execute() || $form->dberror($query);
-    @cols = qw(description sold revenue partnumber received expense);
+    @cols = qw(description sold revenue partnumber received expenses);
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
         $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         $ref->{net_income} = $ref->{revenue} - $ref->{expenses};

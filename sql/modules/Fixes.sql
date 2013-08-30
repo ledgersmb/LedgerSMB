@@ -559,3 +559,78 @@ ALTER TABLE ar ENABLE TRIGGER ALL;
 ALTER TABLE ap ENABLE TRIGGER ALL;
 
 COMMIT;
+
+BEGIN;
+	ALTER TABLE entity_bank_account ADD COLUMN remark varchar;
+	COMMENT ON COLUMN entity_bank_account.remark IS
+$$ This field contains the notes for an account, like: This is USD account, this one is HUF account, this one is the default account, this account for paying specific taxes. If a partner has more than one account, now you are able to write remarks for them.
+$$;
+
+DROP FUNCTION eca__save_bank_account (int, int, text, text, int);
+DROP FUNCTION entity__save_bank_account (int, text, text, int);
+
+CREATE OR REPLACE FUNCTION eca__save_bank_account
+(in_entity_id int, in_credit_id int, in_bic text, in_iban text, in_remark text,
+in_bank_account_id int)
+RETURNS int AS
+$$
+DECLARE out_id int;
+BEGIN
+        UPDATE entity_bank_account
+           SET bic = in_bic,
+               iban = in_iban,
+               remark = in_remark
+         WHERE id = in_bank_account_id;
+
+        IF FOUND THEN   
+                out_id = in_bank_account_id;
+        ELSE
+                INSERT INTO entity_bank_account(entity_id, bic, iban, remark)
+                VALUES(in_entity_id, in_bic, in_iban, in_remark);
+                SELECT CURRVAL('entity_bank_account_id_seq') INTO out_id ;
+        END IF;
+
+        IF in_credit_id IS NOT NULL THEN
+                UPDATE entity_credit_account SET bank_account = out_id
+                WHERE id = in_credit_id;
+        END IF;
+
+        RETURN out_id;
+END;
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON  FUNCTION eca__save_bank_account
+(in_entity_id int, in_credit_id int, in_bic text, in_iban text, in_remark text,
+in_bank_account_id int) IS
+$$ Saves bank account to the credit account.$$;
+
+CREATE OR REPLACE FUNCTION entity__save_bank_account
+(in_entity_id int, in_bic text, in_iban text, in_remark text, in_bank_account_id int)
+RETURNS int AS
+$$
+DECLARE out_id int;     
+BEGIN   
+        UPDATE entity_bank_account
+           SET bic = in_bic,
+               iban = in_iban,
+               remark = in_remark
+         WHERE id = in_bank_account_id;
+
+        IF FOUND THEN
+                out_id = in_bank_account_id;
+        ELSE   
+                INSERT INTO entity_bank_account(entity_id, bic, iban, remark)
+                VALUES(in_entity_id, in_bic, in_iban, in_remark);
+                SELECT CURRVAL('entity_bank_account_id_seq') INTO out_id ;
+        END IF;
+
+        RETURN out_id;
+END;
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION entity__save_bank_account
+(in_entity_id int, in_bic text, in_iban text, in_remark text, in_bank_account_id int) IS
+$$Saves a bank account to the entity.$$;
+
+COMMIT;
+

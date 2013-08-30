@@ -483,6 +483,7 @@ Saves a bank account.  Requires the following be set:
 entity_id 
 bic (bank id)
 iban (account number)
+remark (remark for the account, optional)
 bank_account_id (id for record, optional)
 
 =cut

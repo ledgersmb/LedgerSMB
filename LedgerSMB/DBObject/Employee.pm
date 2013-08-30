@@ -171,7 +171,7 @@ sub save_contact {
 
 Saves a bank account to an employee.
 
-Standard inputs (entity_id, iban, bic)
+Standard inputs (entity_id, iban, bic, remark)
 
 =cut
 

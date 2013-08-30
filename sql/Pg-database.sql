@@ -819,6 +819,7 @@ CREATE TABLE entity_bank_account (
     entity_id int not null references entity(id) ON DELETE CASCADE,
     bic varchar,
     iban varchar,
+    remark varchar,
     UNIQUE (id),
     PRIMARY KEY (entity_id, bic, iban)
 );
@@ -832,6 +833,12 @@ $$ Banking Institution Code, such as routing number of SWIFT code.$$;
 COMMENT ON COLUMN entity_bank_account.iban IS
 $$ International Bank Account Number.  used to store the actual account number
 for the banking institution.$$;
+
+COMMENT ON COLUMN entity_bank_account.remark IS
+$$ This field contains the notes for an account, like: This is USD account, this one is HUF account, this one is the default account, this account for paying specific taxes. If a $
+$$;
+
+
 
 CREATE TABLE entity_credit_account (
     id serial not null unique,
