@@ -7,6 +7,7 @@ Changelog for 1.3.35
 * Fixed error in logs about failed login during initial login (Chris T, 858)
 * Updated gnome2 stylesheet (Pongracz I)
 * Updated Hungarian translation (Pongracz I)
+* Fixed is_zero error on inventory activity report (Chris T)
 
 
 Changelog for 1.3.34
