@@ -93,7 +93,7 @@ sub inventory_activity {
     @cols = qw(description sold revenue partnumber received expense);
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
         $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
-        $ref->{net_income} = $ref->{revenue} - $ref->{expense};
+        $ref->{net_income} = $ref->{revenue} - $ref->{expenses};
         map { $ref->{$_} =~ s/^\s*// } @cols;
         map { $ref->{$_} =~ s/\s*$// } @cols;
         push @{ $form->{TB} }, $ref;
