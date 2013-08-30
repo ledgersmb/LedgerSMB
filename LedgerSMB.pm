@@ -719,6 +719,7 @@ sub call_procedure {
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
 	for (0 .. $#names){
             #   numeric            float4/real
+            $ref->{$names[$_]} ||=0;
             if ($types[$_] == 3 or $types[$_] == 2) {
                 $ref->{$names[$_]} = LedgerSMB::PGNumber->from_db($ref->{$names[$_]}, 'datetime') if defined $ref->{$names[$_]};
             }
