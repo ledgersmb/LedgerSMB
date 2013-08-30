@@ -260,6 +260,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
 
     $form->{AR} = $form->{AR_1} unless $form->{id};
     $form->{transdate} = $form->{current_date} if (!$form->{transdate});
+    $form->{crdate} = $form->{current_date};
     $form->{locked} =
       ( $form->{revtrans} )
       ? '1'
@@ -573,6 +574,10 @@ function on_return_submit(event){
 		<th align=right nowrap>| . $locale->text('Order Number') . qq|</th>
 		<td><input name="ordnumber" size="20" value="$form->{ordnumber}"></td>
 <input type=hidden name="quonumber" value="$form->{quonumber}">
+	      </tr>
+	      <tr class="crdate-row">
+		<th align=right>| . $locale->text('Invoice Created') . qq|</th>
+		<td><input class="date" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" readonly></td>
 	      </tr>
 	      <tr class="transdate-row">
 		<th align=right>| . $locale->text('Invoice Date') . qq|</th>

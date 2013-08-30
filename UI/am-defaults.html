@@ -113,6 +113,7 @@
       <?lsmb FOREACH textbox IN default_textboxes ?>
       <tr><th align="right" nowrap="nowrap"><?lsmb textbox.label ?></th>
           <td><input name="<?lsmb textbox.name ?>" size="40" 
+                    <?lsmb IF textbox.name == 'sinumber' ?>readonly="readonly"<?lsmb END ?>
                      value="<?lsmb form.${textbox.name} ?>" />
           </td>
       </tr>

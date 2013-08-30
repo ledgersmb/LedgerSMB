@@ -511,6 +511,10 @@ function on_return_submit(event){
 		<td><input name=ordnumber size=20 value="$form->{ordnumber}"></td>
 <input type=hidden name=quonumber value="$form->{quonumber}">
 	      </tr>
+              <tr>
+                <th align=right nowrap>| . $locale->text('Invoice Created') . qq|</th>
+                <td><input class="date" name=crdate size=11 title="$myconfig{dateformat}" value=$form->{crdate}></td>
+              </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Invoice Date') . qq|</th>
 		<td><input class="date" name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
