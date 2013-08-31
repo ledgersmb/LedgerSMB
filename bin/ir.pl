@@ -438,7 +438,7 @@ function on_return_submit(event){
     print qq|
 <table width=100%>
   <tr class=listtop>
-    <th>$form->{title}</th>
+    <th class=listtop>$form->{title}</th>
   </tr>
   <tr height="5"></tr>
   <tr>
