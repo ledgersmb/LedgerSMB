@@ -634,3 +634,6 @@ $$Saves a bank account to the entity.$$;
 
 COMMIT;
 
+BEGIN;
+ALTER TABLE location ALTER COLUMN mail_code DROP NOT NULL;
+COMMIT;
