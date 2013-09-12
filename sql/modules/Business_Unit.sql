@@ -186,11 +186,12 @@ CREATE OR REPLACE FUNCTION eca_bu_trigger() RETURNS TRIGGER AS
 $$
 BEGIN
   IF TG_OP = 'INSERT' THEN
-      INSERT INTO business_unit(class_id, description, credit_id)
-      VALUES (7 - NEW.entity_class, NEW.meta_number, NEW.id);
+      INSERT INTO business_unit(class_id, control_code, description, credit_id)
+      SELECT 7 - NEW.entity_class, NEW.meta_number,  e.name, NEW.id
+             FROM entity e WHERE e.id = NEW.entity_id;
   ELSIF TG_OP = 'UPDATE' THEN
       IF new.meta_number <> old.meta_number THEN
-         UPDATE business_unit SET description = new.meta_number
+         UPDATE business_unit SET control_code = new.meta_number
           WHERE class_id = 7 - NEW.entity_class
                 AND credit_id = new.id;
       END IF;
