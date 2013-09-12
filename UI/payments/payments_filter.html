@@ -128,13 +128,17 @@
 </div>
 <div class="listtop"><?lsmb text('Payment Processing') ?></div>
 	
-      <?lsmb INCLUDE select element_data = {
+      <?lsmb 
+          IF account_class == 1; pay_label = text('Pay From');#'
+          ELSIF account_class == 2; pay_label = text('Pay To'); #'
+          END;
+          INCLUDE select element_data = {
 		name = "cash_accno"
 		default_values = [cash_accno]
 		options = cash_accounts
 		value_attr = "accno"
 		text_attr = "text"
-		label = text('Pay From:') # '
+		label = pay_label _ ':'
 	} ?> 
 
 <?lsmb IF payment_types ?>
