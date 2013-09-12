@@ -671,7 +671,7 @@ CREATE TABLE location (
   city text check (city ~ '[[:alnum:]_]') NOT NULL,
   state text check(state ~ '[[:alnum:]_]'),
   country_id integer not null REFERENCES country(id),
-  mail_code text not null check (mail_code ~ '[[:alnum:]_]'),
+  mail_code text check (mail_code ~ '[[:alnum:]_]'),
   created date not null default now(),
   inactive_date timestamp default null,
   active boolean not null default TRUE

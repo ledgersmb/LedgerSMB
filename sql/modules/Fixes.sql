@@ -193,3 +193,7 @@ COMMIT;
 
 -- Required for parameter rename
 DROP FUNCTION pricelist__delete(int,int);
+
+BEGIN;
+ALTER TABLE location ALTER COLUMN mail_code DROP NOT NULL;
+COMMIT;
