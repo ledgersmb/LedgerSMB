@@ -200,7 +200,9 @@ sub create_links {
     $form->{defaultcurrency} = $curr[0];
     chomp $form->{defaultcurrency};
 
-    for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
+    for (@curr) { $form->{selectcurrency} .= "<option>$_\n"  
+                     unless  $form->{selectcurrency} =~ /<option[^>]*>$_/
+    }
 
     AA->get_name( \%myconfig, \%$form );
 
