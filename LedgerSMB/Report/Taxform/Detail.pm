@@ -26,13 +26,13 @@ for a given vendor.  This is used largely for verifying the values reported.
 
 =head1 CRITERIA PROPERTIES
 
-=head2 taxform_id
+=head2 tax_form_id
 
 This is the id of the taxform.
 
 =cut
 
-has taxform_id => (is => 'ro', isa => 'Int', required => '1');
+has tax_form_id => (is => 'ro', isa => 'Int', required => '1');
 
 =head2 meta_number
 
@@ -135,7 +135,7 @@ sub buttons {
 
 sub run_report {
     my ($self) = @_;
-    my $tf = LedgerSMB::DBObject::TaxForm->get($self->taxform_id);
+    my $tf = LedgerSMB::DBObject::TaxForm->get($self->tax_form_id);
     $self->taxform($tf->{form_name});
     my $fname = 'tax_form_details_report';
     $fname .= '_accrual' if $tf->{is_accrual};
@@ -144,7 +144,7 @@ sub run_report {
     for my $row(@rows){
        $row->{total} = $row->{acc_total} + $row->{invoice_total};
     }
-    $self->rows(@rows);
+    $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT

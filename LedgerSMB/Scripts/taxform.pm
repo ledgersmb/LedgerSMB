@@ -60,7 +60,7 @@ Display the "add taxform" screen.
 
 =cut
 
-sub add_taxform 
+sub _taxform_screen
 {
     my ($request) = @_;
     my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
@@ -74,6 +74,23 @@ sub add_taxform
         format => 'HTML'
     );
     $template->render($taxform);
+}
+
+sub add_taxform {
+    _taxform_screen(@_);
+}
+
+=item edit 
+
+This retrieves and edits a tax form.  Requires that id be set.
+
+=cut
+
+sub edit {
+    my ($request) = @_;
+    my $tf = LedgerSMB::DBObject::TaxForm->get($request->{id});
+    $request->merge($tf);
+    _taxform_screen($request);
 }
 
 =item generate_report
@@ -126,11 +143,13 @@ sub print {
     my $report = LedgerSMB::Report::Taxform::Summary->new(%$request);
     $report->run_report($request);
     if ($request->{meta_number}){
-       my $rows = $report->rows;
-       for my (@$rows){
-           delete $_ unless $_->{meta_number} eq $request->{meta_number}
+       my @rows = $report->rows;
+       my $inc = 0;
+       for (@rows){
+           delete $rows[$inc] unless $_->{meta_number} eq $request->{meta_number};
+           ++$inc;
        }
-       $report->rows($rows);
+       $report->rows(\@rows);
     }
 
     # Business settings for 1099

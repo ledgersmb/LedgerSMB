@@ -31,13 +31,13 @@ internally revieing the numbers for accuracy.
 
 In addition to the standard dates, there is only one property expected.
 
-=head2 taxform_id
+=head2 tax_form_id
 
 This is the id of the taxform.
 
 =cut
 
-has taxform_id => (is => 'ro', isa => 'Int', required => '1');
+has tax_form_id => (is => 'ro', isa => 'Int', required => '1');
 
 has taxform => (is => 'rw', isa => 'Str', required => 0);
 
@@ -133,7 +133,7 @@ sub buttons {
 
 sub run_report {
     my ($self) = @_;
-    my $tf = LedgerSMB::DBObject::TaxForm->get($self->taxform_id);
+    my $tf = LedgerSMB::DBObject::TaxForm->get($self->tax_form_id);
     $self->taxform($tf->{form_name});
     my $fname = 'tax_form_summary_report';
     $fname .= '_accrual' if $tf->{is_accrual};
@@ -141,13 +141,13 @@ sub run_report {
 
     my $href_suffix_base = 'from_date=' . $self->from_date 
                          . '&to_date=' . $self->to_date
-                         . '&taxform_id=' . $self->taxform_id;
+                         . '&tax_form_id=' . $self->tax_form_id;
     for my $row(@rows){
        $row->{total_href_suffix} = $href_suffix_base 
                                  . '&meta_number=' . $row->{meta_number};
        $row->{total} = $row->{acc_total} + $row->{invoice_total};
     }
-    $self->rows(@rows);
+    $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT
