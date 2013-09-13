@@ -901,9 +901,7 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
 
         if ( $form->{id} ) {
 
-            if ( $form->{locked} ) {
-                for ( "post", "delete", 'on_hold' ) { delete $button{$_} }
-            }
+            for ( "post", "delete") { delete $button{$_} }
             for ( 'post_as_new', 'print_and_post_as_new', "update") {
                 delete $button{$_};
             }

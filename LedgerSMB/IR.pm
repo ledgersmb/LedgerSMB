@@ -1584,24 +1584,8 @@ sub toggle_on_hold {
     if ($form->{id}) { # it's an existing (.. probably) invoice.
         
         my $dbh = $form->{dbh};
-        #my $sth = $dbh->prepare("SELECT on_hold from ar where ar.id = ?");#tshvr4
-        my $sth = $dbh->prepare("SELECT on_hold from ap where ap.id = ?");
-        $sth->execute($form->{id});
-        my $state = $sth->fetchrow_array;
-        my $n_s; # new state
-        #if ($state[0] == 't') {
-        if ($state) {#tshvr4            
-            # Turn it off
-            $n_s = 'f';
-            
-        } else {
-            $n_s = 't';
-        }
-        
-        #$sth = $dbh->prepare("update ar set on_hold = ?::boolean where ar.id = ?");#tshvr4
-        $sth = $dbh->prepare("update ap set on_hold = ?::boolean where ap.id = ?");
-        #my $code = $dbh->execute($ns, $form->{id});#tshvr4
-        my $code = $sth->execute($n_s, $form->{id});#tshvr4
+        $sth = $dbh->prepare("update ap set on_hold = not on_hold where ap.id = ?");
+        my $code = $sth->execute($form->{id});#tshvr4
         
         return 1;
         

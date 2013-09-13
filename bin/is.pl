@@ -1028,7 +1028,7 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
             if ( $transdate > $closedto ) {
                 # Added on_hold, by Aurynn.
                 for ( "update", "ship_to", "post",
-                    "schedule", "on_hold" )
+                    "schedule")
                 {
                     $allowed{$_} = 1;
                 }

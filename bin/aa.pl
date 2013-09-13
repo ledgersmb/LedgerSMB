@@ -945,6 +945,14 @@ sub form_footer {
         &print_options;
 
         print "<br>";
+        my $hold_text;
+
+        if ($form->{on_hold}) {
+            $hold_text = $locale->text('Off Hold');
+        } else {
+            $hold_text = $locale->text('On Hold');
+        }
+            
 
         %button = (
             'update' =>
@@ -960,11 +968,17 @@ sub form_footer {
               { ndx => 7, key => 'H', value => $locale->text('Schedule') },
             'delete' =>
               { ndx => 8, key => 'D', value => $locale->text('Delete') },
-
+            'on_hold' => 
+              { ndx => 9, key => 'O', value => $hold_text },
             'save_info' => 
-              { ndx => 9, key => 'I', value => $locale->text('Save Info') },
+              { ndx => 10, key => 'I', value => $locale->text('Save Info') },
+<<<<<<< .working
+=======
+            'save_temp' =>
+              { ndx => 11, key => 'T', value => $locale->text('Save Template')},
+>>>>>>> .merge-right.r6006
             'new_screen' => # Create a blank ar/ap invoice.
-             { ndx => 10, key=> 'N', value => $locale->text('New') }
+             { ndx => 12, key=> 'N', value => $locale->text('New') }
         );
         my $is_draft = 0;
         if (!$form->{approved} && !$form->{batch_id}){
@@ -999,7 +1013,7 @@ sub form_footer {
         elsif (!$form->{id}) {
 
             for ( "post_as_new","delete","save_info",
-                  "print", 'copy_to_new', 'new_screen') {
+                  "print", 'copy_to_new', 'new_screen', 'on_hold') {
                 delete $button{$_};
             }
 
@@ -1092,6 +1106,21 @@ sub form_footer {
 </html>
 |;
 }
+
+sub on_hold {
+    use LedgerSMB::IS;
+    use LedgerSMB::IR; # TODO: refactor this over time
+    
+    if ($form->{id}) {
+        if ($form->{ARAP} eq 'AR'){
+            my $toggled = IS->toggle_on_hold($form);
+        } else {
+            my $toggled = IR->toggle_on_hold($form);
+        }
+        &edit(); 
+    }    
+}
+
 
 sub edit_and_approve {
     use LedgerSMB::DBObject::Draft;
