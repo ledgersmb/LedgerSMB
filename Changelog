@@ -97,6 +97,7 @@ Changelog for 1.3.35
 * Dropped not null requirement on zip/mail codes (Chris T, 863)
 * Fixed on hold throwing http 500 errors (Chris T and Nick P, 872)
 * Fixed on hold not available for ar/ap transactions (Chris T, 838)
+* Fixed single payments screen confusing (Chris T, 856)
 
 
 Changelog for 1.3.34

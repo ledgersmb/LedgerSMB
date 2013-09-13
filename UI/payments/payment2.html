@@ -210,7 +210,7 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
       </table>
      </div>
      </td>
-     <td valign="MIDDLE"><input type="checkbox" name="checkbox_<?lsmb row.invoice.id ?>"></td>
+     <td valign="MIDDLE"><input type="checkbox" class="remove" name="checkbox_<?lsmb row.invoice.id ?>"></td>
    <?lsmb END ?>
    </tr>
    <?lsmb  colspan = column_count - 2 # We will use this later on totals -?>
@@ -264,7 +264,7 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
      	<input type="hidden" id="overpayment_topay_<?lsmb overpayment_item -?>" name="overpayment_topay_<?lsmb overpayment_item -?>" value="<?lsmb item.amount ?>" />
      	<?lsmb overpayment_subtotal = overpayment_subtotal + item.amount -?>
      </td>
-     <td align="center"><input type="checkbox" name="overpayment_checkbox_<?lsmb overpayment_item -?>"/></td>   
+     <td align="center"><input type="checkbox" class="remove" name="overpayment_checkbox_<?lsmb overpayment_item -?>"/></td>   
    </tr>        
    <?lsmb END -?>
    <?lsmb #Now we insert an empty field to process a new overpayment -?>
@@ -306,7 +306,7 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
         value="0"
       />
      </td>
-     <td align="center"><input type="checkbox" name="overpayment_checkbox_<?lsmb overpayment_item -?>"/></td>
+     <td align="center"><input type="checkbox" class="remove" name="overpayment_checkbox_<?lsmb overpayment_item -?>"/></td>
    </tr>
    <tr class="listsubtotal">
    <th colspan="5" align="right"><?lsmb text('Subtotal') -?></th>
