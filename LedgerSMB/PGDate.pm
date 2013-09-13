@@ -159,7 +159,9 @@ sub from_input{
     my $format = $LedgerSMB::App_State::User->{dateformat};
     $format ||= 'yyyy-mm-dd';
     my $dt =  _parse_string($self, $input, uc($format), $has_time);
-    return $self->new(date => $dt, dummy => !defined $dt);
+    my %prop = (date => $dt, dummy => !defined $dt);
+    delete $prop{date} unless defined $prop{date} and $prop{date} ne '';
+    return $self->new(%prop);
 }
 
 
@@ -209,7 +211,10 @@ sub from_db {
        confess 'LedgerSMB::PGDate Invalid DB Type';
     }
     my $dt =  _parse_string($self, $input, $format, $has_time);
-    return $self->new(date => $dt, dummy => !defined $dt);
+    my %prop = (date => $dt, dummy => !defined $dt);
+    delete $prop{date} unless defined $prop{date} and $prop{date} ne '';
+
+    return $self->new(%prop);
 }
 
 =item to_db
@@ -230,7 +235,7 @@ sub to_db {
     return $formatter->format_datetime($self->date);
 }
 
-__PACKAGE__->meta->make_immutable;
+#__PACKAGE__->meta->make_immutable;
 
 1;
 

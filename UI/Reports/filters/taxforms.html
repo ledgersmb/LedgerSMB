@@ -5,8 +5,8 @@
 -->
 <?lsmb INCLUDE 'ui-header.html' 
        	include_script = ["UI/ajax/scriptaculous/lib/prototype.js","UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls","UI/ajax/helpers.js"]
-?>
-<?lsmb PROCESS 'elements.html' ?>
+        PROCESS 'elements.html';
+        PROCESS 'report_base.html';
 <body>
 
 <form method="post" action="<?lsmb script ?>">
@@ -36,54 +36,6 @@
 
 	</tr>
 	
-        <tr>
-	<th align="right"><?lsmb text('Period') ?></th>
-
-	<td>
-        <?lsmb PROCESS select element_data = {
-               name = "begin_month"
-               options = accountingmonths
-               text_attr = "text"
-               value_attr = "value"
-        } ?>
-
-        <?lsmb PROCESS select element_data = {
-               name = "begin_day"
-               options = days
-               text_attr = "text"
-               value_attr = "value"
-        } ?>
-
-	<?lsmb PROCESS select element_data = {
-               name="begin_year"
-               options = all_years
-               text_attr = "text"
-               value_attr = "value"
-        } ?>
-        </td>
-        <td>to</td>
-	<td>
-        <?lsmb PROCESS select element_data = {
-               name = "end_month"
-               options = accountingmonths
-               text_attr = "text"
-               value_attr = "value"
-        } ?>
-
-        <?lsmb PROCESS select element_data = {
-               name = "end_day"
-               options = days
-               text_attr = "text"
-               value_attr = "value"
-        } ?>
-
-	<?lsmb PROCESS select element_data = {
-               name="end_year"
-               options = all_years
-               text_attr = "text"
-               value_attr = "value"
-        } ?>
-        </td>
       </tr>
 	<tr>
 	  <th align="right"><?lsmb text('Vendor Number') ?></th>
@@ -95,6 +47,7 @@
       </table>
     </td>
   </tr>
+  <?lsmb PROCESS date_row ?> 
   <tr>
     <td><hr size=3 noshade></td>
   </tr>
