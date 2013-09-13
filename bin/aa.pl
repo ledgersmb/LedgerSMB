@@ -974,11 +974,6 @@ sub form_footer {
               { ndx => 9, key => 'O', value => $hold_text },
             'save_info' => 
               { ndx => 10, key => 'I', value => $locale->text('Save Info') },
-<<<<<<< .working
-=======
-            'save_temp' =>
-              { ndx => 11, key => 'T', value => $locale->text('Save Template')},
->>>>>>> .merge-right.r6006
             'new_screen' => # Create a blank ar/ap invoice.
              { ndx => 12, key=> 'N', value => $locale->text('New') }
         );
