@@ -128,6 +128,13 @@ sub generate_report {
     
     
     my ($request) = @_;
+    if (!$request->{begin_year}){
+        $request->error($request->{_locale}->text('Beginning year required'));
+    }
+    if (!$request->{end_year}){
+        $request->error($request->{_locale}->text('Ending year required'));
+    }
+        
     if (!$request->{format}){
        $request->{format} = 'HTML';
     }
