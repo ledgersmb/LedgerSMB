@@ -227,6 +227,17 @@ tr.record {
 tr.warning {
 	background-color: yellow;
 }
+input[type=checkbox].remove::before {
+    display: inline-block;
+    content: ' X '; 
+    width: 12px;
+    text-align: center;
+    background: white;
+    color: white; 
+}
+input[type=checkbox].remove:checked:before { 
+    background:red; 
+}
 
 /* Theming controls based on transaction status */
 /* disabled for now to speed release 
