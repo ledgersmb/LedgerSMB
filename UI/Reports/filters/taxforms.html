@@ -4,9 +4,10 @@
 * optional vendor text box 
 -->
 <?lsmb INCLUDE 'ui-header.html' 
-       	include_script = ["UI/ajax/scriptaculous/lib/prototype.js","UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls","UI/ajax/helpers.js"]
+       	include_script = ["UI/ajax/scriptaculous/lib/prototype.js","UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls","UI/ajax/helpers.js"];
         PROCESS 'elements.html';
         PROCESS 'report_base.html';
+?>
 <body>
 
 <form method="post" action="<?lsmb script ?>">
@@ -26,7 +27,7 @@
       <table>
         <tr>
 	<th align="right"><?lsmb text('Form') ?></th>
-	<td colspan="3">
+	<td colspan="6">
         <?lsmb PROCESS select element_data = {
                name = "tax_form_id"
                options = forms
@@ -39,15 +40,15 @@
       </tr>
 	<tr>
 	  <th align="right"><?lsmb text('Vendor Number') ?></th>
-	  <td colspan="3"><?lsmb INCLUDE input element_data = {
+	  <td colspan="6"><?lsmb INCLUDE input element_data = {
 	                  name = "meta_number"
 	                  size = '35'
            } ?></td>
 	</tr>
-      </table>
-    </td>
   </tr>
   <?lsmb PROCESS date_row ?> 
+      </table>
+    </td>
   <tr>
     <td><hr size=3 noshade></td>
   </tr>

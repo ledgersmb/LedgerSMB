@@ -676,6 +676,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 225	module	taxform.pl	613
 225	action	list_all	614
 226	module	taxform.pl	615
+226	action	report	201
 227	menu	1	616
 228	menu	1	617
 229	menu	1	618
