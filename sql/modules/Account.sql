@@ -621,4 +621,11 @@ WITH RECURSIVE account_headings AS (
 )
 SELECT id, accno, level, string_to_array(path, '||||') as path
   FROM account_headings;
+
+CREATE OR REPLACE FUNCTION gifi__list() RETURNS SETOF gifi 
+LANGUAGE SQL AS
+$$
+SELECT * FROM gifi ORDER BY accno;
+$$;
+
 COMMIT;

@@ -19,6 +19,7 @@ use LedgerSMB::Business_Unit;
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Report::Balance_Sheet;
 use LedgerSMB::Report::Listings::Business_Type;
+use LedgerSMB::Report::Listings::GIFI;
 use strict;
 
 =pod
@@ -107,6 +108,16 @@ sub list_business_types {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Listings::Business_Type->new(%$request);
     $report->render($request);
+}
+
+=item list_gifi
+
+List the gifi entries.  No inputs expected or used.
+
+=cut
+
+sub list_gifi {
+    LedgerSMB::Report::Listings::GIFI->new()->render();
 }
 
 =item balance_sheet 

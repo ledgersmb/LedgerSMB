@@ -59,40 +59,6 @@ use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('AM');
 
-=item AM->gifi_accounts($myconfig, $form);
-
-Populates the list referred to as $form->{ALL} with hashes of gifi numbers and
-descriptions in order of the GIFI number.  The GIFI number referred to as
-'accno'.
-
-$myconfig is not used.
-
-=cut
-
-sub gifi_accounts {
-
-    my ( $self, $myconfig, $form ) = @_;
-
-    # connect to database
-    my $dbh = $form->{dbh};
-
-    my $query = qq|
-		  SELECT accno, description
-		    FROM gifi
-		ORDER BY accno|;
-
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        push @{ $form->{ALL} }, $ref;
-    }
-
-    $sth->finish;
-    $dbh->commit;
-
-}
-
 =item AM->get_gifi($myconfig, $form);
 
 Sets $form->{description} to the description of the GIFI number $form->{accno}.

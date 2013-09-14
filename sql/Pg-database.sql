@@ -3138,7 +3138,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 132	module	account.pl	346
 132	action	yearend_info	347
 139	module	am.pl	357
-140	module	am.pl	358
+140	module	reports.pl	358
 139	action	add_gifi	361
 140	action	list_gifi	362
 141	menu	1	363
