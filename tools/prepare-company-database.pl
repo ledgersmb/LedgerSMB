@@ -37,7 +37,7 @@ use Cwd;
 
 use LedgerSMB;
 use LedgerSMB::Entity::User;
-use LedgerSMB::Entity::Employee;
+use LedgerSMB::Entity::Person::Employee;
 use DBI;
 
 # always use strict!
