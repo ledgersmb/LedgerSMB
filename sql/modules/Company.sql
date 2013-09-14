@@ -1695,4 +1695,10 @@ delete from partsvendor where entry_id = $1 and credit_id = $2;
 select true;
 $$ language sql;
 
+CREATE OR REPLACE FUNCTION sic__list()
+RETURNS SETOF sic LANGUAGE SQL AS
+$$
+SELECT * FROM sic ORDER BY code;
+$$;
+
 COMMIT;

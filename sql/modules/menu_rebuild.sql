@@ -477,7 +477,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 152	action	list_language	381
 153	menu	1	382
 154	module	am.pl	383
-155	module	am.pl	384
+155	module	reports.pl	384
 154	action	add_sic	385
 155	action	list_sic	386
 86	action	search_screen	610

@@ -22,6 +22,7 @@ use LedgerSMB::Report::Listings::Business_Type;
 use LedgerSMB::Report::Listings::GIFI;
 use LedgerSMB::Report::Listings::Warehouse;
 use LedgerSMB::Report::Listings::Language;
+use LedgerSMB::Report::Listings::SIC;
 use strict;
 
 =pod
@@ -140,6 +141,16 @@ List language entries.  No inputs expected or used.
 
 sub list_language {
     LedgerSMB::Report::Listings::Language->new()->render();
+}
+
+=item list_sic
+
+Lists sic codes
+
+=cut
+
+sub list_sic {
+    LedgerSMB::Report::Listings::SIC->new->render;
 }
     
 =item balance_sheet 
