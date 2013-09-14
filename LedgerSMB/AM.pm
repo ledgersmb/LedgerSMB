@@ -549,54 +549,6 @@ sub delete_sic {
 
 }
 
-=item AM->language($myconfig, $form);
-
-Populates the list referred to as $form->{ALL} with hashes containing the code
-and description of all languages entered in the language table.  The usual set
-of $form attributes affect the order in which the hashes are entered in the
-list.
-
-These language functions are unrelated to LedgerSMB::Locale, although these
-language codes are also used for non-UI templates and by LedgerSMB::PE.
-
-$myconfig is unused.
-
-=cut
-
-sub language {
-
-    my ( $self, $myconfig, $form ) = @_;
-
-    # connect to database
-    my $dbh = $form->{dbh};
-
-    $form->{sort} = "code" unless $form->{sort};
-    my @a = qw(code description);
-
-    my %ordinal = (
-        code        => 1,
-        description => 2
-    );
-
-    my $sortorder = $form->sort_order( \@a, \%ordinal );
-
-    my $query = qq|
-		  SELECT code, description
-		    FROM language
-		ORDER BY $sortorder|;
-
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        push @{ $form->{ALL} }, $ref;
-    }
-
-    $sth->finish;
-    $dbh->commit;
-
-}
-
 =item AM->get_language($myconfig, $form);
 
 Sets $form->{description} to the description of the language that has the code

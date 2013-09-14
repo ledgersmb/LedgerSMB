@@ -3162,7 +3162,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 149	action	list_business_types	376
 150	menu	1	377
 151	module	am.pl	378
-152	module	am.pl	379
+152	module	reports.pl	379
 151	action	add_language	380
 152	action	list_language	381
 153	menu	1	382

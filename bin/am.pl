@@ -49,42 +49,6 @@ sub edit   { &{"edit_$form->{type}"} }
 sub save   { &{"save_$form->{type}"} }
 sub delete { &{"delete_$form->{type}"} }
 
-our @default_textboxes = (
-   { name => 'glnumber', label => $locale->text('GL Reference Number') },
-   { name => 'sinumber', 
-      label => $locale->text('Sales Invoice/AR Transaction Number'), },
-   { name => 'vclimit', label => $locale->text('Max per dropdown') },
-   { name => 'sonumber', label => $locale->text('Sales Order Number') },
-   { name => 'vinumber' , 
-    label => $locale->text('Vendor Invoice/AP Transaction Number')},
-   { name => 'sqnumber', label => $locale->text('Sales Quotation Number') },
-   { name => 'rfqnumber', label => $locale->text('RFQ Number') },
-   { name => 'partnumber', label => $locale->text('Part Number') },
-   { name => 'projectnumber', label => $locale->text('Job/Project Number') },
-   { name => 'employeenumber', label => $locale->text('Employee Number') },
-   { name => 'customernumber', label => $locale->text('Customer Number') },
-   { name => 'vendornumber', label => $locale->text('Vendor Number') },
-   { name => 'check_prefix', label => $locale->text('Check Prefix') },
-   { name => 'password_duration', label => $locale->text('Password Duration') },
-   { name => 'default_email_to', label => $locale->text('Default Email To') },
-   { name => 'default_email_cc', label => $locale->text('Default Email CC') },
-   { name => 'default_email_bcc', label => $locale->text('Default Email BCC') },
-   { name => 'default_email_from', 
-     label => $locale->text('Default Email From') },
-   { name => 'company_name', label => $locale->text('Company Name') },
-   { name => 'company_address', label => $locale->text('Company Address') },
-   { name => 'company_phone', label => $locale->text('Company Phone') },
-   { name => 'company_fax', label => $locale->text('Company Fax') },
-   { name => 'company_sales_tax_id', 
-                             label =>  $locale->text('Company Sales Tax ID') },
-   { name => 'company_license_number',
-                           label =>  $locale->text('Company License Number') },
-);
-
-my @default_others = qw(businessnumber weightunit separate_duties default_language
-                        inventory_accno_id income_accno_id expense_accno_id 
-                        fxgain_accno_id fxloss_accno_id default_country 
-                        templates curr template_images);
 
 sub save_as_new {
 
@@ -635,81 +599,6 @@ sub edit_language {
         hiddens => \%hiddens,
     });
 
-}
-
-sub list_language {
-
-    AM->language( \%myconfig, \%$form );
-
-    $href =
-"$form->{script}?action=list_language&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
-
-    $form->sort_order();
-
-    $form->{callback} =
-"$form->{script}?action=list_language&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
-
-    my $callback = $form->escape( $form->{callback} );
-
-    $form->{title} = $locale->text('Languages');
-
-    my @column_index = $form->sort_columns(qw(code description));
-    my %column_header;
-
-    $column_header{code} = { text => $locale->text('Code'),
-        href => "$href&sort=code" };
-    $column_header{description} = { text => $locale->text('Description'),
-        href => "$href&sort=description" };
-
-    my @rows;
-    my $i = 0;
-    foreach my $ref ( @{ $form->{ALL} } ) {
-
-        my %column_data;
-        $i++;
-        $i %= 2;
-        $column_data{i} = $i;
-
-        $column_data{code} = {text => $ref->{code}, href =>
-            qq|$form->{script}?action=edit_language&code=$ref->{code}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback|};
-        $column_data{description} = $ref->{description};
-
-        push @rows, \%column_data;
-    
-    }
-
-    $form->{type} = "language";
-
-    my @hiddens = qw(type callback path login sessionid);
-
-## SC: Temporary removal
-##    if ( $form->{lynx} ) {
-##        require "bin/menu.pl";
-##        &menubar;
-##    }
-
-    my @buttons;
-    push @buttons, {
-        name => 'action',
-        value => 'add_language',
-        text => $locale->text('Add Language'),
-        type => 'submit',
-        class => 'submit',
-    };
-
-    # SC: I'm not concerned about the wider description as code is 6 chars max
-    my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
-        locale => $locale,
-        template => 'am-list-departments');
-    $template->render({
-        form => $form,
-        buttons => \@buttons,
-        columns => \@column_index,
-        heading => \%column_header,
-        rows => \@rows,
-        hiddens => \@hiddens,
-    });
 }
 
 sub language_header {

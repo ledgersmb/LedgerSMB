@@ -21,6 +21,7 @@ use LedgerSMB::Report::Balance_Sheet;
 use LedgerSMB::Report::Listings::Business_Type;
 use LedgerSMB::Report::Listings::GIFI;
 use LedgerSMB::Report::Listings::Warehouse;
+use LedgerSMB::Report::Listings::Language;
 use strict;
 
 =pod
@@ -131,6 +132,16 @@ sub list_warehouse {
     LedgerSMB::Report::Listings::Warehouse->new()->render();
 }
 
+=item list_language
+
+List language entries.  No inputs expected or used.
+
+=cut
+
+sub list_language {
+    LedgerSMB::Report::Listings::Language->new()->render();
+}
+    
 =item balance_sheet 
 
 Generates a balance sheet
