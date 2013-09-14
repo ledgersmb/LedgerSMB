@@ -637,3 +637,9 @@ COMMIT;
 BEGIN;
 ALTER TABLE location ALTER COLUMN mail_code DROP NOT NULL;
 COMMIT;
+
+BEGIN;
+UPDATE menu_attribute 
+   SET value = 'sales_quotation' 
+ where value = 'quotation' AND attribute='template';
+COMMIT;

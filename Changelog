@@ -14,6 +14,11 @@ Changelog for 1.3.35
 * Fixed on hold not available for ar/ap transactions (Chris T, 838)
 * Fixed single payments screen confusing (Chris T, 856)
 * Fixed confusing error on tax form reports (Chris T, 883)
+* Fixed unable to edit quotation.tex (Chris T, 885)
+
+Chris T is Chris Travers
+Nick P is Nick Prater
+Pongracz I is Pongracz Istvan
 
 
 Changelog for 1.3.34
