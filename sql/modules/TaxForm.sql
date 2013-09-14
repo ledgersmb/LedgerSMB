@@ -42,10 +42,24 @@ $$ language sql;
 COMMENT ON FUNCTION tax_form__get(in_form_id int) IS
 $$ Retrieves specified tax form information from the database.$$;
 
+DROP TYPE IF EXISTS tax_form_list;
+
+CREATE TYPE tax_form_list AS (
+   id int,
+   form_name text,
+   country_name text,
+   default_reportable bool,
+   is_accrual bool
+);
+
+DROP FUNCTION IF EXISTS tax_form__list_all();
 CREATE OR REPLACE FUNCTION tax_form__list_all()
-RETURNS SETOF country_tax_form AS
+RETURNS SETOF tax_form_list AS
 $BODY$
-SELECT * FROM country_tax_form ORDER BY country_id, id;
+SELECT tf.id, tf.form_name, c.name, tf.default_reportable, tf.is_accrual
+  FROM country c
+  JOIN country_tax_form tf ON c.id = tf.country_id
+ ORDER BY country_id, form_name;
 $BODY$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION tax_form__list_all() IS
