@@ -173,7 +173,7 @@ $$;
 
 --- INVENTORY ADJUSTMENT LOGIC
 
-DROP TYPE part_at_date IF EXISTS;
+DROP TYPE IF EXISTS part_at_date CASCADE;
 CREATE TYPE part_at_date AS (
   parts_id int,
   partnumber text,
@@ -370,6 +370,13 @@ RETURNS SETOF inventory_report_line LANGUAGE SQL AS
 $$
 SELECT * FROM inventory_report_line l WHERE adjust_id = $1
  ORDER BY parts_id;
+$$;
+
+CREATE OR REPLACE FUNCTION warehouse__list()
+RETURNS SETOF warehouse
+LANGUAGE SQL AS
+$$
+SELECT * FROM warehouse ORDER BY DESCRIPTION;
 $$;
 
 COMMIT;

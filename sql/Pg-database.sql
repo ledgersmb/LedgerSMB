@@ -3143,7 +3143,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 140	action	list_gifi	362
 141	menu	1	363
 142	module	am.pl	364
-143	module	am.pl	365
+143	module	reports.pl	365
 142	action	add_warehouse	366
 131	module	configuration.pl	339
 111	report_name	trial_balance	277

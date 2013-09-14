@@ -20,6 +20,7 @@ use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Report::Balance_Sheet;
 use LedgerSMB::Report::Listings::Business_Type;
 use LedgerSMB::Report::Listings::GIFI;
+use LedgerSMB::Report::Listings::Warehouse;
 use strict;
 
 =pod
@@ -118,6 +119,16 @@ List the gifi entries.  No inputs expected or used.
 
 sub list_gifi {
     LedgerSMB::Report::Listings::GIFI->new()->render();
+}
+
+=item list_warehouse
+
+List the warehouse entries.  No inputs expected or used.
+
+=cut
+
+sub list_warehouse {
+    LedgerSMB::Report::Listings::Warehouse->new()->render();
 }
 
 =item balance_sheet 

@@ -185,41 +185,6 @@ sub delete_gifi {
 
 }
 
-=item AM->warehouses($myconfig, $form);
-
-Populates the list referred to as $form->{ALL} with hashes describing
-warehouses, ordered according to the logic of $form->sort_order.  Each hash has
-an id and a description element.
-
-$myconfig is not used.
-
-=cut
-
-sub warehouses {
-
-    my ( $self, $myconfig, $form ) = @_;
-
-    # connect to database
-    my $dbh = $form->{dbh};
-
-    $form->sort_order();
-    my $query = qq|
-		  SELECT id, description
-		    FROM warehouse
-		ORDER BY description $form->{direction}|;
-
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        push @{ $form->{ALL} }, $ref;
-    }
-
-    $sth->finish;
-    $dbh->commit;
-
-}
-
 =item AM->get_warehouse($myconfig, $form);
 
 Sets $form->{description} to the name of the warehouse $form->{id}.  If no
