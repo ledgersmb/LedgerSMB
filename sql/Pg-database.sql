@@ -3061,8 +3061,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 97	action	translation	237
 97	translation	partsgroup	238
 98	menu	1	239
-100	module	jc.pl	243
-100	action	add	244
+100	module	timecard.pl	243
+100	action	display	244
 100	project	project	246
 100	type	timecard	247
 101	menu	1	248

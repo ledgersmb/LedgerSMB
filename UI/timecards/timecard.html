@@ -1,7 +1,7 @@
 <?lsmb INCLUDE 'ui-header.html';
        PROCESS 'elements.html';
        PROCESS 'report_base.html';
-       PROCESS 'utilities';
+       PROCESS 'utilities.html';
 ?>
 <body>
 <form action="timecard.pl" method="post">
@@ -20,7 +20,7 @@
                type = 'text'
                size = '32'
               class = 'control-code'
-         ?>
+         } ?>
     </td>
 </tr>
 <tr><th><?lsmb text('Description') ?></th>
@@ -30,7 +30,7 @@
                type = 'text'
                size = '48'
               class = 'description'
-         ?>
+         } ?>
     </td>
 </tr>
 <tr><th><?lsmb text('Date Worked') ?></th>
@@ -52,14 +52,14 @@
        type = text
       class = 'time-part'
        size = 3
-  maxlength = 2 ?> : 
+  maxlength = 2 } ?> : 
     <?lsmb PROCESS input element_data = {
        name = 'in_min'
       value = in_min
        type = text
       class = 'time-part'
        size = 3
-  maxlength = 2 ?>
+  maxlength = 2 } ?>
  </td> 
 <th><?lsmb text('Time Out') ?></th>
 <td><?lsmb PROCESS input element_data = {
@@ -68,14 +68,14 @@
        type = text
       class = 'time-part'
        size = 3
-  maxlength = 2 ?> : 
+  maxlength = 2 } ?> : 
     <?lsmb PROCESS input element_data = {
        name = 'out_min'
       value = out_min
        type = text
       class = 'time-part'
        size = 3
-  maxlength = 2 ?>
+  maxlength = 2 } ?>
  </td> 
 </tr>
 <tr><th><?lsmb text('Clocked') ?></th>
@@ -88,7 +88,7 @@
       value = qty
        type = text
       class = 'qty'
-       size = 16 ?></td>
+       size = 16 } ?></td>
 </td>
 <tr><th><?lsmb text('Non-Chargeable') ?></th>
     <td><?lsmb PROCESS input element_data = {
@@ -96,13 +96,15 @@
       value = non_billable
        type = text
       class = 'qty'
-       size = 16 ?></td>
+       size = 16 } ?></td>
 </tr>
 <tr><th><?lsmb text('Allocated') ?></th>
     <td><?lsmb allocated ?></td>
 </tr>
 <tr><th align><?lsmb text('Notes') ?></th>
-    <td colspan=3><textarea name="notes" rows=2 cols=46 wrap=soft></textarea>
+    <td colspan=3><textarea name="notes" rows=2 cols=46 wrap=soft><?lsmb
+          notes
+    ?></textarea>
     </td>
 </tr>
 </table>

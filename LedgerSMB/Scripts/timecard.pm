@@ -53,6 +53,7 @@ sub display {
         template => 'timecard',
         format   => 'HTML'
     );
+    $template->render($request);
 
 }
 
