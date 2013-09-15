@@ -330,7 +330,9 @@ sub render {
 	}
         $cleanvars->{escape} = sub { return $format->escape(@_)};
 	if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
-		$cleanvars->{text} = sub { return $self->escape($self->{locale}->text(@_))};
+		$cleanvars->{text} = sub { 
+                    return $self->escape($self->{locale}->text(@_)) 
+                        if defined $_[0]};
 	} 
 	else {
             $cleanvars->{text} = sub { return $self->escape(shift @_) };

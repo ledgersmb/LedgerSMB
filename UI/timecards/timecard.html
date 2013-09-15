@@ -7,13 +7,12 @@
 <form action="timecard.pl" method="post">
 <div class="listtop"><?lsmb text('Time or Materials Card') ?></div>
 <table>
-<?lsmb PROCESS employee; ?>
-<tr><th colspan="2" class="listtop"><?lsmb text('Business Units') ?> : 
-                                    <?lsmb text('Please select only one') ?>
+<?lsmb PROCESS employee element_name="person_id" label=text('Employee'); ?>
+<tr><th colspan="2" class="listtop"><?lsmb text('Category') ?> : 
     </th>
 </tr>
-<?lsmb PROCESS business_units; ?>
-<tr><th><?lsmb text('Partnumber') ?></th>
+<?lsmb # PROCESS business_units; ?>
+<tr><th><?lsmb  text('Partnumber') ?></th>
     <td><?lsmb PROCESS input element_data = {
                name = 'partnumber'
               value = partnumber

@@ -25,3 +25,17 @@ PROCESS select element_data = {
  default_values = [media]
 }; ?></div>
 <?lsmb END ?>
+<?lsmb- BLOCK employee;
+IF !element_name;
+    element_name = 'employee';
+END;
+
+PROCESS select element_data = {
+            name = element_name
+         options = employees
+  default_values = $element_name
+           class = 'employees'
+           label = label
+};
+
+END; ?>
