@@ -50,3 +50,12 @@ input {
 button {
     margin-top: 10px;
 }
+
+div.login-indicator {
+    font-size: x-large;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%
+    text-align: center;
+    visibility: hidden;
+}

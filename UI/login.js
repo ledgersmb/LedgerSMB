@@ -1,4 +1,17 @@
+
+
+function show_indicator() {
+        var e = document.getElementById('indicator');
+        e.style.visibility='visible';
+}
+
 function submit_form() {
+        window.setTimeout(show_indicator, 0);
+        window.setTimeout(send_form, 10);
+        return false;
+}
+
+function send_form() {
 	var http = get_http_request_object();
     var username = document.login.login.value;
 	var password = document.login.password.value;
@@ -16,7 +29,6 @@ function submit_form() {
 		return false;
 	}
 	document.location=document.login.action.value+".pl?action=login&company="+document.login.company.value;
-	return false;//otherwise 2 login's in parallell!
 }
 
 function check_auth() {
