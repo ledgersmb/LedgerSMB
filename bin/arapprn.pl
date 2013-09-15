@@ -40,7 +40,7 @@
 #
 
 package lsmb_legacy;
-use Error qw(:try);
+use Try::Tiny;
 use LedgerSMB::Template;
 use LedgerSMB::Company_Config;
 
@@ -364,14 +364,9 @@ sub print_transaction {
         locale => $locale,
 	no_auto_output => 1,
         format => uc $form->{format} );
-    try {
-        $template->render($form);
-        $template->output(%{$form});
-    }
-    catch Error::Simple with {
-        my $E = shift;
-        $form->error( $E->stacktrace );
-    };
+
+    $template->render($form);
+    $template->output(%{$form});
 
     if (%$old_form) {
         $old_form->{invnumber} = $form->{invnumber};
