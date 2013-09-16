@@ -59,6 +59,8 @@ has taxform => (is => 'rw', isa => 'Str', required => 0);
 
 =item total
 
+=back
+
 =cut
 
 sub columns {

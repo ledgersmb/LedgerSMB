@@ -89,7 +89,7 @@ This is the parser, automatically generated via builder.
 
 has parser => (is => 'ro', isa => 'X12::Parser', lazy => 1, builder => '_parser');
 
-=item ISA
+=head2 ISA
 
 This is the exchange security and routing information header.
 

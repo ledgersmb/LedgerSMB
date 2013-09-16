@@ -84,7 +84,8 @@ our $DBName;
 
 =head1 METHODS 
 
-=item zero()
+
+=head2 zero()
 
 zeroes out all majro parts.
 
@@ -101,7 +102,7 @@ sub zero() {
     $Role_Prefix = undef;
 }
 
-=item cleanup
+=head2 cleanup
 
 Deletes all objects attached here.
 
@@ -125,7 +126,7 @@ sub cleanup {
 
 1;
 
-=item get_url
+=head2 get_url
 
 Returns URL of get request or undef
 
@@ -138,7 +139,7 @@ sub get_url {
     return "$ENV{SCRIPT_NAME}?$ENV{QUERY_STRING}";
 }
 
-=item all_months(is_short $bool)
+=head2 all_months(is_short $bool)
 
 Returns hashref of localized date data with following members:
 
@@ -193,8 +194,6 @@ sub all_months {
     }
     return { as_hashref => $as_hashref, dropdown=> $for_dropdown };
 }
-
-=back
 
 
 =head1 COPYRIGHT

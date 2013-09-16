@@ -53,6 +53,8 @@ sub columns {
 
 =item partsgroup
 
+=back
+
 =cut
 
 sub header_lines {

@@ -89,6 +89,8 @@ sub run {
     $tb->render($request);
 }
 
+=back
+
 =head1 SEE ALSO
 
 =over

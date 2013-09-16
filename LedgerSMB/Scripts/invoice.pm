@@ -86,6 +86,8 @@ sub  invoice_search{
     $report->render($request);
 }
 
+=back
+
 =head1 COPYRIGHT
 
 COPYRIGHT (C) 2012 The LedgerSMB Core Team.  This file may be re-used under the

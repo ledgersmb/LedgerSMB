@@ -29,8 +29,6 @@ if (!$locale){
    warn 'default language used';
 }
 
-=back
-
 =head1 PROPERTIES
 
 =over

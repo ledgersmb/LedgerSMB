@@ -91,6 +91,8 @@ sub columns {
     ];
 }
 
+=back
+
 =head1 METHODS
 
 =over

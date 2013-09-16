@@ -153,6 +153,8 @@ has on_hold => (is => 'ro', isa => 'Bool', required => 0);
 
 =item ship_via
 
+=back
+
 =cut
 
 sub columns {

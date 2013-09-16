@@ -78,7 +78,7 @@ sub run_report {
     $self->rows(\@rows);
 }
 
-=over
+=back
 
 =head1 SEE ALSO
 
@@ -91,6 +91,8 @@ sub run_report {
 =item LedgerSMB::MooseTypes
 
 =item LedgerSMB::Report
+
+=back
 
 =head1 COPYRIGHT
 

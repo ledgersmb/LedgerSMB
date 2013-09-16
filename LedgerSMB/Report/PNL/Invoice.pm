@@ -32,7 +32,7 @@ This is the id of the invoice
 
 has id => (is => 'ro', isa =>'Int', required => 1);
 
-=over invnumber
+=item invnumber
 
 Invoice number
 
@@ -40,9 +40,7 @@ Invoice number
 
 has invnumber => (is => 'rw', isa =>'Str');
 
-=cut
-
-=over transdate
+=item transdate
 
 Transaction Date
 
@@ -50,7 +48,7 @@ Transaction Date
 
 has transdate => (is => 'rw', isa =>'LedgerSMB::Moose::Date', coerce=> 1);
 
-=over name
+=item name
 
 Customer/vendor name
 
@@ -121,6 +119,8 @@ sub report_base {
 =item LedgerSMB::Report::Dates
 
 =item LedgerSMB::Report::PNL
+
+=back
 
 =head1 COPYRIGHT
 

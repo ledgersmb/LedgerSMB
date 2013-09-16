@@ -71,8 +71,6 @@ show closed timecards
 
 has closed => (is => 'ro', isa => 'Bool', required => 0);
 
-=back
-
 =item jctype
 
 Show timecards of the specified type
@@ -81,6 +79,7 @@ Show timecards of the specified type
 
 has jctype => (is => 'ro', isa => 'Int', required => 0);
 
+=back
 
 =head1 STATIC METHODS
 

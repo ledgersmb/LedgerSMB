@@ -798,7 +798,7 @@ sub save_pricelist {
 }
 
 
-=back
+
 =item delete_pricelist
 
 =cut
@@ -815,6 +815,7 @@ sub delete_pricelist {
     get_pricelist($request);
 }
 
+=back
 
 =head1 COPYRIGHT
 

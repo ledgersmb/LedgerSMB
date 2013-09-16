@@ -66,6 +66,8 @@ above
 
 has 'comparisons'  =>  (is => 'rw', isa => 'ArrayRef[Any]');
 
+=back
+
 =head1 CONSTANT REPORT-RELATED FUNCTIONS
 
 =over
@@ -167,6 +169,8 @@ sub add_comparison {
     $self->_merge_rows($label, @rows);
 }
 
+=back
+
 =head1 SEE ALSO
 
 =over
@@ -180,6 +184,8 @@ sub add_comparison {
 =item LedgerSMB::Report
 
 =item LedgerSMB::Report::Dates
+
+=back
 
 =head1 COPYRIGHT
 

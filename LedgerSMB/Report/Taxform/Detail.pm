@@ -46,6 +46,8 @@ has meta_number => (is => 'ro', isa => 'Str', required => '1');
 
 =head2 columns
 
+=over
+
 =item legal_name
 
 =item account_type
@@ -60,6 +62,7 @@ has meta_number => (is => 'ro', isa => 'Str', required => '1');
 
 =item total
 
+=back
 
 =cut
 

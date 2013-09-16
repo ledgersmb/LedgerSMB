@@ -37,7 +37,7 @@ Full text search on description
 
 has description  => (is => 'ro', isa => 'Str', required => 0);
 
-=back;
+=back
 
 =head1 INTERNALS
 
@@ -118,6 +118,8 @@ sub columns {
 
 =item date_to
 
+=back
+
 =cut
 
 sub header_lines {
@@ -128,6 +130,7 @@ sub header_lines {
       { name => 'date_to',     text => LedgerSMB::Report::text('To Date') },
     ];
 }
+
 
 =head2 name
 

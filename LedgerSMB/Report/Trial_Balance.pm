@@ -100,6 +100,8 @@ If set, only include these accounts
 
 has accounts => (is => 'rw', isa => 'Maybe[ArrayRef[Int]]');
 
+=back
+
 =head1  REPORT CONSTANT FUNCTIONS
 
 See the documentation for LedgerSMB::Report for details on these
