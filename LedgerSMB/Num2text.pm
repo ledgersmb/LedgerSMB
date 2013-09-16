@@ -41,6 +41,7 @@
 # EOF
 
 use utf8;
+no warnings;
 
 sub init {
     my $self    = shift;
