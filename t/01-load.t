@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 52;
+use Test::More tests => 62;
 
 use_ok('LedgerSMB::Sysconfig') 
     || BAIL_OUT('System Configuration could be loaded!');
@@ -39,7 +39,6 @@ use_ok('LedgerSMB::Num2text');
 use_ok('LedgerSMB::OE');
 use_ok('LedgerSMB::PE');
 use_ok('LedgerSMB::PriceMatrix');
-use_ok('LedgerSMB::RP');
 use_ok('LedgerSMB::Auth');
 use_ok('LedgerSMB::DBObject::Reconciliation');
 use_ok('LedgerSMB::Tax');
@@ -53,6 +52,17 @@ use_ok('LedgerSMB::File::Order');
 use_ok('LedgerSMB::DBObject::Asset');
 use_ok('LedgerSMB::DBObject::Asset_Report');
 use_ok('LedgerSMB::DBObject::Asset_Class');
+use_ok('LedgerSMB::Entity');
+use_ok('LedgerSMB::Entity::Company');
+use_ok('LedgerSMB::Entity::Person');
+use_ok('LedgerSMB::Entity::User');
+use_ok('LedgerSMB::Entity::Person::Employee');
+use_ok('LedgerSMB::Entity::Contact');
+use_ok('LedgerSMB::Entity::Bank');
+use_ok('LedgerSMB::Entity::Location');
+use_ok('LedgerSMB::Entity::Note');
+use_ok('LedgerSMB::Entity::Payroll::Deduction');
+use_ok('LedgerSMB::Entity::Payroll::Wage');
 SKIP: {
     eval{ require Template::Plugin::Latex} ||
     skip 'Template::Plugin::Latex not installed';
