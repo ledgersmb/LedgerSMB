@@ -453,12 +453,12 @@ is($form->like('hello world'), '%hello world%', 'like');
 $form = new Form;
 ok(!defined $form->{callback}, 'redirect: No callback set');
 @r = trap{$form->redirect};
-is($trap->stdout, "redirected\n", 'redirect: No message or callback redirect');
+is($trap->stdout, "", 'redirect: No message or callback redirect');
 @r = trap{$form->redirect('hello world')};
 is($trap->stdout, "hello world\n", 
 	'redirect: message, no callback redirect');
 $form->{callback} = 1;
 @r = trap{$form->redirect};
-is($trap->stdout, "redirected\n", 'redirect: callback, no message redirect');
+is($trap->stdout, "", 'redirect: callback, no message redirect');
 @r = trap{$form->redirect("hello world\n")};
-is($trap->stdout, "redirected\n", 'redirect: callback and message redirect');
+is($trap->stdout, "", 'redirect: callback and message redirect');
