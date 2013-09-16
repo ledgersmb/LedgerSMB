@@ -139,8 +139,34 @@ sub generate_report {
     $report->render($request);
 }
 
-sub print { 
+=item save
+
+Saves a tax form, returns to edit screen.
+
+=cut
+
+
+sub save
+{
     my ($request) = @_;
+    my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request}); 
+    
+    $taxform->save();
+    edit($taxform);
+}
+
+=item print
+
+Prints the tax forms, using the 1099 templates.
+
+=cut
+
+sub print {
+    my ($request) = @_;
+    my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
+    my $form_info = $taxform->get($request->{tax_form_id});
+    $request->{taxform_name} = $form_info->{form_name};
+    $request->{format} = 'PDF';
     my $report = LedgerSMB::Report::Taxform::Summary->new(%$request);
     $report->run_report($request);
     if ($request->{meta_number}){
@@ -169,38 +195,6 @@ sub print {
           template => 'taxform/summary_report',
           format => 'PDF',
     );
-}
-
-sub save
-{
-    my ($request) = @_;
-    my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request}); 
-    
-    $taxform->save();
-    $taxform->get_metadata();
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user}, 
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'taxform/add_taxform',
-        format => 'HTML'
-    );
-    $template->render($taxform);
-}
-
-=item print
-
-Prints the tax forms, using the 1099 templates.
-
-=cut
-
-sub print {
-    my ($request) = @_;
-    my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
-    my $form_info = $taxform->get($request->{tax_form_id});
-    $request->{taxform_name} = $form_info->{form_name};
-    $request->{format} = 'PDF';
-    generate_report($request);    
 }
 
 =item list_all

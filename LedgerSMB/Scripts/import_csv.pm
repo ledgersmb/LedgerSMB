@@ -307,6 +307,12 @@ our $process = {
              },
 };
 
+=head2 parse_file
+
+This parses a file, and returns a the csv in tabular format.
+
+=cut
+
 sub parse_file {
     my $self = shift @_;
 
@@ -338,6 +344,12 @@ sub parse_file {
     return @{$self->{import_entries}};
 }
 
+=head2 begin_import
+
+This displays the begin data entry screen.
+
+=cut
+
 sub begin_import {
     my ($request) = @_;
     my $template = LedgerSMB::Template->new(
@@ -349,6 +361,13 @@ sub begin_import {
     );
     $template->render($request);
 }
+
+=head2 run_import
+
+run_import is the routine responsible for the primary work.  It accepts the 
+data in $request and processes it according to the dispatch tables.
+
+=cut
 
 sub run_import {
     my ($request) = @_;
@@ -362,6 +381,14 @@ sub run_import {
     }
     begin_import($request);
 }
+
+=head1 COPYRIGHT
+
+Copyright(C) 2008-2013 The LedgerSMB Core Team.  This file may be re-used in 
+accordance with the GNU General Public License (GNU GPL) v2 or at your option 
+any later version.  Please see the included LICENSE.txt for more details.
+
+=cut
 
 eval { do 'scripts/custom/import_trans.pl'; };
 
