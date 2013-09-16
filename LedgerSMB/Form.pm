@@ -113,7 +113,7 @@ sub new {
     elsif ( $ARGV[0] ) {
         $_ = $ARGV[0];
     }
-    $logger->trace(" RequestIn=$_");
+    $logger->trace(" RequestIn=$_") if $_;
     my $self = {};
     my $orig = {};
     %$orig = split /[&=]/ unless !defined $_;
