@@ -26,6 +26,33 @@ use DateTime;
 
 =over
 
+=item new
+
+This begins the timecard workflow.  The following may be set as a default:
+
+=over
+
+=item business_unit_class
+
+=item time_frame (1 for day, 7 for week)
+
+=item date_from
+
+=back
+
+=cut
+
+sub new {
+    my ($request) = @_;
+    LedgerSMB::Template->new(
+        user     => $request->{_user},
+        locale   => $request->{_locale},
+        path     => 'UI/timecards',
+        template => 'entry_filter',
+        format   => 'HTML'
+    )->render($request);
+}
+
 =item display
 
 Displays a timecard.  LedgerSMB::Timecard properties set are treated as 

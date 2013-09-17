@@ -19,11 +19,12 @@
 <?lsmb PROCESS select element_data = {
             name = 'num_days'
          options = [{text = text('Day'),  value = 1},
-                     text = text('Week'), value = 7}]
+                    {text = text('Week'), value = 7}]
   default_values = [7],
            label = text('Time Frame') #'
            class = 'timeframe'
        };
+?>
 </div>
 <div class="input_row">
 <?lsmb PROCESS input element_data = {
