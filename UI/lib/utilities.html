@@ -33,9 +33,46 @@ END;
 PROCESS select element_data = {
             name = element_name
          options = employees
-  default_values = $element_name
+  default_values = [$element_name]
            class = 'employees'
            label = label
+       text_attr = text_attr 
+      value_attr = value_attr
 };
 
-END; ?>
+END; 
+
+BLOCK business_unit_class;
+IF !element_name;
+    element_name = 'bu_class_id';
+END;
+
+PROCESS select element_data = {
+            name = element_name
+         options = bu_class_list
+  default_values = [$element_name]
+           class = 'bu-class'
+           label = label
+       text_attr = text_attr 
+      value_attr = value_attr
+};
+
+END;
+BLOCK business_unit;
+
+IF !element_name;
+    element_name = 'business_unit_id';
+END;
+
+PROCESS select element_data = {
+            name = element_name
+         options = b_unit_list
+  default_values = [$element_name]
+           class = 'b-unit'
+           label = label
+       text_attr = text_attr 
+      value_attr = value_attr
+};
+
+END;
+-?>

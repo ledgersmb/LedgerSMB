@@ -20,6 +20,7 @@ use LedgerSMB::Timecard;
 use LedgerSMB::Timecard::Type;
 use LedgerSMB::Report::Timecards;
 use LedgerSMB::Company_Config;
+use LedgerSMB::Business_Unit_Class;
 use DateTime;
 
 =head1 ROUTINES
@@ -44,6 +45,7 @@ This begins the timecard workflow.  The following may be set as a default:
 
 sub new {
     my ($request) = @_;
+    @{$request->{bu_class_list}} = LedgerSMB::Business_Unit_Class->list();
     LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},

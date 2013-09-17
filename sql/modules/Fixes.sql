@@ -197,3 +197,7 @@ DROP FUNCTION pricelist__delete(int,int);
 BEGIN;
 ALTER TABLE location ALTER COLUMN mail_code DROP NOT NULL;
 COMMIT;
+
+BEGIN;
+INSERT INTO lsmb_module(id, label) values (7, 'Timecards');
+COMMIT;

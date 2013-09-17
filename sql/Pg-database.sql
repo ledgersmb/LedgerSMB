@@ -30,7 +30,8 @@ VALUES (1, 'AR'),
        (3, 'GL'),
        (4, 'Entity'),
        (5, 'Manufacturing'),
-       (6, 'Fixed Assets');
+       (6, 'Fixed Assets'),
+       (7, 'Timecards');
 
 
 CREATE OR REPLACE FUNCTION person__get_my_entity_id() RETURNS INT AS
