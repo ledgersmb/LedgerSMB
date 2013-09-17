@@ -48,11 +48,11 @@ IF !element_name;
 END;
 
 PROCESS select element_data = {
+           label = label
             name = element_name
          options = bu_class_list
   default_values = [$element_name]
            class = 'bu-class'
-           label = label
        text_attr = text_attr 
       value_attr = value_attr
 };
