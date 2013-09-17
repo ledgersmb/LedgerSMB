@@ -1,0 +1,47 @@
+<?lsmb INCLUDE 'ui-header.html';
+       PROCESS 'elements.html';
+       PROCESS 'utilities.html';
+?>
+<body>
+<form method="post" action="timecard.pl">
+<div class="listtop"><?lsmb text('Timecard Criteria') ?></div>
+<div class="input_row"><?lsmb IF employees;
+          # Setting this to a conditional so that employee list can be
+          # populated by add-on workflows.  Our standard ones will be set up
+          # only to enter the timecards of the current user. --CT
+          PROCESS employee element_name="person_id" label=text('Employee'); 
+       END ?>
+</div>
+<div class="input_row">
+<?lsmb PROCESS business_unit_class; label=text('Recording time for') _ ':' #' ?>
+</div>
+<div class="input_row">
+<?lsmb PROCESS select element_data = {
+            name = 'num_days'
+         options = [{text = text('Day'),  value = 1},
+                     text = text('Week'), value = 7}]
+  default_values = [7],
+           label = text('Time Frame') #'
+           class = 'timeframe'
+       };
+</div>
+<div class="input_row">
+<?lsmb PROCESS input element_data = {
+       label = text('Starting Date') #'
+        name = date_from
+        type = 'text'
+        size = 12
+       class = 'date'
+} ?>
+</div>
+<div class="input_row">
+<?lsmb PROCESS button element_data = {
+    text = text('Continue')
+  action = 'timecard_screen'
+    type = 'submit'
+   class = 'submit'
+} ?>
+</div>
+</form>
+</body>
+</html>
