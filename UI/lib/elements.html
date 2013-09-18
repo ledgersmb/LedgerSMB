@@ -54,9 +54,13 @@
 <?lsmb # INPUT ELEMENT ?>
 <?lsmb BLOCK input ?>
   <?lsmb IF label_pos != 1 and label_pos != -1; label_pos = -1; END ?>
-  <?lsmb IF element_data  # Only process element if one exists. ?>
+  <?lsmb IF element_data;  # Only process element if one exists.
+              IF !element_data.title.defined();
+                  element_data.title = element_data.label;
+              END; ?>
   	<?lsmb
 	    input_defaults = {}  # Some inputs have no defaults, so make sure everything is empty to start with.
+            
 	    element_type = 'input';
 	    PROCESS auto_id;
 	  ?>
