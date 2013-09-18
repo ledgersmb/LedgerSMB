@@ -1,3 +1,4 @@
+
 define(['dijit/registry','dojo/ready'],
     function(registry, ready) {
       return {

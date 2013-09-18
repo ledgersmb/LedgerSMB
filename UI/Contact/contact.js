@@ -1,48 +1,42 @@
+require(['dojo/parser', 
+         'dojo/query', 
+         'dojo/dom', 
+         "dijit/layout/TabContainer",
+         "dijit/layout/ContentPane",
+         'lsmb/Contact/tabs',
+          'dijit/registry',
+         'dojo/ready'],
+       function(parser, query, dom, tc, cp, obj, registry){
+           parser.instantiate([dom.byId('contact_tabs')], 
+              { "data-dojo-type": "dijit/layout/TabContainer" }
+           );
+           var tabs = registry.byId('contact_tabs');
+           query('.container').forEach(function(cnode){
+               new cp (
+                   { "data-dojo-type": 'dijit.layout.ContentPane',
+                     "title": cnode.title},
+                   cnode 
+               );
+               var t = registry.byId(cnode.id);
+               if (t !== undefined){
+                   tabs.addChild(t);
+               }
+           });
+           tabs.startup();
+           obj.init();
+       } 
+ 
+);
 
-function init(div_id) {
-	var lis = document.getElementsByTagName('li');
-	for (var e in lis){
-		if (e != e * 1){
-			continue;
-                }
-		e = lis[e];
-		if (e.getAttribute('class') == "nav"){
-			e.addEventListener('click', function (e) {
-				for (var a in this.getElementsByTagName('a')){
-					if (a != a * 1){
-						continue;
-					}
-					a = this.getElementsByTagName('a')[a];
-					var dest = a.getAttribute('href');
-					dest = dest.replace('#', '');
-					select_div(dest);
-					break;
-				}
-				return false;
-			},false);
-		}
-	}
-	if (div_id != '' && document.getElementById(div_id)){
-		select_div(div_id);
-	}
-}
 
-function select_div(div_id){
-	var divs = document.getElementsByTagName('div');
-	var i = 0;
-	for (i=0;i<=divs.length;i++){
-		var e = divs[i];
-		if (!e || !e.getAttribute || !e.getAttribute('class')){
-			continue;
+require([
+	'lsmb/Contact/tabs',
+	'dojo/parser',
+	'dojo/ready'], 
+	function(
+		  obj,
+		  parser){
 		}
-		if (e.getAttribute('class').match(/^container/)){
-			if (e.getAttribute('id') == div_id){
-				e.className = 'container';
-			}
-			else {
-				e.className = 'container_hidden';
-			}
-		}
-	}
-}
+);
+
 
