@@ -124,7 +124,9 @@ sub _main_screen {
     } else {
        @DIVS = qw(company person);
     }
-    $request->{target_div} ||= 'company';
+    $request->{target_div} ||= 'company_div' if defined $company;
+    $request->{target_div} ||= 'person_div' if defined $person;
+    $request->{target_div} ||= 'company_div';
 
     my @all_years =  LedgerSMB->call_procedure(
               procname => 'date_get_all_years'
