@@ -1,4 +1,4 @@
-require(['dojo/parser', 
+require([
          'dojo/query', 
          'dojo/dom', 
          "dijit/layout/TabContainer",
@@ -6,12 +6,9 @@ require(['dojo/parser',
          'lsmb/Contact/tabs',
           'dijit/registry',
          'dojo/ready'],
-       function(parser, query, dom, tc, cp, obj, registry){
-           parser.instantiate([dom.byId('contact_tabs')], 
-              { "data-dojo-type": "dijit/layout/TabContainer" }
-           );
-           var tabs = registry.byId('contact_tabs');
-           query('.container').forEach(function(cnode){
+       function(query, dom, tc, cp, obj, registry){
+           var tabs = new tc({}, dom.byId('contact_tabs'));
+           query('div.lsmbtab').forEach(function(cnode){
                new cp (
                    { "data-dojo-type": 'dijit.layout.ContentPane',
                      "title": cnode.title},
@@ -27,16 +24,4 @@ require(['dojo/parser',
        } 
  
 );
-
-
-require([
-	'lsmb/Contact/tabs',
-	'dojo/parser',
-	'dojo/ready'], 
-	function(
-		  obj,
-		  parser){
-		}
-);
-
 

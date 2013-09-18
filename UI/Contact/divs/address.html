@@ -1,4 +1,4 @@
-<div id="address_div" title="<?lsmb text('Addresses') ?>" class="container">
+<div id="address_div" title="<?lsmb text('Addresses') ?>" class="lsmbtab">
     <div class="listtop"><?lsmb text('Locations') ?></div>
 	<!-- This entire form should probably be optionaly automated with AJAX
 	in order to prevent user confusion -CT -->
@@ -90,6 +90,7 @@
              <?lsmb IF credit_act.id;
                        INCLUDE select element_data = {
                           name            = "attach_to"
+                          id              = 'attach_address_to' 
                           default_options = ['3']
                           options         = attach_level_options
                           label           = text('Attach To') #'
