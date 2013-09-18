@@ -45,7 +45,9 @@ function construct_form_node(query, cls, registry,
              } else if (cls.contains(input, 'AccountBox')){
                 return require(['lsmb/accounts/AccountSelector'],
                             function(accountselector){
-                                return new accountselector({}, input);
+                                return new accountselector({
+                                    "name": input.name
+                                }, input);
                             }
                 );
              } else {
@@ -98,6 +100,13 @@ function construct_form_node(query, cls, registry,
             }, input
          );
      
+     } else if (input.nodeName == 'TEXTAREA'){
+        return require(['dijit/form/Textarea'],
+                function(textarea){
+                    return new textarea(
+                      { "name": input.name,
+                       "value": input.innerHTML,
+                       "label": input.title }, input)});
      }
      return undefined; 
 }
