@@ -3,7 +3,7 @@
        PROCESS 'utilities.html';
 ?>
 <body>
-<form method="post" action="timecard.pl">
+<form method="post" action="timecard.pl" title = "<?lsmb text('Timecard Criteria') ?>" class="tabular col-1">
 <div class="listtop"><?lsmb text('Timecard Criteria') ?></div>
 <div class="input_row"><?lsmb IF employees;
           # Setting this to a conditional so that employee list can be
@@ -29,7 +29,7 @@
 <div class="input_row">
 <?lsmb PROCESS input element_data = {
        label = text('Starting Date') #'
-        name = date_from
+        name = 'date_from'
         type = 'text'
         size = 12
        class = 'date'
