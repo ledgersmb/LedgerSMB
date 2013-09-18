@@ -65,8 +65,14 @@ function construct_form_node(query, cls, registry,
              } 
             
          } else if (input.type == 'checkbox'){
-         }
-         if (input.type == 'radio'){
+/*        
+            return new checkbox({
+                "name": input.name,
+               "value": input.value,
+             "checked": input.checked
+            }, input);
+*/
+         } else if (input.type == 'radio'){
          }
            
      } else if (input.nodeName == 'SELECT'){
@@ -206,7 +212,7 @@ require(     ['dojo/query',
                   }
              );
 
-             query('input, button, textarea').forEach(
+             query('input, select, button, textarea').forEach(
                   function(node){
                       var val;
                       var ntype = node.nodeName;
