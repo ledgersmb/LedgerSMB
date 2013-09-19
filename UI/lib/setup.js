@@ -8,7 +8,7 @@
 
 function construct_form_node(query, cls, registry,
                         textbox, checkbox, datebox, radio, select, button, 
-                        input)
+                        textarea, input)
 {
     
     if (input.nodeName == 'INPUT'){ 
@@ -17,12 +17,10 @@ function construct_form_node(query, cls, registry,
         } else if (input.type == 'text'){
             if (cls.contains(input, 'date')){
                 // logic to pick dates
-                // TODO.  This looks pretty complex
-                // and the documentation in Dojo appears
-                // to be in flux.  I am setting this
-                // as a standard text box for now and
-                // letting others turn this into a 
-                // DateTextBox --CT
+                //
+                // I have now changed it to a DateTextBox, but apparently we 
+                // also have a wrapped version which we should use.  Will move 
+                // that over shortly. --CT
                 var df = dateformat;
                 df.replace('mm', 'MM');
                 var val = input.value;
@@ -107,12 +105,10 @@ function construct_form_node(query, cls, registry,
          );
      
      } else if (input.nodeName == 'TEXTAREA'){
-        return require(['dijit/form/Textarea'],
-                function(textarea){
-                    return new textarea(
+          return new textarea(
                       { "name": input.name,
                        "value": input.innerHTML,
-                       "label": input.title }, input)});
+                       "label": input.title }, input);
      }
      return undefined; 
 }
@@ -143,10 +139,11 @@ require(     ['dojo/query',
               'dijit/form/Select',
               'dijit/form/Button',
               'dijit/layout/ContentPane',
+              'dijit/form/Textarea',
               'dojo/ready'
              ],
       function(query, registry, cls, construct, table, textbox, checkbox, datebox, 
-               radio, select, button, contentpane)
+               radio, select, button, textarea, contentpane)
       {
              query('.tabular').forEach(
                   function(node){
@@ -190,11 +187,12 @@ require(     ['dojo/query',
                              var widget = construct_form_node(
                                                query, cls, registry, textbox, checkbox, 
                                                datebox, radio, select,
-                                               button, input
+                                               button, textarea, input
                              );
                              if (widget !== undefined){
                                 ++counter;
                                 if (input.nodeName == 'BUTTON'){
+                                    console.log(input);
                                     var mycp = new contentpane(
                                         { content: "" }
                                     );
@@ -222,7 +220,7 @@ require(     ['dojo/query',
                       var widget = construct_form_node(
                                            query, cls, registry, textbox, checkbox, 
                                            datebox, radio, select,
-                                           button, node
+                                           button, textarea, node
                       );
                       if (widget !== undefined){
                           if (widget.declaredClass !== undefined){

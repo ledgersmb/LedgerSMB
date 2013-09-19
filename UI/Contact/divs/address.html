@@ -86,7 +86,7 @@
 		name="location_id" 
 		value= DISPLAY.id
 	}; 
-       ?> <div>
+       ?> <div class="tabular col-1"><div>
              <?lsmb IF credit_act.id;
                        INCLUDE select element_data = {
                           name            = "attach_to"
@@ -96,9 +96,10 @@
                           label           = text('Attach To') #'
                        };
                      ELSE ?>
+         </div>
+	<div> 
              <label><?lsmb text('Attach to') ?></label><?lsmb text('Entity');
                     END; ?>
-	<div> 
                 <?lsmb INCLUDE select element_data = {
                        name           = "location_class"
                        default_values = [DISPLAY.location_class]
@@ -107,7 +108,6 @@
                        value_attr     = "id"
                        label          = text('Type')
                 } ?>
-		</select>
 	</div>
 	<div> 
 		<?lsmb INCLUDE input element_data = {
@@ -120,7 +120,6 @@
 	</div>
 	<div> 
 		<?lsmb PROCESS input element_data = {
-                        label = ":"
 			name = "line_two"
 			class = "addl-address"
 			value = DISPLAY.line_two
@@ -130,7 +129,6 @@
 	</div>
 	<div> 
 		<?lsmb PROCESS input element_data = {
-                        label = ":"
 			name = "line_three"
 			class = "addl-address"
 			value = DISPLAY.line_three
@@ -175,7 +173,7 @@
 			name = "country_id"
 			label = text('Country') 
 		} ?>
-	</div>
+	</div></div>
 	<div>
              <?lsmb PROCESS button element_data = {
 		class = "submit" 

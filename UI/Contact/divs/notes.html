@@ -21,6 +21,7 @@
 		name="credit_id" 
 		value=credit_act.id
 	} ?>
+<div class="tabular col-1">
 <div class="input">
    <?lsmb PROCESS input element_data = {
       label = text('Subject'),
@@ -47,8 +48,8 @@ END; ?>
 <div class="input"><?lsmb PROCESS textarea element_data = {
 	label = text('Notes')
 	name = 'note'
-          id = 'note_note'
-} ?></div>
+          id = 'note_entry_note'
+} ?></div></div>
 <div class="input">
 <?lsmb PROCESS button element_data = {
 	text = text('Save')

@@ -39,7 +39,7 @@ PROCESS dynatable
 		type="hidden" 
 		name="bank_account_id" 
 		value=request.id
-	} ?>
+	} ?><div class="tabular col-1">
 	<div>
 	<?lsmb INCLUDE input element_data = {
 		type="text" 
@@ -57,7 +57,7 @@ PROCESS dynatable
 		value=request.iban
 		size=20
 	} #' ?>
-	</div>
+	</div></div>
 	<div><?lsmb PROCESS button element_data = {
 		name="action" 
 		value="save_bank_account"

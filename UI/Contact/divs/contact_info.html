@@ -63,6 +63,7 @@ PROCESS dynatable
 		name="contact_id" 
 		value=request.contact_id
 	} ?>
+        <div class="tabular col-1">
         <div>
            
              <?lsmb IF credit_act.id;
@@ -76,6 +77,7 @@ PROCESS dynatable
                      ELSE ?>
              <label><?lsmb text('Attach to') ?></label><?lsmb text('Entity');
                     END; ?>
+        </div>
 	<div>
 		<?lsmb PROCESS select element_data = {
 			name = "class_id"
@@ -94,7 +96,7 @@ PROCESS dynatable
 			value = request.description
 			type = "text"
 			size = "20"
-		} #' ?>
+		}  ?>
 	</div>
 	<div>
 		<?lsmb PROCESS input element_data = {
@@ -104,7 +106,7 @@ PROCESS dynatable
 			type = "text"
 			size = "20"
 		} #' ?>
-	</div>
+	</div></div>
 	<div><?lsmb PROCESS button element_data = {
 		name = "action",
 		value = "save_contact",
