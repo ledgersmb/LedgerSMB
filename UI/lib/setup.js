@@ -69,6 +69,24 @@ function construct_form_node(query, cls, registry,
              "checked": input.checked
             }, input);
          } else if (input.type == 'radio'){
+            return new radio({
+                "name": input.name,
+               "value": input.value,
+             "checked": input.checked
+            }, input);
+         } else if (input.type == 'password'){
+            var style = {};
+            if (input.size !== undefined && input.size !== ''){
+               style['width'] = (input.size * 0.6) + 'em';
+            }
+            return new textbox({
+                "label": input.title,
+                "value": input.value,
+                "name": input.name,
+                "style": style,
+                   "id": input.id,
+                 "type": 'password'
+            }, input);
          }
            
      } else if (input.nodeName == 'SELECT'){

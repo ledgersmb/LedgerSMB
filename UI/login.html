@@ -8,8 +8,7 @@
 		 
 
 
-<body class="login" onload="setup_page('<?lsmb text('Name')?>',
-	'<?lsmb text('Password') ?>');">
+<body class="login, <?lsmb dojo_theme ?>" id="login-body">
 	<br /><br />
 	<center>
 		<form method="post" action="login.pl" name="login"
@@ -29,23 +28,43 @@
 				<a href="http://www.ledgersmb.org/" target="_top"><img src="images/ledgersmb.png" class="logo" alt="LedgerSMB Logo" /></a>
 				<h1 class="login" align="center"><?lsmb text("LedgerSMB [_1]", VERSION) ?></h1>
 				<div align="center">
-					<div id="credentials"></div>
 					<div id="company_div">
-					  <div class="labelledinput">
-						<div class="label">
-							<label for="company">
-							<?lsmb text('Company') 
-							?>:
-							</label>
-						</div>
-						<div class="input">
-							<input class="login" 
+					  <div class="tabular col-1">
+                                               <div class="noshow">
+                                                 <div>
+                                                  <?lsmb PROCESS input
+                                                        element_data = {
+                                                        class="login" 
+							type="text" 
+							name="login" 
+							size="20"
+							id="username" 
+                                                        label=text('User Name')
+                                                        value = login
+							accesskey="l" } #' ?>
+                                                 </div>
+                                                 <div>
+                                                  <?lsmb PROCESS input
+                                                        element_data = {
+                                                        class="password" 
+							type="password" 
+							name="password" 
+							size="20"
+							id="password" 
+                                                        label=text('Password')
+                                                        value = ''
+							accesskey="p" } ?>
+                                                 </div></div>
+						  <?lsmb PROCESS input
+                                                        element_data = {
+                                                        class="login" 
 							type="text" 
 							name="company" 
-							size="30"
+							size="20"
 							id="company" 
-                                                        value = "<?lsmb company ?>"
-							accesskey="c" />
+                                                        label=text('Company')
+                                                        value = company
+							accesskey="c" } ?>
 						</div>
 					</div>
 				</div>
