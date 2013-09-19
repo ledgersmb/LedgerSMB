@@ -1,6 +1,6 @@
 <?lsmb INCLUDE 'ui-header.html' ?> 
 <?lsmb PROCESS elements.html ?> 
-<body>
+<body class="<?lsmb dojo_theme ?>">
 <?lsmb IF !form.file.match('\.html$'); #Pre-enclose non-HTML templates ?>
 <pre><?lsmb form.body ?></pre><?lsmb 
 ELSE;

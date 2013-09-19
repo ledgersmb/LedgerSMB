@@ -13,11 +13,11 @@ LINK = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME
            _ '?' _ ENVARS.QUERY_STRING _ '&company=' _ DBNAME;
 
 ?>
-<body>
+<body class="<?lsmb dojo_theme ?>">
 <div class="report_header"><label><?lsmb text('Report Name') ?>:</label>
 <span class="report_header"><?lsmb name ?></span>
 </div>
-<body>
+<body class="<?lsmb dojo_theme ?>">
 <div class="report_header"><label><?lsmb text('Company') ?>:</label>
 <span class="report_header"><?lsmb request.company ?></span>
 </div>

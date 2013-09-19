@@ -2,7 +2,7 @@
 stylesheet="ledgersmb.css"
 include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <?lsmb PROCESS elements.html ?>
-<body>
+<body class="<?lsmb dojo_theme ?>">
 <h2><?lsmb text('Database Management Console') ?></h2>
 <div class="listtop"><?lsmb text('Upgrade Info') ?></div>
 <form action="setup.pl" method="POST" name="upgrade_info">

@@ -1,7 +1,7 @@
 <?lsmb INCLUDE 'ui-header.html' include_stylesheet = ['UI/Reports/pnl.css'];
 account_data = report.account_data ?>
 <?lsmb COLS = comparison.length + 2 ?>
-<body>
+<body class="<?lsmb dojo_theme ?>">
 <h1><?lsmb name ?></h1>
 <h2><?lsmb text('Accounting period: [_1] to [_2]', report.from_date, report.to_date); ?></h2>
 <?lsmb 

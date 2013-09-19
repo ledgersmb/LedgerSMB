@@ -3,7 +3,7 @@
 <?lsmb PROCESS elements.html;
        PROCESS report_base.html ?>
 
-<body>
+<body class="<?lsmb dojo_theme ?>">
     <form method="post" action="trial_balance.pl">
         <?lsmb IF report.id;
             INCLUDE input element_data = {
