@@ -111,7 +111,10 @@
 
 <?lsmb # TEXTAREA ELEMENT ?>
 <?lsmb BLOCK textarea ?>
-  <?lsmb IF element_data  # Only process element if one exists. ?>
+  <?lsmb IF element_data;  # Only process element if one exists. 
+              IF !element_data.title.defined();
+                  element_data.title = element_data.label;
+              END; ?>
   	<?lsmb
 	    element_type = 'textarea';
 	    PROCESS auto_id;

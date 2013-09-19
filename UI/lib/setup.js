@@ -63,13 +63,11 @@ function construct_form_node(query, cls, registry,
              } 
             
          } else if (input.type == 'checkbox'){
-/*        
             return new checkbox({
                 "name": input.name,
                "value": input.value,
              "checked": input.checked
             }, input);
-*/
          } else if (input.type == 'radio'){
          }
            
@@ -105,12 +103,25 @@ function construct_form_node(query, cls, registry,
          );
      
      } else if (input.nodeName == 'TEXTAREA'){
+          console.log(input);
           return new textarea(
                       { "name": input.name,
                        "value": input.innerHTML,
-                       "label": input.title }, input);
+                       "label": input.title, 
+                        "cols": input.cols,
+                        "rows": input.rows}, input);
      }
      return undefined; 
+}
+
+function try_startup(widget){
+     try{
+          return widget.startup();
+     } catch(err){
+          return false;
+     } finally {
+          //nothing
+     }
 }
 
 /* Set up form.tabular forms.  
@@ -183,26 +194,31 @@ require(     ['dojo/query',
                                     }
                                     counter = 0;
                                  }
-                             } 
-                             var widget = construct_form_node(
+                             }
+                             var widget = registry.byNode(input);
+                             if (widget == undefined){
+ 
+                                 widget = construct_form_node(
                                                query, cls, registry, textbox, checkbox, 
                                                datebox, radio, select,
                                                button, textarea, input
-                             );
+                                 );
+                             }
                              if (widget !== undefined){
                                 ++counter;
                                 if (input.nodeName == 'BUTTON'){
-                                    console.log(input);
                                     var mycp = new contentpane(
-                                        { content: "" }
-                                    );
+                                    { content: "" }
+                                );
                                  
-                                    mytabular.addChild(mycp);
-                                    mycp.addChild(widget); // obscures label
+                                mytabular.addChild(mycp);
+                                mycp.addChild(widget); // obscures label
                                      
                                 } else {
                                      mytabular.addChild(widget);
                                 } 
+                                try_startup(widget);
+            
                              }
                          }
                       ); 
@@ -222,10 +238,10 @@ require(     ['dojo/query',
                                            datebox, radio, select,
                                            button, textarea, node
                       );
-                      if (widget !== undefined){
-                          if (widget.declaredClass !== undefined){
-                              widget.startup();
-                          }
+                      if (! try_startup(widget)){
+                            console.log(widget,node);
+                      } 
+                      else {
                       }
                   });
       }
