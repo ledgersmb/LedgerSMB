@@ -644,6 +644,8 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
 		window.alert('Warning:  Your password will expire in $self->{pw_expires}');
 	</script>|;
         }
+        my $dformat = $self->{_myconfig}->{dateformat};
+        $dformat =~ s/mm/MM/;
 
         print qq|Content-Type: text/html; charset=utf-8\n\n
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -664,7 +666,7 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
                parseOnLoad: 0,
                packages: [{"name":"lsmb","location":"../../.."}]
            }
-           var dateformat = '| . $self->{_myconfig}->{dateformat} . qq|';
+           var dateformat = '$dformat';
         </script>
        <script type="text/javascript" language="JavaScript" src="UI/lib/dojo/dojo/dojo.js"></script>
         <script type="text/javascript" language="JavaScript" src="UI/lib/setup.js"></script>

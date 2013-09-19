@@ -30,7 +30,7 @@ function construct_form_node(query, cls, registry,
                 }
                 
                 if (input.size !== undefined && input.size !== ''){
-                   style['width'] = input.size + 'em';
+                   style['width'] = (input.size * 0.6) + 'em';
                 }
                 return new datebox({
                     "label": input.title,
@@ -51,7 +51,7 @@ function construct_form_node(query, cls, registry,
              } else {
                 var style = {};
                 if (input.size !== undefined && input.size !== ''){
-                   style['width'] = input.size + 'em';
+                   style['width'] = (input.size * 0.6) + 'em';
                 }
                 return new textbox({
                     "label": input.title,
