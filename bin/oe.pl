@@ -594,7 +594,7 @@ sub form_header {
     $form->header;
 
     print qq|
-<body onLoad="document.forms[0].${focus}.focus()" />
+<body class="$form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" />
 | . $form->open_status_div . qq|
 <script> 
 function on_return_submit(event){
@@ -1367,7 +1367,7 @@ sub delete {
     }
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <form method=post action=$form->{script}>
 |;
@@ -1560,7 +1560,7 @@ sub backorder_exchangerate {
     $form->header;
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <form method=post action=$form->{script}>
 |;
@@ -1836,7 +1836,7 @@ sub display_ship_receive {
     $form->header;
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <form method=post action=$form->{script}>
 
@@ -2129,7 +2129,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
     $form->header;
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <form method=post action=$form->{script}>
 
@@ -2281,7 +2281,7 @@ sub list_transfer {
     $form->header;
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <form method=post action=$form->{script}>
 
@@ -2535,7 +2535,7 @@ sub po_orderitems {
     $form->header;
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <form method=post action=$form->{script}>
 
@@ -2669,7 +2669,7 @@ sub select_vendor {
     $form->header;
 
     print qq|
-<body onload="document.forms[0].vendor.focus()" />
+<body class="$form->{dojo_theme}" onload="document.forms[0].vendor.focus()" />
 
 <form method=post action=$form->{script}>
 

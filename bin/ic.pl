@@ -746,7 +746,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
     $form->header;
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 | . $form->open_status_div . qq|
 
 <form method=post action="$form->{script}">
@@ -1718,7 +1718,7 @@ sub select_name {
     $title = $locale->text('Select from one of the names below');
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <form method=post action="$form->{script}">
 
@@ -2027,7 +2027,7 @@ sub stock_assembly {
     $form->header;
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <form method=post action=$form->{script}>
 
@@ -2139,7 +2139,7 @@ sub list_assemblies {
     $form->header;
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <form method=post action=$form->{script}>
 

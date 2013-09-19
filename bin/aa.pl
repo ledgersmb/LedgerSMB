@@ -537,7 +537,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     $form->header;
 
  print qq|
-<body onload="document.forms[0].${focus}.focus()" /> | .
+<body class="$form->{dojo_theme}" onload="document.forms[0].${focus}.focus()" /> | .
 $form->open_status_div . qq|
 <form method=post action=$form->{script}>
 <input type=hidden name=type value="$form->{formname}">
@@ -1187,7 +1187,7 @@ sub approve {
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
         print "Status: 302 Found\n\n";
-        print "<html><body>";
+        print qq|<html><body class="$form->{dojo_theme}">|;
         my $url = $form->{callback};
         print qq|If you are not redirected automatically, click <a href="$url">|
                 . qq|here</a>.</body></html>|;
@@ -1445,7 +1445,7 @@ sub save_info {
 	    if ($form->{callback}){
 		print "Location: $form->{callback}\n";
 		print "Status: 302 Found\n\n";
-		print "<html><body>";
+		print qq|<html><body class="$form->{dojo_theme}">|;
 		my $url = $form->{callback};
 		print qq|If you are not redirected automatically, click <a href="$url">|
 			. qq|here</a>.</body></html>|;
@@ -1683,7 +1683,7 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox value=Y checked> |
     $form->header;
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <form method=post action=$form->{script}>
 

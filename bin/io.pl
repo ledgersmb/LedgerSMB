@@ -140,7 +140,7 @@ sub approve {
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
         print "Status: 302 Found\n\n";
-        print "<html><body>";
+        print qq|<html><body class="$form->{dojo_theme}">|;
         my $url = $form->{callback};
         print qq|If you are not redirected automatically, click <a href="$url">|
                 . qq|here</a>.</body></html>|;
@@ -578,7 +578,7 @@ sub select_item {
     $title = $locale->text('Select items');
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <form method=post action="$form->{script}">
 
@@ -849,7 +849,7 @@ sub new_item {
     $form->header;
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <h4 class=error>| . $locale->text('Item not on file!') . qq|</h4>|;
 
@@ -2064,7 +2064,7 @@ sub ship_to {
 
 
     print qq|
-               <body>
+               <body class="$form->{dojo_theme}">
 
 <form name="form" method=post action=$form->{script}>
 

@@ -184,7 +184,7 @@ sub select_name {
     $title = $locale->text('Select from one of the names below');
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <form method=post action=$form->{script}>
 
@@ -400,7 +400,7 @@ sub select_project {
     $title = $locale->text('Select from one of the projects below');
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <form method=post action=$form->{script}>
 
@@ -744,7 +744,7 @@ sub schedule {
     $form->header;
 
     print qq|
-<body>
+<body class="$form->{dojo_theme}">
 
 <form method=post action=$form->{script}>
 
