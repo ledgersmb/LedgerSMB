@@ -45,24 +45,16 @@ function check_auth() {
     );
 }
 
-function set_indicator() {
-    require(['dojo/on', 'dijit/registry', 'dojo/ready!'],
-    function(on, registry){
-        var button = registry.byId('action-login');
-        button.set('type', 'button');
-        on(button, 'click', function(evt){
-           require(['dojo/dom', 'dijit/ProgressBar', 'dojo/_base/window'],
-           function(dom, progressbar, win){
-               var indicator = new progressbar({
-                  "indeterminate": true,
-                  "style": "width: 25em"
-               }, dom.byId("login-indicator"));
-               indicator.startup();
+    require(['dojo/dom-construct', 'dijit/ProgressBar', 'dojo/domReady!'],
+    function(construct, progressbar){
+           var indicator = new progressbar({
+                  "style": "width: 10em",
+                  "id": "login-progressbar",
+                  "value": 100,
+                "indeterminate": true
+           }).placeAt("login-indicator", "only");
+           indicator.startup();
                
-           });
-           send_form();
-           return false;
-        });
-      });
-}
+    });
+
 

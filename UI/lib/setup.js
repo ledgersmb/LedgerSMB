@@ -169,7 +169,7 @@ require(     ['dojo/query',
               'dijit/form/Button',
               'dijit/layout/ContentPane',
               'dijit/form/Textarea',
-              'dojo/ready'
+              'dojo/domReady!'
              ],
       function(query, registry, cls, construct, table, textbox, checkbox, datebox, 
                radio, select, button, textarea, contentpane)
