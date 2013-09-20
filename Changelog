@@ -16,6 +16,7 @@ Changelog for 1.3.35
 * Fixed confusing error on tax form reports (Chris T, 883)
 * Fixed unable to edit quotation.tex (Chris T, 885)
 * Silenced warnings in Num2Text (Chris T)
+* Fixed blank weights sometimes making invoices unprintable (Chris T)
 
 Chris T is Chris Travers
 Nick P is Nick Prater

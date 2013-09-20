@@ -334,6 +334,7 @@ sub invoice_details {
             $form->{discount} = [] if ref $form->{discount} ne 'ARRAY';
             $form->{totalqty}  += $form->{"qty_$i"};
             $form->{totalship} += $form->{"qty_$i"};
+            $form->{"weight_$i"} ||= 0;
             $form->{totalweight} +=
               ( $form->{"qty_$i"} * $form->{"weight_$i"} );
 
