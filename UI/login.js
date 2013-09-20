@@ -18,19 +18,24 @@ function send_form() {
 	var company = document.login.company.value;
 	var action = document.login.action.value;
         //alert('document.login.company.value='+document.login.company.value);
-	http.open("get", 'login.pl?action=authenticate&company='+company, false, username, password);
-	http.send("");
-        if (http.status != 200){
-                if (http.status == '454'){
-                     alert('Company does not exist.');
-                } else {
-  		     alert("Access Denied:  Bad username/Password");
-                }
-                var e = document.getElementById('login-indicator');
-                e.style.visibility='hidden';
-		return false;
-	}
-	document.location=document.login.action.value+".pl?action=login&company="+document.login.company.value;
+	http.open("get", 'login.pl?action=authenticate&company='+company, true, username, password);
+        http.onreadystatechange = function(){
+            if (http.readyState != 4){
+               return true;
+            }
+            if (http.status != 200){
+                    if (http.status == '454'){
+                          alert('Company does not exist.');
+                    } else {
+  	   	          alert("Access Denied:  Bad username/Password");
+                    }
+                    var e = document.getElementById('login-indicator');
+                    e.style.visibility='hidden';
+	  	    return false;
+	    }
+	    document.location=document.login.action.value+".pl?action=login&company="+document.login.company.value;
+        };
+ 	http.send("");
 }
 
 function check_auth() {
