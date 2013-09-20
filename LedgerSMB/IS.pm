@@ -1598,7 +1598,8 @@ sub post_invoice {
 		       person_id = ?,
 		       till = ?,
 		       language_code = ?,
-		       ponumber = ?
+		       ponumber = ?,
+		       crdate = ?
 		 WHERE id = ?
              |;
     $sth = $dbh->prepare($query);
@@ -1614,7 +1615,7 @@ sub post_invoice {
         $form->{currency},      $form->{department_id},
         $form->{employee_id},   $form->{till},
         $form->{language_code}, $form->{ponumber},
-        $form->{id}
+        $form->{crdate},	$form->{id}
     ) || $form->dberror($query);
 
     # add shipto
@@ -2092,7 +2093,7 @@ sub retrieve_invoice {
 			          a.duedate, a.taxincluded, a.curr AS currency,
 			          a.person_id, e.name AS employee, a.till, 
 			          a.reverse,
-			          a.language_code, a.ponumber,
+			          a.language_code, a.ponumber, a.crdate,
 			          a.on_hold
 			     FROM ar a
 			LEFT JOIN entity_employee em ON (em.entity_id = a.person_id)

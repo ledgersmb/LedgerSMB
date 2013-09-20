@@ -260,7 +260,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
 
     $form->{AR} = $form->{AR_1} unless $form->{id};
     $form->{transdate} = $form->{current_date} if (!$form->{transdate});
-    $form->{crdate} = $form->{current_date};
+    $form->{crdate} = $form->{current_date} if (!$form->{crdate});
     $form->{locked} =
       ( $form->{revtrans} )
       ? '1'
@@ -568,7 +568,7 @@ function on_return_submit(event){
 	      $employee
 	      <tr class="invnumber-row">
 		<th align=right nowrap>| . $locale->text('Invoice Number') . qq|</th>
-		<td><input name="invnumber" size="20" value="$form->{invnumber}"></td>
+		<td><input name="invnumber" size="20" value="$form->{invnumber}" readonly></td>
 	      </tr>
 	      <tr class="ordnumber-row">
 		<th align=right nowrap>| . $locale->text('Order Number') . qq|</th>

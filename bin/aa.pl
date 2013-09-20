@@ -181,6 +181,7 @@ sub create_links {
 			            && $form->{type} eq 'invoice');
 
     $duedate     = $form->{duedate};
+    $crdate	 = $form->{crdate};
     $taxincluded = $form->{taxincluded};
 
     $form->{formname} = "transaction";
@@ -208,6 +209,7 @@ sub create_links {
 
     $form->{currency} =~ s/ //g;
     $form->{duedate}     = $duedate     if $duedate;
+    $form->{crdate}      = $crdate      if $crdate;
     $form->{taxincluded} = $taxincluded if $form->{id};
 
     $form->{notes} = $form->{intnotes} if !$form->{id};
@@ -1300,6 +1302,7 @@ sub post {
     # check if there is an invoice number, invoice and due date
     $form->isblank( "transdate", $locale->text('Invoice Date missing!') );
     $form->isblank( "duedate",   $locale->text('Due Date missing!') );
+    $form->isblank( "crdate",    $locale->text('Invoice Created Date missing!') );
     $form->isblank( $form->{vc}, $label );
 
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
@@ -1696,6 +1699,8 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox value=Y checked> |
     push @a,
       qq|<input name="l_paid" class=checkbox type=checkbox value=Y checked> |
       . $locale->text('Paid');
+    push @a, qq|<input name="l_crdate" class=checkbox type=checkbox value=Y> |
+      . $locale->text('Invoice Created');
     push @a, qq|<input name="l_duedate" class=checkbox type=checkbox value=Y> |
       . $locale->text('Due Date');
     push @a, qq|<input name="l_due" class=checkbox type=checkbox value=Y> |
@@ -1975,7 +1980,7 @@ sub transactions {
 
     @columns =
       $form->sort_columns(
-        qw(transdate id invnumber ordnumber ponumber name netamount tax amount paid due curr datepaid duedate notes till employee manager shippingpoint shipvia department)
+        qw(transdate id invnumber ordnumber ponumber name netamount tax amount paid due curr datepaid crdate duedate notes till employee manager shippingpoint shipvia department)
       );
     pop @columns if $form->{department};
     unshift @columns, "runningnumber";
@@ -2024,6 +2029,10 @@ sub transactions {
     $column_header{transdate} =
         "<th><a class=listheading href=$href&sort=transdate>"
       . $locale->text('Date')
+      . "</a></th>";
+    $column_header{crdate} =
+        "<th><a class=listheading href=$href&sort=crdate>"
+      . $locale->text('Invoice Created')
       . "</a></th>";
     $column_header{duedate} =
         "<th><a class=listheading href=$href&sort=duedate>"
@@ -2290,7 +2299,7 @@ sub transactions {
         }
         for (qw(notes description)) { $ref->{$_} =~ s/\r?\n/<br>/g }
         for (
-            qw(transdate datepaid duedate department ordnumber ponumber notes shippingpoint shipvia employee manager till source description projectnumber)
+            qw(transdate datepaid crdate duedate department ordnumber ponumber notes shippingpoint shipvia employee manager till source description projectnumber)
           )
         {
             $column_data{$_} = "<td>$ref->{$_}&nbsp;</td>";

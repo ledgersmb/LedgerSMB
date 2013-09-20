@@ -383,6 +383,7 @@ sub post_transaction {
 			intnotes = ?,
 			department_id = ?,
 			ponumber = ?,
+			crdate = ?,
                         reverse = ?
 		WHERE id = ?
 	|;
@@ -395,8 +396,8 @@ sub post_transaction {
         $datepaid,              $invnetamount,
         $form->{currency},      $form->{notes},
         $form->{intnotes},      $form->{department_id},
-        $form->{ponumber},      $form->{reverse},
-        $form->{id}
+        $form->{ponumber},      $form->{crdate},
+	$form->{reverse},        $form->{id}
     );
 
     $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
@@ -937,7 +938,7 @@ sub transactions {
         } else {
             #HV typo error a.ponumber $acc_trans_fields -> a.ponumber $acc_trans_flds
             $query = qq|
-		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
+		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate, a.crdate,
 		          a.duedate, a.netamount, a.amount::numeric(20,$p), 
 		          a.amount::numeric(20,$p)
                              - (sum(acs.amount::numeric(20,$p)) 
@@ -975,7 +976,7 @@ sub transactions {
        } 
     } else {
         $query = qq|
-		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate,
+		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate, a.crdate,
 		          a.duedate, a.netamount, a.amount, 
                           (a.amount - pd.due) AS paid,
 		          a.invoice, a.datepaid, a.terms, a.notes,
@@ -1015,7 +1016,7 @@ sub transactions {
                 LEFT JOIN project ip ON (i.project_id = ip.id)
                 LEFT JOIN project p ON ac.project_id = p.id |;
         $group_by = qq| 
-                GROUP BY  a.id, a.invnumber, a.ordnumber, a.transdate,
+                GROUP BY  a.id, a.invnumber, a.ordnumber, a.transdate, 
                           a.duedate, a.netamount, a.amount,
                           a.invoice, a.datepaid, a.terms, a.notes,
                           a.shipvia, a.shippingpoint, ee.name , 
@@ -1030,7 +1031,8 @@ sub transactions {
         invnumber     => 2,
         ordnumber     => 3,
         transdate     => 4,
-        duedate       => 5,
+        crdate        => 5,
+        duedate       => 6,
         datepaid      => 10,
         shipvia       => 13,
         shippingpoint => 14,

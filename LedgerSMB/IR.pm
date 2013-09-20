@@ -848,7 +848,8 @@ sub post_invoice {
 		       curr = ?,
 		       department_id = ?,
 		       language_code = ?,
-		       ponumber = ?
+		       ponumber = ?,
+		       crdate = ?
 		 WHERE id = ?|;
 
     $sth = $dbh->prepare($query);
@@ -859,7 +860,8 @@ sub post_invoice {
         $form->{duedate},       $form->{shippingpoint}, $form->{shipvia},
         $form->{taxincluded},   $form->{notes},         $form->{intnotes},
         $form->{currency},      $form->{department_id}, 
-        $form->{language_code}, $form->{ponumber},      $form->{id}
+        $form->{language_code}, $form->{ponumber},      
+	$form->{crdate},	$form->{id}
     ) || $form->dberror($query);
 
     # add shipto
@@ -1224,7 +1226,7 @@ sub retrieve_invoice {
 			SELECT a.invnumber, a.transdate, a.duedate,
 			       a.ordnumber, a.quonumber, a.paid, a.taxincluded,
 			       a.notes, a.intnotes, a.curr AS currency, 
-			       a.entity_credit_account as vendor_id, a.language_code, a.ponumber,
+			       a.entity_credit_account as vendor_id, a.language_code, a.ponumber, a.crdate,
 			       a.on_hold, a.reverse
 			  FROM ap a
 			 WHERE id = ?|;
