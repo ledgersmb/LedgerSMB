@@ -31,13 +31,14 @@ package LedgerSMB::Company_Config;
 use strict;
 use base qw(LedgerSMB);
 use LedgerSMB::Setting;
+use LedgerSMB::App_State;
 
 my @company_settings = qw(templates businessnumber weightunit curr
                           default_email_from default_email_to
                           default_email_bcc  default_email_cc
                           separate_duties company_name company_email
                           company_phone company_fax businessnumber
-                          company_address);
+                          company_address dojo_theme);
 
 our $VERSION = 1.0;
 our $settings = {};
@@ -54,4 +55,5 @@ sub initialize{
           $settings->{$key } = $ref->{value};
        }
    }
+   $LedgerSMB::App_State::Company_Config = $settings;
 }

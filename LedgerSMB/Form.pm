@@ -76,7 +76,6 @@ use utf8;
 our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
 
 # To be later set in config, but also hardwired in Template::HTML --CT
-my $dojo_theme = 'claro';
 
 =item new Form([$argstr])
 
@@ -98,6 +97,7 @@ sub new {
     my $argstr = shift;
 
     $ENV{CONTENT_LENGTH} = 0 unless defined $ENV{CONTENT_LENGTH};
+    my $dojo_theme = $LedgerSMB::Sysconfig::dojo_template;
 
     if ( ( $ENV{CONTENT_LENGTH} != 0 ) 
          && ( $ENV{CONTENT_LENGTH} > $LedgerSMB::Sysconfig::max_post_size ) 
@@ -620,9 +620,13 @@ sub header {
     my ( $self, $init, $headeradd ) = @_;
 
     return if $self->{header} or $ENV{LSMB_NOHEAD};
+
     $ENV{LSMB_NOHEAD} = 1; # Only run once.
     my ( $stylesheet, $favicon, $charset );
 
+    my $dojo_theme = $self->{dojo_theme};
+    $dojo_theme ||= $LedgerSMB::Sysconfig::dojo_theme;
+    $self->{dojo_theme} = $dojo_theme; # Needed for theming of old screens
     if ( $ENV{GATEWAY_INTERFACE} ) {
         if ( $self->{stylesheet} && ( -f "css/$self->{stylesheet}" ) ) {
             $stylesheet =
@@ -1354,6 +1358,13 @@ sub db_init {
     # Expect @{$self->{_roles}} to go away sometime during 1.4/1.5 development
     # -CT
 
+    $sth = $self->{dbh}->prepare("
+            SELECT value FROM defaults 
+             WHERE setting_key = 'dojo_theme'");
+    $sth->execute;
+
+    ($self->{dojo_theme}) = $sth->fetchrow_array;
+    $LedgerSMB::App_State::dojo_theme = $self->{dojo_theme};
     $sth = $dbh->prepare('SELECT check_expiration()');
     $sth->execute;
     ($self->{warn_expire}) = $sth->fetchrow_array;

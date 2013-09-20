@@ -201,3 +201,7 @@ COMMIT;
 BEGIN;
 INSERT INTO lsmb_module(id, label) values (7, 'Timecards');
 COMMIT;
+
+BEGIN;
+INSERT INTO defaults (setting_key, value) values ('dojo_theme', 'claro');
+COMMIT;

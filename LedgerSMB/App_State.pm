@@ -55,7 +55,6 @@ Database handle for current connection
 
 our $DBH;
 
-
 =item Roles
 
 This is a list (array) of role names for the current user.

@@ -50,6 +50,9 @@ use Error qw(:try);
 use CGI::Simple::Standard qw(:html);
 use Template;
 use LedgerSMB::Template::TTI18N;
+use LedgerSMB::Sysconfig;
+use LedgerSMB::Company_Config;
+use LedgerSMB::App_State;
 
 my $binmode = ':utf8';
 binmode STDOUT, $binmode;
@@ -107,8 +110,14 @@ sub process {
 	my $output;
 	my $source;
         $parent->{binmode} = $binmode;
-         
-	$cleanvars->{dojo_theme} = 'claro';
+
+        my $dojo_theme; 
+        if ($LedgerSMB::App_State::DBH){
+           $LedgerSMB::Company_Config->initialize() 
+                   unless $LedgerSMB::App_State::Company_Config;
+           $dojo_theme = $LedgerSMB::App_State::Company_Config->{dojo_theme}
+        } 
+	$cleanvars->{dojo_theme} ||= $dojo_theme;
 	
 	if ($parent->{outputfile}) {
 		$output = "$parent->{outputfile}.html";

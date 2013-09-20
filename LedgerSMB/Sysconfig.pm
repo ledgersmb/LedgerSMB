@@ -21,6 +21,7 @@ our $auth = 'DB';
 our $images = getcwd() . '/images'; 
 our $cssdir = 'css/';
 our $fs_cssdir = 'css/';
+our $dojo_theme = 'claro';
 
 our $force_username_case = undef; # don't force case
 
@@ -101,7 +102,7 @@ my $cfg = Config::IniFiles->new( -file => "ledgersmb.conf" ) || die @Config::Ini
 for my $var (
     qw(pathsep log_level cssdir DBI_TRACE check_max_invoices language auth
     db_autoupdate force_username_case max_post_size cookie_name
-    return_accno no_db_str tempdir cache_templates fs_cssdir)
+    return_accno no_db_str tempdir cache_templates fs_cssdir dojo_theme)
   )
 {
     ${$var} = $cfg->val('main', $var) if $cfg->val('main', $var);

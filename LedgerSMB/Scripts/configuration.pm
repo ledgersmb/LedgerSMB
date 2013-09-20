@@ -106,6 +106,9 @@ our @default_settings = (
    ] },
    { title => $locale->text('Misc Settings'),
      items => [  
+       { name => 'dojo_theme',
+         type => 'SELECT_ONE',
+        label => $locale->text('Widgit Themes') },
        { name => 'check_prefix', label => $locale->text('Check Prefix') },
        { name => 'check_max_invoices',
         label =>  $locale->text('Max Invoices per Check Stub') },
@@ -168,6 +171,12 @@ sub defaults_screen{
         if ! defined $request->{inventory_accno_id};
 
     my %selects = (
+        'dojo_theme'  =>     {name => 'dojo_theme', # TODO autodetect
+                           options => [{text => 'Claro', value => 'claro'},
+                                       {text => 'Nihilo', value => 'nihilo'},
+                                       {text => 'Soria', value => 'soria'},
+                                       {text => 'Tundra', value => 'tundra'},],
+                   default_values  => [$request->{dojo_theme}]},
         'fxloss_accno_id' => {name => 'fxloss_accno_id',
                            options => $fx_loss_accounts,
                          text_attr => 'text',
