@@ -46,10 +46,10 @@ SELECT account_save(NULL, '1481', 'Egyéb gép, berendezés, felszerelés terven
 SELECT account_save(NULL, '1482', 'Egyéb járművek terven felüli értékcsökkenése', 'A', '', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL, '1483', 'Irodai, igazgatási berendezések terven felüli értékcsökkenése', 'A', '', NULL, false, false, string_to_array('', ':'));
 SELECT account_heading_save (NULL, '149', 'Egyéb gépek, berendezések, járművek elszámolt értékcsökkenése', NULL);
-SELECT account_save(NULL, '1491', 'Egyéb gép, berendezés, szerszám elszámolt értékcsökkenése', 'A', '', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL, '1492', 'Egyéb járművek elszámolt értékcsökkenése', 'A', '', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL, '1493', 'Irodai, igazgatási berendezés, felszerelés elszámolt értékcsökkenése', 'A', '', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL, '1495', 'Kis értékű tárgyi eszközök értékcsökkenése', 'A', '', NULL, false, false, string_to_array('', ':'));
+SELECT account_save(NULL, '1491', 'Egyéb gép, berendezés, szerszám elszámolt értékcsökkenése', 'A', '', NULL, false, false, string_to_array('Asset_Dep', ':'));
+SELECT account_save(NULL, '1492', 'Egyéb járművek elszámolt értékcsökkenése', 'A', '', NULL, false, false, string_to_array('Asset_Dep', ':'));
+SELECT account_save(NULL, '1493', 'Irodai, igazgatási berendezés, felszerelés elszámolt értékcsökkenése', 'A', '', NULL, false, false, string_to_array('Asset_Dep', ':'));
+SELECT account_save(NULL, '1495', 'Kis értékű tárgyi eszközök értékcsökkenése', 'A', '', NULL, false, false, string_to_array('Asset_Dep', ':'));
 SELECT account_heading_save (NULL, '15', 'Beruházások', NULL);
 SELECT account_heading_save (NULL, '161', 'Befejezetlen beruházások', NULL);
 SELECT account_save(NULL, '1611', 'Befejezetlen beruházás', 'A', '', NULL, false, false, string_to_array('AP_amount', ':'));
@@ -214,10 +214,14 @@ SELECT account_heading_save (NULL, '466', 'Előzetesen felszámított ÁFA', NUL
 SELECT account_save(NULL, '4660', 'Előzetesen felszámított ÁFA mentes', 'L', '', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL, '4661', 'Előzetesen felszámított ÁFA 0%', 'L', '', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL, '4662', 'Előzetesen felszámított ÁFA 27%', 'L', '', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'));
+SELECT account_save(NULL, '4663', 'Előzetesen felszámított ÁFA 18%', 'L', '', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'));
+SELECT account_save(NULL, '4664', 'Előzetesen felszámított ÁFA 5%', 'L', '', NULL, false, false, string_to_array('AP_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_heading_save (NULL, '467', 'Fizetendő ÁFA', NULL);
 SELECT account_save(NULL, '4670', 'Fizetendő ÁFA mentes', 'L', '', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL, '4671', 'Fizetendő ÁFA 0%', 'L', '', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL, '4672', 'Fizetendő ÁFA 27%', 'L', '', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
+SELECT account_save(NULL, '4673', 'Fizetendő ÁFA 18%', 'L', '', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
+SELECT account_save(NULL, '4674', 'Fizetendő ÁFA 5%', 'L', '', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'));
 SELECT account_save(NULL, '4680', 'ÁFA elszámolási számla', 'L', '', NULL, false, false, string_to_array('', ':'));
 SELECT account_heading_save (NULL, '469', 'Helyi adók elszámolási számla', NULL);
 SELECT account_save(NULL, '4691', 'Iparűzési adó', 'L', '', NULL, false, false, string_to_array('', ':'));
@@ -447,9 +451,13 @@ SELECT cr_coa_to_account_save(accno, accno || '--' || description) FROM account 
 INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '4660'),0.0);
 INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '4661'),0.0);
 INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '4662'),0.27);
+INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '4663'),0.18);
+INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '4664'),0.05);
 INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '4670'),0.0);
 INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '4671'),0.0);
 INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '4672'),0.27);
+INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '4673'),0.18);
+INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '4674'),0.05);
 
 --
 INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT id FROM chart WHERE accno = '2610')); 
