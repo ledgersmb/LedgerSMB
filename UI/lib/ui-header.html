@@ -1,5 +1,4 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
 	<title><?lsmb form.titlebar ? form.titlebar : titlebar ?></title>
@@ -32,7 +31,7 @@
 	       parseOnLoad: 0,
 	       packages: [{"name":"lsmb","location":"../../.."}]
 	   }
-           var dateformat = '<?lsmb USER.dateformat ?>';
+           var lsmbConfig = { "dateformat": '<?lsmb USER.dateformat ?>' };
         </script>
        <script type="text/javascript" language="JavaScript" src="UI/lib/dojo/dojo/dojo.js"></script>
         <script type="text/javascript" language="JavaScript" 

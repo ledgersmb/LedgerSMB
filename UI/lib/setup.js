@@ -21,7 +21,7 @@ function construct_form_node(query, cls, registry,
                 // I have now changed it to a DateTextBox, but apparently we 
                 // also have a wrapped version which we should use.  Will move 
                 // that over shortly. --CT
-                var df = dateformat;
+                var df = lsmbConfig.dateformat;
                 df.replace('mm', 'MM');
                 var val = input.value;
                 var style = {};
