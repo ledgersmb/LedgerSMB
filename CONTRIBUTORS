@@ -99,9 +99,9 @@ the password change in the admin.pl.  He maintains the Gentoo Ebuilds packages.
 Frans van der Star <f.van.der.star @ gmail.com> provided additional 
 documentation regarding Ubuntu 11.10 installation.
 
-Bob Miller [email redacted] has contributed DNS hosting and documentation 
-regarding integrating LedgerSMB with other corporate systems, for example, 
-authenticating LedgerSMB from LDAP.
+Bob Miller <bob @ computerisms.ca} has contributed DNS hosting and 
+documentation regarding integrating LedgerSMB with other corporate systems, for 
+example, authenticating LedgerSMB from LDAP.
 
 Victor Sterpu <victor @ ambra.ro> has contributed some bug fixes to COGS 
 handling.
