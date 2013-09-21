@@ -289,7 +289,7 @@ sub render {
         $vars->{LIST_FORMATS} = sub { return $self->available_formats} ;
         $vars->{ENVARS} = \%ENV;
         $vars->{USER} = $LedgerSMB::App_State::User;
-        $fars->{USER} ||= {dateformat => 'yyyy-mm-dd'};
+        $vars->{USER} ||= {dateformat => 'yyyy-mm-dd'};
         $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
         $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
         my @stdformats = ();
