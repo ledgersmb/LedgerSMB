@@ -3,20 +3,21 @@
        PROCESS 'utilities.html';
 ?>
 <body class="<?lsmb dojo_theme ?>">
-<form method="post" action="timecard.pl" title = "<?lsmb text('Timecard Criteria') ?>" class="tabular col-1">
+<form method="post" action="timecard.pl" title = "<?lsmb text('Timecard Criteria') ?>">
 <div class="listtop"><?lsmb text('Timecard Criteria') ?></div>
-<div class="input_row"><?lsmb IF employees;
+<div class="tabular col-1">
+<div><?lsmb IF employees;
           # Setting this to a conditional so that employee list can be
           # populated by add-on workflows.  Our standard ones will be set up
           # only to enter the timecards of the current user. --CT
           PROCESS employee element_name="person_id" label=text('Employee'); 
        END ?>
 </div>
-<div class="input_row">
+<div>
 <?lsmb PROCESS business_unit_class label=text('Recording time for') _ ':' #' 
        text_attr="label" value_attr="id" ?>
 </div>
-<div class="input_row">
+<div >
 <?lsmb PROCESS select element_data = {
             name = 'num_days'
          options = [{text = text('Day'),  value = 1},
@@ -27,7 +28,7 @@
        };
 ?>
 </div>
-<div class="input_row">
+<div>
 <?lsmb PROCESS input element_data = {
        label = text('Starting Date') #'
         name = 'date_from'
@@ -35,8 +36,7 @@
         size = 12
        class = 'date'
 } ?>
-</div>
-<div class="input_row">
+</div></div>
 <?lsmb PROCESS button element_data = {
     text = text('Continue')
     name = 'action'
@@ -44,7 +44,6 @@
     type = 'submit'
    class = 'submit'
 } ?>
-</div>
 </form>
 </body>
 </html>
