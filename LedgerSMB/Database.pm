@@ -359,8 +359,8 @@ sub get_info {
        $sth->execute('version');
        if (my $ref = $sth->fetchrow_hashref('NAME_lc')){
             $retval->{appname} = 'sql-ledger';
-            $retval->{full_version} = $ref->{fldname};
-            $retval->{version} = $ref->{fldname};
+            $retval->{full_version} = $ref->{fldvalue};
+            $retval->{version} = $ref->{fldvalue};
             $retval->{version} =~ s/(\d+\.\d+).*/$1/g;
        } else {
             $retval->{appname} = 'unknown';
@@ -623,7 +623,6 @@ sub lsmb_info {
                     users);
     my $retval = {};
     my $qtemp = 'SELECT count(*) FROM TABLE';
-    my $dbh = 
     my $dbh = DBI->connect(
         "dbi:Pg:dbname=$self->{company_name}",  
          $self->{username}, $self->{password},

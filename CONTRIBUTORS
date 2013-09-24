@@ -125,6 +125,9 @@ Brian Wolf <  brian @ activustech.com > has contributed bug reports.
 Berend Tober < btober @ ieee.org > has contributed some to the 
 documentation.
 
+Ward Vandewege [email redacted] has contributed some bug fixes to LedgerSMB database management and migration scripts.
+
+
 Original Authors of SQL-Ledger:
 ===================================
 Dieter Simader <dsimader @ sql-ledger.com>
