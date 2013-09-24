@@ -506,7 +506,11 @@ INSERT INTO audittrail(trans_id, tablename, reference, formname, action,
 INSERT INTO user_preference(id)
      SELECT id from users;
 
-INSERT INTO recurring SELECT * FROM sl28.recurring;
+INSERT INTO recurring(id, reference, startdate, nextdate, enddate, repeat, 
+            unit, howmany, payment)
+     SELECT id, reference, startdate, nextdate, enddate, repeat, 
+            unit, howmany, payment 
+       FROM sl28.recurring;
 
 INSERT INTO recurringemail SELECT * FROM sl28.recurringemail;
 
