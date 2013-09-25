@@ -2223,7 +2223,7 @@ COMMENT ON TABLE user_preference IS
 $$ This table sets the basic preferences for formats, languages, printers, and user-selected stylesheets.$$;
 
 CREATE TABLE recurring (
-  id int references journal_entry(id) unique,
+  id int not null references transactions(id) unique,
   reference text,
   startdate date,
   nextdate date,

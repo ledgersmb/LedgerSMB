@@ -10,7 +10,8 @@ DELETE FROM lsmb13.session; -- Cleares out locks
 
 --to preserve user modifications tshvr4
 DELETE FROM country;
-INSERT INTO country SELECT * FROM lsmb13.country;
+INSERT INTO country (id, name, short_name, itu) 
+SELECT id, name, short_name, itu FROM lsmb13.country;
 
 INSERT INTO language SELECT * FROM lsmb13.language where code not in (select code from language);
 
@@ -85,7 +86,11 @@ SELECT
  FROM lsmb13.parts p;
 
 INSERT INTO country_tax_form SELECT * FROM lsmb13.country_tax_form;
-INSERT INTO entity SELECT * FROM lsmb13.entity;
+
+INSERT INTO entity (id, name, entity_class, control_code, created, country_id) 
+SELECT id, name, entity_class, control_code, created, country_id 
+  FROM lsmb13.entity;
+
 INSERT INTO users SELECT * FROM lsmb13.users;
 INSERT INTO lsmb_roles SELECT * FROM lsmb13.lsmb_roles;
 INSERT INTO location SELECT * FROM lsmb13.location;
@@ -117,7 +122,8 @@ SELECT e.id, pc.contact_class_id, pc.contact, pc.description
    FROM lsmb13.person_to_contact pc
    JOIN lsmb13.person p ON p.id = pc.person_id
    JOIN lsmb13.entity e ON e.id = p.entity_id;
-INSERT INTO entity_bank_account SELECT * FROM lsmb13.entity_bank_account;
+INSERT INTO entity_bank_account (id, entity_id, bic, iban)
+SELECT id, entity_id, bic, iban FROM lsmb13.entity_bank_account;
 INSERT INTO entity_credit_account SELECT * FROM lsmb13.entity_credit_account;
 INSERT INTO eca_to_contact SELECT * FROM lsmb13.eca_to_contact;
 INSERT INTO eca_to_location SELECT * FROM lsmb13.eca_to_location;
@@ -475,7 +481,7 @@ SELECT ac.entry_id, 1, gl.department_id
 
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT entry_id, 2, project_id + 1000 FROM lsmb13.acc_trans
- WHERE project_id > 0;
+ WHERE project_id > 0 and project_id in (select id from lsmb13.project);
 
 INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
 SELECT inv.id, 1, gl.department_id
@@ -487,7 +493,7 @@ SELECT inv.id, 1, gl.department_id
 
 INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
 SELECT id, 2, project_id + 1000 FROM lsmb13.invoice 
- WHERE project_id > 0;
+ WHERE project_id > 0 and  project_id in (select id from lsmb13.project);
 
 INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
 SELECT oi.id, 1, oe.department_id 
@@ -496,7 +502,7 @@ SELECT oi.id, 1, oe.department_id
 
 INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
 SELECT id, 2, project_id + 1000 FROM lsmb13.orderitems
- WHERE project_id > 0;
+ WHERE project_id > 0  and  project_id in (select id from lsmb13.project);
 
 INSERT INTO partsgroup SELECT * FROM lsmb13.partsgroup;
 INSERT INTO status SELECT * FROM lsmb13.status;
@@ -554,7 +560,8 @@ SELECT
  1,
   (SELECT (string_to_array(value, ':'))[1] 
      FROM lsmb13.defaults WHERE setting_key = 'curr')
-  FROM lsmb13.jcitems;
+  FROM lsmb13.jcitems
+ WHERE project_id IN (select id from lsmb13.project);
 INSERT INTO custom_table_catalog SELECT * FROM lsmb13.custom_table_catalog;
 INSERT INTO custom_field_catalog SELECT * FROM lsmb13.custom_field_catalog;
 INSERT INTO ac_tax_form SELECT * FROM lsmb13.ac_tax_form;
