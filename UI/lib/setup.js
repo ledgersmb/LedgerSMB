@@ -21,25 +21,21 @@ function construct_form_node(query, cls, registry,
                 // I have now changed it to a DateTextBox, but apparently we 
                 // also have a wrapped version which we should use.  Will move 
                 // that over shortly. --CT
-                var df = lsmbConfig.dateformat;
-                df.replace('mm', 'MM');
-                var val = input.value;
-                var style = {};
-                if (val == undefined || val == ''){
-                   val = null;
-                }
-                
-                if (input.size !== undefined && input.size !== ''){
-                   style['width'] = (input.size * 0.6) + 'em';
-                }
-                return new datebox({
-                    "label": input.title,
-                    "value": val,
-                     "name": input.name,
-                       "id": input.id,
-                    "style": style,
-              "constraints": { "datePattern": df }
-                }, input);
+                return require(['lsmb/lib/DateTextBox', 'dojo/domReady!'],
+                  function(datebox){
+                    var val = input.value;
+                    if (val == ''){
+                        val = undefined;
+                    }
+                    new datebox({
+                        "label": input.title,
+                        "value": val,
+                         "name": input.name,
+                           "id": input.id,
+                        "style": style,
+                    }, input);
+                  }
+                );
              } else if (cls.contains(input, 'AccountBox')){
                 return require(['lsmb/accounts/AccountSelector'],
                             function(accountselector){
@@ -174,6 +170,7 @@ require(     ['dojo/query',
       function(query, registry, cls, construct, table, textbox, checkbox, datebox, 
                radio, select, button, textarea, contentpane)
       {
+             lsmbConfig.dateformat = lsmbConfig.dateformat.replace('m', 'M');
              query('.tabular').forEach(
                   function(node){
                       var tabparams = {

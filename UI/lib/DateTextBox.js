@@ -7,7 +7,7 @@ define([
         [DateTextBox],
         {
           postMixInProperties: function() {
-            this.constraints.datePattern = this.constraints.datePattern.replace(/m/g, 'M');
+            this.constraints.datePattern = lsmbConfig.dateformat;
             this.inherited(arguments);
           }
         });
