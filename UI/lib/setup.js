@@ -1,5 +1,6 @@
-/* construct_form_node(query, cls, textbox, checkbox, datebox, radio, select,
- *                     button, input)
+/* construct_form_node(query, cls, registry,
+ *                     textbox, checkbox, radio, select, button, textarea,
+ *                     input)
  * This constructs the appropriate dojo/dijit object from the input provided and
  * returns it to the calling function.  query and cls are needed for select box
  * and textbox class detection.  input is the node.  The others are appropriate
@@ -7,8 +8,8 @@
  */
 
 function construct_form_node(query, cls, registry,
-                        textbox, checkbox, datebox, radio, select, button, 
-                        textarea, input)
+                        textbox, checkbox, radio, select, button, textarea, 
+                        input)
 {
     
     if (input.nodeName == 'INPUT'){ 
@@ -159,7 +160,6 @@ require(     ['dojo/query',
               'dojox/layout/TableContainer',
               'dijit/form/TextBox',
               'dijit/form/CheckBox',
-              'dijit/form/DateTextBox',
               'dijit/form/RadioButton',
               'dijit/form/Select',
               'dijit/form/Button',
@@ -167,10 +167,18 @@ require(     ['dojo/query',
               'dijit/form/Textarea',
               'dojo/domReady!'
              ],
-      function(query, registry, cls, construct, table, textbox, checkbox, datebox, 
+      function(query, registry, cls, construct, table, textbox, checkbox, 
                radio, select, button, textarea, contentpane)
       {
              lsmbConfig.dateformat = lsmbConfig.dateformat.replace('m', 'M');
+             var parse = false;
+             query('#dojo-declarative').forEach(function() { parse = true; });
+             if (parse){
+                 return require(['dojo/parser', 'dojo/domReady!'],
+                        function(parser){
+                            return parser.parse();
+                        });
+             }
              query('.tabular').forEach(
                   function(node){
                       var tabparams = {
@@ -211,11 +219,12 @@ require(     ['dojo/query',
                                  }
                              }
                              var widget = registry.byNode(input);
-                             if (widget == undefined){
+                             if (widget == undefined && input !== undefined){
  
                                  widget = construct_form_node(
-                                               query, cls, registry, textbox, checkbox, 
-                                               datebox, radio, select,
+                                               query, cls, registry, 
+                                               textbox, checkbox, 
+                                               radio, select,
                                                button, textarea, input
                                  );
                              }
@@ -250,7 +259,7 @@ require(     ['dojo/query',
                       }
                       var widget = construct_form_node(
                                            query, cls, registry, textbox, checkbox, 
-                                           datebox, radio, select,
+                                           radio, select,
                                            button, textarea, node
                       );
                       if (! try_startup(widget)){
