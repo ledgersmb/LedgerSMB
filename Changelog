@@ -19,6 +19,7 @@ Changelog for 1.3.35
 * Fixed blank weights sometimes making invoices unprintable (Chris T)
 * Fixed some bugs with SL2.8 to LedgerSMB upgrades (Chris T)
 * Fixed encoding errors after sending email (Chris T, 884)
+* Fixed spurious 0's in incorrect fields (Chris T, 889)
 
 Chris T is Chris Travers
 Nick P is Nick Prater
