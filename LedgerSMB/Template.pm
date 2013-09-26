@@ -367,6 +367,10 @@ sub output {
 	} else {
 		$self->_http_output_file;
 	}
+        binmode (STDOUT, ':utf8'); # Reset binmode *after* sending file to
+                                   # email, printer, or screen.  For screen
+                                   # this should have no effect.  For printer
+                                   # or email, this should fix bug 884. --CT 
 }
 
 sub _http_output {
