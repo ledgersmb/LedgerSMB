@@ -9,10 +9,6 @@ define(['dijit/registry','dojo/ready'],
           if (activeDiv) {
             ready(function() {
               var td = registry.byId('contact_tabs');
-              var ad = registry.byId(activeDiv);
-              console.log(td,ad,activeDiv);
-              td.selectChild(ad);
-
             });
           }
         }

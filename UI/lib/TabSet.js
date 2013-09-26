@@ -6,8 +6,9 @@ define([
       return declare('dijit/layout/TabContainer',
         [TabContainer],
         {
-          startup: function() {
+          startup: function(activeDiv, boxSize) {
            var myself = this; // needed for AMD query usage below.
+           var active;
            require (['dojo/query', 
                      'dijit/layout/ContentPane', 
                      'dijit/registry', 'dojo/domReady!'],
@@ -21,11 +22,14 @@ define([
                var t = registry.byId(cnode.id);
                if (t !== undefined){
                    myself.addChild(t);
+                   t.startup();
                }
                });
+               var ad = registry.byId(activeDiv);
+               myself.selectChild(ad);
             });
             this.inherited(arguments);
-            
+            this.resize(boxSize);
           }
           
         });
