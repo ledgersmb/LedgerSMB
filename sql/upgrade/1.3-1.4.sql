@@ -108,6 +108,13 @@ JOIN lsmb13.person p ON p.id = l.person_id AND p.entity_id IS NOT NULL;
 
 INSERT INTO person SELECT * FROM lsmb13.person;
 INSERT INTO entity_employee SELECT * FROM lsmb13.entity_employee;
+UPDATE entity_employee 
+   SET ssn = 'invalid-' || entity_id::text
+ WHERE ssn = '' or ssn is null;
+UPDATE entity_employee 
+   SET employeenumber = 'invalid-' || entity_id::text
+ WHERE employeenumber = '' or employeenumber is null;
+
 INSERT INTO person_to_company SELECT * FROM lsmb13.person_to_company;
 INSERT INTO entity_other_name SELECT * FROM lsmb13.entity_other_name;
 INSERT INTO entity_to_contact 
