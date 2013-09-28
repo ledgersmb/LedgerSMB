@@ -172,7 +172,7 @@ require(     ['dojo/query',
       {
              lsmbConfig.dateformat = lsmbConfig.dateformat.replace('m', 'M');
              var parse = false;
-             query('#dojo-declarative').forEach(function() { parse = true; });
+             query('body.dojo-declarative').forEach(function() { parse = true; });
              if (parse){
                  return require(['dojo/parser', 'dojo/domReady!'],
                         function(parser){
