@@ -35,6 +35,7 @@
 		name = "account_class"
 		value = account_class
 	} ?>	
+<div class="tabular col-1">
 <div class="input_line">
 <div class="input_group1">
 	<?lsmb PROCESS input element_data = {
@@ -63,22 +64,6 @@
 		value_attr = 'id'
 		label = text('Class')
 	} ?>
-	<?lsmb PROCESS button element_data = {
-                 id = 'person-generate-control-code'
-		text = text('Generate Control Code') #'
-		type = "submit"
-		name = "action"
-		value = "generate_control_code"
-		class = "submit"
-        } ?>
-        <?lsmb PROCESS button element_data = {
-                  id = 'person-retrieve'
-                text = text('Retrieve')
-                type = 'submit'
-                name = 'action'
-               value = 'get_by_cc'
-               class = 'submit'
-        } ?>
 </div>
 </div>
 <div class="input_line">
@@ -146,9 +131,26 @@
 	} ?> 
 </div>
 </div>
+</div>
 <div class="input_line">
             <hr/>
 <div class="input_group1">
+	<?lsmb PROCESS button element_data = {
+                 id = 'person-generate-control-code'
+		text = text('Generate Control Code') #'
+		type = "submit"
+		name = "action"
+		value = "generate_control_code"
+		class = "submit"
+        } ?>
+        <?lsmb PROCESS button element_data = {
+                  id = 'person-retrieve'
+                text = text('Retrieve')
+                type = 'submit'
+                name = 'action'
+               value = 'get_by_cc'
+               class = 'submit'
+        } ?>
 		<?lsmb INCLUDE button element_data = {
 			text = text('Save'),
 			class="submit" 

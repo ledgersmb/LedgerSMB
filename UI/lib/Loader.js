@@ -45,7 +45,7 @@ function(
                    // for INPUT elements, type beats class.
                DIV: {
                '__default': function(){ return undefined; },
-             'tabularform': function(node){
+                 'tabular': function(node){
                                         return new tabular(node);
                             }
              
