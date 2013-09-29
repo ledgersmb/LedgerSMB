@@ -103,7 +103,6 @@ define([
             query('*', this.domNode).forEach(TFRenderElement(dnode)); 
         },
         TFRenderElement: function(dnode){
-           function(dnode){
               if (cls.contains(dnode, 'input-row')){
                  TFRenderRow(dnode);
               }
@@ -113,7 +112,6 @@ define([
                      this.addChild(widget);
                  }
              }
-           }
         },
         TFRenderRow: function (dnode){
            var counter = 0;
