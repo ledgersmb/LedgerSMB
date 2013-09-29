@@ -46,7 +46,7 @@ function(
                DIV: {
                '__default': function(){ return undefined; },
                  'tabular': function(node){
-                                        return new tabular(null, node);
+                                        return new tabular({}, node);
                             }
              
                     },

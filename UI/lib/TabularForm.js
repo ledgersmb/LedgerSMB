@@ -82,23 +82,26 @@ define([
             if (domNode !== undefined){
                 // Number of columns
                 var class_str = " " + domNode.className + " ";
-                console.log(class_str);
-                var classes = class_str.match('/ col-\d+ /');
-                classes[0].replace('s/col-//');
-                this.cols=classes[0];
+                var classes = class_str.match(/ col-\d+ /);
+                if (classes){ 
+                    this.cols = classes[0].replace(/ col-(\d+) /, "$1");
+                }
 
                 //resize to one column on a size of....
                 classes = class_str.match('/ virtsize-\w+ /');
-                classes[0].replace('s/virtsize-//');
-                this.vertsize = classes[0];
+                if (classes){
+                    this.vertsize = classes[0].replace(/ virtsize-(\w+) /, "$1");               }
 
                 //labels go vertical on a size of.....
                 classes = class_str.match('/ virtlabel-\w+ /');
-                classes[0].replace('s/virtlabel-//');
-                this.vertlabelsize = classes[0];
+                if (classes){
+                    this.vertlabelsize = 
+                            classes[0].replace(/ virtlabel-(\w+) /, "$1");
+                }
             }
         },
         postCreate: function(){
+            console.log('postCreate');
             this.inherited(arguments);
             query('*', this.domNode).forEach(TFRenderElement(dnode)); 
         },
