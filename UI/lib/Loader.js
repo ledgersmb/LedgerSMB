@@ -166,7 +166,7 @@ function(
                                   }
                  },
           BUTTON: {
-                    '__default': function(){
+                    '__default': function(input){
                           return new button(
                               { "name": input.name,
                                 "type": input.type,
