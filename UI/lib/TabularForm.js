@@ -67,7 +67,7 @@ define([
     'dijit/layout/ContentPane',
     'dojo/query',
     'dojo/window',
-    'lsmb/lib/loader',
+    'lsmb/lib/Loader',
     'dojo/_base/declare'
     ],
     function(TableContainer, dom, cls, registry, cp, query, win, loader, 

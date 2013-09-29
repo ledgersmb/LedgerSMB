@@ -6,107 +6,18 @@
  * and textbox class detection.  input is the node.  The others are appropriate
  * dijit/dojo classes for the widgets.
  */
-
+/*
 function construct_form_node(query, cls, registry,
                         textbox, checkbox, radio, select, button, textarea, 
                         input)
 {
     
     if (input.nodeName == 'INPUT'){ 
-        if (input.type == 'hidden') {
-            return undefined;
-        } else if (input.type == 'text'){
-            if (cls.contains(input, 'date')){
-                // logic to pick dates
-                //
-                // I have now changed it to a DateTextBox, but apparently we 
-                // also have a wrapped version which we should use.  Will move 
-                // that over shortly. --CT
-                return require(['lsmb/lib/DateTextBox', 'dojo/domReady!'],
-                  function(datebox){
-                    var val = input.value;
-                    if (val == ''){
-                        val = undefined;
-                    }
-                    new datebox({
-                        "label": input.title,
-                        "value": val,
-                         "name": input.name,
-                           "id": input.id,
-                        "style": style,
-                    }, input);
-                  }
-                );
-             } else if (cls.contains(input, 'AccountBox')){
-                return require(['lsmb/accounts/AccountSelector'],
-                            function(accountselector){
-                                return new accountselector({
-                                    "name": input.name
-                                }, input);
-                            }
-                );
-             } else {
-                var style = {};
-                if (input.size !== undefined && input.size !== ''){
-                   style['width'] = (input.size * 0.6) + 'em';
-                }
-                return new textbox({
-                    "label": input.title,
-                    "value": input.value,
-                    "name": input.name,
-                    "style": style,
-                       "id": input.id
-                }, input);
-             } 
-            
-         } else if (input.type == 'checkbox'){
-            return new checkbox({
-                "name": input.name,
-               "value": input.value,
-             "checked": input.checked
-            }, input);
          } else if (input.type == 'radio'){
-            return new radio({
-                "name": input.name,
-               "value": input.value,
-             "checked": input.checked
-            }, input);
          } else if (input.type == 'password'){
-            var style = {};
-            if (input.size !== undefined && input.size !== ''){
-               style['width'] = (input.size * 0.6) + 'em';
-            }
-            return new textbox({
-                "label": input.title,
-                "value": input.value,
-                "name": input.name,
-                "style": style,
-                   "id": input.id,
-                 "type": 'password'
-            }, input);
          }
            
      } else if (input.nodeName == 'SELECT'){
-     var optlist = [];
-     query('option', input).forEach(
-         function(opt){
-             var entry = {
-                 "label": opt.innerHTML,
-                       "id": input.id,
-                 "value": opt.value
-             };
-             if (opt.selected){
-                 entry["selected"] = true;
-             }
-             optlist.push(entry);
-          });
-             
-         return new select(
-            { "name": input.name,
-              "options": optlist,
-              "label": input.title,
-                       "id": input.id
-            } , input); 
      } else if (input.nodeName == 'BUTTON'){
          return new button(
             { "name": input.name,
@@ -152,7 +63,7 @@ function try_startup(widget){
  *
  * As of first commit only setting up table containers.
  */
-
+/*
 require(     ['dojo/query', 
               'dijit/registry',
               'dojo/dom-class',
@@ -161,7 +72,6 @@ require(     ['dojo/query',
               'dijit/form/TextBox',
               'dijit/form/CheckBox',
               'dijit/form/RadioButton',
-              'dijit/form/Select',
               'dijit/form/Button',
               'dijit/layout/ContentPane',
               'dijit/form/Textarea',
@@ -269,4 +179,10 @@ require(     ['dojo/query',
                       }
                   });
       }
-);
+);*/
+
+require(['lsmb/lib/Loader', 'dojo/domReady!'],
+function(l){
+   loader = new l;
+   loader.setup();
+});
