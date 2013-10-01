@@ -70,9 +70,10 @@ define([
     'lsmb/lib/Loader',
     'dojo/_base/declare'
     ],
-    function(TableContainer, dom, cls, registry, cp, query, win, loader, 
+    function(TableContainer, dom, cls, registry, cp, query, win, ldr, 
              declare) 
     {
+      var loader = new ldr;
       return declare('dojox/layout/TableContainer',
         [TableContainer],
         {
@@ -101,11 +102,14 @@ define([
             }
         },
         postCreate: function(){
-            console.log('postCreate');
             this.inherited(arguments);
-            query('*', this.domNode).forEach(TFRenderElement(dnode)); 
+            var myself = this;
+            query('*', this.domNode).forEach(function(dnode){
+                                            myself.TFRenderElement(dnode)
+            }); 
         },
         TFRenderElement: function(dnode){
+              console.log('TFRenderElement');
               if (cls.contains(dnode, 'input-row')){
                  TFRenderRow(dnode);
               }

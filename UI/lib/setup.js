@@ -7,48 +7,6 @@
  * dijit/dojo classes for the widgets.
  */
 /*
-function construct_form_node(query, cls, registry,
-                        textbox, checkbox, radio, select, button, textarea, 
-                        input)
-{
-    
-    if (input.nodeName == 'INPUT'){ 
-         } else if (input.type == 'radio'){
-         } else if (input.type == 'password'){
-         }
-           
-     } else if (input.nodeName == 'SELECT'){
-     } else if (input.nodeName == 'BUTTON'){
-         return new button(
-            { "name": input.name,
-              "type": input.type,
-                       "id": input.id,
-             "label": input.innerHTML,
-             "value": input.value
-            }, input
-         );
-     
-     } else if (input.nodeName == 'TEXTAREA'){
-          console.log(input);
-          return new textarea(
-                      { "name": input.name,
-                       "value": input.innerHTML,
-                       "label": input.title, 
-                        "cols": input.cols,
-                        "rows": input.rows}, input);
-     }
-     return undefined; 
-}
-
-function try_startup(widget){
-     try{
-          return widget.startup();
-     } catch(err){
-          return false;
-     } finally {
-          //nothing
-     }
-}
 
 /* Set up form.tabular forms.  
  * Supports the following additional classes for setting columns
