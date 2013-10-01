@@ -73,8 +73,8 @@ define([
     function(TableContainer, dom, cls, registry, cp, query, win, ldr, 
              declare) 
     {
-      var loader = new ldr;
-      return declare('dojox/layout/TableContainer',
+      console.log(ldr); 
+      return declare('lsmb/lib/TabularForm',
         [TableContainer],
         {
         vertsize: 'mobile',
@@ -114,7 +114,7 @@ define([
                  TFRenderRow(dnode);
               }
               else {
-                 var widget = loader.createWidget(dnode);
+                 var widget = this.createWidget(dnode);
                  if (undefined !== widget) {
                      this.addChild(widget);
                  }
