@@ -21,6 +21,7 @@ define([
     'dojo/parser',
     'dojo/query',
     'dojo/ready',
+    'dijit/_WidgetBase',
     // widgets
     // row1
     'lsmb/lib/TabularForm',
@@ -36,11 +37,11 @@ define([
     ],
 function(
     // base
-    declare, registry, parser, query, ready,
+    declare, registry, parser, query, ready, wbase,
     // widgets
     tabular, textarea, datebox, checkbox, radio, textbox, accountselector, 
     select, button) {
-    return declare(null, {
+    return declare(wbase, {
         nodeMap: { // hierarchy nodeName->class, input type treated as class
                    // for INPUT elements, type beats class.
                DIV: {
@@ -229,6 +230,7 @@ function(
              ready(function(){
                widget = myself.createWidget(dnode);
                if (undefined !== widget){
+                    console.log('startup', dnode);
                     widget.startup();
                }
              });

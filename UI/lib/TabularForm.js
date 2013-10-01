@@ -67,13 +67,11 @@ define([
     'dijit/layout/ContentPane',
     'dojo/query',
     'dojo/window',
-    'lsmb/lib/Loader',
     'dojo/_base/declare'
     ],
-    function(TableContainer, dom, cls, registry, cp, query, win, ldr, 
+    function(TableContainer, dom, cls, registry, cp, query, win, 
              declare) 
     {
-      console.log(ldr); 
       return declare('lsmb/lib/TabularForm',
         [TableContainer],
         {
@@ -109,16 +107,29 @@ define([
             }); 
         },
         TFRenderElement: function(dnode){
-              console.log('TFRenderElement');
+           var myself = this;
+           require(['lsmb/lib/Loader', 'dojo/ready'],
+           function(l, ready){
+            ready(function(){
+              if (registry.byId(dnode.id)){
+                 widget = registry.byId(dnode.id);
+                 myself.addChild(widget);
+                 widget.startup();
+                 return;
+              }
+              loader = new l;
               if (cls.contains(dnode, 'input-row')){
                  TFRenderRow(dnode);
               }
               else {
-                 var widget = this.createWidget(dnode);
+                 var widget = loader.createWidget(dnode);
                  if (undefined !== widget) {
-                     this.addChild(widget);
+                    widget.startup();
+                    myself.addChild(widget);
                  }
-             }
+              }
+            });
+           });
         },
         TFRenderRow: function (dnode){
            var counter = 0;
