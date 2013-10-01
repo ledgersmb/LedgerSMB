@@ -100,24 +100,26 @@ define([
             }
         },
         postCreate: function(){
-            this.inherited(arguments);
             var myself = this;
-            query('*', this.domNode).forEach(function(dnode){
+            require(['lsmb/lib/Loader', 'dojo/ready'],
+            function(l, ready){
+             ready(function(){
+                 loader = new l;
+                 query('*', this.domNode).forEach(function(dnode){
                                             myself.TFRenderElement(dnode)
-            }); 
+                 }); 
+                 this.inherited(arguments);
+             });
+            });
         },
         TFRenderElement: function(dnode){
            var myself = this;
-           require(['lsmb/lib/Loader', 'dojo/ready'],
-           function(l, ready){
-            ready(function(){
               if (registry.byId(dnode.id)){
                  widget = registry.byId(dnode.id);
                  myself.addChild(widget);
                  widget.startup();
                  return;
               }
-              loader = new l;
               if (cls.contains(dnode, 'input-row')){
                  TFRenderRow(dnode);
               }
@@ -128,8 +130,6 @@ define([
                     myself.addChild(widget);
                  }
               }
-            });
-           });
         },
         TFRenderRow: function (dnode){
            var counter = 0;
@@ -143,10 +143,12 @@ define([
                this.addChild(spc); 
            }
         },
+/*
         resize: function(){
            //TODO:  this needs to detect container size and restructure
            //accordingly. --CT
         }
+*/
         });
      });
 

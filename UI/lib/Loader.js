@@ -30,7 +30,6 @@ define([
     'dijit/form/CheckBox',
     'dijit/form/RadioButton',
     'dijit/form/TextBox',
-    'lsmb/accounts/AccountSelector',
     //row2
     'dijit/form/Select',
     'dijit/form/Button'
@@ -39,7 +38,7 @@ function(
     // base
     declare, registry, parser, query, ready, wbase,
     // widgets
-    tabular, textarea, datebox, checkbox, radio, textbox, accountselector, 
+    tabular, textarea, datebox, checkbox, radio, textbox, 
     select, button) {
     return declare(wbase, {
         nodeMap: { // hierarchy nodeName->class, input type treated as class
@@ -119,9 +118,17 @@ function(
                                      }, input);
                                 },
                     'AccountBox': function(input){
+                                    // Since this requires db components, it
+                                    // cannot be preloaded on every page.
+                                    require(['lsmb/accounts/AccountSelector',
+                                             'dojo/ready'],
+                                    function(accountselector, ready){
+                                      ready(function(){
                                           return new accountselector({
                                               "name": input.name
                                           }, input);
+                                      });
+                                    });
                                  },
                      '__default': function(input){
                                      if (undefined !== registry.byNode(input)){
