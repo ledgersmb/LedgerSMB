@@ -246,9 +246,9 @@ function(
             if (declarative){
                return parser.parse(); 
             } 
-            query('.tabular label').forEach(function(dnode){
+            /*query('.tabular label').forEach(function(dnode){
                  construct.destroy(dnode);
-            });
+            });*/
             query('*').forEach(function(dnode){
                 ready(function(){
                    widget = myself.createWidget(dnode);
