@@ -22,6 +22,7 @@ define([
     'dojo/query',
     'dojo/ready',
     'dijit/_WidgetBase',
+    'dojo/dom-construct',
     // widgets
     // row1
     'lsmb/lib/TabularForm',
@@ -36,7 +37,7 @@ define([
     ],
 function(
     // base
-    declare, registry, parser, query, ready, wbase,
+    declare, registry, parser, query, ready, wbase, construct,
     // widgets
     tabular, textarea, datebox, checkbox, radio, textbox, 
     select, button) {
@@ -46,7 +47,15 @@ function(
                DIV: {
                '__default': function(){ return undefined; },
                  'tabular': function(node){
-                                        return new tabular({}, node);
+                                        //disabling for now
+                                        return undefined;
+                                        return new tabular({
+                                              showLabels: true,
+                                              labelWidth: 100,
+                                              customClass: 'lsmbtabular',
+                                              orientation: 'vert',
+                                              cols: 1
+                                                     }, node);
                             }
              
                     },
@@ -54,7 +63,7 @@ function(
                                     return new textarea(
                                            { "name": input.name,
                                             "value": input.innerHTML,
-                                            "label": input.title, 
+                                            "title": input.title, 
                                              "cols": input.cols,
                                              "rows": input.rows}, input);
                                    }
@@ -75,6 +84,7 @@ function(
                                                 }
                                                 return new datebox({
                                                     "label": input.title,
+                                                    "title": input.title,
                                                     "value": val,
                                                      "name": input.name,
                                                        "id": input.id,
@@ -108,6 +118,7 @@ function(
                                                            + 'em';
                                      }
                                      return new textbox({
+                                             "title": input.title,
                                              "label": input.title,
                                              "value": input.value,
                                               "name": input.name,
@@ -142,6 +153,7 @@ function(
                                                            + 'em';
                                      }
                                      return new textbox({
+                                         "title": input.title,
                                          "label": input.title,
                                          "value": input.value,
                                           "name": input.name,
@@ -168,7 +180,7 @@ function(
                                       return new select(
                                              { "name": input.name,
                                             "options": optlist,
-                                              "label": input.title,
+                                              "title": input.title,
                                                  "id": input.id
                                              } , input); 
                                   }
@@ -179,14 +191,15 @@ function(
                               { "name": input.name,
                                 "type": input.type,
                                   "id": input.id,
-                               "label": input.innerHTML,
+                               "title": input.innerHTML,
                                "value": input.value
                               }, input
                           );
                      }
                  }
         },
-        constructor: function(){},
+        constructor: function(){
+        },
         // createWidget(domNode)
         //
         // Creates a widget from a domNode.  This is used in a number of cases,
@@ -199,7 +212,7 @@ function(
             return dnode.size * 0.6 + 'em';
         },
         createWidget: function(dnode) {
-            if (undefined !== registry.byNode(dnode)){
+            if (undefined !== registry.byId(dnode.id)){
                return undefined;
             }
             if (undefined == this.nodeMap[dnode.nodeName]){
@@ -233,14 +246,16 @@ function(
             if (declarative){
                return parser.parse(); 
             } 
+            query('.tabular label').forEach(function(dnode){
+                 construct.destroy(dnode);
+            });
             query('*').forEach(function(dnode){
-             ready(function(){
-               widget = myself.createWidget(dnode);
-               if (undefined !== widget){
-                    console.log('startup', dnode);
-                    widget.startup();
-               }
-             });
+                ready(function(){
+                   widget = myself.createWidget(dnode);
+                   if (undefined !== widget){
+                        widget.startup();
+                   }
+                });
             });
         }
    }); 

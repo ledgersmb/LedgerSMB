@@ -67,10 +67,11 @@ define([
     'dijit/layout/ContentPane',
     'dojo/query',
     'dojo/window',
-    'dojo/_base/declare'
+    'dojo/_base/declare',
+    'dijit/form/TextBox',
     ],
     function(TableContainer, dom, cls, registry, cp, query, win, 
-             declare) 
+             declare, testbox) 
     {
       return declare('lsmb/lib/TabularForm',
         [TableContainer],
@@ -98,26 +99,22 @@ define([
                             classes[0].replace(/ virtlabel-(\w+) /, "$1");
                 }
             }
-        },
-        postCreate: function(){
+            console.log(this);
             var myself = this;
-            require(['lsmb/lib/Loader', 'dojo/ready'],
-            function(l, ready){
-             ready(function(){
+            require(['lsmb/lib/Loader', 'dojo/ready', 'dojo/dom-construct'],
+            function(l, ready, construct){
+             ready(80, function(){
                  loader = new l;
-                 query('*', this.domNode).forEach(function(dnode){
+                 query('*', myself.domNode).forEach(function(dnode){
                                             myself.TFRenderElement(dnode)
+             
                  }); 
-                 this.inherited(arguments);
              });
             });
         },
         TFRenderElement: function(dnode){
            var myself = this;
               if (registry.byId(dnode.id)){
-                 widget = registry.byId(dnode.id);
-                 myself.addChild(widget);
-                 widget.startup();
                  return;
               }
               if (cls.contains(dnode, 'input-row')){
@@ -126,8 +123,9 @@ define([
               else {
                  var widget = loader.createWidget(dnode);
                  if (undefined !== widget) {
-                    widget.startup();
+                    console.log(widget);
                     myself.addChild(widget);
+                    widget.startup();
                  }
               }
         },
@@ -142,6 +140,10 @@ define([
                var spc = new cp({content: '&nbsp;'});
                this.addChild(spc); 
            }
+        },
+        startup: function(){
+           this.inherited(arguments);
+           this.layout();
         },
 /*
         resize: function(){

@@ -17,7 +17,8 @@ function send_form() {
 	var password = document.login.password.value;
 	var company = document.login.company.value;
 	var action = document.login.action.value;
-        //alert('document.login.company.value='+document.login.company.value);
+        // console.log(password, company, username);
+        // alert('document.login.company.value='+document.login.company.value);
 	http.open("get", 'login.pl?action=authenticate&company='+company, true, username, password);
         http.onreadystatechange = function(){
             if (http.readyState != 4){
