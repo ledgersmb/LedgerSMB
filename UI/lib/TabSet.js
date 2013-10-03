@@ -63,7 +63,6 @@ define([
                myself.selectChild(ad);
             });
             this.inherited(arguments);
-            this.resize(boxSize);
           }
           
         });

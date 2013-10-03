@@ -138,13 +138,46 @@ define([
                var spc = new cp({content: '&nbsp;'});
                this.addChild(spc); 
            }
-        }
-/*
+        },
         resize: function(){
-           //TODO:  this needs to detect container size and restructure
-           //accordingly. --CT
+            var winsize = win.getBox();
+            switch (this.vertlabelsize){
+            case 'mobile':
+                if (winsize.h >= 480){
+                   break;
+                }
+            case 'small':
+                if (winsize.h >= 768){
+                   break;
+                }
+            case 'med':
+                if (winsize.h >= 992){
+                   break;
+                }
+            default:
+               this.cols = 1;
+               this.orientation = 'vert'; 
+            }
+            if (this.orientation == 'horiz'){
+               switch (this.vertsize){
+               case 'mobile':
+                if (winsize.h >= 480){
+                   break;
+                }
+               case 'small':
+                if (winsize.h >= 768){
+                   break;
+                }
+               case 'med':
+                if (winsize.h >= 992){
+                   break;
+                }
+               default:
+                this.cols = 1;
+               };
+            }
+            return this.inherited(arguments);
         }
-*/
         });
      });
 
