@@ -99,7 +99,6 @@ define([
                             classes[0].replace(/ virtlabel-(\w+) /, "$1");
                 }
             }
-            console.log(this);
             var myself = this;
             require(['lsmb/lib/Loader', 'dojo/ready', 'dojo/dom-construct'],
             function(l, ready, construct){
@@ -123,7 +122,6 @@ define([
               else {
                  var widget = loader.createWidget(dnode);
                  if (undefined !== widget) {
-                    console.log(widget);
                     myself.addChild(widget);
                     widget.startup();
                  }
@@ -140,11 +138,7 @@ define([
                var spc = new cp({content: '&nbsp;'});
                this.addChild(spc); 
            }
-        },
-        startup: function(){
-           this.inherited(arguments);
-           this.layout();
-        },
+        }
 /*
         resize: function(){
            //TODO:  this needs to detect container size and restructure

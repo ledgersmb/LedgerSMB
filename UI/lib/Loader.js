@@ -47,14 +47,10 @@ function(
                DIV: {
                '__default': function(){ return undefined; },
                  'tabular': function(node){
-                                        //disabling for now
-                                        return undefined;
                                         return new tabular({
                                               showLabels: true,
-                                              labelWidth: 100,
                                               customClass: 'lsmbtabular',
-                                              orientation: 'vert',
-                                              cols: 1
+                                              orientation: 'horiz'
                                                      }, node);
                             }
              
@@ -246,14 +242,16 @@ function(
             if (declarative){
                return parser.parse(); 
             } 
-            /*query('.tabular label').forEach(function(dnode){
+            query('.tabular label').forEach(function(dnode){
                  construct.destroy(dnode);
-            });*/
+            });
             query('*').forEach(function(dnode){
                 ready(function(){
                    widget = myself.createWidget(dnode);
                    if (undefined !== widget){
-                        widget.startup();
+                       ready(function(){
+                           registry.byId(dnode.id).startup();
+                        });
                    }
                 });
             });
