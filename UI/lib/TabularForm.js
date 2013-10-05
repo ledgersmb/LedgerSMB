@@ -77,7 +77,9 @@ define([
         [TableContainer],
         {
         vertsize: 'mobile',
-        vertlabelsize: '',
+        vertlabelsize: 'mobile',
+        maxCols: 1,
+        initOrient: 'horiz',
         constructor: function (mixIn, domNode){
             if (domNode !== undefined){
                 // Number of columns
@@ -110,6 +112,8 @@ define([
                  }); 
              });
             });
+            this.maxCols = this.cols;
+            this.initOrient = this.orientation;
         },
         TFRenderElement: function(dnode){
            var myself = this;
@@ -141,41 +145,49 @@ define([
         },
         resize: function(){
             var winsize = win.getBox();
+            var orient = this.orientation;
             switch (this.vertlabelsize){
             case 'mobile':
-                if (winsize.h >= 480){
+                if (winsize.w >= 480){
+                   this.cols=this.maxCols;
+                   this.orientation=this.initOrient;
                    break;
                 }
             case 'small':
-                if (winsize.h >= 768){
+                if (winsize.w >= 768){
+                   this.cols=this.maxCols;
+                   this.orientation=this.initOrient;
                    break;
                 }
             case 'med':
-                if (winsize.h >= 992){
+                if (winsize.w >= 992){
+                   this.cols=this.maxCols;
+                   this.orientation=this.initOrient;
                    break;
                 }
             default:
                this.cols = 1;
                this.orientation = 'vert'; 
-            }
-            if (this.orientation == 'horiz'){
-               switch (this.vertsize){
-               case 'mobile':
-                if (winsize.h >= 480){
+            } 
+            switch (this.vertsize){
+            case 'mobile':
+                if (winsize.w >= 480){
                    break;
                 }
-               case 'small':
-                if (winsize.h >= 768){
+            case 'small':
+                if (winsize.w >= 768){
                    break;
                 }
-               case 'med':
-                if (winsize.h >= 992){
+            case 'med':
+                if (winsize.w >= 992){
                    break;
                 }
-               default:
+            default:
                 this.cols = 1;
-               };
-            }
+            } 
+            if (this.orientation !== orient){
+                this.startup();
+            } 
             return this.inherited(arguments);
         }
         });
