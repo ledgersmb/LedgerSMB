@@ -670,7 +670,7 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
                parseOnLoad: 0,
                packages: [{"name":"lsmb","location":"../../.."}]
            }
-           var dateformat = '$dformat';
+           var lsmbConfig = {dateformat: '$dformat'};
         </script>
        <script type="text/javascript" language="JavaScript" src="UI/lib/dojo/dojo/dojo.js"></script>
         <script type="text/javascript" language="JavaScript" src="UI/lib/setup.js"></script>
