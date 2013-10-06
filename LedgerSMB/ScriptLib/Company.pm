@@ -432,7 +432,6 @@ sub get_results {
         {href => $sort_href, columns => \@sort_columns}
     );
             
-    $logger->debug("\$company = " . Data::Dumper::Dumper($company));
     $template->render({
 	form    => $company,
 	columns => \@columns,
