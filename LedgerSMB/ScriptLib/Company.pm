@@ -737,6 +737,7 @@ Pulls relevant data from db and renders the data entry screen for it.
 
 sub _render_main_screen{
     my $company = shift @_;
+    $company->debug({file => '/tmp/company'});
     $company->close_form;
     $company->open_form;
     $company->{dbh}->commit;

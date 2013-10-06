@@ -1302,7 +1302,7 @@ sub post {
     # check if there is an invoice number, invoice and due date
     $form->isblank( "transdate", $locale->text('Invoice Date missing!') );
     $form->isblank( "duedate",   $locale->text('Due Date missing!') );
-    $form->isblank( "crdate",    $locale->text('Invoice Created Date missing!') );
+    # $form->isblank( "crdate",    $locale->text('Invoice Created Date missing!') );
     $form->isblank( $form->{vc}, $label );
 
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
