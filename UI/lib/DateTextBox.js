@@ -8,6 +8,7 @@ define([
         {
           postMixInProperties: function() {
             this.constraints.datePattern = lsmbConfig.dateformat;
+            this.constraints.datePattern = this.constraints.datePattern.replace(/mm/, 'MM');
             this.inherited(arguments);
           }
         });
