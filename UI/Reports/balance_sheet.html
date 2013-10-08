@@ -1,4 +1,5 @@
-<?lsmb INCLUDE 'ui-header.html' stylesheet=request.stylesheet ?>
+<?lsmb INCLUDE 'ui-header.html' stylesheet=request.stylesheet 
+         include_stylesheet = ['UI/Reports/pnl.css']; ?>
 <body class="financial-statement" id="balance-sheet">
 <h1><?lsmb text('Balance Sheet') ?></h1>
 <h2><?lsmb text('Through date:') _ ' ' _ report.to_date ?></h2>

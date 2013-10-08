@@ -23,8 +23,17 @@ td.amount {
 	text-align: right;
 }
 tr.separator {
-	background-color: gray;
+        min-height: 1em;
 }
+tr.sectionhead {
+}
+tr.sectionhead th {
+        padding-top: 2em;
+        margin-top: 4em;
+        font-size: 120%;
+        font-weight: bold;
+}
+
 td.total {
         border: 0px;
 	border-top: 1px;
@@ -34,4 +43,12 @@ td.total {
 
 th {
 	vertical-align: bottom;	
+}
+
+table {
+      margin-right: auto;
+      margin-left: auto;
+}
+h1, h2 {
+       text-align: center;
 }
