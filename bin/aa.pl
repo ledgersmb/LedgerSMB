@@ -92,6 +92,10 @@ my $is_update;
 sub copy_to_new{
     delete $form->{id};
     delete $form->{invnumber};
+    $form->{paidaccounts} = 1;
+    if ($form->{paid_1}){
+        delete $form->{paid_1};
+    }
     update();
 }
 
