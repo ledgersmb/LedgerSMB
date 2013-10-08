@@ -188,7 +188,7 @@ SELECT a.id, a.accno, a.description, a.category,
   JOIN account_heading_tree at ON a.heading = at.id
  WHERE ac.approved is true and ac.trans_id = $1
  GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description
+          ah.id, ah.accno, ah.description, at.path
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE sql;
 
