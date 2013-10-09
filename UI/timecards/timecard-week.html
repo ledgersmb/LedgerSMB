@@ -1,0 +1,19 @@
+<?lsmb INCLUDE "ui-header.html";
+PROCESS "elements.html" ?>
+<body class="<?lsmb dojo_theme ?>">
+<form action="timecard.pl" method="post">
+<table width="100%">
+<tr class="listtop">
+ <th><?lsmb transdates[0] ?></th>
+ <th><?lsmb transdates[1] ?></th>
+ <th><?lsmb transdates[2] ?></th>
+ <th><?lsmb transdates[3] ?></th>
+ <th><?lsmb transdates[4] ?></th>
+ <th><?lsmb transdates[5] ?></th>
+ <th><?lsmb transdates[6] ?></th>
+</tr>
+<?lsmb FOR 1 .. num_lines ?>
+<?lsmb END ?>
+</form>
+</body>
+</html>
