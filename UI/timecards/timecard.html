@@ -118,30 +118,33 @@
     </td>
 </tr>
 </table>
-<?lsmb PROCESS print_options ?>
-<?lsmb PROCESS button element_data = {
-   name = 'action'
-   type = 'submit'
-  class = 'submit'
-   text = text('Update')
-  value = 'update_day' 
-} ?>
-<?lsmb PROCESS button element_data = {
-   name = 'action'
-   type = 'submit'
-  class = 'submit'
-   text = text('Save')
-  value = 'save'
-} ?>
-<?lsmb IF id ?>
-<?lsmb PROCESS button element_data = {
+<?lsmb IF id; PROCESS print_options; END; ?>
+<?lsmb 
+IF id;
+    PROCESS button element_data = {
    name = 'action'
    type = 'submit'
   class = 'submit'
    text = text('Print')
   value = 'print'
-} ?>
-<?lsmb END ?>
+   };
+ELSE;
+   PROCESS button element_data = {
+   name = 'action'
+   type = 'submit'
+  class = 'submit'
+   text = text('Update')
+  value = 'update_day' 
+   };
+   PROCESS button element_data = {
+   name = 'action'
+   type = 'submit'
+  class = 'submit'
+   text = text('Save')
+  value = 'save'
+   };
+END;
+?>
 </form>
 </body>
 </html>
