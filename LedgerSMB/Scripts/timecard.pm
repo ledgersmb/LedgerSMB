@@ -21,6 +21,7 @@ use LedgerSMB::Timecard::Type;
 use LedgerSMB::Report::Timecards;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Business_Unit_Class;
+use LedgerSMB::Business_Unit;
 use DateTime;
 
 =head1 ROUTINES
@@ -74,16 +75,42 @@ sub display {
         $request->{in_hour} = $now->hour unless defined $request->{in_hour};
         $request->{in_min} = $now->minute unless defined $request->{in_min};
     }
-    $request->{total} = $request->{qty} + $request->{non_billable};
-    my $template = LedgerSMB::Template->new(
-        user     => $request->{_user},
-        locale   => $request->{_locale},
-        path     => 'UI/timecards',
-        template => 'timecard',
-        format   => 'HTML'
+    @{$request->{b_units}} = LedgerSMB::Business_Unit->list(
+          $request->{bu_class_id}, undef, 0, $request->{transdate}
     );
-    $template->render($request);
+    $request->{total} = $request->{qty} + $request->{non_billable};
+     my $template = LedgerSMB::Template->new(
+         user     => $request->{_user},
+         locale   => $request->{_locale},
+         path     => 'UI/timecards',
+         template => 'timecard',
+         format   => 'HTML'
+     );
+     $template->render($request);
 
+}
+
+=item timecard_screen
+
+This displays a screen for entry of timecards, either single day or week.
+
+=cut
+
+sub timecard_screen {
+    my ($request) = @_;
+    if (1 == $request->{num_days}){
+        $request->{transdate} = $request->{date_from};
+        return display($request);
+    } else {
+         my $template = LedgerSMB::Template->new(
+             user     => $request->{_user},
+             locale   => $request->{_locale},
+             path     => 'UI/timecards',
+             template => 'timecard-week',
+             format   => 'HTML'
+         );
+         $template->render($request);
+    }
 }
 
 =item save

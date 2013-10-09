@@ -10,7 +10,19 @@
 <tr><th colspan="2" class="listtop"><?lsmb text('Category') ?> : 
     </th>
 </tr>
-<?lsmb # PROCESS business_units; ?>
+<tr id="business_unit">
+  <th><?lsmb text('Entered For') ?></th>
+  <td><?lsmb
+        FOREACH bu IN b_units;
+            bu.text = bu.control_code _ ' -- ' _ bu.description;
+        END;
+        PROCESS select element_data = {
+                       name = "business_unit_id"
+             default_values = [business_unit_id]
+                    options = b_units
+                  text_attr = 'text'
+                 value_attr = 'id'
+       } ?></td>
 <tr><th><?lsmb  text('Partnumber') ?></th>
     <td><?lsmb PROCESS input element_data = {
                name = 'partnumber'
@@ -112,7 +124,7 @@
    type = 'submit'
   class = 'submit'
    text = text('Update')
-  value = 'update' 
+  value = 'update_day' 
 } ?>
 <?lsmb PROCESS button element_data = {
    name = 'action'
