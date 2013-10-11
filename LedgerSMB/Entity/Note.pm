@@ -124,13 +124,12 @@ setting things like the id field.
 sub save {
     my ($self) = @_;
     my $ref;
-    if ($self->credit_id){
+    if (3 == $self->note_class){
         ($ref) = $self->exec_method({funcname => 'eca__save_notes'});
     } else {
         ($ref) = $self->exec_method({funcname => 'entity__save_notes'});
     }
-    $self->prepare_dbhash($ref);
-    $self = $self->new(%$ref);
+    return $ref;
 }
 
 =back

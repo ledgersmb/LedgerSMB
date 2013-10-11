@@ -691,9 +691,6 @@ subject.
 sub save_notes {
     my ($request) = @_;
     my $note = LedgerSMB::Entity::Note->new(%$request);
-    if ($request->{note_class} == 1){
-       $note->credit_id(undef);
-    }
     $note->save;
     get($request);
 }
