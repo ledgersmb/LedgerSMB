@@ -205,3 +205,32 @@ COMMIT;
 BEGIN;
 INSERT INTO defaults (setting_key, value) values ('dojo_theme', 'claro');
 COMMIT;
+
+BEGIN;
+CREATE FUNCTION prevent_closed_transactions() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE t_end_date date;
+BEGIN
+SELECT max(end_date) into t_end_date FROM account_checkpoint;
+IF new.transdate <= t_end_date THEN
+    RAISE EXCEPTION 'Transaction entered into closed period.  Transdate: %',
+                   new.transdate;
+END IF;
+RETURN new;
+END;
+$$;
+
+
+CREATE TRIGGER acc_trans_prevent_closed BEFORE INSERT ON acc_trans 
+FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
+CREATE TRIGGER ap_prevent_closed BEFORE INSERT ON ap 
+FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
+CREATE TRIGGER ar_prevent_closed BEFORE INSERT ON ar 
+FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
+CREATE TRIGGER gl_prevent_closed BEFORE INSERT ON gl 
+FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
+COMMIT;
+
+
+
