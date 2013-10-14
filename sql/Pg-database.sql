@@ -1139,6 +1139,10 @@ $$Document Source identifier for individual line items, usually used
 for payments.$$;
 
 CREATE INDEX acc_trans_voucher_id_idx ON acc_trans(voucher_id);
+
+-- preventing closed transactions
+
+
 --
 CREATE TABLE parts (
   id serial PRIMARY KEY,
@@ -1976,7 +1980,32 @@ COMMENT ON FUNCTION gl_audit_trail_append() IS
 $$ This provides centralized support for insertions into audittrail.
 $$;
 
-CREATE TRIGGER gl_audit_trail AFTER insert or update or delete ON gl
+CREATE FUNCTION prevent_closed_transactions() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+DECLARE t_end_date date;
+BEGIN
+SELECT max(end_date) into t_end_date FROM account_checkpoint;
+IF new.transdate <= t_end_date THEN
+    RAISE EXCEPTION 'Transaction entered into closed period.  Transdate: %',
+                   new.transdate;
+END IF;
+RETURN new;
+END;
+$$;
+
+CREATE TRIGGER acc_trans_prevent_closed BEFORE INSERT ON acc_trans 
+FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
+CREATE TRIGGER ap_prevent_closed BEFORE INSERT ON ap 
+FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
+CREATE TRIGGER ar_prevent_closed BEFORE INSERT ON ar 
+FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
+CREATE TRIGGER gl_prevent_closed BEFORE INSERT ON gl 
+FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
+
+
+
+CREATE TRIGGER gl_audit_trail AFTER INSERT OR UPDATE OR DELETE ON gl
 FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
 
 CREATE TRIGGER ar_audit_trail AFTER insert or update or delete ON ar

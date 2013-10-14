@@ -41,6 +41,7 @@ Changelog for 1.3.34
 * Fixed trouble emailing recurring transactions (873, Erik H)
 * Fixed saving company saving incorrectly to DB (886, John L)
 * Can now search for batches/drafts without specifying a class (Erik H)
+* Added trigger to prevent transactions in closed periods (Chris T)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
