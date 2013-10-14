@@ -215,14 +215,15 @@ END # BLOCK -?>
   FOREACH e IN employees;
      e.text = e.first_name _ ' ' _ e.last_name;
   END;
-  employees.push({}) ?>
+  #employees.push({})
+  employees.unshift({}) ?>
 <tr>
   <th><?lsmb text('Employees') ?></th>
   <td><?lsmb PROCESS select element_data = {
                  name = SELECTNAME
        default_values = [$SELECTNAME]
               options = employees
-           value_attr = 'id'
+           value_attr = 'person_id' #??
                 class = 'employee'
        } ?></td>
 </tr><?lsmb
