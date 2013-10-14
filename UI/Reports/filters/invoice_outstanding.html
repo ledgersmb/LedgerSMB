@@ -17,7 +17,7 @@
         FOREACH T IN tax_accounts;
            T.text = T.accno _ '--' _ T.description;
         END;
-        accounts.unshift({});
+        tax_accounts.unshift({});
 ?>
 <body class="<?lsmb dojo_theme ?>">
 <form action="invoice.pl" method="GET">
