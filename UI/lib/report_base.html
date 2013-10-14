@@ -209,7 +209,8 @@ END # BLOCK -?>
   BLOCK employee_row;
   # DEFAULTS
   IF ! SELECTNAME.defined;
-     SELECTNAME = 'employee_id';
+     #SELECTNAME = 'employee_id';
+     SELECTNAME = 'person_id';
   END;
   FOREACH e IN employees;
      e.text = e.first_name _ ' ' _ e.last_name;
