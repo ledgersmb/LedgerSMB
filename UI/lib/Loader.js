@@ -177,7 +177,8 @@ function(
                                              { "name": input.name,
                                             "options": optlist,
                                               "title": input.title,
-                                                 "id": input.id
+                                                 "id": input.id,
+                                            "on_load": input.on_load
                                              } , input); 
                                   }
                  },

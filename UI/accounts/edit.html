@@ -4,24 +4,76 @@ INCLUDE 'ui-header.html'
     include_script = ['UI/accounts/edit.js']
 ?> 
 <?lsmb PROCESS elements.html ?> 
-<body onload="init()">
+<body class="<?lsmb dojo_theme ?>">
+<script type="text/javascript" language="Javascript">
+    var activeDiv = "<?lsmb charttype ?>";
+</script>
+<div class="TabSet" id="account-tabs">
+<div class="lsmbtab" title="<?lsmb text('Heading') ?>" id="H">
 <form method="post" action="<?lsmb form.script ?>">
-<div class="listtop"><?lsmb form.title ?></div>
-<div class="inputline" id="charttype-line">
-   <label class="line">&nbsp;</label>
-   <div class="inputgroup">
+<?lsmb PROCESS input element_data = {
+        value = 'H'
+        name = 'charttype'
+        type = 'hidden'
+} ?>
+<div class="inputline" id="accno-line">
+  <label class="line"><?lsmb text('Account Number') ?></label>
+  <div class="inputgroup">
     <?lsmb 
-     ctypes = [
-                { text = 'Account', value = 'A'}
-                { text = 'Heading', value = 'H'}
-              ];
-    INCLUDE select element_data = {
-                  name = 'charttype'
-               options = ctypes
-        default_values = [form.charttype]
-    };?>
+    INCLUDE input element_data = {
+      name = 'accno'
+       id  = 'accno-h'
+      size = '20'
+     value = form.accno
+      type = 'text'
+     class = 'control-code'
+    } ?>
   </div>
 </div>
+<div class="inputline" id="desc-line">
+   <label class="line"><?lsmb text('Description') ?></label>
+   <div class="inputgroup">
+      <?lsmb 
+    INCLUDE input element_data = {
+        id = 'desc-h'
+      name = 'description'
+      size = '40'
+     value = form.description
+      type = 'text'
+     class = 'description'
+    } ?>
+   </div>
+</div>
+<div class="inputline" id="heading-line">
+   <label class="line"><?lsmb text('Heading') ?></label>
+   <div class="inputgroup">
+      <?lsmb 
+    FOREACH h IN form.all_headings;
+        h.text = h.accno _ '--' _ h.description;
+    END;
+    form.all_headings.push({});
+    INCLUDE select element_data = {
+                  name = 'heading'
+               options = form.all_headings
+        default_values = [form.heading]
+             text_attr = 'text'
+            value_attr = 'id'
+                 class = 'account'
+                    id = 'heading-h'
+    }; ?>
+   </div>
+</div>
+<hr size="3" noshade="noshade" />
+<?lsmb FOREACH button IN buttons; INCLUDE button element_data=button; END ?>
+</form>
+</div>
+<div class="lsmbtab" title="<?lsmb text('Account') ?>" id="A">
+<form method="post" action="<?lsmb form.script ?>">
+<?lsmb PROCESS input element_data = {
+        value = 'A'
+        name = 'charttype'
+        type = 'hidden'
+} ?>
 <div class="inputline" id="accno-line">
   <label class="line"><?lsmb text('Account Number') ?></label>
   <div class="inputgroup">
@@ -332,7 +384,7 @@ INCLUDE 'ui-header.html'
    <div class="inputgroup">
       <?lsmb IF form.IC_expense;IC_expense= 'CHECKED'; END;
          INCLUDE input element_data={
-              name = 'IC_expense',
+              name = 'IC_returns',
               type = 'checkbox',
              label = text('Returns'),
            checked = IC_returns,
@@ -405,7 +457,7 @@ INCLUDE 'ui-header.html'
 		}; END ?>
 
 <hr size="3" noshade="noshade" />
-<?lsmb FOREACH button IN buttons; INCLUDE button element_data=button; END ?>
+<?lsmb FOREACH button IN buttons; button.id = button.name _ '-A'; INCLUDE button element_data=button; END ?>
 </form>
 </body>
 </html>
