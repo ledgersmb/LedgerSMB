@@ -159,6 +159,8 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Mailer;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
+use File::Copy "cp";
+use File::Copy;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
@@ -357,6 +359,8 @@ sub output {
         $method = '' if !defined $method;
 	if ('email' eq lc $method) {
 		$self->_email_output;
+        } elsif (defined $args{OUT}){ # To file
+                cp($self->{rendered}, $args{OUT}); 
 	} elsif ('print' eq lc $method) {
 		$self->_lpr_output;
 	} elsif (defined $self->{output} or lc $method eq 'screen') {
