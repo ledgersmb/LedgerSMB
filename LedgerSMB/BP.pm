@@ -352,7 +352,7 @@ sub print_spool {
 
         if ( $form->{"checked_$i"} ) {
 
-            open( OUT, '>', $form->{OUT} ) or $form->error("$form->{OUT} : $!");
+            open( OUT, $form->{printmode}, $form->{OUT} ) or $form->error("$form->{OUT} : $!");
             binmode(OUT);
 
             $spoolfile = qq|$spool/$form->{"spoolfile_$i"}|;
