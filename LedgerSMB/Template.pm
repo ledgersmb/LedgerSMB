@@ -388,7 +388,7 @@ sub output {
         $method = '' if !defined $method;
 	if ('email' eq lc $method) {
 		$self->_email_output;
-        } elsif (defined $args{OUT}){ # To file
+        } elsif (defined $args{OUT} and $args{printmode} eq '>'){ # To file
                 cp($self->{rendered}, $args{OUT}); 
 	} elsif ('print' eq lc $method) {
 		$self->_lpr_output;
