@@ -247,7 +247,7 @@ sub print {
     for $i ( 1 .. $form->{rowcount} ) {
         if ( $form->{"checked_$i"} ) {
             ##SC: XXX adjust later once printing hooked up to templates
-            $form->{OUT} = "${LedgerSMB::Sysconfig::printer}{$form->{media}}";
+            $form->{OUT} = "$LedgerSMB::Sysconfig::printer{$form->{media}}";
             $form->{printmode} = '|-';
             $form->info( $locale->text('Printing') . " ..." );
 
