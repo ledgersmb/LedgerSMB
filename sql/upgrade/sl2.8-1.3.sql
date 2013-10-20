@@ -26,10 +26,11 @@ INSERT INTO account_heading(id, accno, description)
 SELECT id, accno, description
   FROM sl28.chart WHERE charttype = 'H';
 
-SELECT account_save(id, accno, description, category, gifi_accno, NULL, contra, 
-                    CASE WHEN link like '%tax%' THEN true ELSE false END, 
+SELECT account_save(id, accno, description, category, gifi_accno, NULL::int,
+                    contra,
+                    CASE WHEN link like '%tax%' THEN true ELSE false END,
                     string_to_array(link,':'))
-  FROM sl28.chart 
+  FROM sl28.chart
  WHERE charttype = 'A';
 
 delete from account_link where description = 'CT_tax';
