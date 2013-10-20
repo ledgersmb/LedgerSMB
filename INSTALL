@@ -135,12 +135,9 @@ LedgerSMB depends on these additional modules (not listing core modules):
   DBD::Pg
   MIME::Base64
   Digest::MD5
-  HTML::Entities
-  Math::BigFloat
-  IO::File
-  IO::Scalar
-  Encode
-  Time::Local
+  HTML::Entities    (part of HTML::Parser)
+  Math::BigFloat    (part of Math::BigInt)
+  IO::Scalar        (part of IO-stringy)
   Config::IniFiles
   MIME::Lite
   Template  (also known as The Template Toolkit or TT)
