@@ -121,31 +121,29 @@ Note that the above will require new pg_hba.conf lines for each db created.
 Installing Perl module dependencies
 ===================================
 
-LedgerSMB depends on these required modules:
+LedgerSMB depends on these additional modules (not listing core modules):
 
   Test::More
   Test::Trap
   Test::Exception
-  Contextual::Return
   Data::Dumper
   Log::Log4perl
   Locale::Maketext
-  DateTime
   Locale::Maketext::Lexicon
+  DateTime
   DBI
+  DBD::Pg
   MIME::Base64
   Digest::MD5
   HTML::Entities
-  DBD::Pg
   Math::BigFloat
   IO::File
   IO::Scalar
   Encode
   Time::Local
-  Cwd
   Config::IniFiles
   MIME::Lite
-  Template
+  Template  (also known as The Template Toolkit or TT)
   Error
   CGI::Simple
   File::MimeInfo
@@ -156,7 +154,7 @@ LedgerSMB depends on these required modules:
 and these optional ones:
 
   XML::Simple        [RESTful Web Services XML support]
-  Image::Size        [Size detection for images for embedding in LaTeX templates]
+  Image::Size        [Size detection for images for embedding in LaTeX]
   Net::TCLink        [Support for TrustCommerce credit card processing]
   Parse::RecDescent  [Support for the *experimental* scripting engine]
   Getopt::Long       [Developer tool dependencies]
