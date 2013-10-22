@@ -168,24 +168,27 @@ $$;
 
 CREATE OR REPLACE FUNCTION sequence__save
 (in_label text, in_setting_key text, in_prefix text, in_suffix text,
- in_sequence text)
+ in_sequence text, in_accept_input bool)
 RETURNS lsmb_sequence LANGUAGE sql AS
 $$
 UPDATE lsmb_sequence 
    SET prefix = coalesce(in_prefix, DEFAULT),
        suffix = coalecce(in_suffix, DEFAULT),
        sequence = coalesce(in_sequence, DEFAULT),
-       setting_ley = in_setting_key
+       setting_ley = in_setting_key,
+       accept_input = in_accept_input
  WHERE label = in_label;
 
 IF FOUND THEN RETURN sequence__get(in_label);
 END IF;
 
-INSERT INTO lsmb_sequence(label, setting_key, prefix, suffix, sequence)
+INSERT INTO lsmb_sequence(label, setting_key, prefix, suffix, sequence, 
+                          accept_input)
 VALUES (in_label, in_setting_ley, 
         coalesce(prefix, default), 
         coalesce(suffix, default), 
-        coalesce(sequence, default)
+        coalesce(sequence, default),
+        in_accept_input
 );
 
 return sequence__get(in_label);
