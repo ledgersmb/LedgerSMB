@@ -239,7 +239,8 @@ CREATE TABLE lsmb_sequence (
    setting_key text not null references defaults(setting_key),
    prefix text,
    suffix text,
-   sequence text not null default '1'
+   sequence text not null default '1',
+   accept_input bool default true
 );
 
 COMMIT;
