@@ -65,35 +65,45 @@ $$ LANGUAGE plpgsql;
 COMMENT ON FUNCTION setting_get_default_accounts () IS
 $$ Returns a set of settings for default accounts.$$; 
 
+CREATE OR REPLACE FUNCTION setting__increment_base(in_raw_var text)
+returns varchar language plpgsql as $$
+declare raw_value VARCHAR;
+       base_value VARCHAR;
+       increment  INTEGER;
+       inc_length INTEGER;
+       new_value VARCHAR;
+begin
+    raw_value := in_raw_var;
+    base_value := substring(raw_value from  
+                                '(' || E'\\' || 'd*)(' || E'\\' || 'D*|<' 
+                                    || E'\\' || '?lsmb [^<>] ' || E'\\' 
+                                    || '?>)*$');
+    IF base_value like '0%' THEN
+         increment := base_value::integer + 1;
+         inc_length := char_length(increment::text);
+         new_value := overlay(base_value placing increment::varchar
+                              from (char_length(base_value)
+                                    - inc_length + 1) 
+                              for inc_length);
+    ELSE
+         new_value := base_value::integer + 1;
+    END IF;
+    return regexp_replace(raw_value, base_value, new_value);
+end;
+$$;
+
 CREATE OR REPLACE FUNCTION setting_increment (in_key varchar) returns varchar
 AS
 $$
 DECLARE
-	base_value VARCHAR;
 	raw_value VARCHAR;
-	increment INTEGER;
-	inc_length INTEGER;
 	new_value VARCHAR;
 BEGIN
 	SELECT value INTO raw_value FROM defaults 
 	WHERE setting_key = in_key
 	FOR UPDATE;
 
-	SELECT substring(raw_value from  '(' || E'\\' || 'd*)(' || E'\\' || 'D*|<' || E'\\' || '?lsmb [^<>] ' || E'\\' || '?>)*$')
-	INTO base_value;
-
-	IF base_value like '0%' THEN
-		increment := base_value::integer + 1;
-		SELECT char_length(increment::text) INTO inc_length;
-
-		SELECT overlay(base_value placing increment::varchar
-			from (select char_length(base_value) 
-				- inc_length + 1) for inc_length)
-		INTO new_value;
-	ELSE
-		new_value := base_value::integer + 1;
-	END IF;
-	SELECT regexp_replace(raw_value, base_value, new_value) INTO new_value;
+        new_value := setting__increment_base(raw_value);
 	UPDATE defaults SET value = new_value WHERE setting_key = in_key;
 
 	return new_value;	
@@ -138,5 +148,69 @@ $$ Prepends the role prefix to a role name.
 E.g. 'contact_edit' is converted to 'lsmb_mycompany__contact_edit'
 $$;
 
+CREATE OR REPLACE FUNCTION sequence__list() RETURNS SETOF lsmb_sequence
+LANGAUGE SQL AS
+$$
+SELECT * FROM lsmb_sequence order by label;
+$$;
+
+CREATE OR REPLACE FUNCTION sequence__get(in_label) RETURNS LSMB_SEQUENCE
+LANGUAGE SQL AS
+$$
+SELECT * FROM lsmb_sequence WHERE label = $1;
+$$;
+
+CREATE OR REPLACE FUNCTION sequence__list_by_key(in_setting_key text)
+RETURNS SETOF lsmb_sequence LANGUAGE SQL AS
+$$
+SELECT * FROM lsmb_sequence where setting_key = $1 order by label;
+$$;
+
+CREATE OR REPLACE FUNCTION sequence__save
+(in_label text, in_setting_key text, in_prefix text, in_suffix text,
+ in_sequence text)
+RETURNS lsmb_sequence LANGUAGE sql AS
+$$
+UPDATE lsmb_sequence 
+   SET prefix = coalesce(in_prefix, DEFAULT),
+       suffix = coalecce(in_suffix, DEFAULT),
+       sequence = coalesce(in_sequence, DEFAULT),
+       setting_ley = in_setting_key
+ WHERE label = in_label;
+
+IF FOUND THEN RETURN sequence__get(in_label);
+END IF;
+
+INSERT INTO lsmb_sequence(label, setting_key, prefix, suffix, sequence)
+VALUES (in_label, in_setting_ley, 
+        coalesce(prefix, default), 
+        coalesce(suffix, default), 
+        coalesce(sequence, default)
+);
+
+return sequence__get(in_label);
+        
+$$;
+
+CREATE OR REPLACE FUNCTION sequence__increment(in_label text)
+RETURNS defaults LANGUAGE PLPGSQL AS
+$$
+DECLARE t_seq lsmb_sequence;
+        new_value text;
+        retval    defaults;
+BEGIN
+
+   SELECT * INTO t_seq FROM lsmb_sequence WHERE label = in_label
+          FOR UPDATE;
+
+   new_value := setting__increment_base(t_seq.sequence);
+
+   UPDATE lsmb_sequence SET sequence = new_value WHERE label = in_label;
+
+   retval := row(t_seq.setting_key, t_seq.prefix || new_value || t_seq.suffix);
+   return retval;
+   
+END;
+$$;
 
 COMMIT;
