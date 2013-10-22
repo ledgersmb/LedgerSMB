@@ -45,6 +45,7 @@ your software.
 =cut
 
 package LedgerSMB::Setting;
+use LedgerSMB::App_State;
 use base qw(LedgerSMB::DBObject);
 use strict;
 our $VERSION = '1.0.0';
@@ -75,12 +76,24 @@ sub increment {
     my ($retval) = $self->call_procedure(procname => 'setting_increment',
                                              args => [$key]) ;
     my $value = $retval->{setting_increment};
+
+    my $var = _increment_process($value, $self, $myconfig);
+
+    $self->{value} = $var if $self->{key};
+    return $var;
+}
+
+# Increment processing routine, used by only related classes.
+#
+sub _increment_process{
+    my ($value, $self ) = @_;
 # check for and replace
 # <?lsmb DATE ?>, <?lsmb YYMMDD ?>, <?lsmb YEAR ?>, <?lsmb MONTH ?>, <?lsmb DAY ?> or variations of
 # <?lsmb NAME 1 1 3 ?>, <?lsmb BUSINESS ?>, <?lsmb BUSINESS 10 ?>, <?lsmb CURR... ?>
 # <?lsmb DESCRIPTION 1 1 3 ?>, <?lsmb ITEM 1 1 3 ?>, <?lsmb PARTSGROUP 1 1 3 ?> only for parts
 # <?lsmb PHONE ?> for customer and vendors
 
+    my $myconfig = $LedgerSMB::App_State::User;
     my $dbvar = $value;
     my $var   = $value;
     my $str;
@@ -158,9 +171,7 @@ sub increment {
             }
         }
     }
-
-    $self->{value} = $var if $self->{key};
-    $var;
+    return $var;
 }
 
 sub get_currencies {
