@@ -9,6 +9,7 @@ LedgerSMB::Scripts::configuration->can('action')->($request);
 =cut
 package LedgerSMB::Scripts::configuration;
 use LedgerSMB::Setting;
+use LedgerSMB::Setting::Sequence;
 use LedgerSMB::AM; # To be removed, only for template directories right now
 use strict;
 use warnings;
@@ -239,6 +240,22 @@ sub defaults_screen{
     });
 }
 
+=item sequence_screen
+
+No inputs expected or used
+
+=cut
+
+sub sequence_screen {
+    my ($request) = @_;
+    @{$request->{sequence_list}} = LedgerSMB::Setting::Sequence->list();
+    LedgerSMB::Template->new_UI(
+        user => $LedgerSMB::App_State::User, 
+        locale => $locale,
+        template => 'Configuration/sequences')->render($request);
+      
+}
+
 =item save_defaults
 
 Saves settings from the defaults screen
@@ -284,6 +301,21 @@ sub _get_template_directories {
     }
     closedir(DIR);
     return \@dirarray;
+}
+
+sub save_sequences {
+    my ($request) = @_;
+    for my $count (1 .. $request->{count}){
+        if ($request->{"sequence_$count"}){
+           my %shash;
+           for my $key (qw()){
+              $shash{$key} = $request->{"${key}_$count"};
+           }
+           my $sequence = LedgerSMB::Setting::Sequence->new(%shash);
+           $sequence->save;
+        }
+    }
+    sequence_screen($request);
 }
 
 =back
