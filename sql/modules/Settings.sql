@@ -213,4 +213,12 @@ BEGIN
 END;
 $$;
 
+CREATE OR REPLACE FUNCTION sequence__delete(in_label text)
+RETURNS lsmb_sequence LANGUAGE SQL AS
+$$
+DELETE FROM lsmb_sequence where label = $1;
+
+RETURN NULL;
+$$;
+
 COMMIT;
