@@ -69,7 +69,7 @@ sub post_transaction {
     my ( $self, $myconfig, $form, $locale) = @_;
     $form->all_business_units;
     $form->{reference} = $form->update_defaults( $myconfig, 'glnumber', $dbh )
-      unless $form->{reference};
+      if $form->should_update_defaults('glnumber');
     my $null;
     my $project_id;
     my $department_id;

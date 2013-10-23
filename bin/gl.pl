@@ -49,6 +49,7 @@ package lsmb_legacy;
 use LedgerSMB::GL;
 use LedgerSMB::PE;
 use LedgerSMB::Template;
+use LedgerSMB::Setting::Sequence;
 
 require 'bin/bridge.pl'; # needed for voucher dispatches
 require "bin/arap.pl";
@@ -164,7 +165,6 @@ sub add {
       unless $form->{callback};
 
     &create_links;
-    $form->{reference} = $form->update_defaults(\%myconfig, 'glnumber');
     if (!$form->{rowcount}){
         $form->{rowcount} = ( $form->{transfer} ) ? 3 : 9;
     }
@@ -182,6 +182,8 @@ sub display_form
 {
     #Add General Ledger Transaction
     $form->all_business_units($form->{transdate}, undef, 'GL');
+    @{$form->{sequences}} = LedgerSMB::Setting::Sequence->list('glnumber')
+         unless $form->{id};
     $form->close_form;
     $form->open_form; 
     $form->{dbh}->commit;
