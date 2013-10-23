@@ -3787,6 +3787,7 @@ key.  It is not generally to be used with code on new templates.
 
 sub sequence_dropdown{
     my ($self, $setting_key) = @_;
+    return undef if $self->{id};
     my @sequences = LedgerSMB::Setting::Sequence->list($setting_key);
     my $retval = qq|<select name='setting_sequence' class='sequence'>\n|;
     $retval .= qq|<option></option>|;
