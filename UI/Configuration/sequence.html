@@ -1,5 +1,6 @@
 <?lsmb INCLUDE 'ui-header.html';
 PROCESS 'elements.html';
+
 ?>
 <body class="<?lsmb dojo_theme ?>">
 <form action="configuration.pl" action="post">
@@ -34,6 +35,8 @@ PROCESS 'elements.html';
              name = 'setting_key_' _ count
           options = setting_keys
    default_values = [seq.setting_key]
+        text_attr = 'label',
+       value_attr = 'name'
      } ?></td>
  <td><?lsmb PROCESS input element_data = {
              name = 'prefix_' _ count

@@ -249,6 +249,10 @@ No inputs expected or used
 sub sequence_screen {
     my ($request) = @_;
     @{$request->{sequence_list}} = LedgerSMB::Setting::Sequence->list();
+    for my $subset (@default_settings){
+        @{$request->{setting_keys}} = $subset->{items} 
+             if $subset->{title} eq $locale->text('Next in Sequence');
+    }
     LedgerSMB::Template->new_UI(
         user => $LedgerSMB::App_State::User, 
         locale => $locale,

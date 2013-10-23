@@ -23,6 +23,7 @@ package LedgerSMB::Setting::Sequence;
 use LedgerSMB::Setting;
 use Carp;
 use Moose;
+with 'LedgerSMB::DBObject_Moose';
 
 =head1 DESCRIPTION
 
@@ -93,11 +94,11 @@ sub get{
    my ($self, $label, $setting_key) = @_;
 
    if (defined $label){
-       my ($ref) = $self->call_procedure(procname => 'sequence__get', args => [$label]);
+       my ($ref) = __PACKAGE__->call_procedure(procname => 'sequence__get', args => [$label]);
        croak 'Sequence does not exist: ' . $label unless $ref;
        return $self->new(%$ref);
    } elsif (defined $setting_key){
-       my ($ref) = $self->call_procedure(procname => 'setting_get', args => [$setting_key]);
+       my ($ref) = __PACKAGE__->call_procedure(procname => 'setting_get', args => [$setting_key]);
        croak 'Setting does not exist: ' . $setting_key unless $ref;
        return LedgerSMB::Setting->new($ref);
    } else {
@@ -116,11 +117,11 @@ sub list{
     my ($self, $setting_key) = $_;
     my @setting_list;
     if (defined $setting_key){
-       @setting_list = $self->call_procedure(
+       @setting_list = __PACKAGE__->call_procedure(
               procname => 'sequence__list_by_key', args => [$setting_key]
        );
     } else {
-       @setting_list = $self->call_procedure(procname => 'sequence__list');
+       @setting_list = __PACKAGE__->call_procedure(procname => 'sequence__list');
     }
     for my $s (@setting_list){
        $s = $self->new(%$s);
@@ -160,7 +161,7 @@ sub increment {
        $label = $val1;
        $vars = $val2;
     }
-    my ($ref) = $self->call_procedure(procname => 'sequence__increment',
+    my ($ref) = __PACKAGE__->call_procedure(procname => 'sequence__increment',
                                           args => [$label]);
     
     my ($value) = values %$ref;
@@ -176,7 +177,7 @@ Deletes a sequence.
 
 sub delete {
     my ($self, $label) = @_;
-    return $self->call_procedure(procname => 'sequence__delete', 
+    return __PACKAGE__->call_procedure(procname => 'sequence__delete', 
                                      args => [$label]);
 }
 

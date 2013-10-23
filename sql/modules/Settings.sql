@@ -149,12 +149,12 @@ E.g. 'contact_edit' is converted to 'lsmb_mycompany__contact_edit'
 $$;
 
 CREATE OR REPLACE FUNCTION sequence__list() RETURNS SETOF lsmb_sequence
-LANGAUGE SQL AS
+LANGUAGE SQL AS
 $$
 SELECT * FROM lsmb_sequence order by label;
 $$;
 
-CREATE OR REPLACE FUNCTION sequence__get(in_label) RETURNS LSMB_SEQUENCE
+CREATE OR REPLACE FUNCTION sequence__get(in_label text) RETURNS LSMB_SEQUENCE
 LANGUAGE SQL AS
 $$
 SELECT * FROM lsmb_sequence WHERE label = $1;
@@ -169,30 +169,36 @@ $$;
 CREATE OR REPLACE FUNCTION sequence__save
 (in_label text, in_setting_key text, in_prefix text, in_suffix text,
  in_sequence text, in_accept_input bool)
-RETURNS lsmb_sequence LANGUAGE sql AS
+RETURNS lsmb_sequence LANGUAGE plpgsql AS
 $$
+DECLARE retval lsmb_sequence;
+BEGIN
 UPDATE lsmb_sequence 
-   SET prefix = coalesce(in_prefix, DEFAULT),
-       suffix = coalecce(in_suffix, DEFAULT),
-       sequence = coalesce(in_sequence, DEFAULT),
-       setting_ley = in_setting_key,
+   SET prefix = coalesce(in_prefix, ''),
+       suffix = coalesce(in_suffix, ''),
+       sequence = coalesce(in_sequence, '1'),
+       setting_key = in_setting_key,
        accept_input = in_accept_input
  WHERE label = in_label;
 
-IF FOUND THEN RETURN sequence__get(in_label);
+IF FOUND THEN 
+   retval := sequence__get(in_label);
+   RETURN retval;
 END IF;
 
 INSERT INTO lsmb_sequence(label, setting_key, prefix, suffix, sequence, 
                           accept_input)
 VALUES (in_label, in_setting_ley, 
-        coalesce(prefix, default), 
-        coalesce(suffix, default), 
-        coalesce(sequence, default),
+        coalesce(prefix, ''), 
+        coalesce(suffix, ''), 
+        coalesce(sequence, '1'),
         in_accept_input
 );
 
-return sequence__get(in_label);
-        
+retval := sequence__get(in_label);
+RETURN retval;
+
+end;
 $$;
 
 CREATE OR REPLACE FUNCTION sequence__increment(in_label text)
@@ -221,7 +227,7 @@ RETURNS lsmb_sequence LANGUAGE SQL AS
 $$
 DELETE FROM lsmb_sequence where label = $1;
 
-RETURN NULL;
+SELECT NULL::lsmb_sequence;
 $$;
 
 COMMIT;
