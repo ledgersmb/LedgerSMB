@@ -256,7 +256,7 @@ sub sequence_screen {
     LedgerSMB::Template->new_UI(
         user => $LedgerSMB::App_State::User, 
         locale => $locale,
-        template => 'Configuration/sequences')->render($request);
+        template => 'Configuration/sequence')->render($request);
       
 }
 

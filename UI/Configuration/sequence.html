@@ -3,8 +3,9 @@ PROCESS 'elements.html';
 
 ?>
 <body class="<?lsmb dojo_theme ?>">
+<div class="listtop"><?lsmb text('Sequences') ?></div>
 <form action="configuration.pl" action="post">
-<table>
+<table width='100%'>
 <tr class="listheading">
 <th class="listheading"><?lsmb text('Save') ?></th>
 <th class="listheading"><?lsmb text('Allow Input') ?></th>
@@ -103,6 +104,7 @@ PROCESS 'elements.html';
             value = 'save'
              type = 'submit'
             class = 'submit'
+             text = text('Save')
 } ?>
 </form>
 </body>
