@@ -197,6 +197,7 @@ sub should_increment{
     }
     my $sequence = $self;
     $sequence = LedgerSMB::Setting::Sequence->get($label) if $label;
+    return 0 unless ref $sequence;
     return 1 unless $sequence->accept_input;
     return 0;
 }
