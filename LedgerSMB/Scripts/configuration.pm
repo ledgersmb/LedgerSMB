@@ -310,9 +310,9 @@ sub _get_template_directories {
 sub save_sequences {
     my ($request) = @_;
     for my $count (1 .. $request->{count}){
-        if ($request->{"sequence_$count"}){
+        if ($request->{"save_$count"}){
            my %shash;
-           for my $key (qw()){
+           for my $key (qw(accept_input setting_key label prefix sequence suffix)){
               $shash{$key} = $request->{"${key}_$count"};
            }
            my $sequence = LedgerSMB::Setting::Sequence->new(%shash);

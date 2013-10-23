@@ -178,7 +178,7 @@ UPDATE lsmb_sequence
        suffix = coalesce(in_suffix, ''),
        sequence = coalesce(in_sequence, '1'),
        setting_key = in_setting_key,
-       accept_input = in_accept_input
+       accept_input = coalesce(in_accept_input, true)
  WHERE label = in_label;
 
 IF FOUND THEN 
@@ -188,11 +188,11 @@ END IF;
 
 INSERT INTO lsmb_sequence(label, setting_key, prefix, suffix, sequence, 
                           accept_input)
-VALUES (in_label, in_setting_ley, 
-        coalesce(prefix, ''), 
-        coalesce(suffix, ''), 
-        coalesce(sequence, '1'),
-        in_accept_input
+VALUES (in_label, in_setting_key, 
+        coalesce(in_prefix, ''), 
+        coalesce(in_suffix, ''), 
+        coalesce(in_sequence, '1'),
+        coalesce(in_accept_input, false)
 );
 
 retval := sequence__get(in_label);

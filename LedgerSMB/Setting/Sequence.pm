@@ -78,6 +78,14 @@ Optional suffix.  Default is set in the db.
 
 has suffix => (is => 'rw', isa => 'Str', required => 0);
 
+=head2 allow_input
+
+If true (the default) then allow user-entered sequence fields.
+
+=cut
+
+has allow_input => (is => 'rw', isa => 'Bool', required => 0);
+
 =head1 METHODS
 
 =head2 get(label, setting_key)
@@ -124,7 +132,7 @@ sub list{
        @setting_list = __PACKAGE__->call_procedure(procname => 'sequence__list');
     }
     for my $s (@setting_list){
-       $s = $self->new(%$s);
+       $s = __PACKAGE__->new(%$s);
     }
     return @setting_list;
 }
