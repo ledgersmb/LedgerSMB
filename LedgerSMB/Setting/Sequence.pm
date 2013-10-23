@@ -84,7 +84,7 @@ If true (the default) then allow user-entered sequence fields.
 
 =cut
 
-has allow_input => (is => 'rw', isa => 'Bool', required => 0);
+has accept_input => (is => 'rw', isa => 'Bool', required => 0);
 
 =head1 METHODS
 

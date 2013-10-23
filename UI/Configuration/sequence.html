@@ -23,8 +23,8 @@ PROCESS 'elements.html';
           value = 1
      } ?></td>
  <td><?lsmb 
-     checked = 0;
-     IF seq.accept_input; checked = 'CHECKED'; ELSE; checked = '0'; END;
+     checked = undefined;
+     IF seq.accept_input; checked = 'CHECKED'; ELSE; checked = undefined; END;
      PROCESS input element_data = {
            type = 'checkbox'
            name = 'accept_input_' _ count
