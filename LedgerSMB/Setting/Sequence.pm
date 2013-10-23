@@ -159,7 +159,7 @@ increment,
 =cut
 
 sub increment {
-    my ($self, $val1, $val2);
+    my ($self, $val1, $val2) = @_;
     my $label;
     my $vars;
     if (ref $val1 eq ref {}){
@@ -171,7 +171,6 @@ sub increment {
     }
     my ($ref) = __PACKAGE__->call_procedure(procname => 'sequence__increment',
                                           args => [$label]);
-    
     my ($value) = values %$ref;
     return LedgerSMB::Setting::_increment_process($value, $vars);
 
