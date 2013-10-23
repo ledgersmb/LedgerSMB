@@ -9,6 +9,7 @@ use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::DBObject::App_Module;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Template;
+use LedgerSMB::Setting::Sequence;
 use Carp;
 
 $Carp::Verbose = 1;
@@ -53,7 +54,11 @@ sub add {
     my ($request) = @_;
     if (!$request->{class_id}){
         $request->{class_id} = $request->{id};
+        delete $request->{id};
     }
+    @{$request->{sequences}} = 
+          LedgerSMB::Setting::Sequence->list('projectnumber') 
+          unless $request->{id};
     $request->{control_code} = '';
     my $b_unit = LedgerSMB::Business_Unit->new(%$request);
     @{$request->{parent_options}} = $b_unit->list($request->{class_id});
@@ -195,6 +200,13 @@ LedgerSMB::Business_Unit must be set for $request.
 
 sub save {
     my ($request) = @_;
+    if ($request->{sequence}){
+       $request->{control_code} = 
+           LedgerSMB::Setting::Sequence->increment($request->{sequence}, 
+                                                              $request)
+              if LedgerSMB::Setting::Sequence->should_increment(
+                        $request, 'control_code', $request->{sequence});
+    }
     $request->{start_date} = LedgerSMB::PGDate->from_input($request->{start_date}, 0)
                               if defined $request->{start_date};
     $request->{end_date} = LedgerSMB::PGDate->from_input($request->{end_date}, 0)

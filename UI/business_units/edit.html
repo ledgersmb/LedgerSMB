@@ -3,7 +3,7 @@
       stylesheet = USER.stylesheet
 ?>
 <?lsmb PROCESS 'elements.html' ?>
-<body onLoad="init()">
+<body onLoad="init()" class="<?lsmb dojo_theme ?>">
 <div class="listtop">
    <?lsmb 
    IF id; 
@@ -26,8 +26,18 @@
 	value = control_code
 	label = text('Control Code') #'
 	size = 16
-} ?>
-<?lsmb PROCESS select element_data = {
+};
+IF sequences;
+   PROCESS select element_data = {
+            class = "sequence"
+             name = "sequence"
+          options = sequences
+   default_values = [sequence]
+        text_attr = 'label'
+       value_attr = 'label'
+   };
+END;
+PROCESS select element_data = {
         label = text('Parent')
         class = "parent"
       options = parent_options
