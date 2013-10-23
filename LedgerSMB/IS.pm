@@ -929,7 +929,7 @@ sub post_invoice {
     my ( $self, $myconfig, $form ) = @_;
     $form->all_business_units;
     $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
-      unless $form->{invnumber};
+      if $form->should_update_defaults('invnumber');
 
     my $dbh = $LedgerSMB::App_State::DBH;;
 

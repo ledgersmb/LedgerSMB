@@ -585,7 +585,7 @@ function on_return_submit(event){
 	      $employee
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Invoice Number') . qq|</th>
-		<td><input name="invnumber" size="20" value="$form->{invnumber}"></td>
+		<td><input name="invnumber" size="20" value="$form->{invnumber}">| .  $form->sequence_dropdown('sinumber') . qq|</td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Order Number') . qq|</th>
