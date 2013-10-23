@@ -85,7 +85,7 @@ sub post_invoice {
     }
     my $dbh = $LedgerSMB::App_State::DBH;
     $form->{invnumber} = $form->update_defaults( $myconfig, "vinumber", $dbh )
-      unless $form->{invnumber};
+      if $form->should_update_defaults('invnumber');
 
     for ( 1 .. $form->{rowcount} ) {
         $form->{"qty_$_"} *= -1 if $form->{reverse};
