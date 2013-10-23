@@ -80,6 +80,8 @@ PROCESS 'elements.html';
  <td><?lsmb PROCESS select element_data = {
              name = 'setting_key_' _ count
           options = setting_keys
+        text_attr = 'label',
+       value_attr = 'name'
      } ?></td>
  <td><?lsmb PROCESS input element_data = {
              name = 'prefix_' _ count
