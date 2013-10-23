@@ -161,6 +161,12 @@ sub edit {
 }
 
 sub display_form {
+    my $invnumber = "sinumber";
+    if ( $form->{vc} eq 'vendor' ) {
+        $invnumber = "vinumber";
+    }
+    $form->{sequence_select} = $form->sequence_dropdown($invnumber)
+        unless $form->{id};
     $form->{format} = $form->get_setting('format') unless $form->{format};
     $form->close_form;
     $form->open_form;
@@ -662,7 +668,8 @@ $form->open_status_div . qq|
 	      $employee
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Invoice Number') . qq|</th>
-		<td><input name=invnumber size=20 value="$form->{invnumber}"></td>
+		<td><input name=invnumber size=20 value="$form->{invnumber}">
+                      $form->{sequence_select}</td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Order Number') . qq|</th>
