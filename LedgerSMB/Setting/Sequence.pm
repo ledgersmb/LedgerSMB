@@ -122,7 +122,7 @@ attached to the setting are applicable.
 =cut
 
 sub list{
-    my ($self, $setting_key) = $_;
+    my ($self, $setting_key) = @_;
     my @setting_list;
     if (defined $setting_key){
        @setting_list = __PACKAGE__->call_procedure(
