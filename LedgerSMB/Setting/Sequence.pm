@@ -176,6 +176,31 @@ sub increment {
 
 }
 
+=head2 should_increment($vars, $fldname, [$label]);
+
+If label is provided, used to get new sequence to test.
+
+Returns true if one should increment, false otherwise.
+
+=cut
+
+
+
+sub should_increment{
+    my ($self, $vars, $fldname, $label) = @_;
+
+    if (!$vars->{$fldname}){
+       return 1;
+    }
+    if (!$vars->{setting_sequence}){
+        return 0;
+    }
+    my $sequence = $self;
+    $sequence = LedgerSMB::Setting::Sequence->get($label) if $label;
+    return 1 unless $sequence->accept_input;
+    return 0;
+}
+
 =head2 delete(label)
 
 Deletes a sequence.
