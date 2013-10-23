@@ -1,0 +1,106 @@
+<?lsmb INCLUDE 'ui-header.html';
+PROCESS 'elements.html';
+?>
+<body class="<?lsmb dojo_theme ?>">
+<form action="configuration.pl" action="post">
+<table>
+<tr class="listheading">
+<th class="listheading"><?lsmb text('Save') ?></th>
+<th class="listheading"><?lsmb text('Allow Input') ?></th>
+<th class="listheading"><?lsmb text('label') ?></th>
+<th class="listheading"><?lsmb text('Setting') ?></th>
+<th class="listheading"><?lsmb text('Prefix') ?></th>
+<th class="listheading"><?lsmb text('Sequence') ?></th>
+<th class="listheading"><?lsmb text('Suffix') ?></th>
+</tr>
+<?lsmb FOR seq IN sequence_list; count = loop.count ?>
+<tr>
+ <td><?lsmb PROCESS input element_data = {
+           type = 'checkbox'
+           name = 'sequence_' _ count
+          value = 1
+     } ?></td>
+ <td><?lsmb 
+     checked = 0;
+     IF seq.allow_input; checked = 'CHECKED'; ELSE; checked = '0'; END;
+     PROCESS input element_data = {
+           type = 'checkbox'
+           name = 'allow_input_' _ count
+          value = 1
+        checked = checked
+     } ?></td>
+ <td><?lsmb seq.label ?></td>
+ <td><?lsmb PROCESS select element_data = {
+             name = 'setting_key_' _ count
+          options = setting_keys
+   default_values = [seq.setting_key]
+     } ?></td>
+ <td><?lsmb PROCESS input element_data = {
+             name = 'prefix_' _ count
+             type = 'text'
+            value = seq.prefix
+             size = '10'
+     } ?></td>
+ <td><?lsmb PROCESS input element_data = {
+             name = 'sequence_' _ count
+             type = 'text'
+            value = seq.sequence
+             size = '10'
+     } ?></td>
+ <td><?lsmb PROCESS input element_data = {
+             name = 'suffix_' _ count
+             type = 'text'
+            value = seq.suffix
+             size = '10'
+     } ?></td>
+</tr>
+<?lsmb END; count = count + 1 # FOR seq ?>
+<tr>
+ <td><?lsmb PROCESS input element_data = {
+           type = 'checkbox'
+           name = 'sequence_' _ count + 1
+          value = 1
+     } ?></td>
+ <td><?lsmb 
+     PROCESS input element_data = {
+           type = 'checkbox'
+           name = 'allow_input_' _ count 
+          value = 1
+     } ?></td>
+ <td><?lsmb PROCESS input element_data = {
+           type = 'text'
+           name = 'label_' _ count 
+           size = 10
+          class = 'control_code'
+     } ?> </td>
+ <td><?lsmb PROCESS select element_data = {
+             name = 'setting_key_' _ count
+          options = setting_keys
+     } ?></td>
+ <td><?lsmb PROCESS input element_data = {
+             name = 'prefix_' _ count
+             type = 'text'
+             size = '10'
+     } ?></td>
+ <td><?lsmb PROCESS input element_data = {
+             name = 'sequence_' _ count
+             type = 'text'
+             size = '10'
+     } ?></td>
+ <td><?lsmb PROCESS input element_data = {
+             name = 'suffix_' _ count
+             type = 'text'
+             size = '10'
+     } ?></td>
+</tr>
+</table>
+</div class="button-row">
+<?lsmb PROCESS button element_data = {
+             name = 'action'
+            value = 'save'
+             type = 'submit'
+            class = 'submit'
+} ?>
+</form>
+</body>
+</html>
