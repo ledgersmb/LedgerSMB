@@ -21,6 +21,12 @@ General Enhancements:
 Enhancing data integrity
 * No longer allow NULL amounts in acc_trans (Chris T)
 
+Control Code Series System (Chris T)
+* Covers invoices, orders, transactions, parts, and business units
+* Have many different series for the same field (i.e. several series of 
+   partnumbers
+* Each can set whether it overrides user input.
+
 Installation/Upgrade
 * PostgreSQL contrib dependencies removed, now require Pg 8.4 (Chris T)
 * LaTeX format detection now run-time call, not configured (Chris T)

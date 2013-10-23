@@ -254,6 +254,13 @@ sub sequence_screen {
         $request->{setting_keys} = $subset->{items} 
              if $subset->{title} eq $locale->text('Next in Sequence');
     }
+    my $count = 0;
+    for my $item (@{$request->{setting_keys}}){
+        for my $blacklist (qw(customernumber vendornumber employeenumber)){
+            delete $request->{setting_keys}->[$count] if $item->{name} eq $blacklist;
+        }
+    ++$count;
+    }
     LedgerSMB::Template->new_UI(
         user => $LedgerSMB::App_State::User, 
         locale => $locale,
