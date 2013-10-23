@@ -2889,6 +2889,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 95	Translations	77	12
 85	Reports	77	11
 98	Timecards	0	14
+17	Sequences	128	4
 \.
 
 
@@ -3262,7 +3263,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 166	template	purchase_order	427
 167	template	bin_list	428
 168	template	statement	429
-169	template	quotation	430
+169	template	sales_quotation	430
 170	template	rfq	431
 171	template	timecard	432
 241	template	letterhead	644
@@ -3341,7 +3342,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 180	template	purchase_order	513
 181	template	bin_list	514
 182	template	statement	515
-185	template	sales_quotation	518
+185	template	quotation	518
 186	template	rfq	519
 187	template	timecard	520
 183	template	check	516
@@ -3540,6 +3541,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 13	multi	1	177
 16	module	inventory.pl	178
 16	action	enter_adjust	179
+17	module	configuration.pl	206
+17	action	sequence_screen	207
 \.
 
 

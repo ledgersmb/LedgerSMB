@@ -807,6 +807,8 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 13	multi	1	177
 16	module	inventory.pl	178
 16	action	enter_adjust	179
+17	module	configuration.pl	206
+17	action	sequence_screen	207
 \.
 
 
@@ -1036,6 +1038,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 95	Translations	77	12
 85	Reports	77	11
 98	Timecards	0	14
+17	Sequences	128	4
 \.
 
 

@@ -864,6 +864,7 @@ SELECT lsmb__grant_menu('system_settings_list', 131, 'allow');
 
 SELECT lsmb__create_role('system_settings_change');
 SELECT lsmb__grant_role('system_settings_change', 'system_settings_list');
+SELECT lsmb__grant_menu('system_settings_change', 17, 'allow');
 
 SELECT lsmb__create_role('taxes_set');
 SELECT lsmb__grant_perms('taxes_set', 'tax', 'INSERT');
@@ -947,6 +948,7 @@ SELECT lsmb__grant_exec('users_manage', 'admin__get_roles_for_user(int)');
 SELECT lsmb__grant_exec('users_manage', 'admin__save_user(int,int,text,text,bool)');
 SELECT lsmb__grant_exec('users_manage', 'admin__delete_user(TEXT, bool)');
 SELECT lsmb__grant_perms('users_manage', 'role_view', 'SELECT');
+SELECT lsmb__grant_menu('users_manage', 222, 'allow');
 
 SELECT lsmb__create_role('system_admin');
 SELECT lsmb__grant_role('system_admin', rname)
