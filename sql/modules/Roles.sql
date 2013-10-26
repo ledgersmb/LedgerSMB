@@ -1059,6 +1059,7 @@ GRANT SELECT ON asset_report_class, asset_rl_to_disposal_method,
                 asset_disposal_method TO PUBLIC;
 GRANT SELECT ON mime_type, file_class TO PUBLIC;
 GRANT SELECT ON jctype TO PUBLIC;
+GRANT ALL ON lsmb_sequence TO PUBLIC;
 
 GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
 
