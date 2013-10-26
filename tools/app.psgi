@@ -1,4 +1,4 @@
-#!/usr/bin/plackup -s FCGI ledgersmb.fcgi
+#!/usr/bin/plackup -s FCGI 
 
 package LedgerSMB::FCGI;
 
