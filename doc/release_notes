@@ -76,22 +76,21 @@ framework.
 
 3:  Known Issues
 
-3.1:  Reposting Invoices
-
-Reposting invoices is known to cause inaccuracies cost of goods sold and
-inventory accounts.  This problem has been confirmed to affect SQL-Ledger 2.6.x 
-as well and is caused by problems involving the de-allocation and trasaction
-reversal routines.  It will be corrected (by removing the ability to truly
-repost invoices) in an upcoming version as we continue to re-engineer the
-application.
-
-3.2:  Foreign exchange and payment reversals
+3.1:  Foreign exchange and payment reversals
 
 The current design of foreign exchange handling means that if you reverse a
 payment, the foreign exchange gains and losses will not be exactly reversed 
 unless you are able to reverse on the same day.  If reversed on different days the 
 gain/loss will be realized per the time when the payment was in effect and 
 not reversed.
+
+3.2:  Reconciliation and Adjustments
+
+If you enter adjustments for reconciliation you cannot simply add them with the
+same source, etc. on the transaction screen.  You must go through payment,
+payment reversal, or gl workflows.  Failure to do so may cause the payment to 
+fail to be recognized by existing in-process reconciliation workflows.  If this
+happens, start the bank reconciliation over and the payment will be recognized.
 
 5:  Roadmap
 This project has a losely defined roadmap and a set of statements and 
