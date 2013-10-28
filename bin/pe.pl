@@ -125,7 +125,8 @@ sub partsgroup_header {
       <table width=100%>
 	<tr>
           <th align="right">| . $locale->text('Parent') . qq|</th>
-          <td><select name='parent'>|;
+          <td><select name='parent'>
+              <option></option>|;
               for my $pg (@{$form->{item_list}}){
                   my $selected = '';
                   $selected = 'SELECTED="SELECTED"'

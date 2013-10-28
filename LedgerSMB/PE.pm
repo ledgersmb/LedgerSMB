@@ -354,6 +354,7 @@ sub save_partsgroup {
         push @group,  $form->{id};
     }
     else {
+        $form->{parent}  = undef unless $form->{parent};
         $query = qq|
 			INSERT INTO partsgroup (partsgroup, parent)
 			     VALUES (?, ?)|;
