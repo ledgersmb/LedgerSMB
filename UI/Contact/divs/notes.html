@@ -41,7 +41,12 @@ IF credit_act.id;
 			label = text("Note Class") #"
 			value_attr = "value"
 	};
-ELSE ?>
+ELSE;
+    PROCESS input element_data = {
+          type = "hidden"
+          name = "note_class"
+         value = "1"
+} ?>
 <label><?lsmb text('Note Class') ?></label><?lsmb text('Entity');
 END; ?>
 </div>
