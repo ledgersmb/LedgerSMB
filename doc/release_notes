@@ -207,6 +207,14 @@ In LedgerSMB 1.3, the outstanding report shows the total number of invoices
 received and paid in a given time period.  In 1.4 this will be changing so that only invoices that are outstanding are counted.  The change however is quite 
 complex and poses testability issues in 1.3 so we decided to leave the behavior ias it is for now.
 
+3.5: Reconciliation and Adjustments
+
+If you enter adjustments for reconciliation you cannot simply add them with the
+same source, etc. on the transaction screen.  You must go through payment,
+payment reversal, or gl workflows.  Failure to do so may cause the payment to
+fail to be recognized by existing in-process reconciliation workflows.  If this
+happens, start the bank reconciliation over and the payment will be recognized.
+
 4:  Differences between LedgerSMB and SQL-Ledger(TM)
 
 4.1: Login name restrictions
