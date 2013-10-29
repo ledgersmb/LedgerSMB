@@ -130,6 +130,7 @@ Saves (grants) roles requested.
 
 sub save_roles{
     my ($self, $role_list) = @_;
+    $role_list = $self->role_list unless $role_list;
     for my $rol_name (@$role_list) {
         $self->call_procedure(procname => 'admin__add_user_to_role',
                                   args => [$self->{username}, $rol_name]);

@@ -105,7 +105,14 @@
                type="hidden"
                name="user_id"
                value= user.id 
-           } ?>
+              };
+                PROCESS input element_data = {
+                         type = 'hidden'
+                         name = 'form_id'
+                        value = form_id
+                };
+           ?>
+        <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
             <table>
                 <!-- Groups section -->
                 <tr>

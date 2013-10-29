@@ -86,7 +86,7 @@ sub _main_screen {
     my ($request, $employee) = @_;
     my $user;
     my @entity_files;
-    if ($employee->{entity_id}){
+    if (eval { $employee->can('entity_id')} ){
         $user = LedgerSMB::Entity::User->get($employee->{entity_id});
         @entity_files = LedgerSMB::File->list(
                {ref_key => $employee->{entity_id}, file_class => '4'}
@@ -125,6 +125,7 @@ sub _main_screen {
 
     # DIVS contents
     my $entity_id = $employee->{entity_id};
+    $entity_id ||= $request->{entity_id};
 
     my $entity_class = 3;
 
@@ -483,10 +484,12 @@ sub save_roles {
     my ($request) = @_;
     if ($request->close_form){
        my $user = LedgerSMB::Entity::User->get($request->{entity_id});
-       my $roles;
+       my $roles = [];
+       $request->{_role_prefix} = "lsmb_$request->{company}__" 
+           unless defined $request->{_role_prefix};
        for my $key(keys %$request){
-           if ($key =~ $request->{_role_prefix} and $request->{key}){
-               push @$roles, $request->{key};
+           if ($key =~ /$request->{_role_prefix}/ and $request->{$key}){
+               push @$roles, $key;
            }
        }
        $user->role_list($roles);
