@@ -533,7 +533,8 @@ sub display_history {
     );
     my $company = LedgerSMB::DBObject::Company->new(base => $request);
     $company->get_history();
-    my @columns = qw(invnumber);
+    my @columns = ();
+    push @columns, 'invnumber' if $request->{report_type} eq 'detail';
     for my $col (qw(l_curr l_partnumber l_description l_unit l_qty l_sellprice 
                   l_discount l_serialnumber l_deliverydate l_projectnumber)){
         if ($request->{$col}){
