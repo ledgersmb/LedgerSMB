@@ -112,6 +112,8 @@ Changelog for 1.3.35
 * Fixed encoding errors after sending email (Chris T, 884)
 * Fixed spurious 0's in incorrect fields (Chris T, 889)
 * Copy to New no longer copies payments (Chris T)
+* Fixed '0' invoice number on customer history summary (Chris T)
+* Added 'created on' date to invoices (Pongracz I)
 
 Chris T is Chris Travers
 Nick P is Nick Prater
