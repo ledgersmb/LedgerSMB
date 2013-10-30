@@ -101,10 +101,11 @@
     <?lsmb IF user.entity_id ?>
         <hr /> 
         <form name="groups" method="POST" action="employee.pl">
+            <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>" />
             <?lsmb PROCESS input element_data = {
                type="hidden"
                name="user_id"
-               value= user.id 
+               value=user.id
               };
                 PROCESS input element_data = {
                          type = 'hidden'
@@ -131,6 +132,7 @@
                                label = role.description
                                value = 1
                                name = role.rolname
+                               id = role.rolname
                                checked = rolcheck
                          }, label_pos = 1 ?>
                     </td>
