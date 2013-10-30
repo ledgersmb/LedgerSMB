@@ -222,7 +222,7 @@ use utf8;
 $CGI::Simple::POST_MAX = -1;
 
 package LedgerSMB;
-our $VERSION = '1.3.34';
+our $VERSION = '1.3.35';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
