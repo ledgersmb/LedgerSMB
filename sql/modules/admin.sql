@@ -360,7 +360,7 @@ AS $$
        t_is_role := found;
        t_is_user := admin__is_user(in_username);
 
-       IF t_is_role is true and t_is_user is false and in_pls_import is false THEN
+       IF t_is_role is true and t_is_user is false and in_pls_import is NOT TRUE THEN
           RAISE EXCEPTION 'Duplicate user';
         END IF;
 
@@ -372,7 +372,7 @@ AS $$
         elsif in_pls_import is false AND t_is_user is false 
               AND in_password IS NULL THEN
                 RAISE EXCEPTION 'No password';
-        elsif  t_is_role is false and in_pls_import IS FALSE THEN
+        elsif  t_is_role is false and in_pls_import IS NOT TRUE THEN
             -- create an actual user
                 execute 'CREATE USER ' || quote_ident( in_username ) || 
                      ' WITH ENCRYPTED PASSWORD ' || quote_literal (in_password)
