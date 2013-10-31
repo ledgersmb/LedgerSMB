@@ -33,7 +33,8 @@ VALUES (1, 'AR'),
        (6, 'Fixed Assets'),
        (7, 'Timecards');
 
-
+--function person__get_my_entity_id() defined 2 times in Pg-database.sql
+--this first,dummy? definition needed because function is called in subsequent default statements in this file?
 CREATE OR REPLACE FUNCTION person__get_my_entity_id() RETURNS INT AS
 $$ SELECT -1;$$ LANGUAGE SQL;
 
