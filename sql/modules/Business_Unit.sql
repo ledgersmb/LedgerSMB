@@ -196,8 +196,8 @@ BEGIN
                 AND credit_id = new.id;
       END IF;
   ELSIF TG_OP = 'DELETE'THEN
-      DELETE FROM business_unit WHERE class_id = 7 - NEW.entity_class
-                  AND credit_id = old_id;
+      DELETE FROM business_unit WHERE class_id = 7 - OLD.entity_class
+                  AND credit_id = OLD.id;
       RETURN OLD;
   END IF;
   RETURN NEW;
