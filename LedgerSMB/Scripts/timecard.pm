@@ -109,6 +109,7 @@ sub timecard_screen {
                     date => $startdate->date->add(days => $_)
             );
          }
+         $request->{num_lines} = 1 unless $request->{num_lines};
          $request->{transdates} = \@dates;
          my $template = LedgerSMB::Template->new(
              user     => $request->{_user},

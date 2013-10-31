@@ -38,6 +38,9 @@ PROCESS input element_data = {
     name = "transdate_6"
    value = transdates.6
 };
+FOREACH bu IN b_units;
+    bu.text = bu.control_code _ ' -- ' _ bu.description;
+END;
 ?>
 <div class="listtop"><?lsmb text('Weekly Time and Materials Entry') ?></div>
 <table width="100%" cols=7 data-dojo-type="dijit/layout/TableContainer"
@@ -55,7 +58,49 @@ PROCESS input element_data = {
 <tr>
 <?lsmb FOR dnum IN [0 .. 6] ?>
 <td>
-
+     <div><?lsmb text('Report in') ?> </div>
+     <div><?lsmb
+        suffix = transdates.$dnum _ '_' _ lnum;
+        PROCESS select element_data = {
+                       name = "business_unit_id_$suffix"
+             default_values = [${"business_unit_id_$suffix"}]
+                    options = b_units
+                  text_attr = 'text'
+                 value_attr = 'id'
+     } ?>
+    </div>
+  <div><?lsmb  text('Partnumber') ?></div>
+    <div><?lsmb PROCESS input element_data = {
+               name = "partnumber_$suffix"
+              value = ${"partnumber_$suffix"}
+               type = 'text'
+               size = '15'
+              class = 'control-code'
+         } ?>
+    </div>
+  <div><?lsmb text('Description') ?></div>
+    <div><?lsmb PROCESS input element_data = {
+               name = "description_$suffix"
+              value = ${"description_$suffix"}
+               type = 'text'
+               size = '15'
+              class = 'description'
+         } ?>
+    </div>
+  <div><?lsmb text('Qty') ?></div>
+    <div><?lsmb PROCESS input element_data = {
+       name = "qty_$suffix"
+      value = ${"qty_$suffix"}
+       type = text
+      class = 'qty'
+       size = 5 } ?></div>
+  <div><?lsmb text('Extra Used') ?></div>
+    <div><?lsmb PROCESS input element_data = {
+       name = "non_billable_$suffix"
+      value = ${"non_billable_$suffix"}
+       type = text
+      class = 'qty'
+       size = 5 } ?></div>
 </td>
 <?lsmb END ?>
 </tr>
