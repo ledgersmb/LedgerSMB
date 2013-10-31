@@ -102,6 +102,14 @@ sub timecard_screen {
         $request->{transdate} = $request->{date_from};
         return display($request);
     } else {
+         my $startdate = LedgerSMB::PGDate->from_input($request->{date_from});
+         my @dates = ();
+         for (0 .. 6){
+            push @dates, LedgerSMB::PGDate->new(
+                    date => $startdate->date->add(days => $_)
+            );
+         }
+         $request->{transdates} = \@dates;
          my $template = LedgerSMB::Template->new(
              user     => $request->{_user},
              locale   => $request->{_locale},

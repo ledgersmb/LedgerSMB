@@ -1,4 +1,4 @@
-<?lsmb INCLUDE "ui-header.html" dojo-parse='onload';
+<?lsmb INCLUDE "ui-header.html" dojo_parse='onload';
 PROCESS "elements.html" ?>
 <body class="<?lsmb dojo_theme ?>">
 <form action="timecard.pl" method="post">
@@ -6,54 +6,54 @@ PROCESS "elements.html" ?>
 PROCESS input element_data = {
     type = "hidden"
     name = "transdate_0"
-   value = transdates[0]
+   value = transdates.0
 };
 PROCESS input element_data = {
     type = "hidden"
     name = "transdate_1"
-   value = transdates[1]
+   value = transdates.1
 };
 PROCESS input element_data = {
     type = "hidden"
     name = "transdate_2"
-   value = transdates[2]
+   value = transdates.2
 };
 PROCESS input element_data = {
     type = "hidden"
     name = "transdate_3"
-   value = transdates[3]
+   value = transdates.3
 };
 PROCESS input element_data = {
     type = "hidden"
     name = "transdate_4"
-   value = transdates[4]
+   value = transdates.4
 };
 PROCESS input element_data = {
     type = "hidden"
     name = "transdate_5"
-   value = transdates[5]
+   value = transdates.5
 };
 PROCESS input element_data = {
     type = "hidden"
     name = "transdate_6"
-   value = transdates[6]
+   value = transdates.6
 };
 ?>
 <div class="listtop"><?lsmb text('Weekly Time and Materials Entry') ?></div>
 <table width="100%" cols=7 data-dojo-type="dijit/layout/TableContainer"
  id="timecard-weekly">
 <tr class="listtop">
- <th><?lsmb transdates[0] ?></th>
- <th><?lsmb transdates[1] ?></th>
- <th><?lsmb transdates[2] ?></th>
- <th><?lsmb transdates[3] ?></th>
- <th><?lsmb transdates[4] ?></th>
- <th><?lsmb transdates[5] ?></th>
- <th><?lsmb transdates[6] ?></th>
+ <th><?lsmb transdates.0 ?></th>
+ <th><?lsmb transdates.1 ?></th>
+ <th><?lsmb transdates.2 ?></th>
+ <th><?lsmb transdates.3 ?></th>
+ <th><?lsmb transdates.4 ?></th>
+ <th><?lsmb transdates.5 ?></th>
+ <th><?lsmb transdates.6 ?></th>
 </tr>
-<?lsmb FOR 1 .. num_lines ?>
+<?lsmb FOR lnum IN [1 .. num_lines] ?>
 <tr>
-<?lsmb FOR 0 .. 6 ?>
+<?lsmb FOR dnum IN [0 .. 6] ?>
 <td>
 
 </td>
