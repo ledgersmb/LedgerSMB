@@ -28,7 +28,7 @@ SELECT account_save(NULL,'5200','Bérleti díj','E','', NULL, false, false, stri
 SELECT account_save(NULL,'5210','Telefon','E','', NULL, false, false, string_to_array('AP_amount', ':'));
 SELECT account_save(NULL,'5990','Költségek','E','', NULL, false, false, string_to_array('IC_expense', ':'));
 SELECT account_heading_save(NULL, '8', 'RÁFORDÍTÁSOK', NULL);
-SELECT account_save(NULL,'8140','Eladott áruk beszerzési értéke','E','', NULL, false, false, string_to_array('IC_cogs', ':'));
+SELECT account_save(NULL,'8140','Eladott áruk beszerzési értéke','E','', NULL, false, false, string_to_array('AP_amount:IC_cogs:IC_expense', ':'));
 SELECT account_save(NULL,'8700','Árfolyamveszteség','E','', NULL, false, false, string_to_array('', ':'));
 SELECT account_heading_save(NULL, '9', 'BEVÉTELEK', NULL);
 SELECT account_save(NULL,'9110','Belföldi árbevétel','I','', NULL, false, false, string_to_array('AR_amount:IC_sale:IC_income', ':'));

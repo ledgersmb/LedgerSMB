@@ -343,7 +343,7 @@ SELECT account_heading_save (NULL, '81', 'Anyagjellegű ráfordítások', NULL);
 SELECT account_save(NULL, '8110', 'Anyagköltség', 'E', '', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL, '8120', 'Igénybe vett szolgáltatás', 'E', '', NULL, false, false, string_to_array('', ':'));
 SELECT account_save(NULL, '8130', 'Eladott szolgáltatások értéke', 'E', '', NULL, false, false, string_to_array('', ':'));
-SELECT account_save(NULL, '8140', 'ELÁBÉ', 'E', '', NULL, false, false, string_to_array('AP_amount:IC_expense', ':'));
+SELECT account_save(NULL, '8140', 'ELÁBÉ', 'E', '', NULL, false, false, string_to_array('AP_amount:IC_cogs:IC_expense', ':'));
 SELECT account_save(NULL, '8150', 'Eladott (közvetített) szolgáltatás értéke', 'E', '', NULL, false, false, string_to_array('', ':'));
 SELECT account_heading_save (NULL, '86', 'Egyéb ráfordítások', NULL);
 SELECT account_heading_save (NULL, '861', 'Értékesített eszközök nyilvántartási értéke', NULL);
