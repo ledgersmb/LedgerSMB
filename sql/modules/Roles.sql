@@ -942,6 +942,7 @@ SELECT lsmb__grant_menu('template_edit', id, 'allow')
 
 SELECT lsmb__create_role('users_manage');
 SELECT lsmb__grant_role('users_manage', 'contact_read');
+SELECT lsmb__grant_role('users_manage', 'contact_class_employee');
 SELECT lsmb__grant_exec('users_manage', 'admin__add_user_to_role(TEXT, TEXT)');
 SELECT lsmb__grant_exec('users_manage', 'admin__remove_user_from_role(TEXT, TEXT)');
 SELECT lsmb__grant_exec('users_manage', 'admin__get_roles_for_user(int)');
@@ -1018,6 +1019,12 @@ GRANT SELECT ON custom_field_catalog TO public;
 GRANT SELECT ON custom_table_catalog TO public;
 GRANT SELECT ON oe_class TO public;
 GRANT SELECT ON note_class TO public;
+GRANT SELECT ON account_heading TO public;
+GRANT SELECT ON acc_trans TO PUBLIC; -- I don't like this but we need to 
+                                     -- change the all years function to be
+                                     -- security definer first. -- CT
+GRANT SELECT ON contact_class TO PUBLIC;
+GRANT SELECT ON batch_class TO PUBLIC;
 GRANT ALL ON defaults TO public;
 GRANT ALL ON "session" TO public;
 GRANT ALL ON session_session_id_seq TO PUBLIC;
