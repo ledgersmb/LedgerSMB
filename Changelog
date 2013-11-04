@@ -24,6 +24,7 @@ Changelog for 1.3.35
 * Fixed '0' invoice number on customer history summary (Chris T)
 * Added 'created on' date to invoices (Pongracz I)
 * Condensed income statement and balance sheet for readability (Erik H)
+* Updated Hungarian Charts of Accounts (Pongracz I)
 
 Chris T is Chris Travers
 Nick P is Nick Prater
