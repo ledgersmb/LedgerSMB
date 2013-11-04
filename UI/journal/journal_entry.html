@@ -51,7 +51,7 @@
 	</tr>
 	<tr>
           <th align="right"><?lsmb text('Description') ?></th>
-	  <td colspan="3">
+	  <td colspan="3"> 
 			<?lsmb IF form.colrowdesc ==1 ?>
 			      <?lsmb INCLUDE textarea element_data={
 							name = "description"
@@ -64,7 +64,7 @@
 			<?lsmb ELSE ?>
 				  <?lsmb INCLUDE textarea element_data = {
 						      name = "description",
-						      value = form.description,
+						      text = form.description,
 						      type = "text",
 						      size = "50",
 						      class = 'description'
