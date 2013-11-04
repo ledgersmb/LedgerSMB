@@ -25,8 +25,8 @@ We can also retrieve a previous report from the database and run it:
 package LedgerSMB::Report::Trial_Balance;
 use Moose;
 use LedgerSMB::App_State;
-with 'LedgerSMB::Report::Dates';
 extends 'LedgerSMB::Report';
+with 'LedgerSMB::Report::Dates';
 
 =head1 DESCRIPTION
 
