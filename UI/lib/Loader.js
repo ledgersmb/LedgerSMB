@@ -71,7 +71,7 @@ function(
                                                     && input.size !== '')
                                                 {
                                                    style['width'] = 
-                                                          (input.size * 0.6) 
+                                                          (input.size * 0.7) 
                                                            + 'em';
                                                    }
                                                 var val = input.value;
