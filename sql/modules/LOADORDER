@@ -21,6 +21,7 @@ Entity.sql
 Payment.sql
 Person.sql
 PNL.sql
+trial_balance.sql
 Report.sql
 Voucher.sql
 admin.sql
