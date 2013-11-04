@@ -116,8 +116,8 @@ sub _merge_rows {
         $data->{$r->{account_category}}->{$r->{account_number}} = {$label => $r};
         $data->{$r->{account_category}}->{$r->{account_number}}->{info} = $r;
     }
-    my $i_total = 0;
-    my $e_total = 0;
+    my $i_total = LedgerSMB::PGNumber->from_input('0');
+    my $e_total = LedgerSMB::PGNumber->from_input('0');
     my $total;
     for my $k (keys %{$data->{I}}){
        $i_total += $data->{I}->{$k}->{$label}->{amount}; 
