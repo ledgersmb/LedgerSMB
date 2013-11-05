@@ -675,6 +675,10 @@ $form->open_status_div . qq|
 		<th align=right nowrap>| . $locale->text('Order Number') . qq|</th>
 		<td><input name=ordnumber id=ordnum size=20 value="$form->{ordnumber}"></td>
 	      </tr>
+              <tr>
+                <th align=right nowrap>| . $locale->text('Invoice Created') . qq|</th>
+                <td><input name=crdate size=11 title="($myconfig{'dateformat'})" value=$form->{crdate}></td>
+              </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Invoice Date') . qq|</th>
 		<td><input name=transdate id=transdate size=11 title="($myconfig{'dateformat'})" value=$form->{transdate}></td>

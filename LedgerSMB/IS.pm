@@ -900,7 +900,7 @@ sub customer_details {
 		       l.state as state, l.mail_code AS zipcode, 
 		       country.name as country,
 		       '' as contact, '' as customerphone, '' as customerfax,
-		       '' AS customertaxnumber, sic_code AS sic, iban, 
+		       '' AS customertaxnumber, sic_code AS sic, iban, remark,
  		       bic,eca.startdate,eca.enddate
 		  FROM company cm
 		  JOIN entity e ON (cm.entity_id = e.id)

@@ -1385,7 +1385,7 @@ sub vendor_details {
 		       mail_code as zipcode, c.name as country, 
                        pay_to_name as contact, 
                        phone as vendorphone, fax as vendorfax, 
-		       tax_id AS vendortaxnumber, sic_code AS sic, iban, bic,
+		       tax_id AS vendortaxnumber, sic_code AS sic, iban, bic, remark,
 		       -- gifi_accno AS gifi, 
                        startdate, enddate
 		  FROM entity_credit_account eca
