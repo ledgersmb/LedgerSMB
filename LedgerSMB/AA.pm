@@ -387,6 +387,7 @@ sub post_transaction {
 			notes = ?,
 			intnotes = ?,
 			ponumber = ?,
+			crdate = ?,
                         reverse = ?
 		WHERE id = ?
 	|;
@@ -399,8 +400,8 @@ sub post_transaction {
         $datepaid,              $invnetamount,
         $form->{currency},      $form->{notes},
         $form->{intnotes},
-        $form->{ponumber},      $form->{reverse},
-        $form->{id}
+        $form->{ponumber},      $form->{crdate},
+	$form->{reverse},        $form->{id}
     );
     $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
     if (defined $form->{approved}) {

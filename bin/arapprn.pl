@@ -266,7 +266,7 @@ sub print_transaction {
     ( $form->{employee} ) = split /--/, $form->{employee};
 
     if ( exists $form->{longformat} ) {
-        for (qw(duedate transdate)) {
+        for (qw(duedate transdate crdate)) {
             $form->{$_} =
               $locale->date( \%myconfig, $form->{$_}, $form->{longformat} );
         }
@@ -274,7 +274,7 @@ sub print_transaction {
 
     $form->{notes} =~ s/^\s+//g;
 
-    @a = ( "invnumber", "transdate", "duedate", "notes" );
+    @a = ( "invnumber", "transdate", "duedate", "crdate", "notes" );
 
     push @a,
       qw(company address tel fax businessnumber text_amount text_decimal);

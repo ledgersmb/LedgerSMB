@@ -278,7 +278,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
 
     $form->{AR} = $form->{AR_1} unless $form->{id};
     $form->{transdate} = $form->{current_date} if (!$form->{transdate});
-    $form->{crdate} = $form->{current_date};
+    $form->{crdate} = $form->{current_date} if (!$form->{crdate});
     $form->{locked} =
       ( $form->{revtrans} )
       ? '1'
