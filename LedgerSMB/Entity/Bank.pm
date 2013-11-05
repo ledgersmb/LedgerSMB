@@ -79,6 +79,14 @@ This is the bank account number.  It is required on all records.
 
 has 'iban' => (is => 'rw', isa => 'Str', required => 1);
 
+=item remark
+
+This is a note to help select bank accounts.
+
+=cut
+
+has 'remark' => (is => 'rw', isa => 'Str', required => 0);
+
 =back
 
 =head1 METHODS
@@ -141,4 +149,3 @@ version.  Please see the enclosed LICENSE file for details.
 
 __PACKAGE__->meta->make_immutable;
 
-return 1;

@@ -16,6 +16,7 @@ PROCESS dynatable
      { col_id='bic', type='text', name=text('BIC/SWIFT Code') } #'
      { col_id='iban', type='href', href_base=href_base, 
          name=text('Account Number')}#'
+     { col_id='remark', type='text', name=text('Remark') }
      { col_id='delete', type='href', href_base=href_base, name=' ' }
    ];
 ?>
@@ -58,6 +59,15 @@ PROCESS dynatable
 		size=20
 	} #' ?>
 	</div></div>
+	<div>
+	<?lsmb PROCESS input element_data = {
+		type="text" 
+		label = text('Remark')
+		name="remark" 
+		value=request.remark
+		size=30
+	} # ?>
+	</div>
 	<div><?lsmb PROCESS button element_data = {
 		name="action" 
 		value="save_bank_account"
