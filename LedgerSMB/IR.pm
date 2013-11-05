@@ -68,6 +68,7 @@ sub get_files {
 
 sub post_invoice {
     my ( $self, $myconfig, $form ) = @_;
+    $form->{crdate} ||= 'now';
 
     if ($form->{id}){
         delete_invoice($self, $myconfig, $form);
