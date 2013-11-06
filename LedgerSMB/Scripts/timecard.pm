@@ -22,6 +22,7 @@ use LedgerSMB::Report::Timecards;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
+use LedgerSMB::Setting;
 use DateTime;
 
 =head1 ROUTINES
@@ -78,6 +79,8 @@ sub display {
     @{$request->{b_units}} = LedgerSMB::Business_Unit->list(
           $request->{bu_class_id}, undef, 0, $request->{transdate}
     );
+    my $curr = LedgerSMB::Setting->get('curr');
+    @{$request->{currencies}} = split /:/, $curr;
     $request->{total} = $request->{qty} + $request->{non_billable};
      my $template = LedgerSMB::Template->new(
          user     => $request->{_user},

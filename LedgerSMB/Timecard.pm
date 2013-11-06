@@ -88,7 +88,7 @@ Quantities allocated for manufacturing, orders etc.
 =cut
 
 has allocated  => (isa => 'LedgerSMB::Moose::Number', is => 'ro', 
-              required => '1', coerce => 1);
+              required => '0', coerce => 1);
 
 =item sellprice numeric
 
@@ -97,7 +97,7 @@ This is the sell price in the master currency.
 =cut
 
 has sellprice => (isa => 'LedgerSMB::Moose::Number', is => 'ro',
-             required => '1', coerce => 1);
+             required => '0', coerce => 1);
 
 
 =item fxsellprice numeric
@@ -107,7 +107,7 @@ This is the sell price in the foreign currency if applicable.
 =cut
 
 has fxsellprice => (isa => 'LedgerSMB::Moose::Number', is => 'ro',
-               required => '1', coerce => 1);
+               required => '0', coerce => 1);
 
 
 =item serialnumber text
@@ -124,7 +124,7 @@ Time and date work started
 
 =cut
 
-has checkedin  => (isa => 'LedgerSMB::Moose::Date', is => 'ro', required => '1',
+has checkedin  => (isa => 'LedgerSMB::Moose::Date', is => 'ro', required => '0',
                 coerce => 1);
 
 =item checkedout timestamp
@@ -134,7 +134,7 @@ Time and date work ended for this card
 =cut
 
 has checkedout  => (isa => 'LedgerSMB::Moose::Date', is => 'ro', 
-               required => '1', coerce => 1);
+               required => '0', coerce => 1);
 
 =item person_id int
 
@@ -172,7 +172,7 @@ This is the ID of the LedgerSMB::Timecard::Type that the timecard is of.
 
 =cut
 
-has jctype => (is => 'ro', isa => 'Int', required => 1);
+has jctype => (is => 'ro', isa => 'Int', required => 0);
 
 =item curr str
 

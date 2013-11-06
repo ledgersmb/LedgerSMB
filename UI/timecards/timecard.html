@@ -108,6 +108,17 @@
       class = 'qty'
        size = 16 } ?></td>
 </tr>
+<tr><th><?lsmb text('Currency') ?></th>
+    <td><?lsmb
+        currencies2 = [];  
+        FOREACH curr IN currencies;
+           currencies2.push({text = curr, value = curr });
+        END;
+        PROCESS select element_data = {
+           name = "curr"
+        options = currencies2
+ default_values = [curr]
+       }; ?>
 <tr><th><?lsmb text('Allocated') ?></th>
     <td><?lsmb allocated ?></td>
 </tr>
