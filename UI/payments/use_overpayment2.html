@@ -1,5 +1,6 @@
 <?lsmb INCLUDE "ui-header.html" ?>
-<body id="payment_2_body" onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif','UI/payments/img/up.gif') ">
+<body id="payment_2_body" onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif','UI/payments/img/up.gif') " 
+class="<?lsmb dojo_theme ?>">
  <form name="pay_single_dues" method="post" action="payment.pl">
 
  <?lsmb PROCESS elements.html  # Include form elements helper. ?>
@@ -143,7 +144,6 @@
    <th class="listheading"><?lsmb text('Vendor') -?>/<?lsmb text('Customer') -?></th>
    <th class="listheading"><?lsmb text('Invoice date') -?></th>
    <th class="listheading"><?lsmb text('Invoice due') -?></th>
-   <th class="listheading"><?lsmb text('Apply Disc') -?></th>
    <th class="listheading"><?lsmb text('Overpayment Account') ?>
    <th class="listheading"><?lsmb text('Amount to be used') -?></th>
    <th class="listheading">X</th>
@@ -160,25 +160,16 @@
    </td>
    <td align="center"> <?lsmb data.entity_name ?>
     <input type="hidden" id="entity_id_<?lsmb i -?>" name="entity_id_<?lsmb i -?>" value="<?lsmb data.entity_id -?>" />
-    <input type="hidden" id="vc_discount_accno_<?lsmb i -?>" name="vc_discount_accno_<?lsmb i -?>" value="<?lsmb data.vc_discount_accno -?>" />
    </td>
    <td align="center"> <?lsmb data.invoice_date ?>
     <input type="hidden" id="invoice_date_<?lsmb i -?>" name="invoice_date_<?lsmb i -?>" value="<?lsmb data.invoice_date -?>" />
    </td>
    <td align="right"> <?lsmb data.applied_due -?>
     <input type="hidden" id="due_<?lsmb i -?>" name="due_<?lsmb i -?>" value="<?lsmb data.due -?>" />
-    <input type="hidden" id="discount_<?lsmb i -?>" name="discount_<?lsmb i -?>" value="<?lsmb data.discount -?>" />
    </td>
    <?lsmb IF data.repeated_invoice == 'true' -?>
     <td align="center"> &nbsp;
-    	<input type="hidden" id="optional_discount_<?lsmb i -?>" name="optional_discount_<?lsmb i -?>" value="<?lsmb data.optional_discount -?>"/> 
     </td>
-   <?lsmb ELSE -?>
-      	<?lsmb IF data.optional_discount -?>
-    <td align="center"> <input type="checkbox" id="optional_discount_<?lsmb i -?>" name="optional_discount_<?lsmb i -?>" checked/> </td>
-   	<?lsmb ELSE -?>
-    <td align="center"> <input type="checkbox" id="optional_discount_<?lsmb i -?>" name="optional_discount_<?lsmb i -?>" /> </td>
-   	<?lsmb END -?>
    <?lsmb END -?>
    <td align="center"> <?lsmb data.selected_accno.ovp_accno ?>
     <input type="hidden" id="selected_accno_<?lsmb i -?>" name="selected_accno_<?lsmb i -?>" value="<?lsmb data.selected_accno.id -?>--<?lsmb data.selected_accno.ovp_accno -?>" />
@@ -199,19 +190,15 @@
    </td>
    <td align="center"> <?lsmb data.entity_name ?>
     <input type="hidden" id="entity_id_<?lsmb i -?>" name="entity_id_<?lsmb i -?>" value="<?lsmb data.entity_id -?>" />
-    <input type="hidden" id="vc_discount_accno_<?lsmb i -?>" name="vc_discount_accno_<?lsmb i -?>" value="<?lsmb data.vc_discount_accno -?>" />
    </td>
    <td align="center"> <?lsmb data.invoice_date ?>
     <input type="hidden" id="invoice_date_<?lsmb i -?>" name="invoice_date_<?lsmb i -?>" value="<?lsmb data.invoice_date -?>" />
    </td >
    <td align="right"> <?lsmb data.due ?>
     <input type="hidden" id="due_<?lsmb i -?>" name="due_<?lsmb i -?>" value="<?lsmb data.due -?>" />    
-    <input type="hidden" id="discount_<?lsmb i -?>" name="discount_<?lsmb i -?>" value="<?lsmb data.discount -?>" />
    </td>
    <?lsmb IF data.repeated_invoice == 'true' -?>
     <td align="center"> &nbsp; </td>
-   <?lsmb ELSE -?>
-   <td align="center"> <input type="checkbox" id="optional_discount_<?lsmb i -?>" name="optional_discount_<?lsmb i ?>" checked/> </td>
    <?lsmb END -?>
    <td align="center"> <?lsmb data.selected_accno.ovp_accno ?>
     <input type="hidden" id="selected_accno_<?lsmb i -?>" name="selected_accno_<?lsmb i -?>" value="<?lsmb data.selected_accno.id -?>--<?lsmb data.selected_accno.ovp_accno -?>" />
@@ -239,7 +226,6 @@
    </td>
    <td align="center">N/A</td>
    <td align="center">N/A</td>
-   <td align="center"> &nbsp; </td>
    <td align="center">
     <select id="new_accno" name="new_accno">
      <?lsmb FOREACH item IN overpayments ?>
@@ -259,7 +245,7 @@
    </td>
   </tr>
   <tr class="listsubtotal" >
-   <th class="listsubtotal" colspan="6" align="right">&nbsp;<?lsmb text('Subtotal') -?></th>
+   <th class="listsubtotal" colspan="5" align="right">&nbsp;<?lsmb text('Subtotal') -?></th>
    <th class="listsubtotal"> <?lsmb subtotal_inv -?>
      <input type="hidden" id="subtotal_inv" name="subtotal_inv" value="<?lsmb subtotal_inv -?>" />  
    </th>
