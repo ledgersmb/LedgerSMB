@@ -131,6 +131,11 @@ sub timecard_screen {
 
 sub save {
     my ($request) = @_;
+    $request->{parts_id} =  LedgerSMB::Timecard->get_part_id(
+           $request->{partnumber}
+    );
+    $request->{jctype} ||= 1;
+    $request->{total} = $request->{qty} + $request{non_chargeable};
     my $timecard = LedgerSMB::Timecard->new(%$request);
     $timecard->save;
     $request->{id} = $timecard->id;

@@ -245,3 +245,11 @@ CREATE TABLE lsmb_sequence (
 
 COMMIT;
 
+
+BEGIN;
+
+ALTER TABLE jcitems DROP CONSTRAINT "jcitems_person_id_fkey";
+ALTER TABLE jcitems ADD FOREIGN KEY (person_id) REFERENCES entity(id);
+
+COMMIT;
+

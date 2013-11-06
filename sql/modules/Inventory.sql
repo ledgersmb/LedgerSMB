@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE OR REPLACE FUNCTION inventory_get_item_at_day
 (in_transdate date, in_partnumber text)
 RETURNS parts AS
@@ -82,3 +84,17 @@ BEGIN
 	RETURN currval('inventory_report_line_id_seq');
 end;
 $$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE FUNCTION inventory__get_item_by_partnumber(in_partnumber text)
+RETURNS parts LANGUAGE SQL AS
+$$
+SELECT * FROM parts WHERE obsolete is not true AND partnumber = $1;
+$$;
+
+CREATE OR REPLACE FUNCTION inventory__get_item_by_id(in_id int)
+RETURNS parts LANGUAGE SQL AS
+$$
+SELECT * FROM parts WHERE id = $1;
+$$;
+
+COMMIT;

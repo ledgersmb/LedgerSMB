@@ -156,7 +156,7 @@ has notes => (isa => 'Str', is => 'ro', required => '0');
 
 =cut
 
-has total => (is => 'ro', isa => 'LedgerSMB::Moose::Number', required => 1, 
+has total => (is => 'ro', isa => 'LedgerSMB::Moose::Number', required => 0, 
           coerce => 1);
 
 =item non_billable numeric
@@ -197,6 +197,21 @@ sub get {
     my ($retval) = __PACKAGE__->call_procedure(
          procname => 'timecard__get', args => [$id]);
     return $retval;
+}
+
+=item get_part_id($partnumber)
+
+Returns the part id for the given partnumber
+
+=cut
+
+sub get_part_id {
+    my ($self, $partnumber) = @_;
+    my ($ref) = __PACKAGE__->call_procedure(
+                    procname => 'inventory__get_item_by_partnumber',
+                        args => [$partnumber]
+    );
+    return $ref->{id};
 }
 
 =item save()

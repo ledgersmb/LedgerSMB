@@ -20,6 +20,7 @@ CREATE OR REPLACE FUNCTION timecard__save
   in_notes text,
   in_total numeric,
   in_non_billable numeric,
+  in_curr char(3),
   in_jctype int
 ) 
 RETURNS jcitems LANGUAGE PLPGSQL AS
@@ -49,14 +50,14 @@ END IF;
 INSERT INTO jcitems 
 (business_unit_id, parts_id, description, qty, allocated, sellprice,
   fxsellprice, serialnumber, checkedin, checkedout, person_id, notes,
-  total, non_billable, jctype)
+  total, non_billable, jctype, curr)
 VALUES
 (in_business_unit_id, in_parts_id, in_description, in_qty, in_allocated, 
   in_sellprice, in_fxsellprice, in_serialnumber, in_checkedin, in_checkedout, 
   coalesce(in_person_id, person__get_my_entity_id()), in_notes, in_total, 
-  in_non_billable, in_jctype);
+  in_non_billable, in_jctype, in_curr);
 
-SELECT * INTO retval WHERE id = currval('jcitems_id_seq')::int;
+SELECT * INTO retval FROM jcitems WHERE id = currval('jcitems_id_seq')::int;
 
 RETURN retval;
 
@@ -73,7 +74,7 @@ SELECT *
        AND ($1 OR inventory_accno_id IS NULL)
        AND ($2 OR (income_accno_id IS NOT NULL 
              AND inventory_accno_id IS NULL))
-       AND ($3 IS NULL OF partnumber like $3 || '%')
+       AND ($3 IS NULL OR partnumber like $3 || '%')
  ORDER BY partnumber;
 $$;
 
@@ -118,7 +119,7 @@ SELECT j.id, j.description, j.qty, j.allocated, j.checkedin::time as checkedin,
        j.checkedout::time as checkedout, j.checkedin::date as transdate,
        extract('dow' from j.checkedin) as weekday, 
        extract('week' from j.checkedin) as workweek,
-       date_trunc('week', j.checkedin) as weekstarting,
+       date_trunc('week', j.checkedin)::date as weekstarting,
        p.partnumber, bu.control_code as business_unit_code, 
        bu.description AS businessunit_description,
        ee.employeenumber, e.name AS employee, j.parts_id, j.sellprice
