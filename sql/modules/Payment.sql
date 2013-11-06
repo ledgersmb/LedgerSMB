@@ -1479,4 +1479,48 @@ COMMENT ON FUNCTION payment_get_unused_overpayment(
 in_account_class int, in_entity_credit_id int, in_chart_id int) IS
 $$ Returns a list of available overpayments$$;
 
+CREATE OR REPLACE FUNCTION payment__get_gl(in_payment_id int)
+returns gl
+language sql as
+$$
+SELECT * FROM gl WHERE id = (select id from payment where id = $1);
+$$;
+
+CREATE FUNCTION payment__reverse_overpayment
+(in_payment_id int, in_batch_id int, in_account_class int) 
+RETURNS voucher LANGUAGE PLPGSQL AS
+$$
+DECLARE retval voucher;
+        t_batch_class int;
+        t_gl_id int;
+BEGIN
+    IF in_account_class = 1 THEN
+       t_batch_class := 4;
+    ELSIF in_account_class = 2 THEN
+       t_batch_class := 7;
+    ELSE
+       RAISE EXCEPTION 'bad account class';
+    END IF;
+
+    SELECT gl_id INTO t_gl_id FROM payment WHERE payment_id = in_payment_id;
+
+    INSERT INTO voucher(batch_id, trans_id, batch_class)
+    SELECT in_batch_id, t_gl_id, t_batch_class
+    RETURNING * INTO retval;
+
+    INSERT INTO acc_trans(trans_id, chart_id, amount, transdate, source, 
+                          fx_transaction, memo, approved, voucher_id)
+    SELECT a.trans_id, a.chart_id, a.amount, b.default_date, 
+           'reversing ' || a.source, a.fx_transaction, a.memo, false, retval.id
+      FROM acc_trans a
+      JOIN batch b ON (b.id = in_batch_id)
+ LEFT JOIN payment_links pl ON pl.entry_id = a.entry_id
+     WHERE trans_id = t_gl_id or pl.entry_id is not null;
+
+    UPDATE overpayment set available = 0 WHERE payment_id = in_payment_id;
+
+    RETURN retval;
+END;
+$$;
+
 COMMIT;
