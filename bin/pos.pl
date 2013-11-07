@@ -124,13 +124,13 @@ sub add {
         $form->{partsgroup} .= "$_->{partsgroup}--$_->{translation}\n";
     }
 
-    $form->{dontdisplayend} = 1;
+  #  $form->{dontdisplayend} = 1;
 
     &display_form;
 
-    $form->{dontdisplayrows} = 1;
-    $form->{dontdisplayend}  = 0;
-    &openinvoices;
+ #   $form->{dontdisplayrows} = 1;
+ #   $form->{dontdisplayend}  = 0;
+ #   &openinvoices;
 }
 
 sub openinvoices {
@@ -782,27 +782,6 @@ sub display_row {
         ($dec) = ( $form->{"sellprice_$i"} =~ /\.(\d+)/ );
         $dec = length $dec;
         $decimalplaces = ( $dec > 2 ) ? $dec : 2;
-
-        if (   ( $form->{"qty_$i"} != $form->{"oldqty_$i"} )
-            || ( $form->{currency} ne $form->{oldcurrency} ) )
-        {
-
-            # check for a pricematrix
-            @a = split / /, $form->{"pricematrix_$i"};
-            if ( scalar @a ) {
-                foreach $item (@a) {
-                    ( $q, $p ) = split /:/, $item;
-                    if ( ( $p * 1 ) && ( $form->{"qty_$i"} >= ( $q * 1 ) ) ) {
-                        ($dec) = ( $p =~ /\.(\d+)/ );
-                        $dec = length $dec;
-                        $decimalplaces = ( $dec > 2 ) ? $dec : 2;
-                        $form->{"sellprice_$i"} =
-                          $form->round_amount( $p / $exchangerate,
-                            $decimalplaces );
-                    }
-                }
-            }
-        }
 
         $column_data{discount} =
                 qq|<td align=right><input name="discount_$i" size=3 value=|
