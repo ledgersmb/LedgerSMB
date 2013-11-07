@@ -638,7 +638,7 @@ END ?>
         <div class="inputrow" id="taxrow-<?lsmb tx.chart_id ?>">
         <span class="input" id="txinput-<?lsmb tx.id ?>">
             <?lsmb checked = "";  
-                   IF eca_tax.grep(tx.id).size == 1;
+                   IF eca_tax.grep("^${tx.id}$").size == 1;
                        checked = "CHECKED";
                    END;
                    INCLUDE input element_data = {
