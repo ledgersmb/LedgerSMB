@@ -1487,13 +1487,19 @@ SELECT * FROM gl WHERE id = (select id from payment where id = $1);
 $$;
 
 CREATE OR REPLACE FUNCTION payment__reverse_overpayment
-(in_payment_id int, in_batch_id int, in_account_class int) 
+(in_payment_id int, in_batch_id int) 
 RETURNS voucher LANGUAGE PLPGSQL AS
 $$
 DECLARE retval voucher;
         t_batch_class int;
         t_gl_id int;
+      in_account_class int;
 BEGIN
+    SELECT entity_class INTO in_account_class 
+      FROM entity_credit_account
+     WHERE id = (select entity_credit_id FROM overpayments 
+                  WHERE payment_id = in_payment_id);
+
     IF in_account_class = 1 THEN
        t_batch_class := 4;
     ELSIF in_account_class = 2 THEN
@@ -1523,7 +1529,7 @@ BEGIN
 END;
 $$;
 
-DROP TYPE IF EXISTS overpayment_list_item;
+DROP TYPE IF EXISTS overpayment_list_item CASCADE;
 CREATE TYPE overpayment_list_item AS (
   payment_id int,
   entity_name text,

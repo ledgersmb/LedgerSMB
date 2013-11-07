@@ -23,6 +23,7 @@ use LedgerSMB::Report::Listings::GIFI;
 use LedgerSMB::Report::Listings::Warehouse;
 use LedgerSMB::Report::Listings::Language;
 use LedgerSMB::Report::Listings::SIC;
+use LedgerSMB::Report::Listings::Overpayments;
 use strict;
 
 =pod
@@ -163,6 +164,17 @@ sub balance_sheet {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Balance_Sheet->new(%$request);
     $report->render($request);
+}
+
+=item search_overpayments
+
+Searches overpayments based on inputs.
+
+=cut
+
+sub search_overpayments {
+    my ($request) = @_;
+    LedgerSMB::Report::Listings::Overpayments->new(%$request)->render($request);
 }
 
 =back
