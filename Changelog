@@ -98,9 +98,11 @@ Changelog for 1.3.36
 * Removed "apply discount" from use overpayment screen (Chris T)
 * Fixed tax checkbox problem when one tax id includes another (Chris T)
 * Fixed update forgetting creditor (Nick P)
+* Fixed invoices rounding and printing differently (Giovanni B)
 
 Chris T is Chris Travers
 Nick P is Nick Prater
+Giovanni B is Giovanni Biscuolo
 
 Changelog for 1.3.35
 * Fixed uninitialized value warnings when cached template enabled (Chris T)
