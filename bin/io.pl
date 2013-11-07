@@ -91,11 +91,14 @@ if ( -f "bin/custom/$form->{login}_io.pl" ) {
 sub _calc_taxes {
     $form->{subtotal} = $form->{invsubtotal};
     for $i (1 .. $form->{rowcount}){
-        my $linetotal = 
-             $form->parse_amount(\%myconfig, $form->{"sellprice_$i"}) 
-             * $form->parse_amount(\%myconfig, $form->{"qty_$i"}) 
-             * (1 - $form->parse_amount(\%myconfig, $form->{"discount_$i"})
-                    / 100);
+        my $discount_amount = $form->round_amount( $form->{"sellprice_$i"} 
+        		       			   * ($form->{"discount_$i"} / 100), 
+		  	       			   $decimalplaces);
+        my $linetotal = $form->round_amount( $form->{"sellprice_$i"}
+                         		     - $discount_amount,
+                         		     $decimalplaces);
+        $linetotal = $form->round_amount( $linetotal * $form->{"qty_$i"}, 
+                                          $moneyplaces);
         @taxaccounts = Tax::init_taxes(
             $form, $form->{"taxaccounts_$i"},
             $form->{'taxaccounts'}
@@ -320,8 +323,11 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
             }
         }
 
+	my $discount_amount = $form->round_amount( $form->{"sellprice_$i"} 
+			   			   * ($form->{"discount_$i"} / 100), 
+						   $decimalplaces);
         $linetotal = $form->round_amount( $form->{"sellprice_$i"}
-                                          * (1 - ($form->{"discount_$i"} / 100)),
+                                          - $discount_amount,
                                           $decimalplaces);
         $linetotal = $form->round_amount( $linetotal * $form->{"qty_$i"}, 
                                          $moneyplaces);
