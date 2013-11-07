@@ -1486,7 +1486,7 @@ $$
 SELECT * FROM gl WHERE id = (select id from payment where id = $1);
 $$;
 
-CREATE FUNCTION payment__reverse_overpayment
+CREATE OR REPLACE FUNCTION payment__reverse_overpayment
 (in_payment_id int, in_batch_id int, in_account_class int) 
 RETURNS voucher LANGUAGE PLPGSQL AS
 $$
@@ -1521,6 +1521,43 @@ BEGIN
 
     RETURN retval;
 END;
+$$;
+
+DROP TYPE IF EXISTS overpayment_list_item;
+CREATE TYPE overpayment_list_item AS (
+  payment_id int,
+  entity_name text,
+  available numeric,
+  transdate date,
+  amount numeric
+);
+CREATE OR REPLACE FUNCTION payment__overpayments_list
+(in_date_from date, in_date_to date, in_control_code text, in_meta_number text,
+ in_name_part text)
+RETURNS SETOF overpayment_list_item
+LANGUAGE SQL AS
+$$
+-- I don't like the subquery below but we are looking for the first line, and
+-- I can't think of a better way to do that. --CT
+
+-- This should never hit an income statement-side account but I have handled it 
+-- in case of configuration error. --CT
+SELECT o.payment_id, e.name, o.available, g.transdate, 
+       (select amount * CASE WHEN c.category in ('A', 'E') THEN -1 ELSE 1 END
+          from acc_trans 
+         where g.id = trans_id 
+               AND chart_id = o.chart_id ORDER BY entry_id ASC LIMIT 1) as amount
+  FROM overpayments o
+  JOIN payment p ON o.payment_id = p.id
+  JOIN gl g ON g.id = p.gl_id
+  JOIN account c ON c.id = o.chart_id
+  JOIN entity_credit_account eca ON eca.id = o.entity_credit_id
+  JOIN entity e ON eca.entity_id = e.id
+ WHERE ($1 IS NULL OR $1 <= g.transdate) AND
+       ($2 IS NULL OR $2 >= g.transdate) AND
+       ($3 IS NULL OR $3 = e.control_code) AND
+       ($4 IS NULL OR $4 = eca.meta_number) AND
+       ($5 IS NULL OR e.name @@ plainto_tsquery($5));
 $$;
 
 COMMIT;

@@ -26,9 +26,7 @@ In addition to standard dates, we also have:
 
 =over 
 
-=item amount_from
-
-=item amount_to
+=item name_part
 
 =item control_code
 
@@ -38,11 +36,7 @@ In addition to standard dates, we also have:
 
 =cut
 
-has amount_from => (is => 'ro', isa => 'LedgerSMB::Moose::Number', coerce=> 1,
-              required => 0);
-
-has amount_to => (is => 'ro', isa => 'LedgerSMB::Moose::Number', coerce=> 1,
-            required => 0);
+has name_part => (is => 'ro', isa => 'Str', required => 0);
 
 has control_code => (is => 'ro', isa => 'Str', required => 0);
 
