@@ -1283,6 +1283,13 @@ sub update {
     $form->{oldinvtotal}  = $form->{invtotal};
     $form->{oldtotalpaid} = $totalpaid;
 
+    # This must be done after check_name()
+    # otherwise it will operate on the old vendor/customer id
+    # rather than the newly selected one in the form
+    # check_name() sets $form->{vendor_id} or $form->{customer_id}
+    # and updates $form->{oldvendor} or $form->{oldcustomer}
+    &create_links;
+
     &display_form;
 
 }
