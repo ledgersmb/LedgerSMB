@@ -508,11 +508,10 @@ $$ This table was designed for holding information relating to reportable
 sales or purchases, such as IRS 1099 forms and international equivalents.$$;
 
 -- BEGIN new entity management
-
+--table entity_class contained field country_id, the idea was that we could have country-specific entity classes, nobody uses this , it can be removed from 1.4.
 CREATE TABLE entity_class (
   id serial primary key,
   class text check (class ~ '[[:alnum:]_]') NOT NULL,
-  country_id int references country(id),
   active boolean not null default TRUE);
   
 COMMENT ON TABLE entity_class IS $$ Defines the class type such as vendor, customer, contact, employee $$;
