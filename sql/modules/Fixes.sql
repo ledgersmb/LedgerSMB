@@ -253,3 +253,44 @@ ALTER TABLE jcitems ADD FOREIGN KEY (person_id) REFERENCES entity(id);
 
 COMMIT;
 
+BEGIN;
+ALTER TABLE entity_class DROP COLUMN IF EXISTS country_id;
+COMMIT;
+
+BEGIN;
+update audittrail set person_id=(select id from person where last_name='Admin') where person_id not in (select id from person) ;
+ALTER TABLE audittrail DROP CONSTRAINT IF EXISTS "audittrail_person_id_fkey";
+ALTER TABLE audittrail ADD CONSTRAINT "audittrail_person_id_fkey" FOREIGN KEY(person_id) REFERENCES person(id);
+
+CREATE OR REPLACE FUNCTION gl_audit_trail_append()
+RETURNS TRIGGER AS
+$$
+DECLARE
+   t_reference text;
+   t_row RECORD;
+   t_user_id int;
+BEGIN
+
+IF TG_OP = 'INSERT' then
+   t_row := NEW;
+ELSE
+   t_row := OLD;
+END IF;
+
+IF TG_RELNAME IN ('ar', 'ap') THEN
+    t_reference := t_row.invnumber;
+ELSE 
+    t_reference := t_row.reference;
+END IF;
+
+SELECT id into t_user_id from users where username = SESSION_USER;
+
+INSERT INTO audittrail (trans_id,tablename,reference, action, person_id)
+--values (t_row.id,TG_RELNAME,t_reference, TG_OP, person__get_my_entity_id());
+values (t_row.id,TG_RELNAME,t_reference, TG_OP, t_user_id);
+
+return null; -- AFTER TRIGGER ONLY, SAFE
+END;
+$$ language plpgsql security definer;
+
+COMMIT;
