@@ -292,6 +292,8 @@ SELECT id, table_name, locked_by FROM lsmb13.transactions;
 
 INSERT INTO voucher SELECT * FROM lsmb13.voucher;
 
+ALTER TABLE acc_trans DISABLE TRIGGER ALL;
+
 INSERT INTO acc_trans (
  trans_id,
  chart_id,
@@ -323,6 +325,8 @@ INSERT INTO acc_trans (
  voucher_id,
  entry_id 
    FROM lsmb13.acc_trans;
+
+ALTER TABLE acc_trans enable TRIGGER ALL;
 
 INSERT INTO invoice (
  id,
@@ -520,6 +524,8 @@ INSERT INTO inventory SELECT * FROM lsmb13.inventory;
 INSERT INTO yearend SELECT * FROM lsmb13.yearend;
 INSERT INTO partsvendor SELECT * FROM lsmb13.partsvendor;
 INSERT INTO partscustomer SELECT * FROM lsmb13.partscustomer;
+
+update lsmb13.audittrail set person_id=(select id from lsmb13.person where last_name='Admin') where person_id not in (select id from lsmb13.person) ;
 INSERT INTO audittrail SELECT * FROM lsmb13.audittrail;
 INSERT INTO translation SELECT * FROM lsmb13.translation;
 INSERT INTO parts_translation SELECT * FROM lsmb13.parts_translation;
