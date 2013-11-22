@@ -294,3 +294,10 @@ END;
 $$ language plpgsql security definer;
 
 COMMIT;
+BEGIN;
+ALTER TABLE ar ADD COLUMN crdate date;
+ALTER TABLE ap ADD COLUMN crdate date;
+ALTER TABLE entity_bank_account ADD COLUMN  remark text;
+
+COMMIT;
+

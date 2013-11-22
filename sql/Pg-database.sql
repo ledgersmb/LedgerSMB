@@ -1650,6 +1650,7 @@ CREATE TABLE ar (
   force_closed bool,
   description text,
   is_return bool default false,
+  crdate date,
   unique(invnumber) -- probably a good idea as per Erik's request --CT
 );
 
@@ -1734,6 +1735,7 @@ CREATE TABLE ap (
   terms int2 DEFAULT 0,
   description text,
   force_closed bool,
+  crdate date,
   entity_credit_account int references entity_credit_account(id) NOT NULL
 );
 

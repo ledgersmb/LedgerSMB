@@ -814,6 +814,16 @@ my ($self) = @_;
 return @{$self->{available_overpayment_amount}};
 }
 
+=item overpayment_reverse($payment_id, $batch_id);
+
+=cut
+
+sub overpayment_reverse {
+    my ($self, $payment, $batch_id) = @_;
+    __PACKAGE__->call_procedure({procname => 'payment__reverse_overpayment',
+                                     args => [] });
+}
+
 =item init
 
 Initializes the num2text system
