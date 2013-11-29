@@ -398,6 +398,7 @@ CREATE OR REPLACE FUNCTION account__delete(in_id int)
 RETURNS BOOL AS
 $$
 BEGIN
+DELETE FROM tax WHERE chart_id = in_id;
 DELETE FROM account_link WHERE account_id = in_id;
 DELETE FROM account WHERE id = in_id;
 RETURN FOUND;
