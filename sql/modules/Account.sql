@@ -159,6 +159,22 @@ Then it saves the account information, and rebuilds the account_link records
 based on the in_link array.
 $$;
 
+CREATE OR REPLACE FUNCTION account__delete(in_id int)
+RETURNS BOOL AS
+$$
+BEGIN
+DELETE FROM tax WHERE chart_id = in_id;
+DELETE FROM account_link WHERE account_id = in_id;
+DELETE FROM account WHERE id = in_id;
+RETURN FOUND;
+END;
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION account__delete(int) IS
+$$ This deletes an account with the id specified.  If the account has 
+transactions associated with it, it will fail and raise a foreign key constraint.
+$$;
+
 CREATE OR REPLACE FUNCTION account_heading_list()
 RETURNS SETOF account_heading AS
 $$
