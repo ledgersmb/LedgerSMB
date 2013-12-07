@@ -127,7 +127,6 @@ sub get_interval_dates {
                end => LedgerSMB::PGDate->from_db($end, 'date') };   
 }
 
-
 =back
 
 =head1 Copyright (C) 2007, The LedgerSMB core team.

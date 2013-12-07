@@ -101,6 +101,22 @@ accompanying LICENSE.TXT for more information.
 
 =cut
 
+around BUILDARGS => sub {
+    my $orig = shift;
+    my $class = shift;
+    my %args;
+    if (ref $_[0]){
+        %args = %{$_[0]};
+    } else {
+        %args = @_;
+    }
+    if (!$args{name}){
+        $args{name} = $args{legal_name} if $args{legal_name};
+        $args{name} = "$args{first_name} $args{last_name}" if $args{first_name};
+    }
+    $class->$orig(%args);
+};
+
 __PACKAGE__->meta->make_immutable;
 
 return 1;
