@@ -145,7 +145,7 @@ Fax: <?lsmb shiptofax ?>
 <?lsmb lc = loop.count - 1 ?>
   <?lsmb runningnumber.${lc} ?> & 
   <?lsmb number.${lc} ?> & 
-  <?lsmb INCLUDE multiline string = description.${lc} ?> & 
+  <?lsmb INCLUDE multiline string = item_description.${lc} ?> & 
   <?lsmb deliverydate.${lc} ?> &
   <?lsmb qty.${lc} ?> & 
   <?lsmb unit.${lc} ?> &

@@ -363,7 +363,7 @@ sub invoice_details {
             push( @{ $form->{serialnumber} },  $form->{"serialnumber_$i"} );
 
             push( @{ $form->{bin} },         $form->{"bin_$i"} );
-            push( @{ $form->{description} }, $form->{"description_$i"} );
+            push( @{ $form->{item_description} }, $form->{"description_$i"} );
             push( @{ $form->{itemnotes} },   $form->{"notes_$i"} );
             push(
                 @{ $form->{qty} },

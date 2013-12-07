@@ -1988,12 +1988,7 @@ sub print_form {
         output_options => \%output_options,
 	output_file => $form->{formname} . "-" . $form->{"${inv}number"},
         );
-    try {
-        $template->render($form);
-    }
-    catch {
-        $form->error( $_ );
-    };
+    $template->render($form);
 
     # if we got back here restore the previous form
     if ( %$old_form ) {
