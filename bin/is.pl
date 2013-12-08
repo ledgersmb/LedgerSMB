@@ -595,7 +595,7 @@ function on_return_submit(event){
 	      </tr>
 	      <tr class="crdate-row">
 		<th align=right>| . $locale->text('Invoice Created') . qq|</th>
-		<td><input class="date" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}"></td>
+		<td><input class="date" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate"></td>
 	      </tr>
 	      <tr class="transdate-row">
 		<th align=right>| . $locale->text('Invoice Date') . qq|</th>

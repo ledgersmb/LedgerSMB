@@ -1636,7 +1636,7 @@ sub post_invoice {
 		       till = ?,
 		       language_code = ?,
 		       ponumber = ?,
-                       approved = ?
+                       approved = ?,
 		       crdate = ?
 		 WHERE id = ?
              |;
@@ -1654,7 +1654,7 @@ sub post_invoice {
         $form->{currency},
         $form->{employee_id},   $form->{till},
         $form->{language_code}, $form->{ponumber}, $approved,
-        $form->{crdate},	$form->{id}
+        $form->{crdate} || 'today',	$form->{id}
     ) || $form->dberror($query);
 
     # add shipto
