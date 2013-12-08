@@ -2191,8 +2191,7 @@ CREATE TABLE audittrail (
   formname text,
   action text,
   transdate timestamp default current_timestamp,
-  --person_id integer references person(entity_id) not null,
-  person_id integer references person(id) not null,
+  person_id integer references person(entity_id) not null,
   entry_id BIGSERIAL PRIMARY KEY
 );
 
@@ -2415,7 +2414,6 @@ $$
 DECLARE
    t_reference text;
    t_row RECORD;
-   t_user_id int;
 BEGIN
 
 IF TG_OP = 'INSERT' then
@@ -2430,11 +2428,8 @@ ELSE
     t_reference := t_row.reference;
 END IF;
 
-SELECT id into t_user_id from users where username = SESSION_USER;
-
-INSERT INTO audittrail (trans_id,tablename,reference, action, person_id)
---values (t_row.id,TG_RELNAME,t_reference, TG_OP, person__get_my_entity_id());
-values (t_row.id,TG_RELNAME,t_reference, TG_OP, t_user_id);
+INSERT INTO audittrail (trans_id,tablename,reference, action, person__get_my_entity_id())
+values (t_row.id,TG_RELNAME,t_reference, TG_OP, person__get_my_entity_id());
 
 return null; -- AFTER TRIGGER ONLY, SAFE
 END;

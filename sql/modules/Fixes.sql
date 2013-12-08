@@ -258,9 +258,8 @@ ALTER TABLE entity_class DROP COLUMN IF EXISTS country_id;
 COMMIT;
 
 BEGIN;
-update audittrail set person_id=(select id from person where last_name='Admin') where person_id not in (select id from person) ;
 ALTER TABLE audittrail DROP CONSTRAINT IF EXISTS "audittrail_person_id_fkey";
-ALTER TABLE audittrail ADD CONSTRAINT "audittrail_person_id_fkey" FOREIGN KEY(person_id) REFERENCES person(id);
+ALTER TABLE audittrail ADD CONSTRAINT "audittrail_person_id_fkey" FOREIGN KEY(person_id) REFERENCES entity(id);
 
 CREATE OR REPLACE FUNCTION gl_audit_trail_append()
 RETURNS TRIGGER AS
@@ -268,7 +267,6 @@ $$
 DECLARE
    t_reference text;
    t_row RECORD;
-   t_user_id int;
 BEGIN
 
 IF TG_OP = 'INSERT' then
@@ -283,17 +281,15 @@ ELSE
     t_reference := t_row.reference;
 END IF;
 
-SELECT id into t_user_id from users where username = SESSION_USER;
-
 INSERT INTO audittrail (trans_id,tablename,reference, action, person_id)
---values (t_row.id,TG_RELNAME,t_reference, TG_OP, person__get_my_entity_id());
-values (t_row.id,TG_RELNAME,t_reference, TG_OP, t_user_id);
+values (t_row.id,TG_RELNAME,t_reference, TG_OP, person__get_my_entity_id());
 
 return null; -- AFTER TRIGGER ONLY, SAFE
 END;
 $$ language plpgsql security definer;
 
 COMMIT;
+
 BEGIN;
 ALTER TABLE ar ADD COLUMN crdate date;
 ALTER TABLE ap ADD COLUMN crdate date;
