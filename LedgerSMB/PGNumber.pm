@@ -181,6 +181,7 @@ sub to_output {
 
     my $format = ($args{format}) ? $args{format}
                               : $LedgerSMB::App_State::User->{numberformat};
+    die 'LedgerSMB::PGNumber No Format Set, check numberformat in user_preference' if !$format;
 
     my $places = undef;
     $places = LedgerSMB::Setting->get('decimal_places') if $args{money};
