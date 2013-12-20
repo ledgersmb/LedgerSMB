@@ -58,7 +58,7 @@ sub columns {
 
          {col_id => 'invnumber',
             type => 'href',
-       href_base => 'is.pl?action=edit&id=',
+       #href_base => 'is.pl?action=edit&id=',
             name => LedgerSMB::Report::text('Invoice Number') },
 
          {col_id => 'curr',
@@ -329,7 +329,15 @@ sub run_report {
     $proc .= '_summary' if $self->is_summary; 
     my @rows = $self->exec_method({funcname => $proc});
     for my $r(@rows){
-        $r->{invnumber_href_suffix} = $r->{invoice_id};
+     my $script;
+     if($self->entity_class == 1){
+      $script = 'ir.pl';
+     }
+     else{
+      $script = 'is.pl';
+     }
+     #$r->{invnumber_href_suffix} = $r->{invoice_id};
+     $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{inv_id}";
     }
     $self->rows(\@rows);
 }
