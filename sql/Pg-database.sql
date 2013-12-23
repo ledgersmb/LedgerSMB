@@ -2428,7 +2428,7 @@ ELSE
     t_reference := t_row.reference;
 END IF;
 
-INSERT INTO audittrail (trans_id,tablename,reference, action, person__get_my_entity_id())
+INSERT INTO audittrail (trans_id,tablename,reference, action, person_id)
 values (t_row.id,TG_RELNAME,t_reference, TG_OP, person__get_my_entity_id());
 
 return null; -- AFTER TRIGGER ONLY, SAFE
