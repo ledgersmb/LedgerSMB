@@ -381,6 +381,7 @@ sub save {
     my ($self) = @_;
     warn $self->{entity_class};
     my ($ref) = $self->exec_method({funcname => 'eca__save'});
+    $self->{id}=$ref->{eca__save};
     $self->exec_method(funcname => 'eca__set_taxes');
     return $self->get_by_id($ref->{eca__save});
 }
