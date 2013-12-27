@@ -84,7 +84,7 @@ gzip       = gzip -S .gz
 
 [mail]
 ### How to send mail.  The sendmail command is used unless smtphost is set.
-sendmail   = /usr/bin/sendmail -t
+sendmail   = /usr/bin/sendmail
 # smtphost = 127.0.0.1
 # smtptimeout = 60
 # backup_email_from = backups@lsmb_hosting.com
