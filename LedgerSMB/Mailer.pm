@@ -219,7 +219,8 @@ sub send {
 	} else {
 		$self->{_message}->send(
 			'sendmail',
-			${LedgerSMB::Sysconfig::sendmail}
+			SendMail => ${LedgerSMB::Sysconfig::sendmail},
+		        SetSender => 1
 			) || return $!;
 	}
 }
