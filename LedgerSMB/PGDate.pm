@@ -177,7 +177,7 @@ sub to_output {
     return undef if !defined $self->date;
     my $fmt;
     if (defined $LedgerSMB::App_State::User->{dateformat}){
-        $fmt = $formats->{uc($LedgerSMB::App_State::User->{dateformat})}->[0];
+        $fmt = $LedgerSMB::App_State::User->{dateformat};
     } else {
         $fmt = '%F';
     }
