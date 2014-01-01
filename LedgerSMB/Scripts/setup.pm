@@ -134,7 +134,7 @@ sub login {
     }
 
     $request->{login_name} = $version_info->{username};
-    if (!$version_info->{exists}){
+    if (!$version_info->{status} eq 'does not exist'){
         $request->{message} = $request->{_locale}->text(
              'Database does not exist.');
         $request->{operation} = $request->{_locale}->text('Create Database?');
