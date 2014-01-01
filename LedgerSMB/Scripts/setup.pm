@@ -327,7 +327,6 @@ Beginning of an SQL-Ledger 2.7/2.8 migration.
 
 sub migrate_sl{
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
     my $database = _init_db($request);
     my $rc = 0;
     my $temp = $LedgerSMB::Sysconfig::tempdir;
@@ -411,7 +410,6 @@ Beginning of the upgrade from 1.2 logic
 
 sub upgrade{
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
     my $database = _init_db($request);
     my $dbinfo = $database->get_info();
 
@@ -546,7 +544,6 @@ sub fix_tests{
 sub create_db{
     use LedgerSMB::Sysconfig;
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
     my $rc=0;
 
     my $database = _get_database($request);
@@ -843,7 +840,6 @@ between versions on a stable branch (typically upgrading)
 
 sub rebuild_modules {
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
     my $database = _init_db($request);
     $request->{dbh}->{AutoCommit} = 0;
 
