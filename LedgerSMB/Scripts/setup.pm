@@ -539,7 +539,7 @@ sub create_db{
     my $creds = LedgerSMB::Auth::get_credentials('setup');
     my $rc=0;
 
-    my $database = _get_database($request):
+    my $database = _get_database($request);
     $rc=$database->create_and_load();#TODO what if createdb fails?
     $logger->info("create_and_load rc=$rc");
 
