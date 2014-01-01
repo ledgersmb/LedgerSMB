@@ -62,7 +62,7 @@ my $dstdir=getcwd;
 my $cc = 'us';
 my $coa="$srcdir/sql/coa/us/chart/General.sql";
 my $gifi=undef;
-my $pgsql_contrib_dir='ignore';
+my $pgsql_contrib_dir=undef;
 my $progress=0;
 my $help=0;
 
@@ -136,7 +136,7 @@ GetOptions(
 #
 $ENV{PG_CONTRIB_DIR} = $pgsql_contrib_dir if $pgsql_contrib_dir;
 $ENV{PGUSER} = $owner if $owner;
-$ENV{PGPASS} = $pass if $pass;
+$ENV{PGPASSWORD} = $pass if $pass;
 $ENV{PGDATABASE} = $company if $company;
 $ENV{PGHOST} = $host if $host;
 $ENV{PGPORT} = $port if $port;
@@ -149,6 +149,31 @@ my $database = LedgerSMB::Database->new(
        username => $owner, 
        password => $pass}
 );
+
+my $dbh  = DBI->connect("dbi:Pg:dbname=template1",
+			    $database->{username},
+			    $database->{password}, { AutoCommit => 0 });
+my $sth = $dbh->prepare("SELECT version()");
+$sth->execute();
+my ($pg_dbversion) = $sth->fetchrow_array();
+$sth->finish();
+
+if ($pg_dbversion =~ m/^PostgreSQL (8\.4|9\.0)/) {
+    die "Your database version requires the --pgsql-contrib option"
+	if ! defined $pgsql_contrib_dir;
+} else { # assume 9.1+ (this could however be 8.3-)
+    $sth = $dbh->prepare(
+	"select count(*)=3 from pg_available_extensions()" .
+	" where name in ('btree_gist', 'pg_trgm', 'tablefunc')");
+    $sth->execute();
+    my ($have_required_extensions) = $sth->fetchrow_array();
+    $sth->finish();
+
+    die "You don't have all the required contribs installed (btree_gist," .
+	" pg_trgm, tablefunc)"
+	if ! $have_required_extensions;
+}
+$dbh->disconnect();
 
 # Creating the actual database and loading it.  Note that process_roles is 
 # currently a separate call.  If you don't do that then permissions are never 
@@ -167,11 +192,9 @@ $database->process_roles();
 
 my $lsmb = LedgerSMB->new() || die 'could not create new LedgerSMB object';
 $lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}",
-                                       undef, undef, { AutoCommit => 0 });
-
-# We also have to retrieve the country ID which requires a database query
-
-my $sth = $lsmb->{dbh}->prepare(
+			    $database->{username},
+			    $database->{password}, { AutoCommit => 0 });
+$sth = $lsmb->{dbh}->prepare(
             'SELECT id FROM country WHERE short_name ILIKE ?'
 );
 
