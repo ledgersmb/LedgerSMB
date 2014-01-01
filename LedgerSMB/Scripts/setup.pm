@@ -68,6 +68,54 @@ take.
 
 =cut
 
+my @login_actions_dispatch_table =
+    ( { appname => 'sql-ledger',
+	version => '2.7',
+	message => "SQL-Ledger database detected.",
+	operation => "Would you like to migrate the database?",
+	next_action => 'migrate_sl' },
+      { appname => 'sql-ledger',
+	version => '2.8',
+	message => "SQL-Ledger database detected.",
+	operation => "Would you like to migrate the database?",
+	next_action => 'migrate_sl' },
+      { appname => 'sql-ledger',
+	version => undef,
+	message => "Unsupported SQL-Ledger version detected.",
+	operation => "Cancel.",
+	next_action => 'cancel' },
+      { appname => 'ledgersmb',
+	version => '1.2',
+	message => "LedgerSMB 1.2 db found.",
+	operation => "Would you like to upgrade the database?",
+	next_action => 'upgrade' },
+      { appname => 'ledgersmb',
+	version => '1.3dev',
+	message => 'Development version found.  Please upgrade manually first',
+	operation => 'Cancel?',
+	next_action => 'cancel' },
+      { appname => 'ledgersmb',
+	version => 'legacy',
+	message => 'Legacy version found.  Please upgrade first',
+	operation => 'Cancel?',
+	next_action => 'cancel' },
+      { appname => 'ledgersmb',
+	version => '1.3',
+	message => "LedgerSMB 1.3 db found.",
+	operation => "Would you like to upgrade the database?",
+	next_action => 'upgrade' },
+      { appname => 'ledgersmb',
+	version => '1.4',
+	message => "LedgerSMB 1.4 db found.",
+	operation => 'Rebuild/Upgrade?',
+	next_action => 'rebuild_modules' },
+      { appname => 'ledgersmb',
+	version => undef,
+	message => "Unsupported LedgerSMB version detected.",
+	operation => "Cancel.",
+	next_action => 'cancel' } );
+
+
 sub login {
     use LedgerSMB::Locale;
     my ($request) = @_;
@@ -80,78 +128,40 @@ sub login {
     my $server_info = $database->server_version;
     
     my $version_info = $database->get_info();
-    if(!$request->{dbh}){$request->{dbh}=$database->{dbh};}#allow upper stack to disconnect dbh when leaving
+    if(!$request->{dbh}) {
+	#allow upper stack to disconnect dbh when leaving
+	$request->{dbh}=$database->{dbh};
+    }
+
     $request->{login_name} = $version_info->{username};
-    if ($version_info->{appname} eq 'sql-ledger'){
-         $request->{message} = 
-             $request->{_locale}->text("SQL-Ledger database detected.");
-         if ($version_info->{version} =~ /^2\.[78]$/){
-             $request->{operation} = $request->{_locale}->text(
-                           "Would you like to migrate the database?"
-                );
-                $request->{next_action} = 'migrate_sl';
-         } else {
-             $request->{operation} = $request->{_locale}->text(
-                           "Unsupported version.  Cancel?"
-                );
-                $request->{next_action} = 'cancel';
-         }
-    } elsif ($version_info->{appname} eq 'ledgersmb'){
-         if ($version_info->{version} eq '1.2'){
-            $request->{message} =
-               $request->{_locale}->text("LedgerSMB 1.2 db found");
-            $request->{operation} = $request->{_locale}->text(
-                "Would you like to upgrade the database?"
-            );
-            $request->{next_action} = 'upgrade';
-         } elsif ($version_info->{version} eq '1.3dev'){
-            $request->{message} = $request->{_locale}->text(
-                 'Development version found.  Please upgrade first'
-            );
-            $request->{operation} = $request->{_locale}->text('Cancel?');
-            $request->{next_action} = 'cancel';
-         } elsif ($version_info->{version} eq 'legacy'){
-            $request->{message} = $request->{_locale}->text(
-                 'Legacy version found.  Please upgrade first'
-            );
-            $request->{operation} = $request->{_locale}->text('Cancel?');
-            $request->{next_action} = 'cancel';
-         
-         } elsif ($version_info->{version} eq '1.4') {
-             $request->{message} = $request->{_locale}->text(
-                 'LedgerSMB 1.4 found'   
-             );
-             $request->{operation} = $request->{_locale}->text(
-                    'Rebuild/Upgrade?'
-             );
-             $request->{next_action} = 'rebuild_modules';
-         } elsif ($version_info->{version} eq '1.3') {
-             $request->{message} = $request->{_locale}->text(
-                 'LedgerSMB 1.3 found'   
-             );
-             $request->{operation} = $request->{_locale}->text(
-                    'Upgrade?'
-             );
-             $request->{next_action} = 'upgrade';
-             $request->{lsmb_info} = $database->lsmb_info();
-         } else {
-            $request->{message} = $request->{_locale}->text(
-                 'Unknown version found.'
-            );
-            $request->{operation} = $request->{_locale}->text('Cancel?');
-            $request->{next_action} = 'cancel';
-         }
-    } elsif (!$version_info->{exists}){
+    if (!$version_info->{exists}){
         $request->{message} = $request->{_locale}->text(
              'Database does not exist.');
         $request->{operation} = $request->{_locale}->text('Create Database?');
         $request->{next_action} = 'create_db';
     } else {
-        $request->{message} = $request->{_locale}->text(
-             'Unknown database found.'
-        );
-        $request->{operation} = $request->{_locale}->text('Cancel?');
-        $request->{next_action} = 'cancel';
+	my $dispatch_entry;
+
+	foreach $dispatch_entry (@login_actions_dispatch_table) {
+	    if ($version_info->{appname} eq $dispatch_entry->{appname}
+		&& ($version_info->{version} eq $dispatch_entry->{version}
+		    || ! defined $dispatch_entry->{version})) {
+		foreach my $field (qq|operation message next_action|)
+		    $request->{$field} =
+		       $request->{_locale}->text($dispatch_entry->{$field});
+
+	    last;
+	    }
+	}
+
+
+	if (! defined $request->{next_action}) {
+	    $request->{message} = $request->{_locale}->text(
+		'Unknown database found.'
+		);
+	    $request->{operation} = $request->{_locale}->text('Cancel?');
+	    $request->{next_action} = 'cancel';
+	}
     }
     my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
