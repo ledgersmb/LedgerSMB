@@ -464,18 +464,19 @@ sub create {
     # 
     # Hat tip:  irc user RhodiumToad on #postgresql -- CT
 
-    my $dbh = DBI->connect('dbi:Pg:dbname=postgres');
+    my $dbh = DBI->connect('dbi:Pg:dbname=postgres',
+			   $self->{username}, $self->{password});
 
     $dbh->{RaiseError} = 1;
     $dbh->{AutoCommit} = 1;
-    my $dbn = $dbh->quote_identifier($ENV{PGDATABASE});
+    my $dbn = $dbh->quote_identifier($self->{company_name});
     my $rc = $dbh->do("CREATE DATABASE $dbn WITH TEMPLATE template0 ENCODING 'UTF8'");
 
     $logger->trace("after create db \$rc=$rc");
     if (!$rc) {
         return $rc;
     }
-    $rc ||= $self->load_base_schema();
+    $rc = $self->load_base_schema();
 
      # TODO Add logging of errors/notices
 
@@ -554,9 +555,11 @@ sub exec_script {
 
     local %ENV;
 
-    $ENV{PGUSER} = $self->{user};
+    $ENV{PGUSER} = $self->{username};
     $ENV{PGPASSWORD} = $self->{password};
     $ENV{PGDATABASE} = $self->{company_name};
+    $ENV{PGHOST} = $LedgerSMB::Sysconfig::db_host;
+    $ENV{PGPORT} = $LedgerSMB::Sysconfig::db_port;
 
     open (LOG, '>>', $args->{log});
     if ($args->{errlog}) {

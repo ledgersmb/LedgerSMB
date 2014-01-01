@@ -188,8 +188,11 @@ our $log4perl_config = qq(
 #log4perl.logger.LedgerSMB.ScriptLib.Company=TRACE
 #print STDERR localtime()." Sysconfig log4perl_config=$log4perl_config\n";
 
-$ENV{PGHOST} = $cfg->val('database', 'host');
-$ENV{PGPORT} = $cfg->val('database', 'port');
+our $db_host = $cfg->val('database', 'host');
+our $db_port = $cfg->val('database', 'port');
+
+$ENV{PGHOST} = $db_host;
+$ENV{PGPORT} = $db_port;
 our $default_db = $cfg->val('database', 'default_db');
 our $db_namespace = $cfg->val('database', 'db_namespace') || 'public';
 $ENV{PGSSLMODE} = $cfg->val('database', 'sslmode') 
