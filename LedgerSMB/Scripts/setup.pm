@@ -146,11 +146,13 @@ sub login {
 	    if ($version_info->{appname} eq $dispatch_entry->{appname}
 		&& ($version_info->{version} eq $dispatch_entry->{version}
 		    || ! defined $dispatch_entry->{version})) {
-		foreach my $field (qq|operation message next_action|)
+		my $field;
+
+		foreach $field qw(operation message next_action) {
 		    $request->{$field} =
 		       $request->{_locale}->text($dispatch_entry->{$field});
-
-	    last;
+		}
+		last;
 	    }
 	}
 
