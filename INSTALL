@@ -196,9 +196,9 @@ CPAN module (the Perl module downloader) as well.
 
 >>> Perl module dependencies for Debian
 
----- Actions for Debian Squeeze  (6.x stable)
+---- Actions for Debian Wheezy  (7.x stable)
 
-To install all the required packages which Squeeze supports, execute the
+To install all the required packages which Wheezy supports, execute the
 following command:
 
  $ aptitude install libdatetime-perl libdbi-perl libdbd-pg-perl \
@@ -206,32 +206,24 @@ following command:
    liblocale-maketext-lexicon-perl libtest-exception-perl \
    libtest-trap-perl liblog-log4perl-perl libmath-bigint-gmp-perl \
    libfile-mimeinfo-perl libtemplate-plugin-number-format-perl \
-   libdatetime-format-strptime-perl libconfig-general-perl
-   (@@@ have to TEST for trunk / 1.4 @@@)
-
-Extra for trunk (1.4) (@@@ tested @@@):
-  $ aptitude install libdatetime-format-strptime-perl \ 
-    libconfig-inifiles-perl libcontextual-return-perl
+   libdatetime-format-strptime-perl libconfig-general-perl \
+   libdatetime-format-strptime-perl libio-stringy-perl libmoose-perl \
+   libconfig-inifiles-perl
 
 
-This installs the modules available from the Squeeze repository.
+This installs the required modules available from the Wheezy repository.
 
-As far as the optional packages are concerned on Squeeze, the Excel and
-PDF/Postscript output options are not directly available. If you want
-these output options, you'll need to download them from CPAN. 
-(@@@ TEST (Excel gone in 1.4) @@@)
+To install the (optional) PDF/Postscript output module, install the
+following packages by executing this command:
 
-Please note that the PDF/Postscript module depends on the TeX/LaTeX
-package which *is* in the Squeeze package repository:
-
- $ aptitude install texlive-latex-recommended
+ $ aptitude install libtemplate-plugin-latex-perl texlive-latex-recommended
 
 The credit card processing support for TrustCommerce is available
-from the Squeeze repository through:
+from the Wheezy repository through:
 
  $ aptitude install libnet-tclink-perl
 
-The Open Office output option is available from the Squeeze repository
+The Open Office output option is available from the Wheezy repository
 as well through the command:
 
  $ aptitude install libxml-twig-perl
