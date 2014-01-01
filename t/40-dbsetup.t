@@ -19,7 +19,7 @@ my $run_tests = 1;
 for my $log (qw(dblog dblog_stderr dblog_stdout)){
     unlink "$LedgerSMB::Sysconfig::tempdir/$log";
 }
-for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB PG_CONTRIB_DIR)){
+for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB)){
   if (!defined $ENV{$evar}){
       $run_tests = 0;
       plan skip_all => "$evar not set";
@@ -38,7 +38,6 @@ my $db = LedgerSMB::Database->new({
          company_name => $ENV{LSMB_NEW_DB},
          username     => $ENV{PGUSER},
          password     => $ENV{PGPASSWORD},
-         contrib_dir  => $ENV{PG_CONTRIB_DIR},
          source_dir   => $ENV{LSMB_SOURCE_DIR}
 });
 

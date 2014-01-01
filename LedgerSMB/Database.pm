@@ -79,6 +79,22 @@ sub new {
     return $self;
 }
 
+=item dbh
+
+This routine returns a DBI database handle
+
+=cut
+
+sub dbh {
+    my ($self) = @_;
+    my $creds = LedgerSMB::Auth::get_credentials();
+    return DBI->connect(
+        "dbi:Pg:dbname=$self->{company_name}",
+	"$creds->{login}", "$creds->{password}",
+	{ AutoCommit => 0, PrintError => $logger->is_warn(), }
+    );
+}
+
 =item base_backup
 
 This routine connects to the database using pg_dumpall and returns a plain text,
@@ -100,8 +116,7 @@ failure.
 sub base_backup {
     my $self = shift @_;
 
-    my $old_pguser = $ENV{PGUSER};
-    my $old_pgpass = $ENV{PGPASSWORD};
+    local %ENV; # Make sure that - when leaving the scope - %ENV is restored
     $ENV{PGUSER} = $self->{username};
     $ENV{PGPASSWORD} = $self->{password};
 
@@ -121,9 +136,6 @@ sub base_backup {
         $backupfile = undef;
         $logger->error("backup failed: non-zero exit code from pg_dumpall");
     }
-
-    $ENV{PGUSER} = $old_pguser;
-    $ENV{PGPASSWORD} = $old_pgpass;
 
     return $backupfile;
 }
@@ -147,8 +159,7 @@ failure.
 sub db_backup {
     my $self = shift @_;
 
-    my $old_pguser = $ENV{PGUSER};
-    my $old_pgpass = $ENV{PGPASSWORD};
+    local %ENV;
     $ENV{PGUSER} = $self->{username};
     $ENV{PGPASSWORD} = $self->{password};
 
@@ -168,9 +179,6 @@ sub db_backup {
         $backupfile = undef;
         $logger->error("backup failed: non-zero exit code from pg_dump");
     }
-
-    $ENV{PGUSER} = $old_pguser;
-    $ENV{PGPASSWORD} = $old_pgpass;
 
     return $backupfile;
 }
@@ -445,7 +453,6 @@ display only those lines containing the word ERROR.
 
 sub create {
     my ($self) = @_;
-    $logger->trace("trying to create db \$ENV{PG_CONTRIB_DIR}=$ENV{PG_CONTRIB_DIR}");
     # We have to use template0 because of issues that Debian has with database 
     # encoding.  Apparently that causes problems for us, so template0 must be
     # used. Hat tip:  irc user nwnw on #ledgersmb
@@ -468,22 +475,7 @@ sub create {
     if (!$rc) {
         return $rc;
     }
-    my $rc2=0;
-    my @contrib_scripts = qw(pg_trgm tsearch2 tablefunc);
-    if($ENV{PG_CONTRIB_DIR})
-    { 
-     #postgres 9.1 this is done by create extension pg_trgm btree_gist ..
-     for my $contrib (@contrib_scripts){
-         $rc2=system("psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
-         $rc ||= $rc2
-     }
-    }
-    else
-    {
-     $logger->info("Skipping contrib_scripts @contrib_scripts");
-    }     
-    $rc2 = system("psql -f $self->{source_dir}sql/Pg-database.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
-    $rc ||= $rc2;
+    $rc ||= $self->load_base_schema();
 
      # TODO Add logging of errors/notices
 
@@ -509,6 +501,23 @@ sub copy {
     return $rc;
 }        
 
+=item $db->load_base_schema()
+
+Loads the base schema definition file Pg-database.sql.
+
+=cut
+
+sub load_base_schema {
+    my ($self) = @_;
+
+    return $self->exec_script({
+	script => "$self->{source_dir}sql/Pg-database.sql",
+	log => "$temp/dblog_stdout",
+	errlog => "$temp/dblog_stderr"
+			      });
+}
+
+
 =item $db->load_modules($loadorder)
 
 Loads or reloads sql modules from $loadorder
@@ -528,10 +537,11 @@ sub load_modules {
                             log    => "$temp/dblog"});
 
     }
-    close (LOADORDER);
+    close (LOADORDER); // ### return failure to execute the script?
 }
 
-=item $db->exec_script({script => 'path/to/file', logfile => 'path/to/log'})
+=item $db->exec_script({script => 'path/to/file', log => 'path/to/log',
+    errlog => 'path/to/stderr_output' })
 
 Executes the script.  Returns 0 if successful, 1 if there are errors suggesting
 that types are already created, and 2 if there are other errors.
@@ -540,8 +550,20 @@ that types are already created, and 2 if there are other errors.
 
 sub exec_script {
     my ($self, $args) = @_;
+
+
+    local %ENV;
+
+    $ENV{PGUSER} = $self->{user};
+    $ENV{PGPASSWORD} = $self->{password};
+    $ENV{PGDATABASE} = $self->{company_name};
+
     open (LOG, '>>', $args->{log});
-    open (PSQL, '-|', "psql -f $args->{script} 2>&1");
+    if ($args->{errlog}) {
+	open (PSQL, '-|', "psql -f $args->{script} 2>>$args->{errlog}");
+    } else {
+	open (PSQL, '-|', "psql -f $args->{script} 2>&1");
+    }
     my $test = 0;
     while (my $line = <PSQL>){
         if ($line =~ /ERROR/){
@@ -554,6 +576,10 @@ sub exec_script {
         print LOG $line;
     }
     close(PSQL);
+    if ($? != 0) {  # command return value non-zero indicates 'other error'
+	$test = 2;
+    }
+
     close(LOG);
     return $test;
 }

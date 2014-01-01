@@ -10,9 +10,6 @@ print "Name of company file/database to install? ";
 chomp($ENV{LSMB_NEW_DB} = <STDIN>);
 
 
-print "Please enter the directory where I can find PostgreSQL contrib modules:\n";
-chomp($ENV{PG_CONTRIB_DIR} = <STDIN>);
-
 print "\n\nPostgreSQL superuser's username: ";
 chomp($ENV{PGUSER} = <STDIN>);
 

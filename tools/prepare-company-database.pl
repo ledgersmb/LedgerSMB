@@ -63,7 +63,6 @@ my $dstdir=getcwd;
 my $cc = 'us';
 my $coa="$srcdir/sql/coa/us/chart/General.sql";
 my $gifi=undef;
-my $pgsql_contrib_dir='ignore';
 my $progress=0;
 my $help=0;
 
@@ -97,8 +96,6 @@ Available options:
 		from the webserver [$dstdir]
  --host		The PostgreSQL host to connect to (see 'man psql') [$host]
  --port		The PostgreSQL port to connect to (see 'man psql') [$port]
- --pgsql-contrib The directory where the tsearch2.sql, pg_trgm.sql and
-                tablefunc.sql PostgeSQL are located [$pgsql_contrib_dir] [*]
  --company	The name of the database to be created for the company [*]
  --owner	The name of the superuser which is to become owner of the
 		company's database [$owner]
@@ -118,7 +115,6 @@ GetOptions(
    'dstdir=s'        => \$dstdir,
    'port=s'          => \$port,
    'host=s'          => \$host,
-   'pgsql-contrib=s' => \$pgsql_contrib_dir,
    'company=s'       => \$company,
    'owner=s'         => \$owner,
    'password=s'      => \$pass,
@@ -132,10 +128,9 @@ GetOptions(
 
 # Setting up the environment here in case at some point we want to expand to
 # call libpq programs directly.  It also makes the script more future proof in
-# other ways.  Note that PG_CONTRIB_DIR is not really needed in Pg 9.1 and later
+# other ways.
 # and is a LedgerSMB-ism.
 #
-$ENV{PG_CONTRIB_DIR} = $pgsql_contrib_dir if $pgsql_contrib_dir;
 $ENV{PGUSER} = $owner if $owner;
 $ENV{PGPASS} = $pass if $pass;
 $ENV{PGDATABASE} = $company if $company;

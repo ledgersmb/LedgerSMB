@@ -27,11 +27,6 @@ use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 
-sub _set_dbh {
-    my ($dbh) = @_;
-    $LedgerSMB::App_State::DBH=$dbh;
-}
-
 sub __default {
 
     my ($request) = @_;
@@ -41,6 +36,27 @@ sub __default {
 	    format => 'HTML',
     );
     $template->render($request);
+}
+
+sub _get_database {
+    my ($request) = @_;
+    my $creds = LedgerSMB::Auth::get_credentials('setup');
+
+    return LedgerSMB::Database->new(
+               {username => $creds->{login},
+            company_name => $request->{database},
+                password => $creds->{password}}
+    );
+}
+
+
+sub _init_db {
+    my ($request) = @_;
+    my $database = _get_database($request);
+    $request->{dbh} = $database->dbh();
+    $LedgerSMB::App_State::DBH = $request->{dbh};
+
+    return $database;
 }
 
 =over
@@ -56,16 +72,11 @@ sub login {
     use LedgerSMB::Locale;
     my ($request) = @_;
     $logger->trace("\$request=$request \$request->{dbh}=$request->{dbh} request=".Data::Dumper::Dumper(\$request));
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
     if (!$request->{database}){
         list_databases($request);
         return;
     }
-    my $database = LedgerSMB::Database->new(
-               {username => $creds->{login},
-            company_name => $request->{database},
-                password => $creds->{password}}
-    );
+    my $database = _get_database($request);
     my $server_info = $database->server_version;
     
     my $version_info = $database->get_info();
@@ -158,12 +169,7 @@ Lists all databases as hyperlinks to continue operations.
 
 sub list_databases {
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
-    my $database = LedgerSMB::Database->new(
-               {username => $creds->{login},
-            company_name => $request->{database},
-                password => $creds->{password}}
-    );
+    my $database = _get_database($request);
     my @results = $database->list;
     $request->{dbs} = [];
     for my $r (@results){
@@ -185,12 +191,7 @@ Copies db to the name of $request->{new_name}
 
 sub copy_db {
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
-    my $database = LedgerSMB::Database->new(
-               {username => $creds->{login},
-            company_name => $request->{database},
-                password => $creds->{password}}
-    );
+    my $database = _get_database($request);
     my $rc = $database->copy($request->{new_name}) 
            || die 'An error occurred. Please check your database logs.' ;
     my $template = LedgerSMB::Template->new(
@@ -247,14 +248,8 @@ Runs the backup.  If backup_type is set to email, emails the
 sub run_backup {
     use LedgerSMB::Company_Config;
 
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
     my $request = shift @_;
-
-    my $database = LedgerSMB::Database->new(
-               {username => $creds->{login},
-            company_name => $request->{database},
-                password => $creds->{password}}
-    );
+    my $database = _get_database($request);
 
     my $backupfile;
     my $mimetype;
@@ -283,8 +278,7 @@ sub run_backup {
             mimetype => $mimetype,
             filename => $backupfile,
             file     => $backupfile,
-	);
-        $mail->send;
+	);        $mail->send;
         unlink $backupfile;
         my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
@@ -324,38 +318,16 @@ Beginning of an SQL-Ledger 2.7/2.8 migration.
 sub migrate_sl{
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials('setup');
-    my $database = LedgerSMB::Database->new(
-               {username => $creds->{login},
-            company_name => $request->{database},
-                password => $creds->{password}}
-    );
-
-    # ENVIRONMENT NECESSARY
-    $ENV{PGUSER} = $creds->{login};
-    $ENV{PGPASSWORD} = $creds->{password};
-    $ENV{PGDATABASE} = $request->{database};
-
-    # Credentials set above via environment variables --CT
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
-    my $dbh = $request->{dbh};
-    _set_dbh($dbh);
-    $dbh->do('ALTER SCHEMA public RENAME TO sl28');
-    $dbh->do('CREATE SCHEMA PUBLIC');
-    # Copying contrib script loading for now
+    my $database = _init_db($request);
     my $rc = 0;
     my $temp = $LedgerSMB::Sysconfig::tempdir;
-     my @contrib_scripts = qw(tsearch2 tablefunc);
 
-     for my $contrib (@contrib_scripts){
-         my $rc2;
-         $rc2=system("psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
-         $rc ||= $rc2
-     }
-     my $rc2 = system("psql -f sql/Pg-database.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
-     
-     $rc ||= $rc2;
+    my $dbh = $request->{dbh};
+    $dbh->do('ALTER SCHEMA public RENAME TO sl28');
+    $dbh->do('CREATE SCHEMA PUBLIC');
 
-    $database->load_modules('LOADORDER');
+    $rc ||= $database->load_base_schema();
+    $rc ||= $database->load_modules('LOADORDER');
     my $dbtemplate = LedgerSMB::Template->new(
         user => {}, 
         path => 'sql/upgrade',
@@ -365,11 +337,12 @@ sub migrate_sl{
         output_file => 'sl2.8-1.3-upgrade',
         format => 'TXT' );
     $dbtemplate->render($request);
-    $rc2 = system("psql -f $temp/sl2.8-1.3-upgrade.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
-    $rc ||= $rc2;
 
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
-    _set_dbh($request->{dbh});
+    $database->exec_script(
+        { script => "$temp/sl2.8-1.3-upgrade.sql",
+          log => "$temp/dblog_stdout",
+          errlog => "temp/dblog_stderr"
+        });
 
    @{$request->{salutations}} 
     = $request->call_procedure(procname => 'person__list_salutations' ); 
@@ -429,21 +402,9 @@ Beginning of the upgrade from 1.2 logic
 sub upgrade{
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials('setup');
-    my $database = LedgerSMB::Database->new(
-               {username => $creds->{login},
-            company_name => $request->{database},
-                password => $creds->{password}}
-    );
+    my $database = _init_db($request);
     my $dbinfo = $database->get_info();
 
-    # ENVIRONMENT NECESSARY
-    $ENV{PGUSER} = $creds->{login};
-    $ENV{PGPASSWORD} = $creds->{password};
-    $ENV{PGDATABASE} = $request->{database};
-
-    # Credentials set above via environment variables --CT
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
-    _set_dbh($request->{dbh});
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
@@ -545,15 +506,8 @@ script.
 
 sub fix_tests{
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
-    # ENVIRONMENT NECESSARY
-    $ENV{PGUSER} = $creds->{login};
-    $ENV{PGPASSWORD} = $creds->{password};
-    $ENV{PGDATABASE} = $request->{database};
 
-    # Credentials set above via environment variables --CT
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
-    _set_dbh($request->{dbh});
+    _init_db($request);
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
 
@@ -585,17 +539,7 @@ sub create_db{
     my $creds = LedgerSMB::Auth::get_credentials('setup');
     my $rc=0;
 
-
-    # ENVIRONMENT NECESSARY
-    $ENV{PGUSER} = $creds->{login};
-    $ENV{PGPASSWORD} = $creds->{password};
-    $ENV{PGDATABASE} = $request->{database};
-
-    my $database = LedgerSMB::Database->new(
-               {username => $creds->{login},
-            company_name => $request->{database},
-                password => $creds->{password}}
-    );
+    my $database = _get_database($request):
     $rc=$database->create_and_load();#TODO what if createdb fails?
     $logger->info("create_and_load rc=$rc");
 
@@ -614,8 +558,7 @@ sub create_db{
             template => 'select_coa',
 	    format => 'HTML',
     );
-    $template->render($request);
-    
+    $template->render($request);    
 }
 
 =item select_coa
@@ -704,18 +647,8 @@ sub _render_new_user {
     # here in order to avoid creating objects just to get argument
     # mapping going. --CT
 
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
-    
-    # ENVIRONMENT NECESSARY
-    $ENV{PGUSER} = $creds->{login};
-    $ENV{PGPASSWORD} = $creds->{password};
-    $ENV{PGDATABASE} = $request->{database};
 
-
-
-
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
-    _set_dbh($request->{dbh});
+    _init_db($request);
     $request->{dbh}->{AutoCommit} = 0;
 
     @{$request->{salutations}} 
@@ -759,13 +692,10 @@ sub save_user {
     use LedgerSMB::Entity::Person::Employee;
     use LedgerSMB::Entity::User;
     use LedgerSMB::PGDate;
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",
-                                   $creds->{login},
-                                   $creds->{password});
-    _set_dbh($request->{dbh});
+
+    _init_db($request);
     $request->{dbh}->{AutoCommit} = 0;
-    $LedgerSMB::App_State::DBH = $request->{dbh};
+
     $request->{control_code} = $request->{employeenumber};
     $request->{dob} = LedgerSMB::PGDate->from_input($request->{dob});
     my $emp = LedgerSMB::Entity::Person::Employee->new(%$request);
@@ -831,32 +761,19 @@ Runs the actual upgrade script.
 
 sub run_upgrade {
     my ($request) = @_;
-    my $creds = LedgerSMB::Auth::get_credentials('setup');
-    my $database = LedgerSMB::Database->new(
-               {username => $creds->{login},
-            company_name => $request->{database},
-                password => $creds->{password}}
-    );
+    my $database = _init_db($request);
+
     my $rc;
-    my $rc2;
     my $temp = $LedgerSMB::Sysconfig::tempdir;
 
-    # ENVIRONMENT NECESSARY
-    $ENV{PGUSER} = $creds->{login};
-    $ENV{PGPASSWORD} = $creds->{password};
-    $ENV{PGDATABASE} = $request->{database};
-
-    # Credentials set above via environment variables --CT
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
-    _set_dbh($request->{dbh});
     my $dbh = $request->{dbh};
     my $dbinfo = $database->get_info();
     my $v = $dbinfo->{version};
     $v =~ s/\.//;
     $dbh->do("ALTER SCHEMA public RENAME TO lsmb$v");
     $dbh->do('CREATE SCHEMA PUBLIC');
-    $database->exec_script({script => "$database->{source_dir}sql/Pg-database.sql",
-                            log    => "$temp/dblog"});
+
+    $database->load_base_schema();
     $database->load_modules('LOADORDER');
     my $dbtemplate = LedgerSMB::Template->new(
         user => {}, 
@@ -867,11 +784,11 @@ sub run_upgrade {
         output_file => 'to_1.4-upgrade',
         format => 'TXT' );
     $dbtemplate->render($request);
-    $rc2 = system("psql -f $temp/to_1.4-upgrade.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
-    $rc ||= $rc2;
-
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
-    _set_dbh($request->{dbh});
+    $rc ||= $database->exec_script(
+        { script => "$temp/to_1.4-upgrade.sql",
+          log => "$temp/dblog_stdout",
+          errlog => "temp/dblog_stderr"
+        });
 
    @{$request->{salutations}} 
     = $request->call_procedure(procname => 'person__list_salutations' ); 
@@ -917,23 +834,12 @@ between versions on a stable branch (typically upgrading)
 sub rebuild_modules {
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials('setup');
-    my $database = LedgerSMB::Database->new(
-               {username => $creds->{login},
-            company_name => $request->{database},
-                password => $creds->{password}}
-    );
+    my $database = _init_db($request);
+    $request->{dbh}->{AutoCommit} = 0;
 
-    # ENVIRONMENT NECESSARY
-    $ENV{PGUSER} = $creds->{login};
-    $ENV{PGPASSWORD} = $creds->{password};
-    $ENV{PGDATABASE} = $request->{database};
-    
     $database->load_modules('LOADORDER');
     $request->{lsmb_info} = $database->lsmb_info();
-    # Credentials set above via environment variables --CT
-    #avoid msg commit ineffective with AutoCommit enabled
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",$creds->{login},$creds->{password},{AutoCommit=>0});
-    _set_dbh($request->{dbh});
+
     my $dbh = $request->{dbh};
     my $sth = $dbh->prepare(
           'UPDATE defaults SET value = ? WHERE setting_key = ?'

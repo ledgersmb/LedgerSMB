@@ -49,12 +49,10 @@ Variables to configure test suites:
 LSMB_BASE_URL directs LWP tests to the main LSMB instance being tested. 
 
 If you wish to make a new db for tests, you must set the following environment 
-variables:
+variable:
 
    LSMB_NEW_DB is the name of the new db.  If this database cannot be created, 
                the tests will bail out.
-PG_CONTRIB_DIR is the address of the directory where Pg contrib scripts are 
-               located.  You can find it by searching for tablefunc.sql.
 
 Additionally, if LSMB_INSTALL_DB is set, the database will NOT be removed after
 test cases are run.  This can be a useful way of installing the for production

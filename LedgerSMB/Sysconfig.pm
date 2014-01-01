@@ -194,7 +194,6 @@ our $default_db = $cfg->val('database', 'default_db');
 our $db_namespace = $cfg->val('database', 'db_namespace') || 'public';
 $ENV{PGSSLMODE} = $cfg->val('database', 'sslmode') 
     if $cfg->val('database', 'sslmode');
-$ENV{PG_CONTRIB_DIR} = $cfg->val('database', 'contrib_dir');
 
 $ENV{HOME} = $tempdir;
 
