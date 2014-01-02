@@ -45,7 +45,7 @@ sub _get_database {
     return LedgerSMB::Database->new(
                {username => $creds->{login},
             company_name => $request->{database},
-                password => $creds->{password}}
+                password => $creds->{password} }
     );
 }
 
@@ -53,8 +53,8 @@ sub _get_database {
 sub _init_db {
     my ($request) = @_;
     my $database = _get_database($request);
-    $request->{dbh} = $database->dbh();
-    $LedgerSMB::App_State::DBH = $request->{dbh};
+    $request->{dbh} = $database->dbh()
+	if ! defined $request->{dbh};
 
     return $database;
 }
@@ -128,11 +128,8 @@ sub login {
     my $server_info = $database->server_version;
     
     my $version_info = $database->get_info();
-    if(!$request->{dbh}) {
-	#allow upper stack to disconnect dbh when leaving
-	$request->{dbh}=$database->{dbh};
-    }
 
+    _init_db($request);
     $request->{login_name} = $version_info->{username};
     if ($version_info->{status} eq 'does not exist'){
         $request->{message} = $request->{_locale}->text(
@@ -148,7 +145,7 @@ sub login {
 		    || ! defined $dispatch_entry->{version})) {
 		my $field;
 
-		foreach $field qw(operation message next_action) {
+		foreach $field (qw|operation message next_action|) {
 		    $request->{$field} =
 		       $request->{_locale}->text($dispatch_entry->{$field});
 		}
@@ -336,6 +333,7 @@ sub migrate_sl{
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
     $dbh->do('CREATE SCHEMA PUBLIC');
+    $dbh->commit();
 
     $rc ||= $database->load_base_schema();
     $rc ||= $database->load_modules('LOADORDER');
@@ -352,7 +350,7 @@ sub migrate_sl{
     $database->exec_script(
         { script => "$temp/sl2.8-1.3-upgrade.sql",
           log => "$temp/dblog_stdout",
-          errlog => "temp/dblog_stderr"
+          errlog => "$temp/dblog_stderr"
         });
 
    @{$request->{salutations}} 
@@ -399,18 +397,78 @@ sub _get_linked_accounts {
                           id => $row->{id}
         };
     }
+    $sth->finish();
 
     return @accounts;
 }
 
 
-=item upgrade 
-
-Beginning of the upgrade from 1.2 logic
+=item upgrade_settigs
 
 =cut
 
-sub upgrade{
+my %info_applicable_for_upgrade = (
+    'default_ar' => [ 'ledgersmb/1.2',
+		      'sql-ledger/2.7', 'sql-ledger/2.8' ],
+    'default_ap' => [ 'ledgersmb/1.2',
+		      'sql-ledger/2.7', 'sql-ledger/2.8' ],
+    'default_country' => [ 'ledgersmb/1.2',
+			   'sql-ledger/2.7', 'sql-ledger/2.8']
+    );
+	
+sub applicable_for_upgrade {
+    my ($info, $upgrade) = @_;
+
+    foreach my $check ($info_applicable_for_upgrade{$info}) {
+	return 1
+	    if $check eq $upgrade;
+    }
+
+    return 0;
+}
+
+sub upgrade_info {
+    my ($request) = @_;
+    my $database = _init_db($request);
+    my $dbinfo = $database->get_info();
+    my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
+
+
+    if (applicable_for_upgrade('default_ar', $upgrade_type)) {
+	@{$request->{ar_accounts}} = _get_linked_accounts($request, "AR");
+	unshift @{$request->{ar_accounts}}, {};
+    }
+
+    if (applicable_for_upgrade('default_ap', $upgrade_type)) {
+	@{$request->{ap_accounts}} = _get_linked_accounts($request, "AP");
+	unshift @{$request->{ap_accounts}}, {};
+    }
+
+    if (applicable_for_upgrade('default_country', $upgrade_type)) {
+	@{$request->{countries}} = ();
+	foreach my $iso2 (all_country_codes()) {
+	    push @{$request->{countries}}, { code    => uc($iso2),
+					     country => code2country($iso2) };
+	}
+	@{$request->{countries}} =
+	    sort { $a->{country} cmp $b->{country} } @{$request->{countries}};
+	unshift @{$request->{countries}}, {};
+    }
+    
+    my $retval = 0;
+    foreach my $key (keys %info_applicable_for_upgrade) {
+	$retval++
+	    if applicable_for_upgrade($key, $upgrade_type);
+    }
+    return $retval;
+}
+
+=item upgrade 
+
+
+=cut
+
+sub upgrade {
     my ($request) = @_;
     my $database = _init_db($request);
     my $dbinfo = $database->get_info();
@@ -420,32 +478,20 @@ sub upgrade{
 
     for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
         next if ($check->min_version lt $dbinfo->{version}) or 
-                ($check->max_version gt $dbinfo->{version});
+                ($check->max_version gt $dbinfo->{version}) or
+		($check->appname ne $dbinfo->{appname});
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute();
         if ($sth->rows > 0){ # Check failed --CT
              _failed_check($request, $check, $sth);
              return;
         }
+	$sth->finish();
     }
 
-    @{$request->{ar_accounts}} = _get_linked_accounts($request, "AR");
-    @{$request->{ap_accounts}} = _get_linked_accounts($request, "AP");
-    unshift @{$request->{ar_accounts}}, {};
-    unshift @{$request->{ap_accounts}}, {};
+    if (upgrade_info($request) > 0) {
+	my $template;
 
-    @{$request->{countries}} = ();
-    foreach my $iso2 (all_country_codes()) {
-        push @{$request->{countries}}, { code    => uc($iso2),
-                                         country => code2country($iso2) };
-    }
-    @{$request->{countries}} =
-        sort { $a->{country} cmp $b->{country} } @{$request->{countries}};
-    unshift @{$request->{countries}}, {};
-
-    my $template;
-
-    if ($dbinfo->{version} eq '1.2'){
         $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'upgrade_info',
@@ -453,12 +499,13 @@ sub upgrade{
         );
         $template->render($request);
     } else {
+        $request->{dbh}->rollback();
         run_upgrade($request);
     } 
 
 }
 
-sub _failed_check{
+sub _failed_check {
     my ($request, $check, $sth) = @_;
     my $template = LedgerSMB::Template->new(
             path => 'UI',
@@ -488,6 +535,8 @@ sub _failed_check{
           $hiddens->{"id_$count"} = $row->{id},
           ++$count;
     }
+    $sth->finish();
+
     $hiddens->{count} = $count;
     $hiddens->{edit} = $check->column;
     my $buttons = [
@@ -533,6 +582,7 @@ sub fix_tests{
         $sth->execute($request->{"$request->{edit}_$id"}, $id) ||
             $request->error($sth->errstr);
     }
+    $sth->finish();
     $request->{dbh}->commit;
     upgrade($request);
 }
@@ -584,7 +634,7 @@ coa_lc not set:  Select the coa location code
 
 sub select_coa {
     use LedgerSMB::Sysconfig;
-    use DBI;
+
     my ($request) = @_;
 
     if ($request->{coa_lc} =~ /\.\./){
@@ -771,7 +821,6 @@ Runs the actual upgrade script.
 sub run_upgrade {
     my ($request) = @_;
     my $database = _init_db($request);
-
     my $rc;
     my $temp = $LedgerSMB::Sysconfig::tempdir;
 
@@ -781,6 +830,7 @@ sub run_upgrade {
     $v =~ s/\.//;
     $dbh->do("ALTER SCHEMA public RENAME TO lsmb$v");
     $dbh->do('CREATE SCHEMA PUBLIC');
+    $dbh->commit;
 
     $database->load_base_schema();
     $database->load_modules('LOADORDER');
@@ -796,7 +846,7 @@ sub run_upgrade {
     $rc ||= $database->exec_script(
         { script => "$temp/to_1.4-upgrade.sql",
           log => "$temp/dblog_stdout",
-          errlog => "temp/dblog_stderr"
+          errlog => "$temp/dblog_stderr"
         });
 
    @{$request->{salutations}} 
