@@ -320,20 +320,42 @@ sub get_info {
        $sth = $dbh->prepare("SELECT SESSION_USER");
        $sth->execute;
        $retval->{username} = $sth->fetchrow_array();
-       # Legacy SL and LSMB
-       $sth = $dbh->prepare('SELECT version FROM defaults');
-       #avoid DBD::Pg::st fetchrow_hashref failed: no statement executing
-       my $rv=$sth->execute();     
-       if(defined($rv))
-       {
-        if (my $ref = $sth->fetchrow_hashref('NAME_lc')){
-           if ($ref->{version}){
-               $retval->{appname} = 'ledgersmb';
-               $retval->{version} = 'legacy';
-               $retval->{full_version} = $ref->{version};
-               return $retval;
-           }
-        }
+
+       # Is there a chance this is an SL or LSMB legacy version?
+       # (ie. is there a VERSION column to query in the DEFAULTS table?
+       $sth = $dbh->prepare(
+	   qq|select count(*)=1
+	        from pg_attribute attr
+	        join pg_class cls
+	          on cls.oid = attr.attrelid
+	        join pg_namespace nsp
+	          on nsp.oid = cls.relnamespace
+	       where cls.relname = 'defaults'
+	         and attr.attname='version'
+                 and nsp.nspname = 'public'
+             |
+	   );
+       $sth->execute();
+       my ($have_version_column) =
+	   $sth->fetchrow_array();
+       $sth->finish();
+
+       if ($have_version_column) {
+	   # Legacy SL and LSMB
+	   $sth = $dbh->prepare('SELECT version FROM defaults');
+	   #avoid DBD::Pg::st fetchrow_hashref failed: no statement executing
+	   my $rv=$sth->execute();     
+	   if(defined($rv))
+	   {
+	       if (my $ref = $sth->fetchrow_hashref('NAME_lc')){
+		   if ($ref->{version}){
+		       $retval->{appname} = 'ledgersmb';
+		       $retval->{version} = 'legacy';
+		       $retval->{full_version} = $ref->{version};
+		       return $retval;
+		   }
+	       }
+	   }
        }
        $dbh->rollback;
        # LedgerSMB 1.2 and above
