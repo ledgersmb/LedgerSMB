@@ -111,7 +111,11 @@ sub process {
 	} else {
 		$output = \$parent->{output};
 	}
-	if (ref $parent->{template} eq 'SCALAR') {
+        if ($parent->{include_path} eq 'DB'){
+                $source = LedgerSMB::Template::DB->get_template(
+                       $parent->{template}, $parent->{include_path_lang}, 'csv'
+                );
+	} elsif (ref $parent->{template} eq 'SCALAR') {
 		$source = $parent->{template};
 	} elsif (ref $parent->{template} eq 'ARRAY') {
 		$source = join "\n", @{$parent->{template}};

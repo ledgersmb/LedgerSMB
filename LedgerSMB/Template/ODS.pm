@@ -847,7 +847,11 @@ sub process {
         $parent->{binmode} = $binmode;
 	$parent->{outputfile} ||= "$tempdir/$parent->{template}-output-$$";
 
-	if (ref $parent->{template} eq 'SCALAR') {
+        if ($parent->{include_path} eq 'DB'){
+                $source = LedgerSMB::Template::DB->get_template(
+                       $parent->{template}, $parent->{include_path_lang}, 'ods'
+                );
+	} elsif (ref $parent->{template} eq 'SCALAR') {
 		$source = $parent->{template};
 	} elsif (ref $parent->{template} eq 'ARRAY') {
 		$source = join "\n", @{$parent->{template}};
