@@ -4855,10 +4855,11 @@ CREATE TABLE template ( -- not for UI templates
     template_name text not null,
     language_code varchar(6) references language(code),
     template text not null,
-    unique(template_name, language_code)
+    format text not null,
+    unique(template_name, language_code, format)
 );
 
-CREATE UNIQUE INDEX template_name_idx_u ON template(template_name) 
+CREATE UNIQUE INDEX template_name_idx_u ON template(template_name, format) 
 WHERE language_code is null; -- Pseudo-Pkey
 
 commit;
