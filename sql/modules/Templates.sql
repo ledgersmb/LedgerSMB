@@ -15,6 +15,14 @@ $$
 SELECT * FROM template WHERE id = $1;
 $$;
 
+CREATE OR REPLACE FUNCTION template__list(in_language_code varchar(6))
+RETURNS SETOF template language sql as $$
+
+SELECT * FROM template WHERE language_code IS NOT DISTINCT FROM $1
+ORDER BY template_name, format;
+
+$$;
+
 CREATE OR REPLACE FUNCTION template__save(
 in_template_name text, in_language_code varchar(6), in_template text
 in_format text
