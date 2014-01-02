@@ -1038,104 +1038,6 @@ sub update {
 
 }
 
-sub config {
-
-    my %selects;
-    $selects{dateformat} = {
-        name => 'dateformat',
-        default_values => $myconfig{dateformat},
-        options => [],
-        };
-    foreach $item (qw(mm-dd-yy mm/dd/yy dd-mm-yy dd/mm/yy dd.mm.yy yyyy-mm-dd))
-    {
-        push @{$selects{dateformat}{options}}, {text => $item, value => $item};
-    }
-
-    $selects{numberformat} = {
-        name => 'numberformat',
-        default_values => $myconfig{numberformat},
-        options => [],
-        };
-    my @formats = qw(1,000.00 1000.00 1.000,00 1000,00 1'000.00);
-    push @formats, '1 000.00';
-    foreach $item (@formats) {
-        push @{$selects{numberformat}{options}}, {text => $item, value => $item};
-    }
-
-##    for (qw(name company address signature)) {
-##        $myconfig{$_} = $form->quote( $myconfig{$_} );
-##    }
-    for (qw(address signature)) { $myconfig{$_} =~ s/\\n/\n/g }
-
-    $selects{countrycode} = {
-        name => 'countrycode',
-        default_values => ($myconfig{countrycode})? $myconfig{countrycode}: 'en',
-        options => [],
-        };
-    %countrycodes = LedgerSMB::User->country_codes;
-    foreach $key ( sort { $countrycodes{$a} cmp $countrycodes{$b} }
-        keys %countrycodes )
-    {
-        push @{$selects{countrycode}{options}}, {
-            text => $countrycodes{$key},
-            value => $key
-            };
-    }
-
-    opendir CSS, $LedgerSMB::Sysconfig::fs_cssdir;
-    @all = grep /.*\.css$/, readdir CSS;
-    closedir CSS;
-
-    $selects{stylesheet} = {
-        name => 'usestylesheet',
-	default_values => $myconfig{stylesheet},
-        options => [],
-        };
-    foreach $item (@all) {
-        push @{$selects{stylesheet}{options}}, {text => $item, value => $item};
-    }
-    push @{$selects{stylesheet}{options}}, {text => 'none', value => '0'};
-
-    if ( %{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex} ) {
-        $selects{printer} = {
-            name => 'printer',
-            default_values => $myconfig{printer},
-            options => [],
-            };
-        foreach $item ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
-            push @{$selects{printer}{options}}, {text => $item, value => $item};
-        }
-    }
-
-    $form->{title} =
-      $locale->text( 'Edit Preferences for [_1]', $form->{login} );
-
-##SC: Temporary commenting out
-##    if ( $form->{lynx} ) {
-##        require "bin/menu.pl";
-##        &menubar;
-##    }
-
-    my %hiddens = (
-        path => $form->{path},
-        login => $form->{login},
-        sessionid => $form->{sessionid},
-        type => 'preferences',
-        role => $myconfig{role},
-        old_password => $myconfig{password},
-        );
-    my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
-        locale => $locale,
-        template => 'am-userconfig');
-    $template->render({
-        form => $form,
-        user => \%myconfig,
-	hiddens => \%hiddens,
-	selects => \%selects,
-    });
-}
-
 sub save_taxes {
 
     if ( AM->save_taxes( \%myconfig, \%$form ) ) {
@@ -1143,24 +1045,6 @@ sub save_taxes {
     }
     else {
         $form->error( $locale->text('Cannot save taxes!') );
-    }
-
-}
-
-sub save_preferences {
-
-    $form->{stylesheet} = $form->{usestylesheet};
-
-    if ( $form->{new_password} ne $form->{old_password} ) {
-        $form->error( $locale->text('Password does not match!') )
-          if $form->{new_password} ne $form->{confirm_password};
-    }
-
-    if ( AM->save_preferences( \%myconfig, \%$form ) ) {
-        $form->info( $locale->text('Preferences saved!') );
-    }
-    else {
-        $form->error( $locale->text('Cannot save preferences!') );
     }
 
 }
