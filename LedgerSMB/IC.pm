@@ -253,7 +253,7 @@ sub save {
     my $nocommit=1;
     $form->{partnumber} =
       $form->update_defaults( $myconfig, "partnumber", $dbh,$nocommit)
-      if !$form->{partnumber};
+      if $form->should_update_defaults('partnumber');
 
     ( $form->{inventory_accno} ) = split( /--/, $form->{IC_inventory} );
     ( $form->{expense_accno} )   = split( /--/, $form->{IC_expense} );

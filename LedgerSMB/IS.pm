@@ -913,7 +913,7 @@ sub post_invoice {
 
     my ( $self, $myconfig, $form ) = @_;
     $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
-      unless $form->{invnumber};
+      if $form->should_update_defaults('invnumber');
 
     my $dbh = $form->{dbh};
 

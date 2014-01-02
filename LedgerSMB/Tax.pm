@@ -67,6 +67,7 @@ sub init_taxes {
         if ( defined $taxaccounts2 ) {
             next if $taxaccounts2 !~ /\b$taxaccount\b/;
         }
+        $form->{transdate} = undef unless $form->{transdate};
         $sth->execute($taxaccount, $form->{transdate}) || $form->dberror($query);
         my $ref = $sth->fetchrow_hashref;
         next unless $ref;

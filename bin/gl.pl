@@ -48,6 +48,7 @@
 use LedgerSMB::GL;
 use LedgerSMB::PE;
 use LedgerSMB::Template;
+use LedgerSMB::Setting::Sequence;
 
 require "bin/arap.pl";
 
@@ -162,7 +163,6 @@ sub add {
       unless $form->{callback};
 
     &create_links;
-    $form->{reference} = $form->update_defaults(\%myconfig, 'glnumber');
     if (!$form->{rowcount}){
         $form->{rowcount} = ( $form->{transfer} ) ? 3 : 9;
     }
@@ -190,6 +190,8 @@ sub display_form
     if (@{$form->{all_project}}){
        unshift @{ $form->{all_project} }, {};
     }
+    @{$form->{sequences}} = LedgerSMB::Setting::Sequence->list('glnumber')
+         unless $form->{id};
     $title = $form->{title};
     if ( $form->{transfer} ) {
         $form->{title} = $locale->text("[_1] Cash Transfer Transaction", $title);
