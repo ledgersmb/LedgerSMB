@@ -87,12 +87,17 @@ This routine returns a DBI database handle
 
 sub dbh {
     my ($self) = @_;
+
+    return $LedgerSMB::App_State::DBH
+	if defined $LedgerSMB::App_State::DBH;
+
     my $creds = LedgerSMB::Auth::get_credentials();
-    return DBI->connect(
+    $LedgerSMB::App_State::DBH = DBI->connect(
         "dbi:Pg:dbname=$self->{company_name}",
 	"$creds->{login}", "$creds->{password}",
 	{ AutoCommit => 0, PrintError => $logger->is_warn(), }
     );
+    return $LedgerSMB::App_State::DBH;
 }
 
 =item base_backup
@@ -292,13 +297,9 @@ sub get_info {
     full_version => undef,
           status => undef,
     };
-    $logger->debug("\$self->{dbh}=$self->{dbh}");
+
     my $creds = LedgerSMB::Auth->get_credentials();
-    my $dbh = DBI->connect(
-        "dbi:Pg:dbname=$self->{company_name}", 
-         "$creds->{login}", "$creds->{password}", 
-         { AutoCommit => 0, PrintError => $logger->is_warn(), }
-    );
+    my $dbh = $self->dbh();
     if (!$dbh){ # Could not connect, try to validate existance by connecting
                 # to postgres and checking
            $dbh = DBI->connect(
@@ -307,7 +308,9 @@ sub get_info {
             );
            return $retval unless $dbh;
            $logger->debug("DBI->connect dbh=$dbh");
-           $self->{dbh}=$dbh;#make available to upper levels
+	   # don't assign to App_State::DBH, since we're a fallback connection,
+	   #  not one to the company database
+
            my $sth = $dbh->prepare(
                  "select count(*) = 1 from pg_database where datname = ?"
            );
@@ -321,29 +324,59 @@ sub get_info {
            $sth = $dbh->prepare("SELECT SESSION_USER");
            $sth->execute;
            $retval->{username} = $sth->fetchrow_array();
+	   $sth->finish();
+	   $dbh->disconnect();
+
            return $retval;
    } else { # Got a db handle... try to find the version and app by a few
             # different means
        $logger->debug("DBI->connect dbh=$dbh");
-       $self->{dbh}=$dbh;#make it available to upper levels
+
        my $sth;
        $sth = $dbh->prepare("SELECT SESSION_USER");
        $sth->execute;
        $retval->{username} = $sth->fetchrow_array();
-       # Legacy SL and LSMB
-       $sth = $dbh->prepare('SELECT version FROM defaults');
-       #avoid DBD::Pg::st fetchrow_hashref failed: no statement executing
-       my $rv=$sth->execute();     
-       if(defined($rv))
-       {
-        if (my $ref = $sth->fetchrow_hashref('NAME_lc')){
-           if ($ref->{version}){
-               $retval->{appname} = 'ledgersmb';
-               $retval->{version} = 'legacy';
-               $retval->{full_version} = $ref->{version};
-               return $retval;
-           }
-        }
+       $sth->finish();
+
+       # Is there a chance this is an SL or LSMB legacy version?
+       # (ie. is there a VERSION column to query in the DEFAULTS table?
+       $sth = $dbh->prepare(
+	   qq|select count(*)=1
+	        from pg_attribute attr
+	        join pg_class cls
+	          on cls.oid = attr.attrelid
+	        join pg_namespace nsp
+	          on nsp.oid = cls.relnamespace
+	       where cls.relname = 'defaults'
+	         and attr.attname='version'
+                 and nsp.nspname = 'public'
+             |
+	   );
+       $sth->execute();
+       my ($have_version_column) =
+	   $sth->fetchrow_array();
+       $sth->finish();
+
+       if ($have_version_column) {
+	   # Legacy SL and LSMB
+	   $sth = $dbh->prepare(
+	       'SELECT version FROM defaults'
+	       );
+	   #avoid DBD::Pg::st fetchrow_hashref failed: no statement executing
+	   my $rv=$sth->execute();     
+	   if(defined($rv))
+	   {
+	       if (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
+		   if ($ref->{version}){
+		       $retval->{appname} = 'ledgersmb';
+		       $retval->{version} = 'legacy';
+		       $retval->{full_version} = $ref->{version};
+
+		       $dbh->rollback();
+		       return $retval;
+		   }
+	       }
+	   }
        }
        $dbh->rollback;
        # LedgerSMB 1.2 and above
@@ -362,6 +395,8 @@ sub get_info {
                 $retval->{version} = '1.3';
            }
            if ($retval->{version}){
+
+	       $dbh->rollback();
               return $retval;
            }
        }
@@ -471,6 +506,7 @@ sub create {
     $dbh->{AutoCommit} = 1;
     my $dbn = $dbh->quote_identifier($self->{company_name});
     my $rc = $dbh->do("CREATE DATABASE $dbn WITH TEMPLATE template0 ENCODING 'UTF8'");
+    $dbh->disconnect();
 
     $logger->trace("after create db \$rc=$rc");
     if (!$rc) {
@@ -646,6 +682,7 @@ sub lsmb_info {
         $key = 'eca' if $t eq 'entity_credit_account';
         $retval->{"${key}_count"} = $count;
     }
+    $dbh->disconnect();
     return $retval;
 }
     
