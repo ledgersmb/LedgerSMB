@@ -73,12 +73,12 @@ my @login_actions_dispatch_table =
 	version => '2.7',
 	message => "SQL-Ledger database detected.",
 	operation => "Would you like to migrate the database?",
-	next_action => 'migrate_sl' },
+	next_action => 'upgrade' },
       { appname => 'sql-ledger',
 	version => '2.8',
 	message => "SQL-Ledger database detected.",
 	operation => "Would you like to migrate the database?",
-	next_action => 'migrate_sl' },
+	next_action => 'upgrade' },
       { appname => 'sql-ledger',
 	version => undef,
 	message => "Unsupported SQL-Ledger version detected.",
@@ -318,62 +318,6 @@ sub run_backup {
 }
    
 
-=item migrate_sl
-
-Beginning of an SQL-Ledger 2.7/2.8 migration.
-
-=cut
-
-sub migrate_sl{
-    my ($request) = @_;
-    my $database = _init_db($request);
-    my $rc = 0;
-    my $temp = $LedgerSMB::Sysconfig::tempdir;
-
-    my $dbh = $request->{dbh};
-    $dbh->do('ALTER SCHEMA public RENAME TO sl28');
-    $dbh->do('CREATE SCHEMA PUBLIC');
-    $dbh->commit();
-
-    $rc ||= $database->load_base_schema();
-    $rc ||= $database->load_modules('LOADORDER');
-    my $dbtemplate = LedgerSMB::Template->new(
-        user => {}, 
-        path => 'sql/upgrade',
-        template => 'sl2.8-1.3',
-        no_auto_output => 1,
-        format_options => {extension => 'sql'},
-        output_file => 'sl2.8-1.3-upgrade',
-        format => 'TXT' );
-    $dbtemplate->render($request);
-
-    $database->exec_script(
-        { script => "$temp/sl2.8-1.3-upgrade.sql",
-          log => "$temp/dblog_stdout",
-          errlog => "$temp/dblog_stderr"
-        });
-
-   @{$request->{salutations}} 
-    = $request->call_procedure(procname => 'person__list_salutations' ); 
-          
-   @{$request->{countries}} 
-    = $request->call_procedure(procname => 'location_list_country' ); 
-
-   my $locale = $request->{_locale};
-
-   @{$request->{perm_sets}} = (
-       {id => '0', label => $locale->text('Manage Users')},
-       {id => '1', label => $locale->text('Full Permissions')},
-   );
-    my $template = LedgerSMB::Template->new(
-                   path => 'UI/setup',
-                   template => 'new_user',
-                   format => 'HTML',
-     );
-     $template->render($request);
-
-}
-
 =item _get_linked_accounts
 
 Returns an array of hashrefs with keys ('id', 'accno', 'desc') identifying
@@ -468,10 +412,18 @@ sub upgrade_info {
 
 =cut
 
+my %upgrade_run_step = (
+    'sql-ledger/2.7' => 'run_sl_migration',
+    'sql-ledger/2.8' => 'run_sl_migration',
+    'ledgersmb/1.2' => 'run_upgrade',
+    'ledgersmb/1.3' => 'run_upgrade'
+    );
+
 sub upgrade {
     my ($request) = @_;
     my $database = _init_db($request);
     my $dbinfo = $database->get_info();
+    my $upgrade_type = "$dbinfo->{appname}/$dbinfo->{version}";
 
     $request->{dbh}->{AutoCommit} = 0;
     my $locale = $request->{_locale};
@@ -490,17 +442,18 @@ sub upgrade {
     }
 
     if (upgrade_info($request) > 0) {
-	my $template;
-
-        $template = LedgerSMB::Template->new(
+	my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'upgrade_info',
             format => 'HTML',
         );
+
+        $request->{upgrade_action} = $upgrade_run_step{$upgrade_type};
         $template->render($request);
     } else {
         $request->{dbh}->rollback();
-        run_upgrade($request);
+
+        __PACKAGE__->can($upgrade_run_step{$upgrade_type})->($request);
     } 
 
 }
@@ -809,45 +762,93 @@ sub save_user {
    $request->{dbh}->commit;
 
    rebuild_modules($request);
-   
+}
+
+
+=item process_and_run_upgrade_script
+
+=cut
+
+sub process_and_run_upgrade_script {
+    my ($request, $database, $template) = @_;
+    my $dbh = $database->dbh;
+    my $temp = $LedgerSMB::Sysconfig::tempdir;
+    my $rc;
+
+    $dbh->do('CREATE SCHEMA PUBLIC');
+    $dbh->commit;
+
+    $rc = $database->load_base_schema();
+    $rc ||= $database->load_modules('LOADORDER');
+    my $dbtemplate = LedgerSMB::Template->new(
+        user => {}, 
+        path => 'sql/upgrade',
+        template => $template,
+        no_auto_output => 1,
+        format_options => {extension => 'sql'},
+        output_file => 'upgrade',
+        format => 'TXT' );
+    $dbtemplate->render($request);
+    $rc ||= $database->exec_script(
+        { script => "$temp/upgrade.sql",
+          log => "$temp/dblog_stdout",
+          errlog => "$temp/dblog_stderr"
+        });
 }
 
 =item run_upgrade
 
-Runs the actual upgrade script.
+
 
 =cut
 
 sub run_upgrade {
     my ($request) = @_;
     my $database = _init_db($request);
-    my $rc;
-    my $temp = $LedgerSMB::Sysconfig::tempdir;
 
     my $dbh = $request->{dbh};
     my $dbinfo = $database->get_info();
     my $v = $dbinfo->{version};
     $v =~ s/\.//;
     $dbh->do("ALTER SCHEMA public RENAME TO lsmb$v");
-    $dbh->do('CREATE SCHEMA PUBLIC');
-    $dbh->commit;
 
-    $database->load_base_schema();
-    $database->load_modules('LOADORDER');
-    my $dbtemplate = LedgerSMB::Template->new(
-        user => {}, 
-        path => 'sql/upgrade',
-        template => "$dbinfo->{version}-1.4",
-        no_auto_output => 1,
-        format_options => {extension => 'sql'},
-        output_file => 'to_1.4-upgrade',
-        format => 'TXT' );
-    $dbtemplate->render($request);
-    $rc ||= $database->exec_script(
-        { script => "$temp/to_1.4-upgrade.sql",
-          log => "$temp/dblog_stdout",
-          errlog => "$temp/dblog_stderr"
-        });
+    process_and_run_upgrade_script($request, $database,
+				   "$dbinfo->{version}-1.4");
+
+    if ($v eq '1.2'){
+	create_initial_user($request);
+    } else {
+	rebuild_modules($request);
+    }
+}
+
+=item run_sl_migration
+
+
+=cut
+
+sub run_sl_migration {
+    my ($request) = @_;
+    my $database = _init_db($request);
+    my $rc = 0;
+    my $temp = $LedgerSMB::Sysconfig::tempdir;
+
+    my $dbh = $request->{dbh};
+    $dbh->do('ALTER SCHEMA public RENAME TO sl28');
+
+    process_and_run_upgrade_script($request, $database,
+				   'sl2.8-1.3');
+
+    create_initial_user($request);
+}
+
+
+=item create_initial_user
+
+=cut
+
+sub create_initial_user {
+    my ($request) = @_;
 
    @{$request->{salutations}} 
     = $request->call_procedure(procname => 'person__list_salutations' ); 
@@ -861,17 +862,14 @@ sub run_upgrade {
        {id => '0', label => $locale->text('Manage Users')},
        {id => '1', label => $locale->text('Full Permissions')},
    );
-   if ($v eq '1.2'){
-        my $template = LedgerSMB::Template->new(
+    my $template = LedgerSMB::Template->new(
                    path => 'UI/setup',
                    template => 'new_user',
                    format => 'HTML',
-         );
-         $template->render($request);
-   } else {
-         rebuild_modules($request);
-   }
+     );
+     $template->render($request);
 }
+
 
 =item cancel
 
