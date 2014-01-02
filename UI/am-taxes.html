@@ -22,7 +22,7 @@
 	  <td><input name="taxrate_<?lsmb i ?>" size="6" value="<?lsmb form.item("taxrate_$i") ?>" /></td>
 	  <td><input name="minvalue_<?lsmb i ?>" size="6" value="<?lsmb form.item("minvalue_$i") ?>" /></td>
 	  <td><input name="taxnumber_<?lsmb i ?>" value="<?lsmb form.item("taxnumber_$i") ?>" /></td>
-	  <td><input class="date" name="validto_<?lsmb i ?>" size="11" value="<?lsmb form.item("validto_$i") ?>" title="<?lsmb user.dateformat ?>" /></td>
+	  <td><input class="date" id="validto-<?lsmb i ?>" name="validto_<?lsmb i ?>" size="11" value="<?lsmb form.item("validto_$i") ?>" title="<?lsmb user.dateformat ?>" /></td>
 	  <td><input name="pass_<?lsmb i ?>" size="6" value="<?lsmb form.item("pass_$i") ?>" /></td>
 	  <td><?lsmb PROCESS select element_data=row.1 ?></td>
 	</tr>

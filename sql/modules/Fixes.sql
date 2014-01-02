@@ -297,3 +297,18 @@ ALTER TABLE entity_bank_account ADD COLUMN  remark text;
 
 COMMIT;
 
+BEGIN;
+
+CREATE TABLE template ( -- not for UI templates
+    id serial not null unique,
+    template_name text not null,
+    language_code varchar(6) references language(code),
+    template text not null,
+    unique(template_name, language_code)
+);
+
+CREATE UNIQUE INDEX template_name_idx_u ON template(template_name) 
+WHERE language_code is null; -- Pseudo-Pkey
+
+commit;
+

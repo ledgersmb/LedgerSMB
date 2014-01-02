@@ -4850,4 +4850,15 @@ transaction to be counted.$$;
 -- helpful to keeping the selection of all years fast
 create index ac_transdate_year_idx on acc_trans(EXTRACT ('YEAR' FROM transdate));
 
+CREATE TABLE template ( -- not for UI templates
+    id serial not null unique,
+    template_name text not null,
+    language_code varchar(6) references language(code),
+    template text not null,
+    unique(template_name, language_code)
+);
+
+CREATE UNIQUE INDEX template_name_idx_u ON template(template_name) 
+WHERE language_code is null; -- Pseudo-Pkey
+
 commit;
