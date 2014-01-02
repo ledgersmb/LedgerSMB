@@ -67,7 +67,6 @@ use Cwd;
 use File::Copy;
 use LedgerSMB::Company_Config;
 use LedgerSMB::App_State;
-use LedgerSMB::Setting::Sequence;
 
 use charnames qw(:full);
 use open ':utf8';
@@ -3458,10 +3457,6 @@ Replace <?lsmb curr ?> with the value of $form->{currency}
 sub update_defaults {
 
     my ( $self, $myconfig, $fld,$dbh_parm,$nocommit) = @_;
-    if ($self->{setting_sequence}){
-        return LedgerSMB::Setting::Sequence->increment(
-              $self->{setting_sequence}, $self);
-    }
 
     if ( !$self->{dbh} && $self ) {
         $self->db_init($myconfig);
@@ -3605,26 +3600,6 @@ sub update_defaults {
     return $var;
 }
 
-=item should_update_defaults(fldname)
-
-This should be used instead of direct tests, and checks for a sequence selected.
-
-=cut
-
-sub should_update_defaults {
-    my ($self, $fldname) = @_;
-    if (!$self->{$fldname}){
-       return 1;
-    }
-    if (!$self->{setting_sequence}){
-        return 0;
-    }
-
-    my $sequence = LedgerSMB::Setting::Sequence->get($self->{setting_sequence});
-    return 1 unless $sequence->accept_input;
-    return 0;
-}
-
 =item $form->db_prepare_vars(var1, var2, ..., varI<n>)
 
 Undefines $form->{varI<m>}, 1 <= I<m> <= I<n>, iff $form-<{varI<m> is both
@@ -3639,34 +3614,6 @@ sub db_prepare_vars {
         if ( !$self->{$_} and $self->{$_} ne "0" ) {
             undef $self->{$_};
         }
-    }
-}
-
-=item sequence_dropdown(setting_key)
-
-This function returns the HTML code for a dropdown box for a given setting
-key.  It is not generally to be used with code on new templates.
-
-=cut
-
-sub sequence_dropdown{
-    my ($self, $setting_key) = @_;
-    return undef if $self->{id};
-    my @sequences = LedgerSMB::Setting::Sequence->list($setting_key);
-    my $retval = qq|<select name='setting_sequence' class='sequence'>\n|;
-    $retval .= qq|<option></option>|;
-    for my $seq (@sequences){
-        my $selected = '';
-        my $label = $seq->label;
-        $selected = "SELECTED='SELECTED'"
-            if $self->{setting_sequence} eq $label;
-        $retval .= qq|<option value='$label' $selected>$label</option>\n|;
-    }
-    $retval .= "</select>";
-    if (@sequences){
-        return $retval;
-    } else {
-        return undef
     }
 }
 

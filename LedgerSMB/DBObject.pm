@@ -72,6 +72,9 @@ sub new {
     else {
         @mergelist = ();
     }
+    if ( !$base->isa('LedgerSMB') ) {
+        $self->error("Constructor called without LedgerSMB object arg");
+    }
 
     my $attr;
     if (lc($mode) eq 'base'){

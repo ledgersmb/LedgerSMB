@@ -101,7 +101,7 @@ sub post_transaction {
         $invnumber = "vinumber";
     }
     $form->{invnumber} = $form->update_defaults( $myconfig, $invnumber )
-      if $form->should_update_defaults('invnumber');
+      unless $form->{invnumber};
 
     if ( $form->{currency} eq $form->{defaultcurrency} ) {
         $form->{exchangerate} = 1;

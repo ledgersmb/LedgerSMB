@@ -75,7 +75,7 @@ sub post_invoice {
     }
     my $dbh = $form->{dbh};
     $form->{invnumber} = $form->update_defaults( $myconfig, "vinumber", $dbh )
-      if $form->should_update_defaults('invnumber');
+      unless $form->{invnumber};
 
     for ( 1 .. $form->{rowcount} ) {
         $form->{"qty_$_"} *= -1 if $form->{reverse};

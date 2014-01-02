@@ -332,29 +332,7 @@ sub prepare_order {
 
 sub form_header {
 
-    my $ordnumber;
-    my $numberfld;
-    if ( $form->{type} =~ /_order$/ ) {
-        $quotation = "0";
-        $ordnumber = "ordnumber";
-	if ($form->{vc} eq 'customer'){
-             $numberfld = "sonumber";
-        } else {
-             $numberfld = "ponumber";
-        }
-    }
-    else {
-        $quotation = "1";
-        $ordnumber = "quonumber";
-        if ( $form->{vc} eq 'customer' ) {
-	    $numberfld = "sqnumber";
-	} else {
-	    $numberfld = "rfqnumber";
-	}
-    }
     $form->{nextsub} = 'update';
-
-    $sequences = $form->sequence_dropdown($numberfld) unless $form->{id};
    
     $checkedopen   = ( $form->{closed} ) ? ""        : "checked";
     $checkedclosed = ( $form->{closed} ) ? "checked" : "";
@@ -450,8 +428,7 @@ sub form_header {
         $ordnumber = qq|
 	      <tr class="ordnumber-row">
 		<th width=70% align=right nowrap>| . $locale->text('Order Number') . qq|</th>
-                <td><input name=ordnumber size=20 value="$form->{ordnumber}">
-                     $sequences</td>
+                <td><input name=ordnumber size=20 value="$form->{ordnumber}"></td>
 		<input type=hidden name=quonumber value="$form->{quonumber}">
 	      </tr>
 	      <tr class="transdate-row">
@@ -520,8 +497,7 @@ sub form_header {
 		<th width=70% align=right nowrap>|
               . $locale->text('Quotation Number')
               . qq|</th>
-		<td><input name=quonumber size=20 value="$form->{quonumber}">
-                    $sequences</td>
+		<td><input name=quonumber size=20 value="$form->{quonumber}"></td>
 		<input type=hidden name=ordnumber value="$form->{ordnumber}">
 	      </tr>
 |;
@@ -530,8 +506,7 @@ sub form_header {
             $ordnumber = qq|
 	      <tr class="rfqnumber-row">
 		<th width=70% align=right nowrap>| . $locale->text('RFQ Number') . qq|</th>
-		<td><input name=quonumber size=20 value="$form->{quonumber}">
-                    $sequences</td>
+		<td><input name=quonumber size=20 value="$form->{quonumber}"></td>
 		<input type=hidden name=ordnumber value="$form->{ordnumber}">
 	      </tr>
 |;

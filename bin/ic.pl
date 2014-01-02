@@ -769,8 +769,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
 	  <th align=left>$group</th>
 	</tr>
 	<tr valign=top>
-          <td><input name=partnumber value="$form->{partnumber}" size=20> 
-              | . $form->sequence_dropdown('partnumber') . qq| </td>
+          <td><input name=partnumber value="$form->{partnumber}" size=20></td>
           <td>$description</td>
 	  <td>$partsgroup</td>
 	</tr>

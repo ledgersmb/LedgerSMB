@@ -671,16 +671,4 @@ FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
 COMMIT;
 
 
-BEGIN;
-
-CREATE TABLE lsmb_sequence (
-   label text primary key,
-   setting_key text not null references defaults(setting_key),
-   prefix text,
-   suffix text,
-   sequence text not null default '1',
-   accept_input bool default true
-);
-
-COMMIT;
 
