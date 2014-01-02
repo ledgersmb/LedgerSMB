@@ -77,6 +77,15 @@ The maximum version to run this against
 
 has max_version => (is => 'ro', isa => 'Str', required => 1);
 
+=item appname
+
+The appname of the application the test belongs to.
+Can currently be 'ledgersmb' or 'sql-leder'.
+
+=cut
+
+has appname => (is => 'ro', isa => 'Str', required => 1);
+
 =item test_query
 
 Text of the query to run
@@ -136,6 +145,7 @@ push @tests, __PACKAGE__->new(
  display_cols => ['customernumber', 'name', 'address1', 'city', 'state', 'zip'],
        column => 'customernumber',
         table => 'customer',
+      appname => 'ledgersmb',
   min_version => '1.2',
   max_version => '1.2'
 );
@@ -152,6 +162,7 @@ push @tests, __PACKAGE__->new(
  display_cols => ['vendornumber', 'name', 'address1', 'city', 'state', 'zip'],
        column => 'customernumber',
         table => 'customer',
+      appname => 'ledgersmb',
   min_version => '1.2',
   max_version => '1.2'
 );
@@ -163,6 +174,7 @@ push @tests, __PACKAGE__->new(
  display_cols => ['login', 'name', 'employeenumber'],
        column => 'employeenumber',
         table => 'employee',
+      appname => 'ledgersmb',
   min_version => '1.2',
   max_version => '1.2'
 );
@@ -178,6 +190,7 @@ push @tests, __PACKAGE__->new(
  display_cols => ['login', 'name', 'employeenumber'],
        column => 'employeenumber',
         table => 'employee',
+      appname => 'ledgersmb',
   min_version => '1.2',
   max_version => '1.2'
 );
@@ -193,6 +206,7 @@ push @tests, __PACKAGE__->new(
  display_cols => ['partnumber', 'description', 'sellprice'],
        column => 'partnumber',
         table => 'parts',
+      appname => 'ledgersmb',
   min_version => '1.2',
   max_version => '1.2'
 );
@@ -206,6 +220,7 @@ push @tests, __PACKAGE__->new(
  display_cols =>  ['invnumber', 'transdate', 'amount', 'netamount', 'paid'],
        column =>  'invnumber',
         table =>  'ar',
+      appname => 'ledgersmb',
   min_version => '1.2',
   max_version => '1.2',
 );
@@ -217,6 +232,7 @@ push @tests, __PACKAGE__->new(
  display_name => $LedgerSMB::App_State::Locale->text('No NULL Amounts'),
          name => 'no_null_ac_amounts',
  display_cols => ["trans_id", "chart_id", "transdate"],
+      appname => 'ledgersmb',
   min_version => '1.2',
   max_version => '1.4'
 );
