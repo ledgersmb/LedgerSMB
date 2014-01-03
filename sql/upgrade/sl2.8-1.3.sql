@@ -60,8 +60,16 @@ UPDATE sl28.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id, 
 	cash_account_id, startdate, enddate, threshold, entity_class)
-SELECT entity_id, vendornumber, business_id, creditlimit, arap_accno_id, 
-	payment_accno_id, startdate, enddate, threshold, 1
+SELECT entity_id, vendornumber, business_id, creditlimit,
+       (select id
+          from account
+         where accno = coalesce((select accno from sl28.chart
+                                  where id = arap_accno_id) ,:ap)),   
+	(select id
+	   from account
+	   where accno = (select accno from sl28.chart
+	                   where id = payment_accno_id)),
+	 startdate, enddate, threshold, 1
 FROM sl28.vendor WHERE entity_id IS NOT NULL;
 
 UPDATE sl28.vendor SET credit_id = 
@@ -72,13 +80,21 @@ UPDATE sl28.vendor SET credit_id =
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id, 
 	cash_account_id, startdate, enddate, threshold, entity_class)
-SELECT entity_id, vendornumber, business_id, creditlimit, arap_accno_id, 
-	payment_accno_id, startdate, enddate, threshold, 2
+SELECT entity_id, customernumber, business_id, creditlimit,
+       (select id
+          from account
+         where accno = coalesce((select accno from sl28.chart
+                                  where id = arap_accno_id) ,:ar)), 
+	(select id
+	   from account
+	   where accno = (select accno from sl28.chart
+	                   where id = payment_accno_id)),
+        startdate, enddate, threshold, 2
 FROM sl28.customer WHERE entity_id IS NOT NULL;
 
 UPDATE sl28.customer SET credit_id = 
 	(SELECT id FROM entity_credit_account e 
-	WHERE e.meta_number = vendornumber and entity_class = 2
+	WHERE e.meta_number = customernumber and entity_class = 2
         and e.entity_id = vendor.entity_id);
 
 --Company
