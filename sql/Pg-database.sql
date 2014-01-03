@@ -1,4 +1,3 @@
-CREATE LANGUAGE PLPGSQL; -- Remove when 8.4 is no longer supported
 
 begin;
 
