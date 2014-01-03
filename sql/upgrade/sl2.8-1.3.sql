@@ -218,10 +218,10 @@ ON
 OR
 
     lower(trim(both ' ' from c.short_name)) = lower( trim(both ' ' from oa.country))
-JOIN entity_credit_account eca ON (v.credit_id = eca.id)
-JOIN (select credit_id, id from vendor
+JOIN (select credit_id, id from sl28.vendor
           union
-           select credit_id, id from customer) v ON oa.trans_id = v.id
+           select credit_id, id from sl28.customer) v ON oa.trans_id = v.id
+JOIN entity_credit_account eca ON (v.credit_id = eca.id)
 GROUP BY eca.id;
 
 -- Shipto
@@ -262,10 +262,10 @@ ON
 OR
 
     lower(trim(both ' ' from c.short_name)) = lower( trim(both ' ' from oa.shiptocountry))
-JOIN (select credit_id, id from vendor
+JOIN (select credit_id, id from sl28.vendor
           union
-           select credit_id, id from customer) ov ON oa.trans_id = v.id
-JOIN entity_credit_account eca ON (ov.credit_id = eca.id)
+           select credit_id, id from sl28.customer) v ON oa.trans_id = v.id
+JOIN entity_credit_account eca ON (v.credit_id = eca.id)
 GROUP BY eca.id;
 
 INSERT INTO eca_note(note_class, ref_key, note, vector)
@@ -323,8 +323,10 @@ SELECT entity_id, startdate, enddate, role, ssn, sales, employeenumber, dob,
 
 -- must rebuild this table due to changes since 1.2
 
-INSERT INTO makemodel
-SELECT * FROM sl28.makemodel;
+INSERT INTO parts SELECT * FROM sl28.parts;
+
+INSERT INTO makemodel (parts_id, make, model) 
+SELECT parts_id, make, model FROM sl28.makemodel;
 
 INSERT INTO gifi
 SELECT * FROM sl28.gifi;
@@ -334,8 +336,6 @@ UPDATE defaults
                  WHERE src.setting_key = defaults.setting_key)
  WHERE setting_key IN (select setting_key FROM sl28.defaults);
 
-
-INSERT INTO parts SELECT * FROM sl28.parts;
 
 INSERT INTO assembly SELECT * FROM sl28.assembly;
 

@@ -237,6 +237,127 @@ push @tests, __PACKAGE__->new(
   max_version => '1.4'
 );
 
+=item
+
+push @tests, __PACKAGE__->new(
+    test_query => "select * from customer where arap_accno_id is null",
+    display_name => $LedgerSMB::App_State::Locale->text('Empty AR account'),
+    name => 'no_null_ar_accounts',
+    display_cols => [ 'id', 'name', 'contact' ],
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+push @tests, __PACKAGE__->new(
+    test_query => "select * from vendor where arap_accno_id is null",
+    display_name => $LedgerSMB::App_State::Locale->text('Empty AP account'),
+    name => 'no_null_ap_accounts',
+    display_cols => [ 'id', 'name', 'contact' ],
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+*/
+
+=cut
+
+push @tests,__PACKAGE__->new(
+    test_query => "select *
+                    from customer
+                   where customernumber in (select customernumber
+                                              from customer
+                                             group by customernumber
+                                             having count(*) > 1)",
+    display_name => $LedgerSMB::App_State::Locale->text('Double customernumbers'), 
+    name => 'no_double_customernumbers',
+    display_cols => ['id', 'customernumber', 'name'],
+    column => 'customernumber',
+    table => 'customer',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+push @tests,__PACKAGE__->new(
+    test_query => "select *
+                    from vendor
+                   where vendornumber in (select vendornumber
+                                              from vendor
+                                             group by vendornumber
+                                             having count(*) > 1)",
+    display_name => $LedgerSMB::App_State::Locale->text('Double vendornumbers'), 
+    name => 'no_double_vendornumbers',
+    display_cols => ['id', 'vendornumber', 'name'],
+    column => 'vendornumber',
+    table => 'vendor',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+push @tests, __PACKAGE__->new(
+    test_query => "select *
+                     from employee
+                    where employeenumber is null",
+    display_name => $LedgerSMB::App_State::Locale->text('Null employee numbers'),
+    name => 'no_null_employeenumbers',
+    display_cols => ['id', 'login', 'name', 'employeenumber'],
+    column => 'employeenumber',
+    table => 'employee',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+push @tests, __PACKAGE__->new(
+    test_query => "select *
+                     from employee
+                    where employeenumber in (select employeenumber
+                                               from employee
+                                              group by employeenumber
+                                              having count(*) > 1",
+    display_name => $LedgerSMB::App_State::Locale->text('Null employee numbers'),
+    name => 'no_duplicate_employeenumbers',
+    display_cols => ['id', 'login', 'name', 'employeenumber'],
+    column => 'employeenumber',
+    table => 'employee',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+
+push @tests, __PACKAGE__->new(
+    test_query => "select *
+                     from makemodel
+                    where model is null",
+    display_name => $LedgerSMB::App_State::Locale->text('Null model numbers'),
+    name => 'no_null_employeenumbers',
+    display_cols => ['parts_id', 'make', 'model'],
+    column => 'model',
+    table => 'makemodel',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+
+push @tests, __PACKAGE__->new(
+    test_query => "select *
+                     from makemodel
+                    where make is null",
+    display_name => $LedgerSMB::App_State::Locale->text('Null make numbers'),
+    name => 'no_null_employeenumbers',
+    display_cols => ['parts_id', 'make', 'model'],
+    column => 'make',
+    table => 'makemodel',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+
 
 __PACKAGE__->meta->make_immutable;
 
