@@ -69,8 +69,9 @@ sub load_template {
     if ($path =~ m|/.*:| ){
        die 'Cannot run on NTFS alternate data stream!';
     }
-    $fname =~ s|.*/?([^/]+)|$1|;
-    my ($template_name, $format) = split /./, $fname;
+    $path =~ m|(.*)/([^/]+)$|;
+    $fname = $2;
+    my ($template_name, $format) = split /\./, $fname;
     my $content = '';
     open TEMP, '<', $path;
     $content .= $_ while <TEMP>;

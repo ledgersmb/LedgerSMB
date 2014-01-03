@@ -36,13 +36,13 @@ BEGIN
           language_code IS NOT DISTINCT FROM in_language_code;
           
    IF FOUND THEN
-      retval := template_get(in_template_name, in_language_code, in_format);
+      retval := template__get(in_template_name, in_language_code, in_format);
       RETURN retval;
    END IF;
    INSERT INTO template (template_name, language_code, template, format)
-   VALUES (in_template_name, language_code, template, in_format);
+   VALUES (in_template_name, in_language_code, in_template, in_format);
 
-   retval := template_get(in_template_name, in_language_code, in_format);
+   retval := template__get(in_template_name, in_language_code, in_format);
    RETURN retval;
 END;
 $$;
