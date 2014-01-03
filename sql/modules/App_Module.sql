@@ -12,4 +12,6 @@ $$ SELECT * FROM lsmb_module ORDER BY id $$ LANGUAGE SQL;
 COMMENT ON FUNCTION lsmb_module__list() IS
 $$ Returns a list of all defined modules, ordered by id. $$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

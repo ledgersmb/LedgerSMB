@@ -119,5 +119,8 @@ restore the backup tables only from the backup again but this reduces security
 disclosure.
 $$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
+
 
 COMMIT;

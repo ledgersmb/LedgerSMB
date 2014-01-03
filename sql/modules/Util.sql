@@ -121,4 +121,6 @@ CREATE OR REPLACE FUNCTION lsmb__max_date() RETURNS date
 LANGUAGE SQL AS
 $$ SELECT max(transdate) FROM acc_trans; $$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

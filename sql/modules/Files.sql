@@ -354,4 +354,6 @@ $$ language sql;
 COMMENT ON FUNCTION file__list_links(in_ref_key int, in_file_class int) IS
 $$ This function retrieves a list of file attachments on a specified object.$$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

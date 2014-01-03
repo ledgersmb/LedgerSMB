@@ -248,4 +248,6 @@ $$ language sql;
 COMMENT ON FUNCTION eoy_earnings_accounts() IS
 $$ Lists equity accounts for the retained earnings dropdown.$$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

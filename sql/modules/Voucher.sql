@@ -534,4 +534,6 @@ REVOKE ALL ON FUNCTION voucher__delete(int) FROM public;
 COMMENT ON FUNCTION voucher__delete(in_voucher_id int) IS
 $$ Deletes the specified voucher from the batch.$$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

@@ -323,4 +323,6 @@ CREATE OR REPLACE FUNCTION trial_balance__delete (
     END;
 $body$ LANGUAGE PLPGSQL;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

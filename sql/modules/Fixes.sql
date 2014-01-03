@@ -313,3 +313,8 @@ WHERE language_code is null; -- Pseudo-Pkey
 
 commit;
 
+-- ### not a real check, but we rely on failing transactions above
+-- for the purpose of rejecting bits of script which might have already
+-- been executed before.
+
+update defaults set value='yes' where setting_key='module_load_ok';

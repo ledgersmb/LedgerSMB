@@ -233,4 +233,6 @@ SELECT a.id, a.accno, a.description, a.category,
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

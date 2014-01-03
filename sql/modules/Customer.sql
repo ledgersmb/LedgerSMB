@@ -1,3 +1,6 @@
+
+begin;
+
 CREATE OR REPLACE FUNCTION customer_location_save (
     in_entity_id int,
     in_location_class int, in_line_one text, in_line_two text, 
@@ -13,3 +16,7 @@ CREATE OR REPLACE FUNCTION customer_location_save (
 
 $$ language 'plpgsql';
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
+
+commit;

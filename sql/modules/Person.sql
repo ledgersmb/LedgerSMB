@@ -363,4 +363,8 @@ COMMENT ON FUNCTION person__save_location(
 ) IS
 $$ Saves a location mapped to the person with the specified information.
 Returns the location id saved.$$;
+
+
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

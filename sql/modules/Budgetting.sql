@@ -341,4 +341,7 @@ REVOKE EXECUTE ON FUNCTION budget__reject(in_id int) FROM public;
 COMMENT ON FUNCTION budget__reject(in_id int) IS
 $$ Deletes unapproved budgets only.$$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
+
 COMMIT;

@@ -215,4 +215,8 @@ CREATE TRIGGER eca_maintain_b_units_del BEFORE DELETE
        ON entity_credit_account
        FOR EACH ROW EXECUTE PROCEDURE eca_bu_trigger();
 
+
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
+
 COMMIT;

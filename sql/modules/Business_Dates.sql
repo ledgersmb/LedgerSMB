@@ -3,6 +3,7 @@
 -- the GNU GPL version 2 or at your option any future version.  Please see the
 -- accompanying LICENSE file for details.
 
+begin;
 
 --
 -- Content
@@ -335,3 +336,9 @@ begin
   return t_end_date;
 end;
 $$;
+
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
+
+
+commit;

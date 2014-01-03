@@ -230,4 +230,6 @@ DELETE FROM lsmb_sequence where label = $1;
 SELECT NULL::lsmb_sequence;
 $$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

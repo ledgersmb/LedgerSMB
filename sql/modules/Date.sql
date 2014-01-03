@@ -146,4 +146,6 @@ $$ language sql;
 COMMENT ON FUNCTION periods_get() IS
 $$ Returns dates for year to date, and last year.$$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

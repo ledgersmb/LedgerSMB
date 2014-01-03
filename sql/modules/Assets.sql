@@ -1316,4 +1316,6 @@ api's.$$; --'
 alter table asset_report alter column entered_by 
 set default person__get_my_entity_id();
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

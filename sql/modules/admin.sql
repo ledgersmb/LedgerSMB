@@ -775,4 +775,6 @@ $$ language plpgsql;
 COMMENT ON FUNCTION admin__drop_session(in_session_id int) IS
 $$ Drops the session identified, releasing all locks held.$$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

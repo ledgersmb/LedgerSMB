@@ -629,4 +629,6 @@ $$ language 'plpgsql';
 COMMENT ON FUNCTION reconciliation__report_details_payee (in_report_id INT) IS
 $$ Pulls the payee information for the reconciliation report.$$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

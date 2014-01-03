@@ -163,4 +163,6 @@ COMMENT ON VIEW menu_friendly IS
 $$ A nice human-readable view for investigating the menu tree.  Does not
 show menu attributes or acls.$$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

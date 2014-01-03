@@ -1701,4 +1701,8 @@ $$
 SELECT * FROM sic ORDER BY code;
 $$;
 
+
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
+
 COMMIT;

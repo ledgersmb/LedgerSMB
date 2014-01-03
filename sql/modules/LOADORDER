@@ -1,5 +1,9 @@
-# This is a simple list of files to be loaded from sql/modules in the order
-# they shall be loaded.
+# This is a simple list of files to be loaded from sql/modules
+# in the order they shall be loaded.
+#
+# Note: These files all adhere to the protocol where
+#  they change the value of the setting_key 'module_load_ok'
+#  from 'no' to 'yes' on success.
 Fixes.sql
 Settings.sql
 Util.sql

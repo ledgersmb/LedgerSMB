@@ -360,4 +360,7 @@ $$ This provides a list of invoices and transactions that a report hits.  This
 is intended to allow an organization to adjust what is reported on the 1099 
 before printing them.$$;
 
+
+update defaults set value='yes' where setting_key='module_load_ok';
+
 COMMIT;

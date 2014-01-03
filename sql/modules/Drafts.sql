@@ -142,4 +142,6 @@ COMMENT ON FUNCTION draft_delete(in_id int) is
 $$ Deletes the draft from the book.  Only will delete unapproved transactions.
 Otherwise an exception is raised and the transaction terminated.$$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

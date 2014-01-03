@@ -179,4 +179,6 @@ them or not.
 Returns true if the transaction was unlocked by this routine, false 
 otherwise.$$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

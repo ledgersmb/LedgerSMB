@@ -141,4 +141,6 @@ COMMENT ON FUNCTION entity__delete_bank_account(in_entity_id int, in_id int) IS
 $$ Deletes the bank account identitied by in_id if it is attached to the entity
 identified by entity_id.  Returns true if a record is deleted, false if not.$$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

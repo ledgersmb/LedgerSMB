@@ -608,4 +608,6 @@ COMMENT ON function report__balance_sheet(date) IS
 $$ This produces a balance sheet and the paths (acount numbers) of all headings
 necessary. $$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

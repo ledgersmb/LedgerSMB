@@ -258,4 +258,6 @@ LEFT JOIN person mp ON ee.manager_id = p.entity_id
  ORDER BY ee.employeenumber;
 $$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

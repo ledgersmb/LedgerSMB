@@ -1112,4 +1112,6 @@ CREATE TRIGGER eclass_perms_check
 BEFORE INSERT OR UPDATE OR DELETE ON entity_credit_account
 FOR EACH ROW EXECUTE PROCEDURE tg_enforce_perms_eclass();
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

@@ -1,3 +1,5 @@
+begin;
+
 --Journal entry stored procedures for LedgerSMB
 --Copyright (C) 2011, The LedgerSMB Core Team
 
@@ -216,3 +218,7 @@ SELECT currval('journal_entry_id_seq'), account_id, amount * -1, project_id,
 
 SELECT je_get(currval('journal_entry_id_seq'));
 $$ LANGUAGE SQL SECURITY DEFINER;
+
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
+commit;

@@ -1566,4 +1566,6 @@ SELECT o.payment_id, e.name, o.available, g.transdate,
        ($5 IS NULL OR e.name @@ plainto_tsquery($5));
 $$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;

@@ -42,7 +42,7 @@ $$ language sql;
 COMMENT ON FUNCTION tax_form__get(in_form_id int) IS
 $$ Retrieves specified tax form information from the database.$$;
 
-DROP TYPE IF EXISTS tax_form_list;
+DROP TYPE IF EXISTS tax_form_list CASCADE;
 
 CREATE TYPE tax_form_list AS (
    id int,
@@ -88,5 +88,7 @@ $BODY$ language sql;
 COMMENT ON function tax_form__list_ext() IS
 $$ Returns a list of tax forms with an added field, country_name, to specify the
 name of the country.$$;
+
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
 COMMIT;

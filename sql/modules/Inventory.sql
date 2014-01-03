@@ -97,4 +97,6 @@ $$
 SELECT * FROM parts WHERE id = $1;
 $$;
 
+update defaults set value = 'yes' where setting_key = 'module_load_ok';
+
 COMMIT;
