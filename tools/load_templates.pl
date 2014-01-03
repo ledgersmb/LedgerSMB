@@ -59,7 +59,7 @@ $language  ||= undef; # false values used as placeholders only.
 if ($to_load eq '--help' or $to_load =~ /^-/ or !$to_load){
     print $help_msg;
     exit 0;
-};
+}
 
 ### FUNCTIONS
 
@@ -103,7 +103,7 @@ $type = 'file' if -f $to_load;
 $type = 'dir' if -d $to_load;
 
 die 'Bad file type: Must be a file or directory or file does not exist' 
-   unless $type;
+   unless defined $type;
 
 # load
 

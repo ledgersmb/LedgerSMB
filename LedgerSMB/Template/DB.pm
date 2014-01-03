@@ -60,7 +60,7 @@ Returns a scalar ref to the template text so that Template Toolkit can run it.
 sub get_template {
     my ($module, $template_name, $language_code, $format) = @_;
     my ($temp) = __PACKAGE__->call_procedure(
-         procname => 'template__get'
+         procname => 'template__get',
          args => [$template_name, $language_code, $format]
     );
     my $text = $temp->{template};
@@ -76,7 +76,7 @@ Gets the template by ID.  Returns a whole template object.
 sub get_by_id {
     my ($module, $id) = @_;
     my ($temp) = __PACKAGE__->call_procedure(
-         procname => 'template__get_by_id'
+         procname => 'template__get_by_id',
          args => [$id]
     );
     return __PACKAGE__->new(%$temp);
@@ -103,7 +103,7 @@ sub get {
     my $module = shift @_;
     my %args = @_;
     my ($temp) = __PACKAGE__->call_procedure(
-         procname => 'template__get'
+         procname => 'template__get',
          args => [$args{template_name}, $args{language_code}, $args{format}]
     );
     return __PACKAGE__->new(%$temp);
