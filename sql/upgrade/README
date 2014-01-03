@@ -1,0 +1,11 @@
+
+This directory contains upgrade scripts for various LedgerSMB and
+SQL-Ledger versions.
+
+Note that every upgrade (and downgrade) script *must* adhere to
+the protocol which allows the script runner to determine success
+or failure:
+
+ Upon successful completion, the upgrade script must change
+ the value associated with the setting_key 'migration_ok' to 'yes'.
+

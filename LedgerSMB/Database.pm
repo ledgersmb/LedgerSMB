@@ -509,14 +509,12 @@ sub create {
     $dbh->disconnect();
 
     $logger->trace("after create db \$rc=$rc");
-    if (!$rc) {
-        return $rc;
-    }
-    $rc = $self->load_base_schema();
+    die "Failed to create database named $dbn"
+	if ! $rc;
 
-     # TODO Add logging of errors/notices
+    $self->load_base_schema();
 
-     return $rc;
+    return 1;
 }
 
 =item $db->copy('new_name')
@@ -546,12 +544,35 @@ Loads the base schema definition file Pg-database.sql.
 
 sub load_base_schema {
     my ($self) = @_;
+    my $success;
+    
+    # The statement below is likely to fail, because
+    # the language already exists. Unfortunately, it's an error.
+    # If it had been a notice, 
+    $self->dbh->do("CREATE LANGAGE plpgsql");
+    $self->dbh->commit;
+    $self->exec_script(
+	{
+	    script => "$self->{source_dir}sql/Pg-database.sql",
+	    log => "$temp/dblog_stdout",
+	    errlog => "$temp/dblog_stderr"
+	});
 
-    return $self->exec_script({
-	script => "$self->{source_dir}sql/Pg-database.sql",
-	log => "$temp/dblog_stdout",
-	errlog => "$temp/dblog_stderr"
-			      });
+    my $dbh = $self->dbh;
+    my $sth = $dbh->prepare(
+	qq|select true
+	        from pg_class cls
+	        join pg_namespace nsp
+	          on nsp.oid = cls.relnamespace
+	       where cls.relname = 'defaults'
+                 and nsp.nspname = 'public'
+             |);
+    $sth->execute();
+    ($success) = $sth->fetchrow_array();
+    $sth->finish();
+
+    die "Base schema failed to load"
+	if ! $success;
 }
 
 
@@ -563,18 +584,31 @@ Loads or reloads sql modules from $loadorder
 
 sub load_modules {
     my ($self, $loadorder) = @_;
+
+    my $dbh = $self->dbh;
     open (LOADORDER, '<', "$self->{source_dir}sql/modules/$loadorder");
-    for my $mod (<LOADORDER>){
+    for my $mod (<LOADORDER>) {
         chomp($mod);
         $mod =~ s/#.*//;
         $mod =~ s/^\s*//;
         $mod =~ s/\s*$//;
         next if $mod eq '';
+
+	$dbh->do("delete from defaults where setting_key='module_load_ok'");
+	$dbh->do("insert into defaults (setting_key, value)" .
+		 " values ('module_load_ok','no')");
+	$dbh->commit;
         $self->exec_script({script => "$self->{source_dir}sql/modules/$mod",
                             log    => "$temp/dblog"});
-
+	my $sth = $dbh->prepare("select value='yes' from defaults" .
+				" where setting_key='module_load_ok'");
+	$sth->execute();
+	my ($is_success) = $sth->fetchrow_array();
+	$sth->finish();
+	die "Module $mod failed to load"
+	    if ! $is_success;
     }
-    close (LOADORDER); // ### return failure to execute the script?
+    close (LOADORDER); ### return failure to execute the script?
 }
 
 =item $db->exec_script({script => 'path/to/file', log => 'path/to/log',

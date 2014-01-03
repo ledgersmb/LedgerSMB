@@ -684,5 +684,6 @@ SELECT setval('id', max(id)) FROM transactions;
 
 UPDATE defaults SET value = '1.4.0' WHERE setting_key = 'version';
 
+update defaults set value = 'yes' where setting_key = 'migration_ok';
 
 COMMIT;

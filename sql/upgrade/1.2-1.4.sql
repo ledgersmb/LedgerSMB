@@ -767,6 +767,7 @@ SELECT setval('id', max(id)) FROM transactions;
 
 UPDATE defaults SET value = '1.3.999' WHERE setting_key = 'version';
 
+update defaults set value = 'yes' where setting_key = 'migration_ok';
 
 COMMIT;
 --TODO:  Translation migratiion.  Partsgroups?

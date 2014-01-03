@@ -95,7 +95,7 @@ FROM sl28.customer WHERE entity_id IS NOT NULL;
 UPDATE sl28.customer SET credit_id = 
 	(SELECT id FROM entity_credit_account e 
 	WHERE e.meta_number = customernumber and entity_class = 2
-        and e.entity_id = vendor.entity_id);
+        and e.entity_id = customer.entity_id);
 
 --Company
 
@@ -614,8 +614,9 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
  SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
 
-UPDATE defaults SET value = '1.3.0' WHERE setting_key = 'version';
+UPDATE defaults SET value = '1.4.0' WHERE setting_key = 'version';
 
+UPDATE defaults SET value = 'yes' where setting_key = 'migration_ok';
 
 COMMIT;
 --TODO:  Translation migratiion.  Partsgroups?

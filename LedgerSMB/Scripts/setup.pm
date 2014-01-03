@@ -546,7 +546,7 @@ sub fix_tests{
 
 =cut
 
-sub create_db{
+sub create_db {
     use LedgerSMB::Sysconfig;
     my ($request) = @_;
     my $rc=0;
@@ -561,7 +561,7 @@ sub create_db{
     closedir(COA); 
 
     $request->{coa_lcs} =[];
-    foreach my $lcs (sort @coa){
+    foreach my $lcs (sort @coa) {
          push @{$request->{coa_lcs}}, {code => $lcs};
     } 
 
@@ -778,8 +778,15 @@ sub process_and_run_upgrade_script {
     $dbh->do('CREATE SCHEMA PUBLIC');
     $dbh->commit;
 
-    $rc = $database->load_base_schema();
-    $rc ||= $database->load_modules('LOADORDER');
+    $database->load_base_schema();
+    $database->load_modules('LOADORDER');
+
+    $dbh->do(qq(
+       INSERT INTO defaults (setting_key, value)
+                     VALUES ('migration_ok', 'no')
+     ));
+    $dbh->commit;
+
     my $dbtemplate = LedgerSMB::Template->new(
         user => {}, 
         path => 'sql/upgrade',
@@ -789,12 +796,30 @@ sub process_and_run_upgrade_script {
         output_file => 'upgrade',
         format => 'TXT' );
     $dbtemplate->render($request);
-    $rc ||= $database->exec_script(
+    $database->exec_script(
         { script => "$temp/upgrade.sql",
           log => "$temp/dblog_stdout",
           errlog => "$temp/dblog_stderr"
         });
+
+
+    my $sth = $dbh->prepare(qq(select value='yes'
+                                 from defaults
+                                where setting_key='migration_ok'));
+    $sth->execute();
+    my ($success) = $sth->fetchrow_array();
+    $sth->finish();
+
+    $request->error(qq(Upgrade failed;
+           logs can be found in
+           $temp/dblog_stdout and $temp/dblog_stderr))
+	if ! $success;
+
+    $dbh->do("delete from defaults where setting_key='migration_ok'");
+    $dbh->commit;
+
 }
+
 
 =item run_upgrade
 
@@ -831,7 +856,6 @@ sub run_sl_migration {
     my ($request) = @_;
     my $database = _init_db($request);
     my $rc = 0;
-    my $temp = $LedgerSMB::Sysconfig::tempdir;
 
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
