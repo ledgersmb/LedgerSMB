@@ -26,10 +26,10 @@ INSERT INTO account_heading(id, accno, description)
 SELECT id, accno, description
   FROM sl28.chart WHERE charttype = 'H';
 
-SELECT account_save(id, accno, description, category, gifi_accno, NULL::int,
+SELECT account__save(id, accno, description, category, gifi_accno, NULL::int,
                     contra,
                     CASE WHEN link like '%tax%' THEN true ELSE false END,
-                    string_to_array(link,':'))
+                    string_to_array(link,':'), 'f', 'f')
   FROM sl28.chart
  WHERE charttype = 'A';
 
@@ -62,7 +62,7 @@ INSERT INTO entity_credit_account
 	cash_account_id, startdate, enddate, threshold, entity_class)
 SELECT entity_id, vendornumber, business_id, creditlimit, arap_accno_id, 
 	payment_accno_id, startdate, enddate, threshold, 1
-FROM orig.vendor WHERE entity_id IS NOT NULL);
+FROM sl28.vendor WHERE entity_id IS NOT NULL;
 
 UPDATE sl28.vendor SET credit_id = 
 	(SELECT id FROM entity_credit_account e 
@@ -74,7 +74,7 @@ INSERT INTO entity_credit_account
 	cash_account_id, startdate, enddate, threshold, entity_class)
 SELECT entity_id, vendornumber, business_id, creditlimit, arap_accno_id, 
 	payment_accno_id, startdate, enddate, threshold, 2
-FROM orig.customer WHERE entity_id IS NOT NULL);
+FROM sl28.customer WHERE entity_id IS NOT NULL;
 
 UPDATE sl28.customer SET credit_id = 
 	(SELECT id FROM entity_credit_account e 
@@ -345,7 +345,7 @@ insert into ar
 	on_hold, approved, reverse, terms, description)
 SELECT 
 	customer.credit_id,
-	(select entity_id from orig.employee 
+	(select entity_id from sl28.employee 
 		WHERE id = ap.employee_id),
 	ap.id, invnumber, transdate, ap.taxincluded, amount, netamount, paid, 
 	datepaid, duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber, 
@@ -353,7 +353,7 @@ SELECT
 	department_id, shipvia, ap.language_code, ponumber, shippingpoint, 
 	onhold, approved, case when amount < 0 then true else false end,
 	ap.terms, description
-FROM orig.ar JOIN orig.customer ON (ap.vendor_id = customer.id) ;
+FROM sl28.ar JOIN sl28.customer ON (ap.vendor_id = customer.id) ;
 
 ALTER TABLE ar ENABLE TRIGGER ar_audit_trail;
 
@@ -367,7 +367,7 @@ insert into ap
 	on_hold, approved, reverse, terms, description)
 SELECT 
 	vendor.credit_id,
-	(select entity_id from orig.employee 
+	(select entity_id from sl28.employee 
 		WHERE id = ap.employee_id),
 	ap.id, invnumber, transdate, ap.taxincluded, amount, netamount, paid, 
 	datepaid, duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber, 
@@ -375,7 +375,7 @@ SELECT
 	department_id, shipvia, ap.language_code, ponumber, shippingpoint, 
 	onhold, approved, case when amount < 0 then true else false end,
 	ap.terms, description
-FROM orig.ap JOIN orig.vendor ON (ap.vendor_id = vendor.id) ;
+FROM sl28.ap JOIN sl28.vendor ON (ap.vendor_id = vendor.id) ;
 
 ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 
@@ -386,7 +386,7 @@ INSERT INTO acc_trans
 SELECT trans_id, chart_id, amount, transdate, source,
 	CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END, fx_transaction,
 	project_id, memo, approved, cleared, reconciled, vr_id
-	FROM orig.acc_trans ;
+	FROM sl28.acc_trans ;
 
 INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, discount, assemblyitem, unit, project_id,

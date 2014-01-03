@@ -363,7 +363,7 @@ my %info_applicable_for_upgrade = (
 sub applicable_for_upgrade {
     my ($info, $upgrade) = @_;
 
-    foreach my $check ($info_applicable_for_upgrade{$info}) {
+    foreach my $check (@{$info_applicable_for_upgrade{$info}}) {
 	return 1
 	    if $check eq $upgrade;
     }

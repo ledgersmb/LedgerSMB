@@ -1,29 +1,4 @@
-ALTER SCHEMA public RENAME TO orig;
-CREATE SCHEMA public;
 
-\i /usr/local/src/postgresql-8.2.6/contrib/tsearch2/tsearch2.sql
-\i /usr/local/src/postgresql-8.2.6/contrib/pg_trgm/pg_trgm.sql
-\i /usr/local/src/postgresql-8.2.6/contrib/tablefunc/tablefunc.sql
-\i /home/ledgersmb/ledger-smb/sql/Pg-database.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Account.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Session.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/chart.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Business_type.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Location.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Company.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Customer.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Date.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Defaults.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Settings.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Employee.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Entity.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Payment.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Person.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Report.sql
-\i /home/ledgersmb/ledger-smb/sql/modules/Voucher.sql
-
-GRANT EXECUTE ON FUNCTION eca__list_notes(int) TO lsmb_paycom_eu__read_contact;
-GRANT INSERT ON eca_note TO lsmb_paycom_eu__edit_contact;
 
 ALTER TABLE orig.vendor ADD COLUMN entity_id int;
 ALTER TABLE orig.vendor ADD COLUMN company_id int;
