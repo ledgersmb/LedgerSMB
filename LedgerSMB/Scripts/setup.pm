@@ -429,9 +429,9 @@ sub upgrade {
     my $locale = $request->{_locale};
 
     for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
-        next if ($check->min_version lt $dbinfo->{version}) or 
-                ($check->max_version gt $dbinfo->{version}) or
-		($check->appname ne $dbinfo->{appname});
+        next if ($check->min_version gt $dbinfo->{version}) 
+	    || ($check->max_version lt $dbinfo->{version})
+	    || ($check->appname ne $dbinfo->{appname});
         my $sth = $request->{dbh}->prepare($check->test_query);
         $sth->execute();
         if ($sth->rows > 0){ # Check failed --CT
@@ -467,8 +467,8 @@ sub _failed_check {
     );
     my $rows = [];
     my $count = 1;
-    my $hiddens = {table => $check->{table},
-                    edit => $check->{edit},
+    my $hiddens = {table => $check->table,
+                    edit => $check->column,
                 database => $request->{database}};
     my $header = {};
     for (@{$check->display_cols}){
@@ -479,7 +479,7 @@ sub _failed_check {
           $row->{$check->column} = 
                     { input => {
                                 name => $check->column . "_$row->{id}",
-                                value => $row->{$check->{'edit'}},
+                                value => $row->{$check->column},
                                 type => 'text',
                                 size => 15,
                     },
