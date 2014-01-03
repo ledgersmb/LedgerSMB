@@ -42,7 +42,7 @@ perl load_templates.pl file_or_directory templates/demo '' lsmbdemo
 
 #### ARG HANDLING (before functions because it should be read first)
 #
-my ($script, $to_load, $language, $database) = @_;
+my ($to_load, $language, $database) = @ARGV;
 
 # handle 2-arg form:
 
@@ -77,7 +77,7 @@ sub load_template {
     my %args = (
            template_name => $template_name,
            format => $format,
-           template => $template,
+           template => $content,
     );
     $args{language_code} = $language_code if $language_code;
     my $dbtemp = LedgerSMB::Template::DB->new(%args);

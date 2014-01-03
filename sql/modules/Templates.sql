@@ -24,23 +24,26 @@ ORDER BY template_name, format;
 $$;
 
 CREATE OR REPLACE FUNCTION template__save(
-in_template_name text, in_language_code varchar(6), in_template text
+in_template_name text, in_language_code varchar(6), in_template text,
 in_format text
 ) 
 RETURNS template LANGUAGE PLPGSQL AS
 $$
+DECLARE retval template;
 BEGIN
    UPDATE template SET template = in_template
     WHERE template_name = in_template_name AND format = in_format AND
           language_code IS NOT DISTINCT FROM in_language_code;
           
    IF FOUND THEN
-      RETURN template_get(in_template_name, in_language_code, in_format);
-   END;
+      retval := template_get(in_template_name, in_language_code, in_format);
+      RETURN retval;
+   END IF;
    INSERT INTO template (template_name, language_code, template, format)
    VALUES (in_template_name, language_code, template, in_format);
 
-   RETURN template_get(in_template_name, in_language_code, in_format);
+   retval := template_get(in_template_name, in_language_code, in_format);
+   RETURN retval;
 END;
 $$;
 
