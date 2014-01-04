@@ -357,6 +357,49 @@ push @tests, __PACKAGE__->new(
     max_version => '2.8'
     );
 
+push @tests, __PACKAGE__->new(
+    test_query => "select *
+                     from ar
+                    where invnumber in (select invnumber
+                                          from ar
+                                         group by invnumber
+                                         having count(*) > 1)
+                   order by invnumber",
+    display_name => $LedgerSMB::App_State::Locale->text('Non-unique invoice numbers'),
+    name => 'no_duplicate_ar_invoicenumbers',
+    display_cols => ['id', 'invnumber', 'transdate', 'duedate', 'datepaid',
+                     'ordnumber', 'quonumber', 'approved'],
+    column => 'invnumber',
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'Please make all AR invoice numbers unique'),
+    table => 'ar',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+#  There's no AP uniqueness requirement? 
+# push @tests, __PACKAGE__->new(
+#     test_query => "select *
+#                      from ap
+#                     where invnumber in (select invnumber
+#                                                from ap
+#                                               group by invnumber
+#                                               having count(*) > 1)
+#                     order by invnumber",
+#     display_name => $LedgerSMB::App_State::Locale->text('Non-unique invoice numbers'),
+#     name => 'no_duplicate_ap_invoicenumbers',
+#     display_cols => ['id', 'invnumber', 'transdate', 'duedate', 'datepaid',
+#                      'ordnumber', 'quonumber', 'approved'],
+#     column => 'invnumber',
+#  instructions => $LedgerSMB::App_State::Locale->text(
+#                    'Please make all AP invoice numbers unique'),
+#     table => 'ap',
+#     appname => 'sql-ledger',
+#     min_version => '2.7',
+#     max_version => '2.8'
+#     );
+
 
 push @tests, __PACKAGE__->new(
     test_query => "select *
