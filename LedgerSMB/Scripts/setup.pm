@@ -502,6 +502,7 @@ sub _failed_check {
     $template->render({
            form     => $request,
            heading  => $header,
+           headers  => [$check->display_name, $check->instructions],
            columns  => $check->display_cols,
            rows     => $rows,
            hiddens  => $hiddens,

@@ -4,6 +4,7 @@
 
 <body class="<?lsmb dojo_theme ?>">
 <form method="post" action="<?lsmb form.script ?>">
+<?lsmb FOREACH header IN headers ?><div class="listtop"><?lsmb header ?></div><?lsmb END ?>
 
 <?lsmb PROCESS 'dynatable' ?>
 <br />

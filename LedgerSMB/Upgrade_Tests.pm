@@ -127,6 +127,10 @@ Human readable, localized display name
 
 has display_name => (is => 'ro', isa => 'Str', required => 1);
 
+=item instructions
+
+Human readable instructions for test, localized.
+
 =back
 
 =cut
@@ -141,6 +145,8 @@ push @tests, __PACKAGE__->new(
                    GROUP BY customernumber
                    HAVING count(*) > 1)",
  display_name => $LedgerSMB::App_State::Locale->text('Unique Customernumber'),
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'Please make all customer numbers unique'),
          name => 'unique_customernumber',
  display_cols => ['customernumber', 'name', 'address1', 'city', 'state', 'zip'],
        column => 'customernumber',
@@ -158,6 +164,8 @@ push @tests, __PACKAGE__->new(
                    GROUP BY vendornumber
                    HAVING count(*) > 1)",
  display_name => $LedgerSMB::App_State::Locale->text('Unique Vendornumber'),
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'Please make all vendor numbers unique'),
          name => 'unique_vendornumber',
  display_cols => ['vendornumber', 'name', 'address1', 'city', 'state', 'zip'],
        column => 'customernumber',
@@ -170,6 +178,8 @@ push @tests, __PACKAGE__->new(
 push @tests, __PACKAGE__->new(
    test_query => "SELECT * FROM employee WHERE employeenumber IS NULL",
  display_name => $LedgerSMB::App_State::Locale->text('No Null employeenumber'),
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'Enter employee numbers where they are missing'),
          name => 'null_employeenumber',
  display_cols => ['login', 'name', 'employeenumber'],
        column => 'employeenumber',
@@ -187,6 +197,8 @@ push @tests, __PACKAGE__->new(
                           HAVING count(*) > 1)',
          name => 'duplicate_employee_numbers',
  display_name => $LedgerSMB::App_State::Locale->text('Duplicate employee numbers'),
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'Make employee numbers unique'),
  display_cols => ['login', 'name', 'employeenumber'],
        column => 'employeenumber',
         table => 'employee',
@@ -203,6 +215,8 @@ push @tests, __PACKAGE__->new(
                   group by partnumber having count(*) > 1)",
          name => 'duplicate_partnumbers',
  display_name => $LedgerSMB::App_State::Locale->text('Unique nonobsolete partnumbers'),
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'Make non-obsolete partnumbers unique'),
  display_cols => ['partnumber', 'description', 'sellprice'],
        column => 'partnumber',
         table => 'parts',
@@ -216,6 +230,8 @@ push @tests, __PACKAGE__->new(
                    select invnumber from ar
                    group by invnumber having count(*) > 1)',
  display_name => $LedgerSMB::App_State::Locale->text('Unique AR Invoice numbers'),
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'Make invoice numbers unique'),
          name => 'unique_ar_invnumbers',
  display_cols =>  ['invnumber', 'transdate', 'amount', 'netamount', 'paid'],
        column =>  'invnumber',
@@ -232,6 +248,8 @@ push @tests, __PACKAGE__->new(
  display_name => $LedgerSMB::App_State::Locale->text('No NULL Amounts'),
          name => 'no_null_ac_amounts',
  display_cols => ["trans_id", "chart_id", "transdate"],
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   '?????'),
       appname => 'ledgersmb',
   min_version => '1.2',
   max_version => '1.4'
