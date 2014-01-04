@@ -131,6 +131,10 @@ has display_name => (is => 'ro', isa => 'Str', required => 1);
 
 Human readable instructions for test, localized.
 
+=cut
+
+has instructions => (is => 'ro', isa => 'Str', required => 1);
+
 =back
 
 =cut
@@ -290,6 +294,8 @@ push @tests,__PACKAGE__->new(
     display_name => $LedgerSMB::App_State::Locale->text('Double customernumbers'), 
     name => 'no_double_customernumbers',
     display_cols => ['id', 'customernumber', 'name'],
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'Please make all customer numbers unique'),
     column => 'customernumber',
     table => 'customer',
     appname => 'sql-ledger',
@@ -307,6 +313,8 @@ push @tests,__PACKAGE__->new(
     display_name => $LedgerSMB::App_State::Locale->text('Double vendornumbers'), 
     name => 'no_double_vendornumbers',
     display_cols => ['id', 'vendornumber', 'name'],
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'Please make all vendor numbers unique'),
     column => 'vendornumber',
     table => 'vendor',
     appname => 'sql-ledger',
@@ -321,6 +329,8 @@ push @tests, __PACKAGE__->new(
     display_name => $LedgerSMB::App_State::Locale->text('Null employee numbers'),
     name => 'no_null_employeenumbers',
     display_cols => ['id', 'login', 'name', 'employeenumber'],
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'Please make sure all employees have an employee number'),
     column => 'employeenumber',
     table => 'employee',
     appname => 'sql-ledger',
@@ -334,11 +344,13 @@ push @tests, __PACKAGE__->new(
                     where employeenumber in (select employeenumber
                                                from employee
                                               group by employeenumber
-                                              having count(*) > 1",
+                                              having count(*) > 1)",
     display_name => $LedgerSMB::App_State::Locale->text('Null employee numbers'),
     name => 'no_duplicate_employeenumbers',
     display_cols => ['id', 'login', 'name', 'employeenumber'],
     column => 'employeenumber',
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'Please make all employee numbers unique'),
     table => 'employee',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -351,8 +363,10 @@ push @tests, __PACKAGE__->new(
                      from makemodel
                     where model is null",
     display_name => $LedgerSMB::App_State::Locale->text('Null model numbers'),
-    name => 'no_null_employeenumbers',
+    name => 'no_null_modelnumbers',
     display_cols => ['parts_id', 'make', 'model'],
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'Please make sure all modelsnumbers are non-empty'),
     column => 'model',
     table => 'makemodel',
     appname => 'sql-ledger',
@@ -366,9 +380,11 @@ push @tests, __PACKAGE__->new(
                      from makemodel
                     where make is null",
     display_name => $LedgerSMB::App_State::Locale->text('Null make numbers'),
-    name => 'no_null_employeenumbers',
+    name => 'no_null_makenumbers',
     display_cols => ['parts_id', 'make', 'model'],
     column => 'make',
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'Please make sure all make numbers are non-empty'),
     table => 'makemodel',
     appname => 'sql-ledger',
     min_version => '2.7',
