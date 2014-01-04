@@ -323,7 +323,29 @@ SELECT entity_id, startdate, enddate, role, ssn, sales, employeenumber, dob,
 
 -- must rebuild this table due to changes since 1.2
 
-INSERT INTO parts SELECT * FROM sl28.parts;
+INSERT INTO partsgroup (id, partsgroup) SELECT id, partsgroup FROM sl28.partsgroup;
+
+INSERT INTO parts (id, partnumber, description, unit,
+listprice, sellprice, lastcost, priceupdate, weight, onhand, notes,
+makemodel, assembly, alternate, rop, inventory_accno_id,
+income_accno_id, expense_accno_id, bin, obsolete, bom, image,
+drawing, microfiche, partsgroup_id, avgcost)
+ SELECT id, partnumber, description, unit,
+listprice, sellprice, lastcost, priceupdate, weight, onhand, notes,
+makemodel, assembly, alternate, rop, (select id
+          from public.account
+         where accno = (select accno from sl28.chart
+                         where id = inventory_accno_id)),
+(select id
+          from public.account
+         where accno = (select accno from sl28.chart
+                         where id = income_accno_id)), (select id
+          from public.account
+         where accno = (select accno from sl28.chart
+                         where id = expense_accno_id)),
+ bin, obsolete, bom, image,
+drawing, microfiche, partsgroup_id, avgcost FROM sl28.parts;
+
 
 INSERT INTO makemodel (parts_id, make, model) 
 SELECT parts_id, make, model FROM sl28.makemodel;
@@ -331,20 +353,40 @@ SELECT parts_id, make, model FROM sl28.makemodel;
 INSERT INTO gifi
 SELECT * FROM sl28.gifi;
 
+/* TODO -- can't be solved this easily: a freshly created defaults
+table contains 30 keys, one after having saved the System->Defaults
+screen contains 58. Also, there are account IDs here, which should
+be migrated using queries, not just copied over.
+
+To watch out for: keys which are semantically the same, but have
+different names
+
 UPDATE defaults 
-   SET value = (select value from sl28.defaults src 
-                 WHERE src.setting_key = defaults.setting_key)
- WHERE setting_key IN (select setting_key FROM sl28.defaults);
+   SET value = (select fldvalue from sl28.defaults src 
+                 WHERE src.fldname = defaults.setting_key)
+ WHERE setting_key IN (select fldvalue FROM sl28.defaults
+                        where );
+*/
 
-
-INSERT INTO assembly SELECT * FROM sl28.assembly;
+INSERT INTO assembly (id, parts_id, qty, bom, adj)
+SELECT id, parts_id, qty, bom, adj  FROM sl28.assembly;
 
 ALTER TABLE gl DISABLE TRIGGER gl_audit_trail;
 
-INSERT INTO gl(id, reference, description, transdate, person_id, notes, 
-               department_id)
-    SELECT gl.id, reference, description, transdate, p.id, gl.notes, 
-           department_id
+INSERT INTO business_unit (id, class_id, control_code, description)
+SELECT id, 1, id, description
+  FROM sl28.department;
+
+INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
+SELECT ac.entry_id, 1, gl.department_id
+  FROM acc_trans ac 
+  JOIN (SELECT id, department_id FROM sl28.ar UNION ALL
+        SELECT id, department_id FROM sl28.ap UNION ALL
+        SELECT id, department_id FROM sl28.gl) gl ON gl.id = ac.trans_id 
+ WHERE department_id > 0;
+
+INSERT INTO gl(id, reference, description, transdate, person_id, notes)
+    SELECT gl.id, reference, description, transdate, p.id, gl.notes
       FROM sl28.gl 
  LEFT JOIN sl28.employee em ON gl.employee_id = em.id
  LEFT JOIN person p ON em.entity_id = p.id;
@@ -357,19 +399,19 @@ insert into ar
 (entity_credit_account, person_id,
 	id, invnumber, transdate, taxincluded, amount, netamount, paid, 
 	datepaid, duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
-	department_id, shipvia, language_code, ponumber, shippingpoint, 
+	shipvia, language_code, ponumber, shippingpoint, 
 	on_hold, approved, reverse, terms, description)
 SELECT 
 	customer.credit_id,
 	(select entity_id from sl28.employee 
-		WHERE id = ap.employee_id),
-	ap.id, invnumber, transdate, ap.taxincluded, amount, netamount, paid, 
-	datepaid, duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber, 
+		WHERE id = ar.employee_id),
+	ar.id, invnumber, transdate, ar.taxincluded, amount, netamount, paid, 
+	datepaid, duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber, 
 	intnotes,
-	department_id, shipvia, ap.language_code, ponumber, shippingpoint, 
+	shipvia, ar.language_code, ponumber, shippingpoint, 
 	onhold, approved, case when amount < 0 then true else false end,
-	ap.terms, description
-FROM sl28.ar JOIN sl28.customer ON (ap.vendor_id = customer.id) ;
+	ar.terms, description
+FROM sl28.ar JOIN sl28.customer ON (ar.customer_id = customer.id) ;
 
 ALTER TABLE ar ENABLE TRIGGER ar_audit_trail;
 
@@ -379,7 +421,7 @@ insert into ap
 (entity_credit_account, person_id,
 	id, invnumber, transdate, taxincluded, amount, netamount, paid, 
 	datepaid, duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
-	department_id, shipvia, language_code, ponumber, shippingpoint, 
+        shipvia, language_code, ponumber, shippingpoint, 
 	on_hold, approved, reverse, terms, description)
 SELECT 
 	vendor.credit_id,
@@ -388,7 +430,7 @@ SELECT
 	ap.id, invnumber, transdate, ap.taxincluded, amount, netamount, paid, 
 	datepaid, duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber, 
 	intnotes,
-	department_id, shipvia, ap.language_code, ponumber, shippingpoint, 
+	shipvia, ap.language_code, ponumber, shippingpoint, 
 	onhold, approved, case when amount < 0 then true else false end,
 	ap.terms, description
 FROM sl28.ap JOIN sl28.vendor ON (ap.vendor_id = vendor.id) ;
@@ -475,7 +517,6 @@ INSERT INTO project (id, projectnumber, description, startdate, enddate,
        FROM sl28.project p
        JOIN sl28.customer c ON p.customer_id = c.id;
 
-INSERT INTO partsgroup (id, partsgroup) SELECT id, partsgroup FROM sl28.partsgroup;
 
 INSERT INTO status SELECT * FROM sl28.status; -- may need to comment this one out sometimes
 
