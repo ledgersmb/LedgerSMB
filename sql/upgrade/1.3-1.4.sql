@@ -154,7 +154,8 @@ SELECT id, reference, description, transdate,
 ALTER TABLE gl ENABLE TRIGGER ALL;
 
 INSERT INTO gifi SELECT * FROM lsmb13.gifi;
-SELECT setting__set(setting_key, value) FROM lsmb13.defaults;
+SELECT setting__set(setting_key, value) FROM lsmb13.defaults
+ where not setting_key = 'version';
 INSERT INTO batch SELECT * FROM lsmb13.batch;
 
 ALTER TABLE ar DISABLE TRIGGER ALL;
