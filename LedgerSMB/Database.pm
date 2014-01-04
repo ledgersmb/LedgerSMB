@@ -46,7 +46,7 @@ my $temp = $LedgerSMB::Sysconfig::tempdir;
 sub loader_log_filename {
     my $dt = DateTime->now();
     $dt =~ s/://g; # strip out disallowed Windows characters
-    return $temp . "/dblog_${$}_$dt";
+    return $temp . "/dblog_${dt}_$$";
 }
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
