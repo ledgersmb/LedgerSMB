@@ -29,6 +29,7 @@ our $VERSION = '1';
 use LedgerSMB::Sysconfig;
 use base('LedgerSMB');
 use strict;
+use DateTime;
 use Log::Log4perl;
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 my $logger = Log::Log4perl->get_logger('');
@@ -41,7 +42,12 @@ my $dbversions = {
 };
 
 my $temp = $LedgerSMB::Sysconfig::tempdir;
-#(-d "$temp") ||  system("mkdir -p $temp"); moved to Sysconfig, so can be trapped earlier
+
+sub loader_log_filename {
+    my $dt = DateTime->now();
+    $dt =~ s/://g; # strip out disallowed Windows characters
+    return $temp . "/dblog_${$}_$dt";
+}
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
@@ -124,6 +130,9 @@ sub base_backup {
     local %ENV; # Make sure that - when leaving the scope - %ENV is restored
     $ENV{PGUSER} = $self->{username};
     $ENV{PGPASSWORD} = $self->{password};
+    $ENV{PGDATABASE} = $self->{company_name};
+    $ENV{PGHOST} = $LedgerSMB::Sysconfig::db_host;
+    $ENV{PGPORT} = $LedgerSMB::Sysconfig::db_port;
 
     my @t = localtime(time);
     $t[4]++;
@@ -164,9 +173,12 @@ failure.
 sub db_backup {
     my $self = shift @_;
 
-    local %ENV;
+    local %ENV; # Make sure that - when leaving the scope - %ENV is restored
     $ENV{PGUSER} = $self->{username};
     $ENV{PGPASSWORD} = $self->{password};
+    $ENV{PGDATABASE} = $self->{company_name};
+    $ENV{PGHOST} = $LedgerSMB::Sysconfig::db_host;
+    $ENV{PGPORT} = $LedgerSMB::Sysconfig::db_port;
 
     my @t = localtime(time);
     $t[4]++;
@@ -487,7 +499,7 @@ display only those lines containing the word ERROR.
 =cut
 
 sub create {
-    my ($self) = @_;
+    my ($self, $args) = @_;
     # We have to use template0 because of issues that Debian has with database 
     # encoding.  Apparently that causes problems for us, so template0 must be
     # used. Hat tip:  irc user nwnw on #ledgersmb
@@ -512,7 +524,10 @@ sub create {
     die "Failed to create database named $dbn"
 	if ! $rc;
 
-    $self->load_base_schema();
+    $self->load_base_schema({
+	log => $args->{log},
+	errlog => $args->{errlog}
+			    });
 
     return 1;
 }
@@ -543,8 +558,9 @@ Loads the base schema definition file Pg-database.sql.
 =cut
 
 sub load_base_schema {
-    my ($self) = @_;
+    my ($self, $args) = @_;
     my $success;
+    my $log = loader_log_filename();
     
     # The statement below is likely to fail, because
     # the language already exists. Unfortunately, it's an error.
@@ -554,8 +570,8 @@ sub load_base_schema {
     $self->exec_script(
 	{
 	    script => "$self->{source_dir}sql/Pg-database.sql",
-	    log => "$temp/dblog_stdout",
-	    errlog => "$temp/dblog_stderr"
+	    log => ($args->{log} || "${log}_stdout"),
+	    errlog => ($args->{errlog} || "${log}_stderr")
 	});
 
     my $dbh = $self->dbh;
@@ -583,7 +599,8 @@ Loads or reloads sql modules from $loadorder
 =cut
 
 sub load_modules {
-    my ($self, $loadorder) = @_;
+    my ($self, $loadorder, $args) = @_;
+    my $log = loader_log_filename();
 
     my $dbh = $self->dbh;
     open (LOADORDER, '<', "$self->{source_dir}sql/modules/$loadorder");
@@ -599,7 +616,9 @@ sub load_modules {
 		 " values ('module_load_ok','no')");
 	$dbh->commit;
         $self->exec_script({script => "$self->{source_dir}sql/modules/$mod",
-                            log    => "$temp/dblog"});
+                            log    => $args->{log} || "${log}_stdout",
+			    errlog => $args->{errlog} || "${log}_stderr"
+			   });
 	my $sth = $dbh->prepare("select value='yes' from defaults" .
 				" where setting_key='module_load_ok'");
 	$sth->execute();
@@ -664,9 +683,15 @@ Creates a database and then loads it.
 =cut
 
 sub create_and_load(){
-    my ($self) = @_;
-    $self->create();
-    $self->load_modules('LOADORDER');
+    my ($self, $args) = @_;
+    $self->create({
+	log     => $args->{log},
+	errlog  => $args->{errlog},
+		  });
+    $self->load_modules('LOADORDER', {
+	log     => $args->{log},
+	errlog  => $args->{errlog},
+			});
 }
 
 

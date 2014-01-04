@@ -433,7 +433,8 @@ sub upgrade {
 	    || ($check->max_version lt $dbinfo->{version})
 	    || ($check->appname ne $dbinfo->{appname});
         my $sth = $request->{dbh}->prepare($check->test_query);
-        $sth->execute();
+        $sth->execute()
+	    or die "Failed to execute pre-migration check " . $check->name;
         if ($sth->rows > 0){ # Check failed --CT
              _failed_check($request, $check, $sth);
              return;
@@ -773,14 +774,21 @@ sub save_user {
 sub process_and_run_upgrade_script {
     my ($request, $database, $template) = @_;
     my $dbh = $database->dbh;
-    my $temp = $LedgerSMB::Sysconfig::tempdir;
+    my $temp = $database->loader_log_filename();
     my $rc;
 
-    $dbh->do('CREATE SCHEMA PUBLIC');
+    $dbh->do('CREATE SCHEMA PUBLIC')
+	or die "Failed to create schema PUBLIC (" . $dbh->errstr . ")";
     $dbh->commit;
 
-    $database->load_base_schema();
-    $database->load_modules('LOADORDER');
+    $database->load_base_schema({
+	log     => $temp . "_stdout",
+	errlog  => $temp . "_stderr"
+				});
+    $database->load_modules('LOADORDER', {
+	log     => $temp . "_stdout",
+	errlog  => $temp . "_stderr"
+			    });
 
     $dbh->do(qq(
        INSERT INTO defaults (setting_key, value)
@@ -798,9 +806,9 @@ sub process_and_run_upgrade_script {
         format => 'TXT' );
     $dbtemplate->render($request);
     $database->exec_script(
-        { script => "$temp/upgrade.sql",
-          log => "$temp/dblog_stdout",
-          errlog => "$temp/dblog_stderr"
+        { script =>  $LedgerSMB::Sysconfig::tempdir . "/upgrade.sql",
+          log => $temp . "_stdout",
+          errlog => $temp . "_stderr"
         });
 
 
@@ -813,7 +821,7 @@ sub process_and_run_upgrade_script {
 
     $request->error(qq(Upgrade failed;
            logs can be found in
-           $temp/dblog_stdout and $temp/dblog_stderr))
+           ${temp}_stdout and ${temp}_stderr))
 	if ! $success;
 
     $dbh->do("delete from defaults where setting_key='migration_ok'");
@@ -860,6 +868,7 @@ sub run_sl_migration {
 
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
+    # process_and_run_upgrade_script commits the transaction
 
     process_and_run_upgrade_script($request, $database,
 				   'sl2.8-1.3');
@@ -916,9 +925,13 @@ between versions on a stable branch (typically upgrading)
 sub rebuild_modules {
     my ($request) = @_;
     my $database = _init_db($request);
+    my $temp = $database->loader_log_filename();
     $request->{dbh}->{AutoCommit} = 0;
 
-    $database->load_modules('LOADORDER');
+    $database->load_modules('LOADORDER', {
+	log     => $temp . "_stdout",
+	errlog  => $temp . "_stderr"
+			    });
     $request->{lsmb_info} = $database->lsmb_info();
 
     my $dbh = $request->{dbh};
