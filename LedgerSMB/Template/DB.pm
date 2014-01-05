@@ -65,7 +65,8 @@ sub get_template {
          procname => 'template__get',
          args => [$template_name, $language_code, $format]
     );
-    my $text = $temp->{template};
+    $temp = __PACKAGE__->new($temp);
+    my $text = $temp->template;
     return \$text;
 }
 
