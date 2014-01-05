@@ -78,7 +78,9 @@ Saves the template.
 
 sub save {
     my ($request) = @_;
-    my $dbtemp = LedgerSMB::Template::DB->get(%$request);
+    $request->{template} = $request->unescape($request->{template})
+        if $request->{template} =~ /&lt;\?lsmb/;
+    my $dbtemp = LedgerSMB::Template::DB->new(%$request);
     $dbtemp->save();
     display($request);
 }

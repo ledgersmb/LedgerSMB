@@ -23,6 +23,10 @@ the database connections for the user.
 This function takes the date in the format provided and returns a numeric 
 string in YYMMDD format.  This may be moved to User in the future.
 
+=item unescape($var)
+
+Unescapes the var, i.e. converts html entities back to their characters.
+
 =item open_form()
 
 This sets a $self->{form_id} to be used in later form validation (anti-XSRF 
@@ -384,6 +388,12 @@ sub new {
 
     return $self;
 
+}
+
+sub unescape {
+    my ($self, $var) = @_;
+    my $q = CGI::Simple->new();
+    return $q->unescapeHTML($var);
 }
 
 sub open_form {
