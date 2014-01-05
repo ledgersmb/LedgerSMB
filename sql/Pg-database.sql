@@ -2766,8 +2766,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 152	List Languages	150	2
 154	Add SIC	153	1
 155	List SIC	153	2
-157	Income Statement	156	1
-158	Balance Sheet	156	2
 159	Invoice	156	3
 160	AR Transaction	156	4
 161	AP Transaction	156	5
@@ -3223,8 +3221,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 155	action	list_sic	386
 86	action	search_screen	610
 156	menu	1	387
-157	module	am.pl	388
-158	module	am.pl	389
 159	module	am.pl	390
 160	module	am.pl	391
 161	module	am.pl	392
@@ -3239,8 +3235,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 170	module	am.pl	401
 171	module	am.pl	402
 241	module	am.pl	642
-157	action	list_templates	403
-158	action	list_templates	404
 159	action	list_templates	405
 160	action	list_templates	406
 161	action	list_templates	407
@@ -3258,8 +3252,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 170	action	list_templates	416
 171	action	list_templates	417
 241	action	list_templates	643
-157	template	income_statement	418
-158	template	balance_sheet	419
 159	template	invoice	420
 160	template	ar_transaction	421
 161	template	ap_transaction	422
@@ -3274,8 +3266,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 170	template	rfq	431
 171	template	timecard	432
 241	template	letterhead	644
-157	format	HTML	433
-158	format	HTML	434
 159	format	HTML	435
 160	format	HTML	436
 161	format	HTML	437
