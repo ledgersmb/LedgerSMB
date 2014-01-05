@@ -703,12 +703,6 @@ sub yes_delete_language {
 
 }
 
-sub display_stylesheet {
-
-    $form->{file} = "$LedgerSMB::Sysconfig::fs_cssdir/$myconfig{stylesheet}";
-    &display_form;
-
-}
 
 sub taxes {
 
