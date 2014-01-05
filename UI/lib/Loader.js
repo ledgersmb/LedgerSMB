@@ -215,6 +215,9 @@ function(
             if (undefined == this.nodeMap[dnode.nodeName]){
                return undefined;
             }
+            if ('INPUT' == dnode.nodeName && 'file' == dnode.type){
+               return undefined;
+            }
             if ('INPUT' == dnode.nodeName){
                 var classKey;
                 classKey = dnode.type;
