@@ -60,7 +60,7 @@ Optional prefix.   Default is set in the db.
 
 =cut
 
-has prefix => (is => 'rw', isa => 'Str', required => 0);
+has prefix => (is => 'rw', required => 0);
 
 =head2 sequence
 
@@ -76,7 +76,7 @@ Optional suffix.  Default is set in the db.
 
 =cut
 
-has suffix => (is => 'rw', isa => 'Str', required => 0);
+has suffix => (is => 'rw', required => 0);
 
 =head2 allow_input
 
