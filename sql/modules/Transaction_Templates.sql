@@ -102,7 +102,7 @@ BEGIN
 			j.is_template, eca.meta_number, 
 			e.name, ec.class, 
                         coalesce(
-                          r.startdate + r.recurring_interval,
+                          r.startdate + 0, -- r.recurring_interval,
                           j.transaction_date)
 		FROM journal_entry j
 		LEFT JOIN eca_invoice i ON (i.journal_id = j.id)
@@ -149,6 +149,7 @@ select * from journal_line where journal_id = $1;
 $$ language sql;
 -- orders with inventory not supported yet.
 
+/*
 CREATE OR REPLACE FUNCTION journal__save_recurring
 (in_recurringreference text, in_recurringstartdate date, 
 in_recurring_interval interval, in_recurringhowmany int, in_id int) 
@@ -159,7 +160,7 @@ delete from recurring where id = $5;
 insert into recurring (id, reference, startdate, recurring_interval, howmany)
 values ($5, $1, $2, $3, $4)
 returning *;
-$$;
+$$; */
 
 CREATE OR REPLACE FUNCTION journal__save_recurring_print
 (in_id int, in_formname text, in_printer text)
@@ -170,6 +171,7 @@ values ($1, $2, 'PDF', $3)
 returning *;
 $$;
 
+/*
 CREATE OR REPLACE FUNCTION journal__increment_recurring
 (in_id int, in_transdate date)
 RETURNS recurring LANGUAGE SQL AS
@@ -179,7 +181,7 @@ UPDATE recurring
        nextdate = $2::timestamp + recurring_interval
  WHERE id = $1 AND howmany > 0
 RETURNING *;
-$$;
+$$; */
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
