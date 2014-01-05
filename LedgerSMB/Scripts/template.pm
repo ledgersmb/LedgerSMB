@@ -8,6 +8,7 @@ package LedgerSMB::Scripts::template;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Report::Listings::Templates;
 use LedgerSMB::Template;
+use LedgerSMB::App_State;
 
 =head1 SYNPOSIS
 
@@ -80,6 +81,29 @@ sub save {
     my ($request) = @_;
     $request->{template} = $request->unescape($request->{template})
         if $request->{template} =~ /&lt;\?lsmb/;
+    my $dbtemp = LedgerSMB::Template::DB->new(%$request);
+    $dbtemp->save();
+    display($request);
+}
+
+=head2 upload($request)
+
+Sends the file as an upload.  The template_name and format must match before it 
+will be accepted.
+
+=cut
+
+sub upload {
+    my ($request) = @_;
+    my @fnames =  $request->{_request}->upload_info;
+    $name = $fnames[0];
+    my $fh = $request->{_request}->upload($name);
+    my $fdata = join ("", <$fh>);
+    die "No content" unless $fdata;
+    my $testname = $request->{template_name} . "." . $request->{format};
+    die 'Unexpected file name'
+          unless $name eq $testname;
+    $request->{template} = $fdata;
     my $dbtemp = LedgerSMB::Template::DB->new(%$request);
     $dbtemp->save();
     display($request);

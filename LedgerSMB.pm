@@ -392,8 +392,7 @@ sub new {
 
 sub unescape {
     my ($self, $var) = @_;
-    my $q = CGI::Simple->new();
-    return $q->unescapeHTML($var);
+    return $self->{_request}->unescapeHTML($var);
 }
 
 sub open_form {
