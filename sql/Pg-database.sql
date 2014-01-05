@@ -2885,7 +2885,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 193	Logout	0	25
 192	New Window	0	24
 191	Preferences	0	23
-190	Stylesheet	0	22
 128	System	0	21
 116	Batch Printing	0	20
 9	Outstanding	4	1
@@ -3361,8 +3360,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 189	action	list_templates	523
 189	template	pos_invoice	524
 189	format	TEXT	525
-190	action	display_stylesheet	526
-190	module	am.pl	527
 193	module	login.pl	532
 193	action	logout	533
 193	target	_top	534
