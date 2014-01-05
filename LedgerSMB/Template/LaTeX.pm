@@ -164,7 +164,7 @@ sub process {
         $parent->{binmode} = $binmode;
         if ($parent->{include_path} eq 'DB'){
                 $source = LedgerSMB::Template::DB->get_template(
-                       $parent->{template}, $parent->{include_path_lang}, 'tex'
+                       $parent->{template}, undef, 'tex'
                 );
 	} elsif (ref $parent->{template} eq 'SCALAR') {
 		$source = $parent->{template};

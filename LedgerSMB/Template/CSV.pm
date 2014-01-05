@@ -114,7 +114,7 @@ sub process {
 	}
         if ($parent->{include_path} eq 'DB'){
                 $source = LedgerSMB::Template::DB->get_template(
-                       $parent->{template}, $parent->{include_path_lang}, 'csv'
+                       $parent->{template}, undef, 'csv'
                 );
 	} elsif (ref $parent->{template} eq 'SCALAR') {
 		$source = $parent->{template};
