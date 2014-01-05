@@ -65,23 +65,7 @@ if ($to_load eq '--help' or $to_load =~ /^-/ or !$to_load){
 
 sub load_template {
     my ($path) = @_;
-    my $fname = $path;
-    if ($path =~ m|/.*:| ){
-       die 'Cannot run on NTFS alternate data stream!';
-    }
-    $path =~ m|(.*)/([^/]+)$|;
-    $fname = $2;
-    my ($template_name, $format) = split /\./, $fname;
-    my $content = '';
-    open TEMP, '<', $path;
-    $content .= $_ while <TEMP>;
-    my %args = (
-           template_name => $template_name,
-           format => $format,
-           template => $content,
-    );
-    $args{language_code} = $language_code if $language_code;
-    my $dbtemp = LedgerSMB::Template::DB->new(%args);
+    my $dbtemp = LedgerSMB::Template::DB->get_from_file($path);
     $dbtemp->save;
 }
 

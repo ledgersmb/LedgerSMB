@@ -109,6 +109,38 @@ sub get {
     return __PACKAGE__->new(%$temp);
 }
 
+=head2 get_from_file($path)
+
+Loads a template from a file path.  This should only be used during database
+setup because it could be used to access any file on the system that the web 
+server or fcgi process could.  It is highly recommended that other web app code 
+does not call this without carefully whitelisting values.
+
+=cut
+
+sub get_from_file {
+    my ($package, $path) = @_;
+    my $fname = $path;
+    if ($path =~ m|/.*:| ){
+       die 'Cannot run on NTFS alternate data stream!';
+    }
+    $path =~ m|(.*)/([^/]+)$|;
+    $fname = $2;
+    my ($template_name, $format) = split /\./, $fname;
+    my $content = '';
+    open TEMP, '<', $path;
+    $content .= $_ while <TEMP>;
+    my %args = (
+           template_name => $template_name,
+           format => $format,
+           template => $content,
+    );
+    $args{language_code} = $language_code if $language_code;
+    my $self = LedgerSMB::Template::DB->new(%args);
+    return $self;
+}
+    
+
 =head2 save
 
 Saves the current object
