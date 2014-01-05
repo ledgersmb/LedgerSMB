@@ -41,11 +41,12 @@ Displays a template for review
 sub display {
     my ($request) = @_;
     my $dbtemp = LedgerSMB::Template::DB->get(%$request);
+    $dbtemp->{content} = $dbtemp->template;
     LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => 'UI/templates',
-        template => 'review',
+        template => 'preview',
         format   => 'HTML'
     )->render($dbtemp);
 }
@@ -59,6 +60,7 @@ Displays a screen for editing the template
 sub edit {
     my ($request) = @_;
     my $dbtemp = LedgerSMB::Template::DB->get(%$request);
+    $dbtemp->{content} = $dbtemp->template;
     LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},

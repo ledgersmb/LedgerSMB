@@ -45,11 +45,11 @@ has language_code => (is => 'ro', isa => 'Str', required => 0);
 
 sub columns {
     return [
-      { col_id => 'template_name'
+      { col_id => 'template_name',
           name => LedgerSMB::Report::text('File Name'),
           type => 'href',
      href_base => 'templates.pl?action=display&' },
-      { col_id => 'format'
+      { col_id => 'format',
           name => LedgerSMB::Report::text('Format'),
           type => 'text' },
    ];

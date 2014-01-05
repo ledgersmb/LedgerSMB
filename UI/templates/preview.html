@@ -1,10 +1,10 @@
 <?lsmb INCLUDE "ui-header.html";
  PROCESS "elements.html" ?>
-<body class="<?lsmb dojo-theme ?>">
+<body class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb template_name ?>.<?lsmb format ?><?lsmb
  IF language_code; "($language_code)"; ELSE; "(" _ text("No language") _ ")";
  END; ?></div>
-<div class="template_body"><?lsmb template ?></div>
+<div class="template_body"><pre><?lsmb content ?></pre></div>
 <form action="template.pl" method="get">
 <?lsmb 
 PROCESS input element_data = {

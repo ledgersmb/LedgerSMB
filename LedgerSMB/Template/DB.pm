@@ -41,6 +41,7 @@ To save:
 
 =head2 format text (required)
 
+
 =cut
 
 has id             => (is => 'ro', isa => 'Int', required => 0);
@@ -48,6 +49,7 @@ has template_name  => (is => 'ro', isa => 'Str', required => 1);
 has language_code  => (is => 'ro', isa => 'Str', required => 0);
 has format         => (is => 'ro', isa => 'Str', required => 1);
 has template       => (is => 'ro', isa => 'Str', required => 1);
+
 
 =head1 METHODS
 
@@ -109,7 +111,7 @@ sub get {
     return __PACKAGE__->new(%$temp);
 }
 
-=head2 get_from_file($path)
+=head2 get_from_file($path, $language_code)
 
 Loads a template from a file path.  This should only be used during database
 setup because it could be used to access any file on the system that the web 
@@ -119,7 +121,7 @@ does not call this without carefully whitelisting values.
 =cut
 
 sub get_from_file {
-    my ($package, $path) = @_;
+    my ($package, $path, $language_code) = @_;
     my $fname = $path;
     if ($path =~ m|/.*:| ){
        die 'Cannot run on NTFS alternate data stream!';

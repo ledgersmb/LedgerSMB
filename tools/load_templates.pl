@@ -65,7 +65,7 @@ if ($to_load eq '--help' or $to_load =~ /^-/ or !$to_load){
 
 sub load_template {
     my ($path) = @_;
-    my $dbtemp = LedgerSMB::Template::DB->get_from_file($path);
+    my $dbtemp = LedgerSMB::Template::DB->get_from_file($path, $language_code);
     $dbtemp->save;
 }
 

@@ -1,11 +1,12 @@
 <?lsmb INCLUDE "ui-header.html";
  PROCESS "elements.html" ?>
-<body class="<?lsmb dojo-theme ?>">
+<body class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb template_name ?>.<?lsmb format ?><?lsmb
  IF language_code; "($language_code)"; ELSE; "(" _ text("No language") _ ")";
  END; ?></div>
 <form action="template.pl" method="post">
-<textarea class="template-body <?lsmb format ?>"><?lsmb template ?></textarea>
+<textarea class="template-body <?lsmb format ?>" 
+    cols=80><?lsmb content ?></textarea><br/>
 <?lsmb 
 PROCESS input element_data = {
     type = 'hidden'
