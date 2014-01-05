@@ -56,6 +56,7 @@ use OpenOffice::OODoc;
 use OpenOffice::OODoc::Styles;
 use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Template::DB;
 
 $OpenOffice::OODoc::File::WORKING_DIRECTORY = $LedgerSMB::Sysconfig::tempdir;
 

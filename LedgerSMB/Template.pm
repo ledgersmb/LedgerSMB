@@ -361,8 +361,7 @@ sub render {
 		$self->output(%$vars);
                 $logger->debug("after self output,but does not seem to return here!");
 		if ($self->{rendered}) {
-			unlink($self->{rendered}) or
-				throw Error::Simple 'Unable to delete output file';
+			unlink($self->{rendered}); 
 		}
 	}
 	return $post;

@@ -48,6 +48,7 @@ use Error qw(:try);
 use Template;
 use LedgerSMB::Template::TTI18N;
 use DateTime;
+use LedgerSMB::Template::DB;
 
 # The following are for EDI only
 my $dt = DateTime->now;

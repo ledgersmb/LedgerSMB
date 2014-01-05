@@ -54,6 +54,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Company_Config;
 use LedgerSMB::App_State;
 use LedgerSMB::Company_Config;
+use LedgerSMB::Template::DB;
 
 my $binmode = ':utf8';
 binmode STDOUT, $binmode;

@@ -58,6 +58,7 @@ use Error qw(:try);
 use Template::Latex;
 use LedgerSMB::Template::TTI18N;
 use Log::Log4perl;
+use LedgerSMB::Template::DB;
 
 #my $binmode = ':utf8';
 my $binmode = ':raw';

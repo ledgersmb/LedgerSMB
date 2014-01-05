@@ -48,6 +48,7 @@ use strict;
 use Error qw(:try);
 use Template;
 use LedgerSMB::Template::TTI18N;
+use LedgerSMB::Template::DB;
 
 my $binmode = ':utf8';
 binmode STDOUT, $binmode;

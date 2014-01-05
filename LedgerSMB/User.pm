@@ -188,9 +188,7 @@ sub fetch_config {
     my $sth = $dbh->prepare($query);
     $sth->execute($lsmb->{login});
     $myconfig = $sth->fetchrow_hashref(NAME_lc);
-    $sth = $dbh->prepare("SELECT value FROM defaults WHERE setting_key = 'templates'");
-    $sth->execute();
-    ($templates) = $sth->fetchrow_array() || 'demo';
+    my ($templates) = 'DB';
     my %date_query = (
         'mm/dd/yy' => 'set DateStyle to \'SQL, US\'',
         'mm-dd-yy' => 'set DateStyle to \'POSTGRES, US\'',
@@ -200,7 +198,8 @@ sub fetch_config {
     );
     $dbh->do( $date_query{ $myconfig{dateformat} } );
 
-    $myconfig->{templates} = "$LedgerSMB::Sysconfig::templates/$templates";
+    my ($templates) = 'DB';
+    $myconfig->{templates} = "DB";
     bless $myconfig, __PACKAGE__;
     return $myconfig;
 }
