@@ -831,9 +831,7 @@ sub post_invoice {
 			 WHERE id = $item|;
         $dbh->do($query) || $form->dberror($query);
     }
-    my $rc = $dbh->commit;
 
-    $rc;
 
 }
 
@@ -971,8 +969,6 @@ sub reverse_invoice {
     $query = qq|DELETE FROM new_shipto WHERE trans_id = ?|;
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    #$dbh->commit;#tshvr lower-level sub should not commit on behalf of higher-level sub
 
 }
 
@@ -1205,9 +1201,6 @@ sub retrieve_invoice {
 
     }
 
-    my $rc = $dbh->commit;
-
-    $rc;
 
 }
 
@@ -1533,7 +1526,6 @@ sub update_invoice_tax_form
           $sth->execute($invoice_id,$report) || $form->dberror("$query");
    }
 
-   #$dbh->commit();#tshvr lower-level sub should not commit on behalf of higher-level sub
 
 }
 

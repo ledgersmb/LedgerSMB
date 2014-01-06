@@ -70,7 +70,6 @@ sub check {
     my $sessionValid = $checkQuery->fetchrow_hashref('NAME_lc');
     my ($session_ref) = $sessionValid;
     $sessionValid = $sessionValid->{session_id};
-    $dbh->commit;
 
     if ($sessionValid) {
        
@@ -221,7 +220,6 @@ sub create {
     }
     print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue; path=$path;$secure\n|;
     $lsmb->{LedgerSMB} = $newCookieValue;
-    $lsmb->{dbh}->commit;
 }
 
 =item destroy

@@ -40,7 +40,6 @@ sub save {
         $self->{old_location_class} || 1 # obviously, country.
     ]);
     $self->{id} = $ret->{$type."__save_location"};
-    $self->{dbh}->commit();
     return $self->{id};
 }
 

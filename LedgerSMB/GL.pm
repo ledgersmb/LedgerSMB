@@ -239,10 +239,6 @@ sub post_transaction {
 
     $form->save_recurring( $dbh, $myconfig );
 
-    # commit and redirect
-    my $rc = $dbh->commit;
-
-    $rc;
 }
 
 sub transaction {
@@ -353,8 +349,6 @@ sub transaction {
 
     # get projects
     $form->all_business_units( $form->{transdate} );
-
-    $dbh->commit;
 
 }
 

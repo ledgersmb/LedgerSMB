@@ -94,7 +94,7 @@ sub save {
         "currency",  "department_id", "employee_id",   "language_code",
         "ponumber",  "terms"
     );
-    # connect to database, turn off autocommit
+
     my $dbh = $form->{dbh};
     my $b_unit_sth = $dbh->prepare(
          "INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
@@ -497,11 +497,6 @@ sub save {
         id       => $form->{id}
     );
 
-   # $form->audittrail( $dbh, "", \%audittrail );
-
-    my $rc = $dbh->commit;
-
-    $rc;
 }
 
 sub delete {
@@ -583,15 +578,11 @@ sub delete {
 
     $form->audittrail( $dbh, "", \%audittrail );
 
-    my $rc = $dbh->commit;
 
-    if ($rc) {
-        foreach $spoolfile (@spoolfiles) {
-            unlink "${LedgerSMB::Sysconfig::spool}/$spoolfile" if $spoolfile;
-        }
+    foreach $spoolfile (@spoolfiles) {
+        unlink "${LedgerSMB::Sysconfig::spool}/$spoolfile" if $spoolfile;
     }
 
-    $rc;
 
 }
 
@@ -796,7 +787,6 @@ sub retrieve {
 
     }
 
-    $dbh->commit;
 
 }
 
@@ -1450,7 +1440,6 @@ sub order_details {
 		 WHERE setting_key = 'weightunit'|;
     ( $form->{weightunit} ) = $dbh->selectrow_array($query);
 
-    $dbh->commit;
 
 }
 
@@ -1755,10 +1744,6 @@ sub save_inventory {
         }
     }
 
-    my $rc = $dbh->commit;
-
-    $rc;
-
 }
 
 sub adj_onhand {
@@ -1980,7 +1965,6 @@ sub get_inventory {
     }
     $sth->finish;
 
-    $dbh->commit;
 }
 
 sub transfer {
@@ -2033,10 +2017,6 @@ sub transfer {
         }
     }
 
-    my $rc = $dbh->commit;
-
-    $rc;
-
 }
 
 sub get_soparts {
@@ -2077,8 +2057,6 @@ sub get_soparts {
 
     # foreign exchange rates
     &exchangerate_defaults( $dbh, $form );
-
-    $dbh->commit;
 
 }
 
@@ -2333,10 +2311,6 @@ sub generate_orders {
         ) || $form->dberror($query);
 
     }
-
-    my $rc = $dbh->commit;
-
-    $rc;
 
 }
 

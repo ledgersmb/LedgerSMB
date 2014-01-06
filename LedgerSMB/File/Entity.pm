@@ -38,7 +38,6 @@ Attaches or links a specific file to the given transaction.
 sub attach {
     my ($self, $args) = @_;
     $self->exec_method({funcname => 'file__attach_to_entity'});
-    $self->commit unless $args->{no_commit};
 }
 
 =back

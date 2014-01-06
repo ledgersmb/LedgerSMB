@@ -31,7 +31,6 @@ sub save {
        $self->exec_method(funcname => 'journal__save_recurring');
        $self->exec_method(funcname => 'journal__save_recurring_print');
    }
-   $self->{dbh}->commit;
 }
 
 sub search {

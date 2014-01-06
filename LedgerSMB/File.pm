@@ -326,17 +326,6 @@ sub merge {
     $self->src_class      ($ref->{src_class}      || $self->src_class);
 }
 
-=item commit()
-
-Returns the value of DBI->commit
-
-=cut
-
-sub commit{
-    my ($self) = @_;
-    return $LedgerSMB::App_State::DBH->commit;
-}
-
 =back
 
 =head1 COPYRIGHT

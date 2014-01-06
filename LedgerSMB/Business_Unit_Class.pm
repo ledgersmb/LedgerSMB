@@ -109,7 +109,7 @@ sub save {
     $self->save_modules();
     $self->prepare_dbhash($ref);
     $self = $self->new(%$ref);
-    $self->dbh->commit;
+    return $self;
 }   
 
 =item save_modules

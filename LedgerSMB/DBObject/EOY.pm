@@ -45,7 +45,6 @@ prevents data from being inserted for earlier dates.
 sub checkpoint_only {
     my ($self) = @_;
    $self->exec_method(funcname => 'eoy_create_checkpoint');
-   $self->{dbh}->commit;
 }
 
 =item $eoy->reopen_books()
@@ -58,7 +57,6 @@ checkpoints later than that and creates a checkpoint for the prior day.
 sub reopen_books {
     my ($self) = @_;
    $self->exec_method(funcname => 'eoy__reopen_books_at');
-   $self->{dbh}->commit;
 }
 
 =item $eoy->latest_closing()
@@ -85,7 +83,6 @@ for retained earnings.
 sub close_books {
     my ($self) = @_;
    $self->exec_method(funcname => 'eoy_close_books');
-   $self->{dbh}->commit;
 }
 
 =item $eoy->list_earnings_accounts

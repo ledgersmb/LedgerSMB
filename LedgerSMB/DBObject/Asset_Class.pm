@@ -62,11 +62,7 @@ sub save {
     my ($self) = @_;
     my ($ref) = $self->exec_method(funcname => 'asset_class__save');
     $self->merge($ref);
-    $self->{dbh}->commit || $self->error(
-                  $self->{_locale}->text("Unable to save [_1] object", 
-                          $self->{_locale}->text('Asset Class'))
-    );
-    return $ref if $self->{dbh}->commit;
+    return $ref;
 }
 
 =item get_metadata 

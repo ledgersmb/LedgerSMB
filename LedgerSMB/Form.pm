@@ -1789,7 +1789,6 @@ sub add_shipto {
 		      ) || $self->dberror($query);
 	
 	$sth->finish;
-	$dbh->commit;
 
      
     
@@ -2886,10 +2885,6 @@ sub update_status {
     $sth->execute( $self->{id}, $printed, $emailed, $spoolfile,
         $self->{formname} ) || $self->dberror($query);
     $sth->finish;
-    if ($commit){
-        $dbh->commit;
-    }
-
 }
 
 =item $form->save_status();
@@ -2974,7 +2969,6 @@ sub save_status {
         $sth->execute( $self->{id}, $printed, $emailed, $formname );
         $sth->finish;
     }
-    $dbh->commit;
 }
 
 =item $form->get_recurring();
@@ -3253,7 +3247,6 @@ sub save_recurring {
             $sth->finish;
         }
     }
-    $dbh->commit;
 
 }
 
@@ -3280,7 +3273,6 @@ sub save_intnotes {
 
     my $sth = $dbh->prepare($query);
     $sth->execute( $self->{intnotes}, $self->{id} ) || $self->dberror($query);
-    $dbh->commit;
 }
 
 =item $form->update_defaults($myconfig, $fld[, $dbh [, $nocommit]);
@@ -3463,8 +3455,6 @@ sub update_defaults {
 
     $sth = $self->{dbh}->prepare($query);
     $sth->execute( $dbvar, $fld ) || $self->dberror($query);
-
-    $self->{dbh}->commit if !defined $nocommit;
 
     return $var;
 }

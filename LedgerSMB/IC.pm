@@ -249,9 +249,8 @@ sub get_part {
 
 sub save {
     my ( $self, $myconfig, $form ) = @_;
-    my $nocommit=1;
     $form->{partnumber} =
-      $form->update_defaults( $myconfig, "partnumber", $dbh,$nocommit)
+      $form->update_defaults( $myconfig, "partnumber", $dbh)
       if $form->should_update_defaults('partnumber');
 
     ( $form->{inventory_accno} ) = split( /--/, $form->{IC_inventory} );
@@ -613,7 +612,6 @@ sub save {
         }
     }
 
-    my $rc = $dbh->commit;
 
     $form->run_custom_queries( 'parts', 'UPDATE' );
     $rc;
@@ -798,7 +796,6 @@ sub retrieve_assemblies {
     }
     $sth->finish;
 
-    $dbh->commit;
 
 }
 
@@ -818,9 +815,8 @@ sub restock_assemblies {
 
     }
 
-    my $rc = $dbh->commit;
 
-    $rc;
+    1;
 
 }
 
@@ -905,10 +901,8 @@ sub delete {
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
-    # commit
-    my $rc = $dbh->commit;
 
-    $rc;
+    1;
 
 }
 
@@ -1098,7 +1092,6 @@ sub create_links {
         $sth->finish;
     }
 
-    $dbh->commit;
 
 }
 
@@ -1117,7 +1110,6 @@ sub get_warehouses {
     }
     $sth->finish;
 
-    $dbh->commit;
 
 }
 

@@ -105,11 +105,7 @@ sub save {
     my ($self) = @_;
     my ($ref) = $self->exec_method(funcname => 'asset__save');
     $self->merge($ref);
-    $self->{dbh}->commit || $self->error(
-                  $self->{_locale}->text("Unable to save [_1] object", 
-                          $self->{_locale}->text('Asset'))
-    );
-    return $ref if $self->{dbh}->commit;
+    return $ref;
 }
 
 =item import_file
@@ -213,7 +209,6 @@ Saves a note.  Uses the following properties:
 sub save_note {
     my ($self) = @_;
     my ($ref) = $self->exec_method(funcname => 'asset_item__add_note');
-    $self->{dbh}->commit;
 }
 
 =item get_metadata
@@ -271,7 +266,6 @@ sub get_next_tag {
           args     => ['asset_tag']
     );
     $self->{tag} = $ref->{setting_increment};
-    $self->{dbh}->commit;
 }
 
 =item import_asset

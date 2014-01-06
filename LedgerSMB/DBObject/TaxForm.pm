@@ -55,7 +55,6 @@ sub save
     my ($ref) = $self->exec_method(funcname => 'tax_form__save');
     $self->{taxform_id} = $ref->{'tax_form__save'};
   
-    $self->{dbh}->commit();
 }
 
 =item get($id)

@@ -106,7 +106,6 @@ sub get_gifi {
         $form->{orphaned} = 0;
     }
 
-    $dbh->commit;
 
 }
 
@@ -154,7 +153,6 @@ sub save_gifi {
     $sth = $dbh->prepare($query);
     $sth->execute(@queryargs) || $form->dberror($query);
     $sth->finish;
-    $dbh->commit;
 
 }
 
@@ -181,7 +179,6 @@ sub delete_gifi {
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
     $sth->finish;
-    $dbh->commit;
 
 }
 
@@ -230,7 +227,6 @@ sub get_warehouse {
         $form->{orphaned} = 0;
     }
 
-    $dbh->commit;
 }
 
 =item AM->save_warehouse($myconfig, $form);
@@ -272,7 +268,6 @@ sub save_warehouse {
     $sth = $dbh->prepare($query);
     $sth->execute(@queryargs) || $form->dberror($query);
     $sth->finish;
-    $dbh->commit;
 
 }
 
@@ -296,7 +291,6 @@ sub delete_warehouse {
 		      WHERE id = ?|;
 
     $dbh->prepare($query)->execute( $form->{id} ) || $form->dberror($query);
-    $dbh->commit;
 
 }
 
@@ -324,7 +318,6 @@ sub get_business {
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} );
     ( $form->{description}, $form->{discount} ) = $sth->fetchrow_array();
-    $dbh->commit;
 
 }
 
@@ -375,7 +368,6 @@ sub save_business {
         $sth->execute();
         ($form->{id}) = $sth->fetchrow_array;
     }
-    $dbh->commit;
 
 }
 
@@ -398,7 +390,6 @@ sub delete_business {
 		      WHERE id = ?|;
 
     $dbh->prepare($query)->execute( $form->{id} ) || $form->dberror($query);
-    $dbh->commit;
 
 }
 
@@ -443,7 +434,6 @@ sub sic {
     }
 
     $sth->finish;
-    $dbh->commit;
 
 }
 
@@ -476,7 +466,6 @@ sub get_sic {
     for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
 
     $sth->finish;
-    $dbh->commit;
 
 }
 
@@ -522,7 +511,6 @@ sub save_sic {
     }
 
     $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
-    $dbh->commit;
 
 }
 
@@ -545,7 +533,6 @@ sub delete_sic {
 		      WHERE code = ?|;
 
     $dbh->prepare($query)->execute( $form->{code} );
-    $dbh->commit;
 
 }
 
@@ -578,7 +565,6 @@ sub get_language {
     for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
 
     $sth->finish;
-    $dbh->commit;
 
 }
 
@@ -625,7 +611,6 @@ sub save_language {
     }
 
     $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
-    $dbh->commit;
 
 }
 
@@ -871,7 +856,6 @@ sub recurring_transactions {
         chop $form->{transactions}{$transaction}->[$i]->{recurringprint};
     }
 
-    $dbh->commit;
 
 }
 
@@ -977,7 +961,6 @@ sub recurring_details {
     for (qw(arinvoice apinvoice invnumber)) { delete $form->{$_} }
     
 
-    $dbh->commit;
 
 }
 
@@ -1029,7 +1012,6 @@ sub update_recurring {
 
     $dbh->do($query) || $form->dberror($query);
 
-    $dbh->commit;
 
 }
 
@@ -1134,7 +1116,6 @@ sub taxes {
 
     $sth->finish;
 
-    $dbh->commit;
 
 }
 
@@ -1200,9 +1181,8 @@ sub save_taxes {
        $sth->finish;
     }
 
-    my $rc = $dbh->commit;
 
-    $rc;
+    1;
 
 }
 

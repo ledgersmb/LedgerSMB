@@ -49,7 +49,6 @@ sub country_codes {
 sub save_preferences {
     my ($self) = @_;
     $self->exec_method(funcname => 'user__save_preferences');
-    $self->{dbh}->commit;
     $self->get_user_info;
 }
 
@@ -79,7 +78,7 @@ sub change_my_password {
     }
     $self->{password} = $self->{new_password};
     $self->exec_method(funcname => 'user__change_password');
-    $self->{dbh}->commit;
+    $self->{dbh}->commit; # This is needed since it is not the normal DBH!
     $self->{dbh}->disconnect;
     $self->{dbh} = $old_dbh;
 }
@@ -301,11 +300,8 @@ sub save_contact {
         );
     }
     print STDERR Dumper(\@ret);
-    if ($ret[0]->{person__save_contact} == 1){
-        $self->{dbh}->commit();
-    }
-    else{
-        $self->error("Couldn't save contact...");
+    if ($ret[0]->{person__save_contact} != 1){
+        die "Couldn't save contact...";
     }
     return 1;
 }

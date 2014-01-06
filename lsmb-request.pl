@@ -106,6 +106,7 @@ sub call_script {
     $script->can($request->{action}) 
       || die $locale->text("Action Not Defined: ") . $request->{action};
     $script->can( $request->{action} )->($request);
+    $request->{dbh}->commit if defined $request->{dbh};
     LedgerSMB::App_State->cleanup();
   }
   catch {
