@@ -216,6 +216,8 @@ function(
                return undefined;
             }
             if ('INPUT' == dnode.nodeName && 'file' == dnode.type){
+               // otherwise renders as a text field.  We should change this
+               // down the road.  --CT
                return undefined;
             }
             if ('INPUT' == dnode.nodeName){
