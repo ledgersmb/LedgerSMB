@@ -181,6 +181,8 @@ sub to_output {
     } else {
         $fmt = '%F';
     }
+    $fmt = $formats->{uc($fmt)}->[0] if defined $formats->{uc($fmt)};
+    $fmt .= ' %T' if ($self->date->hour);
     
     my $formatter = new DateTime::Format::Strptime(
              pattern => $fmt,
