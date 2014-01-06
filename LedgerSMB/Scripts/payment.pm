@@ -444,7 +444,6 @@ sub display_payments {
     $payment->{default_currency} =  $payment->get_default_currency();;
     $payment->get_payment_detail_data();
     $payment->open_form();
-    $payment->{dbh}->commit;
     my $db_fx = $payment->get_exchange_rate($payment->{currency}, 
                                             $payment->{batch_date});
     if ($db_fx){

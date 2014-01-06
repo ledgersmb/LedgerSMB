@@ -162,7 +162,6 @@ sub projects {
     }
 
     $sth->finish;
-    $dbh->commit;
 
     $i;
 
@@ -270,10 +269,6 @@ sub delete_partsgroup {
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
-    my $rc = $dbh->commit;
-
-    $rc;
-
 }
 
 =item PE->delete_pricegroup($myconfig, $form);
@@ -293,9 +288,6 @@ sub delete_pricegroup {
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
-    my $rc = $dbh->commit;
-
-    $rc;
 
 }
 
@@ -362,8 +354,6 @@ sub save_partsgroup {
     }
     $dbh->do($query, undef, @group) || $form->dberror($query);
 
-    $dbh->commit;
-
 }
 
 =item PE->get_partsgroup($myconfig, $form);
@@ -401,8 +391,6 @@ sub get_partsgroup {
 
     $sth->finish;
 
-    $dbh->commit;
-
 }
 
 =item PE->save_pricegroup($myconfig, $form);
@@ -433,8 +421,6 @@ sub save_pricegroup {
     }
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{pricegroup} ) || $form->dberror($query);
-
-    $dbh->commit;
 
 }
 
@@ -470,8 +456,6 @@ sub get_pricegroup {
     $form->{orphaned} = !$form->{orphaned};
 
     $sth->finish;
-
-    $dbh->commit;
 
 }
 
@@ -553,8 +537,6 @@ sub description_translations {
 
     &get_language( "", $dbh, $form ) if $form->{id};
 
-    $dbh->commit;
-
 }
 
 =item PE::partsgroup_translations("", $myconfig, $form)
@@ -625,8 +607,6 @@ sub partsgroup_translations {
     $sth->finish;
 
     &get_language( "", $dbh, $form ) if $form->{id};
-
-    $dbh->commit;
 
 }
 
@@ -707,8 +687,6 @@ sub project_translations {
 
     &get_language( "", $dbh, $form ) if $form->{id};
 
-    $dbh->commit;
-
 }
 
 =item PE::get_language("", $dbh, $form)
@@ -778,8 +756,6 @@ sub save_translation {
             $sth->finish;
         }
     }
-    $dbh->commit;
-
 }
 
 =item PE::delete_translation("", $myconfig, $form);
@@ -806,8 +782,6 @@ sub delete_translation {
     my $query = qq|DELETE FROM $table WHERE trans_id = ?|;
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    $dbh->commit;
 
 }
 
@@ -851,8 +825,6 @@ sub project_sales_order {
     $form->all_projects( $myconfig, $dbh, $transdate );
 
     $form->all_employees( $myconfig, $dbh, $transdate );
-
-    $dbh->commit;
 
 }
 
@@ -1000,8 +972,6 @@ sub get_jcitems {
     chop $form->{taxaccounts};
     $sth->finish;
 
-    $dbh->commit;
-
 }
 
 =item PE->allocate_projectitems($myconfig, $form);
@@ -1029,10 +999,6 @@ sub allocate_projectitems {
                 $qty );
         }
     }
-
-    $rc = $dbh->commit;
-
-    $rc;
 
 }
 

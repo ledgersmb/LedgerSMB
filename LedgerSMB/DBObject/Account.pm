@@ -82,7 +82,6 @@ sub save {
     if (defined $self->{recon}){
         $self->call_procedure(procname => 'cr_coa_to_account_save', args =>[ $self->{accno}, $self->{description}]);
     }
-    $self->{dbh}->commit;
 }
 
 =item get()
@@ -151,7 +150,6 @@ $account->{id} must be set.
 sub delete {
     my $self = shift @_;
     $self->exec_method(funcname => 'account__delete');
-    $self->{dbh}->commit;
 }
 
 =item list()

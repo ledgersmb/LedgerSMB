@@ -1101,7 +1101,6 @@ sub run_import {
         }
         $ai->import_asset;
     }
-    $request->{dbh}->commit;
     $request->{info} = $request->{_locale}->text('File Imported');
     begin_import($request);
 }

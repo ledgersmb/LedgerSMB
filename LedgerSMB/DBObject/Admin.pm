@@ -60,7 +60,6 @@ Deletes a session identified by the session_id hashref.
 sub delete_session {
    my $self = shift @_;
    my @sessions = $self->exec_method(funcname => 'admin__drop_session');
-   return $self->{dbh}->commit;
 }
 
 =item save_roles 
@@ -113,7 +112,6 @@ sub save_roles {
             );
         }         
     }
-    $self->{dbh}->commit;
 }
 
 =item get_salutations

@@ -731,10 +731,6 @@ sub post_transaction {
     #$form->audittrail( $dbh, "", \%audittrail );
 
 
-    my $rc = $dbh->commit;
-
-    $rc;
-
 }
 
 =item get_files
@@ -1064,7 +1060,6 @@ sub get_name {
         $form->{rowcount} = $i if ( $i && !$form->{type} );
     }
 
-    $dbh->commit;
 }
 
 =item taxform_exist($form, $cv_id)
@@ -1138,8 +1133,6 @@ sub update_ac_tax_form
           my $sth = $dbh->prepare($query);
           $sth->execute($entry_id,$report) || $form->dberror("Sada $query");
    }
-
-   $dbh->commit();
 
 
 }

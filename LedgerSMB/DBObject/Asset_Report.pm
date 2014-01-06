@@ -113,7 +113,6 @@ sub save {
           }
        }
     }
-    $self->{dbh}->commit;
 }
 
 =item get
@@ -182,7 +181,6 @@ approved.
 sub approve {
     my ($self) = @_;
     $self->exec_method(funcname => 'asset_report__approve');
-    $self->{dbh}->commit;
 }
 
 =item search

@@ -108,8 +108,6 @@ sub get_vc {
 
         $sth->finish;
     }
-    $dbh->commit();
-
     $form->all_years( $myconfig, $dbh );
 
 }
@@ -277,8 +275,6 @@ sub get_spoolfiles {
     }
 
     $sth->finish;
-    $dbh->commit;
-
 }
 
 sub delete_spool {
@@ -316,19 +312,12 @@ sub delete_spool {
         }
     }
 
-    # commit
-    my $rc = $dbh->commit;
-
-    if ($rc) {
-        foreach my $i ( 1 .. $form->{rowcount} ) {
-            $_ = qq|${LedgerSMB::Sysconfig::spool}/$form->{"spoolfile_$i"}|;
-            if ( $form->{"checked_$i"} ) {
-                unlink;
-            }
+    foreach my $i ( 1 .. $form->{rowcount} ) {
+        $_ = qq|${LedgerSMB::Sysconfig::spool}/$form->{"spoolfile_$i"}|;
+        if ( $form->{"checked_$i"} ) {
+            unlink;
         }
     }
-
-    $rc;
 }
 
 sub print_spool {
@@ -381,7 +370,6 @@ sub print_spool {
 
             $form->audittrail( $dbh, "", \%audittrail );
 
-            $dbh->commit;
         }
     }
 

@@ -246,7 +246,6 @@ $payment->{account_class}).  This reverses the entries with that source.
 sub reverse {
     my ($self) = @_;
     $self->exec_method(funcname => 'payment__reverse');
-    return $self->{dbh}->commit;
 }  
 
 =over
@@ -595,7 +594,6 @@ sub get_payment_detail_data {
         }
     }
  
-    $self->{dbh}->commit; # Commit locks
 }    
 
 =item post_bulk
@@ -711,7 +709,6 @@ sub post_bulk {
         }
     }
     $self->{queue_payments} = $queue_payments;
-    return $self->{dbh}->commit;
 }
 
 =item check_job
@@ -755,7 +752,6 @@ sub post_payment {
    }
  }
  my @TMParray = $self->exec_method(funcname => 'payment_post');
- $self->{dbh}->commit();
  $self->{payment_id} = $TMParray[0]->{payment_post};
  return $self->{payment_id};
 }

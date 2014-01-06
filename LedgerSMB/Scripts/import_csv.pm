@@ -184,7 +184,6 @@ our $process = {
                foreach my $entry (@$entries) {
                  $sth->execute($entry->[0], $entry->[1]) || die $sth->errstr();
                }
-               $dbh->commit;
              },
     sic   => sub {
                my ($request, $entries) = @_;
@@ -195,7 +194,6 @@ our $process = {
                  $sth->execute($entry->[0], $entry->[1], $entry->[2])
                     || die $sth->errstr();
                }
-               $dbh->commit;
              },
  timecard => sub {
                use LedgerSMB::Timecard;

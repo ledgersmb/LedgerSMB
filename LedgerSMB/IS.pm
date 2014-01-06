@@ -740,8 +740,6 @@ sub invoice_details {
 
     $form->{paid} = $form->format_amount( $myconfig, $form->{paid}, 2 );
 
-    $dbh->commit;
-
 }
 
 sub assembly_details {
@@ -1679,10 +1677,6 @@ sub post_invoice {
 
     $form->audittrail( $dbh, "", \%audittrail );
 
-    my $rc = $dbh->commit;
-
-    $rc;
-
 }
 
 sub process_assembly {
@@ -1893,8 +1887,6 @@ sub reverse_invoice {
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
-    $dbh->commit;
-
 }
 
 sub retrieve_invoice {
@@ -2072,8 +2064,6 @@ sub retrieve_invoice {
     }
 
     @queries = $form->run_custom_queries( 'ar', 'SELECT' );
-    my $rc = $dbh->commit;
-    $rc;
 
 }
 
@@ -2467,8 +2457,6 @@ sub createlocation
 
   $sth->finish();
 
-  $dbh->commit();
-
 }
 
 
@@ -2487,8 +2475,6 @@ sub createcontact
   $sth->execute($form->{"customer_id"},$form->{"shiptotype_new"},$form->{"shiptodescription_new"},$form->{"shiptocontact_new"},$form->{"shiptocontact_new"},$form->{"shiptotype_new"}) || $form->dberror($query);
 
   $sth->finish();
-
-  $dbh->commit();
 
 }
 
@@ -2548,8 +2534,6 @@ sub update_invoice_tax_form
           my $sth = $dbh->prepare($query);
           $sth->execute($invoice_id,$report) || $form->dberror("$query");
    }
-
-   $dbh->commit();
 
 }
 

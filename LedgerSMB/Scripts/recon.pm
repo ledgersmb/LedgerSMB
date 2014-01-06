@@ -72,7 +72,6 @@ sub update_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
     $recon->{their_total} = $recon->parse_amount(amount => $recon->{their_total}) if defined $recon->{their_total}; 
-    $recon->{dbh}->commit;
     if ($recon->{line_order}){
        $recon->set_ordering(
 		{method => 'reconciliation__report_details_payee', 
@@ -197,7 +196,7 @@ sub _display_report {
         delete $recon->{reverse} unless $recon->{account_info}->{category}
                                         eq 'A';
         $recon->close_form;
-        $recon->open_form({commit => 1});
+        $recon->open_form;
         $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
         $recon->{can_approve} = $recon->is_allowed_role({allowed_roles => ['reconciliation_approve']});
         $recon->get();
@@ -342,7 +341,6 @@ sub new_report {
         
         # Why isn't this testing for errors?
         my ($report_id, $entries) = $recon->new_report($recon->import_file());
-        $recon->{dbh}->commit;
         if ($recon->{error}) {
             #$recon->{error};
             

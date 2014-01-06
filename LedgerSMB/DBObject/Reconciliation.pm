@@ -90,7 +90,6 @@ sub submit {
     my $self = shift @_;
     $self->_pre_save;
     $self->exec_method(funcname=>'reconciliation__submit_set');
-    $self->{dbh}->commit; 
 }
 
 
@@ -105,7 +104,6 @@ sub save {
     my $self = shift @_;
     $self->_pre_save;
     $self->exec_method(funcname=>'reconciliation__save_set');
-    $self->{dbh}->commit; 
 }
 
 =item import_file
@@ -154,7 +152,6 @@ sub approve {
         
         $self->error("User $self->{user}->{name} cannot approve report, must be a different user.");
     }
-    $self->{dbh}->commit;
 }
 
 =item new_report
@@ -180,7 +177,6 @@ sub new_report {
     # Now that we have this, we need to create the internal report representation.
     # Ideally, we OUGHT to not return anything here, save the report number.
    
-    $self->{dbh}->commit;
     
     return ($report_id, $entries); # returns the report ID.
 }
@@ -215,7 +211,6 @@ sub delete {
                                args => [$report_id]);
         
     }
-    $self->{dbh}->commit;
     if ($found){
         $retval = '0';
     } else {
@@ -260,7 +255,6 @@ sub add_entries {
         );
         $entry{report_id} = $report_id;        
     }
-    $self->{dbh}->commit;
 }
 
 =item get
@@ -313,7 +307,6 @@ sub get {
         $self->exec_method(
 		funcname=>'reconciliation__pending_transactions'
         );
-        $self->{dbh}->commit;
     }
     @{$self->{report_lines}} = $self->exec_method(
 		funcname=>'reconciliation__report_details_payee'

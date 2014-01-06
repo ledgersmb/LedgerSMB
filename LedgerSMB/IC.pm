@@ -822,7 +822,6 @@ sub restock_assemblies {
 
 sub adjust_inventory {
 
-    # Private method.  Do not commit transaction at end of function...
     my ( $dbh, $form, $id, $qty ) = @_;
 
     my $query = qq|

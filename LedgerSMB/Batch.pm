@@ -28,7 +28,6 @@ sub get_new_info {
     my $cc_object = LedgerSMB::Setting->new({base => $self});
     $cc_object->{key} = 'batch_cc';
     $self->{batch_number} = $cc_object->increment;
-    $self->{dbh}->commit;
 }
 
 =item create
@@ -41,7 +40,6 @@ sub create {
     $self = shift @_;
     my ($ref) = $self->exec_method(funcname => 'batch_create');
     $self->{id} = $ref->{batch_create};
-    $self->{dbh}->commit;
     return $ref->{id};
 }
 
@@ -54,7 +52,6 @@ Deletes the voucher specified by $id.
 sub delete_voucher {
     my ($self, $voucher_id) = @_;
     $self->call_procedure(procname => 'voucher__delete', args => [$voucher_id]);
-    $self->{dbh}->commit;
 }
 
 =item get_search_criteria
@@ -171,7 +168,6 @@ reports, financial statements, and more.
 sub post {
     my ($self) = @_;
     ($self->{post_return_ref}) = $self->exec_method(funcname => 'batch_post');
-    $self->{dbh}->commit;
     return $self->{post_return_ref};
 }
 
@@ -184,7 +180,6 @@ Deletes the unapproved batch and all vouchers under it.
 sub delete {
     my ($self) = @_;
     ($self->{delete_ref}) = $self->exec_method(funcname => 'batch_delete');
-    $self->{dbh}->commit;
     return $self->{delete_ref};
 }
 
