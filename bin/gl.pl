@@ -186,7 +186,6 @@ sub display_form
          unless $form->{id};
     $form->close_form;
     $form->open_form; 
-    $form->{dbh}->commit;
     my ($init) = @_; 
     # Form header part begins -------------------------------------------
     if (@{$form->{all_department}}){

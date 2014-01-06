@@ -1456,12 +1456,10 @@ sub save_info {
                 if($form->{"taxformcheck_$i"})
 		{
 		  IR->update_invoice_tax_form($form,$form->{dbh},$form->{"invoice_id_$i"},"true") if($form->{"invoice_id_$i"});
-          $form->{$dbh}->commit();#highest-level sub should commit
 		}
 		else
 		{
 		    IR->update_invoice_tax_form($form,$form->{dbh},$form->{"invoice_id_$i"},"false") if($form->{"invoice_id_$i"});
-            $form->{$dbh}->commit();#highest-level sub should commit
 		}
                 }#taxformfound		
 	    }

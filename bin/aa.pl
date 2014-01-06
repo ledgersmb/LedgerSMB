@@ -170,7 +170,6 @@ sub display_form {
     $form->{format} = $form->get_setting('format') unless $form->{format};
     $form->close_form;
     $form->open_form;
-    $form->{dbh}->commit;
     AA->get_files($form, $locale);
     &form_header;
     &form_footer;

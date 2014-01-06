@@ -225,6 +225,8 @@ $logger->trace("leaving after script=bin/$form->{script} action=$form->{action}"
 
 1;
 
+$form->{dbh}->commit if defined $form->{dbh};
+
 $form->{dbh}->disconnect()
     if defined $form->{dbh};
 
