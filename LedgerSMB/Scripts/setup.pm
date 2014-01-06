@@ -23,6 +23,8 @@ use LedgerSMB::Auth;
 use LedgerSMB::Database;
 use LedgerSMB::App_State;
 use LedgerSMB::Upgrade_Tests;
+use LedgerSMB::Sysconfig;
+use LedgerSMB::Template::DB;
 use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
@@ -203,12 +205,7 @@ sub copy_db {
     my $database = _get_database($request);
     my $rc = $database->copy($request->{new_name}) 
            || die 'An error occurred. Please check your database logs.' ;
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'complete',
-            format => 'HTML',
-    );
-    $template->render($request);
+    complete($request);
 }
 
 
@@ -317,6 +314,67 @@ sub run_backup {
  
 }
    
+=item _get_template_directories
+
+Returns set of template directories available.
+
+=cut
+
+sub _get_template_directories {
+    my $subdircount = 0;
+    my @dirarray;
+    my $locale = $LedgerSMB::App_State::Locale;
+    opendir ( DIR, $LedgerSMB::Sysconfig::templates) || die $locale->text("Error while opening directory: [_1]",  "./".$LedgerSMB::Sysconfig::templates);
+    while( my $name = readdir(DIR)){
+        next if ($name =~ /\./);
+        if (-d $LedgerSMB::Sysconfig::templates.'/'.$name) {
+            push @dirarray, {text => $name, value => $name};
+        }
+    }
+    closedir(DIR);
+    return \@dirarray;
+}
+
+=item template_screen
+
+Shows the screen for loading templates.  This should appear before loading
+the user.  $request->{only_templates} will be passed on to the saving routine
+so that further workflow can be aborted.
+
+=cut
+
+sub template_screen {
+    my ($request) = @_;
+    $request->{template_dirs} = _get_template_directories();
+    LedgerSMB::Template->new(
+           path => 'UI/setup',
+           template => 'template_info',
+           format => 'HTML',
+    )->render($request);
+}
+
+=item load_templates
+
+This bulk loads the templates.  Expectated inputs are template_dir and
+optionally only_templates (which if true returns to the confirmation screen 
+and not the user creation screen.
+
+=cut
+
+sub load_templates {
+    my ($request) = @_;
+    my $dir = $LedgerSMB::Sysconfig::templates . '/' . $request->{template_dir};
+    my $dbh = _get_database($request)->dbh;
+    opendir(DIR, $dir);
+    while (readdir(DIR)){
+       next unless -f "$dir/$_";
+       my $dbtemp = LedgerSMB::Template::DB->get_from_file("$dir/$_");
+       $dbtemp->save;
+    }
+    $dbh->commit;
+    return _render_new_user($request) unless $request->{only_templates};
+    return complete($request);
+}
 
 =item _get_linked_accounts
 
@@ -549,7 +607,6 @@ sub fix_tests{
 =cut
 
 sub create_db {
-    use LedgerSMB::Sysconfig;
     my ($request) = @_;
     my $rc=0;
 
@@ -597,7 +654,7 @@ sub select_coa {
     }
     if ($request->{coa_lc}){
         if ($request->{chart}){
-           _render_new_user($request);
+           template_screen($request);
         } else {
             opendir(COA, "sql/coa/$request->{coa_lc}/chart");
             my @coa = sort (grep !/^(\.|[Ss]ample.*)/, readdir(COA));
@@ -617,7 +674,7 @@ sub select_coa {
              push @{$request->{coa_lcs}}, {code => $lcs};
         } 
     }
-    _render_new_user($request);
+    template_screen($request);
 }
 
 
@@ -635,7 +692,7 @@ button facilitates that scenario.
 sub skip_coa {
     my ($request) = @_;
 
-    _render_new_user($request);
+    template_screen($request);
 }
 
 
@@ -932,7 +989,6 @@ sub rebuild_modules {
 	log     => $temp . "_stdout",
 	errlog  => $temp . "_stderr"
 			    });
-    $request->{lsmb_info} = $database->lsmb_info();
 
     my $dbh = $request->{dbh};
     my $sth = $dbh->prepare(
@@ -942,14 +998,29 @@ sub rebuild_modules {
     $sth->finish;
     $dbh->commit;
     #$dbh->disconnect;#upper stack will disconnect
+    complete($request);
+
+}
+
+=item complete 
+
+Gets the info and adds shows the complete screen.
+
+=cut
+
+sub complete {
+    my ($request) = @_;
+    my $database = _init_db($request);
+    my $temp = $database->loader_log_filename();
+    $request->{lsmb_info} = $database->lsmb_info();
     my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'complete',
             format => 'HTML',
     );
     $template->render($request);
-
 }
+
 
 =back
 

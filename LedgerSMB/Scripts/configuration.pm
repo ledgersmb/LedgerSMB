@@ -47,9 +47,6 @@ our @default_settings = (
        { name => 'default_language',
         label => $locale->text('Default Language'),
          type => 'SELECT_ONE', },
-       { name => 'templates',
-         type => 'SELECT_ONE',
-        label => $locale->text('Template Set'), },
        { name => 'format',
          type => 'SELECT_ONE',
         label => $locale->text('Default Format'), },
@@ -211,12 +208,6 @@ sub defaults_screen{
 			     text_attr => 'description',
 			     value_attr => 'code',
 		},
-	'templates'        => {name => 'templates',
-                           options => _get_template_directories(),
-                         text_attr => 'text',
-                    default_values => [$request->{'templates'}],
-                        value_attr => 'value'
-               },
         'format'           => {name => 'format',
                            text_attr => 'text',
                           value_attr => 'value',
@@ -295,25 +286,11 @@ sub save_defaults {
     defaults_screen($request);
 }
 
-=item _get_template_directories
+=item save_sequences
 
-Returns set of template directories available.
+Saves the items in the sequence screen
 
 =cut
-
-sub _get_template_directories {
-    my $subdircount = 0;
-    my @dirarray;
-    opendir ( DIR, $LedgerSMB::Sysconfig::templates) || die $locale->text("Error while opening directory: [_1]",  "./".$LedgerSMB::Sysconfig::templates);
-    while( my $name = readdir(DIR)){
-        next if ($name =~ /\./);
-        if (-d $LedgerSMB::Sysconfig::templates.'/'.$name) {
-            push @dirarray, {text => $name, value => $name};
-        }
-    }
-    closedir(DIR);
-    return \@dirarray;
-}
 
 sub save_sequences {
     my ($request) = @_;
