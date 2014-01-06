@@ -52,6 +52,20 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
     text = text('Add User') #'
 }; ?>
 </div>
+<div id="templates">
+<div><?lsmb text('Templates') ?></div>
+<?lsmb INCLUDE button element_data = {
+    name = 'action'
+   value = 'template_screen'
+    type = 'submit'
+   class = 'submit'
+    text = text('Load Templates') #'
+}; 
+INCLUDE input element_data = {
+    name = "only_templates"
+   value = "1"
+    type = "hidden"
+}; ?>
 <?lsmb END ?> 
 <?lsmb IF next_action != 'create_db' ?>
 <div id="others"><?lsmb text('Backup') ?></div>
