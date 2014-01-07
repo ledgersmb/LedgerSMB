@@ -1111,46 +1111,17 @@ sub update {
 
 
 sub delete {
-
-    my %hiddens;
-    delete $form->{action};
-    foreach (keys %$form) {
-        $hiddens{$_} = $form->{$_} unless ref $form->{$_};
-    }
-
-    $form->{title} = $locale->text('Confirm!');
-    my $query = $locale->text(
-        'Are you sure you want to delete Transaction [_1]',
-        $form->{reference} );
-
-    my @buttons = ({
-        name => 'action',
-        value => 'delete_transaction',
-        text => $locale->text('Yes'),
-        });
-    my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
-        locale => $locale, 
-        template => 'form-confirmation',
-        );
-    $template->render({
-        form => $form,
-        query => $query,
-        hiddens => \%hiddens,
-        buttons => \@buttons,
-    });
+    $form->error($locale->text('Cannot delete posted transaction')) 
+       if ($form->{approved});
+    my $lsmb = LedgerSMB->new();
+    $lsmb->merge($form);
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    $draft->delete();
+    delete $form->{id};
+    delete $form->{reference};
+    add();
 }
 
-sub delete_transaction {
-
-    if ( GL->delete_transaction( \%myconfig, \%$form ) ) {
-        $form->redirect( $locale->text('Transaction deleted!') );
-    }
-    else {
-        $form->error( $locale->text('Cannot delete transaction!') );
-    }
-
-}
 
 sub post {
     if (!$form->close_form){
