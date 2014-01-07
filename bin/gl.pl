@@ -700,6 +700,19 @@ sub post {
 
 }
 
+sub delete {
+    $form->error($locale->text('Cannot delete posted transaction')) 
+       if ($form->{approved});
+    my $lsmb = LedgerSMB->new();
+    $lsmb->merge($form);
+    my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
+    $draft->delete();
+    delete $form->{id};
+    delete $form->{reference};
+    add();
+}
+
+
 sub check_balanced {
     my ($form) = @_;
     # add up debits and credits
