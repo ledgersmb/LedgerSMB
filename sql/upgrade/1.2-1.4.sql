@@ -29,7 +29,7 @@ SELECT id, accno, description
   FROM lsmb12.chart WHERE charttype = 'H';
 
 SELECT account__save(id, accno, description, category, gifi_accno, NULL, contra, 
-                    CASE WHEN link like '%tax%' THEN true ELSE false END, 
+                    (CASE WHEN link like '%tax%' THEN true ELSE false END), 
                     string_to_array(link,':'), false, false)
   FROM lsmb12.chart 
  WHERE charttype = 'A';
@@ -398,7 +398,8 @@ SELECT 	admin__save_user(null, max(entity_id), login, random()::text, false)
 -- needed to handle null values
 UPDATE lsmb12.makemodel set model = '' where model is null;
 
-INSERT INTO makemodel
+--barcode will throw off SELECT * FROM makemodel
+INSERT INTO makemodel (parts_id, make, model)
 SELECT * FROM lsmb12.makemodel;
 
 INSERT INTO gifi
