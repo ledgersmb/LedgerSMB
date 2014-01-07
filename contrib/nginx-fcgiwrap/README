@@ -1,0 +1,66 @@
+Author:       Istvan Pongracz
+email:        pongracz.istvan@gmail.com
+1st release:  7th Jan, 2014
+
+Contents:
+  nginx and fcgiwrap configuration files for Debian wheezy
+  README (this file)
+
+About
+  If you like to use nginx instead of other popular webservers, 
+  here you can find the sample configuration for nginx.
+
+  You can adjust the setup to your needs.
+
+  This is a very very basic howto, jut a guied for experts.
+
+HowTo
+
+  Nginx and fcgiwrap
+    Sorry, I assume you already installed nginx and fcgiwrap.
+    If not, just install them using your package manager.
+    Please do not install other webservers, except you know
+    what are you doing.
+ 
+  Ledgersmb
+    I assume you already installed all dependencies, you
+    haver working postgresql etc., and you are in the final
+    step to start the webserver.
+
+    Copy the ledgersmb files under /opt/ledgersmb
+    Check the owner: www-data:www-data
+    Check the permissions: 0775 just fine to start quickly.
+    
+    Check the nginx config files, adjust and copy them 
+    into /etc/nginx/
+
+  Start the system
+    Now you can start nginx and fcgiwrap as follows:
+    service fcgiwrap start
+    service nginx    start
+  
+    If you were lucky enough, now you are able to see lsmb in
+    your borwser when you visit your webserver on port 80 (http).
+
+Hints
+
+  How to restart fcgiwrap
+
+    Sometimes when you try to stop fcgiwrap service, you can still
+    see fcgiwrap processess running. Just kill them all.
+    
+    So, in this case the proper way to restart fcgiwrap:
+    service fcgiwrap stop
+    killall fcgiwrap
+    service fcgiwrap start
+
+  Install the latest ang greatest nginx version
+    
+    It is safe to use these repos (I guess :)
+
+    deb http://nginx.org/packages/mainline/debian/ wheezy nginx                                                                                              
+    deb http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main                                                                                            
+    deb-src http://apt.postgresql.org/pub/repos/apt/ wheezy-pgdg main                                                                                        
+    deb-src http://nginx.org/packages/mainline/debian/ wheezy nginx      
+
+Good luck!
