@@ -526,8 +526,7 @@ INSERT INTO yearend SELECT * FROM lsmb13.yearend;
 INSERT INTO partsvendor SELECT * FROM lsmb13.partsvendor;
 INSERT INTO partscustomer SELECT * FROM lsmb13.partscustomer;
 
-update lsmb13.audittrail set person_id=(select id from lsmb13.person where last_name='Admin') where person_id not in (select id from lsmb13.person) ;
-INSERT INTO audittrail SELECT * FROM lsmb13.audittrail;
+INSERT INTO audittrail SELECT * FROM lsmb13.audittrail where person_id is not null;
 INSERT INTO translation SELECT * FROM lsmb13.translation;
 INSERT INTO parts_translation SELECT * FROM lsmb13.parts_translation;
 INSERT INTO user_preference SELECT * FROM lsmb13.user_preference;

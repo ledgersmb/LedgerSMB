@@ -1,7 +1,7 @@
 RELEASE NOTES
 LedgerSMB 1.4
 
-Latest Revision:  1.4.0 beta 1, Dec 15, 2012
+Latest Revision:  1.4.0 beta 4, TBD
 
 1:  Welcome to LedgerSMB
 
@@ -69,6 +69,9 @@ We have also integrated the template transaction addon, allowing for better
 management of recurring transactions, as well as the budgets add-on.  The point
 of sale has been broken off into addons to allow for faster release cycles.
 
+Finally templates for user documents (invoices, etc) are now loaded in the 
+database.
+
 2.4:  Database Changes
 
 Projects and Departments have been replaced by the new reporting units
@@ -76,7 +79,13 @@ framework.
 
 3:  Known Issues
 
-3.1:  Foreign exchange and payment reversals
+3.1:  Upgrade Limitations
+
+The upgrade procedure does not import audit trails where we don't know who did 
+something (i.e. where person_id is null).  If you have such, you may want to 
+the pre-upgrade data around (it is in a schema called lsmb13).
+
+3.2:  Foreign exchange and payment reversals
 
 The current design of foreign exchange handling means that if you reverse a
 payment, the foreign exchange gains and losses will not be exactly reversed 
@@ -84,7 +93,7 @@ unless you are able to reverse on the same day.  If reversed on different days t
 gain/loss will be realized per the time when the payment was in effect and 
 not reversed.
 
-3.2:  Reconciliation and Adjustments
+3.3:  Reconciliation and Adjustments
 
 If you enter adjustments for reconciliation you cannot simply add them with the
 same source, etc. on the transaction screen.  You must go through payment,
