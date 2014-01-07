@@ -131,7 +131,7 @@ sub save {
     }
     $form->{"$ordnumber"} =
       $form->update_defaults( $myconfig, $numberfld, $dbh )
-      if $form->should_update_defaults($form->{"$ordnumber"});
+      if $form->should_update_defaults($ordnumber);
 
 
 
