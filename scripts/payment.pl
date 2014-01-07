@@ -950,8 +950,13 @@ my @column_headers =  ({text => $locale->text('Invoice')},
                        };
   }
 # FINALLY WE ADD TO THE COLUMN HEADERS A LAST FIELD TO PRINT THE CLOSE INVOICE CHECKBOX TRICK :)
+if ($request->{account_class} == 1){
  push @column_headers, {text => $locale->text('To pay').$currency_text}, 
                        {text => 'X'};
+} else {
+ push @column_headers, {text => $locale->text('Received').$currency_text}, 
+                       {text => 'X'};
+}
 # WE NEED TO QUERY THE DATABASE TO CHECK FOR OPEN INVOICES
 # WE WONT DO ANYTHING IF WE DONT FIND ANY INVOICES, THE USER CAN STILL POST A PREPAYMENT
 my @invoice_data;

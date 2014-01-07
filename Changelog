@@ -11,6 +11,7 @@ Changelog for 1.3.36
 * Deleted broken pricematrix check on existing rows in POS (Chris T)
 * Fixing manually entered tax amounts ignored printing invoice (Chris T, 864)
 * Fixing deleting gl draft via gl screen fails (Chris T, 871)
+* Fixing receipts listing "to pay" for amount (Chris T, 892)
 
 Chris T is Chris Travers
 Nick P is Nick Prater
