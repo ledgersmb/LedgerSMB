@@ -1849,6 +1849,7 @@ sub save {
 
     # save part
     $rc = IC->save( \%myconfig, \%$form );
+    $rc = 1;
 
     $parts_id = $form->{id};
 
