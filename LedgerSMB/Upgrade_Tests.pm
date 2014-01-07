@@ -435,6 +435,41 @@ push @tests, __PACKAGE__->new(
     );
 
 
+push @tests, __PACKAGE__->new(
+    test_query => "select *
+                     from partscustomer
+                    where not exists (select 1
+                                        from pricegroup
+                                       where id = pricegroup_id)",
+    display_name => $LedgerSMB::App_State::Locale->text('Non-existing customer pricegroups in partscustomer'),
+    name => 'partscustomer_pricegroups_exist',
+    display_cols => ['parts_id', 'credit_id', 'pricegroup_id'],
+ instructions => $LedgerSMB::App_State::Locale->text(
+                   'Please fix the pricegroup data in your partscustomer table (no UI available)'),
+    table => 'partscustomer',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+#  ### On the vendor side, SL doesn't use pricegroups
+# push @tests, __PACKAGE__->new(
+#     test_query => "select *
+#                      from partsvendor
+#                     where not exists (select 1
+#                                         from pricegroup
+#                                        where id = pricegroup_id)",
+#     display_name => $LedgerSMB::App_State::Locale->text('Non-existing vendor pricegroups in partsvendor'),
+#     name => 'partsvendor_pricegroups_exist',
+#     display_cols => ['parts_id', 'credit_id', 'pricegroup_id'],
+#  instructions => $LedgerSMB::App_State::Locale->text(
+#                    'Please fix the pricegroup data in your partsvendor table (no UI available)'),
+#     table => 'partsvendor',
+#     appname => 'sql-ledger',
+#     min_version => '2.7',
+#     max_version => '2.8'
+#     );
+
 
 __PACKAGE__->meta->make_immutable;
 

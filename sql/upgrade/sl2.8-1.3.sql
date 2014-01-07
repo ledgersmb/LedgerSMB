@@ -5,7 +5,12 @@
 \set ar '''<?lsmb default_ar ?>'''
 \set ap '''<?lsmb default_ap ?>'''
 
-BEGIN;
+\set default_country '''AF'''
+\set ar '''1310'''
+\set ap '''2210'''
+
+
+-- BEGIN;
 
 -- adding mapping info for import.
 
@@ -437,20 +442,28 @@ FROM sl28.ap JOIN sl28.vendor ON (ap.vendor_id = vendor.id) ;
 
 ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 
+-- ### TODO: there used to be projects here!
+-- ### Move those to business_units
+-- ### TODO: Reconciled disappeared from the source table...
 INSERT INTO acc_trans
 (trans_id, chart_id, amount, transdate, source, cleared, fx_transaction, 
-	project_id, memo, approved, cleared_on, reconciled_on, 
-	voucher_id)
-SELECT trans_id, chart_id, amount, transdate, source,
+	memo, approved, cleared_on, voucher_id)
+SELECT trans_id, (select id
+                    from account
+                   where accno = (select accno
+                                    from sl28.chart
+                                   where chart.id = acc_trans.chart_id)),
+                                    amount, transdate, source,
 	CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END, fx_transaction,
-	project_id, memo, approved, cleared, reconciled, vr_id
+	memo, approved, cleared, vr_id
 	FROM sl28.acc_trans ;
 
-INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
-            sellprice, fxsellprice, discount, assemblyitem, unit, project_id,
+-- ### project_id deleted (need to stick into business units?)
+ INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
+            sellprice, fxsellprice, discount, assemblyitem, unit,
             deliverydate, serialnumber)
     SELECT  id, trans_id, parts_id, description, qty, allocated,
-            sellprice, fxsellprice, discount, assemblyitem, unit, project_id,
+            sellprice, fxsellprice, discount, assemblyitem, unit,
             deliverydate, serialnumber
        FROM sl28.invoice;
 
@@ -460,35 +473,38 @@ INSERT INTO partstax (parts_id, chart_id)
        JOIN sl28.chart ON chart.id = pt.chart_id
        JOIN account a ON chart.accno = a.accno;
 
-INSERT INTO tax(chart_id, rate, taxnumber, validto, pass, taxmodule_id)
+INSERT INTO tax(chart_id, rate, taxnumber, validto)
      SELECT a.id, t.rate, t.taxnumber, 
-            coalesce(t.validto::timestamp, 'infinity'), pass, taxmodule_id
+            coalesce(t.validto::timestamp, 'infinity')
        FROM sl28.tax t
        JOIN sl28.chart c ON (t.chart_id = c.id)
        JOIN account a ON (a.accno = c.accno);
 
-INSERT INTO customertax (customer_id, chart_id)
-     SELECT c.credit_id,  a.id
-       FROM sl28.customertax pt
-       JOIN sl28.customer c ON (pt.customer_id = c.id)
-       JOIN sl28.chart ON chart.id = pt.chart_id
-       JOIN account a ON chart.accno = a.accno; 
 
-INSERT INTO vendortax (vendor_id, chart_id)
-     SELECT c.credit_id,  a.id
-       FROM sl28.vendortax pt       
-       JOIN sl28.vendor c ON (pt.vendor_id = c.id)
-       JOIN sl28.chart ON chart.id = pt.chart_id
-       JOIN account a ON chart.accno = a.accno;
+-- ### TODO: Customer tax does not exist in LSMB. What is its function in SL??
+-- INSERT INTO customertax (customer_id, chart_id)
+--      SELECT c.credit_id,  a.id
+--        FROM sl28.customertax pt
+--        JOIN sl28.customer c ON (pt.customer_id = c.id)
+--        JOIN sl28.chart ON chart.id = pt.chart_id
+--        JOIN account a ON chart.accno = a.accno; 
 
+-- INSERT INTO vendortax (vendor_id, chart_id)
+--      SELECT c.credit_id,  a.id
+--        FROM sl28.vendortax pt       
+--        JOIN sl28.vendor c ON (pt.vendor_id = c.id)
+--        JOIN sl28.chart ON chart.id = pt.chart_id
+--        JOIN account a ON chart.accno = a.accno;
+
+-- ### TODO: deleted department_id here. to be moved to business units.
 INSERT 
   INTO oe(id, ordnumber, transdate, amount, netamount, reqdate, taxincluded,
        shippingpoint, notes, curr, person_id, closed, quotation, quonumber,
-       intnotes, department_id, shipvia, language_code, ponumber, terms,
+       intnotes, shipvia, language_code, ponumber, terms,
        entity_credit_account, oe_class_id)
 SELECT oe.id,  ordnumber, transdate, amount, netamount, reqdate, oe.taxincluded,
        shippingpoint, oe.notes, oe.curr, p.id, closed, quotation, quonumber,
-       intnotes, department_id, shipvia, oe.language_code, ponumber, oe.terms,
+       intnotes, shipvia, oe.language_code, ponumber, oe.terms,
        coalesce(c.credit_id, v.credit_id),
        case 
            when c.id is not null and quotation is not true THEN 1
@@ -502,25 +518,28 @@ SELECT oe.id,  ordnumber, transdate, amount, netamount, reqdate, oe.taxincluded,
   LEFT JOIN sl28.employee e ON oe.employee_id = e.id
   LEFT JOIN person p ON e.entity_id = p.id;
 
+-- ### TODO Deleted project_id here, to be moved to business units!
 INSERT INTO orderitems(id, trans_id, parts_id, description, qty, sellprice,
-            discount, unit, project_id, reqdate, ship, serialnumber, notes)
+            discount, unit, reqdate, ship, serialnumber)
      SELECT id, trans_id, parts_id, description, qty, sellprice,
-            discount, unit, project_id, reqdate, ship, serialnumber, notes
+            discount, unit, reqdate, ship, serialnumber
        FROM sl28.orderitems;
 
 INSERT INTO exchangerate select * from sl28.exchangerate;
 
-INSERT INTO project (id, projectnumber, description, startdate, enddate,
-            parts_id, production, completed, credit_id)
-     SELECT p.id, projectnumber, description, p.startdate, p.enddate,
-            parts_id, production, completed, c.credit_id
-       FROM sl28.project p
-       JOIN sl28.customer c ON p.customer_id = c.id;
+-- ### TODO: Move to business units!
+-- INSERT INTO project (id, projectnumber, description, startdate, enddate,
+--             parts_id, production, completed, credit_id)
+--      SELECT p.id, projectnumber, description, p.startdate, p.enddate,
+--             parts_id, production, completed, c.credit_id
+--        FROM sl28.project p
+--        JOIN sl28.customer c ON p.customer_id = c.id;
 
 
 INSERT INTO status SELECT * FROM sl28.status; -- may need to comment this one out sometimes
 
-INSERT INTO department SELECT * FROM sl28.department;
+-- ### TODO: Move to business units!
+-- INSERT INTO department SELECT * FROM sl28.department;
 
 INSERT INTO business SELECT * FROM sl28.business;
 
@@ -528,35 +547,39 @@ INSERT INTO sic SELECT * FROM sl28.sic;
 
 INSERT INTO warehouse SELECT * FROM sl28.warehouse;
 
+-- ### TODO: Had to delete the column i.entry_id from the SELECT??
 INSERT INTO inventory(entity_id, warehouse_id, parts_id, trans_id,
-            orderitems_id, qty, shippingdate, entry_id)
+            orderitems_id, qty, shippingdate)
      SELECT e.entity_id, warehouse_id, parts_id, trans_id,
-            orderitems_id, qty, shippingdate, i.entry_id
+            orderitems_id, qty, shippingdate
        FROM sl28.inventory i
        JOIN sl28.employee e ON i.employee_id = e.id;
 
 INSERT INTO yearend (trans_id, transdate) SELECT * FROM sl28.yearend;
 
+-- ### TODO: Had to delete the column 'entry_id' from the SELECT??
 INSERT INTO partsvendor(credit_id, parts_id, partnumber, leadtime, lastcost,
-            curr, entry_id)
+            curr)
      SELECT v.credit_id, parts_id, partnumber, leadtime, lastcost,
-            pv.curr, entry_id
+            pv.curr
        FROM sl28.partsvendor pv
        JOIN sl28.vendor v ON v.id = pv.vendor_id;
 
+-- ### TODO: Had to delete the column 'entry_id'??
 INSERT INTO partscustomer(parts_id, credit_id, pricegroup_id, pricebreak,
-            sellprice, validfrom, validto, curr, entry_id)
+            sellprice, validfrom, validto, curr)
      SELECT parts_id, credit_id, pv.pricegroup_id, pricebreak,
-            sellprice, validfrom, validto, pv.curr, entry_id
+            sellprice, validfrom, validto, pv.curr
        FROM sl28.partscustomer pv
        JOIN sl28.customer v ON v.id = pv.customer_id;
 
 INSERT INTO language SELECT * FROM sl28.language;
 
+-- ### TODO: Had to delete entry_id??
 INSERT INTO audittrail(trans_id, tablename, reference, formname, action,
-            transdate, person_id, entry_id)
+            transdate, person_id)
      SELECT trans_id, tablename, reference, formname, action,
-            transdate, p.entity_id, entry_id
+            transdate, p.entity_id
        FROM sl28.audittrail a
        JOIN sl28.employee e ON a.employee_id = e.id
        JOIN person p on e.entity_id = p.entity_id;
@@ -564,37 +587,40 @@ INSERT INTO audittrail(trans_id, tablename, reference, formname, action,
 INSERT INTO user_preference(id)
      SELECT id from users;
 
-INSERT INTO recurring(id, reference, startdate, nextdate, enddate, repeat, 
-            unit, howmany, payment)
-     SELECT id, reference, startdate, nextdate, enddate, repeat, 
-            unit, howmany, payment 
+INSERT INTO recurring(id, reference, startdate, nextdate, enddate,
+            recurring_interval, howmany, payment)
+     SELECT id, reference, startdate, nextdate, enddate, 
+            (repeat || ' ' || unit)::interval,
+            howmany, payment 
        FROM sl28.recurring;
 
 INSERT INTO recurringemail SELECT * FROM sl28.recurringemail;
 
 INSERT INTO recurringprint SELECT * FROM sl28.recurringprint;
 
-INSERT INTO jcitems(id, project_id, parts_id, description, qty, allocated,
+-- ### TODO: removed 'project_id'??
+INSERT INTO jcitems(id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
             person_id, notes)
-     SELECT j.id,  project_id, parts_id, description, qty, allocated,
+     SELECT j.id,  parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
             p.id, j.notes
        FROM sl28.jcitems j
        JOIN sl28.employee e ON j.employee_id = e.id
        JOIN person p ON e.entity_id = p.entity_id;
 
-INSERT INTO  custom_table_catalog  SELECT * FROM sl28. custom_table_catalog;
-
-INSERT INTO  custom_field_catalog  SELECT * FROM sl28. custom_field_catalog;
+--  ### Don't understand? These two don't exist??
+-- INSERT INTO  custom_table_catalog  SELECT * FROM sl28. custom_table_catalog;
+-- INSERT INTO  custom_field_catalog  SELECT * FROM sl28. custom_field_catalog;
 
 INSERT INTO parts_translation SELECT * FROM sl28.translation where trans_id in (select id from parts);
 
 INSERT INTO partsgroup_translation SELECT * FROM sl28.translation where trans_id in
  (select id from partsgroup);
 
-INSERT INTO project_translation SELECT * FROM sl28.translation where trans_id in
- (select id from project);
+--  ### TODO: To translate to business_units
+-- INSERT INTO project_translation SELECT * FROM sl28.translation where trans_id in
+--  (select id from project);
 
 SELECT setval('id', max(id)) FROM transactions;
 
@@ -641,7 +667,8 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('warehouse_id_seq', max(id)) FROM warehouse;
  SELECT setval('partsgroup_id_seq', max(id)) FROM partsgroup;
  SELECT setval('project_id_seq', max(id)) FROM project;
- SELECT setval('department_id_seq', max(id)) FROM department;
+-- ### TODO move to business_units
+-- SELECT setval('department_id_seq', max(id)) FROM department;
  SELECT setval('jcitems_id_seq', max(id)) FROM jcitems;
  SELECT setval('payment_type_id_seq', max(id)) FROM payment_type;
  SELECT setval('custom_table_catalog_table_id_seq', max(table_id)) FROM custom_table_catalog;
@@ -654,8 +681,6 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('payment_id_seq', max(id)) FROM payment;
  SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
  SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
-
-UPDATE defaults SET value = '1.4.0' WHERE setting_key = 'version';
 
 UPDATE defaults SET value = 'yes' where setting_key = 'migration_ok';
 
