@@ -53,12 +53,13 @@ our $VERSION = '1.0.0';
 sub get {
     my $self = shift;
     my ($key) = @_;
-    if ($key){
-        $self->{key} = $key;
-    }
-    my ($hashref) = $self->exec_method( funcname => 'setting_get' ) ;
-    $self->{value} = $hashref->{value};
-    return $self->{value};
+    $key = $self->{key} unless $key;
+    my ($hashref) = __PACKAGE__->call_procedure( procname => 'setting_get' ,
+                                                  args => [$key]) ;
+    warn 'breakpoint';
+    $self->{value} = $hashref->{value} if ref $self;
+    warn 'breakpoint';
+    return $hashref->{value};
 }
 
 sub increment {

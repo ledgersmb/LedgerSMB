@@ -443,13 +443,8 @@ sub get_metadata {
     @{$self->{contact_class_list}} = 
          $self->exec_method(funcname => 'entity_list_contact_class');
     #HV was $country_setting , given it a more general name, not only for country
-    my $setting_module = LedgerSMB::Setting->new({base => $self, copy => 'base'});
-    $setting_module->{key} = 'default_country';
-    $setting_module->get;
-    $self->{default_country} = $setting_module->{value};
-    $setting_module->{key} = 'default_language';
-    $setting_module->get;
-    $self->{default_language} = $setting_module->{value};
+    $self->{default_country} = LedgerSMB::Setting->get('default_country');
+    $self->{default_language} = LedgerSMB::Setting->get('default_language');
 }
 
 =item save_contact
