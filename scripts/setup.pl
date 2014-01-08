@@ -21,6 +21,7 @@ package LedgerSMB::Scripts::setup;
 use Locale::Country;
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
+use LedgerSMB::App_State;
 use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
@@ -835,6 +836,7 @@ sub save_user {
     $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",
                                    $creds->{login},
                                    $creds->{password});
+    $LedgerSMB::App_State::DBH = $request->{dbh};
     my $user = LedgerSMB::DBObject::Admin->new({base => $request});
     if (8 == $user->save_user){ # Told not to import but user exists in db
         $request->{notice} = $request->{_locale}->text(
