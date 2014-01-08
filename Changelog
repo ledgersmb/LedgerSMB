@@ -13,10 +13,12 @@ Changelog for 1.3.36
 * Fixing deleting gl draft via gl screen fails (Chris T, 871)
 * Fixing receipts listing "to pay" for amount (Chris T, 892)
 * Setting->get() now works with named keys (Chris T)
+* nginx sample configurations (P. Istvan)
 
 Chris T is Chris Travers
 Nick P is Nick Prater
 Giovanni B is Giovanni Biscuolo
+P. Istvan is Pongracz Istvan
 
 Changelog for 1.3.35
 * Fixed uninitialized value warnings when cached template enabled (Chris T)

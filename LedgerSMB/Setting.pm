@@ -56,9 +56,7 @@ sub get {
     $key = $self->{key} unless $key;
     my ($hashref) = __PACKAGE__->call_procedure( procname => 'setting_get' ,
                                                   args => [$key]) ;
-    warn 'breakpoint';
     $self->{value} = $hashref->{value} if ref $self;
-    warn 'breakpoint';
     return $hashref->{value};
 }
 
