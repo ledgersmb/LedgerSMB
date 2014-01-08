@@ -482,6 +482,7 @@ INSERT INTO tax(chart_id, rate, taxnumber, validto)
 
 
 -- ### TODO: Customer tax does not exist in LSMB. What is its function in SL??
+-- ###  LSMB moved these tables jointly to eca_tax
 -- INSERT INTO customertax (customer_id, chart_id)
 --      SELECT c.credit_id,  a.id
 --        FROM sl28.customertax pt
@@ -547,7 +548,6 @@ INSERT INTO sic SELECT * FROM sl28.sic;
 
 INSERT INTO warehouse SELECT * FROM sl28.warehouse;
 
--- ### TODO: Had to delete the column i.entry_id from the SELECT??
 INSERT INTO inventory(entity_id, warehouse_id, parts_id, trans_id,
             orderitems_id, qty, shippingdate)
      SELECT e.entity_id, warehouse_id, parts_id, trans_id,
@@ -557,7 +557,6 @@ INSERT INTO inventory(entity_id, warehouse_id, parts_id, trans_id,
 
 INSERT INTO yearend (trans_id, transdate) SELECT * FROM sl28.yearend;
 
--- ### TODO: Had to delete the column 'entry_id' from the SELECT??
 INSERT INTO partsvendor(credit_id, parts_id, partnumber, leadtime, lastcost,
             curr)
      SELECT v.credit_id, parts_id, partnumber, leadtime, lastcost,
@@ -565,7 +564,6 @@ INSERT INTO partsvendor(credit_id, parts_id, partnumber, leadtime, lastcost,
        FROM sl28.partsvendor pv
        JOIN sl28.vendor v ON v.id = pv.vendor_id;
 
--- ### TODO: Had to delete the column 'entry_id'??
 INSERT INTO partscustomer(parts_id, credit_id, pricegroup_id, pricebreak,
             sellprice, validfrom, validto, curr)
      SELECT parts_id, credit_id, pv.pricegroup_id, pricebreak,
@@ -575,7 +573,6 @@ INSERT INTO partscustomer(parts_id, credit_id, pricegroup_id, pricebreak,
 
 INSERT INTO language SELECT * FROM sl28.language;
 
--- ### TODO: Had to delete entry_id??
 INSERT INTO audittrail(trans_id, tablename, reference, formname, action,
             transdate, person_id)
      SELECT trans_id, tablename, reference, formname, action,
@@ -608,10 +605,6 @@ INSERT INTO jcitems(id, parts_id, description, qty, allocated,
        FROM sl28.jcitems j
        JOIN sl28.employee e ON j.employee_id = e.id
        JOIN person p ON e.entity_id = p.entity_id;
-
---  ### Don't understand? These two don't exist??
--- INSERT INTO  custom_table_catalog  SELECT * FROM sl28. custom_table_catalog;
--- INSERT INTO  custom_field_catalog  SELECT * FROM sl28. custom_field_catalog;
 
 INSERT INTO parts_translation SELECT * FROM sl28.translation where trans_id in (select id from parts);
 
