@@ -826,6 +826,11 @@ WITH INHERIT NOLOGIN;
 
 GRANT UPDATE ON warehouse TO "lsmb_<?lsmb dbname ?>__warehouse_edit";
 
+CREATE ROLE "lsmb_<?lsmb dbname ?>__warehouse_delete"
+WITH INHERIT NOLOGIN;
+
+GRANT DELETE ON warehouse TO "lsmb_<?lsmb dbname ?>__warehouse_delete";
+
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 values (143, 'allow', 'lsmb_<?lsmb dbname ?>__warehouse_edit');
 
