@@ -20,6 +20,7 @@ use LedgerSMB::DBObject::Asset_Class;
 use LedgerSMB::DBObject::Asset;
 use LedgerSMB::DBObject::Asset_Report;
 use LedgerSMB::Report::Assets::Net_Book_Value;
+use LedgerSMB::Report::Listings::Asset_Class;
 use strict;
 
 our @file_columns = qw(tag purchase_date description asset_class location vendor 
@@ -153,60 +154,7 @@ Displays a list of all asset classes.  No inputs required.
 
 sub asset_category_results {
     my ($request) = @_;
-    my $ac = LedgerSMB::DBObject::Asset_Class->new(base => $request);
-    my @classes = $ac->list_asset_classes();
-    my $locale = $request->{_locale};
-    $ac->get_metadata;
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user}, 
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'form-dynatable',
-        format => 'HTML'
-    );
-    my $columns;
-    @$columns = qw(id label dep_method asset_account dep_account);
-    my $heading = {
-         id            => $locale->text('ID'),
-         label         => $locale->text('Description'),
-         asset_account => $locale->text('Asset Account'),
-         dep_account   => $locale->text('Depreciation Account'),
-         dep_method    => $locale->text('Depreciation Method')
-    };
-
-    my $rows = [];
-    my $a_accs = {};
-    for my $a_acc (@{$ac->{asset_accounts}}){
-        $a_accs->{$a_acc->{id}} = $a_acc;
-    }
-    my $d_accs = {};
-    for my $d_acc (@{$ac->{dep_accounts}}){
-        $d_accs->{$d_acc->{id}} = $d_acc;
-    }
-    for my $aclass (@{$ac->{classes}}) {
-        print STDERR "$aclass\n";
-        my $a_acc = $a_accs->{$aclass->{asset_account_id}};
-        my $d_acc = $d_accs->{$aclass->{dep_account_id}};
-        my $href = "asset.pl?action=edit_asset_class";
-        my $row = {
-             id            => $aclass->{id},
-             label         => {
-                               text => $aclass->{label},
-                               href => "$href&id=$aclass->{id}",
-                              },
-             dep_method    => $aclass->{dep_method},
-             life_unit     => $aclass->{life_unit}, 
-             asset_account => $a_acc->{text},
-             dep_account   => $d_acc->{text},
-		};
-        push @$rows, $row;
-    }
-    $template->render({
-         form    => $ac,
-         heading => $heading,
-         rows    => $rows,
-         columns => $columns,
-   });
+    LedgerSMB::Report::Listings::Asset_Class->new(%$request)->render($request);
 }
 
 =item edit_asset_class

@@ -17,7 +17,7 @@ retrieving depreciation categories of assets.
 
 Integer ID of record.
 
-=item lable
+=item label
 
 Text description of asset class
 
