@@ -909,17 +909,18 @@ sub get_jcitems {
     $query = qq|
 		   SELECT j.id, j.description, j.qty - j.allocated AS qty,
 		          j.sellprice, j.parts_id, pr.credit_id as customer_id, 
-		          j.project_id, j.checkedin::date AS transdate, 
-		          j.notes, c.legal_name AS customer, pr.projectnumber, 
+		          j.business_unit_id as project_id, 
+                          j.checkedin::date AS transdate, 
+		          j.notes, c.legal_name AS customer, 
+                          pr.description as projectnumber, 
 		          p.partnumber
 		     FROM jcitems j
-		     JOIN project pr ON (pr.id = j.project_id)
+		     JOIN business_unit pr ON (pr.id = j.business_unit_id)
 		     JOIN parts p ON (p.id = j.parts_id)
 		LEFT JOIN entity_credit_account eca ON (eca.id = pr.credit_id)
                 LEFT JOIN company c ON eca.entity_id = c.entity_id
-		    WHERE pr.parts_id IS NULL
-		          AND j.allocated != j.qty $where
-		 ORDER BY pr.projectnumber, c.legal_name, j.checkedin::date|;
+		    WHERE j.allocated != j.qty $where
+		 ORDER BY pr.description, c.legal_name, j.checkedin::date|;
     if ( $form->{summary} ) {
         $query =~ s/j\.description/p\.description/;
         $query =~ s/c\.name,/c\.name, j\.parts_id, /;
