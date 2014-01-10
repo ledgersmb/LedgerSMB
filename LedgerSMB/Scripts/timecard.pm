@@ -139,6 +139,7 @@ sub save {
     my $timecard = LedgerSMB::Timecard->new(%$request);
     $timecard->save;
     $request->{id} = $timecard->id;
+    $request->merge($timecard->get($request->{id}));
     display($request);
 }
 

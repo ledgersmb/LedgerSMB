@@ -54,6 +54,14 @@ This is the int of the business unit attached.
 
 has business_unit_id => (isa => 'Int', is => 'ro', required => '1');
 
+=item bu_class_id int
+
+The business unit class id.
+
+=cut
+
+has bu_class_id => (isa => 'Int', is => 'ro', required => 0);
+
 =item parts_id int
 
 This is the id of the part utilized (labor/overhead or service for time)
@@ -196,7 +204,10 @@ sub get {
     my ($self, $id) = @_;
     my ($retval) = __PACKAGE__->call_procedure(
          procname => 'timecard__get', args => [$id]);
-    return $retval;
+    my ($buclass) = __PACKAGE__->call_procedure(
+         procname => 'timecard__bu_class', args => [$id]);
+    $retval->{bu_class_id} = $buclass->{id};
+    return __PACKAGE__->new(%$retval);
 }
 
 =item get_part_id($partnumber)

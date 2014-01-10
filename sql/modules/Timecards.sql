@@ -64,6 +64,15 @@ RETURN retval;
 END;
 $$;
 
+CREATE OR REPLACE FUNCTION timecard__bu_class(in_id int) 
+returns business_unit_class LANGUAGE SQL AS
+$$
+SELECT * from business_unit_class 
+ where id in (select class_id from business_unit
+               WHERE id in (select business_unit_id from jcitems
+                             WHERE id = $1));
+$$;
+
 CREATE OR REPLACE FUNCTION timecard__parts
 (in_timecard bool, in_service bool, in_partnumber text)
 RETURNS SETOF parts LANGUAGE SQL AS
