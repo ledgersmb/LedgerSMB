@@ -228,7 +228,7 @@ sub get_metadata {
     my ($self) = @_;
     @{$self->{asset_classes}} = $self->exec_method(funcname => 'asset_class__list');
    @{$self->{locations}} = $self->exec_method(funcname => 'warehouse__list_all');
-   @{$self->{departments}} = $self->exec_method(funcname => 'department__list_all');
+   @{$self->{departments}} = $self->call_procedure(procname => 'business_unit__list_by_class', args => [1, undef, undef, undef]);
     @{$self->{asset_accounts}} = $self->exec_method(funcname => 'asset_class__get_asset_accounts');
     @{$self->{dep_accounts}} = $self->exec_method(funcname => 'asset_class__get_dep_accounts');
     @{$self->{exp_accounts}} = $self->exec_method(

@@ -21,6 +21,7 @@ use LedgerSMB::DBObject::Asset;
 use LedgerSMB::DBObject::Asset_Report;
 use LedgerSMB::Report::Assets::Net_Book_Value;
 use LedgerSMB::Report::Listings::Asset_Class;
+use LedgerSMB::Report::Listings::Asset;
 use strict;
 
 our @file_columns = qw(tag purchase_date description asset_class location vendor 
@@ -253,68 +254,7 @@ be set.
 
 sub asset_results { 
     my ($request) = @_;
-    my $locale = $request->{_locale};
-    my $asset = LedgerSMB::DBObject::Asset->new(base => $request);
-    $asset->get_metadata;
-    if (!$asset->{usable_life}){
-       delete $asset->{usable_life};
-    }
-    my @items = $asset->search();
-    my $columns = ['tag', 'description', 'class', 'purchase_date', 
-                  'purchase_value', 'usable_life', 'location', 'department'];
-    my $heading = { tag            => $locale->text('Tag'),
-                    description    => $locale->text('Description'),
-                    purchase_date  => $locale->text('Purchase Date'),
-                    purchase_value => $locale->text('Purchase Value'),
-                    class          => $locale->text('Class'),
-                    usable_life    => $locale->text('Usable Life'),
-                    location       => $locale->text('Location'),
-                    department     => $locale->text('Department'),
-    };
-    my $asset_classes = {};
-    for my $ac(@{$asset->{asset_classes}}){
-        $asset_classes->{$ac->{id}} = $ac;
-    }
-    my $departments = {};
-    for my $dept(@{$asset->{departments}}){
-        $departments->{$dept->{id}} = $dept;
-    }
-    my $locations = {};
-    for my $loc(@{$asset->{asset_classes}}){
-        $locations->{$loc->{id}} = $loc;
-    }
-    my $rows = [];
-    for my $item (@items){
-        my $ref = {};
-        for my $label (qw(id description purchase_date purchase_value 
-                   usable_life)){
-            $ref->{$label} = $item->{$label};
-        }
-        $ref->{tag} = { href => "asset.pl?action=asset_edit&id=$item->{id}",
-                        text => $item->{tag},
-                      };
-        for my $label (qw(purchase_value usable_life)){
-            $ref->{$label} = $asset->format_amount({amount => $ref->{$label}});
-        }
-        $ref->{class} = $asset_classes->{$item->{asset_class_id}}->{label};
-        $ref->{department} 
-          = $departments->{$item->{department_id}}->{description};
-        $ref->{location} = $locations->{$item->{location_id}}->{description};
-        push @$rows, $ref;
-    }
-    my $template = LedgerSMB::Template->new(
-        user =>$request->{_user}, 
-        locale => $request->{_locale},
-        path => 'UI',
-        template => 'form-dynatable',
-        format => 'HTML'
-    );
-    $template->render({
-         form    => $asset,
-         heading => $heading,
-         rows    => $rows,
-         columns => $columns,
-   });
+    LedgerSMB::Report::Listings::Asset->new(%$request)->render($request);
 }
 
 =item asset_save
