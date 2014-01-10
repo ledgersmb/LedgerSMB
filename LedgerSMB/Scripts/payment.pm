@@ -362,7 +362,7 @@ sub print {
             my $id = $payment->{"contact_$line"};
             next if !defined $payment->{"id_$id"};
             my ($check) = $payment->call_procedure(
-                     procname => 'company__get_billing_info', args => [$id]
+                     procname => 'company_get_billing_info', args => [$id]
             );
             $check->{entity_class} = $payment->{account_class};
             $check->{id} = $id;
