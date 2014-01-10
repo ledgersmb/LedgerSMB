@@ -272,7 +272,8 @@ DECLARE out_var asset_class_result;
 BEGIN
 	FOR out_var IN
 		SELECT ac.id, ac.asset_account_id, aa.accno, aa.description, 
-			ad.accno, ad.description, m.method, ac.method,
+			ac.dep_account_id, ad.accno, ad.description, 
+                        m.method, ac.method,
 			ac.label
 		FROM asset_class ac
 		JOIN account aa ON (aa.id = ac.asset_account_id)
@@ -374,7 +375,7 @@ BEGIN
 			or asset_class_id = in_asset_class)
 			AND (in_description is null or description 
 				LIKE '%' || in_description || '%')
-			and (in_tag is not null or tag like '%'||in_tag||'%')
+			and (in_tag is null or tag like '%'||in_tag||'%')
 			AND (in_purchase_date is null 
 				or purchase_date = in_purchase_date)
 			AND (in_purchase_value is null
