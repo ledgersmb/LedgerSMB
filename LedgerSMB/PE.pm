@@ -822,7 +822,8 @@ sub project_sales_order {
 
     $form->all_years( $myconfig, $dbh );
 
-    $form->all_projects( $myconfig, $dbh, $transdate );
+    $form->all_business_units( $transdate, undef, 'Timecards');
+    $form->{all_project} = $form->{b_units}->{2};
 
     $form->all_employees( $myconfig, $dbh, $transdate );
 
