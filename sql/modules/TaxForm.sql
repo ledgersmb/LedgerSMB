@@ -19,7 +19,8 @@ BEGIN
            RETURN in_id;
         END IF;
 
-	insert into country_tax_form(country_id,form_name, default_reportable) 
+	insert into country_tax_form(country_id,form_name, default_reportable,
+                                     is_accrual) 
 	values (in_country_id, in_form_name, 
                 coalesce(in_default_reportable, false), 
                 coalesce(in_is_accrual, false));
