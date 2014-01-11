@@ -110,6 +110,8 @@ $$;
 
 GRANT ALL ON SCHEMA public TO public;
 
+\echo BASE ROLES
+SELECT lsmb__create_role('base_user');
 
 \echo BUDGETS
 SELECT lsmb__create_role('budget_enter');
@@ -936,6 +938,7 @@ SELECT lsmb__grant_role('sic_all', 'sic_create');
 SELECT lsmb__grant_role('sic_all', 'sic_edit');
 
 SELECT lsmb__create_role('template_edit');
+SELECT lsmb__grant_perms('template_edit', 'template', 'SELECT');
 SELECT lsmb__grant_menu('template_edit', id, 'allow')
   FROM unnest(array[159,160,161,162,163,164,165,166,167,168,169,170,
                     171,173,174,175,176,177,178,179,180,181,182,183,184,
@@ -1011,65 +1014,48 @@ SELECT lsmb__grant_menu('assets_approve', id, 'allow')
   FROM unnest(array[239,240]) id;
 
 -- Grants to all users;
-GRANT SELECT ON asset_unit_class TO public;
-GRANT SELECT ON asset_dep_method TO public;
-GRANT SELECT ON lsmb_module TO public; -- everyone needs to read this table and nothing
--- sensitive in that table.
-GRANT SELECT ON makemodel TO public;
-GRANT SELECT ON custom_field_catalog TO public;
-GRANT SELECT ON custom_table_catalog TO public;
-GRANT SELECT ON oe_class TO public;
-GRANT SELECT ON note_class TO public;
-GRANT SELECT ON account_heading TO public;
-GRANT SELECT ON acc_trans TO PUBLIC; -- I don't like this but we need to 
+SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
+  FROM unnest(array['asset_unit_class'::text, 'asset_dep_method',
+                    'lsmb_module', 'business_unit', 'business_unit_class']) obj;
+SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
+  FROM unnest(array['makemodel'::text, 'custom_field_catalog',
+                    'custom_table_catalog', 'oe_class', 'note_class']) obj;
+SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
+  FROM unnest(array['account_heading'::text, 'account',
+                    'acc_trans', 'account_link', 'defaults']) obj;
+                                     -- I don't like loose grants on acc_trans
+                                     -- but we need to 
                                      -- change the all years function to be
                                      -- security definer first. -- CT
-GRANT SELECT ON contact_class TO PUBLIC;
-GRANT SELECT ON batch_class TO PUBLIC;
-GRANT ALL ON defaults TO public;
-GRANT ALL ON "session" TO public;
-GRANT ALL ON session_session_id_seq TO PUBLIC;
-GRANT SELECT ON users TO public;
-GRANT ALL ON user_preference TO public;
-GRANT SELECT ON user_listable TO public;
-GRANT SELECT ON custom_table_catalog TO PUBLIC;
-GRANT SELECT ON custom_field_catalog TO PUBLIC;
-grant select on menu_node, menu_attribute, menu_acl to public;
-GRANT select on chart, gifi, country to public;
-GRANT SELECT ON parts, partsgroup TO public;
-GRANT SELECT ON language TO public;
-GRANT SELECT ON business, exchangerate, new_shipto, tax TO public;
-GRANT ALL ON recurring, recurringemail, recurringprint, status TO public; 
-GRANT ALL ON transactions TO public;
-GRANT SELECT ON entity_employee TO public;
-REVOKE INSERT, UPDATE, DELETE ON entity_employee FROM public; --fixing old perms
-GRANT ALL ON invoice_tax_form TO public;
-GRANT SELECT ON taxmodule TO public;
-GRANT ALL ON ac_tax_form to public;
-GRANT SELECT ON country_tax_form to public;
-GRANT SELECT ON translation TO public;
-GRANT SELECT ON pricegroup TO public;
-GRANT SELECT ON partstax TO public;
-GRANT SELECT ON salutation TO public;
-GRANT SELECT ON partscustomer TO public;
-GRANT SELECT ON assembly TO public;
-GRANT SELECT ON jcitems TO public;
-GRANT SELECT ON account_heading_tree TO public;
-GRANT SELECT ON payment_type TO public;
-GRANT SELECT ON lsmb_roles TO public;
-GRANT SELECT ON employee_search TO PUBLIC;
-GRANT SELECT ON warehouse TO public;
-GRANT SELECT ON voucher TO public;
-GRANT select ON account, account_link, account_link_description TO PUBLIC;
-GRANT select ON sic TO public;
-GRANT SELECT ON parts_translation,  partsgroup_translation TO public;
-GRANT SELECT ON asset_report_class, asset_rl_to_disposal_method,
-                asset_disposal_method TO PUBLIC;
-GRANT SELECT ON mime_type, file_class TO PUBLIC;
-GRANT SELECT ON jctype TO PUBLIC;
-GRANT ALL ON lsmb_sequence TO PUBLIC;
+SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
+  FROM unnest(array['contact_class'::text, 'batch_class',
+                    'entity_class', 'lsmb_roles', 'users']) obj;
 
-GRANT EXECUTE ON FUNCTION user__get_all_users() TO public;
+SELECT lsmb__grant_perms('base_user', obj, 'ALL')
+  FROM unnest(array['session'::text, 'session_session_id_seq',
+                    'user_preference', 'status', 'recurring',
+                    'recurringemail', 'recurringprint', 'transactions',
+                    'ac_tax_form', 'invoice_tax_form', 'lsmb_sequence']) obj;
+-- transactions table needs to be better locked down in 1.5
+
+SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
+  FROM unnest(array['user_listable'::text, 'language',
+                    'menu_node', 'menu_attribute', 'menu_acl',
+                    'chart', 'gifi', 'country', 'taxmodule',
+                    'parts', 'partsgroup', 'country_tax_form', 'translation',
+                    'business', 'exchangerate', 'new_shipto', 'tax',
+                    'entity_employee', 'jcitems', 'salutation', 'assembly']) obj;
+
+SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
+  FROM unnest(array['partstax'::text, 'partscustomer',
+                    'account_heading_tree', 'payment_type', 'warehouse',
+                    'employee_search', 'sic', 'voucher', 'mime_type',
+                    'parts_translation', 'partsgroup_translation', 
+                    'asset_report_class', 'asset_rl_to_disposal_method',
+                    'asset_disposal_method', 'file_class', 'jctype']) obj;
+
+REVOKE INSERT, UPDATE, DELETE ON entity_employee FROM public; --fixing old perms
+SELECT lsmb__grant_exec('base_user', 'user__get_all_users()');
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
 SELECT i_id, 'allow', 'public'

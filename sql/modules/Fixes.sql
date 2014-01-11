@@ -318,3 +318,9 @@ commit;
 -- been executed before.
 
 update defaults set value='yes' where setting_key='module_load_ok';
+
+BEGIN;
+SELECT admin__add_user_to_role(username, lsmb__role_prefix() || 'base_user')
+  from users
+ WHERE id NOT IN (select id from lsmb_roles where role_name = lsmb__role_prefix() || 'base_user');
+COMMIT;

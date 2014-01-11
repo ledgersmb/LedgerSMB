@@ -39,7 +39,9 @@ CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEX
         
         EXECUTE stmt;
         insert into lsmb_roles (user_id, role) 
-        SELECT id, in_role from users where username = in_username;
+        SELECT id, in_role from users where username = in_username 
+               AND id not in (select user_id from lsmb_roles 
+                               where role = in_role);
         return 1;
     END;
     
@@ -381,6 +383,9 @@ AS $$
         
         select * into a_user from users lu where lu.id = in_id;
         IF FOUND THEN 
+            SELECT admin__add_user_to_role(
+                        a_user.username, 
+                        lsmb__role_prefix() || 'base_user');
             return a_user.id;
         ELSE
             -- Insert cycle
@@ -401,6 +406,9 @@ AS $$
                 INSERT into entity_employee (entity_id) values (in_entity_id);
             END IF;
             -- Finally, issue the create user statement
+            SELECT admin__add_user_to_role(
+                        in_username, 
+                        lsmb__role_prefix() || 'base_user');
             
             return v_user_id ;
 
