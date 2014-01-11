@@ -546,10 +546,10 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
                                          AND al.description ilike '%tax'))
             )
             AND ( -- open/closed handling
-              (in_open IS TRUE AND abs(p.due) > 0.001) -- threshold due to 
+              (in_open IS TRUE AND abs(p.due) > 0.005) -- threshold due to 
                                                        -- impossibility to 
                                                        -- collect below -CT
-              OR (in_closed IS TRUE AND p.due = 0)
+              OR (in_closed IS TRUE AND abs(p.due) < 0.005 )
             )
 
 LOOP
