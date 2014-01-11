@@ -467,6 +467,7 @@ BEGIN
                  where trans_id = any(t_transaction_ids));
 
 	DELETE FROM acc_trans WHERE trans_id = ANY(t_transaction_ids);
+	DELETE FROM ar WHERE id = ANY(t_transaction_ids);
 	DELETE FROM ap WHERE id = ANY(t_transaction_ids);
 	DELETE FROM gl WHERE id = ANY(t_transaction_ids);
 	DELETE FROM voucher WHERE batch_id = in_batch_id;
