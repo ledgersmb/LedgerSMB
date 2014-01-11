@@ -16,6 +16,7 @@ General Enhancements:
 * Can now select default formats for printed invoices (Chris T)
 * Shipvia is now a text area. (Chris T)
 * Descriptions can now be locked on invoices and orders (Chris T)
+* Reconciliation reports can now be rejected (Chris T, 855)
 
 Enhancing Security Structure
 * Session expiration now with configurable behavior (Chris T)

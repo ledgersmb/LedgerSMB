@@ -11,6 +11,18 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION reconciliation__reject_set(in_report_id int)
+RETURNS bool language plpgsql as $$
+BEGIN
+     UPDATE cr_report set submitted = false 
+      WHERE id = in_report_id
+            AND approved is not true;
+     RETURN found;
+END;
+$$ SECURITY DEFINER;
+
+REVOKE EXECUTE ON FUNCTION reconciliation__reject_set(in_report_id int) FROM public;
+
 COMMENT ON FUNCTION reconciliation__submit_set(
         in_report_id int, in_line_ids int[]) IS
 $$Submits a reconciliation report for approval. 

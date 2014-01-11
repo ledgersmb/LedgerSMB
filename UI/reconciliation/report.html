@@ -2,6 +2,7 @@
 		include_stylesheet = ['UI/reconciliation/report.css']
 ?>
 <?lsmb PROCESS 'elements.html' ?>
+<body class="<?lsmb dojo_theme ?>">
 
 <form action="recon.pl" method="post" enctype="multipart/form-data">
 <div class="listtop" id="title"><?lsmb text('Reconciliation Report') ?></div>
@@ -278,7 +279,13 @@
 <?lsmb INCLUDE button element_data = {
 	name = "action",
 	text = text('Approve'),
-	value = 'Approve',
+	value = 'approve',
+	class = "submit"
+};
+INCLUDE button element_data = {
+	name = "action",
+	text = text('Reject'),
+	value = 'reject',
 	class = "submit"
 } ?>
 <?lsmb END ?>

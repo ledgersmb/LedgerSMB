@@ -100,6 +100,19 @@ sub select_all_recons {
 
 } 
 
+=item reject
+
+Rejects the recon set and returns it to non-submitted state
+
+=cut
+
+sub reject {
+    my ($request) = @_;
+    my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
+    $recon->reject;
+    search($request);
+}
+
 =item submit_recon_set
 
 Submits the recon set to be approved.

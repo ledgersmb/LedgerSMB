@@ -219,6 +219,17 @@ sub delete {
     return $retval;
 }
 
+=item reject
+
+This rejects a submitted but not approved report.
+
+=cut
+
+sub reject {
+    my ($self) = @_;
+    $self->exec_method(funcname => 'reconciliation__reject_set');
+}
+
 =item add_entries
 
 Adds entries from the import file routine.

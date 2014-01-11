@@ -594,6 +594,7 @@ SELECT lsmb__grant_perms('reconciliation_approve', obj, 'SELECT')
 
 SELECT lsmb__grant_menu('reconciliation_approve', 44, 'allow');
 SELECT lsmb__grant_menu('reconciliation_approve', 211, 'allow');
+SELECT lsmb__grant_exec('reconciliation_approve', 'reconciliation__reject_set(in_report_id int)');
 SELECT lsmb__grant_exec('reconciliation_approve', 'reconciliation__delete_unapproved(in_report_id int)');
 
 SELECT lsmb__create_role('reconciliation_all');
