@@ -17,9 +17,9 @@ Alias /ledgersmb WORKING_DIR/
   RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
 
 
+  Options +ExecCGI Includes FollowSymlinks
   AllowOverride All
   AddHandler cgi-script .pl
-  Options ExecCGI Includes FollowSymlinks
 
   # By default, only allow from localhost.  If you change this, please be
   # advised that you should use SSL protection on any and all network
