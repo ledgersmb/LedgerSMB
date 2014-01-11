@@ -295,7 +295,7 @@ Saves the items in the sequence screen
 sub save_sequences {
     my ($request) = @_;
     for my $count (1 .. $request->{count}){
-        if ($request->{"save_$count"}){
+        if ($request->{"save_$count"} and $request->{"label_$count"}){
            my %shash;
            for my $key (qw(accept_input setting_key label prefix sequence suffix)){
               $shash{$key} = $request->{"${key}_$count"};
