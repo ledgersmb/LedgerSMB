@@ -23,6 +23,7 @@ Enhancing Security Structure
 * Templates for user documents (like invoices) now stored in the db (Chris T)
 * New Roles.sql file can be reloaded without prepocessing (Chris T)
 * New Roles.sql file leaves no errors on success (Chris T)
+* Removed public grants, using a base user instead (Chris T)
 
 Enhancing data integrity
 * No longer allow NULL amounts in acc_trans (Chris T)

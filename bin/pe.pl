@@ -51,6 +51,11 @@ sub prepare_partsgroup {
     PE->get_partsgroup( \%myconfig, \%$form )
       if $form->{id};
 }
+sub prepare_pricegroup {
+    PE->get_pricegroup( \%myconfig, \%$form )
+      if $form->{id};
+}
+
 
 sub save {
 
