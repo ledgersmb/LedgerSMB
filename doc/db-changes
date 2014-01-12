@@ -1,0 +1,36 @@
+Database Changes for Integrators (1.3 to 1.4)
+
+This document is to set about general notes for system integrators, how our 
+upgrade processes work, and the major changes in the current branch.
+
+UPGRADE SYSTEM BASICS
+=====================
+
+We have a non-destructive upgrade system, which moves old data out of the way 
+and then imports it to the current system. There is currently no provision to 
+run custom after-upgrade import scripts though if this is a need support could
+be added.  Specific requirements would need to be worked out though.
+
+Old data remains in database schemas descriptively named.  For LedgerSMB, the name is lsmb[major][branch].  For SQL-Ledger it is the same but with sl instead of
+lsmb.  SQL-Ledger 2.8 becomes sl28, while LedgerSMB 1.3 becomes lsmb13.  This
+can be used to roll back upgrades, but any changes made during the
+pre-upgrade-text phase will remain in effect.
+
+After an upgrade, you can run whatever scripts you need to in order to move data
+from the old version to the new version.  Just because data is not imported
+doesn't mean it is lost.  You can always import it yourself.  In general
+anything outside the functionality of previous LedgerSMB pervsions will not be
+imported.   This is a good reason for implementors to coordinate with us on the
+development lists to ensure that common pieces of functionality are merged into
+the core software.
+
+MAJOR DB CHANGES IN 1.4
+========================
+* customertax and vendortax merged to eca_tax
+* department and project merged into business_unit and business_unit_class
+* mappings to business units are in bu_ tables.
+
+Because projects and departments share id-space, we currently add 1000 to the id
+of projects during import on the assumption that we don't have any users with
+more than 1000 departments.  If this is a wrong assumption the upgrade scripts
+may require adjustment.
