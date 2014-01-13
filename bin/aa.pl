@@ -1338,7 +1338,10 @@ sub update {
     # rather than the newly selected one in the form
     # check_name() sets $form->{vendor_id} or $form->{customer_id}
     # and updates $form->{oldvendor} or $form->{oldcustomer}
-    &create_links;
+
+    #tshvr4 should be revised!
+    #&create_links;#tshvr4 bug_#923 AA->get_name is called again from create_links and already user-filled in fields like $form->{AP_amount_1} $form->{amount_1} $form->{AP} are overridden again in get_name.TODO prevent change of vendor/customer on update?
+
 
     &display_form;
 
