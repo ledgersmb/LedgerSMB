@@ -180,6 +180,7 @@ $LedgerSMB::App_State::Locale = $locale;
 # pull in the main code
 try {
 #eval {
+  $logger->trace("requiring bin/$form->{script}");
   require "bin/$form->{script}";
 
   # customized scripts
@@ -193,6 +194,7 @@ try {
   }
 
   if ( $form->{action} ) {
+    $logger->trace("action $form->{action}");
 
     binmode STDOUT, ':utf8';
     binmode STDERR, ':utf8';
