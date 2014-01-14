@@ -78,6 +78,8 @@ sub post_transaction {
         $form->{"amount_$_"} *= -1 if $form->{reverse};
     }
 
+    $form->{crdate} ||= 'now';
+
     # connect to database
     my $dbh = $LedgerSMB::App_State::DBH;
 
