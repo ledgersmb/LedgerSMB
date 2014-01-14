@@ -1082,7 +1082,7 @@ sub taxes {
 
     my $query = qq|
 		  SELECT c.id, c.accno, c.description, 
-		         t.rate * 100 AS rate, t.taxnumber, t.validto,
+		         t.rate * 100 AS rate, t.taxnumber, t.validto::date,
 			 t.minvalue, t.pass, m.taxmodulename
 		    FROM chart c
 		    LEFT JOIN

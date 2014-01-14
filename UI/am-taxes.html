@@ -19,10 +19,27 @@
 <?lsmb FOREACH row IN rows; i = loop.count ?>
 	<tr>
 	  <th align="right"><?lsmb row.0 ?></th>
-	  <td><input name="taxrate_<?lsmb i ?>" size="6" value="<?lsmb form.item("taxrate_$i") ?>" /></td>
-	  <td><input name="minvalue_<?lsmb i ?>" size="6" value="<?lsmb form.item("minvalue_$i") ?>" /></td>
-	  <td><input name="taxnumber_<?lsmb i ?>" value="<?lsmb form.item("taxnumber_$i") ?>" /></td>
-	  <td><input class="date" id="validto-<?lsmb i ?>" name="validto_<?lsmb i ?>" size="11" value="<?lsmb form.item("validto_$i") ?>" title="<?lsmb user.dateformat ?>" /></td>
+          <td><?lsmb PROCESS input element_data = {
+               name = "taxrate_" _ i
+               size = 6
+              value = form.item("taxrate_$i")
+          } ?></td>
+          <td><?lsmb PROCESS input element_data = {
+               name = "minvalue_" _ i
+               size = 6
+              value = form.item("minvalue_$i")
+          } ?></td>
+          <td><?lsmb PROCESS input element_data = {
+               name = "taxnumber_" _ i
+               size = 6
+              value = form.item("taxnumber_$i")
+          } ?></td>
+          <td><?lsmb PROCESS input element_data = {
+               name = "validto_" _ i
+               size = 10
+              value = form.item("validto_$i")
+              class = "date"
+          } ?></td>
 	  <td><input name="pass_<?lsmb i ?>" size="6" value="<?lsmb form.item("pass_$i") ?>" /></td>
 	  <td><?lsmb PROCESS select element_data=row.1 ?></td>
 	</tr>
