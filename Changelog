@@ -118,6 +118,7 @@ Changelog for 1.3.36
 * nginx sample configurations (P. Istvan)
 * Fixed unable to delete ar vouchers (Chris T)
 * Fixed copy to new scrambling lines (Chris T, 923)
+* Fixed improper account line handling in ar/ap trans. (Chris T, 923)
 
 Chris T is Chris Travers
 Nick P is Nick Prater

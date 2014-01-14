@@ -1005,61 +1005,6 @@ sub get_name {
     $sth->finish;
     chop $form->{taxaccounts};
 
-    # setup last accounts used for this customer/vendor
-
-   if ( !$form->{id} && $form->{type} !~ /_(order|quotation)/ ) {
-
-         $query = qq|
-			   SELECT c.accno, c.description, c.link, 
-                                  c.category,
-			          pbu.bu_id AS project_id,
-			          dbu.bu_id AS department_id
-			     FROM chart c
-			     JOIN acc_trans ac ON (ac.chart_id = c.id)
-			     JOIN $arap a ON (a.id = ac.trans_id)
-                        LEFT JOIN business_unit_ac pbu 
-                                  ON (ac.entry_id = pbu.entry_id 
-                                     AND pbu.class_id = 2)
-                        LEFT JOIN business_unit_ac dbu
-                                  ON (ac.entry_id = dbu.entry_id
-                                      AND dbu.class_id = 1)
-			    WHERE c.charttype = 'A' AND a.entity_credit_account = ?
-			          AND a.id = (SELECT max(id) 
-			                         FROM $arap
-			                        WHERE entity_credit_account = 
-			                              ?)
-			|;
-
-        $sth = $dbh->prepare($query);
-        $sth->execute( $form->{"$form->{vc}_id"}, $form->{"$form->{vc}_id"} )
-          || $form->dberror($query);
-
-        my $i = 0;
-
-	
-        while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-            $form->{department_id} = $ref->{department_id};
-            if ( $ref->{link} =~ /_amount/ ) {
-                $i++;
-                $form->{"$form->{ARAP}_amount_$i"} =
-                  "$ref->{accno}--$ref->{description}"
-                  if $ref->{accno};
-                $form->{"projectnumber_$i"} =
-                  "$ref->{projectnumber}--" . "$ref->{project_id}"
-                  if $ref->{project_id};
-            }
-
-            if ( $ref->{link} eq $form->{ARAP} ) {
-                $form->{ $form->{ARAP} } = $form->{"$form->{ARAP}_1"} =
-                  "$ref->{accno}--" . "$ref->{description}"
-                  if $ref->{accno};
-            }
-        }
-
-        $sth->finish;
-        $form->{rowcount} = $i if ( $i && !$form->{type} );
-    }
-
 }
 
 =item taxform_exist($form, $cv_id)
