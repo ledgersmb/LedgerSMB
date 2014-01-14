@@ -557,6 +557,7 @@ Deletes selected batches
 
 sub batch_delete {
     my ($request)  = @_;
+    warn 'batch_delete';
     my $batch = LedgerSMB::Batch->new(base => $request);
     if (!$batch->close_form){
         list_batches($request);
