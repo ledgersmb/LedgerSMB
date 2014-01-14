@@ -96,7 +96,7 @@ sub copy_to_new{
     if ($form->{paid_1}){
         delete $form->{paid_1};
     }
-    display_form();
+    update();
 }
 
 sub new_screen {
