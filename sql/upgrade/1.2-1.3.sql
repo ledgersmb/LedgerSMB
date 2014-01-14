@@ -461,10 +461,7 @@ INSERT INTO acc_trans(trans_id, chart_id, amount, transdate, source, cleared,
             fx_transaction, project_id, memo, invoice_id, entry_id
        FROM lsmb12.acc_trans
        JOIN lsmb12.chart ON acc_trans.chart_id = chart.id
-       JOIN account a ON chart.accno = a.accno
-      WHERE trans_id IN (select id from lsmb12.ar UNION
-                         SELECT id from lsmb12.ap UNION
-                         SELECT id FROM lsmb12.gl); 
+       JOIN account a ON chart.accno = a.accno;
 
 INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, discount, assemblyitem, unit, project_id,
