@@ -1,10 +1,15 @@
 <?lsmb INCLUDE 'ui-header.html' stylesheet=request.stylesheet 
-         include_stylesheet = ['UI/Reports/pnl.css']; ?>
+         include_stylesheet = ['UI/Reports/pnl.css']; 
+ comparisons = report.comparisons ?>
 <body class="financial-statement" id="balance-sheet">
 <h1><?lsmb text('Balance Sheet') ?></h1>
-<h2><?lsmb text('Through date:') _ ' ' _ report.to_date ?></h2>
 <?lsmb # TODO:  header hierarchy handling ?>
 <table>
+<tr class="report-head">
+<th colspan="2"><?lsmb text('Through date:') _ ' ' _ report.to_date ?></th>
+<?lsmb FOREACH c IN comparisons ?>
+<th><?lsmb c.to_date ?></th>
+<?lsmb END; ?>
 <tr class="section-head">
    <th colspan="2"><?lsmb text('Assets') ?></th>
 </tr>
@@ -13,10 +18,16 @@
        ?>&accno=<?lsmb line.account_number ?>"
        ><?lsmb line.account_number _ ' - ' _ line.account_desc ?></a></th>
     <td class="amount"><?lsmb line.balance ?> </td>
+    <?lsmb FOREACH c IN comparisons ?>
+    <td class="amount"><?lsmb c.index.${line.account_number} ?></td>
+    <?lsmb END; ?>
 </tr>
 <?lsmb END ?>
 <tr class="total"><th><?lsmb text('Total Assets') ?></th>
     <td class="amount"><?lsmb report.balance_sheet.A.total ?></td>
+    <?lsmb FOREACH c IN comparisons ?>
+    <td class="amount"><?lsmb c.totals.A ?></td>
+    <?lsmb END; ?>
 </tr>
 <tr class="section-head">
    <th colspan="2"><?lsmb text('Liabilities') ?></th>
@@ -26,10 +37,16 @@
        ?>&accno=<?lsmb line.account_number ?>"
        ><?lsmb line.account_number _ ' - ' _ line.account_desc ?></a></th>
     <td class="amount"><?lsmb line.balance ?> </td>
+    <?lsmb FOREACH c IN comparisons ?>
+    <td class="amount"><?lsmb c.index.${line.account_number} ?></td>
+    <?lsmb END; ?>
 </tr>
 <?lsmb END ?>
 <tr class="total"><th><?lsmb text('Total Liabilities') ?></th>
     <td class="amount"><?lsmb report.balance_sheet.L.total ?></td>
+    <?lsmb FOREACH c IN comparisons ?>
+    <td class="amount"><?lsmb c.totals.L ?></td>
+    <?lsmb END ?>
 </tr>
 <tr class="section-head">
    <th colspan="2"><?lsmb text('Equity') ?></th>
@@ -39,17 +56,27 @@
        ?>&accno=<?lsmb account_number ?>"
        ><?lsmb IF line.account_number; line.account_number _ ' - '; END; line.account_desc ?></a></th>
     <td class="amount"><?lsmb line.balance ?> </td>
+    <?lsmb FOREACH c IN comparisons ?>
+    <td class="amount"><?lsmb c.index.${line.account_number} ?></td>
+    <?lsmb END; ?>
 </tr>
 <?lsmb END ?>
 <tr class="total"><th><?lsmb text('Total Equity') ?></th>
     <td class="amount"><?lsmb report.balance_sheet.Q.total ?></td>
+    <?lsmb FOREACH c IN comparisons ?>
+    <td class="amount"><?lsmb c.totals.Q ?></td>
+    <?lsmb END ?>
 </tr>
 <tr class="total"><th><?lsmb text('Total Liabilities Plus Equity') ?></th>
     <td class="amount"><?lsmb report.balance_sheet.total_LQ ?></td>
+    <?lsmb FOREACH c IN comparisons ?>
+    <td class="amount"><?lsmb c.totals.LQ ?></td>
+    <?lsmb END ?>
 </tr>
 </table>
 
-<h2>Key Ratios</h2>
+<h2><?lsmb text('Key Ratios'); ?></h2>
+<h2><?lsmb text('First column only') ?></h2>
 <table>
 <tr><th><?lsmb text('Assets to Liabilities') ?></th>
     <td><?lsmb report.balance_sheet.ratios.AL ?></td>

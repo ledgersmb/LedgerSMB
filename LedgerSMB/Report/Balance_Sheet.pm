@@ -45,6 +45,23 @@ This is the hashref that holds the main balance sheet data structure
 
 has 'balance_sheet' => (is => 'rw', isa => 'HashRef[Any]', required => 0);
 
+=head2 comparisons
+
+An arrayref of hashrefs, each is:
+
+=over 
+
+=item through_date
+
+=item index
+
+A hashref of hashref in the form of account_number => balance
+
+=back
+
+=cut
+
+has 'comparisons' => (is => 'rw', isa => 'ArrayRef[Any]', required => 0, default => sub { return [] });
 
 =head1 STATIC METHODS
 
@@ -137,6 +154,41 @@ sub run_report {
     $self->headings($head);
     $self->balance_sheet($sheet);
     $self->rows([]);
+}
+
+=head2 add_comparison($balance_sheet)
+
+Adds a comparison to the current balance sheet.  Among other things it checks 
+the sheet for new account keys and adds them.
+
+=cut
+
+sub add_comparison{
+    my ($self, $comparison) = @_;
+    my $old_sheet = $self->balance_sheet;
+    my $new_sheet = $comparison->balance_sheet;
+    my $comparisons = $self->comparisons;
+    my $idx = {};
+    for my $type (('A', 'L', 'Q')){
+        for my $line (@{$new_sheet->{$type}->{lines}}){
+            $idx->{$line->{account_number}} = $line->{balance};
+            my $found = 0;
+            for my $l2 (@{$old_sheet->{$type}->{lines}}){
+               $found = 1 if $l2->{account_number} eq $line->{account_number};
+            }
+            push @{$old_sheet->{$type}->{lines}}, 
+               {account_number => $line->{account_number},
+                    balance    => '---' } unless $found;
+        }
+    }
+    my $comparison_hash = {     to_date => $comparison->to_date,
+                                  index => $idx,
+                                 totals => {A => $new_sheet->{A}->{total},
+                                            L => $new_sheet->{L}->{total},
+                                            Q => $new_sheet->{Q}->{total},
+                                           LQ => $new_sheet->{total_LQ}, }};
+    push @$comparisons, $comparison_hash;
+    $self->comparisons($comparisons);
 }
 
 =head1 COPYRIGHT

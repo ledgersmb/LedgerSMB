@@ -163,6 +163,14 @@ Generates a balance sheet
 sub balance_sheet {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Balance_Sheet->new(%$request);
+    $report->run_report;
+    for my $count (1 .. 3){
+        next unless $request->{"to_date_$count"};
+        $request->{to_date} = $request->{"to_date_$count"};
+        my $comparison = LedgerSMB::Report::Balance_Sheet->new(%$request);
+        $comparison->run_report;
+        $report->add_comparison($comparison);
+    }
     $report->render($request);
 }
 

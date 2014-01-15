@@ -3,6 +3,7 @@
 <body class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('Balance Sheet') ?></div>
 <form action="reports.pl" method="get">
+<div class="inputrow">
 <?lsmb 
 PROCESS input element_data = {
            label = text('Through date') #'
@@ -10,7 +11,21 @@ PROCESS input element_data = {
            value = to_date
            class = 'date'
             size = 12
-}; 
+};
+?></div>
+<div class="subsection"><h3><?lsmb text('Enter up to 3 comparison dates') ?></h3></div>
+<?lsmb FOR ct IN [1, 2, 3]; ?>
+<div class="inputrow"><?lsmb 
+PROCESS input element_data = {
+           label = text('Through date') #'
+            name = 'to_date_' _ ct
+           value = to_date
+           class = 'date'
+            size = 12
+};
+?></div>
+<?lsmb
+END;
 PROCESS button element_data = {
             text = text('Generate')
             name = 'action'
