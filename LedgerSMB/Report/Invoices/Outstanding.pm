@@ -324,6 +324,9 @@ sub run_report {
         if($r->{id}){
          $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{id}";
         }        
+        $r->{entity_name_href_suffix} = "entity_class=" . $self->entity_class 
+                         . "&entity_id=$r->{entity_id}&".
+                         "meta_number=$r->{meta_number}";
     }
     $self->rows(\@rows);
 }
