@@ -121,6 +121,7 @@ sub cleanup {
     $DBName = undef;
     @Roles = ();
     $Role_Prefix = undef;
+    delete $ENV{LSMB_ALWAYS_MONEY} if $ENV{LSMB_ALWAYS_MONEY};
 }
 
 1;

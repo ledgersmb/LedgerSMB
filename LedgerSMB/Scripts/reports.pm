@@ -162,6 +162,7 @@ Generates a balance sheet
 
 sub balance_sheet {
     my ($request) = @_;
+    $ENV{LSMB_ALWAYS_MONEY} = 1;
     my $report = LedgerSMB::Report::Balance_Sheet->new(%$request);
     $report->run_report;
     for my $count (1 .. 3){
