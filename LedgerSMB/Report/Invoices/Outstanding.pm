@@ -316,9 +316,9 @@ sub run_report {
     for my $r(@rows){
         my $script;
         if ($self->entity_class == 2) {
-             $script = ($r->{invoice}) ? 'is.pl' : 'aa.pl';
+             $script = ($r->{invoice}) ? 'is.pl' : 'ar.pl';
         } else {
-             $script = ($r->{invoice}) ? 'ir.pl' : 'aa.pl';
+             $script = ($r->{invoice}) ? 'ir.pl' : 'ap.pl';
         }
         #tshvr4 avoid 'Use of uninitialized value in concatenation (.) or string at LedgerSMB/Report/Invoices/Outstanding.pm'
         if($r->{id}){
