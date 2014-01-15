@@ -35,6 +35,7 @@ use LedgerSMB::App_State;
 
 sub generate_income_statement {
     my ($request) = @_;
+    $ENV{LSMB_ALWAYS_MONEY} = 1;
     my $rpt;
     if ($request->{pnl_type} eq 'invoice'){
         $rpt = LedgerSMB::Report::PNL::Invoice->new(%$request);
@@ -44,7 +45,22 @@ sub generate_income_statement {
         $rpt = LedgerSMB::Report::PNL::Product->new(%$request);
     } else {
         $rpt =LedgerSMB::Report::PNL::Income_Statement->new(%$request);
+        $rpt->run_report;
+        for my $c_per (1 .. 3) {
+            my $found = 0;
+            for (qw(from_month from_year from_date to_date interval)){
+                $request->{$_} = $request->{"${_}_$c_per"};
+                delete $request->{$_} unless defined $request->{$_};
+                $found = 1 if defined $request->{$_} and $_ ne 'interval';
+            }
+            next unless $found;
+            my $comparison = LedgerSMB::Report::PNL::Income_Statement->new(%$request);
+            $comparison->run_report;
+            $rpt->add_comparison($comparison);
+        }
     }
+    #use Data::Dumper;
+    #die '<pre>' . Dumper($rpt);
     $rpt->render($request);
 }
 

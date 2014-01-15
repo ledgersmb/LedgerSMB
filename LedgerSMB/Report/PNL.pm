@@ -152,21 +152,21 @@ Adds a comparison.
 =cut
 
 sub add_comparison {
-    my ($self, $label, $from, $to) = @_;
-    my %attributes = %{ $self->meta->get_attribute_map };
-    my %new_data;
-    while (my ($name, $attribute) = each %attributes) { 
-        my $reader = $attribute->get_read_method;
-        $new_data{$name} = $self->$reader;
-    }
-    $new_data{from_date} = $from;
-    $new_data{to_date} = $to;
-    my $new_report = $self->new(%new_data);
-    my @rows = $new_report->run_report;
+    my ($self, $new_pnl) = @_;
     my $comparisons = $self->comparisons;
     $comparisons ||= [];
-    push @$comparisons, {label => $label, from_date => $from, to_date => $to}; 
-    $self->_merge_rows($label, @rows);
+    my $old_ad = $self->account_data;
+    my $new_ad = $new_pnl->account_data;
+    for my $cat (qw(I E)){
+       for my $k (keys %{$new_ad->{$cat}}){
+           $old_ad->{$cat}->{$k} ||= 0;
+       }
+    }
+    push @$comparisons, {from_date => $new_pnl->from_date, 
+                           to_date => $new_pnl->to_date,
+                      account_data => $new_pnl->account_data,
+                         }; 
+    $self->comparisons($comparisons);
 }
 
 =back

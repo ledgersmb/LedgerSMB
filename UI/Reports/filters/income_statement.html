@@ -11,15 +11,6 @@
 <table width="100%">
   <tr><th class="listtop"><?lsmb text('Income Statement') ?></th></tr>
   <tr><td> </td></tr>
-  <tr>
-    <td>
-      <table>
-       <?lsmb PROCESS business_classes;
-       PROCESS date_row; # TODO add comparisons ?>
-       </tr>
-    </table>
-  </td>
-</tr>
 <tr>
   <td>
     <table>
@@ -68,6 +59,20 @@
       </table>
     </td>
   </tr>
+  <tr>
+    <td>
+      <table>
+       <?lsmb PROCESS business_classes;
+       PROCESS date_row; # TODO add comparisons ?>
+       <tr>
+       <th colspan="7"><?lsmb text('Enter up to 3 date ranges for comparison') ?></th>
+       </tr>
+       <?lsmb FOREACH c IN [1, 2, 3];
+              PROCESS date_row SUFFIX='_' _ c; 
+              END ?>
+    </table>
+  </td>
+</tr>
   <tr><td><hr size="3" noshade="noshade" /></td></tr>
 </table>
 <?lsmb PROCESS button element_data = {
