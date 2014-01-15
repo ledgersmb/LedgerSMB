@@ -24,7 +24,7 @@ PROCESS 'elements.html';
      } ?></td>
  <td><?lsmb 
      checked = undefined;
-     IF seq.accept_input; checked = 'CHECKED'; ELSE; checked = undefined; END;
+     IF seq.accept_input; checked = 'CHECKED'; END;
      PROCESS input element_data = {
            type = 'checkbox'
            name = 'accept_input_' _ count
@@ -73,7 +73,7 @@ PROCESS 'elements.html';
  <td><?lsmb 
      PROCESS input element_data = {
            type = 'checkbox'
-           name = 'accept_input' _ count 
+           name = 'accept_input_' _ count 
           value = 1
      } ?></td>
  <td><?lsmb PROCESS input element_data = {
