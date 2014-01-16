@@ -158,6 +158,7 @@ sub from_input{
     $input = undef if $input eq '';
     my $format = $LedgerSMB::App_State::User->{dateformat};
     $format ||= 'yyyy-mm-dd';
+    $format = 'yyyy-mm-dd' if $input =~ /^\d{4}/;
     my $dt =  _parse_string($self, $input, uc($format), $has_time);
     my %prop = (date => $dt, dummy => !defined $dt);
     delete $prop{date} unless defined $prop{date} and $prop{date} ne '';
