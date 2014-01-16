@@ -646,7 +646,7 @@ sub lsmb_info {
     my $retval = {};
     my $qtemp = 'SELECT count(*) FROM TABLE';
     my $dbh = DBI->connect(
-        "dbi:Pg:dbname=$self->{company_name}",  
+        qq|dbi:Pg:dbname="$self->{company_name}"|,  
          $self->{username}, $self->{password},
          { AutoCommit => 0, PrintError => $logger->is_warn(), }
     );

@@ -344,7 +344,7 @@ sub migrate_sl{
     $ENV{PGDATABASE} = $request->{database};
 
     # Credentials set above via environment variables --CT
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    $request->{dbh} = DBI->connect(qq|dbi:Pg:dbname="$request->{database}"|);
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
     $dbh->do('CREATE SCHEMA PUBLIC');
@@ -376,7 +376,7 @@ sub migrate_sl{
     $rc2 = system("psql -f $temp/sl2.8-1.3-upgrade.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
     $rc ||= $rc2;
 
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    $request->{dbh} = DBI->connect(qq|dbi:Pg:dbname="$request->{database}"|);
 
    @{$request->{salutations}} 
     = $request->call_procedure(procname => 'person__list_salutations' ); 
@@ -448,7 +448,7 @@ sub upgrade{
     $ENV{PGDATABASE} = $request->{database};
 
     # Credentials set above via environment variables --CT
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    $request->{dbh} = DBI->connect(qq|dbi:Pg:dbname="$request->{database}"|);
     my $locale = $request->{_locale};
 
     my @pre_upgrade_checks = (
@@ -601,7 +601,7 @@ sub fix_tests{
     $ENV{PGDATABASE} = $request->{database};
 
     # Credentials set above via environment variables --CT
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    $request->{dbh} = DBI->connect(qq|dbi:Pg:dbname="$request->{database}"|);
     my $locale = $request->{_locale};
 
     my $table = $request->{dbh}->quote_identifier($request->{table});
@@ -791,7 +791,7 @@ sub _render_new_user {
 
 
 
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    $request->{dbh} = DBI->connect(qq|dbi:Pg:dbname="$request->{database}"|);
     $request->{dbh}->{AutoCommit} = 0;
 
     @{$request->{salutations}} 
@@ -833,7 +833,7 @@ sub save_user {
     use LedgerSMB::DBObject::Admin;
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials();
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",
+    $request->{dbh} = DBI->connect(qq|dbi:Pg:dbname="$request->{database}"|,
                                    $creds->{login},
                                    $creds->{password});
     $LedgerSMB::App_State::DBH = $request->{dbh};
@@ -910,7 +910,7 @@ sub run_upgrade {
     $ENV{PGDATABASE} = $request->{database};
 
     # Credentials set above via environment variables --CT
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    $request->{dbh} = DBI->connect(qq|dbi:Pg:dbname="$request->{database}"|);
     my $dbh = $request->{dbh};
     $dbh->do('ALTER SCHEMA public RENAME TO lsmb12');
     $dbh->do('CREATE SCHEMA PUBLIC');
@@ -942,7 +942,7 @@ sub run_upgrade {
     $rc2 = system("psql -f $temp/1.2-1.3-upgrade.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
     $rc ||= $rc2;
 
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}");
+    $request->{dbh} = DBI->connect(qq|dbi:Pg:dbname="$request->{database}"|);
 
    @{$request->{salutations}} 
     = $request->call_procedure(procname => 'person__list_salutations' ); 
@@ -1000,7 +1000,7 @@ sub rebuild_modules {
     $request->{lsmb_info} = $database->lsmb_info();
     # Credentials set above via environment variables --CT
     #avoid msg commit ineffective with AutoCommit enabled
-    $request->{dbh} = DBI->connect("dbi:Pg:dbname=$request->{database}",$creds->{login},$creds->{password},{AutoCommit=>0});
+    $request->{dbh} = DBI->connect(qq|dbi:Pg:dbname="$request->{database}"|,$creds->{login},$creds->{password},{AutoCommit=>0});
     my $dbh = $request->{dbh};
     my $sth = $dbh->prepare(
           'UPDATE defaults SET value = ? WHERE setting_key = ?'
