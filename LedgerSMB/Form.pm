@@ -1285,12 +1285,9 @@ sub db_init {
         $self->{company} = $LedgerSMB::Sysconfig::default_db;
     }
     my $dbname = $self->{company};
-    my $dbconfig = { dbconnect => "dbi:Pg:dbname=$dbname",
-                  dbuser    => $login,
-                  dbpasswd  => $password
-    };
+    $self->{dbh} = DBI->connect(qq|dbi:Pg:dbname="$dbname"|, $login, $password,
+           { AutoCommit => 0 }) || $self->dberror();
 
-    $self->{dbh} = $self->dbconnect_noauto($dbconfig) || $self->dberror();
     $logger->debug("acquired dbh \$self->{dbh}=$self->{dbh}");
     $self->{dbh}->{pg_server_prepare} = 0;
     my $dbh = $self->{dbh};

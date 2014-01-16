@@ -99,7 +99,7 @@ sub dbh {
 
     my $creds = LedgerSMB::Auth::get_credentials();
     $LedgerSMB::App_State::DBH = DBI->connect(
-        "dbi:Pg:dbname=$self->{company_name}",
+        qq|dbi:Pg:dbname="$self->{company_name}"|,
 	"$creds->{login}", "$creds->{password}",
 	{ AutoCommit => 0, PrintError => $logger->is_warn(), }
     );
@@ -729,7 +729,7 @@ sub lsmb_info {
     my $retval = {};
     my $qtemp = 'SELECT count(*) FROM TABLE';
     my $dbh = DBI->connect(
-        "dbi:Pg:dbname=$self->{company_name}",  
+        qq|dbi:Pg:dbname="$self->{company_name}"|,  
          $self->{username}, $self->{password},
          { AutoCommit => 0, PrintError => $logger->is_warn(), }
     );

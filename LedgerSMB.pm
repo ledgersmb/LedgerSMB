@@ -881,7 +881,7 @@ sub _db_init {
     # Just in case, however, I think it is a good idea to include the DBI
     # error string.  CT
     $self->{dbh} = DBI->connect(
-        "dbi:Pg:dbname=$dbname", "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
+        qq|dbi:Pg:dbname="$dbname"|, "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
     ); 
     #move dbi_trace further on , dbh may not have been acquired because of authentication error
 
