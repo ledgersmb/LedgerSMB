@@ -1286,7 +1286,7 @@ sub db_init {
     }
     my $dbname = $self->{company};
     $self->{dbh} = DBI->connect(qq|dbi:Pg:dbname="$dbname"|, $login, $password,
-           { AutoCommit => 0 }) || $self->dberror();
+           { AutoCommit => 0 }) || LedgerSMB::Auth::credential_prompt();
 
     $logger->debug("acquired dbh \$self->{dbh}=$self->{dbh}");
     $self->{dbh}->{pg_server_prepare} = 0;
