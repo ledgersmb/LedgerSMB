@@ -5,6 +5,7 @@ Supported Presently
 Changelog for 1.3.37
 * 1.3-1.2 downgrade now drops extensions (Chris T, 943)
 * Fixed db names with spaces not supported (Chris T, 946)
+* Fixed old code not working if clicked on after changing passwd (Chris 949)
 
 Changelog for 1.3.36
 * Set default date for AP invoice creation to current date (Chris T)
