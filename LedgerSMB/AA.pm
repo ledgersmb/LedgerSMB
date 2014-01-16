@@ -898,52 +898,20 @@ sub transactions {
     my $query;
     if ($form->{outstanding}){
         # $form->{ARAP} is safe since it is set in calling scripts and not passed from the UA
+        #
+        # Refactoring code here entirely.  This is done because the outstanding
+        # summary report (as of 1.3.36) is not delivering correct answers.
+        # 
+        # I really don't like this code but it is going away in 1.4, and this
+        # seems like the best way to make this more maintainable now.
+        #
+        # The result is going to be a refactoring of the queries so that the
+        # detail report query can be inlined in the summary report query. -CT
         my $p = $LedgerSMB::Sysconfig::decimal_places;
-        if ($form->{transdateto} eq ''){
-            delete $form->{transdateto};
-        }
-        if ($form->{summary}){
-            $query = qq|
-		   SELECT count(a.id) as invnumber, min(a.transdate) as transdate,
-		          min(a.duedate) as duedate, 
-		          sum(a.netamount) as netamount, 
-		          sum(a.amount::numeric(20,$p)) as amount, 
-		          sum(a.amount::numeric(20,$p)) 
-                             - (sum(acs.amount::numeric(20,$p)) 
-                                * CASE WHEN '$table' = 'ar' THEN -1 ELSE 1 END)
-                          AS paid,
-		          vce.name, vc.meta_number,
-		          a.entity_credit_account, 
-		          d.description AS department
-		     FROM $table a
-		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
-		     JOIN acc_trans acs ON (acs.trans_id = a.id)
-		     JOIN entity vce ON (vc.entity_id = vce.id)
-		     JOIN chart c ON (acs.chart_id = c.id 
-                                     AND charttype = 'A')
-		LEFT JOIN exchangerate ex ON (ex.curr = a.curr
-		          AND ex.transdate = a.transdate)
-		LEFT JOIN department d ON (a.department_id = d.id)
-		$acc_trans_join
-		    WHERE c.link = '$form->{ARAP}' AND 
-		          (|.$dbh->quote($form->{transdateto}) . qq| IS NULL OR 
-		           |.$dbh->quote($form->{transdateto}) . qq| >= acs.transdate)
-			AND a.approved IS TRUE AND acs.approved IS TRUE
-			AND a.force_closed IS NOT TRUE
-		 GROUP BY 
-		          vc.meta_number, a.entity_credit_account, vce.name, 
-                          d.description --,
-		          --a.ponumber, a.invoice 
-		   HAVING abs(sum(acs.amount::numeric(20,2))) > 0.000 |;
-        } else {
-            #HV typo error a.ponumber $acc_trans_fields -> a.ponumber $acc_trans_flds
-            $query = qq|
-		   SELECT a.id, a.invnumber, a.ordnumber, a.transdate, a.crdate,
+
+        my $cols = qq|a.id, a.invnumber, a.ordnumber, a.transdate, a.crdate,
 		          a.duedate, a.netamount, a.amount::numeric(20,$p), 
-		          a.amount::numeric(20,$p)
-                             - (sum(acs.amount::numeric(20,$p)) 
-                                * CASE WHEN '$table' = 'ar' THEN -1 ELSE 1 END)
-                          AS paid,
+		          a.amount::numeric(20,$p) - (sum(acs.amount::numeric(20,$p)) * CASE WHEN '$table' = 'ar' THEN -1 ELSE 1 END) AS paid,
 		          a.invoice, a.datepaid, a.terms, a.notes,
 		          a.shipvia, a.shippingpoint, 
 		          vce.name, vc.meta_number,
@@ -952,6 +920,9 @@ sub transactions {
 		          d.description AS department, 
 		          as_array(p.projectnumber) as ac_projects,
 		          a.ponumber $acc_trans_flds
+        |;
+        delete $form->{transdateto} unless $form->{transdateto};
+        my $detail_query = qq| SELECT $cols 
 		     FROM $table a
 		     JOIN entity_credit_account vc ON (a.entity_credit_account = vc.id)
 		LEFT JOIN acc_trans acs ON (acs.trans_id = a.id)
@@ -973,6 +944,34 @@ sub transactions {
 		          vc.meta_number, a.entity_credit_account, a.till, ex.$buysell, d.description, vce.name,
 		          a.ponumber, a.invoice, a.datepaid $acc_trans_flds
 		   HAVING abs(sum(acs.amount::numeric(20,$p))) > 0 |;
+        if ($form->{transdateto} eq ''){
+            delete $form->{transdateto};
+        }
+        if ($form->{summary}){
+            $cols =~ s/\w+\.invnumber/count(*) as invnumber/;
+            $cols =~ s/\w+\.transdate/min(transdate) as transdate/;
+            $cols =~ s/\w+\.duedate/min(duedate) as duedate/;
+            $cols =~ s/\w+\.netamount/sum(netamount) as netamount/;
+            $cols =~ s/\w+\.duedate/min(duedate) as duedate/;
+            $cols =~ s/.*paid,/sum(paid) as paid,/;
+            $cols =~ s/.*exchangerate,//;
+            $cols =~ s/.*ac_projects,//;
+            $cols =~ s/\w+\.amount::numeric\(20,$p\)/sum(amount::numeric(20,$p)) as amount/;
+            $cols =~ s/\w+\.(invoice|datepaid|terms|invoice|crdate|id),//g;
+            $cols =~ s/\w+\.(ordnumber|notes|shipvia|shippingpoint|till),//g;
+            $cols =~ s/a\.ponumber//;
+            $cols =~ s/d.description AS department,/department/ ;
+            $cols =~ s/(vc|vce|d|a)\.//g;
+
+            $query = qq|
+		   SELECT $cols
+                     FROM ($detail_query) d
+		 GROUP BY 
+		          meta_number, entity_credit_account, name, 
+                          department|;
+        } else {
+            #HV typo error a.ponumber $acc_trans_fields -> a.ponumber $acc_trans_flds
+            $query = $detail_query;
        } 
     } else {
         $query = qq|
@@ -1197,7 +1196,7 @@ sub transactions {
             $query =~ s/GROUP BY / $where \n GROUP BY /;
         }
 	if ($form->{summary}){
-		$sortorder = "vc.meta_number";
+		$sortorder = "meta_number";
 	}
         $query .= "\n ORDER BY $sortorder";
     } else {
