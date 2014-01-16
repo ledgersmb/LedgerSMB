@@ -406,7 +406,7 @@ AS $$
                 INSERT into entity_employee (entity_id) values (in_entity_id);
             END IF;
             -- Finally, issue the create user statement
-            SELECT admin__add_user_to_role(
+            PERFORM admin__add_user_to_role(
                         in_username, 
                         lsmb__role_prefix() || 'base_user');
             
