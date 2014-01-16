@@ -178,6 +178,7 @@ sub add_comparison{
             }
             push @{$old_sheet->{$type}->{lines}}, 
                {account_number => $line->{account_number},
+                account_desc   =>  $line->{account_desc},
                     balance    => '---' } unless $found;
         }
     }

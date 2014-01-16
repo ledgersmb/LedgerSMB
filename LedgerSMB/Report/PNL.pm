@@ -159,7 +159,8 @@ sub add_comparison {
     my $new_ad = $new_pnl->account_data;
     for my $cat (qw(I E)){
        for my $k (keys %{$new_ad->{$cat}}){
-           $old_ad->{$cat}->{$k} ||= 0;
+           $old_ad->{$cat}->{$k}->{main}->{account_description} 
+             ||=  $new_ad->{$cat}->{$k}->{main}->{account_description};
        }
     }
     push @$comparisons, {from_date => $new_pnl->from_date, 
