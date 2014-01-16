@@ -1487,65 +1487,6 @@ sub run_custom_queries {
     @rc;
 }
 
-=item $form->dbconnect($myconfig);
-
-Returns an autocommit connection to the database specified in $myconfig.
-
-=cut
-
-sub dbconnect {
-
-    my ( $self, $myconfig ) = @_;
-
-    # connect to database
-    my $dbh = DBI->connect( $myconfig->{dbconnect},
-        $myconfig->{dbuser}, $myconfig->{dbpasswd} )
-      or $self->dberror;
-    $dbh->{pg_enable_utf8} = 1;
-
-    # set db options
-    if ( $myconfig->{dboptions} ) {
-        $dbh->do( $myconfig->{dboptions} )
-          || $self->dberror( $myconfig->{dboptions} );
-    }
-
-    $dbh;
-}
-
-=item $form->dbconnect_noauto($myconfig);
-
-Returns a non-autocommit connection to the database specified in $myconfig.
-
-=cut
-
-sub dbconnect_noauto {
-
-    my ( $self, $myconfig ) = @_;
-
-    # connect to database
-    my $dbh = DBI->connect(
-        $myconfig->{dbconnect}, $myconfig->{dbuser},
-        $myconfig->{dbpasswd}, { AutoCommit => 0 }
-    ) or $self->dberror;
-    #HV trying to trace DBI->connect statements
-    $logger->debug("DBI->connect dbh=$dbh");
-    my $dbi_trace=$LedgerSMB::Sysconfig::DBI_TRACE;
-    if($dbi_trace)
-    {
-     $logger->debug("\$dbi_trace=$dbi_trace");
-     $dbh->trace(split /=/,$dbi_trace,2);#http://search.cpan.org/~timb/DBI-1.616/DBI.pm#TRACING
-    }
-
-    $dbh->{pg_enable_utf8} = 1;
-
-    # set db options
-    if ( $myconfig->{dboptions} ) {
-        $dbh->do( $myconfig->{dboptions} );
-    }
-
-    $dbh;
-}
-
 =item $form->dbquote($var);
 
 If $var is an empty string, return NULL, otherwise return $var as quoted by
