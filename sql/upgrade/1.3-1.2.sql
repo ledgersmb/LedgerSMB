@@ -1,3 +1,6 @@
+DROP EXTENSION tablefunc;
+DROP EXTENSION tsearch2; 
+DROP EXTENSION pg_trgm;
 
 BEGIN;
 ALTER SCHEMA public RENAME TO lsmb_13fail;
