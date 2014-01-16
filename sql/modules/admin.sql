@@ -383,7 +383,7 @@ AS $$
         
         select * into a_user from users lu where lu.id = in_id;
         IF FOUND THEN 
-            SELECT admin__add_user_to_role(
+            PERFORM admin__add_user_to_role(
                         a_user.username, 
                         lsmb__role_prefix() || 'base_user');
             return a_user.id;
