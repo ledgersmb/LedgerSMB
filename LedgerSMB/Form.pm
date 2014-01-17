@@ -1707,7 +1707,7 @@ $dbh is unused.
 
 sub add_shipto {
   
-  	my ( $self,$dbh,$id ) = @_;
+  	my ( $self,$dbh,$id, $oe) = @_;
         if (! $self->{locationid}) {
 		return;
 	}
@@ -1718,10 +1718,18 @@ sub add_shipto {
 			|;
 
         my $sth = $self->{dbh}->prepare($query) || $self->dberror($query);
-
+        my $trans_id;
+        my $oe_id;
+        if ($oe){
+           $trans_id = undef;
+           $oe_id = $id;
+        } else {
+           $trans_id = $id;
+           $oe_id = undef;
+        }  
         $sth->execute(
-                        undef,                     
-			$self->{id},
+                        $trans_id,                     
+			$oe_id,
 			$self->{locationid}
              
 		      ) || $self->dberror($query);
