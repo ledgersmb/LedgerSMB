@@ -214,10 +214,13 @@ Runs the trial balance report.
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->exec_method({funcname => 'trial_balance__generate'});
+    my @rawrows = $self->exec_method({funcname => 'trial_balance__generate'});
     my $total_debits;
     my $total_credits;
-    for my $ref(@rows){
+    my @rows = ();
+    for my $ref(@rawrows){
+        next if (($ref->{starting_balance} == 0)
+                        and ($ref->{credits} == 0) and ($ref->{debits} == 0));
         my $href_suffix = "from_date=" . $self->from_date . 
                           "&to_date=" . $self->to_date .
                           "&accno=" . $ref->{account_number};
@@ -226,12 +229,11 @@ sub run_report {
         $ref->{account_number_href_suffix} = $href_suffix;
         $ref->{account_desc_href_suffix} = $href_suffix;
         $ref->{gifi_accno_href_suffix} = $href_suffix;
-        
+        push @rows, $ref;
     }
     push @rows, {class => 'total', 
                debits => $total_debits,
               credits => $total_credits, };
-
     $self->rows(\@rows);
 }
 
