@@ -29,7 +29,7 @@ package LedgerSMB::Taxes::Simple;
 use Class::Struct;
 use Math::BigFloat;
 
-struct Taxes::Simple => {
+struct LedgerSMB::Taxes::Simple => {
     taxnumber   => '$',
     description => '$',
     rate        => 'Math::BigFloat',
