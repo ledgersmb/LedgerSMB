@@ -4,20 +4,6 @@ LedgerSMB::Scripts::trial_balance - Trial Balance logic for LedgerSMB
 
 =head1 SYNOPSIS
 
-To save a criteria set:
-
-  LedgerSMB::Scripts::trial_balance::save($request);
-
-To get a criteria set and run it:
-
-  LedgerSMB::Scripts::trial_balance::get($request);
-
-To list criteria sets:
-
-  LedgerSMB::Scripts::trial_balance::list($request);
-
-To run a trial balance:
-
   LedgerSMB::Scripts::trial_balance::run($request);
 
 =cut
@@ -38,44 +24,6 @@ that the methods expect.
 
 =over
 
-=item get 
-
-Retrieves and runs a trial balance.  Only needs id to be set.
-
-=cut
-
-sub get {
-    my ($request) = @_;
-    $request->merge(LedgerSMB::Report::Trial_Balance->get($request->{id}));
-    run($request);
-}
-
-=item save
-
-Saves a trial balance.  All criteria are applicable.
-
-=cut
-
-sub save {
-    my ($request) = @_;
-    my $tb = LedgerSMB::Report::Trial_Balance->new(%$request);
-    $tb->save;
-    list($request);
-}
-
-=item list
-
-Lists trial balances.  No criteria are applicable
-
-=cut
-
-sub list {
-    my ($request) = @_;
-    use LedgerSMB::Report::Trial_Balance::List;
-    my $rpt = LedgerSMB::Report::Trial_Balance::List->new(%$request);
-    $rpt->render($request);
-}
-
 =item run
 
 Runs the trial balance. All criteria are applicable except id and desc.
@@ -84,9 +32,7 @@ Runs the trial balance. All criteria are applicable except id and desc.
 
 sub run {
     my ($request) = @_;
-    my $tb = LedgerSMB::Report::Trial_Balance->new(%$request);
-    $tb->run_report;
-    $tb->render($request);
+    LedgerSMB::Report::Trial_Balance->new(%$request)->render($request);
 }
 
 =back

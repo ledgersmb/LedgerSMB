@@ -42,14 +42,6 @@
                     </td>
                 </tr>
                 <tr>
-                <th colspan=2><?lsmb text('Round Amounts First') ?>
-                <td><?lsmb PROCESS input element_data={
-                              name => 'discrete_amounts',
-                              type => 'checkbox',
-                             value => 'Y',
-                      } -?>
-                </td>
-                </tr>
             </table>
           </td>
         </tr>
@@ -78,17 +70,6 @@
                              text_attr = 'label',
                              value_attr = 'id',
                              } ?>
-                    </td>
-                </tr>
-                <tr>
-                    <th align="righ"><?lsmb text("Description")?></th>
-                    <td colspan="2">
-                        <?lsmb PROCESS input element_data={
-                            name="description",
-                            value=report.description,
-                            size=65,
-                            class= 'text'
-                        }?>
                     </td>
                 </tr>
               </table>
@@ -135,28 +116,13 @@
         <br />
         
         <?lsmb PROCESS button element_data={
-            text => 'Save',
-            attributes => {
-                name=>'action',
-                value=>'save'
-            }
-        }?>
-        <?lsmb PROCESS button element_data={
-            text => 'Run',
-            attributes => {
-                name=>'action',
-                value=>'run'
+            text = 'Run',
+            attributes = {
+                name= 'action',
+                value= 'run'
             }
         }?>
 
-        <?lsmb PROCESS button element_data={
-            text => 'Save & Run',
-            attributes => {
-                name=>'action',
-                value=>'save_and_run'
-            }
-        }?>
-        
         </form>
     </body>
 </html>
