@@ -137,6 +137,7 @@ BEGIN
               AND (in_heading IS NULL OR in_heading = a.heading)
      GROUP BY a.id, a.accno, a.description, a.category, a.gifi_accno,
               cp.end_date, cp.account_id, cp.amount, cp.debits, cp.credits
+       HAVING abs(cp.amount) > 0 or count(ac) > 0
      ORDER BY a.accno;
 END;
 $$ language plpgsql;
