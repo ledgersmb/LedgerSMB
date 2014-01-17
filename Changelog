@@ -7,6 +7,8 @@ Changelog for 1.3.37
 * Fixed db names with spaces not supported (Chris T, 946)
 * Fixed old code not working if clicked on after changing passwd (Chris 949)
 * Fixed join projection issues in AP Outstanding (Chris T, 950)
+* Added Apache 2.4 configuration file (Chris T)
+* Save Info reports "Draft Posted" (Chris T, 925)
 
 Changelog for 1.3.36
 * Set default date for AP invoice creation to current date (Chris T)
