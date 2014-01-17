@@ -2038,14 +2038,13 @@ sub save_warehouse {
 
     $form->isblank( "description", $locale->text('Description missing!') );
     AM->save_warehouse( \%myconfig, \%$form );
-    $form->redirect( $locale->text('Warehouse saved!') );
-
+    list_warehouse();
 }
 
 sub delete_warehouse {
 
     AM->delete_warehouse( \%myconfig, \%$form );
-    $form->redirect( $locale->text('Warehouse deleted!') );
+    list_warehouse();
 
 }
 
