@@ -968,26 +968,6 @@ sub _warehouse_redirect {
     LedgerSMB::Scripts::reports::list_warehouse($lsmb);
 }
 
-sub company_logo {
-
-    $myconfig{address} =~ s/\\n/<br>/g; # Template cleans this up
-    $myconfig{dbhost} = $locale->text('localhost') unless $myconfig{dbhost};
-
-    $form->{stylesheet} = $myconfig{stylesheet};
-
-    $form->{title} = $locale->text('About');
-
-    # create the logo screen
-    my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
-        locale => $locale,
-        template => 'am-company-logo');
-    $template->render({
-        form => $form,
-        user => \%myconfig,
-    });
-}
-
 sub recurring_transactions {
 
     # $locale->text('Day')
