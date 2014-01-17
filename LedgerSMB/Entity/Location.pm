@@ -254,6 +254,10 @@ sub save {
 
 Deletes the current location
 
+This can be called from $self->delete() if you have  a location object, or it
+can be called as LedgerSMB::Entity::Locateion::delete($hashref) if the hashref 
+contains either entity_id or credit_id, and location_id, and location class.
+
 =cut
 
 sub delete{
