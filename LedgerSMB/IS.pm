@@ -2442,7 +2442,7 @@ sub list_locations_contacts
     my $query = qq|
 			select  id as locationid,line_one as shiptoaddress1,line_two as shiptoaddress2,line_three as shiptoaddress3,city as shiptocity,
 				state as shiptostate,mail_code as shiptozipcode,country as shiptocountry 
-			from eca__list_locations(?);
+			from eca__list_locations(?) WHERE location_class = 3;
 		  |;
 
 
