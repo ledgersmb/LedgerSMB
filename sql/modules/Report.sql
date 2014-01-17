@@ -80,7 +80,7 @@ BEGIN
                    (coalesce(in_to_date, now())::date - a.transdate) as age
 		  FROM (select id, invnumber, till, ordnumber, amount, duedate,
                                curr, ponumber, notes, entity_credit_account,
-                               -1 AS sign, transdate,
+                               -1 AS sign, transdate, force_closed,
                                CASE WHEN in_use_duedate 
                                     THEN coalesce(in_to_date, now())::date
                                          - duedate
@@ -92,7 +92,7 @@ BEGIN
                          UNION 
                         SELECT id, invnumber, null, ordnumber, amount, duedate,
                                curr, ponumber, notes, entity_credit_account,
-                               1 as sign, transdate,
+                               1 as sign, transdate, force_closed,
                                CASE WHEN in_use_duedate 
                                     THEN coalesce(in_to_date, now())::date
                                          - duedate
@@ -120,6 +120,7 @@ BEGIN
 	     LEFT JOIN country ON (country.id = l.country_id)
                  WHERE (e.id = in_entity_id OR in_entity_id IS NULL)
                        AND (in_accno IS NULL or acc.accno = in_accno)
+                       AND NOT a.force_closed
               GROUP BY c.entity_id, c.meta_number, e.name,
                        l.line_one, l.line_two, l.line_three,
                        l.city, l.state, l.mail_code, country.name,
@@ -386,13 +387,13 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        '{}' as business_units -- TODO
   FROM (select id, transdate, invnumber, amount, netamount, duedate, notes, 
                till, person_id, entity_credit_account, invoice, shippingpoint,
-               shipvia, ordnumber, ponumber, description, on_hold
+               shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ar
          WHERE in_entity_class = 2 and approved
          UNION
         SELECT id, transdate, invnumber, amount, netamount, duedate, notes,
                null, person_id, entity_credit_account, invoice, shippingpoint,
-               shipvia, ordnumber, ponumber, description, on_hold
+               shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ap 
          WHERE in_entity_class = 1 and approved) a 
   LEFT
@@ -423,7 +424,8 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        AND (in_on_hold IS NULL OR in_on_hold = a.on_hold)
        AND (in_from_date IS NULL OR a.transdate >= in_from_date)
        AND (in_to_date IS NULL OR a.transdate <= in_to_date)
-       AND p.due::numeric(100,2) <> 0
+       AND p.due::numeric(100,2) <> 0 
+       AND NOT a.force_closed
        AND (in_partnumber IS NULL 
           OR EXISTS(SELECT 1 FROM invoice inv 
                       JOIN parts ON inv.parts_id = parts.id
@@ -483,13 +485,13 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
        
   FROM (select id, transdate, invnumber, amount, netamount, duedate, notes, 
                till, person_id, entity_credit_account, invoice, shippingpoint,
-               shipvia, ordnumber, ponumber, description, on_hold
+               shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ar
          WHERE in_entity_class = 2 and approved
          UNION
         SELECT id, transdate, invnumber, amount, netamount, duedate, notes,
                null, person_id, entity_credit_account, invoice, shippingpoint,
-               shipvia, ordnumber, ponumber, description, on_hold
+               shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ap 
          WHERE in_entity_class = 1 and approved) a 
   LEFT
@@ -546,10 +548,11 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
                                          AND al.description ilike '%tax'))
             )
             AND ( -- open/closed handling
-              (in_open IS TRUE AND abs(p.due) > 0.005) -- threshold due to 
+              (in_open IS TRUE AND ( a.force_closed IS NOT TRUE AND
+                 abs(p.due) > 0.005))                  -- threshold due to 
                                                        -- impossibility to 
                                                        -- collect below -CT
-              OR (in_closed IS TRUE AND abs(p.due) < 0.005 )
+              OR (in_closed IS TRUE AND (a.force_closed OR abs(p.due) < 0.005 ))
             )
 
 LOOP
