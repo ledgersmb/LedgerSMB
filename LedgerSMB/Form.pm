@@ -1874,6 +1874,32 @@ sub add_shipto {
     
 }
 
+=item $form->get_shipto ($location_id)
+
+Returns the shipto record of the corresponding location, and attaches the info
+as expected for the templates
+
+=cut
+
+sub get_shipto {
+    my ($self, $location_id) = @_;
+    my $query = qq| select line_one, line_two, city, state, mail_code,
+                           c.name as country 
+                      from location l 
+                      join country c on c.id = l.country_id
+                     where l.id = ? |;
+    my $sth = $self->{dbh}->prepare($query);
+    $sth->execute($location_id);
+    my $ref = $sth->fetchrow_hashref('NAME_lc');
+    $self->{shiptoaddress1} = $ref->{line_one};
+    $self->{shiptoaddress2} = $ref->{line_two};
+    $self->{shiptocity} = $ref->{city};
+    $self->{shiptostate} = $ref->{state};
+    $self->{shiptozipcode} = $ref->{mail_code};
+    $self->{shiptocountry} = $ref->{country};
+    return $ref;    
+}
+
 
 =item $form->get_employee($dbh);
 

@@ -1714,8 +1714,8 @@ sub print_form {
       qw(name address1 address2 city state zipcode country contact phone fax email);
 
     $shipto = 1;
-
     # if there is no shipto fill it in from billto
+    $form->get_shipto($form->{locationid}) if $form->{locationid};
     foreach $item (@vars) {
         if ( $form->{"shipto$item"} ) {
             $shipto = 0;
