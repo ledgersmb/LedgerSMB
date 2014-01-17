@@ -171,14 +171,22 @@ sub save {
 
 deletes the record
 
+This can be called from $self->delete() if you have  a contact object, or it
+can be called as LedgerSMB::Entity::Contact::delete($hashref) if the hashref 
+contains either entity_id or credit_id, and location_id, and location class.
+
 =cut
 
 sub delete {
-    my ($self) = @_;
-    if ($self->credit_id){
-        $self->exec_method({funcname => 'eca__delete_contact'});
+    my ($ref) = @_;
+    if ($ref->{credit_id}){
+        __PACKAGE__->call_procedure(procname => 'eca__delete_contact',
+                                  args => [$ref->{credit_id}, $ref->{class_id},
+                                           $ref->{contact}]);
     } else {
-        $self->exec_method({funcname => 'entity__delete_contact'});
+        __PACKAGE__->call_procedure(procname => 'entity__delete_contact',
+                                  args => [$ref->{entity_id}, $ref->{class_id},
+                                           $ref->{contact}]);
     }
 }
 

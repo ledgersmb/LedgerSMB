@@ -636,9 +636,7 @@ credit id over in this case.
 
 sub delete_contact {
     my ($request) = @_;
-    my $contact = LedgerSMB::Entity::Contact->new(%$request);
-    $contact->credit_id($request->{for_credit});
-    $contact->delete;
+    LedgerSMB::Entity::Contact::delete($request);
     $request->{target_div} = 'contact_info_div';
     get($request);
 }
