@@ -951,15 +951,21 @@ sub save_warehouse {
 
     $form->isblank( "description", $locale->text('Description missing!') );
     AM->save_warehouse( \%myconfig, \%$form );
-    $form->redirect( $locale->text('Warehouse saved!') );
+    _warehouse_redirect();
 
 }
 
 sub delete_warehouse {
 
     AM->delete_warehouse( \%myconfig, \%$form );
-    $form->redirect( $locale->text('Warehouse deleted!') );
+    _warehouse_redirect();
 
+}
+
+sub _warehouse_redirect {
+    use LedgerSMB::Scripts::reports;
+    bless $form, 'LedgerSMB';
+    LedgerSMB::Scripts::reports::list_warehouse($lsmb);
 }
 
 sub company_logo {
