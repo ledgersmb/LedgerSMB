@@ -600,12 +600,7 @@ Deletes the specified location
 
 sub delete_location {
     my ($request) = @_;
-    my $location = LedgerSMB::Entity::Location->new(%$request);
-    $location->id($request->{location_id});
-    if (!$request->{is_for_credit}){
-       $location->credit_id(undef);
-    }
-    $location->delete;
+    LedgerSMB::Entity::Location::delete($request);
     $request->{target_div} = 'address_div';
     get($request);
 }

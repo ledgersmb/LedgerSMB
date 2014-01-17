@@ -257,14 +257,21 @@ Deletes the current location
 =cut
 
 sub delete{
-    my ($self) = @_;
+    my ($ref) = @_;
     my $procname;
-    if ($self->credit_id){
+    my $args;
+    if ($ref->{credit_id}){
         $procname = 'eca__delete_location';
+        $args = [
+           $ref->{credit_id}, $ref->{location_id}, $ref->{location_class}
+        ];
     } else {
         $procname = 'entity__delete_location';
+        $args = [
+           $ref->{entity_id}, $ref->{location_id}, $ref->{location_class}
+        ];
     }
-    $self->exec_method({funcname => $procname});
+    __PACKAGE__->call_procedure(procname => $procname, args => $args );
 }
 
 =back
