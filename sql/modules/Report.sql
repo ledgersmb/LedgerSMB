@@ -127,9 +127,10 @@ BEGIN
                        a.invnumber, a.transdate, a.till, a.ordnumber,
                        a.ponumber, a.notes, a.amount, a.sign,
                        a.duedate, a.id, a.curr, a.age
-                HAVING in_business_units is null or in_business_units 
+                HAVING (in_business_units is null or in_business_units 
                        <@ compound_array(string_to_array(bu_tree.path, 
-                                         ',')::int[])
+                                         ',')::int[]))
+                       AND sum(ac.amount::numeric(20,2)) <> 0
 	      ORDER BY entity_id, curr, transdate, invnumber
 	LOOP
 		return next item;
