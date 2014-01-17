@@ -326,4 +326,9 @@ COMMIT;
 BEGIN;
 INSERT INTO taxmodule (taxmodule_id, taxmodulename) values (2, 'Rounded');
 COMMIT;
+
+BEGIN;
+ALTER TABLE new_shipto DROP CONSTRAINT new_shipto_trans_id_fkey;
+ALTER TABLE new_shipto ADD FOREIGN KEY (trans_id) REFERENCES transactions(id);
+COMMIT;
 -- Beta 4 fixes below

@@ -3632,7 +3632,7 @@ $$;
 
 CREATE TABLE new_shipto (
 	id serial primary key,
-	trans_id int references journal_entry(id),
+	trans_id int references transactions(id),
 	oe_id int references oe(id),
 	location_id int references location(id)
 );
