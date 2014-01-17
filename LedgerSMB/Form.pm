@@ -72,6 +72,7 @@ use LedgerSMB::Setting::Sequence;
 use charnames qw(:full);
 use open ':utf8';
 package Form;
+use base qw(LedgerSMB::Request);
 use utf8;
 
 our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
