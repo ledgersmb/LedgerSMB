@@ -12,6 +12,7 @@ Changelog for 1.3.37
 * Fixed shipto causing db error on sales invoice (Chris T, 929)
 * Fixed shipto including all addresses (Chris T, 929)
 * Fixed shipto address not showing on invoice (Chris T, 929)
+* Fixed fcgi blank screens on saving/deleting warehouse (Chris T, 902)
 
 Changelog for 1.3.36
 * Set default date for AP invoice creation to current date (Chris T)
