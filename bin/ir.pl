@@ -1469,7 +1469,7 @@ sub save_info {
 			. qq|here</a>.</body></html>|;
 
 	    } else {
-		$form->info($locale->text('Draft Posted'));
+		edit();
 	    }
 
 }
