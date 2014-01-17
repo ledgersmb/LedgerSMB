@@ -24,7 +24,7 @@
 # extract_tax - sets $value to the tax value on a tax-included subtotal
 #
 #====================================================================
-package Taxes::Simple;
+package LedgerSMB::Taxes::Simple;
 
 use Class::Struct;
 use Math::BigFloat;

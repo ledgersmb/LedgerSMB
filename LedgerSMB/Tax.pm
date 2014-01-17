@@ -75,7 +75,7 @@ sub init_taxes {
         my $module = $ref->{'taxmodulename'};
         require "LedgerSMB/Taxes/${module}.pm";
         $module =~ s/\//::/g;
-        my $tax = ( eval 'Taxes::' . $module )->new();
+        my $tax = ( eval 'LedgerSMB::Taxes::' . $module )->new();
 
         $tax->pass( $ref->{'pass'} );
         $tax->account($taxaccount);

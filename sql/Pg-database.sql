@@ -2387,9 +2387,8 @@ $$ Deprecated, use only with old code.$$;
 
 INSERT INTO taxmodule (
   taxmodule_id, taxmodulename
-  ) VALUES (
-  1, 'Simple'
-);
+  ) VALUES (1, 'Simple'), 
+  (2, 'Rounded');
 
 CREATE TABLE ac_tax_form (
         entry_id int references acc_trans(entry_id) primary key,

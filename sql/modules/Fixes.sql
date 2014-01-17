@@ -5,9 +5,7 @@
 
 -- Chris Travers
 
--- during 1.4m2
-
--- BETA 1
+-- BETA 1-3 (delete a month after Beta 4)
 
 BEGIN;
 
@@ -324,3 +322,8 @@ SELECT admin__add_user_to_role(username, lsmb__role_prefix() || 'base_user')
   from users
  WHERE id NOT IN (select id from lsmb_roles where role_name = lsmb__role_prefix() || 'base_user');
 COMMIT;
+
+BEGIN;
+INSERT INTO taxmodule (taxmodule_id, taxmodulename) values (2, 'Rounded');
+COMMIT;
+-- Beta 4 fixes below
