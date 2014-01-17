@@ -76,7 +76,8 @@ feature 'X12 EDI support',
 # Rendering options
 feature 'PDF and Postscript output',
     -default => 0,
-    'Template::Plugin::Latex' => 0;
+    'Template::Plugin::Latex' => 0,
+    'TeX::Encode' => 0;
 
 feature 'OpenOffice.org output',
     -default => 0,
