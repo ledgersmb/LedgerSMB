@@ -97,57 +97,11 @@ sub form_footer_buttons {
 
 }
 
-sub save_account {
-
-    $form->isblank( "accno",    $locale->text('Account Number missing!') );
-    $form->isblank( "category", $locale->text('Account Type missing!') );
-
-    # check for conflicting accounts
-    if ( $form->{AR} || $form->{AP} || $form->{IC} ) {
-        $a = "";
-        for (qw(AR AP IC)) { $a .= $form->{$_} }
-        $form->error(
-            $locale->text(
-                'Cannot set account for more than one of AR, AP or IC')
-        ) if length $a > 2;
-
-        for (
-            qw(AR_amount AR_tax AR_paid AR_overpayment AR_discount AP_amount AP_tax AP_paid AP_overpayment AP_discount IC_taxpart IC_taxservice IC_sale IC_cogs IC_income IC_expense)
-          )
-        {
-            $form->error(
-                "$form->{AR}$form->{AP}$form->{IC} "
-                  . $locale->text(
-                    'account cannot be set to any other type of account')
-            ) if $form->{$_};
-        }
-    }
-
-    foreach $item ( "AR", "AP" ) {
-        $i = 0;
-        for ( "${item}_amount", "${item}_paid", "${item}_tax", "${item}_overpayment", "${item}_discount" ) {
-            $i++ if $form->{$_};
-        }
-        $form->error(
-            $locale->text( 'Cannot set multiple options for [_1]', $item ) )
-          if $i > 1;
-    }
-
-    if ( AM->save_account( \%myconfig, \%$form ) ) {
-        $form->redirect( $locale->text('Account saved!') );
-    }
-    else {
-        $form->error( $locale->text('Cannot save account!') );
-    }
-
-}
-
 sub add_gifi {
     $form->{title} = "Add";
 
     # construct callback
-    $form->{callback} =
-"$form->{script}?action=list_gifi&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
+    $form->{callback} = "reports.pl?action=list_gifi";
 
     $form->{coa} = 1;
 
@@ -257,36 +211,6 @@ sub save_gifi {
     $form->isblank( "accno", $locale->text('GIFI missing!') );
     AM->save_gifi( \%myconfig, \%$form );
     $form->redirect( $locale->text('GIFI saved!') );
-
-}
-
-sub copy_to_coa {
-
-    $form->isblank( "accno", $locale->text('GIFI missing!') );
-
-    AM->save_gifi( \%myconfig, \%$form );
-
-    delete $form->{id};
-    $form->{gifi_accno} = $form->{accno};
-
-    $form->{title}     = "Add";
-    $form->{charttype} = "A";
-
-    my %hiddens;
-    my @buttons;
-    my $checked = &account_header(\%hiddens);
-    &form_footer_buttons(\%hiddens, \@buttons);
-
-    my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
-        locale => $locale,
-        template => 'am-account-form');
-    $template->render({
-        form => $form,
-        checked => $checked,
-        buttons => \@buttons,
-        hiddens => \%hiddens,
-    });
 
 }
 
@@ -430,87 +354,6 @@ sub edit_sic {
         hiddens => \%hiddens,
     });
 
-}
-
-sub list_sic {
-
-    AM->sic( \%myconfig, \%$form );
-
-    my $href =
-"$form->{script}?action=list_sic&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
-
-    $form->sort_order();
-
-    $form->{callback} =
-"$form->{script}?action=list_sic&direction=$form->{direction}&oldsort=$form->{oldsort}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}";
-
-    my $callback = $form->escape( $form->{callback} );
-
-    $form->{title} = $locale->text('Standard Industrial Codes');
-
-    my @column_index = $form->sort_columns(qw(code description));
-
-    my %column_header;
-    $column_header{code} = {
-        href => "$href&sort=code",
-        text => $locale->text('Code'),
-        };
-    $column_header{description} = {
-        href => "$href&sort=description",
-        text => $locale->text('Description'),
-        };
-
-    my @rows;
-    my $i = 0;
-    foreach $ref ( @{ $form->{ALL} } ) {
-
-        my %column_data;
-        $i++;
-        $i %= 2;
-
-        if ( $ref->{sictype} eq 'H' ) {
-            $column_data{class} = 'heading';
-        }
-        $column_data{i} = $i;
-        $column_data{code} = {
-            text => $ref->{code},
-            href => "$form->{script}?action=edit_sic&code=$ref->{code}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}&callback=$callback",
-            };
-        $column_data{description} = $ref->{description};
-
-        push @rows, \%column_data;
-    }
-
-    $form->{type} = "sic";
-    my @hiddens = qw(type callback path login sessionid);
-
-##SC: Temporary removal
-##    if ( $form->{lynx} ) {
-##        require "bin/menu.pl";
-##        &menubar;
-##    }
-
-    my @buttons;
-    push @buttons, {
-        name => 'action',
-        value => 'add_sic',
-        text => $locale->text('Add SIC'),
-        type => 'submit',
-        class => 'submit',
-    };
-
-    my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
-        locale => $locale,
-        template => 'am-list-departments');
-    $template->render({
-        form => $form,
-        buttons => \@buttons,
-        columns => \@column_index,
-        heading => \%column_header,
-        rows => \@rows,
-        hiddens => \@hiddens,
-    });
 }
 
 sub sic_header {

@@ -393,50 +393,6 @@ sub delete_business {
 
 }
 
-=item AM->sic($myconfig, $form);
-
-Populate the list referred to as $form->{ALL} with hashes containing SIC (some
-well known systems of which are NAICS and ISIC) data from the sic table.  code
-is the actual SIC code, description is a textual description of the code, and
-sictype is an indicator of whether or not the entry refers to a header.  The
-hashes will be sorted by either the code or description.
-
-$myconfig is unused.
-
-=cut
-
-sub sic {
-
-    my ( $self, $myconfig, $form ) = @_;
-
-    # connect to database
-    my $dbh = $form->{dbh};
-
-    $form->{sort} = "code" unless $form->{sort};
-    my @a = qw(code description);
-
-    my %ordinal = (
-        code        => 1,
-        description => 3
-    );
-
-    my $sortorder = $form->sort_order( \@a, \%ordinal );
-
-    my $query = qq|SELECT code, sictype, description
-					 FROM sic
-				 ORDER BY $sortorder|;
-
-    $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        push @{ $form->{ALL} }, $ref;
-    }
-
-    $sth->finish;
-
-}
-
 =item AM->get_sic($myconfig, $form);
 
 Retrieves the sictype and description for the SIC indicated by
