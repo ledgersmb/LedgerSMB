@@ -139,8 +139,18 @@ require(     ['dojo/query',
       }
 );*/
 
-require(['lsmb/lib/Loader', 'dojo/domReady!'],
+require(['lsmb/lib/Loader', 'dojo/cookie', 'dojo/domReady!'],
 function(l){
-   loader = new l;
-   loader.setup();
+    if (location.search.indexOf('&dojo=no') != -1) {
+        dojo.cookie("lsmb-dojo-disable", "yes", {});
+    } else if (location.search.indexOf('&dojo') != -1) {
+        dojo.cookie("lsmb-dojo-disable", "no", {});
+    }
+
+    if (dojo.cookie("lsmb-dojo-disable") != 'yes') {
+        loader = new l;
+        loader.setup();
+    } else {
+        init();
+    }
 });
