@@ -41,13 +41,6 @@ sub get_credentials {
     $auth = MIME::Base64::decode($auth);
     print STDERR localtime()." tshvr4 Auth/DB.pm get_credentials auth mime ".Data::Dumper::Dumper($auth)."\n";
     #tshvr4 2014-01-14 Firefox, after logout on normal application (login.pl) and coming to setup.pl, auth seems to be  'logout:logout', TODO remove Dumper statements  
-    if ( $auth eq 'logout:logout') { $auth = undef;}
-	# Send HTTP 401 if the authorization header is missing
-    if(! $auth){
-     credential_prompt() unless ($auth);#does return here ! tshvr4
-     print STDERR localtime()." tshvr4 Auth/DB.pm get_credentials after prompt \n";     
-     return;#go back to browser tshvr4
-    }
 
     #$auth =~ s/Basic //i; # strip out basic authentication preface
     #print STDERR localtime()." tshvr4 Auth/DB.pm get_credentials auth before mime ".Data::Dumper::Dumper($auth)."\n";

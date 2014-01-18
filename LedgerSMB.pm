@@ -869,6 +869,7 @@ sub _db_init {
     }
 
     my $creds = LedgerSMB::Auth::get_credentials();
+    LedgerSMB::Auth::credential_prompt() if $creds->{login} eq 'logout';
     return unless $creds->{login};
   
     $self->{login} = $creds->{login};
