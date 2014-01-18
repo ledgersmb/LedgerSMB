@@ -37,14 +37,6 @@ not.  Use this if the form may be re-used (back-button actions are valid).
 Identical with check_form() above, but also removes the form_id from the 
 session.  This should be used when back-button actions are not valid.
 
-=item escape (string => $string);
-
-This function returns the current string escaped using %hexhex notation.
-
-=item unescape (string => $string);
-
-This function returns the $string encoded using %hexhex using ordinary notation.
-
 =item format_amount (user => $LedgerSMB::User::hash, amount => $string, precision => $integer, neg_format => (-|DRCR));
 
 The function takes a monetary amount and formats it according to the user 
@@ -426,16 +418,6 @@ sub _get_password {
     die;
 }
 
-sub escape {
-    my $self = shift;
-    my %args = @_;
-    my $str  = $args{string};
-    $str = "" unless defined $str;
-
-    my $regex = qr/([^a-zA-Z0-9_.-])/;
-    $str =~ s/$regex/sprintf("%%%02x", ord($1))/ge;
-    return $str;
-}
 
 sub is_blank {
     my $self = shift @_;
