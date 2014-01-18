@@ -533,7 +533,6 @@ INSERT INTO tax(chart_id, rate, taxnumber, validto)
 --        JOIN sl28.chart ON chart.id = pt.chart_id
 --        JOIN account a ON chart.accno = a.accno;
 
--- ### TODO: deleted department_id here. to be moved to business units.
 INSERT 
   INTO oe(id, ordnumber, transdate, amount, netamount, reqdate, taxincluded,
        shippingpoint, notes, curr, person_id, closed, quotation, quonumber,
@@ -555,12 +554,21 @@ SELECT oe.id,  ordnumber, transdate, amount, netamount, reqdate, oe.taxincluded,
   LEFT JOIN sl28.employee e ON oe.employee_id = e.id
   LEFT JOIN person p ON e.entity_id = p.id;
 
--- ### TODO Deleted project_id here, to be moved to business units!
 INSERT INTO orderitems(id, trans_id, parts_id, description, qty, sellprice,
             discount, unit, reqdate, ship, serialnumber)
      SELECT id, trans_id, parts_id, description, qty, sellprice,
             discount, unit, reqdate, ship, serialnumber
        FROM sl28.orderitems;
+
+INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
+SELECT oi.id, 1, oe.department_id 
+  FROM orderitems oi
+  JOIN sl28.oe ON oi.trans_id = oe.id AND department_id > 0;
+
+INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
+SELECT id, 2, project_id + 1000 FROM sl28.orderitems
+ WHERE project_id > 0  and  project_id in (select id from sl28.project);
+
 
 INSERT INTO exchangerate select * from sl28.exchangerate;
 
