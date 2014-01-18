@@ -480,8 +480,6 @@ SELECT ac.entry_id, 2, slac.project_id+1000
  WHERE project_id > 0;
 
 
-
--- ### project_id deleted (need to stick into business units?)
  INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, discount, assemblyitem, unit,
             deliverydate, serialnumber)
@@ -489,6 +487,21 @@ SELECT ac.entry_id, 2, slac.project_id+1000
             sellprice, fxsellprice, discount, assemblyitem, unit,
             deliverydate, serialnumber
        FROM sl28.invoice;
+
+INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
+SELECT inv.id, 1, gl.department_id
+  FROM invoice inv 
+  JOIN (SELECT id, department_id FROM sl28.ar UNION ALL
+        SELECT id, department_id FROM sl28.ap UNION ALL
+        SELECT id, department_id FROM sl28.gl) gl ON gl.id = inv.trans_id
+ WHERE department_id > 0;
+
+INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
+SELECT id, 2, project_id + 1000 FROM sl28.invoice 
+ WHERE project_id > 0 and  project_id in (select id from sl28.project);
+
+
+
 
 INSERT INTO partstax (parts_id, chart_id)
      SELECT parts_id, a.id
@@ -618,13 +631,12 @@ INSERT INTO recurringemail SELECT * FROM sl28.recurringemail;
 
 INSERT INTO recurringprint SELECT * FROM sl28.recurringprint;
 
--- ### TODO: removed 'project_id'??
 INSERT INTO jcitems(id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            person_id, notes)
+            person_id, notes, business_unit_id)
      SELECT j.id,  parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            p.id, j.notes
+            p.id, j.notes, j.project_id+1000
        FROM sl28.jcitems j
        JOIN sl28.employee e ON j.employee_id = e.id
        JOIN person p ON e.entity_id = p.entity_id;
