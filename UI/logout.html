@@ -17,7 +17,7 @@ if (agt.indexOf("opera") != -1){
 }
 if (agt.indexOf("msie") == -1) {
 	var xhre = new XMLHttpRequest() ;
-        xhre.open("GET",window.location,true,"logout","logout");
+        xhre.open("GET",'login.pl?action=logout_js',true,"logout","logout");
         xhre.send("");
         xhre.abort();
         //be aware, sometimes get-request reaches server despite abort.
