@@ -37,11 +37,6 @@ not.  Use this if the form may be re-used (back-button actions are valid).
 Identical with check_form() above, but also removes the form_id from the 
 session.  This should be used when back-button actions are not valid.
 
-=item debug (file => $path);
-
-This dumps the current object to the file if that is defined and otherwise to 
-standard output.
-
 =item escape (string => $string);
 
 This function returns the current string escaped using %hexhex notation.
@@ -429,28 +424,6 @@ sub _get_password {
         LedgerSMB::Auth::credential_prompt();
     }
     die;
-}
-
-sub debug {
-    my $self = shift @_;
-    my $args = shift @_;
-    my $file;
-    if (scalar keys %$args){
-        $file = $args->{'file'};
-    }
-    my $d    = Data::Dumper->new( [$self] );
-    $d->Sortkeys(1);
-
-    if ($file) {
-        open( FH, '>', "$file" ) or die $!;
-        print FH $d->Dump();
-        close(FH);
-    }
-    else {
-        print "\n";
-        print $d->Dump();
-    }
-
 }
 
 sub escape {

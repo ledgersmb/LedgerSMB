@@ -10,7 +10,6 @@ sub save {
    my ($ref) = $self->exec_method(funcname => 'journal__add');
    $self->merge($ref);
    $self->{journal_id} = $self->{id};
-   $self->debug({file => '/tmp/temptrans'});
    for my $line (@{$self->{journal_lines}}){
        my $l = bless $line, 'LedgerSMB::DBObject';
        $l->{_locale} = $self->{_locale};
