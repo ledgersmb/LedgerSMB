@@ -404,8 +404,8 @@ sub _http_output {
 		$disposition .= qq|\nContent-Disposition: attachment; filename="$name"|;
 	}
         if (!$ENV{LSMB_NOHEAD}){
-            print "cache-Control: no-store, no-cache, must-revalidate\n";
-            print "cache-Control: post-check=0, pre-check=0, false\n";
+            print "Cache-Control: no-store, no-cache, must-revalidate\n";
+            print "Cache-Control: post-check=0, pre-check=0, false\n";
             print "Pragma: no-cache\n";
  	    if ($self->{mimetype} =~ /^text/) {
 		print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n";
