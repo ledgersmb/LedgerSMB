@@ -48,11 +48,6 @@ LedgerSMB::User at some point in the future.
 If $amount is a Bigfloat, it is returned as is.  If it is a string, it is 
 parsed according to the user preferences stored in the LedgerSMB::User object.
 
-=item is_blank (name => $string)
-
-This function returns true if $self->{$string} only consists of whitespace
-characters or is an empty string.
-
 =item is_run_mode ('(cli|cgi|mod_perl)')
 
 This function returns 1 if the run mode is what is specified.  Otherwise
@@ -418,26 +413,6 @@ sub _get_password {
     die;
 }
 
-
-sub is_blank {
-    my $self = shift @_;
-    my %args = @_;
-    my $name = $args{name};
-    my $rc;
-
-    if (not defined $name){
-        $self->{_locale} = LedgerSMB::Locale->get_handle('en') unless defined $self->{_locale};
-        $self->error($self->{_locale}->text('Field \"Name\" Not Defined'));
-    }
-
-    if ( $self->{$name} =~ /^\s*$/ ) {
-        $rc = 1;
-    }
-    else {
-        $rc = 0;
-    }
-    $rc;
-}
 
 sub is_run_mode {
     my $self = shift @_;
