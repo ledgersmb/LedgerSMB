@@ -162,7 +162,23 @@ sub login {
 		);
 	    $request->{operation} = $request->{_locale}->text('Cancel?');
 	    $request->{next_action} = 'cancel';
-	}
+	} elsif ($request->{next_action} eq 'rebuild_modules') {
+            # we found the current version
+            # check we don't have stale migrations around
+            my $dbh = $database->dbh();
+            my $sth = $dbh->prepare(qq(
+                SELECT count(*)<>0
+                  FROM defaults
+                 WHERE setting_key = 'migration_ok' and value = 'no'
+              ));
+            $sth->execute();
+            my ($has_stale_migration) = $sth->fetchrow_array();
+            if ($has_stale_migration) {
+                $request->{operation} = 'Restore old version?';
+                $request->{message} = 'Failed migration found';
+                $request->{next_action} = 'revert_migration';
+            }
+        }
     }
     my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
@@ -312,6 +328,35 @@ sub run_backup {
         $request->error($request->{_locale}->text("Don't know what to do with backup"));
     }
  
+}
+
+=item revert_migration
+
+=cut
+
+sub revert_migration {
+    my ($request) = @_;
+    my $database = _get_database($request);
+    my $dbh = $database->dbh();
+    my $sth = $dbh->prepare(qq(
+         SELECT value
+           FROM defaults
+          WHERE setting_key = 'migration_src_schema'
+      ));
+    $sth->execute();
+    my ($src_schema) = $sth->fetchrow_array();
+    $dbh->rollback();
+    $dbh->do("DROP SCHEMA public CASCADE");
+    $dbh->do("ALTER SCHEMA $src_schema RENAME TO public");
+    $dbh->commit();
+
+    my $template = LedgerSMB::Template->new(
+        path => 'UI/setup',
+        template => 'complete_migration_revert',
+        format => 'HTML',
+           );
+
+    $template->render($request);
 }
    
 =item _get_template_directories
@@ -829,7 +874,7 @@ sub save_user {
 =cut
 
 sub process_and_run_upgrade_script {
-    my ($request, $database, $template) = @_;
+    my ($request, $database, $src_schema, $template) = @_;
     my $dbh = $database->dbh;
     my $temp = $database->loader_log_filename();
     my $rc;
@@ -850,6 +895,10 @@ sub process_and_run_upgrade_script {
     $dbh->do(qq(
        INSERT INTO defaults (setting_key, value)
                      VALUES ('migration_ok', 'no')
+     ));
+    $dbh->do(qq(
+       INSERT INTO defaults (setting_key, value)
+                     VALUES ('migration_src_schema', '$src_schema')
      ));
     $dbh->commit;
 
@@ -881,7 +930,7 @@ sub process_and_run_upgrade_script {
            ${temp}_stdout and ${temp}_stderr))
 	if ! $success;
 
-    $dbh->do("delete from defaults where setting_key='migration_ok'");
+    $dbh->do("delete from defaults where setting_key like 'migration_%'");
     $dbh->commit;
 
 }
@@ -903,7 +952,7 @@ sub run_upgrade {
     $v =~ s/\.//;
     $dbh->do("ALTER SCHEMA public RENAME TO lsmb$v");
 
-    process_and_run_upgrade_script($request, $database,
+    process_and_run_upgrade_script($request, $database, "lsmb$v",
 				   "$dbinfo->{version}-1.4");
 
     if ($v eq '1.2'){
@@ -927,7 +976,7 @@ sub run_sl_migration {
     $dbh->do('ALTER SCHEMA public RENAME TO sl28');
     # process_and_run_upgrade_script commits the transaction
 
-    process_and_run_upgrade_script($request, $database,
+    process_and_run_upgrade_script($request, $database, "sl28",
 				   'sl2.8-1.3');
 
     create_initial_user($request);
