@@ -10,7 +10,7 @@
 \set ap '''2210'''
 
 
--- BEGIN;
+BEGIN;
 
 -- adding mapping info for import.
 
@@ -382,13 +382,14 @@ INSERT INTO business_unit (id, class_id, control_code, description)
 SELECT id, 1, id, description
   FROM sl28.department;
 
-INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
-SELECT ac.entry_id, 1, gl.department_id
-  FROM acc_trans ac 
-  JOIN (SELECT id, department_id FROM sl28.ar UNION ALL
-        SELECT id, department_id FROM sl28.ap UNION ALL
-        SELECT id, department_id FROM sl28.gl) gl ON gl.id = ac.trans_id 
- WHERE department_id > 0;
+INSERT INTO business_unit (id, class_id, control_code, description,
+       start_date, end_date, credit_id)
+SELECT 1000+id, 2, projectnumber, description, startdate, enddate,
+       (select credit_id
+          from sl28.customer c
+         where c.id = p.customer_id)
+  FROM sl28.project p;
+
 
 INSERT INTO gl(id, reference, description, transdate, person_id, notes)
     SELECT gl.id, reference, description, transdate, p.id, gl.notes
@@ -445,10 +446,16 @@ ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 -- ### TODO: there used to be projects here!
 -- ### Move those to business_units
 -- ### TODO: Reconciled disappeared from the source table...
+
+ALTER TABLE sl28.acc_trans ADD COLUMN entry_id integer;
+
+update sl28.acc_trans
+  set entry_id = nextval('acc_trans_entry_id_seq');
+
 INSERT INTO acc_trans
-(trans_id, chart_id, amount, transdate, source, cleared, fx_transaction, 
+(entry_id, trans_id, chart_id, amount, transdate, source, cleared, fx_transaction, 
 	memo, approved, cleared_on, voucher_id)
-SELECT trans_id, (select id
+SELECT entry_id, trans_id, (select id
                     from account
                    where accno = (select accno
                                     from sl28.chart
@@ -457,6 +464,22 @@ SELECT trans_id, (select id
 	CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END, fx_transaction,
 	memo, approved, cleared, vr_id
 	FROM sl28.acc_trans ;
+
+INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
+SELECT ac.entry_id, 1, gl.department_id
+  FROM acc_trans ac 
+  JOIN (SELECT id, department_id FROM sl28.ar UNION ALL
+        SELECT id, department_id FROM sl28.ap UNION ALL
+        SELECT id, department_id FROM sl28.gl) gl ON gl.id = ac.trans_id 
+ WHERE department_id > 0;
+
+INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
+SELECT ac.entry_id, 2, slac.project_id+1000
+  FROM acc_trans ac 
+  JOIN sl28.acc_trans slac ON slac.entry_id = ac.entry_id 
+ WHERE project_id > 0;
+
+
 
 -- ### project_id deleted (need to stick into business units?)
  INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
@@ -659,9 +682,6 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('business_id_seq', max(id)) FROM business;
  SELECT setval('warehouse_id_seq', max(id)) FROM warehouse;
  SELECT setval('partsgroup_id_seq', max(id)) FROM partsgroup;
- SELECT setval('project_id_seq', max(id)) FROM project;
--- ### TODO move to business_units
--- SELECT setval('department_id_seq', max(id)) FROM department;
  SELECT setval('jcitems_id_seq', max(id)) FROM jcitems;
  SELECT setval('payment_type_id_seq', max(id)) FROM payment_type;
  SELECT setval('custom_table_catalog_table_id_seq', max(table_id)) FROM custom_table_catalog;
@@ -669,11 +689,12 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('menu_node_id_seq', max(id)) FROM menu_node;
  SELECT setval('menu_attribute_id_seq', max(id)) FROM menu_attribute;
  SELECT setval('menu_acl_id_seq', max(id)) FROM menu_acl;
- SELECT setval('pending_job_id_seq', max(id)) FROM pending_job;
+-- SELECT setval('pending_job_id_seq', max(id)) FROM pending_job;
  SELECT setval('new_shipto_id_seq', max(id)) FROM new_shipto;
  SELECT setval('payment_id_seq', max(id)) FROM payment;
  SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
  SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
+ SELECT setval('business_unit_id_seq', max(id)) FROM business_unit;
 
 UPDATE defaults SET value = 'yes' where setting_key = 'migration_ok';
 
