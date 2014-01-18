@@ -55,7 +55,7 @@ sub get {
     my $self = shift;
     my ($key) = @_;
     $key = $self->{key} unless $key;
-    my ($hashref) = $self->call_procedure( procname => 'setting_get',
+    my ($hashref) = __PACKAGE__->call_procedure( procname => 'setting_get',
                                                args => [$key]) ;
     $self->{value} = $hashref->{value} if ref $self !~ /hash/i;
     return $hashref->{value};

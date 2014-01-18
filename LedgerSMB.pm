@@ -18,11 +18,6 @@ This method creates a new base request instance. It also validates the
 session/user credentials, as appropriate for the run mode.  Finally, it sets up 
 the database connections for the user.
 
-=item date_to_number (user => $LedgerSMB::User, date => $string);
-
-This function takes the date in the format provided and returns a numeric 
-string in YYMMDD format.  This may be moved to User in the future.
-
 =item unescape($var)
 
 Unescapes the var, i.e. converts html entities back to their characters.
@@ -81,11 +76,6 @@ returns 0.
 This function returns 1 if the user's roles include any of the roles in
 @role_names.  
 
-=item num_text_rows (string => $string, cols => $number, max => $number);
-
-This function determines the likely number of rows needed to hold text in a 
-textbox.  It returns either that number or max, which ever is lower.
-
 =item merge ($hashref, keys => @list, index => $number);
 
 This command merges the $hashref into the current object.  If keys are 
@@ -93,12 +83,6 @@ specified, only those keys are used.  Otherwise all keys are merged.
 
 If an index is specified, the merged keys are given a form of 
 "$key" . "_$index", otherwise the key is used on both sides.
-
-=item redirect (msg => $string)
-
-This function redirects to the script and argument set determined by 
-$self->{callback}, and if this is not set, goes to an info screen and prints
-$msg.
 
 =item set (@attrs)
 
@@ -109,11 +93,6 @@ merging hashes into self.
 
 Removes all elements starting with a . because these elements conflict with the
 ability to hide the entire structure for things like CSV lookups.
-
-=item get_default_value_by_key($key)
-
-Retrieves a default value for the given key, it is just a wrapper on LedgerSMB::Setting;
-
 
 =item call_procedure( procname => $procname, args => $args )
 
@@ -524,53 +503,6 @@ sub is_run_mode {
     $rc;
 }
 
-sub num_text_rows {
-    my $self    = shift @_;
-    my %args    = @_;
-    my $string  = $args{string};
-    my $cols    = $args{cols};
-    my $maxrows = $args{max};
-
-    my $rows = 0;
-
-    for ( split /\n/, $string ) {
-        my $line = $_;
-        while ( length($line) > $cols ) {
-            my $fragment = substr( $line, 0, $cols + 1 );
-            $fragment =~ s/^(.*)\W.*$/$1/;
-            $line =~ s/$fragment//;
-            if ( $line eq $fragment ) {    # No word breaks!
-                $line = "";
-            }
-            ++$rows;
-        }
-        ++$rows;
-    }
-
-    if ( !defined $maxrows ) {
-        $maxrows = $rows;
-    }
-
-    return ( $rows > $maxrows ) ? $maxrows : $rows;
-
-}
-
-sub redirect {
-    my $self = shift @_;
-    my %args = @_;
-    my $msg  = $args{msg};
-
-    if ( $self->{callback} || !$msg ) {
-
-        main::redirect();
-	die;
-    }
-    else {
-
-        $self->info($msg);
-    }
-}
-
 # TODO:  Either we should have an amount class with formats and such attached
 # Or maybe we should move this into the user class...
 sub format_amount {
@@ -755,63 +687,6 @@ sub is_allowed_role {
         }
     }
     return 0; 
-}
-
-# This should probably be moved to User too...
-sub date_to_number {
-
-    #based on SQL-Ledger's Form::datetonum
-    my $self     = shift @_;
-    my %args     = @_;
-    my $myconfig = $args{user};
-    my $date     = $args{date};
-
-    $date = "" unless defined $date;
-
-    my ( $yy, $mm, $dd );
-    if ( $date ne "" && $date && $date =~ /\D/ ) {
-
-        if ( $date =~ /^\d{4}-\d\d-\d\d$/ ) {
-            ( $yy, $mm, $dd ) = split /\D/, $date;
-        } elsif ( $myconfig->{dateformat} =~ /^yy/ ) {
-            ( $yy, $mm, $dd ) = split /\D/, $date;
-        } elsif ( $myconfig->{dateformat} =~ /^mm/ ) {
-            ( $mm, $dd, $yy ) = split /\D/, $date;
-        } elsif ( $myconfig->{dateformat} =~ /^dd/ ) {
-            ( $dd, $mm, $yy ) = split /\D/, $date;
-        }
-
-        $dd *= 1;
-        $mm *= 1;
-        $yy += 2000 if length $yy == 2;
-
-        $dd = substr( "0$dd", -2 );
-        $mm = substr( "0$mm", -2 );
-
-        $date = "$yy$mm$dd";
-    }
-
-    $date;
-}
-
-sub sanitize_for_display {
-    my $self = shift;
-    my $var = shift;
-    $self->error('Untested API');
-    if (!$var){ 
-	$var = $self;
-    }
-    for my $k (keys %$var){
-	my $type = ref($var);
-	if (UNIVERSAL::isa($var->{$k}, 'Math::BigFloat')){
-              $var->{$k} = 
-                  $self->format_amount({amount => $var->{$k}});
-	}
-	elsif ($type == 'HASH'){
-               $self->sanitize_for_display($var->{$k});
-        }
-    }
-    
 }
 
 sub finalize_request {
@@ -1104,16 +979,6 @@ sub take_top_level {
    return $return_hash;
 }
 
-
-
-sub get_default_value_by_key 
-{
-    my ($self, $key) = @_;
-    my $Settings = LedgerSMB::Setting->new({base => $self, copy => 'base'});
-    $Settings->{key} = $key;
-    $Settings->get;    
-    $Settings->{value};    
-}
 1;
 
 

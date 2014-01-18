@@ -495,7 +495,7 @@ sub display_payments {
             $_->{to_pay} = $contact_to_pay;
             $payment->{grand_total} += $contact_total;
 
-            my ($check_all) = $payment->get_default_value_by_key('check_payments');
+            my ($check_all) = LedgerSMB::Setting->get('check_payments');
             if ($payment->{account_class} == 1 and $check_all){
                  $payment->{"id_$_->{contact_id}"} = $_->{contact_id};
             }
@@ -1259,7 +1259,7 @@ sub print_payment {
       rows          => \@rows,
       format_amount => sub {$Payment->format_amount(@_)}
   }; 
-  $Payment->{templates_path} = 'templates/'.$Payment->get_default_value_by_key('templates').'/';
+  $Payment->{templates_path} = 'templates/'.LedgerSMB::Setting::get('templates').'/';
   my $template = LedgerSMB::Template->new(
       user     => $Payment->{_user},
       locale   => $Payment->{_locale},
