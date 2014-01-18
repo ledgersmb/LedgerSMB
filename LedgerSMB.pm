@@ -332,7 +332,7 @@ sub new {
     #HV  why not trying _db_init also in case of login authenticate? quid logout-function?
     if ($self->{script} eq 'login.pl' &&
         ($self->{action} eq 'authenticate'  || $self->{action} eq '__default' 
-		|| !$self->{action})){
+		|| !$self->{action} || ($self->{action} eq 'logout_js'))){
         return $self;
     }
     if ($self->{script} eq 'setup.pl'){

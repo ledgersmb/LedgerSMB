@@ -143,6 +143,23 @@ sub logout {
     $template->render($request);
 }
 
+=head2 logout_js
+
+This is a stup for a js logout feature.  It allows javascript to log out by 
+requiring only bogus credentials (logout:logout).
+
+=cut
+
+sub logout_js {
+    my $request = shift @_;
+    my $creds = LedgerSMB::Auth::get_credentials();
+    LedgerSMB::Auth::credential_prompt 
+        unless ($creds->{password} eq 'logout') 
+               and ($creds->{login} eq 'logout');
+    logout($request);
+}
+    
+
 eval { do "scripts/custom/login.pl"};
 
 =back
