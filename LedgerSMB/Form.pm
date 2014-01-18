@@ -659,6 +659,7 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
 <head>
 	<title>$self->{titlebar}</title>
 	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="must-revalidate" />
 	<meta http-equiv="Expires" content="-1" />
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	$stylesheet

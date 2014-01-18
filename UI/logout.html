@@ -6,7 +6,6 @@
   case this makes localization of the Opera error message essentially impossible
   so for this reason going to inline this functionality here. - Chris T -->
 <script>
-try{
 var agt=navigator.userAgent.toLowerCase();
 if (agt.indexOf("msie") != -1) {
 // IE clear HTTP Authentication
@@ -19,12 +18,6 @@ if (agt.indexOf("msie") == -1) {
 	var xhre = new XMLHttpRequest() ;
         xhre.open("GET",'login.pl?action=logout_js',true,"logout","logout");
         xhre.send("");
-        xhre.abort();
-        //be aware, sometimes get-request reaches server despite abort.
-        // LedgerSMB::Auth::DB::get_credentials can have $auth=logout:logout
-}
-}
-catch (e) {
 }
 </script>
 <body class="<?lsmb dojo_theme ?>">
@@ -35,5 +28,6 @@ catch (e) {
             text('Logout Successful');
           END; ?></h1>
 <p><a href="login.pl" target='top'><?lsmb text('Return to the login screen.') ?></a>
+<form id='submitform' action="login.pl" method="post"><input type="hidden" name="action" value="logout_js"></form>
 </body>
 </html>
