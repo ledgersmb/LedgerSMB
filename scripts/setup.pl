@@ -329,7 +329,138 @@ Beginning of an SQL-Ledger 2.7/2.8 migration.
 
 =cut
 
-sub migrate_sl{
+sub migrate_sl {
+    my ($request) = @_;
+    my $creds = LedgerSMB::Auth::get_credentials();
+    my $database = LedgerSMB::Database->new(
+               {username => $creds->{login},
+            company_name => $request->{database},
+                password => $creds->{password}}
+    );
+
+    # ENVIRONMENT NECESSARY
+    $ENV{PGUSER} = $creds->{login};
+    $ENV{PGPASSWORD} = $creds->{password};
+    $ENV{PGDATABASE} = $request->{database};
+
+    # Credentials set above via environment variables --CT
+    $request->{dbh} = DBI->connect(qq|dbi:Pg:dbname="$request->{database}"|);
+    my $locale = $request->{_locale};
+
+    my @pre_upgrade_checks = (
+        { query => "select *
+                    from customer
+                   where customernumber in (select customernumber
+                                              from customer
+                                             group by customernumber
+                                             having count(*) > 1)",
+          name => $locale->text('Double customernumbers'), 
+          cols => ['id', 'customernumber', 'name'],
+          edit => 'customernumber',
+          table => 'customer'},
+        { query => "select *
+                    from vendor
+                   where vendornumber in (select vendornumber
+                                              from vendor
+                                             group by vendornumber
+                                             having count(*) > 1)",
+          name => $locale->text('Double vendornumbers'), 
+          cols => ['id', 'vendornumber', 'name'],
+          edit => 'vendornumber',
+          table => 'vendor'},
+        { query => "select *
+                     from employee
+                    where employeenumber is null",
+          name => $locale->text('Null employee numbers'),
+          cols => ['id', 'login', 'name', 'employeenumber'],
+          edit => 'employeenumber',
+          table => 'employee'},
+        { query => "select *
+                     from employee
+                    where employeenumber in (select employeenumber
+                                               from employee
+                                              group by employeenumber
+                                              having count(*) > 1)",
+          name => $locale->text('Null employee numbers'),
+          cols => ['id', 'login', 'name', 'employeenumber'],
+          edit => 'employeenumber',
+          table => 'employee'},
+        { query => "select *
+                     from ar
+                    where invnumber in (select invnumber
+                                          from ar
+                                         group by invnumber
+                                         having count(*) > 1)
+                   order by invnumber",
+          name => $locale->text('Non-unique invoice numbers'),
+          cols => ['id', 'invnumber', 'transdate', 'duedate', 'datepaid',
+                     'ordnumber', 'quonumber', 'approved'],
+          edit => 'invnumber',
+          table => 'ar'},
+        { query => "select *
+                     from makemodel
+                    where model is null",
+          name => $locale->text('Null model numbers'),
+          cols => ['parts_id', 'make', 'model'],
+          edit => 'model',
+          table => 'makemodel'},
+        { query => "select *
+                     from makemodel
+                    where make is null",
+          name => $locale->text('Null make numbers'),
+          cols => ['parts_id', 'make', 'model'],
+          edit => 'make',
+          table => 'makemodel'},
+        { query => "select *
+                     from partscustomer
+                    where not exists (select 1
+                                        from pricegroup
+                                       where id = pricegroup_id)",
+          name => $locale->text("Non-existing customer pricegroups in partscustomer (can't be edited through the web interface)"),
+          # No 'edit =>' section: this is an informational query
+          cols => ['parts_id', 'credit_id', 'pricegroup_id'],
+          table => 'partscustomer'}
+        );
+    for my $check (@pre_upgrade_checks){
+        my $sth = $request->{dbh}->prepare($check->{query});
+        $sth->execute();
+        if ($sth->rows > 0){ # Check failed --CT
+             _failed_check($request, $check, $sth, 'fix_sl_tests');
+        }
+    }
+
+    @{$request->{ar_accounts}} = _get_linked_accounts($request, "AR");
+    @{$request->{ap_accounts}} = _get_linked_accounts($request, "AP");
+    unshift @{$request->{ar_accounts}}, {}
+       unless scalar(@{$request->{ar_accounts}}) == 1;
+    unshift @{$request->{ap_accounts}}, {}
+       unless scalar(@{$request->{ap_accounts}}) == 1;
+
+    @{$request->{countries}} = ();
+    foreach my $iso2 (all_country_codes()) {
+        push @{$request->{countries}}, { code    => uc($iso2),
+                                         country => code2country($iso2) };
+    }
+    @{$request->{countries}} =
+        sort { $a->{country} cmp $b->{country} } @{$request->{countries}};
+    unshift @{$request->{countries}}, {};
+
+
+    my $template = LedgerSMB::Template->new(
+            path => 'UI/setup',
+            template => 'migrate_sl_info',
+            format => 'HTML',
+    );
+    $template->render($request);
+}
+
+
+=item run_migrate_sl
+
+
+=cut
+
+sub run_migrate_sl{
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials();
     my $database = LedgerSMB::Database->new(
@@ -358,12 +489,14 @@ sub migrate_sl{
          $rc2=system("psql -f $ENV{PG_CONTRIB_DIR}/$contrib.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
          $rc ||= $rc2
      }
+    $logger->info("loaded extensions");
      my $rc2 = system("psql -f sql/Pg-database.sql >> $temp/dblog_stdout 2>>$temp/dblog_stderr");
      
      $rc ||= $rc2;
 
     $database->load_modules('LOADORDER');
     $database->process_roles('Roles.sql');
+    $logger->info("loaded LOADORDER and Roles");
     my $dbtemplate = LedgerSMB::Template->new(
         user => {}, 
         path => 'sql/upgrade',
@@ -509,7 +642,7 @@ sub upgrade{
         my $sth = $request->{dbh}->prepare($check->{query});
         $sth->execute();
         if ($sth->rows > 0){ # Check failed --CT
-             _failed_check($request, $check, $sth);
+             _failed_check($request, $check, $sth, 'fix_tests');
         }
     }
 
@@ -539,7 +672,7 @@ sub upgrade{
 }
 
 sub _failed_check{
-    my ($request, $check, $sth) = @_;
+    my ($request, $check, $sth, $next_action) = @_;
     my $template = LedgerSMB::Template->new(
             path => 'UI',
             template => 'form-dynatable',
@@ -571,7 +704,7 @@ sub _failed_check{
     my $buttons = [
            { type => 'submit',
              name => 'action',
-            value => 'fix_tests',
+            value => $next_action,
              text => $request->{_locale}->text('Save and Retry'),
             class => 'submit' },
     ];
@@ -585,14 +718,14 @@ sub _failed_check{
     });
 }
 
-=item fix_tests
 
-Handles input from the failed test function and then re-runs the migrate db 
-script.
+=item _fix_tests
+
+
 
 =cut
 
-sub fix_tests{
+sub _fix_tests {
     my ($request) = @_;
     my $creds = LedgerSMB::Auth::get_credentials();
     # ENVIRONMENT NECESSARY
@@ -616,7 +749,32 @@ sub fix_tests{
             $request->error($sth->errstr);
     }
     $request->{dbh}->commit;
+}
+
+=item fix_tests
+
+Handles input from the failed test function and then re-runs the migrate db 
+script.
+
+=cut
+
+sub fix_tests{
+    my ($request) = @_;
+    _fix_tests($request);
     upgrade($request);
+}
+
+=item fix_sl_tests
+
+Handles input from the failed test function and then re-runs the migrate db 
+script.
+
+=cut
+
+sub fix_sl_tests{
+    my ($request) = @_;
+    _fix_tests($request);    
+    migrate_sl($request);
 }
 
 =item create_db
