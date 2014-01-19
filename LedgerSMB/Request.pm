@@ -23,6 +23,7 @@ package LedgerSMB::Request;
 use LedgerSMB::App_State;
 use LedgerSMB::PGNumber;
 use LedgerSMB::PGDate;
+use Carp;
 
 =head1 DESCRIPTION
 
@@ -65,6 +66,25 @@ sub requires_series {
     my $end  = shift @_;
     for my $att (@_){
         $self->requires("${att}_$_") for ($start .. $stop);
+    }
+}
+
+=head2 requires_from($moose_class_name)
+
+Assumes one is goin to instantiate a Moose class with the object and checks for
+required attributes on the Moose class.
+
+=cut
+
+sub requires_from {
+    no strict 'refs';
+    my ($self, $class) = @_;
+    my $meta;
+    eval { $meta = $class->meta } 
+         or Carp::croak 
+            "Could not get meta object.  Is $class a valid Moose class?";
+    for my $att($meta->get_attibute_list){
+        $self->require($att) if $meta->get_attribute($_)->required;
     }
 }
 
