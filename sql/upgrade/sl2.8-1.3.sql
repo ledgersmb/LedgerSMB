@@ -60,13 +60,17 @@ UPDATE sl28.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id, 
 	cash_account_id, startdate, enddate, threshold, entity_class)
-SELECT entity_id, vendornumber, business_id, creditlimit, aa.id, 
-	a.id, startdate, enddate, threshold, 1
-FROM sl28.vendor 
-LEFT JOIN sl28.chart c on payment_accno_id = c.id
-LEFT JOIN account a on c.accno = a.accno 
-     JOIN account aa ON aa.accno = :ap
-    WHERE entity_id IS NOT NULL;
+SELECT entity_id, vendornumber, business_id, creditlimit,
+       (select id
+          from account
+         where accno = coalesce((select accno from sl28.chart
+                                  where id = arap_accno_id) ,:ap)),   
+	(select id
+	   from account
+	   where accno = (select accno from sl28.chart
+	                   where id = payment_accno_id)),
+	 startdate, enddate, threshold, 1
+FROM sl28.vendor WHERE entity_id IS NOT NULL;
 
 UPDATE sl28.vendor SET credit_id = 
 	(SELECT id FROM entity_credit_account e 
@@ -76,13 +80,17 @@ UPDATE sl28.vendor SET credit_id =
 INSERT INTO entity_credit_account
 (entity_id, meta_number, business_id, creditlimit, ar_ap_account_id, 
 	cash_account_id, startdate, enddate, threshold, entity_class)
-SELECT entity_id, customernumber, business_id, creditlimit, aa.id, 
-	a.id, startdate, enddate, threshold, 2
-FROM sl28.customer
-LEFT JOIN sl28.chart c on payment_accno_id = c.id
-LEFT JOIN account a on c.accno = a.accno 
-     JOIN account aa ON aa.accno = :ar
-    WHERE entity_id IS NOT NULL;
+SELECT entity_id, customernumber, business_id, creditlimit,
+       (select id
+          from account
+         where accno = coalesce((select accno from sl28.chart
+                                  where id = arap_accno_id) ,:ar)), 
+	(select id
+	   from account
+	   where accno = (select accno from sl28.chart
+	                   where id = payment_accno_id)),
+        startdate, enddate, threshold, 2
+FROM sl28.customer WHERE entity_id IS NOT NULL;
 
 UPDATE sl28.customer SET credit_id = 
 	(SELECT id FROM entity_credit_account e 
@@ -256,8 +264,8 @@ OR
     lower(trim(both ' ' from c.short_name)) = lower( trim(both ' ' from oa.shiptocountry))
 JOIN (select credit_id, id from sl28.vendor
           union
-           select credit_id, id from sl28.customer) ov ON oa.trans_id = ov.id
-JOIN entity_credit_account eca ON (ov.credit_id = eca.id)
+           select credit_id, id from sl28.customer) v ON oa.trans_id = v.id
+JOIN entity_credit_account eca ON (v.credit_id = eca.id)
 GROUP BY eca.id;
 
 INSERT INTO eca_note(note_class, ref_key, note, vector)
@@ -312,6 +320,11 @@ SELECT entity_id, startdate, enddate, role, ssn, sales, employeenumber, dob,
   FROM sl28.employee em;
 
 
+
+-- must rebuild this table due to changes since 1.2
+
+INSERT INTO partsgroup (id, partsgroup) SELECT id, partsgroup FROM sl28.partsgroup;
+
 insert into parts 
        (id,        partnumber,    description, unit,      listprice,
        sellprice,  lastcost,      priceupdate, weight,    onhand,
@@ -324,30 +337,42 @@ SELECT p.id,       partnumber,    p.description, unit,      listprice,
        notes,      makemodel,     assembly,      alternate, rop,
        bin,        obsolete,      bom,           image,     drawing,
        microfiche, partsgroup_id, project_id,    avgcost,
-       inv.id,     inc.id,        exp.id
-  FROM sl28.parts p
-  LEFT JOIN sl28.chart cinv ON inventory_accno_id = cinv.id
-  LEFT JOIN account inv ON cinv.accno = inv.accno
-  LEFT JOIN sl28.chart cinc ON income_accno_id = cinc.id
-  LEFT JOIN account inc ON cinc.accno = inc.accno
-  LEFT JOIN sl28.chart cexp ON expense_accno_id = cexp.id
-  LEFT JOIN account exp ON cexp.accno = exp.accno;
+       (select id
+          from public.account
+         where accno = (select accno from sl28.chart
+                         where id = inventory_accno_id)),
+       (select id
+          from public.account
+         where accno = (select accno from sl28.chart
+                         where id = income_accno_id)),
+       (select id
+          from public.account
+         where accno = (select accno from sl28.chart
+                         where id = expense_accno_id))
+  FROM sl28.parts p;
 
 
 
-
--- must rebuild this table due to changes since 1.2
-
-INSERT INTO makemodel
-SELECT * FROM sl28.makemodel;
+INSERT INTO makemodel (parts_id, make, model) 
+SELECT parts_id, make, model FROM sl28.makemodel;
 
 INSERT INTO gifi
 SELECT * FROM sl28.gifi;
 
+/* TODO -- can't be solved this easily: a freshly created defaults
+table contains 30 keys, one after having saved the System->Defaults
+screen contains 58. Also, there are account IDs here, which should
+be migrated using queries, not just copied over.
+
+To watch out for: keys which are semantically the same, but have
+different names
+
 UPDATE defaults 
    SET value = (select fldvalue from sl28.defaults src 
                  WHERE src.fldname = defaults.setting_key)
- WHERE setting_key IN (select fldname FROM sl28.defaults);
+ WHERE setting_key IN (select fldvalue FROM sl28.defaults
+                        where );
+*/
 
 
 --INSERT INTO assembly SELECT * FROM sl28.assembly;
@@ -408,16 +433,25 @@ FROM sl28.ap JOIN sl28.vendor ON (ap.vendor_id = vendor.id) ;
 
 ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 
+ALTER TABLE sl28.acc_trans ADD COLUMN entry_id integer;
+
+update sl28.acc_trans
+  set entry_id = nextval('acc_trans_entry_id_seq');
+
 INSERT INTO acc_trans
-(trans_id, chart_id, amount, transdate, source, cleared, fx_transaction, 
+(entry_id, trans_id, chart_id, amount, transdate, source, cleared, fx_transaction, 
 	project_id, memo, approved, cleared_on, reconciled_on, 
 	voucher_id)
-SELECT trans_id, a.id, amount, transdate, source,
+SELECT entry_id, trans_id, 
+                 (select id
+                    from account
+                   where accno = (select accno
+                                    from sl28.chart
+                                   where chart.id = acc_trans.chart_id)),
+        amount, transdate, source,
 	CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END, fx_transaction,
 	project_id, memo, approved, cleared, null, vr_id
-	FROM sl28.acc_trans ac
-        JOIN sl28.chart c on c.id = ac.chart_id
-        join account a on c.accno= a.accno;
+	FROM sl28.acc_trans ac;
 
 INSERT INTO invoice (id, trans_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, discount, assemblyitem, unit, project_id,
@@ -440,19 +474,18 @@ INSERT INTO tax(chart_id, rate, taxnumber, validto, pass, taxmodule_id)
        JOIN sl28.chart c ON (t.chart_id = c.id)
        JOIN account a ON (a.accno = c.accno);
 
-INSERT INTO customertax (customer_id, chart_id)
-     SELECT c.credit_id,  a.id
-       FROM sl28.customertax pt
-       JOIN sl28.customer c ON (pt.customer_id = c.id)
-       JOIN sl28.chart ON chart.id = pt.chart_id
-       JOIN account a ON chart.accno = a.accno; 
+INSERT INTO eca_tax (credit_id, chart_id)
+  SELECT credit_id, (select id from account
+                      where accno = (select accno from sl28.chart sc
+                                      where sc.id = ct.chart_id))
+   FROM sl28.customertax ct
+  UNION
+  SELECT credit_id, (select id from account
+                      where accno = (select accno from sl28.chart sc
+                                      where sc.id = vt.chart_id))
+   FROM sl28.vendortax vt;
 
-INSERT INTO vendortax (vendor_id, chart_id)
-     SELECT c.credit_id,  a.id
-       FROM sl28.vendortax pt       
-       JOIN sl28.vendor c ON (pt.vendor_id = c.id)
-       JOIN sl28.chart ON chart.id = pt.chart_id
-       JOIN account a ON chart.accno = a.accno;
+
 
 INSERT 
   INTO oe(id, ordnumber, transdate, amount, netamount, reqdate, taxincluded,
@@ -538,10 +571,11 @@ INSERT INTO audittrail(trans_id, tablename, reference, formname, action,
 INSERT INTO user_preference(id)
      SELECT id from users;
 
-INSERT INTO recurring(id, reference, startdate, nextdate, enddate, repeat, 
-            unit, howmany, payment)
-     SELECT id, reference, startdate, nextdate, enddate, repeat, 
-            unit, howmany, payment 
+INSERT INTO recurring(id, reference, startdate, nextdate, enddate,
+            recurring_interval, howmany, payment)
+     SELECT id, reference, startdate, nextdate, enddate, 
+            (repeat || ' ' || unit)::interval,
+            howmany, payment 
        FROM sl28.recurring;
 
 INSERT INTO recurringemail SELECT * FROM sl28.recurringemail;
@@ -619,13 +653,11 @@ SELECT setval('id', max(id)) FROM transactions;
  SELECT setval('menu_node_id_seq', max(id)) FROM menu_node;
  SELECT setval('menu_attribute_id_seq', max(id)) FROM menu_attribute;
  SELECT setval('menu_acl_id_seq', max(id)) FROM menu_acl;
- SELECT setval('pending_job_id_seq', max(id)) FROM pending_job;
+-- SELECT setval('pending_job_id_seq', max(id)) FROM pending_job;
  SELECT setval('new_shipto_id_seq', max(id)) FROM new_shipto;
  SELECT setval('payment_id_seq', max(id)) FROM payment;
  SELECT setval('cr_report_id_seq', max(id)) FROM cr_report;
  SELECT setval('cr_report_line_id_seq', max(id)) FROM cr_report_line;
-
-UPDATE defaults SET value = '1.3.0' WHERE setting_key = 'version';
 
 
 COMMIT;
