@@ -3,5 +3,17 @@ CURRENT KNOWN BUGS:
 Current bug list for LedgerSMB 1.3
 http://sourceforge.net/tracker/?group_id=175965&atid=875350&status=1&artgroup=2085417
 
-Current bug list for LedgerSMB 1.4
-http://sourceforge.net/tracker/?group_id=175965&atid=875350&status=1&artgroup=2748140
+Current bug list for LedgerSMB 1.4.  Items from the list can be looked up at
+http://sourceforge.net/p/ledger-smb/bugs/
+
+897:  Weekly timecard entry not working yet (missing some theming and buttons)
+899:  No overpayment reversal possible
+907:  AR/AP reports lacking totals.
+910:  Some Reports Not Filtering on Click Through
+911:  Back button loses selections (mostly due to Dojo)
+913:  HR screen missing file uploads dialog
+918:  Saved/not posted invoice shows buttons for posted invoices only.
+933:  Can't print timecard
+937:  Inventory adjusment screen fails
+940:  Handling of new adjustments on reconciliation screen broken
+952:  Contact "Sales Invoice" button drops user at blank screen.
