@@ -1281,8 +1281,8 @@ sub db_init {
     LedgerSMB::Auth::credential_prompt unless ($auth);
 	$auth =~ s/Basic //i; # strip out basic authentication preface
     $auth = MIME::Base64::decode($auth);
-    LedgerSMB::Auth::credential_prompt() if $login eq 'logout';
     my ($login, $password) = split(/:/, $auth);
+    LedgerSMB::Auth::credential_prompt() if $login eq 'logout';
     $self->{login} = $login;
     if (!$self->{company}){ 
         $self->{company} = $LedgerSMB::Sysconfig::default_db;
