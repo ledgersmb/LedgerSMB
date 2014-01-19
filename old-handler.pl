@@ -161,6 +161,7 @@ if ($@) {
         "$msg1 <p><a href=\"login.pl\" target=\"_top\">$msg2</a></p>");
 }
 
+try {
 $form->db_init( \%myconfig );
 &check_password;
 
@@ -178,7 +179,6 @@ if ($myconfig{language}){
 
 $LedgerSMB::App_State::Locale = $locale;
 # pull in the main code
-try {
 #eval {
   $logger->trace("requiring bin/$form->{script}");
   require "bin/$form->{script}";

@@ -18,6 +18,7 @@ package LedgerSMB::Session;
 use LedgerSMB::Sysconfig;
 use Log::Log4perl;
 use LedgerSMB::Auth;
+use CGI::Simple;
 use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
@@ -36,8 +37,7 @@ sub check {
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;
     my $secure;
-
-   if ($cookie eq 'Login'){
+   if (($cookie eq 'Login') or ($cookie =~ /^::/)){
         return create($form);
     }
     my $timeout;
@@ -109,9 +109,8 @@ sub check {
             if ($ENV{SERVER_PORT} == 443){
                  $secure = ' Secure;';
             }
-        print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=; path=$path;$secure\n|;
-        LedgerSMB::Auth::credential_prompt(); 
-        return 0;
+            destroy($form);
+            LedgerSMB::Auth::credential_prompt;
     }
 }
 
@@ -256,8 +255,9 @@ sub destroy {
     if ($ENV{SERVER_PORT} == 443){
          $secure = ' Secure;';
     }
-    print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=; path=$path;$secure\n|;
-
+    print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=::$form->{company}; path=$path;$secure\n|;
+    $dbh->commit; # called before anything else on the page, make sure the 
+                  # session is really gone.  -CT
 }
 
 1;

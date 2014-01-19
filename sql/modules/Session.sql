@@ -119,9 +119,9 @@ BEGIN
 
                PERFORM * 
                   FROM defaults
-                 WHERE setting_key = 'auto_logout' and value = '1';
+                 WHERE setting_key = 'never_logout' and value = '0';
 
-                IF FOUND THEN
+                IF NOT FOUND THEN
                     RAISE NOTICE 'auto logout';
                     RETURN NULL;
                 ELSE
