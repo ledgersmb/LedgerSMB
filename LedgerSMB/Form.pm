@@ -3024,7 +3024,7 @@ $dbh2 is not used.
 
 sub save_recurring {
 
-    my ( $self, $dbh2, $myconfig ) = @_;
+    my ( $self, $dbh2, $myconfig, $is_oe) = @_;
 
     my $dbh = $self->{dbh};
 
