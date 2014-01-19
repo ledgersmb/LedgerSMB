@@ -272,54 +272,6 @@ not.  Use this if the form may be re-used (back-button actions are valid).
 Identical with check_form() above, but also removes the form_id from the 
 session.  This should be used when back-button actions are not valid.
 
-=item $form->debug([$file]);
-
-Outputs the sorted contents of $form.  If a filename is specified, log to it,
-otherwise output to STDOUT.
-
-=cut
-
-sub debug {
-
-    my ( $self, $file ) = @_;
-
-    if ($file) {
-        open( FH, '>', "$file" ) or die $!;
-        for ( sort keys %$self ) 
-        {   
-            $self->{$_} = "" unless defined $self->{$_};
-            print FH "$_ = $self->{$_}\n";
-        }
-        close(FH);
-    }
-    else {
-        print "\n";
-        for ( sort keys %$self ) { print "$_ = $self->{$_}\n" }
-    }
-
-}
-
-=item $form->encode_all();
-
-Does nothing and is unused.  Contains merely the comment # TODO;
-
-=cut
-
-sub encode_all {
-
-    # TODO;
-}
-
-=item $form->decode_all();
-
-Does nothing and is unused.  Contains merely the comment # TODO
-
-=cut
-
-sub decode_all {
-
-    # TODO
-}
 
 =item $form->escape($str[, $beenthere]);
 

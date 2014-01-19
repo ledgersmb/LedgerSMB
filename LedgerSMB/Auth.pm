@@ -18,20 +18,6 @@ Each plugin library must provide the following methods.
 
 =over
 
-=item session_check
-
-Check whether a session exists and handle failure appropriately.
-
-Modules are free to define how failure should be addressed.
-
-=item session_create
-
-Create a session
-
-=item session_destroy
-
-Destroy a session.
-
 =item get_credentials
 
 Get credentials and return them to the application.

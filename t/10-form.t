@@ -155,10 +155,6 @@ cmp_ok($form->numtextrows("hello world\n12345678901234567890\n", 20, 1), '==', 1
 cmp_ok($form->numtextrows("hello world\n12345678901234567890\n", 20, 3), '==', 2,
 	'numtextrows: 2 rows (3 max)');
 
-## $form->debug checks
-$form = new Form;
-@r = trap{$form->debug};
-like($trap->stdout, qr/\naction = \ndbversion = \d+\.\d+\.\d+\nlogin = \nnextsub = \npath = bin\/mozilla\nversion = $form->{version}\n/, 'debug: STDOUT');
 SKIP: {
 	skip 'Environment for file test not clean' if -f "t/lsmb-10.$$";
 	$form->debug("t/lsmb-10.$$");

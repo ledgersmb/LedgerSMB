@@ -17,6 +17,7 @@ package LedgerSMB::Session;
 
 use LedgerSMB::Sysconfig;
 use Log::Log4perl;
+use LedgerSMB::Auth;
 use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
@@ -109,6 +110,7 @@ sub check {
                  $secure = ' Secure;';
             }
         print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=; path=$path;$secure\n|;
+        LedgerSMB::Auth::credential_prompt(); 
         return 0;
     }
 }
