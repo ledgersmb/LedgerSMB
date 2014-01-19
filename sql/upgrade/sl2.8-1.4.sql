@@ -5,11 +5,6 @@
 \set ar '''<?lsmb default_ar ?>'''
 \set ap '''<?lsmb default_ap ?>'''
 
-\set default_country '''AF'''
-\set ar '''1310'''
-\set ap '''2210'''
-
-
 BEGIN;
 
 -- adding mapping info for import.
@@ -509,29 +504,29 @@ INSERT INTO partstax (parts_id, chart_id)
        JOIN sl28.chart ON chart.id = pt.chart_id
        JOIN account a ON chart.accno = a.accno;
 
-INSERT INTO tax(chart_id, rate, taxnumber, validto)
+INSERT INTO tax(chart_id, rate, taxnumber, validto, pass, taxmodule_id)
      SELECT a.id, t.rate, t.taxnumber, 
-            coalesce(t.validto::timestamp, 'infinity')
+            coalesce(t.validto::timestamp, 'infinity'), 1, 1
        FROM sl28.tax t
        JOIN sl28.chart c ON (t.chart_id = c.id)
        JOIN account a ON (a.accno = c.accno);
 
+INSERT INTO eca_tax (eca_id, chart_id)
+  SELECT c.credit_id, (select id from account
+                      where accno = (select accno from sl28.chart sc
+                                      where sc.id = ct.chart_id))
+   FROM sl28.customertax ct
+   JOIN sl28.customer c
+     ON ct.customer_id = c.id
+  UNION
+  SELECT v.credit_id, (select id from account
+                      where accno = (select accno from sl28.chart sc
+                                      where sc.id = vt.chart_id))
+   FROM sl28.vendortax vt
+   JOIN sl28.vendor v
+     ON vt.vendor_id = v.id;
 
--- ### TODO: Customer tax does not exist in LSMB. What is its function in SL??
--- ###  LSMB moved these tables jointly to eca_tax
--- INSERT INTO customertax (customer_id, chart_id)
---      SELECT c.credit_id,  a.id
---        FROM sl28.customertax pt
---        JOIN sl28.customer c ON (pt.customer_id = c.id)
---        JOIN sl28.chart ON chart.id = pt.chart_id
---        JOIN account a ON chart.accno = a.accno; 
 
--- INSERT INTO vendortax (vendor_id, chart_id)
---      SELECT c.credit_id,  a.id
---        FROM sl28.vendortax pt       
---        JOIN sl28.vendor c ON (pt.vendor_id = c.id)
---        JOIN sl28.chart ON chart.id = pt.chart_id
---        JOIN account a ON chart.accno = a.accno;
 
 INSERT 
   INTO oe(id, ordnumber, transdate, amount, netamount, reqdate, taxincluded,
@@ -572,19 +567,8 @@ SELECT id, 2, project_id + 1000 FROM sl28.orderitems
 
 INSERT INTO exchangerate select * from sl28.exchangerate;
 
--- ### TODO: Move to business units!
--- INSERT INTO project (id, projectnumber, description, startdate, enddate,
---             parts_id, production, completed, credit_id)
---      SELECT p.id, projectnumber, description, p.startdate, p.enddate,
---             parts_id, production, completed, c.credit_id
---        FROM sl28.project p
---        JOIN sl28.customer c ON p.customer_id = c.id;
-
 
 INSERT INTO status SELECT * FROM sl28.status; -- may need to comment this one out sometimes
-
--- ### TODO: Move to business units!
--- INSERT INTO department SELECT * FROM sl28.department;
 
 INSERT INTO business SELECT * FROM sl28.business;
 
