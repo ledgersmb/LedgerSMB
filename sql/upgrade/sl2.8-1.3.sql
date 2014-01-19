@@ -475,15 +475,19 @@ INSERT INTO tax(chart_id, rate, taxnumber, validto, pass, taxmodule_id)
        JOIN account a ON (a.accno = c.accno);
 
 INSERT INTO eca_tax (credit_id, chart_id)
-  SELECT credit_id, (select id from account
+  SELECT c.credit_id, (select id from account
                       where accno = (select accno from sl28.chart sc
                                       where sc.id = ct.chart_id))
    FROM sl28.customertax ct
+   JOIN sl28.customer c
+     ON ct.customer_id = c.id
   UNION
-  SELECT credit_id, (select id from account
+  SELECT v.credit_id, (select id from account
                       where accno = (select accno from sl28.chart sc
                                       where sc.id = vt.chart_id))
-   FROM sl28.vendortax vt;
+   FROM sl28.vendortax vt
+   JOIN sl28.vendor v
+     ON vt.vendor_id = v.id;
 
 
 
