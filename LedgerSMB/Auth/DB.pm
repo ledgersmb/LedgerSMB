@@ -36,16 +36,12 @@ Returns a hashref with the keys of login and password.
 sub get_credentials {
     # Handling of HTTP Basic Auth headers
     my $auth = $ENV{'HTTP_AUTHORIZATION'};
-    print STDERR localtime()." tshvr4 Auth/DB.pm get_credentials auth ".Data::Dumper::Dumper($auth)."\n";
     $auth =~ s/Basic //i; # strip out basic authentication preface
     $auth = MIME::Base64::decode($auth);
-    print STDERR localtime()." tshvr4 Auth/DB.pm get_credentials auth mime ".Data::Dumper::Dumper($auth)."\n";
     #tshvr4 2014-01-14 Firefox, after logout on normal application (login.pl) and coming to setup.pl, auth seems to be  'logout:logout', TODO remove Dumper statements  
 
     #$auth =~ s/Basic //i; # strip out basic authentication preface
-    #print STDERR localtime()." tshvr4 Auth/DB.pm get_credentials auth before mime ".Data::Dumper::Dumper($auth)."\n";
     #$auth = MIME::Base64::decode($auth);
-    print STDERR localtime()." tshvr4 Auth/DB.pm get_credentials auth decoded ".Data::Dumper::Dumper($auth)."\n";
     my $return_value = {};
     #$logger->debug("\$auth=$auth");#be aware of passwords in log!
     ($return_value->{login}, $return_value->{password}) = split(/:/, $auth);
