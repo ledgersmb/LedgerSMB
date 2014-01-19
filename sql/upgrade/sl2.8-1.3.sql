@@ -447,7 +447,7 @@ SELECT entry_id, trans_id,
                     from account
                    where accno = (select accno
                                     from sl28.chart
-                                   where chart.id = acc_trans.chart_id)),
+                                   where chart.id = ac.chart_id)),
         amount, transdate, source,
 	CASE WHEN cleared IS NOT NULL THEN TRUE ELSE FALSE END, fx_transaction,
 	project_id, memo, approved, cleared, null, vr_id
@@ -474,14 +474,15 @@ INSERT INTO tax(chart_id, rate, taxnumber, validto, pass, taxmodule_id)
        JOIN sl28.chart c ON (t.chart_id = c.id)
        JOIN account a ON (a.accno = c.accno);
 
-INSERT INTO eca_tax (credit_id, chart_id)
+INSERT INTO customertax (customer_id, chart_id)
   SELECT c.credit_id, (select id from account
                       where accno = (select accno from sl28.chart sc
                                       where sc.id = ct.chart_id))
    FROM sl28.customertax ct
    JOIN sl28.customer c
-     ON ct.customer_id = c.id
-  UNION
+     ON ct.customer_id = c.id;
+
+INSERT INTO vendortax (vendor_id, chart_id)
   SELECT v.credit_id, (select id from account
                       where accno = (select accno from sl28.chart sc
                                       where sc.id = vt.chart_id))
@@ -576,9 +577,9 @@ INSERT INTO user_preference(id)
      SELECT id from users;
 
 INSERT INTO recurring(id, reference, startdate, nextdate, enddate,
-            recurring_interval, howmany, payment)
+            repeat, unit, howmany, payment)
      SELECT id, reference, startdate, nextdate, enddate, 
-            (repeat || ' ' || unit)::interval,
+            repeat, unit,
             howmany, payment 
        FROM sl28.recurring;
 
