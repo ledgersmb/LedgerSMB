@@ -986,7 +986,7 @@ sub run_sl_migration {
     # process_and_run_upgrade_script commits the transaction
 
     process_and_run_upgrade_script($request, $database, "sl28",
-				   'sl2.8-1.3');
+				   'sl2.8-1.4');
 
     create_initial_user($request);
 }
