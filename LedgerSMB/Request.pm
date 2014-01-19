@@ -84,7 +84,7 @@ sub requires_from {
          or Carp::croak 
             "Could not get meta object.  Is $class a valid Moose class?";
     for my $att($meta->get_attibute_list){
-        $self->require($att) if $meta->get_attribute($_)->required;
+        $self->require($att) if $meta->get_attribute($_)->is_required;
     }
 }
 
