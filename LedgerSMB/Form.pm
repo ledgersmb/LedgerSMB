@@ -1364,13 +1364,9 @@ sub db_init {
     my ( $self, $myconfig ) = @_;
     $logger->trace("begin");
 
-    # Handling of HTTP Basic Auth headers
-    my $auth = $ENV{'HTTP_AUTHORIZATION'};
-	# Send HTTP 401 if the authorization header is missing
-    LedgerSMB::Auth::credential_prompt unless ($auth);
-	$auth =~ s/Basic //i; # strip out basic authentication preface
-    $auth = MIME::Base64::decode($auth);
-    my ($login, $password) = split(/:/, $auth);
+    my $creds = LedgerSMB::Auth::get_credentials;
+    my ($login, $password) = ($creds->{login}, $creds->{password});
+    LedgerSMB::Auth::credential_prompt unless ($login) and ($login ne 'logout');
     $self->{login} = $login;
     if (!$self->{company}){ 
         $self->{company} = $LedgerSMB::Sysconfig::default_db;
@@ -3270,7 +3266,7 @@ $dbh2 is not used.
 
 sub save_recurring {
 
-    my ( $self, $dbh2, $myconfig ) = @_;
+    my ( $self, $dbh2, $myconfig, $is_oe) = @_;
 
     my $dbh = $self->{dbh};
 

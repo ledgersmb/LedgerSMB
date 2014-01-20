@@ -792,7 +792,6 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 
     # type=submit $locale->text('Update')
     # type=submit $locale->text('Print')
-    # type=submit $locale->text('Schedule')
     # type=submit $locale->text('Save')
     # type=submit $locale->text('Print and Save')
     # type=submit $locale->text('Ship to')
@@ -847,8 +846,6 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
                 value => $locale->text('Purchase Order')
             },
             'rfq' => { ndx => 14, key => 'Q', value => $locale->text('RFQ') },
-            'schedule' =>
-              { ndx => 15, key => 'H', value => $locale->text('Schedule') },
             'delete' =>
               { ndx => 16, key => 'D', value => $locale->text('Delete') },
         );
