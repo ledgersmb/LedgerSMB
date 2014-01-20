@@ -1971,6 +1971,8 @@ sub retrieve_invoice {
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         $ref = $sth->fetchrow_hashref(NAME_lc);
+        $ref->{locationid} = $ref->{id};
+        delete $ref->{id};
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
 
