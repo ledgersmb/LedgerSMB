@@ -68,6 +68,9 @@ use LedgerSMB::PGNumber;
 use Log::Log4perl;
 use LedgerSMB::App_State;
 use LedgerSMB::Setting::Sequence;
+use Try::Tiny;
+use Carp;
+use DBI;
 
 use charnames qw(:full);
 use open ':utf8';
@@ -412,10 +415,10 @@ appropriate path.
 
 sub error {
     my ( $self, $msg ) = @_;
-    die $msg;
+    Carp::croak $msg;
 }
 
-sub error {
+sub _error {
 
     my ( $self, $msg ) = @_;
 
@@ -1226,58 +1229,26 @@ autocommit disabled.
 sub db_init {
     my ( $self, $myconfig ) = @_;
     $logger->trace("begin");
-
-    # Handling of HTTP Basic Auth headers
-    my $auth = $ENV{'HTTP_AUTHORIZATION'};
-	# Send HTTP 401 if the authorization header is missing
-    LedgerSMB::Auth::credential_prompt unless ($auth);
-	$auth =~ s/Basic //i; # strip out basic authentication preface
-    $auth = MIME::Base64::decode($auth);
-    my ($login, $password) = split(/:/, $auth);
-    LedgerSMB::Auth::credential_prompt() if $login eq 'logout';
-    $self->{login} = $login;
     if (!$self->{company}){ 
         $self->{company} = $LedgerSMB::Sysconfig::default_db;
     }
     my $dbname = $self->{company};
-    $self->{dbh} = DBI->connect(qq|dbi:Pg:dbname="$dbname"|, $login, $password,
-           { AutoCommit => 0 }) || LedgerSMB::Auth::credential_prompt();
-
-    $logger->debug("acquired dbh \$self->{dbh}=$self->{dbh}");
-    $self->{dbh}->{pg_server_prepare} = 0;
+    $self->{dbh} = LedgerSMB::DBH->connect($self->{company});
     my $dbh = $self->{dbh};
+    LedgerSMB::App_State::set_DBH($dbh);
+    LedgerSMB::DBH->set_datestyle;
 
-    my $datequery = 'select dateformat from user_preference join users using(id)
-                      where username = CURRENT_USER';
-    my $date_sth = $dbh->prepare($datequery);
-    $date_sth->execute;
-    my ($datestyle) = $date_sth->fetchrow_array;
-    my %date_query = (
-        'mm/dd/yy' => 'set DateStyle to \'SQL, US\'',
-        'mm-dd-yy' => 'set DateStyle to \'POSTGRES, US\'',
-        'dd/mm/yy' => 'set DateStyle to \'SQL, EUROPEAN\'',
-        'dd-mm-yy' => 'set DateStyle to \'POSTGRES, EUROPEAN\'',
-        'dd.mm.yy' => 'set DateStyle to \'GERMAN\''
-    );
-    $self->{dbh}->do( $date_query{ $datestyle } );
+
     $self->{db_dateformat} = $myconfig->{dateformat};    #shim
 
-    # This is the general version check
-    my $sth = $dbh->prepare("
-            SELECT value FROM defaults 
-             WHERE setting_key = 'version'");
-    $sth->execute;
-    my ($dbversion) = $sth->fetchrow_array;
-    if ($dbversion ne $self->{dbversion}){
-        $self->error("Database is not the expected version.");
-    }
+    LedgerSMB::DBH->require_version($self->{version});
 
     my $query = "SELECT t.extends, 
 			coalesce (t.table_name, 'custom_' || extends) 
 			|| ':' || f.field_name as field_def
 		FROM custom_table_catalog t
 		JOIN custom_field_catalog f USING (table_id)";
-    $sth = $self->{dbh}->prepare($query);
+    my $sth = $self->{dbh}->prepare($query);
     $sth->execute;
     my $ref;
     while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {

@@ -81,25 +81,85 @@ our $DBName;
 
 =back
 
-=head1 METHODS 
+Each of the above has an accessor function fo the same name which reads the 
+data, and a set_... function which writes it.  The set_ function should be 
+used sparingly.
 
-
-=head2 zero()
-
-zeroes out all majro parts.
+The direct access approach is deprecated and is likely to go away in 1.5 with 
+the variables above given a "my" scope instead of an "our" one.
 
 =cut
 
-sub zero() {
-    $User = undef;
-    #tshvr4 leave it initialised, otherwise 'Can't call method "text" on an undefined value' if
-    # still errors between calling this method and and end of script
-    #$Locale = undef;
-    $DBH = undef;
-    @Roles = ();
-    $DBName = undef;
-    $Role_Prefix = undef;
+sub _set_n {
+    no strict 'refs';
+    my ($att) = shift @_;
+    for (@_){
+        if ($_ ne __PACKAGE__){
+            $$att = $_;
+            return $_;
+        }
+    }
 }
+
+sub DBName {
+    return $DBName;
+}
+
+sub set_DBName {
+    return _set_n('DBName', @_);
+}
+
+sub User {
+    return $User;
+}
+
+sub set_User {
+    return _set_n('User', @_);
+}
+
+sub Locale {
+    return $Locale;
+}
+
+sub set_Locale {
+    return _set_n('Locale', @_);
+}
+
+sub Roles {
+    return @Roles;
+}
+
+sub set_Roles {
+    shift @_ if $_[0] eq __PACKAGE__;
+    @Roles = @_;
+    return @Roles;
+}
+
+sub Company_Settings {
+    return $Company_Settings;
+}
+
+sub set_Company_Settings {
+    return _set_n('Company_Settings', @_);
+}
+
+sub DBH {
+    return $DBH;
+}
+
+sub set_DBH {
+    return _set_n('DBH', @_);
+}
+
+sub Role_Prefix {
+    return $Role_Prefix;
+}
+
+sub set_Role_Prefix {
+    return _set_n('Role_Prefix', @_);
+}
+
+=head1 METHODS 
 
 =head2 cleanup
 

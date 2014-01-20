@@ -159,7 +159,6 @@ $CGI::Simple::DISABLE_UPLOADS = 0;
 use LedgerSMB::PGNumber;
 use LedgerSMB::PGDate;
 use LedgerSMB::Sysconfig;
-use Data::Dumper;
 use LedgerSMB::App_State;
 use LedgerSMB::Auth;
 use LedgerSMB::Session;
@@ -168,6 +167,7 @@ use LedgerSMB::Locale;
 use LedgerSMB::User;
 use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
+use LedgerSMB::DBH;
 use Carp;
 use strict;
 use utf8;
@@ -175,6 +175,9 @@ use utf8;
 $CGI::Simple::POST_MAX = -1;
 
 package LedgerSMB;
+use Try::Tiny;
+use DBI;
+
 use base qw(LedgerSMB::Request);
 our $VERSION = '1.4.0';
 
@@ -620,13 +623,13 @@ sub is_allowed_role {
 }
 
 sub finalize_request {
-    LedgerSMB::App_State->zero();
+    LedgerSMB::App_State->cleanup();
 }
 
 # To be replaced with a generic interface to an Error class
 sub error {
     my ($self, $msg) = @_;
-    die $msg;
+    Carp::croak $msg;
 }
 
 sub _error {
@@ -668,72 +671,29 @@ sub _db_init {
     my $self     = shift @_;
     my %args     = @_;
     (my $package,my $filename,my $line)=caller;
-    if($self->{dbh})
-    {
-     $logger->error("dbh already set \$self->{dbh}=$self->{dbh},called from $filename");
-    }
-
-    my $creds = LedgerSMB::Auth::get_credentials();
-    LedgerSMB::Auth::credential_prompt() if $creds->{login} eq 'logout';
-    return unless $creds->{login};
-  
-    $self->{login} = $creds->{login};
     if (!$self->{company}){ 
         $self->{company} = $LedgerSMB::Sysconfig::default_db;
     }
-    my $dbname = $self->{company};
 
-    # Note that we have to request the login/password again if the db
-    # connection fails since this probably means bad credentials are entered.
-    # Just in case, however, I think it is a good idea to include the DBI
-    # error string.  CT
-    $self->{dbh} = DBI->connect(
-        qq|dbi:Pg:dbname="$dbname"|, "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
-    ); 
-    #move dbi_trace further on , dbh may not have been acquired because of authentication error
+    $self->{dbh} = LedgerSMB::DBH->connect($self->{company})
+      || LedgerSMB::Auth::credential_prompt;
 
+    LedgerSMB::App_State::set_DBH($self->{dbh});
+    LedgerSMB::App_State::set_DBName($self->{company});
 
-    if (($self->{script} eq 'login.pl') && ($self->{action} eq 
-        'authenticate')){
-        if (!$self->{dbh}){
-            $self->{_auth_error} = $DBI::errstr;
-        }
-        return;
-    }
-    elsif (!$self->{dbh}){
-        $self->_get_password;
-    }
-
-    $logger->debug("DBI->connect dbh=$self->{dbh}");
-    my $dbi_trace=$LedgerSMB::Sysconfig::DBI_TRACE;
-    if($dbi_trace)
-    {
-     $logger->debug("\$dbi_trace=$dbi_trace");
-     $self->{dbh}->trace(split /=/,$dbi_trace,2);#http://search.cpan.org/~timb/DBI-1.616/DBI.pm#TRACING
-    }
-
-    $self->{dbh}->{pg_server_prepare} = 0;
-    $self->{dbh}->{pg_enable_utf8} = 1;
-    $LedgerSMB::App_State::DBH = $self->{dbh};
-    $LedgerSMB::App_State::DBName = $dbname;
-
-    # This is the general version check
+    try {
+        LedgerSMB::DBH->require_version($VERSION);
+    } catch {
+        $self->_error($_);
+    };
+    
     my $sth = $self->{dbh}->prepare("
-            SELECT value FROM defaults 
-             WHERE setting_key = 'version'");
-    $sth->execute;
-    my ($dbversion) = $sth->fetchrow_array;
-    $sth = $self->{dbh}->prepare("
             SELECT value FROM defaults 
              WHERE setting_key = 'role_prefix'");
     $sth->execute;
 
 
     ($self->{_role_prefix}) = $sth->fetchrow_array;
-    if ($dbversion ne $self->{dbversion}){
-        #$self->error("Database is not the expected version.  Was $dbversion, expected $self->{dbversion}.  Please re-run setup.pl against this database to correct.<a href='setup.pl'>setup.pl</a>");
-        $self->_error("Database is not the expected version.  Was $dbversion, expected $self->{dbversion}.  Please re-run setup.pl against this database to correct.<a href='setup.pl'>setup.pl</a>");
-    }
 
     $sth = $self->{dbh}->prepare('SELECT check_expiration()');
     $sth->execute;

@@ -37,7 +37,7 @@ use Data::Dumper;
 use Log::Log4perl;
 use strict;
 
-LedgerSMB::App_State->zero();
+LedgerSMB::App_State->cleanup();
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Handler');
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
