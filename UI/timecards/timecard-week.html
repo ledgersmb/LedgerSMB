@@ -5,6 +5,11 @@ PROCESS "elements.html" ?>
 <?lsmb 
 PROCESS input element_data = {
     type = "hidden"
+    name = "rowcount"
+   value = 1 
+};
+PROCESS input element_data = {
+    type = "hidden"
     name = "transdate_0"
    value = transdates.0
 };
@@ -105,6 +110,16 @@ END;
 <?lsmb END ?>
 </tr>
 <?lsmb END ?>
+</table>
+<div id="buttons-div">
+<?lsmb PROCESS button element_data = {
+    text = text('Save')
+    name = 'action'
+   value = 'save_week'
+    type = 'submit'
+   class = 'submit'
+} ?>
+</div>
 </form>
 </body>
 </html>
