@@ -104,6 +104,8 @@ our @default_settings = (
    ] },
    { title => $locale->text('Misc Settings'),
      items => [  
+       { name => 'show_creditlimit', type => 'YES_NO', 
+        label => $locale->text('Show Credit Limit') },
        { name => 'dojo_theme',
          type => 'SELECT_ONE',
         label => $locale->text('Widgit Themes') },
