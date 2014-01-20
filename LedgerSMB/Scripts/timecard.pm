@@ -106,10 +106,12 @@ sub timecard_screen {
         return display($request);
     } else {
          my $startdate = LedgerSMB::PGDate->from_input($request->{date_from});
+         
          my @dates = ();
          for (0 .. 6){
-            push @dates, LedgerSMB::PGDate->new(
-                    date => $startdate->date->add(days => $_)
+            push @dates, LedgerSMB::PGDate->from_db(
+                    $startdate->date->add(days => 1)->strftime('%Y-%m-%d'),
+                    'date'
             );
          }
          $request->{num_lines} = 1 unless $request->{num_lines};

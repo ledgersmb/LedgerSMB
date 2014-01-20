@@ -60,7 +60,7 @@ END;
 <td>
      <div><?lsmb text('Report in') ?> </div>
      <div><?lsmb
-        suffix = transdates.$dnum _ '_' _ lnum;
+        suffix = transdates.$dnum.replace('[./-]', '_') _ '_' _ lnum;
         PROCESS select element_data = {
                        name = "business_unit_id_$suffix"
              default_values = [${"business_unit_id_$suffix"}]
