@@ -137,12 +137,41 @@ sub save {
            $request->{partnumber}
     );
     $request->{jctype} ||= 1;
-    $request->{total} = $request->{qty} + $request{non_chargeable};
+    $request->{total} = $request->{qty} + $request->{non_chargeable};
     my $timecard = LedgerSMB::Timecard->new(%$request);
     $timecard->save;
     $request->{id} = $timecard->id;
     $request->merge($timecard->get($request->{id}));
     display($request);
+}
+
+=item save_week
+
+Saves a week of timecards.
+
+=cut
+
+sub save_week {
+    my $request = shift @_;
+    for my $row(1 .. $request->{rowcount}){
+        for my $dow (0 .. 6){
+            my $date = $request->{"transdate_$dow"};
+            my $hash = { transdate => LedgerSMB::PGDate->from_input($date) };
+            $date =~ s|[.-/]|_|g;
+            next unless $request->{"partnumber_${date}_${row}"};
+            $hash->{$_} = $request->{"${_}_${date}_${row}"} 
+                 for (qw(business_unit_id partnumber description qty
+                                 non_chargeable));
+            $hash->{parts_id} =  LedgerSMB::Timecard->get_part_id(
+                     $hash->{partnumber}
+            );
+            $hash->{jctype} ||= 1;
+            $hash->{total} = $hash->{qty} + $hash->{non_chargeable};
+            my $timecard = LedgerSMB::Timecard->new(%$hash);
+            $timecard->save;
+        }
+    }
+    new($request);
 }
 
 =item print
