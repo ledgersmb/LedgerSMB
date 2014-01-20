@@ -105,6 +105,11 @@ sub timecard_screen {
         $request->{transdate} = $request->{date_from};
         return display($request);
     } else {
+         @{$request->{b_units}} = LedgerSMB::Business_Unit->list(
+              $request->{bu_class_id}, undef, 0, $request->{transdate}
+         );
+         my $curr = LedgerSMB::Setting->get('curr');
+         @{$request->{currencies}} = split /:/, $curr;
          my $startdate = LedgerSMB::PGDate->from_input($request->{date_from});
          
          my @dates = ();
@@ -157,11 +162,12 @@ sub save_week {
         for my $dow (0 .. 6){
             my $date = $request->{"transdate_$dow"};
             my $hash = { transdate => LedgerSMB::PGDate->from_input($date) };
-            $date =~ s|[.-/]|_|g;
+            $date =~ s#\D#_#g;
             next unless $request->{"partnumber_${date}_${row}"};
             $hash->{$_} = $request->{"${_}_${date}_${row}"} 
-                 for (qw(business_unit_id partnumber description qty
-                                 non_chargeable));
+                 for (qw(business_unit_id partnumber description qty curr
+                                 non_billable));
+            $hash->{non_billable} ||= 0;
             $hash->{parts_id} =  LedgerSMB::Timecard->get_part_id(
                      $hash->{partnumber}
             );
