@@ -602,13 +602,19 @@ $form->open_status_div . qq|
 	      <tr>
 		<td colspan=3>
 		  <table width=100%>
-		    <tr>
+		    <tr> |;
+    if (LedgerSMB::Setting ->get('show_creditlimit')){
+       print qq|
 		      <th align=left nowrap>| . $locale->text('Credit Limit') . qq|</th>
 		      <td>$form->{creditlimit}</td>
 		      <th align=left nowrap>| . $locale->text('Remaining') . qq|</th>
 		      <td class="plus$n">|
       . $form->format_amount( \%myconfig, $form->{creditremaining}, 0, "0" )
-      . qq|</td>
+      . qq|</td>|;
+    } else {
+       print qq|<td>&nbsp;</td>|;
+    }
+    print qq|
 		    </tr>
 		  </table>
 		</td>

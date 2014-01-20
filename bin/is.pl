@@ -521,7 +521,9 @@ function on_return_submit(event){
 		<td></td>
 		<td colspan=3>
 		  <table>
-		    <tr>
+		    <tr> |;
+      if (LedgerSMB::Setting->get('show_creditlimit')){
+          print qq|
 		      <th align=right nowrap>| . $locale->text('Credit Limit') . qq|</th>
 		      <td>|
       . $form->format_amount( \%myconfig, $form->{creditlimit}, 0, "0" )
@@ -530,7 +532,9 @@ function on_return_submit(event){
 		      <th align=right nowrap>| . $locale->text('Remaining') . qq|</th>
 		      <td class="plus$n" nowrap>|
       . $form->format_amount( \%myconfig, $form->{creditremaining}, 0, "0" )
-      . qq|</td>
+      . qq|</td> |;
+     } else { print "<td>&nbsp;</td>"; }
+        print qq|
 		    </tr>|;
 		if ($form->{entity_control_code}){
                     $form->hide_form(qw(entity_control_code meta_number));

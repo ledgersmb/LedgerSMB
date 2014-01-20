@@ -32,6 +32,7 @@ use LedgerSMB::App_State;
 use Log::Log4perl;
 use LedgerSMB::File;
 use Math::BigFloat;
+use LedgerSMB::Setting;
 
 my $logger = Log::Log4perl->get_logger("AA");
 
@@ -898,11 +899,12 @@ sub get_name {
     my $arap = ( $form->{vc} eq 'customer' ) ? 'ar' : 'ap';
     my $ARAP = uc $arap;
 
-    $form->{creditremaining} = $form->{creditlimit};
-    # acc_trans.approved is only false in the case of batch payments which 
-    # have not yet been approved.  Unapproved transactions set approved on the
-    # ar or ap record level.  --CT
-    $query = qq|
+    if (LedgerSMB::Setting->get('show_creditlimit')){
+        $form->{creditremaining} = $form->{creditlimit};
+        # acc_trans.approved is only false in the case of batch payments which 
+        # have not yet been approved.  Unapproved transactions set approved on 
+        # the ar or ap record level.  --CT
+        $query = qq|
                 SELECT sum(used) FROM (
 		SELECT SUM(ac.amount) 
                        * CASE WHEN '$arap' = 'ar' THEN -1 ELSE 1 END as used
@@ -918,13 +920,14 @@ sub get_name {
                  WHERE not closed and oe_class_id in (1, 2)
                        and entity_credit_account = ?) s|;
 
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{"$form->{vc}_id"}, $form->{"$form->{vc}_id"})
-      || $form->dberror($query);
-    my ($credit_rem) = $sth->fetchrow_array;
-    ( $form->{creditremaining} ) -= Math::BigFloat->new($credit_rem);
+        $sth = $dbh->prepare($query);
+        $sth->execute( $form->{"$form->{vc}_id"}, $form->{"$form->{vc}_id"})
+           || $form->dberror($query);
+        my ($credit_rem) = $sth->fetchrow_array;
+        ( $form->{creditremaining} ) -= Math::BigFloat->new($credit_rem);
 
-    $sth->finish;
+        $sth->finish;
+    }
 
     # get shipto if we did not converted an order or invoice
     if ( !$form->{shipto} ) {
