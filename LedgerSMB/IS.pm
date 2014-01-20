@@ -918,7 +918,7 @@ sub post_invoice {
     my ( $self, $myconfig, $form ) = @_;
     $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
       unless $form->{invnumber};
-
+ 
     my $dbh = $form->{dbh};
 
     my $query;
@@ -1622,6 +1622,7 @@ sub post_invoice {
         $form->{crdate},	$form->{id}
     ) || $form->dberror($query);
 
+    $form->error($form->{id});
     # add shipto
     $form->{name} = $form->{customer};
     $form->{name} =~ s/--$form->{customer_id}//;
@@ -2136,6 +2137,8 @@ sub retrieve_invoice {
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         $ref = $sth->fetchrow_hashref(NAME_lc);
+        $ref->{locationid} = $ref->{id};
+        delete $ref->{id};
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
 
