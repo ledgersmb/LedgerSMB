@@ -209,18 +209,18 @@ sub new_dbobject{
              $dbobject = LedgerSMB::DBObject->new({base => $lsmb});
              $logger->debug("\$dbobject->{dbh}=$dbobject->{dbh}");
          } else {
-             $rc | 2; # No locale
+             $rc = $rc | 2; # No locale
          }
     }
     elsif (LedgerSMB->isa($args->{base})){
          $dbobject = LedgerSMB::DBObject->new({base => $args->{base}});
     }
     else {
-        $rc | 4; # Incorrect base type
+        $rc = $rc | 4; # Incorrect base type
     }
     $logger->debug("end");
     if (!$dbobject->{dbh}){
-        $rc | 1; # No database handle
+        $rc = $rc | 1; # No database handle
     }
     if ($rc){
         return $rc;  # Return error.

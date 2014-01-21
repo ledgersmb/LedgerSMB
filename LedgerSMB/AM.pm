@@ -1710,7 +1710,7 @@ sub save_defaults {
     );
              
     if (!@{$defaults}){
-       $defaults = qw(inventory_accno_id income_accno_id expense_accno_id
+       @$defaults = qw(inventory_accno_id income_accno_id expense_accno_id
                       fxgain_accno_id fxloss_accno_id glnumber sinumber vinumber
                       sonumber ponumber sqnumber rfqnumber partnumber 
                       employeenumber customernumber vendornumber projectnumber 
