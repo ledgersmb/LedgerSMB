@@ -22,6 +22,7 @@ version.  See the COPYRIGHT and LICENSE files for more information.
 # Methods are documented inline.  
 
 package LedgerSMB::Database;
+use LedgerSMB::Auth;
 use DBI;
 
 our $VERSION = '1';
@@ -301,7 +302,6 @@ though the fullversion may give you an idea of what the actual version is run.
 =cut 
 
 sub get_info {
-    use LedgerSMB::Auth;
     my $self = shift @_;
     my $retval = { # defaults
          appname => undef,
@@ -444,7 +444,7 @@ sub server_version {
     my $dbh = DBI->connect(
         "dbi:Pg:dbname=postgres", 
          "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
-    );
+    ) or LedgerSMB::Auth::credential_prompt;
     my ($version) = $dbh->selectrow_array('SELECT version()');
     $version =~ /(\d+\.\d+\.\d+)/;
     my $retval = $1;
