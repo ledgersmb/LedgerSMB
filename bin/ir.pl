@@ -1315,9 +1315,7 @@ sub post {
         &update;
         $form->finalize_request();
     }
-    check_form();
-
-    &validate_items;
+    check_form(1);
 
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );

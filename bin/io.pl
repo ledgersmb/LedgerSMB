@@ -44,6 +44,7 @@ use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Company_Config;
 use LedgerSMB::File;
+use Carp::Always;
 
 # any custom scripts for this one
 if ( -f "bin/custom/io.pl" ) {
@@ -901,7 +902,7 @@ sub display_form {
 
 
 sub check_form {
-
+    my $nodisplay = shift;
     my @a     = ();
     my $count = 0;
     my $i;
@@ -1053,7 +1054,7 @@ sub check_form {
 
         }
     }
-    return if $form->{action} =~ /(save|post)/;
+    return if $form->{action} =~ /(save|post)/ or $nodisplay;
     &display_form;
 
 }
@@ -1622,8 +1623,7 @@ sub print_form {
         $form->{parts_files} = \%parts_files;
         $form->{file_path} = $file->file_path;
     }
-
-    &validate_items;
+    check_form(1);
 
     $form->{"${inv}date"} = $form->{transdate};
 
@@ -2202,13 +2202,16 @@ sub ship_to {
 print qq|
 
 <button class="submit" type="submit" name="action" value="continuenew">|
-. $locale->text('Continue')
+. $locale->text('Use Shipto')
 . qq|
 </button>
 <button class="submit" type="submit" name="action" value="updatenew">|
-. $locale->text('Update')
+. $locale->text('Add To List')
 . qq|
 </button>
+<button class="submit" type="submit" name="action" value="update">|.
+$locale->text('Cancel')
+.qq|</button>
 
 </form>
 

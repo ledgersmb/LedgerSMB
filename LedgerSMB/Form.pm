@@ -3484,11 +3484,7 @@ sub update_defaults {
 
     my ( $self, $myconfig, $fld,$dbh_parm,$nocommit) = @_;
 
-    if ( !$self->{dbh} && $self ) {
-        $self->db_init($myconfig);
-    }
-
-    #my $dbh = $self->{dbh};
+    my $dbh = LedgerSMB::App_State::DBH;
 
     #if ( !$self ) { #if !$self, previous statement would already have failed!
     #    $dbh = $_[3];
