@@ -2087,7 +2087,7 @@ sub ship_to {
 					</table>
 
 				</td>
-				<td background="new_images/line.gif"><IMG SRC="new_images/line.gif" WIDTH="2px"/> </td>
+				<td>&nbsp;</td>
 				<td valign="top" >
 				      <table width=30%>	
 					         <tr class=listheading>
@@ -2178,7 +2178,7 @@ sub ship_to {
 					  <td><input name=shiptozipcode_new size=8 maxlength=10 value="$form->{shiptozipcode_new}" ></td>
 					  <td><select name="shiptocountry_new">$country</select></td>
 
-					  <td background="new_images/line.gif"><IMG SRC="new_images/line.gif" WIDTH="0px"/></td>
+					  <td>&nbsp;</td>
 					  <td><input type=radio name=shiptoradiocontact value="1" ondblclick="uncheckRadiocontact(this);" ></td>
 					  <td><select name="shiptotype_new">$contacttype</select></td>
 					  <td><input name=shiptocontact_new size=10 maxlength=100 value="$form->{shiptocontact_new}" ></td>
