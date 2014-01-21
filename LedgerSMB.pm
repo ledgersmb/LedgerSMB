@@ -676,7 +676,7 @@ sub _db_init {
     }
 
     $self->{dbh} = LedgerSMB::DBH->connect($self->{company})
-      || LedgerSMB::Auth::credential_prompt;
+      or LedgerSMB::Auth::credential_prompt;
 
     LedgerSMB::App_State::set_DBH($self->{dbh});
     LedgerSMB::App_State::set_DBName($self->{company});
