@@ -47,6 +47,7 @@ ul.submenu {
 li.menu_closed {
  background: #bbb url('gnome2/folder-download.png') top left no-repeat;
  padding-left: 18px;
+ padding-bottom: 3px;
 }
 
 li.menu_open {
@@ -57,6 +58,7 @@ li.menu_open {
 li.menu_item {
  background: #ddd url('gnome2/mail-forward.png') top left no-repeat;
  padding-left: 18px;
+ padding-bottom: 3px;
 }
 
 /* Reports
