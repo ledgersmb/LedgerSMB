@@ -19,6 +19,7 @@ Changelog for 1.3.37
 * Added SQL-Ledger 2.8 migration script (Erik H)
 * Removed sales/purchase order recurring logic (Chris T, 888)
 * Removing references to missing line.gif (Chris T, 962)
+* Fixed garbled UTF-8 characters appearing in web output (Erik H, 953)
 
 Changelog for 1.3.36
 * Set default date for AP invoice creation to current date (Chris T)
