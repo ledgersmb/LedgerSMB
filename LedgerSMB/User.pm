@@ -288,9 +288,9 @@ sub dbsources {
     &dbconnect_vars( $form, $form->{dbdefault} );
 
     my $dbh =
-      DBI->connect( $form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd} )
+      DBI->connect( $form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd},
+                    { pg_enable_utf8 => 1 })
       or $form->dberror( __FILE__ . ':' . __LINE__ );
-    $dbh->{pg_enable_utf8} = 1;
 
     if ( $form->{dbdriver} eq 'Pg' ) {
 
@@ -307,9 +307,8 @@ sub dbsources {
                 &dbconnect_vars( $form, $db );
                 my $dbh =
                   DBI->connect( $form->{dbconnect}, $form->{dbuser},
-                    $form->{dbpasswd} )
+                    $form->{dbpasswd}, { pg_enable_utf8 => 1} )
                   or $form->dberror( __FILE__ . ':' . __LINE__ );
-                $dbh->{pg_enable_utf8} = 1;
 
                 $query = qq|
                     SELECT tablename FROM pg_tables
@@ -359,9 +358,8 @@ sub dbcreate {
     if ( $form->{dbsuperuser} ) {
         my $superdbh =
           DBI->connect( $form->{dbconnect}, $form->{dbsuperuser},
-            $form->{dbsuperpasswd} )
+            $form->{dbsuperpasswd}, { pg_enable_utf8 => 1 } )
           or $form->dberror( __FILE__ . ':' . __LINE__ );
-        $superdbh->{pg_enable_utf8} = 1;
         my $query = qq|$dbcreate{$form->{dbdriver}}|;
         $superdbh->do($query)
           || $form->dberror( __FILE__ . ':' . __LINE__ . $query );
@@ -374,15 +372,14 @@ sub dbcreate {
     &dbconnect_vars( $form, $form->{db} );
 
     my $dbh =
-      DBI->connect( $form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd} )
+      DBI->connect( $form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd},
+                    { pg_enable_utf8 => 1 })
       or $form->dberror( __FILE__ . ':' . __LINE__ );
-    $dbh->{pg_enable_utf8} = 1;
     if ( $form->{dbsuperuser} ) {
         my $superdbh =
           DBI->connect( $form->{dbconnect}, $form->{dbsuperuser},
-            $form->{dbsuperpasswd} )
+            $form->{dbsuperpasswd}, { pg_enable_utf8 => 1 } )
           or $form->dberror( __FILE__ . ':' . __LINE__ );
-        $superdbh->{pg_enable_utf8} = 1;
 
         # JD: We need to check for plpgsql,
         # if it isn't there create it, if we can't error
@@ -465,9 +462,9 @@ sub dbdelete {
     $form->{sid} = $form->{dbdefault};
     &dbconnect_vars( $form, $form->{dbdefault} );
     my $dbh =
-      DBI->connect( $form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd} )
+      DBI->connect( $form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd},
+                    { pg_enable_utf8 => 1 } )
       or $form->dberror( __FILE__ . ':' . __LINE__ );
-    $dbh->{pg_enable_utf8} = 1;
     my $query = qq|DROP DATABASE "$form->{db}"|;
     $dbh->do($query) || $form->dberror( __FILE__ . ':' . __LINE__ . $query );
 
@@ -536,9 +533,9 @@ sub dbneedsupdate {
     &dbconnect_vars( $form, $form->{dbdefault} );
 
     my $dbh =
-      DBI->connect( $form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd} )
+      DBI->connect( $form->{dbconnect}, $form->{dbuser}, $form->{dbpasswd},
+                    { pg_enable_utf8 => 1 })
       or $form->dberror( __FILE__ . ':' . __LINE__ );
-    $dbh->{pg_enable_utf8} = 1;
 
     if ( $form->{dbdriver} =~ /Pg/ ) {
 
@@ -559,9 +556,8 @@ sub dbneedsupdate {
 
             my $dbh =
               DBI->connect( $form->{dbconnect}, $form->{dbuser},
-                $form->{dbpasswd} )
+                $form->{dbpasswd}, { pg_enable_utf8 => 1 } )
               or $form->dberror( __FILE__ . ':' . __LINE__ );
-            $dbh->{pg_enable_utf8} = 1;
 
             $query = qq|
                 SELECT tablename 
@@ -631,9 +627,8 @@ sub dbupdate {
 
         my $dbh = DBI->connect(
             $form->{dbconnect}, $form->{dbuser},
-            $form->{dbpasswd}, { AutoCommit => 0 }
+            $form->{dbpasswd}, { AutoCommit => 0, pg_enable_utf8 => 1 }
         ) or $form->dberror( __FILE__ . ':' . __LINE__ );
-        $dbh->{pg_enable_utf8} = 1;
 
         # check version
         $query = qq|
@@ -891,9 +886,8 @@ sub save_member {
         # check if login is in database
         my $dbh = DBI->connect(
             $self->{dbconnect}, $self->{dbuser},
-            $self->{dbpasswd}, { AutoCommit => 0 }
+            $self->{dbpasswd}, { AutoCommit => 0, pg_enable_utf8 => 1 }
         ) or $self->error($DBI::errstr);
-        $dbh->{pg_enable_utf8} = 1;
 
         # add login to employees table if it does not exist
         my $login = $self->{login};
@@ -951,9 +945,8 @@ sub delete_login {
 
     my $dbh = DBI->connect(
         $form->{dbconnect}, $form->{dbuser},
-        $form->{dbpasswd}, { AutoCommit => 0 }
+        $form->{dbpasswd}, { AutoCommit => 0, pg_enable_utf8 => 1 }
     ) or $form->dberror( __FILE__ . ':' . __LINE__ );
-    $dbh->{pg_enable_utf8} = 1;
 
     my $login = $form->{login};
     $login =~ s/@.*//;

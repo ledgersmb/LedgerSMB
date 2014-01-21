@@ -68,7 +68,8 @@ sub change_my_password {
     # Just in case, however, I think it is a good idea to include the DBI
     # error string.  CT
     $self->{dbh} = DBI->connect(
-        qq|dbi:Pg:dbname="$dbname"|, "$self->{login}", "$self->{old_password}", { AutoCommit => 0 }
+        qq|dbi:Pg:dbname="$dbname"|, "$self->{login}", "$self->{old_password}",
+        { AutoCommit => 0, pg_enable_utf8 => 1 }
     ); 
     if (!$self->{dbh}){
         $self->error($self->{_locale}->text('Incorrect Password'));

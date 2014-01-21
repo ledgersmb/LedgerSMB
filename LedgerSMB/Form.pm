@@ -1373,10 +1373,10 @@ sub db_init {
     }
     my $dbname = $self->{company};
     $self->{dbh} = DBI->connect(qq|dbi:Pg:dbname="$dbname"|, $login, $password,
-           { AutoCommit => 0 }) || LedgerSMB::Auth::credential_prompt();
+           { AutoCommit => 0, pg_enable_utf8 => 1, pg_server_prepare => 0 })
+        || LedgerSMB::Auth::credential_prompt();
 
     $logger->debug("acquired dbh \$self->{dbh}=$self->{dbh}");
-    $self->{dbh}->{pg_server_prepare} = 0;
     my $dbh = $self->{dbh};
 
     my $datequery = 'select dateformat from user_preference join users using(id)
@@ -1567,9 +1567,9 @@ sub dbconnect {
 
     # connect to database
     my $dbh = DBI->connect( $myconfig->{dbconnect},
-        $myconfig->{dbuser}, $myconfig->{dbpasswd} )
+        $myconfig->{dbuser}, $myconfig->{dbpasswd},
+        { AutoCommit => 0, pg_server_prepare => 0, pg_enable_utf8 => 1 })
       or $self->dberror;
-    $dbh->{pg_enable_utf8} = 1;
 
     # set db options
     if ( $myconfig->{dboptions} ) {
@@ -1593,7 +1593,7 @@ sub dbconnect_noauto {
     # connect to database
     my $dbh = DBI->connect(
         $myconfig->{dbconnect}, $myconfig->{dbuser},
-        $myconfig->{dbpasswd}, { AutoCommit => 0 }
+        $myconfig->{dbpasswd}, { AutoCommit => 0, pg_enable_utf8 => 1 }
     ) or $self->dberror;
     #HV trying to trace DBI->connect statements
     $logger->debug("DBI->connect dbh=$dbh");
@@ -1603,8 +1603,6 @@ sub dbconnect_noauto {
      $logger->debug("\$dbi_trace=$dbi_trace");
      $dbh->trace(split /=/,$dbi_trace,2);#http://search.cpan.org/~timb/DBI-1.616/DBI.pm#TRACING
     }
-
-    $dbh->{pg_enable_utf8} = 1;
 
     # set db options
     if ( $myconfig->{dboptions} ) {

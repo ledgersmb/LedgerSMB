@@ -986,7 +986,8 @@ sub _db_init {
     # Just in case, however, I think it is a good idea to include the DBI
     # error string.  CT
     $self->{dbh} = DBI->connect(
-        qq|dbi:Pg:dbname="$dbname"|, "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
+        qq|dbi:Pg:dbname="$dbname"|, "$creds->{login}", "$creds->{password}",
+        { AutoCommit => 0, pg_server_prepare => 0, pg_enable_utf8 => 1 }
     ); 
     $logger->debug("DBI->connect dbh=$self->{dbh}");
     my $dbi_trace=$LedgerSMB::Sysconfig::DBI_TRACE;
@@ -1007,8 +1008,6 @@ sub _db_init {
     elsif (!$self->{dbh}){
         $self->_get_password;
     }
-    $self->{dbh}->{pg_server_prepare} = 0;
-    $self->{dbh}->{pg_enable_utf8} = 1;
     $LedgerSMB::App_State::DBH = $self->{dbh};
     $LedgerSMB::App_State::DBName = $dbname;
 
