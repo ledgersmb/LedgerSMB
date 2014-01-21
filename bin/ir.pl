@@ -1376,6 +1376,7 @@ sub post {
         &update;
         $form->finalize_request();
     }
+    check_form();
 
     &validate_items;
 

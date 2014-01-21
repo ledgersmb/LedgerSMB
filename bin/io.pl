@@ -1112,6 +1112,7 @@ sub check_form {
 
         }
     }
+    return if $form->{action} =~ /(save|post)/;
     &display_form;
 
 }
