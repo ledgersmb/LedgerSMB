@@ -222,8 +222,8 @@ sub run_report {
     for my $ref(@rawrows){
         next if (($ref->{starting_balance} == 0)
                         and ($ref->{credits} == 0) and ($ref->{debits} == 0));
-        my $href_suffix = "from_date=" . $self->from_date . 
-                          "&to_date=" . $self->to_date .
+        my $href_suffix = "&from_date=" . $self->date_from->to_db . 
+                          "&to_date=" . $self->date_to->to_db .
                           "&accno=" . $ref->{account_number};
         $total_debits += $ref->{debits}; 
         $total_credits += $ref->{credits}; 
