@@ -350,12 +350,15 @@ sub post_transaction {
         # are using the current username as the "person" inserting the new 
         # AR/AP Transaction.
         # ~A
+
+    #tshvr4 trunk svn-revison 6589,$form->login seems to contain id instead of name,person_id not found,reports with join on person_id not working
     $query = qq|
 			INSERT INTO $table (invnumber, person_id, 
 				entity_credit_account)
 			     VALUES (?,    (select  u.entity_id from users u
                  join entity e on(e.id = u.entity_id)
-                 where u.username=? and u.entity_id in(select p.entity_id from person p) ), ?)|;
+                 where u.id=? and u.entity_id in(select p.entity_id from person p) ), ?)|;
+                 #where u.username=? and u.entity_id in(select p.entity_id from person p) ), ?)|;
 
         # the second param is undef, as the DBI api expects a hashref of
         # attributes to pass to $dbh->prepare. This is not used here.
