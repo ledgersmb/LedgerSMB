@@ -574,6 +574,15 @@ sub load_base_schema {
 	    errlog => ($args->{errlog} || "${log}_stderr")
 	});
 
+    opendir(LOADDIR, 'sql/on_load');
+    while (my $fname = readdir(LOADDIR)){
+        $self->exec_script({
+            script => "$self->{source_dir}sql/on_load/$fname",
+	    log => ($args->{log} || "${log}_stdout"),
+	    errlog => ($args->{errlog} || "${log}_stderr")
+        }) if -f "sql/on_load/$fname";
+    }
+
     my $dbh = $self->dbh;
     my $sth = $dbh->prepare(
 	qq|select true
