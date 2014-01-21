@@ -1048,8 +1048,8 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
                        key   => 'E', 
                        value => $locale->text('Save as Shown') };
               }
-               delete $button{post_as_new};
-               delete $button{post};
+               delete $button{$_}
+                 for qw(post_as_new post e_mail sales_order void print on_hold); 
             }
 
             if ( !${LedgerSMB::Sysconfig::latex} ) {
