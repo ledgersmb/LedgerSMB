@@ -37,7 +37,7 @@ sub check {
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;
     my $secure;
-   if (($cookie eq 'Login') or ($cookie =~ /^::/)){
+   if (($cookie eq 'Login') or ($cookie =~ /^::/) or (!$cookie)){
         return create($form);
     }
     my $timeout;
@@ -128,6 +128,10 @@ sub create {
     $path =~ s|[^/]*$||;
     my $dbh = $lsmb->{dbh};
     my $login = $lsmb->{login};
+    if (!$login) {
+       my $creds = LedgerSMB::Auth::get_credentials;
+       $login = $creds->{login};
+    }
 
 
     if ( !$ENV{GATEWAY_INTERFACE} ) {
