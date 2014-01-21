@@ -44,7 +44,6 @@ use LedgerSMB::Template;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Company_Config;
 use LedgerSMB::File;
-use Carp::Always;
 
 # any custom scripts for this one
 if ( -f "bin/custom/io.pl" ) {
