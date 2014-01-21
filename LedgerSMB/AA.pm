@@ -299,7 +299,9 @@ sub post_transaction {
 
     my ( $fxgain_accno_id, $fxloss_accno_id ) = $dbh->selectrow_array($query);
 
-    ( $null, $form->{employee_id} ) = split /--/, $form->{employee};
+    #tshvr4 trunk svn-revison 6589,$form->login seems to contain id instead of name or '',so person_id not found,thus reports with join on person_id not working,quick fix,use employee_name
+    #( $null, $form->{employee_id} ) = split /--/, $form->{employee};
+    ( $form->{employee_name}, $form->{employee_id} ) = split /--/, $form->{employee};
     unless ( $form->{employee_id} ) {
         ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh);
     }
@@ -351,20 +353,20 @@ sub post_transaction {
         # AR/AP Transaction.
         # ~A
 
-    #tshvr4 trunk svn-revison 6589,$form->login seems to contain id instead of name,person_id not found,reports with join on person_id not working
+    #tshvr4 trunk svn-revison 6589,$form->login seems to contain id instead of name or '',so person_id not found,thus reports with join on person_id not working,quick fix,use employee_name
     $query = qq|
 			INSERT INTO $table (invnumber, person_id, 
 				entity_credit_account)
 			     VALUES (?,    (select  u.entity_id from users u
                  join entity e on(e.id = u.entity_id)
-                 where u.id=? and u.entity_id in(select p.entity_id from person p) ), ?)|;
-                 #where u.username=? and u.entity_id in(select p.entity_id from person p) ), ?)|;
+                 where u.username=? and u.entity_id in(select p.entity_id from person p) ), ?)|;
 
         # the second param is undef, as the DBI api expects a hashref of
         # attributes to pass to $dbh->prepare. This is not used here.
         # ~A
         
-    $dbh->do($query,undef,$uid,$form->{login}, $form->{"$form->{vc}_id"}) || $form->dberror($query);
+    #$dbh->do($query,undef,$uid,$form->{login}, $form->{"$form->{vc}_id"}) || $form->dberror($query);
+    $dbh->do($query,undef,$uid,$form->{employee_name}, $form->{"$form->{vc}_id"}) || $form->dberror($query);
 
     $query = qq|
 			SELECT id FROM $table
