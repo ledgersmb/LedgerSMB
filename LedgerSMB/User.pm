@@ -111,7 +111,10 @@ sub fetch_config {
 
     my ( $self, $lsmb ) = @_;
 
-    my $login = $lsmb->{login};
+    my $login;
+    my $creds = LedgerSMB::Auth::get_credentials;
+    $login = $creds->{login};
+     
     my $dbh = $lsmb->{dbh};
 
     if ( !$login ) { # Assume this is for current connected user
@@ -124,19 +127,8 @@ sub fetch_config {
 		SELECT * FROM user_preference 
 		 WHERE id = (SELECT id FROM users WHERE username = ?)|;
     my $sth = $dbh->prepare($query);
-    $sth->execute($lsmb->{login});
+    $sth->execute($login);
     $myconfig = $sth->fetchrow_hashref(NAME_lc);
-    my ($templates) = 'DB';
-    my %date_query = (
-        'mm/dd/yy' => 'set DateStyle to \'SQL, US\'',
-        'mm-dd-yy' => 'set DateStyle to \'POSTGRES, US\'',
-        'dd/mm/yy' => 'set DateStyle to \'SQL, EUROPEAN\'',
-        'dd-mm-yy' => 'set DateStyle to \'POSTGRES, EUROPEAN\'',
-        'dd.mm.yy' => 'set DateStyle to \'GERMAN\''
-    );
-    $dbh->do( $date_query{ $myconfig{dateformat} } );
-
-    my ($templates) = 'DB';
     $myconfig->{templates} = "DB";
     bless $myconfig, __PACKAGE__;
     return $myconfig;
