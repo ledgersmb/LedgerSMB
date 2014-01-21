@@ -140,6 +140,16 @@ bool, determines whether to show subtotals.
 
 has show_subtotals => (is => 'rw', isa => 'Bool');
 
+=has manual_totals
+
+Defaults to false.  Shows totals for all numeric (but not int) columns.  
+Typically this would be set to true in the run_report function if manual 
+totals are used.
+
+=cut
+
+has manual_totals => (is => 'rw', isa => 'Bool');
+
 =item buttons 
 
 Buttons to show at the bottom of the screen
@@ -205,27 +215,34 @@ sub render {
         @$rows = reverse @$rows;
     }
     $self->rows($rows);
-    if ($self->show_subtotals){
-        my @newrows;
-        my $subtotals = {html_class => 'subtotal'};
-        for my $col ({eval $self->subtotal_on}){
-           $subtotals->{$col} = 0;
-        }
-        my $col_val = undef;
-        for my $r (@{$self->rows}){
-            if (defined $col_val and ($col_val ne $r->{$self->order_by})){
-                push @newrows, $subtotals;
-                $subtotals = {html_class => 'subtotal'};
-                for my $col ({eval $self->subtotal_on}){
-                    $subtotals->{$col} = 0;
-                }
+    my $total_row = {html_class => 'listtotal'};
+    my $col_val = undef;
+    my $old_subtotal = {};
+    my @newrows;
+    for my $r (@{$self->rows}){
+        for my $k (keys %$r){
+            if (eval { $r->{$k}->isa('LedgerSMB::PGNumber') }){
+                $total_row->{$k} ||= LedgerSMB::PGNumber->from_input('0');
+                $total_row->{$k}->badd($r->{$k});
             }
-            for my $col ({eval $self->subtotal_on}){
-                $subtotals->{$col} += $r->{$col};
-            }
-            push @newrows, $r;
+            
         }
-   } 
+        if ($self->show_subtotals and defined $col_val and 
+            ($col_val ne $r->{$self->order_by})
+         ){
+            my $subtotals = {html_class => 'listsubtotal'};
+            for my $k (keys %$total_row){
+                $subtotals->{$k} = $total_row->{$k}->copy 
+                        unless $subtotals->{k};
+                $subtotals->{$k}->bsub($old_subtotal->{$k}) 
+                        if ref $old_subtotal->{$k};
+            }
+            push @newrows, $subtotals;
+         }
+         push @newrows, $r;
+    }
+    push @newrows, $total_row unless $self->manual_totals;
+    $self->rows(\@newrows);
     # Rendering
 
     if (!defined $self->format){

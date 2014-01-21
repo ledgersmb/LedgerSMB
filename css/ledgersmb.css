@@ -169,8 +169,8 @@ A.listheading:link, A.listheading:active, A.listheading:visited {
   text-decoration: none; color: white; font-weight: bold}
 .listrow1, table.dynatable tr:nth-child(odd) { font-size: 10pt; background-color: #e6e6fa; color: black; vertical-align: top; }
 .listrow0, table.dynatable tr:nth-child(even) { font-size: 10pt; background-color: #ffe4e1; color: black; vertical-align: top; }
-.listsubtotal { font-size: 10pt; background-color: #5a7d9b; color: white; }
-.listtotal { font-size: 10pt; background-color: #004d99; color: white; }
+.listsubtotal, table.dynatable tr.sublisttotal { font-size: 10pt; background-color: #5a7d9b; color: white; }
+.listtotal, table.dynatable tr.listtotal { font-size: 10pt; background-color: #004d99; color: white; font-weight: bold}
 
 textarea {
   font-family: Verdana, Arial, Helvetica, sans-serif;

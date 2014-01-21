@@ -214,6 +214,7 @@ Runs the trial balance report.
 
 sub run_report {
     my ($self) = @_;
+    $self->manual_totals('1');
     my @rawrows = $self->exec_method({funcname => 'trial_balance__generate'});
     my $total_debits;
     my $total_credits;
