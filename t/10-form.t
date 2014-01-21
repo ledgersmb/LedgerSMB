@@ -155,26 +155,8 @@ cmp_ok($form->numtextrows("hello world\n12345678901234567890\n", 20, 1), '==', 1
 cmp_ok($form->numtextrows("hello world\n12345678901234567890\n", 20, 3), '==', 2,
 	'numtextrows: 2 rows (3 max)');
 
-SKIP: {
-	skip 'Environment for file test not clean' if -f "t/lsmb-10.$$";
-	$form->debug("t/lsmb-10.$$");
-	ok(-f "t/lsmb-10.$$", "debug: output file t/lsmb-10.$$ created");
-	open(my $FH, '<', "t/lsmb-10.$$");
-	my @str = <$FH>;
-	close($FH);
-	chomp(@str);
-	like(join("\n", @str), qr/action = \ndbversion = \d+\.\d+\.\d+\nlogin = \nnextsub = \npath = bin\/mozilla\nversion = $form->{version}/, "debug: t/lsmb-10.$$ contents");
-	is(unlink("t/lsmb-10.$$"), 1, "debug: removing t/lsmb-10.$$");
-	ok(!-e "t/lsmb-10.$$", "debug: t/lsmb-10.$$ removed");
-};
-
 ## $form->hide_form checks
 $form = new Form;
-$form->{header} = 1;
-@r = trap{$form->hide_form};
-like($trap->stdout, qr/<input type="hidden" name="action" value="" \/>\n<input type="hidden" name="dbversion" value="\d+\.\d+\.\d+" \/>\n<input type="hidden" name="login" value="" \/>\n<input type="hidden" name="nextsub" value="" \/>\n<input type="hidden" name="path" value="bin\/mozilla" \/>\n<input type="hidden" name="version" value="$form->{version}" \/>/, 
-	'hide_form: base');
-ok(!$form->{header}, 'hide_form: header flag cleared');
 
 $form->{header} = 1;
 @r = trap{$form->hide_form('path')};
@@ -195,9 +177,6 @@ ok(!$form->{pre}, 'info: CGI, removed $self->{pre}');
 
 delete $form->{header};
 $ENV{LSMB_NOHEAD} = 0;
-@r = trap{$form->info('hello world')};
-like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+<body><b>hello world</b>|, 
-	'info: CGI, header content');
 
 delete $ENV{GATEWAY_INTERFACE};
 delete $ENV{info_function};
@@ -217,68 +196,6 @@ SKIP: {
 };
 delete $ENV{info_function};
 
-## $form->error checks
-$form = new Form;
-$ENV{GATEWAY_INTERFACE} = 'yes';
-$form->{pre} = 'Blah';
-$form->{header} = 'Blah';
-@r = trap{$form->error('hello world')};
-is($trap->exit, undef, 
-	'error: CGI, normal termination');
-like($trap->stdout, qr|<h2 class="error">Error!</h2> <p><b>hello world</b>|,
-	'error: CGI, pre-set header content');
-ok(!$form->{pre}, 'error: CGI, removed $self->{pre}');
-$ENV{LSMB_NOHEAD} = 0;
-delete $form->{header};
-@r = trap{$form->error('hello world')};
-is($trap->exit, undef, 
-	'error: CGI, normal termination');
-
-delete $ENV{GATEWAY_INTERFACE};
-delete $ENV{error_function};
-$form->{pre} = 'Blah';
-$form->{header} = 'Blah';
-@r = trap{$form->error('hello world')};
-if ( $expStackTrace == 0 )
-{
-    is($trap->die, "Error: hello world\n",
-	    'error: CLI, content, terminated');
-}
-else
-{   
-    my $trapmsg="";
-    if ($trap->die =~/(Error: hello world\n).*/)
-    {
-        $trapmsg = $1;
-    }
-    is($trapmsg, "Error: hello world\n",
-	    'error: CLI, content, terminated');
-}
-ok($form->{pre}, 'error: CLI, ignored $self->{pre}');
-
-$ENV{error_function} = 'main::form_error_func';
-SKIP: {
-	skip 'Environment variable error_function could not be set' unless
-		$ENV{error_function} eq 'main::form_error_func';
-	@r = trap{$form->error('hello world')};
-	is($trap->stdout, 'hello world', 
-		'error: CLI, function call called');
-if ( $expStackTrace == 0 )
-{
-	is($trap->die, "Error: hello world\n",
-		'error: CLI, function call termination');
-}
-else
-{ 
-    my $trapmsg="";
-    if ($trap->die =~/(Error: hello world\n).*/)
-    {
-        $trapmsg = $1;
-    }  
-	is($trapmsg, "Error: hello world\n",
-		'error: CLI, function call termination');
-}
-};
 
 ## $form->isblank checks
 $form = new Form;
@@ -286,9 +203,6 @@ $ENV{GATEWAY_INTERFACE} = 'yes';
 $form->{header} = 'yes';
 $form->{blank} = '    ';
 ok(!$form->isblank('version'), 'isblank: Not blank');
-@r = trap{$form->isblank('blank', 'hello world')};
-like($trap->stdout, qr|<h2 class="error">Error!</h2> <p><b>hello world</b>|,
-	'isblank: Blank');
 is($trap->exit, undef, 
 	'isblank: Blank, termination');
 
@@ -305,68 +219,9 @@ delete $form->{titlebar};
 delete $form->{title};
 delete $form->{pre};
 $ENV{LSMB_NOHEAD} = 0;
-@r = trap{$form->header};
-like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+|, 
-	'header: unset');
-
-delete $form->{header};
-$ENV{LSMB_NOHEAD} = 0;
-@r = trap{$form->header(1, 'hello world')};
-like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+hello world[\n\s]+</head>[\n\s]+|, 
-	'header: headeradd');
-
-delete $form->{header};
-$ENV{LSMB_NOHEAD} = 0;
-$form->{pre} = 'hello world';
-@r = trap{$form->header};
-like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+hello world \n|, 
-	'header: pre => \'hello world\'');
-delete $form->{pre};
-
-delete $form->{header};
-$form->{titlebar} = 'hello';
-$ENV{LSMB_NOHEAD} = 0;
-@r = trap{$form->header};
-like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title>hello</title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+|, 
-	'header: titlebar => \'hello\'');
-
-delete $form->{header};
-$ENV{LSMB_NOHEAD} = 0;
-$form->{title} = 'world';
-@r = trap{$form->header};
-like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title>world - hello</title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+|, 
-	'header: titlebar => \'hello\', title => \'world\'');
-delete $form->{title};
-delete $form->{titlebar};
-
-delete $form->{header};
-$form->{charset} = 'UTF-8';
-$ENV{LSMB_NOHEAD} = 0;
-@r = trap{$form->header};
-like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+|, 
-	'header: charset => \'UTF-8\'');
-delete $form->{charset};
-
-delete $form->{header};
-$form->{stylesheet} = "not a real file.$$";
-$ENV{LSMB_NOHEAD} = 0;
-@r = trap{$form->header};
-like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+|, 
-	"header: stylesheet => 'not a real file.$$'");
-
-delete $form->{header};
-$form->{stylesheet} = 'ledgersmb.css';
-$ENV{LSMB_NOHEAD} = 0;
-@r = trap{$form->header};
-like($trap->stdout, qr|Content-Type: text/html; charset=utf-8\n\n+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" \n\s+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">\n<head>\n\s+<title></title>\n\s+<meta http-equiv="Pragma" content="no-cache" />\n\s+<meta http-equiv="Expires" content="-1" />\n\s+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />[\n\s]+<link rel="stylesheet" href="css/ledgersmb.css" type="text/css" title="LedgerSMB stylesheet" />[\n\s]+<meta http-equiv="content-type" content="text/html; charset=utf-8" />[\n\s]+<meta name="robots" content="noindex,nofollow" />[\n\s]+</head>[\n\s]+|, 
-	'header: stylesheet => \'ledgersmb.css\'');
-
 delete $ENV{GATEWAY_INTERFACE};
 delete $form->{header};
 $ENV{LSMB_NOHEAD} = 0;
-is($form->header, 1, 'header: non-CGI');
-$ENV{LSMB_NOHEAD} = 0;
-is($form->{header}, 1, 'header: non-CGI header flag set');
 
 ## $form->sort_column checks
 ## Note that sort_column merely sorts the value of $form->{sort} to being the
