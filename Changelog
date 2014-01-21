@@ -18,6 +18,7 @@ General Enhancements:
 * Descriptions can now be locked on invoices and orders (Chris T)
 * Reconciliation reports can now be rejected (Chris T, 855)
 * Added rounding tax module (Chris T, related to bug report 878)
+* SQL files placed in sql/on_load/ now run on creation/upgrade of db (Chris T)
 
 Enhancing Security Structure
 * Session expiration now with configurable behavior (Chris T)
