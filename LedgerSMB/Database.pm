@@ -565,7 +565,7 @@ sub load_base_schema {
     # The statement below is likely to fail, because
     # the language already exists. Unfortunately, it's an error.
     # If it had been a notice, 
-    $self->dbh->do("CREATE LANGUAGE plpgsql");
+    $self->dbh->do("CREATE LANGAGE plpgsql");
     $self->dbh->commit;
     $self->exec_script(
 	{
