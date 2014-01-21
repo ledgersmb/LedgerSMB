@@ -10,6 +10,11 @@ use base qw/LedgerSMB::DBObject/;
 use Data::Dumper;
 use strict;
 
+=head2 NOTES
+
+This badly needs to be rewritten and moved to later frameworks.  Planned for 
+1.5.
+
 =over
 
 =item LedgerSMB::User->country_codes();
