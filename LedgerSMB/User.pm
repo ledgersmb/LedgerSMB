@@ -64,38 +64,6 @@ use Log::Log4perl;
 my $logger = Log::Log4perl->get_logger('LedgerSMB::User');
 
 
-=item LedgerSMB::User->country_codes();
-
-Returns a hash where the keys are registered locales and the values are the
-textual representation of the locale name.
-
-=cut
-
-sub country_codes {
-    use Locale::Country;
-    use Locale::Language;
-
-    my %cc = ();
-
-    # scan the locale directory and read in the LANGUAGE files
-    opendir DIR, "${LedgerSMB::Sysconfig::localepath}";
-
-    my @dir = grep !/^\..*$/, readdir DIR;
-
-    foreach my $dir (@dir) {
-        $dir = substr( $dir, 0, -3 );
-        $cc{$dir} = code2language( substr( $dir, 0, 2 ) );
-        $cc{$dir} .= ( "/" . code2country( substr( $dir, 3, 2 ) ) )
-          if length($dir) > 2;
-        $cc{$dir} .= ( " " . substr( $dir, 6 ) ) if length($dir) > 5;
-    }
-
-    closedir(DIR);
-
-    %cc;
-
-}
-
 =item LedgerSMB::User->fetch_config($login);
 
 Returns a reference to a hash that contains the user config for the user $login.
@@ -133,32 +101,6 @@ sub fetch_config {
     bless $myconfig, __PACKAGE__;
     return $myconfig;
 }
-
-
-=item LedgerSMB::User->check_recurring($form);
-
-Disused function to return the number of current recurring events.
-
-=cut
-
-sub check_recurring {
-    my ( $self, $form ) = @_;
-
-    my $dbh = $form->{dbh};
-    $dbh->{pg_encode_utf8} = 1;
-
-    my $query = qq|
-        SELECT count(*) FROM recurring
-         WHERE enddate >= current_date AND nextdate <= current_date|;
-    ($_) = $dbh->selectrow_array($query);
-
-    $dbh->disconnect;
-
-    $_;
-
-}
-
-
 
 1;
 
