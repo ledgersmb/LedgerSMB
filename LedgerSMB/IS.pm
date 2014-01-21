@@ -1622,7 +1622,6 @@ sub post_invoice {
         $form->{crdate},	$form->{id}
     ) || $form->dberror($query);
 
-    $form->error($form->{id});
     # add shipto
     $form->{name} = $form->{customer};
     $form->{name} =~ s/--$form->{customer_id}//;

@@ -2265,6 +2265,7 @@ sub save {
     $form->isblank( "exchangerate", $locale->text('Exchange rate missing!') )
       if ( $form->{currency} ne $form->{defaultcurrency} );
 
+    check_form();
     &validate_items;
 
 

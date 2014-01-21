@@ -1373,7 +1373,7 @@ sub post {
         &update;
         $form->finalize_request();
     }
-
+    check_form();
     &validate_items;
 
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
