@@ -670,6 +670,7 @@ Note that in_transactions is a two-dimensional numeric array.  Of each
 sub-array, the first element is the (integer) transaction id, and the second
 is the amount for that transaction.  $$;
 
+--TODO 1.5 parameter in_cash_approved not used in function, use it or drop it?
 CREATE OR REPLACE FUNCTION payment_post 
 (in_datepaid      		  date,
  in_account_class 		  int,
