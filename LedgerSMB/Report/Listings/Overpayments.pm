@@ -42,6 +42,27 @@ has control_code => (is => 'ro', isa => 'Str', required => 0);
 
 has meta_number => (is => 'ro', isa => 'Str', required => 0);
 
+=head1 PASSTHROUGH PROPERTIES
+
+These properties are there specifically to pass through to the form for 
+submission.
+
+=over
+
+=item batch_id
+
+=item post_date
+
+=item batch_number
+
+=cut
+
+has batch_id => (is => 'ro', isa => 'Int', required => 0);
+has post_date => (is => 'ro', isa => 'LedgerSMB::Moose::Date', 
+                required => 0, coerce => 1);
+
+has batch_number => (is => 'ro', isa => 'Str', required => 0);
+
 =head1 REPORT CONSTANTS
 
 =head2 name
