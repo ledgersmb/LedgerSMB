@@ -15,7 +15,6 @@ use LedgerSMB::DBObject;
 use LedgerSMB;
 use Scalar::Util;
 use Log::Log4perl;
-use LedgerSMB::DBObject;
 use Moose::Util::TypeConstraints;
 use LedgerSMB::MooseTypes
 
