@@ -1703,6 +1703,7 @@ sub print_form {
         $form->{file_path} = $file->file_path;
     }
     check_form(1);
+    ++$form->{rowcount};
 
     $form->{"${inv}date"} = $form->{transdate};
 
