@@ -47,6 +47,7 @@ sub create_batch {
 	$request->{hidden} = [
         {name => "batch_type", value => $request->{batch_type}},
 		{name => "form_id",   value => $request->{form_id}},
+        {name => 'overpayment', value => $request->{overpayment}},
     ];
  
     my $batch = LedgerSMB::Batch->new({base => $request});
@@ -135,7 +136,7 @@ sub add_vouchers {
 				my ($request) = @_;
 				$request->{account_class} = 1;
                                 if ($request->{overpayment}){
-                                    LedgerSMB::Scripts::reports::list_overpayments;
+                                    LedgerSMB::Scripts::reports::list_overpayments();
                                 } else {
 				    LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
                                 }
@@ -146,11 +147,10 @@ sub add_vouchers {
 				my ($request) = @_;
 				$request->{account_class} = 2;
                                 if ($request->{overpayment}){
-                                    LedgerSMB::Scripts::reports::list_overpayments;
+                                    LedgerSMB::Scripts::reports::list_overpayments();
                                 } else {
 			   	    LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
                                 }
-				}},
      
                      }},
     };
