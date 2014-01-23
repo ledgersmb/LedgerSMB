@@ -1233,7 +1233,9 @@ sub db_init {
         $self->{company} = $LedgerSMB::Sysconfig::default_db;
     }
     my $dbname = $self->{company};
-    $self->{dbh} = LedgerSMB::DBH->connect($self->{company});
+    $self->{dbh} = LedgerSMB::App_State::DBH;
+    $self->{dbh} ||= LedgerSMB::DBH->connect($self->{company});
+    LedgerSMB::Auth::credential_prompt unless $self->{dbh};
     my $dbh = $self->{dbh};
     LedgerSMB::App_State::set_DBH($dbh);
     LedgerSMB::DBH->set_datestyle;
