@@ -624,6 +624,8 @@ sub is_allowed_role {
 
 sub finalize_request {
     LedgerSMB::App_State->cleanup();
+    die; # return to error handling and cleanup
+         # Without dying, we tend to continue with a bad dbh. --CT
 }
 
 # To be replaced with a generic interface to an Error class

@@ -993,7 +993,7 @@ sub reprint {
 
 
 
-sub continue        {&{ $form->{nextsub} }; }
+sub continue        { &{ $form->{nextsub} }; }
 sub continuenew     {$form->{rowcount}--; &setlocation_id;  &{ $form->{nextsub} }; }
 sub updatenew       {&createlocations;}
 sub gl_transaction  { &add }

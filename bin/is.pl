@@ -1388,6 +1388,7 @@ sub update {
             }
         }
     }
+    display_form();
 }
 
 sub post {

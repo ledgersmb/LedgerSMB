@@ -263,7 +263,7 @@ sub get_for_template{
 }
 
 
-sub DESTROY {
+sub DEMOLISH {
    my ($self) = $_;
    opendir(TMP, $self->{file_path}) || return 1;
    for my $file (readdir(TMP)){

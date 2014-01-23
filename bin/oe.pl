@@ -46,7 +46,6 @@ use LedgerSMB::IS;
 use LedgerSMB::PE;
 use LedgerSMB::Tax;
 use LedgerSMB::Locale;
-use Carp::Always;
 
 require "bin/arap.pl";
 require "bin/io.pl";
