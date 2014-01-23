@@ -893,6 +893,7 @@ sub display_form {
     $form->hide_form(qw|locationid|);
 
     &form_footer;
+    $form->finalize_request;
 
 }
 
@@ -1055,7 +1056,7 @@ sub check_form {
     }
     return if $form->{action} =~ /(save|post)/ or $nodisplay;
     &display_form;
-
+    $form->finalize_request;
 }
 
 sub calc_markup {
