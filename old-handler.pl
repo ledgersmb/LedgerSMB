@@ -219,7 +219,7 @@ $LedgerSMB::App_State::Locale = $locale;
   # when output terminates.  A mere 'die' will no longer trigger an automatic
   # error, but die 'foo' will map to $form->error('foo')
   # -- CT
-  $form->_error("'$_'")  unless $_ =~ /^Died/i; 
+  $form->_error("'$_'")  unless $_ =~ /^Died/i or $_ =~ /^exit at Ledger/; 
 } 
 ;
 
