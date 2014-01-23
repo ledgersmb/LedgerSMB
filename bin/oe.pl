@@ -1261,7 +1261,7 @@ sub update {
             }
         }
     }
-
+    display_form();
 }
 
 sub save {
