@@ -123,7 +123,7 @@ sub columns {
     return [{
         col_id => 'select',
           name => '',
-          type => 'select',
+          type => 'checkbox',
     },
     {   col_id => 'entity_name',
           name => LedgerSMB::Report::text('Counterparty'),
@@ -159,13 +159,13 @@ sub run_report {
             type => 'submit',
            class => 'submit'
           },
-       ]) if $request->is_allowed_role('overpayments_reverse');
+       ]) if $self->{batch_id};
     }
     my @rows = $self->exec_method({funcname => 'payment__overpayments_list'});
     for my $r (@rows){
        $r->{row_id} = $r->{payment_id};
     }
-    $self->rows(@rows);
+    $self->rows(\@rows);
 }
 
 =head1 COPYRIGHT
