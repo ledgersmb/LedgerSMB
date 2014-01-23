@@ -134,17 +134,25 @@ sub add_vouchers {
                     function => sub {
 				my ($request) = @_;
 				$request->{account_class} = 1;
-				LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
+                                if ($request->{overpayment}){
+                                    LedgerSMB::Scripts::reports::list_overpayments;
+                                } else {
+				    LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
+                                }
 				}},
         receipt_reversal => {
                       script => undef,
                     function => sub {
 				my ($request) = @_;
 				$request->{account_class} = 2;
-				LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
+                                if ($request->{overpayment}){
+                                    LedgerSMB::Scripts::reports::list_overpayments;
+                                } else {
+			   	    LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
+                                }
 				}},
      
-	
+                     }},
     };
 
     our $form = new Form;
