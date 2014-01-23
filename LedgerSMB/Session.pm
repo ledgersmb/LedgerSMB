@@ -33,8 +33,6 @@ Handles failure by creating a new session, since credentials are now separate.
 
 sub check {
     my ( $cookie, $form ) = @_;
-    use Carp::Always;
-    warn $cookie;
 
     my $path = ($ENV{SCRIPT_NAME});
     $path =~ s|[^/]*$||;
