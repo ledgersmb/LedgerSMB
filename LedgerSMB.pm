@@ -624,8 +624,8 @@ sub is_allowed_role {
 
 sub finalize_request {
     LedgerSMB::App_State->cleanup();
-    die; # return to error handling and cleanup
-         # Without dying, we tend to continue with a bad dbh. --CT
+    die 'exit'; # return to error handling and cleanup
+                # Without dying, we tend to continue with a bad dbh. --CT
 }
 
 # To be replaced with a generic interface to an Error class
@@ -676,10 +676,10 @@ sub _db_init {
     if (!$self->{company}){ 
         $self->{company} = $LedgerSMB::Sysconfig::default_db;
     }
-
-    $self->{dbh} = LedgerSMB::DBH->connect($self->{company})
-      || LedgerSMB::Auth::credential_prompt;
-
+    if (!($self->{dbh} = LedgerSMB::App_State::DBH)){
+        $self->{dbh} = LedgerSMB::DBH->connect($self->{company})
+            || LedgerSMB::Auth::credential_prompt;
+    }
     LedgerSMB::App_State::set_DBH($self->{dbh});
     LedgerSMB::App_State::set_DBName($self->{company});
 

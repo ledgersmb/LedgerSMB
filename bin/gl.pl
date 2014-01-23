@@ -116,7 +116,6 @@ sub approve {
     $lsmb->merge($form);
 
     my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
-
     $draft->approve();
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
