@@ -234,7 +234,8 @@ sub run_report {
     }
     push @rows, {class => 'total', 
                debits => $total_debits,
-              credits => $total_credits, };
+              credits => $total_credits, 
+            html_class => 'listtotal'};
     $self->rows(\@rows);
 }
 

@@ -4,7 +4,7 @@
        PROCESS report_base.html ?>
 
 <body class="<?lsmb dojo_theme ?>">
-    <form method="post" action="trial_balance.pl">
+    <form method="get" action="trial_balance.pl">
         <?lsmb IF report.id;
             INCLUDE input element_data = {
                 type="hidden",
