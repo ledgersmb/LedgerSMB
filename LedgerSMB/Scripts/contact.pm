@@ -405,8 +405,9 @@ sub dispatch_legacy {
     $form->{dbh} = $request->{dbh};
     $form->{script} =~ s|.*/||;
     { no strict; no warnings 'redefine'; do $script; }
-
-    $form->{action}();
+    $lsmb_legacy::form = $form;
+    $lsmb_legacy::locale = LedgerSMB::App_State::Locale();
+    "lsmb_legacy"->can($form->{action})->();
 }
 
 =item add_transaction
