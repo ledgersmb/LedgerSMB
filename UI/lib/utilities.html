@@ -15,16 +15,18 @@ PROCESS select element_data = {
 };
 END; 
 
+IF languages.defined;
 languages.push({});
 PROCESS select element_data = {
            name = "language"
         options = languages
  default_values = [language]
 };
+END;
 
-IF 0 == formats.size;
+IF ! formats.defined;
    formats = [];
-   FOR F IN list_formats();
+   FOR F IN LIST_FORMATS();
       formats.push({text = F, id = F});
    END;
 END;
@@ -35,7 +37,11 @@ PROCESS select element_data = {
  default_values = [format]
 };
 
-printers.pushd({ text = text('screen'), id = 'screen' });
+IF !printers.defined;
+   printers = [];
+END;
+
+printers.push({ text = text('Screen'), id = 'screen' });
 PROCESS select element_data = {
            name = "media"
         options = printers

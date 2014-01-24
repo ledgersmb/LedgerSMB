@@ -147,6 +147,7 @@ sub save {
     $timecard->save;
     $request->{id} = $timecard->id;
     $request->merge($timecard->get($request->{id}));
+    $request->{templates} = ['timecard'];
     display($request);
 }
 

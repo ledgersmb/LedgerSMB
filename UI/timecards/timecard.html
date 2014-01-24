@@ -129,7 +129,16 @@
     </td>
 </tr>
 </table>
-<?lsmb IF id; PROCESS print_options; END; ?>
+<?lsmb IF id; 
+formats = [];
+FOR F IN LIST_FORMATS();
+   IF F == 'HTML' or F == 'PDF';
+      formats.push({text = F, id = F});
+   END;
+END;
+
+PROCESS print_options; 
+END; ?>
 <?lsmb 
 IF id;
     PROCESS button element_data = {
