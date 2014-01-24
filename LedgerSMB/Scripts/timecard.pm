@@ -148,6 +148,7 @@ sub save {
     $request->{id} = $timecard->id;
     $request->merge($timecard->get($request->{id}));
     $request->{templates} = ['timecard'];
+    @{$request->{printers}} = %LedgerSMB::Sysconfig::Printers; # List context
     display($request);
 }
 
