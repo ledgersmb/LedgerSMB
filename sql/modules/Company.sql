@@ -196,7 +196,7 @@ COMMENT ON FUNCTION eca__history
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
  in_country_id int, in_from_date date, in_to_date date, in_type char(1),
- in_start_from date, in_start_to date, in_account_class int,
+ in_start_from date, in_start_to date, in_entity_class int,
  in_inc_open bool, in_inc_closed bool) IS
 $$This produces a history detail report, i.e. a list of all products purchased by
 a customer over a specific date range.  
@@ -209,7 +209,7 @@ CREATE OR REPLACE FUNCTION eca__history_summary
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
  in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
- in_start_from date, in_start_to date, in_account_class int, 
+ in_start_from date, in_start_to date, in_entity_class int, 
  in_inc_open bool, in_inc_closed bool)
 RETURNS SETOF  eca_history_result AS
 $$
@@ -227,7 +227,7 @@ COMMENT ON FUNCTION eca__history_summary
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
  in_country_id int, in_from_date date, in_to_date date, in_type char(1),
- in_start_from date, in_start_to date, in_account_class int,
+ in_start_from date, in_start_to date, in_entity_class int,
  in_inc_open bool, in_inc_closed bool) IS
 $$Creates a summary account (no quantities, just parts group by invoice).
 

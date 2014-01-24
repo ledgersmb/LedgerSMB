@@ -47,15 +47,18 @@ Read-only accessor, returns a list of columns.
 sub columns {
     my ($self) = @_;
     my $script = 'contacts.pl';
-    return [
+    my $cols = [
          {col_id => 'name',
             type => 'text',
             name => LedgerSMB::Report::text('Name') },
 
          {col_id => 'meta_number',
             type => 'text',
-            name => LedgerSMB::Report::text('Account Number') },
+            name => LedgerSMB::Report::text('Account Number') }];
 
+    if ($self->is_summary){
+     
+      push @$cols,
          {col_id => 'invnumber',
             type => 'href',
        #href_base => 'is.pl?action=edit&id=',
@@ -63,7 +66,10 @@ sub columns {
 
          {col_id => 'curr',
             type => 'text',
-            name => LedgerSMB::Report::text('Currency') },
+            name => LedgerSMB::Report::text('Currency') };
+    }
+
+      push @$cols,
 
          {col_id => 'partnumber',
             type => 'text',
@@ -96,17 +102,18 @@ sub columns {
 
          {col_id => 'serialnumber',
             type => 'text',
-            name => LedgerSMB::Report::text('Serial Number') },
-
+            name => LedgerSMB::Report::text('Serial Number') };
+    
+    push @$cols, 
          {col_id => 'exchangerate',
             type => 'text',
             name => LedgerSMB::Report::text('Exchange Rate') },
 
          {col_id => 'salesperson_name',
             type => 'text',
-            name => LedgerSMB::Report::text('Salesperson') },
+            name => LedgerSMB::Report::text('Salesperson') };
 
-    ];
+    return $cols;
 }
 
 =item name
