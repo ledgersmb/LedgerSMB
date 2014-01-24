@@ -188,14 +188,22 @@ sub save_week {
 
 sub print {
     my ($request) = @_;
+    $request->{parts_id} =  LedgerSMB::Timecard->get_part_id(
+           $request->{partnumber}
+    );
     my $timecard = LedgerSMB::Timecard->new(%$request);
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => $LedgerSMB::Company_Config::settings->{templates},
         template => 'timecard',
+  no_auto_output => 1,
         format   => $request->{format} || 'HTML'
     );
+    $template->render;
+    $template->output(%$request);
+    $request->finalize_request if $request->{media} eq 'screen';
+    display($request);
 }
 
 =item timecard_report

@@ -348,9 +348,7 @@ sub render {
                return $str;
         };
 
-        use Data::Dumper;
-        $Data::Dumper::Sortkeys = 1;
-
+           
 	$format->can('process')->($self, $cleanvars);
 	#return $format->can('postprocess')->($self);
 	my $post = $format->can('postprocess')->($self);
@@ -405,13 +403,14 @@ sub output {
 }
 
 sub _http_output {
+        use Carp::Always;
 	my ($self, $data) = @_;
         LedgerSMB::App_State::cleanup();
 	$data ||= $self->{output};
+        
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
 		throw Error::Simple "Invalid format";
 	}
-
 	if (!defined $data and defined $self->{rendered}){
 		$data = "";
                 $logger->trace("begin DATA < self->{rendered}=$self->{rendered} \$self->{format}=$self->{format}");
@@ -426,7 +425,9 @@ sub _http_output {
 
 	my $format = "LedgerSMB::Template::$self->{format}";
 	my $disposition = "";
-	my $name = $format->can('postprocess')->($self) || $self->{rendered};
+	my $name;
+        $name = $format->can('postprocess')->($self) if $format->can('postprocess');
+        $name ||= $self->{rendered};
 	if ($name) {
 		$name =~ s#^.*/##;
 		$disposition .= qq|\nContent-Disposition: attachment; filename="$name"|;

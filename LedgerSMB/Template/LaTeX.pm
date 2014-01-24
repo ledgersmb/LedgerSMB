@@ -169,7 +169,7 @@ sub process {
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
 		"$parent->{outputfile}.$format", {binmode => 1})) {
-		throw Error::Simple $template->error();
+		die $template->error();
 	}
 	if (lc $format eq 'dvi') {
 		$parent->{mimetype} = 'application/x-dvi';
