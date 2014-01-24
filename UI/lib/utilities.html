@@ -1,10 +1,19 @@
 <?lsmb BLOCK print_options ?>
 <div class="print-options"><?lsmb
+
+IF templates.size == 1;
+PROCESS input element_data = {
+     name = 'template'
+     type = 'hidden'
+    value = templates.0
+};
+ELSE;
 PROCESS select element_data = {
            name = "template"
         options = templates
  default_values = [template]
 };
+END; 
 
 languages.push({});
 PROCESS select element_data = {
@@ -13,12 +22,20 @@ PROCESS select element_data = {
  default_values = [language]
 };
 
+IF 0 == formats.size;
+   formats = [];
+   FOR F IN list_formats();
+      formats.push({text = F, id = F});
+   END;
+END;
+
 PROCESS select element_data = {
            name = "format"
         options = formats
  default_values = [format]
 };
 
+printers.pushd({ text = text('screen'), id = 'screen' });
 PROCESS select element_data = {
            name = "media"
         options = printers
