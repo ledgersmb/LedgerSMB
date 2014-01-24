@@ -21,6 +21,9 @@ Changelog for 1.3.37
 * Removing references to missing line.gif (Chris T, 962)
 * Fixed garbled UTF-8 characters appearing in web output (Erik H, 953)
 
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+
 Changelog for 1.3.36
 * Set default date for AP invoice creation to current date (Chris T)
 * Removed "apply discount" from use overpayment screen (Chris T)
