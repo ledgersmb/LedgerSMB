@@ -1845,7 +1845,7 @@ CREATE TABLE tax (
   validto timestamp not null default 'infinity',
   pass integer DEFAULT 0 NOT NULL,
   taxmodule_id int DEFAULT 1 NOT NULL,
-  FOREIGN KEY (chart_id) REFERENCES  account(id),
+  --FOREIGN KEY (chart_id) REFERENCES  account(id),--already defined before
   FOREIGN KEY (taxmodule_id) REFERENCES taxmodule (taxmodule_id),
   PRIMARY KEY (chart_id, validto)
 );
