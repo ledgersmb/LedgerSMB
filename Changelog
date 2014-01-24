@@ -98,6 +98,10 @@ New Business Reporting Unit System (Chris T)
 * Allows one to do funds accounting, track jobs separately from projects, etc
 * Report on any combination of business reporting units (up to one per class)
 
+Erik H is Erik Huelsmann
+Chris T is Chris Travers
+Steven M is Steven Marshall
+Havard S is Havard Sorli
 
 Changelog for 1.3 Series
 Initial Release:  Monday, Oct 12 2011
@@ -121,6 +125,9 @@ Changelog for 1.3.37
 * Removed sales/purchase order recurring logic (Chris T, 888)
 * Removing references to missing line.gif (Chris T, 962)
 * Fixed garbled UTF-8 characters appearing in web output (Erik H, 953)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
 
 Changelog for 1.3.36
 * Set default date for AP invoice creation to current date (Chris T)
