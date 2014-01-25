@@ -3534,7 +3534,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 11	multi	1	176
 13	multi	1	177
 16	module	inventory.pl	178
-16	action	enter_adjust	179
+16	action	begin_adjust	179
 17	module	configuration.pl	206
 17	action	sequence_screen	207
 \.
