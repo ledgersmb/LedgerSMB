@@ -45,7 +45,6 @@ package LedgerSMB::Template::CSV;
 use warnings;
 use strict;
 
-use Error qw(:try);
 use Template;
 use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Template::DB;
@@ -130,14 +129,14 @@ sub process {
 		DELIMITER => ';',
 		DEBUG => ($parent->{debug})? 'dirs': undef,
 		DEBUG_FORMAT => '',
-		}) || throw Error::Simple Template->error(); 
+		}) || die Template->error(); 
 
 	if (not $template->process(
 		$source, 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
 		$output, binmode => ':utf8')) {
-		throw Error::Simple $template->error();
+		die $template->error();
 	}
 	$parent->{mimetype} = 'text/csv';
 }

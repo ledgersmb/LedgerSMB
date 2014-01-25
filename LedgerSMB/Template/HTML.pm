@@ -46,7 +46,6 @@ package LedgerSMB::Template::HTML;
 use warnings;
 use strict;
 
-use Error qw(:try);
 use CGI::Simple::Standard qw(:html);
 use Template;
 use LedgerSMB::Template::TTI18N;
@@ -161,13 +160,13 @@ sub process {
        
 	$template = Template->new(
                     $arghash
-		) || throw Error::Simple Template->error(); 
+		) || die Template->error(); 
 	if (not $template->process(
 		$source, 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
 		$output, {binmode => ':utf8'})) {
-		throw Error::Simple $template->error();
+		die $template->error();
 	}
 	$parent->{mimetype} = 'text/html';
 }

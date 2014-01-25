@@ -47,7 +47,6 @@ package LedgerSMB::Template::ODS;
 use strict;
 use warnings;
 
-use Error qw(:try);
 use Data::Dumper;
 use CGI::Simple::Standard qw(:html);
 use Template;
@@ -866,14 +865,14 @@ sub process {
 		DELIMITER => ';',
 		DEBUG => ($parent->{debug})? 'dirs': undef,
 		DEBUG_FORMAT => '',
-		}) || throw Error::Simple Template->error(); 
+		}) || die Template->error(); 
 
 	if (not $template->process(
 		$source, 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
 		\$output, binmode => ':utf8')) {
-		throw Error::Simple $template->error();
+		die $template->error();
 	}
 	&_ods_process("$parent->{outputfile}.ods", $output);
 

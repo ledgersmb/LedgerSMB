@@ -44,7 +44,6 @@ package LedgerSMB::Template::TXT;
 use warnings;
 use strict;
 
-use Error qw(:try);
 use Template;
 use LedgerSMB::Template::TTI18N;
 use DateTime;
@@ -138,7 +137,7 @@ sub process {
 		DELIMITER => ';',
 		DEBUG => ($parent->{debug})? 'dirs': undef,
 		DEBUG_FORMAT => '',
-		}) || throw Error::Simple Template->error(); 
+		}) || die Template->error(); 
 
 	if (not $template->process(
 		$source, 

@@ -54,7 +54,6 @@ package LedgerSMB::Template::LaTeX;
 use warnings;
 use strict;
 
-use Error qw(:try);
 use Template::Latex;
 use LedgerSMB::Template::TTI18N;
 use Log::Log4perl;
@@ -163,7 +162,7 @@ sub process {
                 ENCODING => 'utf8',
 		DEBUG => ($parent->{debug})? 'dirs': undef,
 		DEBUG_FORMAT => '',
-		}) || throw Error::Simple Template::Latex->error(); 
+		}) || die Template::Latex->error(); 
 	if (not $template->process(
 		$source, 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
