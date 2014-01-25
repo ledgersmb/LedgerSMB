@@ -75,20 +75,20 @@ screen.
 
 sub adjustment_next {
     my ($request) = @_;
-    my $adjustment = LedgerSMB::Inventory::Adjust->new(base => $request);
-    for my $i (1 .. $adjustment->{rowcount}){
-        if ($adjustment->{"row_$i"} eq "new"){
+    my $adjustment = LedgerSMB::Inventory::Adjust->new(%$request);
+    for my $i (1 .. $request->{rowcount}){
+        if ($request->{"id_$i"} eq "new" or !$request->{"id_$i"}){
             my $item = $adjustment->retrieve_item_at_date(
-		$adjustment->{"partnumber_new_$i"});
-            $adjustment->{"row_$i"} = $item->{id};
-            $adjustment->{"description_$i"} = $item->{description};
-            $adjustment->{"onhand_$i"} = $item->{onhand};
+		$request->{"partnumber_new_$i"});
+            $request->{"row_$i"} = $item->{id};
+            $request->{"description_$i"} = $item->{description};
+            $request->{"onhand_$i"} = $item->{onhand};
         }
-        $adjustment->{"qty_$i"} = $adjustment->{"onhand_$i"} 
-		- $adjustment->{"counted_$i"}; 
+        $request->{"qty_$i"} = $request->{"onhand_$i"} 
+		- $request->{"counted_$i"}; 
     }
-    ++$adjustment->{rowcount};
-    enter_adjust($adjustment);
+    ++$request->{rowcount};
+    enter_adjust($request);
 }
 
 =item adjustment_save
