@@ -416,7 +416,8 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
           OR EXISTS (select 1 FROM acc_trans 
                       WHERE trans_id = a.id and chart_id = in_account_id))
        AND (in_entity_name IS NULL 
-           OR eeca.name @@ plainto_tsquery(in_entity_name))
+           OR eeca.name @@ plainto_tsquery(in_entity_name)
+           OR eeca.name ilike '%' || in_entity_name || '%')
        AND (in_meta_number IS NULL 
           OR eca.meta_number ilike in_meta_number || '%')
        AND (in_employee_id IS NULL OR ee.id = in_employee_id)
@@ -513,7 +514,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
        EXISTS (select * from acc_trans 
                where trans_id = a.id AND chart_id = in_account_id))
        AND (in_entity_name IS NULL 
---           OR eeca.name ilike in_entity_name || '%')
+           OR eeca.name ilike in_entity_name || '%'
            OR eeca.name @@ plainto_tsquery(in_entity_name))
        AND (in_meta_number IS NULL OR eca.meta_number ilike in_meta_number)
        AND (in_employee_id = ee.entity_id OR in_employee_id IS NULL)

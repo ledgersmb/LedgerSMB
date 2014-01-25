@@ -1791,12 +1791,14 @@ sub get_name {
                         ON (c.id = ecl.credit_id)
              LEFT JOIN country_tax_form ctf ON (c.taxform_id = ctf.id)
 		 WHERE (lower(e.name) LIKE ?
-		       OR c.meta_number ILIKE ?)
+		       OR c.meta_number ILIKE ?
+                       or e.name @@ plainto_tsquery(?))
                        AND coalesce(?, c.entity_class) = c.entity_class
 		$where
 		ORDER BY e.name/;
 
-    unshift( @queryargs, $name, $self->{"${table}number"} , $entity_class);
+    unshift( @queryargs, $name, $self->{"${table}number"} , 
+                         $self->{$table}, $entity_class);
     my $sth = $self->{dbh}->prepare($query);
     $sth->execute(@queryargs) || $self->dberror($query);
 
@@ -1807,6 +1809,7 @@ sub get_name {
         $i++;
     }
     $sth->finish;
+    use Carp::Always;
 
     return $i;
 }
