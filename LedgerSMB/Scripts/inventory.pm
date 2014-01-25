@@ -17,6 +17,7 @@ Save customer will update or create as needed.
 =cut
 package LedgerSMB::Scripts::inventory;
 
+use Carp::Always;
 use LedgerSMB::Template;
 use LedgerSMB::Inventory::Adjust;
 use LedgerSMB::Inventory::Adjust_Line;

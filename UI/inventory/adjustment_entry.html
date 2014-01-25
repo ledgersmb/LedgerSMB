@@ -25,44 +25,47 @@
 		<th><?lsmb text('On Hand') ?></th>
 		<th><?lsmb text('Adjustment') ?></th>
 	</tr>
-	<?lsmb FOREACH i = [ 1 .. rowcount ] -?>
-	<?lsmb ${"id_$i"} = (${"id_$i"}) ? ${"id_$i"} : "New_$i"
+	<?lsmb FOREACH i = [ 1 .. rowcount ];
+              id_id = "id_$i";
+              IF NOT $id_id;
+                 $id_id = "New_$i";
+              END;
 		# ids are numeric -?>
 	<?lsmb INCLUDE input element_data = {
-		name  = "id_$i"
-		value = ${"id_$i"}
+		name  = id_id
+		value = $id_id
 		type  = "hidden"
 	} ?>	
         <tr>
 		<td><?lsmb INCLUDE input element_data = {
-			name  = "partnumber_${id_$i}"
-			value = ${partnumber_${"id_$i"}}
+			name  = "partnumber_$id_id"
+			value = ${"partnumber_$id_id"}
 			class = "control_code"
 			type  = "text"
 			size  = "20"                        
 		} ?></td>
 		<td><?lsmb INCLUDE input element_data = {
-			name  = "description_${id_$i}"
-			value = ${description_${"id_$i"}}
+			name  = "description_$id_id"
+			value = ${"description_$id_id"}
 			type  = "hidden"
-		} ?><?lsmb ${description_${"id_$i"}} ?></td>
+		} ?><?lsmb ${"description_$id_id"} ?></td>
 		<td><?lsmb INCLUDE input element_data = {
-			name  = "counted_${id_$i}"
-			value = ${counted_${"id_$i"}}
+			name  = "counted_$id_id"
+			value = ${"counted_$id_id"}
 			class = "numeric"
 			type  = "text"
 			size  = "20"                    
 		} ?></td>
 		<td><?lsmb INCLUDE input element_data = {
-			name  = "onhand_${id_$i}"
-			value = ${onhand_${"id_$i"}}
+			name  = "onhand_$id_id"
+			value = ${"onhand_$id_id"}
 			type  = "hidden"
-		} ?><?lsmb ${onhand_${"id_$i"}} ?></td>
+		} ?><?lsmb ${"onhand_$id_id"} ?></td>
 		<td><?lsmb INCLUDE input element_data = {
-			name  = "qty_${id_$i}"
-			value = ${qty_${"id_$i"}}
+			name  = "qty_$id_id"
+			value = ${"qty_$id_id"}
 			type  = "hidden"
-		} ?><?lsmb ${qty_${"id_$i"}} ?></td>
+		} ?><?lsmb ${"qty_$id_id"} ?></td>
         </tr>
 	<?lsmb END # foreach i -?>
 	</table>
