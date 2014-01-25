@@ -27,7 +27,7 @@ The same is for the needed changes in some configuration files; evidently the ch
 
 2.Installation required Perl-modules and required Texlive-modules
 
-sudo apt-get install libdata-dumper-simple-perl perl-modules liblocale-maketext-lexicon-perl libdbi-perl libdbd-pg-perl libconfig-any-perl libmime-lite-perl libhtml-linkextractor-perl libnet-tclink-perl libparse-recdescent-perl libmodule-build-perl libperl5.12 libuuid-perl liblocale-gettext-perl libyaml-tiny-perl libtext-iconv-perl libtext-charwidth-perl  libmodule-install-perl              liblatex-driver-perl                  (this is one command)
+sudo apt-get install libdata-dumper-simple-perl perl-modules liblocale-maketext-lexicon-perl libdbi-perl libdbd-pg-perl libconfig-any-perl libmime-lite-perl libhtml-linkextractor-perl libnet-tclink-perl libparse-recdescent-perl libmodule-build-perl libperl5.12 libuuid-perl liblocale-gettext-perl libyaml-tiny-perl libtext-iconv-perl libtext-charwidth-perl  libmodule-install-perl liblatex-driver-perl libcarp-always-perl   (this is one command)
 
 There are another three modules to be installed, the first two: (SOURCE: Falko Timme)
 libclass-std-perl 
