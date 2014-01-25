@@ -31,10 +31,15 @@
 		<th><?lsmb text('Adjustment') ?></th>
 	</tr>
 	<?lsmb IF ! rowcount;  rowcount = 1; END; 
+           INCLUDE input element_data = {
+                   name = 'rowcount'
+                   type = 'hidden'
+                  value = rowcount
+           };
            FOREACH i = [ 1 .. rowcount ];
               id_id = "id_$i";
               IF ! $id_id;
-                 $id_id = "New_$i";
+                 $id_id = "new";
               END;
 		# ids are numeric -?>
 	<?lsmb INCLUDE input element_data = {
