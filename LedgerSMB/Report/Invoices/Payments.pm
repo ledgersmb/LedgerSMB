@@ -220,6 +220,7 @@ Runs the report and sets $self->rows
 
 sub run_report{
     my ($self) = @_;
+    $ENV{LSMB_ALWAYS_MONEY} = 1;
     my @rows = $self->exec_method({funcname => 'payment__search'});
     my $count = 1;
     for my $r(@rows){

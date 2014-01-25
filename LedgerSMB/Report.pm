@@ -215,7 +215,7 @@ sub render {
         @$rows = reverse @$rows;
     }
     $self->rows($rows);
-    my $total_row = {html_class => 'listtotal'};
+    my $total_row = {html_class => 'listtotal', NOINPUT => 1};
     my $col_val = undef;
     my $old_subtotal = {};
     my @newrows;
@@ -230,7 +230,7 @@ sub render {
         if ($self->show_subtotals and defined $col_val and 
             ($col_val ne $r->{$self->order_by})
          ){
-            my $subtotals = {html_class => 'listsubtotal'};
+            my $subtotals = {html_class => 'listsubtotal', NOINPUT => 1};
             for my $k (keys %$total_row){
                 $subtotals->{$k} = $total_row->{$k}->copy 
                         unless $subtotals->{k};
