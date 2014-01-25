@@ -19,8 +19,9 @@ package LedgerSMB::Scripts::inventory;
 
 use LedgerSMB::Template;
 use LedgerSMB::Inventory::Adjust;
-use LedgerSMB::Inventory::Adjust_line;
-use LedgerSMB::Report::Inventory::Adjustments;
+use LedgerSMB::Inventory::Adjust_Line;
+use LedgerSMB::Report::Inventory::Search_Adj;
+use LedgerSMB::Report::Inventory::Adj_Details;
 
 #require 'lsmb-request.pl';
 
