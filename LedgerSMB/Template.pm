@@ -402,7 +402,6 @@ sub output {
 }
 
 sub _http_output {
-        use Carp::Always;
 	my ($self, $data) = @_;
         LedgerSMB::App_State::cleanup();
 	$data ||= $self->{output};
