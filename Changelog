@@ -20,6 +20,7 @@ Changelog for 1.3.37
 * Removed sales/purchase order recurring logic (Chris T, 888)
 * Removing references to missing line.gif (Chris T, 962)
 * Fixed garbled UTF-8 characters appearing in web output (Erik H, 953)
+* Removed crdate from ar/ap transactions and outstanding bug reports (Chris T)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
