@@ -25,9 +25,10 @@
 		<th><?lsmb text('On Hand') ?></th>
 		<th><?lsmb text('Adjustment') ?></th>
 	</tr>
-	<?lsmb FOREACH i = [ 1 .. rowcount ];
+	<?lsmb IF ! rowcount;  rowcount = 1; END; 
+           FOREACH i = [ 1 .. rowcount ];
               id_id = "id_$i";
-              IF NOT $id_id;
+              IF ! $id_id;
                  $id_id = "New_$i";
               END;
 		# ids are numeric -?>
