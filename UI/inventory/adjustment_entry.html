@@ -11,7 +11,12 @@
 	<div class="listtop"><?lsmb text('Enter Inventory')?></div>
 	<div class="label" id="date_div">
 		<label for="date_span"><?lsmb text('Adjustment Date') ?></label>
-		<span id="date_span"><?lsmb transdte ?></span>
+		<span id="date_span"><?lsmb transdate ?></span>
+		<?lsmb INCLUDE input element_data = {
+			name  = "source"
+			type  = "hidden"
+			value = source
+		} ?></div>
 		<?lsmb INCLUDE input element_data = {
 			name  = "transdate"
 			type  = "hidden"
