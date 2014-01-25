@@ -202,7 +202,7 @@ sub run_report{
                     value => 'vouchers_delete',
                     class => 'submit',
                 }]);
-    my @rows = $self->exec_method({funcname => 'batch__search'});
+    my @rows = $self->exec_method({funcname => 'voucher__list'});
     for my $ref (@rows){
         my $script;
         my $class_to_script = {
