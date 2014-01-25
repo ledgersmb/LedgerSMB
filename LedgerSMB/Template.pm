@@ -153,7 +153,6 @@ use warnings;
 use strict;
 use Carp;
 
-use Error qw(:try);
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Mailer;
 use LedgerSMB::Company_Config;
@@ -228,14 +227,14 @@ sub new {
 	bless $self, $class;
 
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
-		throw Error::Simple "Invalid format";
+		die "Invalid format";
 	}
 	if (!$self->{include_path}){
 		$self->{include_path} = $self->{'myconfig'}->{'templates'};
 		$self->{include_path} ||= 'templates/demo';
 		if (defined $self->{language}){
 			if (!$self->_valid_language){
-				throw Error::Simple 'Invalid language';
+				die 'Invalid language';
 				return undef;
 			}
 			$self->{include_path_lang} = "$self->{'include_path'}"
@@ -311,7 +310,7 @@ sub render {
         }
 
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
-		throw Error::Simple "Invalid format";
+		die "Invalid format";
 	}
 	my $format = "LedgerSMB::Template::$self->{format}";
 
@@ -320,7 +319,7 @@ sub render {
 #	}
 	eval "require $format";
 	if ($@) {
-		throw Error::Simple $@;
+		die $@;
 	}
 
 	my $cleanvars;
@@ -409,7 +408,7 @@ sub _http_output {
 	$data ||= $self->{output};
         
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
-		throw Error::Simple "Invalid format";
+		die "Invalid format";
 	}
 	if (!defined $data and defined $self->{rendered}){
 		$data = "";
@@ -420,7 +419,7 @@ sub _http_output {
 			$data .= $line;
 		}
                 $logger->trace("end DATA < self->{rendered}");
-	        unlink($self->{rendered}) or throw Error::Simple 'Unable to delete output file';
+	        unlink($self->{rendered}) or die 'Unable to delete output file';
 	}
 
 	my $format = "LedgerSMB::Template::$self->{format}";
@@ -453,7 +452,7 @@ sub _http_output_file {
 	my $FH;
 
 	open($FH, '<:bytes', $self->{rendered}) or
-		throw Error::Simple 'Unable to open rendered file';
+		die 'Unable to open rendered file';
 	my $data;
 	{
 		local $/;
@@ -464,7 +463,7 @@ sub _http_output_file {
 	$self->_http_output($data);
 	
 	unlink($self->{rendered}) or
-		throw Error::Simple 'Unable to delete output file';
+		die 'Unable to delete output file';
 }
 
 sub _email_output {
@@ -522,7 +521,7 @@ sub _lpr_output {
 	my ($self, $in_args) = shift;
 	my $args = $self->{output_args};
 	if ($self->{format} ne 'LaTeX') {
-		throw Error::Simple "Invalid Format";
+		die "Invalid Format";
 	}
 	my $lpr = $LedgerSMB::Sysconfig::printer{$args->{media}};
 
