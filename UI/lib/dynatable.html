@@ -30,7 +30,7 @@ END; ?>
              value="<?lsmb ROW.row_id ?>" />
       <?lsmb- FOREACH COL IN columns;
             TYPE = COL.type;
-            IF ROW.NOINPUT AND TYPE != 'href';
+            IF ROW.NOINPUT AND TYPE != 'href' AND TYPE != 'hidden';
             TYPE = 'text';
             END;
           IF TYPE == 'hidden';
