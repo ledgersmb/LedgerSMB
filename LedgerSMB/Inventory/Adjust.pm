@@ -181,6 +181,21 @@ sub delete {
     my ($ref) = $self->exec_method({funcname => 'inventory_adjust__delete'});
 }
 
+=item get_part_at_date
+
+Returns a hashref with the information of the part's inventory information at
+a given date.
+
+=cut
+
+sub get_part_at_date {
+    my ($self, $transdate, $partnumber) = @_;
+    my ($ref) = $self->exec_method({funcname => 'inventory_get_item_at_day',
+                                        args => [$transdate, $partnumber]});
+    use Data::Dumper;
+    return $ref;
+}
+
 =back
 
 =head1 COPYRIGHT

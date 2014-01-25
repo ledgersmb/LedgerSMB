@@ -49,34 +49,34 @@
 	} ?>	
         <tr>
 		<td><?lsmb INCLUDE input element_data = {
-			name  = "partnumber_$id_id"
-			value = ${"partnumber_$id_id"}
+			name  = "partnumber_$i"
+			value = ${"partnumber_$i"}
 			class = "control_code"
 			type  = "text"
 			size  = "20"                        
 		} ?></td>
 		<td><?lsmb INCLUDE input element_data = {
-			name  = "description_$id_id"
-			value = ${"description_$id_id"}
+			name  = "description_$i"
+			value = ${"description_$i"}
 			type  = "hidden"
-		} ?><?lsmb ${"description_$id_id"} ?></td>
+		} ?><?lsmb ${"description_$i"} ?></td>
 		<td><?lsmb INCLUDE input element_data = {
-			name  = "counted_$id_id"
-			value = ${"counted_$id_id"}
+			name  = "counted_$i"
+			value = ${"counted_$i"}
 			class = "numeric"
 			type  = "text"
 			size  = "20"                    
 		} ?></td>
 		<td><?lsmb INCLUDE input element_data = {
-			name  = "onhand_$id_id"
-			value = ${"onhand_$id_id"}
+			name  = "onhand_$i"
+			value = ${"onhand_$i"}
 			type  = "hidden"
-		} ?><?lsmb ${"onhand_$id_id"} ?></td>
+		} ?><?lsmb ${"onhand_$i"} ?></td>
 		<td><?lsmb INCLUDE input element_data = {
-			name  = "qty_$id_id"
-			value = ${"qty_$id_id"}
+			name  = "qty_$i"
+			value = ${"qty_$i"}
 			type  = "hidden"
-		} ?><?lsmb ${"qty_$id_id"} ?></td>
+		} ?><?lsmb ${"qty_$i"} ?></td>
         </tr>
 	<?lsmb END # foreach i -?>
 	</table>
