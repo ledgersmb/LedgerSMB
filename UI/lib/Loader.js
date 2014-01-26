@@ -92,6 +92,7 @@ function(
                                         return new checkbox({
                                              "name": input.name,
                                             "value": input.value,
+                                            "title": input.title,
                                           "checked": input.checked
                                          }, input);
                                  },
@@ -99,6 +100,7 @@ function(
                                          return new radio({
                                              "name": input.name,
                                             "value": input.value,
+                                            "title": input.title,
                                           "checked": input.checked
                                         }, input);
                                  },

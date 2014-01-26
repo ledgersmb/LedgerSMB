@@ -1,8 +1,8 @@
 <?lsmb PROCESS 'ui-header.html' ?>
 <?lsmb PROCESS 'elements.html' ?>
-
+<body class="<?lsmb dojo_theme ?>">
 <div class="body" id ="recon1" class="<?lsmb dojo_theme ?>">
-    <div class="title">
+    <div class="title listtop">
         New Reconciliation Report
     </div>
     <?lsmb IF error?>
@@ -11,6 +11,7 @@
         </div>
     <?lsmb END?>
     <form name="csv_upload" method="POST" action="recon.pl">
+    <div class="tabular col-2">
        <!-- TODO:  Move this to CSS show/hide" --> 
 	<!-- div id="csv-file">
         <label for="file_upload"><?lsmb text('CSV File:') ?></label>
@@ -47,6 +48,7 @@
            name = "recon_fx"
         } ?>
         </div>
+     </div>
 	<div id="button-row">
 	<?lsmb INCLUDE button element_data = {
 		type = "submit",
