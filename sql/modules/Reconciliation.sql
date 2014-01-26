@@ -431,6 +431,7 @@ RETURNS int as $$
 			AND ((rl.ledger_id = ac.entry_id 
 				AND ac.voucher_id IS NULL) 
 				OR (rl.voucher_id = ac.voucher_id)))
+                LEFT JOIN cr_report r ON r.id = in_report_id
                 LEFT JOIN exchangerate ex ON gl.transdate = ex.transdate
 		WHERE ac.cleared IS FALSE
 			AND ac.approved IS TRUE
@@ -441,13 +442,15 @@ RETURNS int as $$
                             OR (t_recon_fx is true 
                                 AND (gl.table <> 'gl' OR ac.fx_transaction
                                                       IS TRUE))) 
+                        AND (ac.entry_id > coalesce(r.max_ac_id, 0))
 		GROUP BY gl.ref, ac.source, ac.transdate,
 			ac.memo, ac.voucher_id, gl.table, 
                         case when gl.table = 'gl' then gl.id else 1 end
 		HAVING count(rl.id) = 0;
 
 		UPDATE cr_report set updated = now(),
-			their_total = coalesce(in_their_total, their_total)
+			their_total = coalesce(in_their_total, their_total),
+                        max_ac_id = (select max(entry_id) from acc_trans)
 		where id = in_report_id;
     RETURN in_report_id;
     END;
