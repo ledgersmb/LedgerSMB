@@ -125,13 +125,14 @@ sub lines_from_form {
     my ($self, $hashref) = @_;
     my @lines;
     for my $ln (1 .. $hashref->{rowcount}){
-        next if !$hashref->{"counted_$ln"};
-        next if !$hashref->{"partnumber_$ln"} and !$hashref->{"parts_id_$ln"};
+        next 
+          if $hashref->{"id_$ln"} eq 'new';
         my $line = LedgerSMB::Inventory::Adjust_Line->new(
-          {parts_id => $hashref->{"parts_id_$ln"},
+          parts_id => $hashref->{"id_$ln"},
          partnumber => $hashref->{"partnumber_$ln"},
             counted => $hashref->{"counted_$ln"},
-           expected => $hashref->{"expected_$ln"}});
+           expected => $hashref->{"onhand_$ln"},
+           variance => $hashref->{"onhand_$ln"} - $hashref->{"counted_$ln"});
         push @lines, $line;
     }
     my $rows = $self->rows;

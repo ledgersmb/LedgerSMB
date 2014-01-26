@@ -80,7 +80,7 @@ sub adjustment_next {
         if ($request->{"id_$i"} eq "new" or !$request->{"id_$i"}){
             my $item = $adjustment->get_part_at_date(
 		$request->{transdate}, $request->{"partnumber_$i"});
-            $request->{"row_$i"} = $item->{id};
+            $request->{"id_$i"} = $item->{id};
             $request->{"description_$i"} = $item->{description};
             $request->{"onhand_$i"} = $item->{onhand};
         }
@@ -101,7 +101,8 @@ invoices.
 
 sub adjustment_save {
     my ($request) = @_;
-    my $adjustment = LedgerSMB::Inventory::Adjust->new(base => $request);
+    my $adjustment = LedgerSMB::Inventory::Adjust->new(%$request);
+    $adjustment->lines_from_form($request);
     $adjustment->save;
     begin_adjust($request);
 } 
