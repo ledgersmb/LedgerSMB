@@ -38,7 +38,13 @@
 <button value="create_vouchers" type="submit" class="submit" name="action">
 <?lsmb text('Continue') ?></button>
 </div>
-<?lsmb FOREACH item = hidden ?>
+<?lsmb 
+hidden_url_base = '';
+FOREACH item = hidden;
+  IF item.value;
+      hidden_url_base = hidden_url_base _ '&' _ item.name _ '=' _ item.value;
+  END;
+   ?>
 <input type=hidden name="<?lsmb item.name ?>" value="<?lsmb item.value ?>">
 <?lsmb END ?>
 </form>
@@ -54,7 +60,8 @@ PROCESS dynatable
                tbody = {rows = search_results}
                columns = [
         { col_id='control_code', type='href', name=text('Control Number'), #'
-       href_base="vouchers.pl?action=add_vouchers&batch_type=$batch_type&id=" }
+       href_base="vouchers.pl?action=add_vouchers&batch_type=$batch_type" _
+                   hidden_url_base _ "&id=" }
         { col_id='description', type='text', name = text('Description') }
         { col_id='created_by', type='text', name = text('Created By') } #'
         { col_id='created_on', type='text', name = text('Created On') } #'
