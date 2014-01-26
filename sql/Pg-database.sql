@@ -1138,6 +1138,7 @@ CREATE TABLE cr_report (
     approved_by int references entity(id),
     approved_username text,
     recon_fx bool default false,
+    max_ac_id int,
     CHECK (deleted is not true or approved is not true)
 );
 
@@ -1448,6 +1449,8 @@ CREATE TABLE acc_trans (
   voucher_id int references voucher(id),
   entry_id SERIAL PRIMARY KEY
 );
+
+ALTER TABLE cr_report ADD FOREIGN KEY (max_ac_id) REFERENCES acc_trans(entry_id);
 
 COMMENT ON TABLE acc_trans IS
 $$This table stores line items for financial transactions.  Please note that
