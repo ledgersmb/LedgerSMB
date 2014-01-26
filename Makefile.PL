@@ -14,6 +14,7 @@ license 'GPL';
 perl_version '5.8.1';
 
 requires 'Data::Dumper';
+requires 'Carp::Always';
 requires 'Log::Log4perl';
 requires 'Locale::Maketext';
 requires 'DateTime';
