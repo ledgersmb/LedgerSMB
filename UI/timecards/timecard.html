@@ -5,6 +5,13 @@
 ?>
 <body class="<?lsmb dojo_theme ?>">
 <form action="timecard.pl" method="post">
+<?lsmb FOR hidden IN ['id', 'parts_id'];
+PROCESS input element_data = {
+    type = 'hidden'
+    name = hidden
+   value = $hidden
+};
+END; ?>
 <div class="listtop"><?lsmb text('Time or Materials Card') ?></div>
 <table>
 <tr><th colspan="2" class="listtop"><?lsmb text('Category') ?> : 

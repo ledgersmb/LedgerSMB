@@ -200,7 +200,7 @@ sub print {
   no_auto_output => 1,
         format   => $request->{format} || 'HTML'
     );
-    $template->render;
+    $template->render($request);;
     $template->output(%$request);
     $request->finalize_request if $request->{media} eq 'screen';
     display($request);
