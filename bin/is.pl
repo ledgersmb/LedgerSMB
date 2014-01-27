@@ -1037,20 +1037,22 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
             }
             my $is_draft = 0;
             if (!$form->{approved} && !$form->{batch_id}){
-               $is_draft = 1;
-               $button{approve} = { 
+               if (!$form->{batch_id}){
+                   $is_draft = 1;
+                   $button{approve} = { 
                        ndx   => 3, 
                        key   => 'O', 
                        value => $locale->text('Post as Saved') };
-               if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
-                   $button{edit_and_save} = { 
-                       ndx   => 4, 
-                       key   => 'E', 
-                       value => $locale->text('Save as Shown') };
+                   if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
+                       $button{edit_and_save} = { 
+                           ndx   => 4, 
+                           key   => 'E', 
+                           value => $locale->text('Save as Shown') };
+                   }
               }
                delete $button{$_}
                  for qw(post_as_new post e_mail sales_order void print on_hold); 
-            }
+           }
 
             if ( !${LedgerSMB::Sysconfig::latex} ) {
                 for ( "print_and_post", "print_and_post_as_new" ) {

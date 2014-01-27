@@ -953,7 +953,7 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
                 delete $button{$_};
             }
             my $is_draft = 0;
-            if (!$form->{approved} && !$form->{batch_id}){
+            if (!$form->{approved}){
                $is_draft = 1;
                $button{approve} = { 
                        ndx   => 3, 
@@ -965,6 +965,7 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
                        key   => 'E', 
                        value => $locale->text('Save as Shown') };
               }
+               # Delete these for batches too
                delete $button{$_}
                  for qw(post_as_new post e_mail sales_order void print on_hold); 
             }
