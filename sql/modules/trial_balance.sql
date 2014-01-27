@@ -111,7 +111,7 @@ BEGIN
          case when in_date_from is null then 0 else
               CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END 
               * (coalesce(cp.amount, 0) 
-              + sum(CASE WHEN ac.transdate <= coalesce(in_date_from, 
+              + sum(CASE WHEN ac.transdate < coalesce(in_date_from, 
                                                       t_roll_forward)
                          THEN ac.amount ELSE 0 END)) end, 
               sum(CASE WHEN ac.transdate BETWEEN coalesce(in_date_from, 
