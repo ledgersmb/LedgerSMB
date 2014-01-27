@@ -607,7 +607,7 @@ SELECT lsmb__create_role('payment_process');
 SELECT lsmb__grant_role('payment_process', 'ap_transaction_list');
 SELECT lsmb__grant_role('payment_process', 'exchangerate_edit');
 SELECT lsmb__grant_menu('payment_process', node_id, 'allow')
-  FROM unnest(array[38, 43, 201, 202, 223]) node_id;
+  FROM unnest(array[18, 38, 43, 201, 202, 223]) node_id;
 
 SELECT lsmb__grant_perms('payment_process', 'ap', 'UPDATE');
 SELECT lsmb__grant_perms('payment_process', obj, 'ALL')
@@ -622,7 +622,7 @@ SELECT lsmb__create_role('receipt_process');
 SELECT lsmb__grant_role('receipt_process', 'ap_transaction_list');
 SELECT lsmb__grant_role('receipt_process', 'exchangerate_edit');
 SELECT lsmb__grant_menu('receipt_process', node_id, 'allow')
-  FROM unnest(array[36, 37, 42, 203, 204]) node_id;
+  FROM unnest(array[26, 36, 37, 42, 203, 204]) node_id;
 
 SELECT lsmb__grant_perms('receipt_process', 'ar', 'UPDATE');
 SELECT lsmb__grant_perms('receipt_process', obj, 'ALL')

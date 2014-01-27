@@ -2815,8 +2815,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 41	Reports	35	8
 45	Reconciliation	35	7
 132	Year End	73	3
-203	Receipts	200	3
-204	Reverse Receipts	200	4
 111	Trial Balance	109	1
 112	Income Statement	109	2
 60	Combine	50	5
@@ -2839,6 +2837,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 141	Warehouses	128	8
 222	Sessions	128	5
 225	List Tax Forms	217	2
+203	Receipts	200	4
 226	Reports	217	3
 228	Asset Classes	227	1
 229	Assets	227	2
@@ -2897,6 +2896,9 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 85	Reports	77	11
 98	Timecards	0	14
 17	Sequences	128	4
+204	Reverse Receipts	200	5
+18	Reverse Overpay	200	3
+26	Reverse AR Overpay	200	6
 \.
 
 
@@ -3348,7 +3350,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 184	template_name	receipt	517
 242	template_name	letterhead	649
 188	menu	1	521
-189	module	template.pl	522
+189	module	templates.pl	522
 189	action	display	523
 189	template_name	pos_invoice	524
 189	format	txt	525
@@ -3540,6 +3542,14 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 16	action	begin_adjust	179
 17	module	configuration.pl	206
 17	action	sequence_screen	207
+18	batch_type	payment_reversal	208
+18	module	vouchers.pl	209
+18	action	create_batch	210
+18	overpayment	1	211
+26	batch_type	receipt_reversal	212
+26	module	vouchers.pl	213
+26	action	create_batch	214
+26	overpayment	1	215
 \.
 
 
