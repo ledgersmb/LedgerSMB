@@ -229,6 +229,18 @@ sub generate_order {
     # TODO after beta 1
 }
 
+=item get
+
+This routine retrieves a timecard and sends it to the display.
+
+=cut
+
+sub get {
+    my ($request) = @_;
+    my $tcard = LedgerSMB::Timecard->get($request->{id});
+    display($tcard);
+}
+
 
 =back
 

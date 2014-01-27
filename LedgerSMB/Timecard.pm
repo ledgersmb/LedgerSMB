@@ -206,6 +206,7 @@ sub get {
          procname => 'timecard__get', args => [$id]);
     my ($buclass) = __PACKAGE__->call_procedure(
          procname => 'timecard__bu_class', args => [$id]);
+   
     $retval->{bu_class_id} = $buclass->{id};
     return __PACKAGE__->new(%$retval);
 }
