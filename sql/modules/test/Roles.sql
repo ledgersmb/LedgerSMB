@@ -63,6 +63,65 @@ SELECT 'contact_read can read ' || t,
           'person_to_company', 'eca_to_contact', 'eca_to_location', 'eca_note'
        ]) t;
 
+INSERT INTO test_result(test_name, success)
+SELECT 'ar_transaction_list can read ' || t,
+       test__has_select_permission('ar_transaction_list', t)
+  FROM unnest(ARRAY['partsvendor'::text, 'partscustomer', 'taxcategory',
+          'entity', 'company', 'location', 'entity_to_location', 
+          'entity_to_contact', 'person', 'entity_credit_account',
+          'contact_class', 'eca_tax', 'entity_class', 'entity_note',
+          'entity_bank_account', 'entity_other_name', 'location_class',
+          'person_to_company', 'eca_to_contact', 'eca_to_location', 'eca_note',
+          'ar', 'acc_trans', 'invoice', 'ac_tax_form', 'invoice_tax_form'
+       ]) t;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'ap_transaction_list can read ' || t,
+       test__has_select_permission('ap_transaction_list', t)
+  FROM unnest(ARRAY['partsvendor'::text, 'partscustomer', 'taxcategory',
+          'entity', 'company', 'location', 'entity_to_location', 
+          'entity_to_contact', 'person', 'entity_credit_account',
+          'contact_class', 'eca_tax', 'entity_class', 'entity_note',
+          'entity_bank_account', 'entity_other_name', 'location_class',
+          'person_to_company', 'eca_to_contact', 'eca_to_location', 'eca_note',
+          'ap', 'acc_trans', 'invoice', 'ac_tax_form', 'invoice_tax_form'
+       ]) t;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'sales_order_list can read ' || t,
+       test__has_select_permission('sales_order_list', t)
+  FROM unnest(ARRAY['partsvendor'::text, 'partscustomer', 'taxcategory',
+          'entity', 'company', 'location', 'entity_to_location', 
+          'entity_to_contact', 'person', 'entity_credit_account',
+          'contact_class', 'eca_tax', 'entity_class', 'entity_note',
+          'entity_bank_account', 'entity_other_name', 'location_class',
+          'person_to_company', 'eca_to_contact', 'eca_to_location', 'eca_note',
+          'oe', 'orderitems'
+       ]) t;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'purchase_order_list can read ' || t,
+       test__has_select_permission('purchase_order_list', t)
+  FROM unnest(ARRAY['partsvendor'::text, 'partscustomer', 'taxcategory',
+          'entity', 'company', 'location', 'entity_to_location', 
+          'entity_to_contact', 'person', 'entity_credit_account',
+          'contact_class', 'eca_tax', 'entity_class', 'entity_note',
+          'entity_bank_account', 'entity_other_name', 'location_class',
+          'person_to_company', 'eca_to_contact', 'eca_to_location', 'eca_note',
+          'oe', 'orderitems'
+       ]) t;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'inventory_reports can read ' || t,
+       test__has_select_permission('inventory_reports', t)
+FROM unnest(array['ar'::text, 'ap', 'inventory', 'invoice', 'acc_trans']) t;
+
+INSERT INTO test_result(test_name, success)
+SELECT 'gl_reports can read ' || t,
+       test__has_select_permission('gl_reports', t)
+FROM unnest(array['gl'::text, 'acc_trans', 'account_checkpoint', 'ar', 'ap', 
+                  'entity', 'entity_credit_account'])t;
+
 -- TEST RESULTS
 SELECT test_name, success FROM test_result;
 
