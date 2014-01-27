@@ -942,7 +942,7 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
              { ndx => 11, key=> 'N', value => $locale->text('New') }
         );
 
-        if ($from->{separate_duties} or $form->{batch_id}){
+        if ($form->{separate_duties} or $form->{batch_id}){
            $button{'post'}->{value} = $locale->text('Save');
         }
 

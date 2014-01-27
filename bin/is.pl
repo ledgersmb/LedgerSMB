@@ -1025,7 +1025,7 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
         );
 
 
-        if ($from->{separate_duties} or $form->{batch_id}){
+        if ($form->{separate_duties} or $form->{batch_id}){
            $button{'post'}->{value} = $locale->text('Save');
         }
        delete $button{void} if $form->{invnumber} =~ /-VOID/;
