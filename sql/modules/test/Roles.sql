@@ -52,6 +52,17 @@ INSERT INTO test_result (test_name, success)
 SELECT 'file_read can read file_part', 
         test__has_select_permission('file_read', 'file_part');
 
+INSERT INTO test_result(test_name, success)
+SELECT 'contact_read can read ' || t, 
+       test__has_select_permission('contact_read', t)
+  FROM unnest(ARRAY['partsvendor'::text, 'partscustomer', 'taxcategory',
+          'entity', 'company', 'location', 'entity_to_location', 
+          'entity_to_contact', 'person', 'entity_credit_account',
+          'contact_class', 'eca_tax', 'entity_class', 'entity_note',
+          'entity_bank_account', 'entity_other_name', 'location_class',
+          'person_to_company', 'eca_to_contact', 'eca_to_location', 'eca_note'
+       ]) t;
+
 -- TEST RESULTS
 SELECT test_name, success FROM test_result;
 
