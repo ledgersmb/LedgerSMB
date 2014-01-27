@@ -1,5 +1,4 @@
 BEGIN;
---TODO 1.5 in_ar_accno , parm $16 , not used
 CREATE OR REPLACE FUNCTION invoice__start_ap
 (in_invnumber text, in_transdate date, in_taxincluded bool, 
  in_amount numeric, in_netamount numeric, in_paid numeric, in_datepaid date,
