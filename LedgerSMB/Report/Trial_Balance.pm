@@ -126,37 +126,44 @@ sub columns {
       {col_id => 'account_number',
          type => 'href',
     href_base => 'journal.pl?action=search&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
-         name => LedgerSMB::Report::text('Account Number') },
+         name => LedgerSMB::Report::text('Account Number'),
+       pwidth => 1,},
 
       {col_id => 'account_desc',
          type => 'href',
     href_base => 'journal.pl?action=search&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
-         name => LedgerSMB::Report::text('Account Description') },
+         name => LedgerSMB::Report::text('Account Description'),
+       pwidth => 3,},
 
       {col_id => 'gifi_accno',
          type => 'href',
     href_base => 'journal.pl?action=search&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y',
-         name => LedgerSMB::Report::text('GIFI') } ,
+         name => LedgerSMB::Report::text('GIFI'),
+       pwidth => 1, } ,
 
       {col_id => 'starting_balance',
          type => 'text',
          money => 1,
-         name => LedgerSMB::Report::text('Starting Balance') } ,
+         name => LedgerSMB::Report::text('Starting Balance'),
+       pwidth => 1,} ,
 
       {col_id => 'debits',
          type => 'text',
          money => 1,
-         name => LedgerSMB::Report::text('Debits') } ,
+         name => LedgerSMB::Report::text('Debits'),
+       pwidth => 1} ,
 
       {col_id => 'credits',
          type => 'text',
          money => 1,
-         name => LedgerSMB::Report::text('Credits') } ,
+         name => LedgerSMB::Report::text('Credits'),
+       pwidth => 1} ,
 
       {col_id => 'ending_balance',
          type => 'text',
          money => 1,
-         name => LedgerSMB::Report::text('Ending Balance') } ,
+         name => LedgerSMB::Report::text('Ending Balance'),
+        pwidth => 1} ,
 
     ];
 }
