@@ -886,8 +886,8 @@ sub process_and_run_upgrade_script {
     my $temp = $database->loader_log_filename();
     my $rc;
 
-    $dbh->do('CREATE SCHEMA PUBLIC')
-	or die "Failed to create schema PUBLIC (" . $dbh->errstr . ")";
+    $dbh->do("CREATE SCHEMA $LedgerSMB::Sysconfig::dbnamespace")
+	or die "Failed to create schema $LedgerSMB::Sysconfig::dbnamespace (" . $dbh->errstr . ")";
     $dbh->commit;
     $dbh->begin_work;
 
@@ -959,7 +959,7 @@ sub run_upgrade {
     my $dbinfo = $database->get_info();
     my $v = $dbinfo->{version};
     $v =~ s/\.//;
-    $dbh->do("ALTER SCHEMA public RENAME TO lsmb$v");
+    $dbh->do("ALTER SCHEMA $LedgerSMB::Sysconfig::db_namespace RENAME TO lsmb$v");
 
     process_and_run_upgrade_script($request, $database, "lsmb$v",
 				   "$dbinfo->{version}-1.4");

@@ -65,3 +65,31 @@ From LedgerSMB 1.2.x
      passwords after logging into LedgerSMB. 
    * log into the application and create additional users under System/User
      Management
+
+ROLLING BACK AN UPGRADE
+=========================
+
+LedgerSMB upgrades are non-destructive and work by moving data to the side,
+adding mapping data, and then populating a new LedgerSMB schema.  The data is retained in an old schema, with a naming convention like lsmbnn (for LedgerSMB) or slnn (for SQL-Ledger).  The following schemas are used currently:
+
+lsmb13: LedgerSMB 1.3
+lsmb12: LedgerSMB 1.2
+sl28:  SQL-Ledger 2.8
+
+We include downgrade scripts for previous LSMB versions.  This works by removing
+the mapping the data and restoring the old schema.  Changes made in the process 
+of preparing for upgrades (the test screens for unique identifiers etc) are
+preserved but nothing else is.
+
+The downgrade scripts assume that LedgerSMB is installed in the public schema.
+If this is not the case, then the scripts will have to be edited before running.
+
+UPGRADING INTO A NON-STANDARD SCHEMA
+====================================
+
+The installation and upgrade scripts are schema-agnostic.  They install the 
+components into the first available schema on the installing super-users 
+search_path.
+
+This should be done for users of the software too (using alter database or alter
+user), and it must also be configured in the ledgersmb.conf.
