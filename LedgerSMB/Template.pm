@@ -405,6 +405,12 @@ sub _http_output {
 	my ($self, $data) = @_;
         LedgerSMB::App_State::cleanup();
 	$data ||= $self->{output};
+        my $cache = 1; # default
+        if ($LedgerSMB::App_State::DBH){
+            # we have a db connection, so are logged in.  
+            # Let's see about caching.
+            $cache = 0 if LedgerSMB::Setting->get('disable_back');
+        }
         
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
 		die "Invalid format";
@@ -431,9 +437,11 @@ sub _http_output {
 		$disposition .= qq|\nContent-Disposition: attachment; filename="$name"|;
 	}
         if (!$ENV{LSMB_NOHEAD}){
-            print "Cache-Control: no-store, no-cache, must-revalidate\n";
-            print "Cache-Control: post-check=0, pre-check=0, false\n";
-            print "Pragma: no-cache\n";
+            if (!$cache){
+                print "Cache-Control: no-store, no-cache, must-revalidate\n";
+                print "Cache-Control: post-check=0, pre-check=0, false\n";
+                print "Pragma: no-cache\n";
+            }
  	    if ($self->{mimetype} =~ /^text/) {
 		print "Content-Type: $self->{mimetype}; charset=utf-8$disposition\n\n";
 	    } else {

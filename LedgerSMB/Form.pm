@@ -68,6 +68,7 @@ use LedgerSMB::PGNumber;
 use Log::Log4perl;
 use LedgerSMB::App_State;
 use LedgerSMB::Setting::Sequence;
+use LedgerSMB::Setting;
 use Try::Tiny;
 use Carp;
 use DBI;
@@ -577,6 +578,11 @@ sub header {
     my ( $self, $init, $headeradd ) = @_;
 
     return if $self->{header} or $ENV{LSMB_NOHEAD};
+    my $cache = 1; # default
+    if ($LedgerSMB::App_State::DBH){
+        # we have a db connection, so are logged in.  Let's see about caching.
+        $cache = 0 if LedgerSMB::Setting->get('disable_back');
+    }
 
     $ENV{LSMB_NOHEAD} = 1; # Only run once.
     my ( $stylesheet, $favicon, $charset );
@@ -612,10 +618,14 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
 		"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<title>$self->{titlebar}</title>
+	<title>$self->{titlebar}</title> |;
+        if (!$cache){
+            print qq|
 	<meta http-equiv="Pragma" content="no-cache" />
 	<meta http-equiv="Cache-Control" content="must-revalidate" />
-	<meta http-equiv="Expires" content="-1" />
+	<meta http-equiv="Expires" content="-1" /> |;
+        }
+        print qq|
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	$stylesheet
 	$charset

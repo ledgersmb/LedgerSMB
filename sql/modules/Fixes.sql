@@ -286,3 +286,7 @@ COMMIT;
 BEGIN;
 ALTER TABLE cr_report ADD max_ac_id int references acc_trans(entry_id);
 COMMIT;
+
+BEGIN;
+INSERT INTO defaults VALUES ('disable_back', '0');
+COMMIT;
