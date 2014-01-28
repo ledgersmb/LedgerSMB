@@ -159,7 +159,7 @@ BEGIN
 				     WHEN vc.id  = 1
 				     THEN ap.amount 
 				     WHEN vc.id = 2
-                                     THEN ap.amount
+                                     THEN ar.amount
 				     ELSE 0
                                 END) AS transaction_total,
 			sum(
