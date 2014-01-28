@@ -6,7 +6,7 @@ use warnings;
 $ENV{TMPDIR} = 't/var';
 
 #use Test::More 'no_plan';
-use Test::More tests => 759;
+use Test::More tests => 745;
 use Test::Trap qw(trap $trap);
 use Math::BigFloat;
 
@@ -138,14 +138,6 @@ foreach my $format (0 .. $#formats) {
 			amount =>$value);
 		is($form->format_amount(\%myconfig, $value, 2, '0'), $expected,
 			"form: $value formatted as $formats[$format][0] - $expected");
-SKIP: {
-      skip 'db connection not set up', 1 if $skipdbtests;
- 
-		is($lsmb->format_amount('user' => \%myconfig, 
-			'amount' => $value, 'money' => 1, 
-			'neg_format' => '0'), $expected,
-			"lsmb(money): $value formatted as $formats[$format][0] - $expected");
-}
 	}
   
 }

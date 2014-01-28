@@ -221,6 +221,7 @@ SELECT lsmb__grant_perms('contact_read', 'entity_to_location', 'SELECT');
 SELECT lsmb__grant_perms('contact_read', 'eca_to_location', 'SELECT');
 SELECT lsmb__grant_perms('contact_read', 'eca_to_contact', 'SELECT');
 SELECT lsmb__grant_perms('contact_read', 'eca_note', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'pricegroup', 'SELECT');
 SELECT lsmb__grant_exec('contact_read', 'eca__list_notes(int)');
 SELECT lsmb__grant_menu('contact_read', 14, 'allow');
 

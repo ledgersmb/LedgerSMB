@@ -60,7 +60,8 @@ SELECT 'contact_read can read ' || t,
           'entity_to_contact', 'person', 'entity_credit_account',
           'contact_class', 'eca_tax', 'entity_class', 'entity_note',
           'entity_bank_account', 'entity_other_name', 'location_class',
-          'person_to_company', 'eca_to_contact', 'eca_to_location', 'eca_note'
+          'person_to_company', 'eca_to_contact', 'eca_to_location', 'eca_note',
+          'pricegroup'
        ]) t;
 
 INSERT INTO test_result(test_name, success)

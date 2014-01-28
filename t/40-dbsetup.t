@@ -27,7 +27,7 @@ for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB)){
 }
 
 if ($run_tests){
-	plan tests => 11;
+	plan tests => 10;
 	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 }
 
@@ -52,8 +52,6 @@ if (!$ENV{LSMB_INSTALL_DB}){
     print DBLOCK $ENV{LSMB_NEW_DB};
     close (DBLOCK);
 }
-
-is($db->process_roles('Roles.sql'), 2, 'Roles processed');
 
 #Changed the COA and GIFI loading to use this, and move admin user to 
 #Database.pm --CT
