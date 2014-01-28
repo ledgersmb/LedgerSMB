@@ -13,13 +13,13 @@ use Math::BigFloat;
 
 use LedgerSMB::Sysconfig;
 use LedgerSMB;
+use LedgerSMB::App_State;
 my $lsmb;
 if ($ENV{PGDATABASE}){
-    plan tests => 96;
+    plan tests => 61;
 } else {
-    plan tests => 92;
+    plan tests => 57;
 }
-$LedgerSMB::App_State::DBH =  DBI->connect('dbi:Pg:');
 
 
 
@@ -56,32 +56,7 @@ isa_ok($lsmb, 'LedgerSMB');
 $lsmb = LedgerSMB->new();
 $utfstr = "\xd8\xad";
 utf8::decode($utfstr);
-ok(!$lsmb->escape, 'escape: (undef)');
-ok(!$lsmb->escape('foo' => 'bar'), 'escape: (invalid args)');
-cmp_ok($lsmb->escape('string' => ' '), 'eq', '%20',
-	'escape: \' \'');
-cmp_ok($lsmb->escape('string' => 'foo'), 'eq', 'foo', 
-	'escape: foo');
-cmp_ok($lsmb->escape('string' => 'foo bar'), 'eq', 'foo%20bar', 
-	'escape: foo bar');
-TODO: {
-	local $TODO = 'Fun with Unicode';
-	cmp_ok($lsmb->escape('string' => $utfstr), 'eq', '%d8%ad', 
-		'escape: U+D8AD');
-}
 
-# $lsmb->is_blank checks
-$lsmb = LedgerSMB->new();
-$lsmb->{blank} = '    ';
-$lsmb->{notblank} = ' d   ';
-TODO: {
-	local $TODO = 'Errors should be thrown';
-	throws_ok{$lsmb->is_blank} 'Error::Simple', 'is_blank: (undef)';
-	throws_ok{$lsmb->is_blank('foo' => 'bar')} 'Error::Simple', 
-		'is_blank: (invalid args)';
-}
-is($lsmb->is_blank('name' => 'notblank'), 0, 'is_blank: notblank');
-is($lsmb->is_blank('name' => 'blank'), 1, 'is_blank: blank');
 
 # $lsmb->is_run_mode checks
 $lsmb = LedgerSMB->new();
@@ -110,65 +85,6 @@ is($lsmb->is_run_mode('mod_perl'), 0, 'is_run_mode: CLI - mod_perl');
 is($lsmb->is_run_mode('foo'), 0, 'is_run_mode: CLI - (bad mode)');
 is($lsmb->is_run_mode, 0, 'is_run_mode: CLI - (unknown mode)');
 
-# $lsmb->num_text_rows checks
-$lsmb = LedgerSMB->new();
-is($lsmb->num_text_rows('string' => "apple\npear", 'cols' => 10, 'max' => 5),
-	2, 'num_text_rows: 2 rows, no column breakage, max 5 rows');
-is($lsmb->num_text_rows('string' => "apple\npear", 'cols' => 10, 'max' => 1),
-	1, 'num_text_rows: 2 rows, no column breakage, max 1 row');
-is($lsmb->num_text_rows('string' => "apple\npear", 'cols' => 10, 'max' => 2),
-	2, 'num_text_rows: 2 rows, no column breakage, max 2 rows');
-is($lsmb->num_text_rows('string' => "apple\npear", 'cols' => 10),
-	2, 'num_text_rows: 2 rows, no column breakage, no max row count');
-is($lsmb->num_text_rows('string' => "01234567890123456789", 'cols' => 10),
-	2, 'num_text_rows: 2 rows, non-word column breakage, no max row count');
-is($lsmb->num_text_rows('string' => "012345 67890123 456789", 'cols' => 10),
-	3, 'num_text_rows: 3 rows, word column breakage, no max row count');
-is($lsmb->num_text_rows('string' => "0123456789", 'cols' => 10),
-	1, 'num_text_rows: 1 rows, no breakage, max cols, no max row count');
-is($lsmb->num_text_rows('string' => "01234567890", 'cols' => 10),
-	2, 'num_text_rows: 2 rows, no breakage, max cols+1, no max row count');
-is($lsmb->num_text_rows('string' => "1\n\n2", 'cols' => 10),
-	3, 'num_text_rows: 3 rows, no breakage, blank line, no max row count');
-is($lsmb->num_text_rows('string' => "012345 67890123456789", 'cols' => 10),
-	3, 'num_text_rows: 3 rows, word and non column breakage, no max row count');
-
-# $lsmb->debug checks
-$lsmb = LedgerSMB->new();
-@r = trap{$lsmb->debug()};
-#SKIP: {like($trap->stdout, qr|\n\$VAR1 = bless\( {[\n\s]+'action' => '',[\n\s]+'dbversion' => '\d+\.\d+\.\d+',[\n\s]+'path' => 'bin/mozilla',[\n\s]+'version' => '$lsmb->{version}'[\n\s]+}, 'LedgerSMB' \);|,
-#	'debug: $lsmb->debug');
-#}
-SKIP: {
-	skip 'Environment for file test not clean' if -f "t/var/lsmb-11.$$";
-	$lsmb->{file} = "t/var/lsmb-11.$$";
-	$lsmb->debug({'file' => $lsmb->{file}});
-	ok(-f "t/var/lsmb-11.$$", "debug: output file t/var/lsmb-11.$$ created");
-	open(my $FH, '<', "t/var/lsmb-11.$$");
-	my @str = <$FH>;
-	close($FH);
-	chomp(@str);
-	cmp_ok(grep (/\s?\$VAR1\s=\sbless/, @str), '>', 0, 
-		'Debug Contents, var1 type'); 
-	cmp_ok(grep (/'action' => ''/, @str), '>', 0,
-		'Debug contents, blank action');
-	cmp_ok(grep (/'dbversion' => '\d+\.\d+\.\d+'/, @str), '>', 0,
-		'Debug contents, dbversion format');
-	cmp_ok(grep (/'path' => 'bin\/mozilla'/, @str), '>', 0,
-		'Debug contents, path');
-	cmp_ok(grep (/'version' => '$lsmb->{version}'/, @str), '>', 0,
-		'Debug contents, version match');
-	cmp_ok(grep (/'file' => 't\/var\/lsmb-11.$$'/, @str), '>', 0,
-		'Debug contents file attribute match');
-	is(unlink("t/var/lsmb-11.$$"), 1, "debug: removing t/var/lsmb-11.$$");
-	ok(!-e "t/var/lsmb-11.$$", "debug: t/var/lsmb-11.$$ removed");
-};
-
-$lsmb->{file} = 't/this is a bad directory, I do not exist/foo';
-@r = trap {$lsmb->debug({'file' => $lsmb->{file}, $lsmb})};
-like($trap->die, qr/No such file or directory/,
-	"debug: open failure causes death");
-ok(!-e $lsmb->{file}, "debug: file creation failed");
 
 # $lsmb->new checks
 $lsmb = LedgerSMB->new();
@@ -194,22 +110,6 @@ ok(defined $lsmb->{menubar}, 'new: lynx, menubar defined (deprecated)');
 is($lsmb->{menubar}, 1, 'new: lynx, menubar enabled (deprecated)');
 ok(defined $lsmb->{version}, 'new: lynx, version defined');
 
-# $lsmb->redirect checks
-$lsmb = LedgerSMB->new();
-ok(!defined $lsmb->{callback}, 'redirect: No callback set');
-@r = trap{$lsmb->redirect};
-is($trap->stdout, "redirected\n", 'redirect: No message or callback redirect');
-#TODO: {
-	#local $TODO = '$lsmb->info for LedgerSMB';
-	#@r = trap{$lsmb->redirect('msg' => 'hello world')};
-	#is($trap->stdout, "hello world\n", 
-	#	'redirect: message, no callback redirect');
-#}
-$lsmb->{callback} = 1;
-@r = trap{$lsmb->redirect};
-is($trap->stdout, "redirected\n", 'redirect: callback, no message redirect');
-@r = trap{$lsmb->redirect('msg' => "hello world\n")};
-is($trap->stdout, "redirected\n", 'redirect: callback and message redirect');
 
 # $lsmb->call_procedure checks
 SKIP: {
@@ -218,6 +118,7 @@ SKIP: {
 	$lsmb = LedgerSMB->new();
 	$lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", 
 		undef, undef, {AutoCommit => 0 });
+        LedgerSMB::App_State::set_DBH($lsmb->{dbh});
 	@r = $lsmb->call_procedure('procname' => 'character_length', 
 		'args' => ['month'], 'schema'=>"pg_catalog");
 	is($#r, 0, 'call_procedure: correct return length (one row)');
