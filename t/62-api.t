@@ -4,6 +4,8 @@ BEGIN {
 	use LedgerSMB::Template;
 	use LedgerSMB::Sysconfig;
 	use LedgerSMB::DBTest;
+        use LedgerSMB::App_State;
+        use LedgerSMB::Locale;
 }
 
 # TODO: FIXME
@@ -16,6 +18,9 @@ BEGIN {
 # or regularly in the code.
 # LedgerSMB::Template contains render and _http_output
 # LedgerSMB contains error
+
+LedgerSMB::App_State::set_Locale(LedgerSMB::Locale->get_handle('en'));
+
 no warnings 'redefine';
 
 if (defined $ENV{LSMB_TEST_DB}){
@@ -33,8 +38,8 @@ if (defined $ENV{LSMB_TEST_DB}){
 @test_request_data = do { 't/data/62-request-data' } ; # Import test case hashes
 
 for (qw(	drafts     login      payment      
-		employee   menu.pl       vendor
-		customer  inventory  vouchers recon menu)
+		employee   menu       contact
+		inventory  vouchers recon)
     ){
 	ok(eval { require "LedgerSMB/Scripts/$_.pm" }, "Importing $_");
 	if ($@){
