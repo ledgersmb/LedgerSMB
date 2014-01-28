@@ -44,6 +44,19 @@
            <?lsmb PROCESS select element_data=selects.default_language ?>
          </td>
 	</tr>
+  <tr>
+    <th align="right"><?lsmb text('Disable Back Button') ?></th>
+       <td>
+       <label id="disable-back-1-label" for="disable-back-1">
+              <?lsmb text('Yes') ?></label>
+          
+	  <input id="disable-back-1" title="Yes" type="radio" name="disable_back" value="1" />
+        <label id="disable-back-0-label" for="disable-back-0">
+              <?lsmb text('No') ?></label>
+          
+	  <input id="disable-back-0" title="No" type="radio" name="disable_back" value="0" checked="CHECKED" />
+    </td>
+  </tr>
       </table>
     </td>
   </tr>

@@ -670,5 +670,6 @@ CREATE TRIGGER gl_prevent_closed BEFORE INSERT ON gl
 FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
 COMMIT;
 
-
-
+BEGIN;
+INSERT INTO defaults VALUES ('disable_back', '0');
+COMMIT;
