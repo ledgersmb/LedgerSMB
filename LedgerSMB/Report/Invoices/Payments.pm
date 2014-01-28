@@ -188,9 +188,9 @@ sub header_lines {
     return [{name => 'meta_number', text => $meta_number },
             {name => 'cash_accno',  
              text => LedgerSMB::Report::text('Account Number') },
-            {name => 'date_from',   
+            {name => 'from_date',   
              text => LedgerSMB::Report::text('From Date')},
-            {name => 'date_to',
+            {name => 'to_date',
              text => LedgerSMB::Report::text('To Date')}
            ];
 }

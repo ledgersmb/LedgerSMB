@@ -1035,8 +1035,10 @@ CREATE TYPE payment_record AS (
         date_paid date
 );
 
+DROP FUNCTION IF EXISTS payment__search(text, date, date, int, text, int, char(3));
+
 CREATE OR REPLACE FUNCTION payment__search 
-(in_source text, in_date_from date, in_date_to date, in_credit_id int, 
+(in_source text, in_from_date date, in_to_date date, in_credit_id int, 
 	in_cash_accno text, in_entity_class int, in_currency char(3))
 RETURNS SETOF payment_record AS
 $$
@@ -1071,9 +1073,9 @@ BEGIN
                                                                     )))
                         AND (in_currency IS NULL OR in_currency = arap.curr)
 			AND (c.id = in_credit_id OR in_credit_id IS NULL)
-			AND (a.transdate >= in_date_from 
-				OR in_date_from IS NULL)
-			AND (a.transdate <= in_date_to OR in_date_to IS NULL)
+			AND (a.transdate >= in_from_date
+				OR in_from_date IS NULL)
+			AND (a.transdate <= in_to_date OR in_to_date IS NULL)
 			AND (source = in_source OR in_source IS NULL)
                         AND arap.approved AND a.approved
 		GROUP BY c.meta_number, c.id, co.legal_name, a.transdate, 
