@@ -940,8 +940,12 @@ sub process_and_run_upgrade_script {
 	if ! $success;
 
     $dbh->do("delete from defaults where setting_key like 'migration_%'");
+
+    # If users are added to the user table, and appropriat roles created, this
+    # then grants the base_user permission to them.  Note it only affects users
+    # found also in pg_roles, so as to avoid errors.  --CT
     $dbh->do("SELECT admin__add_user_to_role(username, lsmb__role('base_user'))
-                from users");
+                from users WHERE username IN (select rolname from pg_roles)");
 
     $dbh->commit;
     $dbh->begin_work;
