@@ -2243,7 +2243,6 @@ sub save {
        &update;
        $form->finalize_request();
     }
-
      
     if ( $form->{type} =~ /_order$/ ) {
         $msg = $locale->text('Order Date missing!');
@@ -2264,8 +2263,8 @@ sub save {
 
     $form->isblank( "exchangerate", $locale->text('Exchange rate missing!') )
       if ( $form->{currency} ne $form->{defaultcurrency} );
-
     check_form(1);
+    ++$form->{rowcount};
 
 
     # if the name changed get new values
