@@ -32,11 +32,11 @@ if (defined $ENV{LSMB_TEST_DB}){
 
 @test_request_data = do { 't/data/62-request-data' } ; # Import test case hashes
 
-for (qw(	drafts.pl     login.pl      payment.pl      
-		employee.pl   menu.pl       vendor.pl
-		customer.pl  inventory.pl  vouchers.pl recon.pl menu.pl)
+for (qw(	drafts     login      payment      
+		employee   menu.pl       vendor
+		customer  inventory  vouchers recon menu)
     ){
-	ok(eval { require "scripts/$_" }, "Importing $_");
+	ok(eval { require "LedgerSMB/Scripts/$_.pm" }, "Importing $_");
 	if ($@){
 		print STDERR "Error:  $@\n";
 	}
