@@ -122,6 +122,12 @@ SELECT 'gl_reports can read ' || t,
 FROM unnest(array['gl'::text, 'acc_trans', 'account_checkpoint', 'ar', 'ap', 
                   'entity', 'entity_credit_account'])t;
 
+INSERT INTO test_result(test_name, success)
+SELECT 'financial_reports can read ' || t,
+       test__has_select_permission('financial_reports', t)
+FROM unnest(array['gl'::text, 'acc_trans', 'account_checkpoint', 'ar', 'ap', 
+                  'entity', 'entity_credit_account', 'cash_impact'])t;
+
 -- TEST RESULTS
 SELECT test_name, success FROM test_result;
 
