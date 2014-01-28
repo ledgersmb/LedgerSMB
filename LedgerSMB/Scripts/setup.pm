@@ -464,6 +464,12 @@ my %info_applicable_for_upgrade = (
     'default_country' => [ 'ledgersmb/1.2',
 			   'sql-ledger/2.7', 'sql-ledger/2.8']
     );
+
+=item applicable_for_upgrade
+
+Checks settings for applicability for a given upgrade, for the form.
+
+=cut
 	
 sub applicable_for_upgrade {
     my ($info, $upgrade) = @_;
@@ -475,6 +481,12 @@ sub applicable_for_upgrade {
 
     return 0;
 }
+
+=item upgrade_info
+
+Displays the upgrade information screen,
+
+=cut
 
 sub upgrade_info {
     my ($request) = @_;

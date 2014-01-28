@@ -44,6 +44,12 @@ my $dbversions = {
 
 my $temp = $LedgerSMB::Sysconfig::tempdir;
 
+=item loader_log_filename
+
+This creates a log file for the specific upgrade attempt.
+
+=cut
+
 sub loader_log_filename {
     my $dt = DateTime->now();
     $dt =~ s/://g; # strip out disallowed Windows characters

@@ -117,7 +117,7 @@ sub adjustment_list {
     $report->render($request);
 }
 
-=item adjustement_approve
+=item adjustment_approve
 
 =cut
 

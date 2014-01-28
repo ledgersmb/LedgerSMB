@@ -262,6 +262,12 @@ sub get_for_template{
     return @results;
 }
 
+=item DEMOLISH 
+
+This is called by Moose on destruction of the object.  We just clean up any
+files we have left around.
+
+=cut
 
 sub DEMOLISH {
    my ($self) = $_;
