@@ -386,7 +386,8 @@ SELECT lsmb__grant_role('ar_transaction_list', 'file_read');
 SELECT lsmb__grant_perms('ar_transaction_list', tname, 'SELECT')
   FROM unnest(
          array['ar'::text, 'acc_trans', 'business_unit_ac', 'invoice', 
-               'business_unit_inv', 'inventory', 'tax_extended']
+               'business_unit_inv', 'inventory', 'tax_extended', 'ac_tax_form',
+               'invoice_tax_form']
        ) tname;
 
 SELECT lsmb__grant_menu('ar_transaction_list', node_id, 'allow')
@@ -512,7 +513,7 @@ SELECT lsmb__grant_role('ap_transaction_list', 'contact_read');
 SELECT lsmb__grant_role('ap_transaction_list', 'file_read');
 SELECT lsmb__grant_perms('ap_transaction_list', obj, 'SELECT')
   FROM unnest(array['ap'::text, 'acc_trans', 'invoice', 'inventory', 
-                    'tax_extended']) obj;
+                    'tax_extended', 'ac_tax_form', 'invoice_tax_form']) obj;
 SELECT lsmb__grant_menu('ap_transaction_list', node_id, 'allow')
   FROM unnest(array[25,27,34]) node_id;
 
