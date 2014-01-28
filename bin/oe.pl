@@ -1289,6 +1289,7 @@ sub save {
       if ( $form->{currency} ne $form->{defaultcurrency} );
 
     check_form(1);
+    ++$form->{rowcount};
 
 
     # if the name changed get new values
