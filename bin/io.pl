@@ -898,6 +898,8 @@ sub new_item {
 </html>
 |;
 
+    $form->finalize_request();
+
 }
 
 sub display_form {

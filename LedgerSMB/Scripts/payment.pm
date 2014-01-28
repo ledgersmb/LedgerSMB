@@ -366,7 +366,7 @@ sub print {
             );
             $check->{entity_class} = $payment->{account_class};
             $check->{id} = $id;
-            $check->{amount} = $check->parse_amount(amount => '0');
+            $check->{amount} = LedgerSMB::PGNumber->from_db('0');
             $check->{invoices} = [];
             $check->{source} = $payment->{"source_$id"};
 
