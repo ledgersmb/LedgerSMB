@@ -394,15 +394,14 @@ sub print {
                     $payment->error("Invalid Payment Amount Option"); 
                 }
                 $check->{amount} += $invhash->{paid};
-                $invhash->{paid} = $check->format_amount(amount => $invhash->{paid});
                 push @{$check->{invoices}}, $invhash if $inv <= $inv_count;
             }
             my $amt = $check->{amount}->copy;
             $amt->bfloor();
             $check->{text_amount} = $payment->text_amount($amt);
-            $check->{amount} = $check->format_amount(amount => $check->{amount},
+            $check->{amount} = $request->format_amount(amount => $check->{amount},
                                                      format => '1000.00');
-            $check->{decimal} = $check->format_amount(amount => ($check->{amount} - $amt) * 100);
+            $check->{decimal} = $request->format_amount(amount => ($check->{amount} - $amt) * 100);
             push @{$payment->{checks}}, $check;
         }
         $template = LedgerSMB::Template->new(
