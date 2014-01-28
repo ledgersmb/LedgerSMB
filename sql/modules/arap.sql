@@ -126,6 +126,146 @@ BEGIN
 END;
 $$ language plpgsql;
 
+--tshvr4 first attempt to mimic AA.pm,sub post_transaction in PLPGSQL function begin
+--this is still trial and error
+--see also sql/modules/Invoice.sql
+--sql/modules/Journal.sql , example of SELECT .. into .. FROM expand(array_lines);
+CREATE OR REPLACE FUNCTION AP_simple_post
+(
+ in_entity_credit_account int,in_ap_liablility_chartid int,in_invnumber text,in_transdate date,in_duedate date,in_curr char(3),in_description text,in_ordnumber text,in_notes text,in_intnotes text,in_ponumber text,in_memo text[],in_netamount numeric[],in_chartid numeric[],in_taxrate numeric[],in_taxchartid numeric[]
+)
+RETURNS INT AS
+$$
+DECLARE invnumber text;
+DECLARE ap_id   int;
+DECLARE chartid int;
+DECLARE tax_chartid int;
+DECLARE invoice bool;
+DECLARE separate_duties bool;
+DECLARE approved bool;
+DECLARE taxincluded bool;
+DECLARE curr char(3);
+DECLARE curr_default char(3);
+DECLARE transdate date;
+DECLARE duedate date;
+DECLARE crdate date;
+DECLARE memo text;
+DECLARE netamount numeric;
+DECLARE netamount_total numeric;
+DECLARE taxrate numeric;
+DECLARE taxamount numeric;
+DECLARE taxamount_total numeric;
+DECLARE amount_total numeric;
+DECLARE person_id int;
+DECLARE dp int;
+DECLARE fx_transaction bool;
+DECLARE cleared bool;
+DECLARE taxform_id int;
+BEGIN
+ netamount_total=0.0;
+ taxamount_total=0.0;
+ invoice=false;
+ approved=true;
+ taxincluded=false;
+ fx_transaction=false;
+ cleared=false;
+
+ select value::int       INTO dp FROM setting_get('decimal_places');
+ select person__get_my_entity_id into person_id from person__get_my_entity_id();
+ SELECT value::bool INTO separate_duties FROM defaults WHERE setting_key='separate_duties';
+ IF separate_duties = true THEN
+  RAISE EXCEPTION 'separate_duties not yet treated';
+ END IF;
+ select eca.taxform_id::int into taxform_id from entity_credit_account eca where eca.id=in_entity_credit_account;
+ IF taxform_id <> 0 THEN
+  RAISE EXCEPTION 'taxform not yet treated';
+ END IF;
+
+ transdate=coalesce(in_transdate,'today');
+ duedate=coalesce(in_duedate,'today');
+ crdate=now();
+
+ IF in_invnumber IS NULL THEN
+  select setting_increment::text INTO invnumber FROM setting_increment('vinumber');
+ ELSE
+  invnumber=in_invnumber;
+ END IF;
+
+ select defaults_get_defaultcurrency into curr_default from defaults_get_defaultcurrency();
+ IF in_curr IS NULL THEN
+  curr=curr_default;
+ ELSE
+  curr=in_curr;
+ END IF;
+ IF curr <> curr_default THEN
+  RAISE EXCEPTION 'curr <> curr_default not yet treated';
+ END IF;
+ 
+ FOR out_count IN array_lower(in_memo, 1) .. array_upper(in_memo, 1)
+ LOOP
+   netamount=in_netamount[out_count];
+   netamount_total=netamount_total+netamount;
+   taxrate=in_taxrate[out_count];
+   IF taxrate IS NOT NULL THEN
+    taxamount=netamount*taxrate;
+   ELSE
+    taxamount=0.0;
+   END IF;
+   taxamount_total=taxamount_total+taxamount;
+ END LOOP;
+
+ amount_total=netamount_total+taxamount_total;
+
+ amount_total=round(amount_total,dp);
+ netamount_total=round(netamount_total,dp);
+
+ INSERT INTO ap (entity_credit_account,invnumber,transdate,invoice,approved,taxincluded,curr,duedate,crdate,netamount,amount,person_id) VALUES(in_entity_credit_account,invnumber,transdate,invoice,approved,taxincluded,curr,duedate,crdate,netamount_total,amount_total,person_id);
+
+ SELECT currval('id') INTO ap_id;--NOT "id"!
+
+ INSERT INTO acc_trans(trans_id,transdate,chart_id,amount,approved) values(ap_id,transdate,in_ap_liablility_chartid,amount_total,approved);
+
+ FOR out_count IN array_lower(in_memo, 1) .. array_upper(in_memo, 1)
+ LOOP
+  memo=in_memo[out_count];
+  chartid=in_chartid[out_count];
+  tax_chartid=in_taxchartid[out_count];
+  netamount=in_netamount[out_count];
+  taxrate=in_taxrate[out_count];
+  IF taxrate IS NOT NULL THEN
+   IF tax_chartid IS NOT NULL THEN
+    taxamount=netamount*taxrate;
+    taxamount=round(taxamount,dp);
+    INSERT INTO acc_trans (trans_id,chart_id,amount,transdate,fx_transaction) VALUES(ap_id,tax_chartid,taxamount*-1.0,transdate,fx_transaction);
+   ELSE
+    RAISE EXCEPTION 'taxrate NOT NULL but tax_chartid NULL';
+   END IF;--tax_chartid
+  ELSE
+   IF tax_chartid IS NOT NULL THEN
+    RAISE EXCEPTION 'taxrate NULL but tax_chartid NOT NULL';
+   END IF;
+   taxamount=0.0;
+  END IF;--taxrate
+
+  netamount=round(netamount,dp);
+  INSERT INTO acc_trans (trans_id,chart_id,amount,transdate,memo,fx_transaction,cleared) VALUES(ap_id,chartid,netamount*-1.0,transdate,memo,fx_transaction,cleared);
+ END LOOP;
+
+ PERFORM trans_id FROM acc_trans WHERE trans_id = ap_id GROUP BY trans_id HAVING sum(amount) <> 0;
+ IF FOUND THEN
+   RAISE EXCEPTION 'Out of balance';
+ END IF;
+
+ return ap_id;
+END;
+$$ LANGUAGE PLPGSQL;
+--To Test:
+--select * from AP_simple_post(4,66,null,null,null,'DL','descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,95],ARRAY[0.06,0.21],ARRAY[74,70]);
+--select * from AP_simple_post(4,66,null,null,null,null,'descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,95],ARRAY[0.06,0.21],ARRAY[74,70]);
+--select * from AP_simple_post(4,66,null,null,null,null,'descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,95],ARRAY[null,0.21],ARRAY[74,70]);
+--select * from AP_simple_post(4,66,null,null,null,null,'descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,95],ARRAY[0.06,0.21],ARRAY[null,70]);
+--tshvr4 first attempt to mimic AA.pm,sub post_transaction in PLPGSQL function end
+
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
