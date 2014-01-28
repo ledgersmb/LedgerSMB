@@ -23,7 +23,6 @@ COMMIT;
 
 BEGIN;
 
-DROP VIEW IF EXISTS cash_impact;
 CREATE VIEW cash_impact AS
 SELECT id, '1'::numeric AS portion, 'gl' as rel, gl.transdate FROM gl
 UNION ALL
