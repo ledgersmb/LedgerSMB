@@ -45,7 +45,7 @@ Cash account number, exact match
 
 =cut
 
-has cash_accno => (is => 'ro', isa => 'Str', required => 1);
+has cash_accno => (is => 'ro', isa => 'Str');
 
 =item source
 
@@ -220,6 +220,8 @@ Runs the report and sets $self->rows
 
 sub run_report{
     my ($self) = @_;
+    die LedgerSMB::Report::text('Must have cash account in batch') 
+        if $self->batch_id and !defined $self->cash_accno;
     $ENV{LSMB_ALWAYS_MONEY} = 1;
     my @rows = $self->exec_method({funcname => 'payment__search'});
     my $count = 1;

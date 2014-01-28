@@ -54,6 +54,7 @@
 	} ?> --></div>
 <div class="input" id="account_input_div">
 	<?lsmb 
+             IF !batch_id; cash_accounts.unshift({}); END;
              INCLUDE select element_data = {
 		name           = "cash_accno"
 		options        = cash_accounts
