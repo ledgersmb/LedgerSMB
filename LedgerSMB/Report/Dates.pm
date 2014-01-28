@@ -61,6 +61,10 @@ has from_year => (is => 'ro', isa => 'Int', required => 0);
 
 =cut
 
+has date_from => (lazy => '1', builder => 'from_date');
+
+has date_to => (lazy => '1', builder => 'to_date');
+
 sub _get_from_date {
     my ($self) = @_;
     if ($self->from_month and $self->from_year){
