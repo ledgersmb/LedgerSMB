@@ -940,6 +940,9 @@ sub process_and_run_upgrade_script {
 	if ! $success;
 
     $dbh->do("delete from defaults where setting_key like 'migration_%'");
+    $dbh->do("SELECT admin__add_user_to_role(username, lsmb__role('base_user'))
+                from users");
+
     $dbh->commit;
     $dbh->begin_work;
 }
