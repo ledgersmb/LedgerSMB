@@ -185,7 +185,7 @@ BEGIN
  duedate=coalesce(in_duedate,'today');
  crdate=now();
 
- IF in_invnumber IS NULL THEN
+ IF in_invnumber IS NULL OR (length(trim(in_invnumber))=0) THEN
   select setting_increment::text INTO invnumber FROM setting_increment('vinumber');
  ELSE
   invnumber=in_invnumber;
