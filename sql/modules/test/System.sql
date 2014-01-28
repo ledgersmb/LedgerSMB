@@ -25,6 +25,8 @@ insert into test_exempt_funcs values ('crosstab');
 insert into test_exempt_funcs values ('concat_colon');
 insert into test_exempt_funcs values ('to_args');
 insert into test_exempt_funcs values ('table_log_restore_table');
+insert into test_exempt_funcs values ('lsmb__grant_perms'); 
+-- there's an array and a non-array form of the above function
 
 create table test_exempt_tables (tablename text, reason text);
 insert into test_exempt_tables values ('note', 'abstract table, no data');
@@ -65,20 +67,7 @@ select proname FROM pg_proc WHERE pronamespace =
 group by proname
 having count(*) > 1;
 
-CREATE TEMPORARY table permissionless_tables AS
-SELECT nspname, relname
-  FROM pg_namespace nsp
-  JOIN pg_class rel ON (relkind = 'r' and nsp.oid = rel.relnamespace)
- WHERE nspname = 'public' AND relacl IS NULL and relname NOT IN 
-       (select tablename from test_exempt_tables);
-
-select * from permissionless_tables;
-
-INSERT INTO test_result (test_name, success)
-select 'All tables in public have some permissions', count(*)=0 from 
-permissionless_tables;
 SELECT * FROM test_result;
-
 
 SELECT (select count(*) from test_result where success is true)
 || ' tests passed and '
