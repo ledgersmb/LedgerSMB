@@ -140,7 +140,7 @@ bool, determines whether to show subtotals.
 
 has show_subtotals => (is => 'rw', isa => 'Bool');
 
-=has manual_totals
+=item manual_totals
 
 Defaults to false.  Shows totals for all numeric (but not int) columns.  
 Typically this would be set to true in the run_report function if manual 

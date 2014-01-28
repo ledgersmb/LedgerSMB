@@ -131,13 +131,12 @@ has display_name => (is => 'ro', isa => 'Str', required => 1);
 
 Human readable instructions for test, localized.
 
+=back
+
 =cut
 
 has instructions => (is => 'ro', isa => 'Str', required => 1);
 
-=back
-
-=cut
 
 # 1.2-1.3 tests
 
@@ -259,9 +258,9 @@ push @tests, __PACKAGE__->new(
   max_version => '1.4'
 );
 
-=item
+=pod 
 
-push @tests, __PACKAGE__->new(
+ push @tests, __PACKAGE__->new(
     test_query => "select * from customer where arap_accno_id is null",
     display_name => $LedgerSMB::App_State::Locale->text('Empty AR account'),
     name => 'no_null_ar_accounts',
@@ -271,7 +270,7 @@ push @tests, __PACKAGE__->new(
     max_version => '2.8'
     );
 
-push @tests, __PACKAGE__->new(
+ push @tests, __PACKAGE__->new(
     test_query => "select * from vendor where arap_accno_id is null",
     display_name => $LedgerSMB::App_State::Locale->text('Empty AP account'),
     name => 'no_null_ap_accounts',

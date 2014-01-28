@@ -63,6 +63,8 @@ has post_date => (is => 'ro', isa => 'LedgerSMB::Moose::Date',
 
 has batch_number => (is => 'ro', isa => 'Str', required => 0);
 
+=back
+
 =head1 REPORT CONSTANTS
 
 =head2 name
@@ -88,6 +90,8 @@ sub name {
 =item amount_from
 
 =item amount_to
+
+=back
 
 =cut
 

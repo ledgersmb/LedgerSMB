@@ -143,7 +143,7 @@ sub logout {
     $template->render($request);
 }
 
-=head2 logout_js
+=item logout_js
 
 This is a stup for a js logout feature.  It allows javascript to log out by 
 requiring only bogus credentials (logout:logout).
