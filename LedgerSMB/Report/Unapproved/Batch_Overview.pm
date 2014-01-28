@@ -99,7 +99,7 @@ our @COLUMNS = (
     {col_id => 'control_code',
        name => LedgerSMB::Report::text('Control Code'),
        type => 'href',
-  href_base => 'vouchers.pl?action=get_batch&id=',
+  href_base => 'vouchers.pl?action=get_batch&batch_id=',
      pwidth => '3', },
 
     {col_id => 'description',
