@@ -418,7 +418,7 @@ sub post_transaction {
         $dbh->prepare($query)->execute($form->{approved}, $form->{id}) ||
             $form->dberror($query);
         if (!$form->{approved} && $form->{batch_id}){
-           if ($form->{arap} eq 'ar'){
+           if ($form->{ARAP} eq 'AR'){
                $batch_class = 'ar';
            } else {
                $batch_class = 'ap';

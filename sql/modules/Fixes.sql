@@ -289,3 +289,8 @@ COMMIT;
 BEGIN;
 INSERT INTO defaults VALUES ('disable_back', '0');
 COMMIT;
+
+BEGIN;
+UPDATE voucher SET batch_class = 2 WHERE batch_class = 1 AND trans_id IN
+(SELECT id FROM ar);
+COMMIT;
