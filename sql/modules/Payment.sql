@@ -1051,10 +1051,10 @@ BEGIN
 				ch.description]]), a.source, 
 			b.control_code, b.description, a.voucher_id, a.transdate
 		FROM entity_credit_account c
-		JOIN ( select entity_credit_account, id, curr
+		JOIN ( select entity_credit_account, id, curr, approved
 			FROM ar WHERE in_entity_class = 2
 			UNION
-			SELECT entity_credit_account, id, curr
+			SELECT entity_credit_account, id, curr, approved
 			FROM ap WHERE in_entity_class = 1
 			) arap ON (arap.entity_credit_account = c.id)
 		JOIN acc_trans a ON (arap.id = a.trans_id)
@@ -1062,13 +1062,20 @@ BEGIN
 		JOIN company co ON (c.entity_id = co.entity_id)
 		LEFT JOIN voucher v ON (v.id = a.voucher_id)
 		LEFT JOIN batch b ON (b.id = v.batch_id)
-		WHERE (ch.accno = in_cash_accno)
+		WHERE (ch.accno = in_cash_accno OR ch.id IN (select account_id 
+                                                               FROM account_link
+                                                              WHERE description
+                                                                    IN(
+                                                                     'AR_paid',
+                                                                     'AP_paid'
+                                                                    )))
                         AND (in_currency IS NULL OR in_currency = arap.curr)
 			AND (c.id = in_credit_id OR in_credit_id IS NULL)
 			AND (a.transdate >= in_date_from 
 				OR in_date_from IS NULL)
 			AND (a.transdate <= in_date_to OR in_date_to IS NULL)
 			AND (source = in_source OR in_source IS NULL)
+                        AND arap.approved AND a.approved
 		GROUP BY c.meta_number, c.id, co.legal_name, a.transdate, 
 			a.source, a.memo, b.id, b.control_code, b.description, 
                         voucher_id

@@ -53,7 +53,8 @@
 		label = text('Name')
 	} ?> --></div>
 <div class="input" id="account_input_div">
-	<?lsmb INCLUDE select element_data = {
+	<?lsmb 
+             INCLUDE select element_data = {
 		name           = "cash_accno"
 		options        = cash_accounts
 		default_values = [cash_accno]
