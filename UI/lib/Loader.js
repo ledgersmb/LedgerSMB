@@ -33,14 +33,16 @@ define([
     'dijit/form/TextBox',
     //row2
     'dijit/form/Select',
-    'dijit/form/Button'
+    'dijit/form/Button',
+    //more
+    'dojo/on'
     ],
 function(
     // base
     declare, registry, parser, query, ready, wbase, construct,
     // widgets
     tabular, textarea, datebox, checkbox, radio, textbox, 
-    select, button) {
+    select, button, on) {
     return declare(wbase, {
         nodeMap: { // hierarchy nodeName->class, input type treated as class
                    // for INPUT elements, type beats class.
@@ -255,11 +257,16 @@ function(
             });
             query('*').forEach(function(dnode){
                 ready(function(){
+                   var onclick = dnode.onclick;
                    widget = myself.createWidget(dnode);
                    if (undefined !== widget){
                        ready(function(){
                            registry.byId(dnode.id).startup();
                         });
+                   }
+                   if (null !== onclick){
+                       alert(onclick); 
+                       ready(function(){ on(dnode, 'click', onclick)});
                    }
                 });
             });

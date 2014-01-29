@@ -45,6 +45,11 @@ function init() {
                         var cid = document.getElementById('contact-' + i).value;
                         var rowcb = document.getElementById('id-' + cid);
                         rowcb.checked = cb.checked;
+                        require(['dijit/registry'], function(registry){
+                               var widget = registry.byId(rowcb.id);
+                               console.log(widget);
+                               widget.set('checked', cb.checked);
+                        });
                     }
                  }, false);
 }
