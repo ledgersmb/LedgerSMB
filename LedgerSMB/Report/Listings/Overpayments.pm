@@ -119,8 +119,6 @@ sub header_lines {
 
 =item available
 
-=back
-
 =cut
 
 sub columns {
@@ -145,7 +143,28 @@ sub columns {
           name => LedgerSMB::Report::text('Available'),
           type => 'text',
     }];
-}     
+}
+
+=item set_buttons
+
+If there is a batch_id, returns the the set of buttons.  Otherwise not.
+
+=cut
+
+sub set_buttons {
+   my $self = shift;
+   return [
+          { name => 'action',
+            text => LedgerSMB::Report::text('Reverse'),
+           value => 'reverse',
+            type => 'submit',
+           class => 'submit'
+          },
+   ] if $self->batch_id;
+   return [];
+}
+  
+=back
 
 =head1 METHODS
 
@@ -155,16 +174,6 @@ sub columns {
 
 sub run_report {
     my ($self, $request) = @_;
-    if (ref $request){
-       $self->buttons([
-          { name => 'action',
-            text => LedgerSMB::Report::text('Reverse'),
-           value => 'reverse',
-            type => 'submit',
-           class => 'submit'
-          },
-       ]) if $self->{batch_id};
-    }
     my @rows = $self->exec_method({funcname => 'payment__overpayments_list'});
     for my $r (@rows){
        $r->{row_id} = $r->{payment_id};

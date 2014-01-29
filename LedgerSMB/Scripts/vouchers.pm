@@ -136,7 +136,7 @@ sub add_vouchers {
 				my ($request) = @_;
 				$request->{account_class} = 1;
                                 if ($request->{overpayment}){
-                                    LedgerSMB::Scripts::reports::search_overpayments();
+                                    LedgerSMB::Scripts::reports::search_overpayments($request);
                                 } else {
 				    LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
                                 }
