@@ -174,7 +174,8 @@ BEGIN
  select person__get_my_entity_id into person_id from person__get_my_entity_id();
  SELECT value::bool INTO separate_duties FROM defaults WHERE setting_key='separate_duties';
  IF separate_duties = true THEN
-  RAISE EXCEPTION 'separate_duties not yet treated';
+  --RAISE EXCEPTION 'separate_duties not yet treated';
+  approved=false;
  END IF;
  select eca.taxform_id::int into taxform_id from entity_credit_account eca where eca.id=in_entity_credit_account;
  IF taxform_id <> 0 THEN
@@ -185,7 +186,8 @@ BEGIN
  duedate=coalesce(in_duedate,'today');
  crdate=now();
 
- IF in_invnumber IS NULL OR (length(trim(in_invnumber))=0) THEN
+ --IF in_invnumber IS NULL OR (length(trim(in_invnumber))=0) THEN --NULL as only designator for "no value supplied"
+ IF in_invnumber IS NULL THEN
   select setting_increment::text INTO invnumber FROM setting_increment('vinumber');
  ELSE
   invnumber=in_invnumber;
@@ -262,6 +264,7 @@ $$ LANGUAGE PLPGSQL;
 --To Test:
 --select * from AP_simple_post(4,66,null,null,null,'DL','descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,95],ARRAY[0.06,0.21],ARRAY[74,70]);
 --select * from AP_simple_post(4,66,null,null,null,null,'descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,95],ARRAY[0.06,0.21],ARRAY[74,70]);
+--select * from AP_simple_post(4,66,'',null,null,null,'descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,95],ARRAY[0.06,0.21],ARRAY[74,70]);
 --select * from AP_simple_post(4,66,null,null,null,null,'descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,95],ARRAY[null,0.21],ARRAY[74,70]);
 --select * from AP_simple_post(4,66,null,null,null,null,'descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,95],ARRAY[0.06,0.21],ARRAY[null,70]);
 --tshvr4 first attempt to mimic AA.pm,sub post_transaction in PLPGSQL function end
