@@ -94,7 +94,6 @@ sub check_name {
              or !$form->{"${name}_id"}
         )
         {
-
             # this is needed for is, ir and oe
             for ( split / /, $form->{taxaccounts} ) {
                 delete $form->{"${_}_rate"};

@@ -217,7 +217,11 @@ sub create_links {
                      unless  $form->{selectcurrency} =~ /<option[^>]*>$_/
     }
 
-    AA->get_name( \%myconfig, \%$form );
+    my $vc = $form->{vc};
+
+    AA->get_name( \%myconfig, \%$form ) 
+            unless $form->{"old$vc"} eq $form->{$vc} 
+                    or $form->{"old$vc"} =~ /^\Q$form->{$vc}\E--/;
 
     $form->{currency} =~ s/ //g;
     $form->{duedate}     = $duedate     if $duedate;
