@@ -56,7 +56,7 @@ sub columns {
             type => 'text',
             name => LedgerSMB::Report::text('Account Number') }];
 
-    if ($self->is_summary){
+    if (!$self->is_summary){
      
       push @$cols,
          {col_id => 'invnumber',
@@ -85,13 +85,15 @@ sub columns {
 
          {col_id => 'unit',
             type => 'text',
-            name => LedgerSMB::Report::text('Unit') },
-
+            name => LedgerSMB::Report::text('Unit') };
+      
+   push @$cols, 
          {col_id => 'sellprice',
             type => 'text',
            money => 1,
-            name => LedgerSMB::Report::text('Sell Price') },
+            name => LedgerSMB::Report::text('Sell Price') };
 
+   push @$cols, 
          {col_id => 'discount',
             type => 'text',
             name => LedgerSMB::Report::text('Disc') },
@@ -102,7 +104,8 @@ sub columns {
 
          {col_id => 'serialnumber',
             type => 'text',
-            name => LedgerSMB::Report::text('Serial Number') };
+            name => LedgerSMB::Report::text('Serial Number') }
+          unless $self->is_summary;
     
     push @$cols, 
          {col_id => 'exchangerate',

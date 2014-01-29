@@ -71,8 +71,6 @@ create type eca_history_result as (
    sellprice numeric,
    discount numeric,
    delivery_date date,
-   project_id int,
-   projectnumber text,
    serialnumber text,
    exchangerate numeric,
    salesperson_id int,
@@ -98,8 +96,10 @@ $$
      SELECT eca.id, e.name, eca.meta_number, 
             a.id as invoice_id, a.invnumber, a.curr::text, 
             p.id AS parts_id, p.partnumber, 
-            i.description, i.qty, i.unit::text, i.sellprice, i.discount, 
-            i.deliverydate, null::int as project_id, null::text as projectnumber,
+            i.description, 
+            i.qty * case when eca.entity_class = 1 THEN -1 ELSE 1 END, 
+            i.unit::text, i.sellprice, i.discount, 
+            i.deliverydate,
             i.serialnumber, 
             case when $16 = 1 then ex.buy else ex.sell end as exchange_rate,
             ee.id as salesperson_id, 
@@ -215,11 +215,12 @@ RETURNS SETOF  eca_history_result AS
 $$
 SELECT id, name, meta_number, null::int, null::text, curr, parts_id, partnumber,
        description, sum(qty), unit, null::numeric, null::numeric, null::date, 
-       null::int, null::text, null::text, null::numeric,
+       null::text, null::numeric,
        null::int, null::text
 FROM   eca__history($1, $2, $3, $4, $5, $6, $7, $8, $9,
                    $10, $11, $12, $13, $14, $15, $16, $17, $18)
- group by id, name, meta_number, curr, parts_id, partnumber, description, unit
+ group by id, name, meta_number, curr, parts_id, partnumber, description, unit,
+          sellprice
  order by meta_number;
 $$ LANGUAGE SQL;
 
