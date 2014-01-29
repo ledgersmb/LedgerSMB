@@ -898,8 +898,8 @@ sub process_and_run_upgrade_script {
     my $temp = $database->loader_log_filename();
     my $rc;
 
-    $dbh->do("CREATE SCHEMA $LedgerSMB::Sysconfig::dbnamespace")
-	or die "Failed to create schema $LedgerSMB::Sysconfig::dbnamespace (" . $dbh->errstr . ")";
+    $dbh->do("CREATE SCHEMA $LedgerSMB::Sysconfig::db_namespace")
+	or die "Failed to create schema $LedgerSMB::Sysconfig::dbn_amespace (" . $dbh->errstr . ")";
     $dbh->commit;
     $dbh->begin_work;
 
