@@ -1018,6 +1018,7 @@ sub run_sl_migration {
 sub create_initial_user {
     my ($request) = @_;
 
+   my $database = _init_db($request) unless $request->{dbh};
    @{$request->{salutations}} 
     = $request->call_procedure(procname => 'person__list_salutations' ); 
           

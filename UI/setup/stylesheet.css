@@ -45,6 +45,11 @@ input {
     margin-right: 3em;
 }
 
+#yesno span {
+    float: left;
+    display: block;
+}
+
 img.logo {
     border-style: none;
     width: 16em;

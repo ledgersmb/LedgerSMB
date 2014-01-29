@@ -30,21 +30,21 @@ text('Password') ?></label>
 </div>
 <div class="input_row">
 <label><?lsmb text('Import') ?></label>
-<div id="yesno">
+<div id="yesno"><span>
                 <?lsmb INCLUDE input element_data = {
                            label   = 'Yes'
                            value   = '1'
                            checked = ''
                            name    = 'pls_import'
                            type    = 'radio'
-                   };
+                   }; ?></span> <span><?lsmb
                    INCLUDE input element_data = {
                            label   = 'No'
                            value   = '0'
                            checked = 'CHECKED'
                            name    = 'pls_import'
                            type    = 'radio'
-                   } ?>
+                   } ?></span>
 </div>
 </div>
 <div class="input_row">
