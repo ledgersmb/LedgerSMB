@@ -1707,6 +1707,7 @@ $$ Not exposed to the UI, but can be set to prevent an invoice from showing up
 for payment or in outstanding reports.$$;
 
 --
+--TODO 1.5 ap invnumber text check (invnumber ~ '[[:alnum:]_]') NOT NULL
 CREATE TABLE ap (
   id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),
   invnumber text,
