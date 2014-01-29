@@ -156,7 +156,7 @@ sub set_buttons {
    return [
           { name => 'action',
             text => LedgerSMB::Report::text('Reverse'),
-           value => 'reverse',
+           value => 'reverse_overpayment',
             type => 'submit',
            class => 'submit'
           },

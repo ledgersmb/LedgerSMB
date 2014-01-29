@@ -183,6 +183,9 @@ Searches overpayments based on inputs.
 
 sub search_overpayments {
     my ($request) = @_;
+    my $hiddens = {};
+    $hiddens->{$_} = $request->{$_} for qw(batch_id);
+    $request->{hiddens} = $hiddens;
     LedgerSMB::Report::Listings::Overpayments->new(%$request)->render($request);
 }
 

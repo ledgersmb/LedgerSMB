@@ -147,7 +147,7 @@ sub add_vouchers {
 				my ($request) = @_;
 				$request->{account_class} = 2;
                                 if ($request->{overpayment}){
-                                    LedgerSMB::Scripts::reports::search_overpayments();
+                                    LedgerSMB::Scripts::reports::search_overpayments($request);
                                 } else {
 			   	    LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
                                 }
@@ -316,6 +316,27 @@ sub batch_delete {
     $request->{report_name} = 'unapproved'; 
     $request->{search_type} = 'batches';
     LedgerSMB::Scripts::reports::start_report($request);
+}
+
+=item reverse_overpayment 
+
+Adds overpayment reversal vouchers to a batch
+
+=cut
+
+sub reverse_overpayment {
+    my ($request) = @_;
+    my $batch = LedgerSMB::Batch->new(base => $request);
+    $batch->get;
+    for (1 .. $request->{rowcount_}){
+        my $id = $request->{"id_$_"}
+        $batch->call_procedure(procname => 'overpayment__reverse',
+           args => [$id, $batch->{post_date}, $batch->{id}, $a_class,
+                 $request->{cash_accno}, $request->{exchangerate}, 
+                 $request->{curr}]
+         ) if $id;
+    }
+    LedgerSMB::Scripts::reports::search_overpayments($request);
 }
 
 eval { do "scripts/custom/vouchers.pl"};
