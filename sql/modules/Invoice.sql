@@ -153,9 +153,9 @@ BEGIN
    SELECT in_id, p.income_accno_id, a.transdate, i.qty * i.sellprice * -1, true, i.id
      FROM parts p
      JOIN invoice i ON i.parts_id = p.id
-     JOIN ar a ON i.trans_id = a.id AND a.id = in_id;
+     JOIN ap a ON i.trans_id = a.id AND a.id = in_id;
 
-   -- transaction should now be balanced if this was done with invoice__begin_ar
+   -- transaction should now be balanced if this was done with invoice__begin_ap
    -- add cogs
    PERFORM cogs__add_for_ap(parts_id, qty, sellprice)
       FROM invoice WHERE trans_id = in_id;
