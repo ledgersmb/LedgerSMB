@@ -83,6 +83,8 @@ UPDATE lsmb12.customer SET credit_id =
 	(SELECT id FROM entity_credit_account e 
 	WHERE e.meta_number = customernumber AND customer.entity_id = e.entity_id and entity_class = 2);
 
+UPDATE entity_credit_account SET curr = defaults_get_defaultcurrency()
+ WHERE curr IS NULL;
 --Company
 
 INSERT INTO company (entity_id, legal_name, tax_id)
