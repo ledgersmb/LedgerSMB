@@ -48,7 +48,7 @@ in the current hash or an empty string.  '0' does pass however.
 sub requires {
     my $self = shift @_;
     for (@_){
-        die "Required attribute not provided: %1", $_ 
+        Carp::croak(LedgerSMB::App_State->Locale->text("Required attribute not provided: [_1]", $_))
               unless $self->{$_} or $self->{$_} eq '0';
     }
 }
