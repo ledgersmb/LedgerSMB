@@ -167,7 +167,7 @@
                 </tr>
                 <tr>
                 <?lsmb END?>
-                    <td>
+                    <td><div class="input">
                         <?lsmb rolcheck = undef; 
                            IF user.roles.grep(role.name).size;
                               rolcheck = "checked";
@@ -178,7 +178,7 @@
                                value = 1
                                name = role.name
                                checked = rolcheck
-                         }, label_pos = 1 ?>
+                         }, label_pos = 1 ?></div>
                     </td>
                 <?lsmb END?>
                 </tr>
