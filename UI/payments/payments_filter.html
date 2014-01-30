@@ -100,6 +100,7 @@
     } ?>
 </div>
 <div id = "payments-filter-daterow" class = "inputgroup">
+<span class="input">
 <?lsmb PROCESS input element_data = {
 	label = text('Date From:')
 	type = "text"
@@ -107,7 +108,7 @@
 	value = date_from
 	name = "date_from"
 	size = 12
-} # ' ?>
+} # ' ?></span><span class="input">
 <?lsmb PROCESS input element_data = {
 	label = text('Date To:')
 	type = "text"
@@ -115,7 +116,7 @@
 	value = date_to
 	name = "date_to"
 	size = 12
-} # ' ?>
+} # ' ?></span>
 </div>
 <div id = "payments-filter-currency-row" class="inputgroup" ?>
 <label for="currency"><?lsmb text('Currency')?></label>
