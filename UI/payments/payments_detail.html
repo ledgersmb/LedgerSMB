@@ -253,7 +253,7 @@
 	<td class="invoice"><?lsmb r.to_pay ?> 
 		<?lsmb currency ?></td>
         <td>
-		<span class="details_select">
+		<span class="details_select"><div class="input">
 		<?lsmb INCLUDE input element_data = {
 		name = "paid_$r.contact_id"
 		value = "some"
@@ -262,7 +262,7 @@
 		label = text('Some')
 		checked = (${"paid_$r.contact_id"} == 'some') ? "checked" : ""
 		type = "radio"
-	 }	?>
+	 }	?></div><div class="input">
 		<?lsmb INCLUDE input element_data = {
 		name = "paid_$r.contact_id"
 		value = "all"
@@ -271,7 +271,7 @@
 		label = text('All')
 		checked = (${"paid_$r.contact_id"} != 'some') ? "checked" : ""
 		type = "radio"
-	 }	?></span>
+	 }	?></div></span>
 	</td>
 	<td rowspan = 2><?lsmb INCLUDE input element_data = {
 		name = "source_$r.contact_id"

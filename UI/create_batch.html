@@ -11,7 +11,7 @@
 <div class="listtop"><?lsmb text('Create New Batch') ?></div>
 <form name="create_batch" method="post">
 <div class="labelledinput">
-  <div class="input">
+  <div class="inputgroup">
     <?lsmb text("Batch Number") ?>
   </div>
   <div class="value">
@@ -21,7 +21,7 @@
   <div class="label">
     <?lsmb text("Description") ?>
   </div>
-  <div class="input">
+  <div class="inputgroup">
     <input name="description" type="text" value="<?lsmb batch_number ?>"/>
   </div>
 </div>
@@ -29,7 +29,7 @@
   <div class="label">
      <?lsmb text("Batch Date") ?>
   </div>
-  <div class="input">
+  <div class="inputgroup">
      <input type=text class=date name="batch_date" 
             value="<?lsmb batch_date ?>" />
   </div>
