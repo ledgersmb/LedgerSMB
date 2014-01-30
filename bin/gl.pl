@@ -269,6 +269,8 @@ sub display_form
 		  'update' =>
 		    { ndx => 1, key => 'U', value => $locale->text('Update') },
 		  'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
+                  'edit_and_save' => {ndx => 4, key => 'V', 
+                          value => value => $locale->text('Edit and Save') },
                   'save_temp' =>
                     { ndx   => 9, 
                       key   => 'T', 
@@ -309,6 +311,7 @@ sub display_form
 			value => $locale->text('Post as Saved') };
 		$a{approve} = 1;
 		$a{edit_and_save} = 1;
+		$a{update} = 1;
 		if (grep /__draft_edit$/, @{$form->{_roles}}){
 		    $button{edit_and_save} = { 
 			ndx   => 4, 
