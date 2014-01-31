@@ -138,6 +138,7 @@ RETURNS INT AS
 $$
 DECLARE invnumber text;
 DECLARE ap_id   int;
+DECLARE entry_id   int;
 DECLARE chartid int;
 DECLARE tax_chartid int;
 DECLARE invoice bool;
@@ -161,6 +162,9 @@ DECLARE dp int;
 DECLARE fx_transaction bool;
 DECLARE cleared bool;
 DECLARE taxform_id int;
+DECLARE reportable bool;
+DECLARE atf_count int;
+DECLARE ect_count int;
 BEGIN
  netamount_total=0.0;
  taxamount_total=0.0;
@@ -179,6 +183,7 @@ BEGIN
  END IF;
  select eca.taxform_id::int into taxform_id from entity_credit_account eca where eca.id=in_entity_credit_account;
  IF taxform_id <> 0 THEN
+  --FOREIGN KEY (taxform_id) REFERENCES country_tax_form(id)
   RAISE EXCEPTION 'taxform not yet treated';
  END IF;
 
@@ -236,6 +241,12 @@ BEGIN
   taxrate=in_taxrate[out_count];
   IF taxrate IS NOT NULL THEN
    IF tax_chartid IS NOT NULL THEN
+
+    select count(*) into ect_count from eca_tax ect where ect.eca_id=in_entity_credit_account and ect.chart_id=tax_chartid;
+    IF ect_count = 0 THEN
+     RAISE EXCEPTION 'tax_chartid NOT IN  eca_tax';
+    END IF;
+
     taxamount=netamount*taxrate;
     taxamount=round(taxamount,dp);
     INSERT INTO acc_trans (trans_id,chart_id,amount,transdate,fx_transaction) VALUES(ap_id,tax_chartid,taxamount*-1.0,transdate,fx_transaction);
@@ -251,6 +262,17 @@ BEGIN
 
   netamount=round(netamount,dp);
   INSERT INTO acc_trans (trans_id,chart_id,amount,transdate,memo,fx_transaction,cleared) VALUES(ap_id,chartid,netamount*-1.0,transdate,memo,fx_transaction,cleared);
+  SELECT currval('acc_trans_entry_id_seq') INTO entry_id;
+
+  IF taxform_id <> 0 THEN
+   select count(*) into atf_count from ac_tax_form atf where atf.entry_id=entry_id;
+   IF atf_count > 0 THEN
+    update ac_tax_form atf set atf.reportable=reportable where atf.entry_id=entry_id;
+   ELSE 
+    insert into ac_tax_form(entry_id,reportable) values(entry_id,reportable);
+   END IF;
+  END IF;--taxform_id
+
  END LOOP;
 
  PERFORM trans_id FROM acc_trans WHERE trans_id = ap_id GROUP BY trans_id HAVING sum(amount) <> 0;
@@ -265,10 +287,11 @@ $$ LANGUAGE PLPGSQL;
 --select * from AP_simple_post(4,66,null,null,null,'DL','descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,95],ARRAY[0.06,0.21],ARRAY[74,70]);
 --select * from AP_simple_post(4,66,null,null,null,null,'descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,95],ARRAY[0.06,0.21],ARRAY[74,70]);
 --select * from AP_simple_post(4,66,'',null,null,null,'descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,95],ARRAY[0.06,0.21],ARRAY[74,70]);
+--select * from AP_simple_post(4,66,'test chartid not in ecatax',null,null,null,'descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,71],ARRAY[0.06,0.21],ARRAY[74,74]);
+--select * from AP_simple_post(4,66,'test chartid in ecatax ',null,null,null,'descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,71],ARRAY[0.06,0.06],ARRAY[70,70]);
 --select * from AP_simple_post(4,66,null,null,null,null,'descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,95],ARRAY[null,0.21],ARRAY[74,70]);
 --select * from AP_simple_post(4,66,null,null,null,null,'descr','ordnr','notes','intnotes','ponr',ARRAY['a','b'],ARRAY[100.556,205.308],ARRAY[71,95],ARRAY[0.06,0.21],ARRAY[null,70]);
 --tshvr4 first attempt to mimic AA.pm,sub post_transaction in PLPGSQL function end
-
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
