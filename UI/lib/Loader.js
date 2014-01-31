@@ -261,12 +261,15 @@ function(
                    widget = myself.createWidget(dnode);
                    if (undefined !== widget){
                        ready(function(){
-                           registry.byId(dnode.id).startup();
+                           //console.log('tshvr4 Loader setup widget=',widget,'id='+dnode.id);
+                           var wdgt_tmp=registry.byId(dnode.id);
+                           //registry.byId(dnode.id).startup();
+                           if(wdgt_tmp) wdgt_tmp.startup();//avoid TypeError: wdgt_tmp is undefined
                         });
                    }
                    if (null !== onclick){
-                       alert(onclick); 
-                       ready(function(){ on(dnode, 'click', onclick)});
+                       //alert(onclick); 
+                       ready(function(){on(dnode, 'click', onclick)});
                    }
                 });
             });
