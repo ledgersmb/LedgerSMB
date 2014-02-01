@@ -677,22 +677,7 @@ sub create_db {
     $rc=$database->create_and_load();#TODO what if createdb fails?
     $logger->info("create_and_load rc=$rc");
 
-    #COA Directories
-    opendir(COA, 'sql/coa');
-    my @coa = grep !/^(\.|[Ss]ample.*)/, readdir(COA);
-    closedir(COA); 
-
-    $request->{coa_lcs} =[];
-    foreach my $lcs (sort @coa) {
-         push @{$request->{coa_lcs}}, {code => $lcs};
-    } 
-
-    my $template = LedgerSMB::Template->new(
-            path => 'UI/setup',
-            template => 'select_coa',
-	    format => 'HTML',
-    );
-    $template->render($request);    
+    select_coa($request);
 }
 
 =item select_coa
@@ -717,27 +702,38 @@ sub select_coa {
     }
     if ($request->{coa_lc}){
         if ($request->{chart}){
+           my $database = _get_database($request);
+
+           $database->load_coa( {
+               country => $request->{coa_lc},
+               chart => $request->{chart} });
+
            template_screen($request);
+           return;
         } else {
-            opendir(COA, "sql/coa/$request->{coa_lc}/chart");
-            my @coa = sort (grep !/^(\.|[Ss]ample.*)/, readdir(COA));
-            $request->{charts} = [];
-            for my $chart (sort @coa){
-                push @{$request->{charts}}, {name => $chart};
-            }
+            opendir(CHART, "sql/coa/$request->{coa_lc}/chart");
+            @{$request->{charts}} =
+                map +{ name => $_ },
+                sort (grep !/^(\.|[Ss]ample.*)/,
+                      readdir(CHART));
+            closedir(CHART);
        }
     } else {
         #COA Directories
         opendir(COA, 'sql/coa');
-        my @coa = sort(grep !/^(\.|[Ss]ample.*)/, readdir(COA));
+        @{$request->{coa_lcs}} =
+            map +{ code => $_ },
+            sort(grep !/^(\.|[Ss]ample.*)/,
+                 readdir(COA));
         closedir(COA); 
-
-        $request->{coa_lcs} =[];
-        foreach my $lcs (sort {$a cmp $b} @coa){
-             push @{$request->{coa_lcs}}, {code => $lcs};
-        } 
     }
-    template_screen($request);
+
+    my $template = LedgerSMB::Template->new(
+            path => 'UI/setup',
+            template => 'select_coa',
+	    format => 'HTML',
+    );
+    $template->render($request);    
 }
 
 

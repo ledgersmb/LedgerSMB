@@ -645,6 +645,29 @@ sub load_modules {
     close (LOADORDER); ### return failure to execute the script?
 }
 
+=item $db->load_coa({country => '2-char-country-code',
+                     chart => 'name-of-chart' })
+
+Loads the chart of accounts (and possibly GIFI) as specified in
+the chart of accounts file name given for the given 2-char (iso) country code.
+
+=cut
+
+sub load_coa {
+    my ($self, $args) = @_;
+    my $log = loader_log_filename();
+
+    $self->exec_script(
+        {script => "sql/coa/$args->{country}/chart/$args->{chart}", 
+         logfile => $log });
+    if (-f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
+        $self->exec_script(
+            {script => "sql/coa/$args->{coa_lc}/gifi/$args->{chart}",
+             logfile => $log });
+    }
+}
+
+
 =item $db->exec_script({script => 'path/to/file', log => 'path/to/log',
     errlog => 'path/to/stderr_output' })
 
