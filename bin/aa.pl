@@ -1611,10 +1611,10 @@ qq|<input name="l_employee" class=checkbox type=checkbox value=Y> $employeelabel
     }
     $summary = qq|
               <tr>
-		<td><input name=summary type=radio class=radio value=1 checked> |
+		<td><input name=summary type=radio class=radio value=1> |
       . $locale->text('Summary')
       . qq|</td>
-		<td><input name=summary type=radio class=radio value=0> |
+		<td><input name=summary type=radio class=radio value=0 checked> |
       . $locale->text('Detail') . qq|
 		</td>
 	      </tr>
