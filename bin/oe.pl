@@ -2406,7 +2406,6 @@ sub vendor_invoice { &invoice }
 sub sales_invoice  { &invoice }
 
 sub invoice {
-
     if ( $form->{type} =~ /_order$/ ) {
         $form->isblank( "ordnumber", $locale->text('Order Number missing!') );
         $form->isblank( "transdate", $locale->text('Order Date missing!') );
@@ -2482,10 +2481,6 @@ sub invoice {
     for (qw(id subject message printed emailed queued)) { delete $form->{$_} }
     $form->{ $form->{vc} } =~ s/--.*//g;
     $form->{type} = "invoice";
-
-    # locale messages
-    $locale = LedgerSMB::Locale->get_handle( $myconfig{countrycode} )
-      or $form->error("Locale not loaded: $!\n");
 
     #$form->{charset} = $locale->encoding;
     $form->{charset} = 'UTF-8';
