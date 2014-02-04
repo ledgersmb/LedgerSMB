@@ -204,6 +204,29 @@ sub search_batch {
     $template->render($batch_request);
 }
 
+=item batch_unlock
+
+Unlocks selected batches 
+
+=cut
+
+sub batch_unlock {
+    my ($request) = @_;
+    my $batch = LedgerSMB::Batch->new(base => $request);
+    if ($request->{batch_id}){
+       $batch->unlock($request->{batch_id});
+    } else {
+        for my $count (1 .. $batch->{rowcount}){
+            next unless $batch->{"batch_" . $batch->{"row_$count"}};
+            $batch->unlock($request->{"row_$count"});
+        }
+    }
+    $request->{report_name} = 'unapproved'; 
+    $request->{search_type} = 'batches';
+    $request->{dbh}->commit;
+    search_batch($request);
+}
+
 =item list_batches
 
 This function displays the search results.
@@ -331,6 +354,12 @@ sub list_batches {
                     type  => 'submit',
                     text  => $request->{_locale}->text('Delete'),
                     value => 'batch_delete',
+                    class => 'submit',
+                 },{
+                    name  => 'action',
+                    type  => 'submit',
+                    text  => $request->{_locale}->text('Unlock'),
+                    value => 'batch_unlock',
                     class => 'submit',
                 }];
     }
@@ -487,6 +516,10 @@ sub get_batch_batch_delete {
 # alias for batch_post, needed for form-dynatable
 sub list_batches_batch_approve {
     batch_approve(@_);
+}
+
+sub list_batches_batch_unlock {
+    batch_unlock(@_);
 }
 
 =item get_batch_batch_approve

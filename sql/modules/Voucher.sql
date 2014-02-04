@@ -159,7 +159,7 @@ BEGIN
 UPDATE batch SET locked_by = NULL
  WHERE id = $1 AND locked_by IN (select session_id 
                                    from "session" s
-                                   join users u on (u.id = s.user_id)
+                                   join users u on (u.id = s.users_id)
                                   where username = SESSION_USER);
  
 RETURN FOUND;
