@@ -62,7 +62,7 @@ Unlocks a given batch
 
 sub unlock{
     my ($self, $id) = @_;
-    $self->call_procedure(procname => 'batch__unlick', args => [$id]);
+    $self->call_procedure(procname => 'batch__unlock', args => [$id]);
 }
 
 =item get_search_criteria

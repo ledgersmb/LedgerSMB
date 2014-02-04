@@ -201,6 +201,13 @@ sub run_report{
                     text  => LedgerSMB::Report::text('Delete Vouchers'),
                     value => 'vouchers_delete',
                     class => 'submit',
+                },
+                {
+                    name  => 'action',
+                    type  => 'submit',
+                    text  => LedgerSMB::Report::text('Unlock Batch'),
+                    value => 'batch_unlock',
+                    class => 'submit',
                 }]);
     my @rows = $self->exec_method({funcname => 'voucher__list'});
     for my $ref (@rows){

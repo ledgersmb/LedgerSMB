@@ -243,6 +243,12 @@ sub run_report{
                     text  => LedgerSMB::Report::text('Delete'),
                     value => 'batch_delete',
                     class => 'submit',
+                 },{
+                    name  => 'action',
+                    type  => 'submit',
+                    text  => LedgerSMB::Report::text('Unlock'),
+                    value => 'batch_unlock',
+                    class => 'submit',
                 }]);
     my @rows = $self->exec_method({funcname => 'batch__search'});
     for my $r (@rows){

@@ -295,6 +295,29 @@ sub batch_approve {
     LedgerSMB::Scripts::reports::start_report($request);
 }
 
+=item batch_unlock
+
+Unlocks selected batches 
+
+=cut
+
+sub batch_unlock {
+    my ($request) = @_;
+    my $batch = LedgerSMB::Batch->new(base => $request);
+    if ($request->{batch_id}){
+       $batch->unlock($request->{batch_id});
+    } else {
+        for my $count (1 .. $batch->{rowcount_}){
+            next unless $batch->{"select_" . $count};
+            $batch->{batch_id} = $batch->{"row_$count"};
+            $batch->unlock($request->{"row_$count"});
+        }
+    }
+    $request->{report_name} = 'unapproved'; 
+    $request->{search_type} = 'batches';
+    LedgerSMB::Scripts::reports::start_report($request);
+}
+
 =item batch_delete
 
 Deletes selected batches
