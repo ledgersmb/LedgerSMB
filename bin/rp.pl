@@ -1417,6 +1417,9 @@ sub send_email {
     $form->{subject} = $locale->text( 'Statement - [_1]', $form->{todate} )
       unless $form->{subject};
     $form->isblank( "email", $locale->text('E-mail address missing!') );
+    my $email = $form->{email};
+    my $cc = $form->{cc};
+    my $bcc = $form->{bcc};
 
     my $selected = 0;
     RP->aging( \%myconfig, $form );
@@ -1511,9 +1514,9 @@ sub send_email {
         method => 'email',
         locale => $locale,
         output_options => {
-            to => $form->{email},
-            cc => $form->{cc},
-            bcc => $form->{bcc},
+            to => $email,
+            cc => $cc,
+            bcc => $bcc,
             from => $form->{form},
             subject => $form->{subject},
             message => $form->{message},
