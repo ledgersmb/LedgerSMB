@@ -495,6 +495,7 @@ DECLARE
         t_currs text[];
         t_exchangerate numeric;
         t_cash_sign int;
+        t_batch batch;
 BEGIN
 
         SELECT * INTO t_exchangerate FROM currency_get_exchangerate(
@@ -504,6 +505,12 @@ BEGIN
                 -- t_voucher_id := NULL;
                 RAISE EXCEPTION 'Bulk Post Must be from Batch!';
         ELSE
+                SELECT * INTO t_batch FROM batch WHERE in_batch_id = id;
+                IF t_batch.approved_by IS NOT NULL THEN
+                    RAISE EXCEPTION 'Approved Batch';
+                ELSIF t_batch.locked_by IS NOT NULL THEN
+                    RAISE EXCEPTION 'Locked Batch';
+                END;
                 INSERT INTO voucher (batch_id, batch_class, trans_id)
                 values (in_batch_id,
                 (SELECT batch_class_id FROM batch WHERE id = in_batch_id),

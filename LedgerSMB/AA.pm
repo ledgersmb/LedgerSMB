@@ -412,6 +412,15 @@ sub post_transaction {
            } else {
                $batch_class = 'ap';
            }
+           my $vqh = $dbh->prepare(
+              'SELECT * FROM batch 
+               WHERE id = ? FOR UPDATE'
+           );
+           $vqh->execute($form->{batch_id});
+           my $bref = $vqh->fetchrow_hashref('NAME_lc');
+           # Change the below to die with localization in 1.4
+           $form->error('Approved Batch') if $bref->{approved_by};
+           $form->error('Locked Batch') if $bref->{locked_by};
            $query = qq| 
 		INSERT INTO voucher (batch_id, trans_id, batch_class)
 		VALUES (?, ?, (select id from batch_class where class = ?))|;

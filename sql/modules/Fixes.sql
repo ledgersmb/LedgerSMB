@@ -673,3 +673,9 @@ COMMIT;
 BEGIN;
 INSERT INTO defaults VALUES ('disable_back', '0');
 COMMIT;
+
+BEGIN;
+ALTER TABLE batch DROP CONSTRAINT "batch_locked_by_fkey";
+ALTER TABLE batch ADD FOREIGN KEY (locked_by) REFERENCES session(session_id)
+ON DELETE SET NULL;
+COMMIT;
