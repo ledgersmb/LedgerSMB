@@ -1454,7 +1454,7 @@ sub get_name {
 		   SELECT c.accno, c.description, t.rate, t.taxnumber
 		     FROM chart c
 		     JOIN tax t ON (c.id = t.chart_id)
-		    WHERE c.link LIKE '%${ARAP}_tax%'
+		    WHERE true
 		          $where
 		 ORDER BY accno, validto|;
 

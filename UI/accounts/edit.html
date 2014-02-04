@@ -183,16 +183,6 @@ INCLUDE 'ui-header.html'
      } ?>
    </div>
    <div class="inputgroup">
-      <?lsmb IF form.AR_tax; AR_tax = 'CHECKED'; END;
-          INCLUDE input element_data={
-              name = 'AR_tax',
-              type = 'checkbox',
-             label = text('Tax'),
-           checked = AR_tax,
-             value = 'AR_tax'
-      } ?>
-   </div>
-   <div class="inputgroup">
       <?lsmb IF form.AR_overpayment; AR_overpayment = 'CHECKED'; END;
          INCLUDE input element_data={
               name = 'AR_overpayment',
@@ -232,15 +222,6 @@ INCLUDE 'ui-header.html'
              label = text('Payment'),
            checked = AP_paid,
              value = 'AP_paid'} ?>
-   </div>
-   <div class="inputgroup">
-      <?lsmb IF form.AP_tax; AP_tax= 'CHECKED'; END;
-         INCLUDE input element_data={
-              name = 'AP_tax',
-              type = 'checkbox',
-             label = text('Tax'),
-           checked = AP_tax,
-             value = 'AP_tax'} ?>
    </div>
    <div class="inputgroup">
       <?lsmb IF form.AP_overpayment; AP_overpayment= 'CHECKED'; END;
