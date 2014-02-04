@@ -59,7 +59,8 @@ checking a price deal for a customer.
                      name = '&nbsp;',
                      type = 'href',
                 href_base = script _ '?action=delete_pricematrix&credit_id=' 
-                            _ id _ '&entry_id=' }
+                            _ credit_id _ '&entity_class=' _ entity_class 
+                            _ '&entity_id=' _ entity_id _ '&entry_id=' }
      );
      FOREACH pm IN pricematrix;
          pm.delete = '[' _ text('Delete') _ ']';

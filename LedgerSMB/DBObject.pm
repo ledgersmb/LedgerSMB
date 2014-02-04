@@ -147,18 +147,17 @@ sub exec_method {
         if (@proc_args) {
             for my $arg (@proc_args) {
                 #print STDERR "User Provided Args: $arg\n";
-                if ( $arg =~ s/^in_// ) {
-                     if ( defined $self->{$arg} )
-                     {
-                        $logger->debug("exec_method pushing $arg = $self->{$arg}");
-                     }
-                     else
-                     {
-                        $logger->debug("exec_method pushing \$arg defined $arg | \$self->{\$arg} is undefined");
-                        #$self->{$arg} = undef; # Why was this being unset? --CT
-                     }
-                     push ( @call_args, $self->{$arg} );
-                }
+                $arg =~ s/^in_//;
+                 if ( defined $self->{$arg} )
+                 {
+                    $logger->debug("exec_method pushing $arg = $self->{$arg}");
+                 }
+                 else
+                 {
+                    $logger->debug("exec_method pushing \$arg defined $arg | \$self->{\$arg} is undefined");
+                    #$self->{$arg} = undef; # Why was this being unset? --CT
+                 }
+                 push ( @call_args, $self->{$arg} );
             }
         }
         for (@in_args) { push @call_args, $_ } ;

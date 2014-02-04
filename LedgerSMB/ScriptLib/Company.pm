@@ -1110,6 +1110,22 @@ sub save_pricelist {
     $psearch->render($request);
 }
 
+=item delete_pricematrix
+
+Delets an item from the pricelist, based on entry_id and credit_id, both of
+which must be provided
+
+=cut
+
+sub delete_pricematrix {
+    my ($request) = @_;
+    my $pricelist = LedgerSMB::DBObject::Pricelist->new({base => $request});
+    $pricelist->delete;
+    $request->{dbh}->commit;
+    $request->{search_redirect} = 'pricelist_search_handle';
+    pricelist($request);
+}
+
 
 =item pricelist_search_handle
 

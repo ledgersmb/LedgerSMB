@@ -56,6 +56,17 @@ sub save {
     $self->{dbh}->commit;
 }
 
+=item delete
+
+Deletes the pricelist entry. Requires credit_id and entry_id to be set.
+
+=cut
+
+sub delete {
+    my ($self) = @_;
+    $self->exec_method({funcname => 'pricelist__delete'});
+}
+
 =back
 
 =head1 COPYRIGHT

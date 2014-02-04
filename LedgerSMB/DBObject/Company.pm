@@ -720,7 +720,7 @@ sub get_pricematrix {
     @{$self->{pricematrix}} = $self->exec_method(
                funcname => 'eca__get_pricematrix'
     );
-    if ($self->{account_class} == 1){
+    if ($self->{account_class} == 2){
         @{$self->{pricematrix_pricegroup}}= $self->exec_method(
                funcname => 'eca__get_pricematrix_by_pricegroup'
         );
