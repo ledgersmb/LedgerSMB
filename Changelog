@@ -9,6 +9,7 @@ Changelog for 1.3.38
 * Fixed can't delete pricematrix entries from customer screen (Chris T, 893)
 * Fixed language change on order to invoice conversion (Chris T, 896)
 * Fixed ar/ap tax check inconsistency (Chris T, 919)
+* Fixed inputs ignored for email addresses sending statements (Chris T, 920)
 
 Changelog for 1.3.37
 * 1.3-1.2 downgrade now drops extensions (Chris T, 943)
