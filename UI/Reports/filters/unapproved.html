@@ -30,6 +30,7 @@ END;
 <body class="<?lsmb dojo_theme ?>">
 <form action="<?lsmb script ?>" method="get">
 <div class="listtop" id="title_div"><?lsmb text('Search Unapproved Transactions') ?></div>
+<div class="tabular col-1">
 <div class="input" id="batch_class_div">
 	<?lsmb INCLUDE select element_data = {
 		label = text('Transaction Type') # '
@@ -54,7 +55,7 @@ Commenting this section out.  Does not seem to be used by API. -CT
 	} ?></div> -->
 <div class="input" id="reference_div">
 	<?lsmb INCLUDE input element_data = {
-		label = text('Reference/Invoice Number') #'
+		label = text('Reference') #'
 		size = 20
 		value = reference
 		name = "reference"
@@ -86,6 +87,7 @@ Commenting this section out.  Does not seem to be used by API. -CT
 		class = "submit"
 		type = "submit"
 	} ?> </div>
+</div>
 </form>
 </body>
 
