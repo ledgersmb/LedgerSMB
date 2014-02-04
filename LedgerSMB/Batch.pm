@@ -57,6 +57,17 @@ sub delete_voucher {
     $self->{dbh}->commit;
 }
 
+=item unlock($id)
+
+Unlocks a given batch
+
+=cut
+
+sub unlock{
+    my ($self, $id) = @_;
+    $self->call_procedure(procname => 'batch__unlick', args => [$id]);
+}
+
 =item get_search_criteria
 Sets all hash values needed for the search interface:
 
