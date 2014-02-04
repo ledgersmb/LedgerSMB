@@ -138,8 +138,38 @@ CREATE TYPE batch_list_item AS (
     created_on date,
     default_date date,
     transaction_total numeric,
-    payment_total numeric
+    payment_total numeric,
+    lock_success bool
 );
+
+CREATE OR REPLACE FUNCTION batch__lock(in_batch_id int) 
+RETURNS BOOL LANGUAGE PLPGSQL SECURITY DEFINER AS
+$$
+BEGIN
+UPDATE batch SET locked_by = (select max(session_id)
+                                FROM "session" where users_id = (
+                                        select id from users 
+                                         WHERE username = SESSION_USER))
+ WHERE locked_by IS NULL;
+RETURN FOUND;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION batch__unlock(in_batch_id int)
+RETURNS BOOL LANGUAGE plpgsql SECURITY DEFINER AS
+$$
+BEGIN
+
+UPDATE batch SET locked_by = NULL
+ WHERE id = $1 AND locked_by IN (select session_id 
+                                   from "session" s
+                                   join users u on (u.id = s.user_id)
+                                  where username = SESSION_USER);
+ 
+RETURN FOUND;
+
+END;
+$$;
 
 CREATE OR REPLACE FUNCTION 
 batch__search(in_class_id int, in_description text, in_created_by_eid int, 
@@ -169,7 +199,8 @@ BEGIN
 				     THEN al.amount * -1
 				     ELSE 0
 				END
-			   ) AS payment_total
+			   ) AS payment_total, 
+                     batch__lock(b.id)
 		FROM batch b
 		JOIN batch_class c ON (b.batch_class_id = c.id)
 		LEFT JOIN users u ON (u.entity_id = b.created_by)

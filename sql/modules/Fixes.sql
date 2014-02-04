@@ -294,3 +294,9 @@ BEGIN;
 UPDATE voucher SET batch_class = 2 WHERE batch_class = 1 AND trans_id IN
 (SELECT id FROM ar);
 COMMIT;
+
+BEGIN;
+ALTER TABLE batch DROP CONSTRAINT "batch_locked_by_fkey";
+ALTER TABLE batch ADD FOREIGN KEY (locked_by) REFERENCES session(session_id)
+ON DELETE SET NULL;
+COMMIT;
