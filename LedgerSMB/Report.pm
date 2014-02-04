@@ -209,7 +209,9 @@ sub render {
     );
 
     my $rows = $self->rows;
-    @$rows = sort {$a->{$self->order_by} cmp $b->{$self->order_by}} @$rows
+    @$rows = sort {$a->{$self->order_by} <=> $b->{$self->order_by}
+                   or
+                   $a->{$self->order_by} cmp $b->{$self->order_by}} @$rows
       if $self->order_by;
     if (lc($self->order_dir) eq 'desc' and $self->order_by) {
         @$rows = reverse @$rows;
