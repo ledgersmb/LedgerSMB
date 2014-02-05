@@ -596,12 +596,30 @@ Loads database Roles templates.
 
 sub process_roles {
     my ($self, $rolefile) = @_;
+    my $company = $self->{company_name};
+
+    # DB connection logic below somewhat obtuse but only used for 1.3
+    # since 1.4 no longer needs special processing for Roles.sql.
+    # This prevents connection leakage though.
+
+    my $dbh = $LedgerSMB::App_State::DBH;
+    $dbh = DBI->connect(
+        qq|dbi:Pg:dbname="$self->{company_name}"|,
+         $self->{username}, $self->{password},
+         { AutoCommit => 0, PrintError => $logger->is_warn(), }
+    ) unless $dbh; 
+    $LedgerSMB::App_State::DBH = $dbh unless $LedgerSMB::App_State::DBH;
+
+    my $prefix = LedgerSMB::Setting->get('role_prefix');
+    $prefix =~ s/^lsmb_//;
+    $prefix =~ s/__$//;
+    $company = $prefix if $prefix;
 
     open (ROLES, '<', "sql/modules/$rolefile");
     open (TROLES, '>', "$temp/lsmb_roles.sql");
 
     for my $line (<ROLES>){
-        $line =~ s/<\?lsmb dbname \?>/$self->{company_name}/;
+        $line =~ s/<\?lsmb dbname \?>/$company/;
         print TROLES $line;
     }
 
