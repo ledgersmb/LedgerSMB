@@ -506,7 +506,7 @@ BEGIN
                     RAISE EXCEPTION 'Approved Batch';
                 ELSIF t_batch.locked_by IS NOT NULL THEN
                     RAISE EXCEPTION 'Locked Batch';
-                END;
+                END IF;
                 INSERT INTO voucher (batch_id, batch_class, trans_id)
                 values (in_batch_id,
                 (SELECT batch_class_id FROM batch WHERE id = in_batch_id),
@@ -1388,7 +1388,8 @@ DROP VIEW IF EXISTS overpayments CASCADE;
 CREATE VIEW overpayments AS
 SELECT p.id as payment_id, p.reference as payment_reference, p.payment_class, p.closed as payment_closed,
        p.payment_date, ac.chart_id, c.accno, c.description as chart_description,
-       abs(sum(ac.amount)) as available, cmp.legal_name, 
+       sum(ac.amount) * CASE WHEN eca.entity_class = 1 THEN -1 ELSE 1 END 
+          as available, cmp.legal_name, 
        eca.id as entity_credit_id, eca.entity_id, eca.discount, eca.meta_number
 FROM payment p
 JOIN payment_links pl ON (pl.payment_id=p.id)
@@ -1401,7 +1402,7 @@ WHERE p.gl_id IS NOT NULL
       AND c.link LIKE '%overpayment%'
 GROUP BY p.id, c.accno, p.reference, p.payment_class, p.closed, p.payment_date,
       ac.chart_id, chart_description,legal_name, eca.id,
-      eca.entity_id, eca.discount, eca.meta_number;
+      eca.entity_id, eca.discount, eca.meta_number, eca.entity_class;
 
 CREATE OR REPLACE FUNCTION payment_get_open_overpayment_entities(in_account_class int)
  returns SETOF payment_vc_info AS
