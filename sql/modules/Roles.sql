@@ -891,7 +891,7 @@ SELECT lsmb__grant_menu('account_create', id, 'allow')
 SELECT lsmb__create_role('account_edit');
 SELECT lsmb__grant_perms('account_edit', obj, 'ALL')
   FROM unnest(array['account'::text, 'account_heading', 'account_link', 
-                    'cr_coa_to_account']) obj;
+                    'cr_coa_to_account', 'tax']) obj;
 
 SELECT lsmb__create_role('auditor');
 SELECT lsmb__grant_perms('auditor', 'audittrail', 'SELECT');
