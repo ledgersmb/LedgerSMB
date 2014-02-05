@@ -941,7 +941,7 @@ END ?>
 				?>?entity_id=<?lsmb tt_url(entity_id)
 				?>&contact=<?lsmb tt_url(ct.contact)
 				?>&contact_class=<?lsmb tt_url(ct.class_id)
-				?>&description=<?lsmb tt_url(ct.description)
+				?>&contact_description=<?lsmb tt_url(ct.description)
 				?>&action=edit&credit_id=<?lsmb 
 				tt_url(credit_id) 
                                 ?>&person_id=<?lsmb tt_url(person_id)
@@ -1011,7 +1011,7 @@ END ?>
 		<?lsmb PROCESS input element_data = {
 			label = text('Description'),
 			name = "description"
-			value = description
+			value = contact_description
 			type = "text"
 			size = "30"
 		} #' ?>
