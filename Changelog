@@ -13,6 +13,7 @@ Changelog for 1.3.38
 * Fixed negative overpayments showing as positive (Chris T, 926)
 * Fixed permission denied errors after upgrading copied db (Chris T, 956)
 * Fixed "access denied" when deleting unused tax account (Chris T, 967)
+* Fixed GL Report fails before entering transactions (Chris T, 977)
 
 Changelog for 1.3.37
 * 1.3-1.2 downgrade now drops extensions (Chris T, 943)
