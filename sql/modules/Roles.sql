@@ -1132,7 +1132,7 @@ values (137, 'allow', 'lsmb_<?lsmb dbname ?>__account_create');
 CREATE ROLE "lsmb_<?lsmb dbname ?>__account_edit"
 WITH INHERIT NOLOGIN;
 
-GRANT ALL ON account, account_heading, account_link, cr_coa_to_account 
+GRANT ALL ON account, account_heading, account_link, cr_coa_to_account, tax
 TO "lsmb_<?lsmb dbname ?>__account_edit";
 
 INSERT INTO menu_acl (node_id, acl_type, role_name)
