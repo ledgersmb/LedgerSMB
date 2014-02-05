@@ -689,7 +689,8 @@ END ?>
 			name="action" 
 			value="save_credit_new"  
 			title="Save Credit Account as New" #'
-		} ?>
+		};
+                IF credit_id ?>
 		<?lsmb INCLUDE button element_data = {
                         class="submit" 
                         type="submit" 
@@ -734,7 +735,7 @@ END ?>
                         accesskey="P" 
                         title="Pricelist [Alt-P]"
 			text = text('Pricelist') 
-		} ?>
+		} ; END ?>
 	
     </form>
 </div>
