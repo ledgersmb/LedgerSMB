@@ -14,6 +14,7 @@ Changelog for 1.3.38
 * Fixed permission denied errors after upgrading copied db (Chris T, 956)
 * Fixed "access denied" when deleting unused tax account (Chris T, 967)
 * Fixed GL Report fails before entering transactions (Chris T, 977)
+* Fixed start and end dates not shown on contact screen (Chris T, 979)
 
 Changelog for 1.3.37
 * 1.3-1.2 downgrade now drops extensions (Chris T, 943)

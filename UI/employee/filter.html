@@ -184,31 +184,31 @@
 } ?>
 </div>
 <div class="inputgroup">
-<?lsmb IF l_startdate; 
-             c_id = 'CHECKED';
+<?lsmb IF l_start_date; 
+             c_start_date = 'CHECKED';
        END 
 ?> 
 <?lsmb INCLUDE input element_data = {
-    name = 'l_startdate'
+    name = 'l_start_date'
    value = '1'
     type = 'checkbox'
    class = 'checkbox'
    label = text('Start Date') #'
- checked = c_startdate
+ checked = c_start_date
 } ?>
 </div>
 <div class="inputgroup">
-<?lsmb IF l_enddate; 
-             c_enddate = 'CHECKED';
+<?lsmb IF l_end_date; 
+             c_end_date = 'CHECKED';
        END 
 ?> 
 <?lsmb INCLUDE input element_data = {
-    name = 'l_enddate'
+    name = 'l_end_date'
    value = '1'
     type = 'checkbox'
    class = 'checkbox'
    label = text('End Date') #'
- checked = c_enddate
+ checked = c_end_date
 } ?>
 </div>
 <div class="inputgroup">
