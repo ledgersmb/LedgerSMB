@@ -100,7 +100,6 @@ INCLUDE 'ui-header.html'
             checked = obsolete
               value = '1'
         } ?>
-   </div>
    
 </div>
 <?lsmb END #  IF ID ?>
@@ -440,5 +439,6 @@ INCLUDE 'ui-header.html'
 <hr size="3" noshade="noshade" />
 <?lsmb FOREACH button IN buttons; button.id = button.name _ '-A'; INCLUDE button element_data=button; END ?>
 </form>
+</div>
 </body>
 </html>
