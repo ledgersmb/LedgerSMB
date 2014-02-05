@@ -1481,12 +1481,11 @@ $$
 DECLARE out_overpayment payment_overpayments_available_amount;
 BEGIN
       FOR out_overpayment IN
-              SELECT chart_id, accno,   chart_description, abs(sum(available))
+              SELECT chart_id, accno,   chart_description, available
               FROM overpayments
               WHERE payment_class  = in_account_class 
               AND entity_credit_id = in_entity_credit_id 
               AND available <> 0
-              GROUP BY chart_id, accno, chart_description
       LOOP
            RETURN NEXT out_overpayment;
       END LOOP;
