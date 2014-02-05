@@ -807,6 +807,7 @@ sub generate_report {
     for (@column_index) { $column_data{$_} = " " }
     $column_data{debit} = $form->format_amount( \%myconfig, $totaldebit, 2, " " );
     $column_data{credit} = $form->format_amount( \%myconfig, $totalcredit, 2, " " );
+    $form->{balance} ||= 0;
     $column_data{balance} = $form->format_amount( \%myconfig, $form->{balance} * $ml * $cml, 2, 0 );
 
     $i = 1;
