@@ -138,7 +138,7 @@ SELECT p.entity_id, p.id, s.salutation,
      JOIN entity e ON p.entity_id = e.id
      JOIN entity_employee ee on (ee.entity_id = p.entity_id)
 LEFT JOIN salutation s on (p.salutation_id = s.id)
-LEFT JOIN person mp ON ee.manager_id = p.entity_id
+LEFT JOIN person mp ON ee.manager_id = mp.entity_id
     WHERE ($7 is null or p.entity_id in (select ref_key from entity_note
                                           WHERE note ilike '%' || $7 || '%'))
           and ($1 is null or $1 = ee.employeenumber)
