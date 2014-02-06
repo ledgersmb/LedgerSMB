@@ -44,7 +44,7 @@ Matches the beginning of the source string on the report source string
 
 =cut
 
-has source => (is => 'ro', isa => 'Maybe[Str]');
+has source => (is => 'rw', isa => 'Maybe[Str]');
 
 =back
 
@@ -104,7 +104,7 @@ sub columns {
 sub run_report {
     my ($self) = @_;
     my ($rpt) = $self->exec_method({funcname => 'inventory_adj__get'});
-    $self->source($rpt->source);
+    $self->source($rpt->{source});
     my @rows = $self->exec_method({funcname => 'inventory_adj__details'});
     for my $row (@rows){
         $row->{row_id} = $row->{parts_id}; 
