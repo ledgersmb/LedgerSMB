@@ -23,6 +23,14 @@ update inventory_report
 RETURNING id;
 $$;
 
+CREATE OR REPLACE FUNCTION inventory_report__delete(in_id int)
+RETURNS int LANGUAGE SQL AS
+$$
+DELETE FROM inventory_report_line WHERE adjust_id = $1;
+DELETE FROM inventory_report WHERE id = $1
+RETURNING id;
+$$;
+
 DROP TYPE IF EXISTS inventory_adjustment_info CASCADE;
 
 CREATE TYPE inventory_adjustment_info AS (
