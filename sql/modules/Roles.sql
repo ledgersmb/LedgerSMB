@@ -691,6 +691,14 @@ SELECT lsmb__grant_perms('inventory_adjust', obj, 'INSERT')
 SELECT lsmb__grant_menu('inventory_adjust', node_id, 'allow')
   FROM unnest(array[6,16]) node_id;
 
+SELECT lsmb__create_role('inventory_approve');
+SELECT lsmb__grant_menu('inventory_approve', 59, 'allow');
+SELECT lsmb__grant_role('inventory_approve', 'ar_invoice_create');
+SELECT lsmb__grant_role('inventory_approve', 'ap_invoice_create');
+SELECT lsmb__grant_perms('inventory_adjust', obj, 'SELECT')
+  FROM unnest(array['inventory_report'::text, 'inventory_report_line']) obj;
+SELECT lsmb__grant_perms('inventory_adjust', 'inventory_report', 'UPDATE');
+
 SELECT lsmb__create_role('pricegroup_create');
 SELECT lsmb__grant_role('pricegroup_create', 'contact_read');
 SELECT lsmb__grant_menu('pricegroup_create', 83, 'allow');
