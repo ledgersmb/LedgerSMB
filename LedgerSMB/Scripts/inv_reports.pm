@@ -23,6 +23,7 @@ Searches for inventory adjustment reports
 package LedgerSMB::Scripts::inv_reports;
 use LedgerSMB::Report::Inventory::Search_Adj;
 use LedgerSMB::Report::Inventory::Adj_Details;
+use LedgerSMB::Scripts::reports;
 
 sub search_adj{
     my ($request) = @_;

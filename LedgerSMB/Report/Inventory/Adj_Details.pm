@@ -20,6 +20,7 @@ use LedgerSMB::IS;
 use LedgerSMB::IR;
 use LedgerSMB::AA;
 use LedgerSMB::App_State;
+use LedgerSMB::Setting;
 
 =head1 DESCRIPTION
 
@@ -152,19 +153,29 @@ sub approve {
     my ($self) = @_;
     my $form_ar = bless({rowcount => 1}, 'Form');
     my $form_ap = bless({rowcount => 1}, 'Form');
+    my $curr = LedgerSMB::Setting->get('curr');
+    ($curr) = split(':', $curr);
 
     ## Setting up forms
     #
     # ar
     $form_ar->{dbh} = LedgerSMB::App_State::DBH;
-    $form_ar->{customer} = 'Inventory';
-    AA->get_name( {}, $form_ar );
+    $form_ar->{customer} = '00000';
+    $form_ar->{vc} = 'customer';
+    $form_ar->get_name( {}, 'customer', 'today', '2' );
+    $form_ar->{customer_id} = $form_ar->{'name_list'}->[0]->{id};
+    $form_ar->{currency} = $curr;
+    $form_ar->{defaultcurrency} = $curr;
 
 
     # ap
     $form_ap->{dbh} = LedgerSMB::App_State::DBH;
-    $form_ap->{vendor} = 'Inventory';
-    AA->get_name( {}, $form_ar );
+    $form_ap->{vendor} = '00000';
+    $form_ap->{vc} = 'vendor';
+    $form_ap->get_name( {}, 'vendor', 'today', '1' );
+    $form_ap->{vendor_id} = $form_ap->{'name_list'}->[0]->{id};
+    $form_ap->{currency} = $curr;
+    $form_ap->{defaultcurrency} = $curr;
     
 
     ## Processing reports

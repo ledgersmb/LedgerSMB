@@ -779,7 +779,7 @@ sub post_invoice {
 		       curr = ?,
 		       language_code = ?,
 		       ponumber = ?, 
-                       approved = ?
+                       approved = ?,
 		       crdate = ?
 		 WHERE id = ?|;
 

@@ -1729,7 +1729,6 @@ sub get_employee {
     my $sth = $self->{dbh}->prepare($query);
     $sth->execute($login);
     my (@a) = $sth->fetchrow_array();
-    $a[1] *= 1;
 
     $sth->finish;
 
