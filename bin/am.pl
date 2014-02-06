@@ -98,7 +98,7 @@ sub form_footer_buttons {
 }
 
 sub add_gifi {
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
 
     # construct callback
     $form->{callback} = "reports.pl?action=list_gifi";
@@ -223,7 +223,7 @@ sub delete_gifi {
 
 sub add_business {
 
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
 
     $form->{callback} =
 "$form->{script}?action=add_business&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -304,7 +304,7 @@ sub delete_business {
 
 sub add_sic {
 
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
 
     $form->{callback} =
 "$form->{script}?action=add_sic&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -392,7 +392,7 @@ sub delete_sic {
 
 sub add_language {
 
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
 
     $form->{callback} =
 "$form->{script}?action=add_language&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -726,7 +726,7 @@ sub save_taxes {
 
 sub add_warehouse {
 
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
 
     $form->{callback} =
 "$form->{script}?action=add_warehouse&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -1525,7 +1525,7 @@ sub formnames {
 
 sub add_taxform {
 
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
 
     $form->{callback} =
 "$form->{script}?action=add_taxform&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
