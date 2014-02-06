@@ -18,6 +18,7 @@ extends 'LedgerSMB::Report';
 use LedgerSMB::Form;
 use LedgerSMB::IS;
 use LedgerSMB::IR;
+use LedgerSMB::AA;
 use LedgerSMB::App_State;
 
 =head1 DESCRIPTION
@@ -193,8 +194,8 @@ sub approve {
         }
     }
     ## Posting
-    IS->post_invoice($form_ar);
-    IR->post_invoice($form_ap);
+    IS->post_invoice({}, $form_ar);
+    IR->post_invoice({}, $form_ap);
     $self->call_procedure(procname => 'inventory_report__approve',
        args => [$self->id, $form_ar->{id}, $form_ap->{ap}]
     );
