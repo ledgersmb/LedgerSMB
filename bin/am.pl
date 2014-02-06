@@ -405,7 +405,7 @@ sub list_gifi {
 sub csv_list_gifi { &list_gifi }
 
 sub add_gifi {
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
 
     # construct callback
     $form->{callback} =
@@ -561,7 +561,7 @@ sub delete_gifi {
 
 sub add_department {
 
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
     $form->{role}  = "P";
 
     $form->{callback} =
@@ -719,7 +719,7 @@ sub delete_department {
 
 sub add_business {
 
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
 
     $form->{callback} =
 "$form->{script}?action=add_business&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -873,7 +873,7 @@ sub delete_business {
 
 sub add_sic {
 
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
 
     $form->{callback} =
 "$form->{script}?action=add_sic&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -1042,7 +1042,7 @@ sub delete_sic {
 
 sub add_language {
 
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
 
     $form->{callback} =
 "$form->{script}?action=add_language&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -1896,7 +1896,7 @@ sub doclose {
 
 sub add_warehouse {
 
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
 
     $form->{callback} =
 "$form->{script}?action=add_warehouse&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -2882,7 +2882,7 @@ sub formnames {
 
 sub add_taxform {
 
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
 
     $form->{callback} =
 "$form->{script}?action=add_taxform&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
