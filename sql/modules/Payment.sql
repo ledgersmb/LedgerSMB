@@ -596,6 +596,11 @@ BEGIN
              FROM bulk_payments_in  where amount <> 0;
 
         -- early payment discounts
+        IF t_cash_sign IS NULL THEN
+             raise exception 't_cash_sign is null';
+        ELSIF t_exchangerate IS NULL THEN
+             raise exception 't_exchangerate is null';
+        END IF; 
         INSERT INTO acc_trans
                (trans_id, chart_id, amount, approved,
                voucher_id, transdate, source)
@@ -614,7 +619,9 @@ BEGIN
                  WHERE in_account_class = 1) gl ON gl.id = bpi.id
           JOIN entity_credit_account eca ON gl.entity_credit_account = eca.id
          WHERE bpi.amount <> 0 
-               AND extract('days' from age(gl.transdate)) < eca.discount_terms;
+               AND extract('days' from age(gl.transdate)) < eca.discount_terms
+               and eca.discount_terms is not null AND discount IS NOT NULL
+               AND eca.discount_account_id IS NOT NULL;
 
         INSERT INTO acc_trans
                (trans_id, chart_id, amount, approved,
@@ -634,7 +641,9 @@ BEGIN
                  WHERE in_account_class = 1) gl ON gl.id = bpi.id
           JOIN entity_credit_account eca ON gl.entity_credit_account = eca.id
          WHERE bpi.amount <> 0 
-               AND extract('days' from age(gl.transdate)) < eca.discount_terms;
+               AND extract('days' from age(gl.transdate)) < eca.discount_terms
+               AND eca.discount_terms IS NOT NULL AND discount IS NOT NULL
+               AND eca.discount_account_id IS NOT NULL;
 
         -- Insert ar/ap side
         INSERT INTO acc_trans
