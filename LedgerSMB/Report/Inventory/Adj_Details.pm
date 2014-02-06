@@ -15,10 +15,16 @@ package LedgerSMB::Report::Inventory::Adj_Details;
 use Moose;
 use LedgerSMB::Report::Inventory::Search_Adj;
 extends 'LedgerSMB::Report';
+use LedgerSMB::Form;
+use LedgerSMB::IS;
+use LedgerSMB::IR;
+use LedgerSMB::App_State;
 
 =head1 DESCRIPTION
 
 This report shows the details of an inventory adjustment report.
+
+THIS IS NOT SAFE TO CACHE UNTIL THE FINANCIAL LOGIC IS IN THE NEW FRAMEWORK.
 
 =head1 CRITERIA PROPERTIES
 
@@ -132,6 +138,77 @@ sub run_report {
         $row->{row_id} = $row->{parts_id}; 
     }
     $self->rows(\@rows);
+}
+
+=head2 approve
+
+Approves the report.  This currently goes through the legacy code and is the 
+point where caching becomes unsafe.
+
+=cut
+
+sub approve {
+    my ($self) = @_;
+    my $form_ar = bless({rowcount => 1}, 'Form');
+    my $form_ap = bless({rowcount => 1}, 'Form');
+
+    ## Setting up forms
+    #
+    # ar
+    $form_ar->{dbh} = LedgerSMB::App_State::DBH;
+    $form_ar->{customer} = 'Inventory';
+    AA->get_name( {}, $form_ar );
+
+
+    # ap
+    $form_ap->{dbh} = LedgerSMB::App_State::DBH;
+    $form_ap->{vendor} = 'Inventory';
+    AA->get_name( {}, $form_ar );
+    
+
+    ## Processing reports
+    $self->run_report;
+    my @rows = @{$self->rows};
+    for my $row (@rows){
+        next if $row->{variance} == 0;
+        if ($row->{variance} < 0){
+            my $form = $form_ar;
+            my $rc = $form->{rowcount};
+            $form->{"qty_$rc"} = -1 * $row->{variance};
+            $form->{"id_$rc"} = $row->{parts_id}; 
+            $form->{"description_$rc"} = $row->{description}; 
+            $form->{"discount_$rc"} = '100';
+            $form->{"sellprice_$rc"} = $row->{sellprice};
+            ++$form->{rowcount};
+        } elsif ($row->{variance} > 0){
+            my $form = $form_ap;
+            my $rc = $form->{rowcount};
+            $form->{"qty_$rc"} = $row->{variance};
+            $form->{"id_$rc"} = $row->{parts_id}; 
+            $form->{"description_$rc"} = $row->{description}; 
+            $form->{"discount_$rc"} = '100';
+            $form->{"sellprice_$rc"} = $row->{lastcost};
+            ++$form->{rowcount};
+           
+        }
+    }
+    ## Posting
+    IS->post_invoice($form_ar);
+    IR->post_invoice($form_ap);
+    $self->call_procedure(procname => 'inventory_report__approve',
+       args => [$self->id, $form_ar->{id}, $form_ap->{ap}]
+    );
+}
+
+=head2 delete
+
+Deletes the inventory report
+
+=cut
+
+sub delete {
+    my ($self) = @_;
+    $self->exec_method(funcname => 'inventory_report__delete');
 }
 
 =back

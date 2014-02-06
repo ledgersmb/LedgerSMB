@@ -39,9 +39,38 @@ Shows adjustment details
 
 sub adj_detail {
     my ($request) = @_;
+    $request->{hiddens} = { id => $request->{id}};
     my $rpt = LedgerSMB::Report::Inventory::Adj_Details->new(%$request);
     $rpt->run_report;
     $rpt->render($request);
+}
+
+=item approve
+
+Approves the inventory report and enters invoices against them.
+
+=cut
+
+sub approve {
+    my ($request) = @_;
+    my $rpt = LedgerSMB::Report::Inventory::Adj_Details->new(%$request);
+    $rpt->approve;
+    $request->{report_name} = 'inventory_adj';
+    LedgerSMB::Scripts::reports::start_report($request);
+}
+
+=item delete
+
+Deletes the inventory report
+
+=cut
+
+sub delete {
+    my ($request) = @_;
+    my $rpt = LedgerSMB::Report::Inventory::Adj_Details->new(%$request);
+    $rpt->delete;
+    $request->{report_name} = 'inventory_adj';
+    LedgerSMB::Scripts::reports::start_report($request);
 }
 
 =back

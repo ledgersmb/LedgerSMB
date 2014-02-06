@@ -8,9 +8,20 @@ CREATE TYPE inventory_adjustment_line AS (
     description text,
     counted  numeric,
     expected numeric,
-    variance numeric
+    variance numeric,
+    sellprice numeric,
+    lastcost numeric
 );
 
+CREATE OR REPLACE FUNCTION inventory_report__approve
+(in_id int, in_ar_trans_id int, in_ap_trans_id int)
+RETURNS int LANGUAGE SQL AS
+$$
+update inventory_report 
+   SET ar_trans_id = $2, ap_trans_id = $3
+ WHERE id = $1 AND ar_trans_id IS NULL AND ap_trans_id IS NULL
+RETURNING id;
+$$;
 
 DROP TYPE IF EXISTS inventory_adjustment_info CASCADE;
 
@@ -63,7 +74,7 @@ RETURNS SETOF inventory_adjustment_line AS
 $$ 
 
    SELECT l.parts_id, p.partnumber, p.description, l.counted, l.expected, 
-          l.counted - l.expected
+          l.counted - l.expected, p.sellprice, p.lastcost
      FROM inventory_report_line l
      JOIN parts p ON l.parts_id = p.id
     WHERE l.adjust_id = $1;
