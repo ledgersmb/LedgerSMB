@@ -72,6 +72,7 @@ use LedgerSMB::Setting;
 use charnames qw(:full);
 use open ':utf8';
 package Form;
+use base 'LedgerSMB::Request';
 use utf8;
 
 use LedgerSMB::Log;
