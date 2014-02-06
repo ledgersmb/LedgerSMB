@@ -1,7 +1,9 @@
 <?lsmb 
-INCLUDE 'ui-header.html';
+INCLUDE 'ui-header.html' include_stylesheet = ['UI/Reports/filter.css'];
 PROCESS 'elements.html';
 PROCESS 'report_base.html'; ?>
+<body class="<?lsmb dojo_theme ?>">
+<div class="listtop"><?lsmb text('Search Inventory Entry'); ?></div>
 <form action="inv_reports.pl" method="get">
 <div class="input_row">
 <div class="input_group">
@@ -32,6 +34,7 @@ PROCESS 'report_base.html'; ?>
        type = "submit"
        text = text('Run Report') #'
 }; ?>
+</div>
 </div>
 </form>
 </body>

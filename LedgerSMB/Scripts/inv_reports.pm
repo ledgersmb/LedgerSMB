@@ -21,10 +21,11 @@ Searches for inventory adjustment reports
 =cut
 
 package LedgerSMB::Scripts::inv_reports;
+use LedgerSMB::Report::Inventory::Search_Adj;
+use LedgerSMB::Report::Inventory::Adj_Details;
 
 sub search_adj{
     my ($request) = @_;
-    use LedgerSMB::Report::Inventory::Search_Adj;
     my $rpt = LedgerSMB::Report::Inventory::Search_Adj->new(%$request);
     $rpt->run_report;
     $rpt->render($request);
@@ -36,10 +37,9 @@ Shows adjustment details
 
 =cut 
 
-sub adj_details {
+sub adj_detail {
     my ($request) = @_;
-    use LedgerSMB::Report::Inventory::Adj_Detail;
-    my $rpt = LedgerSMB::Report::Inventory::Adj_Detail->new(%$request);
+    my $rpt = LedgerSMB::Report::Inventory::Adj_Details->new(%$request);
     $rpt->run_report;
     $rpt->render($request);
 }
