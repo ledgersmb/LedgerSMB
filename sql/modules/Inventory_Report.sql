@@ -39,8 +39,9 @@ LEFT JOIN ap ON ap.id = r.ap_trans_id
     WHERE ($1 is null or $1 <= r.transdate) AND
           ($2 is null OR $2 >= r.transdate) AND
           ($3 IS NULL OR plainto_tsquery($3) @@ tsvector(p.partnumber)) AND
-          ($4 IS NULL OR source LIKE $4 || '%');
- 
+          ($4 IS NULL OR source LIKE $4 || '%')
+ GROUP BY r.id, r.transdate, r.source, r.ar_trans_id, r.ap_trans_id,
+          ar.invnumber, ap.invnumber
 $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION inventory_adj__get(in_id int)

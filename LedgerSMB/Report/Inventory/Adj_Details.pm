@@ -91,6 +91,28 @@ sub columns {
     ];
 }
 
+=head2 set_buttons
+
+This sets buttons relevant to approving the adjustments.
+
+=cut
+
+sub set_buttons {
+    return [{
+       name => 'action',
+       type => 'submit',
+      value => 'approve',
+       text => LedgerSMB::Report::text('Approve'),
+      class => 'submit',
+    },{
+       name => 'action',
+       type => 'submit',
+      value => 'delete',
+       text => LedgerSMB::Report::text('Delete'),
+      class => 'submit',
+    }];
+}
+
 =back
 
 =head1 METHODS
