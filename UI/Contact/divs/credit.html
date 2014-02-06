@@ -243,7 +243,11 @@ PROCESS dynatable
 			} ?> 
               <?lsmb END ?>
 	  </td>
-        <td> <?lsmb INCLUDE select element_data = {
+        <td> <?lsmb 
+           IF NOT credit_act.language_code;
+                credit_act.language_code = default_language;
+           END;
+           INCLUDE select element_data = {
 		label = text("Language")
 		name = "language_code"
                 default_values = [credit_act.language_code],

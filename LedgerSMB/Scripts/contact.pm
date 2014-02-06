@@ -235,15 +235,9 @@ sub _main_screen {
         push @all_currencies, { text => $curr};
     }
 
-    my ($default_country) = LedgerSMB->call_procedure(
-              procname => 'setting_get',
-                  args => ['default_country']);
-    $default_country = $default_country->{value};
+    my $default_country = LedgerSMB::Setting->get('default_country');
 
-    my ($default_language) = LedgerSMB->call_procedure(
-              procname => 'setting_get',
-                  args => ['default_language']);
-    $default_language = $default_language->{value};
+    my ($default_language) = LedgerSMB::Setting->get('default_language');
 
     my $attach_level_options = [
         {text => $locale->text('Entity'), value => 1} ];
@@ -311,6 +305,8 @@ sub _main_screen {
                 all_taxes => \@all_taxes,
                 all_years => \@all_years,
                all_months =>  LedgerSMB::App_State::all_months()->{dropdown},
+          default_country => $default_country,
+         default_language => $default_language
     });
 }
 
