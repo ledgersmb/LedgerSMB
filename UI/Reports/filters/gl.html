@@ -32,12 +32,12 @@
          <tr>
           <th align="right"><?lsmb text('Account') ?></th>
           <td colspan="3">
-              <?lsmb PROCESS ajaxselect element_data = {
+              <?lsmb PROCESS input element_data = {
                      name = "accno"
-                     initial_value = accno
-                     text_attr = 'accno'
-                     value_attr = 'id'
-                     ajax_target = 'journal.pl'
+                     size = '15'
+                    value = accno
+                     type = 'text'
+                    class = 'AccountBox'
               } ?> </td>
 	  </tr>
 	  <tr>
