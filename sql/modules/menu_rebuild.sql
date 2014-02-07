@@ -378,10 +378,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 101	menu	1	248
 102	module	pe.pl	249
 102	action	project_sales_order	250
-106	module	jc.pl	263
-106	action	search	264
-106	type	timecard	265
-106	project	project	266
 107	menu	1	268
 108	module	pe.pl	269
 108	action	translation	270
@@ -521,6 +517,9 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 164	template_name	sales_order	425
 165	template_name	work_order	426
 166	template_name	purchase_order	427
+106	action	start_report	264
+106	module_name	timecards	265
+106	report_name	timecards	266
 167	template_name	bin_list	428
 168	template_name	statement	429
 169	template_name	sales_quotation	430
@@ -810,6 +809,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 59	module	reports.pl	216
 59	action	start_report	217
 59	report_name	inventory_adj	218
+106	module	reports.pl	263
 \.
 
 
