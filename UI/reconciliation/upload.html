@@ -3,7 +3,7 @@
 <body class="<?lsmb dojo_theme ?>">
 <div class="body" id ="recon1" class="<?lsmb dojo_theme ?>">
     <div class="title listtop">
-        New Reconciliation Report
+        <?lsmb text('New Reconciliation Report') ?>
     </div>
     <?lsmb IF error?>
         <div class="error">Error detected in file upload: <?lsmb error?><br/>
@@ -22,7 +22,7 @@
 		options = accounts,
 		text_attr = "name",
 		value_attr = "id",
-		label = "Account"
+		label = text("Account")
 	} ?>
 	<?lsmb INCLUDE input element_data = {
 		name = "total",
