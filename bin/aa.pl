@@ -114,7 +114,7 @@ sub new_screen {
 }
 
 sub add {
-    $form->{title} = $locale->text("Add");
+    $form->{title} = "Add";
 	
     $form->{callback} =
 "$form->{script}?action=add&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -398,7 +398,7 @@ sub create_links {
 
 sub form_header {
 
-    $title = $locale->text("$form->{title}");
+    $title = $form->{title};
     $form->all_business_units($form->{transdate}, 
                               $form->{"$form->{vc}_id"}, 
                               $form->{ARAP});
