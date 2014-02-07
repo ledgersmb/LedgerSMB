@@ -118,7 +118,7 @@ $$
 WITH RECURSIVE bu_tree (id, path) AS (
      SELECT id, id::text AS path, control_code, description
        FROM business_unit
-      WHERE id = any($1)
+      WHERE id = any($1) OR ($1 = '{}' OR $1 IS NULL and parent_id IS NULL)
       UNION
      SELECT bu.id, bu_tree.path || ',' || bu.id, bu.control_code, bu.description
        FROM business_unit bu

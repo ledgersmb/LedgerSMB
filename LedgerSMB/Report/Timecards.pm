@@ -92,7 +92,7 @@ has jctype => (is => 'ro', isa => 'Int', required => 0);
 sub columns {
     return [
     {col_id => 'weekstarting',
-       name => LedgerSMB::Report::text('Date'),
+       name => LedgerSMB::Report::text('Week Starting'),
        type => 'text',
      pwidth => '2', },
     {col_id => 'business_unit_code',
@@ -105,7 +105,8 @@ sub columns {
      pwidth => '4', },
     {col_id => 'id',
        name => LedgerSMB::Report::text('ID'),
-       type => 'text',
+       type => 'href',
+  href_base => 'timecard.pl?action=edit&id=',
      pwidth => '1', },
     {col_id => 'partnumber',
        name => LedgerSMB::Report::text('Partnumber'),
@@ -182,7 +183,8 @@ sub run_report {
     my ($self) = @_;
     my @rows = $self->exec_method({ funcname => 'timecard__report' });
     for my $row (@rows){
-        $row->{"day$row->{dow}"} = $row->{qty};
+        $row->{"day$row->{weekday}"} = $row->{qty};
+        $row->{"row_id"} = $row->{id};
     }
     $self->rows(\@rows);
 }
