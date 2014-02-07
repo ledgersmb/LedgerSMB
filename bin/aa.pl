@@ -114,7 +114,7 @@ sub new_screen {
 }
 
 sub add {
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
 	
     $form->{callback} =
 "$form->{script}?action=add&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -142,7 +142,7 @@ sub add {
 sub edit {
 
     &create_links;
-    $form->{title} = "Edit";
+    $form->{title} = $locale->text("Edit");
     if ($form->{reverse}){
         if ($form->{ARAP} eq 'AR'){
             $form->{subtype} = 'credit_note';
@@ -398,7 +398,7 @@ sub create_links {
 
 sub form_header {
 
-    $title = $form->{title};
+    $title = $locale->text("$form->{title}");
     $form->all_business_units($form->{transdate}, 
                               $form->{"$form->{vc}_id"}, 
                               $form->{ARAP});

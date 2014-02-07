@@ -83,17 +83,17 @@ sub search {
     # $locale->text('Employee')
 
     my %label = (
-        invoice           => { title => 'Sales Invoices',  name => 'Customer' },
-        packing_list      => { title => 'Packing Lists',   name => 'Customer' },
-        pick_list         => { title => 'Pick Lists',      name => 'Customer' },
-        sales_order       => { title => 'Sales Orders',    name => 'Customer' },
-        work_order        => { title => 'Work Orders',     name => 'Customer' },
-        purchase_order    => { title => 'Purchase Orders', name => 'Vendor' },
-        bin_list          => { title => 'Bin Lists',       name => 'Vendor' },
-        sales_quotation   => { title => 'Quotations',      name => 'Customer' },
-        request_quotation => { title => 'RFQs',            name => 'Vendor' },
-        timecard          => { title => 'Time Cards',      name => 'Employee' },
-        check             => { title => 'Check',           name => 'Vendor' },
+        invoice           => { title => $locale->text('Sales Invoices'),  name => 'Customer' },
+        packing_list      => { title => $locale->text('Packing Lists'),   name => 'Customer' },
+        pick_list         => { title => $locale->text('Pick Lists'),      name => 'Customer' },
+        sales_order       => { title => $locale->text('Sales Orders'),    name => 'Customer' },
+        work_order        => { title => $locale->text('Work Orders'),     name => 'Customer' },
+        purchase_order    => { title => $locale->text('Purchase Orders'), name => 'Vendor' },
+        bin_list          => { title => $locale->text('Bin Lists'),       name => 'Vendor' },
+        sales_quotation   => { title => $locale->text('Quotations'),      name => 'Customer' },
+        request_quotation => { title => $locale->text('RFQs'),            name => 'Vendor' },
+        timecard          => { title => $locale->text('Time Cards'),      name => 'Employee' },
+        check             => { title => $locale->text('Check'),           name => 'Vendor' },
     );
 
     $label{invoice}{invnumber} = {
