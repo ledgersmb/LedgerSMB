@@ -112,7 +112,7 @@ sub new_screen {
 }
 
 sub add {
-    $form->{title} = "Add";
+    $form->{title} = $locale->text("Add");
 	
     $form->{callback} =
 "$form->{script}?action=add&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -140,7 +140,7 @@ sub add {
 sub edit {
 
     &create_links;
-    $form->{title} = "Edit";
+    $form->{title} = $locale->text("Edit");
     if ($form->{reverse}){
         if ($form->{ARAP} eq 'AR'){
             $form->{subtype} = 'credit_note';
@@ -407,7 +407,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 
 sub form_header {
 
-    $title = $form->{title};
+    $title = $locale->text("$form->{title}");
 
     if($form->{batch_id})
     {
