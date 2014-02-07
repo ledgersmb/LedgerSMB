@@ -106,7 +106,7 @@ sub columns {
     {col_id => 'id',
        name => LedgerSMB::Report::text('ID'),
        type => 'href',
-  href_base => 'timecard.pl?action=edit&id=',
+  href_base => 'timecard.pl?action=get&id=',
      pwidth => '1', },
     {col_id => 'partnumber',
        name => LedgerSMB::Report::text('Partnumber'),
