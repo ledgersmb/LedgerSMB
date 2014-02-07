@@ -47,6 +47,7 @@ sub __default {
     my %hits = ();
     
     $template = LedgerSMB::Template->new(
+            locale => $request->{_locale},
             path => 'UI/taxform',
             template => 'filter',
 	    format => 'HTML',
