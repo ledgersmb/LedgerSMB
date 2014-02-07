@@ -176,6 +176,21 @@ sub set_buttons {
     return [];
 }
 
+=item _exclude_from_totals 
+
+Returns a hashref with the keys pointing to true values for column id's that 
+should not appear on the total row.
+
+This is useful in avoiding a running total column from being added together and
+a meaningless sum displayed on the totals row.
+
+=cut
+
+sub _exclude_from_totals {
+    return {};
+}
+
+
 =item render
 
 This takes no arguments and simply renders the report as is.
@@ -221,8 +236,10 @@ sub render {
     my $col_val = undef;
     my $old_subtotal = {};
     my @newrows;
+    my $exclude = $self->_exclude_from_totals;
     for my $r (@{$self->rows}){
         for my $k (keys %$r){
+            next if $exclude->{$k};
             if (eval { $r->{$k}->isa('LedgerSMB::PGNumber') }){
                 $total_row->{$k} ||= LedgerSMB::PGNumber->from_input('0');
                 $total_row->{$k}->badd($r->{$k});

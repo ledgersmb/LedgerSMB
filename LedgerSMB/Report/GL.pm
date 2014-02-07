@@ -341,6 +341,10 @@ Runs the report, and assigns rows to $self->rows.
 
 =cut
 
+sub _exclude_from_totals {
+    return {running_balance => 1};
+}
+
 sub run_report{
     my ($self) = @_;
     my $accno = $self->accno;
