@@ -1369,9 +1369,11 @@ $$ language plpgsql;
 COMMENT ON FUNCTION eca__list_contacts(in_credit_id int) IS
 $$ Returns a list of contact info attached to the entity credit account.$$;
 
+DROP FUNCTION IF EXISTS eca__save_contact(int, int, text, text, text, int);
+
 CREATE OR REPLACE FUNCTION eca__save_contact
 (in_credit_id int, in_class_id int, in_description text, in_contact text,
-in_old_contact text, in_old_contact_class int)
+in_old_contact text, in_old_class_id int)
 RETURNS INT AS
 $$
 DECLARE out_id int;
@@ -1380,7 +1382,7 @@ BEGIN
     PERFORM *
        FROM eca_to_contact
       WHERE credit_id = in_credit_id
-        AND contact_class_id = in_old_contact_class
+        AND contact_class_id = in_old_class_id 
         AND contact = in_old_contact;
         
     IF FOUND THEN
@@ -1389,7 +1391,7 @@ BEGIN
                description = in_description,
                contact_class_id = in_class_id
          WHERE credit_id = in_credit_id
-           AND contact_class_id = in_old_contact_class
+           AND contact_class_id = in_old_class_id
            AND contact = in_old_contact;
     ELSE
         INSERT INTO eca_to_contact(credit_id, contact_class_id, 
