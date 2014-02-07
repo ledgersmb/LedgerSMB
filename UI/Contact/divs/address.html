@@ -88,10 +88,15 @@
 	}; 
        ?> <div class="tabular col-1"><div>
              <?lsmb IF credit_act.id;
+                    IF is_for_credit;
+                       attach_to = 3;
+                    ELSE; 
+                       attach_to = 1;
+                    END; 
                        INCLUDE select element_data = {
                           name            = "attach_to"
                           id              = 'attach_address_to' 
-                          default_options = ['3']
+                          default_values  = [attach_to]
                           options         = attach_level_options
                           label           = text('Attach To') #'
                        };
