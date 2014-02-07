@@ -62,10 +62,6 @@ msgstr "Bevétel"
 msgid "Received"
 msgstr "Vásárolva"
 
-msgid "Annual Straight Line Daily"
-msgstr "Éves amortizáció napi leírással"
-
-
 msgid "Customer Search"
 msgstr "Vevő partner keresése"
 
@@ -101,6 +97,15 @@ msgstr "Legutóbbi aktivitás"
 
 msgid "Transactions Locked"
 msgstr "Zárolt tranzakciók"
+
+msgid "Minimum Value"
+msgstr "Minimum érték"
+
+msgid "Maximum Value"
+msgstr "Maximum érték"
+
+msgid "New Reconciliation Report"
+msgstr "Új egyeztetési jelentés"
 
 #: old-handler.pl:131
 msgid "You are logged out!"
@@ -1415,7 +1420,7 @@ msgstr "Ajánlat azonosítója"
 
 #: bin/bp.pl:122
 msgid "Print %1"
-msgstr "Nyomtat %1"
+msgstr "%1 nyomtatása"
 
 #: bin/bp.pl:191 bin/pe.pl:2787 bin/oe.pl:3392 bin/oe.pl:3658 bin/oe.pl:3682
 #: bin/rp.pl:1383 bin/rp.pl:1644
@@ -3550,7 +3555,7 @@ msgstr "A vevőszámlát nem lehet törölni!"
 # 76%
 #: bin/ir.pl:72 bin/ir.pl:91
 msgid "Add Debit Invoice"
-msgstr "Új beszerzési számla"
+msgstr "Új beszerzési számlakorrekció"
 
 #: bin/ir.pl:94
 msgid "Edit Vendor Invoice"
@@ -4809,7 +4814,7 @@ msgstr "Érvénytelen évzárás szűrő kérés!"
 
 #: LedgerSMB/Batch.pm:90
 msgid "Any"
-msgstr "Bármennyi"
+msgstr "Bármelyik"
 
 #: LedgerSMB/DBObject/User.pm:74
 msgid "Incorrect Password"
@@ -5017,7 +5022,7 @@ msgstr "Nullával osztás probléma"
 
 #: LedgerSMB.pm:1091 LedgerSMB.pm:1092
 msgid "Required input not provided"
-msgstr "Nincs megadva a adat"
+msgstr "Nincs megadva elegendő adat"
 
 #: LedgerSMB.pm:1093
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
@@ -8243,8 +8248,8 @@ msgstr "Új vevő tranzakció"
 #~ msgid "Are you sure you want to delete time card for"
 #~ msgstr "Biztos benne, ki akarja törölni az időkártyát"
 
-#~ msgid "Assemblies"
-#~ msgstr "Saját termékek"
+msgid "Assemblies"
+msgstr "Saját termékek"
 
 #~ msgid "Audit trail removed up to"
 #~ msgstr "Audit követés törlés dátuma"
