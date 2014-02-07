@@ -43,6 +43,7 @@ define([
           startup: function(activeDiv, boxSize) {
            var myself = this; // needed for AMD query usage below.
            var active;
+           this.inherited(arguments);
            require (['dojo/query', 
                      'dijit/layout/ContentPane', 
                      'dijit/registry', 'dojo/domReady!'],
@@ -57,12 +58,12 @@ define([
                if (t !== undefined){
                    myself.addChild(t);
                    t.startup();
+                   if (cnode.id == activeDiv){
+                      myself.selectChild(t);
+                   }
                }
                });
-               var ad = registry.byId(activeDiv);
-               myself.selectChild(ad);
             });
-            this.inherited(arguments);
           }
           
         });

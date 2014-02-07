@@ -9,14 +9,14 @@ FOREACH ROW IN contacts;
                tt_url(script) _ '?entity_id=' _ entity_id _ '&contact=' _
                tt_url(ROW.contact) _ '&class_id=' _ ROW.class_id _
                '&description=' _ tt_url(ROW.description) _ '&credit_id=' _ 
-               credit_act.id _ '&action=edit&target_div=contact_div&for_credit='
+               credit_act.id _ '&action=edit&target_div=contact_info_div&for_credit='
                _ ROW.credit_id;
     ROW.delete_href_suffix = 
                tt_url(script) _ '?entity_id=' _ entity_id _ '&contact=' _
                tt_url(ROW.contact) _ '&class_id=' _ ROW.class_id _ 
                '&description=' _ tt_url(ROW.description) _ '&credit_id=' _ 
                credit_act.id _ '&action=delete_contact&' _
-               'target_div=contact_div&for_credit=' _ ROW.credit_id;
+               'target_div=contact_info_div&for_credit=' _ ROW.credit_id;
     IF ROW.credit_id;
          ROW.for_credit = 'X';
     END;
