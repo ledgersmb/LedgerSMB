@@ -32,6 +32,76 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Pootle 2.1.6\n"
 
+msgid "Sequences"
+msgstr "Sorszámok"
+
+msgid "Allow Input"
+msgstr "Felülírható"
+
+msgid "label"
+msgstr "Címke"
+
+msgid "Setting"
+msgstr "Sorszám típusa"
+
+msgid "Prefix"
+msgstr "Előtag"
+
+msgid "Suffix"
+msgstr "Utótag"
+
+msgid "Sequence"
+msgstr "Sorszám"
+
+msgid "Sold"
+msgstr "Eladva"
+
+msgid "Revenue"
+msgstr "Bevétel"
+
+msgid "Received"
+msgstr "Vásárolva"
+
+msgid "Annual Straight Line Daily"
+msgstr "Éves amortizáció napi leírással"
+
+
+msgid "Customer Search"
+msgstr "Vevő partner keresése"
+
+msgid "Vendor Search"
+msgstr "Szállító partner keresése"
+
+msgid "Employee Search"
+msgstr "Alkalmazott keresése"
+
+msgid "Re-open Books"
+msgstr "Könyvelés újranyitása"
+
+msgid "Books closed on"
+msgstr "Könyvelés lezárva"
+
+msgid "Re-Open As Of"
+msgstr "Újranyitás mint"
+
+msgid "Reopen Books"
+msgstr "Könyvek újranyitása"
+
+msgid "Disable Back Button"
+msgstr "Vissza gomb letiltása"
+
+msgid "Add Credit Note"
+msgstr "Új kredit note"
+
+msgid "Add Debit Note"
+msgstr "Új debit note"
+
+msgid "Last Used"
+msgstr "Legutóbbi aktivitás"
+
+msgid "Transactions Locked"
+msgstr "Zárolt tranzakciók"
+
 #: old-handler.pl:131
 msgid "You are logged out!"
 msgstr "Ön sikeresen kijelentkezett a rendszerből!"
@@ -333,8 +403,8 @@ msgstr "Szolgáltatás"
 
 # 80%
 #: bin/io.pl:1129
-msgid "Number missing in Row [_1]"
-msgstr "A [_1]. sorból hiányzik a szám"
+msgid "Number missing in Row %1"
+msgstr "A %1. sorból hiányzik a szám"
 
 #: bin/io.pl:1136 bin/oe.pl:59
 msgid "Add Purchase Order"
@@ -519,24 +589,24 @@ msgid "Subtotal"
 msgstr "Részösszeg"
 
 #: bin/io.pl:1805 bin/arap.pl:1028
-msgid "Cc: [_1]"
-msgstr "Cc: [_1]"
+msgid "Cc: %1"
+msgstr "Cc: %1"
 
 #: bin/io.pl:1806 bin/arap.pl:1029
-msgid "Bcc: [_1]"
-msgstr "Bcc: [_1]"
+msgid "Bcc: %1"
+msgstr "Bcc: %1"
 
 #: bin/io.pl:1824 bin/arap.pl:1035
-msgid "Date: [_1]"
-msgstr "Dátum: [_1]"
+msgid "Date: %1"
+msgstr "Dátum: %1"
 
 #: bin/io.pl:1825 bin/arap.pl:1036
-msgid "To: [_1]"
-msgstr "Címzett: [_1]"
+msgid "To: %1"
+msgstr "Címzett: %1"
 
 #: bin/io.pl:1827 bin/arap.pl:1038 UI/Contact/contact.html:1158
-msgid "Subject: [_1]"
-msgstr "Tárgy: [_1]"
+msgid "Subject: %1"
+msgstr "Tárgy: %1"
 
 #: bin/io.pl:1829 UI/io-email.html:34 UI/rp-email.html:33
 msgid "Message"
@@ -638,8 +708,8 @@ msgid "Update"
 msgstr "Frissítés"
 
 #: bin/io.pl:2318
-msgid "Do not keep field empty [_1]"
-msgstr "Ne hagyja a mezőt üresen [_1]"
+msgid "Do not keep field empty %1"
+msgstr "Ne hagyja a mezőt üresen %1"
 
 #: bin/arapprn.pl:69 bin/arapprn.pl:77 bin/arapprn.pl:574 bin/jc.pl:1261
 #: bin/jc.pl:2094 bin/oe.pl:2330 bin/is.pl:1414 bin/rp.pl:1546
@@ -668,8 +738,8 @@ msgid "Select a Printer!"
 msgstr "Válasszon egy nyomtatót!"
 
 #: bin/gl.pl:90 bin/pos.pl:55 bin/ps.pl:54 bin/ps.pl:84 bin/ps.pl:225
-msgid "Could not open pos.conf.pl in [_1] line [_2]: [_3]"
-msgstr "Nem nyitható meg a pos.conf.pl fájl innen [_1], [_2] sor: [_3]"
+msgid "Could not open pos.conf.pl in %1 line %2: %3"
+msgstr "Nem nyitható meg a pos.conf.pl fájl innen %1, %2 sor: %3"
 
 #: bin/gl.pl:127 bin/is.pl:1534 bin/ir.pl:1447 bin/aa.pl:1117 bin/aa.pl:1377
 msgid "Draft Posted"
@@ -687,13 +757,13 @@ msgstr "Kassza módosítása adatbeviteli hiba miatt."
 # 89%
 # 90%
 #: bin/gl.pl:195
-msgid "[_1] Cash Transfer Transaction"
-msgstr "[_1] számlák közötti pénzmozgás"
+msgid "%1 Cash Transfer Transaction"
+msgstr "%1 számlák közötti pénzmozgás"
 
 # 90%
 #: bin/gl.pl:198
-msgid "[_1] General Ledger Transaction"
-msgstr "[_1] vegyes könyvelési tranzakció"
+msgid "%1 General Ledger Transaction"
+msgstr "%1 vegyes könyvelési tranzakció"
 
 #: bin/gl.pl:268 bin/is.pl:970 bin/ir.pl:871 bin/aa.pl:948
 #: scripts/drafts.pl:242 scripts/vouchers.pl:324 UI/payments/payment2.html:330
@@ -783,8 +853,8 @@ msgid "Expense"
 msgstr "Költség"
 
 #: bin/gl.pl:535
-msgid "General Ledger: [_1] [_2]"
-msgstr "Főkönyv: [_1] [_2]"
+msgid "General Ledger: %1 %2"
+msgstr "Főkönyv: %1 %2"
 
 #: bin/gl.pl:537
 msgid "General Ledger"
@@ -1019,12 +1089,12 @@ msgid "Email CSV Report"
 msgstr "CSV jelentés emailben küldése"
 
 #: bin/gl.pl:920
-msgid "GL report sent to [_1]"
-msgstr "Főkönyvi jelentés elküldve [_1]"
+msgid "GL report sent to %1"
+msgstr "Főkönyvi jelentés elküldve %1"
 
 #: bin/gl.pl:1078
-msgid "Account [_1] not found."
-msgstr "[_1] számla nem található."
+msgid "Account %1 not found."
+msgstr "%1 számla nem található."
 
 #: bin/gl.pl:1120 bin/bp.pl:193 bin/jc.pl:1290 bin/am.pl:1236 bin/oe.pl:2368
 #: bin/is.pl:1450 bin/ir.pl:1370 bin/aa.pl:1388
@@ -1033,8 +1103,8 @@ msgstr "Erősítse meg!"
 
 # 93%
 #: bin/gl.pl:1122
-msgid "Are you sure you want to delete Transaction [_1]"
-msgstr "Biztosan törölni akarja a [_1] tranzakciót"
+msgid "Are you sure you want to delete Transaction %1"
+msgstr "Biztosan törölni akarja a %1 tranzakciót"
 
 #: bin/gl.pl:1128 bin/bp.pl:206 bin/oe.pl:2373 bin/is.pl:1460 bin/ir.pl:1378
 #: bin/aa.pl:1409 scripts/taxform.pl:283 UI/am-audit-control.html:14
@@ -1344,8 +1414,8 @@ msgid "Quotation Number"
 msgstr "Ajánlat azonosítója"
 
 #: bin/bp.pl:122
-msgid "Print [_1]"
-msgstr "Nyomtat [_1]"
+msgid "Print %1"
+msgstr "Nyomtat %1"
 
 #: bin/bp.pl:191 bin/pe.pl:2787 bin/oe.pl:3392 bin/oe.pl:3658 bin/oe.pl:3682
 #: bin/rp.pl:1383 bin/rp.pl:1644
@@ -1382,42 +1452,42 @@ msgid "Marked entries printed!"
 msgstr "A kijelölt tételek nyomtatva!"
 
 #: bin/bp.pl:299
-msgid "Customer: [_1]"
-msgstr "Vevő: [_1]"
+msgid "Customer: %1"
+msgstr "Vevő: %1"
 
 #: bin/bp.pl:300
-msgid "Vendor: [_1]"
-msgstr "Szállító: [_1]"
+msgid "Vendor: %1"
+msgstr "Szállító: %1"
 
 #: bin/bp.pl:305 bin/rp.pl:1961
-msgid "Account: [_1]"
-msgstr "Számla: [_1]"
+msgid "Account: %1"
+msgstr "Számla: %1"
 
 # 77%
 # 85%
 #: bin/bp.pl:310
-msgid "Invoice Number: [_1]"
-msgstr "Számlaszám: [_1]"
+msgid "Invoice Number: %1"
+msgstr "Számlaszám: %1"
 
 # 75%
 # 83%
 #: bin/bp.pl:315
-msgid "Order Number: [_1]"
-msgstr "Rendelés azonosító: [_1]"
+msgid "Order Number: %1"
+msgstr "Rendelés azonosító: %1"
 
 # 80%
 # 86%
 #: bin/bp.pl:320
-msgid "Quotation Number: [_1]"
-msgstr "Ajánlat azonosítója: [_1]"
+msgid "Quotation Number: %1"
+msgstr "Ajánlat azonosítója: %1"
 
 #: bin/bp.pl:326 bin/rp.pl:1985
-msgid "From [_1]"
-msgstr "Mettől: [_1]"
+msgid "From %1"
+msgstr "Mettől: %1"
 
 #: bin/bp.pl:332 bin/aa.pl:1923 bin/rp.pl:1990
-msgid "To [_1]"
-msgstr "Meddig: [_1]"
+msgid "To %1"
+msgstr "Meddig: %1"
 
 #. here goes an input where the date can be written, we can also use a java calendar :). We can use an ajax script to call the Exchange rate of the input date wich can be called with the onChange Method
 #: bin/bp.pl:363 bin/jc.pl:875 bin/jc.pl:1449 bin/jc.pl:1837 bin/pe.pl:2649
@@ -1774,8 +1844,8 @@ msgstr "Munkalap törlése"
 # 83%
 # 85%
 #: bin/jc.pl:1308
-msgid "Are you sure you want to delete time card for [_1] [_2] [_3]"
-msgstr "Biztosan törölni szeretné a munkalapot [_1] [_2] [_3]"
+msgid "Are you sure you want to delete time card for %1 %2 %3"
+msgstr "Biztosan törölni szeretné a munkalapot %1 %2 %3"
 
 #: bin/jc.pl:1321
 msgid "Time Card deleted!"
@@ -2110,8 +2180,8 @@ msgid "Orders generated!"
 msgstr "A rendelések elkészültek!"
 
 #: bin/ps.pl:82
-msgid "Closing Till For [_1]"
-msgstr "Kassza lezárása eddig [_1]"
+msgid "Closing Till For %1"
+msgstr "Kassza lezárása eddig %1"
 
 #: bin/ps.pl:181 UI/rc-till-closing.html:42
 msgid "Cumulative Error:"
@@ -2130,28 +2200,28 @@ msgid "Cash Breakdown:"
 msgstr "Készpénz bontása:"
 
 #: bin/ps.pl:299
-msgid "Total Cash in Drawer: [_1]"
-msgstr "Összes készpénz a kasszában: [_1]"
+msgid "Total Cash in Drawer: %1"
+msgstr "Összes készpénz a kasszában: %1"
 
 #: bin/ps.pl:301
-msgid "Less Cash in Till At Start: [_1]"
-msgstr "Kevés készpénz a kasszában ekkortól: [_1]"
+msgid "Less Cash in Till At Start: %1"
+msgstr "Kevés készpénz a kasszában ekkortól: %1"
 
 #: bin/ps.pl:304
-msgid "Cumulative Error: [_1]"
-msgstr "Összesített hiba: [_1]"
+msgid "Cumulative Error: %1"
+msgstr "Összesített hiba: %1"
 
 #: bin/ps.pl:306
-msgid "Reset Till By [_1]"
-msgstr "Kassza alaphelyzetbe [_1]"
+msgid "Reset Till By %1"
+msgstr "Kassza alaphelyzetbe %1"
 
 #: bin/ps.pl:316
-msgid "You are over by [_1]"
-msgstr "Többlete van ennyivel: [_1]"
+msgid "You are over by %1"
+msgstr "Többlete van ennyivel: %1"
 
 #: bin/ps.pl:319
-msgid "You are under by [_1]"
-msgstr "Hiánya van ennyivel: [_1]"
+msgid "You are under by %1"
+msgstr "Hiánya van ennyivel: %1"
 
 #: bin/ps.pl:323
 msgid "Congratulations!  Your till is exactly balanced."
@@ -2258,8 +2328,8 @@ msgid "account cannot be set to any other type of account"
 msgstr "a számla nem állítható be bármilyen más számla típusra"
 
 #: bin/am.pl:165
-msgid "Cannot set multiple options for [_1]"
-msgstr "Nem lehet több opciót beállítani ehhez: [_1]"
+msgid "Cannot set multiple options for %1"
+msgstr "Nem lehet több opciót beállítani ehhez: %1"
 
 #: bin/am.pl:170
 msgid "Account saved!"
@@ -2284,8 +2354,8 @@ msgid "Link"
 msgstr "Kapcsolat"
 
 #: bin/am.pl:271 bin/rp.pl:843 bin/rp.pl:1259
-msgid "[_1] Report"
-msgstr "[_1] jelentés"
+msgid "%1 Report"
+msgstr "%1 jelentés"
 
 #: bin/am.pl:313
 msgid "Delete Account"
@@ -2308,8 +2378,8 @@ msgid "Account does not exist!"
 msgstr "A számla nem létezik!"
 
 #: bin/am.pl:462
-msgid "[_1] GIFI"
-msgstr "[_1] gyűjtőkód"
+msgid "%1 GIFI"
+msgstr "%1 gyűjtőkód"
 
 #: bin/am.pl:496
 msgid "Copy to COA"
@@ -2344,8 +2414,8 @@ msgid "Add Department"
 msgstr "Új center"
 
 #: bin/am.pl:690
-msgid "[_1] Department"
-msgstr "[_1] költséghely/profitcenter"
+msgid "%1 Department"
+msgstr "%1 költséghely/profitcenter"
 
 #: bin/am.pl:707 bin/am.pl:861 bin/am.pl:1030 bin/am.pl:1189 bin/am.pl:2039
 msgid "Description missing!"
@@ -2373,8 +2443,8 @@ msgid "Add Business"
 msgstr "Új partnercsoport"
 
 #: bin/am.pl:845
-msgid "[_1] Business"
-msgstr "[_1] partnercsoport"
+msgid "%1 Business"
+msgstr "%1 partnercsoport"
 
 #: bin/am.pl:863
 msgid "Business saved!"
@@ -2398,8 +2468,8 @@ msgid "Add SIC"
 msgstr "Új TEÁOR/SZJ"
 
 #: bin/am.pl:1012
-msgid "[_1] SIC"
-msgstr "[_1] TEÁOR/SZJ"
+msgid "%1 SIC"
+msgstr "%1 TEÁOR/SZJ"
 
 #: bin/am.pl:1029 bin/am.pl:1188
 msgid "Code missing!"
@@ -2422,8 +2492,8 @@ msgid "Add Language"
 msgstr "Új nyelv"
 
 #: bin/am.pl:1175
-msgid "[_1] Language"
-msgstr "[_1] nyelv"
+msgid "%1 Language"
+msgstr "%1 nyelv"
 
 #: bin/am.pl:1230
 msgid "Language saved!"
@@ -2436,8 +2506,8 @@ msgstr "Nyelv törlése"
 # 95%
 # 97%
 #: bin/am.pl:1255
-msgid "Deleting a language will also delete the templates for the language [_1]"
-msgstr "A nyelv törlése törli a [_1] nyelvhez tartozó sablonokat is"
+msgid "Deleting a language will also delete the templates for the language %1"
+msgstr "A nyelv törlése törli a %1 nyelvhez tartozó sablonokat is"
 
 #: bin/am.pl:1270
 msgid "Language deleted!"
@@ -2469,8 +2539,8 @@ msgid "Taxes"
 msgstr "Adók"
 
 #: bin/am.pl:1745
-msgid "Edit Preferences for [_1]"
-msgstr "[_1] felhasználó beállításainak módosítása"
+msgid "Edit Preferences for %1"
+msgstr "%1 felhasználó beállításainak módosítása"
 
 #: bin/am.pl:1777
 msgid "Password duration must be an integer"
@@ -2515,8 +2585,8 @@ msgstr ""
 "dátum esetén"
 
 #: bin/am.pl:1869
-msgid "Transaction reversal enforced up to [_1]"
-msgstr "[_1] dátumig csak ellentétes előjelű tranzakcióval lehet stornózni"
+msgid "Transaction reversal enforced up to %1"
+msgstr "%1 dátumig csak ellentétes előjelű tranzakcióval lehet stornózni"
 
 # Nyilván számlát nem, leginkább ügyféladatbázis, rendelések/ajánlatok stb. Vagy nem.
 #: bin/am.pl:1873
@@ -2540,8 +2610,8 @@ msgid "Add Warehouse"
 msgstr "Új raktár"
 
 #: bin/am.pl:2023
-msgid "[_1] Warehouse"
-msgstr "[_1] raktár"
+msgid "%1 Warehouse"
+msgstr "%1 raktár"
 
 #: bin/am.pl:2041
 msgid "Warehouse saved!"
@@ -2640,28 +2710,28 @@ msgid "Process Transactions"
 msgstr "Tranzakciók végrehajtása"
 
 #: bin/am.pl:2583
-msgid "Posting Sales Invoice [_1]"
-msgstr "[_1] vevőszámla rögzítése"
+msgid "Posting Sales Invoice %1"
+msgstr "%1 vevőszámla rögzítése"
 
 #: bin/am.pl:2593
-msgid "Posting Vendor Invoice [_1]"
-msgstr "[_1] szállító számla rögzítése"
+msgid "Posting Vendor Invoice %1"
+msgstr "%1 szállító számla rögzítése"
 
 #: bin/am.pl:2605 bin/am.pl:2614
-msgid "Posting Transaction [_1]"
-msgstr "[_1] tranzakció rögzítése"
+msgid "Posting Transaction %1"
+msgstr "%1 tranzakció rögzítése"
 
 #: bin/am.pl:2689
-msgid "Saving [_1] [_2]"
-msgstr "Mentés [_1] [_2]"
+msgid "Saving %1 %2"
+msgstr "Mentés %1 %2"
 
 #: bin/am.pl:2697 bin/am.pl:2794 bin/am.pl:2841
 msgid "failed"
 msgstr "nem sikerült"
 
 #: bin/am.pl:2743
-msgid "Posting GL Transaction [_1]"
-msgstr "[_1] Vegyes könyvelési tranzakció mentése"
+msgid "Posting GL Transaction %1"
+msgstr "%1 Vegyes könyvelési tranzakció mentése"
 
 #: bin/am.pl:2784 bin/am.pl:2831
 msgid "Invalid redirect"
@@ -2977,21 +3047,21 @@ msgstr "váratlan hiba!"
 # 82%
 # 88%
 #: bin/ic.pl:3369
-msgid "[_1]: Vendor not on file!"
-msgstr "[_1]: Szállító nincs az adatbázisban!"
+msgid "%1: Vendor not on file!"
+msgstr "%1: Szállító nincs az adatbázisban!"
 
 # 84%
 # 88%
 #: bin/ic.pl:3447
-msgid "[_1]: Customer not on file!"
-msgstr "[_1]: A vevő hiányzik az adatbázisból!"
+msgid "%1: Customer not on file!"
+msgstr "%1: A vevő hiányzik az adatbázisból!"
 
 # 94%
 # 95%
 #: bin/ic.pl:3609
-msgid "Inventory quantity must be zero before you can set this [_1] obsolete!"
+msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
 msgstr ""
-"Mielőtt ezt az anyagot/árut ( [_1] ) elavultnak nyilvánítja,a mennyiségnek "
+"Mielőtt ezt az anyagot/árut ( %1 ) elavultnak nyilvánítja,a mennyiségnek "
 "nullának kell lennie!"
 
 #: bin/ic.pl:3786
@@ -3466,8 +3536,8 @@ msgstr "Nem lehet vevőszámlát rögzíteni!"
 # 92%
 # 94%
 #: bin/is.pl:1453 bin/ir.pl:1373
-msgid "Are you sure you want to delete Invoice Number [_1]?"
-msgstr "Biztosan törölni szeretné a [_1] számú számlát?"
+msgid "Are you sure you want to delete Invoice Number %1?"
+msgstr "Biztosan törölni szeretné a %1 számú számlát?"
 
 #: bin/is.pl:1475 bin/ir.pl:1388
 msgid "Invoice deleted!"
@@ -3601,8 +3671,8 @@ msgid "None"
 msgstr "Semmi"
 
 #: bin/rp.pl:470 bin/rp.pl:485
-msgid "[_1] To [_2]"
-msgstr "[_1]-tól [_2]-ig"
+msgid "%1 To %2"
+msgstr "%1-tól %2-ig"
 
 #: bin/rp.pl:526
 msgid "Current Earnings"
@@ -3620,14 +3690,14 @@ msgstr "Főkönyvi kivonat"
 #: templates/demo_with_images/income_statement.html:72
 #: templates/demo/income_statement.html:72
 #: templates/xedemo/income_statement.html:72
-msgid "Department: [_1]"
-msgstr "Költséghely/profitcenter: [_1]"
+msgid "Department: %1"
+msgstr "Költséghely/profitcenter: %1"
 
 #: bin/rp.pl:631 templates/demo_with_images/income_statement.html:76
 #: templates/demo/income_statement.html:76
 #: templates/xedemo/income_statement.html:76
-msgid "Project Number: [_1]"
-msgstr "Projekt azonosító: [_1]"
+msgid "Project Number: %1"
+msgstr "Projekt azonosító: %1"
 
 #: bin/rp.pl:682
 msgid "N/A"
@@ -3643,8 +3713,8 @@ msgid "Aged"
 msgstr "Lejárt"
 
 #: bin/rp.pl:1002
-msgid "for Period To [_1]"
-msgstr "időszakhoz [_1]"
+msgid "for Period To %1"
+msgstr "időszakhoz %1"
 
 #: bin/rp.pl:1322 tools/dbstrings:147 tools/dbstrings:161
 #: templates/demo_with_images/statement.html:4
@@ -3659,29 +3729,29 @@ msgid "Copies"
 msgstr "Másolatok"
 
 #: bin/rp.pl:1416
-msgid "Statement - [_1]"
-msgstr "Kimutatás - [_1]"
+msgid "Statement - %1"
+msgstr "Kimutatás - %1"
 
 #: bin/rp.pl:1538
-msgid "Statement sent to [_1]"
-msgstr "Kimutatás elküldve [_1]"
+msgid "Statement sent to %1"
+msgstr "Kimutatás elküldve %1"
 
 #: bin/rp.pl:1662
 msgid "Statements sent to printer!"
 msgstr "A kimutatás elküldésre került a nyomtatóra!"
 
 #: bin/rp.pl:1971
-msgid "Description: [_1]"
-msgstr "Leírás: [_1]"
+msgid "Description: %1"
+msgstr "Leírás: %1"
 
 # Vagy kezdés
 #: bin/rp.pl:1976
-msgid "Source: [_1]"
-msgstr "Bizonylatszám: [_1]"
+msgid "Source: %1"
+msgstr "Bizonylatszám: %1"
 
 #: bin/rp.pl:1981
-msgid "Memo: [_1]"
-msgstr "Megjegyzés: [_1]"
+msgid "Memo: %1"
+msgstr "Megjegyzés: %1"
 
 #: bin/rp.pl:2006
 msgid "Batch"
@@ -3697,8 +3767,8 @@ msgid "Control Code"
 msgstr "Ellenőrző kód"
 
 #: bin/arap.pl:168
-msgid "[_1] Number"
-msgstr "[_1] azonosító"
+msgid "%1 Number"
+msgstr "%1 azonosító"
 
 #: bin/arap.pl:172 UI/employee.html:53 UI/Contact/search.html:85
 #: UI/Contact/history_filter.html:88 UI/Contact/contact.html:762
@@ -3779,8 +3849,8 @@ msgid "time(s)"
 msgstr "-szor"
 
 #: bin/arap.pl:800
-msgid "Recurring Transaction for [_1]"
-msgstr "Ismétlődő tranzakció [_1]"
+msgid "Recurring Transaction for %1"
+msgstr "Ismétlődő tranzakció %1"
 
 #: bin/arap.pl:871
 msgid "Save Schedule"
@@ -3920,8 +3990,8 @@ msgid "Approve"
 msgstr "Jóváhagy"
 
 #: scripts/asset.pl:731
-msgid "Report [_1] on date [_2]"
-msgstr "[_1] jelentés ekkor: [_2]"
+msgid "Report %1 on date %2"
+msgstr "%1 jelentés ekkor: %2"
 
 #: scripts/asset.pl:735 scripts/asset.pl:800 scripts/asset.pl:871
 msgid "Dep. Starts"
@@ -3964,8 +4034,8 @@ msgid "Total Accum. Dep."
 msgstr "Összesített écs."
 
 #: scripts/asset.pl:795
-msgid "Partial Disposal Report [_1] on date [_2]"
-msgstr "Részleges selejtezés jelentés [_1] időpontra [_2]"
+msgid "Partial Disposal Report %1 on date %2"
+msgstr "Részleges selejtezés jelentés %1 időpontra %2"
 
 #: scripts/asset.pl:802
 msgid "Percent Disposed"
@@ -3984,8 +4054,8 @@ msgid "Aquired Value Remaining"
 msgstr ""
 
 #: scripts/asset.pl:866
-msgid "Disposal Report [_1] on date [_2]"
-msgstr "Selejtezés jelentés [_1] időpontra [_2]"
+msgid "Disposal Report %1 on date %2"
+msgstr "Selejtezés jelentés %1 időpontra %2"
 
 #: scripts/asset.pl:872
 msgid "Disposal Date"
@@ -4367,8 +4437,8 @@ msgid "Delete Vouchers"
 msgstr "Utalványok törlése"
 
 #: scripts/setup.pl:66 scripts/setup.pl:76
-msgid "Cannot find Contrib script [_1] in [_2]."
-msgstr "Nem található a [_1] Contrib szkript ezen az útvonalon: [_2]."
+msgid "Cannot find Contrib script %1 in %2."
+msgstr "Nem található a %1 Contrib szkript ezen az útvonalon: %2."
 
 #: scripts/setup.pl:70 scripts/setup.pl:80
 msgid ""
@@ -4722,16 +4792,16 @@ msgid "Trillion"
 msgstr "billió"
 
 #: LedgerSMB/Form.pm:674 UI/lib/elements.html:360
-msgid "Action: [_1], ID: [_2]"
-msgstr "Művelet: [_1], ID: [_2]"
+msgid "Action: %1, ID: %2"
+msgstr "Művelet: %1, ID: %2"
 
 #: LedgerSMB/GL.pm:177 LedgerSMB/IS.pm:1264 LedgerSMB/IR.pm:353
 msgid "Batch ID Missing"
 msgstr "Köteg azonosító hiányzik"
 
 #: LedgerSMB/GL.pm:226
-msgid "Account [_1] not found"
-msgstr "[_1] számla nem található"
+msgid "Account %1 not found"
+msgstr "%1 számla nem található"
 
 #: LedgerSMB/RP.pm:1477
 msgid "Invalid Year-end filter request!"
@@ -4754,8 +4824,8 @@ msgid "Password required"
 msgstr "Jelszó megadása szükséges"
 
 #: LedgerSMB/DBObject/Asset_Class.pm:66 LedgerSMB/DBObject/Asset.pm:109
-msgid "Unable to save [_1] object"
-msgstr "A(z) [_1] objektum nem menthető el."
+msgid "Unable to save %1 object"
+msgstr "A(z) %1 objektum nem menthető el."
 
 # 75%
 #: LedgerSMB/DBObject/Payment.pm:475
@@ -4777,9 +4847,9 @@ msgid "other"
 msgstr "egyéb"
 
 #: LedgerSMB/DBObject/Payment.pm:754
-msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
+msgid "Exchange rate inconsistency with database.  Got %1, expected %2"
 msgstr ""
-"Átvátlási árfolyam nem egyezik az adatbázisban. [_1]-et találtam, a várt [_2] "
+"Átvátlási árfolyam nem egyezik az adatbázisban. %1-et találtam, a várt %2 "
 "helyett"
 
 #: LedgerSMB/DBObject/Draft.pm:56 LedgerSMB/DBObject/Draft.pm:75
@@ -5511,8 +5581,8 @@ msgid "Password"
 msgstr "Jelszó"
 
 #: UI/login.html:30 UI/menu/expanding.html:45
-msgid "LedgerSMB [_1]"
-msgstr "LedgerSMB [_1]"
+msgid "LedgerSMB %1"
+msgstr "LedgerSMB %1"
 
 #: UI/login.html:37 UI/taxform/details_report.html:18
 #: UI/taxform/summary_report.html:18 UI/Contact/contact.html:42
@@ -5556,12 +5626,12 @@ msgid "Activate Audit trail"
 msgstr "Audit követés aktiválás"
 
 #: UI/am-company-logo.html:6
-msgid "Version [_1]"
-msgstr "Verzió [_1]"
+msgid "Version %1"
+msgstr "Verzió %1"
 
 #: UI/am-company-logo.html:7
-msgid "Company: [_1]"
-msgstr "Cég: [_1]"
+msgid "Company: %1"
+msgstr "Cég: %1"
 
 #: UI/am-company-logo.html:12 UI/employee.html:94 UI/Contact/contact.html:78
 #: t/data/04-complex_template.html:36
@@ -5601,8 +5671,8 @@ msgid "Difference"
 msgstr "Eltérés"
 
 #: UI/io-email.html:7
-msgid "E-mail [_1]"
-msgstr "Email [_1]"
+msgid "E-mail %1"
+msgstr "Email %1"
 
 #: UI/io-email.html:18 UI/rp-email.html:17
 msgid "Cc"
@@ -5827,8 +5897,8 @@ msgid "LedgerSMB Accounting Menu"
 msgstr "LedgerSMB számvitel menü"
 
 #: UI/menu/expanding.html:46
-msgid "Logged into [_1]"
-msgstr "Bejelentkezve [_1]"
+msgid "Logged into %1"
+msgstr "Bejelentkezve %1"
 
 #: UI/rc-reconciliation.html:80 UI/reconciliation/report.html:68
 #: UI/reconciliation/report.html:131 UI/reconciliation/report.html:192
@@ -6201,7 +6271,7 @@ msgstr "Felhasználónév:"
 
 #: UI/Admin/user_search.html:41
 msgid "Tax ID"
-msgstr "Adó ID"
+msgstr "Adószám"
 
 #: UI/Admin/user_search.html:51
 msgid "Date of Birth"
@@ -6355,8 +6425,8 @@ msgstr "Fizetendő"
 
 #. not $i.7
 #: UI/payments/payments_detail.html:362
-msgid "Locked by [_1]"
-msgstr "Zárolta [_1]"
+msgid "Locked by %1"
+msgstr "Zárolta %1"
 
 #: UI/payments/payments_detail.html:374
 msgid "Contact Total (if paying \"some\")"
@@ -6376,8 +6446,8 @@ msgid "Checking Job"
 msgstr "Feladat ellenőrzése"
 
 #: UI/payments/check_job.html:14
-msgid "Checking Job [_1]"
-msgstr "Feladat ellenőrzése [_1]"
+msgid "Checking Job %1"
+msgstr "Feladat ellenőrzése %1"
 
 #: UI/payments/check_job.html:17
 msgid "Status: Still Running"
@@ -6458,8 +6528,8 @@ msgid "Start Source Numbering At:"
 msgstr "Bizonylatszám számozás kezdete:"
 
 #: UI/lib/ui-header.html:28
-msgid "Warning:  Your password will expire in [_1]"
-msgstr "Figyelem! A jelszava érvényessége [_1] "
+msgid "Warning:  Your password will expire in %1"
+msgstr "Figyelem! A jelszava érvényessége %1 "
 
 #. ifs -
 #. block
@@ -6468,8 +6538,8 @@ msgstr "Figyelem! A jelszava érvényessége [_1] "
 #. block
 #. if action
 #: UI/am-userconfig.html:9 UI/users/preferences.html:17
-msgid "Your password will expire in [_1]"
-msgstr "A jelszava érvényessége még [_1]"
+msgid "Your password will expire in %1"
+msgstr "A jelszava érvényessége még %1"
 
 #: UI/am-userconfig.html:21 UI/users/preferences.html:34
 msgid "Confirm"
@@ -6599,8 +6669,8 @@ msgstr "Összes értékcsökkentése"
 
 # 79%
 #: UI/rp-email.html:8
-msgid "E-mail Statement to [_1]"
-msgstr "Kimutatás küldése e-mail-ben [_1]"
+msgid "E-mail Statement to %1"
+msgstr "Kimutatás küldése e-mail-ben %1"
 
 #: UI/file/attachment_screen.html:22
 msgid "Attach File"
@@ -6921,12 +6991,12 @@ msgid "Note Class"
 msgstr "Megjegyzés osztálya"
 
 #: UI/Contact/contact.html:1159 t/data/04-complex_template.html:618
-msgid "Entered at: [_1]"
-msgstr "Bevitel: [_1]"
+msgid "Entered at: %1"
+msgstr "Bevitel: %1"
 
 #: UI/Contact/contact.html:1160
-msgid "Author: [_1]"
-msgstr "Szerző: [_1]"
+msgid "Author: %1"
+msgstr "Szerző: %1"
 
 #: UI/am-taxes.html:12
 msgid "Rate (%)"
@@ -6945,8 +7015,8 @@ msgid "Tax Rules"
 msgstr "Adó szabályok"
 
 #: UI/users/preferences.html:12
-msgid "Preferences for [_1]"
-msgstr "[_1] beállításai"
+msgid "Preferences for %1"
+msgstr "%1 beállításai"
 
 #: UI/users/preferences.html:14
 msgid "Preferences Saved"
@@ -7178,8 +7248,8 @@ msgstr "Szállítási cím:"
 #: templates/xedemo/request_quotation.html:79
 #: templates/xedemo/sales_quotation.html:44 templates/xedemo/pick_list.html:51
 #: templates/xedemo/sales_order.html:49 templates/xedemo/packing_list.html:52
-msgid "Attn: [_1]"
-msgstr "Címzett: [_1]"
+msgid "Attn: %1"
+msgstr "Címzett: %1"
 
 # 77%
 #: templates/demo_with_images/packing_list.html:56
@@ -7222,8 +7292,8 @@ msgstr "Címzett: [_1]"
 #: templates/xedemo/sales_order.html:52 templates/xedemo/sales_order.html:80
 #: templates/xedemo/packing_list.html:56 templates/xedemo/letterhead.html:21
 #: templates/xedemo/printPayment.html:27
-msgid "Tel: [_1]"
-msgstr "Telefon: [_1]"
+msgid "Tel: %1"
+msgstr "Telefon: %1"
 
 #: templates/demo_with_images/packing_list.html:60
 #: templates/demo_with_images/request_quotation.html:59
@@ -7264,8 +7334,8 @@ msgstr "Telefon: [_1]"
 #: templates/xedemo/sales_order.html:55 templates/xedemo/sales_order.html:83
 #: templates/xedemo/statement.html:54 templates/xedemo/packing_list.html:60
 #: templates/xedemo/letterhead.html:22
-msgid "Fax: [_1]"
-msgstr "Fax: [_1]"
+msgid "Fax: %1"
+msgstr "Fax: %1"
 
 # 77%
 #: templates/demo_with_images/packing_list.html:78
@@ -7318,13 +7388,13 @@ msgstr "Sorozatszám"
 #: templates/xedemo/invoice.html:286 templates/xedemo/packing_list.html:176
 msgid ""
 "Items returned are subject to a 10% restocking charge. A return authorization "
-"must be obtained from [_1] before goods are returned. Returns must be shipped "
-"prepaid and properly insured. [_1] will not be responsible for damages during "
+"must be obtained from %1 before goods are returned. Returns must be shipped "
+"prepaid and properly insured. %1 will not be responsible for damages during "
 "transit."
 msgstr ""
 "A visszaszállított termékekért 10% újraraktározási költséget számítunk fel. A "
-"visszaszállítás megkezdése előtt [_1] hivatalos engedélye szükséges. A "
-"visszaszállítást előre kell fizetni és megfelelő biztosítással ellátni. [_1] "
+"visszaszállítás megkezdése előtt %1 hivatalos engedélye szükséges. A "
+"visszaszállítást előre kell fizetni és megfelelő biztosítással ellátni. %1 "
 "semmilyen felelősséget nem vállal a szállítás folyamán keletkezett károkért."
 
 # 80%
@@ -7392,16 +7462,16 @@ msgstr "Kedv.%"
 #: templates/xedemo/purchase_order.html:184
 #: templates/xedemo/sales_quotation.html:151
 #: templates/xedemo/sales_order.html:183
-msgid "Terms Net [_1] days"
-msgstr "Fizetési határidő [_1] nap"
+msgid "Terms Net %1 days"
+msgstr "Fizetési határidő %1 nap"
 
 #: templates/demo_with_images/sales_order.html:211
 #: templates/demo_with_images/sales_quotation.html:179
 #: templates/demo/sales_quotation.html:179 templates/demo/sales_order.html:211
 #: templates/xedemo/sales_quotation.html:179
 #: templates/xedemo/sales_order.html:211
-msgid "All prices in [_1] Funds"
-msgstr "Minden ár [_1]ban értendő"
+msgid "All prices in %1 Funds"
+msgstr "Minden ár %1ban értendő"
 
 #: templates/demo_with_images/sales_order.html:225
 #: templates/demo/sales_order.html:225 templates/xedemo/sales_order.html:225
@@ -7478,19 +7548,19 @@ msgstr "Adótartalommal"
 #: templates/demo_with_images/purchase_order.html:203
 #: templates/demo/purchase_order.html:203
 #: templates/xedemo/purchase_order.html:203
-msgid "All prices in [_1] funds"
-msgstr "Minden ár [_1]ban értendő"
+msgid "All prices in %1 funds"
+msgstr "Minden ár %1ban értendő"
 
 #. WE NEED TO KNOW HOW MANY COLUMNS WE ARE USING, PLEASE DO NOT MOVE THE NEXT LINE -
 #: templates/demo_with_images/printPayment.html:26
 #: templates/demo/printPayment.html:26 templates/xedemo/printPayment.html:26
-msgid "Address: [_1]"
-msgstr "Cím: [_1]"
+msgid "Address: %1"
+msgstr "Cím: %1"
 
 #: templates/demo_with_images/printPayment.html:32
 #: templates/demo/printPayment.html:32 templates/xedemo/printPayment.html:32
-msgid "Payment Order Number [_1]"
-msgstr "Kifizetés rendelés száma [_1]"
+msgid "Payment Order Number %1"
+msgstr "Kifizetés rendelés száma %1"
 
 #: templates/demo_with_images/printPayment.html:66
 #: templates/demo/printPayment.html:66 templates/xedemo/printPayment.html:66
@@ -7529,8 +7599,8 @@ msgstr "Jóváhagyó aláírása"
 
 #: templates/demo_with_images/balance_sheet.html:64
 #: templates/demo/balance_sheet.html:64 templates/xedemo/balance_sheet.html:64
-msgid "as at [_1]"
-msgstr "fordulónap [_1]"
+msgid "as at %1"
+msgstr "fordulónap %1"
 
 # 90%
 #: templates/demo_with_images/balance_sheet.html:68
@@ -7607,13 +7677,13 @@ msgstr "Művelet/Szolgáltatáskód"
 #: templates/demo_with_images/ap_transaction.html:62
 #: templates/demo/ap_transaction.html:62
 #: templates/xedemo/ap_transaction.html:62
-msgid "Taxnumber: [_1]"
-msgstr "Adószám: [_1]"
+msgid "Taxnumber: %1"
+msgstr "Adószám: %1"
 
 #: templates/demo_with_images/statement.html:51
 #: templates/demo/statement.html:51 templates/xedemo/statement.html:51
-msgid "Tel: [_1],"
-msgstr "Telefon: [_1],"
+msgid "Tel: %1,"
+msgstr "Telefon: %1,"
 
 # 83%
 #: templates/demo_with_images/statement.html:74
@@ -7643,13 +7713,13 @@ msgstr "Összes kintlévőség"
 
 #: templates/demo_with_images/statement.html:138
 #: templates/demo/statement.html:138 templates/xedemo/statement.html:138
-msgid "All amounts in [_1] Funds"
-msgstr "A teljes összeg [_1]ban értendő"
+msgid "All amounts in %1 Funds"
+msgstr "A teljes összeg %1ban értendő"
 
 #: templates/demo_with_images/statement.html:139
 #: templates/demo/statement.html:139 templates/xedemo/statement.html:139
-msgid "Please make check payable to [_1]."
-msgstr "Kérem állítson ki fizethető csekket [_1] számára."
+msgid "Please make check payable to %1."
+msgstr "Kérem állítson ki fizethető csekket %1 számára."
 
 #: templates/demo_with_images/invoice.html:197 templates/demo/invoice.html:197
 #: templates/xedemo/invoice.html:197
@@ -7658,8 +7728,8 @@ msgstr "Esedékes egyenleg"
 
 #: templates/demo_with_images/invoice.html:222 templates/demo/invoice.html:222
 #: templates/xedemo/invoice.html:222
-msgid "All prices in [_1]"
-msgstr "A megadott árak [_1]ban értendők"
+msgid "All prices in %1"
+msgstr "A megadott árak %1ban értendők"
 
 #: templates/demo_with_images/invoice.html:274 templates/demo/invoice.html:274
 #: templates/xedemo/invoice.html:274
@@ -7668,13 +7738,13 @@ msgstr "Köszönjük hogy nálunk vásárolt!"
 
 #: templates/demo_with_images/invoice.html:285 templates/demo/invoice.html:285
 #: templates/xedemo/invoice.html:285
-msgid "Payment due by [_1]."
-msgstr "Kifizetés lejárt [_1] nappal."
+msgid "Payment due by %1."
+msgstr "Kifizetés lejárt %1 nappal."
 
 #: templates/demo_with_images/invoice.html:303 templates/demo/invoice.html:303
 #: templates/xedemo/invoice.html:303
-msgid "Registration [_1]"
-msgstr "Regisztráció [_1]"
+msgid "Registration %1"
+msgstr "Regisztráció %1"
 
 #: templates/demo_with_images/sales_quotation.html:194
 #: templates/demo/sales_quotation.html:194
@@ -7732,9 +7802,9 @@ msgstr "Sorozatszám"
 #~ msgid "Reject"
 #~ msgstr "Visszautasít"
 
-#~ msgid "Cannot specify both debits and credits for budget line [_1]"
+#~ msgid "Cannot specify both debits and credits for budget line %1"
 #~ msgstr ""
-#~ "Nem specifikálható a tartozik és követel is a költségvetés [_1] sorához"
+#~ "Nem specifikálható a tartozik és követel is a költségvetés %1 sorához"
 
 #~ msgid "Entered by"
 #~ msgstr "Rögzítette"
@@ -7788,8 +7858,8 @@ msgstr "Sorozatszám"
 #~ msgid "Error from Function"
 #~ msgstr "Hiba a funkcióban"
 
-#~ msgid "No Account id for [_1]"
-#~ msgstr "Nincs számla azonosító ehhez: [_1]"
+#~ msgid "No Account id for %1"
+#~ msgstr "Nincs számla azonosító ehhez: %1"
 
 #~ msgid "Starting Balance"
 #~ msgstr "Nyitó egyenleg"
@@ -8131,11 +8201,11 @@ msgstr "Sorozatszám"
 #~ msgid "Accounting Menu"
 #~ msgstr "Menü"
 
-#~ msgid "Add AP Transaction"
-#~ msgstr "Új szállítói tranzakció"
+msgid "Add AP Transaction"
+msgstr "Új szállítói tranzakció"
 
-#~ msgid "Add AR Transaction"
-#~ msgstr "Új vevő tranzakció"
+msgid "Add AR Transaction"
+msgstr "Új vevő tranzakció"
 
 #~ msgid "Add Cash Transfer Transaction"
 #~ msgstr "Új számlák közötti pénzmozgás"
@@ -8485,8 +8555,8 @@ msgstr "Sorozatszám"
 #~ msgid "Item already on pricelist!"
 #~ msgstr "A cikk már szerepel az árlistában!"
 
-#~ msgid "Items"
-#~ msgstr "Tételek"
+msgid "Items"
+msgstr "Tételek"
 
 #~ msgid ""
 #~ "Leave host and port field empty unless you want to make a remote "
@@ -8546,11 +8616,11 @@ msgstr "Sorozatszám"
 #~ msgid "No email address for"
 #~ msgstr "Nincs e-mail címe:"
 
-#~ msgid "Non-taxable Purchases"
-#~ msgstr "Adómentes beszerzések"
+msgid "Non-taxable Purchases"
+msgstr "Adómentes beszerzések"
 
-#~ msgid "Non-taxable Sales"
-#~ msgstr "Adómentes eladások"
+msgid "Non-taxable Sales"
+msgstr "Adómentes eladások"
 
 #~ msgid "Nothing open!"
 #~ msgstr "Nincs nyitva"
@@ -8705,11 +8775,11 @@ msgstr "Sorozatszám"
 #~ msgid "Tax Number / SSN"
 #~ msgstr "Tax Number / SSN"
 
-#~ msgid "Tax collected"
-#~ msgstr "Fizetendő ÁFA"
+msgid "Tax collected"
+msgstr "Fizetendő ÁFA"
 
-#~ msgid "Tax paid"
-#~ msgstr "Levonható ÁFA"
+msgid "Tax paid"
+msgstr "Levonható ÁFA"
 
 #~ msgid "Templates"
 #~ msgstr "Sablonok"
