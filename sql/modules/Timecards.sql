@@ -134,17 +134,17 @@ SELECT j.id, j.description, j.qty, j.allocated, j.checkedin::time as checkedin,
        ee.employeenumber, e.name AS employee, j.parts_id, j.sellprice
   FROM jcitems j
   JOIN parts p ON p.id = j.parts_id
-  JOIN person ON person.id = j.person_id
-  JOIN entity_employee ee ON ee.entity_id = person.entity_id
+  JOIN entity_employee ee ON ee.entity_id = j.person_id
   JOIN entity e ON ee.entity_id = e.id
-  JOIN bu_tree bu ON bu.id = j.business_unit_id
+  LEFT JOIN bu_tree bu ON bu.id = j.business_unit_id 
  WHERE (p.partnumber = $2 OR $2 IS NULL)
        AND (ee.entity_id = $3 OR $3 IS NULL)
        AND (j.checkedin::date <= $4 OR $4 IS NULL)
        AND (j.checkedin::date >= $5 OR $5 IS NULL)
-       AND (j.qty > j.allocated AND $6)
-       AND (j.qty <= j.allocated AND $7)
-       AND (j.jctype = $8 OR $8 is null);
+       AND (((j.qty > j.allocated or j.allocated is null)  AND $6)
+            OR (j.qty <= j.allocated AND $7))
+       AND (j.jctype = $8 OR $8 is null)
+       AND (bu.path IS NOT NULL OR $1 = '{}' OR $1 IS NULL)
 $$;
 
 CREATE OR REPLACE FUNCTION timecard__allocate(in_id int, in_amount numeric)

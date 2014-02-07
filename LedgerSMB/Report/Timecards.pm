@@ -184,7 +184,7 @@ sub run_report {
     for my $row (@rows){
         $row->{"day$row->{dow}"} = $row->{qty};
     }
-    $self->rows(@rows);
+    $self->rows(\@rows);
 }
 
 =back
