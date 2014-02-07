@@ -118,7 +118,7 @@ PROCESS dynatable
 		text =  text('Save Contact'),
 		class = "submit"
 		} #' ?>
-	<?lsmb IF contact.defined ?> 
+	<?lsmb IF request.contact.defined ?> 
 	<?lsmb PROCESS button element_data = {
 		name = "action",
 		value = "save_contact_new",
