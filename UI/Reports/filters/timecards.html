@@ -18,6 +18,25 @@
 </tr>
 <?lsmb PROCESS employee_row ?>
 <?lsmb PROCESS date_row ?>
+<tr>
+   <th>&nbsp;</th>
+   <td><div class="input">
+        <?lsmb PROCESS input element_data = {
+                  type = 'checkbox' 
+                  name = 'open'
+                 value = '1'
+               checked = 'CHECKED'
+                 label = text('Open')
+         } ?></div><div class="input">
+         <?lsmb PROCESS input element_data = {
+                  type = 'checkbox' 
+                  name = 'closed'
+                 value = '1'
+               checked = 'CHECKED'
+                 label = text('Closed')
+         } ?></div>
+   </td>
+</tr>
 <tr id="buttonrow">
  <td><?lsmb PROCESS button element_data = {
                  text = text('Search')
