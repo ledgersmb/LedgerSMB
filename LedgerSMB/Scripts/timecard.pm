@@ -240,6 +240,9 @@ This routine retrieves a timecard and sends it to the display.
 sub get {
     my ($request) = @_;
     my $tcard = LedgerSMB::Timecard->get($request->{id});
+    $tcard->{transdate} = LedgerSMB::PGDate->from_db(
+              $tcard->checkedin->to_db, 
+             'date');
     display($tcard);
 }
 
