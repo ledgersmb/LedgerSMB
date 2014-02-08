@@ -1386,7 +1386,7 @@ sub e_mail {
 
     &print_options;
 
-    for (qw(subject message type sendmode format action nextsub)) {
+    for (qw(subject message type sendmode format action nextsub email)) {
         delete $form->{$_};
     }
 
