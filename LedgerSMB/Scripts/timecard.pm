@@ -143,6 +143,7 @@ sub save {
     );
     $request->{jctype} ||= 1;
     $request->{total} = $request->{qty} + $request->{non_chargeable};
+    $request->{checkedin} = $request->{transdate};
     my $timecard = LedgerSMB::Timecard->new(%$request);
     $timecard->save;
     $request->{id} = $timecard->id;
@@ -163,7 +164,8 @@ sub save_week {
     for my $row(1 .. $request->{rowcount}){
         for my $dow (0 .. 6){
             my $date = $request->{"transdate_$dow"};
-            my $hash = { transdate => LedgerSMB::PGDate->from_input($date) };
+            my $hash = { transdate => LedgerSMB::PGDate->from_input($date),
+                         checkedin => LedgerSMB::PGDate->from_input($date), };
             $date =~ s#\D#_#g;
             next unless $request->{"partnumber_${date}_${row}"};
             $hash->{$_} = $request->{"${_}_${date}_${row}"} 
