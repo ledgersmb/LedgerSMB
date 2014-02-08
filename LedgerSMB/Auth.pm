@@ -102,7 +102,7 @@ sub http_error {
         );
     }
     print $err->{$errcode}->{message};
-    return;
+    die;
 }
 
 =head1 COPYRIGHT
