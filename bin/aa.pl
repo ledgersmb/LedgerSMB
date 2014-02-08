@@ -112,7 +112,7 @@ sub new_screen {
 }
 
 sub add {
-    $form->{title} = $locale->text("Add");
+    $form->{title} = "Add";
 	
     $form->{callback} =
 "$form->{script}?action=add&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -407,7 +407,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 
 sub form_header {
 
-    $title = $locale->text("$form->{title}");
+    $title = $form->{title};
 
     if($form->{batch_id})
     {
@@ -426,7 +426,7 @@ sub form_header {
     my $title_msgid="$title $form->{ARAP} Transaction";
     if ($form->{reverse} == 0){
        #$form->{title} = $locale->text("[_1] [_2] Transaction", $title, $form->{ARAP});
-       $form->{title} = $locale->text($title_msgid);
+       $form->{title} = $locale->text("$title_msgid");
     }
     elsif($form->{reverse} == 1) {
        if ($form->{subtype} eq 'credit_note'){
