@@ -25,6 +25,7 @@ use LedgerSMB::App_State;
 use LedgerSMB::Upgrade_Tests;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
+use LedgerSMB::Setting;
 use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
@@ -980,10 +981,15 @@ sub run_upgrade {
     process_and_run_upgrade_script($request, $database, "lsmb$v",
 				   "$dbinfo->{version}-1.4");
 
-    if ($v eq '1.2'){
-	create_initial_user($request);
+    if ($v ne '1.2'){
+	$request->{only_templates} = 1;
+    }
+    my $templates = LedgerSMB::Setting->get('templates');
+    if ($templates){
+       $request->{template_dir} = $templates;
+       load_templates($request);
     } else {
-	rebuild_modules($request);
+       template_screen($request);
     }
 }
 
