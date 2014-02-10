@@ -1433,6 +1433,7 @@ voucher. $$;
 
 COMMENT ON COLUMN voucher.id IS $$ This is simply a surrogate key for easy reference.$$;
 
+--TODO 1.5 invoice_id references invoice(id)
 CREATE TABLE acc_trans (
   trans_id int NOT NULL REFERENCES transactions(id),
   chart_id int NOT NULL REFERENCES  account(id),
