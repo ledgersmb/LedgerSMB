@@ -531,7 +531,9 @@ INSERT INTO partscustomer SELECT * FROM lsmb13.partscustomer;
 INSERT INTO audittrail SELECT * FROM lsmb13.audittrail where person_id is not null;
 INSERT INTO translation SELECT * FROM lsmb13.translation;
 INSERT INTO parts_translation SELECT * FROM lsmb13.parts_translation;
-INSERT INTO user_preference SELECT * FROM lsmb13.user_preference;
+INSERT INTO user_preference 
+SELECT id, language, stylesheet, printer, dateformat, numerformat
+  FROM lsmb13.user_preference;
 --INSERT INTO recurring SELECT * FROM lsmb13.recurring;--tshvr4 fields differ
 INSERT INTO recurring(id,reference,startdate,nextdate,enddate,howmany,payment) SELECT id,reference,startdate,nextdate,enddate,howmany,payment FROM lsmb13.recurring;
 INSERT INTO payment_type SELECT * FROM lsmb13.payment_type;
