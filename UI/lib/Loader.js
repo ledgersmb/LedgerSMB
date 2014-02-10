@@ -134,11 +134,19 @@ function(
                                     require(['lsmb/accounts/AccountSelector',
                                              'dojo/ready'],
                                     function(accountselector, ready){
+                                      var value = input.value;
                                       ready(function(){
+                                          console.log(input);
                                           return new accountselector({
-                                              "name": input.name
+                                              "name": input.name,
+                                             "value": value
                                           }, input);
                                       });
+                                      ready(function(){
+                                         var widget = registry.byId(input.id);
+                                         console.log(widget);
+                                         widget.set('value', value); 
+                                      });    
                                     });
                                  },
                      '__default': function(input){
