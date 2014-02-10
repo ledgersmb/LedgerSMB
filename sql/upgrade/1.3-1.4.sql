@@ -532,7 +532,7 @@ INSERT INTO audittrail SELECT * FROM lsmb13.audittrail where person_id is not nu
 INSERT INTO translation SELECT * FROM lsmb13.translation;
 INSERT INTO parts_translation SELECT * FROM lsmb13.parts_translation;
 INSERT INTO user_preference 
-SELECT id, language, stylesheet, printer, dateformat, numerformat
+SELECT id, language, stylesheet, printer, dateformat, numberformat
   FROM lsmb13.user_preference;
 --INSERT INTO recurring SELECT * FROM lsmb13.recurring;--tshvr4 fields differ
 INSERT INTO recurring(id,reference,startdate,nextdate,enddate,howmany,payment) SELECT id,reference,startdate,nextdate,enddate,howmany,payment FROM lsmb13.recurring;
