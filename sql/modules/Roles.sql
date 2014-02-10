@@ -446,7 +446,7 @@ SELECT lsmb__grant_role('sales_quotation_list', 'file_read');
 SELECT lsmb__grant_perms('sales_quotation_list', obj, 'SELECT')
   FROM unnest(array['oe'::text, 'orderitems', 'business_unit_oitem']) obj;
 
-SELECT lsmb__grant_menu('sales_quotation_list', 54, 'allow');
+SELECT lsmb__grant_menu('sales_quotation_list', 71, 'allow');
 
 SELECT lsmb__create_role('ar_all');
 SELECT lsmb__grant_role('ar_all', rname)
