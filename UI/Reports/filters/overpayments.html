@@ -1,0 +1,63 @@
+<?lsmb INCLUDE 'ui-header.html';
+      PROCESS 'elements.html';
+      PROCESS 'report_base.html'; ?>
+<body class="<?lsmb dojo_theme ?>">
+<div class="listtop"><?lsmb text('List Overpayments') ?></div>
+<form action="reports.pl" method="get">
+<table>
+ <?lsmb PROCESS date_row ?>
+ <tr>
+    <th><?lsmb text('Control Code') ?></th>
+    <td><?lsmb PROCESS input element_data = {
+         name = 'control_code'
+         type = 'text'
+         size = '16'
+        value = control_code
+        class = 'control-code'
+    } ?></td>
+ </tr>
+ <tr>
+    <th><?lsmb IF account_class == 1; text('Vendor Number'); END;
+              IF account_class == 2; text('Customer Number'); END;
+               ?></th>
+    <td><?lsmb PROCESS input element_data = {
+         name = 'meta_number'
+         type = 'text'
+         size = '16'
+        value = meta_number
+        class = 'control-code'
+    } ?></td>
+ </tr>
+ <tr>
+    <th><?lsmb text('Name') ?></th>
+    <td><?lsmb PROCESS input element_data = {
+         name = 'name_part'
+         type = 'text'
+         size = '32'
+        value = name_part
+        class = 'name'
+    } ?></td>
+ </tr>
+</table>
+<?lsmb PROCESS button element_data = {
+      name = 'action'
+     value = "search_overpayments"
+      type = 'submit'
+     class = 'submit'
+      text = text('Search')
+};
+ PROCESS input element_data = {
+      name = "account_class"
+     value = account_class
+      type = 'hidden'
+      
+};
+ PROCESS input element_data = {
+      name = "batch_id"
+     value = batch_id
+      type = 'hidden'
+      
+} ?>
+</form>
+</div>
+</body>
