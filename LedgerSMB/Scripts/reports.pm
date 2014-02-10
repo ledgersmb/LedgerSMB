@@ -188,7 +188,8 @@ Searches overpayments based on inputs.
 sub search_overpayments {
     my ($request) = @_;
     my $hiddens = {};
-    $hiddens->{$_} = $request->{$_} for qw(batch_id currency exchangerate);
+    $hiddens->{$_} = $request->{$_} for qw(batch_id currency exchangerate
+                                        post_date batch_class account_class);
     $request->{hiddens} = $hiddens;
     LedgerSMB::Report::Listings::Overpayments->new(%$request)->render($request);
 }
@@ -197,9 +198,10 @@ sub reverse_overpayment {
     my ($request) = @_;
     for my $rc (1 .. $request->{rowcount_}){
         next unless $request->{"select_$rc"};
-        LedgerSMB::DBObject::Payment->overpayment_reverse(
-             $request->{"select_$rc"}, $request->{batch_id}
-        );
+        my $args = {id => $request->{"select_$rc"}};
+        $args->{$_} = $request->{$_} for qw(post_date batch_id account_class
+                                            exchangerate, curr);
+        LedgerSMB::DBObject::Payment->overpayment_reverse($args);
     }
     $request->{report_name} = 'overpayments';
     start_report($request);

@@ -1550,12 +1550,16 @@ SELECT o.payment_id, e.name, o.available, g.transdate,
        ($5 IS NULL OR e.name @@ plainto_tsquery($5));
 $$;
 
-CREATE OR REPLACE FUNCTION overpayment__reverse 
+DROP FUNCTION IF EXISTS overpayment__reverse
 (in_id int, in_transdate date, in_batch_id int, in_account_class int,
-in_cash_accno text, in_exchangerate numeric, in_curr char(3))
+in_cash_accno text, in_exchangerate numeric, in_curr char(3));
+
+CREATE OR REPLACE FUNCTION overpayment__reverse 
+(in_id int, in_transdate date, in_batch_id int, in_account_class int, in_exchangerate numeric, in_curr char(3))
 returns bool LANGUAGE PLPGSQL AS
 $$
 declare t_id int;
+        in_cash_accno text;
 BEGIN
 
 -- reverse overpayment gl
@@ -1575,10 +1579,12 @@ SELECT in_transdate, t_id, chart_id, amount * -1
  WHERE trans_id = in_id;
 
 -- reverse overpayment usage
-SELECT payment__reverse(ac.source, ac.transdate, eca.id, in_cash_accno,
+SELECT payment__reverse(ac.source, ac.transdate, eca.id, accno,
         in_transdate, eca.entity_class, in_batch_id, null, 
         in_exchangerate, in_currency)
   FROM acc_trans ac
+  JOIN account a ON ac.chart_id = a.id
+  JOIN account_link al ON a.id = al.account_id AND description like 'A%paid'
   JOIN (select id, entity_credit_account FROM ar UNION
         select id, entity_credit_account from ap) a ON a.id = ac.trans_id
   JOIN entity_credit_account eca ON a.entity_credit_account = eca.id
@@ -1586,7 +1592,8 @@ SELECT payment__reverse(ac.source, ac.transdate, eca.id, in_cash_accno,
   JOIN overpayment op ON op.id = pl.payment_id
   JOIN payment p ON p.id = o.payment_id
  WHERE p.gl_id = in_id
-GROUP BY ac.source, ac.transdate, eca.id, eca.entity_class;
+GROUP BY ac.source, ac.transdate, eca.id, eca.entity_class,
+         a.accno, al.description;
 
 UPDATE overpayment set available = 0 
  WHERE payment_id = (select id from payment where gl_id = in_id);

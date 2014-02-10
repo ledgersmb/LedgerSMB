@@ -52,7 +52,7 @@ FOREACH item = hidden;
 <?lsmb 
 
 FOREACH row IN search_results;
-     row.row_id = row.id;
+     row.row_id = row.id _ "&post_date=" _ row.default_date;
 END;
 
 PROCESS dynatable 

@@ -815,9 +815,14 @@ return @{$self->{available_overpayment_amount}};
 =cut
 
 sub overpayment_reverse {
-    my ($self, $payment, $batch_id) = @_;
+    my ($self, $args) = @_;
     __PACKAGE__->call_procedure(procname => 'payment__reverse_overpayment',
-                                     args => [] );
+                                     args => [$args->{id},
+                                              $args->{post_date},
+                                              $args->{batch_id},
+                                              $args->{account_class},
+                                              $args->{exchangerate},
+                                              $args->{curr}] );
 }
 
 =item init
