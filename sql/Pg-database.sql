@@ -3352,7 +3352,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 184	template_name	receipt	517
 242	template_name	letterhead	649
 188	menu	1	521
-189	module	templates.pl	522
+189	module	template.pl	522
 189	action	display	523
 189	template_name	pos_invoice	524
 189	format	txt	525
