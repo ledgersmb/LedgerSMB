@@ -1034,11 +1034,13 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
                     'custom_table_catalog', 'oe_class', 'note_class']) obj;
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['account_heading'::text, 'account',
-                    'acc_trans', 'account_link', 'defaults']) obj;
+                    'acc_trans', 'account_link', 
+                    'account_link_description']) obj;
                                      -- I don't like loose grants on acc_trans
                                      -- but we need to 
                                      -- change the all years function to be
                                      -- security definer first. -- CT
+SELECT lsmb__grant_perms('base_user', 'defaults', 'ALL');
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['contact_class'::text, 'batch_class',
                     'entity_class', 'lsmb_roles', 'users']) obj;
