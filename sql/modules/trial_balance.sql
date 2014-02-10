@@ -47,12 +47,14 @@ BEGIN
                            WHERE y.transdate < coalesce(in_date_to, gl.transdate)
                          );
     ELSIF in_date_from IS NULL THEN
-       SELECT min(transdate)  INTO t_roll_forward
+       SELECT min(transdate) - 1 INTO t_roll_forward
          FROM (select min(transdate) as transdate from ar
                 union ALL
                select min(transdate) from ap
                 union all
-               select min(transdate) from gl) gl;
+               select min(transdate) from gl
+                union all
+               select min(transdate) from acc_trans) gl;
                            
     ELSE
       SELECT max(end_date) INTO t_roll_forward
