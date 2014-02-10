@@ -1566,12 +1566,16 @@ BEGIN
 
 INSERT INTO gl (transdate, reference, description, approved)
 SELECT transdate, reference || '-reversal', 'reversal of ' || description, '0'
-  FROM gl WHERE id = in_id;
+  FROM gl WHERE id = (select gl_id from payment where id = in_id);
 
-t_id := curval('id');
+IF NOT FOUND THEN
+   RETURN FALSE;
+END IF;
+
+t_id := currval('id');
 
 INSERT INTO voucher (batch_id, trans_id, batch_class)
-VALUES (in_batch_id, t_id, CASE WHEN in_account_class == 1 THEN 4 ELSE 7 END);
+VALUES (in_batch_id, t_id, CASE WHEN in_account_class = 1 THEN 4 ELSE 7 END);
 
 INSERT INTO acc_trans (transdate, trans_id, chart_id, amount)
 SELECT in_transdate, t_id, chart_id, amount * -1
@@ -1579,24 +1583,21 @@ SELECT in_transdate, t_id, chart_id, amount * -1
  WHERE trans_id = in_id;
 
 -- reverse overpayment usage
-SELECT payment__reverse(ac.source, ac.transdate, eca.id, accno,
+PERFORM payment__reverse(ac.source, ac.transdate, eca.id, at.accno,
         in_transdate, eca.entity_class, in_batch_id, null, 
-        in_exchangerate, in_currency)
+        in_exchangerate, in_curr)
   FROM acc_trans ac
-  JOIN account a ON ac.chart_id = a.id
-  JOIN account_link al ON a.id = al.account_id AND description like 'A%paid'
+  JOIN account at ON ac.chart_id = at.id
+  JOIN account_link al ON at.id = al.account_id AND al.description like 'A%paid'
   JOIN (select id, entity_credit_account FROM ar UNION
         select id, entity_credit_account from ap) a ON a.id = ac.trans_id
   JOIN entity_credit_account eca ON a.entity_credit_account = eca.id
-  JOIN payment_links pl ON pl.entry_id = a.entry_id
-  JOIN overpayment op ON op.id = pl.payment_id
-  JOIN payment p ON p.id = o.payment_id
+  JOIN payment_links pl ON pl.entry_id = ac.entry_id
+  JOIN overpayments op ON op.payment_id = pl.payment_id
+  JOIN payment p ON p.id = op.payment_id
  WHERE p.gl_id = in_id
 GROUP BY ac.source, ac.transdate, eca.id, eca.entity_class,
-         a.accno, al.description;
-
-UPDATE overpayment set available = 0 
- WHERE payment_id = (select id from payment where gl_id = in_id);
+         at.accno, al.description;
 
 RETURN TRUE;
 END;

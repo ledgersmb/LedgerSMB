@@ -816,7 +816,7 @@ return @{$self->{available_overpayment_amount}};
 
 sub overpayment_reverse {
     my ($self, $args) = @_;
-    __PACKAGE__->call_procedure(procname => 'payment__reverse_overpayment',
+    __PACKAGE__->call_procedure(procname => 'overpayment__reverse',
                                      args => [$args->{id},
                                               $args->{post_date},
                                               $args->{batch_id},
