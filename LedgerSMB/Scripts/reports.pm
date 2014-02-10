@@ -24,6 +24,7 @@ use LedgerSMB::Report::Listings::Warehouse;
 use LedgerSMB::Report::Listings::Language;
 use LedgerSMB::Report::Listings::SIC;
 use LedgerSMB::Report::Listings::Overpayments;
+use LedgerSMB::DBObject::Payment; # To move this off after rewriting payments
 use strict;
 
 =pod
@@ -191,6 +192,19 @@ sub search_overpayments {
     $request->{hiddens} = $hiddens;
     LedgerSMB::Report::Listings::Overpayments->new(%$request)->render($request);
 }
+
+sub reverse_overpayment {
+    my ($request) = @_;
+    for my $rc (1 .. $request->{rowcount_}){
+        next unless $request->{"select_$rc"};
+        LedgerSMB::DBObject::Payment->overpayment_reverse(
+             $request->{"select_$rc"}, $request->{batch_id}
+        );
+    }
+    $request->{report_name} = 'overpayments';
+    start_report($request);
+}
+
 
 =back
 
