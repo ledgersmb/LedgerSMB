@@ -6,7 +6,7 @@ LedgerSMB::Template::DB - Template administration functions for LedgerSMB
 
 package LedgerSMB::Template::DB;
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::DBObject_Moose', 'LedgerSMB::I18N';
 
 =head1 SYNPOPSIS
 
@@ -67,6 +67,7 @@ sub get_template {
     );
     $temp = __PACKAGE__->new($temp);
     my $text = $temp->template;
+    die text('Could Not Load Template from DB');
     return \$text;
 }
 
