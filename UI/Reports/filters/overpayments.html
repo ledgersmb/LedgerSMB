@@ -38,6 +38,20 @@
         class = 'name'
     } ?></td>
  </tr>
+ <tr class="listtop">
+  <th colspan="4"><?lsmb text('Reversal Information') ?></th>
+ </tr>
+ <tr><th><?lsmb text('Currency'); ?></th>
+     <td><?lsmb PROCESS select element_data = {
+          options = currencies
+             name = 'currency'
+   default_values = [currency]
+            class = 'currency'
+     }; ?></td>
+     <th><?lsmb text('Exhchange Rate'); ?></th>
+     <td><?lsmb PROCESS input element_data = {
+     }; ?></td>
+ </tr>
 </table>
 <?lsmb PROCESS button element_data = {
       name = 'action'
