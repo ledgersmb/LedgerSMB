@@ -110,7 +110,7 @@ sub get {
          procname => 'template__get',
          args => [$args{template_name}, $args{language_code}, $args{format}]
     );
-    return {} unless $temp->{format};  # allows editing of blank templates
+    return undef unless $temp->{format};  # allows editing of blank templates
     return __PACKAGE__->new(%$temp);
 }
 

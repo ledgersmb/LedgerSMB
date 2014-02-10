@@ -42,7 +42,7 @@ Displays a template for review
 sub display {
     my ($request) = @_;
     my $dbtemp = LedgerSMB::Template::DB->get(%$request);
-    $dbtemp->{content} = $dbtemp->template;
+    $dbtemp->{content} = $dbtemp->template if defined $dbtemp;
     LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
