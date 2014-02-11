@@ -349,6 +349,10 @@ through to the LedgerSMB application. Currently, Apache (with mod_rewrite
 support) and IIS are known to support this requirement. The section below
 details the Apache setup process.
 
+The default configuration file only works with Apache 2.2.  To run this with 
+Apache 2.4, you will want to move the ledgersmb-httpd.conf.template out of the
+way and replace it with the ledgersmb-httpd-2.4.conf.template before proceding.
+
 Default installation layouts for Apache HTTPD on various operating systems 
 and distributions: http://wiki.apache.org/httpd/DistrosDefaultLayout
 
@@ -359,9 +363,14 @@ LoadModule rewrite_module <path-to-apache-modules-directory>/mod_rewrite.so
 
 [On Debian and its derivatives, mod_rewrite can be enabled using the command
 
- $ a2enmod rewrite
+ # a2enmod rewrite
 
-executed as the root user.]
+executed as the root user.
+
+Also note on Debian, if using Apache 2.4, you may need to:
+ # a2enmod cgi
+
+Also as root.]
 
 A default configuration file to be used with Apache2 comes with LedgerSMB in
 its root project directory: ledgersmb-httpd.conf.template. You can use the 
@@ -377,7 +386,8 @@ you do not need to add the the line to your Apache configuration.
 [Debian, Fedora, Centos, RedHat]
 
 [On Debian and derivatives, you can store the resulting
-configuration file directly in the /etc/apache2/conf.d directory.  From
+configuration file directly in the /etc/apache2/conf.d directory, for Apache 
+2.2, and /etc/apache2/conf-enabled/ for Apache 2.4.  From
 that location, it'll be automatically included upon the next server (re)start.]
 
 
