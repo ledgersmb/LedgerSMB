@@ -32,13 +32,22 @@
          <tr>
           <th align="right"><?lsmb text('Account') ?></th>
           <td colspan="3">
-              <?lsmb PROCESS input element_data = {
+              <?lsmb IF accno;
+              accno;
+              PROCESS input element_data = {
+                   name = 'accno',
+                   type = 'hidden',
+                  value = accno
+              };
+              ELSE;
+              PROCESS input element_data = {
                      name = "accno"
                      size = '15'
-                    value = accno
+                    value = ''
                      type = 'text'
                     class = 'AccountBox'
-              } ?> </td>
+              };
+              END ?> </td>
 	  </tr>
 	  <tr>
 	  <th align="right"><?lsmb text('Source') ?></th>
