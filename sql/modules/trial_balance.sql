@@ -21,10 +21,13 @@ create type tb_row AS (
    ending_balance numeric
 );
 
+DROP FUNCTION IF EXISTS trial_balance__generate
+(in_date_from DATE, in_date_to DATE, in_heading INT, in_accounts INT[],
+ in_ignore_yearend TEXT, in_business_units int[]);
 
 CREATE OR REPLACE FUNCTION trial_balance__generate 
 (in_date_from DATE, in_date_to DATE, in_heading INT, in_accounts INT[],
- in_ignore_yearend TEXT, in_business_units int[]) 
+ in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int) 
 returns setof tb_row AS
 $$
 DECLARE
@@ -34,7 +37,15 @@ DECLARE
         ignore_trans    int[];
         t_start_date    date; 
         t_end_date      date;
+        t_balance_sign  int;
 BEGIN
+    IF in_balance_sign IS NULL OR in_balance_sign = 0 THEN
+       t_balance_sign = null;
+    ELSIF in_balance_sign = -1 OR in_balance_sign = 1 THEN
+       t_balance_sign = in_balance_sign;
+    ELSE 
+       RAISE EXCEPTION 'Invalid Balance Type';
+    END IF;
 
     IF in_date_from IS NULL AND in_ignore_yearend = 'none' THEN
        SELECT max(end_date) INTO t_roll_forward 
@@ -111,7 +122,8 @@ BEGIN
        )
        SELECT a.id, a.accno, a.description, a.gifi_accno,
          case when in_date_from is null then 0 else
-              CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END 
+              COALESCE(t_balance_sign, 
+                      CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END )
               * (coalesce(cp.amount, 0) 
               + sum(CASE WHEN ac.transdate < coalesce(in_date_from, 
                                                       t_roll_forward)
@@ -128,7 +140,8 @@ BEGIN
                                                          ac.transdate)
                              AND ac.amount > 0 THEN ac.amount ELSE 0 END) + 
               case when in_date_from is null then coalesce(cp.credits, 0) else 0 end, 
-              CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END 
+              COALESCE(t_balance_sign, 
+                       CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END)
               * (coalesce(cp.amount, 0) + sum(coalesce(ac.amount, 0)))
          FROM account a
     LEFT JOIN ac ON ac.chart_id = a.id

@@ -292,6 +292,7 @@ sub render {
         $vars->{USER} ||= {dateformat => 'yyyy-mm-dd'};
         $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
         $vars->{DBNAME} = $LedgerSMB::App_State::DBName;
+        $vars->{LETTERHEAD} = sub { $self->_include('letterhead', $vars) };
         my @stdformats = ();
         for (qw(HTML PDF PS)){
            if (scalar(grep {/^$_$/} $self->available_formats)){
@@ -350,7 +351,7 @@ sub render {
            
 	$format->can('process')->($self, $cleanvars);
 	#return $format->can('postprocess')->($self);
-	my $post = $format->can('postprocess')->($self);
+	my $post = $format->can('postprocess')->($self) unless $self->{_no_postprocess};
         #$logger->debug("\$format=$format \$self->{'noauto'}=$self->{'noauto'} \$self->{rendered}=$self->{rendered}");
 	if (!$self->{'noauto'}) {
 		# Clean up
@@ -579,6 +580,40 @@ sub column_heading {
 	}
 	
 	return $names;
+}
+
+# $self->_include($templatename, $vars)
+#
+# This is a private method used to handle things like including files that are
+# db templates.  It is not performance-optimal for frequently used operations
+# like user-interface templates.  It returns processed but not post-processed 
+# content.
+
+sub _include {
+    my ($self, $templatename, $vars) = @_;
+    die 'No Template Name in _include' unless $templatename;
+    my $template = LedgerSMB::Template->new(
+                  user => $self->{myconfig}, 
+              template => $templatename,
+                locale => $self->{locale},
+        no_auto_output => 1,
+                format => $self->{format},
+                  path => $self->{include_path}
+    );
+    my $data;
+    $template->{outputfile} = \$data;
+    $template->{_no_postprocess} = 1;
+    $template->render($vars);
+    if (!defined $data and defined $self->{rendered}){
+       	$data = "";
+        open (DATA, '<', $self->{rendered});
+        binmode DATA, $self->{binmode};
+        while (my $line = <DATA>){
+            $data .= $line;
+        }
+        unlink($self->{rendered}) or die 'Unable to delete output file';
+    }
+    return $data;
 }
 
 1;
