@@ -83,6 +83,15 @@ This value holds information related to yearend handling.  It can be either
 
 has ignore_yearend => (is => 'rw', isa => 'Str');
 
+=item balance_sign
+
+Either 1, 0, or -1.  1 for credit, -1 for debit, 0 for normal balances (i.e 
+credit balances except for asset and expense accounts).
+
+=cut
+
+has balance_sign => (is => 'rw', isa => 'Int');
+
 
 =item heading
 

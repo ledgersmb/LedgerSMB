@@ -61,9 +61,9 @@ has from_year => (is => 'ro', isa => 'Int', required => 0);
 
 =cut
 
-has date_from => (lazy => '1', builder => 'from_date');
+has date_from => (is => 'ro', lazy => '1', builder => 'from_date');
 
-has date_to => (lazy => '1', builder => 'to_date');
+has date_to => (is => 'ro', lazy => '1', builder => 'to_date');
 
 sub _get_from_date {
     my ($self) = @_;
@@ -105,10 +105,24 @@ sub _get_to_date {
     return $date;
 }
 
-before 'render' => sub { 
+sub _set_lazy_dates {
               my ($self) = @_;
+              # Set lazy attributes
               $self->from_date;
               $self->to_date;
+              $self->date_from;
+              $self->date_to;
+}
+
+before 'render' => sub { 
+              my ($self) = @_;
+              # Set lazy attributes
+              $self->_set_lazy_dates;
+};
+before 'run_report' => sub { 
+              my ($self) = @_;
+              # Set lazy attributes
+              $self->_set_lazy_dates;
 };
 
 

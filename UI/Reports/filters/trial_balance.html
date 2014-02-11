@@ -1,7 +1,12 @@
 <?lsmb include_stylesheet = ['css/trial_balance/search.css']?>
 <?lsmb INCLUDE 'ui-header.html' ?> 
 <?lsmb PROCESS elements.html;
-       PROCESS report_base.html ?>
+       PROCESS report_base.html;
+BALANCE_TYPES = [
+   {text = text('Debit'), id = -1}
+   {text = text('Credit'), id = 1}
+   {text = text('Normal'), id = 0}
+] ?>
 
 <body class="<?lsmb dojo_theme ?>">
     <form method="get" action="trial_balance.pl">
@@ -19,28 +24,7 @@
             <td>
               <table>
                 <?lsmb PROCESS business_classes ?>
-                <tr>
-                    <th align="right"><?lsmb text('From') ?></th>
-                    <td>
-                        <?lsmb PROCESS input element_data={
-                        class => 'date',
-                        name => 'date_from',
-                        size => '11',
-                        title => user.dateformat,
-                        value => report.date_from,
-                        } ?>
-                    </td>
-                    <th align="right"><?lsmb text('To') ?></th>
-                    <td>
-                        <?lsmb PROCESS input element_data={
-                        class => 'date',
-                        name => 'date_to',
-                        size => '11',
-                        title => user.dateformat,
-                        value => report.date_to,
-                        } ?>
-                    </td>
-                </tr>
+                <?lsmb PROCESS date_row ?>
                 <tr>
             </table>
           </td>
@@ -72,6 +56,13 @@
                              } ?>
                     </td>
                 </tr>
+                <tr><th><?lsmb text('Balances as') ?></th>
+                    <td><?lsmb PROCESS select element_data = {
+                               name = 'balance_sign'
+                            options = BALANCE_TYPES 
+                     default_values = ['0']
+                          value_attr = 'id'
+                        } ?></td>
               </table>
             </td>
           </tr>
@@ -116,7 +107,7 @@
         <br />
         
         <?lsmb PROCESS button element_data={
-            text = 'Run',
+            text = text('Continue'),
             attributes = {
                 name= 'action',
                 value= 'run'
