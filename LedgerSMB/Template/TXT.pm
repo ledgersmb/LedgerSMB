@@ -116,8 +116,12 @@ sub process {
 	my $output;
         $parent->{binmode} = $binmode;
 	if ($parent->{outputfile}) {
+            if (ref $parent->{outputfile}){
+                $output = $parent->{outputfile};
+            } else {
 		$output = "$parent->{outputfile}.". get_extension($parent);
                 $parent->{outputfile} = $output;
+            }
 	}
         if ($parent->{include_path} eq 'DB'){
                 $source = LedgerSMB::Template::DB->get_template(

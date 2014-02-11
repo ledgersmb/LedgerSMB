@@ -124,7 +124,11 @@ sub process {
         $cleanvars->{UNESCAPE} = sub { return unescapeHTML(shift @_) };
 	
 	if ($parent->{outputfile}) {
+            if (ref $parent->{outputfile}){
+		$output = $parent->{outputfile};
+            } else {
 		$output = "$parent->{outputfile}.html";
+            }
 	} else {
 		$output = \$parent->{output};
 	}

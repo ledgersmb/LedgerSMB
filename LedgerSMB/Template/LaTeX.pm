@@ -163,11 +163,13 @@ sub process {
 		DEBUG => ($parent->{debug})? 'dirs': undef,
 		DEBUG_FORMAT => '',
 		}) || die Template::Latex->error(); 
+        my $out = "$parent->{outputfile}.$format" unless ref $parent->{outputfile};
+        $out ||= $parent->{outputfile};
 	if (not $template->process(
 		$source, 
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
-		"$parent->{outputfile}.$format", {binmode => 1})) {
+		$out, {binmode => 1})) {
 		die $template->error();
 	}
 	if (lc $format eq 'dvi') {

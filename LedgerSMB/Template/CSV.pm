@@ -107,7 +107,11 @@ sub process {
         $parent->{binmode} = $binmode;
 
 	if ($parent->{outputfile}) {
+            if (ref $parent->{outputfile}){
+                $output = $parent->{outputfile};
+            } else {
 		$output = "$parent->{outputfile}.csv";
+            }
 	} else {
 		$output = \$parent->{output};
 	}

@@ -67,7 +67,7 @@ sub get_template {
     );
     $temp = __PACKAGE__->new($temp);
     my $text = $temp->template;
-    die text('Could Not Load Template from DB');
+    die text('Could Not Load Template from DB') unless $text;
     return \$text;
 }
 
