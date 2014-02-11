@@ -1709,6 +1709,7 @@ for payment or in outstanding reports.$$;
 
 --
 --TODO 1.5 ap invnumber text check (invnumber ~ '[[:alnum:]_]') NOT NULL
+--TODO 1.5 ap paid,datepaid , drop those fields? they are not maintained in Payment.sql!
 CREATE TABLE ap (
   id int DEFAULT nextval ( 'id' ) PRIMARY KEY REFERENCES transactions(id),
   invnumber text,
