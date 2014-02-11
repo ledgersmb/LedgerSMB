@@ -1,7 +1,7 @@
 RELEASE NOTES
 LedgerSMB 1.4
 
-Latest Revision:  1.4.0 beta 4, TBD
+Latest Revision:  1.4.0 beta 5, TBD
 
 1:  Welcome to LedgerSMB
 
@@ -100,6 +100,24 @@ same source, etc. on the transaction screen.  You must go through payment,
 payment reversal, or gl workflows.  Failure to do so may cause the payment to 
 fail to be recognized by existing in-process reconciliation workflows.  If this
 happens, start the bank reconciliation over and the payment will be recognized.
+
+4.  Known Issues
+
+4.1:  Tighter balance calculations on reports
+
+Reporting has been fully rewrittein in 1.4.  As a result in some cases where 
+data corruption exists, the balance sheet can be out of balance where it would
+have been balanced in 1.3.  We believe that this is a feature because out of
+balance trial balances and balance sheets should reflect any problems in the
+underlying data.  This is a rare issue, but would mostly affect users who have
+been using LedgerSMB since before 1.3, of using SQL-Ledger 2.6 or earlier.
+
+4.2:  Inability to migrate books with NULL amounts
+
+Currently there is no provision for removing lines where the amount is NULL.
+This should never happen but could occur from inadequately tested third party 
+addons.  In this case, check which add-ons may have caused the problem and
+follow up with the authors or get professional support.
 
 5:  Roadmap
 This project has a losely defined roadmap and a set of statements and 
