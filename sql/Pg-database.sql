@@ -4550,7 +4550,9 @@ insert into file_class values (1, 'transaction'),
                               (2, 'order'),
                               (3, 'part'),
                               (4, 'entity'),
-                              (5, 'eca');
+                              (5, 'eca'),
+                              (6, 'internal'),
+                              (7, 'incoming');
 
 
 COMMENT ON TABLE file_class IS
@@ -4633,6 +4635,37 @@ CREATE TABLE file_eca (
 
 COMMENT ON TABLE file_eca IS
 $$ File attachments primarily attached to customer and vendor agreements.$$;
+
+CREATE TABLE file_internal (
+   check (file_class = 6),
+   unique(id),
+   primary key (ref_key, file_name, file_class),
+   check (ref_key = 0)
+) inherits (file_base);
+
+COMMENT ON COLUMN file_internal.ref_key IS
+$$ Always must be 0, and we have no primary key since these files all
+are for internal use and against the company, not categorized.$$;
+
+COMMENT ON TABLE file_internal IS
+$$ This is for internal files used operationally by LedgerSMB.  For example,
+company logos would be here.$$;
+
+CREATE TABLE file_incoming (
+   check (file_class = 7),
+   unique(id),
+   primary key (ref_key, file_name, file_class),
+   check (ref_key = 0) 
+) inherits (file_base);
+
+
+COMMENT ON COLUMN file_incoming.ref_key IS
+$$ Always must be 0, and we have no primary key since these files all
+are for interal incoming use, not categorized.$$;
+
+COMMENT ON TABLE file_incoming IS
+$$ This is essentially a spool for files to be reviewed and attached.  It is 
+important that the names are somehow guaranteed to be unique, so one may want to prepend them with an email equivalent or the like.$$;
 
 CREATE TABLE file_secondary_attachment (
        file_id int not null,

@@ -5,112 +5,6 @@
 
 -- Chris Travers
 
--- BETA 1-3 (delete a month after Beta 4)
-
-
-BEGIN;
-
-ALTER TABLE file_transaction DROP CONSTRAINT  "file_transaction_ref_key_fkey";
-ALTER TABLE file_transaction ADD FOREIGN KEY (ref_key) REFERENCES transactions(id);
-
-COMMIT;
-
-BEGIN;
-
-ALTER TABLE country_tax_form ADD is_accrual bool not null default false;
-
-COMMIT;
-
-BEGIN;
-
-CREATE VIEW cash_impact AS
-SELECT id, '1'::numeric AS portion, 'gl' as rel, gl.transdate FROM gl
-UNION ALL
-SELECT id, CASE WHEN gl.amount = 0 THEN 0 -- avoid div by 0
-                WHEN gl.transdate = ac.transdate
-                     THEN 1 + sum(ac.amount) / gl.amount
-                ELSE 
-                     1 - (gl.amount - sum(ac.amount)) / gl.amount
-                END , 'ar' as rel, ac.transdate
-  FROM ar gl
-  JOIN acc_trans ac ON ac.trans_id = gl.id
-  JOIN account_link al ON ac.chart_id = al.account_id and al.description = 'AR'
- GROUP BY gl.id, gl.amount, ac.transdate
-UNION ALL
-SELECT id, CASE WHEN gl.amount = 0 THEN 0
-                WHEN gl.transdate = ac.transdate
-                     THEN 1 - sum(ac.amount) / gl.amount
-                ELSE 
-                     1 - (gl.amount + sum(ac.amount)) / gl.amount
-            END, 'ap' as rel, ac.transdate
-  FROM ap gl
-  JOIN acc_trans ac ON ac.trans_id = gl.id
-  JOIN account_link al ON ac.chart_id = al.account_id and al.description = 'AP'
- GROUP BY gl.id, gl.amount, ac.transdate;
-
-COMMENT ON VIEW cash_impact IS
-$$ This view is used by cash basis reports to determine the fraction of a
-transaction to be counted.$$;
-COMMIT;
-
-BEGIN;
-
-ALTER TABLE payroll_deduction_class ADD stored_proc_name name not null;
-
-COMMIT;
-
-BEGIN; -- Timecard types
-
-CREATE TABLE jctype (
-  id int not null unique, -- hand assigned
-  label text primary key,
-  description text not null,
-  is_service bool default true,
-  is_timecard bool default true
-);
-
-INSERT INTO jctype (id, label, description, is_service, is_timecard)
-VALUES (1, 'time', 'Timecards for project services', true, true);
-
-INSERT INTO jctype (id, label, description, is_service, is_timecard)
-VALUES (2, 'materials', 'Materials for projects', false, false);
-
-INSERT INTO jctype (id, label, description, is_service, is_timecard)
-VALUES (3, 'overhead', 'Time/Overhead for payroll, manufacturing, etc', false, true);
-
-COMMIT;
-
--- BETA 2
-BEGIN;
-
-ALTER TABLE tax_extended DROP CONSTRAINT "tax_extended_entry_id_fkey";
-
-ALTER TABLE tax_extended ADD FOREIGN KEY (entry_id) 
-REFERENCES acc_trans(entry_id);
-
-COMMIT;
-
-BEGIN;
-
-ALTER TABLE inventory_report_line add adjust_id int not null;
-
- alter table inventory_report_line add variance numeric not null;
-
-
-COMMIT;
-
-BEGIN;
-
---- EDI contact fixes
-
-
-INSERT INTO contact_class (id,class) values (18,'EDI Interchange ID');
-INSERT INTO contact_class (id,class) values (19,'EDI ID');
-
-SELECT SETVAL('contact_class_id_seq',19);
-
-COMMIT;
-
 BEGIN;
 
 ALTER TABLE asset_report DROP CONSTRAINT "asset_report_gl_id_fkey";
@@ -300,3 +194,44 @@ ALTER TABLE batch DROP CONSTRAINT "batch_locked_by_fkey";
 ALTER TABLE batch ADD FOREIGN KEY (locked_by) REFERENCES session(session_id)
 ON DELETE SET NULL;
 COMMIT;
+
+-- POST-BETA-5 FIXES
+
+BEGIN;
+INSERT INTO file_class (id, class) values (6, 'internal'), (7, 'incoming');
+COMMIT;
+
+BEGIN;
+CREATE TABLE file_internal (
+   check (file_class = 6),
+   unique(id),
+   primary key (ref_key, file_name, file_class),
+   check (ref_key = 0)
+) inherits (file_base);
+
+COMMENT ON COLUMN file_internal.ref_key IS
+$$ Always must be 0, and we have no primary key since these files all
+are for internal use and against the company, not categorized.$$;
+
+COMMENT ON TABLE file_internal IS
+$$ This is for internal files used operationally by LedgerSMB.  For example,
+company logos would be here.$$;
+
+CREATE TABLE file_incoming (
+   check (file_class = 7),
+   unique(id),
+   primary key (ref_key, file_name, file_class),
+   check (ref_key = 0) 
+) inherits (file_base);
+
+
+COMMENT ON COLUMN file_incoming.ref_key IS
+$$ Always must be 0, and we have no primary key since these files all
+are for interal incoming use, not categorized.$$;
+
+COMMENT ON TABLE file_incoming IS
+$$ This is essentially a spool for files to be reviewed and attached.  It is 
+important that the names are somehow guaranteed to be unique, so one may want to prepend them with an email equivalent or the like.$$;
+
+COMMIT;
+

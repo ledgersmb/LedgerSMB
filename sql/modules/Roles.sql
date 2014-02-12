@@ -174,6 +174,8 @@ SELECT lsmb__grant_perms('file_read', 'file_transaction', 'SELECT');
 SELECT lsmb__grant_perms('file_read', 'file_order', 'SELECT');
 SELECT lsmb__grant_perms('file_read', 'file_links', 'SELECT');
 SELECT lsmb__grant_perms('file_read', 'file_part', 'SELECT');
+SELECT lsmb__grant_perms('file_read', 'file_internal', 'SELECT');
+SELECT lsmb__grant_perms('file_read', 'file_incoming', 'SELECT');
 
 SELECT lsmb__create_role('file_attach_tx');
 SELECT lsmb__grant_perms('file_attach_tx', 'file_transaction', 'INSERT');
@@ -196,6 +198,9 @@ SELECT lsmb__grant_perms('file_attach_part', 'file_part', 'UPDATE');
 SELECT lsmb__grant_perms('file_attach_tx', 'file_base_id_seq', 'ALL');
 SELECT lsmb__grant_perms('file_attach_order', 'file_base_id_seq', 'ALL');
 SELECT lsmb__grant_perms('file_attach_part', 'file_base_id_seq', 'ALL');
+SELECT lsmb__grant_perms(role, 'file_incoming', 'DELETE')
+  FROM unnest(ARRAY['file_attach_tx'::text, 'file_attach_order', 
+                    'file_attach_part']) role;
 
 \echo Contact Management
 SELECT lsmb__create_role('contact_read');
