@@ -208,6 +208,52 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION file__save_incoming
+(in_content bytea, in_mime_type_id int, in_file_name text,
+in_description text)
+RETURNS file_base LANGUAGE SQL AS
+$$
+INSERT INTO file_incoming(content, mime_type_id, file_name, description, 
+                          ref_key, file_class, uploaded_by)
+SELECT $1, $2, $3, $4, 0, 7, entity_id
+  FROM users where username = SESSION_USER
+ RETURNING *;
+$$;
+
+COMMENT ON FUNCTION file__save_incoming
+(in_content bytea, in_mime_type_id int, in_file_name text,
+in_description text) IS 
+$$If the file_name is not unique, a unique constraint violation will be thrown.
+$$;
+
+CREATE OR REPLACE FUNCTION file__save_internal
+(in_content bytea, in_mime_type_id int, in_file_name text,
+in_description text)
+RETURNS file_base LANGUAGE SQL AS
+$$
+WITH up AS (
+    UPDATE file_internal 
+       SET content = $1, uploaded_at = now(),
+           uploaded_by = (select entity_id from users 
+                           where username = session_user)
+     WHERE file_name = $3
+ RETURNING true as found_it
+)   
+INSERT INTO file_internal (content, mime_type_id, file_name, description,
+                          ref_key, file_class, uploaded_by)
+SELECT $1, $2, $3, $4, 0, 6, entity_id
+  FROM users 
+ where username = SESSION_USER 
+       AND NOT EXISTS (select 1 from up)
+RETURNING *;
+$$;
+
+COMMENT ON FUNCTION file__save_internal
+(in_content bytea, in_mime_type_id int, in_file_name text,
+in_description text) IS 
+$$If the file_name is not unique, this will overwrite the previous stored file.
+$$;
+
 COMMENT ON FUNCTION file__attach_to_order
 (in_content bytea, in_mime_type_id int, in_file_name text,
 in_description text, in_id int, in_ref_key int, in_file_class int) IS
