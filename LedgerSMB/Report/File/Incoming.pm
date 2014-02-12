@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Report::File::Internal - Files for LSMB processes.
+LedgerSMB::Report::File::Incoming - Files for LSMB processes.
 
 =head1 SYNPOSIS
 
@@ -8,18 +8,17 @@ LedgerSMB::Report::File::Internal - Files for LSMB processes.
 
 =cut
 
-package LedgerSMB::Report::File::Internal;
+package LedgerSMB::Report::File::Incoming;
 use Moose;
 extends 'LedgerSMB::Report';
 with 'LedgerSMB::Report::File', 'LedgerSMB::I18N';
 
-sub _set_file_class { return 6; }
+sub _set_file_class { return 7; }
 sub _set_ref_key { return 0; }
 
 =head1 DESCRIPTION
 
-This report lists internal files, and provides a form to upload additional
-ones.  Files must be unique by name.
+This is for queued incoming files.
 
 =head1 CRITERIA
 
@@ -37,6 +36,9 @@ None
 
 sub columns {
     return [
+     { col_id => 'select',
+         type => 'select',
+         name => '', },
      { col_id => 'file_name',
          type => 'href',
     href_base => 'file.pl?action=get&file_class=' . _set_file_class() . 
@@ -71,21 +73,37 @@ Internal Files (localized)
 
 =cut
 
-sub name { return text('Internal Files'); }
+sub name { return text('Incoming Files'); }
 
 =head2 set_buttons
 
-Single button, set to add a new file.
+=over
+
+=item add_incoming_file
+
+button, set to add a new file.
+
+=item attach
+
+Removes a file from the queue and attaches it to the current document.
+
+=back
 
 =cut
 
 sub set_buttons {
     return [
         { name => 'action',
-         value => 'add_internal_file',
+         value => 'add_incoming_file',
           type => 'submit',
          class => 'submit',
           text => text('Add'),
+        },
+        { name => 'action',
+         value => 'attach_incoming_file',
+          type => 'submit',
+         class => 'submit',
+          text => text('Attach'),
         },
     ];
 }
