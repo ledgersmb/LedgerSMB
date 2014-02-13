@@ -27,6 +27,8 @@ use LedgerSMB::File::Order;
 use LedgerSMB::File::Part;
 use LedgerSMB::File::Entity;
 use LedgerSMB::File::ECA;
+use LedgerSMB::File::Internal;
+use LedgerSMB::File::Incoming;
 use DBD::Pg qw(:pg_types);
 use strict;
 use CGI::Simple;
@@ -37,6 +39,8 @@ our $fileclassmap = {
    3   => 'LedgerSMB::File::Part',
    4   => 'LedgerSMB::File::Entity',
    5   => 'LedgerSMB::File::ECA',
+   6   => 'LedgerSMB::File::Internal',
+   7   => 'LedgerSMB::File::Incoming',
 };
 
 sub get {
