@@ -131,22 +131,24 @@ function(
                     'AccountBox': function(input){
                                     // Since this requires db components, it
                                     // cannot be preloaded on every page.
+                                    console.log('Loader.js AccountBox input=',input);
                                     require(['lsmb/accounts/AccountSelector',
                                              'dojo/ready'],
                                     function(accountselector, ready){
                                       var value = input.value;
                                       ready(function(){
-                                          console.log(input);
+                                          console.log('Loader.js AccountBox input=',input);
                                           return new accountselector({
                                               "name": input.name,
                                              "value": value
                                           }, input);
                                       });
+                                      /**********
                                       ready(function(){
                                          var widget = registry.byId(input.id);
-                                         console.log(widget);
                                          widget.set('value', value); 
-                                      });    
+                                      });   
+                                      ****************/ 
                                     });
                                  },
                      '__default': function(input){
@@ -243,6 +245,7 @@ function(
             for (var i = 0; i <= classes.length; i++){
                 classKey=classes[i];
                 if (undefined !== this.nodeMap[dnode.nodeName][classKey]){
+                    console.log('tshvr4 createWidget dnode.nodeName='+dnode.nodeName+' classKey='+classKey);
                     return this.nodeMap[dnode.nodeName][classKey](dnode);
                 }
             }
