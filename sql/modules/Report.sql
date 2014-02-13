@@ -120,7 +120,7 @@ BEGIN
 	     LEFT JOIN country ON (country.id = l.country_id)
                  WHERE (e.id = in_entity_id OR in_entity_id IS NULL)
                        AND (in_accno IS NULL or acc.accno = in_accno)
-                       AND NOT a.force_closed
+                       AND a.force_closed IS NOT TRUE
               GROUP BY c.entity_id, c.meta_number, e.name,
                        l.line_one, l.line_two, l.line_three,
                        l.city, l.state, l.mail_code, country.name,
@@ -427,7 +427,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        AND (in_from_date IS NULL OR a.transdate >= in_from_date)
        AND (in_to_date IS NULL OR a.transdate <= in_to_date)
        AND p.due::numeric(100,2) <> 0 
-       AND NOT a.force_closed
+       AND a.force_closed IS NOT TRUE
        AND (in_partnumber IS NULL 
           OR EXISTS(SELECT 1 FROM invoice inv 
                       JOIN parts ON inv.parts_id = parts.id
