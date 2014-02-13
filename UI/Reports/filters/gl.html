@@ -1,5 +1,4 @@
 <?lsmb INCLUDE 'ui-header.html' 
-       	include_script = ["UI/ajax/scriptaculous/lib/prototype.js","UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls","UI/ajax/helpers.js"]
 ?>
 <?lsmb PROCESS 'elements.html';
        PROCESS 'report_base.html' ?>
@@ -32,6 +31,7 @@
          <tr>
           <th align="right"><?lsmb text('Account') ?></th>
           <td colspan="3">
+          <!-- tshvr fixed accno is better here, but commented for test
               <?lsmb IF accno;
               accno;
               PROCESS input element_data = {
@@ -43,11 +43,21 @@
               PROCESS input element_data = {
                      name = "accno"
                      size = '15'
-                    value = ''
+                    value = accno
                      type = 'text'
                     class = 'AccountBox'
               };
               END ?> </td>
+          -->
+          <!-- tshvr test http://sourceforge.net/p/ledger-smb/bugs/1057/ -->
+              <?lsmb PROCESS input element_data = {
+                     name = "accno"
+                     size = '15'
+                    value = accno
+                     type = 'text'
+                    class = 'AccountBox'
+              } ?> </td>
+          <!--tshvr end test-->
 	  </tr>
 	  <tr>
 	  <th align="right"><?lsmb text('Source') ?></th>
