@@ -226,7 +226,7 @@ BEGIN
  amount_total=round(amount_total,dp);
  netamount_total=round(netamount_total,dp);
 
- INSERT INTO ap (entity_credit_account,invnumber,transdate,invoice,approved,taxincluded,curr,duedate,crdate,netamount,amount,person_id) VALUES(in_entity_credit_account,invnumber,transdate,invoice,approved,taxincluded,curr,duedate,crdate,netamount_total,amount_total,person_id);
+ INSERT INTO ap (entity_credit_account,invnumber,transdate,invoice,approved,taxincluded,curr,duedate,crdate,netamount,amount,person_id,description,ordnumber,notes,intnotes,ponumber) VALUES(in_entity_credit_account,invnumber,transdate,invoice,approved,taxincluded,curr,duedate,crdate,netamount_total,amount_total,person_id,in_description,in_ordnumber,in_notes,in_intnotes,in_ponumber);
 
  SELECT currval('id') INTO ap_id;--NOT "id"!
 
@@ -239,25 +239,24 @@ BEGIN
   tax_chartid=in_taxchartid[out_count];
   netamount=in_netamount[out_count];
   taxrate=in_taxrate[out_count];
+  taxamount=0.0;
   IF taxrate IS NOT NULL THEN
    IF tax_chartid IS NOT NULL THEN
-
-    select count(*) into ect_count from eca_tax ect where ect.eca_id=in_entity_credit_account and ect.chart_id=tax_chartid;
-    IF ect_count = 0 THEN
-     RAISE EXCEPTION 'tax_chartid NOT IN  eca_tax';
-    END IF;
-
-    taxamount=netamount*taxrate;
-    taxamount=round(taxamount,dp);
-    INSERT INTO acc_trans (trans_id,chart_id,amount,transdate,fx_transaction) VALUES(ap_id,tax_chartid,taxamount*-1.0,transdate,fx_transaction);
-   ELSE
+     select count(*) into ect_count from eca_tax ect where ect.eca_id=in_entity_credit_account and ect.chart_id=tax_chartid;
+     IF ect_count = 0 THEN
+      RAISE EXCEPTION 'tax_chartid NOT IN  eca_tax';
+     END IF;
+     taxamount=netamount*taxrate;
+     taxamount=round(taxamount,dp);
+     INSERT INTO acc_trans (trans_id,chart_id,amount,transdate,fx_transaction,memo) VALUES(ap_id,tax_chartid,taxamount*-1.0,transdate,fx_transaction,memo);
+   ELSE --tax_chartid null
     RAISE EXCEPTION 'taxrate NOT NULL but tax_chartid NULL';
    END IF;--tax_chartid
-  ELSE
+  ELSE --taxrate null
    IF tax_chartid IS NOT NULL THEN
     RAISE EXCEPTION 'taxrate NULL but tax_chartid NOT NULL';
    END IF;
-   taxamount=0.0;
+   --taxamount=0.0;
   END IF;--taxrate
 
   netamount=round(netamount,dp);
