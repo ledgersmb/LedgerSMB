@@ -708,7 +708,7 @@ DROP FUNCTION IF EXISTS company_save (
     in_entity_id int, in_sic_code text,in_country_id int,
     in_sales_tax_id text, in_license_number text
 );
-
+--TODO 1.5 in_id not used in function,drop it
 CREATE OR REPLACE FUNCTION company__save (
     in_id int, in_control_code text, in_entity_class int,
     in_legal_name text, in_tax_id TEXT,
@@ -716,11 +716,11 @@ CREATE OR REPLACE FUNCTION company__save (
     in_sales_tax_id text, in_license_number text
 ) RETURNS company AS $$
 DECLARE t_entity_id INT;
-	t_company_id INT;
+	--t_company_id INT;--not used
 	t_control_code TEXT;
         t_retval COMPANY;
 BEGIN
-	t_company_id := in_id;
+	--t_company_id := in_id;--not used
 
 	IF in_control_code IS NULL THEN
 		t_control_code := setting_increment('company_control');
@@ -731,7 +731,7 @@ BEGIN
 	UPDATE entity 
 	SET name = in_legal_name, 
 		entity_class = in_entity_class,
-		control_code = in_control_code,
+		control_code = t_control_code,
                 country_id   = in_country_id
 	WHERE id = in_entity_id;
 
