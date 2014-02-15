@@ -483,7 +483,7 @@ sub invoice_details {
 
             foreach my $item (@taxaccounts) {
                 push @taxrates, 100 * $item->rate;
-                if ($form->{"mt_amount_" . $item->account}){
+                if (defined $form->{"mt_amount_" . $item->account}){
                     $taxaccounts{ $item->account } += $form->{"mt_amount_" . $item->account};
                     next;
                 }

@@ -125,6 +125,11 @@ Changelog for 1.3.38
 * Fixed useless buttons on credit div when no account active (Chris T, 1001)
 * Backported requires() and requires_series() APIs from 1.4 (Chris T)
 * Updated INSTALL to reflect better instructions for Apache 2.4 (Chris T)
+* Fixed printed invoice not matching posted when 0 manual tax (Nick P, 1051)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+Nick P is Nick Prater
 
 Changelog for 1.3.37
 * 1.3-1.2 downgrade now drops extensions (Chris T, 943)
