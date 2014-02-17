@@ -201,6 +201,7 @@ sub render {
     my ($self, $request) = @_;
     my $template;
 
+
     my $testref = $self->rows;
     $self->run_report($request) if !defined $testref;
     # This is a hook for other modules to use to override the default
@@ -350,9 +351,9 @@ Valid for a year starting with the month selected.
 
 sub prepare_input {
     my ($self, $request) = @_;
-    if ($request->{from_month} and $request->{year}){
+    if ($request->{from_month}){# and $request->{year}){tshvr4 year should be from_year!?
         my $interval = $self->get_interval_dates(
-                                                  $request->{year}, 
+                                                  $request->{from_year}, 
                                                   $request->{from_month}, 
                                                   $request->{interval}
         );
@@ -362,8 +363,8 @@ sub prepare_input {
         $request->{from_date} = LedgerSMB::PGDate->from_input(
                                    $request->{from_date}
         );
-        $request->{date_to} = LedgerSMB::PGDate->from_input(
-                                   $request->{date_to}
+        $request->{to_date} = LedgerSMB::PGDate->from_input(
+                                   $request->{to_date}#date_to
         );
     }
     $request->{from_amount} = LedgerSMB::PGNumber->from_input(
