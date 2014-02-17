@@ -26,6 +26,7 @@ searching for and reporting financial transactions.
 package LedgerSMB::Report::GL;
 use Moose;
 extends 'LedgerSMB::Report';
+with 'LedgerSMB::Report::Dates';
 
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
@@ -279,22 +280,6 @@ Full text search of description field of GL transaction
 =cut
 
 has 'description' => (is => 'rw', isa => 'Maybe[Str]');
-
-=item from_date
-
-Earliest date which matches the search
-
-=cut
-
-has 'from_date' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
-
-=item to_date
-
-Last date that matches the search
-
-=cut
-
-has 'to_date' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item approved
 

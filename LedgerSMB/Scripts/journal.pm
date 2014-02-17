@@ -131,11 +131,7 @@ sub search {
                if $request->{"business_unit_$count"};
     }
     #tshvr4 trying to mix in period from_month from_year interval
-    my $tshvr4_report = LedgerSMB::Report->new(%$request);#tshvr4,seems i have to do this , to be able to call prepare_input
-    $tshvr4_report->prepare_input($request);
-    my $report = LedgerSMB::Report::GL->new(%$request);
-    $report->run_report;
-    $report->render($request);
+    LedgerSMB::Report::GL->new(%$request)->render($request);
 }
 
 =item search_purchases

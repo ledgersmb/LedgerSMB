@@ -351,22 +351,10 @@ Valid for a year starting with the month selected.
 
 sub prepare_input {
     my ($self, $request) = @_;
-    if ($request->{from_month}){# and $request->{year}){tshvr4 year should be from_year!?
-        my $interval = $self->get_interval_dates(
-                                                  $request->{from_year}, 
-                                                  $request->{from_month}, 
-                                                  $request->{interval}
-        );
-        $request->{from_date} = $interval->{start};
-        $request->{to_date} = $interval->{end};
-    } else {
-        $request->{from_date} = LedgerSMB::PGDate->from_input(
-                                   $request->{from_date}
-        );
-        $request->{to_date} = LedgerSMB::PGDate->from_input(
-                                   $request->{to_date}#date_to
-        );
-    }
+    # Removing date handling since this is done by
+    # LedgerSMB::Report::Dates
+    # Question:  Should we move from_amount and to_amount to a role like this
+    # instead? --CT
     $request->{from_amount} = LedgerSMB::PGNumber->from_input(
                                $request->{from_amount}
     );
