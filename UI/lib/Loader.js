@@ -64,7 +64,9 @@ function(
                                             "title": input.title, 
                                              "cols": input.cols,
                                              "rows": input.rows}, input);
-                                   }
+                                   },
+                      // skip editors for now --CT
+                      'editor': function(input) { return true }, 
                     },
              INPUT: {   'hidden': function(){ return undefined},
                           'date': function(input){

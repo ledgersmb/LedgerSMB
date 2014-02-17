@@ -5,7 +5,7 @@
  IF language_code; "($language_code)"; ELSE; "(" _ text("No language") _ ")";
  END; ?></div>
 <form action="template.pl" method="post">
-<textarea class="template-body <?lsmb format ?>" 
+<textarea class="template-body <?lsmb format ?> editor" 
     cols=80 name="template"><?lsmb UNESCAPE(content) ?></textarea><br/>
 <?lsmb 
 PROCESS input element_data = {
