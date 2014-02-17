@@ -381,12 +381,13 @@ an array of arrays of (class_id, bu_id) and adds keys in the form of
 bc_$class_id holding the $bu_id fields.
 
 =cut
-
 sub process_bclasses {
     my ($self, $ref) = @_;
     for my $bu (@{$ref->{business_units}}){
+     if($bu->[1]){#avoid message:Use of uninitialized value in hash element
         push @{$ref->{$bu->[0]}}, $bu->[1] 
                  unless grep(/$bu->[1]/, @{$ref->{$bu->[0]}});
+     }
     }
 }
 
