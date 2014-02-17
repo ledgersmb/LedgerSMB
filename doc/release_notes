@@ -1,7 +1,7 @@
 RELEASE NOTES
 LedgerSMB 1.3
 
-Latest Revision:  1.3.37, January 29, 2014
+Latest Revision:  1.3.38, February 20, 2014
 
 1:  Welcome to LedgerSMB
 
@@ -167,6 +167,11 @@ transaction and using it as the default for the first line only.   Over time
 other related bugs surfaced.  In the end we decided to remove this "feature"
 and to simply call it a bug.  In 1.4, it will be replaced with template 
 transactions, currently supported as an add-on.
+
+2.10:  AR/AP Reports Now Default to Details
+
+The AR/AP reports now default to details instead of summary.  This was in 
+response to user feedback and was first made in 1.3.38
 
 3:  Known Issues
 
