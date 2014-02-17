@@ -408,7 +408,9 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
       GROUP BY trans_id) p ON p.trans_id = a.id
   JOIN entity_credit_account eca ON a.entity_credit_account = eca.id
   JOIN entity eeca ON eca.entity_id = eeca.id
+  LEFT
   JOIN entity_employee ON entity_employee.entity_id = a.person_id
+  LEFT
   JOIN entity ee ON entity_employee.entity_id = ee.id
   LEFT
   JOIN entity me ON entity_employee.manager_id = me.id
@@ -504,7 +506,9 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
          WHERE l.description IN ('AR', 'AP')
       GROUP BY ac.trans_id
        ) p ON p.trans_id = a.id
+  LEFT
   JOIN entity_employee ee ON ee.entity_id = a.person_id
+  LEFT
   JOIN entity eee ON eee.id = ee.entity_id
   JOIN entity_credit_account eca ON a.entity_credit_account = eca.id
   JOIN entity eeca ON eca.entity_id = eeca.id
