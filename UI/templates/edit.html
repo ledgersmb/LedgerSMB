@@ -6,7 +6,7 @@
  END; ?></div>
 <form action="template.pl" method="post">
 <textarea class="template-body <?lsmb format ?> editor" 
-    cols=80 name="template"><?lsmb UNESCAPE(content) ?></textarea><br/>
+    cols="80" name="template" rows="30"><?lsmb UNESCAPE(content) ?></textarea><br/>
 <?lsmb 
 PROCESS input element_data = {
     type = 'hidden'
