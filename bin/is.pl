@@ -633,6 +633,104 @@ function on_return_submit(event){
         $form->hide_form( "${item}_rate", "${item}_description",
             "${item}_taxnumber" );
     }
+    if ( !$form->{readonly} ) {
+        print "<tr><td>";
+        
+        # changes by Aurynn to add an On Hold button
+
+        %button = (
+            'update' =>
+              { ndx => 1, key => 'U', value => $locale->text('Update') },
+            'copy_to_new' => # Shares an index with copy because one or the other
+                             # must be deleted.  One can only either copy or 
+                             # update, not both. --CT
+              { ndx => 1, key => 'C', value => $locale->text('Copy to New') },
+            'print' =>
+              { ndx => 2, key => 'P', value => $locale->text('Print') },
+            'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
+            'ship_to' =>
+              { ndx => 4, key => 'T', value => $locale->text('Ship to') },
+            'e_mail' =>
+              { ndx => 5, key => 'E', value => $locale->text('E-mail') },
+            'sales_order' =>
+              { ndx => 9, key => 'L', value => $locale->text('Sales Order') },
+            'schedule' =>
+              { ndx => 10, key => 'H', value => $locale->text('Schedule') },
+            'on_hold' =>
+              { ndx => 12, key => 'O',  value => $hold_button_text },
+             'void'  => 
+                { ndx => 13, key => 'V', value => $locale->text('Void') },
+             'save_info'  => 
+                { ndx => 14, key => 'I', value => $locale->text('Save Info') },
+            'new_screen' => # Create a blank ar/ap invoice.
+             { ndx => 15, key=> 'N', value => $locale->text('New') }
+
+        );
+
+
+        if ($form->{separate_duties} or $form->{batch_id}){
+           $button{'post'}->{value} = $locale->text('Save');
+        }
+       delete $button{void} if $form->{invnumber} =~ /-VOID/;
+
+        if ( $form->{id} ) {
+
+            for ( "post", "print_and_post", "delete" ) {
+                delete $button{$_};
+            }
+            my $is_draft = 0;
+            if (!$form->{approved} && !$form->{batch_id}){
+               if (!$form->{batch_id}){
+                   $is_draft = 1;
+                   $button{approve} = { 
+                       ndx   => 3, 
+                       key   => 'O', 
+                       value => $locale->text('Post as Saved') };
+                   if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
+                       $button{edit_and_save} = { 
+                           ndx   => 4, 
+                           key   => 'E', 
+                           value => $locale->text('Save as Shown') };
+                   }
+              }
+               delete $button{$_}
+                 for qw(post_as_new post e_mail sales_order void print on_hold); 
+           }
+
+            if ( !${LedgerSMB::Sysconfig::latex} ) {
+                for ( "print_and_post", "print_and_post_as_new" ) {
+                    delete $button{$_};
+                }
+            }
+            for ("update", "post", "post_as_new", "print_and_post_as_new"){
+                delete $button{$_};
+            } 
+
+        }
+        else {
+
+            if ( $transdate > $closedto ) {
+                # Added on_hold, by Aurynn.
+                for ( "update", "ship_to", "post",
+                    "schedule")
+                {
+                    $allowed{$_} = 1;
+                }
+                $a{'print_and_post'} = 1 if ${LedgerSMB::Sysconfig::latex};
+
+                for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
+            }
+            elsif ($closedto) {
+                %button = ();
+            }
+        }
+        for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
+        {
+            $form->print_button( \%button, $_ );
+        }
+
+        print "</td></tr>";
+    }
 
 }
 
@@ -992,100 +1090,10 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
     # type=submit $locale->text('Sales Order')
 
     if ( !$form->{readonly} ) {
-        
-        # changes by Aurynn to add an On Hold button
-
-        %button = (
-            'update' =>
-              { ndx => 1, key => 'U', value => $locale->text('Update') },
-            'copy_to_new' => # Shares an index with copy because one or the other
-                             # must be deleted.  One can only either copy or 
-                             # update, not both. --CT
-              { ndx => 1, key => 'C', value => $locale->text('Copy to New') },
-            'print' =>
-              { ndx => 2, key => 'P', value => $locale->text('Print') },
-            'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
-            'ship_to' =>
-              { ndx => 4, key => 'T', value => $locale->text('Ship to') },
-            'e_mail' =>
-              { ndx => 5, key => 'E', value => $locale->text('E-mail') },
-            'sales_order' =>
-              { ndx => 9, key => 'L', value => $locale->text('Sales Order') },
-            'schedule' =>
-              { ndx => 10, key => 'H', value => $locale->text('Schedule') },
-            'on_hold' =>
-              { ndx => 12, key => 'O',  value => $hold_button_text },
-             'void'  => 
-                { ndx => 13, key => 'V', value => $locale->text('Void') },
-             'save_info'  => 
-                { ndx => 14, key => 'I', value => $locale->text('Save Info') },
-            'new_screen' => # Create a blank ar/ap invoice.
-             { ndx => 15, key=> 'N', value => $locale->text('New') }
-
-        );
-
-
-        if ($form->{separate_duties} or $form->{batch_id}){
-           $button{'post'}->{value} = $locale->text('Save');
-        }
-       delete $button{void} if $form->{invnumber} =~ /-VOID/;
-
-        if ( $form->{id} ) {
-
-            for ( "post", "print_and_post", "delete" ) {
-                delete $button{$_};
-            }
-            my $is_draft = 0;
-            if (!$form->{approved} && !$form->{batch_id}){
-               if (!$form->{batch_id}){
-                   $is_draft = 1;
-                   $button{approve} = { 
-                       ndx   => 3, 
-                       key   => 'O', 
-                       value => $locale->text('Post as Saved') };
-                   if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
-                       $button{edit_and_save} = { 
-                           ndx   => 4, 
-                           key   => 'E', 
-                           value => $locale->text('Save as Shown') };
-                   }
-              }
-               delete $button{$_}
-                 for qw(post_as_new post e_mail sales_order void print on_hold); 
-           }
-
-            if ( !${LedgerSMB::Sysconfig::latex} ) {
-                for ( "print_and_post", "print_and_post_as_new" ) {
-                    delete $button{$_};
-                }
-            }
-            for ("update", "post", "post_as_new", "print_and_post_as_new"){
-                delete $button{$_};
-            } 
-
-        }
-        else {
-
-            if ( $transdate > $closedto ) {
-                # Added on_hold, by Aurynn.
-                for ( "update", "ship_to", "post",
-                    "schedule")
-                {
-                    $allowed{$_} = 1;
-                }
-                $a{'print_and_post'} = 1 if ${LedgerSMB::Sysconfig::latex};
-
-                for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
-            }
-            elsif ($closedto) {
-                %button = ();
-            }
-        }
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
         {
             $form->print_button( \%button, $_ );
         }
-
     }
 
     if ($form->{id}){

@@ -581,6 +581,80 @@ function on_return_submit(event){
   </tr>
 |;
 
+    if ( !$form->{readonly} ) {
+        print qq|<tr><td>|;
+        %button = (
+            'update' =>
+              { ndx => 1, key => 'U', value => $locale->text('Update') },
+            'copy_to_new' => # Shares an index with copy because one or the other
+                             # must be deleted.  One can only either copy or 
+                             # update, not both. --CT
+              { ndx => 1, key => 'C', value => $locale->text('Copy to New') },
+            'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
+            'post_as_new' =>
+              { ndx => 5, key => 'N', value => $locale->text('Post as new') },
+            'purchase_order' => {
+                ndx   => 6,
+                key   => 'L',
+                value => $locale->text('Purchase Order')
+            },
+            'schedule' =>
+              { ndx => 7, key => 'H', value => $locale->text('Schedule') },
+            'on_hold' =>
+              { ndx => 9, key=> 'O', value => $locale->text('On Hold') },
+	    'save_info'  => 
+                { ndx => 10, key => 'I', value => $locale->text('Save Info') },
+            'new_screen' => # Create a blank ar/ap invoice.
+             { ndx => 11, key=> 'N', value => $locale->text('New') }
+        );
+
+        if ($form->{separate_duties} or $form->{batch_id}){
+           $button{'post'}->{value} = $locale->text('Save');
+        }
+
+        if ( $form->{id} ) {
+         
+            for ( "post", "delete") { delete $button{$_} }
+            for ( 'post_as_new', 'print_and_post_as_new', "update") {
+                delete $button{$_};
+            }
+            my $is_draft = 0;
+            if (!$form->{approved}){
+               $is_draft = 1;
+               $button{approve} = { 
+                       ndx   => 3, 
+                       key   => 'O', 
+                       value => $locale->text('Post as Saved') };
+               if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
+                   $button{edit_and_save} = { 
+                       ndx   => 4, 
+                       key   => 'E', 
+                       value => $locale->text('Save as Shown') };
+              }
+               # Delete these for batches too
+               delete $button{$_}
+                 for qw(post_as_new post e_mail sales_order void print on_hold); 
+            }
+
+        }
+        else {
+
+            if ( $transdate > $closedto ) {
+                for ( 'update', 'post', 'schedule' ) { $allowed{$_} = 1 }
+                for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
+            }
+            elsif ($closedto) {
+                %buttons = ();
+            }
+        }
+
+        for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
+        {
+            $form->print_button( \%button, $_ );
+        }
+
+    }
+
     $form->hide_form(qw(selectcurrency defaultcurrency taxaccounts));
 
     for ( split / /, $form->{taxaccounts} ) {
@@ -917,71 +991,6 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
     # type=submit $locale->text('Delete')
 
     if ( !$form->{readonly} ) {
-        %button = (
-            'update' =>
-              { ndx => 1, key => 'U', value => $locale->text('Update') },
-            'copy_to_new' => # Shares an index with copy because one or the other
-                             # must be deleted.  One can only either copy or 
-                             # update, not both. --CT
-              { ndx => 1, key => 'C', value => $locale->text('Copy to New') },
-            'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
-            'post_as_new' =>
-              { ndx => 5, key => 'N', value => $locale->text('Post as new') },
-            'purchase_order' => {
-                ndx   => 6,
-                key   => 'L',
-                value => $locale->text('Purchase Order')
-            },
-            'schedule' =>
-              { ndx => 7, key => 'H', value => $locale->text('Schedule') },
-            'on_hold' =>
-              { ndx => 9, key=> 'O', value => $locale->text('On Hold') },
-	    'save_info'  => 
-                { ndx => 10, key => 'I', value => $locale->text('Save Info') },
-            'new_screen' => # Create a blank ar/ap invoice.
-             { ndx => 11, key=> 'N', value => $locale->text('New') }
-        );
-
-        if ($form->{separate_duties} or $form->{batch_id}){
-           $button{'post'}->{value} = $locale->text('Save');
-        }
-
-        if ( $form->{id} ) {
-         
-            for ( "post", "delete") { delete $button{$_} }
-            for ( 'post_as_new', 'print_and_post_as_new', "update") {
-                delete $button{$_};
-            }
-            my $is_draft = 0;
-            if (!$form->{approved}){
-               $is_draft = 1;
-               $button{approve} = { 
-                       ndx   => 3, 
-                       key   => 'O', 
-                       value => $locale->text('Post as Saved') };
-               if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
-                   $button{edit_and_save} = { 
-                       ndx   => 4, 
-                       key   => 'E', 
-                       value => $locale->text('Save as Shown') };
-              }
-               # Delete these for batches too
-               delete $button{$_}
-                 for qw(post_as_new post e_mail sales_order void print on_hold); 
-            }
-
-        }
-        else {
-
-            if ( $transdate > $closedto ) {
-                for ( 'update', 'post', 'schedule' ) { $allowed{$_} = 1 }
-                for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
-            }
-            elsif ($closedto) {
-                %buttons = ();
-            }
-        }
-
         for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
         {
             $form->print_button( \%button, $_ );
