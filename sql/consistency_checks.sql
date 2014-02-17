@@ -22,6 +22,12 @@ BEGIN
   raise exception 'unbalanced gl - acc_trans row_count=%',row_count;
  end if;
 
+ perform * from ap where id not in (select trans_id from acc_trans);
+ GET DIAGNOSTICS row_count = ROW_COUNT;
+ if row_count > 0 then
+  raise exception 'entries in ap but not in acc_trans row_count=%',row_count;
+ end if;
+
 
  rc=0;
  return rc;
