@@ -29,6 +29,7 @@ certain point, and locating specific transactions.
 package LedgerSMB::Report::Contact::Purchase;
 use Moose;
 extends 'LedgerSMB::Report';
+with 'LedgerSMB::Report::Dates';
 
 =head1 PROPERTIES
 
@@ -238,22 +239,6 @@ Full text search on ship_via field.
 =cut
 
 has ship_via => (is => 'ro', isa => 'Maybe[Str]');
-
-=item from_date
-
-Invoices posted starting on this date
-
-=cut
-
-has from_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
-
-=item to_date
-
-Invoices posted no later than this date
-
-=cut
-
-has to_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item as_of
 

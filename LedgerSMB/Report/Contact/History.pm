@@ -27,6 +27,8 @@ both customers and vendors.
 package LedgerSMB::Report::Contact::History;
 use Moose;
 extends 'LedgerSMB::Report';
+with 'LedgerSMB::Report::Dates';
+
 use LedgerSMB::PGDate;
 use LedgerSMB::MooseTypes;
 
@@ -239,22 +241,6 @@ country id of customer
 =cut
 
 has country_id => (is => 'ro', isa => 'Maybe[Int]');
-
-=item from_date
-
-Include only invoices starting on this date
-
-=cut
-
-has from_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
-
-=item to_date
-
-Include only invoices before this date
-
-=cut
-
-has to_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item type
 
