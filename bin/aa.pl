@@ -426,7 +426,7 @@ sub form_header {
     my $title_msgid="$title $form->{ARAP} Transaction";
     if ($form->{reverse} == 0){
        #$form->{title} = $locale->text("[_1] [_2] Transaction", $title, $form->{ARAP});
-       $form->{title} = $locale->text("$title_msgid");
+       $form->{title} = $locale->text($title_msgid);
     }
     elsif($form->{reverse} == 1) {
        if ($form->{subtype} eq 'credit_note'){
