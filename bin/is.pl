@@ -476,7 +476,7 @@ function on_return_submit(event){
     $form->hide_form(
         qw(form_id id type printed emailed queued title vc terms discount 
            creditlimit creditremaining tradediscount business closedto locked 
-           shipped oldtransdate recurring reverse batch_id subtype 
+           shipped oldtransdate recurring reverse batch_id subtype tax_id 
            meta_number separate_duties lock_description nextsub default_reportable address city)
     );
 
@@ -542,11 +542,16 @@ function on_return_submit(event){
 	        <tr>
 		<th align="right" nowrap>| . 
 			$locale->text('Entity Code') . qq|</th>
-		<td colspan="2">$form->{entity_control_code}</td>
+		<td colspan="2" nowrap>$form->{entity_control_code}</td>
 		<th align="right" nowrap>| . 
 			$locale->text('Account') . qq|</th>
 		<td colspan=3>$form->{meta_number}</td>
 	      </tr>
+              <tr>
+                <th align="right" nowrap>| .
+                        $locale->text('Tax ID'). qq|</th>
+                <td colspan=3>$form->{tax_id}</td>
+              </tr>
               <tr class="address_row">
                 <th align="right" nowrap>| .
                         $locale->text('Address'). qq|</th>

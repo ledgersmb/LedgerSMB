@@ -850,7 +850,8 @@ sub get_name {
 		          c.language_code, $duedate AS duedate, 
 			  b.discount AS tradediscount, 
 		          b.description AS business, 
-			  entity.control_code as entity_control_code,
+			  entity.control_code AS entity_control_code,
+                          co.tax_id AS tax_id,
 			  c.meta_number, ecl.*, ctf.default_reportable,
                           c.cash_account_id, ca.accno as cash_accno
 		     FROM entity_credit_account c
@@ -858,6 +859,7 @@ sub get_name {
                 LEFT JOIN account ca ON c.cash_account_id = ca.id
 		LEFT JOIN business b ON (b.id = c.business_id)
                 LEFT JOIN country_tax_form ctf ON ctf.id = c.taxform_id
+                LEFT JOIN company co ON co.entity_id = c.entity_id
                 LEFT JOIN (SELECT coalesce(line_one, '')
                                || ' ' || coalesce(line_two, '') as address,
                                l.city, etl.credit_id

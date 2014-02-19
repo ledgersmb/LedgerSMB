@@ -514,11 +514,16 @@ function on_return_submit(event){
 	        <tr>
 		<th align="right" nowrap>| . 
 			$locale->text('Entity Code') . qq|</th>
-		<td colspan="2">$form->{entity_control_code}</td>
+		<td colspan="2" nowrap>$form->{entity_control_code}</td>
 		<th align="right" nowrap>| . 
 			$locale->text('Account') . qq|</th>
 		<td colspan=3>$form->{meta_number}</td>
 	      </tr>
+              <tr>
+                <th align="right" nowrap>| .
+                        $locale->text('Tax ID'). qq|</th>
+                <td colspan=3>$form->{tax_id}</td>
+              </tr>
               <tr class="address_row">
                 <th align="right" nowrap>| .
                         $locale->text('Address'). qq|</th>
