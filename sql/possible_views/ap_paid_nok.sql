@@ -32,3 +32,20 @@ SELECT sum(ac.amount) AS balance, e.name, ap.id, ap.invnumber, ap.transdate, ap.
    JOIN account_link al ON al.description = 'AP'::text AND al.account_id = ac.chart_id
   GROUP BY e.name, ap.id, ap.invnumber, ap.transdate, ap.taxincluded, ap.amount, ap.netamount, ap.duedate, ap.invoice, ap.ordnumber, ap.curr, ap.notes, ap.person_id, ap.till, ap.quonumber, ap.intnotes, ap.shipvia, ap.language_code, ap.ponumber, ap.shippingpoint, ap.on_hold, ap.approved, ap.reverse, ap.terms, ap.description, ap.force_closed, ap.crdate
  HAVING sum(ac.amount) <> 0::numeric;
+
+--example of instead trigger on view working under openjpa
+CREATE OR REPLACE FUNCTION ap_paid_nok1_delete()
+RETURNS TRIGGER AS
+$$
+BEGIN
+ IF TG_OP <> 'DELETE' then
+  RAISE EXCEPTION 'TG_OP should be DELETE';
+ END IF;
+ delete from acc_trans where trans_id=OLD.id;
+ DELETE FROM ap WHERE id=OLD.id;
+return OLD; 
+END;
+$$ language plpgsql;
+
+CREATE TRIGGER ap_paid_nok1_delete INSTEAD OF DELETE ON ap_paid_nok1 FOR EACH ROW EXECUTE PROCEDURE ap_paid_nok1_delete();
+
