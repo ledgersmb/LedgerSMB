@@ -579,7 +579,7 @@ $form->open_status_div . qq|
     $form->hide_form(
         qw(batch_id approved id printed emailed sort closedto locked 
            oldtransdate audittrail recurring checktax reverse batch_id subtype
-           entity_control_code meta_number default_reportable address city)
+           entity_control_code tax_id meta_number default_reportable address city)
     );
 
     if ( $form->{vc} eq 'customer' ) {
@@ -657,6 +657,11 @@ $form->open_status_div . qq|
 		<th align="right" nowrap>| . 
 			$locale->text('Entity Control Code') . qq|</th>
 		<td colspan=3>$form->{entity_control_code}</td>
+	      </tr>
+	        <tr>
+		<th align="right" nowrap>| . 
+			$locale->text('Tax ID') . qq|</th>
+		<td colspan=3>$form->{tax_id}</td>
 	      </tr>
 	        <tr>
 		<th align="right" nowrap>| . 
