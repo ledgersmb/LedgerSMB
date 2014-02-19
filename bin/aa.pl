@@ -1382,6 +1382,11 @@ sub post {
     $form->isblank( "transdate", $locale->text('Invoice Date missing!') );
     $form->isblank( "duedate",   $locale->text('Due Date missing!') );
     #$form->isblank( "crdate",    $locale->text('Invoice Created Date missing!') );
+    # pongraczi: we silently fill crdate with transdate if the user left empty to do not break existing workflow
+    if (!$form->{crdate}){
+          $form->{crdate} = $form->{transdate};
+    }
+
     $form->isblank( $form->{vc}, $label );
 
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
