@@ -190,6 +190,7 @@ sub partsgroup_footer {
 
 sub pricegroup_header {
 
+    $form->{action} =~ s/_.*//;
     $form->{title} = $locale->text( ucfirst $form->{action} . " Pricegroup" );
 
     # $locale->text('Add Pricegroup')
