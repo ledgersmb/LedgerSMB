@@ -98,7 +98,7 @@ sub form_footer_buttons {
 }
 
 sub add_gifi {
-    $form->{title} = $locale->text("Add");
+    $form->{title} = "Add";
 
     # construct callback
     $form->{callback} = "reports.pl?action=list_gifi";
@@ -150,8 +150,9 @@ sub edit_gifi {
 
 sub gifi_header {
     my $hiddens = shift;
+    my $title_msg="$form->{title} GIFI";
 
-    $form->{title} = $locale->text("[_1] GIFI", $form->{title});
+    $form->{title} = $locale->text($title_msg);
 
     # $locale->text('Add GIFI')
     # $locale->text('Edit GIFI')
@@ -223,7 +224,7 @@ sub delete_gifi {
 
 sub add_business {
 
-    $form->{title} = $locale->text("Add");
+    $form->{title} = "Add";
 
     $form->{callback} =
 "$form->{script}?action=add_business&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -272,8 +273,9 @@ sub edit_business {
 
 sub business_header {
     my $hiddens = shift;
+    my $title_msg="$form->{title} Business";
 
-    $form->{title} = $locale->text("[_1] Business", $form->{title});
+    $form->{title} = $locale->text($title_msg);
 
     # $locale->text('Add Business')
     # $locale->text('Edit Business')
@@ -304,7 +306,7 @@ sub delete_business {
 
 sub add_sic {
 
-    $form->{title} = $locale->text("Add");
+    $form->{title} = "Add";
 
     $form->{callback} =
 "$form->{script}?action=add_sic&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -358,8 +360,9 @@ sub edit_sic {
 
 sub sic_header {
     my $hiddens = shift;
+    my $title_msg="$form->{title} SIC";
 
-    $form->{title} = $locale->text("[_1] SIC", $form->{title});
+    $form->{title} = $locale->text($title_msg);
 
     # $locale->text('Add SIC')
     # $locale->text('Edit SIC')
@@ -392,7 +395,7 @@ sub delete_sic {
 
 sub add_language {
 
-    $form->{title} = $locale->text("Add");
+    $form->{title} = "Add";
 
     $form->{callback} =
 "$form->{script}?action=add_language&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -446,8 +449,9 @@ sub edit_language {
 
 sub language_header {
     my $hiddens = shift;
+    my $title_msg="$form->{title} Language";
 
-    $form->{title} = $locale->text("[_1] Language", $form->{title});
+    $form->{title} = $locale->text($title_msg);
 
     # $locale->text('Add Language')
     # $locale->text('Edit Language')
@@ -726,7 +730,7 @@ sub save_taxes {
 
 sub add_warehouse {
 
-    $form->{title} = $locale->text("Add");
+    $form->{title} = "Add";
 
     $form->{callback} =
 "$form->{script}?action=add_warehouse&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
@@ -775,8 +779,9 @@ sub edit_warehouse {
 
 sub warehouse_header {
     my $hiddens = shift;
+    my $title_msg="$form->{title} Warehouse";
 
-    $form->{title} = $locale->text("[_1] Warehouse", $form->{title});
+    $form->{title} = $locale->text($title_msg);
 
     # $locale->text('Add Warehouse')
     # $locale->text('Edit Warehouse')
