@@ -2422,6 +2422,10 @@ msgstr "Új center"
 msgid "%1 Department"
 msgstr "%1 költséghely/profitcenter"
 
+msgid "Edit Department"
+msgstr "Költséghely/profitcenter módosítása"
+
+
 #: bin/am.pl:707 bin/am.pl:861 bin/am.pl:1030 bin/am.pl:1189 bin/am.pl:2039
 msgid "Description missing!"
 msgstr "Leírás hiányzik!"
@@ -2473,8 +2477,8 @@ msgid "Add SIC"
 msgstr "Új TEÁOR/SZJ"
 
 #: bin/am.pl:1012
-msgid "%1 SIC"
-msgstr "%1 TEÁOR/SZJ"
+#msgid "%1 SIC"
+#msgstr "%1 TEÁOR/SZJ"
 
 #: bin/am.pl:1029 bin/am.pl:1188
 msgid "Code missing!"
@@ -3031,7 +3035,7 @@ msgstr "nap"
 # Elvileg mikor egy saját terméket összetevőire bontunk.
 #: bin/ic.pl:2921
 msgid "Break"
-msgstr "Szünet"
+msgstr "Árküszöb"
 
 #: bin/ic.pl:3061
 msgid "Sell"
@@ -8428,11 +8432,11 @@ msgstr "Saját termékek"
 #~ msgid "Edit AR Transaction"
 #~ msgstr "Vevő tranzakció szerkesztése"
 
-#~ msgid "Edit Assembly"
-#~ msgstr "Saját termék szerkesztése"
+msgid "Edit Assembly"
+msgstr "Saját termék módosítása"
 
-#~ msgid "Edit Business"
-#~ msgstr "Üzletág szerkesztése"
+msgid "Edit Business"
+msgstr "Partnercsoport módosítása"
 
 #~ msgid "Edit Cash Transfer Transaction"
 #~ msgstr "Számlák közötti pénzmozgás szerkesztése"
@@ -8440,47 +8444,47 @@ msgstr "Saját termékek"
 #~ msgid "Edit Deduction"
 #~ msgstr "Levonások szerkesztése"
 
-#~ msgid "Edit Department"
-#~ msgstr "Osztály szerkesztése"
-
-#~ msgid "Edit GIFI"
-#~ msgstr "Gyűjtőkód módosítása"
+msgid "Edit GIFI"
+msgstr "Gyűjtőkód módosítása"
 
 #~ msgid "Edit General Ledger Transaction"
 #~ msgstr "Vegyes könyvelési tétel módosítása"
 
-#~ msgid "Edit Group"
-#~ msgstr "Csoport módosítása"
+msgid "Edit Group"
+msgstr "Csoport módosítása"
 
-#~ msgid "Edit Labor/Overhead"
-#~ msgstr "Művelet módosítás"
+msgid "Edit Labor/Overhead"
+msgstr "Művelet módosítása"
 
-#~ msgid "Edit Language"
-#~ msgstr "Nyelv módosítás"
+msgid "Edit Language"
+msgstr "Nyelv módosítása"
 
-#~ msgid "Edit Part"
-#~ msgstr "Cikk módosítása"
+msgid "Edit Part"
+msgstr "Cikk módosítása"
 
 #~ msgid "Edit Preferences for"
 #~ msgstr "Felhasználói paraméterek módosítása:"
 
-#~ msgid "Edit Pricegroup"
-#~ msgstr "Árcsoport módosítás"
+msgid "Edit Pricegroup"
+msgstr "Árcsoport módosítása"
 
-#~ msgid "Edit SIC"
-#~ msgstr "SIC módosítás"
+msgid "Edit SIC"
+msgstr "TEÁOR/SZJ módosítása"
+
+msgid "Edit TEÁOR/SZJ"
+msgstr "TEÁOR/SZJ módosítása"
 
 #~ msgid "Edit Sales Invoice"
 #~ msgstr "Vevőszámla módosítása"
 
-#~ msgid "Edit Service"
-#~ msgstr "Szolgáltatás módosítása"
+msgid "Edit Service"
+msgstr "Szolgáltatás módosítása"
 
-#~ msgid "Edit Timecard"
-#~ msgstr "Időkártya szerkesztése"
+msgid "Edit Timecard"
+msgstr "Munkalap módosítása"
 
-#~ msgid "Edit Warehouse"
-#~ msgstr "Raktár módosítás"
+msgid "Edit Warehouse"
+msgstr "Raktár módosítása"
 
 #~ msgid "Employee Name"
 #~ msgstr "Alkalmazott neve"
