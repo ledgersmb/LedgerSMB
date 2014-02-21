@@ -1723,6 +1723,7 @@ qq|<button class="submit" type="submit" name="action" value="add_pricegroup">|
 
 sub pricegroup_header {
 
+    $form->{action} =~ s/_.*//;
     $form->{title} = $locale->text( ucfirst $form->{action} . " Pricegroup" );
 
     # $locale->text('Add Pricegroup')
