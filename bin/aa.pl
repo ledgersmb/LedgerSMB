@@ -426,7 +426,7 @@ sub form_header {
     my $title_msgid="$title $form->{ARAP} Transaction";
     if ($form->{reverse} == 0){
        #$form->{title} = $locale->text("[_1] [_2] Transaction", $title, $form->{ARAP});
-       $form->{title} = $locale->text("$title_msgid");
+       $form->{title} = $locale->text($title_msgid);
     }
     elsif($form->{reverse} == 1) {
        if ($form->{subtype} eq 'credit_note'){
@@ -579,7 +579,7 @@ $form->open_status_div . qq|
     $form->hide_form(
         qw(batch_id approved id printed emailed sort closedto locked 
            oldtransdate audittrail recurring checktax reverse batch_id subtype
-           entity_control_code meta_number default_reportable address city)
+           entity_control_code tax_id meta_number default_reportable address city)
     );
 
     if ( $form->{vc} eq 'customer' ) {
@@ -657,6 +657,11 @@ $form->open_status_div . qq|
 		<th align="right" nowrap>| . 
 			$locale->text('Entity Control Code') . qq|</th>
 		<td colspan=3>$form->{entity_control_code}</td>
+	      </tr>
+	        <tr>
+		<th align="right" nowrap>| . 
+			$locale->text('Tax ID') . qq|</th>
+		<td colspan=3>$form->{tax_id}</td>
 	      </tr>
 	        <tr>
 		<th align="right" nowrap>| . 
@@ -1318,6 +1323,11 @@ sub post {
     $form->isblank( "transdate", $locale->text('Invoice Date missing!') );
     $form->isblank( "duedate",   $locale->text('Due Date missing!') );
     # $form->isblank( "crdate",    $locale->text('Invoice Created Date missing!') );
+    # pongraczi: we silently fill crdate with transdate if the user left empty to do not break existing workflow
+    if (!$form->{crdate}){
+          $form->{crdate} = $form->{transdate};
+    }
+
     $form->isblank( $form->{vc}, $label );
 
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
@@ -1615,10 +1625,10 @@ qq|<input name="l_employee" class=checkbox type=checkbox value=Y> $employeelabel
     }
     $summary = qq|
               <tr>
-		<td><input name=summary type=radio class=radio value=1> |
+		<td><input name=summary type=radio class=radio value=1 checked> |
       . $locale->text('Summary')
       . qq|</td>
-		<td><input name=summary type=radio class=radio value=0 checked> |
+		<td><input name=summary type=radio class=radio value=0> |
       . $locale->text('Detail') . qq|
 		</td>
 	      </tr>
