@@ -2332,7 +2332,7 @@ sub transactions {
         for (qw(id curr)) { $column_data{$_} = "<td>$ref->{$_}</td>" }
 
         $column_data{accno} =
-qq|<td><a href=ca.pl?path=$form->{path}&action=list_transactions&accounttype=standard&accno=$ref->{accno}&fromdate=$form->{transdatefrom}&todate=$form->{transdateto}&sort=transdate&l_subtotal=$form->{l_subtotal}&prevreport=$callback>$ref->{accno}</a></td>|;
+qq|<td><a href=gl.pl?path=$form->{path}&action=generate_report&accno=$ref->{accno}&fromdate=$form->{transdatefrom}&todate=$form->{transdateto}&sort=transdate&l_transdate=Y&l_reference=Y&l_description=Y&l_source=Y&l_debit=Y&l_credit=Y&l_accno=Y&category=X>$ref->{accno}</a></td>|;
 
         $column_data{name} =
 qq|<td>$ref->{meta_number}</td><td><a href=$form->{vc}.pl?path=$form->{path}&action=edit&entity_id=$ref->{entity_id}&meta_number=$ref->{meta_number}&db=$form->{vc}&callback=$callback>$ref->{name}</a></td>|;
