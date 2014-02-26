@@ -1,4 +1,3 @@
-
 =head1 NAME
 
 LedgerSMB::IC - Inventory Control backend
