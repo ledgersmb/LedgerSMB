@@ -712,7 +712,7 @@ TO "lsmb_<?lsmb dbname ?>__contact_edit", "lsmb_<?lsmb dbname ?>__part_edit";
 GRANT SELECT ON assembly, orderitems, jcitems, invoice 
 TO "lsmb_<?lsmb dbname ?>__part_edit";
 
-GRANT DELETE ON assembly TO "lsmb_<?lsmb dbname ?>__part_edit";
+GRANT DELETE ON assembly, parts TO "lsmb_<?lsmb dbname ?>__part_edit";
 GRANT UPDATE ON parts, partsgroup, assembly TO "lsmb_<?lsmb dbname ?>__part_edit";
 GRANT ALL ON makemodel TO "lsmb_<?lsmb dbname ?>__part_edit";
 --###oldcode: Should have been UPDATE
