@@ -1847,6 +1847,11 @@ sub save {
 
     $olditem = $form->{id};
 
+    check_vendor();
+    check_customer();
+    $form->{vendor_rows} += 1 if $form->{"vendor_$form->{vendor_rows}"};
+    $form->{customer_rows} += 1 if $form->{"customer_$form->{customer_rows}"};
+
     # save part
     $rc = IC->save( \%myconfig, \%$form );
     $rc = 1;
