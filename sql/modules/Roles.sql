@@ -670,7 +670,8 @@ SELECT lsmb__grant_menu('part_edit', node_id, 'allow')
 
 SELECT lsmb__grant_perms('part_edit', 'assembly', 'DELETE');
 SELECT lsmb__grant_perms('part_edit', obj, 'ALL')
-  FROM unnest(array['makemodel'::text, 'partstax', 'partscustomer_entry_id_seq']
+  FROM unnest(array['makemodel'::text, 'partstax', 'partscustomer_entry_id_seq',
+                   'parts']
        )obj;
 
 SELECT lsmb__grant_perms('part_edit', obj, 'UPDATE')
