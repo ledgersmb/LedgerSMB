@@ -26,6 +26,7 @@ use LedgerSMB::Upgrade_Tests;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Setting;
+use Carp::Always;
 use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
