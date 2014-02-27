@@ -85,13 +85,23 @@ sub set_datestyle {
 
 =head2 require_version($version)
 
-Requires a specific version (exactly).  Dies if doesn't match.
+Checks for a setting called 'ignore_version' and returns immediately if this is
+set and true.
+
+Otherwise, requires a specific version (exactly).  Dies if doesn't match.
+
+The ignore_version setting is intended to be temporarily set during 
+zero-downtime upgrades.
 
 =cut
 
 sub require_version {
     my ($self, $expected_version) = @_;
     $expected_version ||= $self; # handling ::require_version($version) syntax
+
+    my $ignore_version = LedgerSMB::Setting->get('ignore_version');
+    return if $ignore_version;
+
     my $version = LedgerSMB::Setting->get('version');
     die LedgerSMB::App_State->Locale->text("Database is not the expected version.  Was $version, expected $expected_version.  Please re-run setup.pl against this database to correct.<a href='setup.pl'>setup.pl</a>")
        unless $version eq $expected_version;
