@@ -115,7 +115,7 @@ sub chart_of_accounts {
         my $gifi_description = $form->escape( $ca->{gifi_description} );
 
         my $href =
-qq|$form->{script}?path=$form->{path}&action=list&accno=$ca->{accno}&login=$form->{login}&sessionid=$form->{sessionid}&description=$description&gifi_accno=$ca->{gifi_accno}&gifi_description=$gifi_description|;
+qq|gl.pl?action=generate_report&accno=$ca->{accno}&category=X&sort=transdate&l_transdate=Y&l_reference=Y&l_description=Y&l_source=Y&l_debit=Y&l_credit=Y&l_accno=Y|;
 
         if ( $ca->{charttype} eq "H" ) {
             $column_data{class} = 'heading';
