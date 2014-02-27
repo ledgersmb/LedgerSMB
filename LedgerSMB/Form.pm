@@ -1412,7 +1412,8 @@ sub db_init {
              WHERE setting_key = 'version'");
     $sth->execute;
     my ($dbversion) = $sth->fetchrow_array;
-    if ($dbversion ne $self->{dbversion}){
+    my $ignore_version = LedgerSMB::Setting->get('ignore_version');
+    if (($dbversion ne $self->{dbversion}) and !$ignore_version){
         $self->error("Database is not the expected version.");
     }
 
