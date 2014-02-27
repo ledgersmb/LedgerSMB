@@ -114,6 +114,7 @@ Changelog for 1.3.39
 * Fixed display of weight on parts list with comma decimal sep (Chris T, 1030)
 * Fixed pricelist pdf column widths all equal (Chris T, 1037)
 * Added support for zero-downtime upgrades (Chris T)
+* Fixed clicking through COA does not show future transactions (Chris T, 1044)
 
 Changelog for 1.3.38
 * Fixed AR/AP transactions resetting currency/exchange rate (Chris T)
