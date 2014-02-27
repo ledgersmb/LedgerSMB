@@ -1388,6 +1388,7 @@ sub db_init {
            { AutoCommit => 0, pg_enable_utf8 => 1, pg_server_prepare => 0 })
         || LedgerSMB::Auth::credential_prompt();
 
+    $LedgerSMB::App_State::DBH = $self->{dbh};
     $logger->debug("acquired dbh \$self->{dbh}=$self->{dbh}");
     my $dbh = $self->{dbh};
 

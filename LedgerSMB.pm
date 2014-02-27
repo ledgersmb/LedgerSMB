@@ -990,6 +990,8 @@ sub _db_init {
         qq|dbi:Pg:dbname="$dbname"|, "$creds->{login}", "$creds->{password}",
         { AutoCommit => 0, pg_server_prepare => 0, pg_enable_utf8 => 1 }
     ); 
+    $LedgerSMB::App_State::DBH = $self->{dbh};
+    $LedgerSMB::App_State::DBName = $dbname;
     $logger->debug("DBI->connect dbh=$self->{dbh}");
     my $dbi_trace=$LedgerSMB::Sysconfig::DBI_TRACE;
     if($dbi_trace)
@@ -1009,8 +1011,6 @@ sub _db_init {
     elsif (!$self->{dbh}){
         $self->_get_password;
     }
-    $LedgerSMB::App_State::DBH = $self->{dbh};
-    $LedgerSMB::App_State::DBName = $dbname;
 
     # This is the general version check
     my $sth = $self->{dbh}->prepare("
