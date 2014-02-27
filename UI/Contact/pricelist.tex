@@ -11,23 +11,28 @@
               { col_id = 'int_partnumber'
                   name = text('Partnumber')
                   type = 'text'
+                pwidth = 1
                 },
                 { col_id = 'description'
                   name = text('Description')
                   type = 'text'
+                pwidth = 4
                 } ];
 ?> <?lsmb-
      IF account_class == 1;
          columns.push(
                   {col_id = 'lastcost'
                      name = text('Last Cost') 
+                   pwidth = 1
                      type = 'text_input'},
                   {col_id = 'partnumber',
                      name = text('Vendor Partnumber') 
+                   pwidth = 1
                      type = 'text_input'},
                   {col_id = 'leadtime',
                      name = text('Lead Time') 
-                     type = 'input_text'}
+                   pwidth = 1
+                     type = 'text_input'}
          );
 
      ELSE;
@@ -35,12 +40,15 @@
          columns.push(
                   {col_id = 'sellprice'
                      name = text('Sell Price') 
+                   pwidth = 1
                      type = 'input_text'},
                   {col_id = 'validfrom',
                      name = text('Valid From') 
+                   pwidth = 1
                      type = 'input_text'},
                   {col_id = 'validto',
                      name = text('Valid To') 
+                   pwidth = 1
                      type = 'input_text'},
          );
                         
@@ -48,6 +56,7 @@
 -?><?lsmb-
      columns.push({col_id = 'currency',
                      name = text('Currency'),
+                   pwidth = 1
                      type = 'text'},
      );
       PROCESS dynatable
