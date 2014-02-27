@@ -1543,6 +1543,7 @@ sub all_parts {
     my $pth = $dbh->prepare($query) || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+        $form->db_parse_numeric(sth => $sth, hashref => $ref);
         $pth->execute( $ref->{id} );
         while ( ($accno) = $pth->fetchrow_array ) {
             $ref->{tax} .= "$accno ";
