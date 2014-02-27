@@ -111,6 +111,7 @@ Changelog for 1.3.39
 * Fixed Internal Server Error clicking through ar/ap report (Chris T, 1022)
 * Fixed internal server error deleting part (Chris T, 1027)
 * Fixed Internal server error saving part with all vendor rows (Chris T, 1028)
+* Fixed display of weight on parts list with comma decimal sep (Chris T, 1030)
 
 Changelog for 1.3.38
 * Fixed AR/AP transactions resetting currency/exchange rate (Chris T)
