@@ -116,6 +116,7 @@ Changelog for 1.3.39
 * Added support for zero-downtime upgrades (Chris T)
 * Fixed clicking through COA does not show future transactions (Chris T, 1044)
 * Fixed unable to partially pay or receive when negative due (Chris T, 1045)
+* Fixed encoding for templates when edited through web (Chris T, 1077)
 
 Changelog for 1.3.38
 * Fixed AR/AP transactions resetting currency/exchange rate (Chris T)
