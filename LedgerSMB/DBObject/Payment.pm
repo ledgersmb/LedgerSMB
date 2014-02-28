@@ -735,7 +735,7 @@ sub post_payment {
  my ($self) = @_;
  # We have to check if it was a fx_payment
  $self->{currency} = $self->{curr};
- $_ = "$_" for @{$self->{amount}};
+ $_ = "$_" for $self->_parse_array($self->{amount});
 
 
  if ("$self->{currency}" ne $self->get_default_currency()) {
