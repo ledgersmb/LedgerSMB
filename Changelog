@@ -8,6 +8,7 @@ Changelog for 1.3.39
 * Fixed Internal server error saving part with all vendor rows (Chris T, 1028)
 * Fixed pricelist pdf column widths all equal (Chris T, 1037)
 * Added support for zero-downtime upgrades (Chris T)
+* Fixed encoding for templates when edited through web (Chris T, 1077)
 
 Changelog for 1.3.38
 * Fixed AR/AP transactions resetting currency/exchange rate (Chris T)
