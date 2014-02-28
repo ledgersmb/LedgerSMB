@@ -1148,7 +1148,11 @@ for my $ref (0 .. $#array_options) {
          # The prefix cash is to set the movements of the cash accounts, 
          # same names are used for ap/ar accounts w/o the cash prefix.
          #
-     if ( "$array_options[$ref]->{due_fx}" <  $request_topay_fx_bigfloat ) {
+     my $sign = "$array_options[$ref]->{due_fx}" <=> 0;
+     if ( ($sign * "$array_options[$ref]->{due_fx}")
+            <  
+          ($sign * $request_topay_fx_bigfloat ) 
+     ){
          # We need to store all the overpayments so we can use it on a new payment2 screen
          $unhandled_overpayment = $request->round_amount($unhandled_overpayment + $request_topay_fx_bigfloat + $temporary_discount - $array_options[$ref]->{amount}) ;
 
