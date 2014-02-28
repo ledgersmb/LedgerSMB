@@ -1547,6 +1547,7 @@ sub load_template {
     $form->{file} ||= lc "$myconfig->{templates}/$form->{template}.$form->{format}";
     $self->check_template_name( \%$myconfig, \%$form );
     open( TEMPLATE, '<', "$form->{file}" ) || ($testval = 1);
+    binmode TEMPLATE, ':utf8';
     if ($testval == 1 && ($! eq 'No such file or directory')){
       my $file = $form->{file};
       $file =~ s|$form->{code}/|| if $form->{code};
@@ -1579,6 +1580,7 @@ sub save_template {
     $self->check_template_name( \%$myconfig, \%$form );
     open( TEMPLATE, '>', "$form->{file}" )
       or $form->error("$form->{file} : $!");
+    binmode TEMPLATE, ':utf8';
 
     # strip
     $form->{body} =~ s/\r//g;
