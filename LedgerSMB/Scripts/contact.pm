@@ -198,7 +198,7 @@ sub _main_screen {
     my @all_taxes = LedgerSMB->call_procedure(procname => 'account__get_taxes');
 
     my @ar_ap_acc_list = LedgerSMB->call_procedure(procname => 'chart_get_ar_ap',
-                                           args => [$entity_class]);
+                                           args => [$entity_class]) if $entity_class < 3;
 
     my @cash_acc_list = LedgerSMB->call_procedure(procname => 'chart_list_cash',
                                            args => [$entity_class]);
