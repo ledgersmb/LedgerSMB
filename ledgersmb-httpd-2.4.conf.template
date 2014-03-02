@@ -17,7 +17,7 @@ Alias /ledgersmb WORKING_DIR/
   RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization},L]
 
 
-  Options +ExecCGI Includes FollowSymlinks
+  Options +ExecCGI 
   AllowOverride All
   AddHandler cgi-script .pl
 
