@@ -16,7 +16,7 @@ use LedgerSMB;
 use Scalar::Util;
 use Log::Log4perl;
 use Moose::Util::TypeConstraints;
-use LedgerSMB::MooseTypes
+use LedgerSMB::MooseTypes;
 
 =head1 METHODS
 
