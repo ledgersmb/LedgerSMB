@@ -1355,6 +1355,7 @@ entity_control|A-00001
 batch_cc|B-11111
 check_prefix|CK
 decimal_places|2
+disable_back|0
 dojo_theme|claro
 \.
 
