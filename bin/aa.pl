@@ -238,7 +238,8 @@ sub create_links {
     $form->{"select$form->{vc}"} = "";
     if ( @{ $form->{"all_$form->{vc}"} } ) {
         $form->{ $form->{vc} } =
-          qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|;
+          qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|
+          unless $form->{ $form->{vc} } =~ /--$form->{"$form->{vc}_id"}$/;
         for ( @{ $form->{"all_$form->{vc}"} } ) {
             $form->{"select$form->{vc}"} .=
               qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
