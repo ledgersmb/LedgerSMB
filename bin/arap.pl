@@ -315,7 +315,6 @@ sub rebuild_vc {
         $form->{"select$vc"} .=
           qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
     }
-
     $form->{selectprojectnumber} = "";
     if ( @{ $form->{all_project} } ) {
         $form->{selectprojectnumber} = "<option>\n";

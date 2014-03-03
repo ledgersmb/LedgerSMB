@@ -9,6 +9,7 @@ Changelog for 1.3.39
 * Fixed pricelist pdf column widths all equal (Chris T, 1037)
 * Added support for zero-downtime upgrades (Chris T)
 * Fixed encoding for templates when edited through web (Chris T, 1077)
+* Fixed customer/vendor dropdown resetting on update (Chris T, 1072)
 
 Changelog for 1.3.38
 * Fixed AR/AP transactions resetting currency/exchange rate (Chris T)
