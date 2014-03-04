@@ -215,7 +215,7 @@ sub post_transaction {
 				            transdate, source,
 				            fx_transaction, memo, cleared)
 				    VALUES  (?, (SELECT id
-				                   FROM chart
+				                   FROM account
 				                  WHERE accno = ? ),
 				           ?, ?, ?, ?, ?, ?)|;
             $sth = $dbh->prepare($query);
