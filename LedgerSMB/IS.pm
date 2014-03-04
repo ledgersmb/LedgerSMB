@@ -1936,7 +1936,7 @@ sub retrieve_invoice {
 			          a.on_hold, a.description
 			     FROM ar a
 			LEFT JOIN entity_employee em ON (em.entity_id = a.person_id)
-			INNER JOIN entity e ON e.id = em.entity_id
+			LEFT JOIN entity e ON e.id = em.entity_id
 			    WHERE a.id = ?|;
 
         $sth = $dbh->prepare($query);
