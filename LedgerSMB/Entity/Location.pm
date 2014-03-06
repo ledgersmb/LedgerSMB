@@ -153,7 +153,7 @@ Name of the state or province
 
 =cut
 
-has 'state' => (is => 'rw', 'isa' => 'Str', required => 1);
+has 'state' => (is => 'rw', 'isa' => 'Str', required => 0);
 
 =item mail_code
 
