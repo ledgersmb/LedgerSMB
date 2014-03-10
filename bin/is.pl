@@ -61,6 +61,7 @@ sub on_update{}
 sub copy_to_new{
     delete $form->{id};
     delete $form->{invnumber};
+    $form->{crdate} = $form->current_date( \%myconfig );
     $form->{paidaccounts} = 1;
     if ($form->{paid_1}){
         delete $form->{paid_1};
