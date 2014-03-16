@@ -43,6 +43,7 @@ use LedgerSMB::Tax;
 use LedgerSMB::Sysconfig;
 
 my $logger = Log::Log4perl->get_logger('OE');
+
 =over
 
 =item get_files
@@ -51,6 +52,8 @@ Returns a list of files associated with the existing transaction.  This is
 provisional, and will change for 1.4 as the GL transaction functionality is 
                   {ref_key => $self->{id}, file_class => 2}
 rewritten
+
+=back
 
 =cut
 
@@ -66,9 +69,13 @@ sub get_files {
 
 }
 
-=get_type 
+=over
+
+=item get_type 
 
 Sets the type field for an existing order or quotation
+
+=back
 
 =cut
 
