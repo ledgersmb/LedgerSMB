@@ -52,6 +52,8 @@ provisional, and will change for 1.4 as the GL transaction functionality is
                   {ref_key => $self->{id}, file_class => 1}
 rewritten
 
+=back
+
 =cut
 
 sub get_files {
