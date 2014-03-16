@@ -232,6 +232,7 @@ sub get_all_accounts {
         $self->exec_method(funcname => 'payment_get_all_accounts');
     return @{$self->{accounts}};
 }
+
 =over
 
 =item $payment->reverse()
@@ -414,7 +415,7 @@ The list is attached to $self->{departments} and returned.
 =cut
 
 =over
-                      
+
 =item get_open_currencies
 
 This method gets a list of the open currencies inside the database, it requires that  
@@ -432,14 +433,15 @@ sub get_open_currencies {
   return @{$self->{openCurrencies}};
 }
 
-
 =over
 
 =item list_accounting
 
 This method lists all accounts that match the role specified in account_class property and
 are available to store the payment or receipts. 
+
 =back
+
 =cut
 
 sub list_accounting {
@@ -448,11 +450,15 @@ sub list_accounting {
  return @{$self->{pay_accounts}}; 
 }
 
+=over
+
 =item list_overpayment_accounting
 
 This method lists all accounts that match the role specified in account_class property and
 are available to store an overpayment / advanced payment / pre-payment. 
+
 =back
+
 =cut
 
 sub list_overpayment_accounting {
@@ -461,11 +467,13 @@ sub list_overpayment_accounting {
  return @{$self->{overpayment_accounts}}; 
 }
 
+=over
 
 =item get_sources
 
 This method builds all the possible sources of money,
 in the future it will look inside the DB. 
+
 =back
 
 =cut
@@ -479,9 +487,13 @@ sub get_sources {
  return @{$self->{cash_sources}}; 
 }
 
+=over
+
 =item get_exchange_rate(currency, date)
 
 This method gets the exchange rate for the specified currency and date
+
+=back
 
 =cut 
 
@@ -493,9 +505,12 @@ sub get_exchange_rate {
  
 }
 
+=over
+
 =item get_default_currency
 
 This method gets the default currency 
+
 =back
 
 =cut
@@ -506,9 +521,13 @@ sub get_default_currency {
  return $self->{default_currency}->{defaults_get_defaultcurrency};
 }
 
+=over
+
 =item get_current_date
 
 This method returns the system's current date
+
+=back
 
 =cut
 
@@ -517,10 +536,14 @@ sub get_current_date {
  return $self->{current_date}; 
 }
 
+=over
+
 =item get_vc_info
 
 This method returns the contact informatino for a customer or vendor according to
 $self->{account_class}
+
+=back
 
 =cut
 
@@ -533,9 +556,13 @@ sub get_vc_info {
  return ${$self->{vendor_customer_info}}[0];
 }
 
+=over
+
 =item get_payment_detail_data
 
 This method sets appropriate project, department, etc. fields.
+
+=back
 
 =cut
 
@@ -598,6 +625,8 @@ sub get_payment_detail_data {
     $self->{dbh}->commit; # Commit locks
 }    
 
+=over
+
 =item post_bulk
 
 This function posts the payments in bulk.  Note that queue_payments is not a 
@@ -620,6 +649,8 @@ for (1 .. contact_count), contact_$_ is the entity credit account's id
 associated with the current contact.  We will call this $contact_id below.
 
 For each contact id, we have the following, suffixed with _$contact_id:
+
+=back
 
 =over
 
@@ -714,9 +745,13 @@ sub post_bulk {
     return $self->{dbh}->commit;
 }
 
+=over
+
 =item check_job
 
 To be moved into payment_queue addon.
+
+=back
 
 =cut
 
@@ -725,9 +760,13 @@ sub check_job {
     ($self->{job}) = $self->exec_method(funcname => 'job__status');
 }
 
+=over
+
 =item post_payment
 
 This method uses payment_post to store a payment (not a bulk payment) on the database.
+
+=back
 
 =cut
 
@@ -761,10 +800,14 @@ sub post_payment {
  return $self->{payment_id};
 }
 
+=over
+
 =item gather_printable_info 
 
 This method retrieves all the payment related info needed to build a
 document and print it. IT IS NECESSARY TO ALREADY HAVE payment_id on $self
+
+=back
 
 =cut
 
@@ -778,10 +821,14 @@ for my $row(@{$self->{line_info}}){
 }
 }
 
+=over
+
 =item get_open_overpayment_entities 
 
 This method retrieves all the entities with the specified
 account_class which have unused overpayments
+
+=back
 
 =cut
 
@@ -791,9 +838,13 @@ my ($self) = @_;
 return @{$self->{open_overpayment_entities}}; 
 }
 
+=over
+
 =item get_unused_overpayments
 
 This is a simple wrapper around payment_get_unused_overpayments sql function.
+
+=back
 
 =cut
 
@@ -803,9 +854,13 @@ my ($self) = @_;
 return @{$self->{unused_overpayment}}; 
 }
 
+=over
+
 =item get_available_overpayment_amount
 
 Simple wrapper around payment_get_available_overpayment_amount sql function.
+
+=back
 
 =cut
 
@@ -815,6 +870,8 @@ my ($self) = @_;
 return @{$self->{available_overpayment_amount}};
 }
 
+=over
+
 =item init
 
 Initializes the num2text system
@@ -822,6 +879,9 @@ Initializes the num2text system
 =item num2text
 
 Translates numbers into words.
+
+=back
+
 
 =cut
 
