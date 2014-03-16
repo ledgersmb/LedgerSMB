@@ -15,8 +15,6 @@ version.  See the COPYRIGHT and LICENSE files for more information.
 
 =head1 METHODS
 
-=over
-
 =cut
 
 # Methods are documented inline.  
@@ -43,6 +41,8 @@ my $temp = $LedgerSMB::Sysconfig::tempdir;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
+=over
+
 =item LedgerSMB::Database->new({dbname = $dbname, countrycode = $cc, chart_name = $name, company_name = $company, username = $username, password = $password})
 
 This function creates a new database management object with the specified
@@ -56,6 +56,8 @@ a chart name as well.
 Note that the arguments can be any hashref. If it is a LedgerSMB object,
 however, it will attempt to copy all attributes beginning with _ into the 
 current object (_user, _locale, etc).
+
+=back
 
 =cut
 
@@ -77,6 +79,8 @@ sub new {
     return $self;
 }
 
+=over
+
 =item base_backup
 
 This routine connects to the database using pg_dumpall and returns a plain text,
@@ -92,6 +96,8 @@ yyyy-mm-dd format.
 
 It returns the full path of the resulting backup file on success, or undef on 
 failure.
+
+=back
 
 =cut
 
@@ -126,6 +132,8 @@ sub base_backup {
     return $backupfile;
 }
 
+=over
+
 =item db_backup()
 
 This routine connects to the database using pg_dump and creates a Pg-native 
@@ -139,6 +147,8 @@ yyyy-mm-dd format.
 
 It returns the full path of the resulting backup file on success, or undef on 
 failure.
+
+=back
 
 =cut
 
@@ -173,6 +183,8 @@ sub db_backup {
     return $backupfile;
 }
 
+=over
+
 =item get_info()
 
 This routine connects to the database using DBI and attempts to determine if a 
@@ -182,9 +194,11 @@ It returns a hashref with the following keys set:
 =over
 
 =item username
+
 Set to the user of the current connection
 
 =item appname
+
 Set to the current application name, one of:
 
 =over
@@ -198,11 +212,13 @@ Set to the current application name, one of:
 =back
 
 =item version
+
 The current version of the application.  One of:
 
 =over
 
 =item legacy
+
 SQL-Ledger 2.6 and below, and LedgerSMB 1.1 and below
 
 =item 1.2 (LedgerSMB only)
@@ -220,18 +236,23 @@ SQL-Ledger 2.6 and below, and LedgerSMB 1.1 and below
 =over
 
 =item full_version
+
 The full version number of the database version
 
 =item status
+
 Current status of the db.  One of:
 
 =item exists
+
 The database was confirmed to exist
 
 =item does not exist
+
 The database was confirmed to not exist
 
 =item undef
+
 The database could not be confirmed to exist, or not
 
 =back
@@ -270,6 +291,8 @@ and status values.
 Finally, it is important to note that LedgerSMB 1.1 and prior, and SQL-Ledger 
 2.6.x and prior are lumped under appname => 'ledgersmb' and version => 'legacy',
 though the fullversion may give you an idea of what the actual version is run.
+
+=back
 
 =cut 
 
@@ -395,9 +418,13 @@ sub get_info {
    return $retval;
 }
 
+=over
+
 =item $db->server_version();
 
 Connects to the server and returns the version number in x.y.z format.
+
+=back
 
 =cut
 
@@ -415,12 +442,16 @@ sub server_version {
     return $retval;
 }
 
+=over
+
 =item $db->list()
 
 Lists available databases except for those named "postgres" or starting with
 "template"
 
 Returns a list of strings of db names.
+
+=back
 
 =cut
 
@@ -445,8 +476,8 @@ sub list {
     return @results;
 }
 
+=over
 
-    
 =item $db->create();
 
 Creates a database and loads the contrib files.  This is done from template0, 
@@ -458,6 +489,8 @@ temporary directory with all the output from the psql files.
 
 In DEBUG mode, will show all lines to STDERR.  In ERROR logging mode, will 
 display only those lines containing the word ERROR.
+
+=back
 
 =cut
 
@@ -507,9 +540,13 @@ sub create {
      return $rc;
 }
 
+=over
+
 =item $db->copy('new_name')
 
 Copies the existing database to a new name.
+
+=back
 
 =cut
 
@@ -524,11 +561,15 @@ sub copy {
     my $rc = $dbh->do("CREATE DATABASE $new_name WITH TEMPLATE $dbname");
     $dbh->disconnect;
     return $rc;
-}        
+}
+
+=over
 
 =item $db->load_modules($loadorder)
 
 Loads or reloads sql modules from $loadorder
+
+=back
 
 =cut
 
@@ -548,10 +589,14 @@ sub load_modules {
     close (LOADORDER);
 }
 
+=over 
+
 =item $db->exec_script({script => 'path/to/file', logfile => 'path/to/log'})
 
 Executes the script.  Returns 0 if successful, 1 if there are errors suggesting
 that types are already created, and 2 if there are other errors.
+
+=back
 
 =cut
 
@@ -575,9 +620,13 @@ sub exec_script {
     return $test;
 }
 
+=over
+
 =item $db->create_and_load();
 
 Creates a database and then loads it.
+
+=back
 
 =cut
 
@@ -587,10 +636,13 @@ sub create_and_load(){
     $self->load_modules('LOADORDER');
 }
 
+=over
 
 =item $db->process_roles($rolefile);
 
 Loads database Roles templates.
+
+=back
 
 =cut
 
@@ -630,6 +682,8 @@ sub process_roles {
                         log    => "$temp/dblog"});
 }
 
+=over
+
 =item $db->lsmb_info()
 
 This routine retrieves general stats about the database and returns the output
@@ -652,6 +706,8 @@ as a hashref with the following key/value pairs:
 =item transactions_rows
 
 =item users_rows
+
+=back
 
 =back
 
@@ -678,13 +734,16 @@ sub lsmb_info {
     }
     return $retval;
 }
-    
+
+=over
 
 =item $db->db_tests()
 
 This routine runs general db tests.
 
 TODO
+
+=back
 
 =cut
 
