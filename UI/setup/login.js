@@ -2,7 +2,9 @@ function submit_form() {
 	var http = get_http_request_object();
         var username = document.getElementById('s-user').value;
 	var password = document.getElementById('s-password').value;
-	http.open("get", 'login.pl?action=authenticate&company=template1',
+	var dbName = document.getElementById('database').value;
+    if(!dbName) dbname='postgres';//'template1'
+	http.open("get", 'login.pl?action=authenticate&company='+dbName,
 		false, username, password);
 	http.send("");
         if (http.status != 200){

@@ -128,7 +128,9 @@ sub login {
         return;
     }
     my $database = _get_database($request);
+    $logger->trace("\$database=".Data::Dumper::Dumper(\$database));
     my $server_info = $database->server_version;
+    $logger->trace("\$server_info=".Data::Dumper::Dumper(\$server_info));
     
     my $version_info = $database->get_info();
 

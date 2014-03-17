@@ -33,7 +33,7 @@ use strict;
 use DateTime;
 use Log::Log4perl;
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
-my $logger = Log::Log4perl->get_logger('');
+my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
 my $dbversions = {
     '1.2' => '1.2.0',
@@ -56,7 +56,6 @@ sub loader_log_filename {
     return $temp . "/dblog_${dt}_$$";
 }
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
 =item LedgerSMB::Database->new({dbname = $dbname, countrycode = $cc, chart_name = $name, company_name = $company, username = $username, password = $password})
 
@@ -317,6 +316,7 @@ sub get_info {
     };
 
     my $creds = LedgerSMB::Auth->get_credentials();
+    $logger->trace("\$creds=".Data::Dumper::Dumper(\$creds));
     my $dbh = $self->dbh();
     if (!$dbh){ # Could not connect, try to validate existance by connecting
                 # to postgres and checking
@@ -446,9 +446,12 @@ Connects to the server and returns the version number in x.y.z format.
 
 sub server_version {
     my $self = shift @_;
+    $logger->trace("\$self=".Data::Dumper::Dumper(\$self));
+    my $dbName=$self->{company_name}||'postgres';
     my $creds = LedgerSMB::Auth->get_credentials();
+    $logger->trace("\$creds=".Data::Dumper::Dumper(\$creds));
     my $dbh = DBI->connect(
-        "dbi:Pg:dbname=postgres", 
+        "dbi:Pg:dbname=$dbName", 
          "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
     ) or LedgerSMB::Auth::credential_prompt;
     my ($version) = $dbh->selectrow_array('SELECT version()');
@@ -473,7 +476,7 @@ sub list {
     my $dbh = DBI->connect(
         "dbi:Pg:dbname=postgres", 
          "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
-    );
+    ) or LedgerSMB::Auth::credential_prompt;
     my $resultref = $dbh->selectall_arrayref(
         "SELECT datname FROM pg_database 
           WHERE datname <> 'postgres' AND datname NOT LIKE 'template%'
