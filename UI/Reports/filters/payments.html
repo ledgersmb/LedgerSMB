@@ -35,6 +35,7 @@
 		value = entity_class
 	} ?>
 <div class="listtop" id="page_title"><?lsmb TITLE ?></div>
+<div class="inputrow">
 <div class="input" id="vendor_input_div">
 	<?lsmb INCLUDE input element_data = {
 		name  = "meta_number"
@@ -72,13 +73,15 @@
 		size  = "20"
 		label = text('Source')
 	} ?></div>
+</div>
 <?lsmb PROCESS date_row_div ?>
 <?lsmb IF batch_id ?>
 <div class="listtop"><?lsmb text('Payment Reversal Information') ?></div>
-<div class="input">
  	<?lsmb IF batch_id -?>
 	<label for="batch_post_span"><?lsmb text('Date Reversed') ?></label>
 	<span id="batch_post_span"><?lsmb date_reversed ?></span>
+<div class="tabular col-1">
+<div class="input">
 	<?lsmb INCLUDE input element_data = {
 		type  = "hidden"
 		value = date_reversed
@@ -95,11 +98,11 @@
 	} ?>
 	<?lsmb END # if batch_id ?></div>
 <div class="input" id="curr-exchange-div">
-      <?lsmb INCLUDE select element_data = {
+      <?lsmb
+           INCLUDE select element_data = {
               name = 'currency'
            options = currencies
-         text_attr = 'payments_get_open_currencies'
-        value_attr = 'payments_get_open_currencies'
+        value_attr = id
   default_optiopns = [default_currency]
              label = text('Currency')
       } ?>
@@ -112,15 +115,17 @@
              class = 'fxrate'
       } ?>
 </div>
+</div>
 <?lsmb END # if batch_id -?>
-<div class="input" id="search_button_div">
+<div class="button" id="search_button_div">
 	<?lsmb INCLUDE button element_data = {
 		name  = "action"
 		type  = "submit"
 		class = "submit"
 		value = "get_search_results"
 		text  = text('Search')
-	} ?></div>
+	} ?>
+</div>
 </form>
 </body>
 </html>
