@@ -274,6 +274,8 @@ sub get_search_results {
     $request->{hiddens} = { 
         batch_id => $request->{batch_id},
       cash_accno => $request->{cash_accno},
+        currency => $request->{currency},
+    exchangerate => $request->{exchangerate}
     };
     $report->render($request);
 }

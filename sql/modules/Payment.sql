@@ -1189,7 +1189,7 @@ BEGIN
 		JOIN entity_credit_account c 
 			ON (arap.entity_credit_account = c.id)
 		JOIN account ch ON (a.chart_id = ch.id)
-		WHERE a.source IS NOT DISTINCT FROM in_source
+		WHERE coalesce(a.source, '') = coalesce(in_source, '')
 			AND a.transdate = in_date_paid
 			AND in_credit_id = arap.entity_credit_account
 			AND in_cash_accno = ch.accno
