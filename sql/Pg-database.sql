@@ -1357,6 +1357,7 @@ check_prefix|CK
 decimal_places|2
 disable_back|0
 dojo_theme|claro
+company_control|1
 \.
 
 -- Sequence handling
