@@ -723,7 +723,8 @@ BEGIN
 	--t_company_id := in_id;--not used
 
 	IF in_control_code IS NULL THEN
-		t_control_code := setting_increment('company_control');
+		--t_control_code := setting_increment('company_control');
+		t_control_code := setting_increment('entity_control');
 	ELSE
 		t_control_code := in_control_code;
 	END IF;
