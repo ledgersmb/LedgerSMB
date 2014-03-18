@@ -275,7 +275,8 @@ sub get_search_results {
         batch_id => $request->{batch_id},
       cash_accno => $request->{cash_accno},
         currency => $request->{currency},
-    exchangerate => $request->{exchangerate}
+    exchangerate => $request->{exchangerate},
+   date_reversed => $request->{date_reversed},
     };
     $report->render($request);
 }
