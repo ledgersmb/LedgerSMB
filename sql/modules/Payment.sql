@@ -54,7 +54,9 @@ CREATE OR REPLACE FUNCTION payment_get_entity_accounts
  		FROM entity_credit_account ec
  		JOIN entity e ON (ec.entity_id = e.id)
 		WHERE ec.entity_class = in_account_class
-		AND (e.name ilike coalesce('%'||in_vc_name||'%','%%') OR cp.tax_id = in_vc_idn)
+		AND (e.name ilike coalesce('%'||in_vc_name||'%','%%') 
+                    OR EXISTS (select 1 FROM company 
+                                WHERE entity_id = e.id AND tax_id = in_vc_idn))
 	LOOP
 		RETURN NEXT out_entity;
 	END LOOP;
