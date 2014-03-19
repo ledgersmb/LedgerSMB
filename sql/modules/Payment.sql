@@ -96,10 +96,9 @@ $$
 DECLARE out_entity entity%ROWTYPE;
 BEGIN
         FOR out_entity IN
-                SELECT ec.id, cp.legal_name as name, e.entity_class, e.created
+                SELECT ec.id, e.name as name, e.entity_class, e.created
                 FROM entity e
                 JOIN entity_credit_account ec ON (ec.entity_id = e.id)
-                JOIN company cp ON (cp.entity_id = e.id)
                         WHERE ec.entity_class = in_account_class
                         AND CASE WHEN in_account_class = 1 THEN
                                 ec.id IN
