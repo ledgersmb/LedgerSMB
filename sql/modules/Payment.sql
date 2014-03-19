@@ -48,14 +48,13 @@ CREATE OR REPLACE FUNCTION payment_get_entity_accounts
 
  BEGIN
  	FOR out_entity IN
-              SELECT ec.id, cp.legal_name || 
+              SELECT ec.id, e.name || 
                      coalesce(':' || ec.description,'') as name, 
                      e.entity_class, ec.discount_account_id, ec.meta_number
  		FROM entity_credit_account ec
  		JOIN entity e ON (ec.entity_id = e.id)
- 		JOIN company cp ON (cp.entity_id = e.id)
 		WHERE ec.entity_class = in_account_class
-		AND (cp.legal_name ilike coalesce('%'||in_vc_name||'%','%%') OR cp.tax_id = in_vc_idn)
+		AND (e.name ilike coalesce('%'||in_vc_name||'%','%%') OR cp.tax_id = in_vc_idn)
 	LOOP
 		RETURN NEXT out_entity;
 	END LOOP;
