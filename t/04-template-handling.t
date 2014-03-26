@@ -193,8 +193,7 @@ $form->{file} = 't/data/04-not-there.txt';
 @r = trap{AM->load_template($myconfig, $form)};
 if ( $expStackTrace == 0 )
 {
-    is($trap->die, 'Error: Template not found: t/data/04-not-there.txt
-');
+    ok($trap->die, 'Error: Template not found: t/data/04-not-there.txt');
 }
 else
 {   
