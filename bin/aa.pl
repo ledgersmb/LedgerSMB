@@ -1362,8 +1362,9 @@ sub post {
     }
 
     # if oldname ne name redo form
-    ($name) = split /--/, $form->{ $form->{vc} };
-    if ( $form->{"old$form->{vc}"} ne qq|$name--$form->{"$form->{vc}_id"}| ) {
+    ($name, $id) = split /--/, $form->{ $form->{vc} };
+    if (( $form->{"old$form->{vc}"} ne qq|$name--$form->{"$form->{vc}_id"}|) 
+        and ($form->{"old$form->{vc}"} !~ /$name--$id--/ )) {
         &update;
         $form->finalize_request();
     }

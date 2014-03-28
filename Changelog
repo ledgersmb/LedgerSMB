@@ -13,6 +13,7 @@ Changelog for 1.3.39
 * Fixed error that string cannot be used as array during payment (Chris T)
 * Fixed POD syntax errors in five LedgerSMB/* files. (Robert C)
 * Fixed upgrade tests where null pricegrup exists (Chris T)
+* Fixed save button on ar/ap transactions not saving (Chris T, 1097)
 
 Changelog for 1.3.38
 * Fixed AR/AP transactions resetting currency/exchange rate (Chris T)
