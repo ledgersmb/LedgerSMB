@@ -433,7 +433,7 @@ FROM sl28.ap JOIN sl28.vendor ON (ap.vendor_id = vendor.id) ;
 
 ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 
-ALTER TABLE sl28.acc_trans ADD COLUMN entry_id integer;
+--ALTER TABLE sl28.acc_trans ADD COLUMN entry_id integer;
 
 update sl28.acc_trans
   set entry_id = nextval('acc_trans_entry_id_seq');
@@ -589,10 +589,10 @@ INSERT INTO recurringprint SELECT * FROM sl28.recurringprint;
 
 INSERT INTO jcitems(id, project_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            person_id, notes)
+            person_id, notes, total)
      SELECT j.id,  project_id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            p.id, j.notes
+            p.id, j.notes, qty * sellprice
        FROM sl28.jcitems j
        JOIN sl28.employee e ON j.employee_id = e.id
        JOIN person p ON e.entity_id = p.entity_id;
