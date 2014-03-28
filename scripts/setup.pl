@@ -414,7 +414,8 @@ sub migrate_sl {
           table => 'makemodel'},
         { query => "select *
                      from partscustomer
-                    where not exists (select 1
+                    where pricegroup_id is not null and
+                          not exists (select 1
                                         from pricegroup
                                        where id = pricegroup_id)",
           name => $locale->text("Non-existing customer pricegroups in partscustomer (can't be edited through the web interface)"),
