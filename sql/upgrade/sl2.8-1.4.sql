@@ -442,7 +442,7 @@ ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 -- ### Move those to business_units
 -- ### TODO: Reconciled disappeared from the source table...
 
---ALTER TABLE sl28.acc_trans ADD COLUMN entry_id integer;
+ALTER TABLE sl28.acc_trans ADD COLUMN entry_id integer;
 
 update sl28.acc_trans
   set entry_id = nextval('acc_trans_entry_id_seq');
@@ -625,10 +625,10 @@ INSERT INTO recurringprint SELECT * FROM sl28.recurringprint;
 
 INSERT INTO jcitems(id, parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            person_id, notes, business_unit_id, total)
+            person_id, notes, business_unit_id)
      SELECT j.id,  parts_id, description, qty, allocated,
             sellprice, fxsellprice, serialnumber, checkedin, checkedout,
-            p.id, j.notes, j.project_id+1000, qty * sellprice
+            p.id, j.notes, j.project_id+1000
        FROM sl28.jcitems j
        JOIN sl28.employee e ON j.employee_id = e.id
        JOIN person p ON e.entity_id = p.entity_id;

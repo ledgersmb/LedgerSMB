@@ -437,8 +437,7 @@ push @tests, __PACKAGE__->new(
 push @tests, __PACKAGE__->new(
     test_query => "select *
                      from partscustomer
-                    where pricegroup_id is not null and
-                          not exists (select 1
+                    where not exists (select 1
                                         from pricegroup
                                        where id = pricegroup_id)",
     display_name => $LedgerSMB::App_State::Locale->text('Non-existing customer pricegroups in partscustomer'),
