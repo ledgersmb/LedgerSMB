@@ -126,7 +126,7 @@ BEGIN
 	FOR out_row IN 
 		SELECT * FROM account 
                  WHERE (accno ~* ('^'||in_search) 
-                       OR description ~* ('^'||in_search))
+                       OR description ~* in_search)
                        AND (in_link_desc IS NULL 
                            or id in 
                           (select account_id from account_link 
