@@ -191,9 +191,10 @@ SELECT account__save(NULL,'8040','Kostprijs Verkopen C','E','8040', NULL, false,
 SELECT account__save(NULL,'8100','Directe Verkoopkosten','E','8100', NULL, false, false, string_to_array('AP_amount:IC_expense', ':'), false, false);
 SELECT account__save(NULL,'8150','Toeslag Indirecte Verkoopkosten','E','8150', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'8300','Kortingen bij Verkoop','E','8300', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'8520','Opbrengst Verkopen A','I','8520', NULL, false, false, string_to_array('AR_amount:IC_sale', ':'), false, false);
-SELECT account__save(NULL,'8530','Opbrengst Verkopen B','I','8530', NULL, false, false, string_to_array('AR_amount:IC_sale', ':'), false, false);
-SELECT account__save(NULL,'8540','Opbrengst Verkopen C','I','8540', NULL, false, false, string_to_array('AR_amount:IC_sale', ':'), false, false);
+SELECT account_heading_save(NULL,'8500','Opbrengsten', NULL);
+SELECT account__save(NULL,'8520','Opbrengst Verkopen A','I','8520', NULL, false, false, string_to_array('AR_amount:IC_sale:IC_income', ':'), false, false);
+SELECT account__save(NULL,'8530','Opbrengst Verkopen B','I','8530', NULL, false, false, string_to_array('AR_amount:IC_sale:IC_income', ':'), false, false);
+SELECT account__save(NULL,'8540','Opbrengst Verkopen C','I','8540', NULL, false, false, string_to_array('AR_amount:IC_sale:IC_income', ':'), false, false);
 SELECT account__save(NULL,'8999','Overboekingsrekening Rubriek 8','E','8999', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'9000','Rekeningen tbv Resultatenrekening', NULL);
 SELECT account__save(NULL,'9010','Resultaat Indirecte Kosten','E','9010', NULL, false, false, string_to_array('', ':'), false, false);
