@@ -453,7 +453,7 @@ sub server_version {
     my $dbh = DBI->connect(
         "dbi:Pg:dbname=$dbName", 
          "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
-    ) or LedgerSMB::Auth::credential_prompt;
+    ) or return undef;
     my ($version) = $dbh->selectrow_array('SELECT version()');
     $version =~ /(\d+\.\d+\.\d+)/;
     my $retval = $1;
