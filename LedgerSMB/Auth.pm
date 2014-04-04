@@ -64,8 +64,6 @@ sub http_error {
     $msg_plus = '' if not defined $msg_plus;
     my $cgi = CGI::Simple->new();
 
-    die 'foo';
-
     my $err = {
 	'500' => {status  => '500 Internal Server Error', 
 		  message => 'An error occurred. Information on this error has been logged.', 
