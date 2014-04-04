@@ -5,7 +5,16 @@ LedgerSMB::Database - Provides the APIs for database creation and management.
 
 =head1 SYNOPSIS
 
-This module provides the APIs for database creation and management
+This module wraps both DBI and the PostgreSQL commandline tools.
+
+  my $db = LedgerSMB::Database->new({
+       company_name => 'mycompany',
+       username => 'foo',
+       password => 'foospassword'
+  });
+
+  $db->load_modules('LOADORDER');
+
 
 =head1 COPYRIGHT
 
@@ -57,7 +66,7 @@ sub loader_log_filename {
 }
 
 
-=item LedgerSMB::Database->new({dbname = $dbname, countrycode = $cc, chart_name = $name, company_name = $company, username = $username, password = $password})
+=item LedgerSMB::Database->new({company_name = $dbname, countrycode = $cc, chart_name = $name, username = $username, password = $password})
 
 This function creates a new database management object with the specified
 characteristics.  The $dbname is the name of the database. the countrycode
@@ -67,9 +76,6 @@ dropdown boxes on the Login screen.
 As some countries may have multiple available charts, you can also specify
 a chart name as well.
 
-Note that the arguments can be any hashref. If it is a LedgerSMB object,
-however, it will attempt to copy all attributes beginning with _ into the 
-current object (_user, _locale, etc).
 
 =cut
 
