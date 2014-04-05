@@ -81,7 +81,8 @@ BEGIN
                         v.batch_id, v.trans_id, a.transdate, bc.class
 
 		UNION ALL
-		SELECT v.id, a.source, a.memo, 
+		SELECT v.id, a.source,
+                        cr.meta_number || '--'  || co.legal_name ,
 			v.batch_id, v.trans_id, 
 			CASE WHEN bc.class LIKE 'receipt%' THEN sum(a.amount) * -1
 			     ELSE sum(a.amount)  END, a.transdate, 
