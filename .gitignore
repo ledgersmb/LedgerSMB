@@ -10,3 +10,22 @@ inc/
 #
 # LedgerSMB runtime files
 ledgersmb.conf
+
+# /
+/Makefile
+/META.yml
+/inc
+/blib
+/pm_to_blib
+/ledgersmb.conf
+/ledgersmb-httpd.conf
+
+# /bin/custom/
+/bin/custom/*
+
+# /doc/manual/
+/doc/manual/*.aux
+/doc/manual/*.lof
+/doc/manual/*.toc
+/doc/manual/*.log
+/doc/manual/*.out
