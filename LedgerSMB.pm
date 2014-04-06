@@ -198,48 +198,24 @@ sub new {
 
     $logger->debug("Begin called from \$filename=$filename \$line=$line \$type=$type \$argstr=$argstr ref argstr=".ref $argstr);
 
-    $self->{version} = $VERSION;
-    $self->{dbversion} = $VERSION;
-    
     bless $self, $type;
 
     my $query;
-    my %params=();
     if(ref($argstr) eq 'DBI::db')
     {
-     $self->{dbh}=$argstr;
-     $logger->info("setting dbh from argstr \$self->{dbh}=$self->{dbh}");
+        $self->{dbh}=$argstr;
+        $logger->info("setting dbh from argstr \$self->{dbh}=$self->{dbh}");
     }
     else
     {
-     $query = ($argstr) ? new CGI::Simple($argstr) : new CGI::Simple;
-     # my $params = $query->Vars; returns a tied hash with keys that
-     # are not parameters of the CGI query.
-     %params = $query->Vars;
-     for my $p(keys %params){
-         if (($params{$p} eq undef) or ($params{$p} eq '')){
-             delete $params{$p};
-             next;
-         }
-         utf8::decode($params{$p});
-         utf8::upgrade($params{$p});
-     }
-     $logger->debug("params=", Data::Dumper::Dumper(\%params));
+        $query = $self->_process_argstr($argstr);
     }
+
+    $self->{version} = $VERSION;
+    $self->{dbversion} = $VERSION;
     $self->{VERSION} = $VERSION;
     $self->{_request} = $query;
-
-    $self->merge(\%params);
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
-
-    # Adding this so that empty values are stored in the db as NULL's.  If
-    # stored procedures want to handle them differently, they must opt to do so.
-    # -- CT
-    for (keys %$self){
-        if ($self->{$_} eq ''){
-            $self->{$_} = undef;
-        }
-    }
 
     #HV set _locale already to default here,so routines lower in stack can use it;e.g. login.pl
     #$self->{_locale}=LedgerSMB::Locale->get_handle('en');
@@ -405,6 +381,37 @@ sub _set_script_name {
     }
     $logger->debug("\$self->{script} = $self->{script} "
                    . "\$self->{action} = $self->{action}");
+}
+
+sub _process_argstr {
+    my ($self, $argstr) = @_;
+
+    my %params=();
+    my $query = ($argstr) ? new CGI::Simple($argstr) : new CGI::Simple;
+    # my $params = $query->Vars; returns a tied hash with keys that
+    # are not parameters of the CGI query.
+    %params = $query->Vars;
+    for my $p(keys %params){
+        if (($params{$p} eq undef) or ($params{$p} eq '')){
+            delete $params{$p};
+            next;
+        }
+        utf8::decode($params{$p});
+        utf8::upgrade($params{$p});
+    }
+    $logger->debug("params=", Data::Dumper::Dumper(\%params));
+    $self->merge(\%params);
+
+    # Adding this so that empty values are stored in the db as NULL's.  If
+    # stored procedures want to handle them differently,
+    # they must opt to do so.
+    # -- CT
+    for (keys %$self){
+        if ($self->{$_} eq ''){
+            $self->{$_} = undef;
+        }
+    }
+    return $query;
 }
 
 sub _process_cookies {
