@@ -193,6 +193,21 @@ push @tests, __PACKAGE__->new(
 );
 
 push @tests, __PACKAGE__->new(
+   test_query => "SELECT * FROM employee
+                   WHERE not name ~ '[[:alnum:]_]'::text",
+         name => 'minimal_employee_name_requirements',
+ display_name => $LedgerSMB::App_State::Locale->text("Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"),
+ instructions => $LedgerSMB::App_State::Locale->text(
+     'Make sure every name consists of alphanumeric characters (and underscores) only and is at least one character long'),
+ display_cols => ['login', 'name', 'employeenumber'],
+       column => 'name',
+        table => 'employee',
+      appname => 'ledgersmb',
+  min_version => '1.2',
+  max_version => '1.2'
+);
+
+push @tests, __PACKAGE__->new(
    test_query => 'SELECT * FROM employee 
                    WHERE employeenumber IN 
                          (SELECT employeenumber FROM employee 
