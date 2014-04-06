@@ -225,34 +225,6 @@ sub new {
     $self->_set_script_name();
 
 
-    # This is suboptimal.  We need to have a better way for 1.4
-    #HV we should try to have DBI->connect in one place?
-    #HV  why not trying _db_init also in case of login authenticate? quid logout-function?
-    if ($self->{script} eq 'login.pl' &&
-        ($self->{action} eq 'authenticate'  || $self->{action} eq '__default' 
-		|| !$self->{action} || ($self->{action} eq 'logout_js'))){
-        return $self;
-    }
-    if ($self->{script} eq 'setup.pl'){
-        return $self;
-    }
-
-    %cookie = $self->_process_cookie();
-    $self->{cookie} = $cookie{${LedgerSMB::Sysconfig::cookie_name}};
-    if(! $self->{cookie} && $self->{action} eq 'logout')
-    {
-     $logger->debug("quitting because of logout and no cookie,avoid _db_init");
-     return $self;
-    }
-
-    #dbh may have been set elsewhere,by DBObject.pm?
-    if(!$self->{dbh})
-    {
-     $self->_db_init;
-    }
-
-    $self->initialize_with_db();
-
     $logger->debug("End");
     return $self;
 }

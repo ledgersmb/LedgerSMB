@@ -119,6 +119,22 @@ sub call_script {
     eval "require $script;"
       || die $locale->text('Unable to open script') . 
                           ": $script : $!: $@";
+
+    my @no_db_actions =
+        $script->can('no_db_actions')->()
+        if $script->can('no_db_actions');
+    my $no_db = 0;
+
+    foreach my $action (@no_db_actions) {
+        $no_db = 1
+            if $action eq $request->{action};
+    }
+
+    if (! ($no_db || $script->can('no_db'))) {
+        $request->_db_init();
+        $request->initialize_with_db();
+    }
+
     $script->can($request->{action}) 
       || die $locale->text("Action Not Defined: ") . $request->{action};
     $script->can( $request->{action} )->($request);
