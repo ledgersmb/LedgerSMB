@@ -166,5 +166,8 @@ $logger->debug("after calling script=$script action=$request->{action} "
                . "\$request->{dbh}=$request->{dbh}");
 
 
+&request_cleanup();
+
+
 
 1;
