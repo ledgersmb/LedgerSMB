@@ -615,9 +615,15 @@ sub upgrade{
          edit => 'employeenumber',
         table => 'employee'},
 
-       {query => 'SELECT * FROM employee 
-                   WHERE employeenumber IN 
-                         (SELECT employeenumber FROM employee 
+       {query => "SELECT * FROM employee WHERE name = ''",
+         name => $locale->text('No blank employee name'),
+         cols => ['employeenumber', 'login', 'name'],
+         edit => 'name',
+        table => 'employee'},
+
+       {query => 'SELECT * FROM employee
+                   WHERE employeenumber IN
+                         (SELECT employeenumber FROM employee
                         GROUP BY employeenumber
                           HAVING count(*) > 1)',
          name => $locale->text('Duplicte employee numbers'),
@@ -651,10 +657,19 @@ sub upgrade{
         }
     }
 
+    # Check to see if there is a heading, otherwise add a default --LH
+    my ( $count_heading ) = $request->{dbh}->selectrow_array(
+        "SELECT COUNT(*) FROM chart WHERE charttype = 'H'"
+    );
+    unless ( $count_heading ) {
+        $request->{dbh}->do(
+            "INSERT INTO chart (id,accno,description,charttype,category,link,gifi_accno,contra)
+            VALUES (1, '0000', 'Minimal heading', 'H', '', '', '', false)");
+    }
+
     @{$request->{ar_accounts}} = _get_linked_accounts($request, "AR");
     @{$request->{ap_accounts}} = _get_linked_accounts($request, "AP");
-    unshift @{$request->{ar_accounts}}, {};
-    unshift @{$request->{ap_accounts}}, {};
+    unshift @{$request->{ar_accounts}}, {};    unshift @{$request->{ap_accounts}}, {};
 
     @{$request->{countries}} = ();
     foreach my $iso2 (all_country_codes()) {
