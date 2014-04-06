@@ -238,8 +238,8 @@ sub new {
     }
 
     %cookie = $self->_process_cookie();
-    if(! $cookie{${LedgerSMB::Sysconfig::cookie_name}}
-       && $self->{action} eq 'logout')
+    $self->{cookie} = $cookie{${LedgerSMB::Sysconfig::cookie_name}};
+    if(! $self->{cookie} && $self->{action} eq 'logout')
     {
      $logger->debug("quitting because of logout and no cookie,avoid _db_init");
      return $self;
@@ -250,40 +250,11 @@ sub new {
     {
      $self->_db_init;
     }
-    LedgerSMB::Company_Config::initialize($self);
 
-    #TODO move before _db_init to avoid _db_init with invalid session?
-    #  Can't do that:  Company_Config has to pull company data from the db --CT
-    if ($self->is_run_mode('cgi', 'mod_perl') and !$ENV{LSMB_NOHEAD}) {
-       #check for valid session unless this is an inital authentication
-       #request -- CT
-       if (!LedgerSMB::Session::check( $cookie{${LedgerSMB::Sysconfig::cookie_name}}, $self) ) {
-            $logger->error("Session did not check");
-            $self->_get_password("Session Expired");
-            die;
-       }
-       $logger->debug("session_check completed OK \$self->{session_id}=$self->{session_id} caller=\$filename=$filename \$line=$line");
-    }
-    $self->get_user_info;
-
-    my %date_setting = (
-        'mm/dd/yy' => "ISO, MDY",
-        'mm-dd-yy' => "ISO, MDY",
-        'dd/mm/yy' => "ISO, DMY",
-        'dd-mm-yy' => "ISO, DMY",
-        'dd.mm.yy' => "ISO, DMY",
-    );
-
-    $self->{dbh}->do("set DateStyle to '".$date_setting{$self->{_user}->{dateformat}}."'");
-    $self->{_locale}=LedgerSMB::Locale->get_handle($self->{_user}->{language})
-     or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
-
-    $self->{stylesheet} = $self->{_user}->{stylesheet} unless $self->{stylesheet};
+    $self->initialize_with_db();
 
     $logger->debug("End");
-
     return $self;
-
 }
 
 sub unescape {
@@ -328,6 +299,45 @@ sub close_form {
     delete $self->{form_id};
     return $vars[0]->{form_close};
 }
+
+
+sub initialize_with_db {
+    my ($self) = @_;
+
+    LedgerSMB::Company_Config::initialize($self);
+
+    #TODO move before _db_init to avoid _db_init with invalid session?
+    #  Can't do that:  Company_Config has to pull company data from the db --CT
+    if ($self->is_run_mode('cgi', 'mod_perl') and !$ENV{LSMB_NOHEAD}) {
+       #check for valid session unless this is an inital authentication
+       #request -- CT
+       if (!LedgerSMB::Session::check( $self->{cookie}, $self) ) {
+            $logger->error("Session did not check");
+            $self->_get_password("Session Expired");
+            die;
+       }
+       $logger->debug("session_check completed OK");
+    }
+    $self->get_user_info;
+
+    my %date_setting = (
+        'mm/dd/yy' => "ISO, MDY",
+        'mm-dd-yy' => "ISO, MDY",
+        'dd/mm/yy' => "ISO, DMY",
+        'dd-mm-yy' => "ISO, DMY",
+        'dd.mm.yy' => "ISO, DMY",
+    );
+
+    $self->{dbh}->do("set DateStyle to '"
+                     . $date_setting{$self->{_user}->{dateformat}}."'");
+    $self->{_locale} =
+        LedgerSMB::Locale->get_handle($self->{_user}->{language})
+        or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
+
+    $self->{stylesheet} =
+        $self->{_user}->{stylesheet} unless $self->{stylesheet};
+}
+
 
 sub get_user_info {
     my ($self) = @_;
