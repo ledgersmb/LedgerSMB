@@ -1011,7 +1011,7 @@ $$
 DECLARE out_id int;
 BEGIN
         UPDATE entity_bank_account
-           SET bic = in_bic,
+           SET bic = coalesce(in_bic,''),
                iban = in_iban
          WHERE id = in_bank_account_id;
 
