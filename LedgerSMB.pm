@@ -241,14 +241,6 @@ sub new {
         }
     }
 
-    if ($self->is_run_mode('cgi', 'mod_perl')) {
-        $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
-        my @cookies = split /;/, $ENV{HTTP_COOKIE};
-        foreach (@cookies) {
-            my ( $name, $value ) = split /=/, $_, 2;
-            $cookie{$name} = $value;
-        }
-    }
     #HV set _locale already to default here,so routines lower in stack can use it;e.g. login.pl
     #$self->{_locale}=LedgerSMB::Locale->get_handle('en');
     $self->{_locale}=LedgerSMB::Locale->get_handle($LedgerSMB::Sysconfig::language);
@@ -272,22 +264,8 @@ sub new {
 
     }
 
-    $ENV{SCRIPT_NAME} = "" unless defined $ENV{SCRIPT_NAME};
+    $self->_set_script_name();
 
-    $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
-    $self->{script} = $1 unless !defined $1;
-    $self->{script} = "" unless defined $self->{script};
-
-    if ( ( $self->{script} =~ m#(\.\.|\\|/)# ) ) {
-        $self->error("Access Denied");
-    }
-    if (!$self->{script}) {
-        $self->{script} = 'login.pl';
-    }
-    $logger->debug("\$self->{script} = $self->{script} \$self->{action} = $self->{action}");
-#    if ($self->{action} eq 'migrate_user'){
-#        return $self;
-#    }
 
     # This is suboptimal.  We need to have a better way for 1.4
     #HV we should try to have DBI->connect in one place?
@@ -300,15 +278,10 @@ sub new {
     if ($self->{script} eq 'setup.pl'){
         return $self;
     }
-    my $ccookie;
-    if (!$self->{company} && $self->is_run_mode('cgi', 'mod_perl')){
-         $ccookie = $cookie{${LedgerSMB::Sysconfig::cookie_name}};
-         $ccookie =~ s/.*:([^:]*)$/$1/;
-         if($ccookie ne 'Login') { $self->{company} = $ccookie; } 
-    }
-    $logger->debug("\$ccookie=$ccookie cookie.LedgerSMB::Sysconfig::cookie_name=".$cookie{${LedgerSMB::Sysconfig::cookie_name}}." \$self->{company}=$self->{company}");
 
-    if(! $cookie{${LedgerSMB::Sysconfig::cookie_name}} && $self->{action} eq 'logout')
+    %cookie = $self->_process_cookie();
+    if(! $cookie{${LedgerSMB::Sysconfig::cookie_name}}
+       && $self->{action} eq 'logout')
     {
      $logger->debug("quitting because of logout and no cookie,avoid _db_init");
      return $self;
@@ -403,6 +376,7 @@ sub get_user_info {
     $self->{_user} = LedgerSMB::User->fetch_config($self);
     $self->{_user}->{language} ||= 'en';
 }
+
 #This function needs to be moved into the session handler.
 sub _get_password {
     my ($self) = shift @_;
@@ -416,6 +390,46 @@ sub _get_password {
     die;
 }
 
+sub _set_script_name {
+    $ENV{SCRIPT_NAME} = "" unless defined $ENV{SCRIPT_NAME};
+
+    $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
+    $self->{script} = $1 unless !defined $1;
+    $self->{script} = "" unless defined $self->{script};
+
+    if ( ( $self->{script} =~ m#(\.\.|\\|/)# ) ) {
+        $self->error("Access Denied");
+    }
+    if (!$self->{script}) {
+        $self->{script} = 'login.pl';
+    }
+    $logger->debug("\$self->{script} = $self->{script} "
+                   . "\$self->{action} = $self->{action}");
+}
+
+sub _process_cookies {
+    my ($self) = @_;
+    my %cookie;
+
+    if ($self->is_run_mode('cgi', 'mod_perl')) {
+        $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
+        my @cookies = split /;/, $ENV{HTTP_COOKIE};
+        foreach (@cookies) {
+            my ( $name, $value ) = split /=/, $_, 2;
+            $cookie{$name} = $value;
+        }
+    }
+
+    my $ccookie;
+    if (!$self->{company} && $self->is_run_mode('cgi', 'mod_perl')){
+        $ccookie = $cookie{${LedgerSMB::Sysconfig::cookie_name}};
+        $ccookie =~ s/.*:([^:]*)$/$1/;
+        if($ccookie ne 'Login') { $self->{company} = $ccookie; } 
+    }
+    $logger->debug("\$ccookie=$ccookie cookie.LedgerSMB::Sysconfig::cookie_name=".$cookie{${LedgerSMB::Sysconfig::cookie_name}}." \$self->{company}=$self->{company}");
+
+    return %cookie;
+}
 
 sub is_run_mode {
     my $self = shift @_;
