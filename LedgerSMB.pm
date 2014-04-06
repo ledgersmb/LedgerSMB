@@ -217,29 +217,11 @@ sub new {
     $self->{_request} = $query;
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
 
-    #HV set _locale already to default here,so routines lower in stack can use it;e.g. login.pl
-    #$self->{_locale}=LedgerSMB::Locale->get_handle('en');
-    $self->{_locale}=LedgerSMB::Locale->get_handle($LedgerSMB::Sysconfig::language);
-    $self->error( __FILE__ . ':' . __LINE__ .": Locale ($LedgerSMB::Sysconfig::language) not loaded: $!\n" ) unless $self->{_locale};
-
-    $self->{action} = "" unless defined $self->{action};
-    $self->{action} =~ s/\W/_/g;
-    $self->{action} = lc $self->{action};
-
-    $self->{path} = "" unless defined $self->{path};
-
-    if ( $self->{path} eq "bin/lynx" ) {
-        $self->{menubar} = 1;
-
-        # Applying the path is deprecated.  Use menubar instead.  CT.
-        $self->{lynx} = 1;
-        $self->{path} = "bin/lynx";
-    }
-    else {
-        $self->{path} = "bin/mozilla";
-
-    }
-
+    #HV set _locale already to default here,
+    # so routines lower in stack can use it;e.g. login.pl
+    $self->_set_default_locale();
+    $self->_set_action();
+    $self->_set_path();
     $self->_set_script_name();
 
 
@@ -366,6 +348,25 @@ sub _get_password {
     die;
 }
 
+
+sub _set_default_locale {
+    my ($self) = @_;
+
+    my $lang = $LedgerSMB::Sysconfig::language;
+    $self->{_locale}=LedgerSMB::Locale->get_handle($lang);
+    $self->error( __FILE__ . ':' . __LINE__ 
+                  . ": Locale ($lang) not loaded: $!\n" )
+        unless $self->{_locale};
+}
+
+sub _set_action {
+    my ($self) = @_;
+
+    $self->{action} = "" unless defined $self->{action};
+    $self->{action} =~ s/\W/_/g;
+    $self->{action} = lc $self->{action};
+}
+
 sub _set_script_name {
     $ENV{SCRIPT_NAME} = "" unless defined $ENV{SCRIPT_NAME};
 
@@ -382,6 +383,24 @@ sub _set_script_name {
     $logger->debug("\$self->{script} = $self->{script} "
                    . "\$self->{action} = $self->{action}");
 }
+
+sub _set_path {
+    my ($self) = @_;
+
+    $self->{path} = "" unless defined $self->{path};
+
+    if ( $self->{path} eq "bin/lynx" ) {
+        $self->{menubar} = 1;
+
+        # Applying the path is deprecated.  Use menubar instead.  CT.
+        $self->{lynx} = 1;
+        $self->{path} = "bin/lynx";
+    }
+    else {
+        $self->{path} = "bin/mozilla";
+    }
+}
+
 
 sub _process_argstr {
     my ($self, $argstr) = @_;
