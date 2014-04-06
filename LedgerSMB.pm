@@ -368,6 +368,8 @@ sub _set_action {
 }
 
 sub _set_script_name {
+    my ($self) = @_;
+
     $ENV{SCRIPT_NAME} = "" unless defined $ENV{SCRIPT_NAME};
 
     $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
