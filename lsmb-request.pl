@@ -37,62 +37,78 @@ use Data::Dumper;
 use Log::Log4perl;
 use strict;
 
-LedgerSMB::App_State->cleanup();
 
-my $logger = Log::Log4perl->get_logger('LedgerSMB::Handler');
-Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
-$logger->debug("Begin");
+my $logger;
 
-# for custom preprocessing logic
-eval { require "custom.pl"; };
 
-$logger->debug("getting new LedgerSMB");
+sub get_script {
+    my ($locale, $request) = @_;
 
-my $request = new LedgerSMB;
+    $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
+    my $script = $1;
+    $logger->debug("\$ENV{SCRIPT_NAME}=$ENV{SCRIPT_NAME} "
+                   . "\$request->{action}=$request->{action} "
+                   . "\$script=$script");
 
-$logger->debug("Got \$request=$request");
-$logger->trace("\$request=".Data::Dumper::Dumper($request));
-
-$request->{action} = '__default' if (!$request->{action});
-
-$ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
-my $script = $1;
-$logger->debug("\$ENV{SCRIPT_NAME}=$ENV{SCRIPT_NAME} \$request->{action}=$request->{action} \$script=$script");
-
-my $locale;
-
-if ($request->{_user}){
-    $LedgerSMB::App_State::User = $request->{_user};
-    $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
-    $LedgerSMB::App_State::Locale = $locale;
-} else {
-    $locale = LedgerSMB::Locale->get_handle( $LedgerSMB::Sysconfig::language );
-    $request->error( __FILE__ . ':' . __LINE__ . 
-                 ": Locale ($LedgerSMB::Sysconfig::language) not loaded: $!\n" 
-    ) unless $locale;
-    $LedgerSMB::App_State::Locale = $locale;
-}
-
-if (!$script){
+    if (!$script){
 	$request->error($locale->text('No workflow script specified'));
+    }
+
+    return $script;
 }
 
-$request->{_locale} = $locale;
+sub get_locale {
+    my ($request) = @_;
+    my $locale;
 
-$logger->debug("calling $script");
+    if ($request->{_user}){
+        $LedgerSMB::App_State::User = $request->{_user};
+        $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
+        $LedgerSMB::App_State::Locale = $locale;
+    } else {
+        $locale =
+            LedgerSMB::Locale->get_handle( $LedgerSMB::Sysconfig::language );
+        $request->error( __FILE__ . ':' . __LINE__ . 
+                         ": Locale ($LedgerSMB::Sysconfig::language) "
+                         . "not loaded: $!\n" 
+            ) unless $locale;
+        $LedgerSMB::App_State::Locale = $locale;
+    }
 
-&call_script( $script, $request );
-$logger->debug("after calling script=$script action=$request->{action} \$request->{dbh}=$request->{dbh}");
+    return $locale;
+}
 
-# Prevent flooding the error logs with undestroyed connection warnings
-$request->{dbh}->disconnect()
-    if defined $request->{dbh};
-$logger->debug("End");
+
+sub app_initialize {
+    LedgerSMB::App_State->cleanup();
+
+    $logger = Log::Log4perl->get_logger('LedgerSMB::Handler');
+    Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+    $logger->debug("Begin");
+}
+
+
+sub request_instantiate {
+    my $request;
+
+    $logger->debug("getting new LedgerSMB");
+
+    my $request = new LedgerSMB;
+
+    $logger->debug("Got \$request=$request");
+    $logger->trace("\$request=".Data::Dumper::Dumper($request));
+
+    $request->{action} = '__default' if (!$request->{action});
+
+    return $request;
+}
+
 
 
 sub call_script {
   my $script = shift @_;
   my $request = shift @_;
+  my $locale = shift @_;
 
   try {        
     $request->{script} = $script;
@@ -119,4 +135,36 @@ sub call_script {
      $request->_error($_) unless $_ =~ 'Died at' or $_ =~ /^exit at/;
   };
 }
+
+sub request_cleanup {
+    my ($request) = @_;
+
+# Prevent flooding the error logs with undestroyed connection warnings
+    $request->{dbh}->disconnect()
+        if defined $request->{dbh};
+    $logger->debug("End");
+}
+
+
+&app_initialize();
+
+# for custom preprocessing logic
+eval { require "custom.pl"; };
+
+my $request = request_instantiate();
+
+my $locale = get_locale($request);
+$request->{_locale} = $locale;
+
+
+
+my $script = get_script($locale, $request);
+
+$logger->debug("calling $script");
+&call_script( $script, $request, $locale);
+$logger->debug("after calling script=$script action=$request->{action} "
+               . "\$request->{dbh}=$request->{dbh}");
+
+
+
 1;
