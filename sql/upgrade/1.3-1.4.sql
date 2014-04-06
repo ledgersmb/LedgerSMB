@@ -130,7 +130,7 @@ SELECT e.id, pc.contact_class_id, pc.contact, pc.description
    JOIN lsmb13.person p ON p.id = pc.person_id
    JOIN lsmb13.entity e ON e.id = p.entity_id;
 INSERT INTO entity_bank_account (id, entity_id, bic, iban)
-SELECT id, entity_id, bic, iban FROM lsmb13.entity_bank_account;
+SELECT id, entity_id, coalesce(bic,''), iban FROM lsmb13.entity_bank_account;
 INSERT INTO entity_credit_account SELECT * FROM lsmb13.entity_credit_account;
 UPDATE entity_credit_account SET curr = defaults_get_defaultcurrency()
  WHERE curr IS NULL;
