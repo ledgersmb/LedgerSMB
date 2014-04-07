@@ -52,6 +52,7 @@ use Log::Log4perl;
 use LedgerSMB::App_State;
 use strict;
 use warnings;
+use Carp::Always;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::DBObject');
 

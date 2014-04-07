@@ -30,6 +30,18 @@ use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 
+=item no_db
+
+Existence of this sub causes requests passed to this module /not/ to be
+pre-connected to the database.
+
+=cut
+
+sub no_db {
+    return 1;
+}
+
+
 sub __default {
 
     my ($request) = @_;
