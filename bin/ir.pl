@@ -587,6 +587,13 @@ function on_return_submit(event){
 |;
 
     if ( !$form->{readonly} ) {
+
+        if ($form->{on_hold}) {
+            $hold_button_text = $locale->text('Off Hold');
+        } else {
+            $hold_button_text = $locale->text('On Hold');
+        }
+
         print qq|<tr><td>|;
         %button = (
             'update' =>
@@ -606,7 +613,7 @@ function on_return_submit(event){
             'schedule' =>
               { ndx => 7, key => 'H', value => $locale->text('Schedule') },
             'on_hold' =>
-              { ndx => 9, key=> 'O', value => $locale->text('On Hold') },
+              { ndx => 9, key=> 'O', value => $hold_button_text },
 	    'save_info'  => 
                 { ndx => 10, key => 'I', value => $locale->text('Save Info') },
             'new_screen' => # Create a blank ar/ap invoice.
