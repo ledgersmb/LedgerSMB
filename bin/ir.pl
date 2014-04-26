@@ -351,6 +351,9 @@ sub form_header {
 
     $form->{nextsub} = 'update';
 
+    $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
+    $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
+
     # set option selected
     for (qw(AP currency)) {
         $form->{"select$_"} =~ s/ selected//;
