@@ -644,6 +644,13 @@ function on_return_submit(event){
         
         # changes by Aurynn to add an On Hold button
 
+        if ($form->{on_hold}) {
+            $hold_button_text = $locale->text('Off Hold');
+        } else {
+            $hold_button_text = $locale->text('On Hold');
+        }
+
+
         %button = (
             'update' =>
               { ndx => 1, key => 'U', value => $locale->text('Update') },
