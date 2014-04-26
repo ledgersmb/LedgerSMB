@@ -1635,14 +1635,10 @@ sub print_form {
     $form->isblank( "${inv}date",
         $locale->text( $form->{label} . ' Date missing!' ) );
 
-    # get next number
-    if ( !$form->{"${inv}number"} ) {
-        $form->{"${inv}number"} =
-          $form->update_defaults( \%myconfig, $numberfld );
-        if ( $form->{media} eq 'screen' ) {
-            &update;
-            $form->finalize_request();
-        }
+    # We used to increment the number but we no longer allow printing before
+    # posting, so the safe thing to do is just to display an error.  --Chris T
+    if ( !$form->{"${inv}number"} and $inv) {
+        $form->error($locale->text('Reference Number Missing'));
     }
 
     # $locale->text('Invoice Number missing!')
