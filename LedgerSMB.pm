@@ -217,6 +217,8 @@ sub new {
     $self->{_request} = $query;
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
 
+    $self->_process_cookies();
+
     #HV set _locale already to default here,
     # so routines lower in stack can use it;e.g. login.pl
     $self->_set_default_locale();

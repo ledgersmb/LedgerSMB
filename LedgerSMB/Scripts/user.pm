@@ -52,13 +52,15 @@ sub preference_screen {
     $user->{dateformat} =~ s/\//$slash/g;
      
     my $template = LedgerSMB::Template->new(
-            user     =>$request->{_user}, 
+            user     => $user, 
             locale   => $request->{_locale},
             path     => 'UI/users',
             template => 'preferences',
 	    format   => 'HTML'
     );
-    $user->{user} = $request->{_user};
+
+    my $creds = LedgerSMB::Auth::get_credentials();
+    $user->{login} = $creds->{login};
     $user->{password_expires} =~ s/:(\d|\.)*$//;
     $template->render($user);
 }
