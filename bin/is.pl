@@ -373,6 +373,10 @@ sub form_header {
         $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected="selected"/;
     }
 
+
+    $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
+    $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
+
     $form->{exchangerate} =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
 
@@ -733,6 +737,7 @@ function on_return_submit(event){
 
                 for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
             }
+
             elsif ($closedto) {
                 %button = ();
             }
@@ -760,7 +765,7 @@ sub void {
     $form->{reverse} = 1;
     $form->{paidaccounts} = 1;
     if ($form->{paid_1}){
-        warn $locale->text(
+       warn $locale->text(
              'Payments associated with voided invoice may need to be reversed.'
         );
         delete $form->{paid_1};
