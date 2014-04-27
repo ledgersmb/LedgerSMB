@@ -18,6 +18,7 @@ use warnings;
 use Moose;
 
 my @tests;
+my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 FUNCTIONS
 
@@ -147,8 +148,8 @@ push @tests, __PACKAGE__->new(
                     (SELECT customernumber from customer
                    GROUP BY customernumber
                    HAVING count(*) > 1)",
- display_name => $LedgerSMB::App_State::Locale->text('Unique Customernumber'),
- instructions => $LedgerSMB::App_State::Locale->text(
+ display_name => $locale->text('Unique Customernumber'),
+ instructions => $locale->text(
                    'Please make all customer numbers unique'),
          name => 'unique_customernumber',
  display_cols => ['customernumber', 'name', 'address1', 'city', 'state', 'zip'],
@@ -166,8 +167,8 @@ push @tests, __PACKAGE__->new(
                     (SELECT vendornumber from vendor
                    GROUP BY vendornumber
                    HAVING count(*) > 1)",
- display_name => $LedgerSMB::App_State::Locale->text('Unique Vendornumber'),
- instructions => $LedgerSMB::App_State::Locale->text(
+ display_name => $locale->text('Unique Vendornumber'),
+ instructions => $locale->text(
                    'Please make all vendor numbers unique'),
          name => 'unique_vendornumber',
  display_cols => ['vendornumber', 'name', 'address1', 'city', 'state', 'zip'],
@@ -180,8 +181,8 @@ push @tests, __PACKAGE__->new(
 
 push @tests, __PACKAGE__->new(
    test_query => "SELECT * FROM employee WHERE employeenumber IS NULL",
- display_name => $LedgerSMB::App_State::Locale->text('No Null employeenumber'),
- instructions => $LedgerSMB::App_State::Locale->text(
+ display_name => $locale->text('No Null employeenumber'),
+ instructions => $locale->text(
                    'Enter employee numbers where they are missing'),
          name => 'null_employeenumber',
  display_cols => ['login', 'name', 'employeenumber'],
@@ -196,8 +197,8 @@ push @tests, __PACKAGE__->new(
    test_query => "SELECT * FROM employee
                    WHERE not name ~ '[[:alnum:]_]'::text",
          name => 'minimal_employee_name_requirements',
- display_name => $LedgerSMB::App_State::Locale->text("Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"),
- instructions => $LedgerSMB::App_State::Locale->text(
+ display_name => $locale->text("Employee name doesn't meet minimal requirements (e.g. non-empty, alphanumeric)"),
+ instructions => $locale->text(
      'Make sure every name consists of alphanumeric characters (and underscores) only and is at least one character long'),
  display_cols => ['login', 'name', 'employeenumber'],
        column => 'name',
@@ -214,8 +215,8 @@ push @tests, __PACKAGE__->new(
                         GROUP BY employeenumber
                           HAVING count(*) > 1)',
          name => 'duplicate_employee_numbers',
- display_name => $LedgerSMB::App_State::Locale->text('Duplicate employee numbers'),
- instructions => $LedgerSMB::App_State::Locale->text(
+ display_name => $locale->text('Duplicate employee numbers'),
+ instructions => $locale->text(
                    'Make employee numbers unique'),
  display_cols => ['login', 'name', 'employeenumber'],
        column => 'employeenumber',
@@ -232,8 +233,8 @@ push @tests, __PACKAGE__->new(
                   WHERE obsolete is not true
                   group by partnumber having count(*) > 1)",
          name => 'duplicate_partnumbers',
- display_name => $LedgerSMB::App_State::Locale->text('Unique nonobsolete partnumbers'),
- instructions => $LedgerSMB::App_State::Locale->text(
+ display_name => $locale->text('Unique nonobsolete partnumbers'),
+ instructions => $locale->text(
                    'Make non-obsolete partnumbers unique'),
  display_cols => ['partnumber', 'description', 'sellprice'],
        column => 'partnumber',
@@ -247,8 +248,8 @@ push @tests, __PACKAGE__->new(
    test_query => 'SELECT * from ar where invnumber in (
                    select invnumber from ar
                    group by invnumber having count(*) > 1)',
- display_name => $LedgerSMB::App_State::Locale->text('Unique AR Invoice numbers'),
- instructions => $LedgerSMB::App_State::Locale->text(
+ display_name => $locale->text('Unique AR Invoice numbers'),
+ instructions => $locale->text(
                    'Make invoice numbers unique'),
          name => 'unique_ar_invnumbers',
  display_cols =>  ['invnumber', 'transdate', 'amount', 'netamount', 'paid'],
@@ -263,11 +264,25 @@ push @tests, __PACKAGE__->new(
 
 push @tests, __PACKAGE__->new(
    test_query => "select * from acc_trans WHERE amount IS NULL",
- display_name => $LedgerSMB::App_State::Locale->text('No NULL Amounts'),
+ display_name => $locale->text('No NULL Amounts'),
          name => 'no_null_ac_amounts',
  display_cols => ["trans_id", "chart_id", "transdate"],
- instructions => $LedgerSMB::App_State::Locale->text(
+ instructions => $locale->text(
                    '?????'),
+      appname => 'ledgersmb',
+  min_version => '1.2',
+  max_version => '1.4'
+);
+
+push @tests, __PACKAGE__->new(
+   test_query => "select * from entity_credit_account
+                   where meta_number in
+                       (select meta_number from entity_credit_account
+                        group by meta_number having count(*) > 1)",
+ display_name => $locale->text('No duplicate meta_numbers'),
+         name => 'no_meta_number_dupes',
+ display_cols => [ 'meta_number', 'description' ],
+ instructions => $locale->text("Make sure all meta numbers are unique."),
       appname => 'ledgersmb',
   min_version => '1.2',
   max_version => '1.4'
@@ -277,7 +292,7 @@ push @tests, __PACKAGE__->new(
 
  push @tests, __PACKAGE__->new(
     test_query => "select * from customer where arap_accno_id is null",
-    display_name => $LedgerSMB::App_State::Locale->text('Empty AR account'),
+    display_name => $locale->text('Empty AR account'),
     name => 'no_null_ar_accounts',
     display_cols => [ 'id', 'name', 'contact' ],
     appname => 'sql-ledger',
@@ -287,7 +302,7 @@ push @tests, __PACKAGE__->new(
 
  push @tests, __PACKAGE__->new(
     test_query => "select * from vendor where arap_accno_id is null",
-    display_name => $LedgerSMB::App_State::Locale->text('Empty AP account'),
+    display_name => $locale->text('Empty AP account'),
     name => 'no_null_ap_accounts',
     display_cols => [ 'id', 'name', 'contact' ],
     appname => 'sql-ledger',
@@ -305,10 +320,10 @@ push @tests,__PACKAGE__->new(
                                               from customer
                                              group by customernumber
                                              having count(*) > 1)",
-    display_name => $LedgerSMB::App_State::Locale->text('Double customernumbers'), 
+    display_name => $locale->text('Double customernumbers'), 
     name => 'no_double_customernumbers',
     display_cols => ['id', 'customernumber', 'name'],
- instructions => $LedgerSMB::App_State::Locale->text(
+ instructions => $locale->text(
                    'Please make all customer numbers unique'),
     column => 'customernumber',
     table => 'customer',
@@ -324,10 +339,10 @@ push @tests,__PACKAGE__->new(
                                               from vendor
                                              group by vendornumber
                                              having count(*) > 1)",
-    display_name => $LedgerSMB::App_State::Locale->text('Double vendornumbers'), 
+    display_name => $locale->text('Double vendornumbers'), 
     name => 'no_double_vendornumbers',
     display_cols => ['id', 'vendornumber', 'name'],
- instructions => $LedgerSMB::App_State::Locale->text(
+ instructions => $locale->text(
                    'Please make all vendor numbers unique'),
     column => 'vendornumber',
     table => 'vendor',
@@ -340,10 +355,10 @@ push @tests, __PACKAGE__->new(
     test_query => "select *
                      from employee
                     where employeenumber is null",
-    display_name => $LedgerSMB::App_State::Locale->text('Null employee numbers'),
+    display_name => $locale->text('Null employee numbers'),
     name => 'no_null_employeenumbers',
     display_cols => ['id', 'login', 'name', 'employeenumber'],
- instructions => $LedgerSMB::App_State::Locale->text(
+ instructions => $locale->text(
                    'Please make sure all employees have an employee number'),
     column => 'employeenumber',
     table => 'employee',
@@ -359,11 +374,11 @@ push @tests, __PACKAGE__->new(
                                                from employee
                                               group by employeenumber
                                               having count(*) > 1)",
-    display_name => $LedgerSMB::App_State::Locale->text('Null employee numbers'),
+    display_name => $locale->text('Null employee numbers'),
     name => 'no_duplicate_employeenumbers',
     display_cols => ['id', 'login', 'name', 'employeenumber'],
     column => 'employeenumber',
- instructions => $LedgerSMB::App_State::Locale->text(
+ instructions => $locale->text(
                    'Please make all employee numbers unique'),
     table => 'employee',
     appname => 'sql-ledger',
@@ -379,12 +394,12 @@ push @tests, __PACKAGE__->new(
                                          group by invnumber
                                          having count(*) > 1)
                    order by invnumber",
-    display_name => $LedgerSMB::App_State::Locale->text('Non-unique invoice numbers'),
+    display_name => $locale->text('Non-unique invoice numbers'),
     name => 'no_duplicate_ar_invoicenumbers',
     display_cols => ['id', 'invnumber', 'transdate', 'duedate', 'datepaid',
                      'ordnumber', 'quonumber', 'approved'],
     column => 'invnumber',
- instructions => $LedgerSMB::App_State::Locale->text(
+ instructions => $locale->text(
                    'Please make all AR invoice numbers unique'),
     table => 'ar',
     appname => 'sql-ledger',
@@ -401,12 +416,12 @@ push @tests, __PACKAGE__->new(
 #                                               group by invnumber
 #                                               having count(*) > 1)
 #                     order by invnumber",
-#     display_name => $LedgerSMB::App_State::Locale->text('Non-unique invoice numbers'),
+#     display_name => $locale->text('Non-unique invoice numbers'),
 #     name => 'no_duplicate_ap_invoicenumbers',
 #     display_cols => ['id', 'invnumber', 'transdate', 'duedate', 'datepaid',
 #                      'ordnumber', 'quonumber', 'approved'],
 #     column => 'invnumber',
-#  instructions => $LedgerSMB::App_State::Locale->text(
+#  instructions => $locale->text(
 #                    'Please make all AP invoice numbers unique'),
 #     table => 'ap',
 #     appname => 'sql-ledger',
@@ -419,10 +434,10 @@ push @tests, __PACKAGE__->new(
     test_query => "select *
                      from makemodel
                     where model is null",
-    display_name => $LedgerSMB::App_State::Locale->text('Null model numbers'),
+    display_name => $locale->text('Null model numbers'),
     name => 'no_null_modelnumbers',
     display_cols => ['parts_id', 'make', 'model'],
- instructions => $LedgerSMB::App_State::Locale->text(
+ instructions => $locale->text(
                    'Please make sure all modelsnumbers are non-empty'),
     column => 'model',
     table => 'makemodel',
@@ -436,11 +451,11 @@ push @tests, __PACKAGE__->new(
     test_query => "select *
                      from makemodel
                     where make is null",
-    display_name => $LedgerSMB::App_State::Locale->text('Null make numbers'),
+    display_name => $locale->text('Null make numbers'),
     name => 'no_null_makenumbers',
     display_cols => ['parts_id', 'make', 'model'],
     column => 'make',
- instructions => $LedgerSMB::App_State::Locale->text(
+ instructions => $locale->text(
                    'Please make sure all make numbers are non-empty'),
     table => 'makemodel',
     appname => 'sql-ledger',
@@ -455,10 +470,10 @@ push @tests, __PACKAGE__->new(
                     where not exists (select 1
                                         from pricegroup
                                        where id = pricegroup_id)",
-    display_name => $LedgerSMB::App_State::Locale->text('Non-existing customer pricegroups in partscustomer'),
+    display_name => $locale->text('Non-existing customer pricegroups in partscustomer'),
     name => 'partscustomer_pricegroups_exist',
     display_cols => ['parts_id', 'credit_id', 'pricegroup_id'],
- instructions => $LedgerSMB::App_State::Locale->text(
+ instructions => $locale->text(
                    'Please fix the pricegroup data in your partscustomer table (no UI available)'),
     table => 'partscustomer',
     appname => 'sql-ledger',
@@ -473,10 +488,10 @@ push @tests, __PACKAGE__->new(
 #                     where not exists (select 1
 #                                         from pricegroup
 #                                        where id = pricegroup_id)",
-#     display_name => $LedgerSMB::App_State::Locale->text('Non-existing vendor pricegroups in partsvendor'),
+#     display_name => $locale->text('Non-existing vendor pricegroups in partsvendor'),
 #     name => 'partsvendor_pricegroups_exist',
 #     display_cols => ['parts_id', 'credit_id', 'pricegroup_id'],
-#  instructions => $LedgerSMB::App_State::Locale->text(
+#  instructions => $locale->text(
 #                    'Please fix the pricegroup data in your partsvendor table (no UI available)'),
 #     table => 'partsvendor',
 #     appname => 'sql-ledger',
