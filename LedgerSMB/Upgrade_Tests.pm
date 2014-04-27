@@ -282,6 +282,8 @@ push @tests, __PACKAGE__->new(
  display_name => $locale->text('No duplicate meta_numbers'),
          name => 'no_meta_number_dupes',
  display_cols => [ 'meta_number', 'description' ],
+       column => 'meta_number',
+        table => 'entity_credit_account',
  instructions => $locale->text("Make sure all meta numbers are unique."),
       appname => 'ledgersmb',
   min_version => '1.2',
