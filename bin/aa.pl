@@ -394,7 +394,6 @@ sub create_links {
         $form->{readonly} = 1
           if $myconfig{acs} =~ /$form->{ARAP}--Add Transaction/;
     }
-
 }
 
 sub form_header {
@@ -825,9 +824,13 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
 	# CT:  This should probably be moved to a hidden field and a text label.
         print qq|
         <tr>
-	  <td><input name="tax_$item" size=10 value=$form->{"tax_$item"}></td>
-	  <td align=right><input name="calctax_$item" class=checkbox type=checkbox value=1 $form->{"calctax_$item"}></td>
- 	  <td><select name="$form->{ARAP}_tax_$item">
+	  <td><input name="tax_$item" id="tax_$item"
+                     size=10 value=$form->{"tax_$item"}></td>
+	  <td align=right><input id="calctax_$item" name="calctax_$item"
+                                 class="checkbox" type="checkbox" value=1
+                                 $form->{"calctax_$item"}></td>
+ 	  <td><select name="$form->{ARAP}_tax_$item"
+                      id="$form->{ARAP}_tax_$item">
  	<option value="$form->{ARAP}_tax_$item">$item--$form->{"${item}_description"}</option></select></td>
 	</tr>
 |;
@@ -848,7 +851,9 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
         <tr>
 	  <th align=left>$form->{invtotal}</th>
 	  <td></td>
-	  <td><select name=$form->{ARAP}>$form->{"select$form->{ARAP}"}</select></td>
+	  <td><select name="$form->{ARAP}" id="$form->{ARAP}">
+                 $form->{"select$form->{ARAP}"}
+              </select></td>
         </tr>
         <tr>
            <td>&nbsp;</td>
