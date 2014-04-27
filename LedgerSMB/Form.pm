@@ -2280,12 +2280,19 @@ sub create_links {
     my $val;
     my $ref;
     my $key;
+    my %tax_accounts;
+
+    $sth = $dbh->prepare("SELECT accno FROM account WHERE tax");
+    $sth->execute();
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+        $tax_accounts{$ref->{accno}} = 1;
+    }
 
     # now get the account numbers
     $query = qq|SELECT a.accno, a.description, a.link
 				  FROM chart a
                   JOIN account ON a.id = account.id AND NOT account.obsolete
-				 WHERE link LIKE ?
+				 WHERE (link LIKE ?) OR account.tax
 			  ORDER BY accno|;
 
     $sth = $dbh->prepare($query);
@@ -2294,8 +2301,12 @@ sub create_links {
     $self->{accounts} = "";
 
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+        my $link = $ref->{link};
 
-        foreach my $key ( split /:/, $ref->{link} ) {
+        $link .= ($link ? ":" : "") . "${module}_tax"
+            if $tax_accounts{$ref->{accno}};
+
+        foreach my $key ( split /:/, $link ) {
 
             if ( $key =~ /$module/ ) {
 
