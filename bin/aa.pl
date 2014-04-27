@@ -195,7 +195,6 @@ sub create_links {
 
     $duedate     = $form->{duedate};
     $crdate	 = $form->{crdate};
-    $taxincluded = $form->{taxincluded};
 
     $form->{formname} = "transaction";
     $form->{media}    = $myconfig{printer};
@@ -226,9 +225,6 @@ sub create_links {
     $form->{currency} =~ s/ //g;
     $form->{duedate}     = $duedate     if $duedate;
     $form->{crdate}      = $crdate      if $crdate;
-    $form->{taxincluded} = $taxincluded if $form->{id};
-
-    $form->{notes} = $form->{intnotes} if !$form->{id};
 
     $form->{"old$form->{vc}"} =
       qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|;
@@ -369,7 +365,7 @@ sub create_links {
 
 
     # check if calculated is equal to stored
-    # taxincluded is terrible to calculate
+    # taxincluded can't be calculated
     # this works only if all taxes are checked
 
     @taxaccounts = Tax::init_taxes( $form, $form->{taxaccounts} );
@@ -488,16 +484,6 @@ sub form_header {
     $exchangerate .= qq|
 </tr>
 |;
-
-    $taxincluded = "";
-    if ( $form->{taxaccounts} ) {
-        $taxincluded = qq|
-	      <tr>
-		<td align=right><input name=taxincluded class=checkbox type=checkbox value=1 $form->{taxincluded}></td>
-		<th align=left nowrap>| . $locale->text('Tax Included') . qq|</th>
-	      </tr>
-|;
-    }
 
     if ( ( $rows = $form->numtextrows( $form->{notes}, 50 ) - 1 ) < 2 ) {
         $rows = 2;
@@ -670,7 +656,6 @@ $form->open_status_div . qq|
 	print qq|
 	      $exchangerate
 	      $department
-	      $taxincluded
             <tr>
                <th align="right" nowrap>| . $locale->text('Description') . qq|
                </th>
