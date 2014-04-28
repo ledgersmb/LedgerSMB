@@ -794,6 +794,9 @@ sub post_payment {
    $self->error($self->{_locale}->text("Exchange rate inconsistency with database.  Got [_1], expected [_2]", $self->{exrate}, $db_exchangerate));
    }
  }
+ for (@{$self->{amount}}){
+    $_ = $_->bstr if ref $_;
+ }
  my @TMParray = $self->exec_method(funcname => 'payment_post');
  $self->{dbh}->commit();
  $self->{payment_id} = $TMParray[0]->{payment_post};
