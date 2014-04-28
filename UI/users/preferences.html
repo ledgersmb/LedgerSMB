@@ -8,6 +8,11 @@
                type = "hidden"
                value = login
 } ?>
+<?lsmb INCLUDE input element_data = {
+               name = "company"
+               type = "hidden"
+               value = company
+} ?>
 <table width="100%">
   <tr><th class="listtop"><?lsmb text('Preferences for [_1]', login) ?></th></tr>
   <?lsmb IF action == 'save_preferences' ?> <tr><th class="info">

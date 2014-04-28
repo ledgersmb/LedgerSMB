@@ -5,6 +5,7 @@ function submit_form() {
 	var old_password = document.prefs.old_password.value;
 	var new_password = document.prefs.new_password.value;
 	var confirm_pass = document.prefs.confirm_password.value;
+    
 	http.open("get", 'user.pl?action=change_password' +
                           '&old_password='+old_password+
                           '&new_password='+new_password+
@@ -19,13 +20,15 @@ function submit_form() {
                 }
 		return false;
 	}
-    http.open("get", "login.pl?action=authenticate", false, 
-		login, new_password
-    );
+
+    http.open("get", "login.pl?action=authenticate&company="+
+              document.prefs.company.value, false, 
+	      login, new_password);
+    http.send("");
     if (http.status == 200){
-       document.pref.old_password.value = '';
-       document.pref.new_password.value = '';
-       document.pref.confirm_password.value = '';
+       document.prefs.old_password.value = '';
+       document.prefs.new_password.value = '';
+       document.prefs.confirm_password.value = '';
     }
     return true;
 }
