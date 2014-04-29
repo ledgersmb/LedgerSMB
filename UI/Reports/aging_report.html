@@ -57,13 +57,14 @@ PROCESS button element_data = {
 };
 PROCESS select element_data = {
     name = 'print_template'
- options = [{text = 'Statement', value = 'Statement'}]
+ options = [{text = 'Statement', value = 'statement'}]
    class = 'print_template'
 };
 
 PRINTERS.push({text = text('Email'), value = 'email' });
 
-PFORMATS = [];
+PFORMATS = [ {text = 'PDF', value = 'pdf'},
+             {text = 'HTML', value = 'html'} ];
 
 FOREACH F IN STDFORMATS;
   PFORMATS.push({text = F, value = F});
