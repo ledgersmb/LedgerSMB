@@ -400,7 +400,9 @@ sub close_form {
 
 sub get_user_info {
     my ($self) = @_;
-    $self->{_user} = LedgerSMB::User->fetch_config($self);
+    $LedgerSMB::App_State::User =
+        $self->{_user} =
+        LedgerSMB::User->fetch_config($self);
     $self->{_user}->{language} ||= 'en';
 }
 #This function needs to be moved into the session handler.
