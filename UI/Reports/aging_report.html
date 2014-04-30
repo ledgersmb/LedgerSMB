@@ -69,7 +69,8 @@ PROCESS select element_data = {
 
 PRINTERS.push({text = text('Email'), value = 'email' });
 
-PFORMATS = [];
+PFORMATS = [ {text = 'PDF', value = 'pdf'},
+             {text = 'HTML', value = 'html'} ];
 
 FOREACH F IN LIST_FORMATS();
   PFORMATS.push({text = F, value = F});

@@ -2497,9 +2497,6 @@ msgstr "Listar Departamentos"
 msgid "List Businesses"
 msgstr "Listar Negocios"
 
-msgid "Add Language"
-msgstr "Agregar Idioma"
-
 msgid "List Languages"
 msgstr "Listar Idioma"
 
