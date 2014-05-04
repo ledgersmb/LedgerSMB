@@ -31,12 +31,39 @@ our $cols = {
                  'purchase_price'],
 };
 
-our $ap_accno_for_inventory = '2100';
-our $ar_accno_for_inventory = '1200';
+my %template_file = (
+   inventory => 'import_inventory_csv',
+);
+
+
 our $ap_eca_for_inventory = '00000'; # Built in inventory adjustment accounts
 our $ar_eca_for_inventory = '00000';
 our $preprocess = {};
 our $postprocess = {};
+
+our $template_setup = {
+  inventory => sub {
+     my ($request) = @_;
+       my $sth = $request->{dbh}->prepare(
+          "SELECT concat(accno,'--',description) as value
+             FROM chart_get_ar_ap(?)"
+       );
+
+       $sth->execute(1); # AP accounts
+       while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+         push @{$request->{AP_accounts}}, $row; 
+       }
+     
+
+       $sth->execute(2); # AR accounts
+       while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+         push @{$request->{AR_accounts}}, $row; 
+       }
+     
+
+  }
+
+};
 
 our $aa_multi = sub {
                    use LedgerSMB::AA;
@@ -282,11 +309,12 @@ our $process = {
                               (parts_id, counted, expected, adjust_id)
                        VALUES ($part->{id}, $dbready_oh, $expected, $report_id)"
                     ) or $ap_form->dberror();
+
                 }
                 $ar_form->{ARAP} = 'AR';
-                $ar_form->{AR} = $ar_accno_for_inventory;
+                $ar_form->{AR} = $request->{AR};
                 $ap_form->{ARAP} = 'AP';
-                $ap_form->{AP} = $ap_accno_for_inventory;
+                $ap_form->{AP} = $request->{AP};
 
                 # ECA
                 $ar_form->{'customernumber'} = $ar_eca_for_inventory;
@@ -363,11 +391,19 @@ This displays the begin data entry screen.
 
 sub begin_import {
     my ($request) = @_;
+    my $template_file = 
+        ($template_file{$request->{type}}) ?
+        $template_file{$request->{type}} : 'import_csv';
+
+    if (ref($template_setup->{$request->{type}}) eq "CODE") {
+        $template_setup->{$request->{type}}($request);
+    }
+
     my $template = LedgerSMB::Template->new(
         user =>$request->{_user}, 
         locale => $request->{_locale},
         path => 'UI/import_csv',
-        template => 'import_csv',
+        template => $template_file,
         format => 'HTML'
     );
     $template->render($request);
