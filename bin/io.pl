@@ -578,6 +578,9 @@ sub select_item {
 
     $exchangerate = ( $form->{exchangerate} ) ? $form->{exchangerate} : 1;
 
+    $form->{exchangerate} =
+        $form->format_amount( \%myconfig, $form->{exchangerate} );
+
     # list items with radio button on a form
     $form->header;
 
