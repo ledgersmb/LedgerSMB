@@ -83,12 +83,12 @@ sub generate_statement {
         --$request->{rowcount};
         next unless $request->{"select_$rc"};
         my ($entity_id, $meta_number) = split /:/, $request->{"select_$rc"};
-        my $company = LedgerSMB::DBobject::Entity::Company->get($entity_id);
+        my $company = LedgerSMB::Entity::Company->get($entity_id);
         my $credit_act = 
-              LedgerSMB::DBobject::Entity::Credit_Account->get_by_meta_number(
+              LedgerSMB::Entity::Credit_Account->get_by_meta_number(
                  $meta_number, $request->{entity_class}
         );
-        my @loc = LedgerSMB::DBobject::Entity::Location->get_active(
+        my @loc = LedgerSMB::Entity::Location->get_active(
              $request, {entity_id => $entity_id, 
                         credit_id => $credit_act->{id},
                        only_class => 1}
@@ -115,10 +115,12 @@ sub generate_statement {
     my $template = LedgerSMB::Template->new(
         locale => $LedgerSMB::App_Date::Locale,
         template => $request->{print_template},
-     #   language => $form->{language_code}, TODO
+        #language => $language->{language_code}, #TODO
         format => uc $request->{print_format},
         method => $request->{print_to},
     );
+    use Data::Dumper;
+    $request->error(Dumper(@statements));
 
     if ($request->{print_to} eq 'email'){ 
        #TODO -- mailer stuff
