@@ -1,4 +1,3 @@
-
 =head1 NAME
 
 LedgerSMB::Template - Template support module for LedgerSMB 

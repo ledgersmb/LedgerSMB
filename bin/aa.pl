@@ -195,7 +195,6 @@ sub create_links {
 
     $duedate     = $form->{duedate};
     $crdate	 = $form->{crdate};
-    $taxincluded = $form->{taxincluded};
 
     $form->{formname} = "transaction";
     $form->{media}    = $myconfig{printer};
@@ -226,9 +225,6 @@ sub create_links {
     $form->{currency} =~ s/ //g;
     $form->{duedate}     = $duedate     if $duedate;
     $form->{crdate}      = $crdate      if $crdate;
-    $form->{taxincluded} = $taxincluded if $form->{id};
-
-    $form->{notes} = $form->{intnotes} if !$form->{id};
 
     $form->{"old$form->{vc}"} =
       qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|;
@@ -369,7 +365,7 @@ sub create_links {
 
 
     # check if calculated is equal to stored
-    # taxincluded is terrible to calculate
+    # taxincluded can't be calculated
     # this works only if all taxes are checked
 
     @taxaccounts = Tax::init_taxes( $form, $form->{taxaccounts} );
@@ -394,7 +390,6 @@ sub create_links {
         $form->{readonly} = 1
           if $myconfig{acs} =~ /$form->{ARAP}--Add Transaction/;
     }
-
 }
 
 sub form_header {
@@ -489,16 +484,6 @@ sub form_header {
     $exchangerate .= qq|
 </tr>
 |;
-
-    $taxincluded = "";
-    if ( $form->{taxaccounts} ) {
-        $taxincluded = qq|
-	      <tr>
-		<td align=right><input name=taxincluded class=checkbox type=checkbox value=1 $form->{taxincluded}></td>
-		<th align=left nowrap>| . $locale->text('Tax Included') . qq|</th>
-	      </tr>
-|;
-    }
 
     if ( ( $rows = $form->numtextrows( $form->{notes}, 50 ) - 1 ) < 2 ) {
         $rows = 2;
@@ -671,7 +656,6 @@ $form->open_status_div . qq|
 	print qq|
 	      $exchangerate
 	      $department
-	      $taxincluded
             <tr>
                <th align="right" nowrap>| . $locale->text('Description') . qq|
                </th>
@@ -825,9 +809,13 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
 	# CT:  This should probably be moved to a hidden field and a text label.
         print qq|
         <tr>
-	  <td><input name="tax_$item" size=10 value=$form->{"tax_$item"}></td>
-	  <td align=right><input name="calctax_$item" class=checkbox type=checkbox value=1 $form->{"calctax_$item"}></td>
- 	  <td><select name="$form->{ARAP}_tax_$item">
+	  <td><input name="tax_$item" id="tax_$item"
+                     size=10 value=$form->{"tax_$item"}></td>
+	  <td align=right><input id="calctax_$item" name="calctax_$item"
+                                 class="checkbox" type="checkbox" value=1
+                                 $form->{"calctax_$item"}></td>
+ 	  <td><select name="$form->{ARAP}_tax_$item"
+                      id="$form->{ARAP}_tax_$item">
  	<option value="$form->{ARAP}_tax_$item">$item--$form->{"${item}_description"}</option></select></td>
 	</tr>
 |;
@@ -848,7 +836,9 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
         <tr>
 	  <th align=left>$form->{invtotal}</th>
 	  <td></td>
-	  <td><select name=$form->{ARAP}>$form->{"select$form->{ARAP}"}</select></td>
+	  <td><select name="$form->{ARAP}" id="$form->{ARAP}">
+                 $form->{"select$form->{ARAP}"}
+              </select></td>
         </tr>
         <tr>
            <td>&nbsp;</td>
