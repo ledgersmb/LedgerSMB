@@ -1,9 +1,10 @@
-<?lsmb INCLUDE 'ui-header.html' 
+<?lsmb INCLUDE 'ui-header.html'
+      stylesheet = stylesheet
       include_stylesheet = ["UI/asset/asset.css"] 
       include_script = ["UI/asset/asset.js"] 
 ?>
 <?lsmb PROCESS 'elements.html' ?>
-<body onLoad="init()">
+<body onLoad="init()" class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb title ?></div>
 <div class="info"><?lsmb info ?></div>
 <form action="<?lsmb script ?>" method="post" enctype="multipart/form-data">
@@ -35,16 +36,17 @@
 <?lsmb PROCESS input element_data = {
      type = "text"
      class = "date"
-     label = text("Transaction Date") #" 
+     label = text("Transaction Date") 
      name = "transdate"
      value = transdate
      size = 12
 } ?>
+</div>
 <div class="inputrow" id="filerow">
 <?lsmb PROCESS input element_data = {
        name = "import_file"
        type = "file"
-       label = text('From File') #'
+       label = text("From File") 
        class = "file"
 } ?>
 </div>
