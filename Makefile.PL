@@ -33,7 +33,6 @@ requires 'Cwd';
 requires 'Config::IniFiles';
 requires 'MIME::Lite';
 requires 'Template' => '2.14';
-requires 'Error';
 requires 'CGI::Simple';
 requires 'File::MimeInfo';
 requires 'Number::Format';

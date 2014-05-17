@@ -379,7 +379,6 @@ sub parse_file {
         }
         push @{$self->{import_entries}}, \@fields;
     }     
-    shift @{$self->{import_entries}}; # get rid of header line
     return @{$self->{import_entries}};
 }
 
@@ -419,12 +418,14 @@ data in $request and processes it according to the dispatch tables.
 sub run_import {
     my ($request) = @_;
     my @entries = parse_file($request);
+    my $headers = shift @entries;
     if (ref($preprocess->{$request->{type}}) eq 'CODE'){
-        $preprocess->{$request->{type}}($request, \@entries);
+        $preprocess->{$request->{type}}($request, \@entries, $headers);
     }
-    $process->{$request->{type}}($request, \@entries) || begin_import($request);
+    $process->{$request->{type}}($request, \@entries, $headers)
+        || begin_import($request);
     if (ref($postprocess->{$request->{type}}) eq 'CODE'){
-        $postprocess->{$request->{type}}($request, \@entries);
+        $postprocess->{$request->{type}}($request, \@entries, $headers);
     }
     begin_import($request);
 }
