@@ -9,7 +9,7 @@ package LedgerSMB::DBObject::User;
 use base qw/LedgerSMB::DBObject/;
 use Data::Dumper;
 use strict;
-use Log::Log4Perl;
+use Log::Log4perl;
 
 =head2 NOTES
 
@@ -278,7 +278,7 @@ sub save_contact {
     my $class = shift @_;
     my $contact = shift @_;
     my @ret;
-    my $logger = Log::Log4Perl->get_logger("LedgerSMB");
+    my $logger = Log::Log4perl->get_logger("LedgerSMB");
 
     $logger->debug( sub { Dumper($self->{entity}->{id}) });
     if ($id) {

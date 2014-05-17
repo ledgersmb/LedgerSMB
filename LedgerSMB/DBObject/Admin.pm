@@ -80,7 +80,6 @@ sub save_roles {
     my @roles = $self->exec_method( funcname => "admin__get_roles" );
     my @user_roles = $self->exec_method(funcname => "admin__get_roles_for_user");
     my %active_roles;
-    my $logger = Log::Log4Perl->get_logger("LedgerSMB");
     for my $role (@user_roles) {
        
        # These are our user's roles.

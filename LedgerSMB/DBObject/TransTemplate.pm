@@ -1,11 +1,11 @@
 package LedgerSMB::DBObject::TransTemplate;
 use base qw(LedgerSMB::DBObject);
 use strict;
-use Log::Log4Perl;
+use Log::Log4perl;
 
 sub save {
    my $self = shift @_;
-   my $loggor = Log::Log4Perl->get_logger("LedgerSMB");
+   my $logger = Log::Log4perl->get_logger("LedgerSMB");
 
    $self->{is_template} = '1';
    $self->{approved} = 0;
