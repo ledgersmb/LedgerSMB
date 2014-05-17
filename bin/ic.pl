@@ -1998,6 +1998,9 @@ sub save {
     }
 
     if ($rc) {
+        my $logger = Log::Log4perl->get_logger("LedgerSMB");
+        $logger->debug($parts_id);
+        $form->{id} = $parts_id;
         edit();
         # redirect
         # $form->redirect("Part Saved");
