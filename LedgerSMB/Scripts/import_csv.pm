@@ -143,7 +143,6 @@ our $process = {
                        if ($ref->[1] !~ /\d/){
                           delete $ref->[1];
                        } else {
-                          print STDERR "debits $ref->[1]\n";
                           $ref->[1] = $form->parse_amount(
                                          $request->{_user}, $ref->[1]
                           );
@@ -151,7 +150,6 @@ our $process = {
                        if ($ref->[2] !~ /\d/){
                           delete $ref->[2];
                        } else {
-                          print STDERR "credits $ref->[2]\n";
                           $ref->[2] = $form->parse_amount(
                                          $request->{_user}, $ref->[2]
                           );

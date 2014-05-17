@@ -83,7 +83,7 @@ sub save_roles {
     for my $role (@user_roles) {
        
        # These are our user's roles.
-       print STDERR "Have $role->{admin__get_roles_for_user}\n";
+       $logger->info("Have $role->{admin__get_roles_for_user}\n");
         
        $active_roles{"$role->{admin__get_roles_for_user}"} = 1;
     }
