@@ -884,7 +884,8 @@ sub format_amount {
        $places= $self->{money_precision};
     }
     $myconfig->{numberformat} = '1000.00' unless $myconfig->{numberformat};
-    $amount = $self->parse_amount( $myconfig, $amount );
+    $amount = $self->parse_amount( $myconfig, $amount )
+        unless ref($amount) eq 'LedgerSMB::PGNumber';
     return $amount->to_output({
                places => $places,
                 money => $self->{money_precision},
