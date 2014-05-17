@@ -611,7 +611,7 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
 		window.alert('Warning:  Your password will expire in $self->{pw_expires}');
 	</script>|;
         }
-        my $dformat = $self->{_myconfig}->{dateformat};
+        my $dformat = $LedgerSMB::App_State::User->{dateformat};
 
         print qq|Content-Type: text/html; charset=utf-8\n\n
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
