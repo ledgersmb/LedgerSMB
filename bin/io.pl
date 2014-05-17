@@ -824,12 +824,6 @@ sub item_selected {
 
 sub new_item {
 
-    #print STDERR localtime()." HV io.pl new_item \$form->{rowcount}=$form->{rowcount} \$form->{language_code}=$form->{language_code} description=".$form->{"description_$form->{rowcount}"}."\n";
-    #HV commented out,ohterwise unable to bring in new article on Sales Invoice if $printops->{lang} set. What was the meaning of this code?
-    #if ( $form->{language_code} && $form->{"description_$form->{rowcount}"} ) {
-        #$form->error( $locale->text('Translation not on file!') );
-    #}
-
     # change callback
     $form->{old_callback} = $form->escape( $form->{callback}, 1 );
     $form->{callback} =

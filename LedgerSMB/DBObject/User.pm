@@ -9,6 +9,7 @@ package LedgerSMB::DBObject::User;
 use base qw/LedgerSMB::DBObject/;
 use Data::Dumper;
 use strict;
+use Log::Log4Perl;
 
 =head2 NOTES
 
@@ -277,10 +278,11 @@ sub save_contact {
     my $class = shift @_;
     my $contact = shift @_;
     my @ret;
-    
-    print STDERR Dumper($self->{entity}->{id});
+    my $logger = Log::Log4Perl->get_logger("LedgerSMB");
+
+    $logger->debug( sub { Dumper($self->{entity}->{id}) });
     if ($id) {
-        print STDERR "Found ID..";
+        $logger->debug("Found ID..");
         @ret = $self->exec_method(funcname=>"person__save_contact", 
             args=>[
                 $self->{entity}->{id},
@@ -291,10 +293,10 @@ sub save_contact {
         );
     } 
     else{
-        print STDERR "Did not find an ID, attempting to save a new contact..\n";
-        print STDERR ($class."\n");
-        print STDERR ($contact."\n");
-        print STDERR ($self->{entity_id}."\n");
+        $logger->debug("Did not find an ID, attempting to save a new contact..\n");
+        $logger->debug($class."\n");
+        $logger->debug($contact."\n");
+        $logger->debug($self->{entity_id}."\n");
         @ret = $self->exec_method(funcname=>"person__save_contact",
             args=>[
                 $self->{entity_id},
@@ -304,7 +306,7 @@ sub save_contact {
             ]
         );
     }
-    print STDERR Dumper(\@ret);
+    $logger->debug(sub { return Dumper(\@ret) });
     if ($ret[0]->{person__save_contact} != 1){
         die "Couldn't save contact...";
     }

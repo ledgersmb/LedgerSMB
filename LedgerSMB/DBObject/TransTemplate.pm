@@ -1,9 +1,12 @@
 package LedgerSMB::DBObject::TransTemplate;
 use base qw(LedgerSMB::DBObject);
 use strict;
+use Log::Log4Perl;
 
 sub save {
    my $self = shift @_;
+   my $loggor = Log::Log4Perl->get_logger("LedgerSMB");
+
    $self->{is_template} = '1';
    $self->{approved} = 0;
    $self->{source} = $self->{invnumber} if $self->{invnumber};
@@ -17,7 +20,7 @@ sub save {
        $l->{journal_id} = $self->{id};
        my ($ref) = $l->exec_method(funcname => 'account__get_from_accno');
        $l->{account_id} = $ref->{id};
-       print STDERR "$l->{accno}\n";
+       $logger->debug( "$l->{accno}\n" );
        if (!$ref->{id}){
            $self->error($self->{_locale}->text('No Account id for [_1]', $l->{accno}));
        }

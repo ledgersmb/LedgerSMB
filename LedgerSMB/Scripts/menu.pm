@@ -117,7 +117,6 @@ sub expanding_menu {
     
     my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
     $menu->generate();
-    #print STDERR localtime()." menu.pl expanding_menu menu=".Data::Dumper::Dumper(\$menu)."\n";
     for my $item (@{$menu->{menu_items}}){
         if ($request->{'open'} =~ /:$item->{id}:/ ){
             $item->{'open'} = 'true';
@@ -155,7 +154,6 @@ sub drilldown_menu {
 
     $menu->{parent_id} ||= 0;
 
-    print STDERR "Testing";
     $menu->generate_section;
     my $template = LedgerSMB::Template->new(
          user => $request->{_user}, 

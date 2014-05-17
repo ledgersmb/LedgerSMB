@@ -668,7 +668,6 @@ sub update {
             {
 
                 #insert line
-                #print STDERR localtime()." am.pl update insert line\n";
                 for ( $j = $ndx + 1 ; $j > $i ; $j-- ) {
                     $k = $j - 1;
                     for (qw(taxrate taxdescription taxnumber validto pass old_validto)) {
@@ -690,7 +689,6 @@ sub update {
             $j = $i + 1;
             if ( $form->{"taxdescription_$i"} eq $form->{"taxdescription_$j"} )
             {
-             #print STDERR localtime()." am.pl update remove line\n";
                 for ( $j = $i + 1 ; $j <= $ndx ; $j++ ) {
                     $k = $j + 1;
                     for (qw(taxrate taxdescription taxnumber validto pass old_validto)) {

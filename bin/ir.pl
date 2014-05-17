@@ -1470,11 +1470,8 @@ sub save_info {
             $form->{arap} = 'ap';
             AA->save_intnotes($form);
 	    
-        #print STDERR qq|___Rowcount=$form->{rowcount} _______|;
-
 	    foreach my $i(1..($form->{rowcount}))
 	    {
-            #print STDERR qq| taxformcheck_$i = $form->{"taxformcheck_$i"} and taxformfound= $taxformfound ___________|;
 		
                 if($taxformfound)
                 {
