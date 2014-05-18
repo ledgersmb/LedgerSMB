@@ -222,14 +222,15 @@ sub render {
     $url =~ s/&?order_dir=[^\&]*/$1/g;
     $self->order_url(
         "$url&old_order_by=".$self->order_by."&order_dir=".$self->order_dir
-    );
+    ) if $self->order_by;
 
     my $rows = $self->rows;
     @$rows = sort {$a->{$self->order_by} <=> $b->{$self->order_by}
                    or
                    $a->{$self->order_by} cmp $b->{$self->order_by}} @$rows
       if $self->order_by;
-    if (lc($self->order_dir) eq 'desc' and $self->order_by) {
+    if ($self->order_dir && $self->order_by
+        && lc($self->order_dir) eq 'desc') {
         @$rows = reverse @$rows;
     }
     $self->rows($rows);
@@ -268,7 +269,7 @@ sub render {
     if (!defined $self->format){
         $self->format('html');
     }
-    my $name = $self->name;
+    my $name = $self->name || '';
     $name =~ s/ /_/g;
     $name = $name . '_' . $self->from_date->to_output if $self->{from_date};
     $name = $name . '-' . $self->to_date->to_output if $self->{to_date};
