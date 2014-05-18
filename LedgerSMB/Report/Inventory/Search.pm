@@ -340,11 +340,6 @@ sub run_report {
             $r->{"href_suffix_$field"} = $r->{field};
         }
 
-        for my $field (qw(invnumber quonumber ordnumber)){
-            $r->{"href_suffix_$field"} = "$r->{module}.pl?action=edit&id=";
-            $r->{"href_suffix_$field"} .= $r->{trans_id} if $r->{trans_id};
-            $r->{"href_suffix_$field"} .= $r->{ord_id} if $r->{ord_id};
-        }
     }
     $self->rows(\@rows);
 }
