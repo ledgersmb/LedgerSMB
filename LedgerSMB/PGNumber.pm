@@ -30,6 +30,27 @@ This extends Math::BigFloat and can be used in this way.
 
 use base qw(Math::BigFloat);
 
+=head1 OVERLOADS
+
+=over
+
+=item "bool"
+
+=back
+
+=cut
+
+use overload "bool" => "_bool";
+
+# function to return boolean value based on the numerical value
+# of the BigFloat (zero being false)
+sub _bool {
+    my ($self) = @_;
+
+    return !($self == 0);
+}
+
+
 =head1 SUPPORTED I/O FORMATS
 
 =over
