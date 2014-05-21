@@ -720,6 +720,10 @@ SELECT lsmb__grant_perms('pricegroup_edit', 'entity_credit_account', 'UPDATE');
 
 SELECT lsmb__create_role('assembly_stock');
 SELECT lsmb__grant_perms('assembly_stock', 'parts', 'UPDATE');
+
+SELECT lsmb__grant_perms('assembly_stock', t_name, 'INSERT')
+  FROM unnest(ARRAY['mfg_lot'::text, 'mfg_lot_item']) t_name;
+
 SELECT lsmb__grant_menu('assembly_stock', 84, 'allow');
 
 SELECT lsmb__create_role('inventory_ship');
