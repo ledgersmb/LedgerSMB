@@ -169,7 +169,6 @@ sub display_results {
 	    href => "$base_url&entry_type=$line->{entry_type}&id=$line->{id}",
        };
        push @$rows, $line;
-       print STDERR "row added \n";
    }
    $template->render({
       columns => \@cols,

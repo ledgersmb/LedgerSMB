@@ -20,6 +20,7 @@ package LedgerSMB::File;
 use Moose;
 with 'LedgerSMB::DBObject_Moose';
 use File::MimeInfo;
+use Log::Log4perl;
 binmode STDIN, ':bytes';
 
 =item  attached_by_id
@@ -202,7 +203,7 @@ Auto-detects the type of the file.  Not yet implemented
 
 sub detect_type {
     my ($self) = @_;
-    print STDERR "WARNING:  Stub LedgerSMB::File::detect_type\n";
+    $logger->warn("Stub LedgerSMB::File::detect_type\n");
 };
 
 =item get
