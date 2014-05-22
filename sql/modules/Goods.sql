@@ -11,7 +11,7 @@ RETURNS numeric LANGUAGE SQL AS $$
                               - (select qty from mfg_lot_item
                                   WHERE parts_id = parts.id AND
                                         mfg_lot_id = currval('mfg_lot_id_seq'))
-     WHERE id in (select id from mfg_lot_item 
+     WHERE id in (select parts_id from mfg_lot_item 
                    WHERE mfg_lot_id = currval('mfg_lot_id_seq'));
 
     UPDATE parts SET onhand = onhand + $2 where id = $1;
