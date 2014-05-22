@@ -138,7 +138,7 @@ period.
 
 =cut
 
-has purchase_invpices => (is => 'ro', isa => 'Bool', required => 0);
+has purchase_invoices => (is => 'ro', isa => 'Bool', required => 0);
 
 =item sales_orders
 
@@ -196,13 +196,13 @@ sub columns {
        type => 'text',
        name => LedgerSMB::Report::text('Description'),},
    
-    {col_id => 'unit',
-       type => 'text',
-       name => LedgerSMB::Report::text('Unit'),},
-   
     {col_id => 'onhand',
        type => 'text',
        name => LedgerSMB::Report::text('On Hand'),},
+   
+    {col_id => 'unit',
+       type => 'text',
+       name => LedgerSMB::Report::text('Unit'),},
    
     {col_id => 'rop',
        type => 'text',
@@ -263,7 +263,7 @@ sub columns {
     {col_id => 'microfiche',
        type => 'text',
        name => LedgerSMB::Report::text('Microfiche'),},
- 
+
     {col_id => 'notes',
        type => 'text',
        name => LedgerSMB::Report::text('Notes'),},
