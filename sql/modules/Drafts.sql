@@ -19,50 +19,54 @@ $$
 DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN
-		SELECT trans.id, trans.transdate, trans.invoice, 
-                       trans.reference, trans.description, trans.type,
-			sum(case when (lower(in_type) = 'ap' or in_type is null)
-                                      AND chart.link = 'AP'
-				 THEN line.amount
-				 WHEN (lower(in_type) = 'ar' or in_type is null)
-                                      AND chart.link = 'AR'
-				 THEN line.amount * -1
-				 WHEN (lower(in_type) = 'gl' or in_type is null)
-                                      AND line.amount > 0
-				 THEN line.amount
-			 	 ELSE 0
-			    END) as amount
-		FROM (
-			SELECT id, transdate, reference, 
-				description, false as invoice,
-                                approved, 'gl' as type from gl
-			WHERE lower(in_type) = 'gl' or in_type is null
-			UNION
-			SELECT id, transdate, invnumber as reference, 
-				(SELECT name FROM eca__get_entity(entity_credit_account)),
-				invoice, approved, 'ap' as type from ap
-			WHERE lower(in_type) = 'ap' or in_type is null
-			UNION
-			SELECT id, transdate, invnumber as reference,
-				description, 
-				invoice, approved, 'ar' as type from ar
-			WHERE lower(in_type) = 'ar' or in_type is null
-			) trans
-		JOIN acc_trans line ON (trans.id = line.trans_id)
-		JOIN chart ON (line.chart_id = chart.id and charttype = 'A')
-           LEFT JOIN voucher v ON (v.trans_id = trans.id)
-		WHERE (in_from_date IS NULL or trans.transdate >= in_from_date)
-			AND (in_to_date IS NULL 
-				or trans.transdate <= in_to_date)
-			AND trans.approved IS FALSE
-			AND v.id IS NULL
-		GROUP BY trans.id, trans.transdate, trans.description, 
-                         trans.reference, trans.invoice, trans.type
-		HAVING (in_with_accno IS NULL or in_with_accno = 
-			ANY(as_array(chart.accno)))
-		ORDER BY trans.reference
+	SELECT id, transdate, invoice, reference, description,
+	       type, amount FROM (
+	    SELECT id, transdate, reference, 
+		   description, false as invoice,
+                   (SELECT SUM(line.amount)
+                      FROM acc_trans line
+                     WHERE line.amount > 0) as amount,
+                   'gl' as type
+	      from gl
+	     WHERE (lower(in_type) = 'gl' or in_type is null)
+		  AND NOT approved
+		  AND NOT EXISTS (SELECT 1
+                                    FROM voucher v
+                                   WHERE v.trans_id = gl.id)
+            UNION
+            SELECT id, transdate, invnumber as reference, 
+		(SELECT name FROM eca__get_entity(entity_credit_account)),
+		invoice, amount, 'ap' as type
+	      FROM ap
+	     WHERE (lower(in_type) = 'ap' or in_type is null)
+                   AND NOT approved
+	 	   AND NOT EXISTS (SELECT 1
+                                     FROM voucher v
+                                    WHERE v.trans_id = ap.id)
+	    UNION
+	    SELECT id, transdate, invnumber as reference,
+		description, invoice, amount, 'ar' as type
+              FROM ar
+	     WHERE (lower(in_type) = 'ar' or in_type is null)
+                   AND NOT approved
+		   AND NOT EXISTS (SELECT 1
+                                     FROM voucher v
+                                    WHERE v.trans_id = ar.id)) trans
+	WHERE (in_from_date IS NULL or trans.transdate >= in_from_date)
+	  AND (in_to_date IS NULL or trans.transdate <= in_to_date)
+          AND (in_with_accno IS NULL
+               OR id IN (SELECT line.trans_id
+                           FROM acc_trans line
+                           JOIN account acc ON (line.chart_id = acc.id)
+                          WHERE acc.accno = in_with_accno
+			    AND NOT approved
+                            AND (in_from_date IS NULL
+                                 OR line.transdate >= in_from_date)
+		            AND (in_to_date IS NULL
+			    	 OR line.transdate <= in_to_date)))
+	ORDER BY trans.reference
 	LOOP
-		RETURN NEXT out_row;
+	    RETURN NEXT out_row;
 	END LOOP;
 END;
 $$ language plpgsql;
