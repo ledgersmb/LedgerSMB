@@ -1524,6 +1524,29 @@ $$Hyperlink to product image.$$;
 CREATE UNIQUE INDEX parts_partnumber_index_u ON parts (partnumber) 
 WHERE obsolete is false;
 
+CREATE SEQUENCE lot_tracking_number;
+CREATE TABLE mfg_lot (
+    id serial not null unique,
+    lot_number text not null unique default nextval('lot_tracking_number')::text,
+    parts_id int not null references parts(id),
+    qty numeric not null,
+    stock_date date not null default now()::date
+);
+
+COMMENT ON TABLE mfg_lot IS 
+$$ This tracks assembly restocks.  This is designed to work with old code and
+may change as we refactor the parts.$$;
+    
+CREATE TABLE mfg_lot_item (
+    id serial not null unique,
+    mfg_lot_id int not null references mfg_lot(id),
+    parts_id int not null references parts(id),
+    qty numeric not null
+);
+
+COMMENT ON TABLE mfg_lot_item IS
+$$ This tracks items used in assembly restocking.$$;
+
 CREATE TABLE invoice (
   id serial PRIMARY KEY,
   trans_id int REFERENCES transactions(id),

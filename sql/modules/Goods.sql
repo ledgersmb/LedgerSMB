@@ -1,5 +1,24 @@
 BEGIN;
 
+CREATE OR REPLACE FUNCTION assembly__stock(in_parts_id int, in_qty numeric)
+RETURNS numeric LANGUAGE SQL AS $$
+    INSERT INTO mfg_lot(parts_id, qty) VALUES ($1, $2);
+    INSERT INTO mfg_lot_item(mfg_lot_id, parts_id, qty)
+    SELECT currval('mfg_lot_id_seq'), parts_id, qty * $2
+      FROM assembly WHERE id = $1;
+
+    UPDATE parts SET onhand = onhand 
+                              - (select qty from mfg_lot_item
+                                  WHERE parts_id = parts.id AND
+                                        mfg_lot_id = currval('mfg_lot_id_seq'))
+     WHERE id in (select parts_id from mfg_lot_item 
+                   WHERE mfg_lot_id = currval('mfg_lot_id_seq'));
+
+    UPDATE parts SET onhand = onhand + $2 where id = $1;
+
+    select $2;
+$$;
+
 DROP TYPE IF EXISTS goods_search_result CASCADE;
 
 CREATE TYPE goods_search_result AS (
