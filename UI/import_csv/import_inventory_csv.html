@@ -1,4 +1,4 @@
-<?lsmb INCLUDE 'ui-header.html' 
+<?lsmb INCLUDE 'ui-header.html'
       stylesheet = stylesheet
       include_stylesheet = ["UI/asset/asset.css"] 
       include_script = ["UI/asset/asset.js"] 
@@ -14,51 +14,43 @@
     name = "type"
     value = type
 } ?>
-<?lsmb IF multi ?>
-<div class="listtop"><?lsmb text('Batch Information') ?></div>
-<?lsmb END ?>
-<div class="inputrow" id = "referencerow">
-<?lsmb PROCESS input element_data = {
-    type  = "text"
-    class = "reference"
-    name  = "reference"
-    label = text('Reference')
-    value = reference
-    size  = 15
+<div class="inputrow" id="ar-account-row">
+<?lsmb PROCESS select element_data = {
+     label = text("AR account")
+      name = "AR"
+      options = AR_accounts
+      text_attr = "value"
+      value_attr = "value"
 } ?>
 </div>
-<div class="inputrow" id = "descriptionrow">
-<?lsmb PROCESS input element_data = {
-    type  = "text"
-    class = "description"
-    name  = "description"
-    label = text('Description')
-    value = description
+<div class="inputrow" id="ap-account-row">
+<?lsmb PROCESS select element_data = {
+     label = text("AP account")
+      name = "AP"
+      options = AP_accounts
+      text_attr = "value"
+      value_attr = "value"
 } ?>
 </div>
 <div class="inputrow" id="daterow">
 <?lsmb PROCESS input element_data = {
      type = "text"
      class = "date"
-     label = text("Transaction Date") #" 
+     label = text("Transaction Date") 
      name = "transdate"
      value = transdate
      size = 12
 } ?>
+</div>
 <div class="inputrow" id="filerow">
 <?lsmb PROCESS input element_data = {
        name = "import_file"
        type = "file"
-       label = text('From File') #'
+       label = text("From File") 
        class = "file"
 } ?>
 </div>
 <div class="inputrow" id="buttonrow">
-<?lsmb PROCESS input element_data = {
-       type = "hidden"
-       name = "trans_type"
-       value = trans_type
-} ?>
 <?lsmb PROCESS button element_data = {
 	text = text("Save")
 	type = "submit"

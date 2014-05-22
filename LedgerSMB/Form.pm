@@ -611,7 +611,7 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
 		window.alert('Warning:  Your password will expire in $self->{pw_expires}');
 	</script>|;
         }
-        my $dformat = $self->{_myconfig}->{dateformat};
+        my $dformat = $LedgerSMB::App_State::User->{dateformat};
 
         print qq|Content-Type: text/html; charset=utf-8\n\n
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -884,7 +884,8 @@ sub format_amount {
        $places= $self->{money_precision};
     }
     $myconfig->{numberformat} = '1000.00' unless $myconfig->{numberformat};
-    $amount = $self->parse_amount( $myconfig, $amount );
+    $amount = $self->parse_amount( $myconfig, $amount )
+        unless ref($amount) eq 'LedgerSMB::PGNumber';
     return $amount->to_output({
                places => $places,
                 money => $self->{money_precision},
@@ -2540,11 +2541,15 @@ sub lastname_used {
     $vc ||= $self->{vc};    # add default to correct for improper passing
     my $arap;
     my $where;
+    my $eclass;   # we have to use a criteria to find only vendors or customers
+                  # otherwise we can get vendor by default in sales order on creating a new sales order -- PI
     if ($vc eq 'customer') {
         $arap = 'ar';
+        $eclass = 2;
     } else {
         $arap = 'ap';
         $vc = 'vendor';
+        $eclass = 1;
     }
     my $sth;
 
@@ -2568,7 +2573,8 @@ sub lastname_used {
 			ct.curr AS currency
 		FROM entity_credit_account ct
 		JOIN entity ON (ct.entity_id = entity.id)
-		WHERE entity.id = (select entity_id from $arap 
+		WHERE entity.entity_class = $eclass AND
+                      entity.id = (select entity_id from $arap 
 		                    where entity_id IS NOT NULL $where 
                                  order by id DESC limit 1)|;
 

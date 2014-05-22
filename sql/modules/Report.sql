@@ -42,6 +42,7 @@ BEGIN
                 SELECT id, id::text AS path
                   FROM business_unit
                  WHERE id = any(in_business_units)
+                       OR in_business_units IS NULL
                  UNION
                 SELECT bu.id, bu_tree.path || ',' || bu.id
                   FROM business_unit bu
