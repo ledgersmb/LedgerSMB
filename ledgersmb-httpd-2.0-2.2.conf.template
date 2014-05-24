@@ -2,6 +2,8 @@
 
 Alias /ledgersmb WORKING_DIR/
 
+# If you want to change the "/rest" part below, make sure to change
+# rest-handler.pl too, since it's hard coded there.
 <Location /ledgersmb/rest>
    RewriteEngine On
    RewriteBase /ledgersmb/rest/
