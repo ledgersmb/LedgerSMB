@@ -4,7 +4,7 @@ LedgerSMB::REST_Class::Contact - Customer/vendor web servicesA
 
 =cut
 
-package LedgerSMB::REST_Class::Contact;
+package LedgerSMB::REST_Class::contact;
 use LedgerSMB::Entity;
 use LedgerSMB::Entity::Credit_Account;
 use LedgerSMB::Entity::Location;
@@ -36,7 +36,7 @@ Searches or retrieves one or more records.
 
 =cut 
 
-my $cname = 'LedgerSMB::REST_Class::Contact';
+my $cname = 'LedgerSMB::REST_Class::contact';
 
 sub get {
     my ($request) = @_;
