@@ -82,9 +82,10 @@ sub get_locale {
 sub app_initialize {
     LedgerSMB::App_State->cleanup();
 
-    $logger = Log::Log4perl->get_logger('LedgerSMB::Handler');
     Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+    $logger = Log::Log4perl->get_logger('LedgerSMB::Handler');
     $logger->debug("Begin");
+
 }
 
 
