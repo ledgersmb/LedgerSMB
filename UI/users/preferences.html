@@ -52,8 +52,7 @@
 	      </tr>
 	      <tr>
 		<th align="right"><?lsmb text('Number Format') ?></th>
-		<td><?lsmb numberformat = user.numberformat -?>
-                    <?lsmb PROCESS select element_data={ 
+		<td><?lsmb PROCESS select element_data={ 
                       name = 'numberformat',
                       options = numberformats,
                       default_values = [numberformat],
@@ -63,8 +62,7 @@
 	      </tr>
 	      <tr>
 		<th align="right"><?lsmb text('Language') ?></th>
-		<td><?lsmb language = user.language -?>
-		    <?lsmb country_codes.unshift({}) ?>
+                <td><?lsmb country_codes.unshift({}) ?>
                     <?lsmb PROCESS select element_data={
                      name = 'language',
                      options = country_codes,
