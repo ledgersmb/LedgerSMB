@@ -4,7 +4,7 @@ LedgerSMB::REST_Class::Contact - Customer/vendor web servicesA
 
 =cut
 
-package LedgerSMB::REST_Class::Contact;
+package LedgerSMB::REST_Class::contact;
 use LedgerSMB::Entity;
 use LedgerSMB::Entity::Credit_Account;
 use LedgerSMB::Entity::Location;
@@ -13,6 +13,7 @@ use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Person;
 use LedgerSMB::Entity::Bank;
 use LedgerSMB::Report::Contact::Search;
+use strict;
 
 =head1 SYNOPSIS
 
@@ -35,7 +36,7 @@ Searches or retrieves one or more records.
 
 =cut 
 
-my $cname = 'LedgerSMB::REST_Class::Contact';
+my $cname = 'LedgerSMB::REST_Class::contact';
 
 sub get {
     my ($request) = @_;
@@ -51,7 +52,7 @@ sub get {
           return $data;
        } else {
             my @results = ();
-            for $ref (LedgerSMB::Entity->call_procedure(
+            for my $ref (LedgerSMB::Entity->call_procedure(
                           procname => 'entity__list_classes'
                       )
             ){
@@ -80,6 +81,8 @@ sub _search_entity_class {
 sub _get_entity {
     my ($request, $id) = @_;
     my $company = LedgerSMB::Entity::Company->get($id);
+    my $data;
+
     if ($company){
        $data= $company;
        $data->{entity_type} = 'Company';
@@ -137,7 +140,7 @@ sub put {
     } else {
         die '400 Bad Request:  Must Specify entity_type';
     }
-    for $act (@{$payload->{credit_accounts}}){
+    for my $act (@{$payload->{credit_accounts}}){
         LedgerSMB::Entity::Credit_Account->new(%$payload)->save();
     }
     if ($id){ 

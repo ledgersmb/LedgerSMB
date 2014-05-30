@@ -28,7 +28,7 @@ the url is given fixed semantic meaning based on the following pattern:
 
 =head2 Authentication
 
-Authentication information is provided using HTTP authentication headers. 
+Authentication information is provided using HTTP authentication headers.
 Currently only HTTP Basic is supported though Kerberos could be supported with
 a little effort. Please use it over SSL.
 
@@ -164,7 +164,13 @@ $LedgerSMB::App_State::Locale = $locale;
 $LedgerSMB::App_State::User = {numberformat => '1000.00', 
                                  dateformat => 'YYYY-MM-DD'};
 
+Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+my $logger = Log::Log4perl->get_logger('LedgerSMB::Handler');
+$logger->debug("Begin");
+
 process_request();
+
+$logger->debug("End");
 
 # Note:  Indenting try/catch only two characters here because it wraps all
 # substantive logic in the function.  -CT
@@ -262,20 +268,19 @@ sub get_request_properties {
 
     my $creds = LedgerSMB::Auth::get_credentials();
     my $request = {};
-    my $url = $cgi->self_url();
-
+    my $url = $ENV{REQUEST_URI};
 
     $request->{args} = $cgi->Vars();
     $request->{method} = $ENV{REQUEST_METHOD};
     $request->{payload} = $cgi->param( "$request->{method}DATA" );
-    $url =~ s|.*/rest-handler.pl/(.*)|$1|;
+    $url =~ s|.*/rest/(.*)|$1|;
     $url =~ s|\.([^/.?]*)(\?.*)?$||;
     $request->{format} = $1;
 
     my @components = split /\//, $url;
     my $version = shift @components;
     my $company = shift @components;
-    die '400 Unsupported Version' if ($version ne '1.4');
+    die "400 Unsupported version ($version)" if ($version ne '1.4');
     $LedgerSMB::App_State::DBH = DBI->connect(
         "dbi:Pg:dbname=$company", 
         "$creds->{login}", "$creds->{password}", 
