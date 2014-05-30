@@ -17,6 +17,7 @@ our $VERSION = '0.1';
 use LedgerSMB::Batch;
 use LedgerSMB::Template;
 use LedgerSMB::Report::Unapproved::Batch_Overview;
+use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
 use strict;
@@ -215,8 +216,7 @@ sub list_batches {
     my $report = LedgerSMB::Report::Unapproved::Batch_Overview->new(
                  %$request);
     $report->run_report;
-    $report->render($request);
-        
+    $report->render($request);     
 }
 
 =item get_batch
@@ -229,50 +229,84 @@ Displays all vouchers from the batch by type, and includes amount.
 
 sub get_batch {
     my ($request)  = @_;
-    use LedgerSMB::Report::Unapproved::Batch_Detail;
+    $request->open_form;
+
+    $request->{hiddens} = { batch_id => $request->{batch_id} };
+
     my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
                  %$request);
     $report->run_report;
     $report->render($request);
 }
 
-=item get_batch_batch_approve
+=item single_batch_approve
 
-Approves the single batch on the details screen.  Batch_id must be set.,
+Approves the single batch on the details screen.  Batch_id must be set.
 
 =cut
 
-sub get_batch_batch_approve {
+sub single_batch_approve {
     my ($request) = @_;
-    my $batch = LedgerSMB::Batch->new(base => $request);
-    if ($batch->close_form){
+    if ($request->close_form){
+        my $batch = LedgerSMB::Batch->new(base => $request);
         $batch->post;
-        search_batch($request);
-    }
-    else {
+        list_batches($request);
+    } else {
         get_batch($request);
     }
 }
 
-=item get_batch_voucher_delete
+=item single_batch_delete
+
+Deletes the single batch on the details screen.  Batch_id must be set.
+
+=cut
+
+sub single_batch_delete {
+    my ($request) = @_;
+    if ($request->close_form){
+        my $batch = LedgerSMB::Batch->new(base => $request);
+        $batch->delete;
+        list_batches($request);
+    } else {
+        get_batch($request);
+    }
+}
+
+=item single_batch_unlock
+
+Unlocks the single batch on the details screen.  Batch_id must be set.
+
+=cut
+
+sub single_batch_unlock {
+    my ($request) = @_;
+    if ($request->close_form){
+        my $batch = LedgerSMB::Batch->new(base => $request);
+        $batch->unlock;
+        list_batches($request);
+    } else {
+        get_batch($request);
+    }
+}
+
+=item batch_voucher_delete
 
 Deletes selected vouchers. 
 
 =cut
 
-sub get_batch_voucher_delete {
+sub batch_voucher_delete {
     my ($request) = @_;
-    my $batch = LedgerSMB::Batch->new(base => $request);
-    if (!$batch->close_form){
-       get_batch($request); 
-       $request->finalize_request();
+    if ($request->close_form){
+        my $batch = LedgerSMB::Batch->new(base => $request);
+        for my $count (1 .. $request->{rowcount_}){
+            my $voucher_id = $request->{"select_$count"};
+            next unless $voucher_id;
+            $batch->delete_voucher($voucher_id);
+        }
     }
-    for my $count (1 .. $batch->{rowcount}){
-        my $voucher_id = $batch->{"row_$count"};
-        next unless $batch->{"voucher_$voucher_id"};
-        $batch->delete_voucher($voucher_id);
-    }
-    search_batch($request);
+    get_batch($request);
 }
 
 =item batch_approve
