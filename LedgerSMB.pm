@@ -442,8 +442,6 @@ sub _process_cookies {
         $self->{company} = $ccookie
             unless $ccookie eq 'Login';
     }
-    $logger->debug("\$ccookie=$ccookie cookie.LedgerSMB::Sysconfig::cookie_name=".$cookie{${LedgerSMB::Sysconfig::cookie_name}}." \$self->{company}=$self->{company}");
-
 }
 
 sub is_run_mode {
