@@ -112,6 +112,11 @@ Changelog for 1.3.40
 * GL account search now will search within descriptions for matches (Chris T)
 * Printing without an invoice number now errors instead of increments (Chris T)
 * Fixed internal server error using cash/payment (Chris T)
+* Fixed #1133 (FX rate changed after selecting part/service) (Pongracz I)
+* Fixed #1078 (Don't populate all empty projects automatically) (Pongracz I)
+
+Chris T is Chris Travers
+Pongracz I is Pongracz Istvan
 
 Changelog for 1.3.39
 * Fixed Internal Server Error clicking through ar/ap report (Chris T, 1022)

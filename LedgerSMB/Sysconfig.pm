@@ -186,7 +186,6 @@ our $log4perl_config = qq(
 #log4perl.logger.LedgerSMB.Handler = ERROR
 #log4perl.logger.LedgerSMB.User = WARN
 #log4perl.logger.LedgerSMB.ScriptLib.Company=TRACE
-#print STDERR localtime()." Sysconfig log4perl_config=$log4perl_config\n";
 
 our $db_host = $cfg->val('database', 'host');
 our $db_port = $cfg->val('database', 'port');

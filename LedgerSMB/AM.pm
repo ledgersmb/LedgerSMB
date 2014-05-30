@@ -1109,7 +1109,6 @@ sub save_taxes {
         $taxnumber=~s/^\s+|\s+$//g;
         my $old_validto=$form->{"old_validto_$i"};
         $old_validto=~s/^\s+|\s+$//g;
-        #print STDERR localtime()." AM save_taxes chart_id=$chart_id i=$i rate=$rate validto=$validto pass=$pass taxnumber=$taxnumber old_validto=$old_validto\n";
         if($rate==0  && $validto eq '' && $pass eq '' && $taxnumber eq '')
         {
          $logger->debug("skipping chart_id=$chart_id i=$i rate=$rate validto=$validto pass=$pass taxnumber=$taxnumber old_validto=$old_validto skipping");

@@ -549,8 +549,6 @@ sub get_payment_detail_data {
 
     my $source_inc;
     my $source_src;
-    #print STDERR "Use of uninitialized value \$self->{source_start}: $self->{source_start} \n"; 
-    #if ( defined $self->{source_start} ) { print STDERR "Use of uninitialized value \$self->{source_start} is undefined"; } else { print STDERR "Use of uninitialized value \$self->{source_start} is undefined \n"; }
     $self->{source_start} =~ /(\d*)\D*$/;
     $source_src = $1;
     if ($source_src) {

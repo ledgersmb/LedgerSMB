@@ -11,8 +11,6 @@ use Test::More 'no_plan';
 use Test::Trap qw(trap $trap);
 use Test::Exception;
 
-use Error qw(:try :warndie);
-
 use LedgerSMB::AM;
 use LedgerSMB::Form;
 use LedgerSMB::Sysconfig;
@@ -387,7 +385,7 @@ sub get_output_line_array {
         my $FH;
         my ($template) = @_;
         open($FH, '<:bytes', $template->{rendered}) or
-                throw Error::Simple 'Unable to open rendered file';
+                die 'Unable to open rendered file';
         my @lines = <$FH>;
         close $FH;
         delete $template->{rendered};

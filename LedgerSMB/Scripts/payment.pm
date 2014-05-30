@@ -52,8 +52,6 @@ use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Invoices::Payments;
-use Error::Simple;
-use Error;
 use strict; 
 
 # CT:  A few notes for future refactoring of this code:
@@ -628,9 +626,7 @@ sub payment1_5 {
 my ($request)    = @_;  
 #my $locale       = $request->{_locale};#avoid duplicating variables as much as possible?
 my  $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
-#print STDERR localtime()." payment.pl payment1_5 dbPayment=".Data::Dumper::Dumper(\$dbPayment)."\n";
 my @array_options = $dbPayment->get_entity_credit_account();
-#print STDERR localtime()." payment.pl payment1_5 \$\#array_options=".Data::Dumper::Dumper(\@array_options)."\n";
 if ($#array_options == -1) { 
    &payment($request);   
 } elsif ($#array_options == 0) {
@@ -869,7 +865,6 @@ for my $ref (0 .. $#array_options) {
          #$request->{"topay_fx_$array_options[$ref]->{invoice_id}"} = "$due_fx";
          $request_topay_fx_bigfloat=$due_fx;
      } 
- #print STDERR localtime()." payment.pl array=".Data::Dumper::Dumper($array_options[$ref])."\n";
  my $paid_formatted=$Payment->format_amount(amount=>($array_options[$ref]->{amount} - $array_options[$ref]->{due} - $array_options[$ref]->{discount}));
  #Now its time to build the link to the invoice :)
  my $uri_module;

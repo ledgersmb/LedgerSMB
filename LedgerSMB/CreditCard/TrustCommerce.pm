@@ -19,6 +19,7 @@ package TrustCommerce;
 use LedgerSMB::CreditCard::Config;
 use LedgerSMB::CreditCard::TrustCommerce::Config;
 use Net::TCLink;
+use Log::Log4Perl;
 
 $debug = $1;
 
@@ -44,16 +45,18 @@ sub process {
     $form->{ccauth} = $result{transID};
 
     # log transID and status
-    print STDERR "Info: TCLink CC AUTH transID $result{transid} returned "
+    my $logger = Log::Log4Perl->get_logger("LedgerSMB");
+    $logger->info("TCLink CC AUTH transID $result{transid} returned "
       . "status $result{status}:$result{declinetype}:$result{baddata}:"
-      . "$result{errortype}\n";
-    if ($debug) {
-        print STDERR "Full Result:\n";
+      . "$result{errortype}\n");
+    $logger->debug( sub {
+        my $full_result = "Full Result:\n";
 
         for ( keys %result ) {
-            print STDERR "$_=  " . $result{$_} . "\n";
+            $full_result .= "$_=  " . $result{$_} . "\n";
         }
-    }
+        return $full_result;
+                    });
 
     %result;
 }
