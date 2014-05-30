@@ -95,7 +95,13 @@ our $aa_multi = sub {
                        $request->error("Account $acct not found") if !$pass;
                        $vcst->execute(uc($ref->[0]));
                        ($pass) = $vcst->fetchrow_array;
-                       $request->error("Vendor $ref->[0] not found") if !$pass;
+                       if (! $pass) {
+                           if ($arap eq 'ar') {
+                               $request->error("Customer $ref->[0] not found");
+                           } else {
+                               $request->error("Vendor $ref->[0] not found");
+                           }
+                      }
                    }
                    for my $ref (@$entries){
                        my $form = Form->new();
@@ -103,13 +109,14 @@ our $aa_multi = sub {
                        $form->{rowcount} = 1;
                        $form->{ARAP} = uc($arap);
                        $form->{batch_id} = $batch->{id};
-                       $form->{vendornumber} = shift @$ref;
+                       $form->{customernumber}
+                          = $form->{vendornumber} = shift @$ref;
                        $form->{amount_1} = shift @$ref;
                        next if $form->{amount_1} !~ /\d/;
                        $form->{amount_1} = $form->parse_amount(
                               $request->{_user}, $form->{amount_1}); 
                        $form->{"$form->{ARAP}_amount_1"} = shift @$ref;
-                       $form->{vc} = "vendor";
+                       $form->{vc} = ($arap eq "ar") ? "customer" : "vendor";
                        $form->{arap} = $arap;
                        $form->{uc($arap)} = shift @$ref;
                        $form->{description_1} = shift @$ref;
@@ -120,10 +127,12 @@ our $aa_multi = sub {
                        $form->{defaultcurrency} = $default_currency;
                        my $sth = $form->{dbh}->prepare(
                             "SELECT id FROM entity_credit_account
-                              WHERE entity_class = 1 and meta_number = ?"
+                              WHERE entity_class = ? and meta_number = ?"
                        );
-                       $sth->execute(uc($form->{vendornumber}));
+                       $sth->execute( ($arap eq 'ar') ? 2 : 1,
+                            uc($form->{vendornumber}));
                        ($form->{vendor_id}) = $sth->fetchrow_array;
+                       $form->{customer_id} = $form->{vendor_id};
                       
                        AA->post_transaction($request->{_user}, $form);
                    }
@@ -166,11 +175,11 @@ our $process = {
                 },
    ar_multi => sub { 
                    my  ($request, $entries) = @_;
-                   return $aa_multi($request, $entries, 'ar');
+                   return &$aa_multi($request, $entries, 'ar');
                },
    ap_multi => sub { 
                    my  ($request, $entries) = @_;
-                   return $aa_multi($request, $entries, 'ap');
+                   return &$aa_multi($request, $entries, 'ap');
                },
     chart => sub {
                use LedgerSMB::DBObject::Account;
