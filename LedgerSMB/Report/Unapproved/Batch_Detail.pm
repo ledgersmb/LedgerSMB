@@ -187,26 +187,26 @@ sub run_report{
                     name  => 'action',
                     type  => 'submit',
                     text  => LedgerSMB::Report::text('Post Batch'),
-                    value => 'batch_approve',
+                    value => 'single_batch_approve',
                     class => 'submit',
                  },{
                     name  => 'action',
                     type  => 'submit',
                     text  => LedgerSMB::Report::text('Delete Batch'),
-                    value => 'batch_delete',
+                    value => 'single_batch_delete',
                     class => 'submit',
                  },{
                     name  => 'action',
                     type  => 'submit',
                     text  => LedgerSMB::Report::text('Delete Vouchers'),
-                    value => 'vouchers_delete',
+                    value => 'batch_vouchers_delete',
                     class => 'submit',
                 },
                 {
                     name  => 'action',
                     type  => 'submit',
                     text  => LedgerSMB::Report::text('Unlock Batch'),
-                    value => 'batch_unlock',
+                    value => 'single_batch_unlock',
                     class => 'submit',
                 }]);
     my @rows = $self->exec_method({funcname => 'voucher__list'});
