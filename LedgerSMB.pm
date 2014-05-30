@@ -190,7 +190,6 @@ sub new {
 
     my $type   = shift @_;
     my $argstr = shift @_;
-    my %cookie;
     my $self = {};
 
     $type = "" unless defined $type;
@@ -434,15 +433,17 @@ sub _process_cookies {
         }
     }
 
-    my $ccookie;
-    if (!$self->{company} && $self->is_run_mode('cgi', 'mod_perl')){
-        $ccookie = $cookie{${LedgerSMB::Sysconfig::cookie_name}};
+    $self->{cookie} = $cookie{$LedgerSMB::Sysconfig::cookie_name};
+
+
+    if (! $self->{company} && $self->is_run_mode('cgi', 'mod_perl')){
+        my $ccookie = $self->{cookie};
         $ccookie =~ s/.*:([^:]*)$/$1/;
-        if($ccookie ne 'Login') { $self->{company} = $ccookie; } 
+        $self->{company} = $ccookie
+            unless $ccookie eq 'Login';
     }
     $logger->debug("\$ccookie=$ccookie cookie.LedgerSMB::Sysconfig::cookie_name=".$cookie{${LedgerSMB::Sysconfig::cookie_name}}." \$self->{company}=$self->{company}");
 
-    return %cookie;
 }
 
 sub is_run_mode {
