@@ -100,6 +100,7 @@ our $aa_multi = sub {
                       
                        AA->post_transaction($request->{_user}, $form);
                    }
+                   return 1;
                };
 our $process = {
    gl       => sub {
@@ -373,9 +374,10 @@ sub run_import {
     if (ref($preprocess->{$request->{type}}) eq 'CODE'){
         $preprocess->{$request->{type}}($request, \@entries);
     }
-    $process->{$request->{type}}($request, \@entries) || begin_import($request);
-    if (ref($postprocess->{$request->{type}}) eq 'CODE'){
-        $postprocess->{$request->{type}}($request, \@entries);
+    if ($process->{$request->{type}}($request, \@entries)){
+        if (ref($postprocess->{$request->{type}}) eq 'CODE'){
+            $postprocess->{$request->{type}}($request, \@entries);
+        }
     }
     begin_import($request);
 }
