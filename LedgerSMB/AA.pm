@@ -423,10 +423,7 @@ sub post_transaction {
            } else {
                $batch_class = 'ap';
            }
-           my $vqh = $dbh->prepare(
-              'SELECT * FROM batch 
-               WHERE id = ? FOR UPDATE'
-           );
+           my $vqh = $dbh->prepare('SELECT * FROM batch__lock(?)');
            $vqh->execute($form->{batch_id});
            my $bref = $vqh->fetchrow_hashref('NAME_lc');
            # Change the below to die with localization in 1.4
