@@ -1,5 +1,14 @@
 BEGIN;
 
+CREATE OR REPLACE FUNCTION batch__lock (in_batch_id integer)
+RETURNS batch LANGUAGE SQL 
+SECURITY DEFINER AS
+$$
+SELECT * FROM batch WHERE id = $1 FOR UPDATE;
+$$;
+
+REVOKE EXECUTE ON batch__lock FROM PUBLIC;
+
 CREATE OR REPLACE FUNCTION voucher_get_batch (in_batch_id integer) 
 RETURNS batch AS 
 $$

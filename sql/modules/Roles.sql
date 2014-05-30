@@ -317,6 +317,7 @@ SELECT lsmb__grant_perms('batch_create', 'batch_id_seq', 'ALL');
 SELECT lsmb__grant_perms('batch_create', 'batch_class', 'SELECT');
 SELECT lsmb__grant_perms('batch_create', 'voucher', 'INSERT');
 SELECT lsmb__grant_perms('batch_create', 'voucher_id_seq', 'ALL');
+SELECT lsmb__grant_exec('batch_create', 'batch__lock(int)');
 
 SELECT lsmb__create_role('batch_post');
 SELECT lsmb__grant_exec('batch_post', 'batch_post(int)');
