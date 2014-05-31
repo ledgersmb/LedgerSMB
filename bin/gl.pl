@@ -270,7 +270,7 @@ sub display_form
 		    { ndx => 1, key => 'U', value => $locale->text('Update') },
 		  'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
                   'edit_and_save' => {ndx => 4, key => 'V', 
-                          value => value => $locale->text('Edit and Save') },
+                          value => $locale->text('Edit and Save') },
                   'save_temp' =>
                     { ndx   => 9, 
                       key   => 'T', 
