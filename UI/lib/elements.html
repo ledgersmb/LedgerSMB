@@ -245,12 +245,8 @@
 
 <?lsmb # OPTION ELEMENT ?>
 <?lsmb BLOCK option ?>
-  <?lsmb IF element_data.defined('value_attr');
-	option_data.value = option_data.$value_attr;
-    END ?>
-  <?lsmb IF element_data.defined('text_attr');
-	option_data.text = option_data.$text_attr;
-    END ?>
+  <?lsmb option_data.value = option_data.$value_attr ?>
+  <?lsmb option_data.text = option_data.$text_attr ?>
   <?lsmb option_data.id = "${parent_id}-${optindex}" -?>
   <?lsmb  # Selected is a special case -- no attribute key, so it is handled here by looking for the option value in the default_values list.
     option_data.selected = "";
