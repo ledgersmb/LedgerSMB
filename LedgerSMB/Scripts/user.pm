@@ -41,11 +41,10 @@ Displays the preferences screen.  No inputs needed.
 sub preference_screen {
     my ($request) = @_;
     my $user = LedgerSMB::DBObject::User->new({base => $request});
-    $user->get;
     $user->get_option_data;
 
     my $template = LedgerSMB::Template->new(
-            user     => $user, 
+            user     => $user->{_user}, 
             locale   => $request->{_locale},
             path     => 'UI/users',
             template => 'preferences',
@@ -55,6 +54,7 @@ sub preference_screen {
     my $creds = LedgerSMB::Auth::get_credentials();
     $user->{login} = $creds->{login};
     $user->{password_expires} =~ s/:(\d|\.)*$//;
+    $user->{user} = $user->{_user};
     $template->render($user);
 }
 
