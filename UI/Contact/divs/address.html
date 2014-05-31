@@ -38,7 +38,12 @@
            LOC.type = text('Sales');
         ELSIF LOC.location_class == 3;
            LOC.type = text('Shipping');
-        END; 
+        END;
+        FOREACH CNTRY IN country_list;
+           IF LOC.country_id == CNTRY.id;
+              LOC.country = CNTRY.name;
+           END;
+        END;
         LOC.edit = '[' _ text('Edit') _ ']';
         LOC.delete= '[' _ text('Delete') _ ']';
         LOC.edit_href_suffix= script _ '?action=edit&entity_id=' _ entity_id _
