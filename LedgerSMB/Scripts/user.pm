@@ -29,7 +29,6 @@ use LedgerSMB::DBObject::User;
 use LedgerSMB::App_State;
 our $VERSION = 1.0;
 use strict;
-use Data::Dumper;
 
 my $slash = "::";
 
@@ -45,10 +44,8 @@ sub preference_screen {
     $user->get($user->{_user}->{id});
     $user->get_option_data;
 
-    print STDERR Dumper($user);
-
     my $template = LedgerSMB::Template->new(
-            user     => $user->{_user}, 
+            user     => $user, 
             locale   => $request->{_locale},
             path     => 'UI/users',
             template => 'preferences',
@@ -58,7 +55,6 @@ sub preference_screen {
     my $creds = LedgerSMB::Auth::get_credentials();
     $user->{login} = $creds->{login};
     $user->{password_expires} =~ s/:(\d|\.)*$//;
-    $user->{user} = $user->{_user};
     $template->render($user);
 }
 
