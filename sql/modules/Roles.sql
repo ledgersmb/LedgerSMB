@@ -195,12 +195,14 @@ SELECT lsmb__create_role('file_attach_part');
 SELECT lsmb__grant_perms('file_attach_part', 'file_part', 'INSERT');
 SELECT lsmb__grant_perms('file_attach_part', 'file_part', 'UPDATE');
 
-SELECT lsmb__grant_perms('file_attach_tx', 'file_base_id_seq', 'ALL');
-SELECT lsmb__grant_perms('file_attach_order', 'file_base_id_seq', 'ALL');
-SELECT lsmb__grant_perms('file_attach_part', 'file_base_id_seq', 'ALL');
-SELECT lsmb__grant_perms(role, 'file_incoming', 'DELETE')
+SELECT lsmb__create_role('file_attach_eca');
+SELECT lsmb__grant_perms('file_attach_eca', 'file_eca', 'INSERT');
+SELECT lsmb__grant_perms('file_attach_eca', 'file_eca', 'UPDATE');
+
+SELECT lsmb__grant_perms(role, 'file_incoming', 'DELETE'),
+       lsmb__grant_perms(role, 'file_base_id_seq', 'ALL')
   FROM unnest(ARRAY['file_attach_tx'::text, 'file_attach_order', 
-                    'file_attach_part']) role;
+                    'file_attach_part', 'file_attach_eca']) role;
 
 \echo Contact Management
 SELECT lsmb__create_role('contact_read');
@@ -315,7 +317,7 @@ SELECT lsmb__grant_perms('batch_create', 'batch_id_seq', 'ALL');
 SELECT lsmb__grant_perms('batch_create', 'batch_class', 'SELECT');
 SELECT lsmb__grant_perms('batch_create', 'voucher', 'INSERT');
 SELECT lsmb__grant_perms('batch_create', 'voucher_id_seq', 'ALL');
-SELECT lsmb__grant_exec('batch_create', 'batch__lock(int)');
+SELECT lsmb__grant_exec('batch_create', 'batch__lock_for_update(int)');
 
 SELECT lsmb__create_role('batch_post');
 SELECT lsmb__grant_exec('batch_post', 'batch_post(int)');
