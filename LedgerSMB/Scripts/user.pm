@@ -29,6 +29,7 @@ use LedgerSMB::DBObject::User;
 use LedgerSMB::App_State;
 our $VERSION = 1.0;
 use strict;
+use Data::Dumper;
 
 my $slash = "::";
 
@@ -41,7 +42,10 @@ Displays the preferences screen.  No inputs needed.
 sub preference_screen {
     my ($request) = @_;
     my $user = LedgerSMB::DBObject::User->new({base => $request});
+    $user->get($user->{_user}->{id});
     $user->get_option_data;
+
+    print STDERR Dumper($user);
 
     my $template = LedgerSMB::Template->new(
             user     => $user->{_user}, 
