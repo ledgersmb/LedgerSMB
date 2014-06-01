@@ -318,10 +318,10 @@ identified by $meta_number
 
 sub get_by_meta_number {
     my ($self, $meta_number, $entity_class) = @_;
-    my ($ref) = __PACKAGE__->call_procedure(procname => 'eca__get_by_met_number',
+    my ($ref) = __PACKAGE__->call_procedure(procname => 'eca__get_by_meta_number',
                                           args => [$meta_number, 
                                                    $entity_class]);
-    $ref->{tax_ids} = __PACKAGE__->_set_tax_ids($ref->{id});
+    $ref->{tax_ids} = __PACKAGE__->_get_tax_ids($ref->{id});
     return __PACKAGE__->new(%$ref);
 }
 
