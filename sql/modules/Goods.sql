@@ -1,5 +1,12 @@
 BEGIN;
 
+CREATE OR REPLACE FUNCTION part__get_by_id(in_id int) returns parts
+language sql as
+$$
+select * from parts where id = $1;
+$$;
+
+
 CREATE OR REPLACE FUNCTION assembly__stock(in_parts_id int, in_qty numeric)
 RETURNS numeric LANGUAGE SQL AS $$
     INSERT INTO mfg_lot(parts_id, qty) VALUES ($1, $2);
