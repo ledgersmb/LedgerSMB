@@ -17,6 +17,7 @@ use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Report::Aging;
+use LedgerSMB::Scripts::reports;
 use strict;
 
 =pod
@@ -98,6 +99,7 @@ sub generate_statement {
         );
         $request->{entity_id} = $entity_id;
         my $aging_report = LedgerSMB::Report::Aging->new(%$request);
+        $aging_report->run_report;
         my $statement = {
               aging => $aging_report,
              entity => $company,
@@ -109,24 +111,23 @@ sub generate_statement {
     }
     $request->{report_type} = $rtype;
     $request->{meta_number} = $old_meta;
-
+    my $path = LedgerSMB::Setting->get('templates');
     my $template = LedgerSMB::Template->new(
         locale => $LedgerSMB::App_Date::Locale,
+        path => "templates/$path",
         template => $request->{print_template},
         #language => $language->{language_code}, #TODO
         format => uc $request->{print_format},
         method => $request->{print_to},
+        no_auto_output => 1,
     );
-    use Data::Dumper;
-    $request->error(Dumper(@statements));
-
     if ($request->{print_to} eq 'email'){ 
        #TODO -- mailer stuff
     } elsif ($request->{print_to} eq 'screen'){
         $template->render({statements => \@statements});
+        $template->output;
     } else {
         $template->render({statements => \@statements});
-        use LedgerSMB::Scripts::reports;
         $request->{module_name}='gl';
         $request->{report_type}='aging';
         LedgerSMB::Scripts::reports::start_report($request);
