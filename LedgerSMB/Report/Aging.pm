@@ -239,7 +239,15 @@ has 'date_ref' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =cut
 
-has 'entity_class' => (is => 'rw', isa => 'Maybe[Int]');
+has 'entity_class' => (is => 'ro', isa => 'Maybe[Int]');
+
+=item entity_id
+
+Customer/Vendor entity id
+
+=cut
+
+has entity_id => (is => 'ro', isa => 'Maybe[Int]');
 
 =back
 
