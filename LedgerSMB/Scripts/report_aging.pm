@@ -83,29 +83,28 @@ sub generate_statement {
         my $rc = $request->{rowcount};
         --$request->{rowcount};
         next unless $request->{"select_$rc"};
-        my ($entity_id, $meta_number) = split /:/, $request->{"select_$rc"};
-        my $company = LedgerSMB::Entity::Company->get($entity_id);
+        my ($meta_number, $entity_id) = split /:/, $request->{"select_$rc"};
+        my $company = LedgerSMB::Entity::get($entity_id);
         my $credit_act = 
               LedgerSMB::Entity::Credit_Account->get_by_meta_number(
                  $meta_number, $request->{entity_class}
         );
-        my @loc = LedgerSMB::Entity::Location->get_active(
+        my ($location) = LedgerSMB::Entity::Location->get_active(
              $request, {entity_id => $entity_id, 
                         credit_id => $credit_act->{id},
                        only_class => 1}
         );
-        my $location = pop @loc;
         my @contact_info = LedgerSMB::Entity::Contact->list(
                  {entity_id => $entity_id, credit_id => $credit_act->{id} }
         );
-        $request->{meta_number} = $meta_number;
+        $request->{entity_id} = $entity_id;
         my $aging_report = LedgerSMB::Report::Aging->new(%$request);
         $aging_report->run_report;
         my $statement = {
               aging => $aging_report,
              entity => $company,
             address => $location,
-           contacts => @contact_info
+           contacts => \@contact_info
         };
         push @statements, $statement;
         last if $request->{print_to} eq 'email';
