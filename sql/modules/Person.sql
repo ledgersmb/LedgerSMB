@@ -132,7 +132,7 @@ BEGIN
 			l.state, l.mail_code, c.id, c.name, lc.id, lc.class
 		FROM location l
 		JOIN entity_to_location ctl ON (ctl.location_id = l.id)
-		JOIN person p ON (ctl.person_id = p.entity_id)
+		JOIN person p ON (ctl.entity_id = p.entity_id)
 		JOIN location_class lc ON (ctl.location_class = lc.id)
 		JOIN country c ON (c.id = l.country_id)
 		WHERE p.entity_id = in_entity_id
@@ -155,7 +155,7 @@ BEGIN
 		SELECT cc.class, cc.id, c.description, c.contact
 		FROM entity_to_contact c
 		JOIN contact_class cc ON (c.contact_class_id = cc.id)
-		JOIN person p ON (c.person_id = p.entity_id)
+		JOIN person p ON (c.entity_id = p.entity_id)
 		WHERE p.entity_id = in_entity_id
 	LOOP
 		RETURN NEXT out_row;
@@ -173,7 +173,7 @@ returns bool as $$
 BEGIN
 
 DELETE FROM entity_to_contact
- WHERE person_id = (SELECT entity_id FROM person WHERE id = in_person_id) 
+ WHERE entity_id = (SELECT entity_id FROM person WHERE id = in_person_id) 
        and contact_class_id = in_contact_class_id
        and contact= in_contact;
 RETURN FOUND;
@@ -274,7 +274,7 @@ $$
 BEGIN
 
 DELETE FROM entity_to_location
- WHERE person_id = (select entity_id from person where id = in_person_id) 
+ WHERE entity_id = (select entity_id from person where id = in_person_id) 
        AND location_id = in_location_id 
        AND location_class = in_location_class;
 

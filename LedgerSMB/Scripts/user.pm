@@ -41,7 +41,7 @@ Displays the preferences screen.  No inputs needed.
 sub preference_screen {
     my ($request) = @_;
     my $user = LedgerSMB::DBObject::User->new({base => $request});
-    $user->get;
+    $user->get($user->{_user}->{id});
     $user->get_option_data;
 
     my $template = LedgerSMB::Template->new(
