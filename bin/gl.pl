@@ -270,13 +270,13 @@ sub display_form
 		    { ndx => 1, key => 'U', value => $locale->text('Update') },
 		  'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
                   'edit_and_save' => {ndx => 4, key => 'V', 
-                          value => $locale->text('Edit and Save') },
+                          value => $locale->text('Save') },
                   'save_temp' =>
                     { ndx   => 9, 
                       key   => 'T', 
                       value => $locale->text('Save Template') },
-		  'post_as_new' =>
-		    { ndx => 6, key => 'N', value => $locale->text('Post as new') },
+		  'save_as_new' =>
+		    { ndx => 6, key => 'N', value => $locale->text('Save as new') },
 		  'schedule' =>
 		    { ndx => 7, key => 'H', value => $locale->text('Schedule') },
                   'new' => 
@@ -293,7 +293,7 @@ sub display_form
 	      if ( $form->{id}) {
                   $a{'new'} = 1;
 
-		  for ( 'post_as_new', 'schedule' ) { $a{$_} = 1 }
+		  for ( 'save_as_new', 'schedule' ) { $a{$_} = 1 }
 
 		  for ( 'post', 'delete' ) { $a{$_} = 1 }
 	      }
@@ -318,7 +318,6 @@ sub display_form
 			key   => 'O', 
 			value => $locale->text('Save as Shown') };
 		}
-		delete $button{post_as_new};
 		delete $button{post};
 	      }
 
@@ -741,3 +740,8 @@ sub check_balanced {
     }
 }
 
+sub save_as_new {
+    for (qw(id printed emailed queued)) { delete $form->{$_} }
+    $form->{approved} = 0;
+    &post;
+}
