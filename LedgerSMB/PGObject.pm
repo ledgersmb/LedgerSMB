@@ -26,9 +26,11 @@ LICENSE.TXT for more information.
 =cut
 
 package LedgerSMB::PGObject;
-use base 'PGObject::Simple';
+use Moose::Role;
+with 'PGObject::Simple::Role';
+
 use LedgerSMB::App_State;
 
-sub _get_dbh { LedgerSMB::App_State::DBH() }
+
 
 1;
