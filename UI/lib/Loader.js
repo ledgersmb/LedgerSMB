@@ -17,6 +17,7 @@
 define([
      // base
     'dojo/_base/declare',
+    'dojo/date/locale',
     'dijit/registry',
     'dojo/parser',
     'dojo/query',
@@ -76,11 +77,14 @@ function(
                                                 {
                                                    style['width'] = 
                                                           (input.size * 0.7) 
-                                                           + 'em';
+
+                                                        + 'em';
                                                    }
                                                 var val = input.value;
                                                 if (val == ''){
                                                      val = undefined;
+                                                } else {
+                                                    val = dojo.date.locale.parse( val, { datePattern: lsmbConfig.dateformat.replace(/mm/,'MM'), selector: "date" });
                                                 }
                                                 return new datebox({
                                                     "label": input.title,
