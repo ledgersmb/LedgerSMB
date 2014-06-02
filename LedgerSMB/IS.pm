@@ -1213,7 +1213,6 @@ sub post_invoice {
 
                 }
             }
-
             # save detail record in invoice table
             $query = qq|
 				INSERT INTO invoice (description)
@@ -1353,8 +1352,11 @@ sub post_invoice {
     foreach $ref ( sort { $b->{amount} <=> $a->{amount} }
         @{ $form->{acc_trans}{lineitems} } )
     {
+        $diff ||= 0;
+        $ref->{fxdiff} ||= 0;
 
         $amount = $ref->{amount} + $diff; # Subtracting included taxes
+        
         $query  = qq|
 			INSERT INTO acc_trans 
 			            (trans_id, chart_id, amount,
@@ -1714,13 +1716,11 @@ sub process_assembly {
                 $project_id );
             next;
         }
-        else {
-            if ( $ref->{inventory_accno_id} ) {
-                $allocated =
-                  &cogs( $dbh, $form, $ref->{parts_id}, $ref->{qty},
-                    $project_id );
-            }
-        }
+        next unless $ref->{inventory_accno_id};
+
+        $allocated =
+              &cogs( $dbh, $form, $ref->{parts_id}, $ref->{qty},
+                $project_id );
 
         $query = qq|
 			INSERT INTO invoice 
@@ -1731,13 +1731,10 @@ sub process_assembly {
 
         my $sth = $dbh->prepare($query);
         $sth->execute( $form->{id}, $ref->{description}, $ref->{parts_id},
-            $ref->{qty}, $allocated, $ref->{unit} )
-          || $form->dberror($query);
-
+                $ref->{qty}, $allocated, $ref->{unit} )
+              || $form->dberror($query);
+        $sth->finish;
     }
-
-    $sth->finish;
-
 }
 
 sub cogs {
@@ -1746,7 +1743,7 @@ sub cogs {
     my $dbh   = $form->{dbh};
 
     # Parts info
-    my $part_sth = $dbh->prepare('SELECT * FROM parts WHERE id = ?');
+    my $part_sth = $dbh->prepare('SELECT * FROM parts__get_by_id(?)');
     $part_sth->execute($id);
     my ($part_ref) = $part_sth->fetchrow_hashref('NAME_lc');
 
@@ -1757,10 +1754,12 @@ sub cogs {
         # Getting cogs
         my $cogs_sth = $dbh->prepare('SELECT * FROM cogs__add_for_ar(?, ?)');
         $cogs_sth->execute($id, $totalqty);
-        my ($cogs) = $cogs_sth->fetchrow_array();
+        my ($cogs_ref) = $cogs_sth->fetchrow_array();
+        my $cogs = pop @$cogs_ref;
+
         push @{ $form->{acc_trans}{lineitems} },
               {
-                chart_id   => $parts_ref->{expense_accno_id},
+                chart_id   => $part_ref->{expense_accno_id},
                 amount     => $cogs * -1,
                 project_id => $project_id,
                 invoice_id => $inv_id
@@ -1768,22 +1767,22 @@ sub cogs {
 
         push @{ $form->{acc_trans}{lineitems} },
               {
-                chart_id   => $parts_ref->{inventory_accno_id},
+                chart_id   => $part_ref->{inventory_accno_id},
                 amount     => $cogs,
                 project_id => $project_id,
                 invoice_id => $inv_id
               } if $cogs;
-
     } else {
         # Getting cogs
         my $cogs_sth = $dbh->prepare('SELECT * FROM cogs__reverse_ar(?, ?)');
         $cogs_sth->execute($id, $totalqty);
-        my ($cogs) = $cogs_sth->fetchrow_array();
+        my ($cogs_ref) = $cogs_sth->fetchrow_array();
+        my $cogs = pop @$cogs_ref;
 
         push @{ $form->{acc_trans}{lineitems} },
                   {
                     chart_id   => $parts_ref->{expense_accno_id},
-                    amount     => $linetotal,
+                    amount     => $cogs,
                     project_id => $project_id,
                     invoice_id => $inv_id
                   };
@@ -1791,7 +1790,7 @@ sub cogs {
         push @{ $form->{acc_trans}{lineitems} },
                   {
                     chart_id   => $parts_ref->{inventory_accno_id},
-                    amount     => -$linetotal,
+                    amount     => -$cogs,
                     project_id => $project_id,
                     invoice_id => $inv_id
                   };
