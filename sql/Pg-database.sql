@@ -1204,7 +1204,7 @@ CREATE TABLE invoice (
   parts_id int REFERENCES parts(id),
   description text,
   qty NUMERIC,
-  allocated integer,
+  allocated NUMERIC,
   sellprice NUMERIC,
   precision int,
   fxsellprice NUMERIC,
