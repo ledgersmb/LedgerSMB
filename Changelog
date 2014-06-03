@@ -12,6 +12,9 @@ Changelog for 1.3.40
 * Fixed #1139 (Vendor can show up as default customer in sales order, confusing...) (Pongracz I)
 * Fixed type mismatch between invoice.qty and invoice.allocated (Chris T)
 
+Chris T is Chris Travers
+Pongracz I is Pongracz Istvan
+
 Changelog for 1.3.39
 * Fixed Internal Server Error clicking through ar/ap report (Chris T, 1022)
 * Fixed internal server error deleting part (Chris T, 1027)
