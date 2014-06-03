@@ -92,10 +92,10 @@ sub columns {
         pwidth => 1,
           name => LedgerSMB::Report::text('Invoice Date'), },
 
-      { col_id => 'partsnumber',
+      { col_id => 'partnumber',
           type => 'href',
         pwidth => 1,
-          name => LedgerSMB::Report::text('Invoice Date'), 
+          name => LedgerSMB::Report::text('Part Number'), 
      href_base => 'ic.pl?action=edit&id=', },
 
       { col_id => 'description',
