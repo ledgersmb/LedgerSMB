@@ -26,19 +26,20 @@ in_parts_description text)
 RETURNS SETOF incoming_lot_cogs_line 
 LANGUAGE SQL AS
 $$
-SELECT i.id, a.id, a.invnumber, a.transdate, i.parts_id. p.partnumber, 
-       i.description, i.qty, i.allocated * -1, p.onhand, i.qty,
-       i.sellprice, i.qty * i.sellprice, i.allocated * i.sellprice * -1
+SELECT i.id, a.id, a.invnumber, a.transdate, i.parts_id, p.partnumber, 
+       i.description, i.qty * -1, i.allocated, p.onhand, 
+       i.sellprice, i.qty * i.sellprice * -1, i.allocated * i.sellprice
   FROM ap a
   JOIN invoice i ON a.id = i.trans_id
   JOIN parts p ON i.parts_id = p.id
- WHERE p.income_account_id IS NOT NULL AND p.expense_account_id IS NOT NULL
+ WHERE p.income_accno_id IS NOT NULL AND p.expense_accno_id IS NOT NULL
        AND (a.transdate >= $1 OR $1 IS NULL) 
        AND (a.transdate <= $2 OR $2 IS NULL) 
        AND (p.partnumber like $3 || '%' OR $3 IS NULL)
        AND (p.description @@ plainto_tsquery($4) 
             OR p.description LIKE '%' || $4 || '%'
-            OR $4 IS NULL);
+            OR $4 IS NULL)
+ ORDER BY p.partnumber, a.invnumber;
 $$;
 
 DROP TYPE IF EXISTS report_aging_item CASCADE;
