@@ -40,7 +40,7 @@ define([
     ],
 function(
     // base
-    declare, registry, parser, query, ready, wbase, construct,
+    declare, date_locale, registry, parser, query, ready, wbase, construct,
     // widgets
     tabular, textarea, datebox, checkbox, radio, textbox, 
     select, button, on) {
