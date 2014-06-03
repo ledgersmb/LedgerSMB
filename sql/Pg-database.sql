@@ -2927,6 +2927,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 18	Reverse Overpay	200	3
 26	Reverse AR Overpay	200	6
 59	Inventory	205	4
+75	Inventory and COGS	109	5
 \.
 
 
@@ -3581,8 +3582,10 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 59	action	start_report	217
 59	report_name	inventory_adj	218
 106	module	reports.pl	263
+75	module	reports.pl	219
+75	action	start_report	226
+75	report_name	cogs_lines	227
 \.
-
 
 --
 
