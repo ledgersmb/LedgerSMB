@@ -17,6 +17,7 @@
 define([
      // base
     'dojo/_base/declare',
+    'dojo/date/locale',
     'dijit/registry',
     'dojo/parser',
     'dojo/query',
@@ -39,7 +40,7 @@ define([
     ],
 function(
     // base
-    declare, registry, parser, query, ready, wbase, construct,
+    declare, date_locale, registry, parser, query, ready, wbase, construct,
     // widgets
     tabular, textarea, datebox, checkbox, radio, textbox, 
     select, button, on) {
@@ -76,11 +77,14 @@ function(
                                                 {
                                                    style['width'] = 
                                                           (input.size * 0.7) 
-                                                           + 'em';
+
+                                                        + 'em';
                                                    }
                                                 var val = input.value;
                                                 if (val == ''){
                                                      val = undefined;
+                                                } else {
+                                                    val = dojo.date.locale.parse( val, { datePattern: lsmbConfig.dateformat.replace(/mm/,'MM'), selector: "date" });
                                                 }
                                                 return new datebox({
                                                     "label": input.title,
