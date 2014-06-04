@@ -1,0 +1,50 @@
+\documentclass{article}
+\usepackage{longtable}
+\title{<?lsmb text('Balance Sheet') ?>}
+\begin{document}
+\maketitle
+
+\begin{longtable}{@{\extracolsep{\fill}}lllr<?lsmb- FOREACH c IN comparisons;
+'r'; END -?>}
+\multicolumn{3}{l}{<?lsmb text('Assets') ?>} & <?lsmb report.to_date ?>
+<?lsmb- FOREACH c IN comparisons; " & "; c.to_date; END; ?>\\
+<?lsmb- FOREACH line IN report.balance_sheet.A.lines; line.account_number ?> &
+--- &
+<?lsmb line.account_desc ?> &
+<?lsmb line.balance ?>  
+<?lsmb FOREACH c IN comparisons; ' & '; c.index.${line.account_number}; END ?>
+\\
+<?lsmb END ?>\multicolumn{3}{l}{<?lsmb text('Total Assets') ?>} & 
+<?lsmb report.balance_sheet.A.total ?>
+<?lsmb FOREACH c IN comparisons; ' & '; c.totals.A; END ?>\medskip\\
+\multicolumn{3}{l}{<?lsmb text('Liabilities') ?>} &
+<?lsmb- FOREACH c IN comparisons; " & " END; ?>\\
+<?lsmb- FOREACH line IN report.balance_sheet.L.lines; line.account_number ?> &
+--- &
+<?lsmb line.account_desc ?> &
+<?lsmb line.balance ?>  
+<?lsmb FOREACH c IN comparisons; ' & '; c.index.${line.account_number}; END ?>
+\\
+<?lsmb END -?>
+<?lsmb END ?>\multicolumn{3}{l}{<?lsmb text('Total Liabilities') ?>} & 
+<?lsmb report.balance_sheet.L.total ?>
+<?lsmb FOREACH c IN comparisons; ' & '; c.totals.L; END ?>\medskip\\
+\multicolumn{3}{l}{<?lsmb text('Equities') ?>} & 
+<?lsmb- FOREACH c IN comparisons; " & "; END; ?>\\
+<?lsmb- FOREACH line IN report.balance_sheet.Q.lines; line.account_number ?> &
+--- &
+<?lsmb line.account_desc ?> &
+<?lsmb line.balance ?>  
+<?lsmb FOREACH c IN comparisons; ' & '; c.index.${line.account_number}; END ?>
+\\
+<?lsmb END ?>\multicolumn{3}{l}{<?lsmb text('Total Equities') ?>} & 
+<?lsmb report.balance_sheet.Q.total ?>
+<?lsmb FOREACH c IN comparisons; ' & '; c.totals.Q; END ?>\medskip\\
+\multicolumn{3}{l}{<?lsmb text('Total Liabilities and Equities') ?>} &
+<?lsmb report.balance_sheet.LQ.total ?>
+<?lsmb FOREACH c IN comparisons; ' & '; c.totals.LQ; END ?>\medskip\\
+<?lsmb END -?>
+
+\end{longtable}
+
+\end{document}
