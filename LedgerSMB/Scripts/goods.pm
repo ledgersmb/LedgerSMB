@@ -6,6 +6,7 @@ LedgerSMB::Scripts::goods - Goods and Services workflows for LedgerSMB
 
 package LedgerSMB::Scripts::goods;
 use LedgerSMB::Report::Inventory::Search;
+use LedgerSMB::Report::Invoices::COGS;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Inventory::Partsgroups;
 use LedgerSMB::Report::Inventory::Pricegroups;
@@ -79,6 +80,17 @@ sub inventory_activity {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Inventory::Activity->new(%$request);
     $report->render($request);
+}
+
+=item cogs_lines
+
+Runs the cogs lines report.
+
+=cut
+
+sub cogs_lines {
+    my ($request) = shift;
+    LedgerSMB::Report::Invoices::COGS->new(%$request)->render($request);
 }
 
 =back

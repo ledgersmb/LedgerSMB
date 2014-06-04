@@ -689,6 +689,7 @@ SELECT lsmb__grant_perms('inventory_reports', obj, 'SELECT')
   FROM unnest(array['ar'::text, 'ap', 'inventory', 'invoice', 'acc_trans']) obj;
 
 SELECT lsmb__grant_menu('inventory_reports', 114, 'allow');
+SELECT lsmb__grant_menu('inventory_reports', 75, 'allow');
 
 SELECT lsmb__create_role('inventory_adjust');
 SELECT lsmb__grant_perms('inventory_adjust', obj, 'SELECT')
@@ -862,7 +863,7 @@ SELECT lsmb__grant_role('orders_manage', rname)
 SELECT lsmb__create_role('financial_reports');
 SELECT lsmb__grant_role('financial_reports', 'gl_reports');
 SELECT lsmb__grant_menu('financial_reports', node_id, 'allow')
-  FROM unnest(array[110,111,112,113,114]) node_id;
+  FROM unnest(array[75,110,111,112,113,114]) node_id;
 
 SELECT lsmb__grant_perms('financial_reports', obj, 'SELECT')
   FROM unnest(array['yearend'::text, 'cash_impact', 'tx_report']) obj;
