@@ -725,8 +725,14 @@ SELECT lsmb__grant_perms('pricegroup_edit', 'entity_credit_account', 'UPDATE');
 SELECT lsmb__create_role('assembly_stock');
 SELECT lsmb__grant_perms('assembly_stock', 'parts', 'UPDATE');
 
-SELECT lsmb__grant_perms('assembly_stock', t_name, 'INSERT')
-  FROM unnest(ARRAY['mfg_lot'::text, 'mfg_lot_item']) t_name;
+SELECT lsmb__grant_perms('assembly_stock', t_name, perm)
+  FROM unnest(ARRAY['mfg_lot'::text, 'mfg_lot_item']) t_name
+ CROSS JOIN
+       unnest(ARRAY['SELECT'::text, 'INSERT', 'UPDATE']) perm;
+
+SELECT lsmb__grant_perms('assembly_stock', t_name, 'UPDATE')
+  FROM unnest(ARRAY['mfg_lot_id_seq'::text, 'mfg_lot_item_id_seq', 
+                    'lot_tracking_number']) t_name;
 
 SELECT lsmb__grant_menu('assembly_stock', 84, 'allow');
 
