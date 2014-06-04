@@ -1,16 +1,16 @@
 <?lsmb INCLUDE 'ui-header.html' stylesheet=request.stylesheet 
          include_stylesheet = ['UI/Reports/pnl.css']; 
  comparisons = report.comparisons ?>
-<body class="financial-statement" id="balance-sheet">
+<body class="financial-statement <?lsmb dojo_theme ?>">
 <h1><?lsmb text('Balance Sheet') ?></h1>
 <?lsmb # TODO:  header hierarchy handling ?>
 <table>
 <tr class="report-head">
-<th colspan="2"><?lsmb text('Through date:') _ ' ' _ report.to_date ?></th>
+<td colspan="2"><h2><?lsmb text('Through date:') _ ' ' _ report.to_date ?></h2></td>
 <?lsmb FOREACH c IN comparisons ?>
-<th><?lsmb c.to_date ?></th>
+<td><?lsmb c.to_date ?></td>
 <?lsmb END; ?>
-<tr class="section-head">
+<tr class="sectionhead">
    <th colspan="2"><?lsmb text('Assets') ?></th>
 </tr>
 <?lsmb FOREACH line IN report.balance_sheet.A.lines ?> 
@@ -29,7 +29,7 @@
     <td class="amount"><?lsmb c.totals.A ?></td>
     <?lsmb END; ?>
 </tr>
-<tr class="section-head">
+<tr class="sectionhead">
    <th colspan="2"><?lsmb text('Liabilities') ?></th>
 </tr>
 <?lsmb FOREACH line IN report.balance_sheet.L.lines ?> 
@@ -48,7 +48,7 @@
     <td class="amount"><?lsmb c.totals.L ?></td>
     <?lsmb END ?>
 </tr>
-<tr class="section-head">
+<tr class="sectionhead">
    <th colspan="2"><?lsmb text('Equity') ?></th>
 </tr>
 <?lsmb FOREACH line IN report.balance_sheet.Q.lines ?> 
