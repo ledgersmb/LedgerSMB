@@ -1,7 +1,12 @@
 <?lsmb INCLUDE 'ui-header.html' include_stylesheet = ['UI/Reports/pnl.css'];
-account_data = report.account_data ?>
+account_data = report.account_data;
+FORMATS = LIST_FORMATS();
+
+LINK = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME 
+           _ '?' _ ENVARS.QUERY_STRING _ '&company=' _ DBNAME;
+?>
 <?lsmb COLS = comparison.length + 2 ?>
-<body class="<?lsmb dojo_theme ?>">
+<body class="financial-statement <?lsmb dojo_theme ?>">
 <h1><?lsmb name ?></h1>
 <h2><?lsmb text('Accounting period: [_1] to [_2]', report.from_date, report.to_date); ?></h2>
 <?lsmb 
@@ -112,6 +117,9 @@ END ?>
             <?lsmb COMP.account_data.totals.main.total ?></td>
     <?lsmb END ?>
    </tr>
+<?lsmb IF FORMATS.grep('PDF').size() ?>
+<tr><td><a href="<?lsmb LINK ?>&format=PDF">[<?lsmb text('PDF') ?>]</a></td>
+<?lsmb END ?>
 </tbody>
 </table>
 </body>

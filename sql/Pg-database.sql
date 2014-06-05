@@ -1553,7 +1553,7 @@ CREATE TABLE invoice (
   parts_id int REFERENCES parts(id),
   description text,
   qty NUMERIC,
-  allocated integer,
+  allocated NUMERIC,
   sellprice NUMERIC,
   precision int,
   fxsellprice NUMERIC,
@@ -2888,7 +2888,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 194	Credit Note	1	5
 195	Credit Invoice	1	6
 245	Import	73	2
-76	Reports	73	4
+76	Search and GL	73	4
 139	Add GIFI	136	4
 140	List GIFI	136	5
 247	Import GIFI	136	6
@@ -2927,6 +2927,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 18	Reverse Overpay	200	3
 26	Reverse AR Overpay	200	6
 59	Inventory	205	4
+75	Inventory and COGS	109	5
 \.
 
 
@@ -3581,8 +3582,10 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 59	action	start_report	217
 59	report_name	inventory_adj	218
 106	module	reports.pl	263
+75	module	reports.pl	219
+75	action	start_report	226
+75	report_name	cogs_lines	227
 \.
-
 
 --
 
