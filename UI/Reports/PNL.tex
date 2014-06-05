@@ -1,7 +1,7 @@
 <?lsmb FILTER latex ?>
 \documentclass{article}
 \usepackage{longtable}
-\title{<?lsmb text('Balance Sheet') ?>}
+\title{<?lsmb text('Income Statement') ?>}
 \begin{document}
 \maketitle
 
@@ -9,6 +9,7 @@
 <?lsmb text('Accounting period: [_1] to [_2]', report.from_date, report.to_date); ?>
 <?lsmb-
 comparisons = report.comparisons;
+account_data = report.account_data;
 IF comparisons;
     FOREACH COMP IN comparisons ?>
 
