@@ -305,10 +305,19 @@ SELECT lsmb__grant_perms('contact_edit', 'eca_to_contact', 'ALL');
 SELECT lsmb__grant_perms('contact_edit', 'eca_to_location', 'ALL');
 SELECT lsmb__grant_perms('contact_edit', 'eca_tax', 'ALL');
 
+SELECT lsmb__create_role('contact_delete');
+SELECT lsmb__grant_perms('contact_delete', obj, 'DELETE')
+  FROM unnest(ARRAY['entity'::text, 'company', 'person', 'location', 
+                    'entity_credit_account', 'eca_tax', 'entity_note', 
+                    'eca_note', 'entity_to_location', 'eca_to_location',
+                    'eca_to_contact', 'entity_to_contact', 'entity_other_name',
+                    'entity_bank_account', 'person_to_company']) obj;
+
 SELECT lsmb__create_role('contact_all_rights');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_create');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_edit');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_read');
+SELECT lsmb__grant_role('contact_all_rights', 'contact_delete');
 
 \echo Batches and Vouchers
 SELECT lsmb__create_role('batch_create');
@@ -427,6 +436,16 @@ SELECT lsmb__create_role('sales_order_edit');
 SELECT lsmb__grant_perms('sales_order_edit', 'orderitems', 'DELETE');
 SELECT lsmb__grant_perms('sales_order_edit', 'business_unit_oitem', 'DELETE');
 SELECT lsmb__grant_perms('sales_order_edit', 'new_shipto', 'DELETE');
+
+SELECT lsmb__create_role(dt || '_delete') 
+  FROM unnest(array['sales_order'::text, 'sales_quotation', 'purchase_order', 
+              'rfq']) dt;
+SELECT lsmb__grant_perms(dt || '_delete', obj, 'DELETE')
+  FROM unnest(ARRAY['oe'::TEXT, 'orderitems', 'business_unit_oitem', 
+                    'new_shipto']) obj
+ CROSS 
+  JOIN unnest(array['sales_order'::text, 'sales_quotation', 'purchase_order',
+              'rfq']) dt;
 
 SELECT lsmb__create_role('sales_quotation_create');
 SELECT lsmb__grant_role('sales_quotation_create', 'contact_read');
@@ -684,6 +703,10 @@ SELECT lsmb__grant_perms('part_edit', obj, 'SELECT')
   FROM unnest(array['assembly'::text, 'orderitems', 'jcitems', 'invoice', 
                     'business_unit_oitem']) obj;
 
+SELECT lsmb__create_role('part_delete');
+SELECT lsmb__grant_perms('part_delete', obj, 'DELETE')
+  FROM unnest(array['parts'::text, 'partsgroup', 'assembly']) obj;
+
 SELECT lsmb__create_role('inventory_reports');
 SELECT lsmb__grant_perms('inventory_reports', obj, 'SELECT')
   FROM unnest(array['ar'::text, 'ap', 'inventory', 'invoice', 'acc_trans']) obj;
@@ -917,8 +940,14 @@ SELECT lsmb__grant_menu('account_create', id, 'allow')
   FROM unnest(array[137,246]) id;
 
 SELECT lsmb__create_role('account_edit');
-SELECT lsmb__grant_perms('account_edit', obj, 'ALL')
+SELECT lsmb__grant_perms('account_edit', obj, perm)
   FROM unnest(array['account'::text, 'account_heading', 'account_link', 
+                    'cr_coa_to_account', 'tax']) obj
+ CROSS JOIN unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) perm;
+
+SELECT lsmb__create_role('account_delete');
+SELECT lsmb__grant_perms('account_delete', obj, 'DELETE')
+  FROM unnest(array['account'::text, 'account_heading', 'account_link',
                     'cr_coa_to_account', 'tax']) obj;
 
 SELECT lsmb__create_role('auditor');
