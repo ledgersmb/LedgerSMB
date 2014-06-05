@@ -1,5 +1,9 @@
 <?lsmb INCLUDE 'ui-header.html' stylesheet=request.stylesheet 
          include_stylesheet = ['UI/Reports/pnl.css']; 
+FORMATS = LIST_FORMATS();
+
+LINK = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME 
+           _ '?' _ ENVARS.QUERY_STRING _ '&company=' _ DBNAME;
  comparisons = report.comparisons ?>
 <body class="financial-statement <?lsmb dojo_theme ?>">
 <h1><?lsmb text('Balance Sheet') ?></h1>
@@ -87,6 +91,10 @@
 <tr><th><?lsmb text('Equity to Liabilities') ?></th>
     <td><?lsmb report.balance_sheet.ratios.QL ?></td>
 </tr>
+<?lsmb IF FORMATS.grep('PDF').size() ?>
+<tr><td><a href="<?lsmb LINK ?>&format=PDF">[<?lsmb text('PDF') ?>]</a></td>
+</tr>
+<?lsmb END ?>
 </table>
 </body>
 </html>
