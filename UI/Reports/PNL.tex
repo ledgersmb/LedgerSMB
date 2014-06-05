@@ -1,6 +1,7 @@
+<?lsmb FILTER latex ?>
 \documentclass{article}
 \usepackage{longtable}
-\title{<?lsmb text('Balance Sheet') ?>}
+\title{<?lsmb text('Income Statement') ?>}
 \begin{document}
 \maketitle
 
@@ -8,6 +9,7 @@
 <?lsmb text('Accounting period: [_1] to [_2]', report.from_date, report.to_date); ?>
 <?lsmb-
 comparisons = report.comparisons;
+account_data = report.account_data;
 IF comparisons;
     FOREACH COMP IN comparisons ?>
 
@@ -17,7 +19,7 @@ END ?>
 }
 
 \begin{longtable}{lllr<?lsmb FOREACH c IN comparisons; 'r'; END ?>}
-\multicolumn{3}{l}{\bf <?lsmb text('Income' ?>} &
+\multicolumn{3}{l}{\bf <?lsmb text('Income') ?>} &
 <?lsmb  FOREACH COMP IN comparisons; ' & '; END ?> \\
 <?lsmb FOREACH k IN account_data.I.keys.sort ?> 
 <?lsmb k ?> & 
@@ -25,7 +27,7 @@ END ?>
 <?lsmb account_data.I.${k}.main.account_description ?> &
 <?lsmb account_data.I.${k}.main.amount ?>
 <?lsmb FOREACH COMP IN comparisons; ' & '; 
-    COMP.account_data.I.${k}.info.amount 
+    COMP.account_data.I.${k}.info.amount;
 END; ?>\\
 <?lsmb- END ?>
 \multicolumn{3}{r}{<?lsmb text('Total Income') ?>} & 
@@ -34,7 +36,7 @@ END; ?>\\
     COMP.account_data.totals.main.I;
 END; ?>\\
  & & & <?lsmb FOREACH COMP IN comparisons; ' & '; END ?>\\
-\multicolumn{3}{l}{\bf <?lsmb text('Expense' ?>} & 
+\multicolumn{3}{l}{\bf <?lsmb text('Expense') ?>} & 
 <?lsmb  FOREACH COMP IN comparisons; ' & '; END ?> \\
 <?lsmb FOREACH k IN account_data.E.keys.sort ?> 
 <?lsmb k ?> & 
@@ -42,7 +44,7 @@ END; ?>\\
 <?lsmb account_data.E.${k}.main.account_description ?> &
 <?lsmb account_data.E.${k}.main.amount ?>
 <?lsmb FOREACH COMP IN comparisons; ' & '; 
-    COMP.account_data.E.${k}.info.amount 
+    COMP.account_data.E.${k}.info.amount;
 END; ?>\\
 <?lsmb- END ?>
 \multicolumn{3}{r}{<?lsmb text('Total Expense') ?>} & 
@@ -68,3 +70,4 @@ END; ?>\\
 END; ?>\\
 \end{longtable}
 \end{document}
+<?lsmb END ?>
