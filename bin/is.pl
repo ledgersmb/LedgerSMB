@@ -643,6 +643,7 @@ sub void {
     }
     if ($form->{manual_tax}){
         $form->{"mt_amount_$_"} *= -1 for keys %{$form->{taxes}};
+        $form->{"mt_basis_$_"} *= -1 for keys %{$form->{taxes}};
     }
     &post_as_new;
 }
