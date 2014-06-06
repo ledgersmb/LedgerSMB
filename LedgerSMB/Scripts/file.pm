@@ -97,9 +97,9 @@ sub attach_file {
     my ($request) = @_;
     my $file = $fileclassmap->{$request->{file_class}}->new(%$request);
     my @fnames =  $request->{_request}->upload_info;
-    $file->file_name($fnames[0]);
-    $file->merge($request);
+    $file->file_name($fnames[0]) if $fnames[0];
     if ($request->{url}){
+        $file->file_name($request->{url});
 	$file->mime_type_text('text/x-uri');
         $file->file_name($request->{url});
         $file->get_mime_type;
@@ -117,6 +117,7 @@ sub attach_file {
         my $fdata = join ("", <$fh>);
         $file->content($fdata);
     }
+    $file->merge($request);
     $request->{content} = $file->content;
     $file->attach;
     my $cgi = CGI::Simple->new;
