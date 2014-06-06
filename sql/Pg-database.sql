@@ -1027,7 +1027,7 @@ sinumber|1
 sonumber|1
 yearend|1
 businessnumber|1
-version|1.3.39
+version|1.3.40
 closedto|\N
 revtrans|1
 ponumber|1
@@ -1204,7 +1204,7 @@ CREATE TABLE invoice (
   parts_id int REFERENCES parts(id),
   description text,
   qty NUMERIC,
-  allocated integer,
+  allocated NUMERIC,
   sellprice NUMERIC,
   precision int,
   fxsellprice NUMERIC,

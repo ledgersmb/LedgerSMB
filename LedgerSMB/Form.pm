@@ -166,8 +166,8 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
-    $self->{version}   = "1.3.39";
-    $self->{dbversion} = "1.3.39";
+    $self->{version}   = "1.3.40";
+    $self->{dbversion} = "1.3.40";
 
     bless $self, $type;
 
@@ -2793,11 +2793,16 @@ sub lastname_used {
     $vc ||= $self->{vc};    # add default to correct for improper passing
     my $arap;
     my $where;
+    my $eclass;   # we have to use a criteria to find only vendors or customers
+                  # otherwise we can get vendor by default in sales order on creating a new sales order
+                  # it would be nice to test this function later in other --PI
     if ($vc eq 'customer') {
         $arap = 'ar';
+        $eclass = 2;
     } else {
         $arap = 'ap';
         $vc = 'vendor';
+        $eclass = 1;
     }
     my $sth;
 
@@ -2821,7 +2826,8 @@ sub lastname_used {
 			ct.curr AS currency
 		FROM entity_credit_account ct
 		JOIN entity ON (ct.entity_id = entity.id)
-		WHERE entity.id = (select entity_id from $arap 
+		WHERE entity.entity_class = $eclass AND 
+                      entity.id = (select entity_id from $arap 
 		                    where entity_id IS NOT NULL $where 
                                  order by id DESC limit 1)|;
 
