@@ -120,6 +120,12 @@ COMMENT ON FUNCTION eca__get_entity (
 $$ Returns a set of (only one) entity to which the entity credit account is
 attached.$$; 
 
+CREATE OR REPLACE FUNCTION entity__get_bank_account(in_id int)
+RETURNS entity_bank_account
+LANGUAGE SQL AS $$
+SELECT * FROM  entity_bank_account WHERE id = $1;
+$$;
+
 CREATE OR REPLACE FUNCTION entity__delete_bank_account
 (in_entity_id int, in_id int)
 RETURNS bool AS
