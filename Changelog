@@ -41,6 +41,7 @@ Installation/Upgrade
 * LaTeX format detection now run-time call, not configured (Chris T)
 * configure_apache.sh: Add search for apache user & config path
   Do not overwrite ledgersmb-httpd.conf without warning (Havard S)
+* Validation of database schema load processes in setup.pl (Erik H)
 
 Code/API improvements
 * scripts/* files moved to make inheritance possible (Chris T)
