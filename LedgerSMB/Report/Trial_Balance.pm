@@ -174,6 +174,18 @@ sub columns {
          name => LedgerSMB::Report::text('Ending Balance'),
         pwidth => 1} ,
 
+      {col_id => 'ending_balance_debit',
+         type => 'text',
+        money => 1,
+         name => LedgerSMB::Report::text('Debit Balance'),
+        pwidth => 1} ,
+        
+      {col_id => 'ending_balance_credit',
+         type => 'text',
+        money => 1,
+         name => LedgerSMB::Report::text('Credit Balance'),
+        pwidth => 1} ,
+
     ];
 }
 
