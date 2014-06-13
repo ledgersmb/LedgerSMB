@@ -1038,7 +1038,7 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON  FUNCTION entity__save_bank_account
-(in_entity_id int, in_credit_id int, in_bic text, in_iban text,
+(in_entity_id int, in_credit_id int, in_bic text, in_iban text, in_remark text,
 in_bank_account_id int) IS
 $$ Saves bank account to the credit account.$$;
 
