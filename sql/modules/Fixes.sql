@@ -7,11 +7,6 @@
 
 update defaults set value='yes' where setting_key='module_load_ok';
 
--- THIS MUST ALWAYS RUN FOR WEB SERVICES TO WORK. IT IS NOT A FIX
-
-update entity_credit_account set ar_ap_account_id = (select min(account_id) from account_link where description='AP' where ar_ap_account_id is null AND entity_class=1;
-update entity_credit_account set ar_ap_account_id = (select min(account_id) from account_link where description='AR' where ar_ap_account_id is null AND entity_class=2;
-
 -- Beta 4 fixes below
 
 BEGIN;
