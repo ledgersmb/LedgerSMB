@@ -96,3 +96,9 @@ COMMENT ON TABLE mfg_lot_item IS
 $$ This tracks items used in assembly restocking.$$;
 
 COMMIT;
+
+BEGIN;
+
+ALTER TABLE invoice ALTER COLUMN allocated TYPE NUMERIC;
+
+COMMIT;

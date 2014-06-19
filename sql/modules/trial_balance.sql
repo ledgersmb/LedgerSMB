@@ -18,7 +18,9 @@ create type tb_row AS (
    starting_balance numeric,
    debits numeric,
    credits numeric,
-   ending_balance numeric
+   ending_balance numeric,
+   ending_balance_debit numeric,
+   ending_balance_credit numeric
 );
 
 DROP FUNCTION IF EXISTS trial_balance__generate
@@ -142,7 +144,12 @@ BEGIN
               case when in_date_from is null then coalesce(cp.credits, 0) else 0 end, 
               COALESCE(t_balance_sign, 
                        CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END)
-              * (coalesce(cp.amount, 0) + sum(coalesce(ac.amount, 0)))
+              * (coalesce(cp.amount, 0) + sum(ac.amount)),
+              CASE WHEN sum(ac.amount) + coalesce(cp.amount, 0) < 0 
+                   THEN (sum(ac.amount) + coalesce(cp.amount, 0)) * -1 
+                   ELSE NULL END,
+              CASE WHEN sum(ac.amount) + coalesce(cp.amount, 0) > 0 
+                   THEN sum(ac.amount) + coalesce(cp.amount, 0) ELSE NULL END
          FROM account a
     LEFT JOIN ac ON ac.chart_id = a.id
     LEFT JOIN account_checkpoint cp ON cp.account_id = a.id

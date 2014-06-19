@@ -41,6 +41,7 @@ Installation/Upgrade
 * LaTeX format detection now run-time call, not configured (Chris T)
 * configure_apache.sh: Add search for apache user & config path
   Do not overwrite ledgersmb-httpd.conf without warning (Havard S)
+* Validation of database schema load processes in setup.pl (Erik H)
 
 Code/API improvements
 * scripts/* files moved to make inheritance possible (Chris T)
@@ -115,6 +116,8 @@ Changelog for 1.3.40
 * Fixed #1133 (FX rate changed after selecting part/service) (Pongracz I)
 * Fixed #1078 (Don't populate all empty projects automatically) (Pongracz I)
 * Fixed #1139 (Vendor can show up as default customer in sales order, confusing...) (Pongracz I)
+* Fixed type mismatch between invoice.qty and invoice.allocated (Chris T)
+* Fixed manual tax invoices not reversing properly (Chris T, 1134)
 
 Chris T is Chris Travers
 Pongracz I is Pongracz Istvan

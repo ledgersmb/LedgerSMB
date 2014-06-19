@@ -222,7 +222,7 @@ The id for the AR or AP account, use for payment reversals.  Required on save.
 
 =cut
 
-has 'ar_ap_account_id' => (is => 'rw', isa => 'Int', required => 1);
+has 'ar_ap_account_id' => (is => 'rw', isa => 'Int');
 
 =item cash_account_id
 
@@ -318,10 +318,10 @@ identified by $meta_number
 
 sub get_by_meta_number {
     my ($self, $meta_number, $entity_class) = @_;
-    my ($ref) = __PACKAGE__->call_procedure(procname => 'eca__get_by_met_number',
+    my ($ref) = __PACKAGE__->call_procedure(procname => 'eca__get_by_meta_number',
                                           args => [$meta_number, 
                                                    $entity_class]);
-    $ref->{tax_ids} = __PACKAGE__->_set_tax_ids($ref->{id});
+    $ref->{tax_ids} = __PACKAGE__->_get_tax_ids($ref->{id});
     return __PACKAGE__->new(%$ref);
 }
 
@@ -379,7 +379,7 @@ Saves the entity credit account.  This also sets db defaults if not set.
 
 sub save {
     my ($self) = @_;
-    warn $self->{entity_class};
+    die 'No AR/AP Account ID Set' unless $self->ar_ap_account_id;
     my ($ref) = $self->exec_method({funcname => 'eca__save'});
     $self->{id}=$ref->{eca__save};
     $self->exec_method(funcname => 'eca__set_taxes');

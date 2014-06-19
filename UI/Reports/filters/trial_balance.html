@@ -6,6 +6,10 @@ BALANCE_TYPES = [
    {text = text('Debit'), id = -1}
    {text = text('Credit'), id = 1}
    {text = text('Normal'), id = 0}
+];
+TRIAL_BALANCE_TYPES = [
+   {text = text('Full'), id = 'sql-ledger' },
+   {text = text('Ending'), id = 'balance' } 
 ] ?>
 
 <body class="<?lsmb dojo_theme ?>">
@@ -62,7 +66,13 @@ BALANCE_TYPES = [
                             options = BALANCE_TYPES 
                      default_values = ['0']
                           value_attr = 'id'
-                        } ?></td>
+                        } ?></td></tr>
+                <tr><th><?lsmb text('Report Type') ?></th>
+                    <td><?lsmb PROCESS select element_data = {
+                               name = 'tb_type'
+                            options = TRIAL_BALANCE_TYPES 
+                          value_attr = 'id'
+                        } ?></td></tr>
               </table>
             </td>
           </tr>

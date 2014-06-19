@@ -43,16 +43,8 @@ sub preference_screen {
     my $user = LedgerSMB::DBObject::User->new({base => $request});
     $user->get_option_data;
 
-    for my $format(@{$user->{dateformats}}){
-        $format->{id} = $format->{format};
-        $format->{id} =~ s/\//$slash/g;
-    }
-
-    $user->{dateformat} = $user->{_user}->{dateformat};
-    $user->{dateformat} =~ s/\//$slash/g;
-     
     my $template = LedgerSMB::Template->new(
-            user     => $user, 
+            user     => $user->{_user}, 
             locale   => $request->{_locale},
             path     => 'UI/users',
             template => 'preferences',
@@ -62,6 +54,7 @@ sub preference_screen {
     my $creds = LedgerSMB::Auth::get_credentials();
     $user->{login} = $creds->{login};
     $user->{password_expires} =~ s/:(\d|\.)*$//;
+    $user->{user} = $user->{_user};
     $template->render($user);
 }
 
