@@ -86,13 +86,16 @@ CREATE TABLE account (
   accno text primary key,
   description text,
   is_temp bool not null default false,
-  category CHAR(1) NOT NULL,
+  category CHAR(1) NOT NULL check (category IN ('A','L','Q','I','E')),
   gifi_accno text,
   heading int not null references account_heading(id),
   contra bool not null default false,
   tax bool not null default false,
   obsolete bool not null default false
 );
+
+COMMENT ON COLUMN account.category IS
+$$ A=asset,L=liability,Q=Equity,I=Income,E=expense $$;
 
 COMMENT ON COLUMN account.is_temp IS
 $$ Only affects equity accounts.  If set, close at end of year. $$;

@@ -1003,8 +1003,12 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION entity__list_bank_account(in_entity_id int) IS
 $$ Lists all bank accounts for the entity.$$;
 
-CREATE OR REPLACE FUNCTION entity__save_bank_account
+DROP FUNCTION IF EXISTS entity__save_bank_account
 (in_entity_id int, in_credit_id int, in_bic text, in_iban text,
+in_bank_account_id int);
+
+CREATE OR REPLACE FUNCTION entity__save_bank_account
+(in_entity_id int, in_credit_id int, in_bic text, in_iban text, in_remark text,
 in_bank_account_id int)
 RETURNS int AS
 $$
@@ -1012,14 +1016,15 @@ DECLARE out_id int;
 BEGIN
         UPDATE entity_bank_account
            SET bic = coalesce(in_bic,''),
-               iban = in_iban
+               iban = in_iban,
+               remark = in_remark
          WHERE id = in_bank_account_id;
 
         IF FOUND THEN
                 out_id = in_bank_account_id;
         ELSE
-	  	INSERT INTO entity_bank_account(entity_id, bic, iban)
-		VALUES(in_entity_id, in_bic, in_iban);
+	  	INSERT INTO entity_bank_account(entity_id, bic, iban, remark)
+		VALUES(in_entity_id, in_bic, in_iban, in_remark);
 	        SELECT CURRVAL('entity_bank_account_id_seq') INTO out_id ;
 	END IF;
 
@@ -1033,7 +1038,7 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON  FUNCTION entity__save_bank_account
-(in_entity_id int, in_credit_id int, in_bic text, in_iban text,
+(in_entity_id int, in_credit_id int, in_bic text, in_iban text, in_remark text,
 in_bank_account_id int) IS
 $$ Saves bank account to the credit account.$$;
 

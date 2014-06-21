@@ -121,8 +121,6 @@ setting things like the id field.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'entity__save_bank_account'});
-    $self->prepare_dbhash($ref);
-    $self = $self->new(%$ref);
 }
 
 =item delete
@@ -135,6 +133,19 @@ sub delete {
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'entity__delete_bank_account'});
     return $ref;
+}
+
+=over get($id)
+
+Returns the account with the id.
+
+=cut
+
+sub get {
+    my ($self, $id) = @_;
+    my ($ref) = __PACKAGE__->call_procedure (procname => 'entity__get_bank_account',
+               args => [$id]);
+    return __PACKAGE__->new(%$ref);
 }
 
 =back

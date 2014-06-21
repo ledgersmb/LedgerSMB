@@ -32,6 +32,13 @@ Runs the trial balance. All criteria are applicable except id and desc.
 
 sub run {
     my ($request) = @_;
+    my @sl_columns = qw(account_number account_desc starting_balance debits
+                        credits ending_balance);
+    my @balance_columns = qw(account_number account_desc ending_balance_debit
+                            ending_balance_credit);
+    my $cols = \@sl_columns;
+    $cols = \@balance_columns if $request->{tb_type} eq 'balance';
+    $request->{"col_$_"} = 1 for @$cols;
     LedgerSMB::Report::Trial_Balance->new(%$request)->render($request);
 }
 

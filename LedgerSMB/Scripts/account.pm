@@ -77,7 +77,7 @@ Request variables
 id: (optional):  If set, overwrite existing account.
 accno: the text used to specify the account number
 description:  Text to describe the account
-category: A = asset, L = liability, Q = Equity, I = Income, E = expense
+category: see COMMENT ON COLUMN account.category
 gifi_accno:  The GIFI account entry control code
 heading: (Optional) The integer representing the heading.id desired 
 contra:  If true, the account balances on the opposite side.
