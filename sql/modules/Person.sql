@@ -30,14 +30,15 @@ CREATE TYPE person_entity AS (
     country_name text,
     first_name text,
     middle_name text,
-    last_name text
+    last_name text,
+    entity_class int
 );
 
 CREATE FUNCTION person__get(in_entity_id int)
 RETURNS person_entity AS
 $$
 SELECT e.id, e.control_code, e.name, e.country_id, c.name, 
-       p.first_name, p.middle_name, p.last_name
+       p.first_name, p.middle_name, p.last_name, e.entity_class
   FROM entity e
   JOIN country c ON c.id = e.country_id
   JOIN person p ON p.entity_id = e.id
@@ -48,7 +49,7 @@ CREATE FUNCTION person__get_by_cc(in_control_code text)
 RETURNS person_entity AS
 $$
 SELECT e.id, e.control_code, e.name, e.country_id, c.name, 
-       p.first_name, p.middle_name, p.last_name
+       p.first_name, p.middle_name, p.last_name, e.entity_class
   FROM entity e
   JOIN country c ON c.id = e.country_id
   JOIN person p ON p.entity_id = e.id
