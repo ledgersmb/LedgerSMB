@@ -83,6 +83,9 @@ function(
                                                 var val = input.value;
                                                 if (val == ''){
                                                      val = undefined;
+                                                } else if (/\d\d\d\d-\d\d-\d\d/.test(val)) {
+                                                    // do nothing: the widget expects                                               
+                                                    // iso8601 formatted input
                                                 } else {
                                                     val = dojo.date.locale.parse( val, { datePattern: lsmbConfig.dateformat.replace(/mm/,'MM'), selector: "date" });
                                                 }
