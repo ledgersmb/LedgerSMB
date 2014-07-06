@@ -2601,15 +2601,21 @@ sub current_date {
     $days *= 1;
     if ($thisdate) {
 
-        my $dateformat = $myconfig->{dateformat};
+        my $dateformat;
 
-        if ( $myconfig->{dateformat} !~ /^y/ ) {
-            my @a = split /\D/, $thisdate;
-            $dateformat .= "yy" if ( length $a[2] > 2 );
-        }
+        if ($thisdate =~ /\d\d\d\d-\d\d-\d\d/) {
+            $dateformat = 'yyyy-mm-dd';
 
-        if ( $thisdate !~ /\D/ ) {
-            $dateformat = 'yyyymmdd';
+        } else {
+            $dateformat = $myconfig->{dateformat};
+            if ( $myconfig->{dateformat} !~ /^y/ ) {
+                my @a = split /\D/, $thisdate;
+                $dateformat .= "yy" if ( length $a[2] > 2 );
+            }
+
+            if ( $thisdate !~ /\D/ ) {
+                $dateformat = 'yyyymmdd';
+            }
         }
 
         $query = qq|SELECT (to_date(?, ?) 
