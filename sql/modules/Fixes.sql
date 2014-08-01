@@ -679,3 +679,9 @@ ALTER TABLE batch DROP CONSTRAINT "batch_locked_by_fkey";
 ALTER TABLE batch ADD FOREIGN KEY (locked_by) REFERENCES session(session_id)
 ON DELETE SET NULL;
 COMMIT;
+
+BEGIN;
+
+ALTER TABLE invoice ALTER COLUMN allocated TYPE NUMERIC;
+
+COMMIT;
