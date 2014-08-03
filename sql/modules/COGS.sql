@@ -79,7 +79,7 @@ FOR t_inv IN
       JOIN (select id, approved, transdate from ap
              union
             select id, approved, transdate from gl) a ON a.id = i.trans_id
-     WHERE qty + allocated < 0 AND i.parts_id = in_parts_id
+     WHERE qty + allocated < 0 AND i.parts_id = in_parts_id AND a.approved
   ORDER BY a.transdate asc, a.id asc, i.id asc
 LOOP
    t_avail := (t_inv.qty + t_inv.allocated) * -1;
@@ -127,7 +127,10 @@ RAISE NOTICE 'reversing AP: parts_id %, qty %', in_parts_id, in_qty;
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
-      JOIN ap a ON a.id = i.trans_id
+      JOIN (select id, approved, transdate from ap 
+             union 
+            select id, approved, transdate from gl) a 
+           ON a.id = i.trans_id AND NOT a.approved
      WHERE qty + allocated < 0 AND parts_id = in_parts_id
   ORDER BY a.transdate, a.id, i.id
 LOOP
@@ -188,7 +191,10 @@ SELECT * INTO t_cp FROM account_checkpoint ORDER BY end_date DESC LIMIT 1;
 FOR t_inv IN
     SELECT i.*
       FROM invoice i
-      JOIN ar a ON a.id = i.trans_id
+      JOIN (select id, approved, transdate from ar 
+             union 
+            select id, approved, transdate from gl) a 
+           ON a.id = i.trans_id AND NOT a.approved
      WHERE qty + allocated > 0 and parts_id  = in_parts_id
   ORDER BY a.transdate, a.id, i.id
 LOOP
