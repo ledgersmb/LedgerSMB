@@ -826,6 +826,10 @@ sub get_name {
         $dateformat = 'yyyymmdd';
     }
 
+    if ( $form->{transdate} =~ m/\d\d\d\d-\d\d-\d\d/ ) {
+        $dateformat = 'yyyy-mm-dd';
+    }
+
     my $duedate;
 
     $dateformat = $dbh->quote($dateformat);
