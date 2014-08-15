@@ -586,15 +586,15 @@ function on_return_submit(event){
 	      </tr>
 	      <tr class="crdate-row">
 		<th align=right>| . $locale->text('Invoice Created') . qq|</th>
-		<td><input class="date" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" readonly></td>
+		<td><input class="date" name="crdate" id="crdate" onblur="return dattrans('crdate');" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" readonly></td>
 	      </tr>
 	      <tr class="transdate-row">
 		<th align=right>| . $locale->text('Invoice Date') . qq|</th>
-		<td><input class="date" name="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}"></td>
+		<td><input class="date" name="transdate" id="transdate" onblur="return dattrans('transdate');" size="11" title="$myconfig{dateformat}" value="$form->{transdate}"></td>
 	      </tr>
 	      <tr class="duedate-row">
 		<th align=right>| . $locale->text('Due Date') . qq|</th>
-		<td><input class="date" name="duedate" size="11" title="$myconfig{dateformat}" value="$form->{duedate}"></td>
+		<td><input class="date" name="duedate" id="duedate" onblur="return dattrans('duedate');" size="11" title="$myconfig{dateformat}" value="$form->{duedate}"></td>
 	      </tr>
 	      <tr class="ponumber-row">
 		<th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
