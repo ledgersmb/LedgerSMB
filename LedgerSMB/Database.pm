@@ -112,7 +112,7 @@ sub dbh {
     my $creds = LedgerSMB::Auth::get_credentials();
     $LedgerSMB::App_State::DBH = DBI->connect(
         qq|dbi:Pg:dbname="$self->{company_name}"|,
-	"$creds->{login}", "$creds->{password}",
+	"$self->{username}", "$self->{password}",
 	{ AutoCommit => 0, PrintError => $logger->is_warn(), }
     );
     return $LedgerSMB::App_State::DBH;
