@@ -8,7 +8,8 @@ $$;
 
 
 CREATE OR REPLACE FUNCTION assembly__stock(in_parts_id int, in_qty numeric)
-RETURNS numeric LANGUAGE SQL AS $$
+RETURNS numeric LANGUAGE PLPGSQL AS $$
+BEGIN
     INSERT INTO mfg_lot(parts_id, qty) VALUES ($1, $2);
     INSERT INTO mfg_lot_item(mfg_lot_id, parts_id, qty)
     SELECT currval('mfg_lot_id_seq'), parts_id, qty * $2
@@ -23,7 +24,13 @@ RETURNS numeric LANGUAGE SQL AS $$
 
     UPDATE parts SET onhand = onhand + $2 where id = $1;
 
-    select $2;
+    INSERT INTO gl (reference, description, transdate)
+    values ('mfg-' || currval('mfg_lot_id_seq')::TEXT, 'Manufacturing lot', 
+            now());
+    
+
+    RETURN $2;
+END;
 $$;
 
 DROP TYPE IF EXISTS goods_search_result CASCADE;
