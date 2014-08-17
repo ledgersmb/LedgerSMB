@@ -802,9 +802,9 @@ This routine upgrades modules as required with a patch release upgrade.
 sub upgrade_modules {
     my ($self, $loadorder, $version) = @_;
 
-    my $temp = $database->loader_log_filename();
+    my $temp = $self->loader_log_filename();
 
-    $database->load_modules($loadorder, {
+    $self->load_modules($loadorder, {
 	log     => $temp . "_stdout",
 	errlog  => $temp . "_stderr"
 			    })
