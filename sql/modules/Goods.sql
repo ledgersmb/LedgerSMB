@@ -12,7 +12,7 @@ RETURNS numeric LANGUAGE PLPGSQL AS $$
 BEGIN
     INSERT INTO mfg_lot(parts_id, qty) VALUES ($1, $2);
     INSERT INTO mfg_lot_item(mfg_lot_id, parts_id, qty)
-    SELECT currval('mfg_lot_id_seq'), parts_id, qty * $2
+    SELECT currval('mfg_lot_id_seq')::int, parts_id, qty * $2
       FROM assembly WHERE id = $1;
 
     UPDATE parts SET onhand = onhand 
@@ -24,10 +24,45 @@ BEGIN
 
     UPDATE parts SET onhand = onhand + $2 where id = $1;
 
-    INSERT INTO gl (reference, description, transdate)
+    INSERT INTO gl (reference, description, transdate, approved)
     values ('mfg-' || currval('mfg_lot_id_seq')::TEXT, 'Manufacturing lot', 
-            now());
-    
+            now(), true);
+
+    INSERT INTO invoice (trans_id, parts_id, qty, allocated)
+    SELECT currval('id')::int, parts_id, qty, 0
+      FROM mfg_lot_item WHERE mfg_lot_id = currval('mfg_lot_id_seq')::int;
+
+    PERFORM cogs__add_for_ar_line(id) FROM invoice 
+      WHERE trans_id = currval('id')::int;
+      
+
+    PERFORM * FROM invoice 
+      WHERE qty + allocated <> 0 AND trans_id = currval('id')::int;
+
+    IF FOUND THEN
+       RAISE EXCEPTION 'Not enough parts in stock';
+    END IF;
+
+    INSERT INTO invoice (trans_id, parts_id, qty, allocated, sellprice)
+    SELECT currval('id')::int, $1, $2 * -1, 0, sum(amount) / $2
+      FROM acc_trans 
+     WHERE amount < 0 and trans_id = currval('id')::int;
+
+    -- move from reverse COGS.
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount)
+    SELECT trans_id, chart_id, transdate, amount * -1
+      FROM acc_trans 
+     WHERE amount < 0 and trans_id = currval('id')::int;
+
+    -- difference goes into inventory
+    INSERT INTO acc_trans(trans_id, transdate, amount, chart_id)
+    SELECT trans_id, now(), sum(amount) * -1,
+           (select inventory_accno_id from parts where id = $1)
+      FROM acc_trans
+     WHERE trans_id = currval('id')::int
+  GROUP BY trans_id;
+
+    UPDATE parts SET onhand = onhand + $2 where id = $1;
 
     RETURN $2;
 END;
