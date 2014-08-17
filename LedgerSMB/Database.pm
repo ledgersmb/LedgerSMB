@@ -793,6 +793,36 @@ sub lsmb_info {
 }
     
 
+=item $db->upgrade_modules($loadorder, $version)
+
+This routine upgrades modules as required with a patch release upgrade.
+
+=cut
+
+sub upgrade_modules {
+    my ($self, $loadorder, $version) = @_;
+
+    my $temp = $database->loader_log_filename();
+
+    $database->load_modules($loadorder, {
+	log     => $temp . "_stdout",
+	errlog  => $temp . "_stderr"
+			    })
+        or die "Modules failed to be loaded.";
+
+    my $dbh = $self->dbh;
+    my $sth = $dbh->prepare(
+          "UPDATE defaults SET value = ? WHERE setting_key = 'version'"
+    );
+    $sth->execute($LedgerSMB::VERSION)
+        or die "Version not updated.";
+    $dbh->commit;
+
+    return 1;
+}
+    
+
+
 =item $db->db_tests()
 
 This routine runs general db tests.

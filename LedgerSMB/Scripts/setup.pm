@@ -1077,25 +1077,11 @@ between versions on a stable branch (typically upgrading)
 sub rebuild_modules {
     my ($request) = @_;
     my $database = _init_db($request);
-    my $temp = $database->loader_log_filename();
-    $request->{dbh}->{AutoCommit} = 0;
 
-    $database->load_modules('LOADORDER', {
-	log     => $temp . "_stdout",
-	errlog  => $temp . "_stderr"
-			    });
+    $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
+        or die "Upgrade failed.";
 
-    my $dbh = $request->{dbh};
-    my $sth = $dbh->prepare(
-          'UPDATE defaults SET value = ? WHERE setting_key = ?'
-    );
-    $sth->execute($request->{dbversion}, 'version');
-    $sth->finish;
-    $dbh->commit;
-    #$dbh->begin_work; no need to start a new transaction; no further work
-    #$dbh->disconnect;#upper stack will disconnect
     complete($request);
-
 }
 
 =item complete 

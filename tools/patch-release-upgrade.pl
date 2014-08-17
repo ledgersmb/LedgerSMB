@@ -28,10 +28,6 @@ This is to prevent passwords being saved into the history file.
 
 sub rebuild_modules {
 
-
-    
-### Modified copy/paste from LedgerSMB/Scripts/setup.pm
-
     my $database = LedgerSMB::Database->new(
         {
             username => $ENV{PGUSER},
@@ -39,23 +35,9 @@ sub rebuild_modules {
             password => $ENV{PGPASSWORD},
         })
         or die "No database connection.";
-    my $temp = $database->loader_log_filename();
 
-    $database->load_modules('LOADORDER', {
-	log     => $temp . "_stdout",
-	errlog  => $temp . "_stderr"
-			    })
-        or die "modules not loaded.";
-
-    my $sth = $database->dbh->prepare(
-          "UPDATE defaults SET value = ? WHERE setting_key = 'version'"
-    );
-    $sth->execute($LedgerSMB::VERSION)
-        or die "Version not updated.";
-#     $sth->finish;
-    $database->dbh->commit;
-
-#### end of copied code
+    $database->upgrade_modules('LOADORDER', $LedgerSMB::VERSION)
+        or die "Upgrade failed.";
     
     return 1;
 };
