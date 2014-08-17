@@ -924,7 +924,7 @@ qq|<td align="center"><input name="paid_$i" size="11" value="$form->{"paid_$i"}"
         $column_data{AR_paid} =
 qq|<td align="center"><select name="AR_paid_$i">$form->{"selectAR_paid_$i"}</select></td>|;
         $column_data{datepaid} =
-qq|<td align="center"><input class="date" name="datepaid_$i" size="11" title="$myconfig{dateformat}" value="$form->{"datepaid_$i"}"></td>|;
+qq|<td align="center"><input class="date" name="datepaid_$i" id=datepaid_$i onblur="return dattrans('datepaid_$i');"  size="11" title="$myconfig{dateformat}" value="$form->{"datepaid_$i"}"></td>|;
         $column_data{source} =
 qq|<td align="center"><input name="source_$i" size="11" value="$form->{"source_$i"}"></td>|;
         $column_data{memo} =

@@ -2885,7 +2885,7 @@ sub display_ship_receive {
 	      </tr>
 	      <tr>
 		<th align=right nowrap>$shipped</th>
-		<td><input class="date" name=shippingdate id=shippingdate onblur="return dattrans('shippingdate');" size=11 value=$form->{shippingdate}></td>
+		<td><input class="date" name=shippingdate id=shippingdate onblur="return dattrans('shippingdate');" size=11 value=$form->{shippingdate} title="$myconfig{dateformat}"  ></td>
 	      </tr>
 	    </table>
 	  </td>
