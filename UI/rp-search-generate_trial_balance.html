@@ -3,6 +3,7 @@
         <td><?lsmb PROCESS input element_data={
         class => 'date',
         name => 'fromdate',
+        onblur => "return dattrans('fromdate');",
         size => '11',
         title => user.dateformat,
         value => form.fromdate,
@@ -11,6 +12,7 @@
         <td><?lsmb PROCESS input element_data={
         class => 'date',
         name => 'todate',
+        onblur => "return dattrans('todate');",
         size => '11',
         title => user.dateformat,
         value => form.todate,

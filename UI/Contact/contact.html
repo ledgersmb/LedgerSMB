@@ -204,6 +204,8 @@ default_values = [manager_id]
 	value = dob
 	type = "text"
 	class = "date"
+        onblur = "return dattrans('dob');"
+        title = USER.dateformat
 	size = 10
 }  ?>
 </div>
@@ -214,6 +216,8 @@ default_values = [manager_id]
 	value = start_date
 	type = "text"
 	class = "date"
+        onblur = "return dattrans('start-date');"
+        title = USER.dateformat
 	size = 10
 } # '  ?>
 </div>
@@ -222,8 +226,10 @@ default_values = [manager_id]
 	label = text('End Date')
 	name = "end_date"
 	value = end_date
-	class = "text"
+	class = "date"
 	type = "text"
+        onblur = "return dattrans('end-date');"
+        title = USER.dateformat
 	size = 10
 } # ' ?>
 </div>
@@ -476,6 +482,8 @@ END ?>
 			value = startdate,
 			type = "text",
 			size = "12",
+                        onblur = "return dattrans('startdate');"
+                        title = USER.dateformat
 			maxlength = "10"
 		} #' ?>
             </td>
@@ -487,6 +495,8 @@ END ?>
 			value = enddate,
 			type = "text",
 			size = "12",
+                        onblur = "return dattrans('enddate');"
+                        title = USER.dateformat
 			maxlength = "10"
 		} #' ?>
             </td>

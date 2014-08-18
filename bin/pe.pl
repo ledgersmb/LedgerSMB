@@ -383,7 +383,7 @@ qq|<textarea name=notes rows=$rows cols=40 wrap=soft>$form->{notes}</textarea>|;
 		  <table>
 		    <tr>
 		      <th align="right" nowrap="true">| . $locale->text('Updated') . qq|</th>
-		      <td><input name=priceupdate size=11 title="$myconfig{dateformat}" value=$form->{priceupdate}></td>
+		      <td><input name=priceupdate id=priceupdate size=11 title="$myconfig{dateformat}" value=$form->{priceupdate} onblur="return dattrans('priceupdate');" ></td>
 		    </tr>
 		    <tr>
 		      <th align="right" nowrap="true">|

@@ -28,7 +28,7 @@
      <?lsmb text("Batch Date") ?>
   </div>
   <div class="input">
-     <input type=text class=date name="batch_date" 
+     <input type=text class=date name="batch_date" id="batch_date" onblur="return dattrans('batch_date');" title = "<?lsmb USER.dateformat ?>" 
             value="<?lsmb batch_date ?>" />
   </div>
 </div>

@@ -104,9 +104,9 @@
                 <th align="right"><?lsmb text('Active') ?></th>
                 <td>
                    <?lsmb text('From'); ' '; INCLUDE input element_data={
-  size = '11', name = 'startdatefrom', class = 'date', title = user.dateformat};
+  size = '11', name = 'startdatefrom', class = 'date', onblur = "return dattrans('startdatefrom');" , title = "$USER.dateformat"  };
                           text('Date to'); ' '; INCLUDE input element_data={
-  size = '11', name = 'startdateto', class = 'date', title = user.dateformat} ?>
+  size = '11', name = 'startdateto', class = 'date', onblur = "return dattrans('startdateto');"  , title = "$USER.dateformat" } ?>
                 </td>
               </tr>
             </table>
@@ -164,10 +164,10 @@
                     <tr>
                       <th><?lsmb text('From') ?></th>
                       <td><?lsmb INCLUDE input element_data={
-  size = '11', name = 'transdatefrom', class = 'date', title = user.dateformat} -?></td>
+  size = '11', name = 'transdatefrom', class = 'date', onblur = "return dattrans('transdatefrom');", title = user.dateformat} -?></td>
                       <th><?lsmb text('To') ?></th>
                       <td><?lsmb INCLUDE input element_data={
-  size = '11', name = 'transdateto', class = 'date', title = user.dateformat} -?></td>
+  size = '11', name = 'transdateto', class = 'date', onblur = "return dattrans('transdateto');", title = user.dateformat} -?></td>
                     </tr>
                     <tr>
                       <td />
@@ -376,6 +376,7 @@
     name = 'transdatefrom',
     class = 'date'
     size = '11',
+    onblur = "return dattrans('transdatefrom');",
     title = user.dateformat,
     } -?>
                       </td>
@@ -385,6 +386,7 @@
     name = 'transdateto',
     class = 'date'
     size = '11',
+    onblur = "return dattrans('transdateto');",
     title = user.dateformat,
     } -?>
                       </td>

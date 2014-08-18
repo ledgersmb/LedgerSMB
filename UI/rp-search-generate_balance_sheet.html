@@ -4,6 +4,7 @@
         class => 'date',
         name => 'asofdate',
         size => '11',
+        onblur => "return dattrans('asofdate');",
         title => user.dateformat,
         value => form.asofdate,
         } ?></td>
@@ -21,6 +22,7 @@
         class => 'date',
         name => 'compareasofdate',
         size => '11',
+        onblur => "return dattrans('compareasofdate');",
         title => user.dateformat,
         } ?></td>
         <td>

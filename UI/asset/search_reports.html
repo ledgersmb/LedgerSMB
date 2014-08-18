@@ -24,18 +24,22 @@ default_values = [asset_class]
 <?lsmb PROCESS input element_data = {
            label = text('From')
            class = "date"
-            name = "start_date"
+           name = "start_date"
+           title=USER.dateformat 
+           onblur="return dattrans('start-date');"  
            value = start_date
-            size = 12
+           size = 12
 } ?>
 </div>
 <div class="inputgroup" id="end-dategroup">
 <?lsmb PROCESS input element_data = {
            label = text('To')
            class = "date"
-            name = "end_date"
+           title=USER.dateformat 
+           onblur="return dattrans('end-date');"  
+           name = "end_date"
            value = end_date
-            size = 12
+           size = 12
 } ?>
 </div>
 </div>

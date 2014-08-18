@@ -802,7 +802,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
 	    <table width="100%">
 	      <tr>
 		<th align="right" nowrap="true">| . $locale->text('Updated') . qq|</th>
-		<td><input name=priceupdate size=11 title="$myconfig{dateformat}" value=$form->{priceupdate}></td>    
+		<td><input name=priceupdate id=priceupdate size=11 title="$myconfig{dateformat}" value=$form->{priceupdate} onblur="return dattrans('priceupdate');"     ></td>    
 	      </tr>
 	      $sellprice
 	      $lastcost

@@ -61,6 +61,8 @@
 			     datefrom.size      = "10"  ;
 			     datefrom.maxlenght = "10"  ;
 			     datefrom.name      = "datefrom";
+                             datefrom.title     = USER.dateformat;
+                             datefrom.onblur    = "return dattrans('datefrom');";
 			     INCLUDE input element_data=datefrom;
 		         -?>
 		</td>
@@ -71,6 +73,8 @@
 			     dateto.size        = "10"  ;
 			     dateto.maxlenght   = "10"  ;
 			     dateto.name	= "dateto";
+                             dateto.title       = USER.dateformat;
+                             dateto.onblur      = "return dattrans('dateto');";
 			     INCLUDE input element_data=dateto;
 			-?>
 		</td>

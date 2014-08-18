@@ -20,6 +20,8 @@
      name = "start_date"
      class = "date"
      value = start_date
+     title=USER.dateformat 
+     onblur="return dattrans('start-date');"  
      label = text("From")
 } ?>
 </div>
@@ -27,6 +29,8 @@
 <?lsmb PROCESS input element_data = {
      name = "end_date"
      class = "date"
+     title=USER.dateformat 
+     onblur="return dattrans('end-date');"  
      value = end_date
      label = text("To")
 } ?>

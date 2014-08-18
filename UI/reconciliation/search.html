@@ -11,6 +11,8 @@
 			type = 'text',
 			class = 'date',
 			size = 12,
+                        onblur = "return dattrans('date-from');",
+                        title = USER.dateformat,
 			value = date_from,
 			name = 'date_from'
 		} ?>
@@ -19,6 +21,8 @@
 			type = 'text',
 			class = 'date',
 			size = 12,
+                        onblur = "return dattrans('date-to');",
+                        title = USER.dateformat,
 			value = date_to,
 			name = 'date_to'
 		} ?>

@@ -286,6 +286,8 @@ sub render {
 	my $vars = shift;
         $vars->{LIST_FORMATS} = sub { return $self->available_formats} ;
         $vars->{CSSDIR} = $LedgerSMB::Sysconfig::cssdir;
+        $vars->{USER} = $LedgerSMB::App_State::User;
+        $vars->{USER} ||= {dateformat => 'yyyy-mm-dd'};
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
 		throw Error::Simple "Invalid format";
 	}

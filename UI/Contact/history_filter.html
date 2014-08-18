@@ -125,7 +125,8 @@
                          size = "11",
                          type = "text",
                          class = "date",
-                         title = user.dateformat,
+                         title = USER.dateformat,
+                         onblur = "return dattrans('startdate-from');",
                          label = text('From')
                     };
                     INCLUDE input element_data = {
@@ -133,7 +134,8 @@
                          size = "11",
                          type = "text",
                          class = "date",
-                         title = user.dateformat,
+                         title = USER.dateformat,
+                         onblur = "return dattrans('startdate-to');",
                          label = text('To') 
                   } ?></td>
 		    <tr> 
@@ -144,7 +146,8 @@
                          size = "11",
                          type = "text",
                          class = "date",
-                         title = user.dateformat,
+                         title = USER.dateformat,
+                         onblur = "return dattrans('from-date');"
                          label = text('From') 
                   } ;
                      INCLUDE input element_data = {
@@ -152,7 +155,8 @@
                          size = "11",
                          type = "text",
                          class = "date",
-                         title = user.dateformat,
+                         title = USER.dateformat,
+                         onblur = "return dattrans('to-date');",
                          label = text('To') 
                   };
                   label_pos=1 ?></td>

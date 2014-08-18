@@ -85,14 +85,16 @@
 	  <td><?lsmb PROCESS input element_data = {
                class="date" 
                name="datefrom" 
-               size="11" 
-               title=datestyle } ?></td>
+               title=USER.dateformat
+               onblur="return dattrans('datefrom');"
+               size="11"  } ?></td>
 	  <th align="right"><?lsmb text('To') ?></th>
 	  <td><?lsmb PROCESS input element_data = {
                  class="date" 
-                 name="dateto" 
-                 size="11" 
-                 title=datestyle } ?></td>
+                 name="dateto"
+                 title=USER.dateformat
+                 onblur="return dattrans('dateto');"
+                 size="11" } ?></td>
 	</tr>
 	
         <tr>
