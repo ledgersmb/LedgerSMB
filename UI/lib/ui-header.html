@@ -22,9 +22,10 @@
 	<?lsmb FOREACH s = include_script ?>
 	<script type="text/javascript" language="JavaScript" src="<?lsmb s ?>" ></script>
 	<?lsmb END ?>
-
-        <script src="UI/js/prototype.js" type="text/javascript"></script>
-       <script src="UI/js/custom.js" type="text/javascript"></script>
+        <script src="UI/ajax/scriptaculous/lib/prototype.js" type="text/javascript"></script>
+        <script src="UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls" type="text/javascript"></script>
+        <script src="UI/ajax/helpers.js" type="text/javascript"></script>
+        <script src="UI/js/custom.js" type="text/javascript"></script>
 	
 	<?lsmb IF warn_expire ?>
 	<script type="text/javascript" language="JavaScript">
