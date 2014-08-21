@@ -854,7 +854,8 @@ sub get_name {
 			  entity.control_code AS entity_control_code,
                           co.tax_id AS tax_id,
 			  c.meta_number, ecl.*, ctf.default_reportable,
-                          c.cash_account_id, ca.accno as cash_accno
+                          c.cash_account_id, ca.accno as cash_accno,
+                          c.id as eca_id
 		     FROM entity_credit_account c
 		     JOIN entity ON (entity.id = c.entity_id)
                 LEFT JOIN account ca ON c.cash_account_id = ca.id
@@ -887,7 +888,34 @@ sub get_name {
     for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
     $sth->finish;
 
-    # TODO:  Retrieve contact records
+    # get customer e-mail accounts
+    $query = qq|SELECT * FROM eca__list_contacts(?)
+                      WHERE class_id BETWEEN 12 AND ?
+                      ORDER BY class_id DESC;|;
+    my %id_map = ( 12 => 'email',
+    	       13 => 'cc',
+    	       14 => 'bcc',
+    	       15 => 'email',
+    	       16 => 'cc',
+    	       17 => 'bcc' );
+    $sth = $dbh->prepare($query);
+    $sth->execute( $self->{eca_id}, 14) || $self->dberror( $query );
+    
+    my $ctype;
+    my $billing_email = 0;
+    while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+        $ctype = $ref->{class_id};
+        $ctype = $id_map{$ctype};
+        $billing_email = 1
+    	if $ref->{class_id} == 15;
+
+        # If there's an explicit billing email, don't use
+        # the standard email addresses; otherwise fall back to standard
+        $self->{$ctype} .= ($self->{$ctype} ? ", " : "") . $ref->{contact}
+    	if (($ref->{class_id} < 15 && ! $billing_email)
+    	    || $ref->{class_id} >= 15);
+    }
+    $sth->finish;
 
     my $buysell = ( $form->{vc} eq 'customer' ) ? "buy" : "sell";
 
