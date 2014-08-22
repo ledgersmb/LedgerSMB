@@ -15,17 +15,9 @@ The id attribute is expected to be static and hardcoded, so these must be assign
 
 A default module (id 0, label '') is available for doing lookups.
 
-=head1 INHERITS
-
-=over 
-
-=item LedgerSMB::DBObject_Moose
-
-=back
-
 =cut
 
-package LedgerSMB::DBObject::App_Module;
+package LedgerSMB::App_Module;
 use Moose;
 with 'LedgerSMB::DBObject_Moose';
 

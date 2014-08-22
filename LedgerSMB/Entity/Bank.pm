@@ -23,15 +23,7 @@ use PGObject::Util::DBMethod;
 
 sub _get_prefix { 'entity__' };
 
-=head1 INHERITS
-
-=over
-
-=item LedgerSMB::DBObject_Moose;
-
-=back
-
-head1 PROPERTIES
+=head1 PROPERTIES
 
 =over
 
