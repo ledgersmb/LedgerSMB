@@ -27,7 +27,7 @@ User/group management for LedgerSMB
 =cut
 
 
-use base qw(LedgerSMB::DBObject);
+use base qw(LedgerSMB::PGOld);
 
 use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::DBObject::User;
@@ -46,7 +46,7 @@ active_sessions hash value.  No inputs required or used.
 
 sub list_sessions {
    my $self = shift @_;
-   my @sessions = $self->exec_method(funcname => 'admin__list_sessions');
+   my @sessions = $self->call_dbmethod(funcname => 'admin__list_sessions');
    $self->{active_sessions} = \@sessions;
    return @sessions;
 }
@@ -59,7 +59,7 @@ Deletes a session identified by the session_id hashref.
 
 sub delete_session {
    my $self = shift @_;
-   my @sessions = $self->exec_method(funcname => 'admin__drop_session');
+   my @sessions = $self->call_dbmethod(funcname => 'admin__drop_session');
 }
 
 =item save_roles 
@@ -77,14 +77,10 @@ sub save_roles {
     my $user = LedgerSMB::DBObject::User->new( base=>$self, copy=>'all' );
     $user->get();
     $self->{modifying_user} = $user->{user}->{username};
-    my @roles = $self->exec_method( funcname => "admin__get_roles" );
-    my @user_roles = $self->exec_method(funcname => "admin__get_roles_for_user");
+    my @roles = $self->call_dbmethod( funcname => "admin__get_roles" );
+    my @user_roles = $self->call_dbmethod(funcname => "admin__get_roles_for_user");
     my %active_roles;
     for my $role (@user_roles) {
-       
-       # These are our user's roles.
-       $logger->info("Have $role->{admin__get_roles_for_user}\n");
-        
        $active_roles{"$role->{admin__get_roles_for_user}"} = 1;
     }
     
@@ -101,13 +97,13 @@ sub save_roles {
         elsif ($active_roles{$role} && !($self->{$reqrole} )) {
             
             # do remove function
-            $status = $self->call_procedure(procname => "admin__remove_user_from_role",
+            $status = $self->call_procedure(funcname => "admin__remove_user_from_role",
                 args=>[ $self->{modifying_user}, $role ] );
         }
         elsif ($self->{$reqrole} and !($active_roles{$role} )) {
             
             # do add function
-            $status = $self->call_procedure(procname => "admin__add_user_to_role",
+            $status = $self->call_procedure(funcname=> "admin__add_user_to_role",
                args=>[ $self->{modifying_user}, $role ] 
             );
         }         
@@ -123,7 +119,7 @@ Returns a list of salutation records from the db for the dropdowns.
 sub get_salutations {
     
     my $self = shift;
-    return $self->exec_method({funcname => 'person__list_salutations' });
+    return $self->call_dbmethod(funcname => 'person__list_salutations');
 }
 
 
@@ -142,7 +138,7 @@ sub get_roles {
     
     my $self = shift @_;
     my $company = shift; # optional
-    my @s_rows = $self->call_procedure(procname=>'admin__get_roles');
+    my @s_rows = $self->call_procedure(funcname =>'admin__get_roles');
     my @rows;
 
     $company = $self->{company} if ! defined $company;

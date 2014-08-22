@@ -12,4 +12,13 @@ See PGObject::Simple
 
 =cut
 
+package LedgerSMB::PGOld;
+use PGObject::Simple;
+use LedgerSMB::App_State;
+
+sub set_dbh {
+    my ($self) = @_;
+    $self->{_DBH} =  LedgerSMB::App_State::DBH();
+}
+
 1; 

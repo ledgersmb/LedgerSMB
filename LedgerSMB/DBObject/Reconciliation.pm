@@ -46,7 +46,7 @@ uncleared.
 
 package LedgerSMB::DBObject::Reconciliation;
 
-use base qw(LedgerSMB::DBObject);
+use base qw(LedgerSMB::PGOld);
 use LedgerSMB::DBObject;
 use LedgerSMB::Reconciliation::CSV;
 
@@ -62,7 +62,7 @@ transaction list.
 
 sub update {
     my $self = shift @_;
-    $self->exec_method(funcname=>'reconciliation__pending_transactions');
+    $self->call_dbmethod(funcname=>'reconciliation__pending_transactions');
 }
 
 sub _pre_save {
@@ -89,7 +89,7 @@ Submits the reconciliation set for approval.
 sub submit {
     my $self = shift @_;
     $self->_pre_save;
-    $self->exec_method(funcname=>'reconciliation__submit_set');
+    $self->call_dbmethod(funcname=>'reconciliation__submit_set');
 }
 
 
@@ -103,7 +103,7 @@ Saves the reconciliation set for later work
 sub save {
     my $self = shift @_;
     $self->_pre_save;
-    $self->exec_method(funcname=>'reconciliation__save_set');
+    $self->call_dbmethod(funcname=>'reconciliation__save_set');
 }
 
 =item import_file
@@ -142,7 +142,7 @@ sub approve {
     # the user should be embedded into the $self object.
     my $report_id = shift @_;
     
-    my $code = $self->exec_method(funcname=>'reconciliation__report_approve', args=>[$report_id]); # user 
+    my $code = $self->call_dbmethod(funcname=>'reconciliation__report_approve', args=>[$report_id]); # user 
     
     if ($code == 0) {  # no problem.
         return $code;
@@ -169,10 +169,10 @@ sub new_report {
     # Total is in here somewhere, too
     
     # gives us a report ID to insert with.
-    my @reports = $self->exec_method(funcname=>'reconciliation__new_report_id');
+    my @reports = $self->call_dbmethod(funcname=>'reconciliation__new_report_id');
     my $report_id = $reports[0]->{reconciliation__new_report_id};
     $self->{report_id} = $report_id;
-    $self->exec_method(funcname=>'reconciliation__pending_transactions');
+    $self->call_dbmethod(funcname=>'reconciliation__pending_transactions');
     
     # Now that we have this, we need to create the internal report representation.
     # Ideally, we OUGHT to not return anything here, save the report number.
@@ -202,11 +202,11 @@ sub delete {
     my $retval;
     my $found;
     if ($self->is_allowed_role({allowed_roles => ['reconciliation_approve']})){
-        ($found) = $self->exec_method(
+        ($found) = $self->call_procedure(
                            funcname => 'reconciliation__delete_unapproved', 
                                args => [$report_id]);
     } else {
-        ($found) = $self->exec_method(
+        ($found) = $self->call_procedure(
                            funcname => 'reconciliation__delete_my_report', 
                                args => [$report_id]);
         
@@ -227,7 +227,7 @@ This rejects a submitted but not approved report.
 
 sub reject {
     my ($self) = @_;
-    $self->exec_method(funcname => 'reconciliation__reject_set');
+    $self->call_dbmethod(funcname => 'reconciliation__reject_set');
 }
 
 =item add_entries
@@ -254,7 +254,7 @@ sub add_entries {
         #in_account INT, 
         #in_user TEXT, 
         #in_date TIMESTAMP
-        $code = $self->exec_method(
+        $code = $self->call_procedure(
             funcname=>'reconciliation__add_entry', 
             args=>[
                 $self->{report_id},
@@ -312,24 +312,24 @@ a hashrefo of information from the account table.
 
 sub get {
     my ($self) = shift @_;
-    my ($ref) = $self->exec_method(funcname=>'reconciliation__report_summary');
+    my ($ref) = $self->call_dbmethod(funcname=>'reconciliation__report_summary');
     $self->merge($ref);
     if (!$self->{submitted}){
-        $self->exec_method(
+        $self->call_dbmethod(
 		funcname=>'reconciliation__pending_transactions'
         );
     }
-    @{$self->{report_lines}} = $self->exec_method(
+    @{$self->{report_lines}} = $self->call_dbmethod(
 		funcname=>'reconciliation__report_details_payee'
     );
-    ($ref) = $self->exec_method(funcname=>'account_get', 
+    ($ref) = $self->call_dbmethod(funcname=>'account_get', 
                                 args => [$self->{chart_id}]);
     my $neg = 1;
     if ($self->{account_info}->{category} =~ /(A|E)/){
         $neg = -1;
     }
     $self->{account_info} = $ref;
-    ($ref) = $self->exec_method(
+    ($ref) = $self->call_dbmethod(
                 funcname=>'reconciliation__get_cleared_balance'
     );
 
@@ -393,7 +393,7 @@ This is a simple wrapper around reconciliation__account_list
 sub get_accounts {
     my $self = shift @_;
 
-    return $self->exec_method(
+    return $self->call_dbmethod(
         funcname=>'reconciliation__account_list',
     );
 }
