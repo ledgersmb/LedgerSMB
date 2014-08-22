@@ -37,17 +37,6 @@ not.  Use this if the form may be re-used (back-button actions are valid).
 Identical with check_form() above, but also removes the form_id from the 
 session.  This should be used when back-button actions are not valid.
 
-=item format_amount (user => $LedgerSMB::User::hash, amount => $string, precision => $integer, neg_format => (-|DRCR));
-
-The function takes a monetary amount and formats it according to the user 
-preferences, the negative format (- or DR/CR).  Note that it may move to
-LedgerSMB::User at some point in the future.
-
-=item parse_amount (user => $LedgerSMB::User::hash, amount => $variable);
-
-If $amount is a Bigfloat, it is returned as is.  If it is a string, it is 
-parsed according to the user preferences stored in the LedgerSMB::User object.
-
 =item is_run_mode ('(cli|cgi|mod_perl)')
 
 This function returns 1 if the run mode is what is specified.  Otherwise
@@ -97,14 +86,6 @@ Returns HTML errors in LedgerSMB. Needs refactored into a general Error class.
 =item get_user_info()
 
 Loads user configuration info from LedgerSMB::User
-
-=item round_amount() 
-
-Uses Math::Float with an amount and a set number of decimal places to round the amount and return it.
-
-Defaults to the default decimal places setting in the LedgerSMB configuration if there is no places argument passed in.
-
-They should be changed to allow different rules for different accounts.
 
 =item sanitize_for_display()
 
@@ -462,86 +443,6 @@ sub is_run_mode {
         $rc = 1;
     }
     $rc;
-}
-
-# TODO:  Either we should have an amount class with formats and such attached
-# Or maybe we should move this into the user class...
-sub format_amount {
-
-    # Based on SQL-Ledger's Form::format_amount
-    my $self     = shift @_;
-    my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
-    my $myconfig = $args{user} || $self->{_user};
-    my $amount   = $args{amount};
-    my $places   = $args{precision};
-    my $dash     = $args{neg_format};
-    my $format   = $args{format};
-
-    if (defined $amount and ! UNIVERSAL::isa($amount, 'LedgerSMB::PGNumber' )) {
-        $amount = $self->parse_amount('user' => $myconfig, 'amount' => $amount);
-    }
-    $dash = undef unless defined $dash;
-
-    if (!defined $format){
-       $format = $myconfig->{numberformat}
-    }
-    if (!defined $amount){
-        return undef;
-    }
-    if (!defined $args{precision} and defined $args{money}){
-       $places = LedgerSMB::Setting->get('decimal_places');
-    }
-
-    return $amount->to_output({format => $format, 
-                           neg_format => $args{neg_format}, 
-                               places => $places,
-                                money => $args{money},
-           });
-}
-
-# For backwards compatibility only
-sub parse_amount {
-    my $self     = shift @_;
-    my %args     = @_;
-    my $amount   = $args{amount};
-    my $user     = ($args{user})? ($args{user}) : $self->{_user};
-    if (UNIVERSAL::isa($amount, 'LedgerSMB::PGNumber')){
-        return $amount;
-    } 
-    return LedgerSMB::PGNumber->from_input($amount, 
-                                     {format => $user->{numberformat}}
-    ); 
-}
-
-sub round_amount {
-
-    my ( $self, $amount, $places ) = @_;
-    
-    #
-    # We will grab the default value, if it isnt defined
-    #
-    if (!defined $places){
-       $places = LedgerSMB::Setting->get('decimal_places');
-    }
-    
-    # These rounding rules follow from the previous implementation.
-    # They should be changed to allow different rules for different accounts.
-    if ($amount >= 0) {
-        Math::BigFloat->round_mode('+inf');
-    } 
-    else {
-        Math::BigFloat->round_mode('-inf');
-    } 
-
-    if ($places >= 0) {
-        $amount = Math::BigFloat->new($amount)->ffround( -$places );
-    } 
-    else {
-        $amount = Math::BigFloat->new($amount)->ffround( -( $places - 1 ) );
-    } 
-    $amount->precision(undef);
-
-    return $amount;
 }
 
 sub call_procedure {

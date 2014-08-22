@@ -112,7 +112,7 @@ sub dbh {
     my $creds = LedgerSMB::Auth::get_credentials();
     $LedgerSMB::App_State::DBH = DBI->connect(
         qq|dbi:Pg:dbname="$self->{company_name}"|,
-	"$creds->{login}", "$creds->{password}",
+	"$self->{username}", "$self->{password}",
 	{ AutoCommit => 0, PrintError => $logger->is_warn(), }
     );
     return $LedgerSMB::App_State::DBH;
@@ -792,6 +792,36 @@ sub lsmb_info {
     return $retval;
 }
     
+
+=item $db->upgrade_modules($loadorder, $version)
+
+This routine upgrades modules as required with a patch release upgrade.
+
+=cut
+
+sub upgrade_modules {
+    my ($self, $loadorder, $version) = @_;
+
+    my $temp = $self->loader_log_filename();
+
+    $self->load_modules($loadorder, {
+	log     => $temp . "_stdout",
+	errlog  => $temp . "_stderr"
+			    })
+        or die "Modules failed to be loaded.";
+
+    my $dbh = $self->dbh;
+    my $sth = $dbh->prepare(
+          "UPDATE defaults SET value = ? WHERE setting_key = 'version'"
+    );
+    $sth->execute($LedgerSMB::VERSION)
+        or die "Version not updated.";
+    $dbh->commit;
+
+    return 1;
+}
+    
+
 
 =item $db->db_tests()
 

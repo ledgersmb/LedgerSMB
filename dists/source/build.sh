@@ -5,11 +5,5 @@
 version="1.4.0";
 build_d="../release";
 
-if test -d $build_d/ledgersmb; then
-  rm -rf $build_d/ledgersmb
-fi
-rm -rf $build_d/ledgersmb
-svn export . $build_d/ledgersmb
+hg archive -t tgz $build_d/ledgersmb-${version}.tar.gz
 
-cd $build_d
-tar -zcvf ledgersmb-$version.tar.gz ledgersmb

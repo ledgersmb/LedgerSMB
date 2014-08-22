@@ -1,0 +1,3 @@
+div.table { display: table;}
+form.tr, div.tr { display: table-row; }
+div.td, div.th {display: table-cell; }

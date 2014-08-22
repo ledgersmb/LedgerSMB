@@ -179,7 +179,7 @@ contains either entity_id or credit_id, and location_id, and location class.
 
 sub delete {
     my ($ref) = @_;
-    if ($ref->{credit_id}){
+    if ($ref->{for_credit}){
         __PACKAGE__->call_procedure(funcname => 'eca__delete_contact',
                                   args => [$ref->{credit_id}, $ref->{class_id},
                                            $ref->{contact}]);

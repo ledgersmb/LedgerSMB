@@ -95,14 +95,6 @@ sub columns { [{col_id => 'amount',
 =cut
 
 # private method
-# report_base($from, $to)
-# returns an array of hashrefs of report results.  Used in adding comparison
-# as well as the main report.  To be overridden.
-
-sub report_base {
-}
-
-# private method
 # _merge_rows(arrayref $rows, string $label, report $report)
 
 sub _merge_rows {

@@ -222,7 +222,7 @@ The id for the AR or AP account, use for payment reversals.  Required on save.
 
 =cut
 
-has 'ar_ap_account_id' => (is => 'rw', isa => 'Int', required => 1);
+has 'ar_ap_account_id' => (is => 'rw', isa => 'Int');
 
 =item cash_account_id
 
@@ -379,6 +379,7 @@ Saves the entity credit account.  This also sets db defaults if not set.
 
 sub save {
     my ($self) = @_;
+    die 'No AR/AP Account ID Set' unless $self->ar_ap_account_id;
     my ($ref) = $self->call_dbmethod(funcname => 'eca__save');
     $self->{id}=$ref->{eca__save};
     $self->call_dbmethod(funcname => 'eca__set_taxes');
