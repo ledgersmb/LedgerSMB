@@ -29,7 +29,7 @@ and the like.
 
 package LedgerSMB::Entity::Credit_Account;
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 
 our $VERSION = '1.4.0';
 
@@ -303,7 +303,7 @@ mentioned.
 
 sub get_by_id {
     my ($self, $id) = @_;
-    my ($ref) = __PACKAGE__->call_procedure(procname => 'entity_credit__get',
+    my ($ref) = __PACKAGE__->call_procedure(funcname => 'entity_credit__get',
                                           args => [$id]);
     $ref->{tax_ids} = $self->_get_tax_ids($id);
     return __PACKAGE__->new(%$ref);
@@ -318,7 +318,7 @@ identified by $meta_number
 
 sub get_by_meta_number {
     my ($self, $meta_number, $entity_class) = @_;
-    my ($ref) = __PACKAGE__->call_procedure(procname => 'eca__get_by_meta_number',
+    my ($ref) = __PACKAGE__->call_procedure(funcname => 'eca__get_by_meta_number',
                                           args => [$meta_number, 
                                                    $entity_class]);
     $ref->{tax_ids} = __PACKAGE__->_get_tax_ids($ref->{id});
@@ -331,7 +331,7 @@ sub get_by_meta_number {
 sub _get_tax_ids {
     my ($self, $id) = @_;
     my @tax_ids;
-    my @results = __PACKAGE__->call_procedure(procname => 'eca__get_taxes',
+    my @results = __PACKAGE__->call_procedure(funcname => 'eca__get_taxes',
                                             args => [$id]);
     for my $ref (@results){
         push @tax_ids, $ref->{chart_id};
@@ -348,7 +348,7 @@ identified by $entity_id
 
 sub list_for_entity {
     my ($self, $entity_id, $entity_class) = @_;
-    my @results = __PACKAGE__->call_procedure(procname => 'entity__list_credit',
+    my @results = __PACKAGE__->call_procedure(funcname => 'entity__list_credit',
                                             args => [$entity_id, $entity_class]
     );
     for my $ref (@results){
@@ -366,7 +366,7 @@ Sets $self->current_debt and returns the same value.
 
 sub get_current_debt {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'eca__get_current_debt'});
+    my ($ref) = $self->call_dbmethod(funcname => 'eca__get_current_debt');
     $self->current_debt($ref->{eca__get_current_debt});
     return $self->current_debt;
 }
@@ -379,10 +379,9 @@ Saves the entity credit account.  This also sets db defaults if not set.
 
 sub save {
     my ($self) = @_;
-    warn $self->{entity_class};
-    my ($ref) = $self->exec_method({funcname => 'eca__save'});
+    my ($ref) = $self->call_dbmethod(funcname => 'eca__save');
     $self->{id}=$ref->{eca__save};
-    $self->exec_method(funcname => 'eca__set_taxes');
+    $self->call_dbmethod(funcname => 'eca__set_taxes');
     return $self->get_by_id($ref->{eca__save});
 }
 
@@ -397,12 +396,12 @@ pricematrix_pricegroup for customers.
 sub get_pricematrix {
     my $self = shift @_;
     my $retval = {};
-    @{$retval->{pricematrix}} = $self->exec_method(
+    @{$retval->{pricematrix}} = $self->call_procedure(
                funcname => 'eca__get_pricematrix',
         args => [$self->{id}]
     );
     if ($self->{entity_class} == 1){
-        @{$retval->{pricematrix_pricegroup}}= $self->exec_method(
+        @{$retval->{pricematrix_pricegroup}}= $self->call_procedure(
                funcname => 'eca__get_pricematrix_by_pricegroup',
         args => [$self->{id}]
         );
@@ -419,7 +418,7 @@ This deletes a pricematrix line identified by $entry_id
 sub delete_pricematrix {
     my $self = shift @_;
     my ($entry_id) = @_;
-    my ($retval) = $self->exec_method(funcname => 'eca__delete_pricematrix', 
+    my ($retval) = $self->call_procedure(funcname => 'eca__delete_pricematrix', 
                            args => [$self->credit_id, $entry_id]
     );
     return $retval;
@@ -440,7 +439,7 @@ sub save_pricematrix {
         for my $prop (qw(parts_id credit_id pricebreak price lead_time
                          partnumber validfrom validto curr entry_id)){
             push @args, $request->{"${prop}_$entry_id"};
-            $self->execute_method(funcname => 'eca__save_pricematrix',
+            $self->call_procedure(funcname => 'eca__save_pricematrix',
                                       args => \@args);
         }
     }

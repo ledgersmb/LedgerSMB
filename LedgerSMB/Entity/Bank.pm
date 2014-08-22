@@ -18,7 +18,10 @@ credit account being able to attach itself to a single bank account.
 
 package LedgerSMB::Entity::Bank;
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
+use PGObject::Util::DBMethod;
+
+sub _get_prefix { 'entity__' };
 
 =head1 INHERITS
 
@@ -100,16 +103,9 @@ blessed reference.  All return results are objects.
 
 =cut
 
-sub list{
-    my ($self, $entity_id) = @_;
-    my @results = $self->call_procedure(procname =>
-             'entity__list_bank_account', args => [$entity_id]);
-    for my $row(@results){
-        $self->prepare_dbhash($row); 
-        $row = $self->new(%$row);
-    }
-    return @results;
-}
+dbmethod list => (funcname => 'list_bank_account', 
+                   arglist => ['entity_id'],
+           returns_objects => 1 );
 
 =item save()
 
@@ -120,7 +116,7 @@ setting things like the id field.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'entity__save_bank_account'});
+    my ($ref) = $self->call_dbmethod(funcname => 'save_bank_account');
     $self->prepare_dbhash($ref);
     $self = $self->new(%$ref);
 }
@@ -131,11 +127,7 @@ Deletes the bank account object from the database.
 
 =cut
 
-sub delete {
-    my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'entity__delete_bank_account'});
-    return $ref;
-}
+dbmethod delete => (funcname => 'delete_bank_account');
 
 =back
 
