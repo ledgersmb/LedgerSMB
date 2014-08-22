@@ -72,6 +72,15 @@ of sale has been broken off into addons to allow for faster release cycles.
 Finally templates for user documents (invoices, etc) are now loaded in the 
 database.
 
+2.3:  Overhawled Manufacturing Support
+
+LedgerSMB 1.4 overhauls the manufacturing support.  This means we can now track
+what went into a manufacturing lot (allowing for more sophisticated solutions to
+be developed).  Manufactured goods now are tracked against their own inventory
+accounts rather than having costs dynamically allocated when sold.
+
+In past versions, assemblies could not be effectively sold regarding costs of goods sold unless all materials necessary to manufacture them were in stock.  Now they can be, but the assemblies can no longer be stocked if this is the case.
+
 2.4:  Database Changes
 
 Projects and Departments have been replaced by the new reporting units
@@ -101,7 +110,7 @@ payment reversal, or gl workflows.  Failure to do so may cause the payment to
 fail to be recognized by existing in-process reconciliation workflows.  If this
 happens, start the bank reconciliation over and the payment will be recognized.
 
-4.  Known Issues
+4.  Known Issues when Upgrading
 
 4.1:  Tighter balance calculations on reports
 
