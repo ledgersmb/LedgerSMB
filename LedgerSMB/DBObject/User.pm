@@ -150,7 +150,8 @@ sub save {
                    } elsif ($_ =~/Duplicate user/){
                       $self->{dbh}->rollback;
                       $errcode = 8;
-                   };
+                   }
+                };
     return $errcode if $errcode;
 
     ($self->{id}) = values %$ref;

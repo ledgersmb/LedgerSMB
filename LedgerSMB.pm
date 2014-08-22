@@ -447,8 +447,8 @@ sub is_run_mode {
 
 sub call_procedure {
     my $self = shift;
-    my $args = @_;
-    $args->{dbh} = LedgerSMB::App_State::DBH();
+    my %args = @_;
+    $args{dbh} = LedgerSMB::App_State::DBH();
     return PGObject::call_procedure(%args);
 }
 

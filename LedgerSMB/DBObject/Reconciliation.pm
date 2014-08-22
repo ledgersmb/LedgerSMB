@@ -47,7 +47,6 @@ uncleared.
 package LedgerSMB::DBObject::Reconciliation;
 
 use base qw(LedgerSMB::PGOld);
-use LedgerSMB::DBObject;
 use LedgerSMB::Reconciliation::CSV;
 
 

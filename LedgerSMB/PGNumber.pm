@@ -12,7 +12,7 @@ use LedgerSMB::Setting;
 
 package LedgerSMB::PGNumber;
 
-PGObject->register_type(registry => 'LedgerSMB', pg_type => $_,
+PGObject->register_type(pg_type => $_,
                                   perl_class => __PACKAGE__)
    for ('float4', 'float8', 'double precision', 'float', 'numeric');
 

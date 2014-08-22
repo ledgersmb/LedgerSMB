@@ -72,7 +72,7 @@ sub save {
                         }
                         die LedgerSMB::App_State::Locale->text(
                             'Internal Database Error.'
-                        ) . " $_");
+                        ) . " $_";
                   };
     $self->{id} = $id_ref->{$func};
     if (defined $self->{recon}){

@@ -804,6 +804,7 @@ sub restock_assemblies {
     my $sth = $form->{dbh}->prepare('SELECT assembly__stock(?, ?)');
     for ( 1 .. $form->{rowcount} ){
        $sth->execute($form->{"id_$_"}, $form->{"qty_$_"}) || $form->dberror(' stored procedure: assembly__stock ');
+    }
 
     1;
 
@@ -1102,4 +1103,3 @@ sub get_warehouses {
 }
 
 1;
-
