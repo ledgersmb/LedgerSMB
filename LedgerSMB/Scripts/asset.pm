@@ -182,9 +182,6 @@ sub asset_edit {
     my $asset = LedgerSMB::DBObject::Asset->new(base => $request);
     $asset->get();
     $asset->get_metadata();
-    for my $label (qw(purchase_value salvage_value usable_life)){
-        $asset->{$label} = $asset->format_amount({amount => $asset->{$label}});
-    }
     asset_screen($asset);
 }
 
@@ -407,9 +404,7 @@ sub display_report {
               tag            => $asset->{tag},
               description    => $asset->{description},
               purchase_date  => $asset->{purchase_date},
-              purchase_value => $request->format_amount(
-                                         amount => $asset->{purchase_value}
-                                ),
+              purchase_value => $asset->{purchase_value},
               dm             => {select => { name       => "dm_$asset->{id}",
                                              options    => $report->{disp_methods},
                                              text_attr  => 'label',
@@ -557,8 +552,7 @@ sub report_results {
                report_date    => $r->{report_date},
                entered_at     => $r->{entered_at},
                approved_at    => $r->{approved_at},
-               total          => $ar->format_amount({amount => $r->{total},
-                                                    money => 1}),
+               total          => $r->{total}->to_output(money => 1),
         };
         for my $ac (@{$ar->{asset_classes}}){
             if ($ac->{id} = $r->{asset_class}){
@@ -638,11 +632,9 @@ sub report_details {
     };
     my $rows = [];
     for my $r (@{$report->{report_lines}}){
-        $r->{usable_life} = $report->format_amount({amount => $r->{usable_life}});
         for my $amt (qw(purchase_value basis prior_dep dep_this_time dep_ytd
                         dep_total)){
-             $r->{$amt} = $report->format_amount({amount => $r->{$amt},
-                                              money  => 1,});
+             $r->{$amt} = $r->{$amt}->to_output(money  => 1);
         }
         push @$rows, $r;
     }
@@ -701,20 +693,16 @@ sub partial_disposal_details {
     };
     my $rows = [];
     for my $r (@{$report->{report_lines}}){
-        $r->{usable_life} = $report->format_amount({amount => $r->{usable_life}});
         for my $amt (qw(purchase_value adj_basis disposed_acquired_value 
                         remaining_aquired_value percent_disposed 
                         percent_remaining)
         ){
-             $r->{$amt} = $report->format_amount(
-                                  {amount => $r->{$amt},
-                                   money  => 1,
-                                  }
-             );
+             $r->{$amt} = $r->{$amt}->to_output(money => 1);
         }
-        $r->{gain_loss} = $report->format_amount({amount => $r->{gain_loss},
-                                                 money => 1,
-                                               neg_format => '-' } );
+        $r->{gain_loss} = $r->{gain_loss}->to_output(
+                                                    money => 1,
+                                               neg_format => '-'
+        );
         push @$rows, $r;
     }
     my $template = LedgerSMB::Template->new(
@@ -772,16 +760,12 @@ sub disposal_details {
     };
     my $rows = [];
     for my $r (@{$report->{report_lines}}){
-        $r->{usable_life} = $report->format_amount({amount => $r->{usable_life}});
         for my $amt (qw(purchase_value adj_basis accum_depreciation 
                         disposal_amt)
         ){
-             $r->{$amt} = $report->format_amount({amount => $r->{$amt},
-                                              money  => 1,});
+             $r->{$amt} = $r->{$amt}->to_output(money  => 1);
         }
-        $r->{gain_loss} = $report->format_amount({amount => $r->{gain_loss},
-                                                 money => 1,
-                                               neg_format => '-' } );
+        $r->{gain_loss} = $r->{gain_loss}->to_output(money => 1, neg_format => '-');
         push @$rows, $r;
     }
     my $template = LedgerSMB::Template->new(
