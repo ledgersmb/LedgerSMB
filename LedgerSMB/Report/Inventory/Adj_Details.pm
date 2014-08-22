@@ -133,9 +133,9 @@ sub set_buttons {
 
 sub run_report {
     my ($self) = @_;
-    my ($rpt) = $self->exec_method({funcname => 'inventory_adj__get'});
+    my ($rpt) = $self->call_dbmethod(funcname => 'inventory_adj__get');
     $self->source($rpt->{source});
-    my @rows = $self->exec_method({funcname => 'inventory_adj__details'});
+    my @rows = $self->call_dbmethod(funcname => 'inventory_adj__details');
     for my $row (@rows){
         $row->{row_id} = $row->{parts_id}; 
     }
@@ -220,7 +220,7 @@ Deletes the inventory report
 
 sub delete {
     my ($self) = @_;
-    $self->exec_method(funcname => 'inventory_report__delete');
+    $self->call_dbmethod(funcname => 'inventory_report__delete');
 }
 
 =back

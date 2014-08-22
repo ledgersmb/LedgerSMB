@@ -142,7 +142,7 @@ sub run_report {
     $self->taxform($tf->{form_name});
     my $fname = 'tax_form_details_report';
     $fname .= '_accrual' if $tf->{is_accrual};
-    my @rows = $self->exec_method(funcname => $fname);
+    my @rows = $self->call_dbmethod(funcname => $fname);
 
     for my $row(@rows){
        $row->{total} = $row->{acc_total} + $row->{invoice_total};

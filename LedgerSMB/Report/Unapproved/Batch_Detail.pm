@@ -209,7 +209,7 @@ sub run_report{
                     value => 'single_batch_unlock',
                     class => 'submit',
                 }]);
-    my @rows = $self->exec_method({funcname => 'voucher__list'});
+    my @rows = $self->call_dbmethod(funcname => 'voucher__list');
     for my $ref (@rows){
         my $script;
         my $class_to_script = {

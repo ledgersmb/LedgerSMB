@@ -71,7 +71,7 @@ sub _get_from_date {
         my $date_string = $self->from_year . "-" .  $self->from_month . '-01';
         return LedgerSMB::PGDate->from_db($date_string, 'date');
     } else {
-        my ($ref) = $self->exec_method({funcname => 'lsmb__min_date'});
+        my ($ref) = $self->call_dbmethod(funcname => 'lsmb__min_date');
         if ($ref->{lsmb__min_date}){
             return LedgerSMB::PGDate->from_db($ref->{lsmb__min_date}, 'date');
         } else {
@@ -84,7 +84,7 @@ sub _get_from_date {
 sub _get_to_date {
     my ($self) = @_;
     if (!$self->from_month or !$self->from_year or $self->interval eq 'none'){
-        my ($ref) = $self->exec_method({funcname => 'lsmb__max_date'});
+        my ($ref) = $self->call_dbmethod(funcname => 'lsmb__max_date');
         if ($ref->{lsmb__max_date}){
              return LedgerSMB::PGDate->from_db($ref->{lsmb__max_date}, 'date');
         } else {

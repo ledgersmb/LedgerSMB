@@ -78,7 +78,7 @@ None
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->exec_method(funcname => 'gifi__list');
+    my @rows = $self->call_dbmethod(funcname => 'gifi__list');
     for my $row (@rows){
         $row->{row_id} = $row->{accno};
     }

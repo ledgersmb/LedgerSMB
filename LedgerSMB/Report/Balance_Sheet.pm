@@ -122,11 +122,11 @@ the balance sheet.
 
 sub run_report {
     my ($self) = @_;
-    my @headings = $self->exec_method({funcname => 'account__all_headings'});
+    my @headings = $self->call_dbmethod(funcname => 'account__all_headings');
     my $head = {};
     $head->{$_->{accno}} = $_ for (@headings);
    
-    my @lines = $self->exec_method({funcname => 'report__balance_sheet'});
+    my @lines = $self->call_dbmethod(funcname => 'report__balance_sheet');
 
     my $sheet = {A => { # Assets
                        lines => [], 

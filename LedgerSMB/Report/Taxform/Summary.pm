@@ -139,7 +139,7 @@ sub run_report {
     $self->taxform($tf->{form_name});
     my $fname = 'tax_form_summary_report';
     $fname .= '_accrual' if $tf->{is_accrual};
-    my @rows = $self->exec_method(funcname => $fname);
+    my @rows = $self->call_dbmethod(funcname => $fname);
 
     my $href_suffix_base = 'from_date=' . $self->from_date 
                          . '&to_date=' . $self->to_date
