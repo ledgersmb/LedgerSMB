@@ -13,7 +13,7 @@ LedgerSMB::Inventory::Adjust_Line - Inventory Adjustemnt Lines for LedgerSMB
 package LedgerSMB::Inventory::Adjust_Line;
 use Moose;
 use LedgerSMB::MooseTypes;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 
 =head1 DESCRIPTION
 
@@ -110,13 +110,13 @@ sub search_part{
     my ($self, $partnumber, $count_on) = @_;
     my $ref;
     if ($partnumber){
-        ($ref) = $self->exec_method(
-           {funcname => 'inventory__search_part', 
-                args => [$partnumber, $count_on]}
+        ($ref) = $self->call_procedure(
+           funcname => 'inventory__search_part', 
+                args => [$partnumber, $count_on]
         );
     } else {
         die 'Bad call for search_part' if !$self->{parts_id};
-        ($ref) = $self->exec_method({funcname => 'inventory__search_part'});
+        ($ref) = $self->call_dbmethod(funcname => 'inventory__search_part');
     }
     return $ref;
 }
@@ -159,7 +159,7 @@ sub save {
     $self->adjust_id($adjustment_id);
     die 'No part specified' unless $self->parts_id;
     $self->check_variance unless defined $self->variance;
-    $self->exec_method({funcname => 'inventory_adjust__save_line'});
+    $self->call_dbmethod(funcname => 'inventory_adjust__save_line');
 }
 
 =back
