@@ -31,6 +31,8 @@ with 'PGObject::Simple::Role';
 
 use LedgerSMB::App_State;
 
-
+sub _get_dbh { LedgerSMB::App_State::DBH() }
+sub _get_schema { 'public' } # can be overridden
+sub _get_prefix { '' } # can be overridden
 
 1;
