@@ -71,7 +71,7 @@ and re-renders the reconciliation screen.
 sub update_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
-    $recon->{their_total} = $recon->parse_amount(amount => $recon->{their_total}) if defined $recon->{their_total}; 
+    $recon->{their_total} = LedgerSMB::PGNumber->from_input($recon->{their_total}) if defined $recon->{their_total}; 
     if ($recon->{line_order}){
        $recon->set_ordering(
 		{method => 'reconciliation__report_details_payee', 
@@ -230,10 +230,10 @@ sub _display_report {
         if (!$recon->{line_order}){
            $recon->{line_order} = 'scn';
         }
-        $recon->{total_cleared_credits} = $recon->parse_amount(amount => 0);
-        $recon->{total_cleared_debits} = $recon->parse_amount(amount => 0);
-        $recon->{total_uncleared_credits} = $recon->parse_amount(amount => 0);
-        $recon->{total_uncleared_debits} = $recon->parse_amount(amount => 0);
+        $recon->{total_cleared_credits} = LedgerSMB::PGNumber->from_input(0);
+        $recon->{total_cleared_debits} = LedgerSMB::PGNumber->from_input(0);
+        $recon->{total_uncleared_credits} = LedgerSMB::PGNumber->from_input(0);
+        $recon->{total_uncleared_debits} = LedgerSMB::PGNumber->from_input(0);
         my $neg_factor = 1;
         if ($recon->{account_info}->{category} =~ /(A|E)/){
            $recon->{their_total} *= -1;
@@ -245,19 +245,19 @@ sub _display_report {
         # Credit/Debit separation (useful for some)
         for my $l (@{$recon->{report_lines}}){
             if ($l->{their_balance} > 0){
-               $l->{their_debits} = $recon->parse_amount(amount => 0);
+               $l->{their_debits} = LedgerSMB::PGNumber->from_input(0);
                $l->{their_credits} = $l->{their_balance};
             }
             else {
-               $l->{their_credits} = $recon->parse_amount(amount => 0);
+               $l->{their_credits} = LedgerSMB::PGNumber->from_input(0);
                $l->{their_debits} = $l->{their_balance}->bneg;
             }
             if ($l->{our_balance} > 0){
-               $l->{our_debits} = $recon->parse_amount(amount => 0);
+               $l->{our_debits} = LedgerSMB::PGNumber->from_input(0);
                $l->{our_credits} = $l->{our_balance};
             }
             else {
-               $l->{our_credits} = $recon->parse_amount(amount => 0);
+               $l->{our_credits} = LedgerSMB::PGNumber->from_input(0);
                $l->{our_debits} = $l->{our_balance}->bneg;
             }
 
@@ -269,54 +269,48 @@ sub _display_report {
                  $recon->{total_uncleared_debits}->badd($l->{our_debits});
             }
 
-            $l->{their_balance} = $recon->format_amount({amount => $l->{their_balance}, money => 1});
-            $l->{our_balance} = $recon->format_amount({amount => $l->{our_balance}, money => 1});
-            $l->{their_debits} = $recon->format_amount({amount => $l->{their_debits}, money => 1});
-            $l->{their_credits} = $recon->format_amount({amount => $l->{their_credits}, money => 1});
-            $l->{our_debits} = $recon->format_amount({amount => $l->{our_debits}, money => 1});
-            $l->{our_credits} = $recon->format_amount({amount => $l->{our_credits}, money => 1});
+            $l->{their_balance} = $l->{their_balance}->to_output(money => 1);
+            $l->{our_balance} = $l->{our_balance}->to_output(money => 1);
+            $l->{their_debits} = $l->{their_debits}->to_output(money => 1);
+            $l->{their_credits} = $l->{their_credits}->to_output(money => 1);
+            $l->{our_debits} = $l->{our_debits}->to_output(money => 1);
+            $l->{our_credits} = $l->{our_credits}->to_output(money => 1);
         }
 
-	$recon->{zero_string} = $recon->format_amount({amount => 0, money => 1});
+	$recon->{zero_string} = LedgerSMB::PGNumber->from_input(0)->to_output(money => 1);
 
 	$recon->{statement_gl_calc} = $neg_factor * 
                 ($recon->{their_total}
 		+ $recon->{outstanding_total} 
                 + $recon->{mismatch_our_total});
-        print STDERR "debug: $recon->{their_total} - $recon->{our_total}\n";
 	$recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
-        $recon->{cleared_total} = $recon->format_amount({amount => $recon->{cleared_total}, money => 1});
-        $recon->{outstanding_total} = $recon->format_amount({amount => $recon->{outstanding_total}, money => 1});
-        $recon->{mismatch_our_debits} = $recon->format_amount(
-		{amount => $recon->{mismatch_our_debits}, money => 1});
-        $recon->{mismatch_our_credits} = $recon->format_amount(
-		{amount => $recon->{mismatch_our_credits}, money => 1});
-        $recon->{mismatch_their_debits} = $recon->format_amount(
-		{amount => $recon->{mismatch_their_debits}, money => 1});
-        $recon->{mismatch_their_credits} = $recon->format_amount(
-		{amount => $recon->{mismatch_their_credits}, money => 1});
-        $recon->{statement_gl_calc} = $recon->format_amount(
-		{amount => $recon->{statement_gl_calc}, money => 1});
-        $recon->{total_cleared_debits} = $recon->format_amount(
-              {amount => $recon->{total_cleared_debits}, money => 1}
-        );
-        $recon->{total_cleared_credits} = $recon->format_amount(
-               {amount => $recon->{total_cleared_credits}, money => 1}
-        );
-        $recon->{total_uncleared_debits} = $recon->format_amount(
-              {amount => $recon->{total_uncleared_debits}, money => 1}
-        );
-        $recon->{total_uncleared_credits} = $recon->format_amount(
-               {amount => $recon->{total_uncleared_credits}, money => 1}
-        );
-	$recon->{their_total} = $recon->format_amount(
-		{amount => $recon->{their_total} * $neg_factor, money => 1});
-	$recon->{our_total} = $recon->format_amount(
-		{amount => $recon->{our_total}, money => 1});
-	$recon->{beginning_balance} = $recon->format_amount(
-		{amount => $recon->{beginning_balance}, money => 1});
-	$recon->{out_of_balance} = $recon->format_amount(
-		{amount => $recon->{out_of_balance}, money => 1});
+        $recon->{cleared_total} = $recon->{cleared_total}->to_output(money => 1);
+        $recon->{outstanding_total} = $recon->{outstanding_total}->to_output(money => 1);
+        $recon->{mismatch_our_debits} = 
+                $recon->{mismatch_our_debits}->to_output(money => 1);
+        $recon->{mismatch_our_credits} =
+		$recon->{mismatch_our_credits}->to_output(money => 1);
+        $recon->{mismatch_their_debits} = 
+		$recon->{mismatch_their_debits}->to_output(money => 1);
+        $recon->{mismatch_their_credits} =
+		$recon->{mismatch_their_credits}->to_output(money => 1);
+        $recon->{statement_gl_calc} =
+		$recon->{statement_gl_calc}->to_output(money => 1);
+        $recon->{total_cleared_debits} = 
+                $recon->{total_cleared_debits}->to_output(money => 1);
+        $recon->{total_cleared_credits} = 
+                $recon->{total_cleared_credits}->to_output(money => 1);
+        $recon->{total_uncleared_debits} = 
+                $recon->{total_uncleared_debits}->to_output(money => 1);
+        $recon->{total_uncleared_credits} = 
+                $recon->{total_uncleared_credits}->to_output(money => 1);
+	$recon->{their_total} = $recon->{their_total} * $neg_factor;
+        $recon->{their_total} = $recon->{their_total}->to_output(money => 1);
+	$recon->{our_total} = $recon->{our_total}->to_output(money => 1);
+	$recon->{beginning_balance} = 
+		$recon->{beginning_balance}->to_output(money => 1);
+	$recon->{out_of_balance} = 
+		$recon->{out_of_balance}->to_output(money => 1);
 
         return $template->render($recon);
 }
@@ -337,7 +331,7 @@ sub new_report {
         ));
     }
 
-    $request->{total} = $request->parse_amount(amount => $request->{total});
+    $request->{total} = LedgerSMB::PGNumber->from_input($request->{total});
     my $template;
     my $return;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all'); 
