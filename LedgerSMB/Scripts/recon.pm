@@ -71,7 +71,7 @@ and re-renders the reconciliation screen.
 sub update_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
-    $recon->{their_total} = $recon->parse_amount(amount => $recon->{their_total}) if defined $recon->{their_total}; 
+    $recon->{their_total} = LedgerSMB::PGNumber->from_input($recon->{their_total}) if defined $recon->{their_total}; 
     if ($recon->{line_order}){
        $recon->set_ordering(
 		{method => 'reconciliation__report_details_payee', 
@@ -230,10 +230,10 @@ sub _display_report {
         if (!$recon->{line_order}){
            $recon->{line_order} = 'scn';
         }
-        $recon->{total_cleared_credits} = $recon->parse_amount(amount => 0);
-        $recon->{total_cleared_debits} = $recon->parse_amount(amount => 0);
-        $recon->{total_uncleared_credits} = $recon->parse_amount(amount => 0);
-        $recon->{total_uncleared_debits} = $recon->parse_amount(amount => 0);
+        $recon->{total_cleared_credits} = LedgerSMB::PGNumber->from_input(0);
+        $recon->{total_cleared_debits} = LedgerSMB::PGNumber->from_input(0);
+        $recon->{total_uncleared_credits} = LedgerSMB::PGNumber->from_input(0);
+        $recon->{total_uncleared_debits} = LedgerSMB::PGNumber->from_input(0);
         my $neg_factor = 1;
         if ($recon->{account_info}->{category} =~ /(A|E)/){
            $recon->{their_total} *= -1;
@@ -245,19 +245,19 @@ sub _display_report {
         # Credit/Debit separation (useful for some)
         for my $l (@{$recon->{report_lines}}){
             if ($l->{their_balance} > 0){
-               $l->{their_debits} = $recon->parse_amount(amount => 0);
+               $l->{their_debits} = LedgerSMB::PGNumber->from_input(0);
                $l->{their_credits} = $l->{their_balance};
             }
             else {
-               $l->{their_credits} = $recon->parse_amount(amount => 0);
+               $l->{their_credits} = LedgerSMB::PGNumber->from_input(0);
                $l->{their_debits} = $l->{their_balance}->bneg;
             }
             if ($l->{our_balance} > 0){
-               $l->{our_debits} = $recon->parse_amount(amount => 0);
+               $l->{our_debits} = LedgerSMB::PGNumber->from_input(0);
                $l->{our_credits} = $l->{our_balance};
             }
             else {
-               $l->{our_credits} = $recon->parse_amount(amount => 0);
+               $l->{our_credits} = LedgerSMB::PGNumber->from_input(0);
                $l->{our_debits} = $l->{our_balance}->bneg;
             }
 
@@ -337,7 +337,7 @@ sub new_report {
         ));
     }
 
-    $request->{total} = $request->parse_amount(amount => $request->{total});
+    $request->{total} = LedgerSMB::PGNumber->from_input($request->{total});
     my $template;
     my $return;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request, copy => 'all'); 

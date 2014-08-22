@@ -271,8 +271,8 @@ sub asset_save {
     my ($request) = @_;
     my $asset = LedgerSMB::DBObject::Asset->new(base => $request);
     for my $number (qw(salvage_value purchase_value usable_life)){
-        $asset->{"$number"} = $asset->parse_amount(
-                   user => $asset->{_user}, amount => $asset->{"$number"}
+        $asset->{"$number"} = LedgerSMB::PGNumber->from_input(
+               $asset->{"$number"}
         );
     }
     $asset->save;
@@ -949,8 +949,10 @@ sub run_import {
           $ai->{$file_columns[$_]} = $ail->[$_];
         }
         next if $ai->{purchase_value} !~ /\d/;
-        $ai->{purchase_value} = $ai->parse_amount(amount => $ai->{purchase_value});
-        $ai->{accum_dep} = $ai->parse_amount(amount => $ai->{accum_dep});
+        $ai->{purchase_value} = LedgerSMB::PGNumber->from_input(
+             $ai->{purchase_value}
+        );
+        $ai->{accum_dep} = LedgerSMB::PGNumber->from_input($ai->{accum_dep});
         $ai->{dep_account} = $default_dep_account if !$ai->{dep_account};
         $ai->{asset_account} = $default_asset_account if !$ai->{dep_account};
         if (!$ai->{start_depreciation}){

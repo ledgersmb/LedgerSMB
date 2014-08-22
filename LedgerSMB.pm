@@ -471,20 +471,6 @@ sub format_amount {
            });
 }
 
-# For backwards compatibility only
-sub parse_amount {
-    my $self     = shift @_;
-    my %args     = @_;
-    my $amount   = $args{amount};
-    my $user     = ($args{user})? ($args{user}) : $self->{_user};
-    if (UNIVERSAL::isa($amount, 'LedgerSMB::PGNumber')){
-        return $amount;
-    } 
-    return LedgerSMB::PGNumber->from_input($amount, 
-                                     {format => $user->{numberformat}}
-    ); 
-}
-
 sub round_amount {
 
     my ( $self, $amount, $places ) = @_;
