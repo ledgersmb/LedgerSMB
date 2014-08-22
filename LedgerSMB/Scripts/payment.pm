@@ -390,9 +390,9 @@ sub print {
                     $invhash->{$_} = $payment->{"${_}_$inv_id"};
                 }
                 if ($payment->{"paid_$id"} eq 'some'){
-                    $invhash->{paid} = $payment->parse_amount(amount => $payment->{"payment_$inv_id"});
+                    $invhash->{paid} = LedgerSMB::PGNumber->from_input($payment->{"payment_$inv_id"});
                 } elsif ($payment->{"paid_$id"} eq 'all'){
-                    $invhash->{paid} = $payment->parse_amount(amount => $payment->{"net_$inv_id"});
+                    $invhash->{paid} = LedgerSMB::PGNumber->from_input($payment->{"net_$inv_id"});
                 } else {
                     $payment->error("Invalid Payment Amount Option"); 
                 }
@@ -465,10 +465,10 @@ sub display_payments {
 
                    if ($payment->{"paid_$_->{contact_id}"} eq 'some'){
                       my $i_id = $invoice->[0];
-                      my $payment_amt = $payment->parse_amount(
-				amount => $payment->{"payment_$i_id"});
-                      $contact_total 
-                              += $payment_amt;
+                      my $payment_amt = LedgerSMB::PGNumber->from_input(
+                          $payment->{"payment_$i_id"}
+                      );
+                      $contact_total += $payment_amt;
                    } 
             }
             $invoice->[3] = $payment->format_amount(amount => $invoice->[3], 
@@ -478,11 +478,11 @@ sub display_payments {
             $invoice->[5] = $payment->format_amount(amount => $invoice->[5],
                                                     money  => 1);
             $invoice->[6] = $payment->format_amount(amount => (
-                    $payment->parse_amount(amount => $invoice->[3]) 
-                    - $payment->parse_amount(amount => $invoice->[4])
-                    - $payment->parse_amount(amount => $invoice->[5])),
+                    LedgerSMB::PGNumber->from_input($invoice->[3]) 
+                    - (LedgerSMB::PGNumber->from_input($invoice->[4])
+                    - LedgerSMB::PGNumber->from_input($invoice->[5])),
                                                     money  => 1);
-            $contact_to_pay +=  $payment->parse_amount(amount => $invoice->[6]);
+            $contact_to_pay +=  LedgerSMB::PGNumber->from_input($invoice->[6]);
             my $fld = "payment_" . $invoice->[0];
             if (!defined $payment->{"$fld"} ){
                 $payment->{"$fld"} = $invoice->[6];
@@ -817,16 +817,14 @@ if ($request->{account_class} == 1){
  push @column_headers, {text => $locale->text('Received').$currency_text}, 
                        {text => 'X'};
 }
-# WE NEED TO QUERY THE DATABASE TO CHECK FOR OPEN INVOICES
-# WE WONT DO ANYTHING IF WE DONT FIND ANY INVOICES, THE USER CAN STILL POST A PREPAYMENT
 my @invoice_data;
-my @topay_state; # WE WILL USE THIS TO HELP UI TO DETERMINE WHAT IS VISIBLE
+my @topay_state; 
 @array_options  = $Payment->get_open_invoices(); 
 my $unhandled_overpayment;
 for my $ref (0 .. $#array_options) {
  $array_options[$ref]->{invoice_date} = $array_options[$ref]->{invoice_date}->to_output;
  if (  !$request->{"checkbox_$array_options[$ref]->{invoice_id}"}) {
-   my $request_topay_fx_bigfloat=$Payment->parse_amount(amount=>$request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
+   my $request_topay_fx_bigfloat=$LedgerSMB::PGNumber->from_input($request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
 # SHOULD I APPLY DISCCOUNTS?   
       $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} = $request->{first_load}? "on":  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"};
 
@@ -1143,7 +1141,7 @@ for my $ref (0 .. $#array_options) {
          # we will assume that a discount should apply only
          # if this is the last payment of an invoice
      my  $temporary_discount = 0;
-     my  $request_topay_fx_bigfloat=$Payment->parse_amount(amount=>$request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
+     my  $request_topay_fx_bigfloat=LedgerSMB::PGNumber->from_input($request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
      if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&("$array_options[$ref]->{due_fx}" <=  $request_topay_fx_bigfloat +  $array_options[$ref]->{discount_fx})) {
          $temporary_discount = $array_options[$ref]->{discount_fx};
      }   
