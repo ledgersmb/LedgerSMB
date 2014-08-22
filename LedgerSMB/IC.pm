@@ -801,19 +801,9 @@ sub retrieve_assemblies {
 sub restock_assemblies {
     my ( $self, $myconfig, $form ) = @_;
 
-    # connect to database
-    my $dbh = $form->{dbh};
-
-    for my $i ( 1 .. $form->{rowcount} ) {
-        $form->{"qty_$i"} = $form->parse_amount( $myconfig, $form->{"qty_$i"} );
-
-        if ( $form->{"qty_$i"} ) {
-            &adjust_inventory( $dbh, $form, $form->{"id_$i"},
-                $form->{"qty_$i"} );
-        }
-
-    }
-
+    my $sth = $form->{dbh}->prepare('SELECT assembly__stock(?, ?)');
+    for ( 1 .. $form->{rowcount} ){
+       $sth->execute($form->{"id_$_"}, $form->{"qty_$_"}) || $form->dberror(' stored procedure: assembly__stock ');
 
     1;
 

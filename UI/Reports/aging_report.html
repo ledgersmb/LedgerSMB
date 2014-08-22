@@ -46,6 +46,12 @@ FOREACH KEY IN report.keys();
     END;
 END;
 
+PROCESS input element_data = {
+    name = 'rowcount'
+   value = rows.size
+    type = 'hidden'
+};
+
 PROCESS dynatable tbody = {rows = rows } 
                attributes = {id = 'aging', class = 'report' };
 PROCESS button element_data = {
@@ -57,15 +63,16 @@ PROCESS button element_data = {
 };
 PROCESS select element_data = {
     name = 'print_template'
- options = [{text = 'Statement', value = 'Statement'}]
+ options = [{text = 'Statement', value = 'statement'}]
    class = 'print_template'
 };
 
 PRINTERS.push({text = text('Email'), value = 'email' });
 
-PFORMATS = [];
+PFORMATS = [ {text = 'PDF', value = 'pdf'},
+             {text = 'HTML', value = 'html'} ];
 
-FOREACH F IN STDFORMATS;
+FOREACH F IN LIST_FORMATS();
   PFORMATS.push({text = F, value = F});
 END;
 

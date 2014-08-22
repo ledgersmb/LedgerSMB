@@ -373,6 +373,10 @@ sub form_header {
         $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected="selected"/;
     }
 
+
+    $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
+    $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
+
     $form->{exchangerate} =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
 
@@ -644,6 +648,13 @@ function on_return_submit(event){
         
         # changes by Aurynn to add an On Hold button
 
+        if ($form->{on_hold}) {
+            $hold_button_text = $locale->text('Off Hold');
+        } else {
+            $hold_button_text = $locale->text('On Hold');
+        }
+
+
         %button = (
             'update' =>
               { ndx => 1, key => 'U', value => $locale->text('Update') },
@@ -726,6 +737,7 @@ function on_return_submit(event){
 
                 for ( keys %button ) { delete $button{$_} if !$allowed{$_} }
             }
+
             elsif ($closedto) {
                 %button = ();
             }
@@ -753,10 +765,14 @@ sub void {
     $form->{reverse} = 1;
     $form->{paidaccounts} = 1;
     if ($form->{paid_1}){
-        warn $locale->text(
+       warn $locale->text(
              'Payments associated with voided invoice may need to be reversed.'
         );
         delete $form->{paid_1};
+    }
+    if ($form->{manual_tax}){
+        $form->{"mt_amount_$_"} *= -1 for split / /,$form->{taxaccounts};
+        $form->{"mt_basis_$_"} *= -1 for split / /,$form->{taxaccounts};
     }
     &post_as_new;
 }
@@ -1518,13 +1534,11 @@ sub save_info {
 
 	    $taxformfound=IS->taxform_exist($form,$form->{"customer_id"});
 	    
-        #print STDERR qq|___Rowcount=$form->{rowcount} _______|;
             $form->{arap} = 'ar';
             AA->save_intnotes($form);
 
 	    foreach my $i(1..($form->{rowcount}))
 	    {
-            #print STDERR qq| taxformcheck_$i = $form->{"taxformcheck_$i"} and taxformfound= $taxformfound ___________|;
 		
 		if($form->{"taxformcheck_$i"} and $taxformfound)
 		{

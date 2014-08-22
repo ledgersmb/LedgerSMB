@@ -86,13 +86,16 @@ CREATE TABLE account (
   accno text primary key,
   description text,
   is_temp bool not null default false,
-  category CHAR(1) NOT NULL,
+  category CHAR(1) NOT NULL check (category IN ('A','L','Q','I','E')),
   gifi_accno text,
   heading int not null references account_heading(id),
   contra bool not null default false,
   tax bool not null default false,
   obsolete bool not null default false
 );
+
+COMMENT ON COLUMN account.category IS
+$$ A=asset,L=liability,Q=Equity,I=Income,E=expense $$;
 
 COMMENT ON COLUMN account.is_temp IS
 $$ Only affects equity accounts.  If set, close at end of year. $$;
@@ -1524,13 +1527,36 @@ $$Hyperlink to product image.$$;
 CREATE UNIQUE INDEX parts_partnumber_index_u ON parts (partnumber) 
 WHERE obsolete is false;
 
+CREATE SEQUENCE lot_tracking_number;
+CREATE TABLE mfg_lot (
+    id serial not null unique,
+    lot_number text not null unique default nextval('lot_tracking_number')::text,
+    parts_id int not null references parts(id),
+    qty numeric not null,
+    stock_date date not null default now()::date
+);
+
+COMMENT ON TABLE mfg_lot IS 
+$$ This tracks assembly restocks.  This is designed to work with old code and
+may change as we refactor the parts.$$;
+    
+CREATE TABLE mfg_lot_item (
+    id serial not null unique,
+    mfg_lot_id int not null references mfg_lot(id),
+    parts_id int not null references parts(id),
+    qty numeric not null
+);
+
+COMMENT ON TABLE mfg_lot_item IS
+$$ This tracks items used in assembly restocking.$$;
+
 CREATE TABLE invoice (
   id serial PRIMARY KEY,
   trans_id int REFERENCES transactions(id),
   parts_id int REFERENCES parts(id),
   description text,
   qty NUMERIC,
-  allocated integer,
+  allocated NUMERIC,
   sellprice NUMERIC,
   precision int,
   fxsellprice NUMERIC,
@@ -2865,7 +2891,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 194	Credit Note	1	5
 195	Credit Invoice	1	6
 245	Import	73	2
-76	Reports	73	4
+76	Search and GL	73	4
 139	Add GIFI	136	4
 140	List GIFI	136	5
 247	Import GIFI	136	6
@@ -2904,6 +2930,7 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 18	Reverse Overpay	200	3
 26	Reverse AR Overpay	200	6
 59	Inventory	205	4
+75	Inventory and COGS	109	5
 \.
 
 
@@ -3558,8 +3585,10 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 59	action	start_report	217
 59	report_name	inventory_adj	218
 106	module	reports.pl	263
+75	module	reports.pl	219
+75	action	start_report	226
+75	report_name	cogs_lines	227
 \.
-
 
 --
 

@@ -159,6 +159,7 @@ and these optional ones:
   Locale::Country    [Developer tool dependencies]
   Locale::Language   [Developer tool dependencies]
   Template::Plugin::Latex [Support for Postscript and PDF output]
+  TeX::Encode             [Support for Postscript and PDF output]
   XML::Twig               [Support for OpenOffice output]
   OpenOffice::OODoc       [Support for OpenOffice output]
 
@@ -216,7 +217,8 @@ This installs the required modules available from the Wheezy repository.
 To install the (optional) PDF/Postscript output module, install the
 following packages by executing this command:
 
- $ aptitude install libtemplate-plugin-latex-perl texlive-latex-recommended
+ $ aptitude install libtemplate-plugin-latex-perl \
+      libtex-encode-perl texlive-latex-recommended
 
 The credit card processing support for TrustCommerce is available
 from the Wheezy repository through:

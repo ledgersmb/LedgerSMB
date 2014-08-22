@@ -195,12 +195,14 @@ SELECT lsmb__create_role('file_attach_part');
 SELECT lsmb__grant_perms('file_attach_part', 'file_part', 'INSERT');
 SELECT lsmb__grant_perms('file_attach_part', 'file_part', 'UPDATE');
 
-SELECT lsmb__grant_perms('file_attach_tx', 'file_base_id_seq', 'ALL');
-SELECT lsmb__grant_perms('file_attach_order', 'file_base_id_seq', 'ALL');
-SELECT lsmb__grant_perms('file_attach_part', 'file_base_id_seq', 'ALL');
-SELECT lsmb__grant_perms(role, 'file_incoming', 'DELETE')
+SELECT lsmb__create_role('file_attach_eca');
+SELECT lsmb__grant_perms('file_attach_eca', 'file_eca', 'INSERT');
+SELECT lsmb__grant_perms('file_attach_eca', 'file_eca', 'UPDATE');
+
+SELECT lsmb__grant_perms(role, 'file_incoming', 'DELETE'),
+       lsmb__grant_perms(role, 'file_base_id_seq', 'ALL')
   FROM unnest(ARRAY['file_attach_tx'::text, 'file_attach_order', 
-                    'file_attach_part']) role;
+                    'file_attach_part', 'file_attach_eca']) role;
 
 \echo Contact Management
 SELECT lsmb__create_role('contact_read');
@@ -303,10 +305,19 @@ SELECT lsmb__grant_perms('contact_edit', 'eca_to_contact', 'ALL');
 SELECT lsmb__grant_perms('contact_edit', 'eca_to_location', 'ALL');
 SELECT lsmb__grant_perms('contact_edit', 'eca_tax', 'ALL');
 
+SELECT lsmb__create_role('contact_delete');
+SELECT lsmb__grant_perms('contact_delete', obj, 'DELETE')
+  FROM unnest(ARRAY['entity'::text, 'company', 'person', 'location', 
+                    'entity_credit_account', 'eca_tax', 'entity_note', 
+                    'eca_note', 'entity_to_location', 'eca_to_location',
+                    'eca_to_contact', 'entity_to_contact', 'entity_other_name',
+                    'entity_bank_account', 'person_to_company']) obj;
+
 SELECT lsmb__create_role('contact_all_rights');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_create');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_edit');
 SELECT lsmb__grant_role('contact_all_rights', 'contact_read');
+SELECT lsmb__grant_role('contact_all_rights', 'contact_delete');
 
 \echo Batches and Vouchers
 SELECT lsmb__create_role('batch_create');
@@ -315,6 +326,7 @@ SELECT lsmb__grant_perms('batch_create', 'batch_id_seq', 'ALL');
 SELECT lsmb__grant_perms('batch_create', 'batch_class', 'SELECT');
 SELECT lsmb__grant_perms('batch_create', 'voucher', 'INSERT');
 SELECT lsmb__grant_perms('batch_create', 'voucher_id_seq', 'ALL');
+SELECT lsmb__grant_exec('batch_create', 'batch__lock_for_update(int)');
 
 SELECT lsmb__create_role('batch_post');
 SELECT lsmb__grant_exec('batch_post', 'batch_post(int)');
@@ -424,6 +436,16 @@ SELECT lsmb__create_role('sales_order_edit');
 SELECT lsmb__grant_perms('sales_order_edit', 'orderitems', 'DELETE');
 SELECT lsmb__grant_perms('sales_order_edit', 'business_unit_oitem', 'DELETE');
 SELECT lsmb__grant_perms('sales_order_edit', 'new_shipto', 'DELETE');
+
+SELECT lsmb__create_role(dt || '_delete') 
+  FROM unnest(array['sales_order'::text, 'sales_quotation', 'purchase_order', 
+              'rfq']) dt;
+SELECT lsmb__grant_perms(dt || '_delete', obj, 'DELETE')
+  FROM unnest(ARRAY['oe'::TEXT, 'orderitems', 'business_unit_oitem', 
+                    'new_shipto']) obj
+ CROSS 
+  JOIN unnest(array['sales_order'::text, 'sales_quotation', 'purchase_order',
+              'rfq']) dt;
 
 SELECT lsmb__create_role('sales_quotation_create');
 SELECT lsmb__grant_role('sales_quotation_create', 'contact_read');
@@ -681,11 +703,16 @@ SELECT lsmb__grant_perms('part_edit', obj, 'SELECT')
   FROM unnest(array['assembly'::text, 'orderitems', 'jcitems', 'invoice', 
                     'business_unit_oitem']) obj;
 
+SELECT lsmb__create_role('part_delete');
+SELECT lsmb__grant_perms('part_delete', obj, 'DELETE')
+  FROM unnest(array['parts'::text, 'partsgroup', 'assembly']) obj;
+
 SELECT lsmb__create_role('inventory_reports');
 SELECT lsmb__grant_perms('inventory_reports', obj, 'SELECT')
   FROM unnest(array['ar'::text, 'ap', 'inventory', 'invoice', 'acc_trans']) obj;
 
 SELECT lsmb__grant_menu('inventory_reports', 114, 'allow');
+SELECT lsmb__grant_menu('inventory_reports', 75, 'allow');
 
 SELECT lsmb__create_role('inventory_adjust');
 SELECT lsmb__grant_perms('inventory_adjust', obj, 'SELECT')
@@ -720,6 +747,16 @@ SELECT lsmb__grant_perms('pricegroup_edit', 'entity_credit_account', 'UPDATE');
 
 SELECT lsmb__create_role('assembly_stock');
 SELECT lsmb__grant_perms('assembly_stock', 'parts', 'UPDATE');
+
+SELECT lsmb__grant_perms('assembly_stock', t_name, perm)
+  FROM unnest(ARRAY['mfg_lot'::text, 'mfg_lot_item']) t_name
+ CROSS JOIN
+       unnest(ARRAY['SELECT'::text, 'INSERT', 'UPDATE']) perm;
+
+SELECT lsmb__grant_perms('assembly_stock', t_name, 'UPDATE')
+  FROM unnest(ARRAY['mfg_lot_id_seq'::text, 'mfg_lot_item_id_seq', 
+                    'lot_tracking_number']) t_name;
+
 SELECT lsmb__grant_menu('assembly_stock', 84, 'allow');
 
 SELECT lsmb__create_role('inventory_ship');
@@ -855,7 +892,7 @@ SELECT lsmb__grant_role('orders_manage', rname)
 SELECT lsmb__create_role('financial_reports');
 SELECT lsmb__grant_role('financial_reports', 'gl_reports');
 SELECT lsmb__grant_menu('financial_reports', node_id, 'allow')
-  FROM unnest(array[110,111,112,113,114]) node_id;
+  FROM unnest(array[75,110,111,112,113,114]) node_id;
 
 SELECT lsmb__grant_perms('financial_reports', obj, 'SELECT')
   FROM unnest(array['yearend'::text, 'cash_impact', 'tx_report']) obj;
@@ -903,8 +940,14 @@ SELECT lsmb__grant_menu('account_create', id, 'allow')
   FROM unnest(array[137,246]) id;
 
 SELECT lsmb__create_role('account_edit');
-SELECT lsmb__grant_perms('account_edit', obj, 'ALL')
+SELECT lsmb__grant_perms('account_edit', obj, perm)
   FROM unnest(array['account'::text, 'account_heading', 'account_link', 
+                    'cr_coa_to_account', 'tax']) obj
+ CROSS JOIN unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) perm;
+
+SELECT lsmb__create_role('account_delete');
+SELECT lsmb__grant_perms('account_delete', obj, 'DELETE')
+  FROM unnest(array['account'::text, 'account_heading', 'account_link',
                     'cr_coa_to_account', 'tax']) obj;
 
 SELECT lsmb__create_role('auditor');

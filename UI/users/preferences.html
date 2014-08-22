@@ -8,6 +8,11 @@
                type = "hidden"
                value = login
 } ?>
+<?lsmb INCLUDE input element_data = {
+               name = "company"
+               type = "hidden"
+               value = company
+} ?>
 <table width="100%">
   <tr><th class="listtop"><?lsmb text('Preferences for [_1]', login) ?></th></tr>
   <?lsmb IF action == 'save_preferences' ?> <tr><th class="info">
@@ -40,30 +45,28 @@
 		<td><?lsmb PROCESS select element_data={
                       name = 'dateformat'
                       options = dateformats
-                      default_values = [dateformat]
+                      default_values = [ prefs.dateformat ]
                       text_attr = 'format'
-                      value_attr = 'id'
+                      value_attr = 'format'
                     } ?></td>
 	      </tr>
 	      <tr>
 		<th align="right"><?lsmb text('Number Format') ?></th>
-		<td><?lsmb numberformat = user.numberformat -?>
-                    <?lsmb PROCESS select element_data={ 
+		<td><?lsmb PROCESS select element_data={ 
                       name = 'numberformat',
                       options = numberformats,
-                      default_values = [numberformat],
+                      default_values = [ prefs.numberformat],
                       text_attr = 'format',
                       value_attr = 'format',
                     } ?></td>
 	      </tr>
 	      <tr>
 		<th align="right"><?lsmb text('Language') ?></th>
-		<td><?lsmb language = user.language -?>
-		    <?lsmb country_codes.unshift({}) ?>
+                <td><?lsmb country_codes.unshift({}) ?>
                     <?lsmb PROCESS select element_data={
                      name = 'language',
                      options = country_codes,
-                     default_values = [language],
+                     default_values = [ prefs.language],
                      text_attr = 'label',
                      value_attr = 'id',
                    }?> </td>
@@ -73,7 +76,7 @@
 		<td><?lsmb PROCESS select element_data={
                       name = 'stylesheet'
                       options = cssfiles
-                      default_values = [stylesheet]
+                      default_values = [ prefs.stylesheet]
                       text_attr = 'file'
                       value_attr = 'file'
                      } ?></td>
@@ -81,11 +84,10 @@
 <?lsmb IF printers.defined ?> 
 	      <tr>
 		<th align="right"><?lsmb text('Printer') ?></th>
-		<td><?lsmb printer = user.printer -?>
-                   <?lsmb PROCESS select element_data={
+		<td><?lsmb PROCESS select element_data={
                      name = 'printer'
                      options = printers
-                     default_values = [printer] 
+                     default_values = [ prefs.printer] 
                      text_attr = 'printer'
                      value_attr = 'printer'
                      }?></td>

@@ -41,24 +41,19 @@ Displays the preferences screen.  No inputs needed.
 sub preference_screen {
     my ($request) = @_;
     my $user = LedgerSMB::DBObject::User->new({base => $request});
+    $user->get($user->{_user}->{id});
     $user->get_option_data;
 
-    for my $format(@{$user->{dateformats}}){
-        $format->{id} = $format->{format};
-        $format->{id} =~ s/\//$slash/g;
-    }
-
-    $user->{dateformat} = $user->{_user}->{dateformat};
-    $user->{dateformat} =~ s/\//$slash/g;
-     
     my $template = LedgerSMB::Template->new(
-            user     =>$request->{_user}, 
+            user     => $user, 
             locale   => $request->{_locale},
             path     => 'UI/users',
             template => 'preferences',
 	    format   => 'HTML'
     );
-    $user->{user} = $request->{_user};
+
+    my $creds = LedgerSMB::Auth::get_credentials();
+    $user->{login} = $creds->{login};
     $user->{password_expires} =~ s/:(\d|\.)*$//;
     $template->render($user);
 }

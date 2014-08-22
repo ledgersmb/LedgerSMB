@@ -37,7 +37,6 @@ your software.
 package LedgerSMB::Contact;
 
 use base LedgerSMB::DBObject;
-#use LedgerSMB::Error;
 
 
 sub save {

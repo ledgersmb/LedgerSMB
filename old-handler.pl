@@ -167,7 +167,6 @@ $form->db_init( \%myconfig );
 
 # we get rid of myconfig and use User as a real object
 %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
-$form->{_myconfig} = \%myconfig;
 $LedgerSMB::App_State::User = \%myconfig;
 map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
   unless ( $form->{type} eq 'preferences' );
@@ -219,7 +218,7 @@ $LedgerSMB::App_State::Locale = $locale;
   # when output terminates.  A mere 'die' will no longer trigger an automatic
   # error, but die 'foo' will map to $form->error('foo')
   # -- CT
-  $form->_error("'$_'")  unless $_ =~ /^Died/i or $_ =~ /^exit at Ledger/; 
+  $form->_error("'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at Ledger/; 
 } 
 ;
 

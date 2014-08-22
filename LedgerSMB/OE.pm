@@ -324,6 +324,8 @@ sub save {
 
             $netamount += $form->{"sellprice_$i"} * $form->{"qty_$i"};
 
+            $project_id = "0";
+
             if ( $form->{"projectnumber_$i"} ne "" ) {
                 ( $null, $project_id ) = split /--/,
                   $form->{"projectnumber_$i"};

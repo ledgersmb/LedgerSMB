@@ -88,8 +88,9 @@ sub init_taxes {
         $tax->maxvalue(Math::BigFloat->new($ref->{'maxvalue'} || 0));
 
         push @taxes, $tax;
-        $sth->finish;#should this not be out of foreach loop?, to examine
     }
+    # http://search.cpan.org/dist/DBI/DBI.pm#finish
+    # documents we should NOT call $sth->finish here.
     return @taxes;
 }
 

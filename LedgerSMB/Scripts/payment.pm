@@ -52,8 +52,6 @@ use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Invoices::Payments;
-use Error::Simple;
-use Error;
 use strict; 
 
 # CT:  A few notes for future refactoring of this code:

@@ -2,6 +2,46 @@
 -- not recommended for current usage.  Not documenting yet.  --CT
 BEGIN;
 
+DROP TYPE IF EXISTS incoming_lot_cogs_line CASCADE;
+
+CREATE TYPE incoming_lot_cogs_line AS (
+       id int,
+       trans_id int,
+       invnumber text,
+       transdate date,
+       parts_id int,
+       partnumber text,
+       description text,
+       qty numeric,
+       allocated numeric,
+       onhand numeric,
+       sellprice numeric,
+       total_value numeric,
+       cogs_sold numeric
+);
+
+CREATE OR REPLACE FUNCTION report__incoming_cogs_line
+(in_date_from date, in_date_to date, in_partnumber text, 
+in_parts_description text)
+RETURNS SETOF incoming_lot_cogs_line 
+LANGUAGE SQL AS
+$$
+SELECT i.id, a.id, a.invnumber, a.transdate, i.parts_id, p.partnumber, 
+       i.description, i.qty * -1, i.allocated, p.onhand, 
+       i.sellprice, i.qty * i.sellprice * -1, i.allocated * i.sellprice
+  FROM ap a
+  JOIN invoice i ON a.id = i.trans_id
+  JOIN parts p ON i.parts_id = p.id
+ WHERE p.income_accno_id IS NOT NULL AND p.expense_accno_id IS NOT NULL
+       AND (a.transdate >= $1 OR $1 IS NULL) 
+       AND (a.transdate <= $2 OR $2 IS NULL) 
+       AND (p.partnumber like $3 || '%' OR $3 IS NULL)
+       AND (p.description @@ plainto_tsquery($4) 
+            OR p.description LIKE '%' || $4 || '%'
+            OR $4 IS NULL)
+ ORDER BY p.partnumber, a.invnumber;
+$$;
+
 DROP TYPE IF EXISTS report_aging_item CASCADE;
 
 CREATE TYPE report_aging_item AS (
@@ -42,6 +82,7 @@ BEGIN
                 SELECT id, id::text AS path
                   FROM business_unit
                  WHERE id = any(in_business_units)
+                       OR in_business_units IS NULL
                  UNION
                 SELECT bu.id, bu_tree.path || ',' || bu.id
                   FROM business_unit bu

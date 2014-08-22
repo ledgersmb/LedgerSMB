@@ -146,10 +146,7 @@ sub post_transaction {
            if (not defined $form->{batch_id}){
                $form->error($locale->text('Batch ID Missing'));
            }
-           my $vqh = $dbh->prepare(
-              'SELECT * FROM batch 
-               WHERE id = ? FOR UPDATE'
-           );
+           my $vqh = $dbh->prepare('SELECT * FROM batch__lock_for_update(?)');
            $vqh->execute($form->{batch_id});
            my $bref = $vqh->fetchrow_hashref('NAME_lc');
            # Change the below to die with localization in 1.4
@@ -165,7 +162,6 @@ sub post_transaction {
        }
     }
     $sth = $dbh->prepare($query);
-    print STDERR $query;
     $sth->execute( $form->{transdate}, $form->{id} )
       || $form->dberror($query);
 

@@ -171,7 +171,6 @@ sub new {
 
     my $type   = shift @_;
     my $argstr = shift @_;
-    my %cookie;
     my $self = {};
 
     $type = "" unless defined $type;
@@ -179,161 +178,37 @@ sub new {
 
     $logger->debug("Begin called from \$filename=$filename \$line=$line \$type=$type \$argstr=$argstr ref argstr=".ref $argstr);
 
-    $self->{version} = $VERSION;
-    $self->{dbversion} = $VERSION;
-    
     bless $self, $type;
 
     my $query;
-    my %params=();
     if(ref($argstr) eq 'DBI::db')
     {
-     $self->{dbh}=$argstr;
-     $logger->info("setting dbh from argstr \$self->{dbh}=$self->{dbh}");
+        $self->{dbh}=$argstr;
+        $logger->info("setting dbh from argstr \$self->{dbh}=$self->{dbh}");
     }
     else
     {
-     $query = ($argstr) ? new CGI::Simple($argstr) : new CGI::Simple;
-     # my $params = $query->Vars; returns a tied hash with keys that
-     # are not parameters of the CGI query.
-     %params = $query->Vars;
-     for my $p(keys %params){
-         if (($params{$p} eq undef) or ($params{$p} eq '')){
-             delete $params{$p};
-             next;
-         }
-         utf8::decode($params{$p});
-         utf8::upgrade($params{$p});
-     }
-     $logger->debug("params=", Data::Dumper::Dumper(\%params));
+        $query = $self->_process_argstr($argstr);
     }
+
+    $self->{version} = $VERSION;
+    $self->{dbversion} = $VERSION;
     $self->{VERSION} = $VERSION;
     $self->{_request} = $query;
-
-    $self->merge(\%params);
     $self->{have_latex} = $LedgerSMB::Sysconfig::latex;
 
-    # Adding this so that empty values are stored in the db as NULL's.  If
-    # stored procedures want to handle them differently, they must opt to do so.
-    # -- CT
-    for (keys %$self){
-        if ($self->{$_} eq ''){
-            $self->{$_} = undef;
-        }
-    }
+    $self->_process_cookies();
 
-    if ($self->is_run_mode('cgi', 'mod_perl')) {
-        $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
-        my @cookies = split /;/, $ENV{HTTP_COOKIE};
-        foreach (@cookies) {
-            my ( $name, $value ) = split /=/, $_, 2;
-            $cookie{$name} = $value;
-        }
-    }
-    #HV set _locale already to default here,so routines lower in stack can use it;e.g. login.pl
-    #$self->{_locale}=LedgerSMB::Locale->get_handle('en');
-    $self->{_locale}=LedgerSMB::Locale->get_handle($LedgerSMB::Sysconfig::language);
-    $self->error( __FILE__ . ':' . __LINE__ .": Locale ($LedgerSMB::Sysconfig::language) not loaded: $!\n" ) unless $self->{_locale};
+    #HV set _locale already to default here,
+    # so routines lower in stack can use it;e.g. login.pl
+    $self->_set_default_locale();
+    $self->_set_action();
+    $self->_set_path();
+    $self->_set_script_name();
 
-    $self->{action} = "" unless defined $self->{action};
-    $self->{action} =~ s/\W/_/g;
-    $self->{action} = lc $self->{action};
-
-    $self->{path} = "" unless defined $self->{path};
-
-    if ( $self->{path} eq "bin/lynx" ) {
-        $self->{menubar} = 1;
-
-        # Applying the path is deprecated.  Use menubar instead.  CT.
-        $self->{lynx} = 1;
-        $self->{path} = "bin/lynx";
-    }
-    else {
-        $self->{path} = "bin/mozilla";
-
-    }
-
-    $ENV{SCRIPT_NAME} = "" unless defined $ENV{SCRIPT_NAME};
-
-    $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
-    $self->{script} = $1 unless !defined $1;
-    $self->{script} = "" unless defined $self->{script};
-
-    if ( ( $self->{script} =~ m#(\.\.|\\|/)# ) ) {
-        $self->error("Access Denied");
-    }
-    if (!$self->{script}) {
-        $self->{script} = 'login.pl';
-    }
-    $logger->debug("\$self->{script} = $self->{script} \$self->{action} = $self->{action}");
-#    if ($self->{action} eq 'migrate_user'){
-#        return $self;
-#    }
-
-    # This is suboptimal.  We need to have a better way for 1.4
-    #HV we should try to have DBI->connect in one place?
-    #HV  why not trying _db_init also in case of login authenticate? quid logout-function?
-    if ($self->{script} eq 'login.pl' &&
-        ($self->{action} eq 'authenticate'  || $self->{action} eq '__default' 
-		|| !$self->{action} || ($self->{action} eq 'logout_js'))){
-        return $self;
-    }
-    if ($self->{script} eq 'setup.pl'){
-        return $self;
-    }
-    my $ccookie;
-    if (!$self->{company} && $self->is_run_mode('cgi', 'mod_perl')){
-         $ccookie = $cookie{${LedgerSMB::Sysconfig::cookie_name}};
-         $ccookie =~ s/.*:([^:]*)$/$1/;
-         if($ccookie ne 'Login') { $self->{company} = $ccookie; } 
-    }
-    $logger->debug("\$ccookie=$ccookie cookie.LedgerSMB::Sysconfig::cookie_name=".$cookie{${LedgerSMB::Sysconfig::cookie_name}}." \$self->{company}=$self->{company}");
-
-    if(! $cookie{${LedgerSMB::Sysconfig::cookie_name}} && $self->{action} eq 'logout')
-    {
-     $logger->debug("quitting because of logout and no cookie,avoid _db_init");
-     return $self;
-    }
-
-    #dbh may have been set elsewhere,by DBObject.pm?
-    if(!$self->{dbh})
-    {
-     $self->_db_init;
-    }
-    LedgerSMB::Company_Config::initialize($self);
-
-    #TODO move before _db_init to avoid _db_init with invalid session?
-    #  Can't do that:  Company_Config has to pull company data from the db --CT
-    if ($self->is_run_mode('cgi', 'mod_perl') and !$ENV{LSMB_NOHEAD}) {
-       #check for valid session unless this is an inital authentication
-       #request -- CT
-       if (!LedgerSMB::Session::check( $cookie{${LedgerSMB::Sysconfig::cookie_name}}, $self) ) {
-            $logger->error("Session did not check");
-            $self->_get_password("Session Expired");
-            die;
-       }
-       $logger->debug("session_check completed OK \$self->{session_id}=$self->{session_id} caller=\$filename=$filename \$line=$line");
-    }
-    $self->get_user_info;
-
-    my %date_setting = (
-        'mm/dd/yy' => "ISO, MDY",
-        'mm-dd-yy' => "ISO, MDY",
-        'dd/mm/yy' => "ISO, DMY",
-        'dd-mm-yy' => "ISO, DMY",
-        'dd.mm.yy' => "ISO, DMY",
-    );
-
-    $self->{dbh}->do("set DateStyle to '".$date_setting{$self->{_user}->{dateformat}}."'");
-    $self->{_locale}=LedgerSMB::Locale->get_handle($self->{_user}->{language})
-     or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
-
-    $self->{stylesheet} = $self->{_user}->{stylesheet} unless $self->{stylesheet};
 
     $logger->debug("End");
-
     return $self;
-
 }
 
 sub unescape {
@@ -379,11 +254,53 @@ sub close_form {
     return $vars[0]->{form_close};
 }
 
+
+sub initialize_with_db {
+    my ($self) = @_;
+
+    LedgerSMB::Company_Config::initialize($self);
+
+    #TODO move before _db_init to avoid _db_init with invalid session?
+    #  Can't do that:  Company_Config has to pull company data from the db --CT
+    if ($self->is_run_mode('cgi', 'mod_perl') and !$ENV{LSMB_NOHEAD}) {
+       #check for valid session unless this is an inital authentication
+       #request -- CT
+       if (!LedgerSMB::Session::check( $self->{cookie}, $self) ) {
+            $logger->error("Session did not check");
+            $self->_get_password("Session Expired");
+            die;
+       }
+       $logger->debug("session_check completed OK");
+    }
+    $self->get_user_info;
+
+    my %date_setting = (
+        'mm/dd/yy' => "ISO, MDY",
+        'mm-dd-yy' => "ISO, MDY",
+        'dd/mm/yy' => "ISO, DMY",
+        'dd-mm-yy' => "ISO, DMY",
+        'dd.mm.yy' => "ISO, DMY",
+    );
+
+    $self->{dbh}->do("set DateStyle to '"
+                     . $date_setting{$self->{_user}->{dateformat}}."'");
+    $self->{_locale} =
+        LedgerSMB::Locale->get_handle($self->{_user}->{language})
+        or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
+
+    $self->{stylesheet} =
+        $self->{_user}->{stylesheet} unless $self->{stylesheet};
+}
+
+
 sub get_user_info {
     my ($self) = @_;
-    $self->{_user} = LedgerSMB::User->fetch_config($self);
+    $LedgerSMB::App_State::User =
+        $self->{_user} =
+        LedgerSMB::User->fetch_config($self);
     $self->{_user}->{language} ||= 'en';
 }
+
 #This function needs to be moved into the session handler.
 sub _get_password {
     my ($self) = shift @_;
@@ -397,6 +314,116 @@ sub _get_password {
     die;
 }
 
+
+sub _set_default_locale {
+    my ($self) = @_;
+
+    my $lang = $LedgerSMB::Sysconfig::language;
+    $self->{_locale}=LedgerSMB::Locale->get_handle($lang);
+    $self->error( __FILE__ . ':' . __LINE__ 
+                  . ": Locale ($lang) not loaded: $!\n" )
+        unless $self->{_locale};
+}
+
+sub _set_action {
+    my ($self) = @_;
+
+    $self->{action} = "" unless defined $self->{action};
+    $self->{action} =~ s/\W/_/g;
+    $self->{action} = lc $self->{action};
+}
+
+sub _set_script_name {
+    my ($self) = @_;
+
+    $ENV{SCRIPT_NAME} = "" unless defined $ENV{SCRIPT_NAME};
+
+    $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
+    $self->{script} = $1 unless !defined $1;
+    $self->{script} = "" unless defined $self->{script};
+
+    if ( ( $self->{script} =~ m#(\.\.|\\|/)# ) ) {
+        $self->error("Access Denied");
+    }
+    if (!$self->{script}) {
+        $self->{script} = 'login.pl';
+    }
+    $logger->debug("\$self->{script} = $self->{script} "
+                   . "\$self->{action} = $self->{action}");
+}
+
+sub _set_path {
+    my ($self) = @_;
+
+    $self->{path} = "" unless defined $self->{path};
+
+    if ( $self->{path} eq "bin/lynx" ) {
+        $self->{menubar} = 1;
+
+        # Applying the path is deprecated.  Use menubar instead.  CT.
+        $self->{lynx} = 1;
+        $self->{path} = "bin/lynx";
+    }
+    else {
+        $self->{path} = "bin/mozilla";
+    }
+}
+
+
+sub _process_argstr {
+    my ($self, $argstr) = @_;
+
+    my %params=();
+    my $query = ($argstr) ? new CGI::Simple($argstr) : new CGI::Simple;
+    # my $params = $query->Vars; returns a tied hash with keys that
+    # are not parameters of the CGI query.
+    %params = $query->Vars;
+    for my $p(keys %params){
+        if (($params{$p} eq undef) or ($params{$p} eq '')){
+            delete $params{$p};
+            next;
+        }
+        utf8::decode($params{$p});
+        utf8::upgrade($params{$p});
+    }
+    $logger->debug("params=", Data::Dumper::Dumper(\%params));
+    $self->merge(\%params);
+
+    # Adding this so that empty values are stored in the db as NULL's.  If
+    # stored procedures want to handle them differently,
+    # they must opt to do so.
+    # -- CT
+    for (keys %$self){
+        if ($self->{$_} eq ''){
+            $self->{$_} = undef;
+        }
+    }
+    return $query;
+}
+
+sub _process_cookies {
+    my ($self) = @_;
+    my %cookie;
+
+    if ($self->is_run_mode('cgi', 'mod_perl')) {
+        $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
+        my @cookies = split /;/, $ENV{HTTP_COOKIE};
+        foreach (@cookies) {
+            my ( $name, $value ) = split /=/, $_, 2;
+            $cookie{$name} = $value;
+        }
+    }
+
+    $self->{cookie} = $cookie{$LedgerSMB::Sysconfig::cookie_name};
+
+
+    if (! $self->{company} && $self->is_run_mode('cgi', 'mod_perl')){
+        my $ccookie = $self->{cookie};
+        $ccookie =~ s/.*:([^:]*)$/$1/;
+        $self->{company} = $ccookie
+            unless $ccookie eq 'Login';
+    }
+}
 
 sub is_run_mode {
     my $self = shift @_;

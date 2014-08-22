@@ -113,7 +113,7 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION chart_get_ar_ap(in_account_class int) IS
-$$ This function returns the cash account acording with in_account_class which 
+$$ This function returns the cash account according with in_account_class which 
 must be 1 or 2.
 
 If in_account_class is 1 then it returns a list of AP accounts, and if 

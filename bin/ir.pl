@@ -351,6 +351,9 @@ sub form_header {
 
     $form->{nextsub} = 'update';
 
+    $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
+    $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
+
     # set option selected
     for (qw(AP currency)) {
         $form->{"select$_"} =~ s/ selected//;
@@ -587,6 +590,13 @@ function on_return_submit(event){
 |;
 
     if ( !$form->{readonly} ) {
+
+        if ($form->{on_hold}) {
+            $hold_button_text = $locale->text('Off Hold');
+        } else {
+            $hold_button_text = $locale->text('On Hold');
+        }
+
         print qq|<tr><td>|;
         %button = (
             'update' =>
@@ -606,7 +616,7 @@ function on_return_submit(event){
             'schedule' =>
               { ndx => 7, key => 'H', value => $locale->text('Schedule') },
             'on_hold' =>
-              { ndx => 9, key=> 'O', value => $locale->text('On Hold') },
+              { ndx => 9, key=> 'O', value => $hold_button_text },
 	    'save_info'  => 
                 { ndx => 10, key => 'I', value => $locale->text('Save Info') },
             'new_screen' => # Create a blank ar/ap invoice.
@@ -1460,11 +1470,8 @@ sub save_info {
             $form->{arap} = 'ap';
             AA->save_intnotes($form);
 	    
-        #print STDERR qq|___Rowcount=$form->{rowcount} _______|;
-
 	    foreach my $i(1..($form->{rowcount}))
 	    {
-            #print STDERR qq| taxformcheck_$i = $form->{"taxformcheck_$i"} and taxformfound= $taxformfound ___________|;
 		
                 if($taxformfound)
                 {

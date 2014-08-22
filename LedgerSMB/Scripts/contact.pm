@@ -631,7 +631,21 @@ sub save_contact {
     delete $request->{description};
     delete $request->{contact};
     get($request);
-} 
+}
+
+=item save_contact_new
+
+Saves the specified contact info as an additional item
+
+=cut
+
+sub save_contact_new {
+    my ($request) = @_;
+    delete $request->{contact_id};
+    delete $request->{old_contact};
+    
+    save_contact($request);
+}
 
 =item delete_contact
 
@@ -660,8 +674,7 @@ Required request variables:
 
 sub delete_bank_account{
     my ($request) = @_;
-    my $account = LedgerSMB::Entity::Bank->new(%$request);
-    $account->delete;
+    LedgerSMB::Entity::Bank->get($request->{id})->delete;
     $request->{target_div} = 'bank_act_div';
     get($request);
 }

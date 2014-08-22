@@ -122,7 +122,7 @@ sub link_part {
     }
 
     # readonly
-    if ( $form->{item} eq 'part' ) {
+    if ( $form->{item} eq 'part' or $form->{item} eq 'assembly') {
         $form->{readonly} = 1
           if $myconfig{acs} =~ /Goods \& Services--Add Part/;
         $form->error(
@@ -150,14 +150,6 @@ sub link_part {
         ) if !@{ $form->{IC_links}{IC_expense} };
     }
 
-    if ( $form->{item} eq 'assembly' ) {
-        $form->{readonly} = 1
-          if $myconfig{acs} =~ /Goods \& Services--Add Assembly/;
-        $form->error(
-            $locale->text(
-                'Cannot create Assembly; Income account does not exist!')
-        ) if !@{ $form->{IC_links}{IC_sale} };
-    }
     if ( $form->{item} eq 'labor' ) {
         $form->{readonly} = 1
           if $myconfig{acs} =~ /Goods \& Services--Add Labor\/Overhead/;
@@ -519,7 +511,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
 |;
     }
 
-    if ( $form->{item} eq "part" ) {
+    if ( $form->{item} eq "part" or $form->{item} eq "assembly") {
 
         $linkaccounts = qq|
 	      <tr>
@@ -651,23 +643,6 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
 	      </tr>
 |;
 
-        }
-
-        $linkaccounts = qq|
-	      <tr>
-		<th align=right>| . $locale->text('Income') . qq|</th>
-		<td><select name=IC_income>$form->{selectIC_income}</select></td>
-		<input name=selectIC_income type=hidden value="$form->{selectIC_income}">
-	      </tr>
-|;
-
-        if ($tax) {
-            $linkaccounts .= qq|
-	      <tr>
-		<th align=right>| . $locale->text('Tax') . qq|</th>
-		<td>$tax</td>
-	      </tr>
-|;
         }
 
     }
@@ -1998,6 +1973,9 @@ sub save {
     }
 
     if ($rc) {
+        my $logger = Log::Log4perl->get_logger("LedgerSMB");
+        $logger->debug($parts_id);
+        $form->{id} = $parts_id;
         edit();
         # redirect
         # $form->redirect("Part Saved");

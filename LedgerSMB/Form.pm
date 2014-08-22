@@ -611,7 +611,7 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
 		window.alert('Warning:  Your password will expire in $self->{pw_expires}');
 	</script>|;
         }
-        my $dformat = $self->{_myconfig}->{dateformat};
+        my $dformat = $LedgerSMB::App_State::User->{dateformat};
 
         print qq|Content-Type: text/html; charset=utf-8\n\n
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
@@ -884,7 +884,8 @@ sub format_amount {
        $places= $self->{money_precision};
     }
     $myconfig->{numberformat} = '1000.00' unless $myconfig->{numberformat};
-    $amount = $self->parse_amount( $myconfig, $amount );
+    $amount = $self->parse_amount( $myconfig, $amount )
+        unless ref($amount) eq 'LedgerSMB::PGNumber';
     return $amount->to_output({
                places => $places,
                 money => $self->{money_precision},
@@ -2280,12 +2281,19 @@ sub create_links {
     my $val;
     my $ref;
     my $key;
+    my %tax_accounts;
+
+    $sth = $dbh->prepare("SELECT accno FROM account WHERE tax");
+    $sth->execute();
+    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+        $tax_accounts{$ref->{accno}} = 1;
+    }
 
     # now get the account numbers
     $query = qq|SELECT a.accno, a.description, a.link
 				  FROM chart a
                   JOIN account ON a.id = account.id AND NOT account.obsolete
-				 WHERE link LIKE ?
+				 WHERE (link LIKE ?) OR account.tax
 			  ORDER BY accno|;
 
     $sth = $dbh->prepare($query);
@@ -2294,8 +2302,12 @@ sub create_links {
     $self->{accounts} = "";
 
     while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
+        my $link = $ref->{link};
 
-        foreach my $key ( split /:/, $ref->{link} ) {
+        $link .= ($link ? ":" : "") . "${module}_tax"
+            if $tax_accounts{$ref->{accno}};
+
+        foreach my $key ( split /:/, $link ) {
 
             if ( $key =~ /$module/ ) {
 
@@ -2589,15 +2601,21 @@ sub current_date {
     $days *= 1;
     if ($thisdate) {
 
-        my $dateformat = $myconfig->{dateformat};
+        my $dateformat;
 
-        if ( $myconfig->{dateformat} !~ /^y/ ) {
-            my @a = split /\D/, $thisdate;
-            $dateformat .= "yy" if ( length $a[2] > 2 );
-        }
+        if ($thisdate =~ /\d\d\d\d-\d\d-\d\d/) {
+            $dateformat = 'yyyy-mm-dd';
 
-        if ( $thisdate !~ /\D/ ) {
-            $dateformat = 'yyyymmdd';
+        } else {
+            $dateformat = $myconfig->{dateformat};
+            if ( $myconfig->{dateformat} !~ /^y/ ) {
+                my @a = split /\D/, $thisdate;
+                $dateformat .= "yy" if ( length $a[2] > 2 );
+            }
+
+            if ( $thisdate !~ /\D/ ) {
+                $dateformat = 'yyyymmdd';
+            }
         }
 
         $query = qq|SELECT (to_date(?, ?) 

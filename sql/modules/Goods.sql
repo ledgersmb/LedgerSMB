@@ -1,5 +1,88 @@
 BEGIN;
 
+CREATE OR REPLACE FUNCTION part__get_by_id(in_id int) returns parts
+language sql as
+$$
+select * from parts where id = $1;
+$$;
+
+
+CREATE OR REPLACE FUNCTION mfg_lot__commit(in_id int)
+RETURNS numeric LANGUAGE PLPGSQL AS
+$$
+DECLARE t_mfg_lot mfg_lot;
+BEGIN
+    SELECT * INTO t_mfg_lot FROM mfg_lot WHERE id = $1;
+    IF NOT FOUND THEN
+        RAISE EXCEPTION 'Lot not found';
+    END IF;
+
+    UPDATE parts SET onhand = onhand 
+                              - (select qty * t_mfg_lot.qty from mfg_lot_item
+                                  WHERE parts_id = parts.id AND
+                                        mfg_lot_id = $1)
+     WHERE id in (select parts_id from mfg_lot_item 
+                   WHERE mfg_lot_id = $1);
+
+    UPDATE parts SET onhand = onhand + t_mfg_lot.qty 
+     where id = t_mfg_lot.parts_id;
+
+    INSERT INTO gl (reference, description, transdate, approved)
+    values ('mfg-' || $1::TEXT, 'Manufacturing lot', 
+            now(), true);
+
+    INSERT INTO invoice (trans_id, parts_id, qty, allocated)
+    SELECT currval('id')::int, parts_id, qty, 0
+      FROM mfg_lot_item WHERE mfg_lot_id = $1;
+
+    PERFORM cogs__add_for_ar_line(id) FROM invoice 
+      WHERE trans_id = currval('id')::int;
+      
+
+    PERFORM * FROM invoice 
+      WHERE qty + allocated <> 0 AND trans_id = currval('id')::int;
+
+    IF FOUND THEN
+       RAISE EXCEPTION 'Not enough parts in stock';
+    END IF;
+
+    INSERT INTO invoice (trans_id, parts_id, qty, allocated, sellprice)
+    SELECT currval('id')::int, t_mfg_lot.parts_id, t_mfg_lot.qty * -1, 0, 
+           sum(amount) / $2
+      FROM acc_trans 
+     WHERE amount < 0 and trans_id = currval('id')::int;
+
+    PERFORM cogs__add_for_ar_line(currval('invoice_id_seq')::int);
+
+    -- move from reverse COGS.
+    INSERT INTO acc_trans(trans_id, chart_id, transdate, amount)
+    SELECT trans_id, chart_id, transdate, amount * -1
+      FROM acc_trans 
+     WHERE amount < 0 and trans_id = currval('id')::int;
+
+    -- difference goes into inventory
+    INSERT INTO acc_trans(trans_id, transdate, amount, chart_id)
+    SELECT trans_id, now(), sum(amount) * -1,
+           (select inventory_accno_id from parts where id = t_mfg_lot.parts_id)
+      FROM acc_trans
+     WHERE trans_id = currval('id')::int
+  GROUP BY trans_id;
+
+
+    RETURN t_mfg_lot.qty;
+END;
+$$;
+
+CREATE OR REPLACE FUNCTION assembly__stock(in_parts_id int, in_qty numeric)
+RETURNS numeric LANGUAGE SQL AS $$
+    INSERT INTO mfg_lot(parts_id, qty) VALUES ($1, $2);
+    INSERT INTO mfg_lot_item(mfg_lot_id, parts_id, qty)
+    SELECT currval('mfg_lot_id_seq')::int, parts_id, qty * $2
+      FROM assembly WHERE id = $1;
+
+    SELECT mfg_lot__commit(currval('mfg_lot_id_seq')::int);
+$$;
+
 DROP TYPE IF EXISTS goods_search_result CASCADE;
 
 CREATE TYPE goods_search_result AS (
