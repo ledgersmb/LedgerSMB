@@ -355,7 +355,7 @@ sub print {
         $payment->{batch_control_code} = $batch->{control_code};
     }
 
-    $payment->{format_amount} = sub {return $payment->format_amount(@_); };
+    $payment->{format_amount} = sub {return PGObject::PGNumber->from_input(@_)->to_output(); };
 
     if ($payment->{multiple}){
         $payment->{checks} = [];
@@ -388,9 +388,9 @@ sub print {
                     $invhash->{$_} = $payment->{"${_}_$inv_id"};
                 }
                 if ($payment->{"paid_$id"} eq 'some'){
-                    $invhash->{paid} = $payment->parse_amount(amount => $payment->{"payment_$inv_id"});
+                    $invhash->{paid} = LedgerSMB::PGNumber->from_input($payment->{"payment_$inv_id"});
                 } elsif ($payment->{"paid_$id"} eq 'all'){
-                    $invhash->{paid} = $payment->parse_amount(amount => $payment->{"net_$inv_id"});
+                    $invhash->{paid} = LedgerSMB::PGNumber->from_input($payment->{"net_$inv_id"});
                 } else {
                     $payment->error("Invalid Payment Amount Option"); 
                 }
@@ -400,9 +400,8 @@ sub print {
             my $amt = $check->{amount}->copy;
             $amt->bfloor();
             $check->{text_amount} = $payment->text_amount($amt);
-            $check->{amount} = $request->format_amount(amount => $check->{amount},
-                                                     format => '1000.00');
-            $check->{decimal} = $request->format_amount(amount => ($check->{amount} - $amt) * 100);
+            $check->{decimal} = ($check->{amount} - $amt) * 100;
+            $check->{amount} = $check->{amount}->to_output(format => '1000.00');
             push @{$payment->{checks}}, $check;
         }
         $template = LedgerSMB::Template->new(
@@ -463,24 +462,18 @@ sub display_payments {
 
                    if ($payment->{"paid_$_->{contact_id}"} eq 'some'){
                       my $i_id = $invoice->[0];
-                      my $payment_amt = $payment->parse_amount(
-				amount => $payment->{"payment_$i_id"});
-                      $contact_total 
-                              += $payment_amt;
+                      my $payment_amt = LedgerSMB::PGNumber->from_input(
+                          $payment->{"payment_$i_id"}
+                      );
+                      $contact_total += $payment_amt;
                    } 
             }
-            $invoice->[3] = $payment->format_amount(amount => $invoice->[3], 
-                                                    money  => 1);
-            $invoice->[4] = $payment->format_amount(amount => $invoice->[4],
-                                                    money  => 1);
-            $invoice->[5] = $payment->format_amount(amount => $invoice->[5],
-                                                    money  => 1);
-            $invoice->[6] = $payment->format_amount(amount => (
-                    $payment->parse_amount(amount => $invoice->[3]) 
-                    - $payment->parse_amount(amount => $invoice->[4])
-                    - $payment->parse_amount(amount => $invoice->[5])),
-                                                    money  => 1);
-            $contact_to_pay +=  $payment->parse_amount(amount => $invoice->[6]);
+            $invoice->[6] = $invoice->[3] - $invoice->[4] - $invoice->[5];
+            $contact_to_pay +=  $invoice->[6]);
+            $invoice->[3] = $invoice->[3]->to_output(money  => 1);
+            $invoice->[4] = $invoice->[4]->to_output(money  => 1);
+            $invoice->[5] = $invoice->[5]->to_output(money  => 1);
+            $invoice->[6] = $invoice->[6]->to_output(money  => 1);
             my $fld = "payment_" . $invoice->[0];
             if (!defined $payment->{"$fld"} ){
                 $payment->{"$fld"} = $invoice->[6];
@@ -501,16 +494,11 @@ sub display_payments {
             }
                        
         }
-        $_->{total_due} = $payment->format_amount(amount =>  $_->{total_due},
-                                                  money  => 1);
-        $_->{contact_total} = $payment->format_amount(amount =>  $_->{contact_total},
-                                                  money  => 1);
-        $_->{to_pay} = $payment->format_amount(amount =>  $_->{to_pay},
-                                                  money  => 1);
+        $_->{total_due} = $_->{total_due}->to_output(money  => 1);
+        $_->{contact_total} = $_->{contact_total}->to_output(money  => 1);
+        $_->{to_pay} = $_->{to_pay}->to_output(money  => 1);
     }
-    $payment->{grand_total} = $payment->format_amount(
-			amount =>  $payment->{grand_total},
-			money  => 1);
+    $payment->{grand_total} = $payment->{grand_total}->to_output(money  => 1);
     @{$payment->{media_options}} = (
             {text  => $request->{_locale}->text('Screen'), 
              value => 'screen'});
@@ -626,7 +614,9 @@ sub payment1_5 {
 my ($request)    = @_;  
 #my $locale       = $request->{_locale};#avoid duplicating variables as much as possible?
 my  $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
+#print STDERR localtime()." payment.pl payment1_5 dbPayment=".Data::Dumper::Dumper(\$dbPayment)."\n";
 my @array_options = $dbPayment->get_entity_credit_account();
+#print STDERR localtime()." payment.pl payment1_5 \$\#array_options=".Data::Dumper::Dumper(\@array_options)."\n";
 if ($#array_options == -1) { 
    &payment($request);   
 } elsif ($#array_options == 0) {
@@ -813,29 +803,26 @@ if ($request->{account_class} == 1){
  push @column_headers, {text => $locale->text('Received').$currency_text}, 
                        {text => 'X'};
 }
-# WE NEED TO QUERY THE DATABASE TO CHECK FOR OPEN INVOICES
-# WE WONT DO ANYTHING IF WE DONT FIND ANY INVOICES, THE USER CAN STILL POST A PREPAYMENT
 my @invoice_data;
-my @topay_state; # WE WILL USE THIS TO HELP UI TO DETERMINE WHAT IS VISIBLE
+my @topay_state; 
 @array_options  = $Payment->get_open_invoices(); 
 my $unhandled_overpayment;
 for my $ref (0 .. $#array_options) {
  $array_options[$ref]->{invoice_date} = $array_options[$ref]->{invoice_date}->to_output;
  if (  !$request->{"checkbox_$array_options[$ref]->{invoice_id}"}) {
-   my $request_topay_fx_bigfloat=$Payment->parse_amount(amount=>$request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
+   my $request_topay_fx_bigfloat=$LedgerSMB::PGNumber->from_input($request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
 # SHOULD I APPLY DISCCOUNTS?   
       $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} = $request->{first_load}? "on":  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"};
 
 # LETS SET THE EXCHANGERATE VALUES
    #tshvr4 meaning of next statement? does the same in either case!
-   #my $due_fx = $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} ? $request->round_amount($array_options[$ref]->{due_fx}) : $request->round_amount($array_options[$ref]->{due_fx});
-   my $due_fx = $request->round_amount($array_options[$ref]->{due_fx});
+   my $due_fx = $array_options[$ref]->{due_fx};
 
    my $topay_fx_value;
    if ("$exchangerate") {
        $topay_fx_value =   $due_fx;
        if (!$request->{"optional_discount_$array_options[$ref]->{invoice_id}"}) {
-       $topay_fx_value = $due_fx = $due_fx + $request->round_amount($array_options[$ref]->{discount}/$array_options[$ref]->{exchangerate});
+       $topay_fx_value = $due_fx = $due_fx + ($array_options[$ref]->{discount}/$array_options[$ref]->{exchangerate});
         }
    } else {
    #    $topay_fx_value = "N/A";
@@ -846,12 +833,6 @@ for my $ref (0 .. $#array_options) {
 # First we will see if the discount should apply?
 
 
-#I dont think this is working
-#     my  $temporary_discount = 0;
-#     if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&($due_fx <=  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} +  $request->round_amount($array_options[$ref]->{discount}/"$exchangerate"))) {
-#         $temporary_discount = $request->round_amount("$array_options[$ref]->{discount}"/$array_options[$ref]->{exchangerate});
-#      } 
-
 # We need to compute the unhandled_overpayment, notice that all the values inside the if already have 
 # the exchangerate applied
        
@@ -861,11 +842,13 @@ for my $ref (0 .. $#array_options) {
       $request_topay_fx_bigfloat ||= 0;
       if ( $due_fx <  $request_topay_fx_bigfloat) {
          # We need to store all the overpayments so we can use it on the screen
-         $unhandled_overpayment = $request->round_amount($unhandled_overpayment + $request_topay_fx_bigfloat - $due_fx );
+         $unhandled_overpayment = $unhandled_overpayment + $request_topay_fx_bigfloat - $due_fx;
          #$request->{"topay_fx_$array_options[$ref]->{invoice_id}"} = "$due_fx";
          $request_topay_fx_bigfloat=$due_fx;
      } 
- my $paid_formatted=$Payment->format_amount(amount=>($array_options[$ref]->{amount} - $array_options[$ref]->{due} - $array_options[$ref]->{discount}));
+ #print STDERR localtime()." payment.pl array=".Data::Dumper::Dumper($array_options[$ref])."\n";
+ my $paid = $array_options[$ref]->{amount} - $array_options[$ref]->{due} - $array_options[$ref]->{discount};
+ my $paid_formatted=$paid->to_output;
  #Now its time to build the link to the invoice :)
  my $uri_module;
  #TODO move following code to sub getModuleForUri() ?
@@ -904,8 +887,8 @@ for my $ref (0 .. $#array_options) {
                                             href   => $uri
                                            },  
                                invoice_date      => "$array_options[$ref]->{invoice_date}",
-                               amount            => $Payment->format_amount(amount=>$array_options[$ref]->{amount}),
-                               due               => $Payment->format_amount(amount=>$request->{"optional_discount_$array_options[$ref]->{invoice_id}"}?  $array_options[$ref]->{due} : $array_options[$ref]->{due} + $array_options[$ref]->{discount}),
+                               amount            => $array_options[$ref]->{amount}->to_output,
+                               due               => $request->{"optional_discount_$array_options[$ref]->{invoice_id}"}?  $array_options[$ref]->{due} : $array_options[$ref]->{due} + $array_options[$ref]->{discount},
                                paid              => $paid_formatted,
                                discount          => $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} ? "$array_options[$ref]->{discount}" : 0 ,
                                optional_discount =>  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"},
@@ -1050,10 +1033,7 @@ my $select = {
  notes => $request->{notes},
  overpayment         => \@overpayment,
  overpayment_account => \@overpayment_account,
- #tshvr4 format_amount() should be passed PGNumber to format correctly
- #tshvr4 e.g  $request_topay_fx_bigfloat, passed as string to template, passed back as string to format_amount , '3.14' then bad formatted if numberformat '1.000,00'
- #format_amount => sub {return $Payment->format_amount(amount=>@_)}
- format_amount => sub {return $Payment->format_amount(amount=>new LedgerSMB::PGNumber(@_))} #tshvr4
+ format_amount => sub {return LedgerSMB::PGNumber(@_)->to_output()}
 };
 
 $select->{selected_account} = $vc_options[0]->{cash_account_id} 
@@ -1138,7 +1118,7 @@ for my $ref (0 .. $#array_options) {
          # we will assume that a discount should apply only
          # if this is the last payment of an invoice
      my  $temporary_discount = 0;
-     my  $request_topay_fx_bigfloat=$Payment->parse_amount(amount=>$request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
+     my  $request_topay_fx_bigfloat=LedgerSMB::PGNumber->from_input($request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
      if (($request->{"optional_discount_$array_options[$ref]->{invoice_id}"})&&("$array_options[$ref]->{due_fx}" <=  $request_topay_fx_bigfloat +  $array_options[$ref]->{discount_fx})) {
          $temporary_discount = $array_options[$ref]->{discount_fx};
      }   
@@ -1152,7 +1132,7 @@ for my $ref (0 .. $#array_options) {
           ($sign * $request_topay_fx_bigfloat ) 
      ){
          # We need to store all the overpayments so we can use it on a new payment2 screen
-         $unhandled_overpayment = $request->round_amount($unhandled_overpayment + $request_topay_fx_bigfloat + $temporary_discount - $array_options[$ref]->{amount}) ;
+         $unhandled_overpayment = $unhandled_overpayment + $request_topay_fx_bigfloat + $temporary_discount - $array_options[$ref]->{amount}) ;
 
      }
          if ($temporary_discount != 0) {
@@ -1248,17 +1228,15 @@ sub print_payment {
      $Payment->init();
      $header->{amount2text} = $Payment->num2text($header->{amount});
   ############################################################################
-#  $Payment->{format_amount} = sub {return $Payment->format_amount(@_); };
   # IF YOU NEED MORE INFORMATION ON THE HEADER AND ROWS ITEMS CHECK SQL FUNCTIONS
   # payment_gather_header_info AND payment_gather_line_info  
   for my $row (@rows) {
-      $row->{amount} = $Payment->format_amount({amount => $row->{amount},
-                                               money => 1});
+      $row->{amount} = $row->{amount}->to_output(money => 1);
   }
   my $select = {
       header        => $header,
       rows          => \@rows,
-      format_amount => sub {$Payment->format_amount(@_)}
+      format_amount => sub {LedgerSMB::PGNumber->from_input(@_)->to_output()}
   }; 
   $Payment->{templates_path} = 'templates/'.LedgerSMB::Setting::get('templates').'/';
   my $template = LedgerSMB::Template->new(
