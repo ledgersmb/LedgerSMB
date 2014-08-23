@@ -12,6 +12,13 @@ See PGObject::Simple
 
 =cut
 
+# This is temporary until we can get rid of it.  Basically the following
+# namespaces need to be moved to Moose:
+#
+# LedgerSMB::Setting
+# LedgerSMB::DBObject
+# Then we can delete this module.
+
 package LedgerSMB::PGOld;
 use PGObject::Simple;
 use LedgerSMB::App_State;

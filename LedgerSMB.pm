@@ -137,6 +137,9 @@ This zeroes out the App_State.
 
 use CGI::Simple;
 $CGI::Simple::DISABLE_UPLOADS = 0;
+
+use PGObject;
+
 use LedgerSMB::PGNumber;
 use LedgerSMB::PGDate;
 use LedgerSMB::Sysconfig;
