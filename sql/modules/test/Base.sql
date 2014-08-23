@@ -12,6 +12,7 @@ VALUES (-101, 'Testing..... 2', 3, '_TEST2', 242);
 INSERT INTO person(id, entity_id, first_name, last_name)
 values (-100, -100, 'Test', 'User');
 
+DELETE FROM user_preference WHERE id = (select id from users where  username = CURRENT_USER);
 DELETE FROM users WHERE username = CURRENT_USER;
 
 INSERT INTO users (entity_id, username)

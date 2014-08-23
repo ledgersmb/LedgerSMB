@@ -39,8 +39,8 @@ INSERT INTO entity_credit_account
 VALUES (-1000, 1, 'cogs test1', -1000, 'USD', -1103), 
        (-2000, 2, 'cogs test2', -1000, 'USD', -1103);
 -- First series of tests, AR before AP
-INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account)
-VALUES (-1201, true, 'test1001', now() - '10 days'::interval, -2000);
+INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account, approved)
+VALUES (-1201, true, 'test1001', now() - '10 days'::interval, -2000, 't');
 INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
 VALUES (-1201, -1201, -1, 100, 0, 3);
 
@@ -49,15 +49,17 @@ SELECT 'initial COGS is null, (invoice 1, series 1)', sum(amount) IS NULL
   from acc_trans 
  where trans_id = -1201 and chart_id = -1102;
 
+
 SELECT cogs__add_for_ar_line(-1201);
+select * from invoice where id < 0;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'post-run COGS is 0, (invoice 1, series 1)', sum(amount) = 0
   from acc_trans 
  where trans_id = -1201 and chart_id = -1102;
 
-INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account)
-VALUES (-1202,  true, 'test1002', now() - '10 days'::interval, -1000);
+INSERT INTO ap (id, invoice, invnumber, transdate, entity_credit_account, approved)
+VALUES (-1202,  true, 'test1002', now() - '10 days'::interval, -1000, 't');
 INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
 VALUES (-1202, -1202, -1, -75, 0, 0.5);
 
@@ -623,5 +625,5 @@ SELECT (select count(*) from test_result where success is true)
 || (select count(*) from test_result where success is not true)
 || ' failed' as message;
 
-ROLLBACK;
 -- */
+ROLLBACK;
