@@ -1064,7 +1064,7 @@ BEGIN
 	FOR out_row IN 
 		select sum(CASE WHEN c.entity_class = 1 then a.amount
 				ELSE a.amount * -1 END), c.meta_number, 
-			c.id, co.legal_name,
+			c.id, e.name as legal_name,
 			compound_array(ARRAY[ARRAY[ch.id::text, ch.accno, 
 				ch.description]]), a.source, 
 			b.control_code, b.description, a.voucher_id, a.transdate
@@ -1077,7 +1077,7 @@ BEGIN
 			) arap ON (arap.entity_credit_account = c.id)
 		JOIN acc_trans a ON (arap.id = a.trans_id)
 		JOIN chart ch ON (ch.id = a.chart_id)
-		JOIN company co ON (c.entity_id = co.entity_id)
+		JOIN entity e ON (c.entity_id = e.id)
 		LEFT JOIN voucher v ON (v.id = a.voucher_id)
 		LEFT JOIN batch b ON (b.id = v.batch_id)
 		WHERE (ch.accno = in_cash_accno OR ch.id IN (select account_id 
@@ -1094,7 +1094,7 @@ BEGIN
 			AND (a.transdate <= in_to_date OR in_to_date IS NULL)
 			AND (source = in_source OR in_source IS NULL)
                         AND arap.approved AND a.approved
-		GROUP BY c.meta_number, c.id, co.legal_name, a.transdate, 
+		GROUP BY c.meta_number, c.id, e.name, a.transdate, 
 			a.source, a.memo, b.id, b.control_code, b.description, 
                         voucher_id
 		ORDER BY a.transdate, c.meta_number, a.source
