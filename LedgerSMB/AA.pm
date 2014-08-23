@@ -1358,7 +1358,7 @@ sub get_name {
     	       16 => 'cc',
     	       17 => 'bcc' );
     $sth = $dbh->prepare($query);
-    $sth->execute( $form->{eca_id}, 14) || $form->dberror( $query );
+    $sth->execute( $form->{eca_id}, 17) || $form->dberror( $query );
     
     my $ctype;
     my $billing_email = 0;
