@@ -194,7 +194,7 @@ FOR t_inv IN
       JOIN (select id, approved, transdate from ar 
              union 
             select id, approved, transdate from gl) a 
-           ON a.id = i.trans_id AND NOT a.approved
+           ON a.id = i.trans_id AND a.approved
      WHERE qty + allocated > 0 and parts_id  = in_parts_id
   ORDER BY a.transdate, a.id, i.id
 LOOP
