@@ -6,7 +6,7 @@ use warnings;
 $ENV{TMPDIR} = 't/var';
 
 #use Test::More 'no_plan';
-use Test::More tests => 388;
+use Test::More tests => 374;
 use Test::Trap qw(trap $trap);
 use Math::BigFloat;
 
@@ -99,29 +99,6 @@ foreach my $format (0 .. $#formats) {
 		is($form->format_amount(\%myconfig, $value, 2, '0'), $expected,
 			"form: $value formatted as $formats[$format][0] : $expected");
 	}
-}
-foreach my $format (0 .. $#formats) {
-	%myconfig = (numberformat => $formats[$format][0]);
-        $LedgerSMB::App_State::User = \%myconfig;
-	my $thou = $formats[$format][1];
-	my $dec = $formats[$format][2];
-	foreach my $rawValue ('10t000d00', '9t999d99', '333d33', 
-			'7t777t777d77', '-12d34', '0d00', '0') {
-		$expected = $rawValue;
-		if ($expected eq '0'){
-			$expected = '0d00';
-                }
-		$expected =~ s/t/$thou/gx;
-		$expected =~ s/d/$dec/gx;
-		my $value = $rawValue;
-		$value =~ s/t//gx;
-		$value =~ s/d/\./gx;
-		##$value = Math::BigFloat->new($value);
-		$LedgerSMB::Sysconfig::decimal_places = 2;
-		is($form->format_amount(\%myconfig, $value, 2, '0'), $expected,
-			"form: $value formatted as $formats[$format][0] - $expected");
-	}
-  
 }
 
 foreach my $format (0 .. $#formats) {
