@@ -5,6 +5,7 @@ Supported Presently
 Changelog for 1.3.42
 * Fixed #1184 invalid numeric format on payment search field, where date was used instead of amount (Pongracz I)
 * Fix for missing emails when emailing orders/quotations (1073, Chris T)
+* Fix doubled email addresses when emailing invoice (1186, Pongracz I)
 
 Pongracz I is Pongracz Istvan
 
