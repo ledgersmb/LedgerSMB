@@ -12,7 +12,7 @@ sub foo {
 
 =head1 DESCRIPTION
 
-This replaces the plder LedgerSMB::DBObject, as it has more features and 
+This replaces the older LedgerSMB::DBObject, as it has more features and 
 better consistency
 
 =head1 COPYRIGHT
