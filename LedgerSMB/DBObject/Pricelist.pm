@@ -10,7 +10,7 @@ LedgerSMB::DBObject::Pricelist - Pricelists for customers and vendors
 =cut
 
 package LedgerSMB::DBObject::Pricelist;
-use base qw(LedgerSMB::DBObject);
+use base qw(LedgerSMB::PGOld);
 use strict;
 use warnings;
 
@@ -51,7 +51,7 @@ sub save {
                               merge => ['entity_class', 'credit_id'], }
         );
         $line->merge($ref);
-        $line->exec_method({funcname => 'pricelist__save'});
+        $line->call_dbmethod(funcname => 'pricelist__save');
     }
 }
 
@@ -71,7 +71,7 @@ sub delete {
     my $line = __PACKAGE__->new({base => $self,
                                  merge => ['credit_id', 'entry_id'] }
         );
-    $line->exec_method({funcname => 'pricelist__delete'});
+    $line->call_dbmethod(funcname => 'pricelist__delete');
 }
 
 

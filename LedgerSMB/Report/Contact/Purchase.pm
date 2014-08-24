@@ -273,11 +273,11 @@ sub run_report {
     my ($self) = @_;
     my @rows;
     if ($self->summarize){
-       @rows = $self->exec_method({
-               funcname => 'ar_ap__transaction_search_summary'}
+       @rows = $self->call_dbmethod(
+               funcname => 'ar_ap__transaction_search_summary'
        );
     } else {
-       @rows = $self->exec_method({funcname => 'ar_ap__transaction_search'});
+       @rows = $self->call_dbmethod(funcname => 'ar_ap__transaction_search');
        my $rn = 0;
        for my $r (@rows){
             $r->{running_number} = ++$rn;

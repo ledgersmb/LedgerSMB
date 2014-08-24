@@ -261,7 +261,7 @@ Runs the report, populates rows.
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->exec_method({funcname => 'contact__search'});
+    my @rows = $self->call_dbmethod(funcname => 'contact__search');
     for my $r(@rows){
         $r->{meta_number_href_suffix} = 
                "&entity_id=$r->{entity_id}&meta_number=$r->{meta_number}";

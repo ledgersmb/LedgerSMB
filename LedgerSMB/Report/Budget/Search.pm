@@ -202,7 +202,7 @@ Runs the report
 
 sub run_report{
     my ($self) = @_;
-    my @rows = $self->exec_method({funcname => 'budget__search'});
+    my @rows = $self->call_dbmethod(funcname => 'budget__search');
     for my $r(@rows){
         $r->{row_id} = $r->{id};
     }

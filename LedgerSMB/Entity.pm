@@ -6,7 +6,7 @@ LedgerSMB::Entity -- Entity Management base classes for LedgerSMB
 
 package LedgerSMB::Entity;
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 
 =head1 SYNOPSYS
 
@@ -86,9 +86,9 @@ Returns an entity by id
 
 sub get{
     my ($id) = @_;
-    my @results =  __PACKAGE__->call_procedure(procname => 'entity__get', 
+    my ($result) =  __PACKAGE__->call_procedure(funcname => 'entity__get', 
                                                    args => [$id]);
-    return shift @results;
+    return __PACKAGE__->new(%$result);
 }
 
 =back

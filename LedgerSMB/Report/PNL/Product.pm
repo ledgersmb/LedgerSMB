@@ -93,7 +93,7 @@ sub header_lines {
 
 sub report_base {
     my ($self, $from_date, $to_date) = @_;
-    return $self->exec_method({funcname => 'pnl__product'});
+    return $self->call_dbmethod(funcname => 'pnl__product');
 }
 
 =head1 SEE ALSO

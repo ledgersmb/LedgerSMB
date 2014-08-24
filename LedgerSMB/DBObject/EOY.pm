@@ -30,7 +30,7 @@ closure
 
 use strict;
 package LedgerSMB::DBObject::EOY;
-use base qw(LedgerSMB::DBObject);
+use base qw(LedgerSMB::PGOld);
 
 =item $eoy->checkpoint_only();
 
@@ -44,7 +44,7 @@ prevents data from being inserted for earlier dates.
 
 sub checkpoint_only {
     my ($self) = @_;
-   $self->exec_method(funcname => 'eoy_create_checkpoint');
+   $self->call_dbmethod(funcname => 'eoy_create_checkpoint');
 }
 
 =item $eoy->reopen_books()
@@ -56,7 +56,7 @@ checkpoints later than that and creates a checkpoint for the prior day.
 
 sub reopen_books {
     my ($self) = @_;
-   $self->exec_method(funcname => 'eoy__reopen_books_at');
+   $self->call_dbmethod(funcname => 'eoy__reopen_books_at');
 }
 
 =item $eoy->latest_closing()
@@ -68,7 +68,7 @@ latest closing date and returns it.
 
 sub latest_closing {
     my ($self) = @_;
-    my ($ref) = $self->exec_method(funcname => 'eoy__latest_checkpoint');
+    my ($ref) = $self->call_dbmethod(funcname => 'eoy__latest_checkpoint');
     return $ref->{end_date};
 }
 
@@ -82,7 +82,7 @@ for retained earnings.
 
 sub close_books {
     my ($self) = @_;
-   $self->exec_method(funcname => 'eoy_close_books');
+   $self->call_dbmethod(funcname => 'eoy_close_books');
 }
 
 =item $eoy->list_earnings_accounts
@@ -95,7 +95,7 @@ closing books.
 
 sub list_earnings_accounts{
     my ($self) = @_;
-    my @results = $self->exec_method(funcname => 'eoy_earnings_accounts');
+    my @results = $self->call_dbmethod(funcname => 'eoy_earnings_accounts');
     $self->{earnings_accounts} = \@results;
     return @results;
 }

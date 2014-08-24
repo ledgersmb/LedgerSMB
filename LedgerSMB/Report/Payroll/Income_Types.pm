@@ -114,7 +114,7 @@ has unit => (is => 'ro', isa => 'Str', required => '0');
 
 sub run_report {
     my ($self) = $_;
-    my @rows = $self->exec_method(funcname => 'payroll_income_type__search');
+    my @rows = $self->call_dbmethod(funcname => 'payroll_income_type__search');
     $_->{row_id} = $_->{id} for my (@rows);
     $self->rows(@rows);
 }

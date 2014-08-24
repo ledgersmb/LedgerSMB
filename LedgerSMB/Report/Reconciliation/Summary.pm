@@ -200,9 +200,9 @@ sub name {
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->exec_method({funcname => 'reconciliation__search'});
-    my @accounts = $self->exec_method(
-            {funcname => 'reconciliation__account_list'}
+    my @rows = $self->call_dbmethod(funcname => 'reconciliation__search');
+    my @accounts = $self->call_dbmethod(
+            funcname => 'reconciliation__account_list'
     );
     my $account = {};
     for my $a (@accounts){

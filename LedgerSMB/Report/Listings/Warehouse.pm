@@ -63,7 +63,7 @@ sub name { return LedgerSMB::Report::text('Warehouses'); }
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->exec_method(funcname => 'warehouse__list');
+    my @rows = $self->call_dbmethod(funcname => 'warehouse__list');
     for my $row(@rows){
         $row->{row_id} = $row->{id};
     }

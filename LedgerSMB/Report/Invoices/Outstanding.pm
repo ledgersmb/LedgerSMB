@@ -313,7 +313,7 @@ sub run_report {
     if ($self->is_detailed){
        $procname .= '_details';
     }
-    my @rows = $self->exec_method({funcname => $procname});
+    my @rows = $self->call_dbmethod(funcname => $procname);
     for my $r(@rows){
         my $script;
         if ($self->entity_class == 2) {

@@ -18,7 +18,7 @@ only searching for them, and posting them to the books.
 
 package LedgerSMB::DBObject::Draft;
 
-use base qw/LedgerSMB::DBObject/;
+use base qw/LedgerSMB::PGOld/;
 
 =item search()
 
@@ -39,7 +39,7 @@ amount_ge: total greater than or equal to
 
 sub search {
     my ($self) = @_;
-    @{$self->{draft_results}} = $self->exec_method(funcname => 'draft__search');
+    @{$self->{draft_results}} = $self->call_dbmethod(funcname => 'draft__search');
     return @{$self->{draft_results}};
 }
 
@@ -55,7 +55,7 @@ sub approve {
    if (!$self->{id}){
        $self->error($self->{_locale}->text('No ID Set'));
    }
-   ($self->{approved}) = $self->exec_method(funcname => 'draft_approve');
+   ($self->{approved}) = $self->call_dbmethod(funcname => 'draft_approve');
    return $self->{approved};
 }
 
@@ -73,7 +73,7 @@ sub delete {
    if (!$self->{id}){
        $self->error($self->{_locale}->text('No ID Set'));
    }
-   ($self->{deleted}) = $self->exec_method(funcname => 'draft_delete');
+   ($self->{deleted}) = $self->call_dbmethod(funcname => 'draft_delete');
    return $self->{deleted};
 }
 

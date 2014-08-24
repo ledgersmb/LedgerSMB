@@ -30,7 +30,7 @@ like.
 
 package LedgerSMB::Timecard;
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 use LedgerSMB::MooseTypes;
 
 
@@ -203,9 +203,9 @@ Retrieves the timecard with the specified ID and returns it.
 sub get {
     my ($self, $id) = @_;
     my ($retval) = __PACKAGE__->call_procedure(
-         procname => 'timecard__get', args => [$id]);
+         funcname => 'timecard__get', args => [$id]);
     my ($buclass) = __PACKAGE__->call_procedure(
-         procname => 'timecard__bu_class', args => [$id]);
+         funcname => 'timecard__bu_class', args => [$id]);
    
     $retval->{bu_class_id} = $buclass->{id};
     return __PACKAGE__->new(%$retval);
@@ -220,7 +220,7 @@ Returns the part id for the given partnumber
 sub get_part_id {
     my ($self, $partnumber) = @_;
     my ($ref) = __PACKAGE__->call_procedure(
-                    procname => 'inventory__get_item_by_partnumber',
+                    funcname => 'inventory__get_item_by_partnumber',
                         args => [$partnumber]
     );
     return $ref->{id};
@@ -234,7 +234,7 @@ Saves the current timecard to the database, sets id.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'timecard__save'});
+    my ($ref) = $self->call_dbmethod(funcname => 'timecard__save');
     $self->id($ref->{id});
 }
 
@@ -247,7 +247,7 @@ Returns a list of parts matching the criteria requested
 sub find_part {
     my ($self, $args) = @_;
     return __PACKAGE__->call_procedure(
-                 procname => 'timecard__part', 
+                 funcname => 'timecard__part', 
                      args => [$args->{is_timecard}, 
                               $args->{is_service}, 
                               $args->{partnumber}]);
@@ -261,7 +261,8 @@ Adds $amount to the allocation amount of the timecard.
 
 sub allocate {
     my ($self, $amount) = @_;
-    $self->call_procedure(funcname => 'timecard__allocate', $amount);
+    $self->call_procedure(funcname => 'timecard__allocate', 
+                              args => [$self->id, $amount]);
 }
 
 =back

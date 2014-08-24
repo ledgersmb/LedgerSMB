@@ -112,7 +112,7 @@ Populates rows.
 
 sub run_report {
     my ($self, $request) = @_;
-    my @rows = $self->exec_method(funcname => 'asset_class__search');
+    my @rows = $self->call_dbmethod(funcname => 'asset_class__search');
     for my $r (@rows){
         $r->{row_id} = $r->{id};
     }

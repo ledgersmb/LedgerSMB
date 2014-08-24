@@ -323,7 +323,7 @@ sub run_report {
     my ($self) = @_;
     my $proc = 'eca__history';
     $proc .= '_summary' if $self->is_summary; 
-    my @rows = $self->exec_method({funcname => $proc});
+    my @rows = $self->call_dbmethod(funcname => $proc);
     for my $r(@rows){
      my $script;
      if($self->entity_class == 1){

@@ -6,7 +6,7 @@ LedgerSMB::Scripts::business_unit
 
 package LedgerSMB::Scripts::business_unit;
 use LedgerSMB::Business_Unit_Class;
-use LedgerSMB::DBObject::App_Module;
+use LedgerSMB::App_Module;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Template;
 use LedgerSMB::Setting::Sequence;
@@ -31,7 +31,7 @@ All functions take a single $request object as their sole argument
 sub list_classes {
     my ($request) = @_;
     my $bu_class = LedgerSMB::Business_Unit_Class->new(%$request);
-    my $lsmb_modules = LedgerSMB::DBObject::App_Module->new(%$request);
+    my $lsmb_modules = LedgerSMB::App_Module->new(%$request);
     @{$request->{classes}} = $bu_class->list;
     @{$request->{modules}} = $lsmb_modules->list;
     my $template = LedgerSMB::Template->new(
@@ -225,7 +225,7 @@ LedgerSMB::Business_Unit_Class must be set for $request.
 
 sub save_class {
     my ($request) = @_;
-    my $lsmb_modules = LedgerSMB::DBObject::App_Module->new(%$request);
+    my $lsmb_modules = LedgerSMB::App_Module->new(%$request);
     my @modules = $lsmb_modules->list;
     my $modlist = [];
     for my $mod (@modules){

@@ -13,9 +13,11 @@ LedgerSMB::Inventory::Adjust - Inventory Adjustments for LedgerSMB
 
 package LedgerSMB::Inventory::Adjust;
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 use LedgerSMB::MooseTypes;
 use LedgerSMB::Inventory::Adjust_Line;
+
+sub _get_prefix { 'inventory_adjust__' }
 
 =head1 DESCRIPTION
 
@@ -149,7 +151,7 @@ check which allows the expected number of parts to be looked up if not provided.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'inventory_adjust__save_info'});
+    my ($ref) = $self->call_dbmethod(funcname => 'save_info');
     $self->id($ref->{id});
     for my $row(@{$self->rows}){
         $row->check_variance($self->transdate);
@@ -166,7 +168,7 @@ These can then be approved, adjusted, have payment lines recorded, and the like.
 
 sub approve {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'inventory_adjust__approve'});
+    my ($ref) = $self->call_dbmethod(funcname => 'approve');
 };
     
 
@@ -179,7 +181,7 @@ adjustment is not approved.
 
 sub delete {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'inventory_adjust__delete'});
+    my ($ref) = $self->call_dbmethod(funcname => 'delete');
 }
 
 =item get_part_at_date
@@ -191,8 +193,9 @@ a given date.
 
 sub get_part_at_date {
     my ($self, $transdate, $partnumber) = @_;
-    my ($ref) = $self->exec_method({funcname => 'inventory_get_item_at_day',
-                                        args => [$transdate, $partnumber]});
+    my ($ref) = $self->call_procedure(funcname => 'get_item_at_day',
+                                        args => [$transdate, $partnumber],
+                                    funcprefix => 'inventory_');
     use Data::Dumper;
     return $ref;
 }
