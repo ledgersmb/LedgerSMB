@@ -238,6 +238,11 @@ sub to_db {
     return $formatter->format_datetime($self->date);
 }
 
+sub to_sort {
+    my $self = shift;
+    return $self->date->epoch;
+}
+
 #__PACKAGE__->meta->make_immutable;
 
 1;
