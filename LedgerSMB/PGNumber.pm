@@ -259,6 +259,9 @@ sub to_db {
     return $self->to_output({format => '1000.00'});
 }
 
+sub to_sort {
+    return $_[0]->to_db;
+}
 
 1;
 
