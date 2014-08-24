@@ -13,8 +13,7 @@ funds, and projects.
 
 package LedgerSMB::Business_Unit;
 use Moose;
-use LedgerSMB::DBObject_Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
 
@@ -121,7 +120,7 @@ Returns the business reporting unit referenced by the id.
 
 sub get {
     my ($self, $id) = @_;
-    my ($unit) = $self->call_procedure(procname => 'business_unit__get',
+    my ($unit) = $self->call_procedure(funcname => 'business_unit__get',
                                             args => [$id]
     );
     $self->prepare_dbhash($unit);
@@ -136,7 +135,7 @@ Saves the business reporting unit ot the database and updates changes to object.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'business_unit__save'});
+    my ($ref) = $self->call_dbmethod(funcname => 'business_unit__save');
     $self->prepare_dbhash($ref);
     $self = $self->new($ref);
 }   
@@ -150,7 +149,7 @@ credit_ids), and of $class.  Undef on date and credit_id match all rows.
 
 sub list {
     my ($self, $class_id, $credit_id, $strict, $active_on) = @_;
-    my @rows =  $self->call_procedure(procname => 'business_unit__list_by_class',
+    my @rows =  $self->call_procedure(funcname => 'business_unit__list_by_class',
                                       args => [$class_id, $active_on, 
                                                $credit_id, $strict]);
     for my $row(@rows){
@@ -169,7 +168,7 @@ children and no transactions attached.
 
 sub delete {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'business_unit__delete'});
+    my ($ref) = $self->call_dbmethod(funcname => 'business_unit__delete');
 }   
 
 =item search

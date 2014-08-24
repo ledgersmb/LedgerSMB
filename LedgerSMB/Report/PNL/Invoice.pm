@@ -101,7 +101,7 @@ sub header_lines {
 
 sub report_base {
     my ($self) = @_;
-    return $self->exec_method({funcname => 'pnl__invoice'});
+    return $self->call_dbmethod(funcname => 'pnl__invoice');
 }
 
 =head1 SEE ALSO

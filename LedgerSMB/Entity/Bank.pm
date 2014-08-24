@@ -18,17 +18,12 @@ credit account being able to attach itself to a single bank account.
 
 package LedgerSMB::Entity::Bank;
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
+use PGObject::Util::DBMethod;
 
-=head1 INHERITS
+sub _get_prefix { 'entity__' };
 
-=over
-
-=item LedgerSMB::DBObject_Moose;
-
-=back
-
-head1 PROPERTIES
+=head1 PROPERTIES
 
 =over
 
@@ -100,16 +95,9 @@ blessed reference.  All return results are objects.
 
 =cut
 
-sub list{
-    my ($self, $entity_id) = @_;
-    my @results = $self->call_procedure(procname =>
-             'entity__list_bank_account', args => [$entity_id]);
-    for my $row(@results){
-        $self->prepare_dbhash($row); 
-        $row = $self->new(%$row);
-    }
-    return @results;
-}
+dbmethod list => (funcname => 'list_bank_account', 
+                   arglist => ['entity_id'],
+           returns_objects => 1 );
 
 =item save()
 
@@ -120,7 +108,9 @@ setting things like the id field.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'entity__save_bank_account'});
+    my ($ref) = $self->call_dbmethod(funcname => 'save_bank_account');
+    $self->prepare_dbhash($ref);
+    $self = $self->new(%$ref);
 }
 
 =item delete
@@ -129,24 +119,7 @@ Deletes the bank account object from the database.
 
 =cut
 
-sub delete {
-    my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'entity__delete_bank_account'});
-    return $ref;
-}
-
-=over get($id)
-
-Returns the account with the id.
-
-=cut
-
-sub get {
-    my ($self, $id) = @_;
-    my ($ref) = __PACKAGE__->call_procedure (procname => 'entity__get_bank_account',
-               args => [$id]);
-    return __PACKAGE__->new(%$ref);
-}
+dbmethod delete => (funcname => 'delete_bank_account');
 
 =back
 

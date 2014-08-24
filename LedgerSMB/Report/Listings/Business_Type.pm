@@ -84,7 +84,7 @@ Runs the report and returns the results for rendering.
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->exec_method({funcname => 'business_type__list'});
+    my @rows = $self->call_dbmethod({funcname => 'business_type__list'});
     for my $ref(@rows){
         $ref->{id} = $ref->{id};
         $ref->{discount} *= 100;

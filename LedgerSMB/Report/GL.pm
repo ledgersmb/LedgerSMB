@@ -335,7 +335,7 @@ sub run_report{
     my $accno = $self->accno;
     $accno =~ s/--.*//;
     $self->accno($accno);
-    my @rows = $self->exec_method({funcname => 'report__gl'});
+    my @rows = $self->call_dbmethod(funcname => 'report__gl');
     for my $ref(@rows){
         if ($ref->{amount} < 0){
             $ref->{debits} = $ref->{amount} * -1;

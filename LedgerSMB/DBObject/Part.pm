@@ -13,7 +13,7 @@ LedgerSMB::DBObject::Part - Base parts functions to support new 1.3 stuff
 =cut
 
 package LedgerSMB::DBObject::Part;
-use base qw(LedgerSMB::DBObject);
+use base qw(LedgerSMB::PGOld);
 use strict;
 use warnings;
 
@@ -55,7 +55,7 @@ search.
 
 sub search_lite {
     my ($self, $args) = @_;
-    return $self->call_procedure(procname => 'parts__search_lite',
+    return $self->call_procedure(funcname => 'parts__search_lite',
                                      args => [$args->{partnumber},
                                               $args->{description},]
     );

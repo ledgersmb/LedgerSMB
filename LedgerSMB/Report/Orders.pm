@@ -307,7 +307,7 @@ script should do that separately.
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->exec_method({funcname => 'order__search'});
+    my @rows = $self->call_dbmethod(funcname => 'order__search');
     for my $r(@rows){
        $r->{row_id} = $r->{id};
     }

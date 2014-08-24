@@ -106,8 +106,7 @@ sub header_lines {
 
 sub report_base {
     my ($self, $from_date, $to_date) = @_;
-    my $procname = 'pnl__customer';
-    return $self->exec_method({funcname => $procname});
+    return $self->call_dbmethod(funcname => 'pnl__customer');
 }
 
 =head1 SEE ALSO

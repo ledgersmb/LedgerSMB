@@ -138,7 +138,7 @@ sub name { return LedgerSMB::Report::text('Asset Listing') }
 
 sub run_report {
     my ($self, $request) = @_;
-    my @rows = $self->exec_method(funcname => 'asset__search');
+    my @rows = $self->call_dbmethod(funcname => 'asset__search');
     for my $r(@rows){
        $r->{row_id} = $r->{id};
     }

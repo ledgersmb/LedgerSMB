@@ -18,7 +18,7 @@ to provide functionality for specific types of file attachments.
 
 package LedgerSMB::File;
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 use File::MimeInfo;
 use Log::Log4perl;
 binmode STDIN, ':bytes';
@@ -173,7 +173,7 @@ sub get_mime_type {
        $self->mime_type_text(mimetype($self->file_name));
     } 
     if (!($self->mime_type_id && $self->mime_type_text)){
-       my ($ref) = $self->exec_method({funcname => 'file__get_mime_type'});
+       my ($ref) = $self->call_dbmethod(funcname => 'file__get_mime_type');
        $self->mime_type_text($ref->{mime_type});
        $self->mime_type_id($ref->{id});
     } 
@@ -189,8 +189,8 @@ Sets the mipe_type_id from the mime_type_text
 sub set_mime_type {
     my ($self, $mime_type) = @_;
     $self->mime_type_text($mime_type);
-    my ($ref) = $self->exec_method({funcname => 'file__mime_type_text', 
-         args => [undef, $self->mime_type_text]});
+    my ($ref) = $self->call_procedure(funcname => 'file__mime_type_text', 
+         args => [undef, $self->mime_type_text]);
     $self->mime_type_id($ref->{id});
 
 }
@@ -214,7 +214,7 @@ Retrives a file.  ID and file_class properties must be set.
 
 sub get{
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'file__get'});
+    my ($ref) = $self->call_dbmethod(funcname => 'file__get');
     $self->merge($ref);
 }
 
@@ -229,10 +229,9 @@ sub get_for_template{
     my ($self, $args) = @_;
     warn 'entering get_for_template';
 
-    my @results = $self->exec_method(
-                 {funcname => 'file__get_for_template',
+    my @results = $self->call_procedure(
+                 funcname => 'file__get_for_template',
                       args => [$args->{ref_key}, $args->{file_class}]
-                 }
      );
     if ( -d $LedgerSMB::Sysconfig::tempdir . '/' . $$){
         die 'directory exists';
@@ -303,34 +302,11 @@ Lists the links directly attached to the object.
 
 sub list_links{
     my ($self, $args) = @_;
-    my @results = $self->exec_method(
-                 {funcname => 'file__list_links', 
+    my @results = $self->call_procedure(
+                 funcname => 'file__list_links', 
                       args => [$args->{ref_key}, $args->{file_class}]
-                 }
      );
     return @results;
-}
-
-=item merge(hashref)
-
-Merges in specific attributes from the ref.
-
-=cut
-
-sub merge {
-    my ($self, $ref) = @_;
-    $self->attached_by_id ($ref->{attached_by_id} || $self->attached_by_id);
-    $self->attached_by    ($ref->{attached_by}    || $self->attached_by);
-    $self->reference      ($ref->{reference}      || $self->reference);
-    $self->content        ($ref->{content}        || $self->content);
-    $self->mime_type_id   ($ref->{mime_type_id}   || $self->mime_type_id);
-    $self->mime_type_text ($ref->{mime_type_text} || $self->mime_type_text);
-    $self->file_name      ($ref->{file_name}      || $self->file_name);
-    $self->description    ($ref->{description}    || $self->description);
-    $self->id             ($ref->{id}             || $self->id);
-    $self->ref_key        ($ref->{ref_key}        || $self->ref_key);
-    $self->file_class     ($ref->{file_class}     || $self->file_class);
-    $self->src_class      ($ref->{src_class}      || $self->src_class);
 }
 
 =back

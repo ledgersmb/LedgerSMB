@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 62;
+use Test::More tests => 59;
 
 use_ok('LedgerSMB::Sysconfig') 
     || BAIL_OUT('System Configuration could be loaded!');
@@ -12,16 +12,13 @@ use_ok('LedgerSMB::AM');
 use_ok('LedgerSMB::Auth');
 use_ok('LedgerSMB::BP');
 use_ok('LedgerSMB::CP');
-use_ok('LedgerSMB::DBObject');
 use_ok('LedgerSMB::DBObject::Account');
 use_ok('LedgerSMB::DBObject::Admin');
 use_ok('LedgerSMB::DBObject::Date');
 use_ok('LedgerSMB::DBObject::Draft');
 use_ok('LedgerSMB::DBObject::EOY');
-use_ok('LedgerSMB::DBObject::Location');
 use_ok('LedgerSMB::DBObject::Menu');
 use_ok('LedgerSMB::DBObject::Payment');
-use_ok('LedgerSMB::DBObject::Reconciliation');
 use_ok('LedgerSMB::DBObject::TaxForm');
 use_ok('LedgerSMB::Report');
 use_ok('LedgerSMB::Form');

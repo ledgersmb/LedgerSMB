@@ -150,7 +150,7 @@ sub name {
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->exec_method({funcname => 'inventory__activity'});
+    my @rows = $self->call_dbmethod(funcname => 'inventory__activity');
     for my $r (@rows) {
        $r->{row_id} = $r->{parts_id};
     }

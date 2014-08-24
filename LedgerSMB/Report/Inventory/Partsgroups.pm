@@ -82,7 +82,7 @@ Populates rows
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->exec_method({funcname => 'partsgroup__search'});
+    my @rows = $self->call_dbmethod(funcname => 'partsgroup__search');
     $_->{row_id} = $_->{id} for (@rows);
     $self->rows(\@rows);
 }
