@@ -12,6 +12,7 @@ Contents
    * for Fedora
    * for <your system>
  * Initializing a company database
+   * Manual Database Creation (needed on Windows platforms)
  * Adding configuration to Apache 2.x
  * Manual configuration
  * Company database removal
@@ -339,6 +340,32 @@ Note: The script expects to be able to connect to the postgresql database
       authentication enforcement.  This line can be inserted for the duration
       of the configuration of LedgerSMB, if the file doesn't have one.  The
       line can safely be removed afterwards.
+
+Manual Database Creation:
+-------------------------
+In some environments, using the tools above are not possible.  These may 
+include some heavily scripted environments which require additional control 
+than the above tools provide, or rare environments where environemnt variables
+are not recognized by libpq or are not properly transmitted from Perl to the 
+called program (such problems have been reported to us on Microsoft Windows 
+platforms).
+
+These instructions also provide basic documentation for custom db creation 
+tools.
+
+In this case:
+
+1.  Load the sql/Pg-database.sql using a tool of your choice (psql or PgAdmin)
+2.  Load the modules in the order located in sql/modules/LOADORDER
+    * can be done programmatically, see the UNIX Bash script reload_modules.sh 
+      in that same directory.
+    * can use tools of your choice (PGAdmin, psql).
+
+When upgrading a database, you perform that second stage, and then set the 
+version record in the defaults table to the appropriate version (with a new
+database, this is set by default).  To do this:
+
+    * SELECT * FROM setting__set('version', '1.3.41'); -- or other version
 
 
 Adding configuration to Apache 2.x

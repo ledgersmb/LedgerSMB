@@ -1358,10 +1358,17 @@ sub get_name {
     	       16 => 'cc',
     	       17 => 'bcc' );
     $sth = $dbh->prepare($query);
-    $sth->execute( $form->{eca_id}, 14) || $form->dberror( $query );
+    $sth->execute( $form->{eca_id}, 17) || $form->dberror( $query );
     
     my $ctype;
     my $billing_email = 0;
+
+    # Set these variables to empty, otherwise in some cases it keeps earlier values and cause doubled
+    # values, ie. when emailing invoice
+    $form->{email} = '';
+    $form->{cc} = '';
+    $form->{bcc} = '';
+
     while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         $ctype = $ref->{class_id};
         $ctype = $id_map{$ctype};
