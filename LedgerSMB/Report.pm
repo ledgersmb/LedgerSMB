@@ -211,7 +211,8 @@ sub render {
 
     # Sorting and Subtotal logic
     my $url = LedgerSMB::App_State::get_url();
-    if ($self->order_by eq $self->old_order_by){
+    $self->order_dir('asc') if defined $self->order_by;
+    if (defined $self->old_order_by and ($self->order_by eq $self->old_order_by)){
         if (lc($self->order_dir) eq 'asc'){
             $self->order_dir('desc');
         } else {
@@ -271,13 +272,13 @@ sub render {
     $self->rows(\@newrows);
     # Rendering
 
-    if (!defined $self->format){
-        $self->format('html');
-    }
+    $self->format('html') unless defined $self->format;
     my $name = $self->name || '';
     $name =~ s/ /_/g;
-    $name = $name . '_' . $self->from_date->to_output if $self->{from_date};
-    $name = $name . '-' . $self->to_date->to_output if $self->{to_date};
+    $name = $name . '_' . $self->from_date->to_output 
+            if $self->can('from_date') and defined $self->from_date->to_output;
+    $name = $name . '-' . $self->to_date->to_output 
+            if $self->can('to_date') and defined $self->to_date->to_output;
     $name = undef unless $request->{format};
     my $columns = $self->show_cols($request);
 
