@@ -181,7 +181,7 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self) = @_;
-    my @rows = $self->exec_method({funcname => 'report__coa'});
+    my @rows = $self->call_dbmethod(funcname => 'report__coa');
     for my $r(@rows){
         my $ct; 
         if ($r->{is_heading}){

@@ -6,10 +6,16 @@ LedgerSMB::PGNumeric
 
 use strict;
 use warnings;
+use PGObject;
 use Number::Format;
 use LedgerSMB::Setting;
 
 package LedgerSMB::PGNumber;
+
+PGObject->register_type(pg_type => $_,
+                                  perl_class => __PACKAGE__)
+   for ('float4', 'float8', 'double precision', 'float', 'numeric');
+
 
 =head1 SYNPOSIS
 
@@ -238,10 +244,6 @@ sub to_output {
     return sprintf($fmt, $str);
 }
 
-=item from_db
-
-=cut
-
 sub from_db {
     my ($self, $string) = @_;
     return undef if !defined $string;
@@ -257,6 +259,9 @@ sub to_db {
     return $self->to_output({format => '1000.00'});
 }
 
+sub to_sort {
+    return $_[0]->to_db;
+}
 
 1;
 

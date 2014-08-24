@@ -17,7 +17,7 @@ included COPYRIGHT and LICENSE files for more information.
 
 package LedgerSMB::DBObject::Menu;
 
-use base(qw(LedgerSMB::DBObject));
+use base(qw(LedgerSMB::PGOld));
 1;
 
 =head1 METHODS
@@ -40,7 +40,7 @@ th result set, This function does not return an entry for the top-level menu.
 sub generate {
     my ($self) = shift @_;
 
-    @{$self->{menu_items}} = $self->exec_method(funcname => 'menu_generate');
+    @{$self->{menu_items}} = $self->call_dbmethod(funcname => 'menu_generate');
     $self->__generate;
 
     return @{$self->{menu_items}};
@@ -57,7 +57,7 @@ $object->{parent_id}.
 sub generate_section {
     my ($self) = shift @_;
 
-    @{$self->{menu_items}} = $self->exec_method(funcname => 'menu_children');
+    @{$self->{menu_items}} = $self->call_dbmethod(funcname => 'menu_children');
     $self->__generate;
 
     return @{$self->{menu_items}};
@@ -72,7 +72,7 @@ This method returns true if the user's password will expire soon
 
 sub will_expire_soon {
     my ($self) = @_;
-    my ($pw_expires) = $self->exec_method(
+    my ($pw_expires) = $self->call_dbmethod(
           funcname => 'user__expires_soon');
     $self->{expires_soon} = $pw_expires->{'user__expires_soon'};
     return $self->{expires_soon};
@@ -102,7 +102,7 @@ sub __generate {
 
 =back
 
-=head1 Copyright (C) 2007 The LedgerSMB Core Team
+=head1 Copyright (C) 2007-2014 The LedgerSMB Core Team
 
 Licensed under the GNU General Public License version 2 or later (at your 
 option).  For more information please see the included LICENSE and COPYRIGHT 

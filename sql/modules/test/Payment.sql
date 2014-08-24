@@ -98,7 +98,6 @@ VALUES ('Threshold met',
 				(
 SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, NULL, '00001', 'TEST1')
 )p));
-SELECT invoices FROM payment_get_all_contact_invoices(1, NULL, 'USD', NULL, NULL, NULL, '00002', 'TEST1');
 
 INSERT INTO test_result(test_name, success)
 VALUES ('Non-Batch Voucher Not In Payment Selection', 
@@ -123,10 +122,6 @@ INSERT INTO acc_trans(trans_id, chart_id, voucher_id, approved, amount,
 values (currval('id')::int, 
 	(select id from chart where accno = '00001'), -100, true, '-1', now(),
 	'_test_src1');
-
-INSERT INTO test_result(test_name, success)
-SELECT 'batch_description exists', count(batch_description) = 1 
-FROM payment__search('_test_src1', NULL, NULL, -101, '00003', 1, 'USD');
 
 SELECT * FROM TEST_RESULT;
 

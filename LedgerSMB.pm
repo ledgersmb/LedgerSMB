@@ -137,6 +137,9 @@ This zeroes out the App_State.
 
 use CGI::Simple;
 $CGI::Simple::DISABLE_UPLOADS = 0;
+
+use PGObject;
+
 use LedgerSMB::PGNumber;
 use LedgerSMB::PGDate;
 use LedgerSMB::Sysconfig;
@@ -231,12 +234,13 @@ sub open_form {
     $self->{form_id} = $vars[0]->{form_open};
 }
 
+# move to another module
 sub check_form {
     my ($self) = @_;
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
-    my @vars = $self->call_procedure(procname => 'form_check', 
+    my @vars = $self->call_procedure(funcname => 'form_check', 
                               args => [$self->{session_id}, $self->{form_id}]
     );
     return $vars[0]->{form_check};
@@ -247,7 +251,7 @@ sub close_form {
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
-    my @vars = $self->call_procedure(procname => 'form_close', 
+    my @vars = $self->call_procedure(funcname => 'form_close', 
                               args => [$self->{session_id}, $self->{form_id}]
     );
     delete $self->{form_id};
@@ -445,95 +449,10 @@ sub is_run_mode {
 }
 
 sub call_procedure {
-    my $self     = shift @_;
-    my %args     = @_;
-    my $procname = $args{procname};
-    my $schema   = $args{schema};
-    my @call_args;
-    @call_args = @{ $args{args} } if defined $args{args};
-    my $order_by = $args{order_by};
-    my $query_rc;
-    my $argstr   = "";
-    my @results;
-    my $dbh = $LedgerSMB::App_State::DBH;
-    die "Database handle not found! procname=$procname" if !$dbh;
-
-    if (!defined $procname){
-        $self->error('Undefined function in call_procedure.');
-    }
-    $procname = $dbh->quote_identifier($procname);
-    # Add the test for whether the schema is something useful.
-    $logger->trace("\$procname=$procname");
-    
-    $schema = $schema || $LedgerSMB::Sysconfig::db_namespace;
-    
-    $schema = $dbh->quote_identifier($schema);
-    
-    for my $arg ( @call_args ) {
-        if (eval { $arg->can('to_db') }){
-           $arg = $arg->to_db;
-        }
-        $argstr .= "?, ";
-    }
-    $argstr =~ s/\, $//;
-    my $query = "SELECT * FROM $schema.$procname()";
-    if ($order_by){
-        $query .= " ORDER BY $order_by";
-    }
-    $query =~ s/\(\)/($argstr)/;
-    my $sth = $dbh->prepare($query);
-    my $place = 1;
-    # API Change here to support byteas:  
-    # If the argument is a hashref, allow it to define it's SQL type
-    # for example PG_BYTEA, and use that to bind.  The API supports the old
-    # syntax (array of scalars and arrayrefs) but extends this so that hashrefs
-    # now have special meaning. I expect this to be somewhat recursive in the
-    # future if hashrefs to complex types are added, but we will have to put 
-    # that off for another day. --CT
-    foreach my $carg (@call_args){
-        if (ref($carg) eq 'HASH'){
-            $sth->bind_param($place, $carg->{value}, 
-                       { pg_type => $carg->{type} });
-        } else {
-            if (ref($carg) eq 'ARRAY'){
-               if (eval{$carg->[0]->can('to_db')}){
-                  for my $ref(@$carg){
-                       $ref = $ref->to_db;
-                  }
-               }
-            }
-            $sth->bind_param($place, $carg);
-        }
-        ++$place;
-    }
-    $query_rc = $sth->execute();
-    if (!$query_rc){
-          if ($args{continue_on_error} and  #  only for plpgsql exceptions
-                          ($dbh->state =~ /^P/)){
-                $@ = $dbh->errstr;
-          } else {
-                $self->dberror($dbh->errstr . ": " . $query);
-          }
-    }
-   
-    my @types = @{$sth->{TYPE}};
-    my @names = @{$sth->{NAME_lc}};
-    while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
-	for (0 .. $#names){
-            #   numeric            float4/real
-            if ($types[$_] == 3 or $types[$_] == 2) {
-                $ref->{$names[$_]} ||=0;
-                $ref->{$names[$_]} = LedgerSMB::PGNumber->from_db($ref->{$names[$_]}, 'datetime') if defined $ref->{$names[$_]};
-            }
-            #    DATE                TIMESTAMP
-            if ($types[$_] == 91 or $types[$_] == 11){
-                $ref->{$names[$_]} = LedgerSMB::PGDate->from_db($ref->{$names[$_]}, 'date') if defined $ref->{$names[$_]};
-            }
-            delete $ref->{$names[$_]} unless defined $ref->{$names[$_]};
-        }
-        push @results, $ref;
-    }
-    return @results;
+    my $self = shift;
+    my %args = @_;
+    $args{dbh} = LedgerSMB::App_State::DBH();
+    return PGObject::call_procedure(%args);
 }
 
 # Keeping this here due to common requirements

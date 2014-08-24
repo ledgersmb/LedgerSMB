@@ -11,7 +11,7 @@ LedgerSMB.
 =cut
 
 package LedgerSMB::DBObject::Date;
-use base qw(LedgerSMB::DBObject);
+use base qw(LedgerSMB::PGOld);
 use strict;
 use Math::BigFloat lib => 'GMP';
 our $VERSION = '0.1.0';

@@ -103,7 +103,7 @@ usually ID (if no match to current ID or if ID was undef).
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method(funcname => 'asset__save');
+    my ($ref) = $self->call_dbmethod(funcname => 'asset__save');
     $self->merge($ref);
     return $ref;
 }
@@ -158,7 +158,7 @@ Gets a fixed asset, sets all standard properties.  The id property must be set.
 
 sub get {
     my ($self) = @_;
-    my ($ref) = $self->exec_method(funcname => 'asset__get');
+    my ($ref) = $self->call_dbmethod(funcname => 'asset__get');
     $self->merge($ref);
     return $ref;
 }
@@ -191,7 +191,7 @@ matches all values.
 
 sub search {
     my ($self) = @_;
-    my @results = $self->exec_method(funcname => 'asset_item__search');
+    my @results = $self->call_dbmethod(funcname => 'asset_item__search');
     $self->{search_results} = \@results;
     return @results;
 }
@@ -208,7 +208,7 @@ Saves a note.  Uses the following properties:
 
 sub save_note {
     my ($self) = @_;
-    my ($ref) = $self->exec_method(funcname => 'asset_item__add_note');
+    my ($ref) = $self->call_dbmethod(funcname => 'asset_item__add_note');
 }
 
 =item get_metadata
@@ -226,15 +226,15 @@ Sets the following:
 
 sub get_metadata {
     my ($self) = @_;
-    @{$self->{asset_classes}} = $self->exec_method(funcname => 'asset_class__list');
-   @{$self->{locations}} = $self->exec_method(funcname => 'warehouse__list_all');
-   @{$self->{departments}} = $self->call_procedure(procname => 'business_unit__list_by_class', args => [1, undef, undef, undef]);
-    @{$self->{asset_accounts}} = $self->exec_method(funcname => 'asset_class__get_asset_accounts');
-    @{$self->{dep_accounts}} = $self->exec_method(funcname => 'asset_class__get_dep_accounts');
-    @{$self->{exp_accounts}} = $self->exec_method(
+    @{$self->{asset_classes}} = $self->call_dbmethod(funcname => 'asset_class__list');
+   @{$self->{locations}} = $self->call_dbmethod(funcname => 'warehouse__list_all');
+   @{$self->{departments}} = $self->call_procedure(funcname => 'business_unit__list_by_class', args => [1, undef, undef, undef]);
+    @{$self->{asset_accounts}} = $self->call_dbmethod(funcname => 'asset_class__get_asset_accounts');
+    @{$self->{dep_accounts}} = $self->call_dbmethod(funcname => 'asset_class__get_dep_accounts');
+    @{$self->{exp_accounts}} = $self->call_dbmethod(
                    funcname => 'asset_report__get_expense_accts'
     );
-    my @dep_methods = $self->exec_method(
+    my @dep_methods = $self->call_dbmethod(
                                 funcname => 'asset_class__get_dep_methods'
     );
     for my $dep(@dep_methods){
@@ -262,7 +262,7 @@ Sets $self->{tag} to that value.
 sub get_next_tag {
     my ($self) =  @_;
     my ($ref) = $self->call_procedure(
-          procname => 'setting_increment', 
+          funcname => 'setting_increment', 
           args     => ['asset_tag']
     );
     $self->{tag} = $ref->{setting_increment};
@@ -277,13 +277,13 @@ creation.
 
 sub import_asset {
     my ($self) =  @_;
-    my ($ref) = $self->exec_method(funcname => 'asset_report__import');
+    my ($ref) = $self->call_dbmethod(funcname => 'asset_report__import');
     return $ref;
 }
 
 sub get_invoice_id {
     my ($self) = @_;
-    my ($ref) = $self->exec_method(funcname => 'get_vendor_invoice_id');
+    my ($ref) = $self->call_dbmethod(funcname => 'get_vendor_invoice_id');
     if (!$ref) {
         $self->error($self->{_locale}->text('Invoice not found'));
     } else {
@@ -294,7 +294,7 @@ sub get_invoice_id {
 
 =back
 
-=head1 Copyright (C) 2010, The LedgerSMB core team.
+=head1 Copyright (C) 2010-2014, The LedgerSMB core team.
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

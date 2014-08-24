@@ -221,7 +221,7 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self) = @_;
-    my @rows = $self->exec_method({funcname => 'draft__search'});
+    my @rows = $self->call_dbmethod(funcname => 'draft__search');
     for my $ref (@rows){
         my $script = $ref->{type};
         $ref->{row_id} = $ref->{id};

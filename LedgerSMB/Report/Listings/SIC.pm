@@ -72,7 +72,7 @@ sub name { return LedgerSMB::Report::text('Standard Industrial Codes'); }
 
 sub run_report{
     my ($self) = @_;
-    my @rows = $self->exec_method(funcname => 'sic__list');
+    my @rows = $self->call_dbmethod(funcname => 'sic__list');
     for my $row(@rows){
         $row->{row_id} = $row->{code};
     }

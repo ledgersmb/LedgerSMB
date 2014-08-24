@@ -25,7 +25,7 @@ To save a new deduction:
 
 package LedgerSMB::Entity::Payroll::Deduction;
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
 
@@ -72,7 +72,7 @@ Retrns a list of  deduction objects for entity
 
 sub list {
     my ($self, $entity_id) = @_;
-    return __PACKAGE__->call_procedure(procname => 'deduction__list_for_entity',
+    return __PACKAGE__->call_procedure(funcname => 'deduction__list_for_entity',
                                      args => [$entity_id]);
 }
 
@@ -84,7 +84,7 @@ Returns a list of deduction classes
 
 sub types{
     my ($self, $country_id) = @_;
-    return __PACKAGE__->call_procedure(procname => 'deduction__list_types', 
+    return __PACKAGE__->call_procedure(funcname => 'deduction__list_types', 
                                      args => [$country_id]);
 }
 
@@ -96,7 +96,7 @@ Saves the deduction and attaches to the entity record
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'deduction__save'});
+    my ($ref) = $self->call_dbmethod(funcname => 'deduction__save');
     $self->entry_id($ref->{entry_id});
 }
 

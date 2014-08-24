@@ -168,10 +168,6 @@ sub add_comparison {
 
 =over
 
-=item LedgerSMB::DBObject
-
-=item LedgerSMB::DBObject::Moose
-
 =item LedgerSMB::MooseTypes
 
 =item LedgerSMB::Report

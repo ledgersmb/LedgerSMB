@@ -250,7 +250,7 @@ sub run_report{
                     value => 'batch_unlock',
                     class => 'submit',
                 }]);
-    my @rows = $self->exec_method({funcname => 'batch__search'});
+    my @rows = $self->call_dbmethod(funcname => 'batch__search');
     for my $r (@rows){
        $r->{row_id} = $r->{id};
     }

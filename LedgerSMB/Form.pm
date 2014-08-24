@@ -880,6 +880,7 @@ sub format_amount {
     $amount = "" unless defined $amount;
     $places = "0" unless defined $places;
     $dash = "" unless defined $dash;
+    $amount = $self->parse_amount($myconfig, $amount);
     if ($self->{money_precision}){
        $places= $self->{money_precision};
     }
@@ -908,8 +909,8 @@ Calls $form->error if the value is NaN.
 sub parse_amount {
 
     my ( $self, $myconfig, $amount ) = @_;
+    return $amount if eval {$amount->isa('LedgerSMB::PGNumber') };
 
-    #if ( ( $amount eq '' ) or ( ! defined $amount ) ) {
     if ( ( ! defined $amount ) or ( $amount eq '' ) ) {
         $amount = '0';
     }

@@ -118,7 +118,7 @@ sub columns {
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->exec_method({funcname => 'inventory_adj__search'});
+    my @rows = $self->call_dbmethod(funcname => 'inventory_adj__search');
     for my $row (@rows) {
         $row->{ar_invnumber_suffix} = $row->{ar_invoice_id};
         $row->{ap_invnumber_suffix} = $row->{ap_invoice_id};

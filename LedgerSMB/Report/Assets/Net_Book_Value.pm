@@ -141,7 +141,7 @@ sub name {
 
 sub run_report{
     my ($self) = @_;
-    my @rows = $self->exec_method(funcname => 'asset_nbv_report');
+    my @rows = $self->call_dbmethod(funcname => 'asset_nbv_report');
     for my $row(@rows){
         $row->{row_id} = $row->{id};
     }
