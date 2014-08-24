@@ -218,16 +218,21 @@ sub render {
             $self->order_dir('asc');
         }
     }
-    $url =~ s/&?order_by=[^\&]*/$1/g;
-    $url =~ s/&?order_dir=[^\&]*/$1/g;
+    $url =~ s/&?order_by=[^\&]*//g;
+    $url =~ s/&?order_dir=[^\&]*//g;
+    $self->order_url($url);
     $self->order_url(
         "$url&old_order_by=".$self->order_by."&order_dir=".$self->order_dir
     ) if $self->order_by;
 
     my $rows = $self->rows;
-    @$rows = sort {$a->{$self->order_by} <=> $b->{$self->order_by}
-                   or
-                   $a->{$self->order_by} cmp $b->{$self->order_by}} @$rows
+    @$rows = sort {
+                   my $srt_a = $a->{$self->order_by};
+                   my $srt_b = $b->{$self->order_by};
+                   $srt_a = $srt_a->to_sort if eval { $srt_a->can('to_sort') };
+                   $srt_b = $srt_b->to_sort if eval { $srt_b->can('to_sort') };
+                   $srt_a <=> $srt_b or $srt_a cmp $srt_b
+              } @$rows
       if $self->order_by;
     if ($self->order_dir && $self->order_by
         && lc($self->order_dir) eq 'desc') {
