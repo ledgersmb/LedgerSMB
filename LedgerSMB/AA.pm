@@ -1358,7 +1358,7 @@ sub get_name {
     	       16 => 'cc',
     	       17 => 'bcc' );
     $sth = $dbh->prepare($query);
-    $sth->execute( $self->{eca_id}, 14) || $self->dberror( $query );
+    $sth->execute( $form->{eca_id}, 17) || $self->dberror( $query );
     
     my $ctype;
     my $billing_email = 0;
@@ -1370,7 +1370,7 @@ sub get_name {
 
         # If there's an explicit billing email, don't use
         # the standard email addresses; otherwise fall back to standard
-        $self->{$ctype} .= ($self->{$ctype} ? ", " : "") . $ref->{contact}
+        $form->{$ctype} .= ($form->{$ctype} ? ", " : "") . $ref->{contact}
     	if (($ref->{class_id} < 15 && ! $billing_email)
     	    || $ref->{class_id} >= 15);
     }
