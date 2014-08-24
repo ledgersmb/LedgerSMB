@@ -211,23 +211,29 @@ sub render {
 
     # Sorting and Subtotal logic
     my $url = LedgerSMB::App_State::get_url();
-    if ($self->order_by eq $self->old_order_by){
+    $self->order_dir('asc') if defined $self->order_by;
+    if (defined $self->old_order_by and ($self->order_by eq $self->old_order_by)){
         if (lc($self->order_dir) eq 'asc'){
             $self->order_dir('desc');
         } else {
             $self->order_dir('asc');
         }
     }
-    $url =~ s/&?order_by=[^\&]*/$1/g;
-    $url =~ s/&?order_dir=[^\&]*/$1/g;
+    $url =~ s/&?order_by=[^\&]*//g;
+    $url =~ s/&?order_dir=[^\&]*//g;
+    $self->order_url($url);
     $self->order_url(
         "$url&old_order_by=".$self->order_by."&order_dir=".$self->order_dir
     ) if $self->order_by;
 
     my $rows = $self->rows;
-    @$rows = sort {$a->{$self->order_by} <=> $b->{$self->order_by}
-                   or
-                   $a->{$self->order_by} cmp $b->{$self->order_by}} @$rows
+    @$rows = sort {
+                   my $srt_a = $a->{$self->order_by};
+                   my $srt_b = $b->{$self->order_by};
+                   $srt_a = $srt_a->to_sort if eval { $srt_a->can('to_sort') };
+                   $srt_b = $srt_b->to_sort if eval { $srt_b->can('to_sort') };
+                   $srt_a <=> $srt_b or $srt_a cmp $srt_b
+              } @$rows
       if $self->order_by;
     if ($self->order_dir && $self->order_by
         && lc($self->order_dir) eq 'desc') {
@@ -266,13 +272,13 @@ sub render {
     $self->rows(\@newrows);
     # Rendering
 
-    if (!defined $self->format){
-        $self->format('html');
-    }
+    $self->format('html') unless defined $self->format;
     my $name = $self->name || '';
     $name =~ s/ /_/g;
-    $name = $name . '_' . $self->from_date->to_output if $self->{from_date};
-    $name = $name . '-' . $self->to_date->to_output if $self->{to_date};
+    $name = $name . '_' . $self->from_date->to_output 
+            if $self->can('from_date') and defined $self->from_date->to_output;
+    $name = $name . '-' . $self->to_date->to_output 
+            if $self->can('to_date') and defined $self->to_date->to_output;
     $name = undef unless $request->{format};
     my $columns = $self->show_cols($request);
 
