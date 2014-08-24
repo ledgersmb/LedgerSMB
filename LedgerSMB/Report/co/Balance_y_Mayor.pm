@@ -169,7 +169,7 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self) = @_;
-    my @rows = $self->exec_method({funcname => 'report__general_balance'});
+    my @rows = $self->call_dbmethod(funcname => 'report__general_balance');
     $self->rows(\@rows);
 }
 

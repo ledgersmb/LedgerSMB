@@ -83,7 +83,7 @@ Populates the $report->rows.
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->exec_method(funcname => 'templates__list');
+    my @rows = $self->call_dbmethod(funcname => 'templates__list');
     for my $ref(@rows){
         $ref->{row_id} = 
           "template_name=$ref->{template_name}&" . 

@@ -21,7 +21,7 @@ package LedgerSMB::Entity::Location;
 use Moose;
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 
 my $locale = $LedgerSMB::App_State::Locale;
 if (!$locale){
@@ -210,7 +210,7 @@ class (useful for retrieving billing info only).
 sub get_active {
     my ($self, $args) = @_;
     my @results;
-    for my $ref (__PACKAGE__->call_procedure(procname => 'entity__list_locations',
+    for my $ref (__PACKAGE__->call_procedure(funcname => 'entity__list_locations',
                                            args => [$args->{entity_id}]))
     {
        next if ($args->{only_class}) 
@@ -219,7 +219,7 @@ sub get_active {
     }
     return @results unless $args->{credit_id};
 
-    for my $ref (__PACKAGE__->call_procedure(procname => 'eca__list_locations',
+    for my $ref (__PACKAGE__->call_procedure(funcname => 'eca__list_locations',
                                            args => [$args->{credit_id}]))
     {
        next if ($args->{only_class}) 
@@ -247,7 +247,7 @@ sub save {
     } else {
         $procname = 'entity__location_save';
     }
-    $self->exec_method({funcname => $procname});
+    $self->call_dbmethod(funcname => $procname);
 }
 
 =item delete()
@@ -275,7 +275,7 @@ sub delete{
            $ref->{entity_id}, $ref->{location_id}, $ref->{location_class}
         ];
     }
-    __PACKAGE__->call_procedure(procname => $procname, args => $args );
+    __PACKAGE__->call_procedure(funcname => $procname, args => $args );
 }
 
 =back

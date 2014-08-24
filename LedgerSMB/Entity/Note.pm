@@ -21,17 +21,10 @@ level.
 
 package LedgerSMB::Entity::Note;
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 
-=head1 INHERITS
 
-=over
-
-=item LedgerSMB::DBObject_Moose;
-
-=back
-
-head1 PROPERTIES
+=head1 PROPERTIES
 
 =over
 
@@ -102,10 +95,10 @@ sub list{
     my ($self, $entity_id, $credit_id) = @_;
     my @results;
     if ($credit_id){
-        @results = __PACKAGE__->call_procedure(procname =>
+        @results = __PACKAGE__->call_procedure(funcname =>
              'eca__list_notes', args => [$credit_id]);
     } else {
-        @results = __PACKAGE__->call_procedure(procname =>
+        @results = __PACKAGE__->call_procedure(funcname =>
              'entity__list_notes', args => [$entity_id]);
     }
     for my $row(@results){
@@ -125,9 +118,9 @@ sub save {
     my ($self) = @_;
     my $ref;
     if (3 == $self->note_class){
-        ($ref) = $self->exec_method({funcname => 'eca__save_notes'});
+        ($ref) = $self->call_dbmethod(funcname => 'eca__save_notes');
     } else {
-        ($ref) = $self->exec_method({funcname => 'entity__save_notes'});
+        ($ref) = $self->call_dbmethod(funcname => 'entity__save_notes');
     }
     return $ref;
 }

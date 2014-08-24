@@ -16,20 +16,10 @@ approving or rejecting them, and marking them obsolete.  It does not include
 more free-form areas like reporting.  For those, see
 LedgerSMB::Budget_Report.
 
-=head1 INHERITANCE
-
-=over
-
-=item LedgerSMB
-
-=item LedgerSMB::DBObject_Moose
-
-=back
-
 =cut
 
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
 
@@ -202,7 +192,7 @@ Saves the current budget.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'budget__save_info'});
+    my ($ref) = $self->call_dbmethod(funcname => 'budget__save_info');
     $self->id($ref->{id});
     $self->{details} = [];
     for my $line (@{$self->lines}){
@@ -212,7 +202,7 @@ sub save {
        ];
        push @{$self->{details}}, $l_info;
     }
-    $self->exec_method({funcname => 'budget__save_details'});
+    $self->call_dbmethod(funcname => 'budget__save_details');
     $self->get($ref->{id});
 }
 
@@ -256,7 +246,7 @@ sub from_input {
          }
          my ($accno) = split /--/, $input->{"accno_$rownum"};
          my ($ref) = $input->call_procedure(
-                       procname => 'account__get_from_accno',
+                       funcname => 'account__get_from_accno',
                            args => [$accno]
           );
          $line->{description} = $input->{"description_$rownum"};
@@ -316,7 +306,7 @@ all.
 sub search {
     my ($self) = @_; # self is search criteria here.
     @{$self->{search_results}}
-       = $self->exec_method({funcname => 'budget__search'});
+       = $self->call_dbmethod(funcname => 'budget__search');
     return @{$self->{search_results}}; 
 }
 
@@ -328,13 +318,13 @@ takes a new (base) object and populates with info for the budget.
 sub get {
    my ($self, $id) = @_;
    my ($info) = $self->call_procedure(
-          procname => 'budget__get_info', args => [$id]
+          funcname => 'budget__get_info', args => [$id]
    );
    $self->prepare_dbhash($info);
    $self = $self->new(%$info);
-   my @lines = $self->exec_method({funcname => 'budget__get_details'});
+   my @lines = $self->call_dbmethod(funcname => 'budget__get_details');
    $self->lines(\@lines);
-   @{$self->{notes}} = $self->exec_method({funcname => 'budget__get_notes'});
+   @{$self->{notes}} = $self->call_dbmethod(funcname => 'budget__get_notes');
    return $self;
 }
 
@@ -345,7 +335,7 @@ Marks the budget as approved.
 
 sub approve {
    my ($self) = @_;
-   $self->exec_method({funcname => 'budget__approve'});
+   $self->call_dbmethod(funcname => 'budget__approve');
 }
 
 =item reject
@@ -355,7 +345,7 @@ Reject and deletes the budget.
 
 sub reject {
    my ($self) = @_;
-   $self->exec_method({funcname => 'budget__reject'});
+   $self->call_dbmethod(funcname => 'budget__reject');
 }
 
 =item obsolete
@@ -365,7 +355,7 @@ Marks the budget as obsolete/superceded.
 
 sub obsolete {
    my ($self) = @_;
-   $self->exec_method({funcname => 'budget__mark_obsolete'});
+   $self->call_dbmethod(funcname => 'budget__mark_obsolete');
 }
 
 =item save_note(subject string, note string)
@@ -376,7 +366,7 @@ Attaches a note with this subject and content to the budget.
 sub save_note {
    my ($self, $subject, $note) = @_;
    my ($info) = $self->call_procedure(
-          procname => 'budget__save_note', 
+          funcname => 'budget__save_note', 
            args => [$self->{id}, $subject, $note]
    );
 }
@@ -388,8 +378,6 @@ sub save_note {
 =over
 
 =item LedgerSMB
-
-=item LedgerSMB::DBObject_Moose
 
 =back
 

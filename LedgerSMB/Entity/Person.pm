@@ -30,6 +30,7 @@ To get by control code:
 package LedgerSMB::Entity::Person;
 use Moose;
 extends 'LedgerSMB::Entity';
+use LedgerSMB::MooseTypes;
 
 use LedgerSMB::App_State;
 my $locale = $LedgerSMB::App_State::Locale;

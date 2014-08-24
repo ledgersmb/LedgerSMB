@@ -223,7 +223,7 @@ sub run_report{
     die LedgerSMB::Report::text('Must have cash account in batch') 
         if $self->batch_id and !defined $self->cash_accno;
     $ENV{LSMB_ALWAYS_MONEY} = 1;
-    my @rows = $self->exec_method({funcname => 'payment__search'});
+    my @rows = $self->call_dbmethod(funcname => 'payment__search');
     my $count = 1;
     for my $r(@rows){
         $r->{row_id} = $count;

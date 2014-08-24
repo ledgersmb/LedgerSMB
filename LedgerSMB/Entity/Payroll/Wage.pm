@@ -21,7 +21,7 @@ To save a new wage:
 
 package LedgerSMB::Entity::Payroll::Wage;
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
 
@@ -67,7 +67,7 @@ Retrns a list of wage objects for entity
 
 sub list {
     my ($self, $entity_id) = @_;
-    return __PACKAGE__->call_procedure(procname => 'wage__list_for_entity',
+    return __PACKAGE__->call_procedure(funcname => 'wage__list_for_entity',
                                      args => [$entity_id]);
 }
 
@@ -79,7 +79,7 @@ Returns a list of wage classes
 
 sub types{
     my ($self, $country_id) = @_;
-    return __PACKAGE__->call_procedure(procname => 'wage__list_types', 
+    return __PACKAGE__->call_procedure(funcname => 'wage__list_types', 
                                      args => [$country_id]);
 }
 
@@ -91,7 +91,7 @@ Saves the wage and attaches to the entity record
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'wage__save'});
+    my ($ref) = $self->call_dbmethod(funcname => 'wage__save');
     $self->entry_id($ref->{entry_id});
 }
 

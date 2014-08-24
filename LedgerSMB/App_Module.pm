@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::DBObject::App_Module -- Application Module Lists for LedgerSMB
+LedgerSMB::App_Module -- Application Module Lists for LedgerSMB
 
 =head1 SYNOPSYS
 
@@ -15,19 +15,11 @@ The id attribute is expected to be static and hardcoded, so these must be assign
 
 A default module (id 0, label '') is available for doing lookups.
 
-=head1 INHERITS
-
-=over 
-
-=item LedgerSMB::DBObject_Moose
-
-=back
-
 =cut
 
-package LedgerSMB::DBObject::App_Module;
+package LedgerSMB::App_Module;
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
 
@@ -63,7 +55,7 @@ This retrieves a single module by id, and returns it.
 
 sub get {
     my ($self, $id) = @_;
-    my ($ref)  = $self->call_procedure(procname => 'lsmb_module__get', args => [$id]);
+    my ($ref)  = $self->call_procedure(funcname => 'lsmb_module__get', args => [$id]);
     $self->prepare_dbhash($ref);
     return $self->new($ref);
 }
@@ -76,7 +68,7 @@ This returns a list of all modules, ordered by id.
 
 sub list{
     my ($self) = @_;
-    my @results = $self->call_procedure(procname => 'lsmb_module__list');
+    my @results = $self->call_procedure(funcname => 'lsmb_module__list');
     for my $ref(@results){
         $self->prepare_dbhash($ref);
         $ref = $self->new($ref);

@@ -41,7 +41,7 @@ Integer id of depreciation method.
 
 =cut
 
-use base qw(LedgerSMB::DBObject);
+use base qw(LedgerSMB::PGOld);
 use strict;
 
 =item save
@@ -60,7 +60,7 @@ Typically sets ID if no match found or if ID not provided.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method(funcname => 'asset_class__save');
+    my ($ref) = $self->call_dbmethod(funcname => 'asset_class__save');
     $self->merge($ref);
     return $ref;
 }
@@ -77,9 +77,9 @@ dep_methods to arrayrefo of depreciation methods
 
 sub get_metadata {
     my ($self) = @_;
-    @{$self->{asset_accounts}} = $self->exec_method(funcname => 'asset_class__get_asset_accounts');
-    @{$self->{dep_accounts}} = $self->exec_method(funcname => 'asset_class__get_dep_accounts');
-    @{$self->{dep_methods}} = $self->exec_method(funcname => 'asset_class__get_dep_methods');
+    @{$self->{asset_accounts}} = $self->call_dbmethod(funcname => 'asset_class__get_asset_accounts');
+    @{$self->{dep_accounts}} = $self->call_dbmethod(funcname => 'asset_class__get_dep_accounts');
+    @{$self->{dep_methods}} = $self->call_dbmethod(funcname => 'asset_class__get_dep_methods');
     for my $acc (@{$self->{asset_accounts}}){
         $acc->{text} = $acc->{accno} . '--' . $acc->{description};
     }
@@ -98,7 +98,7 @@ Sets all other standard properties if the record is found.
 
 sub get_asset_class {
     my ($self) = @_;
-    my ($ref) = $self->exec_method(funcname => 'asset_class__get');
+    my ($ref) = $self->call_dbmethod(funcname => 'asset_class__get');
     $self->merge($ref);
     return $ref;
 }
@@ -111,14 +111,14 @@ Sets classes to a list of all asset classes, ordered as per db.
 
 sub list_asset_classes {
     my ($self) = @_;
-    my @refs = $self->exec_method(funcname => 'asset_class__list');
+    my @refs = $self->call_dbmethod(funcname => 'asset_class__list');
     $self->{classes} = \@refs;
     return @refs;
 }
 
 =back
 
-=head1 Copyright (C) 2010, The LedgerSMB core team.
+=head1 Copyright (C) 2010-2014, The LedgerSMB core team.
 
 This file is licensed under the Gnu General Public License version 2, or at your
 option any later version.  A copy of the license should have been included with

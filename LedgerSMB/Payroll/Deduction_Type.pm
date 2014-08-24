@@ -17,7 +17,7 @@ To save a type
 
 package LedgerSMB::Payroll::Deduction_Type;
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 
 =head1 DESCRIPTION
 
@@ -120,7 +120,7 @@ application.
 sub get {
     my ($self, $id) = @_;
     my ($ref) = __PACKAGE__->call_procedure(
-              procname => 'payroll_deduction_type__get', args => [$id]
+              funcname => 'payroll_deduction_type__get', args => [$id]
     );
     return __PACKAGE__->new(%$ref);
 }
@@ -134,7 +134,7 @@ defaults set as applicable.
 
 sub save {
     my ($self, $id) = @_;
-    my ($ref) = $self->exec_method({funcname => 'payroll_deduction_type__save'});
+    my ($ref) = $self->call_dbmethod(funcname => 'payroll_deduction_type__save');
     return $self->new($ref);
 }
 

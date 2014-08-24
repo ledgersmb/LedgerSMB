@@ -1103,4 +1103,3 @@ sub get_warehouses {
 }
 
 1;
-

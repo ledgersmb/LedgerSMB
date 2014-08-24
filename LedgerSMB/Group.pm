@@ -18,7 +18,7 @@ To retrieve a role from the db:
 
 package LedgerSMB::Group;
 use Moose;
-with 'LedgerSMB::DBObject_Moose';
+with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
 

@@ -23,7 +23,7 @@ on the fly, but this will have to be implemented in the future.
 
 package LedgerSMB::DBObject::TaxForm;
 
-use base qw(LedgerSMB::DBObject);
+use base qw(LedgerSMB::PGOld);
 
 use strict;
 
@@ -52,7 +52,7 @@ sub save
 {
   
     my ($self) = shift @_;
-    my ($ref) = $self->exec_method(funcname => 'tax_form__save');
+    my ($ref) = $self->call_dbmethod(funcname => 'tax_form__save');
     $self->{taxform_id} = $ref->{'tax_form__save'};
   
 }
@@ -82,7 +82,7 @@ sub get
     my ($self, $id) = @_;
 
     my @results = $self->call_procedure(
-                procname => 'tax_form__get', args => [$id]
+                funcname => 'tax_form__get', args => [$id]
     );
     return $results[0];
 }
@@ -104,7 +104,7 @@ sub get_full_list
 {
     my ($self) = @_;
     
-    @{$self->{forms}} = $self->exec_method(
+    @{$self->{forms}} = $self->call_dbmethod(
                 funcname => 'tax_form__list_ext',
     );
     return @{$self->{forms}};
@@ -124,7 +124,7 @@ sub get_forms
 {
     my ($self) = @_;
     
-    @{$self->{forms}} = $self->exec_method(
+    @{$self->{forms}} = $self->call_dbmethod(
                 funcname => 'tax_form__list_all',
     );
     return @{$self->{forms}};
@@ -152,11 +152,11 @@ sub get_metadata
 {
     my ($self) = @_;
 
-    @{$self->{countries}} = $self->exec_method(
+    @{$self->{countries}} = $self->call_dbmethod(
                 funcname => 'location_list_country'
     );
 
-    my ($ref) = $self->call_procedure(procname => 'setting_get', args => ['default_country']);
+    my ($ref) = $self->call_procedure(funcname => 'setting_get', args => ['default_country']);
     $self->{default_country} = $ref->{setting_get};
 }
 
