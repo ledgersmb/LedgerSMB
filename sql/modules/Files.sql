@@ -204,9 +204,6 @@ $$ language sql;
 COMMENT ON FUNCTION file__get(in_id int, in_file_class int) IS
 $$ Retrieves the file information specified including content.$$;
 
-DROP VIEW IF EXISTS file_order_links CASCADE;
-DROP VIEW IF EXISTS file_tx_links CASCADE;
-DROP VIEW IF EXISTS file_links CASCADE;
 DELETE FROM file_view_catalog WHERE file_class in (1, 2);
 
 CREATE OR REPLACE view file_tx_links AS
