@@ -903,6 +903,13 @@ sub get_name {
     
     my $ctype;
     my $billing_email = 0;
+
+    # Set these variables to empty, otherwise in some cases it keeps earlier values and cause doubled
+    # values, ie. when emailing invoice
+    $form->{email} = '';
+    $form->{cc} = '';
+    $form->{bcc} = '';
+
     while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         $ctype = $ref->{class_id};
         $ctype = $id_map{$ctype};
