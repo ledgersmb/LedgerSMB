@@ -9,6 +9,7 @@ Changelog for 1.3.42
 * Fix for inactive customers showing up on receipt search (1095, Chris T)
 * Hungarian translation changes (Pongracz I)
 * View file_links is no longer dropped before rebuild (Chris T, 1099)
+* Fix for invoice with shipto linking to wrong one on report (Chris T, 1104)
 
 Chris T is Chris Travers
 Pongracz I is Pongracz Istvan
