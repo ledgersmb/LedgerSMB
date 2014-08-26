@@ -756,9 +756,12 @@ qq|gl.pl?path=$form->{path}&action=generate_report&accounttype=$form->{accountty
                 next;
             }
 
-            for (qw(accno debit credit begbalance endbalance)) {
+            # To get the account number for the headers, too (Pongracz I)
+            for (qw(debit credit begbalance endbalance)) {
                 $column_data{$_} = " ";
             }
+           # To get the account number for the headers, too (Pongracz I) (Pongracz I)
+            $column_data{accno} = {text => $ref->{accno}, href => $href};
             $column_data{description} = $ref->{description};
             $column_data{class} = 'heading';
         }
