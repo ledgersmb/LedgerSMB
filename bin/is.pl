@@ -1134,7 +1134,7 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
 }
 
 sub update {
-    on_update();#TODO meaning ?
+    on_update();#this is a hook for things like point of sale
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
 
     $form->{taxes} = {};

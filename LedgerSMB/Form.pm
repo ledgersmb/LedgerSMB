@@ -2619,7 +2619,8 @@ sub create_links {
 				a.person_id, e.name AS employee, 
 				c.language_code, a.ponumber, a.reverse,
                                 a.approved, ctf.default_reportable, 
-                                a.on_hold, a.crdate
+                                a.on_hold, a.crdate, 
+                                ns.location_id as locationid
 			FROM $arap a
 			JOIN entity_credit_account c 
 				ON (a.entity_credit_account = c.id)
@@ -2630,6 +2631,7 @@ sub create_links {
 			LEFT JOIN department d ON (d.id = a.department_id)
                         LEFT JOIN country_tax_form ctf 
                                   ON (ctf.id = c.taxform_id)
+                        LEFT JOIN new_shipto ns on a.id = ns.trans_id
 			WHERE a.id = ? AND c.entity_class = 
 				(select id FROM entity_class 
 				WHERE class ilike ?)|;
