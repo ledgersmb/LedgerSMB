@@ -1438,33 +1438,6 @@ sub get_name {
 
     $sth->finish;
 
-    # get shipto if we did not converted an order or invoice
-    if ( !$form->{shipto} ) {
-
-        for (
-            qw(shiptoname shiptoaddress1 shiptoaddress2
-            shiptocity shiptostate shiptozipcode
-            shiptocountry shiptocontact shiptophone
-            shiptofax shiptoemail)
-          )
-        {
-            delete $form->{$_};
-        }
-
-        ## needs fixing (SELECT *)
-        $query = qq|
-			SELECT * 
-			  FROM new_shipto
-			 WHERE trans_id = $form->{"$form->{vc}_id"}|;
-
-        $sth = $dbh->prepare($query);
-        $sth->execute || $form->dberror($query);
-
-        $ref = $sth->fetchrow_hashref(NAME_lc);
-        for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
-        $sth->finish;
-    }
-
     # get taxes
     $query = qq|
 		SELECT c.accno
