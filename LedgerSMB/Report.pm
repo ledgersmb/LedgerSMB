@@ -232,7 +232,8 @@ sub render {
                    my $srt_b = $b->{$self->order_by};
                    $srt_a = $srt_a->to_sort if eval { $srt_a->can('to_sort') };
                    $srt_b = $srt_b->to_sort if eval { $srt_b->can('to_sort') };
-                   $srt_a <=> $srt_b or $srt_a cmp $srt_b
+                   no warnings 'numeric';
+                   $srt_a <=> $srt_b or $srt_a cmp $srt_b;
               } @$rows
       if $self->order_by;
     if ($self->order_dir && $self->order_by
