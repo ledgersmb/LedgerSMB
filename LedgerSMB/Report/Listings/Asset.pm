@@ -11,6 +11,7 @@ LedgerSMB::Report::Listings::Asset - Search Fixed Assets in LedgerSMB
 package LedgerSMB::Report::Listings::Asset;
 use Moose;
 extends 'LedgerSMB::Report';
+use LedgerSMB::MooseTypes;
 
 =head1 CRITERIA PROPERTIES
 
@@ -48,10 +49,10 @@ has asset_class     => (is => 'ro', isa => 'Int', required => 0);
 has description     => (is => 'ro', isa => 'Str', required => 0);
 has tag             => (is => 'ro', isa => 'Str', required => 0);
 has purchase_date   => (is => 'ro', isa => 'LedgerSMB::Moose::Date',coerce=> 1);
-has purchase_value  => (is => 'ro', isa => 'LedgerSMB::Moose::Numeric',
+has purchase_value  => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
                        coerce => 1);
 has usable_life     => (is => 'ro', isa => 'Int', required => 0);
-has salvage_value   => (is => 'ro', isa => 'LedgerSMB::Moose::Numeric',
+has salvage_value   => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
                        coerce => 1);
 
 =head1 CONSTANT METHODS
@@ -118,7 +119,7 @@ sub header_lines {
      { name => 'description', text => LedgerSMB::Report::text('Description') },
      {name => 'purchase_date',text => LedgerSMB::Report::text('Purchase Date')},
      {name => 'purchase_value',
-        text=> text => LedgerSMB::Report::text('Purchase Value') },
+        text => LedgerSMB::Report::text('Purchase Value') },
    ];
 }
 
