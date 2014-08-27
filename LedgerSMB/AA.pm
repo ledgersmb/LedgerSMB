@@ -903,6 +903,13 @@ sub get_name {
     
     my $ctype;
     my $billing_email = 0;
+
+    # Set these variables to empty, otherwise in some cases it keeps earlier values and cause doubled
+    # values, ie. when emailing invoice
+    $form->{email} = '';
+    $form->{cc} = '';
+    $form->{bcc} = '';
+
     while ( $ref = $sth->fetchrow_hashref('NAME_lc') ) {
         $ctype = $ref->{class_id};
         $ctype = $id_map{$ctype};
@@ -971,33 +978,6 @@ sub get_name {
         my ($credit_rem) = $sth->fetchrow_array;
         ( $form->{creditremaining} ) -= Math::BigFloat->new($credit_rem);
 
-        $sth->finish;
-    }
-
-    # get shipto if we did not converted an order or invoice
-    if ( !$form->{shipto} ) {
-
-        for (
-            qw(shiptoname shiptoaddress1 shiptoaddress2
-            shiptocity shiptostate shiptozipcode
-            shiptocountry shiptocontact shiptophone
-            shiptofax shiptoemail)
-          )
-        {
-            delete $form->{$_};
-        }
-
-        ## needs fixing (SELECT *)
-        $query = qq|
-			SELECT * 
-			  FROM new_shipto
-			 WHERE trans_id = $form->{"$form->{vc}_id"}|;
-
-        $sth = $dbh->prepare($query);
-        $sth->execute || $form->dberror($query);
-
-        $ref = $sth->fetchrow_hashref(NAME_lc);
-        for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
     }
 
