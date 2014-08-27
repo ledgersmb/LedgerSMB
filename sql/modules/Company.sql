@@ -299,7 +299,8 @@ BEGIN
                        WHERE in_name_part IS NULL) c ON (e.id = c.entity_id)
 		LEFT JOIN entity_credit_account ec ON (ec.entity_id = e.id)
 		LEFT JOIN business b ON (ec.business_id = b.id)
-		WHERE coalesce(ec.entity_class,e.entity_class) = in_entity_class
+		WHERE (in_entity_class is null 
+                        OR coalesce(ec.entity_class,e.entity_class) = in_entity_class)
 			AND (c.entity_id IN 
                        (select entity_id 
                           FROM entity_credit_account leca

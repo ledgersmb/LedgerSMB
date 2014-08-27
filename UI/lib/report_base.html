@@ -38,6 +38,7 @@ END # BLOCK -?>
       <tr>
       <th align="right"><?lsmb text('Entity Class') ?></th>
       <td><?lsmb
+        entity_classes.unshift({text = '', value_attr = ''});
         PROCESS select element_data = {
 		name = "entity_class"
 		options = entity_classes

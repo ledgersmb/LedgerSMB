@@ -111,7 +111,7 @@ The account/entity class of the contact.  Required and an exact match.
 
 =cut
 
-has entity_class => (is => 'ro', isa => 'Int', required => 1);
+has entity_class => (is => 'ro', isa => 'Int');
 
 =item name_part
 
