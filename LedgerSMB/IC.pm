@@ -41,6 +41,7 @@ package IC;
 
 use Log::Log4perl;
 use LedgerSMB::File;
+use Try::Tiny;
 
 my $logger = Log::Log4perl->get_logger('IC');
 
@@ -803,7 +804,7 @@ sub restock_assemblies {
 
     my $sth = $form->{dbh}->prepare('SELECT assembly__stock(?, ?)');
     for ( 1 .. $form->{rowcount} ){
-       $sth->execute($form->{"id_$_"}, $form->{"qty_$_"}) || $form->dberror(' stored procedure: assembly__stock ');
+       $form->dberror(' stored procedure: assembly__stock ') if $sth->err;
     }
 
     1;
