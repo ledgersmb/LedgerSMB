@@ -185,13 +185,16 @@
 		} ?>
 	</div></div>
 	<div>
-             <?lsmb PROCESS button element_data = {
+             <?lsmb
+              IF request.location_class; 
+                PROCESS button element_data = {
 		class = "submit" 
 		name = "action" 
 		value = "save_location" 
 		id = "loc_save_location"
-		text = text('Save Location') 
-	} #' ?>
+		text = text('Save Location') #'
+	        }; 
+              END; ?>
              <?lsmb PROCESS button element_data = {
 		class = "submit" 
 		name = "action" 
