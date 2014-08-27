@@ -2234,11 +2234,9 @@ sub restock_assemblies {
     }
 
     if ( IC->restock_assemblies( \%myconfig, \%$form ) ) {
-        die 'Foo';
         $form->redirect( $locale->text('Assemblies restocked!') );
     }
     else {
-        die 'Bar';
         $form->error( $locale->text('Cannot stock assemblies!') );
     }
 
