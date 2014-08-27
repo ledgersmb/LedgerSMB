@@ -2234,10 +2234,6 @@ sub restock_assemblies {
     }
 
     if ( IC->restock_assemblies( \%myconfig, \%$form ) ) {
-        if ( $form->{callback} =~ /(direction=)(.*?)\&/ ) {
-            $direction = ( $2 eq 'ASC' ) ? 'DESC' : 'ASC';
-        }
-        $form->{callback} =~ s/direction=(.*?)\&/direction=$direction\&/;
         $form->redirect( $locale->text('Assemblies restocked!') );
     }
     else {
