@@ -202,7 +202,7 @@ sub run_report{
                      unless $r->{is_heading};
         $r->{description_href_suffix} = $r->{accno_href_suffix};
         $r->{html_class} = 'listheading' if $r->{is_heading};
-        $r->{link} =~ s/:/\n/g;
+        $r->{link} =~ s/:/\n/g if $r->{link};
     }
     $self->rows(\@rows);
 }
