@@ -56,6 +56,8 @@
    value = startdate_from
     type = 'text'
    class = 'date'
+   onblur = "return dattrans('startdate-from');"
+   title = USER.dateformat
    label = text('From')
 } ?>
 </div>
@@ -65,6 +67,8 @@
    value = startdate_to
     type = 'text'
    class = 'date'
+   onblur = "return dattrans('startdate-to');"
+   title = USER.dateformat
    label = text('To')
 } ?>
 </div>

@@ -867,6 +867,8 @@ sub retrieve {
 
         $ref = $sth->fetchrow_hashref('NAME_lc');
         $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
+        # This should be necessary to not rewrite the id of the form -- Pongracz I
+        # for ( keys %$ref ) { $form->{$_} = $ref->{$_} if ( $_ != 'id' ) }
         for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
         $sth->finish;
 

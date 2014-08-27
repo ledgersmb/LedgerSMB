@@ -25,9 +25,9 @@
 <?lsmb END; END ?>
 	<tr>
 	  <th align="right" nowrap="nowrap"><?lsmb text('From') ?></th>
-	  <td><?lsmb PROCESS input element_data={class="date", name => "transdatefrom", size => "11", title=> user.dateformat} ?></td>
+	  <td><?lsmb PROCESS input element_data={class="date", name => "transdatefrom", size => "11", title=> user.dateformat,  onblur=> "return dattrans('transdatefrom');"} ?></td>
 	  <th align="right" nowrap="nowrap"><?lsmb text('To') ?></th>
-	  <td><?lsmb PROCESS input element_data={class="date", name => "transdateto", size => "11", title=> user.dateformat} ?></td>
+	  <td><?lsmb PROCESS input element_data={class="date", name => "transdateto", size => "11", title=> user.dateformat, onblur=> "return dattrans('transdateto');"} ?></td>
 	</tr>
 <?lsmb IF form.all_years.defined ?>
         <tr>

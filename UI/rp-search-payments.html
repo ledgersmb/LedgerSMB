@@ -32,6 +32,7 @@
         class => 'date',
         name => 'fromdate',
         size => '11',
+        onblur => "return dattrans('fromdate');",
         title => user.dateformat,
         value => form.fromdate,
         } ?></td>
@@ -40,6 +41,7 @@
         class => 'date',
         name => 'todate',
         size => '11',
+        onblur => "return dattrans('todate');",
         title => user.dateformat,
         value => form.todate,
         } ?></td>

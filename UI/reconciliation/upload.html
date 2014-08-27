@@ -34,6 +34,8 @@
 		name = "end_date",
 		label = text('To Date'), #'
 		class = "date",
+                onblur = "return dattrans('end-date');",
+                title = USER.dateformat,
 		type = 'text',
 		size = 14
 	} ?>

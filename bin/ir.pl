@@ -521,15 +521,15 @@ function on_return_submit(event){
 	      </tr>
               <tr>
                 <th align=right nowrap>| . $locale->text('Invoice Created') . qq|</th>
-                <td><input class="date" name=crdate size=11 title="$myconfig{dateformat}" value=$form->{crdate}></td>
+                <td><input class="date" name=crdate size=11 id="crdate" onblur="return dattrans('crdate');" title="$myconfig{dateformat}" value=$form->{crdate}></td>
               </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Invoice Date') . qq|</th>
-		<td><input class="date" name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
+		<td><input class="date" name=transdate id="transdate" onblur="return dattrans('transdate');" size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Due Date') . qq|</th>
-		<td><input class="date" name=duedate size=11 title="$myconfig{dateformat}" value=$form->{duedate}></td>
+		<td><input class="date" name=duedate id="duedate" onblur="return dattrans('duedate');" size=11 title="$myconfig{dateformat}" value=$form->{duedate}></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
@@ -842,7 +842,7 @@ qq|<td align=center><input name="paid_$i" size=11 value=$form->{"paid_$i"}></td>
         $column_data{"AP_paid_$i"} =
 qq|<td align=center><select name="AP_paid_$i">$form->{"selectAP_paid_$i"}</select></td>|;
         $column_data{"datepaid_$i"} =
-qq|<td align=center><input class="date" name="datepaid_$i" size=11 title="$myconfig{dateformat}" value=$form->{"datepaid_$i"}></td>|;
+qq|<td align=center><input class="date" id=datepaid_$i onblur="return dattrans('datepaid_$i');" name="datepaid_$i" size=11 title="$myconfig{dateformat}" value=$form->{"datepaid_$i"}></td>|;
         $column_data{"source_$i"} =
 qq|<td align=center><input name="source_$i" size=11 value="$form->{"source_$i"}"></td>|;
         $column_data{"memo_$i"} =

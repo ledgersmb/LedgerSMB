@@ -112,8 +112,10 @@
 		<span id="date_paid"><?lsmb datepaid ?></span>
 	<?lsmb END ?>
 	<?lsmb INCLUDE input element_data= {
-		value = datepaid
-		name = "datepaid" 
+		value  =  datepaid
+		name   = "datepaid" 
+                title  =  USER.dateformat
+                onblur = "return dattrans('datepaid');"
 		size = 20
 		class = (batch_id) ? "hidden" : "date"
 		type = (batch_id) ? "hidden" : "text"

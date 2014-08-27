@@ -71,6 +71,8 @@
 		class = "date"
 		type  = "text"
 		size  = "20"
+                onblur = "return dattrans('date-from');"
+                title = USER.dateformat
 		label = text('From Date') # '
 	} ?>
 	<?lsmb INCLUDE input element_data = {
@@ -79,6 +81,8 @@
 		class = "date"
 		type  = "text"
 		size  = "20"
+                onblur = "return dattrans('date-to');"
+                title = USER.dateformat
 		label = text('Through Date') # '
 	} ?></div>
 <?lsmb IF ! search_only ?>
@@ -99,6 +103,8 @@
 		type  = "text"
 		size  = "20"
 		class = "date"
+                onblur = "return dattrans('date_reversed');"
+                title = USER.dateformat
 		label = text('Date Reversed') # '
 	} ?>
 	<?lsmb END # if batch_id ?></div>

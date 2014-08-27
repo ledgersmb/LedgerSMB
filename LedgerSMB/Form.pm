@@ -655,6 +655,11 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
 	$charset
 	<meta name="robots" content="noindex,nofollow" />
         $headeradd
+        <script src="UI/ajax/scriptaculous/lib/prototype.js" type="text/javascript"></script>
+        <script src="UI/ajax/scriptaculous/src/scriptaculous.js?load=builder,effects,dragdrop,controls" type="text/javascript"></script>
+        <script src="UI/ajax/helpers.js" type="text/javascript"></script>
+        <script src="UI/js/custom.js" type="text/javascript"></script>
+
 </head>
 
 		$self->{pre} \n|;

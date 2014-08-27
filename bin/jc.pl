@@ -190,10 +190,10 @@ sub search {
 	  <th align=right nowrap>| . $locale->text('Startdate') . qq|</th>
 	  <td>|
       . $locale->text('From')
-      . qq| <input class="date" name=startdatefrom size=11 title="$myconfig{dateformat}">
+      . qq| <input class="date" name=startdatefrom id=startdatefrom onblur="return dattrans('startdatefrom');" size=11 title="$myconfig{dateformat}">
 	  |
       . $locale->text('To')
-      . qq| <input class="date" name=startdateto size=11 title="$myconfig{dateformat}"></td>
+      . qq| <input class="date" name=startdateto id=startdateto onblur="return dattrans('startdateto');" size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
 |;
@@ -601,7 +601,7 @@ qq|<textarea name=description rows=$rows cols=46 wrap=soft>$form->{description}<
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Date worked') . qq|</th>
-		<td><input class="date" name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
+		<td><input class="date" name=transdate id=transdate onblur="return dattrans('transdate');" size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>$laborlabel</th>
@@ -873,7 +873,7 @@ qq|<textarea name=description rows=$rows cols=46 wrap=soft>$form->{description}<
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Date') . qq|</th>
-		<td><input class="date" name=transdate size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
+		<td><input class="date" name=transdate id=transdate onblur="return dattrans('transdate');" size=11 title="$myconfig{dateformat}" value=$form->{transdate}></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Part Number') . qq|</th>

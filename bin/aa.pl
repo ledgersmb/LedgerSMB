@@ -680,15 +680,15 @@ $form->open_status_div . qq|
 	      </tr>
               <tr>
                 <th align=right nowrap>| . $locale->text('Invoice Created') . qq|</th>
-                <td><input name=crdate size=11 title="($myconfig{'dateformat'})" value=$form->{crdate}></td>
+                <td><input name=crdate id="crdate" onblur="return dattrans('crdate');" size=11 title="($myconfig{'dateformat'})" value=$form->{crdate}></td>
               </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Invoice Date') . qq|</th>
-		<td><input name=transdate size=11 title="($myconfig{'dateformat'})" value=$form->{transdate}></td>
+		<td><input name=transdate id="transdate" onblur="return dattrans('transdate');" size=11 title="($myconfig{'dateformat'})" value=$form->{transdate}></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Due Date') . qq|</th>
-		<td><input name=duedate size=11 title="$myconfig{'dateformat'}" value=$form->{duedate}></td>
+		<td><input name=duedate id="duedate" onblur="return dattrans('duedate');" size=11 title="$myconfig{'dateformat'}" value=$form->{duedate}></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
@@ -902,7 +902,7 @@ qq|<td align=center><input name="paid_$i" size=11 value=$form->{"paid_$i"}></td>
 qq|<td align=center><select name="$form->{ARAP}_paid_$i">$form->{"select$form->{ARAP}_paid_$i"}</select></td>|;
         $column_data{exchangerate} = qq|<td align=center>$exchangerate</td>|;
         $column_data{datepaid} =
-qq|<td align=center><input class="date" name="datepaid_$i" size=11 value=$form->{"datepaid_$i"}></td>|;
+qq|<td align=center><input class="date" name="datepaid_$i" id=datepaid_$i onblur="return dattrans('datepaid_$i');" title="$myconfig{dateformat}"  size=11 value=$form->{"datepaid_$i"}></td>|;
         $column_data{source} =
 qq|<td align=center><input name="source_$i" size=11 value="$form->{"source_$i"}"></td>|;
         $column_data{memo} =
@@ -1759,9 +1759,9 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox value=Y checked> |
 	</tr>
 	<tr>
 	  <th align=right nowrap>| . $locale->text('From') . qq|</th>
-	  <td><input class="date" name=transdatefrom size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=transdatefrom id=transdatefrom onblur="return dattrans('transdatefrom');" size=11 title="$myconfig{dateformat}"></td>
 	  <th align=right>| . $locale->text('Date to') . qq|</th>
-	  <td><input class="date" name=transdateto size=11 title="$myconfig{dateformat}"></td>
+	  <td><input class="date" name=transdateto id=transdateto onblur="return dattrans('transdateto');" size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
       </table>

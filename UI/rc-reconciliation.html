@@ -17,11 +17,13 @@
           <td colspan="3"><?lsmb PROCESS input element_data={
   class => 'date',
   name => 'fromdate',
+  onblur => "return dattrans('fromdate');",
   size => '11',
   title => user.dateformat,
   } ?> <?lsmb text('To') ?> <?lsmb PROCESS input element_data={
   class => 'date',
   name => 'todate',
+  onblur => "return dattrans('todate');",
   size => '11',
   title => user.dateformat,
   } ?>

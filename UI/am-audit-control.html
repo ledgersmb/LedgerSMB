@@ -17,7 +17,7 @@
 	</tr>
 	<tr>
 	  <th align="right"><?lsmb text('Close Books up to') ?></th>
-	  <td><input class="date" name="closedto" size="11" title="<?lsmb user.dateformat ?>" value="<?lsmb form.closedto ?>" /></td>
+	  <td><input class="date" name="closedto" id=closedto onblur="return dattrans('closedto');" size="11" title="<?lsmb user.dateformat ?>" value="<?lsmb form.closedto ?>" /></td>
 	</tr>
 	<tr>
 	  <th align="right"><?lsmb text('Activate Audit trail') ?></th>

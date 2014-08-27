@@ -29,9 +29,9 @@
         
 	<tr>
 	  <th align="right"><?lsmb text('From') ?></th>
-	  <td><?lsmb PROCESS input element_data={class => 'date', name => 'datefrom' size => '11', title="yyyy-mm-dd"} ?></td>
+	  <td><?lsmb PROCESS input element_data={class => 'date', name => 'datefrom' size => '11', onblur => "return dattrans('datefrom');" , title="yyyy-mm-dd"} ?></td>
 	  <th align="right"><?lsmb text('To') ?></th>
-	  <td><?lsmb PROCESS input element_data={class => 'date', name => 'dateto' size => '11', title="yyyy-mm-dd"} ?></td>
+	  <td><?lsmb PROCESS input element_data={class => 'date', name => 'dateto' size => '11', onblur => "return dattrans('dateto');", title="yyyy-mm-dd"} ?></td>
 	</tr>
         <tr>
            <th align="right" colspan="1"><?lsmb text('Bank Register Mode') ?>
