@@ -2055,11 +2055,13 @@ sub ship_to {
 
 						   for($i=1;$i<=$form->{totallocations};$i++)
 						   {
+                                                      my $checked = '';
+                                                      $checked = 'CHECKED="CHECKED"' if $form->{location_id} == $form->{"shiptolocationid_$i"};
 
 				  	   	   print qq|
 						   <tr>
 						  
-							  <td><input type=radio name=shiptoradio value="$i"  ondblclick="return uncheckRadio(this);"></td>
+							  <td><input type=radio name=shiptoradio value="$i"  $checked ondblclick="return uncheckRadio(this);"></td>
 							  <input name=shiptolocationid_$i type="hidden" value="$form->{"shiptolocationid_$i"}" readonly>
 							  <td><input name=shiptoaddress1_$i size=12 maxlength=64 id="ad1_$i" value="$form->{"shiptoaddress1_$i"}" readonly></td>
 							  <td><input name=shiptoaddress2_$i size=12 maxlength=64 id="ad2_$i" value="$form->{"shiptoaddress2_$i"}" readonly></td>
