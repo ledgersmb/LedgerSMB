@@ -48,7 +48,7 @@ BEGIN
 
     INSERT INTO invoice (trans_id, parts_id, qty, allocated, sellprice)
     SELECT currval('id')::int, t_mfg_lot.parts_id, t_mfg_lot.qty * -1, 0, 
-           sum(amount) / $2
+           sum(amount) / t_mfg_lot.qty
       FROM acc_trans 
      WHERE amount < 0 and trans_id = currval('id')::int;
 
