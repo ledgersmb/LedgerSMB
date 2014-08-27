@@ -232,6 +232,7 @@ sub to_output {
     }
 
     my $neg_format = ($args{neg_format}) ? $args{neg_format} : 'def';
+    $neg_format = 'def' unless $lsmb_neg_formats->{$neg_format};
     my $fmt = ($is_neg) ? $lsmb_neg_formats->{$neg_format}->{neg}
                         : $lsmb_neg_formats->{$neg_format}->{pos};
    
