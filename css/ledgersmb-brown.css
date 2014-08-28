@@ -142,9 +142,9 @@ body.menu {
 A.listheading:link, A.listheading:active, A.listheading:visited {
   color: white;
   text-decoration: none; }
-.listrow1 { font-size: 10pt; background-color: #ffffee; color: black;
+.listrow1, table.dynatable tr:nth-child(odd) { font-size: 10pt; background-color: #ffffee; color: black;
 vertical-align: top; }
-.listrow0 { font-size: 10pt; background-color: #eeeecc; color: black;
+.listrow0, table.dynatable tr:nth-child(even) { font-size: 10pt; background-color: #eeeecc; color: black;
 vertical-align: top; }
 .listsubtotal { font-size: 10pt; background-color: #dad561; color: white; }
 .listtotal { font-size: 10pt; background-color: black; color: white; }
