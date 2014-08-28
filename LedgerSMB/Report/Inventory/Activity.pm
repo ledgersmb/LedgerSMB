@@ -154,7 +154,7 @@ sub run_report {
     my ($self) = @_;
     my @rows = $self->exec_method({funcname => 'inventory__activity'});
     for my $r (@rows) {
-       $r->{row_id} = $r->{parts_id};
+       $r->{row_id} = $r->{partnumber};
     }
     $self->rows(\@rows);
 }
