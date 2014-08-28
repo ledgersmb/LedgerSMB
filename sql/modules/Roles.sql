@@ -1110,6 +1110,8 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
                     'business', 'exchangerate', 'new_shipto', 'tax',
                     'entity_employee', 'jcitems', 'salutation', 'assembly']) obj;
 
+SELECT lsmb__grant_perms('base_user', 'new_shipto', 'UPDATE');
+
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['partstax'::text, 'partscustomer',
                     'account_heading_tree', 'payment_type', 'warehouse',
