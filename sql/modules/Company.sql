@@ -90,7 +90,7 @@ DROP FUNCTION IF EXISTS eca__history
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
  in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
  in_start_from date, in_start_to date, in_entity_class int, 
- in_inc_open bool, in_inc_closed bool)
+ in_inc_open bool, in_inc_closed bool);
 CREATE OR REPLACE FUNCTION eca__history
 (in_name_part text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
@@ -215,7 +215,7 @@ DROP FUNCTION IF EXISTS eca__history_summary
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
  in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
  in_start_from date, in_start_to date, in_entity_class int, 
- in_inc_open bool, in_inc_closed bool)
+ in_inc_open bool, in_inc_closed bool);
 CREATE OR REPLACE FUNCTION eca__history_summary
 (in_name_part text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
