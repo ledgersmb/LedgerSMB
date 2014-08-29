@@ -2030,8 +2030,6 @@ sub vendor_details {
 
 
 sub ship_to {
-    die;
-
 
     $title = $form->{title};
     $form->{title} = $locale->text('Ship to');
