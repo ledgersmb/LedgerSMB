@@ -1964,13 +1964,14 @@ sub vendor_details {
 
 
 sub ship_to {
+    die;
 
 
     $title = $form->{title};
     $form->{title} = $locale->text('Ship to');
 
-    for (qw(exchangerate creditlimit creditremaining)) {
-        $form->{$_} = $form->parse_amount( \%myconfig, $form->{$_} );
+    for (qw(creditlimit creditremaining)) {
+        $form->{$_} = $form->format_amount($form->parse_amount( \%myconfig, $form->{$_} ));
     }
     for ( 1 .. $form->{paidaccounts} ) {
         $form->{"paid_$_"} =
