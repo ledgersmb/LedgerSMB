@@ -127,7 +127,7 @@ If set, excludes those which are not associated with customers/vendors.
 sub list {
     my ($request) = @_;
     $request->{control_code} = '';
-    $request->{class_id} = 0 unless $request->{class_id} = 0;
+    $request->{class_id} = 0 unless $request->{class_id} == 0;
     my $b_unit = LedgerSMB::Business_Unit->new(%$request);
     my $template = LedgerSMB::Template->new(
         user =>$request->{_user},

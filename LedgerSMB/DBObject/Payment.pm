@@ -439,7 +439,7 @@ sub get_open_currencies {
 
 This method lists all accounts that match the role specified in account_class property and
 are available to store the payment or receipts. 
-=back
+
 =cut
 
 sub list_accounting {
@@ -452,7 +452,7 @@ sub list_accounting {
 
 This method lists all accounts that match the role specified in account_class property and
 are available to store an overpayment / advanced payment / pre-payment. 
-=back
+
 =cut
 
 sub list_overpayment_accounting {
@@ -466,7 +466,6 @@ sub list_overpayment_accounting {
 
 This method builds all the possible sources of money,
 in the future it will look inside the DB. 
-=back
 
 =cut
 
@@ -496,7 +495,6 @@ sub get_exchange_rate {
 =item get_default_currency
 
 This method gets the default currency 
-=back
 
 =cut
 
@@ -833,6 +831,8 @@ Initializes the num2text system
 =item num2text
 
 Translates numbers into words.
+
+=back
 
 =cut
 

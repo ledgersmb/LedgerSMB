@@ -85,8 +85,14 @@ SELECT * FROM entity_credit_account
  WHERE entity_class = $2 AND meta_number = $1;
 $$ language sql;
 
-CREATE OR REPLACE FUNCTION eca__history
+DROP FUNCTION IF EXISTS eca__history
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
+ in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
+ in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
+ in_start_from date, in_start_to date, in_entity_class int, 
+ in_inc_open bool, in_inc_closed bool);
+CREATE OR REPLACE FUNCTION eca__history
+(in_name_part text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
  in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
  in_start_from date, in_start_to date, in_entity_class int, 
@@ -193,7 +199,7 @@ LEFT JOIN person ep ON (ep.entity_id = ee.id)
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION eca__history 
-(in_name text, in_meta_number text, in_contact_info text, in_address_line text,
+(in_name_part text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text,
  in_country_id int, in_from_date date, in_to_date date, in_type char(1),
  in_start_from date, in_start_to date, in_entity_class int,
@@ -204,9 +210,14 @@ a customer over a specific date range.
 meta_number is an exact match, as are in_open and inc_closed.  All other fields
 allow for partial matches.  NULL matches all values.$$;
 
-
-CREATE OR REPLACE FUNCTION eca__history_summary
+DROP FUNCTION IF EXISTS eca__history_summary
 (in_name text, in_meta_number text, in_contact_info text, in_address_line text,
+ in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
+ in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
+ in_start_from date, in_start_to date, in_entity_class int, 
+ in_inc_open bool, in_inc_closed bool);
+CREATE OR REPLACE FUNCTION eca__history_summary
+(in_name_part text, in_meta_number text, in_contact_info text, in_address_line text,
  in_city text, in_state text, in_zip text, in_salesperson text, in_notes text, 
  in_country_id int, in_from_date date, in_to_date date, in_type char(1), 
  in_start_from date, in_start_to date, in_entity_class int, 

@@ -80,12 +80,12 @@ sub getposlines {
         push @{ $form->{TB} }, $ref;
     }
     $sth->finish;
-    my $query = qq| 
+    $query = qq| 
 		SELECT sum(amount) AS sum FROM acc_trans
 		 WHERE chart_id =  (SELECT id FROM chart WHERE accno = ?)
 	  AND transdate = date 'NOW'
           AND cleared IS NOT TRUE|;
-    my $sth = $dbh->prepare($query);
+    $sth = $dbh->prepare($query);
     $sth->execute( $pos_config{till_accno} ) || $form->dberror($query);
     my $ref = $sth->fetchrow_hashref(NAME_lc);
     $form->db_parse_numeric(sth=>$sth, hashref=>$ref);
@@ -2566,8 +2566,9 @@ sub get_taxcheck
 
 }
 
+=back
 
-
+=cut
 
 1;
 

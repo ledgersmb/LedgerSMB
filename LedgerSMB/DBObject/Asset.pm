@@ -146,7 +146,7 @@ sub import_file {
         push @{$self->{import_entries}}, \@fields;
     }     
                    # get rid of header line
-    @{$self->{import_header}} = unshift @{$self->{import_entries}}; 
+    @{$self->{import_header}} = shift @{$self->{import_entries}}; 
     return @{$self->{import_entries}};
 }
 

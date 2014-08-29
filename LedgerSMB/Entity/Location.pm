@@ -26,7 +26,6 @@ with 'LedgerSMB::PGObject';
 my $locale = $LedgerSMB::App_State::Locale;
 if (!$locale){
    $locale = LedgerSMB::Locale->get_handle('en');
-   warn 'default language used';
 }
 
 =head1 PROPERTIES

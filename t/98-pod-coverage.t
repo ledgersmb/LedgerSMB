@@ -44,7 +44,7 @@ pod_coverage_ok("LedgerSMB::Scripts::contact");
 pod_coverage_ok("LedgerSMB::Scripts::contact_reports");
 pod_coverage_ok("LedgerSMB::Scripts::drafts");
 pod_coverage_ok("LedgerSMB::Scripts::employee");
-pod_coverage_ok("LedgerSMB::Scripts::file.pm");
+pod_coverage_ok("LedgerSMB::Scripts::file");
 pod_coverage_ok("LedgerSMB::Scripts::goods");
 pod_coverage_ok("LedgerSMB::Scripts::import_csv");
 pod_coverage_ok("LedgerSMB::Scripts::inventory");
