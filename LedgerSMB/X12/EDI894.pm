@@ -76,4 +76,8 @@ sub _order {
     return $form;
 }
 
+=back
+
+=cut
+
 __PACKAGE__->meta->make_immutable;

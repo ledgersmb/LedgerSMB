@@ -194,6 +194,12 @@ sub search_overpayments {
     LedgerSMB::Report::Listings::Overpayments->new(%$request)->render($request);
 }
 
+=item reverse_overpayment
+
+Reverses overpayments selected from the search overpayments screen.
+
+=cut
+
 sub reverse_overpayment {
     my ($request) = @_;
     for my $rc (1 .. $request->{rowcount_}){
