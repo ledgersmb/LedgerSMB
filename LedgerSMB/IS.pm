@@ -2566,8 +2566,9 @@ sub get_taxcheck
 
 }
 
+=back
 
-
+=cut
 
 1;
 

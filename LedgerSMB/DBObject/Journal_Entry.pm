@@ -161,6 +161,8 @@ has entered_by      => (is => 'ro', isa => 'int',     required => 0);
 This is the entity id of the one entering the transaction.  It is set 
 automatically by the database.
 
+=back
+
 =cut
 
 has entered_by_name  => (is => 'ro', isa => 'str',     required => 0);
