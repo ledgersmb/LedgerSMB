@@ -2318,4 +2318,8 @@ sub generate_orders {
 
 }
 
+=back
+
+=cut
+
 1;

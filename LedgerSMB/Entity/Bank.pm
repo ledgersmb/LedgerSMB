@@ -135,7 +135,7 @@ sub delete {
     return $ref;
 }
 
-=over get($id)
+=item get($id)
 
 Returns the account with the id.
 

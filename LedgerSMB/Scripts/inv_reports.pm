@@ -32,7 +32,7 @@ sub search_adj{
     $rpt->render($request);
 }
 
-=item adj_details
+=item adj_detail
 
 Shows adjustment details
 
