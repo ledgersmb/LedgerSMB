@@ -520,7 +520,7 @@ sub save {
 				            (id, parts_id, qty, bom, adj)
 				     VALUES (?, ?, ?, ?, ?)|;
             $sth = $dbh->prepare($query);
-            for $i ( 1 .. $form->{assembly_rows} - 1 ) {
+            for $i ( 1 .. $form->{assembly_rows} - 1) {
                 $form->{"qty_$i"} =
                   $form->parse_amount( $myconfig, $form->{"qty_$i"} );
                 if ( !$form->{"bom_$i"} ) {
