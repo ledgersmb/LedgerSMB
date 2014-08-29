@@ -57,6 +57,7 @@ $request->{action} = '__default' if (!$request->{action});
 
 $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
 my $script = $1;
+$script = '' unless defined $script;
 $logger->debug("\$ENV{SCRIPT_NAME}=$ENV{SCRIPT_NAME} \$request->{action}=$request->{action} \$script=$script");
 
 my $locale;

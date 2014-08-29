@@ -206,7 +206,7 @@ sub reverse_overpayment {
         next unless $request->{"select_$rc"};
         my $args = {id => $request->{"select_$rc"}};
         $args->{$_} = $request->{$_} for qw(post_date batch_id account_class
-                                            exchangerate, currency);
+                                            exchangerate currency);
         $args->{curr} = $args->{currency};
         LedgerSMB::DBObject::Payment->overpayment_reverse($args);
     }

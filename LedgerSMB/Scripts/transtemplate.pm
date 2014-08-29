@@ -39,7 +39,7 @@ sub view {
     our %myconfig = ();
     %myconfig = %{$request->{_user}};
     $form->{stylesheet} = $myconfig{stylesheet};
-    our $locale = $request->{_locale};
+    $locale = $request->{_locale};
     my $transtemplate = LedgerSMB::DBObject::TransTemplate->new(base => $request);
     $transtemplate->get;
     my $script = $template_dispatch->{$request->{entry_type}}->{script};
