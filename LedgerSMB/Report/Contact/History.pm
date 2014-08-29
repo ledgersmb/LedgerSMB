@@ -162,13 +162,13 @@ The account/entity class of the contact.  Required and an exact match.
 
 has entity_class => (is => 'ro', isa => 'Int');
 
-=item name
+=item name_part
 
 This is the name of the customer or vendor.  It is an exact match.
 
 =cut
 
-has name => (is => 'ro', isa => 'Maybe[Str]');
+has name_part => (is => 'ro', isa => 'Maybe[Str]');
 
 =item meta_number
 
@@ -272,7 +272,7 @@ Include only customers active starting this date.
 
 =cut
 
-has start_from => (is => 'ro', coerce => 1, isa => 'LedgerSMB::DBObject::Date');
+has start_from => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item start_to
 
@@ -280,7 +280,7 @@ Include only customers becoming active no later than this date
 
 =cut
 
-has start_to => (is => 'ro', coerce => 1, isa => 'LedgerSMB::DBObject::Date');
+has start_to => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item inc_open
 
