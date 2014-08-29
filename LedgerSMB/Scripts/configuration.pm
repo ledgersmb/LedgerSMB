@@ -14,7 +14,7 @@ use LedgerSMB::AM; # To be removed, only for template directories right now
 use strict;
 use warnings;
 
-my $locale = $LedgerSMB::App_State::Locale;
+my $locale = LedgerSMB::App_State::Locale();
 
 our @default_settings = (
    { title => $locale->text('Company Information'),

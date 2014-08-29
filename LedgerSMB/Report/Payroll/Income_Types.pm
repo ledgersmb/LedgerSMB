@@ -10,7 +10,7 @@ LedgerSMB::Payroll::Income_Types - Income Types Searches for LedgerSMB
 
 package LedgerSMB::Payroll::Income_Types;
 use Moose;
-extends 'LedgerSMB::Payroll';
+extends 'LedgerSMB::Report';
 
 =head1 DESCRIPTION
 
