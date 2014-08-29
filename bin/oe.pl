@@ -1926,7 +1926,7 @@ sub display_ship_receive {
 	      </tr>
 	      <tr>
 		<th align=right nowrap>$shipped</th>
-		<td><input class="date" name=shippingdate size=11 value=$form->{shippingdate}></td>
+		<td><input class="date" name=shippingdate id=shippingdate size=11 value=$form->{shippingdate}></td>
 	      </tr>
 	    </table>
 	  </td>
