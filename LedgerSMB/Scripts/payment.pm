@@ -102,6 +102,8 @@ Displays the payment criteria screen.  Optional inputs are
 
 =item batch_date
 
+=back
+
 =cut
 
 sub get_search_criteria {
@@ -1860,7 +1862,10 @@ for my $key (keys %entity_list)
 
 }
 
+=back
+
+=cut
+
 eval { do "scripts/custom/payment.pl"};
 1;
 
-=back

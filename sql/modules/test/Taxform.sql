@@ -42,8 +42,8 @@ BEGIN;
 
 -- Basic setup
 INSERT INTO account_heading(id, accno ) VALUES (-255, '-billion');
-INSERT INTO account (id, accno, category, heading ) VALUES (-255, '-billion', 'T', -255);
-INSERT INTO account (id, accno, category, heading ) VALUES (-256, '-billiontest', 'T', -255);
+INSERT INTO account (id, accno, category, heading ) VALUES (-255, '-billion', 'L', -255);
+INSERT INTO account (id, accno, category, heading ) VALUES (-256, '-billiontest', 'L', -255);
 
 
 INSERT INTO country_tax_form (country_id, form_name, id) VALUES (232, 'Testing Form', -511);

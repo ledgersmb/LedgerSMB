@@ -17,8 +17,6 @@ This module provides the workflow scripts for managing users and permissions.
         
 =cut
 
-require 'lsmb-request.pl';
-
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
@@ -74,13 +72,6 @@ sub __edit_page {
         
         $template_data->{$key} = $otd->{$key};
     }
-    my $template = LedgerSMB::Template->new( 
-        user => $request->{_user}, 
-        template => 'Admin/edit_user', 
-        language => $user->{language}, 
-        format => 'HTML', 
-        path=>'UI'
-    );
     $template->render($template_data);
 }
 
@@ -92,7 +83,7 @@ Saves the role assignments for a given user
 
 sub save_roles {
     my ($request, $admin) = @_;
-    my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
+    $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
     $admin->{stylesheet} = $request->{stylesheet};
     $admin->save_roles();
     __edit_page($admin);

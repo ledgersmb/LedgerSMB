@@ -99,6 +99,8 @@ sub columns {
     ];
 }
 
+=back
+
 =head2 set_buttons
 
 This sets buttons relevant to approving the adjustments.
@@ -121,13 +123,9 @@ sub set_buttons {
     }];
 }
 
-=back
-
 =head1 METHODS
 
-=over
-
-=item run_report
+=head2 run_report
 
 =cut
 
@@ -222,8 +220,6 @@ sub delete {
     my ($self) = @_;
     $self->exec_method(funcname => 'inventory_report__delete');
 }
-
-=back
 
 =head1 SEE ALSO
 
