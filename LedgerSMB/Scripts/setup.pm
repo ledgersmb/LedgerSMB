@@ -729,7 +729,7 @@ sub select_coa {
             opendir(CHART, "sql/coa/$request->{coa_lc}/chart");
             @{$request->{charts}} =
                 map +{ name => $_ },
-                sort (grep !/^(\.|[Ss]ample.*)/,
+                sort(grep !/^(\.|[Ss]ample.*)/,
                       readdir(CHART));
             closedir(CHART);
        }
