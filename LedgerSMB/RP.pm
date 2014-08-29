@@ -1800,20 +1800,19 @@ sub aging {
 		       '' as $form->{ct}taxnumber,
 	               a.invnumber, a.transdate, a.ordnumber, 
 		       a.ponumber, a.notes, c.language_code, 
-		       CASE WHEN 
-		                 EXTRACT(days FROM age(?, a.transdate)/30) 
+		       CASE WHEN (?::date - a.transdate)/30 
 		                 = 0
 		                 THEN (sum(p.due) * -1) ELSE 0 END
 		            as c0, 
-		       CASE WHEN EXTRACT(days FROM age(?, a.transdate)/30)
+		       CASE WHEN (?::date - a.transdate)/30
 		                 = 1
 		                 THEN (sum(p.due) * -1) ELSE 0 END
 		            as c30, 
-		       CASE WHEN EXTRACT(days FROM age(?, a.transdate)/30)
+		       CASE WHEN (?::date - a.transdate)/30 
 		                 = 2
 		                 THEN (sum(p.due) * -1) ELSE 0 END
 		            as c60, 
-		       CASE WHEN EXTRACT(days FROM age(?, a.transdate)/30)
+		       CASE WHEN (?::date - a.transdate)/30
 		                 > 2
 		                 THEN (sum(p.due) * -1) ELSE 0 END
 		            as c90, 
