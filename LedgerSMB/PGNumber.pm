@@ -132,6 +132,7 @@ The input is formatted.
 sub from_input {
     my $self   = shift @_;
     my $string = shift @_;
+    return $string if eval { $string->isa(__PACKAGE__) };
     #tshvr4 avoid 'Use of uninitialized value $string in string eq'
     if(!defined $string || $string eq ''){
      return undef;
