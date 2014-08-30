@@ -1345,7 +1345,9 @@ sub run_custom_queries {
     }
 
     $query_type = uc($query_type);
-    for ( @{ $self->{custom_db_fields}{$tablename} } ) {
+    return unless $self->{custom_db_fields} 
+           and exists $self->{custom_db_fields}->{$tablename};
+    for ( @{ $self->{custom_db_fields}->{$tablename} } ) {
         @elements = split( /:/, $_ );
         push @{ $temphash{ $elements[0] } }, $elements[1];
     }
