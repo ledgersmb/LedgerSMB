@@ -1327,6 +1327,9 @@ Valid values for $query_type are any casing of 'SELECT', 'INSERT', and 'UPDATE'.
 
 sub run_custom_queries {
     my ( $self, $tablename, $query_type, $linenum ) = @_;
+    return unless exists $self->{custom_db_fields} 
+           and ref $self->{custom_db_fields}
+           and exists $self->{custom_db_fields}->{$tablename};
     my $dbh = $self->{dbh};
     if ( $query_type !~ /^(select|insert|update)$/i ) {
         $self->error(
@@ -1346,7 +1349,7 @@ sub run_custom_queries {
     }
 
     $query_type = uc($query_type);
-    for ( @{ $self->{custom_db_fields}{$tablename} } ) {
+    for ( @{ $self->{custom_db_fields}->{$tablename} } ) {
         @elements = split( /:/, $_ );
         push @{ $temphash{ $elements[0] } }, $elements[1];
     }
