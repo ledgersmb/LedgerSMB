@@ -6,6 +6,7 @@ Changelog for 1.3.43
 * Fixed bug 1136, manual tax not respecting user number formats (Chris T)
 * Fixed bug 1171, invoices showing as current when not (Chris T)
 * Fixed bug 1140, shipto causes exchangerate format lost (Chris T)
+* Fixed errors running custom queries where no table yet defined (Chris T)
 
 Chris T is Chris Travers
 
