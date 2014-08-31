@@ -27,8 +27,7 @@ our $cols = {
    timecard =>  ['employee', 'projectnumber', 'transdate', 'partnumber',
                  'description', 'qty', 'noncharge', 'sellprice', 'allocated',
                 'notes'],
-   inventory => ['partnumber', 'description', 'expected', 'onhand', 
-                 'purchase_price'],
+   inventory => ['partnumber', 'onhand', 'purchase_price'],
 };
 
 my %template_file = (
@@ -138,7 +137,98 @@ sub aa_multi {
     return 1;
 };
 
+sub inventory_single_date {
+    my ($request, $entries, $report_id) = @_;
+    use LedgerSMB::IS;
+    use LedgerSMB::IR;
+    my $ar_form = Form->new();
+    my $ap_form = Form->new();
+    my $dbh = $request->{dbh};
 
+    $ar_form->{dbh} = $ap_form->{dbh} = $dbh;
+
+    # Needs to come *after* form initialization
+    my ($curr) = split /:/, $ap_form->get_setting('curr');
+
+
+    $ar_form->{rowcount} = $ap_form->{rowcount} = 0;
+    $ar_form->{transdate} = $ap_form->{transdate} = $request->{transdate};
+    $ar_form->{defaultcurrency} = $ar_form->{currency} = $curr;
+    $ap_form->{defaultcurrency} = $ap_form->{currency} = $curr;
+    $ar_form->{type} = $ap_form->{type} = 'invoice';
+    # Intentionally not setting CRDATE here
+
+    my $p_info_sth = $dbh->prepare(
+        "SELECT * FROM parts WHERE partnumber = ?"
+        ) or $ap_form->dberror();
+
+    my $adjustment = ($request->{stock_type} ne 'relative') ?
+        sub { my ($target, $part_info) = @_;
+              return ($target - $part_info->{onhand}); }
+        : sub { my ($target) = @_;
+                return $target; };
+
+    
+    for my $entry (@$entries){
+        my $line = {};
+        for my $col (@{$cols->{inventory}}) {
+            $line->{$col} = shift @$entry;
+        }
+        next if $line->{onhand} !~ /\d/;
+
+        $p_info_sth->execute($line->{partnumber});
+        my $part = $p_info_sth->fetchrow_hashref('NAME_lc');
+        my $adjust = &$adjustment( $line->{onhand}, $part);
+        my $adjust_form = ($adjust > 0) ? $ap_form : $ar_form;
+
+        my $rc = ++$adjust_form->{rowcount};
+        $adjust_form->{"id_$rc"} = $part->{id};
+        $adjust_form->{"sellprice_$rc"} = $line->{purchase_price};
+        $adjust_form->{"discount_$rc"} = 0;
+        $adjust_form->{"qty_$rc"} = abs($adjust);
+
+        my $dbready_oh = $dbh->quote($line->{onhand});
+        $dbh->do( # all values numbers from db but one and that 
+                  # one is sanitized
+            "INSERT INTO inventory_report_line
+                (parts_id, counted, expected, adjust_id)
+             VALUES ($part->{id}, $dbready_oh, $part->{onhand}, $report_id)"
+            ) or $ap_form->dberror();
+        
+    }
+    $ar_form->{ARAP} = 'AR';
+    $ar_form->{AR} = $request->{AR};
+    $ap_form->{ARAP} = 'AP';
+    $ap_form->{AP} = $request->{AP};
+    
+    # ECA
+    $ar_form->{'customernumber'} = $ar_eca_for_inventory;
+    $ap_form->{'vendornumber'} = $ap_eca_for_inventory;
+    $ar_form->get_name(undef, 'customer', 'today', 2);
+    $ap_form->get_name(undef, 'vendor', 'today', 1);
+    my $ar_eca = shift @{$ar_form->{name_list}};
+    my $ap_eca = shift @{$ap_form->{name_list}};
+    $ar_form->{customer_id} = $ar_eca->{id}; 
+    $ap_form->{vendor_id} = $ap_eca->{id}; 
+
+    # POST
+    IS->post_invoice(undef, $ar_form) if $ar_form->{rowcount};
+    IR->post_invoice(undef, $ap_form) if $ap_form->{rowcount};
+    
+    $ar_form->{id} = "NULL"
+        if ! $ar_form->{id};
+    $ap_form->{id} = "NULL"
+        if ! $ap_form->{id};
+    
+    # Now, update the report record.
+    $dbh->do( # These two params come from posting above, and from
+              # the db.
+              "UPDATE inventory_report
+                       SET ar_trans_id = $ar_form->{id},
+                           ap_trans_id = $ap_form->{id}
+                     WHERE id = $report_id"
+        ) or $ap_form->dberror();
+};
 
 our $process = {
    gl       => sub {
@@ -249,112 +339,22 @@ our $process = {
                }
              },
    inventory => sub {
-                my ($request, $entries) = @_;
-                use LedgerSMB::IS;
-                use LedgerSMB::IR;
-                my $ar_form = Form->new();
-                my $ap_form = Form->new();
-                my $dbh = $request->{dbh};
-                $ar_form->{dbh} = $dbh;
-                $ap_form->{dbh} = $dbh;
-                $ar_form->{rowcount} = 0;
-                $ap_form->{rowcount} = 0;
-                $ar_form->{transdate} = $request->{transdate};
-                $ap_form->{transdate} = $request->{transdate};
-                my ($curr) = split /:/, $ap_form->get_setting('curr');
-                $ar_form->{defaultcurrency} = $ar_form->{currency} = $curr;
-                $ap_form->{defaultcurrency} = $ap_form->{currency} = $curr;
-                $ar_form->{type} = 'invoice';
-                $ap_form->{type} = 'invoice';
-                # Intentionally not setting CRDATE here
-                my $expected_sth = $dbh->prepare(
-                    "SELECT sum(qty) * -1 FROM invoice 
-                       JOIN (select id, approved from ar UNION ALL
-                             SELECT id, approved from gl UNION ALL
-                             SELECT id, approved from ap) gl 
-                             ON gl.approved AND invoice.trans_id = gl.id
-                      WHERE invoice.parts_id = ?"
-                ) or $ap_form->dberror();
-                my $p_info_sth = $dbh->prepare(
-                    "SELECT * FROM parts WHERE partnumber = ?"
-                ) or $ap_form->dberror();
-
-                $dbh->do( # Not worth parameterizing for one input
-                    "INSERT INTO inventory_report 
+       my ($request, $entries) = @_;
+       my $dbh = $request->{dbh};
+       
+       $dbh->do( # Not worth parameterizing for one input
+              "INSERT INTO inventory_report 
                             (transdate, source)
                      VALUES (".$dbh->quote($request->{transdate}).
-                             ", 'CSV upload')"
-                ) or $ap_form->dberror();
+              ", 'CSV upload')"
+        ) or $request->dberror();
+    
+       my ($report_id) = $dbh->selectrow_array(
+           "SELECT currval('inventory_report_id_seq')"
+           ) or $request->dberror();
 
-                my ($report_id) = $dbh->selectrow_array(
-                    "SELECT currval('inventory_report_id_seq')"
-                ) or $ap_form->dberror();
-                for my $entry (@$entries){
-                    my $line = {};
-                    for my $col (@{$cols->{inventory}}) {
-                      $line->{$col} = shift @$entry;
-                    }
-                    next if $line->{onhand} !~ /\d/;
-                    $p_info_sth->execute($line->{partnumber});
-                    my $part = $p_info_sth->fetchrow_hashref('NAME_lc');
-                    $expected_sth->execute($part->{id});
-                    my ($expected) = $expected_sth->fetchrow_array;
-                    $expected = 0
-                       if ! $expected;
-                    if ($line->{onhand} > $expected) { # Adjusting UP
-                       my $rc = ++$ap_form->{rowcount};
-                       $ap_form->{"id_$rc"} = $part->{id};
-                       $ap_form->{"description_$rc"} = $part->{description};
-                       $ap_form->{"sellprice_$rc"} = $line->{purchase_price};
-                       $ap_form->{"qty_$rc"} = $line->{onhand} - $expected;
-                    } else { # Adjusting DOWN by 0 or more
-                       my $rc = ++$ar_form->{rowcount};
-                       $ar_form->{"id_$rc"} = $part->{id};
-                       $ar_form->{"description_$rc"} = $part->{description};
-                       $ar_form->{"sellprice_$rc"} = $line->{purchase_price};
-                       $ar_form->{"qty_$rc"} = $expected - $line->{onhand};
-                    }
-                    my $dbready_oh = $dbh->quote($line->{onhand});
-                    $dbh->do( # all values numbers from db but one and that 
-                              # one is sanitized
-                      "INSERT INTO inventory_report_line
-                              (parts_id, counted, expected, adjust_id)
-                       VALUES ($part->{id}, $dbready_oh, $expected, $report_id)"
-                    ) or $ap_form->dberror();
+       &inventory_single_date($request, $entries, $report_id);
 
-                }
-                $ar_form->{ARAP} = 'AR';
-                $ar_form->{AR} = $request->{AR};
-                $ap_form->{ARAP} = 'AP';
-                $ap_form->{AP} = $request->{AP};
-
-                # ECA
-                $ar_form->{'customernumber'} = $ar_eca_for_inventory;
-                $ap_form->{'vendornumber'} = $ap_eca_for_inventory;
-                $ar_form->get_name(undef, 'customer', 'today', 2);
-                $ap_form->get_name(undef, 'vendor', 'today', 1);
-                my $ar_eca = shift @{$ar_form->{name_list}};
-                my $ap_eca = shift @{$ap_form->{name_list}};
-                $ar_form->{customer_id} = $ar_eca->{id}; 
-                $ap_form->{vendor_id} = $ap_eca->{id}; 
-
-                # POST
-                IS->post_invoice(undef, $ar_form) if $ar_form->{rowcount};
-                IR->post_invoice(undef, $ap_form) if $ap_form->{rowcount};
-
-                $ar_form->{id} = "NULL"
-                    if ! $ar_form->{id};
-                $ap_form->{id} = "NULL"
-                    if ! $ap_form->{id};
-
-                # Now, update the report record.
-                $dbh->do( # These two params come from posting above, and from
-                          # the db.
-                   "UPDATE inventory_report
-                       SET ar_trans_id = $ar_form->{id},
-                           ap_trans_id = $ap_form->{id}
-                     WHERE id = $report_id"
-                ) or $ap_form->dberror();
              },
 };
 
