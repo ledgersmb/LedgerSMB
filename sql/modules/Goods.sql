@@ -18,7 +18,7 @@ BEGIN
     END IF;
 
     UPDATE parts SET onhand = onhand 
-                              - (select qty * t_mfg_lot.qty from mfg_lot_item
+                              - (select t_mfg_lot.qty from mfg_lot_item
                                   WHERE parts_id = parts.id AND
                                         mfg_lot_id = $1)
      WHERE id in (select parts_id from mfg_lot_item 
