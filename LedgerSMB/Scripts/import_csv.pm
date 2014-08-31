@@ -65,79 +65,81 @@ our $template_setup = {
 
 };
 
-our $aa_multi = sub {
-                   use LedgerSMB::AA;
-                   use LedgerSMB::Batch;
-                   my ($request, $entries, $arap) = @_;
-                   my $batch = LedgerSMB::Batch->new({base => $request});
-                   $batch->{batch_number} = $request->{reference};
-                   $batch->{batch_date} = $request->{transdate};
-                   $batch->{batch_class} = $arap;
-                   $batch->create(); 
-                   # Necessary to test things are found before starting to 
-                   # import! -- CT
-                   my $acst = $request->{dbh}->prepare(
-                        "select count(*) from account where accno = ?"
-                   );
-                   my $vcst = $request->{dbh}->prepare(
-                        "select count(*) from entity_credit_account where meta_number = ?"
-                   );
-                   for my $ref (@$entries){
-                       my $pass;
-                       next if $ref->[1] !~ /\d/;
-                       my ($acct) = split /--/, $ref->[2];
-                       $acst->execute($acct);
-                       ($pass) = $acst->fetchrow_array;
-                       $request->error("Account $acct not found") if !$pass;
-                       ($acct) = split /--/, $ref->[3];
-                       $acst->execute($acct);
-                       ($pass) = $acst->fetchrow_array;
-                       $request->error("Account $acct not found") if !$pass;
-                       $vcst->execute(uc($ref->[0]));
-                       ($pass) = $vcst->fetchrow_array;
-                       if (! $pass) {
-                           if ($arap eq 'ar') {
-                               $request->error("Customer $ref->[0] not found");
-                           } else {
-                               $request->error("Vendor $ref->[0] not found");
-                           }
-                      }
-                   }
-                   for my $ref (@$entries){
-                       my $form = Form->new();
-                       $form->{dbh} = $request->{dbh};
-                       $form->{rowcount} = 1;
-                       $form->{ARAP} = uc($arap);
-                       $form->{batch_id} = $batch->{id};
-                       $form->{customernumber}
-                          = $form->{vendornumber} = shift @$ref;
-                       $form->{amount_1} = shift @$ref;
-                       next if $form->{amount_1} !~ /\d/;
-                       $form->{amount_1} = $form->parse_amount(
-                              $request->{_user}, $form->{amount_1}); 
-                       $form->{"$form->{ARAP}_amount_1"} = shift @$ref;
-                       $form->{vc} = ($arap eq "ar") ? "customer" : "vendor";
-                       $form->{arap} = $arap;
-                       $form->{uc($arap)} = shift @$ref;
-                       $form->{description_1} = shift @$ref;
-                       $form->{invnumber} = shift @$ref;
-                       $form->{transdate} = shift @$ref;
-                       $form->{currency} = $default_currency;
-                       $form->{approved} = '0';
-                       $form->{defaultcurrency} = $default_currency;
-                       my $sth = $form->{dbh}->prepare(
-                            "SELECT id FROM entity_credit_account
-                              WHERE entity_class = ? and meta_number = ?"
-                       );
-                       $sth->execute( ($arap eq 'ar') ? 2 : 1,
-                            uc($form->{vendornumber}));
-                       ($form->{vendor_id}) = $sth->fetchrow_array;
-                       $form->{customer_id} = $form->{vendor_id};
-                      
-                       AA->post_transaction($request->{_user}, $form);
-                   }
-                   return 1;
-               };
+sub aa_multi {
+    use LedgerSMB::AA;
+    use LedgerSMB::Batch;
+    my ($request, $entries, $arap) = @_;
+    my $batch = LedgerSMB::Batch->new({base => $request});
+    $batch->{batch_number} = $request->{reference};
+    $batch->{batch_date} = $request->{transdate};
+    $batch->{batch_class} = $arap;
+    $batch->create(); 
+    # Necessary to test things are found before starting to 
+    # import! -- CT
+    my $acst = $request->{dbh}->prepare(
+        "select count(*) from account where accno = ?"
+        );
+    my $vcst = $request->{dbh}->prepare(
+        "select count(*) from entity_credit_account where meta_number = ?"
+        );
+    for my $ref (@$entries){
+        my $pass;
+        next if $ref->[1] !~ /\d/;
+        my ($acct) = split /--/, $ref->[2];
+        $acst->execute($acct);
+        ($pass) = $acst->fetchrow_array;
+        $request->error("Account $acct not found") if !$pass;
+        ($acct) = split /--/, $ref->[3];
+        $acst->execute($acct);
+        ($pass) = $acst->fetchrow_array;
+        $request->error("Account $acct not found") if !$pass;
+        $vcst->execute(uc($ref->[0]));
+        ($pass) = $vcst->fetchrow_array;
+        if (! $pass) {
+            if ($arap eq 'ar') {
+                $request->error("Customer $ref->[0] not found");
+            } else {
+                $request->error("Vendor $ref->[0] not found");
+            }
+        }
+    }
+    for my $ref (@$entries){
+        my $form = Form->new();
+        $form->{dbh} = $request->{dbh};
+        $form->{rowcount} = 1;
+        $form->{ARAP} = uc($arap);
+        $form->{batch_id} = $batch->{id};
+        $form->{customernumber} = $form->{vendornumber} = shift @$ref;
+        $form->{amount_1} = shift @$ref;
+        next if $form->{amount_1} !~ /\d/;
+        $form->{amount_1} = $form->parse_amount(
+            $request->{_user}, $form->{amount_1}); 
+        $form->{"$form->{ARAP}_amount_1"} = shift @$ref;
+        $form->{vc} = ($arap eq "ar") ? "customer" : "vendor";
+        $form->{arap} = $arap;
+        $form->{uc($arap)} = shift @$ref;
+        $form->{description_1} = shift @$ref;
+        $form->{invnumber} = shift @$ref;
+        $form->{transdate} = shift @$ref;
+        $form->{currency} = $default_currency;
+        $form->{approved} = '0';
+        $form->{defaultcurrency} = $default_currency;
+        my $sth = $form->{dbh}->prepare(
+            "SELECT id FROM entity_credit_account
+              WHERE entity_class = ? and meta_number = ?"
+            );
+        $sth->execute( ($arap eq 'ar') ? 2 : 1,
+                       uc($form->{vendornumber}));
+        ($form->{vendor_id}) = $sth->fetchrow_array;
+        $form->{customer_id} = $form->{vendor_id};
+        
+        AA->post_transaction($request->{_user}, $form);
+    }
+    return 1;
+};
+
+
+
 our $process = {
    gl       => sub {
                    use LedgerSMB::GL;
@@ -174,11 +176,11 @@ our $process = {
                 },
    ar_multi => sub { 
                    my  ($request, $entries) = @_;
-                   return &$aa_multi($request, $entries, 'ar');
+                   return &aa_multi($request, $entries, 'ar');
                },
    ap_multi => sub { 
                    my  ($request, $entries) = @_;
-                   return &$aa_multi($request, $entries, 'ap');
+                   return &aa_multi($request, $entries, 'ap');
                },
     chart => sub {
                use LedgerSMB::DBObject::Account;
