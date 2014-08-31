@@ -52,7 +52,7 @@ BEGIN
       FROM acc_trans 
      WHERE amount < 0 and trans_id = currval('id')::int;
 
-    PERFORM cogs__add_for_ar_line(currval('invoice_id_seq')::int);
+    PERFORM cogs__add_for_ap_line(currval('invoice_id_seq')::int);
 
     -- move from reverse COGS.
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount)
