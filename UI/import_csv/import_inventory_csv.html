@@ -42,6 +42,20 @@
      size = 12
 } ?>
 </div>
+<div class="inputrow" id="typerow">
+<?lsmb PROCESS input element_data = {
+       name = "stock_type"
+       type = "radio"
+       value = "absolute"
+       label = text("Onhand amount")
+} ?> <br />
+<?lsmb PROCESS input element_data = {
+       name = "stock_type"
+       type = "radio"
+       value = "relative"
+       label = text("Onhand delta")
+} ?>
+</div>
 <div class="inputrow" id="filerow">
 <?lsmb PROCESS input element_data = {
        name = "import_file"
