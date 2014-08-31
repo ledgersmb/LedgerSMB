@@ -584,7 +584,7 @@ sub header {
     }
     elsif ($LedgerSMB::App_State::DBH){
         # we have a db connection, so are logged in.  Let's see about caching.
-        $cache = 0; if eval { LedgerSMB::Setting->get('disable_back')};
+        $cache = 0 if eval { LedgerSMB::Setting->get('disable_back')};
     }
 
     $ENV{LSMB_NOHEAD} = 1; # Only run once.

@@ -807,11 +807,11 @@ sub restock_assemblies {
        my ($id, $qty) = ($form->{"id_$loop"}, $form->{"qty_$loop"});
        $sth = $form->{dbh}->prepare('SELECT assembly__stock(?, ?)');
        if ($qty){
-           $sth->execute($id, $qty) or $form->dberror();
+           $sth->execute($id, $qty);
+           $form->dberror() if $form->{dbh}->err;
        }
-       $form->dberror;
-       $form->error($form->{dbh}->errstr . " in assembly__stock stored proc"); # if $sth->state;
     }
+    $form->{dbh}->commit;
 
     1;
 
