@@ -2166,11 +2166,11 @@ sub list_assemblies {
         $column_data{bin} = qq|<td>$ref->{bin}&nbsp;</td>|;
         $column_data{onhand} =
             qq|<td align=right>|
-          . $form->format_amount( \%myconfig, $ref->{onhand}, "", "&nbsp;" )
+          . $form->format_amount( \%myconfig, $ref->{onhand}) || '&nbsp;'
           . qq|</td>|;
         $column_data{rop} =
             qq|<td align=right>|
-          . $form->format_amount( \%myconfig, $ref->{rop}, '', "&nbsp;" )
+          . $form->format_amount( \%myconfig, $ref->{rop}) || "&nbsp;"
           . qq|</td>|;
         $column_data{stock} =
             qq|<td width=10%><input name="qty_$i" size="10" value="|
