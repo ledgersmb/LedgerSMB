@@ -194,6 +194,8 @@ sub inventory_single_date {
         $adjust_form->{"id_$rc"} = $part->{id};
         $adjust_form->{"sellprice_$rc"} = $line->{purchase_price};
         $adjust_form->{"discount_$rc"} = 0;
+        my ($dec) = ($adjust_form->{"sellprice_$rc"} =~ /\.(\d*)/);
+        $adjust_form->{"precision_$rc"} = length($dec);
         $adjust_form->{"qty_$rc"} = abs($adjust);
 
         my $dbready_oh = $dbh->quote($line->{onhand});
