@@ -28,10 +28,12 @@ our $cols = {
                  'description', 'qty', 'noncharge', 'sellprice', 'allocated',
                 'notes'],
    inventory => ['partnumber', 'onhand', 'purchase_price'],
+   inventory_multi => ['date', 'partnumber', 'onhand', 'purchase_price'],
 };
 
 my %template_file = (
    inventory => 'import_inventory_csv',
+   inventory_multi => 'import_inventory_csv',
 );
 
 
@@ -40,29 +42,41 @@ our $ar_eca_for_inventory = '00000';
 our $preprocess = {};
 our $postprocess = {};
 
-our $template_setup = {
-  inventory => sub {
-     my ($request) = @_;
-       my $sth = $request->{dbh}->prepare(
-          "SELECT concat(accno,'--',description) as value
+sub inventory_template_setup {
+    my ($request) = @_;
+    my $sth = $request->{dbh}->prepare(
+        "SELECT concat(accno,'--',description) as value
              FROM chart_get_ar_ap(?)"
-       );
+        );
 
-       $sth->execute(1); # AP accounts
-       while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-         push @{$request->{AP_accounts}}, $row; 
-       }
+    $sth->execute(1); # AP accounts
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+        push @{$request->{AP_accounts}}, $row; 
+    }
      
 
-       $sth->execute(2); # AR accounts
-       while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-         push @{$request->{AR_accounts}}, $row; 
-       }
-     
-
-  }
-
+    $sth->execute(2); # AR accounts
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+        push @{$request->{AR_accounts}}, $row; 
+    }
 };
+
+
+our $template_setup = {
+  inventory => \&inventory_template_setup,
+  inventory_multi => \&inventory_template_setup,
+};
+
+sub map_columns_into_hash {
+    my ($keys, $values) = @_;
+    my %rv;
+
+    @rv{@$keys} = @$values;
+
+    return \%rv;
+}
+
+
 
 sub aa_multi {
     use LedgerSMB::AA;
@@ -138,7 +152,7 @@ sub aa_multi {
 };
 
 sub inventory_single_date {
-    my ($request, $entries, $report_id) = @_;
+    my ($request, $entries, $report_id, $transdate) = @_;
     use LedgerSMB::IS;
     use LedgerSMB::IR;
     my $ar_form = Form->new();
@@ -152,7 +166,7 @@ sub inventory_single_date {
 
 
     $ar_form->{rowcount} = $ap_form->{rowcount} = 0;
-    $ar_form->{transdate} = $ap_form->{transdate} = $request->{transdate};
+    $ar_form->{transdate} = $ap_form->{transdate} = $transdate;
     $ar_form->{defaultcurrency} = $ar_form->{currency} = $curr;
     $ap_form->{defaultcurrency} = $ap_form->{currency} = $curr;
     $ar_form->{type} = $ap_form->{type} = 'invoice';
@@ -168,12 +182,7 @@ sub inventory_single_date {
         : sub { my ($target) = @_;
                 return $target; };
 
-    
-    for my $entry (@$entries){
-        my $line = {};
-        for my $col (@{$cols->{inventory}}) {
-            $line->{$col} = shift @$entry;
-        }
+    for my $line (@$entries){
         next if $line->{onhand} !~ /\d/;
 
         $p_info_sth->execute($line->{partnumber});
@@ -353,9 +362,42 @@ our $process = {
            "SELECT currval('inventory_report_id_seq')"
            ) or $request->dberror();
 
-       &inventory_single_date($request, $entries, $report_id);
+       @$entries =
+           map { map_columns_into_hash($cols->{inventory}, $_) } @$entries;
+       &inventory_single_date($request, $entries,
+                              $report_id, $request->{transdate});
 
-             },
+   },
+   inventory_multi => sub {
+       my ($request, $entries) = @_;
+       my $dbh = $request->{dbh};
+       
+       @$entries =
+           map { map_columns_into_hash($cols->{inventory_multi}, $_) }
+           @$entries;
+       my %dated_entries;
+       for my $entry (@$entries) {
+           push @{$dated_entries{$entry->{date}}}, $entry;
+       } 
+
+       for my $key (keys %dated_entries) {
+           $dbh->do( # Not worth parameterizing for one input
+                     "INSERT INTO inventory_report 
+                            (transdate, source)
+                     VALUES (".$dbh->quote($key).
+                     ", 'CSV upload (' || ".$dbh->quote($request->{transdate})
+                     ." || ')')"
+               ) or $request->dberror();
+    
+           my ($report_id) = $dbh->selectrow_array(
+               "SELECT currval('inventory_report_id_seq')"
+               ) or $request->dberror();
+
+           &inventory_single_date($request, $dated_entries{$key},
+                                  $report_id, $key);
+       }
+
+   },
 };
 
 =head2 parse_file

@@ -8,12 +8,6 @@
 <div class="listtop"><?lsmb title ?></div>
 <div class="info"><?lsmb info ?></div>
 <form action="<?lsmb script ?>" method="post" enctype="multipart/form-data">
-<?lsmb PROCESS input element_data = {
-    type = "hidden"
-    class = "hidden"
-    name = "type"
-    value = type
-} ?>
 <div class="inputrow" id="ar-account-row">
 <?lsmb PROCESS select element_data = {
      label = text("AR account")
@@ -54,6 +48,20 @@
        type = "radio"
        value = "relative"
        label = text("Onhand delta")
+} ?>
+</div>
+<div class="inputrow" id="typerow">
+<?lsmb PROCESS input element_data = {
+       name = "type"
+       type = "radio"
+       value = "inventory"
+       label = text("Single date")
+} ?> <br />
+<?lsmb PROCESS input element_data = {
+       name = "type"
+       type = "radio"
+       value = "inventory_multi"
+       label = text("Multiple dates")
 } ?>
 </div>
 <div class="inputrow" id="filerow">
