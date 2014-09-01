@@ -1968,9 +1968,6 @@ sub ship_to {
     $title = $form->{title};
     $form->{title} = $locale->text('Ship to');
 
-    for (qw(creditlimit creditremaining)) {
-        $form->{$_} = $form->format_amount($form->parse_amount( \%myconfig, $form->{$_} ));
-    }
     for ( 1 .. $form->{paidaccounts} ) {
         $form->{"paid_$_"} =
           $form->parse_amount( \%myconfig, $form->{"paid_$_"} );
