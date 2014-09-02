@@ -1825,7 +1825,6 @@ sub get_name {
         $i++;
     }
     $sth->finish;
-    use Carp::Always;
 
     return $i;
 }
