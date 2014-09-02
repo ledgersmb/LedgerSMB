@@ -2285,6 +2285,7 @@ sub construct_countrys_types
 
 sub createlocations
 {
+        my ($continue) = @_;
 
 	my $loc_id_index=$form->{"shiptoradio"};
 
@@ -2300,7 +2301,7 @@ sub createlocations
 
 	     &validatelocation;
 
-	     IS->createlocation($form);			
+	     $form->{location_id} = IS->createlocation($form);			
 					
 			
 	}
@@ -2309,11 +2310,9 @@ sub createlocations
 	{
 	     &validatecontact;
    	     IS->createcontact($form);
-			
-	
         }
 
-	&ship_to;
+	&ship_to unless $continue;
 
 	     
 	     
@@ -2356,7 +2355,7 @@ sub setlocation_id
        }
        if($form->{"shiptoradio"} eq "new")
        {
-		$form->error("Please dont select from others");
+                createlocations(1);
        }
 	
 
