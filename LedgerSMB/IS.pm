@@ -2459,9 +2459,9 @@ sub createlocation
 		 $form->{"shiptozipcode_new"},
 		 $form->{"shiptocountry_new"}
 	        ) || $form->dberror($query);
-
+  my ($l_id) = $sth->fetchrow_array;
   $sth->finish();
-
+  return $l_id;
 }
 
 

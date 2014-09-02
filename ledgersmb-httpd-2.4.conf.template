@@ -44,6 +44,12 @@ Alias /ledgersmb WORKING_DIR/
   </Files>
 </Directory>
 
+<Directory WORKING_DIR/rest>
+   RewriteEngine On
+   RewriteBase /ledgersmb/rest/
+   RewriteRule (.*) ../rest-handler.pl$1
+</Directory>
+
 <Directory WORKING_DIR/users>
   Require all denied
 </Directory>
