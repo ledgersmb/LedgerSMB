@@ -1115,7 +1115,7 @@ SELECT lsmb__grant_perms('base_user', 'new_shipto', 'UPDATE');
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['partstax'::text, 'partscustomer',
                     'account_heading_tree', 'payment_type', 'warehouse',
-                    'employee_search', 'sic', 'voucher', 'mime_type',
+                    'sic', 'voucher', 'mime_type',
                     'parts_translation', 'partsgroup_translation', 
                     'asset_report_class', 'asset_rl_to_disposal_method',
                     'asset_disposal_method', 'file_class', 'jctype']) obj;
