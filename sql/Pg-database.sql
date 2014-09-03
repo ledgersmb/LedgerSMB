@@ -744,6 +744,7 @@ create table entity_employee (
     manager_id integer references entity(id),
     employeenumber varchar(32),
     dob date,
+    is_manager bool default false,
     PRIMARY KEY (entity_id)
 );
 

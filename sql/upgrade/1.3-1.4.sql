@@ -6,7 +6,6 @@ ALTER TABLE entity_credit_account ENABLE TRIGGER ALL;
 DELETE FROM person;
 DELETE FROM company;
 DELETE FROM entity;
-DELETE FROM lsmb13.session; -- Cleares out locks
 
 --to preserve user modifications tshvr4
 DELETE FROM country;
@@ -534,6 +533,7 @@ INSERT INTO parts_translation SELECT * FROM lsmb13.parts_translation;
 INSERT INTO user_preference 
 SELECT id, language, stylesheet, printer, dateformat, numberformat
   FROM lsmb13.user_preference;
+update user_preference set dateformat = dateformat || 'yy' where length(dateformat) = 8;
 --INSERT INTO recurring SELECT * FROM lsmb13.recurring;--tshvr4 fields differ
 INSERT INTO recurring(id,reference,startdate,nextdate,enddate,howmany,payment) SELECT id,reference,startdate,nextdate,enddate,howmany,payment FROM lsmb13.recurring;
 INSERT INTO payment_type SELECT * FROM lsmb13.payment_type;
