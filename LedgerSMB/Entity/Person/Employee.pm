@@ -71,6 +71,14 @@ Organizational role.  Is manager, user, or administrator
 
 has role => (is => 'rw', isa => 'Str', required => 0);
 
+=item is_manager
+
+Whether the employee is a manager.
+
+=cut
+
+has is_manager => (is => 'rw', isa => 'Bool');
+
 =item ssn
 
 Social security number, tax number, or the like for the employee.  Required
