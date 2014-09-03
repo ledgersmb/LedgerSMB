@@ -6,11 +6,14 @@
 -- Docstrings already added to this file.
 
 
-
-CREATE OR REPLACE FUNCTION employee__save 
+DROP FUNCTION IF EXISTS employee__save
 (in_entity_id int, in_start_date date, in_end_date date, in_dob date, 
 	in_role text, in_ssn text, in_sales bool, in_manager_id int, 
         in_employee_number text)
+CREATE OR REPLACE FUNCTION employee__save 
+(in_entity_id int, in_start_date date, in_end_date date, in_dob date, 
+	in_role text, in_ssn text, in_sales bool, in_manager_id int, 
+        in_employee_number text, in_is_manager bool)
 RETURNS int AS $$
 DECLARE out_id INT;
 BEGIN
@@ -21,7 +24,8 @@ BEGIN
 		role = in_role,
 		ssn = in_ssn,
 		manager_id = in_manager_id,
-		employeenumber = in_employee_number
+		employeenumber = in_employee_number,
+                is_manager = coalesce(in_is_manager, false)
 	WHERE entity_id = in_entity_id;
 
 	out_id = in_entity_id;
@@ -29,12 +33,12 @@ BEGIN
 	IF NOT FOUND THEN
 		INSERT INTO entity_employee 
 			(startdate, enddate, dob, role, ssn, manager_id, 
-				employeenumber, entity_id)
+				employeenumber, entity_id, is_manager)
 		VALUES
 			(coalesce(in_start_date, now()::date), in_end_date, 
                                 in_dob, in_role, in_ssn,
 				in_manager_id, in_employee_number, 
-                                in_entity_id);
+                                in_entity_id, in_is_manager);
 		RETURN in_entity_id;
 	END IF;
         RETURN out_id;
@@ -44,7 +48,7 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION employee__save
 (in_entity_id int, in_start_date date, in_end_date date, in_dob date,
         in_role text, in_ssn text, in_sales bool, in_manager_id int,
-        in_employee_number text) IS
+        in_employee_number text, in_is_manager bool) IS
 $$ Saves an employeerecord with the specified information.$$;
 
 CREATE OR REPLACE FUNCTION employee__get_user(in_entity_id int)
@@ -75,6 +79,7 @@ CREATE TYPE employee_result AS (
     first_name text,
     middle_name text,
     last_name text,
+    is_manager bool,
     start_date date,
     end_date date,
     role varchar(20),
@@ -92,7 +97,7 @@ CREATE OR REPLACE FUNCTION employee__all_managers()
 RETURNS setof employee_result AS
 $$
    SELECT p.entity_id, p.id, s.salutation,
-          p.first_name, p.middle_name, p.last_name,
+          p.first_name, p.middle_name, p.last_name, ee.is_manager,
           ee.startdate, ee.enddate, ee.role, ee.ssn, ee.sales, ee.manager_id,
           mp.first_name, mp.last_name, ee.employeenumber, ee.dob, e.country_id
      FROM person p
@@ -100,7 +105,7 @@ $$
      JOIN entity e ON (p.entity_id = e.id)
 LEFT JOIN salutation s on (p.salutation_id = s.id)
 LEFT JOIN person mp ON ee.manager_id = p.entity_id
-    WHERE ee.role = 'manager'
+    WHERE ee.is_manager
  ORDER BY ee.employeenumber;
 $$ LANGUAGE SQL; 
 
@@ -109,7 +114,7 @@ CREATE OR REPLACE FUNCTION employee__get
 returns employee_result as
 $$
    SELECT p.entity_id, p.id, s.salutation, 
-          p.first_name, p.middle_name, p.last_name,
+          p.first_name, p.middle_name, p.last_name, ee.is_manager
           ee.startdate, ee.enddate, ee.role, ee.ssn, ee.sales, ee.manager_id,
           mp.first_name, mp.last_name, ee.employeenumber, ee.dob, e.country_id
      FROM person p
