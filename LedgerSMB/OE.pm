@@ -283,12 +283,13 @@ sub transactions {
     }
 
     $query .= " ORDER by $sortorder";
-
+    
     my $sth = $dbh->prepare($query);
     $sth->execute(@queryargs) || $form->dberror($query);
 
     my %oid = ();
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
+
 	$form->db_parse_numeric(sth=>$sth, hashref=>$ref);
         $ref->{exchangerate} = 1 unless $ref->{exchangerate};
         if ( $ref->{id} != $oid{id}{ $ref->{id} } ) {
