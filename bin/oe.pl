@@ -1628,7 +1628,7 @@ sub transactions {
     for (
         "oldsort",     "direction", "path",      "type",
         "vc",          "login",     "sessionid", "transdatefrom",
-        "transdateto", "open",      "closed"
+        "transdateto", "open",      "closed",    "oe_class_id"
       )
     {
         $href .= qq|&$_=$form->{$_}|;
