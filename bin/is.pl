@@ -719,7 +719,8 @@ function on_return_submit(event){
                     delete $button{$_};
                 }
             }
-            for ("update", "post", "post_as_new", "print_and_post_as_new"){
+            for ("update", "post", "post_as_new", "print_and_post_as_new",
+                 "ship_to"){
                 delete $button{$_};
             } 
 
