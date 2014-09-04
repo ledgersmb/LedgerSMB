@@ -31,7 +31,7 @@ ADD_COMMA=0;
                ',';
             END;
             ADD_COMMA = 1;
-            ROW.$COL_ID;
+            INCLUDE escape VALUE = ROW.$COL_ID;
         END;
     END; 
 ?>
