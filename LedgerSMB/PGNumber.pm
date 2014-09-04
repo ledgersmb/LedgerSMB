@@ -6,11 +6,11 @@ LedgerSMB::PGNumeric
 
 use strict;
 use warnings;
-use PGObject;
 use Number::Format;
 use LedgerSMB::Setting;
 
 package LedgerSMB::PGNumber;
+use base qw(PGObject::Type::BigFloat);
 
 PGObject->register_type(pg_type => $_,
                                   perl_class => __PACKAGE__)
@@ -22,7 +22,8 @@ PGObject->register_type(pg_type => $_,
 This is a wrapper class for handling a database interface for numeric (int, 
 float, numeric) data types to/from the database and to/from user input.
 
-This extends Math::BigFloat and can be used in this way.
+This extends PBObject::Type::BigFloat which further extends Math::BigFloat and 
+can be used in this way.
 
 =head1 INHERITS
 
@@ -33,8 +34,6 @@ This extends Math::BigFloat and can be used in this way.
 =back
 
 =cut
-
-use base qw(Math::BigFloat);
 
 =head1 OVERLOADS
 
@@ -246,23 +245,14 @@ sub to_output {
     return sprintf($fmt, $str);
 }
 
-sub from_db {
-    my ($self, $string) = @_;
-    return undef if !defined $string;
-    return $self->new($string);
-}
+=item to_sort
 
-=item to_db
+Returns the value for sorting purposes
 
 =cut
 
-sub to_db {
-    my ($self) = @_; 
-    return $self->to_output({format => '1000.00'});
-}
-
 sub to_sort {
-    return $_[0]->to_db;
+    return $_[0]->bstr;
 }
 
 1;
