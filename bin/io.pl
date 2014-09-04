@@ -2118,7 +2118,8 @@ sub ship_to {
 						   for($i=1;$i<=$form->{totallocations};$i++)
 						   {
                                                       my $checked = '';
-                                                      $checked = 'CHECKED="CHECKED"' if $form->{location_id} == $form->{"shiptolocationid_$i"};
+                                                      $checked = 'CHECKED="CHECKED"' if $form->{location_id} == $form->{"shiptolocationid_$i"}
+         or $form->{location_id} == $form->{"locationid_$i"};
 
 				  	   	   print qq|
 						   <tr>
@@ -2367,7 +2368,7 @@ sub createlocations
 
 	     &validatelocation;
 
-	     $form->{location_id} = IS->createlocation($form);			
+	     $form->{location_id} = IS->createlocation($form);
 					
 			
 	}
