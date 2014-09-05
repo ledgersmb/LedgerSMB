@@ -576,20 +576,22 @@ is(grep(/Locked by/, @output), 1, 'Invoice locked label shown');
 
 
 # LPR PRinting Tests
-use LedgerSMB::Sysconfig;
-%LedgerSMB::Sysconfig::printer = ('test' => 'cat > t/var/04-lpr-test');
+SKIP: {
+    skip 'LATEX_TESTING is not set', 2 unless $ENV{LATEX_TESTING};
+    use LedgerSMB::Sysconfig;
+    %LedgerSMB::Sysconfig::printer = ('test' => 'cat > t/var/04-lpr-test');
 
-$template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PDF', 
+    $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PDF', 
 	'template' => '04-template', 'locale' => $locale, no_auto_output => 1);
-$template->render({media => 'test'});
-$template->output(media => 'test');
+    $template->render({media => 'test'});
+    $template->output(media => 'test');
 
-ok (open (LPR_TEST, '<', 't/var/04-lpr-test'), 'LedgerSMB::Template::_output_lpr output file opened successfully');
+    ok (open (LPR_TEST, '<', 't/var/04-lpr-test'), 'LedgerSMB::Template::_output_lpr output file opened successfully');
 
-my $line1 = <LPR_TEST>;
+    my $line1 = <LPR_TEST>;
 
-like($line1, qr/^%PDF/, 'output file is pdf');
-
+    like($line1, qr/^%PDF/, 'output file is pdf');
+}
 $template =  LedgerSMB::Template->new(
         path            => 'UI',
         template        => 'rp-payments',
