@@ -33,6 +33,7 @@ before_install:
    - "cpanm Encode"
    - "cpanm Time::Local"
    - "cpanm Cwd"
+   - "cpanm --force Class::Std"
    - "cpanm Config::Std"
    - "cpanm Mojo::Base"
    - "cpanm MIME::Lite"
