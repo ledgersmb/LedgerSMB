@@ -175,6 +175,11 @@ sub inventory_single_date {
     my $p_info_sth = $dbh->prepare(
         "SELECT * FROM parts WHERE partnumber = ?"
         ) or $ap_form->dberror();
+    my $ins_sth = $dbh->prepare(
+        "INSERT INTO inventory_report_line
+                (parts_id, counted, expected, adjust_id)
+             VALUES (?, ?, ?, ?)"
+        ) or $ap_form->dberror();
 
     my $adjustment = ($request->{stock_type} ne 'relative') ?
         sub { my ($target, $part_info) = @_;
@@ -187,6 +192,8 @@ sub inventory_single_date {
 
         $p_info_sth->execute($line->{partnumber});
         my $part = $p_info_sth->fetchrow_hashref('NAME_lc');
+        die "Part $line->{partnumber} not found."
+            unless $part;
         my $adjust = &$adjustment( $line->{onhand}, $part);
         my $adjust_form = ($adjust > 0) ? $ap_form : $ar_form;
 
@@ -197,12 +204,9 @@ sub inventory_single_date {
         $adjust_form->{"qty_$rc"} = abs($adjust);
 
         my $dbready_oh = $dbh->quote($line->{onhand});
-        $dbh->do( # all values numbers from db but one and that 
-                  # one is sanitized
-            "INSERT INTO inventory_report_line
-                (parts_id, counted, expected, adjust_id)
-             VALUES ($part->{id}, $dbready_oh, $part->{onhand}, $report_id)"
-            ) or $ap_form->dberror();
+        $ins_sth->execute($part->{id}, $dbready_oh,
+                          $part->{onhand}, $report_id)
+            or $ap_form->dberror();
         
     }
     $ar_form->{ARAP} = 'AR';
