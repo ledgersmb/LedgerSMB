@@ -35,6 +35,7 @@ before_install:
    - "cpanm Time::Local"
    - "cpanm Cwd"
    - "cpanm Config::Std"
+   - "cpanm Mojo::Base"
    - "cpanm MIME::Lite"
    - "cpanm Template"
    - "cpanm Error"
