@@ -74,7 +74,8 @@ sub chart_json {
     
     my $json = LedgerSMB::REST_Format::json->to_output(\@results);
     my $cgi = CGI::Simple->new();
-    print $cgi->header('application/json', '200 Success');
+    binmode STDOUT, ':raw';
+    print $cgi->header('application/json;charset=UTF-8', '200 Success');
     $cgi->put($json);
 }
 

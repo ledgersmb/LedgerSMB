@@ -1070,7 +1070,8 @@ DROP FUNCTION IF EXISTS payment__search(text, date, date, int, text, int, char(3
 
 CREATE OR REPLACE FUNCTION payment__search 
 (in_source text, in_from_date date, in_to_date date, in_credit_id int, 
-	in_cash_accno text, in_entity_class int, in_currency char(3))
+	in_cash_accno text, in_entity_class int, in_currency char(3), 
+        in_meta_number text)
 RETURNS SETOF payment_record AS
 $$
 DECLARE 
@@ -1109,6 +1110,8 @@ BEGIN
 			AND (a.transdate <= in_to_date OR in_to_date IS NULL)
 			AND (source = in_source OR in_source IS NULL)
                         AND arap.approved AND a.approved
+                        AND (c.meta_number = in_meta_number 
+                                OR in_meta_number IS NULL)
 		GROUP BY c.meta_number, c.id, e.name, a.transdate, 
 			a.source, a.memo, b.id, b.control_code, b.description, 
                         voucher_id
@@ -1121,7 +1124,7 @@ $$ language plpgsql;
 
 COMMENT ON FUNCTION payment__search
 (in_source text, in_date_from date, in_date_to date, in_credit_id int,
-        in_cash_accno text, in_entity_class int, char(3)) IS
+        in_cash_accno text, in_entity_class int, char(3), text) IS
 $$This searches for payments.  in_date_to and _date_from specify the acceptable
 date range.  All other matches are exact except that null matches all values.
 
