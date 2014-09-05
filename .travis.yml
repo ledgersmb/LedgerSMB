@@ -42,4 +42,4 @@ before_install:
    - "cpanm CGI::Simple"
    - "cpanm File::MimeInfo"
 script:
-   export RELEASE_TESTING=1 && perl Makefile.PL && sh tools/pre-release-tests.sh && cover -test -report coveralls
+   export RELEASE_TESTING=1 && yes n | perl Makefile.PL && sh tools/pre-release-tests.sh && cover -test -report coveralls
