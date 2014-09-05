@@ -19,11 +19,6 @@ use LedgerSMB::Template;
 use LedgerSMB::Template::Elements;
 use LedgerSMB::Template::CSV;
 use LedgerSMB::Template::HTML;
-my $has_latex = 0;
- (  eval {require LedgerSMB::Template::LaTeX } 
-&&  eval {require Template::Latex} 
-&&  eval {require Template::Plugins::Latex}
-) || ($has_latex = 1) ;
 use LedgerSMB::Template::TXT;
 
 $LedgerSMB::Sysconfig::tempdir = 't/var';
@@ -137,7 +132,7 @@ throws_ok{$template->render({'login' => 'foo'})} qr/Can't locate/,
 #####################
 
 SKIP: {
-    skip "LaTeX modules not installed", 7 unless $ENV{LATEX_TESTING};
+    skip "LATEX_TESTING not set", 7 unless $ENV{LATEX_TESTING};
     $template = undef;
     $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PDF', 
 	'template' => '04-template', 'no_auto_output' => 1);
