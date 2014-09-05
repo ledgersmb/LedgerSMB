@@ -20,25 +20,25 @@ before_install:
    - "cpanm Test::Trap"
    - "cpanm Test::Exception"
    - "cpanm Devel::Cover::Report::Coveralls"
-   - 'cpanm Data::Dumper'
-   - 'cpanm Log::Log4perl'
-   - 'cpanm Locale::Maketext'
-   - 'cpanm DateTime'
-   - 'cpanm Locale::Maketext::Lexicon'
-   - 'cpanm MIME::Base64'
-   - 'cpanm Digest::MD5'
-   - 'cpanm HTML::Entities'
-   - 'cpanm Math::BigFloat';
-   - 'cpanm IO::File'
-   - 'cpanm IO::Scalar'
-   - 'cpanm Encode'
-   - 'cpanm Time::Local'
-   - 'cpanm Cwd'
-   - 'cpanm Config::Std'
-   - 'cpanm MIME::Lite'
-   - 'cpanm Template' 
-   - 'cpanm Error'
-   - 'cpanm CGI::Simple'
-   - 'cpanm File::MimeInfo'
+   - "cpanm Data::Dumper"
+   - "cpanm Log::Log4perl"
+   - "cpanm Locale::Maketext"
+   - "cpanm DateTime"
+   - "cpanm Locale::Maketext::Lexicon"
+   - "cpanm MIME::Base64"
+   - "cpanm Digest::MD5"
+   - "cpanm HTML::Entities"
+   - "cpanm Math::BigFloat"
+   - "cpanm IO::File"
+   - "cpanm IO::Scalar"
+   - "cpanm Encode"
+   - "cpanm Time::Local"
+   - "cpanm Cwd"
+   - "cpanm Config::Std"
+   - "cpanm MIME::Lite"
+   - "cpanm Template"
+   - "cpanm Error"
+   - "cpanm CGI::Simple"
+   - "cpanm File::MimeInfo"
 script:
    export RELEASE_TESTING=1 && perl Makefile.PL && sh tools/pre-release-tests.sh && cover -test -report coveralls
