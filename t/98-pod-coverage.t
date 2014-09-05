@@ -13,7 +13,7 @@ eval "use Test::Pod::Coverage";
 if ($@){
     plan skip_all => "Test::Pod::Coverage required for testing POD coverage";
 } else {
-    plan tests => 30;
+    plan tests => 29;
 }
 pod_coverage_ok("LedgerSMB");
 pod_coverage_ok("LedgerSMB::Form");
