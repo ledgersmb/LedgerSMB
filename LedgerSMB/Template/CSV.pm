@@ -82,8 +82,6 @@ sub preprocess {
 			$vars = $rawvars;
 		}
 		$vars =~ s/(^ +| +$)//g;
-		$vars =~ s/"/""/g;
-		$vars = qq|"$vars"| if $vars =~ /[^0-9.+-]/;
 	} elsif ( $type eq 'CODE' ) { # a code reference makes no sense
 		return undef;
 	} else { # hashes and objects
@@ -97,10 +95,6 @@ sub preprocess {
 sub process {
 	my $parent = shift;
 	my $cleanvars = shift;
-        for my $col (@{$cleanvars->{columns}}){
-            $col =~ s/""/"/g;
-            $col =~ s/(^"|"$)//g;
-        }
 	my $template;
 	my $source;
 	my $output;

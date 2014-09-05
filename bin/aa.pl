@@ -1075,12 +1075,13 @@ sub form_footer {
 <th>| . $locale->text('Attached by') . qq|</th>
 </tr> |;
         foreach my $file (@{$form->{files}}){
+     use Data::Dumper;
               print qq|
 <tr>
 <td><a href="file.pl?action=get&file_class=1&ref_key=$form->{id}&id=$file->{id}"
             >$file->{file_name}</a></td> 
 <td>$file->{mime_type}</td> 
-<td>|.$file->{uploaded_at}.qq|</td> 
+<td>|. $file->{uploaded_at}->to_output .qq|</td> 
 <td>$file->{uploaded_by_name}</td> 
 </tr>
               |;
@@ -1108,7 +1109,7 @@ sub form_footer {
 <td> $file->{mime_type} </td> 
 <td> $aclass </td> 
 <td> $file->{reference} </td> 
-<td> $file->{attached_at} </td> 
+<td> | . $file->{attached_at}->to_output . qq| </td> 
 <td> $file->{attached_by} </td> 
 </tr>|;
        }
