@@ -137,8 +137,7 @@ throws_ok{$template->render({'login' => 'foo'})} qr/Can't locate/,
 #####################
 
 SKIP: {
-    eval { require LedgerSMB::Template::LaTeX };
-    skip "LaTeX modules not installed", 7 if $@;
+    skip "LaTeX modules not installed", 7 if unless $ENV{LATEX_TESTING};
     $template = undef;
     $template = new LedgerSMB::Template('user' => $myconfig, 'format' => 'PDF', 
 	'template' => '04-template', 'no_auto_output' => 1);
