@@ -4,7 +4,7 @@
 # These include parsing the current test files, and creating 997 docs in 
 # response.
 #
-use Test::More tests => 5;
+use Test::More;
 use LedgerSMB::Form;
 use LedgerSMB::X12;
 use LedgerSMB::X12::EDI850;
@@ -12,6 +12,8 @@ use LedgerSMB::X12::EDI894;
 #use Carp::Always;
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
+plan skip_all => 'X12_TESTING not set' unless $ENV{X12_TESTING};
+plan tests => 5;
 
 
 my $e850t1 = LedgerSMB::X12::EDI850->new(message => 't/data/sample_po.edi');
