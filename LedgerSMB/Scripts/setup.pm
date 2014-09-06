@@ -9,6 +9,8 @@ management tasks.
 
 =head1 METHODS
 
+=over
+
 =cut
 
 # DEVELOPER NOTES:
@@ -73,8 +75,6 @@ sub _init_db {
 
     return $database;
 }
-
-=over
 
 =item login
 

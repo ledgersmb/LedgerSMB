@@ -28,7 +28,6 @@ pod_coverage_ok("LedgerSMB::Mailer");
 pod_coverage_ok("LedgerSMB::Template");
 pod_coverage_ok("LedgerSMB::Template::CSV");
 pod_coverage_ok("LedgerSMB::Template::HTML");
-pod_coverage_ok("LedgerSMB::Template::LaTeX");
 pod_coverage_ok("LedgerSMB::Template::TXT");
 pod_coverage_ok("LedgerSMB::User");
 pod_coverage_ok("LedgerSMB::DBObject::Date");
@@ -80,7 +79,6 @@ pod_coverage_ok("LedgerSMB::File::Entity");
 pod_coverage_ok("LedgerSMB::File::Order");
 pod_coverage_ok("LedgerSMB::File::Part");
 pod_coverage_ok("LedgerSMB::File::Transaction");
-pod_coverage_ok("LedgerSMB::DBObject");
 pod_coverage_ok("LedgerSMB::Batch");
 pod_coverage_ok("LedgerSMB::DBObject::Payment", 
                {also_private => [qr/^(format_ten_|num2text_)/]}
