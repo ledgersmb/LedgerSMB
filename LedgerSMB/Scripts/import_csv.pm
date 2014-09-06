@@ -42,7 +42,7 @@ our $ar_eca_for_inventory = '00000';
 our $preprocess = {};
 our $postprocess = {};
 
-sub inventory_template_setup {
+sub _inventory_template_setup {
     my ($request) = @_;
     my $sth = $request->{dbh}->prepare(
         "SELECT concat(accno,'--',description) as value
@@ -63,11 +63,11 @@ sub inventory_template_setup {
 
 
 our $template_setup = {
-  inventory => \&inventory_template_setup,
-  inventory_multi => \&inventory_template_setup,
+  inventory => \&_inventory_template_setup,
+  inventory_multi => \&_inventory_template_setup,
 };
 
-sub map_columns_into_hash {
+sub _map_columns_into_hash {
     my ($keys, $values) = @_;
     my %rv;
 
@@ -78,7 +78,7 @@ sub map_columns_into_hash {
 
 
 
-sub aa_multi {
+sub _aa_multi {
     use LedgerSMB::AA;
     use LedgerSMB::Batch;
     my ($request, $entries, $arap) = @_;
@@ -151,7 +151,7 @@ sub aa_multi {
     return 1;
 };
 
-sub inventory_single_date {
+sub _inventory_single_date {
     my ($request, $entries, $report_id, $transdate) = @_;
     use LedgerSMB::IS;
     use LedgerSMB::IR;
@@ -283,11 +283,11 @@ our $process = {
                 },
    ar_multi => sub { 
                    my  ($request, $entries) = @_;
-                   return &aa_multi($request, $entries, 'ar');
+                   return &_aa_multi($request, $entries, 'ar');
                },
    ap_multi => sub { 
                    my  ($request, $entries) = @_;
-                   return &aa_multi($request, $entries, 'ap');
+                   return &_aa_multi($request, $entries, 'ap');
                },
     chart => sub {
                use LedgerSMB::DBObject::Account;
@@ -369,8 +369,8 @@ our $process = {
            ) or $request->dberror();
 
        @$entries =
-           map { map_columns_into_hash($cols->{inventory}, $_) } @$entries;
-       &inventory_single_date($request, $entries,
+           map { _map_columns_into_hash($cols->{inventory}, $_) } @$entries;
+       &_inventory_single_date($request, $entries,
                               $report_id, $request->{transdate});
 
    },
@@ -379,7 +379,7 @@ our $process = {
        my $dbh = $request->{dbh};
        
        @$entries =
-           map { map_columns_into_hash($cols->{inventory_multi}, $_) }
+           map { _map_columns_into_hash($cols->{inventory_multi}, $_) }
            @$entries;
        my %dated_entries;
        for my $entry (@$entries) {
@@ -399,7 +399,7 @@ our $process = {
                "SELECT currval('inventory_report_id_seq')"
                ) or $request->dberror();
 
-           &inventory_single_date($request, $dated_entries{$key},
+           &_inventory_single_date($request, $dated_entries{$key},
                                   $report_id, $key);
        }
 
