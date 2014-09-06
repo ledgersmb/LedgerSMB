@@ -200,6 +200,15 @@ COMMENT ON FUNCTION employee__list_managers
 (in_id integer) IS
 $$ Returns a list of managers, that is employees with the 'manager' role set.$$;
 
+CREATE OR REPLACE VIEW employee_search AS
+SELECT e.*, em.name AS manager, emn.note, en.name as name
+FROM entity_employee e
+LEFT JOIN entity en on (e.entity_id = en.id)
+LEFT JOIN entity_employee m ON (e.manager_id = m.entity_id)
+LEFT JOIN entity em on (em.id = m.entity_id)
+LEFT JOIN entity_note emn on (emn.ref_key = em.id);
+
+
 CREATE OR REPLACE FUNCTION employee_search
 (in_startdatefrom date, in_startdateto date, in_name varchar, in_notes text,
 	in_enddateto date, in_enddatefrom date, in_sales boolean)

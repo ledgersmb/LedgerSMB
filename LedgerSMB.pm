@@ -103,8 +103,9 @@ Ensures that the $ENV{REQUEST_METHOD} is defined and either "HEAD", "GET", "POST
 
 This zeroes out the App_State.
 
-=cut
+=item initialize_with_db
 
+This function sets up the db handle for the request
 
 =back
 
