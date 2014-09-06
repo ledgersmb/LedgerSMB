@@ -471,7 +471,7 @@ sub display_payments {
                    } 
             }
             $invoice->[6] = $invoice->[3] - $invoice->[4] - $invoice->[5];
-            $contact_to_pay +=  $invoice->[6]);
+            $contact_to_pay +=  $invoice->[6];
             $invoice->[3] = $invoice->[3]->to_output(money  => 1);
             $invoice->[4] = $invoice->[4]->to_output(money  => 1);
             $invoice->[5] = $invoice->[5]->to_output(money  => 1);
@@ -1134,7 +1134,7 @@ for my $ref (0 .. $#array_options) {
           $request->round_amount($sign * $request_topay_fx_bigfloat ) 
      ){
          # We need to store all the overpayments so we can use it on a new payment2 screen
-         $unhandled_overpayment = $unhandled_overpayment + $request_topay_fx_bigfloat + $temporary_discount - $array_options[$ref]->{amount}) ;
+         $unhandled_overpayment = $unhandled_overpayment + $request_topay_fx_bigfloat + $temporary_discount - $array_options[$ref]->{amount} ;
 
      }
          if ($temporary_discount != 0) {
