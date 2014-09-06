@@ -685,3 +685,9 @@ BEGIN;
 ALTER TABLE invoice ALTER COLUMN allocated TYPE NUMERIC;
 
 COMMIT;
+
+BEGIN;
+ALTER TABLE entity_employee ADD is_manager bool DEFAULT FALSE;
+UPDATE entity_employee SET is_manager = true WHERE role = 'manager';
+
+COMMIT;

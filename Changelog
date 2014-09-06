@@ -10,6 +10,8 @@ Changelog for 1.3.43
 * Use Shipto button works right away when adding from invoice (Chris T)
 * Fixed bug 1196, number formatting issue when decimal separator is comma, like 1.000,00 (Pongracz I)
 * Fixed bug 1169, sorting orders results in empty list (Chris T)
+* Fixed bug 1173, employee manager checkbox badly handled (Chris T)
+* Fixed bug 1199, can change shipto with no effect after positng (Chris T)
 
 Chris T is Chris Travers
 Pongracz I is Pongracz Istvan
