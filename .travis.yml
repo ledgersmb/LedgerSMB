@@ -8,8 +8,6 @@ perl:
   - '5.20'
 addons:
    postgresql: "9.3"
-env:
-  - DB_TESTING: 1
 before_install:
    - "cpanm DBI"
    - "cpanm DBD::Pg"
