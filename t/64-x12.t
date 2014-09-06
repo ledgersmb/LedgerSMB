@@ -10,7 +10,7 @@ eval {
 require LedgerSMB::X12;
 require LedgerSMB::X12::EDI850;
 require LedgerSMB::X12::EDI894;
-}
+};
 #use Carp::Always;
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
