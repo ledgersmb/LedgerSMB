@@ -6,10 +6,8 @@ perl:
   - '5.16'
   - '5.18'
   - '5.20'
-postgresql:
-  - "9.1"
-  - "9.2"
-  - "9.3"
+addons:
+  postgresql: "9.3"
 env:
   - DB_TESTING: 1
 before_install:
