@@ -67,6 +67,12 @@ our $template_setup = {
   inventory_multi => \&_inventory_template_setup,
 };
 
+=head2 map_columns_into_hash($keys, $values)
+
+Takes two arrayrefs and returns a hashref as you'd expect from the args.
+
+=cut
+
 sub map_columns_into_hash {
     my ($keys, $values) = @_;
     my %rv;
