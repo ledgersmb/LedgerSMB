@@ -6,9 +6,11 @@
 #
 use Test::More;
 use LedgerSMB::Form;
-use LedgerSMB::X12;
-use LedgerSMB::X12::EDI850;
-use LedgerSMB::X12::EDI894;
+eval {
+require LedgerSMB::X12;
+require LedgerSMB::X12::EDI850;
+require LedgerSMB::X12::EDI894;
+}
 #use Carp::Always;
 use Data::Dumper;
 $Data::Dumper::Sortkeys = 1;
