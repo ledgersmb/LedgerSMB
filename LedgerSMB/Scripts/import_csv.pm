@@ -42,7 +42,7 @@ our $ar_eca_for_inventory = '00000';
 our $preprocess = {};
 our $postprocess = {};
 
-sub inventory_template_setup {
+sub _inventory_template_setup {
     my ($request) = @_;
     my $sth = $request->{dbh}->prepare(
         "SELECT concat(accno,'--',description) as value
@@ -63,9 +63,15 @@ sub inventory_template_setup {
 
 
 our $template_setup = {
-  inventory => \&inventory_template_setup,
-  inventory_multi => \&inventory_template_setup,
+  inventory => \&_inventory_template_setup,
+  inventory_multi => \&_inventory_template_setup,
 };
+
+=head2 map_columns_into_hash($keys, $values)
+
+Takes two arrayrefs and returns a hashref as you'd expect from the args.
+
+=cut
 
 sub map_columns_into_hash {
     my ($keys, $values) = @_;
@@ -78,7 +84,7 @@ sub map_columns_into_hash {
 
 
 
-sub aa_multi {
+sub _aa_multi {
     use LedgerSMB::AA;
     use LedgerSMB::Batch;
     my ($request, $entries, $arap) = @_;
@@ -151,7 +157,7 @@ sub aa_multi {
     return 1;
 };
 
-sub inventory_single_date {
+sub _inventory_single_date {
     my ($request, $entries, $report_id, $transdate) = @_;
     use LedgerSMB::IS;
     use LedgerSMB::IR;
@@ -279,11 +285,11 @@ our $process = {
                 },
    ar_multi => sub { 
                    my  ($request, $entries) = @_;
-                   return &aa_multi($request, $entries, 'ar');
+                   return &_aa_multi($request, $entries, 'ar');
                },
    ap_multi => sub { 
                    my  ($request, $entries) = @_;
-                   return &aa_multi($request, $entries, 'ap');
+                   return &_aa_multi($request, $entries, 'ap');
                },
     chart => sub {
                use LedgerSMB::DBObject::Account;
@@ -366,7 +372,7 @@ our $process = {
 
        @$entries =
            map { map_columns_into_hash($cols->{inventory}, $_) } @$entries;
-       &inventory_single_date($request, $entries,
+       &_inventory_single_date($request, $entries,
                               $report_id, $request->{transdate});
 
    },
@@ -395,7 +401,7 @@ our $process = {
                "SELECT currval('inventory_report_id_seq')"
                ) or $request->dberror();
 
-           &inventory_single_date($request, $dated_entries{$key},
+           &_inventory_single_date($request, $dated_entries{$key},
                                   $report_id, $key);
        }
 
