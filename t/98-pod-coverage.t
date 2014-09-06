@@ -28,7 +28,6 @@ pod_coverage_ok("LedgerSMB::Mailer");
 pod_coverage_ok("LedgerSMB::Template");
 pod_coverage_ok("LedgerSMB::Template::CSV");
 pod_coverage_ok("LedgerSMB::Template::HTML");
-pod_coverage_ok("LedgerSMB::Template::LaTeX");
 pod_coverage_ok("LedgerSMB::Template::TXT");
 pod_coverage_ok("LedgerSMB::User");
 pod_coverage_ok("LedgerSMB::DBObject::Date");
