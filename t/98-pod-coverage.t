@@ -8,12 +8,16 @@
 use strict;
 use warnings;
 
+use LedgerSMB::Locale;
+my $locale =  LedgerSMB::Locale->get_handle('en');
+$LedgerSMB::App_State::Locale = $locale;
+
 use Test::More;
 eval "use Test::Pod::Coverage";
 if ($@){
     plan skip_all => "Test::Pod::Coverage required for testing POD coverage";
 } else {
-    plan tests => 67;
+    plan tests => 65;
 }
 pod_coverage_ok("LedgerSMB");
 pod_coverage_ok("LedgerSMB::Form");
@@ -24,8 +28,6 @@ pod_coverage_ok("LedgerSMB::Mailer");
 pod_coverage_ok("LedgerSMB::Template");
 pod_coverage_ok("LedgerSMB::Template::CSV");
 pod_coverage_ok("LedgerSMB::Template::HTML");
-pod_coverage_ok("LedgerSMB::Template::LaTeX");
-pod_coverage_ok("LedgerSMB::Template::ODS");
 pod_coverage_ok("LedgerSMB::Template::TXT");
 pod_coverage_ok("LedgerSMB::User");
 pod_coverage_ok("LedgerSMB::DBObject::Date");
