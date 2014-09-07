@@ -599,7 +599,8 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
                  abs(p.due) > 0.005))                  -- threshold due to 
                                                        -- impossibility to 
                                                        -- collect below -CT
-              OR (in_closed IS TRUE AND (a.force_closed OR abs(p.due) < 0.005 ))
+               OR (in_closed IS TRUE AND ( a.force_closed IS NOT TRUE AND
+                 abs(p.due) > 0.005) IS NOT TRUE)
             )
 
 LOOP

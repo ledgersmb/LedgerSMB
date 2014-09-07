@@ -507,13 +507,6 @@ sub invoice_details {
             push( @{ $form->{taxrates} },
                 join ' ', sort { $a <=> $b } @taxrates );
 
-            if ( $form->{"assembly_$i"} ) {
-                $form->{stagger} = -1;
-                &assembly_details( $myconfig, $form, $dbh, $form->{"id_$i"},
-                    $oid{ $myconfig->{dbdriver} },
-                    $form->{"qty_$i"} );
-            }
-
         }
 
         # add subtotal
@@ -743,133 +736,6 @@ sub invoice_details {
     $form->{invtotal} = $form->format_amount( $myconfig, $form->{invtotal}, 2 );
 
     $form->{paid} = $form->format_amount( $myconfig, $form->{paid}, 2 );
-
-}
-
-sub assembly_details {
-    my ( $myconfig, $form, $dbh2, $id, $oid, $qty ) = @_;
-    $dbh = $form->{dbh};
-    my $sm = "";
-    my $spacer;
-
-    $form->{stagger}++;
-    if ( $form->{format} eq 'html' ) {
-        $spacer = "&nbsp;" x ( 3 * ( $form->{stagger} - 1 ) )
-          if $form->{stagger} > 1;
-    }
-    if ( $form->{format} =~ /(postscript|pdf)/ ) {
-        if ( $form->{stagger} > 1 ) {
-            $spacer = ( $form->{stagger} - 1 ) * 3;
-            $spacer = '\rule{' . $spacer . 'mm}{0mm}';
-        }
-    }
-
-    # get parts and push them onto the stack
-    my $sortorder = "";
-
-    if ( $form->{grouppartsgroup} ) {
-        $sortorder = qq|ORDER BY pg.partsgroup|;
-    }
-
-    my $query = qq|
-		   SELECT p.partnumber, p.description, p.unit, a.qty,
-		          pg.partsgroup, p.partnumber AS sku
-		     FROM assembly a
-		     JOIN parts p ON (a.parts_id = p.id)
-		LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-		    WHERE a.bom = '1'
-		      AND a.id = ?
-		$sortorder|;
-    my $sth = $dbh->prepare($query);
-    $sth->execute($id) || $form->dberror($query);
-
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-
-        for (qw(partnumber description partsgroup)) {
-            $form->{"a_$_"} = $ref->{$_};
-            $form->format_string("a_$_");
-        }
-
-        if ( $form->{grouppartsgroup} && $ref->{partsgroup} ne $sm ) {
-            for (
-                qw(taxrates runningnumber number sku
-                serialnumber unit qty ship bin deliverydate
-                projectnumber sellprice listprice netprice
-                discount discountrate linetotal weight
-                itemnotes)
-              )
-            {
-
-                push( @{ $form->{$_} }, "" );
-            }
-            $sm =
-              ( $form->{"a_partsgroup"} )
-              ? $form->{"a_partsgroup"}
-              : "--";
-
-            push( @{ $form->{description} }, "$spacer$sm" );
-            push( @{ $form->{lineitems} }, { amount => 0, tax => 0 } );
-        }
-
-        if ( $form->{stagger} ) {
-
-            push(
-                @{ $form->{description} },
-                $form->format_amount( $myconfig,
-                    $ref->{qty} * $form->{"qty_$i"} )
-                  . qq| -- $form->{"a_partnumber"}|
-                  . qq|, $form->{"a_description"}|
-            );
-
-            for (
-                qw(taxrates runningnumber number sku
-                serialnumber unit qty ship bin deliverydate
-                projectnumber sellprice listprice netprice
-                discount discountrate linetotal weight
-                itemnotes)
-              )
-            {
-                push( @{ $form->{$_} }, "" );
-            }
-
-        }
-        else {
-
-            push( @{ $form->{description} }, qq|$form->{"a_description"}| );
-
-            push( @{ $form->{number} }, $form->{"a_partnumber"} );
-            push( @{ $form->{sku} },    $form->{"a_partnumber"} );
-
-            for (
-                qw(taxrates runningnumber ship serialnumber
-                reqdate projectnumber sellprice listprice
-                netprice discount discountrate linetotal weight
-                itemnotes)
-              )
-            {
-
-                push( @{ $form->{$_} }, "" );
-            }
-
-        }
-
-        push( @{ $form->{lineitems} }, { amount => 0, tax => 0 } );
-
-        push(
-            @{ $form->{qty} },
-            $form->format_amount( $myconfig, $ref->{qty} * $qty )
-        );
-
-        for (qw(unit bin)) {
-            $form->{"a_$_"} = $ref->{$_};
-            $form->format_string("a_$_");
-            push( @{ $form->{$_} }, $form->{"a_$_"} );
-        }
-
-    }
-    $sth->finish;
-
-    $form->{stagger}--;
 
 }
 
@@ -1173,45 +1039,11 @@ sub post_invoice {
                 || $form->{"assembly_$i"} )
             {
 
-                if ( $form->{"assembly_$i"} ) {
-
-                    # If the assembly consists of all
-                    # services, we don't keep inventory,
-                    # so we should not update it
-                    $query = qq|
-						SELECT sum(
-						       p.inventory_accno_id), 
-						       p.assembly
-						  FROM parts p
-						  JOIN assembly a 
-						       ON (a.parts_id = p.id)
-						 WHERE a.id = ?
-						 GROUP BY p.assembly|;
-                    $sth = $dbh->prepare($query);
-                    $sth->execute( $form->{"id_$i"} )
-                      || $form->dberror($query);
-                    my ( $inv, $assembly ) = $sth->fetchrow_array;
-                    $sth->finish;
-
-                    if ( $inv || $assembly ) {
-                        $form->update_balance(
-                            $dbh, "parts", "onhand",
-                            qq|id = | . qq|$form->{"id_$i"}|,
-                            $form->{"qty_$i"} * -1
-                        ); # unless $form->{shipped};
-                    }
-
-                    &process_assembly( $dbh, $form, $form->{"id_$i"},
-                        $form->{"qty_$i"}, $project_id );
-                }
-                else {
                     $form->update_balance(
                         $dbh, "parts", "onhand",
                         qq|id = $form->{"id_$i"}|,
                         $form->{"qty_$i"} * -1
                     ); # unless $form->{shipped};
-
-                }
             }
             # save detail record in invoice table
             $query = qq|
@@ -1683,58 +1515,6 @@ sub post_invoice {
 
     $form->audittrail( $dbh, "", \%audittrail );
 
-}
-
-sub process_assembly {
-    my ( $dbh2, $form, $id, $totalqty, $project_id ) = @_;
-    my $dbh   = $form->{dbh};
-    my $query = qq|
-		SELECT a.parts_id, a.qty, p.assembly,
-		       p.partnumber, p.description, p.unit,
-		       p.inventory_accno_id, p.income_accno_id,
-		       p.expense_accno_id
-		  FROM assembly a
-		  JOIN parts p ON (a.parts_id = p.id)
-		 WHERE a.id = ?|;
-    my $sth = $dbh->prepare($query);
-    $sth->execute($id) || $form->dberror($query);
-
-    my $allocated;
-
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-
-        $allocated = 0;
-
-        $ref->{inventory_accno_id} *= 1;
-        $ref->{expense_accno_id}   *= 1;
-
-        # multiply by number of assemblies
-        $ref->{qty} *= $totalqty;
-
-        if ( $ref->{assembly} ) {
-            &process_assembly( $dbh, $form, $ref->{parts_id}, $ref->{qty},
-                $project_id );
-            next;
-        }
-        next unless $ref->{inventory_accno_id};
-
-        $allocated =
-              &cogs( $dbh, $form, $ref->{parts_id}, $ref->{qty},
-                $project_id );
-
-        $query = qq|
-			INSERT INTO invoice 
-			            (trans_id, description, parts_id, qty,
- 			            sellprice, fxsellprice, allocated, 
-			            assemblyitem, unit)
-			     VALUES (?, ?, ?, ?, 0, 0, ?, 't', ?)|;
-
-        my $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id}, $ref->{description}, $ref->{parts_id},
-                $ref->{qty}, $allocated, $ref->{unit} )
-              || $form->dberror($query);
-        $sth->finish;
-    }
 }
 
 sub cogs {
