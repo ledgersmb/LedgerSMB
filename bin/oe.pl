@@ -1028,6 +1028,10 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 sub update {
     $form->{nextsub} = 'update';
 
+    $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
+       for qw(transdate reqdate);
+
+
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
     if ( $form->{type} eq 'generate_purchase_order' ) {
 
