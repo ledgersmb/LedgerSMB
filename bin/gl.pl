@@ -609,7 +609,7 @@ sub gl_subtotal {
 }
 
 sub update {
-
+     $form->{transdate} = LedgerSMB::PGDate->from_input($form->{transdate})->to_output();
      if ( $form->{transdate} ne $form->{oldtransdate} ) {
          $form->{oldtransdate} = $form->{transdate};
      } 
