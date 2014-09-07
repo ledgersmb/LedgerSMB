@@ -200,6 +200,7 @@ COMMENT ON FUNCTION employee__list_managers
 (in_id integer) IS
 $$ Returns a list of managers, that is employees with the 'manager' role set.$$;
 
+DROP VIEW IF EXISTS employee_search CASCADE;
 CREATE OR REPLACE VIEW employee_search AS
 SELECT e.*, em.name AS manager, emn.note, en.name as name
 FROM entity_employee e
