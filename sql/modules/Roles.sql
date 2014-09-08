@@ -1000,7 +1000,8 @@ SELECT lsmb__grant_role('sic_all', 'sic_create');
 SELECT lsmb__grant_role('sic_all', 'sic_edit');
 
 SELECT lsmb__create_role('template_edit');
-SELECT lsmb__grant_perms('template_edit', 'template', 'SELECT');
+SELECT lsmb__grant_perms('template_edit', 'template', 'ALL');
+SELECT lsmb__grant_perms('template_edit', 'template_id_seq', 'ALL');
 SELECT lsmb__grant_menu('template_edit', id, 'allow')
   FROM unnest(array[159,160,161,162,163,164,165,166,167,168,169,170,
                     171,173,174,175,176,177,178,179,180,181,182,183,184,
