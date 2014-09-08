@@ -33,7 +33,6 @@ before_install:
    - "cpanm Cwd"
    - "cpanm Config::IniFiles"
    - "cpanm Moose"
-   - "cpanm Mojo::Base"
    - "cpanm MIME::Lite"
    - "cpanm Template"
    - "cpanm Error"
