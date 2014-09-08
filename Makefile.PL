@@ -39,6 +39,10 @@ requires 'Number::Format';
 requires 'DateTime::Format::Strptime';
 requires 'Moose';
 requires 'namespace::autoclean';
+requires 'PGObject';
+requires 'PGObject::Simple';
+requires 'PGObject::Simple::Role';
+requires 'PGObject::Type::BigFloat';
 
 recommends 'Math::BigInt::GMP';
 
