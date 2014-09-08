@@ -1915,7 +1915,6 @@ sub get_customer {
           if (($ref->{class_id} < 15) && ! $billing_email)
               || $ref->{class_id} >= 15;
     }
-    
 
     $dbh->commit;
 

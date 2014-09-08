@@ -1071,6 +1071,7 @@ sub aging {
                 value => $ref->{ctid},
                 };
             $column_data{statement}{checked} = 'checked' if $ref->{checked};
+            $hiddens{"email_$i"} = $ref->{email};
             $hiddens{"curr_$i"} = $ref->{curr};
             $hiddens{"$form->{ct}_id_$i"} = $ref->{ctid};
         }
@@ -1385,10 +1386,6 @@ sub e_mail {
     $form->{media} = "email";
 
     &print_options;
-
-    for (qw(subject message type sendmode format action nextsub email)) {
-        delete $form->{$_};
-    }
 
     for (keys %$form) {
         $hiddens{$_} = $form->{$_} unless ref $form->{$_};
