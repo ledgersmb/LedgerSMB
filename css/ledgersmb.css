@@ -30,7 +30,7 @@ th {
   font-size: 10pt;
 }
 
-#company_info {
+#company_info, #login_info, #version_info {
    font-weight: bold;
    font-size: 9pt;
 }

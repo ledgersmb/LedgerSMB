@@ -155,7 +155,7 @@ th {
   font-size: 10pt;
 }
 
-#company_info {
+#company_info, #version_info, #login_info {
    font-weight: bold;
    font-size: 9pt;
 }
