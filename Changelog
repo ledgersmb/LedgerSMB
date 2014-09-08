@@ -118,6 +118,8 @@ Changelog for 1.3.43
 * Fixed bug 1169, sorting orders results in empty list (Chris T)
 * Fixed bug 1173, employee manager checkbox badly handled (Chris T)
 * Fixed bug 1199, can change shipto with no effect after positng (Chris T)
+* Fixed issue 1183, added login name to menu pane (Chris T)
+* Fixed bug 1185, email address not shown when emailing statements (Chris T)
 
 Chris T is Chris Travers
 Pongracz I is Pongracz Istvan
