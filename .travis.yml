@@ -38,7 +38,7 @@ before_install:
    - "cpanm Template"
    - "cpanm Error"
    - "cpanm CGI::Simple"
-   - "cpan PGObject"
+   - "cpanm PGObject"
    - "cpanm PGObject::Simple"
    - "cpanm PGObject::Simple::Role"
    - "cpanm PGObject::Type::BigFloat"
