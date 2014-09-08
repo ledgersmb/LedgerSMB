@@ -35,7 +35,6 @@ before_install:
    - "cpanm Cwd"
    - "cpanm --force Class::Std"
    - "cpanm Config::Std"
-   - "cpanm Mojo::Base"
    - "cpanm MIME::Lite"
    - "cpanm Template"
    - "cpanm Error"
