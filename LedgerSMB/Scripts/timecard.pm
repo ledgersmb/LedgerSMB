@@ -115,7 +115,7 @@ sub timecard_screen {
          my @dates = ();
          for (0 .. 6){
             push @dates, LedgerSMB::PGDate->from_db(
-                    $startdate->date->add(days => 1)->strftime('%Y-%m-%d'),
+                    $startdate->add(days => 1)->strftime('%Y-%m-%d'),
                     'date'
             );
          }

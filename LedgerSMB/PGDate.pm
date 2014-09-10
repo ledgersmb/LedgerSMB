@@ -8,33 +8,13 @@ use Moose;
 use DateTime::Format::Strptime;
 use LedgerSMB::App_State;
 use Carp;
-use DateTime::Duration;
+use base qw(PGObject::Type::DateTime);
 
 =head1 SYNPOSIS
 This class handles formatting and mapping between the DateTime module and
 PostgreSQL. It provides a handler for date and timestamp datatypes.
 
-=head1 PROPERTIES
-
-=over
-
-=item date
-
-A DateTime object for internal storage and processing.
-
-=cut
-
-has date => (isa => 'DateTime', is=> 'ro', required => '0');
-
-=item dummy
-
-If set to 1, this is a dummy value for an unknown value
-
-=cut
-
-has dummy => (isa => 'Bool', is=> 'ro', required => '0');
-
-=back
+The type behaves internally as a Datetime module.
 
 =head1 SUPPORTED FORMATS
 
@@ -175,7 +155,7 @@ used.  If $format is not supplied, the dateformat of the user is used.
 
 sub to_output {
     my ($self) = @_;
-    return undef if !defined $self->date;
+    return undef if !defined $self;
     my $fmt;
     if (defined $LedgerSMB::App_State::User->{dateformat}){
         $fmt = $LedgerSMB::App_State::User->{dateformat};
@@ -183,64 +163,19 @@ sub to_output {
         $fmt = '%F';
     }
     $fmt = $formats->{uc($fmt)}->[0] if defined $formats->{uc($fmt)};
-    $fmt .= ' %T' if ($self->date->hour);
+    $fmt .= ' %T' if ($self->hour);
     
     my $formatter = new DateTime::Format::Strptime(
              pattern => $fmt,
               locale => $LedgerSMB::App_State::Locale->{datetime},
             on_error => 'croak',
     );
-    return $formatter->format_datetime($self->date);
-}
-
-=item from_db (string $date, string $type)
-
-The $date is the date or datetime value from the db. The type is either 'date',
-'timestamp', or 'datetime'.
-
-=cut
-
-sub from_db {
-    use Carp;
-    my ($self, $input, $type) = @_;
-    return undef if !defined $input;
-    my $format = 'YYYY-MM-DD';
-    my $has_time;
-    if ((lc($type) eq 'datetime') or (lc($type) eq 'timestamp')) {
-        $has_time = 1;
-    } elsif(lc($type) eq 'date'){
-        $has_time = 0;
-    } else {
-       confess 'LedgerSMB::PGDate Invalid DB Type';
-    }
-    my $dt =  _parse_string($self, $input, $format, $has_time);
-    my %prop = (date => $dt, dummy => !defined $dt);
-    delete $prop{date} unless defined $prop{date} and $prop{date} ne '';
-
-    return $self->new(%prop);
-}
-
-=item to_db
-This returns the preferred form for database queries.
-
-=cut
-
-sub to_db {
-    my ($self) = @_;
-    return undef if !defined $self->date;
-    my $fmt = $formats->{'YYYY-MM-DD'}->[0];
-    $fmt .= ' %T' if ($self->date->hour);
-    my $formatter = new DateTime::Format::Strptime(
-             pattern => $fmt,
-              locale => $LedgerSMB::App_State::Locale->{datetime},
-            on_error => 'croak',
-    );
-    return $formatter->format_datetime($self->date);
+    return $formatter->format_datetime($self);
 }
 
 sub to_sort {
     my $self = shift;
-    return $self->date->epoch;
+    return $self->epoch;
 }
 
 #__PACKAGE__->meta->make_immutable;
