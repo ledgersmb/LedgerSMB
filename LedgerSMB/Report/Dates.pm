@@ -95,13 +95,13 @@ sub _get_to_date {
     my $dateobj = $self->from_date;
     my $date = $dateobj->from_db($dateobj->to_db, 'date'); # copy, round trip
     if ($self->interval eq 'month'){
-       $date->date->add(months => 1);
+       $date->add(months => 1);
     } elsif ($self->interval eq 'quarter'){
-       $date->date->add(months => 3);
+       $date->add(months => 3);
     } elsif ($self->interval eq 'year'){
-       $date->date->add(years => 1);
+       $date->add(years => 1);
     }
-    $date->date->subtract(days => 1); # dates are inclusive
+    $date->subtract(days => 1); # dates are inclusive
     return $date;
 }
 

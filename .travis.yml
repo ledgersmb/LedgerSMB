@@ -41,6 +41,7 @@ before_install:
    - "cpanm PGObject::Simple"
    - "cpanm PGObject::Simple::Role"
    - "cpanm PGObject::Type::BigFloat"
+   - "cpanm PGObject::Type::DateTime"
    - "cpanm PGObject::Util::DBMethod"
 script:
    export RELEASE_TESTING=1 && yes n | perl Makefile.PL && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest make test && cover -test -report coveralls

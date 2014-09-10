@@ -43,6 +43,7 @@ requires 'PGObject';
 requires 'PGObject::Simple';
 requires 'PGObject::Simple::Role';
 requires 'PGObject::Type::BigFloat';
+requires 'PGObject::Type::DateTime';
 
 recommends 'Math::BigInt::GMP';
 
