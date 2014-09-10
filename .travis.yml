@@ -26,6 +26,7 @@ before_install:
    - "cpanm Digest::MD5"
    - "cpanm HTML::Entities"
    - "cpanm Math::BigFloat"
+   - "cpanm Math::DateTime"
    - "cpanm IO::File"
    - "cpanm IO::Scalar"
    - "cpanm Encode"
