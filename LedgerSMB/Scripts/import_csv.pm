@@ -209,8 +209,7 @@ sub _inventory_single_date {
         $adjust_form->{"discount_$rc"} = 0;
         $adjust_form->{"qty_$rc"} = abs($adjust);
 
-        my $dbready_oh = $dbh->quote($line->{onhand});
-        $ins_sth->execute($part->{id}, $dbready_oh,
+        $ins_sth->execute($part->{id}, $line->{onhand},
                           $part->{onhand}, $report_id)
             or $ap_form->dberror();
         
