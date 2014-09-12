@@ -9,7 +9,7 @@
 DROP FUNCTION IF EXISTS employee__save
 (in_entity_id int, in_start_date date, in_end_date date, in_dob date, 
 	in_role text, in_ssn text, in_sales bool, in_manager_id int, 
-        in_employee_number text)
+        in_employee_number text);
 CREATE OR REPLACE FUNCTION employee__save 
 (in_entity_id int, in_start_date date, in_end_date date, in_dob date, 
 	in_role text, in_ssn text, in_sales bool, in_manager_id int, 
