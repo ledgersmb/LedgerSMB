@@ -22,10 +22,6 @@ This module is copyright (C) 2007, the LedgerSMB Core Team and subject to
 the GNU General Public License (GPL) version 2, or at your option, any later
 version.  See the COPYRIGHT and LICENSE files for more information.
 
-=head1 METHODS
-
-=over
-
 =cut
 
 # Methods are documented inline.  
@@ -62,7 +58,7 @@ sub loader_log_filename {
 }
 
 
-=item base_backup
+=head2 base_backup
 
 This routine connects to the database using pg_dumpall and returns a plain text,
 roles-only dump of the current database cluster.  This is left uncompressed for
@@ -110,7 +106,7 @@ sub base_backup {
     return $backupfile;
 }
 
-=item get_info()
+=head2 get_info()
 
 This routine connects to the database using DBI and attempts to determine if a 
 related application is running in that database and if so what version.  
@@ -339,7 +335,7 @@ sub get_info {
    return $retval;
 }
 
-=item $db->server_version();
+=head2 $db->server_version();
 
 Connects to the server and returns the version number in x.y.z format.
 
@@ -356,7 +352,7 @@ sub server_version {
     return $retval;
 }
 
-=item $db->copy('new_name')
+=head2 $db->copy('new_name')
 
 Copies the existing database to a new name.
 
@@ -368,7 +364,7 @@ sub copy {
               )->create(copy_of => $self->dbname);
 }        
 
-=item $db->load_base_schema()
+=head2 $db->load_base_schema()
 
 Loads the base schema definition file Pg-database.sql.
 
@@ -399,7 +395,7 @@ sub load_base_schema {
 }
 
 
-=item $db->load_modules($loadorder)
+=head2 $db->load_modules($loadorder)
 
 Loads or reloads sql modules from $loadorder
 
@@ -436,7 +432,7 @@ sub load_modules {
     return 1;
 }
 
-=item $db->load_coa({country => '2-char-country-code',
+=head2 $db->load_coa({country => '2-char-country-code',
                      chart => 'name-of-chart' })
 
 Loads the chart of accounts (and possibly GIFI) as specified in
@@ -460,7 +456,7 @@ sub load_coa {
 }
 
 
-=item $db->create_and_load();
+=head2 $db->create_and_load();
 
 Creates a database and then loads it.
 
@@ -480,7 +476,7 @@ sub create_and_load(){
 }
 
 
-=item $db->lsmb_info()
+=head2 $db->lsmb_info()
 
 This routine retrieves general stats about the database and returns the output
 as a hashref with the following key/value pairs:
@@ -527,7 +523,7 @@ sub lsmb_info {
 }
     
 
-=item $db->upgrade_modules($loadorder, $version)
+=head2 $db->upgrade_modules($loadorder, $version)
 
 This routine upgrades modules as required with a patch release upgrade.
 
