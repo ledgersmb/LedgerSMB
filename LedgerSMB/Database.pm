@@ -408,7 +408,6 @@ sub load_modules {
     my ($self, $loadorder, $args) = @_;
     my $log = loader_log_filename();
 
-    my $dbh = $self->dbh;
     open (LOADORDER, '<', "$self->{source_dir}sql/modules/$loadorder");
     for my $mod (<LOADORDER>) {
         chomp($mod);
