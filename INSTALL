@@ -24,9 +24,9 @@ System requirements
 
 LedgerSMB depends on the following software:
 
- * a web server (Apache v2.x or MS IIS)
- * PostgreSQL 8.4+
- * Perl 5.8+
+ * a web server (Apache v2.x, Nginx, MS IIS, etc)
+ * PostgreSQL 9.0+
+ * Perl 5.10+
 
 
 Installation process overview
@@ -142,12 +142,12 @@ LedgerSMB depends on these additional modules (not listing core modules):
   Config::IniFiles
   MIME::Lite
   Template  (also known as The Template Toolkit or TT)
-  Error
   CGI::Simple
   File::MimeInfo
   Number::Format
   DateTime::Format::Strptime
   Moose
+  Try::Tiny
 
 and these optional ones:
 
@@ -229,17 +229,10 @@ as well through the command:
 
  $ aptitude install libxml-twig-perl
 
+Please see the following about UTF8 characters, XeTeX, and templates:
 
-(@@@ ADD info about xelatex @@@)
 http://ledgersmb.org/faq/localization/im-using-non-ascii-unicode-characters-why-cant-i-generate-pdf-output
 
-
-
->>> Perl module dependencies for Fedora and its derivatives (RedHat, Centos ++)
-
----- Actions for Fedora 
-Install rpm or look at dists/rpm/ledgersmb.spec for perl module dependencies
-(@@@ update for 1.4 @@@)
 
 
 Initializing a company database
