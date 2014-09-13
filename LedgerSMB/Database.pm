@@ -413,11 +413,23 @@ sub load_modules {
         chomp($mod);
         $mod =~ s/(\s+|#.*)//g;
         next unless $mod;
-
-        $self->run_file(file       => "$self->{source_dir}sql/modules/$mod",
+        if ($mod eq 'Fixes.sql'){
+     
+            eval { 
+              $self->run_file(
+                       file       => "$self->{source_dir}sql/modules/$mod",
                        log_stdout  => $args->{log} || "${log}_stdout",
 		       log_stderr  => $args->{errlog} || "${log}_stderr"
-	);
+	      ); 
+            };
+        } else {
+            $self->run_file(
+                       file       => "$self->{source_dir}sql/modules/$mod",
+                       log_stdout  => $args->{log} || "${log}_stdout",
+		       log_stderr  => $args->{errlog} || "${log}_stderr"
+	    ); 
+        }
+           
     }
     close (LOADORDER); ### return failure to execute the script?
 }
