@@ -394,6 +394,7 @@ sub load_base_schema {
 	    log_stderr => ($args->{errlog} || "${log}_stderr")
         ) if -f "sql/on_load/$fname";
     }
+    return 1;
 
 }
 
@@ -432,6 +433,7 @@ sub load_modules {
            
     }
     close (LOADORDER); ### return failure to execute the script?
+    return 1;
 }
 
 =item $db->load_coa({country => '2-char-country-code',

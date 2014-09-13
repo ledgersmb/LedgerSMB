@@ -61,7 +61,7 @@ sub _get_database {
 
     return LedgerSMB::Database->new(
                 username => $creds->{login},
-                password => $creds->{password} 
+                password => $creds->{password},
                   dbname => $request->{database},
     );
 }

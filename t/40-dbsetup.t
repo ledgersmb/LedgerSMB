@@ -27,7 +27,7 @@ for my $evar (qw(LSMB_NEW_DB LSMB_TEST_DB)){
 }
 
 if ($run_tests){
-	plan tests => 10;
+	plan tests => 11;
 	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 }
 
