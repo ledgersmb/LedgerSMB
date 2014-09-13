@@ -43,7 +43,7 @@ my $db = LedgerSMB::Database->new({
 
 # Manual tests
 ok($db->create, 'Database Created') 
-  || BAIL_OUT('Database could not be created! ' . $rc);
+  || BAIL_OUT('Database could not be created! ');
 ok($db->load_base_schema, 'Basic schema loaded');
 
 ok($db->load_modules('LOADORDER'), 'Modules loaded');
