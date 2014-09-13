@@ -60,9 +60,9 @@ sub _get_database {
     my $creds = LedgerSMB::Auth::get_credentials('setup');
 
     return LedgerSMB::Database->new(
-               {username => $creds->{login},
-            company_name => $request->{database},
-                password => $creds->{password} }
+                username => $creds->{login},
+                password => $creds->{password} 
+                  dbname => $request->{database},
     );
 }
 
@@ -70,7 +70,7 @@ sub _get_database {
 sub _init_db {
     my ($request) = @_;
     my $database = _get_database($request);
-    $request->{dbh} = $database->dbh()
+    $request->{dbh} = $database->connect()
 	if ! defined $request->{dbh};
 
     return $database;
@@ -180,7 +180,7 @@ sub login {
 	} elsif ($request->{next_action} eq 'rebuild_modules') {
             # we found the current version
             # check we don't have stale migrations around
-            my $dbh = $database->dbh();
+            my $dbh = $database->connect();
             my $sth = $dbh->prepare(qq(
                 SELECT count(*)<>0
                   FROM defaults
@@ -212,7 +212,7 @@ Lists all databases as hyperlinks to continue operations.
 sub list_databases {
     my ($request) = @_;
     my $database = _get_database($request);
-    my @results = $database->list;
+    my @results = $database->list_dbs;
     $request->{dbs} = [];
     for my $r (@results){
        push @{$request->{dbs}}, {row_id => $r, db => $r };
@@ -295,7 +295,7 @@ sub run_backup {
        $backupfile = $database->base_backup; 
        $mimetype   = 'text/x-sql';
     } elsif ($request->{backup} eq 'db'){
-       $backupfile = $database->db_backup;
+       $backupfile = $database->backup;
        $mimetype   = 'application/octet-stream';
     } else {
         $request->error($request->{_locale}->text('Invalid backup request'));
@@ -313,7 +313,7 @@ sub run_backup {
 	);
 	$mail->attach(
             mimetype => $mimetype,
-            filename => $backupfile,
+            filename => 'ledgersmb-backup.sqlc',
             file     => $backupfile,
 	);        $mail->send;
         unlink $backupfile;
@@ -332,7 +332,7 @@ sub run_backup {
           -type       => $mimetype,
           -status     => '200',
           -charset    => 'utf-8',
-          -attachment => $backupfile,
+          -attachment => 'ledgersmb-backup-' . time . ".sqlc",
         );
         my $data;
         while (read(BAK, $data, 1024 * 1024)){ # Read 1MB at a time
@@ -689,7 +689,7 @@ sub create_db {
     my $rc=0;
 
     my $database = _get_database($request);
-    $rc=$database->create_and_load();#TODO what if createdb fails?
+    $rc=$database->create_and_load();
     $logger->info("create_and_load rc=$rc");
 
     select_coa($request);

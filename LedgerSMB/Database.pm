@@ -33,8 +33,9 @@ version.  See the COPYRIGHT and LICENSE files for more information.
 package LedgerSMB::Database;
 use LedgerSMB::Auth;
 use DBI;
+use base qw(PGObject::Util::DBAdmin);
 
-our $VERSION = '1';
+our $VERSION = '1.1';
 
 use LedgerSMB::Sysconfig;
 use base('LedgerSMB');
@@ -44,16 +45,11 @@ use Log::Log4perl;
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
-my $dbversions = {
-    '1.2' => '1.2.0',
-    '1.3dev' => '1.2.99',
-    '1.3' => '1.3.0',
-    '1.4' => '1.4'
-};
-
 my $temp = $LedgerSMB::Sysconfig::tempdir;
 
-=item loader_log_filename
+=head1 METHODS
+
+=head2 loader_log_filename
 
 This creates a log file for the specific upgrade attempt.
 
@@ -65,58 +61,6 @@ sub loader_log_filename {
     return $temp . "/dblog_${dt}_$$";
 }
 
-
-=item LedgerSMB::Database->new({company_name = $dbname, countrycode = $cc, chart_name = $name, username = $username, password = $password})
-
-This function creates a new database management object with the specified
-characteristics.  The $dbname is the name of the database. the countrycode
-is the two-letter ISO code.  The company name is the friendly name for 
-dropdown boxes on the Login screen.
-
-As some countries may have multiple available charts, you can also specify
-a chart name as well.
-
-
-=cut
-
-sub new {
-    my ($class, $args) = @_;
-
-    my $self = {};
-    for (qw(countrycode chart_name chart_gifi company_name username password
-            contrib_dir source_dir)){
-        $self->{$_} = $args->{$_};
-    }
-    if ($self->{source_dir}){
-        $self->{source_dir} =~ s/\/*$/\//;
-    } else {
-        $self->{source_dir} = '';
-    }
-
-    bless $self, $class;
-    return $self;
-}
-
-=item dbh
-
-This routine returns a DBI database handle
-
-=cut
-
-sub dbh {
-    my ($self) = @_;
-
-    return $LedgerSMB::App_State::DBH
-	if defined $LedgerSMB::App_State::DBH;
-
-    my $creds = LedgerSMB::Auth::get_credentials();
-    $LedgerSMB::App_State::DBH = DBI->connect(
-        qq|dbi:Pg:dbname="$self->{company_name}"|,
-	"$self->{username}", "$self->{password}",
-	{ AutoCommit => 0, PrintError => $logger->is_warn(), }
-    );
-    return $LedgerSMB::App_State::DBH;
-}
 
 =item base_backup
 
@@ -161,52 +105,6 @@ sub base_backup {
     if($exit_code != 0) {
         $backupfile = undef;
         $logger->error("backup failed: non-zero exit code from pg_dumpall");
-    }
-
-    return $backupfile;
-}
-
-=item db_backup()
-
-This routine connects to the database using pg_dump and creates a Pg-native 
-database backup of the selected db only.  There is some redundancy with the base
-backup but the overlap is minimal.  You can restore your database and data with
-the db_bakup, but not the users and roles.  You can restore the users and roles
-with the base_backup but not your database.
-
-The resulting file is named backup_[dbname]_[date].bak with the date in
-yyyy-mm-dd format.
-
-It returns the full path of the resulting backup file on success, or undef on 
-failure.
-
-=cut
-
-sub db_backup {
-    my $self = shift @_;
-
-    local %ENV; # Make sure that - when leaving the scope - %ENV is restored
-    $ENV{PGUSER} = $self->{username};
-    $ENV{PGPASSWORD} = $self->{password};
-    $ENV{PGDATABASE} = $self->{company_name};
-    $ENV{PGHOST} = $LedgerSMB::Sysconfig::db_host;
-    $ENV{PGPORT} = $LedgerSMB::Sysconfig::db_port;
-
-    my @t = localtime(time);
-    $t[4]++;
-    $t[5] += 1900;
-    $t[3] = substr( "0$t[3]", -2 );
-    $t[4] = substr( "0$t[4]", -2 );
-    my $date = "$t[5]-$t[4]-$t[3]";
-
-    my $backupfile = $LedgerSMB::Sysconfig::backuppath .
-                     "/backup_$self->{company_name}_${date}.bak";
-
-    my $exit_code = system("pg_dump  -F c -f '$backupfile' '$self->{company_name}'");
-
-    if($exit_code != 0) {
-        $backupfile = undef;
-        $logger->error("backup failed: non-zero exit code from pg_dump");
     }
 
     return $backupfile;
@@ -323,13 +221,10 @@ sub get_info {
 
     my $creds = LedgerSMB::Auth->get_credentials();
     $logger->trace("\$creds=".Data::Dumper::Dumper(\$creds));
-    my $dbh = $self->dbh();
+    my $dbh = $self->connect();
     if (!$dbh){ # Could not connect, try to validate existance by connecting
                 # to postgres and checking
-           $dbh = DBI->connect(
-                   "dbi:Pg:dbname=postgres", 
-                   "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
-            );
+           $dbh = $self->new($self->export, (dbname => 'postgres'))->connect;
            return $retval unless $dbh;
            $logger->debug("DBI->connect dbh=$dbh");
 	   # don't assign to App_State::DBH, since we're a fallback connection,
@@ -453,98 +348,12 @@ Connects to the server and returns the version number in x.y.z format.
 sub server_version {
     my $self = shift @_;
     $logger->trace("\$self=".Data::Dumper::Dumper(\$self));
-    my $dbName=$self->{company_name}||'postgres';
-    my $creds = LedgerSMB::Auth->get_credentials();
-    $logger->trace("\$creds=".Data::Dumper::Dumper(\$creds));
-    my $dbh = DBI->connect(
-        "dbi:Pg:dbname=$dbName", 
-         "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
-    ) or return undef;
+    my $dbh = $self->connect;
     my ($version) = $dbh->selectrow_array('SELECT version()');
     $version =~ /(\d+\.\d+\.\d+)/;
     my $retval = $1;
     $dbh->disconnect;
     return $retval;
-}
-
-=item $db->list()
-
-Lists available databases except for those named "postgres" or starting with
-"template"
-
-Returns a list of strings of db names.
-
-=cut
-
-sub list {
-    my ($self) = @_;
-    my $creds = LedgerSMB::Auth->get_credentials();
-    my $dbh = DBI->connect(
-        "dbi:Pg:dbname=postgres", 
-         "$creds->{login}", "$creds->{password}", { AutoCommit => 0 }
-    ) or LedgerSMB::Auth::credential_prompt;
-    my $resultref = $dbh->selectall_arrayref(
-        "SELECT datname FROM pg_database 
-          WHERE datname <> 'postgres' AND datname NOT LIKE 'template%'
-       ORDER BY datname"
-    );
-    my @results;
-    for my $r (@$resultref){
-        push @results, @$r;
-    }
-
-    $dbh->disconnect;
-    return @results;
-}
-
-
-    
-=item $db->create();
-
-Creates a database and loads the contrib files.  This is done from template0, 
-meaning nothing added to postgres will be found in this database.  This was 
-necessary as a workaround for issues on some Debian systems.
-
-Returns true if successful, false of not.  Creates a log called dblog in the 
-temporary directory with all the output from the psql files.  
-
-In DEBUG mode, will show all lines to STDERR.  In ERROR logging mode, will 
-display only those lines containing the word ERROR.
-
-=cut
-
-sub create {
-    my ($self, $args) = @_;
-    # We have to use template0 because of issues that Debian has with database 
-    # encoding.  Apparently that causes problems for us, so template0 must be
-    # used. Hat tip:  irc user nwnw on #ledgersmb
-    #
-    # Also moved away from createdb here because at least for some versions of
-    # PostgreSQL, it connects to the postgres db in order to issue the 
-    # CREATE DATABASE command.  This makes it harder to adequately secure the 
-    # platform via pg_hba.conf.  Long run we should specify a locale.
-    # 
-    # Hat tip:  irc user RhodiumToad on #postgresql -- CT
-
-    my $dbh = DBI->connect('dbi:Pg:dbname=postgres',
-			   $self->{username}, $self->{password});
-
-    $dbh->{RaiseError} = 1;
-    $dbh->{AutoCommit} = 1;
-    my $dbn = $dbh->quote_identifier($self->{company_name});
-    my $rc = $dbh->do("CREATE DATABASE $dbn WITH TEMPLATE template0 ENCODING 'UTF8'");
-    $dbh->disconnect();
-
-    $logger->trace("after create db \$rc=$rc");
-    die "Failed to create database named $dbn"
-	if ! $rc;
-
-    $self->load_base_schema({
-	log => $args->{log},
-	errlog => $args->{errlog}
-			    });
-
-    return 1;
 }
 
 =item $db->copy('new_name')
@@ -555,15 +364,8 @@ Copies the existing database to a new name.
 
 sub copy {
     my ($self, $new_name) = @_;
-    my $dbh = DBI->connect('dbi:Pg:dbname=postgres', 
-         $self->{username}, $self->{password},
-         { AutoCommit => 1, PrintError => 1, }
-    );
-    my $dbname = $dbh->quote_identifier($self->{company_name});
-    $new_name = $dbh->quote_identifier($new_name);
-    my $rc = $dbh->do("CREATE DATABASE $new_name WITH TEMPLATE $dbname");
-    $dbh->disconnect;
-    return $rc;
+    $self->new($self->export, (dbname => $new_name)
+              )->create(copy_of => $self->dbname);
 }        
 
 =item $db->load_base_schema()
@@ -577,42 +379,22 @@ sub load_base_schema {
     my $success;
     my $log = loader_log_filename();
     
-    # The statement below is likely to fail, because
-    # the language already exists. Unfortunately, it's an error.
-    # If it had been a notice, 
-    $self->dbh->do("CREATE LANGUAGE plpgsql");
-    $self->dbh->commit;
-    $self->exec_script(
-	{
-	    script => "$self->{source_dir}sql/Pg-database.sql",
-	    log => ($args->{log} || "${log}_stdout"),
-	    errlog => ($args->{errlog} || "${log}_stderr")
-	});
+    $self->run_file(
+	
+	    file       => "$self->{source_dir}sql/Pg-database.sql",
+	    log_stdout => ($args->{log} || "${log}_stdout"),
+	    log_stderr => ($args->{errlog} || "${log}_stderr")
+	);
 
     opendir(LOADDIR, 'sql/on_load');
     while (my $fname = readdir(LOADDIR)){
-        $self->exec_script({
-            script => "$self->{source_dir}sql/on_load/$fname",
-	    log => ($args->{log} || "${log}_stdout"),
-	    errlog => ($args->{errlog} || "${log}_stderr")
-        }) if -f "sql/on_load/$fname";
+        $self->run_file(
+            file       => "$self->{source_dir}sql/on_load/$fname",
+	    log_stdout => ($args->{log} || "${log}_stdout"),
+	    log_stderr => ($args->{errlog} || "${log}_stderr")
+        ) if -f "sql/on_load/$fname";
     }
 
-    my $dbh = $self->dbh;
-    my $sth = $dbh->prepare(
-	qq|select true
-	        from pg_class cls
-	        join pg_namespace nsp
-	          on nsp.oid = cls.relnamespace
-	       where cls.relname = 'defaults'
-                 and nsp.nspname = 'public'
-             |);
-    $sth->execute();
-    ($success) = $sth->fetchrow_array();
-    $sth->finish();
-
-    die "Base schema failed to load"
-	if ! $success;
 }
 
 
@@ -630,26 +412,13 @@ sub load_modules {
     open (LOADORDER, '<', "$self->{source_dir}sql/modules/$loadorder");
     for my $mod (<LOADORDER>) {
         chomp($mod);
-        $mod =~ s/#.*//;
-        $mod =~ s/^\s*//;
-        $mod =~ s/\s*$//;
-        next if $mod eq '';
+        $mod =~ s/(\s+|#.*)//g;
+        next unless $mod;
 
-	$dbh->do("delete from defaults where setting_key='module_load_ok'");
-	$dbh->do("insert into defaults (setting_key, value)" .
-		 " values ('module_load_ok','no')");
-	$dbh->commit;
-        $self->exec_script({script => "$self->{source_dir}sql/modules/$mod",
-                            log    => $args->{log} || "${log}_stdout",
-			    errlog => $args->{errlog} || "${log}_stderr"
-			   });
-	my $sth = $dbh->prepare("select value='yes' from defaults" .
-				" where setting_key='module_load_ok'");
-	$sth->execute();
-	my ($is_success) = $sth->fetchrow_array();
-	$sth->finish();
-	die "Module $mod failed to load"
-	    if ! $is_success;
+        $self->run_file(file       => "$self->{source_dir}sql/modules/$mod",
+                       log_stdout  => $args->{log} || "${log}_stdout",
+		       log_stderr  => $args->{errlog} || "${log}_stderr"
+	);
     }
     close (LOADORDER); ### return failure to execute the script?
 }
@@ -666,62 +435,17 @@ sub load_coa {
     my ($self, $args) = @_;
     my $log = loader_log_filename();
 
-    $self->exec_script(
-        {script => "sql/coa/$args->{country}/chart/$args->{chart}", 
-         logfile => $log });
+    $self->run_file (
+            file  => "sql/coa/$args->{country}/chart/$args->{chart}", 
+            log   => $log 
+    );
     if (-f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
         $self->exec_script(
-            {script => "sql/coa/$args->{coa_lc}/gifi/$args->{chart}",
-             logfile => $log });
+             file => "sql/coa/$args->{coa_lc}/gifi/$args->{chart}",
+             log  => $log );
     }
 }
 
-
-=item $db->exec_script({script => 'path/to/file', log => 'path/to/log',
-    errlog => 'path/to/stderr_output' })
-
-Executes the script.  Returns 0 if successful, 1 if there are errors suggesting
-that types are already created, and 2 if there are other errors.
-
-=cut
-
-sub exec_script {
-    my ($self, $args) = @_;
-
-
-    local %ENV;
-
-    $ENV{PGUSER} = $self->{username};
-    $ENV{PGPASSWORD} = $self->{password};
-    $ENV{PGDATABASE} = $self->{company_name};
-    $ENV{PGHOST} = $LedgerSMB::Sysconfig::db_host;
-    $ENV{PGPORT} = $LedgerSMB::Sysconfig::db_port;
-
-    open (LOG, '>>', $args->{log});
-    if ($args->{errlog}) {
-	open (PSQL, '-|', "psql -f $args->{script} 2>>$args->{errlog}");
-    } else {
-	open (PSQL, '-|', "psql -f $args->{script} 2>&1");
-    }
-    my $test = 0;
-    while (my $line = <PSQL>){
-        if ($line =~ /ERROR/){
-            if (($test < 2) and ($line =~ /relation .* exists/)){
-                $test = 1;
-            } else {
-                $test  =2;
-            }
-        }
-        print LOG $line;
-    }
-    close(PSQL);
-    if ($? != 0) {  # command return value non-zero indicates 'other error'
-	$test = 2;
-    }
-
-    close(LOG);
-    return $test;
-}
 
 =item $db->create_and_load();
 
@@ -731,8 +455,9 @@ Creates a database and then loads it.
 
 sub create_and_load(){
     my ($self, $args) = @_;
-    $self->create({
-	log     => $args->{log},
+    $self->create;
+    $self->load_base_schema({
+	log_stdout     => $args->{log},
 	errlog  => $args->{errlog},
 		  });
     $self->load_modules('LOADORDER', {
@@ -775,11 +500,7 @@ sub lsmb_info {
                     users);
     my $retval = {};
     my $qtemp = 'SELECT count(*) FROM TABLE';
-    my $dbh = DBI->connect(
-        qq|dbi:Pg:dbname="$self->{company_name}"|,  
-         $self->{username}, $self->{password},
-         { AutoCommit => 0, PrintError => $logger->is_warn(), }
-    );
+    my $dbh = $self->connect;
     for my $t (@tables) {
         my $query = $qtemp;
         $query =~ s/TABLE/$t/;
@@ -820,19 +541,5 @@ sub upgrade_modules {
 
     return 1;
 }
-    
 
-
-=item $db->db_tests()
-
-This routine runs general db tests.
-
-TODO
-
-=back
-
-=cut
-
-#TODO
-#
 1;

@@ -44,6 +44,8 @@ requires 'PGObject::Simple';
 requires 'PGObject::Simple::Role';
 requires 'PGObject::Type::BigFloat';
 requires 'PGObject::Type::DateTime';
+requires 'PGObject::Util::DBMethod';
+requires 'PGObject::Util::DBAdmin';
 
 recommends 'Math::BigInt::GMP';
 
