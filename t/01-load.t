@@ -2,11 +2,12 @@
 
 use strict;
 use warnings;
-use Test::More tests => 59;
+use Test::More tests => 61;
 
 use_ok('LedgerSMB::Sysconfig') 
     || BAIL_OUT('System Configuration could be loaded!');
 use_ok('LedgerSMB');
+use_ok('LedgerSMB::App_State');
 use_ok('LedgerSMB::AA');
 use_ok('LedgerSMB::AM');
 use_ok('LedgerSMB::Auth');
@@ -31,6 +32,7 @@ use_ok('LedgerSMB::Timecard::Type');
 use_ok('LedgerSMB::Report::Timecards');
 use_ok('LedgerSMB::Scripts::timecard');
 use_ok('LedgerSMB::Locale');
+$LedgerSMB::App_State::Locale = LedgerSMB::Locale->get_handle('en');
 use_ok('LedgerSMB::Mailer');
 use_ok('LedgerSMB::Num2text');
 use_ok('LedgerSMB::OE');
@@ -60,6 +62,7 @@ use_ok('LedgerSMB::Entity::Location');
 use_ok('LedgerSMB::Entity::Note');
 use_ok('LedgerSMB::Entity::Payroll::Deduction');
 use_ok('LedgerSMB::Entity::Payroll::Wage');
+use_ok('LedgerSMB::Scripts::setup');
 SKIP: {
     eval{ require Template::Plugin::Latex} ||
     skip 'Template::Plugin::Latex not installed';
