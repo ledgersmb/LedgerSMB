@@ -335,23 +335,6 @@ sub get_info {
    return $retval;
 }
 
-=head2 $db->server_version();
-
-Connects to the server and returns the version number in x.y.z format.
-
-=cut
-
-sub server_version {
-    my $self = shift @_;
-    $logger->trace("\$self=".Data::Dumper::Dumper(\$self));
-    my $dbh = $self->connect;
-    my ($version) = $dbh->selectrow_array('SELECT version()');
-    $version =~ /(\d+\.\d+\.\d+)/;
-    my $retval = $1;
-    $dbh->disconnect;
-    return $retval;
-}
-
 =head2 $db->copy('new_name')
 
 Copies the existing database to a new name.
