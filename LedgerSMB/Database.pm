@@ -58,54 +58,6 @@ sub loader_log_filename {
 }
 
 
-=head2 base_backup
-
-This routine connects to the database using pg_dumpall and returns a plain text,
-roles-only dump of the current database cluster.  This is left uncompressed for
-readability and ease of troubleshooting.  Base backups are advised to be taken
-frequently and in conjunction with single database backups.  The single database
-backups will backup all data but no roles.  Restoring a new database onto a new
-server post-crash with only the single-database backup thus means recreating all
-users.
-
-The file is named roles_[date].sql by default where the date is in
-yyyy-mm-dd format.
-
-It returns the full path of the resulting backup file on success, or undef on 
-failure.
-
-=cut
-
-sub base_backup {
-    my $self = shift @_;
-
-    local %ENV; # Make sure that - when leaving the scope - %ENV is restored
-    $ENV{PGUSER} = $self->{username};
-    $ENV{PGPASSWORD} = $self->{password};
-    $ENV{PGDATABASE} = $self->{company_name};
-    $ENV{PGHOST} = $LedgerSMB::Sysconfig::db_host;
-    $ENV{PGPORT} = $LedgerSMB::Sysconfig::db_port;
-
-    my @t = localtime(time);
-    $t[4]++;
-    $t[5] += 1900;
-    $t[3] = substr( "0$t[3]", -2 );
-    $t[4] = substr( "0$t[4]", -2 );
-    my $date = "$t[5]-$t[4]-$t[3]";
-
-    my $backupfile = $LedgerSMB::Sysconfig::backuppath .
-                     "/roles_${date}.sql";
-
-    my $exit_code = system("pg_dumpall -r -f $backupfile");
-
-    if($exit_code != 0) {
-        $backupfile = undef;
-        $logger->error("backup failed: non-zero exit code from pg_dumpall");
-    }
-
-    return $backupfile;
-}
-
 =head2 get_info()
 
 This routine connects to the database using DBI and attempts to determine if a 
