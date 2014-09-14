@@ -292,7 +292,17 @@ sub run_backup {
     my $mimetype;
 
     if ($request->{backup} eq 'roles'){
-       $backupfile = $database->base_backup; 
+       my @t = localtime(time);
+       $t[4]++;
+       $t[5] += 1900;
+       $t[3] = substr( "0$t[3]", -2 );
+       $t[4] = substr( "0$t[4]", -2 );
+       my $date = "$t[5]-$t[4]-$t[3]";
+
+       $backupfile = $database->backup_globals(
+                      tempdir => $LedgerSMB::Sysconfig::backuppath,
+                         file => "roles_${date}.sql"
+       );
        $mimetype   = 'text/x-sql';
     } elsif ($request->{backup} eq 'db'){
        $backupfile = $database->backup;
