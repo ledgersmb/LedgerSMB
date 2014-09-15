@@ -1,6 +1,10 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.1
+* Fixing 1205, copy does not copy roles (Chris T)
+
+Changelog for 1.4.0
 General Enhancements:
 * Performance enhancements on menu routines (Chris T and Steven M)
 * Added +/- selection indicators to menu CSS (Chris T)
