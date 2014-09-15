@@ -83,3 +83,6 @@ ALTER TABLE entity_employee ADD is_manager bool DEFAULT FALSE;
 UPDATE entity_employee SET is_manager = true WHERE role = 'manager';
 
 COMMIT;
+
+-- Fixes after 1.4.0 below this point.  Fixes above to be deleted after 1.4.10
+-- Fixes below not to be deleted
