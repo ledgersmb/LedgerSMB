@@ -1,5 +1,11 @@
-Changelog for 1.4 Series
+Changelog for 1.5 Series
 Forthcoming
+
+API Enhancements:
+* Moved a great deal of code into PGObject framework on CPAN (Chris T)
+
+Changelog for 1.4 Series
+Released 2014-09-15
 
 General Enhancements:
 * Performance enhancements on menu routines (Chris T and Steven M)
