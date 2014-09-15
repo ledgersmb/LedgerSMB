@@ -194,13 +194,19 @@ sub search_overpayments {
     LedgerSMB::Report::Listings::Overpayments->new(%$request)->render($request);
 }
 
+=item reverse_overpayment
+
+Reverses overpayments selected from the search overpayments screen.
+
+=cut
+
 sub reverse_overpayment {
     my ($request) = @_;
     for my $rc (1 .. $request->{rowcount_}){
         next unless $request->{"select_$rc"};
         my $args = {id => $request->{"select_$rc"}};
         $args->{$_} = $request->{$_} for qw(post_date batch_id account_class
-                                            exchangerate, currency);
+                                            exchangerate currency);
         $args->{curr} = $args->{currency};
         LedgerSMB::DBObject::Payment->overpayment_reverse($args);
     }

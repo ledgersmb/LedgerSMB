@@ -7,31 +7,6 @@
 
 update defaults set value='yes' where setting_key='module_load_ok';
 
--- Beta 4 fixes below
-
-BEGIN;
-INSERT INTO defaults VALUES ('show_creditlimit', '1');
-COMMIT;
-
-BEGIN;
-ALTER TABLE cr_report ADD max_ac_id int references acc_trans(entry_id);
-COMMIT;
-
-BEGIN;
-INSERT INTO defaults VALUES ('disable_back', '0');
-COMMIT;
-
-BEGIN;
-UPDATE voucher SET batch_class = 2 WHERE batch_class = 1 AND trans_id IN
-(SELECT id FROM ar);
-COMMIT;
-
-BEGIN;
-ALTER TABLE batch DROP CONSTRAINT "batch_locked_by_fkey";
-ALTER TABLE batch ADD FOREIGN KEY (locked_by) REFERENCES session(session_id)
-ON DELETE SET NULL;
-COMMIT;
-
 -- POST-BETA-5 FIXES
 
 BEGIN;
@@ -102,3 +77,12 @@ BEGIN;
 ALTER TABLE invoice ALTER COLUMN allocated TYPE NUMERIC;
 
 COMMIT;
+
+BEGIN;
+ALTER TABLE entity_employee ADD is_manager bool DEFAULT FALSE;
+UPDATE entity_employee SET is_manager = true WHERE role = 'manager';
+
+COMMIT;
+
+-- Fixes after 1.4.0 below this point.  Fixes above to be deleted after 1.4.10
+-- Fixes below not to be deleted

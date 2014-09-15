@@ -2037,13 +2037,9 @@ sub vendor_details {
 
 sub ship_to {
 
-
     $title = $form->{title};
     $form->{title} = $locale->text('Ship to');
 
-    for (qw(exchangerate creditlimit creditremaining)) {
-        $form->{$_} = $form->parse_amount( \%myconfig, $form->{$_} );
-    }
     for ( 1 .. $form->{paidaccounts} ) {
         $form->{"paid_$_"} =
           $form->parse_amount( \%myconfig, $form->{"paid_$_"} );
@@ -2127,11 +2123,14 @@ sub ship_to {
 
 						   for($i=1;$i<=$form->{totallocations};$i++)
 						   {
+                                                      my $checked = '';
+                                                      $checked = 'CHECKED="CHECKED"' if $form->{location_id} == $form->{"shiptolocationid_$i"}
+         or $form->{location_id} == $form->{"locationid_$i"};
 
 				  	   	   print qq|
 						   <tr>
 						  
-							  <td><input type=radio name=shiptoradio value="$i"  ondblclick="return uncheckRadio(this);"></td>
+							  <td><input type=radio name=shiptoradio value="$i"  $checked ondblclick="return uncheckRadio(this);"></td>
 							  <input name=shiptolocationid_$i type="hidden" value="$form->{"shiptolocationid_$i"}" readonly>
 							  <td><input name=shiptoaddress1_$i size=12 maxlength=64 id="ad1_$i" value="$form->{"shiptoaddress1_$i"}" readonly></td>
 							  <td><input name=shiptoaddress2_$i size=12 maxlength=64 id="ad2_$i" value="$form->{"shiptoaddress2_$i"}" readonly></td>
@@ -2359,6 +2358,7 @@ sub construct_countrys_types
 
 sub createlocations
 {
+        my ($continue) = @_;
 
 	my $loc_id_index=$form->{"shiptoradio"};
 
@@ -2374,7 +2374,7 @@ sub createlocations
 
 	     &validatelocation;
 
-	     IS->createlocation($form);			
+	     $form->{location_id} = IS->createlocation($form);
 					
 			
 	}
@@ -2383,11 +2383,9 @@ sub createlocations
 	{
 	     &validatecontact;
    	     IS->createcontact($form);
-			
-	
         }
 
-	&ship_to;
+	&ship_to unless $continue;
 
 	     
 	     
@@ -2430,7 +2428,7 @@ sub setlocation_id
        }
        if($form->{"shiptoradio"} eq "new")
        {
-		$form->error("Please dont select from others");
+                createlocations(1);
        }
 	
 

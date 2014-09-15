@@ -753,9 +753,10 @@ SELECT lsmb__grant_perms('assembly_stock', t_name, perm)
  CROSS JOIN
        unnest(ARRAY['SELECT'::text, 'INSERT', 'UPDATE']) perm;
 
-SELECT lsmb__grant_perms('assembly_stock', t_name, 'UPDATE')
+SELECT lsmb__grant_perms('assembly_stock', t_name, perm)
   FROM unnest(ARRAY['mfg_lot_id_seq'::text, 'mfg_lot_item_id_seq', 
-                    'lot_tracking_number']) t_name;
+                    'lot_tracking_number']) t_name
+ CROSS JOIN unnest(ARRAY['SELECT'::text, 'UPDATE']) perm;
 
 SELECT lsmb__grant_menu('assembly_stock', 84, 'allow');
 
@@ -999,7 +1000,8 @@ SELECT lsmb__grant_role('sic_all', 'sic_create');
 SELECT lsmb__grant_role('sic_all', 'sic_edit');
 
 SELECT lsmb__create_role('template_edit');
-SELECT lsmb__grant_perms('template_edit', 'template', 'SELECT');
+SELECT lsmb__grant_perms('template_edit', 'template', 'ALL');
+SELECT lsmb__grant_perms('template_edit', 'template_id_seq', 'ALL');
 SELECT lsmb__grant_menu('template_edit', id, 'allow')
   FROM unnest(array[159,160,161,162,163,164,165,166,167,168,169,170,
                     171,173,174,175,176,177,178,179,180,181,182,183,184,
@@ -1109,10 +1111,12 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
                     'business', 'exchangerate', 'new_shipto', 'tax',
                     'entity_employee', 'jcitems', 'salutation', 'assembly']) obj;
 
+SELECT lsmb__grant_perms('base_user', 'new_shipto', 'UPDATE');
+
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['partstax'::text, 'partscustomer',
                     'account_heading_tree', 'payment_type', 'warehouse',
-                    'employee_search', 'sic', 'voucher', 'mime_type',
+                    'sic', 'voucher', 'mime_type',
                     'parts_translation', 'partsgroup_translation', 
                     'asset_report_class', 'asset_rl_to_disposal_method',
                     'asset_disposal_method', 'file_class', 'jctype']) obj;

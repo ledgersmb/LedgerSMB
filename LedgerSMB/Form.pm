@@ -579,9 +579,12 @@ sub header {
 
     return if $self->{header} or $ENV{LSMB_NOHEAD};
     my $cache = 1; # default
-    if ($LedgerSMB::App_State::DBH){
+    if ($self->{_error}){
+        $cache = 0;
+    }
+    elsif ($LedgerSMB::App_State::DBH){
         # we have a db connection, so are logged in.  Let's see about caching.
-        $cache = 0 if LedgerSMB::Setting->get('disable_back');
+        $cache = 0 if eval { LedgerSMB::Setting->get('disable_back')};
     }
 
     $ENV{LSMB_NOHEAD} = 1; # Only run once.
@@ -1326,6 +1329,9 @@ Valid values for $query_type are any casing of 'SELECT', 'INSERT', and 'UPDATE'.
 
 sub run_custom_queries {
     my ( $self, $tablename, $query_type, $linenum ) = @_;
+    return unless exists $self->{custom_db_fields} 
+           and ref $self->{custom_db_fields}
+           and exists $self->{custom_db_fields}->{$tablename};
     my $dbh = $self->{dbh};
     if ( $query_type !~ /^(select|insert|update)$/i ) {
         $self->error(
@@ -1345,7 +1351,7 @@ sub run_custom_queries {
     }
 
     $query_type = uc($query_type);
-    for ( @{ $self->{custom_db_fields}{$tablename} } ) {
+    for ( @{ $self->{custom_db_fields}->{$tablename} } ) {
         @elements = split( /:/, $_ );
         push @{ $temphash{ $elements[0] } }, $elements[1];
     }
@@ -1819,7 +1825,6 @@ sub get_name {
         $i++;
     }
     $sth->finish;
-    use Carp::Always;
 
     return $i;
 }
@@ -2343,7 +2348,8 @@ sub create_links {
 				a.person_id, e.name AS employee, 
 				c.language_code, a.ponumber, a.reverse,
                                 a.approved, ctf.default_reportable, 
-                                a.description, a.on_hold, a.crdate
+                                a.description, a.on_hold, a.crdate, 
+                                ns.location_id as locationid
 			FROM $arap a
 			JOIN entity_credit_account c 
 				ON (a.entity_credit_account = c.id)
@@ -2353,6 +2359,7 @@ sub create_links {
 			LEFT JOIN entity e ON (er.entity_id = e.id)
                         LEFT JOIN country_tax_form ctf 
                                   ON (ctf.id = c.taxform_id)
+                        LEFT JOIN new_shipto ns on a.id = ns.trans_id
 			WHERE a.id = ? AND c.entity_class = 
 				(select id FROM entity_class 
 				WHERE class ilike ?)|;

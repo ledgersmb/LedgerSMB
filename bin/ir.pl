@@ -1031,7 +1031,7 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
 <td><a href="file.pl?action=get&file_class=1&ref_key=$form->{id}&id=$file->{id}"
             >$file->{file_name}</a></td> 
 <td>$file->{mime_type}</td> 
-<td>$file->{uploaded_at}</td> 
+<td>| . $file->{uploaded_at}->to_output . qq|</td> 
 <td>$file->{uploaded_by_name}</td> 
 </tr>
               |;
@@ -1171,6 +1171,9 @@ sub update {
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );
+
+    $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
+       for qw(transdate duedate crdate);
 
     if ( $newname = &check_name(vendor) ) {
         &rebuild_vc( vendor, AP, $form->{transdate}, 1 );

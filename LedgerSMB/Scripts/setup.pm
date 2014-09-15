@@ -224,6 +224,14 @@ sub copy_db {
     my $database = _get_database($request);
     my $rc = $database->copy($request->{new_name}) 
            || die 'An error occurred. Please check your database logs.' ;
+    my $dbh = LedgerSMB::Database->new(
+           {%$database, (company_name => $request->{new_name})}
+    )->dbh;
+    $dbh->prepare("SELECT setting__set('role_prefix', 
+                               coalesce((setting_get('role_prefix')).value, ?))"
+    )->execute("lsmb_$database->{company_name}__");
+    $dbh->commit;
+    $dbh->disconnect;
     complete($request);
 }
 
@@ -717,7 +725,7 @@ sub select_coa {
             opendir(CHART, "sql/coa/$request->{coa_lc}/chart");
             @{$request->{charts}} =
                 map +{ name => $_ },
-                sort (grep !/^(\.|[Ss]ample.*)/,
+                sort(grep !/^(\.|[Ss]ample.*)/,
                       readdir(CHART));
             closedir(CHART);
        }

@@ -96,9 +96,11 @@ sub get_option_data {
     for my $opt (qw(mm-dd-yyyy mm/dd/yyyy dd-mm-yyyy dd/mm/yyyy dd.mm.yyyy yyyy-mm-dd)){
         push @{$self->{dateformats}}, {format => $opt};
     }
+    no warnings 'qw';
     for my $opt (qw(1,000.00 1000.00 1.000,00 1000,00 1'000.00)){
         push @{$self->{numberformats}}, {format => $opt};
     }
+    use warnings;
 
     my %country_codes = country_codes();
 

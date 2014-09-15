@@ -38,7 +38,7 @@ requires 'File::MimeInfo';
 requires 'Number::Format';
 requires 'DateTime::Format::Strptime';
 requires 'Moose';
-
+requires 'namespace::autoclean';
 
 recommends 'Math::BigInt::GMP';
 

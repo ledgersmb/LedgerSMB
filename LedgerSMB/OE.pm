@@ -628,7 +628,8 @@ sub retrieve {
 				o.entity_credit_account, c.legal_name, 
 				o.amount AS invtotal, o.closed, o.reqdate, 
 				o.quonumber, o.language_code,
-				o.ponumber, cr.entity_class
+				o.ponumber, cr.entity_class,
+                                ns.location_id as locationid
 			FROM oe o
 			JOIN entity_credit_account cr ON (cr.id = o.entity_credit_account)
 			JOIN company c ON (cr.entity_id = c.entity_id)
@@ -636,6 +637,7 @@ sub retrieve {
 			LEFT JOIN person pe ON (o.person_id = pe.id)
 			LEFT JOIN entity_employee e 
                                   ON (pe.entity_id = e.entity_id)
+                        LEFT JOIN new_shipto ns ON ns.oe_id = o.id
 			WHERE o.id = ?|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -2315,5 +2317,9 @@ sub generate_orders {
     }
 
 }
+
+=back
+
+=cut
 
 1;

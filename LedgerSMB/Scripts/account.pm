@@ -134,9 +134,11 @@ sub _display_account_screen {
 
     if ( $form->{id} ) {
         $button{'save'} =
-          { ndx => 3, key => 'S', value => $locale->text('Save') };
+          { ndx => 3, key => 'S', value => $locale->text('Save'),
+           id => 'action_save' };
         $button{'save_as_new'} =
-          { ndx => 7, key => 'N', value => $locale->text('Save as new') };
+          { ndx => 7, key => 'N', value => $locale->text('Save as new'),
+           id => 'action_save_as_new' };
 
         if ( $form->{orphaned} ) {
             $button{'delete'} =

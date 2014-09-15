@@ -18,7 +18,7 @@ BEGIN
     END IF;
 
     UPDATE parts SET onhand = onhand 
-                              - (select qty * t_mfg_lot.qty from mfg_lot_item
+                              - (select t_mfg_lot.qty from mfg_lot_item
                                   WHERE parts_id = parts.id AND
                                         mfg_lot_id = $1)
      WHERE id in (select parts_id from mfg_lot_item 
@@ -48,11 +48,11 @@ BEGIN
 
     INSERT INTO invoice (trans_id, parts_id, qty, allocated, sellprice)
     SELECT currval('id')::int, t_mfg_lot.parts_id, t_mfg_lot.qty * -1, 0, 
-           sum(amount) / $2
+           sum(amount) / t_mfg_lot.qty
       FROM acc_trans 
      WHERE amount < 0 and trans_id = currval('id')::int;
 
-    PERFORM cogs__add_for_ar_line(currval('invoice_id_seq')::int);
+    PERFORM cogs__add_for_ap_line(currval('invoice_id_seq')::int);
 
     -- move from reverse COGS.
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount)

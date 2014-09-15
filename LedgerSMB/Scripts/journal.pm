@@ -74,7 +74,8 @@ sub chart_json {
     
     my $json = LedgerSMB::REST_Format::json->to_output(\@results);
     my $cgi = CGI::Simple->new();
-    print $cgi->header('application/json', '200 Success');
+    binmode STDOUT, ':raw';
+    print $cgi->header('application/json;charset=UTF-8', '200 Success');
     $cgi->put($json);
 }
 
@@ -124,7 +125,7 @@ Runs a search and displays results.
 
 sub search {
     my ($request) = @_;
-    delete $request->{category} if ($request->{category} = 'X');
+    delete $request->{category} if ($request->{category} eq 'X');
     $request->{business_units} = [];
     for my $count (1 .. $request->{bc_count}){
          push @{$request->{business_units}}, $request->{"business_unit_$count"}

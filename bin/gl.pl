@@ -504,17 +504,21 @@ sub edit {
          $form->{department}=$form->{departmentdesc}."--".$form->{department_id};
     }
     $i = 0;
+
+    my $minusOne    = new Math::BigFloat(-1);#HV make sure BigFloat stays BigFloat
+    my $plusOne     = new Math::BigFloat(1);#HV make sure BigFloat stays BigFloat
+
     foreach $ref ( @{ $form->{GL} } ) {
         $form->{"accno_$i"} = "$ref->{accno}--$ref->{description}";
         $form->{"projectnumber_$i"} = "$ref->{projectnumber}--$ref->{project_id}";
         for (qw(fx_transaction source memo)) { $form->{"${_}_$i"} = $ref->{$_} }
         if ( $ref->{amount} < 0 ) {
             $form->{totaldebit} -= $ref->{amount};
-            $form->{"debit_$i"} = $ref->{amount} * -1;
+            $form->{"debit_$i"} =  $ref->{amount} * $minusOne;
         }
         else {
             $form->{totalcredit} += $ref->{amount};
-            $form->{"credit_$i"} = $ref->{amount};
+            $form->{"credit_$i"} =  $ref->{amount} * $plusOne;
         }
         for my $cls (@{$form->{bu_class}}){
             $form->{"b_unit_$cls->{id}_$i"} = $ref->{"b_unit_$cls->{id}"};
@@ -522,6 +526,7 @@ sub edit {
 
         $i++;
     }
+
    if ($form->{id}){
        GL->get_files($form, $locale);
    }
@@ -604,7 +609,7 @@ sub gl_subtotal {
 }
 
 sub update {
-
+     $form->{transdate} = LedgerSMB::PGDate->from_input($form->{transdate})->to_output();
      if ( $form->{transdate} ne $form->{oldtransdate} ) {
          $form->{oldtransdate} = $form->{transdate};
      } 

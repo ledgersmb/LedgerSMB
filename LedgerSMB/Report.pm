@@ -232,7 +232,8 @@ sub render {
                    my $srt_b = $b->{$self->order_by};
                    $srt_a = $srt_a->to_sort if eval { $srt_a->can('to_sort') };
                    $srt_b = $srt_b->to_sort if eval { $srt_b->can('to_sort') };
-                   $srt_a <=> $srt_b or $srt_a cmp $srt_b
+                   no warnings 'numeric';
+                   $srt_a <=> $srt_b or $srt_a cmp $srt_b;
               } @$rows
       if $self->order_by;
     if ($self->order_dir && $self->order_by
@@ -276,9 +277,13 @@ sub render {
     my $name = $self->name || '';
     $name =~ s/ /_/g;
     $name = $name . '_' . $self->from_date->to_output 
-            if $self->can('from_date') and defined $self->from_date->to_output;
+            if $self->can('from_date') 
+               and defined $self->from_date 
+               and defined $self->from_date->to_output;
     $name = $name . '-' . $self->to_date->to_output 
-            if $self->can('to_date') and defined $self->to_date->to_output;
+            if $self->can('to_date') 
+               and defined $self->to_date 
+               and defined $self->to_date->to_output;
     $name = undef unless $request->{format};
     my $columns = $self->show_cols($request);
 

@@ -969,7 +969,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 <td><a href="file.pl?action=get&file_class=2&ref_key=$form->{id}&id=$file->{id}&type=sales_quotation&additional=type"
             >$file->{file_name}</a></td> 
 <td>$file->{mime_type}</td> 
-<td>|.$file->{uploaded_at}.qq|</td> 
+<td>|.$file->{uploaded_at}->to_output.qq|</td> 
 <td>$file->{uploaded_by_name}</td> 
 </tr>
               |;
@@ -1027,6 +1027,10 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 
 sub update {
     $form->{nextsub} = 'update';
+
+    $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
+       for qw(transdate reqdate);
+
 
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
     if ( $form->{type} eq 'generate_purchase_order' ) {
@@ -1926,7 +1930,7 @@ sub display_ship_receive {
 	      </tr>
 	      <tr>
 		<th align=right nowrap>$shipped</th>
-		<td><input class="date" name=shippingdate size=11 value=$form->{shippingdate}></td>
+		<td><input class="date" name=shippingdate id=shippingdate size=11 value=$form->{shippingdate}></td>
 	      </tr>
 	    </table>
 	  </td>

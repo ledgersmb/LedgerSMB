@@ -780,7 +780,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
 	    <table width="100%">
 	      <tr>
 		<th align="right" nowrap="true">| . $locale->text('Updated') . qq|</th>
-		<td><input name=priceupdate size=11 title="$myconfig{dateformat}" value=$form->{priceupdate}></td>    
+		<td><input name="priceupdate" size="11" title="$myconfig{dateformat}" class="date" id="priceupdate" value="$form->{priceupdate}"></td>    
 	      </tr>
 	      $sellprice
 	      $lastcost
@@ -2166,11 +2166,11 @@ sub list_assemblies {
         $column_data{bin} = qq|<td>$ref->{bin}&nbsp;</td>|;
         $column_data{onhand} =
             qq|<td align=right>|
-          . $form->format_amount( \%myconfig, $ref->{onhand}, "", "&nbsp;" )
+          . $form->format_amount( \%myconfig, $ref->{onhand}) || '&nbsp;'
           . qq|</td>|;
         $column_data{rop} =
             qq|<td align=right>|
-          . $form->format_amount( \%myconfig, $ref->{rop}, '', "&nbsp;" )
+          . $form->format_amount( \%myconfig, $ref->{rop}) || "&nbsp;"
           . qq|</td>|;
         $column_data{stock} =
             qq|<td width=10%><input name="qty_$i" size="10" value="|
@@ -2234,10 +2234,6 @@ sub restock_assemblies {
     }
 
     if ( IC->restock_assemblies( \%myconfig, \%$form ) ) {
-        if ( $form->{callback} =~ /(direction=)(.*?)\&/ ) {
-            $direction = ( $2 eq 'ASC' ) ? 'DESC' : 'ASC';
-        }
-        $form->{callback} =~ s/direction=(.*?)\&/direction=$direction\&/;
         $form->redirect( $locale->text('Assemblies restocked!') );
     }
     else {

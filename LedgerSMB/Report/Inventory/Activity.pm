@@ -65,8 +65,10 @@ sub columns {
     my $self = shift;
     my $from_date = $self->from_date;
     $from_date = $from_date->to_db if $from_date;
+    $from_date ||= '';
     my $to_date = $self->to_date;
     $to_date = $to_date->to_db if $to_date;
+    $to_date ||= '';
     return [
      {col_id => 'partnumber',
         type => 'text',
@@ -152,7 +154,7 @@ sub run_report {
     my ($self) = @_;
     my @rows = $self->exec_method({funcname => 'inventory__activity'});
     for my $r (@rows) {
-       $r->{row_id} = $r->{parts_id};
+       $r->{row_id} = $r->{partnumber};
     }
     $self->rows(\@rows);
 }

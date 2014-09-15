@@ -719,7 +719,8 @@ function on_return_submit(event){
                     delete $button{$_};
                 }
             }
-            for ("update", "post", "post_as_new", "print_and_post_as_new"){
+            for ("update", "post", "post_as_new", "print_and_post_as_new",
+                 "ship_to"){
                 delete $button{$_};
             } 
 
@@ -873,16 +874,19 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
                 <th align=right>$form->{"${taccno}_description"}</th>
                 <td><input type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
-                        .$form->{"mt_amount_$item"} .qq|" size="10"/></td>
+                        .$form->format_amount($form->{"mt_amount_$item"}) 
+                        .qq|" size="10"/></td>
                 <td><input type="text" name="mt_rate_$item"
                          id="mt-rate-$item" value="|
-                        .$form->{"mt_rate_$item"} .qq|" size="4"/></td>
+                        .$form->format_amount($form->{"mt_rate_$item"}) 
+                        .qq|" size="4"/></td>
                 <td><input type="text" name="mt_basis_$item"
                          id="mt-basis-$item" value="|
-                        .$form->{"mt_basis_$item"} .qq|" size="10"/></td>
+                        .$form->format_amount($form->{"mt_basis_$item"}) 
+                        .qq|" size="10"/></td>
                 <td><input type="text" name="mt_ref_$item"
                          id="mt-ref-$item" value="|
-                        .$form->{"mt_ref_$item"} .qq|" size="10"/></td>
+                        . $form->{"mt_ref_$item"} .qq|" size="10"/></td>
                 <td><input type="text" name="mt_memo_$item"
                          id="mt-memo-$item" value="|
                         .$form->{"mt_memo_$item"} .qq|" size="10"/></td>
@@ -1195,7 +1199,9 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
 sub update {
     on_update(); # Used for overrides for POS invoices --CT
     delete $form->{"partnumber_$form->{delete_line}"} if $form->{delete_line};
-
+    $form->{$_} = LedgerSMB::PGDate->from_input($form->{$_})->to_output()
+       for qw(transdate duedate crdate);
+    
     $form->{taxes} = {};
     $form->{exchangerate} =
       $form->parse_amount( \%myconfig, $form->{exchangerate} );

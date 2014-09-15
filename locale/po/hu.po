@@ -60,7 +60,7 @@ msgid "Revenue"
 msgstr "Bevétel"
 
 msgid "Received"
-msgstr "Vásárolva"
+msgstr "Befolyt"
 
 msgid "Customer Search"
 msgstr "Vevő partner keresése"
@@ -2907,7 +2907,7 @@ msgstr "Teljesítés alapján"
 # Készpénz is lehet, majd meg kell nézni a kontextust.
 #: bin/ic.pl:1069 pos.conf.pl:42 tools/dbstrings:40
 msgid "Cash"
-msgstr "Pénztár"
+msgstr "Pénzmozgások"
 
 #: bin/ic.pl:1090 bin/ic.pl:1852 bin/arap.pl:164 UI/login.html:11
 #: UI/employee.html:36 UI/payments/search.html:47
@@ -3379,7 +3379,7 @@ msgstr "Áthelyezés ide"
 
 #: bin/oe.pl:3239 bin/oe.pl:3355 tools/dbstrings:65 tools/dbstrings:182
 msgid "Transfer"
-msgstr "Átvezetés"
+msgstr "Tranzakciók"
 
 #: bin/oe.pl:3245
 msgid "From Warehouse"
@@ -4165,7 +4165,7 @@ msgstr "Engedményadás"
 
 #: scripts/payment.pl:953
 msgid "To pay"
-msgstr "Fizetni"
+msgstr "Fizetendő"
 
 #: scripts/payment.pl:1129 tools/dbstrings:41 tools/dbstrings:163
 msgid "Receipt"
@@ -4835,17 +4835,17 @@ msgstr "A(z) %1 objektum nem menthető el."
 # 75%
 #: LedgerSMB/DBObject/Payment.pm:475
 msgid "cash"
-msgstr "készpénz"
+msgstr "bankkivonat"
 
 # 80%
 #: LedgerSMB/DBObject/Payment.pm:476
 msgid "check"
-msgstr "csekk"
+msgstr "pénztárbizonylat"
 
 # 85%
 #: LedgerSMB/DBObject/Payment.pm:477
 msgid "deposit"
-msgstr "jóváírás"
+msgstr "utalvány"
 
 #: LedgerSMB/DBObject/Payment.pm:478
 msgid "other"
@@ -6293,7 +6293,7 @@ msgstr "Nem támogatott szám"
 # 75%
 #: UI/payments/search.html:56 UI/payments/payment2.html:226
 msgid "Cash Account"
-msgstr "Készpénz számla"
+msgstr "Pénz számla"
 
 #: UI/payments/search.html:74
 msgid "From Date"

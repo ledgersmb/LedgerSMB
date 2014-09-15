@@ -132,6 +132,7 @@ The input is formatted.
 sub from_input {
     my $self   = shift @_;
     my $string = shift @_;
+    return $string if eval { $string->isa(__PACKAGE__) };
     #tshvr4 avoid 'Use of uninitialized value $string in string eq'
     if(!defined $string || $string eq ''){
      return undef;
@@ -232,6 +233,7 @@ sub to_output {
     }
 
     my $neg_format = ($args{neg_format}) ? $args{neg_format} : 'def';
+    $neg_format = 'def' unless $lsmb_neg_formats->{$neg_format};
     my $fmt = ($is_neg) ? $lsmb_neg_formats->{$neg_format}->{neg}
                         : $lsmb_neg_formats->{$neg_format}->{pos};
    
