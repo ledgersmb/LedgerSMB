@@ -9,6 +9,10 @@ Released 2014-09-15
 
 Changelog for 1.4.1
 * Fixing 1205, copy does not copy roles (Chris T)
+* Added multi-date inventory uploads (Erik H)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
 
 Changelog for 1.4.0
 General Enhancements:
