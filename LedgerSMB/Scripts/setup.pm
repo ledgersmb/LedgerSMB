@@ -239,8 +239,10 @@ sub copy_db {
     my $dbh = LedgerSMB::Database->new(
            {%$database, (company_name => $request->{new_name})}
     )->dbh;
-    $dbh->prepare("SELECT setting__set(?, ?)")->execute(
-           "role_prefix", "lsmb_$database->{company_name}__");
+    $dbh->prepare("SELECT setting__set('role_prefix', 
+                               coalesce((setting_get('role_prefix')).value, ?))"
+    )->execute("lsmb_$database->{company_name}__");
+    $dbh->commit;
     $dbh->disconnect;
     complete($request);
 }
