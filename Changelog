@@ -2,8 +2,9 @@ Changelog for 1.4 Series
 Released 2014-09-15
 
 Changelog for 1.4.1
-* Fixing 1205, copy does not copy roles (Chris T)
+* Fixed bug 1205, copy does not copy roles (Chris T)
 * Added multi-date inventory uploads (Erik H)
+* Fixed bug 1207, date format not displated on preferences (Chris T)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
