@@ -236,6 +236,12 @@ sub copy_db {
     my $database = _get_database($request);
     my $rc = $database->copy($request->{new_name}) 
            || die 'An error occurred. Please check your database logs.' ;
+    my $dbh = LedgerSMB::Database->new(
+           {%$database, (company_name => $request->{new_name})}
+    )->dbh;
+    $dbh->prepare("SELECT setting__set(?, ?)")->execute(
+           "role_prefix", "lsmb_$database->{company_name}__");
+    $dbh->disconnect;
     complete($request);
 }
 
