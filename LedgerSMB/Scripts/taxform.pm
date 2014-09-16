@@ -135,6 +135,8 @@ sub _generate_report {
 
 sub generate_report {
     my ($request) = @_;
+    die $LedgerSMB::App_State::Locale->text('No tax form selected')
+        unless $request->{tax_form_id};
     my $report = _generate_report($request);
     $report->render($request);
 }
@@ -204,8 +206,9 @@ Lists all tax forms.
 =cut
 
 sub list_all {
-    my $report = LedgerSMB::Report::Taxform::List->new();
-    $report->render;
+    my $request= shift;
+    my $report = LedgerSMB::Report::Taxform::List->new(%$request);
+    $report->render($request);
 }
 
 =back
