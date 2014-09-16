@@ -12,6 +12,7 @@ Changelog for 1.4.1
 * Added multi-date inventory uploads (Erik H)
 * Fixed bug 1207, date format not displated on preferences (Chris T)
 * Fixed bug 1208, username does not appear on menu block (Chris T)
+* Fixed bug 1209, Types of Businesses report shows total discounts (Chris T)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
