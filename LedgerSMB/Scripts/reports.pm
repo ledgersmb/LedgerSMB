@@ -125,7 +125,8 @@ List the gifi entries.  No inputs expected or used.
 =cut
 
 sub list_gifi {
-    LedgerSMB::Report::Listings::GIFI->new()->render();
+    my ($request) = @_;
+    LedgerSMB::Report::Listings::GIFI->new(%$request)->render($request);
 }
 
 =item list_warehouse
@@ -135,7 +136,7 @@ List the warehouse entries.  No inputs expected or used.
 =cut
 
 sub list_warehouse {
-    LedgerSMB::Report::Listings::Warehouse->new()->render();
+    LedgerSMB::Report::Listings::Warehouse->new(%{$_[0]})->render($_[0]);
 }
 
 =item list_language
@@ -145,7 +146,8 @@ List language entries.  No inputs expected or used.
 =cut
 
 sub list_language {
-    LedgerSMB::Report::Listings::Language->new()->render();
+    my ($request) = @_;
+    LedgerSMB::Report::Listings::Language->new(%$request)->render($request);
 }
 
 =item list_sic
@@ -155,7 +157,8 @@ Lists sic codes
 =cut
 
 sub list_sic {
-    LedgerSMB::Report::Listings::SIC->new->render;
+    my ($request) = @_;
+    LedgerSMB::Report::Listings::SIC->new(%$request)->render($request);
 }
     
 =item balance_sheet 

@@ -178,7 +178,7 @@ UPDATE lsmb_sequence
        suffix = coalesce(in_suffix, ''),
        sequence = coalesce(in_sequence, '1'),
        setting_key = in_setting_key,
-       accept_input = coalesce(in_accept_input, true)
+       accept_input = coalesce(in_accept_input, false)
  WHERE label = in_label;
 
 IF FOUND THEN 

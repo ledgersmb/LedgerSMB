@@ -84,6 +84,7 @@ Runs the report and returns the results for rendering.
 
 sub run_report {
     my ($self) = @_;
+    $self->manual_totals(1); # don't display totals
     my @rows = $self->exec_method({funcname => 'business_type__list'});
     for my $ref(@rows){
         $ref->{id} = $ref->{id};

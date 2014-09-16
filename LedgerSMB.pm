@@ -200,6 +200,8 @@ sub new {
 
     $self->{version} = $VERSION;
     $self->{dbversion} = $VERSION;
+    my $creds =  LedgerSMB::Auth::get_credentials;
+    $self->{login} = $creds->{login};
     
     bless $self, $type;
 

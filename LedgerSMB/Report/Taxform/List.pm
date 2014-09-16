@@ -77,6 +77,7 @@ sub name { return LedgerSMB::Report::text('Tax Form List'); }
 sub buttons {
     return  [{
          text => LedgerSMB::Report::text('Add New Tax Form'),
+        value => 'add_taxform',
          name => 'action',
          type => 'submit',
          class => 'submit'
