@@ -5,6 +5,8 @@
 
 -- Docstrings already added to this file.
 
+BEGIN;
+
 
 DROP FUNCTION IF EXISTS employee__save
 (in_entity_id int, in_start_date date, in_end_date date, in_dob date, 
@@ -58,7 +60,7 @@ $$SELECT * FROM users WHERE entity_id = $1;$$ language sql;
 COMMENT ON FUNCTION employee__get_user(in_entity_id int) IS
 $$ Returns username, user_id, etc. information if the employee is a user.$$;
 
-create view employees as
+create or replace view employees as
     select 
         s.salutation,
         p.first_name,
@@ -136,7 +138,7 @@ in_notes text)
 RETURNS SETOF employee_result as
 $$
 SELECT p.entity_id, p.id, s.salutation,
-          p.first_name, p.middle_name, p.last_name,
+          p.first_name, p.middle_name, p.last_name, ee.is_manager,
           ee.startdate, ee.enddate, ee.role, ee.ssn, ee.sales, ee.manager_id,
           mp.first_name, mp.last_name, ee.employeenumber, ee.dob, e.country_id
      FROM person p
@@ -198,11 +200,10 @@ $$ Returns a list of managers, that is employees with the 'manager' role set.$$;
 --
 -- % type is pg_trgm comparison.
 
-CREATE INDEX notes_idx ON entity_note USING gist(note gist_trgm_ops);
-
 --Testing this more before replacing employee__search with it.
 -- Consequently not to be publically documented yet, --CT
 
+DROP VIEW IF EXISTS employee_search CASCADE;
 CREATE OR REPLACE VIEW employee_search AS
 SELECT e.*, em.name AS manager, emn.note, en.name as name
 FROM entity_employee e 
@@ -253,3 +254,4 @@ returns void as $$
     
 $$ language 'sql';
 
+COMMIT;
