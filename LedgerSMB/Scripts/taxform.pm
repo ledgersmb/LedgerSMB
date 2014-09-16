@@ -35,9 +35,9 @@ use LedgerSMB::Report::Taxform::List;
 
 =over
 
-=item __default
+=item report
 
-Display the filter screen by default.
+Display the filter screen.
 
 =cut
 
