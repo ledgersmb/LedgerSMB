@@ -1,14 +1,14 @@
 =head1 NAME
 
-LedgerSMB::Report::Listings::Business_Units - List Business Reporting Units
+LedgerSMB::Report::Listings::Business_Unit - List Business Reporting Units
 
 =head1 SYNOPSIS
 
- LedgerSMB::Report::Listings::Business_Units->new(%$request)->render;
+ LedgerSMB::Report::Listings::Business_Unit->new(%$request)->render;
 
 =cut
 
-package LedgerSMB::Report::Listings::Business_Units;
+package LedgerSMB::Report::Listings::Business_Unit;
 use Moose;
 extends 'LedgerSMB::Report';
 
@@ -92,11 +92,11 @@ sub name { LedgerSMB::Report::text('Business Unit List'); }
 
 sub run_report {
     my $self = shift;
-    $self->rows(
+    $self->rows([
        map { { %$_, $_->{row_id} => $_->{id}, } }
-       $self->exec_method(funcname => 'business_unit___list_by_class',
+       $self->exec_method(funcname => 'business_unit__list_by_class',
                               args => [$self->id, undef, undef, undef] )
-    );
+    ]);
 }
 
 =head1 COPYRIGHT
