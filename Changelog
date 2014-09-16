@@ -13,6 +13,8 @@ Changelog for 1.4.1
 * Fixed bug 1207, date format not displated on preferences (Chris T)
 * Fixed bug 1208, username does not appear on menu block (Chris T)
 * Fixed bug 1209, Types of Businesses report shows total discounts (Chris T)
+* Fixed bug 1210, Cannot list business reporting units (Chris T)
+* Fixed bug 1211, Sequences always set to allow input (Chris T)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
