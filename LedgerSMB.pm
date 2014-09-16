@@ -182,6 +182,8 @@ sub new {
 
     $logger->debug("Begin called from \$filename=$filename \$line=$line \$type=$type \$argstr=$argstr ref argstr=".ref $argstr);
 
+    my $creds =  LedgerSMB::Auth::get_credentials;
+    $self->{login} = $creds->{login};
     bless $self, $type;
 
     my $query;
