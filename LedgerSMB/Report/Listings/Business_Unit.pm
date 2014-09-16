@@ -94,8 +94,8 @@ sub run_report {
     my $self = shift;
     $self->rows([
        map { { %$_, $_->{row_id} => $_->{id}, } }
-       $self->exec_method(funcname => 'business_unit__list_by_class',
-                              args => [$self->id, undef, undef, undef] )
+       $self->call_dbmethod(funcname => 'business_unit__list_by_class',
+                              args => { class_id => $self->id } )
     ]);
 }
 
