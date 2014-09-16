@@ -62,7 +62,7 @@ sub columns {
           type => 'text',
           name => LedgerSMB::Report::text('Start Date') }, 
 
-      { col_id => 'description',
+      { col_id => 'end_date',
           type => 'text',
           name => LedgerSMB::Report::text('End Date') }, 
     ];
@@ -93,7 +93,7 @@ sub name { LedgerSMB::Report::text('Business Unit List'); }
 sub run_report {
     my $self = shift;
     $self->rows([
-       map { { %$_, $_->{row_id} => $_->{id}, } }
+       map { { %$_, row_id => $_->{id}, } }
        $self->exec_method(funcname => 'business_unit__list_by_class',
                               args => [$self->id, undef, undef, undef] )
     ]);
