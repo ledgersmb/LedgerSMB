@@ -301,12 +301,10 @@ sub save_sequences {
     my ($request) = @_;
     for my $count (1 .. $request->{count}){
         if ($request->{"save_$count"} and $request->{"label_$count"}){
-           my %shash;
-           for my $key (qw(accept_input setting_key label prefix sequence suffix)){
-              $shash{$key} = $request->{"${key}_$count"};
-           }
-           my $sequence = LedgerSMB::Setting::Sequence->new(%shash);
-           $sequence->save;
+           LedgerSMB::Setting::Sequence->new(
+               map { $_ => $request->{"${_}_$count"} }
+               qw(accept_input setting_key label prefix sequence suffix)
+           )->save;
         }
     }
     sequence_screen($request);
