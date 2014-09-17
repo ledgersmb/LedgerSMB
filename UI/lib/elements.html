@@ -160,6 +160,8 @@
 <?lsmb # SELECT ELEMENT ?>
 <?lsmb BLOCK select ?>
   <?lsmb IF element_data  # Only process element if one exists. ?>
+    <?lsmb default_blank = element_data.default_blank;
+           element_data.delete('default_blank'); ?>
     <?lsmb IF element_data.defined('text_attr') ?>
         <?lsmb text_attr =  element_data.text_attr ?>
         <?lsmb element.delete('text_attr') ?>
@@ -199,6 +201,7 @@
 	  ?>
 	  <?lsmb PROCESS auto_label  # Process element label. ?>
 	  <select<?lsmb all_attributes ?><?lsmb all_custom_attributes ?>>
+            <?lsmb IF default_blank; "<option></option>"; END; ?>
 	    <?lsmb  # Build options.
 	      FOREACH optionds IN element_data.options;
                   option_data = {};
