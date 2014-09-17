@@ -13,6 +13,7 @@ Changelog for 1.4.1
 * Fixed bug 1214, Company db name not displated on some reports (Chris T)
 * Fixed bug 1212, Fixed error regaring no default action (Chris T)
 * Fixed bug 1215, duplicate user throws incorrect error (Chris T)
+* Fixed bug 1204, Unable to select blank salutation (Chris T)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
@@ -124,6 +125,12 @@ Havard S is Havard Sorli
 Changelog for 1.3 Series
 Initial Release:  Monday, Oct 12 2011
 Supported Presently
+
+Changelog for 1.3.44
+* Allow blank salutations, bug 1204. (Chris T)
+* Easier creation of select widgets with blanks. (Chris T)
+
+Chris T is Chris Travers
 
 Changelog for 1.3.43
 * Fixed bug 1136, manual tax not respecting user number formats (Chris T)
