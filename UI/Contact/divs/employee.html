@@ -23,6 +23,7 @@
                   label = text('Salutation')
                    name = 'salutation_id'
          default_values = [employee.salutation_id]
+          default_blank = 1
                 options = salutations
                   class = 'salutations'
               text_attr = 'salutation'
@@ -32,7 +33,6 @@
 </div>
 <div class="input_line" id="person_name_div"><?lsmb #text('Name:')?>&nbsp;
 <div class="input_group g1">
-<!-- TODO:  Add Saluatation -->
 <?lsmb PROCESS input element_data = {
 	label = text('First Name') #'
 	name = "first_name"
