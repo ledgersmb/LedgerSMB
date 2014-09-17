@@ -2,7 +2,7 @@
 	<div class="listtop">
             <?lsmb 
                IF request.pls_import;
-                       text('Importing User');
+                       text('Duplicate User Found: Importing User');
                        action = 'save_user';
                 ELSIF user.username;
                       text('Editing User');
@@ -17,7 +17,7 @@
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
         <table>
 
-            <?lsmb IF user.username?>
+            <?lsmb IF user.username and not request.pls_import ?>
             <tr>
                 <td><?lsmb text('Username') ?></td>
                 <td>
@@ -41,11 +41,11 @@
             <tr>
                 <td><?lsmb text('Password') ?></td>
                 <td>
-                    <input type="password" name="password" value="<?lsmb user.user.password ?>"/>
+                    <input type="password" name="reset_password" value=""/>
                 </td>
             </tr>
 
-            <?lsmb IF (request.import == 1) OR !user.username ?>
+            <?lsmb IF (request.pls_import == 1) OR !user.username ?>
             <tr>
                 <td><?lsmb text('Import') ?></td>
                 <?lsmb 
@@ -74,7 +74,7 @@
             </tr>
             <?lsmb END # unless employee.entity_id ?>
         </table>
-           <?lsmb IF user.username;
+           <?lsmb IF user.username and not request.pls_import;
                 PROCESS button element_data  = {
                          text = text('Reset Password') #'
                          name = 'action'
@@ -98,7 +98,7 @@
                 };
     ?>
     </form>
-    <?lsmb IF user.entity_id ?>
+    <?lsmb IF user.entity_id and not request.pls_import?>
         <hr /> 
         <form name="groups" method="POST" action="employee.pl">
             <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>" />
