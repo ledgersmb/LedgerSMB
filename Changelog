@@ -13,6 +13,7 @@ Changelog for 1.4.1
 * Fixed bug 1214, Company db name not displated on some reports (Chris T)
 * Fixed bug 1212, Fixed error regaring no default action (Chris T)
 * Fixed bug 1215, duplicate user throws incorrect error (Chris T)
+* Fixed bug 1204, Unable to select blank salutation (Chris T)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
