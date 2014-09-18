@@ -164,10 +164,10 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 </div>
 <div class="input_line" id="person-country-div">
 <div class="input_group">
-       <?lsmb country_list.unshift({}) ?>
 		<?lsmb INCLUDE select element_data = {
 			text_attr = "name"
 			value_attr = "id"
+                        default_blank = 1
 			default_values = [country_id]
 			options = country_list
 			name = "country_id"
