@@ -51,7 +51,7 @@ sub columns {
     return [
       { col_id => 'control_code',
           type => 'href',
-     href_base => 'http://localhost/ledgersmb_trunk/business_unit.pl?action=edit&id=', 
+     href_base => 'business_unit.pl?action=edit&id=', 
           name => LedgerSMB::Report::text('Control Code') },
 
       { col_id => 'description',

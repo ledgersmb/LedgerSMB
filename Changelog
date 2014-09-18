@@ -20,9 +20,12 @@ Changelog for 1.4.1
 * Fixed bug 1212, Fixed error regaring no default action (Chris T)
 * Fixed bug 1215, duplicate user throws incorrect error (Chris T)
 * Fixed bug 1204, Unable to select blank salutation (Chris T)
+* Fixed bug 1198, incorrect rewrite rule on Apache 2.4 (Chris T)
+* Fixed bug 1217, Link to business units on Business_Unit report was hardcoded (Pongracz I)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
+Pongracz I is Pongracz Istv√an
 
 Changelog for 1.4.0
 General Enhancements:
