@@ -86,3 +86,21 @@ COMMIT;
 
 -- Fixes after 1.4.0 below this point.  Fixes above to be deleted after 1.4.10
 -- Fixes below not to be deleted
+
+BEGIN;
+update acc_trans 
+   set transdate = (select transdate 
+                      from (select id, transdate from ar
+                             union
+                            select id, transdate from ap
+                             union
+                            select id, transdate from gl
+                            ) gl 
+                     where gl.id = acc_trans.trans_id
+                           and not exists (select 1 from account_checkpoint cp
+                                             where end_date > gl.transdate)
+                   ) 
+ where transdate is null;
+COMMIT;
+
+
