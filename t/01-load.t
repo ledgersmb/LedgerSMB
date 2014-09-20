@@ -11,7 +11,6 @@ use_ok('LedgerSMB::App_State');
 use_ok('LedgerSMB::AA');
 use_ok('LedgerSMB::AM');
 use_ok('LedgerSMB::Auth');
-use_ok('LedgerSMB::BP');
 use_ok('LedgerSMB::CP');
 use_ok('LedgerSMB::DBObject::Account');
 use_ok('LedgerSMB::DBObject::Admin');
