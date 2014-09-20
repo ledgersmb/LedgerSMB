@@ -10,7 +10,6 @@ use_ok('LedgerSMB');
 use_ok('LedgerSMB::AA');
 use_ok('LedgerSMB::AM');
 use_ok('LedgerSMB::Auth');
-use_ok('LedgerSMB::BP');
 use_ok('LedgerSMB::CP');
 use_ok('LedgerSMB::DBObject');
 use_ok('LedgerSMB::DBObject::Account');
