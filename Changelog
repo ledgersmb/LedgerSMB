@@ -22,6 +22,7 @@ Changelog for 1.4.1
 * Fixed bug 1204, Unable to select blank salutation (Chris T)
 * Fixed bug 1198, incorrect rewrite rule on Apache 2.4 (Chris T)
 * Fixed bug 1217, Link to business units on Business_Unit report was hardcoded (Pongracz I)
+* Fixed bug causing COGS dates to be set null (Chris T)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
