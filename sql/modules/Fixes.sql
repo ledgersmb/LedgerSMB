@@ -88,6 +88,14 @@ COMMIT;
 -- Fixes below not to be deleted
 
 BEGIN;
+CREATE TABLE fixed_acc_trans (LIKE acc_trans);
+COMMIT;
+
+BEGIN;
+INSERT INTO fixed_acc_trans 
+SELECT * FROM acc_trans
+WHERE transdate IS NULL;
+
 update acc_trans 
    set transdate = (select transdate 
                       from (select id, transdate from ar
