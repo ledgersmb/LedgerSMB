@@ -29,6 +29,8 @@ use LedgerSMB::Template;
 use LedgerSMB::File;
 use LedgerSMB::Scripts::employee::country;
 
+use Try::Tiny;
+
 use strict;
 use warnings;
 
@@ -452,9 +454,22 @@ This turns the employee into a user.
 
 sub create_user {
     my ($request) = @_;
+    $request->{target_div} = 'user_div';
     if ($request->close_form){
+       $request->{password} = $request->{reset_password};
        my $user = LedgerSMB::Entity::User->new(%$request);
-       $user->create;
+       my $return_with_import;
+       try {
+           $user->create;
+       } catch {
+           my $err = $_;
+           die $err unless $err =~ /duplicate user/i;
+           $request->{dbh}->rollback;
+           $return_with_import = 1;
+       };
+       if ($return_with_import){
+           $request->{pls_import} = 1;
+       }
     }
     get($request);
 }
@@ -468,6 +483,7 @@ This resets the user's password
 sub reset_password {
     my ($request) = @_;
     if ($request->close_form){
+       $request->{password} = $request->{reset_password};
        my $user = LedgerSMB::Entity::User->new(%$request);
        $user->reset_password($request->{password});
     }

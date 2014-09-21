@@ -83,3 +83,44 @@ ALTER TABLE entity_employee ADD is_manager bool DEFAULT FALSE;
 UPDATE entity_employee SET is_manager = true WHERE role = 'manager';
 
 COMMIT;
+
+BEGIN;
+update acc_trans 
+   set transdate = (select transdate 
+                      from (select id, transdate from ar
+                             union
+                            select id, transdate from ap
+                             union
+                            select id, transdate from gl
+                            ) gl 
+                     where gl.id = acc_trans.trans_id
+                           and not exists (select 1 from account_checkpoint cp
+                                             where end_date > gl.transdate)
+                   ) 
+ where transdate is null;
+COMMIT;
+
+-- Removing batch printing menu options
+BEGIN;
+
+DELETE FROM menu_acl 
+ WHERE node_id IN (select node_id from menu_attribute 
+                    where attribute = 'module' and value = 'bp.pl');
+DELETE FROM menu_attribute 
+ WHERE node_id IN (select node_id from menu_attribute 
+                    where attribute = 'module' and value = 'bp.pl');
+DELETE FROM menu_node 
+ WHERE id NOT IN (select node_id from menu_attribute);
+
+DELETE FROM menu_acl
+ WHERE node_id IN (select node_id from menu_attribute
+                    where attribute = 'menu' and node_id not in
+                          (select parent from menu_node));
+
+DELETE FROM menu_attribute
+ WHERE node_id IN (select node_id from menu_attribute
+                    where attribute = 'menu' and node_id not in
+                          (select parent from menu_node));
+DELETE FROM menu_node 
+ WHERE id NOT IN (select node_id from menu_attribute);
+COMMIT;

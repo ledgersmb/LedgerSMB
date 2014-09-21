@@ -6,6 +6,7 @@ LedgerSMB::Entity::User - User management Logic for LedgerSMB
 
 package LedgerSMB::Entity::User;
 use Moose;
+use Try::Tiny;
 use LedgerSMB::App_State;
 with 'LedgerSMB::PGObject';
 
@@ -21,7 +22,7 @@ Creating a new user:
 
 Saving permissions:
   my $user = LedgerSMB::Entity::User->new(%$request);
-  $user->set_roles($request);
+  $user->save_roles($request);
 
 =head1 PROPERTIES
 
