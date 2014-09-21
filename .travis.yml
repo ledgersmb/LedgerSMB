@@ -15,7 +15,7 @@ before_install:
    - "cpanm Memoize"
    - "cpanm Test::More"
    - "cpanm Test::Trap"
-   - "cpanm http://search.cpan.org/CPAN/authors/id/A/AD/ADIE/Test-Exception-0.32.tar.gz"
+   - "cpanm Test::Exception"
    - "cpanm Devel::Cover::Report::Coveralls"
    - "cpanm Data::Dumper"
    - "cpanm Log::Log4perl"
