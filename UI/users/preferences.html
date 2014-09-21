@@ -42,12 +42,13 @@
   <tr><th class="listtop" colspan="2"><?lsmb text('Settings') ?></th></tr>
 	      <tr>
 		<th align="right"><?lsmb text('Date Format') ?></th>
-		<td><?lsmb PROCESS select element_data={
+		<td><?lsmb dformat = user.dateformat;
+                      PROCESS select element_data={
                       name = 'dateformat'
                       options = dateformats
-                      default_values = [ user.dateformat]
+                      default_values = [dformat]
                       text_attr = 'format'
-                      value_attr = 'id'
+                      value_attr = 'format'
                     } ?></td>
 	      </tr>
 	      <tr>

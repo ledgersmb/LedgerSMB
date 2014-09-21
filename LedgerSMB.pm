@@ -179,7 +179,7 @@ use Try::Tiny;
 use DBI;
 
 use base qw(LedgerSMB::Request);
-our $VERSION = '1.4.0';
+our $VERSION = '1.4.1';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
@@ -200,6 +200,8 @@ sub new {
 
     $self->{version} = $VERSION;
     $self->{dbversion} = $VERSION;
+    my $creds =  LedgerSMB::Auth::get_credentials;
+    $self->{login} = $creds->{login};
     
     bless $self, $type;
 

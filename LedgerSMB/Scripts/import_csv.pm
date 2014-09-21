@@ -27,12 +27,13 @@ our $cols = {
    timecard =>  ['employee', 'projectnumber', 'transdate', 'partnumber',
                  'description', 'qty', 'noncharge', 'sellprice', 'allocated',
                 'notes'],
-   inventory => ['partnumber', 'description', 'expected', 'onhand', 
-                 'purchase_price'],
+   inventory => ['partnumber', 'onhand', 'purchase_price'],
+   inventory_multi => ['date', 'partnumber', 'onhand', 'purchase_price'],
 };
 
 my %template_file = (
    inventory => 'import_inventory_csv',
+   inventory_multi => 'import_inventory_csv',
 );
 
 
@@ -41,103 +42,208 @@ our $ar_eca_for_inventory = '00000';
 our $preprocess = {};
 our $postprocess = {};
 
-our $template_setup = {
-  inventory => sub {
-     my ($request) = @_;
-       my $sth = $request->{dbh}->prepare(
-          "SELECT concat(accno,'--',description) as value
+sub _inventory_template_setup {
+    my ($request) = @_;
+    my $sth = $request->{dbh}->prepare(
+        "SELECT concat(accno,'--',description) as value
              FROM chart_get_ar_ap(?)"
-       );
+        );
 
-       $sth->execute(1); # AP accounts
-       while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-         push @{$request->{AP_accounts}}, $row; 
-       }
+    $sth->execute(1); # AP accounts
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+        push @{$request->{AP_accounts}}, $row; 
+    }
      
 
-       $sth->execute(2); # AR accounts
-       while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-         push @{$request->{AR_accounts}}, $row; 
-       }
-     
-
-  }
-
+    $sth->execute(2); # AR accounts
+    while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+        push @{$request->{AR_accounts}}, $row; 
+    }
 };
 
-our $aa_multi = sub {
-                   use LedgerSMB::AA;
-                   use LedgerSMB::Batch;
-                   my ($request, $entries, $arap) = @_;
-                   my $batch = LedgerSMB::Batch->new({base => $request});
-                   $batch->{batch_number} = $request->{reference};
-                   $batch->{batch_date} = $request->{transdate};
-                   $batch->{batch_class} = $arap;
-                   $batch->create(); 
-                   # Necessary to test things are found before starting to 
-                   # import! -- CT
-                   my $acst = $request->{dbh}->prepare(
-                        "select count(*) from account where accno = ?"
-                   );
-                   my $vcst = $request->{dbh}->prepare(
-                        "select count(*) from entity_credit_account where meta_number = ?"
-                   );
-                   for my $ref (@$entries){
-                       my $pass;
-                       next if $ref->[1] !~ /\d/;
-                       my ($acct) = split /--/, $ref->[2];
-                       $acst->execute($acct);
-                       ($pass) = $acst->fetchrow_array;
-                       $request->error("Account $acct not found") if !$pass;
-                       ($acct) = split /--/, $ref->[3];
-                       $acst->execute($acct);
-                       ($pass) = $acst->fetchrow_array;
-                       $request->error("Account $acct not found") if !$pass;
-                       $vcst->execute(uc($ref->[0]));
-                       ($pass) = $vcst->fetchrow_array;
-                       if (! $pass) {
-                           if ($arap eq 'ar') {
-                               $request->error("Customer $ref->[0] not found");
-                           } else {
-                               $request->error("Vendor $ref->[0] not found");
-                           }
-                      }
-                   }
-                   for my $ref (@$entries){
-                       my $form = Form->new();
-                       $form->{dbh} = $request->{dbh};
-                       $form->{rowcount} = 1;
-                       $form->{ARAP} = uc($arap);
-                       $form->{batch_id} = $batch->{id};
-                       $form->{customernumber}
-                          = $form->{vendornumber} = shift @$ref;
-                       $form->{amount_1} = shift @$ref;
-                       next if $form->{amount_1} !~ /\d/;
-                       $form->{amount_1} = $form->parse_amount(
-                              $request->{_user}, $form->{amount_1}); 
-                       $form->{"$form->{ARAP}_amount_1"} = shift @$ref;
-                       $form->{vc} = ($arap eq "ar") ? "customer" : "vendor";
-                       $form->{arap} = $arap;
-                       $form->{uc($arap)} = shift @$ref;
-                       $form->{description_1} = shift @$ref;
-                       $form->{invnumber} = shift @$ref;
-                       $form->{transdate} = shift @$ref;
-                       $form->{currency} = $default_currency;
-                       $form->{approved} = '0';
-                       $form->{defaultcurrency} = $default_currency;
-                       my $sth = $form->{dbh}->prepare(
-                            "SELECT id FROM entity_credit_account
-                              WHERE entity_class = ? and meta_number = ?"
-                       );
-                       $sth->execute( ($arap eq 'ar') ? 2 : 1,
-                            uc($form->{vendornumber}));
-                       ($form->{vendor_id}) = $sth->fetchrow_array;
-                       $form->{customer_id} = $form->{vendor_id};
-                      
-                       AA->post_transaction($request->{_user}, $form);
-                   }
-                   return 1;
-               };
+
+our $template_setup = {
+  inventory => \&_inventory_template_setup,
+  inventory_multi => \&_inventory_template_setup,
+};
+
+sub _map_columns_into_hash {
+    my ($keys, $values) = @_;
+    my %rv;
+
+    @rv{@$keys} = @$values;
+
+    return \%rv;
+}
+
+
+
+sub _aa_multi {
+    use LedgerSMB::AA;
+    use LedgerSMB::Batch;
+    my ($request, $entries, $arap) = @_;
+    my $batch = LedgerSMB::Batch->new({base => $request});
+    $batch->{batch_number} = $request->{reference};
+    $batch->{batch_date} = $request->{transdate};
+    $batch->{batch_class} = $arap;
+    $batch->create(); 
+    # Necessary to test things are found before starting to 
+    # import! -- CT
+    my $acst = $request->{dbh}->prepare(
+        "select count(*) from account where accno = ?"
+        );
+    my $vcst = $request->{dbh}->prepare(
+        "select count(*) from entity_credit_account where meta_number = ?"
+        );
+    for my $ref (@$entries){
+        my $pass;
+        next if $ref->[1] !~ /\d/;
+        my ($acct) = split /--/, $ref->[2];
+        $acst->execute($acct);
+        ($pass) = $acst->fetchrow_array;
+        $request->error("Account $acct not found") if !$pass;
+        ($acct) = split /--/, $ref->[3];
+        $acst->execute($acct);
+        ($pass) = $acst->fetchrow_array;
+        $request->error("Account $acct not found") if !$pass;
+        $vcst->execute(uc($ref->[0]));
+        ($pass) = $vcst->fetchrow_array;
+        if (! $pass) {
+            if ($arap eq 'ar') {
+                $request->error("Customer $ref->[0] not found");
+            } else {
+                $request->error("Vendor $ref->[0] not found");
+            }
+        }
+    }
+    for my $ref (@$entries){
+        my $form = Form->new();
+        $form->{dbh} = $request->{dbh};
+        $form->{rowcount} = 1;
+        $form->{ARAP} = uc($arap);
+        $form->{batch_id} = $batch->{id};
+        $form->{customernumber} = $form->{vendornumber} = shift @$ref;
+        $form->{amount_1} = shift @$ref;
+        next if $form->{amount_1} !~ /\d/;
+        $form->{amount_1} = $form->parse_amount(
+            $request->{_user}, $form->{amount_1}); 
+        $form->{"$form->{ARAP}_amount_1"} = shift @$ref;
+        $form->{vc} = ($arap eq "ar") ? "customer" : "vendor";
+        $form->{arap} = $arap;
+        $form->{uc($arap)} = shift @$ref;
+        $form->{description_1} = shift @$ref;
+        $form->{invnumber} = shift @$ref;
+        $form->{transdate} = shift @$ref;
+        $form->{currency} = $default_currency;
+        $form->{approved} = '0';
+        $form->{defaultcurrency} = $default_currency;
+        my $sth = $form->{dbh}->prepare(
+            "SELECT id FROM entity_credit_account
+              WHERE entity_class = ? and meta_number = ?"
+            );
+        $sth->execute( ($arap eq 'ar') ? 2 : 1,
+                       uc($form->{vendornumber}));
+        ($form->{vendor_id}) = $sth->fetchrow_array;
+        $form->{customer_id} = $form->{vendor_id};
+        
+        AA->post_transaction($request->{_user}, $form);
+    }
+    return 1;
+};
+
+sub _inventory_single_date {
+    my ($request, $entries, $report_id, $transdate) = @_;
+    use LedgerSMB::IS;
+    use LedgerSMB::IR;
+    my $ar_form = Form->new();
+    my $ap_form = Form->new();
+    my $dbh = $request->{dbh};
+
+    $ar_form->{dbh} = $ap_form->{dbh} = $dbh;
+
+    # Needs to come *after* form initialization
+    my ($curr) = split /:/, $ap_form->get_setting('curr');
+
+
+    $ar_form->{rowcount} = $ap_form->{rowcount} = 0;
+    $ar_form->{transdate} = $ap_form->{transdate} = $transdate;
+    $ar_form->{defaultcurrency} = $ar_form->{currency} = $curr;
+    $ap_form->{defaultcurrency} = $ap_form->{currency} = $curr;
+    $ar_form->{type} = $ap_form->{type} = 'invoice';
+    # Intentionally not setting CRDATE here
+
+    my $p_info_sth = $dbh->prepare(
+        "SELECT * FROM parts WHERE partnumber = ?"
+        ) or $ap_form->dberror();
+    my $ins_sth = $dbh->prepare(
+        "INSERT INTO inventory_report_line
+                (parts_id, counted, expected, adjust_id)
+             VALUES (?, ?, ?, ?)"
+        ) or $ap_form->dberror();
+
+    my $adjustment = ($request->{stock_type} ne 'relative') ?
+        sub { my ($target, $part_info) = @_;
+              return ($target - $part_info->{onhand}); }
+        : sub { my ($target) = @_;
+                return $target; };
+
+    for my $line (@$entries){
+        next if $line->{onhand} !~ /\d/;
+
+        $p_info_sth->execute($line->{partnumber});
+        my $part = $p_info_sth->fetchrow_hashref('NAME_lc');
+        die "Part $line->{partnumber} not found."
+            unless $part;
+        my $adjust = &$adjustment( $line->{onhand}, $part);
+        my $adjust_form = ($adjust > 0) ? $ap_form : $ar_form;
+
+        my $rc = ++$adjust_form->{rowcount};
+        $adjust_form->{"id_$rc"} = $part->{id};
+        $adjust_form->{"sellprice_$rc"} = $line->{purchase_price};
+        $adjust_form->{"discount_$rc"} = 0;
+        my ($dec) = ($adjust_form->{"sellprice_$rc"} =~ /\.(\d*)/);
+        $adjust_form->{"precision_$rc"} = length($dec);
+        $adjust_form->{"qty_$rc"} = abs($adjust);
+
+        $ins_sth->execute($part->{id}, $line->{onhand},
+                          $part->{onhand}, $report_id)
+            or $ap_form->dberror();
+        
+    }
+    $ar_form->{ARAP} = 'AR';
+    $ar_form->{AR} = $request->{AR};
+    $ap_form->{ARAP} = 'AP';
+    $ap_form->{AP} = $request->{AP};
+    
+    # ECA
+    $ar_form->{'customernumber'} = $ar_eca_for_inventory;
+    $ap_form->{'vendornumber'} = $ap_eca_for_inventory;
+    $ar_form->get_name(undef, 'customer', 'today', 2);
+    $ap_form->get_name(undef, 'vendor', 'today', 1);
+    my $ar_eca = shift @{$ar_form->{name_list}};
+    my $ap_eca = shift @{$ap_form->{name_list}};
+    $ar_form->{customer_id} = $ar_eca->{id}; 
+    $ap_form->{vendor_id} = $ap_eca->{id}; 
+
+    # POST
+    IS->post_invoice(undef, $ar_form) if $ar_form->{rowcount};
+    IR->post_invoice(undef, $ap_form) if $ap_form->{rowcount};
+    
+    $ar_form->{id} = "NULL"
+        if ! $ar_form->{id};
+    $ap_form->{id} = "NULL"
+        if ! $ap_form->{id};
+    
+    # Now, update the report record.
+    $dbh->do( # These two params come from posting above, and from
+              # the db.
+              "UPDATE inventory_report
+                       SET ar_trans_id = $ar_form->{id},
+                           ap_trans_id = $ap_form->{id}
+                     WHERE id = $report_id"
+        ) or $ap_form->dberror();
+};
+
 our $process = {
    gl       => sub {
                    use LedgerSMB::GL;
@@ -176,11 +282,11 @@ our $process = {
                 },
    ar_multi => sub { 
                    my  ($request, $entries) = @_;
-                   return &$aa_multi($request, $entries, 'ar');
+                   return &_aa_multi($request, $entries, 'ar');
                },
    ap_multi => sub { 
                    my  ($request, $entries) = @_;
-                   return &$aa_multi($request, $entries, 'ap');
+                   return &_aa_multi($request, $entries, 'ap');
                },
     chart => sub {
                use LedgerSMB::DBObject::Account;
@@ -247,113 +353,56 @@ our $process = {
                }
              },
    inventory => sub {
-                my ($request, $entries) = @_;
-                use LedgerSMB::IS;
-                use LedgerSMB::IR;
-                my $ar_form = Form->new();
-                my $ap_form = Form->new();
-                my $dbh = $request->{dbh};
-                $ar_form->{dbh} = $dbh;
-                $ap_form->{dbh} = $dbh;
-                $ar_form->{rowcount} = 0;
-                $ap_form->{rowcount} = 0;
-                $ar_form->{transdate} = $request->{transdate};
-                $ap_form->{transdate} = $request->{transdate};
-                my ($curr) = split /:/, $ap_form->get_setting('curr');
-                $ar_form->{defaultcurrency} = $ar_form->{currency} = $curr;
-                $ap_form->{defaultcurrency} = $ap_form->{currency} = $curr;
-                $ar_form->{type} = 'invoice';
-                $ap_form->{type} = 'invoice';
-                # Intentionally not setting CRDATE here
-                my $expected_sth = $dbh->prepare(
-                    "SELECT sum(qty) * -1 FROM invoice 
-                       JOIN (select id, approved from ar UNION ALL
-                             SELECT id, approved from gl UNION ALL
-                             SELECT id, approved from ap) gl 
-                             ON gl.approved AND invoice.trans_id = gl.id
-                      WHERE invoice.parts_id = ?"
-                ) or $ap_form->dberror();
-                my $p_info_sth = $dbh->prepare(
-                    "SELECT * FROM parts WHERE partnumber = ?"
-                ) or $ap_form->dberror();
-
-                $dbh->do( # Not worth parameterizing for one input
-                    "INSERT INTO inventory_report 
+       my ($request, $entries) = @_;
+       my $dbh = $request->{dbh};
+       
+       $dbh->do( # Not worth parameterizing for one input
+              "INSERT INTO inventory_report 
                             (transdate, source)
                      VALUES (".$dbh->quote($request->{transdate}).
-                             ", 'CSV upload')"
-                ) or $ap_form->dberror();
+              ", 'CSV upload')"
+        ) or $request->dberror();
+    
+       my ($report_id) = $dbh->selectrow_array(
+           "SELECT currval('inventory_report_id_seq')"
+           ) or $request->dberror();
 
-                my ($report_id) = $dbh->selectrow_array(
-                    "SELECT currval('inventory_report_id_seq')"
-                ) or $ap_form->dberror();
-                for my $entry (@$entries){
-                    my $line = {};
-                    for my $col (@{$cols->{inventory}}) {
-                      $line->{$col} = shift @$entry;
-                    }
-                    next if $line->{onhand} !~ /\d/;
-                    $p_info_sth->execute($line->{partnumber});
-                    my $part = $p_info_sth->fetchrow_hashref('NAME_lc');
-                    $expected_sth->execute($part->{id});
-                    my ($expected) = $expected_sth->fetchrow_array;
-                    $expected = 0
-                       if ! $expected;
-                    if ($line->{onhand} > $expected) { # Adjusting UP
-                       my $rc = ++$ap_form->{rowcount};
-                       $ap_form->{"id_$rc"} = $part->{id};
-                       $ap_form->{"description_$rc"} = $part->{description};
-                       $ap_form->{"sellprice_$rc"} = $line->{purchase_price};
-                       $ap_form->{"qty_$rc"} = $line->{onhand} - $expected;
-                    } else { # Adjusting DOWN by 0 or more
-                       my $rc = ++$ar_form->{rowcount};
-                       $ar_form->{"id_$rc"} = $part->{id};
-                       $ar_form->{"description_$rc"} = $part->{description};
-                       $ar_form->{"sellprice_$rc"} = $line->{purchase_price};
-                       $ar_form->{"qty_$rc"} = $expected - $line->{onhand};
-                    }
-                    my $dbready_oh = $dbh->quote($line->{onhand});
-                    $dbh->do( # all values numbers from db but one and that 
-                              # one is sanitized
-                      "INSERT INTO inventory_report_line
-                              (parts_id, counted, expected, adjust_id)
-                       VALUES ($part->{id}, $dbready_oh, $expected, $report_id)"
-                    ) or $ap_form->dberror();
+       @$entries =
+           map { _map_columns_into_hash($cols->{inventory}, $_) } @$entries;
+       &_inventory_single_date($request, $entries,
+                              $report_id, $request->{transdate});
 
-                }
-                $ar_form->{ARAP} = 'AR';
-                $ar_form->{AR} = $request->{AR};
-                $ap_form->{ARAP} = 'AP';
-                $ap_form->{AP} = $request->{AP};
+   },
+   inventory_multi => sub {
+       my ($request, $entries) = @_;
+       my $dbh = $request->{dbh};
+       
+       @$entries =
+           map { _map_columns_into_hash($cols->{inventory_multi}, $_) }
+           @$entries;
+       my %dated_entries;
+       for my $entry (@$entries) {
+           push @{$dated_entries{$entry->{date}}}, $entry;
+       } 
 
-                # ECA
-                $ar_form->{'customernumber'} = $ar_eca_for_inventory;
-                $ap_form->{'vendornumber'} = $ap_eca_for_inventory;
-                $ar_form->get_name(undef, 'customer', 'today', 2);
-                $ap_form->get_name(undef, 'vendor', 'today', 1);
-                my $ar_eca = shift @{$ar_form->{name_list}};
-                my $ap_eca = shift @{$ap_form->{name_list}};
-                $ar_form->{customer_id} = $ar_eca->{id}; 
-                $ap_form->{vendor_id} = $ap_eca->{id}; 
+       for my $key (keys %dated_entries) {
+           $dbh->do( # Not worth parameterizing for one input
+                     "INSERT INTO inventory_report 
+                            (transdate, source)
+                     VALUES (".$dbh->quote($key).
+                     ", 'CSV upload (' || ".$dbh->quote($request->{transdate})
+                     ." || ')')"
+               ) or $request->dberror();
+    
+           my ($report_id) = $dbh->selectrow_array(
+               "SELECT currval('inventory_report_id_seq')"
+               ) or $request->dberror();
 
-                # POST
-                IS->post_invoice(undef, $ar_form) if $ar_form->{rowcount};
-                IR->post_invoice(undef, $ap_form) if $ap_form->{rowcount};
+           &_inventory_single_date($request, $dated_entries{$key},
+                                  $report_id, $key);
+       }
 
-                $ar_form->{id} = "NULL"
-                    if ! $ar_form->{id};
-                $ap_form->{id} = "NULL"
-                    if ! $ap_form->{id};
-
-                # Now, update the report record.
-                $dbh->do( # These two params come from posting above, and from
-                          # the db.
-                   "UPDATE inventory_report
-                       SET ar_trans_id = $ar_form->{id},
-                           ap_trans_id = $ap_form->{id}
-                     WHERE id = $report_id"
-                ) or $ap_form->dberror();
-             },
+   },
 };
 
 =head2 parse_file
