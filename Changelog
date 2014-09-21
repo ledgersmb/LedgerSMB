@@ -2,6 +2,12 @@ Changelog for 1.3 Series
 Initial Release:  Monday, Oct 12 2011
 Supported Presently
 
+Changelog for 1.3.44
+* Allow blank salutations, bug 1204. (Chris T)
+* Easier creation of select widgets with blanks. (Chris T)
+
+Chris T is Chris Travers
+
 Changelog for 1.3.43
 * Fixed bug 1136, manual tax not respecting user number formats (Chris T)
 * Fixed bug 1171, invoices showing as current when not (Chris T)
@@ -14,8 +20,10 @@ Changelog for 1.3.43
 * Fixed bug 1199, can change shipto with no effect after positng (Chris T)
 * Fixed issue 1183, added login name to menu pane (Chris T)
 * Fixed bug 1185, email address not shown when emailing statements (Chris T)
+* Fixed bugin Employee.sql: missing comma in employee_get function (Michael R)
 
 Chris T is Chris Travers
+Michael R is Michael Richardson
 Pongracz I is Pongracz Istvan
 
 
