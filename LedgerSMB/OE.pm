@@ -900,7 +900,11 @@ sub retrieve {
 
         # retrieve individual items
         $query = qq|
-			SELECT o.id AS orderitems_id, p.partnumber, p.assembly, 
+			SELECT o.id AS orderitems_id, 
+                                COALESCE(CASE WHEN pv.partnumber <> ''
+                                              THEN pv.partnumber ELSE null 
+                                          END, p.partnumber) AS partnumber, 
+                                p.assembly, 
 				o.description, o.qty, o.sellprice, o.precision, 
 				o.parts_id AS id, o.unit, o.discount, p.bin,
 				o.reqdate, o.project_id, o.ship, o.serialnumber,
@@ -914,13 +918,17 @@ sub retrieve {
 			JOIN parts p ON (o.parts_id = p.id)
 			LEFT JOIN project pr ON (o.project_id = pr.id)
 			LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
+			LEFT JOIN partsvendor pv ON (pv.parts_id = p.id
+                                           AND pv.credit_id = ?)
 			LEFT JOIN translation t 
 				ON (t.trans_id = p.partsgroup_id 
 					AND t.language_code = ?)
 			WHERE o.trans_id = ?
 			ORDER BY o.id|;
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{language_code}, $form->{id} )
+        # The use of vendor_id below helps ensure that partsvendor drops out
+        # for sales orders. --CT
+        $sth->execute( $form->{vendor_id}, $form->{language_code}, $form->{id} )
           || $form->dberror($query);
 
         # foreign exchange rates
