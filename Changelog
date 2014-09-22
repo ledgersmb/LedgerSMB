@@ -10,6 +10,7 @@ Released 2014-09-15
 Changelog for 1.4.2
 * Separated address classes for employees out (bug 817, Chris T)
 * Fixed dojo issue with user address screen (Chris T)
+* Fixed bug 1219, log message of warning trial_balance/search.css (Chris T)
 
 Chris T is Chris Travers
 
