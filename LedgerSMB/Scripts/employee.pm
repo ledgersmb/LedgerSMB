@@ -165,6 +165,8 @@ sub _main_screen {
     }
     
     my @location_class_list = 
+        grep {( scalar grep {$_ == 3} @{$_->{entity_classes}} )
+              or ($request->{location_class} == $_->{id}) }
             $request->call_procedure(procname => 'location_list_class');
 
     my ($curr_list) =
