@@ -1,6 +1,12 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.2
+* Separated address classes for employees out (bug 817, Chris T)
+* Fixed dojo issue with user address screen (Chris T)
+
+Chris T is Chris Travers
+
 Changelog for 1.4.1
 * Fixed bug 1205, copy does not copy roles (Chris T)
 * Added multi-date inventory uploads (Erik H)

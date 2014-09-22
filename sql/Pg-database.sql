@@ -658,13 +658,37 @@ COMMENT ON TABLE location_class is $$
 Individuals seeking to add new location classes should coordinate with others.
 $$;
 
+create table location_class_to_entity_class (
+  id serial unique,
+  location_class int not null references location_class(id),
+  entity_class int not null references entity_class(id)
+);
+
+GRANT SELECT ON location_class_to_entity_class TO PUBLIC;
+
+COMMENT ON TABLE location_class_to_entity_class IS
+$$This determines which location classes go with which entity classes$$;
+
 CREATE UNIQUE INDEX lower_class_unique ON location_class(lower(class));
 
 INSERT INTO location_class(id,class,authoritative) VALUES ('1','Billing',TRUE);
-INSERT INTO location_class(id,class,authoritative) VALUES ('2','Sales',TRUE);
-INSERT INTO location_class(id,class,authoritative) VALUES ('3','Shipping',TRUE);
+INSERT INTO location_class(id,class,authoritative) VALUES ('2','Sales',FALSE);
+INSERT INTO location_class(id,class,authoritative) VALUES ('3','Shipping',FALSE);
+INSERT INTO location_class(id,class,authoritative) VALUES ('4','Physical',TRUE);
+INSERT INTO location_class(id,class,authoritative) VALUES ('5','Mailing',FALSE);
 
-SELECT SETVAL('location_class_id_seq',4);
+SELECT SETVAL('location_class_id_seq',5);
+
+INSERT INTO location_class_to_entity_class 
+       (location_class, entity_class)
+SELECT lc.id, ec.id
+  FROM entity_class ec
+ cross
+  join location_class lc
+ WHERE ec.id <> 3 and lc.id < 4;
+
+INSERT INTO location_class_to_entity_class (location_class, entity_class)
+SELECT id, 3 from location_class where lc.id > 3;
   
 CREATE TABLE location (
   id serial PRIMARY KEY,
