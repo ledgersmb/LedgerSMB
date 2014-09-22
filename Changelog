@@ -6,6 +6,8 @@ Changelog for 1.4.2
 * Fixed dojo issue with user address screen (Chris T)
 * Fixed bug 1219, log message of warning trial_balance/search.css (Chris T)
 * Fixed issue with demo_with_images invoice.tex item description (Chris T)
+* Display vendor's sku if available on orders and invoices, bug 1218 (Chris T)
+
 
 Chris T is Chris Travers
 
