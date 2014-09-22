@@ -688,7 +688,7 @@ SELECT lc.id, ec.id
  WHERE ec.id <> 3 and lc.id < 4;
 
 INSERT INTO location_class_to_entity_class (location_class, entity_class)
-SELECT id, 3 from location_class where lc.id > 3;
+SELECT id, 3 from location_class lc where lc.id > 3;
   
 CREATE TABLE location (
   id serial PRIMARY KEY,
