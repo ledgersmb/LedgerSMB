@@ -154,3 +154,11 @@ INSERT INTO location_class_to_entity_class (location_class, entity_class)
 SELECT id, 3 from location_class lc where lc.id > 3;
 
 COMMIT;
+
+BEGIN;
+ALTER TABLE BATCH DROP CONSTRAINT "batch_locked_by_fkey";
+
+ALTER TABLE BATCH ADD FOREIGN KEY (locked_by) references session (session_id) 
+ON DELETE SET NULL;
+
+COMMIT;
