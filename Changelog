@@ -14,6 +14,7 @@ Changelog for 1.4.2
 * Fixed issue with demo_with_images invoice.tex item description (Chris T)
 * Display vendor's sku if available on orders and invoices, bug 1218 (Chris T)
 * Fixed error unable to delete order (Chris T)
+* Fixed bug 1223 prices 0 if selected from parts search (Chris T)
 
 
 Chris T is Chris Travers

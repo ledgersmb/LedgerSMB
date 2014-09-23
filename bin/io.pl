@@ -717,7 +717,7 @@ sub item_selected {
               if $form->{type} !~ /_quotation/;
 
             for (
-                qw(id partnumber sku description listprice lastcost
+                qw(id partnumber sku description listprice lastcost sellprice
                   bin unit weight assembly taxaccounts pricematrix onhand notes 
                   inventory_accno_id image income_accno_id expense_accno_id)
               )
