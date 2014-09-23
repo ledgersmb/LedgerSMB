@@ -1432,7 +1432,7 @@ CREATE TABLE batch (
   approved_on date default null,
   approved_by int references entity_employee(entity_id),
   created_by int references entity_employee(entity_id),
-  locked_by int references session(session_id) ON DELETE CASCADE,
+  locked_by int references session(session_id) ON DELETE SET NULL,
   created_on date default now(),
   CHECK (length(control_code) > 0)
 );
