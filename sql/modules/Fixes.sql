@@ -691,3 +691,11 @@ ALTER TABLE entity_employee ADD is_manager bool DEFAULT FALSE;
 UPDATE entity_employee SET is_manager = true WHERE role = 'manager';
 
 COMMIT;
+
+BEGIN;
+ALTER TABLE BATCH DROP CONSTRAINT "batch_locked_by_fkey";
+
+ALTER TABLE BATCH ADD FOREIGN KEY (locked_by) references session (session_id)
+ON DELETE SET NULL;
+
+COMMIT;
