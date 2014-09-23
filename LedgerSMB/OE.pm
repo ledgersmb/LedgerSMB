@@ -584,7 +584,7 @@ sub delete {
     foreach $spoolfile (@spoolfiles) {
         unlink "${LedgerSMB::Sysconfig::spool}/$spoolfile" if $spoolfile;
     }
-
+    return 1;
 
 }
 
