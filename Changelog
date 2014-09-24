@@ -10,6 +10,7 @@ Changelog for 1.4.2
 * Fixed error unable to delete order (Chris T)
 * Fixed bug 1223 prices 0 if selected from parts search (Chris T)
 * Fixed issue, cannot log in after creating batch. (Chris T)
+* Fixed bug 1224, account dropdowns on budget screen not working (Chris T)
 
 
 Chris T is Chris Travers

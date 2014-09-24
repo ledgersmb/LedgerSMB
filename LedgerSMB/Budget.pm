@@ -205,6 +205,7 @@ sub save {
     my ($ref) = $self->exec_method({funcname => 'budget__save_info'});
     $self->id($ref->{id});
     $self->{details} = [];
+    return unless $self->lines;
     for my $line (@{$self->lines}){
        my $l_info = [$line->{account_id}, 
                      $line->{description}, 
