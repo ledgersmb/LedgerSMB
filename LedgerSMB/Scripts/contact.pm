@@ -222,6 +222,7 @@ sub _main_screen {
     }
     
     my @location_class_list = 
+       grep { $_->{id} < 4 }
             LedgerSMB->call_procedure(procname => 'location_list_class');
 
     my @business_types =
