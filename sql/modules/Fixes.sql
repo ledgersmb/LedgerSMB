@@ -86,3 +86,65 @@ COMMIT;
 
 -- Fixes after 1.4.0 below this point.  Fixes above to be deleted after 1.4.10
 -- Fixes below not to be deleted
+
+BEGIN;
+CREATE TABLE fixed_acc_trans (LIKE acc_trans);
+COMMIT;
+
+BEGIN;
+INSERT INTO fixed_acc_trans 
+SELECT * FROM acc_trans
+WHERE transdate IS NULL;
+
+update acc_trans 
+   set transdate = (select transdate 
+                      from (select id, transdate from ar
+                             union
+                            select id, transdate from ap
+                             union
+                            select id, transdate from gl
+                            ) gl 
+                     where gl.id = acc_trans.trans_id
+                           and not exists (select 1 from account_checkpoint cp
+                                             where end_date > gl.transdate)
+                   ) 
+ where transdate is null;
+COMMIT;
+
+BEGIN;
+create table location_class_to_entity_class (
+  id serial unique,
+  location_class int not null references location_class(id),
+  entity_class int not null references entity_class(id)
+);
+
+GRANT SELECT ON location_class_to_entity_class TO PUBLIC;
+
+COMMENT ON TABLE location_class_to_entity_class IS
+$$This determines which location classes go with which entity classes$$;
+
+INSERT INTO location_class(id,class,authoritative) VALUES ('4','Physical',TRUE);
+INSERT INTO location_class(id,class,authoritative) VALUES ('5','Mailing',FALSE);
+
+SELECT SETVAL('location_class_id_seq',5);
+
+INSERT INTO location_class_to_entity_class
+       (location_class, entity_class)
+SELECT lc.id, ec.id
+  FROM entity_class ec
+ cross
+  join location_class lc
+ WHERE ec.id <> 3 and lc.id < 4;
+
+INSERT INTO location_class_to_entity_class (location_class, entity_class)
+SELECT id, 3 from location_class lc where lc.id > 3;
+
+COMMIT;
+
+BEGIN;
+ALTER TABLE BATCH DROP CONSTRAINT "batch_locked_by_fkey";
+
+ALTER TABLE BATCH ADD FOREIGN KEY (locked_by) references session (session_id) 
+ON DELETE SET NULL;
+
+COMMIT;

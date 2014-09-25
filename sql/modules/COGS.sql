@@ -122,7 +122,6 @@ DECLARE t_alloc numeric :=0;
         t_cogs numeric :=0;
         retval numeric[];
 BEGIN
-RAISE NOTICE 'reversing AP: parts_id %, qty %', in_parts_id, in_qty;
 
 FOR t_inv IN
     SELECT i.*
@@ -134,7 +133,6 @@ FOR t_inv IN
      WHERE qty + allocated < 0 AND parts_id = in_parts_id
   ORDER BY a.transdate, a.id, i.id
 LOOP
-   RAISE NOTICE 'id %, avail %, allocated %, requesting %', t_inv.id, t_inv.qty + t_inv.allocated, t_alloc, in_qty - t_alloc;
    IF t_alloc > in_qty THEN
        RAISE EXCEPTION 'TOO MANY ALLOCATED';
    ELSIF t_alloc = in_qty THEN
@@ -211,7 +209,7 @@ LOOP
        INSERT INTO acc_trans 
               (chart_id, transdate, amount, invoice_id, approved, trans_id)
        SELECT expense_accno_id, 
-              CASE WHEN t_ar.transdate > t_cp.end_date THEN t_ar.transdate
+              CASE WHEN t_ar.transdate > coalesce(t_cp.end_date, t_ar.transdate - 1) THEN t_ar.transdate
                    ELSE t_cp.end_date + '1 day'::interval
                END, (in_qty + t_alloc) * in_lastcost, t_inv.id, true,
               t_inv.trans_id
@@ -220,7 +218,7 @@ LOOP
               AND expense_accno_id IS NOT NULL
        UNION
        SELECT income_accno_id,
-              CASE WHEN t_ar.transdate > t_cp.end_date THEN t_ar.transdate
+              CASE WHEN t_ar.transdate > coalesce(t_cp.end_date, t_ar.transdate - 1) THEN t_ar.transdate
                    ELSE t_cp.end_date + '1 day'::interval
                END, -1 * (in_qty + t_alloc) * in_lastcost, t_inv.id, true,
               t_inv.trans_id
@@ -238,7 +236,7 @@ LOOP
        INSERT INTO acc_trans
               (chart_id, transdate, amount, invoice_id, approved, trans_id)
        SELECT expense_accno_id,
-              CASE WHEN t_ar.transdate > t_cp.end_date THEN t_ar.transdate
+              CASE WHEN t_ar.transdate > coalesce(t_cp.end_date, t_ar.transdate - 1) THEN t_ar.transdate
                    ELSE t_cp.end_date + '1 day'::interval
                END,  -1 * t_avail * in_lastcost, 
               t_inv.id, true, t_inv.trans_id
@@ -247,7 +245,7 @@ LOOP
               AND expense_accno_id IS NOT NULL
        UNION
        SELECT income_accno_id,
-              CASE WHEN t_ar.transdate > t_cp.end_date THEN t_ar.transdate
+              CASE WHEN t_ar.transdate > coalesce(t_cp.end_date, t_ar.transdate - 1) THEN t_ar.transdate
                    ELSE t_cp.end_date + '1 day'::interval
                END, -t_avail * in_lastcost, t_inv.id, true, t_inv.trans_id
          FROM parts
@@ -297,7 +295,7 @@ END IF;
 UPDATE invoice set allocated = allocated - t_cogs[1]
  WHERE id = in_invoice_id;
 
-SELECT CASE WHEN t_ar.transdate > max(end_date) THEN t_ar.transdate
+SELECT CASE WHEN t_ar.transdate > coalesce(max(end_date), t_ar.transdate - 1) THEN t_ar.transdate
             ELSE max(end_date) + '1 day'::interval
         END INTO t_transdate
   from account_checkpoint td; 
@@ -306,7 +304,7 @@ INSERT INTO acc_trans
 VALUES (t_inv.trans_id, CASE WHEN t_inv.qty < 0 AND t_ar.is_return 
                            THEN t_part.returns_accno_id
                            ELSE t_part.expense_accno_id
-                      END, TRUE, t_cogs[2] * -1, t_transdate, t_inv.id),
+                      END, TRUE, t_cogs[2] * -1, coalesce(t_transdate, t_ar.transdate), t_inv.id),
        (t_inv.trans_id, t_part.inventory_accno_id, TRUE, t_cogs[2], 
        t_transdate, t_inv.id);
 
