@@ -4,6 +4,14 @@
 
 VERSION="1.4.2"
 hg archive -ttgz ~/ledgersmb.tar.gz
+
+# Remove Dojo
+
+gunzip  ~/ledgersmb.tar.gz
+tar -f ~/ledgersmb.tar --delete ledgersmb/UI/lib/dojo -v
+
+gzip ~/ledgersmb.tar;
+
 mv ~/ledgersmb.tar.gz ~/rpmbuild/SOURCES/ledgersmb-$VERSION.tar.gz;
 
 rpmbuild -ba --sign  \

@@ -21,6 +21,7 @@ Requires: perl-IO-String
 Requires: perl-Math-BigInt-GMP
 Requires: perl-Log-Log4perl perl-DateTime perl-DateTime-Format-Strptime
 Requires: perl-Config-IniFiles perl-Moose perl-Number-Format
+Requires: dojo
 BuildRequires: perl
 # avoid bogus autodetection of perl modules:
 AutoReqProv: no
@@ -139,6 +140,8 @@ ln -s ../../..%{_localstatedir}/spool/%{name} \
 mkdir -p $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d
 install -m 644 rpm-ledgersmb-httpd.conf \
   $RPM_BUILD_ROOT%{_sysconfdir}/httpd/conf.d/ledgersmb.conf
+
+ln -s /usr/share/dojo $RPM_BUILD_ROOT%{_datadir}/%{name}/UI/lib/dojo
 
 %clean
 rm -rf $RPM_BUILD_ROOT
