@@ -2,7 +2,9 @@
 
 # One must run the source file build first.
 
-cp ../release/ledgersm*.tar.gz /root/rpmbuild/SOURCES/
+VERSION="1.4.2"
+hg archive -ttgz ~/ledgersmb.tar.gz
+mv ~/ledgersmb.tar.gz ~/rpmbuild/SOURCES/ledgersmb-$VERSION.tar.gz;
 
 rpmbuild -ba --sign  \
                --define "_source_filedigest_algorithm 0" \
