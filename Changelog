@@ -7,6 +7,12 @@ API Enhancements:
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.3
+* Added sanity check for psql availability (Bug 1226, Chris T)
+* Added db fix for older eca's missing currencies (Bug 1228, Chris T)
+
+Chris T is Chris Travers
+
 Changelog for 1.4.2
 * Separated address classes for employees out (bug 817, Chris T)
 * Fixed dojo issue with user address screen (Chris T)
