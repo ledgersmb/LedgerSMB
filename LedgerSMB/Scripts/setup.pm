@@ -147,6 +147,7 @@ sub login {
     my $version_info = $database->get_info();
 
     _init_db($request);
+    sanity_checks($database);
     $request->{login_name} = $version_info->{username};
     if ($version_info->{status} eq 'does not exist'){
         $request->{message} = $request->{_locale}->text(
@@ -202,6 +203,18 @@ sub login {
     );
     $template->render($request);
 
+}
+
+=item sanity_checks
+Checks for common setup issues and errors if admin tasks cannot be completed/
+
+=cut
+
+sub sanity_checks {
+    my ($database) = @_;
+    `psql --help` || die LedgerSMB::App_State::Locale->text(
+                                 'psql not found.'
+                              );
 }
 
 =item list_databases
