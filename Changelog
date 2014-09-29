@@ -5,7 +5,9 @@ Changelog for 1.4.3
 * Added sanity check for psql availability (Bug 1226, Chris T)
 * Added db fix for older eca's missing currencies (Bug 1228, Chris T)
 * Fixed bug 1230, pricematrix for vendors not respected (Chris T)
+* Updated installation instructions with more Apache info (Bill A)
 
+Bill A is Bill Appelbe
 Chris T is Chris Travers
 
 Changelog for 1.4.2
@@ -154,6 +156,7 @@ Supported Presently
 Changelog for 1.3.45
 * Cleaned up sql files so App::LedgerSMB::Admin (Chris T)
 * Fixed pricematrix prices not respected for vendors (Chris T, bug 1230)
+
 
 Chris T is Chris Travers
 
