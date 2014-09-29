@@ -181,6 +181,7 @@ $$ language plpgsql;
 COMMENT ON FUNCTION location_delete (in_id integer)
 IS $$ DELETES the location specified by in_id.  Does not return a value.$$;
 
+DROP TYPE IF EXISTS location_result CASCADE;
 CREATE TYPE location_result AS (
         id int,
         line_one text,

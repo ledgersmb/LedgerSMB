@@ -1,5 +1,5 @@
 BEGIN;
-DROP TYPE draft_search_result CASCADE;
+DROP TYPE IF EXISTS draft_search_result CASCADE;
 
 CREATE TYPE draft_search_result AS (
 	id int,
