@@ -4,6 +4,7 @@ Released 2014-09-15
 Changelog for 1.4.3
 * Added sanity check for psql availability (Bug 1226, Chris T)
 * Added db fix for older eca's missing currencies (Bug 1228, Chris T)
+* Fixed bug 1230, pricematrix for vendors not respected (Chris T)
 
 Chris T is Chris Travers
 
@@ -149,6 +150,12 @@ Havard S is Havard Sorli
 Changelog for 1.3 Series
 Initial Release:  Monday, Oct 12 2011
 Supported Presently
+
+Changelog for 1.3.45
+* Cleaned up sql files so App::LedgerSMB::Admin (Chris T)
+* Fixed pricematrix prices not respected for vendors (Chris T, bug 1230)
+
+Chris T is Chris Travers
 
 Changelog for 1.3.44
 * Allow blank salutations, bug 1204. (Chris T)
