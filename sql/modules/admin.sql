@@ -425,6 +425,7 @@ REVOKE EXECUTE ON FUNCTION admin__save_user(
     in_import bool
 ) FROM public; 
 
+DROP VIEW IF EXISTS role_view CASCADE;
 create view role_view as 
     select * from pg_auth_members m join pg_roles a ON (m.roleid = a.oid);
         
@@ -664,6 +665,7 @@ $$ language plpgsql;
 COMMENT ON function user__get_preferences (in_user_id int) IS
 $$ Returns the preferences row for the user.$$;
 
+DROP TYPE IF EXISTS user_result CASCADE;
 CREATE TYPE user_result AS (
 	id int,
 	username text,
@@ -698,6 +700,7 @@ COMMENT ON FUNCTION  admin__search_users(in_username text, in_first_name text, i
 $$ Returns a list of users matching search criteria.  Nulls match all values.
 only username is not an exact match.$$;
 
+DROP TYPE IF EXISTS session_result CASCADE;
 CREATE TYPE session_result AS (
 	id int,
 	username text,

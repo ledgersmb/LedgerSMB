@@ -5,6 +5,8 @@
 
 -- Docstrings already added to this file.
 
+BEGIN;
+
 
 CREATE OR REPLACE FUNCTION entity_save(
     in_entity_id int, in_name text, in_entity_class INT
@@ -133,3 +135,5 @@ $$ LANGUAGE plpgsql;
 COMMENT ON FUNCTION entity__delete_bank_account(in_entity_id int, in_id int) IS
 $$ Deletes the bank account identitied by in_id if it is attached to the entity
 identified by entity_id.  Returns true if a record is deleted, false if not.$$;
+
+COMMIT;

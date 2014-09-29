@@ -1,7 +1,9 @@
 -- Unused currently and untested.  This is expected to be a basis for 1.4 work
 -- not recommended for current usage.  Not documenting yet.  --CT
 
+BEGIN;
 
+DROP TYPE IF EXISTS report_aging_item CASCADE;
 CREATE TYPE report_aging_item AS (
 	entity_id int,
 	account_number varchar(24),
@@ -157,4 +159,4 @@ BEGIN
 END;
 $$ language plpgsql;
 
-
+COMMIT;
