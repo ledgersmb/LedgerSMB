@@ -1253,7 +1253,8 @@ sub retrieve_item {
                                 CASE WHEN pv.partnumber <> '' THEN pv.partnumber
                                      ELSE NULL END, p.partnumber) as partnumber, 
                           p.description, pg.partsgroup, p.partsgroup_id,
-		          p.lastcost AS sellprice, p.unit, p.bin, p.onhand, 
+		          coalesce(pv.lastcost, p.lastcost) AS sellprice, 
+                          p.unit, p.bin, p.onhand, 
 		          p.notes, p.inventory_accno_id, p.income_accno_id, 
 		          p.expense_accno_id, p.partnumber AS sku, p.weight,
 		          t1.description AS translation, 
