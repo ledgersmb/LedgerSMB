@@ -162,3 +162,10 @@ ALTER TABLE BATCH ADD FOREIGN KEY (locked_by) references session (session_id)
 ON DELETE SET NULL;
 
 COMMIT;
+
+BEGIN;
+UPDATE entity_credit_account
+   SET curr = (select s from unnest(string_to_array((setting_get('curr')).value, ':')) s limit 1)
+ WHERE curr IS NULL;
+COMMIT;
+COMMIT;
