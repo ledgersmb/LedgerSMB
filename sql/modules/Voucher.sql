@@ -1,4 +1,4 @@
-
+BEGIN;
 CREATE OR REPLACE FUNCTION voucher_get_batch (in_batch_id integer) 
 RETURNS batch AS 
 $$
@@ -13,6 +13,7 @@ $$ language plpgsql;
 COMMENT ON FUNCTION voucher_get_batch (in_batch_id integer) is
 $$ Retrieves basic batch information based on batch_id.$$;
 
+DROP TYPE IF EXISTS voucher_list CASCADE;
 CREATE TYPE voucher_list AS (
 	id int,
 	reference text,
@@ -126,6 +127,7 @@ $$ language plpgsql;
 COMMENT ON FUNCTION voucher_list (in_batch_id integer) IS
 $$ Retrieves a list of vouchers and amounts attached to the batch.$$;
 
+DROP TYPE IF EXISTS batch_list_item CASCADE;
 CREATE TYPE batch_list_item AS (
     id integer,
     batch_class text,
@@ -564,3 +566,5 @@ REVOKE ALL ON FUNCTION voucher__delete(int) FROM public;
 
 COMMENT ON FUNCTION voucher__delete(in_voucher_id int) IS
 $$ Deletes the specified voucher from the batch.$$;
+
+COMMIT;

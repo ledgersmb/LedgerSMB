@@ -1,4 +1,5 @@
 -- VERSION 1.3.0
+BEGIN;
 
 CREATE OR REPLACE FUNCTION location_list_class()
 RETURNS SETOF location_class AS
@@ -193,4 +194,4 @@ CREATE TYPE location_result AS (
         class_id int,
         class text
 );
-
+COMMIT;

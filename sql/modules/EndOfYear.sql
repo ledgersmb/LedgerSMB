@@ -1,3 +1,4 @@
+BEGIN;
 CREATE OR REPLACE FUNCTION eoy__latest_checkpoint() RETURNS account_checkpoint
 LANGUAGE SQL AS
 $$
@@ -236,4 +237,4 @@ $$
 SELECT eoy_create_checkpoint($1 - 1) > 0;
 
 $$;
-
+COMMIT;
