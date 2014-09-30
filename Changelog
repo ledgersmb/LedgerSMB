@@ -6,6 +6,7 @@ Changelog for 1.4.3
 * Added db fix for older eca's missing currencies (Bug 1228, Chris T)
 * Fixed bug 1230, pricematrix for vendors not respected (Chris T)
 * Updated installation instructions with more Apache info (Bill A)
+* Improvements in testing LedgerSMB::Sysconfig (bug 1232, Chris T)
 
 Bill A is Bill Appelbe
 Chris T is Chris Travers
