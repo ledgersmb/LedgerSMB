@@ -88,7 +88,7 @@ if ( -f "bin/custom/$form->{login}_io.pl" ) {
 
 sub _calc_taxes {
     $form->{subtotal} = $form->{invsubtotal};
-    my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
+    my $moneyplaces = $LedgerSMB::Company_Config::settings->{decimal_places};
     for $i (1 .. $form->{rowcount}){
         my $discount_amount = $form->round_amount( $form->{"sellprice_$i"} 
         		       			   * ($form->{"discount_$i"} / 100), 
