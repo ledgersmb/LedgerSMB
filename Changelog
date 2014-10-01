@@ -7,6 +7,8 @@ Changelog for 1.4.3
 * Fixed bug 1230, pricematrix for vendors not respected (Chris T)
 * Updated installation instructions with more Apache info (Bill A)
 * Improvements in testing LedgerSMB::Sysconfig (bug 1232, Chris T)
+* Fixing sales tax rounding precision (bug via email, Chris T)
+* Added Starman/Plack support (Chris T)
 
 Bill A is Bill Appelbe
 Chris T is Chris Travers
@@ -158,7 +160,6 @@ Changelog for 1.3.45
 * Cleaned up sql files so App::LedgerSMB::Admin (Chris T)
 * Fixed pricematrix prices not respected for vendors (Chris T, bug 1230)
 * Added tests for Sysconfig (Chris T, bug 1232)
-* Fixing sales tax rounding precision (bug via email, Chris T)
 
 
 Chris T is Chris Travers
