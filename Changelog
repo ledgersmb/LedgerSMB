@@ -8,6 +8,7 @@ Changelog for 1.4.3
 * Updated installation instructions with more Apache info (Bill A)
 * Improvements in testing LedgerSMB::Sysconfig (bug 1232, Chris T)
 * Fixing sales tax rounding precision (bug via email, Chris T)
+* Added Starman/Plack support (Chris T)
 
 Bill A is Bill Appelbe
 Chris T is Chris Travers
