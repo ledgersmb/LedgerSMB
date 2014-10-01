@@ -57,6 +57,10 @@ feature 'RESTful Web Services XML support',
     -default => 0,
     'XML::Simple' => 0;
 
+feature 'Simple Standalone Server',
+    -default => 0,
+    'HTTP::Server::Simple::PSGI' => 0;
+
 feature 'Size detection for images for embedding in LaTeX templates',
     -default => 0,
     'Image::Size' => 0;
