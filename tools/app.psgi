@@ -1,45 +1,32 @@
-#!/usr/bin/plackup -s FCGI 
+#!/usr/bin/plackup
 
-package LedgerSMB::FCGI;
+  my $path = "/usr/local/ledgersmb_trunk";
 
-use CGI::Emulate::PSGI;
-use FCGI::ProcManager;
-use FindBin;
-# Preloads
-use LedgerSMB;
-use LedgerSMB::Form;
-use LedgerSMB::Sysconfig;
-use LedgerSMB::Template;
-use LedgerSMB::Template::LaTeX;
-use LedgerSMB::Template::HTML;
-use LedgerSMB::Locale;
-use LedgerSMB::DBObject;
-use LedgerSMB::File;
+  use Plack::App::CGIBin;
+  use Plack::Builder;
+  use LedgerSMB;
+  use LedgerSMB::Form;
+  use Moose;
+  use CGI::Simple;
+  $CGI::Simple::DISABLE_UPLOADS = 0;
+  use LedgerSMB::PGNumber;
+  use LedgerSMB::PGDate;
+  use Data::Dumper;
+  use LedgerSMB::Auth;
+  use LedgerSMB::Session;
+  use LedgerSMB::Template;
+  use LedgerSMB::Locale;
+  use LedgerSMB::User;
+  use LedgerSMB::Locale;
+  use Try::Tiny;
+  use Devel::Trace;
+  use Plack::Middleware::Static;
+  use Log::Log4perl;
 
-BEGIN {
-  lib->import($FindBin::Bin) unless $ENV{mod_perl}
-}
-
-# Process Manager
-my $proc_manager = FCGI::ProcManager->new({ n_processes => 10 });
-
-
-my $app = CGI::Emulate::PSGI->handler(
-   sub {
-       if (my $cpid = fork()){
-          wait
-       } else {
-          $proc_manager->pm_pre_dispatch();
-          $uri = $ENV{REQUEST_URI};
-          $uri =~ s/\?.*//;
-          $ENV{SCRIPT_NAME} = $uri;
-          $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
-
-          my $script = $1;
-          warn $script;
-          do "./$script";
-          $proc_manager->pm_post_dispatch();
-       }
-   }
-);
-
+  my $app = Plack::App::CGIBin->new(root => "$path")->to_app;
+  builder {
+       enable "Plack::Middleware::Static",
+        path => qr!ledgersmb_trunk/(css|images|favicon|UI)/!,
+        root => "../";
+      mount '/ledgersmb_trunk' => $app;
+  }

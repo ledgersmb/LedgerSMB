@@ -30,7 +30,7 @@ our @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
 # Whitelist for redirect destination
 #
 our @newscripts = qw(
-     account.pl  customer.pl  inventory.pl  payment.pl  user.pl
+     account.pl contact.pl  inventory.pl  payment.pl  user.pl
 admin.pl    drafts.pl    journal.pl    recon.pl    vendor.pl
 asset.pl    employee.pl  login.pl      setup.pl    vouchers.pl
 file.pl      menu.pl       taxform.pl);
