@@ -4,6 +4,7 @@ Contents
 --------
 
  * System requirements
+ * Simple Server Setup: Running on Starman
  * Installing Apache 2
  * Installing PostgreSQL
  * PostgreSQL authorization settings
@@ -45,6 +46,36 @@ Installation process overview
  6) Login with your name (database username),
     password (database user password), Company (databasename)
 
+Running on Starman
+===================
+As an alternative to Apache 2, LedgerSMB now supports the Perl-based web server
+named Starman.  To install you need:
+
+ * Starman
+ * CGI::Emulate::PSGI
+ * PSGI::Middleware::Static
+ * Plack::Builder
+
+Compared to Apache 2, Starman seems to perform better at the Perl portions of
+the application, but slower at serving Javascript and CSS files, though these
+are usually cached on the browser.  Thus it is not unusual to see the software
+seem to be slower at the first and then pick up speed, becoming faster than the
+equivalent CGI installations.
+
+The above may be installed by running the Makefile.PL and selecting appropriate
+options.
+
+Then from the LedgerSMB directory starting is as simple as:
+
+ starman --preload-app tools/starman.psgi
+
+The server by default starts on port 5000 so you would access the installation
+by pointing your web browser to:
+
+ http://localhost:5000/login.pl
+
+You can also daemonize Starman, run it on the default port, and much more.  See
+the starman documentation for details.
 
 Installing Apache 2
 ===================
