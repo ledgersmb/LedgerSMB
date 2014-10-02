@@ -2,7 +2,7 @@
 
 # Simple script to prepare for release
 
-version="1.4.2";
+version="1.4.3";
 build_d="../release";
 
 if test -d $build_d/ledgersmb; then
