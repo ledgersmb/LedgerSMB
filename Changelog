@@ -15,6 +15,7 @@ Changelog for 1.4.3
 * Improvements in testing LedgerSMB::Sysconfig (bug 1232, Chris T)
 * Fixing sales tax rounding precision (bug via email, Chris T)
 * Added Starman/Plack support (Chris T)
+* Fixed duplicate user handling in setup.pl (Chris T)
 
 Bill A is Bill Appelbe
 Chris T is Chris Travers
