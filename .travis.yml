@@ -10,6 +10,7 @@ addons:
    postgresql: "9.3"
 before_install:
    - "cpanm DBI"
+   - "cpanm HTTP::Tiny"
    - "cpanm DBD::Pg"
    - "cpanm Try::Tiny"
    - "cpanm Memoize"
