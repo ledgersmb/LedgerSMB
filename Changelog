@@ -10,6 +10,7 @@ Changelog for 1.4.3
 * Fixing sales tax rounding precision (bug via email, Chris T)
 * Added Starman/Plack support (Chris T)
 * Fixed duplicate user handling in setup.pl (Chris T)
+* renamed 'Post as Saved' to 'Post', 'Save as Shown' to 'Save Draft' (Chris T)
 
 Bill A is Bill Appelbe
 Chris T is Chris Travers
