@@ -26,6 +26,7 @@ use LedgerSMB::Upgrade_Tests;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Setting;
+use Try::Tiny;
 use strict;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
@@ -857,32 +858,40 @@ sub save_user {
     $emp->save;
     $request->{entity_id} = $emp->entity_id;
     my $user = LedgerSMB::Entity::User->new(%$request);
-    if (8 == $user->create){ # Told not to import but user exists in db
-        $request->{notice} = $request->{_locale}->text(
+    my $duplicate = 0;
+    try { $user->create }
+    catch {
+        if ($_ =~ /duplicate user/i){
+           $duplicate = 1;
+           $request->{notice} = $request->{_locale}->text(
                        'User already exists. Import?'
-        );
+            );
+           $request->{pls_import} = 1;
 
+           @{$request->{salutations}} 
+            = $request->call_procedure(procname => 'person__list_salutations' );
+         
+           @{$request->{countries}} 
+              = $request->call_procedure(procname => 'location_list_country' ); 
 
-       @{$request->{salutations}} 
-        = $request->call_procedure(procname => 'person__list_salutations' ); 
-          
-       @{$request->{countries}} 
-        = $request->call_procedure(procname => 'location_list_country' ); 
+           my $locale = $request->{_locale};
 
-       my $locale = $request->{_locale};
-
-       @{$request->{perm_sets}} = (
-           {id => '0', label => $locale->text('Manage Users')},
-           {id => '1', label => $locale->text('Full Permissions')},
-       );
-        my $template = LedgerSMB::Template->new(
+           @{$request->{perm_sets}} = (
+               {id => '0', label => $locale->text('Manage Users')},
+               {id => '1', label => $locale->text('Full Permissions')},
+           );
+           my $template = LedgerSMB::Template->new(
                 path => 'UI/setup',
                 template => 'new_user',
-         format => 'HTML',
-        );
-        $template->render($request);
-        return;
-    }
+                format => 'HTML',
+           );
+           $template->render($request);
+           return;
+       } else {
+           die $_;
+       }
+    };
+    return if $duplicate;
     if ($request->{perms} == 1){
          for my $role (
                 $request->call_procedure(procname => 'admin__get_roles')
