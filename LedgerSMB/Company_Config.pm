@@ -45,15 +45,9 @@ our $settings = {};
 
 sub initialize{
    my ($self) = @_;
-   $settings= {}; # In case code is cached
-   for my $key (@company_settings){
-       my ($ref) = LedgerSMB::call_procedure($self, procname => 'setting_get', 
-                  args => [$key ]);
-       if ($ref->{setting_key} eq 'curr'){
-          @{$settings->{$key}} = split(/:/, $ref->{value});
-       } else {
-          $settings->{$key } = $ref->{value};
-       }
+   $settings= {map {$_ => LedgerSMB::Setting->get($_) } @company_settings}; 
+   { no strict 'refs';
+   @{$settings->{curr}} = split (/:/, $settings->{curr});
    }
    $LedgerSMB::App_State::Company_Config = $settings;
 }
