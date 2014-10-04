@@ -23,9 +23,11 @@ package LedgerSMB::PGOld;
 use base 'PGObject::Simple';
 use LedgerSMB::App_State;
 
-sub set_dbh {
+sub get_dbh {
     my ($self) = @_;
     $self->{_DBH} =  LedgerSMB::App_State::DBH();
+    die  LedgerSMB::App_State::DBH();
+    return  LedgerSMB::App_State::DBH();
 }
 
 1; 
