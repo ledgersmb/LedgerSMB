@@ -109,7 +109,6 @@ setting things like the id field.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'save_bank_account');
-    $self->prepare_dbhash($ref);
     $self = $self->new(%$ref);
 }
 
