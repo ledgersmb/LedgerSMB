@@ -57,7 +57,7 @@ sub country_codes {
 sub save_preferences {
     my ($self) = @_;
     $self->call_dbmethod(funcname => 'user__save_preferences');
-    $self->get_user_info;
+    $self->get;
 }
 
 sub change_my_password {

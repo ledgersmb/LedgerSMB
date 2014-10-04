@@ -26,8 +26,9 @@ use LedgerSMB::App_State;
 sub new {
     my ($pkg, $args) = @_;
     my $mergelist = $args->{mergelist} || [keys %{$args->{base}}];
-    my $self = { map $_ => $args->{base}->{$_} } for @$mergelist;
-    return PGObject::Simple::new($pkg, $self);
+    my $self = { map { $_ => $args->{base}->{$_} } @$mergelist };
+    $self =  PGObject::Simple::new($pkg, %$self);
+    return $self;
 }
 
 sub set_dbh {
