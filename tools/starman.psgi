@@ -7,6 +7,7 @@ use FindBin;
 use LedgerSMB::PSGI;
 use Plack::Builder;
 use Plack::Middleware::Static;
+use Carp::Always;
 
 BEGIN {
   lib->import($FindBin::Bin) unless $ENV{mod_perl}

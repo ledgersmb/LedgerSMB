@@ -23,10 +23,16 @@ package LedgerSMB::PGOld;
 use base 'PGObject::Simple';
 use LedgerSMB::App_State;
 
-sub get_dbh {
+sub new {
+    my ($pkg, $args) = @_;
+    my $mergelist = $args->{mergelist} || [keys %{$args->{base}}];
+    my $self = { map $_ => $args->{base}->{$_} } for @$mergelist;
+    return PGObject::Simple::new($pkg, $self);
+}
+
+sub set_dbh {
     my ($self) = @_;
     $self->{_DBH} =  LedgerSMB::App_State::DBH();
-    die  LedgerSMB::App_State::DBH();
     return  LedgerSMB::App_State::DBH();
 }
 
