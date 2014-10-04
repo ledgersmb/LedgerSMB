@@ -19,8 +19,8 @@ use LedgerSMB::Template;
 use LedgerSMB::Template::LaTeX;
 use LedgerSMB::Template::HTML;
 use LedgerSMB::Locale;
-use LedgerSMB::DBObject;
 use LedgerSMB::File;
+use LedgerSMB::PGObject;
 use Try::Tiny;
 
 use CGI::Emulate::PSGI;
