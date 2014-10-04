@@ -36,7 +36,7 @@ date formats.
 
 =cut
 
-subtype 'LedgerSMB::Moose::Date', as 'LedgerSMB::PGDate';
+subtype 'LedgerSMB::Moose::Date', as 'Maybe[LedgerSMB::PGDate]';
 
 
 

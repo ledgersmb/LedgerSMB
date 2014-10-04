@@ -20,6 +20,7 @@ leads etc.
 package LedgerSMB::Entity::Company;
 use Moose;
 extends 'LedgerSMB::Entity';
+use LedgerSMB::MooseTypes;
 
 =head1 PROPERTIES
 

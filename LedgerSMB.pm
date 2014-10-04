@@ -454,8 +454,11 @@ sub is_run_mode {
 sub call_procedure {
     my $self = shift;
     my %args = @_;
+    $args{funcschema} ||= $LedgerSMB::Sysconfig::db_namespace;
+    $args{funcname} ||= $args{procname};
     $args{dbh} = LedgerSMB::App_State::DBH();
-    return PGObject::call_procedure(%args);
+    $args{args} ||= [];
+    return PGObject->call_procedure(%args);
 }
 
 # Keeping this here due to common requirements
