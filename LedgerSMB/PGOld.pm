@@ -20,7 +20,7 @@ See PGObject::Simple
 # Then we can delete this module.
 
 package LedgerSMB::PGOld;
-use PGObject::Simple;
+use base 'PGObject::Simple';
 use LedgerSMB::App_State;
 
 sub set_dbh {

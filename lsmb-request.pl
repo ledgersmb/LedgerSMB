@@ -80,7 +80,6 @@ sub get_locale {
 $ENV{SCRIPT_NAME} =~ m/([^\/\\]*.pl)\?*.*$/;
 my $script = $1;
 $script = '' unless defined $script;
-$logger->debug("\$ENV{SCRIPT_NAME}=$ENV{SCRIPT_NAME} \$request->{action}=$request->{action} \$script=$script");
 
 
 sub app_initialize {
