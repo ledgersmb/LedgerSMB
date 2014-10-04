@@ -475,13 +475,12 @@ sub upgrade_modules {
 			    })
         or die "Modules failed to be loaded.";
 
-    my $dbh = $self->dbh;
+    my $dbh = $self->connect;
     my $sth = $dbh->prepare(
           "UPDATE defaults SET value = ? WHERE setting_key = 'version'"
     );
     $sth->execute($LedgerSMB::VERSION)
         or die "Version not updated.";
-    $dbh->commit;
 
     return 1;
 }
