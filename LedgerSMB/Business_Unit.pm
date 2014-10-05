@@ -13,6 +13,7 @@ funds, and projects.
 
 package LedgerSMB::Business_Unit;
 use Moose;
+use LedgerSMB::MooseTypes;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
@@ -60,7 +61,8 @@ here for conversion to/from input and to/from strings for the db.
 
 =cut
 
-has 'start_date' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'start_date' => (is => 'rw', isa => 'LedgerSMB::Moose::Date',
+            coerce => 1);
 
 =item end_date
 
@@ -69,7 +71,7 @@ here for conversion to/from input and to/from strings for the db.
 
 =cut
 
-has 'end_date' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'end_date' => (is => 'rw', isa => 'LedgerSMB::Moose::Date', coerce => 1);
 
 =item parent_id
 
