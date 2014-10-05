@@ -60,7 +60,7 @@ This is the subject of the note.
 
 =cut
 
-has 'subject' => (is =>'rw', isa => 'Str', required => 0);
+has 'subject' => (is =>'rw', isa => 'Maybe[Str]', required => 0);
 
 =item note
 
