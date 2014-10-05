@@ -134,7 +134,6 @@ sub list {
     for my $ref (__PACKAGE__->call_procedure(funcname => 'entity__list_contacts',
                                              args => [$args->{entity_id}])
     ){
-       $self->prepare_dbhash($ref);
        push @results, $self->new($ref);
     }
 

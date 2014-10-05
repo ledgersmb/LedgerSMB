@@ -68,7 +68,7 @@ This is the name that checks are written to or from.
 
 =cut
 
-has 'pay_to_name' => (is => 'rw', isa => 'Str', required => 0);
+has 'pay_to_name' => (is => 'rw', isa => 'Maybe[Str]', required => 0);
 
 =item discount
 
@@ -84,7 +84,7 @@ This is the general description for the account.
 
 =cut
 
-has 'description' => (is => 'rw', isa => 'Str', required => 0);
+has 'description' => (is => 'rw', isa => 'Maybe[Str]', required => 0);
 
 =item discount_terms
 
@@ -175,7 +175,7 @@ has no effect for vendors.
 
 =cut
 
-has 'pricegroup_id' => (is => 'rw', isa => 'Int', required => 0);
+has 'pricegroup_id' => (is => 'rw', isa => 'Maybe[Int]', required => 0);
 
 =item curr
 
@@ -230,7 +230,7 @@ The id that is the default for the cash account.
 
 =cut
 
-has 'cash_account_id' => (is => 'rw', isa => 'Int', required => 0);
+has 'cash_account_id' => (is => 'rw', isa => 'Maybe[Int]', required => 0);
 
 =item bank_account
 
@@ -260,7 +260,7 @@ This is the tax reporting form associated with the account.
 
 =cut
 
-has 'taxform_id' => (is => 'rw', isa => 'Int', required => 0);
+has 'taxform_id' => (is => 'rw', isa => 'Maybe[Int]', required => 0);
 
 =back
 
