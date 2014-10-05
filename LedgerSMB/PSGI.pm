@@ -34,10 +34,11 @@ sub app {
        $ENV{SCRIPT_NAME} =~ s/\?.*//; 
        $script =~ s/.*[\\\/]([^\\\/\?=]+\.pl).*/$1/;
 
-       my $nscript = $script;
-       $nscript =~ s/l$/m/;
-       if (-f "LedgerSMB/Scripts/$nscript"){
+       if (-f "scripts/$script"){
+         {
+         package main; 
          do 'lsmb-request.pl'; 
+         }
        } else {
           _run_old($script);
        }
@@ -60,7 +61,9 @@ sub _run_old {
        wait;
     } else {
        &$pre_dispatch() if $pre_dispatch;
+       { package main;
        do 'old-handler.pl';
+       }
        &$post_dispatch() if $post_dispatch;
        exit;
     }
