@@ -91,9 +91,9 @@ sub get {
     my $entity = LedgerSMB::Entity::Company->get($request->{entity_id});
     $entity ||= LedgerSMB::Entity::Person->get($request->{entity_id});
     my ($company, $person) = (undef, undef);
-    if ($entity->isa('LedgerSMB::Entity::Company')){
+    if (eval {$entity->isa('LedgerSMB::Entity::Company')}){
        $company = $entity;
-    } elsif ($entity->isa('LedgerSMB::Entity::Person')){
+    } elsif (eval {$entity->isa('LedgerSMB::Entity::Person')}){
        $person = $entity;
     }
     _main_screen($request, $company, $person);

@@ -96,7 +96,7 @@ This retrieves and returns the item as a blessed reference
 
 sub get {
     my ($self, $id) = @_;
-    my ($ref) = __PACKAGE__->call_procedure(procname => 'company__get',
+    my ($ref) = __PACKAGE__->call_procedure(funcname => 'company__get',
                                           args => [$id]);
     return undef unless $ref->{control_code};
     $ref->{name} = $ref->{legal_name};
@@ -112,7 +112,7 @@ company does not exist.
 
 sub get_by_cc {
     my ($self, $cc) = @_;
-    my ($ref) = __PACKAGE__->call_procedure(procname => 'company__get_by_cc',
+    my ($ref) = __PACKAGE__->call_procedure(funcname => 'company__get_by_cc',
                                           args => [$cc]);
     return undef unless $ref->{control_code};
     $ref->{name} = $ref->{legal_name};
@@ -128,7 +128,7 @@ Saves the item and populates db defaults in id and created.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'company__save'});
+    my ($ref) = $self->exec_method(funcname => 'company__save');
     $ref->{control_code} = $self->{control_code};
     $ref->{entity_class} = $self->{entity_class};
     $ref->{country_id} = $self->{country_id};

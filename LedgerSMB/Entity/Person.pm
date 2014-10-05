@@ -131,7 +131,7 @@ This retrieves and returns the item as a blessed reference
 
 sub get {
     my ($self, $id) = @_;
-    my ($ref) = __PACKAGE__->call_procedure(procname => 'person__get',
+    my ($ref) = __PACKAGE__->call_procedure(funcname => 'person__get',
                                           args => [$id]);
     return undef unless $ref->{control_code};
     return __PACKAGE__->new(%$ref);
@@ -146,7 +146,7 @@ person does not exist.
 
 sub get_by_cc {
     my ($self, $cc) = @_;
-    my ($ref) = __PACKAGE__->call_procedure(procname => 'person__get_by_cc',
+    my ($ref) = __PACKAGE__->call_procedure(funcname => 'person__get_by_cc',
                                           args => [$cc]);
     return undef unless $ref->{control_code};
     return __PACKAGE__->new(%$ref);
@@ -161,7 +161,7 @@ Saves the item and populates db defaults in id and created.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'person__save'});
+    my ($ref) = $self->exec_method(funcname => 'person__save');
     $self->entity_id(values %$ref);
 }
 
