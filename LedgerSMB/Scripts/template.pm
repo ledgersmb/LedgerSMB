@@ -41,7 +41,8 @@ Displays a template for review
 
 sub display {
     my ($request) = @_;
-    my $dbtemp = LedgerSMB::Template::DB->get(%$request);
+    my $dbtemp;
+    eval {$dbtemp = LedgerSMB::Template::DB->get(%$request)};
     $dbtemp->{content} = $dbtemp->template if defined $dbtemp;
     LedgerSMB::Template->new(
         user     => $request->{_user},
