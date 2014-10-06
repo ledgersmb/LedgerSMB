@@ -44,6 +44,7 @@ sub display {
     my $dbtemp;
     eval {$dbtemp = LedgerSMB::Template::DB->get(%$request)};
     $dbtemp->{content} = $dbtemp->template if defined $dbtemp;
+    $dbtemp = $request unless $dbtemp->{format};
     LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
@@ -63,6 +64,7 @@ sub edit {
     my ($request) = @_;
     my $dbtemp = LedgerSMB::Template::DB->get(%$request);
     $dbtemp->{content} = $dbtemp->template;
+    $dbtemp = $request unless $dbtemp->{format};
     LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
@@ -100,7 +102,9 @@ sub upload {
     my $fdata = join ("", <$fh>);
     die "No content" unless $fdata;
     my $testname = $request->{template_name} . "." . $request->{format};
-    die 'Unexpected file name'
+    die LedgerSMB::App_State::Locale->text(
+                'Unexpected file name, expected [_1], got [_2]',
+                 $testname, $name)
           unless $name eq $testname;
     $request->{template} = $fdata;
     my $dbtemp = LedgerSMB::Template::DB->new(%$request);

@@ -67,9 +67,9 @@ sub get_template {
          funcname => 'template__get',
          args => [$template_name, $language_code, $format]
     );
-    $temp = __PACKAGE__->new($temp);
-    my $text = $temp->template;
+    my $text = $temp->{template};
     die text('Could Not Load Template from DB') unless $text;
+    $temp = __PACKAGE__->new($temp);
     return \$text;
 }
 
@@ -112,7 +112,7 @@ sub get {
          funcname => 'template__get',
          args => [$args{template_name}, $args{language_code}, $args{format}]
     );
-    die text('Could Not Load Template from DB') unless $text;
+    die text('Could Not Load Template from DB') unless $temp;
     return __PACKAGE__->new(%$temp);
 }
 
