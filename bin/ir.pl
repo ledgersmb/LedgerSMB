@@ -605,6 +605,8 @@ function on_return_submit(event){
                              # must be deleted.  One can only either copy or 
                              # update, not both. --CT
               { ndx => 1, key => 'C', value => $locale->text('Copy to New') },
+            'print' =>
+              { ndx => 2, key => 'P', value => $locale->text('Print') },
             'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
             'post_as_new' =>
               { ndx => 5, key => 'N', value => $locale->text('Post as new') },
@@ -988,6 +990,19 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
       </table>
     </td>
   </tr>
+  <tr><td>|;
+    my $printops = &print_options;
+    my $formname = { name => 'formname',
+                     options => [
+                                  {text=> $locale->text('Product Receipt'), value => 'product_receipt'},
+                                ]
+                   };
+    print_select($form, $formname);
+    print_select($form, $printops->{lang});
+    print_select($form, $printops->{format});
+    print_select($form, $printops->{media});
+  print qq|
+  </td></tr>
   <tr>
     <td><hr size=3 noshade></td>
   </tr>
