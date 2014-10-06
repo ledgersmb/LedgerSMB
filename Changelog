@@ -5,6 +5,9 @@ Changelog for 1.4.4
 * Fixed bug 1225 error saving order/quote for natural persons (Chris T)
 * Fixed bug 1235, natural persons' orders not on report (Chris T)
 * Fixed bug, insufficient perms on account_checkpoint_id_seq (Chris T)
+* Fixed bug 1238, web services do not run on starman (Chris T)
+
+Chris T is Chris Travers
 
 Changelog for 1.4.3
 * Added sanity check for psql availability (Bug 1226, Chris T)
