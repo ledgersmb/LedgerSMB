@@ -8,8 +8,6 @@ Fixes.sql
 Settings.sql
 Util.sql
 App_Module.sql
-# Remove the one below once we get into rc
-menu_rebuild.sql
 Menu.sql
 Drafts.sql
 Account.sql
