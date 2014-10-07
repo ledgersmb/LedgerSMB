@@ -752,6 +752,8 @@ CREATE TABLE person (
     middle_name text,
     last_name text check (last_name ~ '[[:alnum:]_]') NOT NULL,
     created date not null default current_date,
+    birthdate date,
+    personal_id text,
     unique(entity_id) -- needed due to entity_employee assumptions --CT
  );
  
