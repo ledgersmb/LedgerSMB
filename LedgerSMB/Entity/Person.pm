@@ -112,8 +112,6 @@ sub salutations {
 
 Date when the  person was entered into LedgerSMB
 
-=back
-
 =cut
 
 has 'created' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
@@ -131,6 +129,7 @@ Personal id, such as a passport or other government-issued or other ID.
 has 'birthdate' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 has 'personal_id' => (is => 'ro', isa => 'Str');
 
+=back
 
 =head1 METHODS
 
