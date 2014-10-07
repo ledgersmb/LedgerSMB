@@ -16,6 +16,7 @@ Changelog for 1.4.4
 * Added Product Receipt templates for printing vendor invoices (Chris T)
 * (Bug Report 1229), added ID card and birthdate tracking (Chris T)
 * Fixed bug 1234, trying to save user before employee thows error (Chris T)
+* Fixed bug 1239, reopening on previous close throws error (Chris T)
 
 Chris T is Chris Travers
 
