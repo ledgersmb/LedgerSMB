@@ -14,6 +14,7 @@ Changelog for 1.4.4
 * Fixed bug 1238, web services do not run on starman (Chris T)
 * Fixed bug 1233, insufficient error handling with templates (Chris T)
 * Added Product Receipt templates for printing vendor invoices (Chris T)
+* (Bug Report 1229), added ID card and birthdate tracking (Chris T)
 
 Chris T is Chris Travers
 
