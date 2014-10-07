@@ -46,6 +46,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
 use LedgerSMB::File;
+use List::Util 'reduce';
 
 # any custom scripts for this one
 if ( -f "bin/custom/io.pl" ) {
@@ -1780,10 +1781,27 @@ sub print_form {
     # create the form variables
     if ($order) {
         OE->order_details( \%myconfig, $form );
-    }
-    else {
+    } elsif ($form->{formname} eq 'product_receipt'){
+        @{$form->{number}} = map { $form->{"partnumber_$_"} }
+            1 .. $form->{rowcount};
+        @{$form->{item_description}} = map { $form->{"description_$_"} }
+            1 .. $form->{rowcount};
+        @{$form->{qty}} = map { $form->{"qty_$_"} }
+            1 .. $form->{rowcount};
+        @{$form->{unit}} = map { $form->{"unit_$_"} }
+            1 .. $form->{rowcount};
+        @{$form->{sellprice}} = map { $form->{"sellprice_$_"} }
+            1 .. $form->{rowcount};
+        @{$form->{discount}} = map { $form->{"discount_$_"} }
+            1 .. $form->{rowcount};
+        @{$form->{linetotal}} = map { 
+            $form->{"qty_$_"} * $form->{"sellprice_$_"}
+         }
+            1 .. $form->{rowcount} - 1;
+        $form->{invtotal} = reduce { $a + $b } @{$form->{linetotal}};
+    } else {
         IS->invoice_details( \%myconfig, $form );
-    } 
+    }
     if ( exists $form->{longformat} ) {
         $form->{"${due}date"} = $duedate;
         for ( "${inv}date", "${due}date", "shippingdate", "transdate" ) {

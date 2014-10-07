@@ -8,6 +8,8 @@ package LedgerSMB::Template::DB;
 use Moose;
 with 'LedgerSMB::DBObject_Moose', 'LedgerSMB::I18N';
 
+use LedgerSMB::App_State;
+
 =head1 SYNPOPSIS
 
 To retrieve template data as a scalar ref (for TT):
@@ -65,9 +67,9 @@ sub get_template {
          procname => 'template__get',
          args => [$template_name, $language_code, $format]
     );
-    $temp = __PACKAGE__->new($temp);
-    my $text = $temp->template;
+    my $text = $temp->{template};
     die text('Could Not Load Template from DB') unless $text;
+    $temp = __PACKAGE__->new($temp);
     return \$text;
 }
 
@@ -110,7 +112,7 @@ sub get {
          procname => 'template__get',
          args => [$args{template_name}, $args{language_code}, $args{format}]
     );
-    return undef unless $temp->{format};  # allows editing of blank templates
+    die text('Could Not Load Template from DB') unless $temp;
     return __PACKAGE__->new(%$temp);
 }
 
