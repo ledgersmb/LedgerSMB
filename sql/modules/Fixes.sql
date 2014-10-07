@@ -192,3 +192,8 @@ INSERT INTO menu_attribute
 (242, 99, 'template_name', 'product_receipt'),
 (245, 99, 'format', 'html');
 COMMIT;
+
+BEGIN;
+ALTER TABLE person ADD COLUMN birthdate date;
+ALTER TABLE person ADD COLUMN personal_id text;
+COMMIT;
