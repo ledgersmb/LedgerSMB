@@ -179,6 +179,27 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION eoy_reopen_books(in_end_date date) IS
 $$ Removes checkpoints and reverses yearend transactions on in_end_date$$;
 
+CREATE OR REPLACE FUNCTION eoy__reopen_books_at(in_reopen_date date) 
+RETURNS BOOL
+LANGUAGE SQL AS
+$$
+
+    SELECT eoy_reopen_books(end_date) 
+      FROM (SELECT end_date 
+              FROM account_checkpoint
+             WHERE end_date >= $1
+             GROUP BY end_date) eoy_dates
+  ORDER BY end_date;
+
+SELECT CASE WHEN (SELECT count(*) > 0 from account_checkpoint 
+                   where end_date = $1 - 1)
+            THEN true
+            ELSE eoy_create_checkpoint($1 - 1) > 0
+       END;
+
+$$;
+
+
 CREATE OR REPLACE FUNCTION account__obtain_balance
 (in_transdate date, in_account_id int)
 RETURNS numeric AS
@@ -222,19 +243,4 @@ COMMENT ON FUNCTION eoy_earnings_accounts() IS
 $$ Lists equity accounts for the retained earnings dropdown.$$;
 
 
-CREATE OR REPLACE FUNCTION eoy__reopen_books_at(in_reopen_date date) 
-RETURNS BOOL
-LANGUAGE SQL AS
-$$
-
-    SELECT eoy_reopen_books(end_date) 
-      FROM (SELECT end_date 
-              FROM account_checkpoint
-             WHERE end_date >= $1
-             GROUP BY end_date) eoy_dates
-  ORDER BY end_date;
-
-SELECT eoy_create_checkpoint($1 - 1) > 0;
-
-$$;
 COMMIT;

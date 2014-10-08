@@ -7,6 +7,7 @@ Changelog for 1.3.45
 * Fixed pricematrix prices not respected for vendors (Chris T, bug 1230)
 * Added tests for Sysconfig (Chris T, bug 1232)
 * Added first-rate starman/plack support (Chris T)
+* Fixed bug 1239, reopening on previous close throws error (Chris T)
 
 Chris T is Chris Travers
 
