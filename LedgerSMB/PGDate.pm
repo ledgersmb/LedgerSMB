@@ -56,9 +56,11 @@ On the database side, these are all converted to YYYY-MM-DD format.
 our $formats = { 
     'YYYY-MM-DD' => ['%F'],
     'DD-MM-YYYY' => ['%d-%m-%Y', '%d-%m-%y'],
+    'DD.MM.YYYY' => ['%d.%m.%Y', '%d.%m.%y'],
     'DD/MM/YYYY' => ['%d/%m/%Y', '%D'],
     'MM-DD-YYYY' => ['%m-%d-%Y', '%m-%d-%y'],
     'MM/DD/YYYY' => ['%d/%m/%Y', '%d/%m/%y'],
+    'MM.DD.YYYY' => ['%d.%m.%Y', '%d.%m.%y'],
       'YYYYMMDD' => ['%Y%m%d'],
         'YYMMDD' => ['%y%m%d'],
       'DDMMYYYY' => ['%d%m%Y'],
