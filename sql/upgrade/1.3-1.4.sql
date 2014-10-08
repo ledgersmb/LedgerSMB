@@ -292,6 +292,13 @@ ALTER TABLE ap ENABLE TRIGGER ALL;
 INSERT INTO transactions (id, table_name, locked_by) 
 SELECT id, table_name, locked_by FROM lsmb13.transactions;
 
+INSERT INTO transactions (id, table_name)
+SELECT id, 'ar' FROM ar WHERE id not in (select id from transactions);
+INSERT INTO transactions (id, table_name)
+SELECT id, 'ap' FROM ap WHERE id not in (select id from transactions);
+INSERT INTO transactions (id, table_name)
+SELECT id, 'gl' FROM gl WHERE id not in (select id from transactions);
+
 INSERT INTO voucher SELECT * FROM lsmb13.voucher;
 
 ALTER TABLE acc_trans DISABLE TRIGGER ALL;
