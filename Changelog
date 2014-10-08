@@ -12,6 +12,7 @@ Changelog for 1.4.4
 * Fixed bug 1234, trying to save user before employee thows error (Chris T)
 * Fixed bug 1239, reopening on previous close throws error (Chris T)
 * Fixed upgrade bug, referential errors upgrading 1.2 data (Chris T)
+* Fixed bug 1243, dd.mm.yyyy formats don't work (Chris T)
 
 Chris T is Chris Travers
 
