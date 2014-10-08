@@ -580,7 +580,7 @@ END ?>
 			label = text('Threshold')
 			class = "numeric"
                } ?>
-          <td> <?lsmb IF pricegroups.size > 0 ?>
+          <td> <?lsmb IF pricegroups.size ?>
                <div id="pricegroup-div">
                <?lsmb pricegroups.unshift({});
                 INCLUDE select element_data = {
@@ -597,7 +597,7 @@ END ?>
 	<tr id="taxform-threshold-row">
 
 	
-	 <td><?lsmb IF taxform_list.size > 0 ?>
+	 <td><?lsmb IF taxform_list.size ?>
              <?lsmb taxform_list.unshift({});
                     INCLUDE select element_data = {
 			name = "taxform_id"

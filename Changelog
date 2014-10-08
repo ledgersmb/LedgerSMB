@@ -8,6 +8,7 @@ Changelog for 1.3.45
 * Added tests for Sysconfig (Chris T, bug 1232)
 * Added first-rate starman/plack support (Chris T)
 * Fixed bug 1239, reopening on previous close throws error (Chris T)
+* Quited some of the test cases (Chris T)
 
 Chris T is Chris Travers
 
