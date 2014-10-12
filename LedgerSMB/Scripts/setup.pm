@@ -1134,7 +1134,7 @@ sub complete {
     my ($request) = @_;
     my $database = _init_db($request);
     my $temp = $database->loader_log_filename();
-    $request->{lsmb_info} = $database->lsmb_info();
+    $request->{lsmb_info} = $database->stats();
     my $template = LedgerSMB::Template->new(
             path => 'UI/setup',
             template => 'complete',
