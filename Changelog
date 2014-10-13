@@ -3,6 +3,7 @@ Released 2014-09-15
 
 Changelog for 1.4.5
 * Fixed bug 1245, print and email buttons lost after email invoice (Chris T)
+* Fixed bug 1246, entity-level addresses do not show on invoice (Chris T)
 
 Chris T is Chris Travers
 

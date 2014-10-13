@@ -1434,7 +1434,11 @@ sub vendor_details {
                   JOIN entity e ON eca.entity_id = e.id
                   JOIN company co ON co.entity_id = e.id
              LEFT JOIN eca_to_location e2l ON eca.id = e2l.credit_id
-             LEFT JOIN location l ON l.id = e2l.location_id
+                                     and e2l.location_class = 1
+             LEFT JOIN entity_to_location el ON eca.entity_id = el.entity_id
+                                     and el.location_class = 1
+             LEFT JOIN location l ON l.id = 
+                                     coalesce(e2l.location_id, el.location_id)
              LEFT JOIN country c ON l.country_id = c.id
              LEFT JOIN (select max(phone) as phone, max(fax) as fax, credit_id
                           FROM (SELECT CASE WHEN contact_class_id =1 THEN contact
