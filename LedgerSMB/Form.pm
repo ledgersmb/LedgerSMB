@@ -1795,7 +1795,10 @@ sub get_name {
 
     # Vendor and Customer are now views into entity_credit_account.
     my $query = qq/
-		SELECT c.*, ecl.*, e.name, e.control_code, ctf.default_reportable
+		SELECT c.*, coalesce(etl.address, el.address) as address,
+                       coalesce(etl.cty, el.city) as city, 
+                       e.name, e.control_code, 
+                       ctf.default_reportable
                   FROM entity_credit_account c
 		  JOIN entity e ON (c.entity_id = e.id)
              LEFT JOIN (SELECT coalesce(line_one, '')
@@ -1805,6 +1808,13 @@ sub get_name {
                           JOIN location l ON etl.location_id = l.id
                           WHERE etl.location_class = 1) ecl
                         ON (c.id = ecl.credit_id)
+             LEFT JOIN (SELECT coalesce(line_one, '')
+                               || ' ' || coalesce(line_two, '') as address,
+                               l.city, etl.entity_id
+                          FROM entity_to_location etl
+                          JOIN location l ON etl.location_id = l.id
+                          WHERE etl.location_class = 1) el
+                        ON (c.entity_id = el.entity_id)
              LEFT JOIN country_tax_form ctf ON (c.taxform_id = ctf.id)
 		 WHERE (lower(e.name) LIKE ?
 		       OR c.meta_number ILIKE ?
