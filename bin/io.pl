@@ -1592,6 +1592,7 @@ sub print_form {
     $form->{fax} = $csettings->{company_fax};
     my $inv = "inv";
     my $due = "due";
+    my $class;
 
     my $numberfld = "sinumber";
 
@@ -2033,8 +2034,7 @@ sub print_form {
             }
         }
 
-        &{"$display_form"};
-
+        edit();
     }
 
 }
