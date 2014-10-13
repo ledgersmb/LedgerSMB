@@ -7,6 +7,11 @@ API Enhancements:
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.5
+* Fixed bug 1245, print and email buttons lost after email invoice (Chris T)
+
+Chris T is Chris Travers
+
 Changelog for 1.4.4
 * Fixed bug 1225 error saving order/quote for natural persons (Chris T)
 * Fixed bug 1235, natural persons' orders not on report (Chris T)
