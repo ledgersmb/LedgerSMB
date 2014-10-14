@@ -874,15 +874,15 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
                 <th align=right>$form->{"${taccno}_description"}</th>
                 <td><input type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
-                        .$form->format_amount($form->{"mt_amount_$item"}) 
+                        .$form->format_amount(\%myconfig, $form->{"mt_amount_$item"}) 
                         .qq|" size="10"/></td>
                 <td><input type="text" name="mt_rate_$item"
                          id="mt-rate-$item" value="|
-                        .$form->format_amount($form->{"mt_rate_$item"}) 
+                        .$form->format_amount(\%myconfig, $form->{"mt_rate_$item"}) 
                         .qq|" size="4"/></td>
                 <td><input type="text" name="mt_basis_$item"
                          id="mt-basis-$item" value="|
-                        .$form->format_amount($form->{"mt_basis_$item"}) 
+                        .$form->format_amount(\%myconfig, $form->{"mt_basis_$item"}) 
                         .qq|" size="10"/></td>
                 <td><input type="text" name="mt_ref_$item"
                          id="mt-ref-$item" value="|
