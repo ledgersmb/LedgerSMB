@@ -49,6 +49,7 @@ package LedgerSMB::DBObject;
 use Scalar::Util;
 use base qw(LedgerSMB);
 use LedgerSMB::Log;
+use LedgerSMB::App_State;
 use strict;
 use warnings;
 
@@ -107,6 +108,7 @@ sub exec_method {
     my $self   = shift @_;
     my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     my $funcname = $args{funcname};
+    $self->{dbh} ||= $LedgerSMB::App_State::DBH;
     
     my $schema   = $args{schema} || $LedgerSMB::Sysconfig::db_namespace;
     
