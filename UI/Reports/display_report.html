@@ -9,9 +9,26 @@ PROCESS "dynatable.html";
 
 FORMATS = LIST_FORMATS();
 
-LINK = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME 
-           _ '?' _ ENVARS.QUERY_STRING _ '&company=' _ DBNAME;
+PROTO='http';
 
+IF (ENVARS.SERVER_PORT == '443') or 
+   (ENVARS.HTTPS and ENVARS.HTTPS != 'OFF'); 
+   PROTO='https'; 
+END;
+
+SERVER = ENVARS.SERVER_NAME;
+
+IF (ENVARS.SERVER_PORT != '80') and ENVARS.SERVER_PORT
+                                and (ENVARS.SERVER_PORT != '443');
+   SERVER = SERVER _ ':' _ ENVARS.SERVER_PORT;
+END;
+
+QSTR=ENVARS.QUERY_STRING;
+
+LINK = PROTO _ '://' _ SERVER _ ENVARS.SCRIPT_NAME 
+           _ '?' _ QSTR _ 'company=' _ DBNAME;
+
+LINK = LINK.replace('\&\&', '&');
 ?>
 <body class="<?lsmb dojo_theme ?>">
 <div class="report_header"><label><?lsmb text('Report Name') ?>:</label>
