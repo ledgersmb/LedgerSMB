@@ -890,12 +890,12 @@ sub transactions {
 
     if ( !$form->{summary} and !$form->{outstanding} ) {
         $acc_trans_flds = qq|
-			, c.accno, ac.source,
-			p.projectnumber, ac.memo AS description,
-			ac.amount AS linetotal,
+			, c.accno, 
+			p.projectnumber, 
+                        ((1 - i.discount) * i.qty * i.sellprice) as linetotal, 
 			i.description AS linedescription|;
-        $group_by_fields = qq|, c.accno, ac.source, p.projectnumber, ac.memo,
-                              ac.amount, i.description |;
+        $group_by_fields = qq|, c.accno, p.projectnumber,
+                              i.discount, i.qty, i.sellprice, i.description |;
 
         $acc_trans_join = qq| 
 			     JOIN acc_trans ac ON (a.id = ac.trans_id)
