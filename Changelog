@@ -11,6 +11,7 @@ Changelog for 1.3.45
 * Quieted some of the test cases (Chris T)
 * Fixed bug 1244, manually entered tax crashes invoice on edit (Chris T)
 * Fixed bug 1251, some backports failing due to misplacing db cnx (Chris T)
+* Fixed bug 1241, join projection, amounts in invoice details report (Chris T)
 
 Chris T is Chris Travers
 
