@@ -237,6 +237,41 @@ sub post_invoice {
             $pth->finish;
 
             # project
+            push( @{ $form->{runningnumber} }, $runningnumber++ );
+            push( @{ $form->{number} },        $form->{"partnumber_$i"} );
+            push( @{ $form->{image} },        $form->{"image_$i"} );
+            push( @{ $form->{sku} },           $form->{"sku_$i"} );
+            push( @{ $form->{serialnumber} },  $form->{"serialnumber_$i"} );
+
+            push( @{ $form->{bin} },         $form->{"bin_$i"} );
+            warn $form->{"description_$i"};
+            push( @{ $form->{item_description} }, $form->{"description_$i"} );
+            push( @{ $form->{itemnotes} },   $form->{"notes_$i"} );
+            push(
+                @{ $form->{qty} },
+                $form->format_amount( $myconfig, $form->{"qty_$i"} )
+            );
+
+            push(
+                @{ $form->{ship} },
+                $form->format_amount( $myconfig, $form->{"qty_$i"} )
+            );
+
+            push( @{ $form->{unit} },         $form->{"unit_$i"} );
+            push( @{ $form->{deliverydate} }, $form->{"deliverydate_$i"} );
+
+            push( @{ $form->{projectnumber} }, $form->{"projectnumber_$i"} );
+
+            push( @{ $form->{sellprice} }, $form->{"sellprice_$i"} );
+
+            push( @{ $form->{listprice} }, $form->{"listprice_$i"} );
+
+            push(
+                @{ $form->{weight} },
+                $form->format_amount(
+                    $myconfig, $form->{"weight_$i"} * $form->{"qty_$i"}
+                )
+            );
 
             if ( $form->{"projectnumber_$i"} ne "" ) {
                 ( $null, $project_id ) =
@@ -1399,7 +1434,11 @@ sub vendor_details {
                   JOIN entity e ON eca.entity_id = e.id
                   JOIN company co ON co.entity_id = e.id
              LEFT JOIN eca_to_location e2l ON eca.id = e2l.credit_id
-             LEFT JOIN location l ON l.id = e2l.location_id
+                                     and e2l.location_class = 1
+             LEFT JOIN entity_to_location el ON eca.entity_id = el.entity_id
+                                     and el.location_class = 1
+             LEFT JOIN location l ON l.id = 
+                                     coalesce(e2l.location_id, el.location_id)
              LEFT JOIN country c ON l.country_id = c.id
              LEFT JOIN (select max(phone) as phone, max(fax) as fax, credit_id
                           FROM (SELECT CASE WHEN contact_class_id =1 THEN contact

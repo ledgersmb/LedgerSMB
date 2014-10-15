@@ -36,7 +36,9 @@ sub app {
 
        my $nscript = $script;
        $nscript =~ s/l$/m/;
-       if (-f "LedgerSMB/Scripts/$nscript"){
+       if ($uri =~ m|/rest/|){
+         do 'rest-handler.pl';
+       } elsif (-f "LedgerSMB/Scripts/$nscript"){
          do 'lsmb-request.pl'; 
        } else {
           _run_old($script);

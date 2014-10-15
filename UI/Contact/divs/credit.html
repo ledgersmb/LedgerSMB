@@ -205,7 +205,7 @@ PROCESS dynatable
            </td>
         </tr>
         <tr id="business-threshold-row">
-           <td> <?lsmb IF business_types.size > 0 ?>
+           <td> <?lsmb IF business_types.size ?>
                 <?lsmb business_types.unshift({});
                        INCLUDE select element_data = {
 			name = "business_id"
@@ -217,7 +217,7 @@ PROCESS dynatable
 			} ?> 
                 <?lsmb END ?>
 	  </td>
-          <td><?lsmb IF pricegroups.size > 0 ?>
+          <td><?lsmb IF pricegroups.size ?>
               <div id="pricegroup-div"><?lsmb pricegroups.unshift({});
                 INCLUDE select element_data = {
                      default_values = [credit_act.pricegroup_id],
@@ -231,7 +231,7 @@ PROCESS dynatable
 	</tr>
 
 	<tr id="taxform-threshold-row">
-	 <td> <?lsmb IF taxform_list.size > 0 ?>
+	 <td> <?lsmb IF taxform_list.size ?>
               <?lsmb taxform_list.unshift({});
                      INCLUDE select element_data = {
 			name = "taxform_id"

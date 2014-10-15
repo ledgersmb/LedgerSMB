@@ -775,7 +775,12 @@ sub customer_details {
                   JOIN entity_credit_account eca ON e.id = eca.entity_id
                   LEFT JOIN entity_bank_account eba ON eca.entity_id = eba.entity_id
 		  LEFT JOIN eca_to_location el ON eca.id = el.credit_id
-		  LEFT JOIN location l ON el.location_id = l.id
+                               and el.location_class=1
+		  LEFT JOIN entity_to_location el2
+                            ON eca.entity_id = el2.entity_id 
+                               and el2.location_class=1
+		  LEFT JOIN location l 
+                            ON coalesce(el.location_id,el2.location_id) = l.id
 		  LEFT JOIN country ON l.country_id = country.id
 		 WHERE eca.id = ? limit 1|;
 
