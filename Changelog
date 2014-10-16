@@ -6,6 +6,7 @@ Changelog for 1.4.5
 * Fixed bug 1246, entity-level addresses do not show on invoice (Chris T)
 * Fixed bug 1244, manually entered tax crashes invoice on edit (Chris T)
 * Fixed bug 1253, report pdfs redirect to port 80 (Chris T)
+* Fixed internal server error on single payment interface (Chris T)
 
 Chris T is Chris Travers
 
