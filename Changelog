@@ -14,8 +14,10 @@ Changelog for 1.3.45
 * Fixed bug 1241, join projection, amounts in invoice details report (Chris T)
 * Fixed internal server error on single payment interface (Chris T)
 * Fixed bug 1240, false alarms of customer credit usage exceeded (Chris T)
+* Adding tax_id hidden field to order and offer forms to be able to include it on tex templates (Pongracz I)
 
 Chris T is Chris Travers
+Pongracz I is Pongracz Istvan
 
 Changelog for 1.3.44
 * Allow blank salutations, bug 1204. (Chris T)
