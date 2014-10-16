@@ -750,6 +750,7 @@ sub post_payment {
  for (@{$self->{amount}}){
     $_ = $_->bstr if ref $_;
  }
+ $self->{amount} = [map {ref $_ ? $_->bstr() : $_ } @{$self->{amount}}];
  my @TMParray = $self->call_dbmethod(funcname => 'payment_post');
  $self->{payment_id} = $TMParray[0]->{payment_post};
  return $self->{payment_id};
