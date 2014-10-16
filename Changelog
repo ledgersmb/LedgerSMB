@@ -8,6 +8,7 @@ Changelog for 1.4.5
 * Fixed bug 1253, report pdfs redirect to port 80 (Chris T)
 * Fixed internal server error on single payment interface (Chris T)
 * Adding tax_id hidden field to order and offer forms to be able to include it on tex templates (Pongracz I)
+* Fixed bug 1195, goods and services w/invoice search useless (Chris T)
 
 Chris T is Chris Travers
 Pongracz I is Pongracz Istvan
