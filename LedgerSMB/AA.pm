@@ -977,6 +977,7 @@ sub get_name {
                 SELECT sum(o.amount * coalesce(e.$buysell, 1)) as used
                   FROM oe o
              LEFT JOIN exchangerate e ON o.transdate = e.transdate
+                                      AND o.curr = e.curr
                  WHERE not closed and oe_class_id in (1, 2)
                        and entity_credit_account = ?) s|;
 

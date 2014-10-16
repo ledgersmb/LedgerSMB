@@ -194,6 +194,7 @@ Changelog for 1.3.45
 * Fixed bug 1251, some backports failing due to misplacing db cnx (Chris T)
 * Fixed bug 1241, join projection, amounts in invoice details report (Chris T)
 * Fixed internal server error on single payment interface (Chris T)
+* Fixed bug 1240, false alarms of customer credit usage exceeded (Chris T)
 
 Chris T is Chris Travers
 
