@@ -1754,6 +1754,7 @@ sub save_inventory {
 
         }
     }
+    1;
 
 }
 
