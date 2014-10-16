@@ -86,95 +86,58 @@ $$;
 DROP TYPE IF EXISTS goods_search_result CASCADE;
 
 CREATE TYPE goods_search_result AS (
-   invnumber text,
-   trans_id int,
-   ordnumber text,
-   ord_id int,
-   quonumber text,
-   partnumber text,
-   id int,
-   description text,
-   onhand numeric,
-   qty numeric,
-   unit varchar,
-   price_updated date,
-   partsgroup text,
-   listprice numeric,
-   sellprice numeric,
-   lastcost numeric,
-   avgcost numeric,
-   linetotal numeric, 
-   markup numeric,
-   bin text,
-   rop numeric,
-   weight numeric,
-   notes text,
-   image text,
-   drawing text,
-   microfiche text,
-   make text,
-   model text,
-   curr char(3),
-   serialnumber text,
-   module text
+partnumber text,
+id int, 
+description text, 
+onhand numeric, 
+unit text, 
+priceupdate date,
+partsgroup text,
+listprice numeric, 
+sellprice numeric, 
+lastcost numeric, 
+avgcost numeric,
+markup numeric,
+bin text,
+rop numeric,
+weight numeric,
+notes text,
+image text,
+drawing text,
+microfische text,
+make text,
+model text
 );
 
-CREATE OR REPLACE FUNCTION goods__search 
+DROP FUNCTION IF EXISTS goods__search
 (in_partnumber text, in_description text,
  in_partsgroup_id int, in_serial_number text, in_make text,
  in_model text, in_drawing text, in_microfiche text,
  in_status text, in_date_from date, in_date_to date,
  in_sales_invoices bool, in_purchase_invoices bool,
  in_sales_orders bool, in_purchase_orders bool, in_quotations bool, 
- in_rfqs bool)
+ in_rfqs bool);
+
+CREATE OR REPLACE FUNCTION goods__search 
+(in_partnumber text, in_description text,
+ in_partsgroup_id int, in_serial_number text, in_make text,
+ in_model text, in_drawing text, in_microfiche text,
+ in_status text, in_date_from date, in_date_to date)
 RETURNS SETOF goods_search_result 
 LANGUAGE PLPGSQL STABLE AS $$
 BEGIN
 
--- Trying a CTE here to cut down on left joins.
 RETURN QUERY 
-         WITH orders (invnumber, id, ordnumber, quonumber, qty, sellprice, 
-              serialnumber, recordtype, oe_class_id, parts_id, curr) as 
-      (SELECT a.invnumber, a.id, null::text, null::text, i.qty, i.sellprice, 
-              i.serialnumber, a.recordtype, null::int, i.parts_id, a.curr
-         FROM (SELECT id, invnumber, 'is'::text as recordtype, transdate, curr
-                 FROM ar WHERE in_sales_invoices
-                UNION
-               SELECT id, invnumber, 'ir'::text as recordtype, transdate, curr
-                 FROM ap WHERE in_purchase_invoices
-              ) a
-         JOIN invoice i ON i.trans_id = a.id
-        WHERE (in_date_from is null or in_date_from >= a.transdate) and
-              (in_date_to is null or in_date_to <= a.transdate)
-        UNION
-       SELECT null::text, o.id, o.ordnumber, o.quonumber, i.qty, i.sellprice, 
-              i.serialnumber, 'oe', oe_class_id, i.parts_id, o.curr
-         FROM oe o
-         JOIN orderitems i ON o.id = i.trans_id
-        WHERE (o.oe_class_id = 1 AND in_sales_orders)
-              OR (o.oe_class_id = 2 AND in_purchase_orders)
-              OR (o.oe_class_id = 3 AND in_quotations)
-              OR (o.oe_class_id = 4 AND in_rfqs)
-              AND((in_date_from is null or in_date_from >= o.transdate) and
-              (in_date_to is null or in_date_to <= o.transdate))
-       )
-       SELECT o.invnumber, 
-              CASE WHEN o.recordtype in ('ir', 'is') THEN o.id ELSE NULL END, 
-              o.ordnumber, 
-              CASE WHEN o.recordtype = 'oe' THEN o.id ELSE NULL END, 
-              o.quonumber, p.partnumber, 
-              p.id, p.description, p.onhand, o.qty, p.unit, p.priceupdate, 
+       SELECT p.partnumber, 
+              p.id, p.description, p.onhand, p.unit::text, p.priceupdate, 
               pg.partsgroup,
               p.listprice, p.sellprice, p.lastcost, p.avgcost, 
-              o.qty * o.sellprice as linetotal, 
               CASE WHEN p.lastcost = 0 THEN NULL
                    ELSE ((p.sellprice / p.lastcost) - 1) * 100 
               END as markup,
               p.bin, p.rop, p.weight, p.notes, p.image, p.drawing, p.microfiche,
-              m.make, m.model, o.curr,
-              o.serialnumber, o.recordtype
+              m.make, m.model
          FROM parts p
-    LEFT JOIN orders o ON o.parts_id = p.id
     LEFT JOIN makemodel m ON m.parts_id = p.id
     LEFT JOIN partsgroup pg ON p.partsgroup_id = pg.id
         WHERE (in_partnumber is null or p.partnumber ilike in_partnumber || '%')
@@ -182,13 +145,15 @@ RETURN QUERY
                   or p.description @@ plainto_tsquery(in_description))
               AND (in_partsgroup_id is null 
                   or p.partsgroup_id = in_partsgroup_id )
-              AND (in_serial_number is null
-                  or o.serialnumber = in_serial_number)
               AND (in_make is null or m.make ilike in_make || '%')
               AND (in_model is null or m.model  ilike in_model || '%')
               AND (in_drawing IS NULL OR p.drawing ilike in_drawing || '%')
               AND (in_microfiche IS NULL
                   OR p.microfiche ilike in_microfiche || '%')
+              AND (in_serial_number IS NULL OR p.id IN
+                      (select parts_id from invoice
+                        where in_serial_number is not null
+                              and serialnumber = in_serial_number))
               AND ((in_status = 'active' and not p.obsolete) 
                    OR (in_status = 'obsolete' and p.obsolete)
                    OR (in_status = 'short' and p.onhand <= p.rop)
@@ -460,6 +425,74 @@ RETURNS SETOF warehouse
 LANGUAGE SQL AS
 $$
 SELECT * FROM warehouse ORDER BY DESCRIPTION;
+$$;
+
+drop type if exists parts_history_result cascade;
+CREATE TYPE parts_history_result AS (
+id int,
+partnumber text,
+transdate date,
+description text,
+bin text,
+ord_id int,
+ordnumber text,
+ordtype text,
+meta_number text,
+name text,
+sellprice numeric,
+qty numeric,
+discount numeric,
+serial_number text
+);
+
+CREATE OR REPLACE FUNCTION goods__history(
+  in_date_from date, in_date_to date, 
+  in_partnumber text, in_description text, in_serial_number text,
+  in_inc_po bool, in_inc_so bool, in_inc_quo bool, in_inc_rfq bool,
+  in_inc_is bool, in_inc_ir bool
+) RETURNS SETOF parts_history_result LANGUAGE PLPGSQL AS
+$$
+BEGIN
+RETURN QUERY
+  SELECT p.id, p.partnumber, o.transdate, p.description, p.bin,
+         o.id as ord_id, o.ordnumber, o.oe_class, eca.meta_number::text, e.name,
+         i.sellprice, i.qty, i.discount, i.serialnumber
+    FROM parts p
+    JOIN (select id, trans_id, parts_id, sellprice, qty, discount, serialnumber,
+                 'o' as i_type
+            FROM orderitems
+           UNION
+          SELECT id, trans_id, parts_id, sellprice, qty, discount, serialnumber,
+                 'i' as i_type
+            FROM invoice) i ON p.id = i.parts_id
+    JOIN (select o.id, 'oe' as o_table, ordnumber as ordnumber, c.oe_class,
+                 o.oe_class_id, o.transdate, o.entity_credit_account
+            FROM oe o
+            JOIN oe_class c ON o.oe_class_id = c.id
+           UNION
+          SELECT id, 'ar' as o_table, invnumber as ordnumber, 'is' as oe_class,
+                 null, transdate, entity_credit_account
+            FROM ar
+           UNION 
+          SELECT id, 'ap' as o_table, invnumber as ordnumber, 'ir' as oe_class,
+                 null, transdate, entity_credit_account
+            FROM ap) o ON o.id = i.trans_id 
+                          AND (o_table = 'oe') = (i_type = 'o')
+    JOIN entity_credit_account eca ON o.entity_credit_account = eca.id
+    JOIN entity e ON e.id = eca.entity_id 
+   WHERE (in_partnumber is null or p.partnumber like in_partnumber || '%')
+         AND (in_description IS NULL 
+              OR p.description @@ plainto_tsquery(in_description))
+         AND (in_date_from is null or in_date_from <= o.transdate)
+         and (in_date_to is null or in_date_to >= o.transdate)
+         AND (in_inc_po is not true or o.oe_class = 'Purchase Order')
+         AND (in_inc_so is not true or o.oe_class = 'Sales Order')
+         AND (in_inc_quo is not true or o.oe_class = 'Quotation')
+         AND (in_inc_rfq is not true or o.oe_class = 'RFQ')
+         AND (in_inc_ir is not true or o.oe_class = 'ir')
+         AND (in_inc_is is not true or o.oe_class = 'is')
+ORDER BY o.transdate desc, o.id desc;
+END;
 $$;
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';

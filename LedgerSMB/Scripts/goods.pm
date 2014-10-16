@@ -6,6 +6,7 @@ LedgerSMB::Scripts::goods - Goods and Services workflows for LedgerSMB
 
 package LedgerSMB::Scripts::goods;
 use LedgerSMB::Report::Inventory::Search;
+use LedgerSMB::Report::Inventory::History;
 use LedgerSMB::Report::Invoices::COGS;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Inventory::Partsgroups;
@@ -40,6 +41,12 @@ sub search_screen {
 
 sub search {
     my ($request) = @_;
+    for (qw(so po is ir quo rfq)){
+       $request->{col_ordnumber} = 1;
+       return LedgerSMB::Report::Inventory::History->new(%$request)
+              ->render($request)
+               if ($request->{"inc_$_"});
+    }
     my $report = LedgerSMB::Report::Inventory::Search->new(%$request);
     $report->render($request);
 };
