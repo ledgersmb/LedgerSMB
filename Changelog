@@ -202,6 +202,7 @@ Changelog for 1.3.45
 * Fixed internal server error on single payment interface (Chris T)
 * Fixed bug 1240, false alarms of customer credit usage exceeded (Chris T)
 * Adding tax_id hidden field to order and offer forms to be able to include it on tex templates (Pongracz I)
+* Fixed bug 1258, manual tax number entries do not respect number formats (Pongracz I)
 
 Chris T is Chris Travers
 Pongracz I is Pongracz Istvan
