@@ -10,6 +10,8 @@ Changelog for 1.4.5
 * Adding tax_id hidden field to order and offer forms to be able to include it on tex templates (Pongracz I)
 * Fixed bug 1195, goods and services w/invoice search useless (Chris T)
 * Fixed bug 1247, cannot save shipping record (Chris T)
+* Fixed bug 1255, no such function timecard__report (Chris T)
+* Fixed bug 1256, No such function: inventory_get_item_at_day (Chris T)
 
 Chris T is Chris Travers
 Pongracz I is Pongracz Istvan
@@ -188,7 +190,7 @@ Initial Release:  Monday, Oct 12 2011
 Supported Presently
 
 Changelog for 1.3.45
-* Cleaned up sql files so App::LedgerSMB::Admin (Chris T)
+* Cleaned up sql files so App::LedgerSMB::Admin works (Chris T)
 * Fixed pricematrix prices not respected for vendors (Chris T, bug 1230)
 * Added tests for Sysconfig (Chris T, bug 1232)
 * Added first-rate starman/plack support (Chris T)
