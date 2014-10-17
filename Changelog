@@ -11,6 +11,7 @@ Changelog for 1.4.5
 * Fixed bug 1195, goods and services w/invoice search useless (Chris T)
 * Fixed bug 1247, cannot save shipping record (Chris T)
 * Fixed bug 1255, no such function timecard__report (Chris T)
+* Fixed bug 1256, No such function: inventory_get_item_at_day (Chris T)
 
 Chris T is Chris Travers
 Pongracz I is Pongracz Istvan
