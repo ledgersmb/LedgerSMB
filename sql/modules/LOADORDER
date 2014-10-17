@@ -43,4 +43,5 @@ OrderEntry.sql
 Goods.sql
 Roles.sql
 Templates.sql
+Timecarrds.sql
 Fixes.sql

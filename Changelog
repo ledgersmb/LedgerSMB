@@ -10,6 +10,7 @@ Changelog for 1.4.5
 * Adding tax_id hidden field to order and offer forms to be able to include it on tex templates (Pongracz I)
 * Fixed bug 1195, goods and services w/invoice search useless (Chris T)
 * Fixed bug 1247, cannot save shipping record (Chris T)
+* Fixed bug 1255, no such function timecard__report (Chris T)
 
 Chris T is Chris Travers
 Pongracz I is Pongracz Istvan
