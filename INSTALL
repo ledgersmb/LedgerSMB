@@ -25,9 +25,9 @@ System requirements
 
 LedgerSMB depends on the following software:
 
- * a web server (Apache v2.x or MS IIS)
- * PostgreSQL 8.4+
- * Perl 5.8+
+ * a web server (Starman, Apache v2.x, MS IIS, etc)
+ * PostgreSQL 9.1+
+ * Perl 5.10+
 
 
 Installation process overview
@@ -75,10 +75,15 @@ by pointing your web browser to:
  http://localhost:5000/login.pl
 
 You can also daemonize Starman, run it on the default port, and much more.  See
-the starman documentation for details.
+the starman documentation for details.  If you are using older versions of 
+Starman, we recommend setting up SSL on a web server like Apache or Nginx and 
+back-proxying.
 
 Installing Apache 2
 ===================
+
+This is not necessary if you are running Starman and only accessing from your
+local system.
 
 On Debian and its derivatives - like Ubuntu - Apache installation
 is as simple as running:
