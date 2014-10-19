@@ -1,6 +1,9 @@
 Changelog for 1.5 Series
 Forthcoming
 
+Code Cleanup:
+* LedgerSMB now relies on plack.  Previous stub scripts removed (ChrisT)
+
 API Enhancements:
 * Moved a great deal of code into PGObject framework on CPAN (Chris T)
 
