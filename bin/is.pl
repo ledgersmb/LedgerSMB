@@ -735,7 +735,7 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
                            * $form->{"mt_basis_$item"};
                }
                $form->{invtotal} += $form->round_amount(
-                                         $form->{"mt_amount_$item"}, 2);
+                                         $form->parse_amount( \%myconfig,  $form->{"mt_amount_$item"}), 2);
                # Setting this up as a table
                # Note that the screens may be not wide enough to display
                # this in the normal way so we have to change the layout of the
@@ -744,7 +744,7 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
                 <th align=right>$form->{"${taccno}_description"}</th>
                 <td><input type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
-                        .$form->format_amount(\%myconfig, $form->{"mt_amount_$item"}) 
+                        .$form->format_amount(\%myconfig, $form->{"mt_amount_$item"}, 2) 
                         .qq|" size="10"/></td>
                 <td><input type="text" name="mt_rate_$item"
                          id="mt-rate-$item" value="|
@@ -752,7 +752,7 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
                         .qq|" size="4"/></td>
                 <td><input type="text" name="mt_basis_$item"
                          id="mt-basis-$item" value="|
-                        .$form->format_amount(\%myconfig, $form->{"mt_basis_$item"}) 
+                        .$form->format_amount(\%myconfig, $form->{"mt_basis_$item"}, 2) 
                         .qq|" size="10"/></td>
                 <td><input type="text" name="mt_ref_$item"
                          id="mt-ref-$item" value="|
