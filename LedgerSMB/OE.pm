@@ -115,6 +115,7 @@ sub transactions {
         $ordnumber = 'quonumber';
     }
 
+    $ordnumber = ($ordnumber eq 'ordnumber') ? 'ordnumber' : 'quonumber';
     my $number  = $form->like( lc $form->{$ordnumber} );
     my $name    = $form->like( lc $form->{ $form->{vc} } );
     my @dptargs = ();
@@ -241,11 +242,8 @@ sub transactions {
     }
 
     if ( $form->{$ordnumber} ne "" ) {
-	$ordnumber = ($ordnumber eq 'ordnumber') ? 'ordnumber' : 'quonumber';
         $query .= " AND lower($ordnumber) LIKE ?";
         push @queryargs, $number;
-        $form->{open}   = 1;
-        $form->{closed} = 1;
     }
     if ( $form->{ponumber} ne "" ) {
         $query .= " AND lower(ponumber) LIKE '%' || lower(?) || '%'";
