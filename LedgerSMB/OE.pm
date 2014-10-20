@@ -244,8 +244,6 @@ sub transactions {
     if ( $form->{$ordnumber} ne "" ) {
         $query .= " AND lower($ordnumber) LIKE ?";
         push @queryargs, $number;
-        $form->{open}   = 1;
-        $form->{closed} = 1;
     }
     if ( $form->{ponumber} ne "" ) {
         $query .= " AND lower(ponumber) LIKE '%' || lower(?) || '%'";
