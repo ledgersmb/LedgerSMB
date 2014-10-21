@@ -189,6 +189,11 @@ Changelog for 1.3 Series
 Initial Release:  Monday, Oct 12 2011
 Supported Presently
 
+Changelog for 1.3.46
+* Fixed bug 1257, search by ordnumber pulls up all orders (Chris T)
+
+Chris T is Chris Travers
+
 Changelog for 1.3.45
 * Cleaned up sql files so App::LedgerSMB::Admin works (Chris T)
 * Fixed pricematrix prices not respected for vendors (Chris T, bug 1230)
@@ -202,6 +207,7 @@ Changelog for 1.3.45
 * Fixed internal server error on single payment interface (Chris T)
 * Fixed bug 1240, false alarms of customer credit usage exceeded (Chris T)
 * Adding tax_id hidden field to order and offer forms to be able to include it on tex templates (Pongracz I)
+* Fixed bug 1258, manual tax number entries do not respect number formats (Pongracz I)
 
 Chris T is Chris Travers
 Pongracz I is Pongracz Istvan
