@@ -1795,6 +1795,7 @@ CREATE TABLE ap (
   description text,
   force_closed bool,
   crdate date,
+  is_return bool default false,
   entity_credit_account int references entity_credit_account(id) NOT NULL
 );
 
