@@ -1761,7 +1761,7 @@ msgstr "Bcc: %1"
 
 #: bin/arap.pl:973 bin/io.pl:1850
 msgid "Date: [_1]"
-msgstr "Datum : [_1]"
+msgstr "Datum : %1"
 
 #: bin/arap.pl:974 bin/io.pl:1851
 msgid "To: [_1]"
