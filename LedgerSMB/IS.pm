@@ -1757,7 +1757,7 @@ sub retrieve_invoice {
         $ref = $sth->fetchrow_hashref(NAME_lc);
         $ref->{locationid} = $ref->{id};
         delete $ref->{id};
-        for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
+        for ( keys %$ref ) { $form->{$_} = $ref->{$_} unless $_ eq 'id' };
         $sth->finish;
 
         # retrieve individual items
