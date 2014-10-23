@@ -658,7 +658,7 @@ sub retrieve {
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         $ref = $sth->fetchrow_hashref('NAME_lc');
-        for ( keys %$ref ) { $form->{$_} = $ref->{$_} unless ( $_ == "id") }
+        for ( keys %$ref ) { $form->{$_} = $ref->{$_} unless ( $_ eq "id") }
         $sth->finish;
 
         # get printed, emailed and queued
