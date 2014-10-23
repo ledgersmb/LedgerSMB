@@ -91,3 +91,10 @@ BEGIN;
 ALTER TABLE person ADD COLUMN birthdate date;
 ALTER TABLE person ADD COLUMN personal_id text;
 COMMIT;
+
+BEGIN;
+ALTER TABLE ar ADD COLUMN is_return bool default false;
+COMMIT;
+BEGIN; -- SEPARATE transaction due to questions of if one of the cols si there
+ALTER TABLE ap ADD COLUMN is_return bool default false;
+COMMIT;
