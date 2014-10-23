@@ -205,12 +205,13 @@ sub link_part {
         $form->{selectIC_inventory} = $form->{selectIC};
         $form->{selectIC_income}    = $form->{selectIC_sale};
         $form->{selectIC_expense}   = $form->{selectIC_cogs};
+        $form->{selectIC_returns}   = $form->{selectIC_returns};
         $form->{IC_income}          = $form->{IC_sale};
         $form->{IC_expense}         = $form->{IC_cogs};
     }
 
     # set option
-    for (qw(IC_inventory IC_income IC_expense)) {
+    for (qw(IC_inventory IC_income IC_expense IC_returns)) {
         $form->{$_} =
           "$form->{amount}{$_}{accno}--$form->{amount}{$_}{description}"
           if $form->{amount}{$_}{accno};
@@ -392,7 +393,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
     $form->{selectIC_inventory} = $form->{selectIC};
 
     # set option
-    for (qw(IC_inventory IC_income IC_expense)) {
+    for (qw(IC_inventory IC_income IC_expense IC_returns)) {
         if ( $form->{$_} ) {
             if ( $form->{orphaned} ) {
                 $form->{"select$_"} =~ s/ selected//;
@@ -528,6 +529,11 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
 		<th align=right>| . $locale->text('COGS') . qq|</th>
 		<td><select name=IC_expense>$form->{selectIC_expense}</select></td>
 		<input name=selectIC_expense type=hidden value="$form->{selectIC_expense}">
+	      </tr>
+	      <tr>
+		<th align=right>| . $locale->text('Returns') . qq|</th>
+		<td><select name=IC_returns>$form->{selectIC_returns}</select></td>
+		<input name=selectIC_returns type=hidden value="$form->{selectIC_returns}">
 	      </tr>
 |;
 
