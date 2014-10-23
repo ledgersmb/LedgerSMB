@@ -1,6 +1,13 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.6
+* Fixed bug 1259, id from new_shipto overwrites form-id (Pongracz I)
+* Fixed related bug to 1259 on invoices (Chris T)
+
+Pongracz I is Pongracz Istvan
+Chris T is Chris Travers
+
 Changelog for 1.4.5
 * Fixed bug 1245, print and email buttons lost after email invoice (Chris T)
 * Fixed bug 1246, entity-level addresses do not show on invoice (Chris T)
