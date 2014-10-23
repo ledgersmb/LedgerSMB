@@ -134,7 +134,7 @@ sub get_part {
 
     # setup accno hash for <option checked>
     # {amount} is used in create_links
-    for (qw(inventory income expense)) {
+    for (qw(inventory income expense returns)) {
         $form->{amount}{"IC_$_"} = {
             accno       => $form->{"${_}_accno"},
             description => $form->{"${_}_description"}
@@ -445,12 +445,14 @@ sub save {
 		       notes = ?,
 		       rop = ?,
 		       bin = ?,
-		       inventory_accno_id = (SELECT id FROM chart
+		       inventory_accno_id = (SELECT id FROM account
 		                              WHERE accno = ?),
-		       income_accno_id = (SELECT id FROM chart
+		       income_accno_id = (SELECT id FROM account
 		                           WHERE accno = ?),
-		       expense_accno_id = (SELECT id FROM chart
+		       expense_accno_id = (SELECT id FROM account
 		                            WHERE accno = ?),
+                       returns_accno_id = (SELECT id FROM account
+                                            WHERE accno = ?)
 		       obsolete = ?,
 		       image = ?,
 		       drawing = ?,
@@ -467,7 +469,8 @@ sub save {
         $form->{unit},            $form->{notes},
         $form->{rop},             $form->{bin},
         $form->{inventory_accno}, $form->{income_accno},
-        $form->{expense_accno},   $form->{obsolete},
+        $form->{expense_accno},   $form->{returns_accno},
+        $form->{obsolete},
         $form->{image},           $form->{drawing},
         $form->{microfiche},      $partsgroup_id,
         $form->{id}
@@ -1061,7 +1064,9 @@ sub create_links {
 			       a2.description AS income_description,
 			       a3.accno AS expense_accno, 
 			       a3.description AS expense_description
-			  FROM account a1, account a2, account a3 
+			       a4.accno AS returns_accno, 
+			       a4.description AS returns_description
+			  FROM account a1, account a2, account a3, account ac4
 			 WHERE a1.id IN (SELECT value::int FROM defaults 
 			 WHERE setting_key = 'inventory_accno_id')
 			       AND a2.id IN (SELECT value::int FROM defaults
