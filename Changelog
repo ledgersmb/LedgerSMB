@@ -13,11 +13,13 @@ Released 2014-09-15
 Changelog for 1.4.6
 * Fixed bug 1259, id from new_shipto overwrites form-id (Pongracz I)
 * Fixed related bug to 1259 on invoices (Chris T)
-* Updated Dutch translation (Frans S)
+* Updated Dutch translation (Frans S and Erik H)
+* New returns-specific logic (see release notes) (Chris T)
 
 Pongracz I is Pongracz Istvan
 Chris T is Chris Travers
 Frans S is Frans van der Star
+Erik H is Erik Huelsmann
 
 Changelog for 1.4.5
 * Fixed bug 1245, print and email buttons lost after email invoice (Chris T)
