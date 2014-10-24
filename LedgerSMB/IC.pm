@@ -1049,51 +1049,6 @@ sub create_links {
         ( $form->{currencies} ) = $dbh->selectrow_array($query);
 
     }
-    else {
-
-        # Dieter: FIXME left joins not working
-        $query = qq|
-			SELECT (SELECT value FROM defaults 
-			         WHERE setting_key = 'weightunit') 
-			       AS weightunit,  current_date AS priceupdate,
-			       (SELECT value FROM defaults 
-			         WHERE setting_key = 'curr') AS currencies,
-			       a1.accno AS inventory_accno, 
-			       a1.description AS inventory_description,
-			       a2.accno AS income_accno, 
-			       a2.description AS income_description,
-			       a3.accno AS expense_accno, 
-			       a3.description AS expense_description
-			       a4.accno AS returns_accno, 
-			       a4.description AS returns_description
-			  FROM account a1, account a2, account a3, account ac4
-			 WHERE a1.id IN (SELECT value::int FROM defaults 
-			 WHERE setting_key = 'inventory_accno_id')
-			       AND a2.id IN (SELECT value::int FROM defaults
-			 WHERE setting_key = 'income_accno_id')
-			       AND a3.id IN (SELECT value::int FROM defaults
-			                      WHERE setting_key 
-			                            = 'expense_accno_id')|;
-        $sth = $dbh->prepare($query);
-        $sth->execute || $form->dberror($query);
-
-        $ref = $sth->fetchrow_hashref(NAME_lc);
-        for (qw(weightunit priceupdate currencies)) {
-            $form->{$_} = $ref->{$_};
-        }
-
-        # setup accno hash, {amount} is used in create_links
-        for (qw(inventory income expense)) {
-            $form->{amount}{"IC_$_"} = {
-                accno       => $ref->{"${_}_accno"},
-                description => $ref->{"${_}_description"}
-            };
-        }
-
-        $sth->finish;
-    }
-
-
 }
 
 sub get_warehouses {
