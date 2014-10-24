@@ -359,6 +359,7 @@ SELECT lsmb__grant_perms('ar_transaction_create', 'acc_trans_entry_id_seq', 'ALL
 SELECT lsmb__grant_perms('ar_transaction_create', 'journal_entry_id_seq', 'ALL');
 SELECT lsmb__grant_perms('ar_transaction_create', 'journal_line_id_seq', 'ALL');
 SELECT lsmb__grant_menu('ar_transaction_create', 2, 'allow');
+SELECT lsmb__grant_menu('ar_transaction_create', 129, 'allow');
 SELECT lsmb__grant_menu('ar_transaction_create', 194, 'allow');
 
 SELECT lsmb__create_role('ar_transaction_create_voucher');
