@@ -256,6 +256,7 @@ sub save {
     ( $form->{inventory_accno} ) = split( /--/, $form->{IC_inventory} );
     ( $form->{expense_accno} )   = split( /--/, $form->{IC_expense} );
     ( $form->{income_accno} )    = split( /--/, $form->{IC_income} );
+    ( $form->{returns_accno} )    = split( /--/, $form->{IC_returns} );
 
     my $dbh = $form->{dbh};
 

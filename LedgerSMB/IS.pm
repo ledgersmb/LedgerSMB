@@ -800,6 +800,7 @@ sub customer_details {
 sub post_invoice {
 
     my ( $self, $myconfig, $form ) = @_;
+
     $form->all_business_units;
     $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
       if $form->should_update_defaults('invnumber');
@@ -1480,7 +1481,8 @@ sub post_invoice {
 		       language_code = ?,
 		       ponumber = ?,
                        approved = ?,
-		       crdate = ?
+		       crdate = ?,
+                       is_return = ?
 		 WHERE id = ?
              |;
     $sth = $dbh->prepare($query);
@@ -1497,7 +1499,8 @@ sub post_invoice {
         $form->{currency},
         $form->{employee_id},   $form->{till},
         $form->{language_code}, $form->{ponumber}, $approved,
-        $form->{crdate} || 'today',	$form->{id}
+        $form->{crdate} || 'today', $form->{is_return},
+        $form->{id}
     ) || $form->dberror($query);
 
     # add shipto
