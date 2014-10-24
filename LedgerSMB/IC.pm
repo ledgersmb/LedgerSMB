@@ -452,7 +452,7 @@ sub save {
 		       expense_accno_id = (SELECT id FROM account
 		                            WHERE accno = ?),
                        returns_accno_id = (SELECT id FROM account
-                                            WHERE accno = ?)
+                                            WHERE accno = ?),
 		       obsolete = ?,
 		       image = ?,
 		       drawing = ?,
