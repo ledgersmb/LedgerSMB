@@ -100,6 +100,11 @@ sub add {
         $form->{title} = $locale->text('Add Credit Invoice');
         $form->{subtype} = 'credit_invoice';
         $form->{reverse} = 1;
+    } elsif ($form->{type} eq 'customer_return') {
+        $form->{title} = $locale->text('Add Customer Return');
+        $form->{subtype} = 'credit_invoice';
+        $form->{reverse} = 1;
+        $form->{is_return} = 1;
     } else {
         $form->{title} = $locale->text('Add Sales Invoice');
         $form->{reverse} = 0;
@@ -116,11 +121,14 @@ sub add {
 
 sub edit {
 
-    if ($form->{reverse}) {
-        $form->{title} = $locale->text('Add Credit Invoice');
+    if ($form->{is_return}){
+        $form->{title} = $locale->text('Edit Customer Return');
+        $form->{subtype} = 'credit_invoice';
+    } elsif ($form->{reverse}) {
+        $form->{title} = $locale->text('Edit Credit Invoice');
         $form->{subtype} = 'credit_invoice';
     } else {
-        $form->{title} = $locale->text('Add Sales Invoice');
+        $form->{title} = $locale->text('Edit Sales Invoice');
     }
     &invoice_links;
     &prepare_invoice;
@@ -482,7 +490,8 @@ function on_return_submit(event){
         qw(form_id id type printed emailed queued title vc terms discount 
            creditlimit creditremaining tradediscount business closedto locked 
            shipped oldtransdate recurring reverse batch_id subtype tax_id 
-           meta_number separate_duties lock_description nextsub default_reportable address city)
+           meta_number separate_duties lock_description nextsub 
+           default_reportable address city is_return)
     );
 
     if ($form->{notice}){
