@@ -800,6 +800,7 @@ sub customer_details {
 sub post_invoice {
 
     my ( $self, $myconfig, $form ) = @_;
+
     $form->all_business_units;
     $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
       if $form->should_update_defaults('invnumber');
@@ -853,9 +854,11 @@ sub post_invoice {
             &reverse_invoice( $dbh, $form );
         }
         else {
-            $query = qq|INSERT INTO ar (id, entity_credit_account) VALUES (?, ?)|;
+            $query = qq|INSERT INTO ar (id, entity_credit_account, is_return) 
+                        VALUES (?, ?, ?)|;
             $sth   = $dbh->prepare($query);
-            $sth->execute( $form->{id}, $form->{customer_id}) || $form->dberror($query);
+            $sth->execute($form->{id}, $form->{customer_id}, $form->{is_return})
+                 || $form->dberror($query);
         }
 
     }
@@ -1478,7 +1481,8 @@ sub post_invoice {
 		       language_code = ?,
 		       ponumber = ?,
                        approved = ?,
-		       crdate = ?
+		       crdate = ?,
+                       is_return = ?
 		 WHERE id = ?
              |;
     $sth = $dbh->prepare($query);
@@ -1495,7 +1499,8 @@ sub post_invoice {
         $form->{currency},
         $form->{employee_id},   $form->{till},
         $form->{language_code}, $form->{ponumber}, $approved,
-        $form->{crdate} || 'today',	$form->{id}
+        $form->{crdate} || 'today', $form->{is_return},
+        $form->{id}
     ) || $form->dberror($query);
 
     # add shipto
@@ -2142,20 +2147,7 @@ sub list_locations_contacts
 
     $sth->finish();
 
-
-
-
-
-
-
-
-
-
-
-
     # for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
-
-
 }
 
 

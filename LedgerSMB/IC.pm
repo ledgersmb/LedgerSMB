@@ -134,7 +134,7 @@ sub get_part {
 
     # setup accno hash for <option checked>
     # {amount} is used in create_links
-    for (qw(inventory income expense)) {
+    for (qw(inventory income expense returns)) {
         $form->{amount}{"IC_$_"} = {
             accno       => $form->{"${_}_accno"},
             description => $form->{"${_}_description"}
@@ -256,6 +256,7 @@ sub save {
     ( $form->{inventory_accno} ) = split( /--/, $form->{IC_inventory} );
     ( $form->{expense_accno} )   = split( /--/, $form->{IC_expense} );
     ( $form->{income_accno} )    = split( /--/, $form->{IC_income} );
+    ( $form->{returns_accno} )    = split( /--/, $form->{IC_returns} );
 
     my $dbh = $form->{dbh};
 
@@ -445,12 +446,14 @@ sub save {
 		       notes = ?,
 		       rop = ?,
 		       bin = ?,
-		       inventory_accno_id = (SELECT id FROM chart
+		       inventory_accno_id = (SELECT id FROM account
 		                              WHERE accno = ?),
-		       income_accno_id = (SELECT id FROM chart
+		       income_accno_id = (SELECT id FROM account
 		                           WHERE accno = ?),
-		       expense_accno_id = (SELECT id FROM chart
+		       expense_accno_id = (SELECT id FROM account
 		                            WHERE accno = ?),
+                       returns_accno_id = (SELECT id FROM account
+                                            WHERE accno = ?),
 		       obsolete = ?,
 		       image = ?,
 		       drawing = ?,
@@ -467,7 +470,8 @@ sub save {
         $form->{unit},            $form->{notes},
         $form->{rop},             $form->{bin},
         $form->{inventory_accno}, $form->{income_accno},
-        $form->{expense_accno},   $form->{obsolete},
+        $form->{expense_accno},   $form->{returns_accno},
+        $form->{obsolete},
         $form->{image},           $form->{drawing},
         $form->{microfiche},      $partsgroup_id,
         $form->{id}
@@ -1046,8 +1050,6 @@ sub create_links {
         ( $form->{currencies} ) = $dbh->selectrow_array($query);
 
     }
-
-
 }
 
 sub get_warehouses {
