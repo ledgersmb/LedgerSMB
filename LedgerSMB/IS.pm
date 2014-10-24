@@ -853,9 +853,11 @@ sub post_invoice {
             &reverse_invoice( $dbh, $form );
         }
         else {
-            $query = qq|INSERT INTO ar (id, entity_credit_account) VALUES (?, ?)|;
+            $query = qq|INSERT INTO ar (id, entity_credit_account, is_return) 
+                        VALUES (?, ?, ?)|;
             $sth   = $dbh->prepare($query);
-            $sth->execute( $form->{id}, $form->{customer_id}) || $form->dberror($query);
+            $sth->execute($form->{id}, $form->{customer_id}, $form->{is_return})
+                 || $form->dberror($query);
         }
 
     }
@@ -2142,20 +2144,7 @@ sub list_locations_contacts
 
     $sth->finish();
 
-
-
-
-
-
-
-
-
-
-
-
     # for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
-
-
 }
 
 

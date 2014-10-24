@@ -2359,8 +2359,8 @@ sub create_links {
 				a.person_id, e.name AS employee, 
 				c.language_code, a.ponumber, a.reverse,
                                 a.approved, ctf.default_reportable, 
-                                a.description, a.on_hold, a.crdate,
-                                ns.location_id as locationid
+                                a.description, a.on_hold, a.crdate, 
+                                ns.location_id as locationid, a.is_return
 			FROM $arap a
 			JOIN entity_credit_account c 
 				ON (a.entity_credit_account = c.id)
