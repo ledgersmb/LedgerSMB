@@ -2765,7 +2765,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 2	Add Transaction	1	1
 7	AR Aging	4	3
 39	Invoice Vouchers	250	2
-5	Search	1	7
 22	Add Transaction	21	1
 27	AP Aging	24	3
 25	Search	21	7
@@ -2835,8 +2834,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 19	Contacts	0	1
 246	Import Chart	73	7
 136	GIFI	128	7
-4	Reports	1	9
-249	Vouchers	1	8
 24	Reports	21	9
 250	Vouchers	21	8
 200	Vouchers	35	5
@@ -2961,6 +2958,10 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 242	Letterhead	172	17
 90	Product Receipt	172	2
 99	Product Receipt	156	2
+129	Add Return	1	7
+5	Search	1	8
+4	Reports	1	10
+249	Vouchers	1	9
 \.
 
 
@@ -3626,6 +3627,9 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 99	action	display	241
 99	template_name	product_receipt	242
 99	format	html	245
+129	module	is.pl	251
+129	action	add	252
+129	type	customer_return	253
 \.
 
 --
