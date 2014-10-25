@@ -294,6 +294,13 @@ Saves a company and moves on to the next screen
 
 sub save_employee {
     my ($request) = @_;
+    unless ($request->{control_code}){
+        my ($ref) = $request->call_procedure(
+                             procname => 'setting_increment', 
+                             args     => ['entity_control']
+                           );
+        ($request->{control_code}) = values %$ref;
+    }
     $request->{entity_class} = 3;
     $request->{control_code} = $request->{employeenumber};
     $request->{name} = "$request->{last_name}, $request->{first_name}";
