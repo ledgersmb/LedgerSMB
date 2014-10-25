@@ -328,7 +328,10 @@ sub print_transaction {
           $form->audittrail( "", \%myconfig, \%audittrail );
     }
 
-    if ( $form->{media} !~ /(queue|screen)/ ) {
+    if ( lc($form->{media}) eq 'zip'){
+        $form->{OUT}       = $form->{zipdir};
+        $form->{printmode} = '>';
+    } elsif ( $form->{media} !~ /(zip|screen)/ ) {
         $form->{OUT}       = ${LedgerSMB::Sysconfig::printer}{ $form->{media} };
         $form->{printmode} = '|-';
 
