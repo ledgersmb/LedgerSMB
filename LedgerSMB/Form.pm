@@ -2147,7 +2147,6 @@ sub all_business_units {
     );
 
     while (my $classref = $class_sth->fetchrow_hashref('NAME_lc')){
-        warn $classref->{id};
         push @{$self->{bu_class}}, $classref;
         $bu_sth->execute($classref->{id}, $transdate, $credit_id);
         $self->{b_units}->{$classref->{id}} = [];
