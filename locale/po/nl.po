@@ -148,7 +148,7 @@ msgstr "Standaard Kopie Email aan"
 
 #: bin/am.pl:72 LedgerSMB/Scripts/configuration.pm:31
 msgid "Default Email BCC"
-msgstr "Standaard Email"
+msgstr "Standaard Email BCC"
 
 #: bin/am.pl:74 LedgerSMB/Scripts/configuration.pm:33
 msgid "Default Email From"
@@ -1063,7 +1063,7 @@ msgstr "Inplannen"
 
 #: bin/ir.pl:903 bin/is.pl:762 bin/aa.pl:1729
 msgid "On Hold"
-msgstr "niet geaccordeerd vasthouden"
+msgstr "Wacht"
 
 #: bin/ir.pl:905 bin/is.pl:973 bin/aa.pl:1002
 #: addons/1.3/extended_arap/trunk/UI/aa.html:627
@@ -1073,12 +1073,12 @@ msgstr "Opslaan info"
 #: bin/ir.pl:926 bin/is.pl:996 bin/aa.pl:1014 bin/gl.pl:309
 #: addons/1.3/extended_arap/trunk/UI/aa.html:564
 msgid "Post as Saved"
-msgstr "Opslaan als zijnde geaccordeerd"
+msgstr "Accordeer opgeslagen transactie"
 
 #: bin/ir.pl:931 bin/is.pl:1001 bin/aa.pl:1019 bin/gl.pl:316
 #: addons/1.3/extended_arap/trunk/UI/aa.html:573
 msgid "Post as Shown"
-msgstr "Geaccordeerd als getoond"
+msgstr "Accordeer getoonde transactie"
 
 #: bin/ir.pl:958 bin/ic.pl:968 bin/is.pl:1044 bin/aa.pl:1063
 msgid "Profit/Loss"
@@ -1101,7 +1101,7 @@ msgstr "Bestandstype"
 #: bin/ir.pl:965 bin/ir.pl:986 bin/ic.pl:899 bin/ic.pl:920 bin/is.pl:1051
 #: bin/is.pl:1072 bin/aa.pl:1070 bin/aa.pl:1091 bin/oe.pl:911 bin/oe.pl:932
 msgid "Attached at"
-msgstr "BIJGEVOEGD AAN"
+msgstr "Bijgevoegd op"
 
 #: bin/ir.pl:966 bin/ir.pl:987 bin/ic.pl:900 bin/ic.pl:921 bin/is.pl:1052
 #: bin/is.pl:1073 bin/aa.pl:1071 bin/aa.pl:1092 bin/oe.pl:912 bin/oe.pl:933
@@ -2056,7 +2056,7 @@ msgstr "Betalingen m.b.t. niet geldige facturen moeten worden teruggeboekt"
 
 #: bin/is.pl:760
 msgid "Off Hold"
-msgstr "Opnieuw accorderen"
+msgstr "Uit de wacht"
 
 #: bin/is.pl:919 bin/oe.pl:822 tools/dbstrings:180
 msgid "Sales Invoice"
@@ -2064,7 +2064,7 @@ msgstr "Verkoopfactuur"
 
 #: bin/is.pl:971
 msgid "Void"
-msgstr "Ongeldig"
+msgstr "Maak ongeldig"
 
 #: bin/is.pl:1355 bin/pe.pl:1695 bin/aa.pl:1340
 #: addons/1.4/pos/trunk/bin/pos.pl:686
@@ -2255,7 +2255,7 @@ msgstr "Bedrijfseenheid Control Code"
 
 #: bin/aa.pl:727 addons/1.3/extended_arap/trunk/UI/aa.html:291
 msgid "Tax Form Applied"
-msgstr "Aangifte belasting ingediend"
+msgstr "Belasting formulier toegepast"
 
 #: bin/aa.pl:1027
 #, fuzzy
@@ -2382,7 +2382,7 @@ msgstr "Kassacorrectie door invoerfout."
 
 #: bin/gl.pl:198
 msgid "[_1] Cash Transfer Transaction"
-msgstr "Contante verkooptransactie"
+msgstr "Geldoverboeking Toevoegen"
 
 #: bin/gl.pl:201
 #, fuzzy
@@ -2391,7 +2391,7 @@ msgstr "Journaalpost Toevoegen"
 
 #: bin/gl.pl:638
 msgid "Account [_1] not found."
-msgstr "Rekening niet gevonden"
+msgstr  "Rekening %1 niet gevonden"
 
 #: bin/gl.pl:673
 #, fuzzy
@@ -3060,7 +3060,7 @@ msgstr "Transactie"
 
 #: UI/menu/expanding.html:45
 msgid "Logged into [_1]"
-msgstr "Login in"
+msgstr "Login in %1"
 
 #: UI/business_units/filter.html:35
 msgid "Active On"
@@ -3336,7 +3336,7 @@ msgstr "LaTeX Sjablonen"
 
 #: LedgerSMB/Scripts/configuration.pm:227
 msgid "Error while opening directory: [_1]"
-msgstr "Four bij het openen van de directory"
+msgstr "Four bij het openen van de directory %1"
 
 #: LedgerSMB/Scripts/payment.pm:146
 msgid "Pay To"
