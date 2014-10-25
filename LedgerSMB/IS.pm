@@ -775,7 +775,12 @@ sub customer_details {
                   JOIN entity_credit_account eca ON e.id = eca.entity_id
                   LEFT JOIN entity_bank_account eba ON eca.entity_id = eba.entity_id
 		  LEFT JOIN eca_to_location el ON eca.id = el.credit_id
-		  LEFT JOIN location l ON el.location_id = l.id
+                               and el.location_class=1
+		  LEFT JOIN entity_to_location el2
+                            ON eca.entity_id = el2.entity_id 
+                               and el2.location_class=1
+		  LEFT JOIN location l 
+                            ON coalesce(el.location_id,el2.location_id) = l.id
 		  LEFT JOIN country ON l.country_id = country.id
 		 WHERE eca.id = ? limit 1|;
 
@@ -795,6 +800,7 @@ sub customer_details {
 sub post_invoice {
 
     my ( $self, $myconfig, $form ) = @_;
+
     $form->all_business_units;
     $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
       if $form->should_update_defaults('invnumber');
@@ -837,6 +843,7 @@ sub post_invoice {
 		  FROM parts p
 		 WHERE p.id = ?|;
     my $pth = $dbh->prepare($query) || $form->dberror($query);
+    $form->{is_return} ||= 0;
 
     if ( $form->{id} ) {
         $keepcleared = 1;
@@ -848,9 +855,11 @@ sub post_invoice {
             &reverse_invoice( $dbh, $form );
         }
         else {
-            $query = qq|INSERT INTO ar (id, entity_credit_account) VALUES (?, ?)|;
+            $query = qq|INSERT INTO ar (id, entity_credit_account, is_return) 
+                        VALUES (?, ?, ?)|;
             $sth   = $dbh->prepare($query);
-            $sth->execute( $form->{id}, $form->{customer_id}) || $form->dberror($query);
+            $sth->execute($form->{id}, $form->{customer_id}, $form->{is_return})
+                 || $form->dberror($query);
         }
 
     }
@@ -1473,7 +1482,8 @@ sub post_invoice {
 		       language_code = ?,
 		       ponumber = ?,
                        approved = ?,
-		       crdate = ?
+		       crdate = ?,
+                       is_return = ?
 		 WHERE id = ?
              |;
     $sth = $dbh->prepare($query);
@@ -1490,7 +1500,8 @@ sub post_invoice {
         $form->{currency},
         $form->{employee_id},   $form->{till},
         $form->{language_code}, $form->{ponumber}, $approved,
-        $form->{crdate} || 'today',	$form->{id}
+        $form->{crdate} || 'today', $form->{is_return},
+        $form->{id}
     ) || $form->dberror($query);
 
     # add shipto
@@ -1752,7 +1763,7 @@ sub retrieve_invoice {
         $ref = $sth->fetchrow_hashref(NAME_lc);
         $ref->{locationid} = $ref->{id};
         delete $ref->{id};
-        for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
+        for ( keys %$ref ) { $form->{$_} = $ref->{$_} unless $_ eq 'id' };
         $sth->finish;
 
         # retrieve individual items
@@ -2137,20 +2148,7 @@ sub list_locations_contacts
 
     $sth->finish();
 
-
-
-
-
-
-
-
-
-
-
-
     # for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
-
-
 }
 
 

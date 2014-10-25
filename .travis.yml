@@ -12,12 +12,13 @@ env:
   - DB_TESTING: 1
 before_install:
    - "cpanm DBI"
+   - "cpanm HTTP::Tiny"
    - "cpanm DBD::Pg"
    - "cpanm Try::Tiny"
    - "cpanm Memoize"
    - "cpanm Test::More"
    - "cpanm Test::Trap"
-   - "cpanm Test::Exception"
+   - "cpanm http://search.cpan.org/CPAN/authors/id/A/AD/ADIE/Test-Exception-0.32.tar.gz"
    - "cpanm Devel::Cover::Report::Coveralls"
    - "cpanm Data::Dumper"
    - "cpanm Log::Log4perl"

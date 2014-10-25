@@ -270,7 +270,7 @@ sub display_form
 		    { ndx => 1, key => 'U', value => $locale->text('Update') },
 		  'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
                   'edit_and_save' => {ndx => 4, key => 'V', 
-                          value => $locale->text('Save') },
+                          value => $locale->text('Save Draft') },
                   'save_temp' =>
                     { ndx   => 9, 
                       key   => 'T', 
@@ -308,7 +308,7 @@ sub display_form
 		$button{approve} = { 
 			ndx   => 3, 
 			key   => 'S', 
-			value => $locale->text('Post as Saved') };
+			value => $locale->text('Post') };
 		$a{approve} = 1;
 		$a{edit_and_save} = 1;
 		$a{update} = 1;
@@ -316,7 +316,7 @@ sub display_form
 		    $button{edit_and_save} = { 
 			ndx   => 4, 
 			key   => 'O', 
-			value => $locale->text('Save as Shown') };
+			value => $locale->text('Save Draft') };
 		}
 		delete $button{post};
 	      }

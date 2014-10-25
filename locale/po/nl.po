@@ -8,6 +8,7 @@
 #          Bert Tijhuis <domino@dse.nl>
 #          Paul Tammes <ptammes@home.nl>
 #          Arno Peters <a.w.peters@ieee.org>
+#          Frans van der Star <f.van.der.star@gmail.com>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,27 +25,29 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.1.1\n"
+"Project-Id-Version: LedgerSMB 1.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-12-29 19:35-0800\n"
-"PO-Revision-Date: 2006-11-01 23:39+0100\n"
-"Last-Translator: Arno Peters <a.w.peters@ieee.org>\n"
+"PO-Revision-Date: 2014-10-22 18:01+0200\n"
+"Last-Translator: Frans <f.van.der.star@gmail.com>\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Pootle 2.1.6\n"
 
 #: lsmb-request.pl:77
 msgid "No workflow script specified"
-msgstr ""
+msgstr "Geen proces voortgang script gespecificeerd"
 
 #: lsmb-request.pl:104
 msgid "Unable to open script"
-msgstr ""
+msgstr "Kan script niet openen"
 
 #: lsmb-request.pl:108
-#, fuzzy
 msgid "Action Not Defined: "
-msgstr "action= niet gedefinieerd!"
+msgstr "aktie niet gedefinieerd!"
 
 #: old-handler.pl:153
 msgid "You are logged out!"
@@ -73,11 +76,11 @@ msgstr "Verkoopfactuur/Transactienummer Debiteuren"
 
 #: bin/am.pl:57 LedgerSMB/Scripts/configuration.pm:87
 msgid "Max per dropdown"
-msgstr ""
+msgstr "Max per dropdown"
 
 #: bin/am.pl:58 LedgerSMB/Scripts/configuration.pm:88
 msgid "Sales Order Number"
-msgstr "Verkoopordercode"
+msgstr "Verkooporder Nummer"
 
 #: bin/am.pl:60 LedgerSMB/Scripts/configuration.pm:90
 msgid "Vendor Invoice/AP Transaction Number"
@@ -85,7 +88,7 @@ msgstr "Inkoopfactuur/Transactienummer Crediteuren"
 
 #: bin/am.pl:61 LedgerSMB/Scripts/configuration.pm:91
 msgid "Sales Quotation Number"
-msgstr "Verkoopoffertecode"
+msgstr "Verkoopofferte Nummer"
 
 #: bin/am.pl:62 bin/oe.pl:504 LedgerSMB/Scripts/configuration.pm:92
 msgid "RFQ Number"
@@ -100,15 +103,15 @@ msgstr "Prijsaanvraagcode"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Product.pm:77
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:69
 msgid "Part Number"
-msgstr "Artikelcode"
+msgstr "Artikel Nummer"
 
 #: bin/am.pl:64 LedgerSMB/Scripts/configuration.pm:94
 msgid "Job/Project Number"
-msgstr "Job-/Projectcode"
+msgstr "Job-/Project Nummer"
 
 #: bin/am.pl:65 LedgerSMB/Scripts/configuration.pm:95
 msgid "Employee Number"
-msgstr "Werknemercode"
+msgstr "Werknemer Nummer"
 
 #: bin/am.pl:66 bin/io.pl:2002 bin/aa.pl:1615
 #: UI/payments/payments_filter.html:65 LedgerSMB/Scripts/configuration.pm:96
@@ -116,7 +119,7 @@ msgstr "Werknemercode"
 #: LedgerSMB/Report/Invoices/Payments.pm:184 LedgerSMB/Report/Margin/ECA.pm:83
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Margin/ECA.pm:83
 msgid "Customer Number"
-msgstr "Klantcode"
+msgstr "Klant Nummer"
 
 #: bin/am.pl:67 bin/io.pl:2003 bin/aa.pl:1624
 #: UI/payments/payments_filter.html:63 LedgerSMB/Scripts/configuration.pm:97
@@ -124,7 +127,7 @@ msgstr "Klantcode"
 #: LedgerSMB/Report/Invoices/Payments.pm:182
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:156
 msgid "Vendor Number"
-msgstr "Leveranciercode"
+msgstr "Leverancier Nummer"
 
 #: bin/am.pl:68 LedgerSMB/Scripts/configuration.pm:101
 #, fuzzy
@@ -132,58 +135,49 @@ msgid "Check Prefix"
 msgstr "Chequenummer"
 
 #: bin/am.pl:69 LedgerSMB/Scripts/configuration.pm:54
-#, fuzzy
 msgid "Password Duration"
-msgstr "Wachtwoord gewijzigd!"
+msgstr "Geldigheid wachtwoord"
 
 #: bin/am.pl:70 LedgerSMB/Scripts/configuration.pm:27
-#, fuzzy
 msgid "Default Email To"
-msgstr "Standaard Sjabloon"
+msgstr "Standaard Email aan"
 
 #: bin/am.pl:71 LedgerSMB/Scripts/configuration.pm:29
-#, fuzzy
 msgid "Default Email CC"
-msgstr "Standaard Sjabloon"
+msgstr "Standaard Kopie Email aan"
 
 #: bin/am.pl:72 LedgerSMB/Scripts/configuration.pm:31
-#, fuzzy
 msgid "Default Email BCC"
-msgstr "Standaard Sjabloon"
+msgstr "Standaard Email BCC"
 
 #: bin/am.pl:74 LedgerSMB/Scripts/configuration.pm:33
 msgid "Default Email From"
-msgstr ""
+msgstr "Standaard Email Van"
 
 #: bin/am.pl:75 LedgerSMB/Scripts/configuration.pm:21
 #: LedgerSMB/Report/Invoices/Payments.pm:146
 msgid "Company Name"
-msgstr "Bedrijfsnaam"
+msgstr "Firmanaam"
 
 #: bin/am.pl:76 LedgerSMB/Scripts/configuration.pm:22
-#, fuzzy
 msgid "Company Address"
-msgstr "Bedrijfsnaam"
+msgstr "Firma adres"
 
 #: bin/am.pl:77 LedgerSMB/Scripts/configuration.pm:23
-#, fuzzy
 msgid "Company Phone"
-msgstr "Bedrijfsnaam"
+msgstr "Firma Telefoon"
 
 #: bin/am.pl:78 LedgerSMB/Scripts/configuration.pm:24
-#, fuzzy
 msgid "Company Fax"
-msgstr "Bedrijfsnaam"
+msgstr "Firma Fax"
 
 #: bin/am.pl:80 LedgerSMB/Scripts/configuration.pm:35
-#, fuzzy
 msgid "Company Sales Tax ID"
-msgstr "Bedrijfsnaam"
+msgstr "Firma BTW Nummer"
 
 #: bin/am.pl:82 LedgerSMB/Scripts/configuration.pm:37
-#, fuzzy
 msgid "Company License Number"
-msgstr "Werknemercode"
+msgstr "Firma K.v.K. Nummer"
 
 #: bin/am.pl:111 bin/am.pl:122 bin/am.pl:334 bin/ir.pl:911 bin/ic.pl:865
 #: bin/is.pl:981 bin/pe.pl:460 bin/pe.pl:665 bin/pe.pl:1043 bin/aa.pl:1026
@@ -260,9 +254,8 @@ msgid "GIFI"
 msgstr "GIFI"
 
 #: bin/am.pl:230
-#, fuzzy
 msgid "CSV Report"
-msgstr "Rapporten"
+msgstr "CSV Rapporten"
 
 #: bin/am.pl:288
 msgid "Account does not exist!"
@@ -359,13 +352,12 @@ msgid "Description"
 msgstr "Omschrijving"
 
 #: bin/am.pl:481
-#, fuzzy
 msgid "Discount %"
-msgstr "Korting"
+msgstr "Korting %"
 
 #: bin/am.pl:514 tools/dbstrings:79
 msgid "Add Business"
-msgstr "Branche Toevoegen"
+msgstr "Bedrijfsactiviteit Toevoegen"
 
 #: bin/am.pl:536
 #, fuzzy
@@ -398,7 +390,7 @@ msgstr "SIC Toevoegen"
 
 #: bin/am.pl:703
 msgid "[_1] SIC"
-msgstr ""
+msgstr "SIC"
 
 #: bin/am.pl:720 bin/am.pl:879
 msgid "Code missing!"
@@ -434,9 +426,8 @@ msgid "Confirm!"
 msgstr "Bevestig!"
 
 #: bin/am.pl:935
-#, fuzzy
 msgid "Delete Language"
-msgstr "Taal Wijzigen"
+msgstr "Taal Verwijderen"
 
 #: bin/am.pl:946
 #, fuzzy
@@ -462,9 +453,8 @@ msgstr "Sjabloon Wijzigen"
 
 #: bin/am.pl:1114 bin/aa.pl:1004 bin/gl.pl:275
 #: addons/1.3/extended_arap/trunk/UI/aa.html:634
-#, fuzzy
 msgid "Save Template"
-msgstr "LaTeX Sjablonen"
+msgstr "Opslaan sjabloon"
 
 #: bin/am.pl:1130
 msgid "Template saved!"
@@ -472,7 +462,7 @@ msgstr "Sjabloon opgeslagen!"
 
 #: bin/am.pl:1163 tools/dbstrings:75
 msgid "Taxes"
-msgstr "Belastingen"
+msgstr "BTW"
 
 #: bin/am.pl:1370
 #, fuzzy
@@ -485,7 +475,7 @@ msgstr "Belastingen opgeslagen!"
 
 #: bin/am.pl:1404
 msgid "Cannot save taxes!"
-msgstr "Kan belastingen niet opslaan!"
+msgstr "Kan BTW niet opslaan!"
 
 #: bin/am.pl:1414
 msgid "Password does not match!"
@@ -642,7 +632,7 @@ msgstr "Inkooporders"
 
 #: bin/am.pl:1714
 msgid "Next Number"
-msgstr "Volgende Code"
+msgstr "Volgende Nummer"
 
 #: bin/am.pl:1791
 msgid "Process Transactions"
@@ -659,19 +649,16 @@ msgid "PDF"
 msgstr "PDF"
 
 #: bin/am.pl:2020
-#, fuzzy
 msgid "Posting Sales Invoice [_1]"
-msgstr "Verkoopfactuur "
+msgstr "Verkoopfactuur accordering"
 
 #: bin/am.pl:2030
-#, fuzzy
 msgid "Posting Vendor Invoice [_1]"
-msgstr "Inkoopfactuur "
+msgstr "Inkoopfactuur accordering"
 
 #: bin/am.pl:2042 bin/am.pl:2051
-#, fuzzy
 msgid "Posting Transaction [_1]"
-msgstr "Crediteurenboeking"
+msgstr "Accordering transactie"
 
 #: bin/am.pl:2060 bin/am.pl:2131 bin/am.pl:2185 bin/am.pl:2228 bin/am.pl:2275
 #: bin/bp.pl:261
@@ -692,16 +679,15 @@ msgstr "Inkooporder"
 
 #: bin/am.pl:2126
 msgid "Saving [_1] [_2]"
-msgstr ""
+msgstr "Opslaan"
 
 #: bin/am.pl:2134 bin/am.pl:2231 bin/am.pl:2278
 msgid "failed"
 msgstr "mislukt"
 
 #: bin/am.pl:2180
-#, fuzzy
 msgid "Posting GL Transaction [_1]"
-msgstr "Grootboekboeking"
+msgstr "Grootboekboeking transactie"
 
 #: bin/am.pl:2217 bin/bp.pl:253
 msgid "Printing"
@@ -709,7 +695,7 @@ msgstr "Afdrukken"
 
 #: bin/am.pl:2221 bin/am.pl:2268
 msgid "Invalid redirect"
-msgstr ""
+msgstr "Niet bruikbaar redirect"
 
 #: bin/am.pl:2255
 msgid "Sending"
@@ -725,11 +711,11 @@ msgstr "Allemaal"
 
 #: bin/rp.pl:156
 msgid "Last Only"
-msgstr ""
+msgstr "Uitsluitend de laatste"
 
 #: bin/rp.pl:157
 msgid "None"
-msgstr ""
+msgstr "Nihiel"
 
 #: bin/rp.pl:169 bin/ic.pl:979 bin/ic.pl:1118 bin/ic.pl:2190 bin/ic.pl:2464
 #: bin/ic.pl:2618 bin/bp.pl:163 bin/arap.pl:265 bin/arap.pl:473
@@ -753,13 +739,12 @@ msgid "Department: [_1]"
 msgstr "Afdeling"
 
 #: bin/rp.pl:406
-#, fuzzy
 msgid "Project Number: [_1]"
-msgstr "Projectcode"
+msgstr "Project Nummer"
 
 #: bin/rp.pl:457
 msgid "N/A"
-msgstr "N/A"
+msgstr "niet van toepassing"
 
 #: bin/rp.pl:618
 #, fuzzy
@@ -788,6 +773,8 @@ msgstr "Inkoopfactuur Wijzigen"
 #: bin/ir.pl:157 bin/is.pl:129 bin/aa.pl:199
 msgid "No currencies defined.  Please set these up under System/Defaults."
 msgstr ""
+"Geen valuta gedefinieerd   Ga naar Systeem Standaar en maak daar tenminste "
+"een valuta aan"
 
 #: bin/ir.pl:370 bin/pe.pl:821 bin/pe.pl:999
 #: addons/1.4/pos/trunk/bin/pos.pl:308 UI/Contact/divs/credit.html:227
@@ -822,7 +809,7 @@ msgstr "Wisselkoers"
 #: bin/ir.pl:417 bin/ir.pl:907 bin/is.pl:393 bin/is.pl:975 bin/aa.pl:547
 #: bin/aa.pl:1006 bin/gl.pl:281 bin/oe.pl:543
 msgid "New"
-msgstr ""
+msgstr "Nieuw"
 
 #: bin/ir.pl:422 bin/is.pl:398 bin/aa.pl:531 bin/oe.pl:548
 #: addons/1.4/pos/trunk/bin/pos.pl:253
@@ -856,7 +843,7 @@ msgstr "Resterend"
 
 #: bin/ir.pl:493 bin/is.pl:511 bin/oe.pl:471
 msgid "Entity Code"
-msgstr ""
+msgstr "Bedrijfseenheid code"
 
 #: bin/ir.pl:496 bin/ir.pl:793 bin/ic.pl:1537 bin/is.pl:514 bin/is.pl:838
 #: bin/aa.pl:668 bin/aa.pl:725 bin/aa.pl:885 bin/aa.pl:1697 bin/oe.pl:474
@@ -920,16 +907,15 @@ msgstr "Vervaldatum"
 #: LedgerSMB/Report/Contact/Purchase.pm:71
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:71
 msgid "PO Number"
-msgstr "PO code"
+msgstr "PO Nummer"
 
 #: bin/ir.pl:577 bin/is.pl:465 bin/is.pl:634
 msgid "Automatic"
-msgstr ""
+msgstr "Automatisch"
 
 #: bin/ir.pl:581 bin/is.pl:469 bin/is.pl:638
-#, fuzzy
 msgid "Manual"
-msgstr "januari"
+msgstr "Handmatig"
 
 #: bin/ir.pl:606 bin/is.pl:666 bin/aa.pl:516 bin/oe.pl:692
 #: addons/1.4/pos/trunk/bin/pos.pl:423
@@ -938,16 +924,15 @@ msgstr "Belasting Inbegrepen"
 
 #: bin/ir.pl:616 bin/is.pl:677
 msgid "Rate"
-msgstr "Percentage"
+msgstr "Tarief"
 
 #: bin/ir.pl:617 bin/is.pl:678 LedgerSMB/Scripts/asset.pm:1010
 msgid "Basis"
-msgstr ""
+msgstr "Basis"
 
 #: bin/ir.pl:618 bin/is.pl:679
-#, fuzzy
 msgid "Tax Code"
-msgstr "Werkcode"
+msgstr "BTW Code"
 
 #: bin/ir.pl:619 bin/ir.pl:795 bin/is.pl:680 bin/is.pl:840 bin/aa.pl:887
 #: addons/1.4/pos/trunk/bin/pos.pl:459
@@ -986,9 +971,8 @@ msgid "Import Text"
 msgstr "Importeer Tekst"
 
 #: bin/ir.pl:758 bin/is.pl:463 bin/is.pl:802
-#, fuzzy
 msgid "Calculate Taxes"
-msgstr "Bereken"
+msgstr "Bereken BTW"
 
 #: bin/ir.pl:766 bin/is.pl:810 bin/aa.pl:1662 bin/oe.pl:749
 #: addons/1.4/pos/trunk/bin/pos.pl:573 LedgerSMB/Scripts/payment.pm:198
@@ -1058,9 +1042,8 @@ msgid "Update"
 msgstr "Bijwerken"
 
 #: bin/ir.pl:891 bin/is.pl:956 bin/aa.pl:992
-#, fuzzy
 msgid "Copy to New"
-msgstr "Kopieër naar rekeningstelsel"
+msgstr "Kopieër naar Nieuw"
 
 #: bin/ir.pl:892 bin/is.pl:959 bin/aa.pl:995 bin/gl.pl:271
 #: UI/payments/payment2.html:330 addons/1.3/extended_arap/trunk/UI/aa.html:594
@@ -1079,71 +1062,63 @@ msgid "Schedule"
 msgstr "Inplannen"
 
 #: bin/ir.pl:903 bin/is.pl:762 bin/aa.pl:1729
-#, fuzzy
 msgid "On Hold"
-msgstr "Op voorraad"
+msgstr "Wacht"
 
 #: bin/ir.pl:905 bin/is.pl:973 bin/aa.pl:1002
 #: addons/1.3/extended_arap/trunk/UI/aa.html:627
-#, fuzzy
 msgid "Save Info"
-msgstr "Opslaan"
+msgstr "Opslaan info"
 
 #: bin/ir.pl:926 bin/is.pl:996 bin/aa.pl:1014 bin/gl.pl:309
 #: addons/1.3/extended_arap/trunk/UI/aa.html:564
-#, fuzzy
 msgid "Post as Saved"
-msgstr "Inboeken als nieuw"
+msgstr "Accordeer opgeslagen transactie"
 
 #: bin/ir.pl:931 bin/is.pl:1001 bin/aa.pl:1019 bin/gl.pl:316
 #: addons/1.3/extended_arap/trunk/UI/aa.html:573
-#, fuzzy
 msgid "Post as Shown"
-msgstr "Inboeken als nieuw"
+msgstr "Accordeer getoonde transactie"
 
 #: bin/ir.pl:958 bin/ic.pl:968 bin/is.pl:1044 bin/aa.pl:1063
 msgid "Profit/Loss"
-msgstr ""
+msgstr "Verlies/Winst"
 
 #: bin/ir.pl:961 bin/ic.pl:895 bin/is.pl:1047 bin/aa.pl:1066 bin/oe.pl:907
 msgid "Attached and Linked Files"
-msgstr ""
+msgstr "Bijgevoegde bestanden en link naar bestanden"
 
 #: bin/ir.pl:963 bin/ir.pl:982 bin/ic.pl:897 bin/ic.pl:916 bin/is.pl:1049
 #: bin/is.pl:1068 bin/aa.pl:1068 bin/aa.pl:1087 bin/oe.pl:909 bin/oe.pl:928
 msgid "File name"
-msgstr ""
+msgstr "Bestandsnaam"
 
 #: bin/ir.pl:964 bin/ir.pl:983 bin/ic.pl:898 bin/ic.pl:917 bin/is.pl:1050
 #: bin/is.pl:1069 bin/aa.pl:1069 bin/aa.pl:1088 bin/oe.pl:910 bin/oe.pl:929
 msgid "File type"
-msgstr ""
+msgstr "Bestandstype"
 
 #: bin/ir.pl:965 bin/ir.pl:986 bin/ic.pl:899 bin/ic.pl:920 bin/is.pl:1051
 #: bin/is.pl:1072 bin/aa.pl:1070 bin/aa.pl:1091 bin/oe.pl:911 bin/oe.pl:932
-#, fuzzy
 msgid "Attached at"
-msgstr "Bijlage"
+msgstr "Bijgevoegd op"
 
 #: bin/ir.pl:966 bin/ir.pl:987 bin/ic.pl:900 bin/ic.pl:921 bin/is.pl:1052
 #: bin/is.pl:1073 bin/aa.pl:1071 bin/aa.pl:1092 bin/oe.pl:912 bin/oe.pl:933
-#, fuzzy
 msgid "Attached by"
-msgstr "Bijlage"
+msgstr "Bijgevoegd door"
 
 #: bin/ir.pl:984 bin/ic.pl:918 bin/is.pl:1070 bin/aa.pl:1089 bin/oe.pl:930
 msgid "Attached To Type"
-msgstr ""
+msgstr "Bijgevoegd bestandstype"
 
 #: bin/ir.pl:985 bin/ic.pl:919 bin/is.pl:1071 bin/aa.pl:1090 bin/oe.pl:931
-#, fuzzy
 msgid "Attached To"
-msgstr "Bijlage"
+msgstr "Bijgevoegd aan"
 
 #: bin/ir.pl:1011 bin/ic.pl:947 bin/is.pl:1097 bin/aa.pl:1118 bin/oe.pl:957
-#, fuzzy
 msgid "Attach"
-msgstr "Bijlage"
+msgstr "Bijvoegen"
 
 #: bin/ir.pl:1057 bin/ir.pl:1313 bin/is.pl:1334 bin/oe.pl:1209
 msgid "ea"
@@ -1151,7 +1126,7 @@ msgstr "p.st."
 
 #: bin/ir.pl:1326 bin/is.pl:1346 bin/oe.pl:1221
 msgid "Could not save the data.  Please try again"
-msgstr ""
+msgstr "Kan gegevens niet opslaan Probeer opnieuw"
 
 #: bin/ir.pl:1335 bin/is.pl:1354 bin/aa.pl:1344
 msgid "Invoice Date missing!"
@@ -1187,44 +1162,36 @@ msgid "Cannot post invoice!"
 msgstr "Kan factuur niet boeken!"
 
 #: bin/ic.pl:130
-#, fuzzy
 msgid "Cannot create Part; Inventory account does not exist!"
-msgstr "Inventarisrekening bestaat niet!"
+msgstr "Kan geen artikel aanmaken; Inventarisrekening bestaat niet!"
 
 #: bin/ic.pl:133
-#, fuzzy
 msgid "Cannot create Part; Income account does not exist!"
-msgstr "Inkomstenrekening bestaat niet!"
+msgstr "Kan geen artikel aanmaken; Inkomstenrekening bestaat niet!"
 
 #: bin/ic.pl:136
-#, fuzzy
 msgid "Cannot create Part; COGS account does not exist!"
-msgstr "Kostprijs Omzet rekening bestaat niet!"
+msgstr "Kan geen artikel aanmaken; Kostprijs Omzet rekening bestaat niet!"
 
 #: bin/ic.pl:145
-#, fuzzy
 msgid "Cannot create Service; Income account does not exist!"
-msgstr "Inkomstenrekening bestaat niet!"
+msgstr "Kan geen diensten aanmaken; Inkomstenrekening bestaat niet!"
 
 #: bin/ic.pl:149
-#, fuzzy
 msgid "Cannot create Service; Expense account does not exist!"
-msgstr "Uitgavenrekening bestaat niet!"
+msgstr "Kan geen diensten aanmaken; Uitgavenrekening bestaat niet!"
 
 #: bin/ic.pl:158
-#, fuzzy
 msgid "Cannot create Assembly; Income account does not exist!"
-msgstr "Inkomstenrekening bestaat niet!"
+msgstr "Kan geen assembly aanmaken; Inkomstenrekening bestaat niet!"
 
 #: bin/ic.pl:166
-#, fuzzy
 msgid "Cannot create Labor; Inventory account does not exist!"
-msgstr "Inventarisrekening bestaat niet!"
+msgstr "Kan werkopdracht aanmaken; Inventarisrekening bestaat niet!"
 
 #: bin/ic.pl:169
-#, fuzzy
 msgid "Cannot create Labor; COGS account does not exist!"
-msgstr "Kostprijs Omzet rekening bestaat niet!"
+msgstr "Kan geen werkorder aanmaken; Kostprijs Omzet rekening bestaat niet!"
 
 #: bin/ic.pl:430 bin/ic.pl:1008 bin/ic.pl:1014 bin/ic.pl:1154 bin/ic.pl:1686
 #: bin/io.pl:240 bin/io.pl:532 bin/pe.pl:142 bin/pe.pl:291 bin/pe.pl:298
@@ -1252,7 +1219,7 @@ msgstr "Laaste Kostprijs"
 
 #: bin/ic.pl:470 bin/ic.pl:647 LedgerSMB/Report/Inventory/Search.pm:237
 msgid "Markup"
-msgstr "Winstmarge"
+msgstr "Bruto marge"
 
 #: bin/ic.pl:481 bin/ic.pl:707 LedgerSMB/Report/Inventory/Search.pm:205
 msgid "On Hand"
@@ -1298,7 +1265,7 @@ msgstr "Kostprijs omzet"
 #: LedgerSMB/Report/Contact/Purchase.pm:83
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:83
 msgid "Tax"
-msgstr "Belasting"
+msgstr "BTW"
 
 #: bin/ic.pl:553 bin/ic.pl:580 bin/ic.pl:602
 #: LedgerSMB/Report/Inventory/Search.pm:217
@@ -1332,7 +1299,7 @@ msgstr "Niet actief"
 #: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:20
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:328
 msgid "Number"
-msgstr "Code"
+msgstr "Nummer"
 
 #: bin/ic.pl:789
 msgid "Link Accounts"
@@ -1350,14 +1317,12 @@ msgid "Unit"
 msgstr "Eenheid"
 
 #: bin/ic.pl:971
-#, fuzzy
 msgid "Date From"
-msgstr "Datumformaat"
+msgstr "Datum vanaf"
 
 #: bin/ic.pl:974
-#, fuzzy
 msgid "Date To"
-msgstr "Datum"
+msgstr "Datum tot en met"
 
 #: bin/ic.pl:1027 bin/pe.pl:112 bin/pe.pl:1256 bin/aa.pl:1597
 msgid "Period"
@@ -1403,9 +1368,8 @@ msgid "Model"
 msgstr "Type"
 
 #: bin/ic.pl:1395
-#, fuzzy
 msgid "Bar Code"
-msgstr "Werkcode"
+msgstr "Bar code"
 
 #: bin/ic.pl:1424 bin/ic.pl:1523 bin/oe.pl:2503
 #: LedgerSMB/Report/Invoices/Outstanding.pm:229
@@ -1630,19 +1594,16 @@ msgid "Account: [_1]"
 msgstr "Rekening"
 
 #: bin/bp.pl:311
-#, fuzzy
 msgid "Invoice Number: [_1]"
-msgstr "Factuurcode"
+msgstr "Factuurnummer"
 
 #: bin/bp.pl:316
-#, fuzzy
 msgid "Order Number: [_1]"
-msgstr "Referentie"
+msgstr "Order Nummer"
 
 #: bin/bp.pl:321
-#, fuzzy
 msgid "Quotation Number: [_1]"
-msgstr "Offertecode"
+msgstr "Offertenummer"
 
 #: bin/bp.pl:327
 #, fuzzy
@@ -1651,7 +1612,7 @@ msgstr "Van"
 
 #: bin/bp.pl:333
 msgid "To [_1]"
-msgstr ""
+msgstr "Naar"
 
 #: bin/bp.pl:368 bin/io.pl:1348 bin/io.pl:1539 bin/is.pl:287 bin/is.pl:1395
 #: LedgerSMB/Scripts/payment.pm:762 LedgerSMB/Report/Aging.pm:99
@@ -1708,18 +1669,16 @@ msgstr "Naam"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:96
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/ECA.pm:92
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:60
-#, fuzzy
 msgid "Control Code"
-msgstr "Werkcode"
+msgstr "Control Code"
 
 #: bin/arap.pl:169
-#, fuzzy
 msgid "[_1] Number"
-msgstr "Code"
+msgstr "Nummer"
 
 #: bin/arap.pl:173 addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:329
 msgid "City"
-msgstr "Stad"
+msgstr "(Woon)Plaats"
 
 #: bin/arap.pl:372
 msgid "Project not on file!"
@@ -1731,7 +1690,7 @@ msgstr "Kies een van de onderstaande projecten"
 
 #: bin/arap.pl:527
 msgid "Reposting Not Allowed"
-msgstr ""
+msgstr "Heraccordering niet toegestaan"
 
 #: bin/arap.pl:551
 msgid "Include Payment"
@@ -1801,13 +1760,12 @@ msgid "Bcc: [_1]"
 msgstr "Bcc: %1"
 
 #: bin/arap.pl:973 bin/io.pl:1850
-#, fuzzy
 msgid "Date: [_1]"
-msgstr "Date: %1"
+msgstr "Datum : %1"
 
 #: bin/arap.pl:974 bin/io.pl:1851
 msgid "To: [_1]"
-msgstr ""
+msgstr "Naar"
 
 #: bin/arap.pl:976 bin/io.pl:1853
 #, fuzzy
@@ -1879,11 +1837,11 @@ msgstr "Totaal"
 
 #: bin/io.pl:222
 msgid "OH"
-msgstr "OH"
+msgstr "Op Voorraad"
 
 #: bin/io.pl:224
 msgid "TaxForm"
-msgstr ""
+msgstr "Belasting formulier"
 
 #: bin/io.pl:237 LedgerSMB/Report/Contact/History.pm:93
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:93
@@ -1931,9 +1889,8 @@ msgid "Service"
 msgstr "Dienst"
 
 #: bin/io.pl:1155
-#, fuzzy
 msgid "Number missing in Row [_1]"
-msgstr "Code ontbreekt in Regel"
+msgstr "Nummer ontbreekt in Regel"
 
 #: bin/io.pl:1162 bin/oe.pl:60
 msgid "Add Purchase Order"
@@ -2022,7 +1979,7 @@ msgstr "Branche Toevoegen"
 
 #: bin/io.pl:2055
 msgid "city"
-msgstr ""
+msgstr "(Woon)plaats"
 
 #: bin/io.pl:2058
 msgid "State"
@@ -2045,16 +2002,15 @@ msgstr "Land"
 #: bin/io.pl:2114 LedgerSMB/Scripts/asset.pm:633
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:38
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: bin/io.pl:2117 addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:220
 msgid "Contact"
 msgstr "Contact"
 
 #: bin/is.pl:83 bin/is.pl:103
-#, fuzzy
 msgid "Add Credit Invoice"
-msgstr "Creditfactuur"
+msgstr "Creditfactuur aanmaken"
 
 #: bin/is.pl:87 bin/is.pl:106 bin/oe.pl:1457
 msgid "Add Sales Invoice"
@@ -2062,7 +2018,7 @@ msgstr "Verkoopfactuur Toevoegen"
 
 #: bin/is.pl:411 bin/oe.pl:416 addons/1.4/pos/trunk/bin/pos.pl:278
 msgid "Business"
-msgstr "Branche"
+msgstr "Bedrijfsactiviteit"
 
 #: bin/is.pl:414 bin/oe.pl:420 addons/1.4/pos/trunk/bin/pos.pl:281
 msgid "Trade Discount"
@@ -2096,11 +2052,11 @@ msgstr "Kan factuur niet verwijderen!"
 
 #: bin/is.pl:609
 msgid "Payments associated with voided invoice may need to be reversed."
-msgstr ""
+msgstr "Betalingen m.b.t. niet geldige facturen moeten worden teruggeboekt"
 
 #: bin/is.pl:760
 msgid "Off Hold"
-msgstr ""
+msgstr "Uit de wacht"
 
 #: bin/is.pl:919 bin/oe.pl:822 tools/dbstrings:180
 msgid "Sales Invoice"
@@ -2108,7 +2064,7 @@ msgstr "Verkoopfactuur"
 
 #: bin/is.pl:971
 msgid "Void"
-msgstr ""
+msgstr "Maak ongeldig"
 
 #: bin/is.pl:1355 bin/pe.pl:1695 bin/aa.pl:1340
 #: addons/1.4/pos/trunk/bin/pos.pl:686
@@ -2138,6 +2094,7 @@ msgid "Quarter"
 msgstr "Kwartaal"
 
 #: bin/pe.pl:131 bin/pe.pl:287 bin/pe.pl:503
+#, fuzzy
 msgid "Orphaned"
 msgstr "Wees"
 
@@ -2194,9 +2151,8 @@ msgid "Add Group"
 msgstr "Productgroep Toevoegen"
 
 #: bin/pe.pl:428
-#, fuzzy
 msgid "Parent"
-msgstr "Huidig"
+msgstr "Parent"
 
 #: bin/pe.pl:573 tools/dbstrings:215
 msgid "Add Pricegroup"
@@ -2286,7 +2242,7 @@ msgstr "Boeking"
 
 #: bin/aa.pl:644 addons/1.3/extended_arap/trunk/UI/aa.html:99
 msgid "Batch Control Code"
-msgstr ""
+msgstr "Batch Control Code"
 
 #: bin/aa.pl:649 addons/1.3/extended_arap/trunk/UI/aa.html:104
 #, fuzzy
@@ -2294,13 +2250,12 @@ msgid "Batch Name"
 msgstr "Naam Activa"
 
 #: bin/aa.pl:663 addons/1.3/extended_arap/trunk/UI/aa.html:112
-#, fuzzy
 msgid "Entity Control Code"
-msgstr "Transactielogboek"
+msgstr "Bedrijfseenheid Control Code"
 
 #: bin/aa.pl:727 addons/1.3/extended_arap/trunk/UI/aa.html:291
 msgid "Tax Form Applied"
-msgstr ""
+msgstr "Belasting formulier toegepast"
 
 #: bin/aa.pl:1027
 #, fuzzy
@@ -2314,7 +2269,7 @@ msgstr "Sjabloon opgeslagen!"
 
 #: bin/aa.pl:1330 LedgerSMB/Scripts/payment.pm:328
 msgid "Data not saved.  Please try again."
-msgstr ""
+msgstr "Gegevens niet opgeslagen Probeer opnieuw"
 
 #: bin/aa.pl:1345
 msgid "Due Date missing!"
@@ -2374,9 +2329,8 @@ msgid "No."
 msgstr "Nr."
 
 #: bin/aa.pl:1649
-#, fuzzy
 msgid "Project Numbers"
-msgstr "Projectcode"
+msgstr "Project Nummers"
 
 #: bin/aa.pl:1666 LedgerSMB/Report/Invoices/Payments.pm:134
 #: LedgerSMB/Report/Invoices/Transactions.pm:254
@@ -2401,14 +2355,12 @@ msgid "Amount Due"
 msgstr "Verschuldigd Bedrag"
 
 #: bin/aa.pl:1717
-#, fuzzy
 msgid "Date to"
-msgstr "Datum"
+msgstr "Datum tot"
 
 #: bin/aa.pl:1727
-#, fuzzy
 msgid "All Invoices"
-msgstr "Facturen"
+msgstr "Alle Facturen"
 
 #: bin/aa.pl:1738
 msgid "Include in Report"
@@ -2429,7 +2381,6 @@ msgid "Adjusting till due to data entry error."
 msgstr "Kassacorrectie door invoerfout."
 
 #: bin/gl.pl:198
-#, fuzzy
 msgid "[_1] Cash Transfer Transaction"
 msgstr "Geldoverboeking Toevoegen"
 
@@ -2440,7 +2391,7 @@ msgstr "Journaalpost Toevoegen"
 
 #: bin/gl.pl:638
 msgid "Account [_1] not found."
-msgstr ""
+msgstr  "Rekening %1 niet gevonden"
 
 #: bin/gl.pl:673
 #, fuzzy
@@ -2653,7 +2604,7 @@ msgstr "Gevr"
 
 #: bin/oe.pl:2501
 msgid "Lead"
-msgstr "Doorloop"
+msgstr "Prospect Klant"
 
 #: bin/oe.pl:2505
 msgid "Generate Purchase Orders"
@@ -2801,7 +2752,7 @@ msgstr "Bedrijf"
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:121
 #: LedgerSMB/Scripts/contact.pm:121
 msgid "Person"
-msgstr ""
+msgstr "Individu"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:122
 #: LedgerSMB/Scripts/contact.pm:122
@@ -2823,19 +2774,18 @@ msgstr "Contact"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:125
 #: LedgerSMB/Scripts/contact.pm:125 LedgerSMB/Scripts/employee.pm:110
-#, fuzzy
 msgid "Bank Accounts"
-msgstr "Rekeningen Verbinden"
+msgstr "Bank rekening"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:127
 #: LedgerSMB/Scripts/contact.pm:127 LedgerSMB/Scripts/employee.pm:112
 msgid "Files"
-msgstr ""
+msgstr "Bestanden"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:228
 #: LedgerSMB/Scripts/contact.pm:231 LedgerSMB/Scripts/employee.pm:186
 msgid "Entity"
-msgstr ""
+msgstr "Bedrijfseenheid"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:230
 #: LedgerSMB/Scripts/contact.pm:233
@@ -2856,7 +2806,7 @@ msgstr "Rekening Verwijderd"
 
 #: addons/1.3/audit/trunk/scripts/audit.pl:47
 msgid "Vendor audit information not found."
-msgstr ""
+msgstr "Leverancier's audit informatie niet gevonden"
 
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:59
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:388
@@ -2940,21 +2890,20 @@ msgstr "Rekeningnummer"
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:43
 #: LedgerSMB/Report/Budget/Variance.pm:78
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:78
-#, fuzzy
 msgid "Amount Budgetted"
-msgstr "Verschuldigd Bedrag"
+msgstr "Gebudgetteerd Bedrag"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:44
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:44
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:44
 msgid "- Used"
-msgstr ""
+msgstr "Verbruikt"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:45
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:45
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:45
 msgid "= Variance"
-msgstr ""
+msgstr "Verschil"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:147
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:147
@@ -2964,28 +2913,28 @@ msgstr ""
 #: LedgerSMB/Scripts/asset.pm:902 LedgerSMB/Report/Unapproved/Drafts.pm:199
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:199
 msgid "Approve"
-msgstr ""
+msgstr "Goedkeuren"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:153
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:153
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:153
 #: LedgerSMB/Scripts/budgets.pm:113
-#, fuzzy
 msgid "Reject"
-msgstr "Project"
+msgstr "Afwijzen"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:259
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:259
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:259 LedgerSMB/Budget.pm:243
 msgid "Cannot specify both debits and credits for budget line [_1]"
 msgstr ""
+"Geen specificatie mogelijk voor zowel de debet als de credit zijde op een "
+"budget regel"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:379
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:379
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:379
-#, fuzzy
 msgid "Entered by"
-msgstr "Nodig voor"
+msgstr "Ingevoerd door"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:380
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:380
@@ -2994,7 +2943,7 @@ msgstr "Nodig voor"
 #: LedgerSMB/Report/Budget/Search.pm:91
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:91
 msgid "Approved By"
-msgstr ""
+msgstr "Goedgekeurd door"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:381
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:381
@@ -3058,19 +3007,19 @@ msgstr ""
 #: templates/demo/balance_sheet.html:128
 #: templates/with_images/balance_sheet.html:128
 msgid "Shareholder's Equity"
-msgstr ""
+msgstr "Aandeel Eigen Vermogen Aandeelhouder"
 
 #: UI/payments/use_overpayment2.html:278
 msgid "UPDATE"
-msgstr ""
+msgstr "Verversen"
 
 #: UI/payments/use_overpayment2.html:284
 msgid "POST"
-msgstr ""
+msgstr "accorderen"
 
 #: UI/payments/use_overpayment2.html:290 UI/payments/payment2.html:336
 msgid "POST AND PRINT"
-msgstr ""
+msgstr "accorderen en afdrukken"
 
 #: UI/payments/payments_filter.html:18
 msgid "Filtering $t"
@@ -3078,21 +3027,19 @@ msgstr ""
 
 #: UI/payments/payments_detail.html:362
 msgid "Locked by [_1]"
-msgstr ""
+msgstr "Geblokkeerd door"
 
 #: UI/file/attachment_screen.html:39
 msgid "File"
-msgstr ""
+msgstr "Bestand"
 
 #: UI/create_batch.html:15
-#, fuzzy
 msgid "Batch Number"
-msgstr "Artikelcode"
+msgstr "Batch Nummer"
 
 #: UI/create_batch.html:30
-#, fuzzy
 msgid "Batch Date"
-msgstr "Volgende Datum"
+msgstr "Batch Datum"
 
 #: UI/taxform/add_taxform.html:47 UI/business_units/edit.html:61
 #: UI/business_units/filter.html:26 UI/asset/edit_asset.html:61
@@ -3113,12 +3060,11 @@ msgstr "Transactie"
 
 #: UI/menu/expanding.html:45
 msgid "Logged into [_1]"
-msgstr ""
+msgstr "Login in %1"
 
 #: UI/business_units/filter.html:35
-#, fuzzy
 msgid "Active On"
-msgstr "Actief"
+msgstr "Actief op"
 
 #: UI/business_units/filter.html:45 UI/asset/search_class.html:65
 #: UI/asset/search_asset.html:185 tools/dbstrings:4 tools/dbstrings:15
@@ -3133,41 +3079,36 @@ msgid "Asset Class:"
 msgstr "Activa"
 
 #: UI/asset/edit_asset.html:71 UI/asset/search_asset.html:65
-#, fuzzy
 msgid "Purchase Date:"
-msgstr "Inkooporder"
+msgstr "Datum Inkoop"
 
 #: UI/asset/edit_asset.html:81 UI/asset/search_asset.html:75
-#, fuzzy
 msgid "Purchase Value:"
-msgstr "Inkooporder"
+msgstr "Inkoop Waarde"
 
 #: UI/asset/edit_asset.html:93 UI/asset/search_asset.html:87
 #: LedgerSMB/Scripts/asset.pm:317
 msgid "Usable Life"
-msgstr ""
+msgstr "Verwacht gebruik in jaren"
 
 #: UI/asset/edit_asset.html:105 UI/asset/search_asset.html:96
 msgid "Salvage Value:"
 msgstr ""
 
 #: UI/asset/edit_asset.html:117 UI/asset/search_asset.html:108
-#, fuzzy
 msgid "Depreciation Starts"
-msgstr "Afschrijvingen"
+msgstr "Afschrijving begint"
 
 #: UI/asset/import_asset.html:43
-#, fuzzy
 msgid "Depreciate Through"
-msgstr "Afschrijvingen"
+msgstr "Afschrijvingen door"
 
 #: UI/import_csv/import_csv.html:42
 #: addons/1.3/import_trans/trunk/UI/import_trans/import_trans.html:42
 #: LedgerSMB/Report/PNL/Invoice.pm:89
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:89
-#, fuzzy
 msgid "Transaction Date"
-msgstr "Transactiedatums"
+msgstr "Transactiedatum"
 
 #: UI/login.html:30
 #, fuzzy
@@ -3177,7 +3118,7 @@ msgstr "LedgerSMB website"
 #: UI/Contact/divs/credit.html:61
 #: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:61
 msgid "$entity_classname Number"
-msgstr ""
+msgstr "Bedrijfseenheid Naam Nummer"
 
 #: UI/Contact/divs/notes.html:40
 #: addons/1.3/crm-basic/trunk/UI/crm/divs/notes.html:40
@@ -3192,17 +3133,15 @@ msgstr ""
 
 #: addons/1.3/company_person/trunk/UI/Contact/divs/person.html:2
 msgid "$operation Person"
-msgstr ""
+msgstr "Uitvoerende persoon"
 
 #: addons/1.3/extended_arap/trunk/UI/aa.html:165
-#, fuzzy
 msgid "Tax Included?"
-msgstr "Belasting Inbegrepen"
+msgstr "BTW Inbegrepen"
 
 #: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:27
-#, fuzzy
 msgid "Actions"
-msgstr "Kortingen"
+msgstr "Acties"
 
 #: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:20
 #, fuzzy
@@ -3246,7 +3185,7 @@ msgstr ""
 #: LedgerSMB.pm:968 LedgerSMB/SODA.pm:614
 #: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:614
 msgid "Internal Database Error"
-msgstr ""
+msgstr "Interne database fout"
 
 #: LedgerSMB.pm:969 LedgerSMB.pm:970 LedgerSMB/Scripts/configuration.pm:202
 #: LedgerSMB/Scripts/setup.pm:589 LedgerSMB/SODA.pm:615 LedgerSMB/SODA.pm:617
@@ -3259,40 +3198,39 @@ msgstr "Toegang Geweigerd!"
 #: LedgerSMB.pm:971 LedgerSMB/SODA.pm:618
 #: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:618
 msgid "Invalid date/time entered"
-msgstr ""
+msgstr "Ongeldige datum/tijd ingevoerd"
 
 #: LedgerSMB.pm:972 LedgerSMB/SODA.pm:619
 #: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:619
 msgid "Division by 0 error"
-msgstr ""
+msgstr "Delen door 0 kan niet! Onmodelijk!"
 
 #: LedgerSMB.pm:973 LedgerSMB.pm:974 LedgerSMB/SODA.pm:620
 #: LedgerSMB/SODA.pm:621
 #: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:620
 #: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:621
 msgid "Required input not provided"
-msgstr ""
+msgstr "Niet voorzien van de benodigde input"
 
 #: LedgerSMB.pm:975
 msgid "Conflict with Existing Data.  Perhaps you already entered this?"
-msgstr ""
+msgstr "Conflicteert met bestaande gegevens. Misschien heeft u het al ingevoerd"
 
 #: LedgerSMB.pm:976
 msgid "Error from Function:"
-msgstr ""
+msgstr "Functionele fout"
 
 #: LedgerSMB.pm:984
 msgid "More information has been reported in the error logs"
-msgstr ""
+msgstr "Meer informatie is te zien in de \"error logs\""
 
 #: LedgerSMB/Scripts/recon.pm:131
 msgid "Data not saved.  Please update again."
-msgstr ""
+msgstr "Gegevens niet opgeslagen. Probeer opnieuw"
 
 #: LedgerSMB/Scripts/recon.pm:207
-#, fuzzy
 msgid "Clear date"
-msgstr "Opgeschoond"
+msgstr "Opgeschonen"
 
 #: LedgerSMB/Scripts/recon.pm:209
 #, fuzzy
@@ -3315,7 +3253,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:19
 msgid "Company Information"
-msgstr ""
+msgstr "Gegevens Firma"
 
 #: LedgerSMB/Scripts/configuration.pm:25
 msgid "Business Number"
@@ -3323,7 +3261,7 @@ msgstr "KvK-nummer"
 
 #: LedgerSMB/Scripts/configuration.pm:39
 msgid "Currencies (colon-separated)"
-msgstr ""
+msgstr "Valuta gescheiden door ;!!!!!!!"
 
 #: LedgerSMB/Scripts/configuration.pm:40
 msgid "Weight Unit"
@@ -3335,9 +3273,8 @@ msgid "Default Country"
 msgstr "Land"
 
 #: LedgerSMB/Scripts/configuration.pm:45
-#, fuzzy
 msgid "Default Language"
-msgstr "Taal Wijzigen"
+msgstr "Standaard Taal "
 
 #: LedgerSMB/Scripts/configuration.pm:49
 #, fuzzy
@@ -3346,7 +3283,7 @@ msgstr "Sjablonen"
 
 #: LedgerSMB/Scripts/configuration.pm:51
 msgid "Security Settings"
-msgstr ""
+msgstr "Veiligheids Instellingen"
 
 #: LedgerSMB/Scripts/configuration.pm:56
 msgid "Session Timeout"
@@ -3354,21 +3291,19 @@ msgstr "Tijdsduur Sessie"
 
 #: LedgerSMB/Scripts/configuration.pm:58
 msgid "Automatically Logout"
-msgstr ""
+msgstr "Automatisch uitloggen"
 
 #: LedgerSMB/Scripts/configuration.pm:61
-#, fuzzy
 msgid "Separate Duties"
-msgstr "Afdelingen"
+msgstr "Afzonderlijke Taken"
 
 #: LedgerSMB/Scripts/configuration.pm:64
-#, fuzzy
 msgid "Default Accounts"
-msgstr "Rekening Verwijderen"
+msgstr "Standaard Rekeningen "
 
 #: LedgerSMB/Scripts/configuration.pm:74
 msgid "Cost of Goods Sold"
-msgstr ""
+msgstr "Kostprijs van verkochte goederen"
 
 #: LedgerSMB/Scripts/configuration.pm:77
 msgid "Foreign Exchange Gain"
@@ -3380,20 +3315,19 @@ msgstr "Wisselkoersverlies"
 
 #: LedgerSMB/Scripts/configuration.pm:82
 msgid "Next in Sequence"
-msgstr ""
+msgstr "Eerstvolgende in aangegeven volgorder"
 
 #: LedgerSMB/Scripts/configuration.pm:99
 msgid "Misc Settings"
-msgstr ""
+msgstr "Overige instellingen"
 
 #: LedgerSMB/Scripts/configuration.pm:103
 msgid "Max Invoices per Check Stub"
 msgstr ""
 
 #: LedgerSMB/Scripts/configuration.pm:105
-#, fuzzy
 msgid "Decimal Places for Money"
-msgstr "Decimalen"
+msgstr "Aantal decimalen voor Valuta"
 
 #: LedgerSMB/Scripts/configuration.pm:107
 #, fuzzy
@@ -3402,11 +3336,11 @@ msgstr "LaTeX Sjablonen"
 
 #: LedgerSMB/Scripts/configuration.pm:227
 msgid "Error while opening directory: [_1]"
-msgstr ""
+msgstr "Four bij het openen van de directory %1"
 
 #: LedgerSMB/Scripts/payment.pm:146
 msgid "Pay To"
-msgstr ""
+msgstr "Betalen aan"
 
 #: LedgerSMB/Scripts/payment.pm:148
 #, fuzzy
@@ -3424,11 +3358,11 @@ msgstr "Korting"
 
 #: LedgerSMB/Scripts/payment.pm:767
 msgid "Apply Disc"
-msgstr ""
+msgstr "Toepassen korting"
 
 #: LedgerSMB/Scripts/payment.pm:817
 msgid "To pay"
-msgstr ""
+msgstr "Betalen"
 
 #: LedgerSMB/Scripts/payment.pm:995 tools/dbstrings:20
 msgid "Payment"
@@ -3441,7 +3375,7 @@ msgstr "Wisselkoers ontbreekt!"
 
 #: LedgerSMB/Scripts/payment.pm:1089
 msgid "This gl movement, is a consecuence of a payment transaction"
-msgstr ""
+msgstr "Deze journaalboeking is een gevolg van een betalingstransactie"
 
 #: LedgerSMB/Scripts/payment.pm:1149
 #, fuzzy
@@ -3450,36 +3384,35 @@ msgstr "Handelskorting"
 
 #: LedgerSMB/Scripts/payment.pm:1186
 msgid "No overpayment account selected.  Was one set up?"
-msgstr ""
+msgstr "Geen vooruitbetalings rekening geselecteerd  Een aanmaken?"
 
 #: LedgerSMB/Scripts/payment.pm:1464 LedgerSMB/Scripts/payment.pm:1470
-#, fuzzy
 msgid "The amount of the invoice number"
-msgstr "Weet u zeker dat u dit factuurnummer wilt verwijderen?"
+msgstr "Het bedrag van factuurnummer"
 
 #: LedgerSMB/Scripts/payment.pm:1464
 msgid "is lesser than the amount to be paid"
-msgstr ""
+msgstr "het bedrag is minder dan uiteindelijk moet worden betaald"
 
 #: LedgerSMB/Scripts/payment.pm:1470
 msgid "is lesser than 0"
-msgstr ""
+msgstr "Is minder dan 0"
 
 #: LedgerSMB/Scripts/payment.pm:1591
 msgid "Use overpayment/prepayment"
-msgstr ""
+msgstr "Gebruik meerbetaling/vooruitbetaling"
 
 #: LedgerSMB/Scripts/payment.pm:1684
 msgid "The amount to be pay of the invoice number"
-msgstr ""
+msgstr "Het bedrag dat moet worden betaald voor Factuurnummer"
 
 #: LedgerSMB/Scripts/payment.pm:1684
 msgid "is null"
-msgstr ""
+msgstr "is nihiel"
 
 #: LedgerSMB/Scripts/payment.pm:1701 LedgerSMB/Scripts/payment.pm:1778
 msgid "Applied discount by an overpayment"
-msgstr ""
+msgstr "Korting bij een vooruitbetaling"
 
 #: LedgerSMB/Scripts/payment.pm:1716
 msgid "The amount to be pay from the accno"
@@ -3487,16 +3420,16 @@ msgstr ""
 
 #: LedgerSMB/Scripts/payment.pm:1716
 msgid "is bigger than the amount available"
-msgstr ""
+msgstr "Saldo is ontoereikend"
 
 #: LedgerSMB/Scripts/payment.pm:1724 LedgerSMB/Scripts/payment.pm:1741
 #: LedgerSMB/Scripts/payment.pm:1795 LedgerSMB/Scripts/payment.pm:1812
 msgid "use of an overpayment"
-msgstr ""
+msgstr "Gebruik van een vooruitbetaling"
 
 #: LedgerSMB/Scripts/payment.pm:1768
 msgid "This gl movement, is the result of a overpayment transaction"
-msgstr ""
+msgstr "Deze journaalboeking is het gevolg van vooruitbetaling transactie"
 
 #: LedgerSMB/Scripts/admin.pm:148
 #, fuzzy
@@ -3505,17 +3438,15 @@ msgstr "Verwijder"
 
 #: LedgerSMB/Scripts/admin.pm:153
 msgid "Active Sessions"
-msgstr ""
+msgstr "Actieve sessies"
 
 #: LedgerSMB/Scripts/import_csv.pm:312
-#, fuzzy
 msgid "Invalid file"
-msgstr "Geldig tot"
+msgstr "Niet bruikbaar bestand"
 
 #: LedgerSMB/Scripts/asset.pm:74
-#, fuzzy
 msgid "Depreciation Successful"
-msgstr "Afschrijvingen"
+msgstr "Afschrijvingen met succes geboekt"
 
 #: LedgerSMB/Scripts/asset.pm:98
 #, fuzzy
@@ -3549,30 +3480,26 @@ msgstr "Activa Toevoegen"
 #: LedgerSMB/Scripts/asset.pm:312 LedgerSMB/Scripts/asset.pm:734
 #: LedgerSMB/Scripts/asset.pm:798 LedgerSMB/Scripts/asset.pm:869
 #: LedgerSMB/Scripts/asset.pm:1005
-#, fuzzy
 msgid "Tag"
-msgstr "Belasting"
+msgstr "Label"
 
 #: LedgerSMB/Scripts/asset.pm:314 LedgerSMB/Scripts/asset.pm:497
-#, fuzzy
 msgid "Purchase Date"
-msgstr "Inkooporder"
+msgstr "Inkoop datum"
 
 #: LedgerSMB/Scripts/asset.pm:315 LedgerSMB/Scripts/asset.pm:498
-#, fuzzy
 msgid "Purchase Value"
-msgstr "Inkooporder"
+msgstr "Inkoopprijs"
 
 #: LedgerSMB/Scripts/asset.pm:316
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:219
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:327
 msgid "Class"
-msgstr ""
+msgstr "Class"
 
 #: LedgerSMB/Scripts/asset.pm:318
-#, fuzzy
 msgid "Location"
-msgstr "Offerte"
+msgstr "Plaats"
 
 #: LedgerSMB/Scripts/asset.pm:495
 #, fuzzy
@@ -3581,7 +3508,7 @@ msgstr "Naam Activa"
 
 #: LedgerSMB/Scripts/asset.pm:499 LedgerSMB/Scripts/asset.pm:876
 msgid "Proceeds"
-msgstr ""
+msgstr "vervolgt"
 
 #: LedgerSMB/Scripts/asset.pm:500
 msgid "Disposal Method"
@@ -3589,7 +3516,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:501
 msgid "Percent"
-msgstr ""
+msgstr "procent"
 
 #: LedgerSMB/Scripts/asset.pm:555
 #, fuzzy
@@ -3621,11 +3548,11 @@ msgstr "Activa"
 
 #: LedgerSMB/Scripts/asset.pm:635
 msgid "Entered at"
-msgstr ""
+msgstr "Ingeboekt op"
 
 #: LedgerSMB/Scripts/asset.pm:636
 msgid "Approved at"
-msgstr ""
+msgstr "Goedgekeurd op"
 
 #: LedgerSMB/Scripts/asset.pm:676 tools/dbstrings:173
 #, fuzzy
@@ -3643,12 +3570,12 @@ msgstr ""
 #: LedgerSMB/Scripts/asset.pm:735 LedgerSMB/Scripts/asset.pm:800
 #: LedgerSMB/Scripts/asset.pm:871
 msgid "Dep. Starts"
-msgstr ""
+msgstr "Afschr. begint"
 
 #: LedgerSMB/Scripts/asset.pm:736 LedgerSMB/Scripts/asset.pm:801
 #: LedgerSMB/Scripts/asset.pm:873
 msgid "Aquired Value"
-msgstr ""
+msgstr "Verkregen prijs bij verkoop"
 
 #: LedgerSMB/Scripts/asset.pm:737
 #, fuzzy
@@ -3657,11 +3584,11 @@ msgstr "Gebruikt Stelsel"
 
 #: LedgerSMB/Scripts/asset.pm:738
 msgid "Est. Life"
-msgstr ""
+msgstr "Verw. Levensduur"
 
 #: LedgerSMB/Scripts/asset.pm:739
 msgid "Dep. Basis"
-msgstr ""
+msgstr "Afschr. Basis"
 
 #: LedgerSMB/Scripts/asset.pm:740
 msgid "Prior Through"
@@ -3681,7 +3608,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:744
 msgid "Total Accum. Dep."
-msgstr ""
+msgstr "Totaal afschrijvingen"
 
 #: LedgerSMB/Scripts/asset.pm:795
 msgid "Partial Disposal Report [_1] on date [_2]"
@@ -3697,13 +3624,12 @@ msgid "Disp. Aquired Value"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:805
-#, fuzzy
 msgid "Percent Remaining"
-msgstr "Resterend"
+msgstr "Resterend Percentage"
 
 #: LedgerSMB/Scripts/asset.pm:807
 msgid "Aquired Value Remaining"
-msgstr ""
+msgstr "Verkregen restwaarde"
 
 #: LedgerSMB/Scripts/asset.pm:866
 msgid "Disposal Report [_1] on date [_2]"
@@ -3715,7 +3641,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:874
 msgid "D M"
-msgstr ""
+msgstr "Dag Maand"
 
 #: LedgerSMB/Scripts/asset.pm:875
 #, fuzzy
@@ -3729,11 +3655,11 @@ msgstr "Kassacorrectie"
 
 #: LedgerSMB/Scripts/asset.pm:878
 msgid "Gain (Loss)"
-msgstr ""
+msgstr "Winst  (Verlies)"
 
 #: LedgerSMB/Scripts/asset.pm:1007
 msgid "In Svc."
-msgstr ""
+msgstr "In reparatie"
 
 #: LedgerSMB/Scripts/asset.pm:1008
 msgid "Method"
@@ -3741,19 +3667,19 @@ msgstr "Gebruikt Stelsel"
 
 #: LedgerSMB/Scripts/asset.pm:1009
 msgid "Rem. Life"
-msgstr ""
+msgstr "Verwachte resterende levensduur"
 
 #: LedgerSMB/Scripts/asset.pm:1011
 msgid "(+) Salvage Value"
-msgstr ""
+msgstr "Restwaarde volledig afgeschreven vaste activa"
 
 #: LedgerSMB/Scripts/asset.pm:1012
 msgid "Dep. through"
-msgstr ""
+msgstr "Methodiek afschrijving"
 
 #: LedgerSMB/Scripts/asset.pm:1013
 msgid "(-) Accum. Dep."
-msgstr ""
+msgstr "Cumulatie afschrijvingen"
 
 #: LedgerSMB/Scripts/asset.pm:1014
 msgid "(=) NBV"
@@ -3761,44 +3687,44 @@ msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:1015
 msgid "Pct. Dep."
-msgstr ""
+msgstr "Percent. Afschrijving"
 
 #: LedgerSMB/Scripts/asset.pm:1153
 msgid "File Imported"
-msgstr ""
+msgstr "Bestand geimporteerd"
 
 #: LedgerSMB/Scripts/setup.pm:61
 msgid "No database specified"
-msgstr ""
+msgstr "Geen database gespecificeerd"
 
 #: LedgerSMB/Scripts/setup.pm:75
 msgid "SQL-Ledger database detected."
-msgstr ""
+msgstr "SQL-Ledger database aangetroffen"
 
 #: LedgerSMB/Scripts/setup.pm:78
 msgid "Would you like to migrate the database?"
-msgstr ""
+msgstr "Is migratiie database gewenst?"
 
 #: LedgerSMB/Scripts/setup.pm:83
 msgid "Unsupported version.  Cancel?"
-msgstr ""
+msgstr "Niet ondersteunde versie.......Annuleren?"
 
 #: LedgerSMB/Scripts/setup.pm:90
 msgid "LedgerSMB 1.2 db found"
-msgstr ""
+msgstr "LedgerSMB 1.2 aangetroffen"
 
 #: LedgerSMB/Scripts/setup.pm:92
 msgid "Would you like to upgrade the database?"
-msgstr ""
+msgstr "Wilt u de database upgraden?"
 
 #: LedgerSMB/Scripts/setup.pm:97
 msgid "Development version found.  Please upgrade first"
-msgstr ""
+msgstr "Ontwikkelingsversie aangetroffen. Allereerst upgraden"
 
 #: LedgerSMB/Scripts/setup.pm:99 LedgerSMB/Scripts/setup.pm:105
 #: LedgerSMB/Scripts/setup.pm:129 LedgerSMB/Scripts/setup.pm:141
 msgid "Cancel?"
-msgstr ""
+msgstr "Annuleren?"
 
 #: LedgerSMB/Scripts/setup.pm:103
 msgid "Legacy version found.  Please upgrade first"
@@ -3806,23 +3732,23 @@ msgstr ""
 
 #: LedgerSMB/Scripts/setup.pm:110
 msgid "LedgerSMB 1.4 found"
-msgstr ""
+msgstr "ledgerSMB 1.4 aangetroffen"
 
 #: LedgerSMB/Scripts/setup.pm:113
 msgid "Rebuild/Upgrade?"
-msgstr ""
+msgstr "Opnieuw database opstarten? Voor upgrade versie."
 
 #: LedgerSMB/Scripts/setup.pm:118
 msgid "LedgerSMB 1.3 found"
-msgstr ""
+msgstr "LedgerSMB 1.3 aangetroffen"
 
 #: LedgerSMB/Scripts/setup.pm:121
 msgid "Upgrade?"
-msgstr ""
+msgstr "Upgrade?"
 
 #: LedgerSMB/Scripts/setup.pm:127
 msgid "Unknown version found."
-msgstr ""
+msgstr "Niet bekende versie aangetroffen"
 
 #: LedgerSMB/Scripts/setup.pm:134
 #, fuzzy
@@ -3836,30 +3762,29 @@ msgstr "Maak Dataset"
 
 #: LedgerSMB/Scripts/setup.pm:139
 msgid "Unknown database found."
-msgstr ""
+msgstr "Onbekende database aangetroffen"
 
 #: LedgerSMB/Scripts/setup.pm:217
 msgid "Invalid backup request"
-msgstr ""
+msgstr "Ongeldige backup verzoek"
 
 #: LedgerSMB/Scripts/setup.pm:220
 msgid "Error creating backup file"
-msgstr ""
+msgstr "Fout in aanmaken backup bestand"
 
 #: LedgerSMB/Scripts/setup.pm:260
 msgid "Don't know what to do with backup"
-msgstr ""
+msgstr "Onbekend welke aktie met backup"
 
 #: LedgerSMB/Scripts/setup.pm:332 LedgerSMB/Scripts/setup.pm:684
 #: LedgerSMB/Scripts/setup.pm:740 LedgerSMB/Scripts/setup.pm:836
-#, fuzzy
 msgid "Manage Users"
-msgstr "Manager"
+msgstr "Toekennen bevoegdheden aan gebruikers"
 
 #: LedgerSMB/Scripts/setup.pm:333 LedgerSMB/Scripts/setup.pm:685
 #: LedgerSMB/Scripts/setup.pm:741 LedgerSMB/Scripts/setup.pm:837
 msgid "Full Permissions"
-msgstr ""
+msgstr "Systeem administrateur"
 
 #: LedgerSMB/Scripts/setup.pm:475
 #, fuzzy
@@ -3868,11 +3793,11 @@ msgstr "Opslaan als nieuw"
 
 #: LedgerSMB/Scripts/setup.pm:727
 msgid "User already exists. Import?"
-msgstr ""
+msgstr "Gebruiker bestaat al    Importeer?"
 
 #: LedgerSMB/Scripts/setup.pm:768
 msgid "No Permissions Assigned"
-msgstr ""
+msgstr "Geen gebruikers-bevoegdheden toegekend"
 
 #: LedgerSMB/Scripts/vouchers.pm:93
 msgid "Error creating batch.  Please try again."
@@ -3880,12 +3805,11 @@ msgstr ""
 
 #: LedgerSMB/Scripts/file.pm:108
 msgid "No file uploaded"
-msgstr ""
+msgstr "Geen bestand uploaded"
 
 #: LedgerSMB/Scripts/order.pm:53
-#, fuzzy
 msgid "Search Sales Orders"
-msgstr "Verkooporders"
+msgstr "Zoek Verkooporders"
 
 #: LedgerSMB/Scripts/order.pm:56
 #, fuzzy
@@ -3898,9 +3822,8 @@ msgid "Combine Sales Orders"
 msgstr "Samenvoegen Verkooporders"
 
 #: LedgerSMB/Scripts/order.pm:64
-#, fuzzy
 msgid "Search Purchase Orders"
-msgstr "Inkooporders"
+msgstr "Zoek Inkooporders"
 
 #: LedgerSMB/Scripts/order.pm:66
 #, fuzzy
@@ -3917,18 +3840,16 @@ msgid "Receive"
 msgstr "Ontvangen"
 
 #: LedgerSMB/Scripts/order.pm:75
-#, fuzzy
 msgid "Search Quotations"
-msgstr "Offertes"
+msgstr "Zoek Offertes"
 
 #: LedgerSMB/Scripts/order.pm:79
-#, fuzzy
 msgid "Search Requests for Quotation"
-msgstr "Prijsaanvraag"
+msgstr "Zoek Prijsaanvraag"
 
 #: LedgerSMB/Scripts/order.pm:106 tools/dbstrings:138
 msgid "Combine"
-msgstr ""
+msgstr "Samenvoegen"
 
 #: LedgerSMB/Scripts/order.pm:114 tools/dbstrings:36 tools/dbstrings:55
 msgid "Generate"
@@ -3936,7 +3857,7 @@ msgstr "Genereer"
 
 #: LedgerSMB/Scripts/taxform.pm:258
 msgid "Tax Form List"
-msgstr ""
+msgstr "Lijst Belastingformulieren"
 
 #: LedgerSMB/Scripts/taxform.pm:271
 #, fuzzy
@@ -3957,9 +3878,8 @@ msgid "User"
 msgstr "Gebruiker"
 
 #: LedgerSMB/Scripts/employee.pm:107
-#, fuzzy
 msgid "Wages/Deductions"
-msgstr "Kortingen"
+msgstr "Lonen/Inhoudingen"
 
 #: LedgerSMB/Scripts/account.pm:39
 msgid "Add Account"
@@ -3967,7 +3887,7 @@ msgstr "Rekening Toevoegen"
 
 #: LedgerSMB/Scripts/account.pm:64
 msgid "Bug: No such account"
-msgstr ""
+msgstr "Bug: account niet aangetroffen"
 
 #: LedgerSMB/Scripts/account.pm:66
 msgid "Edit Account"
@@ -3975,22 +3895,21 @@ msgstr "Rekening Wijzigen"
 
 #: LedgerSMB/Scripts/reports.pm:80
 msgid "No report specified"
-msgstr ""
+msgstr "Geen specificatie rapport aangegeven"
 
 #: LedgerSMB/SODA.pm:622
 #: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:622
 msgid "Conflict with Existing Data"
-msgstr ""
+msgstr "Conflict met bestaande gegevens"
 
 #: LedgerSMB/SODA.pm:623
 #: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:623
 msgid "Error from Function"
-msgstr ""
+msgstr "Functionele fout"
 
 #: LedgerSMB/IS.pm:1281 LedgerSMB/GL.pm:147 LedgerSMB/IR.pm:375
-#, fuzzy
 msgid "Batch ID Missing"
-msgstr "Gegroepeerd Afdrukken"
+msgstr "Gegroepeerd Afdrukken ID ontbreekt"
 
 #: LedgerSMB/Upgrade_Tests.pm:134
 #, fuzzy
@@ -3998,36 +3917,32 @@ msgid "Unique Customernumber"
 msgstr "Klantcode"
 
 #: LedgerSMB/Upgrade_Tests.pm:150
-#, fuzzy
 msgid "Unique Vendornumber"
-msgstr "Leveranciercode"
+msgstr "Leverancier Nummer"
 
 #: LedgerSMB/Upgrade_Tests.pm:161
-#, fuzzy
 msgid "No Null employeenumber"
-msgstr "Werknemercode"
+msgstr "Werknemer NUMMER (moet ingevuld worden!)"
 
 #: LedgerSMB/Upgrade_Tests.pm:177
-#, fuzzy
 msgid "Duplicate employee numbers"
-msgstr "Werknemercode"
+msgstr "Werknemer Nummer"
 
 #: LedgerSMB/Upgrade_Tests.pm:192
 msgid "Unique nonobsolete partnumbers"
-msgstr ""
+msgstr "Unieke geldige artikelnummers"
 
 #: LedgerSMB/Upgrade_Tests.pm:204
-#, fuzzy
 msgid "Unique AR Invoice numbers"
-msgstr "Factuurcode"
+msgstr "Factuurnummer"
 
 #: LedgerSMB/Upgrade_Tests.pm:217
 msgid "No NULL Amounts"
-msgstr ""
+msgstr "Bedragen moeten groter zijn dan 0"
 
 #: LedgerSMB/DBObject/Payment.pm:473
 msgid "cash"
-msgstr ""
+msgstr "Contante betaling"
 
 #: LedgerSMB/DBObject/Payment.pm:474
 #, fuzzy
@@ -4041,11 +3956,11 @@ msgstr "Storting"
 
 #: LedgerSMB/DBObject/Payment.pm:476
 msgid "other"
-msgstr ""
+msgstr "Anders"
 
 #: LedgerSMB/DBObject/Payment.pm:752
 msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
-msgstr ""
+msgstr "Wisselkoers tarief niet consistent met data base"
 
 #: LedgerSMB/DBObject/Account.pm:73
 msgid "Error: Cannot include summary account in other dropdown menus"
@@ -4053,21 +3968,21 @@ msgstr ""
 
 #: LedgerSMB/DBObject/Account.pm:77
 msgid "Internal Database Error."
-msgstr ""
+msgstr "Interne database fout. Neem contact op met database-beheerder"
 
 #: LedgerSMB/DBObject/Account.pm:191
 msgid "Too many links on summary account!"
-msgstr ""
+msgstr "Te veel verwijzingen op overzichts rekening"
 
 #: LedgerSMB/DBObject/TransTemplate.pm:23
 #: addons/1.3/templatetrans/trunk/LedgerSMB/DBObject/TransTemplate.pm:23
 #: addons/1.3/templatetrans/tags/1.0/LedgerSMB/DBObject/TransTemplate.pm:22
 msgid "No Account id for [_1]"
-msgstr ""
+msgstr "Geen account ID voor"
 
 #: LedgerSMB/DBObject/Asset.pm:109 LedgerSMB/DBObject/Asset_Class.pm:66
 msgid "Unable to save [_1] object"
-msgstr ""
+msgstr "Kan Object niet opslaan"
 
 #: LedgerSMB/DBObject/Asset.pm:110
 msgid "Asset"
@@ -4128,12 +4043,11 @@ msgstr "december"
 
 #: LedgerSMB/DBObject/Draft.pm:56 LedgerSMB/DBObject/Draft.pm:75
 msgid "No ID Set"
-msgstr ""
+msgstr "Geen ID ingegeven"
 
 #: LedgerSMB/DBObject/User.pm:74
-#, fuzzy
 msgid "Incorrect Password"
-msgstr "Verander Wachtwoord"
+msgstr "Verander Wachtwoord = niet correct"
 
 #: LedgerSMB/DBObject/User.pm:77
 #, fuzzy
@@ -4141,9 +4055,8 @@ msgid "Passwords must match."
 msgstr "Wachtwoorden komen niet overeen!"
 
 #: LedgerSMB/DBObject/User.pm:146
-#, fuzzy
 msgid "Password required"
-msgstr "Wachtwoord gewijzigd!"
+msgstr "Wachtwoord nodig!"
 
 #: LedgerSMB/Report/Trial_Balance.pm:115
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:115
@@ -4153,9 +4066,8 @@ msgstr "Proefbalans"
 
 #: LedgerSMB/Report/Trial_Balance.pm:132
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:132
-#, fuzzy
 msgid "Account Description"
-msgstr "Jobomschrijving"
+msgstr "Omschrijving grootboekrekening"
 
 #: LedgerSMB/Report/Trial_Balance.pm:141
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:75
@@ -4168,9 +4080,8 @@ msgstr "Saldo Overzicht"
 
 #: LedgerSMB/Report/Trial_Balance.pm:153
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:153
-#, fuzzy
 msgid "Ending Balance"
-msgstr "Beginsaldo"
+msgstr "Eindsaldo"
 
 #: LedgerSMB/Report/Trial_Balance.pm:164
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:164
@@ -4182,9 +4093,8 @@ msgstr "Van"
 #: LedgerSMB/Report/Invoices/Payments.pm:194 LedgerSMB/Report/Timecards.pm:158
 #: LedgerSMB/Report/Reconciliation/Summary.pm:176
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:166
-#, fuzzy
 msgid "To Date"
-msgstr "Datum"
+msgstr "tot Datum"
 
 #: LedgerSMB/Report/Trial_Balance.pm:168
 #: LedgerSMB/Report/Trial_Balance/List.pm:60
@@ -4203,17 +4113,17 @@ msgstr "Proefbalans"
 #: LedgerSMB/Report/Aging.pm:127
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:127
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: LedgerSMB/Report/Aging.pm:132
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:132
 msgid "60"
-msgstr ""
+msgstr "60"
 
 #: LedgerSMB/Report/Aging.pm:137
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:137
 msgid "90"
-msgstr ""
+msgstr "90"
 
 #: LedgerSMB/Report/Aging.pm:167
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:167
@@ -4226,7 +4136,7 @@ msgstr "Rapporten"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:100
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:107
 msgid "AR/AP/GL Amount"
-msgstr ""
+msgstr "Debiteuren/Crediteuren/Grootboek Bedrag"
 
 #: LedgerSMB/Report/Unapproved/Drafts.pm:115
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:115
@@ -4237,14 +4147,14 @@ msgstr "Zoek"
 #: LedgerSMB/Report/Unapproved/Drafts.pm:126
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:126
 msgid "Draft Type"
-msgstr ""
+msgstr "Concept type"
 
 #: LedgerSMB/Report/Unapproved/Drafts.pm:130
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:146
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:130
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:146
 msgid "Amount Greater Than"
-msgstr ""
+msgstr "Bedrag groter dan"
 
 #: LedgerSMB/Report/Unapproved/Drafts.pm:132
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:148
@@ -4299,9 +4209,8 @@ msgstr "Dataset Verwijderen"
 
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:200
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:200
-#, fuzzy
 msgid "Delete Vouchers"
-msgstr "Inplanning Verwijderen"
+msgstr "Vouchers Verwijderen"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:120
 #, fuzzy
@@ -4339,26 +4248,22 @@ msgid "Receipt Results"
 msgstr "Ontvangstbewijzen"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:232
-#, fuzzy
 msgid "Reverse Payments"
-msgstr "Betalingen"
+msgstr "Terug Betalingen"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:215
-#, fuzzy
 msgid "Vendor Account"
-msgstr "Rekening Toevoegen"
+msgstr "Leveranciers Rekening "
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:218
-#, fuzzy
 msgid "Customer Account"
-msgstr "Rekeningen Weergeven"
+msgstr "Klant Rekening"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:251
 #: LedgerSMB/Report/Contact/Purchase.pm:91
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:91
-#, fuzzy
 msgid "Due"
-msgstr "dec"
+msgstr "Verschuldigd op"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:275 LedgerSMB/Report/Orders.pm:257
 #: LedgerSMB/Report/Contact/Purchase.pm:111
@@ -4368,14 +4273,12 @@ msgid "Ship Via"
 msgstr "Verzenden via"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:299
-#, fuzzy
 msgid "Search AP"
-msgstr "Zoek"
+msgstr "Zoek Inkoopfactuur"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:300
-#, fuzzy
 msgid "Search AR"
-msgstr "Zoek"
+msgstr "Zoek Verkoopfactuur"
 
 #: LedgerSMB/Report/Invoices/Outstanding.pm:160
 #, fuzzy
@@ -4391,7 +4294,7 @@ msgstr "Verzenden via"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:76
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:77
 msgid "Document"
-msgstr ""
+msgstr "Document"
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:81
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:80
@@ -4477,12 +4380,11 @@ msgstr "Projectcode"
 
 #: LedgerSMB/Report/Timecards.pm:112 LedgerSMB/Report/Timecards.pm:160
 msgid "Partnumber"
-msgstr "Artikelcode"
+msgstr "Artikel Nummer"
 
 #: LedgerSMB/Report/Timecards.pm:120
-#, fuzzy
 msgid "Sun"
-msgstr "jun"
+msgstr "Zon"
 
 #: LedgerSMB/Report/Timecards.pm:124
 #, fuzzy
@@ -4490,27 +4392,24 @@ msgid "Mon"
 msgstr "Maand"
 
 #: LedgerSMB/Report/Timecards.pm:128
-#, fuzzy
 msgid "Tue"
-msgstr "Tien"
+msgstr "Dins"
 
 #: LedgerSMB/Report/Timecards.pm:132
 msgid "Wed"
-msgstr ""
+msgstr "Woens"
 
 #: LedgerSMB/Report/Timecards.pm:136
 msgid "Thu"
-msgstr ""
+msgstr "Donder"
 
 #: LedgerSMB/Report/Timecards.pm:140
-#, fuzzy
 msgid "Fri"
-msgstr "Gedurende"
+msgstr "Vrij"
 
 #: LedgerSMB/Report/Timecards.pm:144
-#, fuzzy
 msgid "Sat"
-msgstr "Provincie"
+msgstr "Zater"
 
 #: LedgerSMB/Report/Timecards.pm:169
 #, fuzzy
@@ -4527,7 +4426,7 @@ msgstr "Maximum in Dropdown-lijst"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:117
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:190
 msgid "Edit"
-msgstr "Wijzigen"
+msgstr "Tonen"
 
 #: LedgerSMB/Report/COA.pm:141
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:141
@@ -4536,9 +4435,8 @@ msgid "Chart of Accounts"
 msgstr "Rekeningstelsel"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:134
-#, fuzzy
 msgid "Statement Date"
-msgstr "Overzicht"
+msgstr "Datum Overzicht"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:138
 msgid "Statement Balance"
@@ -4546,11 +4444,11 @@ msgstr "Saldo Overzicht"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:141
 msgid "Approved"
-msgstr ""
+msgstr "Goedgekeurd"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:144
 msgid "Submitted"
-msgstr ""
+msgstr "Verstuurd"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:147
 #, fuzzy
@@ -4561,7 +4459,7 @@ msgstr "Bijgewerkt"
 #: LedgerSMB/Report/Budget/Search.pm:87
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:87
 msgid "Entered By"
-msgstr ""
+msgstr "Registratie door"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:178
 #, fuzzy
@@ -4606,35 +4504,30 @@ msgstr "Goederen & Diensten"
 
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:59
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:59
-#, fuzzy
 msgid "Inventory Adjustment Details"
-msgstr "Inventarisrekening bestaat niet!"
+msgstr "Inventaris details wijzigingen"
 
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:84
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:84
-#, fuzzy
 msgid "Counted"
-msgstr "Land"
+msgstr "Geteld (aanwezig)"
 
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:87
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:87
-#, fuzzy
 msgid "Expected"
-msgstr "Uitgaven"
+msgstr "Verwacht"
 
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:90
 #: LedgerSMB/Report/Budget/Variance.pm:86
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:90
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:86
-#, fuzzy
 msgid "Variance"
-msgstr "Saldo"
+msgstr "Verschil"
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:67
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:67
-#, fuzzy
 msgid "Inventory Adjustments"
-msgstr "Voorraadactiviteit"
+msgstr "Voorraad aanpassingen"
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:79
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:79
@@ -4645,41 +4538,37 @@ msgstr "Toevoegen aan Uitvoer"
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:81
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:81
 msgid "Source starting with"
-msgstr ""
+msgstr "Bron vanaf"
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:100
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:100
-#, fuzzy
 msgid "AR Invoice"
-msgstr "Factuur"
+msgstr "Verkoopfactuur"
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:104
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:104
-#, fuzzy
 msgid "AP Invoice"
-msgstr "Kassabon"
+msgstr "Inkoopfactuur"
 
 #: LedgerSMB/Report/Budget/Variance.pm:82
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:82
 msgid "Used"
-msgstr ""
+msgstr "al in gebruik"
 
 #: LedgerSMB/Report/Budget/Variance.pm:97
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:97
-#, fuzzy
 msgid "Budget Variance Report"
-msgstr "Toevoegen aan Uitvoer"
+msgstr "Budget verschil rapport"
 
 #: LedgerSMB/Report/Budget/Variance.pm:108
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:108
-#, fuzzy
 msgid "Budget Number"
-msgstr "Volgende Code"
+msgstr "Budget Nummer"
 
 #: LedgerSMB/Report/Budget/Search.pm:107
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:107
 msgid "Budget Search Results"
-msgstr ""
+msgstr "Budget Zoek Resultaten"
 
 #: LedgerSMB/Report/PNL/Income_Statement.pm:51
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:51
@@ -4689,24 +4578,23 @@ msgstr "Resultatenrekening"
 
 #: LedgerSMB/Report/PNL/Income_Statement.pm:59
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:59
-#, fuzzy
 msgid "Reporting Basis"
-msgstr "Rapporten"
+msgstr "Rapporterings Basis"
 
 #: LedgerSMB/Report/PNL/Income_Statement.pm:81
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:81
 msgid "Invalid Reporting Basis"
-msgstr ""
+msgstr "Geen geldige rapportage basis"
 
 #: LedgerSMB/Report/PNL/Invoice.pm:77
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:77
 msgid "Invoice Profit/Loss"
-msgstr ""
+msgstr "Verlies en Winst Rekening"
 
 #: LedgerSMB/Report/PNL/Product.pm:69
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Product.pm:69
 msgid "Proft/Loss on Inventory Sales"
-msgstr ""
+msgstr "Verlies en Winst op Verkoop Voorraad Goederen"
 
 #: LedgerSMB/Report/PNL/ECA.pm:80
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/ECA.pm:80
@@ -4748,7 +4636,7 @@ msgstr "Inkomsten"
 #: LedgerSMB/Report/GL.pm:103
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:103
 msgid "Entry ID"
-msgstr ""
+msgstr "Invoer ID"
 
 #: LedgerSMB/Report/GL.pm:128
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:128
@@ -4758,7 +4646,7 @@ msgstr "Opgeschoond"
 #: LedgerSMB/Report/GL.pm:138
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:138
 msgid "Chart ID"
-msgstr ""
+msgstr "Chart ID"
 
 #: LedgerSMB/Report/GL.pm:143
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:143
@@ -4768,9 +4656,8 @@ msgstr "Rekening"
 
 #: LedgerSMB/Report/GL.pm:148
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:148
-#, fuzzy
 msgid "Account Name"
-msgstr "Rekeningnummer"
+msgstr "Rekeninghouder"
 
 #: LedgerSMB/Report/GL.pm:189
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:189
@@ -4792,9 +4679,8 @@ msgstr "Branche"
 
 #: LedgerSMB/Report/Contact/Search.pm:87
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:87
-#, fuzzy
 msgid "Contact Search"
-msgstr "Contact"
+msgstr "Zoek Contact"
 
 #: LedgerSMB/Report/Contact/History.pm:89
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:89
@@ -4804,13 +4690,12 @@ msgstr "Korting"
 
 #: LedgerSMB/Report/Contact/History.pm:114
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:114
-#, fuzzy
 msgid "Purchase History"
-msgstr "Klanthistorie"
+msgstr "Inkoophistorie"
 
 #: LedgerSMB/Batch.pm:90
 msgid "Any"
-msgstr ""
+msgstr "Elk(e)"
 
 #: LedgerSMB/Form.pm:678
 msgid "Action: [_1], ID: [_2]"
@@ -4819,9 +4704,8 @@ msgstr ""
 #: LedgerSMB/Entity/Location.pm:113
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:114
 #: tools/dbstrings:269
-#, fuzzy
 msgid "Billing"
-msgstr "miljard"
+msgstr "Rekening naar:"
 
 #: LedgerSMB/Entity/Location.pm:114
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:115
@@ -4838,46 +4722,45 @@ msgstr "Zendingen"
 #: LedgerSMB/Entity/Contact.pm:164
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Contact.pm:173
 msgid "Must have credit or entity id"
-msgstr ""
+msgstr "Moet een Krediet of Bedrijfseenheid id bevatten"
 
 #: LedgerSMB/Entity/Person.pm:100
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:100
 msgid "Dr."
-msgstr ""
+msgstr "Dr."
 
 #: LedgerSMB/Entity/Person.pm:101
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:101
 msgid "Miss."
-msgstr ""
+msgstr "Mejuffrouw"
 
 #: LedgerSMB/Entity/Person.pm:102
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:102
-#, fuzzy
 msgid "Mr."
-msgstr "mrt"
+msgstr "de Heer"
 
 #: LedgerSMB/Entity/Person.pm:103
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:103
 msgid "Mrs."
-msgstr ""
+msgstr "Mevrouw"
 
 #: LedgerSMB/Entity/Person.pm:104
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:104
 msgid "Ms."
-msgstr ""
+msgstr "Mejuffrouw"
 
 #: LedgerSMB/Entity/Person.pm:105
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:105
 msgid "Sir."
-msgstr ""
+msgstr "de Heer"
 
 #: LedgerSMB/Contact.pm:59
 msgid "Unable to save contact information"
-msgstr ""
+msgstr "Kan contact gegevens niet opslaan"
 
 #: LedgerSMB/GL.pm:200
 msgid "Account [_1] not found"
-msgstr ""
+msgstr "Rekening niet gevonden"
 
 #: LedgerSMB/App_State.pm:189
 msgid "Jan"
@@ -4925,16 +4808,15 @@ msgstr "dec"
 
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:331
 msgid "Created"
-msgstr ""
+msgstr "Aangemaakt"
 
 #: tools/dbstrings:3
 msgid "Batches"
 msgstr ""
 
 #: tools/dbstrings:5
-#, fuzzy
 msgid "Add Contact"
-msgstr "Contact"
+msgstr "Toevoegen Contact"
 
 #: tools/dbstrings:6
 msgid "Customer History"
@@ -4978,7 +4860,7 @@ msgstr "Voorschot"
 
 #: tools/dbstrings:22
 msgid "Use AR Overpayment"
-msgstr ""
+msgstr "Gebruik voorschot Debiteuren factuur"
 
 #: tools/dbstrings:25 tools/dbstrings:132 tools/dbstrings:146
 msgid "Reconciliation"
@@ -4996,9 +4878,8 @@ msgid "Reports"
 msgstr "Rapporten"
 
 #: tools/dbstrings:47
-#, fuzzy
 msgid "Journal Entry"
-msgstr "Land"
+msgstr "Journaal boeking"
 
 #: tools/dbstrings:48
 msgid "Requirements"
@@ -5089,7 +4970,7 @@ msgstr "Tijdkaart"
 
 #: tools/dbstrings:100 tools/dbstrings:120
 msgid "Letterhead"
-msgstr ""
+msgstr "Briefhoofd"
 
 #: tools/dbstrings:111
 #, fuzzy
@@ -5112,7 +4993,7 @@ msgstr "Importeer Tekst"
 
 #: tools/dbstrings:126 tools/dbstrings:128 tools/dbstrings:129
 msgid "Vouchers"
-msgstr ""
+msgstr "Tegoed Bon"
 
 #: tools/dbstrings:133
 #, fuzzy
@@ -5143,12 +5024,11 @@ msgstr "Voorschot"
 
 #: tools/dbstrings:145
 msgid "Drafts"
-msgstr ""
+msgstr "Concepten"
 
 #: tools/dbstrings:147
-#, fuzzy
 msgid "Add Tax Form"
-msgstr "Artikel Toevoegen"
+msgstr "Belastingformulier Toevoegen"
 
 #: tools/dbstrings:148
 #, fuzzy
@@ -5181,9 +5061,8 @@ msgid "Add User"
 msgstr "Gebruiker Toevoegen"
 
 #: tools/dbstrings:158
-#, fuzzy
 msgid "Search Users"
-msgstr "Zoek"
+msgstr "Zoek Gebruikers"
 
 #: tools/dbstrings:159
 #, fuzzy
@@ -5191,38 +5070,32 @@ msgid "Sessions"
 msgstr "Versie"
 
 #: tools/dbstrings:160
-#, fuzzy
 msgid "List Tax Forms"
-msgstr "Afdelingen Weergeven"
+msgstr "Lijst Belastingformulieren"
 
 #: tools/dbstrings:162
-#, fuzzy
 msgid "Asset Classes"
-msgstr "Naam Activa"
+msgstr "Verdeling Vaste activa bijv: Vervoermiddelen Gebouwen Inventaris"
 
 #: tools/dbstrings:163
 msgid "Assets"
-msgstr "Activa"
+msgstr "Vaste activa onr/roer goederen"
 
 #: tools/dbstrings:164
-#, fuzzy
 msgid "Add Class"
-msgstr "Activa Toevoegen"
+msgstr "Vaste activa soort toevoegen"
 
 #: tools/dbstrings:165
-#, fuzzy
 msgid "List Classes"
-msgstr "Branches Weergeven"
+msgstr "Overzicht vaste activa "
 
 #: tools/dbstrings:166
-#, fuzzy
 msgid "Add Assets"
-msgstr "Activa Toevoegen"
+msgstr "Vaste Activa Toevoegen"
 
 #: tools/dbstrings:167
-#, fuzzy
 msgid "Search Assets"
-msgstr "Zoek"
+msgstr "Zoek in vaste activa"
 
 #: tools/dbstrings:168 tools/dbstrings:183 tools/dbstrings:188
 #, fuzzy
@@ -5236,7 +5109,7 @@ msgstr "Afschrijvingen"
 
 #: tools/dbstrings:170
 msgid "Net Book Value"
-msgstr ""
+msgstr "Netto Boekingswaarde"
 
 #: tools/dbstrings:175 tools/dbstrings:179
 #, fuzzy
@@ -5276,47 +5149,43 @@ msgstr "Importeer Tekst"
 
 #: tools/dbstrings:189
 msgid "AR Voucher"
-msgstr ""
+msgstr "Verkoop Voucher"
 
 #: tools/dbstrings:190
 msgid "AP Voucher"
-msgstr ""
+msgstr "Inkoop Voucher"
 
 #: tools/dbstrings:191
-#, fuzzy
 msgid "Add Budget"
-msgstr "Branche Toevoegen"
+msgstr "Budget Toevoegen"
 
 #: tools/dbstrings:193
 msgid "Budgets"
-msgstr ""
+msgstr "budgetten"
 
 #: tools/dbstrings:194
 msgid "HR"
-msgstr "Personeel"
+msgstr "Personeelszaken"
 
 #: tools/dbstrings:195
 msgid "Order Entry"
 msgstr "Orderinvoer"
 
 #: tools/dbstrings:198
-#, fuzzy
 msgid "General Journal"
-msgstr "Grootboek"
+msgstr "Grootboek journaal"
 
 #: tools/dbstrings:200
 msgid "Projects"
 msgstr "Projecten"
 
 #: tools/dbstrings:203
-#, fuzzy
 msgid "Tax Forms"
-msgstr "Datumformaat"
+msgstr "Belasting formulieren"
 
 #: tools/dbstrings:204
-#, fuzzy
 msgid "Fixed Assets"
-msgstr "Activa Toevoegen"
+msgstr "Vaste Activa"
 
 #: tools/dbstrings:205
 msgid "Logout"
@@ -5353,12 +5222,11 @@ msgstr "Arbeids-/Overheadkosten Toevoegen"
 
 #: tools/dbstrings:235
 msgid "ap"
-msgstr ""
+msgstr "Crediteuren"
 
 #: tools/dbstrings:236
-#, fuzzy
 msgid "ar"
-msgstr "mrt"
+msgstr "Debiteuren"
 
 #: tools/dbstrings:237
 #, fuzzy
@@ -5367,11 +5235,11 @@ msgstr "Betaling"
 
 #: tools/dbstrings:238
 msgid "payment_reversal"
-msgstr ""
+msgstr "Terug betaling"
 
 #: tools/dbstrings:239
 msgid "gl"
-msgstr ""
+msgstr "Grootoboek"
 
 #: tools/dbstrings:240
 #, fuzzy
@@ -5380,7 +5248,7 @@ msgstr "Ontvangstbewijs"
 
 #: tools/dbstrings:241
 msgid "receipt_reversal"
-msgstr ""
+msgstr "Bevestiging terugzending"
 
 #: tools/dbstrings:242
 #, fuzzy

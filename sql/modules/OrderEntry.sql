@@ -47,15 +47,15 @@ FOR retval IN
                    WHEN oe_class_id IN (3, 4) THEN o.quonumber
                    ELSE NULL
                END as ordnumber, o.transdate, o.reqdate,
-              o.amount, c.legal_name AS name, o.netamount, 
+              o.amount, c.name, o.netamount, 
               o.entity_credit_account, o.closed, o.quonumber, o.shippingpoint,
               CASE WHEN ct.entity_class = 2 THEN ex.buy ELSE ex.sell END
               AS exchangerate, o.shipvia, pe.first_name || ' ' || pe.last_name 
               AS employee, pm.first_name || ' ' || pm.last_name AS manager, 
-              o.curr, o.ponumber, ct.meta_number, c.entity_id
+              o.curr, o.ponumber, ct.meta_number, c.id
          FROM oe o
          JOIN entity_credit_account ct ON (o.entity_credit_account = ct.id)
-         JOIN company c ON (c.entity_id = ct.entity_id)
+         JOIN entity c ON (c.id = ct.entity_id)
     LEFT JOIN person pe ON (o.person_id = pe.id)
     LEFT JOIN entity_employee e ON (pe.entity_id = e.entity_id)
     LEFT JOIN person pm ON (e.manager_id = pm.id)
@@ -66,7 +66,7 @@ FOR retval IN
              AND (in_meta_number IS NULL 
                    or ct.meta_number ILIKE in_meta_number || '%')
              AND (in_legal_name IS NULL OR
-                     c.legal_name @@ plainto_tsquery(in_legal_name))
+                     c.name @@ plainto_tsquery(in_legal_name))
              AND (in_ponumber IS NULL OR o.ponumber ILIKE in_ponumber || '%')
             AND (in_ordnumber IS NULL 
                      OR o.ordnumber ILIKE in_ordnumber || '%')

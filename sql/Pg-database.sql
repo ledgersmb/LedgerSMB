@@ -752,6 +752,8 @@ CREATE TABLE person (
     middle_name text,
     last_name text check (last_name ~ '[[:alnum:]_]') NOT NULL,
     created date not null default current_date,
+    birthdate date,
+    personal_id text,
     unique(entity_id) -- needed due to entity_employee assumptions --CT
  );
  
@@ -1360,7 +1362,7 @@ sinumber|1
 sonumber|1
 yearend|1
 businessnumber|1
-version|1.4.2
+version|1.4.5
 closedto|\N
 revtrans|1
 ponumber|1
@@ -1590,6 +1592,7 @@ CREATE TABLE invoice (
   unit varchar,
   deliverydate date,
   serialnumber text,
+  vendor_sku text,
   notes text
 );
 
@@ -1793,6 +1796,7 @@ CREATE TABLE ap (
   description text,
   force_closed bool,
   crdate date,
+  is_return bool default false,
   entity_credit_account int references entity_credit_account(id) NOT NULL
 );
 
@@ -2762,7 +2766,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 2	Add Transaction	1	1
 7	AR Aging	4	3
 39	Invoice Vouchers	250	2
-5	Search	1	7
 22	Add Transaction	21	1
 27	AP Aging	24	3
 25	Search	21	7
@@ -2802,17 +2805,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 107	Translations	98	5
 108	Description	107	1
 113	Balance Sheet	109	4
-117	Sales Invoices	116	1
-118	Sales Orders	116	2
-119	Checks	116	3
-120	Work Orders	116	4
-121	Quotations	116	5
-122	Packing Lists	116	6
-123	Pick Lists	116	7
-124	Purchase Orders	116	8
-125	Bin Lists	116	9
-126	RFQs	116	10
-127	Time Cards	116	11
 130	Taxes	128	2
 131	Defaults	128	3
 142	Add Warehouse	141	1
@@ -2823,46 +2815,15 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 152	List Languages	150	2
 154	Add SIC	153	1
 155	List SIC	153	2
-159	Invoice	156	3
-160	AR Transaction	156	4
-161	AP Transaction	156	5
-162	Packing List	156	6
-163	Pick List	156	7
-164	Sales Order	156	8
-165	Work Order	156	9
-166	Purchase Order	156	10
-167	Bin List	156	11
-168	Statement	156	12
-169	Quotation	156	13
-170	RFQ	156	14
-171	Timecard	156	15
-241	Letterhead	156	16
 173	Invoice	172	1
-174	AR Transaction	172	2
-175	AP Transaction	172	3
-176	Packing List	172	4
-177	Pick List	172	5
-178	Sales Order	172	6
-179	Work Order	172	7
-180	Purchase Order	172	8
-181	Bin List	172	9
-182	Statement	172	10
 205	Transaction Approval	0	6
 1	AR	0	2
 21	AP	0	4
 35	Cash	0	5
-183	Check	172	11
-184	Receipt	172	12
-185	Quotation	172	13
-186	RFQ	172	14
-187	Timecard	172	15
-242	Letterhead	172	16
 189	POS Invoice	188	1
 19	Contacts	0	1
 246	Import Chart	73	7
 136	GIFI	128	7
-4	Reports	1	9
-249	Vouchers	1	8
 24	Reports	21	9
 250	Vouchers	21	8
 200	Vouchers	35	5
@@ -2940,7 +2901,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 192	New Window	0	24
 191	Preferences	0	23
 128	System	0	21
-116	Batch Printing	0	20
 9	Outstanding	4	1
 10	Outstanding	24	1
 81	Add Overhead	77	5
@@ -2956,6 +2916,41 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 26	Reverse AR Overpay	200	6
 59	Inventory	205	4
 75	Inventory and COGS	109	5
+159	Invoice	156	4
+160	AR Transaction	156	5
+161	AP Transaction	156	6
+162	Packing List	156	7
+163	Pick List	156	8
+164	Sales Order	156	9
+165	Work Order	156	10
+166	Purchase Order	156	11
+167	Bin List	156	12
+168	Statement	156	13
+169	Quotation	156	14
+170	RFQ	156	15
+171	Timecard	156	16
+241	Letterhead	156	17
+174	AR Transaction	172	3
+175	AP Transaction	172	4
+176	Packing List	172	5
+177	Pick List	172	6
+178	Sales Order	172	7
+179	Work Order	172	8
+180	Purchase Order	172	9
+181	Bin List	172	10
+182	Statement	172	11
+183	Check	172	12
+184	Receipt	172	13
+185	Quotation	172	14
+186	RFQ	172	15
+187	Timecard	172	16
+242	Letterhead	172	17
+90	Product Receipt	172	2
+99	Product Receipt	156	2
+129	Add Return	1	7
+5	Search	1	8
+4	Reports	1	10
+249	Vouchers	1	9
 \.
 
 
@@ -3189,54 +3184,9 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 113	report_name	balance_sheet	283
 115	action	recurring_transactions	287
 115	module	am.pl	288
-116	menu	1	289
-119	module	bp.pl	290
-119	action	search	291
-119	type	check	292
-119	vc	vendor	293
-117	module	bp.pl	294
-117	action	search	295
-117	vc	customer	297
-118	module	bp.pl	298
-118	action	search	299
-118	vc	customer	300
-120	module	bp.pl	302
-120	action	search	303
-120	vc	customer	304
-121	module	bp.pl	306
-121	action	search	307
-121	vc	customer	308
-122	module	bp.pl	310
-122	action	search	311
-122	vc	customer	312
-120	type	work_order	305
-121	type	sales_quotation	309
-122	type	packing_list	313
-123	module	bp.pl	314
-123	action	search	315
-123	vc	customer	316
-123	type	pick_list	317
-124	module	bp.pl	318
-124	action	search	319
-124	vc	vendor	321
-124	type	purchase_order	320
-125	module	bp.pl	322
-125	action	search	323
-125	vc	vendor	325
-126	module	bp.pl	326
-126	action	search	327
-126	vc	vendor	329
-127	module	bp.pl	330
-127	action	search	331
-127	type	timecard	332
-125	type	bin_list	324
 76	module	reports.pl	180
 76	action	start_report	181
-117	type	invoice	296
-118	type	sales_order	301
 110	module	journal.pl	273
-126	type	request_quotation	328
-127	vc	employee	333
 128	menu	1	334
 130	module	am.pl	338
 130	taxes	audit_control	341
@@ -3613,6 +3563,17 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 75	module	reports.pl	219
 75	action	start_report	226
 75	report_name	cogs_lines	227
+90	module	template.pm	228
+90	action	display	229
+90	template_name	product_receipt	230
+90	format	tex	231
+99	module	template.pm	240
+99	action	display	241
+99	template_name	product_receipt	242
+99	format	html	245
+129	module	is.pl	251
+129	action	add	252
+129	type	customer_return	253
 \.
 
 --

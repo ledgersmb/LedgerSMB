@@ -1191,6 +1191,7 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
      if ( $request->{"overpayment_topay_$i"} ) { # Is this overpayment an used field?
      # Now we split the account selected options, using the namespace the if statement
      # provides for us.
+     $request->{"overpayment_topay_$i"} = LedgerSMB::PGNumber->from_input($request->{"overpayment_topay_$i"});
      $request->{"overpayment_account_$i"} =~ /^(\d+)--*/;
      my $id = $1; 
      $request->{"overpayment_cash_account_$i"} =~ /^(\d+)--*/;

@@ -174,8 +174,8 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
-    $self->{version}   = "1.4.2";
-    $self->{dbversion} = "1.4.2";
+    $self->{version}   = "1.4.5";
+    $self->{dbversion} = "1.4.5";
 
     bless $self, $type;
 
@@ -1795,7 +1795,10 @@ sub get_name {
 
     # Vendor and Customer are now views into entity_credit_account.
     my $query = qq/
-		SELECT c.*, ecl.*, e.name, e.control_code, ctf.default_reportable
+		SELECT c.*, coalesce(ecl.address, el.address) as address,
+                       coalesce(ecl.city, el.city) as city, 
+                       e.name, e.control_code, 
+                       ctf.default_reportable
                   FROM entity_credit_account c
 		  JOIN entity e ON (c.entity_id = e.id)
              LEFT JOIN (SELECT coalesce(line_one, '')
@@ -1805,6 +1808,13 @@ sub get_name {
                           JOIN location l ON etl.location_id = l.id
                           WHERE etl.location_class = 1) ecl
                         ON (c.id = ecl.credit_id)
+             LEFT JOIN (SELECT coalesce(line_one, '')
+                               || ' ' || coalesce(line_two, '') as address,
+                               l.city, etl.entity_id
+                          FROM entity_to_location etl
+                          JOIN location l ON etl.location_id = l.id
+                          WHERE etl.location_class = 1) el
+                        ON (c.entity_id = el.entity_id)
              LEFT JOIN country_tax_form ctf ON (c.taxform_id = ctf.id)
 		 WHERE (lower(e.name) LIKE ?
 		       OR c.meta_number ILIKE ?
@@ -2349,7 +2359,7 @@ sub create_links {
 				c.language_code, a.ponumber, a.reverse,
                                 a.approved, ctf.default_reportable, 
                                 a.description, a.on_hold, a.crdate, 
-                                ns.location_id as locationid
+                                ns.location_id as locationid, a.is_return
 			FROM $arap a
 			JOIN entity_credit_account c 
 				ON (a.entity_credit_account = c.id)
