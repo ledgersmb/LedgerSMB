@@ -382,6 +382,7 @@ sub output {
 
 	my $method = $self->{method} || $args{method} || $args{media};
         $method = '' if !defined $method;
+
 	if ('email' eq lc $method) {
 		$self->_email_output;
         } elsif (defined $args{OUT} and $args{printmode} eq '>'){ # To file
