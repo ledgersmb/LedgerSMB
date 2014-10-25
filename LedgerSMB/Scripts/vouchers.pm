@@ -500,7 +500,7 @@ sub print_batch {
           -attachment => "batch-$request->{id}.zip",
        );
 
-       open ZIP, '<', "$request->{zipdir}"
+       open ZIP, '<', "$request->{zipdir}";
        binmode (ZIP, ':bytes');
        print <ZIP>;
        close ZIP;
