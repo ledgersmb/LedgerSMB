@@ -843,6 +843,7 @@ sub post_invoice {
 		  FROM parts p
 		 WHERE p.id = ?|;
     my $pth = $dbh->prepare($query) || $form->dberror($query);
+    $form->{is_return} ||= 0;
 
     if ( $form->{id} ) {
         $keepcleared = 1;

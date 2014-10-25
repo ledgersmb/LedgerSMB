@@ -666,7 +666,7 @@ function on_return_submit(event){
 
         %button = (
             'update' =>
-              { ndx => 1, key => 'U', value => $locale->text('Update') },
+              { ndx => 0, key => 'U', value => $locale->text('Update') },
             'copy_to_new' => # Shares an index with copy because one or the other
                              # must be deleted.  One can only either copy or 
                              # update, not both. --CT
@@ -728,10 +728,6 @@ function on_return_submit(event){
                     delete $button{$_};
                 }
             }
-            for ("update", "post", "post_as_new", "print_and_post_as_new",
-                 "ship_to"){
-                delete $button{$_};
-            } 
 
         }
         else {

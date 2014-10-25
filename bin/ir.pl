@@ -640,7 +640,7 @@ function on_return_submit(event){
         if ( $form->{id} ) {
          
             for ( "post", "delete") { delete $button{$_} }
-            for ( 'post_as_new', 'print_and_post_as_new', "update") {
+            for ( 'post_as_new', 'print_and_post_as_new') {
                 delete $button{$_};
             }
             my $is_draft = 0;
