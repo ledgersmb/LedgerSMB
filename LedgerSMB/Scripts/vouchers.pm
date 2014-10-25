@@ -450,8 +450,8 @@ sub print_batch {
                  %$request);
     $report->run_report;
     my @files = 
-      map { my $contents = &$print_dispatch{$_->{voucher_type}}($request, $_);
-            $contents ? $contents : () }
+      map { my $contents = &{$print_dispatch{$_->{voucher_type}}}($request, $_);
+            $contents ? $contents : (); }
       @{$report->rows};
 
     my $dirname = "$LedgerSMB::Sysconfig::tempdir/docs-$request->{id}-" . time;
