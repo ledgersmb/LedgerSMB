@@ -1,6 +1,7 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+
 Changelog for 1.4.6
 * Fixed bug 1259, id from new_shipto overwrites form-id (Pongracz I)
 * Fixed related bug to 1259 on invoices (Chris T)
@@ -10,6 +11,7 @@ Changelog for 1.4.6
 * Fixed bug 1263, error when control_code not filled in (chris T)
 * Fixed update button not showing after save (Chris T)
 * Fixed bug 1260, Multiple vendor skus breaks display of invoice (Chris T)
+* Removed buggy batch printing interface (Chris T)
 
 Pongracz I is Pongracz Istvan
 Chris T is Chris Travers
@@ -75,6 +77,7 @@ Changelog for 1.4.2
 
 Chris T is Chris Travers
 
+>>>>>>> /tmp/Changelog~other.LbdXqA
 Changelog for 1.4.1
 * Fixed bug 1205, copy does not copy roles (Chris T)
 * Added multi-date inventory uploads (Erik H)

@@ -1484,11 +1484,6 @@ sub print_options {
                 push @{$options{media}{options}}, {text => $_, value => $_};
             }
         }
-        if ( ${LedgerSMB::Sysconfig::latex} )
-        {
-            push @{$options{media}{options}}, {text => $locale->text('Queue'),
-                value => 'queue'};
-        }
     }
 
     $options{format} = {
@@ -1523,13 +1518,11 @@ sub print_options {
 
     # $locale->text('Printed')
     # $locale->text('E-mailed')
-    # $locale->text('Queued')
     # $locale->text('Scheduled')
 
     $options{status} = (
         printed   => 'Printed',
         emailed   => 'E-mailed',
-        queued    => 'Queued',
         recurring => 'Scheduled'
     );
 
