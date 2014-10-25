@@ -1592,6 +1592,7 @@ CREATE TABLE invoice (
   unit varchar,
   deliverydate date,
   serialnumber text,
+  vendor_sku text,
   notes text
 );
 
