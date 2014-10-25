@@ -1214,6 +1214,7 @@ CREATE TABLE invoice (
   project_id int,
   deliverydate date,
   serialnumber text,
+  vendor_sku text,
   notes text
 );
 
