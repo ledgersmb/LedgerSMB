@@ -528,7 +528,6 @@ sub print_options {
         $form->{selectformat} .= qq|
             <option value="postscript">| . $locale->text('Postscript') . qq|
 	    <option value="pdf">| . $locale->text('PDF');
-        $media .= qq|<option value="queue">| . $locale->text('Queue');
     }
 
     $format = qq|<select name=format>$form->{selectformat}</select>|;
