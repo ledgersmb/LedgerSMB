@@ -326,7 +326,8 @@ sub post_invoice {
 				       project_id = ?,
 				       serialnumber = ?,
                                        precision = ?,
-				       notes = ?
+				       notes = ?,
+                                       vendor_sku = ?
 				 WHERE id = ?|;
             $sth = $dbh->prepare($query);
             $sth->execute(
@@ -336,7 +337,8 @@ sub post_invoice {
                 $form->{"discount_$i"},    $allocated,
                 $form->{"unit_$i"},        $form->{"deliverydate_$i"},
                 $project_id,               $form->{"serialnumber_$i"},
-                $form->{"precision_$i"},   $form->{"notes_$i"},       
+                $form->{"precision_$i"},   $form->{"notes_$i"},
+                $form->{"partnumber_$i"},
                 $invoice_id
             ) || $form->dberror($query);
 
@@ -1257,9 +1259,8 @@ sub retrieve_invoice {
         # retrieve individual items
         $query = qq|
 			   SELECT i.id as invoice_id,
-                                  coalesce(
-                                CASE WHEN pv.partnumber <> '' THEN pv.partnumber
-                                     ELSE NULL END, p.partnumber) as partnumber,
+                                  coalesce(i.vendor_sku, p.partnumber) 
+                                        as partnumber,
                                   i.description, i.qty, 
 			          i.fxsellprice, i.sellprice, i.precision,
 			          i.parts_id AS id, i.unit, p.bin, 
@@ -1274,8 +1275,6 @@ sub retrieve_invoice {
 			     FROM invoice i
 			     JOIN parts p ON (i.parts_id = p.id)
 			LEFT JOIN project pr ON (i.project_id = pr.id)
-			LEFT JOIN partsvendor pv ON (p.id = pv.parts_id
-                                               AND pv.credit_id = ?)
 			LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
 			LEFT JOIN translation t 
 			          ON (t.trans_id = p.partsgroup_id 
