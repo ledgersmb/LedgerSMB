@@ -20,6 +20,7 @@ use LedgerSMB::Report::Unapproved::Batch_Overview;
 use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
+use CGI::Simple;
 use strict;
 
 
@@ -408,7 +409,7 @@ my %print_dispatch = (
                   do 'bin/aa.pl';
                   require 'LedgerSMB/Form.pm';
                   %$lsmb_legacy::form = (%$request);
-                  bless $lsmb_legacy::form, Form;
+                  bless $lsmb_legacy::form, 'Form';
                   $lsmb_legacy::form->{formname} = 'ar_transaction';
 
                   lsmb_legacy::create_links();
@@ -427,7 +428,7 @@ my %print_dispatch = (
                   do 'bin/is.pl';
                   require 'LedgerSMB/Form.pm';
                   %$lsmb_legacy::form = (%$request);
-                  bless $lsmb_legacy::form, Form;
+                  bless $lsmb_legacy::form, 'Form';
                   $lsmb_legacy::form->{formname} = 'invoice';
 
                   lsmb_legacy::create_links();
@@ -445,7 +446,7 @@ my %print_dispatch = (
                   do 'bin/is.pl';
                   require 'LedgerSMB/Form.pm';
                   %$lsmb_legacy::form = (%$request);
-                  bless $lsmb_legacy::form, Form;
+                  bless $lsmb_legacy::form, 'Form';
                   $lsmb_legacy::form->{formname} = 'product_receipt';
 
                   lsmb_legacy::create_links();
@@ -472,6 +473,9 @@ sub print_batch {
     my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
                  %$request);
     $report->run_report;
+
+    my $cgi = CGI::Simple->new;
+
     my @files = 
       map { my $contents = &{$print_dispatch{$_->{voucher_type}}}($request, $_);
             $contents ? $contents : (); }
