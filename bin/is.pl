@@ -100,6 +100,11 @@ sub add {
         $form->{title} = $locale->text('Add Credit Invoice');
         $form->{subtype} = 'credit_invoice';
         $form->{reverse} = 1;
+    } elsif ($form->{type} eq 'customer_return') {
+        $form->{title} = $locale->text('Add Customer Return');
+        $form->{subtype} = 'credit_invoice';
+        $form->{reverse} = 1;
+        $form->{is_return} = 1;
     } else {
         $form->{title} = $locale->text('Add Sales Invoice');
         $form->{reverse} = 0;
@@ -116,11 +121,14 @@ sub add {
 
 sub edit {
 
-    if ($form->{reverse}) {
-        $form->{title} = $locale->text('Add Credit Invoice');
+    if ($form->{is_return}){
+        $form->{title} = $locale->text('Edit Customer Return');
+        $form->{subtype} = 'credit_invoice';
+    } elsif ($form->{reverse}) {
+        $form->{title} = $locale->text('Edit Credit Invoice');
         $form->{subtype} = 'credit_invoice';
     } else {
-        $form->{title} = $locale->text('Add Sales Invoice');
+        $form->{title} = $locale->text('Edit Sales Invoice');
     }
     &invoice_links;
     &prepare_invoice;
@@ -482,7 +490,8 @@ function on_return_submit(event){
         qw(form_id id type printed emailed queued title vc terms discount 
            creditlimit creditremaining tradediscount business closedto locked 
            shipped oldtransdate recurring reverse batch_id subtype tax_id 
-           meta_number separate_duties lock_description nextsub default_reportable address city)
+           meta_number separate_duties lock_description nextsub 
+           default_reportable address city is_return)
     );
 
     if ($form->{notice}){
@@ -657,7 +666,7 @@ function on_return_submit(event){
 
         %button = (
             'update' =>
-              { ndx => 1, key => 'U', value => $locale->text('Update') },
+              { ndx => 0, key => 'U', value => $locale->text('Update') },
             'copy_to_new' => # Shares an index with copy because one or the other
                              # must be deleted.  One can only either copy or 
                              # update, not both. --CT
@@ -719,10 +728,6 @@ function on_return_submit(event){
                     delete $button{$_};
                 }
             }
-            for ("update", "post", "post_as_new", "print_and_post_as_new",
-                 "ship_to"){
-                delete $button{$_};
-            } 
 
         }
         else {
@@ -865,7 +870,7 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
                            * $form->{"mt_basis_$item"};
                }
                $form->{invtotal} += $form->round_amount(
-                                         $form->{"mt_amount_$item"}, 2);
+                                         $form->parse_amount( \%myconfig,  $form->{"mt_amount_$item"}), 2);
                # Setting this up as a table
                # Note that the screens may be not wide enough to display
                # this in the normal way so we have to change the layout of the
@@ -874,7 +879,7 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
                 <th align=right>$form->{"${taccno}_description"}</th>
                 <td><input type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
-                        .$form->format_amount(\%myconfig, $form->{"mt_amount_$item"}) 
+                        .$form->format_amount(\%myconfig, $form->{"mt_amount_$item"}, 2) 
                         .qq|" size="10"/></td>
                 <td><input type="text" name="mt_rate_$item"
                          id="mt-rate-$item" value="|
@@ -882,7 +887,7 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
                         .qq|" size="4"/></td>
                 <td><input type="text" name="mt_basis_$item"
                          id="mt-basis-$item" value="|
-                        .$form->format_amount(\%myconfig, $form->{"mt_basis_$item"}) 
+                        .$form->format_amount(\%myconfig, $form->{"mt_basis_$item"}, 2) 
                         .qq|" size="10"/></td>
                 <td><input type="text" name="mt_ref_$item"
                          id="mt-ref-$item" value="|

@@ -174,8 +174,8 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
-    $self->{version}   = "1.4.4";
-    $self->{dbversion} = "1.4.4";
+    $self->{version}   = "1.4.5";
+    $self->{dbversion} = "1.4.5";
 
     bless $self, $type;
 
@@ -1795,8 +1795,8 @@ sub get_name {
 
     # Vendor and Customer are now views into entity_credit_account.
     my $query = qq/
-		SELECT c.*, coalesce(etl.address, el.address) as address,
-                       coalesce(etl.cty, el.city) as city, 
+		SELECT c.*, coalesce(ecl.address, el.address) as address,
+                       coalesce(ecl.city, el.city) as city, 
                        e.name, e.control_code, 
                        ctf.default_reportable
                   FROM entity_credit_account c
@@ -2359,7 +2359,7 @@ sub create_links {
 				c.language_code, a.ponumber, a.reverse,
                                 a.approved, ctf.default_reportable, 
                                 a.description, a.on_hold, a.crdate, 
-                                ns.location_id as locationid
+                                ns.location_id as locationid, a.is_return
 			FROM $arap a
 			JOIN entity_credit_account c 
 				ON (a.entity_credit_account = c.id)

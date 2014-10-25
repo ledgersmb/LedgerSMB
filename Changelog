@@ -1,13 +1,37 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+
+Changelog for 1.4.6
+* Fixed bug 1259, id from new_shipto overwrites form-id (Pongracz I)
+* Fixed related bug to 1259 on invoices (Chris T)
+* Updated Dutch translation (Frans S and Erik H)
+* New returns-specific logic (see release notes) (Chris T)
+* Fixed bug 1262, cannot post overpayment with formatted nums (Chris T)
+* Fixed bug 1263, error when control_code not filled in (chris T)
+* Fixed update button not showing after save (Chris T)
+* Fixed bug 1260, Multiple vendor skus breaks display of invoice (Chris T)
+* Removed buggy batch printing interface (Chris T)
+
+Pongracz I is Pongracz Istvan
+Chris T is Chris Travers
+Frans S is Frans van der Star
+Erik H is Erik Huelsmann
+
 Changelog for 1.4.5
 * Fixed bug 1245, print and email buttons lost after email invoice (Chris T)
 * Fixed bug 1246, entity-level addresses do not show on invoice (Chris T)
 * Fixed bug 1244, manually entered tax crashes invoice on edit (Chris T)
 * Fixed bug 1253, report pdfs redirect to port 80 (Chris T)
+* Fixed internal server error on single payment interface (Chris T)
+* Adding tax_id hidden field to order and offer forms to be able to include it on tex templates (Pongracz I)
+* Fixed bug 1195, goods and services w/invoice search useless (Chris T)
+* Fixed bug 1247, cannot save shipping record (Chris T)
+* Fixed bug 1255, no such function timecard__report (Chris T)
+* Fixed bug 1256, No such function: inventory_get_item_at_day (Chris T)
 
 Chris T is Chris Travers
+Pongracz I is Pongracz Istvan
 
 Changelog for 1.4.4
 * Fixed bug 1225 error saving order/quote for natural persons (Chris T)
@@ -53,6 +77,7 @@ Changelog for 1.4.2
 
 Chris T is Chris Travers
 
+>>>>>>> /tmp/Changelog~other.LbdXqA
 Changelog for 1.4.1
 * Fixed bug 1205, copy does not copy roles (Chris T)
 * Added multi-date inventory uploads (Erik H)
@@ -182,8 +207,19 @@ Changelog for 1.3 Series
 Initial Release:  Monday, Oct 12 2011
 Supported Presently
 
+Changelog for 1.3.46
+* Fixing bug 1257, ordnumber shows all orders open/closd (Chris T)
+* Fixed bug 1259, id from new_shipto overwrites form-id (Pongracz I)
+* Fixed related bug to 1259 on invoices (Chris T)
+* Some log quieting fixes. (Chris T)
+* Fixed bug 1262, cannot post overpayment with formatted numbers (Chris T)
+* Fixed bug 1260, Multiple vendor skus breaks display of invoice (Chris T)
+
+Chris T is Chris Travers
+Pongracz I is Pongracz Istvan
+
 Changelog for 1.3.45
-* Cleaned up sql files so App::LedgerSMB::Admin (Chris T)
+* Cleaned up sql files so App::LedgerSMB::Admin works (Chris T)
 * Fixed pricematrix prices not respected for vendors (Chris T, bug 1230)
 * Added tests for Sysconfig (Chris T, bug 1232)
 * Added first-rate starman/plack support (Chris T)
@@ -192,8 +228,13 @@ Changelog for 1.3.45
 * Fixed bug 1244, manually entered tax crashes invoice on edit (Chris T)
 * Fixed bug 1251, some backports failing due to misplacing db cnx (Chris T)
 * Fixed bug 1241, join projection, amounts in invoice details report (Chris T)
+* Fixed internal server error on single payment interface (Chris T)
+* Fixed bug 1240, false alarms of customer credit usage exceeded (Chris T)
+* Adding tax_id hidden field to order and offer forms to be able to include it on tex templates (Pongracz I)
+* Fixed bug 1258, manual tax number entries do not respect number formats (Pongracz I)
 
 Chris T is Chris Travers
+Pongracz I is Pongracz Istvan
 
 Changelog for 1.3.44
 * Allow blank salutations, bug 1204. (Chris T)

@@ -115,6 +115,11 @@ sub add {
         $form->{title} = $locale->text('Add Debit Invoice');
         $form->{subtype} = 'debit_invoice';
         $form->{reverse} = 1;
+    } elsif ($form->{type} eq 'vendor_return') {
+        $form->{title} = $locale->text('Add Vendor Return');
+        $form->{subtype} = 'debit_invoice';
+        $form->{reverse} = 1;
+        $form->{is_return} = 1;
     } else {
         $form->{title} = $locale->text('Add Vendor Invoice');
         $form->{reverse} = 0;
@@ -130,7 +135,10 @@ sub add {
 }
 
 sub edit {
-    if ($form->{reverse}){
+    if ($form->{is_return}){
+        $form->{title} = $locale->text('Edit Vendor Return');
+        $form->{subtype} = 'debit_invoice';
+    } elsif ($form->{reverse}) {
         $form->{title} = $locale->text('Add Debit Invoice');
         $form->{subtype} = 'debit_invoice';
     } else {
@@ -469,7 +477,7 @@ function on_return_submit(event){
     $form->hide_form(
         qw(id title vc type terms creditlimit creditremaining closedto locked 
            shipped oldtransdate recurring reverse batch_id subtype form_id
-           separate_duties nextsub default_reportable address city)
+           separate_duties nextsub default_reportable address city is_return)
     );
 
     print qq|
@@ -632,7 +640,7 @@ function on_return_submit(event){
         if ( $form->{id} ) {
          
             for ( "post", "delete") { delete $button{$_} }
-            for ( 'post_as_new', 'print_and_post_as_new', "update") {
+            for ( 'post_as_new', 'print_and_post_as_new') {
                 delete $button{$_};
             }
             my $is_draft = 0;

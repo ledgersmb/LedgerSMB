@@ -168,9 +168,10 @@ sub post_invoice {
             &reverse_invoice( $dbh, $form );
         }
         else {
-            $query = qq|INSERT INTO ap (id) VALUES (?)|;
+            $query = qq|INSERT INTO ap (id, is_return) VALUES (?, ?)|;
             $sth   = $dbh->prepare($query);
-            $sth->execute( $form->{id} ) || $form->dberror($query);
+            $sth->execute( $form->{id} , $form->{is_return} ) 
+                || $form->dberror($query);
         }
     }
 
@@ -376,7 +377,8 @@ sub post_invoice {
 				       deliverydate = ?,
 				       serialnumber = ?,
                                        precision = ?,
-				       notes = ?
+				       notes = ?,
+                                       vendor_sku = ?
 				 WHERE id = ?|;
             $sth = $dbh->prepare($query);
             $sth->execute(
@@ -387,6 +389,7 @@ sub post_invoice {
                 $form->{"unit_$i"},        $form->{"deliverydate_$i"},
                 $form->{"serialnumber_$i"},
                 $form->{"precision_$i"},   $form->{"notes_$i"},       
+                $form->{"partnumber_$i"},
                 $invoice_id
             ) || $form->dberror($query);
 
@@ -1147,9 +1150,8 @@ sub retrieve_invoice {
         # retrieve individual items
         $query = qq|
 			   SELECT i.id as invoice_id,
-                                  coalesce(
-                                CASE WHEN pv.partnumber <> '' THEN pv.partnumber
-                                     ELSE NULL END, p.partnumber) as partnumber,
+                                  coalesce(i.vendor_sku, p.partnumber) 
+                                        as partnumber,
                                   i.description, i.qty, 
 			          i.fxsellprice, i.sellprice, i.precision,
 			          i.parts_id AS id, i.unit, p.bin, 
@@ -1162,8 +1164,6 @@ sub retrieve_invoice {
 			          t.description AS partsgrouptranslation
 			     FROM invoice i
 			     JOIN parts p ON (i.parts_id = p.id)
-			LEFT JOIN partsvendor pv ON (p.id = pv.parts_id
-                                               AND pv.credit_id = ?)
 			LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
 			LEFT JOIN translation t 
 			          ON (t.trans_id = p.partsgroup_id 

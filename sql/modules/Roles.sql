@@ -359,6 +359,7 @@ SELECT lsmb__grant_perms('ar_transaction_create', 'acc_trans_entry_id_seq', 'ALL
 SELECT lsmb__grant_perms('ar_transaction_create', 'journal_entry_id_seq', 'ALL');
 SELECT lsmb__grant_perms('ar_transaction_create', 'journal_line_id_seq', 'ALL');
 SELECT lsmb__grant_menu('ar_transaction_create', 2, 'allow');
+SELECT lsmb__grant_menu('ar_transaction_create', 129, 'allow');
 SELECT lsmb__grant_menu('ar_transaction_create', 194, 'allow');
 
 SELECT lsmb__create_role('ar_transaction_create_voucher');
@@ -902,14 +903,6 @@ SELECT lsmb__grant_perms('financial_reports', obj, 'SELECT')
 \echo RECURRING TRANSACTIONS
 SELECT lsmb__create_role('recurring');
 SELECT lsmb__grant_menu('recurring', 115, 'allow');
-
-\echo BATCH PRINTING
-SELECT lsmb__create_role('print_jobs_list');
-SELECT lsmb__grant_menu('print_jobs_list', id, 'allow')
-  FROM unnest(array[117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127]) id;
-
-SELECT lsmb__create_role('print_jobs');
-SELECT lsmb__grant_role('print_jobs', 'print_jobs_list');
 
 \echo TAX FORMS
 SELECT lsmb__create_role('tax_form_save');

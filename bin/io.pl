@@ -1484,11 +1484,6 @@ sub print_options {
                 push @{$options{media}{options}}, {text => $_, value => $_};
             }
         }
-        if ( ${LedgerSMB::Sysconfig::latex} )
-        {
-            push @{$options{media}{options}}, {text => $locale->text('Queue'),
-                value => 'queue'};
-        }
     }
 
     $options{format} = {
@@ -1523,13 +1518,11 @@ sub print_options {
 
     # $locale->text('Printed')
     # $locale->text('E-mailed')
-    # $locale->text('Queued')
     # $locale->text('Scheduled')
 
     $options{status} = (
         printed   => 'Printed',
         emailed   => 'E-mailed',
-        queued    => 'Queued',
         recurring => 'Scheduled'
     );
 
@@ -1866,7 +1859,10 @@ sub print_form {
     $form->{pre} = "<body bgcolor=#ffffff>\n<pre>" if $form->{format} eq 'txt';
 
     my %output_options;
-    if ( $form->{media} !~ /(screen|queue|email)/ ) { # printing
+    if ($form->{media} eq 'zip'){
+        $form->{OUT}       = $form->{zipdir};
+        $form->{printmode} = '>';
+    } elsif ( $form->{media} !~ /(screen|zip|email)/ ) { # printing
         $form->{OUT}       = ${LedgerSMB::Sysconfig::printer}{ $form->{media} };
         $form->{printmode} = '|-';
         $form->{OUT} =~ s/<%(fax)%>/<%$form->{vc}$1%>/;
