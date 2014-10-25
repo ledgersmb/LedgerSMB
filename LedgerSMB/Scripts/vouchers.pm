@@ -401,7 +401,7 @@ sub reverse_overpayment {
 
 my %print_dispatch = (
    ar => sub { 
-               my ($voucher, $request) = @_,
+               my ($voucher, $request) = @_;
                if (my $cpid = fork()){
                   wait; 
                } else {
@@ -420,7 +420,7 @@ my %print_dispatch = (
              },
    ap => sub { 0 },
    is => sub { 
-               my ($voucher, $request) = @_,
+               my ($voucher, $request) = @_;
                if (fork){
                   wait; 
                } else {
@@ -438,6 +438,22 @@ my %print_dispatch = (
                1;
              },
    ir => sub {
+               my ($voucher, $request) = @_;
+               if (fork){
+                  wait; 
+               } else {
+                  do 'bin/is.pl';
+                  require 'LedgerSMB/Form.pm';
+                  %$lsmb_legacy::form = (%$request);
+                  bless $lsmb_legacy::form, Form;
+                  $lsmb_legacy::form->{formname} = 'product_receipt';
+
+                  lsmb_legacy::create_links();
+
+                  lsmb_legacy::print();
+                  exit;
+               }
+               1;
              },
    gl => sub { 0 },
    receipt =>  sub { undef }, # todo, new functionality
