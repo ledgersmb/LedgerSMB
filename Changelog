@@ -7,6 +7,7 @@ Changelog for 1.4.6
 * Updated Dutch translation (Frans S and Erik H)
 * New returns-specific logic (see release notes) (Chris T)
 * Fixed bug 1262, cannot post overpayment with formatted nums (Chris T)
+* Fixed bug 1263, error when control_code not filled in (chris T)
 
 Pongracz I is Pongracz Istvan
 Chris T is Chris Travers
