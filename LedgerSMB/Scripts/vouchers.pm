@@ -402,7 +402,7 @@ sub reverse_overpayment {
 my %print_dispatch = (
    ar => sub { 
                my ($voucher, $request) = @_,
-               if (fork){
+               if (my $cpid = fork()){
                   wait; 
                } else {
                   do 'bin/aa.pl';
