@@ -222,6 +222,7 @@ sub _main_screen {
     }
     
     my @location_class_list = 
+       grep { $_->{id} < 4 }
             LedgerSMB->call_procedure(procname => 'location_list_class');
 
     my @business_types =
@@ -470,6 +471,13 @@ Saves a company and moves on to the next screen
 
 sub save_company {
     my ($request) = @_;
+    unless ($request->{control_code}){
+        my ($ref) = $request->call_procedure(
+                             procname => 'setting_increment', 
+                             args     => ['entity_control']
+                           );
+        ($request->{control_code}) = values %$ref;
+    }
     $request->{name} ||= $request->{legal_name};
     my $company = LedgerSMB::Entity::Company->new(%$request);
     $request->{target_div} = 'credit_div';

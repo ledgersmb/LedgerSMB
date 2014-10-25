@@ -12,6 +12,7 @@ env:
   - DB_TESTING: 1
 before_install:
    - "cpanm DBI"
+   - "cpanm HTTP::Tiny"
    - "cpanm DBD::Pg"
    - "cpanm Try::Tiny"
    - "cpanm Memoize"

@@ -853,9 +853,11 @@ sub get_name {
 		          b.description AS business, 
 			  entity.control_code AS entity_control_code,
                           co.tax_id AS tax_id,
-			  c.meta_number, ecl.*, ctf.default_reportable,
+			  c.meta_number, ctf.default_reportable,
                           c.cash_account_id, ca.accno as cash_accno,
-                          c.id as eca_id
+                          c.id as eca_id,
+                          coalesce(ecl.address, el.address) as address,
+                          coalesce(ecl.city, el.city) as city
 		     FROM entity_credit_account c
 		     JOIN entity ON (entity.id = c.entity_id)
                 LEFT JOIN account ca ON c.cash_account_id = ca.id
@@ -869,8 +871,14 @@ sub get_name {
                           JOIN location l ON etl.location_id = l.id
                           WHERE etl.location_class = 1) ecl
                         ON (c.id = ecl.credit_id)
+                LEFT JOIN (SELECT coalesce(line_one, '')
+                               || ' ' || coalesce(line_two, '') as address,
+                               l.city, etl.entity_id
+                          FROM entity_to_location etl
+                          JOIN location l ON etl.location_id = l.id
+                          WHERE etl.location_class = 1) el
+                        ON (c.entity_id = el.entity_id)
 		    WHERE c.id = ?/;
-    # TODO:  Add location join
 
     @queryargs = ( $form->{"$form->{vc}_id"} );
     my $sth = $dbh->prepare($query);
@@ -969,6 +977,7 @@ sub get_name {
                 SELECT sum(o.amount * coalesce(e.$buysell, 1)) as used
                   FROM oe o
              LEFT JOIN exchangerate e ON o.transdate = e.transdate
+                                      AND o.curr = e.curr
                  WHERE not closed and oe_class_id in (1, 2)
                        and entity_credit_account = ?) s|;
 

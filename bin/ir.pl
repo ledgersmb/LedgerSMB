@@ -115,6 +115,11 @@ sub add {
         $form->{title} = $locale->text('Add Debit Invoice');
         $form->{subtype} = 'debit_invoice';
         $form->{reverse} = 1;
+    } elsif ($form->{type} eq 'vendor_return') {
+        $form->{title} = $locale->text('Add Vendor Return');
+        $form->{subtype} = 'debit_invoice';
+        $form->{reverse} = 1;
+        $form->{is_return} = 1;
     } else {
         $form->{title} = $locale->text('Add Vendor Invoice');
         $form->{reverse} = 0;
@@ -130,7 +135,10 @@ sub add {
 }
 
 sub edit {
-    if ($form->{reverse}){
+    if ($form->{is_return}){
+        $form->{title} = $locale->text('Edit Vendor Return');
+        $form->{subtype} = 'debit_invoice';
+    } elsif ($form->{reverse}) {
         $form->{title} = $locale->text('Add Debit Invoice');
         $form->{subtype} = 'debit_invoice';
     } else {
@@ -469,7 +477,7 @@ function on_return_submit(event){
     $form->hide_form(
         qw(id title vc type terms creditlimit creditremaining closedto locked 
            shipped oldtransdate recurring reverse batch_id subtype form_id
-           separate_duties nextsub default_reportable address city)
+           separate_duties nextsub default_reportable address city is_return)
     );
 
     print qq|
@@ -605,6 +613,8 @@ function on_return_submit(event){
                              # must be deleted.  One can only either copy or 
                              # update, not both. --CT
               { ndx => 1, key => 'C', value => $locale->text('Copy to New') },
+            'print' =>
+              { ndx => 2, key => 'P', value => $locale->text('Print') },
             'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
             'post_as_new' =>
               { ndx => 5, key => 'N', value => $locale->text('Post as new') },
@@ -630,7 +640,7 @@ function on_return_submit(event){
         if ( $form->{id} ) {
          
             for ( "post", "delete") { delete $button{$_} }
-            for ( 'post_as_new', 'print_and_post_as_new', "update") {
+            for ( 'post_as_new', 'print_and_post_as_new') {
                 delete $button{$_};
             }
             my $is_draft = 0;
@@ -639,12 +649,12 @@ function on_return_submit(event){
                $button{approve} = { 
                        ndx   => 3, 
                        key   => 'O', 
-                       value => $locale->text('Post as Saved') };
+                       value => $locale->text('Post') };
                if (grep /^lsmb_$form->{company}__draft_modify$/, @{$form->{_roles}}){
                    $button{edit_and_save} = { 
                        ndx   => 4, 
                        key   => 'E', 
-                       value => $locale->text('Save as Shown') };
+                       value => $locale->text('Save Draft') };
               }
                # Delete these for batches too
                delete $button{$_}
@@ -988,6 +998,19 @@ qq|<td align=center><input name="memo_$i" size=11 value="$form->{"memo_$i"}"></t
       </table>
     </td>
   </tr>
+  <tr><td>|;
+    my $printops = &print_options;
+    my $formname = { name => 'formname',
+                     options => [
+                                  {text=> $locale->text('Product Receipt'), value => 'product_receipt'},
+                                ]
+                   };
+    print_select($form, $formname);
+    print_select($form, $printops->{lang});
+    print_select($form, $printops->{format});
+    print_select($form, $printops->{media});
+  print qq|
+  </td></tr>
   <tr>
     <td><hr size=3 noshade></td>
   </tr>

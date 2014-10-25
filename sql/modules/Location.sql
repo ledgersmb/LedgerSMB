@@ -2,13 +2,27 @@
 
 BEGIN;
 
+DROP TYPE IF EXISTS location_class_item CASCADE;
+CREATE TYPE location_class_item AS (
+id int,
+class text,
+authoritative bool,
+entity_classes int[]
+);
+
+DROP FUNCTION IF EXISTS location_list_class();
 CREATE OR REPLACE FUNCTION location_list_class()
-RETURNS SETOF location_class AS
+RETURNS SETOF location_class_item AS
 $$
 DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN
-		SELECT * FROM location_class ORDER BY id
+		SELECT l.*, as_array(e.entity_class) 
+                  FROM location_class l
+                  JOIN location_class_to_entity_class e 
+                       ON (l.id = e.location_class)
+              GROUP BY l.id, l.class, l.authoritative
+              ORDER BY l.id
 	LOOP
 		RETURN NEXT out_row;
 	END LOOP;

@@ -584,7 +584,7 @@ sub delete {
     foreach $spoolfile (@spoolfiles) {
         unlink "${LedgerSMB::Sysconfig::spool}/$spoolfile" if $spoolfile;
     }
-
+    return 1;
 
 }
 
@@ -625,15 +625,14 @@ sub retrieve {
 				o.notes, o.intnotes, o.curr AS currency, 
 				pe.first_name \|\| ' ' \|\| pe.last_name AS employee,
 				o.person_id AS employee_id,
-				o.entity_credit_account, c.legal_name, 
+				o.entity_credit_account, vc.name as legal_name,
 				o.amount AS invtotal, o.closed, o.reqdate, 
 				o.quonumber, o.language_code,
 				o.ponumber, cr.entity_class,
                                 ns.location_id as locationid
 			FROM oe o
 			JOIN entity_credit_account cr ON (cr.id = o.entity_credit_account)
-			JOIN company c ON (cr.entity_id = c.entity_id)
-			JOIN entity vc ON (c.entity_id = vc.id)
+			JOIN entity vc ON (cr.entity_id = vc.id)
 			LEFT JOIN person pe ON (o.person_id = pe.id)
 			LEFT JOIN entity_employee e 
                                   ON (pe.entity_id = e.entity_id)
@@ -659,7 +658,7 @@ sub retrieve {
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         $ref = $sth->fetchrow_hashref('NAME_lc');
-        for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
+        for ( keys %$ref ) { $form->{$_} = $ref->{$_} unless ( $_ eq "id") }
         $sth->finish;
 
         # get printed, emailed and queued
@@ -683,7 +682,11 @@ sub retrieve {
 
         # retrieve individual items
         $query = qq|
-			SELECT o.id AS orderitems_id, p.partnumber, p.assembly, 
+			SELECT o.id AS orderitems_id, 
+                                COALESCE(CASE WHEN pv.partnumber <> ''
+                                              THEN pv.partnumber ELSE null 
+                                          END, p.partnumber) AS partnumber, 
+                                p.assembly, 
 				o.description, o.qty, o.sellprice, o.precision, 
 				o.parts_id AS id, o.unit, o.discount, p.bin,
 				o.reqdate, o.ship, o.serialnumber,
@@ -696,13 +699,17 @@ sub retrieve {
 			FROM orderitems o
 			JOIN parts p ON (o.parts_id = p.id)
 			LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
+			LEFT JOIN partsvendor pv ON (pv.parts_id = p.id
+                                           AND pv.credit_id = ?)
 			LEFT JOIN translation t 
 				ON (t.trans_id = p.partsgroup_id 
 					AND t.language_code = ?)
 			WHERE o.trans_id = ?
 			ORDER BY o.id|;
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{language_code}, $form->{id} )
+        # The use of vendor_id below helps ensure that partsvendor drops out
+        # for sales orders. --CT
+        $sth->execute( $form->{vendor_id}, $form->{language_code}, $form->{id} )
           || $form->dberror($query);
 
         # foreign exchange rates
@@ -1747,6 +1754,7 @@ sub save_inventory {
 
         }
     }
+    1;
 
 }
 

@@ -50,6 +50,14 @@ feature 'RESTful Web Services XML support',
     -default => 0,
     'XML::Simple' => 0;
 
+feature 'Standalone Server w/Starman',
+    -default => 0,
+    'Starman' => 0,
+    'CGI::Emulate::PSGI' => 0,
+    'Plack::Builder' => 0,
+    'Plack::Middleware::Static' => 0;
+  
+
 feature 'Size detection for images for embedding in LaTeX templates',
     -default => 0,
     'Image::Size' => 0;

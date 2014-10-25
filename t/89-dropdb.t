@@ -20,7 +20,8 @@ if ($run_tests){
 	$ENV{PGDATABASE} = $ENV{LSMB_NEW_DB};
 }
 
-ok(open (DBLOCK, '<', "$temp/LSMB_TEST_DB"), 'Opened db lock file');
+ok(open (DBLOCK, '<', "$temp/LSMB_TEST_DB"), 'Opened db lock file')
+  || BAIL_OUT("could not open lock file: \$!=$!, \$@=$@");
 my $db = <DBLOCK>;
 chomp($db);
 cmp_ok($db, 'eq', $ENV{LSMB_NEW_DB}, 'Got expected db name out') &&

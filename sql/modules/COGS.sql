@@ -271,11 +271,16 @@ DECLARE
    t_part parts;
    t_ar ar;
    t_transdate date;
+   t_override_cogs int;
 BEGIN
 
 SELECT * INTO t_inv FROM invoice WHERE id = in_invoice_id;
 SELECT * INTO t_part FROM parts WHERE id = t_inv.parts_id;
 SELECT * INTO t_ar FROM ar WHERE id = t_inv.trans_id;
+
+IF t_ar.is_return THEN
+   t_override_cogs = (setting_get('ar_return_account_id')).value::int;
+END IF;
 
 IF t_part.inventory_accno_id IS NULL THEN
    RETURN 0;
@@ -301,10 +306,12 @@ SELECT CASE WHEN t_ar.transdate > coalesce(max(end_date), t_ar.transdate - 1) TH
   from account_checkpoint td; 
 INSERT INTO acc_trans 
        (trans_id, chart_id, approved, amount, transdate,  invoice_id)
-VALUES (t_inv.trans_id, CASE WHEN t_inv.qty < 0 AND t_ar.is_return 
+VALUES (t_inv.trans_id, COALESCE(t_override_cogs, 
+                      CASE WHEN t_inv.qty < 0 AND t_ar.is_return 
                            THEN t_part.returns_accno_id
                            ELSE t_part.expense_accno_id
-                      END, TRUE, t_cogs[2] * -1, coalesce(t_transdate, t_ar.transdate), t_inv.id),
+                      END), TRUE, t_cogs[2] * -1, 
+       coalesce(t_transdate, t_ar.transdate), t_inv.id),
        (t_inv.trans_id, t_part.inventory_accno_id, TRUE, t_cogs[2], 
        t_transdate, t_inv.id);
 

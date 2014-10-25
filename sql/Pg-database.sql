@@ -658,13 +658,37 @@ COMMENT ON TABLE location_class is $$
 Individuals seeking to add new location classes should coordinate with others.
 $$;
 
+create table location_class_to_entity_class (
+  id serial unique,
+  location_class int not null references location_class(id),
+  entity_class int not null references entity_class(id)
+);
+
+GRANT SELECT ON location_class_to_entity_class TO PUBLIC;
+
+COMMENT ON TABLE location_class_to_entity_class IS
+$$This determines which location classes go with which entity classes$$;
+
 CREATE UNIQUE INDEX lower_class_unique ON location_class(lower(class));
 
 INSERT INTO location_class(id,class,authoritative) VALUES ('1','Billing',TRUE);
-INSERT INTO location_class(id,class,authoritative) VALUES ('2','Sales',TRUE);
-INSERT INTO location_class(id,class,authoritative) VALUES ('3','Shipping',TRUE);
+INSERT INTO location_class(id,class,authoritative) VALUES ('2','Sales',FALSE);
+INSERT INTO location_class(id,class,authoritative) VALUES ('3','Shipping',FALSE);
+INSERT INTO location_class(id,class,authoritative) VALUES ('4','Physical',TRUE);
+INSERT INTO location_class(id,class,authoritative) VALUES ('5','Mailing',FALSE);
 
-SELECT SETVAL('location_class_id_seq',4);
+SELECT SETVAL('location_class_id_seq',5);
+
+INSERT INTO location_class_to_entity_class 
+       (location_class, entity_class)
+SELECT lc.id, ec.id
+  FROM entity_class ec
+ cross
+  join location_class lc
+ WHERE ec.id <> 3 and lc.id < 4;
+
+INSERT INTO location_class_to_entity_class (location_class, entity_class)
+SELECT id, 3 from location_class lc where lc.id > 3;
   
 CREATE TABLE location (
   id serial PRIMARY KEY,
@@ -728,6 +752,8 @@ CREATE TABLE person (
     middle_name text,
     last_name text check (last_name ~ '[[:alnum:]_]') NOT NULL,
     created date not null default current_date,
+    birthdate date,
+    personal_id text,
     unique(entity_id) -- needed due to entity_employee assumptions --CT
  );
  
@@ -1336,7 +1362,7 @@ sinumber|1
 sonumber|1
 yearend|1
 businessnumber|1
-version|1.4.1
+version|1.4.5
 closedto|\N
 revtrans|1
 ponumber|1
@@ -1408,7 +1434,7 @@ CREATE TABLE batch (
   approved_on date default null,
   approved_by int references entity_employee(entity_id),
   created_by int references entity_employee(entity_id),
-  locked_by int references session(session_id) ON DELETE CASCADE,
+  locked_by int references session(session_id) ON DELETE SET NULL,
   created_on date default now(),
   CHECK (length(control_code) > 0)
 );
@@ -1566,6 +1592,7 @@ CREATE TABLE invoice (
   unit varchar,
   deliverydate date,
   serialnumber text,
+  vendor_sku text,
   notes text
 );
 
@@ -1769,6 +1796,7 @@ CREATE TABLE ap (
   description text,
   force_closed bool,
   crdate date,
+  is_return bool default false,
   entity_credit_account int references entity_credit_account(id) NOT NULL
 );
 
@@ -2738,7 +2766,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 2	Add Transaction	1	1
 7	AR Aging	4	3
 39	Invoice Vouchers	250	2
-5	Search	1	7
 22	Add Transaction	21	1
 27	AP Aging	24	3
 25	Search	21	7
@@ -2788,46 +2815,15 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 152	List Languages	150	2
 154	Add SIC	153	1
 155	List SIC	153	2
-159	Invoice	156	3
-160	AR Transaction	156	4
-161	AP Transaction	156	5
-162	Packing List	156	6
-163	Pick List	156	7
-164	Sales Order	156	8
-165	Work Order	156	9
-166	Purchase Order	156	10
-167	Bin List	156	11
-168	Statement	156	12
-169	Quotation	156	13
-170	RFQ	156	14
-171	Timecard	156	15
-241	Letterhead	156	16
 173	Invoice	172	1
-174	AR Transaction	172	2
-175	AP Transaction	172	3
-176	Packing List	172	4
-177	Pick List	172	5
-178	Sales Order	172	6
-179	Work Order	172	7
-180	Purchase Order	172	8
-181	Bin List	172	9
-182	Statement	172	10
 205	Transaction Approval	0	6
 1	AR	0	2
 21	AP	0	4
 35	Cash	0	5
-183	Check	172	11
-184	Receipt	172	12
-185	Quotation	172	13
-186	RFQ	172	14
-187	Timecard	172	15
-242	Letterhead	172	16
 189	POS Invoice	188	1
 19	Contacts	0	1
 246	Import Chart	73	7
 136	GIFI	128	7
-4	Reports	1	9
-249	Vouchers	1	8
 24	Reports	21	9
 250	Vouchers	21	8
 200	Vouchers	35	5
@@ -2920,6 +2916,41 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 26	Reverse AR Overpay	200	6
 59	Inventory	205	4
 75	Inventory and COGS	109	5
+159	Invoice	156	4
+160	AR Transaction	156	5
+161	AP Transaction	156	6
+162	Packing List	156	7
+163	Pick List	156	8
+164	Sales Order	156	9
+165	Work Order	156	10
+166	Purchase Order	156	11
+167	Bin List	156	12
+168	Statement	156	13
+169	Quotation	156	14
+170	RFQ	156	15
+171	Timecard	156	16
+241	Letterhead	156	17
+174	AR Transaction	172	3
+175	AP Transaction	172	4
+176	Packing List	172	5
+177	Pick List	172	6
+178	Sales Order	172	7
+179	Work Order	172	8
+180	Purchase Order	172	9
+181	Bin List	172	10
+182	Statement	172	11
+183	Check	172	12
+184	Receipt	172	13
+185	Quotation	172	14
+186	RFQ	172	15
+187	Timecard	172	16
+242	Letterhead	172	17
+90	Product Receipt	172	2
+99	Product Receipt	156	2
+129	Add Return	1	7
+5	Search	1	8
+4	Reports	1	10
+249	Vouchers	1	9
 \.
 
 
@@ -3532,6 +3563,17 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 75	module	reports.pl	219
 75	action	start_report	226
 75	report_name	cogs_lines	227
+90	module	template.pm	228
+90	action	display	229
+90	template_name	product_receipt	230
+90	format	tex	231
+99	module	template.pm	240
+99	action	display	241
+99	template_name	product_receipt	242
+99	format	html	245
+129	module	is.pl	251
+129	action	add	252
+129	type	customer_return	253
 \.
 
 --

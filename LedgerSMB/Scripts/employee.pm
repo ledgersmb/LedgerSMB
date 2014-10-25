@@ -165,6 +165,8 @@ sub _main_screen {
     }
     
     my @location_class_list = 
+        grep {( scalar grep {$_ == 3} @{$_->{entity_classes}} )
+              or ($request->{location_class} == $_->{id}) }
             $request->call_procedure(procname => 'location_list_class');
 
     my ($curr_list) =
@@ -292,6 +294,13 @@ Saves a company and moves on to the next screen
 
 sub save_employee {
     my ($request) = @_;
+    unless ($request->{control_code}){
+        my ($ref) = $request->call_procedure(
+                             procname => 'setting_increment', 
+                             args     => ['entity_control']
+                           );
+        ($request->{control_code}) = values %$ref;
+    }
     $request->{entity_class} = 3;
     $request->{control_code} = $request->{employeenumber};
     $request->{name} = "$request->{last_name}, $request->{first_name}";
