@@ -460,6 +460,13 @@ my %print_dispatch = (
    payment =>  sub { undef }, # todo, new functionality
 );
 
+=item print_batch
+
+Prints vouchers of a given batch.  Currently payments, receipts, ap transactions
+and gl transactions are not printed.
+
+=cut
+
 sub print_batch {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
