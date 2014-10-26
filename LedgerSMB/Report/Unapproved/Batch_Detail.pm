@@ -183,6 +183,10 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self) = @_;
+    $self->options([{
+    }, {
+    }, {
+    }];
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',
