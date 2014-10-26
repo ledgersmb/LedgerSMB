@@ -162,7 +162,6 @@ sub post_transaction {
        }
     }
     $sth = $dbh->prepare($query);
-    print STDERR $query;
     $sth->execute( $form->{transdate}, $form->{id} )
       || $form->dberror($query);
 
