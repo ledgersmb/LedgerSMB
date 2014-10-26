@@ -2,6 +2,35 @@ Changelog for 1.3 Series
 Initial Release:  Monday, Oct 12 2011
 Supported Presently
 
+Changelog for 1.3.46
+* Fixing bug 1257, ordnumber shows all orders open/closd (Chris T)
+* Fixed bug 1259, id from new_shipto overwrites form-id (Pongracz I)
+* Fixed related bug to 1259 on invoices (Chris T)
+* Some log quieting fixes. (Chris T)
+* Fixed bug 1262, cannot post overpayment with formatted numbers (Chris T)
+* Fixed bug 1260, Multiple vendor skus breaks display of invoice (Chris T)
+
+Chris T is Chris Travers
+Pongracz I is Pongracz Istvan
+
+Changelog for 1.3.45
+* Cleaned up sql files so App::LedgerSMB::Admin works (Chris T)
+* Fixed pricematrix prices not respected for vendors (Chris T, bug 1230)
+* Added tests for Sysconfig (Chris T, bug 1232)
+* Added first-rate starman/plack support (Chris T)
+* Fixed bug 1239, reopening on previous close throws error (Chris T)
+* Quieted some of the test cases (Chris T)
+* Fixed bug 1244, manually entered tax crashes invoice on edit (Chris T)
+* Fixed bug 1251, some backports failing due to misplacing db cnx (Chris T)
+* Fixed bug 1241, join projection, amounts in invoice details report (Chris T)
+* Fixed internal server error on single payment interface (Chris T)
+* Fixed bug 1240, false alarms of customer credit usage exceeded (Chris T)
+* Adding tax_id hidden field to order and offer forms to be able to include it on tex templates (Pongracz I)
+* Fixed bug 1258, manual tax number entries do not respect number formats (Pongracz I)
+
+Chris T is Chris Travers
+Pongracz I is Pongracz Istvan
+
 Changelog for 1.3.44
 * Allow blank salutations, bug 1204. (Chris T)
 * Easier creation of select widgets with blanks. (Chris T)

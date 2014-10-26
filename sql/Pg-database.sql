@@ -1027,7 +1027,7 @@ sinumber|1
 sonumber|1
 yearend|1
 businessnumber|1
-version|1.3.44
+version|1.3.45
 closedto|\N
 revtrans|1
 ponumber|1
@@ -1214,6 +1214,7 @@ CREATE TABLE invoice (
   project_id int,
   deliverydate date,
   serialnumber text,
+  vendor_sku text,
   notes text
 );
 

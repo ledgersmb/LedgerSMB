@@ -4,6 +4,7 @@
 -- Public License v 2 or at your option any later version.
 
 -- Docstrings already added to this file.
+BEGIN;
 
 
 CREATE OR REPLACE FUNCTION setting_set (in_key varchar, in_value varchar) 
@@ -101,4 +102,4 @@ COMMENT ON FUNCTION setting__get_currencies() is
 $$ Returns an array of currencies from the defaults table.$$;
 
 ALTER TABLE entity ALTER control_code SET default setting_increment('entity_control');
-
+COMMIT;

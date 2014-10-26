@@ -1,5 +1,6 @@
 -- TODO:  Merge with account.sql -CT
-
+BEGIN;
+DROP TYPE IF EXISTS trial_balance_line CASCADE;
 CREATE TYPE trial_balance_line AS (
 	chart_id int,
 	accno text,
@@ -227,3 +228,4 @@ which must be 1 or 2.
 
 If in_account_class is 1, returns AP discount accounts, if 2, AR discount 
 accounts.$$;
+COMMIT;

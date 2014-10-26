@@ -1,5 +1,7 @@
 -- VERSION 1.3.0
 
+BEGIN;
+
 CREATE OR REPLACE FUNCTION account__get_from_accno(in_accno text)
 returns account as
 $$
@@ -309,3 +311,4 @@ COMMENT ON FUNCTION account__save_tax
 in_maxvalue numeric, in_taxnumber text, 
 in_pass int, in_taxmodule_id int, in_old_validto date) IS
 $$ This saves tax rates.$$; 
+COMMIT;
