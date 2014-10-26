@@ -151,14 +151,14 @@ sub _main_screen {
 
     # Globals for the template
     my @salutations = $request->call_procedure(
-                procname => 'person__list_salutations'
+                funcname => 'person__list_salutations'
     );
     my @managers = $request->call_procedure(
-                         procname => 'employee__all_managers'
+                         funcname => 'employee__all_managers'
     );
 
     my @language_code_list = 
-             $request->call_procedure(procname=> 'person__list_languages');
+             $request->call_procedure(funcname => 'person__list_languages');
 
     for my $ref (@language_code_list){
         $ref->{text} = "$ref->{code}--$ref->{description}";
@@ -167,10 +167,10 @@ sub _main_screen {
     my @location_class_list = 
         grep {( scalar grep {$_ == 3} @{$_->{entity_classes}} )
               or ($request->{location_class} == $_->{id}) }
-            $request->call_procedure(procname => 'location_list_class');
+            $request->call_procedure(funcname => 'location_list_class');
 
     my ($curr_list) =
-          $request->call_procedure(procname => 'setting__get_currencies');
+          $request->call_procedure(funcname => 'setting__get_currencies');
 
     my @all_currencies;
     for my $curr (@{$curr_list->{'setting__get_currencies'}}){
@@ -178,12 +178,12 @@ sub _main_screen {
     }
 
     my ($default_country) = $request->call_procedure(
-              procname => 'setting_get',
+              funcname => 'setting_get',
                   args => ['default_country']);
     $default_country = $default_country->{value};
 
     my ($default_language) = $request->call_procedure(
-              procname => 'setting_get',
+              funcname => 'setting_get',
                   args => ['default_language']);
     $default_language = $default_language->{value};
 
@@ -203,10 +203,10 @@ sub _main_screen {
     );
 
     my @country_list = $request->call_procedure(
-                     procname => 'location_list_country'
+                     funcname => 'location_list_country'
       );
     my @entity_classes = $request->call_procedure(
-                      procname => 'entity__list_classes'
+                      funcname => 'entity__list_classes'
     );
     my @roles = LedgerSMB::Entity::User->list_roles;
 
@@ -265,7 +265,7 @@ Generates a control code and hands off execution to other routines
 sub generate_control_code {
     my ($request) = @_;
     my ($ref) = $request->call_procedure(
-                             procname => 'setting_increment', 
+                             funcname => 'setting_increment', 
                              args     => ['entity_control']
                            );
     ($request->{control_code}) = values %$ref;
@@ -294,6 +294,13 @@ Saves a company and moves on to the next screen
 
 sub save_employee {
     my ($request) = @_;
+    unless ($request->{control_code}){
+        my ($ref) = $request->call_procedure(
+                             funcname => 'setting_increment', 
+                             args     => ['entity_control']
+                           );
+        ($request->{control_code}) = values %$ref;
+    }
     $request->{entity_class} = 3;
     $request->{control_code} = $request->{employeenumber};
     $request->{name} = "$request->{last_name}, $request->{first_name}";

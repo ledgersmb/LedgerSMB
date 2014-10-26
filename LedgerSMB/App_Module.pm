@@ -56,7 +56,6 @@ This retrieves a single module by id, and returns it.
 sub get {
     my ($self, $id) = @_;
     my ($ref)  = $self->call_procedure(funcname => 'lsmb_module__get', args => [$id]);
-    $self->prepare_dbhash($ref);
     return $self->new($ref);
 }
 
@@ -70,7 +69,6 @@ sub list{
     my ($self) = @_;
     my @results = $self->call_procedure(funcname => 'lsmb_module__list');
     for my $ref(@results){
-        $self->prepare_dbhash($ref);
         $ref = $self->new($ref);
     }
     return @results;

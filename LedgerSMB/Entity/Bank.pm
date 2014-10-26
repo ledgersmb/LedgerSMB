@@ -97,6 +97,7 @@ blessed reference.  All return results are objects.
 
 dbmethod list => (funcname => 'list_bank_account', 
                    arglist => ['entity_id'],
+               funcschema => 'public',
            returns_objects => 1 );
 
 =item save()
@@ -109,7 +110,6 @@ setting things like the id field.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'save_bank_account');
-    $self->prepare_dbhash($ref);
     $self = $self->new(%$ref);
 }
 

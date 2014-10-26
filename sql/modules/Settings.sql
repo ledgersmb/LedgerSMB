@@ -230,6 +230,12 @@ DELETE FROM lsmb_sequence where label = $1;
 SELECT NULL::lsmb_sequence;
 $$;
 
+CREATE OR REPLACE FUNCTION defaults__get_contra_accounts(in_category char(1))
+RETURNS SETOF account LANGUAGE SQL AS
+$$
+SELECT * FROM account WHERE contra AND category = $1;
+$$;
+
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
 COMMIT;

@@ -411,53 +411,6 @@ sub create_and_load(){
 }
 
 
-=head2 $db->lsmb_info()
-
-This routine retrieves general stats about the database and returns the output
-as a hashref with the following key/value pairs:
-
-=over
-
-=item ar_rows 
-
-=item ap_rows
-
-=item gl_rows
-
-=item acc_trans_rows
-
-=item eca_rows
-
-=item oe_rows
-
-=item transactions_rows
-
-=item users_rows
-
-=back
-
-=cut
-
-sub lsmb_info {
-    my ($self) = @_;
-    my @tables = qw(ar ap gl acc_trans entity_credit_account oe transactions 
-                    users);
-    my $retval = {};
-    my $qtemp = 'SELECT count(*) FROM TABLE';
-    my $dbh = $self->connect;
-    for my $t (@tables) {
-        my $query = $qtemp;
-        $query =~ s/TABLE/$t/;
-        my ($count) = $dbh->selectrow_array($query);
-        my $key = $t;
-        $key = 'eca' if $t eq 'entity_credit_account';
-        $retval->{"${key}_count"} = $count;
-    }
-    $dbh->disconnect();
-    return $retval;
-}
-    
-
 =head2 $db->upgrade_modules($loadorder, $version)
 
 This routine upgrades modules as required with a patch release upgrade.
@@ -475,13 +428,12 @@ sub upgrade_modules {
 			    })
         or die "Modules failed to be loaded.";
 
-    my $dbh = $self->dbh;
+    my $dbh = $self->connect;
     my $sth = $dbh->prepare(
           "UPDATE defaults SET value = ? WHERE setting_key = 'version'"
     );
     $sth->execute($LedgerSMB::VERSION)
         or die "Version not updated.";
-    $dbh->commit;
 
     return 1;
 }

@@ -128,7 +128,7 @@ The second line of the street address
 
 =cut
 
-has 'line_two' => (is => 'rw', 'isa' => 'Str', required => 0);
+has 'line_two' => (is => 'rw', 'isa' => 'Maybe[Str]', required => 0);
 
 =item line_three
 
@@ -136,7 +136,7 @@ The third line of the street address
 
 =cut
 
-has 'line_three' => (is => 'rw', 'isa' => 'Str', required => 0);
+has 'line_three' => (is => 'rw', 'isa' => 'Maybe[Str]', required => 0);
 
 =item city
 
@@ -152,7 +152,7 @@ Name of the state or province
 
 =cut
 
-has 'state' => (is => 'rw', 'isa' => 'Str', required => 0);
+has 'state' => (is => 'rw', 'isa' => 'Maybe[Str]', required => 0);
 
 =item mail_code
 
@@ -160,7 +160,7 @@ Zip or postal code
 
 =cut
 
-has 'mail_code' => (is => 'rw', 'isa' => 'Str', required => 0);
+has 'mail_code' => (is => 'rw', 'isa' => 'Maybe[Str]', required => 0);
 
 =item country_id
 

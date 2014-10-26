@@ -1,4 +1,5 @@
 #!/usr/bin/perl
+package LedgerSMB::Rest;
 
 =head1 NAME
 
@@ -273,7 +274,7 @@ sub get_request_properties {
     $request->{args} = $cgi->Vars();
     $request->{method} = $ENV{REQUEST_METHOD};
     $request->{payload} = $cgi->param( "$request->{method}DATA" );
-    $url =~ s|.*/rest/(.*)|$1|;
+    $url =~ s#.*/(rest-handler.pl|rest)/(.*)#$2#;
     $url =~ s|\.([^/.?]*)(\?.*)?$||;
     $request->{format} = $1;
 

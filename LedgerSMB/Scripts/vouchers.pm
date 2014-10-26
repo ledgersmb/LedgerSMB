@@ -20,6 +20,7 @@ use LedgerSMB::Report::Unapproved::Batch_Overview;
 use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
+use CGI::Simple;
 use strict;
 
 
@@ -397,6 +398,117 @@ sub reverse_overpayment {
          ) if $id;
     }
     LedgerSMB::Scripts::reports::search_overpayments($request);
+}
+
+my %print_dispatch = (
+   ar => sub { 
+               my ($voucher, $request) = @_;
+               if (my $cpid = fork()){
+                  wait; 
+               } else {
+                  do 'bin/aa.pl';
+                  require 'LedgerSMB/Form.pm';
+                  %$lsmb_legacy::form = (%$request);
+                  bless $lsmb_legacy::form, 'Form';
+                  $lsmb_legacy::form->{formname} = 'ar_transaction';
+
+                  lsmb_legacy::create_links();
+
+                  lsmb_legacy::print();
+                  exit;
+               }
+               1;
+             },
+   ap => sub { 0 },
+   is => sub { 
+               my ($voucher, $request) = @_;
+               if (fork){
+                  wait; 
+               } else {
+                  do 'bin/is.pl';
+                  require 'LedgerSMB/Form.pm';
+                  %$lsmb_legacy::form = (%$request);
+                  bless $lsmb_legacy::form, 'Form';
+                  $lsmb_legacy::form->{formname} = 'invoice';
+
+                  lsmb_legacy::create_links();
+
+                  lsmb_legacy::print();
+                  exit;
+               }
+               1;
+             },
+   ir => sub {
+               my ($voucher, $request) = @_;
+               if (fork){
+                  wait; 
+               } else {
+                  do 'bin/is.pl';
+                  require 'LedgerSMB/Form.pm';
+                  %$lsmb_legacy::form = (%$request);
+                  bless $lsmb_legacy::form, 'Form';
+                  $lsmb_legacy::form->{formname} = 'product_receipt';
+
+                  lsmb_legacy::create_links();
+
+                  lsmb_legacy::print();
+                  exit;
+               }
+               1;
+             },
+   gl => sub { 0 },
+   receipt =>  sub { undef }, # todo, new functionality
+   payment =>  sub { undef }, # todo, new functionality
+);
+
+=item print_batch
+
+Prints vouchers of a given batch.  Currently payments, receipts, ap transactions
+and gl transactions are not printed.
+
+=cut
+
+sub print_batch {
+    my ($request) = @_;
+    my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
+                 %$request);
+    $report->run_report;
+
+    my $cgi = CGI::Simple->new;
+
+    my @files = 
+      map { my $contents = &{$print_dispatch{$_->{voucher_type}}}($request, $_);
+            $contents ? $contents : (); }
+      @{$report->rows};
+
+    my $dirname = "$LedgerSMB::Sysconfig::tempdir/docs-$request->{id}-" . time;
+    mkdir $dirname;
+
+    $request->{zipdir} = $dirname;
+
+    if (@files) {
+       my $zipcmd = $LedgerSMB::Sysconfig::zip;
+       $zipcmd =~ s/\%dir/$dirname/g;
+       `$zipcmd`;
+
+       binmode (STDOUT, ':bytes');
+
+       print $cgi->header(
+          -type       => 'application/zip',
+          -status     => '200',
+          -charset    => 'utf-8',
+          -attachment => "batch-$request->{id}.zip",
+       );
+
+       open ZIP, '<', "$request->{zipdir}";
+       binmode (ZIP, ':bytes');
+       print <ZIP>;
+       close ZIP;
+
+    } else {
+       $report->render($request); 
+    }
+    
 }
 
 eval { do "scripts/custom/vouchers.pl"};

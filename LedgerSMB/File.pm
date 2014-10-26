@@ -288,7 +288,7 @@ Lists files directly attached to the object.
 sub list{
     my ($self, $args) = @_;
     my @results = $self->call_procedure(
-                 procname => 'file__list_by', 
+                 funcname => 'file__list_by', 
                       args => [$args->{ref_key}, $args->{file_class}]
      );
     return @results;

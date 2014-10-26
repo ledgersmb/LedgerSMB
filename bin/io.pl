@@ -46,6 +46,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
 use LedgerSMB::File;
+use List::Util 'reduce';
 
 # any custom scripts for this one
 if ( -f "bin/custom/io.pl" ) {
@@ -90,7 +91,7 @@ if ( -f "bin/custom/$form->{login}_io.pl" ) {
 
 sub _calc_taxes {
     $form->{subtotal} = $form->{invsubtotal};
-    my $moneyplaces = $LedgerSMB::Sysconfig::decimal_places;
+    my $moneyplaces = $LedgerSMB::Company_Config::settings->{decimal_places};
     for $i (1 .. $form->{rowcount}){
         my $discount_amount = $form->round_amount( $form->{"sellprice_$i"} 
         		       			   * ($form->{"discount_$i"} / 100), 
@@ -1578,6 +1579,7 @@ sub print_form {
     $form->{fax} = $csettings->{company_fax};
     my $inv = "inv";
     my $due = "due";
+    my $class;
 
     my $numberfld = "sinumber";
 
@@ -1767,10 +1769,27 @@ sub print_form {
     # create the form variables
     if ($order) {
         OE->order_details( \%myconfig, $form );
-    }
-    else {
+    } elsif ($form->{formname} eq 'product_receipt'){
+        @{$form->{number}} = map { $form->{"partnumber_$_"} }
+            1 .. $form->{rowcount};
+        @{$form->{item_description}} = map { $form->{"description_$_"} }
+            1 .. $form->{rowcount};
+        @{$form->{qty}} = map { $form->{"qty_$_"} }
+            1 .. $form->{rowcount};
+        @{$form->{unit}} = map { $form->{"unit_$_"} }
+            1 .. $form->{rowcount};
+        @{$form->{sellprice}} = map { $form->{"sellprice_$_"} }
+            1 .. $form->{rowcount};
+        @{$form->{discount}} = map { $form->{"discount_$_"} }
+            1 .. $form->{rowcount};
+        @{$form->{linetotal}} = map { 
+            $form->{"qty_$_"} * $form->{"sellprice_$_"}
+         }
+            1 .. $form->{rowcount} - 1;
+        $form->{invtotal} = reduce { $a + $b } @{$form->{linetotal}};
+    } else {
         IS->invoice_details( \%myconfig, $form );
-    } 
+    }
     if ( exists $form->{longformat} ) {
         $form->{"${due}date"} = $duedate;
         for ( "${inv}date", "${due}date", "shippingdate", "transdate" ) {
@@ -1834,7 +1853,10 @@ sub print_form {
     $form->{pre} = "<body bgcolor=#ffffff>\n<pre>" if $form->{format} eq 'txt';
 
     my %output_options;
-    if ( $form->{media} !~ /(screen|queue|email)/ ) { # printing
+    if ($form->{media} eq 'zip'){
+        $form->{OUT}       = $form->{zipdir};
+        $form->{printmode} = '>';
+    } elsif ( $form->{media} !~ /(screen|zip|email)/ ) { # printing
         $form->{OUT}       = ${LedgerSMB::Sysconfig::printer}{ $form->{media} };
         $form->{printmode} = '|-';
         $form->{OUT} =~ s/<%(fax)%>/<%$form->{vc}$1%>/;
@@ -2002,8 +2024,7 @@ sub print_form {
             }
         }
 
-        &{"$display_form"};
-
+        edit();
     }
 
 }

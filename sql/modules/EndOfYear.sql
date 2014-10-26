@@ -193,7 +193,11 @@ $$
              GROUP BY end_date) eoy_dates
   ORDER BY end_date;
 
-SELECT eoy_create_checkpoint($1 - 1) > 0;
+SELECT CASE WHEN (SELECT count(*) > 0 from account_checkpoint 
+                   where end_date = $1 - 1)
+            THEN true
+            ELSE eoy_create_checkpoint($1 - 1) > 0
+       END;
 
 $$;
 

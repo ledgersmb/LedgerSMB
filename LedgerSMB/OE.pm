@@ -625,15 +625,14 @@ sub retrieve {
 				o.notes, o.intnotes, o.curr AS currency, 
 				pe.first_name \|\| ' ' \|\| pe.last_name AS employee,
 				o.person_id AS employee_id,
-				o.entity_credit_account, c.legal_name, 
+				o.entity_credit_account, vc.name as legal_name,
 				o.amount AS invtotal, o.closed, o.reqdate, 
 				o.quonumber, o.language_code,
 				o.ponumber, cr.entity_class,
 				ns.location_id as locationid
 			FROM oe o
 			JOIN entity_credit_account cr ON (cr.id = o.entity_credit_account)
-			JOIN company c ON (cr.entity_id = c.entity_id)
-			JOIN entity vc ON (c.entity_id = vc.id)
+			JOIN entity vc ON (cr.entity_id = vc.id)
 			LEFT JOIN person pe ON (o.person_id = pe.id)
 			LEFT JOIN entity_employee e 
                                   ON (pe.entity_id = e.entity_id)
@@ -659,7 +658,7 @@ sub retrieve {
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         $ref = $sth->fetchrow_hashref('NAME_lc');
-        for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
+        for ( keys %$ref ) { $form->{$_} = $ref->{$_} unless ( $_ eq "id") }
         $sth->finish;
 
         # get printed, emailed and queued
@@ -1755,6 +1754,7 @@ sub save_inventory {
 
         }
     }
+    1;
 
 }
 

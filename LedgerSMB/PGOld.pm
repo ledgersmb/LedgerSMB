@@ -20,12 +20,21 @@ See PGObject::Simple
 # Then we can delete this module.
 
 package LedgerSMB::PGOld;
-use PGObject::Simple;
+use base 'PGObject::Simple';
 use LedgerSMB::App_State;
+
+sub new {
+    my ($pkg, $args) = @_;
+    my $mergelist = $args->{mergelist} || [keys %{$args->{base}}];
+    my $self = { map { $_ => $args->{base}->{$_} } @$mergelist };
+    $self =  PGObject::Simple::new($pkg, %$self);
+    return $self;
+}
 
 sub set_dbh {
     my ($self) = @_;
     $self->{_DBH} =  LedgerSMB::App_State::DBH();
+    return  LedgerSMB::App_State::DBH();
 }
 
 1; 

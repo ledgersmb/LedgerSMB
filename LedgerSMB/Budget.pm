@@ -321,7 +321,6 @@ sub get {
    my ($info) = $self->call_procedure(
           funcname => 'budget__get_info', args => [$id]
    );
-   $self->prepare_dbhash($info);
    $self = $self->new(%$info);
    my @lines = $self->call_dbmethod(funcname => 'budget__get_details');
    $self->lines(\@lines);

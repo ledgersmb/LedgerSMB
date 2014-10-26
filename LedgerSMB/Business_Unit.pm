@@ -13,6 +13,7 @@ funds, and projects.
 
 package LedgerSMB::Business_Unit;
 use Moose;
+use LedgerSMB::MooseTypes;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
@@ -60,7 +61,8 @@ here for conversion to/from input and to/from strings for the db.
 
 =cut
 
-has 'start_date' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'start_date' => (is => 'rw', isa => 'LedgerSMB::Moose::Date',
+            coerce => 1);
 
 =item end_date
 
@@ -69,7 +71,7 @@ here for conversion to/from input and to/from strings for the db.
 
 =cut
 
-has 'end_date' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
+has 'end_date' => (is => 'rw', isa => 'LedgerSMB::Moose::Date', coerce => 1);
 
 =item parent_id
 
@@ -123,7 +125,6 @@ sub get {
     my ($unit) = $self->call_procedure(funcname => 'business_unit__get',
                                             args => [$id]
     );
-    $self->prepare_dbhash($unit);
     return $self->new(%$unit);
 } 
 
@@ -136,7 +137,6 @@ Saves the business reporting unit ot the database and updates changes to object.
 sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'business_unit__save');
-    $self->prepare_dbhash($ref);
     $self = $self->new($ref);
 }   
 
@@ -153,7 +153,6 @@ sub list {
                                       args => [$class_id, $active_on, 
                                                $credit_id, $strict]);
     for my $row(@rows){
-        $self->prepare_dbhash($row);
         $row = $self->new($row);
     }
     return @rows;

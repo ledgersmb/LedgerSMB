@@ -91,9 +91,9 @@ sub get {
     my $entity = LedgerSMB::Entity::Company->get($request->{entity_id});
     $entity ||= LedgerSMB::Entity::Person->get($request->{entity_id});
     my ($company, $person) = (undef, undef);
-    if ($entity->isa('LedgerSMB::Entity::Company')){
+    if (eval {$entity->isa('LedgerSMB::Entity::Company')}){
        $company = $entity;
-    } elsif ($entity->isa('LedgerSMB::Entity::Person')){
+    } elsif (eval {$entity->isa('LedgerSMB::Entity::Person')}){
        $person = $entity;
     }
     _main_screen($request, $company, $person);
@@ -129,7 +129,7 @@ sub _main_screen {
     $request->{target_div} ||= 'company_div';
 
     my @all_years =  LedgerSMB->call_procedure(
-              procname => 'date_get_all_years'
+              funcname => 'date_get_all_years'
     );
 
 
@@ -149,7 +149,7 @@ sub _main_screen {
     my $entity_id = $company->{entity_id};
     $entity_id ||= $person->{entity_id};
     my @pricegroups = LedgerSMB->call_procedure(
-        procname => 'pricegroups__list'
+        funcname => 'pricegroups__list'
     );
     my @credit_list = 
        LedgerSMB::Entity::Credit_Account->list_for_entity(
@@ -193,18 +193,18 @@ sub _main_screen {
 
     # Globals for the template
     my @salutations = LedgerSMB->call_procedure(
-                procname => 'person__list_salutations'
+                funcname => 'person__list_salutations'
     );
-    my @all_taxes = LedgerSMB->call_procedure(procname => 'account__get_taxes');
+    my @all_taxes = LedgerSMB->call_procedure(funcname => 'account__get_taxes');
 
-    my @ar_ap_acc_list = LedgerSMB->call_procedure(procname => 'chart_get_ar_ap',
+    my @ar_ap_acc_list = LedgerSMB->call_procedure(funcname => 'chart_get_ar_ap',
                                            args => [$entity_class]) if $entity_class < 3;
 
-    my @cash_acc_list = LedgerSMB->call_procedure(procname => 'chart_list_cash',
+    my @cash_acc_list = LedgerSMB->call_procedure(funcname => 'chart_list_cash',
                                            args => [$entity_class]);
 
     my @discount_acc_list =
-         LedgerSMB->call_procedure(procname => 'chart_list_discount',
+         LedgerSMB->call_procedure(funcname => 'chart_list_discount',
                                      args => [$entity_class]);
 
     for my $var (\@ar_ap_acc_list, \@cash_acc_list, \@discount_acc_list){
@@ -215,7 +215,7 @@ sub _main_screen {
 
 #
     my @language_code_list = 
-             LedgerSMB->call_procedure(procname=> 'person__list_languages');
+             LedgerSMB->call_procedure(funcname => 'person__list_languages');
 
     for my $ref (@language_code_list){
         $ref->{text} = "$ref->{description}";
@@ -223,13 +223,13 @@ sub _main_screen {
     
     my @location_class_list = 
        grep { $_->{id} < 4 }
-            LedgerSMB->call_procedure(procname => 'location_list_class');
+            LedgerSMB->call_procedure(funcname => 'location_list_class');
 
     my @business_types =
-               LedgerSMB->call_procedure(procname => 'business_type__list');
+               LedgerSMB->call_procedure(funcname => 'business_type__list');
 
     my ($curr_list) =
-          LedgerSMB->call_procedure(procname => 'setting__get_currencies');
+          LedgerSMB->call_procedure(funcname => 'setting__get_currencies');
 
     my @all_currencies;
     for my $curr (@{$curr_list->{'setting__get_currencies'}}){
@@ -266,10 +266,10 @@ sub _main_screen {
     $Data::Dumper::Sortkeys = 1;
     #die '<pre>' . Dumper($request) . '</pre>';
     my @country_list = LedgerSMB->call_procedure(
-                     procname => 'location_list_country'
+                     funcname => 'location_list_country'
       );
     my @entity_classes = LedgerSMB->call_procedure(
-                      procname => 'entity__list_classes'
+                      funcname => 'entity__list_classes'
     );
 
     $template->render({
@@ -320,7 +320,7 @@ Generates a control code and hands off execution to other routines
 sub generate_control_code {
     my ($request) = @_;
     my ($ref) = $request->call_procedure(
-                             procname => 'setting_increment', 
+                             funcname => 'setting_increment', 
                              args     => ['entity_control']
                            );
     ($request->{control_code}) = values %$ref;
@@ -471,6 +471,13 @@ Saves a company and moves on to the next screen
 
 sub save_company {
     my ($request) = @_;
+    unless ($request->{control_code}){
+        my ($ref) = $request->call_procedure(
+                             funcname => 'setting_increment', 
+                             args     => ['entity_control']
+                           );
+        ($request->{control_code}) = values %$ref;
+    }
     $request->{name} ||= $request->{legal_name};
     my $company = LedgerSMB::Entity::Company->new(%$request);
     $request->{target_div} = 'credit_div';

@@ -20,6 +20,7 @@ leads etc.
 package LedgerSMB::Entity::Company;
 use Moose;
 extends 'LedgerSMB::Entity';
+use LedgerSMB::MooseTypes;
 
 =head1 PROPERTIES
 
@@ -47,7 +48,7 @@ Tax identifier for the company.
 
 =cut
 
-has 'tax_id' => (is => 'rw', isa => 'Str', required => 0);
+has 'tax_id' => (is => 'rw', isa => 'Maybe[Str]', required => 0);
 
 =item sales_tax_id
 
@@ -55,7 +56,7 @@ Sales tax identifier for the company (like a GST or VAT number)
 
 =cut
 
-has 'sales_tax_id' => (is => 'rw', isa => 'Str', required => 0);
+has 'sales_tax_id' => (is => 'rw', isa => 'Maybe[Str]', required => 0);
 
 =item license_number
 
@@ -71,7 +72,7 @@ Business categorization code.  SIC, NAICS, or other systems can be used.
 
 =cut
 
-has 'sic_code' => (is => 'rw', isa => 'Str', required => 0);
+has 'sic_code' => (is => 'rw', isa => 'Maybe[Str]', required => 0);
 
 =item created 
 
@@ -95,7 +96,7 @@ This retrieves and returns the item as a blessed reference
 
 sub get {
     my ($self, $id) = @_;
-    my ($ref) = __PACKAGE__->call_procedure(procname => 'company__get',
+    my ($ref) = __PACKAGE__->call_procedure(funcname => 'company__get',
                                           args => [$id]);
     return undef unless $ref->{control_code};
     $ref->{name} = $ref->{legal_name};
@@ -111,7 +112,7 @@ company does not exist.
 
 sub get_by_cc {
     my ($self, $cc) = @_;
-    my ($ref) = __PACKAGE__->call_procedure(procname => 'company__get_by_cc',
+    my ($ref) = __PACKAGE__->call_procedure(funcname => 'company__get_by_cc',
                                           args => [$cc]);
     return undef unless $ref->{control_code};
     $ref->{name} = $ref->{legal_name};
@@ -127,7 +128,7 @@ Saves the item and populates db defaults in id and created.
 
 sub save {
     my ($self) = @_;
-    my ($ref) = $self->exec_method({funcname => 'company__save'});
+    my ($ref) = $self->exec_method(funcname => 'company__save');
     $ref->{control_code} = $self->{control_code};
     $ref->{entity_class} = $self->{entity_class};
     $ref->{country_id} = $self->{country_id};

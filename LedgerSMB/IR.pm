@@ -168,9 +168,10 @@ sub post_invoice {
             &reverse_invoice( $dbh, $form );
         }
         else {
-            $query = qq|INSERT INTO ap (id) VALUES (?)|;
+            $query = qq|INSERT INTO ap (id, is_return) VALUES (?, ?)|;
             $sth   = $dbh->prepare($query);
-            $sth->execute( $form->{id} ) || $form->dberror($query);
+            $sth->execute( $form->{id} , $form->{is_return} ) 
+                || $form->dberror($query);
         }
     }
 
@@ -237,6 +238,41 @@ sub post_invoice {
             $pth->finish;
 
             # project
+            push( @{ $form->{runningnumber} }, $runningnumber++ );
+            push( @{ $form->{number} },        $form->{"partnumber_$i"} );
+            push( @{ $form->{image} },        $form->{"image_$i"} );
+            push( @{ $form->{sku} },           $form->{"sku_$i"} );
+            push( @{ $form->{serialnumber} },  $form->{"serialnumber_$i"} );
+
+            push( @{ $form->{bin} },         $form->{"bin_$i"} );
+            warn $form->{"description_$i"};
+            push( @{ $form->{item_description} }, $form->{"description_$i"} );
+            push( @{ $form->{itemnotes} },   $form->{"notes_$i"} );
+            push(
+                @{ $form->{qty} },
+                $form->format_amount( $myconfig, $form->{"qty_$i"} )
+            );
+
+            push(
+                @{ $form->{ship} },
+                $form->format_amount( $myconfig, $form->{"qty_$i"} )
+            );
+
+            push( @{ $form->{unit} },         $form->{"unit_$i"} );
+            push( @{ $form->{deliverydate} }, $form->{"deliverydate_$i"} );
+
+            push( @{ $form->{projectnumber} }, $form->{"projectnumber_$i"} );
+
+            push( @{ $form->{sellprice} }, $form->{"sellprice_$i"} );
+
+            push( @{ $form->{listprice} }, $form->{"listprice_$i"} );
+
+            push(
+                @{ $form->{weight} },
+                $form->format_amount(
+                    $myconfig, $form->{"weight_$i"} * $form->{"qty_$i"}
+                )
+            );
 
             if ( $form->{"projectnumber_$i"} ne "" ) {
                 ( $null, $project_id ) =
@@ -341,7 +377,8 @@ sub post_invoice {
 				       deliverydate = ?,
 				       serialnumber = ?,
                                        precision = ?,
-				       notes = ?
+				       notes = ?,
+                                       vendor_sku = ?
 				 WHERE id = ?|;
             $sth = $dbh->prepare($query);
             $sth->execute(
@@ -352,6 +389,7 @@ sub post_invoice {
                 $form->{"unit_$i"},        $form->{"deliverydate_$i"},
                 $form->{"serialnumber_$i"},
                 $form->{"precision_$i"},   $form->{"notes_$i"},       
+                $form->{"partnumber_$i"},
                 $invoice_id
             ) || $form->dberror($query);
 
@@ -1112,9 +1150,8 @@ sub retrieve_invoice {
         # retrieve individual items
         $query = qq|
 			   SELECT i.id as invoice_id,
-                                  coalesce(
-                                CASE WHEN pv.partnumber <> '' THEN pv.partnumber
-                                     ELSE NULL END, p.partnumber) as partnumber,
+                                  coalesce(i.vendor_sku, p.partnumber) 
+                                        as partnumber,
                                   i.description, i.qty, 
 			          i.fxsellprice, i.sellprice, i.precision,
 			          i.parts_id AS id, i.unit, p.bin, 
@@ -1127,8 +1164,6 @@ sub retrieve_invoice {
 			          t.description AS partsgrouptranslation
 			     FROM invoice i
 			     JOIN parts p ON (i.parts_id = p.id)
-			LEFT JOIN partsvendor pv ON (p.id = pv.parts_id
-                                               AND pv.credit_id = ?)
 			LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
 			LEFT JOIN translation t 
 			          ON (t.trans_id = p.partsgroup_id 
@@ -1253,7 +1288,8 @@ sub retrieve_item {
                                 CASE WHEN pv.partnumber <> '' THEN pv.partnumber
                                      ELSE NULL END, p.partnumber) as partnumber, 
                           p.description, pg.partsgroup, p.partsgroup_id,
-		          p.lastcost AS sellprice, p.unit, p.bin, p.onhand, 
+		          coalesce(pv.lastcost, p.lastcost) AS sellprice, 
+                          p.unit, p.bin, p.onhand, 
 		          p.notes, p.inventory_accno_id, p.income_accno_id, 
 		          p.expense_accno_id, p.partnumber AS sku, p.weight,
 		          t1.description AS translation, 
@@ -1398,7 +1434,11 @@ sub vendor_details {
                   JOIN entity e ON eca.entity_id = e.id
                   JOIN company co ON co.entity_id = e.id
              LEFT JOIN eca_to_location e2l ON eca.id = e2l.credit_id
-             LEFT JOIN location l ON l.id = e2l.location_id
+                                     and e2l.location_class = 1
+             LEFT JOIN entity_to_location el ON eca.entity_id = el.entity_id
+                                     and el.location_class = 1
+             LEFT JOIN location l ON l.id = 
+                                     coalesce(e2l.location_id, el.location_id)
              LEFT JOIN country c ON l.country_id = c.id
              LEFT JOIN (select max(phone) as phone, max(fax) as fax, credit_id
                           FROM (SELECT CASE WHEN contact_class_id =1 THEN contact

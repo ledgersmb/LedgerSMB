@@ -126,6 +126,7 @@ sub price_matrix {
         $form->error('Missing counter-party (customer or vendor)');
         return;
     }
+   
     if ( $mref = $pmh->fetchrow_hashref('NAME_lc') ) {
        if ($form->{customer_id}){
             $form->db_parse_numeric(sth=>$pmh, hashref=>$mref);
@@ -137,6 +138,7 @@ sub price_matrix {
             $ref->{sellprice} = $sellprice;
        } elsif ($form->{vendor_id}){
             $sellprice = $mref->{lastcost} || $ref->{sellprice};
+            die $sellprice;
             $ref->{sellprice} = $sellprice;    
        }
     }

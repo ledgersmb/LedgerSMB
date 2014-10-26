@@ -4,6 +4,7 @@ Contents
 --------
 
  * System requirements
+ * Simple Server Setup: Running on Starman
  * Installing Apache 2
  * Installing PostgreSQL
  * PostgreSQL authorization settings
@@ -24,9 +25,9 @@ System requirements
 
 LedgerSMB depends on the following software:
 
- * a web server (Apache v2.x or MS IIS)
- * PostgreSQL 8.4+
- * Perl 5.8+
+ * a web server (Starman, Apache v2.x, MS IIS, etc)
+ * PostgreSQL 9.1+
+ * Perl 5.10+
 
 
 Installation process overview
@@ -45,9 +46,44 @@ Installation process overview
  6) Login with your name (database username),
     password (database user password), Company (databasename)
 
+Running on Starman
+===================
+As an alternative to Apache 2, LedgerSMB now supports the Perl-based web server
+named Starman.  To install you need:
+
+ * Starman
+ * CGI::Emulate::PSGI
+ * PSGI::Middleware::Static
+ * Plack::Builder
+
+Compared to Apache 2, Starman seems to perform better at the Perl portions of
+the application, but slower at serving Javascript and CSS files, though these
+are usually cached on the browser.  Thus it is not unusual to see the software
+seem to be slower at the first and then pick up speed, becoming faster than the
+equivalent CGI installations.
+
+The above may be installed by running the Makefile.PL and selecting appropriate
+options.
+
+Then from the LedgerSMB directory starting is as simple as:
+
+ starman --preload-app tools/starman.psgi
+
+The server by default starts on port 5000 so you would access the installation
+by pointing your web browser to:
+
+ http://localhost:5000/login.pl
+
+You can also daemonize Starman, run it on the default port, and much more.  See
+the starman documentation for details.  If you are using older versions of 
+Starman, we recommend setting up SSL on a web server like Apache or Nginx and 
+back-proxying.
 
 Installing Apache 2
 ===================
+
+This is not necessary if you are running Starman and only accessing from your
+local system.
 
 On Debian and its derivatives - like Ubuntu - Apache installation
 is as simple as running:
@@ -385,8 +421,14 @@ you do not need to add the the line to your Apache configuration.
 
 [On Debian and derivatives, you can store the resulting
 configuration file directly in the /etc/apache2/conf.d directory.  From
-that location, it'll be automatically included upon the next server (re)start.]
-
+that location, it'll be automatically included upon the next server (re)start.
+On Apache 2.4 on Debian and derivatives, you can store the configuration file 
+in the /etc/apache2/conf-enabled directory. You will need to add the cgi module
+by going to /etc/apache2/mods-enabled/ and creating a symbolic link like this:
+ln -s /etc/apache2/mods-available/cgi.load cgi.load
+You also may need to add a symbolic link to enable apache to see postgres:
+ln -s /user/bin/psql /bin/psql
+both these commands will need to be performed with root permissions (use sudo)]
 
 In order for the changes to take effect, you should run
 

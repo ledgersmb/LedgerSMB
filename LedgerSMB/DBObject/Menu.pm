@@ -73,6 +73,7 @@ This method returns true if the user's password will expire soon
 sub will_expire_soon {
     my ($self) = @_;
     my ($pw_expires) = $self->call_dbmethod(
+          dbh => LedgerSMB::App_State::DBH(),
           funcname => 'user__expires_soon');
     $self->{expires_soon} = $pw_expires->{'user__expires_soon'};
     return $self->{expires_soon};
@@ -88,9 +89,6 @@ sub __generate {
 
     for my $attribute (@{$self->{menu_items}}){
         
-        @args = $self->_parse_array($attribute->{args});
-        delete $attribute->{args};
-        @{$attribute->{args}} = @args;
 	for (@{$attribute->{args}}){
             if ($_ =~ /(module|menu|action)=/){
                @elems = split(/=/, $_);
