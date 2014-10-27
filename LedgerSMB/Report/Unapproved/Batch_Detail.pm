@@ -186,7 +186,7 @@ sub run_report{
     $self->options([{
     }, {
     }, {
-    }];
+    }]);
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',
