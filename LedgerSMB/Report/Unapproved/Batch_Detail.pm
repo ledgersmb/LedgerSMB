@@ -30,6 +30,7 @@ LedgerSMB::Report::Unapproved::Batch_Overview instead.
 
 package LedgerSMB::Report::Unapproved::Batch_Detail;
 use Moose;
+use LedgerSMB::DBObject::User;
 extends 'LedgerSMB::Report';
 
 use LedgerSMB::Business_Unit_Class;
@@ -183,8 +184,24 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self) = @_;
+    my %lhash = LedgerSMB::DBObject::User->country_codes();
+    my ($lang_setting) = LedgerSMB::Setting->get('default_language');
+    my $default_language = $lang_setting->{value};
+    my $locales = [ map { { text => $lhash{$_}, value => $_ } }
+                    sort {$lhash{$a} cmp $lhash{$b}} keys %lhash
+                  ];
+    my $printer = [ {text => 'Screen', value => 'zip'}, 
+                    map { { 
+                         text => $_, value => $LedgerSMB::Sysconfig::printer{$_}
+                          } }
+                  keys %LedgerSMB::Sysconfig::printer];
     $self->options([{
+       name => 'language',
+       options => $locales,
+       default_value => [$default_language],
     }, {
+       name => 'media',
+       options => $printer,
     }, {
     }]);
     $self->buttons([{
