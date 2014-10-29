@@ -24,6 +24,7 @@ ELSE;
        CLS.value = CLS.id;
    END;
    batch_classes.unshift({});
+   SHOW_APPROVED=1;
 END;
 
  ?>
@@ -53,6 +54,25 @@ Commenting this section out.  Does not seem to be used by API. -CT
 		name = "created_by_eid"
 		default_values = [created_by]
 	} ?></div> -->
+<?lsmb IF SHOW_APPROVED ?>
+<div class="input" id="approved_div">
+  <?lsmb INCLUDE input element_data = {
+          name="approved"
+          id="approved-1"
+          value="1"
+          label= text("Approved")
+          type="radio"
+   };
+   INCLUDE input element_data = {
+          name="approved"
+          id="approved-0"
+          value="0"
+          label= text("Unpproved")
+          type="radio"
+          checked="CHECKED"
+   }; ?>
+</div>
+<?lsmb END ?>
 <div class="input" id="reference_div">
 	<?lsmb INCLUDE input element_data = {
 		label = text('Reference') #'
