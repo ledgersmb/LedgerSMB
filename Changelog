@@ -19,6 +19,8 @@ Changelog for 1.4.6
 * Fixed bug 1263, error when control_code not filled in (chris T)
 * Fixed update button not showing after save (Chris T)
 * Fixed bug 1260, Multiple vendor skus breaks display of invoice (Chris T)
+* Removed buggy batch printing interface (Chris T)
+* Added search for approved batches (Chris T)
 
 Pongracz I is Pongracz Istvan
 Chris T is Chris Travers
