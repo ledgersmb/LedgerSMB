@@ -13,6 +13,7 @@ Changelog for 1.4.6
 * Fixed bug 1260, Multiple vendor skus breaks display of invoice (Chris T)
 * Removed buggy batch printing interface (Chris T)
 * Added search for approved batches (Chris T)
+* Fixed PGNumber error when posting gl entry (Chris T)
 
 Pongracz I is Pongracz Istvan
 Chris T is Chris Travers
