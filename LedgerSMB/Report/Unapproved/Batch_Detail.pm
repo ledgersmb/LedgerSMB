@@ -185,8 +185,7 @@ Runs the report, and assigns rows to $self->rows.
 sub run_report{
     my ($self) = @_;
     my %lhash = LedgerSMB::DBObject::User->country_codes();
-    my ($lang_setting) = LedgerSMB::Setting->get('default_language');
-    my $default_language = $lang_setting->{value};
+    my ($default_language) = LedgerSMB::Setting->get('default_language');
     my $locales = [ map { { text => $lhash{$_}, value => $_ } }
                     sort {$lhash{$a} cmp $lhash{$b}} keys %lhash
                   ];
@@ -234,14 +233,14 @@ sub run_report{
     for my $ref (@rows){
         my $script;
         my $class_to_script = {
-           1 => 'ap',
-           2 => 'ar',
-           5 => 'gl',
-           8 => 'is',
-           9 => 'ir',
+           '1' => 'ap',
+           '2' => 'ar',
+           '3' => 'gl',
+           '8' => 'is',
+           '9' => 'ir',
         };
-        $script = $class_to_script->{$ref->{batch_class}};
-        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}";
+        $script = $class_to_script->{lc($ref->{batch_class_id})};
+        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}" if $script;
     }
     $self->rows(\@rows);
 }
