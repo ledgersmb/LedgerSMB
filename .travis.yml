@@ -19,7 +19,7 @@ before_install:
    - "cpanm Test::Exception"
    - "cpanm Devel::Cover::Report::Coveralls"
    - "cpanm Data::Dumper"
-   - "cpanm Log::Log4perl"
+   - "cpanm http://search.cpan.org/CPAN/authors/id/M/MS/MSCHILLI/Log-Log4perl-1.44.tar.gz"
    - "cpanm Locale::Maketext"
    - "cpanm DateTime"
    - "cpanm Locale::Maketext::Lexicon"
