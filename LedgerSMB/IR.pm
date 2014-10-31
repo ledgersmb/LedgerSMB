@@ -1171,7 +1171,7 @@ sub retrieve_invoice {
 			    WHERE i.trans_id = ?
 		         ORDER BY i.id|;
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{vendor_id}, $form->{language_code}, $form->{id} )
+        $sth->execute( $form->{language_code}, $form->{id} )
           || $form->dberror($query);
 
         my $bu_sth = $dbh->prepare(
