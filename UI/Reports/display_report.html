@@ -65,7 +65,12 @@ END;
     END; ?>
 <?lsmb PROCESS dynatable tbody = {rows = rows } 
                attributes = {class = 'report', order_url = order_url } ?>
-
+<div id="options">
+<?lsmb
+FOREACH OPTION IN options;
+  PROCESS select element_data = OPTION;
+END; ?>
+</div>
 <?lsmb
 FOREACH BUTTON IN buttons;
   PROCESS button element_data = BUTTON;
