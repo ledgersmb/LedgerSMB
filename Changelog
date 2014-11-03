@@ -14,11 +14,13 @@ Changelog for 1.4.6
 * Removed buggy batch printing interface (Chris T)
 * Added search for approved batches (Chris T)
 * Fixed PGNumber error when posting gl entry (Chris T)
+* Fixed bug 1273, some invoices cannot be opened (John L)
 
 Pongracz I is Pongracz Istvan
 Chris T is Chris Travers
 Frans S is Frans van der Star
 Erik H is Erik Huelsmann
+John L is John Locke
 
 Changelog for 1.4.5
 * Fixed bug 1245, print and email buttons lost after email invoice (Chris T)
