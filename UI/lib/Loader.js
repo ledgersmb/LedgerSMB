@@ -64,6 +64,7 @@ function(
                                             "value": input.innerHTML,
                                             "title": input.title, 
                                              "cols": input.cols,
+                                         "required": input.required,
                                              "rows": input.rows}, input);
                                    },
                       // skip editors for now --CT
@@ -95,6 +96,7 @@ function(
                                                     "value": val,
                                                      "name": input.name,
                                                        "id": input.id,
+                                                 "required": input.required,
                                                     "style": style,
                                                 }, input);
 
@@ -104,6 +106,7 @@ function(
                                              "name": input.name,
                                             "value": input.value,
                                             "title": input.title,
+                                         "required": input.required,
                                           "checked": input.checked
                                          }, input);
                                  },
@@ -112,6 +115,7 @@ function(
                                              "name": input.name,
                                             "value": input.value,
                                             "title": input.title,
+                                         "required": input.required,
                                           "checked": input.checked
                                         }, input);
                                  },
@@ -132,6 +136,7 @@ function(
                                              "value": input.value,
                                               "name": input.name,
                                              "style": style,
+                                          "required": input.required,
                                                 "id": input.id,
                                               "type": 'password'
                                      
@@ -149,7 +154,8 @@ function(
                                           console.log('Loader.js AccountBox input=',input);
                                           return new accountselector({
                                               "name": input.name,
-                                             "value": value
+                                             "value": value,
+                                          "required": input.required,
                                           }, input);
                                       });
                                       /**********
@@ -177,6 +183,7 @@ function(
                                          "value": input.value,
                                           "name": input.name,
                                          "style": style,
+                                      "required": input.required,
                                             "id": input.id
                                      }, input);
                                   }
@@ -201,6 +208,7 @@ function(
                                             "options": optlist,
                                               "title": input.title,
                                                  "id": input.id,
+                                           "required": input.required,
                                             "on_load": input.on_load
                                              } , input); 
                                   }

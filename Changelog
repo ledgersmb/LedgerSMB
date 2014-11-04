@@ -1,6 +1,10 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.7
+* Fixed 1231, lack of validation on forms leads to Perl errors (Chris T)
+
+Chris T is Chris Travers
 
 Changelog for 1.4.6
 * Fixed bug 1259, id from new_shipto overwrites form-id (Pongracz I)
