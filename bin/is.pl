@@ -735,7 +735,7 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
                            * $form->{"mt_basis_$item"};
                }
                $form->{invtotal} += $form->round_amount(
-                                         $form->{"mt_amount_$item"}, 2);
+                                         $form->parse_amount( \%myconfig,  $form->{"mt_amount_$item"}), 2);
                # Setting this up as a table
                # Note that the screens may be not wide enough to display
                # this in the normal way so we have to change the layout of the
@@ -744,16 +744,19 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
                 <th align=right>$form->{"${taccno}_description"}</th>
                 <td><input type="text" name="mt_amount_$item"
                         id="mt-amount-$item" value="|
-                        .$form->{"mt_amount_$item"} .qq|" size="10"/></td>
+                        .$form->format_amount(\%myconfig, $form->{"mt_amount_$item"}, 2) 
+                        .qq|" size="10"/></td>
                 <td><input type="text" name="mt_rate_$item"
                          id="mt-rate-$item" value="|
-                        .$form->{"mt_rate_$item"} .qq|" size="4"/></td>
+                        .$form->format_amount(\%myconfig, $form->{"mt_rate_$item"}) 
+                        .qq|" size="4"/></td>
                 <td><input type="text" name="mt_basis_$item"
                          id="mt-basis-$item" value="|
-                        .$form->{"mt_basis_$item"} .qq|" size="10"/></td>
+                        .$form->format_amount(\%myconfig, $form->{"mt_basis_$item"}, 2) 
+                        .qq|" size="10"/></td>
                 <td><input type="text" name="mt_ref_$item"
                          id="mt-ref-$item" value="|
-                        .$form->{"mt_ref_$item"} .qq|" size="10"/></td>
+                        . $form->{"mt_ref_$item"} .qq|" size="10"/></td>
                 <td><input type="text" name="mt_memo_$item"
                          id="mt-memo-$item" value="|
                         .$form->{"mt_memo_$item"} .qq|" size="10"/></td>
@@ -1031,7 +1034,8 @@ qq|<td align="center"><input name="memo_$i" size="11" value="$form->{"memo_$i"}"
                     delete $button{$_};
                 }
             }
-            for ("update", "post", "post_as_new", "print_and_post_as_new"){
+            for ("update", "post", "post_as_new", "print_and_post_as_new",
+                 "ship_to"){
                 delete $button{$_};
             } 
 

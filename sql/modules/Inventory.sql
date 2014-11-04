@@ -1,3 +1,4 @@
+BEGIN;
 CREATE OR REPLACE FUNCTION inventory_get_item_at_day
 (in_transdate date, in_partnumber text)
 RETURNS parts AS
@@ -82,3 +83,5 @@ BEGIN
 	RETURN currval('inventory_report_line_id_seq');
 end;
 $$ LANGUAGE plpgsql;
+
+COMMIT;

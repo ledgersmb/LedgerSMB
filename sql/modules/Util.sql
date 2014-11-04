@@ -1,3 +1,5 @@
+BEGIN;
+
 CREATE OR REPLACE FUNCTION je_set_default_lines(in_rowcount int) returns int
 as
 $$
@@ -48,3 +50,5 @@ BEGIN
 	RETURN retval;
 END;
 $$ LANGUAGE PLPGSQL;
+
+COMMIT;

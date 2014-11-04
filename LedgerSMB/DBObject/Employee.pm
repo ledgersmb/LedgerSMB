@@ -96,11 +96,6 @@ sub set_entity_class {
 sub save {
    my ($self) = @_;
    $self->set_entity_class();
-   if ($self->{is_manager}) {
-       $self->{role} = 'manager';
-   } else {
-       $self->{role} = 'user';
-   }
    my ($ref) = $self->exec_method(funcname => 'person__save');
    $self->{entity_id} = $ref->{'person__save'};
    $self->exec_method(funcname => 'employee__save');

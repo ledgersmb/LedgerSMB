@@ -326,7 +326,8 @@ sub post_invoice {
 				       project_id = ?,
 				       serialnumber = ?,
                                        precision = ?,
-				       notes = ?
+				       notes = ?,
+                                       vendor_sku = ?
 				 WHERE id = ?|;
             $sth = $dbh->prepare($query);
             $sth->execute(
@@ -336,7 +337,8 @@ sub post_invoice {
                 $form->{"discount_$i"},    $allocated,
                 $form->{"unit_$i"},        $form->{"deliverydate_$i"},
                 $project_id,               $form->{"serialnumber_$i"},
-                $form->{"precision_$i"},   $form->{"notes_$i"},       
+                $form->{"precision_$i"},   $form->{"notes_$i"},
+                $form->{"partnumber_$i"},
                 $invoice_id
             ) || $form->dberror($query);
 
@@ -1256,7 +1258,10 @@ sub retrieve_invoice {
 
         # retrieve individual items
         $query = qq|
-			   SELECT i.id as invoice_id,p.partnumber, i.description, i.qty, 
+			   SELECT i.id as invoice_id,
+                                  coalesce(i.vendor_sku, p.partnumber) 
+                                        as partnumber,
+                                  i.description, i.qty, 
 			          i.fxsellprice, i.sellprice, i.precision,
 			          i.parts_id AS id, i.unit, p.bin, 
 			          i.deliverydate,
@@ -1382,17 +1387,21 @@ sub retrieve_item {
     else {
         $where .= " ORDER BY 2";
     }
-
     my $query = qq|
-		   SELECT p.id, p.partnumber, p.description,
-		          pg.partsgroup, p.partsgroup_id,
-		          p.lastcost AS sellprice, p.unit, p.bin, p.onhand, 
+		   SELECT p.id, coalesce(
+                                CASE WHEN pv.partnumber <> '' THEN pv.partnumber
+                                     ELSE NULL END, p.partnumber) as partnumber, 
+                          p.description, pg.partsgroup, p.partsgroup_id,
+		          coalesce(pv.lastcost, p.lastcost) AS sellprice, 
+                          p.unit, p.bin, p.onhand, 
 		          p.notes, p.inventory_accno_id, p.income_accno_id, 
 		          p.expense_accno_id, p.partnumber AS sku, p.weight,
 		          t1.description AS translation, 
 		          t2.description AS grouptranslation
 		     FROM parts p
 		LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
+                LEFT JOIN partsvendor pv ON (pv.parts_id = p.id
+                                           AND pv.credit_id = ?)
 		LEFT JOIN translation t1 
 		          ON (t1.trans_id = p.id AND t1.language_code = ?)
 		LEFT JOIN translation t2 
@@ -1400,7 +1409,8 @@ sub retrieve_item {
 		          AND t2.language_code = ?)
 	         $where|;
     my $sth = $dbh->prepare($query);
-    $sth->execute( $form->{language_code}, $form->{language_code} )
+    $sth->execute( $form->{vendor_id}, $form->{language_code}, 
+                   $form->{language_code} )
       || $form->dberror($query);
 
     # foreign currency

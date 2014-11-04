@@ -2141,7 +2141,7 @@ sub retrieve_invoice {
         $ref = $sth->fetchrow_hashref(NAME_lc);
         $ref->{locationid} = $ref->{id};
         delete $ref->{id};
-        for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
+        for ( keys %$ref ) { $form->{$_} = $ref->{$_} unless $_ eq 'id' };
         $sth->finish;
 
         # retrieve individual items
@@ -2618,11 +2618,11 @@ sub createlocation
 		 $form->{"shiptozipcode_new"},
 		 $form->{"shiptocountry_new"}
 	        ) || $form->dberror($query);
-
+  my ($l_id) = $sth->fetchrow_array;
   $sth->finish();
-
   $dbh->commit();
 
+  return $l_id;
 }
 
 

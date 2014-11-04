@@ -166,8 +166,8 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
-    $self->{version}   = "1.3.42";
-    $self->{dbversion} = "1.3.42";
+    $self->{version}   = "1.3.46";
+    $self->{dbversion} = "1.3.46";
 
     bless $self, $type;
 
@@ -1496,7 +1496,9 @@ sub run_custom_queries {
     }
 
     $query_type = uc($query_type);
-    for ( @{ $self->{custom_db_fields}{$tablename} } ) {
+    return unless $self->{custom_db_fields} 
+           and exists $self->{custom_db_fields}->{$tablename};
+    for ( @{ $self->{custom_db_fields}->{$tablename} } ) {
         @elements = split( /:/, $_ );
         push @{ $temphash{ $elements[0] } }, $elements[1];
     }

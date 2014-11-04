@@ -1027,7 +1027,7 @@ sinumber|1
 sonumber|1
 yearend|1
 businessnumber|1
-version|1.3.42
+version|1.3.46
 closedto|\N
 revtrans|1
 ponumber|1
@@ -1082,7 +1082,7 @@ CREATE TABLE batch (
   approved_on date default null,
   approved_by int references entity_employee(entity_id),
   created_by int references entity_employee(entity_id),
-  locked_by int references session(session_id) ON DELETE CASCADE,
+  locked_by int references session(session_id) ON DELETE SET NULL,
   created_on date default now(),
   CHECK (length(control_code) > 0)
 );
@@ -1214,6 +1214,7 @@ CREATE TABLE invoice (
   project_id int,
   deliverydate date,
   serialnumber text,
+  vendor_sku text,
   notes text
 );
 

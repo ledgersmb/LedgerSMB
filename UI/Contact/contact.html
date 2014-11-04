@@ -164,10 +164,10 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 </div>
 <div class="input_line" id="person-country-div">
 <div class="input_group">
-       <?lsmb country_list.unshift({}) ?>
 		<?lsmb INCLUDE select element_data = {
 			text_attr = "name"
 			value_attr = "id"
+                        default_blank = 1
 			default_values = [country_id]
 			options = country_list
 			name = "country_id"
@@ -590,7 +590,7 @@ END ?>
 			label = text('Threshold')
 			class = "numeric"
                } ?>
-          <td> <?lsmb IF pricegroups.size > 0 ?>
+          <td> <?lsmb IF pricegroups.size ?>
                <div id="pricegroup-div">
                <?lsmb pricegroups.unshift({});
                 INCLUDE select element_data = {
@@ -607,7 +607,7 @@ END ?>
 	<tr id="taxform-threshold-row">
 
 	
-	 <td><?lsmb IF taxform_list.size > 0 ?>
+	 <td><?lsmb IF taxform_list.size ?>
              <?lsmb taxform_list.unshift({});
                     INCLUDE select element_data = {
 			name = "taxform_id"

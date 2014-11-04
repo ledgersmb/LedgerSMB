@@ -608,7 +608,7 @@ function on_return_submit(event){
     if ($form->{notice}){
          print qq|$form->{notice}<br/>|;
     }
-    $form->hide_form(qw(entity_control_code meta_number address city));
+    $form->hide_form(qw(entity_control_code meta_number tax_id address city));
     $form->hide_form(
         qw(id type formname media format printed emailed queued vc title discount creditlimit creditremaining tradediscount business recurring form_id nextsub
    lock_description)
@@ -1628,7 +1628,7 @@ sub transactions {
     for (
         "oldsort",     "direction", "path",      "type",
         "vc",          "login",     "sessionid", "transdatefrom",
-        "transdateto", "open",      "closed"
+        "transdateto", "open",      "closed",    "oe_class_id"
       )
     {
         $href .= qq|&$_=$form->{$_}|;

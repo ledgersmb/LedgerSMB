@@ -1,4 +1,5 @@
 -- VERSION 1.3.0
+BEGIN;
 
 CREATE OR REPLACE FUNCTION location_list_class()
 RETURNS SETOF location_class AS
@@ -180,6 +181,7 @@ $$ language plpgsql;
 COMMENT ON FUNCTION location_delete (in_id integer)
 IS $$ DELETES the location specified by in_id.  Does not return a value.$$;
 
+DROP TYPE IF EXISTS location_result CASCADE;
 CREATE TYPE location_result AS (
         id int,
         line_one text,
@@ -193,4 +195,4 @@ CREATE TYPE location_result AS (
         class_id int,
         class text
 );
-
+COMMIT;

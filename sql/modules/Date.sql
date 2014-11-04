@@ -4,6 +4,8 @@
 
 -- Docstrings already added to this file.
 
+BEGIN;
+
 CREATE OR REPLACE FUNCTION date_get_all_years() returns setof INT AS
 $$
 DECLARE next_record int;
@@ -145,4 +147,4 @@ $$ language sql;
 
 COMMENT ON FUNCTION periods_get() IS
 $$ Returns dates for year to date, and last year.$$;
-
+COMMIT;

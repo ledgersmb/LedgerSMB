@@ -1330,6 +1330,9 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
      # Now we split the account selected options, using the namespace the if statement
      # provides for us.
      $request->{"overpayment_account_$i"} =~ /^(\d+)--*/;
+     $request->{"overpayment_account_$i"} = $request->parse_amount(
+          amount => $request->{"overpayment_account_$i"}
+     );
      my $id = $1; 
      $request->{"overpayment_cash_account_$i"} =~ /^(\d+)--*/;
      my $cashid = $1; 
