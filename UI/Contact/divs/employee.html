@@ -102,6 +102,7 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 			default_values = [employee.country_id]
 			options = country_list
 			name = "country_id"
+                        required = 'true'
 			label = text('Country') 
 	} ?> 
 </div>
@@ -134,6 +135,7 @@ default_values = [employee.manager_id]
          type = "text"
         class = "tax_id"
          size = "16"
+     required = 'true'
 } ?>
 </div>
 </div>
@@ -146,6 +148,7 @@ default_values = [employee.manager_id]
 	type = "text"
 	class = "date"
 	size = 10
+      required = 'true'
 }  ?>
 </div>
 <div class="input_group g2">
