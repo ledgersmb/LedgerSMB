@@ -32,9 +32,9 @@ END ?>
                                     ?>&from_date=<?lsmb report.from_date 
                                     ?>&to_date=<?lsmb report.to_date 
                                     ?>&category=X&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y&action=search"
-        ><?lsmb account_data.I.${k}.main.amount ?></a></td>
-             ><?lsmb k _ '--' 
-                             _ account_data.I.${k}.main.account_description ?></td></a>
+        >
+             <?lsmb k _ '--' 
+                             _ account_data.I.${k}.main.account_description ?></a></td>
         <td class="amount"><a href="journal.pl?sort=transdate&accno=<?lsmb k
                                     ?>&from_date=<?lsmb report.from_date 
                                     ?>&to_date=<?lsmb report.to_date 
@@ -72,9 +72,8 @@ END ?>
                                     ?>&from_date=<?lsmb report.from_date 
                                     ?>&to_date=<?lsmb report.to_date 
                                     ?>&category=X&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y&action=search"
-        ><?lsmb account_data.E.${k}.main.amount ?></a></td>
-                                  ?>&charttype=A"
-             ><?lsmb k _ '--' _
+        >
+             <?lsmb k _ '--' _
              account_data.E.${k}.main.account_description ?></a></td>
         <td class="amount"><a href="journal.pl?sort=transdate&accno=<?lsmb k
                                     ?>&from_date=<?lsmb report.from_date 
