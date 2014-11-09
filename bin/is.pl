@@ -491,7 +491,7 @@ function on_return_submit(event){
            creditlimit creditremaining tradediscount business closedto locked 
            shipped oldtransdate recurring reverse batch_id subtype tax_id 
            meta_number separate_duties lock_description nextsub 
-           default_reportable address city is_return)
+           default_reportable address city is_return cash_accno)
     );
 
     if ($form->{notice}){

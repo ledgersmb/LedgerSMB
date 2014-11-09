@@ -423,7 +423,9 @@ sub display_row
 			      
         }
         else
-	{	    
+	{
+                              $form->{"debit_$i"} = LedgerSMB::PGNumber->from_input($form->{"debit_$i"});
+                              $form->{"credit_$i"}= LedgerSMB::PGNumber->from_input($form->{"credit_$i"}); 	    
 			      $form->{totaldebit}  += $form->{"debit_$i"};
 			      $form->{totalcredit} += $form->{"credit_$i"};			      
 			      for (qw(debit credit)) {

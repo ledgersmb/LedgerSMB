@@ -944,7 +944,7 @@ qq|<td align=center><input name="memo_$i" id="memo_$i" size=11 value="$form->{"m
 ";
     }
 
-    $form->hide_form( "paidaccounts", "select$form->{ARAP}_paid" );
+    $form->hide_form( "paidaccounts", "select$form->{ARAP}_paid", 'cash_accno' );
 
     print qq|
       </table>
