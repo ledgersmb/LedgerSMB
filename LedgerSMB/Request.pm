@@ -141,7 +141,7 @@ sub dates_series {
     my $start = shift @_;
     my $end  = shift @_;
     for my $att (@_){
-        $self->dates("${att}_$_") for ($start .. $stop);
+        $self->dates(map { "${att}_$_" }  ($start .. $end));
     }
 }
 

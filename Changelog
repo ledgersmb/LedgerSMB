@@ -5,6 +5,7 @@ Changelog for 1.4.7
 * Fixed 1231, lack of validation on forms leads to Perl errors (Chris T)
 * Fixed 1264, account numbers out of place on PNL (Chris T)
 * Fixed 1268, name not clickable on customer/vendor searches (Chris T)
+* Fixed 1274, error on posting payment reversals w. dd/mm/yyy dates (Chris T)
 
 Chris T is Chris Travers
 
