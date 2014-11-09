@@ -174,8 +174,8 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
-    $self->{version}   = "1.4.5";
-    $self->{dbversion} = "1.4.5";
+    $self->{version}   = "1.4.6";
+    $self->{dbversion} = "1.4.6";
 
     bless $self, $type;
 
@@ -2147,7 +2147,6 @@ sub all_business_units {
     );
 
     while (my $classref = $class_sth->fetchrow_hashref('NAME_lc')){
-        warn $classref->{id};
         push @{$self->{bu_class}}, $classref;
         $bu_sth->execute($classref->{id}, $transdate, $credit_id);
         $self->{b_units}->{$classref->{id}} = [];
