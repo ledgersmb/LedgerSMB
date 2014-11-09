@@ -261,6 +261,7 @@ sub columns {
            type => 'text'},
        { col_id => 'entity_name',
            name => $entity_name_label,
+       href_base =>"contact.pl?action=get&entity_class=".$self->entity_class,
            type => 'href', },
        { col_id => 'invnumber',
            name => LedgerSMB::Report::text('Invoice'),
@@ -349,6 +350,8 @@ sub run_report {
         } else {
              $script = ($r->{invoice}) ? 'ir.pl' : 'ap.pl';
         }
+        $r->{entity_name_href_suffix} =
+               "&entity_id=$r->{entity_id}&meta_number=$r->{meta_number}";
         $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{id}";
     }
     $self->rows(\@rows);
