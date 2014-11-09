@@ -49,7 +49,10 @@ sub columns {
 
     return [
        {col_id => 'name',
-            type => 'text',
+            type => 'href',
+       href_base =>($self->entity_class == 3)
+                    ? "employee.pl?action=get"
+                    :"contact.pl?action=get&entity_class=".$self->entity_class,
             name => LedgerSMB::Report::text('Name') },
 
        {col_id => 'entity_control_code',
@@ -263,6 +266,8 @@ sub run_report {
     my ($self) = @_;
     my @rows = $self->exec_method({funcname => 'contact__search'});
     for my $r(@rows){
+        $r->{name_href_suffix} = 
+               "&entity_id=$r->{entity_id}&meta_number=$r->{meta_number}";
         $r->{meta_number_href_suffix} = 
                "&entity_id=$r->{entity_id}&meta_number=$r->{meta_number}";
         $r->{entity_control_code_href_suffix} = $r->{meta_number_href_suffix};
