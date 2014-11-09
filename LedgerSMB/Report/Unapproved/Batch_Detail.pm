@@ -201,8 +201,9 @@ sub run_report{
     }, {
        name => 'media',
        options => $printer,
-    }, {
-    }]);
+    }, 
+    ]);
+
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',
@@ -228,8 +229,20 @@ sub run_report{
                     text  => LedgerSMB::Report::text('Unlock Batch'),
                     value => 'single_batch_unlock',
                     class => 'submit',
+<<<<<<< /home/chris/ledgersmb/LedgerSMB/Report/Unapproved/Batch_Detail.pm
                 }]);
     my @rows = $self->call_dbmethod(funcname => 'voucher__list');
+=======
+                },
+                {
+                    name  => 'action',
+                    type  => 'submit',
+                    text  => LedgerSMB::Report::text('Print Batch'),
+                    value => 'print_batch',
+                    class => 'submit',
+                }, ]);
+    my @rows = $self->exec_method({funcname => 'voucher__list'});
+>>>>>>> /tmp/Batch_Detail.pm~other.q5GWP9
     for my $ref (@rows){
         my $script;
         my $class_to_script = {

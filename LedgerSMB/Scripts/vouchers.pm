@@ -214,10 +214,8 @@ class_id and created_by are exact matches
 sub list_batches {
     my ($request) = @_;
     $request->open_form;
-    my $report = LedgerSMB::Report::Unapproved::Batch_Overview->new(
-                 %$request);
-    $report->run_report;
-    $report->render($request);     
+    LedgerSMB::Report::Unapproved::Batch_Overview->new(
+                 %$request)->render($request);     
 }
 
 =item get_batch
@@ -234,10 +232,8 @@ sub get_batch {
 
     $request->{hiddens} = { batch_id => $request->{batch_id} };
 
-    my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
-                 %$request);
-    $report->run_report;
-    $report->render($request);
+    LedgerSMB::Report::Unapproved::Batch_Detail->new(
+                 %$request)->render;
 }
 
 =item single_batch_approve
