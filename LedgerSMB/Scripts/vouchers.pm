@@ -233,7 +233,7 @@ sub get_batch {
     $request->{hiddens} = { batch_id => $request->{batch_id} };
 
     LedgerSMB::Report::Unapproved::Batch_Detail->new(
-                 %$request)->render;
+                 %$request)->render($request);
 }
 
 =item single_batch_approve
@@ -397,7 +397,7 @@ sub reverse_overpayment {
 }
 
 my %print_dispatch = (
-   ar => sub { 
+   2 => sub { 
                my ($voucher, $request) = @_;
                if (my $cpid = fork()){
                   wait; 
@@ -415,8 +415,8 @@ my %print_dispatch = (
                }
                1;
              },
-   ap => sub { 0 },
-   is => sub { 
+   1 => sub { 0 },
+   8 => sub { 
                my ($voucher, $request) = @_;
                if (fork){
                   wait; 
@@ -434,7 +434,7 @@ my %print_dispatch = (
                }
                1;
              },
-   ir => sub {
+   9 => sub {
                my ($voucher, $request) = @_;
                if (fork){
                   wait; 
@@ -452,7 +452,7 @@ my %print_dispatch = (
                }
                1;
              },
-   gl => sub { 0 },
+   3 => sub { 0 },
    receipt =>  sub { undef }, # todo, new functionality
    payment =>  sub { undef }, # todo, new functionality
 );
@@ -473,9 +473,13 @@ sub print_batch {
     my $cgi = CGI::Simple->new;
 
     my @files = 
-      map { my $contents = &{$print_dispatch{$_->{voucher_type}}}($request, $_);
+      map { my $contents;
+            
+            $contents = &{$print_dispatch{lc($_->{batch_class_id})}}($request, $_)
+                if $print_dispatch{lc($_->{batch_class_id})};
             $contents ? $contents : (); }
       @{$report->rows};
+    die scalar @files;
 
     my $dirname = "$LedgerSMB::Sysconfig::tempdir/docs-$request->{id}-" . time;
     mkdir $dirname;

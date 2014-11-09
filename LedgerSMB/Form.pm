@@ -1258,7 +1258,7 @@ sub db_init {
 
     $self->{db_dateformat} = $myconfig->{dateformat};    #shim
 
-    LedgerSMB::DBH->require_version($self->{version});
+    LedgerSMB::DBH->require_version($self->{version}) if $self->{version};
 
     my $query = "SELECT t.extends, 
 			coalesce (t.table_name, 'custom_' || extends) 
