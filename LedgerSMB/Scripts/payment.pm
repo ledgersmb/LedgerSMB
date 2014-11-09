@@ -289,6 +289,7 @@ This reverses payments selected in the search results.
 
 sub reverse_payments {
     my ($request) = @_;
+    $request->dates_series(1, $payment->{rowcount_}, 'date_paid');
     $request->{account_class} = 1;
     my $payment = LedgerSMB::DBObject::Payment->new({base => $request});
     for my $count (1 .. $payment->{rowcount_}){
