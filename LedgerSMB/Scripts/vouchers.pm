@@ -402,11 +402,16 @@ my %print_dispatch = (
                if (my $cpid = fork()){
                   wait; 
                } else {
-                  do 'bin/aa.pl';
+                  do 'bin/ar.pl';
                   require 'LedgerSMB/Form.pm';
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
+                  $lsmb_legacy::form->{ARAP} = 'AR';
+                  $lsmb_legacy::form->{arap} = 'ar';
+                  $lsmb_legacy::form->{id} = $voucher->{trans_id} 
+                               if ref $voucher;
                   $lsmb_legacy::form->{formname} = 'ar_transaction';
+                  $lsmb_legacy::locale = $LedgerSMB::App_State::Locale;
 
                   lsmb_legacy::create_links();
 
