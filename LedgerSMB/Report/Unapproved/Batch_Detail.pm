@@ -229,10 +229,8 @@ sub run_report{
                     text  => LedgerSMB::Report::text('Unlock Batch'),
                     value => 'single_batch_unlock',
                     class => 'submit',
-<<<<<<< /home/chris/ledgersmb/LedgerSMB/Report/Unapproved/Batch_Detail.pm
                 }]);
     my @rows = $self->call_dbmethod(funcname => 'voucher__list');
-=======
                 },
                 {
                     name  => 'action',
@@ -242,7 +240,6 @@ sub run_report{
                     class => 'submit',
                 }, ]);
     my @rows = $self->exec_method({funcname => 'voucher__list'});
->>>>>>> /tmp/Batch_Detail.pm~other.q5GWP9
     for my $ref (@rows){
         my $script;
         my $class_to_script = {
