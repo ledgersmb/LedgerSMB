@@ -201,8 +201,9 @@ sub run_report{
     }, {
        name => 'media',
        options => $printer,
-    }, {
-    }]);
+    }, 
+    ]);
+
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',
@@ -228,7 +229,14 @@ sub run_report{
                     text  => LedgerSMB::Report::text('Unlock Batch'),
                     value => 'single_batch_unlock',
                     class => 'submit',
-                }]);
+                },
+                {
+                    name  => 'action',
+                    type  => 'submit',
+                    text  => LedgerSMB::Report::text('Print Batch'),
+                    value => 'print_batch',
+                    class => 'submit',
+                }, ]);
     my @rows = $self->call_dbmethod(funcname => 'voucher__list');
     for my $ref (@rows){
         my $script;
