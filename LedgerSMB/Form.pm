@@ -1993,6 +1993,7 @@ $module and $dbh are unused.
 sub get_regular_metadata {
     my ( $self, $myconfig, $vc, $module, $dbh, $transdate, $job ) = @_;
     $dbh = $self->{dbh};
+    $transdate = $transdate->to_db if eval { $transdate->can('to_db') };
 
     $self->all_employees( $myconfig, $dbh, $transdate, 1 );
     $self->all_business_units( $myconfig, $dbh, $transdate, $job );
