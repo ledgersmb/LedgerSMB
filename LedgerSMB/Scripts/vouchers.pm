@@ -21,6 +21,7 @@ use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
 use CGI::Simple;
+use LedgerSMB::CP;
 use strict;
 
 
@@ -408,6 +409,7 @@ my %print_dispatch = (
                   bless $lsmb_legacy::form, 'Form';
                   $lsmb_legacy::form->{ARAP} = 'AR';
                   $lsmb_legacy::form->{arap} = 'ar';
+                  $lsmb_legacy::form->{vc} = 'customer';
                   $lsmb_legacy::form->{id} = $voucher->{trans_id} 
                                if ref $voucher;
                   $lsmb_legacy::form->{formname} = 'ar_transaction';
@@ -473,6 +475,7 @@ sub print_batch {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
                  %$request);
+    $request->{format} = 'pdf';
     $report->run_report;
 
     my $cgi = CGI::Simple->new;
@@ -480,7 +483,7 @@ sub print_batch {
     my @files = 
       map { my $contents;
             
-            $contents = &{$print_dispatch{lc($_->{batch_class_id})}}($request, $_)
+            $contents = &{$print_dispatch{lc($_->{batch_class_id})}}($_, $request)
                 if $print_dispatch{lc($_->{batch_class_id})};
             $contents ? $contents : (); }
       @{$report->rows};
