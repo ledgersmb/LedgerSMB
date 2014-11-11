@@ -410,7 +410,7 @@ my %print_dispatch = (
                   $lsmb_legacy::form->{ARAP} = 'AR';
                   $lsmb_legacy::form->{arap} = 'ar';
                   $lsmb_legacy::form->{vc} = 'customer';
-                  $lsmb_legacy::form->{id} = $voucher->{trans_id} 
+                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
                                if ref $voucher;
                   $lsmb_legacy::form->{formname} = 'ar_transaction';
                   $lsmb_legacy::locale = $LedgerSMB::App_State::Locale;
@@ -433,6 +433,8 @@ my %print_dispatch = (
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
                   $lsmb_legacy::form->{formname} = 'invoice';
+                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
+                               if ref $voucher;
 
                   lsmb_legacy::create_links();
 
@@ -451,6 +453,8 @@ my %print_dispatch = (
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
                   $lsmb_legacy::form->{formname} = 'product_receipt';
+                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
+                               if ref $voucher;
 
                   lsmb_legacy::create_links();
 
@@ -476,6 +480,7 @@ sub print_batch {
     my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
                  %$request);
     $request->{format} = 'pdf';
+    $request->{media} = 'zip';
     $report->run_report;
 
     my $cgi = CGI::Simple->new;
