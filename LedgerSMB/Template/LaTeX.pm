@@ -107,6 +107,7 @@ sub preprocess {
 # Breaking this off to be used separately.
 sub escape {
     my ($vars) = shift @_;
+    return '' unless defined $vars;
 
     $vars =~ s/-/......hyphen....../g;
     $vars =~ s/\+/......plus....../g; 

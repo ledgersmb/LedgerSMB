@@ -391,7 +391,7 @@ sub print_transaction {
                 }
             }
         }
-
+        return if 'zip' eq lc($form->{media});
         &{"$display_form"};
 
     }
