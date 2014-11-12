@@ -407,6 +407,8 @@ my %print_dispatch = (
                   require 'LedgerSMB/Form.pm';
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
+                  local $LedgerSMB::App_State::DBH = 0;
+                  $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
                   $lsmb_legacy::form->{ARAP} = 'AR';
                   $lsmb_legacy::form->{arap} = 'ar';
                   $lsmb_legacy::form->{vc} = 'customer';
@@ -416,6 +418,7 @@ my %print_dispatch = (
                   $lsmb_legacy::locale = $LedgerSMB::App_State::Locale;
 
                   lsmb_legacy::create_links();
+		  $lsmb_legacy::form->{media} = $request->{media};
 
                   lsmb_legacy::print();
                   exit;
@@ -432,6 +435,8 @@ my %print_dispatch = (
                   require 'LedgerSMB/Form.pm';
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
+                  local $LedgerSMB::App_State::DBH = 0;
+                  $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
                   $lsmb_legacy::form->{formname} = 'invoice';
                   $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
                                if ref $voucher;
@@ -452,6 +457,9 @@ my %print_dispatch = (
                   require 'LedgerSMB/Form.pm';
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
+                  local $LedgerSMB::App_State::DBH = 0;
+                  $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
+                  $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
                   $lsmb_legacy::form->{formname} = 'product_receipt';
                   $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
                                if ref $voucher;
@@ -481,6 +489,11 @@ sub print_batch {
                  %$request);
     $request->{format} = 'pdf';
     $request->{media} = 'zip';
+    my $dirname = "$LedgerSMB::Sysconfig::tempdir/docs-$request->{batch_id}-" . time;
+    mkdir $dirname;
+
+    $request->{zipdir} = $dirname;
+
     $report->run_report;
 
     my $cgi = CGI::Simple->new;
@@ -492,16 +505,11 @@ sub print_batch {
                 if $print_dispatch{lc($_->{batch_class_id})};
             $contents ? $contents : (); }
       @{$report->rows};
-    die scalar @files;
-
-    my $dirname = "$LedgerSMB::Sysconfig::tempdir/docs-$request->{id}-" . time;
-    mkdir $dirname;
-
-    $request->{zipdir} = $dirname;
 
     if (@files) {
        my $zipcmd = $LedgerSMB::Sysconfig::zip;
        $zipcmd =~ s/\%dir/$dirname/g;
+       
        `$zipcmd`;
 
        binmode (STDOUT, ':bytes');
@@ -510,13 +518,14 @@ sub print_batch {
           -type       => 'application/zip',
           -status     => '200',
           -charset    => 'utf-8',
-          -attachment => "batch-$request->{id}.zip",
+          -attachment => "batch-$request->{batch_id}.zip",
        );
 
-       open ZIP, '<', "$request->{zipdir}";
+       open ZIP, '<', "$request->{zipdir}.zip";
        binmode (ZIP, ':bytes');
        print <ZIP>;
        close ZIP;
+    
 
     } else {
        $report->render($request); 
