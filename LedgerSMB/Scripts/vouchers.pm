@@ -21,6 +21,7 @@ use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
 use CGI::Simple;
+use LedgerSMB::CP;
 use strict;
 
 
@@ -402,11 +403,17 @@ my %print_dispatch = (
                if (my $cpid = fork()){
                   wait; 
                } else {
-                  do 'bin/aa.pl';
+                  do 'bin/ar.pl';
                   require 'LedgerSMB/Form.pm';
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
+                  $lsmb_legacy::form->{ARAP} = 'AR';
+                  $lsmb_legacy::form->{arap} = 'ar';
+                  $lsmb_legacy::form->{vc} = 'customer';
+                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
+                               if ref $voucher;
                   $lsmb_legacy::form->{formname} = 'ar_transaction';
+                  $lsmb_legacy::locale = $LedgerSMB::App_State::Locale;
 
                   lsmb_legacy::create_links();
 
@@ -426,6 +433,8 @@ my %print_dispatch = (
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
                   $lsmb_legacy::form->{formname} = 'invoice';
+                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
+                               if ref $voucher;
 
                   lsmb_legacy::create_links();
 
@@ -444,6 +453,8 @@ my %print_dispatch = (
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
                   $lsmb_legacy::form->{formname} = 'product_receipt';
+                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
+                               if ref $voucher;
 
                   lsmb_legacy::create_links();
 
@@ -468,6 +479,8 @@ sub print_batch {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
                  %$request);
+    $request->{format} = 'pdf';
+    $request->{media} = 'zip';
     $report->run_report;
 
     my $cgi = CGI::Simple->new;
@@ -475,7 +488,7 @@ sub print_batch {
     my @files = 
       map { my $contents;
             
-            $contents = &{$print_dispatch{lc($_->{batch_class_id})}}($request, $_)
+            $contents = &{$print_dispatch{lc($_->{batch_class_id})}}($_, $request)
                 if $print_dispatch{lc($_->{batch_class_id})};
             $contents ? $contents : (); }
       @{$report->rows};

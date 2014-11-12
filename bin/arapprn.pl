@@ -245,18 +245,10 @@ sub print_transaction {
     $form->{invtotal} = $form->{subtotal} + $tax;
     $form->{total}    = $form->{invtotal} - $form->{paid};
 
-    use LedgerSMB::CP;
-    $c =
-      CP->new( ( $form->{language_code} )
-        ? $form->{language_code}
-        : $myconfig{countrycode} );
-    $c->init;
     ( $whole, $form->{decimal} ) = split /\./, $form->{invtotal};
 
     $form->{decimal} .= "00";
     $form->{decimal}        = substr( $form->{decimal}, 0, 2 );
-    $form->{text_decimal}   = $c->num2text( $form->{decimal} * 1 );
-    $form->{text_amount}    = $c->num2text($whole);
     $form->{integer_amount} = $form->format_amount( \%myconfig, $whole );
 
     for (qw(invtotal subtotal paid total)) {
