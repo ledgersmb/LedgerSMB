@@ -21,6 +21,7 @@ use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
 use CGI::Simple;
+use LedgerSMB::CP;
 use strict;
 
 
@@ -214,10 +215,8 @@ class_id and created_by are exact matches
 sub list_batches {
     my ($request) = @_;
     $request->open_form;
-    my $report = LedgerSMB::Report::Unapproved::Batch_Overview->new(
-                 %$request);
-    $report->run_report;
-    $report->render($request);     
+    LedgerSMB::Report::Unapproved::Batch_Overview->new(
+                 %$request)->render($request);     
 }
 
 =item get_batch
@@ -234,10 +233,8 @@ sub get_batch {
 
     $request->{hiddens} = { batch_id => $request->{batch_id} };
 
-    my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
-                 %$request);
-    $report->run_report;
-    $report->render($request);
+    LedgerSMB::Report::Unapproved::Batch_Detail->new(
+                 %$request)->render($request);
 }
 
 =item single_batch_approve
@@ -401,26 +398,35 @@ sub reverse_overpayment {
 }
 
 my %print_dispatch = (
-   ar => sub { 
+   2 => sub { 
                my ($voucher, $request) = @_;
                if (my $cpid = fork()){
                   wait; 
                } else {
-                  do 'bin/aa.pl';
+                  do 'bin/ar.pl';
                   require 'LedgerSMB/Form.pm';
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
+                  local $LedgerSMB::App_State::DBH = 0;
+                  $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
+                  $lsmb_legacy::form->{ARAP} = 'AR';
+                  $lsmb_legacy::form->{arap} = 'ar';
+                  $lsmb_legacy::form->{vc} = 'customer';
+                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
+                               if ref $voucher;
                   $lsmb_legacy::form->{formname} = 'ar_transaction';
+                  $lsmb_legacy::locale = $LedgerSMB::App_State::Locale;
 
                   lsmb_legacy::create_links();
+		  $lsmb_legacy::form->{media} = $request->{media};
 
                   lsmb_legacy::print();
                   exit;
                }
                1;
              },
-   ap => sub { 0 },
-   is => sub { 
+   1 => sub { 0 },
+   8 => sub { 
                my ($voucher, $request) = @_;
                if (fork){
                   wait; 
@@ -429,7 +435,11 @@ my %print_dispatch = (
                   require 'LedgerSMB/Form.pm';
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
+                  local $LedgerSMB::App_State::DBH = 0;
+                  $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
                   $lsmb_legacy::form->{formname} = 'invoice';
+                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
+                               if ref $voucher;
 
                   lsmb_legacy::create_links();
 
@@ -438,7 +448,7 @@ my %print_dispatch = (
                }
                1;
              },
-   ir => sub {
+   9 => sub {
                my ($voucher, $request) = @_;
                if (fork){
                   wait; 
@@ -447,7 +457,12 @@ my %print_dispatch = (
                   require 'LedgerSMB/Form.pm';
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
+                  local $LedgerSMB::App_State::DBH = 0;
+                  $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
+                  $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
                   $lsmb_legacy::form->{formname} = 'product_receipt';
+                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
+                               if ref $voucher;
 
                   lsmb_legacy::create_links();
 
@@ -456,7 +471,7 @@ my %print_dispatch = (
                }
                1;
              },
-   gl => sub { 0 },
+   3 => sub { 0 },
    receipt =>  sub { undef }, # todo, new functionality
    payment =>  sub { undef }, # todo, new functionality
 );
@@ -472,23 +487,29 @@ sub print_batch {
     my ($request) = @_;
     my $report = LedgerSMB::Report::Unapproved::Batch_Detail->new(
                  %$request);
+    $request->{format} = 'pdf';
+    $request->{media} = 'zip';
+    my $dirname = "$LedgerSMB::Sysconfig::tempdir/docs-$request->{batch_id}-" . time;
+    mkdir $dirname;
+
+    $request->{zipdir} = $dirname;
+
     $report->run_report;
 
     my $cgi = CGI::Simple->new;
 
     my @files = 
-      map { my $contents = &{$print_dispatch{$_->{voucher_type}}}($request, $_);
+      map { my $contents;
+            
+            $contents = &{$print_dispatch{lc($_->{batch_class_id})}}($_, $request)
+                if $print_dispatch{lc($_->{batch_class_id})};
             $contents ? $contents : (); }
       @{$report->rows};
-
-    my $dirname = "$LedgerSMB::Sysconfig::tempdir/docs-$request->{id}-" . time;
-    mkdir $dirname;
-
-    $request->{zipdir} = $dirname;
 
     if (@files) {
        my $zipcmd = $LedgerSMB::Sysconfig::zip;
        $zipcmd =~ s/\%dir/$dirname/g;
+       
        `$zipcmd`;
 
        binmode (STDOUT, ':bytes');
@@ -497,13 +518,14 @@ sub print_batch {
           -type       => 'application/zip',
           -status     => '200',
           -charset    => 'utf-8',
-          -attachment => "batch-$request->{id}.zip",
+          -attachment => "batch-$request->{batch_id}.zip",
        );
 
-       open ZIP, '<', "$request->{zipdir}";
+       open ZIP, '<', "$request->{zipdir}.zip";
        binmode (ZIP, ':bytes');
        print <ZIP>;
        close ZIP;
+    
 
     } else {
        $report->render($request); 
