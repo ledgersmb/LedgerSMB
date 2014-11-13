@@ -8,11 +8,6 @@ PROCESS input element_data = {
 };
 PROCESS input element_data = {
     type = 'hidden'
-    name = 'language_code'
-   value = language_code
-};
-PROCESS input element_data = {
-    type = 'hidden'
     name = "format"
    value = format
 };
@@ -43,6 +38,20 @@ PROCESS button element_data = {
 <form action="template.pl" method="get">
 <?lsmb 
 PROCESS HIDDENS;
+PROCESS select element_data = {
+           name = 'language_code'
+        options = languages
+  default_blank = 1
+ default_values = [language_code]
+      text_attr = 'description'
+     value_attr = 'code'
+};
+PROCESS button element_data = {
+    type = 'submit'
+    name = 'action'
+   value = 'display'
+    text = text('Display')
+};
 PROCESS button element_data = {
     type = 'submit'
     name = 'action'
