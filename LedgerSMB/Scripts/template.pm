@@ -45,6 +45,8 @@ sub display {
     eval {$dbtemp = LedgerSMB::Template::DB->get(%$request)};
     $dbtemp->{content} = $dbtemp->template if defined $dbtemp;
     $dbtemp = $request unless $dbtemp->{format};
+    $dbtemp->{languages} = 
+        [ LedgerSMB->call_procedure(procname=> 'person__list_languages') ];
     LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
@@ -62,9 +64,15 @@ Displays a screen for editing the template
 
 sub edit {
     my ($request) = @_;
-    my $dbtemp = LedgerSMB::Template::DB->get(%$request);
+    my $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) } ;
+    delete $request->{language_code} unless $dbtemp;
+    $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) } unless $dbtemp;
+    die $LedgerSMB::App_State::Locale->text('Template Not Found') unless $dbtemp;
     $dbtemp->{content} = $dbtemp->template;
     $dbtemp = $request unless $dbtemp->{format};
+    $dbtemp->{languages} = 
+        [ LedgerSMB->call_procedure(procname=> 'person__list_languages') ];
+
     LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
