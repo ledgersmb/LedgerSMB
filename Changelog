@@ -8,6 +8,7 @@ Changelog for 1.4.7
 * Fixed 1274, error on posting payment reversals w. dd/mm/yyy dates (Chris T)
 * Fixed 1227, 1252, added batch printing via batches (Chris T)
 * Fixed bug 1275, post error due to trying to double encode arry (Chris T)
+* Fixing position of returns checkbox on account screen (Chris T)
 
 Chris T is Chris Travers
 
