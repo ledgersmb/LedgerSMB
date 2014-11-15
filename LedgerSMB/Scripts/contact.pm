@@ -101,7 +101,7 @@ sub get {
         my $emp = LedgerSMB::Entity::Person::Employee->get(
                           $request->{entity_id}
         );
-        return _main_screen($request, undef $emp);
+        return _main_screen($request, undef, $emp);
     }
     my $entity = LedgerSMB::Entity::Company->get($request->{entity_id});
     $entity ||= LedgerSMB::Entity::Person->get($request->{entity_id});
@@ -132,14 +132,16 @@ sub _main_screen {
        $entity_id ||= $person->{entity_id};
        @DIVS = qw(credit address contact_info bank_act notes files);
        unshift @DIVS, 'company' if $company->{entity_id};
-       unshift @DIVS, 'person' yif $person->{entity_id};
+       unshift @DIVS, 'person' if $person->{entity_id};
        if ($person->{entity_id} && $person->{entity_class} == 3){
           shift @DIVS;
-          unshift @DIVS, 'employee';
+          unshift @DIVS, 'employee', 'user', 'wage';
        }
        @entity_files = LedgerSMB::File->list(
                {ref_key => $entity_id, file_class => '4'}
        );
+    } elsif ($person->{entity_class} == 3) {
+       @DIVS = ('employee');
     } else {
        @DIVS = qw(company person);
     }
@@ -151,17 +153,6 @@ sub _main_screen {
               funcname => 'date_get_all_years'
     );
 
-
-    if ($LedgerSMB::Scripts::employee::country::country_divs{
-            $employee->{country_id}
-    }){
-        for my $cform (@{$LedgerSMB::Scripts::employee::country::country_divs{
-            $employee->{country_id}
-         }}){
-             push @DIVS, $cform->{file};
-             $DIV_LABEL{$cform->{file}} = $cform->{div_title};
-         }
-    }
 
 
     my %DIV_LABEL = (
@@ -177,6 +168,17 @@ sub _main_screen {
                notes => $locale->text('Notes'),
                files => $locale->text('Files'),
     );
+
+    if ($LedgerSMB::Scripts::employee::country::country_divs{
+            $person->{country_id}
+    }){
+        for my $cform (@{$LedgerSMB::Scripts::employee::country::country_divs{
+            $person->{country_id}
+         }}){
+             push @DIVS, $cform->{file};
+             $DIV_LABEL{$cform->{file}} = $cform->{div_title};
+         }
+    }
 
     # DIVS contents
     my $entity_id = $company->{entity_id};
@@ -360,7 +362,8 @@ sub save_employee {
         ($request->{control_code}) = values %$ref;
     }
     $request->{entity_class} = 3;
-    $request->{control_code} = $request->{employeenumber};
+    $request->{control_code} = $request->{employeenumber} if $request->{employeenumber};
+    $request->{employeenumber} ||= $request->{control_code};
     $request->{name} = "$request->{last_name}, $request->{first_name}";
     my $employee = LedgerSMB::Entity::Person::Employee->new(%$request);
     $request->{target_div} = 'credit_div';
@@ -549,6 +552,9 @@ Saves a person and moves on to the next screen
 
 sub save_person {
     my ($request) = @_;
+    if ($request->{entity_class} == 3){
+       return save_employee($request);
+    }
     my $person = LedgerSMB::Entity::Person->new(
               %$request
     );
