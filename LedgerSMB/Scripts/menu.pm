@@ -55,7 +55,7 @@ sub __default {
 =item root_doc
 
 If $request->{menubar} is set, this creates a drilldown menu.  Otherwise, it
-creates the root document (currently a frameset).
+creates the root document.
 
 =back
 
@@ -84,7 +84,7 @@ sub root_doc {
             user =>$request->{_user}, 
             locale => $request->{_locale},
             path => 'UI',
-            template => 'frameset',
+            template => 'main',
 	     format => 'HTML'
 	);
     }

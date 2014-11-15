@@ -1,0 +1,23 @@
+<?lsmb INCLUDE "ui-header.html" inc_stylesheet = ['css/main.css'] ?>
+<script language="javascript" type="text/javascript">
+    require([ "dojo/query", 
+              "dijit/layout/BorderContainer", 
+              "dijit/layout/TabContainer",
+              "dijit/layout/ContentPane",
+              "dojo/ready" ],
+             function(query, bordercontainer, tabcontainer, contentpane){
+                   
+             }
+    );
+</script>
+<div id="console-container" data-dojo-type="dijit/layout/BorderContainer"
+     	data-dojo-props="design: 'headline'">
+    <div class="mainpanel" data-dojo-type="dijit/layout/ContentPane"
+         data-dojo-props="region: 'center'"> This is where the main content is.
+    </div>
+     <div id="menudiv" class="edgePanel"
+            data-dojo-type="dijit/layout/ContentPane"
+            data-dojo-props="region: 'left', splitter: true">Sidebar content (left)</div>
+</div>
+</body>
+</html>
