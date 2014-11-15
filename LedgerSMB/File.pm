@@ -270,7 +270,8 @@ files we have left around.
 =cut
 
 sub DEMOLISH {
-   my ($self) = $_;
+   my ($self) = @_;
+   return unless $self->{file_path}; # nothing to do
    opendir(TMP, $self->{file_path}) || return 1;
    for my $file (readdir(TMP)){
        unlink $self->{file_path} . '/' . $file;

@@ -321,6 +321,7 @@ sub render {
                       columns => $columns, 
                     order_url => $self->order_url,
                       buttons => $self->buttons,
+                      options => $self->options,
                          rows => $self->rows});
 }
 
