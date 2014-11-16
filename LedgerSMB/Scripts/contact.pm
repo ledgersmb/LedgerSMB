@@ -314,6 +314,7 @@ sub _main_screen {
                   request => $request,
                   company => $company,
                    person => $person,
+                 employee => $person,
              country_list => \@country_list,
                credit_act => $credit_act,
               credit_list => \@credit_list,
