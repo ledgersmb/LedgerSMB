@@ -524,6 +524,7 @@ sub call_procedure {
     my $self     = shift @_;
     my %args     = @_;
     my $procname = $args{procname};
+    $procname ||= $args{funcname};
     my $schema   = $args{schema};
     my @call_args;
     @call_args = @{ $args{args} } if defined $args{args};
