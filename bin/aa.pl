@@ -46,6 +46,7 @@
 
 package lsmb_legacy;
 use LedgerSMB::Tax;
+use LedgerSMB::Company_Config;
 
 require 'bin/bridge.pl'; # needed for voucher dispatches
 # any custom scripts for this one
@@ -393,6 +394,7 @@ sub create_links {
 }
 
 sub form_header {
+     my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty};
 
     $title = $form->{title};
     $form->all_business_units($form->{transdate}, 
@@ -725,7 +727,7 @@ $form->open_status_div . qq|
 
     # Display rows
 
-    for $i ( 1 .. $form->{rowcount} ) {
+    for $i ( 1 .. $form->{rowcount} + $min_lines) {
 
         $selectamount = $form->{"select$form->{ARAP}_amount"};
         $selectamount =~
