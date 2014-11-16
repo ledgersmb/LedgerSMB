@@ -232,8 +232,10 @@ sub _main_screen {
     );
     my @all_taxes = LedgerSMB->call_procedure(funcname => 'account__get_taxes');
 
+    my $arap_class = $entity_class;
+    $arap_class = 2 if $arap_class == 3;
     my @ar_ap_acc_list = LedgerSMB->call_procedure(funcname => 'chart_get_ar_ap',
-                                           args => [$entity_class]) if $entity_class < 3;
+                                           args => [$arap_class]);
 
     my @cash_acc_list = LedgerSMB->call_procedure(funcname => 'chart_list_cash',
                                            args => [$entity_class]);
@@ -368,9 +370,9 @@ sub save_employee {
     $request->{employeenumber} ||= $request->{control_code};
     $request->{name} = "$request->{last_name}, $request->{first_name}";
     my $employee = LedgerSMB::Entity::Person::Employee->new(%$request);
-    $request->{target_div} = 'credit_div';
+    $request->{target_div} = 'employee_div';
     $employee->save;
-    _main_screen($request, $employee);
+    _main_screen($request, undef, $employee);
 }
 
 =item generate_control_code 
