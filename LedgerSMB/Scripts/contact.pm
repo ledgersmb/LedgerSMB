@@ -333,6 +333,7 @@ sub _main_screen {
             cash_acc_list => \@cash_acc_list,
         discount_acc_list => \@discount_acc_list,
        language_code_list => \@language_code_list,
+       language_code_list => \@language_code_list,
            all_currencies => \@all_currencies,
      attach_level_options => $attach_level_options, 
                 entity_id => $entity_id,
@@ -554,6 +555,7 @@ Saves a person and moves on to the next screen
 sub save_person {
     my ($request) = @_;
     if ($request->{entity_class} == 3){
+        $request->{dob} = $request->{birthdate} if $request->{birthdate};
        return save_employee($request);
     }
     my $person = LedgerSMB::Entity::Person->new(
@@ -879,7 +881,6 @@ sub save_pricelist {
         $psearch->render($request);
    }
 }
-
 
 
 =item delete_pricelist

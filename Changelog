@@ -10,6 +10,12 @@ API Enhancements:
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.8
+* Fixed end-date not a date widget on employee div (Chris T)
+* Fixed errors saving person as employee on contacts screen (Chris T)
+
+Chris T is Chris Travers
+
 Changelog for 1.4.7
 * Fixed 1231, lack of validation on forms leads to Perl errors (Chris T)
 * Fixed 1264, account numbers out of place on PNL (Chris T)
