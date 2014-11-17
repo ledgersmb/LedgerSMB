@@ -121,6 +121,8 @@ our @default_settings = (
        { name => 'template_immages',
         label => $locale->text('Images in Templates'),
          type => 'YES_NO', },
+       { name => 'min_empty',
+        label => $locale->text('Min Empty Lines') },
      ] },
 );
 

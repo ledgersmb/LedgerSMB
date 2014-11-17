@@ -4,6 +4,7 @@ Released 2014-09-15
 Changelog for 1.4.8
 * Fixed end-date not a date widget on employee div (Chris T)
 * Fixed errors saving person as employee on contacts screen (Chris T)
+# Added min empty lines for orders, invoices, and gl (Chris T, 1277)
 
 Chris T is Chris Travers
 
