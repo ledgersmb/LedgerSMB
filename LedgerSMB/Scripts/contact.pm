@@ -19,6 +19,9 @@ package LedgerSMB::Scripts::contact;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Person;
 use LedgerSMB::Entity::Credit_Account;
+use LedgerSMB::Entity::Person::Employee;
+use LedgerSMB::Entity::Payroll::Wage;
+use LedgerSMB::Entity::Payroll::Deduction;
 use LedgerSMB::Entity::Location;
 use LedgerSMB::Entity::Contact;
 use LedgerSMB::Entity::Bank;
@@ -63,6 +66,12 @@ control code
 
 sub get_by_cc {
     my ($request) = @_;
+    if ($request->{entity_class} == 3){
+        my $emp = LedgerSMB::Entity::Person::Employee->get_by_cc(
+                            $request->{control_code}
+        );
+        return _main_screen($request, undef, $emp);
+    }
     my $entity = 
            LedgerSMB::Entity::Company->get_by_cc($request->{control_code});
     $entity ||=  LedgerSMB::Entity::Person->get_by_cc($request->{control_code});
@@ -88,12 +97,18 @@ of the company information.
 
 sub get {
     my ($request) = @_;
+    if ($request->{entity_class} == 3){
+        my $emp = LedgerSMB::Entity::Person::Employee->get(
+                          $request->{entity_id}
+        );
+        return _main_screen($request, undef, $emp);
+    }
     my $entity = LedgerSMB::Entity::Company->get($request->{entity_id});
     $entity ||= LedgerSMB::Entity::Person->get($request->{entity_id});
     my ($company, $person) = (undef, undef);
-    if ($entity->isa('LedgerSMB::Entity::Company')){
+    if (eval {$entity->isa('LedgerSMB::Entity::Company')}){
        $company = $entity;
-    } elsif ($entity->isa('LedgerSMB::Entity::Person')){
+    } elsif (eval {$entity->isa('LedgerSMB::Entity::Person')}){
        $person = $entity;
     }
     _main_screen($request, $company, $person);
@@ -118,9 +133,15 @@ sub _main_screen {
        @DIVS = qw(credit address contact_info bank_act notes files);
        unshift @DIVS, 'company' if $company->{entity_id};
        unshift @DIVS, 'person' if $person->{entity_id};
+       if ($person->{entity_id} && $person->{entity_class} == 3){
+          shift @DIVS;
+          unshift @DIVS, 'employee', 'user', 'wage';
+       }
        @entity_files = LedgerSMB::File->list(
                {ref_key => $entity_id, file_class => '4'}
        );
+    } elsif ($person->{entity_class} == 3) {
+       @DIVS = ('employee');
     } else {
        @DIVS = qw(company person);
     }
@@ -137,6 +158,9 @@ sub _main_screen {
     my %DIV_LABEL = (
              company => $locale->text('Company'),
               person => $locale->text('Person'),
+            employee => $locale->text('Employee'),
+                user => $locale->text('User'),
+                wage => $locale->text('Wages/Deductions'),
               credit => $locale->text('Credit Accounts'),
              address => $locale->text('Addresses'),
         contact_info => $locale->text('Contact Info'),
@@ -144,6 +168,17 @@ sub _main_screen {
                notes => $locale->text('Notes'),
                files => $locale->text('Files'),
     );
+
+    if ($LedgerSMB::Scripts::employee::country::country_divs{
+            $person->{country_id}
+    }){
+        for my $cform (@{$LedgerSMB::Scripts::employee::country::country_divs{
+            $person->{country_id}
+         }}){
+             push @DIVS, $cform->{file};
+             $DIV_LABEL{$cform->{file}} = $cform->{div_title};
+         }
+    }
 
     # DIVS contents
     my $entity_id = $company->{entity_id};
@@ -197,14 +232,16 @@ sub _main_screen {
     );
     my @all_taxes = LedgerSMB->call_procedure(procname => 'account__get_taxes');
 
-    my @ar_ap_acc_list = LedgerSMB->call_procedure(procname => 'chart_get_ar_ap',
-                                           args => [$entity_class]) if $entity_class < 3;
+    my $arap_class = $entity_class;
+    $arap_class = 2 if $arap_class == 3;
+    my @ar_ap_acc_list = LedgerSMB->call_procedure(funcname => 'chart_get_ar_ap',
+                                           args => [$arap_class]);
 
-    my @cash_acc_list = LedgerSMB->call_procedure(procname => 'chart_list_cash',
+    my @cash_acc_list = LedgerSMB->call_procedure(funcname => 'chart_list_cash',
                                            args => [$entity_class]);
 
     my @discount_acc_list =
-         LedgerSMB->call_procedure(procname => 'chart_list_discount',
+         LedgerSMB->call_procedure(funcname => 'chart_list_discount',
                                      args => [$entity_class]);
 
     for my $var (\@ar_ap_acc_list, \@cash_acc_list, \@discount_acc_list){
@@ -215,7 +252,7 @@ sub _main_screen {
 
 #
     my @language_code_list = 
-             LedgerSMB->call_procedure(procname=> 'person__list_languages');
+             LedgerSMB->call_procedure(funcname => 'person__list_languages');
 
     for my $ref (@language_code_list){
         $ref->{text} = "$ref->{description}";
@@ -223,13 +260,13 @@ sub _main_screen {
     
     my @location_class_list = 
        grep { $_->{id} < 4 }
-            LedgerSMB->call_procedure(procname => 'location_list_class');
+            LedgerSMB->call_procedure(funcname => 'location_list_class');
 
     my @business_types =
-               LedgerSMB->call_procedure(procname => 'business_type__list');
+               LedgerSMB->call_procedure(funcname => 'business_type__list');
 
     my ($curr_list) =
-          LedgerSMB->call_procedure(procname => 'setting__get_currencies');
+          LedgerSMB->call_procedure(funcname => 'setting__get_currencies');
 
     my @all_currencies;
     for my $curr (@{$curr_list->{'setting__get_currencies'}}){
@@ -266,10 +303,10 @@ sub _main_screen {
     $Data::Dumper::Sortkeys = 1;
     #die '<pre>' . Dumper($request) . '</pre>';
     my @country_list = LedgerSMB->call_procedure(
-                     procname => 'location_list_country'
+                     funcname => 'location_list_country'
       );
     my @entity_classes = LedgerSMB->call_procedure(
-                      procname => 'entity__list_classes'
+                      funcname => 'entity__list_classes'
     );
 
     $template->render({
@@ -279,6 +316,7 @@ sub _main_screen {
                   request => $request,
                   company => $company,
                    person => $person,
+                 employee => $person,
              country_list => \@country_list,
                credit_act => $credit_act,
               credit_list => \@credit_list,
@@ -297,6 +335,7 @@ sub _main_screen {
             cash_acc_list => \@cash_acc_list,
         discount_acc_list => \@discount_acc_list,
        language_code_list => \@language_code_list,
+       language_code_list => \@language_code_list,
            all_currencies => \@all_currencies,
      attach_level_options => $attach_level_options, 
                 entity_id => $entity_id,
@@ -309,6 +348,31 @@ sub _main_screen {
           default_country => $default_country,
          default_language => $default_language
     });
+}
+
+=item save_employee
+
+Saves a company and moves on to the next screen
+
+=cut
+
+sub save_employee {
+    my ($request) = @_;
+    unless ($request->{control_code}){
+        my ($ref) = $request->call_procedure(
+                             procname => 'setting_increment', 
+                             args     => ['entity_control']
+                           );
+        ($request->{control_code}) = values %$ref;
+    }
+    $request->{entity_class} = 3;
+    $request->{control_code} = $request->{employeenumber} if $request->{employeenumber};
+    $request->{employeenumber} ||= $request->{control_code};
+    $request->{name} = "$request->{last_name}, $request->{first_name}";
+    my $employee = LedgerSMB::Entity::Person::Employee->new(%$request);
+    $request->{target_div} = 'employee_div';
+    $employee->save;
+    _main_screen($request, undef, $employee);
 }
 
 =item generate_control_code 
@@ -492,6 +556,10 @@ Saves a person and moves on to the next screen
 
 sub save_person {
     my ($request) = @_;
+    if ($request->{entity_class} == 3){
+        $request->{dob} = $request->{birthdate} if $request->{birthdate};
+       return save_employee($request);
+    }
     my $person = LedgerSMB::Entity::Person->new(
               %$request
     );
@@ -817,7 +885,6 @@ sub save_pricelist {
 }
 
 
-
 =item delete_pricelist
 
 =cut
@@ -832,6 +899,74 @@ sub delete_pricelist {
 
     # Return to UI
     get_pricelist($request);
+}
+
+=item create_user
+
+This turns the employee into a user.
+
+=cut
+
+sub create_user {
+    my ($request) = @_;
+    $request->{target_div} = 'user_div';
+    if ($request->close_form){
+       $request->{password} = $request->{reset_password};
+       my $user = LedgerSMB::Entity::User->new(%$request);
+       my $return_with_import;
+       try {
+           $user->create;
+       } catch {
+           my $err = $_;
+           die $err unless $err =~ /duplicate user/i;
+           $request->{dbh}->rollback;
+           $return_with_import = 1;
+       };
+       if ($return_with_import){
+           $request->{pls_import} = 1;
+       }
+    }
+    get($request);
+}
+
+=item reset_password
+
+This resets the user's password
+
+=cut
+
+sub reset_password {
+    my ($request) = @_;
+    if ($request->close_form){
+       $request->{password} = $request->{reset_password};
+       my $user = LedgerSMB::Entity::User->new(%$request);
+       $user->reset_password($request->{password});
+    }
+    get($request);
+}
+
+=item save_roles
+
+Saves the user's permissions
+
+=cut
+
+sub save_roles {
+    my ($request) = @_;
+    if ($request->close_form){
+       my $user = LedgerSMB::Entity::User->get($request->{entity_id});
+       my $roles = [];
+       $request->{_role_prefix} = "lsmb_$request->{company}__" 
+           unless defined $request->{_role_prefix};
+       for my $key(keys %$request){
+           if ($key =~ /$request->{_role_prefix}/ and $request->{$key}){
+               push @$roles, $key;
+           }
+       }
+       $user->role_list($roles);
+       $user->save_roles;
+    }
+    get($request);
 }
 
 =back
