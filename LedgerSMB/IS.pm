@@ -1867,6 +1867,7 @@ sub retrieve_item {
     my ( $self, $myconfig, $form ) = @_;
 
     my $dbh = $form->{dbh};
+    $form->{item_list} = [];
 
     my $i = $form->{rowcount};
     my $null;
