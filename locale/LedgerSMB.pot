@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-29 19:35-0800\n"
+"POT-Creation-Date: 2014-11-18 05:05-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -224,7 +224,7 @@ msgstr ""
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:137
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:97
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:153
-#: tools/dbstrings:124
+#: tools/dbstrings:124 tools/dbstrings:123
 msgid "GIFI"
 msgstr ""
 
@@ -256,7 +256,7 @@ msgstr ""
 msgid "GIFI deleted!"
 msgstr ""
 
-#: bin/am.pl:474 tools/dbstrings:154
+#: bin/am.pl:474 tools/dbstrings:154 tools/dbstrings:150
 msgid "Type of Business"
 msgstr ""
 
@@ -322,7 +322,7 @@ msgstr ""
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:40
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:157
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:221 tools/dbstrings:51
-#: tools/dbstrings:61
+#: tools/dbstrings:61 tools/dbstrings:58 tools/dbstrings:63
 msgid "Description"
 msgstr ""
 
@@ -330,7 +330,7 @@ msgstr ""
 msgid "Discount %"
 msgstr ""
 
-#: bin/am.pl:514 tools/dbstrings:79
+#: bin/am.pl:514 tools/dbstrings:79 tools/dbstrings:80
 msgid "Add Business"
 msgstr ""
 
@@ -358,7 +358,7 @@ msgstr ""
 msgid "Code"
 msgstr ""
 
-#: bin/am.pl:681 tools/dbstrings:83
+#: bin/am.pl:681 tools/dbstrings:83 tools/dbstrings:84
 msgid "Add SIC"
 msgstr ""
 
@@ -382,7 +382,7 @@ msgstr ""
 msgid "Languages"
 msgstr ""
 
-#: bin/am.pl:843 tools/dbstrings:81
+#: bin/am.pl:843 tools/dbstrings:81 tools/dbstrings:82
 msgid "Add Language"
 msgstr ""
 
@@ -403,8 +403,7 @@ msgid "Delete Language"
 msgstr ""
 
 #: bin/am.pl:946
-msgid ""
-"Deleting a language will also delete the templates for the language %1"
+msgid "Deleting a language will also delete the templates for the language %1"
 msgstr ""
 
 #: bin/am.pl:961
@@ -432,7 +431,7 @@ msgstr ""
 msgid "Template saved!"
 msgstr ""
 
-#: bin/am.pl:1163 tools/dbstrings:75
+#: bin/am.pl:1163 tools/dbstrings:75 tools/dbstrings:76
 msgid "Taxes"
 msgstr ""
 
@@ -460,11 +459,11 @@ msgstr ""
 msgid "Cannot save preferences!"
 msgstr ""
 
-#: bin/am.pl:1491 tools/dbstrings:156
+#: bin/am.pl:1491 tools/dbstrings:156 tools/dbstrings:152
 msgid "Warehouses"
 msgstr ""
 
-#: bin/am.pl:1530 tools/dbstrings:77
+#: bin/am.pl:1530 tools/dbstrings:77 tools/dbstrings:78
 msgid "Add Warehouse"
 msgstr ""
 
@@ -488,7 +487,7 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: bin/am.pl:1617 tools/dbstrings:202
+#: bin/am.pl:1617 tools/dbstrings:202 tools/dbstrings:196
 msgid "Recurring Transactions"
 msgstr ""
 
@@ -577,11 +576,11 @@ msgstr ""
 msgid "Print"
 msgstr ""
 
-#: bin/am.pl:1659 tools/dbstrings:112
+#: bin/am.pl:1659 tools/dbstrings:112 tools/dbstrings:111
 msgid "AR"
 msgstr ""
 
-#: bin/am.pl:1660 tools/dbstrings:113
+#: bin/am.pl:1660 tools/dbstrings:113 tools/dbstrings:112
 msgid "AP"
 msgstr ""
 
@@ -591,13 +590,15 @@ msgstr ""
 
 #: bin/am.pl:1662 LedgerSMB/Report/Orders.pm:186
 #: LedgerSMB/Report/Orders.pm:286 tools/dbstrings:32 tools/dbstrings:34
-#: tools/dbstrings:37 tools/dbstrings:56 tools/dbstrings:65
+#: tools/dbstrings:37 tools/dbstrings:56 tools/dbstrings:65 tools/dbstrings:42
+#: tools/dbstrings:44 tools/dbstrings:47 tools/dbstrings:61 tools/dbstrings:66
 msgid "Sales Orders"
 msgstr ""
 
 #: bin/am.pl:1663 LedgerSMB/Report/Orders.pm:189
 #: LedgerSMB/Report/Orders.pm:288 tools/dbstrings:33 tools/dbstrings:35
-#: tools/dbstrings:38 tools/dbstrings:71
+#: tools/dbstrings:38 tools/dbstrings:71 tools/dbstrings:43 tools/dbstrings:45
+#: tools/dbstrings:48 tools/dbstrings:72
 msgid "Purchase Orders"
 msgstr ""
 
@@ -638,13 +639,15 @@ msgstr ""
 
 #: bin/am.pl:2081 bin/io.pl:1364 bin/io.pl:1544 bin/is.pl:965 bin/oe.pl:302
 #: bin/oe.pl:824 bin/oe.pl:1260 tools/dbstrings:29 tools/dbstrings:92
-#: tools/dbstrings:106
+#: tools/dbstrings:106 tools/dbstrings:39 tools/dbstrings:91
+#: tools/dbstrings:105
 msgid "Sales Order"
 msgstr ""
 
 #: bin/am.pl:2087 bin/ir.pl:898 bin/io.pl:1381 bin/io.pl:1592 bin/oe.pl:316
 #: bin/oe.pl:835 bin/oe.pl:1266 tools/dbstrings:30 tools/dbstrings:94
-#: tools/dbstrings:108
+#: tools/dbstrings:108 tools/dbstrings:40 tools/dbstrings:93
+#: tools/dbstrings:107
 msgid "Purchase Order"
 msgstr ""
 
@@ -746,7 +749,7 @@ msgstr ""
 #: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:222
 #: LedgerSMB/Report/Aging.pm:92
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:92
-#: tools/dbstrings:153
+#: tools/dbstrings:153 tools/dbstrings:149
 msgid "Language"
 msgstr ""
 
@@ -952,7 +955,7 @@ msgstr ""
 
 #: bin/ir.pl:779 bin/is.pl:824 bin/aa.pl:867
 #: addons/1.3/extended_arap/trunk/UI/aa.html:390 tools/dbstrings:24
-#: tools/dbstrings:143
+#: tools/dbstrings:143 tools/dbstrings:34 tools/dbstrings:140
 msgid "Payments"
 msgstr ""
 
@@ -1213,7 +1216,7 @@ msgstr ""
 msgid "Drawing"
 msgstr ""
 
-#: bin/ic.pl:526 LedgerSMB/Scripts/configuration.pm:68
+#: bin/ic.pl:526 LedgerSMB/Scripts/configuration.pm:68 tools/dbstrings:217
 msgid "Inventory"
 msgstr ""
 
@@ -1478,7 +1481,7 @@ msgstr ""
 msgid "Cannot delete item!"
 msgstr ""
 
-#: bin/ic.pl:2414 bin/ic.pl:2526 tools/dbstrings:216
+#: bin/ic.pl:2414 bin/ic.pl:2526 tools/dbstrings:216 tools/dbstrings:209
 msgid "Stock Assembly"
 msgstr ""
 
@@ -1576,14 +1579,16 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Outstanding.pm:163
 #: LedgerSMB/Report/Inventory/Search.pm:273
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:99
-#: tools/dbstrings:87 tools/dbstrings:101
+#: tools/dbstrings:87 tools/dbstrings:101 tools/dbstrings:86
+#: tools/dbstrings:100
 msgid "Invoice"
 msgstr ""
 
 #: bin/bp.pl:376 bin/io.pl:1354 bin/io.pl:1606 bin/io.pl:1613 bin/oe.pl:282
 #: bin/oe.pl:826 bin/oe.pl:1277 LedgerSMB/Report/Orders.pm:249
 #: LedgerSMB/Report/Inventory/Search.pm:281 tools/dbstrings:42
-#: tools/dbstrings:97 tools/dbstrings:117
+#: tools/dbstrings:97 tools/dbstrings:117 tools/dbstrings:52
+#: tools/dbstrings:96 tools/dbstrings:116
 msgid "Quotation"
 msgstr ""
 
@@ -1771,7 +1776,7 @@ msgid "Select a Printer!"
 msgstr ""
 
 #: bin/io.pl:146 bin/oe.pl:1893 LedgerSMB/Scripts/order.pm:60
-#: tools/dbstrings:39
+#: tools/dbstrings:39 tools/dbstrings:49
 msgid "Ship"
 msgstr ""
 
@@ -1861,27 +1866,31 @@ msgid "Add Quotation"
 msgstr ""
 
 #: bin/io.pl:1359 bin/oe.pl:291 bin/oe.pl:837 tools/dbstrings:43
-#: tools/dbstrings:98 tools/dbstrings:118
+#: tools/dbstrings:98 tools/dbstrings:118 tools/dbstrings:53
+#: tools/dbstrings:97 tools/dbstrings:117
 msgid "RFQ"
 msgstr ""
 
 #: bin/io.pl:1368 bin/io.pl:1551 bin/oe.pl:303 tools/dbstrings:93
-#: tools/dbstrings:107
+#: tools/dbstrings:107 tools/dbstrings:92 tools/dbstrings:106
 msgid "Work Order"
 msgstr ""
 
 #: bin/io.pl:1372 bin/io.pl:1390 bin/io.pl:1581 bin/is.pl:288 bin/oe.pl:304
-#: bin/oe.pl:323 tools/dbstrings:91 tools/dbstrings:105
+#: bin/oe.pl:323 tools/dbstrings:91 tools/dbstrings:105 tools/dbstrings:90
+#: tools/dbstrings:104
 msgid "Pick List"
 msgstr ""
 
 #: bin/io.pl:1376 bin/io.pl:1394 bin/io.pl:1558 bin/is.pl:289 bin/oe.pl:305
-#: bin/oe.pl:324 tools/dbstrings:90 tools/dbstrings:104
+#: bin/oe.pl:324 tools/dbstrings:90 tools/dbstrings:104 tools/dbstrings:89
+#: tools/dbstrings:103
 msgid "Packing List"
 msgstr ""
 
 #: bin/io.pl:1385 bin/io.pl:1399 bin/io.pl:1599 bin/oe.pl:317 bin/oe.pl:329
-#: tools/dbstrings:95 tools/dbstrings:109
+#: tools/dbstrings:95 tools/dbstrings:109 tools/dbstrings:94
+#: tools/dbstrings:108
 msgid "Bin List"
 msgstr ""
 
@@ -2004,7 +2013,7 @@ msgstr ""
 msgid "Off Hold"
 msgstr ""
 
-#: bin/is.pl:919 bin/oe.pl:822 tools/dbstrings:180
+#: bin/is.pl:919 bin/oe.pl:822 tools/dbstrings:180 tools/dbstrings:175
 msgid "Sales Invoice"
 msgstr ""
 
@@ -2091,7 +2100,7 @@ msgstr ""
 msgid "Pricegroup deleted!"
 msgstr ""
 
-#: bin/pe.pl:356 tools/dbstrings:214
+#: bin/pe.pl:356 tools/dbstrings:214 tools/dbstrings:207
 msgid "Add Group"
 msgstr ""
 
@@ -2099,7 +2108,7 @@ msgstr ""
 msgid "Parent"
 msgstr ""
 
-#: bin/pe.pl:573 tools/dbstrings:215
+#: bin/pe.pl:573 tools/dbstrings:215 tools/dbstrings:208
 msgid "Add Pricegroup"
 msgstr ""
 
@@ -2391,7 +2400,7 @@ msgstr ""
 msgid "Print and Save as new"
 msgstr ""
 
-#: bin/oe.pl:830 tools/dbstrings:176
+#: bin/oe.pl:830 tools/dbstrings:176 tools/dbstrings:171
 msgid "Vendor Invoice"
 msgstr ""
 
@@ -2516,6 +2525,7 @@ msgid "Transfer to"
 msgstr ""
 
 #: bin/oe.pl:2222 bin/oe.pl:2338 tools/dbstrings:41 tools/dbstrings:130
+#: tools/dbstrings:51 tools/dbstrings:129
 msgid "Transfer"
 msgstr ""
 
@@ -2641,6 +2651,7 @@ msgid "Posted!"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/pos.pl:1125 tools/dbstrings:23 tools/dbstrings:134
+#: tools/dbstrings:33 tools/dbstrings:155
 msgid "Receipts"
 msgstr ""
 
@@ -2655,10 +2666,11 @@ msgstr ""
 #: addons/1.4/pos/trunk/pos.conf.pl:41
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:63
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:391 tools/dbstrings:115
+#: tools/dbstrings:114
 msgid "Check"
 msgstr ""
 
-#: addons/1.4/pos/trunk/pos.conf.pl:42 tools/dbstrings:114
+#: addons/1.4/pos/trunk/pos.conf.pl:42 tools/dbstrings:114 tools/dbstrings:113
 msgid "Cash"
 msgstr ""
 
@@ -2734,6 +2746,7 @@ msgstr ""
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:59
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:388
 #: LedgerSMB/Scripts/payment.pm:995 tools/dbstrings:19 tools/dbstrings:116
+#: tools/dbstrings:29 tools/dbstrings:115
 msgid "Receipt"
 msgstr ""
 
@@ -2893,6 +2906,7 @@ msgstr ""
 
 #: t/data/04-complex_template.html:20 UI/Contact/contact.html:37
 #: addons/1.3/crm-basic/trunk/UI/crm/contact.html:37 tools/dbstrings:27
+#: tools/dbstrings:37
 msgid "Add Employee"
 msgstr ""
 
@@ -2982,7 +2996,9 @@ msgstr ""
 #: UI/business_units/filter.html:45 UI/asset/search_class.html:65
 #: UI/asset/search_asset.html:185 tools/dbstrings:4 tools/dbstrings:15
 #: tools/dbstrings:18 tools/dbstrings:28 tools/dbstrings:58
-#: tools/dbstrings:142 tools/dbstrings:192
+#: tools/dbstrings:142 tools/dbstrings:192 tools/dbstrings:6
+#: tools/dbstrings:14 tools/dbstrings:25 tools/dbstrings:38
+#: tools/dbstrings:139 tools/dbstrings:187
 msgid "Search"
 msgstr ""
 
@@ -3260,7 +3276,7 @@ msgstr ""
 msgid "To pay"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:995 tools/dbstrings:20
+#: LedgerSMB/Scripts/payment.pm:995 tools/dbstrings:20 tools/dbstrings:30
 msgid "Payment"
 msgstr ""
 
@@ -3437,11 +3453,12 @@ msgstr ""
 msgid "Approved at"
 msgstr ""
 
-#: LedgerSMB/Scripts/asset.pm:676 tools/dbstrings:173
+#: LedgerSMB/Scripts/asset.pm:676 tools/dbstrings:173 tools/dbstrings:168
 msgid "Depreciation"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:678 tools/dbstrings:171 tools/dbstrings:174
+#: tools/dbstrings:166 tools/dbstrings:169
 msgid "Disposal"
 msgstr ""
 
@@ -3706,7 +3723,7 @@ msgstr ""
 msgid "Generate Sales Orders from Purchase Orders"
 msgstr ""
 
-#: LedgerSMB/Scripts/order.pm:71 tools/dbstrings:40
+#: LedgerSMB/Scripts/order.pm:71 tools/dbstrings:40 tools/dbstrings:50
 msgid "Receive"
 msgstr ""
 
@@ -3718,11 +3735,12 @@ msgstr ""
 msgid "Search Requests for Quotation"
 msgstr ""
 
-#: LedgerSMB/Scripts/order.pm:106 tools/dbstrings:138
+#: LedgerSMB/Scripts/order.pm:106 tools/dbstrings:138 tools/dbstrings:135
 msgid "Combine"
 msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:114 tools/dbstrings:36 tools/dbstrings:55
+#: tools/dbstrings:7 tools/dbstrings:46
 msgid "Generate"
 msgstr ""
 
@@ -3924,7 +3942,7 @@ msgstr ""
 
 #: LedgerSMB/Report/Trial_Balance.pm:115
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:115
-#: tools/dbstrings:136
+#: tools/dbstrings:136 tools/dbstrings:133
 msgid "Trial Balance"
 msgstr ""
 
@@ -4202,11 +4220,12 @@ msgstr ""
 
 #: LedgerSMB/Report/Orders.pm:192 LedgerSMB/Report/Orders.pm:290
 #: tools/dbstrings:45 tools/dbstrings:68 tools/dbstrings:197
+#: tools/dbstrings:55 tools/dbstrings:69 tools/dbstrings:192
 msgid "Quotations"
 msgstr ""
 
 #: LedgerSMB/Report/Orders.pm:195 LedgerSMB/Report/Orders.pm:292
-#: tools/dbstrings:46 tools/dbstrings:73
+#: tools/dbstrings:46 tools/dbstrings:73 tools/dbstrings:56 tools/dbstrings:74
 msgid "RFQs"
 msgstr ""
 
@@ -4250,7 +4269,7 @@ msgstr ""
 msgid "Sat"
 msgstr ""
 
-#: LedgerSMB/Report/Timecards.pm:169
+#: LedgerSMB/Report/Timecards.pm:169 tools/dbstrings:212
 msgid "Timecards"
 msgstr ""
 
@@ -4267,7 +4286,7 @@ msgstr ""
 
 #: LedgerSMB/Report/COA.pm:141
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:141
-#: tools/dbstrings:8
+#: tools/dbstrings:8 tools/dbstrings:18
 msgid "Chart of Accounts"
 msgstr ""
 
@@ -4318,6 +4337,7 @@ msgid "Price Updated"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search.pm:269 tools/dbstrings:52
+#: tools/dbstrings:59
 msgid "Partsgroup"
 msgstr ""
 
@@ -4328,6 +4348,7 @@ msgid "Serial Number"
 msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search.pm:319 tools/dbstrings:199
+#: tools/dbstrings:194
 msgid "Goods and Services"
 msgstr ""
 
@@ -4400,7 +4421,7 @@ msgstr ""
 
 #: LedgerSMB/Report/PNL/Income_Statement.pm:51
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:51
-#: tools/dbstrings:85 tools/dbstrings:137
+#: tools/dbstrings:85 tools/dbstrings:137 tools/dbstrings:134
 msgid "Income Statement"
 msgstr ""
 
@@ -4521,19 +4542,20 @@ msgstr ""
 
 #: LedgerSMB/Entity/Location.pm:113
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:114
-#: tools/dbstrings:269
+#: tools/dbstrings:269 tools/dbstrings:271
 msgid "Billing"
 msgstr ""
 
 #: LedgerSMB/Entity/Location.pm:114
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:115
-#: tools/dbstrings:270
+#: tools/dbstrings:270 tools/dbstrings:272
 msgid "Sales"
 msgstr ""
 
 #: LedgerSMB/Entity/Location.pm:115
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:116
-#: tools/dbstrings:196 tools/dbstrings:271
+#: tools/dbstrings:196 tools/dbstrings:271 tools/dbstrings:191
+#: tools/dbstrings:273
 msgid "Shipping"
 msgstr ""
 
@@ -4628,70 +4650,74 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: tools/dbstrings:3
+#: tools/dbstrings:3 tools/dbstrings:13
 msgid "Batches"
 msgstr ""
 
-#: tools/dbstrings:5
+#: tools/dbstrings:5 tools/dbstrings:15
 msgid "Add Contact"
 msgstr ""
 
-#: tools/dbstrings:6
+#: tools/dbstrings:6 tools/dbstrings:16
 msgid "Customer History"
 msgstr ""
 
-#: tools/dbstrings:7
+#: tools/dbstrings:7 tools/dbstrings:17
 msgid "Vendor History"
 msgstr ""
 
-#: tools/dbstrings:9
+#: tools/dbstrings:9 tools/dbstrings:19
 msgid "Add Accounts"
 msgstr ""
 
-#: tools/dbstrings:10
+#: tools/dbstrings:10 tools/dbstrings:20
 msgid "Top-level"
 msgstr ""
 
-#: tools/dbstrings:11 tools/dbstrings:14
+#: tools/dbstrings:11 tools/dbstrings:14 tools/dbstrings:21 tools/dbstrings:24
 msgid "Invoice Vouchers"
 msgstr ""
 
-#: tools/dbstrings:12 tools/dbstrings:16
+#: tools/dbstrings:12 tools/dbstrings:16 tools/dbstrings:22 tools/dbstrings:26
 msgid "Add Transaction"
 msgstr ""
 
-#: tools/dbstrings:13
+#: tools/dbstrings:13 tools/dbstrings:23
 msgid "AR Aging"
 msgstr ""
 
-#: tools/dbstrings:17
+#: tools/dbstrings:17 tools/dbstrings:27
 msgid "AP Aging"
 msgstr ""
 
-#: tools/dbstrings:21
+#: tools/dbstrings:21 tools/dbstrings:31
 msgid "Use Overpayment"
 msgstr ""
 
-#: tools/dbstrings:22
+#: tools/dbstrings:22 tools/dbstrings:32
 msgid "Use AR Overpayment"
 msgstr ""
 
 #: tools/dbstrings:25 tools/dbstrings:132 tools/dbstrings:146
+#: tools/dbstrings:35 tools/dbstrings:131 tools/dbstrings:143
 msgid "Reconciliation"
 msgstr ""
 
-#: tools/dbstrings:26
+#: tools/dbstrings:26 tools/dbstrings:36
 msgid "Employees"
 msgstr ""
 
 #: tools/dbstrings:31 tools/dbstrings:44 tools/dbstrings:57
 #: tools/dbstrings:125 tools/dbstrings:127 tools/dbstrings:131
 #: tools/dbstrings:161 tools/dbstrings:172 tools/dbstrings:184
-#: tools/dbstrings:201 tools/dbstrings:218
+#: tools/dbstrings:201 tools/dbstrings:218 tools/dbstrings:41
+#: tools/dbstrings:54 tools/dbstrings:124 tools/dbstrings:126
+#: tools/dbstrings:130 tools/dbstrings:156 tools/dbstrings:167
+#: tools/dbstrings:195 tools/dbstrings:211
 msgid "Reports"
 msgstr ""
 
-#: tools/dbstrings:47
+#: tools/dbstrings:47 tools/dbstrings:57
 msgid "Journal Entry"
 msgstr ""
 
@@ -4699,139 +4725,146 @@ msgstr ""
 msgid "Requirements"
 msgstr ""
 
-#: tools/dbstrings:54
+#: tools/dbstrings:54 tools/dbstrings:60
 msgid "Add Timecard"
 msgstr ""
 
-#: tools/dbstrings:59 tools/dbstrings:74
+#: tools/dbstrings:59 tools/dbstrings:74 tools/dbstrings:75
 msgid "Time Cards"
 msgstr ""
 
-#: tools/dbstrings:60 tools/dbstrings:217
+#: tools/dbstrings:60 tools/dbstrings:217 tools/dbstrings:62
+#: tools/dbstrings:210
 msgid "Translations"
 msgstr ""
 
-#: tools/dbstrings:62 tools/dbstrings:86
+#: tools/dbstrings:62 tools/dbstrings:86 tools/dbstrings:64
 msgid "Balance Sheet"
 msgstr ""
 
-#: tools/dbstrings:63
+#: tools/dbstrings:63 tools/dbstrings:9
 msgid "Inventory Activity"
 msgstr ""
 
-#: tools/dbstrings:64
+#: tools/dbstrings:64 tools/dbstrings:65
 msgid "Sales Invoices"
 msgstr ""
 
-#: tools/dbstrings:66
+#: tools/dbstrings:66 tools/dbstrings:67
 msgid "Checks"
 msgstr ""
 
-#: tools/dbstrings:67
+#: tools/dbstrings:67 tools/dbstrings:68
 msgid "Work Orders"
 msgstr ""
 
-#: tools/dbstrings:69
+#: tools/dbstrings:69 tools/dbstrings:70
 msgid "Packing Lists"
 msgstr ""
 
-#: tools/dbstrings:70
+#: tools/dbstrings:70 tools/dbstrings:71
 msgid "Pick Lists"
 msgstr ""
 
-#: tools/dbstrings:72
+#: tools/dbstrings:72 tools/dbstrings:73
 msgid "Bin Lists"
 msgstr ""
 
-#: tools/dbstrings:76
+#: tools/dbstrings:76 tools/dbstrings:77
 msgid "Defaults"
 msgstr ""
 
-#: tools/dbstrings:78
+#: tools/dbstrings:78 tools/dbstrings:79
 msgid "List Warehouse"
 msgstr ""
 
-#: tools/dbstrings:80
+#: tools/dbstrings:80 tools/dbstrings:81
 msgid "List Businesses"
 msgstr ""
 
-#: tools/dbstrings:82
+#: tools/dbstrings:82 tools/dbstrings:83
 msgid "List Languages"
 msgstr ""
 
-#: tools/dbstrings:84
+#: tools/dbstrings:84 tools/dbstrings:85
 msgid "List SIC"
 msgstr ""
 
-#: tools/dbstrings:88 tools/dbstrings:102
+#: tools/dbstrings:88 tools/dbstrings:102 tools/dbstrings:87
+#: tools/dbstrings:101
 msgid "AR Transaction"
 msgstr ""
 
-#: tools/dbstrings:89 tools/dbstrings:103
+#: tools/dbstrings:89 tools/dbstrings:103 tools/dbstrings:88
+#: tools/dbstrings:102
 msgid "AP Transaction"
 msgstr ""
 
-#: tools/dbstrings:96 tools/dbstrings:110
+#: tools/dbstrings:96 tools/dbstrings:110 tools/dbstrings:95
+#: tools/dbstrings:109
 msgid "Statement"
 msgstr ""
 
-#: tools/dbstrings:99 tools/dbstrings:119
+#: tools/dbstrings:99 tools/dbstrings:119 tools/dbstrings:98
+#: tools/dbstrings:118
 msgid "Timecard"
 msgstr ""
 
-#: tools/dbstrings:100 tools/dbstrings:120
+#: tools/dbstrings:100 tools/dbstrings:120 tools/dbstrings:99
+#: tools/dbstrings:119
 msgid "Letterhead"
 msgstr ""
 
-#: tools/dbstrings:111
+#: tools/dbstrings:111 tools/dbstrings:110
 msgid "Transaction Approval"
 msgstr ""
 
-#: tools/dbstrings:121
+#: tools/dbstrings:121 tools/dbstrings:120
 msgid "POS Invoice"
 msgstr ""
 
-#: tools/dbstrings:122
+#: tools/dbstrings:122 tools/dbstrings:121
 msgid "Contacts"
 msgstr ""
 
-#: tools/dbstrings:123
+#: tools/dbstrings:123 tools/dbstrings:122
 msgid "Import Chart"
 msgstr ""
 
 #: tools/dbstrings:126 tools/dbstrings:128 tools/dbstrings:129
+#: tools/dbstrings:125 tools/dbstrings:127
 msgid "Vouchers"
 msgstr ""
 
-#: tools/dbstrings:133
+#: tools/dbstrings:133 tools/dbstrings:132
 msgid "Year End"
 msgstr ""
 
-#: tools/dbstrings:135
+#: tools/dbstrings:135 tools/dbstrings:214
 msgid "Reverse Receipts"
 msgstr ""
 
-#: tools/dbstrings:139
+#: tools/dbstrings:139 tools/dbstrings:136
 msgid "Add Part"
 msgstr ""
 
-#: tools/dbstrings:140
+#: tools/dbstrings:140 tools/dbstrings:137
 msgid "Add Service"
 msgstr ""
 
-#: tools/dbstrings:141
+#: tools/dbstrings:141 tools/dbstrings:138
 msgid "Add Assembly"
 msgstr ""
 
-#: tools/dbstrings:144
+#: tools/dbstrings:144 tools/dbstrings:141
 msgid "Reverse Payment"
 msgstr ""
 
-#: tools/dbstrings:145
+#: tools/dbstrings:145 tools/dbstrings:142
 msgid "Drafts"
 msgstr ""
 
-#: tools/dbstrings:147
+#: tools/dbstrings:147 tools/dbstrings:144
 msgid "Add Tax Form"
 msgstr ""
 
@@ -4839,23 +4872,23 @@ msgstr ""
 msgid "Admin Users"
 msgstr ""
 
-#: tools/dbstrings:149
+#: tools/dbstrings:149 tools/dbstrings:145
 msgid "Text Templates"
 msgstr ""
 
-#: tools/dbstrings:150
+#: tools/dbstrings:150 tools/dbstrings:146
 msgid "LaTeX Templates"
 msgstr ""
 
-#: tools/dbstrings:151
+#: tools/dbstrings:151 tools/dbstrings:147
 msgid "HTML Templates"
 msgstr ""
 
-#: tools/dbstrings:152
+#: tools/dbstrings:152 tools/dbstrings:148
 msgid "SIC"
 msgstr ""
 
-#: tools/dbstrings:155
+#: tools/dbstrings:155 tools/dbstrings:151
 msgid "Reporting Units"
 msgstr ""
 
@@ -4867,107 +4900,109 @@ msgstr ""
 msgid "Search Users"
 msgstr ""
 
-#: tools/dbstrings:159
+#: tools/dbstrings:159 tools/dbstrings:153
 msgid "Sessions"
 msgstr ""
 
-#: tools/dbstrings:160
+#: tools/dbstrings:160 tools/dbstrings:154
 msgid "List Tax Forms"
 msgstr ""
 
-#: tools/dbstrings:162
+#: tools/dbstrings:162 tools/dbstrings:157
 msgid "Asset Classes"
 msgstr ""
 
-#: tools/dbstrings:163
+#: tools/dbstrings:163 tools/dbstrings:158
 msgid "Assets"
 msgstr ""
 
-#: tools/dbstrings:164
+#: tools/dbstrings:164 tools/dbstrings:159
 msgid "Add Class"
 msgstr ""
 
-#: tools/dbstrings:165
+#: tools/dbstrings:165 tools/dbstrings:160
 msgid "List Classes"
 msgstr ""
 
-#: tools/dbstrings:166
+#: tools/dbstrings:166 tools/dbstrings:161
 msgid "Add Assets"
 msgstr ""
 
-#: tools/dbstrings:167
+#: tools/dbstrings:167 tools/dbstrings:162
 msgid "Search Assets"
 msgstr ""
 
 #: tools/dbstrings:168 tools/dbstrings:183 tools/dbstrings:188
+#: tools/dbstrings:8 tools/dbstrings:163 tools/dbstrings:178
 msgid "Import"
 msgstr ""
 
-#: tools/dbstrings:169
+#: tools/dbstrings:169 tools/dbstrings:164
 msgid "Depreciate"
 msgstr ""
 
-#: tools/dbstrings:170
+#: tools/dbstrings:170 tools/dbstrings:165
 msgid "Net Book Value"
 msgstr ""
 
-#: tools/dbstrings:175 tools/dbstrings:179
+#: tools/dbstrings:175 tools/dbstrings:179 tools/dbstrings:170
+#: tools/dbstrings:174
 msgid "Import Batch"
 msgstr ""
 
-#: tools/dbstrings:177
+#: tools/dbstrings:177 tools/dbstrings:172
 msgid "Debit Note"
 msgstr ""
 
-#: tools/dbstrings:178
+#: tools/dbstrings:178 tools/dbstrings:173
 msgid "Debit Invoice"
 msgstr ""
 
-#: tools/dbstrings:181
+#: tools/dbstrings:181 tools/dbstrings:176
 msgid "Credit Note"
 msgstr ""
 
-#: tools/dbstrings:182
+#: tools/dbstrings:182 tools/dbstrings:177
 msgid "Credit Invoice"
 msgstr ""
 
-#: tools/dbstrings:185
+#: tools/dbstrings:185 tools/dbstrings:180
 msgid "Add GIFI"
 msgstr ""
 
-#: tools/dbstrings:186
+#: tools/dbstrings:186 tools/dbstrings:181
 msgid "List GIFI"
 msgstr ""
 
-#: tools/dbstrings:187
+#: tools/dbstrings:187 tools/dbstrings:182
 msgid "Import GIFI"
 msgstr ""
 
-#: tools/dbstrings:189
+#: tools/dbstrings:189 tools/dbstrings:184
 msgid "AR Voucher"
 msgstr ""
 
-#: tools/dbstrings:190
+#: tools/dbstrings:190 tools/dbstrings:185
 msgid "AP Voucher"
 msgstr ""
 
-#: tools/dbstrings:191
+#: tools/dbstrings:191 tools/dbstrings:186
 msgid "Add Budget"
 msgstr ""
 
-#: tools/dbstrings:193
+#: tools/dbstrings:193 tools/dbstrings:188
 msgid "Budgets"
 msgstr ""
 
-#: tools/dbstrings:194
+#: tools/dbstrings:194 tools/dbstrings:189
 msgid "HR"
 msgstr ""
 
-#: tools/dbstrings:195
+#: tools/dbstrings:195 tools/dbstrings:190
 msgid "Order Entry"
 msgstr ""
 
-#: tools/dbstrings:198
+#: tools/dbstrings:198 tools/dbstrings:193
 msgid "General Journal"
 msgstr ""
 
@@ -4975,23 +5010,23 @@ msgstr ""
 msgid "Projects"
 msgstr ""
 
-#: tools/dbstrings:203
+#: tools/dbstrings:203 tools/dbstrings:197
 msgid "Tax Forms"
 msgstr ""
 
-#: tools/dbstrings:204
+#: tools/dbstrings:204 tools/dbstrings:198
 msgid "Fixed Assets"
 msgstr ""
 
-#: tools/dbstrings:205
+#: tools/dbstrings:205 tools/dbstrings:199
 msgid "Logout"
 msgstr ""
 
-#: tools/dbstrings:206
+#: tools/dbstrings:206 tools/dbstrings:200
 msgid "New Window"
 msgstr ""
 
-#: tools/dbstrings:207
+#: tools/dbstrings:207 tools/dbstrings:201
 msgid "Preferences"
 msgstr ""
 
@@ -4999,19 +5034,20 @@ msgstr ""
 msgid "Stylesheet"
 msgstr ""
 
-#: tools/dbstrings:209
+#: tools/dbstrings:209 tools/dbstrings:202
 msgid "System"
 msgstr ""
 
-#: tools/dbstrings:210
+#: tools/dbstrings:210 tools/dbstrings:203
 msgid "Batch Printing"
 msgstr ""
 
-#: tools/dbstrings:211 tools/dbstrings:212
+#: tools/dbstrings:211 tools/dbstrings:212 tools/dbstrings:204
+#: tools/dbstrings:205
 msgid "Outstanding"
 msgstr ""
 
-#: tools/dbstrings:213
+#: tools/dbstrings:213 tools/dbstrings:206
 msgid "Add Overhead"
 msgstr ""
 
@@ -5049,4 +5085,56 @@ msgstr ""
 
 #: tools/dbstrings:243
 msgid "vendor_invoice"
+msgstr ""
+
+#: tools/dbstrings:3
+msgid "Search Groups"
+msgstr ""
+
+#: tools/dbstrings:4
+msgid "Search Pricegroups"
+msgstr ""
+
+#: tools/dbstrings:5
+msgid "Import Inventory"
+msgstr ""
+
+#: tools/dbstrings:10
+msgid "Import AR Batch"
+msgstr ""
+
+#: tools/dbstrings:11
+msgid "Import AP Batch"
+msgstr ""
+
+#: tools/dbstrings:12
+msgid "Enter Inventory"
+msgstr ""
+
+#: tools/dbstrings:179
+msgid "Search and GL"
+msgstr ""
+
+#: tools/dbstrings:213
+msgid "Sequences"
+msgstr ""
+
+#: tools/dbstrings:215
+msgid "Reverse Overpay"
+msgstr ""
+
+#: tools/dbstrings:216
+msgid "Reverse AR Overpay"
+msgstr ""
+
+#: tools/dbstrings:218
+msgid "Inventory and COGS"
+msgstr ""
+
+#: tools/dbstrings:274
+msgid "Physical"
+msgstr ""
+
+#: tools/dbstrings:275
+msgid "Mailing"
 msgstr ""
