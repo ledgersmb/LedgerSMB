@@ -366,6 +366,7 @@ sub save_employee {
         ($request->{control_code}) = values %$ref;
     }
     $request->{entity_class} = 3;
+    $request->{ssn} ||= $request->{personal_id};
     $request->{control_code} = $request->{employeenumber} if $request->{employeenumber};
     $request->{employeenumber} ||= $request->{control_code};
     $request->{name} = "$request->{last_name}, $request->{first_name}";
