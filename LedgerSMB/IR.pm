@@ -818,6 +818,7 @@ sub post_invoice {
 		       language_code = ?,
 		       ponumber = ?, 
                        approved = ?,
+                       reverse = ?,
 		       crdate = ?
 		 WHERE id = ?|;
 
@@ -830,7 +831,7 @@ sub post_invoice {
         $form->{taxincluded},   $form->{notes},         $form->{intnotes},
         $form->{currency},
         $form->{language_code}, $form->{ponumber},      
-        $approved,              $form->{crdate},
+        $approved,              $form->{reverse},       $form->{crdate},
         $form->{id}
     ) || $form->dberror($query);
 
