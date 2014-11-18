@@ -1483,6 +1483,7 @@ sub post_invoice {
 		       ponumber = ?,
                        approved = ?,
 		       crdate = ?,
+                       reverse = ?,
                        is_return = ?
 		 WHERE id = ?
              |;
@@ -1500,7 +1501,8 @@ sub post_invoice {
         $form->{currency},
         $form->{employee_id},   $form->{till},
         $form->{language_code}, $form->{ponumber}, $approved,
-        $form->{crdate} || 'today', $form->{is_return},
+        $form->{crdate} || 'today', $form->{reverse},
+        $form->{is_return},
         $form->{id}
     ) || $form->dberror($query);
 
