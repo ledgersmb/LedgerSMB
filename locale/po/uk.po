@@ -24,7 +24,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: LedgerSMB 1.1.1\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-12-29 19:35-0800\n"
+"POT-Creation-Date: 2014-11-19 05:05-0800\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -236,7 +236,7 @@ msgstr ""
 
 #: bin/am.pl:169
 #, fuzzy
-msgid "Cannot set multiple options for [_1]"
+msgid "Cannot set multiple options for %1"
 msgstr "Не вдається наставити декілька параметрів для"
 
 #: bin/am.pl:174
@@ -252,7 +252,7 @@ msgstr "Не вдається зберегти рахунок!"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:137
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:97
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:153
-#: tools/dbstrings:124
+#: tools/dbstrings:124 tools/dbstrings:86
 msgid "GIFI"
 msgstr "GIFI"
 
@@ -267,7 +267,7 @@ msgstr "Рахунок не існує"
 
 #: bin/am.pl:311
 #, fuzzy
-msgid "[_1] GIFI"
+msgid "%1 GIFI"
 msgstr "GIFI"
 
 #: bin/am.pl:345
@@ -286,7 +286,7 @@ msgstr "GIFI збережено!"
 msgid "GIFI deleted!"
 msgstr "GIFI видалено!"
 
-#: bin/am.pl:474 tools/dbstrings:154
+#: bin/am.pl:474 tools/dbstrings:154 tools/dbstrings:111
 msgid "Type of Business"
 msgstr "Тип бізнесу"
 
@@ -351,7 +351,7 @@ msgstr "Тип бізнесу"
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:40
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:157
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:221 tools/dbstrings:51
-#: tools/dbstrings:61
+#: tools/dbstrings:61 tools/dbstrings:57 tools/dbstrings:62
 msgid "Description"
 msgstr "Опис"
 
@@ -360,13 +360,13 @@ msgstr "Опис"
 msgid "Discount %"
 msgstr "Знижка"
 
-#: bin/am.pl:514 tools/dbstrings:79
+#: bin/am.pl:514 tools/dbstrings:79 tools/dbstrings:68
 msgid "Add Business"
 msgstr "Додати бізнес"
 
 #: bin/am.pl:536
 #, fuzzy
-msgid "[_1] Business"
+msgid "%1 Business"
 msgstr "Бізнес"
 
 #: bin/am.pl:552 bin/am.pl:721 bin/am.pl:880 bin/am.pl:1569
@@ -389,13 +389,14 @@ msgstr "Стандартні індустріальні коди"
 msgid "Code"
 msgstr "Код"
 
-#: bin/am.pl:681 tools/dbstrings:83
+#: bin/am.pl:681 tools/dbstrings:83 tools/dbstrings:72
 msgid "Add SIC"
 msgstr "Додати SIC"
 
 #: bin/am.pl:703
-msgid "[_1] SIC"
-msgstr ""
+#, fuzzy
+msgid "%1 SIC"
+msgstr "Додати SIC"
 
 #: bin/am.pl:720 bin/am.pl:879
 msgid "Code missing!"
@@ -413,13 +414,13 @@ msgstr "SIC видалено!"
 msgid "Languages"
 msgstr "Мови"
 
-#: bin/am.pl:843 tools/dbstrings:81
+#: bin/am.pl:843 tools/dbstrings:81 tools/dbstrings:70
 msgid "Add Language"
 msgstr "Додати мову"
 
 #: bin/am.pl:866
 #, fuzzy
-msgid "[_1] Language"
+msgid "%1 Language"
 msgstr "Мова"
 
 #: bin/am.pl:921
@@ -437,7 +438,7 @@ msgstr "Змінити мову"
 
 #: bin/am.pl:946
 #, fuzzy
-msgid "Deleting a language will also delete the templates for the language [_1]"
+msgid "Deleting a language will also delete the templates for the language %1"
 msgstr "Видалення мови призведе також до видалення шаблонів для мови"
 
 #: bin/am.pl:961
@@ -467,13 +468,13 @@ msgstr "Шаблони LaTeX"
 msgid "Template saved!"
 msgstr "Шаблон збережено"
 
-#: bin/am.pl:1163 tools/dbstrings:75
+#: bin/am.pl:1163 tools/dbstrings:75 tools/dbstrings:64
 msgid "Taxes"
 msgstr ""
 
 #: bin/am.pl:1370
 #, fuzzy
-msgid "Edit Preferences for [_1]"
+msgid "Edit Preferences for %1"
 msgstr "Редагувати параметри для"
 
 #: bin/am.pl:1401
@@ -498,17 +499,17 @@ msgstr "Параметри збережено!"
 msgid "Cannot save preferences!"
 msgstr "Не вдається зберегти вподобання!"
 
-#: bin/am.pl:1491 tools/dbstrings:156
+#: bin/am.pl:1491 tools/dbstrings:156 tools/dbstrings:113
 msgid "Warehouses"
 msgstr "Склади"
 
-#: bin/am.pl:1530 tools/dbstrings:77
+#: bin/am.pl:1530 tools/dbstrings:77 tools/dbstrings:66
 msgid "Add Warehouse"
 msgstr "Додати склад"
 
 #: bin/am.pl:1553
 #, fuzzy
-msgid "[_1] Warehouse"
+msgid "%1 Warehouse"
 msgstr "Склад"
 
 #: bin/am.pl:1571
@@ -527,7 +528,7 @@ msgstr "localhost"
 msgid "About"
 msgstr "Про програму"
 
-#: bin/am.pl:1617 tools/dbstrings:202
+#: bin/am.pl:1617 tools/dbstrings:202 tools/dbstrings:157
 msgid "Recurring Transactions"
 msgstr "Періодичні проводки"
 
@@ -616,11 +617,11 @@ msgstr "Ел. пошта"
 msgid "Print"
 msgstr "Надрукувати"
 
-#: bin/am.pl:1659 tools/dbstrings:112
+#: bin/am.pl:1659 tools/dbstrings:112 tools/dbstrings:76
 msgid "AR"
 msgstr "Доходи"
 
-#: bin/am.pl:1660 tools/dbstrings:113
+#: bin/am.pl:1660 tools/dbstrings:113 tools/dbstrings:77
 msgid "AP"
 msgstr "Витрати"
 
@@ -630,12 +631,14 @@ msgstr "ГК"
 
 #: bin/am.pl:1662 LedgerSMB/Report/Orders.pm:186 LedgerSMB/Report/Orders.pm:286
 #: tools/dbstrings:32 tools/dbstrings:34 tools/dbstrings:37 tools/dbstrings:56
-#: tools/dbstrings:65
+#: tools/dbstrings:65 tools/dbstrings:41 tools/dbstrings:43 tools/dbstrings:46
+#: tools/dbstrings:60
 msgid "Sales Orders"
 msgstr "Накладні продажу"
 
 #: bin/am.pl:1663 LedgerSMB/Report/Orders.pm:189 LedgerSMB/Report/Orders.pm:288
 #: tools/dbstrings:33 tools/dbstrings:35 tools/dbstrings:38 tools/dbstrings:71
+#: tools/dbstrings:42 tools/dbstrings:44 tools/dbstrings:47
 msgid "Purchase Orders"
 msgstr "Купівельні замовлення"
 
@@ -660,17 +663,17 @@ msgstr "PDF"
 
 #: bin/am.pl:2020
 #, fuzzy
-msgid "Posting Sales Invoice [_1]"
+msgid "Posting Sales Invoice %1"
 msgstr "Рахунок-фактура "
 
 #: bin/am.pl:2030
 #, fuzzy
-msgid "Posting Vendor Invoice [_1]"
+msgid "Posting Vendor Invoice %1"
 msgstr "Рахунок-фактура "
 
 #: bin/am.pl:2042 bin/am.pl:2051
 #, fuzzy
-msgid "Posting Transaction [_1]"
+msgid "Posting Transaction %1"
 msgstr "Проводка витрат"
 
 #: bin/am.pl:2060 bin/am.pl:2131 bin/am.pl:2185 bin/am.pl:2228 bin/am.pl:2275
@@ -680,19 +683,22 @@ msgstr "завершено"
 
 #: bin/am.pl:2081 bin/io.pl:1364 bin/io.pl:1544 bin/is.pl:965 bin/oe.pl:302
 #: bin/oe.pl:824 bin/oe.pl:1260 tools/dbstrings:29 tools/dbstrings:92
-#: tools/dbstrings:106
+#: tools/dbstrings:106 tools/dbstrings:38 tools/dbstrings:185
+#: tools/dbstrings:198
 msgid "Sales Order"
 msgstr "Накладна продажу"
 
 #: bin/am.pl:2087 bin/ir.pl:898 bin/io.pl:1381 bin/io.pl:1592 bin/oe.pl:316
 #: bin/oe.pl:835 bin/oe.pl:1266 tools/dbstrings:30 tools/dbstrings:94
-#: tools/dbstrings:108
+#: tools/dbstrings:108 tools/dbstrings:39 tools/dbstrings:187
+#: tools/dbstrings:200
 msgid "Purchase Order"
 msgstr "Купівельне замовлення"
 
 #: bin/am.pl:2126
-msgid "Saving [_1] [_2]"
-msgstr ""
+#, fuzzy
+msgid "Saving %1 [_2]"
+msgstr "Збереження"
 
 #: bin/am.pl:2134 bin/am.pl:2231 bin/am.pl:2278
 msgid "failed"
@@ -700,7 +706,7 @@ msgstr "зазнало невдачі"
 
 #: bin/am.pl:2180
 #, fuzzy
-msgid "Posting GL Transaction [_1]"
+msgid "Posting GL Transaction %1"
 msgstr "Проводка ГК"
 
 #: bin/am.pl:2217 bin/bp.pl:253
@@ -749,12 +755,12 @@ msgstr "Поточний заробіток"
 
 #: bin/rp.pl:401
 #, fuzzy
-msgid "Department: [_1]"
+msgid "Department: %1"
 msgstr "Відділ"
 
 #: bin/rp.pl:406
 #, fuzzy
-msgid "Project Number: [_1]"
+msgid "Project Number: %1"
 msgstr "Номер проекту"
 
 #: bin/rp.pl:457
@@ -763,7 +769,7 @@ msgstr "Н/Д"
 
 #: bin/rp.pl:618
 #, fuzzy
-msgid "[_1] Report"
+msgid "%1 Report"
 msgstr "Звіти"
 
 #: bin/ir.pl:91 bin/ir.pl:1445 bin/is.pl:1491 bin/aa.pl:1199 bin/aa.pl:1454
@@ -794,7 +800,7 @@ msgstr ""
 #: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:222
 #: LedgerSMB/Report/Aging.pm:92
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:92
-#: tools/dbstrings:153
+#: tools/dbstrings:153 tools/dbstrings:110
 msgid "Language"
 msgstr "Мова"
 
@@ -1001,7 +1007,7 @@ msgstr "Загальна Сума"
 
 #: bin/ir.pl:779 bin/is.pl:824 bin/aa.pl:867
 #: addons/1.3/extended_arap/trunk/UI/aa.html:390 tools/dbstrings:24
-#: tools/dbstrings:143
+#: tools/dbstrings:143 tools/dbstrings:33 tools/dbstrings:101
 msgid "Payments"
 msgstr "Платежі"
 
@@ -1274,7 +1280,7 @@ msgstr "Мікрофіша"
 msgid "Drawing"
 msgstr "Малюнок"
 
-#: bin/ic.pl:526 LedgerSMB/Scripts/configuration.pm:68
+#: bin/ic.pl:526 LedgerSMB/Scripts/configuration.pm:68 tools/dbstrings:178
 msgid "Inventory"
 msgstr "Інвентар"
 
@@ -1520,12 +1526,12 @@ msgstr ""
 
 #: bin/ic.pl:1987
 #, fuzzy
-msgid "[_1]: Vendor not on file!"
+msgid "%1: Vendor not on file!"
 msgstr "Потачальника нема у списку "
 
 #: bin/ic.pl:2065
 #, fuzzy
-msgid "[_1]: Customer not on file!"
+msgid "%1: Customer not on file!"
 msgstr "Клієнта нема в списку!"
 
 #: bin/ic.pl:2101 bin/arap.pl:171 bin/pe.pl:1109
@@ -1538,7 +1544,7 @@ msgstr "Виберіть одну із наступних назв"
 
 #: bin/ic.pl:2227
 #, fuzzy
-msgid "Inventory quantity must be zero before you can set this [_1] obsolete!"
+msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
 msgstr ""
 "Кількість в інвентарі повинна бути нуль, перш ніж можна позначити ций товар "
 "застарілим!"
@@ -1551,7 +1557,7 @@ msgstr "Річ видалено!"
 msgid "Cannot delete item!"
 msgstr "Не вдається видалити цей елемент!"
 
-#: bin/ic.pl:2414 bin/ic.pl:2526 tools/dbstrings:216
+#: bin/ic.pl:2414 bin/ic.pl:2526 tools/dbstrings:216 tools/dbstrings:170
 msgid "Stock Assembly"
 msgstr "Інвентар комплекту"
 
@@ -1581,7 +1587,7 @@ msgstr "Номер котирування"
 
 #: bin/bp.pl:123
 #, fuzzy
-msgid "Print [_1]"
+msgid "Print %1"
 msgstr "Надрукувати"
 
 #: bin/bp.pl:192 bin/pe.pl:1612 bin/oe.pl:2376 bin/oe.pl:2639
@@ -1615,41 +1621,41 @@ msgstr "Позначені записи надруковано!"
 
 #: bin/bp.pl:300
 #, fuzzy
-msgid "Customer: [_1]"
+msgid "Customer: %1"
 msgstr "Клієнт"
 
 #: bin/bp.pl:301
 #, fuzzy
-msgid "Vendor: [_1]"
+msgid "Vendor: %1"
 msgstr "Постачальник"
 
 #: bin/bp.pl:306
 #, fuzzy
-msgid "Account: [_1]"
+msgid "Account: %1"
 msgstr "Рахунок"
 
 #: bin/bp.pl:311
 #, fuzzy
-msgid "Invoice Number: [_1]"
+msgid "Invoice Number: %1"
 msgstr "Номер рахунка-фактури"
 
 #: bin/bp.pl:316
 #, fuzzy
-msgid "Order Number: [_1]"
+msgid "Order Number: %1"
 msgstr "Номер замовлення"
 
 #: bin/bp.pl:321
 #, fuzzy
-msgid "Quotation Number: [_1]"
+msgid "Quotation Number: %1"
 msgstr "Номер котирування"
 
 #: bin/bp.pl:327
 #, fuzzy
-msgid "From [_1]"
+msgid "From %1"
 msgstr "Від/З"
 
 #: bin/bp.pl:333
-msgid "To [_1]"
+msgid "To %1"
 msgstr ""
 
 #: bin/bp.pl:368 bin/io.pl:1348 bin/io.pl:1539 bin/is.pl:287 bin/is.pl:1395
@@ -1658,14 +1664,16 @@ msgstr ""
 #: LedgerSMB/Report/Invoices/Outstanding.pm:163
 #: LedgerSMB/Report/Inventory/Search.pm:273
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:99
-#: tools/dbstrings:87 tools/dbstrings:101
+#: tools/dbstrings:87 tools/dbstrings:101 tools/dbstrings:74
+#: tools/dbstrings:180
 msgid "Invoice"
 msgstr "Рахунок-фактура"
 
 #: bin/bp.pl:376 bin/io.pl:1354 bin/io.pl:1606 bin/io.pl:1613 bin/oe.pl:282
 #: bin/oe.pl:826 bin/oe.pl:1277 LedgerSMB/Report/Orders.pm:249
 #: LedgerSMB/Report/Inventory/Search.pm:281 tools/dbstrings:42
-#: tools/dbstrings:97 tools/dbstrings:117
+#: tools/dbstrings:97 tools/dbstrings:117 tools/dbstrings:51
+#: tools/dbstrings:190 tools/dbstrings:205
 msgid "Quotation"
 msgstr "Котирування"
 
@@ -1712,7 +1720,7 @@ msgstr ""
 
 #: bin/arap.pl:169
 #, fuzzy
-msgid "[_1] Number"
+msgid "%1 Number"
 msgstr "Номер"
 
 #: bin/arap.pl:173 addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:329
@@ -1776,7 +1784,7 @@ msgstr "раз(ів)"
 
 #: bin/arap.pl:738
 #, fuzzy
-msgid "Recurring Transaction for [_1]"
+msgid "Recurring Transaction for %1"
 msgstr "Періодична проводка"
 
 #: bin/arap.pl:763 bin/pe.pl:101
@@ -1792,24 +1800,25 @@ msgid "Delete Schedule"
 msgstr "Видалити розклад"
 
 #: bin/arap.pl:966 bin/io.pl:1831
-msgid "Cc: [_1]"
+msgid "Cc: %1"
 msgstr ""
 
 #: bin/arap.pl:967 bin/io.pl:1832
-msgid "Bcc: [_1]"
+msgid "Bcc: %1"
 msgstr ""
 
 #: bin/arap.pl:973 bin/io.pl:1850
-msgid "Date: [_1]"
-msgstr ""
+#, fuzzy
+msgid "Date: %1"
+msgstr "Дата"
 
 #: bin/arap.pl:974 bin/io.pl:1851
-msgid "To: [_1]"
+msgid "To: %1"
 msgstr ""
 
 #: bin/arap.pl:976 bin/io.pl:1853
 #, fuzzy
-msgid "Subject: [_1]"
+msgid "Subject: %1"
 msgstr "Тема"
 
 #: bin/arap.pl:978
@@ -1861,7 +1870,7 @@ msgid "Select a Printer!"
 msgstr "Виберіть елементи"
 
 #: bin/io.pl:146 bin/oe.pl:1893 LedgerSMB/Scripts/order.pm:60
-#: tools/dbstrings:39
+#: tools/dbstrings:39 tools/dbstrings:48
 msgid "Ship"
 msgstr "Відіслати"
 
@@ -1933,7 +1942,7 @@ msgstr "Послуга"
 
 #: bin/io.pl:1155
 #, fuzzy
-msgid "Number missing in Row [_1]"
+msgid "Number missing in Row %1"
 msgstr "Не вказаний номер у рядку"
 
 #: bin/io.pl:1162 bin/oe.pl:60
@@ -1953,27 +1962,31 @@ msgid "Add Quotation"
 msgstr "Котирування"
 
 #: bin/io.pl:1359 bin/oe.pl:291 bin/oe.pl:837 tools/dbstrings:43
-#: tools/dbstrings:98 tools/dbstrings:118
+#: tools/dbstrings:98 tools/dbstrings:118 tools/dbstrings:52
+#: tools/dbstrings:191 tools/dbstrings:206
 msgid "RFQ"
 msgstr "RFQ"
 
 #: bin/io.pl:1368 bin/io.pl:1551 bin/oe.pl:303 tools/dbstrings:93
-#: tools/dbstrings:107
+#: tools/dbstrings:107 tools/dbstrings:186 tools/dbstrings:199
 msgid "Work Order"
 msgstr "Наряд"
 
 #: bin/io.pl:1372 bin/io.pl:1390 bin/io.pl:1581 bin/is.pl:288 bin/oe.pl:304
-#: bin/oe.pl:323 tools/dbstrings:91 tools/dbstrings:105
+#: bin/oe.pl:323 tools/dbstrings:91 tools/dbstrings:105 tools/dbstrings:184
+#: tools/dbstrings:197
 msgid "Pick List"
 msgstr "Список комплектування"
 
 #: bin/io.pl:1376 bin/io.pl:1394 bin/io.pl:1558 bin/is.pl:289 bin/oe.pl:305
-#: bin/oe.pl:324 tools/dbstrings:90 tools/dbstrings:104
+#: bin/oe.pl:324 tools/dbstrings:90 tools/dbstrings:104 tools/dbstrings:183
+#: tools/dbstrings:196
 msgid "Packing List"
 msgstr "Пакувальний список"
 
 #: bin/io.pl:1385 bin/io.pl:1399 bin/io.pl:1599 bin/oe.pl:317 bin/oe.pl:329
-#: tools/dbstrings:95 tools/dbstrings:109
+#: tools/dbstrings:95 tools/dbstrings:109 tools/dbstrings:188
+#: tools/dbstrings:201
 msgid "Bin List"
 msgstr "Список корзин"
 
@@ -2103,7 +2116,7 @@ msgstr ""
 msgid "Off Hold"
 msgstr ""
 
-#: bin/is.pl:919 bin/oe.pl:822 tools/dbstrings:180
+#: bin/is.pl:919 bin/oe.pl:822 tools/dbstrings:180 tools/dbstrings:136
 msgid "Sales Invoice"
 msgstr "Рахунок-фактура"
 
@@ -2191,7 +2204,7 @@ msgstr "Групу видалено!"
 msgid "Pricegroup deleted!"
 msgstr "Цінову групу видалено!"
 
-#: bin/pe.pl:356 tools/dbstrings:214
+#: bin/pe.pl:356 tools/dbstrings:214 tools/dbstrings:168
 msgid "Add Group"
 msgstr "Додати групу"
 
@@ -2200,7 +2213,7 @@ msgstr "Додати групу"
 msgid "Parent"
 msgstr "Поточний"
 
-#: bin/pe.pl:573 tools/dbstrings:215
+#: bin/pe.pl:573 tools/dbstrings:215 tools/dbstrings:169
 msgid "Add Pricegroup"
 msgstr "Додати цінову групу"
 
@@ -2427,7 +2440,7 @@ msgstr "Додати до звіту"
 #: bin/gl.pl:92 addons/1.4/pos/trunk/bin/ps.pl:54
 #: addons/1.4/pos/trunk/bin/ps.pl:84 addons/1.4/pos/trunk/bin/ps.pl:225
 #: addons/1.4/pos/trunk/bin/pos.pl:55
-msgid "Could not open pos.conf.pl in [_1] line [_2]: [_3]"
+msgid "Could not open pos.conf.pl in %1 line [_2]: [_3]"
 msgstr ""
 
 #: bin/gl.pl:136
@@ -2440,17 +2453,18 @@ msgstr ""
 
 #: bin/gl.pl:198
 #, fuzzy
-msgid "[_1] Cash Transfer Transaction"
+msgid "%1 Cash Transfer Transaction"
 msgstr "Додати проводку переведення готівки"
 
 #: bin/gl.pl:201
 #, fuzzy
-msgid "[_1] General Ledger Transaction"
+msgid "%1 General Ledger Transaction"
 msgstr "Нова проводка"
 
 #: bin/gl.pl:638
-msgid "Account [_1] not found."
-msgstr ""
+#, fuzzy
+msgid "Account %1 not found."
+msgstr "Рахунок"
 
 #: bin/gl.pl:673
 #, fuzzy
@@ -2511,7 +2525,7 @@ msgstr "Надрукувати і зберегти"
 msgid "Print and Save as new"
 msgstr "Надрукувати і зберегти"
 
-#: bin/oe.pl:830 tools/dbstrings:176
+#: bin/oe.pl:830 tools/dbstrings:176 tools/dbstrings:132
 msgid "Vendor Invoice"
 msgstr "Рахунок-фактура"
 
@@ -2638,6 +2652,7 @@ msgid "Transfer to"
 msgstr "Перенести до"
 
 #: bin/oe.pl:2222 bin/oe.pl:2338 tools/dbstrings:41 tools/dbstrings:130
+#: tools/dbstrings:50 tools/dbstrings:90
 msgid "Transfer"
 msgstr "Перенесення"
 
@@ -2684,8 +2699,9 @@ msgid "Order generation failed!"
 msgstr "Створення замовлення зазнало невдачі!"
 
 #: addons/1.4/pos/trunk/bin/ps.pl:82
-msgid "Closing Till For [_1]"
-msgstr ""
+#, fuzzy
+msgid "Closing Till For %1"
+msgstr "Закрито"
 
 #: addons/1.4/pos/trunk/bin/ps.pl:181
 msgid "Cumulative Error:"
@@ -2705,27 +2721,27 @@ msgid "Cash Breakdown:"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:299
-msgid "Total Cash in Drawer: [_1]"
+msgid "Total Cash in Drawer: %1"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:301
-msgid "Less Cash in Till At Start: [_1]"
+msgid "Less Cash in Till At Start: %1"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:304
-msgid "Cumulative Error: [_1]"
+msgid "Cumulative Error: %1"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:306
-msgid "Reset Till By [_1]"
+msgid "Reset Till By %1"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:316
-msgid "You are over by [_1]"
+msgid "You are over by %1"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:319
-msgid "You are under by [_1]"
+msgid "You are under by %1"
 msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:323
@@ -2770,6 +2786,7 @@ msgid "Posted!"
 msgstr "Виставлено!"
 
 #: addons/1.4/pos/trunk/bin/pos.pl:1125 tools/dbstrings:23 tools/dbstrings:134
+#: tools/dbstrings:32 tools/dbstrings:116
 msgid "Receipts"
 msgstr "Квитанції"
 
@@ -2785,10 +2802,11 @@ msgstr "Знижка"
 #: addons/1.4/pos/trunk/pos.conf.pl:41
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:63
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:391 tools/dbstrings:115
+#: tools/dbstrings:203
 msgid "Check"
 msgstr "Чек"
 
-#: addons/1.4/pos/trunk/pos.conf.pl:42 tools/dbstrings:114
+#: addons/1.4/pos/trunk/pos.conf.pl:42 tools/dbstrings:114 tools/dbstrings:78
 msgid "Cash"
 msgstr "Готівка"
 
@@ -2871,6 +2889,7 @@ msgstr ""
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:59
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:388
 #: LedgerSMB/Scripts/payment.pm:995 tools/dbstrings:19 tools/dbstrings:116
+#: tools/dbstrings:28 tools/dbstrings:204
 msgid "Receipt"
 msgstr "Квитанція"
 
@@ -2987,7 +3006,7 @@ msgstr "Проект"
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:259
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:259
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:259 LedgerSMB/Budget.pm:243
-msgid "Cannot specify both debits and credits for budget line [_1]"
+msgid "Cannot specify both debits and credits for budget line %1"
 msgstr ""
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:379
@@ -3037,6 +3056,7 @@ msgstr "Редагувати постачальника"
 
 #: t/data/04-complex_template.html:20 UI/Contact/contact.html:37
 #: addons/1.3/crm-basic/trunk/UI/crm/contact.html:37 tools/dbstrings:27
+#: tools/dbstrings:36
 msgid "Add Employee"
 msgstr "Додати працівника"
 
@@ -3087,7 +3107,7 @@ msgid "Filtering $t"
 msgstr ""
 
 #: UI/payments/payments_detail.html:362
-msgid "Locked by [_1]"
+msgid "Locked by %1"
 msgstr ""
 
 #: UI/file/attachment_screen.html:39
@@ -3121,7 +3141,7 @@ msgid "Accrual Basis:"
 msgstr ""
 
 #: UI/menu/expanding.html:45
-msgid "Logged into [_1]"
+msgid "Logged into %1"
 msgstr ""
 
 #: UI/business_units/filter.html:35
@@ -3132,7 +3152,9 @@ msgstr "Активний"
 #: UI/business_units/filter.html:45 UI/asset/search_class.html:65
 #: UI/asset/search_asset.html:185 tools/dbstrings:4 tools/dbstrings:15
 #: tools/dbstrings:18 tools/dbstrings:28 tools/dbstrings:58 tools/dbstrings:142
-#: tools/dbstrings:192
+#: tools/dbstrings:192 tools/dbstrings:6 tools/dbstrings:14 tools/dbstrings:27
+#: tools/dbstrings:37 tools/dbstrings:80 tools/dbstrings:100
+#: tools/dbstrings:148
 msgid "Search"
 msgstr "Пошук"
 
@@ -3176,7 +3198,7 @@ msgid "Transaction Date"
 msgstr "Проводка"
 
 #: UI/login.html:30
-msgid "LedgerSMB [_1]"
+msgid "LedgerSMB %1"
 msgstr ""
 
 #: UI/Contact/divs/credit.html:61
@@ -3192,7 +3214,7 @@ msgstr "Примітки"
 
 #: UI/Contact/divs/notes.html:64
 #: addons/1.3/crm-basic/trunk/UI/crm/divs/notes.html:64
-msgid "Author: [_1]"
+msgid "Author: %1"
 msgstr ""
 
 #: addons/1.3/company_person/trunk/UI/Contact/divs/person.html:2
@@ -3405,7 +3427,7 @@ msgid "Images in Templates"
 msgstr "Шаблони LaTeX"
 
 #: LedgerSMB/Scripts/configuration.pm:227
-msgid "Error while opening directory: [_1]"
+msgid "Error while opening directory: %1"
 msgstr ""
 
 #: LedgerSMB/Scripts/payment.pm:146
@@ -3434,7 +3456,7 @@ msgstr ""
 msgid "To pay"
 msgstr ""
 
-#: LedgerSMB/Scripts/payment.pm:995 tools/dbstrings:20
+#: LedgerSMB/Scripts/payment.pm:995 tools/dbstrings:20 tools/dbstrings:29
 msgid "Payment"
 msgstr "Платіж"
 
@@ -3629,17 +3651,18 @@ msgstr ""
 msgid "Approved at"
 msgstr ""
 
-#: LedgerSMB/Scripts/asset.pm:676 tools/dbstrings:173
+#: LedgerSMB/Scripts/asset.pm:676 tools/dbstrings:173 tools/dbstrings:129
 #, fuzzy
 msgid "Depreciation"
 msgstr "Опис"
 
 #: LedgerSMB/Scripts/asset.pm:678 tools/dbstrings:171 tools/dbstrings:174
+#: tools/dbstrings:127 tools/dbstrings:130
 msgid "Disposal"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:731
-msgid "Report [_1] on date [_2]"
+msgid "Report %1 on date [_2]"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:735 LedgerSMB/Scripts/asset.pm:800
@@ -3686,7 +3709,7 @@ msgid "Total Accum. Dep."
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:795
-msgid "Partial Disposal Report [_1] on date [_2]"
+msgid "Partial Disposal Report %1 on date [_2]"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:802
@@ -3708,7 +3731,7 @@ msgid "Aquired Value Remaining"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:866
-msgid "Disposal Report [_1] on date [_2]"
+msgid "Disposal Report %1 on date [_2]"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:872
@@ -3912,7 +3935,7 @@ msgstr "Купівельні замовлення"
 msgid "Generate Sales Orders from Purchase Orders"
 msgstr "Створити купівельні замовлення"
 
-#: LedgerSMB/Scripts/order.pm:71 tools/dbstrings:40
+#: LedgerSMB/Scripts/order.pm:71 tools/dbstrings:40 tools/dbstrings:49
 msgid "Receive"
 msgstr "Отримати"
 
@@ -3926,11 +3949,12 @@ msgstr "Котирування"
 msgid "Search Requests for Quotation"
 msgstr "Запит на котирування"
 
-#: LedgerSMB/Scripts/order.pm:106 tools/dbstrings:138
+#: LedgerSMB/Scripts/order.pm:106 tools/dbstrings:138 tools/dbstrings:96
 msgid "Combine"
 msgstr ""
 
 #: LedgerSMB/Scripts/order.pm:114 tools/dbstrings:36 tools/dbstrings:55
+#: tools/dbstrings:7 tools/dbstrings:45
 msgid "Generate"
 msgstr "Створити"
 
@@ -4044,7 +4068,7 @@ msgid "other"
 msgstr ""
 
 #: LedgerSMB/DBObject/Payment.pm:752
-msgid "Exchange rate inconsistency with database.  Got [_1], expected [_2]"
+msgid "Exchange rate inconsistency with database.  Got %1, expected [_2]"
 msgstr ""
 
 #: LedgerSMB/DBObject/Account.pm:73
@@ -4062,12 +4086,13 @@ msgstr ""
 #: LedgerSMB/DBObject/TransTemplate.pm:23
 #: addons/1.3/templatetrans/trunk/LedgerSMB/DBObject/TransTemplate.pm:23
 #: addons/1.3/templatetrans/tags/1.0/LedgerSMB/DBObject/TransTemplate.pm:22
-msgid "No Account id for [_1]"
+msgid "No Account id for %1"
 msgstr ""
 
 #: LedgerSMB/DBObject/Asset.pm:109 LedgerSMB/DBObject/Asset_Class.pm:66
-msgid "Unable to save [_1] object"
-msgstr ""
+#, fuzzy
+msgid "Unable to save %1 object"
+msgstr "Не вдається зберегти замовлення!"
 
 #: LedgerSMB/DBObject/Asset.pm:110
 msgid "Asset"
@@ -4147,7 +4172,7 @@ msgstr "Пароль змінено!"
 
 #: LedgerSMB/Report/Trial_Balance.pm:115
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:115
-#: tools/dbstrings:136
+#: tools/dbstrings:136 tools/dbstrings:94
 msgid "Trial Balance"
 msgstr "Пробний баланс"
 
@@ -4456,12 +4481,13 @@ msgid "Margin Report for Customer"
 msgstr ""
 
 #: LedgerSMB/Report/Orders.pm:192 LedgerSMB/Report/Orders.pm:290
-#: tools/dbstrings:45 tools/dbstrings:68 tools/dbstrings:197
+#: tools/dbstrings:45 tools/dbstrings:68 tools/dbstrings:197 tools/dbstrings:54
+#: tools/dbstrings:153
 msgid "Quotations"
 msgstr "Котирування"
 
 #: LedgerSMB/Report/Orders.pm:195 LedgerSMB/Report/Orders.pm:292
-#: tools/dbstrings:46 tools/dbstrings:73
+#: tools/dbstrings:46 tools/dbstrings:73 tools/dbstrings:55
 msgid "RFQs"
 msgstr "RFQs"
 
@@ -4511,7 +4537,7 @@ msgstr "Для"
 msgid "Sat"
 msgstr "Штат"
 
-#: LedgerSMB/Report/Timecards.pm:169
+#: LedgerSMB/Report/Timecards.pm:169 tools/dbstrings:173
 #, fuzzy
 msgid "Timecards"
 msgstr "Разів"
@@ -4530,7 +4556,7 @@ msgstr "Редагувати"
 
 #: LedgerSMB/Report/COA.pm:141
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:141
-#: tools/dbstrings:8
+#: tools/dbstrings:8 tools/dbstrings:18
 msgid "Chart of Accounts"
 msgstr "План Рахунків"
 
@@ -4588,6 +4614,7 @@ msgid "Price Updated"
 msgstr "Оновлено"
 
 #: LedgerSMB/Report/Inventory/Search.pm:269 tools/dbstrings:52
+#: tools/dbstrings:58
 #, fuzzy
 msgid "Partsgroup"
 msgstr "Цінова група"
@@ -4599,6 +4626,7 @@ msgid "Serial Number"
 msgstr "Серійний номер"
 
 #: LedgerSMB/Report/Inventory/Search.pm:319 tools/dbstrings:199
+#: tools/dbstrings:155
 #, fuzzy
 msgid "Goods and Services"
 msgstr "Товари і Послуги"
@@ -4681,7 +4709,7 @@ msgstr ""
 
 #: LedgerSMB/Report/PNL/Income_Statement.pm:51
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:51
-#: tools/dbstrings:85 tools/dbstrings:137
+#: tools/dbstrings:85 tools/dbstrings:137 tools/dbstrings:95
 msgid "Income Statement"
 msgstr "Звіт про доходи і видатки"
 
@@ -4811,25 +4839,26 @@ msgid "Any"
 msgstr ""
 
 #: LedgerSMB/Form.pm:678
-msgid "Action: [_1], ID: [_2]"
+msgid "Action: %1, ID: [_2]"
 msgstr ""
 
 #: LedgerSMB/Entity/Location.pm:113
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:114
-#: tools/dbstrings:269
+#: tools/dbstrings:269 tools/dbstrings:263
 #, fuzzy
 msgid "Billing"
 msgstr "Адреса для надсилання рахунку"
 
 #: LedgerSMB/Entity/Location.pm:114
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:115
-#: tools/dbstrings:270
+#: tools/dbstrings:270 tools/dbstrings:264
 msgid "Sales"
 msgstr "Продаж"
 
 #: LedgerSMB/Entity/Location.pm:115
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:116
-#: tools/dbstrings:196 tools/dbstrings:271
+#: tools/dbstrings:196 tools/dbstrings:271 tools/dbstrings:152
+#: tools/dbstrings:265
 msgid "Shipping"
 msgstr "Відісилання"
 
@@ -4874,8 +4903,9 @@ msgid "Unable to save contact information"
 msgstr ""
 
 #: LedgerSMB/GL.pm:200
-msgid "Account [_1] not found"
-msgstr ""
+#, fuzzy
+msgid "Account %1 not found"
+msgstr "Рахунок не існує"
 
 #: LedgerSMB/App_State.pm:189
 msgid "Jan"
@@ -4925,75 +4955,78 @@ msgstr "грудня"
 msgid "Created"
 msgstr ""
 
-#: tools/dbstrings:3
+#: tools/dbstrings:3 tools/dbstrings:13
 msgid "Batches"
 msgstr ""
 
-#: tools/dbstrings:5
+#: tools/dbstrings:5 tools/dbstrings:15
 #, fuzzy
 msgid "Add Contact"
 msgstr "Контактна особа"
 
-#: tools/dbstrings:6
+#: tools/dbstrings:6 tools/dbstrings:16
 msgid "Customer History"
 msgstr "Історія клієнта"
 
-#: tools/dbstrings:7
+#: tools/dbstrings:7 tools/dbstrings:17
 msgid "Vendor History"
 msgstr "Історія постачальника"
 
-#: tools/dbstrings:9
+#: tools/dbstrings:9 tools/dbstrings:19
 #, fuzzy
 msgid "Add Accounts"
 msgstr "Додати рахунок"
 
-#: tools/dbstrings:10
+#: tools/dbstrings:10 tools/dbstrings:20
 #, fuzzy
 msgid "Top-level"
 msgstr "Верхній Рівень"
 
-#: tools/dbstrings:11 tools/dbstrings:14
+#: tools/dbstrings:11 tools/dbstrings:14 tools/dbstrings:21 tools/dbstrings:24
 #, fuzzy
 msgid "Invoice Vouchers"
 msgstr "Номер рахунка-фактури"
 
-#: tools/dbstrings:12 tools/dbstrings:16
+#: tools/dbstrings:12 tools/dbstrings:16 tools/dbstrings:22 tools/dbstrings:25
 msgid "Add Transaction"
 msgstr "Нова проводка"
 
-#: tools/dbstrings:13
+#: tools/dbstrings:13 tools/dbstrings:23
 msgid "AR Aging"
 msgstr "Старіння рахунків доходів"
 
-#: tools/dbstrings:17
+#: tools/dbstrings:17 tools/dbstrings:26
 msgid "AP Aging"
 msgstr "Старіння рахунків витрат"
 
-#: tools/dbstrings:21
+#: tools/dbstrings:21 tools/dbstrings:30
 #, fuzzy
 msgid "Use Overpayment"
 msgstr "Передплата"
 
-#: tools/dbstrings:22
+#: tools/dbstrings:22 tools/dbstrings:31
 msgid "Use AR Overpayment"
 msgstr ""
 
 #: tools/dbstrings:25 tools/dbstrings:132 tools/dbstrings:146
+#: tools/dbstrings:34 tools/dbstrings:92 tools/dbstrings:104
 msgid "Reconciliation"
 msgstr "Узгодження"
 
-#: tools/dbstrings:26
+#: tools/dbstrings:26 tools/dbstrings:35
 msgid "Employees"
 msgstr "Працівники"
 
 #: tools/dbstrings:31 tools/dbstrings:44 tools/dbstrings:57 tools/dbstrings:125
 #: tools/dbstrings:127 tools/dbstrings:131 tools/dbstrings:161
 #: tools/dbstrings:172 tools/dbstrings:184 tools/dbstrings:201
-#: tools/dbstrings:218
+#: tools/dbstrings:218 tools/dbstrings:40 tools/dbstrings:53 tools/dbstrings:81
+#: tools/dbstrings:87 tools/dbstrings:91 tools/dbstrings:117
+#: tools/dbstrings:128 tools/dbstrings:156
 msgid "Reports"
 msgstr "Звіти"
 
-#: tools/dbstrings:47
+#: tools/dbstrings:47 tools/dbstrings:56
 #, fuzzy
 msgid "Journal Entry"
 msgstr "Країна"
@@ -5003,7 +5036,7 @@ msgstr "Країна"
 msgid "Requirements"
 msgstr "Термін доставки"
 
-#: tools/dbstrings:54
+#: tools/dbstrings:54 tools/dbstrings:59
 #, fuzzy
 msgid "Add Timecard"
 msgstr "Новий Товар"
@@ -5013,15 +5046,16 @@ msgstr "Новий Товар"
 msgid "Time Cards"
 msgstr "Разів"
 
-#: tools/dbstrings:60 tools/dbstrings:217
+#: tools/dbstrings:60 tools/dbstrings:217 tools/dbstrings:61
+#: tools/dbstrings:171
 msgid "Translations"
 msgstr "Переклади"
 
-#: tools/dbstrings:62 tools/dbstrings:86
+#: tools/dbstrings:62 tools/dbstrings:86 tools/dbstrings:63
 msgid "Balance Sheet"
 msgstr "Баланс-зведення"
 
-#: tools/dbstrings:63
+#: tools/dbstrings:63 tools/dbstrings:9
 #, fuzzy
 msgid "Inventory Activity"
 msgstr "Інвентар"
@@ -5050,103 +5084,109 @@ msgstr "Списки комплектування"
 msgid "Bin Lists"
 msgstr "Списки корзин"
 
-#: tools/dbstrings:76
+#: tools/dbstrings:76 tools/dbstrings:65
 msgid "Defaults"
 msgstr "Типові значення"
 
-#: tools/dbstrings:78
+#: tools/dbstrings:78 tools/dbstrings:67
 #, fuzzy
 msgid "List Warehouse"
 msgstr "Список складів"
 
-#: tools/dbstrings:80
+#: tools/dbstrings:80 tools/dbstrings:69
 msgid "List Businesses"
 msgstr "Список бізнесів"
 
-#: tools/dbstrings:82
+#: tools/dbstrings:82 tools/dbstrings:71
 msgid "List Languages"
 msgstr "Список мов"
 
-#: tools/dbstrings:84
+#: tools/dbstrings:84 tools/dbstrings:73
 msgid "List SIC"
 msgstr "Список SIC"
 
-#: tools/dbstrings:88 tools/dbstrings:102
+#: tools/dbstrings:88 tools/dbstrings:102 tools/dbstrings:181
+#: tools/dbstrings:194
 msgid "AR Transaction"
 msgstr "Проводка доходів"
 
-#: tools/dbstrings:89 tools/dbstrings:103
+#: tools/dbstrings:89 tools/dbstrings:103 tools/dbstrings:182
+#: tools/dbstrings:195
 msgid "AP Transaction"
 msgstr "Проводка витрат"
 
-#: tools/dbstrings:96 tools/dbstrings:110
+#: tools/dbstrings:96 tools/dbstrings:110 tools/dbstrings:189
+#: tools/dbstrings:202
 msgid "Statement"
 msgstr "Звіт"
 
-#: tools/dbstrings:99 tools/dbstrings:119
+#: tools/dbstrings:99 tools/dbstrings:119 tools/dbstrings:192
+#: tools/dbstrings:207
 #, fuzzy
 msgid "Timecard"
 msgstr "Разів"
 
-#: tools/dbstrings:100 tools/dbstrings:120
+#: tools/dbstrings:100 tools/dbstrings:120 tools/dbstrings:193
+#: tools/dbstrings:208
 msgid "Letterhead"
 msgstr ""
 
-#: tools/dbstrings:111
+#: tools/dbstrings:111 tools/dbstrings:75
 #, fuzzy
 msgid "Transaction Approval"
 msgstr "Проводка здійснена"
 
-#: tools/dbstrings:121
+#: tools/dbstrings:121 tools/dbstrings:83
 #, fuzzy
 msgid "POS Invoice"
 msgstr "Рахунок-фактура"
 
-#: tools/dbstrings:122
+#: tools/dbstrings:122 tools/dbstrings:84
 #, fuzzy
 msgid "Contacts"
 msgstr "Контактна особа"
 
-#: tools/dbstrings:123
+#: tools/dbstrings:123 tools/dbstrings:85
 msgid "Import Chart"
 msgstr ""
 
 #: tools/dbstrings:126 tools/dbstrings:128 tools/dbstrings:129
+#: tools/dbstrings:82 tools/dbstrings:88 tools/dbstrings:89
 msgid "Vouchers"
 msgstr ""
 
-#: tools/dbstrings:133
+#: tools/dbstrings:133 tools/dbstrings:93
 #, fuzzy
 msgid "Year End"
 msgstr "Кінець року"
 
-#: tools/dbstrings:135
+#: tools/dbstrings:135 tools/dbstrings:175
 #, fuzzy
 msgid "Reverse Receipts"
 msgstr "Квитанції"
 
-#: tools/dbstrings:139
+#: tools/dbstrings:139 tools/dbstrings:97
 msgid "Add Part"
 msgstr "Новий Товар"
 
-#: tools/dbstrings:140
+#: tools/dbstrings:140 tools/dbstrings:98
 msgid "Add Service"
 msgstr "Нова послуга"
 
-#: tools/dbstrings:141
+#: tools/dbstrings:141 tools/dbstrings:99
 msgid "Add Assembly"
 msgstr "Додати комплект"
 
-#: tools/dbstrings:144
+#: tools/dbstrings:144 tools/dbstrings:102
 #, fuzzy
 msgid "Reverse Payment"
 msgstr "Передплата"
 
-#: tools/dbstrings:145
+#: tools/dbstrings:145 tools/dbstrings:103
 msgid "Drafts"
 msgstr ""
 
-#: tools/dbstrings:147
+#: tools/dbstrings:147 tools/dbstrings:105
 #, fuzzy
 msgid "Add Tax Form"
 msgstr "Новий Товар"
@@ -5156,23 +5196,23 @@ msgstr "Новий Товар"
 msgid "Admin Users"
 msgstr "Новий користувач"
 
-#: tools/dbstrings:149
+#: tools/dbstrings:149 tools/dbstrings:106
 msgid "Text Templates"
 msgstr "Текстові шаблони"
 
-#: tools/dbstrings:150
+#: tools/dbstrings:150 tools/dbstrings:107
 msgid "LaTeX Templates"
 msgstr "Шаблони LaTeX"
 
-#: tools/dbstrings:151
+#: tools/dbstrings:151 tools/dbstrings:108
 msgid "HTML Templates"
 msgstr "HTML Шаблони "
 
-#: tools/dbstrings:152
+#: tools/dbstrings:152 tools/dbstrings:109
 msgid "SIC"
 msgstr "SIC"
 
-#: tools/dbstrings:155
+#: tools/dbstrings:155 tools/dbstrings:112
 #, fuzzy
 msgid "Reporting Units"
 msgstr "Звіти"
@@ -5186,122 +5226,125 @@ msgstr "Новий користувач"
 msgid "Search Users"
 msgstr "Пошук"
 
-#: tools/dbstrings:159
+#: tools/dbstrings:159 tools/dbstrings:114
 #, fuzzy
 msgid "Sessions"
 msgstr "Версія"
 
-#: tools/dbstrings:160
+#: tools/dbstrings:160 tools/dbstrings:115
 #, fuzzy
 msgid "List Tax Forms"
 msgstr "Список відділів"
 
-#: tools/dbstrings:162
+#: tools/dbstrings:162 tools/dbstrings:118
 #, fuzzy
 msgid "Asset Classes"
 msgstr "Комплекти"
 
-#: tools/dbstrings:163
+#: tools/dbstrings:163 tools/dbstrings:119
 #, fuzzy
 msgid "Assets"
 msgstr "Актив"
 
-#: tools/dbstrings:164
+#: tools/dbstrings:164 tools/dbstrings:120
 #, fuzzy
 msgid "Add Class"
 msgstr "Додати SIC"
 
-#: tools/dbstrings:165
+#: tools/dbstrings:165 tools/dbstrings:121
 #, fuzzy
 msgid "List Classes"
 msgstr "Список бізнесів"
 
-#: tools/dbstrings:166
+#: tools/dbstrings:166 tools/dbstrings:122
 #, fuzzy
 msgid "Add Assets"
 msgstr "Додати комплект"
 
-#: tools/dbstrings:167
+#: tools/dbstrings:167 tools/dbstrings:123
 #, fuzzy
 msgid "Search Assets"
 msgstr "Пошук"
 
 #: tools/dbstrings:168 tools/dbstrings:183 tools/dbstrings:188
+#: tools/dbstrings:8 tools/dbstrings:124 tools/dbstrings:139
+#: tools/dbstrings:144
 #, fuzzy
 msgid "Import"
 msgstr "Звіти"
 
-#: tools/dbstrings:169
+#: tools/dbstrings:169 tools/dbstrings:125
 msgid "Depreciate"
 msgstr ""
 
-#: tools/dbstrings:170
+#: tools/dbstrings:170 tools/dbstrings:126
 msgid "Net Book Value"
 msgstr ""
 
-#: tools/dbstrings:175 tools/dbstrings:179
+#: tools/dbstrings:175 tools/dbstrings:179 tools/dbstrings:131
+#: tools/dbstrings:135
 msgid "Import Batch"
 msgstr ""
 
-#: tools/dbstrings:177
+#: tools/dbstrings:177 tools/dbstrings:133
 #, fuzzy
 msgid "Debit Note"
 msgstr "Дебит"
 
-#: tools/dbstrings:178
+#: tools/dbstrings:178 tools/dbstrings:134
 #, fuzzy
 msgid "Debit Invoice"
 msgstr "Рахунок-фактура"
 
-#: tools/dbstrings:181
+#: tools/dbstrings:181 tools/dbstrings:137
 #, fuzzy
 msgid "Credit Note"
 msgstr "Кредит"
 
-#: tools/dbstrings:182
+#: tools/dbstrings:182 tools/dbstrings:138
 #, fuzzy
 msgid "Credit Invoice"
 msgstr "Рахунок-фактура"
 
-#: tools/dbstrings:185
+#: tools/dbstrings:185 tools/dbstrings:141
 msgid "Add GIFI"
 msgstr "Новий GIFI"
 
-#: tools/dbstrings:186
+#: tools/dbstrings:186 tools/dbstrings:142
 msgid "List GIFI"
 msgstr "Список GIFI"
 
-#: tools/dbstrings:187
+#: tools/dbstrings:187 tools/dbstrings:143
 #, fuzzy
 msgid "Import GIFI"
 msgstr "Редагувати GIFI"
 
-#: tools/dbstrings:189
+#: tools/dbstrings:189 tools/dbstrings:145
 msgid "AR Voucher"
 msgstr ""
 
-#: tools/dbstrings:190
+#: tools/dbstrings:190 tools/dbstrings:146
 msgid "AP Voucher"
 msgstr ""
 
-#: tools/dbstrings:191
+#: tools/dbstrings:191 tools/dbstrings:147
 #, fuzzy
 msgid "Add Budget"
 msgstr "Додати бізнес"
 
-#: tools/dbstrings:193
+#: tools/dbstrings:193 tools/dbstrings:149
 msgid "Budgets"
 msgstr ""
 
-#: tools/dbstrings:194
+#: tools/dbstrings:194 tools/dbstrings:150
 msgid "HR"
 msgstr "HR"
 
-#: tools/dbstrings:195
+#: tools/dbstrings:195 tools/dbstrings:151
 msgid "Order Entry"
 msgstr "Виставлення замовлення"
 
-#: tools/dbstrings:198
+#: tools/dbstrings:198 tools/dbstrings:154
 #, fuzzy
 msgid "General Journal"
 msgstr "Головна книга"
@@ -5310,24 +5353,24 @@ msgstr "Головна книга"
 msgid "Projects"
 msgstr "Проекти"
 
-#: tools/dbstrings:203
+#: tools/dbstrings:203 tools/dbstrings:158
 #, fuzzy
 msgid "Tax Forms"
 msgstr "Формат дати"
 
-#: tools/dbstrings:204
+#: tools/dbstrings:204 tools/dbstrings:159
 msgid "Fixed Assets"
 msgstr ""
 
-#: tools/dbstrings:205
+#: tools/dbstrings:205 tools/dbstrings:160
 msgid "Logout"
 msgstr "Вихід"
 
-#: tools/dbstrings:206
+#: tools/dbstrings:206 tools/dbstrings:161
 msgid "New Window"
 msgstr "Нове вікно"
 
-#: tools/dbstrings:207
+#: tools/dbstrings:207 tools/dbstrings:162
 msgid "Preferences"
 msgstr "Параметри"
 
@@ -5335,64 +5378,149 @@ msgstr "Параметри"
 msgid "Stylesheet"
 msgstr "Оформленння"
 
-#: tools/dbstrings:209
+#: tools/dbstrings:209 tools/dbstrings:163
 msgid "System"
 msgstr "Система"
 
-#: tools/dbstrings:210
+#: tools/dbstrings:210 tools/dbstrings:164
 #, fuzzy
 msgid "Batch Printing"
 msgstr "Друкується"
 
-#: tools/dbstrings:211 tools/dbstrings:212
+#: tools/dbstrings:211 tools/dbstrings:212 tools/dbstrings:165
+#: tools/dbstrings:166
 msgid "Outstanding"
 msgstr "Не сплачено"
 
-#: tools/dbstrings:213
+#: tools/dbstrings:213 tools/dbstrings:167
 #, fuzzy
 msgid "Add Overhead"
 msgstr "Додати роботу/додаткові витрати"
 
-#: tools/dbstrings:235
+#: tools/dbstrings:235 tools/dbstrings:227
 msgid "ap"
 msgstr ""
 
-#: tools/dbstrings:236
+#: tools/dbstrings:236 tools/dbstrings:228
 #, fuzzy
 msgid "ar"
 msgstr "березня"
 
-#: tools/dbstrings:237
+#: tools/dbstrings:237 tools/dbstrings:229
 #, fuzzy
 msgid "payment"
 msgstr "Платіж"
 
-#: tools/dbstrings:238
+#: tools/dbstrings:238 tools/dbstrings:230
 msgid "payment_reversal"
 msgstr ""
 
-#: tools/dbstrings:239
+#: tools/dbstrings:239 tools/dbstrings:231
 msgid "gl"
 msgstr ""
 
-#: tools/dbstrings:240
+#: tools/dbstrings:240 tools/dbstrings:232
 #, fuzzy
 msgid "receipt"
 msgstr "Квитанція"
 
-#: tools/dbstrings:241
+#: tools/dbstrings:241 tools/dbstrings:233
 msgid "receipt_reversal"
 msgstr ""
 
-#: tools/dbstrings:242
+#: tools/dbstrings:242 tools/dbstrings:234
 #, fuzzy
 msgid "sales_invoice"
 msgstr "Рахунок-фактура"
 
-#: tools/dbstrings:243
+#: tools/dbstrings:243 tools/dbstrings:235
 #, fuzzy
 msgid "vendor_invoice"
 msgstr "Рахунок-фактура"
+
+#: tools/dbstrings:3
+#, fuzzy
+msgid "Search Groups"
+msgstr "Пошук"
+
+#: tools/dbstrings:4
+#, fuzzy
+msgid "Search Pricegroups"
+msgstr "Цінові групи"
+
+#: tools/dbstrings:5
+#, fuzzy
+msgid "Import Inventory"
+msgstr "Інвентар"
+
+#: tools/dbstrings:10
+msgid "Import AR Batch"
+msgstr ""
+
+#: tools/dbstrings:11
+msgid "Import AP Batch"
+msgstr ""
+
+#: tools/dbstrings:12
+#, fuzzy
+msgid "Enter Inventory"
+msgstr "Перенести інвентар"
+
+#: tools/dbstrings:79
+#, fuzzy
+msgid "Add Return"
+msgstr "Новий користувач"
+
+#: tools/dbstrings:140
+#, fuzzy
+msgid "Search and GL"
+msgstr "Пошук"
+
+#: tools/dbstrings:174
+#, fuzzy
+msgid "Sequences"
+msgstr "Параметри"
+
+#: tools/dbstrings:176
+#, fuzzy
+msgid "Reverse Overpay"
+msgstr "Передплата"
+
+#: tools/dbstrings:177
+#, fuzzy
+msgid "Reverse AR Overpay"
+msgstr "Квитанції"
+
+#: tools/dbstrings:179
+#, fuzzy
+msgid "Inventory and COGS"
+msgstr "Інвентар збережено!"
+
+#: tools/dbstrings:209 tools/dbstrings:210
+#, fuzzy
+msgid "Product Receipt"
+msgstr "Квитанція"
+
+#: tools/dbstrings:266
+msgid "Physical"
+msgstr ""
+
+#: tools/dbstrings:267
+#, fuzzy
+msgid "Mailing"
+msgstr "Адреса для надсилання рахунку"
+
+#, fuzzy
+#~ msgid "[_1] Business"
+#~ msgstr "Бізнес"
+
+#, fuzzy
+#~ msgid "[_1] Language"
+#~ msgstr "Мова"
+
+#, fuzzy
+#~ msgid "[_1] Warehouse"
+#~ msgstr "Склад"
 
 #~ msgid "Above"
 #~ msgstr "Вище"
@@ -5968,9 +6096,6 @@ msgstr "Рахунок-фактура"
 
 #~ msgid "Save to File"
 #~ msgstr "Зберегти у Файлі"
-
-#~ msgid "Saving"
-#~ msgstr "Збереження"
 
 #~ msgid "Select from one of the items below"
 #~ msgstr "Виберіть одну із наступних речей"
