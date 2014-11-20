@@ -191,8 +191,8 @@ INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
 -- partially paid ($500) in current year -1035
 
 INSERT INTO ar (id, transdate, amount, netamount, curr, entity_credit_account,
-                approved, invoice)
-      values(-1035, date1(), 1010, 1010, 'USD', -255, true, true);
+                approved, invoice, invnumber)
+      values(-1035, date1(), 1010, 1010, 'USD', -255, true, true, 'test1');
 
 INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
      VALUES (-1035, -1000, date1(), 1010, true, -221);
@@ -222,8 +222,8 @@ insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
 -- paid $500 currnet year, $500 in future year -1036
 
 INSERT INTO ar (id, transdate, amount, netamount, curr, entity_credit_account,
-                approved, invoice)
-      values(-1036, date1(), 1010, 1010, 'USD', -255, true, true);
+                approved, invoice, invnumber)
+      values(-1036, date1(), 1010, 1010, 'USD', -255, true, true, 'test2');
 
 INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
      VALUES (-1036, -1000, date1(), 1010, true, -231);
@@ -260,8 +260,8 @@ insert into invoice(trans_id, id, parts_id, description, qty, sellprice)
 
 
 INSERT INTO ar (id, transdate, amount, netamount, curr, entity_credit_account,
-                approved, invoice)
-      values(-1037, date1(), 1010, 1010, 'USD', -256, true, true);
+                approved, invoice, invnumber)
+      values(-1037, date1(), 1010, 1010, 'USD', -256, true, true, 'test3');
 
 INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
      VALUES (-1037, -1000, date1(), 1010, true, -241);
