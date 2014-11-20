@@ -167,7 +167,7 @@ sub display_form {
         $invnumber = "vinumber";
     }
     $form->{sequence_select} = $form->sequence_dropdown($invnumber)
-        unless $form->{id};
+        unless $form->{id} and ($form->{vc} eq 'vendor');
     $form->{format} = $form->get_setting('format') unless $form->{format};
     $form->close_form;
     $form->open_form;
@@ -1204,6 +1204,7 @@ sub approve {
     use LedgerSMB;
     my $lsmb = LedgerSMB->new();
     $lsmb->merge($form);
+    $form->update_invnumber;
 
     my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
 

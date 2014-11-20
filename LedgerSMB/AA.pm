@@ -378,40 +378,6 @@ sub post_transaction {
     $form->{datepaid} = $form->{transdate} unless $form->{datepaid};
     my $datepaid = ($paid) ? qq|'$form->{datepaid}'| : undef;
 
-
-    $query = qq|
-		UPDATE $table 
-		SET invnumber = ?,
-                    description = ?,
-			ordnumber = ?,
-			transdate = ?,
-			taxincluded = ?,
-			amount = ?,
-			duedate = ?,
-			paid = ?,
-			datepaid = ?,
-			netamount = ?,
-			curr = ?,
-			notes = ?,
-			intnotes = ?,
-			ponumber = ?,
-			crdate = ?,
-                        reverse = ?
-		WHERE id = ?
-	|;
-    
-    my @queryargs = (
-        $form->{invnumber},     $form->{description},    
-        $form->{ordnumber},     $form->{transdate},     
-        $form->{taxincluded},   $invamount,
-        $form->{duedate},       $paid,
-        $datepaid,              $invnetamount,
-        $form->{currency},      $form->{notes},
-        $form->{intnotes},
-        $form->{ponumber},      $form->{crdate},
-	$form->{reverse},        $form->{id}
-    );
-    $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
     if (defined $form->{approved}) {
 
         $query = qq| UPDATE $table SET approved = ? WHERE id = ?|;
@@ -437,6 +403,49 @@ sub post_transaction {
         }
         
     }
+    if ($table eq 'ar' and $form->{setting_sequence}){
+       my $seqsth = $dbh->prepare(
+            'UPDATE ar SET setting_sequence = ? WHERE id = ?'
+       );
+       $seqsth->execute($form->{setting_sequence}, $form->{id});
+       $seqsth->finish;
+    }
+
+    $query = qq|
+		UPDATE $table 
+		SET invnumber = ?,
+                    description = ?,
+			ordnumber = ?,
+			transdate = ?,
+			taxincluded = ?,
+			amount = ?,
+			duedate = ?,
+			paid = ?,
+			datepaid = ?,
+			netamount = ?,
+			curr = ?,
+			notes = ?,
+			intnotes = ?,
+			ponumber = ?,
+			crdate = ?,
+                        reverse = ?
+		WHERE id = ?
+	|;
+
+    $form->{invnumber} = undef if $form->{invnumber} eq '';
+    
+    my @queryargs = (
+        $form->{invnumber},     $form->{description},    
+        $form->{ordnumber},     $form->{transdate},     
+        $form->{taxincluded},   $invamount,
+        $form->{duedate},       $paid,
+        $datepaid,              $invnetamount,
+        $form->{currency},      $form->{notes},
+        $form->{intnotes},
+        $form->{ponumber},      $form->{crdate},
+	$form->{reverse},        $form->{id}
+    );
+    $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
     @queries = $form->run_custom_queries( $table, 'INSERT' );
 
     # update exchangerate

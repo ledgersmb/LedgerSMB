@@ -81,7 +81,7 @@ sub columns {
 
     {col_id => 'id',
        name => LedgerSMB::Report::text('ID'),
-       type => 'text',
+       type => 'href',
      pwidth => 1, },
 
     {col_id => 'transdate',
@@ -230,6 +230,7 @@ sub run_report{
             $script = 'ir' if $script eq 'ap';
         }
         $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}";
+        $ref->{id_href_suffix} = $ref->{reference_href_suffix};
     }
     $self->rows(\@rows);
 }

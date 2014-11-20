@@ -135,6 +135,7 @@ sub _calc_taxes {
 sub approve {
     use LedgerSMB::DBObject::Draft;
     use LedgerSMB;
+    $form->update_invnumber;
     my $lsmb = LedgerSMB->new();
     $lsmb->merge($form);
 
