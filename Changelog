@@ -16,6 +16,8 @@ Changelog for 1.4.8
 * Added min empty lines for orders, invoices, and gl (Chris T, 1277)
 * Fixed 1280, credit/debit invoices flipping signs (Chris T)
 * Fixed 1279, gaps possible if drafts are deleted (Chris T)
+* Fixed 1287, perl errors on missing inputs on setup.pl (Chris T)
+* Fixed 1285, unable to enter more than 1 top-level rep. unit (Chris T)
 
 Chris T is Chris Travers
 
