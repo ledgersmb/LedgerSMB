@@ -21,9 +21,15 @@ END ?>
 <tbody>
     <tr class="sectionhead">
         <th><?lsmb text('Income Account') ?></th>
-        <th><?lsmb report.from_date _ '<br /> - <br />' _ report.to_date ?></th>
+        <th><?lsmb IF report.from_date || report.to_date; 
+                        report.from_date _ '<br /> - <br />' 
+                        _ report.to_date; 
+                   ELSE; '&nbsp;'; END ?>
+        </th>
     <?lsmb FOREACH COMP IN comparisons ?>
-        <th><?lsmb COMP.from_date _ '<br /> - <br />' _ COMP.to_date ?></th>
+        <th><?lsmb IF COMP.from_date || COMP.to_date; 
+                            COMP.from_date _ '<br /> - <br />' _ COMP.to_date;
+                   ELSE; '&nbsp;'; END ?></th>
     <?lsmb END ?>
     </tr>
   <?lsmb FOREACH k IN account_data.I.keys.sort ?>
