@@ -11,6 +11,7 @@ Changelog for 1.4.8
 * Fixed 1285, unable to enter more than 1 top-level rep. unit (Chris T)
 * Fixed 1283, dash in header of amounts col in PNL (Chris T)
 * Fixed 1284, pdf pnl does not work over https or nonstandard ports (Chris T)
+* Fixed 1282, business units not passed to trial balance (Chris T)
 
 Chris T is Chris Travers
 
