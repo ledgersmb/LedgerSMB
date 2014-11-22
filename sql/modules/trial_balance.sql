@@ -1,14 +1,5 @@
 BEGIN;
 
-CREATE OR REPLACE FUNCTION unnest(anyarray)
-  RETURNS SETOF anyelement AS
-$BODY$
-SELECT $1[i] FROM
-    generate_series(array_lower($1,1),
-                    array_upper($1,1)) i;
-$BODY$
-  LANGUAGE 'sql' IMMUTABLE;
-
 DROP TYPE IF EXISTS tb_row CASCADE;
 create type tb_row AS (
    account_id int,
