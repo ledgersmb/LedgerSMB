@@ -64,7 +64,9 @@ BEGIN
         WHERE end_date < in_date_from;
     END IF;
 
-    IF t_roll_forward IS NULL THEN
+    IF t_roll_forward IS NULL 
+       OR array_upper(in_business_units) > 0 
+    THEN
        SELECT min(transdate) - '1 day'::interval 
          INTO t_roll_forward 
          FROM acc_trans;
@@ -147,124 +149,6 @@ BEGIN
      ORDER BY a.accno;
 END;
 $$ language plpgsql;
-
-
-
-CREATE OR REPLACE FUNCTION trial_balance__get (
-    in_report_id int
-) RETURNS trial_balance__entry AS $body$
-    SELECT tb.id, 
-           tb.date_from, 
-           tb.date_to, 
-           tb.description, 
-           tb.yearend,
-           tbh.heading_id,
-           (ARRAY(SELECT account_id FROM trial_balance__account_to_report WHERE report_id = tb.id)) as accounts
-     FROM trial_balance tb
-     LEFT OUTER JOIN trial_balance__heading_to_report tbh ON tbh.report_id = tb.id
-     WHERE tb.id = $1;
-$body$ LANGUAGE SQL;
-
-
-CREATE OR REPLACE FUNCTION trial_balance__save (
-    in_id int,
-    in_date_from date,
-    in_date_to date,
-    in_description text,
-    in_ignore_yearend text,
-    in_heading int,
-    in_accounts int[]
-) RETURNS int AS $body$
-
-    DECLARE
-        old_heading_id int;
-        new_report_id int;
-        iter int;
-        acc_id int;
-    BEGIN
-        PERFORM id 
-           FROM trial_balance
-          WHERE id = in_id;
-          
-        IF in_id IS NOT NULL AND FOUND THEN
-            -- This is an edit.
-            UPDATE trial_balance
-               SET date_from   = in_date_from,
-                   date_to     = in_date_to,
-                   description = in_description,
-                   ignore_yearend     = in_ignore_yearend
-             WHERE id = in_id;
-            
-            SELECT heading_id 
-              INTO old_heading_id
-              FROM trial_balance__heading_to_report
-             WHERE heading_id = in_heading
-               AND report_id = in_id;
-            
-            IF FOUND AND in_heading IS NULL THEN
-                DELETE FROM trial_balance__heading_to_report
-                      WHERE report_id = in_id
-                        AND heading_id = old_heading_id;
-                -- Expect to remove the heading ID.
-            ELSIF FOUND AND in_heading <> old_heading_id THEN
-                
-                UPDATE trial_balance__heading_to_report
-                   SET heading_id = in_heading
-                 WHERE heading_id = old_heading_id
-                   AND report_id = in_id;
-
-            -- Else, do nothing.
-            END IF;
-            
-            IF in_accounts IS NOT NULL AND in_accounts <> '{}' THEN
-                -- First, we add the new ones.
-                
-                DELETE FROM trial_balance__account_to_report WHERE report_id = in_id;
-                FOR 
-                    iter IN array_lower(in_accounts, 1) .. array_upper(in_accounts, 1) 
-                LOOP
-                    INSERT INTO trial_balance__account_to_report (report_id, account_id)
-                         VALUES (in_id, in_accounts[iter]);
-                END LOOP;
-                
-            ELSE
-                -- It's null.
-                -- We can drop all the direct account entries.
-                DELETE 
-                  FROM trial_balance__account_to_report
-                 WHERE report_id = in_id;
-            END IF;
-            return in_id;
-        ELSE 
-            -- We don't have a trial balance setup.
-            -- We can just create a new one whole cloth. Woo!
-            new_report_id := nextval('trial_balance_id_seq');
-            INSERT INTO trial_balance (id, date_from, date_to, description, yearend)
-                 VALUES (new_report_id, in_date_from, in_date_to, 
-                        in_description, in_ignore_yearend);
-            
-            IF in_heading IS NOT NULL THEN
-                INSERT INTO trial_balance__heading_to_report (report_id, heading_id)
-                     VALUES (new_report_id, in_heading);
-            END IF;
-            
-            IF in_accounts IS NOT NULL and in_accounts <> '{}' THEN
-                -- Iterate over the length of the array, and insert each one into the
-                -- account-to-report table.
-                -- Because this targets 8.2, we can't use the 8.4 function unnest();
-                FOR 
-                    iter IN array_lower(in_accounts, 1) .. array_upper(in_accounts, 1) 
-                LOOP
-                    INSERT INTO trial_balance__account_to_report (report_id, account_id)
-                         VALUES (new_report_id, in_accounts[iter]);
-                END LOOP;
-            END IF;
-            return new_report_id;
-        END IF;
-    END;
-$body$ LANGUAGE PLPGSQL;
-
---
 
 CREATE OR REPLACE FUNCTION trial_balance__accounts (
     in_report_id INT
