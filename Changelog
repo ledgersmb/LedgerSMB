@@ -10,6 +10,11 @@ API Enhancements:
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.9
+* Removed optional dependency on LaTeX from starman preload (Chris T)
+
+Chris T is Chris Travers
+
 Changelog for 1.4.8
 * Fixed end-date not a date widget on employee div (Chris T)
 * Fixed errors saving person as employee on contacts screen (Chris T)
