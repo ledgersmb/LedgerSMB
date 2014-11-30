@@ -3,15 +3,15 @@
 package LedgerSMB::FCGI;
 
 use CGI::Emulate::PSGI;
-use FindBin;
+#use FindBin;
 use LedgerSMB::PSGI;
 use Plack::Builder;
 use Plack::Middleware::Static;
 use Carp::Always;
 
-BEGIN {
-  lib->import($FindBin::Bin) unless $ENV{mod_perl}
-}
+#BEGIN {
+#  lib->import($FindBin::Bin) unless $ENV{mod_perl}
+#}
 
 my $app = LedgerSMB::PSGI::app();
 
