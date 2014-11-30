@@ -179,7 +179,7 @@ Populates and returns $report->rows.
 
 sub run_report {
     my $self = shift;
-    my @rows = $self->exec_method(funcname => 'report__incoming_cogs_line');
+    my @rows = $self->call_dbmethod(funcname => 'report__incoming_cogs_line');
     for my $row (@rows){
         $row->{partnumber_href_suffix} = $row->{parts_id};
         $row->{invnumber_href_suffix} = $row->{trans_id};
