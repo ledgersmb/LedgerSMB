@@ -1,22 +1,3 @@
-		<script type="text/javascript">
-			function SwitchMenu(id) {
-				var obj = "menu_" + id;
-				if (document.getElementById) {
-					var element = document.getElementById(obj);
-					
-					element = document.getElementById(obj);
-					if (element.className == 'menu_open'){
-						element.className 
-							= 'menu_closed';
-					} else {
-						element.className = 'menu_open';
-					}
-					return false;
-				}		
-			}
-			document.onselectstart = new Function("return false");
-		</script>
-</head>
                 <div style="text-align: center"><a target="_blank" href="http://ledgersmb.org/">
 		<img class="cornderlogo" src="images/ledgersmb_small.png" width="100" height="50" border="1" alt="LedgerSMB" />
                 </a></div>
@@ -39,7 +20,7 @@
 					?>menu_closed<?lsmb
 					ELSE ?>menu_item<?lsmb END ?>">
 			<a href="<?lsmb IF item.module ?><?lsmb item.module 
-				?><?lsmb ELSE ?>menu.pl<?lsmb END 
+				?>
 				?>?login=<?lsmb login 
 				?>&amp;<?lsmb FOREACH arg IN item.args 
 				?><?lsmb arg 
@@ -56,11 +37,7 @@
 				<?lsmb ELSIF ('login.pl' == item.module) ?>
 					target = '_top'
 				<?lsmb END ?>
-				<?lsmb IF item.menu && 
-					('New Window' != item.label) ?> 
-					onclick="return SwitchMenu('<?lsmb item.id ?>')"
-				<?lsmb END ?>
-				id = "a_<?lsmb item.id ?>"
+				id = "a_<?lsmb item.id; END?>"
 				><?lsmb text(item.label) ?></a>
 		<?lsmb IF item.menu && (item.label != 'New Window') ?>
 			<ul id="sub_<?lsmb item.id ?>" class="submenu">
