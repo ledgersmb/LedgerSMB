@@ -29,7 +29,7 @@ version.  See the COPYRIGHT and LICENSE files for more information.
 package LedgerSMB::Database;
 use LedgerSMB::Auth;
 use DBI;
-use base qw(PGObject::Util::DBAdmin);
+use base qw(App::LedgerSMB::Admin::Database);
 
 our $VERSION = '1.1';
 
