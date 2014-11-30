@@ -13,18 +13,20 @@ function SwitchMenu(id) {
     }		
 }
 
-function ActivateMenu(id) {
-    var obj = "menu_" + id;
-    var menu_node = document.getElementById(obj);
-    var href = menu_node.href;
-    window.alert(href);
-
-    return false;
+function load_link(xhr, href) {
+    console.log(href);
+    xhr(href, {"handlesAs": "text"}).then(function(doc){
+        var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+        console.log(body[1]);
+        var container = document.getElementById('maindiv');
+        var newbody = body[1];
+        container.innerHTML= newbody;
+    });
 }
 
 require([
-       'dojo/on', 'dojo/query', 'dojo/domReady!'
-   ], function (on, query) {
+       'dojo/on', 'dojo/query', "dojo/request/xhr", 'dojo/domReady!'
+   ], function (on, query, xhr) {
         query('.menu_closed').forEach(function(node){
              on(node, 'click', function(e){
                    e.preventDefault();
@@ -32,5 +34,14 @@ require([
                 }
              );
         });
-   }
+        query('#menudiv a').forEach(function(node){
+             if (node.href){
+                 on(node, 'click', function(e){
+                           e.preventDefault();
+                           load_link(xhr, node.href);
+                     }
+                 );
+             }
+        });   
+    }
 );
