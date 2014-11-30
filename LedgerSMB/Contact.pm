@@ -47,7 +47,7 @@ sub save {
     
     if ($self->{person_id} && $self->{contact} && $self->{contact_class}) {
         
-        my $id = shift @ {$self->exec_method( procname => "save_contact" ) };
+        my $id = shift @ {$self->call_dbmethod( funcname => "save_contact" ) };
         $self->merge($id);
         return $self->{id};
     }
@@ -65,9 +65,9 @@ sub get {
     my $self = shift @_;
     my $id = shift @_;
     
-    my $result = shift @{ $self->exec_method(
-        procname => 'get',
-        args=>[$id]
+    my $result = shift @{ $self->call_procedure(
+        funcname => 'get',
+        args     =>[$id]
     ) };
 }
 
@@ -76,9 +76,9 @@ sub search {
     my $self = shift @_;
     my ($pattern, $offset, $limit) = @_;
     
-    my $results = $self->exec_method( 
-        procname => 'search', 
-        args=>[$pattern, $offset, $limit] 
+    my $results = $self->call_procedure( 
+        funcname => 'search', 
+        args     =>[$pattern, $offset, $limit] 
     );
     
     return $results;

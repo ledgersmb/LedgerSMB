@@ -73,6 +73,7 @@ sub _init_db {
     my $database = _get_database($request);
     $request->{dbh} = $database->connect()
 	if ! defined $request->{dbh};
+    $LedgerSMB::App_State::DBH = $request->{dbh};
 
     return $database;
 }
@@ -252,7 +253,7 @@ sub copy_db {
            || die 'An error occurred. Please check your database logs.' ;
     my $dbh = LedgerSMB::Database->new(
            {%$database, (company_name => $request->{new_name})}
-    )->dbh;
+    )->connect;
     $dbh->prepare("SELECT setting__set('role_prefix', 
                                coalesce((setting_get('role_prefix')).value, ?))"
     )->execute("lsmb_$database->{company_name}__");
@@ -384,7 +385,7 @@ sub run_backup {
 sub revert_migration {
     my ($request) = @_;
     my $database = _get_database($request);
-    my $dbh = $database->dbh();
+    my $dbh = $database->connect();
     my $sth = $dbh->prepare(qq(
          SELECT value
            FROM defaults
@@ -458,7 +459,7 @@ and not the user creation screen.
 sub load_templates {
     my ($request) = @_;
     my $dir = $LedgerSMB::Sysconfig::templates . '/' . $request->{template_dir};
-    my $dbh = _get_database($request)->dbh;
+    my $dbh = _get_database($request)->connect;
     opendir(DIR, $dir);
     while (readdir(DIR)){
        next unless -f "$dir/$_";
@@ -946,7 +947,7 @@ sub save_user {
 
 sub process_and_run_upgrade_script {
     my ($request, $database, $src_schema, $template) = @_;
-    my $dbh = $database->dbh;
+    my $dbh = $database->connect;
     my $temp = $database->loader_log_filename();
     my $rc;
 
