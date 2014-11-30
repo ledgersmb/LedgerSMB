@@ -69,26 +69,22 @@ sub root_doc {
     $request->{title} = "LedgerSMB $request->{VERSION} -- ".
 	"$request->{login} -- $request->{company}";
 
-    if ($request->{menubar}){
-        drilldown_menu($request);
-        return;
-    } else {
-        my $userpw = LedgerSMB::DBObject::Menu->new({base => $request});
-        if ($userpw->will_expire_soon){
-            $request->{main} = 'user.pl?action=preference_screen';
-        } else {
-            $request->{main} = "am.pl?action=recurring_transactions"
-                if $request->{main} eq 'recurring_transactions';
+    my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
+    $menu->generate();
+    for my $item (@{$menu->{menu_items}}){
+        if ($request->{'open'} =~ /:$item->{id}:/ ){
+            $item->{'open'} = 'true';
         }
-        $template = LedgerSMB::Template->new(
+    }
+
+    $template = LedgerSMB::Template->new(
             user =>$request->{_user}, 
             locale => $request->{_locale},
             path => 'UI',
             template => 'main',
 	     format => 'HTML'
-	);
-    }
-    $template->render($request);
+    );
+    $template->render($menu);
 }
 
 =pod
