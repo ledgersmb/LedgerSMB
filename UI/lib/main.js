@@ -15,20 +15,25 @@ function SwitchMenu(id) {
 
 function load_link(xhr, href) {
     xhr(href, {"handlesAs": "text"}).then(function(doc){
+         set_main_div(doc);
+    });
+}
+
+function set_main_div(doc){
         var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-        var container = document.getElementById('flicker-container');
-        //container.style.visibility="hidden";
         var newbody = body[1];
-        container.innerHTML= newbody;
-        console.log(container.id);
-        setup_dojo();
-        require(['dojo/query', 'dojo/style'],
-        function(query, style){
-           query('#flicker-container').forEach(function(node){
-                style.set(node, 'visibility', 'visible');
+        require(['dojo/query', 'dojo/dom-style', 'dijit/registry', 'dojo/domReady!'],
+        function(query, style, registry){
+           var mainCP = registry.byId('maindiv');
+           mainCP.domNode.style.visibility = 'hidden';
+           style.set(mainCP, 'visibility', 'hidden');
+           mainCP.set('content', newbody);
+           setup_dojo();
+               mainCP.domNode.style.visibility = 'visible';
+           require(['dojo/domReady!'], 
+           function(){
            });
         });
-    });
 }
 
 function setup_dojo() {
@@ -57,7 +62,7 @@ function setup_dojo() {
                             return parser.parse();
                         });
              }
-             query('maindiv .tabular').forEach(
+             query('#maindiv .tabular').forEach(
                   function(node){
                       var tabparams = {
                              'data-dojo-type': 'dojox/layout/TableContainer',
