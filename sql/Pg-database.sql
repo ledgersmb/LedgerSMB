@@ -3052,7 +3052,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 44	report	1	110
 46	menu	1	111
 47	menu	1	112
-48	module	employee.pl	113
+48	module	contact.pl	113
 48	action	add	114
 50	menu	1	119
 51	module	oe.pl	120

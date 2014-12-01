@@ -801,6 +801,7 @@ sub post_invoice {
 
     my ( $self, $myconfig, $form ) = @_;
     $form->{invnumber} = undef if $form->{invnumber} eq '';
+    delete $form->{reverse} unless $form->{reverse};
 
     $form->all_business_units;
     $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
