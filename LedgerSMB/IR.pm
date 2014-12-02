@@ -79,6 +79,7 @@ sub add_cogs {
 sub post_invoice {
     my ( $self, $myconfig, $form ) = @_;
     $form->{crdate} ||= 'now';
+    delete $form->{reverse} unless $form->{reverse};
 
     $form->all_business_units;
     if ($form->{id}){
