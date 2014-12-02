@@ -37,133 +37,23 @@ function set_main_div(doc){
 }
 
 function setup_dojo() {
-   console.log('setting up dojo');
-   require(     ['dojo/query', 
-              'dijit/registry',
-              'dojo/dom-class',
-              'dojo/dom-construct',
-              'dojox/layout/TableContainer',
-              'dijit/form/TextBox',
-              'dijit/form/CheckBox',
-              'dijit/form/RadioButton',
-              'dijit/form/Button',
-              'dijit/layout/ContentPane',
-              'dijit/form/Textarea',
-              'dojo/domReady!',
-             ],
-      function(query, registry, cls, construct, table, textbox, checkbox, 
-               radio, select, button, textarea, contentpane)
-      {
-             console.log('begining setup of dojo');
-             lsmbConfig.dateformat = lsmbConfig.dateformat.replace('m', 'M');
-             var parse = false;
-             query('div.dojo-declarative').forEach(function() { parse = true; });
-             if (parse){
-                 console.log('declaratively parsing');
-                 return require(['dojo/parser'],
-                        function(parser){
-                            return parser.parse();
-                        });
-             }
-             query('#maindiv .tabular').forEach(
-                  function(node){
-                      console.log('found tabular');
-                      var tabparams = {
-                             'data-dojo-type': 'dojox/layout/TableContainer',
-                             'showLabels': 'True',
-                             'orientation': 'horiz',
-                             'customClass': 'tabularform',
-                             'cols': 1
-                      };
-                      var mycols;
-                      if (cls.contains(node, 'col-1')){
-                         tabparams['cols'] = 1;
-                      } else if (cls.contains(node, 'col-2')){
-                         tabparams['cols'] = 2;
-                      } else if (cls.contains(node, 'col-3')){
-                         tabparams['cols'] = 3;
-                      } 
-                      var mytabular = new table(tabparams, node);
-                      // Must hide labels in such a form!
-                      query('label', node).forEach(function(node2){
-                         construct.destroy(node2);
-                      });
+    require(['lsmb/lib/Loader', 'dojo/domReady!'],
+    function(l){
+        if (location.search.indexOf('&dojo=no') != -1) {
+            dojo.cookie("lsmb-dojo-disable", "yes", {});
+        } else if (location.search.indexOf('&dojo') != -1) {
+            dojo.cookie("lsmb-dojo-disable", "no", {});
+        }
 
-                      var counter = 0;
-                      // Process inputs
-                      query('*', node).forEach(
-                         function(input){
-                             if (input.nodeName == 'DIV')
-                             {
-                                 if (cls.contains(input, 'input_line')){
-                                    var nodes_to_add = counter % mycols;
-                                    for (i=nodes_to_add; i<mycols; i++){
-                                        mytabular.addChild(new contentpane({
-                                           "content": ""
-                                        })); // spacer
-                                    }
-                                    counter = 0;
-                                 }
-                             }
-                             var widget = registry.byNode(input);
-                             if (widget == undefined && input !== undefined){
- 
-                                 widget = construct_form_node(
-                                               query, cls, registry, 
-                                               textbox, checkbox, 
-                                               radio, select,
-                                               button, textarea, input
-                                 );
-                             }
-                             if (widget !== undefined){
-                                ++counter;
-                                if (input.nodeName == 'BUTTON'){
-                                    var mycp = new contentpane(
-                                    { content: "" }
-                                );
-                                 
-                                mytabular.addChild(mycp);
-                                mycp.addChild(widget); // obscures label
-                                     
-                                } else {
-                                     mytabular.addChild(widget);
-                                } 
-                                try_startup(widget);
-            
-                             }
-                         }
-                      ); 
-                      mytabular.startup();
-                  }
-             );
-
-             query('input, select, button, textarea').forEach(
-                  function(node){
-                      var val;
-                      var ntype = node.nodeName;
-                      console.log('found input');
-                      console.log(node);
-                      if (node.type == 'hidden'){
-                          return undefined;
-                      }
-                      if (registry.byId(node.id) !== undefined){
-                          return undefined;
-                      }
-                      var widget = construct_form_node(
-                                           query, cls, registry, textbox, checkbox, 
-                                           radio, select,
-                                           button, textarea, node
-                      );
-                      if (! try_startup(widget)){
-                            console.log(widget,node);
-                      } 
-                      else {
-                      }
-                  });
-      }
-   );
-
+        if (dojo.cookie("lsmb-dojo-disable") != 'yes') {
+            loader = new l;
+            loader.setup();
+        } else {
+            init();
+        }
+    });
 }
+
 require([
        'dojo/on', 'dojo/query', "dojo/request/xhr", 'dojo/domReady!'
    ], function (on, query, xhr) {

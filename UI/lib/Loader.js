@@ -145,13 +145,11 @@ function(
                     'AccountBox': function(input){
                                     // Since this requires db components, it
                                     // cannot be preloaded on every page.
-                                    console.log('Loader.js AccountBox input=',input);
                                     require(['lsmb/accounts/AccountSelector',
                                              'dojo/ready'],
                                     function(accountselector, ready){
                                       var value = input.value;
                                       ready(function(){
-                                          console.log('Loader.js AccountBox input=',input);
                                           return new accountselector({
                                               "name": input.name,
                                              "value": value,
@@ -262,7 +260,6 @@ function(
             for (var i = 0; i <= classes.length; i++){
                 classKey=classes[i];
                 if (undefined !== this.nodeMap[dnode.nodeName][classKey]){
-                    console.log('tshvr4 createWidget dnode.nodeName='+dnode.nodeName+' classKey='+classKey);
                     return this.nodeMap[dnode.nodeName][classKey](dnode);
                 }
             }
@@ -274,7 +271,7 @@ function(
         setup: function(){
             var declarative = false;
             var myself = this;
-            query('body.dojo-declarative').forEach(function(){
+            query('div.dojo-declarative').forEach(function(){
                  declarative = true;
             });
             if (declarative){
@@ -289,7 +286,6 @@ function(
                    widget = myself.createWidget(dnode);
                    if (undefined !== widget){
                        ready(function(){
-                           //console.log('tshvr4 Loader setup widget=',widget,'id='+dnode.id);
                            var wdgt_tmp=registry.byId(dnode.id);
                            //registry.byId(dnode.id).startup();
                            if(wdgt_tmp) wdgt_tmp.startup();//avoid TypeError: wdgt_tmp is undefined
