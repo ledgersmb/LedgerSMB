@@ -58,6 +58,17 @@ function(
                             }
              
                     },
+                 A: { '__default': function(a) {
+                           if (a.target || ! a.href){
+                               return undefined; 
+                           }
+                           on(node, 'click', function(e){
+                               e.preventDefault();
+                               load_link(xhr, node.href);
+                           });
+                     }
+
+                    }, 
           TEXTAREA: { '__default': function(input){
                                     return new textarea(
                                            { "name": input.name,
