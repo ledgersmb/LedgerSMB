@@ -25,7 +25,7 @@ function set_main_div(doc){
         require(['dojo/query', 'dojo/dom-style', 'dijit/registry', 'dojo/domReady!'],
         function(query, style, registry){
            var mainCP = registry.byId('maindiv');
-           mainCP.domNode.style.visibility = 'hidden';
+           // mainCP.domNode.style.visibility = 'hidden';
            style.set(mainCP, 'visibility', 'hidden');
            mainCP.set('content', newbody);
            setup_dojo();
@@ -49,14 +49,17 @@ function setup_dojo() {
               'dijit/form/Button',
               'dijit/layout/ContentPane',
               'dijit/form/Textarea',
+              'dojo/domReady!',
              ],
       function(query, registry, cls, construct, table, textbox, checkbox, 
                radio, select, button, textarea, contentpane)
       {
+             console.log('begining setup of dojo');
              lsmbConfig.dateformat = lsmbConfig.dateformat.replace('m', 'M');
              var parse = false;
              query('div.dojo-declarative').forEach(function() { parse = true; });
              if (parse){
+                 console.log('declaratively parsing');
                  return require(['dojo/parser'],
                         function(parser){
                             return parser.parse();
@@ -64,6 +67,7 @@ function setup_dojo() {
              }
              query('#maindiv .tabular').forEach(
                   function(node){
+                      console.log('found tabular');
                       var tabparams = {
                              'data-dojo-type': 'dojox/layout/TableContainer',
                              'showLabels': 'True',
@@ -137,6 +141,11 @@ function setup_dojo() {
                   function(node){
                       var val;
                       var ntype = node.nodeName;
+                      console.log('found input');
+                      console.log(node);
+                      if (node.type == 'hidden'){
+                          return undefined;
+                      }
                       if (registry.byId(node.id) !== undefined){
                           return undefined;
                       }
