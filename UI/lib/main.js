@@ -1,5 +1,6 @@
 function SwitchMenu(id) {
-    var obj = id;
+    var obj = id.replace(/^a/, 'menu');
+    console.log(id);
     if (document.getElementById) {
         var element = document.getElementById(obj);
 		
@@ -57,15 +58,15 @@ function setup_dojo() {
 require([
        'dojo/on', 'dojo/query', "dojo/request/xhr", 'dojo/domReady!'
    ], function (on, query, xhr) {
-        query('.menu_closed').forEach(function(node){
+        query('a.t-submenu').forEach(function(node){
              on(node, 'click', function(e){
                    e.preventDefault();
-                   SwitchMenu(node.id);
+                   SwitchMenu(node.id.replace(/a/, 'menu'));
                 }
              );
         });
-        query('#menudiv a').forEach(function(node){
-             if (node.href){
+        query('a.menu-terminus').forEach(function(node){
+             if (node.href.search(/pl/)){
                  on(node, 'click', function(e){
                            e.preventDefault();
                            load_link(xhr, node.href);

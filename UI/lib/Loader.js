@@ -277,10 +277,10 @@ function(
             if (declarative){
                return parser.parse(); 
             } 
-            query('.tabular label').forEach(function(dnode){
+            query('#maindiv .tabular label').forEach(function(dnode){
                  construct.destroy(dnode);
             });
-            query('*').forEach(function(dnode){
+            query('#maindiv *').forEach(function(dnode){
                 ready(function(){
                    var onclick = dnode.onclick;
                    widget = myself.createWidget(dnode);
