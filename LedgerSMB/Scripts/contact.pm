@@ -26,6 +26,7 @@ use LedgerSMB::Entity::Location;
 use LedgerSMB::Entity::Contact;
 use LedgerSMB::Entity::Bank;
 use LedgerSMB::Entity::Note;
+use LedgerSMB::Entity::User;
 use LedgerSMB::File;
 use LedgerSMB::App_State;
 use LedgerSMB::Template;
@@ -127,6 +128,7 @@ sub _main_screen {
     my @DIVS;
     my @entity_files;
     my @eca_files;
+    my $user;
     if ($company->{entity_id} or $person->{entity_id}){
        my $entity_id = $company->{entity_id};
        $entity_id ||= $person->{entity_id};
@@ -140,6 +142,7 @@ sub _main_screen {
        @entity_files = LedgerSMB::File->list(
                {ref_key => $entity_id, file_class => '4'}
        );
+       $user = LedgerSMB::Entity::User->get($entity_id);
     } elsif ($person->{entity_class} == 3) {
        @DIVS = ('employee');
     } else {
@@ -317,6 +320,8 @@ sub _main_screen {
                   company => $company,
                    person => $person,
                  employee => $person,
+                     user => $user,
+                    roles => [$user->list_roles],
              country_list => \@country_list,
                credit_act => $credit_act,
               credit_list => \@credit_list,
