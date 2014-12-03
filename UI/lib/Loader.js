@@ -35,7 +35,9 @@ define([
     //row2
     'dijit/form/Select',
     'dijit/form/Button',
+    'dojo/dom-form',
     //more
+    "dojo/request/xhr",
     'dojo/on'
     ],
 function(
@@ -43,7 +45,7 @@ function(
     declare, date_locale, registry, parser, query, ready, wbase, construct,
     // widgets
     tabular, textarea, datebox, checkbox, radio, textbox, 
-    select, button, on) {
+    select, button, form, xhr, on) {
     return declare(wbase, {
         nodeMap: { // hierarchy nodeName->class, input type treated as class
                    // for INPUT elements, type beats class.
@@ -69,6 +71,26 @@ function(
                      }
 
                     }, 
+              FORM: { '__default': function(formnode){
+                                       console.log(formnode);
+                                       on(formnode, 'submit', 
+                                       function(e){
+                                           console.log(formnode);
+                                           e.preventDefault();
+                                           var fquery = form.toQuery(formnode);
+                                           xhr(formnode.action, 
+                                              {"handlesAs": "text",
+                                                  "method": formnode.method,
+                                                   "query": fquery,
+                                              }).then(
+                                              function(doc){
+                                                   set_main_div(doc);
+                                              });
+                                      });
+                                      return undefined;
+                                   },
+                       'dojoized': function(){ return undefined; },
+                    },
           TEXTAREA: { '__default': function(input){
                                     return new textarea(
                                            { "name": input.name,
