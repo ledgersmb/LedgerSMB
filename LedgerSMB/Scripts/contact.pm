@@ -142,6 +142,8 @@ sub _main_screen {
        @entity_files = LedgerSMB::File->list(
                {ref_key => $entity_id, file_class => '4'}
        );
+       my $employee = LedgerSMB::Entity::Person::Employee->get($entity_id);
+       $person = $employee if $employee;
        $user = LedgerSMB::Entity::User->get($entity_id);
     } elsif ($person->{entity_class} == 3) {
        @DIVS = ('employee');
