@@ -323,7 +323,7 @@ sub _main_screen {
                    person => $person,
                  employee => $person,
                      user => $user,
-                    roles => [$user->list_roles],
+                    roles => [eval {$user->list_roles;} ],
              country_list => \@country_list,
                credit_act => $credit_act,
               credit_list => \@credit_list,
