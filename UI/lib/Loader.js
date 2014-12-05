@@ -74,10 +74,13 @@ function(
               FORM: { '__default': function(formnode){
                                        console.log(formnode);
                                        on(formnode, 'submit', 
-                                       function(e){
+                                       function(e){ 
                                            console.log(formnode);
+                                           var method = formnode.method;
+                                           if (undefined == method){
+                                               method = 'GET';
+                                           }
                                            e.preventDefault();
-                                           var fquery = form.toQuery(formnode);
                                            xhr(formnode.action, 
                                               {"handlesAs": "text",
                                                   "method": formnode.method,
