@@ -509,7 +509,6 @@ sub _error {
              <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
              </body>|;
 
-        die;
 
     }
     else {

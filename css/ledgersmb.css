@@ -94,7 +94,7 @@ body.admin {
   color: black;
 }
 
-body.menu {
+body.menu, #menudiv  {
   background-color: #eeeeee;
   font-family: Verdana, Arial, Helvetica, sans-serif;
   font-size: 11px;

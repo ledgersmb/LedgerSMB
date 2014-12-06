@@ -55,7 +55,7 @@ sub __default {
 =item root_doc
 
 If $request->{menubar} is set, this creates a drilldown menu.  Otherwise, it
-creates the root document (currently a frameset).
+creates the root document.
 
 =back
 
@@ -69,26 +69,22 @@ sub root_doc {
     $request->{title} = "LedgerSMB $request->{VERSION} -- ".
 	"$request->{login} -- $request->{company}";
 
-    if ($request->{menubar}){
-        drilldown_menu($request);
-        return;
-    } else {
-        my $userpw = LedgerSMB::DBObject::Menu->new({base => $request});
-        if ($userpw->will_expire_soon){
-            $request->{main} = 'user.pl?action=preference_screen';
-        } else {
-            $request->{main} = "am.pl?action=recurring_transactions"
-                if $request->{main} eq 'recurring_transactions';
+    my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
+    $menu->generate();
+    for my $item (@{$menu->{menu_items}}){
+        if ($request->{'open'} =~ /:$item->{id}:/ ){
+            $item->{'open'} = 'true';
         }
-        $template = LedgerSMB::Template->new(
+    }
+
+    $template = LedgerSMB::Template->new(
             user =>$request->{_user}, 
             locale => $request->{_locale},
             path => 'UI',
-            template => 'frameset',
+            template => 'main',
 	     format => 'HTML'
-	);
-    }
-    $template->render($request);
+    );
+    $template->render($menu);
 }
 
 =pod
