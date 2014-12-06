@@ -1362,7 +1362,7 @@ sinumber|1
 sonumber|1
 yearend|1
 businessnumber|1
-version|1.4.8
+version|1.4.9
 closedto|\N
 revtrans|1
 ponumber|1
