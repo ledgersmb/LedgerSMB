@@ -23,7 +23,7 @@ use LedgerSMB::PGObject;
 use Try::Tiny;
 
 use CGI::Emulate::PSGI;
-
+$ENV{GATEWAY_INTERFACE}="cgi/1.1";
 sub app {
    return CGI::Emulate::PSGI->handler(
      sub {

@@ -14,6 +14,24 @@
  * of the function, and avoid calling if the widget already exists.
  */
 
+function set_main_div(doc){
+        console.log('setting body');
+        var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+        var newbody = body[1];
+        require(['dojo/query', 'dojo/dom-style', 'dijit/registry', 'dojo/domReady!'],
+        function(query, style, registry){
+           var mainCP = registry.byId('maindiv');
+           // mainCP.domNode.style.visibility = 'hidden';
+           style.set(mainCP, 'visibility', 'hidden');
+           mainCP.set('content', newbody);
+           setup_dojo();
+               mainCP.domNode.style.visibility = 'visible';
+           require(['dojo/domReady!'], 
+           function(){
+           });
+        });
+}
+
 define([
      // base
     'dojo/_base/declare',
@@ -35,7 +53,10 @@ define([
     //row2
     'dijit/form/Select',
     'dijit/form/Button',
+    'dojo/dom-form',
+    'dojo/dom-attr',
     //more
+    "dojo/request/xhr",
     'dojo/on'
     ],
 function(
@@ -43,7 +64,7 @@ function(
     declare, date_locale, registry, parser, query, ready, wbase, construct,
     // widgets
     tabular, textarea, datebox, checkbox, radio, textbox, 
-    select, button, on) {
+    select, button, domform, domattr, xhr, on) {
     return declare(wbase, {
         nodeMap: { // hierarchy nodeName->class, input type treated as class
                    // for INPUT elements, type beats class.
@@ -57,6 +78,59 @@ function(
                                                      }, node);
                             }
              
+                    },
+                 A: { '__default': function(a) {
+                           if (a.target || ! a.href){
+                               return undefined; 
+                           }
+                           on(node, 'click', function(e){
+                               e.preventDefault();
+                               load_link(xhr, node.href);
+                           });
+                     }
+
+                    }, 
+              FORM: { '__default': function(formnode){ 
+                                       if (undefined == formnode.action){
+                                           return undefined;
+                                       }
+                                       on(formnode, 'submit', 
+                                       function(evt){ 
+                                           var method = formnode.method;
+                                           evt.preventDefault();
+                                           var qobj = domform.toQuery(formnode);
+                                           qobj = 'action=' 
+                                                  + formnode.action.value + '&' 
+                                                  + qobj;
+                                           if (undefined == method){
+                                               method = 'GET';
+                                           }
+                                           var url = domattr.get(formnode, 'action');
+                                           console.log(url);
+                                           if ('GET' == method || 'get' == method){
+                                                url = url + '?' + qobj;
+                                                console.log(url);
+                                                xhr(url,
+                                                    {"handleAs": "text",
+                                                    }).then(
+                                                       function(doc){
+                                                       set_main_div(doc);
+                                                 });
+                                               
+                                           } else {
+                                                xhr(url,
+                                                    {"handleAs": "text",
+                                                      method: method,
+                                                      data: qobj,
+                                                    }).then(
+                                                       function(doc){
+                                                       set_main_div(doc);
+                                                 });
+                                           }
+                                      });
+                                      return undefined; 
+                                   },
+                       'dojoized': function(){ return undefined; },
                     },
           TEXTAREA: { '__default': function(input){
                                     return new textarea(
@@ -145,13 +219,11 @@ function(
                     'AccountBox': function(input){
                                     // Since this requires db components, it
                                     // cannot be preloaded on every page.
-                                    console.log('Loader.js AccountBox input=',input);
                                     require(['lsmb/accounts/AccountSelector',
                                              'dojo/ready'],
                                     function(accountselector, ready){
                                       var value = input.value;
                                       ready(function(){
-                                          console.log('Loader.js AccountBox input=',input);
                                           return new accountselector({
                                               "name": input.name,
                                              "value": value,
@@ -262,7 +334,6 @@ function(
             for (var i = 0; i <= classes.length; i++){
                 classKey=classes[i];
                 if (undefined !== this.nodeMap[dnode.nodeName][classKey]){
-                    console.log('tshvr4 createWidget dnode.nodeName='+dnode.nodeName+' classKey='+classKey);
                     return this.nodeMap[dnode.nodeName][classKey](dnode);
                 }
             }
@@ -274,22 +345,21 @@ function(
         setup: function(){
             var declarative = false;
             var myself = this;
-            query('body.dojo-declarative').forEach(function(){
+            query('div.dojo-declarative').forEach(function(){
                  declarative = true;
             });
             if (declarative){
                return parser.parse(); 
             } 
-            query('.tabular label').forEach(function(dnode){
+            query('#maindiv .tabular label').forEach(function(dnode){
                  construct.destroy(dnode);
             });
-            query('*').forEach(function(dnode){
+            query('#maindiv *').forEach(function(dnode){
                 ready(function(){
                    var onclick = dnode.onclick;
                    widget = myself.createWidget(dnode);
                    if (undefined !== widget){
                        ready(function(){
-                           //console.log('tshvr4 Loader setup widget=',widget,'id='+dnode.id);
                            var wdgt_tmp=registry.byId(dnode.id);
                            //registry.byId(dnode.id).startup();
                            if(wdgt_tmp) wdgt_tmp.startup();//avoid TypeError: wdgt_tmp is undefined
