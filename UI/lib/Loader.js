@@ -15,6 +15,7 @@
  */
 
 function set_main_div(doc){
+        console.log('setting body');
         var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
         var newbody = body[1];
         require(['dojo/query', 'dojo/dom-style', 'dijit/registry', 'dojo/domReady!'],
@@ -93,19 +94,14 @@ function(
                                        if (undefined == formnode.action){
                                            return undefined;
                                        }
-                                       console.log(formnode);
                                        on(formnode, 'submit', 
                                        function(evt){ 
-                                           console.log(formnode);
                                            var method = formnode.method;
-                                           console.log(evt);
                                            evt.preventDefault();
                                            var qobj = domform.toQuery(formnode);
                                            qobj = 'action=' 
                                                   + formnode.action.value + '&' 
                                                   + qobj;
-                                           console.log(qobj);
-                                           console.log(method);
                                            if (undefined == method){
                                                method = 'GET';
                                            }
@@ -124,7 +120,7 @@ function(
                                            } else {
                                                 xhr(url,
                                                     {"handleAs": "text",
-                                                      method: formnode.method,
+                                                      method: method,
                                                       data: qobj,
                                                     }).then(
                                                        function(doc){
