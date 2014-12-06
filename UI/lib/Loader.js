@@ -14,6 +14,23 @@
  * of the function, and avoid calling if the widget already exists.
  */
 
+function set_main_div(doc){
+        var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+        var newbody = body[1];
+        require(['dojo/query', 'dojo/dom-style', 'dijit/registry', 'dojo/domReady!'],
+        function(query, style, registry){
+           var mainCP = registry.byId('maindiv');
+           // mainCP.domNode.style.visibility = 'hidden';
+           style.set(mainCP, 'visibility', 'hidden');
+           mainCP.set('content', newbody);
+           setup_dojo();
+               mainCP.domNode.style.visibility = 'visible';
+           require(['dojo/domReady!'], 
+           function(){
+           });
+        });
+}
+
 define([
      // base
     'dojo/_base/declare',
@@ -36,6 +53,7 @@ define([
     'dijit/form/Select',
     'dijit/form/Button',
     'dojo/dom-form',
+    'dojo/dom-attr',
     //more
     "dojo/request/xhr",
     'dojo/on'
@@ -45,7 +63,7 @@ function(
     declare, date_locale, registry, parser, query, ready, wbase, construct,
     // widgets
     tabular, textarea, datebox, checkbox, radio, textbox, 
-    select, button, form, xhr, on) {
+    select, button, domform, domattr, xhr, on) {
     return declare(wbase, {
         nodeMap: { // hierarchy nodeName->class, input type treated as class
                    // for INPUT elements, type beats class.
@@ -71,26 +89,50 @@ function(
                      }
 
                     }, 
-              FORM: { '__default': function(formnode){
+              FORM: { '__default': function(formnode){ 
+                                       if (undefined == formnode.action){
+                                           return undefined;
+                                       }
                                        console.log(formnode);
                                        on(formnode, 'submit', 
-                                       function(e){ 
+                                       function(evt){ 
                                            console.log(formnode);
                                            var method = formnode.method;
+                                           console.log(evt);
+                                           evt.preventDefault();
+                                           var qobj = domform.toQuery(formnode);
+                                           qobj = 'action=' 
+                                                  + formnode.action.value + '&' 
+                                                  + qobj;
+                                           console.log(qobj);
+                                           console.log(method);
                                            if (undefined == method){
                                                method = 'GET';
                                            }
-                                           e.preventDefault();
-                                           xhr(formnode.action, 
-                                              {"handlesAs": "text",
-                                                  "method": formnode.method,
-                                                   "query": fquery,
-                                              }).then(
-                                              function(doc){
-                                                   set_main_div(doc);
-                                              });
+                                           var url = domattr.get(formnode, 'action');
+                                           console.log(url);
+                                           if ('GET' == method || 'get' == method){
+                                                url = url + '?' + qobj;
+                                                console.log(url);
+                                                xhr(url,
+                                                    {"handleAs": "text",
+                                                    }).then(
+                                                       function(doc){
+                                                       set_main_div(doc);
+                                                 });
+                                               
+                                           } else {
+                                                xhr(url,
+                                                    {"handleAs": "text",
+                                                      method: formnode.method,
+                                                      data: qobj,
+                                                    }).then(
+                                                       function(doc){
+                                                       set_main_div(doc);
+                                                 });
+                                           }
                                       });
-                                      return undefined;
+                                      return undefined; 
                                    },
                        'dojoized': function(){ return undefined; },
                     },
