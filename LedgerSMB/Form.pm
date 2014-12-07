@@ -2346,6 +2346,8 @@ sub create_links {
 
     my $arap = ( $vc eq 'customer' ) ? 'ar' : 'ap';
     $vc = 'vendor' unless $vc eq 'customer';
+    my $seq = ( $vc eq 'customer' ) ? 'a.setting_sequence' 
+                                    : 'NULL as setting_sequence';
 
     if ( $self->{id} ) {
 
@@ -2360,7 +2362,7 @@ sub create_links {
 				c.language_code, a.ponumber, a.reverse,
                                 a.approved, ctf.default_reportable, 
                                 a.description, a.on_hold, a.crdate, 
-                                ns.location_id as locationid, a.is_return
+                                ns.location_id as locationid, a.is_return, $seq
 			FROM $arap a
 			JOIN entity_credit_account c 
 				ON (a.entity_credit_account = c.id)
@@ -3412,6 +3414,10 @@ This should be used instead of direct tests, and checks for a sequence selected.
 
 sub should_update_defaults {
     my ($self, $fldname) = @_;
+
+    my $gapless_ar = LedgerSMB::Setting->get('gapless_ar');
+    return 0 if $gapless_ar and ($fldname eq 'invnumber');
+
     if (!$self->{$fldname}){
        return 1;
     }
@@ -3422,6 +3428,29 @@ sub should_update_defaults {
     my $sequence = LedgerSMB::Setting::Sequence->get($self->{setting_sequence});
     return 1 unless $sequence->accept_input;
     return 0;
+}
+
+=item $form->update_invnumber
+
+If invnumber is not set, updates it.  Used when gapless numbering is in effect
+
+=cut
+
+sub update_invnumber {
+    my $self = shift;
+    my $sth = $LedgerSMB::App_State::DBH->prepare(
+        'select invnumber from ar where id = ?'
+    );
+    $sth->execute($self->{id});
+    my ($invnumber) = $sth->fetchrow_array;
+    return if defined $invnumber or !$sth->rows;
+    $sth->finish;
+    $sth = $LedgerSMB::App_State::DBH->prepare(
+      'update ar set invnumber = ? where id = ?'
+    );
+    $sth->execute($self->update_defaults(
+                          $LedgerSMB::App_State::User, 'sinumber'
+                                        ), $self->{id});    
 }
 
 =item $form->db_prepare_vars(var1, var2, ..., varI<n>)
@@ -3722,7 +3751,7 @@ key.  It is not generally to be used with code on new templates.
 
 sub sequence_dropdown{
     my ($self, $setting_key) = @_;
-    return undef if $self->{id};
+    return undef if $self->{id} and ($setting_key ne 'sinumber');
     my @sequences = LedgerSMB::Setting::Sequence->list($setting_key);
     my $retval = qq|<select name='setting_sequence' class='sequence'>\n|;
     $retval .= qq|<option></option>|;

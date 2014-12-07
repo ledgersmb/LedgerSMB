@@ -122,3 +122,15 @@ UPDATE invoice SET vendor_sku = (select min(partnumber) from partsvendor
                                 )
  WHERE trans_id in (select id from ap);
 COMMIT;
+
+BEGIN;
+ALTER TABLE ar ADD setting_sequence TEXT;
+ALTER TABLE ar DROP CONSTRAINT ar_invnumber_key;
+ALTER TABLE ar ADD CHECK(invnumber is not null OR not approved);
+CREATE UNIQUE INDEX ar_invnumber_key_p ON ar(invnumber) where invnumber is not null;
+COMMIT;
+
+BEGIN;
+UPDATE menu_attribute SET value = 'contact.pl'
+ WHERE node_id = 48 AND attribute = 'module';
+COMMIT;

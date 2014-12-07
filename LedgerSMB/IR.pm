@@ -79,6 +79,7 @@ sub add_cogs {
 sub post_invoice {
     my ( $self, $myconfig, $form ) = @_;
     $form->{crdate} ||= 'now';
+    delete $form->{reverse} unless $form->{reverse};
 
     $form->all_business_units;
     if ($form->{id}){
@@ -818,6 +819,7 @@ sub post_invoice {
 		       language_code = ?,
 		       ponumber = ?, 
                        approved = ?,
+                       reverse = ?,
 		       crdate = ?
 		 WHERE id = ?|;
 
@@ -830,7 +832,7 @@ sub post_invoice {
         $form->{taxincluded},   $form->{notes},         $form->{intnotes},
         $form->{currency},
         $form->{language_code}, $form->{ponumber},      
-        $approved,              $form->{crdate},
+        $approved,              $form->{reverse},       $form->{crdate},
         $form->{id}
     ) || $form->dberror($query);
 
@@ -1307,6 +1309,7 @@ sub retrieve_item {
 		          AND t2.language_code = ?)
 	         $where|;
     my $sth = $dbh->prepare($query);
+    #die "$query:$i";
     $sth->execute( $form->{vendor_id}, $form->{language_code}, 
                    $form->{language_code} )
       || $form->dberror($query);
@@ -1321,6 +1324,7 @@ sub retrieve_item {
 		  JOIN partstax pt ON (pt.chart_id = c.id)
 		 WHERE pt.parts_id = ?|;
     my $tth = $dbh->prepare($query) || $form->dberror($query);
+    $form->{item_list} = [];
 
     # price matrix
     my $pmh = PriceMatrix::price_matrix_query( $dbh, $form );

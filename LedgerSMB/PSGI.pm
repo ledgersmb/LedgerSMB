@@ -16,7 +16,6 @@ use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
-use LedgerSMB::Template::LaTeX;
 use LedgerSMB::Template::HTML;
 use LedgerSMB::Locale;
 use LedgerSMB::File;
@@ -24,7 +23,7 @@ use LedgerSMB::PGObject;
 use Try::Tiny;
 
 use CGI::Emulate::PSGI;
-
+$ENV{GATEWAY_INTERFACE}="cgi/1.1";
 sub app {
    return CGI::Emulate::PSGI->handler(
      sub {
@@ -39,7 +38,7 @@ sub app {
        if ($uri =~ m|/rest/|){
          do 'rest-handler.pl';
        } elsif (-f "LedgerSMB/Scripts/$nscript"){
-         do 'lsmb-request.pl'; 
+         _run_new($script);
        } else {
           _run_old($script);
        }
@@ -70,12 +69,13 @@ sub _run_old {
 
 sub _run_new {
     my ($script) = @_;
-    &$pre_dispatch();
-    $uri = $ENV{REQUEST_URI};
-    $uri =~ s/\?.*//;
-
-    do "./$script";
-    &$post_dispatch();
+    &$pre_dispatch() if $pre_dispatch;
+    if (-f 'lsmb-request.pl'){
+        do 'lsmb-request.pl' or die 'script failed' . $@; 
+    } else {
+        die 'something is wrong, cannot find lsmb-request.pl';
+    }
+    &$post_dispatch() if $post_dispatch;
 }
 
 1;

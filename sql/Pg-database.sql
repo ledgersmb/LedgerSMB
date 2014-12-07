@@ -1709,8 +1709,10 @@ CREATE TABLE ar (
   description text,
   is_return bool default false,
   crdate date,
-  unique(invnumber) -- probably a good idea as per Erik's request --CT
+  check (invnumber is not null or not approved)
 );
+
+CREATE UNIQUE INDEX ar_invnumber_key ON ar(invnumber) where invnumber is not null;
 
 COMMENT ON TABLE ar IS
 $$ Summary/header information for AR transactions and sales invoices.
@@ -3050,7 +3052,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 44	report	1	110
 46	menu	1	111
 47	menu	1	112
-48	module	employee.pl	113
+48	module	contact.pl	113
 48	action	add	114
 50	menu	1	119
 51	module	oe.pl	120
@@ -4917,3 +4919,4 @@ CREATE UNIQUE INDEX template_name_idx_u ON template(template_name, format)
 WHERE language_code is null; -- Pseudo-Pkey
 
 commit;
+

@@ -438,7 +438,7 @@ for my $testfile (readdir(D62)){
 # Overridden methods in classes for tests.
 
 package LedgerSMB::DBObject::Payment;
-sub exec_method {
+sub call_dbmethod{
     my $self = shift;
     my %args = @_;
     my $funcname = $args{funcname};
@@ -447,11 +447,11 @@ sub exec_method {
            return $self->{_exec_override}->{"$args{funcname}"}($self);
         }
     }
-    LedgerSMB::DBObject::exec_method($self, @_);
+    LedgerSMB::PGObject::call_dbmethod($self, @_);
 }
 
 package LedgerSMB::DBObject::Reconciliation;
 
-sub exec_method {
-    LedgerSMB::DBObject::Payment::exec_method(@_);
+sub call_dbmethod{
+    LedgerSMB::DBObject::Payment::call_dbmethod(@_);
 }

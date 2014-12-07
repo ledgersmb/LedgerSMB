@@ -135,6 +135,7 @@ sub _calc_taxes {
 sub approve {
     use LedgerSMB::DBObject::Draft;
     use LedgerSMB;
+    $form->update_invnumber;
     my $lsmb = LedgerSMB->new();
     $lsmb->merge($form);
 
@@ -157,6 +158,7 @@ sub approve {
 
 sub display_row {
     my $numrows = shift;
+    my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty};
     my $lsmb_module;
     my $desc_disabled = "";
     $desc_disabled = 'DISABLED="DISABLED"' if $form->{lock_description};
@@ -282,7 +284,7 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
     $exchangerate = ($exchangerate) ? $exchangerate : 1;
 
     $spc = substr( $myconfig{numberformat}, -3, 1 );
-    for $i ( 1 .. $numrows ) {
+    for $i ( 1 .. $numrows  + $min_lines) {
         $desc_disabled = '' if $i == $numrows;
         if ( $spc eq '.' ) {
             ( $null, $dec ) = split /\./, $form->{"sellprice_$i"};

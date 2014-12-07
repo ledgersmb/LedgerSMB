@@ -38,7 +38,7 @@ my @company_settings = qw(templates businessnumber weightunit curr
                           default_email_bcc  default_email_cc
                           separate_duties company_name company_email
                           company_phone company_fax businessnumber
-                          company_address dojo_theme decimal_places);
+                          company_address dojo_theme decimal_places min_empty);
 
 our $VERSION = 1.0;
 our $settings = {};

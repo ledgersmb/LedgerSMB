@@ -1,3 +1,25 @@
 div.input {
     float: left;
 }
+html, body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0;
+}
+ 
+#appLayout {
+    height: 100%;
+}
+#leftCol {
+    width: 14em;
+}
+ 
+.claro .demoLayout .edgePanel {
+    background-color: #d0e9fc;
+}
+ 
+#viewsChart {
+    width: 550px;
+    height: 550px;
+}
