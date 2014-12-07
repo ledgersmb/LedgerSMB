@@ -27,7 +27,7 @@ LICENSE.TXT for more information.
 
 package LedgerSMB::PGObject;
 use Moose::Role;
-with 'PGObject::Simple::Role';
+with 'PGObject::Simple::Role' => { -excludes => [qw(_get_dbh _get_schema _get_prefix)], };
 
 use LedgerSMB::App_State;
 
