@@ -27,6 +27,7 @@ referral.
 
 package LedgerSMB::Report::Contact::Search;
 use Moose;
+use LedgerSMB::MooseTypes;
 extends 'LedgerSMB::Report';
 
 =head1 PROPERTIES
