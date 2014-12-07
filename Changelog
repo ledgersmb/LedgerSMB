@@ -10,6 +10,11 @@ API Enhancements:
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.10
+* Malay translation added (Kaiser F, and others)
+
+Kaiser F is Kaiser Farrel
+
 Changelog for 1.4.9
 * Removed optional dependency on LaTeX from starman preload (Chris T)
 
