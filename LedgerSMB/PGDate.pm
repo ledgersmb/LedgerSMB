@@ -107,8 +107,7 @@ module to handle the parsing.
 
 sub _parse_string {
     my ($self, $string, $format, $has_time) = @_;
-    $string = undef if $string eq '';
-    return undef if !defined $string;
+    return undef if (!defined $string) or ('' eq $string);
     my $locale = $LedgerSMB::App_State::Locale->{datetime};
     $locale ||= 'en_US';
     for my $fmt (@{$formats->{$format}}){
@@ -136,8 +135,9 @@ sub _parse_string {
 sub from_input{
     my ($self, $input, $has_time) = @_;
     return $input if eval {$input->isa(__PACKAGE__)};
+    return if (!defined $input) || ('' eq $input);
     $input = undef if $input eq '';
-    my $format = $LedgerSMB::App_State::User->{dateformat};
+    my $format = $LedgerSMB::App_State::User->{dateformat} || 'yyyy-mm-dd';
     $format ||= 'yyyy-mm-dd';
     $format = 'yyyy-mm-dd' if $input =~ /^\d{4}/;
     my $dt =  _parse_string($self, $input, uc($format), $has_time);
