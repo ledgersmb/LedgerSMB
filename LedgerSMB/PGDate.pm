@@ -109,14 +109,13 @@ sub _parse_string {
     my ($self, $string, $format, $has_time) = @_;
     $string = undef if $string eq '';
     return undef if !defined $string;
-    if (!defined $LedgerSMB::App_State::Locale->{datetime}){
-        $LedgerSMB::App_State::Locale->{datetime} = 'en_US';
-    }
+    my $locale = $LedgerSMB::App_State::Locale->{datetime};
+    $locale ||= 'en_US';
     for my $fmt (@{$formats->{$format}}){
         if ($has_time or ! defined $has_time){
             my $parser = new DateTime::Format::Strptime(
                      pattern => $fmt . ' %T',
-                      locale => $LedgerSMB::App_State::Locale->{datetime},
+                      locale => $locale,
             );
             if (my $dt = $parser->parse_datetime($string)){
                 return $dt;
@@ -125,7 +124,7 @@ sub _parse_string {
         if (!$has_time or ! defined $has_time){
             my $parser = new DateTime::Format::Strptime(
                      pattern => $fmt,
-                      locale => $LedgerSMB::App_State::Locale->{datetime},
+                      locale => 'en_US',
             );
             if (my $dt = $parser->parse_datetime($string)){
                 return $dt;
@@ -169,7 +168,7 @@ sub to_output {
     
     my $formatter = new DateTime::Format::Strptime(
              pattern => $fmt,
-              locale => $LedgerSMB::App_State::Locale->{datetime},
+              locale => 'en_US',
             on_error => 'croak',
     );
     return $formatter->format_datetime($self);
