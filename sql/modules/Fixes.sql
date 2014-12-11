@@ -245,3 +245,7 @@ BEGIN;
 UPDATE menu_attribute SET value = 'contact.pl'
  WHERE node_id = 48 AND attribute = 'module';
 COMMIT;
+
+BEGIN;
+UPDATE menu_attribute SET value = 'template.pl' WHERE value = 'template.pm';
+COMMIT;
