@@ -4,6 +4,7 @@ Released 2014-09-15
 Changelog for 1.4.10
 * Malay translation added (Kaiser F, and others)
 * Fixed 1292, some template editing scripts linked to wrong mod (Chris T)
+* Fixed 1290, payment/receipt screen options never show (Chris T)
 
 Chris T is Chris Travers
 Kaiser F is Kaiser Farrel
