@@ -40,7 +40,14 @@
    }
 /* This is the handler for maximize_minimize, it is intended to be called
  directly this will call maximize and minimize */
- function maximize_minimize(element, state, img, plusimage, minusimage) {
+
+var min_max_counter = 1; // used to prevent double dispatches under dojo
+
+ function maximize_minimize(event, element, state, img, plusimage, minusimage) {
+     ++min_max_counter;
+     if (min_max_counter % 2){
+        return undefined;
+     }
      try {   
         var obj = document.getElementById(element);
         var obj3 = document.getElementById(state);
@@ -58,7 +65,7 @@
 
 /* This function gets the form state and set it invisible */
 /* Container is the element that contains the tagname elements, all of them must match the same criteria */
- function maximize_minimize_on_load (container, plusimage, minusimage) {
+ function maximize_minimize_on_load (event, container, plusimage, minusimage) {
  
  var table = document.getElementById(container); 
  var cells = table.getElementsByTagName("input");
@@ -69,7 +76,7 @@
 	 var extra_info =  cells[i].id.replace(regex,"div_topay_");   
 	 var img        =  document.getElementById(cells[i].id.replace(regex,"button_topay_"));
          if (cells[i].value == '' || cells[i].value == "hidden") {
-		 maximize_minimize(extra_info , cells[i].id, img, plusimage, minusimage);
+		 maximize_minimize(event, extra_info , cells[i].id, img, plusimage, minusimage);
          }
  }        
  } catch (err) { alert("ERROR ON maximize_minimize_on_load: " + err)  }

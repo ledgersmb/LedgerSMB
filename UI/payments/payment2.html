@@ -1,7 +1,7 @@
 <?lsmb INCLUDE "ui-header.html" 
     include_script = [ 'UI/payments/javascript/maximize_minimize.js' ] ?>
 <body id="payment_2_body" class="<?lsmb dojo_theme ?>"
-onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif','UI/payments/img/up.gif') ">
+onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/down.gif','UI/payments/img/up.gif') ">
  <form name="pay_single_dues" method="post" action="payment.pl">
 
  <?lsmb PROCESS elements.html  # Include form elements helper. ?>
@@ -174,7 +174,7 @@ onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif',
     <?lsmb # A DEGRADABLE JAVASCRIPT IS USED, BECAUSE OF THE VISUAL IMPACT
     	   # THAT CAUSES THE SIZE OF THIS DIV -?>
     <img src="UI/payments/img/up.gif" id="button_topay_<?lsmb row.invoice.id ?>" name="<?lsmb "button_topay_$i" ?>"
-     onClick="maximize_minimize('div_topay_<?lsmb row.invoice.id ?>',
+     onClick="maximize_minimize(event, 'div_topay_<?lsmb row.invoice.id ?>',
     'topaystate_<?lsmb row.invoice.id ?>' ,this,
     'UI/payments/img/down.gif', 'UI/payments/img/up.gif')">
      <div id="div_topay_<?lsmb row.invoice.id ?>">
