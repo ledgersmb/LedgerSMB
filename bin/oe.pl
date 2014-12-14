@@ -1059,7 +1059,6 @@ sub update {
     }
 
     if ( $newname = &check_name( $form->{vc} ) ) {
-        &rebuild_vc( $form->{vc}, $ARAP, $form->{transdate}, 1 );
         if($newname>1){return;}#tshvr4 may be dropped if finalize_request() does not return here
     }
 
@@ -1125,7 +1124,6 @@ sub update {
             && ( $form->{"description_$i"} eq "" )
             && ( $form->{"partsgroup_$i"}  eq "" ) )
         {
-            warn "no $i";
 
             $form->{creditremaining} +=
               ( $form->{oldinvtotal} - $form->{oldtotalpaid} );
