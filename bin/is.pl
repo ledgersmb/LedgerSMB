@@ -1303,6 +1303,7 @@ sub update {
     for my $i ( 1 .. $form->{rowcount} 
                    + $LedgerSMB::Company_Config::settings->{min_empty}){
         $form->{rowcount} = $i;
+        next if $form->{"id_$i"};
         if (   ( $form->{"partnumber_$i"} eq "" )
             && ( $form->{"description_$i"} eq "" )
             && ( $form->{"partsgroup_$i"}  eq "" ) )
