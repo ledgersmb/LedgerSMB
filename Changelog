@@ -7,6 +7,7 @@ Changelog for 1.4.10
 * Fixed 1290, payment/receipt screen options never show (Chris T)
 * Fixed 1291, cannot change customer/vendor on orders/quotes (Chris T)
 * Cleaned up logs a little (Chris T)
+* Fixed 1294, cannot change parts description or price on inv. (Chris T)
 
 Chris T is Chris Travers
 Kaiser F is Kaiser Farrel
