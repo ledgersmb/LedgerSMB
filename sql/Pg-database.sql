@@ -1709,6 +1709,7 @@ CREATE TABLE ar (
   description text,
   is_return bool default false,
   crdate date,
+  setting_sequence text,
   check (invnumber is not null or not approved)
 );
 
