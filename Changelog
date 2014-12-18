@@ -18,6 +18,7 @@ Changelog for 1.4.10
 * Cleaned up logs a little (Chris T)
 * Fixed 1294, cannot change parts description or price on inv. (Chris T)
 * Fixed 1298, upgrade does not create ar.setting_sequence (Chris T)
+* Fixed 1304.1, removed check printing from invoices (Chris T)
 
 Chris T is Chris Travers
 Kaiser F is Kaiser Farrel

@@ -73,13 +73,6 @@ sub print {
         for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
     }
 
-    if ( $form->{formname} =~ /(check|receipt)/ ) {
-        if ( $form->{media} eq 'screen' ) {
-            $form->error( $locale->text('Select postscript or PDF!') )
-              if $form->{format} !~ /(postscript|pdf)/;
-        }
-    }
-
     if ( !$form->{invnumber} ) {
         $invfld = 'sinumber';
         $invfld = 'vinumber' if $form->{ARAP} eq 'AP';
@@ -92,36 +85,6 @@ sub print {
         }
     }
 
-    if ( $form->{formname} =~ /(check|receipt)/ ) {
-        if ( $form->{media} ne 'screen' ) {
-            for (qw(action header)) { delete $form->{$_} }
-            $form->{invtotal} = $form->{oldinvtotal};
-
-            foreach $key ( keys %$form ) {
-                $form->{$key} =~ s/&/%26/g;
-                $form->{previousform} .= qq|$key=$form->{$key}&|;
-            }
-            chop $form->{previousform};
-            $form->{previousform} = $form->escape( $form->{previousform}, 1 );
-        }
-
-        if ( $form->{paidaccounts} > 1 ) {
-            if ( $form->{"paid_$form->{paidaccounts}"} ) {
-                &update;
-                $form->finalize_request();
-            }
-            elsif ( $form->{paidaccounts} > 2 ) {
-
-                # select payment
-                &select_payment;
-                $form->finalize_request();
-            }
-        }
-        else {
-            $form->error( $locale->text('Nothing to print!') );
-        }
-
-    }
     if ( $filename = $queued{ $form->{formname} } ) {
         $form->{queued} =~ s/$form->{formname} $filename//;
         unlink "${LedgerSMB::Sysconfig::spool}/$filename";
