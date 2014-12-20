@@ -25,7 +25,8 @@ BEGIN
 		   description, false as invoice,
                    (SELECT SUM(line.amount)
                       FROM acc_trans line
-                     WHERE line.amount > 0) as amount,
+                     WHERE line.amount > 0
+                           and line.trans_id = gl.id) as amount,
                    'gl' as type
 	      from gl
 	     WHERE (lower(in_type) = 'gl' or in_type is null)
