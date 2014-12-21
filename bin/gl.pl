@@ -164,7 +164,6 @@ sub add {
 "$form->{script}?action=add&transfer=$form->{transfer}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
-    &create_links;
     if (!$form->{rowcount}){
         $form->{rowcount} = ( $form->{transfer} ) ? 3 : 9;
     }
@@ -542,25 +541,6 @@ sub edit {
 sub create_links {
 
     GL->transaction( \%myconfig, \%$form );
-
-
-    # departments
-    if ( @{ $form->{all_department} } ) {
-        $form->{departmentset} = 1;
-        for ( @{ $form->{all_department} } ) {
-            $_->{departmentstyle}=$_->{description}."--".$_->{id};
-        }
-    }
-
-    # projects
-    if ( @{ $form->{all_project} } ) {
-       $form->{projectset}=1; 
-       for ( @{ $form->{all_project} } ) {
-	  $_->{projectstyle}=$_->{projectnumber}."--".$_->{id};
-       }
-    }
-
-  
 
 }
 
