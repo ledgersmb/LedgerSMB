@@ -51,8 +51,8 @@ CREATE OR REPLACE FUNCTION payment_get_entity_accounts
 
  BEGIN
  	FOR out_entity IN
-              SELECT ec.id, e.name || 
-                     coalesce(':' || ec.description,'') as name, 
+              SELECT ec.id, coalesce(ec.pay_to_name, e.name || 
+                     coalesce(':' || ec.description,'')) as name, 
                      e.entity_class, ec.discount_account_id, ec.meta_number
  		FROM entity_credit_account ec
  		JOIN entity e ON (ec.entity_id = e.id)
@@ -83,8 +83,8 @@ CREATE OR REPLACE FUNCTION payment_get_entity_account_payment_info
 (in_entity_credit_id int)
 RETURNS payment_vc_info
 AS $$
- SELECT ec.id, cp.legal_name ||
-        coalesce(':' || ec.description,'') as name,
+ SELECT ec.id, coalesce(ec.pay_to_name, cp.legal_name ||
+        coalesce(':' || ec.description,'')) as name,
         e.entity_class, ec.discount_account_id, ec.meta_number
  FROM entity_credit_account ec
  JOIN entity e ON (ec.entity_id = e.id)
