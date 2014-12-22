@@ -11,6 +11,7 @@ Changelog for 1.4.10
 * Fixed 1298, upgrade does not create ar.setting_sequence (Chris T)
 * Fixed 1304.1, removed check printing from invoices (Chris T)
 * Fixed join issue for GL drafts showing wrong amt (Chris T)
+* Fixed 1304.2, pay to name not used in single payment (Chris T)
 
 Chris T is Chris Travers
 Kaiser F is Kaiser Farrel
