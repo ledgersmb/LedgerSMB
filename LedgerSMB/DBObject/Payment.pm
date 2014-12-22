@@ -797,7 +797,8 @@ sub post_payment {
  for ($self->_parse_array($self->{amount})){
     $_ = $_->bstr if ref $_;
  }
- $self->{amount} = [map {ref $_ ? $_->bstr() : $_ } @{$self->{amount}}];
+ $self->{amount} = [map {ref $_ ? $_->bstr() : $_ } @{$self->{amount}}] 
+      if ref $self->{amount};
  my @TMParray = $self->exec_method(funcname => 'payment_post');
  $self->{dbh}->commit();
  $self->{payment_id} = $TMParray[0]->{payment_post};
