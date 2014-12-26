@@ -1709,6 +1709,7 @@ CREATE TABLE ar (
   description text,
   is_return bool default false,
   crdate date,
+  setting_sequence text,
   check (invnumber is not null or not approved)
 );
 
@@ -3565,11 +3566,11 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 75	module	reports.pl	219
 75	action	start_report	226
 75	report_name	cogs_lines	227
-90	module	template.pm	228
+90	module	template.pl	228
 90	action	display	229
 90	template_name	product_receipt	230
 90	format	tex	231
-99	module	template.pm	240
+99	module	template.pl	240
 99	action	display	241
 99	template_name	product_receipt	242
 99	format	html	245
