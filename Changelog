@@ -1,6 +1,38 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.10
+* Malay translation added (Kaiser F, and others)
+* Fixed 1292, some template editing scripts linked to wrong mod (Chris T)
+* Fixed 1290, payment/receipt screen options never show (Chris T)
+* Fixed 1291, cannot change customer/vendor on orders/quotes (Chris T)
+* Cleaned up logs a little (Chris T)
+* Fixed 1294, cannot change parts description or price on inv. (Chris T)
+* Fixed 1298, upgrade does not create ar.setting_sequence (Chris T)
+* Fixed 1304.1, removed check printing from invoices (Chris T)
+* Fixed join issue for GL drafts showing wrong amt (Chris T)
+* Fixed 1304.2, pay to name not used in single payment (Chris T)
+
+Chris T is Chris Travers
+Kaiser F is Kaiser Farrel
+
+Changelog for 1.4.9
+* Fixed issue with contacts not loading in 1.4,8 (regression, Chris T)
+
+Changelog for 1.4.8
+* Fixed end-date not a date widget on employee div (Chris T)
+* Fixed errors saving person as employee on contacts screen (Chris T)
+* Added min empty lines for orders, invoices, and gl (Chris T, 1277)
+* Fixed 1280, credit/debit invoices flipping signs (Chris T)
+* Fixed 1279, gaps possible if drafts are deleted (Chris T)
+* Fixed 1287, perl errors on missing inputs on setup.pl (Chris T)
+* Fixed 1285, unable to enter more than 1 top-level rep. unit (Chris T)
+* Fixed 1283, dash in header of amounts col in PNL (Chris T)
+* Fixed 1284, pdf pnl does not work over https or nonstandard ports (Chris T)
+* Fixed 1282, business units not passed to trial balance (Chris T)
+
+Chris T is Chris Travers
+
 Changelog for 1.4.7
 * Fixed 1231, lack of validation on forms leads to Perl errors (Chris T)
 * Fixed 1264, account numbers out of place on PNL (Chris T)

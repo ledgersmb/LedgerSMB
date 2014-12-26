@@ -179,7 +179,7 @@ use Try::Tiny;
 use DBI;
 
 use base qw(LedgerSMB::Request);
-our $VERSION = '1.4.7';
+our $VERSION = '1.4.9';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
@@ -524,6 +524,7 @@ sub call_procedure {
     my $self     = shift @_;
     my %args     = @_;
     my $procname = $args{procname};
+    $procname ||= $args{funcname};
     my $schema   = $args{schema};
     my @call_args;
     @call_args = @{ $args{args} } if defined $args{args};

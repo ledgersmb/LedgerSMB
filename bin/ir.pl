@@ -1273,135 +1273,136 @@ sub update {
         $form->{paidaccounts} = $j;
     }
 
-    $i = $form->{rowcount};
     $exchangerate = ( $form->{exchangerate} ) ? $form->{exchangerate} : 1;
+    for my $i (1 .. ($form->{rowcount} + $LedgerSMB::Company_Config::settings->{min_empty})){
+        next if $form->{"id_$i"};
+        $form->{rowcount} = $i;
 
-    for (qw(partsgroup projectnumber)) {
-        $form->{"select$_"} = $form->unescape( $form->{"select$_"} )
-          if $form->{"select$_"};
-    }
-
-    if (   ( $form->{"partnumber_$i"} eq "" )
-        && ( $form->{"description_$i"} eq "" )
-        && ( $form->{"partsgroup_$i"}  eq "" ) )
-    {
-
-        $form->{creditremaining} +=
-          ( $form->{oldinvtotal} - $form->{oldtotalpaid} );
-        &check_form;
-
-    }
-    else {
-
-        IR->retrieve_item( \%myconfig, \%$form );
-
-        my $rows = scalar @{ $form->{item_list} };
-
-        if ( $form->{language_code} && $rows == 0 ) {
-            $language_code = $form->{language_code};
-            $form->{language_code} = "";
-            IR->retrieve_item( \%myconfig, \%$form );
-            $form->{language_code} = $language_code;
-            $rows = scalar @{ $form->{item_list} };
+        for (qw(partsgroup projectnumber)) {
+            $form->{"select$_"} = $form->unescape( $form->{"select$_"} )
+              if $form->{"select$_"};
         }
 
-        if ($rows) {
+        if (   ( $form->{"partnumber_$i"} eq "" )
+            && ( $form->{"description_$i"} eq "" )
+            && ( $form->{"partsgroup_$i"}  eq "" ) )
+        {
 
-            if ( $rows > 1 ) {
-
-                &select_item;
-                $form->finalize_request();
-
-            }
-            else {
-
-                $form->{"qty_$i"} =
-                  ( $form->{"qty_$i"} * 1 ) ? $form->{"qty_$i"} : 1;
-
-                $sellprice =
-                  $form->parse_amount( \%myconfig, $form->{"sellprice_$i"} );
-
-                for (qw(partnumber description unit)) {
-                    $form->{item_list}[$i]{$_} =
-                      $form->quote( $form->{item_list}[$i]{$_} );
-                }
-
-                for ( keys %{ $form->{item_list}[0] } ) {
-                    $form->{"${_}_$i"} = $form->{item_list}[0]{$_};
-                }
-                if (! defined $form->{"discount_$i"}){
-                    $form->{"discount_$i"} = $form->{discount} * 100;
-                }
-                if ($sellprice) {
-                    $form->{"sellprice_$i"} = $sellprice;
-
-                    ($dec) = ( $form->{"sellprice_$i"} =~ /\.(\d+)/ );
-                    $dec = length $dec;
-                    $decimalplaces = ( $dec > 2 ) ? $dec : 2;
-                }
-                else {
-                    ($dec) = ( $form->{"sellprice_$i"} =~ /\.(\d+)/ );
-                    $dec = length $dec;
-                    $decimalplaces = ( $dec > 2 ) ? $dec : 2;
-
-                    $form->{"sellprice_$i"} /= $exchangerate;
-                }
-
-                $amount =
-                  $form->{"sellprice_$i"} * $form->{"qty_$i"} *
-                  ( 1 - $form->{"discount_$i"} / 100 );
-                for ( split / /, $form->{taxaccounts} ) {
-                    $form->{"${_}_base"} = 0;
-                }
-                for ( split / /, $form->{"taxaccounts_$i"} ) {
-                    $form->{"${_}_base"} += $amount;
-                }
-                if ( !$form->{taxincluded} ) {
-                    my @taxes = Tax::init_taxes(
-                        $form,
-                        $form->{"taxaccounts_$i"},
-                        $form->{"taxaccounts"}
-                    );
-                    $amount +=
-                      ( Tax::calculate_taxes( \@taxes, $form, $amount, 0 ) );
-                }
-
-                $form->{creditremaining} -= $amount;
-
-                $form->{"sellprice_$i"} =
-                  $form->format_amount( \%myconfig, $form->{"sellprice_$i"},
-                    $decimalplaces );
-
-                $form->{"oldqty_$i"} = $form->{"qty_$i"};
-                for (qw(qty discount)) {
-                    $form->{"{_}_$i"} =
-                      $form->format_amount( \%myconfig, $form->{"${_}_$i"} );
-                }
-
-            }
-
-            &display_form;
+            $form->{creditremaining} +=
+              ( $form->{oldinvtotal} - $form->{oldtotalpaid} );
+            &check_form;
 
         }
         else {
 
-            # ok, so this is a new part
-            # ask if it is a part or service item
+            IR->retrieve_item( \%myconfig, \%$form );
 
-            if (   $form->{"partsgroup_$i"}
-                && ( $form->{"partsnumber_$i"} eq "" )
-                && ( $form->{"description_$i"} eq "" ) )
-            {
-                $form->{"discount_$i"} = "";
-                &display_form;
+            my $rows = scalar @{ $form->{item_list} };
+
+            if ( $form->{language_code} && $rows == 0 ) {
+                $language_code = $form->{language_code};
+                $form->{language_code} = "";
+                IR->retrieve_item( \%myconfig, \%$form );
+                $form->{language_code} = $language_code;
+                $rows = scalar @{ $form->{item_list} };
+            }
+
+            if ($rows) {
+
+                if ( $rows > 1 ) {
+
+                    &select_item;
+                    $form->finalize_request();
+
+                }
+                else {
+
+                    $form->{"qty_$i"} =
+                      ( $form->{"qty_$i"} * 1 ) ? $form->{"qty_$i"} : 1;
+
+                    $sellprice =
+                      $form->parse_amount( \%myconfig, $form->{"sellprice_$i"} );
+
+                    for (qw(partnumber description unit)) {
+                        $form->{item_list}[$i]{$_} =
+                          $form->quote( $form->{item_list}[$i]{$_} );
+                    }
+
+                    for ( keys %{ $form->{item_list}[0] } ) {
+                        $form->{"${_}_$i"} = $form->{item_list}[0]{$_};
+                    }
+                    if (! defined $form->{"discount_$i"}){
+                        $form->{"discount_$i"} = $form->{discount} * 100;
+                    }
+                    if ($sellprice) {
+                        $form->{"sellprice_$i"} = $sellprice;
+
+                        ($dec) = ( $form->{"sellprice_$i"} =~ /\.(\d+)/ );
+                        $dec = length $dec;
+                        $decimalplaces = ( $dec > 2 ) ? $dec : 2;
+                    }
+                    else {
+                        ($dec) = ( $form->{"sellprice_$i"} =~ /\.(\d+)/ );
+                        $dec = length $dec;
+                        $decimalplaces = ( $dec > 2 ) ? $dec : 2;
+
+                        $form->{"sellprice_$i"} /= $exchangerate;
+                    }
+
+                    $amount =
+                      $form->{"sellprice_$i"} * $form->{"qty_$i"} *
+                      ( 1 - $form->{"discount_$i"} / 100 );
+                    for ( split / /, $form->{taxaccounts} ) {
+                        $form->{"${_}_base"} = 0;
+                    }
+                    for ( split / /, $form->{"taxaccounts_$i"} ) {
+                        $form->{"${_}_base"} += $amount;
+                    }
+                    if ( !$form->{taxincluded} ) {
+                        my @taxes = Tax::init_taxes(
+                            $form,
+                            $form->{"taxaccounts_$i"},
+                            $form->{"taxaccounts"}
+                        );
+                        $amount +=
+                          ( Tax::calculate_taxes( \@taxes, $form, $amount, 0 ) );
+                    }
+
+                    $form->{creditremaining} -= $amount;
+
+                    $form->{"sellprice_$i"} =
+                      $form->format_amount( \%myconfig, $form->{"sellprice_$i"},
+                        $decimalplaces );
+
+                    $form->{"oldqty_$i"} = $form->{"qty_$i"};
+                    for (qw(qty discount)) {
+                        $form->{"{_}_$i"} =
+                          $form->format_amount( \%myconfig, $form->{"${_}_$i"} );
+                    }
+
+                }
+
+
             }
             else {
 
-                $form->{"id_$i"}   = 0;
-                $form->{"unit_$i"} = $locale->text('ea');
+                # ok, so this is a new part
+                # ask if it is a part or service item
 
-                &new_item;
+                if (   $form->{"partsgroup_$i"}
+                    && ( $form->{"partsnumber_$i"} eq "" )
+                    && ( $form->{"description_$i"} eq "" ) )
+                {
+                    $form->{"discount_$i"} = "";
+                }
+                else {
 
+                    $form->{"id_$i"}   = 0;
+                    $form->{"unit_$i"} = $locale->text('ea');
+    
+                    &new_item;
+
+                }
             }
         }
     }

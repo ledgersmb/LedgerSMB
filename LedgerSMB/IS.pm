@@ -800,6 +800,8 @@ sub customer_details {
 sub post_invoice {
 
     my ( $self, $myconfig, $form ) = @_;
+    $form->{invnumber} = undef if $form->{invnumber} eq '';
+    delete $form->{reverse} unless $form->{reverse};
 
     $form->all_business_units;
     $form->{invnumber} = $form->update_defaults( $myconfig, "sinumber", $dbh )
@@ -1483,7 +1485,9 @@ sub post_invoice {
 		       ponumber = ?,
                        approved = ?,
 		       crdate = ?,
-                       is_return = ?
+                       reverse = ?,
+                       is_return = ?,
+                       setting_sequence = ?
 		 WHERE id = ?
              |;
     $sth = $dbh->prepare($query);
@@ -1500,7 +1504,8 @@ sub post_invoice {
         $form->{currency},
         $form->{employee_id},   $form->{till},
         $form->{language_code}, $form->{ponumber}, $approved,
-        $form->{crdate} || 'today', $form->{is_return},
+        $form->{crdate} || 'today', $form->{reverse},
+        $form->{is_return},     $form->{setting_sequence},
         $form->{id}
     ) || $form->dberror($query);
 
@@ -1723,7 +1728,7 @@ sub retrieve_invoice {
 			          a.person_id, e.name AS employee, a.till, 
 			          a.reverse,
 			          a.language_code, a.ponumber, a.crdate,
-			          a.on_hold, a.description
+			          a.on_hold, a.description, a.setting_sequence
 			     FROM ar a
 			LEFT JOIN entity_employee em ON (em.entity_id = a.person_id)
 			LEFT JOIN entity e ON e.id = em.entity_id
@@ -1867,6 +1872,7 @@ sub retrieve_item {
     my ( $self, $myconfig, $form ) = @_;
 
     my $dbh = $form->{dbh};
+    $form->{item_list} = [];
 
     my $i = $form->{rowcount};
     my $null;

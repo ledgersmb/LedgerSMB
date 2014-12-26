@@ -50,6 +50,7 @@ use LedgerSMB::GL;
 use LedgerSMB::PE;
 use LedgerSMB::Template;
 use LedgerSMB::Setting::Sequence;
+use LedgerSMB::Company_Config;
 
 require 'bin/bridge.pl'; # needed for voucher dispatches
 require "bin/arap.pl";
@@ -163,7 +164,6 @@ sub add {
 "$form->{script}?action=add&transfer=$form->{transfer}&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
 
-    &create_links;
     if (!$form->{rowcount}){
         $form->{rowcount} = ( $form->{transfer} ) ? 3 : 9;
     }
@@ -415,7 +415,7 @@ sub display_row
 	$temphash1->{accnoset}=1;
         $temphash1->{projectset}=1;
         $temphash1->{fx_transactionset}=1;
-	if ($init)
+	if (!defined $form->{"accno_$i"})
 	{
 			      $temphash1->{accnoset}=0;   #use  @{ $form->{all_accno} }
 			      $temphash1->{projectset}=0; #use  @{ $form->{all_project} }
@@ -542,25 +542,6 @@ sub create_links {
 
     GL->transaction( \%myconfig, \%$form );
 
-
-    # departments
-    if ( @{ $form->{all_department} } ) {
-        $form->{departmentset} = 1;
-        for ( @{ $form->{all_department} } ) {
-            $_->{departmentstyle}=$_->{description}."--".$_->{id};
-        }
-    }
-
-    # projects
-    if ( @{ $form->{all_project} } ) {
-       $form->{projectset}=1; 
-       for ( @{ $form->{all_project} } ) {
-	  $_->{projectstyle}=$_->{projectnumber}."--".$_->{id};
-       }
-    }
-
-  
-
 }
 
 sub gl_subtotal_tt {
@@ -586,7 +567,6 @@ sub gl_subtotal_tt {
 }
 
 sub gl_subtotal {
-
     $subtotaldebit =
       $form->format_amount( \%myconfig, $subtotaldebit, 2, "&nbsp;" );
     $subtotalcredit =
@@ -611,6 +591,8 @@ sub gl_subtotal {
 }
 
 sub update {
+     my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty};
+
      $form->{transdate} = LedgerSMB::PGDate->from_input($form->{transdate})->to_output();
      if ( $form->{transdate} ne $form->{oldtransdate} ) {
          $form->{oldtransdate} = $form->{transdate};
@@ -645,6 +627,7 @@ sub update {
 
            }
            if (not $found_acc){
+               die "line $i";
                $form->error($locale->text('Account [_1] not found.', $form->{"accno_$i"}));
            }
             for (qw(debit credit)) {
@@ -668,7 +651,8 @@ sub update {
     for $i ( $count  .. $form->{rowcount} ) {
         for (@flds) { delete $form->{"${_}_$i"} }
     }
-    $form->{rowcount} = $count;
+
+    $form->{rowcount} = $count + $min_lines;
  
     
     
