@@ -4,11 +4,11 @@
                 "&credit_id=" _ credit_act.id; 
 columns = [{ col_id = 'file_name', name = text('File name'), #'
                type = 'href', href_base="file.pl&action=get"}
-           { col_id = 'mime_type_text', name = text('File Type'), #'
+           { col_id = 'mime_type', name = text('File Type'), #'
                type = 'text'}
-           { col_id = 'attached_at', name = text('Attached At'), #'
+           { col_id = 'uploaded_at', name = text('Attached At'), #'
                type = 'text'}
-           { col_id = 'attached_by', name = text('Attached By'), #'
+           { col_id = 'uploaded_by_name', name = text('Attached By'), #'
                type = 'text'}]; ?>
 <div class="listtop"><?lsmb text('Files attached to Entity') ?></div>
 <?lsmb 
@@ -34,7 +34,7 @@ INCLUDE dynatable
                   COL.href_base='file.pl?action=get&file_class=5&id=';
          END;
   END;
-  FOREACH ROW IN credit_files;
+  FOREACH ROW IN eca_files;
        ROW.row_id = ROW.id;
   END;
 
