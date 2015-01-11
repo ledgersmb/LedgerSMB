@@ -169,13 +169,16 @@ SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'UPDATE');
 \echo Basic file attachments
 SELECT lsmb__create_role('file_read');
 SELECT lsmb__grant_perms('file_read', 'file_base', 'SELECT');
+SELECT lsmb__grant_perms('file_read', 'file_eca', 'SELECT');
+SELECT lsmb__grant_perms('file_read', 'file_entity', 'SELECT');
+SELECT lsmb__grant_perms('file_read', 'file_incoming', 'SELECT');
+SELECT lsmb__grant_perms('file_read', 'file_internal', 'SELECT');
+SELECT lsmb__grant_perms('file_read', 'file_links', 'SELECT');
+SELECT lsmb__grant_perms('file_read', 'file_order', 'SELECT');
+SELECT lsmb__grant_perms('file_read', 'file_part', 'SELECT');
 SELECT lsmb__grant_perms('file_read', 'file_secondary_attachment', 'SELECT');
 SELECT lsmb__grant_perms('file_read', 'file_transaction', 'SELECT');
-SELECT lsmb__grant_perms('file_read', 'file_order', 'SELECT');
-SELECT lsmb__grant_perms('file_read', 'file_links', 'SELECT');
-SELECT lsmb__grant_perms('file_read', 'file_part', 'SELECT');
-SELECT lsmb__grant_perms('file_read', 'file_internal', 'SELECT');
-SELECT lsmb__grant_perms('file_read', 'file_incoming', 'SELECT');
+
 
 SELECT lsmb__create_role('file_attach_tx');
 SELECT lsmb__grant_perms('file_attach_tx', 'file_transaction', 'INSERT');
@@ -198,6 +201,10 @@ SELECT lsmb__grant_perms('file_attach_part', 'file_part', 'UPDATE');
 SELECT lsmb__create_role('file_attach_eca');
 SELECT lsmb__grant_perms('file_attach_eca', 'file_eca', 'INSERT');
 SELECT lsmb__grant_perms('file_attach_eca', 'file_eca', 'UPDATE');
+
+SELECT lsmb__create_role('file_attach_entity');
+SELECT lsmb__grant_perms('file_attach_entity', 'file_entity', 'INSERT');
+SELECT lsmb__grant_perms('file_attach_entity', 'file_entity', 'UPDATE');
 
 SELECT lsmb__grant_perms(role, 'file_incoming', 'DELETE'),
        lsmb__grant_perms(role, 'file_base_id_seq', 'ALL')
@@ -229,6 +236,8 @@ SELECT lsmb__grant_perms('contact_read', 'eca_to_location', 'SELECT');
 SELECT lsmb__grant_perms('contact_read', 'eca_to_contact', 'SELECT');
 SELECT lsmb__grant_perms('contact_read', 'eca_note', 'SELECT');
 SELECT lsmb__grant_perms('contact_read', 'pricegroup', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'file_eca', 'SELECT');
+SELECT lsmb__grant_perms('contact_read', 'file_entity', 'SELECT');
 SELECT lsmb__grant_exec('contact_read', 'eca__list_notes(int)');
 SELECT lsmb__grant_menu('contact_read', 14, 'allow');
 
