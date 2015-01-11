@@ -15,6 +15,7 @@ Changelog for 1.4.10
 * Fixed 1314, download link files attached to ECA and entity broken (Erik H)
 * Fixed column names in ECA/entity linked files tables (John L)
 * Fixed headers indistinguishable from accounts in CoA for some CSS (Erik H)
+* Fixed 404 on invoice link from AR/AP aging reports details view (Erik H)
 
 Chris T is Chris Travers
 Kaiser F is Kaiser Farrel
