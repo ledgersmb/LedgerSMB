@@ -16,6 +16,7 @@ Changelog for 1.4.10
 * Fixed column names in ECA/entity linked files tables (John L)
 * Fixed headers indistinguishable from accounts in CoA for some CSS (Erik H)
 * Fixed html in fixed assets screens (Erik H)
+* Fixed 404 on invoice link from AR/AP aging reports details view (Erik H)
 
 Chris T is Chris Travers
 Kaiser F is Kaiser Farrel
