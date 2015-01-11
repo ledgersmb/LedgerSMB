@@ -13,8 +13,8 @@ columns = [{ col_id = 'file_name', name = text('File name'), #'
 <div class="listtop"><?lsmb text('Files attached to Entity') ?></div>
 <?lsmb 
   FOREACH COL IN columns;
-         IF COL.col_id == file_name;
-                  COL.href_base='file.pl&action=get&file_class=4&id=';
+         IF COL.col_id == 'file_name';
+                  COL.href_base='file.pl?&action=get&file_class=4&id=';
          END;
   END;
   FOREACH ROW IN entity_files;
@@ -30,8 +30,8 @@ INCLUDE dynatable
 <div class="listtop"><?lsmb text('Files attached to Credit Account') ?></div>
 <?lsmb 
   FOREACH COL IN columns;
-         IF COL.col_id == file_name;
-                  COL.href_base='file.pl&action=get&file_class=5&id=';
+         IF COL.col_id == 'file_name';
+                  COL.href_base='file.pl?&action=get&file_class=5&id=';
          END;
   END;
   FOREACH ROW IN credit_files;
