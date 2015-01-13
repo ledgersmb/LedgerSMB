@@ -67,7 +67,7 @@ BEGIN
     END IF;
 
     IF t_roll_forward IS NULL 
-       OR array_upper(in_business_units) > 0 
+       OR array_upper(in_business_units, 1) > 0 
     THEN
        SELECT min(transdate) - '1 day'::interval 
          INTO t_roll_forward 
