@@ -3,7 +3,8 @@
 \usepackage[latin1]{inputenc}
 \usepackage{tabularx}
 \usepackage{graphicx}
-\usepackage{textpos}
+\usepackage[letterpaper,top=2cm,bottom=1.5cm,left=1.1cm,right=1.5cm]{geometry}
+
 
 <?lsmb PROCESS check_base.tex ?>
 
@@ -14,6 +15,7 @@
 
 \fontfamily{cmss}\fontsize{9pt}{9pt}\selectfont
 <?lsmb FOR check = checks ?>
+<?lsmb name = check.name ?>
 <?lsmb INCLUDE check_single 
 	source = check.source
 	control_code = check.control_code
