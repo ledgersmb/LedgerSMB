@@ -2,6 +2,7 @@ Changelog for 1.4 Series
 Released 2014-09-15
 
 Changelog for 1.4.10
+* Note:  Corrected version numbers in 1.4.10.1, 1.4.10 had 1.4.9 as version
 * Malay translation added (Kaiser F, and others)
 * Fixed 1292, some template editing scripts linked to wrong mod (Chris T)
 * Fixed 1290, payment/receipt screen options never show (Chris T)
