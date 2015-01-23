@@ -104,7 +104,7 @@ Installing PostgreSQL
 
 On Debian and its derivatives installing PostgreSQL works with:
 
- $ apt-get install postgresql-server postgresql-client postgresql-contrib
+ $ apt-get install postgresql postgresql-client postgresql-contrib
 
 On Fedora and its derivatives this command does the same:
 
@@ -184,6 +184,8 @@ LedgerSMB depends on these additional modules (not listing core modules):
   Number::Format
   DateTime::Format::Strptime
   Moose
+  namespace::autoclean
+  Carp::Always
 
 and these optional ones:
 
@@ -246,7 +248,8 @@ following command:
    libfile-mimeinfo-perl libtemplate-plugin-number-format-perl \
    libdatetime-format-strptime-perl libconfig-general-perl \
    libdatetime-format-strptime-perl libio-stringy-perl libmoose-perl \
-   libconfig-inifiles-perl
+   libconfig-inifiles-perl libnamespace-autoclean-perl \
+   libcarp-always-perl
 
 
 This installs the required modules available from the Wheezy repository.
@@ -257,6 +260,11 @@ following packages by executing this command:
  $ aptitude install libtemplate-plugin-latex-perl \
       libtex-encode-perl texlive-latex-recommended
 
+To install the optional module for size detection of images for embedding
+in LaTeX, execute:
+
+ $ aptitude install libimage-size-perl
+
 The credit card processing support for TrustCommerce is available
 from the Wheezy repository through:
 
@@ -265,8 +273,12 @@ from the Wheezy repository through:
 The Open Office output option is available from the Wheezy repository
 as well through the command:
 
- $ aptitude install libxml-twig-perl
+ $ aptitude install libxml-twig-perl libopenoffice-oodoc-perl
 
+To use the Starman perl-based web server install the required perl modules
+by executing:
+
+ $ aptitude install starman libcgi-emulate-psgi-perl libplack-perl
 
 (@@@ ADD info about xelatex @@@)
 http://ledgersmb.org/faq/localization/im-using-non-ascii-unicode-characters-why-cant-i-generate-pdf-output
@@ -283,8 +295,8 @@ Install rpm or look at dists/rpm/ledgersmb.spec for perl module dependencies
 Initializing a company database
 ===============================
 
-LedgerSMB 1.3 stores data for each company in a separate "database".  A
-database is a PostgreSQL concept for grouping tables, indexes, etc.
+LedgerSMB 1.3 and higher stores data for each company in a separate "database".
+A database is a PostgreSQL concept for grouping tables, indexes, etc.
 
 Each company database must be named.  This name is essentially the system
 identifier within PostgreSQL for the company's dataset.  The name for the
