@@ -139,7 +139,9 @@ password expiration, so don't do that outside of testing/recovery
 scenarios.
 
 3)  The postgres user or other db superuser must be given access via
-the web app in order to create databases.
+the web app in order to create databases.  A password must be set for
+this user, if not previously set, if you wish to use the setup.pl web
+management console to configure LedgerSMB company databases.
 
 A typical pg_hba.conf entry might be:
 
@@ -148,6 +150,12 @@ host   all   all   127.0.0.1/32    md5
 If you want to lock this down, you can lock it down further by:
 host   lsmbdb  all  127.0.0.1/32    md5
 host  postgres postgres  127.0.0.1/32    md5
+
+A typical command to set a password using the psql command line
+might be:
+
+ $ psql -c "ALTER USER postgres WITH PASSWORD 'My-Password'"
+
 
 As of 1.4, connections to template1 are no longer required for the db setup 
 process.
@@ -312,9 +320,14 @@ upgrade script at http://localhost/ledgersmb/setup.pl.  This is very different
 from the approaches taken by LedgerSMB 1.2.x and earlier and SQL-Ledger, but
 rather forms a wizard to walk you through the process.
 
+The setup.pl wizard will prompt for a super-user login and password. This is
+the database superuser mentioned above (often 'postgres').  It will also ask
+for a database name.  If the database name you provide does not yet exist,
+the process of creating a new company database will be started.
+
 Please note that the setup.pl file assumes that LedgerSMB is already configured 
 to be able to access the database and locate the relevant PostgreSQL contrib 
-scripts.  In particular, you must have the  contrib_dir directive set to point
+scripts.  In particular, you must have the contrib_dir directive set to point
 to those scripts properly in your ledgersmb.conf before you begin.
 
 If you are upgrading from 1.2, your 1.2 tables will be moved to schema lsmb12.
