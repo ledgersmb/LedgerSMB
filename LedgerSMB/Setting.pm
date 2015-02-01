@@ -198,3 +198,15 @@ sub accounts_by_link {
     }
     return \@results;
 }
+
+sub all_accounts {
+    my ($self) = @_;
+
+    my @results = $self->call_procedure(procname => 'chart_list_all',
+                              args => []);
+
+    for my $ref (@results){
+        $ref->{text} = "$ref->{accno} -- $ref->{description}";
+    }
+    return \@results;
+}
