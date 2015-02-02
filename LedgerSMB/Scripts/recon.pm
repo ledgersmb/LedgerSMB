@@ -140,21 +140,15 @@ Saves the reconciliation set for later use.
 =cut
 
 sub save_recon_set {
-    my ($request) = shift;
+    my ($request) = @_;
     my $recon = LedgerSMB::DBObject::Reconciliation->new(base => $request);
     if ($recon->close_form){
         $recon->save();
+        return search($request);
     } else {
         $recon->{notice} = $recon->{_locale}->text('Data not saved.  Please update again.');
+        return _display_report($recon);
     }
-    my $template = LedgerSMB::Template->new( 
-            user => $request->{_user}, 
-    	    template => 'reconciliation/search', 
-            locale => $request->{_locale},
-            format => 'HTML',
-            path=>"UI");
-    return $template->render($recon);
-    
 }
 
 =item get_results
