@@ -77,6 +77,7 @@ our $smtptimout = 60;
 our $smtpuser   = '';
 our $smtppass   = '';
 our $smtpauthmethod = '';
+our $zip = 'zip -r %dir %dir';
 
 # set language for login and admin
 our $language = "en";
@@ -129,8 +130,8 @@ for my $var (qw(localepath spool templates images)) {
 }
 
 # Programs
-for my $var (qw(gzip)) {
-    ${$var} = $cfg->val('prigrams', $var) if $cfg->val('prigrams', $var);
+for my $var (qw(gzip zip)) {
+    ${$var} = $cfg->val('programs', $var) if $cfg->val('programs', $var);
 }
 
 # mail configuration

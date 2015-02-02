@@ -39,6 +39,12 @@ sub run {
     my $cols = \@sl_columns;
     $cols = \@balance_columns if $request->{tb_type} eq 'balance';
     $request->{"col_$_"} = 1 for @$cols;
+    $request->{business_units} = [map {$request->{$_}}
+                                 sort 
+                                 grep {$_ =~ /business_/} 
+                                 keys %$request];
+    delete $request->{business_units} 
+           unless scalar @{$request->{business_units}};
     LedgerSMB::Report::Trial_Balance->new(%$request)->render($request);
 }
 

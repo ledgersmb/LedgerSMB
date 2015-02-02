@@ -109,6 +109,14 @@ If set, only include these accounts
 
 has accounts => (is => 'rw', isa => 'Maybe[ArrayRef[Int]]');
 
+=item business_units
+
+A list of business account ids
+
+=cut
+
+has business_units => (is => 'ro', isa => 'ArrayRef[Int]', required => 0);
+
 =back
 
 =head1  REPORT CONSTANT FUNCTIONS

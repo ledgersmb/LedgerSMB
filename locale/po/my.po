@@ -1,93 +1,77 @@
-# #####################################################################
-# LedgerSMB Small Medium Business Accounting
-# Copyright (c) 2005
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <kaiserfarrell@gmail.com>, YEAR.
 #
-# Russian texts:
-#
-#  Author:	Alexey Cherepanov
-#  E-mail:	alx@rdm.com.ru
-# This localisation based on Khaimin Vladimir's KOI8-R localisation.
-#
-# This program is free software; you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2 of the License, or
-# (at your option) any later version.
-#
-# This program is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-# GNU General Public License for more details.
-# You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-#
-# ######################################################################
+#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: LedgerSMB 1.1.1\n"
+"Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-19 05:05-0800\n"
+"POT-Creation-Date: 2014-11-18 05:05-0800\n"
+"PO-Revision-Date: 2014-12-7 14:00+ZONE\n"
+"Last-Translator: kaiserfarrell <kaiserfarrell@gmail.com>\n"
+"Language-Team: LedgerSMB Malaysia <https://www.fb,me/groups/1512686172349251/>\n"
+"Language: Malay \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: lsmb-request.pl:77
 msgid "No workflow script specified"
-msgstr ""
+msgstr "Tiada workflow script yang dinyatakan"
 
 #: lsmb-request.pl:104
 msgid "Unable to open script"
-msgstr ""
+msgstr "Tidak boleh membuka script"
 
 #: lsmb-request.pl:108
 msgid "Action Not Defined: "
-msgstr ""
+msgstr "Tindakan tidak ditakrif: "
 
 #: old-handler.pl:153
-#, fuzzy
 msgid "You are logged out!"
-msgstr "Вы вышли из системы"
+msgstr "Anda sudah daftar keluar!"
 
 #: old-handler.pl:154
 msgid "Login"
-msgstr "Пользователь"
+msgstr "Daftar masuk"
 
 #: old-handler.pl:195
 msgid "Version"
-msgstr "Версия"
+msgstr "Versi"
 
 #: old-handler.pl:204
-#, fuzzy
-msgid "action not defined!"
-msgstr "Языки не определены!"
+msgid "Action not defined!"
+msgstr "Tindakan tidak ditakrif!"
 
 #: bin/am.pl:54 LedgerSMB/Scripts/configuration.pm:84
 msgid "GL Reference Number"
-msgstr "Номер справочника Главной книги"
+msgstr "Nombor rujukan GL"
 
 #: bin/am.pl:56 LedgerSMB/Scripts/configuration.pm:86
 msgid "Sales Invoice/AR Transaction Number"
-msgstr "Номер проводки Фактуры клиента"
+msgstr "jualan invois/nombor urus niaga AR"
 
 #: bin/am.pl:57 LedgerSMB/Scripts/configuration.pm:87
 msgid "Max per dropdown"
-msgstr ""
+msgstr "Maksima setiap penurunan"
 
 #: bin/am.pl:58 LedgerSMB/Scripts/configuration.pm:88
 msgid "Sales Order Number"
-msgstr "Номер заказа клиента"
+msgstr "Nombor pesanan jualan"
 
 #: bin/am.pl:60 LedgerSMB/Scripts/configuration.pm:90
 msgid "Vendor Invoice/AP Transaction Number"
-msgstr "Номер проводки фактуры поставщика"
+msgstr "invois pembekal/nombor urus niaga AP"
 
 #: bin/am.pl:61 LedgerSMB/Scripts/configuration.pm:91
 msgid "Sales Quotation Number"
-msgstr "Номер продажи резерва"
+msgstr "Nombor Sebut Harga Jualan"
 
 #: bin/am.pl:62 bin/oe.pl:504 LedgerSMB/Scripts/configuration.pm:92
 msgid "RFQ Number"
-msgstr "Номер запроса на резервирование"
+msgstr "Nombor RFQ"
 
 #: bin/am.pl:63 bin/pe.pl:1479 bin/oe.pl:2125 bin/oe.pl:2203 bin/oe.pl:2237
 #: bin/oe.pl:2488 LedgerSMB/Scripts/configuration.pm:93
@@ -98,16 +82,15 @@ msgstr "Номер запроса на резервирование"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Product.pm:77
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:69
 msgid "Part Number"
-msgstr "Part Number"
+msgstr "Bahagian nombor"
 
 #: bin/am.pl:64 LedgerSMB/Scripts/configuration.pm:94
-#, fuzzy
 msgid "Job/Project Number"
-msgstr "Код проекта"
+msgstr "Nombor Tugasan/Projek"
 
 #: bin/am.pl:65 LedgerSMB/Scripts/configuration.pm:95
 msgid "Employee Number"
-msgstr "Код сотрудника"
+msgstr "Nombor Pekerja"
 
 #: bin/am.pl:66 bin/io.pl:2002 bin/aa.pl:1615
 #: UI/payments/payments_filter.html:65 LedgerSMB/Scripts/configuration.pm:96
@@ -115,7 +98,7 @@ msgstr "Код сотрудника"
 #: LedgerSMB/Report/Invoices/Payments.pm:184 LedgerSMB/Report/Margin/ECA.pm:83
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Margin/ECA.pm:83
 msgid "Customer Number"
-msgstr "Код клиента"
+msgstr "Nombor Pelanggan"
 
 #: bin/am.pl:67 bin/io.pl:2003 bin/aa.pl:1624
 #: UI/payments/payments_filter.html:63 LedgerSMB/Scripts/configuration.pm:97
@@ -123,65 +106,56 @@ msgstr "Код клиента"
 #: LedgerSMB/Report/Invoices/Payments.pm:182
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:156
 msgid "Vendor Number"
-msgstr "Код поставщика"
+msgstr "Nombor Pembekal"
 
 #: bin/am.pl:68 LedgerSMB/Scripts/configuration.pm:101
 msgid "Check Prefix"
-msgstr ""
+msgstr "Semak Imbuhan"
 
 #: bin/am.pl:69 LedgerSMB/Scripts/configuration.pm:54
-#, fuzzy
 msgid "Password Duration"
-msgstr "Пароль изменен!"
+msgstr "Jangka Masa Kata Laluan"
 
 #: bin/am.pl:70 LedgerSMB/Scripts/configuration.pm:27
-#, fuzzy
 msgid "Default Email To"
-msgstr "Шаблон по умолчанию"
+msgstr "Tetapan utama Email kepada"
 
 #: bin/am.pl:71 LedgerSMB/Scripts/configuration.pm:29
-#, fuzzy
 msgid "Default Email CC"
-msgstr "Шаблон по умолчанию"
+msgstr "Tetapan utama Email CC"
 
 #: bin/am.pl:72 LedgerSMB/Scripts/configuration.pm:31
-#, fuzzy
 msgid "Default Email BCC"
-msgstr "Шаблон по умолчанию"
+msgstr "Tetapan utama Email BCC"
 
 #: bin/am.pl:74 LedgerSMB/Scripts/configuration.pm:33
 msgid "Default Email From"
-msgstr ""
+msgstr "Tetapan utama Email daripada"
 
 #: bin/am.pl:75 LedgerSMB/Scripts/configuration.pm:21
 #: LedgerSMB/Report/Invoices/Payments.pm:146
 msgid "Company Name"
-msgstr "Наименование организации"
+msgstr "Nama Syarikat"
 
 #: bin/am.pl:76 LedgerSMB/Scripts/configuration.pm:22
-#, fuzzy
 msgid "Company Address"
-msgstr "Наименование организации"
+msgstr "Alamat Syarikat"
 
 #: bin/am.pl:77 LedgerSMB/Scripts/configuration.pm:23
-#, fuzzy
 msgid "Company Phone"
-msgstr "Наименование организации"
+msgstr "Nombor Telefon Syarikat"
 
 #: bin/am.pl:78 LedgerSMB/Scripts/configuration.pm:24
-#, fuzzy
 msgid "Company Fax"
-msgstr "Наименование организации"
+msgstr "Faks Syarikat"
 
 #: bin/am.pl:80 LedgerSMB/Scripts/configuration.pm:35
-#, fuzzy
 msgid "Company Sales Tax ID"
-msgstr "Наименование организации"
+msgstr "ID Cukai Jualan Syarikat"
 
 #: bin/am.pl:82 LedgerSMB/Scripts/configuration.pm:37
-#, fuzzy
 msgid "Company License Number"
-msgstr "Код сотрудника"
+msgstr "Nombor Lesen Syarikat"
 
 #: bin/am.pl:111 bin/am.pl:122 bin/am.pl:334 bin/ir.pl:911 bin/ic.pl:865
 #: bin/is.pl:981 bin/pe.pl:460 bin/pe.pl:665 bin/pe.pl:1043 bin/aa.pl:1026
@@ -197,11 +171,11 @@ msgstr "Код сотрудника"
 #: LedgerSMB/Scripts/budgets.pm:98 LedgerSMB/Scripts/asset.pm:548
 #: LedgerSMB/Scripts/account.pm:136 LedgerSMB/Scripts/account.pm:147
 msgid "Save"
-msgstr "Сохранить"
+msgstr "Simpan"
 
 #: bin/am.pl:113 bin/ic.pl:874 bin/oe.pl:815 LedgerSMB/Scripts/account.pm:138
 msgid "Save as new"
-msgstr "Сохранить как новый"
+msgstr "Simpan sebagai baru"
 
 #: bin/am.pl:117 bin/am.pl:339 bin/ic.pl:880 bin/pe.pl:467 bin/pe.pl:672
 #: bin/pe.pl:1044 bin/aa.pl:999 bin/oe.pl:841
@@ -215,36 +189,35 @@ msgstr "Сохранить как новый"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:123
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:191
 msgid "Delete"
-msgstr "Удалить"
+msgstr "Padam"
 
 #: bin/am.pl:139
 msgid "Account Number missing!"
-msgstr "Не указан номер счета!"
+msgstr "Nombor Akaun hilang!"
 
 #: bin/am.pl:140
 msgid "Account Type missing!"
-msgstr "Не указан тип счета!"
+msgstr "Jenis Akaun hilang!"
 
 #: bin/am.pl:148
 msgid "Cannot set account for more than one of AR, AP or IC"
-msgstr "Невозможно установить в счете более чем одно значение из AR, AP или IC"
+msgstr "Tidak boleh tentukan akaun untuk lebih daripada satu AR,AP atau IC"
 
 #: bin/am.pl:158
 msgid "account cannot be set to any other type of account"
-msgstr "счету не может быть присвоен другой тип"
+msgstr "Akaun tidak boleh ditentukan untuk menjadi akaun yang lain"
 
 #: bin/am.pl:169
-#, fuzzy
 msgid "Cannot set multiple options for %1"
-msgstr "Невозможно установить много опций для"
+msgstr "Tidak boleh tentukan banyak pilihan untuk %1"
 
 #: bin/am.pl:174
 msgid "Account saved!"
-msgstr "Счет записан"
+msgstr "Akaun disimpan!"
 
 #: bin/am.pl:177
 msgid "Cannot save account!"
-msgstr "Невозможно сохранить счет!"
+msgstr "Akaun tidak boleh disimpan!"
 
 #: bin/am.pl:189 LedgerSMB/Report/Trial_Balance.pm:137
 #: LedgerSMB/Report/COA.pm:97 LedgerSMB/Report/GL.pm:153
@@ -254,40 +227,37 @@ msgstr "Невозможно сохранить счет!"
 #: tools/dbstrings:124 tools/dbstrings:86
 msgid "GIFI"
 msgstr "GIFI"
-
 #: bin/am.pl:230
-#, fuzzy
 msgid "CSV Report"
-msgstr "Отчеты"
+msgstr "Laporan CSV"
 
 #: bin/am.pl:288
 msgid "Account does not exist!"
-msgstr "Счет не существует!"
+msgstr "Akaun tidak wujud"
 
 #: bin/am.pl:311
-#, fuzzy
 msgid "%1 GIFI"
-msgstr "GIFI"
+msgstr "%1 GIFI"
 
 #: bin/am.pl:345
 msgid "Copy to COA"
-msgstr "Копировать в ГПС"
+msgstr "Salin kepada COA"
 
 #: bin/am.pl:368 bin/am.pl:376
 msgid "GIFI missing!"
-msgstr "Пропущен GIFI"
+msgstr "GIFI hilang"
 
 #: bin/am.pl:370
 msgid "GIFI saved!"
-msgstr "GIFI сохранен!"
+msgstr "GIFI disimpan"
 
 #: bin/am.pl:407
 msgid "GIFI deleted!"
-msgstr "GIFI удален"
+msgstr "GIFI dipadam"
 
 #: bin/am.pl:474 tools/dbstrings:154 tools/dbstrings:111
 msgid "Type of Business"
-msgstr "Тип бизнеса"
+msgstr "Jenis Bisnes"
 
 #: bin/am.pl:479 bin/am.pl:644 bin/am.pl:809 bin/am.pl:1011 bin/am.pl:1641
 #: bin/ir.pl:512 bin/ic.pl:770 bin/ic.pl:1098 bin/ic.pl:1161 bin/ic.pl:1199
@@ -326,9 +296,10 @@ msgstr "Тип бизнеса"
 #: LedgerSMB/Report/Inventory/Search.pm:197
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:81
 #: LedgerSMB/Report/Budget/Variance.pm:66
-#: LedgerSMB/Report/Budget/Variance.pm:110 LedgerSMB/Report/Budget/Search.pm:83
-#: LedgerSMB/Report/PNL/Product.pm:79 LedgerSMB/Report/GL.pm:98
-#: LedgerSMB/Report/Contact/Search.pm:71 LedgerSMB/Report/Contact/History.pm:73
+#: LedgerSMB/Report/Budget/Variance.pm:110
+#: LedgerSMB/Report/Budget/Search.pm:83 LedgerSMB/Report/PNL/Product.pm:79
+#: LedgerSMB/Report/GL.pm:98 LedgerSMB/Report/Contact/Search.pm:71
+#: LedgerSMB/Report/Contact/History.pm:73
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:51
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:105
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:95
@@ -352,172 +323,160 @@ msgstr "Тип бизнеса"
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:221 tools/dbstrings:51
 #: tools/dbstrings:61 tools/dbstrings:57 tools/dbstrings:62
 msgid "Description"
-msgstr "Описание"
+msgstr "Penerangan"
 
 #: bin/am.pl:481
-#, fuzzy
 msgid "Discount %"
-msgstr "Скидка"
+msgstr "Diskaun"
 
 #: bin/am.pl:514 tools/dbstrings:79 tools/dbstrings:68
 msgid "Add Business"
-msgstr "Новый бизнес"
+msgstr "Tambah Bisnes"
 
 #: bin/am.pl:536
-#, fuzzy
 msgid "%1 Business"
-msgstr "Бизнес"
+msgstr "%1 Bisnes"
 
 #: bin/am.pl:552 bin/am.pl:721 bin/am.pl:880 bin/am.pl:1569
 msgid "Description missing!"
-msgstr "Провущено Описание!"
+msgstr "Penerangan hilang"
 
 #: bin/am.pl:554
 msgid "Business saved!"
-msgstr "Бизнес сохранен"
+msgstr "Perniagaan disimpan"
 
 #: bin/am.pl:561
 msgid "Business deleted!"
-msgstr "Бизнес удален"
+msgstr "Perniagaan dipadam"
 
 #: bin/am.pl:633
 msgid "Standard Industrial Codes"
-msgstr "Стандартный промышленный код"
+msgstr "Standart kod industri"
 
 #: bin/am.pl:640 bin/am.pl:807 bin/am.pl:1009
 msgid "Code"
-msgstr "Код"
+msgstr "kod"
 
 #: bin/am.pl:681 tools/dbstrings:83 tools/dbstrings:72
 msgid "Add SIC"
-msgstr "Новый SIC"
+msgstr "Tambah SIC"
 
 #: bin/am.pl:703
-#, fuzzy
 msgid "%1 SIC"
-msgstr "Новый SIC"
+msgstr "%1 SIC"
 
 #: bin/am.pl:720 bin/am.pl:879
 msgid "Code missing!"
-msgstr "Пропущен код"
+msgstr "kod hilang"
 
 #: bin/am.pl:723
 msgid "SIC saved!"
-msgstr "SIC сохранен"
+msgstr "SIC disimpan"
 
 #: bin/am.pl:730
 msgid "SIC deleted!"
-msgstr "SIC удален"
+msgstr "SIC dipadam"
 
 #: bin/am.pl:802
 msgid "Languages"
-msgstr "Языки"
+msgstr "Bahasa"
 
 #: bin/am.pl:843 tools/dbstrings:81 tools/dbstrings:70
 msgid "Add Language"
-msgstr "Новый язык"
+msgstr "Tambah Bahasa"
 
 #: bin/am.pl:866
-#, fuzzy
 msgid "%1 Language"
-msgstr "Язык"
+msgstr "%1 Bahasa"
 
 #: bin/am.pl:921
 msgid "Language saved!"
-msgstr "Язык сохранен"
+msgstr "Bahasa disimpan"
 
 #: bin/am.pl:927 bin/bp.pl:194 bin/oe.pl:1351
 msgid "Confirm!"
-msgstr "Подтвердить!"
+msgstr "Sah!"
 
 #: bin/am.pl:935
-#, fuzzy
 msgid "Delete Language"
-msgstr "Редактировать Язык"
+msgstr "Padam Bahasa"
 
 #: bin/am.pl:946
-#, fuzzy
 msgid "Deleting a language will also delete the templates for the language %1"
-msgstr "Удаление языка приведет к удалению шаблонов"
+msgstr "Bahasa yang dipadam juga akan memadamkan templat untuk bahasa %1"
 
 #: bin/am.pl:961
 msgid "Language deleted!"
-msgstr "Язык удален"
+msgstr "Bahasa dipadam"
 
 #: bin/am.pl:990
 msgid "Default Template"
-msgstr "Шаблон по умолчанию"
+msgstr "Tetapan utama templat"
 
 #: bin/am.pl:1027
-#, fuzzy
 msgid "Default"
-msgstr "Настройки по умолчании"
+msgstr "Tetapan Utama"
 
 #: bin/am.pl:1078 bin/am.pl:1096
 msgid "Edit Template"
-msgstr "Редактировать Шаблон"
+msgstr "Edit Templat"
 
 #: bin/am.pl:1114 bin/aa.pl:1004 bin/gl.pl:275
 #: addons/1.3/extended_arap/trunk/UI/aa.html:634
-#, fuzzy
 msgid "Save Template"
-msgstr "Шаблоны LaTeX"
+msgstr "Simpan Templat"
 
 #: bin/am.pl:1130
 msgid "Template saved!"
-msgstr "Шаблон сохранен!"
+msgstr "Templat disimpan"
 
 #: bin/am.pl:1163 tools/dbstrings:75 tools/dbstrings:64
 msgid "Taxes"
-msgstr ""
+msgstr "Cukai"
 
 #: bin/am.pl:1370
-#, fuzzy
 msgid "Edit Preferences for %1"
-msgstr "Редактировать настройки для"
+msgstr "keutamaan edit untuk %1"
 
 #: bin/am.pl:1401
-#, fuzzy
 msgid "Taxes saved!"
-msgstr "Шаблон сохранен!"
+msgstr "Cukai disimpan!"
 
 #: bin/am.pl:1404
-#, fuzzy
 msgid "Cannot save taxes!"
-msgstr "Невозможно сохранить заказ!"
+msgstr "Cukai tidak disimpan!"
 
 #: bin/am.pl:1414
 msgid "Password does not match!"
-msgstr "Неверный пароль!"
+msgstr "Kata laluan tidak sepadan!"
 
 #: bin/am.pl:1419
 msgid "Preferences saved!"
-msgstr "Настройки сохранены!"
+msgstr "Pilihan disimpan!"
 
 #: bin/am.pl:1422
 msgid "Cannot save preferences!"
-msgstr "Невозможно сохранить настройки!"
+msgstr "Pilihan tidak disimpan!"
 
 #: bin/am.pl:1491 tools/dbstrings:156 tools/dbstrings:113
 msgid "Warehouses"
-msgstr "Склады"
+msgstr "Gudang-gudang"
 
 #: bin/am.pl:1530 tools/dbstrings:77 tools/dbstrings:66
 msgid "Add Warehouse"
-msgstr "Новый склад"
+msgstr "Tambah Gudang"
 
 #: bin/am.pl:1553
-#, fuzzy
 msgid "%1 Warehouse"
-msgstr "Склад"
+msgstr "%1 Gudang"
 
-#: bin/am.pl:1571
+#: bin/am.pl:1571t  
 msgid "Warehouse saved!"
-msgstr "Склад сохранен!"
+msgstr "Gudang disimpan!"
 
 #: bin/am.pl:1578
 msgid "Warehouse deleted!"
-msgstr "Склад удален!"
+msgstr "Gudang dipadam!"
 
 #: bin/am.pl:1585
 msgid "localhost"
@@ -525,11 +484,11 @@ msgstr "localhost"
 
 #: bin/am.pl:1589
 msgid "About"
-msgstr "О программе"
+msgstr "Tentang"
 
 #: bin/am.pl:1617 tools/dbstrings:202 tools/dbstrings:157
 msgid "Recurring Transactions"
-msgstr "Повторяющиеся проводки"
+msgstr "Perulangan Input Transaksi"
 
 #: bin/am.pl:1636 bin/arap.pl:759
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:377
@@ -552,7 +511,7 @@ msgstr "Повторяющиеся проводки"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:92
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:206
 msgid "Reference"
-msgstr "Ссылка"
+msgstr "Rujukan"
 
 #: bin/am.pl:1640 bin/bp.pl:384 bin/aa.pl:1635
 #: addons/1.3/b_units/trunk/scripts/business_unit.pl:132
@@ -573,15 +532,15 @@ msgstr "Ссылка"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:55
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:39
 msgid "ID"
-msgstr "Идентификатор"
+msgstr "ID"
 
 #: bin/am.pl:1643
 msgid "Next"
-msgstr "Следующий"
+msgstr "Seterusnya"
 
 #: bin/am.pl:1647
 msgid "Ends"
-msgstr "окончание"
+msgstr "Tamat"
 
 #: bin/am.pl:1650 bin/ir.pl:615 bin/ir.pl:791 bin/is.pl:676 bin/is.pl:836
 #: bin/pe.pl:1489 bin/aa.pl:723 bin/aa.pl:883 bin/aa.pl:1657
@@ -595,15 +554,15 @@ msgstr "окончание"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:116
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:79
 msgid "Amount"
-msgstr "Сумма"
+msgstr "Jumlah"
 
 #: bin/am.pl:1652 bin/arap.pl:726
 msgid "Every"
-msgstr "каждый"
+msgstr "Setiap"
 
 #: bin/am.pl:1653
 msgid "Times"
-msgstr "раз"
+msgstr "Masa"
 
 #: bin/am.pl:1654 bin/arap.pl:583 bin/is.pl:963 bin/oe.pl:808 bin/oe.pl:2014
 msgid "E-mail"
@@ -614,40 +573,41 @@ msgstr "E-mail"
 #: UI/taxform/summary_report.html:53
 #: addons/1.3/extended_arap/trunk/UI/aa.html:555
 msgid "Print"
-msgstr "Печать"
+msgstr "Cetak"
 
 #: bin/am.pl:1659 tools/dbstrings:112 tools/dbstrings:76
 msgid "AR"
-msgstr "Продажи"
+msgstr "AR"
 
 #: bin/am.pl:1660 tools/dbstrings:113 tools/dbstrings:77
 msgid "AP"
-msgstr "Поступления"
+msgstr "AP"
 
 #: bin/am.pl:1661
 msgid "GL"
-msgstr "Главная книга"
+msgstr "GL"
 
-#: bin/am.pl:1662 LedgerSMB/Report/Orders.pm:186 LedgerSMB/Report/Orders.pm:286
-#: tools/dbstrings:32 tools/dbstrings:34 tools/dbstrings:37 tools/dbstrings:56
-#: tools/dbstrings:65 tools/dbstrings:41 tools/dbstrings:43 tools/dbstrings:46
-#: tools/dbstrings:60
+#: bin/am.pl:1662 LedgerSMB/Report/Orders.pm:186
+#: LedgerSMB/Report/Orders.pm:286 tools/dbstrings:32 tools/dbstrings:34
+#: tools/dbstrings:37 tools/dbstrings:56 tools/dbstrings:65 tools/dbstrings:41
+#: tools/dbstrings:43 tools/dbstrings:46 tools/dbstrings:60
 msgid "Sales Orders"
-msgstr "Заказы клиента"
+msgstr "Pesanan Jualan"
 
-#: bin/am.pl:1663 LedgerSMB/Report/Orders.pm:189 LedgerSMB/Report/Orders.pm:288
-#: tools/dbstrings:33 tools/dbstrings:35 tools/dbstrings:38 tools/dbstrings:71
-#: tools/dbstrings:42 tools/dbstrings:44 tools/dbstrings:47
+#: bin/am.pl:1663 LedgerSMB/Report/Orders.pm:189
+#: LedgerSMB/Report/Orders.pm:288 tools/dbstrings:33 tools/dbstrings:35
+#: tools/dbstrings:38 tools/dbstrings:71 tools/dbstrings:42 tools/dbstrings:44
+#: tools/dbstrings:47
 msgid "Purchase Orders"
-msgstr "Заказы поставщику"
+msgstr "Beli Pesanan"
 
 #: bin/am.pl:1714
 msgid "Next Number"
-msgstr "Следующий номер"
+msgstr "Nombor Seterusnya"
 
 #: bin/am.pl:1791
 msgid "Process Transactions"
-msgstr "Обработка проводок"
+msgstr "Proses Transaksi"
 
 #: bin/am.pl:1868 bin/arapprn.pl:534 bin/io.pl:1445
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:411
@@ -660,138 +620,128 @@ msgid "PDF"
 msgstr "PDF"
 
 #: bin/am.pl:2020
-#, fuzzy
 msgid "Posting Sales Invoice %1"
-msgstr "Фактура клиента"
+msgstr "Simpan Invois Jualan %1 "
 
 #: bin/am.pl:2030
-#, fuzzy
 msgid "Posting Vendor Invoice %1"
-msgstr "Фактура поставщика"
+msgstr "Simpan Invois Pembekal %1"
 
 #: bin/am.pl:2042 bin/am.pl:2051
-#, fuzzy
 msgid "Posting Transaction %1"
-msgstr "Проводка закупки"
+msgstr "Simpan Transaksi"
 
 #: bin/am.pl:2060 bin/am.pl:2131 bin/am.pl:2185 bin/am.pl:2228 bin/am.pl:2275
 #: bin/bp.pl:261
 msgid "done"
-msgstr "выполнено"
+msgstr "selesai"
 
 #: bin/am.pl:2081 bin/io.pl:1364 bin/io.pl:1544 bin/is.pl:965 bin/oe.pl:302
 #: bin/oe.pl:824 bin/oe.pl:1260 tools/dbstrings:29 tools/dbstrings:92
 #: tools/dbstrings:106 tools/dbstrings:38 tools/dbstrings:185
 #: tools/dbstrings:198
 msgid "Sales Order"
-msgstr "Заказ клиента"
+msgstr "Pesanan Jualan"
 
 #: bin/am.pl:2087 bin/ir.pl:898 bin/io.pl:1381 bin/io.pl:1592 bin/oe.pl:316
 #: bin/oe.pl:835 bin/oe.pl:1266 tools/dbstrings:30 tools/dbstrings:94
 #: tools/dbstrings:108 tools/dbstrings:39 tools/dbstrings:187
 #: tools/dbstrings:200
 msgid "Purchase Order"
-msgstr "Заказ поставщику"
+msgstr "Beli Pesanan"
 
 #: bin/am.pl:2126
-#, fuzzy
 msgid "Saving %1 [_2]"
-msgstr "Сохранение"
+msgstr "simpanan %1 [_2]"
 
 #: bin/am.pl:2134 bin/am.pl:2231 bin/am.pl:2278
 msgid "failed"
-msgstr "ошибка"
+msgstr "gagal"
 
 #: bin/am.pl:2180
-#, fuzzy
 msgid "Posting GL Transaction %1"
-msgstr "Проводки Главной книги"
+msgstr "Simpan transaksi GL %1 "
 
 #: bin/am.pl:2217 bin/bp.pl:253
 msgid "Printing"
-msgstr "Печать"
+msgstr "percetakan"
 
 #: bin/am.pl:2221 bin/am.pl:2268
 msgid "Invalid redirect"
-msgstr ""
+msgstr "peralihan yang tidak sah"
 
 #: bin/am.pl:2255
 msgid "Sending"
-msgstr "Отправка"
+msgstr "menghantar"
 
 #: bin/am.pl:2262 bin/io.pl:1649
 msgid "E-mail address missing!"
-msgstr "Не указан адрес E-mail!"
+msgstr "alamat emel hilang"
 
 #: bin/rp.pl:155 bin/pe.pl:187 bin/pe.pl:284 bin/pe.pl:500
 msgid "All"
-msgstr "Все"
+msgstr "Semua"
 
 #: bin/rp.pl:156
 msgid "Last Only"
-msgstr ""
+msgstr "Hanya terakhir"
 
 #: bin/rp.pl:157
 msgid "None"
-msgstr ""
+msgstr "Tiada"
 
 #: bin/rp.pl:169 bin/ic.pl:979 bin/ic.pl:1118 bin/ic.pl:2190 bin/ic.pl:2464
 #: bin/ic.pl:2618 bin/bp.pl:163 bin/arap.pl:265 bin/arap.pl:473
-#: bin/arapprn.pl:469 bin/io.pl:643 bin/io.pl:849 bin/io.pl:1287 bin/io.pl:2223
-#: bin/pe.pl:209 bin/pe.pl:761 bin/pe.pl:1190 bin/pe.pl:1360 bin/pe.pl:1637
-#: bin/aa.pl:1776 bin/oe.pl:1581 bin/oe.pl:2148 bin/oe.pl:2659
-#: addons/1.4/pos/trunk/bin/pos.pl:1174 UI/asset/begin_depreciation_all.html:25
-#: UI/asset/begin_approval.html:66 UI/asset/begin_report.html:58
-#: LedgerSMB/Scripts/payment.pm:607 LedgerSMB/Scripts/payment.pm:674
-#: LedgerSMB/Scripts/payment.pm:1314
+#: bin/arapprn.pl:469 bin/io.pl:643 bin/io.pl:849 bin/io.pl:1287
+#: bin/io.pl:2223 bin/pe.pl:209 bin/pe.pl:761 bin/pe.pl:1190 bin/pe.pl:1360
+#: bin/pe.pl:1637 bin/aa.pl:1776 bin/oe.pl:1581 bin/oe.pl:2148 bin/oe.pl:2659
+#: addons/1.4/pos/trunk/bin/pos.pl:1174
+#: UI/asset/begin_depreciation_all.html:25 UI/asset/begin_approval.html:66
+#: UI/asset/begin_report.html:58 LedgerSMB/Scripts/payment.pm:607
+#: LedgerSMB/Scripts/payment.pm:674 LedgerSMB/Scripts/payment.pm:1314
 msgid "Continue"
-msgstr "Продолжить"
+msgstr "Sambung"
 
 #: bin/rp.pl:341
 msgid "Current Earnings"
-msgstr "Текущая прибыль"
+msgstr "Pendapatan Semasa"
 
 #: bin/rp.pl:401
-#, fuzzy
 msgid "Department: %1"
-msgstr "Отдел"
+msgstr "Jabatan: %1"
 
 #: bin/rp.pl:406
-#, fuzzy
 msgid "Project Number: %1"
-msgstr "Код проекта"
+msgstr "Nombor Projek: %1"
 
 #: bin/rp.pl:457
 msgid "N/A"
-msgstr "N/A"
+msgstr "Tiada"
 
 #: bin/rp.pl:618
-#, fuzzy
 msgid "%1 Report"
-msgstr "Отчеты"
+msgstr "%1 Laporan"
 
 #: bin/ir.pl:91 bin/ir.pl:1445 bin/is.pl:1491 bin/aa.pl:1199 bin/aa.pl:1454
 #: bin/gl.pl:129
-#, fuzzy
 msgid "Draft Posted"
-msgstr "Сохранено!"
+msgstr "Draf yang tercatat"
 
 #: bin/ir.pl:110 bin/ir.pl:129
-#, fuzzy
 msgid "Add Debit Invoice"
-msgstr "Новая фактура продажи"
+msgstr "Penambahan Invois debit"
 
 #: bin/ir.pl:114 bin/oe.pl:1449
 msgid "Add Vendor Invoice"
-msgstr "Новая фактура поступления"
+msgstr "Penambahan Invois Pembekal"
 
 #: bin/ir.pl:132
 msgid "Edit Vendor Invoice"
-msgstr "Редактировать фактуру поставщику"
+msgstr "Penyuntingan Invois Pembekal"
 
 #: bin/ir.pl:157 bin/is.pl:129 bin/aa.pl:199
 msgid "No currencies defined.  Please set these up under System/Defaults."
-msgstr ""
+msgstr "Tiada mata wang ditakrifkan. Sila tetapkan mengikut sistem"
 
 #: bin/ir.pl:370 bin/pe.pl:821 bin/pe.pl:999
 #: addons/1.4/pos/trunk/bin/pos.pl:308 UI/Contact/divs/credit.html:227
@@ -800,12 +750,12 @@ msgstr ""
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:92
 #: tools/dbstrings:153 tools/dbstrings:110
 msgid "Language"
-msgstr "Язык"
+msgstr "Bahasa"
 
 #: bin/ir.pl:385 bin/is.pl:363 bin/aa.pl:491 bin/aa.pl:1664 bin/oe.pl:370
 #: bin/oe.pl:1559 addons/1.4/pos/trunk/bin/pos.pl:213
-#: addons/1.3/extended_arap/trunk/UI/aa.html:129 LedgerSMB/Report/Orders.pm:237
-#: LedgerSMB/Report/Inventory/Search.pm:285
+#: addons/1.3/extended_arap/trunk/UI/aa.html:129
+#: LedgerSMB/Report/Orders.pm:237 LedgerSMB/Report/Inventory/Search.pm:285
 #: LedgerSMB/Report/Contact/Search.pm:79
 #: LedgerSMB/Report/Contact/Purchase.pm:75
 #: LedgerSMB/Report/Contact/History.pm:65
@@ -813,7 +763,7 @@ msgstr "Язык"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:75
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:65
 msgid "Currency"
-msgstr "Валюта"
+msgstr "Mata Wang"
 
 #: bin/ir.pl:398 bin/is.pl:376 bin/aa.pl:503 bin/oe.pl:384 bin/oe.pl:392
 #: bin/oe.pl:1567 addons/1.4/pos/trunk/bin/pos.pl:227
@@ -821,21 +771,22 @@ msgstr "Валюта"
 #: LedgerSMB/Report/Contact/History.pm:101
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:101
 msgid "Exchange Rate"
-msgstr "Курс валюты"
+msgstr "Kadar Pertukaran"
 
 #: bin/ir.pl:417 bin/ir.pl:907 bin/is.pl:393 bin/is.pl:975 bin/aa.pl:547
 #: bin/aa.pl:1006 bin/gl.pl:281 bin/oe.pl:543
 msgid "New"
-msgstr ""
+msgstr "Baru"
 
 #: bin/ir.pl:422 bin/is.pl:398 bin/aa.pl:531 bin/oe.pl:548
 #: addons/1.4/pos/trunk/bin/pos.pl:253
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:382
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:382
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:382
-#: addons/1.3/extended_arap/trunk/UI/aa.html:152 LedgerSMB/Scripts/asset.pm:319
+#: addons/1.3/extended_arap/trunk/UI/aa.html:152
+#: LedgerSMB/Scripts/asset.pm:319
 msgid "Department"
-msgstr "Отдел"
+msgstr "Jabatan"
 
 #: bin/ir.pl:466 bin/ic.pl:1435 bin/pe.pl:1617 bin/aa.pl:594 bin/aa.pl:1623
 #: bin/oe.pl:2492 bin/oe.pl:2648 LedgerSMB/Report/Aging.pm:78
@@ -844,23 +795,23 @@ msgstr "Отдел"
 #: LedgerSMB/Report/Orders.pm:196
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:78
 msgid "Vendor"
-msgstr "Поставщик"
+msgstr "Pembekal"
 
 #: bin/ir.pl:478 bin/is.pl:496 bin/aa.pl:629 bin/oe.pl:457
 #: addons/1.4/pos/trunk/bin/pos.pl:363
 #: addons/1.3/extended_arap/trunk/UI/aa.html:74
 msgid "Credit Limit"
-msgstr "Лимит кредита"
+msgstr "Had Kredit"
 
 #: bin/ir.pl:483 bin/is.pl:501 bin/aa.pl:631 bin/oe.pl:462
 #: addons/1.4/pos/trunk/bin/pos.pl:366
 #: addons/1.3/extended_arap/trunk/UI/aa.html:81
 msgid "Remaining"
-msgstr "Остаток"
+msgstr "Baki"
 
 #: bin/ir.pl:493 bin/is.pl:511 bin/oe.pl:471
 msgid "Entity Code"
-msgstr ""
+msgstr "Kod Entiti"
 
 #: bin/ir.pl:496 bin/ir.pl:793 bin/ic.pl:1537 bin/is.pl:514 bin/is.pl:838
 #: bin/aa.pl:668 bin/aa.pl:725 bin/aa.pl:885 bin/aa.pl:1697 bin/oe.pl:474
@@ -877,11 +828,11 @@ msgstr ""
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:66
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:65
 msgid "Account"
-msgstr "Счет"
+msgstr "Akaun"
 
 #: bin/ir.pl:505 bin/is.pl:526 addons/1.4/pos/trunk/bin/pos.pl:376
 msgid "Record in"
-msgstr "Отнести на счет"
+msgstr "Rekod Kemasukan"
 
 #: bin/ir.pl:522 bin/bp.pl:100 bin/is.pl:552 bin/aa.pl:689 bin/aa.pl:1524
 #: bin/aa.pl:1638 addons/1.3/extended_arap/trunk/UI/aa.html:209
@@ -893,7 +844,7 @@ msgstr "Отнести на счет"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:63
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:61
 msgid "Invoice Number"
-msgstr "Номер счета-фактуры"
+msgstr "Nombor Invois"
 
 #: bin/ir.pl:526 bin/bp.pl:104 bin/is.pl:556 bin/aa.pl:693 bin/aa.pl:1528
 #: bin/aa.pl:1641 bin/oe.pl:431 bin/oe.pl:1858
@@ -901,12 +852,12 @@ msgstr "Номер счета-фактуры"
 #: LedgerSMB/Report/Contact/Purchase.pm:67
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:67
 msgid "Order Number"
-msgstr "Номер заказа"
+msgstr "Nombor Pesanan"
 
 #: bin/ir.pl:531 bin/is.pl:561 bin/aa.pl:697 bin/aa.pl:1645
 #: addons/1.3/extended_arap/trunk/UI/aa.html:235
 msgid "Invoice Date"
-msgstr "Дата выставления"
+msgstr "Tarikh Invois"
 
 #: bin/ir.pl:535 bin/is.pl:565 bin/aa.pl:701 bin/aa.pl:1671
 #: addons/1.3/extended_arap/trunk/UI/aa.html:250 LedgerSMB/Report/Aging.pm:115
@@ -916,7 +867,7 @@ msgstr "Дата выставления"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:115
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:99
 msgid "Due Date"
-msgstr "Оплатить до"
+msgstr "Tarikh Akhir"
 
 #: bin/ir.pl:539 bin/is.pl:569 bin/aa.pl:705 bin/aa.pl:1532 bin/aa.pl:1643
 #: bin/oe.pl:444 bin/oe.pl:1868 addons/1.3/extended_arap/trunk/UI/aa.html:264
@@ -924,34 +875,32 @@ msgstr "Оплатить до"
 #: LedgerSMB/Report/Contact/Purchase.pm:71
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:71
 msgid "PO Number"
-msgstr "Номер ордера покупки"
+msgstr "Jumlah PO"
 
 #: bin/ir.pl:577 bin/is.pl:465 bin/is.pl:634
 msgid "Automatic"
-msgstr ""
+msgstr "Automatik"
 
 #: bin/ir.pl:581 bin/is.pl:469 bin/is.pl:638
-#, fuzzy
 msgid "Manual"
-msgstr "январь"
+msgstr "Manual"
 
 #: bin/ir.pl:606 bin/is.pl:666 bin/aa.pl:516 bin/oe.pl:692
 #: addons/1.4/pos/trunk/bin/pos.pl:423
 msgid "Tax Included"
-msgstr "Налоги включены в сумму"
+msgstr "Disertakan dengan Cukai"
 
 #: bin/ir.pl:616 bin/is.pl:677
 msgid "Rate"
-msgstr "Курс"
+msgstr "Kadar"
 
 #: bin/ir.pl:617 bin/is.pl:678 LedgerSMB/Scripts/asset.pm:1010
 msgid "Basis"
-msgstr ""
+msgstr "Asas"
 
 #: bin/ir.pl:618 bin/is.pl:679
-#, fuzzy
 msgid "Tax Code"
-msgstr "Код работы"
+msgstr "Kod Cukai"
 
 #: bin/ir.pl:619 bin/ir.pl:795 bin/is.pl:680 bin/is.pl:840 bin/aa.pl:887
 #: addons/1.4/pos/trunk/bin/pos.pl:459
@@ -960,12 +909,12 @@ msgstr "Код работы"
 #: LedgerSMB/Report/GL.pm:123
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:123
 msgid "Memo"
-msgstr "Комментарий"
+msgstr "Memo"
 
 #: bin/ir.pl:697 bin/io.pl:1712 bin/is.pl:744 bin/aa.pl:1759 bin/oe.pl:717
 #: addons/1.4/pos/trunk/bin/ps.pl:203 addons/1.4/pos/trunk/bin/pos.pl:449
 msgid "Subtotal"
-msgstr "Итого по разделу"
+msgstr "Jumlah Kecil"
 
 #: bin/ir.pl:725 bin/ic.pl:794 bin/is.pl:774 bin/aa.pl:853 bin/aa.pl:1544
 #: bin/aa.pl:1675 bin/oe.pl:735
@@ -978,20 +927,20 @@ msgstr "Итого по разделу"
 #: LedgerSMB/Report/Contact/Purchase.pm:103
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:103
 msgid "Notes"
-msgstr "Комментарии"
+msgstr "Nota"
 
 #: bin/ir.pl:728 bin/ir.pl:737 bin/is.pl:779 bin/is.pl:787 bin/aa.pl:854
 #: bin/oe.pl:736
 msgid "Internal Notes"
-msgstr "Внутренние заметки"
+msgstr "Nota Dalaman"
 
 #: bin/ir.pl:729 bin/ir.pl:740
 msgid "Import Text"
-msgstr ""
+msgstr "Teks Import"
 
 #: bin/ir.pl:758 bin/is.pl:463 bin/is.pl:802
 msgid "Calculate Taxes"
-msgstr ""
+msgstr "Kira Cukai"
 
 #: bin/ir.pl:766 bin/is.pl:810 bin/aa.pl:1662 bin/oe.pl:749
 #: addons/1.4/pos/trunk/bin/pos.pl:573 LedgerSMB/Scripts/payment.pm:198
@@ -1001,13 +950,13 @@ msgstr ""
 #: LedgerSMB/Report/Inventory/Search.pm:293
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:142
 msgid "Total"
-msgstr "Всего"
+msgstr "Jumlah"
 
 #: bin/ir.pl:779 bin/is.pl:824 bin/aa.pl:867
 #: addons/1.3/extended_arap/trunk/UI/aa.html:390 tools/dbstrings:24
 #: tools/dbstrings:143 tools/dbstrings:33 tools/dbstrings:101
 msgid "Payments"
-msgstr "Оплаты"
+msgstr "Bayaran"
 
 #: bin/ir.pl:790 bin/bp.pl:364 bin/is.pl:835 bin/pe.pl:1474 bin/aa.pl:882
 #: bin/oe.pl:1563 UI/asset/begin_depreciation_all.html:12
@@ -1019,8 +968,8 @@ msgstr "Оплаты"
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:100
 #: LedgerSMB/Report/Invoices/Transactions.pm:227
 #: LedgerSMB/Report/Invoices/Outstanding.pm:180 LedgerSMB/Report/Orders.pm:212
-#: LedgerSMB/Report/Timecards.pm:96 LedgerSMB/Report/Inventory/Search_Adj.pm:93
-#: LedgerSMB/Report/GL.pm:87
+#: LedgerSMB/Report/Timecards.pm:96
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:93 LedgerSMB/Report/GL.pm:87
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:110
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:84
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:91
@@ -1028,17 +977,18 @@ msgstr "Оплаты"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:93
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:87
 msgid "Date"
-msgstr "Дата"
+msgstr "Tarikh"
 
 #: bin/ir.pl:792 bin/is.pl:837 bin/aa.pl:884
 #: addons/1.3/extended_arap/trunk/UI/aa.html:402
 msgid "Exch"
-msgstr "Курс"
+msgstr "Tukar"
 
 #: bin/ir.pl:794 bin/is.pl:839 bin/aa.pl:886 bin/aa.pl:1536
 #: addons/1.4/pos/trunk/bin/pos.pl:458
-#: addons/1.3/extended_arap/trunk/UI/aa.html:398 LedgerSMB/Scripts/recon.pm:208
-#: LedgerSMB/Scripts/payment.pm:150 LedgerSMB/Report/Invoices/Payments.pm:140
+#: addons/1.3/extended_arap/trunk/UI/aa.html:398
+#: LedgerSMB/Scripts/recon.pm:208 LedgerSMB/Scripts/payment.pm:150
+#: LedgerSMB/Report/Invoices/Payments.pm:140
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:66
 #: LedgerSMB/Report/Budget/Search.pm:126 LedgerSMB/Report/GL.pm:118
 #: LedgerSMB/Report/GL.pm:208
@@ -1047,7 +997,7 @@ msgstr "Курс"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:118
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:208
 msgid "Source"
-msgstr "Источник"
+msgstr "Sumber"
 
 #: bin/ir.pl:887 bin/ic.pl:864 bin/io.pl:2227 bin/is.pl:952 bin/pe.pl:1042
 #: bin/aa.pl:988 bin/gl.pl:270 bin/oe.pl:801 bin/oe.pl:2010
@@ -1058,238 +1008,221 @@ msgstr "Источник"
 #: UI/payments/payment2.html:324 addons/1.3/extended_arap/trunk/UI/aa.html:548
 #: LedgerSMB/Scripts/budgets.pm:92
 msgid "Update"
-msgstr "Обновить"
+msgstr "Terbaru"
 
 #: bin/ir.pl:891 bin/is.pl:956 bin/aa.pl:992
-#, fuzzy
 msgid "Copy to New"
-msgstr "Копировать в ГПС"
+msgstr "Salin Ke Baru"
 
 #: bin/ir.pl:892 bin/is.pl:959 bin/aa.pl:995 bin/gl.pl:271
 #: UI/payments/payment2.html:330 addons/1.3/extended_arap/trunk/UI/aa.html:594
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:222
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:222
 msgid "Post"
-msgstr "Сохранить"
+msgstr "Simpan"
 
 #: bin/ir.pl:894 bin/gl.pl:277
 msgid "Post as new"
-msgstr "Сохранить как новый"
+msgstr "Simpan Sebagai Baru"
 
 #: bin/ir.pl:901 bin/is.pl:967 bin/aa.pl:997 bin/gl.pl:279 bin/oe.pl:839
 #: addons/1.3/extended_arap/trunk/UI/aa.html:614
 msgid "Schedule"
-msgstr "Расписание"
+msgstr "Jadual"
 
 #: bin/ir.pl:903 bin/is.pl:762 bin/aa.pl:1729
-#, fuzzy
 msgid "On Hold"
-msgstr "Вналичии"
+msgstr "Ditahan"
 
 #: bin/ir.pl:905 bin/is.pl:973 bin/aa.pl:1002
 #: addons/1.3/extended_arap/trunk/UI/aa.html:627
-#, fuzzy
 msgid "Save Info"
-msgstr "Сохранить"
+msgstr "Simpan Maklumat"
 
 #: bin/ir.pl:926 bin/is.pl:996 bin/aa.pl:1014 bin/gl.pl:309
 #: addons/1.3/extended_arap/trunk/UI/aa.html:564
-#, fuzzy
 msgid "Post as Saved"
-msgstr "Сохранить как новый"
+msgstr "Hantar Sebagai Simpanan"
 
 #: bin/ir.pl:931 bin/is.pl:1001 bin/aa.pl:1019 bin/gl.pl:316
 #: addons/1.3/extended_arap/trunk/UI/aa.html:573
-#, fuzzy
 msgid "Post as Shown"
-msgstr "Сохранить как новый"
+msgstr "Simpan seperti yang dipaparkan"
 
 #: bin/ir.pl:958 bin/ic.pl:968 bin/is.pl:1044 bin/aa.pl:1063
 msgid "Profit/Loss"
-msgstr ""
+msgstr "Keuntungan/Kerugian"
 
 #: bin/ir.pl:961 bin/ic.pl:895 bin/is.pl:1047 bin/aa.pl:1066 bin/oe.pl:907
 msgid "Attached and Linked Files"
-msgstr ""
+msgstr "Dilampirkan dan Fail Berkaitan"
 
 #: bin/ir.pl:963 bin/ir.pl:982 bin/ic.pl:897 bin/ic.pl:916 bin/is.pl:1049
 #: bin/is.pl:1068 bin/aa.pl:1068 bin/aa.pl:1087 bin/oe.pl:909 bin/oe.pl:928
 msgid "File name"
-msgstr ""
+msgstr "Nama Fail"
 
 #: bin/ir.pl:964 bin/ir.pl:983 bin/ic.pl:898 bin/ic.pl:917 bin/is.pl:1050
 #: bin/is.pl:1069 bin/aa.pl:1069 bin/aa.pl:1088 bin/oe.pl:910 bin/oe.pl:929
 msgid "File type"
-msgstr ""
+msgstr "Jenis Fail"
 
 #: bin/ir.pl:965 bin/ir.pl:986 bin/ic.pl:899 bin/ic.pl:920 bin/is.pl:1051
 #: bin/is.pl:1072 bin/aa.pl:1070 bin/aa.pl:1091 bin/oe.pl:911 bin/oe.pl:932
-#, fuzzy
 msgid "Attached at"
-msgstr "Вложение"
+msgstr "Dilampirkan pada"
 
 #: bin/ir.pl:966 bin/ir.pl:987 bin/ic.pl:900 bin/ic.pl:921 bin/is.pl:1052
 #: bin/is.pl:1073 bin/aa.pl:1071 bin/aa.pl:1092 bin/oe.pl:912 bin/oe.pl:933
-#, fuzzy
 msgid "Attached by"
-msgstr "Вложение"
+msgstr "Dilampirkan oleh"
 
 #: bin/ir.pl:984 bin/ic.pl:918 bin/is.pl:1070 bin/aa.pl:1089 bin/oe.pl:930
 msgid "Attached To Type"
-msgstr ""
+msgstr "Dilampirkan Untuk Menaip"
 
 #: bin/ir.pl:985 bin/ic.pl:919 bin/is.pl:1071 bin/aa.pl:1090 bin/oe.pl:931
-#, fuzzy
 msgid "Attached To"
-msgstr "Вложение"
+msgstr "Dilampirkan Kepada"
 
 #: bin/ir.pl:1011 bin/ic.pl:947 bin/is.pl:1097 bin/aa.pl:1118 bin/oe.pl:957
-#, fuzzy
 msgid "Attach"
-msgstr "Вложение"
+msgstr "Lampiran"
 
 #: bin/ir.pl:1057 bin/ir.pl:1313 bin/is.pl:1334 bin/oe.pl:1209
 msgid "ea"
-msgstr "шт."
+msgstr ""
 
 #: bin/ir.pl:1326 bin/is.pl:1346 bin/oe.pl:1221
 msgid "Could not save the data.  Please try again"
-msgstr ""
+msgstr "Data tidak boleh disimpan. Sila cuba lagi"
 
 #: bin/ir.pl:1335 bin/is.pl:1354 bin/aa.pl:1344
 msgid "Invoice Date missing!"
-msgstr "Не указана дата выставления счета-фактуры"
+msgstr "Tarikh Invois hilang!"
 
 #: bin/ir.pl:1336 bin/aa.pl:1341
 msgid "Vendor missing!"
-msgstr "Пропущен поставщик!"
+msgstr "Pembekal hilang!"
 
 #: bin/ir.pl:1349 bin/is.pl:1368
 msgid "Cannot post invoice for a closed period!"
-msgstr "Невозможно провести фактуру в закрытом периоде!"
+msgstr "Tidak boleh simpan invois untuk jangka masa yang terdekat!"
 
 #: bin/ir.pl:1352 bin/is.pl:1371 bin/aa.pl:1355 bin/oe.pl:1245 bin/oe.pl:1594
 #: addons/1.4/pos/trunk/bin/pos.pl:699
 msgid "Exchange rate missing!"
-msgstr "Пропущен курс!"
+msgstr "Kadar pertukaran hilang!"
 
 #: bin/ir.pl:1360 bin/is.pl:1380 bin/aa.pl:1363
 msgid "Payment date missing!"
-msgstr "Пропущена дата оплаты!"
+msgstr "Tarikh pembayaran hilang!"
 
 #: bin/ir.pl:1363 bin/is.pl:1383 bin/aa.pl:1366
 msgid "Cannot post payment for a closed period!"
-msgstr "Невозможно провести оплату для закрытого периода!"
+msgstr "Tidak boleh simpan bayaran untuk jangka masa yang terdekat!"
 
 #: bin/ir.pl:1370 bin/is.pl:1390 bin/aa.pl:1373
 msgid "Exchange rate for payment missing!"
-msgstr "Пропущен курс оплаты!"
+msgstr "Kadar pertukaran pembayaran hilang!"
 
 #: bin/ir.pl:1389 bin/is.pl:1411
 msgid "Cannot post invoice!"
-msgstr "Невозможно провести фактуру!"
+msgstr "Invois tidak boleh disimpan!"
 
 #: bin/ic.pl:130
-#, fuzzy
 msgid "Cannot create Part; Inventory account does not exist!"
-msgstr "Инвентарный счет отсутствует"
+msgstr "Bahagian tidak boleh dihasilkan; Akaun inventori tidak wujud!"
 
 #: bin/ic.pl:133
-#, fuzzy
 msgid "Cannot create Part; Income account does not exist!"
-msgstr "Счет поступления отсутствует"
+msgstr "Bahagian tidak boleh dihasilkan; Akaun pendapatan tidak wujud!"
 
 #: bin/ic.pl:136
-#, fuzzy
 msgid "Cannot create Part; COGS account does not exist!"
-msgstr "Отсутствует счет проданных товаров"
+msgstr "Bahagian tidak boleh dihasilkan; Akaun COGS tidak wujud!"
 
 #: bin/ic.pl:145
-#, fuzzy
 msgid "Cannot create Service; Income account does not exist!"
-msgstr "Счет поступления отсутствует"
+msgstr "Perkhidmatan tidak boleh dihasilkan; Akaun pendapatan tidak wujud!"
 
 #: bin/ic.pl:149
-#, fuzzy
 msgid "Cannot create Service; Expense account does not exist!"
-msgstr "Счет расхода отсутствует"
+msgstr "Perkhidmatan tidak boleh dihasilkan; Akaun perbelanjaan tidak wujud!"
 
 #: bin/ic.pl:158
-#, fuzzy
 msgid "Cannot create Assembly; Income account does not exist!"
-msgstr "Счет поступления отсутствует"
+msgstr "Pengumpulan tidak boleh dihasilkan; Akaun pendapatan tidak wujud!"
 
 #: bin/ic.pl:166
-#, fuzzy
 msgid "Cannot create Labor; Inventory account does not exist!"
-msgstr "Инвентарный счет отсутствует"
+msgstr "Tenaga kerja tidak boleh dihasilkan; Akaun inventori tidak wujud!"
 
 #: bin/ic.pl:169
-#, fuzzy
 msgid "Cannot create Labor; COGS account does not exist!"
-msgstr "Отсутствует счет проданных товаров"
+msgstr "Tenaga kerja tidak boleh dihasilkan; Akaun COGS tidak wujud!"
 
 #: bin/ic.pl:430 bin/ic.pl:1008 bin/ic.pl:1014 bin/ic.pl:1154 bin/ic.pl:1686
 #: bin/io.pl:240 bin/io.pl:532 bin/pe.pl:142 bin/pe.pl:291 bin/pe.pl:298
 #: bin/pe.pl:438 bin/oe.pl:2133 bin/oe.pl:2211 bin/oe.pl:2246
 msgid "Group"
-msgstr "Группа"
+msgstr "Kumpulan"
 
 #: bin/ic.pl:443 bin/ic.pl:1540 LedgerSMB/Report/Inventory/Search.pm:225
 #: LedgerSMB/Report/Contact/History.pm:85
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:85
 msgid "Sell Price"
-msgstr "Продажная цена"
+msgstr "Harga Jualan"
 
 #: bin/ic.pl:447 LedgerSMB/Report/Inventory/Search.pm:221
 msgid "List Price"
-msgstr "Список цен"
+msgstr "Senarai harga"
 
 #: bin/ic.pl:455
 msgid "Average Cost"
-msgstr "Средняя цена"
+msgstr "Kos Purata"
 
 #: bin/ic.pl:464 bin/ic.pl:641 LedgerSMB/Report/Inventory/Search.pm:229
 msgid "Last Cost"
-msgstr "Последняя цена"
+msgstr "Kos Lepas"
 
 #: bin/ic.pl:470 bin/ic.pl:647 LedgerSMB/Report/Inventory/Search.pm:237
 msgid "Markup"
-msgstr "Наценка"
+msgstr "Tanda"
 
 #: bin/ic.pl:481 bin/ic.pl:707 LedgerSMB/Report/Inventory/Search.pm:205
 msgid "On Hand"
-msgstr "Вналичии"
+msgstr "Dalam Tangan"
 
 #: bin/ic.pl:490 bin/ic.pl:2519 LedgerSMB/Report/Inventory/Search.pm:209
 msgid "ROP"
-msgstr "ROP"
+msgstr ""
 
 #: bin/ic.pl:497 bin/ic.pl:2514 bin/io.pl:220 bin/oe.pl:1917
 #: LedgerSMB/Report/Inventory/Search.pm:213
 msgid "Bin"
-msgstr "Bin"
+msgstr "Tong"
 
 #: bin/ic.pl:507 LedgerSMB/Report/Inventory/Search.pm:253
 msgid "Image"
-msgstr "Картинка"
+msgstr "Gambar"
 
 #: bin/ic.pl:509 LedgerSMB/Report/Inventory/Search.pm:261
 msgid "Microfiche"
-msgstr "Микрофиша"
+msgstr "Mikrofis"
 
 #: bin/ic.pl:513 LedgerSMB/Report/Inventory/Search.pm:257
 msgid "Drawing"
-msgstr "Изображение"
+msgstr "Lukisan"
 
 #: bin/ic.pl:526 LedgerSMB/Scripts/configuration.pm:68 tools/dbstrings:178
 msgid "Inventory"
-msgstr "Инвентарный"
+msgstr "inventori"
 
 #: bin/ic.pl:531 bin/ic.pl:658 bin/ic.pl:679
 #: LedgerSMB/Scripts/configuration.pm:71
 msgid "Income"
-msgstr "Поступление"
+msgstr "Pendapatan"
 
 #: bin/ic.pl:536 bin/ic.pl:722
 msgid "COGS"
@@ -1301,24 +1234,24 @@ msgstr "COGS"
 #: LedgerSMB/Report/Contact/Purchase.pm:83
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:83
 msgid "Tax"
-msgstr "Налог"
+msgstr "Cukai"
 
 #: bin/ic.pl:553 bin/ic.pl:580 bin/ic.pl:602
 #: LedgerSMB/Report/Inventory/Search.pm:217
 msgid "Weight"
-msgstr "Вес"
+msgstr "Berat"
 
 #: bin/ic.pl:633
 msgid "Stock"
-msgstr "Сформировать"
+msgstr "Stok"
 
 #: bin/ic.pl:684
 msgid "Expense"
-msgstr "Расход"
+msgstr "perbelanjaan"
 
 #: bin/ic.pl:716
 msgid "Labor/Overhead"
-msgstr "Работа/накладные расходы"
+msgstr "Tenaga Kerja/Overhead"
 
 #: bin/ic.pl:734
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:162
@@ -1326,7 +1259,7 @@ msgstr "Работа/накладные расходы"
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:162
 #: LedgerSMB/Scripts/budgets.pm:122
 msgid "Obsolete"
-msgstr "Устаревший"
+msgstr "Lama"
 
 #: bin/ic.pl:769 bin/ic.pl:1094 bin/ic.pl:1150 bin/ic.pl:1195 bin/ic.pl:1674
 #: bin/ic.pl:2432 bin/ic.pl:2506 bin/arap.pl:389 bin/io.pl:205 bin/io.pl:526
@@ -1335,88 +1268,83 @@ msgstr "Устаревший"
 #: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:20
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:328
 msgid "Number"
-msgstr "код"
+msgstr "Nombor"
 
 #: bin/ic.pl:789
 msgid "Link Accounts"
-msgstr "Ссылки счетов"
+msgstr "Akaun Pautan"
 
 #: bin/ic.pl:806
 msgid "Updated"
-msgstr "Обновлено"
+msgstr "Dikemaskini"
 
 #: bin/ic.pl:813 bin/ic.pl:1671 bin/io.pl:213 bin/oe.pl:1915
-#: addons/1.4/pos/trunk/bin/pos.pl:752 LedgerSMB/Report/Inventory/Search.pm:201
+#: addons/1.4/pos/trunk/bin/pos.pl:752
+#: LedgerSMB/Report/Inventory/Search.pm:201
 #: LedgerSMB/Report/Contact/History.pm:81
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:81
 msgid "Unit"
-msgstr "Единица"
+msgstr "Unit"
 
 #: bin/ic.pl:971
-#, fuzzy
 msgid "Date From"
-msgstr "Формат даты"
+msgstr "Dari Tarikh"
 
 #: bin/ic.pl:974
-#, fuzzy
 msgid "Date To"
-msgstr "Дата"
+msgstr "Kepada Tarikh"
 
 #: bin/ic.pl:1027 bin/pe.pl:112 bin/pe.pl:1256 bin/aa.pl:1597
 msgid "Period"
-msgstr "Период"
+msgstr "Tempoh"
 
 #: bin/ic.pl:1070
-#, fuzzy
 msgid "No History!"
-msgstr "История"
+msgstr "Tiada Maklumat Terdahulu"
 
 #: bin/ic.pl:1073 bin/ic.pl:1221
 msgid "Parts Requirements"
-msgstr ""
+msgstr "Bahagian yang Diperlukan"
 
 #: bin/ic.pl:1189 bin/pe.pl:123 bin/pe.pl:1267 bin/aa.pl:1608
 #: LedgerSMB/DBObject/Date.pm:92
 msgid "Year"
-msgstr "Год"
+msgstr "Tahun"
 
 #: bin/ic.pl:1202
 msgid "Onhand"
-msgstr ""
+msgstr "Dalam Tangan"
 
 #: bin/ic.pl:1204
-#, fuzzy
 msgid "SO"
-msgstr "O"
+msgstr "Nota Penjualan"
 
 #: bin/ic.pl:1206
-#, fuzzy
 msgid "PO"
-msgstr "ККМ"
+msgstr "Nota Pesanan"
 
 #: bin/ic.pl:1208 bin/bp.pl:372 bin/oe.pl:2494
 #: LedgerSMB/Report/Invoices/Outstanding.pm:192
 #: LedgerSMB/Report/Inventory/Search.pm:277
 msgid "Order"
-msgstr "Заказ клиента"
+msgstr "Pesanan"
 
 #: bin/ic.pl:1393 LedgerSMB/Report/Inventory/Search.pm:245
 msgid "Make"
-msgstr "Создать"
+msgstr "Buat"
 
 #: bin/ic.pl:1394 LedgerSMB/Report/Inventory/Search.pm:249
 msgid "Model"
-msgstr "Модель"
+msgstr "Model"
 
 #: bin/ic.pl:1395
-#, fuzzy
 msgid "Bar Code"
-msgstr "Код работы"
+msgstr "Kod Bar"
 
 #: bin/ic.pl:1424 bin/ic.pl:1523 bin/oe.pl:2503
 #: LedgerSMB/Report/Invoices/Outstanding.pm:229
 msgid "Curr"
-msgstr "Валюта"
+msgstr ""
 
 #: bin/ic.pl:1436 bin/ic.pl:2098
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:41
@@ -1426,9 +1354,9 @@ msgstr "Валюта"
 #: addons/1.3/report_framework/trunk/UI/Reports/filters/contact_search.html:70
 #: LedgerSMB/Scripts/payment.pm:147 LedgerSMB/Report/Trial_Balance.pm:127
 #: LedgerSMB/Report/Invoices/Payments.pm:190 LedgerSMB/Report/COA.pm:85
-#: LedgerSMB/Report/Budget/Variance.pm:70 LedgerSMB/Report/Budget/Search.pm:122
-#: LedgerSMB/Report/PNL/ECA.pm:90 LedgerSMB/Report/GL.pm:204
-#: LedgerSMB/Report/Contact/Search.pm:98
+#: LedgerSMB/Report/Budget/Variance.pm:70
+#: LedgerSMB/Report/Budget/Search.pm:122 LedgerSMB/Report/PNL/ECA.pm:90
+#: LedgerSMB/Report/GL.pm:204 LedgerSMB/Report/Contact/Search.pm:98
 #: LedgerSMB/Report/Contact/Purchase.pm:137
 #: LedgerSMB/Report/Contact/History.pm:56
 #: LedgerSMB/Report/Contact/History.pm:126
@@ -1443,28 +1371,27 @@ msgstr "Валюта"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:56
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:126
 msgid "Account Number"
-msgstr "Код счета"
+msgstr "Nombor Akaun"
 
 #: bin/ic.pl:1437
-#, fuzzy
 msgid "Vendor Reference Number"
-msgstr "Номер справочника Главной книги"
+msgstr "Nombor Rujukan Pembekal"
 
 #: bin/ic.pl:1438 bin/ic.pl:1683 bin/oe.pl:2498
 msgid "Cost"
-msgstr "Цена"
+msgstr "kos"
 
 #: bin/ic.pl:1440
 msgid "Leadtime"
-msgstr "Основное время"
+msgstr "Tempoh Proses"
 
 #: bin/ic.pl:1493 bin/oe.pl:408
 msgid "days"
-msgstr "дней"
+msgstr "Hari"
 
 #: bin/ic.pl:1513 bin/pe.pl:157 bin/pe.pl:508 bin/pe.pl:515 bin/pe.pl:643
 msgid "Pricegroup"
-msgstr "Тип цен"
+msgstr "Harga Kumpulan"
 
 #: bin/ic.pl:1536 bin/is.pl:486 bin/pe.pl:1616 bin/aa.pl:591 bin/aa.pl:1614
 #: addons/1.4/pos/trunk/bin/pos.pl:355 UI/business_units/edit.html:71
@@ -1473,26 +1400,25 @@ msgstr "Тип цен"
 #: LedgerSMB/Report/Orders.pm:193
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:80
 msgid "Customer"
-msgstr "Клиент"
+msgstr "Pelanggan"
 
 #: bin/ic.pl:1539
 msgid "Break"
-msgstr "Прервать"
+msgstr "Membatalkan"
 
 #: bin/ic.pl:1542 bin/pe.pl:103 bin/pe.pl:1277 bin/aa.pl:1715 bin/oe.pl:2215
 #: UI/asset/begin_approval.html:23
 msgid "From"
-msgstr "с"
+msgstr "Dari"
 
 #: bin/ic.pl:1543 bin/pe.pl:105 bin/pe.pl:1280 bin/oe.pl:2218
 #: UI/asset/begin_approval.html:31
 msgid "To"
-msgstr "по"
+msgstr "Kepada"
 
 #: bin/ic.pl:1667 bin/io.pl:203
-#, fuzzy
 msgid "Item"
-msgstr "Номенклатура"
+msgstr "Barang"
 
 #: bin/ic.pl:1669 bin/ic.pl:2517 bin/io.pl:211 bin/io.pl:536 bin/pe.pl:1487
 #: bin/oe.pl:1913 bin/oe.pl:2220 addons/1.4/pos/trunk/bin/pos.pl:750
@@ -1500,164 +1426,150 @@ msgstr "Номенклатура"
 #: LedgerSMB/Report/Contact/History.pm:77
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:77
 msgid "Qty"
-msgstr "Количество"
+msgstr "Kuantiti"
 
 #: bin/ic.pl:1679
 msgid "Sell"
-msgstr "Продажа"
+msgstr "Jual"
 
 #: bin/ic.pl:1681
 msgid "List"
-msgstr "Список"
+msgstr "Senarai"
 
 #: bin/ic.pl:1684
 msgid "BOM"
-msgstr "Ведомость материалов"
+msgstr "Bil Bahan"
 
 #: bin/ic.pl:1685
 msgid "A"
-msgstr "A"
+msgstr ""
 
 #: bin/ic.pl:1693
 msgid "Individual Items"
-msgstr "Номеклатурные позиции"
+msgstr "Barang Individu"
 
 #: bin/ic.pl:1846
 msgid "unexpected error!"
-msgstr "неожиданная ошибка"
+msgstr "Kesilapan yang tidak dijangka"
 
 #: bin/ic.pl:1987
-#, fuzzy
 msgid "%1: Vendor not on file!"
-msgstr "Поставщика нет в справочнике!"
+msgstr "%1: Pembekal tidak terdapat di dalam fail"
 
 #: bin/ic.pl:2065
-#, fuzzy
 msgid "%1: Customer not on file!"
-msgstr "Клиент отсутствует в справочнике!"
+msgstr "%1: Pelanggan tidak terdapat dalam fail"
 
 #: bin/ic.pl:2101 bin/arap.pl:171 bin/pe.pl:1109
 msgid "Address"
-msgstr "Адрес"
+msgstr "Alamat"
 
 #: bin/ic.pl:2107 bin/arap.pl:180 bin/pe.pl:1113
 msgid "Select from one of the names below"
-msgstr "Выберите одно из наименований из списка"
+msgstr "Pilih salah satu nama dibawah"
 
 #: bin/ic.pl:2227
-#, fuzzy
 msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
-msgstr ""
-"Прежде чем товар считать усаревшим, инвентарное количество должно быть "
-"нулевым!"
+msgstr "Kuantiti bahan mestilah dalam nilai sifar sebelum anda tetapkan kepada tempoh tamat %1 "
 
 #: bin/ic.pl:2404
 msgid "Item deleted!"
-msgstr "Номенклатура удалена!"
+msgstr "Barang dipadam"
 
 #: bin/ic.pl:2407
 msgid "Cannot delete item!"
-msgstr "Невозможно удалить номенклатуру!"
+msgstr "Barang tidak boleh dipadam"
 
 #: bin/ic.pl:2414 bin/ic.pl:2526 tools/dbstrings:216 tools/dbstrings:170
 msgid "Stock Assembly"
-msgstr "Сформировать комплект"
+msgstr "Himpunan Stok "
 
 #: bin/ic.pl:2445
 msgid "Check Inventory"
-msgstr "Проверить инвентарь"
-
+msgstr "Periksa Senarai Barang"
 #: bin/ic.pl:2521
 msgid "Add"
-msgstr "Новый"
+msgstr "Tambah"
 
 #: bin/ic.pl:2634
 msgid "Quantity exceeds available units to stock!"
-msgstr "Превышено количество единиц номенклатуры на скаде"
+msgstr "Kuantiti melebihi unit yang ada kepada stok!"
 
 #: bin/ic.pl:2645
 msgid "Assemblies restocked!"
-msgstr "Комплект заполнен!"
+msgstr "Pemasangan diisi semula"
 
 #: bin/ic.pl:2648
 msgid "Cannot stock assemblies!"
-msgstr "Невозможно сформировать комплект!"
+msgstr "Pemasangan tidak boleh diisi semula"
 
 #: bin/bp.pl:108 bin/oe.pl:494
 msgid "Quotation Number"
-msgstr "Номер резервирования"
+msgstr "Bilangan Sebut Harga"
 
 #: bin/bp.pl:123
-#, fuzzy
 msgid "Print %1"
-msgstr "Печать"
+msgstr "Cetak %1"
 
 #: bin/bp.pl:192 bin/pe.pl:1612 bin/oe.pl:2376 bin/oe.pl:2639
 msgid "Nothing selected!"
-msgstr "Ничего не выбрано!"
+msgstr "Anda tidak memilih apa-apa!"
 
 #: bin/bp.pl:202
 msgid "Are you sure you want to remove the marked entries from the queue?"
-msgstr "Вы действительно хотите отменить очередь для отмеченных позиций?"
+msgstr "Adakah anda pasti anda mahu memadam entri ditandakan daripada barisan?"
 
 #: bin/bp.pl:207 bin/oe.pl:1356 LedgerSMB/Scripts/taxform.pm:282
 msgid "Yes"
-msgstr "Да"
+msgstr "Ya"
 
 #: bin/bp.pl:225
 msgid "Removing marked entries from queue ..."
-msgstr "Удалить отмеченные позиции из очереди?"
+msgstr "Mengeluarkan penyertaan ditandakan daripada baris gilir ..."
 
 #: bin/bp.pl:231
 msgid "Removed spoolfiles!"
-msgstr "Удалить файл очереди!"
+msgstr "Fail spool dipindahkan!"
 
 #: bin/bp.pl:234
 msgid "Cannot remove files!"
-msgstr "Невозможно переместить файлы!"
+msgstr "Fail tidak boleh dipindahkan"
 
 #: bin/bp.pl:262
 msgid "Marked entries printed!"
-msgstr "Отмеченные позиции напечатаны!"
+msgstr "Entri bertanda dicetak"
 
 #: bin/bp.pl:300
-#, fuzzy
 msgid "Customer: %1"
-msgstr "Клиент"
+msgstr "Pelanggan: %1"
 
 #: bin/bp.pl:301
-#, fuzzy
 msgid "Vendor: %1"
-msgstr "Поставщик"
+msgstr "Pembekal: %1"
 
 #: bin/bp.pl:306
-#, fuzzy
 msgid "Account: %1"
-msgstr "Счет"
+msgstr "Akaun: %1"
 
 #: bin/bp.pl:311
-#, fuzzy
 msgid "Invoice Number: %1"
-msgstr "Номер счета-фактуры"
+msgstr "Nombor Invois: %1"
 
 #: bin/bp.pl:316
-#, fuzzy
 msgid "Order Number: %1"
-msgstr "Номер заказа"
+msgstr "Nombor Pesanan: %1"
 
 #: bin/bp.pl:321
-#, fuzzy
 msgid "Quotation Number: %1"
-msgstr "Номер резервирования"
+msgstr "Nombor Sebut Harga: %1"
 
 #: bin/bp.pl:327
-#, fuzzy
 msgid "From %1"
-msgstr "с"
+msgstr "Dari %1"
 
 #: bin/bp.pl:333
 msgid "To %1"
-msgstr ""
+msgstr "Kepada %1"
 
 #: bin/bp.pl:368 bin/io.pl:1348 bin/io.pl:1539 bin/is.pl:287 bin/is.pl:1395
 #: LedgerSMB/Scripts/payment.pm:762 LedgerSMB/Report/Aging.pm:99
@@ -1668,7 +1580,7 @@ msgstr ""
 #: tools/dbstrings:87 tools/dbstrings:101 tools/dbstrings:74
 #: tools/dbstrings:180
 msgid "Invoice"
-msgstr "Счет-фактура"
+msgstr "Invois"
 
 #: bin/bp.pl:376 bin/io.pl:1354 bin/io.pl:1606 bin/io.pl:1613 bin/oe.pl:282
 #: bin/oe.pl:826 bin/oe.pl:1277 LedgerSMB/Report/Orders.pm:249
@@ -1676,19 +1588,19 @@ msgstr "Счет-фактура"
 #: tools/dbstrings:97 tools/dbstrings:117 tools/dbstrings:51
 #: tools/dbstrings:190 tools/dbstrings:205
 msgid "Quotation"
-msgstr "Резервирование"
+msgstr "Sebut Harga"
 
 #: bin/bp.pl:386
 msgid "Spoolfile"
-msgstr "Файл очереди печати"
+msgstr "Fail spool"
 
 #: bin/bp.pl:501
 msgid "Select all"
-msgstr "Выбрать все"
+msgstr "Pilih semua"
 
 #: bin/bp.pl:505
 msgid "Remove"
-msgstr "Удалить"
+msgstr "Dipindahkan"
 
 #: bin/arap.pl:165 LedgerSMB/Report/Orders.pm:229
 #: LedgerSMB/Report/PNL/Invoice.pm:85 LedgerSMB/Report/PNL/ECA.pm:88
@@ -1707,7 +1619,7 @@ msgstr "Удалить"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:123
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:155
 msgid "Name"
-msgstr "Наименование"
+msgstr "Nama"
 
 #: bin/arap.pl:167 addons/1.3/b_units/trunk/scripts/business_unit.pl:133
 #: LedgerSMB/Scripts/business_unit.pm:138
@@ -1716,87 +1628,83 @@ msgstr "Наименование"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:96
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/ECA.pm:92
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:60
-#, fuzzy
 msgid "Control Code"
-msgstr "Код работы"
+msgstr "Kod kawalan"
 
 #: bin/arap.pl:169
-#, fuzzy
 msgid "%1 Number"
-msgstr "код"
+msgstr "%1 nombor"
 
 #: bin/arap.pl:173 addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:329
 msgid "City"
-msgstr "Город"
+msgstr "Bandar"
 
 #: bin/arap.pl:372
 msgid "Project not on file!"
-msgstr "Проект отсутствует в справочнике!"
+msgstr "Projek tiada dalam fail"
 
 #: bin/arap.pl:396
 msgid "Select from one of the projects below"
-msgstr "Выберите один из проектов из списка"
+msgstr "Pilih salah satu projek dibawah"
 
 #: bin/arap.pl:527
 msgid "Reposting Not Allowed"
-msgstr ""
+msgstr "Ulangan pesanan tidak dibenarkan"
 
 #: bin/arap.pl:551
 msgid "Include Payment"
-msgstr "Включая оплату"
+msgstr "Termasuk pembayaran"
 
 #: bin/arap.pl:560
 msgid "Next Date"
-msgstr "Следующая дата"
+msgstr "Tarikh seterusnya"
 
 #: bin/arap.pl:625
 msgid "E-mail message"
-msgstr "E-mail сообщение"
+msgstr "Pesanan e-mail"
 
 #: bin/arap.pl:703
 msgid "Day(s)"
-msgstr "День"
+msgstr "Hari"
 
 #: bin/arap.pl:704
 msgid "Week(s)"
-msgstr "Недели"
+msgstr "Minggu"
 
 #: bin/arap.pl:705
 msgid "Month(s)"
-msgstr "месяц"
+msgstr "Bulan"
 
 #: bin/arap.pl:706
 msgid "Year(s)"
-msgstr "Год"
+msgstr "Tahun"
 
 #: bin/arap.pl:722
 msgid "Repeat"
-msgstr "Повторить"
+msgstr "Pengulangan"
 
 #: bin/arap.pl:731
 msgid "For"
-msgstr "для"
+msgstr "Untuk"
 
 #: bin/arap.pl:733
 msgid "time(s)"
-msgstr "раз"
+msgstr "masa(s)"
 
 #: bin/arap.pl:738
-#, fuzzy
 msgid "Recurring Transaction for %1"
-msgstr "Повторяющаяся проводка"
+msgstr "Transaksi Berulang untuk% 1"
 
 #: bin/arap.pl:763 bin/pe.pl:101
 msgid "Startdate"
-msgstr "Начальная дата"
-
+msgstr "Tarikh mula"
 #: bin/arap.pl:809
 msgid "Save Schedule"
-msgstr "Сохранить расписание"
+msgstr "Simpan Jadual"
 
 #: bin/arap.pl:811
 msgid "Delete Schedule"
-msgstr "Удалить расписание"
+msgstr "Padam Jadual"
 
 #: bin/arap.pl:966 bin/io.pl:1831
 msgid "Cc: %1"
@@ -1807,82 +1715,79 @@ msgid "Bcc: %1"
 msgstr ""
 
 #: bin/arap.pl:973 bin/io.pl:1850
-#, fuzzy
 msgid "Date: %1"
-msgstr "Дата"
+msgstr "Tarikh: %1"
 
 #: bin/arap.pl:974 bin/io.pl:1851
 msgid "To: %1"
-msgstr ""
+msgstr "Kepada: %1"
 
 #: bin/arap.pl:976 bin/io.pl:1853
-#, fuzzy
 msgid "Subject: %1"
-msgstr "Тема"
+msgstr "Subjek: %1"
 
 #: bin/arap.pl:978
-#, fuzzy
 msgid "Message: "
-msgstr "Сообщение"
+msgstr "Mesej: "
 
 #: bin/arap.pl:981 bin/io.pl:1857
 msgid "sent"
-msgstr "отправлено"
+msgstr "hantar"
 
 #: bin/arapprn.pl:70 bin/arapprn.pl:78 bin/arapprn.pl:575 bin/is.pl:1418
 #: bin/oe.pl:1313
 msgid "Select postscript or PDF!"
-msgstr "Выберите postscript или PDF!"
+msgstr "Pilih postscript atau PDF!"
 
 #: bin/arapprn.pl:121
 msgid "Nothing to print!"
-msgstr "Ничего не напечатано!"
+msgstr "Tiada apa untuk dicetak!"
 
 #: bin/arapprn.pl:421
 msgid "Select payment"
-msgstr "Выберите оплату"
+msgstr "Pilih pembayaran"
 
 #: bin/arapprn.pl:521 bin/io.pl:1420 addons/1.4/pos/trunk/bin/pos.pl:1092
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:396
 #: LedgerSMB/Scripts/payment.pm:521 LedgerSMB/Template.pm:300
 msgid "Screen"
-msgstr "Экран"
+msgstr "Skrin"
 
 #: bin/arapprn.pl:536 bin/io.pl:1432
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:413
 msgid "Queue"
-msgstr ""
+msgstr "Queue"
 
 #: bin/arapprn.pl:558 addons/1.4/pos/trunk/bin/pos.pl:1112
 #: addons/1.3/extended_arap/trunk/UI/aa.html:532
 msgid "Printed"
-msgstr "Напечатано"
+msgstr "Sudah Dicetak"
 
 #: bin/arapprn.pl:562 addons/1.3/extended_arap/trunk/UI/aa.html:528
 msgid "Scheduled"
-msgstr "Назначено расписание"
+msgstr "Sudah Dijadualkan"
 
 #: bin/arapprn.pl:577 bin/is.pl:1420 bin/oe.pl:1315
 #: addons/1.4/pos/trunk/bin/pos.pl:1047
 msgid "Select a Printer!"
-msgstr "Выбрать принтер"
+msgstr "Pilih Mesin Pencetak!"
 
 #: bin/io.pl:146 bin/oe.pl:1893 LedgerSMB/Scripts/order.pm:60
 #: tools/dbstrings:39 tools/dbstrings:48
 msgid "Ship"
-msgstr "Доставить"
+msgstr "Hantar"
 
 #: bin/io.pl:153 bin/oe.pl:1897
 msgid "Recd"
-msgstr "Recd"
+msgstr "Terima"
 
 #: bin/io.pl:215 bin/io.pl:534 addons/1.4/pos/trunk/bin/pos.pl:754
 msgid "Price"
-msgstr "Цена"
+msgstr "Harga"
 
 #: bin/io.pl:218 addons/1.4/pos/trunk/bin/pos.pl:756
 msgid "Extended"
-msgstr "Сумма"
+msgstr "Dilanjutkan"
 
 #: bin/io.pl:222
 msgid "OH"
@@ -1890,16 +1795,16 @@ msgstr "OH"
 
 #: bin/io.pl:224
 msgid "TaxForm"
-msgstr ""
+msgstr "BorangCukai"
 
 #: bin/io.pl:237 LedgerSMB/Report/Contact/History.pm:93
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:93
 msgid "Delivery Date"
-msgstr "Дата получения"
+msgstr "Tarikh Penghantaran"
 
 #: bin/io.pl:238 bin/oe.pl:1920
 msgid "Serial No."
-msgstr "Серийный ном."
+msgstr "No. Siri"
 
 #: bin/io.pl:239 bin/pe.pl:1332
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:383
@@ -1907,7 +1812,7 @@ msgstr "Серийный ном."
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:383
 #: addons/1.3/extended_arap/trunk/UI/aa.html:293
 msgid "Project"
-msgstr "Проект"
+msgstr "Projek"
 
 #: bin/io.pl:241 bin/io.pl:528 bin/oe.pl:1899 bin/oe.pl:2486
 msgid "SKU"
@@ -1915,134 +1820,128 @@ msgstr "SKU"
 
 #: bin/io.pl:246 bin/oe.pl:440 bin/oe.pl:489
 msgid "Required by"
-msgstr "Запрошен"
+msgstr "Diperlukan oleh"
 
 #: bin/io.pl:543
 msgid "Select items"
-msgstr "Выберите элементы"
+msgstr "Pilih item-item"
 
 #: bin/io.pl:819
 msgid "Item not on file!"
-msgstr "Нет номенклатуры в справочнике!"
+msgstr "Item tiada di dalam fail!"
 
 #: bin/io.pl:826
 msgid "What type of item is this?"
-msgstr "Какой это тип номеклатуры?"
+msgstr "Apakah jenis item ini?"
 
 #: bin/io.pl:833
 msgid "Part"
-msgstr "Товар"
+msgstr "Bahagian"
 
 #: bin/io.pl:835
 msgid "Service"
-msgstr "Услуга"
+msgstr "Servis"
 
 #: bin/io.pl:1155
-#, fuzzy
 msgid "Number missing in Row %1"
-msgstr "Пропущен код в строке"
+msgstr "Tiada Nombor di Baris %1"
 
 #: bin/io.pl:1162 bin/oe.pl:60
 msgid "Add Purchase Order"
-msgstr "Новый заказ поставщика"
+msgstr "Tambah Pesanan Belian"
 
 #: bin/io.pl:1173 bin/oe.pl:64
 msgid "Add Sales Order"
-msgstr "Новый заказ клиента"
+msgstr "Tambah Pesanan Jualan"
 
 #: bin/io.pl:1184 bin/oe.pl:68
 msgid "Add Request for Quotation"
-msgstr "Новый запрос на резервирование"
+msgstr "Tambah Permintaan untuk Sebut Harga"
 
 #: bin/io.pl:1195 bin/oe.pl:72
 msgid "Add Quotation"
-msgstr "Новое резервирование"
+msgstr "Tambah Sebut Harga"
 
 #: bin/io.pl:1359 bin/oe.pl:291 bin/oe.pl:837 tools/dbstrings:43
 #: tools/dbstrings:98 tools/dbstrings:118 tools/dbstrings:52
 #: tools/dbstrings:191 tools/dbstrings:206
 msgid "RFQ"
-msgstr "Запрос на резервирование"
+msgstr "RFQ"
 
 #: bin/io.pl:1368 bin/io.pl:1551 bin/oe.pl:303 tools/dbstrings:93
 #: tools/dbstrings:107 tools/dbstrings:186 tools/dbstrings:199
 msgid "Work Order"
-msgstr "Рабочий заказ"
+msgstr "Pesanan Kerja"
 
 #: bin/io.pl:1372 bin/io.pl:1390 bin/io.pl:1581 bin/is.pl:288 bin/oe.pl:304
 #: bin/oe.pl:323 tools/dbstrings:91 tools/dbstrings:105 tools/dbstrings:184
 #: tools/dbstrings:197
 msgid "Pick List"
-msgstr "Список для выбора"
+msgstr "Senarai Pilihan"
 
 #: bin/io.pl:1376 bin/io.pl:1394 bin/io.pl:1558 bin/is.pl:289 bin/oe.pl:305
 #: bin/oe.pl:324 tools/dbstrings:90 tools/dbstrings:104 tools/dbstrings:183
 #: tools/dbstrings:196
 msgid "Packing List"
-msgstr "Упаковочный список"
+msgstr "Senarai Bungkusan"
 
 #: bin/io.pl:1385 bin/io.pl:1399 bin/io.pl:1599 bin/oe.pl:317 bin/oe.pl:329
 #: tools/dbstrings:95 tools/dbstrings:109 tools/dbstrings:188
 #: tools/dbstrings:201
 msgid "Bin List"
-msgstr "Список Bin"
+msgstr "Senarai Bin"
 
 #: bin/io.pl:1408
 msgid "Attachment"
-msgstr "Вложение"
+msgstr "Lampiran"
 
 #: bin/io.pl:1410
 msgid "In-line"
-msgstr "внутристрочный"
+msgstr "Selaras"
 
 #: bin/io.pl:1509
 msgid "Select txt, postscript or PDF!"
-msgstr "Выберите txt, postscript или PDF!"
+msgstr "Pilih txt, postscript atau PDF!"
 
 #: bin/io.pl:1652
-#, fuzzy
 msgid " Date missing!"
-msgstr "Пропущена дата"
+msgstr "Tarikh hilang!"
 
 #: bin/io.pl:1855
 msgid "Message"
-msgstr "Сообщение"
+msgstr "Pesanan"
 
 #: bin/io.pl:1985 bin/is.pl:961 bin/oe.pl:806 bin/oe.pl:2013
 msgid "Ship to"
-msgstr "доставить для"
+msgstr "Hantar kepada"
 
 #: bin/io.pl:2042
 msgid " "
 msgstr ""
 
 #: bin/io.pl:2045
-#, fuzzy
 msgid "Add line1"
-msgstr "Новый бизнес"
+msgstr "Tambah barisan1"
 
 #: bin/io.pl:2048
-#, fuzzy
 msgid "Add line2"
-msgstr "Новый бизнес"
+msgstr "Tambah barisan2"
 
 #: bin/io.pl:2052
-#, fuzzy
 msgid "Add line3 "
-msgstr "Новый бизнес"
+msgstr "Tambah barisan3"
 
 #: bin/io.pl:2055
 msgid "city"
-msgstr ""
+msgstr "Bandar"
 
 #: bin/io.pl:2058
 msgid "State"
-msgstr "Состояние"
+msgstr "Negeri"
 
 #: bin/io.pl:2061
-#, fuzzy
 msgid "Zip Code"
-msgstr "Индекс"
+msgstr "Kod Pos"
 
 #: bin/io.pl:2064 LedgerSMB/Scripts/taxform.pm:272
 #: LedgerSMB/Report/Payroll/Deduction_Types.pm:30
@@ -2051,33 +1950,32 @@ msgstr "Индекс"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Income_Types.pm:30
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:330
 msgid "Country"
-msgstr "Страна"
+msgstr "Negara"
 
 #: bin/io.pl:2114 LedgerSMB/Scripts/asset.pm:633
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:38
 msgid "Type"
-msgstr ""
+msgstr "Jenis"
 
 #: bin/io.pl:2117 addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:220
 msgid "Contact"
-msgstr "Контактное лицо"
+msgstr "Hubungan"
 
 #: bin/is.pl:83 bin/is.pl:103
-#, fuzzy
 msgid "Add Credit Invoice"
-msgstr "Новая фактура поступления"
+msgstr "Tambah Kredit Invois"
 
 #: bin/is.pl:87 bin/is.pl:106 bin/oe.pl:1457
 msgid "Add Sales Invoice"
-msgstr "Новая фактура продажи"
+msgstr "Tambah Jualan Invois"
 
 #: bin/is.pl:411 bin/oe.pl:416 addons/1.4/pos/trunk/bin/pos.pl:278
 msgid "Business"
-msgstr "Бизнес"
+msgstr "Perniagaan"
 
 #: bin/is.pl:414 bin/oe.pl:420 addons/1.4/pos/trunk/bin/pos.pl:281
 msgid "Trade Discount"
-msgstr "Торговая скидка"
+msgstr "Diskaun Perniagaan "
 
 #: bin/is.pl:428 bin/aa.pl:556 bin/aa.pl:1499 bin/oe.pl:564
 #: addons/1.4/pos/trunk/bin/pos.pl:263
@@ -2086,7 +1984,7 @@ msgstr "Торговая скидка"
 #: LedgerSMB/Report/Contact/History.pm:105
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:105
 msgid "Salesperson"
-msgstr "Продавец"
+msgstr "Penjual"
 
 #: bin/is.pl:539 bin/aa.pl:1679 bin/oe.pl:628 bin/oe.pl:1842
 #: LedgerSMB/Report/Invoices/Transactions.pm:272
@@ -2094,299 +1992,293 @@ msgstr "Продавец"
 #: LedgerSMB/Report/Contact/Purchase.pm:107
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:107
 msgid "Shipping Point"
-msgstr "Место доставки"
+msgstr "Lokasi Penghantaran"
 
 #: bin/is.pl:543 bin/aa.pl:1681 bin/aa.pl:1711 bin/oe.pl:632 bin/oe.pl:1847
 msgid "Ship via"
-msgstr "доставить через"
+msgstr "Penghantaran melalui"
 
 #: bin/is.pl:598
-#, fuzzy
 msgid "Can't void a voided invoice!"
-msgstr "Невозможно удалить фактуру!"
+msgstr "Tidak boleh membatalkan invois yang telah dibatalkan"
 
 #: bin/is.pl:609
 msgid "Payments associated with voided invoice may need to be reversed."
-msgstr ""
+msgstr "Bayaran berkaitan dengan invois yang dibatalkan mungkin perlu diterbalikkan"
 
 #: bin/is.pl:760
 msgid "Off Hold"
-msgstr ""
+msgstr "Teruskan"
 
 #: bin/is.pl:919 bin/oe.pl:822 tools/dbstrings:180 tools/dbstrings:136
 msgid "Sales Invoice"
-msgstr "Фактура клиента"
+msgstr "Jualan Invois"
 
 #: bin/is.pl:971
 msgid "Void"
-msgstr ""
+msgstr "Batal"
 
 #: bin/is.pl:1355 bin/pe.pl:1695 bin/aa.pl:1340
 #: addons/1.4/pos/trunk/bin/pos.pl:686
 msgid "Customer missing!"
-msgstr "Пропущен клиент!"
+msgstr "Pelanggan hilang"
 
 #: bin/pe.pl:63
 msgid "Edit Project"
-msgstr "Редактировать Проект"
+msgstr "Ubahsuai Projek"
 
 #: bin/pe.pl:64 tools/dbstrings:53
 msgid "Add Project"
-msgstr "Новый проект"
+msgstr "Tambah Projek"
 
 #: bin/pe.pl:117 bin/pe.pl:1261 bin/aa.pl:1602 LedgerSMB/DBObject/Date.pm:76
 #: LedgerSMB/Report/Aging.pm:122
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:122
 msgid "Current"
-msgstr "Текущий"
+msgstr "Semasa"
 
 #: bin/pe.pl:119 bin/pe.pl:1263 bin/aa.pl:1604 LedgerSMB/DBObject/Date.pm:81
 msgid "Month"
-msgstr "месяц"
+msgstr "Bulan"
 
 #: bin/pe.pl:121 bin/pe.pl:1265 bin/aa.pl:1606 LedgerSMB/DBObject/Date.pm:87
 msgid "Quarter"
-msgstr "Квартал"
+msgstr "Suku"
 
 #: bin/pe.pl:131 bin/pe.pl:287 bin/pe.pl:503
 msgid "Orphaned"
-msgstr "Без проводок"
+msgstr "Yatim"
 
 #: bin/pe.pl:136 bin/pe.pl:301 tools/dbstrings:49
 msgid "Groups"
-msgstr "Группы"
+msgstr "Kumpulan"
 
 #: bin/pe.pl:151 bin/pe.pl:518 tools/dbstrings:50
 msgid "Pricegroups"
-msgstr "Типы цен"
+msgstr "Kumpulan harga"
 
 #: bin/pe.pl:189 bin/aa.pl:1728
 msgid "Active"
-msgstr "Активный"
+msgstr "Aktif"
 
 #: bin/pe.pl:191
 msgid "Inactive"
-msgstr "Неактивный"
+msgstr "Tidak Aktif"
 
 #: bin/pe.pl:232
 msgid "Translations saved!"
-msgstr "Переводы сохранены!"
+msgstr "Terjemahan disimpan"
 
 #: bin/pe.pl:237
 msgid "Group missing!"
-msgstr "Пропущена группа!"
+msgstr "Kumpulan hilang"
 
 #: bin/pe.pl:239
 msgid "Group saved!"
-msgstr "Группа сохранена!"
+msgstr "Kumpulan disimpan"
 
 #: bin/pe.pl:243
 msgid "Pricegroup missing!"
-msgstr "Пропущен тип цен"
+msgstr "Kumpulan harga hilang"
 
 #: bin/pe.pl:245
 msgid "Pricegroup saved!"
-msgstr "Записан тип цен"
+msgstr "Kumpulan harga disimpan"
 
 #: bin/pe.pl:253
 msgid "Translation deleted!"
-msgstr "Перевод удален!"
+msgstr "Terjemahan dipadam"
 
 #: bin/pe.pl:260
 msgid "Group deleted!"
-msgstr "Группа удалена!"
+msgstr "Kumpulan dipadam"
 
 #: bin/pe.pl:264
 msgid "Pricegroup deleted!"
-msgstr "Удален тип цен"
+msgstr "Kumpulan harga dipadam"
 
 #: bin/pe.pl:356 tools/dbstrings:214 tools/dbstrings:168
 msgid "Add Group"
-msgstr "Новая группа"
+msgstr "Tambah Kumpulan"
 
 #: bin/pe.pl:428
-#, fuzzy
 msgid "Parent"
-msgstr "Текущий"
+msgstr "Waris"
 
 #: bin/pe.pl:573 tools/dbstrings:215 tools/dbstrings:169
 msgid "Add Pricegroup"
-msgstr "Новый тип цен"
+msgstr "Tambah Kumpulan Harga"
 
 #: bin/pe.pl:694
 msgid "Description Translations"
-msgstr "Описание проводок"
+msgstr "Huraian terjemahan"
 
 #: bin/pe.pl:706
 msgid "Group Translations"
-msgstr "Группа проводок"
+msgstr "Kumpulan Terjemahan"
 
 #: bin/pe.pl:711
 msgid "Project Description Translations"
-msgstr "Переводы описания проектов"
+msgstr "Huraian Projek Penterjemahan"
 
 #: bin/pe.pl:716 bin/pe.pl:1482
 msgid "Project Number"
-msgstr "Код проекта"
+msgstr "Nombor Projek"
 
 #: bin/pe.pl:825 bin/pe.pl:1000
 msgid "Translation"
-msgstr "Перевод"
+msgstr "Penterjmahan"
 
 #: bin/pe.pl:922
 msgid "Languages not defined!"
-msgstr "Языки не определены!"
+msgstr "Bahasa tidak ditakrifkan"
 
 #: bin/pe.pl:946
 msgid "Edit Description Translations"
-msgstr "Редактировать описание проводок"
+msgstr "Edit Penerangan Penterjemahan"
 
 #: bin/pe.pl:1275
 msgid "Transaction Dates"
-msgstr "Дата проводки"
+msgstr "Tarikh Penterjemahan"
 
 #: bin/pe.pl:1294
 msgid "No open Projects!"
-msgstr "Нет открытых проектов"
+msgstr "Tiada projek yang terbuka"
 
 #: bin/pe.pl:1306 bin/aa.pl:557 bin/aa.pl:1500 bin/oe.pl:576
 #: LedgerSMB/Scripts/employee.pm:105 LedgerSMB/Report/Orders.pm:261
 msgid "Employee"
-msgstr "Сотрудник"
+msgstr "Pekerja"
 
 #: bin/pe.pl:1312 bin/pe.pl:1492 bin/pe.pl:1582
 msgid "Generate Sales Orders"
-msgstr "Создать ордеры продажи"
+msgstr "Menjana Pesanan Jualan"
 
 #: bin/pe.pl:1340 bin/aa.pl:1572
 msgid "Summary"
-msgstr "Суммарно"
+msgstr "Ringkasan"
 
 #: bin/pe.pl:1342 bin/aa.pl:1575
 msgid "Detail"
-msgstr "Детализировать"
+msgstr "Butiran"
 
 #: bin/pe.pl:1477
 msgid "Service Code"
-msgstr "Код услуги"
+msgstr "kod servis"
 
 #: bin/pe.pl:1587
 msgid "Select Customer"
-msgstr "Выбрать покупателя"
+msgstr "Pilih Pelanggan"
 
 #: bin/pe.pl:1670
 msgid "Customer not on file!"
-msgstr "Клиент отсутствует в справочнике!"
+msgstr "Pelangan tiada dalam fail!"
 
 #: bin/pe.pl:1671
 msgid "Vendor not on file!"
-msgstr "Поставщика нет в справочнике!"
+msgstr "Pembekal tiada dalam fail!"
 
 #: bin/pe.pl:1763
 msgid "Failed to save order!"
-msgstr "Ошибка сохранения ордера"
+msgstr "Gagal menyimpan Pesanan!"
 
 #: bin/pe.pl:1770
 msgid "Orders generated!"
-msgstr "Ордеры созданы"
+msgstr "Pesanan dihasilkan!"
 
 #: bin/aa.pl:194 addons/1.3/extended_arap/trunk/bin/custom/aa.pl:54
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:384
 msgid "Transaction"
-msgstr "Проводка"
+msgstr "Transaksi"
 
 #: bin/aa.pl:644 addons/1.3/extended_arap/trunk/UI/aa.html:99
 msgid "Batch Control Code"
-msgstr ""
+msgstr "Kod kawalan batch"
 
 #: bin/aa.pl:649 addons/1.3/extended_arap/trunk/UI/aa.html:104
 msgid "Batch Name"
-msgstr ""
+msgstr "Nama Batch"
 
 #: bin/aa.pl:663 addons/1.3/extended_arap/trunk/UI/aa.html:112
-#, fuzzy
 msgid "Entity Control Code"
-msgstr "Контроль"
+msgstr "Kod Kawalan entiti"
 
 #: bin/aa.pl:727 addons/1.3/extended_arap/trunk/UI/aa.html:291
 msgid "Tax Form Applied"
-msgstr ""
+msgstr "Bentuk cukai digunakan"
 
 #: bin/aa.pl:1027
-#, fuzzy
 msgid "Save as New"
-msgstr "Сохранить как новый"
+msgstr "Simpan sebagai baru"
 
 #: bin/aa.pl:1165 bin/gl.pl:395
-#, fuzzy
 msgid "Template Saved!"
-msgstr "Шаблон сохранен!"
+msgstr "templat Disimppan!"
 
-#: bin/aa.pl:1330 LedgerSMB/Scripts/payment.pm:328
+#: bin/aa.plT1330 LedgerSMB/Scripts/payment.pm:328
 msgid "Data not saved.  Please try again."
-msgstr ""
+msgstr "Data gagal disimpan. Sila cuba lagi"
 
 #: bin/aa.pl:1345
 msgid "Due Date missing!"
-msgstr "Не указан срок оплаты!"
+msgstr "Tarikh akhir hilang!"
 
 #: bin/aa.pl:1352 bin/gl.pl:685
 msgid "Cannot post transaction for a closed period!"
-msgstr "Невозможно провести проводку в закрытом периоде!"
+msgstr "Tidak boleh menyimpan transaksi untuk tempoh tertutup"
 
 #: bin/aa.pl:1407
 msgid "Transaction posted!"
-msgstr "Проводка сохранена!"
+msgstr "Transaksi berjaya di hantar!"
 
 #: bin/aa.pl:1410 bin/gl.pl:700 addons/1.4/pos/trunk/bin/pos.pl:728
 msgid "Cannot post transaction!"
-msgstr "Невозможно провести проводку!"
+msgstr "Transaksi gagal dihantar!"
 
 #: bin/aa.pl:1514 LedgerSMB/Report/Invoices/Transactions.pm:269
 #: LedgerSMB/Report/Invoices/Outstanding.pm:253 LedgerSMB/Report/Orders.pm:265
 msgid "Manager"
-msgstr "Менеджер"
+msgstr "Pengurus"
 
 #: bin/aa.pl:1519 LedgerSMB/Report/Contact/Purchase.pm:124
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:124
 msgid "AR Transactions"
-msgstr "Проводки продаж"
+msgstr "Transaksi AR"
 
 #: bin/aa.pl:1520 LedgerSMB/Report/Contact/Purchase.pm:122
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:122
 msgid "AP Transactions"
-msgstr "Проводки закупки"
+msgstr "Transaksi Ap"
 
 #: bin/aa.pl:1552 bin/oe.pl:345 addons/1.4/pos/trunk/bin/pos.pl:157
 msgid "Open"
-msgstr "Открыть"
+msgstr "Buka"
 
 #: bin/aa.pl:1555 bin/oe.pl:348 LedgerSMB/Report/Orders.pm:241
 msgid "Closed"
-msgstr "Закрыт"
+msgstr "Tutup"
 
 #: bin/aa.pl:1563 LedgerSMB/Report/Invoices/Outstanding.pm:288
 msgid "AR Outstanding"
-msgstr "Задолженость клиентов"
+msgstr "AR Memberangsangkan"
 
 #: bin/aa.pl:1564 LedgerSMB/Report/Invoices/Outstanding.pm:286
 msgid "AP Outstanding"
-msgstr "Задолженость поставщиков"
+msgstr "AP Memberangsangkan"
 
 #: bin/aa.pl:1620 LedgerSMB/Report/Invoices/Transactions.pm:263
 #: LedgerSMB/Report/Invoices/Outstanding.pm:245 LedgerSMB/Report/GL.pm:133
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:133
 msgid "Till"
-msgstr "до"
+msgstr "Till"
 
 #: bin/aa.pl:1633
 msgid "No."
-msgstr "Ном."
+msgstr "Tidak."
 
 #: bin/aa.pl:1649
-#, fuzzy
 msgid "Project Numbers"
-msgstr "Код проекта"
+msgstr "Nombor Projek"
 
 #: bin/aa.pl:1666 LedgerSMB/Report/Invoices/Payments.pm:134
 #: LedgerSMB/Report/Invoices/Transactions.pm:254
@@ -2394,7 +2286,7 @@ msgstr "Код проекта"
 #: LedgerSMB/Report/Contact/Purchase.pm:95
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:95
 msgid "Date Paid"
-msgstr "Дата оплаты"
+msgstr "Tarikh Dibayar"
 
 #: bin/aa.pl:1669 LedgerSMB/Scripts/payment.pm:765
 #: LedgerSMB/Report/Invoices/Transactions.pm:248
@@ -2402,323 +2294,313 @@ msgstr "Дата оплаты"
 #: LedgerSMB/Report/Contact/Purchase.pm:87
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:87
 msgid "Paid"
-msgstr "Оплачено"
+msgstr "Dibaya"
 
 #: bin/aa.pl:1673 LedgerSMB/Scripts/payment.pm:769
 #: LedgerSMB/Scripts/payment.pm:775
 #: LedgerSMB/Report/Invoices/Outstanding.pm:225
 msgid "Amount Due"
-msgstr "Сумма к получению"
+msgstr "Jumlah terhutang"
 
 #: bin/aa.pl:1717
-#, fuzzy
 msgid "Date to"
-msgstr "Дата"
+msgstr "Tarikh kepada"
 
 #: bin/aa.pl:1727
-#, fuzzy
 msgid "All Invoices"
-msgstr "Счет-фактуры"
+msgstr "Semua Invois"
 
 #: bin/aa.pl:1738
 msgid "Include in Report"
-msgstr "Включить в отчет"
+msgstr "Masukkan didalam laporan"
 
 #: bin/gl.pl:92 addons/1.4/pos/trunk/bin/ps.pl:54
 #: addons/1.4/pos/trunk/bin/ps.pl:84 addons/1.4/pos/trunk/bin/ps.pl:225
 #: addons/1.4/pos/trunk/bin/pos.pl:55
 msgid "Could not open pos.conf.pl in %1 line [_2]: [_3]"
-msgstr ""
+msgstr "Gagal membuka pos.conf.pl dalam %1 baris [_2]: [_3]"
 
 #: bin/gl.pl:136
 msgid "Adjusting Till: (till) Source: (source)"
-msgstr ""
+msgstr "Melaraskan Till: (till) Sumber: (sumber) "
 
 #: bin/gl.pl:138
 msgid "Adjusting till due to data entry error."
-msgstr ""
+msgstr "Melaraskan till Kerana kesilapan kemasukan data."
 
 #: bin/gl.pl:198
-#, fuzzy
 msgid "%1 Cash Transfer Transaction"
-msgstr "Новая проводка кассового перемещения"
+msgstr "Pemindahan Transaksi Tunai"
 
 #: bin/gl.pl:201
-#, fuzzy
 msgid "%1 General Ledger Transaction"
-msgstr "Новая проводка"
+msgstr "Transaksi Am Lejar"
 
 #: bin/gl.pl:638
-#, fuzzy
 msgid "Account %1 not found."
-msgstr "Счет"
+msgstr "Akaun %1 Tidak Dijumpai "
 
 #: bin/gl.pl:673
-#, fuzzy
 msgid "Cannot Repost Transaction"
-msgstr "Невозможно провести проводку!"
+msgstr "Transaksi Tidak Boleh Dihantar Kembali "
 
 #: bin/gl.pl:679
 msgid "Transaction Date missing!"
-msgstr "Пропущена Дата проводки!"
+msgstr "Tarikh Transaksi Hilang!"
 
 #: bin/gl.pl:715
 msgid ""
 "Cannot post transaction with a debit and credit entry for the same account!"
-msgstr ""
-"Невозможно провести проводку с дебетом и кредитом для обного и того же счета!"
+msgstr "Tidak boleh menyimpan transaksi dengan kemasukan debit dan kredit untuk akaun yang sama"
 
 #: bin/gl.pl:725
 msgid "Out of balance transaction!"
-msgstr "Вне балланса проводок!"
+msgstr "Kehabisan Baki Transaksi"
 
 #: bin/oe.pl:91
 msgid "Edit Purchase Order"
-msgstr "Редактировать Фактуру поставщика"
+msgstr "Ubah Pesanan Pembelian"
 
 #: bin/oe.pl:96
 msgid "Edit Sales Order"
-msgstr "Редактировать Заказ клиента"
+msgstr "Ubah Pesanan Jualan"
 
 #: bin/oe.pl:101
 msgid "Edit Request for Quotation"
-msgstr "Редактировать запрос на резервирование"
+msgstr "Ubah Permintaan Untuk Sebut Harga"
 
 #: bin/oe.pl:105
 msgid "Edit Quotation"
-msgstr "Редактировать резервирование"
+msgstr "Ubah Sebut Harga"
 
 #: bin/oe.pl:406
 msgid "Terms"
-msgstr "Срок резервирования"
+msgstr "Terma"
 
 #: bin/oe.pl:436 bin/oe.pl:1863
 msgid "Order Date"
-msgstr "Дата заказа клиента"
+msgstr "Tarikh Pesanan"
 
 #: bin/oe.pl:488
 msgid "Valid until"
-msgstr "Действительно до"
+msgstr "Sah Sehingga"
 
 #: bin/oe.pl:515
 msgid "Quotation Date"
-msgstr "Дата резервирования"
+msgstr "Tarikh Sebut Harga"
 
 #: bin/oe.pl:812
 msgid "Print and Save"
-msgstr "Напечатать и сохранить"
+msgstr "Cetak dan Simpan"
 
 #: bin/oe.pl:819
 msgid "Print and Save as new"
-msgstr "Напечатать и сохранить как новый"
+msgstr "Cetak dan Simpan sebagai yang baru"
 
 #: bin/oe.pl:830 tools/dbstrings:176 tools/dbstrings:132
 msgid "Vendor Invoice"
-msgstr "Фактура поставщика"
+msgstr "Pembekal Senarai Bekalan"
 
 #: bin/oe.pl:1229 bin/oe.pl:1393
 msgid "Order Date missing!"
-msgstr "Пропущена дата заказа"
+msgstr "Tarikh Pesanan Hilang!"
 
 #: bin/oe.pl:1232 bin/oe.pl:1399
 msgid "Quotation Date missing!"
-msgstr "Пропущена дата резервирования!"
+msgstr "Tarikh Sebut Harga Hilang!"
 
 #: bin/oe.pl:1239
-#, fuzzy
 msgid " missing!"
-msgstr "Пропущен код"
+msgstr "Hilang!"
 
 #: bin/oe.pl:1272
 msgid "Cannot save order!"
-msgstr "Невозможно сохранить заказ!"
+msgstr "Tidak Boleh Menyimpan Pesanan"
 
 #: bin/oe.pl:1283
 msgid "Request for Quotation"
-msgstr "Запрос на резервирование"
+msgstr "Pemintaan Bagi Sebut Harga"
 
 #: bin/oe.pl:1289
 msgid "Cannot save quotation!"
-msgstr "Невозможно сохранить резерв"
+msgstr "Tidah Boleh Menyimpan Sebut Harga!"
 
 #: bin/oe.pl:1332
 msgid "Are you sure you want to delete Order Number"
-msgstr "Вы уверены, что хотите удалить данный заказ?"
+msgstr "Adakah anda pasti mahu memadam nombor pesanan"
 
 #: bin/oe.pl:1337
 msgid "Are you sure you want to delete Quotation Number"
-msgstr "Вы уверены, что хотите удалить резерв?"
+msgstr "Adakah anda pasti ingin memadam Nombor Sebut Harga"
 
 #: bin/oe.pl:1369
 msgid "Order deleted!"
-msgstr "Заказ удален!"
+msgstr "Pesanan dipadam"
 
 #: bin/oe.pl:1370
 msgid "Cannot delete order!"
-msgstr "Невозможно удалить заказ!"
+msgstr "Tidak boleh memadam pesanan"
 
 #: bin/oe.pl:1373
 msgid "Quotation deleted!"
-msgstr "Резервирование удалено"
+msgstr "Sebut Harga dipadam!"
 
 #: bin/oe.pl:1374
 msgid "Cannot delete quotation!"
-msgstr "Невозможно удалить резерв!"
+msgstr "Tidak boleh memadam sebut harga!"
 
 #: bin/oe.pl:1392
 msgid "Order Number missing!"
-msgstr "Пропущен номер заказа"
+msgstr "Nombor Pesanan Hilang!"
 
 #: bin/oe.pl:1398
 msgid "Quotation Number missing!"
-msgstr "Пропущен номер резервирования!"
+msgstr "Nombor sebut harga hilang!"
 
 #: bin/oe.pl:1545
 msgid "Add Exchange Rate"
-msgstr "Новый курс"
+msgstr "Tambah kadar pertukaran"
 
 #: bin/oe.pl:1779
 msgid "Ship Merchandise"
-msgstr "Погрузить товары"
+msgstr "Barang dagangan kapal"
 
 #: bin/oe.pl:1780
 msgid "Shipping Date"
-msgstr "Дата доставки"
+msgstr "Tarikh penghantaran"
 
 #: bin/oe.pl:1783
 msgid "Receive Merchandise"
-msgstr "Получить товары"
+msgstr "Penerimaan barang dagangan"
 
 #: bin/oe.pl:1784
 msgid "Date Received"
-msgstr "Дата получена"
+msgstr "Tarikh diterima"
 
 #: bin/oe.pl:1796
 msgid "Warehouse"
-msgstr "Склад"
+msgstr "Gudang"
 
 #: bin/oe.pl:2015
 msgid "Done"
-msgstr "Выполнено"
+msgstr "Selesai"
 
 #: bin/oe.pl:2047
 msgid "Shipping Date missing!"
-msgstr "Пропущена дата доставки"
+msgstr "Tarikh penghantaran hilang!"
 
 #: bin/oe.pl:2051
 msgid "Date received missing!"
-msgstr "Пропущена дата"
+msgstr "Tarikh diterima hilang"
 
 #: bin/oe.pl:2060
 msgid "Nothing entered!"
-msgstr "Ничего не введено!"
+msgstr "Tiada apa-apa yang dimasukan"
 
 #: bin/oe.pl:2063
 msgid "Inventory saved!"
-msgstr "Инвентарь сохранен!"
+msgstr "Inventori disimpan"
 
 #: bin/oe.pl:2066
 msgid "Could not save!"
-msgstr "Невозможно сохранить!"
+msgstr "Tidak boleh disimpan"
 
 #: bin/oe.pl:2087
 msgid "Nothing to transfer!"
-msgstr "Ничего не перемещено!"
+msgstr "TIada apa-apa untuk dihantar"
 
 #: bin/oe.pl:2099 bin/oe.pl:2249
 msgid "Transfer Inventory"
-msgstr "Перемещение инвентаря"
+msgstr "Hantar Inventori"
 
 #: bin/oe.pl:2117
 msgid "Transfer from"
-msgstr "Переместить от"
+msgstr "Hantar daripada"
 
 #: bin/oe.pl:2121
 msgid "Transfer to"
-msgstr "Переместить к"
+msgstr "Hantar ke"
 
 #: bin/oe.pl:2222 bin/oe.pl:2338 tools/dbstrings:41 tools/dbstrings:130
 #: tools/dbstrings:50 tools/dbstrings:90
 msgid "Transfer"
-msgstr "Перемещение"
+msgstr "Hantar"
 
 #: bin/oe.pl:2228
 msgid "From Warehouse"
-msgstr "со склада"
+msgstr "Daripada gudang"
 
 #: bin/oe.pl:2233
 msgid "To Warehouse"
-msgstr "на склад"
+msgstr "Ke gudang"
 
 #: bin/oe.pl:2358
 msgid "Inventory transferred!"
-msgstr "Инвентарь перемещен!"
+msgstr "Inventori di hantar"
 
 #: bin/oe.pl:2361
 msgid "Could not transfer Inventory!"
-msgstr "Невозможно пересестить инвентарь"
+msgstr "Tidak dapat memindahkan Inventori!"
 
 #: bin/oe.pl:2496
 msgid "Req"
-msgstr "Req"
+msgstr ""
 
 #: bin/oe.pl:2501
 msgid "Lead"
-msgstr "Lead"
+msgstr "Utama"
 
 #: bin/oe.pl:2505
 msgid "Generate Purchase Orders"
-msgstr "Создать ордеры покупки"
+msgstr "Menjana Pesanan Pembelian"
 
 #: bin/oe.pl:2600
 msgid "Generate Orders"
-msgstr "Создать ордеры"
+msgstr "Menjana pesanan"
 
 #: bin/oe.pl:2605
 msgid "Select Vendor"
-msgstr "Выбрать поставщика"
+msgstr "Pilih Pembekal"
 
 #: bin/oe.pl:2628
 msgid "Order generation failed!"
-msgstr "Ошибка создания ордера"
+msgstr "Penjanaan Pesanan gagal!"
 
 #: addons/1.4/pos/trunk/bin/ps.pl:82
-#, fuzzy
 msgid "Closing Till For %1"
-msgstr "Закрыт"
+msgstr "Penutup Till Untuk%1"
 
 #: addons/1.4/pos/trunk/bin/ps.pl:181
 msgid "Cumulative Error:"
-msgstr ""
+msgstr "Ralat terkumpul:"
 
 #: addons/1.4/pos/trunk/bin/ps.pl:208
 msgid "Calculate"
-msgstr ""
+msgstr "Kira"
 
 #: addons/1.4/pos/trunk/bin/ps.pl:211
-#, fuzzy
 msgid "Close Till"
-msgstr "Закрыт"
+msgstr "Tutup Till"
 
 #: addons/1.4/pos/trunk/bin/ps.pl:287
 msgid "Cash Breakdown:"
-msgstr ""
+msgstr "Pecahan Tunai:"
 
 #: addons/1.4/pos/trunk/bin/ps.pl:299
 msgid "Total Cash in Drawer: %1"
-msgstr ""
+msgstr "Jumlah Tunai dalam laci:%1"
 
 #: addons/1.4/pos/trunk/bin/ps.pl:301
 msgid "Less Cash in Till At Start: %1"
-msgstr ""
+msgstr "Tunai kurang di Till pada mula:%1"
 
 #: addons/1.4/pos/trunk/bin/ps.pl:304
 msgid "Cumulative Error: %1"
-msgstr ""
+msgstr "Ralat terkumpul:%1"
 
 #: addons/1.4/pos/trunk/bin/ps.pl:306
 msgid "Reset Till By %1"
-msgstr ""
+msgstr "Reset Till oleh%1"
 
 #: addons/1.4/pos/trunk/bin/ps.pl:316
 msgid "You are over by %1"
@@ -2730,67 +2612,64 @@ msgstr ""
 
 #: addons/1.4/pos/trunk/bin/ps.pl:323
 msgid "Congratulations!  Your till is exactly balanced."
-msgstr ""
+msgstr "Tahniah! Till anda seimbang."
 
 #: addons/1.4/pos/trunk/bin/pos.pl:105
 msgid "Add POS Invoice"
-msgstr "Новыая фактура ККМ"
+msgstr "Tambah POS Invois"
 
 #: addons/1.4/pos/trunk/bin/pos.pl:164
 msgid "Edit POS Invoice"
-msgstr "Редактировать ККМ-фактуру"
+msgstr "Edit POS Invois"
 
 #: addons/1.4/pos/trunk/bin/pos.pl:342
-#, fuzzy
 msgid "Check ID"
-msgstr "Проверить"
+msgstr "Semak ID" 
 
 #: addons/1.4/pos/trunk/bin/pos.pl:461
 msgid "Credit Card Track"
-msgstr ""
+msgstr "Track Kad Kredit"
 
 #: addons/1.4/pos/trunk/bin/pos.pl:563
 msgid "Change"
-msgstr "Изменить"
+msgstr "Tukar"
 
 #: addons/1.4/pos/trunk/bin/pos.pl:618
-#, fuzzy
 msgid "Open Till"
-msgstr "Открыть"
+msgstr "Buka Till"
 
 #: addons/1.4/pos/trunk/bin/pos.pl:622
 #: addons/1.3/extended_arap/trunk/UI/aa.html:603
 msgid "Print and Post"
-msgstr "Напечатать и отправить"
+msgstr "Cetak dan Simpan"
 
 #: addons/1.4/pos/trunk/bin/pos.pl:725
 msgid "Posted!"
-msgstr "Сохранено!"
+msgstr "Sudah Disimpan"
 
 #: addons/1.4/pos/trunk/bin/pos.pl:1125 tools/dbstrings:23 tools/dbstrings:134
 #: tools/dbstrings:32 tools/dbstrings:116
 msgid "Receipts"
-msgstr "Получения"
+msgstr "Resit"
 
 #: addons/1.4/pos/trunk/pos.conf.pl:39
 msgid "Visa/MC"
 msgstr ""
 
 #: addons/1.4/pos/trunk/pos.conf.pl:40
-#, fuzzy
 msgid "Discover"
-msgstr "Скидка"
+msgstr "Cari"
 
 #: addons/1.4/pos/trunk/pos.conf.pl:41
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:63
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:391 tools/dbstrings:115
 #: tools/dbstrings:203
 msgid "Check"
-msgstr "Проверить"
+msgstr "Semak"
 
 #: addons/1.4/pos/trunk/pos.conf.pl:42 tools/dbstrings:114 tools/dbstrings:78
 msgid "Cash"
-msgstr "Касса"
+msgstr "Tunai"
 
 #: addons/1.4/pos/trunk/pos.conf.pl:43
 msgid "Gift Cert"
@@ -2799,81 +2678,74 @@ msgstr ""
 #: addons/1.3/templatetrans/trunk/scripts/transtemplate.pl:139
 #: addons/1.3/templatetrans/tags/1.0/scripts/transtemplate.pl:139
 #: LedgerSMB/Scripts/transtemplate.pm:139
-#, fuzzy
 msgid "Memorized Transaction List"
-msgstr "Повторяющиеся проводки"
+msgstr "Senarai Transaksi dihafal"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:120
 #: LedgerSMB/Scripts/contact.pm:120
 msgid "Company"
-msgstr "Организация"
+msgstr "Syarikat"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:121
 #: LedgerSMB/Scripts/contact.pm:121
 msgid "Person"
-msgstr ""
+msgstr "Orang"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:122
 #: LedgerSMB/Scripts/contact.pm:122
-#, fuzzy
 msgid "Credit Accounts"
-msgstr "Редактировать счет"
+msgstr "Akaun Kredit"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:123
 #: LedgerSMB/Scripts/contact.pm:123 LedgerSMB/Scripts/employee.pm:108
-#, fuzzy
 msgid "Addresses"
-msgstr "Адрес"
+msgstr "Alamat"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:124
 #: LedgerSMB/Scripts/contact.pm:124 LedgerSMB/Scripts/employee.pm:109
-#, fuzzy
 msgid "Contact Info"
-msgstr "Контактное лицо"
+msgstr "Maklumat Hubungi"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:125
 #: LedgerSMB/Scripts/contact.pm:125 LedgerSMB/Scripts/employee.pm:110
-#, fuzzy
 msgid "Bank Accounts"
-msgstr "Ссылки счетов"
+msgstr "Akaun Bank"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:127
 #: LedgerSMB/Scripts/contact.pm:127 LedgerSMB/Scripts/employee.pm:112
 msgid "Files"
-msgstr ""
+msgstr "Fail"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:228
 #: LedgerSMB/Scripts/contact.pm:231 LedgerSMB/Scripts/employee.pm:186
 msgid "Entity"
-msgstr ""
+msgstr "Entiti"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:230
 #: LedgerSMB/Scripts/contact.pm:233
-#, fuzzy
 msgid "Credit Account"
-msgstr "Редактировать счет"
+msgstr "Akaun Kredit"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:338
 #: LedgerSMB/Scripts/contact.pm:342
 msgid "Unsupported account type"
-msgstr ""
+msgstr "Jenis akaun yang tidak disokong"
 
 #: addons/1.3/crm-basic/trunk/scripts/contact.pl:485
 #: LedgerSMB/Scripts/contact.pm:490
-#, fuzzy
 msgid "No AR or AP Account Selected"
-msgstr "Счет удален"
+msgstr "Tiada Akaun AR atau AP Terpilih"
 
 #: addons/1.3/audit/trunk/scripts/audit.pl:47
 msgid "Vendor audit information not found."
-msgstr ""
+msgstr "Maklumat audit Pembekal tidak dijumpai."
 
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:59
 #: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:388
 #: LedgerSMB/Scripts/payment.pm:995 tools/dbstrings:19 tools/dbstrings:116
 #: tools/dbstrings:28 tools/dbstrings:204
 msgid "Receipt"
-msgstr "Получение"
+msgstr "Resit"
 
 #: addons/1.3/b_units/trunk/scripts/business_unit.pl:135
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:375
@@ -2886,9 +2758,9 @@ msgstr "Получение"
 #: LedgerSMB/Report/co/Caja_Diaria.pm:121
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:125
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:75
-#: LedgerSMB/Report/Budget/Variance.pm:112 LedgerSMB/Report/Budget/Search.pm:68
-#: LedgerSMB/Report/Budget/Search.pm:118 LedgerSMB/Report/GL.pm:200
-#: LedgerSMB/Report/Contact/History.pm:128
+#: LedgerSMB/Report/Budget/Variance.pm:112
+#: LedgerSMB/Report/Budget/Search.pm:68 LedgerSMB/Report/Budget/Search.pm:118
+#: LedgerSMB/Report/GL.pm:200 LedgerSMB/Report/Contact/History.pm:128
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:54
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:121
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:125
@@ -2902,9 +2774,8 @@ msgstr "Получение"
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:129
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:41
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:158
-#, fuzzy
 msgid "Start Date"
-msgstr "Начальная дата"
+msgstr "Tarikh Permulaan"
 
 #: addons/1.3/b_units/trunk/scripts/business_unit.pl:136
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:376
@@ -2917,9 +2788,9 @@ msgstr "Начальная дата"
 #: LedgerSMB/Report/co/Caja_Diaria.pm:123
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:127
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:77
-#: LedgerSMB/Report/Budget/Variance.pm:114 LedgerSMB/Report/Budget/Search.pm:73
-#: LedgerSMB/Report/Budget/Search.pm:120 LedgerSMB/Report/GL.pm:202
-#: LedgerSMB/Report/Contact/History.pm:131
+#: LedgerSMB/Report/Budget/Variance.pm:114
+#: LedgerSMB/Report/Budget/Search.pm:73 LedgerSMB/Report/Budget/Search.pm:120
+#: LedgerSMB/Report/GL.pm:202 LedgerSMB/Report/Contact/History.pm:131
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:57
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:123
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:127
@@ -2933,39 +2804,36 @@ msgstr "Начальная дата"
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:131
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:42
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:159
-#, fuzzy
 msgid "End Date"
-msgstr "Дата заказа клиента"
+msgstr "Tarikh Akhir"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:42
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:42
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:42
 #: LedgerSMB/Report/Budget/Variance.pm:74
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:74
-#, fuzzy
 msgid "Account Label"
-msgstr "Код счета"
+msgstr "Label Akaun"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:43
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:43
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:43
 #: LedgerSMB/Report/Budget/Variance.pm:78
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:78
-#, fuzzy
 msgid "Amount Budgetted"
-msgstr "Сумма к получению"
+msgstr "Jumlah yang Dibajetkan"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:44
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:44
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:44
 msgid "- Used"
-msgstr ""
+msgstr "- Digunakan"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:45
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:45
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:45
 msgid "= Variance"
-msgstr ""
+msgstr "= Varian"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:147
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:147
@@ -2975,28 +2843,26 @@ msgstr ""
 #: LedgerSMB/Scripts/asset.pm:902 LedgerSMB/Report/Unapproved/Drafts.pm:199
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:199
 msgid "Approve"
-msgstr ""
+msgstr "Diluluskan"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:153
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:153
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:153
 #: LedgerSMB/Scripts/budgets.pm:113
-#, fuzzy
 msgid "Reject"
-msgstr "Проект"
+msgstr "Ditolak"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:259
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:259
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:259 LedgerSMB/Budget.pm:243
 msgid "Cannot specify both debits and credits for budget line %1"
-msgstr ""
+msgstr "Debit dan kredit untuk bajet baris %1 tidak dapat dinyatakan"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:379
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:379
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:379
-#, fuzzy
 msgid "Entered by"
-msgstr "Запрошен"
+msgstr "Dimasukkan oleh"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:380
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:380
@@ -3005,53 +2871,51 @@ msgstr "Запрошен"
 #: LedgerSMB/Report/Budget/Search.pm:91
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:91
 msgid "Approved By"
-msgstr ""
+msgstr "Diluluskan Oleh"
 
 #: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:381
 #: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:381
 #: addons/1.3/budgetting/trunk/scripts/budgets.pl:381
 #: LedgerSMB/Report/Budget/Search.pm:95
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:95
-#, fuzzy
 msgid "Obsolete By"
-msgstr "Устаревший"
+msgstr "Dilupuskan Oleh"
 
 #: t/data/04-complex_template.html:16 UI/Contact/contact.html:33
 #: addons/1.3/crm-basic/trunk/UI/crm/contact.html:33
 msgid "Add Customer"
-msgstr "Новый клиент"
+msgstr "Tambah Pelanggan"
 
 #: t/data/04-complex_template.html:17 UI/Contact/contact.html:34
 #: addons/1.3/crm-basic/trunk/UI/crm/contact.html:34
 msgid "Edit Customer"
-msgstr "Редактировать Клиента"
+msgstr "Ubahsuai Pelanggan"
 
 #: t/data/04-complex_template.html:18 UI/Contact/contact.html:35
 #: addons/1.3/crm-basic/trunk/UI/crm/contact.html:35
 msgid "Add Vendor"
-msgstr "Новый поставщик"
+msgstr "Tambah Pembekal"
 
 #: t/data/04-complex_template.html:19 UI/Contact/contact.html:36
 #: addons/1.3/crm-basic/trunk/UI/crm/contact.html:36
 msgid "Edit Vendor"
-msgstr "Редактировать поставщика"
+msgstr "Ubahsuai Pembekal"
 
 #: t/data/04-complex_template.html:20 UI/Contact/contact.html:37
 #: addons/1.3/crm-basic/trunk/UI/crm/contact.html:37 tools/dbstrings:27
 #: tools/dbstrings:36
 msgid "Add Employee"
-msgstr "Новый сотрудник"
+msgstr "Tambah Pekerja"
 
 #: t/data/04-complex_template.html:21 UI/Contact/contact.html:38
 #: addons/1.3/crm-basic/trunk/UI/crm/contact.html:38
 msgid "Edit Employee"
-msgstr "Редактировать сотрудника"
+msgstr "Ubahsuai Pekerja"
 
 #: t/data/04-complex_template.html:43 UI/Contact/divs/employee.html:2
 #: addons/1.3/crm-basic/trunk/UI/crm/divs/employee.html:2
-#, fuzzy
 msgid "$operation Employee"
-msgstr "Редактировать сотрудника"
+msgstr "$operasi Pekerja"
 
 #: t/data/04-complex_template.html:144 UI/Contact/divs/person.html:6
 #: UI/Contact/divs/company.html:6
@@ -3059,165 +2923,152 @@ msgstr "Редактировать сотрудника"
 #: addons/1.3/crm-basic/trunk/UI/crm/divs/company.html:6
 #: addons/1.3/colombia_general/trunk/UI/Contact/divs/colombia_company.html:6
 msgid "$operation $entity_classname"
-msgstr ""
+msgstr "$operasi $entiti_namakelas"
 
 #: t/data/04-complex_template.html:167
 msgid "$entity_classname Number:"
-msgstr ""
+msgstr "$entiti_namakelas Nombor"
 
 #: templates/demo_with_images/balance_sheet.html:128
 #: templates/xedemo/balance_sheet.html:128
 #: templates/demo/balance_sheet.html:128
 #: templates/with_images/balance_sheet.html:128
 msgid "Shareholder's Equity"
-msgstr ""
+msgstr "Ekuiti Pemegang Saham"
 
 #: UI/payments/use_overpayment2.html:278
 msgid "UPDATE"
-msgstr ""
+msgstr "KEMASKINI"
 
 #: UI/payments/use_overpayment2.html:284
 msgid "POST"
-msgstr ""
+msgstr "SIMPAN"
 
 #: UI/payments/use_overpayment2.html:290 UI/payments/payment2.html:336
 msgid "POST AND PRINT"
-msgstr ""
+msgstr "SIMPAN dan Cetak"
 
 #: UI/payments/payments_filter.html:18
 msgid "Filtering $t"
-msgstr ""
+msgstr "Ditapis $t"
 
 #: UI/payments/payments_detail.html:362
 msgid "Locked by %1"
-msgstr ""
+msgstr "tidak dibenarkan oleh %1"
 
 #: UI/file/attachment_screen.html:39
 msgid "File"
-msgstr ""
+msgstr "Fail"
 
 #: UI/create_batch.html:15
-#, fuzzy
 msgid "Batch Number"
-msgstr "Part Number"
+msgstr "Nombor Kumpulan"
 
 #: UI/create_batch.html:30
-#, fuzzy
 msgid "Batch Date"
-msgstr "Следующая дата"
+msgstr "Tarikh Kumpulan"
 
 #: UI/taxform/add_taxform.html:47 UI/business_units/edit.html:61
 #: UI/business_units/filter.html:26 UI/asset/edit_asset.html:61
 #: UI/asset/search_asset.html:55
-#, fuzzy
 msgid "Description:"
-msgstr "Описание"
+msgstr "Huraian"
 
 #: UI/taxform/add_taxform.html:62
-#, fuzzy
 msgid "Select by Default:"
-msgstr "Выбрать все"
+msgstr "Pilih Tetapan utama"
 
 #: UI/taxform/add_taxform.html:77
-#, fuzzy
 msgid "Accrual Basis:"
-msgstr "Накопление"
+msgstr ""
 
 #: UI/menu/expanding.html:45
 msgid "Logged into %1"
-msgstr ""
+msgstr "Daftar masuk 1%"
 
 #: UI/business_units/filter.html:35
-#, fuzzy
 msgid "Active On"
-msgstr "Активный"
+msgstr "Aktif pada"
 
 #: UI/business_units/filter.html:45 UI/asset/search_class.html:65
 #: UI/asset/search_asset.html:185 tools/dbstrings:4 tools/dbstrings:15
-#: tools/dbstrings:18 tools/dbstrings:28 tools/dbstrings:58 tools/dbstrings:142
-#: tools/dbstrings:192 tools/dbstrings:6 tools/dbstrings:14 tools/dbstrings:27
-#: tools/dbstrings:37 tools/dbstrings:80 tools/dbstrings:100
-#: tools/dbstrings:148
+#: tools/dbstrings:18 tools/dbstrings:28 tools/dbstrings:58
+#: tools/dbstrings:142 tools/dbstrings:192 tools/dbstrings:6
+#: tools/dbstrings:14 tools/dbstrings:27 tools/dbstrings:37 tools/dbstrings:80
+#: tools/dbstrings:100 tools/dbstrings:148
 msgid "Search"
-msgstr "Поиск"
+msgstr "Cari"
 
 #: UI/asset/edit_asset.html:56 UI/asset/search_asset.html:50
 msgid "Asset Class:"
-msgstr ""
+msgstr "Mengelasan Aset"
 
 #: UI/asset/edit_asset.html:71 UI/asset/search_asset.html:65
-#, fuzzy
 msgid "Purchase Date:"
-msgstr "Заказ поставщику"
+msgstr "Tarikh Pembelian"
 
 #: UI/asset/edit_asset.html:81 UI/asset/search_asset.html:75
-#, fuzzy
 msgid "Purchase Value:"
-msgstr "Заказ поставщику"
+msgstr "Nilai Pembelian"
 
 #: UI/asset/edit_asset.html:93 UI/asset/search_asset.html:87
 #: LedgerSMB/Scripts/asset.pm:317
 msgid "Usable Life"
-msgstr ""
+msgstr "Kehidupan yang Boleh Digunakan"
 
 #: UI/asset/edit_asset.html:105 UI/asset/search_asset.html:96
 msgid "Salvage Value:"
-msgstr ""
+msgstr "Nilai Penyelamat"
 
 #: UI/asset/edit_asset.html:117 UI/asset/search_asset.html:108
 msgid "Depreciation Starts"
-msgstr ""
+msgstr "Permulaan Susut Nilai"
 
 #: UI/asset/import_asset.html:43
 msgid "Depreciate Through"
-msgstr ""
+msgstr "Melalui Penyusutan"
 
 #: UI/import_csv/import_csv.html:42
 #: addons/1.3/import_trans/trunk/UI/import_trans/import_trans.html:42
 #: LedgerSMB/Report/PNL/Invoice.pm:89
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:89
-#, fuzzy
 msgid "Transaction Date"
-msgstr "Дата проводки"
+msgstr "Tarikh Transaksi"
 
 #: UI/login.html:30
 msgid "LedgerSMB %1"
-msgstr ""
+msgstr "LedgerSMB 1%"
 
 #: UI/Contact/divs/credit.html:61
 #: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:61
 msgid "$entity_classname Number"
-msgstr ""
+msgstr "Jumlah entity_namakelas"
 
 #: UI/Contact/divs/notes.html:40
 #: addons/1.3/crm-basic/trunk/UI/crm/divs/notes.html:40
-#, fuzzy
 msgid "Note Class"
-msgstr "Комментарии"
+msgstr "Kelas Nota"
 
 #: UI/Contact/divs/notes.html:64
 #: addons/1.3/crm-basic/trunk/UI/crm/divs/notes.html:64
 msgid "Author: %1"
-msgstr ""
+msgstr "Penulis: 1%"
 
 #: addons/1.3/company_person/trunk/UI/Contact/divs/person.html:2
 msgid "$operation Person"
-msgstr ""
+msgstr "$operasi perseorangan"
 
 #: addons/1.3/extended_arap/trunk/UI/aa.html:165
-#, fuzzy
 msgid "Tax Included?"
-msgstr "Налоги включены в сумму"
+msgstr "Cukai Dimasukkan?"
 
 #: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:27
-#, fuzzy
 msgid "Actions"
-msgstr "Удержания"
+msgstr "Tindakan"
 
 #: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:20
-#, fuzzy
 msgid "Start Balance"
-msgstr "Балансовая ведомость"
+msgstr "Permulaan Baki"
 
 #: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:24
 #: LedgerSMB/Scripts/payment.pm:152 LedgerSMB/Report/Trial_Balance.pm:145
@@ -3225,9 +3076,8 @@ msgstr "Балансовая ведомость"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:145
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:102
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:108
-#, fuzzy
 msgid "Debits"
-msgstr "Дебет"
+msgstr "Debit"
 
 #: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:27
 #: LedgerSMB/Scripts/payment.pm:153 LedgerSMB/Report/Trial_Balance.pm:149
@@ -3235,46 +3085,42 @@ msgstr "Дебет"
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:149
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:107
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:113
-#, fuzzy
 msgid "Credits"
-msgstr "Кредит"
+msgstr "Kredit"
 
 #: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:30
-#, fuzzy
 msgid "End Balance"
-msgstr "Баланс"
+msgstr "Baki Terakhir"
 
 #: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:109
-#, fuzzy
 msgid "Save as"
-msgstr "Сохранить как новый"
+msgstr "Disimpan sebagai"
 
 #: LedgerSMB.pm:494
 msgid "Field \\\"Name\\\" Not Defined"
-msgstr ""
+msgstr "Bidang\\\"Nama\\\" Tidak Ditentukan"
 
 #: LedgerSMB.pm:968 LedgerSMB/SODA.pm:614
 #: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:614
 msgid "Internal Database Error"
-msgstr ""
+msgstr "Kesalahan Dalaman Pangkalan Data"
 
 #: LedgerSMB.pm:969 LedgerSMB.pm:970 LedgerSMB/Scripts/configuration.pm:202
 #: LedgerSMB/Scripts/setup.pm:589 LedgerSMB/SODA.pm:615 LedgerSMB/SODA.pm:617
 #: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:615
 #: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:617
-#, fuzzy
 msgid "Access Denied"
-msgstr "Доступ запрещен"
+msgstr "Akses Dinafikan"
 
 #: LedgerSMB.pm:971 LedgerSMB/SODA.pm:618
 #: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:618
 msgid "Invalid date/time entered"
-msgstr ""
+msgstr "Tarikh/Masa tidak sah dimasukkan"
 
 #: LedgerSMB.pm:972 LedgerSMB/SODA.pm:619
 #: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:619
 msgid "Division by 0 error"
-msgstr ""
+msgstr "Kesalahan bahagian 0"
 
 #: LedgerSMB.pm:973 LedgerSMB.pm:974 LedgerSMB/SODA.pm:620
 #: LedgerSMB/SODA.pm:621
@@ -3289,7 +3135,7 @@ msgstr ""
 
 #: LedgerSMB.pm:976
 msgid "Error from Function:"
-msgstr ""
+msgstr "Kesalahan daripada fungsi"
 
 #: LedgerSMB.pm:984
 msgid "More information has been reported in the error logs"
@@ -3297,358 +3143,325 @@ msgstr ""
 
 #: LedgerSMB/Scripts/recon.pm:131
 msgid "Data not saved.  Please update again."
-msgstr ""
+msgstr "Data tidak disimpan. Tolong update semula."
 
 #: LedgerSMB/Scripts/recon.pm:207
-#, fuzzy
 msgid "Clear date"
-msgstr "Очищено"
+msgstr "Tarikh dipadam"
 
 #: LedgerSMB/Scripts/recon.pm:209
-#, fuzzy
 msgid "Post Date"
-msgstr "Сохранить как новый"
+msgstr "Tarikh disimpan"
 
 #: LedgerSMB/Scripts/recon.pm:210
-#, fuzzy
 msgid "Our Balance"
-msgstr "Баланс"
+msgstr "Baki kita"
 
 #: LedgerSMB/Scripts/recon.pm:211
-#, fuzzy
 msgid "Their Balance"
-msgstr "Предварительный баланс"
+msgstr "Baki mereka"
 
 #: LedgerSMB/Scripts/recon.pm:319
 msgid "Invalid statement balance.  Hint: Try entering a number"
-msgstr ""
+msgstr "Baki kenyataan tidak sah. Petunjuk: Sila masukkan nombor"
 
 #: LedgerSMB/Scripts/configuration.pm:19
 msgid "Company Information"
-msgstr ""
+msgstr "Maklumat syarikat"
 
 #: LedgerSMB/Scripts/configuration.pm:25
 msgid "Business Number"
-msgstr "Бизнес-код"
+msgstr "Nombor Bisnes"
 
 #: LedgerSMB/Scripts/configuration.pm:39
 msgid "Currencies (colon-separated)"
-msgstr ""
+msgstr "Mata wang (kolon-berasingan)"
 
 #: LedgerSMB/Scripts/configuration.pm:40
 msgid "Weight Unit"
-msgstr "Единица веса"
+msgstr "Berat Unit"
 
 #: LedgerSMB/Scripts/configuration.pm:42
-#, fuzzy
 msgid "Default Country"
-msgstr "Страна"
+msgstr "Negara"
 
 #: LedgerSMB/Scripts/configuration.pm:45
-#, fuzzy
 msgid "Default Language"
-msgstr "Редактировать Язык"
+msgstr "Bahasa"
 
 #: LedgerSMB/Scripts/configuration.pm:49
-#, fuzzy
 msgid "Template Set"
-msgstr "Шаблоны"
+msgstr "Set Template"
 
 #: LedgerSMB/Scripts/configuration.pm:51
 msgid "Security Settings"
-msgstr ""
+msgstr "Tetapan Keselamatan"
 
 #: LedgerSMB/Scripts/configuration.pm:56
 msgid "Session Timeout"
-msgstr "Время задержки сессии"
+msgstr "Sesi Masa berakhir"
 
 #: LedgerSMB/Scripts/configuration.pm:58
 msgid "Automatically Logout"
-msgstr ""
+msgstr "Secara Automatik Log Keluar"
 
 #: LedgerSMB/Scripts/configuration.pm:61
-#, fuzzy
 msgid "Separate Duties"
-msgstr "Отделы"
+msgstr "Tugas Berasingan"
 
 #: LedgerSMB/Scripts/configuration.pm:64
-#, fuzzy
 msgid "Default Accounts"
-msgstr "Удалмть счет"
+msgstr "Akaun Tetapan Utama"
 
 #: LedgerSMB/Scripts/configuration.pm:74
 msgid "Cost of Goods Sold"
-msgstr ""
+msgstr "Kos Barangan Yang Dijual"
 
 #: LedgerSMB/Scripts/configuration.pm:77
 msgid "Foreign Exchange Gain"
-msgstr "Курсовая прибыль"
+msgstr "Keuntungan Pertukaran Asing"
 
 #: LedgerSMB/Scripts/configuration.pm:80
 msgid "Foreign Exchange Loss"
-msgstr "Курсовые потери"
+msgstr "Kerugian Pertukaran Asing"
 
 #: LedgerSMB/Scripts/configuration.pm:82
 msgid "Next in Sequence"
-msgstr ""
+msgstr "Seterusnya Dalam Urutan"
 
 #: LedgerSMB/Scripts/configuration.pm:99
 msgid "Misc Settings"
-msgstr ""
+msgstr "Tetapan Misc"
 
 #: LedgerSMB/Scripts/configuration.pm:103
 msgid "Max Invoices per Check Stub"
-msgstr ""
+msgstr "Max Invois Setiap Cek Resit "
 
 #: LedgerSMB/Scripts/configuration.pm:105
-#, fuzzy
 msgid "Decimal Places for Money"
-msgstr "десятичная точка"
+msgstr "Angka perpuluhan untuk mata wang"
 
 #: LedgerSMB/Scripts/configuration.pm:107
-#, fuzzy
 msgid "Images in Templates"
-msgstr "Шаблоны LaTeX"
+msgstr "Imej untuk templat"
 
 #: LedgerSMB/Scripts/configuration.pm:227
 msgid "Error while opening directory: %1"
-msgstr ""
+msgstr "Kesalahan ketika membuka panduan:%1"
 
 #: LedgerSMB/Scripts/payment.pm:146
 msgid "Pay To"
-msgstr ""
+msgstr "Bayar Kepada"
 
 #: LedgerSMB/Scripts/payment.pm:148
-#, fuzzy
 msgid "Account Title"
-msgstr "Тип счета"
+msgstr "Nama Akaun"
 
 #: LedgerSMB/Scripts/payment.pm:221
-#, fuzzy
 msgid "Save Batch"
-msgstr "Сохранить расписание"
+msgstr "Simpan sejumlah"
 
 #: LedgerSMB/Scripts/payment.pm:766
 msgid "Discount"
-msgstr "Скидка"
+msgstr "Diskaun"
 
 #: LedgerSMB/Scripts/payment.pm:767
 msgid "Apply Disc"
-msgstr ""
+msgstr "Permohonan cakera"
 
 #: LedgerSMB/Scripts/payment.pm:817
 msgid "To pay"
-msgstr ""
+msgstr "Untuk bayar"
 
 #: LedgerSMB/Scripts/payment.pm:995 tools/dbstrings:20 tools/dbstrings:29
 msgid "Payment"
-msgstr "Оплата"
+msgstr "Pembayaran"
 
 #: LedgerSMB/Scripts/payment.pm:1075
-#, fuzzy
 msgid "Exchange rate hasn't been defined"
-msgstr "Пропущен курс!"
+msgstr "Pertukaran kadar tidak diisi"
 
 #: LedgerSMB/Scripts/payment.pm:1089
 msgid "This gl movement, is a consecuence of a payment transaction"
-msgstr ""
+msgstr "Pertukaran gl ini ialah disebabkan oleh pembayaran transit"
 
 #: LedgerSMB/Scripts/payment.pm:1149
-#, fuzzy
 msgid "Applied discount"
-msgstr "Торговая скидка"
+msgstr "Diskaun dipohon"
 
 #: LedgerSMB/Scripts/payment.pm:1186
 msgid "No overpayment account selected.  Was one set up?"
-msgstr ""
+msgstr "Tiada akaun lebihan pembayaran dipilih. Adakah anda telah membuka akaun tersebut?"
 
 #: LedgerSMB/Scripts/payment.pm:1464 LedgerSMB/Scripts/payment.pm:1470
-#, fuzzy
 msgid "The amount of the invoice number"
-msgstr "Вы уверены, что хотите удалить данную фактуру?"
+msgstr "Jumlah nombor invois "
 
 #: LedgerSMB/Scripts/payment.pm:1464
 msgid "is lesser than the amount to be paid"
-msgstr ""
+msgstr "kurang daripada jumlah perlu dibayar"
 
 #: LedgerSMB/Scripts/payment.pm:1470
 msgid "is lesser than 0"
-msgstr ""
+msgstr "kurang daripada 0"
 
 #: LedgerSMB/Scripts/payment.pm:1591
 msgid "Use overpayment/prepayment"
-msgstr ""
+msgstr "Guna lebihan pembayaran/prabayaran"
 
 #: LedgerSMB/Scripts/payment.pm:1684
 msgid "The amount to be pay of the invoice number"
-msgstr ""
+msgstr "Jumlah yang perlu dibayar untuk nombor invois"
 
 #: LedgerSMB/Scripts/payment.pm:1684
 msgid "is null"
-msgstr ""
+msgstr "kosong"
 
 #: LedgerSMB/Scripts/payment.pm:1701 LedgerSMB/Scripts/payment.pm:1778
 msgid "Applied discount by an overpayment"
-msgstr ""
+msgstr "Dikaun dipohon daripada lebihan bayaran"
 
 #: LedgerSMB/Scripts/payment.pm:1716
 msgid "The amount to be pay from the accno"
-msgstr ""
+msgstr "Jumlah yang perlu dibayar daripada accno"
 
 #: LedgerSMB/Scripts/payment.pm:1716
 msgid "is bigger than the amount available"
-msgstr ""
+msgstr "lebih besar daripada jumlah yang tersedia"
 
 #: LedgerSMB/Scripts/payment.pm:1724 LedgerSMB/Scripts/payment.pm:1741
 #: LedgerSMB/Scripts/payment.pm:1795 LedgerSMB/Scripts/payment.pm:1812
 msgid "use of an overpayment"
-msgstr ""
+msgstr "guna lebihan bayaran"
 
 #: LedgerSMB/Scripts/payment.pm:1768
 msgid "This gl movement, is the result of a overpayment transaction"
-msgstr ""
+msgstr "Pergerakan gl ialah hasil daripada transit lebihan bayaran"
 
 #: LedgerSMB/Scripts/admin.pm:148
-#, fuzzy
 msgid "delete"
-msgstr "Удалить"
+msgstr "padam"
 
 #: LedgerSMB/Scripts/admin.pm:153
 msgid "Active Sessions"
-msgstr ""
+msgstr "Sesi Aktif"
 
 #: LedgerSMB/Scripts/import_csv.pm:312
-#, fuzzy
 msgid "Invalid file"
-msgstr "Действительно до"
+msgstr "Fail yang tidah sah"
 
 #: LedgerSMB/Scripts/asset.pm:74
 msgid "Depreciation Successful"
-msgstr ""
+msgstr "susut nilai berjaya"
 
 #: LedgerSMB/Scripts/asset.pm:98
-#, fuzzy
 msgid "Edit Asset Class"
-msgstr "Редактировать комплект"
+msgstr "Mengedit Kelas Aset"
 
 #: LedgerSMB/Scripts/asset.pm:100
-#, fuzzy
 msgid "Add Asset Class"
-msgstr "Новый комплект"
+msgstr "Tambah Kelas Aset"
 
 #: LedgerSMB/Scripts/asset.pm:167
-#, fuzzy
 msgid "Asset Account"
-msgstr "Список счетов"
+msgstr "Akaun Aset"
 
 #: LedgerSMB/Scripts/asset.pm:168
-#, fuzzy
 msgid "Depreciation Account"
-msgstr "Удалмть счет"
+msgstr "Akaun Susut Nilai"
 
 #: LedgerSMB/Scripts/asset.pm:169
 msgid "Depreciation Method"
-msgstr ""
+msgstr "Kaedah Susut Nilai"
 
 #: LedgerSMB/Scripts/asset.pm:253
-#, fuzzy
 msgid "Add Asset"
-msgstr "Новый комплект"
+msgstr "Tambah Aset"
 
 #: LedgerSMB/Scripts/asset.pm:312 LedgerSMB/Scripts/asset.pm:734
 #: LedgerSMB/Scripts/asset.pm:798 LedgerSMB/Scripts/asset.pm:869
 #: LedgerSMB/Scripts/asset.pm:1005
-#, fuzzy
 msgid "Tag"
-msgstr "Налог"
+msgstr "Tanda"
 
 #: LedgerSMB/Scripts/asset.pm:314 LedgerSMB/Scripts/asset.pm:497
-#, fuzzy
 msgid "Purchase Date"
-msgstr "Заказ поставщику"
+msgstr "Tarikh Pembelian"
 
 #: LedgerSMB/Scripts/asset.pm:315 LedgerSMB/Scripts/asset.pm:498
-#, fuzzy
 msgid "Purchase Value"
-msgstr "Заказ поставщику"
+msgstr "Nilai Pembtanelian"
 
 #: LedgerSMB/Scripts/asset.pm:316
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:219
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:327
 msgid "Class"
-msgstr ""
+msgstr "Kelas"
 
 #: LedgerSMB/Scripts/asset.pm:318
-#, fuzzy
 msgid "Location"
-msgstr "Резервирование"
+msgstr "Lokasi"
 
 #: LedgerSMB/Scripts/asset.pm:495
-#, fuzzy
 msgid "Asset Tag"
-msgstr "Актив"
+msgstr "Tanda Aset"
 
 #: LedgerSMB/Scripts/asset.pm:499 LedgerSMB/Scripts/asset.pm:876
 msgid "Proceeds"
-msgstr ""
+msgstr "Teruskan"
 
 #: LedgerSMB/Scripts/asset.pm:500
 msgid "Disposal Method"
-msgstr ""
+msgstr "Cara Pembuangan"
 
 #: LedgerSMB/Scripts/asset.pm:501
 msgid "Percent"
-msgstr ""
+msgstr "Peratus"
 
 #: LedgerSMB/Scripts/asset.pm:555
-#, fuzzy
 msgid "Asset Depreciation Report"
-msgstr "Отчет о согласованности"
+msgstr "Laporan Aset Susut Nilai"
 
 #: LedgerSMB/Scripts/asset.pm:557
 msgid "Asset Disposal Report"
-msgstr ""
+msgstr "Laporan Aset Pembuangan"
 
 #: LedgerSMB/Scripts/asset.pm:562
 msgid "Asset Partial Disposal Report"
-msgstr ""
+msgstr "Laporan Aset "
 
 #: LedgerSMB/Scripts/asset.pm:599
-#, fuzzy
 msgid "Search reports"
-msgstr "Поиск"
+msgstr "Pemeriksaan Laporan"
 
 #: LedgerSMB/Scripts/asset.pm:625
-#, fuzzy
 msgid "Report Results"
-msgstr "Отчеты"
+msgstr "Hasil Laporan"
 
 #: LedgerSMB/Scripts/asset.pm:634 LedgerSMB/DBObject/Asset_Class.pm:67
-#, fuzzy
 msgid "Asset Class"
-msgstr "Актив"
+msgstr "Kelas Aset"
 
 #: LedgerSMB/Scripts/asset.pm:635
 msgid "Entered at"
-msgstr ""
+msgstr "Di Masukkan Di"
 
 #: LedgerSMB/Scripts/asset.pm:636
 msgid "Approved at"
-msgstr ""
+msgstr "Disahkan Di"
 
 #: LedgerSMB/Scripts/asset.pm:676 tools/dbstrings:173 tools/dbstrings:129
-#, fuzzy
 msgid "Depreciation"
-msgstr "Описание"
+msgstr "Susut Nilai"
 
 #: LedgerSMB/Scripts/asset.pm:678 tools/dbstrings:171 tools/dbstrings:174
 #: tools/dbstrings:127 tools/dbstrings:130
 msgid "Disposal"
-msgstr ""
+msgstr "Pembuangan"
 
 #: LedgerSMB/Scripts/asset.pm:731
 msgid "Report %1 on date [_2]"
-msgstr ""
+msgstr "Laporan %1 Pada Tarikh [_2]"
 
 #: LedgerSMB/Scripts/asset.pm:735 LedgerSMB/Scripts/asset.pm:800
 #: LedgerSMB/Scripts/asset.pm:871
@@ -3658,12 +3471,11 @@ msgstr ""
 #: LedgerSMB/Scripts/asset.pm:736 LedgerSMB/Scripts/asset.pm:801
 #: LedgerSMB/Scripts/asset.pm:873
 msgid "Aquired Value"
-msgstr ""
+msgstr "Nilai Diperlukan"
 
 #: LedgerSMB/Scripts/asset.pm:737
-#, fuzzy
 msgid "Dep. Method"
-msgstr "Метод"
+msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:738
 msgid "Est. Life"
@@ -3695,33 +3507,31 @@ msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:795
 msgid "Partial Disposal Report %1 on date [_2]"
-msgstr ""
+msgstr "Laporan Bahagian Pembuangan"
 
 #: LedgerSMB/Scripts/asset.pm:802
-#, fuzzy
 msgid "Percent Disposed"
-msgstr "Оплата проведена!"
+msgstr "Peratusan Pembuangan"
 
 #: LedgerSMB/Scripts/asset.pm:804
 msgid "Disp. Aquired Value"
 msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:805
-#, fuzzy
 msgid "Percent Remaining"
-msgstr "Остаток"
+msgstr "Peratusan Yang Tinggal"
 
 #: LedgerSMB/Scripts/asset.pm:807
 msgid "Aquired Value Remaining"
-msgstr ""
+msgstr "Dapatan Nilai Yang Tinggal"
 
 #: LedgerSMB/Scripts/asset.pm:866
 msgid "Disposal Report %1 on date [_2]"
-msgstr ""
+msgstr "Laporan Pembuangan"
 
 #: LedgerSMB/Scripts/asset.pm:872
 msgid "Disposal Date"
-msgstr ""
+msgstr "Tarikh Pembuangan"
 
 #: LedgerSMB/Scripts/asset.pm:874
 msgid "D M"
@@ -3733,11 +3543,11 @@ msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:877
 msgid "Adjusted Basis"
-msgstr ""
+msgstr "Basis Yang Diubah"
 
 #: LedgerSMB/Scripts/asset.pm:878
 msgid "Gain (Loss)"
-msgstr ""
+msgstr "Dapat (Kerugian)"
 
 #: LedgerSMB/Scripts/asset.pm:1007
 msgid "In Svc."
@@ -3745,7 +3555,7 @@ msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:1008
 msgid "Method"
-msgstr "Метод"
+msgstr "Cara"
 
 #: LedgerSMB/Scripts/asset.pm:1009
 msgid "Rem. Life"
@@ -3773,635 +3583,578 @@ msgstr ""
 
 #: LedgerSMB/Scripts/asset.pm:1153
 msgid "File Imported"
-msgstr ""
+msgstr "Fail Masukkan"
 
 #: LedgerSMB/Scripts/setup.pm:61
 msgid "No database specified"
-msgstr ""
+msgstr "Tiada Pengkalan Data Yang Tepat"
 
 #: LedgerSMB/Scripts/setup.pm:75
 msgid "SQL-Ledger database detected."
-msgstr ""
+msgstr "Pangkalan data Lejar dikesan"
 
 #: LedgerSMB/Scripts/setup.pm:78
 msgid "Would you like to migrate the database?"
-msgstr ""
+msgstr "Adakah anda ingin memindah pangkalan data"
 
 #: LedgerSMB/Scripts/setup.pm:83
 msgid "Unsupported version.  Cancel?"
-msgstr ""
+msgstr "versi tidak disokong"
 
 #: LedgerSMB/Scripts/setup.pm:90
 msgid "LedgerSMB 1.2 db found"
-msgstr ""
+msgstr "lejarSMB 1.2 db dikesan"
 
 #: LedgerSMB/Scripts/setup.pm:92
 msgid "Would you like to upgrade the database?"
-msgstr ""
+msgstr "Adakah anda ingin menaik taraf pangkalan data?"
 
 #: LedgerSMB/Scripts/setup.pm:97
 msgid "Development version found.  Please upgrade first"
-msgstr ""
+msgstr "Versi baru dijumpai. Sila naik taraf dahulu"
 
 #: LedgerSMB/Scripts/setup.pm:99 LedgerSMB/Scripts/setup.pm:105
 #: LedgerSMB/Scripts/setup.pm:129 LedgerSMB/Scripts/setup.pm:141
 msgid "Cancel?"
-msgstr ""
+msgstr "Batal ?"
 
 #: LedgerSMB/Scripts/setup.pm:103
 msgid "Legacy version found.  Please upgrade first"
-msgstr ""
+msgstr "Versi Legacy dijumpai. Sila naik taraf pertama"
 
 #: LedgerSMB/Scripts/setup.pm:110
 msgid "LedgerSMB 1.4 found"
-msgstr ""
+msgstr "LejarSMB 1.4 dijumpai"
 
 #: LedgerSMB/Scripts/setup.pm:113
 msgid "Rebuild/Upgrade?"
-msgstr ""
+msgstr "Menbina semula/menaik taraf"
 
 #: LedgerSMB/Scripts/setup.pm:118
 msgid "LedgerSMB 1.3 found"
-msgstr ""
+msgstr "LejarSMB 1.3 dijumpai"
 
 #: LedgerSMB/Scripts/setup.pm:121
 msgid "Upgrade?"
-msgstr ""
+msgstr "Menaiktaraf?"
 
 #: LedgerSMB/Scripts/setup.pm:127
 msgid "Unknown version found."
-msgstr ""
+msgstr "Versi tidak dikenali dijumpai"
 
 #: LedgerSMB/Scripts/setup.pm:134
-#, fuzzy
 msgid "Database does not exist."
-msgstr "не существует!"
+msgstr "Pengkalan data tidak wujud"
 
 #: LedgerSMB/Scripts/setup.pm:135
-#, fuzzy
 msgid "Create Database?"
-msgstr "Создать базу данных"
+msgstr "Bina pankalan data?"
 
 #: LedgerSMB/Scripts/setup.pm:139
 msgid "Unknown database found."
-msgstr ""
+msgstr "Pangkalan data tidak dikenali dijumpai"
 
 #: LedgerSMB/Scripts/setup.pm:217
 msgid "Invalid backup request"
-msgstr ""
+msgstr "Permintaan backup tidak sah"
 
 #: LedgerSMB/Scripts/setup.pm:220
 msgid "Error creating backup file"
-msgstr ""
+msgstr "Kesalahan membina backup data"
 
 #: LedgerSMB/Scripts/setup.pm:260
 msgid "Don't know what to do with backup"
-msgstr ""
+msgstr "Tidak mengetahui apa yang perlu dibuat dengan backup "
 
 #: LedgerSMB/Scripts/setup.pm:332 LedgerSMB/Scripts/setup.pm:684
 #: LedgerSMB/Scripts/setup.pm:740 LedgerSMB/Scripts/setup.pm:836
-#, fuzzy
 msgid "Manage Users"
-msgstr "Менеджер"
+msgstr "Pengguna diurus"
 
 #: LedgerSMB/Scripts/setup.pm:333 LedgerSMB/Scripts/setup.pm:685
 #: LedgerSMB/Scripts/setup.pm:741 LedgerSMB/Scripts/setup.pm:837
 msgid "Full Permissions"
-msgstr ""
+msgstr "Permintaan penuh"
 
 #: LedgerSMB/Scripts/setup.pm:475
-#, fuzzy
 msgid "Save and Retry"
-msgstr "Сохранить как новый"
+msgstr "Simpan dan cuba lagi"
 
 #: LedgerSMB/Scripts/setup.pm:727
 msgid "User already exists. Import?"
-msgstr ""
+msgstr "Pengguna telah wujud. impot?"
 
 #: LedgerSMB/Scripts/setup.pm:768
 msgid "No Permissions Assigned"
-msgstr ""
+msgstr "Tiada permintaan dilakukan"
 
 #: LedgerSMB/Scripts/vouchers.pm:93
 msgid "Error creating batch.  Please try again."
-msgstr ""
+msgstr "Kesalahan mencipta kumpulan. sila cuba lagi. "
 
 #: LedgerSMB/Scripts/file.pm:108
 msgid "No file uploaded"
-msgstr ""
+msgstr "Tiada data dimuat naik"
 
 #: LedgerSMB/Scripts/order.pm:53
-#, fuzzy
 msgid "Search Sales Orders"
-msgstr "Заказы клиента"
+msgstr "Mencari pesanan jualan"
 
 #: LedgerSMB/Scripts/order.pm:56
-#, fuzzy
 msgid "Generate Purchase Orders from Sales Orders"
-msgstr "Создать ордеры покупки из ордеров продажи"
+msgstr "Menjana Pesanan Pembelian dari Jualan Pesanan"
 
 #: LedgerSMB/Scripts/order.pm:58
-#, fuzzy
 msgid "Combine Sales Orders"
-msgstr "Заказы клиента"
+msgstr "Mengabung pesanan jualan"
 
 #: LedgerSMB/Scripts/order.pm:64
-#, fuzzy
 msgid "Search Purchase Orders"
-msgstr "Заказы поставщику"
+msgstr "Mencari pesanan pembelian"
 
 #: LedgerSMB/Scripts/order.pm:66
-#, fuzzy
 msgid "Combine Purchase Orders"
-msgstr "Заказы поставщику"
+msgstr "Mengabung pesanan jualan"
 
 #: LedgerSMB/Scripts/order.pm:69
-#, fuzzy
 msgid "Generate Sales Orders from Purchase Orders"
-msgstr "Создать ордеры продажи из ордеров покупки"
+msgstr "Menjana Pesanan Pembelian dari Jualan Pesanan"
 
 #: LedgerSMB/Scripts/order.pm:71 tools/dbstrings:40 tools/dbstrings:49
 msgid "Receive"
-msgstr "Получить"
+msgstr "Diterima"
 
 #: LedgerSMB/Scripts/order.pm:75
-#, fuzzy
 msgid "Search Quotations"
-msgstr "Резервы"
+msgstr "Cari Sebut harga"
 
 #: LedgerSMB/Scripts/order.pm:79
-#, fuzzy
 msgid "Search Requests for Quotation"
-msgstr "Запрос на резервирование"
+msgstr "Mencari sebut harga yg diminta"
 
 #: LedgerSMB/Scripts/order.pm:106 tools/dbstrings:138 tools/dbstrings:96
 msgid "Combine"
-msgstr ""
+msgstr "Gabung"
 
 #: LedgerSMB/Scripts/order.pm:114 tools/dbstrings:36 tools/dbstrings:55
 #: tools/dbstrings:7 tools/dbstrings:45
 msgid "Generate"
-msgstr "Создать"
+msgstr "Hasilkan"
 
 #: LedgerSMB/Scripts/taxform.pm:258
 msgid "Tax Form List"
-msgstr ""
+msgstr "Cukai dalam bentuk senarai"
 
 #: LedgerSMB/Scripts/taxform.pm:271
-#, fuzzy
 msgid "Tax Form Name"
-msgstr "Код налога"
+msgstr "Cukai dalam bentuk nama"
 
 #: LedgerSMB/Scripts/taxform.pm:273
-#, fuzzy
 msgid "Default Reportable"
-msgstr "Шаблон по умолчанию"
+msgstr "Tetapan Utama yang dilaporkan"
 
 #: LedgerSMB/Scripts/taxform.pm:284
 msgid "No"
-msgstr "Нет"
+msgstr "Tidak"
 
 #: LedgerSMB/Scripts/employee.pm:106
 msgid "User"
-msgstr "Сотрудник"
+msgstr "Pengguna"
 
 #: LedgerSMB/Scripts/employee.pm:107
-#, fuzzy
 msgid "Wages/Deductions"
-msgstr "Удержания"
+msgstr "Gaji/Potongan"
 
 #: LedgerSMB/Scripts/account.pm:39
 msgid "Add Account"
-msgstr "Новый счет"
+msgstr "Tambah akaun"
 
 #: LedgerSMB/Scripts/account.pm:64
 msgid "Bug: No such account"
-msgstr ""
+msgstr "Bug: Tiada akaun itu"
 
 #: LedgerSMB/Scripts/account.pm:66
 msgid "Edit Account"
-msgstr "Редактировать счет"
+msgstr "Mengubah akaun"
 
 #: LedgerSMB/Scripts/reports.pm:80
 msgid "No report specified"
-msgstr ""
+msgstr "Tiada laporan dinyatakan"
 
 #: LedgerSMB/SODA.pm:622
 #: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:622
 msgid "Conflict with Existing Data"
-msgstr ""
+msgstr "Masalah dengan Data Sedia Ada"
 
 #: LedgerSMB/SODA.pm:623
 #: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:623
 msgid "Error from Function"
-msgstr ""
+msgstr "Kesalahan Daripada fungsi"
 
 #: LedgerSMB/IS.pm:1281 LedgerSMB/GL.pm:147 LedgerSMB/IR.pm:375
-#, fuzzy
 msgid "Batch ID Missing"
-msgstr "Пропущена дата"
+msgstr "Kumpulan ID hilang"
 
 #: LedgerSMB/Upgrade_Tests.pm:134
-#, fuzzy
 msgid "Unique Customernumber"
-msgstr "Код клиента"
+msgstr "Nombor pelanggan unik"
 
 #: LedgerSMB/Upgrade_Tests.pm:150
-#, fuzzy
 msgid "Unique Vendornumber"
-msgstr "Код поставщика"
+msgstr "Nombor Unik Pembekal"
 
 #: LedgerSMB/Upgrade_Tests.pm:161
-#, fuzzy
 msgid "No Null employeenumber"
-msgstr "Код сотрудника"
+msgstr "Tiada Nombor Pekerja"
 
 #: LedgerSMB/Upgrade_Tests.pm:177
-#, fuzzy
 msgid "Duplicate employee numbers"
-msgstr "Код сотрудника"
+msgstr "Salinan nombor pekerja"
 
 #: LedgerSMB/Upgrade_Tests.pm:192
 msgid "Unique nonobsolete partnumbers"
 msgstr ""
 
 #: LedgerSMB/Upgrade_Tests.pm:204
-#, fuzzy
 msgid "Unique AR Invoice numbers"
-msgstr "Номер счета-фактуры"
+msgstr "Nombor Unik AR Invois"
 
 #: LedgerSMB/Upgrade_Tests.pm:217
 msgid "No NULL Amounts"
-msgstr ""
+msgstr "Tiada Amaun"
 
 #: LedgerSMB/DBObject/Payment.pm:473
 msgid "cash"
-msgstr ""
+msgstr "tunai"
 
 #: LedgerSMB/DBObject/Payment.pm:474
-#, fuzzy
 msgid "check"
-msgstr "Проверить"
+msgstr "cek"
 
 #: LedgerSMB/DBObject/Payment.pm:475
-#, fuzzy
 msgid "deposit"
-msgstr "Депозит"
+msgstr "deposit"
 
 #: LedgerSMB/DBObject/Payment.pm:476
 msgid "other"
-msgstr ""
+msgstr "lain-lain"
 
 #: LedgerSMB/DBObject/Payment.pm:752
 msgid "Exchange rate inconsistency with database.  Got %1, expected [_2]"
-msgstr ""
+msgstr "Kadar pertukaran tidak sejajar dengan pangkalan data. Dapat %1, jangkaan"
 
 #: LedgerSMB/DBObject/Account.pm:73
 msgid "Error: Cannot include summary account in other dropdown menus"
-msgstr ""
+msgstr "Ralat: Tidak boleh termasuk ringkasan akaun selain menu dropdown"
 
 #: LedgerSMB/DBObject/Account.pm:77
 msgid "Internal Database Error."
-msgstr ""
+msgstr "Ralat Dalam Pangkalan Data"
 
 #: LedgerSMB/DBObject/Account.pm:191
 msgid "Too many links on summary account!"
-msgstr ""
+msgstr "Terlalu banyak sambungan dalam ringkasan akaun"
 
 #: LedgerSMB/DBObject/TransTemplate.pm:23
 #: addons/1.3/templatetrans/trunk/LedgerSMB/DBObject/TransTemplate.pm:23
 #: addons/1.3/templatetrans/tags/1.0/LedgerSMB/DBObject/TransTemplate.pm:22
 msgid "No Account id for %1"
-msgstr ""
+msgstr "Tiada Akaun id untuk %1"
 
 #: LedgerSMB/DBObject/Asset.pm:109 LedgerSMB/DBObject/Asset_Class.pm:66
-#, fuzzy
 msgid "Unable to save %1 object"
-msgstr "Ошибка сохранения ордера"
+msgstr "Tidak dapat menyimpan objek %1"
 
 #: LedgerSMB/DBObject/Asset.pm:110
 msgid "Asset"
-msgstr "Актив"
+msgstr "Aset"
 
 #: LedgerSMB/DBObject/Asset.pm:294
-#, fuzzy
 msgid "Invoice not found"
-msgstr "Дата выставления"
+msgstr "Invois tidak dijumpai"
 
 #: LedgerSMB/DBObject/Date.pm:59 LedgerSMB/App_State.pm:189
 msgid "January"
-msgstr "январь"
+msgstr "Januari"
 
 #: LedgerSMB/DBObject/Date.pm:60 LedgerSMB/App_State.pm:190
 msgid "February"
-msgstr "февраль"
+msgstr "Februari"
 
 #: LedgerSMB/DBObject/Date.pm:61 LedgerSMB/App_State.pm:191
 msgid "March"
-msgstr "март"
+msgstr "Mac"
 
 #: LedgerSMB/DBObject/Date.pm:62 LedgerSMB/App_State.pm:192
 msgid "April"
-msgstr "апрель"
+msgstr "April"
 
 #: LedgerSMB/DBObject/Date.pm:63 LedgerSMB/App_State.pm:195
 msgid "May"
-msgstr "май"
+msgstr "Mei"
 
 #: LedgerSMB/DBObject/Date.pm:64 LedgerSMB/App_State.pm:196
 msgid "June"
-msgstr "июнь"
+msgstr "Jun"
 
 #: LedgerSMB/DBObject/Date.pm:65 LedgerSMB/App_State.pm:197
 msgid "July"
-msgstr "июль"
+msgstr "Julai"
 
 #: LedgerSMB/DBObject/Date.pm:66 LedgerSMB/App_State.pm:198
 msgid "August"
-msgstr "август"
+msgstr "Ogos"
 
 #: LedgerSMB/DBObject/Date.pm:67 LedgerSMB/App_State.pm:199
 msgid "September"
-msgstr "сентябрь"
+msgstr "September"
 
 #: LedgerSMB/DBObject/Date.pm:68 LedgerSMB/App_State.pm:200
 msgid "October"
-msgstr "октябрь"
+msgstr "Oktober"
 
 #: LedgerSMB/DBObject/Date.pm:69 LedgerSMB/App_State.pm:201
 msgid "November"
-msgstr "ноябрь"
+msgstr "November"
 
 #: LedgerSMB/DBObject/Date.pm:70 LedgerSMB/App_State.pm:202
 msgid "December"
-msgstr "декабрь"
+msgstr "Disember"
 
 #: LedgerSMB/DBObject/Draft.pm:56 LedgerSMB/DBObject/Draft.pm:75
 msgid "No ID Set"
-msgstr ""
+msgstr "Tiada Set ID"
 
 #: LedgerSMB/DBObject/User.pm:74
-#, fuzzy
 msgid "Incorrect Password"
-msgstr "Изменить пароль"
+msgstr "Kata Laluan Tidak Tepat"
 
 #: LedgerSMB/DBObject/User.pm:77
-#, fuzzy
 msgid "Passwords must match."
-msgstr "Неверный пароль!"
+msgstr "Kata laluan mestilah sempadan"
 
 #: LedgerSMB/DBObject/User.pm:146
-#, fuzzy
 msgid "Password required"
-msgstr "Пароль изменен!"
+msgstr "Kata laluan diperlukan"
 
 #: LedgerSMB/Report/Trial_Balance.pm:115
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:115
 #: tools/dbstrings:136 tools/dbstrings:94
 msgid "Trial Balance"
-msgstr "Предварительный баланс"
+msgstr "Baki Percubaan"
 
 #: LedgerSMB/Report/Trial_Balance.pm:132
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:132
-#, fuzzy
 msgid "Account Description"
-msgstr "Описание задания"
+msgstr "Deskripsi Akaun"
 
 #: LedgerSMB/Report/Trial_Balance.pm:141
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:75
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:141
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:75
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:76
-#, fuzzy
 msgid "Starting Balance"
-msgstr "Балансовая ведомость"
+msgstr "Baki Permulaan"
 
 #: LedgerSMB/Report/Trial_Balance.pm:153
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:153
-#, fuzzy
 msgid "Ending Balance"
-msgstr "Начальный баланс"
+msgstr "Baki Pengakhiran"
 
 #: LedgerSMB/Report/Trial_Balance.pm:164
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:164
-#, fuzzy
 msgid "From date"
-msgstr "с"
+msgstr "Dari tarikh"
 
 #: LedgerSMB/Report/Trial_Balance.pm:166
 #: LedgerSMB/Report/Invoices/Payments.pm:194 LedgerSMB/Report/Timecards.pm:158
 #: LedgerSMB/Report/Reconciliation/Summary.pm:176
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:166
-#, fuzzy
 msgid "To Date"
-msgstr "Дата"
+msgstr "Kepada tarikh"
 
 #: LedgerSMB/Report/Trial_Balance.pm:168
 #: LedgerSMB/Report/Trial_Balance/List.pm:60
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:168
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:60
-#, fuzzy
 msgid "Ignore Yearends"
-msgstr "Завершение года"
+msgstr "Abaikan Pengakhiran Tahun"
 
 #: LedgerSMB/Report/Trial_Balance/List.pm:35
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:35
-#, fuzzy
 msgid "Trial Balance List"
-msgstr "Предварительный баланс"
+msgstr "Senarai Baki Percubaan"
 
 #: LedgerSMB/Report/Aging.pm:127
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:127
 msgid "30"
-msgstr ""
+msgstr "30"
 
 #: LedgerSMB/Report/Aging.pm:132
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:132
 msgid "60"
-msgstr ""
+msgstr "60"
 
 #: LedgerSMB/Report/Aging.pm:137
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:137
 msgid "90"
-msgstr ""
+msgstr "90"
 
 #: LedgerSMB/Report/Aging.pm:167
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:167
-#, fuzzy
 msgid "Aging Report"
-msgstr "Отчеты"
+msgstr "Laporan Berumur"
 
 #: LedgerSMB/Report/Unapproved/Drafts.pm:100
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:107
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:100
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:107
 msgid "AR/AP/GL Amount"
-msgstr ""
+msgstr "Amaun AR/AP/GL"
 
 #: LedgerSMB/Report/Unapproved/Drafts.pm:115
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:115
-#, fuzzy
 msgid "Draft Search"
-msgstr "Поиск"
+msgstr "Carian Draf"
 
 #: LedgerSMB/Report/Unapproved/Drafts.pm:126
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:126
 msgid "Draft Type"
-msgstr ""
+msgstr "Jenis Draf"
 
 #: LedgerSMB/Report/Unapproved/Drafts.pm:130
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:146
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:130
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:146
 msgid "Amount Greater Than"
-msgstr ""
+msgstr "Jumlah Melebihi"
 
 #: LedgerSMB/Report/Unapproved/Drafts.pm:132
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:148
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:132
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:148
-#, fuzzy
 msgid "Amount Less Than"
-msgstr "Пропущена сумма"
+msgstr "Jumlah Kurang Daripada"
 
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:112
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:112
-#, fuzzy
 msgid "Payment Amount"
-msgstr "Оплата проведена!"
+msgstr "Jumlah Pembayaran"
 
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:131
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:131
-#, fuzzy
 msgid "Batch Search"
-msgstr "Поиск"
+msgstr "Carian Kumpulan"
 
 #: LedgerSMB/Report/Unapproved/Batch_Overview.pm:142
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:142
 msgid "Batch Type"
-msgstr ""
+msgstr "Jenis Kumpulan"
 
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:95
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:95
 msgid "Batch Class"
-msgstr ""
+msgstr "Kelas Kumpulan"
 
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:131
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:131
 msgid "Voucher List"
-msgstr ""
+msgstr "Senarai Baucer"
 
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:142
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:142
 msgid "Batch ID"
-msgstr ""
+msgstr "ID Kumpulan"
 
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:188
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:188
 msgid "Post Batch"
-msgstr ""
+msgstr "Simpan Kumpulan"
 
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:194
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:194
-#, fuzzy
 msgid "Delete Batch"
-msgstr "Удалить базу данных"
+msgstr "Padam Kumpulan"
 
 #: LedgerSMB/Report/Unapproved/Batch_Detail.pm:200
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:200
-#, fuzzy
 msgid "Delete Vouchers"
-msgstr "Удалить расписание"
+msgstr "Padam Baucer"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:120
-#, fuzzy
 msgid "Selected"
-msgstr "Выбрать"
+msgstr "Terpilih"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:137
-#, fuzzy
 msgid "Total Paid"
-msgstr "Всего"
+msgstr "Jumlah Dibayar"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:149
-#, fuzzy
 msgid "Batch Description"
-msgstr "Описание"
+msgstr "Deskripsi Kumpulan"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:152
 msgid "Batch"
-msgstr ""
+msgstr "Kumpulan"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:192 LedgerSMB/Report/Timecards.pm:156
 #: LedgerSMB/Report/Reconciliation/Summary.pm:174
-#, fuzzy
 msgid "From Date"
-msgstr "Дата заказа клиента"
+msgstr "Tarikh Mula"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:206
-#, fuzzy
 msgid "Payment Results"
-msgstr "Оплаты"
+msgstr "Hasil Pembayaran"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:207
-#, fuzzy
 msgid "Receipt Results"
-msgstr "Получения"
+msgstr "Hasil Resit"
 
 #: LedgerSMB/Report/Invoices/Payments.pm:232
-#, fuzzy
 msgid "Reverse Payments"
-msgstr "Оплаты"
+msgstr "Pembayaran Balik"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:215
-#, fuzzy
 msgid "Vendor Account"
-msgstr "Новый счет"
+msgstr "Akaun Pembekal"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:218
-#, fuzzy
 msgid "Customer Account"
-msgstr "Список счетов"
+msgstr "Akaun Pelanggan"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:251
 #: LedgerSMB/Report/Contact/Purchase.pm:91
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:91
-#, fuzzy
 msgid "Due"
-msgstr "дек"
+msgstr "Tarikh Akhir"
 
-#: LedgerSMB/Report/Invoices/Transactions.pm:275 LedgerSMB/Report/Orders.pm:257
-#: LedgerSMB/Report/Contact/Purchase.pm:111
+#: LedgerSMB/Report/Invoices/Transactions.pm:275
+#: LedgerSMB/Report/Orders.pm:257 LedgerSMB/Report/Contact/Purchase.pm:111
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:111
-#, fuzzy
 msgid "Ship Via"
-msgstr "доставить через"
+msgstr "Hantar Melalui"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:299
-#, fuzzy
 msgid "Search AP"
-msgstr "Поиск"
+msgstr "Mencari AP"
 
 #: LedgerSMB/Report/Invoices/Transactions.pm:300
-#, fuzzy
 msgid "Search AR"
-msgstr "Поиск"
+msgstr "Mencari AR"
 
 #: LedgerSMB/Report/Invoices/Outstanding.pm:160
-#, fuzzy
 msgid "# Invoices"
-msgstr "Счет-фактуры"
+msgstr "Invois"
 
 #: LedgerSMB/Report/Invoices/Outstanding.pm:261
-#, fuzzy
 msgid "Ship_Via"
-msgstr "доставить через"
+msgstr "Hantar Melalui"
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:76
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:76
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:77
 msgid "Document"
-msgstr ""
+msgstr "Dokumen"
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:81
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:80
@@ -4410,7 +4163,7 @@ msgstr ""
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:82
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:81
 msgid "Debit"
-msgstr "Дебет"
+msgstr "Debit"
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:86
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:85
@@ -4419,2121 +4172,975 @@ msgstr "Дебет"
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:87
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:86
 msgid "Credit"
-msgstr "Кредит"
+msgstr "Kredit"
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:110
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:110
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:115
 msgid "Caja Diaria"
-msgstr ""
+msgstr "Tunai Harian"
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:125
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:125
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:130
-#, fuzzy
 msgid "Account Number Start"
-msgstr "Код счета"
+msgstr "Permulaan Akaun Nombor"
 
 #: LedgerSMB/Report/co/Caja_Diaria.pm:127
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:127
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:132
-#, fuzzy
 msgid "Account Number End"
-msgstr "Код счета"
+msgstr "Pengakhiran Akaun Nombor"
 
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:89 LedgerSMB/Report/GL.pm:158
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:89
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:158
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:90
 msgid "Balance"
-msgstr "Баланс"
+msgstr "Baki"
 
 #: LedgerSMB/Report/co/Balance_y_Mayor.pm:114
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:114
 #: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:118
-#, fuzzy
 msgid "Balance y Mayor"
-msgstr "Баланс"
+msgstr "Baki dan Lain-lain"
 
 #: LedgerSMB/Report/Margin/Invoice.pm:53
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Margin/Invoice.pm:53
 msgid "Margin Report for Invoice"
-msgstr ""
+msgstr "Laporan Margin Invois"
 
 #: LedgerSMB/Report/Margin/ECA.pm:67
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Margin/ECA.pm:67
 msgid "Margin Report for Customer"
-msgstr ""
+msgstr "Laporan Margin Pelanggan"
 
 #: LedgerSMB/Report/Orders.pm:192 LedgerSMB/Report/Orders.pm:290
-#: tools/dbstrings:45 tools/dbstrings:68 tools/dbstrings:197 tools/dbstrings:54
-#: tools/dbstrings:153
+#: tools/dbstrings:45 tools/dbstrings:68 tools/dbstrings:197
+#: tools/dbstrings:54 tools/dbstrings:153
 msgid "Quotations"
-msgstr "Резервы"
+msgstr "Sebutan Harga"
 
 #: LedgerSMB/Report/Orders.pm:195 LedgerSMB/Report/Orders.pm:292
 #: tools/dbstrings:46 tools/dbstrings:73 tools/dbstrings:55
 msgid "RFQs"
-msgstr "Запросы на резервирование"
+msgstr "RFQs"
 
 #: LedgerSMB/Report/Orders.pm:221
-#, fuzzy
 msgid "Required Date"
-msgstr "Запрошен"
+msgstr "Tarikh yang Diperlukan"
 
 #: LedgerSMB/Report/Timecards.pm:100
-#, fuzzy
 msgid "Project/Department Number"
-msgstr "Код проекта"
+msgstr "Nombor Projek/Jabatan"
 
 #: LedgerSMB/Report/Timecards.pm:112 LedgerSMB/Report/Timecards.pm:160
 msgid "Partnumber"
-msgstr "Код"
+msgstr "Nombor Bahagian"
 
 #: LedgerSMB/Report/Timecards.pm:120
-#, fuzzy
 msgid "Sun"
-msgstr "июн"
+msgstr "Ahad"
 
 #: LedgerSMB/Report/Timecards.pm:124
-#, fuzzy
 msgid "Mon"
-msgstr "месяц"
+msgstr "Isnin"
 
 #: LedgerSMB/Report/Timecards.pm:128
-#, fuzzy
 msgid "Tue"
-msgstr "Вторник"
+msgstr "Selasa"
 
 #: LedgerSMB/Report/Timecards.pm:132
 msgid "Wed"
-msgstr ""
+msgstr "Rabu"
 
 #: LedgerSMB/Report/Timecards.pm:136
 msgid "Thu"
-msgstr ""
+msgstr "Khamis"
 
 #: LedgerSMB/Report/Timecards.pm:140
-#, fuzzy
 msgid "Fri"
-msgstr "для"
+msgstr "Jumaat"
 
 #: LedgerSMB/Report/Timecards.pm:144
-#, fuzzy
 msgid "Sat"
-msgstr "Состояние"
+msgstr "Sabtu"
 
 #: LedgerSMB/Report/Timecards.pm:169 tools/dbstrings:173
-#, fuzzy
 msgid "Timecards"
-msgstr "Time Cards"
+msgstr ""
 
 #: LedgerSMB/Report/COA.pm:112
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:112
-#, fuzzy
 msgid "Dropdowns"
-msgstr "Ограничение падающего меню"
+msgstr "Gugurkan"
 
 #: LedgerSMB/Report/COA.pm:117 LedgerSMB/Report/COA.pm:190
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:117
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:190
 msgid "Edit"
-msgstr "Редактировать"
+msgstr "Ubahsuai"
 
 #: LedgerSMB/Report/COA.pm:141
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:141
 #: tools/dbstrings:8 tools/dbstrings:18
 msgid "Chart of Accounts"
-msgstr "План счетов"
+msgstr "Carta Akaun"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:134
-#, fuzzy
 msgid "Statement Date"
-msgstr "Ведомость"
+msgstr "Tarikh Penyata"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:138
 msgid "Statement Balance"
-msgstr "Балансовая ведомость"
+msgstr "Baki Penyata"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:141
 msgid "Approved"
-msgstr ""
+msgstr "Diluluskan"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:144
 msgid "Submitted"
-msgstr ""
+msgstr "Dihantar"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:147
-#, fuzzy
 msgid "Last Updated"
-msgstr "Обновлено"
+msgstr "Kemaskini Terakhir"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:150
 #: LedgerSMB/Report/Budget/Search.pm:87
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:87
 msgid "Entered By"
-msgstr ""
+msgstr "Dimasukkan Oleh"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:178
-#, fuzzy
 msgid "From Amount"
-msgstr "Сумма"
+msgstr "Daripada Jumlah"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:180
-#, fuzzy
 msgid "To Amount"
-msgstr "Сумма"
+msgstr "Kepada Jumlah"
 
 #: LedgerSMB/Report/Reconciliation/Summary.pm:191
-#, fuzzy
 msgid "Reconciliation Reports"
-msgstr "Отчет о согласованности"
+msgstr "Laporan Pendamaian"
 
 #: LedgerSMB/Report/Inventory/Search.pm:233
-#, fuzzy
 msgid "Avg. Cost"
-msgstr "Средняя цена"
+msgstr "Kos Purata"
 
 #: LedgerSMB/Report/Inventory/Search.pm:241
-#, fuzzy
 msgid "Price Updated"
-msgstr "Обновлено"
+msgstr "Harga Dikemaskini"
 
 #: LedgerSMB/Report/Inventory/Search.pm:269 tools/dbstrings:52
 #: tools/dbstrings:58
-#, fuzzy
 msgid "Partsgroup"
-msgstr "Тип цен"
+msgstr ""
 
 #: LedgerSMB/Report/Inventory/Search.pm:297
 #: LedgerSMB/Report/Contact/History.pm:97
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:97
 msgid "Serial Number"
-msgstr "Серийный номер"
+msgstr "Nombor Siri"
 
 #: LedgerSMB/Report/Inventory/Search.pm:319 tools/dbstrings:199
 #: tools/dbstrings:155
-#, fuzzy
 msgid "Goods and Services"
-msgstr "Товары и услуги"
+msgstr "Barangan dan Servis"
 
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:59
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:59
-#, fuzzy
 msgid "Inventory Adjustment Details"
-msgstr "Инвентарный счет отсутствует"
+msgstr "Detail Inventori Pelarasan"
 
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:84
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:84
-#, fuzzy
 msgid "Counted"
-msgstr "Страна"
+msgstr "Dikira"
 
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:87
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:87
-#, fuzzy
 msgid "Expected"
-msgstr "Расход"
+msgstr "Telah dijangka"
 
 #: LedgerSMB/Report/Inventory/Adj_Details.pm:90
 #: LedgerSMB/Report/Budget/Variance.pm:86
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:90
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:86
-#, fuzzy
 msgid "Variance"
-msgstr "Баланс"
+msgstr "Varian"
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:67
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:67
-#, fuzzy
 msgid "Inventory Adjustments"
-msgstr "Инвентарь сохранен!"
+msgstr "Inventori Pelarasan"
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:79
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:79
-#, fuzzy
 msgid "Including partnumber"
-msgstr "Включить в отчет"
+msgstr "Termasuk Nombor Bahagian"
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:81
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:81
 msgid "Source starting with"
-msgstr ""
+msgstr "Sumber bermula dengan"
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:100
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:100
-#, fuzzy
 msgid "AR Invoice"
-msgstr "Счет-фактура"
+msgstr "Invois AR"
 
 #: LedgerSMB/Report/Inventory/Search_Adj.pm:104
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:104
-#, fuzzy
 msgid "AP Invoice"
-msgstr "ККМ Фактура"
+msgstr "Invois AP"
 
 #: LedgerSMB/Report/Budget/Variance.pm:82
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:82
 msgid "Used"
-msgstr ""
+msgstr "Digunakan"
 
 #: LedgerSMB/Report/Budget/Variance.pm:97
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:97
-#, fuzzy
 msgid "Budget Variance Report"
-msgstr "Включить в отчет"
+msgstr "Laporan Bajet Varian"
 
 #: LedgerSMB/Report/Budget/Variance.pm:108
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:108
-#, fuzzy
 msgid "Budget Number"
-msgstr "Следующий номер"
+msgstr "Nombor Bajet"
 
 #: LedgerSMB/Report/Budget/Search.pm:107
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:107
 msgid "Budget Search Results"
-msgstr ""
+msgstr "Keputusan Carian Bajet"
 
 #: LedgerSMB/Report/PNL/Income_Statement.pm:51
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:51
 #: tools/dbstrings:85 tools/dbstrings:137 tools/dbstrings:95
 msgid "Income Statement"
-msgstr "Отчет о прибыли/убытках"
+msgstr "Penyata Pendapatan"
 
 #: LedgerSMB/Report/PNL/Income_Statement.pm:59
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:59
-#, fuzzy
 msgid "Reporting Basis"
-msgstr "Отчеты"
+msgstr "Laporan Asas"
 
 #: LedgerSMB/Report/PNL/Income_Statement.pm:81
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:81
 msgid "Invalid Reporting Basis"
-msgstr ""
+msgstr "Laporan Asas Tidak Sah"
 
 #: LedgerSMB/Report/PNL/Invoice.pm:77
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:77
 msgid "Invoice Profit/Loss"
-msgstr ""
+msgstr "Invois Keuntungan/Kerugian"
 
-#: LedgerSMB/Report/PNL/Product.pm:69
+;	#: LedgerSMB/Report/PNL/Product.pm:69
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Product.pm:69
 msgid "Proft/Loss on Inventory Sales"
-msgstr ""
+msgstr "Keuntungan/Kerugian Stok Jualan"
 
 #: LedgerSMB/Report/PNL/ECA.pm:80
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/ECA.pm:80
-#, fuzzy
 msgid "ECA Income Statement"
-msgstr "Отчет о прибыли/убытках"
+msgstr "Penyata Gaji ECA"
 
 #: LedgerSMB/Report/Payroll/Deduction_Types.pm:34
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Deduction_Types.pm:34
-#, fuzzy
 msgid "Deduction Class"
-msgstr "Удержания"
+msgstr "Kelas Pemotongan"
 
 #: LedgerSMB/Report/Payroll/Deduction_Types.pm:37
 #: LedgerSMB/Report/Payroll/Income_Types.pm:37
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Deduction_Types.pm:37
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Income_Types.pm:37
 msgid "Label"
-msgstr ""
+msgstr "Label"
 
 #: LedgerSMB/Report/Payroll/Deduction_Types.pm:55
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Deduction_Types.pm:55
-#, fuzzy
 msgid "Deduction Types"
-msgstr "Удержания"
+msgstr "Jenis Pemotongan"
 
 #: LedgerSMB/Report/Payroll/Income_Types.pm:34
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Income_Types.pm:34
-#, fuzzy
 msgid "Income Class"
-msgstr "Поступление"
+msgstr "Kelas Pendapatan"
+
 
 #: LedgerSMB/Report/Payroll/Income_Types.pm:55
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Income_Types.pm:55
-#, fuzzy
 msgid "Income Types"
-msgstr "Поступление"
+msgstr "Jenis Pendapatan"
 
 #: LedgerSMB/Report/GL.pm:103
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:103
 msgid "Entry ID"
-msgstr ""
+msgstr "Masukkan ID"
 
 #: LedgerSMB/Report/GL.pm:128
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:128
 msgid "Cleared"
-msgstr "Очищено"
+msgstr "Padamkan"
 
 #: LedgerSMB/Report/GL.pm:138
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:138
 msgid "Chart ID"
-msgstr ""
+msgstr "Carta ID"
 
 #: LedgerSMB/Report/GL.pm:143
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:143
-#, fuzzy
 msgid "Account No."
-msgstr "Счет"
+msgstr "No. Akaun"
 
 #: LedgerSMB/Report/GL.pm:148
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:148
-#, fuzzy
 msgid "Account Name"
-msgstr "Код счета"
+msgstr "Nama Akaun"
 
 #: LedgerSMB/Report/GL.pm:189
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:189
-#, fuzzy
 msgid "General Ledger Report"
-msgstr "Главная книга"
+msgstr "Laporan Lajuran Umum"
 
 #: LedgerSMB/Report/Contact/Search.pm:67
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:67
-#, fuzzy
 msgid "Credit Account Number"
-msgstr "Код счета"
+msgstr "No Akaun Kredit"
 
 #: LedgerSMB/Report/Contact/Search.pm:75
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:75
-#, fuzzy
 msgid "Business Type"
-msgstr "Бизнес"
+msgstr "Jenis Perniagaan"
 
 #: LedgerSMB/Report/Contact/Search.pm:87
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:87
-#, fuzzy
 msgid "Contact Search"
-msgstr "Контактное лицо"
+msgstr "Carian Hubungan"
 
 #: LedgerSMB/Report/Contact/History.pm:89
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:89
-#, fuzzy
 msgid "Disc"
-msgstr "Скидка"
+msgstr "Disk"
 
 #: LedgerSMB/Report/Contact/History.pm:114
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:114
-#, fuzzy
 msgid "Purchase History"
-msgstr "История"
+msgstr "Rekod Pembelian"
 
 #: LedgerSMB/Batch.pm:90
 msgid "Any"
-msgstr ""
+msgstr "Selain"
 
 #: LedgerSMB/Form.pm:678
 msgid "Action: %1, ID: [_2]"
-msgstr ""
+msgstr "Tindakan: %1, ID: [_2]"
 
 #: LedgerSMB/Entity/Location.pm:113
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:114
 #: tools/dbstrings:269 tools/dbstrings:263
-#, fuzzy
 msgid "Billing"
-msgstr "Адрес доставки счета"
+msgstr "Bill"
 
 #: LedgerSMB/Entity/Location.pm:114
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:115
 #: tools/dbstrings:270 tools/dbstrings:264
 msgid "Sales"
-msgstr "Продажи"
+msgstr "Jualan"
 
 #: LedgerSMB/Entity/Location.pm:115
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:116
 #: tools/dbstrings:196 tools/dbstrings:271 tools/dbstrings:152
 #: tools/dbstrings:265
 msgid "Shipping"
-msgstr "Доставка"
+msgstr "Penghantaran"
 
 #: LedgerSMB/Entity/Contact.pm:164
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Contact.pm:173
 msgid "Must have credit or entity id"
-msgstr ""
+msgstr "Mesti mempunyai kredit ID entiti"
 
 #: LedgerSMB/Entity/Person.pm:100
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:100
 msgid "Dr."
-msgstr ""
+msgstr "Dr."
 
 #: LedgerSMB/Entity/Person.pm:101
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:101
 msgid "Miss."
-msgstr ""
+msgstr "Cik"
 
 #: LedgerSMB/Entity/Person.pm:102
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:102
-#, fuzzy
 msgid "Mr."
-msgstr "март"
+msgstr "Encik"
 
 #: LedgerSMB/Entity/Person.pm:103
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:103
 msgid "Mrs."
-msgstr ""
+msgstr "Puan"
 
 #: LedgerSMB/Entity/Person.pm:104
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:104
 msgid "Ms."
-msgstr ""
+msgstr "Cik"
 
 #: LedgerSMB/Entity/Person.pm:105
 #: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:105
 msgid "Sir."
-msgstr ""
+msgstr "Tuan"
 
 #: LedgerSMB/Contact.pm:59
 msgid "Unable to save contact information"
-msgstr ""
+msgstr "Informasi hubungan gagal disimpan"
 
 #: LedgerSMB/GL.pm:200
-#, fuzzy
 msgid "Account %1 not found"
-msgstr "Счет не существует!"
+msgstr "Akaun %1 gagal dicari"
 
 #: LedgerSMB/App_State.pm:189
 msgid "Jan"
-msgstr "янв"
+msgstr "Jan"
 
 #: LedgerSMB/App_State.pm:190
 msgid "Feb"
-msgstr "фев"
+msgstr "Feb"
 
 #: LedgerSMB/App_State.pm:191
 msgid "Mar"
-msgstr "март"
+msgstr "Mac"
 
 #: LedgerSMB/App_State.pm:192
 msgid "Apr"
-msgstr "апр"
+msgstr "Apr"
 
 #: LedgerSMB/App_State.pm:196
 msgid "Jun"
-msgstr "июн"
+msgstr "Jun"
 
 #: LedgerSMB/App_State.pm:197
 msgid "Jul"
-msgstr "июл"
+msgstr "Jul"
 
 #: LedgerSMB/App_State.pm:198
 msgid "Aug"
-msgstr "авг"
+msgstr "Ogos"
 
 #: LedgerSMB/App_State.pm:199
 msgid "Sep"
-msgstr "сен"
+msgstr "Sep"
 
 #: LedgerSMB/App_State.pm:200
 msgid "Oct"
-msgstr "окт"
+msgstr "Okt"
 
 #: LedgerSMB/App_State.pm:201
 msgid "Nov"
-msgstr "ноя"
+msgstr "Nov"
 
 #: LedgerSMB/App_State.pm:202
 msgid "Dec"
-msgstr "дек"
+msgstr "Dis"
 
 #: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:331
 msgid "Created"
-msgstr ""
+msgstr "Dicipta"
 
 #: tools/dbstrings:3 tools/dbstrings:13
 msgid "Batches"
-msgstr ""
+msgstr "Kelompok"
 
 #: tools/dbstrings:5 tools/dbstrings:15
-#, fuzzy
 msgid "Add Contact"
-msgstr "Контактное лицо"
+msgstr "Tambah Kenalan"
 
 #: tools/dbstrings:6 tools/dbstrings:16
 msgid "Customer History"
-msgstr "История"
+msgstr "Rekod Pelanggan"
 
 #: tools/dbstrings:7 tools/dbstrings:17
 msgid "Vendor History"
-msgstr "История"
+msgstr "Rekod Pembekal"
 
 #: tools/dbstrings:9 tools/dbstrings:19
-#, fuzzy
 msgid "Add Accounts"
-msgstr "Новый счет"
+msgstr "Tambah Akaun"
 
 #: tools/dbstrings:10 tools/dbstrings:20
-#, fuzzy
 msgid "Top-level"
-msgstr "Верх"
+msgstr "Tahap Tertinggi"
 
 #: tools/dbstrings:11 tools/dbstrings:14 tools/dbstrings:21 tools/dbstrings:24
-#, fuzzy
 msgid "Invoice Vouchers"
-msgstr "Номер счета-фактуры"
+msgstr "invois Baucer"
 
 #: tools/dbstrings:12 tools/dbstrings:16 tools/dbstrings:22 tools/dbstrings:25
 msgid "Add Transaction"
-msgstr "Новая проводка"
+msgstr "Tambah Transaksi"
 
 #: tools/dbstrings:13 tools/dbstrings:23
 msgid "AR Aging"
-msgstr "Взаиморасчеты с клиентами"
+msgstr "penuaan AR"
 
 #: tools/dbstrings:17 tools/dbstrings:26
 msgid "AP Aging"
-msgstr "Взаиморасчеты с поставщиками"
+msgstr "Penuaan AP"
 
 #: tools/dbstrings:21 tools/dbstrings:30
-#, fuzzy
 msgid "Use Overpayment"
-msgstr "Предварительная оплата"
+msgstr "Menggunakan Bayaran Lebih"
 
 #: tools/dbstrings:22 tools/dbstrings:31
 msgid "Use AR Overpayment"
-msgstr ""
+msgstr "Menggunakan Bayaran Lebih AR"
 
 #: tools/dbstrings:25 tools/dbstrings:132 tools/dbstrings:146
 #: tools/dbstrings:34 tools/dbstrings:92 tools/dbstrings:104
 msgid "Reconciliation"
-msgstr "Согласованность"
+msgstr ""
 
 #: tools/dbstrings:26 tools/dbstrings:35
 msgid "Employees"
-msgstr "Сотрудники"
+msgstr "Pekerjaan"
 
-#: tools/dbstrings:31 tools/dbstrings:44 tools/dbstrings:57 tools/dbstrings:125
-#: tools/dbstrings:127 tools/dbstrings:131 tools/dbstrings:161
-#: tools/dbstrings:172 tools/dbstrings:184 tools/dbstrings:201
-#: tools/dbstrings:218 tools/dbstrings:40 tools/dbstrings:53 tools/dbstrings:81
-#: tools/dbstrings:87 tools/dbstrings:91 tools/dbstrings:117
-#: tools/dbstrings:128 tools/dbstrings:156
+#: tools/dbstrings:31 tools/dbstrings:44 tools/dbstrings:57
+#: tools/dbstrings:125 tools/dbstrings:127 tools/dbstrings:131
+#: tools/dbstrings:161 tools/dbstrings:172 tools/dbstrings:184
+#: tools/dbstrings:201 tools/dbstrings:218 tools/dbstrings:40
+#: tools/dbstrings:53 tools/dbstrings:81 tools/dbstrings:87 tools/dbstrings:91
+#: tools/dbstrings:117 tools/dbstrings:128 tools/dbstrings:156
 msgid "Reports"
-msgstr "Отчеты"
+msgstr "Laporan"
 
 #: tools/dbstrings:47 tools/dbstrings:56
-#, fuzzy
 msgid "Journal Entry"
-msgstr "Страна"
+msgstr "jurnal kedatangan"
 
 #: tools/dbstrings:48
-#, fuzzy
 msgid "Requirements"
-msgstr "Запрошен"
+msgstr "Keperluan"
 
 #: tools/dbstrings:54 tools/dbstrings:59
-#, fuzzy
 msgid "Add Timecard"
-msgstr "Добавить карту времени"
+msgstr "Tambah Kad Masa "
 
 #: tools/dbstrings:59 tools/dbstrings:74
 msgid "Time Cards"
-msgstr "Time Cards"
+msgstr "Kad Masa"
 
 #: tools/dbstrings:60 tools/dbstrings:217 tools/dbstrings:61
 #: tools/dbstrings:171
 msgid "Translations"
-msgstr "Переводы"
+msgstr "Terjemahan"
 
 #: tools/dbstrings:62 tools/dbstrings:86 tools/dbstrings:63
 msgid "Balance Sheet"
-msgstr "Баланс"
+msgstr "Helaian Kira-kira"
 
 #: tools/dbstrings:63 tools/dbstrings:9
-#, fuzzy
 msgid "Inventory Activity"
-msgstr "Инвентарный"
+msgstr ""
 
 #: tools/dbstrings:64
 msgid "Sales Invoices"
-msgstr "Фактуры клиента"
+msgstr "Jualan Terperinci"
 
 #: tools/dbstrings:66
 msgid "Checks"
-msgstr "Проверки"
+msgstr "Cek"
 
 #: tools/dbstrings:67
 msgid "Work Orders"
-msgstr "Рабочие заказы"
+msgstr "Arahan Kerja"
 
 #: tools/dbstrings:69
 msgid "Packing Lists"
-msgstr "Упаковочные списоки"
+msgstr "Senarai Bungkusan"
 
 #: tools/dbstrings:70
 msgid "Pick Lists"
-msgstr "Списки для выбора"
+msgstr "Senarai Pilihan"
 
 #: tools/dbstrings:72
 msgid "Bin Lists"
-msgstr "Списки Bin"
+msgstr "Senarai Buangan"
 
 #: tools/dbstrings:76 tools/dbstrings:65
 msgid "Defaults"
-msgstr "Настройки по умолчании"
+msgstr "Asal"
 
 #: tools/dbstrings:78 tools/dbstrings:67
-#, fuzzy
 msgid "List Warehouse"
-msgstr "Список складов"
+msgstr "Senarai Gudang"
 
 #: tools/dbstrings:80 tools/dbstrings:69
 msgid "List Businesses"
-msgstr "Список бизнесов"
+msgstr "Senarai Perniagaan"
 
 #: tools/dbstrings:82 tools/dbstrings:71
 msgid "List Languages"
-msgstr "Список языков"
+msgstr "senarai Bahasa"
 
 #: tools/dbstrings:84 tools/dbstrings:73
 msgid "List SIC"
-msgstr "Список SIC"
+msgstr "Senarai SIC"
 
 #: tools/dbstrings:88 tools/dbstrings:102 tools/dbstrings:181
 #: tools/dbstrings:194
 msgid "AR Transaction"
-msgstr "Проводка продаж"
+msgstr "Transaksi AR"
 
 #: tools/dbstrings:89 tools/dbstrings:103 tools/dbstrings:182
 #: tools/dbstrings:195
 msgid "AP Transaction"
-msgstr "Проводка закупки"
+msgstr "Transakai AP"
 
 #: tools/dbstrings:96 tools/dbstrings:110 tools/dbstrings:189
 #: tools/dbstrings:202
 msgid "Statement"
-msgstr "Ведомость"
+msgstr "Kenyataan"
 
 #: tools/dbstrings:99 tools/dbstrings:119 tools/dbstrings:192
 #: tools/dbstrings:207
-#, fuzzy
 msgid "Timecard"
-msgstr "Time Card"
+msgstr ""
 
 #: tools/dbstrings:100 tools/dbstrings:120 tools/dbstrings:193
 #: tools/dbstrings:208
 msgid "Letterhead"
-msgstr ""
+msgstr "Tajuk Surat"
 
 #: tools/dbstrings:111 tools/dbstrings:75
-#, fuzzy
 msgid "Transaction Approval"
-msgstr "Проводка сохранена!"
+msgstr "Transaksi Diterima"
 
 #: tools/dbstrings:121 tools/dbstrings:83
 msgid "POS Invoice"
-msgstr "ККМ Фактура"
+msgstr "Invois POS"
 
 #: tools/dbstrings:122 tools/dbstrings:84
-#, fuzzy
 msgid "Contacts"
-msgstr "Контактное лицо"
+msgstr "Kenalan"
 
 #: tools/dbstrings:123 tools/dbstrings:85
 msgid "Import Chart"
-msgstr ""
+msgstr "Carta Kemasukan"
 
 #: tools/dbstrings:126 tools/dbstrings:128 tools/dbstrings:129
 #: tools/dbstrings:82 tools/dbstrings:88 tools/dbstrings:89
 msgid "Vouchers"
-msgstr ""
+msgstr "Baucer"
 
 #: tools/dbstrings:133 tools/dbstrings:93
-#, fuzzy
 msgid "Year End"
-msgstr "Завершение года"
+msgstr "Akhir Tahun"
 
 #: tools/dbstrings:135 tools/dbstrings:175
-#, fuzzy
 msgid "Reverse Receipts"
-msgstr "Получения"
+msgstr "Pembatalan Resit"
 
 #: tools/dbstrings:139 tools/dbstrings:97
 msgid "Add Part"
-msgstr "Новый продукт"
+msgstr "Tambah Bahagian"
 
 #: tools/dbstrings:140 tools/dbstrings:98
 msgid "Add Service"
-msgstr "Новая услуга"
+msgstr "Tambah Perkhidmatan"
 
 #: tools/dbstrings:141 tools/dbstrings:99
 msgid "Add Assembly"
-msgstr "Новый комплект"
+msgstr "Tambah Pemasangan "
 
 #: tools/dbstrings:144 tools/dbstrings:102
-#, fuzzy
 msgid "Reverse Payment"
-msgstr "Предварительная оплата"
+msgstr "Pembayaran Balik"
 
 #: tools/dbstrings:145 tools/dbstrings:103
 msgid "Drafts"
-msgstr ""
+msgstr "Draf"
 
 #: tools/dbstrings:147 tools/dbstrings:105
-#, fuzzy
 msgid "Add Tax Form"
-msgstr "Новый продукт"
+msgstr "Tambah Borang Cukai"
 
 #: tools/dbstrings:148
-#, fuzzy
 msgid "Admin Users"
-msgstr "Новый пользователь"
+msgstr "Pengguna admin"
 
 #: tools/dbstrings:149 tools/dbstrings:106
 msgid "Text Templates"
-msgstr "Шаблоны TXT"
+msgstr "Template teks"
 
 #: tools/dbstrings:150 tools/dbstrings:107
 msgid "LaTeX Templates"
-msgstr "Шаблоны LaTeX"
+msgstr "Template LaTeX"
 
 #: tools/dbstrings:151 tools/dbstrings:108
 msgid "HTML Templates"
-msgstr "Шаблоны HTML"
+msgstr "Template HTML"
 
 #: tools/dbstrings:152 tools/dbstrings:109
 msgid "SIC"
 msgstr "SIC"
 
 #: tools/dbstrings:155 tools/dbstrings:112
-#, fuzzy
 msgid "Reporting Units"
-msgstr "Отчеты"
+msgstr "Unit yang dilaporkan"
 
 #: tools/dbstrings:157
 msgid "Add User"
-msgstr "Новый пользователь"
+msgstr "Tambah pengguna"
 
 #: tools/dbstrings:158
-#, fuzzy
 msgid "Search Users"
-msgstr "Поиск"
+msgstr "Carian pengguna"
 
 #: tools/dbstrings:159 tools/dbstrings:114
-#, fuzzy
 msgid "Sessions"
-msgstr "Версия"
+msgstr "Sesi"
 
 #: tools/dbstrings:160 tools/dbstrings:115
-#, fuzzy
 msgid "List Tax Forms"
-msgstr "Список отделов"
+msgstr "Senarai borang cukai"
 
 #: tools/dbstrings:162 tools/dbstrings:118
-#, fuzzy
 msgid "Asset Classes"
-msgstr "Комплекты"
+msgstr "Kelas aset"
 
 #: tools/dbstrings:163 tools/dbstrings:119
-#, fuzzy
 msgid "Assets"
-msgstr "Актив"
+msgstr "Aset"
 
 #: tools/dbstrings:164 tools/dbstrings:120
-#, fuzzy
 msgid "Add Class"
-msgstr "Новый SIC"
+msgstr "Tambah kelas"
 
 #: tools/dbstrings:165 tools/dbstrings:121
-#, fuzzy
 msgid "List Classes"
-msgstr "Список бизнесов"
+msgstr "Senarai kelas"
 
 #: tools/dbstrings:166 tools/dbstrings:122
-#, fuzzy
 msgid "Add Assets"
-msgstr "Новый комплект"
+msgstr "Tambah aset"
 
 #: tools/dbstrings:167 tools/dbstrings:123
-#, fuzzy
 msgid "Search Assets"
-msgstr "Поиск"
+msgstr "Carian aset"
 
 #: tools/dbstrings:168 tools/dbstrings:183 tools/dbstrings:188
 #: tools/dbstrings:8 tools/dbstrings:124 tools/dbstrings:139
 #: tools/dbstrings:144
-#, fuzzy
 msgid "Import"
-msgstr "Отчеты"
+msgstr "Import"
 
 #: tools/dbstrings:169 tools/dbstrings:125
 msgid "Depreciate"
-msgstr ""
+msgstr "Penyusutan"
 
 #: tools/dbstrings:170 tools/dbstrings:126
 msgid "Net Book Value"
-msgstr ""
+msgstr "Nilai buku bersih"
 
 #: tools/dbstrings:175 tools/dbstrings:179 tools/dbstrings:131
 #: tools/dbstrings:135
 msgid "Import Batch"
-msgstr ""
+msgstr "Import kumpulan"
 
 #: tools/dbstrings:177 tools/dbstrings:133
-#, fuzzy
 msgid "Debit Note"
-msgstr "Дебет"
+msgstr "Nota debit"
 
 #: tools/dbstrings:178 tools/dbstrings:134
-#, fuzzy
 msgid "Debit Invoice"
-msgstr "Счет-фактура"
+msgstr "Invois debit"
 
 #: tools/dbstrings:181 tools/dbstrings:137
-#, fuzzy
 msgid "Credit Note"
-msgstr "Кредит"
+msgstr "Nota kredit"
 
 #: tools/dbstrings:182 tools/dbstrings:138
-#, fuzzy
 msgid "Credit Invoice"
-msgstr "Редактировать ККМ-фактуру"
+msgstr "Invois kredit"
 
 #: tools/dbstrings:185 tools/dbstrings:141
 msgid "Add GIFI"
-msgstr "Новый GIFI"
+msgstr "Tambah GIFI"
 
 #: tools/dbstrings:186 tools/dbstrings:142
 msgid "List GIFI"
-msgstr "Список GIFI"
+msgstr "Senarai GIFI"
 
 #: tools/dbstrings:187 tools/dbstrings:143
-#, fuzzy
 msgid "Import GIFI"
-msgstr "Редактировать GIFI"
+msgstr "Import GIFI"
 
 #: tools/dbstrings:189 tools/dbstrings:145
 msgid "AR Voucher"
-msgstr ""
+msgstr "Baucer AR"
 
 #: tools/dbstrings:190 tools/dbstrings:146
 msgid "AP Voucher"
-msgstr ""
+msgstr "Baucer AP"
 
 #: tools/dbstrings:191 tools/dbstrings:147
-#, fuzzy
 msgid "Add Budget"
-msgstr "Новый бизнес"
+msgstr "Tambah bajet"
 
 #: tools/dbstrings:193 tools/dbstrings:149
 msgid "Budgets"
-msgstr ""
+msgstr "Bajet"
 
 #: tools/dbstrings:194 tools/dbstrings:150
 msgid "HR"
-msgstr "Сотрудники"
+msgstr "HR"
 
 #: tools/dbstrings:195 tools/dbstrings:151
 msgid "Order Entry"
-msgstr "Заказы"
+msgstr "Entri pesanan"
 
 #: tools/dbstrings:198 tools/dbstrings:154
-#, fuzzy
 msgid "General Journal"
-msgstr "Главная книга"
+msgstr "Jurnal umum"
 
 #: tools/dbstrings:200
 msgid "Projects"
-msgstr "Проекты"
+msgstr "Projek"
 
 #: tools/dbstrings:203 tools/dbstrings:158
-#, fuzzy
 msgid "Tax Forms"
-msgstr "Формат даты"
+msgstr "Borang cukai"
 
 #: tools/dbstrings:204 tools/dbstrings:159
 msgid "Fixed Assets"
-msgstr ""
+msgstr "Aset tetap"
 
 #: tools/dbstrings:205 tools/dbstrings:160
 msgid "Logout"
-msgstr "Выход"
+msgstr "Log keluar"
 
 #: tools/dbstrings:206 tools/dbstrings:161
 msgid "New Window"
-msgstr "Новое окно"
+msgstr "Tetingkap baru"
 
 #: tools/dbstrings:207 tools/dbstrings:162
 msgid "Preferences"
-msgstr "Настройки"
+msgstr "Keutamaan"
 
 #: tools/dbstrings:208
 msgid "Stylesheet"
-msgstr "Оформление"
+msgstr ""
 
 #: tools/dbstrings:209 tools/dbstrings:163
 msgid "System"
-msgstr "Система"
+msgstr "Sistem"
 
 #: tools/dbstrings:210 tools/dbstrings:164
-#, fuzzy
 msgid "Batch Printing"
-msgstr "Печать"
+msgstr "Percetakan kumpulan"
 
 #: tools/dbstrings:211 tools/dbstrings:212 tools/dbstrings:165
 #: tools/dbstrings:166
 msgid "Outstanding"
-msgstr "Задолженость"
+msgstr ""
 
 #: tools/dbstrings:213 tools/dbstrings:167
-#, fuzzy
 msgid "Add Overhead"
-msgstr "Новая работа/накладные расходы"
+msgstr ""
 
 #: tools/dbstrings:235 tools/dbstrings:227
 msgid "ap"
-msgstr ""
+msgstr "AP"
 
 #: tools/dbstrings:236 tools/dbstrings:228
-#, fuzzy
 msgid "ar"
-msgstr "март"
+msgstr "AR"
 
 #: tools/dbstrings:237 tools/dbstrings:229
-#, fuzzy
 msgid "payment"
-msgstr "Оплата"
+msgstr "Pembayaran"
 
 #: tools/dbstrings:238 tools/dbstrings:230
 msgid "payment_reversal"
-msgstr ""
+msgstr "Pembayaran semula"
 
 #: tools/dbstrings:239 tools/dbstrings:231
 msgid "gl"
-msgstr ""
+msgstr "GL"
 
 #: tools/dbstrings:240 tools/dbstrings:232
-#, fuzzy
 msgid "receipt"
-msgstr "Получение"
+msgstr "Resit"
 
 #: tools/dbstrings:241 tools/dbstrings:233
 msgid "receipt_reversal"
 msgstr ""
 
 #: tools/dbstrings:242 tools/dbstrings:234
-#, fuzzy
 msgid "sales_invoice"
-msgstr "Фактура клиента"
+msgstr "Invois jualan"
 
 #: tools/dbstrings:243 tools/dbstrings:235
-#, fuzzy
 msgid "vendor_invoice"
-msgstr "Фактура поставщика"
+msgstr "invois_pembekal"
 
 #: tools/dbstrings:3
-#, fuzzy
 msgid "Search Groups"
-msgstr "Поиск"
+msgstr "Carian kumpulan"
 
 #: tools/dbstrings:4
-#, fuzzy
 msgid "Search Pricegroups"
-msgstr "Типы цен"
+msgstr "Carian kumpulan harga"
 
 #: tools/dbstrings:5
-#, fuzzy
 msgid "Import Inventory"
-msgstr "Инвентарный"
+msgstr ""
 
 #: tools/dbstrings:10
 msgid "Import AR Batch"
-msgstr ""
+msgstr "Import kumpulan AR"
 
 #: tools/dbstrings:11
 msgid "Import AP Batch"
-msgstr ""
+msgstr "Import kumpulan AP"
 
 #: tools/dbstrings:12
-#, fuzzy
 msgid "Enter Inventory"
-msgstr "Перемещение инвентаря"
+msgstr "Masukan inventori"
 
 #: tools/dbstrings:79
-#, fuzzy
 msgid "Add Return"
-msgstr "Новый пользователь"
+msgstr ""
 
 #: tools/dbstrings:140
-#, fuzzy
 msgid "Search and GL"
-msgstr "Поиск"
+msgstr "Carian dan GL"
 
 #: tools/dbstrings:174
-#, fuzzy
 msgid "Sequences"
-msgstr "Настройки"
+msgstr "Turutan"
 
 #: tools/dbstrings:176
-#, fuzzy
 msgid "Reverse Overpay"
-msgstr "Предварительная оплата"
+msgstr "Lebihan pembayaran semula"
 
 #: tools/dbstrings:177
-#, fuzzy
 msgid "Reverse AR Overpay"
-msgstr "Получения"
+msgstr "Lebihan pembayaran AR"
 
 #: tools/dbstrings:179
-#, fuzzy
 msgid "Inventory and COGS"
-msgstr "Инвентарь сохранен!"
+msgstr ""
 
 #: tools/dbstrings:209 tools/dbstrings:210
-#, fuzzy
 msgid "Product Receipt"
-msgstr "Продукция"
+msgstr "Resit produk"
 
 #: tools/dbstrings:266
 msgid "Physical"
-msgstr ""
+msgstr "Fizikal"
 
 #: tools/dbstrings:267
-#, fuzzy
 msgid "Mailing"
-msgstr "Адрес доставки счета"
-
-#, fuzzy
-#~ msgid "[_1] Business"
-#~ msgstr "Бизнес"
-
-#, fuzzy
-#~ msgid "[_1] Language"
-#~ msgstr "Язык"
-
-#, fuzzy
-#~ msgid "[_1] Warehouse"
-#~ msgstr "Склад"
-
-#~ msgid "AR/AP"
-#~ msgstr "Продажа/Покупка"
-
-#~ msgid "Above"
-#~ msgstr "Больше"
-
-#~ msgid "Access Control"
-#~ msgstr "Контроль доступа"
-
-#~ msgid "Accounting"
-#~ msgstr "Бухгалтерия"
-
-#~ msgid "Accounting Menu"
-#~ msgstr "Бухгалтерское меню"
-
-#~ msgid "Accounts"
-#~ msgstr "Счета"
-
-#~ msgid "Activate Audit trail"
-#~ msgstr "Активировать пробную проверку балланса"
-
-#~ msgid "Activate Audit trails"
-#~ msgstr "Активировать пробную проверку балланса"
-
-#~ msgid "Add AP Transaction"
-#~ msgstr "Новая проводка поступлений"
-
-#~ msgid "Add AR Transaction"
-#~ msgstr "Новая проводка продаж"
-
-#~ msgid "Add Deduction"
-#~ msgstr "Новое Удержание"
-
-#~ msgid "Add Department"
-#~ msgstr "Новый отдел"
-
-#~ msgid "Add Job"
-#~ msgstr "Добавить работу"
-
-#~ msgid "Add Stores Card"
-#~ msgstr "Добавить карту хранения"
-
-#~ msgid "Administration"
-#~ msgstr "Администрирование"
-
-#~ msgid "Administrator"
-#~ msgstr "Администратор"
-
-#~ msgid "After Deduction"
-#~ msgstr "После Удержания"
-
-#~ msgid "All Accounts"
-#~ msgstr "Все счета"
-
-#~ msgid "All Datasets up to date!"
-#~ msgstr "All Datasets up to date!"
-
-#~ msgid "All Items"
-#~ msgstr "Вся номеклатура"
-
-#~ msgid "Allocated"
-#~ msgstr "Размещено"
-
-#~ msgid "Allowances"
-#~ msgstr "Списания"
-
-#~ msgid "Are you sure you want to delete Transaction"
-#~ msgstr "Вы уверены, что хотите удалить данную проводку?"
-
-#~ msgid "Are you sure you want to delete time card for"
-#~ msgstr "Вы уверены, что хотите удалить time card для"
-
-#~ msgid "As of"
-#~ msgstr "как"
-
-#~ msgid "Assembly"
-#~ msgstr "Комлект"
-
-#~ msgid "Assembly stocked!"
-#~ msgstr "Сборка помещена!"
-
-#~ msgid "Audit trail disabled"
-#~ msgstr "Пробная проверка балланса заблокирована"
-
-#~ msgid "Audit trail enabled"
-#~ msgstr "Пробная проверка балланса доступна"
-
-#~ msgid "Audit trail removed up to"
-#~ msgstr "Пробная проверка балланса отменена до"
-
-#~ msgid "Audit trails disabled"
-#~ msgstr "Пробная проверка балланса заблокирована"
-
-#~ msgid "Audit trails enabled"
-#~ msgstr "Пробная проверка балланса доступна"
-
-#~ msgid "BIC"
-#~ msgstr "BIC"
-
-#~ msgid "Backup"
-#~ msgstr "Резервная копия"
-
-#~ msgid "Backup sent to"
-#~ msgstr "Резервная копия отослана на"
-
-#~ msgid "Based on"
-#~ msgstr "Основан на"
-
-#~ msgid "Bcc"
-#~ msgstr "Bcc"
-
-#~ msgid "Before Deduction"
-#~ msgstr "До Удержания"
-
-#~ msgid "Below"
-#~ msgstr "Ниже"
-
-#~ msgid "Books are open"
-#~ msgstr "Книга открыта"
-
-#~ msgid "C"
-#~ msgstr "C"
-
-#~ msgid "Cannot add stores card for a completed job!"
-#~ msgstr "Невозможно добавить к завершенному заданию"
-
-#~ msgid "Cannot add time card for a completed job!"
-#~ msgstr "Невозможно добавить к завершенному заданию"
-
-#~ msgid "Cannot change stores card for a completed job!"
-#~ msgstr "Невозможно изменить завершенное задание"
-
-#~ msgid "Cannot change time card for a completed job!"
-#~ msgstr "Невозможно изменить завершенное задание"
-
-#~ msgid "Cannot create Assembly"
-#~ msgstr "Невозможно создать сборку"
-
-#~ msgid "Cannot create Labor"
-#~ msgstr "Невозможно создать работу"
-
-#~ msgid "Cannot create Lock!"
-#~ msgstr "Невозможно заблокировать!"
-
-#~ msgid "Cannot create Part"
-#~ msgstr "Невозможно создать часть"
-
-#~ msgid "Cannot create Service"
-#~ msgstr "Невозможно создатьуслугу"
-
-#~ msgid "Cannot delete account!"
-#~ msgstr "Невозможно удалить счет!"
-
-#~ msgid "Cannot delete customer!"
-#~ msgstr "Невозможно удалить покупателя"
-
-#~ msgid "Cannot delete default account!"
-#~ msgstr "Невозможно удалить основной счет!"
-
-#~ msgid "Cannot delete time card!"
-#~ msgstr "Невозможно удалить карту времени"
-
-#~ msgid "Cannot delete transaction!"
-#~ msgstr "Невозможно удалить проводку!"
-
-#~ msgid "Cannot delete vendor!"
-#~ msgstr "Невозможно удалить поставщика!"
-
-#~ msgid "Cannot post Payment!"
-#~ msgstr "Невозможно провести оплату!"
-
-#~ msgid "Cannot post Receipt!"
-#~ msgstr "Невозможно провести получение!"
-
-#~ msgid "Cannot save defaults!"
-#~ msgstr "Невозможно сохранить настройки по умолчании!"
-
-#~ msgid "Cannot save stores card for a closed period!"
-#~ msgstr "Невозможно сохранить карту для закрытого периода"
-
-#~ msgid "Cannot save stores card!"
-#~ msgstr "Невозможно сохранить карту"
-
-#~ msgid "Cannot save time card for a closed period!"
-#~ msgstr "Невозможно сохранить карту времени для закрытого периода"
-
-#~ msgid "Cannot save time card!"
-#~ msgstr "Невозможно сохранить карту времени"
-
-#~ msgid "Cannot set multiple options for Item"
-#~ msgstr "Невозможно установить много опций для элемента"
-
-#~ msgid "Cannot stock Assembly!"
-#~ msgstr "Невозможно сформировать комплект!"
-
-#~ msgid "Cc"
-#~ msgstr "Cc"
-
-#~ msgid "Change Admin Password"
-#~ msgstr "Изменить пароль Администратора"
-
-#~ msgid "Chargeable"
-#~ msgstr "Возмещаемый"
-
-#~ msgid "Click on login name to edit!"
-#~ msgstr "Для редактирования кликните на имя пользователя."
-
-#~ msgid "Clocked"
-#~ msgstr "Clocked"
-
-#~ msgid "Close Books up to"
-#~ msgstr "Закрыть книгу по"
-
-#~ msgid "Compare to"
-#~ msgstr "Сравнить с"
-
-#~ msgid "Completed"
-#~ msgstr "Завершен"
-
-#~ msgid "Components"
-#~ msgstr "Компоненты"
-
-#~ msgid "Confirm"
-#~ msgstr "подтвердить"
-
-#~ msgid "Connect to"
-#~ msgstr "Подключиться к"
-
-#~ msgid "Contra"
-#~ msgstr "Против"
-
-#~ msgid "Copies"
-#~ msgstr "Копий"
-
-#~ msgid "Cost Center"
-#~ msgstr "Учетный отдел"
-
-#~ msgid "Could not save pricelist!"
-#~ msgstr "Невозможно сохранить прайс!"
-
-#~ msgid "Create Chart of Accounts"
-#~ msgstr "Создать Таблицу плана счетов"
-
-#~ msgid "Customer deleted!"
-#~ msgstr "Клиент удален!"
-
-#~ msgid "Customer saved!"
-#~ msgstr "Клиент сохранен"
-
-#~ msgid "Customers"
-#~ msgstr "Клиенты"
-
-#~ msgid "DBA"
-#~ msgstr "DBA"
-
-#~ msgid "DBI not installed!"
-#~ msgstr "Не установлен драйвер DBI!"
-
-#~ msgid "DOB"
-#~ msgstr "Дата рождения"
-
-#~ msgid "Database"
-#~ msgstr "База данных"
-
-#~ msgid "Database Administration"
-#~ msgstr "Администрирование базы данных"
-
-#~ msgid "Database Driver not checked!"
-#~ msgstr "Не проверен драйвер базы данных!"
-
-#~ msgid "Database Host"
-#~ msgstr "Сервер базы данных"
-
-#~ msgid "Database User missing!"
-#~ msgstr "Пропущен пользователь базы данных!"
-
-#~ msgid "Dataset"
-#~ msgstr "База данных"
-
-#~ msgid "Dataset is newer than version!"
-#~ msgstr "База данных новее, чем текущая версия!"
-
-#~ msgid "Dataset missing!"
-#~ msgstr "Пропущена база данных"
-
-#~ msgid "Dataset updated!"
-#~ msgstr "База данных обновлена!"
-
-#~ msgid "Date worked"
-#~ msgstr "Дата работ"
-
-#~ msgid "Day"
-#~ msgstr "День"
-
-#~ msgid "Days"
-#~ msgstr "Дней"
-
-#~ msgid "Decrease"
-#~ msgstr "уменьшение"
-
-#~ msgid "Deduct after"
-#~ msgstr "Удержать после"
-
-#~ msgid "Deduction deleted!"
-#~ msgstr "Удержание удалено!"
-
-#~ msgid "Deduction saved!"
-#~ msgstr "Удержание сохранено!"
-
-#~ msgid "Defaults saved!"
-#~ msgstr "Настройки по умолчании сохранены!"
-
-#~ msgid "Department deleted!"
-#~ msgstr "Отдел удален!"
-
-#~ msgid "Department saved!"
-#~ msgstr "Отдел сохранен!"
-
-#~ msgid "Difference"
-#~ msgstr "Разница"
-
-#~ msgid "Directory"
-#~ msgstr "Каталог"
-
-#~ msgid "Driver"
-#~ msgstr "Драйвер"
-
-#~ msgid "E-mail Statement to"
-#~ msgstr "Состояние E-mail для"
-
-#~ msgid "E-mailed"
-#~ msgstr "Отправлено по e-mail"
-
-#~ msgid "Edit AP Transaction"
-#~ msgstr "Редактировать проводку Поступления"
-
-#~ msgid "Edit AR Transaction"
-#~ msgstr "Редактировать проводку Продаж"
-
-#~ msgid "Edit Business"
-#~ msgstr "Редактировать бизнес"
-
-#~ msgid "Edit Cash Transfer Transaction"
-#~ msgstr "Редактировать проводку Кассового Перемещения"
-
-#~ msgid "Edit Deduction"
-#~ msgstr "Редактировать Удержание"
-
-#~ msgid "Edit Department"
-#~ msgstr "Редактировать Отдел"
-
-#~ msgid "Edit General Ledger Transaction"
-#~ msgstr "Редактировать проводку главной книги"
-
-#~ msgid "Edit Group"
-#~ msgstr "Редактировать группу"
-
-#~ msgid "Edit Job"
-#~ msgstr "Редактировать задание"
-
-#~ msgid "Edit Labor/Overhead"
-#~ msgstr "Редактировать работы/накладные расходы"
-
-#~ msgid "Edit Part"
-#~ msgstr "Редактировать товар"
-
-#~ msgid "Edit Pricegroup"
-#~ msgstr "Редактировать тип цен"
-
-#~ msgid "Edit SIC"
-#~ msgstr "Редактировать SIC"
-
-#~ msgid "Edit Sales Invoice"
-#~ msgstr "Редактировать Фактуру клиента"
-
-#~ msgid "Edit Service"
-#~ msgstr "Редактировать Услугу"
-
-#~ msgid "Edit Time Card"
-#~ msgstr "Редактировать карту времени"
-
-#~ msgid "Edit User"
-#~ msgstr "Редактировать сотрудника"
-
-#~ msgid "Edit Warehouse"
-#~ msgstr "Редактировать склад"
-
-#~ msgid "Employee Name"
-#~ msgstr "Имя сотрудника"
-
-#~ msgid "Employee deleted!"
-#~ msgstr "Сотрудник удален!"
-
-#~ msgid "Employee pays"
-#~ msgstr "Зарплата сотрудника"
-
-#~ msgid "Employee saved!"
-#~ msgstr "Сотрудник сохранен!"
-
-#~ msgid "Employer"
-#~ msgstr "Работодатель"
-
-#~ msgid "Employer pays"
-#~ msgstr "Платежи работодателя"
-
-#~ msgid "Enddate"
-#~ msgstr "Дата окончания"
-
-#~ msgid "Enforce transaction reversal for all dates"
-#~ msgstr "Пересчитадь проводки полностью"
-
-#~ msgid ""
-#~ "Enter up to 3 letters separated by a colon (i.e CAD:USD:EUR) for your "
-#~ "native and foreign currencies"
-#~ msgstr ""
-#~ "Для обозначения валюты введите до трех букв, разделённых двоеточием, "
-#~ "(напр. CAD:USD:EUR)"
-
-#~ msgid "Equity"
-#~ msgstr "Капитал"
-
-#~ msgid "Exempt age <"
-#~ msgstr "Возраст <"
-
-#~ msgid "Existing Datasets"
-#~ msgstr "Существующие базы данных"
-
-#~ msgid "Expense/Asset"
-#~ msgstr "Расход/активы"
-
-#~ msgid "FX"
-#~ msgstr "FX"
-
-#~ msgid "Fax"
-#~ msgstr "Факс"
-
-#~ msgid "Friday"
-#~ msgstr "пятница"
-
-#~ msgid "Generate Sales Order"
-#~ msgstr "Создать ордеры продажи"
-
-#~ msgid "Group Items"
-#~ msgstr "Группа номенклатуры"
-
-#~ msgid "Heading"
-#~ msgstr "Раздел"
-
-#~ msgid "Home Phone"
-#~ msgstr "Домашний телефон"
-
-#~ msgid "Host"
-#~ msgstr "Сервер"
-
-#~ msgid "Hostname missing!"
-#~ msgstr "Пропущено имя сервера"
-
-#~ msgid "IBAN"
-#~ msgstr "IBAN"
-
-#~ msgid "Include Exchange Rate Difference"
-#~ msgstr "Включить курсовую разность"
-
-#~ msgid "Include in drop-down menus"
-#~ msgstr "Включить в падающее меню"
-
-#~ msgid "Incorrect Dataset version!"
-#~ msgstr "Неверная версия базы данных!"
-
-#~ msgid "Increase"
-#~ msgstr "Рост(увеличение)"
-
-#~ msgid ""
-#~ "Inventory quantity must be zero before you can set this assembly obsolete!"
-#~ msgstr ""
-#~ "Прежде чем комплект считать усаревшим, инвентарное количество должно быть "
-#~ "нулевым!"
-
-#~ msgid "Invoice Number missing!"
-#~ msgstr "Не указан номер счета-фактуры"
-
-#~ msgid "Invoice deleted!"
-#~ msgstr "Счет-фактура удалена!"
-
-#~ msgid "Is this a summary account to record"
-#~ msgstr "Это итоговый счет для записи"
-
-#~ msgid "Item already on pricelist!"
-#~ msgstr "Номенклатура уже есть в прайс-листе!"
-
-#~ msgid "Job"
-#~ msgstr "Задание"
-
-#~ msgid "Job Name"
-#~ msgstr "Наименование задания"
-
-#~ msgid "Job Number"
-#~ msgstr "Номер заданя"
-
-#~ msgid "Job Number missing!"
-#~ msgstr "Пропущен номер задания!"
-
-#~ msgid "Job deleted!"
-#~ msgstr "Задание удалено!"
-
-#~ msgid "Job saved!"
-#~ msgstr "Задание сохранено"
-
-#~ msgid "Jobs"
-#~ msgstr "Задания"
-
-#~ msgid "Labor Code missing!"
-#~ msgstr "Пропущен Код работы"
-
-#~ msgid "Last Numbers & Default Accounts"
-#~ msgstr "Последние номера документов и счета по-умолчании"
-
-#~ msgid ""
-#~ "Leave host and port field empty unless you want to make a remote "
-#~ "connection."
-#~ msgstr ""
-#~ "Оставте поле сервера и порта пустым до тех пор, пока вы не захотите "
-#~ "сделать удалённого соединения."
-
-#~ msgid "Liability"
-#~ msgstr "Пассив"
-
-#~ msgid "Licensed to"
-#~ msgstr "Лицензией обладает:"
-
-#~ msgid "Line Total"
-#~ msgstr "Итоговая линия"
-
-#~ msgid "Link"
-#~ msgstr "Ссылка"
-
-#~ msgid "List Projects"
-#~ msgstr "Список проектов"
-
-#~ msgid "List Transactions"
-#~ msgstr "Список проводок"
-
-#~ msgid "Lock System"
-#~ msgstr "Заблокировать систему"
-
-#~ msgid "Lockfile created!"
-#~ msgstr "Файл блокирования создан!"
-
-#~ msgid "Lockfile removed!"
-#~ msgstr "Файл блокирования удален!!"
-
-#~ msgid "Login name missing!"
-#~ msgstr "Пропушено имя пользователя!"
-
-#~ msgid "Maximum"
-#~ msgstr "Максимум"
-
-#~ msgid "May "
-#~ msgstr "май"
-
-#~ msgid "Menu Width"
-#~ msgstr "Ширина меню"
-
-#~ msgid "Monday"
-#~ msgstr "Понедельник"
-
-#~ msgid "Months"
-#~ msgstr "месяцы"
-
-#~ msgid "Multibyte Encoding"
-#~ msgstr "Многобайтовая кодировка"
-
-#~ msgid "Name missing!"
-#~ msgstr "Пропущено наименование!"
-
-#~ msgid "New Templates"
-#~ msgstr "Новый шаблон"
-
-#~ msgid "No Database Drivers available!"
-#~ msgstr "Недоступен драйвер базы данных!"
-
-#~ msgid "No Dataset selected!"
-#~ msgstr "Не выбрана база данных"
-
-#~ msgid "No Employees on file!"
-#~ msgstr "No Employees on file!"
-
-#~ msgid "No Labor codes on file!"
-#~ msgstr "No Labor codes on file!"
-
-#~ msgid "No Parts on file!"
-#~ msgstr "No Parts on file!"
-
-#~ msgid "No email address for"
-#~ msgstr "Нет адреса e-mail для"
-
-#~ msgid "No open Jobs!"
-#~ msgstr "Нет открытых заданий"
-
-#~ msgid "Non-chargeable"
-#~ msgstr "Невозмещаемые"
-
-#~ msgid "Non-taxable"
-#~ msgstr "Не подлежащие налогообложению"
-
-#~ msgid "Non-taxable Purchases"
-#~ msgstr "Закупки, не подлежащие налогообложению"
-
-#~ msgid "Non-taxable Sales"
-#~ msgstr "Продажи, не подлежащие налогообложению"
-
-#~ msgid "Non-tracking Items"
-#~ msgstr "Нетрассируемые элементы"
-
-#~ msgid "Nothing to delete!"
-#~ msgstr "Ничего не удалено!"
-
-#~ msgid "Number Format"
-#~ msgstr "Числовой формат"
-
-#~ msgid "Oracle Database Administration"
-#~ msgstr "Администрирование базы данных Oracle"
-
-#~ msgid "Order saved!"
-#~ msgstr "Заказ сохранен!"
-
-#~ msgid "Out of balance!"
-#~ msgstr "Вне балланса!"
-
-#~ msgid "Packing List Date missing!"
-#~ msgstr "Пропущена дата упаковочного списока!"
-
-#~ msgid "Packing List Number missing!"
-#~ msgstr "Пропущен номер упаковочного списока!"
-
-#~ msgid "Parts"
-#~ msgstr "Товары"
-
-#~ msgid "Password"
-#~ msgstr "Пароль"
-
-#~ msgid "Payables"
-#~ msgstr "Подлежащий оплате"
-
-#~ msgid "Payments posted!"
-#~ msgstr "Оплаты проведены!"
-
-#~ msgid "Payroll Deduction"
-#~ msgstr "Удержание по ведомости"
-
-#~ msgid "Pg Database Administration"
-#~ msgstr "Администрирование базы данных PostgreSQL (Pg)"
-
-#~ msgid "PgPP Database Administration"
-#~ msgstr "Администрирование базы данных PostgreSQL (PgPP)"
-
-#~ msgid "Phone"
-#~ msgstr "Тел."
-
-#~ msgid "Port"
-#~ msgstr "Порт"
-
-#~ msgid "Port missing!"
-#~ msgstr "Пропущен номер порта!"
-
-#~ msgid "Pos"
-#~ msgstr "ККМ"
-
-#~ msgid "Posting"
-#~ msgstr "Сохранение"
-
-#~ msgid "Posting failed!"
-#~ msgstr "Ошибка сохранения"
-
-#~ msgid "Pricelist"
-#~ msgstr "Прайслист"
-
-#~ msgid "Print and Post as new"
-#~ msgstr "Напечатать и отправить как новый"
-
-#~ msgid "Printer"
-#~ msgstr "Принтер"
-
-#~ msgid "Printing ... "
-#~ msgstr "Печать..."
-
-#~ msgid "Profit Center"
-#~ msgstr "Профит-центр"
-
-#~ msgid "Project Name"
-#~ msgstr "Название проекта"
-
-#~ msgid "Project Number missing!"
-#~ msgstr "Пропущен код проекта"
-
-#~ msgid "Project Transactions"
-#~ msgstr "Проводки проекта"
-
-#~ msgid "Project deleted!"
-#~ msgstr "Проект удален"
-
-#~ msgid "Project saved!"
-#~ msgstr "Проект сохранен!"
-
-#~ msgid "Project/Job Name"
-#~ msgstr "Название Проекта/Задания"
-
-#~ msgid "Project/Job Number"
-#~ msgstr "Номер Проекта/Задания"
-
-#~ msgid "Purchase Order Number"
-#~ msgstr "Номер заказа поставщику"
-
-#~ msgid "Quotation "
-#~ msgstr "Резервирование"
-
-#~ msgid "R"
-#~ msgstr "R"
-
-#~ msgid "RFQ "
-#~ msgstr "Запрос на резервирование"
-
-#~ msgid "Rate missing!"
-#~ msgstr "Пропущен курс"
-
-#~ msgid "Receipt posted!"
-#~ msgstr "Получение проведено!"
-
-#~ msgid "Receivables"
-#~ msgstr "Подлежащий получению"
-
-#~ msgid "Remove Audit trail up to"
-#~ msgstr "Удалить пробную проверку балланса до"
-
-#~ msgid "Remove Audit trails up to"
-#~ msgstr "Удалить пробную проверку балланса до"
-
-#~ msgid "Report for"
-#~ msgstr "Отчет для"
-
-#~ msgid "Request for Quotations"
-#~ msgstr "Запросы на резервирование"
-
-#~ msgid "Retained Earnings"
-#~ msgstr "Нераспределенная прибыль"
-
-#~ msgid "Role"
-#~ msgstr "Роль"
-
-#~ msgid "S"
-#~ msgstr "S"
-
-#~ msgid "SSN"
-#~ msgstr "SSN"
-
-#~ msgid "Sale"
-#~ msgstr "Продажа"
-
-#~ msgid "Sales Invoice."
-#~ msgstr "Фактура клиента"
-
-#~ msgid "Saturday"
-#~ msgstr "Суббота"
-
-#~ msgid "Save Pricelist"
-#~ msgstr "Сохранить прайслист"
-
-#~ msgid "Save to File"
-#~ msgstr "Сохранить в файл"
-
-#~ msgid "Select a printer!"
-#~ msgstr "Выберите Принтер"
-
-#~ msgid "Send by E-Mail"
-#~ msgstr "Отправить по E-Mail"
-
-#~ msgid "Service Code missing!"
-#~ msgstr "Пропущен Код услуги!"
-
-#~ msgid "Service/Labor Code"
-#~ msgstr "Код услуги/работы"
-
-#~ msgid "Services"
-#~ msgstr "Услуги"
-
-#~ msgid "Session expired!"
-#~ msgstr "Превышено время задержки сессии"
-
-#~ msgid "Setup Templates"
-#~ msgstr "Установить шаблоны"
-
-#~ msgid "Shipping Address"
-#~ msgstr "Адрес доставки"
-
-#~ msgid "Short"
-#~ msgstr "Краткосрочный"
-
-#~ msgid "Signature"
-#~ msgstr "Подпись"
-
-#~ msgid "Standard"
-#~ msgstr "Стандартные"
-
-#~ msgid "State/Province"
-#~ msgstr "Штат/Провинция"
-
-#~ msgid "Statement sent to"
-#~ msgstr "Ведомость отправлена для"
-
-#~ msgid "Statements sent to printer!"
-#~ msgstr "Ведомость отправлена на принтер!"
-
-#~ msgid "Stock Finished Goods"
-#~ msgstr "Сформировать завершенную продукцию"
-
-#~ msgid "Stores Card"
-#~ msgstr "Stores Card"
-
-#~ msgid "Stores Card saved!"
-#~ msgstr "Stores Card saved!"
-
-#~ msgid "Stores Cards"
-#~ msgstr "Stores Cards"
-
-#~ msgid "Sub-contract GIFI"
-#~ msgstr "Передоверенный GIFI"
-
-#~ msgid "Sunday"
-#~ msgstr "Воскресенье"
-
-#~ msgid "Supervisor"
-#~ msgstr "Контролер"
-
-#~ msgid "System Defaults"
-#~ msgstr "Настройки системы поумолчании."
-
-#~ msgid "Tax Accounts"
-#~ msgstr "Налоговые счета"
-
-#~ msgid "Tax Number / SSN"
-#~ msgstr "Код налога/SSN"
-
-#~ msgid "Tax collected"
-#~ msgstr "Собранные налоги"
-
-#~ msgid "Tax paid"
-#~ msgstr "Оплаченные налоги"
-
-#~ msgid "Taxable"
-#~ msgstr "Подлежит налогообложению"
-
-#~ msgid "Text"
-#~ msgstr "Текст"
-
-#~ msgid "The following Datasets are not in use and can be deleted"
-#~ msgstr "Сдедующие базы данных не используются и могут быть удалены"
-
-#~ msgid "The following Datasets need to be updated"
-#~ msgstr "Следующие базы данных необходимо обновить"
-
-#~ msgid ""
-#~ "This is a preliminary check for existing sources. Nothing will be created "
-#~ "or deleted at this stage!"
-#~ msgstr ""
-#~ "это предварительная проверка существующих источников. В этом состоянии ни "
-#~ "что не будет создано и удалено!"
-
-#~ msgid "Thursday"
-#~ msgstr "Четверг"
-
-#~ msgid "Time Card deleted!"
-#~ msgstr "Time Card deleted!"
-
-#~ msgid "Time Card saved!"
-#~ msgstr "Time Card saved!"
-
-#~ msgid "Time In"
-#~ msgstr "Время входа"
-
-#~ msgid "Time Out"
-#~ msgstr "Время выхода"
-
-#~ msgid ""
-#~ "To add a user to a group edit a name, change the login name and save.  A "
-#~ "new user with the same variables will then be saved under the new login "
-#~ "name."
-#~ msgstr ""
-#~ "Для добавления пользователя в группу, отредактируйте его имя (логин) и "
-#~ "сохраните. Для создания нового пользователя с теми же настройками - "
-#~ "сохраните с новым именем пользователя."
-
-#~ msgid "Tracking Items"
-#~ msgstr "Tracking Items"
-
-#~ msgid "Transaction deleted!"
-#~ msgstr "Проводка удалена!"
-
-#~ msgid "Transaction reversal enforced for all dates"
-#~ msgstr "Проводки пересчитаны полностью"
-
-#~ msgid "Transaction reversal enforced up to"
-#~ msgstr "Проводки пересчитаны до"
-
-#~ msgid "Transactions"
-#~ msgstr "Проводки"
-
-#~ msgid "Translation not on file!"
-#~ msgstr "Нет перевода с списке!"
-
-#~ msgid "Unit of measure"
-#~ msgstr "Единица измерения"
-
-#~ msgid "Unlock System"
-#~ msgstr "Разблокировать систему"
-
-#~ msgid "Update Dataset"
-#~ msgstr "Обновить базу данных"
-
-#~ msgid "Upgrading to Version"
-#~ msgstr "Обновление до версии"
-
-#~ msgid "Use Templates"
-#~ msgstr "Использовать шаблоны"
-
-#~ msgid "User deleted!"
-#~ msgstr "Сотрудник удалён!"
-
-#~ msgid "User saved!"
-#~ msgstr "Сотрудник сохранен!"
-
-#~ msgid "Vendor Invoice."
-#~ msgstr "Фактура поставщика."
-
-#~ msgid "Vendor Invoices"
-#~ msgstr "Фактуры поставщика"
-
-#~ msgid "Vendor deleted!"
-#~ msgstr "Поставщик удален!"
-
-#~ msgid "Vendor saved!"
-#~ msgstr "Поставщик сохранен!"
-
-#~ msgid "Vendors"
-#~ msgstr "Поставщики"
-
-#~ msgid "Warning!"
-#~ msgstr "Внимание!"
-
-#~ msgid "Wednesday"
-#~ msgstr "Среда"
-
-#~ msgid "Week"
-#~ msgstr "Неделя"
-
-#~ msgid "Weeks"
-#~ msgstr "Недели"
-
-#~ msgid "Work Phone"
-#~ msgstr "Рабочий телефон"
-
-#~ msgid "Yearend date missing!"
-#~ msgstr "Пропущена дата завершения года!"
-
-#~ msgid "Yearend posted!"
-#~ msgstr "Завершение года выполнено!"
-
-#~ msgid "Yearend posting failed!"
-#~ msgstr "Ошибка завершение года!"
-
-#~ msgid "Years"
-#~ msgstr "Годы"
-
-#~ msgid "You are posting an existing transaction!"
-#~ msgstr "Выполнение существующей проводки!"
-
-#~ msgid "You are printing and posting an existing transaction!"
-#~ msgstr "Печать и выполнение существующей проводки!"
-
-#~ msgid "You are printing and saving an existing order"
-#~ msgstr "Печать и сохранение существующего ордера"
-
-#~ msgid "You are printing and saving an existing quotation"
-#~ msgstr "Печать и сохранение существующего резервирования"
-
-#~ msgid "You are printing and saving an existing transaction!"
-#~ msgstr "Печать и сохранение существующей проводки!"
-
-#~ msgid "You are saving an existing order"
-#~ msgstr "Сохранение существующего ордера"
-
-#~ msgid "You are saving an existing quotation"
-#~ msgstr "Сохранение существующего резервирования"
-
-#~ msgid "You are saving an existing transaction!"
-#~ msgstr "Сохранение существующей проводки!"
-
-#~ msgid "You did not enter a name!"
-#~ msgstr "Вы не ввели (имя)наименование!"
-
-#~ msgid "You must enter a host and port for local and remote connections!"
-#~ msgstr ""
-#~ "Вы должны заполнить поле сервера и порта для локального и удалённого "
-#~ "соединений!"
-
-#~ msgid "as at"
-#~ msgstr "как в"
-
-#~ msgid "for"
-#~ msgstr "для"
-
-#~ msgid "for Period"
-#~ msgstr "за период"
-
-#~ msgid "is already a member!"
-#~ msgstr "уже зарегистрирован"
-
-#~ msgid "locked!"
-#~ msgstr "заблокирована!"
-
-#~ msgid "posted!"
-#~ msgstr "отправлено"
-
-#~ msgid "successfully created!"
-#~ msgstr "успешно создана!"
-
-#~ msgid "successfully deleted!"
-#~ msgstr "успешно удалена!"
-
-#~ msgid "website"
-#~ msgstr "сайт WWW"
+msgstr "Surat-menyurat"

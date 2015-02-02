@@ -67,7 +67,10 @@ our @default_settings = (
         label => $locale->text('Separate Duties'),
          type => 'YES_NO', },
        { name => 'lock_description',
-        label => 'Lock Item Description',
+        label => $locale->text('Lock Item Description'),
+         type => 'YES_NO', },
+       { name => 'gapless_ar',
+        label => $locale->text('Gapless AR'), 
          type => 'YES_NO', },
      ] },
  { title => $locale->text('Default Accounts'),
@@ -121,6 +124,8 @@ our @default_settings = (
        { name => 'template_immages',
         label => $locale->text('Images in Templates'),
          type => 'YES_NO', },
+       { name => 'min_empty',
+        label => $locale->text('Min Empty Lines') },
      ] },
 );
 

@@ -73,13 +73,6 @@ sub print {
         for ( keys %$form ) { $old_form->{$_} = $form->{$_} }
     }
 
-    if ( $form->{formname} =~ /(check|receipt)/ ) {
-        if ( $form->{media} eq 'screen' ) {
-            $form->error( $locale->text('Select postscript or PDF!') )
-              if $form->{format} !~ /(postscript|pdf)/;
-        }
-    }
-
     if ( !$form->{invnumber} ) {
         $invfld = 'sinumber';
         $invfld = 'vinumber' if $form->{ARAP} eq 'AP';
@@ -92,36 +85,6 @@ sub print {
         }
     }
 
-    if ( $form->{formname} =~ /(check|receipt)/ ) {
-        if ( $form->{media} ne 'screen' ) {
-            for (qw(action header)) { delete $form->{$_} }
-            $form->{invtotal} = $form->{oldinvtotal};
-
-            foreach $key ( keys %$form ) {
-                $form->{$key} =~ s/&/%26/g;
-                $form->{previousform} .= qq|$key=$form->{$key}&|;
-            }
-            chop $form->{previousform};
-            $form->{previousform} = $form->escape( $form->{previousform}, 1 );
-        }
-
-        if ( $form->{paidaccounts} > 1 ) {
-            if ( $form->{"paid_$form->{paidaccounts}"} ) {
-                &update;
-                $form->finalize_request();
-            }
-            elsif ( $form->{paidaccounts} > 2 ) {
-
-                # select payment
-                &select_payment;
-                $form->finalize_request();
-            }
-        }
-        else {
-            $form->error( $locale->text('Nothing to print!') );
-        }
-
-    }
     if ( $filename = $queued{ $form->{formname} } ) {
         $form->{queued} =~ s/$form->{formname} $filename//;
         unlink "${LedgerSMB::Sysconfig::spool}/$filename";
@@ -245,18 +208,10 @@ sub print_transaction {
     $form->{invtotal} = $form->{subtotal} + $tax;
     $form->{total}    = $form->{invtotal} - $form->{paid};
 
-    use LedgerSMB::CP;
-    $c =
-      CP->new( ( $form->{language_code} )
-        ? $form->{language_code}
-        : $myconfig{countrycode} );
-    $c->init;
     ( $whole, $form->{decimal} ) = split /\./, $form->{invtotal};
 
     $form->{decimal} .= "00";
     $form->{decimal}        = substr( $form->{decimal}, 0, 2 );
-    $form->{text_decimal}   = $c->num2text( $form->{decimal} * 1 );
-    $form->{text_amount}    = $c->num2text($whole);
     $form->{integer_amount} = $form->format_amount( \%myconfig, $whole );
 
     for (qw(invtotal subtotal paid total)) {
@@ -399,7 +354,7 @@ sub print_transaction {
                 }
             }
         }
-
+        return if 'zip' eq lc($form->{media});
         &{"$display_form"};
 
     }

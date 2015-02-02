@@ -218,6 +218,7 @@ VALUES ('ar_EG', 'Arabic (Egypt)'),
        ('is',    'Icelandic'),
        ('it',    'Italian'),
        ('lt',    'Latvian'),
+       ('my',    'Malay'),
        ('nb',    'Norwegian'),
        ('nl',    'Dutch'),
        ('nl_BE', 'Dutch (Belgium)'),
@@ -1362,7 +1363,7 @@ sinumber|1
 sonumber|1
 yearend|1
 businessnumber|1
-version|1.4.5
+version|1.4.10
 closedto|\N
 revtrans|1
 ponumber|1
@@ -1709,8 +1710,11 @@ CREATE TABLE ar (
   description text,
   is_return bool default false,
   crdate date,
-  unique(invnumber) -- probably a good idea as per Erik's request --CT
+  setting_sequence text,
+  check (invnumber is not null or not approved)
 );
+
+CREATE UNIQUE INDEX ar_invnumber_key ON ar(invnumber) where invnumber is not null;
 
 COMMENT ON TABLE ar IS
 $$ Summary/header information for AR transactions and sales invoices.
@@ -3050,7 +3054,7 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 44	report	1	110
 46	menu	1	111
 47	menu	1	112
-48	module	employee.pl	113
+48	module	contact.pl	113
 48	action	add	114
 50	menu	1	119
 51	module	oe.pl	120
@@ -3563,11 +3567,11 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 75	module	reports.pl	219
 75	action	start_report	226
 75	report_name	cogs_lines	227
-90	module	template.pm	228
+90	module	template.pl	228
 90	action	display	229
 90	template_name	product_receipt	230
 90	format	tex	231
-99	module	template.pm	240
+99	module	template.pl	240
 99	action	display	241
 99	template_name	product_receipt	242
 99	format	html	245
@@ -4917,3 +4921,4 @@ CREATE UNIQUE INDEX template_name_idx_u ON template(template_name, format)
 WHERE language_code is null; -- Pseudo-Pkey
 
 commit;
+

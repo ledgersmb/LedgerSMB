@@ -78,6 +78,7 @@
                   class = 'salutations'
               text_attr = 'salutation'
              value_attr = 'id'
+               required = 'true'
     } ?>
 </div>
 </div>
@@ -89,6 +90,7 @@
 		name = "first_name"
 		value = person.first_name
 		size = "20"
+            required = 'true'
 	} ?>
 </div>
 </div>
@@ -111,6 +113,7 @@
                 name = "last_name"
                 value = person.last_name
                 size = "20"
+            required = 'true'
         } ?>
 </div>
 </div>
@@ -129,6 +132,7 @@
 			options = country_list
 			name = "country_id"
 			label = text('Country') 
+                        required = 'true'
 	} ?> 
 </div>
 </div>
@@ -139,7 +143,7 @@
            type  = 'text',
            size  = '20',
            value = person.personal_id,
-           label = text('Personal ID'), #'
+           label = text('Personal ID') #'
            class = 'id',
     } ?>
 </div>

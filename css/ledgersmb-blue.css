@@ -141,7 +141,8 @@ body.menu {
 }
 
 .listtop { font-size: 10pt; background-color: black; color: white; }
-.listheading { font-size: 10pt; background-color: #6495ED;; color: white; }
+.listheading { font-size: 10pt; background-color: #6495ED;
+               font-weight: bold; color: white; }
 A.listheading:link, A.listheading:active, A.listheading:visited {
   color: white;
   text-decoration: none; }

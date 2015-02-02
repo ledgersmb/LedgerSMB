@@ -1,4 +1,4 @@
-<?lsmb IF employee.ssn ?>
+<?lsmb IF employee.first_name ?>
 <div id="user_div" class="lsmbtab"  title="<?lsmb text('User') ?>">
 	<div class="listtop">
             <?lsmb 
@@ -14,7 +14,7 @@
                 END ?>
         </div>
     
-    <form method="POST" action="employee.pl">
+    <form method="POST" action="<?lsmb script ?>">
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
         <table>
 
@@ -35,7 +35,7 @@
             <tr>
                 <td><?lsmb text('Username') ?></td>
                 <td>
-                    <input type="text" name="username" value="<?lsmb user.username ?>"/>
+                    <input type="text" name="username" value="<?lsmb user.username ?>" required/>
                 </td>
             </tr>
             <?lsmb END ?>

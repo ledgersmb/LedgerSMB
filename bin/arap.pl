@@ -401,8 +401,6 @@ sub schedule {
         $a[$i] =~ />(.*)/;
         $formname{$v} = $1;
     }
-    for (qw(check receipt)) { delete $formname{$_} }
-
     $selectformat = $form->unescape( $form->{selectformat} );
 
     if ( $form->{type} !~ /transaction/ && %formname ) {

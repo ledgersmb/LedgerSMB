@@ -30,6 +30,7 @@ LedgerSMB::Report::Unapproved::Batch_Overview instead.
 
 package LedgerSMB::Report::Unapproved::Batch_Detail;
 use Moose;
+use LedgerSMB::DBObject::User;
 extends 'LedgerSMB::Report';
 
 use LedgerSMB::Business_Unit_Class;
@@ -183,6 +184,26 @@ Runs the report, and assigns rows to $self->rows.
 
 sub run_report{
     my ($self) = @_;
+    my %lhash = LedgerSMB::DBObject::User->country_codes();
+    my ($default_language) = LedgerSMB::Setting->get('default_language');
+    my $locales = [ map { { text => $lhash{$_}, value => $_ } }
+                    sort {$lhash{$a} cmp $lhash{$b}} keys %lhash
+                  ];
+    my $printer = [ {text => 'Screen', value => 'zip'}, 
+                    map { { 
+                         text => $_, value => $LedgerSMB::Sysconfig::printer{$_}
+                          } }
+                  keys %LedgerSMB::Sysconfig::printer];
+    $self->options([{
+       name => 'language',
+       options => $locales,
+       default_value => [$default_language],
+    }, {
+       name => 'media',
+       options => $printer,
+    }, 
+    ]);
+
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',
@@ -208,19 +229,26 @@ sub run_report{
                     text  => LedgerSMB::Report::text('Unlock Batch'),
                     value => 'single_batch_unlock',
                     class => 'submit',
-                }]);
+                },
+                {
+                    name  => 'action',
+                    type  => 'submit',
+                    text  => LedgerSMB::Report::text('Print Batch'),
+                    value => 'print_batch',
+                    class => 'submit',
+                }, ]);
     my @rows = $self->exec_method({funcname => 'voucher__list'});
     for my $ref (@rows){
         my $script;
         my $class_to_script = {
-           1 => 'ap',
-           2 => 'ar',
-           5 => 'gl',
-           8 => 'is',
-           9 => 'ir',
+           '1' => 'ap',
+           '2' => 'ar',
+           '3' => 'gl',
+           '8' => 'is',
+           '9' => 'ir',
         };
-        $script = $class_to_script->{$ref->{batch_class}};
-        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}";
+        $script = $class_to_script->{lc($ref->{batch_class_id})};
+        $ref->{reference_href_suffix} = "$script.pl?action=edit&id=$ref->{id}" if $script;
     }
     $self->rows(\@rows);
 }

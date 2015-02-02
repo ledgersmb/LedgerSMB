@@ -159,6 +159,14 @@ Buttons to show at the bottom of the screen
 has buttons => (is => 'rw', isa => 'ArrayRef[Any]',
                 lazy => 1, builder => 'set_buttons');
 
+=item options
+
+List of select boxes for options for buttons.
+
+=cut
+
+has options => (is => 'rw', isa => 'ArrayRef[Any]',
+                default => sub {[]} );
 =back
 
 =head1 METHODS
@@ -313,6 +321,7 @@ sub render {
                       columns => $columns, 
                     order_url => $self->order_url,
                       buttons => $self->buttons,
+                      options => $self->options,
                          rows => $self->rows});
 }
 
