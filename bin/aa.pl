@@ -227,8 +227,7 @@ sub create_links {
     $form->{duedate}     = $duedate     if $duedate;
     $form->{crdate}      = $crdate      if $crdate;
 
-    $form->{"old$form->{vc}"} =
-      qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|;
+    $form->{"old$form->{vc}"} = $form->{$form->{vc}};
     $form->{oldtransdate} = $form->{transdate};
 
     # customers/vendors
