@@ -21,9 +21,14 @@ Changelog for 1.4.10
 * Fixed 1304.1, removed check printing from invoices (Chris T)
 * Fixed join issue for GL drafts showing wrong amt (Chris T)
 * Fixed 1304.2, pay to name not used in single payment (Chris T)
+* Fixed 1314, download link files attached to ECA and entity broken (Erik H)
+* Fixed column names in ECA/entity linked files tables (John L)
+* Fixed headers indistinguishable from accounts in CoA for some CSS (Erik H)
 
 Chris T is Chris Travers
 Kaiser F is Kaiser Farrel
+Erik H is Erik Huelsmann
+John L is John Locke
 
 Changelog for 1.4.9
 * Removed optional dependency on LaTeX from starman preload (Chris T)

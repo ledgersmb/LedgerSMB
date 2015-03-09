@@ -123,7 +123,8 @@ body.menu {
 }
 
 .listtop { font-size: 10pt; background-color: red; color: black; border: 1px solid #000000 }
-.listheading { font-size: 10pt; background-color: red; color: black; border: 1px solid #000000 }
+.listheading { font-size: 10pt; background-color: red;
+               font-weight: bold; color: black; border: 1px solid #000000 }
 A.listheading:link, A.listheading:active, A.listheading:visited {
   color: black;
   text-decoration: none; }
