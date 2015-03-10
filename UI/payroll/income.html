@@ -5,7 +5,9 @@ INCLUDE "ui-header.html";
 PROCESS "elements.html";
 
 ?>
+<body class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('Income Type') ?></div>
+<div class="tabular">
 <div class="input_row">
 <div class="input_group"><?lsmb 
 
@@ -58,6 +60,7 @@ PROCESS input element_data = {
     type = 'text'
     size = '20'
    class = 'control_code'
+   label = text('Control Code') #'
 }; ?></div></div>
 <div class="input_row">
 <div class="input_group"><?lsmb 
@@ -68,6 +71,7 @@ PROCESS input element_data = {
     type = 'text'
     size = '10'
    class = 'unit'
+   label = text('Unit')
 }; ?></div></div>
 <div class="input_row">
 <div class="input_group"><?lsmb 
@@ -78,7 +82,9 @@ PROCESS input element_data = {
     type = 'text'
     size = '25'
    class = 'amount'
+   label = text('Default amount') #'
 } ?></div></div>
+</div>
 <div class="input_row">
 <?lsmb
 
@@ -96,6 +102,6 @@ PROCESS button element_data = {
    class = 'submit'
     type = 'submit'
     text = text('Save')
-]; ?></div>
+}; ?></div>
 </body>
 </html>

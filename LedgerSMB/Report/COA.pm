@@ -80,7 +80,8 @@ admin users.
 
 =cut
 
-our @COLUMNS = (
+sub columns {
+    return [
     {col_id => 'accno',
        name => LedgerSMB::Report::text('Account Number'),
        type => 'href',
@@ -126,11 +127,7 @@ our @COLUMNS = (
        type => 'href',
   href_base => '',
   html_only => '1', },
-
-);
-
-sub columns {
-    return \@COLUMNS;
+  ];
 }
 
 =item name
