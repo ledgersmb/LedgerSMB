@@ -1,6 +1,12 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.11
+* Fixed account dropdowns on default screen (Nick P)
+* Fixed broken comparison with oldvendor (Nick P)
+* Fixed workflow for saving reconciliation reports (Nick P)
+* Fixed HTML errors in payment details (Nick P)
+
 Changelog for 1.4.10
 * Note:  Corrected version numbers in 1.4.10.1, 1.4.10 had 1.4.9 as version
 * Malay translation added (Kaiser F, and others)

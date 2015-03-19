@@ -17,7 +17,7 @@ eval "use Test::Pod::Coverage";
 if ($@){
     plan skip_all => "Test::Pod::Coverage required for testing POD coverage";
 } else {
-    plan tests => 64;
+    plan tests => 63;
 }
 pod_coverage_ok("LedgerSMB");
 pod_coverage_ok("LedgerSMB::Form");
@@ -51,7 +51,7 @@ pod_coverage_ok("LedgerSMB::Scripts::import_csv");
 pod_coverage_ok("LedgerSMB::Scripts::inventory");
 pod_coverage_ok("LedgerSMB::Scripts::invoice");
 pod_coverage_ok("LedgerSMB::Scripts::inv_reports");
-pod_coverage_ok("LedgerSMB::Scripts::journal");
+# pod_coverage_ok("LedgerSMB::Scripts::journal");
 pod_coverage_ok("LedgerSMB::Scripts::login");
 pod_coverage_ok("LedgerSMB::Scripts::lreports_co");
 pod_coverage_ok("LedgerSMB::Scripts::menu");
