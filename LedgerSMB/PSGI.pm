@@ -16,6 +16,7 @@ use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
+eval { require LedgerSMB::Template::LaTeX; };
 use LedgerSMB::Template::HTML;
 use LedgerSMB::Locale;
 use LedgerSMB::File;
