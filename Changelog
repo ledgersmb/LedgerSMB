@@ -6,6 +6,10 @@ Changelog for 1.4.11
 * Fixed broken comparison with oldvendor (Nick P)
 * Fixed workflow for saving reconciliation reports (Nick P)
 * Fixed HTML errors in payment details (Nick P)
+* Making LaTeX optional on starman (Chris T)
+
+Chris T is Chris Travers
+Nick P is Nick Praeter
 
 Changelog for 1.4.10
 * Note:  Corrected version numbers in 1.4.10.1, 1.4.10 had 1.4.9 as version
