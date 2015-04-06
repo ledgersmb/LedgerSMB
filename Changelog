@@ -7,6 +7,7 @@ Changelog for 1.4.11
 * Fixed workflow for saving reconciliation reports (Nick P)
 * Fixed HTML errors in payment details (Nick P)
 * Making LaTeX optional on starman (Chris T)
+* Fixing issues where colon is in password (Chris T)
 
 Chris T is Chris Travers
 Nick P is Nick Praeter
