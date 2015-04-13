@@ -449,6 +449,20 @@ COMMENT ON FUNCTION account_heading_save
 (in_id int, in_accno text, in_description text, in_parent int) IS
 $$ Saves an account heading. $$;
 
+CREATE OR REPLACE FUNCTION account_heading__delete(in_id int)
+RETURNS BOOL AS
+$$
+BEGIN
+DELETE FROM account_heading WHERE id = in_id;
+RETURN FOUND;
+END;
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION account_heading__delete(int) IS
+$$ This deletes an account heading with the id specified.  If the heading has 
+accounts associated with it, it will fail and raise a foreign key constraint.
+$$;
+
 CREATE OR REPLACE RULE chart_i AS ON INSERT TO chart
 DO INSTEAD
 SELECT CASE WHEN new.charttype='H' THEN 
