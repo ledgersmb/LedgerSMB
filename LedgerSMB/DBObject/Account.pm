@@ -140,16 +140,24 @@ sub is_recon {
 
 =item delete()
 
-Attempts to delete the account.  This will NOT succeed if the account is
-referenced in any way by any transactions, credit accounts, etc.
+Attempts to delete the account or heading.  This will NOT succeed if the
+account is referenced in any way by any transactions, credit accounts, etc.
+or in case of a heading where the heading is referenced by accounts or
+child-headings.
 
-$account->{id} must be set.
+$account->{id} and $account->{charttype} must be set.
 
 =cut
 
 sub delete {
     my $self = shift @_;
-    $self->exec_method(funcname => 'account__delete');
+    if ($self->{charttype} == 'A') {
+	$self->exec_method(funcname => 'account__delete');
+    } elsif ($self->{charttype} == 'H') {
+	$self->exec_method(funcname => 'account_heading__delete');
+    } else {
+	die "Unknown charttype."
+    }
 }
 
 =item list()
