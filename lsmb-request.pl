@@ -27,8 +27,6 @@ use Try::Tiny;
 
 $| = 1;
 
-binmode (STDIN, ':bytes');
-binmode (STDOUT, ':utf8');
 use LedgerSMB::User;
 use LedgerSMB::App_State;
 use LedgerSMB;
@@ -36,6 +34,8 @@ use LedgerSMB::Locale;
 use Data::Dumper;
 use Log::Log4perl;
 use strict;
+binmode STDIN, ':bytes' if (defined $ENV{REQUEST_METHOD}) and ($ENV{REQUEST_METHOD} eq 'POST');
+binmode STDOUT, ':utf8';
 
 
 my $logger;
