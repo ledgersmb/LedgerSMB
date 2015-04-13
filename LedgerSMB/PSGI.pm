@@ -39,7 +39,7 @@ sub app {
        if ($uri =~ m|/rest/|){
          do 'rest-handler.pl';
        } elsif (-f "LedgerSMB/Scripts/$nscript"){
-         do 'lsmb-request.pl'; 
+         do 'lsmb-request.pl' || die $!; 
        } else {
           _run_old($script);
        }

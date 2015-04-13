@@ -1,4 +1,4 @@
-#=====================================================================
+=====================================================================
 # LedgerSMB Small Medium Business Accounting
 # http://www.ledgersmb.org/
 #
@@ -144,7 +144,7 @@ sub add_pos_adjust {
 }
 
 sub new {
-     for my $row (1 .. $form->{rowcount}){
+     for my $row (0 .. $form->{rowcount}){
          for my $fld(qw(accno projectnumber acc debit credit source memo)){
             delete $form->{"${fld}_${row}"};
          }
