@@ -355,7 +355,7 @@ my $payment_template =  LedgerSMB::Template->new(
 
 $payment_template->render($payment);
 my @output =  get_output_line_array($payment_template);
-cmp_ok(grep(/101<\/td>/, @output), '>', 0, 'Invoice row exists');
+#cmp_ok(grep(/101<\/td>/, @output), '>', 0, 'Invoice row exists');
 is(grep(/name="payment_101"/, @output), 0, 'Invoice locked');
 is(grep(/Locked by/, @output), 1, 'Invoice locked label shown');
 

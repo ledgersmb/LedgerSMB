@@ -44,7 +44,7 @@ sub get_credentials {
     #$auth = MIME::Base64::decode($auth);
     my $return_value = {};
     #$logger->debug("\$auth=$auth");#be aware of passwords in log!
-    ($return_value->{login}, $return_value->{password}) = split(/:/, $auth);
+    ($return_value->{login}, $return_value->{password}) = split(/:/, $auth, 2);
     if (defined $LedgerSMB::Sysconfig::force_username_case){
         if (lc($LedgerSMB::Sysconfig::force_username_case) eq 'lower'){
             $return_value->{login} = lc($return_value->{login});
