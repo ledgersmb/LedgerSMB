@@ -16,6 +16,11 @@ INCLUDE 'ui-header.html'
         name = 'charttype'
         type = 'hidden'
 } ?>
+<?lsmb PROCESS input element_data = {
+        value = form.id
+        name = 'id'
+        type = 'hidden'
+} ?>
 <div class="inputline" id="accno-line">
   <label class="line"><?lsmb text('Account Number') ?></label>
   <div class="inputgroup">
