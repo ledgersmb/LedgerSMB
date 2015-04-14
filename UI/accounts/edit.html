@@ -6,7 +6,7 @@ INCLUDE 'ui-header.html'
 <?lsmb PROCESS elements.html ?> 
 <body class="<?lsmb dojo_theme ?>">
 <script type="text/javascript" language="Javascript">
-    var activeDiv = "<?lsmb charttype ?>";
+    var activeDiv = "<?lsmb form.charttype ?>";
 </script>
 <div class="TabSet" id="account-tabs">
 <div class="lsmbtab" title="<?lsmb text('Heading') ?>" id="H">
@@ -14,6 +14,11 @@ INCLUDE 'ui-header.html'
 <?lsmb PROCESS input element_data = {
         value = 'H'
         name = 'charttype'
+        type = 'hidden'
+} ?>
+<?lsmb PROCESS input element_data = {
+        value = form.id
+        name = 'id'
         type = 'hidden'
 } ?>
 <div class="inputline" id="accno-line">
@@ -53,13 +58,13 @@ INCLUDE 'ui-header.html'
     END;
     form.all_headings.push({});
     INCLUDE select element_data = {
-                  name = 'heading'
+                  name = 'parent'
                options = form.all_headings
         default_values = [form.account_heading]
              text_attr = 'text'
             value_attr = 'id'
                  class = 'account'
-                    id = 'heading-h'
+                    id = 'parent'
     }; ?>
    </div>
 </div>
