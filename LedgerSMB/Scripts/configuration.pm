@@ -151,6 +151,7 @@ sub defaults_screen{
     for my $skey (@defaults){
         $request->{$skey} = $setting_handle->get($skey);
     }
+
     my @country_list = $request->call_procedure(
                      procname => 'location_list_country'
     );
@@ -164,8 +165,8 @@ sub defaults_screen{
 
     my $expense_accounts = $setting_handle->accounts_by_link('IC_expense');
     my $income_accounts = $setting_handle->accounts_by_link('IC_income');
-    my $fx_loss_accounts = $setting_handle->accounts_by_link('FX_loss');
-    my $fx_gain_accounts = $setting_handle->accounts_by_link('FX_gain');
+    my $fx_loss_accounts = $setting_handle->all_accounts();
+    my $fx_gain_accounts = $setting_handle->all_accounts();
     my $inventory_accounts = $setting_handle->accounts_by_link('IC');
 
     unshift @$expense_accounts, {}
@@ -180,56 +181,78 @@ sub defaults_screen{
         if ! defined $request->{inventory_accno_id};
 
     my %selects = (
-        'dojo_theme'  =>     {name => 'dojo_theme', # TODO autodetect
-                           options => [{text => 'Claro', value => 'claro'},
-                                       {text => 'Nihilo', value => 'nihilo'},
-                                       {text => 'Soria', value => 'soria'},
-                                       {text => 'Tundra', value => 'tundra'},],
-                   default_values  => [$request->{dojo_theme}]},
-        'fxloss_accno_id' => {name => 'fxloss_accno_id',
-                           options => $fx_loss_accounts,
-                         text_attr => 'text',
-                        value_attr => 'id'},
-        'fxgain_accno_id' => {name => 'fxgain_accno_id',
-                         text_attr => 'text',
-                           options => $fx_gain_accounts,
-                        value_attr => 'id'},
-        'expense_accno_id' => {name => 'expense_accno_id',
-                            options =>  $expense_accounts,
-                         text_attr => 'text',
-                        value_attr => 'id'},
-        'income_accno_id' => {name => 'income_accno_id',
-                           options => $income_accounts,
-                         text_attr => 'text',
-                        value_attr => 'id'},
-        'inventory_accno_id' => {name => 'inventory_accno_id',
-                     options => $inventory_accounts,
-                   text_attr => 'text',
-                  value_attr => 'id'},
-	'default_country' => {name   => 'default_country',
-			     options => \@country_list,
-			     default_values => [$request->{'default_country'}],
-			     text_attr => 'name',
-			     value_attr => 'id',
-		},
-	'default_language' => {name   => 'default_language',
-			     options => \@language_code_list,
-			     default_values => [$request->{'default_language'}],
-			     text_attr => 'description',
-			     value_attr => 'code',
-		},
-        'format'           => {name => 'format',
-                           text_attr => 'text',
-                          value_attr => 'value',
-                      default_values => [$request->{'format'}],
-                             options => [{ text => 'HTML',
-                                          value => 'html'},
-                                         { text => 'PDF',
-                                          value => 'pdf'},
-                                         { text => 'Postscript',
-                                          value => 'postscript'}]
-               }
-        );
+        'dojo_theme' => {
+            name => 'dojo_theme', # TODO autodetect
+            options => [
+                {text => 'Claro', value => 'claro'},
+                {text => 'Nihilo', value => 'nihilo'},
+                {text => 'Soria', value => 'soria'},
+                {text => 'Tundra', value => 'tundra'},
+            ],
+            default_values  => [$request->{dojo_theme}],
+        },
+        'fxloss_accno_id' => {
+            name           => 'fxloss_accno_id',
+            options        => $fx_loss_accounts,
+            text_attr      => 'text',
+            value_attr     => 'id',
+            default_values => [$request->{'fxloss_accno_id'}],
+        },
+        'fxgain_accno_id' => {
+            name           => 'fxgain_accno_id',
+            text_attr      => 'text',
+            options        => $fx_gain_accounts,
+            value_attr     => 'id',
+            default_values => [$request->{'fxgain_accno_id'}],
+        },
+        'expense_accno_id' => {
+            name           => 'expense_accno_id',
+            options        =>  $expense_accounts,
+            text_attr      => 'text',
+            value_attr     => 'id',
+            default_values => [$request->{'expense_accno_id'}],
+        },
+        'income_accno_id' => {
+            name           => 'income_accno_id',
+            options        => $income_accounts,
+            text_attr      => 'text',
+            value_attr     => 'id',
+            default_values => [$request->{'income_accno_id'}],
+        },
+        'inventory_accno_id' => {
+            name           => 'inventory_accno_id',
+            options        => $inventory_accounts,
+            text_attr      => 'text',
+            value_attr     => 'id',
+            default_values => [$request->{'inventory_accno_id'}],
+        },
+	'default_country' => {
+            name           => 'default_country',
+            options        => \@country_list,
+            default_values => [$request->{'default_country'}],
+            text_attr      => 'name',
+            value_attr     => 'id',
+        },
+	'default_language' => {
+            name           => 'default_language',
+            options        => \@language_code_list,
+            default_values => [$request->{'default_language'}],
+            text_attr      => 'description',
+            value_attr     => 'code',
+        },
+        'format' => {
+            name           => 'format',
+            text_attr      => 'text',
+            value_attr     => 'value',
+            default_values => [$request->{'format'}],
+            options        => [
+                {text => 'HTML', value => 'html'},
+                {text => 'PDF', value => 'pdf'},
+                {text => 'Postscript', value => 'postscript'},
+            ]
+        },
+    );
+
     my $template = LedgerSMB::Template->new_UI(
         user => $LedgerSMB::App_State::User, 
         locale => $locale,

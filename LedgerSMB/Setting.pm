@@ -25,6 +25,10 @@ The following methods are passed through to stored procedures:
 
 =item set ($self->{key}, $self->{value})
 
+=item all_accounts()
+
+Returns a list of all accounts on the system.
+
 =item parse_increment ($self->{key})
 
 This function updates a default entry in the database, incrimenting the last 
@@ -193,6 +197,18 @@ sub accounts_by_link {
     my ($self, $link) = @_;
     my @results = $self->call_procedure(procname => 'account__get_by_link_desc',
                               args => [$link]);
+    for my $ref (@results){
+        $ref->{text} = "$ref->{accno} -- $ref->{description}";
+    }
+    return \@results;
+}
+
+sub all_accounts {
+    my ($self) = @_;
+
+    my @results = $self->call_procedure(procname => 'chart_list_all',
+                              args => []);
+
     for my $ref (@results){
         $ref->{text} = "$ref->{accno} -- $ref->{description}";
     }

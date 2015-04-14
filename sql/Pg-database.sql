@@ -218,6 +218,7 @@ VALUES ('ar_EG', 'Arabic (Egypt)'),
        ('is',    'Icelandic'),
        ('it',    'Italian'),
        ('lt',    'Latvian'),
+       ('my',    'Malay'),
        ('nb',    'Norwegian'),
        ('nl',    'Dutch'),
        ('nl_BE', 'Dutch (Belgium)'),
@@ -1362,7 +1363,7 @@ sinumber|1
 sonumber|1
 yearend|1
 businessnumber|1
-version|1.4.9
+version|1.4.10
 closedto|\N
 revtrans|1
 ponumber|1
