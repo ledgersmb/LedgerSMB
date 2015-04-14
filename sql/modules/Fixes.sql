@@ -138,3 +138,22 @@ COMMIT;
 BEGIN;
 UPDATE menu_attribute SET value = 'template.pl' WHERE value = 'template.pm';
 COMMIT;
+
+-- Add parent of the header as its "heading"
+CREATE OR REPLACE VIEV chart AS
+SELECT id, accno, description,
+       'H' as charttype, NULL as category, NULL as link,
+       parent_id as account_heading,
+       null as gifi_accno, false as contra,
+       false as tax
+  from account_heading
+UNION
+select c.id, c.accno, c.description,
+       'A' as charttype, c.category, concat_colon(l.description) as link,
+       heading, gifi_accno, contra,
+       tax
+  from account c
+  left join account_link l
+    ON (c.id = l.account_id)
+group by c.id, c.accno, c.description, c.category, c.heading,
+         c.gifi_accno, c.contra, c.tax;
