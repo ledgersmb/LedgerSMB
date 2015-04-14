@@ -147,9 +147,9 @@ $account->{id} and $account->{charttype} must be set.
 
 sub delete {
     my $self = shift @_;
-    if ($self->{charttype} == 'A') {
+    if ($self->{charttype} eq 'A') {
 	$self->call_dbmethod(funcname => 'account__delete');
-    } elsif ($self->{charttype} == 'H') {
+    } elsif ($self->{charttype} eq 'H') {
 	$self->call_dbmethod(funcname => 'account_heading__delete');
     } else {
 	die "Unknown charttype."
