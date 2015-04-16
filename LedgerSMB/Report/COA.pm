@@ -188,11 +188,11 @@ sub run_report{
         }
         $r->{edit} = '['.LedgerSMB::Report::text('Edit').']';
         $r->{delete} = '['.LedgerSMB::Report::text('Delete').']' 
-                  if !$r->{rowcount} and !$r->{is_heading};
+                  if !$r->{rowcount};
         $r->{edit_href_suffix} = 'account.pl?action=edit&id='.$r->{id} . 
            "&charttype=$ct";
-        $r->{delete_href_suffix} = 'journal.pl?action=delete_account&id='.$r->{id} .
-           "&charttype=$ct";
+        $r->{delete_href_suffix} = 'journal.pl?action=delete_account&id='
+	    . $r->{id} . "&charttype=$ct";
         $r->{accno_href_suffix} = 
                 'reports.pl?action=start_report&module_name=gl&report_name=gl' .
                 "&accno=$r->{accno}--$r->{description}" 
