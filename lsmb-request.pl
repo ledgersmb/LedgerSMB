@@ -50,6 +50,7 @@ $logger->debug("getting new LedgerSMB");
 
 my $request = new LedgerSMB;
 
+
 $logger->debug("Got \$request=$request");
 $logger->trace("\$request=".Data::Dumper::Dumper($request));
 
@@ -86,10 +87,10 @@ $logger->debug("calling $script");
 $logger->debug("after calling script=$script action=$request->{action} \$request->{dbh}=$request->{dbh}");
 
 # Prevent flooding the error logs with undestroyed connection warnings
+#   warn $script, $requestl
 $request->{dbh}->disconnect()
     if defined $request->{dbh};
 $logger->debug("End");
-
 
 sub call_script {
   my $script = shift @_;
