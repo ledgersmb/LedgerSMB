@@ -8,6 +8,9 @@ Changelog for 1.4.11
 * Fixed HTML errors in payment details (Nick P)
 * Making LaTeX optional on starman (Chris T)
 * Fixing issues where colon is in password (Chris T)
+* Fixed missing separation of duties on GL (Chris T)
+* Fixed GL new button preserving first line (Chris T)
+* Fixed AR/AP transactions not saving when using dojo widget (Chris T)
 
 Chris T is Chris Travers
 Nick P is Nick Praeter
