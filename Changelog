@@ -8,9 +8,16 @@ Changelog for 1.4.11
 * Fixed HTML errors in payment details (Nick P)
 * Making LaTeX optional on starman (Chris T)
 * Fixing issues where colon is in password (Chris T)
+* Fixed 'New' button on GL entry screen leaving an uncleared line (Erik H)
+* Fixed Account/Heading entry screen selecting tab on 'Update' (Erik H)
+* Fixed Heading 'Save' action complaining about conflicting data (Erik H)
+* Multiple fixes showing and saving account/heading headings (Erik H)
+* Add 'Delete' option for headings not linked to accounts/headings (Erik H)
+* Fixed encoding issue for special characters in password change (Erik H)
 
 Chris T is Chris Travers
-Nick P is Nick Praeter
+Nick P is Nick Prater
+Erik H is Erik Huelsmann
 
 Changelog for 1.4.10
 * Note:  Corrected version numbers in 1.4.10.1, 1.4.10 had 1.4.9 as version
