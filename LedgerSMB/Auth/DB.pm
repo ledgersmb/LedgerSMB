@@ -52,7 +52,6 @@ sub get_credentials {
             $return_value->{login} = uc($return_value->{login});
         }
     }
-    warn $return_value->{login};
 
     return $return_value;
     
