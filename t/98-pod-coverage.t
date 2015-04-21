@@ -11,13 +11,14 @@ use warnings;
 use LedgerSMB::Locale;
 my $locale =  LedgerSMB::Locale->get_handle('en');
 $LedgerSMB::App_State::Locale = $locale;
+diag $LedgerSMB::App_State::Locale;
 
 use Test::More;
 eval "use Test::Pod::Coverage";
 if ($@){
     plan skip_all => "Test::Pod::Coverage required for testing POD coverage";
 } else {
-    plan tests => 63;
+    plan tests => 64;
 }
 pod_coverage_ok("LedgerSMB");
 pod_coverage_ok("LedgerSMB::Form");
