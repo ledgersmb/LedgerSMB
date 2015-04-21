@@ -37,6 +37,7 @@ before_install:
    - "cpanm MIME::Lite"
    - "cpanm Template"
    - "cpanm Error"
+   - "cpanm JSON"
    - "cpanm CGI::Simple"
    - "cpanm PGObject"
    - "cpanm PGObject::Simple"
