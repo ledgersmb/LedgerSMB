@@ -23,10 +23,12 @@ Changelog for 1.4.11
 * Multiple fixes showing and saving account/heading headings (Erik H)
 * Add 'Delete' option for headings not linked to accounts/headings (Erik H)
 * Fixed encoding issue for special characters in password change (Erik H)
+* Fixing Malaysian language issues (DB and preferences, bug #1358) (Pongracz I)
 
 Chris T is Chris Travers
 Nick P is Nick Prater
 Erik H is Erik Huelsmann
+Pongracz I is Istvan Pongracz
 
 
 Changelog for 1.4.10
