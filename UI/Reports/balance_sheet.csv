@@ -1,0 +1,16 @@
+<?lsmb
+comparisons = report.comparisons
+ -?>
+account,heading,amount <?lsmb report.to_date -?>
+<?lsmb FOREACH c IN comparisons ?>
+,<?lsmb c.to_date -?>
+<?lsmb END; -?>
+<?lsmb FOREACH cat IN ['A', 'L', 'Q'] ; -?>
+<?lsmb FOREACH line IN report.balance_sheet.${cat}.lines ; -?>
+
+<?lsmb line.account_number -?>,<?lsmb line.is_heading -?>,<?lsmb line.balance -?>
+<?lsmb FOREACH c IN comparisons ; -?>
+,<?lsmb c.index.${line.account_number} -?>
+<?lsmb END; -?>
+<?lsmb END; -?>
+<?lsmb END; -?>
