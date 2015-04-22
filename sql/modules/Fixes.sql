@@ -268,3 +268,7 @@ select c.id, c.accno, c.description,
     ON (c.id = l.account_id)
 group by c.id, c.accno, c.description, c.category, c.heading,
          c.gifi_accno, c.contra, c.tax;
+
+BEGIN;
+UPDATE language SET code = 'ms_MY' WHERE code = 'my';
+COMMIT;
