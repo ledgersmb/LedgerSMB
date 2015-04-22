@@ -27,8 +27,6 @@ use Try::Tiny;
 
 $| = 1;
 
-binmode (STDIN, ':bytes');
-binmode (STDOUT, ':utf8');
 use LedgerSMB::User;
 use LedgerSMB::App_State;
 use LedgerSMB;
@@ -36,6 +34,8 @@ use LedgerSMB::Locale;
 use Data::Dumper;
 use Log::Log4perl;
 use strict;
+binmode STDIN, ':bytes' if (defined $ENV{REQUEST_METHOD}) and ($ENV{REQUEST_METHOD} eq 'POST');
+binmode STDOUT, ':utf8';
 
 LedgerSMB::App_State->cleanup();
 
@@ -49,6 +49,7 @@ eval { require "custom.pl"; };
 $logger->debug("getting new LedgerSMB");
 
 my $request = new LedgerSMB;
+
 
 $logger->debug("Got \$request=$request");
 $logger->trace("\$request=".Data::Dumper::Dumper($request));
@@ -86,10 +87,10 @@ $logger->debug("calling $script");
 $logger->debug("after calling script=$script action=$request->{action} \$request->{dbh}=$request->{dbh}");
 
 # Prevent flooding the error logs with undestroyed connection warnings
+#   warn $script, $requestl
 $request->{dbh}->disconnect()
     if defined $request->{dbh};
 $logger->debug("End");
-
 
 sub call_script {
   my $script = shift @_;

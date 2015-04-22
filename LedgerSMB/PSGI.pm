@@ -16,11 +16,12 @@ use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
-use LedgerSMB::Template::LaTeX;
+eval { require LedgerSMB::Template::LaTeX; };
 use LedgerSMB::Template::HTML;
 use LedgerSMB::Locale;
 use LedgerSMB::DBObject;
 use LedgerSMB::File;
+use LedgerSMB::Scripts::login;
 use Try::Tiny;
 
 use CGI::Emulate::PSGI;
@@ -39,7 +40,7 @@ sub app {
        if ($uri =~ m|/rest/|){
          do 'rest-handler.pl';
        } elsif (-f "LedgerSMB/Scripts/$nscript"){
-         do 'lsmb-request.pl'; 
+         do 'lsmb-request.pl' || die $!; 
        } else {
           _run_old($script);
        }

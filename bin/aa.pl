@@ -227,8 +227,7 @@ sub create_links {
     $form->{duedate}     = $duedate     if $duedate;
     $form->{crdate}      = $crdate      if $crdate;
 
-    $form->{"old$form->{vc}"} =
-      qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|;
+    $form->{"old$form->{vc}"} = $form->{$form->{vc}};
     $form->{oldtransdate} = $form->{transdate};
 
     # customers/vendors
@@ -1416,7 +1415,8 @@ sub post {
 
     # if oldname ne name redo form
     ($name) = split /--/, $form->{ $form->{vc} };
-    if ( $form->{"old$form->{vc}"} ne qq|$name--$form->{"$form->{vc}_id"}| ) {
+    if ( $form->{"old$form->{vc}"} ne qq|$name--$form->{"$form->{vc}_id"}| 
+        and $form->{"old$form->{vc}"} ne $name) {
         &update;
         $form->finalize_request();
     }

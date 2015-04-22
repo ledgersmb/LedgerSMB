@@ -44,7 +44,7 @@ sub show_income_type {
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => 'UI/payroll',
-        template => 'income_type',
+        template => 'income',
         format   => 'HTML'
     );
     $template->render($request);
@@ -92,7 +92,7 @@ sub search_income_type {
         user     => $request->{_user},
         locale   => $request->{_locale},
         path     => 'UI/payroll',
-        template => 'income_type',
+        template => 'income_search',
         format   => 'HTML'
     )->render($request);
 }

@@ -120,7 +120,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
      <?lsmb # here goes the exchange rate of the selected currency, it can be done by the ajax script or the update button ?>
      <?lsmb  IF defaultcurrency.text != curr.text # Only process element if one exists. ?>
       <tr id="exrate_row">
-       <th valig="top" align="right" id="exrate_label_column"><?lsmb text('Exchange Rate') ?>:</th>
+       <th valign="top" align="right" id="exrate_label_column"><?lsmb text('Exchange Rate') ?>:</th>
        <td id="exrate_column">
         <?lsmb  IF exrate.value -?>        
         <?lsmb  exrate.text -?>
@@ -147,13 +147,18 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
   <?lsmb i = '0'; topay_subtotal = 0  -?>
   <?lsmb FOREACH row IN rows ?>
   <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" ?>
-  <tr class="<?lsmb alterning_style ?>"=>
+  <tr class="<?lsmb alterning_style ?>">
     <td><a href="<?lsmb row.invoice.href ?>" target="_new"><?lsmb row.invoice.number ?></a>
         <input type="hidden" value="<?lsmb row.invoice.id ?>" />                 </td>
     <?lsmb # we can use an href to link this invoice number to the invoice ?>
-    <td><?lsmb row.invoice_date ?></td>
-    <input type="hidden" name="<?lsmb "invoice_date_$row.invoice.id" ?>" 
-          value="<?lsmb row.invoice_date ?>" />
+    <td>
+        <?lsmb row.invoice_date ?>
+        <input
+          type="hidden"
+          name="<?lsmb "invoice_date_$row.invoice.id" ?>" 
+          value="<?lsmb row.invoice_date ?>"
+        />
+    </td>
     <td><?lsmb row.amount ?></td>
     <td><?lsmb row.paid ?></td>
     <td><?lsmb row.discount ?></td>
