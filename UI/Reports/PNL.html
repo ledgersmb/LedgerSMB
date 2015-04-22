@@ -19,9 +19,9 @@ END;
 QSTR=ENVARS.QUERY_STRING;
 
 LINK = PROTO _ '://' _ SERVER _ ENVARS.SCRIPT_NAME 
-           _ '?' _ QSTR _ '&' _ 'company=' _ DBNAME;
+           _ '?' _ QSTR _ '&amp;' _ 'company=' _ DBNAME;
 
-LINK = LINK.replace('\&\&', '&');
+LINK = LINK.replace('\&amp;\&amp;', '&amp;');
 ?>
 <?lsmb COLS = comparison.length + 2 ?>
 <body class="financial-statement <?lsmb dojo_theme ?>">
@@ -52,24 +52,24 @@ END ?>
     </tr>
   <?lsmb FOREACH k IN account_data.I.keys.sort ?>
     <tr class="incomerow">
-        <td class="label"><a href="journal.pl?sort=transdate&accno=<?lsmb k
-                                    ?>&from_date=<?lsmb report.from_date 
-                                    ?>&to_date=<?lsmb report.to_date 
-                                    ?>&category=X&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y&action=search"
+        <td class="label"><a href="journal.pl?sort=transdate&amp;accno=<?lsmb k
+                                    ?>&amp;from_date=<?lsmb report.from_date 
+                                    ?>&amp;to_date=<?lsmb report.to_date 
+                                    ?>&amp;category=X&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y&amp;col_accno=Y&amp;action=search"
         >
              <?lsmb k _ '--' 
                              _ account_data.I.${k}.main.account_description ?></a></td>
-        <td class="amount"><a href="journal.pl?sort=transdate&accno=<?lsmb k
-                                    ?>&from_date=<?lsmb report.from_date 
-                                    ?>&to_date=<?lsmb report.to_date 
-                                    ?>&category=X&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y&action=search"
+        <td class="amount"><a href="journal.pl?sort=transdate&amp;accno=<?lsmb k
+                                    ?>&amp;from_date=<?lsmb report.from_date 
+                                    ?>&amp;to_date=<?lsmb report.to_date 
+                                    ?>&amp;category=X&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y&amp;col_accno=Y&amp;action=search"
         ><?lsmb account_data.I.${k}.main.amount ?></a></td>
        
     <?lsmb FOREACH COMP IN comparisons ?>
-        <td class="amount"><a href="journal.pl?sort=transdate&accno=<?lsmb k 
-                                   ?>&from_date=<?lsmb COMP.from_date 
-                                   ?>&to_date=<?lsmb COMP.to_date
-                                   ?>&category=X&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y&action=search"
+        <td class="amount"><a href="journal.pl?sort=transdate&amp;accno=<?lsmb k 
+                                   ?>&amp;from_date=<?lsmb COMP.from_date 
+                                   ?>&amp;to_date=<?lsmb COMP.to_date
+                                   ?>&amp;category=X&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y&amp;col_accno=Y&amp;action=search"
            ><?lsmb COMP.account_data.I.${k}.info.amount ?></a></td>
     <?lsmb END ?>
     </tr>
@@ -92,23 +92,23 @@ END ?>
     </tr>
   <?lsmb FOREACH k IN account_data.E.keys.sort ?>
     <tr class="incomerow">
-        <td class="label"><a href="journal.pl?sort=transdate&accno=<?lsmb k
-                                    ?>&from_date=<?lsmb report.from_date 
-                                    ?>&to_date=<?lsmb report.to_date 
-                                    ?>&category=X&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y&action=search"
+        <td class="label"><a href="journal.pl?sort=transdate&amp;accno=<?lsmb k
+                                    ?>&amp;from_date=<?lsmb report.from_date 
+                                    ?>&amp;to_date=<?lsmb report.to_date 
+                                    ?>&amp;category=X&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y&amp;col_accno=Y&amp;action=search"
         >
              <?lsmb k _ '--' _
              account_data.E.${k}.main.account_description ?></a></td>
-        <td class="amount"><a href="journal.pl?sort=transdate&accno=<?lsmb k
-                                    ?>&from_date=<?lsmb report.from_date 
-                                    ?>&to_date=<?lsmb report.to_date 
-                                    ?>&category=X&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y&action=search"
+        <td class="amount"><a href="journal.pl?sort=transdate&amp;accno=<?lsmb k
+                                    ?>&amp;from_date=<?lsmb report.from_date 
+                                    ?>&amp;to_date=<?lsmb report.to_date 
+                                    ?>&amp;category=X&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y&amp;col_accno=Y&amp;action=search"
         ><?lsmb account_data.E.${k}.main.amount ?></a></td>
     <?lsmb FOREACH COMP IN comparisons ?>
-        <td class="amount"><a href="journal.pl?sort=transdate&accno=<?lsmb k 
-                                   ?>&from_date=<?lsmb COMP.from_date 
-                                   ?>&to_date=<?lsmb COMP.to_date
-                                   ?>&category=X&col_transdate=Y&col_reference=Y&col_description=Y&col_debits=Y&col_credits=Y&col_source=Y&col_accno=Y&action=search"
+        <td class="amount"><a href="journal.pl?sort=transdate&amp;accno=<?lsmb k 
+                                   ?>&amp;from_date=<?lsmb COMP.from_date 
+                                   ?>&amp;to_date=<?lsmb COMP.to_date
+                                   ?>&amp;category=X&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y&amp;col_accno=Y&amp;action=search"
 	><?lsmb COMP.account_data.E.${k}.info.amount ?></a></td>
     <?lsmb END ?>
     </tr>
@@ -146,8 +146,8 @@ END ?>
     <?lsmb END ?>
    </tr>
 <?lsmb IF FORMATS.grep('PDF').size() ?>
-<tr><td><a href="<?lsmb LINK ?>&format=PDF">[<?lsmb text('PDF') ?>]</a></td>
-<td><a href="<?lsmb LINK ?>&format=CSV">[<?lsmb text('CSV') ?>]</a></td>
+<tr><td><a href="<?lsmb LINK ?>&amp;format=PDF">[<?lsmb text('PDF') ?>]</a></td>
+<td><a href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></td>
 <?lsmb END ?>
 </tbody>
 </table>

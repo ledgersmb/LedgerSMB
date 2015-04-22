@@ -37,8 +37,8 @@ LINK = LINK.replace('\&\&', '&');
    <th colspan="2"><?lsmb text('Assets') ?></th>
 </tr>
 <?lsmb FOREACH line IN report.balance_sheet.A.lines ?> 
-<tr><th><a href="journal.pl?action=search&to_date=<?lsmb report.to_date 
-       ?>&accno=<?lsmb line.account_number ?>"
+<tr><th><a href="journal.pl?action=search&amp;to_date=<?lsmb report.to_date 
+       ?>&amp;accno=<?lsmb line.account_number ?>"
        ><?lsmb line.account_number _ ' - ' _ line.account_desc ?></a></th>
     <td class="amount"><?lsmb line.balance ?> </td>
     <?lsmb FOREACH c IN comparisons ?>
@@ -56,8 +56,8 @@ LINK = LINK.replace('\&\&', '&');
    <th colspan="2"><?lsmb text('Liabilities') ?></th>
 </tr>
 <?lsmb FOREACH line IN report.balance_sheet.L.lines ?> 
-<tr><th><a href="journal.pl?action=search&to_date=<?lsmb report.to_date 
-       ?>&accno=<?lsmb line.account_number ?>"
+<tr><th><a href="journal.pl?action=search&amp;to_date=<?lsmb report.to_date 
+       ?>&amp;accno=<?lsmb line.account_number ?>"
        ><?lsmb line.account_number _ ' - ' _ line.account_desc ?></a></th>
     <td class="amount"><?lsmb line.balance ?> </td>
     <?lsmb FOREACH c IN comparisons ?>
@@ -75,8 +75,8 @@ LINK = LINK.replace('\&\&', '&');
    <th colspan="2"><?lsmb text('Equity') ?></th>
 </tr>
 <?lsmb FOREACH line IN report.balance_sheet.Q.lines ?> 
-<tr><th><a href="journal.pl?action=search&to_date=<?lsmb report.to_date 
-       ?>&accno=<?lsmb account_number ?>"
+<tr><th><a href="journal.pl?action=search&amp;to_date=<?lsmb report.to_date 
+       ?>&amp;accno=<?lsmb account_number ?>"
        ><?lsmb IF line.account_number; line.account_number _ ' - '; END; line.account_desc ?></a></th>
     <td class="amount"><?lsmb line.balance ?> </td>
     <?lsmb FOREACH c IN comparisons ?>
@@ -111,8 +111,8 @@ LINK = LINK.replace('\&\&', '&');
     <td><?lsmb report.balance_sheet.ratios.QL ?></td>
 </tr>
 <?lsmb IF FORMATS.grep('PDF').size() ?>
-<tr><td><a href="<?lsmb LINK ?>&format=PDF">[<?lsmb text('PDF') ?>]</a></td>
-<td><a href="<?lsmb LINK ?>&format=CSV">[<?lsmb text('CSV') ?>]</a></td>
+<tr><td><a href="<?lsmb LINK ?>&amp;format=PDF">[<?lsmb text('PDF') ?>]</a></td>
+<td><a href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></td>
 </tr>
 <?lsmb END ?>
 </table>
