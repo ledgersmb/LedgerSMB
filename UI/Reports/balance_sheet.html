@@ -112,6 +112,7 @@ LINK = LINK.replace('\&\&', '&');
 </tr>
 <?lsmb IF FORMATS.grep('PDF').size() ?>
 <tr><td><a href="<?lsmb LINK ?>&format=PDF">[<?lsmb text('PDF') ?>]</a></td>
+<td><a href="<?lsmb LINK ?>&format=CSV">[<?lsmb text('CSV') ?>]</a></td>
 </tr>
 <?lsmb END ?>
 </table>
