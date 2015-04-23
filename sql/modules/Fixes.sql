@@ -140,7 +140,7 @@ UPDATE menu_attribute SET value = 'template.pl' WHERE value = 'template.pm';
 COMMIT;
 
 -- Add parent of the header as its "heading"
-CREATE OR REPLACE VIEV chart AS
+CREATE OR REPLACE VIEW chart AS
 SELECT id, accno, description,
        'H' as charttype, NULL as category, NULL as link,
        parent_id as account_heading,
