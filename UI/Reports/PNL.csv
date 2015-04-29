@@ -2,7 +2,7 @@
 account_data = report.account_data;
 COLS = comparison.length + 2
 comparisons = report.comparisons; -?>
-account,heading,amount <?lsmb report.from_date _ ' to ' _ report.to_date -?>
+account,description,is_heading,heading_account,amount <?lsmb report.from_date _ ' to ' _ report.to_date -?>
 <?lsmb 
 IF comparisons;
     FOREACH COMP IN comparisons -?>
@@ -12,7 +12,7 @@ IF comparisons;
 <?lsmb FOREACH cat IN ['I', 'E'] ; -?>
 <?lsmb FOREACH k IN account_data.${cat}.keys.sort ; -?>
 
-<?lsmb k ?>,<?lsmb account_data.${cat}.${k}.main.is_heading ?>,<?lsmb account_data.${cat}.${k}.main.amount -?>
+<?lsmb k ?>,"<?lsmb account_data.${cat}.${k}.main.account_description ?>",<?lsmb IF account_data.${cat}.${k}.main.is_heading ?>Y<?lsmb ELSE ?>N<?lsmb END ?>,<?lsmb account_data.${cat}.${k}.main.heading_path.-1 ?>,<?lsmb account_data.${cat}.${k}.main.amount -?>
 <?lsmb FOREACH COMP IN comparisons ; -?>
 ,<?lsmb COMP.account_data.${cat}.${k}.info.amount -?>
 <?lsmb END; -?>
