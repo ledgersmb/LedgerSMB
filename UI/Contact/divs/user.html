@@ -101,7 +101,7 @@
     </form>
     <?lsmb IF user.entity_id and not request.pls_import?>
         <hr /> 
-        <form name="groups" method="POST" action="employee.pl">
+        <form name="groups" method="POST" action="<?lsmb script ?>">
             <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>" />
             <?lsmb PROCESS input element_data = {
                type="hidden"
