@@ -51,6 +51,7 @@ pod_coverage_ok("LedgerSMB::Scripts::import_csv");
 pod_coverage_ok("LedgerSMB::Scripts::inventory");
 pod_coverage_ok("LedgerSMB::Scripts::invoice");
 pod_coverage_ok("LedgerSMB::Scripts::inv_reports");
+pod_coverage_ok("LedgerSMB::Scripts::journal");
 pod_coverage_ok("LedgerSMB::Scripts::login");
 pod_coverage_ok("LedgerSMB::Scripts::lreports_co");
 pod_coverage_ok("LedgerSMB::Scripts::menu");

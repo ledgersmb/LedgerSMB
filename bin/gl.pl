@@ -1,4 +1,4 @@
-=====================================================================
+#=====================================================================
 # LedgerSMB Small Medium Business Accounting
 # http://www.ledgersmb.org/
 #
@@ -179,6 +179,8 @@ sub add {
 
 sub display_form
 {
+    $form->{separate_duties}
+        = $LedgerSMB::Company_Config::settings->{separate_duties};
     #Add General Ledger Transaction
     $form->all_business_units($form->{transdate}, undef, 'GL');
     @{$form->{sequences}} = LedgerSMB::Setting::Sequence->list('glnumber')

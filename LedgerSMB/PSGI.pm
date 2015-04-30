@@ -20,6 +20,7 @@ eval { require LedgerSMB::Template::LaTeX; };
 use LedgerSMB::Template::HTML;
 use LedgerSMB::Locale;
 use LedgerSMB::File;
+use LedgerSMB::Scripts::login;
 use LedgerSMB::PGObject;
 use Try::Tiny;
 
