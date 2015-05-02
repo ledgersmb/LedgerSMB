@@ -670,6 +670,8 @@ for PNL and B/S headings.$$;
 
 DROP VIEW IF EXISTS account_heading_derived_category
 CREATE VIEW account_heading_derived_category AS
+SELECT *, coalesce(original_category, derived_category) as category
+FROM (
 SELECT *, CASE WHEN equity_count > 0 THEN 'Q'
                WHEN income_count > 0 AND expense_count > 0 THEN 'Q'
                WHEN asset_count > 0 AND liability_count >0 THEN 'Q'
@@ -678,15 +680,17 @@ SELECT *, CASE WHEN equity_count > 0 THEN 'Q'
                WHEN expense_count > 0 THEN 'E'
                WHEN income_count > 0 THEN 'I' END AS derived_category
 FROM (
-     SELECT ahd.id, ahd.accno, ahd.description,
+     SELECT ah.id, ah.accno, ah.description, ah.parent_id,
+            ah.category as original_category,
       count(CASE WHEN acc.category = 'A' THEN acc.category END) AS asset_count,
       count(CASE WHEN acc.category = 'L' THEN acc.category END) AS liability_count,
       count(CASE WHEN acc.category = 'E' THEN acc.category END) AS expense_count,
       count(CASE WHEN acc.category = 'I' THEN acc.category END) AS income_count,
       count(CASE WHEN acc.category = 'Q' THEN acc.category END) AS equity_count
        FROM account_heading_descendants ahd
+     INNER JOIN account_heading ah on ahd.id = ah.id
      LEFT JOIN account acc ON ahd.descendant_id = acc.heading
-     GROUP BY ahd.id, ahd.accno) category_counts;
+     GROUP BY ahd.id, ahd.accno) category_counts) derivation;
 
 COMMENT ON VIEW account_heading_derived_category IS $$ Lists for each row
 the derived category for each heading, based on the categories of the
