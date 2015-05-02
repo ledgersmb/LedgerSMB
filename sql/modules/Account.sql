@@ -651,8 +651,8 @@ SELECT id, accno, level, path
 COMMENT ON VIEW account_heading_tree IS $$ Returns in the 'path' field an
 array which contains the path of the heading to its associated root.$$;
 
-DROP VIEW IF EXISTS account_heading_descendants CASCADE;
-CREATE VIEW account_heading_descendants
+DROP VIEW IF EXISTS account_heading_descendant CASCADE;
+CREATE VIEW account_heading_descendant
 AS
 WITH RECURSIVE account_headings AS (
     SELECT account_heading.id as id, 1 AS level,
@@ -667,12 +667,35 @@ WITH RECURSIVE account_headings AS (
 SELECT id, level, descendant_id, accno, descendant_accno
    FROM account_headings;
 
-COMMENT ON VIEW account_heading_descendants IS $$ Returns rows for
+COMMENT ON VIEW account_heading_descendant IS $$ Returns rows for
 each heading listing its immediate children, children of children, etc., etc.
 
 This is primarily practical when calculating subtotals
 for PNL and B/S headings.$$;
 
+DROP VIEW IF EXISTS account_heading_derived_category
+CREATE VIEW account_heading_derived_category AS
+SELECT *, CASE WHEN equity_count > 0 THEN 'Q'
+               WHEN income_count > 0 AND expense_count > 0 THEN 'Q'
+               WHEN asset_count > 0 AND liability_count >0 THEN 'Q'
+               WHEN asset_count > 0 THEN 'A'
+               WHEN liability_count > 0 THEN 'L'
+               WHEN expense_count > 0 THEN 'E'
+               WHEN income_count > 0 THEN 'I' END AS derived_category
+FROM (
+     SELECT ahd.id, ahd.accno, ahd.description,
+      count(CASE WHEN acc.category = 'A' THEN acc.category END) AS asset_count,
+      count(CASE WHEN acc.category = 'L' THEN acc.category END) AS liability_count,
+      count(CASE WHEN acc.category = 'E' THEN acc.category END) AS expense_count,
+      count(CASE WHEN acc.category = 'I' THEN acc.category END) AS income_count,
+      count(CASE WHEN acc.category = 'Q' THEN acc.category END) AS equity_count
+       FROM account_heading_descendants ahd
+     LEFT JOIN account acc ON ahd.descendant_id = acc.heading
+     GROUP BY ahd.id, ahd.accno) category_counts;
+
+COMMENT ON VIEW account_heading_derived_category IS $$ Lists for each row
+the derived category for each heading, based on the categories of the
+linked accounts.$$;
 
 CREATE OR REPLACE FUNCTION gifi__list() RETURNS SETOF gifi
 LANGUAGE SQL AS
