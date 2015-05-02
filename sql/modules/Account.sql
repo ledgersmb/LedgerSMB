@@ -647,6 +647,9 @@ WITH RECURSIVE account_headings AS (
 SELECT id, accno, level, string_to_array(path, '||||') as path
   FROM account_headings;
 
+COMMENT ON VIEW account_heading_tree IS $$ Returns in the 'path' field an
+array which contains the path of the heading to its associated root.$$;
+
 CREATE OR REPLACE FUNCTION gifi__list() RETURNS SETOF gifi 
 LANGUAGE SQL AS
 $$
