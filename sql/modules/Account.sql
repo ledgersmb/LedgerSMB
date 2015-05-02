@@ -645,6 +645,29 @@ SELECT id, accno, level, string_to_array(path, '||||') as path
 COMMENT ON VIEW account_heading_tree IS $$ Returns in the 'path' field an
 array which contains the path of the heading to its associated root.$$;
 
+DROP VIEW IF EXISTS account_heading_descendants CASCADE;
+CREATE VIEW account_heading_descendants
+AS
+WITH RECURSIVE account_headings AS (
+    SELECT account_heading.id as id, 1 AS level,
+           id as descendant_id, accno, accno as descendant_accno
+      FROM account_heading 
+    UNION ALL 
+    SELECT at.id, at.level+1 as level,
+    	   ah.id as descendant_id, at.accno, ah.accno as descendant_accno
+    FROM account_heading ah
+    JOIN account_headings at ON ah.parent_id = at.descendant_id   
+)
+SELECT id, level, descendant_id, accno, descendant_accno
+   FROM account_headings;
+
+COMMENT ON VIEW account_heading_descendants IS $$ Returns rows for
+each heading listing its immediate children, children of children, etc., etc.
+
+This is primarily practical when calculating subtotals
+for PNL and B/S headings.$$;
+
+
 CREATE OR REPLACE FUNCTION gifi__list() RETURNS SETOF gifi 
 LANGUAGE SQL AS
 $$
