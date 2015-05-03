@@ -668,7 +668,7 @@ each heading listing its immediate children, children of children, etc., etc.
 This is primarily practical when calculating subtotals
 for PNL and B/S headings.$$;
 
-DROP VIEW IF EXISTS account_heading_derived_category
+DROP VIEW IF EXISTS account_heading_derived_category CASCADE;
 CREATE VIEW account_heading_derived_category AS
 SELECT *, coalesce(original_category, derived_category) as category
 FROM (
