@@ -31,10 +31,12 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
       SELECT bu.id, parent, row((path).t || bu.id)::tree_record
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
-)
-   SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, g.accno, g.description,
-          sum(ac.amount) * -1, at.path
+),
+account_balance AS (
+-- Note that this function only differs by the "account_balance" CTE;
+-- the rest of the function is the same as the other functions in this file
+   SELECT a.id, a.accno, a.description, a.category,
+          sum(ac.amount) * -1 as amount, at.path, a.heading
      FROM account a
      JOIN account_heading ah on a.heading = ah.id
      JOIN acc_trans ac ON ac.chart_id = a.id
@@ -56,9 +58,9 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
  GROUP BY a.id, a.accno, a.description, a.category, ah.id, ah.accno,
           ah.description, at.path, g.accno, g.description
     UNION
-   SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, g.accno, g.description,
-          sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0))), at.path
+   SELECT a.id, a.accno, a.description, a.category,
+          sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0))) as amount,
+          at.path, a.heading
      FROM parts p
      JOIN invoice i ON i.id = p.id
      JOIN acc_trans ac ON ac.invoice_id = i.id
@@ -76,11 +78,29 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
           AND (ac.transdate <= $2 OR $2 IS NULL)
           AND ar.approved
           AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
- GROUP BY a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, at.path, g.accno, g.description, g.accno, g.description
-$$ language SQL;
-
-
+ GROUP BY a.id, a.accno, a.description, a.category, at.path, a.heading
+),
+merged AS (
+SELECT *, 'f'::boolean as is_heading
+  FROM account_balance
+UNION
+SELECT aht.id, aht.accno, ahc.description as description,
+       ahc.category as category, sum(ab.amount) as amount,
+       aht.path, null as heading, 't'::boolean as is_heading
+  FROM account_balance ab
+INNER JOIN account_heading_descendant ahd
+        ON ab.heading = ahd.descendant_id
+INNER JOIN account_heading_tree aht
+       ON ahd.id = aht.id
+INNER JOIN account_heading_derived_category ahc
+        ON aht.id = ahc.id
+GROUP BY aht.id, aht.accno, aht.path, ahc.description, ahc.category
+)
+   SELECT id, accno, description, category, is_heading,
+          CASE WHEN category = 'E' THEN -1 ELSE 1 END * amount, path
+     FROM  merged
+ORDER BY array_to_string(path, '||||'), accno ASC;
+$$ LANGUAGE sql;
 
 
 CREATE OR REPLACE FUNCTION pnl__income_statement_accrual(
