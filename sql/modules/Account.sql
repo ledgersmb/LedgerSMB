@@ -600,24 +600,29 @@ l(account_id, link) AS (
        FROM account_link
    GROUP BY account_id
 ),
-h(parent_id) AS (
+hh(parent_id) AS (
      SELECT parent_id
        FROM account_heading
+),
+ha(heading) AS (
+     SELECT heading
+       FROM account
 )
 SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno, 
        CASE WHEN sum(ac.amount) < 0 THEN sum(amount) * -1 ELSE null::numeric
         END,
        CASE WHEN sum(ac.amount) > 0 THEN sum(amount) ELSE null::numeric END,
-       count(ac.*)+count(h.*), l.link
-  FROM (SELECT id,false as is_heading, accno, description, gifi_accno
+       count(ac.*)+count(hh.*)+count(ha.*), l.link
+  FROM (SELECT id, heading, false as is_heading, accno, description, gifi_accno
           FROM account
          UNION
-        SELECT id, true, accno, description, null::text 
+        SELECT id, parent_id, true, accno, description, null::text 
           FROM account_heading) a
 
  LEFT JOIN ac ON ac.chart_id = a.id AND not a.is_heading
  LEFT JOIN l ON l.account_id = a.id AND NOT a.is_heading
- LEFT JOIN h ON h.parent_id = a.id AND a.is_heading
+ LEFT JOIN hh ON hh.parent_id = a.id AND a.is_heading
+ LEFT JOIN ha ON ha.heading = a.id AND a.is_heading
   GROUP BY a.id, a.is_heading, a.accno, a.description, a.gifi_accno, l.link
   ORDER BY a.accno;
 

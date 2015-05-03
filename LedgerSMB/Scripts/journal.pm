@@ -7,8 +7,7 @@ account search request.
 =head1 SYNOPSIS
 
 A script for journal ajax requests: accepts a search string and returns a
-list of matching accounts in a ul/li pair acceptable for scriptaculous's
-autocomplete library..
+list of matching accounts in a ul/li pair
 
 =head1 METHODS
 
@@ -32,8 +31,7 @@ use strict;
 
 =item __default
 
-Get the search string, query the database, return the results in a ul/li
-pair easily queried by scriptaculous's autocompleter.
+Get the search string, query the database, return the results in a ul/li pair
 
 =cut
 
