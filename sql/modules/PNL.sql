@@ -11,13 +11,11 @@ BEGIN;
 
 DROP TYPE IF EXISTS pnl_line CASCADE;
 CREATE TYPE pnl_line AS (
-    account_id int,
-    account_number text,
-    account_description text,
-    account_category char,
-    account_heading_id int,
-    account_heading_number text,
-    account_heading_description text,
+    id int,
+    accno text,
+    description text,
+    category char,
+    is_heading boolean,
     amount numeric,
     heading_path text[]
 );
@@ -81,9 +79,11 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
 $$ language SQL;
 
 
-CREATE OR REPLACE FUNCTION pnl__income_statement_accrual
-(in_from_date date, in_to_date date, in_ignore_yearend text, 
-in_business_units int[])
+
+
+CREATE OR REPLACE FUNCTION pnl__income_statement_accrual(
+       in_from_date date, in_to_date date, in_ignore_yearend text,
+       in_business_units integer[])
 RETURNS SETOF pnl_line AS
 $$
 WITH RECURSIVE bu_tree (id, parent, path) AS (
@@ -93,13 +93,12 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
       SELECT bu.id, parent, row((path).t || bu.id)::tree_record
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
-)
-   SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, 
-          CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), 
-          at.path
+),
+account_balance AS (
+   SELECT a.id, a.accno, a.description, a.category,
+          sum(ac.amount) as amount, 
+          at.path, a.heading
      FROM account a
-     JOIN account_heading ah on a.heading = ah.id
      JOIN acc_trans ac ON a.id = ac.chart_id AND ac.approved
      JOIN tx_report gl ON ac.trans_id = gl.id AND gl.approved
      JOIN account_heading_tree at ON a.heading = at.id
@@ -116,16 +115,51 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
           AND a.category IN ('I', 'E')
           AND ($3 = 'none' 
                OR ($3 = 'all' 
-                   AND NOT EXISTS (SELECT * FROM yearend WHERE trans_id = gl.id
-                   ))
+                   AND NOT EXISTS (SELECT * FROM yearend
+                                    WHERE trans_id = gl.id))
                OR ($3 = 'last'
                    AND NOT EXISTS (SELECT 1 FROM yearend 
-                                   HAVING max(trans_id) = gl.id))
-              )
+                                   HAVING max(trans_id) = gl.id)))
  GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description, at.path
- ORDER BY a.category DESC, a.accno ASC;
-$$ LANGUAGE SQL;
+          at.path
+),
+merged AS (
+SELECT *, 'f'::boolean as is_heading
+  FROM account_balance
+UNION
+SELECT aht.id, aht.accno, ahc.description as description,
+       ahc.category as category, sum(ab.amount) as amount,
+       aht.path, null as heading, 't'::boolean as is_heading
+  FROM account_balance ab
+INNER JOIN account_heading_descendants ahd
+        ON ab.heading = ahd.descendant_id
+INNER JOIN account_heading_tree aht
+       ON ahd.id = aht.id
+INNER JOIN account_heading_derived_category ahc
+        ON aht.id = ahc.id
+GROUP BY aht.id, aht.accno, aht.path, ahc.description, ahc.category
+)
+   SELECT id, accno, description, category, is_heading,
+          CASE WHEN category = 'E' THEN -1 ELSE 1 END * amount, path
+     FROM  merged
+ORDER BY array_to_string(path, '||||'), accno ASC;
+$$ LANGUAGE sql;
+
+
+COMMENT ON FUNCTION pnl__income_statement_accrual(
+       in_from_date date, in_to_date date, in_ignore_yearend text,
+       in_business_units integer[]) IS $$ Returns a set of lines that
+together make up a PNL. Returned lines contain both accounts and
+headings with their associated subtotals. Amounts have been
+sign-converted to present both income and expenses as positive amounts.
+
+Allowable values for 'ignore_yearend' parameter are:
+ * 'none'
+ * 'last'
+ * 'all'
+$$;
+
+
 
 CREATE OR REPLACE FUNCTION pnl__income_statement_cash
 (in_from_date date, in_to_date date, in_ignore_yearend text, 
@@ -176,6 +210,7 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
           ah.id, ah.accno, ah.description, at.path
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
+
 
 CREATE OR REPLACE FUNCTION pnl__invoice(in_id int) RETURNS SETOF pnl_line AS
 $$
