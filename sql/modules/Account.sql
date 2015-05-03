@@ -690,7 +690,8 @@ FROM (
        FROM account_heading_descendants ahd
      INNER JOIN account_heading ah on ahd.id = ah.id
      LEFT JOIN account acc ON ahd.descendant_id = acc.heading
-     GROUP BY ahd.id, ahd.accno) category_counts) derivation;
+     GROUP BY ah.id, ah.accno, ah.description, ah.parent_id,
+              ah.category) category_counts) derivation;
 
 COMMENT ON VIEW account_heading_derived_category IS $$ Lists for each row
 the derived category for each heading, based on the categories of the
