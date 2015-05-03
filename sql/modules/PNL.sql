@@ -95,6 +95,8 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
         JOIN bu_tree ON bu.parent_id = bu_tree.id
 ),
 account_balance AS (
+-- Note that this function only differs by the "account_balance" CTE;
+-- the rest of the function is the same as the other functions in this file
    SELECT a.id, a.accno, a.description, a.category,
           sum(ac.amount) as amount, 
           at.path, a.heading
@@ -131,7 +133,7 @@ SELECT aht.id, aht.accno, ahc.description as description,
        ahc.category as category, sum(ab.amount) as amount,
        aht.path, null as heading, 't'::boolean as is_heading
   FROM account_balance ab
-INNER JOIN account_heading_descendants ahd
+INNER JOIN account_heading_descendant ahd
         ON ab.heading = ahd.descendant_id
 INNER JOIN account_heading_tree aht
        ON ahd.id = aht.id
@@ -142,7 +144,7 @@ GROUP BY aht.id, aht.accno, aht.path, ahc.description, ahc.category
    SELECT id, accno, description, category, is_heading,
           CASE WHEN category = 'E' THEN -1 ELSE 1 END * amount, path
      FROM  merged
-ORDER BY array_to_string(path, '||||'), accno ASC;
+   ORDER BY array_to_string(path, '||||'), accno ASC;
 $$ LANGUAGE sql;
 
 
@@ -160,7 +162,6 @@ Allowable values for 'ignore_yearend' parameter are:
 $$;
 
 
-
 CREATE OR REPLACE FUNCTION pnl__income_statement_cash
 (in_from_date date, in_to_date date, in_ignore_yearend text, 
 in_business_units int[])
@@ -173,11 +174,14 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
       SELECT bu.id, parent, row((path).t || bu.id)::tree_record
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
-)
-   SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, 
+),
+account_balance AS (
+-- Note that this function only differs by the "account_balance" CTE;
+-- the rest of the function is the same as the other functions in this file
+   SELECT a.id, a.accno, a.description, a.category, 
           CASE WHEN a.category = 'E' THEN -1 ELSE 1 END 
-               * sum(ac.amount * ca.portion), at.path
+               * sum(ac.amount * ca.portion) as amount,
+          at.path, a.heading
      FROM account a
      JOIN account_heading ah on a.heading = ah.id
      JOIN acc_trans ac ON a.id = ac.chart_id AND ac.approved
@@ -206,52 +210,116 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
                    AND NOT EXISTS (SELECT 1 FROM yearend 
                                    HAVING max(trans_id) = gl.id))
               )
- GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description, at.path
- ORDER BY a.category DESC, a.accno ASC;
-$$ LANGUAGE SQL;
+ GROUP BY a.id, a.accno, a.description, a.category, at.path, a.heading),
+merged AS (
+SELECT *, 'f'::boolean as is_heading
+  FROM account_balance
+UNION
+SELECT aht.id, aht.accno, ahc.description as description,
+       ahc.category as category, sum(ab.amount) as amount,
+       aht.path, null as heading, 't'::boolean as is_heading
+  FROM account_balance ab
+INNER JOIN account_heading_descendant ahd
+        ON ab.heading = ahd.descendant_id
+INNER JOIN account_heading_tree aht
+       ON ahd.id = aht.id
+INNER JOIN account_heading_derived_category ahc
+        ON aht.id = ahc.id
+GROUP BY aht.id, aht.accno, aht.path, ahc.description, ahc.category
+)
+   SELECT id, accno, description, category, is_heading,
+          CASE WHEN category = 'E' THEN -1 ELSE 1 END * amount, path
+     FROM  merged
+ORDER BY array_to_string(path, '||||'), accno ASC;
+$$ LANGUAGE sql;
 
 
 CREATE OR REPLACE FUNCTION pnl__invoice(in_id int) RETURNS SETOF pnl_line AS
 $$
-SELECT a.id, a.accno, a.description, a.category, 
-       ah.id, ah.accno, ah.description,
-       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
+WITH account_balance AS (
+-- Note that this function only differs by the "account_balance" CTE;
+-- the rest of the function is the same as the other functions in this file
+SELECT a.id, a.accno, a.description, a.category,
+       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount) as amount,
+       at.path, a.heading
   FROM account a
   JOIN account_heading ah on a.heading = ah.id
   JOIN acc_trans ac ON a.id = ac.chart_id
   JOIN account_heading_tree at ON a.heading = at.id
+  JOIN account_heading_descendant ahd ON at.id = ahd.id
  WHERE ac.approved is true and ac.trans_id = $1
+       and a.category in ('I', 'E')
  GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description, at.path
- ORDER BY a.category DESC, a.accno ASC;
+          at.path, a.heading),
+merged AS (
+SELECT *, 'f'::boolean as is_heading
+  FROM account_balance
+UNION
+SELECT aht.id, aht.accno, ahc.description as description,
+       ahc.category as category, sum(ab.amount) as amount,
+       aht.path, null as heading, 't'::boolean as is_heading
+  FROM account_balance ab
+INNER JOIN account_heading_descendant ahd
+        ON ab.heading = ahd.descendant_id
+INNER JOIN account_heading_tree aht
+       ON ahd.id = aht.id
+INNER JOIN account_heading_derived_category ahc
+        ON aht.id = ahc.id
+GROUP BY aht.id, aht.accno, aht.path, ahc.description, ahc.category
+)
+   SELECT id, accno, description, category, is_heading,
+          CASE WHEN category = 'E' THEN -1 ELSE 1 END * amount, path
+     FROM  merged
+   ORDER BY array_to_string(path, '||||'), accno ASC;
 $$ LANGUAGE sql;
+
 
 CREATE OR REPLACE FUNCTION pnl__customer
 (in_id int, in_from_date date, in_to_date date)
 RETURNS SETOF pnl_line AS
 $$
-WITH gl (id) AS
- ( SELECT id FROM ap WHERE approved is true AND entity_credit_account = $1
-UNION ALL
-   SELECT id FROM ar WHERE approved is true AND entity_credit_account = $1
-)
-SELECT a.id, a.accno, a.description, a.category, 
-       ah.id, ah.accno, ah.description,
-       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
-  FROM account a
-  JOIN account_heading ah on a.heading = ah.id
-  JOIN acc_trans ac ON a.id = ac.chart_id
-  JOIN account_heading_tree at ON a.heading = at.id
-  JOIN gl ON ac.trans_id = gl.id
- WHERE ac.approved is true 
+WITH account_balance AS (
+-- Note that this function only differs by the "account_balance" CTE;
+-- the rest of the function is the same as the other functions in this file
+  WITH gl (id) AS (
+     SELECT id FROM ap WHERE approved is true AND entity_credit_account = $1
+     UNION ALL
+     SELECT id FROM ar WHERE approved is true AND entity_credit_account = $1
+   )
+   SELECT a.id, a.accno, a.description, a.category, 
+       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount) as amount,
+       at.path, a.heading
+     FROM account a
+     JOIN account_heading ah on a.heading = ah.id
+     JOIN acc_trans ac ON a.id = ac.chart_id
+     JOIN account_heading_tree at ON a.heading = at.id
+     JOIN gl ON ac.trans_id = gl.id
+    WHERE ac.approved is true 
           AND ($2 IS NULL OR ac.transdate >= $2) 
           AND ($3 IS NULL OR ac.transdate <= $3)
           AND a.category IN ('I', 'E')
- GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description, at.path
- ORDER BY a.category DESC, a.accno ASC;
-$$ LANGUAGE SQL;
+   GROUP BY a.id, a.accno, a.description, a.category, at.path, a.heading),
+merged AS (
+SELECT *, 'f'::boolean as is_heading
+  FROM account_balance
+UNION
+SELECT aht.id, aht.accno, ahc.description as description,
+       ahc.category as category, sum(ab.amount) as amount,
+       aht.path, null as heading, 't'::boolean as is_heading
+  FROM account_balance ab
+INNER JOIN account_heading_descendant ahd
+        ON ab.heading = ahd.descendant_id
+INNER JOIN account_heading_tree aht
+       ON ahd.id = aht.id
+INNER JOIN account_heading_derived_category ahc
+        ON aht.id = ahc.id
+GROUP BY aht.id, aht.accno, aht.path, ahc.description, ahc.category
+)
+   SELECT id, accno, description, category, is_heading,
+          CASE WHEN category = 'E' THEN -1 ELSE 1 END * amount, path
+     FROM  merged
+   ORDER BY array_to_string(path, '||||'), accno ASC;
+$$ LANGUAGE sql;
 
 CREATE OR REPLACE FUNCTION pnl__invoice(in_id int) RETURNS SETOF pnl_line AS
 $$
