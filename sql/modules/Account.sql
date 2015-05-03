@@ -641,7 +641,7 @@ WITH RECURSIVE account_headings AS (
       FROM account_heading
     UNION ALL
     SELECT ah.id, ah.accno, at.level + 1 as level,
-           append_array(at.path, ah.accno) as path
+           array_append(at.path, ah.accno) as path
       FROM account_heading ah
       JOIN account_headings at ON ah.parent_id = at.id
 )
