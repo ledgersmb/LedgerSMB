@@ -692,7 +692,7 @@ FROM (
       count(CASE WHEN acc.category = 'E' THEN acc.category END) AS expense_count,
       count(CASE WHEN acc.category = 'I' THEN acc.category END) AS income_count,
       count(CASE WHEN acc.category = 'Q' THEN acc.category END) AS equity_count
-       FROM account_heading_descendants ahd
+       FROM account_heading_descendant ahd
      INNER JOIN account_heading ah on ahd.id = ah.id
      LEFT JOIN account acc ON ahd.descendant_id = acc.heading
      GROUP BY ah.id, ah.accno, ah.description, ah.parent_id,
