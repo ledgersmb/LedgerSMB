@@ -97,7 +97,7 @@ GROUP BY aht.id, aht.accno, aht.path, ahc.description, ahc.category
    SELECT id, accno, description, category, is_heading,
           CASE WHEN category = 'E' THEN -1 ELSE 1 END * amount, path
      FROM  merged
-ORDER BY array_to_string(path, '||||'), accno ASC;
+ORDER BY array_to_string(array_append(path, accno), '||||');
 $$ LANGUAGE sql;
 
 
@@ -164,7 +164,7 @@ GROUP BY aht.id, aht.accno, aht.path, ahc.description, ahc.category
    SELECT id, accno, description, category, is_heading,
           CASE WHEN category = 'E' THEN -1 ELSE 1 END * amount, path
      FROM  merged
-   ORDER BY array_to_string(path, '||||'), accno ASC;
+   ORDER BY array_to_string(array_append(path, accno), '||||');
 $$ LANGUAGE sql;
 
 
@@ -250,7 +250,7 @@ GROUP BY aht.id, aht.accno, aht.path, ahc.description, ahc.category
    SELECT id, accno, description, category, is_heading,
           CASE WHEN category = 'E' THEN -1 ELSE 1 END * amount, path
      FROM  merged
-ORDER BY array_to_string(path, '||||'), accno ASC;
+ORDER BY array_to_string(array_append(path, accno), '||||');
 $$ LANGUAGE sql;
 
 
@@ -290,7 +290,7 @@ GROUP BY aht.id, aht.accno, aht.path, ahc.description, ahc.category
    SELECT id, accno, description, category, is_heading,
           CASE WHEN category = 'E' THEN -1 ELSE 1 END * amount, path
      FROM  merged
-   ORDER BY array_to_string(path, '||||'), accno ASC;
+   ORDER BY array_to_string(array_append(path, accno), '||||');
 $$ LANGUAGE sql;
 
 
@@ -338,7 +338,7 @@ GROUP BY aht.id, aht.accno, aht.path, ahc.description, ahc.category
    SELECT id, accno, description, category, is_heading,
           CASE WHEN category = 'E' THEN -1 ELSE 1 END * amount, path
      FROM  merged
-   ORDER BY array_to_string(path, '||||'), accno ASC;
+   ORDER BY array_to_string(array_append(path, accno), '||||');
 $$ LANGUAGE sql;
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
