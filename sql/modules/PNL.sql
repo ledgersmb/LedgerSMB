@@ -202,9 +202,7 @@ account_balance AS (
 -- Note that this function only differs by the "account_balance" CTE;
 -- the rest of the function is the same as the other functions in this file
    SELECT a.id, a.accno, a.description, a.category,
-          CASE WHEN a.category = 'E' THEN -1 ELSE 1 END
-               * sum(ac.amount * ca.portion) as amount,
-          at.path, a.heading
+          sum(ac.amount * ca.portion) as amount, at.path, a.heading
      FROM account a
      JOIN account_heading ah on a.heading = ah.id
      JOIN acc_trans ac ON a.id = ac.chart_id AND ac.approved
@@ -264,8 +262,7 @@ WITH account_balance AS (
 -- Note that this function only differs by the "account_balance" CTE;
 -- the rest of the function is the same as the other functions in this file
 SELECT a.id, a.accno, a.description, a.category,
-       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount) as amount,
-       at.path, a.heading
+       sum(ac.amount) as amount, at.path, a.heading
   FROM account a
   JOIN account_heading ah on a.heading = ah.id
   JOIN acc_trans ac ON a.id = ac.chart_id
@@ -311,8 +308,7 @@ WITH account_balance AS (
      SELECT id FROM ar WHERE approved is true AND entity_credit_account = $1
    )
    SELECT a.id, a.accno, a.description, a.category,
-       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount) as amount,
-       at.path, a.heading
+          sum(ac.amount) as amount, at.path, a.heading
      FROM account a
      JOIN account_heading ah on a.heading = ah.id
      JOIN acc_trans ac ON a.id = ac.chart_id
