@@ -639,6 +639,7 @@ CREATE VIEW account_heading_tree AS
 WITH RECURSIVE account_headings AS (
     SELECT id, accno, 1 as level, ARRAY[accno]::text[] as path
       FROM account_heading
+     WHERE parent_id IS NULL
     UNION ALL
     SELECT ah.id, ah.accno, at.level + 1 as level,
            array_append(at.path, ah.accno) as path 
