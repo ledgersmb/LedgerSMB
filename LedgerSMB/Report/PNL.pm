@@ -103,23 +103,19 @@ sub _merge_rows {
     my @rows = @_;
 
     my $data = $self->account_data;
-    $data ||= $data = {'I' => {}, 'E' => {}};
+    $data ||= {};
+    my $max_depth = 0;
     for my $r (@rows){
-        $data->{$r->{account_category}}->{$r->{account_number}} = {$label => $r};
-        $data->{$r->{account_category}}->{$r->{account_number}}->{info} = $r;
+	my $headings = $r->{heading_path};
+	$max_depth = ($max_depth >= scalar(@{$headings})) ? $max_depth : scalar(@{$headings});
     }
-    my $i_total = LedgerSMB::PGNumber->from_input('0');
-    my $e_total = LedgerSMB::PGNumber->from_input('0');
-    my $total;
-    for my $k (keys %{$data->{I}}){
-       $i_total += $data->{I}->{$k}->{$label}->{amount}; 
+    for my $r (@rows){
+        $data->{$r->{accno}} = { $label => $r,
+				 info => $r,
+				 max_depth => $max_depth,
+				 depth => $#{$r->{heading_path}},
+	};
     }
-    for my $k (keys %{$data->{E}}){
-       $e_total += $data->{E}->{$k}->{$label}->{amount}; 
-    }
-    $data->{totals}->{$label}->{I} = $i_total->to_output(money => 1);
-    $data->{totals}->{$label}->{E} = $e_total->to_output(money => 1);
-    $data->{totals}->{$label}->{total} = ($i_total - $e_total)->to_output(money => 1);
     $self->account_data($data);
 }
 
