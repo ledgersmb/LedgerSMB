@@ -1474,8 +1474,7 @@ account search request.
 
 
 A script for journal ajax requests: accepts a search string and returns a
-list of matching accounts in a ul/li pair acceptable for scriptaculous's
-autocomplete library..
+list of matching accounts in a ul/li pair acceptable for ajax consumers
 
 \subsection*{METHODS\label{LedgerSMB::Scripts::journal_METHODS}\index{LedgerSMB::Scripts::journal!METHODS}}
 \begin{description}
@@ -1483,7 +1482,7 @@ autocomplete library..
 \item[{\_\_default}] \mbox{}
 
 Get the search string, query the database, return the results in a ul/li
-pair easily queried by scriptaculous's autocompleter.
+pair easily used by ajax consumers.
 
 
 \item[{chart\_of\_accounts}] \mbox{}
