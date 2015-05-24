@@ -16,6 +16,7 @@
     
     <form method="POST" action="<?lsmb script ?>">
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
+	<input type="hidden" name="id" value="<?lsmb user.id ?>" />
         <table>
 
             <?lsmb IF user.username and not request.pls_import ?>
