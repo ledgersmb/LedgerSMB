@@ -39,6 +39,7 @@ requires 'Number::Format';
 requires 'DateTime::Format::Strptime';
 requires 'Moose';
 requires 'namespace::autoclean';
+requires 'JSON';
 
 recommends 'Math::BigInt::GMP';
 
