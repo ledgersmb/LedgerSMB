@@ -1453,7 +1453,7 @@ sub vendor_details {
                                   FROM eca_to_contact) ct_base
                         GROUP BY credit_id) ct ON ct.credit_id = eca.id
              LEFT JOIN entity_bank_account ba ON ba.id = eca.bank_account
-		 WHERE eca.id = ? and location_class = 1|;
+		 WHERE eca.id = ?|;
     my $sth = $dbh->prepare($query);
     $sth->execute( $form->{vendor_id} ) || $form->dberror($query);
 

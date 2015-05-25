@@ -10,6 +10,16 @@ API Enhancements:
 Changelog for 1.4 Series
 Released 2014-09-15
 
+
+Changelog for 1.4.12
+* Updated German translation by Adrian v. Meibom <meibomberlin@googlemail.com>
+* Fixed printing of purchase order due to SQL error (bug 1359) (Erik H)
+* Don't show button for dis-allowed action in GL entry (bug 1355) (Erik H)
+* Admin can't reset user's password due to SQL error (bug 1333) (Erik H)
+
+Erik H is Erik Huelsmann
+
+
 Changelog for 1.4.11
 * Fixed account dropdowns on default screen (Nick P)
 * Fixed broken comparison with oldvendor (Nick P)
