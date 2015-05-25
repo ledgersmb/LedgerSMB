@@ -3,6 +3,11 @@ Released 2014-09-15
 
 Changelog for 1.4.12
 * Updated German translation by Adrian v. Meibom <meibomberlin@googlemail.com>
+* Fixed printing of purchase order due to SQL error (bug 1359) (Erik H)
+* Don't show button for dis-allowed action in GL entry (bug 1355) (Erik H)
+* Admin can't reset user's password due to SQL error (bug 1333) (Erik H)
+
+Erik H is Erik Huelsmann
 
 
 Changelog for 1.4.11
@@ -27,6 +32,7 @@ Chris T is Chris Travers
 Nick P is Nick Prater
 Erik H is Erik Huelsmann
 Pongracz I is Istvan Pongracz
+
 
 Changelog for 1.4.10
 * Note:  Corrected version numbers in 1.4.10.1, 1.4.10 had 1.4.9 as version
