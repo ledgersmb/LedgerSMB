@@ -322,6 +322,9 @@ sub display_form
 		}
 		delete $button{post};
 	      }
+	      if ($form->{id} && ($form->{approved} || $form->{batch_id})) {
+		  delete $button{post};
+	      }
 
 	      for ( keys %button ) { delete $button{$_} if !$a{$_} }      
 	      my $i=1;
