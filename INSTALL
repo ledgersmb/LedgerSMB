@@ -194,6 +194,7 @@ LedgerSMB depends on these additional modules (not listing core modules):
   Moose
   namespace::autoclean
   Carp::Always
+  JSON
 
 and these optional ones:
 
@@ -257,7 +258,7 @@ following command:
    libdatetime-format-strptime-perl libconfig-general-perl \
    libdatetime-format-strptime-perl libio-stringy-perl libmoose-perl \
    libconfig-inifiles-perl libnamespace-autoclean-perl \
-   libcarp-always-perl
+   libcarp-always-perl libjson-perl
 
 
 This installs the required modules available from the Wheezy repository.
