@@ -459,7 +459,8 @@ and not the user creation screen.
 sub load_templates {
     my ($request) = @_;
     my $dir = $LedgerSMB::Sysconfig::templates . '/' . $request->{template_dir};
-    my $dbh = _get_database($request)->connect;
+    _init_db($request);
+    my $dbh = $request->{dbh};
     opendir(DIR, $dir);
     while (readdir(DIR)){
        next unless -f "$dir/$_";
