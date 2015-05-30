@@ -17,7 +17,8 @@ Changelog for 1.4.12
 * Don't show button for dis-allowed action in GL entry (bug 1355) (Erik H)
 * Admin can't reset user's password due to SQL error (bug 1333) (Erik H)
 * Fix dependency listing (include JSON) (bug 1347) (Erik H)
-* make setup.pl generate fewer warnings in the error logs (Erik H)
+* Make setup.pl generate fewer warnings in the error logs (Erik H)
+* Fix 'Save as' in contact account clobbering existing one (bug 1364) (Erik H)
 
 Erik H is Erik Huelsmann
 
