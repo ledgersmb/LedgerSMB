@@ -34,7 +34,7 @@ This is the integer id of the user
 
 =cut 
 
-has id => (is => 'ro', isa => 'Int', required => 1);
+has id => (is => 'ro', isa => 'Int');
 
 =item entity_id
 
