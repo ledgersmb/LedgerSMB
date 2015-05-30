@@ -621,7 +621,7 @@ This inserts a new credit account.
 
 sub save_credit_new {
     my ($request) = @_;
-    $request->{credit_id} = undef;
+    delete $request->{credit_id};
     save_credit($request);
 }
 
