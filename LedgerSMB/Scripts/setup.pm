@@ -257,7 +257,6 @@ sub copy_db {
     $dbh->prepare("SELECT setting__set('role_prefix', 
                                coalesce((setting_get('role_prefix')).value, ?))"
     )->execute("lsmb_$database->{company_name}__");
-    $dbh->commit;
     $dbh->disconnect;
     complete($request);
 }
@@ -386,6 +385,7 @@ sub revert_migration {
     my ($request) = @_;
     my $database = _get_database($request);
     my $dbh = $database->connect();
+    $dbh->{AutoCommit} = 0;
     my $sth = $dbh->prepare(qq(
          SELECT value
            FROM defaults
@@ -398,7 +398,6 @@ sub revert_migration {
     $dbh->do("DROP SCHEMA public CASCADE");
     $dbh->do("ALTER SCHEMA $src_schema RENAME TO public");
     $dbh->commit();
-    #$dbh->begin_work; # no need to begin work; there's no further work
     
     my $template = LedgerSMB::Template->new(
         path => 'UI/setup',
@@ -467,7 +466,6 @@ sub load_templates {
        my $dbtemp = LedgerSMB::Template::DB->get_from_file("$dir/$_");
        $dbtemp->save;
     }
-    $dbh->commit;
     return _render_new_user($request) unless $request->{only_templates};
     return complete($request);
 }
@@ -949,6 +947,7 @@ sub save_user {
 sub process_and_run_upgrade_script {
     my ($request, $database, $src_schema, $template) = @_;
     my $dbh = $database->connect;
+    $dbh->{AutoCommit} = 0;
     my $temp = $database->loader_log_filename();
     my $rc;
 
