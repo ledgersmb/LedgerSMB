@@ -61,7 +61,7 @@ Middle name of individual
 
 =cut
 
-has 'middle_name' => (is => 'rw', isa => 'Str', required => 0);
+has 'middle_name' => (is => 'rw', isa => 'Maybe[Str]', required => 0);
 
 =item last_name
 
@@ -128,7 +128,7 @@ Personal id, such as a passport or other government-issued or other ID.
 =cut
 
 has 'birthdate' => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
-has 'personal_id' => (is => 'ro', isa => 'Str');
+has 'personal_id' => (is => 'ro', isa => 'Maybe[Str]');
 
 =back
 
