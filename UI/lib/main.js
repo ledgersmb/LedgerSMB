@@ -20,36 +20,6 @@ function load_link(xhr, href) {
     });
 }
 
-/*
-function set_main_div(doc){
-    var head = doc.match(/<head[^>]*>([\s\S]*)<\/head>/i);
-    var additionalhead = head[1];
-    require(['dojox.xml.parser'],
-	    function(parser) {
-		var head_dom = parser.parse(additionalhead);
-		for (var i = 0; i < head_dom.childNodes.length; i++) {
-		    console.log(head_dom.childNodes[i]);
-		}
-	    }
-	   );
-
-        var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-        var newbody = body[1];
-        require(['dojo/query', 'dojo/dom-style', 'dijit/registry', 'dojo/domReady!'],
-        function(query, style, registry){
-           var mainCP = registry.byId('maindiv');
-           // mainCP.domNode.style.visibility = 'hidden';
-           style.set(mainCP, 'visibility', 'hidden');
-           mainCP.set('content', newbody);
-           setup_dojo();
-               mainCP.domNode.style.visibility = 'visible';
-           require(['dojo/domReady!'], 
-           function(){
-           });
-        });
-}
-*/
-
 function setup_dojo() {
     require(['lsmb/lib/Loader', 'dojo/domReady!'],
     function(l){
