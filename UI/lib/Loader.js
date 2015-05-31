@@ -98,9 +98,9 @@ function(
                            if (a.target || ! a.href){
                                return undefined; 
                            }
-                           on(node, 'click', function(e){
+                           on(a, 'click', function(e){
                                e.preventDefault();
-                               load_link(xhr, node.href);
+                               load_link(xhr, a.href);
                            });
                      }
 
