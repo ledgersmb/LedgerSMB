@@ -1,10 +1,16 @@
-<div class="lsmbtab" id="company_div" title="<?lsmb text('Company') ?>">
+<div class="lsmbtab"
+     id="company_div"
+     title="<?lsmb text('Company') ?>"
+     data-dojo-type="dijit/layout/ContentPane"
+     <?lsmb IF request.target_div == 'company_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+	  
+     >
 <?lsmb SWITCH entity_class
 	?><?lsmb CASE 1 ?><?lsmb entity_classname = "Vendor" 
 	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
 	?><?lsmb END ?>
 	<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
-<form name="company" method="post" action="<?lsmb script ?>">
+<form name="company" method="post" action="<?lsmb request.script ?>">
 <?lsmb PROCESS input element_data = {
                   id = 'company-target-div'
 		type = "hidden"

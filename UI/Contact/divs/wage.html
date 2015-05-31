@@ -1,5 +1,6 @@
 <div class="lsmbtab" id="wage_div" 
-     title='<?lsmb text("Wages and Deductions") ?>'>
+     title='<?lsmb text("Wages and Deductions") ?>'
+     data-dojo-type="dijit/layout/ContentPane">
 <?lsmb 
 columns = [{ col_id = 'type', name = text('Type'), type = 'text' },
            { col_id = 'rate', name = text('Amount/Rate'), type = 'text' }];
@@ -16,7 +17,7 @@ PROCESS dynatable
 
 <table>
 <tr>
-<form action="<?lsmb script ?>" method="post" name="wage">
+<form action="<?lsmb request.script ?>" method="post" name="wage">
 <td><?lsmb PROCESS select element_data = {
                 options = wage_types
              value_attr = 'id'
@@ -43,7 +44,7 @@ PROCESS dynatable
 </form>
 </tr>
 <tr>
-<form action="<?lsmb script ?>" method="post" name="deduction">
+<form action="<?lsmb request.script ?>" method="post" name="deduction">
 <td><?lsmb PROCESS select element_data = {
                 options = deduction_types
              value_attr = 'id'

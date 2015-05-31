@@ -148,7 +148,7 @@
         </button>
     <?lsmb IF user.employee.entity_id;
               e_id = user.employee.entity_id ?>
-       <a href="<?lsmb script ?>?action=edit&entity_id=<?lsmb e_id ?>">[<?lsmb text('Edit') 
+       <a href="<?lsmb request.script ?>?action=edit&entity_id=<?lsmb e_id ?>">[<?lsmb text('Edit') 
        ?>]</a>
     <?lsmb END ?> 
     </form>

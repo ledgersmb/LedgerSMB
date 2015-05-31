@@ -1,4 +1,9 @@
-<div class="lsmbtab" id="bank_act_div" title="<?lsmb text('Bank Accounts') ?>">
+<div class="lsmbtab"
+     id="bank_act_div"
+     title="<?lsmb text('Bank Accounts') ?>"
+     data-dojo-type="dijit/layout/ContentPane"
+     <?lsmb IF request.target_div == 'bank_act_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+     >
 <div class="listtop"><?lsmb text('Bank Accounts') ?></div>
 <?lsmb 
 href_base = script _ '?&entity_id=' _ entity_id _ '&target_div=bank_act_div' _
@@ -20,7 +25,7 @@ PROCESS dynatable
      { col_id='delete', type='href', href_base=href_base, name=' ' }
    ];
 ?>
-<form name="bank_acct" action="<?lsmb script ?>" method="post">
+<form name="bank_acct" action="<?lsmb request.script ?>" method="post">
 <?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "form_id"

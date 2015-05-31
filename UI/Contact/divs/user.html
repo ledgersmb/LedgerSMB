@@ -1,5 +1,10 @@
 <?lsmb IF employee.first_name ?>
-<div id="user_div" class="lsmbtab"  title="<?lsmb text('User') ?>">
+<div id="user_div"
+     class="lsmbtab"
+     title="<?lsmb text('User') ?>"
+     data-dojo-type="dijit/layout/ContentPane"
+     <?lsmb IF request.target_div == 'user_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+     >
 	<div class="listtop">
             <?lsmb 
                IF request.pls_import;
@@ -14,7 +19,7 @@
                 END ?>
         </div>
     
-    <form method="POST" action="<?lsmb script ?>">
+    <form method="POST" action="<?lsmb request.script ?>">
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
 	<input type="hidden" name="id" value="<?lsmb user.id ?>" />
         <table>
@@ -102,7 +107,7 @@
     </form>
     <?lsmb IF user.entity_id and not request.pls_import?>
         <hr /> 
-        <form name="groups" method="POST" action="<?lsmb script ?>">
+        <form name="groups" method="POST" action="<?lsmb request.script ?>">
             <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>" />
             <?lsmb PROCESS input element_data = {
                type="hidden"

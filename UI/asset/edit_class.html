@@ -2,7 +2,7 @@
 <?lsmb PROCESS 'elements.html' ?>
 <body class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb title ?></div>
-<form action="<?lsmb script ?>" method="post">
+<form action="<?lsmb request.script ?>" method="post">
 <?lsmb PROCESS input element_data = {
 	type = "hidden"
 	name = "id"

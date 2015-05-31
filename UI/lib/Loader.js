@@ -15,6 +15,21 @@
  */
 
 function set_main_div(doc){
+/*    var head = doc.match(/(<head[^>]*>[\s\S]*<\/head>)/i);
+    var additionalhead = head[1];
+    require(['dojox/xml/parser'],
+	    function(parser) {
+		var head_dom = parser.parse(additionalhead);
+		var headNode = head_dom.childNodes[0];
+		console.log(headNode.childNodes.length);
+		console.log(headNode.getElementByName('script').length);
+		console.log(headNode.getElementByName('style').length);
+		for (var i = 0; i < headNode.childNodes.length; i++) {
+		    console.log(headNode.childNodes[i]);
+		}
+	    }
+	   );*/
+
         console.log('setting body');
         var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
         var newbody = body[1];

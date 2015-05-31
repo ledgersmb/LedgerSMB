@@ -1,4 +1,9 @@
-<div class="lsmbtab" id="files_div" title="<?lsmb text('Files') ?>">
+<div class="lsmbtab"
+     id="files_div"
+     title="<?lsmb text('Files') ?>"
+     data-dojo-type="dijit/layout/ContentPane"
+     <?lsmb IF request.target_div == 'files_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+     >
 <?lsmb callback="contact.pl?action=get&entity_class=" _ 
                 credit_act.entity_class _ "&entity_id=" _ entity_id _
                 "&credit_id=" _ credit_act.id; 

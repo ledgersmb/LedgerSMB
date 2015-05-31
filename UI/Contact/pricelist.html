@@ -65,7 +65,7 @@ checking a price deal for a customer.
          pm.delete = '[' _ text('Delete') _ ']';
          pm.row_id = pm.entry_id;
      END ?>
-<form name="pricematrix" action="<?lsmb script ?>" method="post">
+<form name="pricematrix" action="<?lsmb request.script ?>" method="post">
  <input type="hidden" name="entity_class"  value="<?lsmb account_class ?>" />
  <input type="hidden" name="credit_id" value="<?lsmb credit_id ?>" />
  <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>" /><?lsmb
@@ -85,17 +85,17 @@ checking a price deal for a customer.
 
 FORMATS = LIST_FORMATS();
 
-IF FORMATS.grep('PDF').size() ?> <a href="<?lsmb script ?>?action=get_pricelist&format=PDF&credit_id=<?lsmb 
+IF FORMATS.grep('PDF').size() ?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=PDF&credit_id=<?lsmb 
              credit_id ?>&entity_id=<?lsmb entity_id 
      ?>">[<?lsmb text('PDF') ?>]</a>
 <?lsmb END;
 
 IF FORMATS.grep('ODS').size() 
-?> <a href="<?lsmb script ?>?action=get_pricelist&format=ODS&credit_id=<?lsmb 
+?> <a href="<?lsmb request.script ?>?action=get_pricelist&format=ODS&credit_id=<?lsmb 
              credit_id ?>&entity_id=<?lsmb entity_id 
      ?>">[<?lsmb text('ODS') ?>]</a>
 <?lsmb END ?>
- <a href="<?lsmb script ?>?action=get_pricelist&format=CSV&credit_id=<?lsmb 
+ <a href="<?lsmb request.script ?>?action=get_pricelist&format=CSV&credit_id=<?lsmb 
              credit_id ?>&entity_id=<?lsmb entity_id 
      ?>">[<?lsmb text('CSV') ?>]</a>
 <?lsmb IF pricematrix_pricegroup;
