@@ -123,7 +123,6 @@ sub get {
 sub _main_screen {
     my ($request, $company, $person) = @_;
 
-
     # DIVS logic
     my @DIVS;
     my @entity_files;
@@ -145,7 +144,7 @@ sub _main_screen {
        my $employee = LedgerSMB::Entity::Person::Employee->get($entity_id);
        $person = $employee if $employee;
        $user = LedgerSMB::Entity::User->get($entity_id);
-    } elsif ($person->{entity_class} == 3) {
+    } elsif (defined $person->{entity_class} && $person->{entity_class} == 3) {
        @DIVS = ('employee');
     } else {
        @DIVS = qw(company person);
@@ -174,7 +173,8 @@ sub _main_screen {
                files => $locale->text('Files'),
     );
 
-    if ($LedgerSMB::Scripts::employee::country::country_divs{
+    if (defined $person->{country_id}
+	&& $LedgerSMB::Scripts::employee::country::country_divs{
             $person->{country_id}
     }){
         for my $cform (@{$LedgerSMB::Scripts::employee::country::country_divs{
@@ -226,7 +226,8 @@ sub _main_screen {
                credit_id => $credit_act->{id}}
     );
     my @bank_account = 
-         LedgerSMB::Entity::Bank->list($entity_id);
+         LedgerSMB::Entity::Bank->list(
+	     entity_id => $entity_id);
     my @notes =
          LedgerSMB::Entity::Note->list($entity_id,
                                                  $credit_act->{id});
@@ -238,7 +239,7 @@ sub _main_screen {
     my @all_taxes = LedgerSMB->call_procedure(funcname => 'account__get_taxes');
 
     my $arap_class = $entity_class;
-    $arap_class = 2 if $arap_class == 3;
+    $arap_class = 2 if defined $arap_class && $arap_class == 3;
     my @ar_ap_acc_list = LedgerSMB->call_procedure(funcname => 'chart_get_ar_ap',
                                            args => [$arap_class]);
 
