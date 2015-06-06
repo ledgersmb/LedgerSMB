@@ -20,7 +20,7 @@ function set_main_div(doc){
     var newbody = body[1];
     require(['dojo/query', 'dojo/dom', 'dojo/dom-style',
 	     'dijit/registry', 'dojo/domReady!'],
-            function(query, dom, style){
+            function(query, dom, style, registry){
 		var mainCP = registry.byId('maindiv');
 		mainCP.destroyDescendants();
 		style.set(mainCP, 'visibility', 'hidden');
@@ -52,9 +52,7 @@ function(
     return declare(wbase, {
         constructor: function(){
         },
-        setup: function(){
-            var myself = this;
-	    
+	redirectMainATags: function(){
             query('#maindiv a').forEach(function(dnode){
 		if (! dnode.target && dnode.href) {
                     on(dnode, 'click', function(e){
@@ -63,55 +61,65 @@ function(
                     });
 		}
 	    });
+	},
+	rewriteFormSubmissions: function(formnode){ 
+            if (undefined == formnode.action){
+                return undefined;
+            }
 
-
-            query('#maindiv form:not(.dojoized)').forEach(function(formnode){ 
-                if (undefined == formnode.action){
-                    return undefined;
-                }
-
-		query('button', formnode).forEach(function(b){
-		    on(b, 'click', function(){
-			domattr.set(formnode, 'clicked-action',
-				    domattr.get(b,'value'));
-		    });
+	    query('button', formnode).forEach(function(b){
+		on(b, 'click', function(){
+		    domattr.set(formnode, 'clicked-action',
+				domattr.get(b,'value'));
 		});
+	    });
 
-                on(formnode, 'submit', 
-                   function(evt){ 
-                       var method = formnode.method;
-                       evt.preventDefault();
-                       var qobj = domform.toQuery(formnode);
-                       qobj = 'action=' 
-                           + domattr.get(formnode, 'clicked-action')
-			   + '&' + qobj;
-                       if (undefined == method){
-                           method = 'GET';
-                       }
-                       var url = domattr.get(formnode, 'action');
+            on(formnode, 'submit', 
+               function(evt){ 
+                   var method = formnode.method;
+                   evt.preventDefault();
+                   var qobj = domform.toQuery(formnode);
+                   qobj = 'action=' 
+                       + domattr.get(formnode, 'clicked-action')
+		       + '&' + qobj;
+                   if (undefined == method){
+                       method = 'GET';
+                   }
+                   var url = domattr.get(formnode, 'action');
+                   console.log(url);
+                   if ('GET' == method || 'get' == method){
+                       url = url + '?' + qobj;
                        console.log(url);
-                       if ('GET' == method || 'get' == method){
-                           url = url + '?' + qobj;
-                           console.log(url);
-                           xhr(url,
-                               {"handleAs": "text",
-                               }).then(
-                                   function(doc){
-                                       set_main_div(doc);
-                                   });    
-                       } else {
-                           xhr(url,
-                               {"handleAs": "text",
-                                method: method,
-                                data: qobj,
-                               }).then(
-                                   function(doc){
-                                       set_main_div(doc);
-                                   });
-                       }
-                   });
-                return undefined; 
-            });
+                       xhr(url,
+                           {"handleAs": "text",
+                           }).then(
+                               function(doc){
+                                   set_main_div(doc);
+                               });    
+                   } else {
+                       xhr(url,
+                           {"handleAs": "text",
+                            method: method,
+                            data: qobj,
+                           }).then(
+                               function(doc){
+                                   set_main_div(doc);
+                               });
+                   }
+               });
+         },
+	rewriteAllFormSubmissions: function() {
+	    myself = this;
+	    query('#maindiv form:not(.dojoized)')
+		.forEach(myself.rewriteFormSubmissions);
+	},
+        setup: function(){
+            var myself = this;
+	    
+	    ready(function(){
+		myself.redirectMainATags();
+		myself.rewriteAllFormSubmissions();
+	    });
         }
    }); 
 });   
