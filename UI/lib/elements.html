@@ -7,7 +7,8 @@
 
   #checkbox
   checkbox_defaults = {
-    value = '1'
+    value = '1',
+    'data-dojo-type' = 'dijit/form/CheckBox'
   }
 
   #file
@@ -23,7 +24,8 @@
   # text
   text_defaults = {
     size = '60',
-    maxlength = '255'
+    maxlength = '255',
+    "data-dojo-type" = "dijit/form/TextBox"
   }
 
   # default currency
@@ -47,7 +49,13 @@
   
   #button
   button_defaults = {
-    type = 'submit'
+    type = 'submit',
+    "data-dojo-type" = "dijit/form/Button"
+  }
+
+  #select
+  select_defaults = {
+    "data-dojo-type" = "dijit/form/Select"
   }
   
 ?>
@@ -223,8 +231,8 @@
 	  ?>
 	  <?lsmb PROCESS attributes  # Process regular attributes.
 	    attribute_data=element_data
-	    attribute_defaults = {}  # Make sure old defaults are cleared out.
-	    element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey', 'tabindex']  # Attributes that apply to selects.
+	    attribute_defaults = select_defaults
+	    element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey', 'tabindex', 'data-dojo-type']  # Attributes that apply to selects.
 	  ?>
 	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
 	    custom_attribute_data=element_data.attributes 
@@ -362,6 +370,7 @@
 
 <?lsmb BLOCK auto_label  # Sets a label for a form element if the special 'label' key is passed. ?>
   <?lsmb IF element_data.defined('label')  # Check for label. ?>
+  <?lsmb IF element_data.label != '_none_' ?>
     <?lsmb  # Add a for attribute for the label if possible.
       IF element_data.defined('id');
         label_id = ' id="' _ element_data.id _ '-label"';
@@ -379,6 +388,7 @@
       END;
     ?>
     <label<?lsmb label_id ?><?lsmb label_for ?><?lsmb label_class ?>><?lsmb text(element_data.label) ?></label>
+  <?lsmb END ?>
   <?lsmb END ?>
 <?lsmb END ?>
 
