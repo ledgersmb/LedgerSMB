@@ -67,7 +67,10 @@
   <?lsmb IF element_data;  # Only process element if one exists.
               IF !element_data.title.defined();
                   element_data.title = element_data.label;
-              END; ?>
+              END;
+	      IF !element_data.type.defined();
+	          element_data.type = "text";
+	      END; ?>
   	<?lsmb
 	    input_defaults = {}  # Some inputs have no defaults, so make sure everything is empty to start with.
             
