@@ -145,57 +145,6 @@
   <?lsmb END ?>
 <?lsmb END ?>
 
-<?lsmb # AJAX SELECT ELEMENT PAIR ?>
-<?lsmb BLOCK ajaxselect ?>
-  <?lsmb IF element_data  # Only process element if one exists. ?>
-  	<?lsmb
-	    input_defaults = {}  # Some inputs have no defaults, so make sure everything is empty to start with.
-	    element_type = 'input';
-	    PROCESS auto_id;
-	  ?>
-	  <?lsmb PROCESS attributes  # Process regular attributes.
-	    attribute_data = element_data 
-	    attribute_defaults = input_defaults
-	    element_keys = input_type_keys 
-	  ?>
-	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
-	    custom_attribute_data=element_data.attributes 
-	  ?>
-	  <?lsmb PROCESS auto_label  # Process element label. ?>
-	  <input type="text" 
-                class="autocomplete ajaxselect" 
-                 size="60" 
-                value="<?lsmb element_data.initial_value ?>" 
-                   id="<?lsmb attribute_data.id ?>" 
-                 name="<?lsmb element_data.name ?>" 
-              onclick="this.value='';" 
-          />
-	  <input type="hidden" 
-                   id="<?lsmb attribute_data.id ?>" 
-                 name="<?lsmb element_data.name ?>-old"  
-                value="<?lsmb element_data.initial_value?>" 
-          />
-	  <span class="indicator" id="<?lsmb attribute_data.id ?>-ac-indicator" style="display: none">Working...</span>
-	  <div id="<?lsmb attribute_data.id ?>-ac-choices" class="autocomplete"></div>
-	  <script language="javascript" type="text/javascript"><!--
-	    new Ajax.Autocompleter('<?lsmb attribute_data.id ?>', 
-                                   '<?lsmb attribute_data.id ?>-ac-choices', 
-                                   '<?lsmb element_data.ajax_target ?>', 
-                                   {"afterUpdateElement":post_ajax_setter,
-                                   'parameters' : 
-                                                <?lsmb SET params="search_field=" _ attribute_data.id; 
-                                               FOR k
-                                               IN attribute_data.params.keys();
-                                                  params = params _ "&$k=" _ attribute_data.params.$k;
-                                               END;
-                                               ?>
-                                               <?lsmb '"' _ params _ '"'?>
-                                               
-                                   })
-	  //--></script>
-  <?lsmb END ?>
-<?lsmb END ?>
-
 <?lsmb # SELECT ELEMENT ?>
 <?lsmb BLOCK select ?>
   <?lsmb IF element_data;  # Only process element if one exists.
