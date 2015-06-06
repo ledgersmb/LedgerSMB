@@ -28,6 +28,8 @@ html, body {
 }
 
 
+
+/******** For account editing page */
 #account-tabs #H div.inputline,
 #account-tabs #A div.inputline
 {
@@ -72,3 +74,8 @@ html, body {
    margin: 1em;
 }
 
+/********* For business units editing page ********/
+
+div.table { display: table;}
+form.tr, div.tr { display: table-row; }
+div.td, div.th {display: table-cell; }
