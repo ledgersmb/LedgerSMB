@@ -21,7 +21,7 @@ function load_link(xhr, href) {
 }
 
 function setup_dojo() {
-    require(['lsmb/lib/Loader', 'dojo/domReady!'],
+    require(['lsmb/lib/Loader', 'dojo/cookie', 'dojo/domReady!'],
     function(l){
         if (location.search.indexOf('&dojo=no') != -1) {
             dojo.cookie("lsmb-dojo-disable", "yes", {});
