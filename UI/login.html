@@ -28,17 +28,18 @@
 				<a href="http://www.ledgersmb.org/" target="_top"><img src="images/ledgersmb.png" class="logo" alt="LedgerSMB Logo" /></a>
 				<h1 class="login" align="center"><?lsmb text("LedgerSMB [_1]", VERSION) ?></h1>
 				<div align="center">
-					<div id="company_div" class="tabular col-1">
+					<div id="company_div" data-dojo-type="lsmb/lib/TabularForm" data-dojo-props="cols:1">
                                                <div class="noshow">
                                                  <div>
                                                   <?lsmb PROCESS input
                                                         element_data = {
-                                                        class="login" 
+                                                        class="login--2" 
 							type="text" 
 							name="login" 
 							size="20"
-							id="username" 
-                                                        label=text('User Name')
+							id="username"
+							label='_none_'
+                                                        title=text('User Name')
                                                         value = login
 							accesskey="l" } #' ?>
                                                  </div>
@@ -50,18 +51,20 @@
 							name="password" 
 							size="20"
 							id="password" 
-                                                        label=text('Password')
+                                                        label='_none_'
+							title=text('Password')
                                                         value = ''
 							accesskey="p" } ?>
                                                  </div></div>
 						  <?lsmb PROCESS input
                                                         element_data = {
-                                                        class="login" 
+                                                        class="login-2" 
 							type="text" 
 							name="company" 
 							size="20"
 							id="company" 
-                                                        label=text('Company')
+                                                        label='_none_'
+							title=text('Company')
                                                         value = company
 							accesskey="c" } ?>
 						</div>
