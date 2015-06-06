@@ -40,7 +40,11 @@
               value = form.item("validto_$i")
               class = "date"
           } ?></td>
-	  <td><input name="pass_<?lsmb i ?>" size="6" value="<?lsmb form.item("pass_$i") ?>" /></td>
+	  <td><?lsmb PROCESS input element_data = {
+		     name = "pass_" _ i
+		     size = 6
+		     value = form.item("pass_$i")
+	  } ?></td>
 	  <td><?lsmb PROCESS select element_data=row.1 ?></td>
 	</tr>
 <?lsmb END ?>
