@@ -1,6 +1,8 @@
-<div class="lsmbtab" id="wage_div" 
+<div id="wage_div" 
      title='<?lsmb text("Wages and Deductions") ?>'
-     data-dojo-type="dijit/layout/ContentPane">
+     data-dojo-type="dijit/layout/ContentPane"
+     <?lsmb IF request.target_div == 'wage_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+     >
 <?lsmb 
 columns = [{ col_id = 'type', name = text('Type'), type = 'text' },
            { col_id = 'rate', name = text('Amount/Rate'), type = 'text' }];
