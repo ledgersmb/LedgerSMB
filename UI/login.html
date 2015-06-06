@@ -66,12 +66,19 @@
 							accesskey="c" } ?>
 						</div>
 				</div>
-				<button type="submit" name="action" value="login" accesskey="l" id="action-login"><?lsmb text('Login') ?></button>
+				<?lsmb PROCESS button
+				       element_data = {
+				       type="submit"
+				       name="action"
+				       value="login"
+				       accesskey="l"
+				       id="action-login"
+				       text=text('Login') } ?>
 			</div>
                 <div id="login-indicator">
                   <span><?lsmb text('Logging in.  Please wait.') ?></span>
                 </div>
-		</div></div>
+		</div>
 		</form>
 	</center>
 </body>

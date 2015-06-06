@@ -241,7 +241,8 @@
 	  <?lsmb PROCESS attributes  # Process regular attributes.
 	    attribute_data=element_data 
 	    attribute_defaults = button_defaults
-	    element_keys=['name', 'value', 'accesskey', 'type', 'disabled', 'tabindex']  # Attributes that apply to buttons.
+	    element_keys=['name', 'value', 'accesskey', 'type', 'disabled',
+		 'tabindex', 'data-dojo-type']  # Attributes that apply to buttons.
 	  ?>
 	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
 	    custom_attribute_data=element_data.attributes 
