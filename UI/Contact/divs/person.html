@@ -45,7 +45,8 @@
 <div class="input_group1">
 	<?lsmb PROCESS input element_data = {
                   id = 'person-control-code'
-		label = text('Control Code') #'
+		title = text('Control Code') #'
+		label = "_none_"
 		type= "text"
 		name = "control_code"
 		value = person.control_code
@@ -67,7 +68,8 @@
 		default_values = [person_entity_class]
 		text_attr = 'class'
 		value_attr = 'id'
-		label = text('Class')
+		title = text('Class')
+		label = "_none_"
 	} ?>
 </div>
 </div>
@@ -75,7 +77,8 @@
 <div class="input_group1">
      <?lsmb 
         PROCESS select element_data = {
-                  label = text('Salutation')
+                  title = text('Salutation')
+                  label = "_none_"
                    name = 'salutation_id'
          default_values = [salutation_id]
           default_blank = 1
@@ -90,7 +93,8 @@
 <div class="input_line">
 <div class="input_group1">
 	<?lsmb PROCESS input element_data = {
-		label = text('Given Name') #'
+		title = text('Given Name') #'
+		label = "_none_"
 		type= "text"
 		name = "first_name"
 		value = person.first_name
@@ -102,7 +106,8 @@
 <div class="input_line">
 <div class="input_group1">
         <?lsmb PROCESS input element_data = {
-                label = text('Middle Name') #'
+                title = text('Middle Name') #'
+                label = "_none_"
                 type= "text"
                 name = "middle_name"
                 value = person.middle_name
@@ -113,7 +118,8 @@
 <div class="input_line">
 <div class="input_group1">
         <?lsmb PROCESS input element_data = {
-                label = text('Surname') 
+                title = text('Surname') 
+                label = "_none_"
                 type= "text"
                 name = "last_name"
                 value = person.last_name
@@ -136,7 +142,8 @@
 			default_values = [person_country_id]
 			options = country_list
 			name = "country_id"
-			label = text('Country') 
+			title = text('Country') 
+			label = "_none_"
                         required = 'true'
 	} ?> 
 </div>
@@ -148,7 +155,8 @@
            type  = 'text',
            size  = '20',
            value = person.personal_id,
-           label = text('Personal ID') #'
+           title = text('Personal ID') #'
+           label = "_none_"
            class = 'id',
     } ?>
 </div>
@@ -159,7 +167,8 @@
            name  = 'birthdate',
            type  = 'text',
            value = person.birthdate,
-           label = text('Birthdate'),
+           title = text('Birthdate'),
+           label = "_none_"
            size  = '11',
            class = 'date',
     } ?>
