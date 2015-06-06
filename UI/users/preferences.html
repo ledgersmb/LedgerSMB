@@ -29,15 +29,26 @@
   <tr><th class="listtop" colspan="2"><?lsmb text('Change Password') ?></th></tr>
 	      <tr>
 		<th align="right"><?lsmb text('Old Password') ?></th>
-		<td><input type="password" name="old_password" size="10" value="" /></td>
+		<td><?lsmb PROCESS input element_data = {
+			   type = "password"
+			   name = "old_password"
+			   size = 10
+			   value="" } ?></td>
 	      </tr>
 	      <tr>
 		<th align="right"><?lsmb text('Password') ?></th>
-		<td><input type="password" name="new_password" size="10" value="" /></td>
+		<td><?lsmb PROCESS input element_data = {
+			   type = "password"
+			   name = "new_password"
+			   size = 10
+			   value="" } ?></td>
 	      </tr>
 	      <tr>
 		<th align="right"><?lsmb text('Confirm') ?></th>
-		<td><input type="password" name="confirm_password" size="10" /></td>
+		<td><?lsmb PROCESS input element_data = {
+			   type = "password"
+			   name = "confirm_password"
+			   size = 10 } ?></td>
 	      </tr>
   <tr><th class="listtop" colspan="2"><?lsmb text('Settings') ?></th></tr>
 	      <tr>
@@ -105,7 +116,12 @@
   </tr>
 </table>
 
-<button type="submit" class="submit" name="action" value="save_preferences"><?lsmb text('Save') ?></button>
+<?lsmb PROCESS button element_data = {
+       type = "submit"
+       class = "submit"
+       name = "action"
+       value = "save_preferences"
+       text = text('Save') } ?>
   </form>
 
 </body>
