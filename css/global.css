@@ -1,6 +1,9 @@
 div.input {
     float: left;
 }
+div.date {
+    width: 13ex;
+}
 html, body {
     height: 100%;
     margin: 0;
