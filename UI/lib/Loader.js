@@ -15,11 +15,12 @@
  */
 
 function set_main_div(doc){
-        console.log('setting body');
-        var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-        var newbody = body[1];
-    require(['dojo/query', 'dojo/dom', 'dojo/dom-style', 'dijit/registry', 'dojo/parser', 'dojo/domReady!'],
-            function(query, dom, style, registry, parser){
+    console.log('setting body');
+    var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+    var newbody = body[1];
+    require(['dojo/query', 'dojo/dom', 'dojo/dom-style',
+	     'dijit/registry', 'dojo/domReady!'],
+            function(query, dom, style){
 		var mainCP = registry.byId('maindiv');
 		mainCP.destroyDescendants();
 		style.set(mainCP, 'visibility', 'hidden');
@@ -35,7 +36,6 @@ define([
      // base
     'dojo/_base/declare',
     'dijit/registry',
-    'dojo/parser',
     'dojo/query',
     'dojo/ready',
     'dijit/_WidgetBase',
@@ -47,20 +47,13 @@ define([
     ],
 function(
     // base
-    declare, registry, parser, query, ready, wbase, construct,
+    declare, registry, query, ready, wbase, construct,
     domform, domattr, xhr, on) {
     return declare(wbase, {
         constructor: function(){
         },
         setup: function(){
-            var declarative = false;
             var myself = this;
-            query('div.dojo-declarative').forEach(function(){
-                 declarative = true;
-            });
-            if (declarative){
-               return parser.parse(); 
-            }
 	    
             query('#maindiv a').forEach(function(dnode){
 		if (! dnode.target && dnode.href) {
