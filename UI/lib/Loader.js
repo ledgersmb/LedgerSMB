@@ -22,8 +22,8 @@ function set_main_div(doc){
 	     'dijit/registry', 'dojo/domReady!'],
             function(query, dom, style, registry){
 		var mainCP = registry.byId('maindiv');
-		mainCP.destroyDescendants();
 		style.set(mainCP, 'visibility', 'hidden');
+		mainCP.destroyDescendants();
 		mainCP.set('content', newbody);
 		setup_dojo();
 		style.set(mainCP, 'visibility', 'visible');
