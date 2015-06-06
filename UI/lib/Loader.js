@@ -76,14 +76,22 @@ function(
                 if (undefined == formnode.action){
                     return undefined;
                 }
+
+		query('button', formnode).forEach(function(b){
+		    on(b, 'click', function(){
+			domattr.set(formnode, 'clicked-action',
+				    domattr.get(b,'value'));
+		    });
+		});
+
                 on(formnode, 'submit', 
                    function(evt){ 
                        var method = formnode.method;
                        evt.preventDefault();
                        var qobj = domform.toQuery(formnode);
                        qobj = 'action=' 
-                           + formnode.action.value + '&' 
-                           + qobj;
+                           + domattr.get(formnode, 'clicked-action')
+			   + '&' + qobj;
                        if (undefined == method){
                            method = 'GET';
                        }

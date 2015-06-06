@@ -26,10 +26,11 @@
 		name="credit_id" 
 		value=credit_act.id
 	} ?>
-<div class="tabular col-1">
+<div data-dojo-type="lsmb/lib/TabularForm" data-dojo-props="cols:1">
 <div class="input">
    <?lsmb PROCESS input element_data = {
-      label = text('Subject'),
+      title = text('Subject'),
+      label = "_none_"
       name = "subject"
       value = subject
       type = "text"
@@ -43,7 +44,8 @@ IF credit_act.id;
 			name = "note_class"
 			default_values = [note_class]
 			options = attach_level_options
-			label = text("Note Class") #"
+			title = text("Note Class") #"
+			label = "_none_"
 			value_attr = "value"
 	};
 ELSE;
@@ -56,7 +58,8 @@ ELSE;
 END; ?>
 </div>
 <div class="input"><?lsmb PROCESS textarea element_data = {
-	label = text('Notes')
+	title = text('Notes')
+	label = "_none_"
 	name = 'note'
          required = 'true'
           id = 'note_entry_note'

@@ -65,14 +65,16 @@
                   END; ?> 
                 <td><div class="input_line"><div overflow="auto" class="input_group">
                   <?lsmb INCLUDE input element_data = {
-                           label   = 'Yes'
+                           title = 'Yes'
+                           label = "_none_"
                            value   = '1'
                            checked = importc1
                            name    = 'pls_import'
                            type    = 'radio'
                    } ?></div><div overflow="auto" class="input_group"><?lsmb
                    INCLUDE input element_data = {
-                           label   = 'No'
+                           title = 'No'
+                           label = "_none_"
                            value   = '0'
                            checked = importc0
                            name    = 'pls_import'
@@ -121,7 +123,7 @@
                 };
            ?>
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
-           <div class="tabular col-2">
+           <div data-dojo-type="lsmb/lib/TabularForm" data-dojo-props="cols:2">
             <table>
                 <!-- Groups section -->
                 <tr>
@@ -137,7 +139,8 @@
                            END ?>
                         <?lsmb PROCESS input element_data = {
                                type = "checkbox"
-                               label = role.description
+                               title = role.description
+                               label = "_none_"
                                value = 1
                                name = role.rolname
                                id = role.rolname

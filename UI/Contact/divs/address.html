@@ -96,7 +96,7 @@
 		name="location_id" 
 		value= DISPLAY.id
 	}; 
-       ?> <div class="tabular col-1"><div>
+       ?> <div data-dojo-type="lsmb/lib/TabularForm" data-dojo-props="cols:1"><div>
              <?lsmb IF credit_act.id;
                     IF is_for_credit;
                        attach_to = 3;
@@ -108,7 +108,8 @@
                           id              = 'attach_address_to' 
                           default_values  = [attach_to]
                           options         = attach_level_options
-                          label           = text('Attach To') #'
+                          title = text('Attach To') #'
+                          label = "_none_"
                        };
                      ELSE ?>
          </div>
@@ -121,12 +122,14 @@
                        options        = location_class_list
                        text_attr      = "class"
                        value_attr     = "id"
-                       label          = text('Type')
+                       title = text('Type')
+                       label = "_none_"
                 } ?>
 	</div>
 	<div> 
 		<?lsmb INCLUDE input element_data = {
-			label = text('Address'),
+			title = text('Address'),
+			label = "_none_"
 			name = "line_one",
 			value = DISPLAY.line_one,
 			type = "text",
@@ -154,7 +157,8 @@
 	</div>
 	<div> 
 		<?lsmb PROCESS input element_data = {
-			label = text('City'),
+			title = text('City'),
+			label = "_none_"
 			name = "city",
 			value = DISPLAY.city,
 			type = "text",
@@ -164,7 +168,8 @@
 	</div>
 	<div> 
 		<?lsmb PROCESS input element_data = {
-			label = text('State/Province'),
+			title = text('State/Province'),
+			label = "_none_"
 			name = "state",
 			value = DISPLAY.state,
 			type = "text",
@@ -173,7 +178,8 @@
 	</div>
 	<div> 
 		<?lsmb PROCESS input element_data = {
-			label = text('Zip/Post Code'),
+			title = text('Zip/Post Code'),
+			label = "_none_"
 			name = "mail_code",
 			value = DISPLAY.mail_code,
 			type = "text",
@@ -189,7 +195,8 @@
 			default_values = [DISPLAY.country_id]
 			options = country_list
 			name = "country_id"
-			label = text('Country') 
+			title = text('Country') 
+			label = "_none_"
                         required = 'true'
 		} ?>
 	</div></div>

@@ -68,7 +68,7 @@ PROCESS dynatable
 		name="contact_id" 
 		value=request.contact_id
 	} ?>
-        <div class="tabular col-1">
+        <div data-dojo-type="lsmb/lib/TabularForm" data-dojo-props="cols:1">
         <div>
            
              <?lsmb IF credit_act.id;
@@ -82,7 +82,8 @@ PROCESS dynatable
                           id              = 'attach-contact-to'
                           default_values  = [attach_to]
                           options         = attach_level_options
-                          label           = text('Attach To') #'
+                          title = text('Attach To') #'
+                          label = "_none_"
                        };
                      ELSE ?>
              <label><?lsmb text('Attach to') ?></label><?lsmb text('Entity');
@@ -91,7 +92,8 @@ PROCESS dynatable
 	<div>
 		<?lsmb PROCESS select element_data = {
 			name = "class_id"
-			label = "Type"
+			title = "Type"
+			label = "_none_"
 			text_attr = "class"
 			value_attr = "id"
 			default_values = [request.class_id]		
@@ -100,7 +102,8 @@ PROCESS dynatable
 	</div>
 	<div>
 		<?lsmb PROCESS input element_data = {
-			label = text('Description'),
+			title = text('Description'),
+			label = "_none_"
 			name = "description"
                         id   = 'contact_description'
 			value = request.description
@@ -110,7 +113,8 @@ PROCESS dynatable
 	</div>
 	<div>
 		<?lsmb PROCESS input element_data = {
-			label = text('Contact Info'),
+			title = text('Contact Info'),
+			label = "_none_"
 			name = "contact"
 			value = request.contact
 			type = "text"
