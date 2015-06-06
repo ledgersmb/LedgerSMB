@@ -26,3 +26,49 @@ html, body {
     width: 550px;
     height: 550px;
 }
+
+
+#account-tabs #H div.inputline,
+#account-tabs #A div.inputline
+{
+   overflow: auto;
+}
+
+#account-tabs #H label,
+#account-tabs #A label
+ {
+   display: block;
+   float: left;
+   text-align: right;
+   margin-right: 0.5ex;
+}
+#account-tabs #H div.inputgroup,
+#account-tabs #A div.inputgroup
+ {
+   float: left;
+   display: block;
+}
+
+#account-tabs #H label.line,
+#account-tabs #A label.line
+ {
+   font-weight: bold; 
+   width: 12em;
+   margin-right: 0.5em;
+   vertical-align: center;
+   height: 100%
+}
+
+#account-tabs #H div.inputgroup label,
+#account-tabs #A div.inputgroup label
+ {
+   width: 8em; 
+}
+
+#account-tabs #H div.subsectionhead,
+#account-tabs #A div.subsectionhead
+ {
+   font-weight: bold;
+   margin: 1em;
+}
+
