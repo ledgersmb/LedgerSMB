@@ -58,7 +58,10 @@ FOREACH item = hidden;
       hidden_url_base = hidden_url_base _ '&' _ item.name _ '=' _ item.value;
   END;
    ?>
-<input type=hidden name="<?lsmb item.name ?>" value="<?lsmb item.value ?>">
+<?lsmb PROCESS input element_data = {
+       type = "hidden"
+       name = item.name
+       value = item.value  } ?>
 <?lsmb END ?>
 </form>
 <div class="listtop"><?lsmb text('Or Add To Batch') ?></div>

@@ -28,6 +28,10 @@ if (agt.indexOf("msie") == -1) {
             text('Logout Successful');
           END; ?></h1>
 <p><a href="login.pl" target='top'><?lsmb text('Return to the login screen.') ?></a>
-<form id='submitform' action="login.pl" method="post"><input type="hidden" name="action" value="logout_js"></form>
+<form id='submitform' action="login.pl" method="post">
+<?lsmb PROCESS input element_data = {
+       type = "hidden"
+       name = "action"
+       value = "logout_js" } ?></form>
 </body>
 </html>
