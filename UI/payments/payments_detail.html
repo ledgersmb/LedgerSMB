@@ -339,7 +339,7 @@
 										<?lsmb PROCESS input element_data = {
 											type = "hidden"
 											name = "due_$i.0"
-											value = i.6 ?>
+											value = i.6 } ?>
 									</td>
 									<td class="paid_list">
 										&nbsp;<?lsmb i.4 ?>
@@ -357,7 +357,7 @@
 											value = ${"payment_$i.0"}
 											size = 20
 											type = "text"
-											class = "monetary" ?>
+											class = "monetary" } ?>
 										<?lsmb PROCESS input element_data = {
 											type = "hidden"
 											name = "invoice_${r.contact_id}_$icount"
@@ -397,10 +397,10 @@
 						<?lsmb END # foreach i ?>
 
 						<?lsmb INCLUDE input element_data = {
-							type = "hidden"
-							name = "invoice_count_${r.contact_id}"
-							value = icount
-						} ?>
+								 type = "hidden"
+								 name = "invoice_count_${r.contact_id}"
+								 value = icount
+								 } ?>
 
 						<tr class="subtotal">
 							<td colspan="5" class="total_label">
