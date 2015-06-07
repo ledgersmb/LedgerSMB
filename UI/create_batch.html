@@ -15,14 +15,20 @@
     <?lsmb text("Batch Number") ?>
   </div>
   <div class="value">
-    <input name="batch_number" type="text" value="<?lsmb batch_number ?>"/>
+    <?lsmb PROCESS input element_data = {
+	   name = "batch_number"
+	   type = "text"
+	   value = batch_number } ?>
   </div>
 <div class="labelledinput">
   <div class="label">
     <?lsmb text("Description") ?>
   </div>
   <div class="inputgroup">
-    <input name="description" type="text" value="<?lsmb batch_number ?>"/>
+    <?lsmb PROCESS input element_data = {
+	   name = "description"
+	   type = "text"
+	   value = batch_number } ?>
   </div>
 </div>
 <div class="labelledinput">
@@ -30,13 +36,20 @@
      <?lsmb text("Batch Date") ?>
   </div>
   <div class="inputgroup">
-     <input type=text class=date name="batch_date" 
-            value="<?lsmb batch_date ?>" />
+     <?lsmb PROCESS input element_data = {
+	    type = "text"
+	    class = "date"
+	    name = "batch_date" 
+            value = batch_date } ?>
   </div>
 </div>
 <div id="buttons">
-<button value="create_vouchers" type="submit" class="submit" name="action">
-<?lsmb text('Continue') ?></button>
+<?lsmb PROCESS button element_data = {
+       value = "create_vouchers"
+       type = "submit"
+       class = "submit"
+       name = "action"
+       text = text('Continue') } ?>
 </div>
 <?lsmb 
 hidden_url_base = '';
