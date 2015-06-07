@@ -322,27 +322,24 @@
 								<tr>
 									<td class="invoice_date_list">
 										&nbsp;<?lsmb i.2 ?>
-										<input
+										<?lsmb PROCESS input element_data = {
 											type = "hidden"
-											name = "<?lsmb "invoice_date_$i.0" ?>"
-											value = "<?lsmb i.2 ?>"
-										/>
+											name = "invoice_date_$i.0"
+											value = i.2 } ?>
 									</td>
 									<td class="invoice_list">
 										&nbsp;<?lsmb i.1 ?>
-										<input
+										<?lsmb PROCESS input element_data = {
 											type = "hidden"
-											name = "<?lsmb "invnumber_$i.0" ?>"
-											value = "<?lsmb i.1 ?>"
-										/>
+											name = "invnumber_$i.0"
+											value = i.1 } ?>
 									</td>
 									<td class="total_due_list">
 										&nbsp;<?lsmb i.3 ?>
-										<input
+										<?lsmb PROCESS input element_data = {
 											type = "hidden"
-											name = "<?lsmb "due_$i.0" ?>"
-											value = "<?lsmb i.6 ?>"
-										/>
+											name = "due_$i.0"
+											value = i.6 ?>
 									</td>
 									<td class="paid_list">
 										&nbsp;<?lsmb i.4 ?>
@@ -355,23 +352,20 @@
 										<?lsmb currency ?>
 									</td>
 									<td class="to_pay_list">
-										<input 
-											name = "<?lsmb "payment_$i.0" ?>"
-											value = "<?lsmb ${"payment_$i.0"} ?>"
+										<?lsmb PROCESS input element_data = {
+											name = "payment_$i.0"
+											value = ${"payment_$i.0"}
 											size = 20
 											type = "text"
-											class = "monetary"
-										/>
-										<input 
+											class = "monetary" ?>
+										<?lsmb PROCESS input element_data = {
 											type = "hidden"
-											name = "<?lsmb "invoice_${r.contact_id}_$icount" ?>"
-											value = "<?lsmb i.0 ?>"
-										/>
-										<input 
+											name = "invoice_${r.contact_id}_$icount"
+											value = i.0 } ?>
+										<?lsmb PROCESS input element_data = {
 											type = "hidden"
-											name = "<?lsmb "net_$i.0" ?>"
-											value = "<?lsmb ${"payment_$r.contact_id_$i.0"} ?>"
-										/>
+											name = "net_$i.0"
+											value = ${"payment_$r.contact_id_$i.0"} } ?>
 									</td>
 								</tr>
 							<?lsmb ELSE #not $i.7 ?>

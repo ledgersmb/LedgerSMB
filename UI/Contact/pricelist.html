@@ -66,9 +66,18 @@ checking a price deal for a customer.
          pm.row_id = pm.entry_id;
      END ?>
 <form name="pricematrix" action="<?lsmb request.script ?>" method="post">
- <input type="hidden" name="entity_class"  value="<?lsmb account_class ?>" />
- <input type="hidden" name="credit_id" value="<?lsmb credit_id ?>" />
- <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>" /><?lsmb
+ <?lsmb PROCESS input element_data = {
+	type="hidden"
+	name="entity_class"
+	value=account_class } ?>
+ <?lsmb PROCESS input element_data = {
+	type="hidden"
+	name="credit_id"
+	value=credit_id } ?>
+ <?lsmb PROCESS input element_data = {
+	type="hidden"
+	name="entity_id"
+	value=entity_id } ?><?lsmb
       PROCESS dynatable
     attributes = { id = 'pricematrix' }
          tbody = { rows = pricematrix }

@@ -149,22 +149,33 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
   <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" ?>
   <tr class="<?lsmb alterning_style ?>">
     <td><a href="<?lsmb row.invoice.href ?>" target="_new"><?lsmb row.invoice.number ?></a>
-        <input type="hidden" value="<?lsmb row.invoice.id ?>" />                 </td>
+        <?lsmb PROCESS input elment_data = {
+	       type="hidden"
+	       value=row.invoice.id } ?>
+    </td>
     <?lsmb # we can use an href to link this invoice number to the invoice ?>
     <td>
         <?lsmb row.invoice_date ?>
-        <input
+        <?lsmb PROCESS input element_data = {
           type="hidden"
-          name="<?lsmb "invoice_date_$row.invoice.id" ?>" 
-          value="<?lsmb row.invoice_date ?>"
-        />
+          name="invoice_date_" _ row.invoice.id 
+          value=row.invoice_date } ?>
     </td>
     <td><?lsmb row.amount ?></td>
     <td><?lsmb row.paid ?></td>
     <td><?lsmb row.discount ?></td>
-    <td align="center"><input  name="<?lsmb "optional_discount_$row.invoice.id" -?>"  id="<?lsmb
-       "optional_discount_$row.invoice.id" -?>" type="checkbox"  class="checkbox"<?lsmb IF
-       row.optional_discount OR first_load -?> checked <?lsmb END -?> ></td>
+    <td align="center"><?lsmb IF row.optional_discount OR first_load ;
+			         CHECKED='checked';
+			      ELSE
+			         CHECKED='';
+			      END; ?>
+      <?lsmb PROCESS input element_data = {
+	     name="optional_discount_" _ row.invoice.id
+	     id="optional_discount_" _ row.invoice.id
+	     type="checkbox"
+	     class="checkbox"
+	     checked=CHECKED ?>
+    </td>
     <td align="center"><?lsmb row.memo.id=row.memo.name ; INCLUDE input element_data=row.memo; -?></td>
    <?lsmb IF defaultcurrency.text != curr.value ?>
     <td><?lsmb row.exchange_rate ?></td>
@@ -210,13 +221,28 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
                                               id    => "source_text_$row.invoice.id",
                                               value => row.source_text 
                                               } -?></td>   
-        <td nowrap align="left"><input  name="<?lsmb "optional_pay_$row.invoice.id" -?>"  id="<?lsmb "optional_pay_$row.invoice.id" -?>" type="checkbox"  class="checkbox"
-        <?lsmb IF row.optional -?> checked <?lsmb END -?>></td>
+        <td nowrap align="left">
+	  <?lsmb IF row.optional ;
+		    CHECKED='checked' ;
+		 ELSE ;
+		    CHECKED='';
+		 END ; ?>
+	  <?lsmb PROCESS input element_data = {
+		 name="optional_pay_" _ row.invoice.id
+		 id="optional_pay_" _ row.invoice.id
+		 type="checkbox"
+		 class="checkbox"
+		 checked=CHECKED } ?>
+	</td>
        </tr>
       </table>
      </div>
      </td>
-     <td valign="MIDDLE"><input type="checkbox" class="remove" name="checkbox_<?lsmb row.invoice.id ?>"></td>
+     <td valign="MIDDLE"><?lsmb PROCESS input element_data = {
+				type="checkbox"
+				class="remove"
+				name="checkbox_" _ row.invoice.id } ?>
+     </td>
    <?lsmb END ?>
    </tr>
    <?lsmb  colspan = column_count - 2 # We will use this later on totals -?>

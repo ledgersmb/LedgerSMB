@@ -38,13 +38,18 @@
 		 <?lsmb END -?>                     		 
 		</td>
 		<td id="vc-column">
-			<input id="vc_name" name="vc_name"/>
+			<?lsmb PROCESS input element_data = {
+			       id="vc_name"
+			       name="vc_name" } ?>
 		</td>
 		<td id="vc-label-column2" align="right">
 			<?lsmb text('SSN')?>
 		</td>
 		<td id="vc-column2">
-			<input id="vc_ssn" name="vc_ssn" size="10"/>	
+			<?lsmb PROCESS input element_data = {
+			       id="vc_ssn"
+			       name="vc_ssn"
+			       size=10 } ?>	
 		</td>
 	</tr>	
 	<tr>	
