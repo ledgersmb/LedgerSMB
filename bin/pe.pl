@@ -142,7 +142,7 @@ sub partsgroup_header {
 	  print qq|</select>
           <th align="right">| . $locale->text('Group') . qq|</th>
 
-          <td><input name=partsgroup size=30 value="$form->{partsgroup}"></td>
+          <td><input data-dojo-type="dijit/form/TextBox" name=partsgroup size=30 value="$form->{partsgroup}"></td>
 	</tr>
       </table>
     </td>
@@ -219,7 +219,7 @@ sub pricegroup_header {
 	<tr>
 	  <th align=right>| . $locale->text('Pricegroup') . qq|</th>
 
-          <td><input name=pricegroup size=30 value="$form->{pricegroup}"></td>
+          <td><input data-dojo-type="dijit/form/TextBox" name=pricegroup size=30 value="$form->{pricegroup}"></td>
 	</tr>
       </table>
     </td>
@@ -274,7 +274,7 @@ sub translation {
         $number         = qq|
         <tr>
           <th align=right nowrap>| . $locale->text('Number') . qq|</th>
-          <td><input name=partnumber size=20></td>
+          <td><input data-dojo-type="dijit/form/TextBox" name=partnumber size=20></td>
         </tr>
 |;
     }
@@ -291,7 +291,7 @@ sub translation {
         $number         = qq|
         <tr>
           <th align=right nowrap>| . $locale->text('Project Number') . qq|</th>
-          <td><input name=projectnumber size=20></td>
+          <td><input data-dojo-type="dijit/form/TextBox" name=projectnumber size=20></td>
         </tr>
 |;
     }
@@ -317,7 +317,7 @@ sub translation {
         $number
         <tr>
           <th align=right nowrap>| . $locale->text('Description') . qq|</th>
-          <td colspan=3><input name=description size=40></td>
+          <td colspan=3><input data-dojo-type="dijit/form/TextBox" name=description size=40></td>
         </tr>
       </table>
     </td>
@@ -588,7 +588,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="translation_$i" rows=$ro
         }
         else {
             $translation =
-qq|<input name="translation_$i" size=40 value="$form->{"translation_$i"}">|;
+qq|<input data-dojo-type="dijit/form/TextBox" name="translation_$i" size=40 value="$form->{"translation_$i"}">|;
         }
 
         print qq|
@@ -1200,7 +1200,7 @@ sub select_customer {
 
 <form method=post action=$form->{script}>
 
-<b>$label</b> <input name=$form->{vc} size=40>
+<b>$label</b> <input data-dojo-type="dijit/form/TextBox" name=$form->{vc} size=40>
 
 |;
 

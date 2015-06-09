@@ -412,7 +412,7 @@ sub form_header {
             $exchangerate .=
                 qq|<th align=right>|
               . $locale->text('Exchange Rate')
-              . qq|</th><td><input name=exchangerate size=10 value=$form->{exchangerate}></td>|;
+              . qq|</th><td><input data-dojo-type="dijit/form/TextBox" name=exchangerate size=10 value=$form->{exchangerate}></td>|;
         }
     }
     $exchangerate .= qq|
@@ -426,7 +426,7 @@ sub form_header {
     $terms = qq|
                     <tr id="terms-row">
 		      <th align=right nowrap>| . $locale->text('Terms') . qq|</th>
-		      <td nowrap><input name=terms size="3" maxlength="3" value=$form->{terms}> |
+		      <td nowrap><input data-dojo-type="dijit/form/TextBox" name=terms size="3" maxlength="3" value=$form->{terms}> |
       . $locale->text('days')
       . qq|</td>
                     </tr>
@@ -451,7 +451,7 @@ sub form_header {
         $ordnumber = qq|
 	      <tr class="ordnumber-row">
 		<th width=70% align=right nowrap>| . $locale->text('Order Number') . qq|</th>
-                <td><input name=ordnumber size=20 value="$form->{ordnumber}">
+                <td><input data-dojo-type="dijit/form/TextBox" name=ordnumber size=20 value="$form->{ordnumber}">
                      $sequences</td>
 		<input type=hidden name=quonumber value="$form->{quonumber}">
 	      </tr>
@@ -465,7 +465,7 @@ sub form_header {
 	      </tr>
 	      <tr class="ponunber-row">
 		<th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
-		<td><input name=ponumber size=20 value="$form->{ponumber}"></td>
+		<td><input data-dojo-type="dijit/form/TextBox" name=ponumber size=20 value="$form->{ponumber}"></td>
 	      </tr>
 |;
 
@@ -523,7 +523,7 @@ sub form_header {
 		<th width=70% align=right nowrap>|
               . $locale->text('Quotation Number')
               . qq|</th>
-		<td><input name=quonumber size=20 value="$form->{quonumber}">
+		<td><input data-dojo-type="dijit/form/TextBox" name=quonumber size=20 value="$form->{quonumber}">
                     $sequences</td>
 		<input type=hidden name=ordnumber value="$form->{ordnumber}">
 	      </tr>
@@ -533,7 +533,7 @@ sub form_header {
             $ordnumber = qq|
 	      <tr class="rfqnumber-row">
 		<th width=70% align=right nowrap>| . $locale->text('RFQ Number') . qq|</th>
-		<td><input name=quonumber size=20 value="$form->{quonumber}">
+		<td><input data-dojo-type="dijit/form/TextBox" name=quonumber size=20 value="$form->{quonumber}">
                     $sequences</td>
 		<input type=hidden name=ordnumber value="$form->{ordnumber}">
 	      </tr>
@@ -569,7 +569,7 @@ sub form_header {
         } elsif ($form->{vc} eq 'customer'){
             $eclass = 2
         }
-        $vc = qq|<input name=$form->{vc} value="$form->{$form->{vc}}" size=35>
+        $vc = qq|<input data-dojo-type="dijit/form/TextBox" name=$form->{vc} value="$form->{$form->{vc}}" size=35>
              <a id="new-contact" target="new" 
                  href="contact.pl?action=add&entity_class=$eclass">
                  [| . $locale->text('New') . qq|]</a>|;
@@ -672,7 +672,7 @@ function on_return_submit(event){
 	      $exchangerate
 	      <tr class="shippingpoint-row">
 		<th align=right>| . $locale->text('Shipping Point') . qq|</th>
-		<td colspan=3><input name=shippingpoint size=35 value="$form->{shippingpoint}"></td>
+		<td colspan=3><input data-dojo-type="dijit/form/TextBox" name=shippingpoint size=35 value="$form->{shippingpoint}"></td>
 	      </tr>
 	      <tr class="shipvia-row">
 		<th align=right>| . $locale->text('Ship via') . qq|</th>
@@ -1620,7 +1620,7 @@ sub backorder_exchangerate {
 	</tr>
         <tr>
 	  <th align=right>| . $locale->text('Exchange Rate') . qq|</th>
-	  <td><input name=exchangerate size=11></td>
+	  <td><input data-dojo-type="dijit/form/TextBox" name=exchangerate size=11></td>
         </tr>
       </table>
     </td>
@@ -1896,12 +1896,12 @@ sub display_ship_receive {
 	      <tr>
 		<th align=right>| . $locale->text('Shipping Point') . qq|</th>
 		<td colspan=3>
-		<input name=shippingpoint size=35 value="$form->{shippingpoint}">
+		<input data-dojo-type="dijit/form/TextBox" name=shippingpoint size=35 value="$form->{shippingpoint}">
 	      </tr>
 	      <tr>
 		<th align=right>| . $locale->text('Ship via') . qq|</th>
 		<td colspan=3>
-		<input name=shipvia size=35 value="$form->{shipvia}">
+		<input data-dojo-type="dijit/form/TextBox" name=shipvia size=35 value="$form->{shipvia}">
 	      </tr>
 	      $warehouse
 	    </table>
@@ -2011,7 +2011,7 @@ qq|<td>$description<input type=hidden name="description_$i" value="$form->{"desc
           . $form->format_amount( \%myconfig, $form->{"qty_$i"} )
           . qq|<input type=hidden name="qty_$i" value="$form->{"qty_$i"}"></td>|;
         $column_data{ship} =
-            qq|<td align=right><input name="ship_$i" size=5 value="|
+            qq|<td align=right><input data-dojo-type="dijit/form/TextBox" name="ship_$i" size=5 value="|
           . $form->format_amount( \%myconfig, $form->{"ship_$i"} )
           . qq|"></td>|;
         $column_data{unit} =
@@ -2020,7 +2020,7 @@ qq|<td>$form->{"unit_$i"}<input type=hidden name="unit_$i" value="$form->{"unit_
 qq|<td>$form->{"bin_$i"}<input type=hidden name="bin_$i" value="$form->{"bin_$i"}"></td>|;
 
         $column_data{serialnumber} =
-qq|<td><input name="serialnumber_$i" size=15 value="$form->{"serialnumber_$i"}"></td>|;
+qq|<td><input data-dojo-type="dijit/form/TextBox" name="serialnumber_$i" size=15 value="$form->{"serialnumber_$i"}"></td>|;
 
         print qq|
         <tr valign=top>|;
@@ -2178,11 +2178,11 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
         </tr>
 	<tr>
 	  <th align="right" nowrap="true">| . $locale->text('Part Number') . qq|</th>
-	  <td><input name=partnumber size=20></td>
+	  <td><input data-dojo-type="dijit/form/TextBox" name=partnumber size=20></td>
 	</tr>
 	<tr>
 	  <th align="right" nowrap="true">| . $locale->text('Description') . qq|</th>
-	  <td><input name=description size=40></td>
+	  <td><input data-dojo-type="dijit/form/TextBox" name=description size=40></td>
 	</tr>
 	<tr>
 	  <th align=right nowrap>| . $locale->text('Group') . qq|</th>
@@ -2353,7 +2353,7 @@ qq|<td><input type=hidden name="warehouse_id_$i" value="$ref->{warehouse_id}">$r
             qq|<td><input type=hidden name="qty_$i" value="$ref->{qty}">|
           . $form->format_amount( \%myconfig, $ref->{qty} )
           . qq|</td>|;
-        $column_data{transfer} = qq|<td><input name="transfer_$i" size=4></td>|;
+        $column_data{transfer} = qq|<td><input data-dojo-type="dijit/form/TextBox" name="transfer_$i" size=4></td>|;
 
         $j++;
         $j %= 2;
@@ -2593,7 +2593,7 @@ sub po_orderitems {
         }
 
         $column_data{qty} =
-qq|<td align=right><input name="qty_$i" size="6" value="$form->{"qty_$i"}"></td>|;
+qq|<td align=right><input data-dojo-type="dijit/form/TextBox" name="qty_$i" size="6" value="$form->{"qty_$i"}"></td>|;
 
         if ( $form->{"$form->{vc}_id_$i"} ) {
             $name = $form->{"$form->{vc}_$i"};
@@ -2700,7 +2700,7 @@ sub select_vendor {
 
 <form method=post action=$form->{script}>
 
-<b>| . $locale->text('Vendor') . qq|</b> <input name=vendor size=40>
+<b>| . $locale->text('Vendor') . qq|</b> <input data-dojo-type="dijit/form/TextBox" name=vendor size=40>
 
 |;
 

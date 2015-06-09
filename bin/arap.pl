@@ -556,7 +556,7 @@ sub schedule {
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('For') . qq|</th>
-		<td><input name=recurringhowmany size=3 value=$form->{recurringhowmany}></td>
+		<td><input data-dojo-type="dijit/form/TextBox" name=recurringhowmany size=3 value=$form->{recurringhowmany}></td>
 		<th align=left nowrap>| . $locale->text('time(s)') . qq|</th>
 	      </tr>
 	    </table>
@@ -584,7 +584,7 @@ sub schedule {
 	    <table>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Reference') . qq|</th>
-		<td><input name=recurringreference size=20 value="$form->{recurringreference}"></td>
+		<td><input data-dojo-type="dijit/form/TextBox" name=recurringreference size=20 value="$form->{recurringreference}"></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Startdate') . qq|</th>

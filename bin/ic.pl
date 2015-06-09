@@ -383,7 +383,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows 
     }
     else {
         $description =
-          qq|<input name=description size=40 value="$form->{description}">|;
+          qq|<input data-dojo-type="dijit/form/TextBox" name=description size=40 value="$form->{description}">|;
     }
 
     for ( split / /, $form->{taxaccounts} ) {
@@ -434,11 +434,11 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows 
     $sellprice = qq|
 	      <tr>
 		<th align="right" nowrap="true">| . $locale->text('Sell Price') . qq|</th>
-		<td><input name=sellprice size=11 value=$form->{sellprice}></td>
+		<td><input data-dojo-type="dijit/form/TextBox" name=sellprice size=11 value=$form->{sellprice}></td>
 	      </tr>
 	      <tr>
 		<th align="right" nowrap="true">| . $locale->text('List Price') . qq|</th>
-		<td><input name=listprice size=11 value=$form->{listprice}></td>
+		<td><input data-dojo-type="dijit/form/TextBox" name=listprice size=11 value=$form->{listprice}></td>
 	      </tr>
 |;
 
@@ -456,13 +456,13 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows 
                 <th align="right" nowrap="true">|
       . $locale->text('Last Cost')
       . qq|</th>
-                <td><input name=lastcost size=11 value=$form->{lastcost}></td>
+                <td><input data-dojo-type="dijit/form/TextBox" name=lastcost size=11 value=$form->{lastcost}></td>
               </tr>
 	      <tr>
 	        <th align="right" nowrap="true">|
       . $locale->text('Markup')
       . qq| %</th>
-		<td><input name=markup size=5 value=$form->{markup}></td>
+		<td><input data-dojo-type="dijit/form/TextBox" name=markup size=5 value=$form->{markup}></td>
 		<input type=hidden name=oldmarkup value=$markup>
 	      </tr>
 |;
@@ -481,14 +481,14 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows 
         $rop = qq|
 	      <tr>
 		<th align="right" nowrap="true">| . $locale->text('ROP') . qq|</th>
-		<td><input name=rop size=10 value=$form->{rop}></td>
+		<td><input data-dojo-type="dijit/form/TextBox" name=rop size=10 value=$form->{rop}></td>
 	      </tr>
 |;
 
         $bin = qq|
 	      <tr>
 		<th align="right" nowrap="true">| . $locale->text('Bin') . qq|</th>
-		<td><input name=bin size=10 value="$form->{bin}"></td>
+		<td><input data-dojo-type="dijit/form/TextBox" name=bin size=10 value="$form->{bin}"></td>
 	      </tr>
 |;
 
@@ -498,13 +498,13 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows 
       <table width=100%>
         <tr>
 	  <th align=right nowrap>| . $locale->text('Image') . qq|</th>
-	  <td><input name=image size=40 value="$form->{image}"></td>
+	  <td><input data-dojo-type="dijit/form/TextBox" name=image size=40 value="$form->{image}"></td>
 	  <th align=right nowrap>| . $locale->text('Microfiche') . qq|</th>
-	  <td><input name=microfiche size=20 value="$form->{microfiche}"></td>
+	  <td><input data-dojo-type="dijit/form/TextBox" name=microfiche size=20 value="$form->{microfiche}"></td>
 	</tr>
 	<tr>
 	  <th align=right nowrap>| . $locale->text('Drawing') . qq|</th>
-	  <td><input name=drawing size=40 value="$form->{drawing}"></td>
+	  <td><input data-dojo-type="dijit/form/TextBox" name=drawing size=40 value="$form->{drawing}"></td>
 	</tr>
       </table>
     </td>
@@ -553,7 +553,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows 
 		  <table>
 		    <tr>
 		      <td>
-			<input name=weight size=10 value=$form->{weight}>
+			<input data-dojo-type="dijit/form/TextBox" name=weight size=10 value=$form->{weight}>
 		      </td>
 		      <th>
 			&nbsp;
@@ -580,7 +580,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows 
 		  <table>
 		    <tr>
 		      <td>
-			<input name=weight size=10 value=$form->{weight}>
+			<input data-dojo-type="dijit/form/TextBox" name=weight size=10 value=$form->{weight}>
 		      </td>
 		      <th>
 			&nbsp;
@@ -629,7 +629,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows 
             $stock = qq|
               <tr>
 	        <th align="right" nowrap>| . $locale->text('Stock') . qq|</th>
-		<td><input name=stock size=10 value=$form->{stock}></td>
+		<td><input data-dojo-type="dijit/form/TextBox" name=stock size=10 value=$form->{stock}></td>
 	      </tr>
 |;
 
@@ -644,7 +644,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows 
 	        <th align="right" nowrap="true">|
               . $locale->text('Markup')
               . qq| %</th>
-		<td><input name=markup size=5 value=$form->{markup}></td>
+		<td><input data-dojo-type="dijit/form/TextBox" name=markup size=5 value=$form->{markup}></td>
 		<input type=hidden name=oldmarkup value=$markup>
 	      </tr>
 |;
@@ -752,7 +752,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows 
 	  <th align=left>$group</th>
 	</tr>
 	<tr valign=top>
-          <td><input name=partnumber value="$form->{partnumber}" size=20> 
+          <td><input data-dojo-type="dijit/form/TextBox" name=partnumber value="$form->{partnumber}" size=20> 
               | . $form->sequence_dropdown('partnumber') . qq| </td>
           <td>$description</td>
 	  <td>$partsgroup</td>
@@ -793,7 +793,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows 
 	      $avgcost
 	      <tr>
 		<th align="right" nowrap="true">| . $locale->text('Unit') . qq|</th>
-		<td><input name=unit size=5 value="$form->{unit}"></td>
+		<td><input data-dojo-type="dijit/form/TextBox" name=unit size=5 value="$form->{unit}"></td>
 	      </tr>
 	      $weight
 	      $onhand
@@ -951,10 +951,10 @@ sub form_footer {
                     </th>
         </tr>
         <tr><th>| . $locale->text('Date From') . qq|</th>
-            <td><input type="text" size="12" name="date_from" class="date"></td>
+            <td><input data-dojo-type="dijit/form/TextBox" type="text" size="12" name="date_from" class="date"></td>
         </tr><tr>
             <th>| . $locale->text('Date To') . qq|</th>
-            <td><input type="text" size="12" name="date_to" class="date"></td>
+            <td><input data-dojo-type="dijit/form/TextBox" type="text" size="12" name="date_to" class="date"></td>
         </tr><tr>
             <td><button data-dojo-type="dijit/form/Button" type="submit" name="action" 
                         value="generate_income_statement" 
@@ -992,9 +992,9 @@ sub makemodel_row {
     for $i ( 1 .. $numrows ) {
         print qq|
 	<tr>
-	  <td><input name="make_$i" size=30 value="$form->{"make_$i"}"></td>
-	  <td><input name="model_$i" size=30 value="$form->{"model_$i"}"></td>
-          <td><input name="barcode_$i" size=30 value="$form->{"barcode_$i"}">
+	  <td><input data-dojo-type="dijit/form/TextBox" name="make_$i" size=30 value="$form->{"make_$i"}"></td>
+	  <td><input data-dojo-type="dijit/form/TextBox" name="model_$i" size=30 value="$form->{"model_$i"}"></td>
+          <td><input data-dojo-type="dijit/form/TextBox" name="barcode_$i" size=30 value="$form->{"barcode_$i"}">
           </td>
 	</tr>
 |;
@@ -1047,8 +1047,8 @@ s/option>$form->{"vendorcurr_$i"}/option selected>$form->{"vendorcurr_$i"}/;
         if ( $i == $numrows ) {
 
             $vendor = qq|
-          <td><input name="vendor_$i" size=35 value="$form->{"vendor_$i"}"></td>
-          <td><input name="vendor_mn_$i" size=35 value="$form->{"vendor_mn_$i"}"></td>
+          <td><input data-dojo-type="dijit/form/TextBox" name="vendor_$i" size=35 value="$form->{"vendor_$i"}"></td>
+          <td><input data-dojo-type="dijit/form/TextBox" name="vendor_mn_$i" size=35 value="$form->{"vendor_mn_$i"}"></td>
 |;
 
             if ( $form->{selectvendor} ) {
@@ -1075,12 +1075,12 @@ s/option>$form->{"vendorcurr_$i"}/option selected>$form->{"vendorcurr_$i"}/;
         print qq|
 	<tr>
 	  $vendor
-	  <td><input name="partnumber_$i" size=20 value="$form->{"partnumber_$i"}"></td>
-	  <td><input name="lastcost_$i" size=10 value=|
+	  <td><input data-dojo-type="dijit/form/TextBox" name="partnumber_$i" size=20 value="$form->{"partnumber_$i"}"></td>
+	  <td><input data-dojo-type="dijit/form/TextBox" name="lastcost_$i" size=10 value=|
           . $form->format_amount( \%myconfig, $form->{"lastcost_$i"}, 2 )
           . qq|></td>
 	  $currency
-	  <td nowrap><input name="leadtime_$i" size=5 value=|
+	  <td nowrap><input data-dojo-type="dijit/form/TextBox" name="leadtime_$i" size=5 value=|
           . $form->format_amount( \%myconfig, $form->{"leadtime_$i"} )
           . qq|> <b>|
           . $locale->text('days')
@@ -1149,9 +1149,9 @@ s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
 
         if ( $i == $numrows ) {
             $customer = qq|
-          <td><input name="customer_$i" size=35 value="$form->{"customer_$i"}"></td>
+          <td><input data-dojo-type="dijit/form/TextBox" name="customer_$i" size=35 value="$form->{"customer_$i"}"></td>
           <td>
-         <input name="customer_mn_$i" size=35 value="$form->{"customer_mn_$i"}">
+         <input data-dojo-type="dijit/form/TextBox" name="customer_mn_$i" size=35 value="$form->{"customer_mn_$i"}">
          </td>
 	  |;
 
@@ -1191,10 +1191,10 @@ s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
 	  $customer
 	  $pricegroup
 
-	  <td><input name="pricebreak_$i" size=5 value=|
+	  <td><input data-dojo-type="dijit/form/TextBox" name="pricebreak_$i" size=5 value=|
           . $form->format_amount( \%myconfig, $form->{"pricebreak_$i"} )
           . qq|></td>
-	  <td><input name="customerprice_$i" size=10 value=|
+	  <td><input data-dojo-type="dijit/form/TextBox" name="customerprice_$i" size=10 value=|
           . $form->format_amount( \%myconfig, $form->{"customerprice_$i"}, 2 )
           . qq|></td>
 	  $currency
@@ -1334,11 +1334,11 @@ sub assembly_row {
             }
 
             $column_data{qty} =
-qq|<td><input name="qty_$i" size=6 value="$form->{"qty_$i"}" accesskey="$i" title="[Alt-$i]"></td>|;
+qq|<td><input data-dojo-type="dijit/form/TextBox" name="qty_$i" size=6 value="$form->{"qty_$i"}" accesskey="$i" title="[Alt-$i]"></td>|;
             $column_data{partnumber} =
-qq|<td><input name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}"></td>|;
+qq|<td><input data-dojo-type="dijit/form/TextBox" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}"></td>|;
             $column_data{description} =
-qq|<td><input name="description_$i" size=30 value="$form->{"description_$i"}"></td>|;
+qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=30 value="$form->{"description_$i"}"></td>|;
             $column_data{partsgroup} =
 qq|<td><select data-dojo-type="dijit/form/Select" name="partsgroup_$i">$form->{selectassemblypartsgroup}</select></td>|;
 
@@ -1350,9 +1350,9 @@ qq|<td><a href="ic.pl?action=edit&id=$form->{"id_$i"}" target="new">$form->{"par
       <input type=hidden name="partnumber_$i" value="$form->{"partnumber_$i"}">|;
 
             $column_data{runningnumber} =
-              qq|<td><input name="runningnumber_$i" size=3 value="$i"></td>|;
+              qq|<td><input data-dojo-type="dijit/form/TextBox" name="runningnumber_$i" size=3 value="$i"></td>|;
             $column_data{qty} =
-qq|<td><input name="qty_$i" size=6 value="$form->{"qty_$i"}" accesskey="$i" title="[Alt-$i]"></td>|;
+qq|<td><input data-dojo-type="dijit/form/TextBox" name="qty_$i" size=6 value="$form->{"qty_$i"}" accesskey="$i" title="[Alt-$i]"></td>|;
 
             for (qw(bom adj)) {
                 $form->{"${_}_$i"} = ( $form->{"${_}_$i"} ) ? "checked" : "";
@@ -2032,14 +2032,14 @@ sub stock_assembly {
       <table>
         <tr>
           <th align="right" nowrap="true">| . $locale->text('Number') . qq|</th>
-          <td><input name=partnumber size=20></td>
+          <td><input data-dojo-type="dijit/form/TextBox" name=partnumber size=20></td>
           <td>&nbsp;</td>
         </tr>
         <tr>
           <th align="right" nowrap="true">|
       . $locale->text('Description')
       . qq|</th>
-          <td><input name=description size=40></td>
+          <td><input data-dojo-type="dijit/form/TextBox" name=description size=40></td>
         </tr>
         <tr>
           <td></td>
@@ -2179,7 +2179,7 @@ sub list_assemblies {
           . $form->format_amount( \%myconfig, $ref->{rop}) || "&nbsp;"
           . qq|</td>|;
         $column_data{stock} =
-            qq|<td width=10%><input name="qty_$i" size="10" value="|
+            qq|<td width=10%><input data-dojo-type="dijit/form/TextBox" name="qty_$i" size="10" value="|
           . $form->format_amount( \%myconfig, $ref->{stock} )
           . qq|"></td>
     <input type=hidden name="stock_$i" value="$ref->{stock}">|;
