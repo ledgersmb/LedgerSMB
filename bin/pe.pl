@@ -130,7 +130,7 @@ sub partsgroup_header {
       <table width=100%>
 	<tr>
           <th align="right">| . $locale->text('Parent') . qq|</th>
-          <td><select name='parent'>
+          <td><select data-dojo-type="dijit/form/Select" name='parent'>
               <option></option>|;
               for my $pg (@{$form->{item_list}}){
                   my $selected = '';
@@ -161,14 +161,14 @@ sub partsgroup_footer {
 
     if ( $myconfig{acs} !~ /Goods \& Services--Add Group/ ) {
         print qq|
-<button type="submit" class="submit" name="action" value="save">|
+<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="action" value="save">|
           . $locale->text('Save')
           . qq|</button>
 |;
 
         if ( $form->{id} && $form->{orphaned} ) {
             print qq|
-<button type="submit" class="submit" name="action" value="delete">|
+<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="action" value="delete">|
               . $locale->text('Delete')
               . qq|</button>|;
         }
@@ -238,14 +238,14 @@ sub pricegroup_footer {
 
     if ( $myconfig{acs} !~ /Goods \& Services--Add Pricegroup/ ) {
         print qq|
-<button type="submit" class="submit" name="action" value="save">|
+<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="action" value="save">|
           . $locale->text('Save')
           . qq|</button>
 |;
 
         if ( $form->{id} && $form->{orphaned} ) {
             print qq|
-<button type="submit" class="submit" name="action" value="delete">|
+<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="action" value="delete">|
               . $locale->text('Delete')
               . qq|</button>|;
         }
@@ -334,7 +334,7 @@ $sort
     print qq|
 
 <br>
-<button class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 </form>
@@ -593,7 +593,7 @@ qq|<input name="translation_$i" size=40 value="$form->{"translation_$i"}">|;
 
         print qq|
 	<tr valign=top>
-	  <td><select name="language_code_$i">$form->{"selectlanguage_$i"}</select></td>
+	  <td><select data-dojo-type="dijit/form/Select" name="language_code_$i">$form->{"selectlanguage_$i"}</select></td>
 	  <td>$translation</td>
 	</tr>
 |;
@@ -763,7 +763,7 @@ qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</
     print qq|
 <input type="hidden" name="nextsub" value="name_selected">
 <br>
-<button class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 </form>
@@ -832,8 +832,8 @@ sub project_sales_order {
         <tr>
 	  <th align=right>| . $locale->text('Period') . qq|</th>
 	  <td colspan=3>
-	  <select name=month>$form->{selectaccountingmonth}</select>
-	  <select name=year>$form->{selectaccountingyear}</select>
+	  <select data-dojo-type="dijit/form/Select" name=month>$form->{selectaccountingmonth}</select>
+	  <select data-dojo-type="dijit/form/Select" name=year>$form->{selectaccountingyear}</select>
 	  <input name=interval class=radio type=radio value=0 checked>&nbsp;|
           . $locale->text('Current') . qq|
 	  <input name=interval class=radio type=radio value=1>&nbsp;|
@@ -881,7 +881,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
         $employee = qq|
               <tr>
 	        <th align=right nowrap>| . $locale->text('Employee') . qq|</th>
-		<td><select name=employee>$form->{selectemployee}</select></td>
+		<td><select data-dojo-type="dijit/form/Select" name=employee>$form->{selectemployee}</select></td>
 	      </tr>
 |;
     }
@@ -907,7 +907,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
       <table>
         <tr>
 	  <th align=right>| . $locale->text('Project') . qq|</th>
-	  <td colspan=3><select name=projectnumber>$form->{selectprojectnumber}</select></td>
+	  <td colspan=3><select data-dojo-type="dijit/form/Select" name=projectnumber>$form->{selectprojectnumber}</select></td>
 	</tr>
 	$employee
 	$fromto
@@ -933,7 +933,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
     $form->hide_form(qw(path login sessionid nextsub type vc));
 
     print qq|
-<button type="submit" class="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" type="submit" class="submit" name="action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 
@@ -1155,12 +1155,12 @@ qq|<td><input name="ndx_$i" class=checkbox type=checkbox data-dojo-type="dijit/f
 
     if ( $form->{rowcount} ) {
         print qq|
-<button class="submit" type="submit" name="action" value="generate_sales_orders">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="generate_sales_orders">|
           . $locale->text('Generate Sales Orders')
           . qq|</button>|;
 
         print qq|
-<button class="submit" type="submit" name="action" value="select_customer">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="select_customer">|
           . $locale->text('Select Customer')
           . qq|</button>|;
 
@@ -1210,7 +1210,7 @@ sub select_customer {
     $form->hide_form;
 
     print qq|
-<button class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
       . qq|</button> 
     

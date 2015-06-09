@@ -391,7 +391,7 @@ sub form_header {
     $exchangerate = qq|<tr>|;
     $exchangerate .= qq|
 		<th align=right nowrap>| . $locale->text('Currency') . qq|</th>
-		<td><select name="currency">$form->{selectcurrency}</select></td>
+		<td><select data-dojo-type="dijit/form/Select" name="currency">$form->{selectcurrency}</select></td>
 | if $form->{defaultcurrency};
     $exchangerate .= qq|
 		<input type=hidden name="selectcurrency" value="$form->{selectcurrency}">
@@ -412,7 +412,7 @@ sub form_header {
 |;
 
     if ( $form->{selectcustomer} ) {
-        $customer = qq|<select name="customer">$form->{selectcustomer}</select>
+        $customer = qq|<select data-dojo-type="dijit/form/Select" name="customer">$form->{selectcustomer}</select>
                    <input type="hidden" name="selectcustomer" value="|
           . $form->escape( $form->{selectcustomer}, 1 ) . qq|">|;
     }
@@ -426,7 +426,7 @@ sub form_header {
     $department = qq|
               <tr>
 	        <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-		<td colspan="3"><select name="department">$form->{selectdepartment}</select>
+		<td colspan="3"><select data-dojo-type="dijit/form/Select" name="department">$form->{selectdepartment}</select>
 		<input type="hidden" name="selectdepartment" value="|
       . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
 		</td>
@@ -456,7 +456,7 @@ sub form_header {
     $employee = qq|
 	      <tr>
 	        <th align=right nowrap>| . $locale->text('Salesperson') . qq|</th>
-		<td><select name="employee">$form->{selectemployee}</select></td>
+		<td><select data-dojo-type="dijit/form/Select" name="employee">$form->{selectemployee}</select></td>
 		<input type=hidden name="selectemployee" value="|
       . $form->escape( $form->{selectemployee}, 1 ) . qq|">
 	      </tr>
@@ -581,7 +581,7 @@ function on_return_submit(event){
 
 	      <tr>
 		<th align="right" nowrap>| . $locale->text('Record in') . qq|</th>
-		<td colspan="3"><select name="AR">$form->{selectAR}</select></td>
+		<td colspan="3"><select data-dojo-type="dijit/form/Select" name="AR">$form->{selectAR}</select></td>
 		<input type="hidden" name="selectAR" value="$form->{selectAR}">
 	      </tr>
 	      $department
@@ -1060,7 +1060,7 @@ qq|<input name="exchangerate_$i" size="10" value="$form->{"exchangerate_$i"}">|;
 qq|<td align="center"><input name="paid_$i" size="11" value="$form->{"paid_$i"}"></td>|;
         $column_data{exchangerate} = qq|<td align="center">$exchangerate</td>|;
         $column_data{AR_paid} =
-qq|<td align="center"><select name="AR_paid_$i">$form->{"selectAR_paid_$i"}</select></td>|;
+qq|<td align="center"><select data-dojo-type="dijit/form/Select" name="AR_paid_$i">$form->{"selectAR_paid_$i"}</select></td>|;
         $column_data{datepaid} =
 qq|<td align="center"><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="datepaid_$i" size="11" title="$myconfig{dateformat}" value="$form->{"datepaid_$i"}"></td>|;
         $column_data{source} =

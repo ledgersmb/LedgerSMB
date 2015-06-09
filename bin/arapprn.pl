@@ -456,7 +456,7 @@ sub print_options {
         $form->{"selectlanguage"} =~ s/ selected//;
         $form->{"selectlanguage"} =~
           s/(<option value="\Q$form->{language_code}\E")/$1 selected/;
-        $lang = qq|<select name=language_code>$form->{selectlanguage}</select>
+        $lang = qq|<select data-dojo-type="dijit/form/Select" name=language_code>$form->{selectlanguage}</select>
     <input type=hidden name=selectlanguage value="|
           . $form->escape( $form->{selectlanguage}, 1 ) . qq|">|;
     }
@@ -466,11 +466,11 @@ sub print_options {
     $form->{selectformname} =~
       s/(<option value="\Q$form->{formname}\E")/$1 selected/;
 
-    $type = qq|<select name=formname>$form->{selectformname}</select>
+    $type = qq|<select data-dojo-type="dijit/form/Select" name=formname>$form->{selectformname}</select>
   <input type=hidden name=selectformname value="|
       . $form->escape( $form->{selectformname}, 1 ) . qq|">|;
 
-    $media = qq|<select name=media>
+    $media = qq|<select data-dojo-type="dijit/form/Select" name=media>
           <option value="screen">| . $locale->text('Screen');
 
     $form->{selectformat} = qq|<option value="html">html<option value="csv">csv\n|;
@@ -488,7 +488,7 @@ sub print_options {
 	    <option value="pdf">| . $locale->text('PDF');
     }
 
-    $format = qq|<select name=format>$form->{selectformat}</select>|;
+    $format = qq|<select data-dojo-type="dijit/form/Select" name=format>$form->{selectformat}</select>|;
     $format =~ s/(<option value="\Q$form->{format}\E")/$1 selected/;
     $format .= qq|
   <input type=hidden name=selectformat value="|

@@ -264,7 +264,7 @@ qq|<td><input name="new_meta_number_$i" type=hidden value="$ref->{meta_number}">
 <input type=hidden name=nextsub value=name_selected>
 <input type=hidden name=vc value="$table">
 <br>
-<button class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 </form>
@@ -434,7 +434,7 @@ sub schedule {
 		<tr>
 		  <td><input name="email$item" type=checkbox data-dojo-type="dijit/form/CheckBox" class=checkbox value=1 $checked></td>
 		  <th align=left>$formname{$item}</th>
-		  <td><select name="emailformat$item">$selectformat</select></td>
+		  <td><select data-dojo-type="dijit/form/Select" name="emailformat$item">$selectformat</select></td>
 		</tr>
 |;
         }
@@ -508,8 +508,8 @@ sub schedule {
 		<tr>
 		  <td><input name="print$item" type=checkbox data-dojo-type="dijit/form/CheckBox" class=checkbox value=1 $checked></td>
 		  <th align=left>$formname{$item}</th>
-		  <td><select name="printprinter$item">$selectprinter</select></td>
-		  <td><select name="printformat$item">$selectformat</select></td>
+		  <td><select data-dojo-type="dijit/form/Select" name="printprinter$item">$selectprinter</select></td>
+		  <td><select data-dojo-type="dijit/form/Select" name="printformat$item">$selectformat</select></td>
 		</tr>
 |;
         }
@@ -551,8 +551,8 @@ sub schedule {
 
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Every') . qq|</th>
-		<td><select name=recurringrepeat>$selectrepeat</td>
-		<td><select name=recurringunit>$selectunit</td>
+		<td><select data-dojo-type="dijit/form/Select" name=recurringrepeat>$selectrepeat</td>
+		<td><select data-dojo-type="dijit/form/Select" name=recurringunit>$selectunit</td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('For') . qq|</th>

@@ -390,7 +390,7 @@ sub form_header {
     $exchangerate = qq|<tr id="exchangerate-row">|;
     $exchangerate .= qq|
                 <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
-		<td><select name=currency>$form->{selectcurrency}</select></td> |
+		<td><select data-dojo-type="dijit/form/Select" name=currency>$form->{selectcurrency}</select></td> |
       if $form->{defaultcurrency};
     $exchangerate .= qq|
                 <input type=hidden name=selectcurrency value="$form->{selectcurrency}">
@@ -559,7 +559,7 @@ sub form_header {
 <input type=hidden name=oldtransdate value=$form->{oldtransdate}>|;
 
     if ( $form->{"select$form->{vc}"} ) {
-        $vc = qq|<select name=$form->{vc}>$form->{"select$form->{vc}"}</select>
+        $vc = qq|<select data-dojo-type="dijit/form/Select" name=$form->{vc}>$form->{"select$form->{vc}"}</select>
              <input type=hidden name="select$form->{vc}" value="|
           . $form->escape( $form->{"select$form->{vc}"}, 1 ) . qq|">|;
     }
@@ -578,7 +578,7 @@ sub form_header {
     $department = qq|
               <tr class="department-row">
 	        <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-		<td colspan=3><select name=department>$form->{selectdepartment}</select>
+		<td colspan=3><select data-dojo-type="dijit/form/Select" name=department>$form->{selectdepartment}</select>
 		<input type=hidden name=selectdepartment value="|
       . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
 		</td>
@@ -594,7 +594,7 @@ sub form_header {
             $employee = qq|
  	      <tr class="employee-row">
 	        <th align=right nowrap>| . $locale->text('Salesperson') . qq|</th>
-		<td><select name=employee>$form->{selectemployee}</select></td>
+		<td><select data-dojo-type="dijit/form/Select" name=employee>$form->{selectemployee}</select></td>
 		<input type=hidden name=selectemployee value="|
               . $form->escape( $form->{selectemployee}, 1 ) . qq|"
 	      </tr>
@@ -606,7 +606,7 @@ sub form_header {
             $employee = qq|
  	      <tr class="employee-row">
 	        <th align=right nowrap>| . $locale->text('Employee') . qq|</th>
-		<td><select name=employee>$form->{selectemployee}</select></td>
+		<td><select data-dojo-type="dijit/form/Select" name=employee>$form->{selectemployee}</select></td>
 		<input type=hidden name=selectemployee value="|
               . $form->escape( $form->{selectemployee}, 1 ) . qq|"
 	      </tr>
@@ -1412,7 +1412,7 @@ sub delete {
 
 <h4>$msg $form->{$ordnumber}</h4>
 <p>
-<button name="action" class="submit" type="submit" value="yes">|
+<button data-dojo-type="dijit/form/Button" name="action" class="submit" type="submit" value="yes">|
       . $locale->text('Yes')
       . qq|</button>
 </form>
@@ -1632,7 +1632,7 @@ sub backorder_exchangerate {
 <br>
 <input type=hidden name=nextsub value=save_exchangerate>
 
-<button name="action" class="submit" type="submit" value="continue">|
+<button data-dojo-type="dijit/form/Button" name="action" class="submit" type="submit" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 
@@ -1849,7 +1849,7 @@ sub display_ship_receive {
     $warehouse = qq|
 	      <tr>
 		<th align=right>| . $locale->text('Warehouse') . qq|</th>
-		<td><select name=warehouse>$form->{selectwarehouse}</select></td>
+		<td><select data-dojo-type="dijit/form/Select" name=warehouse>$form->{selectwarehouse}</select></td>
 		<input type=hidden name=selectwarehouse value="|
       . $form->escape( $form->{selectwarehouse}, 1 ) . qq|">
 	      </tr>
@@ -2170,11 +2170,11 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
       <table>
         <tr>
           <th align=right nowrap>| . $locale->text('Transfer from') . qq|</th>
-          <td><select name=fromwarehouse>$form->{selectwarehouse}</select></td>
+          <td><select data-dojo-type="dijit/form/Select" name=fromwarehouse>$form->{selectwarehouse}</select></td>
         </tr>
         <tr>
           <th align=right nowrap>| . $locale->text('Transfer to') . qq|</th>
-          <td><select name=towarehouse>$form->{selectwarehouse}</select></td>
+          <td><select data-dojo-type="dijit/form/Select" name=towarehouse>$form->{selectwarehouse}</select></td>
         </tr>
 	<tr>
 	  <th align="right" nowrap="true">| . $locale->text('Part Number') . qq|</th>
@@ -2186,7 +2186,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
 	</tr>
 	<tr>
 	  <th align=right nowrap>| . $locale->text('Group') . qq|</th>
-	  <td><select name=partsgroup>$form->{selectpartsgroup}</select></td>
+	  <td><select data-dojo-type="dijit/form/Select" name=partsgroup>$form->{selectpartsgroup}</select></td>
 	</tr>
       </table>
     </td>
@@ -2199,7 +2199,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
 <br>
 <input type=hidden name=nextsub value=list_transfer>
 
-<button class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>|;
 
@@ -2389,7 +2389,7 @@ qq|<td><input type=hidden name="warehouse_id_$i" value="$ref->{warehouse_id}">$r
     $form->hide_form(qw(path login sessionid action));
 
     print qq|
-<button class="submit" type="submit" name="action" value="transfer">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="transfer">|
       . $locale->text('Transfer')
       . qq|</button>|;
 
@@ -2651,12 +2651,12 @@ qq|<td><input name="ndx_$i" class=checkbox type=checkbox data-dojo-type="dijit/f
     );
 
     print qq|
-<button class="submit" type="submit" name="action" value="generate_orders">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="generate_orders">|
       . $locale->text('Generate Orders')
       . qq|</button>|;
 
     print qq|
-<button class="submit" type="submit" name="action" value="select_vendor">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="select_vendor">|
       . $locale->text('Select Vendor')
       . qq|</button>|;
 
@@ -2710,7 +2710,7 @@ sub select_vendor {
     $form->hide_form;
 
     print qq|
-<button class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 

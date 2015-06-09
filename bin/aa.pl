@@ -467,7 +467,7 @@ sub form_header {
     $exchangerate = qq|<tr>|;
     $exchangerate .= qq|
                 <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
-		<td><select name=currency>$form->{selectcurrency}</select></td> |
+		<td><select data-dojo-type="dijit/form/Select" name=currency>$form->{selectcurrency}</select></td> |
       if $form->{defaultcurrency};
     $exchangerate .= qq|
                 <input type=hidden name=selectcurrency value="$form->{selectcurrency}">
@@ -497,7 +497,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     $department = qq|
 	      <tr>
 		<th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-		<td colspan=3><select name=department>$form->{selectdepartment}</select>
+		<td colspan=3><select data-dojo-type="dijit/form/Select" name=department>$form->{selectdepartment}</select>
 		<input type=hidden name=selectdepartment value="|
       . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
 		</td>
@@ -508,7 +508,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 
     $name =
       ( $form->{"select$form->{vc}"} )
-      ? qq|<select name="$form->{vc}">$form->{"select$form->{vc}"}</select>|
+      ? qq|<select data-dojo-type="dijit/form/Select" name="$form->{vc}">$form->{"select$form->{vc}"}</select>|
       : qq|<input name="$form->{vc}" value="$form->{$form->{vc}}" size=35> 
                  <a href="contact.pl?action=add&entity_class=$eclass" 
                     target="new" id="new-contact">[|
@@ -527,7 +527,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
         $employee = qq|
 	      <tr>
 		<th align=right nowrap>$label</th>
-		<td><select name=employee>$form->{selectemployee}</select></td>
+		<td><select data-dojo-type="dijit/form/Select" name=employee>$form->{selectemployee}</select></td>
 		<input type=hidden name=selectemployee value="|
           . $form->escape( $form->{selectemployee}, 1 ) . qq|">
 	      </tr>
@@ -741,7 +741,7 @@ s/option>\Q$form->{"$form->{ARAP}_amount_$i"}\E/option selected>$form->{"$form->
           $form->format_amount( \%myconfig,$form->{"amount_$i"}, 2 );
 
         $project = qq|
-	  <td align=right><select name="projectnumber_$i">$selectprojectnumber</select></td>
+	  <td align=right><select data-dojo-type="dijit/form/Select" name="projectnumber_$i">$selectprojectnumber</select></td>
 | if $form->{selectprojectnumber};
 
         if ( ( $rows = $form->numtextrows( $form->{"description_$i"}, 40 ) ) >
@@ -767,14 +767,14 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
 	<tr valign=top>
 	  <td><input name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
 	  <td></td>
-	  <td><select name="$form->{ARAP}_amount_$i">$selectamount</select></td>
+	  <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_amount_$i">$selectamount</select></td>
 	  $description
           $taxformcheck
 	  $project|;
 
         for my $cls (@{$form->{bu_class}}){
             if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
-                print qq|<td><select name="b_unit_$cls->{id}_$i">
+                print qq|<td><select data-dojo-type="dijit/form/Select" name="b_unit_$cls->{id}_$i">
                                     <option></option>|;
                       for my $bu (@{$form->{b_units}->{"$cls->{id}"}}){
                          my $selected = '';
@@ -815,7 +815,7 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
 	  <td align=right><input id="calctax_$item" name="calctax_$item"
                                  class="checkbox" type="checkbox" data-dojo-type="dijit/form/CheckBox" value=1
                                  $form->{"calctax_$item"}></td>
- 	  <td><select name="$form->{ARAP}_tax_$item"
+ 	  <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_tax_$item"
                       id="$form->{ARAP}_tax_$item">
  	<option value="$form->{ARAP}_tax_$item">$item--$form->{"${item}_description"}</option></select></td>
 	</tr>
@@ -837,7 +837,7 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
         <tr>
 	  <th align=left>$form->{invtotal}</th>
 	  <td></td>
-	  <td><select name="$form->{ARAP}" id="$form->{ARAP}">
+	  <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}" id="$form->{ARAP}">
                  $form->{"select$form->{ARAP}"}
               </select></td>
         </tr>
@@ -929,7 +929,7 @@ qq|<input name="exchangerate_$i" size=10 value=$form->{"exchangerate_$i"}>|;
         $column_data{paid} =
 qq|<td align=center><input name="paid_$i" id="paid_$i" size=11 value=$form->{"paid_$i"}></td>|;
         $column_data{ARAP_paid} =
-qq|<td align=center><select name="$form->{ARAP}_paid_$i" id="$form->{ARAP}_paid_$i">$form->{"select$form->{ARAP}_paid_$i"}</select></td>|;
+qq|<td align=center><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_paid_$i" id="$form->{ARAP}_paid_$i">$form->{"select$form->{ARAP}_paid_$i"}</select></td>|;
         $column_data{exchangerate} = qq|<td align=center>$exchangerate</td>|;
         $column_data{datepaid} =
 qq|<td align=center><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="datepaid_$i" id="datepaid_$i" size=11 value=$form->{"datepaid_$i"}></td>|;
@@ -1522,7 +1522,7 @@ sub search {
               qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
         }
         $selectname =
-          qq|<select name="$form->{vc}"><option>\n$selectname</select>|;
+          qq|<select data-dojo-type="dijit/form/Select" name="$form->{vc}"><option>\n$selectname</select>|;
     }
     else {
         $selectname = qq|<input name=$form->{vc} size=35>|;
@@ -1544,7 +1544,7 @@ sub search {
         $employee = qq|
         <tr>
 	  <th align=right nowrap>$employeelabel</th>
-	  <td colspan=3><select name=employee>$form->{selectemployee}</select></td>
+	  <td colspan=3><select data-dojo-type="dijit/form/Select" name=employee>$form->{selectemployee}</select></td>
 	</tr>
 |;
 
@@ -1638,8 +1638,8 @@ qq|<input name="l_employee" class=checkbox type=checkbox data-dojo-type="dijit/f
         <tr>
 	<th align=right>| . $locale->text('Period') . qq|</th>
 	<td colspan=3>
-	<select name=month>$form->{selectaccountingmonth}</select>
-	<select name=year>$form->{selectaccountingyear}</select>
+	<select data-dojo-type="dijit/form/Select" name=month>$form->{selectaccountingmonth}</select>
+	<select data-dojo-type="dijit/form/Select" name=year>$form->{selectaccountingyear}</select>
 	<input name=interval class=radio type=radio value=0 checked>&nbsp;|
           . $locale->text('Current') . qq|
 	<input name=interval class=radio type=radio value=1>&nbsp;|
@@ -1739,7 +1739,7 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox data-dojo-type="di
       <table>
         <tr>
 	  <th align=right>| . $locale->text('Account') . qq|</th>
-	  <td colspan=3><select name=$form->{ARAP}>$form->{"select$form->{ARAP}"}</select></td>
+	  <td colspan=3><select data-dojo-type="dijit/form/Select" name=$form->{ARAP}>$form->{"select$form->{ARAP}"}</select></td>
 	</tr>
 	<tr>
 	  <th align=right>$name</th>
@@ -1816,7 +1816,7 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox data-dojo-type="di
 
 <br>
 <input type="hidden" name="action" value="continue">
-<button class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>|;
 
