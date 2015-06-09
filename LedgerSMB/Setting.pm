@@ -208,7 +208,7 @@ sub accounts_by_link {
 sub all_accounts {
     my ($self) = @_;
 
-    my @results = $self->call_procedure(procname => 'chart_list_all',
+    my @results = $self->call_procedure(funcname => 'chart_list_all',
                               args => []);
 
     for my $ref (@results){

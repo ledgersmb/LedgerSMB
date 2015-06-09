@@ -51,7 +51,7 @@ sub __default {
     my $search_field = $request->{search_field};
     $search_field =~ s/-/_/g;
     my @call_args = ($request->{$search_field}, $request->{link_desc});
-    my @results = $request->call_procedure( procname => $funcname, args => \@call_args, order_by => 'accno' );
+    my @results = $request->call_procedure( funcname => $funcname, args => \@call_args, order_by => 'accno' );
     foreach (@results) { $results_hash{$_->{'accno'}.'--'.$_->{'description'}} = $_->{'accno'}.'--'.$_->{'description'}; 
     }
     
@@ -68,7 +68,7 @@ Returns a json array of all accounts
 sub chart_json {
     my ($request) = @_;
     my $funcname = 'chart_list_all';
-    my @results = $request->call_procedure( procname => $funcname, order_by => 'accno' );
+    my @results = $request->call_procedure( funcname => $funcname, order_by => 'accno' );
     
     my $json = LedgerSMB::REST_Format::json->to_output(\@results);
     my $cgi = CGI::Simple->new();

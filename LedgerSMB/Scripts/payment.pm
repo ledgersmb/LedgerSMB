@@ -367,7 +367,7 @@ sub print {
             my $id = $payment->{"contact_$line"};
             next if !defined $payment->{"id_$id"};
             my ($check) = $payment->call_procedure(
-                     procname => 'company_get_billing_info', args => [$id]
+                     funcname => 'company_get_billing_info', args => [$id]
             );
             $check->{entity_class} = $payment->{account_class};
             $check->{id} = $id;
@@ -699,12 +699,12 @@ if ($request->{account_class} == 2){
 }
 
 my @b_classes = $request->call_procedure(
-                        procname => 'business_unit__list_classes',
+                        funcname => 'business_unit__list_classes',
                             args => ['1', $module]);
 
 for my $cls (@b_classes){
    my @units = $request->call_procedure(
-                        procname => 'business_unit__list_by_class',
+                        funcname => 'business_unit__list_by_class',
                             args => [$cls->{id}, $request->{transdate}, 
                                      $request->{credit_id}, '0'],
    );

@@ -104,7 +104,7 @@ sub save {
        for my $i (0 .. $self->{rowcount}){
            if ($self->{"asset_$i"} == 1){
               my $id = $self->{"id_$i"};
-              $self->call_procedure(procname => 'asset_report__dispose',
+              $self->call_procedure(funcname => 'asset_report__dispose',
                                args => [$ref->{id}, 
                                         $id, 
                                         $self->{"amount_$id"},

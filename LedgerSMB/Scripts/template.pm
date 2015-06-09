@@ -46,7 +46,7 @@ sub display {
     $dbtemp->{content} = $dbtemp->template if defined $dbtemp;
     $dbtemp = $request unless $dbtemp->{format};
     $dbtemp->{languages} = 
-        [ LedgerSMB->call_procedure(procname=> 'person__list_languages') ];
+        [ LedgerSMB->call_procedure(funcname => 'person__list_languages') ];
     LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},
@@ -71,7 +71,7 @@ sub edit {
     $dbtemp->{content} = $dbtemp->template;
     $dbtemp = $request unless $dbtemp->{format};
     $dbtemp->{languages} = 
-        [ LedgerSMB->call_procedure(procname=> 'person__list_languages') ];
+        [ LedgerSMB->call_procedure(funcname => 'person__list_languages') ];
 
     LedgerSMB::Template->new(
         user     => $request->{_user},

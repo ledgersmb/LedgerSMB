@@ -368,7 +368,7 @@ sub save_employee {
     my ($request) = @_;
     unless ($request->{control_code}){
         my ($ref) = $request->call_procedure(
-                             procname => 'setting_increment', 
+                             funcname => 'setting_increment', 
                              args     => ['entity_control']
                            );
         ($request->{control_code}) = values %$ref;

@@ -902,7 +902,7 @@ sub run_import {
     $asset->get_metadata;
 
     my @rresults = $asset->call_procedure(
-                               procname => 'asset_report__begin_import', 
+                               funcname => 'asset_report__begin_import', 
                                    args => [$asset->{asset_classes}->[0]->{id},
                                             $asset->{report_date}]
     );

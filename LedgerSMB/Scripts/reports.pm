@@ -91,10 +91,10 @@ sub start_report {
         die $request->{_locale}->text('No report specified');
     }
     @{$request->{country_list}} = $request->call_procedure( 
-                   procname => 'location_list_country'
+                   funcname => 'location_list_country'
     );
     @{$request->{employees}} =  $request->call_procedure(
-        procname => 'employee__all_salespeople'
+        funcname => 'employee__all_salespeople'
     );
     my $template = LedgerSMB::Template->new(
         user => $request->{_user},

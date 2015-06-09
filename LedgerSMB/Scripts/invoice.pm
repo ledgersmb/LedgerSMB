@@ -45,11 +45,11 @@ sub start_report {
         die 'Invalid Entity Class';
     }
     @{$request->{accounts}} = $request->call_procedure(
-        procname => 'account__get_by_link_desc', args => [$link]);
+        funcname => 'account__get_by_link_desc', args => [$link]);
     @{$request->{tax_accounts}} = $request->call_procedure(
-        procname => 'account__get_by_link_desc', args => ["${link}_tax"]);
+        funcname => 'account__get_by_link_desc', args => ["${link}_tax"]);
     @{$request->{employees}} =  $request->call_procedure(
-        procname => 'employee__all_salespeople'
+        funcname => 'employee__all_salespeople'
     );
     LedgerSMB::Scripts::reports::start_report($request);
 }
