@@ -1610,10 +1610,10 @@ qq|<input name="l_employee" class=checkbox type=checkbox data-dojo-type="dijit/f
     }
     $summary = qq|
               <tr>
-		<td><input name=summary type=radio class=radio value=1> |
+		<td><input name=summary type=radio data-dojo-type="dijit/form/RadioButton" class=radio value=1> |
       . $locale->text('Summary')
       . qq|</td>
-		<td><input name=summary type=radio class=radio value=0 checked> |
+		<td><input name=summary type=radio data-dojo-type="dijit/form/RadioButton" class=radio value=0 checked> |
       . $locale->text('Detail') . qq|
 		</td>
 	      </tr>
@@ -1640,13 +1640,13 @@ qq|<input name="l_employee" class=checkbox type=checkbox data-dojo-type="dijit/f
 	<td colspan=3>
 	<select data-dojo-type="dijit/form/Select" name=month>$form->{selectaccountingmonth}</select>
 	<select data-dojo-type="dijit/form/Select" name=year>$form->{selectaccountingyear}</select>
-	<input name=interval class=radio type=radio value=0 checked>&nbsp;|
+	<input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=0 checked>&nbsp;|
           . $locale->text('Current') . qq|
-	<input name=interval class=radio type=radio value=1>&nbsp;|
+	<input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=1>&nbsp;|
           . $locale->text('Month') . qq|
-	<input name=interval class=radio type=radio value=3>&nbsp;|
+	<input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=3>&nbsp;|
           . $locale->text('Quarter') . qq|
-	<input name=interval class=radio type=radio value=12>&nbsp;|
+	<input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=12>&nbsp;|
           . $locale->text('Year') . qq|
 	</td>
       </tr>
@@ -1768,9 +1768,9 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox data-dojo-type="di
   
   <tr>
     <td>        
-        |.$locale->text('All Invoices').qq|: <input type="radio" name="invoice_type" checked value="1"> 
-        |.$locale->text('Active').qq|: <input type="radio" name="invoice_type" value="2">  
-        |.$locale->text('On Hold').qq|: <input type="radio" name="invoice_type" value="3"> 
+        |.$locale->text('All Invoices').qq|: <input type="radio" data-dojo-type="dijit/form/RadioButton" name="invoice_type" checked value="1"> 
+        |.$locale->text('Active').qq|: <input type="radio" data-dojo-type="dijit/form/RadioButton" name="invoice_type" value="2">  
+        |.$locale->text('On Hold').qq|: <input type="radio" data-dojo-type="dijit/form/RadioButton" name="invoice_type" value="3"> 
         <br/>    
     </td>
   </tr>

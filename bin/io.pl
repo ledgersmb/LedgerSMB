@@ -871,9 +871,9 @@ sub new_item {
 
 <p>
 
-  <input class=radio type=radio name=item value=part checked>&nbsp;|
+  <input class=radio type=radio data-dojo-type="dijit/form/RadioButton" name=item value=part checked>&nbsp;|
           . $locale->text('Part') . qq|<br>
-  <input class=radio type=radio name=item value=service>&nbsp;|
+  <input class=radio type=radio data-dojo-type="dijit/form/RadioButton" name=item value=service>&nbsp;|
           . $locale->text('Service')
 
           . qq|
@@ -2140,7 +2140,7 @@ sub ship_to {
 				  	   	   print qq|
 						   <tr>
 						  
-							  <td><input type=radio name=shiptoradio value="$i"  $checked ondblclick="return uncheckRadio(this);"></td>
+							  <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio value="$i"  $checked ondblclick="return uncheckRadio(this);"></td>
 							  <input name=shiptolocationid_$i type="hidden" value="$form->{"shiptolocationid_$i"}" readonly>
 							  <td><input name=shiptoaddress1_$i size=12 maxlength=64 id="ad1_$i" value="$form->{"shiptoaddress1_$i"}" readonly></td>
 							  <td><input name=shiptoaddress2_$i size=12 maxlength=64 id="ad2_$i" value="$form->{"shiptoaddress2_$i"}" readonly></td>
@@ -2253,7 +2253,7 @@ sub ship_to {
 					 Others
 		  	    </tr>
 			    </tr>	
-					  <td><input type=radio name=shiptoradio value="new" ondblclick="return uncheckRadio(this);"></td>
+					  <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio value="new" ondblclick="return uncheckRadio(this);"></td>
 					  <td><input name=shiptoaddress1_new size=12 maxlength=64 value="$form->{shiptoaddress1_new}" ></td>
 					  <td><input name=shiptoaddress2_new size=12 maxlength=64 value="$form->{shiptoaddress2_new}" ></td>
 					  <td><input name=shiptoaddress3_new size=12 maxlength=64 value="$form->{shiptoaddress3_new}" ></td>
@@ -2263,7 +2263,7 @@ sub ship_to {
 					  <td><select data-dojo-type="dijit/form/Select" name="shiptocountry_new">$country</select></td>
 
 					  <td>&nbsp;</td>
-					  <td><input type=radio name=shiptoradiocontact value="1" ondblclick="uncheckRadiocontact(this);" ></td>
+					  <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradiocontact value="1" ondblclick="uncheckRadiocontact(this);" ></td>
 					  <td><select data-dojo-type="dijit/form/Select" name="shiptotype_new">$contacttype</select></td>
 					  <td><input name=shiptocontact_new size=10 maxlength=100 value="$form->{shiptocontact_new}" ></td>
 				 	  <td><input name=shiptodescription_new size=10 maxlength=100 value="$form->{shiptodescription_new}" ></td>

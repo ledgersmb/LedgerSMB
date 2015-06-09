@@ -363,10 +363,10 @@ sub form_header {
     if ( $form->{id} ) {
         $openclosed = qq|
       <tr>
-	<th nowrap align=right><input name=closed type=radio class=radio value=0 $checkedopen> |
+	<th nowrap align=right><input name=closed type=radio data-dojo-type="dijit/form/RadioButton" class=radio value=0 $checkedopen> |
           . $locale->text('Open')
           . qq|</th>
-	<th nowrap align=left><input name=closed type=radio class=radio value=1 $checkedclosed> |
+	<th nowrap align=left><input name=closed type=radio data-dojo-type="dijit/form/RadioButton" class=radio value=1 $checkedclosed> |
           . $locale->text('Closed')
           . qq|</th>
       </tr>

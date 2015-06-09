@@ -718,7 +718,7 @@ sub select_name {
         $ref->{name} = $form->quote( $ref->{name} );
 
         $column_data{ndx} =
-qq|<td><input name=ndx class=radio type=radio value=$i $checked></td>|;
+qq|<td><input name=ndx class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=$i $checked></td>|;
         $column_data{name} =
 qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</td>|;
         $column_data{address} = qq|<td>$ref->{address1} $ref->{address2}</td>|;
@@ -834,13 +834,13 @@ sub project_sales_order {
 	  <td colspan=3>
 	  <select data-dojo-type="dijit/form/Select" name=month>$form->{selectaccountingmonth}</select>
 	  <select data-dojo-type="dijit/form/Select" name=year>$form->{selectaccountingyear}</select>
-	  <input name=interval class=radio type=radio value=0 checked>&nbsp;|
+	  <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=0 checked>&nbsp;|
           . $locale->text('Current') . qq|
-	  <input name=interval class=radio type=radio value=1>&nbsp;|
+	  <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=1>&nbsp;|
           . $locale->text('Month') . qq|
-	  <input name=interval class=radio type=radio value=3>&nbsp;|
+	  <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=3>&nbsp;|
           . $locale->text('Quarter') . qq|
-	  <input name=interval class=radio type=radio value=12>&nbsp;|
+	  <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=12>&nbsp;|
           . $locale->text('Year') . qq|
 	  </td>
 	</tr>
@@ -913,9 +913,9 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 	$fromto
 	<tr>
 	  <th></th>
-  	  <td><input name=summary type=radio class=radio value=1> |
+  	  <td><input name=summary type=radio data-dojo-type="dijit/form/RadioButton" class=radio value=1> |
       . $locale->text('Summary') . qq|
-  	  <input name=summary type=radio class=radio value=0 checked> |
+  	  <input name=summary type=radio data-dojo-type="dijit/form/RadioButton" class=radio value=0 checked> |
       . $locale->text('Detail') . qq|
   	  </td>
   	</tr>

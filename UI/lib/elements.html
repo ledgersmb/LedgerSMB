@@ -11,6 +11,11 @@
     'data-dojo-type' = 'dijit/form/CheckBox'
   }
 
+  #radio
+  radiobutton_defaults = {
+	 'data-dojo-type' = 'dijit/form/RadioButton'
+  }
+
   #file
   file_defaults = {
     size = '60'
@@ -88,6 +93,7 @@
 	        input_defaults = checkbox_defaults;
 	      CASE ['radio'];
 	        input_type_keys = input_keys.merge(['checked']);
+				input_defailts = radiobutton_defaults;
 	      CASE ['password'];
 	        input_type_keys = input_keys;
 	        input_defaults = password_defaults;
