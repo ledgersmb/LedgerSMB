@@ -52,74 +52,75 @@ function(
     return declare(wbase, {
         constructor: function(){
         },
-	redirectMainATags: function(){
+		  redirectMainATags: function(){
             query('#maindiv a').forEach(function(dnode){
-		if (! dnode.target && dnode.href) {
+					 if (! dnode.target && dnode.href) {
                     on(dnode, 'click', function(e){
-			e.preventDefault();
-			load_link(xhr, dnode.href);
+								e.preventDefault();
+								load_link(xhr, dnode.href);
                     });
-		}
-	    });
-	},
-	rewriteFormSubmissions: function(formnode){ 
-            if (undefined == formnode.action){
-                return undefined;
-            }
+					 }
+				});
+		  },
+		  rewriteFormSubmissions: function(formnode){ 
+				if (undefined == formnode.action){
+					 return undefined;
+				}
+				// <button> tags get rewritten to <input type="submit" tags...
+				query('input[type="submit"]', formnode).forEach(function(b) {
+					 var widget = registry.byId(b.id);
+					 on(widget, 'click', function(){
+						  domattr.set(formnode, 'clicked-action',
+										  domattr.get(b,'value'));
+					 });
+				});
 
-	    query('button', formnode).forEach(function(b){
-		on(b, 'click', function(){
-		    domattr.set(formnode, 'clicked-action',
-				domattr.get(b,'value'));
-		});
-	    });
-
-            on(formnode, 'submit', 
-               function(evt){ 
-                   var method = formnode.method;
-                   evt.preventDefault();
-                   var qobj = domform.toQuery(formnode);
-                   qobj = 'action=' 
-                       + domattr.get(formnode, 'clicked-action')
-		       + '&' + qobj;
-                   if (undefined == method){
-                       method = 'GET';
-                   }
-                   var url = domattr.get(formnode, 'action');
-                   console.log(url);
-                   if ('GET' == method || 'get' == method){
-                       url = url + '?' + qobj;
-                       console.log(url);
-                       xhr(url,
-                           {"handleAs": "text",
-                           }).then(
-                               function(doc){
-                                   set_main_div(doc);
-                               });    
-                   } else {
-                       xhr(url,
-                           {"handleAs": "text",
-                            method: method,
-                            data: qobj,
-                           }).then(
-                               function(doc){
-                                   set_main_div(doc);
-                               });
-                   }
-               });
-         },
-	rewriteAllFormSubmissions: function() {
-	    myself = this;
-	    query('#maindiv form:not(.dojoized)')
-		.forEach(myself.rewriteFormSubmissions);
-	},
+				on(formnode, 'submit', 
+					function(evt){ 
+						 var method = formnode.method;
+						 evt.preventDefault();
+						 var qobj = domform.toQuery(formnode);
+						 qobj = 'action=' 
+							  + domattr.get(formnode, 'clicked-action')
+							  + '&' + qobj;
+						 if (undefined == method){
+							  method = 'GET';
+						 }
+						 var url = domattr.get(formnode, 'action');
+						 console.log(url);
+						 if ('GET' == method || 'get' == method){
+							  url = url + '?' + qobj;
+							  console.log(url);
+							  xhr(url,
+									{"handleAs": "text",
+									}).then(
+										 function(doc){
+											  set_main_div(doc);
+										 });    
+						 } else {
+							  xhr(url,
+									{"handleAs": "text",
+									 method: method,
+									 data: qobj,
+									}).then(
+										 function(doc){
+											  set_main_div(doc);
+										 });
+						 }
+					});
+		  },
+		  rewriteAllFormSubmissions: function() {
+				myself = this;
+				query('#maindiv form:not(.dojoized)')
+					 .forEach(myself.rewriteFormSubmissions);
+		  },
         setup: function(){
             var myself = this;
-	    
-	    ready(function(){
-		myself.redirectMainATags();
-		myself.rewriteAllFormSubmissions();
-	    });
+				
+				ready(function(){
+					 myself.redirectMainATags();
+					 myself.rewriteAllFormSubmissions();
+				});
         }
-   }); 
+    }); 
 });   
