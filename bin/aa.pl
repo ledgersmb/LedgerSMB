@@ -762,7 +762,7 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
 
 	}
 
-	$taxformcheck=qq|<td><input type="checkbox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
+	$taxformcheck=qq|<td><input type="checkbox" data-dojo-type="dijit/form/CheckBox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
         print qq|
 	<tr valign=top>
 	  <td><input name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
@@ -813,7 +813,7 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
 	  <td><input name="tax_$item" id="tax_$item"
                      size=10 value=$form->{"tax_$item"}></td>
 	  <td align=right><input id="calctax_$item" name="calctax_$item"
-                                 class="checkbox" type="checkbox" value=1
+                                 class="checkbox" type="checkbox" data-dojo-type="dijit/form/CheckBox" value=1
                                  $form->{"calctax_$item"}></td>
  	  <td><select name="$form->{ARAP}_tax_$item"
                       id="$form->{ARAP}_tax_$item">
@@ -1549,10 +1549,10 @@ sub search {
 |;
 
         $l_employee =
-qq|<input name="l_employee" class=checkbox type=checkbox value=Y> $employeelabel|;
+qq|<input name="l_employee" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> $employeelabel|;
 
         $l_manager =
-          qq|<input name="l_manager" class=checkbox type=checkbox value=Y> |
+          qq|<input name="l_manager" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
           . $locale->text('Manager');
     }
 
@@ -1590,10 +1590,10 @@ qq|<input name="l_employee" class=checkbox type=checkbox value=Y> $employeelabel
 
     $openclosed = qq|
 	      <tr>
-		<td nowrap><input name=open class=checkbox type=checkbox value=Y checked> |
+		<td nowrap><input name=open class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y checked> |
       . $locale->text('Open')
       . qq|</td>
-		<td nowrap><input name=closed class=checkbox type=checkbox value=Y> |
+		<td nowrap><input name=closed class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('Closed')
       . qq|</td>
 	      </tr>
@@ -1656,9 +1656,9 @@ qq|<input name="l_employee" class=checkbox type=checkbox value=Y> $employeelabel
     $name = $locale->text('Customer');
     my $vc_number=$locale->text("Customer Number");
     $l_name =
-qq|<input name="l_name" class=checkbox type=checkbox value=Y checked> $name|;
+qq|<input name="l_name" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y checked> $name|;
     $l_till =
-      qq|<input name="l_till" class=checkbox type=checkbox value=Y> |
+      qq|<input name="l_till" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('Till');
 
     if ( $form->{vc} eq 'vendor' ) {
@@ -1666,28 +1666,28 @@ qq|<input name="l_name" class=checkbox type=checkbox value=Y checked> $name|;
         $vc_number=$locale->text("Vendor Number");
         $l_till = "";
         $l_name =
-qq|<input name="l_name" class=checkbox type=checkbox value=Y checked> $name|;
+qq|<input name="l_name" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y checked> $name|;
     }
 
     @a = ();
     push @a,
-      qq|<input name="l_runningnumber" class=checkbox type=checkbox value=Y> |
+      qq|<input name="l_runningnumber" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('No.');
-    push @a, qq|<input name="l_id" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_id" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('ID');
     push @a,
-qq|<input name="l_invnumber" class=checkbox type=checkbox value=Y checked> |
+qq|<input name="l_invnumber" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y checked> |
       . $locale->text('Invoice Number');
     push @a,
-      qq|<input name="l_ordnumber" class=checkbox type=checkbox value=Y> |
+      qq|<input name="l_ordnumber" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('Order Number');
-    push @a, qq|<input name="l_ponumber" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_ponumber" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('PO Number');
-    push @a, qq|<input name="l_transdate" class=checkbox type=checkbox value=Y checked> |
+    push @a, qq|<input name="l_transdate" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y checked> |
       . $locale->text('Invoice Date');
     if (!$form->{outstanding}){
         push @a,
-qq|<input name="l_projectnumber" class=checkbox type=checkbox value=Y checked> |
+qq|<input name="l_projectnumber" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y checked> |
       . $locale->text('Project Numbers');
     }
     push @a, $l_name;
@@ -1695,33 +1695,33 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox value=Y checked> |
     push @a, $l_manager if $l_employee;
     push @a, $l_department if $l_department;
     push @a,
-      qq|<input name="l_netamount" class=checkbox type=checkbox value=Y> |
+      qq|<input name="l_netamount" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('Amount');
-    push @a, qq|<input name="l_tax" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_tax" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('Tax');
     push @a,
-      qq|<input name="l_amount" class=checkbox type=checkbox value=Y checked> |
+      qq|<input name="l_amount" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y checked> |
       . $locale->text('Total');
-    push @a, qq|<input name="l_curr" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_curr" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('Currency');
-    push @a, qq|<input name="l_datepaid" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_datepaid" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('Date Paid');
     push @a,
-      qq|<input name="l_paid" class=checkbox type=checkbox value=Y checked> |
+      qq|<input name="l_paid" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y checked> |
       . $locale->text('Paid');
-    push @a, qq|<input name="l_crdate" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_crdate" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('Invoice Created');
-    push @a, qq|<input name="l_duedate" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_duedate" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('Due Date');
-    push @a, qq|<input name="l_due" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_due" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('Amount Due');
-    push @a, qq|<input name="l_notes" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_notes" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('Notes');
     push @a, $l_till if $l_till;
     push @a,
-      qq|<input name="l_shippingpoint" class=checkbox type=checkbox value=Y> |
+      qq|<input name="l_shippingpoint" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('Shipping Point');
-    push @a, qq|<input name="l_shipvia" class=checkbox type=checkbox value=Y> |
+    push @a, qq|<input name="l_shipvia" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('Ship via');
 
     $form->header;
@@ -1799,7 +1799,7 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox value=Y checked> |
 
     print qq|
 	      <tr>
-		<td nowrap><input name="l_subtotal" class=checkbox type=checkbox value=Y> |
+		<td nowrap><input name="l_subtotal" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=Y> |
       . $locale->text('Subtotal')
       . qq|</td>
 	      </tr>

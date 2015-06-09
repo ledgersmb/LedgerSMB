@@ -840,7 +840,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
             <tr height="5"></tr>
             <tr>
 	      <td align=right>
-	      <input name=taxincluded class=checkbox type=checkbox value=1 $form->{taxincluded}></td>
+	      <input name=taxincluded class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=1 $form->{taxincluded}></td>
 	      <th align=left>| . $locale->text('Tax Included') . qq|</th>
 	    </tr>
 |;
@@ -2603,7 +2603,7 @@ qq|<td align=right><input name="qty_$i" size="6" value="$form->{"qty_$i"}"></td>
         }
         else {
             $column_data{name} =
-qq|<td><input name="ndx_$i" class=checkbox type=checkbox value="1"></td>|;
+qq|<td><input name="ndx_$i" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value="1"></td>|;
         }
 
         $form->hide_form( map { "${_}_$i" }

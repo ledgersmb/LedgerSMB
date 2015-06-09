@@ -378,7 +378,7 @@ sub schedule {
         $postpayment = qq|
  	<tr>
 	  <th align=right nowrap>| . $locale->text('Include Payment') . qq|</th>
-	  <td><input name=recurringpayment type=checkbox class=checkbox value=1 $recurringpayment></td>
+	  <td><input name=recurringpayment type=checkbox data-dojo-type="dijit/form/CheckBox" class=checkbox value=1 $recurringpayment></td>
 	</tr>
 |;
     }
@@ -432,7 +432,7 @@ sub schedule {
 
             $email .= qq|
 		<tr>
-		  <td><input name="email$item" type=checkbox class=checkbox value=1 $checked></td>
+		  <td><input name="email$item" type=checkbox data-dojo-type="dijit/form/CheckBox" class=checkbox value=1 $checked></td>
 		  <th align=left>$formname{$item}</th>
 		  <td><select name="emailformat$item">$selectformat</select></td>
 		</tr>
@@ -506,7 +506,7 @@ sub schedule {
 
             $print .= qq|
 		<tr>
-		  <td><input name="print$item" type=checkbox class=checkbox value=1 $checked></td>
+		  <td><input name="print$item" type=checkbox data-dojo-type="dijit/form/CheckBox" class=checkbox value=1 $checked></td>
 		  <th align=left>$formname{$item}</th>
 		  <td><select name="printprinter$item">$selectprinter</select></td>
 		  <td><select name="printformat$item">$selectformat</select></td>

@@ -426,7 +426,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
     # tax fields
     foreach $item ( split / /, $form->{taxaccounts} ) {
         $tax .= qq|
-      <input class=checkbox type=checkbox name="IC_tax_$item" value=1 $form->{"IC_tax_$item"}>&nbsp;<b>$form->{"IC_tax_${item}_description"}</b>
+      <input class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" name="IC_tax_$item" value=1 $form->{"IC_tax_$item"}>&nbsp;<b>$form->{"IC_tax_${item}_description"}</b>
       <br><input type=hidden name=IC_tax_${item}_description value="$form->{"IC_tax_${item}_description"}">
 |;
     }
@@ -713,7 +713,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
         $obsolete = qq|
 	      <tr>
 		<th align="right" nowrap="true">| . $locale->text('Obsolete') . qq|</th>
-		<td><input name=obsolete type=checkbox class=checkbox value=1 $checked></td>
+		<td><input name=obsolete type=checkbox data-dojo-type="dijit/form/CheckBox" class=checkbox value=1 $checked></td>
 	      </tr>
 |;
         $obsolete = "<input type=hidden name=obsolete value=$form->{obsolete}>"
@@ -1358,9 +1358,9 @@ qq|<td><input name="qty_$i" size=6 value="$form->{"qty_$i"}" accesskey="$i" titl
                 $form->{"${_}_$i"} = ( $form->{"${_}_$i"} ) ? "checked" : "";
             }
             $column_data{bom} =
-qq|<td align=center><input name="bom_$i" type=checkbox class=checkbox value=1 $form->{"bom_$i"}></td>|;
+qq|<td align=center><input name="bom_$i" type=checkbox data-dojo-type="dijit/form/CheckBox" class=checkbox value=1 $form->{"bom_$i"}></td>|;
             $column_data{adj} =
-qq|<td align=center><input name="adj_$i" type=checkbox class=checkbox value=1 $form->{"adj_$i"}></td>|;
+qq|<td align=center><input name="adj_$i" type=checkbox data-dojo-type="dijit/form/CheckBox" class=checkbox value=1 $form->{"adj_$i"}></td>|;
 
             ($partsgroup) = split /--/, $form->{"partsgroup_$i"};
             $column_data{partsgroup} =
@@ -2043,7 +2043,7 @@ sub stock_assembly {
         </tr>
         <tr>
           <td></td>
-	  <td><input name=checkinventory class=checkbox type=checkbox value=1>&nbsp;|
+	  <td><input name=checkinventory class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=1>&nbsp;|
       . $locale->text('Check Inventory')
       . qq|</td>
         </tr>

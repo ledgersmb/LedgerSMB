@@ -832,7 +832,7 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
               <tr height="5"></tr>
               <tr>
 	        <td align=right>
-	        <input name="taxincluded" class="checkbox" type="checkbox" value="1" $form->{taxincluded}></td><th align=left>|
+	        <input name="taxincluded" class="checkbox" type="checkbox" data-dojo-type="dijit/form/CheckBox" value="1" $form->{taxincluded}></td><th align=left>|
           . $locale->text('Tax Included')
           . qq|</th>
 	     </tr>

@@ -451,7 +451,7 @@ qq|<td align=right class="qty"><input name="qty_$i" title="$form->{"onhand_$i"}"
           . qq|</td>|;
         $column_data{bin}    = qq|<td class="bin">$form->{"bin_$i"}</td>|;
         $column_data{onhand} = qq|<td class="onhand">$form->{"onhand_$i"}</td>|;
-        $column_data{taxformcheck} = qq|<td class="taxform"><input type="checkbox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
+        $column_data{taxformcheck} = qq|<td class="taxform"><input type="checkbox" data-dojo-type="dijit/form/CheckBox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
         print qq|
         <tr valign=top>|;
 
@@ -623,7 +623,7 @@ sub select_item {
         }
 
         $column_data{ndx} =
-qq|<td><input name="ndx_$i" class=checkbox type=checkbox value=$i></td>|;
+qq|<td><input name="ndx_$i" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=$i></td>|;
 
         for (qw(partnumber sku description partsgroup)) {
             $column_data{$_} = qq|<td>$ref->{$_}&nbsp;</td>|;

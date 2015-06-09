@@ -1103,7 +1103,7 @@ sub jcitems {
 
         $checked = ( $form->{"checked_$i"} ) ? "checked" : "";
         $column_data{id} =
-qq|<td><input name="checked_$i" class=checkbox type=checkbox value="1" $checked></td>|;
+qq|<td><input name="checked_$i" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value="1" $checked></td>|;
 
         if ( $form->{"$form->{vc}_id_$i"} ) {
             $column_data{name} = qq|<td>$form->{"$form->{vc}_$i"}</td>|;
@@ -1111,7 +1111,7 @@ qq|<td><input name="checked_$i" class=checkbox type=checkbox value="1" $checked>
         }
         else {
             $column_data{name} =
-qq|<td><input name="ndx_$i" class=checkbox type=checkbox value="1"></td>|;
+qq|<td><input name="ndx_$i" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value="1"></td>|;
         }
 
         for (qw(projectnumber partnumber description notes)) {
