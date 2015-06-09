@@ -130,9 +130,12 @@ END; ?>
     <td><?lsmb allocated ?></td>
 </tr>
 <tr><th align><?lsmb text('Notes') ?></th>
-    <td colspan=3><textarea name="notes" rows=2 cols=46 wrap=soft><?lsmb
-          notes
-    ?></textarea>
+    <td colspan=3><?lsmb PROCESS textarea element_data = {
+								 name="notes"
+								 rows=2
+								 cols=46
+								 wrap="soft"
+								 text=notes } ?>
     </td>
 </tr>
 </table>

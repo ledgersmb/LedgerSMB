@@ -70,7 +70,14 @@ class="<?lsmb dojo_theme ?>">
      </tr>
      <tr align="right" id="notes_row">
       <th valign="top" id="notes_column"><?lsmb text('Notes') ?></th>
-      <td id="text_notes_column"><textarea id="notes" name="notes" cols="35" rows="3"><?lsmb notes ?></textarea></td>
+      <td id="text_notes_column">
+		  <?lsmb PROCESS textarea element_data = {
+					id="notes"
+					name="notes"
+					cols="35"
+					rows="3"
+					text=notes ?>
+		</td>
      </tr>
     </table>
    </td>
@@ -360,7 +367,13 @@ class="<?lsmb dojo_theme ?>">
    </td>
    <td id="warning_column" align="right">
    <?lsmb IF warning -?>
-     <textarea id="warning_text" name="warning_text" cols="35" readonly="true" style="transparent;"><?lsmb warning ?></textarea>
+     <?lsmb PROCESS textarea element_data = {
+				id="warning_text"
+				name="warning_text"
+				cols="35"
+				readonly="true"
+				style="transparent;"
+				text=warning ?>
    <?lsmb END -?>  
    </td>
   </tr>           

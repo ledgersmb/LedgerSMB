@@ -135,7 +135,11 @@
 	  <?lsmb PROCESS attributes  # Process regular attributes.
 	    attribute_data=element_data 
 	    attribute_defaults = textarea_defaults
-	    element_keys = ['name', 'cols', 'rows', 'disabled', 'readonly', 'tabindex', 'accesskey', 'value', 'data-dojo-type', 'data-dojo-props']  # Attributes that apply to textareas.
+
+				# Attributes that apply to textareas.
+	    element_keys = ['name', 'cols', 'rows', 'disabled', 'readonly',
+				'tabindex', 'accesskey', 'value', 'style', 'wrap',
+				'data-dojo-type', 'data-dojo-props']
 	  ?>
 	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
 	    custom_attribute_data=element_data.attributes 
