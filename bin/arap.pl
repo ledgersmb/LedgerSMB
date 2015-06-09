@@ -387,7 +387,7 @@ sub schedule {
         $nextdate = qq|
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Next Date') . qq|</th>
-		<td><input class="date" name=recurringnextdate size=11 title="($myconfig{'dateformat'})" value=$form->{recurringnextdate}></td>
+		<td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=recurringnextdate size=11 title="($myconfig{'dateformat'})" value=$form->{recurringnextdate}></td>
 	      </tr>
 |;
     }
@@ -588,7 +588,7 @@ sub schedule {
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Startdate') . qq|</th>
-		<td><input class="date" name=recurringstartdate size=11 title="($myconfig{'dateformat'})" value=$form->{recurringstartdate}></td>
+		<td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=recurringstartdate size=11 title="($myconfig{'dateformat'})" value=$form->{recurringstartdate}></td>
 	      </tr>
 	      $nextdate
 	    </table>

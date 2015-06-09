@@ -618,15 +618,15 @@ function on_return_submit(event){
 	      </tr>
 	      <tr class="crdate-row">
 		<th align=right>| . $locale->text('Invoice Created') . qq|</th>
-		<td><input class="date" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate"></td>
+		<td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="crdate" size="11" title="$myconfig{dateformat}" value="$form->{crdate}" id="crdate"></td>
 	      </tr>
 	      <tr class="transdate-row">
 		<th align=right>| . $locale->text('Invoice Date') . qq|</th>
-		<td><input class="date" name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}"></td>
+		<td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="transdate" id="transdate" size="11" title="$myconfig{dateformat}" value="$form->{transdate}"></td>
 	      </tr>
 	      <tr>
 		<th align=right>| . $locale->text('Due Date') . qq|</th>
-		<td><input class="date" name="duedate" id="duedate" size="11" title="$myconfig{dateformat}" value="$form->{duedate}"></td>
+		<td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="duedate" id="duedate" size="11" title="$myconfig{dateformat}" value="$form->{duedate}"></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
@@ -1062,7 +1062,7 @@ qq|<td align="center"><input name="paid_$i" size="11" value="$form->{"paid_$i"}"
         $column_data{AR_paid} =
 qq|<td align="center"><select name="AR_paid_$i">$form->{"selectAR_paid_$i"}</select></td>|;
         $column_data{datepaid} =
-qq|<td align="center"><input class="date" name="datepaid_$i" size="11" title="$myconfig{dateformat}" value="$form->{"datepaid_$i"}"></td>|;
+qq|<td align="center"><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="datepaid_$i" size="11" title="$myconfig{dateformat}" value="$form->{"datepaid_$i"}"></td>|;
         $column_data{source} =
 qq|<td align="center"><input name="source_$i" size="11" value="$form->{"source_$i"}"></td>|;
         $column_data{memo} =

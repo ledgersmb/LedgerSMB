@@ -786,7 +786,7 @@ qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description
 	    <table width="100%">
 	      <tr>
 		<th align="right" nowrap="true">| . $locale->text('Updated') . qq|</th>
-		<td><input name="priceupdate" size="11" title="$myconfig{dateformat}" class="date" id="priceupdate" value="$form->{priceupdate}"></td>    
+		<td><input name="priceupdate" size="11" title="$myconfig{dateformat}" class="date" data-dojo-type="lsmb/lib/DateTextBox" id="priceupdate" value="$form->{priceupdate}"></td>    
 	      </tr>
 	      $sellprice
 	      $lastcost
@@ -1198,8 +1198,8 @@ s/option>$form->{"customercurr_$i"}/option selected>$form->{"customercurr_$i"}/;
           . $form->format_amount( \%myconfig, $form->{"customerprice_$i"}, 2 )
           . qq|></td>
 	  $currency
-	  <td><input class="date" name="validfrom_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validfrom_$i"}"></td>
-	  <td><input class="date" name="validto_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validto_$i"}"></td>
+	  <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="validfrom_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validfrom_$i"}"></td>
+	  <td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="validto_$i" size=11 title="$myconfig{dateformat}" value="$form->{"validto_$i"}"></td>
 	</tr>
 |;
     }

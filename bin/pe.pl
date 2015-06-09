@@ -852,10 +852,10 @@ sub project_sales_order {
 	  <th align=right nowrap>| . $locale->text('Transaction Dates') . qq|</th>
 	  <td>|
       . $locale->text('From')
-      . qq| <input class="date" name=transdatefrom size=11 title="$myconfig{dateformat}">
+      . qq| <input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdatefrom size=11 title="$myconfig{dateformat}">
 	  |
       . $locale->text('To')
-      . qq| <input class="date" name=transdateto size=11 title="$myconfig{dateformat}"></td>
+      . qq| <input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdateto size=11 title="$myconfig{dateformat}"></td>
 	</tr>
 	$selectfrom
 |;
