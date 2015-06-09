@@ -272,31 +272,57 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
    <tr class="<?lsmb alterning_style -?>">
      <td align="center"><?lsmb overpayment_item ?> </td>
      <td align="center">
-                        <?lsmb item.account.accno -?>--<?lsmb item.account.description -?>
-                        <input type="hidden" id="overpayment_account_<?lsmb overpayment_item -?>" name="overpayment_account_<?lsmb overpayment_item -?>" value="<?lsmb item.account.id -?>--<?lsmb item.account.accno ?>--<?lsmb item.account.description ?>" />
+       <?lsmb item.account.accno -?>--<?lsmb item.account.description -?>
+       <?lsmb PROCESS input element_data = {
+				  type="hidden"
+				  id="overpayment_account_" _ overpayment_item
+				  name="overpayment_account_" _ overpayment_item
+				  value=item.account.id _ '--' _ item.account.accno_ '--' _ item.account.description } ?>
      </td>
      <td align="center">
-                        <?lsmb item.cashaccount.accno -?>--<?lsmb item.cashaccount.description -?>
-                        <input type="hidden" id="overpayment_cash_account_<?lsmb overpayment_item -?>"
-                        name="overpayment_cash_account_<?lsmb overpayment_item -?>" 
-                        value="<?lsmb item.cashaccount.id -?>--<?lsmb item.cashaccount.accno ?>--<?lsmb
-                        item.cashaccount.description ?>" />
+       <?lsmb item.cashaccount.accno -?>--<?lsmb item.cashaccount.description -?>
+       <?lsmb PROCESS input element_data = {
+				  type="hidden"
+				  id="overpayment_cash_account_" _ overpayment_item
+				  name="overpayment_cash_account_" _ overpayment_item
+				  value=item.cashaccount.id _ '--' _ item.cashaccount.accno _ ' item.cashaccount.description } ?>
      </td>
      <td align="center">
      	<?lsmb item.source1 -?>	<?lsmb item.source2 -?>
-     	<input type="hidden" id="overpayment_source1_<?lsmb overpayment_item -?>" name="overpayment_source1_<?lsmb overpayment_item -?>" value="<?lsmb item.source1 -?>" />
-     	<input type="hidden" id="overpayment_source2_<?lsmb overpayment_item -?>" name="overpayment_source2_<?lsmb overpayment_item -?>" value="<?lsmb item.source2 -?>" />
+     	<?lsmb PROCESS input element_data = {
+				 type="hidden"
+				 id="overpayment_source1_" _ overpayment_item
+				 name="overpayment_source1_" _ overpayment_item
+				 value=item.source1 } ?>
+     	<?lsmb PROCESS input element_data = {
+				 type="hidden"
+				 id="overpayment_source2_" _ overpayment_item
+				 name="overpayment_source2_" _ overpayment_item
+				 value=item.source2 } ?>
      </td>
      <td align="center">
         <?lsmb item.memo -?>
-        <input type="hidden" id="overpayment_memo_<?lsmb overpayment_item -?>" name="overpayment_memo_<?lsmb overpayment_item -?>" value="<?lsmb item.memo -?>" />
+        <?lsmb PROCESS input element_data = {
+					type="hidden"
+					id="overpayment_memo_" _ overpayment_item
+					name="overpayment_memo_" _ overpayment_item
+					value=item.memo } ?>
      </td>
      <td align="center">
      	<?lsmb item.amount -?>
-     	<input type="hidden" id="overpayment_topay_<?lsmb overpayment_item -?>" name="overpayment_topay_<?lsmb overpayment_item -?>" value="<?lsmb item.amount ?>" />
+     	<?lsmb PROCESS input element_data = {
+				 type="hidden"
+				 id="overpayment_topay_" _ overpayment_item
+				 name="overpayment_topay_" _ overpayment_item
+				 value=item.amount } ?>
      	<?lsmb overpayment_subtotal = overpayment_subtotal + item.amount -?>
      </td>
-     <td align="center"><input type="checkbox" class="remove" name="overpayment_checkbox_<?lsmb overpayment_item -?>"/></td>   
+     <td align="center"><?lsmb PROCESS input element_data = {
+										 type="checkbox"
+										 class="remove"
+										 name="overpayment_checkbox_" _ overpayment_item
+										 } ?>
+	  </td>   
    </tr>        
    <?lsmb END -?>
    <?lsmb #Now we insert an empty field to process a new overpayment -?>
@@ -325,20 +351,36 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
            <option value="<?lsmb item -?>"><?lsmb item -?></option>
           <?lsmb END -?>
          </select>
-         <input name="overpayment_source2_<?lsmb overpayment_item -?>"  id="overpayment_source2_<?lsmb overpayment_item -?>"/>
-         <input type="hidden" name="overpayment_qty" id="overpayment_qty" value="<?lsmb overpayment_item ?>" />
+         <?lsmb PROCESS input element_data = {
+					 name="overpayment_source2_" _ overpayment_item
+					 id="overpayment_source2_" _ overpayment_item
+					 } ?>
+         <?lsmb PROCESS input element_data = {
+					 type="hidden"
+					 name="overpayment_qty"
+					 id="overpayment_qty"
+					 value=overpayment_item } ?>
      </td>
-     <td align="center"><input name="overpayment_memo_<?lsmb overpayment_item -?>" id="overpayment_memo_<?lsmboverpayment_item ?>" /></td>     
+     <td align="center">
+		 <?lsmb PROCESS input element_data = {
+				  name="overpayment_memo_" _ overpayment_item
+				  id="overpayment_memo_" _ overpayment_item } ?>
+	  </td>     
      <td align="center">
       <!-- CT:  Changing this to always show 0 because nowhere else to enter an 
            amount to overpay. -->
-      <input 
-      	name="overpayment_topay_<?lsmb overpayment_item -?>"
-      	id="overpayment_topay_<?lsmb overpayment_item -?>"
-        value="0"
+      <?lsmb PROCESS input element_data = {
+      		 name="overpayment_topay_" _ overpayment_item
+      		 id="overpayment_topay_" _ overpayment_item
+				 value="0"
       />
      </td>
-     <td align="center"><input type="checkbox" class="remove" name="overpayment_checkbox_<?lsmb overpayment_item -?>"/></td>
+     <td align="center">
+		 <lsmb PROCESS input element_data = {
+				 type="checkbox"
+				 class="remove"
+				 name="overpayment_checkbox_" _  overpayment_item ?>
+	  </td>
    </tr>
    <tr class="listsubtotal">
    <th colspan="5" align="right"><?lsmb text('Subtotal') -?></th>
