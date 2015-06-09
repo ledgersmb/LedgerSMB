@@ -31,11 +31,11 @@
         </span>
       </td>
       <td id="vc-column" class="label-left">
-        <select id="entity_credit_id" name="entity_credit_id">
-        <?lsmb FOREACH item IN entities -?>
-          <option value="<?lsmb item.value ?>"><?lsmb item.name?></option>
-        <?lsmb END ?>
-        </select>
+        <?lsmb PROCESS select element_data = {
+					id="entity_credit_id"
+					name="entity_credit_id"
+					options=entities
+					text_attr='name' } ?>
       </td>
     </tr>
     <tr id="curr-row" class="label-left">
@@ -43,11 +43,10 @@
         <?lsmb text('Currency') ?>
       </td>
       <td id="curr-column" class="label-left">
-        <select id="curr" name="curr">
-        <?lsmb FOREACH item IN curr -?>
-          <option value="<?lsmb item.value ?>"><?lsmb item.text?></option>
-        <?lsmb END -?>
-        </select>
+        <?lsmb PROCESS select element_data = {
+					id="curr"
+					name="curr"
+					options=curr } ?>
       </td>
     </tr>
   </table>

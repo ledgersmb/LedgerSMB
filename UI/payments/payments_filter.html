@@ -39,23 +39,25 @@
 <?lsmb IF projects ?>
 <div id = "payments-filter-projects" class="inputgroup">
   <label for="project"><?lsmb text('Project') ?></label>
-  <select name="project_id" id="project">
-  <?lsmb FOREACH p = projects ?>
-  <option value="<?lsmb p.id ?>"><?lsmb p.projectnumber ?></option>
-  <?lsmb END ?>
-  </select>
+  <?lsmb PROCESS select element_data = {
+			name="project_id"
+			id="project"
+			options=projects
+			text_attr='projectnumber'
+			value_attr='id' } ?>
 </div>
 <?lsmb END ?>
 
 <?lsmb IF departments ?>
 <div id = "payments-filter-departments" class="inputgroup">
   <label for="department"><?lsmb text('Department') ?></label>
-  <select name="department_id" id="department">
-		<option value=""></option>
-  <?lsmb FOREACH d = departments ?>
-  <option value="<?lsmb d.id ?>"><?lsmb d.description ?></option>
-  <?lsmb END ?>
-  </select>
+  <?lsmb PROCESS select element_data = {
+			name="department_id"
+			id="department"
+			default_blank=1
+			options=departments
+			value_attr='id'
+			text_attr='description' ?>
 </div>
 <?lsmb END ?>
 
@@ -76,12 +78,13 @@
 <?lsmb IF businesses ?>
 <div id = "payments-filter-businesses" class="inputgroup">
   <label for="businesses"><?lsmb text('Business Class') ?></label>
-  <select name="business_id" id="businesses">
-		<option value=""></option>
-  <?lsmb FOREACH b = businesses ?>
-  <option value="<?lsmb b.id ?>"><?lsmb b.description ?></option>
-  <?lsmb END ?>
-  </select>
+  <?lsmb PROCESS select element_data = {
+			name="business_id"
+			id="businesses"
+			default_blank=1
+			options=businesses
+			value_attr='id'
+			text_attr='description' ?>
 </div>
 <?lsmb END ?>
 </div>
@@ -120,11 +123,15 @@
 </div>
 <div id = "payments-filter-currency-row" class="inputgroup" ?>
 <label for="currency"><?lsmb text('Currency')?></label>
-<select name="currency" id="currency">
-<?lsmb FOREACH c = openCurrencies ?><?lsmb k = c.keys.first ?>
-<option value = "<?lsmb c.$k ?>"><?lsmb c.$k ?></option>
-<?lsmb END ?>
-</select>
+<?lsmb currencies = [];
+	    FOREACH c IN openCurrencies ;
+          k = c.keys.first;
+		    currencies.push { value = c.$k, text = c.$k } 
+       END;
+	    PROCESS select element_data = {
+		      name="currency"
+		      id="currency"
+		      options=currencies ?>
 </div>
 </div>
 <div class="listtop"><?lsmb text('Payment Processing') ?></div>
