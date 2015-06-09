@@ -70,22 +70,21 @@ PROCESS dynatable
             text_attr = 'class'
            value_attr = 'id'
                 title = text('Class')
-                label = "_none_"
         } ?></td>
 
                 
 	<td>
  	<?lsmb PROCESS input element_data = {
 		title = text("$entity_classname Number"), #fixme for i18n
-		label = "_none_"
+	   label = text("$entity_classname Number"), 
 		type= "text",
 		name = "meta_number",
 		value = credit_act.meta_number,
 		size = "10"
-	}  # " ?></td>
+	}  ?></td>
 	<td><?lsmb PROCESS input element_data = {
 		title = text("Description"),
-		label = "_none_"
+		label = text("Description"),
 		type= "text",
 		name = "description",
 		value = credit_act.description,
@@ -95,8 +94,8 @@ PROCESS dynatable
 	<tr class="pay_to_row">
 	<td colspan = "2">
 	<?lsmb PROCESS input element_data = {
-		title = text('Pay To') #'
-		label = "_none_"
+		title = text('Pay To')
+		label = text('Pay To')      
 		type = "text"
 		size = "50"
 		name = "pay_to_name"
@@ -109,7 +108,7 @@ PROCESS dynatable
             <td>
 		<?lsmb PROCESS input element_data = {
 			title = text('Starting Date'),
-			label = "_none_"
+			label = text('Starting Date'),
 			name = "startdate",
 			class = "date",
 			value = credit_act.startdate,
@@ -121,7 +120,7 @@ PROCESS dynatable
             <td>
 		<?lsmb PROCESS input element_data = {
 			title = text('End Date'),
-			label = "_none_"
+			label = text('End Date'),
 			name = "enddate",
 			class = "date",
 			value = credit.enddate,
@@ -138,13 +137,13 @@ PROCESS dynatable
 			type = "text"
 			size = "20"
 			title = text('Threshold')
-			label = "_none_"
+			label = text('Threshold')
 			class = "numeric"
                } ?></td>
             <td>
 		<?lsmb INCLUDE input element_data = {
 			title = text('Credit Limit'),
-			label = "_none_"
+			label = text('Credit Limit'),
 			name = "creditlimit",
 			value = credit_act.creditlimit,
 			type = "text",
@@ -156,7 +155,7 @@ PROCESS dynatable
             <td><span id="terms-span">
 		<?lsmb INCLUDE input element_data = {
 			title = text('Payment Terms'),
-			label = "_none_"
+			label = text('Payment Terms'),
 			name = "terms",
 			value = credit_act.terms,
 			type = "text",
@@ -166,7 +165,7 @@ PROCESS dynatable
             <td>
 		<?lsmb INCLUDE input element_data = {
 			title = text('Discount'),
-			label = "_none_"
+			label = text('Discount'),
 			name = "discount",
 			value = credit_act.discount,
 			type = "text",
@@ -186,7 +185,7 @@ PROCESS dynatable
                         default_values = [credit_act.discount_account_id]
                         options = discount_acc_list
                         title = text('Account')
-                        label = "_none_"
+                        label = text('Account')
                         text_attr = "text"
                         value_attr = "id"
                 } ?>
@@ -198,7 +197,7 @@ PROCESS dynatable
 			default_values = [credit_act.ar_ap_account_id]
 			options = ar_ap_acc_list
 			title = text((ec == 1) ? 'AP' : 'AR')
-			label = "_none_"
+			label = text((ec == 1) ? 'AP' : 'AR')
 			text_attr = "text"
 			value_attr = "id"
                 } ?>
@@ -208,7 +207,7 @@ PROCESS dynatable
 			default_values = [credit_act.cash_account_id]
 			options = cash_acc_list
 			title = text('Payment')
-			label = "_none_"
+			label = text('Payment')
 			text_attr = "text"
 			value_attr = "id"
                 } ?>
@@ -220,7 +219,7 @@ PROCESS dynatable
                         value_attr = 'text'
                         default_values = [credit_act.curr]
                         title = text('Currency')
-                        label = "_none_"
+                        label = text('Currency')
                } ?>
            </td>
         </tr>
@@ -234,7 +233,7 @@ PROCESS dynatable
 			text_attr = "description"
 			value_attr = "id"
 			title = text('Business Type') #'
-			label = "_none_"
+			label = text('Business Type') #'
 			} ?> 
                 <?lsmb END ?>
 	  </td>
@@ -245,7 +244,7 @@ PROCESS dynatable
                                name = 'pricegroup_id'
                             options = pricegroups
                               title = text('Pricegroup')
-                              label = "_none_"
+                              label = text('Pricegroup')
                          value_attr = 'id'
                           text_attr = 'pricegroup'
                 } ?></div>
@@ -262,7 +261,7 @@ PROCESS dynatable
 			text_attr = "form_name"
 			value_attr = "id"
 			title = text('Tax Form') #'
-			label = "_none_"
+			label = text('Tax Form') #'
 			} ?> 
               <?lsmb END ?>
 	  </td>
@@ -272,7 +271,7 @@ PROCESS dynatable
            END;
            INCLUDE select element_data = {
 		title = text("Language")
-		label = "_none_"
+		label = text("Language")
 		name = "language_code"
                 default_values = [credit_act.language_code],
                 options = language_code_list
@@ -292,10 +291,10 @@ PROCESS dynatable
                    IF credit_act.tax_ids.grep("^${tx.id}$").size == 1;
                        checked = "CHECKED";
                    END;
-                   INCLUDE input 
+                   INCLUDE input label_pos=1 
                            element_data = {
                            title = tx.accno _ '--' _ tx.description
-                           label = "_none_"
+                           label = tx.accno _ '--' _ tx.description
                            type = "checkbox"
                            checked = checked
                            name = "taxact_$tx.id"
@@ -309,10 +308,10 @@ PROCESS dynatable
                IF credit_act.taxincluded;
                    checked='CHECKED';
                END;
-               INCLUDE input
+               INCLUDE input label_pos=1
                            element_data = {
                                  title = text('Tax Included') #'
-                                 label = "_none_"
+                                 label = text('Tax Included') #'
                                   type = "checkbox"
                                checked = checked
                                   name = "taxincluded"
