@@ -490,9 +490,9 @@ sub form_header {
         $rows = 2;
     }
     $notes =
-qq|<textarea name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" name=notes rows=$rows cols=50 wrap=soft>$form->{notes}</textarea>|;
     $intnotes =
-qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
 
     $department = qq|
 	      <tr>
@@ -748,7 +748,7 @@ s/option>\Q$form->{"$form->{ARAP}_amount_$i"}\E/option selected>$form->{"$form->
             1 )
         {
             $description =
-qq|<td><textarea name="description_$i" rows=$rows cols=40>$form->{"description_$i"}</textarea></td>|;
+qq|<td><textarea data-dojo-type="dijit/form/Textarea" name="description_$i" rows=$rows cols=40>$form->{"description_$i"}</textarea></td>|;
         }
         else {
             $description =

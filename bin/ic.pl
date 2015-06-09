@@ -375,11 +375,11 @@ sub form_header {
     }
 
     $notes =
-qq|<textarea name=notes rows=$rows cols=40 wrap=soft>$form->{notes}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" name=notes rows=$rows cols=40 wrap=soft>$form->{notes}</textarea>|;
 
     if ( ( $rows = $form->numtextrows( $form->{description}, 40 ) ) > 1 ) {
         $description =
-qq|<textarea name="description" rows=$rows cols=40 wrap=soft>$form->{description}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows cols=40 wrap=soft>$form->{description}</textarea>|;
     }
     else {
         $description =

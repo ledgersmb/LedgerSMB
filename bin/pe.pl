@@ -584,7 +584,7 @@ sub translation_header {
             1 )
         {
             $translation =
-qq|<textarea name="translation_$i" rows=$rows cols=40 wrap=soft>$form->{"translation_$i"}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" name="translation_$i" rows=$rows cols=40 wrap=soft>$form->{"translation_$i"}</textarea>|;
         }
         else {
             $translation =

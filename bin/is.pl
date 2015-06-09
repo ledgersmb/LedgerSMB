@@ -599,7 +599,7 @@ function on_return_submit(event){
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Ship via') . qq|</th>
 		<td colspan=3>
-                   <textarea name="shipvia" cols="35" rows="3"
+                   <textarea data-dojo-type="dijit/form/Textarea" name="shipvia" cols="35" rows="3"
                        >$form->{shipvia}</textarea></td>
 	      </tr>
 	    </table>
@@ -820,9 +820,9 @@ sub form_footer {
     }
     $rows = ( $rows > $introws ) ? $rows : $introws;
     $notes =
-qq|<textarea name="notes" rows="$rows" cols="40" wrap="soft">$form->{notes}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" name="notes" rows="$rows" cols="40" wrap="soft">$form->{notes}</textarea>|;
     $intnotes =
-qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes}</textarea>|;
 
     $form->{taxincluded} = ( $form->{taxincluded} ) ? "checked" : "";
 

@@ -453,7 +453,7 @@ sub schedule {
 	  </tr>
 
 	  <tr>
-	    <td><textarea name="recurringmessage" rows=10 cols=60 wrap=soft>$form->{recurringmessage}</textarea></td>
+	    <td><textarea data-dojo-type="dijit/form/Textarea" name="recurringmessage" rows=10 cols=60 wrap=soft>$form->{recurringmessage}</textarea></td>
 	  </tr>
 	</table>
 |;

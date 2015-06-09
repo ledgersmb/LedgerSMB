@@ -726,9 +726,9 @@ sub form_footer {
     }
     $rows = ( $rows > $introws ) ? $rows : $introws;
     $notes =
-qq|<textarea name=notes rows=$rows cols=35 wrap=soft>$form->{notes}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" name=notes rows=$rows cols=35 wrap=soft>$form->{notes}</textarea>|;
     $intnotes =
-qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
     $tax = "";
     $form->{taxincluded} = ( $form->{taxincluded} ) ? "checked" : "";
 
@@ -873,12 +873,12 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
                  <tr><th align=left>| . $locale->text('Import Text') . qq|</th>
                  </tr>
                  <tr>
-                <td><textarea name=import_text rows=$rows cols=25></textarea>|;
+                <td><textarea data-dojo-type="dijit/form/Textarea" name=import_text rows=$rows cols=25></textarea>|;
      } else {
          print qq|
 		<td>$notes</td>
 		<td>$intnotes</td>
-                <td><textarea name=import_text rows=$rows cols=25></textarea>|;
+                <td><textarea data-dojo-type="dijit/form/Textarea" name=import_text rows=$rows cols=25></textarea>|;
     }
     print qq|
 	      </tr>
