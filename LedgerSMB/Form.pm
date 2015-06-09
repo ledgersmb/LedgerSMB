@@ -1207,7 +1207,7 @@ sub print_button {
     my ( $self, $button, $name ) = @_;
 
     print
-qq|<button class="submit" type="submit" name="action" value="$name" accesskey="$button->{$name}{key}" title="$button->{$name}{value} [Alt-$button->{$name}{key}]">$button->{$name}{value}</button>\n|;
+qq|<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="$name" accesskey="$button->{$name}{key}" title="$button->{$name}{value} [Alt-$button->{$name}{key}]">$button->{$name}{value}</button>\n|;
 }
 
 
