@@ -68,8 +68,7 @@ function(
 				}
 				// <button> tags get rewritten to <input type="submit" tags...
 				query('input[type="submit"]', formnode).forEach(function(b) {
-					 var widget = registry.byId(b.id);
-					 on(widget, 'click', function(){
+					 on(b, 'click', function(){
 						  domattr.set(formnode, 'clicked-action',
 										  domattr.get(b,'value'));
 					 });
