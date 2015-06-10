@@ -96,7 +96,7 @@ sub authenticate {
     elsif ($request->{dbh} and !$request->{log_out}){
         print "Content-Type: text/html\n";
         print "Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path\n";
-	    print "Status: 200 Success\n\n";
+	    print "Status: 200 Success\n\nSuccess\n";
         if ($request->{log_out}){
             $request->finalize_request();
         }
