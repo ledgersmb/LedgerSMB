@@ -76,7 +76,7 @@ function(
 
 				on(formnode, 'submit', 
 					function(evt){ 
-						 var method = formnode.method;
+						 var method = domattr.get(formnode,'method');
 						 evt.preventDefault();
 						 var qobj = domform.toQuery(formnode);
 						 qobj = 'action=' 
@@ -87,7 +87,7 @@ function(
 						 }
 						 var url = domattr.get(formnode, 'action');
 						 console.log(url);
-						 if ('GET' == method || 'get' == method){
+						 if ('get' == method.toLowerCase()){
 							  url = url + '?' + qobj;
 							  console.log(url);
 							  xhr(url,
