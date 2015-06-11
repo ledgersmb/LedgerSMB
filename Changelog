@@ -16,6 +16,8 @@ Changelog for 1.4.12
 * Fixed printing of purchase order due to SQL error (bug 1359) (Erik H)
 * Don't show button for dis-allowed action in GL entry (bug 1355) (Erik H)
 * Admin can't reset user's password due to SQL error (bug 1333) (Erik H)
+* Fix dependency listing (include JSON) (bug 1347) (Erik H)
+* make setup.pl generate fewer warnings in the error logs (Erik H)
 
 Erik H is Erik Huelsmann
 
