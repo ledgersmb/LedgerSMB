@@ -29,36 +29,6 @@ use strict;
 
 =over
 
-=item __default
-
-Get the search string, query the database, return the results in a ul/li pair
-
-=cut
-
-sub __default {
-    my ($request) = @_;
-    my $template;
-    my %hits = ();
-    
-    $template = LedgerSMB::Template->new(
-            path => 'UI',
-            template => 'ajax_li',
-	    format => 'HTML',
-    );
-    
-    my $funcname = 'chart_list_search';
-    my %results_hash;
-    my $search_field = $request->{search_field};
-    $search_field =~ s/-/_/g;
-    my @call_args = ($request->{$search_field}, $request->{link_desc});
-    my @results = $request->call_procedure( funcname => $funcname, args => \@call_args, order_by => 'accno' );
-    foreach (@results) { $results_hash{$_->{'accno'}.'--'.$_->{'description'}} = $_->{'accno'}.'--'.$_->{'description'}; 
-    }
-    
-    $request->{results} = \%results_hash;
-    $template->render($request);
-}
-
 =item chart_json
 
 Returns a json array of all accounts
