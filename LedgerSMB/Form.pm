@@ -643,7 +643,7 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
            var lsmbConfig = {dateformat: '$dformat'};
         </script>
        <script type="text/javascript" language="JavaScript" src="UI/lib/dojo/dojo/dojo.js"></script>
-        <script type="text/javascript" language="JavaScript" src="UI/lib/setup.js"></script>
+        <script type="text/javascript" language="JavaScript" src="UI/lib/main.js"></script>
 	<meta name="robots" content="noindex,nofollow" />
         $headeradd
 </head>
