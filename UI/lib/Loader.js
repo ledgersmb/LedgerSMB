@@ -87,25 +87,23 @@ function(
 						 }
 						 var url = domattr.get(formnode, 'action');
 						 console.log(url);
+						 var options = { "handleAs": "text" };
 						 if ('get' == method.toLowerCase()){
 							  url = url + '?' + qobj;
-							  console.log(url);
-							  xhr(url,
-									{"handleAs": "text",
-									}).then(
-										 function(doc){
-											  set_main_div(doc);
-										 });    
 						 } else {
-							  xhr(url,
-									{"handleAs": "text",
-									 method: method,
-									 data: qobj,
-									}).then(
-										 function(doc){
-											  set_main_div(doc);
-										 });
+							  options['method'] = method;
+							  options['data'] = qobj;
 						 }
+						 
+						 xhr(url, options).then(
+							  function(doc){
+									set_main_div(doc);
+							  },
+							  function(err){
+									var d = registry.byId('errorDialog');
+									d.set('content',err.response.data);
+									d.show();
+							  });
 					});
 		  },
 		  rewriteAllFormSubmissions: function() {

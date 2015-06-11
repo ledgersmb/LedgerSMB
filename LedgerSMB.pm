@@ -501,7 +501,7 @@ sub _error {
         delete $self->{pre};
 
         
-        print qq|Content-Type: text/html; charset=utf-8\n\n|;
+        print qq|Status: 500 ISE\nContent-Type: text/html; charset=utf-8\n\n|;
         print "<head><link rel='stylesheet' href='css/$self->{_user}->{stylesheet}' type='text/css'></head>";
         $self->{msg} =~ s/\n/<br \/>\n/;
         print
