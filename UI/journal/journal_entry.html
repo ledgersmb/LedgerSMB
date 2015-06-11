@@ -87,10 +87,9 @@
                                                  	    } 
 			       ?>
 			<?lsmb ELSE ?>
-				  <?lsmb INCLUDE input element_data = {
+				  <?lsmb INCLUDE textarea element_data = {
 						      name = "notes",
 						      value = form.notes,
-						      type = "textarea",
 						      size = "50",
 						      class = 'notes'
 						      id = "not_1"
@@ -214,10 +213,9 @@
 		   </td>
 
 		    <td>
-			  <?lsmb PROCESS input element_data = {
+			  <?lsmb PROCESS textarea element_data = {
 				  value = displayrow.memo
 				  name = "memo_$INDEX"
-				  type = "textarea"
 				  size = 30
 			          id = "mem_$INDEX"
                                      }  ?>
