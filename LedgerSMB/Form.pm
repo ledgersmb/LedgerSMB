@@ -431,6 +431,7 @@ sub _error {
 
         delete $self->{pre};
 
+		  print "Status: 500 ISE\n";
         if ( !$self->{header} ) {
             $self->header;
         }
