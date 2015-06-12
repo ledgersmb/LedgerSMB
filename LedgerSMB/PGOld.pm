@@ -58,5 +58,13 @@ sub _db_array_literal {
     # No longer needed since we require DBD::Pg 2.x
 }
 
+sub merge {
+	 my ($self, $base) = @_;
+	 foreach my $key (keys %$base) {
+		  $self->{$key} = $base->{$key};
+	 }
+	 return $self;
+}
+
 
 1; 
