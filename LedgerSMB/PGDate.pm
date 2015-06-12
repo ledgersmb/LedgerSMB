@@ -135,7 +135,7 @@ sub _parse_string {
 sub from_input{
     my ($self, $input, $has_time) = @_;
     return $input if eval {$input->isa(__PACKAGE__)};
-    return if (!defined $input) || ('' eq $input);
+    #return if (!defined $input) || ('' eq $input);
     $input = undef if $input eq '';
     my $format = $LedgerSMB::App_State::User->{dateformat} || 'yyyy-mm-dd';
     $format ||= 'yyyy-mm-dd';
@@ -156,7 +156,8 @@ used.  If $format is not supplied, the dateformat of the user is used.
 
 sub to_output {
     my ($self) = @_;
-    return undef if !defined $self;
+    #return undef if !defined $self;
+	 return undef if !defined $self->{date};
     my $fmt;
     if (defined $LedgerSMB::App_State::User->{dateformat}){
         $fmt = $LedgerSMB::App_State::User->{dateformat};
