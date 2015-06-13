@@ -1359,6 +1359,17 @@ sub generate_selects {
 				}
 		  }
 	 }
+
+	 # formats
+    $form->{selectformat} = qq|<option value="html">html<option value="csv">csv\n|;
+    if ( ${LedgerSMB::Sysconfig::latex} ) {
+        $form->{selectformat} .= qq|
+            <option value="postscript">|
+				. $LedgerSMB::App_State::Locale->text('Postscript')
+				. qq|<option value="pdf">|
+				. $LedgerSMB::App_State::Locale->text('PDF');
+    }
+
 		  
 }
 

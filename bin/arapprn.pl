@@ -451,20 +451,11 @@ sub payment_selected {
 sub print_options {
 
     if ( $form->{selectlanguage} ) {
-        $form->{"selectlanguage"} =
-          $form->unescape( $form->{"selectlanguage"} );
         $form->{"selectlanguage"} =~ s/ selected//;
         $form->{"selectlanguage"} =~
           s/(<option value="\Q$form->{language_code}\E")/$1 selected/;
-        $lang = qq|<select data-dojo-type="dijit/form/Select" name=language_code>$form->{selectlanguage}</select>
-    <input type=hidden name=selectlanguage value="|
-          . $form->escape( $form->{selectlanguage}, 1 ) . qq|">|;
+        $lang = qq|<select data-dojo-type="dijit/form/Select" name=language_code>$form->{selectlanguage}</select>|;
     }
-
-    $form->{selectformname} = $form->unescape( $form->{selectformname} );
-    $form->{selectformname} =~ s/ selected//;
-    $form->{selectformname} =~
-      s/(<option value="\Q$form->{formname}\E")/$1 selected/;
 
     $type = qq|<select data-dojo-type="dijit/form/Select" name=formname>$form->{selectformname}</select>
   <input type=hidden name=selectformname value="|
@@ -490,9 +481,6 @@ sub print_options {
 
     $format = qq|<select data-dojo-type="dijit/form/Select" name=format>$form->{selectformat}</select>|;
     $format =~ s/(<option value="\Q$form->{format}\E")/$1 selected/;
-    $format .= qq|
-  <input type=hidden name=selectformat value="|
-      . $form->escape( $form->{selectformat}, 1 ) . qq|">|;
     $media .= qq|</select>|;
     $media =~ s/(<option value="\Q$form->{media}\E")/$1 selected/;
 
