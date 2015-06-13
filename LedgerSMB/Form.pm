@@ -1275,7 +1275,7 @@ sub generate_selects {
 				my $value = "$_->{projectnumber}--$_->{id}";
             $form->{selectprojectnumber} .=
 					 # change the format here, then change it below!
-					 qq|<option value="$value"$selected>$_->{projectnumber}</option>\n|;
+					 qq|<option value="$value">$_->{projectnumber}</option>\n|;
         }
 		  if ($form->{rowcount}) {
 				for my $i ( 1 .. $form->{rowcount} ) {
@@ -1349,8 +1349,6 @@ sub generate_selects {
 				$form->{"select$key"} = "";
 				foreach my $ref ( @{ $form->{"$form->{ARAP}_links"}{$key} } ) {
 					 my $value = "$ref->{accno}--$ref->{description}";
-					 my $selected = ($form->{$key} eq $value) ?
-						  ' selected="selected"' : "";
 					 $form->{"select$key"} .=
 						  # change the format here, then change it below too!
 						  qq|<option value="$value">$value</option>\n|;
