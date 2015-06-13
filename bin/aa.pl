@@ -159,12 +159,12 @@ sub edit {
 
     }
 
-	 $form->generate_selects();
     &display_form;
 
 }
 
 sub display_form {
+	 $form->generate_selects(\%myconfig);
     my $invnumber = "sinumber";
     if ( $form->{vc} eq 'vendor' ) {
         $invnumber = "vinumber";
@@ -190,6 +190,12 @@ sub create_links {
         $form->{ARAP} = 'AR';
         $form->{vc}   = 'customer';
     }
+
+	 $form->create_links( module => $form->{ARAP},
+								 myconfig => \%myconfig,
+								 vc => $form->{vc},
+								 billing => $form->{vc} eq 'customer'
+									  && $form->{type} eq 'invoice');
 
     $duedate     = $form->{duedate};
     $crdate	 = $form->{crdate};
@@ -221,14 +227,6 @@ sub create_links {
 
     # Business Reporting Units
     $form->all_business_units;
-
-    if ( @{ $form->{all_language} } ) {
-        $form->{selectlanguage} = "<option></option>\n";
-        for ( @{ $form->{all_language} } ) {
-            $form->{selectlanguage} .=
-              qq|<option value="$_->{code}">$_->{description}</option>\n|;
-        }
-    }
 
     # forex
     $form->{forex} = $form->{exchangerate};
@@ -408,19 +406,6 @@ sub form_header {
     # $locale->text('Add AP Transaction')
     # $locale->text('Edit AP Transaction')
 
-    # set option selected
-    for ( "$form->{ARAP}", "currency" ) {
-        $form->{"select$_"} =~ s/ selected//;
-        $form->{"select$_"} =~
-          s/(<option value="\Q$form->{$_}\E")>\Q$form->{$_}\E/$1 selected>$form->{$_}/;
-    }
-
-    for ( "$form->{vc}", "department", "employee", "formname" ) {
-        $form->{"select$_"} = $form->unescape( $form->{"select$_"} );
-        $form->{"select$_"} =~ s/ selected//;
-        $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected/;
-    }
-
     $form->{selectprojectnumber} =
       $form->unescape( $form->{selectprojectnumber} );
 
@@ -525,8 +510,7 @@ $form->open_status_div . qq|
     $form->hide_form(
         "old$form->{vc}",  "$form->{vc}_id",
         "terms",           "creditlimit",
-        "creditremaining", "selectcurrency",
-        "defaultcurrency", "select$form->{ARAP}_amount",
+        "creditremaining", "defaultcurrency",
         "rowcount"
     );
 
@@ -547,8 +531,6 @@ $form->open_status_div . qq|
 		<th align="right" nowrap>$label</th>
 		<td colspan=3>$name 
                 </td>
-		<input type=hidden name="select$form->{vc}" value="|
-      . $form->escape( $form->{"select$form->{vc}"}, 1 ) . qq|">
 	      </tr>
 	      <tr>
 		<td colspan=3>
@@ -790,8 +772,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     $form->{invtotal} =
       $form->format_amount( \%myconfig, $form->{invtotal}, 2 );
 
-    $form->hide_form( "oldinvtotal", "oldtotalpaid", "taxaccounts",
-        "select$form->{ARAP}" );
+    $form->hide_form( "oldinvtotal", "oldtotalpaid", "taxaccounts" );
 
     print qq|
         <tr>
@@ -905,7 +886,7 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id
 ";
     }
 
-    $form->hide_form( "paidaccounts", "select$form->{ARAP}_paid", 'cash_accno' );
+    $form->hide_form( "paidaccounts", 'cash_accno' );
 
     print qq|
       </table>
