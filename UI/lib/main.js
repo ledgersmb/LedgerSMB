@@ -36,9 +36,17 @@ function SwitchMenu(id) {
 }
 
 function load_link(xhr, href) {
-    xhr(href, {"handlesAs": "text"}).then(function(doc){
-         set_main_div(doc);
-    });
+    xhr(href, {"handlesAs": "text"})
+		  .then(function(doc){
+				set_main_div(doc);
+		  },
+		  function(err){
+				require(['dijit/registry'],function(registry){
+					 var d = registry.byId('errorDialog');
+					 d.set('content',err.response.data);
+					 d.show();
+				});
+		  });
 }
 
 function setup_dojo() {
