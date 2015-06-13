@@ -73,12 +73,11 @@
 		  <td>
 			<?lsmb IF displayrow.accnoset == 0 ?>
               			<?lsmb PROCESS input element_data = {
-                                     type = 'text'
-		                     name = "accno_$INDEX"
-		                     initial_value = displayrow.accno
-		                     text_attr = 'accno'
-		                     value_attr = 'accno'
-                                     class = 'AccountBox'
+                            type = 'text'
+		                      name = "accno_$INDEX"
+		                      initial_value = displayrow.accno
+                            class = 'AccountBox'
+									 "data-dojo-type" = "lsmb/accounts/AccountSelector"
 		              } ?> 
 			   
 			  <?lsmb ELSE ?>
