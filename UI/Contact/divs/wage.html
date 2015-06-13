@@ -25,12 +25,14 @@ PROCESS dynatable
              value_attr = 'id'
               text_attr = 'label'
                    name = 'type_id'
+			            id = 'wage_type_id'
 } ?></td>
 <td><?lsmb PROCESS input element_data = {
               name = 'rate'
              value = rate
              class = 'number'
               type = 'text'
+			       id = 'wage_rate'
 } ?></td>
 <?lsmb PROCESS input element_data = { 
           name = 'entity_id'
@@ -52,12 +54,14 @@ PROCESS dynatable
              value_attr = 'id'
               text_attr = 'label'
                    name = 'type_id'
+			            id = 'deduction_type_id'
 } ?></td>
 <td><?lsmb PROCESS input element_data = {
               name = 'rate'
              value = rate
              class = 'number'
               type = 'text'
+                id = 'deduction_rate'
 } ?></td>
 <?lsmb PROCESS input element_data = { 
           name = 'entity_id'

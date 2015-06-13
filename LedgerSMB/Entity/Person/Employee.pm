@@ -69,7 +69,7 @@ Organizational role.  Is manager, user, or administrator
 
 =cut
 
-has role => (is => 'rw', isa => 'Str', required => 0);
+has role => (is => 'rw', isa => 'Maybe[Str]', required => 0);
 
 =item is_manager
 
@@ -101,7 +101,7 @@ Entity id of manager
 
 =cut
 
-has manager_id => (is => 'rw', isa => 'Int', required => 0);
+has manager_id => (is => 'rw', isa => 'Maybe[Int]', required => 0);
 
 =item employeenumber
 

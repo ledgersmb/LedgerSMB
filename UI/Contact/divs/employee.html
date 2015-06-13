@@ -5,6 +5,7 @@
      >
   <div class="listtop"><strong><?lsmb text("$operation Employee") ?></strong></div>
 <form name="hr" action="<?lsmb request.script ?>" method="post">
+<div data-dojo-type="lsmb/lib/TabularForm" data-dojo-props="cols:3">
 <?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "target_div"
@@ -188,6 +189,7 @@ default_values = [employee.manager_id]
 	type = "text"
 	size = 10
 } # ' ?>
+</div>
 </div>
 </div>
 <div>
