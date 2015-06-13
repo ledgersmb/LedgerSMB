@@ -1120,7 +1120,7 @@ sub update {
           : $form->{duedate};
         $form->{oldtransdate} = $form->{transdate};
         
-	&rebuild_vc( customer, AR, $form->{transdate}, 1 ) if !$newname;
+		  &rebuild_vc( customer, AR, $form->{transdate}, 1 ) if !$newname;
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};
@@ -1135,13 +1135,6 @@ sub update {
               );
         }
 
-        $form->{selectemployee} = "";
-        if ( @{ $form->{all_employee} } ) {
-            for ( @{ $form->{all_employee} } ) {
-                $form->{selectemployee} .=
-                  qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
-            }
-        }
     }
 
     if ( $form->{currency} ne $form->{oldcurrency} ) {
@@ -1193,13 +1186,9 @@ sub update {
 
     $exchangerate = ( $form->{exchangerate} ) ? $form->{exchangerate} : 1;
 
-    for (qw(partsgroup projectnumber)) {
-        $form->{"select$_"} = $form->unescape( $form->{"select$_"} )
-          if $form->{"select$_"};
-    }
-
     for my $i ( 1 .. $form->{rowcount} 
-                   + $LedgerSMB::Company_Config::settings->{min_empty}){
+                   + $LedgerSMB::Company_Config::settings->{min_empty}
+		  ){
         $form->{rowcount} = $i;
         next if $form->{"id_$i"};
         if (   ( $form->{"partnumber_$i"} eq "" )
