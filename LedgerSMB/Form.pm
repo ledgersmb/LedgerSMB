@@ -1273,11 +1273,18 @@ sub generate_selects {
 		  $form->{selectprojectnumber} = "";
         for ( @{ $form->{all_project} } ) {
 				my $value = "$_->{projectnumber}--$_->{id}";
-				my $selected = ($form->{projectnumber} eq $value) ?
-					 ' selected="selected"' : "";
             $form->{selectprojectnumber} .=
+					 # change the format here, then change it below!
 					 qq|<option value="$value"$selected>$_->{projectnumber}</option>\n|;
         }
+		  if ($form->{rowcount}) {
+				for my $i ( 1 .. $form->{rowcount} ) {
+					 $form->{"selectprojectnumber_$i"} = 
+						  $form->{"selectprojectnumber"};
+					 $form->{"selectprojectnumber_$i"} =~
+						  s/(value="\Q$form->{"projectnumber_$i"}\E")/$1 selected="selected"/;
+				}
+		  }
     }
 
     # departments
@@ -1328,6 +1335,7 @@ sub generate_selects {
 	 }
 
 	 # AR/AP links
+	 # AR_amount_*, AP_amount_*, 
 	 if (defined $form->{ARAP}) {
 		  $form->create_links( module => $form->{ARAP},
 									  myconfig => $myconfig,
@@ -1344,7 +1352,17 @@ sub generate_selects {
 					 my $selected = ($form->{$key} eq $value) ?
 						  ' selected="selected"' : "";
 					 $form->{"select$key"} .=
+						  # change the format here, then change it below too!
 						  qq|<option value="$value">$value</option>\n|;
+				}
+		  }
+
+		  if ($form->{rowcount}) {
+				for my $i ( 1 .. $form->{rowcount} ) {
+					 $form->{"select$form->{ARAP}_amount_$i"} = 
+						  $form->{"select$form->{ARAP}_amount"};
+					 $form->{"select$form->{ARAP}_amount_$i"} =~
+						  s/(value="\Q$form->{"$form->{ARAP}_amount_$i"}\E")/$1 selected="selected"/;
 				}
 		  }
 	 }

@@ -641,8 +641,6 @@ $form->open_status_div . qq|
       </table>
     </td>
   </tr>
-  <input type=hidden name=selectprojectnumber value="|
-      . $form->escape( $form->{selectprojectnumber}, 1 ) . qq|">
   <tr>
     <td>
       <table>
@@ -663,27 +661,18 @@ $form->open_status_div . qq|
     print qq|
 	</tr>
 |;
-    # Building buisness unit dropdowns
 
 
     # Display rows
 
     for $i ( 1 .. $form->{rowcount} + $min_lines) {
 
-        $selectamount = $form->{"select$form->{ARAP}_amount"};
-        $selectamount =~
-s/option>\Q$form->{"$form->{ARAP}_amount_$i"}\E/option selected>$form->{"$form->{ARAP}_amount_$i"}/;
-
-        $selectprojectnumber = $form->{selectprojectnumber};
-        $selectprojectnumber =~
-          s/(<option value="\Q$form->{"projectnumber_$i"}\E")/$1 selected/;
-
         # format amounts
         $form->{"amount_$i"} =
           $form->format_amount( \%myconfig,$form->{"amount_$i"}, 2 );
 
         $project = qq|
-	  <td align=right><select data-dojo-type="dijit/form/Select" name="projectnumber_$i">$selectprojectnumber</select></td>
+	  <td align=right><select data-dojo-type="dijit/form/Select" name="projectnumber_$i">$form->{"selectprojectnumber_$i}</select></td>
 | if $form->{selectprojectnumber};
 
         if ( ( $rows = $form->numtextrows( $form->{"description_$i"}, 40 ) ) >
@@ -709,7 +698,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
 	<tr valign=top>
 	  <td><input data-dojo-type="dijit/form/TextBox" name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
 	  <td></td>
-	  <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_amount_$i">$selectamount</select></td>
+	  <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_amount_$i">$form->{"select$form->{ARAP}_amount_$i"}</select></td>
 	  $description
           $taxformcheck
 	  $project|;
