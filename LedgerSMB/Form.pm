@@ -1279,19 +1279,6 @@ sub generate_selects {
         }
     }
 
-    # vendors
-    $form->{selectvendor} = "";
-    if ( $form->{all_vendor} && @{ $form->{all_vendor} } ) {
-		  $form->{selectvendor} = "";
-        for ( @{ $form->{all_vendor} } ) {
-				my $value = "$_->{name}--$_->{id}";
-				my $selected = ($form->{vendor_id} eq $value) ?
-					 ' selected="selected"' : "";
-            $form->{selectvendor} .=
-              qq|<option value="$value"$selected>$_->{name}</option>\n|;
-        }
-    }
-
     # departments
     if ( $form->{all_department} && @{ $form->{all_department} } ) {
         $form->{selectdepartment} = "<option></option>\n";
@@ -1327,19 +1314,19 @@ sub generate_selects {
 
     # customers/vendors
 	 if ($form->{vc}) {
-		  $form->{"select$form->{vc}"} = "";
 		  if ( $form->{"all_$form->{vc}"} && @{ $form->{"all_$form->{vc}"} } ) {
-				$form->{ $form->{vc} } =
-					 qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|
-					 unless $form->{ $form->{vc} } =~ /--$form->{"$form->{vc}_id"}$/;
 				$form->{"select$form->{vc}"} = "";
 				for ( @{ $form->{"all_$form->{vc}"} } ) {
+					 my $value = "$_->{name}--$_->{id}";
+					 my $selected = ($form->{$form->{vc}} eq $value) ?
+						  ' selected="selected"' : "";
 					 $form->{"select$form->{vc}"} .=
-						  qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
+						  qq|<option value="$value"$selected>$_->{name}</option>\n|;
 				}
 		  }
 	 }
 
+	 # AR/AP links
 	 if (defined $form->{ARAP}) {
 		  $form->create_links( module => $form->{ARAP},
 									  myconfig => $myconfig,

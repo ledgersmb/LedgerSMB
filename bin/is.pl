@@ -154,17 +154,6 @@ sub invoice_links {
            'No currencies defined.  Please set these up under System/Defaults.'
         ));
     }
-    @curr = split /:/, $form->{currencies};
-    $form->{defaultcurrency} = $curr[0];
-    chomp $form->{defaultcurrency};
-
-    for (@curr) { $form->{selectcurrency} .= "<option value=\"$_\">$_</option>\n" }
-
-    if ( @{ $form->{all_customer} } ) {
-        unless ( $form->{customer_id} ) {
-            $form->{customer_id} = $form->{all_customer}->[0]->{id};
-        }
-    }
 
     AA->get_name( \%myconfig, \%$form );
     delete $form->{notes};
@@ -174,82 +163,16 @@ sub invoice_links {
 
     $form->get_partsgroup( \%myconfig, { all => 1} );
 
-    if ( @{ $form->{all_partsgroup} } ) {
-        $form->{selectpartsgroup} = "<option>\n";
-        foreach $ref ( @{ $form->{all_partsgroup} } ) {
-            if ( $ref->{translation} ) {
-                $form->{selectpartsgroup} .=
-qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{translation}\n|;
-            }
-            else {
-                $form->{selectpartsgroup} .=
-qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
-            }
-        }
-    }
-
-    if ( @{ $form->{all_project} } ) {
-        $form->{selectprojectnumber} = "<option>\n";
-        for ( @{ $form->{all_project} } ) {
-            $form->{selectprojectnumber} .=
-qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
-        }
-    }
-
     $form->{oldcustomer}  = "$form->{customer}--$form->{customer_id}";
     $form->{oldtransdate} = $form->{transdate};
 
-    $form->{selectcustomer} = "";
-    if ( @{ $form->{all_customer} } ) {
-        $form->{customer} = "$form->{customer}--$form->{customer_id}";
-        for ( @{ $form->{all_customer} } ) {
-            $form->{selectcustomer} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
-        }
-    }
-
-    # departments
-    if ( @{ $form->{all_department} } ) {
-        $form->{selectdepartment} = "<option>\n";
-        $form->{department} = "$form->{department}--$form->{department_id}"
-          if $form->{department_id};
-
-        for ( @{ $form->{all_department} } ) {
-            $form->{selectdepartment} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-    }
-
     $form->{employee} = "$form->{employee}--$form->{employee_id}";
-
-    # sales staff
-    if ( @{ $form->{all_employee} } ) {
-        $form->{selectemployee} = "";
-        for ( @{ $form->{all_employee} } ) {
-            $form->{selectemployee} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
-        }
-    }
-
-    if ( @{ $form->{all_language} } ) {
-        $form->{selectlanguage} = "<option>\n";
-        for ( @{ $form->{all_language} } ) {
-            $form->{selectlanguage} .=
-              qq|<option value="$_->{code}">$_->{description}\n|;
-        }
-    }
 
     # forex
     $form->{forex} = $form->{exchangerate};
     $exchangerate = ( $form->{exchangerate} ) ? $form->{exchangerate} : 1;
 
     foreach $key ( keys %{ $form->{AR_links} } ) {
-
-        $form->{"select$key"} = "";
-        foreach $ref ( @{ $form->{AR_links}{$key} } ) {
-            $form->{"select$key"} .=
-              "<option>$ref->{accno}--$ref->{description}\n";
-        }
 
         if ( $key eq "AR_paid" ) {
             for $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {
@@ -368,20 +291,6 @@ sub prepare_invoice {
 sub form_header {
     $form->{nextsub} = 'update';
 
-    # set option selected
-    for (qw(AR currency)) {
-        $form->{"select$_"} =~ s/ selected//;
-        $form->{"select$_"} =~
-          s/option>\Q$form->{$_}\E/option selected>$form->{$_}/;
-    }
-
-    for (qw(customer department employee)) {
-        $form->{"select$_"} = $form->unescape( $form->{"select$_"} );
-        $form->{"select$_"} =~ s/ selected//;
-        $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected="selected"/;
-    }
-
-
     $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
     $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
 
@@ -408,9 +317,7 @@ sub form_header {
 |;
 
     if ( $form->{selectcustomer} ) {
-        $customer = qq|<select data-dojo-type="dijit/form/Select" name="customer">$form->{selectcustomer}</select>
-                   <input type="hidden" name="selectcustomer" value="|
-          . $form->escape( $form->{selectcustomer}, 1 ) . qq|">|;
+        $customer = qq|<select data-dojo-type="dijit/form/Select" name="customer">$form->{selectcustomer}</select>|;
     }
     else {
         $customer = qq|<input data-dojo-type="dijit/form/TextBox" name="customer" value="$form->{customer}" size="35"> 
@@ -423,8 +330,6 @@ sub form_header {
               <tr>
 	        <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
 		<td colspan="3"><select data-dojo-type="dijit/form/Select" name="department">$form->{selectdepartment}</select>
-		<input type="hidden" name="selectdepartment" value="|
-      . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
 		</td>
 	      </tr>
 | if $form->{selectdepartment};
@@ -453,8 +358,6 @@ sub form_header {
 	      <tr>
 	        <th align=right nowrap>| . $locale->text('Salesperson') . qq|</th>
 		<td><select data-dojo-type="dijit/form/Select" name="employee">$form->{selectemployee}</select></td>
-		<input type=hidden name="selectemployee" value="|
-      . $form->escape( $form->{selectemployee}, 1 ) . qq|">
 	      </tr>
 | if $form->{selectemployee};
 
@@ -578,7 +481,6 @@ function on_return_submit(event){
 	      <tr>
 		<th align="right" nowrap>| . $locale->text('Record in') . qq|</th>
 		<td colspan="3"><select data-dojo-type="dijit/form/Select" name="AR">$form->{selectAR}</select></td>
-		<input type="hidden" name="selectAR" value="$form->{selectAR}">
 	      </tr>
 	      $department
 	      $exchangerate
@@ -1070,7 +972,7 @@ qq|<td align="center"><input data-dojo-type="dijit/form/TextBox" name="memo_$i" 
     }
 
     $form->{oldtotalpaid} = $totalpaid;
-    $form->hide_form(qw(paidaccounts selectAR_paid oldinvtotal oldtotalpaid));
+    $form->hide_form(qw(paidaccounts oldinvtotal oldtotalpaid));
 
     print qq|
       </table>
