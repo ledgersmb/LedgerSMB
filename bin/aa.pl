@@ -195,7 +195,8 @@ sub create_links {
 								 myconfig => \%myconfig,
 								 vc => $form->{vc},
 								 billing => $form->{vc} eq 'customer'
-									  && $form->{type} eq 'invoice');
+									  && $form->{type} eq 'invoice')
+		  unless defined $form->{"$form->{ARAP}_links"};
 
     $duedate     = $form->{duedate};
     $crdate	 = $form->{crdate};

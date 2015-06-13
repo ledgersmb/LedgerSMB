@@ -1345,7 +1345,8 @@ sub generate_selects {
 									  myconfig => $myconfig,
 									  vc => $form->{vc},
 									  billing => $form->{vc} eq 'customer'
-									  && $form->{type} eq 'invoice');
+									  && $form->{type} eq 'invoice')
+				unless defined $form->{"$form->{ARAP}_links"};
 
 		  foreach my $key ( keys %{ $form->{"$form->{ARAP}_links"} } ) {
 
