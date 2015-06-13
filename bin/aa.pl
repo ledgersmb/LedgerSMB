@@ -48,6 +48,8 @@ package lsmb_legacy;
 use LedgerSMB::Tax;
 use LedgerSMB::Company_Config;
 
+use Data::Dumper;
+
 require 'bin/bridge.pl'; # needed for voucher dispatches
 # any custom scripts for this one
 if ( -f "bin/custom/aa.pl" ) {
@@ -189,12 +191,6 @@ sub create_links {
         $form->{vc}   = 'customer';
     }
 
-    $form->create_links( module => $form->{ARAP},
-			 myconfig => \%myconfig,
-			 vc => $form->{vc},
-			 billing => $form->{vc} eq 'customer'
-			            && $form->{type} eq 'invoice');
-
     $duedate     = $form->{duedate};
     $crdate	 = $form->{crdate};
 
@@ -223,28 +219,8 @@ sub create_links {
     $form->{"old$form->{vc}"} = $form->{$form->{vc}};
     $form->{oldtransdate} = $form->{transdate};
 
-    # customers/vendors
-    $form->{"select$form->{vc}"} = "";
-    if ( @{ $form->{"all_$form->{vc}"} } ) {
-        $form->{ $form->{vc} } =
-          qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|
-          unless $form->{ $form->{vc} } =~ /--$form->{"$form->{vc}_id"}$/;
-        for ( @{ $form->{"all_$form->{vc}"} } ) {
-            $form->{"select$form->{vc}"} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
-        }
-    }
     # Business Reporting Units
     $form->all_business_units;
-
-    # sales staff
-    if ( @{ $form->{all_employee} } ) {
-        $form->{selectemployee} = "";
-        for ( @{ $form->{all_employee} } ) {
-            $form->{selectemployee} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
-        }
-    }
 
     if ( @{ $form->{all_language} } ) {
         $form->{selectlanguage} = "<option></option>\n";
@@ -264,14 +240,9 @@ sub create_links {
     #$ml        = ( $form->{ARAP} eq 'AR' ) ? 1 : -1;
     $ml        = new Math::BigFloat( ( $form->{ARAP} eq 'AR' ) ? 1 : -1);
 
+
     foreach $key ( keys %{ $form->{"$form->{ARAP}_links"} } ) {
 
-
-        $form->{"select$key"} = "";
-        foreach $ref ( @{ $form->{"$form->{ARAP}_links"}{$key} } ) {
-            $form->{"select$key"} .=
-              "<option value=\"$ref->{accno}--$ref->{description}\">$ref->{accno}--$ref->{description}</option>\n";
-        }
 
         # if there is a value we have an old entry
         for $i ( 1 .. scalar @{ $form->{acc_trans}{$key} } ) {

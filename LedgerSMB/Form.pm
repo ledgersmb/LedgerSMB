@@ -1215,12 +1215,13 @@ qq|<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name=
 }
 
 
-=item $form->generate_selects();
+=item $form->generate_selects(\%myconfig);
 
 =cut
 
 sub generate_selects {
-	 my ($form) = @_;
+	 my ($form, $myconfig) = @_;
+
 
     # currencies
 	 if (!$form->{currencies}) {
@@ -1339,6 +1340,26 @@ sub generate_selects {
 		  }
 	 }
 
+	 if (defined $form->{ARAP}) {
+		  $form->create_links( module => $form->{ARAP},
+									  myconfig => $myconfig,
+									  vc => $form->{vc},
+									  billing => $form->{vc} eq 'customer'
+									  && $form->{type} eq 'invoice');
+
+		  foreach my $key ( keys %{ $form->{"$form->{ARAP}_links"} } ) {
+
+				$form->{"select$key"} = "";
+				foreach my $ref ( @{ $form->{"$form->{ARAP}_links"}{$key} } ) {
+					 my $value = "$ref->{accno}--$ref->{description}";
+					 my $selected = ($form->{$key} eq $value) ?
+						  ' selected="selected"' : "";
+					 $form->{"select$key"} .=
+						  qq|<option value="$value">$value</option>\n|;
+				}
+		  }
+	 }
+		  
 }
 
 =item test_should_get_images

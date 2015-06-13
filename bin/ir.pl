@@ -250,7 +250,7 @@ sub invoice_links {
         $form->{readonly} = 1 if $myconfig{acs} =~ /AP--Vendor Invoice/;
     }
 
-	 $form->generate_selects;
+	 $form->generate_selects(\%myconfig);
 
 }
 
@@ -327,12 +327,6 @@ sub form_header {
     }
 
     if ( $form->{selectlanguage} ) {
-        $form->{"selectlanguage"} =
-          $form->unescape( $form->{"selectlanguage"} );
-        $form->{"selectlanguage"} =~ s/ selected//;
-        $form->{"selectlanguage"} =~
-          s/(<option value="\Q$form->{language_code}\E")/$1 selected/;
-
         $lang = qq|
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Language') . qq|</th>
@@ -487,14 +481,12 @@ function on_return_submit(event){
               </tr>
 		|;
 	       }
-	 $form->{selectAP} = $form->escape($form->{selectAP});
 	print qq|
 		  </table>
 		</td>
 	      <tr>
 		<th align=right>| . $locale->text('Record in') . qq|</th>
 		<td colspan=3><select data-dojo-type="dijit/form/Select" name=AP>$form->{selectAP}</select></td>
-		<input type=hidden name=selectAP value="$form->{selectAP}">
 	      </tr>
               $department
 	      $exchangerate
@@ -938,7 +930,7 @@ qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" si
     }
 
     $form->{oldtotalpaid} = $totalpaid;
-    $form->hide_form(qw(paidaccounts selectAP_paid oldinvtotal oldtotalpaid));
+    $form->hide_form(qw(paidaccounts oldinvtotal oldtotalpaid));
 
     print qq|
       </table>
@@ -1134,7 +1126,7 @@ sub import_text {
 }
 
 sub update {
-	 $form->generate_selects();
+	 $form->{ARAP} = 'AP';
     if ( $form->{import_text} ) {
         &import_text;
     }
