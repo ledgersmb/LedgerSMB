@@ -1235,8 +1235,8 @@ sub generate_selects {
 		  my @curr = keys %curr; 
  
 		  $form->{defaultcurrency} = $curr[0];
-		  chomp $form->{defaultcurrency};
-	 
+		  $form->{currency} = $form->{defaultcurrency}
+		       unless $form->{currency};	 
 		  $form->{selectcurrency} = "";
 		  for (@curr) {
 				my $selected =
@@ -1358,7 +1358,18 @@ sub generate_selects {
 				. $LedgerSMB::App_State::Locale->text('PDF');
     }
 
-		  
+    # warehouse
+    if ( $form->{all_warehouse} &&  @{ $form->{all_warehouse} } ) {
+        $form->{selectwarehouse} = "<option></option>\n";
+        for ( @{ $form->{all_warehouse} } ) {
+				my $value = "$_->{description}--$_->{id}";
+				my $selected = ($form->{warehouse} eq $value) ?
+					 ' selected="selected"' : "";
+            $form->{selectwarehouse} .=
+					 qq|<option value="$value"$selected>$_->{description}\n|;
+        }
+    }
+
 }
 
 =item test_should_get_images

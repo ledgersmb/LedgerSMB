@@ -122,42 +122,12 @@ sub order_links {
 				 ( $form->{vc} eq 'customer' ) ? "AR" : "AP",
 				 undef, $form->{transdate}, 1 );
 
-    # currencies
-    @curr = split /:/, $form->{currencies};
-    $form->{defaultcurrency} = $curr[0];
-    chomp $form->{defaultcurrency};
-    $form->{currency} = $form->{defaultcurrency} unless $form->{currency};
-
-    for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
-
     $form->{oldlanguage_code} = $form->{language_code};
 
     $l{language_code} = $form->{language_code};
     $l{searchitems} = 'nolabor' if $form->{vc} eq 'customer';
 
     $form->get_partsgroup( \%myconfig, \%l );
-
-    if ( @{ $form->{all_partsgroup} } ) {
-        $form->{selectpartsgroup} = "<option>\n";
-        foreach $ref ( @{ $form->{all_partsgroup} } ) {
-            if ( $ref->{translation} ) {
-                $form->{selectpartsgroup} .=
-qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{translation}\n|;
-            }
-            else {
-                $form->{selectpartsgroup} .=
-qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
-            }
-        }
-    }
-
-    if ( @{ $form->{all_project} } ) {
-        $form->{selectprojectnumber} = "<option>\n";
-        for ( @{ $form->{all_project} } ) {
-            $form->{selectprojectnumber} .=
-qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
-        }
-    }
 
     for (qw(terms taxincluded)) { $temp{$_} = $form->{$_} }
     $form->{shipto} = 1 if $form->{id};
@@ -173,36 +143,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
     $form->{"old$form->{vc}"} =
       qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|;
 
-    # departments
-    if ( @{ $form->{all_department} } ) {
-        $form->{selectdepartment} = "<option>\n";
-        $form->{department} = "$form->{department}--$form->{department_id}"
-          if $form->{department_id};
-
-        for ( @{ $form->{all_department} } ) {
-            $form->{selectdepartment} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-    }
-
     $form->{employee} = "$form->{employee}--$form->{employee_id}";
-
-    # sales staff
-    if ( @{ $form->{all_employee} } ) {
-        $form->{selectemployee} = "";
-        for ( @{ $form->{all_employee} } ) {
-            $form->{selectemployee} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
-        }
-    }
-
-    if ( @{ $form->{all_language} } ) {
-        $form->{selectlanguage} = "<option>\n";
-        for ( @{ $form->{all_language} } ) {
-            $form->{selectlanguage} .=
-              qq|<option value="$_->{code}">$_->{description}\n|;
-        }
-    }
 
     # forex
     $form->{forex} = $form->{exchangerate};
@@ -373,17 +314,6 @@ sub form_header {
 |;
     }
 
-    # set option selected
-    $form->{selectcurrency} =~ s/ selected//;
-    $form->{selectcurrency} =~
-      s/option>\Q$form->{currency}\E/option selected>$form->{currency}/;
-
-    for ( "$form->{vc}", "department", "employee" ) {
-        $form->{"select$_"} = $form->unescape( $form->{"select$_"} );
-        $form->{"select$_"} =~ s/ selected//;
-        $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected/;
-    }
-
     $form->{exchangerate} =
       $form->format_amount( \%myconfig, $form->{exchangerate} );
 
@@ -392,10 +322,6 @@ sub form_header {
                 <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
 		<td><select data-dojo-type="dijit/form/Select" name=currency>$form->{selectcurrency}</select></td> |
       if $form->{defaultcurrency};
-    $exchangerate .= qq|
-                <input type=hidden name=selectcurrency value="$form->{selectcurrency}">
-		<input type=hidden name=defaultcurrency value=$form->{defaultcurrency}>
-|;
 
     if (   $form->{defaultcurrency}
         && $form->{currency} ne $form->{defaultcurrency} )
@@ -559,9 +485,7 @@ sub form_header {
 <input type=hidden name=oldtransdate value=$form->{oldtransdate}>|;
 
     if ( $form->{"select$form->{vc}"} ) {
-        $vc = qq|<select data-dojo-type="dijit/form/Select" name=$form->{vc}>$form->{"select$form->{vc}"}</select>
-             <input type=hidden name="select$form->{vc}" value="|
-          . $form->escape( $form->{"select$form->{vc}"}, 1 ) . qq|">|;
+        $vc = qq|<select data-dojo-type="dijit/form/Select" name=$form->{vc}>$form->{"select$form->{vc}"}</select>|;
     }
     else {
         if ($form->{vc} eq 'vendor'){
@@ -579,8 +503,6 @@ sub form_header {
               <tr class="department-row">
 	        <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
 		<td colspan=3><select data-dojo-type="dijit/form/Select" name=department>$form->{selectdepartment}</select>
-		<input type=hidden name=selectdepartment value="|
-      . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
 		</td>
 	      </tr>
 | if $form->{selectdepartment};
@@ -595,8 +517,6 @@ sub form_header {
  	      <tr class="employee-row">
 	        <th align=right nowrap>| . $locale->text('Salesperson') . qq|</th>
 		<td><select data-dojo-type="dijit/form/Select" name=employee>$form->{selectemployee}</select></td>
-		<input type=hidden name=selectemployee value="|
-              . $form->escape( $form->{selectemployee}, 1 ) . qq|"
 	      </tr>
 |;
         }
@@ -607,8 +527,6 @@ sub form_header {
  	      <tr class="employee-row">
 	        <th align=right nowrap>| . $locale->text('Employee') . qq|</th>
 		<td><select data-dojo-type="dijit/form/Select" name=employee>$form->{selectemployee}</select></td>
-		<input type=hidden name=selectemployee value="|
-              . $form->escape( $form->{selectemployee}, 1 ) . qq|"
 	      </tr>
 |;
         }
@@ -1085,14 +1003,6 @@ sub update {
                     )
                 )
               );
-        }
-
-        $form->{selectemployee} = "";
-        if ( @{ $form->{all_employee} } ) {
-            for ( @{ $form->{all_employee} } ) {
-                $form->{selectemployee} .=
-                  qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
-            }
         }
     }
 
@@ -1765,22 +1675,6 @@ sub ship_receive {
 
     OE->get_warehouses( \%myconfig, \%$form );
 
-    # warehouse
-    if ( @{ $form->{all_warehouse} } ) {
-        $form->{selectwarehouse} = "<option>\n";
-
-        for ( @{ $form->{all_warehouse} } ) {
-            $form->{selectwarehouse} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-
-        if ( $form->{warehouse} ) {
-            $form->{selectwarehouse} = qq|<option value="$form->{warehouse}">|;
-            $form->{warehouse} =~ s/--.*//;
-            $form->{selectwarehouse} .= $form->{warehouse};
-        }
-    }
-
     $form->{shippingdate} = $form->current_date( \%myconfig );
     $form->{"$form->{vc}"} =~ s/--.*//;
     $form->{"old$form->{vc}"} =
@@ -1824,6 +1718,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
 }
 
 sub display_ship_receive {
+	 $form->generate_selects(\%myconfig);
 
     $vclabel = ucfirst $form->{vc};
     $vclabel = $locale->text($vclabel);
@@ -1839,19 +1734,10 @@ sub display_ship_receive {
         $shipped = $locale->text('Date Received');
     }
 
-    # set option selected
-    for (qw(warehouse employee)) {
-        $form->{"select$_"} = $form->unescape( $form->{"select$_"} );
-        $form->{"select$_"} =~ s/ selected//;
-        $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected/;
-    }
-
     $warehouse = qq|
 	      <tr>
 		<th align=right>| . $locale->text('Warehouse') . qq|</th>
 		<td><select data-dojo-type="dijit/form/Select" name=warehouse>$form->{selectwarehouse}</select></td>
-		<input type=hidden name=selectwarehouse value="|
-      . $form->escape( $form->{selectwarehouse}, 1 ) . qq|">
 	      </tr>
 | if $form->{selectwarehouse};
 
@@ -2128,28 +2014,13 @@ sub search_transfer {
     OE->get_warehouses( \%myconfig, \%$form );
 
     # warehouse
-    if ( @{ $form->{all_warehouse} } ) {
-        $form->{selectwarehouse} = "<option>\n";
-        $form->{warehouse}       = qq|$form->{warehouse}--$form->{warehouse_id}|
-          if $form->{warehouse_id};
-
-        for ( @{ $form->{all_warehouse} } ) {
-            $form->{selectwarehouse} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-    }
-    else {
+    if ( ! @{ $form->{all_warehouse} } ) {
         $form->error( $locale->text('Nothing to transfer!') );
     }
 
     $form->get_partsgroup( \%myconfig, { searchitems => 'part' } );
-    if ( @{ $form->{all_partsgroup} } ) {
-        $form->{selectpartsgroup} = "<option>\n";
-        for ( @{ $form->{all_partsgroup} } ) {
-            $form->{selectpartsgroup} .=
-              qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}\n|;
-        }
-    }
+
+	 $form->generate_selects();
 
     $form->{title} = $locale->text('Transfer Inventory');
 
