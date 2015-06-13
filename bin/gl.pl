@@ -420,7 +420,7 @@ sub display_row
 	$temphash1->{accnoset}=1;
         $temphash1->{projectset}=1;
         $temphash1->{fx_transactionset}=1;
-	if (!defined $form->{"accno_$i"})
+	if (!defined $form->{"accno_$i"} || ! $form->{"accno_$i"})
 	{
 			      $temphash1->{accnoset}=0;   #use  @{ $form->{all_accno} }
 			      $temphash1->{projectset}=0; #use  @{ $form->{all_project} }
