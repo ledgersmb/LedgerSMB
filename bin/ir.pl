@@ -164,17 +164,12 @@ sub invoice_links {
 			 billing => 0,
 			 job => 1 );
 
-    # currencies
     if (!$form->{currencies}){
         $form->error($locale->text(
-           'No currencies defined.  Please set these up under System/Defaults.'
-        ));
+			  'No currencies defined.  Please set these up under System/Defaults.'
+							));
     }
-    @curr = split /:/, $form->{currencies};
-    $form->{defaultcurrency} = $curr[0];
-    chomp $form->{defaultcurrency};
-
-    for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
+ 
 
     if ( @{ $form->{all_vendor} } ) {
         unless ( $form->{vendor_id} ) {
@@ -190,60 +185,14 @@ sub invoice_links {
 
     $form->get_partsgroup( \%myconfig,
         { language_code => $form->{language_code} } );
-    if ( @{ $form->{all_partsgroup} } ) {
-        $form->{selectpartsgroup} = "<option>\n";
-        foreach $ref ( @{ $form->{all_partsgroup} } ) {
-            if ( $ref->{translation} ) {
-                $form->{selectpartsgroup} .=
-qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{translation}\n|;
-            }
-            else {
-                $form->{selectpartsgroup} .=
-qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
-            }
-        }
-    }
 
-    if ( @{ $form->{all_project} } ) {
-        $form->{selectprojectnumber} = "<option>\n";
-        for ( @{ $form->{all_project} } ) {
-            $form->{selectprojectnumber} .=
-qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
-        }
-    }
+    if ( $form->{all_department} && @{ $form->{all_department} } ) {
+        $form->{department} = "$form->{department}--$form->{department_id}"
+          if $form->{department_id};
+	 }
 
     $form->{oldvendor}    = "$form->{vendor}--$form->{vendor_id}";
     $form->{oldtransdate} = $form->{transdate};
-
-    # vendors
-    $form->{selectvendor} = "";
-    if ( @{ $form->{all_vendor} } ) {
-        $form->{vendor} = "$form->{vendor}--$form->{vendor_id}";
-        for ( @{ $form->{all_vendor} } ) {
-            $form->{selectvendor} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
-        }
-    }
-
-    # departments
-    if ( @{ $form->{all_department} } ) {
-        $form->{selectdepartment} = "<option>\n";
-        $form->{department} = "$form->{department}--$form->{department_id}"
-          if $form->{department_id};
-
-        for ( @{ $form->{all_department} } ) {
-            $form->{selectdepartment} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-    }
-
-    if ( @{ $form->{all_language} } ) {
-        $form->{selectlanguage} = "<option>\n";
-        for ( @{ $form->{all_language} } ) {
-            $form->{selectlanguage} .=
-              qq|<option value="$_->{code}">$_->{description}\n|;
-        }
-    }
 
     # forex
     $form->{forex} = $form->{exchangerate};
@@ -254,7 +203,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
         $form->{"select$key"} = "";
         foreach $ref ( @{ $form->{AP_links}{$key} } ) {
             $form->{"select$key"} .=
-              "<option>$ref->{accno}--$ref->{description}\n";
+              "<option value=\"$ref->{accno}--$ref->{description}\">$ref->{accno}--$ref->{description}</option>\n";
         }
 
         if ( $key eq "AP_paid" ) {
@@ -300,6 +249,8 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
     if ( !$form->{readonly} ) {
         $form->{readonly} = 1 if $myconfig{acs} =~ /AP--Vendor Invoice/;
     }
+
+	 $form->generate_selects;
 
 }
 
@@ -364,14 +315,14 @@ sub form_header {
 
     # set option selected
     for (qw(AP currency)) {
-        $form->{"select$_"} =~ s/ selected//;
+        $form->{"select$_"} =~ s/ selected="selected"//;
         $form->{"select$_"} =~
-          s/option>\Q$form->{$_}\E/option selected>$form->{$_}/;
+          s/(option value="\Q$form->{$_}\E")/$1 selected="selected"/;
     }
 
     for (qw(vendor department)) {
         $form->{"select$_"} = $form->unescape( $form->{"select$_"} );
-        $form->{"select$_"} =~ s/ selected//;
+        $form->{"select$_"} =~ s/ selected="selected"//;
         $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected/;
     }
 
@@ -386,9 +337,6 @@ sub form_header {
 	      <tr>
 		<th align=right nowrap>| . $locale->text('Language') . qq|</th>
 		<td><select data-dojo-type="dijit/form/Select" name=language_code>$form->{selectlanguage}</select></td>
-		<input type=hidden name=oldlanguage_code value=$form->{oldlanguage_code}>
-                <input type=hidden name="selectlanguage" value="|
-          . $form->escape( $form->{selectlanguage}, 1 ) . qq|">
 	      </tr>
 |;
 
@@ -402,10 +350,6 @@ sub form_header {
                 <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
 		<td><select data-dojo-type="dijit/form/Select" name=currency>$form->{selectcurrency}</select></td> |
       if $form->{defaultcurrency};
-    $exchangerate .= qq|
-                <input type=hidden name=selectcurrency value="$form->{selectcurrency}">
-		<input type=hidden name=defaultcurrency value=$form->{defaultcurrency}>
-|;
 
     if (   $form->{defaultcurrency}
         && $form->{currency} ne $form->{defaultcurrency} )
@@ -543,6 +487,7 @@ function on_return_submit(event){
               </tr>
 		|;
 	       }
+	 $form->{selectAP} = $form->escape($form->{selectAP});
 	print qq|
 		  </table>
 		</td>
@@ -681,7 +626,7 @@ function on_return_submit(event){
 
     }
 
-    $form->hide_form(qw(selectcurrency defaultcurrency taxaccounts));
+#    $form->hide_form(qw(selectcurrency defaultcurrency taxaccounts));
 
     for ( split / /, $form->{taxaccounts} ) {
         $form->hide_form( "${_}_rate", "${_}_description" );
@@ -1189,6 +1134,7 @@ sub import_text {
 }
 
 sub update {
+	 $form->generate_selects();
     if ( $form->{import_text} ) {
         &import_text;
     }
@@ -1406,6 +1352,7 @@ sub update {
             }
         }
     }
+	 $form->generate_selects();
     display_form();
 }
 

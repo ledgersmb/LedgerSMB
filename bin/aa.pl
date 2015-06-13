@@ -157,6 +157,7 @@ sub edit {
 
     }
 
+	 $form->generate_selects();
     &display_form;
 
 }
@@ -209,16 +210,8 @@ sub create_links {
            'No currencies defined.  Please set these up under System/Defaults.'
         ));
     }
-    @curr = split /:/, $form->{currencies};
-    $form->{defaultcurrency} = $curr[0];
-    chomp $form->{defaultcurrency};
-
-    for (@curr) { $form->{selectcurrency} .= "<option>$_\n"  
-                     unless  $form->{selectcurrency} =~ /<option[^>]*>$_/
-    }
 
     my $vc = $form->{vc};
-
     AA->get_name( \%myconfig, \%$form ) 
             unless $form->{"old$vc"} eq $form->{$vc} 
                     or $form->{"old$vc"} =~ /^\Q$form->{$vc}\E--/;
@@ -238,7 +231,7 @@ sub create_links {
           unless $form->{ $form->{vc} } =~ /--$form->{"$form->{vc}_id"}$/;
         for ( @{ $form->{"all_$form->{vc}"} } ) {
             $form->{"select$form->{vc}"} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
+              qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
         }
     }
     # Business Reporting Units
@@ -249,15 +242,15 @@ sub create_links {
         $form->{selectemployee} = "";
         for ( @{ $form->{all_employee} } ) {
             $form->{selectemployee} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
+              qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
         }
     }
 
     if ( @{ $form->{all_language} } ) {
-        $form->{selectlanguage} = "<option>\n";
+        $form->{selectlanguage} = "<option></option>\n";
         for ( @{ $form->{all_language} } ) {
             $form->{selectlanguage} .=
-              qq|<option value="$_->{code}">$_->{description}\n|;
+              qq|<option value="$_->{code}">$_->{description}</option>\n|;
         }
     }
 
@@ -277,7 +270,7 @@ sub create_links {
         $form->{"select$key"} = "";
         foreach $ref ( @{ $form->{"$form->{ARAP}_links"}{$key} } ) {
             $form->{"select$key"} .=
-              "<option>$ref->{accno}--$ref->{description}\n";
+              "<option value=\"$ref->{accno}--$ref->{description}\">$ref->{accno}--$ref->{description}</option>\n";
         }
 
         # if there is a value we have an old entry
@@ -448,7 +441,7 @@ sub form_header {
     for ( "$form->{ARAP}", "currency" ) {
         $form->{"select$_"} =~ s/ selected//;
         $form->{"select$_"} =~
-          s/<option>\Q$form->{$_}\E/<option selected>$form->{$_}/;
+          s/(<option value="\Q$form->{$_}\E")>\Q$form->{$_}\E/$1 selected>$form->{$_}/;
     }
 
     for ( "$form->{vc}", "department", "employee", "formname" ) {
@@ -469,10 +462,6 @@ sub form_header {
                 <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
 		<td><select data-dojo-type="dijit/form/Select" name=currency>$form->{selectcurrency}</select></td> |
       if $form->{defaultcurrency};
-    $exchangerate .= qq|
-                <input type=hidden name=selectcurrency value="$form->{selectcurrency}">
-		<input type=hidden name=defaultcurrency value=$form->{defaultcurrency}>
-|;
 
     if (   $form->{defaultcurrency}
         && $form->{currency} ne $form->{defaultcurrency} )
@@ -1282,7 +1271,7 @@ sub update {
             if ( @{ $form->{all_employee} } ) {
                 for ( @{ $form->{all_employee} } ) {
                     $form->{selectemployee} .=
-                      qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
+                      qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
                 }
             }
         }
@@ -1509,20 +1498,20 @@ sub search {
 			 vc => $form->{vc},
 			 billing => 0);
 
-    $form->{"select$form->{ARAP}"} = "<option>\n";
+    $form->{"select$form->{ARAP}"} = "<option></option>\n";
     for ( @{ $form->{"$form->{ARAP}_links"}{ $form->{ARAP} } } ) {
         $form->{"select$form->{ARAP}"} .=
-          "<option>$_->{accno}--$_->{description}\n";
+          "<option value=\"$_->{accno}--$_->{description}\">$_->{accno}--$_->{description}</option>\n";
     }
 
     if ( @{ $form->{"all_$form->{vc}"} } ) {
         $selectname = "";
         for ( @{ $form->{"all_$form->{vc}"} } ) {
             $selectname .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
+              qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
         }
         $selectname =
-          qq|<select data-dojo-type="dijit/form/Select" name="$form->{vc}"><option>\n$selectname</select>|;
+          qq|<select data-dojo-type="dijit/form/Select" name="$form->{vc}"><option>$selectname</select>|;
     }
     else {
         $selectname = qq|<input data-dojo-type="dijit/form/TextBox" name=$form->{vc} size=35>|;
@@ -1530,10 +1519,10 @@ sub search {
 
 
     if ( @{ $form->{all_employee} } ) {
-        $form->{selectemployee} = "<option>\n";
+        $form->{selectemployee} = "<option></option>\n";
         for ( @{ $form->{all_employee} } ) {
             $form->{selectemployee} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
+              qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
         }
 
         $employeelabel =
@@ -1623,15 +1612,15 @@ qq|<input name="l_employee" class=checkbox type=checkbox data-dojo-type="dijit/f
     if ( @{ $form->{all_years} } ) {
 
         # accounting years
-        $form->{selectaccountingyear} = "<option>\n";
+        $form->{selectaccountingyear} = "<option></option>\n";
         for ( @{ $form->{all_years} } ) {
-            $form->{selectaccountingyear} .= qq|<option>$_\n|;
+            $form->{selectaccountingyear} .= qq|<option>$_</option>\n|;
         }
-        $form->{selectaccountingmonth} = "<option>\n";
+        $form->{selectaccountingmonth} = "<option></option>\n";
         for ( sort keys %{ $form->{all_month} } ) {
             $form->{selectaccountingmonth} .=
               qq|<option value=$_>|
-              . $locale->text( $form->{all_month}{$_} ) . qq|\n|;
+              . $locale->text( $form->{all_month}{$_} ) . qq|</option>\n|;
         }
 
         $selectfrom = qq|

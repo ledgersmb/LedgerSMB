@@ -158,7 +158,7 @@ sub invoice_links {
     $form->{defaultcurrency} = $curr[0];
     chomp $form->{defaultcurrency};
 
-    for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
+    for (@curr) { $form->{selectcurrency} .= "<option value=\"$_\">$_</option>\n" }
 
     if ( @{ $form->{all_customer} } ) {
         unless ( $form->{customer_id} ) {
@@ -393,10 +393,6 @@ sub form_header {
 		<th align=right nowrap>| . $locale->text('Currency') . qq|</th>
 		<td><select data-dojo-type="dijit/form/Select" name="currency">$form->{selectcurrency}</select></td>
 | if $form->{defaultcurrency};
-    $exchangerate .= qq|
-		<input type=hidden name="selectcurrency" value="$form->{selectcurrency}">
-		<input type=hidden name="defaultcurrency"value="$form->{defaultcurrency}">
-|;
 
     if (   $form->{defaultcurrency}
         && $form->{currency} ne $form->{defaultcurrency} )

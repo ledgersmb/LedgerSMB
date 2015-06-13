@@ -905,6 +905,7 @@ sub new_item {
 
 sub display_form {
     $form->close_form();
+	 $form->generate_selects();
     $form->open_form();
 
     # if we have a display_form

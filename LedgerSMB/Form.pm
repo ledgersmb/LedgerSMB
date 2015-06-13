@@ -1212,6 +1212,98 @@ qq|<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name=
 }
 
 
+=item $form->generate_selects();
+
+=cut
+
+sub generate_selects {
+	 my ($form) = @_;
+
+    # currencies
+	 if ($form->{currencies}) {
+		  my @curr = split /:/, $form->{currencies};
+		  $form->{defaultcurrency} = $curr[0];
+		  chomp $form->{defaultcurrency};
+	 
+		  for (@curr) {
+				my $selected =
+					 ($form->{currency} && $form->{currency} eq $_)
+					 ? " selected=\"selected\"" : "";
+				$form->{selectcurrency} .=
+					 "<option value=\"$_\"$selected>$_</option>\n"
+		  }
+	 }
+
+	 # partsgroups
+    if ( $form->{all_partsgroup} && @{ $form->{all_partsgroup} } ) {
+        $form->{selectpartsgroup} = "<option></option>\n";
+        foreach my $ref ( @{ $form->{all_partsgroup} } ) {
+				my $value = "$ref->{partsgroup}--$ref->{id}";
+				my $selected = ($form->{partsgroup} eq $value) ?
+					 ' selected="selected"' : "";
+            if ( $ref->{translation} ) {
+                $form->{selectpartsgroup} .=
+						  qq|<option value="$value"$selected>$ref->{translation}</option>\n|;
+            }
+            else {
+                $form->{selectpartsgroup} .=
+						  qq|<option value="$value"$selected>$ref->{partsgroup}</option>\n|;
+            }
+        }
+    }
+
+	 # projects
+    if ( $form->{all_project} && @{ $form->{all_project} } ) {
+        $form->{selectprojectnumber} = "<option></option>\n";
+        for ( @{ $form->{all_project} } ) {
+				my $value = "$_->{projectnumber}--$_->{id}";
+				my $selected = ($form->{projectnumber} eq $value) ?
+					 ' selected="selected"' : "";
+            $form->{selectprojectnumber} .=
+					 qq|<option value="$value"$selected>$_->{projectnumber}</option>\n|;
+        }
+    }
+
+    # vendors
+    $form->{selectvendor} = "";
+    if ( $form->{all_vendor} && @{ $form->{all_vendor} } ) {
+        $form->{vendor} = "$form->{vendor}--$form->{vendor_id}";
+        for ( @{ $form->{all_vendor} } ) {
+				my $value = "$_->{name}--$_->{id}";
+				my $selected = ($form->{vendor_id} eq $value) ?
+					 ' selected="selected"' : "";
+            $form->{selectvendor} .=
+              qq|<option value="$value"$selected>$_->{name}</option>\n|;
+        }
+    }
+
+    # departments
+    if ( $form->{all_department} && @{ $form->{all_department} } ) {
+        $form->{selectdepartment} = "<option></option>\n";
+        for ( @{ $form->{all_department} } ) {
+				my $value = "$_->{description}--$_->{id}";
+				my $selected = ($form->{department} eq $value) ?
+					 ' selected="selected"' : "";
+            $form->{selectdepartment} .=
+					 qq|<option value="$value"$selected>$_->{description}</option>\n|;
+        }
+    }
+
+	 # languages
+    if ( $form->{all_language} && @{ $form->{all_language} } ) {
+        $form->{selectlanguage} = "<option></option>\n";
+        for ( @{ $form->{all_language} } ) {
+				my $value = $_->{code};
+				my $selected = ($form->{language} eq $value) ?
+					 ' selected="selected"' : "";
+            $form->{selectlanguage} .=
+              qq|<option value="$value"$selected>$_->{description}</option>\n|;
+        }
+    }
+
+	 
+}
+
 =item test_should_get_images
 
 Returns true if images should get be retrieved for embedding in templates
