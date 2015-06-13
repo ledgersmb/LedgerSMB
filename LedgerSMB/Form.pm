@@ -442,9 +442,9 @@ sub _error {
         $logger->error("dbversion: $self->{dbversion}, company: $self->{company}");
 
         print
-          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b>
+          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></p>
              <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
-             </body>|;
+             </body></html>|;
 
         $self->finalize_request();
 
