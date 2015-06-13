@@ -1227,12 +1227,16 @@ sub generate_selects {
 		  $form->{currencies} = $form->get_setting('curr');
 	 }
 	 if ($form->{currencies}) {
-		  my %curr = map {$_ => 1} split( /:/, $form->{currencies} );
+		  my %curr;
+		  foreach (split( /:/, $form->{currencies})) {
+				$curr{$_} = 1;
+		  }
 		  my @curr = keys %curr; 
  
 		  $form->{defaultcurrency} = $curr[0];
 		  chomp $form->{defaultcurrency};
 	 
+		  $form->{selectcurrency} = "";
 		  for (@curr) {
 				my $selected =
 					 ($form->{currency} && $form->{currency} eq $_)
@@ -1245,6 +1249,7 @@ sub generate_selects {
 	 # partsgroups
     if ( $form->{all_partsgroup} && @{ $form->{all_partsgroup} } ) {
         $form->{selectpartsgroup} = "<option></option>\n";
+		  $form->{selectpartsgroup} = "";
         foreach my $ref ( @{ $form->{all_partsgroup} } ) {
 				my $value = "$ref->{partsgroup}--$ref->{id}";
 				my $selected = ($form->{partsgroup} eq $value) ?
@@ -1263,6 +1268,7 @@ sub generate_selects {
 	 # projects
     if ( $form->{all_project} && @{ $form->{all_project} } ) {
         $form->{selectprojectnumber} = "<option></option>\n";
+		  $form->{selectprojectnumber} = "";
         for ( @{ $form->{all_project} } ) {
 				my $value = "$_->{projectnumber}--$_->{id}";
 				my $selected = ($form->{projectnumber} eq $value) ?
@@ -1275,7 +1281,7 @@ sub generate_selects {
     # vendors
     $form->{selectvendor} = "";
     if ( $form->{all_vendor} && @{ $form->{all_vendor} } ) {
-        $form->{vendor} = "$form->{vendor}--$form->{vendor_id}";
+		  $form->{selectvendor} = "";
         for ( @{ $form->{all_vendor} } ) {
 				my $value = "$_->{name}--$_->{id}";
 				my $selected = ($form->{vendor_id} eq $value) ?
@@ -1308,6 +1314,30 @@ sub generate_selects {
               qq|<option value="$value"$selected>$_->{description}</option>\n|;
         }
     }
+
+    # sales staff
+    if ( $form->{all_employees} && @{ $form->{all_employee} } ) {
+        $form->{selectemployee} = "";
+        for ( @{ $form->{all_employee} } ) {
+            $form->{selectemployee} .=
+              qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
+        }
+    }
+
+    # customers/vendors
+	 if ($form->{vc}) {
+		  $form->{"select$form->{vc}"} = "";
+		  if ( $form->{"all_$form->{vc}"} && @{ $form->{"all_$form->{vc}"} } ) {
+				$form->{ $form->{vc} } =
+					 qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|
+					 unless $form->{ $form->{vc} } =~ /--$form->{"$form->{vc}_id"}$/;
+				$form->{"select$form->{vc}"} = "";
+				for ( @{ $form->{"all_$form->{vc}"} } ) {
+					 $form->{"select$form->{vc}"} .=
+						  qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
+				}
+		  }
+	 }
 
 }
 
