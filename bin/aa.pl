@@ -223,7 +223,6 @@ sub create_links {
     $form->{duedate}     = $duedate     if $duedate;
     $form->{crdate}      = $crdate      if $crdate;
 
-    $form->{"old$form->{vc}"} = $form->{$form->{vc}};
     $form->{oldtransdate} = $form->{transdate};
 
     # Business Reporting Units
@@ -1219,14 +1218,6 @@ sub update {
             $newproj =
               &rebuild_vc( $form->{vc}, $form->{ARAP}, $form->{transdate} )
               if !$newname;
-
-            $form->{selectemployee} = "";
-            if ( @{ $form->{all_employee} } ) {
-                for ( @{ $form->{all_employee} } ) {
-                    $form->{selectemployee} .=
-                      qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
-                }
-            }
         }
     }#!$display
     @taxaccounts = split / /, $form->{taxaccounts};
@@ -1292,8 +1283,6 @@ sub update {
 
     #tshvr4 should be revised!
     &create_links; 
-
-
     &display_form;
 
 }
