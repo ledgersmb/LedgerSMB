@@ -79,6 +79,9 @@ package Form;
 use base qw(LedgerSMB::Request);
 use utf8;
 
+use Data::Dumper;
+
+
 our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
 
 # To be later set in config, but also hardwired in Template::HTML --CT
@@ -1220,8 +1223,13 @@ sub generate_selects {
 	 my ($form) = @_;
 
     # currencies
+	 if (!$form->{currencies}) {
+		  $form->{currencies} = $form->get_setting('curr');
+	 }
 	 if ($form->{currencies}) {
-		  my @curr = split /:/, $form->{currencies};
+		  my %curr = map {$_ => 1} split( /:/, $form->{currencies} );
+		  my @curr = keys %curr; 
+ 
 		  $form->{defaultcurrency} = $curr[0];
 		  chomp $form->{defaultcurrency};
 	 
@@ -1301,7 +1309,6 @@ sub generate_selects {
         }
     }
 
-	 
 }
 
 =item test_should_get_images
