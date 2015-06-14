@@ -682,6 +682,10 @@ RETURN NEW;
 end;
 $$;
 
+DROP TRIGGER IF EXISTS loop_detection ON account_heading;
+CREATE TRIGGER loop_detection AFTER INSERT OR UPDATE ON account_heading
+FOR EACH ROW EXECUTE PROCEDURE account_heading__check_tree();
+
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
 COMMIT;
