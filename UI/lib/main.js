@@ -35,18 +35,44 @@ function SwitchMenu(id) {
     }		
 }
 
-function load_link(xhr, href) {
-    xhr(href, {"handlesAs": "text"})
-		  .then(function(doc){
+function set_main_div(doc){
+    console.log('setting body');
+    var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+    var newbody = body[1];
+    require(['dojo/query', 'dojo/dom', 'dojo/dom-style',
+	     'dijit/registry', 'dojo/domReady!'],
+            function(query, dom, style, registry){
+		var mainCP = registry.byId('maindiv');
+		style.set(mainCP, 'visibility', 'hidden');
+		mainCP.destroyDescendants();
+		mainCP.set('content', newbody);
+		setup_dojo();
+		style.set(mainCP, 'visibility', 'visible');
+		require(['dojo/domReady!'], function(){
+		});
+            });
+}
+
+function load_form(xhr, url, options) {
+	 xhr(url, options).then(
+		  function(doc){
 				set_main_div(doc);
 		  },
 		  function(err){
 				require(['dijit/registry'],function(registry){
 					 var d = registry.byId('errorDialog');
-					 d.set('content',err.response.data);
+					 if (0 == err.response.status) {
+						  d.set('content','Low level networking problem');
+					 } else {
+						  d.set('content',err.response.data);
+					 }
 					 d.show();
 				});
 		  });
+}
+
+function load_link(xhr, href) {
+	 load_form(xhr,href,{"handlesAs": "text"});
 }
 
 function setup_dojo() {

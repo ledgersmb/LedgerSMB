@@ -1,36 +1,7 @@
 /* lsmb/lib/Loader
  * A module for loading and setting up Dojo on LSMB screens.
  * 
- * This exposes two methods:
- *
- * setup() 
- *
- * sets up all widgets on a page
- *
- * createWidget(dnode) 
- *
- * creates a wedget from a DOM node.  Returns undef if the widget already 
- * exists. The choice to return undef allows one to check the return value 
- * of the function, and avoid calling if the widget already exists.
  */
-
-function set_main_div(doc){
-    console.log('setting body');
-    var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-    var newbody = body[1];
-    require(['dojo/query', 'dojo/dom', 'dojo/dom-style',
-	     'dijit/registry', 'dojo/domReady!'],
-            function(query, dom, style, registry){
-		var mainCP = registry.byId('maindiv');
-		style.set(mainCP, 'visibility', 'hidden');
-		mainCP.destroyDescendants();
-		mainCP.set('content', newbody);
-		setup_dojo();
-		style.set(mainCP, 'visibility', 'visible');
-		require(['dojo/domReady!'], function(){
-		});
-            });
-}
 
 define([
      // base
@@ -94,16 +65,7 @@ function(
 							  options['method'] = method;
 							  options['data'] = qobj;
 						 }
-						 
-						 xhr(url, options).then(
-							  function(doc){
-									set_main_div(doc);
-							  },
-							  function(err){
-									var d = registry.byId('errorDialog');
-									d.set('content',err.response.data);
-									d.show();
-							  });
+						 load_form(xhr, url, options);
 					});
 		  },
 		  rewriteAllFormSubmissions: function() {
