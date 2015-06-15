@@ -74,7 +74,7 @@ sub save_preferences {
     my $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
     $request->{_locale} = $locale;
     $LedgerSMB::App_State::Locale = $locale;
-    my $user = LedgerSMB::DBObject::User->new({base => $reques);
+    my $user = LedgerSMB::DBObject::User->new({base => $request});
     $user->{dateformat} =~ s/$slash/\//g;
     if ($user->{confirm_password}){
         $user->change_my_password;
