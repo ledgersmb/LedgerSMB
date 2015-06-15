@@ -96,7 +96,8 @@ sub get {
     my @accounts =  $self->call_dbmethod(funcname => $func);
     $self->{account_list} = [];
     for my $ref (@accounts){
-		  $ref = LedgerSMB::DBObject::Account->new({base => $ref});
+        bless $ref, 'LedgerSMB::DBObject::Account';
+        $ref->merge($self, keys => ['_user', '_locale', 'stylesheet', 'dbh', '_roles', '_request']);
         if ($ref->{is_temp} and ($ref->{category} eq 'Q')){
             $ref->{category} = 'Qt';
         }
