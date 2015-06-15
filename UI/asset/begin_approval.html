@@ -2,14 +2,14 @@
        include_stylesheet = ["UI/asset/asset.css"] -?>
 <?lsmb PROCESS "elements.html" -?>
 <body class="<?lsmb dojo_theme ?>">
-<form action="asset.pl" method="post">
+<form action="<?lsmb request.script ?>" method="post">
 <div class="listtop"><?lsmb text('New Asset Report Search') ?></div>
 <div class="inputrow" id="classrow"><div class="inputgroup" id="classgrp">
-<?lsmb asset_classes.unshift({}) ?>
 <?lsmb PROCESS select element_data = {
      name = "asset_class"
-     default_values = [asset_class]
-     options = asset_classes
+     default_values = [asset_report.asset_class]
+     default_blank = 1
+     options = asset_report.asset_classes
      text_attr = "label"
      value_attr = "id"
      label = text('Asset Class') #'
@@ -19,7 +19,7 @@
 <?lsmb PROCESS input element_data = {
      name = "start_date"
      class = "date"
-     value = start_date
+     value = asset_report.start_date
      label = text("From")
 } ?>
 </div>
@@ -27,7 +27,7 @@
 <?lsmb PROCESS input element_data = {
      name = "end_date"
      class = "date"
-     value = end_date
+     value = asset_report.end_date
      label = text("To")
 } ?>
 </div>
@@ -41,8 +41,8 @@
      name = "gain_acct"
      class = "account"
      value_attr = "id"
-     options = gain_accounts
-     default_values = [gain_acct]
+     options = asset_report.gain_accounts
+     default_values = [asset_report.gain_acct]
      label = text('Gain Account') #'
 } ?>
 </div>
@@ -50,9 +50,9 @@
 <?lsmb PROCESS select element_data = {
      name = "loss_acct"
      class = "account"
-     options = loss_accounts
+     options = asset_report.loss_accounts
      value_attr = "id"
-     default_values = [loss_acct]
+     default_values = [asset_report.loss_acct]
      label = text('Loss Account') #'
 } ?>
 </div>
@@ -77,7 +77,7 @@
 <?lsmb PROCESS input element_data = {
      name = "depreciation"
      type = "hidden"
-     value = depreciation
+     value = asset_report.depreciation
 } ?>
 </form>
 </body>

@@ -3,12 +3,12 @@
 <?lsmb PROCESS "elements.html" -?>
 <body class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('Depreciate All') ?></div>
-<form action="asset.pl" method="post">
+<form action="<?lsmb request.script ?>" method="post">
 <div class="inputrow" id="daterow"><div class="inputgroup" id="dategroup">
 <?lsmb PROCESS input element_data = {
      name = "report_date"
      class = "date"
-     value = report_date
+     value = request.report_date
      label = text("Date")
 } ?>
 </div></div>
