@@ -63,10 +63,10 @@ Expects report_date to be set.
 
 sub depreciate_all {
     my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Asset_Report->new(base => $request);
+    my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->get_metadata;
     for my $ac(@{$report->{asset_classes}}){
-        my $dep = LedgerSMB::DBObject::Asset_Report->new(base => $request);
+        my $dep = LedgerSMB::DBObject::Asset_Report->new({base => $request});
         $dep->{asset_class} = $ac->{id};
         $dep->generate;
         for my $asset (@{$dep->{assets}}){
@@ -103,7 +103,7 @@ sub asset_category_screen {
         $request->{title} = $request->{_locale}->text('Add Asset Class');
     }
 	 if (! defined $ac) {
-		  $ac = LedgerSMB::DBObject::Asset_Class->new(base => $request);
+		  $ac = LedgerSMB::DBObject::Asset_Class->new({base => $request});
 	 }
 	 $ac->get_metadata;
     my $template = LedgerSMB::Template->new(
@@ -128,7 +128,7 @@ Others are required.
 sub asset_category_save {
     my ($request) = @_;
 	 print STDERR Dumper($request);
-    my $ac = LedgerSMB::DBObject::Asset_Class->new(base => $request);
+    my $ac = LedgerSMB::DBObject::Asset_Class->new({base => $request});
     $ac->save;
     asset_category_screen($request, $ac);
 }
@@ -173,7 +173,7 @@ Edits an asset class.  Expects id to be set.
 
 sub edit_asset_class {
    my ($request) = @_;
-   my $ac = LedgerSMB::DBObject::Asset_Class->new(base => $request);
+   my $ac = LedgerSMB::DBObject::Asset_Class->new({base => $request});
    $ac->get_asset_class;
    asset_category_screen($request,$ac);
 }
@@ -186,7 +186,7 @@ Displats the edit screen for an asset item.  Tag or id must be set.
 
 sub asset_edit {
     my ($request) = @_;
-    my $asset = LedgerSMB::DBObject::Asset->new(base => $request);
+    my $asset = LedgerSMB::DBObject::Asset->new({base => $request});
     $asset->get();
     $asset->get_metadata();
     asset_screen($asset);
@@ -203,7 +203,7 @@ can be used to set defaults.
 
 sub asset_screen {
     my ($request,$asset) = @_;
-    $asset = LedgerSMB::DBObject::Asset->new(base => $request)
+    $asset = LedgerSMB::DBObject::Asset->new({base => $request})
         unless defined $asset;
     $asset->get_metadata;
     if (!$asset->{tag}){
@@ -232,7 +232,7 @@ Any inputs for asset_results can be used here to set defaults.
 
 sub asset_search {
     my ($request) = @_;
-    my $asset = LedgerSMB::DBObject::Asset->new(base => $request);
+    my $asset = LedgerSMB::DBObject::Asset->new({base => $request});
     $asset->get_metadata;
     unshift @{$asset->{asset_classes}}, {}; 
     unshift @{$asset->{locations}}, {}; 
@@ -276,7 +276,7 @@ vendor transaction in LedgerSMB.
 
 sub asset_save {
     my ($request) = @_;
-    my $asset = LedgerSMB::DBObject::Asset->new(base => $request);
+    my $asset = LedgerSMB::DBObject::Asset->new({base => $request});
     for my $number (qw(salvage_value purchase_value usable_life)){
         $asset->{"$number"} = LedgerSMB::PGNumber->from_input(
                $asset->{"$number"}
@@ -287,11 +287,11 @@ sub asset_save {
                    . 'Invoice:'.$asset->{invnumber};
     $asset->{subject} = 'Vendor/Invoice Note';
     $asset->save_note;
-    my $newasset = LedgerSMB::DBObject::Asset->new(
+    my $newasset = LedgerSMB::DBObject::Asset->new({
                   base  => $request, 
                   copy  => 'list',
                   merge => ['stylesheet'],
-    );
+    });
     asset_screen($request,$newasset);
 }
 
@@ -305,7 +305,7 @@ report_init inputs can be used to set defaults.
 
 sub new_report {
     my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Asset_Report->new(base => $request);
+    my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->get_metadata;
     my $template = LedgerSMB::Template->new(
         user => $request->{_user}, 
@@ -330,7 +330,7 @@ Inputs expected:
 
 sub report_init {
     my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Asset_Report->new(base => $request);
+    my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->generate;
     display_report($request, $report);
 }
@@ -345,7 +345,7 @@ see LedgerSMB::DBObject::Asset_Report->save() for expected inputs.
 
 sub report_save{
     my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Asset_Report->new(base => $request);
+    my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->{asset_ids} = [];
     for my $count (0 .. $request->{rowcount}){
         my $id = $request->{"id_$count"};
@@ -369,7 +369,7 @@ Retrieves the report identified by the id input and displays it.
 
 sub report_get {
     my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Asset_Report->new(base => $request);
+    my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->get;
     display_report($request, $report);
 }
@@ -495,7 +495,7 @@ LedgerSMB::DBObject::Asset_Report->search() for a list of such inputs.
 sub search_reports {
     my ($request) = @_;
     $request->{title} = $request->{_locale}->text('Search reports');
-    my $ar = LedgerSMB::DBObject::Asset_Report->new(base => $request);
+    my $ar = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $ar->get_metadata;
     my $template = LedgerSMB::Template->new(
         user => $request->{_user}, 
@@ -519,7 +519,7 @@ inputs.
 sub report_results {
     my ($request) = @_;
     my $locale = $request->{_locale};
-    my $ar = LedgerSMB::DBObject::Asset_Report->new(base => $request);
+    my $ar = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $ar->get_metadata;
     $ar->{title} = $locale->text('Report Results');
     my @results = $ar->search;
@@ -614,7 +614,7 @@ set which represents the id of the report.
 sub report_details {
     my ($request) = @_;
     my $locale = $request->{_locale};
-    my $report = LedgerSMB::DBObject::Asset_Report->new(base => $request);
+    my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->get;
     if ($report->{report_class} == 2) {
       disposal_details($report);
@@ -684,7 +684,7 @@ id of the report desired.
 sub partial_disposal_details {
     my ($request) = @_;
     my $locale = $request->{_locale};
-    my $report = LedgerSMB::DBObject::Asset_Report->new(base => $request);
+    my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->get;
     my @cols = qw(tag begin_depreciation purchase_value description 
                  percent_disposed disposed_acquired_value
@@ -753,7 +753,7 @@ id must be set to the id of the report to be displayed.
 sub disposal_details {
     my ($request) = @_;
     my $locale = $request->{_locale};
-    my $report = LedgerSMB::DBObject::Asset_Report->new(base => $request);
+    my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->get;
     my @cols = qw(tag description start_dep disposed_on dm purchase_value
                  accum_depreciation adj_basis disposal_amt gain_loss);
@@ -830,7 +830,7 @@ For depreciation reports, expense_acct must be set to an appropriate accont id.
 
 sub report_details_approve {
     my ($request) = @_;
-    my $report = LedgerSMB::DBObject::Asset_Report->new(base => $request);
+    my $report = LedgerSMB::DBObject::Asset_Report->new({base => $request});
     $report->approve;
     search_reports($request);
 }
@@ -853,7 +853,7 @@ sub report_results_approve {
     my ($request) = @_;
     for my $l (0 .. $request->{rowcount}){
         if ($request->{"report_$l"}){
-            my $approved = LedgerSMB::DBObject::Asset_Report->new(base => $request);
+            my $approved = LedgerSMB::DBObject::Asset_Report->new({base => $request});
             $approved->{id} = $request->{"report_$l"};
             $approved->approve;
         }

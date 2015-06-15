@@ -1111,7 +1111,7 @@ sub save_temp {
                   };
         }
     }
-    $template = LedgerSMB::DBObject::TransTemplate->new(base => $lsmb);
+    $template = LedgerSMB::DBObject::TransTemplate->new({base => $lsmb});
     $template->save;
     $form->redirect( $locale->text('Template Saved!') );
 }

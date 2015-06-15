@@ -24,8 +24,7 @@ use base 'PGObject::Simple';
 use LedgerSMB::App_State;
 
 sub new {
-    my $pkg = shift @_;
-    my $args = { @_ };
+    my ($pkg, $args) = @_;
     my $mergelist = $args->{mergelist} || [keys %{$args->{base}}];
     my $self = { map { $_ => $args->{base}->{$_} } @$mergelist };
     $self =  PGObject::Simple::new($pkg, %$self);

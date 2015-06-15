@@ -38,11 +38,11 @@ sub __edit_page {
     
     my ($request, $otd) = @_;
     # otd stands for Other Template Data.
-    my $dcsetting = LedgerSMB::Setting->new(base=>$request, copy=>'base');
+    my $dcsetting = LedgerSMB::Setting->new( {base=>$request, copy=>'base'} );
     my $default_country = $dcsetting->get('default_country'); 
-    my $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'list', merge =>['user_id']);
+    my $admin = LedgerSMB::DBObject::Admin->new({base=>$request, copy=>'list', merge =>['user_id']});
     my @all_roles = $admin->get_roles($request->{company});
-    my $user_obj = LedgerSMB::DBObject::User->new(base=>$request, copy=>'list', merge=>['user_id','company']);
+    my $user_obj = LedgerSMB::DBObject::User->new({base=>$request, copy=>'list', merge=>['user_id','company']});
     $user_obj->{company} = $request->{company};
     $user_obj->get($request->{user_id});
     my $user = $request->{_user};
@@ -83,7 +83,7 @@ Saves the role assignments for a given user
 
 sub save_roles {
     my ($request, $admin) = @_;
-    $admin = LedgerSMB::DBObject::Admin->new(base=>$request, copy=>'all');
+    $admin = LedgerSMB::DBObject::Admin->new({base=>$request, copy=>'all'});
     $admin->{stylesheet} = $request->{stylesheet};
     $admin->save_roles();
     __edit_page($admin);
@@ -111,7 +111,7 @@ Displays a list of open sessions.  No inputs required or used.
 
 sub list_sessions {
     my ($request) = @_;
-    my $admin = LedgerSMB::DBObject::Admin->new(base => $request);
+    my $admin = LedgerSMB::DBObject::Admin->new({base => $request});
     my @sessions = $admin->list_sessions();
     my $template = LedgerSMB::Template->new(
             user => $request->{_user}, 
@@ -161,7 +161,7 @@ Deletes the session specified by $request->{session_id}
 
 sub delete_session {
     my ($request) = @_;
-    my $admin = LedgerSMB::DBObject::Admin->new(base => $request);
+    my $admin = LedgerSMB::DBObject::Admin->new({base => $request});
     $admin->delete_session();
     list_sessions($request);
 }

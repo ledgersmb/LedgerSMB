@@ -41,7 +41,7 @@ Displays the preferences screen.  No inputs needed.
 sub preference_screen {
     my ($request, $user) = @_;
     if (! defined $user) {
-        $user = LedgerSMB::DBObject::User->new(base => $request);
+        $user = LedgerSMB::DBObject::User->new({base => $request});
         $user->get($user->{_user}->{id});
     }
     $user->get_option_data;
@@ -74,7 +74,7 @@ sub save_preferences {
     my $locale =  LedgerSMB::Locale->get_handle($request->{_user}->{language});
     $request->{_locale} = $locale;
     $LedgerSMB::App_State::Locale = $locale;
-    my $user = LedgerSMB::DBObject::User->new(base => $request);
+    my $user = LedgerSMB::DBObject::User->new({base => $reques);
     $user->{dateformat} =~ s/$slash/\//g;
     if ($user->{confirm_password}){
         $user->change_my_password;
@@ -92,7 +92,7 @@ preferences screen
 
 sub change_password {
     my ($request) = @_;
-    my $user = LedgerSMB::DBObject::User->new(base => $request);
+    my $user = LedgerSMB::DBObject::User->new({base => $request});
     $user->{dateformat} =~ s/$slash/\//g;
     if ($user->{confirm_password}){
         $user->change_my_password;
