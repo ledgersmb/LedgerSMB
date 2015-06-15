@@ -272,3 +272,4 @@ group by c.id, c.accno, c.description, c.category, c.heading,
 BEGIN;
 UPDATE language SET code = 'ms_MY' WHERE code = 'my';
 COMMIT;
+

@@ -9,7 +9,10 @@ Changelog for 1.4.12
 * Fix dependency listing (include JSON) (bug 1347) (Erik H)
 * Make setup.pl generate fewer warnings in the error logs (Erik H)
 * Fix 'Save as' in contact account clobbering existing one (bug 1364) (Erik H)
+* Fixed empty response causing some problems. (Chris T)
+* Detect account heading graph loops and throw errors (Chris T)
 
+Chris T is Chris Travers
 Erik H is Erik Huelsmann
 
 
