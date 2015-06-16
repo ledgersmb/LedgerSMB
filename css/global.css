@@ -118,6 +118,8 @@ html, body {
 
 
 
+/***** Budgetting screens ******/
+
 
 #budgets div.input_row {
     overflow: auto;
@@ -134,3 +136,63 @@ html, body {
     float: left;
     padding-right: 3px;
 }
+
+
+
+/***** PNL Report ******/
+
+#PNL a {
+	color: inherit;
+	background-color: inherit;
+	text-decoration: none;
+}
+#PNL a:link {
+	color: inherit;
+	background-color: inherit;
+	text-decoration: none;
+}
+#PNL a:visited {
+	color: inherit;
+	background-color: inherit;
+	text-decoration: none;
+}
+#PNL a:hover {
+	color: inherit;
+	background-color: inherit;
+	text-decoration: none;
+	border-bottom: thin dashed;
+}
+#PNL td.amount {
+	text-align: right;
+}
+#PNL tr.separator {
+        min-height: 1em;
+}
+#PNL tr.sectionhead {
+}
+#PNL tr.sectionhead th {
+        padding-top: 2em;
+        margin-top: 4em;
+        font-size: 120%;
+        font-weight: bold;
+}
+
+#PNL td.total {
+        border: 0px;
+	border-top: 1px;
+        border-color: black;
+        border-style: solid;
+}
+
+#PNL th {
+	vertical-align: bottom;	
+}
+
+#PNL table {
+      margin-right: auto;
+      margin-left: auto;
+}
+#PNL h1, h2 {
+       text-align: center;
+}
+
