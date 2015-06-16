@@ -10,6 +10,11 @@ use LedgerSMB::App_State;
 use Carp;
 use base qw(PGObject::Type::DateTime);
 
+PGObject->register_type(pg_type => $_,
+                                  perl_class => __PACKAGE__)
+   for ('date');
+
+
 =head1 SYNPOSIS
 This class handles formatting and mapping between the DateTime module and
 PostgreSQL. It provides a handler for date and timestamp datatypes.
