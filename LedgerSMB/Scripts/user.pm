@@ -79,7 +79,7 @@ sub save_preferences {
     if ($user->{confirm_password}){
         $user->change_my_password;
     }
-    $user->save_preferences;
+    $user = $user->save_preferences;
     preference_screen($request, $user);
 }
 

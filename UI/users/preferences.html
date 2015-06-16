@@ -18,9 +18,11 @@
   <tr><th class="listtop"><?lsmb text('Preferences for [_1]', login) ?></th></tr>
   <?lsmb IF action == 'save_preferences' ?> <tr><th class="info">
           <?lsmb text('Preferences Saved') ?>
-  <tr><?lsmb END # if action ?>
+  </tr><?lsmb END # if action ?>
   <tr><th class="info">
           <?lsmb text('Your password will expire in [_1]', password_expires) ?>
+    </th>
+  </tr>
   <tr>
     <td>
       <table width="100%">
@@ -67,7 +69,7 @@
 		<td><?lsmb PROCESS select element_data={ 
                       name = 'numberformat',
                       options = user.numberformats,
-                      default_values = [ user.prefs.numberformat],
+                      default_values = [ user.prefs.numberformat ],
                       text_attr = 'format',
                       value_attr = 'format',
                     } ?></td>
@@ -78,7 +80,7 @@
                     <?lsmb PROCESS select element_data={
                      name = 'language',
                      options = user.country_codes,
-                     default_values = [ user.prefs.language],
+                     default_values = [ user.prefs.language ],
                      text_attr = 'label',
                      value_attr = 'id',
                    }?> </td>
@@ -88,7 +90,7 @@
 		<td><?lsmb PROCESS select element_data={
                       name = 'stylesheet'
                       options = user.cssfiles
-                      default_values = [ user.prefs.stylesheet]
+                      default_values = [ user.prefs.stylesheet ]
                       text_attr = 'file'
                       value_attr = 'file'
                      } ?></td>
