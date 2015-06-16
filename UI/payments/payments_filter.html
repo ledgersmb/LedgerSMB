@@ -1,13 +1,10 @@
 <?lsmb INCLUDE 'ui-header.html'
                 stylesheet = stylesheet
-		include_stylesheet = [
-			'css/global.css' 
-			'UI/payments/payments.css'
-		]
 		titlebar = text('Selection')
 ?>
 <?lsmb PROCESS 'elements.html'  # Include form elements helper. ?>
 <body id="payments-filter-body" class="<?lsmb dojo_theme ?>">
+<div id="payments">
 <div class="listtop">
 	<!-- CT:  Strings for locales:
 	<?lsmb text('Filtering Receipts') ?>
@@ -188,5 +185,6 @@
 	value = "display_payments"
 } ?></div>
 </form>
+</div>
 </body>
 </html>

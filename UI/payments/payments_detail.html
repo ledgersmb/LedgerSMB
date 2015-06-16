@@ -1,9 +1,5 @@
 <?lsmb INCLUDE 'ui-header.html' 
 	titlebar = 'Payments'
-	include_stylesheet = [
-			'css/global.css' 
-			'UI/payments/payments.css'
-		]
 	include_script = ['UI/payments/payments_detail.js']
 ?>
 <?lsmb BLOCK format_money ?><?lsmb number 
@@ -19,6 +15,7 @@
     most browsers should have no issues with them.  Furthermore, I cannot find
     any cleaner solution to embedding tabular data within tabular data than
     this -->
+<div id="payments">
 <div class="listtop"><?lsmb payment_type ?></div>
  <form name="pay_dues" method="post" action="payment.pl">
  <!-- Moving all hidden variables to the top.  -CT -->
@@ -487,5 +484,6 @@
  
 
   </form>
+  </div>
  </body>
 </html>
