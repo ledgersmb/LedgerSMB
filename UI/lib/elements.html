@@ -76,14 +76,19 @@
               END;
 	      IF !element_data.type.defined();
 	          element_data.type = "text";
-	      END; ?>
-  	<?lsmb
-	    input_defaults = {}  # Some inputs have no defaults, so make sure everything is empty to start with.
-            
-	    element_type = 'input';
-	    PROCESS auto_id;
-	  ?>
-	  <?lsmb SWITCH element_data.type;  # Merge in type-specific attributes.
+	      END;
+         IF element_data.class == 'date';
+             # In the old days, text INPUTs had a class of 'date'
+             # to signal the requirement for conversion to date widget
+             element_data.type = "date";
+         END;
+         # Some inputs have no defaults,
+         # so make sure everything is empty to start with.
+         input_defaults = {};
+
+         element_type = 'input';
+	      PROCESS auto_id;
+	      SWITCH element_data.type;  # Merge in type-specific attributes.
 	      CASE 'file';
 	        input_type_keys = input_keys.merge(['accept']);
 	        input_defaults = file_defaults;
