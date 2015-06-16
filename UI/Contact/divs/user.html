@@ -47,7 +47,10 @@
             <tr>
                 <td><?lsmb text('Password') ?></td>
                 <td>
-                    <input type="password" name="reset_password" value=""/>
+                    <?lsmb INCLUDE input element_data = {
+                           type="password"
+                           name="reset_password"
+                           value="" } ?>
                 </td>
             </tr>
 
