@@ -98,8 +98,9 @@ div.td, div.th {display: table-cell; }
 
 #assets div.inputrow
 {
-	overflow: auto;
+   display: block;
 	width: 100%;
+   clear: both;
 }
 
 #assets .invisible
