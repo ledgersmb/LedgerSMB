@@ -54,6 +54,8 @@ use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Invoices::Payments;
 use strict; 
 
+use LedgerSMB::PGNumber;
+
 # CT:  A few notes for future refactoring of this code:
 # 1:  I don't think it is a good idea to make the UI too dependant on internal
 #     code structures but I don't see a good alternative at the moment.
@@ -1037,7 +1039,7 @@ my $select = {
  notes => $request->{notes},
  overpayment         => \@overpayment,
  overpayment_account => \@overpayment_account,
- format_amount => sub {return LedgerSMB::PGNumber(@_)->to_output()}
+ format_amount => sub {return LedgerSMB::PGNumber->to_output(@_)}
 };
 
 $select->{selected_account} = $vc_options[0]->{cash_account_id} 
