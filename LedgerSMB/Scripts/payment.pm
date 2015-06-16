@@ -323,7 +323,7 @@ successful.
 sub post_payments_bulk {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
-    if ($payment->close_form){
+    if ($request->close_form){
         $payment->post_bulk();
     } else {
         $payment->{notice} = 
@@ -448,7 +448,7 @@ sub display_payments {
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     $payment->{default_currency} =  $payment->get_default_currency();;
     $payment->get_payment_detail_data();
-    $payment->open_form();
+    $request->open_form();
     my $db_fx = $payment->get_exchange_rate($payment->{currency}, 
                                             $payment->{batch_date});
     if ($db_fx){

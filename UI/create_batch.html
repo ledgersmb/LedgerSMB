@@ -9,7 +9,7 @@
 ?>
 <body class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('Create New Batch') ?></div>
-<form name="create_batch" method="post">
+<form name="create_batch" method="post" action="<?lsmb request.script ?>">
 <div class="labelledinput">
   <div class="inputgroup">
     <?lsmb text("Batch Number") ?>
@@ -18,7 +18,7 @@
     <?lsmb PROCESS input element_data = {
 	   name = "batch_number"
 	   type = "text"
-	   value = batch_number } ?>
+	   value = batch.batch_number } ?>
   </div>
 <div class="labelledinput">
   <div class="label">
@@ -28,7 +28,7 @@
     <?lsmb PROCESS input element_data = {
 	   name = "description"
 	   type = "text"
-	   value = batch_number } ?>
+	   value = batch.batch_number } ?>
   </div>
 </div>
 <div class="labelledinput">
@@ -40,7 +40,7 @@
 	    type = "date"
 	    class = "date"
 	    name = "batch_date" 
-            value = batch_date } ?>
+            value = batch.batch_date } ?>
   </div>
 </div>
 <div id="buttons">
@@ -53,7 +53,7 @@
 </div>
 <?lsmb 
 hidden_url_base = '';
-FOREACH item = hidden;
+FOREACH item = batch.hidden;
   IF item.value;
       hidden_url_base = hidden_url_base _ '&' _ item.name _ '=' _ item.value;
   END;
@@ -67,13 +67,13 @@ FOREACH item = hidden;
 <div class="listtop"><?lsmb text('Or Add To Batch') ?></div>
 <?lsmb 
 
-FOREACH row IN search_results;
+FOREACH row IN batch.search_results;
      row.row_id = row.id _ "&post_date=" _ row.default_date;
 END;
 
 PROCESS dynatable 
                attributes = {id = 'batch_list'}
-               tbody = {rows = search_results}
+               tbody = {rows = batch.search_results}
                columns = [
         { col_id='control_code', type='href', name=text('Control Number'), #'
        href_base="vouchers.pl?action=add_vouchers" _

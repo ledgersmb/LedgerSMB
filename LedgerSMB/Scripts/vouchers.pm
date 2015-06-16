@@ -73,7 +73,8 @@ sub create_batch {
         template => 'create_batch',
         format => 'HTML'
     );
-    $template->render($batch);
+    $template->render({ request => $request,
+                        batch => $batch });
 }
 
 =item create_vouchers

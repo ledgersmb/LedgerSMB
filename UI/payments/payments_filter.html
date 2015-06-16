@@ -54,14 +54,14 @@
 			default_blank=1
 			options=departments
 			value_attr='id'
-			text_attr='description' ?>
+			text_attr='description' } ?>
 </div>
 <?lsmb END ?>
 
 <?lsmb IF account_class == 1 ?>
-<?lsmb vendor_customer_code = text("Vendor Number") # " ?>
+<?lsmb vendor_customer_code = text("Vendor Number") # ' ?>
 <?lsmb ELSIF account_class == 2 ?>
-<?lsmb vendor_customer_code = text("Customer Number") # " ?>
+<?lsmb vendor_customer_code = text("Customer Number") # ' ?>
 <?lsmb END ?>
 
 <?lsmb PROCESS input element_data = {
@@ -81,10 +81,9 @@
 			default_blank=1
 			options=businesses
 			value_attr='id'
-			text_attr='description' ?>
+			text_attr='description' } ?>
 </div>
 <?lsmb END ?>
-</div>
 <div class="inputgroup" id="account_input">
     <?lsmb
      FOREACH a = debt_accounts;
@@ -123,13 +122,12 @@
 <?lsmb currencies = [];
 	    FOREACH c IN openCurrencies ;
           k = c.keys.first;
-		    currencies.push { value = c.$k, text = c.$k } 
+		    currencies.push( { value = c.$k, text = c.$k } );
        END;
 	    PROCESS select element_data = {
 		      name="currency"
 		      id="currency"
-		      options=currencies ?>
-</div>
+		      options=currencies } ?>
 </div>
 <div class="listtop"><?lsmb text('Payment Processing') ?></div>
 	
@@ -137,7 +135,7 @@
           IF account_class == 1; pay_label = text('Pay From');#'
           ELSIF account_class == 2; pay_label = text('Pay To'); #'
           END;
-          INCLUDE select element_data = {
+          PROCESS select element_data = {
 		name = "cash_accno"
 		default_values = [cash_accno]
 		options = cash_accounts
