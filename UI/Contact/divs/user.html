@@ -125,7 +125,7 @@
                 };
            ?>
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
-           <div data-dojo-type="lsmb/lib/TabularForm" data-dojo-props="cols:2">
+           
             <table>
                 <!-- Groups section -->
                 <tr>
@@ -142,7 +142,7 @@
                         <?lsmb PROCESS input element_data = {
                                type = "checkbox"
                                title = role.description
-                               label = "_none_"
+                               label = role.description
                                value = 1
                                name = role.rolname
                                id = role.rolname
@@ -162,7 +162,7 @@
                           value = "save_roles"
                     } ?></td>
                 </tr>
-            </table></div>
+            </table>
         </form>   
 <?lsmb END ?>
 </div>
