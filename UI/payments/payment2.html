@@ -2,6 +2,7 @@
     include_script = [ 'UI/payments/javascript/maximize_minimize.js' ] ?>
 <body id="payment_2_body" class="<?lsmb dojo_theme ?>"
 onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/down.gif','UI/payments/img/up.gif') ">
+  <div id="payments">
   <form name="pay_single_dues" method="post" action="payment.pl">
 
     <?lsmb PROCESS elements.html  # Include form elements helper. ?>
@@ -196,14 +197,18 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
         <?lsmb END ?> 
         <?lsmb #This should be computed and updated to the div using  ?> 
         <?lsmb topay_subtotal=topay_subtotal + row.topay_fx.value; -?>
-        <td align="center"><?lsmb  row.topay_fx.id=row.topay_fx.name;PROCESS input element_data={id=>row.topay_fx.id,name=>row.topay_fx.name,value=>format_amount(row.topay_fx.value)}; -?>
-          <?lsmb # A DEGRADABLE JAVASCRIPT IS USED, BECAUSE OF THE VISUAL IMPACT
-    	           # THAT CAUSES THE SIZE OF THIS DIV -?>
-          <img src="UI/payments/img/up.gif" id="button_topay_<?lsmb row.invoice.id ?>" name="<?lsmb "button_topay_$i" ?>"
-               onClick="maximize_minimize(event, 'div_topay_<?lsmb row.invoice.id ?>',
-                        'topaystate_<?lsmb row.invoice.id ?>' ,this,
-                        'UI/payments/img/down.gif', 'UI/payments/img/up.gif')">
-          <div id="div_topay_<?lsmb row.invoice.id ?>">
+        <td align="center"><?lsmb row.topay_fx.id=row.topay_fx.name;
+                                  PROCESS input element_data = {
+                                      type = "text"
+                                      id = row.topay_fx.id
+                                      name = row.topay_fx.name
+                                      value = format_amount(row.topay_fx.value)
+                                  } ?>
+          <img src="UI/payments/img/up.gif"
+               data-dojo-type="lsmb/lib/MaximizeMinimize"
+               data-dojo-props="mmNodeId: 'div_topay_<?lsmb row.invoice.id ?>'"
+               class="details-toggler">
+          <div id="div_topay_<?lsmb row.invoice.id ?>" class="<?lsmb alterning_style ?> details-popup" >
             <table>
               <tr id="<?lsmb "account-row$i"?>">
                 <?lsmb # here goes all the posible accounts were the paid can be  done ?>
@@ -462,5 +467,6 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
   <?lsmb END -?>
   </div>          
  </form>
+  </div>
 </body>
 </html>

@@ -236,7 +236,7 @@ html, body {
 
 /*********** payments *************/
 
-
+/*
 #payments table.detail_table_visible {
 	display: block;
 }
@@ -259,6 +259,7 @@ html, body {
 	margin-right: 1em;
 }
 
+
 #payments input {
 	float: left;
 }
@@ -267,6 +268,7 @@ html, body {
 #payments input[type="radio"]{
 	float: none;
 }
+*/
 
 #payments .details_select input[type="radio"] {
         float: left;
@@ -277,4 +279,19 @@ html, body {
 #payments span.input {
      display: block;
      float: left;
+}
+
+#payments .details-popup {
+    position: absolute;
+    z-index: 100;
+    padding: 3px;
+    border-radius: 6px;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+
+#payments img.details-toggler {
+    height: 0.5em;
+    width: auto;
 }
