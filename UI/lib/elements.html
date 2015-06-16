@@ -77,7 +77,7 @@
 	      IF !element_data.type.defined();
 	          element_data.type = "text";
 	      END;
-         IF element_data.class == 'date';
+         IF 'date' == element_data.class && 'text' == element_data.type;
              # In the old days, text INPUTs had a class of 'date'
              # to signal the requirement for conversion to date widget
              element_data.type = "date";
