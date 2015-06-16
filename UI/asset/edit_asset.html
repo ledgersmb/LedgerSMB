@@ -4,6 +4,7 @@
 ?>
 <?lsmb PROCESS 'elements.html' ?>
 <body onLoad="init()" class="<?lsmb dojo_theme ?>">
+<div id="assets">
 <div class="listtop"><?lsmb asset.title ?></div>
 <form action="<?lsmb request.script ?>" method="post">
 <!-- These are for Javascript automation of defaults -CT -->
@@ -72,7 +73,7 @@
 	name = "purchase_date"
 	class = "date"
 	value = asset.purchase_date
-	type = "text"
+	type = "date"
 	size = 12
 } ?>
 </span>
@@ -117,7 +118,7 @@
 	label = text("Depreciation Starts") #'
 	name = "start_depreciation"
 	value = asset.start_depreciation
-	type = "text"
+	type = "date"
 	size = 12
    class = "date"
 } ?>
@@ -211,5 +212,6 @@
 } ?>
 </div>
 </form>
+</div>
 </body>
 </html>

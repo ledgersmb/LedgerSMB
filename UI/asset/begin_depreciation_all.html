@@ -2,6 +2,7 @@
        include_stylesheet = ["UI/asset/asset.css"] -?>
 <?lsmb PROCESS "elements.html" -?>
 <body class="<?lsmb dojo_theme ?>">
+<div id="assets">
 <div class="listtop"><?lsmb text('Depreciate All') ?></div>
 <form action="<?lsmb request.script ?>" method="post">
 <div class="inputrow" id="daterow"><div class="inputgroup" id="dategroup">
@@ -29,5 +30,6 @@
 } ?>
 </div></div>
 </form>
+</div>
 </body>
 </html>

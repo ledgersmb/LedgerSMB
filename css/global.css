@@ -79,3 +79,30 @@ html, body {
 div.table { display: table;}
 form.tr, div.tr { display: table-row; }
 div.td, div.th {display: table-cell; }
+
+
+/********* For assets editing page ********/
+
+#assets label
+{ display: block;
+	float: left;
+	width: 170px;	
+	text-align: right;
+}
+
+#assets span.inputgroup
+{ display: block;
+	float: left;
+	width: 40%;
+}
+
+#assets div.inputrow
+{
+	overflow: auto;
+	width: 100%;
+}
+
+#assets .invisible
+{
+       display: none;
+}
