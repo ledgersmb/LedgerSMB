@@ -816,7 +816,7 @@ my $unhandled_overpayment;
 for my $ref (0 .. $#array_options) {
  $array_options[$ref]->{invoice_date} = $array_options[$ref]->{invoice_date}->to_output;
  if (  !$request->{"checkbox_$array_options[$ref]->{invoice_id}"}) {
-   my $request_topay_fx_bigfloat=$LedgerSMB::PGNumber->from_input($request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
+   my $request_topay_fx_bigfloat=LedgerSMB::PGNumber->from_input($request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
 # SHOULD I APPLY DISCCOUNTS?   
       $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} = $request->{first_load}? "on":  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"};
 
