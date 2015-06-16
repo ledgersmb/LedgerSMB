@@ -20,7 +20,6 @@ This module provides the workflow scripts for managing users and permissions.
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::Admin;
 use LedgerSMB::DBObject::User;
-use Data::Dumper;
 use LedgerSMB::Setting;
 use Log::Log4perl;
 
