@@ -232,3 +232,49 @@ html, body {
 #reconciliation table {
 	border: 0;
 }
+
+
+/*********** payments *************/
+
+
+#payments table.detail_table_visible {
+	display: block;
+}
+#payments table.detail_table_hidden{
+	display: none;
+}
+
+#payments div.selectall {
+       float: left;
+}
+
+#payments div {
+	overflow: auto;
+}
+
+#payments label {
+	text-align: right;
+        float: left;
+	width: 8em;
+	margin-right: 1em;
+}
+
+#payments input {
+	float: left;
+}
+
+#payments input[type="checkbox"],
+#payments input[type="radio"]{
+	float: none;
+}
+
+#payments .details_select input[type="radio"] {
+        float: left;
+}
+#payments select {
+	float: left;
+}
+#payments span.input {
+     display: block;
+     float: left;
+}
