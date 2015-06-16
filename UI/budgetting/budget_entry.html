@@ -4,7 +4,7 @@
     PROCESS elements.html; 
     PROCESS report_base.html; ?>
 <body class="<?lsmb dojo_theme ?>">
-
+<div id="budgets">
 <form method="post" action="<?lsmb request.script ?>">
 <div id="budget-header">
 <div class="listtop"><?lsmb title ?></div>
@@ -189,5 +189,6 @@
 <?lsmb note.note ?>
 </div>
 <?lsmb END # FOREACH Note ?>
+</div>
 </body>
 </html>

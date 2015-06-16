@@ -115,3 +115,22 @@ html, body {
 
 
 #credit_div table label { display: inline-block; width: 12ex; }
+
+
+
+
+#budgets div.input_row {
+    overflow: auto;
+}
+#budgets div.input_group {
+    float: left;
+    width: 35em;
+}
+
+#budgets div label {
+    text-align: right;
+    width: 7em;
+    display: block;
+    float: left;
+    padding-right: 3px;
+}
