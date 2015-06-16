@@ -25,6 +25,7 @@ PROCESS dynatable
    ];
 ?>
 <form name="bank_acct" action="<?lsmb request.script ?>" method="post">
+<div data-dojo-type="lsmb/lib/TabularForm" data-dojo-props="cols:1">
 <?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "form_id"
@@ -44,7 +45,7 @@ PROCESS dynatable
 		type="hidden" 
 		name="bank_account_id" 
 		value=request.id
-	} ?><div data-dojo-type="lsmb/lib/TabularForm" data-dojo-props="cols:1">
+	} ?>
 	<div>
 	<?lsmb INCLUDE input element_data = {
 		type="text" 
@@ -65,7 +66,7 @@ PROCESS dynatable
 		size=20
                 required = 'true'
 	} #' ?>
-	</div></div>
+	</div>
 	<div>
 	<?lsmb PROCESS input element_data = {
 		type="text" 
@@ -76,6 +77,7 @@ PROCESS dynatable
 		size=30
 	} # ?>
 	</div>
+</div>
 	<div><?lsmb PROCESS button element_data = {
 		name="action" 
 		value="save_bank_account"
