@@ -356,7 +356,7 @@ onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/dow
 				     value = item.id _ '--' _ item.accno _ '--' _ item.description
 				 });
 				 END;
-				 PROCESS select element_data {
+				 PROCESS select element_data = {
 					  id="overpayment_account_" _ overpayment_item
 					  name="overpayment_account_" _ overpayment_item
 				     options=options } ?>
