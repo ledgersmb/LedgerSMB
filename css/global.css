@@ -76,9 +76,11 @@ html, body {
 
 /********* For business units editing page ********/
 
-div.table { display: table;}
-form.tr, div.tr { display: table-row; }
-div.td, div.th {display: table-cell; }
+#business_units div.table { display: table;}
+#business_units form.tr,
+#business_units div.tr { display: table-row; }
+#business_units div.td,
+#business_units div.th {display: table-cell; }
 
 
 /********* For assets editing page ********/
