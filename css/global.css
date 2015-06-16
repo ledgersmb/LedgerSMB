@@ -196,3 +196,39 @@ html, body {
        text-align: center;
 }
 
+/****** Reconciliation ****/
+
+
+#reconciliation #cleared-table {
+	width: 800px;
+}
+
+#reconciliation #outstanding-table {
+	width: 800px;
+}
+
+#reconciliation #error-table {
+	width: 800px;
+}
+
+#reconciliation span.heading {
+	font-weight: bold;
+}
+
+#reconciliation table.info tr th {
+	text-align: left;
+}
+
+#reconciliation tr.spacer {
+	margin-bottom: 100px;
+}
+
+#reconciliation span.data {
+}
+#reconciliation th {
+	font-weight: bold;
+}
+
+#reconciliation table {
+	border: 0;
+}
