@@ -65,7 +65,7 @@ checking a price deal for a customer.
          pm.delete = '[' _ text('Delete') _ ']';
          pm.row_id = pm.entry_id;
      END ?>
-<form name="pricematrix" action="<?lsmb request.script ?>" method="post">
+<form name="pricematrix" action="<?lsmb script ?>" method="post">
  <?lsmb PROCESS input element_data = {
 	type="hidden"
 	name="entity_class"

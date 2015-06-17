@@ -1,12 +1,12 @@
 <?lsmb INCLUDE "ui-header.html";
  PROCESS "elements.html" ?>
 <body class="<?lsmb dojo_theme ?>">
-<div class="listtop"><?lsmb template_name ?>.<?lsmb format ?><?lsmb
+<div class="listtop"><?lsmb template.template_name ?>.<?lsmb template.format ?><?lsmb
  IF language_code; "($language_code)"; ELSE; "(" _ text("No language") _ ")";
  END; ?></div>
-<form action="template.pl" method="post">
+<form action="<?lsmb request.script ?>" method="post">
   <?lsmb PROCESS textarea element_data = {
-			class="template-body " _ format _ " editor" 
+			class="template-body " _ template.format _ " editor" 
 			cols="80"
 			name="template"
 			rows="30" 
@@ -16,18 +16,18 @@
 PROCESS input element_data = {
     type = 'hidden'
     name = 'template_name'
-   value = template_name
+   value = template.template_name
 };
 PROCESS input element_data = {
     type = 'hidden'
     name = "format"
-   value = format
+   value = template.format
 };
 PROCESS select element_data = {
            name = 'language_code'
-        options = languages
+        options = template.languages
   default_blank = 1
- default_values = [language_code]
+ default_values = [template.language_code]
       text_attr = 'description'
      value_attr = 'code'
 };

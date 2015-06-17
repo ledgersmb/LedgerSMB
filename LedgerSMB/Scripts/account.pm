@@ -186,7 +186,8 @@ sub yearend_info {
         locale => $request->{_locale},
         template => 'accounts/yearend'
     );
-    $template->render($eoy);
+    $template->render({ request => $request,
+                        eoy => $eoy});
 }
 
 =item post_yearend

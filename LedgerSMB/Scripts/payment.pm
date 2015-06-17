@@ -91,7 +91,8 @@ sub payments {
         template => 'payments_filter',
         format   => 'HTML',
     );
-    $template->render($payment);
+    $template->render({ request => $request,
+                        payment => $payment });
 }
 
 =item get_search_criteria
@@ -443,6 +444,7 @@ This displays the bulk payment screen with current data.
 
 =cut
 
+use Data::Dumper;
 sub display_payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
@@ -528,7 +530,8 @@ sub display_payments {
         template => 'payments_detail',
         format   => 'HTML', 
     );
-    $template->render($payment);
+    $template->render({ request => $request,
+                        payment => $payment });
 } 
 
 =item payment

@@ -4,17 +4,18 @@ BLOCK HIDDENS;
 PROCESS input element_data = {
     type = 'hidden'
     name = 'template_name'
-   value = template_name
+   value = template.template_name
 };
 PROCESS input element_data = {
     type = 'hidden'
     name = "format"
-   value = format
+   value = template.format
 };
 END
  ?>
 <body class="<?lsmb dojo_theme ?>">
-<form action="template.pl" method="post" enctype="multipart/form-data">
+<form action="<?lsmb request.script ?>" method="post"
+      enctype="multipart/form-data">
 <?lsmb
 PROCESS HIDDENS;
 PROCESS input element_data = {
@@ -35,14 +36,14 @@ PROCESS button element_data = {
  IF language_code; "($language_code)"; ELSE; "(" _ text("No language") _ ")";
  END; ?></div>
 <div class="template_body"><pre><?lsmb content ?></pre></div>
-<form action="template.pl" method="get">
+<form action="<?lsmb request.script ?>" method="get">
 <?lsmb 
 PROCESS HIDDENS;
 PROCESS select element_data = {
            name = 'language_code'
-        options = languages
+        options = template.languages
   default_blank = 1
- default_values = [language_code]
+ default_values = [template.language_code]
       text_attr = 'description'
      value_attr = 'code'
 };

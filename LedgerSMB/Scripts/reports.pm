@@ -103,7 +103,8 @@ sub start_report {
         template => $request->{report_name},
         format => 'HTML'
     );
-    $template->render($request);
+    $template->render($request); # request not used for script;
+                                 # forms submit to other URLs than back to here
 }   
 
 =item list_business_types 

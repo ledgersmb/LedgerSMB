@@ -53,7 +53,8 @@ sub display {
         path     => 'UI/templates',
         template => 'preview',
         format   => 'HTML'
-    )->render($dbtemp);
+    )->render({ request => $request,
+                template => $dbtemp });
 }
 
 =head2 edit($request)
@@ -79,7 +80,8 @@ sub edit {
         path     => 'UI/templates',
         template => 'edit',
         format   => 'HTML'
-    )->render($dbtemp);
+    )->render({ request => $script,
+                template => $dbtemp });
 }
 
 =head2 save($request)
