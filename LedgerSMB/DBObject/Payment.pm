@@ -23,7 +23,7 @@ use LedgerSMB::Num2text;
 use base qw(LedgerSMB::PGOld);
 use strict;
 use Math::BigFloat lib => 'GMP';
-use Data::Dumper;
+
 our $VERSION = '0.1.0';
 
 =head1 METHODS
