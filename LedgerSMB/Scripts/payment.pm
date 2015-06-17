@@ -89,7 +89,7 @@ sub payments {
         locale   => $request->{_locale},
         path     => 'UI/payments',
         template => 'payments_filter',
-        format   => 'HTML', 
+        format   => 'HTML',
     );
     $template->render($payment);
 }
@@ -457,7 +457,7 @@ sub display_payments {
     } else {
         $payment->{exchangerate} = undef;
     }
-    $payment->{grand_total} = 0;
+    $payment->{grand_total} = LedgerSMB::PGNumber->from_input(0);
     for (@{$payment->{contact_invoices}}){
         my $contact_total = 0;
         my $contact_to_pay = 0;
