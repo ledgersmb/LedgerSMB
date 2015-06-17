@@ -4,13 +4,13 @@ LedgerSMB::PGNumeric
 
 =cut
 
+
+package LedgerSMB::PGNumber;
+use base qw(PGObject::Type::BigFloat);
 use strict;
 use warnings;
 use Number::Format;
 use LedgerSMB::Setting;
-
-package LedgerSMB::PGNumber;
-use base qw(PGObject::Type::BigFloat);
 
 PGObject->register_type(pg_type => $_,
                                   perl_class => __PACKAGE__)
