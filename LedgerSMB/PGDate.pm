@@ -4,7 +4,6 @@ LedgerSMB::PgDate
 =cut
 
 package LedgerSMB::PGDate;
-use Moose;
 use DateTime::Format::Strptime;
 use LedgerSMB::App_State;
 use Carp;
