@@ -237,10 +237,10 @@
 					<?lsmb # END # IF action ... -?>
 					<?lsmb INCLUDE input element_data = {
 						type    = "checkbox"
-						name    = "id_$r.contact_id"
+						name    = "id_" _ r.contact_id
 						value   = r.contact_id
 						checked = (r.selected) ? "checked" : undef 
-                        			payment.class   = 'contactcb'
+                  class   = 'contactcb'
 			
 					} ?>
 					<?lsmb r.econtrol_code ?> -- 
@@ -262,23 +262,23 @@
 					<div class="details_select">
 						<div class="input">
 							<?lsmb INCLUDE input element_data = {
-								name    = "paid_$r.contact_id"
+								name    = "paid_" _ r.contact_id
 								value   = "some"
 								class   = "paid_some"
-								id      = "paid-some-$r.contact_id"
+								id      = "paid-some-" _ r.contact_id
 								label   = text('Some')
-								checked = (payment.${"paid_$r.contact_id"} == 'some') ? "checked" : ""
+								checked = (${"paid_$r.contact_id"} == 'some') ? "checked" : ""
 								type    = "radio"
 							 }	?>
 						</div>
 						<div class="input">
 							<?lsmb INCLUDE input element_data = {
-								name    = "paid_$r.contact_id"
+								name    = "paid_" _ r.contact_id
 								value   = "all"
 								class   = "paid_all"
-								id      = "paid-all-$r.contact_id"
+								id      = "paid-all-" _ $r.contact_id
 								label   = text('All')
-								checked = (payment.${"paid_$r.contact_id"} != 'some') ? "checked" : ""
+								checked = (${"paid_$r.contact_id"} != 'some') ? "checked" : ""
 								type    = "radio"
 						 }	?>
 						</div>
@@ -357,12 +357,12 @@
 											class = "monetary" } ?>
 										<?lsmb PROCESS input element_data = {
 											type = "hidden"
-											name = "invoice_${r.contact_id}_$icount"
+											name = "invoice_" _ r.contact_id _ "_$icount"
 											value = i.0 } ?>
 										<?lsmb PROCESS input element_data = {
 											type = "hidden"
 											name = "net_$i.0"
-											value = ${"payment_$r.contact_id_$i.0"} } ?>
+											value = payment.${"$r.contact_id_$i.0"} } ?>
 									</td>
 								</tr>
 							<?lsmb ELSE #not $i.7 ?>
@@ -395,7 +395,7 @@
 
 						<?lsmb INCLUDE input element_data = {
 								 type = "hidden"
-								 name = "invoice_count_${r.contact_id}"
+								 name = "invoice_count_" _ r.contact_id
 								 value = icount
 								 } ?>
 
