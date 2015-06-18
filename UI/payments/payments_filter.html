@@ -14,7 +14,10 @@
 	?><?lsmb END ?>
 	<?lsmb text("Filtering $t") ?>
 </div>
-<form name="search" method="post" action="<?lsmb request.script ?>">
+<form name="search" method="post"
+      <?lsmb # action set explicitly,
+             # because this file renders from vouchers.pl ?>
+      action="payment.pl">
 	
 <?lsmb PROCESS input element_data={
 	value = payment.account_class
