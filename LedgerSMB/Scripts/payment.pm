@@ -77,6 +77,8 @@ TT2 system.
 
 =cut
 
+use Data::Dumper;
+
 sub payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
@@ -91,6 +93,7 @@ sub payments {
         template => 'payments_filter',
         format   => 'HTML',
     );
+
     $template->render({ request => $request,
                         payment => $payment });
 }

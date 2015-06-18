@@ -16,18 +16,17 @@
 </div>
 <form name="search" method="post" action="<?lsmb request.script ?>">
 	
-
-<?lsmb INCLUDE input element_data={
+<?lsmb PROCESS input element_data={
 	value = payment.account_class
 	type = "hidden"
 	name = "account_class"
 } ?>
-<?lsmb INCLUDE input element_data={
+<?lsmb PROCESS input element_data={
 	value = payment.batch_id
 	type = "hidden"
 	name = "batch_id"
 } ?>
-<?lsmb INCLUDE input element_data={
+<?lsmb PROCESS input element_data={
 	value = payment.batch_date
 	type = "hidden"
 	name = "batch_date"
@@ -58,9 +57,9 @@
 </div>
 <?lsmb END ?>
 
-<?lsmb IF payment.account_class == 1 ?>
+<?lsmb IF request.account_class == 1 ?>
 <?lsmb vendor_customer_code = text("Vendor Number") # ' ?>
-<?lsmb ELSIF payment.account_class == 2 ?>
+<?lsmb ELSIF request.account_class == 2 ?>
 <?lsmb vendor_customer_code = text("Customer Number") # ' ?>
 <?lsmb END ?>
 
@@ -68,7 +67,7 @@
 	name = "meta_number"
 	type = "text"
 	value = payment.meta_number
-	label = payment.vendor_customer_code
+	label = vendor_customer_code
 	size = '15'
 } ?>
 
@@ -127,7 +126,7 @@
 	    PROCESS select element_data = {
 		      name="currency"
 		      id="currency"
-		      options=payment.currencies } ?>
+		      options=currencies } ?>
 </div>
 <div class="listtop"><?lsmb text('Payment Processing') ?></div>
 	
@@ -167,7 +166,7 @@
 
 
 <div class = "inputgroup">
-<?lsmb INCLUDE input element_data = {
+<?lsmb PROCESS input element_data = {
 	type = "text"
 	size = "20"
 	name = "source_start"
@@ -175,7 +174,7 @@
 } # '?>
 </div>
 <div>
-<?lsmb INCLUDE button element_data = {
+<?lsmb PROCESS button element_data = {
 	type = "submit"
 	name = "action"
 	text = text('Continue')
