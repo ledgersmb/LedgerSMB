@@ -14,54 +14,53 @@ function submit_form() {
     var confirm_pass = document.prefs.confirm_password.value;
 
     if (old_password != "" && new_password != "" && confirm_pass != "") {
-		  r('user.pl',
-			 {
-				  'data': {
-						'action': 'change_password',
-						'old_password': old_password,
-						'new_password': new_password,
-						'confirm_password': confirm_pass
-				  },
-				  'method': 'POST',
-				  'sync': true
-			 }).otherwise(function(err) {
-				  // error branch of the response; can't see 200 here
-				  var status = err.response.status;
-				  if (status != '454'){
-  						alert("Access Denied:  Bad username/Password ("+status+")");
-				  } else {
-                  alert('Company does not exist.');
-				  }
-				  do_submit = false;
-			 });
+	r('user.pl',
+	  {
+	      'data': {
+		  'action': 'change_password',
+		  'old_password': old_password,
+		  'new_password': new_password,
+		  'confirm_password': confirm_pass
+	      },
+	      'method': 'POST',
+	      'sync': true
+
+	  }).otherwise(function(err) {
+              if (err.response.status != 200){
+		  if (err.response.status != '454'){
+  		      alert("Access Denied:  Bad username/Password ("+res.status+")");
+		  } else {
+                      alert('Company does not exist.');
+		  }
+		  do_submit = false;
+	      }
+	  });
         
-		  if (do_submit) {
-				r('login.pl',
-				  {
-						'data': {
-							 'action': 'authenticate',
-							 'company': document.prefs.company.value,
-						},
-						'user': login,
-						'password': new_password,
-						'sync': true,
-						'method': 'POST'
-				  }).then(function(res) {
-						document.prefs.old_password.value = '';
-						document.prefs.new_password.value = '';
-						document.prefs.confirm_password.value = '';
+	if (do_submit) {
+	    r('login.pl',
+	      {
+		  'data': {
+		      'action': 'authenticate',
+		      'company': document.prefs.company.value,
+		  },
+		  'user': login,
+		  'password': new_password,
+		  'sync': true,
+		  'method': 'POST'
+	      }).then(function(res) {
+		  document.prefs.old_password.value = '';
+		  document.prefs.new_password.value = '';
+		  document.prefs.confirm_password.value = '';
               });
-		  }
+	}
     }
-	 require(['dojo/dom-form'],function(f) {
-		  if (do_submit) {
-				r('',
-				  {
-						'data': f.toQuery('prefs'),
-						'method': 'POST'
-				  });
-		  }
-	 });
+    if (do_submit) {
+	r('',
+	  {
+	      'data': document.prefs.formToObject(),
+	      'method': 'POST'
+	  });
+    }
     
     return false;
 }
