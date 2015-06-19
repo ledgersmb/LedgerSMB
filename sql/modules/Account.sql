@@ -449,6 +449,20 @@ COMMENT ON FUNCTION account_heading_save
 (in_id int, in_accno text, in_description text, in_parent int) IS
 $$ Saves an account heading. $$;
 
+CREATE OR REPLACE FUNCTION account_heading__delete(in_id int)
+RETURNS BOOL AS
+$$
+BEGIN
+DELETE FROM account_heading WHERE id = in_id;
+RETURN FOUND;
+END;
+$$ LANGUAGE PLPGSQL;
+
+COMMENT ON FUNCTION account_heading__delete(int) IS
+$$ This deletes an account heading with the id specified.  If the heading has 
+accounts associated with it, it will fail and raise a foreign key constraint.
+$$;
+
 CREATE OR REPLACE RULE chart_i AS ON INSERT TO chart
 DO INSTEAD
 SELECT CASE WHEN new.charttype='H' THEN 
@@ -585,20 +599,30 @@ l(account_id, link) AS (
      SELECT account_id, array_to_string(array_agg(description), ':')
        FROM account_link
    GROUP BY account_id
+),
+hh(parent_id) AS (
+     SELECT parent_id
+       FROM account_heading
+),
+ha(heading) AS (
+     SELECT heading
+       FROM account
 )
 SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno, 
        CASE WHEN sum(ac.amount) < 0 THEN sum(amount) * -1 ELSE null::numeric
         END,
        CASE WHEN sum(ac.amount) > 0 THEN sum(amount) ELSE null::numeric END,
-       count(ac.*), l.link
-  FROM (SELECT id,false as is_heading, accno, description, gifi_accno
+       count(ac.*)+count(hh.*)+count(ha.*), l.link
+  FROM (SELECT id, heading, false as is_heading, accno, description, gifi_accno
           FROM account
          UNION
-        SELECT id, true, accno, description, null::text 
+        SELECT id, parent_id, true, accno, description, null::text 
           FROM account_heading) a
 
  LEFT JOIN ac ON ac.chart_id = a.id AND not a.is_heading
  LEFT JOIN l ON l.account_id = a.id AND NOT a.is_heading
+ LEFT JOIN hh ON hh.parent_id = a.id AND a.is_heading
+ LEFT JOIN ha ON ha.heading = a.id AND a.is_heading
   GROUP BY a.id, a.is_heading, a.accno, a.description, a.gifi_accno, l.link
   ORDER BY a.accno;
 

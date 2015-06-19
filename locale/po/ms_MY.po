@@ -1,0 +1,5146 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <kaiserfarrell@gmail.com>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-11-18 05:05-0800\n"
+"PO-Revision-Date: 2014-12-7 14:00+ZONE\n"
+"Last-Translator: kaiserfarrell <kaiserfarrell@gmail.com>\n"
+"Language-Team: LedgerSMB Malaysia <https://www.fb,me/groups/1512686172349251/>\n"
+"Language: Malay \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: lsmb-request.pl:77
+msgid "No workflow script specified"
+msgstr "Tiada workflow script yang dinyatakan"
+
+#: lsmb-request.pl:104
+msgid "Unable to open script"
+msgstr "Tidak boleh membuka script"
+
+#: lsmb-request.pl:108
+msgid "Action Not Defined: "
+msgstr "Tindakan tidak ditakrif: "
+
+#: old-handler.pl:153
+msgid "You are logged out!"
+msgstr "Anda sudah daftar keluar!"
+
+#: old-handler.pl:154
+msgid "Login"
+msgstr "Daftar masuk"
+
+#: old-handler.pl:195
+msgid "Version"
+msgstr "Versi"
+
+#: old-handler.pl:204
+msgid "Action not defined!"
+msgstr "Tindakan tidak ditakrif!"
+
+#: bin/am.pl:54 LedgerSMB/Scripts/configuration.pm:84
+msgid "GL Reference Number"
+msgstr "Nombor rujukan GL"
+
+#: bin/am.pl:56 LedgerSMB/Scripts/configuration.pm:86
+msgid "Sales Invoice/AR Transaction Number"
+msgstr "jualan invois/nombor urus niaga AR"
+
+#: bin/am.pl:57 LedgerSMB/Scripts/configuration.pm:87
+msgid "Max per dropdown"
+msgstr "Maksima setiap penurunan"
+
+#: bin/am.pl:58 LedgerSMB/Scripts/configuration.pm:88
+msgid "Sales Order Number"
+msgstr "Nombor pesanan jualan"
+
+#: bin/am.pl:60 LedgerSMB/Scripts/configuration.pm:90
+msgid "Vendor Invoice/AP Transaction Number"
+msgstr "invois pembekal/nombor urus niaga AP"
+
+#: bin/am.pl:61 LedgerSMB/Scripts/configuration.pm:91
+msgid "Sales Quotation Number"
+msgstr "Nombor Sebut Harga Jualan"
+
+#: bin/am.pl:62 bin/oe.pl:504 LedgerSMB/Scripts/configuration.pm:92
+msgid "RFQ Number"
+msgstr "Nombor RFQ"
+
+#: bin/am.pl:63 bin/pe.pl:1479 bin/oe.pl:2125 bin/oe.pl:2203 bin/oe.pl:2237
+#: bin/oe.pl:2488 LedgerSMB/Scripts/configuration.pm:93
+#: LedgerSMB/Report/Inventory/Search.pm:193
+#: LedgerSMB/Report/Inventory/Adj_Details.pm:78
+#: LedgerSMB/Report/PNL/Product.pm:77 LedgerSMB/Report/Contact/History.pm:69
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:78
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Product.pm:77
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:69
+msgid "Part Number"
+msgstr "Bahagian nombor"
+
+#: bin/am.pl:64 LedgerSMB/Scripts/configuration.pm:94
+msgid "Job/Project Number"
+msgstr "Nombor Tugasan/Projek"
+
+#: bin/am.pl:65 LedgerSMB/Scripts/configuration.pm:95
+msgid "Employee Number"
+msgstr "Nombor Pekerja"
+
+#: bin/am.pl:66 bin/io.pl:2002 bin/aa.pl:1615
+#: UI/payments/payments_filter.html:65 LedgerSMB/Scripts/configuration.pm:96
+#: LedgerSMB/Report/Invoices/Payments.pm:114
+#: LedgerSMB/Report/Invoices/Payments.pm:184 LedgerSMB/Report/Margin/ECA.pm:83
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Margin/ECA.pm:83
+msgid "Customer Number"
+msgstr "Nombor Pelanggan"
+
+#: bin/am.pl:67 bin/io.pl:2003 bin/aa.pl:1624
+#: UI/payments/payments_filter.html:63 LedgerSMB/Scripts/configuration.pm:97
+#: LedgerSMB/Report/Invoices/Payments.pm:112
+#: LedgerSMB/Report/Invoices/Payments.pm:182
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:156
+msgid "Vendor Number"
+msgstr "Nombor Pembekal"
+
+#: bin/am.pl:68 LedgerSMB/Scripts/configuration.pm:101
+msgid "Check Prefix"
+msgstr "Semak Imbuhan"
+
+#: bin/am.pl:69 LedgerSMB/Scripts/configuration.pm:54
+msgid "Password Duration"
+msgstr "Jangka Masa Kata Laluan"
+
+#: bin/am.pl:70 LedgerSMB/Scripts/configuration.pm:27
+msgid "Default Email To"
+msgstr "Tetapan utama Email kepada"
+
+#: bin/am.pl:71 LedgerSMB/Scripts/configuration.pm:29
+msgid "Default Email CC"
+msgstr "Tetapan utama Email CC"
+
+#: bin/am.pl:72 LedgerSMB/Scripts/configuration.pm:31
+msgid "Default Email BCC"
+msgstr "Tetapan utama Email BCC"
+
+#: bin/am.pl:74 LedgerSMB/Scripts/configuration.pm:33
+msgid "Default Email From"
+msgstr "Tetapan utama Email daripada"
+
+#: bin/am.pl:75 LedgerSMB/Scripts/configuration.pm:21
+#: LedgerSMB/Report/Invoices/Payments.pm:146
+msgid "Company Name"
+msgstr "Nama Syarikat"
+
+#: bin/am.pl:76 LedgerSMB/Scripts/configuration.pm:22
+msgid "Company Address"
+msgstr "Alamat Syarikat"
+
+#: bin/am.pl:77 LedgerSMB/Scripts/configuration.pm:23
+msgid "Company Phone"
+msgstr "Nombor Telefon Syarikat"
+
+#: bin/am.pl:78 LedgerSMB/Scripts/configuration.pm:24
+msgid "Company Fax"
+msgstr "Faks Syarikat"
+
+#: bin/am.pl:80 LedgerSMB/Scripts/configuration.pm:35
+msgid "Company Sales Tax ID"
+msgstr "ID Cukai Jualan Syarikat"
+
+#: bin/am.pl:82 LedgerSMB/Scripts/configuration.pm:37
+msgid "Company License Number"
+msgstr "Nombor Lesen Syarikat"
+
+#: bin/am.pl:111 bin/am.pl:122 bin/am.pl:334 bin/ir.pl:911 bin/ic.pl:865
+#: bin/is.pl:981 bin/pe.pl:460 bin/pe.pl:665 bin/pe.pl:1043 bin/aa.pl:1026
+#: bin/gl.pl:286 bin/oe.pl:804
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:138
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:138
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:138
+#: UI/business_units/edit.html:82 UI/asset/edit_asset.html:206
+#: UI/asset/import_asset.html:57 UI/asset/edit_class.html:56
+#: UI/import_csv/import_csv.html:62
+#: addons/1.3/extended_arap/trunk/UI/aa.html:587
+#: addons/1.3/import_trans/trunk/UI/import_trans/import_trans.html:62
+#: LedgerSMB/Scripts/budgets.pm:98 LedgerSMB/Scripts/asset.pm:548
+#: LedgerSMB/Scripts/account.pm:136 LedgerSMB/Scripts/account.pm:147
+msgid "Save"
+msgstr "Simpan"
+
+#: bin/am.pl:113 bin/ic.pl:874 bin/oe.pl:815 LedgerSMB/Scripts/account.pm:138
+msgid "Save as new"
+msgstr "Simpan sebagai baru"
+
+#: bin/am.pl:117 bin/am.pl:339 bin/ic.pl:880 bin/pe.pl:467 bin/pe.pl:672
+#: bin/pe.pl:1044 bin/aa.pl:999 bin/oe.pl:841
+#: addons/1.4/pos/trunk/bin/pos.pl:625
+#: addons/1.3/extended_arap/trunk/UI/aa.html:620
+#: LedgerSMB/Scripts/account.pm:142 LedgerSMB/Report/Unapproved/Drafts.pm:205
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:228
+#: LedgerSMB/Report/COA.pm:123 LedgerSMB/Report/COA.pm:191
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:205
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:228
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:123
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:191
+msgid "Delete"
+msgstr "Padam"
+
+#: bin/am.pl:139
+msgid "Account Number missing!"
+msgstr "Nombor Akaun hilang!"
+
+#: bin/am.pl:140
+msgid "Account Type missing!"
+msgstr "Jenis Akaun hilang!"
+
+#: bin/am.pl:148
+msgid "Cannot set account for more than one of AR, AP or IC"
+msgstr "Tidak boleh tentukan akaun untuk lebih daripada satu AR,AP atau IC"
+
+#: bin/am.pl:158
+msgid "account cannot be set to any other type of account"
+msgstr "Akaun tidak boleh ditentukan untuk menjadi akaun yang lain"
+
+#: bin/am.pl:169
+msgid "Cannot set multiple options for %1"
+msgstr "Tidak boleh tentukan banyak pilihan untuk %1"
+
+#: bin/am.pl:174
+msgid "Account saved!"
+msgstr "Akaun disimpan!"
+
+#: bin/am.pl:177
+msgid "Cannot save account!"
+msgstr "Akaun tidak boleh disimpan!"
+
+#: bin/am.pl:189 LedgerSMB/Report/Trial_Balance.pm:137
+#: LedgerSMB/Report/COA.pm:97 LedgerSMB/Report/GL.pm:153
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:137
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:97
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:153
+#: tools/dbstrings:124 tools/dbstrings:86
+msgid "GIFI"
+msgstr "GIFI"
+#: bin/am.pl:230
+msgid "CSV Report"
+msgstr "Laporan CSV"
+
+#: bin/am.pl:288
+msgid "Account does not exist!"
+msgstr "Akaun tidak wujud"
+
+#: bin/am.pl:311
+msgid "%1 GIFI"
+msgstr "%1 GIFI"
+
+#: bin/am.pl:345
+msgid "Copy to COA"
+msgstr "Salin kepada COA"
+
+#: bin/am.pl:368 bin/am.pl:376
+msgid "GIFI missing!"
+msgstr "GIFI hilang"
+
+#: bin/am.pl:370
+msgid "GIFI saved!"
+msgstr "GIFI disimpan"
+
+#: bin/am.pl:407
+msgid "GIFI deleted!"
+msgstr "GIFI dipadam"
+
+#: bin/am.pl:474 tools/dbstrings:154 tools/dbstrings:111
+msgid "Type of Business"
+msgstr "Jenis Bisnes"
+
+#: bin/am.pl:479 bin/am.pl:644 bin/am.pl:809 bin/am.pl:1011 bin/am.pl:1641
+#: bin/ir.pl:512 bin/ic.pl:770 bin/ic.pl:1098 bin/ic.pl:1161 bin/ic.pl:1199
+#: bin/ic.pl:1677 bin/ic.pl:2438 bin/ic.pl:2510 bin/arap.pl:391 bin/io.pl:208
+#: bin/io.pl:530 bin/io.pl:2120 bin/is.pl:533 bin/pe.pl:742 bin/pe.pl:788
+#: bin/pe.pl:817 bin/pe.pl:1484 bin/aa.pl:678 bin/aa.pl:726 bin/aa.pl:1540
+#: bin/oe.pl:1910 bin/oe.pl:2129 bin/oe.pl:2207 bin/oe.pl:2241 bin/oe.pl:2490
+#: addons/1.4/pos/trunk/bin/pos.pl:747
+#: addons/1.3/b_units/trunk/scripts/business_unit.pl:134
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:40
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:378
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:40
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:378
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:40
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:378
+#: UI/Reports/filters/trial_balance.html:84 UI/create_batch.html:22
+#: UI/Contact/divs/credit.html:22 UI/Contact/divs/credit.html:68
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:22
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:68
+#: addons/1.3/report_framework/trunk/UI/Reports/filters/trial_balance.html:84
+#: addons/1.3/extended_arap/trunk/UI/aa.html:290
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:17
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/search.html:100
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:16
+#: LedgerSMB/Scripts/asset.pm:166 LedgerSMB/Scripts/asset.pm:313
+#: LedgerSMB/Scripts/asset.pm:496 LedgerSMB/Scripts/asset.pm:799
+#: LedgerSMB/Scripts/asset.pm:870 LedgerSMB/Scripts/asset.pm:1006
+#: LedgerSMB/Scripts/business_unit.pm:139
+#: LedgerSMB/Report/Trial_Balance/List.pm:51 LedgerSMB/Report/Aging.pm:105
+#: LedgerSMB/Report/Unapproved/Drafts.pm:95
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:102
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:111
+#: LedgerSMB/Report/co/Caja_Diaria.pm:71
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:70 LedgerSMB/Report/Timecards.pm:104
+#: LedgerSMB/Report/Timecards.pm:116 LedgerSMB/Report/COA.pm:91
+#: LedgerSMB/Report/Inventory/Search.pm:197
+#: LedgerSMB/Report/Inventory/Adj_Details.pm:81
+#: LedgerSMB/Report/Budget/Variance.pm:66
+#: LedgerSMB/Report/Budget/Variance.pm:110
+#: LedgerSMB/Report/Budget/Search.pm:83 LedgerSMB/Report/PNL/Product.pm:79
+#: LedgerSMB/Report/GL.pm:98 LedgerSMB/Report/Contact/Search.pm:71
+#: LedgerSMB/Report/Contact/History.pm:73
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:51
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:105
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:95
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:102
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:111
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:71
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:70
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:91
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:81
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:66
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:110
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:83
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Product.pm:79
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:98
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:71
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:73
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:72
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:71
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:40
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:157
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:221 tools/dbstrings:51
+#: tools/dbstrings:61 tools/dbstrings:57 tools/dbstrings:62
+msgid "Description"
+msgstr "Penerangan"
+
+#: bin/am.pl:481
+msgid "Discount %"
+msgstr "Diskaun"
+
+#: bin/am.pl:514 tools/dbstrings:79 tools/dbstrings:68
+msgid "Add Business"
+msgstr "Tambah Bisnes"
+
+#: bin/am.pl:536
+msgid "%1 Business"
+msgstr "%1 Bisnes"
+
+#: bin/am.pl:552 bin/am.pl:721 bin/am.pl:880 bin/am.pl:1569
+msgid "Description missing!"
+msgstr "Penerangan hilang"
+
+#: bin/am.pl:554
+msgid "Business saved!"
+msgstr "Perniagaan disimpan"
+
+#: bin/am.pl:561
+msgid "Business deleted!"
+msgstr "Perniagaan dipadam"
+
+#: bin/am.pl:633
+msgid "Standard Industrial Codes"
+msgstr "Standart kod industri"
+
+#: bin/am.pl:640 bin/am.pl:807 bin/am.pl:1009
+msgid "Code"
+msgstr "kod"
+
+#: bin/am.pl:681 tools/dbstrings:83 tools/dbstrings:72
+msgid "Add SIC"
+msgstr "Tambah SIC"
+
+#: bin/am.pl:703
+msgid "%1 SIC"
+msgstr "%1 SIC"
+
+#: bin/am.pl:720 bin/am.pl:879
+msgid "Code missing!"
+msgstr "kod hilang"
+
+#: bin/am.pl:723
+msgid "SIC saved!"
+msgstr "SIC disimpan"
+
+#: bin/am.pl:730
+msgid "SIC deleted!"
+msgstr "SIC dipadam"
+
+#: bin/am.pl:802
+msgid "Languages"
+msgstr "Bahasa"
+
+#: bin/am.pl:843 tools/dbstrings:81 tools/dbstrings:70
+msgid "Add Language"
+msgstr "Tambah Bahasa"
+
+#: bin/am.pl:866
+msgid "%1 Language"
+msgstr "%1 Bahasa"
+
+#: bin/am.pl:921
+msgid "Language saved!"
+msgstr "Bahasa disimpan"
+
+#: bin/am.pl:927 bin/bp.pl:194 bin/oe.pl:1351
+msgid "Confirm!"
+msgstr "Sah!"
+
+#: bin/am.pl:935
+msgid "Delete Language"
+msgstr "Padam Bahasa"
+
+#: bin/am.pl:946
+msgid "Deleting a language will also delete the templates for the language %1"
+msgstr "Bahasa yang dipadam juga akan memadamkan templat untuk bahasa %1"
+
+#: bin/am.pl:961
+msgid "Language deleted!"
+msgstr "Bahasa dipadam"
+
+#: bin/am.pl:990
+msgid "Default Template"
+msgstr "Tetapan utama templat"
+
+#: bin/am.pl:1027
+msgid "Default"
+msgstr "Tetapan Utama"
+
+#: bin/am.pl:1078 bin/am.pl:1096
+msgid "Edit Template"
+msgstr "Edit Templat"
+
+#: bin/am.pl:1114 bin/aa.pl:1004 bin/gl.pl:275
+#: addons/1.3/extended_arap/trunk/UI/aa.html:634
+msgid "Save Template"
+msgstr "Simpan Templat"
+
+#: bin/am.pl:1130
+msgid "Template saved!"
+msgstr "Templat disimpan"
+
+#: bin/am.pl:1163 tools/dbstrings:75 tools/dbstrings:64
+msgid "Taxes"
+msgstr "Cukai"
+
+#: bin/am.pl:1370
+msgid "Edit Preferences for %1"
+msgstr "keutamaan edit untuk %1"
+
+#: bin/am.pl:1401
+msgid "Taxes saved!"
+msgstr "Cukai disimpan!"
+
+#: bin/am.pl:1404
+msgid "Cannot save taxes!"
+msgstr "Cukai tidak disimpan!"
+
+#: bin/am.pl:1414
+msgid "Password does not match!"
+msgstr "Kata laluan tidak sepadan!"
+
+#: bin/am.pl:1419
+msgid "Preferences saved!"
+msgstr "Pilihan disimpan!"
+
+#: bin/am.pl:1422
+msgid "Cannot save preferences!"
+msgstr "Pilihan tidak disimpan!"
+
+#: bin/am.pl:1491 tools/dbstrings:156 tools/dbstrings:113
+msgid "Warehouses"
+msgstr "Gudang-gudang"
+
+#: bin/am.pl:1530 tools/dbstrings:77 tools/dbstrings:66
+msgid "Add Warehouse"
+msgstr "Tambah Gudang"
+
+#: bin/am.pl:1553
+msgid "%1 Warehouse"
+msgstr "%1 Gudang"
+
+#: bin/am.pl:1571t  
+msgid "Warehouse saved!"
+msgstr "Gudang disimpan!"
+
+#: bin/am.pl:1578
+msgid "Warehouse deleted!"
+msgstr "Gudang dipadam!"
+
+#: bin/am.pl:1585
+msgid "localhost"
+msgstr "localhost"
+
+#: bin/am.pl:1589
+msgid "About"
+msgstr "Tentang"
+
+#: bin/am.pl:1617 tools/dbstrings:202 tools/dbstrings:157
+msgid "Recurring Transactions"
+msgstr "Perulangan Input Transaksi"
+
+#: bin/am.pl:1636 bin/arap.pl:759
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:377
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:377
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:377
+#: LedgerSMB/Report/Unapproved/Drafts.pm:89
+#: LedgerSMB/Report/Unapproved/Drafts.pm:128
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:144
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:105
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:97
+#: LedgerSMB/Report/Budget/Search.pm:78 LedgerSMB/Report/Budget/Search.pm:124
+#: LedgerSMB/Report/GL.pm:92 LedgerSMB/Report/GL.pm:206
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:89
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:128
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:144
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:105
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:97
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:78
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:124
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:92
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:206
+msgid "Reference"
+msgstr "Rujukan"
+
+#: bin/am.pl:1640 bin/bp.pl:384 bin/aa.pl:1635
+#: addons/1.3/b_units/trunk/scripts/business_unit.pl:132
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:14
+#: LedgerSMB/Scripts/asset.pm:165 LedgerSMB/Scripts/asset.pm:631
+#: LedgerSMB/Scripts/asset.pm:1004 LedgerSMB/Scripts/business_unit.pm:137
+#: LedgerSMB/Report/Unapproved/Drafts.pm:79
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:86
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:90
+#: LedgerSMB/Report/Invoices/Transactions.pm:224
+#: LedgerSMB/Report/Invoices/Outstanding.pm:184 LedgerSMB/Report/Orders.pm:208
+#: LedgerSMB/Report/Timecards.pm:108 LedgerSMB/Report/Inventory/Search.pm:188
+#: LedgerSMB/Report/GL.pm:82 LedgerSMB/Report/Contact/Purchase.pm:55
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:79
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:86
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:90
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:82
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:55
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:39
+msgid "ID"
+msgstr "ID"
+
+#: bin/am.pl:1643
+msgid "Next"
+msgstr "Seterusnya"
+
+#: bin/am.pl:1647
+msgid "Ends"
+msgstr "Tamat"
+
+#: bin/am.pl:1650 bin/ir.pl:615 bin/ir.pl:791 bin/is.pl:676 bin/is.pl:836
+#: bin/pe.pl:1489 bin/aa.pl:723 bin/aa.pl:883 bin/aa.pl:1657
+#: addons/1.4/pos/trunk/bin/pos.pl:457
+#: addons/1.3/extended_arap/trunk/UI/aa.html:286
+#: addons/1.3/extended_arap/trunk/UI/aa.html:400
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:116
+#: LedgerSMB/Report/Invoices/Transactions.pm:239
+#: LedgerSMB/Report/Invoices/Outstanding.pm:209 LedgerSMB/Report/Orders.pm:233
+#: LedgerSMB/Report/Contact/Purchase.pm:79
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:116
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:79
+msgid "Amount"
+msgstr "Jumlah"
+
+#: bin/am.pl:1652 bin/arap.pl:726
+msgid "Every"
+msgstr "Setiap"
+
+#: bin/am.pl:1653
+msgid "Times"
+msgstr "Masa"
+
+#: bin/am.pl:1654 bin/arap.pl:583 bin/is.pl:963 bin/oe.pl:808 bin/oe.pl:2014
+msgid "E-mail"
+msgstr "E-mail"
+
+#: bin/am.pl:1655 bin/bp.pl:503 bin/arap.pl:658 bin/is.pl:958 bin/aa.pl:994
+#: bin/oe.pl:803 bin/oe.pl:2011 UI/taxform/details_report.html:55
+#: UI/taxform/summary_report.html:53
+#: addons/1.3/extended_arap/trunk/UI/aa.html:555
+msgid "Print"
+msgstr "Cetak"
+
+#: bin/am.pl:1659 tools/dbstrings:112 tools/dbstrings:76
+msgid "AR"
+msgstr "AR"
+
+#: bin/am.pl:1660 tools/dbstrings:113 tools/dbstrings:77
+msgid "AP"
+msgstr "AP"
+
+#: bin/am.pl:1661
+msgid "GL"
+msgstr "GL"
+
+#: bin/am.pl:1662 LedgerSMB/Report/Orders.pm:186
+#: LedgerSMB/Report/Orders.pm:286 tools/dbstrings:32 tools/dbstrings:34
+#: tools/dbstrings:37 tools/dbstrings:56 tools/dbstrings:65 tools/dbstrings:41
+#: tools/dbstrings:43 tools/dbstrings:46 tools/dbstrings:60
+msgid "Sales Orders"
+msgstr "Pesanan Jualan"
+
+#: bin/am.pl:1663 LedgerSMB/Report/Orders.pm:189
+#: LedgerSMB/Report/Orders.pm:288 tools/dbstrings:33 tools/dbstrings:35
+#: tools/dbstrings:38 tools/dbstrings:71 tools/dbstrings:42 tools/dbstrings:44
+#: tools/dbstrings:47
+msgid "Purchase Orders"
+msgstr "Beli Pesanan"
+
+#: bin/am.pl:1714
+msgid "Next Number"
+msgstr "Nombor Seterusnya"
+
+#: bin/am.pl:1791
+msgid "Process Transactions"
+msgstr "Proses Transaksi"
+
+#: bin/am.pl:1868 bin/arapprn.pl:534 bin/io.pl:1445
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:411
+msgid "Postscript"
+msgstr "Postscript"
+
+#: bin/am.pl:1869 bin/arapprn.pl:535 bin/io.pl:1449
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:412
+msgid "PDF"
+msgstr "PDF"
+
+#: bin/am.pl:2020
+msgid "Posting Sales Invoice %1"
+msgstr "Simpan Invois Jualan %1 "
+
+#: bin/am.pl:2030
+msgid "Posting Vendor Invoice %1"
+msgstr "Simpan Invois Pembekal %1"
+
+#: bin/am.pl:2042 bin/am.pl:2051
+msgid "Posting Transaction %1"
+msgstr "Simpan Transaksi"
+
+#: bin/am.pl:2060 bin/am.pl:2131 bin/am.pl:2185 bin/am.pl:2228 bin/am.pl:2275
+#: bin/bp.pl:261
+msgid "done"
+msgstr "selesai"
+
+#: bin/am.pl:2081 bin/io.pl:1364 bin/io.pl:1544 bin/is.pl:965 bin/oe.pl:302
+#: bin/oe.pl:824 bin/oe.pl:1260 tools/dbstrings:29 tools/dbstrings:92
+#: tools/dbstrings:106 tools/dbstrings:38 tools/dbstrings:185
+#: tools/dbstrings:198
+msgid "Sales Order"
+msgstr "Pesanan Jualan"
+
+#: bin/am.pl:2087 bin/ir.pl:898 bin/io.pl:1381 bin/io.pl:1592 bin/oe.pl:316
+#: bin/oe.pl:835 bin/oe.pl:1266 tools/dbstrings:30 tools/dbstrings:94
+#: tools/dbstrings:108 tools/dbstrings:39 tools/dbstrings:187
+#: tools/dbstrings:200
+msgid "Purchase Order"
+msgstr "Beli Pesanan"
+
+#: bin/am.pl:2126
+msgid "Saving %1 [_2]"
+msgstr "simpanan %1 [_2]"
+
+#: bin/am.pl:2134 bin/am.pl:2231 bin/am.pl:2278
+msgid "failed"
+msgstr "gagal"
+
+#: bin/am.pl:2180
+msgid "Posting GL Transaction %1"
+msgstr "Simpan transaksi GL %1 "
+
+#: bin/am.pl:2217 bin/bp.pl:253
+msgid "Printing"
+msgstr "percetakan"
+
+#: bin/am.pl:2221 bin/am.pl:2268
+msgid "Invalid redirect"
+msgstr "peralihan yang tidak sah"
+
+#: bin/am.pl:2255
+msgid "Sending"
+msgstr "menghantar"
+
+#: bin/am.pl:2262 bin/io.pl:1649
+msgid "E-mail address missing!"
+msgstr "alamat emel hilang"
+
+#: bin/rp.pl:155 bin/pe.pl:187 bin/pe.pl:284 bin/pe.pl:500
+msgid "All"
+msgstr "Semua"
+
+#: bin/rp.pl:156
+msgid "Last Only"
+msgstr "Hanya terakhir"
+
+#: bin/rp.pl:157
+msgid "None"
+msgstr "Tiada"
+
+#: bin/rp.pl:169 bin/ic.pl:979 bin/ic.pl:1118 bin/ic.pl:2190 bin/ic.pl:2464
+#: bin/ic.pl:2618 bin/bp.pl:163 bin/arap.pl:265 bin/arap.pl:473
+#: bin/arapprn.pl:469 bin/io.pl:643 bin/io.pl:849 bin/io.pl:1287
+#: bin/io.pl:2223 bin/pe.pl:209 bin/pe.pl:761 bin/pe.pl:1190 bin/pe.pl:1360
+#: bin/pe.pl:1637 bin/aa.pl:1776 bin/oe.pl:1581 bin/oe.pl:2148 bin/oe.pl:2659
+#: addons/1.4/pos/trunk/bin/pos.pl:1174
+#: UI/asset/begin_depreciation_all.html:25 UI/asset/begin_approval.html:66
+#: UI/asset/begin_report.html:58 LedgerSMB/Scripts/payment.pm:607
+#: LedgerSMB/Scripts/payment.pm:674 LedgerSMB/Scripts/payment.pm:1314
+msgid "Continue"
+msgstr "Sambung"
+
+#: bin/rp.pl:341
+msgid "Current Earnings"
+msgstr "Pendapatan Semasa"
+
+#: bin/rp.pl:401
+msgid "Department: %1"
+msgstr "Jabatan: %1"
+
+#: bin/rp.pl:406
+msgid "Project Number: %1"
+msgstr "Nombor Projek: %1"
+
+#: bin/rp.pl:457
+msgid "N/A"
+msgstr "Tiada"
+
+#: bin/rp.pl:618
+msgid "%1 Report"
+msgstr "%1 Laporan"
+
+#: bin/ir.pl:91 bin/ir.pl:1445 bin/is.pl:1491 bin/aa.pl:1199 bin/aa.pl:1454
+#: bin/gl.pl:129
+msgid "Draft Posted"
+msgstr "Draf yang tercatat"
+
+#: bin/ir.pl:110 bin/ir.pl:129
+msgid "Add Debit Invoice"
+msgstr "Penambahan Invois debit"
+
+#: bin/ir.pl:114 bin/oe.pl:1449
+msgid "Add Vendor Invoice"
+msgstr "Penambahan Invois Pembekal"
+
+#: bin/ir.pl:132
+msgid "Edit Vendor Invoice"
+msgstr "Penyuntingan Invois Pembekal"
+
+#: bin/ir.pl:157 bin/is.pl:129 bin/aa.pl:199
+msgid "No currencies defined.  Please set these up under System/Defaults."
+msgstr "Tiada mata wang ditakrifkan. Sila tetapkan mengikut sistem"
+
+#: bin/ir.pl:370 bin/pe.pl:821 bin/pe.pl:999
+#: addons/1.4/pos/trunk/bin/pos.pl:308 UI/Contact/divs/credit.html:227
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:222
+#: LedgerSMB/Report/Aging.pm:92
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:92
+#: tools/dbstrings:153 tools/dbstrings:110
+msgid "Language"
+msgstr "Bahasa"
+
+#: bin/ir.pl:385 bin/is.pl:363 bin/aa.pl:491 bin/aa.pl:1664 bin/oe.pl:370
+#: bin/oe.pl:1559 addons/1.4/pos/trunk/bin/pos.pl:213
+#: addons/1.3/extended_arap/trunk/UI/aa.html:129
+#: LedgerSMB/Report/Orders.pm:237 LedgerSMB/Report/Inventory/Search.pm:285
+#: LedgerSMB/Report/Contact/Search.pm:79
+#: LedgerSMB/Report/Contact/Purchase.pm:75
+#: LedgerSMB/Report/Contact/History.pm:65
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:79
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:75
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:65
+msgid "Currency"
+msgstr "Mata Wang"
+
+#: bin/ir.pl:398 bin/is.pl:376 bin/aa.pl:503 bin/oe.pl:384 bin/oe.pl:392
+#: bin/oe.pl:1567 addons/1.4/pos/trunk/bin/pos.pl:227
+#: addons/1.4/pos/trunk/bin/pos.pl:233 LedgerSMB/Scripts/payment.pm:774
+#: LedgerSMB/Report/Contact/History.pm:101
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:101
+msgid "Exchange Rate"
+msgstr "Kadar Pertukaran"
+
+#: bin/ir.pl:417 bin/ir.pl:907 bin/is.pl:393 bin/is.pl:975 bin/aa.pl:547
+#: bin/aa.pl:1006 bin/gl.pl:281 bin/oe.pl:543
+msgid "New"
+msgstr "Baru"
+
+#: bin/ir.pl:422 bin/is.pl:398 bin/aa.pl:531 bin/oe.pl:548
+#: addons/1.4/pos/trunk/bin/pos.pl:253
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:382
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:382
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:382
+#: addons/1.3/extended_arap/trunk/UI/aa.html:152
+#: LedgerSMB/Scripts/asset.pm:319
+msgid "Department"
+msgstr "Jabatan"
+
+#: bin/ir.pl:466 bin/ic.pl:1435 bin/pe.pl:1617 bin/aa.pl:594 bin/aa.pl:1623
+#: bin/oe.pl:2492 bin/oe.pl:2648 LedgerSMB/Report/Aging.pm:78
+#: LedgerSMB/Report/Invoices/Transactions.pm:216
+#: LedgerSMB/Report/Invoices/Outstanding.pm:168 LedgerSMB/Report/Orders.pm:190
+#: LedgerSMB/Report/Orders.pm:196
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:78
+msgid "Vendor"
+msgstr "Pembekal"
+
+#: bin/ir.pl:478 bin/is.pl:496 bin/aa.pl:629 bin/oe.pl:457
+#: addons/1.4/pos/trunk/bin/pos.pl:363
+#: addons/1.3/extended_arap/trunk/UI/aa.html:74
+msgid "Credit Limit"
+msgstr "Had Kredit"
+
+#: bin/ir.pl:483 bin/is.pl:501 bin/aa.pl:631 bin/oe.pl:462
+#: addons/1.4/pos/trunk/bin/pos.pl:366
+#: addons/1.3/extended_arap/trunk/UI/aa.html:81
+msgid "Remaining"
+msgstr "Baki"
+
+#: bin/ir.pl:493 bin/is.pl:511 bin/oe.pl:471
+msgid "Entity Code"
+msgstr "Kod Entiti"
+
+#: bin/ir.pl:496 bin/ir.pl:793 bin/ic.pl:1537 bin/is.pl:514 bin/is.pl:838
+#: bin/aa.pl:668 bin/aa.pl:725 bin/aa.pl:885 bin/aa.pl:1697 bin/oe.pl:474
+#: addons/1.3/extended_arap/trunk/UI/aa.html:117
+#: addons/1.3/extended_arap/trunk/UI/aa.html:289
+#: addons/1.3/extended_arap/trunk/UI/aa.html:404
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:13
+#: LedgerSMB/Report/Invoices/Outstanding.pm:200
+#: LedgerSMB/Report/co/Caja_Diaria.pm:65
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:64
+#: LedgerSMB/Report/Reconciliation/Summary.pm:131
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:65
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:64
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:66
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:65
+msgid "Account"
+msgstr "Akaun"
+
+#: bin/ir.pl:505 bin/is.pl:526 addons/1.4/pos/trunk/bin/pos.pl:376
+msgid "Record in"
+msgstr "Rekod Kemasukan"
+
+#: bin/ir.pl:522 bin/bp.pl:100 bin/is.pl:552 bin/aa.pl:689 bin/aa.pl:1524
+#: bin/aa.pl:1638 addons/1.3/extended_arap/trunk/UI/aa.html:209
+#: LedgerSMB/Report/Margin/Invoice.pm:69 LedgerSMB/Report/PNL/Invoice.pm:87
+#: LedgerSMB/Report/Contact/Purchase.pm:63
+#: LedgerSMB/Report/Contact/History.pm:61
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Margin/Invoice.pm:69
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:87
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:63
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:61
+msgid "Invoice Number"
+msgstr "Nombor Invois"
+
+#: bin/ir.pl:526 bin/bp.pl:104 bin/is.pl:556 bin/aa.pl:693 bin/aa.pl:1528
+#: bin/aa.pl:1641 bin/oe.pl:431 bin/oe.pl:1858
+#: addons/1.3/extended_arap/trunk/UI/aa.html:222
+#: LedgerSMB/Report/Contact/Purchase.pm:67
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:67
+msgid "Order Number"
+msgstr "Nombor Pesanan"
+
+#: bin/ir.pl:531 bin/is.pl:561 bin/aa.pl:697 bin/aa.pl:1645
+#: addons/1.3/extended_arap/trunk/UI/aa.html:235
+msgid "Invoice Date"
+msgstr "Tarikh Invois"
+
+#: bin/ir.pl:535 bin/is.pl:565 bin/aa.pl:701 bin/aa.pl:1671
+#: addons/1.3/extended_arap/trunk/UI/aa.html:250 LedgerSMB/Report/Aging.pm:115
+#: LedgerSMB/Report/Invoices/Transactions.pm:257
+#: LedgerSMB/Report/Invoices/Outstanding.pm:237
+#: LedgerSMB/Report/Contact/Purchase.pm:99
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:115
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:99
+msgid "Due Date"
+msgstr "Tarikh Akhir"
+
+#: bin/ir.pl:539 bin/is.pl:569 bin/aa.pl:705 bin/aa.pl:1532 bin/aa.pl:1643
+#: bin/oe.pl:444 bin/oe.pl:1868 addons/1.3/extended_arap/trunk/UI/aa.html:264
+#: LedgerSMB/Report/Invoices/Outstanding.pm:196 LedgerSMB/Report/Orders.pm:245
+#: LedgerSMB/Report/Contact/Purchase.pm:71
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:71
+msgid "PO Number"
+msgstr "Jumlah PO"
+
+#: bin/ir.pl:577 bin/is.pl:465 bin/is.pl:634
+msgid "Automatic"
+msgstr "Automatik"
+
+#: bin/ir.pl:581 bin/is.pl:469 bin/is.pl:638
+msgid "Manual"
+msgstr "Manual"
+
+#: bin/ir.pl:606 bin/is.pl:666 bin/aa.pl:516 bin/oe.pl:692
+#: addons/1.4/pos/trunk/bin/pos.pl:423
+msgid "Tax Included"
+msgstr "Disertakan dengan Cukai"
+
+#: bin/ir.pl:616 bin/is.pl:677
+msgid "Rate"
+msgstr "Kadar"
+
+#: bin/ir.pl:617 bin/is.pl:678 LedgerSMB/Scripts/asset.pm:1010
+msgid "Basis"
+msgstr "Asas"
+
+#: bin/ir.pl:618 bin/is.pl:679
+msgid "Tax Code"
+msgstr "Kod Cukai"
+
+#: bin/ir.pl:619 bin/ir.pl:795 bin/is.pl:680 bin/is.pl:840 bin/aa.pl:887
+#: addons/1.4/pos/trunk/bin/pos.pl:459
+#: addons/1.3/extended_arap/trunk/UI/aa.html:399
+#: LedgerSMB/Scripts/payment.pm:151 LedgerSMB/Scripts/payment.pm:768
+#: LedgerSMB/Report/GL.pm:123
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:123
+msgid "Memo"
+msgstr "Memo"
+
+#: bin/ir.pl:697 bin/io.pl:1712 bin/is.pl:744 bin/aa.pl:1759 bin/oe.pl:717
+#: addons/1.4/pos/trunk/bin/ps.pl:203 addons/1.4/pos/trunk/bin/pos.pl:449
+msgid "Subtotal"
+msgstr "Jumlah Kecil"
+
+#: bin/ir.pl:725 bin/ic.pl:794 bin/is.pl:774 bin/aa.pl:853 bin/aa.pl:1544
+#: bin/aa.pl:1675 bin/oe.pl:735
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:126
+#: addons/1.3/extended_arap/trunk/UI/aa.html:373
+#: LedgerSMB/Scripts/contact.pm:126 LedgerSMB/Scripts/employee.pm:111
+#: LedgerSMB/Report/Invoices/Transactions.pm:260
+#: LedgerSMB/Report/Invoices/Outstanding.pm:241
+#: LedgerSMB/Report/Inventory/Search.pm:265
+#: LedgerSMB/Report/Contact/Purchase.pm:103
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:103
+msgid "Notes"
+msgstr "Nota"
+
+#: bin/ir.pl:728 bin/ir.pl:737 bin/is.pl:779 bin/is.pl:787 bin/aa.pl:854
+#: bin/oe.pl:736
+msgid "Internal Notes"
+msgstr "Nota Dalaman"
+
+#: bin/ir.pl:729 bin/ir.pl:740
+msgid "Import Text"
+msgstr "Teks Import"
+
+#: bin/ir.pl:758 bin/is.pl:463 bin/is.pl:802
+msgid "Calculate Taxes"
+msgstr "Kira Cukai"
+
+#: bin/ir.pl:766 bin/is.pl:810 bin/aa.pl:1662 bin/oe.pl:749
+#: addons/1.4/pos/trunk/bin/pos.pl:573 LedgerSMB/Scripts/payment.pm:198
+#: LedgerSMB/Scripts/payment.pm:764 LedgerSMB/Scripts/asset.pm:637
+#: LedgerSMB/Report/Aging.pm:142 LedgerSMB/Report/Invoices/Transactions.pm:245
+#: LedgerSMB/Report/Invoices/Outstanding.pm:217
+#: LedgerSMB/Report/Inventory/Search.pm:293
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:142
+msgid "Total"
+msgstr "Jumlah"
+
+#: bin/ir.pl:779 bin/is.pl:824 bin/aa.pl:867
+#: addons/1.3/extended_arap/trunk/UI/aa.html:390 tools/dbstrings:24
+#: tools/dbstrings:143 tools/dbstrings:33 tools/dbstrings:101
+msgid "Payments"
+msgstr "Bayaran"
+
+#: bin/ir.pl:790 bin/bp.pl:364 bin/is.pl:835 bin/pe.pl:1474 bin/aa.pl:882
+#: bin/oe.pl:1563 UI/asset/begin_depreciation_all.html:12
+#: UI/asset/begin_report.html:22 addons/1.3/extended_arap/trunk/UI/aa.html:397
+#: LedgerSMB/Scripts/payment.pm:149 LedgerSMB/Scripts/payment.pm:763
+#: LedgerSMB/Scripts/asset.pm:632 LedgerSMB/Report/Aging.pm:110
+#: LedgerSMB/Report/Unapproved/Drafts.pm:84
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:91
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:100
+#: LedgerSMB/Report/Invoices/Transactions.pm:227
+#: LedgerSMB/Report/Invoices/Outstanding.pm:180 LedgerSMB/Report/Orders.pm:212
+#: LedgerSMB/Report/Timecards.pm:96
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:93 LedgerSMB/Report/GL.pm:87
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:110
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:84
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:91
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:100
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:93
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:87
+msgid "Date"
+msgstr "Tarikh"
+
+#: bin/ir.pl:792 bin/is.pl:837 bin/aa.pl:884
+#: addons/1.3/extended_arap/trunk/UI/aa.html:402
+msgid "Exch"
+msgstr "Tukar"
+
+#: bin/ir.pl:794 bin/is.pl:839 bin/aa.pl:886 bin/aa.pl:1536
+#: addons/1.4/pos/trunk/bin/pos.pl:458
+#: addons/1.3/extended_arap/trunk/UI/aa.html:398
+#: LedgerSMB/Scripts/recon.pm:208 LedgerSMB/Scripts/payment.pm:150
+#: LedgerSMB/Report/Invoices/Payments.pm:140
+#: LedgerSMB/Report/Inventory/Adj_Details.pm:66
+#: LedgerSMB/Report/Budget/Search.pm:126 LedgerSMB/Report/GL.pm:118
+#: LedgerSMB/Report/GL.pm:208
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:66
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:126
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:118
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:208
+msgid "Source"
+msgstr "Sumber"
+
+#: bin/ir.pl:887 bin/ic.pl:864 bin/io.pl:2227 bin/is.pl:952 bin/pe.pl:1042
+#: bin/aa.pl:988 bin/gl.pl:270 bin/oe.pl:801 bin/oe.pl:2010
+#: addons/1.4/pos/trunk/bin/pos.pl:617
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:132
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:132
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:132
+#: UI/payments/payment2.html:324 addons/1.3/extended_arap/trunk/UI/aa.html:548
+#: LedgerSMB/Scripts/budgets.pm:92
+msgid "Update"
+msgstr "Terbaru"
+
+#: bin/ir.pl:891 bin/is.pl:956 bin/aa.pl:992
+msgid "Copy to New"
+msgstr "Salin Ke Baru"
+
+#: bin/ir.pl:892 bin/is.pl:959 bin/aa.pl:995 bin/gl.pl:271
+#: UI/payments/payment2.html:330 addons/1.3/extended_arap/trunk/UI/aa.html:594
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:222
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:222
+msgid "Post"
+msgstr "Simpan"
+
+#: bin/ir.pl:894 bin/gl.pl:277
+msgid "Post as new"
+msgstr "Simpan Sebagai Baru"
+
+#: bin/ir.pl:901 bin/is.pl:967 bin/aa.pl:997 bin/gl.pl:279 bin/oe.pl:839
+#: addons/1.3/extended_arap/trunk/UI/aa.html:614
+msgid "Schedule"
+msgstr "Jadual"
+
+#: bin/ir.pl:903 bin/is.pl:762 bin/aa.pl:1729
+msgid "On Hold"
+msgstr "Ditahan"
+
+#: bin/ir.pl:905 bin/is.pl:973 bin/aa.pl:1002
+#: addons/1.3/extended_arap/trunk/UI/aa.html:627
+msgid "Save Info"
+msgstr "Simpan Maklumat"
+
+#: bin/ir.pl:926 bin/is.pl:996 bin/aa.pl:1014 bin/gl.pl:309
+#: addons/1.3/extended_arap/trunk/UI/aa.html:564
+msgid "Post as Saved"
+msgstr "Hantar Sebagai Simpanan"
+
+#: bin/ir.pl:931 bin/is.pl:1001 bin/aa.pl:1019 bin/gl.pl:316
+#: addons/1.3/extended_arap/trunk/UI/aa.html:573
+msgid "Post as Shown"
+msgstr "Simpan seperti yang dipaparkan"
+
+#: bin/ir.pl:958 bin/ic.pl:968 bin/is.pl:1044 bin/aa.pl:1063
+msgid "Profit/Loss"
+msgstr "Keuntungan/Kerugian"
+
+#: bin/ir.pl:961 bin/ic.pl:895 bin/is.pl:1047 bin/aa.pl:1066 bin/oe.pl:907
+msgid "Attached and Linked Files"
+msgstr "Dilampirkan dan Fail Berkaitan"
+
+#: bin/ir.pl:963 bin/ir.pl:982 bin/ic.pl:897 bin/ic.pl:916 bin/is.pl:1049
+#: bin/is.pl:1068 bin/aa.pl:1068 bin/aa.pl:1087 bin/oe.pl:909 bin/oe.pl:928
+msgid "File name"
+msgstr "Nama Fail"
+
+#: bin/ir.pl:964 bin/ir.pl:983 bin/ic.pl:898 bin/ic.pl:917 bin/is.pl:1050
+#: bin/is.pl:1069 bin/aa.pl:1069 bin/aa.pl:1088 bin/oe.pl:910 bin/oe.pl:929
+msgid "File type"
+msgstr "Jenis Fail"
+
+#: bin/ir.pl:965 bin/ir.pl:986 bin/ic.pl:899 bin/ic.pl:920 bin/is.pl:1051
+#: bin/is.pl:1072 bin/aa.pl:1070 bin/aa.pl:1091 bin/oe.pl:911 bin/oe.pl:932
+msgid "Attached at"
+msgstr "Dilampirkan pada"
+
+#: bin/ir.pl:966 bin/ir.pl:987 bin/ic.pl:900 bin/ic.pl:921 bin/is.pl:1052
+#: bin/is.pl:1073 bin/aa.pl:1071 bin/aa.pl:1092 bin/oe.pl:912 bin/oe.pl:933
+msgid "Attached by"
+msgstr "Dilampirkan oleh"
+
+#: bin/ir.pl:984 bin/ic.pl:918 bin/is.pl:1070 bin/aa.pl:1089 bin/oe.pl:930
+msgid "Attached To Type"
+msgstr "Dilampirkan Untuk Menaip"
+
+#: bin/ir.pl:985 bin/ic.pl:919 bin/is.pl:1071 bin/aa.pl:1090 bin/oe.pl:931
+msgid "Attached To"
+msgstr "Dilampirkan Kepada"
+
+#: bin/ir.pl:1011 bin/ic.pl:947 bin/is.pl:1097 bin/aa.pl:1118 bin/oe.pl:957
+msgid "Attach"
+msgstr "Lampiran"
+
+#: bin/ir.pl:1057 bin/ir.pl:1313 bin/is.pl:1334 bin/oe.pl:1209
+msgid "ea"
+msgstr ""
+
+#: bin/ir.pl:1326 bin/is.pl:1346 bin/oe.pl:1221
+msgid "Could not save the data.  Please try again"
+msgstr "Data tidak boleh disimpan. Sila cuba lagi"
+
+#: bin/ir.pl:1335 bin/is.pl:1354 bin/aa.pl:1344
+msgid "Invoice Date missing!"
+msgstr "Tarikh Invois hilang!"
+
+#: bin/ir.pl:1336 bin/aa.pl:1341
+msgid "Vendor missing!"
+msgstr "Pembekal hilang!"
+
+#: bin/ir.pl:1349 bin/is.pl:1368
+msgid "Cannot post invoice for a closed period!"
+msgstr "Tidak boleh simpan invois untuk jangka masa yang terdekat!"
+
+#: bin/ir.pl:1352 bin/is.pl:1371 bin/aa.pl:1355 bin/oe.pl:1245 bin/oe.pl:1594
+#: addons/1.4/pos/trunk/bin/pos.pl:699
+msgid "Exchange rate missing!"
+msgstr "Kadar pertukaran hilang!"
+
+#: bin/ir.pl:1360 bin/is.pl:1380 bin/aa.pl:1363
+msgid "Payment date missing!"
+msgstr "Tarikh pembayaran hilang!"
+
+#: bin/ir.pl:1363 bin/is.pl:1383 bin/aa.pl:1366
+msgid "Cannot post payment for a closed period!"
+msgstr "Tidak boleh simpan bayaran untuk jangka masa yang terdekat!"
+
+#: bin/ir.pl:1370 bin/is.pl:1390 bin/aa.pl:1373
+msgid "Exchange rate for payment missing!"
+msgstr "Kadar pertukaran pembayaran hilang!"
+
+#: bin/ir.pl:1389 bin/is.pl:1411
+msgid "Cannot post invoice!"
+msgstr "Invois tidak boleh disimpan!"
+
+#: bin/ic.pl:130
+msgid "Cannot create Part; Inventory account does not exist!"
+msgstr "Bahagian tidak boleh dihasilkan; Akaun inventori tidak wujud!"
+
+#: bin/ic.pl:133
+msgid "Cannot create Part; Income account does not exist!"
+msgstr "Bahagian tidak boleh dihasilkan; Akaun pendapatan tidak wujud!"
+
+#: bin/ic.pl:136
+msgid "Cannot create Part; COGS account does not exist!"
+msgstr "Bahagian tidak boleh dihasilkan; Akaun COGS tidak wujud!"
+
+#: bin/ic.pl:145
+msgid "Cannot create Service; Income account does not exist!"
+msgstr "Perkhidmatan tidak boleh dihasilkan; Akaun pendapatan tidak wujud!"
+
+#: bin/ic.pl:149
+msgid "Cannot create Service; Expense account does not exist!"
+msgstr "Perkhidmatan tidak boleh dihasilkan; Akaun perbelanjaan tidak wujud!"
+
+#: bin/ic.pl:158
+msgid "Cannot create Assembly; Income account does not exist!"
+msgstr "Pengumpulan tidak boleh dihasilkan; Akaun pendapatan tidak wujud!"
+
+#: bin/ic.pl:166
+msgid "Cannot create Labor; Inventory account does not exist!"
+msgstr "Tenaga kerja tidak boleh dihasilkan; Akaun inventori tidak wujud!"
+
+#: bin/ic.pl:169
+msgid "Cannot create Labor; COGS account does not exist!"
+msgstr "Tenaga kerja tidak boleh dihasilkan; Akaun COGS tidak wujud!"
+
+#: bin/ic.pl:430 bin/ic.pl:1008 bin/ic.pl:1014 bin/ic.pl:1154 bin/ic.pl:1686
+#: bin/io.pl:240 bin/io.pl:532 bin/pe.pl:142 bin/pe.pl:291 bin/pe.pl:298
+#: bin/pe.pl:438 bin/oe.pl:2133 bin/oe.pl:2211 bin/oe.pl:2246
+msgid "Group"
+msgstr "Kumpulan"
+
+#: bin/ic.pl:443 bin/ic.pl:1540 LedgerSMB/Report/Inventory/Search.pm:225
+#: LedgerSMB/Report/Contact/History.pm:85
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:85
+msgid "Sell Price"
+msgstr "Harga Jualan"
+
+#: bin/ic.pl:447 LedgerSMB/Report/Inventory/Search.pm:221
+msgid "List Price"
+msgstr "Senarai harga"
+
+#: bin/ic.pl:455
+msgid "Average Cost"
+msgstr "Kos Purata"
+
+#: bin/ic.pl:464 bin/ic.pl:641 LedgerSMB/Report/Inventory/Search.pm:229
+msgid "Last Cost"
+msgstr "Kos Lepas"
+
+#: bin/ic.pl:470 bin/ic.pl:647 LedgerSMB/Report/Inventory/Search.pm:237
+msgid "Markup"
+msgstr "Tanda"
+
+#: bin/ic.pl:481 bin/ic.pl:707 LedgerSMB/Report/Inventory/Search.pm:205
+msgid "On Hand"
+msgstr "Dalam Tangan"
+
+#: bin/ic.pl:490 bin/ic.pl:2519 LedgerSMB/Report/Inventory/Search.pm:209
+msgid "ROP"
+msgstr ""
+
+#: bin/ic.pl:497 bin/ic.pl:2514 bin/io.pl:220 bin/oe.pl:1917
+#: LedgerSMB/Report/Inventory/Search.pm:213
+msgid "Bin"
+msgstr "Tong"
+
+#: bin/ic.pl:507 LedgerSMB/Report/Inventory/Search.pm:253
+msgid "Image"
+msgstr "Gambar"
+
+#: bin/ic.pl:509 LedgerSMB/Report/Inventory/Search.pm:261
+msgid "Microfiche"
+msgstr "Mikrofis"
+
+#: bin/ic.pl:513 LedgerSMB/Report/Inventory/Search.pm:257
+msgid "Drawing"
+msgstr "Lukisan"
+
+#: bin/ic.pl:526 LedgerSMB/Scripts/configuration.pm:68 tools/dbstrings:178
+msgid "Inventory"
+msgstr "inventori"
+
+#: bin/ic.pl:531 bin/ic.pl:658 bin/ic.pl:679
+#: LedgerSMB/Scripts/configuration.pm:71
+msgid "Income"
+msgstr "Pendapatan"
+
+#: bin/ic.pl:536 bin/ic.pl:722
+msgid "COGS"
+msgstr "COGS"
+
+#: bin/ic.pl:545 bin/ic.pl:667 bin/ic.pl:693 bin/aa.pl:1659
+#: LedgerSMB/Report/Invoices/Transactions.pm:242
+#: LedgerSMB/Report/Invoices/Outstanding.pm:213
+#: LedgerSMB/Report/Contact/Purchase.pm:83
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:83
+msgid "Tax"
+msgstr "Cukai"
+
+#: bin/ic.pl:553 bin/ic.pl:580 bin/ic.pl:602
+#: LedgerSMB/Report/Inventory/Search.pm:217
+msgid "Weight"
+msgstr "Berat"
+
+#: bin/ic.pl:633
+msgid "Stock"
+msgstr "Stok"
+
+#: bin/ic.pl:684
+msgid "Expense"
+msgstr "perbelanjaan"
+
+#: bin/ic.pl:716
+msgid "Labor/Overhead"
+msgstr "Tenaga Kerja/Overhead"
+
+#: bin/ic.pl:734
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:162
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:162
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:162
+#: LedgerSMB/Scripts/budgets.pm:122
+msgid "Obsolete"
+msgstr "Lama"
+
+#: bin/ic.pl:769 bin/ic.pl:1094 bin/ic.pl:1150 bin/ic.pl:1195 bin/ic.pl:1674
+#: bin/ic.pl:2432 bin/ic.pl:2506 bin/arap.pl:389 bin/io.pl:205 bin/io.pl:526
+#: bin/pe.pl:699 bin/pe.pl:781 bin/pe.pl:813 bin/oe.pl:1907
+#: addons/1.4/pos/trunk/bin/pos.pl:744 UI/Contact/divs/credit.html:20
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:20
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:328
+msgid "Number"
+msgstr "Nombor"
+
+#: bin/ic.pl:789
+msgid "Link Accounts"
+msgstr "Akaun Pautan"
+
+#: bin/ic.pl:806
+msgid "Updated"
+msgstr "Dikemaskini"
+
+#: bin/ic.pl:813 bin/ic.pl:1671 bin/io.pl:213 bin/oe.pl:1915
+#: addons/1.4/pos/trunk/bin/pos.pl:752
+#: LedgerSMB/Report/Inventory/Search.pm:201
+#: LedgerSMB/Report/Contact/History.pm:81
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:81
+msgid "Unit"
+msgstr "Unit"
+
+#: bin/ic.pl:971
+msgid "Date From"
+msgstr "Dari Tarikh"
+
+#: bin/ic.pl:974
+msgid "Date To"
+msgstr "Kepada Tarikh"
+
+#: bin/ic.pl:1027 bin/pe.pl:112 bin/pe.pl:1256 bin/aa.pl:1597
+msgid "Period"
+msgstr "Tempoh"
+
+#: bin/ic.pl:1070
+msgid "No History!"
+msgstr "Tiada Maklumat Terdahulu"
+
+#: bin/ic.pl:1073 bin/ic.pl:1221
+msgid "Parts Requirements"
+msgstr "Bahagian yang Diperlukan"
+
+#: bin/ic.pl:1189 bin/pe.pl:123 bin/pe.pl:1267 bin/aa.pl:1608
+#: LedgerSMB/DBObject/Date.pm:92
+msgid "Year"
+msgstr "Tahun"
+
+#: bin/ic.pl:1202
+msgid "Onhand"
+msgstr "Dalam Tangan"
+
+#: bin/ic.pl:1204
+msgid "SO"
+msgstr "Nota Penjualan"
+
+#: bin/ic.pl:1206
+msgid "PO"
+msgstr "Nota Pesanan"
+
+#: bin/ic.pl:1208 bin/bp.pl:372 bin/oe.pl:2494
+#: LedgerSMB/Report/Invoices/Outstanding.pm:192
+#: LedgerSMB/Report/Inventory/Search.pm:277
+msgid "Order"
+msgstr "Pesanan"
+
+#: bin/ic.pl:1393 LedgerSMB/Report/Inventory/Search.pm:245
+msgid "Make"
+msgstr "Buat"
+
+#: bin/ic.pl:1394 LedgerSMB/Report/Inventory/Search.pm:249
+msgid "Model"
+msgstr "Model"
+
+#: bin/ic.pl:1395
+msgid "Bar Code"
+msgstr "Kod Bar"
+
+#: bin/ic.pl:1424 bin/ic.pl:1523 bin/oe.pl:2503
+#: LedgerSMB/Report/Invoices/Outstanding.pm:229
+msgid "Curr"
+msgstr ""
+
+#: bin/ic.pl:1436 bin/ic.pl:2098
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:41
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:41
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:41
+#: UI/Reports/filters/contact_search.html:70
+#: addons/1.3/report_framework/trunk/UI/Reports/filters/contact_search.html:70
+#: LedgerSMB/Scripts/payment.pm:147 LedgerSMB/Report/Trial_Balance.pm:127
+#: LedgerSMB/Report/Invoices/Payments.pm:190 LedgerSMB/Report/COA.pm:85
+#: LedgerSMB/Report/Budget/Variance.pm:70
+#: LedgerSMB/Report/Budget/Search.pm:122 LedgerSMB/Report/PNL/ECA.pm:90
+#: LedgerSMB/Report/GL.pm:204 LedgerSMB/Report/Contact/Search.pm:98
+#: LedgerSMB/Report/Contact/Purchase.pm:137
+#: LedgerSMB/Report/Contact/History.pm:56
+#: LedgerSMB/Report/Contact/History.pm:126
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:127
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:85
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:70
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:122
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/ECA.pm:90
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:204
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:98
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:137
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:56
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:126
+msgid "Account Number"
+msgstr "Nombor Akaun"
+
+#: bin/ic.pl:1437
+msgid "Vendor Reference Number"
+msgstr "Nombor Rujukan Pembekal"
+
+#: bin/ic.pl:1438 bin/ic.pl:1683 bin/oe.pl:2498
+msgid "Cost"
+msgstr "kos"
+
+#: bin/ic.pl:1440
+msgid "Leadtime"
+msgstr "Tempoh Proses"
+
+#: bin/ic.pl:1493 bin/oe.pl:408
+msgid "days"
+msgstr "Hari"
+
+#: bin/ic.pl:1513 bin/pe.pl:157 bin/pe.pl:508 bin/pe.pl:515 bin/pe.pl:643
+msgid "Pricegroup"
+msgstr "Harga Kumpulan"
+
+#: bin/ic.pl:1536 bin/is.pl:486 bin/pe.pl:1616 bin/aa.pl:591 bin/aa.pl:1614
+#: addons/1.4/pos/trunk/bin/pos.pl:355 UI/business_units/edit.html:71
+#: LedgerSMB/Report/Aging.pm:80 LedgerSMB/Report/Invoices/Transactions.pm:219
+#: LedgerSMB/Report/Invoices/Outstanding.pm:170 LedgerSMB/Report/Orders.pm:187
+#: LedgerSMB/Report/Orders.pm:193
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:80
+msgid "Customer"
+msgstr "Pelanggan"
+
+#: bin/ic.pl:1539
+msgid "Break"
+msgstr "Membatalkan"
+
+#: bin/ic.pl:1542 bin/pe.pl:103 bin/pe.pl:1277 bin/aa.pl:1715 bin/oe.pl:2215
+#: UI/asset/begin_approval.html:23
+msgid "From"
+msgstr "Dari"
+
+#: bin/ic.pl:1543 bin/pe.pl:105 bin/pe.pl:1280 bin/oe.pl:2218
+#: UI/asset/begin_approval.html:31
+msgid "To"
+msgstr "Kepada"
+
+#: bin/ic.pl:1667 bin/io.pl:203
+msgid "Item"
+msgstr "Barang"
+
+#: bin/ic.pl:1669 bin/ic.pl:2517 bin/io.pl:211 bin/io.pl:536 bin/pe.pl:1487
+#: bin/oe.pl:1913 bin/oe.pl:2220 addons/1.4/pos/trunk/bin/pos.pl:750
+#: LedgerSMB/Report/Inventory/Search.pm:289
+#: LedgerSMB/Report/Contact/History.pm:77
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:77
+msgid "Qty"
+msgstr "Kuantiti"
+
+#: bin/ic.pl:1679
+msgid "Sell"
+msgstr "Jual"
+
+#: bin/ic.pl:1681
+msgid "List"
+msgstr "Senarai"
+
+#: bin/ic.pl:1684
+msgid "BOM"
+msgstr "Bil Bahan"
+
+#: bin/ic.pl:1685
+msgid "A"
+msgstr ""
+
+#: bin/ic.pl:1693
+msgid "Individual Items"
+msgstr "Barang Individu"
+
+#: bin/ic.pl:1846
+msgid "unexpected error!"
+msgstr "Kesilapan yang tidak dijangka"
+
+#: bin/ic.pl:1987
+msgid "%1: Vendor not on file!"
+msgstr "%1: Pembekal tidak terdapat di dalam fail"
+
+#: bin/ic.pl:2065
+msgid "%1: Customer not on file!"
+msgstr "%1: Pelanggan tidak terdapat dalam fail"
+
+#: bin/ic.pl:2101 bin/arap.pl:171 bin/pe.pl:1109
+msgid "Address"
+msgstr "Alamat"
+
+#: bin/ic.pl:2107 bin/arap.pl:180 bin/pe.pl:1113
+msgid "Select from one of the names below"
+msgstr "Pilih salah satu nama dibawah"
+
+#: bin/ic.pl:2227
+msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
+msgstr "Kuantiti bahan mestilah dalam nilai sifar sebelum anda tetapkan kepada tempoh tamat %1 "
+
+#: bin/ic.pl:2404
+msgid "Item deleted!"
+msgstr "Barang dipadam"
+
+#: bin/ic.pl:2407
+msgid "Cannot delete item!"
+msgstr "Barang tidak boleh dipadam"
+
+#: bin/ic.pl:2414 bin/ic.pl:2526 tools/dbstrings:216 tools/dbstrings:170
+msgid "Stock Assembly"
+msgstr "Himpunan Stok "
+
+#: bin/ic.pl:2445
+msgid "Check Inventory"
+msgstr "Periksa Senarai Barang"
+#: bin/ic.pl:2521
+msgid "Add"
+msgstr "Tambah"
+
+#: bin/ic.pl:2634
+msgid "Quantity exceeds available units to stock!"
+msgstr "Kuantiti melebihi unit yang ada kepada stok!"
+
+#: bin/ic.pl:2645
+msgid "Assemblies restocked!"
+msgstr "Pemasangan diisi semula"
+
+#: bin/ic.pl:2648
+msgid "Cannot stock assemblies!"
+msgstr "Pemasangan tidak boleh diisi semula"
+
+#: bin/bp.pl:108 bin/oe.pl:494
+msgid "Quotation Number"
+msgstr "Bilangan Sebut Harga"
+
+#: bin/bp.pl:123
+msgid "Print %1"
+msgstr "Cetak %1"
+
+#: bin/bp.pl:192 bin/pe.pl:1612 bin/oe.pl:2376 bin/oe.pl:2639
+msgid "Nothing selected!"
+msgstr "Anda tidak memilih apa-apa!"
+
+#: bin/bp.pl:202
+msgid "Are you sure you want to remove the marked entries from the queue?"
+msgstr "Adakah anda pasti anda mahu memadam entri ditandakan daripada barisan?"
+
+#: bin/bp.pl:207 bin/oe.pl:1356 LedgerSMB/Scripts/taxform.pm:282
+msgid "Yes"
+msgstr "Ya"
+
+#: bin/bp.pl:225
+msgid "Removing marked entries from queue ..."
+msgstr "Mengeluarkan penyertaan ditandakan daripada baris gilir ..."
+
+#: bin/bp.pl:231
+msgid "Removed spoolfiles!"
+msgstr "Fail spool dipindahkan!"
+
+#: bin/bp.pl:234
+msgid "Cannot remove files!"
+msgstr "Fail tidak boleh dipindahkan"
+
+#: bin/bp.pl:262
+msgid "Marked entries printed!"
+msgstr "Entri bertanda dicetak"
+
+#: bin/bp.pl:300
+msgid "Customer: %1"
+msgstr "Pelanggan: %1"
+
+#: bin/bp.pl:301
+msgid "Vendor: %1"
+msgstr "Pembekal: %1"
+
+#: bin/bp.pl:306
+msgid "Account: %1"
+msgstr "Akaun: %1"
+
+#: bin/bp.pl:311
+msgid "Invoice Number: %1"
+msgstr "Nombor Invois: %1"
+
+#: bin/bp.pl:316
+msgid "Order Number: %1"
+msgstr "Nombor Pesanan: %1"
+
+#: bin/bp.pl:321
+msgid "Quotation Number: %1"
+msgstr "Nombor Sebut Harga: %1"
+
+#: bin/bp.pl:327
+msgid "From %1"
+msgstr "Dari %1"
+
+#: bin/bp.pl:333
+msgid "To %1"
+msgstr "Kepada %1"
+
+#: bin/bp.pl:368 bin/io.pl:1348 bin/io.pl:1539 bin/is.pl:287 bin/is.pl:1395
+#: LedgerSMB/Scripts/payment.pm:762 LedgerSMB/Report/Aging.pm:99
+#: LedgerSMB/Report/Invoices/Transactions.pm:236
+#: LedgerSMB/Report/Invoices/Outstanding.pm:163
+#: LedgerSMB/Report/Inventory/Search.pm:273
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:99
+#: tools/dbstrings:87 tools/dbstrings:101 tools/dbstrings:74
+#: tools/dbstrings:180
+msgid "Invoice"
+msgstr "Invois"
+
+#: bin/bp.pl:376 bin/io.pl:1354 bin/io.pl:1606 bin/io.pl:1613 bin/oe.pl:282
+#: bin/oe.pl:826 bin/oe.pl:1277 LedgerSMB/Report/Orders.pm:249
+#: LedgerSMB/Report/Inventory/Search.pm:281 tools/dbstrings:42
+#: tools/dbstrings:97 tools/dbstrings:117 tools/dbstrings:51
+#: tools/dbstrings:190 tools/dbstrings:205
+msgid "Quotation"
+msgstr "Sebut Harga"
+
+#: bin/bp.pl:386
+msgid "Spoolfile"
+msgstr "Fail spool"
+
+#: bin/bp.pl:501
+msgid "Select all"
+msgstr "Pilih semua"
+
+#: bin/bp.pl:505
+msgid "Remove"
+msgstr "Dipindahkan"
+
+#: bin/arap.pl:165 LedgerSMB/Report/Orders.pm:229
+#: LedgerSMB/Report/PNL/Invoice.pm:85 LedgerSMB/Report/PNL/ECA.pm:88
+#: LedgerSMB/Report/Contact/Search.pm:53 LedgerSMB/Report/Contact/Search.pm:96
+#: LedgerSMB/Report/Contact/Purchase.pm:58
+#: LedgerSMB/Report/Contact/Purchase.pm:135
+#: LedgerSMB/Report/Contact/History.pm:52
+#: LedgerSMB/Report/Contact/History.pm:123
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:85
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/ECA.pm:88
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:53
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:96
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:58
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:135
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:52
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:123
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:155
+msgid "Name"
+msgstr "Nama"
+
+#: bin/arap.pl:167 addons/1.3/b_units/trunk/scripts/business_unit.pl:133
+#: LedgerSMB/Scripts/business_unit.pm:138
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:96
+#: LedgerSMB/Report/PNL/ECA.pm:92 LedgerSMB/Report/Contact/Search.pm:60
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:96
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/ECA.pm:92
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:60
+msgid "Control Code"
+msgstr "Kod kawalan"
+
+#: bin/arap.pl:169
+msgid "%1 Number"
+msgstr "%1 nombor"
+
+#: bin/arap.pl:173 addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:329
+msgid "City"
+msgstr "Bandar"
+
+#: bin/arap.pl:372
+msgid "Project not on file!"
+msgstr "Projek tiada dalam fail"
+
+#: bin/arap.pl:396
+msgid "Select from one of the projects below"
+msgstr "Pilih salah satu projek dibawah"
+
+#: bin/arap.pl:527
+msgid "Reposting Not Allowed"
+msgstr "Ulangan pesanan tidak dibenarkan"
+
+#: bin/arap.pl:551
+msgid "Include Payment"
+msgstr "Termasuk pembayaran"
+
+#: bin/arap.pl:560
+msgid "Next Date"
+msgstr "Tarikh seterusnya"
+
+#: bin/arap.pl:625
+msgid "E-mail message"
+msgstr "Pesanan e-mail"
+
+#: bin/arap.pl:703
+msgid "Day(s)"
+msgstr "Hari"
+
+#: bin/arap.pl:704
+msgid "Week(s)"
+msgstr "Minggu"
+
+#: bin/arap.pl:705
+msgid "Month(s)"
+msgstr "Bulan"
+
+#: bin/arap.pl:706
+msgid "Year(s)"
+msgstr "Tahun"
+
+#: bin/arap.pl:722
+msgid "Repeat"
+msgstr "Pengulangan"
+
+#: bin/arap.pl:731
+msgid "For"
+msgstr "Untuk"
+
+#: bin/arap.pl:733
+msgid "time(s)"
+msgstr "masa(s)"
+
+#: bin/arap.pl:738
+msgid "Recurring Transaction for %1"
+msgstr "Transaksi Berulang untuk% 1"
+
+#: bin/arap.pl:763 bin/pe.pl:101
+msgid "Startdate"
+msgstr "Tarikh mula"
+#: bin/arap.pl:809
+msgid "Save Schedule"
+msgstr "Simpan Jadual"
+
+#: bin/arap.pl:811
+msgid "Delete Schedule"
+msgstr "Padam Jadual"
+
+#: bin/arap.pl:966 bin/io.pl:1831
+msgid "Cc: %1"
+msgstr ""
+
+#: bin/arap.pl:967 bin/io.pl:1832
+msgid "Bcc: %1"
+msgstr ""
+
+#: bin/arap.pl:973 bin/io.pl:1850
+msgid "Date: %1"
+msgstr "Tarikh: %1"
+
+#: bin/arap.pl:974 bin/io.pl:1851
+msgid "To: %1"
+msgstr "Kepada: %1"
+
+#: bin/arap.pl:976 bin/io.pl:1853
+msgid "Subject: %1"
+msgstr "Subjek: %1"
+
+#: bin/arap.pl:978
+msgid "Message: "
+msgstr "Mesej: "
+
+#: bin/arap.pl:981 bin/io.pl:1857
+msgid "sent"
+msgstr "hantar"
+
+#: bin/arapprn.pl:70 bin/arapprn.pl:78 bin/arapprn.pl:575 bin/is.pl:1418
+#: bin/oe.pl:1313
+msgid "Select postscript or PDF!"
+msgstr "Pilih postscript atau PDF!"
+
+#: bin/arapprn.pl:121
+msgid "Nothing to print!"
+msgstr "Tiada apa untuk dicetak!"
+
+#: bin/arapprn.pl:421
+msgid "Select payment"
+msgstr "Pilih pembayaran"
+
+#: bin/arapprn.pl:521 bin/io.pl:1420 addons/1.4/pos/trunk/bin/pos.pl:1092
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:396
+#: LedgerSMB/Scripts/payment.pm:521 LedgerSMB/Template.pm:300
+msgid "Screen"
+msgstr "Skrin"
+
+#: bin/arapprn.pl:536 bin/io.pl:1432
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:413
+msgid "Queue"
+msgstr "Queue"
+
+#: bin/arapprn.pl:558 addons/1.4/pos/trunk/bin/pos.pl:1112
+#: addons/1.3/extended_arap/trunk/UI/aa.html:532
+msgid "Printed"
+msgstr "Sudah Dicetak"
+
+#: bin/arapprn.pl:562 addons/1.3/extended_arap/trunk/UI/aa.html:528
+msgid "Scheduled"
+msgstr "Sudah Dijadualkan"
+
+#: bin/arapprn.pl:577 bin/is.pl:1420 bin/oe.pl:1315
+#: addons/1.4/pos/trunk/bin/pos.pl:1047
+msgid "Select a Printer!"
+msgstr "Pilih Mesin Pencetak!"
+
+#: bin/io.pl:146 bin/oe.pl:1893 LedgerSMB/Scripts/order.pm:60
+#: tools/dbstrings:39 tools/dbstrings:48
+msgid "Ship"
+msgstr "Hantar"
+
+#: bin/io.pl:153 bin/oe.pl:1897
+msgid "Recd"
+msgstr "Terima"
+
+#: bin/io.pl:215 bin/io.pl:534 addons/1.4/pos/trunk/bin/pos.pl:754
+msgid "Price"
+msgstr "Harga"
+
+#: bin/io.pl:218 addons/1.4/pos/trunk/bin/pos.pl:756
+msgid "Extended"
+msgstr "Dilanjutkan"
+
+#: bin/io.pl:222
+msgid "OH"
+msgstr "OH"
+
+#: bin/io.pl:224
+msgid "TaxForm"
+msgstr "BorangCukai"
+
+#: bin/io.pl:237 LedgerSMB/Report/Contact/History.pm:93
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:93
+msgid "Delivery Date"
+msgstr "Tarikh Penghantaran"
+
+#: bin/io.pl:238 bin/oe.pl:1920
+msgid "Serial No."
+msgstr "No. Siri"
+
+#: bin/io.pl:239 bin/pe.pl:1332
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:383
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:383
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:383
+#: addons/1.3/extended_arap/trunk/UI/aa.html:293
+msgid "Project"
+msgstr "Projek"
+
+#: bin/io.pl:241 bin/io.pl:528 bin/oe.pl:1899 bin/oe.pl:2486
+msgid "SKU"
+msgstr "SKU"
+
+#: bin/io.pl:246 bin/oe.pl:440 bin/oe.pl:489
+msgid "Required by"
+msgstr "Diperlukan oleh"
+
+#: bin/io.pl:543
+msgid "Select items"
+msgstr "Pilih item-item"
+
+#: bin/io.pl:819
+msgid "Item not on file!"
+msgstr "Item tiada di dalam fail!"
+
+#: bin/io.pl:826
+msgid "What type of item is this?"
+msgstr "Apakah jenis item ini?"
+
+#: bin/io.pl:833
+msgid "Part"
+msgstr "Bahagian"
+
+#: bin/io.pl:835
+msgid "Service"
+msgstr "Servis"
+
+#: bin/io.pl:1155
+msgid "Number missing in Row %1"
+msgstr "Tiada Nombor di Baris %1"
+
+#: bin/io.pl:1162 bin/oe.pl:60
+msgid "Add Purchase Order"
+msgstr "Tambah Pesanan Belian"
+
+#: bin/io.pl:1173 bin/oe.pl:64
+msgid "Add Sales Order"
+msgstr "Tambah Pesanan Jualan"
+
+#: bin/io.pl:1184 bin/oe.pl:68
+msgid "Add Request for Quotation"
+msgstr "Tambah Permintaan untuk Sebut Harga"
+
+#: bin/io.pl:1195 bin/oe.pl:72
+msgid "Add Quotation"
+msgstr "Tambah Sebut Harga"
+
+#: bin/io.pl:1359 bin/oe.pl:291 bin/oe.pl:837 tools/dbstrings:43
+#: tools/dbstrings:98 tools/dbstrings:118 tools/dbstrings:52
+#: tools/dbstrings:191 tools/dbstrings:206
+msgid "RFQ"
+msgstr "RFQ"
+
+#: bin/io.pl:1368 bin/io.pl:1551 bin/oe.pl:303 tools/dbstrings:93
+#: tools/dbstrings:107 tools/dbstrings:186 tools/dbstrings:199
+msgid "Work Order"
+msgstr "Pesanan Kerja"
+
+#: bin/io.pl:1372 bin/io.pl:1390 bin/io.pl:1581 bin/is.pl:288 bin/oe.pl:304
+#: bin/oe.pl:323 tools/dbstrings:91 tools/dbstrings:105 tools/dbstrings:184
+#: tools/dbstrings:197
+msgid "Pick List"
+msgstr "Senarai Pilihan"
+
+#: bin/io.pl:1376 bin/io.pl:1394 bin/io.pl:1558 bin/is.pl:289 bin/oe.pl:305
+#: bin/oe.pl:324 tools/dbstrings:90 tools/dbstrings:104 tools/dbstrings:183
+#: tools/dbstrings:196
+msgid "Packing List"
+msgstr "Senarai Bungkusan"
+
+#: bin/io.pl:1385 bin/io.pl:1399 bin/io.pl:1599 bin/oe.pl:317 bin/oe.pl:329
+#: tools/dbstrings:95 tools/dbstrings:109 tools/dbstrings:188
+#: tools/dbstrings:201
+msgid "Bin List"
+msgstr "Senarai Bin"
+
+#: bin/io.pl:1408
+msgid "Attachment"
+msgstr "Lampiran"
+
+#: bin/io.pl:1410
+msgid "In-line"
+msgstr "Selaras"
+
+#: bin/io.pl:1509
+msgid "Select txt, postscript or PDF!"
+msgstr "Pilih txt, postscript atau PDF!"
+
+#: bin/io.pl:1652
+msgid " Date missing!"
+msgstr "Tarikh hilang!"
+
+#: bin/io.pl:1855
+msgid "Message"
+msgstr "Pesanan"
+
+#: bin/io.pl:1985 bin/is.pl:961 bin/oe.pl:806 bin/oe.pl:2013
+msgid "Ship to"
+msgstr "Hantar kepada"
+
+#: bin/io.pl:2042
+msgid " "
+msgstr ""
+
+#: bin/io.pl:2045
+msgid "Add line1"
+msgstr "Tambah barisan1"
+
+#: bin/io.pl:2048
+msgid "Add line2"
+msgstr "Tambah barisan2"
+
+#: bin/io.pl:2052
+msgid "Add line3 "
+msgstr "Tambah barisan3"
+
+#: bin/io.pl:2055
+msgid "city"
+msgstr "Bandar"
+
+#: bin/io.pl:2058
+msgid "State"
+msgstr "Negeri"
+
+#: bin/io.pl:2061
+msgid "Zip Code"
+msgstr "Kod Pos"
+
+#: bin/io.pl:2064 LedgerSMB/Scripts/taxform.pm:272
+#: LedgerSMB/Report/Payroll/Deduction_Types.pm:30
+#: LedgerSMB/Report/Payroll/Income_Types.pm:30
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Deduction_Types.pm:30
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Income_Types.pm:30
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:330
+msgid "Country"
+msgstr "Negara"
+
+#: bin/io.pl:2114 LedgerSMB/Scripts/asset.pm:633
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:38
+msgid "Type"
+msgstr "Jenis"
+
+#: bin/io.pl:2117 addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:220
+msgid "Contact"
+msgstr "Hubungan"
+
+#: bin/is.pl:83 bin/is.pl:103
+msgid "Add Credit Invoice"
+msgstr "Tambah Kredit Invois"
+
+#: bin/is.pl:87 bin/is.pl:106 bin/oe.pl:1457
+msgid "Add Sales Invoice"
+msgstr "Tambah Jualan Invois"
+
+#: bin/is.pl:411 bin/oe.pl:416 addons/1.4/pos/trunk/bin/pos.pl:278
+msgid "Business"
+msgstr "Perniagaan"
+
+#: bin/is.pl:414 bin/oe.pl:420 addons/1.4/pos/trunk/bin/pos.pl:281
+msgid "Trade Discount"
+msgstr "Diskaun Perniagaan "
+
+#: bin/is.pl:428 bin/aa.pl:556 bin/aa.pl:1499 bin/oe.pl:564
+#: addons/1.4/pos/trunk/bin/pos.pl:263
+#: LedgerSMB/Report/Invoices/Transactions.pm:266
+#: LedgerSMB/Report/Invoices/Outstanding.pm:249
+#: LedgerSMB/Report/Contact/History.pm:105
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:105
+msgid "Salesperson"
+msgstr "Penjual"
+
+#: bin/is.pl:539 bin/aa.pl:1679 bin/oe.pl:628 bin/oe.pl:1842
+#: LedgerSMB/Report/Invoices/Transactions.pm:272
+#: LedgerSMB/Report/Invoices/Outstanding.pm:257 LedgerSMB/Report/Orders.pm:253
+#: LedgerSMB/Report/Contact/Purchase.pm:107
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:107
+msgid "Shipping Point"
+msgstr "Lokasi Penghantaran"
+
+#: bin/is.pl:543 bin/aa.pl:1681 bin/aa.pl:1711 bin/oe.pl:632 bin/oe.pl:1847
+msgid "Ship via"
+msgstr "Penghantaran melalui"
+
+#: bin/is.pl:598
+msgid "Can't void a voided invoice!"
+msgstr "Tidak boleh membatalkan invois yang telah dibatalkan"
+
+#: bin/is.pl:609
+msgid "Payments associated with voided invoice may need to be reversed."
+msgstr "Bayaran berkaitan dengan invois yang dibatalkan mungkin perlu diterbalikkan"
+
+#: bin/is.pl:760
+msgid "Off Hold"
+msgstr "Teruskan"
+
+#: bin/is.pl:919 bin/oe.pl:822 tools/dbstrings:180 tools/dbstrings:136
+msgid "Sales Invoice"
+msgstr "Jualan Invois"
+
+#: bin/is.pl:971
+msgid "Void"
+msgstr "Batal"
+
+#: bin/is.pl:1355 bin/pe.pl:1695 bin/aa.pl:1340
+#: addons/1.4/pos/trunk/bin/pos.pl:686
+msgid "Customer missing!"
+msgstr "Pelanggan hilang"
+
+#: bin/pe.pl:63
+msgid "Edit Project"
+msgstr "Ubahsuai Projek"
+
+#: bin/pe.pl:64 tools/dbstrings:53
+msgid "Add Project"
+msgstr "Tambah Projek"
+
+#: bin/pe.pl:117 bin/pe.pl:1261 bin/aa.pl:1602 LedgerSMB/DBObject/Date.pm:76
+#: LedgerSMB/Report/Aging.pm:122
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:122
+msgid "Current"
+msgstr "Semasa"
+
+#: bin/pe.pl:119 bin/pe.pl:1263 bin/aa.pl:1604 LedgerSMB/DBObject/Date.pm:81
+msgid "Month"
+msgstr "Bulan"
+
+#: bin/pe.pl:121 bin/pe.pl:1265 bin/aa.pl:1606 LedgerSMB/DBObject/Date.pm:87
+msgid "Quarter"
+msgstr "Suku"
+
+#: bin/pe.pl:131 bin/pe.pl:287 bin/pe.pl:503
+msgid "Orphaned"
+msgstr "Yatim"
+
+#: bin/pe.pl:136 bin/pe.pl:301 tools/dbstrings:49
+msgid "Groups"
+msgstr "Kumpulan"
+
+#: bin/pe.pl:151 bin/pe.pl:518 tools/dbstrings:50
+msgid "Pricegroups"
+msgstr "Kumpulan harga"
+
+#: bin/pe.pl:189 bin/aa.pl:1728
+msgid "Active"
+msgstr "Aktif"
+
+#: bin/pe.pl:191
+msgid "Inactive"
+msgstr "Tidak Aktif"
+
+#: bin/pe.pl:232
+msgid "Translations saved!"
+msgstr "Terjemahan disimpan"
+
+#: bin/pe.pl:237
+msgid "Group missing!"
+msgstr "Kumpulan hilang"
+
+#: bin/pe.pl:239
+msgid "Group saved!"
+msgstr "Kumpulan disimpan"
+
+#: bin/pe.pl:243
+msgid "Pricegroup missing!"
+msgstr "Kumpulan harga hilang"
+
+#: bin/pe.pl:245
+msgid "Pricegroup saved!"
+msgstr "Kumpulan harga disimpan"
+
+#: bin/pe.pl:253
+msgid "Translation deleted!"
+msgstr "Terjemahan dipadam"
+
+#: bin/pe.pl:260
+msgid "Group deleted!"
+msgstr "Kumpulan dipadam"
+
+#: bin/pe.pl:264
+msgid "Pricegroup deleted!"
+msgstr "Kumpulan harga dipadam"
+
+#: bin/pe.pl:356 tools/dbstrings:214 tools/dbstrings:168
+msgid "Add Group"
+msgstr "Tambah Kumpulan"
+
+#: bin/pe.pl:428
+msgid "Parent"
+msgstr "Waris"
+
+#: bin/pe.pl:573 tools/dbstrings:215 tools/dbstrings:169
+msgid "Add Pricegroup"
+msgstr "Tambah Kumpulan Harga"
+
+#: bin/pe.pl:694
+msgid "Description Translations"
+msgstr "Huraian terjemahan"
+
+#: bin/pe.pl:706
+msgid "Group Translations"
+msgstr "Kumpulan Terjemahan"
+
+#: bin/pe.pl:711
+msgid "Project Description Translations"
+msgstr "Huraian Projek Penterjemahan"
+
+#: bin/pe.pl:716 bin/pe.pl:1482
+msgid "Project Number"
+msgstr "Nombor Projek"
+
+#: bin/pe.pl:825 bin/pe.pl:1000
+msgid "Translation"
+msgstr "Penterjmahan"
+
+#: bin/pe.pl:922
+msgid "Languages not defined!"
+msgstr "Bahasa tidak ditakrifkan"
+
+#: bin/pe.pl:946
+msgid "Edit Description Translations"
+msgstr "Edit Penerangan Penterjemahan"
+
+#: bin/pe.pl:1275
+msgid "Transaction Dates"
+msgstr "Tarikh Penterjemahan"
+
+#: bin/pe.pl:1294
+msgid "No open Projects!"
+msgstr "Tiada projek yang terbuka"
+
+#: bin/pe.pl:1306 bin/aa.pl:557 bin/aa.pl:1500 bin/oe.pl:576
+#: LedgerSMB/Scripts/employee.pm:105 LedgerSMB/Report/Orders.pm:261
+msgid "Employee"
+msgstr "Pekerja"
+
+#: bin/pe.pl:1312 bin/pe.pl:1492 bin/pe.pl:1582
+msgid "Generate Sales Orders"
+msgstr "Menjana Pesanan Jualan"
+
+#: bin/pe.pl:1340 bin/aa.pl:1572
+msgid "Summary"
+msgstr "Ringkasan"
+
+#: bin/pe.pl:1342 bin/aa.pl:1575
+msgid "Detail"
+msgstr "Butiran"
+
+#: bin/pe.pl:1477
+msgid "Service Code"
+msgstr "kod servis"
+
+#: bin/pe.pl:1587
+msgid "Select Customer"
+msgstr "Pilih Pelanggan"
+
+#: bin/pe.pl:1670
+msgid "Customer not on file!"
+msgstr "Pelangan tiada dalam fail!"
+
+#: bin/pe.pl:1671
+msgid "Vendor not on file!"
+msgstr "Pembekal tiada dalam fail!"
+
+#: bin/pe.pl:1763
+msgid "Failed to save order!"
+msgstr "Gagal menyimpan Pesanan!"
+
+#: bin/pe.pl:1770
+msgid "Orders generated!"
+msgstr "Pesanan dihasilkan!"
+
+#: bin/aa.pl:194 addons/1.3/extended_arap/trunk/bin/custom/aa.pl:54
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:384
+msgid "Transaction"
+msgstr "Transaksi"
+
+#: bin/aa.pl:644 addons/1.3/extended_arap/trunk/UI/aa.html:99
+msgid "Batch Control Code"
+msgstr "Kod kawalan batch"
+
+#: bin/aa.pl:649 addons/1.3/extended_arap/trunk/UI/aa.html:104
+msgid "Batch Name"
+msgstr "Nama Batch"
+
+#: bin/aa.pl:663 addons/1.3/extended_arap/trunk/UI/aa.html:112
+msgid "Entity Control Code"
+msgstr "Kod Kawalan entiti"
+
+#: bin/aa.pl:727 addons/1.3/extended_arap/trunk/UI/aa.html:291
+msgid "Tax Form Applied"
+msgstr "Bentuk cukai digunakan"
+
+#: bin/aa.pl:1027
+msgid "Save as New"
+msgstr "Simpan sebagai baru"
+
+#: bin/aa.pl:1165 bin/gl.pl:395
+msgid "Template Saved!"
+msgstr "templat Disimppan!"
+
+#: bin/aa.plT1330 LedgerSMB/Scripts/payment.pm:328
+msgid "Data not saved.  Please try again."
+msgstr "Data gagal disimpan. Sila cuba lagi"
+
+#: bin/aa.pl:1345
+msgid "Due Date missing!"
+msgstr "Tarikh akhir hilang!"
+
+#: bin/aa.pl:1352 bin/gl.pl:685
+msgid "Cannot post transaction for a closed period!"
+msgstr "Tidak boleh menyimpan transaksi untuk tempoh tertutup"
+
+#: bin/aa.pl:1407
+msgid "Transaction posted!"
+msgstr "Transaksi berjaya di hantar!"
+
+#: bin/aa.pl:1410 bin/gl.pl:700 addons/1.4/pos/trunk/bin/pos.pl:728
+msgid "Cannot post transaction!"
+msgstr "Transaksi gagal dihantar!"
+
+#: bin/aa.pl:1514 LedgerSMB/Report/Invoices/Transactions.pm:269
+#: LedgerSMB/Report/Invoices/Outstanding.pm:253 LedgerSMB/Report/Orders.pm:265
+msgid "Manager"
+msgstr "Pengurus"
+
+#: bin/aa.pl:1519 LedgerSMB/Report/Contact/Purchase.pm:124
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:124
+msgid "AR Transactions"
+msgstr "Transaksi AR"
+
+#: bin/aa.pl:1520 LedgerSMB/Report/Contact/Purchase.pm:122
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:122
+msgid "AP Transactions"
+msgstr "Transaksi Ap"
+
+#: bin/aa.pl:1552 bin/oe.pl:345 addons/1.4/pos/trunk/bin/pos.pl:157
+msgid "Open"
+msgstr "Buka"
+
+#: bin/aa.pl:1555 bin/oe.pl:348 LedgerSMB/Report/Orders.pm:241
+msgid "Closed"
+msgstr "Tutup"
+
+#: bin/aa.pl:1563 LedgerSMB/Report/Invoices/Outstanding.pm:288
+msgid "AR Outstanding"
+msgstr "AR Memberangsangkan"
+
+#: bin/aa.pl:1564 LedgerSMB/Report/Invoices/Outstanding.pm:286
+msgid "AP Outstanding"
+msgstr "AP Memberangsangkan"
+
+#: bin/aa.pl:1620 LedgerSMB/Report/Invoices/Transactions.pm:263
+#: LedgerSMB/Report/Invoices/Outstanding.pm:245 LedgerSMB/Report/GL.pm:133
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:133
+msgid "Till"
+msgstr "Till"
+
+#: bin/aa.pl:1633
+msgid "No."
+msgstr "Tidak."
+
+#: bin/aa.pl:1649
+msgid "Project Numbers"
+msgstr "Nombor Projek"
+
+#: bin/aa.pl:1666 LedgerSMB/Report/Invoices/Payments.pm:134
+#: LedgerSMB/Report/Invoices/Transactions.pm:254
+#: LedgerSMB/Report/Invoices/Outstanding.pm:233
+#: LedgerSMB/Report/Contact/Purchase.pm:95
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:95
+msgid "Date Paid"
+msgstr "Tarikh Dibayar"
+
+#: bin/aa.pl:1669 LedgerSMB/Scripts/payment.pm:765
+#: LedgerSMB/Report/Invoices/Transactions.pm:248
+#: LedgerSMB/Report/Invoices/Outstanding.pm:221
+#: LedgerSMB/Report/Contact/Purchase.pm:87
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:87
+msgid "Paid"
+msgstr "Dibaya"
+
+#: bin/aa.pl:1673 LedgerSMB/Scripts/payment.pm:769
+#: LedgerSMB/Scripts/payment.pm:775
+#: LedgerSMB/Report/Invoices/Outstanding.pm:225
+msgid "Amount Due"
+msgstr "Jumlah terhutang"
+
+#: bin/aa.pl:1717
+msgid "Date to"
+msgstr "Tarikh kepada"
+
+#: bin/aa.pl:1727
+msgid "All Invoices"
+msgstr "Semua Invois"
+
+#: bin/aa.pl:1738
+msgid "Include in Report"
+msgstr "Masukkan didalam laporan"
+
+#: bin/gl.pl:92 addons/1.4/pos/trunk/bin/ps.pl:54
+#: addons/1.4/pos/trunk/bin/ps.pl:84 addons/1.4/pos/trunk/bin/ps.pl:225
+#: addons/1.4/pos/trunk/bin/pos.pl:55
+msgid "Could not open pos.conf.pl in %1 line [_2]: [_3]"
+msgstr "Gagal membuka pos.conf.pl dalam %1 baris [_2]: [_3]"
+
+#: bin/gl.pl:136
+msgid "Adjusting Till: (till) Source: (source)"
+msgstr "Melaraskan Till: (till) Sumber: (sumber) "
+
+#: bin/gl.pl:138
+msgid "Adjusting till due to data entry error."
+msgstr "Melaraskan till Kerana kesilapan kemasukan data."
+
+#: bin/gl.pl:198
+msgid "%1 Cash Transfer Transaction"
+msgstr "Pemindahan Transaksi Tunai"
+
+#: bin/gl.pl:201
+msgid "%1 General Ledger Transaction"
+msgstr "Transaksi Am Lejar"
+
+#: bin/gl.pl:638
+msgid "Account %1 not found."
+msgstr "Akaun %1 Tidak Dijumpai "
+
+#: bin/gl.pl:673
+msgid "Cannot Repost Transaction"
+msgstr "Transaksi Tidak Boleh Dihantar Kembali "
+
+#: bin/gl.pl:679
+msgid "Transaction Date missing!"
+msgstr "Tarikh Transaksi Hilang!"
+
+#: bin/gl.pl:715
+msgid ""
+"Cannot post transaction with a debit and credit entry for the same account!"
+msgstr "Tidak boleh menyimpan transaksi dengan kemasukan debit dan kredit untuk akaun yang sama"
+
+#: bin/gl.pl:725
+msgid "Out of balance transaction!"
+msgstr "Kehabisan Baki Transaksi"
+
+#: bin/oe.pl:91
+msgid "Edit Purchase Order"
+msgstr "Ubah Pesanan Pembelian"
+
+#: bin/oe.pl:96
+msgid "Edit Sales Order"
+msgstr "Ubah Pesanan Jualan"
+
+#: bin/oe.pl:101
+msgid "Edit Request for Quotation"
+msgstr "Ubah Permintaan Untuk Sebut Harga"
+
+#: bin/oe.pl:105
+msgid "Edit Quotation"
+msgstr "Ubah Sebut Harga"
+
+#: bin/oe.pl:406
+msgid "Terms"
+msgstr "Terma"
+
+#: bin/oe.pl:436 bin/oe.pl:1863
+msgid "Order Date"
+msgstr "Tarikh Pesanan"
+
+#: bin/oe.pl:488
+msgid "Valid until"
+msgstr "Sah Sehingga"
+
+#: bin/oe.pl:515
+msgid "Quotation Date"
+msgstr "Tarikh Sebut Harga"
+
+#: bin/oe.pl:812
+msgid "Print and Save"
+msgstr "Cetak dan Simpan"
+
+#: bin/oe.pl:819
+msgid "Print and Save as new"
+msgstr "Cetak dan Simpan sebagai yang baru"
+
+#: bin/oe.pl:830 tools/dbstrings:176 tools/dbstrings:132
+msgid "Vendor Invoice"
+msgstr "Pembekal Senarai Bekalan"
+
+#: bin/oe.pl:1229 bin/oe.pl:1393
+msgid "Order Date missing!"
+msgstr "Tarikh Pesanan Hilang!"
+
+#: bin/oe.pl:1232 bin/oe.pl:1399
+msgid "Quotation Date missing!"
+msgstr "Tarikh Sebut Harga Hilang!"
+
+#: bin/oe.pl:1239
+msgid " missing!"
+msgstr "Hilang!"
+
+#: bin/oe.pl:1272
+msgid "Cannot save order!"
+msgstr "Tidak Boleh Menyimpan Pesanan"
+
+#: bin/oe.pl:1283
+msgid "Request for Quotation"
+msgstr "Pemintaan Bagi Sebut Harga"
+
+#: bin/oe.pl:1289
+msgid "Cannot save quotation!"
+msgstr "Tidah Boleh Menyimpan Sebut Harga!"
+
+#: bin/oe.pl:1332
+msgid "Are you sure you want to delete Order Number"
+msgstr "Adakah anda pasti mahu memadam nombor pesanan"
+
+#: bin/oe.pl:1337
+msgid "Are you sure you want to delete Quotation Number"
+msgstr "Adakah anda pasti ingin memadam Nombor Sebut Harga"
+
+#: bin/oe.pl:1369
+msgid "Order deleted!"
+msgstr "Pesanan dipadam"
+
+#: bin/oe.pl:1370
+msgid "Cannot delete order!"
+msgstr "Tidak boleh memadam pesanan"
+
+#: bin/oe.pl:1373
+msgid "Quotation deleted!"
+msgstr "Sebut Harga dipadam!"
+
+#: bin/oe.pl:1374
+msgid "Cannot delete quotation!"
+msgstr "Tidak boleh memadam sebut harga!"
+
+#: bin/oe.pl:1392
+msgid "Order Number missing!"
+msgstr "Nombor Pesanan Hilang!"
+
+#: bin/oe.pl:1398
+msgid "Quotation Number missing!"
+msgstr "Nombor sebut harga hilang!"
+
+#: bin/oe.pl:1545
+msgid "Add Exchange Rate"
+msgstr "Tambah kadar pertukaran"
+
+#: bin/oe.pl:1779
+msgid "Ship Merchandise"
+msgstr "Barang dagangan kapal"
+
+#: bin/oe.pl:1780
+msgid "Shipping Date"
+msgstr "Tarikh penghantaran"
+
+#: bin/oe.pl:1783
+msgid "Receive Merchandise"
+msgstr "Penerimaan barang dagangan"
+
+#: bin/oe.pl:1784
+msgid "Date Received"
+msgstr "Tarikh diterima"
+
+#: bin/oe.pl:1796
+msgid "Warehouse"
+msgstr "Gudang"
+
+#: bin/oe.pl:2015
+msgid "Done"
+msgstr "Selesai"
+
+#: bin/oe.pl:2047
+msgid "Shipping Date missing!"
+msgstr "Tarikh penghantaran hilang!"
+
+#: bin/oe.pl:2051
+msgid "Date received missing!"
+msgstr "Tarikh diterima hilang"
+
+#: bin/oe.pl:2060
+msgid "Nothing entered!"
+msgstr "Tiada apa-apa yang dimasukan"
+
+#: bin/oe.pl:2063
+msgid "Inventory saved!"
+msgstr "Inventori disimpan"
+
+#: bin/oe.pl:2066
+msgid "Could not save!"
+msgstr "Tidak boleh disimpan"
+
+#: bin/oe.pl:2087
+msgid "Nothing to transfer!"
+msgstr "TIada apa-apa untuk dihantar"
+
+#: bin/oe.pl:2099 bin/oe.pl:2249
+msgid "Transfer Inventory"
+msgstr "Hantar Inventori"
+
+#: bin/oe.pl:2117
+msgid "Transfer from"
+msgstr "Hantar daripada"
+
+#: bin/oe.pl:2121
+msgid "Transfer to"
+msgstr "Hantar ke"
+
+#: bin/oe.pl:2222 bin/oe.pl:2338 tools/dbstrings:41 tools/dbstrings:130
+#: tools/dbstrings:50 tools/dbstrings:90
+msgid "Transfer"
+msgstr "Hantar"
+
+#: bin/oe.pl:2228
+msgid "From Warehouse"
+msgstr "Daripada gudang"
+
+#: bin/oe.pl:2233
+msgid "To Warehouse"
+msgstr "Ke gudang"
+
+#: bin/oe.pl:2358
+msgid "Inventory transferred!"
+msgstr "Inventori di hantar"
+
+#: bin/oe.pl:2361
+msgid "Could not transfer Inventory!"
+msgstr "Tidak dapat memindahkan Inventori!"
+
+#: bin/oe.pl:2496
+msgid "Req"
+msgstr ""
+
+#: bin/oe.pl:2501
+msgid "Lead"
+msgstr "Utama"
+
+#: bin/oe.pl:2505
+msgid "Generate Purchase Orders"
+msgstr "Menjana Pesanan Pembelian"
+
+#: bin/oe.pl:2600
+msgid "Generate Orders"
+msgstr "Menjana pesanan"
+
+#: bin/oe.pl:2605
+msgid "Select Vendor"
+msgstr "Pilih Pembekal"
+
+#: bin/oe.pl:2628
+msgid "Order generation failed!"
+msgstr "Penjanaan Pesanan gagal!"
+
+#: addons/1.4/pos/trunk/bin/ps.pl:82
+msgid "Closing Till For %1"
+msgstr "Penutup Till Untuk%1"
+
+#: addons/1.4/pos/trunk/bin/ps.pl:181
+msgid "Cumulative Error:"
+msgstr "Ralat terkumpul:"
+
+#: addons/1.4/pos/trunk/bin/ps.pl:208
+msgid "Calculate"
+msgstr "Kira"
+
+#: addons/1.4/pos/trunk/bin/ps.pl:211
+msgid "Close Till"
+msgstr "Tutup Till"
+
+#: addons/1.4/pos/trunk/bin/ps.pl:287
+msgid "Cash Breakdown:"
+msgstr "Pecahan Tunai:"
+
+#: addons/1.4/pos/trunk/bin/ps.pl:299
+msgid "Total Cash in Drawer: %1"
+msgstr "Jumlah Tunai dalam laci:%1"
+
+#: addons/1.4/pos/trunk/bin/ps.pl:301
+msgid "Less Cash in Till At Start: %1"
+msgstr "Tunai kurang di Till pada mula:%1"
+
+#: addons/1.4/pos/trunk/bin/ps.pl:304
+msgid "Cumulative Error: %1"
+msgstr "Ralat terkumpul:%1"
+
+#: addons/1.4/pos/trunk/bin/ps.pl:306
+msgid "Reset Till By %1"
+msgstr "Reset Till oleh%1"
+
+#: addons/1.4/pos/trunk/bin/ps.pl:316
+msgid "You are over by %1"
+msgstr ""
+
+#: addons/1.4/pos/trunk/bin/ps.pl:319
+msgid "You are under by %1"
+msgstr ""
+
+#: addons/1.4/pos/trunk/bin/ps.pl:323
+msgid "Congratulations!  Your till is exactly balanced."
+msgstr "Tahniah! Till anda seimbang."
+
+#: addons/1.4/pos/trunk/bin/pos.pl:105
+msgid "Add POS Invoice"
+msgstr "Tambah POS Invois"
+
+#: addons/1.4/pos/trunk/bin/pos.pl:164
+msgid "Edit POS Invoice"
+msgstr "Edit POS Invois"
+
+#: addons/1.4/pos/trunk/bin/pos.pl:342
+msgid "Check ID"
+msgstr "Semak ID" 
+
+#: addons/1.4/pos/trunk/bin/pos.pl:461
+msgid "Credit Card Track"
+msgstr "Track Kad Kredit"
+
+#: addons/1.4/pos/trunk/bin/pos.pl:563
+msgid "Change"
+msgstr "Tukar"
+
+#: addons/1.4/pos/trunk/bin/pos.pl:618
+msgid "Open Till"
+msgstr "Buka Till"
+
+#: addons/1.4/pos/trunk/bin/pos.pl:622
+#: addons/1.3/extended_arap/trunk/UI/aa.html:603
+msgid "Print and Post"
+msgstr "Cetak dan Simpan"
+
+#: addons/1.4/pos/trunk/bin/pos.pl:725
+msgid "Posted!"
+msgstr "Sudah Disimpan"
+
+#: addons/1.4/pos/trunk/bin/pos.pl:1125 tools/dbstrings:23 tools/dbstrings:134
+#: tools/dbstrings:32 tools/dbstrings:116
+msgid "Receipts"
+msgstr "Resit"
+
+#: addons/1.4/pos/trunk/pos.conf.pl:39
+msgid "Visa/MC"
+msgstr ""
+
+#: addons/1.4/pos/trunk/pos.conf.pl:40
+msgid "Discover"
+msgstr "Cari"
+
+#: addons/1.4/pos/trunk/pos.conf.pl:41
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:63
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:391 tools/dbstrings:115
+#: tools/dbstrings:203
+msgid "Check"
+msgstr "Semak"
+
+#: addons/1.4/pos/trunk/pos.conf.pl:42 tools/dbstrings:114 tools/dbstrings:78
+msgid "Cash"
+msgstr "Tunai"
+
+#: addons/1.4/pos/trunk/pos.conf.pl:43
+msgid "Gift Cert"
+msgstr ""
+
+#: addons/1.3/templatetrans/trunk/scripts/transtemplate.pl:139
+#: addons/1.3/templatetrans/tags/1.0/scripts/transtemplate.pl:139
+#: LedgerSMB/Scripts/transtemplate.pm:139
+msgid "Memorized Transaction List"
+msgstr "Senarai Transaksi dihafal"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:120
+#: LedgerSMB/Scripts/contact.pm:120
+msgid "Company"
+msgstr "Syarikat"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:121
+#: LedgerSMB/Scripts/contact.pm:121
+msgid "Person"
+msgstr "Orang"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:122
+#: LedgerSMB/Scripts/contact.pm:122
+msgid "Credit Accounts"
+msgstr "Akaun Kredit"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:123
+#: LedgerSMB/Scripts/contact.pm:123 LedgerSMB/Scripts/employee.pm:108
+msgid "Addresses"
+msgstr "Alamat"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:124
+#: LedgerSMB/Scripts/contact.pm:124 LedgerSMB/Scripts/employee.pm:109
+msgid "Contact Info"
+msgstr "Maklumat Hubungi"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:125
+#: LedgerSMB/Scripts/contact.pm:125 LedgerSMB/Scripts/employee.pm:110
+msgid "Bank Accounts"
+msgstr "Akaun Bank"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:127
+#: LedgerSMB/Scripts/contact.pm:127 LedgerSMB/Scripts/employee.pm:112
+msgid "Files"
+msgstr "Fail"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:228
+#: LedgerSMB/Scripts/contact.pm:231 LedgerSMB/Scripts/employee.pm:186
+msgid "Entity"
+msgstr "Entiti"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:230
+#: LedgerSMB/Scripts/contact.pm:233
+msgid "Credit Account"
+msgstr "Akaun Kredit"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:338
+#: LedgerSMB/Scripts/contact.pm:342
+msgid "Unsupported account type"
+msgstr "Jenis akaun yang tidak disokong"
+
+#: addons/1.3/crm-basic/trunk/scripts/contact.pl:485
+#: LedgerSMB/Scripts/contact.pm:490
+msgid "No AR or AP Account Selected"
+msgstr "Tiada Akaun AR atau AP Terpilih"
+
+#: addons/1.3/audit/trunk/scripts/audit.pl:47
+msgid "Vendor audit information not found."
+msgstr "Maklumat audit Pembekal tidak dijumpai."
+
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:59
+#: addons/1.3/extended_arap/trunk/bin/custom/aa.pl:388
+#: LedgerSMB/Scripts/payment.pm:995 tools/dbstrings:19 tools/dbstrings:116
+#: tools/dbstrings:28 tools/dbstrings:204
+msgid "Receipt"
+msgstr "Resit"
+
+#: addons/1.3/b_units/trunk/scripts/business_unit.pl:135
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:375
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:375
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:375
+#: UI/business_units/edit.html:44
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:20
+#: LedgerSMB/Scripts/business_unit.pm:140
+#: LedgerSMB/Report/Trial_Balance/List.pm:54
+#: LedgerSMB/Report/co/Caja_Diaria.pm:121
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:125
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:75
+#: LedgerSMB/Report/Budget/Variance.pm:112
+#: LedgerSMB/Report/Budget/Search.pm:68 LedgerSMB/Report/Budget/Search.pm:118
+#: LedgerSMB/Report/GL.pm:200 LedgerSMB/Report/Contact/History.pm:128
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:54
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:121
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:125
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:75
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:112
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:68
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:118
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:200
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:128
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:126
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:129
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:41
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:158
+msgid "Start Date"
+msgstr "Tarikh Permulaan"
+
+#: addons/1.3/b_units/trunk/scripts/business_unit.pl:136
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:376
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:376
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:376
+#: UI/business_units/edit.html:52
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:24
+#: LedgerSMB/Scripts/business_unit.pm:141
+#: LedgerSMB/Report/Trial_Balance/List.pm:57
+#: LedgerSMB/Report/co/Caja_Diaria.pm:123
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:127
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:77
+#: LedgerSMB/Report/Budget/Variance.pm:114
+#: LedgerSMB/Report/Budget/Search.pm:73 LedgerSMB/Report/Budget/Search.pm:120
+#: LedgerSMB/Report/GL.pm:202 LedgerSMB/Report/Contact/History.pm:131
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:57
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:123
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:127
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:77
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:114
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:73
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:120
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:202
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:131
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:128
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:131
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:42
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:159
+msgid "End Date"
+msgstr "Tarikh Akhir"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:42
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:42
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:42
+#: LedgerSMB/Report/Budget/Variance.pm:74
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:74
+msgid "Account Label"
+msgstr "Label Akaun"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:43
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:43
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:43
+#: LedgerSMB/Report/Budget/Variance.pm:78
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:78
+msgid "Amount Budgetted"
+msgstr "Jumlah yang Dibajetkan"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:44
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:44
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:44
+msgid "- Used"
+msgstr "- Digunakan"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:45
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:45
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:45
+msgid "= Variance"
+msgstr "= Varian"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:147
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:147
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:147
+#: LedgerSMB/Scripts/budgets.pm:107 LedgerSMB/Scripts/asset.pm:685
+#: LedgerSMB/Scripts/asset.pm:764 LedgerSMB/Scripts/asset.pm:835
+#: LedgerSMB/Scripts/asset.pm:902 LedgerSMB/Report/Unapproved/Drafts.pm:199
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:199
+msgid "Approve"
+msgstr "Diluluskan"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:153
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:153
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:153
+#: LedgerSMB/Scripts/budgets.pm:113
+msgid "Reject"
+msgstr "Ditolak"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:259
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:259
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:259 LedgerSMB/Budget.pm:243
+msgid "Cannot specify both debits and credits for budget line %1"
+msgstr "Debit dan kredit untuk bajet baris %1 tidak dapat dinyatakan"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:379
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:379
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:379
+msgid "Entered by"
+msgstr "Dimasukkan oleh"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:380
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:380
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:380
+#: LedgerSMB/Report/Reconciliation/Summary.pm:153
+#: LedgerSMB/Report/Budget/Search.pm:91
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:91
+msgid "Approved By"
+msgstr "Diluluskan Oleh"
+
+#: addons/1.3/budgetting/branches/1.0/trunk/scripts/budgets.pl:381
+#: addons/1.3/budgetting/branches/1.0/scripts/budgets.pl:381
+#: addons/1.3/budgetting/trunk/scripts/budgets.pl:381
+#: LedgerSMB/Report/Budget/Search.pm:95
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:95
+msgid "Obsolete By"
+msgstr "Dilupuskan Oleh"
+
+#: t/data/04-complex_template.html:16 UI/Contact/contact.html:33
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:33
+msgid "Add Customer"
+msgstr "Tambah Pelanggan"
+
+#: t/data/04-complex_template.html:17 UI/Contact/contact.html:34
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:34
+msgid "Edit Customer"
+msgstr "Ubahsuai Pelanggan"
+
+#: t/data/04-complex_template.html:18 UI/Contact/contact.html:35
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:35
+msgid "Add Vendor"
+msgstr "Tambah Pembekal"
+
+#: t/data/04-complex_template.html:19 UI/Contact/contact.html:36
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:36
+msgid "Edit Vendor"
+msgstr "Ubahsuai Pembekal"
+
+#: t/data/04-complex_template.html:20 UI/Contact/contact.html:37
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:37 tools/dbstrings:27
+#: tools/dbstrings:36
+msgid "Add Employee"
+msgstr "Tambah Pekerja"
+
+#: t/data/04-complex_template.html:21 UI/Contact/contact.html:38
+#: addons/1.3/crm-basic/trunk/UI/crm/contact.html:38
+msgid "Edit Employee"
+msgstr "Ubahsuai Pekerja"
+
+#: t/data/04-complex_template.html:43 UI/Contact/divs/employee.html:2
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/employee.html:2
+msgid "$operation Employee"
+msgstr "$operasi Pekerja"
+
+#: t/data/04-complex_template.html:144 UI/Contact/divs/person.html:6
+#: UI/Contact/divs/company.html:6
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/person.html:6
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/company.html:6
+#: addons/1.3/colombia_general/trunk/UI/Contact/divs/colombia_company.html:6
+msgid "$operation $entity_classname"
+msgstr "$operasi $entiti_namakelas"
+
+#: t/data/04-complex_template.html:167
+msgid "$entity_classname Number:"
+msgstr "$entiti_namakelas Nombor"
+
+#: templates/demo_with_images/balance_sheet.html:128
+#: templates/xedemo/balance_sheet.html:128
+#: templates/demo/balance_sheet.html:128
+#: templates/with_images/balance_sheet.html:128
+msgid "Shareholder's Equity"
+msgstr "Ekuiti Pemegang Saham"
+
+#: UI/payments/use_overpayment2.html:278
+msgid "UPDATE"
+msgstr "KEMASKINI"
+
+#: UI/payments/use_overpayment2.html:284
+msgid "POST"
+msgstr "SIMPAN"
+
+#: UI/payments/use_overpayment2.html:290 UI/payments/payment2.html:336
+msgid "POST AND PRINT"
+msgstr "SIMPAN dan Cetak"
+
+#: UI/payments/payments_filter.html:18
+msgid "Filtering $t"
+msgstr "Ditapis $t"
+
+#: UI/payments/payments_detail.html:362
+msgid "Locked by %1"
+msgstr "tidak dibenarkan oleh %1"
+
+#: UI/file/attachment_screen.html:39
+msgid "File"
+msgstr "Fail"
+
+#: UI/create_batch.html:15
+msgid "Batch Number"
+msgstr "Nombor Kumpulan"
+
+#: UI/create_batch.html:30
+msgid "Batch Date"
+msgstr "Tarikh Kumpulan"
+
+#: UI/taxform/add_taxform.html:47 UI/business_units/edit.html:61
+#: UI/business_units/filter.html:26 UI/asset/edit_asset.html:61
+#: UI/asset/search_asset.html:55
+msgid "Description:"
+msgstr "Huraian"
+
+#: UI/taxform/add_taxform.html:62
+msgid "Select by Default:"
+msgstr "Pilih Tetapan utama"
+
+#: UI/taxform/add_taxform.html:77
+msgid "Accrual Basis:"
+msgstr ""
+
+#: UI/menu/expanding.html:45
+msgid "Logged into %1"
+msgstr "Daftar masuk 1%"
+
+#: UI/business_units/filter.html:35
+msgid "Active On"
+msgstr "Aktif pada"
+
+#: UI/business_units/filter.html:45 UI/asset/search_class.html:65
+#: UI/asset/search_asset.html:185 tools/dbstrings:4 tools/dbstrings:15
+#: tools/dbstrings:18 tools/dbstrings:28 tools/dbstrings:58
+#: tools/dbstrings:142 tools/dbstrings:192 tools/dbstrings:6
+#: tools/dbstrings:14 tools/dbstrings:27 tools/dbstrings:37 tools/dbstrings:80
+#: tools/dbstrings:100 tools/dbstrings:148
+msgid "Search"
+msgstr "Cari"
+
+#: UI/asset/edit_asset.html:56 UI/asset/search_asset.html:50
+msgid "Asset Class:"
+msgstr "Mengelasan Aset"
+
+#: UI/asset/edit_asset.html:71 UI/asset/search_asset.html:65
+msgid "Purchase Date:"
+msgstr "Tarikh Pembelian"
+
+#: UI/asset/edit_asset.html:81 UI/asset/search_asset.html:75
+msgid "Purchase Value:"
+msgstr "Nilai Pembelian"
+
+#: UI/asset/edit_asset.html:93 UI/asset/search_asset.html:87
+#: LedgerSMB/Scripts/asset.pm:317
+msgid "Usable Life"
+msgstr "Kehidupan yang Boleh Digunakan"
+
+#: UI/asset/edit_asset.html:105 UI/asset/search_asset.html:96
+msgid "Salvage Value:"
+msgstr "Nilai Penyelamat"
+
+#: UI/asset/edit_asset.html:117 UI/asset/search_asset.html:108
+msgid "Depreciation Starts"
+msgstr "Permulaan Susut Nilai"
+
+#: UI/asset/import_asset.html:43
+msgid "Depreciate Through"
+msgstr "Melalui Penyusutan"
+
+#: UI/import_csv/import_csv.html:42
+#: addons/1.3/import_trans/trunk/UI/import_trans/import_trans.html:42
+#: LedgerSMB/Report/PNL/Invoice.pm:89
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:89
+msgid "Transaction Date"
+msgstr "Tarikh Transaksi"
+
+#: UI/login.html:30
+msgid "LedgerSMB %1"
+msgstr "LedgerSMB 1%"
+
+#: UI/Contact/divs/credit.html:61
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/credit.html:61
+msgid "$entity_classname Number"
+msgstr "Jumlah entity_namakelas"
+
+#: UI/Contact/divs/notes.html:40
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/notes.html:40
+msgid "Note Class"
+msgstr "Kelas Nota"
+
+#: UI/Contact/divs/notes.html:64
+#: addons/1.3/crm-basic/trunk/UI/crm/divs/notes.html:64
+msgid "Author: %1"
+msgstr "Penulis: 1%"
+
+#: addons/1.3/company_person/trunk/UI/Contact/divs/person.html:2
+msgid "$operation Person"
+msgstr "$operasi perseorangan"
+
+#: addons/1.3/extended_arap/trunk/UI/aa.html:165
+msgid "Tax Included?"
+msgstr "Cukai Dimasukkan?"
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/reports.html:27
+msgid "Actions"
+msgstr "Tindakan"
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:20
+msgid "Start Balance"
+msgstr "Permulaan Baki"
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:24
+#: LedgerSMB/Scripts/payment.pm:152 LedgerSMB/Report/Trial_Balance.pm:145
+#: LedgerSMB/Report/COA.pm:102 LedgerSMB/Report/GL.pm:108
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:145
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:102
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:108
+msgid "Debits"
+msgstr "Debit"
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:27
+#: LedgerSMB/Scripts/payment.pm:153 LedgerSMB/Report/Trial_Balance.pm:149
+#: LedgerSMB/Report/COA.pm:107 LedgerSMB/Report/GL.pm:113
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:149
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:107
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:113
+msgid "Credits"
+msgstr "Kredit"
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:30
+msgid "End Balance"
+msgstr "Baki Terakhir"
+
+#: addons/1.3/enhanced_tb/trunk/UI/trial_balance/view.html:109
+msgid "Save as"
+msgstr "Disimpan sebagai"
+
+#: LedgerSMB.pm:494
+msgid "Field \\\"Name\\\" Not Defined"
+msgstr "Bidang\\\"Nama\\\" Tidak Ditentukan"
+
+#: LedgerSMB.pm:968 LedgerSMB/SODA.pm:614
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:614
+msgid "Internal Database Error"
+msgstr "Kesalahan Dalaman Pangkalan Data"
+
+#: LedgerSMB.pm:969 LedgerSMB.pm:970 LedgerSMB/Scripts/configuration.pm:202
+#: LedgerSMB/Scripts/setup.pm:589 LedgerSMB/SODA.pm:615 LedgerSMB/SODA.pm:617
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:615
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:617
+msgid "Access Denied"
+msgstr "Akses Dinafikan"
+
+#: LedgerSMB.pm:971 LedgerSMB/SODA.pm:618
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:618
+msgid "Invalid date/time entered"
+msgstr "Tarikh/Masa tidak sah dimasukkan"
+
+#: LedgerSMB.pm:972 LedgerSMB/SODA.pm:619
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:619
+msgid "Division by 0 error"
+msgstr "Kesalahan bahagian 0"
+
+#: LedgerSMB.pm:973 LedgerSMB.pm:974 LedgerSMB/SODA.pm:620
+#: LedgerSMB/SODA.pm:621
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:620
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:621
+msgid "Required input not provided"
+msgstr ""
+
+#: LedgerSMB.pm:975
+msgid "Conflict with Existing Data.  Perhaps you already entered this?"
+msgstr ""
+
+#: LedgerSMB.pm:976
+msgid "Error from Function:"
+msgstr "Kesalahan daripada fungsi"
+
+#: LedgerSMB.pm:984
+msgid "More information has been reported in the error logs"
+msgstr ""
+
+#: LedgerSMB/Scripts/recon.pm:131
+msgid "Data not saved.  Please update again."
+msgstr "Data tidak disimpan. Tolong update semula."
+
+#: LedgerSMB/Scripts/recon.pm:207
+msgid "Clear date"
+msgstr "Tarikh dipadam"
+
+#: LedgerSMB/Scripts/recon.pm:209
+msgid "Post Date"
+msgstr "Tarikh disimpan"
+
+#: LedgerSMB/Scripts/recon.pm:210
+msgid "Our Balance"
+msgstr "Baki kita"
+
+#: LedgerSMB/Scripts/recon.pm:211
+msgid "Their Balance"
+msgstr "Baki mereka"
+
+#: LedgerSMB/Scripts/recon.pm:319
+msgid "Invalid statement balance.  Hint: Try entering a number"
+msgstr "Baki kenyataan tidak sah. Petunjuk: Sila masukkan nombor"
+
+#: LedgerSMB/Scripts/configuration.pm:19
+msgid "Company Information"
+msgstr "Maklumat syarikat"
+
+#: LedgerSMB/Scripts/configuration.pm:25
+msgid "Business Number"
+msgstr "Nombor Bisnes"
+
+#: LedgerSMB/Scripts/configuration.pm:39
+msgid "Currencies (colon-separated)"
+msgstr "Mata wang (kolon-berasingan)"
+
+#: LedgerSMB/Scripts/configuration.pm:40
+msgid "Weight Unit"
+msgstr "Berat Unit"
+
+#: LedgerSMB/Scripts/configuration.pm:42
+msgid "Default Country"
+msgstr "Negara"
+
+#: LedgerSMB/Scripts/configuration.pm:45
+msgid "Default Language"
+msgstr "Bahasa"
+
+#: LedgerSMB/Scripts/configuration.pm:49
+msgid "Template Set"
+msgstr "Set Template"
+
+#: LedgerSMB/Scripts/configuration.pm:51
+msgid "Security Settings"
+msgstr "Tetapan Keselamatan"
+
+#: LedgerSMB/Scripts/configuration.pm:56
+msgid "Session Timeout"
+msgstr "Sesi Masa berakhir"
+
+#: LedgerSMB/Scripts/configuration.pm:58
+msgid "Automatically Logout"
+msgstr "Secara Automatik Log Keluar"
+
+#: LedgerSMB/Scripts/configuration.pm:61
+msgid "Separate Duties"
+msgstr "Tugas Berasingan"
+
+#: LedgerSMB/Scripts/configuration.pm:64
+msgid "Default Accounts"
+msgstr "Akaun Tetapan Utama"
+
+#: LedgerSMB/Scripts/configuration.pm:74
+msgid "Cost of Goods Sold"
+msgstr "Kos Barangan Yang Dijual"
+
+#: LedgerSMB/Scripts/configuration.pm:77
+msgid "Foreign Exchange Gain"
+msgstr "Keuntungan Pertukaran Asing"
+
+#: LedgerSMB/Scripts/configuration.pm:80
+msgid "Foreign Exchange Loss"
+msgstr "Kerugian Pertukaran Asing"
+
+#: LedgerSMB/Scripts/configuration.pm:82
+msgid "Next in Sequence"
+msgstr "Seterusnya Dalam Urutan"
+
+#: LedgerSMB/Scripts/configuration.pm:99
+msgid "Misc Settings"
+msgstr "Tetapan Misc"
+
+#: LedgerSMB/Scripts/configuration.pm:103
+msgid "Max Invoices per Check Stub"
+msgstr "Max Invois Setiap Cek Resit "
+
+#: LedgerSMB/Scripts/configuration.pm:105
+msgid "Decimal Places for Money"
+msgstr "Angka perpuluhan untuk mata wang"
+
+#: LedgerSMB/Scripts/configuration.pm:107
+msgid "Images in Templates"
+msgstr "Imej untuk templat"
+
+#: LedgerSMB/Scripts/configuration.pm:227
+msgid "Error while opening directory: %1"
+msgstr "Kesalahan ketika membuka panduan:%1"
+
+#: LedgerSMB/Scripts/payment.pm:146
+msgid "Pay To"
+msgstr "Bayar Kepada"
+
+#: LedgerSMB/Scripts/payment.pm:148
+msgid "Account Title"
+msgstr "Nama Akaun"
+
+#: LedgerSMB/Scripts/payment.pm:221
+msgid "Save Batch"
+msgstr "Simpan sejumlah"
+
+#: LedgerSMB/Scripts/payment.pm:766
+msgid "Discount"
+msgstr "Diskaun"
+
+#: LedgerSMB/Scripts/payment.pm:767
+msgid "Apply Disc"
+msgstr "Permohonan cakera"
+
+#: LedgerSMB/Scripts/payment.pm:817
+msgid "To pay"
+msgstr "Untuk bayar"
+
+#: LedgerSMB/Scripts/payment.pm:995 tools/dbstrings:20 tools/dbstrings:29
+msgid "Payment"
+msgstr "Pembayaran"
+
+#: LedgerSMB/Scripts/payment.pm:1075
+msgid "Exchange rate hasn't been defined"
+msgstr "Pertukaran kadar tidak diisi"
+
+#: LedgerSMB/Scripts/payment.pm:1089
+msgid "This gl movement, is a consecuence of a payment transaction"
+msgstr "Pertukaran gl ini ialah disebabkan oleh pembayaran transit"
+
+#: LedgerSMB/Scripts/payment.pm:1149
+msgid "Applied discount"
+msgstr "Diskaun dipohon"
+
+#: LedgerSMB/Scripts/payment.pm:1186
+msgid "No overpayment account selected.  Was one set up?"
+msgstr "Tiada akaun lebihan pembayaran dipilih. Adakah anda telah membuka akaun tersebut?"
+
+#: LedgerSMB/Scripts/payment.pm:1464 LedgerSMB/Scripts/payment.pm:1470
+msgid "The amount of the invoice number"
+msgstr "Jumlah nombor invois "
+
+#: LedgerSMB/Scripts/payment.pm:1464
+msgid "is lesser than the amount to be paid"
+msgstr "kurang daripada jumlah perlu dibayar"
+
+#: LedgerSMB/Scripts/payment.pm:1470
+msgid "is lesser than 0"
+msgstr "kurang daripada 0"
+
+#: LedgerSMB/Scripts/payment.pm:1591
+msgid "Use overpayment/prepayment"
+msgstr "Guna lebihan pembayaran/prabayaran"
+
+#: LedgerSMB/Scripts/payment.pm:1684
+msgid "The amount to be pay of the invoice number"
+msgstr "Jumlah yang perlu dibayar untuk nombor invois"
+
+#: LedgerSMB/Scripts/payment.pm:1684
+msgid "is null"
+msgstr "kosong"
+
+#: LedgerSMB/Scripts/payment.pm:1701 LedgerSMB/Scripts/payment.pm:1778
+msgid "Applied discount by an overpayment"
+msgstr "Dikaun dipohon daripada lebihan bayaran"
+
+#: LedgerSMB/Scripts/payment.pm:1716
+msgid "The amount to be pay from the accno"
+msgstr "Jumlah yang perlu dibayar daripada accno"
+
+#: LedgerSMB/Scripts/payment.pm:1716
+msgid "is bigger than the amount available"
+msgstr "lebih besar daripada jumlah yang tersedia"
+
+#: LedgerSMB/Scripts/payment.pm:1724 LedgerSMB/Scripts/payment.pm:1741
+#: LedgerSMB/Scripts/payment.pm:1795 LedgerSMB/Scripts/payment.pm:1812
+msgid "use of an overpayment"
+msgstr "guna lebihan bayaran"
+
+#: LedgerSMB/Scripts/payment.pm:1768
+msgid "This gl movement, is the result of a overpayment transaction"
+msgstr "Pergerakan gl ialah hasil daripada transit lebihan bayaran"
+
+#: LedgerSMB/Scripts/admin.pm:148
+msgid "delete"
+msgstr "padam"
+
+#: LedgerSMB/Scripts/admin.pm:153
+msgid "Active Sessions"
+msgstr "Sesi Aktif"
+
+#: LedgerSMB/Scripts/import_csv.pm:312
+msgid "Invalid file"
+msgstr "Fail yang tidah sah"
+
+#: LedgerSMB/Scripts/asset.pm:74
+msgid "Depreciation Successful"
+msgstr "susut nilai berjaya"
+
+#: LedgerSMB/Scripts/asset.pm:98
+msgid "Edit Asset Class"
+msgstr "Mengedit Kelas Aset"
+
+#: LedgerSMB/Scripts/asset.pm:100
+msgid "Add Asset Class"
+msgstr "Tambah Kelas Aset"
+
+#: LedgerSMB/Scripts/asset.pm:167
+msgid "Asset Account"
+msgstr "Akaun Aset"
+
+#: LedgerSMB/Scripts/asset.pm:168
+msgid "Depreciation Account"
+msgstr "Akaun Susut Nilai"
+
+#: LedgerSMB/Scripts/asset.pm:169
+msgid "Depreciation Method"
+msgstr "Kaedah Susut Nilai"
+
+#: LedgerSMB/Scripts/asset.pm:253
+msgid "Add Asset"
+msgstr "Tambah Aset"
+
+#: LedgerSMB/Scripts/asset.pm:312 LedgerSMB/Scripts/asset.pm:734
+#: LedgerSMB/Scripts/asset.pm:798 LedgerSMB/Scripts/asset.pm:869
+#: LedgerSMB/Scripts/asset.pm:1005
+msgid "Tag"
+msgstr "Tanda"
+
+#: LedgerSMB/Scripts/asset.pm:314 LedgerSMB/Scripts/asset.pm:497
+msgid "Purchase Date"
+msgstr "Tarikh Pembelian"
+
+#: LedgerSMB/Scripts/asset.pm:315 LedgerSMB/Scripts/asset.pm:498
+msgid "Purchase Value"
+msgstr "Nilai Pembtanelian"
+
+#: LedgerSMB/Scripts/asset.pm:316
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:219
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:327
+msgid "Class"
+msgstr "Kelas"
+
+#: LedgerSMB/Scripts/asset.pm:318
+msgid "Location"
+msgstr "Lokasi"
+
+#: LedgerSMB/Scripts/asset.pm:495
+msgid "Asset Tag"
+msgstr "Tanda Aset"
+
+#: LedgerSMB/Scripts/asset.pm:499 LedgerSMB/Scripts/asset.pm:876
+msgid "Proceeds"
+msgstr "Teruskan"
+
+#: LedgerSMB/Scripts/asset.pm:500
+msgid "Disposal Method"
+msgstr "Cara Pembuangan"
+
+#: LedgerSMB/Scripts/asset.pm:501
+msgid "Percent"
+msgstr "Peratus"
+
+#: LedgerSMB/Scripts/asset.pm:555
+msgid "Asset Depreciation Report"
+msgstr "Laporan Aset Susut Nilai"
+
+#: LedgerSMB/Scripts/asset.pm:557
+msgid "Asset Disposal Report"
+msgstr "Laporan Aset Pembuangan"
+
+#: LedgerSMB/Scripts/asset.pm:562
+msgid "Asset Partial Disposal Report"
+msgstr "Laporan Aset "
+
+#: LedgerSMB/Scripts/asset.pm:599
+msgid "Search reports"
+msgstr "Pemeriksaan Laporan"
+
+#: LedgerSMB/Scripts/asset.pm:625
+msgid "Report Results"
+msgstr "Hasil Laporan"
+
+#: LedgerSMB/Scripts/asset.pm:634 LedgerSMB/DBObject/Asset_Class.pm:67
+msgid "Asset Class"
+msgstr "Kelas Aset"
+
+#: LedgerSMB/Scripts/asset.pm:635
+msgid "Entered at"
+msgstr "Di Masukkan Di"
+
+#: LedgerSMB/Scripts/asset.pm:636
+msgid "Approved at"
+msgstr "Disahkan Di"
+
+#: LedgerSMB/Scripts/asset.pm:676 tools/dbstrings:173 tools/dbstrings:129
+msgid "Depreciation"
+msgstr "Susut Nilai"
+
+#: LedgerSMB/Scripts/asset.pm:678 tools/dbstrings:171 tools/dbstrings:174
+#: tools/dbstrings:127 tools/dbstrings:130
+msgid "Disposal"
+msgstr "Pembuangan"
+
+#: LedgerSMB/Scripts/asset.pm:731
+msgid "Report %1 on date [_2]"
+msgstr "Laporan %1 Pada Tarikh [_2]"
+
+#: LedgerSMB/Scripts/asset.pm:735 LedgerSMB/Scripts/asset.pm:800
+#: LedgerSMB/Scripts/asset.pm:871
+msgid "Dep. Starts"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:736 LedgerSMB/Scripts/asset.pm:801
+#: LedgerSMB/Scripts/asset.pm:873
+msgid "Aquired Value"
+msgstr "Nilai Diperlukan"
+
+#: LedgerSMB/Scripts/asset.pm:737
+msgid "Dep. Method"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:738
+msgid "Est. Life"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:739
+msgid "Dep. Basis"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:740
+msgid "Prior Through"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:741
+msgid "Prior Dep."
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:742
+msgid "Dep. this run"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:743
+msgid "Dep. YTD"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:744
+msgid "Total Accum. Dep."
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:795
+msgid "Partial Disposal Report %1 on date [_2]"
+msgstr "Laporan Bahagian Pembuangan"
+
+#: LedgerSMB/Scripts/asset.pm:802
+msgid "Percent Disposed"
+msgstr "Peratusan Pembuangan"
+
+#: LedgerSMB/Scripts/asset.pm:804
+msgid "Disp. Aquired Value"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:805
+msgid "Percent Remaining"
+msgstr "Peratusan Yang Tinggal"
+
+#: LedgerSMB/Scripts/asset.pm:807
+msgid "Aquired Value Remaining"
+msgstr "Dapatan Nilai Yang Tinggal"
+
+#: LedgerSMB/Scripts/asset.pm:866
+msgid "Disposal Report %1 on date [_2]"
+msgstr "Laporan Pembuangan"
+
+#: LedgerSMB/Scripts/asset.pm:872
+msgid "Disposal Date"
+msgstr "Tarikh Pembuangan"
+
+#: LedgerSMB/Scripts/asset.pm:874
+msgid "D M"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:875
+msgid "Accum. Depreciation"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:877
+msgid "Adjusted Basis"
+msgstr "Basis Yang Diubah"
+
+#: LedgerSMB/Scripts/asset.pm:878
+msgid "Gain (Loss)"
+msgstr "Dapat (Kerugian)"
+
+#: LedgerSMB/Scripts/asset.pm:1007
+msgid "In Svc."
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1008
+msgid "Method"
+msgstr "Cara"
+
+#: LedgerSMB/Scripts/asset.pm:1009
+msgid "Rem. Life"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1011
+msgid "(+) Salvage Value"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1012
+msgid "Dep. through"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1013
+msgid "(-) Accum. Dep."
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1014
+msgid "(=) NBV"
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1015
+msgid "Pct. Dep."
+msgstr ""
+
+#: LedgerSMB/Scripts/asset.pm:1153
+msgid "File Imported"
+msgstr "Fail Masukkan"
+
+#: LedgerSMB/Scripts/setup.pm:61
+msgid "No database specified"
+msgstr "Tiada Pengkalan Data Yang Tepat"
+
+#: LedgerSMB/Scripts/setup.pm:75
+msgid "SQL-Ledger database detected."
+msgstr "Pangkalan data Lejar dikesan"
+
+#: LedgerSMB/Scripts/setup.pm:78
+msgid "Would you like to migrate the database?"
+msgstr "Adakah anda ingin memindah pangkalan data"
+
+#: LedgerSMB/Scripts/setup.pm:83
+msgid "Unsupported version.  Cancel?"
+msgstr "versi tidak disokong"
+
+#: LedgerSMB/Scripts/setup.pm:90
+msgid "LedgerSMB 1.2 db found"
+msgstr "lejarSMB 1.2 db dikesan"
+
+#: LedgerSMB/Scripts/setup.pm:92
+msgid "Would you like to upgrade the database?"
+msgstr "Adakah anda ingin menaik taraf pangkalan data?"
+
+#: LedgerSMB/Scripts/setup.pm:97
+msgid "Development version found.  Please upgrade first"
+msgstr "Versi baru dijumpai. Sila naik taraf dahulu"
+
+#: LedgerSMB/Scripts/setup.pm:99 LedgerSMB/Scripts/setup.pm:105
+#: LedgerSMB/Scripts/setup.pm:129 LedgerSMB/Scripts/setup.pm:141
+msgid "Cancel?"
+msgstr "Batal ?"
+
+#: LedgerSMB/Scripts/setup.pm:103
+msgid "Legacy version found.  Please upgrade first"
+msgstr "Versi Legacy dijumpai. Sila naik taraf pertama"
+
+#: LedgerSMB/Scripts/setup.pm:110
+msgid "LedgerSMB 1.4 found"
+msgstr "LejarSMB 1.4 dijumpai"
+
+#: LedgerSMB/Scripts/setup.pm:113
+msgid "Rebuild/Upgrade?"
+msgstr "Menbina semula/menaik taraf"
+
+#: LedgerSMB/Scripts/setup.pm:118
+msgid "LedgerSMB 1.3 found"
+msgstr "LejarSMB 1.3 dijumpai"
+
+#: LedgerSMB/Scripts/setup.pm:121
+msgid "Upgrade?"
+msgstr "Menaiktaraf?"
+
+#: LedgerSMB/Scripts/setup.pm:127
+msgid "Unknown version found."
+msgstr "Versi tidak dikenali dijumpai"
+
+#: LedgerSMB/Scripts/setup.pm:134
+msgid "Database does not exist."
+msgstr "Pengkalan data tidak wujud"
+
+#: LedgerSMB/Scripts/setup.pm:135
+msgid "Create Database?"
+msgstr "Bina pankalan data?"
+
+#: LedgerSMB/Scripts/setup.pm:139
+msgid "Unknown database found."
+msgstr "Pangkalan data tidak dikenali dijumpai"
+
+#: LedgerSMB/Scripts/setup.pm:217
+msgid "Invalid backup request"
+msgstr "Permintaan backup tidak sah"
+
+#: LedgerSMB/Scripts/setup.pm:220
+msgid "Error creating backup file"
+msgstr "Kesalahan membina backup data"
+
+#: LedgerSMB/Scripts/setup.pm:260
+msgid "Don't know what to do with backup"
+msgstr "Tidak mengetahui apa yang perlu dibuat dengan backup "
+
+#: LedgerSMB/Scripts/setup.pm:332 LedgerSMB/Scripts/setup.pm:684
+#: LedgerSMB/Scripts/setup.pm:740 LedgerSMB/Scripts/setup.pm:836
+msgid "Manage Users"
+msgstr "Pengguna diurus"
+
+#: LedgerSMB/Scripts/setup.pm:333 LedgerSMB/Scripts/setup.pm:685
+#: LedgerSMB/Scripts/setup.pm:741 LedgerSMB/Scripts/setup.pm:837
+msgid "Full Permissions"
+msgstr "Permintaan penuh"
+
+#: LedgerSMB/Scripts/setup.pm:475
+msgid "Save and Retry"
+msgstr "Simpan dan cuba lagi"
+
+#: LedgerSMB/Scripts/setup.pm:727
+msgid "User already exists. Import?"
+msgstr "Pengguna telah wujud. impot?"
+
+#: LedgerSMB/Scripts/setup.pm:768
+msgid "No Permissions Assigned"
+msgstr "Tiada permintaan dilakukan"
+
+#: LedgerSMB/Scripts/vouchers.pm:93
+msgid "Error creating batch.  Please try again."
+msgstr "Kesalahan mencipta kumpulan. sila cuba lagi. "
+
+#: LedgerSMB/Scripts/file.pm:108
+msgid "No file uploaded"
+msgstr "Tiada data dimuat naik"
+
+#: LedgerSMB/Scripts/order.pm:53
+msgid "Search Sales Orders"
+msgstr "Mencari pesanan jualan"
+
+#: LedgerSMB/Scripts/order.pm:56
+msgid "Generate Purchase Orders from Sales Orders"
+msgstr "Menjana Pesanan Pembelian dari Jualan Pesanan"
+
+#: LedgerSMB/Scripts/order.pm:58
+msgid "Combine Sales Orders"
+msgstr "Mengabung pesanan jualan"
+
+#: LedgerSMB/Scripts/order.pm:64
+msgid "Search Purchase Orders"
+msgstr "Mencari pesanan pembelian"
+
+#: LedgerSMB/Scripts/order.pm:66
+msgid "Combine Purchase Orders"
+msgstr "Mengabung pesanan jualan"
+
+#: LedgerSMB/Scripts/order.pm:69
+msgid "Generate Sales Orders from Purchase Orders"
+msgstr "Menjana Pesanan Pembelian dari Jualan Pesanan"
+
+#: LedgerSMB/Scripts/order.pm:71 tools/dbstrings:40 tools/dbstrings:49
+msgid "Receive"
+msgstr "Diterima"
+
+#: LedgerSMB/Scripts/order.pm:75
+msgid "Search Quotations"
+msgstr "Cari Sebut harga"
+
+#: LedgerSMB/Scripts/order.pm:79
+msgid "Search Requests for Quotation"
+msgstr "Mencari sebut harga yg diminta"
+
+#: LedgerSMB/Scripts/order.pm:106 tools/dbstrings:138 tools/dbstrings:96
+msgid "Combine"
+msgstr "Gabung"
+
+#: LedgerSMB/Scripts/order.pm:114 tools/dbstrings:36 tools/dbstrings:55
+#: tools/dbstrings:7 tools/dbstrings:45
+msgid "Generate"
+msgstr "Hasilkan"
+
+#: LedgerSMB/Scripts/taxform.pm:258
+msgid "Tax Form List"
+msgstr "Cukai dalam bentuk senarai"
+
+#: LedgerSMB/Scripts/taxform.pm:271
+msgid "Tax Form Name"
+msgstr "Cukai dalam bentuk nama"
+
+#: LedgerSMB/Scripts/taxform.pm:273
+msgid "Default Reportable"
+msgstr "Tetapan Utama yang dilaporkan"
+
+#: LedgerSMB/Scripts/taxform.pm:284
+msgid "No"
+msgstr "Tidak"
+
+#: LedgerSMB/Scripts/employee.pm:106
+msgid "User"
+msgstr "Pengguna"
+
+#: LedgerSMB/Scripts/employee.pm:107
+msgid "Wages/Deductions"
+msgstr "Gaji/Potongan"
+
+#: LedgerSMB/Scripts/account.pm:39
+msgid "Add Account"
+msgstr "Tambah akaun"
+
+#: LedgerSMB/Scripts/account.pm:64
+msgid "Bug: No such account"
+msgstr "Bug: Tiada akaun itu"
+
+#: LedgerSMB/Scripts/account.pm:66
+msgid "Edit Account"
+msgstr "Mengubah akaun"
+
+#: LedgerSMB/Scripts/reports.pm:80
+msgid "No report specified"
+msgstr "Tiada laporan dinyatakan"
+
+#: LedgerSMB/SODA.pm:622
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:622
+msgid "Conflict with Existing Data"
+msgstr "Masalah dengan Data Sedia Ada"
+
+#: LedgerSMB/SODA.pm:623
+#: addons/1.3/report_framework/trunk/LedgerSMB/SODA.pm:623
+msgid "Error from Function"
+msgstr "Kesalahan Daripada fungsi"
+
+#: LedgerSMB/IS.pm:1281 LedgerSMB/GL.pm:147 LedgerSMB/IR.pm:375
+msgid "Batch ID Missing"
+msgstr "Kumpulan ID hilang"
+
+#: LedgerSMB/Upgrade_Tests.pm:134
+msgid "Unique Customernumber"
+msgstr "Nombor pelanggan unik"
+
+#: LedgerSMB/Upgrade_Tests.pm:150
+msgid "Unique Vendornumber"
+msgstr "Nombor Unik Pembekal"
+
+#: LedgerSMB/Upgrade_Tests.pm:161
+msgid "No Null employeenumber"
+msgstr "Tiada Nombor Pekerja"
+
+#: LedgerSMB/Upgrade_Tests.pm:177
+msgid "Duplicate employee numbers"
+msgstr "Salinan nombor pekerja"
+
+#: LedgerSMB/Upgrade_Tests.pm:192
+msgid "Unique nonobsolete partnumbers"
+msgstr ""
+
+#: LedgerSMB/Upgrade_Tests.pm:204
+msgid "Unique AR Invoice numbers"
+msgstr "Nombor Unik AR Invois"
+
+#: LedgerSMB/Upgrade_Tests.pm:217
+msgid "No NULL Amounts"
+msgstr "Tiada Amaun"
+
+#: LedgerSMB/DBObject/Payment.pm:473
+msgid "cash"
+msgstr "tunai"
+
+#: LedgerSMB/DBObject/Payment.pm:474
+msgid "check"
+msgstr "cek"
+
+#: LedgerSMB/DBObject/Payment.pm:475
+msgid "deposit"
+msgstr "deposit"
+
+#: LedgerSMB/DBObject/Payment.pm:476
+msgid "other"
+msgstr "lain-lain"
+
+#: LedgerSMB/DBObject/Payment.pm:752
+msgid "Exchange rate inconsistency with database.  Got %1, expected [_2]"
+msgstr "Kadar pertukaran tidak sejajar dengan pangkalan data. Dapat %1, jangkaan"
+
+#: LedgerSMB/DBObject/Account.pm:73
+msgid "Error: Cannot include summary account in other dropdown menus"
+msgstr "Ralat: Tidak boleh termasuk ringkasan akaun selain menu dropdown"
+
+#: LedgerSMB/DBObject/Account.pm:77
+msgid "Internal Database Error."
+msgstr "Ralat Dalam Pangkalan Data"
+
+#: LedgerSMB/DBObject/Account.pm:191
+msgid "Too many links on summary account!"
+msgstr "Terlalu banyak sambungan dalam ringkasan akaun"
+
+#: LedgerSMB/DBObject/TransTemplate.pm:23
+#: addons/1.3/templatetrans/trunk/LedgerSMB/DBObject/TransTemplate.pm:23
+#: addons/1.3/templatetrans/tags/1.0/LedgerSMB/DBObject/TransTemplate.pm:22
+msgid "No Account id for %1"
+msgstr "Tiada Akaun id untuk %1"
+
+#: LedgerSMB/DBObject/Asset.pm:109 LedgerSMB/DBObject/Asset_Class.pm:66
+msgid "Unable to save %1 object"
+msgstr "Tidak dapat menyimpan objek %1"
+
+#: LedgerSMB/DBObject/Asset.pm:110
+msgid "Asset"
+msgstr "Aset"
+
+#: LedgerSMB/DBObject/Asset.pm:294
+msgid "Invoice not found"
+msgstr "Invois tidak dijumpai"
+
+#: LedgerSMB/DBObject/Date.pm:59 LedgerSMB/App_State.pm:189
+msgid "January"
+msgstr "Januari"
+
+#: LedgerSMB/DBObject/Date.pm:60 LedgerSMB/App_State.pm:190
+msgid "February"
+msgstr "Februari"
+
+#: LedgerSMB/DBObject/Date.pm:61 LedgerSMB/App_State.pm:191
+msgid "March"
+msgstr "Mac"
+
+#: LedgerSMB/DBObject/Date.pm:62 LedgerSMB/App_State.pm:192
+msgid "April"
+msgstr "April"
+
+#: LedgerSMB/DBObject/Date.pm:63 LedgerSMB/App_State.pm:195
+msgid "May"
+msgstr "Mei"
+
+#: LedgerSMB/DBObject/Date.pm:64 LedgerSMB/App_State.pm:196
+msgid "June"
+msgstr "Jun"
+
+#: LedgerSMB/DBObject/Date.pm:65 LedgerSMB/App_State.pm:197
+msgid "July"
+msgstr "Julai"
+
+#: LedgerSMB/DBObject/Date.pm:66 LedgerSMB/App_State.pm:198
+msgid "August"
+msgstr "Ogos"
+
+#: LedgerSMB/DBObject/Date.pm:67 LedgerSMB/App_State.pm:199
+msgid "September"
+msgstr "September"
+
+#: LedgerSMB/DBObject/Date.pm:68 LedgerSMB/App_State.pm:200
+msgid "October"
+msgstr "Oktober"
+
+#: LedgerSMB/DBObject/Date.pm:69 LedgerSMB/App_State.pm:201
+msgid "November"
+msgstr "November"
+
+#: LedgerSMB/DBObject/Date.pm:70 LedgerSMB/App_State.pm:202
+msgid "December"
+msgstr "Disember"
+
+#: LedgerSMB/DBObject/Draft.pm:56 LedgerSMB/DBObject/Draft.pm:75
+msgid "No ID Set"
+msgstr "Tiada Set ID"
+
+#: LedgerSMB/DBObject/User.pm:74
+msgid "Incorrect Password"
+msgstr "Kata Laluan Tidak Tepat"
+
+#: LedgerSMB/DBObject/User.pm:77
+msgid "Passwords must match."
+msgstr "Kata laluan mestilah sempadan"
+
+#: LedgerSMB/DBObject/User.pm:146
+msgid "Password required"
+msgstr "Kata laluan diperlukan"
+
+#: LedgerSMB/Report/Trial_Balance.pm:115
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:115
+#: tools/dbstrings:136 tools/dbstrings:94
+msgid "Trial Balance"
+msgstr "Baki Percubaan"
+
+#: LedgerSMB/Report/Trial_Balance.pm:132
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:132
+msgid "Account Description"
+msgstr "Deskripsi Akaun"
+
+#: LedgerSMB/Report/Trial_Balance.pm:141
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:75
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:141
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:75
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:76
+msgid "Starting Balance"
+msgstr "Baki Permulaan"
+
+#: LedgerSMB/Report/Trial_Balance.pm:153
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:153
+msgid "Ending Balance"
+msgstr "Baki Pengakhiran"
+
+#: LedgerSMB/Report/Trial_Balance.pm:164
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:164
+msgid "From date"
+msgstr "Dari tarikh"
+
+#: LedgerSMB/Report/Trial_Balance.pm:166
+#: LedgerSMB/Report/Invoices/Payments.pm:194 LedgerSMB/Report/Timecards.pm:158
+#: LedgerSMB/Report/Reconciliation/Summary.pm:176
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:166
+msgid "To Date"
+msgstr "Kepada tarikh"
+
+#: LedgerSMB/Report/Trial_Balance.pm:168
+#: LedgerSMB/Report/Trial_Balance/List.pm:60
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance.pm:168
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:60
+msgid "Ignore Yearends"
+msgstr "Abaikan Pengakhiran Tahun"
+
+#: LedgerSMB/Report/Trial_Balance/List.pm:35
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Trial_Balance/List.pm:35
+msgid "Trial Balance List"
+msgstr "Senarai Baki Percubaan"
+
+#: LedgerSMB/Report/Aging.pm:127
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:127
+msgid "30"
+msgstr "30"
+
+#: LedgerSMB/Report/Aging.pm:132
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:132
+msgid "60"
+msgstr "60"
+
+#: LedgerSMB/Report/Aging.pm:137
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:137
+msgid "90"
+msgstr "90"
+
+#: LedgerSMB/Report/Aging.pm:167
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Aging.pm:167
+msgid "Aging Report"
+msgstr "Laporan Berumur"
+
+#: LedgerSMB/Report/Unapproved/Drafts.pm:100
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:107
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:100
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:107
+msgid "AR/AP/GL Amount"
+msgstr "Amaun AR/AP/GL"
+
+#: LedgerSMB/Report/Unapproved/Drafts.pm:115
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:115
+msgid "Draft Search"
+msgstr "Carian Draf"
+
+#: LedgerSMB/Report/Unapproved/Drafts.pm:126
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:126
+msgid "Draft Type"
+msgstr "Jenis Draf"
+
+#: LedgerSMB/Report/Unapproved/Drafts.pm:130
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:146
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:130
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:146
+msgid "Amount Greater Than"
+msgstr "Jumlah Melebihi"
+
+#: LedgerSMB/Report/Unapproved/Drafts.pm:132
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:148
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Drafts.pm:132
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:148
+msgid "Amount Less Than"
+msgstr "Jumlah Kurang Daripada"
+
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:112
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:112
+msgid "Payment Amount"
+msgstr "Jumlah Pembayaran"
+
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:131
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:131
+msgid "Batch Search"
+msgstr "Carian Kumpulan"
+
+#: LedgerSMB/Report/Unapproved/Batch_Overview.pm:142
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Overview.pm:142
+msgid "Batch Type"
+msgstr "Jenis Kumpulan"
+
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:95
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:95
+msgid "Batch Class"
+msgstr "Kelas Kumpulan"
+
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:131
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:131
+msgid "Voucher List"
+msgstr "Senarai Baucer"
+
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:142
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:142
+msgid "Batch ID"
+msgstr "ID Kumpulan"
+
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:188
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:188
+msgid "Post Batch"
+msgstr "Simpan Kumpulan"
+
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:194
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:194
+msgid "Delete Batch"
+msgstr "Padam Kumpulan"
+
+#: LedgerSMB/Report/Unapproved/Batch_Detail.pm:200
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Unapproved/Batch_Detail.pm:200
+msgid "Delete Vouchers"
+msgstr "Padam Baucer"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:120
+msgid "Selected"
+msgstr "Terpilih"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:137
+msgid "Total Paid"
+msgstr "Jumlah Dibayar"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:149
+msgid "Batch Description"
+msgstr "Deskripsi Kumpulan"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:152
+msgid "Batch"
+msgstr "Kumpulan"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:192 LedgerSMB/Report/Timecards.pm:156
+#: LedgerSMB/Report/Reconciliation/Summary.pm:174
+msgid "From Date"
+msgstr "Tarikh Mula"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:206
+msgid "Payment Results"
+msgstr "Hasil Pembayaran"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:207
+msgid "Receipt Results"
+msgstr "Hasil Resit"
+
+#: LedgerSMB/Report/Invoices/Payments.pm:232
+msgid "Reverse Payments"
+msgstr "Pembayaran Balik"
+
+#: LedgerSMB/Report/Invoices/Transactions.pm:215
+msgid "Vendor Account"
+msgstr "Akaun Pembekal"
+
+#: LedgerSMB/Report/Invoices/Transactions.pm:218
+msgid "Customer Account"
+msgstr "Akaun Pelanggan"
+
+#: LedgerSMB/Report/Invoices/Transactions.pm:251
+#: LedgerSMB/Report/Contact/Purchase.pm:91
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:91
+msgid "Due"
+msgstr "Tarikh Akhir"
+
+#: LedgerSMB/Report/Invoices/Transactions.pm:275
+#: LedgerSMB/Report/Orders.pm:257 LedgerSMB/Report/Contact/Purchase.pm:111
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Purchase.pm:111
+msgid "Ship Via"
+msgstr "Hantar Melalui"
+
+#: LedgerSMB/Report/Invoices/Transactions.pm:299
+msgid "Search AP"
+msgstr "Mencari AP"
+
+#: LedgerSMB/Report/Invoices/Transactions.pm:300
+msgid "Search AR"
+msgstr "Mencari AR"
+
+#: LedgerSMB/Report/Invoices/Outstanding.pm:160
+msgid "# Invoices"
+msgstr "Invois"
+
+#: LedgerSMB/Report/Invoices/Outstanding.pm:261
+msgid "Ship_Via"
+msgstr "Hantar Melalui"
+
+#: LedgerSMB/Report/co/Caja_Diaria.pm:76
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:76
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:77
+msgid "Document"
+msgstr "Dokumen"
+
+#: LedgerSMB/Report/co/Caja_Diaria.pm:81
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:80
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:81
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:80
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:82
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:81
+msgid "Debit"
+msgstr "Debit"
+
+#: LedgerSMB/Report/co/Caja_Diaria.pm:86
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:85
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:86
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:85
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:87
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:86
+msgid "Credit"
+msgstr "Kredit"
+
+#: LedgerSMB/Report/co/Caja_Diaria.pm:110
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:110
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:115
+msgid "Caja Diaria"
+msgstr "Tunai Harian"
+
+#: LedgerSMB/Report/co/Caja_Diaria.pm:125
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:125
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:130
+msgid "Account Number Start"
+msgstr "Permulaan Akaun Nombor"
+
+#: LedgerSMB/Report/co/Caja_Diaria.pm:127
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Caja_Diaria.pm:127
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Caja_Diaria.pm:132
+msgid "Account Number End"
+msgstr "Pengakhiran Akaun Nombor"
+
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:89 LedgerSMB/Report/GL.pm:158
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:89
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:158
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:90
+msgid "Balance"
+msgstr "Baki"
+
+#: LedgerSMB/Report/co/Balance_y_Mayor.pm:114
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/co/Balance_y_Mayor.pm:114
+#: addons/1.3/colombia_general/trunk/LedgerSMB/DBObject/Report/co/Balance_y_Mayor.pm:118
+msgid "Balance y Mayor"
+msgstr "Baki dan Lain-lain"
+
+#: LedgerSMB/Report/Margin/Invoice.pm:53
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Margin/Invoice.pm:53
+msgid "Margin Report for Invoice"
+msgstr "Laporan Margin Invois"
+
+#: LedgerSMB/Report/Margin/ECA.pm:67
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Margin/ECA.pm:67
+msgid "Margin Report for Customer"
+msgstr "Laporan Margin Pelanggan"
+
+#: LedgerSMB/Report/Orders.pm:192 LedgerSMB/Report/Orders.pm:290
+#: tools/dbstrings:45 tools/dbstrings:68 tools/dbstrings:197
+#: tools/dbstrings:54 tools/dbstrings:153
+msgid "Quotations"
+msgstr "Sebutan Harga"
+
+#: LedgerSMB/Report/Orders.pm:195 LedgerSMB/Report/Orders.pm:292
+#: tools/dbstrings:46 tools/dbstrings:73 tools/dbstrings:55
+msgid "RFQs"
+msgstr "RFQs"
+
+#: LedgerSMB/Report/Orders.pm:221
+msgid "Required Date"
+msgstr "Tarikh yang Diperlukan"
+
+#: LedgerSMB/Report/Timecards.pm:100
+msgid "Project/Department Number"
+msgstr "Nombor Projek/Jabatan"
+
+#: LedgerSMB/Report/Timecards.pm:112 LedgerSMB/Report/Timecards.pm:160
+msgid "Partnumber"
+msgstr "Nombor Bahagian"
+
+#: LedgerSMB/Report/Timecards.pm:120
+msgid "Sun"
+msgstr "Ahad"
+
+#: LedgerSMB/Report/Timecards.pm:124
+msgid "Mon"
+msgstr "Isnin"
+
+#: LedgerSMB/Report/Timecards.pm:128
+msgid "Tue"
+msgstr "Selasa"
+
+#: LedgerSMB/Report/Timecards.pm:132
+msgid "Wed"
+msgstr "Rabu"
+
+#: LedgerSMB/Report/Timecards.pm:136
+msgid "Thu"
+msgstr "Khamis"
+
+#: LedgerSMB/Report/Timecards.pm:140
+msgid "Fri"
+msgstr "Jumaat"
+
+#: LedgerSMB/Report/Timecards.pm:144
+msgid "Sat"
+msgstr "Sabtu"
+
+#: LedgerSMB/Report/Timecards.pm:169 tools/dbstrings:173
+msgid "Timecards"
+msgstr ""
+
+#: LedgerSMB/Report/COA.pm:112
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:112
+msgid "Dropdowns"
+msgstr "Gugurkan"
+
+#: LedgerSMB/Report/COA.pm:117 LedgerSMB/Report/COA.pm:190
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:117
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:190
+msgid "Edit"
+msgstr "Ubahsuai"
+
+#: LedgerSMB/Report/COA.pm:141
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/COA.pm:141
+#: tools/dbstrings:8 tools/dbstrings:18
+msgid "Chart of Accounts"
+msgstr "Carta Akaun"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:134
+msgid "Statement Date"
+msgstr "Tarikh Penyata"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:138
+msgid "Statement Balance"
+msgstr "Baki Penyata"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:141
+msgid "Approved"
+msgstr "Diluluskan"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:144
+msgid "Submitted"
+msgstr "Dihantar"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:147
+msgid "Last Updated"
+msgstr "Kemaskini Terakhir"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:150
+#: LedgerSMB/Report/Budget/Search.pm:87
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:87
+msgid "Entered By"
+msgstr "Dimasukkan Oleh"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:178
+msgid "From Amount"
+msgstr "Daripada Jumlah"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:180
+msgid "To Amount"
+msgstr "Kepada Jumlah"
+
+#: LedgerSMB/Report/Reconciliation/Summary.pm:191
+msgid "Reconciliation Reports"
+msgstr "Laporan Pendamaian"
+
+#: LedgerSMB/Report/Inventory/Search.pm:233
+msgid "Avg. Cost"
+msgstr "Kos Purata"
+
+#: LedgerSMB/Report/Inventory/Search.pm:241
+msgid "Price Updated"
+msgstr "Harga Dikemaskini"
+
+#: LedgerSMB/Report/Inventory/Search.pm:269 tools/dbstrings:52
+#: tools/dbstrings:58
+msgid "Partsgroup"
+msgstr ""
+
+#: LedgerSMB/Report/Inventory/Search.pm:297
+#: LedgerSMB/Report/Contact/History.pm:97
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:97
+msgid "Serial Number"
+msgstr "Nombor Siri"
+
+#: LedgerSMB/Report/Inventory/Search.pm:319 tools/dbstrings:199
+#: tools/dbstrings:155
+msgid "Goods and Services"
+msgstr "Barangan dan Servis"
+
+#: LedgerSMB/Report/Inventory/Adj_Details.pm:59
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:59
+msgid "Inventory Adjustment Details"
+msgstr "Detail Inventori Pelarasan"
+
+#: LedgerSMB/Report/Inventory/Adj_Details.pm:84
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:84
+msgid "Counted"
+msgstr "Dikira"
+
+#: LedgerSMB/Report/Inventory/Adj_Details.pm:87
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:87
+msgid "Expected"
+msgstr "Telah dijangka"
+
+#: LedgerSMB/Report/Inventory/Adj_Details.pm:90
+#: LedgerSMB/Report/Budget/Variance.pm:86
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Adj_Details.pm:90
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:86
+msgid "Variance"
+msgstr "Varian"
+
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:67
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:67
+msgid "Inventory Adjustments"
+msgstr "Inventori Pelarasan"
+
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:79
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:79
+msgid "Including partnumber"
+msgstr "Termasuk Nombor Bahagian"
+
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:81
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:81
+msgid "Source starting with"
+msgstr "Sumber bermula dengan"
+
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:100
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:100
+msgid "AR Invoice"
+msgstr "Invois AR"
+
+#: LedgerSMB/Report/Inventory/Search_Adj.pm:104
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Inventory/Search_Adj.pm:104
+msgid "AP Invoice"
+msgstr "Invois AP"
+
+#: LedgerSMB/Report/Budget/Variance.pm:82
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:82
+msgid "Used"
+msgstr "Digunakan"
+
+#: LedgerSMB/Report/Budget/Variance.pm:97
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:97
+msgid "Budget Variance Report"
+msgstr "Laporan Bajet Varian"
+
+#: LedgerSMB/Report/Budget/Variance.pm:108
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Variance.pm:108
+msgid "Budget Number"
+msgstr "Nombor Bajet"
+
+#: LedgerSMB/Report/Budget/Search.pm:107
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Budget/Search.pm:107
+msgid "Budget Search Results"
+msgstr "Keputusan Carian Bajet"
+
+#: LedgerSMB/Report/PNL/Income_Statement.pm:51
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:51
+#: tools/dbstrings:85 tools/dbstrings:137 tools/dbstrings:95
+msgid "Income Statement"
+msgstr "Penyata Pendapatan"
+
+#: LedgerSMB/Report/PNL/Income_Statement.pm:59
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:59
+msgid "Reporting Basis"
+msgstr "Laporan Asas"
+
+#: LedgerSMB/Report/PNL/Income_Statement.pm:81
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Income_Statement.pm:81
+msgid "Invalid Reporting Basis"
+msgstr "Laporan Asas Tidak Sah"
+
+#: LedgerSMB/Report/PNL/Invoice.pm:77
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Invoice.pm:77
+msgid "Invoice Profit/Loss"
+msgstr "Invois Keuntungan/Kerugian"
+
+;	#: LedgerSMB/Report/PNL/Product.pm:69
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Product.pm:69
+msgid "Proft/Loss on Inventory Sales"
+msgstr "Keuntungan/Kerugian Stok Jualan"
+
+#: LedgerSMB/Report/PNL/ECA.pm:80
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/ECA.pm:80
+msgid "ECA Income Statement"
+msgstr "Penyata Gaji ECA"
+
+#: LedgerSMB/Report/Payroll/Deduction_Types.pm:34
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Deduction_Types.pm:34
+msgid "Deduction Class"
+msgstr "Kelas Pemotongan"
+
+#: LedgerSMB/Report/Payroll/Deduction_Types.pm:37
+#: LedgerSMB/Report/Payroll/Income_Types.pm:37
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Deduction_Types.pm:37
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Income_Types.pm:37
+msgid "Label"
+msgstr "Label"
+
+#: LedgerSMB/Report/Payroll/Deduction_Types.pm:55
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Deduction_Types.pm:55
+msgid "Deduction Types"
+msgstr "Jenis Pemotongan"
+
+#: LedgerSMB/Report/Payroll/Income_Types.pm:34
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Income_Types.pm:34
+msgid "Income Class"
+msgstr "Kelas Pendapatan"
+
+
+#: LedgerSMB/Report/Payroll/Income_Types.pm:55
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Payroll/Income_Types.pm:55
+msgid "Income Types"
+msgstr "Jenis Pendapatan"
+
+#: LedgerSMB/Report/GL.pm:103
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:103
+msgid "Entry ID"
+msgstr "Masukkan ID"
+
+#: LedgerSMB/Report/GL.pm:128
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:128
+msgid "Cleared"
+msgstr "Padamkan"
+
+#: LedgerSMB/Report/GL.pm:138
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:138
+msgid "Chart ID"
+msgstr "Carta ID"
+
+#: LedgerSMB/Report/GL.pm:143
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:143
+msgid "Account No."
+msgstr "No. Akaun"
+
+#: LedgerSMB/Report/GL.pm:148
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:148
+msgid "Account Name"
+msgstr "Nama Akaun"
+
+#: LedgerSMB/Report/GL.pm:189
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/GL.pm:189
+msgid "General Ledger Report"
+msgstr "Laporan Lajuran Umum"
+
+#: LedgerSMB/Report/Contact/Search.pm:67
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:67
+msgid "Credit Account Number"
+msgstr "No Akaun Kredit"
+
+#: LedgerSMB/Report/Contact/Search.pm:75
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:75
+msgid "Business Type"
+msgstr "Jenis Perniagaan"
+
+#: LedgerSMB/Report/Contact/Search.pm:87
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/Search.pm:87
+msgid "Contact Search"
+msgstr "Carian Hubungan"
+
+#: LedgerSMB/Report/Contact/History.pm:89
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:89
+msgid "Disc"
+msgstr "Disk"
+
+#: LedgerSMB/Report/Contact/History.pm:114
+#: addons/1.3/report_framework/trunk/LedgerSMB/Report/Contact/History.pm:114
+msgid "Purchase History"
+msgstr "Rekod Pembelian"
+
+#: LedgerSMB/Batch.pm:90
+msgid "Any"
+msgstr "Selain"
+
+#: LedgerSMB/Form.pm:678
+msgid "Action: %1, ID: [_2]"
+msgstr "Tindakan: %1, ID: [_2]"
+
+#: LedgerSMB/Entity/Location.pm:113
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:114
+#: tools/dbstrings:269 tools/dbstrings:263
+msgid "Billing"
+msgstr "Bill"
+
+#: LedgerSMB/Entity/Location.pm:114
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:115
+#: tools/dbstrings:270 tools/dbstrings:264
+msgid "Sales"
+msgstr "Jualan"
+
+#: LedgerSMB/Entity/Location.pm:115
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Location.pm:116
+#: tools/dbstrings:196 tools/dbstrings:271 tools/dbstrings:152
+#: tools/dbstrings:265
+msgid "Shipping"
+msgstr "Penghantaran"
+
+#: LedgerSMB/Entity/Contact.pm:164
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Contact.pm:173
+msgid "Must have credit or entity id"
+msgstr "Mesti mempunyai kredit ID entiti"
+
+#: LedgerSMB/Entity/Person.pm:100
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:100
+msgid "Dr."
+msgstr "Dr."
+
+#: LedgerSMB/Entity/Person.pm:101
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:101
+msgid "Miss."
+msgstr "Cik"
+
+#: LedgerSMB/Entity/Person.pm:102
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:102
+msgid "Mr."
+msgstr "Encik"
+
+#: LedgerSMB/Entity/Person.pm:103
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:103
+msgid "Mrs."
+msgstr "Puan"
+
+#: LedgerSMB/Entity/Person.pm:104
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:104
+msgid "Ms."
+msgstr "Cik"
+
+#: LedgerSMB/Entity/Person.pm:105
+#: addons/1.3/crm-basic/trunk/LedgerSMB/DBObject/Entity/Person.pm:105
+msgid "Sir."
+msgstr "Tuan"
+
+#: LedgerSMB/Contact.pm:59
+msgid "Unable to save contact information"
+msgstr "Informasi hubungan gagal disimpan"
+
+#: LedgerSMB/GL.pm:200
+msgid "Account %1 not found"
+msgstr "Akaun %1 gagal dicari"
+
+#: LedgerSMB/App_State.pm:189
+msgid "Jan"
+msgstr "Jan"
+
+#: LedgerSMB/App_State.pm:190
+msgid "Feb"
+msgstr "Feb"
+
+#: LedgerSMB/App_State.pm:191
+msgid "Mar"
+msgstr "Mac"
+
+#: LedgerSMB/App_State.pm:192
+msgid "Apr"
+msgstr "Apr"
+
+#: LedgerSMB/App_State.pm:196
+msgid "Jun"
+msgstr "Jun"
+
+#: LedgerSMB/App_State.pm:197
+msgid "Jul"
+msgstr "Jul"
+
+#: LedgerSMB/App_State.pm:198
+msgid "Aug"
+msgstr "Ogos"
+
+#: LedgerSMB/App_State.pm:199
+msgid "Sep"
+msgstr "Sep"
+
+#: LedgerSMB/App_State.pm:200
+msgid "Oct"
+msgstr "Okt"
+
+#: LedgerSMB/App_State.pm:201
+msgid "Nov"
+msgstr "Nov"
+
+#: LedgerSMB/App_State.pm:202
+msgid "Dec"
+msgstr "Dis"
+
+#: addons/1.3/audit/trunk/LedgerSMB/Vendor/Audit.pm:331
+msgid "Created"
+msgstr "Dicipta"
+
+#: tools/dbstrings:3 tools/dbstrings:13
+msgid "Batches"
+msgstr "Kelompok"
+
+#: tools/dbstrings:5 tools/dbstrings:15
+msgid "Add Contact"
+msgstr "Tambah Kenalan"
+
+#: tools/dbstrings:6 tools/dbstrings:16
+msgid "Customer History"
+msgstr "Rekod Pelanggan"
+
+#: tools/dbstrings:7 tools/dbstrings:17
+msgid "Vendor History"
+msgstr "Rekod Pembekal"
+
+#: tools/dbstrings:9 tools/dbstrings:19
+msgid "Add Accounts"
+msgstr "Tambah Akaun"
+
+#: tools/dbstrings:10 tools/dbstrings:20
+msgid "Top-level"
+msgstr "Tahap Tertinggi"
+
+#: tools/dbstrings:11 tools/dbstrings:14 tools/dbstrings:21 tools/dbstrings:24
+msgid "Invoice Vouchers"
+msgstr "invois Baucer"
+
+#: tools/dbstrings:12 tools/dbstrings:16 tools/dbstrings:22 tools/dbstrings:25
+msgid "Add Transaction"
+msgstr "Tambah Transaksi"
+
+#: tools/dbstrings:13 tools/dbstrings:23
+msgid "AR Aging"
+msgstr "penuaan AR"
+
+#: tools/dbstrings:17 tools/dbstrings:26
+msgid "AP Aging"
+msgstr "Penuaan AP"
+
+#: tools/dbstrings:21 tools/dbstrings:30
+msgid "Use Overpayment"
+msgstr "Menggunakan Bayaran Lebih"
+
+#: tools/dbstrings:22 tools/dbstrings:31
+msgid "Use AR Overpayment"
+msgstr "Menggunakan Bayaran Lebih AR"
+
+#: tools/dbstrings:25 tools/dbstrings:132 tools/dbstrings:146
+#: tools/dbstrings:34 tools/dbstrings:92 tools/dbstrings:104
+msgid "Reconciliation"
+msgstr ""
+
+#: tools/dbstrings:26 tools/dbstrings:35
+msgid "Employees"
+msgstr "Pekerjaan"
+
+#: tools/dbstrings:31 tools/dbstrings:44 tools/dbstrings:57
+#: tools/dbstrings:125 tools/dbstrings:127 tools/dbstrings:131
+#: tools/dbstrings:161 tools/dbstrings:172 tools/dbstrings:184
+#: tools/dbstrings:201 tools/dbstrings:218 tools/dbstrings:40
+#: tools/dbstrings:53 tools/dbstrings:81 tools/dbstrings:87 tools/dbstrings:91
+#: tools/dbstrings:117 tools/dbstrings:128 tools/dbstrings:156
+msgid "Reports"
+msgstr "Laporan"
+
+#: tools/dbstrings:47 tools/dbstrings:56
+msgid "Journal Entry"
+msgstr "jurnal kedatangan"
+
+#: tools/dbstrings:48
+msgid "Requirements"
+msgstr "Keperluan"
+
+#: tools/dbstrings:54 tools/dbstrings:59
+msgid "Add Timecard"
+msgstr "Tambah Kad Masa "
+
+#: tools/dbstrings:59 tools/dbstrings:74
+msgid "Time Cards"
+msgstr "Kad Masa"
+
+#: tools/dbstrings:60 tools/dbstrings:217 tools/dbstrings:61
+#: tools/dbstrings:171
+msgid "Translations"
+msgstr "Terjemahan"
+
+#: tools/dbstrings:62 tools/dbstrings:86 tools/dbstrings:63
+msgid "Balance Sheet"
+msgstr "Helaian Kira-kira"
+
+#: tools/dbstrings:63 tools/dbstrings:9
+msgid "Inventory Activity"
+msgstr ""
+
+#: tools/dbstrings:64
+msgid "Sales Invoices"
+msgstr "Jualan Terperinci"
+
+#: tools/dbstrings:66
+msgid "Checks"
+msgstr "Cek"
+
+#: tools/dbstrings:67
+msgid "Work Orders"
+msgstr "Arahan Kerja"
+
+#: tools/dbstrings:69
+msgid "Packing Lists"
+msgstr "Senarai Bungkusan"
+
+#: tools/dbstrings:70
+msgid "Pick Lists"
+msgstr "Senarai Pilihan"
+
+#: tools/dbstrings:72
+msgid "Bin Lists"
+msgstr "Senarai Buangan"
+
+#: tools/dbstrings:76 tools/dbstrings:65
+msgid "Defaults"
+msgstr "Asal"
+
+#: tools/dbstrings:78 tools/dbstrings:67
+msgid "List Warehouse"
+msgstr "Senarai Gudang"
+
+#: tools/dbstrings:80 tools/dbstrings:69
+msgid "List Businesses"
+msgstr "Senarai Perniagaan"
+
+#: tools/dbstrings:82 tools/dbstrings:71
+msgid "List Languages"
+msgstr "senarai Bahasa"
+
+#: tools/dbstrings:84 tools/dbstrings:73
+msgid "List SIC"
+msgstr "Senarai SIC"
+
+#: tools/dbstrings:88 tools/dbstrings:102 tools/dbstrings:181
+#: tools/dbstrings:194
+msgid "AR Transaction"
+msgstr "Transaksi AR"
+
+#: tools/dbstrings:89 tools/dbstrings:103 tools/dbstrings:182
+#: tools/dbstrings:195
+msgid "AP Transaction"
+msgstr "Transakai AP"
+
+#: tools/dbstrings:96 tools/dbstrings:110 tools/dbstrings:189
+#: tools/dbstrings:202
+msgid "Statement"
+msgstr "Kenyataan"
+
+#: tools/dbstrings:99 tools/dbstrings:119 tools/dbstrings:192
+#: tools/dbstrings:207
+msgid "Timecard"
+msgstr ""
+
+#: tools/dbstrings:100 tools/dbstrings:120 tools/dbstrings:193
+#: tools/dbstrings:208
+msgid "Letterhead"
+msgstr "Tajuk Surat"
+
+#: tools/dbstrings:111 tools/dbstrings:75
+msgid "Transaction Approval"
+msgstr "Transaksi Diterima"
+
+#: tools/dbstrings:121 tools/dbstrings:83
+msgid "POS Invoice"
+msgstr "Invois POS"
+
+#: tools/dbstrings:122 tools/dbstrings:84
+msgid "Contacts"
+msgstr "Kenalan"
+
+#: tools/dbstrings:123 tools/dbstrings:85
+msgid "Import Chart"
+msgstr "Carta Kemasukan"
+
+#: tools/dbstrings:126 tools/dbstrings:128 tools/dbstrings:129
+#: tools/dbstrings:82 tools/dbstrings:88 tools/dbstrings:89
+msgid "Vouchers"
+msgstr "Baucer"
+
+#: tools/dbstrings:133 tools/dbstrings:93
+msgid "Year End"
+msgstr "Akhir Tahun"
+
+#: tools/dbstrings:135 tools/dbstrings:175
+msgid "Reverse Receipts"
+msgstr "Pembatalan Resit"
+
+#: tools/dbstrings:139 tools/dbstrings:97
+msgid "Add Part"
+msgstr "Tambah Bahagian"
+
+#: tools/dbstrings:140 tools/dbstrings:98
+msgid "Add Service"
+msgstr "Tambah Perkhidmatan"
+
+#: tools/dbstrings:141 tools/dbstrings:99
+msgid "Add Assembly"
+msgstr "Tambah Pemasangan "
+
+#: tools/dbstrings:144 tools/dbstrings:102
+msgid "Reverse Payment"
+msgstr "Pembayaran Balik"
+
+#: tools/dbstrings:145 tools/dbstrings:103
+msgid "Drafts"
+msgstr "Draf"
+
+#: tools/dbstrings:147 tools/dbstrings:105
+msgid "Add Tax Form"
+msgstr "Tambah Borang Cukai"
+
+#: tools/dbstrings:148
+msgid "Admin Users"
+msgstr "Pengguna admin"
+
+#: tools/dbstrings:149 tools/dbstrings:106
+msgid "Text Templates"
+msgstr "Template teks"
+
+#: tools/dbstrings:150 tools/dbstrings:107
+msgid "LaTeX Templates"
+msgstr "Template LaTeX"
+
+#: tools/dbstrings:151 tools/dbstrings:108
+msgid "HTML Templates"
+msgstr "Template HTML"
+
+#: tools/dbstrings:152 tools/dbstrings:109
+msgid "SIC"
+msgstr "SIC"
+
+#: tools/dbstrings:155 tools/dbstrings:112
+msgid "Reporting Units"
+msgstr "Unit yang dilaporkan"
+
+#: tools/dbstrings:157
+msgid "Add User"
+msgstr "Tambah pengguna"
+
+#: tools/dbstrings:158
+msgid "Search Users"
+msgstr "Carian pengguna"
+
+#: tools/dbstrings:159 tools/dbstrings:114
+msgid "Sessions"
+msgstr "Sesi"
+
+#: tools/dbstrings:160 tools/dbstrings:115
+msgid "List Tax Forms"
+msgstr "Senarai borang cukai"
+
+#: tools/dbstrings:162 tools/dbstrings:118
+msgid "Asset Classes"
+msgstr "Kelas aset"
+
+#: tools/dbstrings:163 tools/dbstrings:119
+msgid "Assets"
+msgstr "Aset"
+
+#: tools/dbstrings:164 tools/dbstrings:120
+msgid "Add Class"
+msgstr "Tambah kelas"
+
+#: tools/dbstrings:165 tools/dbstrings:121
+msgid "List Classes"
+msgstr "Senarai kelas"
+
+#: tools/dbstrings:166 tools/dbstrings:122
+msgid "Add Assets"
+msgstr "Tambah aset"
+
+#: tools/dbstrings:167 tools/dbstrings:123
+msgid "Search Assets"
+msgstr "Carian aset"
+
+#: tools/dbstrings:168 tools/dbstrings:183 tools/dbstrings:188
+#: tools/dbstrings:8 tools/dbstrings:124 tools/dbstrings:139
+#: tools/dbstrings:144
+msgid "Import"
+msgstr "Import"
+
+#: tools/dbstrings:169 tools/dbstrings:125
+msgid "Depreciate"
+msgstr "Penyusutan"
+
+#: tools/dbstrings:170 tools/dbstrings:126
+msgid "Net Book Value"
+msgstr "Nilai buku bersih"
+
+#: tools/dbstrings:175 tools/dbstrings:179 tools/dbstrings:131
+#: tools/dbstrings:135
+msgid "Import Batch"
+msgstr "Import kumpulan"
+
+#: tools/dbstrings:177 tools/dbstrings:133
+msgid "Debit Note"
+msgstr "Nota debit"
+
+#: tools/dbstrings:178 tools/dbstrings:134
+msgid "Debit Invoice"
+msgstr "Invois debit"
+
+#: tools/dbstrings:181 tools/dbstrings:137
+msgid "Credit Note"
+msgstr "Nota kredit"
+
+#: tools/dbstrings:182 tools/dbstrings:138
+msgid "Credit Invoice"
+msgstr "Invois kredit"
+
+#: tools/dbstrings:185 tools/dbstrings:141
+msgid "Add GIFI"
+msgstr "Tambah GIFI"
+
+#: tools/dbstrings:186 tools/dbstrings:142
+msgid "List GIFI"
+msgstr "Senarai GIFI"
+
+#: tools/dbstrings:187 tools/dbstrings:143
+msgid "Import GIFI"
+msgstr "Import GIFI"
+
+#: tools/dbstrings:189 tools/dbstrings:145
+msgid "AR Voucher"
+msgstr "Baucer AR"
+
+#: tools/dbstrings:190 tools/dbstrings:146
+msgid "AP Voucher"
+msgstr "Baucer AP"
+
+#: tools/dbstrings:191 tools/dbstrings:147
+msgid "Add Budget"
+msgstr "Tambah bajet"
+
+#: tools/dbstrings:193 tools/dbstrings:149
+msgid "Budgets"
+msgstr "Bajet"
+
+#: tools/dbstrings:194 tools/dbstrings:150
+msgid "HR"
+msgstr "HR"
+
+#: tools/dbstrings:195 tools/dbstrings:151
+msgid "Order Entry"
+msgstr "Entri pesanan"
+
+#: tools/dbstrings:198 tools/dbstrings:154
+msgid "General Journal"
+msgstr "Jurnal umum"
+
+#: tools/dbstrings:200
+msgid "Projects"
+msgstr "Projek"
+
+#: tools/dbstrings:203 tools/dbstrings:158
+msgid "Tax Forms"
+msgstr "Borang cukai"
+
+#: tools/dbstrings:204 tools/dbstrings:159
+msgid "Fixed Assets"
+msgstr "Aset tetap"
+
+#: tools/dbstrings:205 tools/dbstrings:160
+msgid "Logout"
+msgstr "Log keluar"
+
+#: tools/dbstrings:206 tools/dbstrings:161
+msgid "New Window"
+msgstr "Tetingkap baru"
+
+#: tools/dbstrings:207 tools/dbstrings:162
+msgid "Preferences"
+msgstr "Keutamaan"
+
+#: tools/dbstrings:208
+msgid "Stylesheet"
+msgstr ""
+
+#: tools/dbstrings:209 tools/dbstrings:163
+msgid "System"
+msgstr "Sistem"
+
+#: tools/dbstrings:210 tools/dbstrings:164
+msgid "Batch Printing"
+msgstr "Percetakan kumpulan"
+
+#: tools/dbstrings:211 tools/dbstrings:212 tools/dbstrings:165
+#: tools/dbstrings:166
+msgid "Outstanding"
+msgstr ""
+
+#: tools/dbstrings:213 tools/dbstrings:167
+msgid "Add Overhead"
+msgstr ""
+
+#: tools/dbstrings:235 tools/dbstrings:227
+msgid "ap"
+msgstr "AP"
+
+#: tools/dbstrings:236 tools/dbstrings:228
+msgid "ar"
+msgstr "AR"
+
+#: tools/dbstrings:237 tools/dbstrings:229
+msgid "payment"
+msgstr "Pembayaran"
+
+#: tools/dbstrings:238 tools/dbstrings:230
+msgid "payment_reversal"
+msgstr "Pembayaran semula"
+
+#: tools/dbstrings:239 tools/dbstrings:231
+msgid "gl"
+msgstr "GL"
+
+#: tools/dbstrings:240 tools/dbstrings:232
+msgid "receipt"
+msgstr "Resit"
+
+#: tools/dbstrings:241 tools/dbstrings:233
+msgid "receipt_reversal"
+msgstr ""
+
+#: tools/dbstrings:242 tools/dbstrings:234
+msgid "sales_invoice"
+msgstr "Invois jualan"
+
+#: tools/dbstrings:243 tools/dbstrings:235
+msgid "vendor_invoice"
+msgstr "invois_pembekal"
+
+#: tools/dbstrings:3
+msgid "Search Groups"
+msgstr "Carian kumpulan"
+
+#: tools/dbstrings:4
+msgid "Search Pricegroups"
+msgstr "Carian kumpulan harga"
+
+#: tools/dbstrings:5
+msgid "Import Inventory"
+msgstr ""
+
+#: tools/dbstrings:10
+msgid "Import AR Batch"
+msgstr "Import kumpulan AR"
+
+#: tools/dbstrings:11
+msgid "Import AP Batch"
+msgstr "Import kumpulan AP"
+
+#: tools/dbstrings:12
+msgid "Enter Inventory"
+msgstr "Masukan inventori"
+
+#: tools/dbstrings:79
+msgid "Add Return"
+msgstr ""
+
+#: tools/dbstrings:140
+msgid "Search and GL"
+msgstr "Carian dan GL"
+
+#: tools/dbstrings:174
+msgid "Sequences"
+msgstr "Turutan"
+
+#: tools/dbstrings:176
+msgid "Reverse Overpay"
+msgstr "Lebihan pembayaran semula"
+
+#: tools/dbstrings:177
+msgid "Reverse AR Overpay"
+msgstr "Lebihan pembayaran AR"
+
+#: tools/dbstrings:179
+msgid "Inventory and COGS"
+msgstr ""
+
+#: tools/dbstrings:209 tools/dbstrings:210
+msgid "Product Receipt"
+msgstr "Resit produk"
+
+#: tools/dbstrings:266
+msgid "Physical"
+msgstr "Fizikal"
+
+#: tools/dbstrings:267
+msgid "Mailing"
+msgstr "Surat-menyurat"

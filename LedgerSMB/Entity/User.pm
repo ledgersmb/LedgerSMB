@@ -28,6 +28,14 @@ Saving permissions:
 
 =over
 
+=item id
+
+This is the integer id of the user
+
+=cut 
+
+has id => (is => 'ro', isa => 'Int');
+
 =item entity_id
 
 This is the integer id of the entity of the user

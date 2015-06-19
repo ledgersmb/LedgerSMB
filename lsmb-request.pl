@@ -41,6 +41,7 @@ binmode STDOUT, ':utf8';
 my $logger;
 
 
+
 sub get_script {
     my ($locale, $request) = @_;
 
@@ -107,7 +108,7 @@ sub request_instantiate {
     return $request;
 }
 
-
+#   warn $script, $requestl
 
 sub call_script {
   my $script = shift @_;
