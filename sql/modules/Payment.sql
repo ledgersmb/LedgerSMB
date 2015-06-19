@@ -451,7 +451,7 @@ BEGIN
                              in_meta_number = c.meta_number)
                 GROUP BY c.id, e.name, c.meta_number, c.threshold, 
                         e.control_code, c.description
-                  HAVING  (sum(p.due) >= c.threshold
+                  HAVING  c.threshold is null or (sum(p.due) >= c.threshold
                         OR sum(case when a.batch_id = in_batch_id then 1
                                   else 0 END) > 0)
         ORDER BY c.meta_number ASC
