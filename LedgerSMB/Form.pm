@@ -904,7 +904,7 @@ sub format_amount {
 
 =item $form->parse_amount($myconfig, $amount);
 
-Return a Math::BigFloat containing the value of $amount where $amount is
+Return a LedgerSMB::PGNumber containing the value of $amount where $amount is
 formatted as $myconfig->{numberformat}.  If $amount is '' or undefined, it is
 treated as zero.  DRCR and parenthesis notation is accepted in addition to
 negative sign notation.
@@ -939,16 +939,16 @@ sub round_amount {
 
     # These rounding rules follow from the previous implementation.
     # They should be changed to allow different rules for different accounts.
-    Math::BigFloat->round_mode('+inf') if $amount >= 0;
-    Math::BigFloat->round_mode('-inf') if $amount < 0;
+    LedgerSMB::PGNumber->round_mode('+inf') if $amount >= 0;
+    LedgerSMB::PGNumber->round_mode('-inf') if $amount < 0;
 
-    $amount = Math::BigFloat->new($amount)->ffround( -$places ) if $places >= 0;
-    $amount = Math::BigFloat->new($amount)->ffround( -( $places - 1 ) )
+    $amount = LedgerSMB::PGNumber->new($amount)->ffround( -$places ) if $places >= 0;
+    $amount = LedgerSMB::PGNumber->new($amount)->ffround( -( $places - 1 ) )
       if $places < 0;
 
     $amount->precision(undef); #we are assuming whole cents so do not round
                                #immediately on arithmatic.  This is necessary
-                               #because Math::BigFloat is arithmatically
+                               #because LedgerSMB::PGNumber is arithmatically
                                #correct wrt accuracy and precision.
 
     return $amount;
@@ -957,7 +957,7 @@ sub round_amount {
 =item $form->db_parse_numeric('sth' => $sth, ['arrayref' => $arrayref, 'hashref' => $hashref])
 
 Converts numeric values in the result set $arrayref or $hashref to
-Math::BigFloat using $sth to determine which fields are numeric.
+LedgerSMB::PGNumber using $sth to determine which fields are numeric.
 
 =cut
 
@@ -973,9 +973,9 @@ sub db_parse_numeric {
         if ($types[$_] == 3 or $types[$_] ==2) {
             $arrayref->[$_] ||= 0 if defined $arrayref;
             $hashref->{$names[$_]} ||=0 if defined $hashref;
-            $arrayref->[$_] = Math::BigFloat->new($arrayref->[$_]) 
+            $arrayref->[$_] = LedgerSMB::PGNumber->new($arrayref->[$_]) 
               if defined $arrayref;
-            $hashref->{$names[$_]} = Math::BigFloat->new($hashref->{$names[$_]})
+            $hashref->{$names[$_]} = LedgerSMB::PGNumber->new($hashref->{$names[$_]})
               if defined $hashref;
         }
 
@@ -1779,7 +1779,7 @@ sub get_exchangerate {
         $sth->execute( $curr, $transdate );
 
         ($exchangerate) = $sth->fetchrow_array;
-	$exchangerate = Math::BigFloat->new($exchangerate);
+	$exchangerate = LedgerSMB::PGNumber->new($exchangerate);
         $sth->finish;
     }
 

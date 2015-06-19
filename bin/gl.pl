@@ -512,8 +512,8 @@ sub edit {
     }
     $i = 0;
 
-    my $minusOne    = new Math::BigFloat(-1);#HV make sure BigFloat stays BigFloat
-    my $plusOne     = new Math::BigFloat(1);#HV make sure BigFloat stays BigFloat
+    my $minusOne    = new LedgerSMB::PGNumber(-1);#HV make sure BigFloat stays BigFloat
+    my $plusOne     = new LedgerSMB::PGNumber(1);#HV make sure BigFloat stays BigFloat
 
     foreach $ref ( @{ $form->{GL} } ) {
         $form->{"accno_$i"} = "$ref->{accno}--$ref->{description}";
