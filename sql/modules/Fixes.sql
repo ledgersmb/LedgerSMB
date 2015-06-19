@@ -138,7 +138,6 @@ COMMIT;
 BEGIN;
 UPDATE menu_attribute SET value = 'template.pl' WHERE value = 'template.pm';
 COMMIT;
-
 -- Add parent of the header as its "heading"
 CREATE OR REPLACE VIEW chart AS
 SELECT id, accno, description,
@@ -162,3 +161,7 @@ BEGIN;
 UPDATE language SET code = 'ms_MY' WHERE code = 'my';
 COMMIT;
 
+BEGIN;
+CREATE TRIGGER loop_detection AFTER INSERT OR UPDATE ON account_heading
+FOR EACH ROW EXECUTE PROCEDURE account_heading__check_tree();
+COMMIT;

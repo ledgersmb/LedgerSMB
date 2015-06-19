@@ -632,7 +632,6 @@ sub update {
 
            }
            if (not $found_acc){
-               die "line $i";
                $form->error($locale->text('Account [_1] not found.', $form->{"accno_$i"}));
            }
             for (qw(debit credit)) {
