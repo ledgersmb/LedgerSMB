@@ -889,10 +889,6 @@ sub delete {
         $sth->execute( $form->{id} ) || $form->dberror($query);
     }
 
-    $query = qq|DELETE FROM inventory WHERE parts_id = ?|;
-    $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
     $query = qq|DELETE FROM partscustomer WHERE parts_id = ?|;
     $sth   = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);

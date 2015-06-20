@@ -2208,7 +2208,7 @@ CREATE TABLE warehouse (
   description text
 );
 --
-CREATE TABLE inventory (
+CREATE TABLE warehouse_inventory (
   entity_id integer references entity_employee(entity_id),
   warehouse_id int,
   parts_id int,
@@ -2219,7 +2219,7 @@ CREATE TABLE inventory (
   entry_id SERIAL PRIMARY KEY
 );
 
-COMMENT ON TABLE inventory IS
+COMMENT ON TABLE warehouse_inventory IS
 $$ This table contains inventory mappings to warehouses, not general inventory
 management data.$$;
 --
