@@ -127,7 +127,6 @@ Others are required.
 
 sub asset_category_save {
     my ($request) = @_;
-	 print STDERR Dumper($request);
     my $ac = LedgerSMB::DBObject::Asset_Class->new({base => $request});
     $ac->save;
     asset_category_screen($request, $ac);

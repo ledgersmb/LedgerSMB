@@ -13,29 +13,32 @@
 	name = "id"
 	value = asset.id
 } ?>
+<?lsmb 
+   default_asset_account = "{";
+   FOREACH a_class IN asset.asset_classes;
+     default_asset_account = default_asset_account _ "'" _ a_class.id _ "': '" _ a_class.asset_account_id _ "',";
+   END;
+   default_asset_account = default_asset_account _ "}";
+
+?>
+<?lsmb 
+   default_depreciation_account = "{";
+   FOREACH a_class IN asset.asset_classes;
+     default_depreciation_account = default_depreciation_account _ "'" _ a_class.id _ "': '" _ a_class.dep_account_id _ "',";
+   END;
+   default_depreciation_account = default_depreciation_account _ "}";
+
+?>
+
+
+<script>
+window.default_unit_label = {
 <?lsmb FOREACH a_class IN asset.asset_classes -?>
-<?lsmb PROCESS input element_data = {
-       type = "hidden",
-       name = "asset_account_default_$a_class.id",
-       value = a_class.asset_account_id,
-} ?>
-<?lsmb PROCESS input element_data = {
-       type = "hidden",
-       name = "dep_account_default_$a_class.id",
-       value = a_class.dep_account_id,
-} ?>
-<?lsmb PROCESS input element_data = {
-       type = "hidden",
-       name = "unit_label_$a_class.id",
-       value = asset.dep_method.${a_class.id}.unit_label,
-} ?>
-<?lsmb- END # For a_class ?>
-<?lsmb PROCESS input element_data = {
-       type = "hidden"
-       name = "last_class_id"
-       value = asset.asset_class
-} ?>
-<!-- end set for javascript automation -CT -->
+   "<?lsmb a_class.id ?>": "<?lsmb asset.dep_method.${a_class.id}.unit_label ?>",
+<?lsmb END -?>
+};
+</script>
+
 <div class="inputrow" id="tagrow">
 <?lsmb PROCESS input element_data = {
 	type = "text"
@@ -55,6 +58,8 @@
 	text_attr = "label"
 	value_attr = "id"
 	label = text("Asset Class:") #'
+       "data-dojo-type" = "lsmb/lib/PublishSelect"
+       "data-dojo-props" = "topic:'ui/assets/class'"
 } ?>
 </div>
 <div class="inputrow" id="descrow">
@@ -98,6 +103,8 @@
 	size = 10
 } ?>
 <span class="caption" id="caption-usablelifegroup">
+<!-- 20150621EH This text should be updated upon change of asset class,
+     but there's no value to update it to, atm. -->
 (<?lsmb text('Method Default') ?>)
 </span>
 </span>
@@ -155,6 +162,8 @@
 	default_values = [asset.asset_account_id]
 	value_attr = 'id'
 	text_attr = 'text'
+       "data-dojo-type" = "lsmb/lib/SubscribeSelect"
+       "data-dojo-props" = "topic:'ui/assets/class',topicMap:$default_asset_account"
 } ?>
 </span>
 <span class="inputgroup" id="depaccgroup">
@@ -165,6 +174,8 @@
 	default_values = [asset.dep_account_id]
 	value_attr = 'id'
 	text_attr = 'text'
+       "data-dojo-type" = "lsmb/lib/SubscribeSelect"
+       "data-dojo-props" = "topic:'ui/assets/class',topicMap:$default_depreciation_account"
 } ?>
 </span>
 </div>
