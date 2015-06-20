@@ -59,8 +59,9 @@ sub _db_array_literal {
 }
 
 sub merge {
-	 my ($self, $base) = @_;
-	 foreach my $key (keys %$base) {
+	 my ($self, $base, %args) = @_;
+    my @keys = $args{keys} || keys %$base;
+	 foreach my $key (@keys) {
 		  $self->{$key} = $base->{$key};
 	 }
 	 return $self;
