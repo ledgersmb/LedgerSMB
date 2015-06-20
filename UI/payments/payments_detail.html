@@ -205,6 +205,8 @@
 						class = 'selectall'
 						value = 0
 						type  = 'checkbox'
+                      "data-dojo-type" = "lsmb/lib/PublishCheckBox"
+                      "data-dojo-props" = "topic:'ui/pay/bulk/all-accounts'"
 					} ?>
 				</div>
 				<?lsmb text('Account') ?>
@@ -241,7 +243,8 @@
 						value   = r.contact_id
 						checked = (r.selected) ? "checked" : undef 
                   class   = 'contactcb'
-			
+                      "data-dojo-type" = "lsmb/lib/SubscribeCheckBox"
+                      "data-dojo-props" = "topic:'ui/pay/bulk/all-accounts'"
 					} ?>
 					<?lsmb r.econtrol_code ?> -- 
 					<?lsmb r.account_number ?> -- <?lsmb r.eca_description ?>
@@ -269,6 +272,8 @@
 								label   = text('Some')
 								checked = (${"paid_$r.contact_id"} == 'some') ? "checked" : ""
 								type    = "radio"
+                        "data-dojo-type" = "lsmb/lib/PublishRadioButton"
+                        "data-dojo-props" = "topic:'ui/pay/bulk/invoice-data-table-" _ r.contact_id _ "'"
 							 }	?>
 						</div>
 						<div class="input">
@@ -280,6 +285,8 @@
 								label   = text('All')
 								checked = (${"paid_$r.contact_id"} != 'some') ? "checked" : ""
 								type    = "radio"
+                        "data-dojo-type" = "lsmb/lib/PublishRadioButton"
+                        "data-dojo-props" = "topic:'ui/pay/bulk/invoice-data-table-" _ r.contact_id _ "'"
 						 }	?>
 						</div>
 					</div>
@@ -298,7 +305,14 @@
 			<tr class="listrow<?lsmb rc ?>">
 				<td class="invoice_detail_list" colspan="3">
 
-					<table id = "invoice-data-table-<?lsmb r.contact_id ?>" width="100%" class = "detail_table_visible">
+					<table id = "invoice-data-table-<?lsmb r.contact_id ?>"
+                      width="100%"
+                      data-dojo-type="lsmb/lib/SubscribeShowHide"
+                      data-dojo-props="topic:'ui/pay/bulk/invoice-data-table-<?lsmb r.contact_id ?>',showValues:['some']"
+                      <?lsmb IF 'some' != ${"paid_$r.contact_id"} ; -?>
+                      style="display:none"
+                      <?lsmb END; ?>
+                      >
 						<tr class="listheading">
 							<th class="invoice_date_list"><?lsmb text('Date') ?>
 							</th>
