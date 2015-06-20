@@ -201,7 +201,9 @@
 	  <?lsmb PROCESS attributes  # Process regular attributes.
 	    attribute_data=element_data
 	    attribute_defaults = select_defaults
-	    element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey', 'tabindex', 'data-dojo-type']  # Attributes that apply to selects.
+            # Attributes that apply to selects.
+	    element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey',
+            'tabindex', 'data-dojo-type', 'data-dojo-props']
 	  ?>
 	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
 	    custom_attribute_data=element_data.attributes 
