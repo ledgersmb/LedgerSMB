@@ -1598,7 +1598,7 @@ CREATE TABLE invoice (
   parts_id int REFERENCES parts(id),
   description text,
   qty NUMERIC,
-  total NUMERIC,
+  allocated NUMERIC,
   sellprice NUMERIC,
   precision int,
   fxsellprice NUMERIC,
@@ -1614,15 +1614,13 @@ CREATE TABLE invoice (
 COMMENT ON TABLE invoice IS
 $$Line items of invoices with goods/services attached.$$;
 
+COMMENT ON COLUMN invoice.allocated IS
+$$Number of allocated items, negative relative to qty.
+When qty + allocated = 0, then the item is fully used for purposes of COGS 
+calculations.$$;
+
 COMMENT ON COLUMN invoice.qty IS
 $$Positive is normal for sales invoices, negative for vendor invoices.$$;
-
-CREATE TABLE invoice_alloc (
-   ap_invoice_id int references invoice(id),
-   ar_invoice_id int references invoice(id),
-   alloc_qty numeric NOT NULL,
-   alloc_price numeric NOT NULL
-);
 
 -- Added for Entity but can't be added due to order
 ALTER TABLE invoice_note ADD FOREIGN KEY (ref_key) REFERENCES invoice(id);
