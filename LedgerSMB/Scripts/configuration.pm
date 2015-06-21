@@ -153,13 +153,13 @@ sub defaults_screen{
     }
 
     my @country_list = $request->call_procedure(
-                     procname => 'location_list_country'
+                     funcname => 'location_list_country'
     );
     unshift @country_list, {}
         if ! defined $request->{default_country};
 
     my @language_code_list =
-             $request->call_procedure(procname=> 'person__list_languages');
+             $request->call_procedure(funcname => 'person__list_languages');
     unshift @language_code_list, {}
         if ! defined $request->{default_language};
 

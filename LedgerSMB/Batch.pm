@@ -14,7 +14,7 @@ Batch/voucher management model for LedgerSMB 1.3
 
 package LedgerSMB::Batch;
 use LedgerSMB::Setting;
-use base qw(LedgerSMB::DBObject);
+use base qw(LedgerSMB::PGOld);
 
 =item get_new_info
 
@@ -51,7 +51,7 @@ Deletes the voucher specified by $id.
 
 sub delete_voucher {
     my ($self, $voucher_id) = @_;
-    $self->call_procedure(procname => 'voucher__delete', args => [$voucher_id]);
+    $self->call_procedure(funcname => 'voucher__delete', args => [$voucher_id]);
 }
 
 =item unlock($id)
@@ -62,7 +62,7 @@ Unlocks a given batch
 
 sub unlock{
     my ($self, $id) = @_;
-    $self->call_procedure(procname => 'batch__unlock', args => [$id]);
+    $self->call_procedure(funcname => 'batch__unlock', args => [$id]);
 }
 
 =item get_search_criteria
@@ -162,7 +162,7 @@ Returns the class_id of batch class specified by its label.
 sub get_class_id {
     my ($self, $type) = @_;
     @results = $self->call_procedure(
-                                     procname => 'batch_get_class_id', 
+                                     funcname => 'batch_get_class_id', 
                                      args     => [$type]
     );
     my $result = pop @results;

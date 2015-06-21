@@ -69,7 +69,7 @@ Organizational role.  Is manager, user, or administrator
 
 =cut
 
-has role => (is => 'rw', isa => 'Str', required => 0);
+has role => (is => 'rw', isa => 'Maybe[Str]', required => 0);
 
 =item is_manager
 
@@ -101,7 +101,7 @@ Entity id of manager
 
 =cut
 
-has manager_id => (is => 'rw', isa => 'Int', required => 0);
+has manager_id => (is => 'rw', isa => 'Maybe[Int]', required => 0);
 
 =item employeenumber
 
@@ -126,7 +126,7 @@ blessed if the employee is found or undef otherwise.
 
 sub get {
     my ($self, $id) = @_;
-    my ($ref) = __PACKAGE__->call_procedure(procname => 'employee__get',
+    my ($ref) = __PACKAGE__->call_procedure(funcname => 'employee__get',
                                           args => [$id]);
     return undef unless $ref->{control_code};
     $ref->{entity_class} = 3;
@@ -143,7 +143,7 @@ entity_id.
 
 sub get_by_cc {
     my ($self, $cc) = @_;
-    my ($ref) = __PACKAGE__->call_procedure(procname => 'person__get_by_cc',
+    my ($ref) = __PACKAGE__->call_procedure(funcname => 'person__get_by_cc',
                                           args => [$cc]);
     return undef unless $ref->{control_code};
     return get($ref->{id});

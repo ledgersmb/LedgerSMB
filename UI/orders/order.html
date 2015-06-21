@@ -2,7 +2,7 @@
 <?lsmb PROCESS elements.html # Form elements helper template ?>
 
 <body id="sales-invoice-body" onload="document.forms[0].partnumber_1.focus()">
-<form method="post" action="<?lsmb script ?>">
+<form method="post" action="<?lsmb request.script ?>">
   
   <?lsmb
     FOREACH hidden_element IN form_elements.hidden_elements;

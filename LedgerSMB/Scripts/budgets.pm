@@ -180,7 +180,7 @@ sub view_budget {
             $row->{credit} = $line->{amount};
         }
         my ($account) = $budget->call_procedure( 
-                          procname => 'account_get',
+                          funcname => 'account_get',
                               args => [$line->{account_id}]
         );
         $row->{account_id} = "$account->{accno}--$account->{description}";

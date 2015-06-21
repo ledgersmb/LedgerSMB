@@ -27,7 +27,11 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <div class="input_row">
 <label id="password-label" for="password" class="password"><?lsmb 
 text('Password') ?></label>
-<input name='password' type='password' class = 'password' size='60' />
+<?lsmb PROCESS input element_data = {
+		 name='password'
+		 type='password'
+		 class = 'password'
+		 size='60' } ?>
 </div>
 <div class="input_row">
 <label><?lsmb text('Import') ?></label>

@@ -347,11 +347,11 @@ qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
                 1 )
             {
                     $column_data{description} =
-qq|<td><textarea name="description_$i" rows=$rows cols=46 wrap=soft>$form->{"description_$i"}</textarea></td>|;
+qq|<td><textarea data-dojo-type="dijit/form/Textarea" name="description_$i" rows=$rows cols=46 wrap=soft>$form->{"description_$i"}</textarea></td>|;
             }
             else {
                  $column_data{description} =
-qq|<td><input name="description_$i" $desc_disabled size=48 value="$form->{"description_$i"}"></td>|;
+qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" $desc_disabled size=48 value="$form->{"description_$i"}"></td>|;
             }
         }
 
@@ -382,7 +382,7 @@ qq|<td><input name="description_$i" $desc_disabled size=48 value="$form->{"descr
         $delivery = qq|
           <td colspan=2 nowrap>
 	  <b>${$delvar}</b>
-	  <input name="${delvar}_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}"></td>
+	  <input data-dojo-type="dijit/form/TextBox" name="${delvar}_$i" size=11 title="$myconfig{dateformat}" value="$form->{"${delvar}_$i"}"></td>
 |;
 
         
@@ -395,7 +395,7 @@ qq|<td><input name="description_$i" $desc_disabled size=48 value="$form->{"descr
         for my $cls(@{$form->{bu_class}}){
             if (scalar @{$form->{b_units}->{"$cls->{id}"}}){
                 $column_data{"b_unit_$cls->{id}"} = 
-                   qq|<td><select name="b_unit_$cls->{id}_$i">
+                   qq|<td><select data-dojo-type="dijit/form/Select" name="b_unit_$cls->{id}_$i">
                            <option></option>|;
                 for my $bu (@{$form->{b_units}->{"$cls->{id}"}}){
                    my $selected = "";
@@ -414,35 +414,35 @@ qq|<td><input name="description_$i" $desc_disabled size=48 value="$form->{"descr
         }
 
 $column_data{runningnumber} =
-          qq|<td class="runningnumber"><input name="runningnumber_$i" size=3 value=$i></td>|;
+          qq|<td class="runningnumber"><input data-dojo-type="dijit/form/TextBox" name="runningnumber_$i" size=3 value=$i></td>|;
         if ($form->{"partnumber_$i"}){
            $column_data{partnumber} =
            qq|<td> $form->{"partnumber_$i"} 
-                 <button type="submit" class="submit" value="$i" 
+                 <button data-dojo-type="dijit/form/Button" type="submit" class="submit" value="$i" 
                          name="delete_line">X</button>
                  <input type="hidden" name="partnumber_$i"
                        value="$form->{"partnumber_$i"}" /></td>|;
         } else {
             $column_data{partnumber} =
-qq|<td class="partnumber"><input name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]">$skunumber</td>|;
+qq|<td class="partnumber"><input data-dojo-type="dijit/form/TextBox" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]">$skunumber</td>|;
         }
         $column_data{qty} =
-qq|<td align=right class="qty"><input name="qty_$i" title="$form->{"onhand_$i"}" size="5" value="|
+qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="qty_$i" title="$form->{"onhand_$i"}" size="5" value="|
           . $form->format_amount( \%myconfig, $form->{"qty_$i"} )
           . qq|"></td>|;
         $column_data{ship} =
-            qq|<td align=right class="ship"><input name="ship_$i" size="5" value="|
+            qq|<td align=right class="ship"><input data-dojo-type="dijit/form/TextBox" name="ship_$i" size="5" value="|
           . $form->format_amount( \%myconfig, $form->{"ship_$i"} )
           . qq|"></td>|;
         $column_data{unit} =
-          qq|<td class="unit"><input name="unit_$i" size=5 value="$form->{"unit_$i"}"></td>|;
+          qq|<td class="unit"><input data-dojo-type="dijit/form/TextBox" name="unit_$i" size=5 value="$form->{"unit_$i"}"></td>|;
         $column_data{sellprice} =
-          qq|<td align=right class="sellprice"><input name="sellprice_$i" size="9" value="|
+          qq|<td align=right class="sellprice"><input data-dojo-type="dijit/form/TextBox" name="sellprice_$i" size="9" value="|
           . $form->format_amount( \%myconfig, $form->{"sellprice_$i"},
             $form->{"precision_$i"} )
           . qq|"></td>|;
         $column_data{discount} =
-            qq|<td align=right class="discount"><input name="discount_$i" size="3" value="|
+            qq|<td align=right class="discount"><input data-dojo-type="dijit/form/TextBox" name="discount_$i" size="3" value="|
           . $form->format_amount( \%myconfig, $form->{"discount_$i"} )
           . qq|"></td>|;
         $column_data{linetotal} =
@@ -451,7 +451,7 @@ qq|<td align=right class="qty"><input name="qty_$i" title="$form->{"onhand_$i"}"
           . qq|</td>|;
         $column_data{bin}    = qq|<td class="bin">$form->{"bin_$i"}</td>|;
         $column_data{onhand} = qq|<td class="onhand">$form->{"onhand_$i"}</td>|;
-        $column_data{taxformcheck} = qq|<td class="taxform"><input type="checkbox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
+        $column_data{taxformcheck} = qq|<td class="taxform"><input type="checkbox" data-dojo-type="dijit/form/CheckBox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
         print qq|
         <tr valign=top>|;
 
@@ -477,23 +477,23 @@ qq|<td align=right class="qty"><input name="qty_$i" title="$form->{"onhand_$i"}"
 
         $project = qq|
                 <b>$projectnumber</b>
-		<select name="projectnumber_$i">$form->{selectprojectnumber}</select>
+		<select data-dojo-type="dijit/form/Select" name="projectnumber_$i">$form->{selectprojectnumber}</select>
 | if $form->{selectprojectnumber};
 
         if ( ( $rows = $form->numtextrows( $form->{"notes_$i"}, 36, 6 ) ) > 1 )
         {
             $form->{"notes_$i"} = $form->quote( $form->{"notes_$i"} );
             $notes =
-qq|<td><textarea name="notes_$i" rows=$rows cols=36 wrap=soft>$form->{"notes_$i"}</textarea></td>|;
+qq|<td><textarea data-dojo-type="dijit/form/Textarea" name="notes_$i" rows=$rows cols=36 wrap=soft>$form->{"notes_$i"}</textarea></td>|;
         }
         else {
             $form->{"notes_$i"} = $form->quote( $form->{"notes_$i"} );
             $notes =
-qq|<td><input name="notes_$i" size=38 value="$form->{"notes_$i"}"></td>|;
+qq|<td><input data-dojo-type="dijit/form/TextBox" name="notes_$i" size=38 value="$form->{"notes_$i"}"></td>|;
         }
 
         $serial = qq|
-                <td colspan=6 nowrap><b>$serialnumber</b> <input name="serialnumber_$i" value="$form->{"serialnumber_$i"}"></td>|
+                <td colspan=6 nowrap><b>$serialnumber</b> <input data-dojo-type="dijit/form/TextBox" name="serialnumber_$i" value="$form->{"serialnumber_$i"}"></td>|
           if $form->{type} !~ /_quotation/;
 
         if ( $i == $numrows ) {
@@ -501,7 +501,7 @@ qq|<td><input name="notes_$i" size=38 value="$form->{"notes_$i"}"></td>|;
             if ( $form->{selectpartsgroup} ) {
                 $partsgroup = qq|
 	        <b>$group</b>
-		<select name="partsgroup_$i">$form->{selectpartsgroup}</select>
+		<select data-dojo-type="dijit/form/Select" name="partsgroup_$i">$form->{selectpartsgroup}</select>
 |;
             }
 
@@ -623,7 +623,7 @@ sub select_item {
         }
 
         $column_data{ndx} =
-qq|<td><input name="ndx_$i" class=checkbox type=checkbox value=$i></td>|;
+qq|<td><input name="ndx_$i" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=$i></td>|;
 
         for (qw(partnumber sku description partsgroup)) {
             $column_data{$_} = qq|<td>$ref->{$_}&nbsp;</td>|;
@@ -687,7 +687,7 @@ qq|<td><input name="ndx_$i" class=checkbox type=checkbox value=$i></td>|;
 <input type="hidden" name="nextsub" value="item_selected">
 
 <br>
-<button class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 </form>
@@ -871,9 +871,9 @@ sub new_item {
 
 <p>
 
-  <input class=radio type=radio name=item value=part checked>&nbsp;|
+  <input class=radio type=radio data-dojo-type="dijit/form/RadioButton" name=item value=part checked>&nbsp;|
           . $locale->text('Part') . qq|<br>
-  <input class=radio type=radio name=item value=service>&nbsp;|
+  <input class=radio type=radio data-dojo-type="dijit/form/RadioButton" name=item value=service>&nbsp;|
           . $locale->text('Service')
 
           . qq|
@@ -887,7 +887,7 @@ sub new_item {
 
         print qq|
 <p>
-<button class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
           . $locale->text('Continue')
           . qq|</button>
 </form>
@@ -905,6 +905,7 @@ sub new_item {
 
 sub display_form {
     $form->close_form();
+	 $form->generate_selects();
     $form->open_form();
 
     # if we have a display_form
@@ -1540,7 +1541,7 @@ sub print_select { # Needed to print new printoptions output from non-template
     my $name = $select->{name};
     my $id = $name;
     $id =~ s/\_/-/;
-    print qq|<select id="$id" name="$name" class="$select->{class}">\n|;
+    print qq|<select data-dojo-type="dijit/form/Select" id="$id" name="$name" class="$select->{class}">\n|;
     for my $opt (@{$select->{options}}){
         print qq|<option value="$opt->{value}" |;
         if ($form->{$select->{name}} eq $opt->{value}){
@@ -2140,15 +2141,15 @@ sub ship_to {
 				  	   	   print qq|
 						   <tr>
 						  
-							  <td><input type=radio name=shiptoradio value="$i"  $checked ondblclick="return uncheckRadio(this);"></td>
+							  <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio value="$i"  $checked ondblclick="return uncheckRadio(this);"></td>
 							  <input name=shiptolocationid_$i type="hidden" value="$form->{"shiptolocationid_$i"}" readonly>
-							  <td><input name=shiptoaddress1_$i size=12 maxlength=64 id="ad1_$i" value="$form->{"shiptoaddress1_$i"}" readonly></td>
-							  <td><input name=shiptoaddress2_$i size=12 maxlength=64 id="ad2_$i" value="$form->{"shiptoaddress2_$i"}" readonly></td>
-							  <td><input name=shiptoaddress3_$i size=12 maxlength=64 id="ad2_$i" value="$form->{"shiptoaddress3_$i"}" readonly></td>
-							  <td><input name=shiptocity_$i size=8 maxlength=32 id="ci_$i" value="$form->{"shiptocity_$i"}" readonly></td>
-							  <td><input name=shiptostate_$i size=10 maxlength=32 id="st_$i" value="$form->{"shiptostate_$i"}" readonly></td>
-							  <td><input name=shiptozipcode_$i size=8 maxlength=10 id="zi_$i" value="$form->{"shiptozipcode_$i"}" readonly></td>
-							  <td><input name=shiptocountry_$i size=5 maxlength=32 id="co_$i" value="$form->{"shiptocountry_$i"}" readonly></td>	  
+							  <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress1_$i size=12 maxlength=64 id="ad1_$i" value="$form->{"shiptoaddress1_$i"}" readonly></td>
+							  <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress2_$i size=12 maxlength=64 id="ad2_$i" value="$form->{"shiptoaddress2_$i"}" readonly></td>
+							  <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress3_$i size=12 maxlength=64 id="ad2_$i" value="$form->{"shiptoaddress3_$i"}" readonly></td>
+							  <td><input data-dojo-type="dijit/form/TextBox" name=shiptocity_$i size=8 maxlength=32 id="ci_$i" value="$form->{"shiptocity_$i"}" readonly></td>
+							  <td><input data-dojo-type="dijit/form/TextBox" name=shiptostate_$i size=10 maxlength=32 id="st_$i" value="$form->{"shiptostate_$i"}" readonly></td>
+							  <td><input data-dojo-type="dijit/form/TextBox" name=shiptozipcode_$i size=8 maxlength=10 id="zi_$i" value="$form->{"shiptozipcode_$i"}" readonly></td>
+							  <td><input data-dojo-type="dijit/form/TextBox" name=shiptocountry_$i size=5 maxlength=32 id="co_$i" value="$form->{"shiptocountry_$i"}" readonly></td>	  
 
 				 		    <tr>
 					  
@@ -2194,9 +2195,9 @@ sub ship_to {
 						print qq|
 			   		   	<tr>
 							      <td>&nbsp</td>
-							      <td><input name=shiptotype_$i size=5 maxlength=100 value="$form->{"shiptotype_$i"}" readonly></td>
-							      <td><input name=shiptocontact_$i size=11 maxlength=100 value="$form->{"shiptocontact_$i"}" readonly></td>
-							      <td><input name=shiptodescription_$i size=12 maxlength=100 value="$form->{"shiptodescription_$i"}" readonly></td>
+							      <td><input data-dojo-type="dijit/form/TextBox" name=shiptotype_$i size=5 maxlength=100 value="$form->{"shiptotype_$i"}" readonly></td>
+							      <td><input data-dojo-type="dijit/form/TextBox" name=shiptocontact_$i size=11 maxlength=100 value="$form->{"shiptocontact_$i"}" readonly></td>
+							      <td><input data-dojo-type="dijit/form/TextBox" name=shiptodescription_$i size=12 maxlength=100 value="$form->{"shiptodescription_$i"}" readonly></td>
 				  	  	 </tr>	|;
 					    
 					    	  }
@@ -2253,20 +2254,20 @@ sub ship_to {
 					 Others
 		  	    </tr>
 			    </tr>	
-					  <td><input type=radio name=shiptoradio value="new" ondblclick="return uncheckRadio(this);"></td>
-					  <td><input name=shiptoaddress1_new size=12 maxlength=64 value="$form->{shiptoaddress1_new}" ></td>
-					  <td><input name=shiptoaddress2_new size=12 maxlength=64 value="$form->{shiptoaddress2_new}" ></td>
-					  <td><input name=shiptoaddress3_new size=12 maxlength=64 value="$form->{shiptoaddress3_new}" ></td>
-					  <td><input name=shiptocity_new size=8 maxlength=32 value="$form->{shiptocity_new}" ></td>
-					  <td><input name=shiptostate_new size=10 maxlength=32 value="$form->{shiptostate_new}" ></td>
-					  <td><input name=shiptozipcode_new size=8 maxlength=10 value="$form->{shiptozipcode_new}" ></td>
-					  <td><select name="shiptocountry_new">$country</select></td>
+					  <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradio value="new" ondblclick="return uncheckRadio(this);"></td>
+					  <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress1_new size=12 maxlength=64 value="$form->{shiptoaddress1_new}" ></td>
+					  <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress2_new size=12 maxlength=64 value="$form->{shiptoaddress2_new}" ></td>
+					  <td><input data-dojo-type="dijit/form/TextBox" name=shiptoaddress3_new size=12 maxlength=64 value="$form->{shiptoaddress3_new}" ></td>
+					  <td><input data-dojo-type="dijit/form/TextBox" name=shiptocity_new size=8 maxlength=32 value="$form->{shiptocity_new}" ></td>
+					  <td><input data-dojo-type="dijit/form/TextBox" name=shiptostate_new size=10 maxlength=32 value="$form->{shiptostate_new}" ></td>
+					  <td><input data-dojo-type="dijit/form/TextBox" name=shiptozipcode_new size=8 maxlength=10 value="$form->{shiptozipcode_new}" ></td>
+					  <td><select data-dojo-type="dijit/form/Select" name="shiptocountry_new">$country</select></td>
 
 					  <td>&nbsp;</td>
-					  <td><input type=radio name=shiptoradiocontact value="1" ondblclick="uncheckRadiocontact(this);" ></td>
-					  <td><select name="shiptotype_new">$contacttype</select></td>
-					  <td><input name=shiptocontact_new size=10 maxlength=100 value="$form->{shiptocontact_new}" ></td>
-				 	  <td><input name=shiptodescription_new size=10 maxlength=100 value="$form->{shiptodescription_new}" ></td>
+					  <td><input type=radio data-dojo-type="dijit/form/RadioButton" name=shiptoradiocontact value="1" ondblclick="uncheckRadiocontact(this);" ></td>
+					  <td><select data-dojo-type="dijit/form/Select" name="shiptotype_new">$contacttype</select></td>
+					  <td><input data-dojo-type="dijit/form/TextBox" name=shiptocontact_new size=10 maxlength=100 value="$form->{shiptocontact_new}" ></td>
+				 	  <td><input data-dojo-type="dijit/form/TextBox" name=shiptodescription_new size=10 maxlength=100 value="$form->{shiptodescription_new}" ></td>
 
 		 	    </tr>
 
@@ -2285,15 +2286,15 @@ sub ship_to {
  
 print qq|
 
-<button class="submit" type="submit" name="action" value="continuenew">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continuenew">|
 . $locale->text('Use Shipto')
 . qq|
 </button>
-<button class="submit" type="submit" name="action" value="updatenew">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="updatenew">|
 . $locale->text('Add To List')
 . qq|
 </button>
-<button class="submit" type="submit" name="action" value="update">|.
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="update">|.
 $locale->text('Cancel')
 .qq|</button>
 

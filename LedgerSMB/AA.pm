@@ -31,7 +31,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::App_State;
 use Log::Log4perl;
 use LedgerSMB::File;
-use Math::BigFloat;
+use LedgerSMB::PGNumber;
 use LedgerSMB::Setting;
 
 my $logger = Log::Log4perl->get_logger("AA");
@@ -994,7 +994,7 @@ sub get_name {
         $sth->execute( $form->{"$form->{vc}_id"}, $form->{"$form->{vc}_id"})
            || $form->dberror($query);
         my ($credit_rem) = $sth->fetchrow_array;
-        ( $form->{creditremaining} ) -= Math::BigFloat->new($credit_rem);
+        ( $form->{creditremaining} ) -= LedgerSMB::PGNumber->new($credit_rem);
 
         $sth->finish;
     }

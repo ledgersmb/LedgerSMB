@@ -115,7 +115,7 @@ SELECT 'purchase_order_list can read ' || t,
 INSERT INTO test_result(test_name, success)
 SELECT 'inventory_reports can read ' || t,
        test__has_select_permission('inventory_reports', t)
-FROM unnest(array['ar'::text, 'ap', 'inventory', 'invoice', 'acc_trans']) t;
+FROM unnest(array['ar'::text, 'ap', 'warehouse_inventory', 'invoice', 'acc_trans']) t;
 
 INSERT INTO test_result(test_name, success)
 SELECT 'gl_reports can read ' || t,

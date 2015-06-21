@@ -50,9 +50,11 @@ use LedgerSMB::Setting;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::DBObject::Payment;
 use LedgerSMB::DBObject::Date;
+use LedgerSMB::PGNumber;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Invoices::Payments;
 use strict; 
+
 
 # CT:  A few notes for future refactoring of this code:
 # 1:  I don't think it is a good idea to make the UI too dependant on internal
@@ -75,6 +77,8 @@ TT2 system.
 
 =cut
 
+use Data::Dumper;
+
 sub payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
@@ -87,9 +91,11 @@ sub payments {
         locale   => $request->{_locale},
         path     => 'UI/payments',
         template => 'payments_filter',
-        format   => 'HTML', 
+        format   => 'HTML',
     );
-    $template->render($payment);
+
+    $template->render({ request => $request,
+                        payment => $payment });
 }
 
 =item get_search_criteria
@@ -321,7 +327,7 @@ successful.
 sub post_payments_bulk {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
-    if ($payment->close_form){
+    if ($request->close_form){
         $payment->post_bulk();
     } else {
         $payment->{notice} = 
@@ -367,7 +373,7 @@ sub print {
             my $id = $payment->{"contact_$line"};
             next if !defined $payment->{"id_$id"};
             my ($check) = $payment->call_procedure(
-                     procname => 'company_get_billing_info', args => [$id]
+                     funcname => 'company_get_billing_info', args => [$id]
             );
             $check->{entity_class} = $payment->{account_class};
             $check->{id} = $id;
@@ -441,12 +447,13 @@ This displays the bulk payment screen with current data.
 
 =cut
 
+use Data::Dumper;
 sub display_payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     $payment->{default_currency} =  $payment->get_default_currency();;
     $payment->get_payment_detail_data();
-    $payment->open_form();
+    $request->open_form();
     my $db_fx = $payment->get_exchange_rate($payment->{currency}, 
                                             $payment->{batch_date});
     if ($db_fx){
@@ -455,7 +462,7 @@ sub display_payments {
     } else {
         $payment->{exchangerate} = undef;
     }
-    $payment->{grand_total} = 0;
+    $payment->{grand_total} = LedgerSMB::PGNumber->from_input(0);
     for (@{$payment->{contact_invoices}}){
         my $contact_total = 0;
         my $contact_to_pay = 0;
@@ -526,7 +533,8 @@ sub display_payments {
         template => 'payments_detail',
         format   => 'HTML', 
     );
-    $template->render($payment);
+    $template->render({ request => $request,
+                        payment => $payment });
 } 
 
 =item payment
@@ -699,12 +707,12 @@ if ($request->{account_class} == 2){
 }
 
 my @b_classes = $request->call_procedure(
-                        procname => 'business_unit__list_classes',
+                        funcname => 'business_unit__list_classes',
                             args => ['1', $module]);
 
 for my $cls (@b_classes){
    my @units = $request->call_procedure(
-                        procname => 'business_unit__list_by_class',
+                        funcname => 'business_unit__list_by_class',
                             args => [$cls->{id}, $request->{transdate}, 
                                      $request->{credit_id}, '0'],
    );
@@ -814,7 +822,7 @@ my $unhandled_overpayment;
 for my $ref (0 .. $#array_options) {
  $array_options[$ref]->{invoice_date} = $array_options[$ref]->{invoice_date}->to_output;
  if (  !$request->{"checkbox_$array_options[$ref]->{invoice_id}"}) {
-   my $request_topay_fx_bigfloat=$LedgerSMB::PGNumber->from_input($request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
+   my $request_topay_fx_bigfloat=LedgerSMB::PGNumber->from_input($request->{"topay_fx_$array_options[$ref]->{invoice_id}"});
 # SHOULD I APPLY DISCCOUNTS?   
       $request->{"optional_discount_$array_options[$ref]->{invoice_id}"} = $request->{first_load}? "on":  $request->{"optional_discount_$array_options[$ref]->{invoice_id}"};
 
@@ -1037,7 +1045,7 @@ my $select = {
  notes => $request->{notes},
  overpayment         => \@overpayment,
  overpayment_account => \@overpayment_account,
- format_amount => sub {return LedgerSMB::PGNumber(@_)->to_output()}
+ format_amount => sub {return LedgerSMB::PGNumber->to_output(@_)}
 };
 
 $select->{selected_account} = $vc_options[0]->{cash_account_id} 

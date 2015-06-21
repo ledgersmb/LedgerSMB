@@ -2,13 +2,14 @@
        include_stylesheet = ["UI/asset/asset.css"] -?>
 <?lsmb PROCESS "elements.html" -?>
 <body class="<?lsmb dojo_theme ?>">
-<form action="asset.pl" method="post">
+<div id="assets">
+<form action="<?lsmb request.script ?>" method="post">
 <div class="listtop"><?lsmb text('New Asset Report') ?></div>
 <div class="inputrow" id="classrow"><div class="inputgroup" id="classgrp">
 <?lsmb PROCESS select element_data = {
      name = "asset_class"
-     default_values = [asset_class]
-     options = asset_classes
+     default_values = [asset.asset_class]
+     options = asset.asset_classes
      text_attr = "label"
      value_attr = "id"
      label = text('Asset Class') #'
@@ -18,7 +19,7 @@
 <?lsmb PROCESS input element_data = {
      name = "report_date"
      class = "date"
-     value = report_date
+     value = asset.report_date
      label = text("Date")
 } ?>
 </div></div>
@@ -48,7 +49,7 @@
 <?lsmb PROCESS input element_data = {
      name = "depreciation"
      type = "hidden"
-     value = depreciation
+     value = asset.depreciation
 } ?>
 <div class="inputrow" id="buttonrow">
 <div class="inputgroup" id="buttongroupnext">
@@ -62,5 +63,6 @@
 } ?>
 </div></div>
 </form>
+</div>
 </body>
 </html>

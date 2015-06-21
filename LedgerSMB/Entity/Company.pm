@@ -64,7 +64,7 @@ Buisness license number for the company
 
 =cut
 
-has 'license_number' => (is => 'rw', isa => 'Str', required => 0);
+has 'license_number' => (is => 'rw', isa => 'Maybe[Str]', required => 0);
 
 =item sic_code
 

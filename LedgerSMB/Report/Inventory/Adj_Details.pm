@@ -205,7 +205,7 @@ sub approve {
     ## Posting
     IS->post_invoice({}, $form_ar);
     IR->post_invoice({}, $form_ap);
-    $self->call_procedure(procname => 'inventory_report__approve',
+    $self->call_procedure(funcname => 'inventory_report__approve',
        args => [$self->id, $form_ar->{id}, $form_ap->{ap}]
     );
 }

@@ -1,25 +1,28 @@
-<?lsmb INCLUDE 'ui-header.html' include_script=['UI/util.js', 'UI/users/preferences.js'] 
+<?lsmb INCLUDE 'ui-header.html'
+		 include_script=['UI/users/preferences.js'] 
 ?> 
 <?lsmb PROCESS elements.html ?> 
 <body class="<?lsmb dojo_theme ?>">
-<form method="post" name = 'prefs' action="<?lsmb script ?>" onsubmit="return submit_form()">
+<form method="post" id="prefs" name="prefs" action="<?lsmb request.script ?>" onsubmit="return submit_form()">
 <?lsmb INCLUDE input element_data = {
                name = "username"
                type = "hidden"
-               value = login
+               value = user.login
 } ?>
 <?lsmb INCLUDE input element_data = {
                name = "company"
                type = "hidden"
-               value = company
+               value = user.company
 } ?>
 <table width="100%">
   <tr><th class="listtop"><?lsmb text('Preferences for [_1]', login) ?></th></tr>
   <?lsmb IF action == 'save_preferences' ?> <tr><th class="info">
           <?lsmb text('Preferences Saved') ?>
-  <tr><?lsmb END # if action ?>
+  </tr><?lsmb END # if action ?>
   <tr><th class="info">
           <?lsmb text('Your password will expire in [_1]', password_expires) ?>
+    </th>
+  </tr>
   <tr>
     <td>
       <table width="100%">
@@ -29,23 +32,34 @@
   <tr><th class="listtop" colspan="2"><?lsmb text('Change Password') ?></th></tr>
 	      <tr>
 		<th align="right"><?lsmb text('Old Password') ?></th>
-		<td><input type="password" name="old_password" size="10" value="" /></td>
+		<td><?lsmb PROCESS input element_data = {
+			   type = "password"
+			   name = "old_password"
+			   size = 10
+			   value="" } ?></td>
 	      </tr>
 	      <tr>
 		<th align="right"><?lsmb text('Password') ?></th>
-		<td><input type="password" name="new_password" size="10" value="" /></td>
+		<td><?lsmb PROCESS input element_data = {
+			   type = "password"
+			   name = "new_password"
+			   size = 10
+			   value="" } ?></td>
 	      </tr>
 	      <tr>
 		<th align="right"><?lsmb text('Confirm') ?></th>
-		<td><input type="password" name="confirm_password" size="10" /></td>
+		<td><?lsmb PROCESS input element_data = {
+			   type = "password"
+			   name = "confirm_password"
+			   size = 10 } ?></td>
 	      </tr>
   <tr><th class="listtop" colspan="2"><?lsmb text('Settings') ?></th></tr>
 	      <tr>
 		<th align="right"><?lsmb text('Date Format') ?></th>
 		<td><?lsmb PROCESS select element_data={
                       name = 'dateformat'
-                      options = dateformats
-                      default_values = [ prefs.dateformat ]
+                      options = user.dateformats
+                      default_values = [ user.prefs.dateformat ]
                       text_attr = 'format'
                       value_attr = 'format'
                     } ?></td>
@@ -54,8 +68,8 @@
 		<th align="right"><?lsmb text('Number Format') ?></th>
 		<td><?lsmb PROCESS select element_data={ 
                       name = 'numberformat',
-                      options = numberformats,
-                      default_values = [ prefs.numberformat],
+                      options = user.numberformats,
+                      default_values = [ user.prefs.numberformat ],
                       text_attr = 'format',
                       value_attr = 'format',
                     } ?></td>
@@ -65,8 +79,8 @@
                 <td><?lsmb country_codes.unshift({}) ?>
                     <?lsmb PROCESS select element_data={
                      name = 'language',
-                     options = country_codes,
-                     default_values = [ prefs.language],
+                     options = user.country_codes,
+                     default_values = [ user.prefs.language ],
                      text_attr = 'label',
                      value_attr = 'id',
                    }?> </td>
@@ -75,8 +89,8 @@
 		<th align="right"><?lsmb text('Stylesheet') ?></th>
 		<td><?lsmb PROCESS select element_data={
                       name = 'stylesheet'
-                      options = cssfiles
-                      default_values = [ prefs.stylesheet]
+                      options = user.cssfiles
+                      default_values = [ user.prefs.stylesheet ]
                       text_attr = 'file'
                       value_attr = 'file'
                      } ?></td>
@@ -86,8 +100,8 @@
 		<th align="right"><?lsmb text('Printer') ?></th>
 		<td><?lsmb PROCESS select element_data={
                      name = 'printer'
-                     options = printers
-                     default_values = [ prefs.printer] 
+                     options = user.printers
+                     default_values = [ user.prefs.printer] 
                      text_attr = 'printer'
                      value_attr = 'printer'
                      }?></td>
@@ -105,7 +119,12 @@
   </tr>
 </table>
 
-<button type="submit" class="submit" name="action" value="save_preferences"><?lsmb text('Save') ?></button>
+<?lsmb PROCESS button element_data = {
+       type = "submit"
+       class = "submit"
+       name = "action"
+       value = "save_preferences"
+       text = text('Save') } ?>
   </form>
 
 </body>

@@ -11,6 +11,7 @@
 		}
 ?>
 <body class="<?lsmb dojo_theme ?>">
+  <div id="payments">
    <div class="listtop"><?lsmb text('Checking Job [_1]', job_id) ?></div>
    <div class="info">
 	<?lsmb IF job.completed;
@@ -32,5 +33,6 @@
   </div>
 	<?lsmb END  # if ! job.success ?>
   <?lsmb END # if job.completed ?>
+  <div id="payments">
 </body>
 </html>

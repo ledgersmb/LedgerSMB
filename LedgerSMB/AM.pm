@@ -213,7 +213,7 @@ sub get_warehouse {
     # see if it is in use
     $query = qq|
 		SELECT count(*) 
-		  FROM inventory
+		  FROM warehouse_inventory
 		 WHERE warehouse_id = ?|;
 
     $sth = $dbh->prepare($query);

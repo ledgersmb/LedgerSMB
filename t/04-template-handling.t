@@ -353,7 +353,8 @@ my $payment_template =  LedgerSMB::Template->new(
         output_file     => 'payment_test1'
 );
 
-$payment_template->render($payment);
+$payment_template->render({ request => { script => '' },
+                            payment => $payment });
 my @output =  get_output_line_array($payment_template);
 #cmp_ok(grep(/101<\/td>/, @output), '>', 0, 'Invoice row exists');
 is(grep(/name="payment_101"/, @output), 0, 'Invoice locked');

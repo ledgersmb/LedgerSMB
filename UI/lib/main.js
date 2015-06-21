@@ -1,3 +1,24 @@
+
+/* Note, this is the first code being executed. If we don't required
+   the parser here, the "onLoad" parse event isn't going to fire. */
+require(['lsmb/lib/Loader', 'dojo/cookie', 'dojo/parser',
+	 'dojo/domReady!'],
+function(l){
+    if (location.search.indexOf('&dojo=no') != -1) {
+        dojo.cookie("lsmb-dojo-disable", "yes", {});
+    } else if (location.search.indexOf('&dojo') != -1) {
+        dojo.cookie("lsmb-dojo-disable", "no", {});
+    }
+
+    if (dojo.cookie("lsmb-dojo-disable") != 'yes') {
+        loader = new l;
+        loader.setup();
+    } else {
+        init();
+    }
+});
+
+
 function SwitchMenu(id) {
     var obj = id.replace(/^a/, 'menu');
     console.log(id);
@@ -14,31 +35,48 @@ function SwitchMenu(id) {
     }		
 }
 
-function load_link(xhr, href) {
-    xhr(href, {"handlesAs": "text"}).then(function(doc){
-         set_main_div(doc);
-    });
+function set_main_div(doc){
+    console.log('setting body');
+    var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
+    var newbody = body[1];
+    require(['dojo/query', 'dojo/dom', 'dojo/dom-style',
+	     'dijit/registry', 'dojo/domReady!'],
+            function(query, dom, style, registry){
+		var mainCP = registry.byId('maindiv');
+		style.set(mainCP, 'visibility', 'hidden');
+		mainCP.destroyDescendants();
+		mainCP.set('content', newbody);
+		setup_dojo();
+		style.set(mainCP, 'visibility', 'visible');
+		require(['dojo/domReady!'], function(){
+		});
+            });
 }
 
-function set_main_div(doc){
-        var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
-        var newbody = body[1];
-        require(['dojo/query', 'dojo/dom-style', 'dijit/registry', 'dojo/domReady!'],
-        function(query, style, registry){
-           var mainCP = registry.byId('maindiv');
-           // mainCP.domNode.style.visibility = 'hidden';
-           style.set(mainCP, 'visibility', 'hidden');
-           mainCP.set('content', newbody);
-           setup_dojo();
-               mainCP.domNode.style.visibility = 'visible';
-           require(['dojo/domReady!'], 
-           function(){
-           });
-        });
+function load_form(xhr, url, options) {
+	 xhr(url, options).then(
+		  function(doc){
+				set_main_div(doc);
+		  },
+		  function(err){
+				require(['dijit/registry'],function(registry){
+					 var d = registry.byId('errorDialog');
+					 if (0 == err.response.status) {
+						  d.set('content','Low level networking problem');
+					 } else {
+						  d.set('content',err.response.data);
+					 }
+					 d.show();
+				});
+		  });
+}
+
+function load_link(xhr, href) {
+	 load_form(xhr,href,{"handlesAs": "text"});
 }
 
 function setup_dojo() {
-    require(['lsmb/lib/Loader', 'dojo/domReady!'],
+    require(['lsmb/lib/Loader', 'dojo/cookie', 'dojo/domReady!'],
     function(l){
         if (location.search.indexOf('&dojo=no') != -1) {
             dojo.cookie("lsmb-dojo-disable", "yes", {});

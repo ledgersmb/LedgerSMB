@@ -79,6 +79,9 @@ package Form;
 use base qw(LedgerSMB::Request);
 use utf8;
 
+use Data::Dumper;
+
+
 our $logger = Log::Log4perl->get_logger('LedgerSMB::Form');
 
 # To be later set in config, but also hardwired in Template::HTML --CT
@@ -431,6 +434,7 @@ sub _error {
 
         delete $self->{pre};
 
+		  print "Status: 500 ISE\n";
         if ( !$self->{header} ) {
             $self->header;
         }
@@ -438,9 +442,9 @@ sub _error {
         $logger->error("dbversion: $self->{dbversion}, company: $self->{company}");
 
         print
-          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b>
+          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></p>
              <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
-             </body>|;
+             </body></html>|;
 
         $self->finalize_request();
 
@@ -643,7 +647,7 @@ qq|<meta http-equiv="content-type" content="text/html; charset=$self->{charset}"
            var lsmbConfig = {dateformat: '$dformat'};
         </script>
        <script type="text/javascript" language="JavaScript" src="UI/lib/dojo/dojo/dojo.js"></script>
-        <script type="text/javascript" language="JavaScript" src="UI/lib/setup.js"></script>
+        <script type="text/javascript" language="JavaScript" src="UI/lib/main.js"></script>
 	<meta name="robots" content="noindex,nofollow" />
         $headeradd
 </head>
@@ -900,7 +904,7 @@ sub format_amount {
 
 =item $form->parse_amount($myconfig, $amount);
 
-Return a Math::BigFloat containing the value of $amount where $amount is
+Return a LedgerSMB::PGNumber containing the value of $amount where $amount is
 formatted as $myconfig->{numberformat}.  If $amount is '' or undefined, it is
 treated as zero.  DRCR and parenthesis notation is accepted in addition to
 negative sign notation.
@@ -935,16 +939,16 @@ sub round_amount {
 
     # These rounding rules follow from the previous implementation.
     # They should be changed to allow different rules for different accounts.
-    Math::BigFloat->round_mode('+inf') if $amount >= 0;
-    Math::BigFloat->round_mode('-inf') if $amount < 0;
+    LedgerSMB::PGNumber->round_mode('+inf') if $amount >= 0;
+    LedgerSMB::PGNumber->round_mode('-inf') if $amount < 0;
 
-    $amount = Math::BigFloat->new($amount)->ffround( -$places ) if $places >= 0;
-    $amount = Math::BigFloat->new($amount)->ffround( -( $places - 1 ) )
+    $amount = LedgerSMB::PGNumber->new($amount)->ffround( -$places ) if $places >= 0;
+    $amount = LedgerSMB::PGNumber->new($amount)->ffround( -( $places - 1 ) )
       if $places < 0;
 
     $amount->precision(undef); #we are assuming whole cents so do not round
                                #immediately on arithmatic.  This is necessary
-                               #because Math::BigFloat is arithmatically
+                               #because LedgerSMB::PGNumber is arithmatically
                                #correct wrt accuracy and precision.
 
     return $amount;
@@ -953,7 +957,7 @@ sub round_amount {
 =item $form->db_parse_numeric('sth' => $sth, ['arrayref' => $arrayref, 'hashref' => $hashref])
 
 Converts numeric values in the result set $arrayref or $hashref to
-Math::BigFloat using $sth to determine which fields are numeric.
+LedgerSMB::PGNumber using $sth to determine which fields are numeric.
 
 =cut
 
@@ -969,9 +973,9 @@ sub db_parse_numeric {
         if ($types[$_] == 3 or $types[$_] ==2) {
             $arrayref->[$_] ||= 0 if defined $arrayref;
             $hashref->{$names[$_]} ||=0 if defined $hashref;
-            $arrayref->[$_] = Math::BigFloat->new($arrayref->[$_]) 
+            $arrayref->[$_] = LedgerSMB::PGNumber->new($arrayref->[$_]) 
               if defined $arrayref;
-            $hashref->{$names[$_]} = Math::BigFloat->new($hashref->{$names[$_]})
+            $hashref->{$names[$_]} = LedgerSMB::PGNumber->new($hashref->{$names[$_]})
               if defined $hashref;
         }
 
@@ -1207,9 +1211,183 @@ sub print_button {
     my ( $self, $button, $name ) = @_;
 
     print
-qq|<button class="submit" type="submit" name="action" value="$name" accesskey="$button->{$name}{key}" title="$button->{$name}{value} [Alt-$button->{$name}{key}]">$button->{$name}{value}</button>\n|;
+qq|<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="$name" accesskey="$button->{$name}{key}" title="$button->{$name}{value} [Alt-$button->{$name}{key}]">$button->{$name}{value}</button>\n|;
 }
 
+
+=item $form->generate_selects(\%myconfig);
+
+=cut
+
+sub generate_selects {
+	 my ($form, $myconfig) = @_;
+
+
+    # currencies
+	 if (!$form->{currencies}) {
+		  $form->{currencies} = $form->get_setting('curr');
+	 }
+	 if ($form->{currencies}) {
+		  my %curr;
+		  my @curr = split( /:/, $form->{currencies} );
+		  $form->{defaultcurrency} = $curr[0];
+		  foreach (@curr) {
+				$curr{$_} = 1;
+		  }
+		  my @curr = keys %curr; 
+ 
+		  $form->{currency} = $form->{defaultcurrency}
+		       unless $form->{currency};	 
+		  $form->{selectcurrency} = "";
+		  for (@curr) {
+				my $selected =
+					 ($form->{currency} eq $_)
+					 ? " selected=\"selected\"" : "";
+				$form->{selectcurrency} .=
+					 "<option value=\"$_\"$selected>$_</option>\n"
+		  }
+	 }
+
+	 # partsgroups
+    if ( $form->{all_partsgroup} && @{ $form->{all_partsgroup} } ) {
+        $form->{selectpartsgroup} = "<option></option>\n";
+		  $form->{selectpartsgroup} = "";
+        foreach my $ref ( @{ $form->{all_partsgroup} } ) {
+				my $value = "$ref->{partsgroup}--$ref->{id}";
+				my $selected = ($form->{partsgroup} eq $value) ?
+					 ' selected="selected"' : "";
+            if ( $ref->{translation} ) {
+                $form->{selectpartsgroup} .=
+						  qq|<option value="$value"$selected>$ref->{translation}</option>\n|;
+            }
+            else {
+                $form->{selectpartsgroup} .=
+						  qq|<option value="$value"$selected>$ref->{partsgroup}</option>\n|;
+            }
+        }
+    }
+
+	 # projects
+    if ( $form->{all_project} && @{ $form->{all_project} } ) {
+        $form->{selectprojectnumber} = "<option></option>\n";
+		  $form->{selectprojectnumber} = "";
+        for ( @{ $form->{all_project} } ) {
+				my $value = "$_->{projectnumber}--$_->{id}";
+            $form->{selectprojectnumber} .=
+					 # change the format here, then change it below!
+					 qq|<option value="$value">$_->{projectnumber}</option>\n|;
+        }
+		  if ($form->{rowcount}) {
+				for my $i ( 1 .. $form->{rowcount} ) {
+					 $form->{"selectprojectnumber_$i"} = 
+						  $form->{"selectprojectnumber"};
+					 $form->{"selectprojectnumber_$i"} =~
+						  s/(value="\Q$form->{"projectnumber_$i"}\E")/$1 selected="selected"/;
+				}
+		  }
+    }
+
+    # departments
+    if ( $form->{all_department} && @{ $form->{all_department} } ) {
+        $form->{selectdepartment} = "<option></option>\n";
+        for ( @{ $form->{all_department} } ) {
+				my $value = "$_->{description}--$_->{id}";
+				my $selected = ($form->{department} eq $value) ?
+					 ' selected="selected"' : "";
+            $form->{selectdepartment} .=
+					 qq|<option value="$value"$selected>$_->{description}</option>\n|;
+        }
+    }
+
+	 # languages
+    if ( $form->{all_language} && @{ $form->{all_language} } ) {
+        $form->{selectlanguage} = "<option></option>\n";
+        for ( @{ $form->{all_language} } ) {
+				my $value = $_->{code};
+				my $selected = ($form->{language} eq $value) ?
+					 ' selected="selected"' : "";
+            $form->{selectlanguage} .=
+              qq|<option value="$value"$selected>$_->{description}</option>\n|;
+        }
+    }
+
+    # sales staff
+    if ( $form->{all_employees} && @{ $form->{all_employee} } ) {
+        $form->{selectemployee} = "";
+        for ( @{ $form->{all_employee} } ) {
+            $form->{selectemployee} .=
+              qq|<option value="$_->{name}--$_->{id}">$_->{name}</option>\n|;
+        }
+    }
+
+    # customers/vendors
+	 if ($form->{vc}) {
+		  if ( $form->{"all_$form->{vc}"} && @{ $form->{"all_$form->{vc}"} } ) {
+				$form->{"select$form->{vc}"} = "";
+				for ( @{ $form->{"all_$form->{vc}"} } ) {
+					 my $value = "$_->{name}--$_->{id}";
+					 my $selected = ($form->{$form->{vc}} eq $value) ?
+						  ' selected="selected"' : "";
+					 $form->{"select$form->{vc}"} .=
+						  qq|<option value="$value"$selected>$_->{name}</option>\n|;
+				}
+		  }
+	 }
+
+	 # AR/AP links
+	 # AR_amount_*, AP_amount_*, 
+	 if (defined $form->{ARAP}) {
+		  $form->create_links( module => $form->{ARAP},
+									  myconfig => $myconfig,
+									  vc => $form->{vc},
+									  billing => $form->{vc} eq 'customer'
+									  && $form->{type} eq 'invoice')
+				unless defined $form->{"$form->{ARAP}_links"};
+
+		  foreach my $key ( keys %{ $form->{"$form->{ARAP}_links"} } ) {
+
+				$form->{"select$key"} = "";
+				foreach my $ref ( @{ $form->{"$form->{ARAP}_links"}{$key} } ) {
+					 my $value = "$ref->{accno}--$ref->{description}";
+					 $form->{"select$key"} .=
+						  # change the format here, then change it below too!
+						  qq|<option value="$value">$value</option>\n|;
+				}
+		  }
+
+		  if ($form->{rowcount}) {
+				for my $i ( 1 .. $form->{rowcount} ) {
+					 $form->{"select$form->{ARAP}_amount_$i"} = 
+						  $form->{"select$form->{ARAP}_amount"};
+					 $form->{"select$form->{ARAP}_amount_$i"} =~
+						  s/(value="\Q$form->{"$form->{ARAP}_amount_$i"}\E")/$1 selected="selected"/;
+				}
+		  }
+	 }
+
+	 # formats
+    $form->{selectformat} = qq|<option value="html">html<option value="csv">csv\n|;
+    if ( ${LedgerSMB::Sysconfig::latex} ) {
+        $form->{selectformat} .= qq|
+            <option value="postscript">|
+				. $LedgerSMB::App_State::Locale->text('Postscript')
+				. qq|<option value="pdf">|
+				. $LedgerSMB::App_State::Locale->text('PDF');
+    }
+
+    # warehouse
+    if ( $form->{all_warehouse} &&  @{ $form->{all_warehouse} } ) {
+        $form->{selectwarehouse} = "<option></option>\n";
+        for ( @{ $form->{all_warehouse} } ) {
+				my $value = "$_->{description}--$_->{id}";
+				my $selected = ($form->{warehouse} eq $value) ?
+					 ' selected="selected"' : "";
+            $form->{selectwarehouse} .=
+					 qq|<option value="$value"$selected>$_->{description}\n|;
+        }
+    }
+
+}
 
 =item test_should_get_images
 
@@ -1601,7 +1779,7 @@ sub get_exchangerate {
         $sth->execute( $curr, $transdate );
 
         ($exchangerate) = $sth->fetchrow_array;
-	$exchangerate = Math::BigFloat->new($exchangerate);
+	$exchangerate = LedgerSMB::PGNumber->new($exchangerate);
         $sth->finish;
     }
 

@@ -7,7 +7,7 @@
 <body onLoad="init()" class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb title ?></div>
 <div class="info"><?lsmb info ?></div>
-<form action="<?lsmb script ?>" method="post" enctype="multipart/form-data">
+<form action="<?lsmb request.script ?>" method="post" enctype="multipart/form-data">
 <?lsmb PROCESS input element_data = {
     type = "hidden"
     class = "hidden"

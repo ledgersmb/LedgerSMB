@@ -1,11 +1,17 @@
-<div id="credit_div" class="lsmbtab" title="<?lsmb text('Credit Accounts') ?>">
+<div id="credit_div"
+     title="<?lsmb text('Credit Accounts') ?>"
+     data-dojo-type="dijit/layout/ContentPane"
+     <?lsmb IF request.target_div == 'credit_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+     >
 <div class="listtop"><strong>Accounts</strong></div>
 <?lsmb 
 
 FOREACH cl IN credit_list;
    IF cl.entity_class == 1;
+        cl.account_class_title = text('Vendor');
         cl.account_class_label = text('Vendor');
    ELSIF  cl.entity_class == 2;
+        cl.account_class_title = text('Customer');
         cl.account_class_label = text('Customer');
    END;
    cl.meta_number_href_suffix = 'account_class=' _ cl.entity_class _ 
@@ -26,7 +32,7 @@ PROCESS dynatable
     ], #'
     tbody = {rows = credit_list}; ?>
     <form id="credit_form" name="credit_form" method="post" 
-	action="<?lsmb script ?>">
+	action="<?lsmb request.script ?>">
 <?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "form_id"
@@ -63,19 +69,21 @@ PROCESS dynatable
        default_values = [ec]
             text_attr = 'class'
            value_attr = 'id'
-                label = text('Class')
+                title = text('Class')
         } ?></td>
 
                 
 	<td>
  	<?lsmb PROCESS input element_data = {
-		label = text("$entity_classname Number"), #fixme for i18n
+		title = text("$entity_classname Number"), #fixme for i18n
+	   label = text("$entity_classname Number"), 
 		type= "text",
 		name = "meta_number",
 		value = credit_act.meta_number,
 		size = "10"
-	}  # " ?></td>
+	}  ?></td>
 	<td><?lsmb PROCESS input element_data = {
+		title = text("Description"),
 		label = text("Description"),
 		type= "text",
 		name = "description",
@@ -86,7 +94,8 @@ PROCESS dynatable
 	<tr class="pay_to_row">
 	<td colspan = "2">
 	<?lsmb PROCESS input element_data = {
-		label = text('Pay To') #'
+		title = text('Pay To')
+		label = text('Pay To')      
 		type = "text"
 		size = "50"
 		name = "pay_to_name"
@@ -98,6 +107,7 @@ PROCESS dynatable
         <tr id="date-row">
             <td>
 		<?lsmb PROCESS input element_data = {
+			title = text('Starting Date'),
 			label = text('Starting Date'),
 			name = "startdate",
 			class = "date",
@@ -109,6 +119,7 @@ PROCESS dynatable
             </td>
             <td>
 		<?lsmb PROCESS input element_data = {
+			title = text('End Date'),
 			label = text('End Date'),
 			name = "enddate",
 			class = "date",
@@ -125,11 +136,13 @@ PROCESS dynatable
 			value = credit_act.threshold
 			type = "text"
 			size = "20"
+			title = text('Threshold')
 			label = text('Threshold')
 			class = "numeric"
                } ?></td>
             <td>
 		<?lsmb INCLUDE input element_data = {
+			title = text('Credit Limit'),
 			label = text('Credit Limit'),
 			name = "creditlimit",
 			value = credit_act.creditlimit,
@@ -141,6 +154,7 @@ PROCESS dynatable
 	<tr id="discount-gifi-row">
             <td><span id="terms-span">
 		<?lsmb INCLUDE input element_data = {
+			title = text('Payment Terms'),
 			label = text('Payment Terms'),
 			name = "terms",
 			value = credit_act.terms,
@@ -150,6 +164,7 @@ PROCESS dynatable
             </td>
             <td>
 		<?lsmb INCLUDE input element_data = {
+			title = text('Discount'),
 			label = text('Discount'),
 			name = "discount",
 			value = credit_act.discount,
@@ -169,6 +184,7 @@ PROCESS dynatable
                         name = "discount_account_id"
                         default_values = [credit_act.discount_account_id]
                         options = discount_acc_list
+                        title = text('Account')
                         label = text('Account')
                         text_attr = "text"
                         value_attr = "id"
@@ -180,6 +196,7 @@ PROCESS dynatable
 			name = "ar_ap_account_id"
 			default_values = [credit_act.ar_ap_account_id]
 			options = ar_ap_acc_list
+			title = text((ec == 1) ? 'AP' : 'AR')
 			label = text((ec == 1) ? 'AP' : 'AR')
 			text_attr = "text"
 			value_attr = "id"
@@ -189,6 +206,7 @@ PROCESS dynatable
 			name = "cash_account_id"
 			default_values = [credit_act.cash_account_id]
 			options = cash_acc_list
+			title = text('Payment')
 			label = text('Payment')
 			text_attr = "text"
 			value_attr = "id"
@@ -200,6 +218,7 @@ PROCESS dynatable
                         text_attr = 'text'
                         value_attr = 'text'
                         default_values = [credit_act.curr]
+                        title = text('Currency')
                         label = text('Currency')
                } ?>
            </td>
@@ -213,6 +232,7 @@ PROCESS dynatable
 			default_values = [credit_act.business_id]
 			text_attr = "description"
 			value_attr = "id"
+			title = text('Business Type') #'
 			label = text('Business Type') #'
 			} ?> 
                 <?lsmb END ?>
@@ -223,6 +243,7 @@ PROCESS dynatable
                      default_values = [credit_act.pricegroup_id],
                                name = 'pricegroup_id'
                             options = pricegroups
+                              title = text('Pricegroup')
                               label = text('Pricegroup')
                          value_attr = 'id'
                           text_attr = 'pricegroup'
@@ -239,6 +260,7 @@ PROCESS dynatable
 			default_values = [credit_act.taxform_id]
 			text_attr = "form_name"
 			value_attr = "id"
+			title = text('Tax Form') #'
 			label = text('Tax Form') #'
 			} ?> 
               <?lsmb END ?>
@@ -248,6 +270,7 @@ PROCESS dynatable
                 credit_act.language_code = default_language;
            END;
            INCLUDE select element_data = {
+		title = text("Language")
 		label = text("Language")
 		name = "language_code"
                 default_values = [credit_act.language_code],
@@ -268,9 +291,10 @@ PROCESS dynatable
                    IF credit_act.tax_ids.grep("^${tx.id}$").size == 1;
                        checked = "CHECKED";
                    END;
-                   INCLUDE input 
+                   INCLUDE input label_pos=1 
                            element_data = {
-                           label =  tx.accno _ '--' _ tx.description
+                           title = tx.accno _ '--' _ tx.description
+                           label = tx.accno _ '--' _ tx.description
                            type = "checkbox"
                            checked = checked
                            name = "taxact_$tx.id"
@@ -284,9 +308,10 @@ PROCESS dynatable
                IF credit_act.taxincluded;
                    checked='CHECKED';
                END;
-               INCLUDE input
+               INCLUDE input label_pos=1
                            element_data = {
-                                 label =  text('Tax Included') #'
+                                 title = text('Tax Included') #'
+                                 label = text('Tax Included') #'
                                   type = "checkbox"
                                checked = checked
                                   name = "taxincluded"
@@ -383,5 +408,5 @@ PROCESS button element_data = {
 </div>
 </div>
 </form>
-</div>
 <?lsmb END # IF credit_act.id ?>
+</div>
