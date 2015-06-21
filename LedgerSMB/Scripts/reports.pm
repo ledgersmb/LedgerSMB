@@ -91,10 +91,10 @@ sub start_report {
         die $request->{_locale}->text('No report specified');
     }
     @{$request->{country_list}} = $request->call_procedure( 
-                   procname => 'location_list_country'
+                   funcname => 'location_list_country'
     );
     @{$request->{employees}} =  $request->call_procedure(
-        procname => 'employee__all_salespeople'
+        funcname => 'employee__all_salespeople'
     );
     my $template = LedgerSMB::Template->new(
         user => $request->{_user},
@@ -103,7 +103,8 @@ sub start_report {
         template => $request->{report_name},
         format => 'HTML'
     );
-    $template->render($request);
+    $template->render($request); # request not used for script;
+                                 # forms submit to other URLs than back to here
 }   
 
 =item list_business_types 

@@ -829,10 +829,10 @@ sub _render_new_user {
     $request->{dbh}->{AutoCommit} = 0;
 
     @{$request->{salutations}} 
-    = $request->call_procedure(procname => 'person__list_salutations' ); 
+    = $request->call_procedure(funcname => 'person__list_salutations' ); 
     
     @{$request->{countries}} 
-    = $request->call_procedure(procname => 'location_list_country' ); 
+    = $request->call_procedure(funcname => 'location_list_country' ); 
     for my $country (@{$request->{countries}}){
         if (lc($request->{coa_lc}) eq lc($country->{short_name})){
            $request->{country_id} = $country->{id};
@@ -891,10 +891,10 @@ sub save_user {
            $request->{pls_import} = 1;
 
            @{$request->{salutations}} 
-            = $request->call_procedure(procname => 'person__list_salutations' );
+            = $request->call_procedure(funcname => 'person__list_salutations' );
          
            @{$request->{countries}} 
-              = $request->call_procedure(procname => 'location_list_country' ); 
+              = $request->call_procedure(funcname => 'location_list_country' ); 
 
            my $locale = $request->{_locale};
 
@@ -916,15 +916,15 @@ sub save_user {
     return if $duplicate;
     if ($request->{perms} == 1){
          for my $role (
-                $request->call_procedure(procname => 'admin__get_roles')
+                $request->call_procedure(funcname => 'admin__get_roles')
          ){
-             $request->call_procedure(procname => 'admin__add_user_to_role',
+             $request->call_procedure(funcname => 'admin__add_user_to_role',
                                       args => [ $request->{username}, 
                                                 $role->{rolname}
                                               ]);
          }
     } elsif ($request->{perms} == 0) {
-        $request->call_procedure(procname => 'admin__add_user_to_role',
+        $request->call_procedure(funcname => 'admin__add_user_to_role',
                                  args => [ $request->{username},
                                            "lsmb_$request->{database}__".
                                             "users_manage",
@@ -1078,10 +1078,10 @@ sub create_initial_user {
 
    my $database = _init_db($request) unless $request->{dbh};
    @{$request->{salutations}} 
-    = $request->call_procedure(procname => 'person__list_salutations' ); 
+    = $request->call_procedure(funcname => 'person__list_salutations' ); 
           
    @{$request->{countries}} 
-    = $request->call_procedure(procname => 'location_list_country' ); 
+    = $request->call_procedure(funcname => 'location_list_country' ); 
 
    my $locale = $request->{_locale};
 

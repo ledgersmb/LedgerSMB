@@ -4,8 +4,8 @@
     PROCESS elements.html; 
     PROCESS report_base.html; ?>
 <body class="<?lsmb dojo_theme ?>">
-
-<form method="post" action="<?lsmb script ?>">
+<div id="budgets">
+<form method="post" action="<?lsmb request.script ?>">
 <div id="budget-header">
 <div class="listtop"><?lsmb title ?></div>
 <div class="input_row" id = "reference_row">
@@ -73,12 +73,11 @@
 		  <td>
 			<?lsmb IF displayrow.accnoset == 0 ?>
               			<?lsmb PROCESS input element_data = {
-                                     type = 'text'
-		                     name = "accno_$INDEX"
-		                     initial_value = displayrow.accno
-		                     text_attr = 'accno'
-		                     value_attr = 'accno'
-                                     class = 'AccountBox'
+                            type = 'text'
+		                      name = "accno_$INDEX"
+		                      initial_value = displayrow.accno
+                            class = 'AccountBox'
+									 "data-dojo-type" = "lsmb/accounts/AccountSelector"
 		              } ?> 
 			   
 			  <?lsmb ELSE ?>
@@ -141,7 +140,7 @@
 <?lsmb FOREACH button IN buttons; PROCESS button element_data=button; END ?>
 </form>
 <?lsmb IF id ?>
-<form name="note" action="<?lsmb script ?>" method="POST">
+<form name="note" action="<?lsmb request.script ?>" method="POST">
 <?lsmb PROCESS input element_data = {
        name = "id"
       value = id
@@ -190,5 +189,6 @@
 <?lsmb note.note ?>
 </div>
 <?lsmb END # FOREACH Note ?>
+</div>
 </body>
 </html>

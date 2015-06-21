@@ -1199,7 +1199,7 @@ sub order_details {
               Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
             $taxbase = Tax::extract_taxes( \@taxaccounts, $form, $linetotal );
             foreach $item (@taxaccounts) {
-                push @taxrates, Math::BigFloat->new(100) * $item->rate;
+                push @taxrates, LedgerSMB::PGNumber->new(100) * $item->rate;
                 if ( $form->{taxincluded} ) {
                     $taxaccounts{ $item->account } += $item->value;
                     $taxbase{ $item->account }     += $taxbase;

@@ -4,7 +4,6 @@
 	include_stylesheet = [
 		'UI/Contact/contact.css'
 	] 
-	dojo_load = 'lsmb/Contact/tabs'
 ?>
 <?lsmb PROCESS 'elements.html';
 PROCESS "dynatable.html"  ?>
@@ -13,6 +12,7 @@ PROCESS "dynatable.html"  ?>
 <?lsmb  # Target_div handling now moved to controller script -- CT -?>
 
 <body class="<?lsmb dojo_theme ?>">
+
     <?lsmb IF name ?> 
 <div class="pageheading"><?lsmb text('Company') ?>: <?lsmb name ?></div>
     <?lsmb END ?>
@@ -27,11 +27,6 @@ PROCESS "dynatable.html"  ?>
 <?lsmb IF entity_id ?><?lsmb operation = "Edit" ?><?lsmb ELSE
 ?><?lsmb operation = "Add"
 ?><?lsmb END ?>
-<script type="text/javascript" language="JavaScript">
-	var activeDiv = '<?lsmb request.target_div ?>';
-</script>
-<script type="text/javascript" language="JavaScript" 
-        src="UI/Contact/contact.js"></script>
 <!-- CT: Keys for localization scripts:
 <?lsmb text("Add Customer") ?>
 <?lsmb text("Edit Customer") ?>
@@ -41,7 +36,7 @@ PROCESS "dynatable.html"  ?>
 <?lsmb text("Edit Employee") ?>
 -->
 </div>
-<div id="contact_tabs" style="height:500px;">
+<div id="contact_tabs" data-dojo-type="dijit/layout/TabContainer" style="height:500px;">
   <?lsmb FOREACH ITEM IN DIVS; 
       INCLUDEDIV = "divs/" _ ITEM _ ".html";
       INCLUDE $INCLUDEDIV;

@@ -113,7 +113,8 @@
 	      <tr>
 		<td>
 		  <?lsmb PROCESS input element_data = {
-                          name="category" 
+                          name="category"
+                          id="category-all"
                           class="radio" 
                           type="radio" 
                           value="X" 
@@ -121,30 +122,35 @@
                    } ?>&nbsp;<?lsmb text('All') ?>
 		  <?lsmb PROCESS input element_data = {
                           name="category" 
+                          id="category-asset"
                           class="radio"
                           type="radio" 
                           value="A"
                    } ?>&nbsp;<?lsmb text('Asset') ?>
 		  <?lsmb PROCESS input element_data = { 
                           name="category" 
+                          id="category-liability"
                           class="radio" 
                           type="radio" 
                           value="L"
                    } ?>&nbsp;<?lsmb text('Liability') ?>
 		  <?lsmb PROCESS input element_data = {
                          name="category" 
+                         id="category-equity"
                          class="radio"
                          type="radio" 
                          value="Q"
                   } ?>&nbsp;<?lsmb text('Equity') ?>
 		  <?lsmb PROCESS input element_data = {
                          name="category"
+                         id="category-income"
                          class="radio" 
                          type="radio" 
                          value="I"
                     } ?>&nbsp;<?lsmb text('Income') ?>
 		  <?lsmb PROCESS input element_data = {
                          name="category" 
+                         id="category-expense"
                          class="radio" 
                          type="radio" 
                          value="E"

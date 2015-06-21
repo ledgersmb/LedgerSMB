@@ -58,7 +58,7 @@ sub edit {
         $request->error('No Chart Type Provided');
     }
     $request->{chart_id} = $request->{id};
-    my $account = LedgerSMB::DBObject::Account->new(base => $request);
+    my $account = LedgerSMB::DBObject::Account->new({base => $request});
     my @accounts = $account->get();
     my $acc = shift @accounts;
     if (!$acc){  # This should never happen.  Any occurance of this is a bug.
@@ -88,7 +88,7 @@ link:  a list of strings representing text box identifier.
 
 sub save {
     my ($request) = @_;
-    my $account = LedgerSMB::DBObject::Account->new(base => $request);
+    my $account = LedgerSMB::DBObject::Account->new({base => $request});
     $account->{$account->{summary}}=$account->{summary};
     $account->save;
     edit($account); 
@@ -177,7 +177,7 @@ Shows the yearend screen.  No expected inputs.
 
 sub yearend_info {
     my ($request) = @_;
-    my $eoy =  LedgerSMB::DBObject::EOY->new(base => $request);
+    my $eoy =  LedgerSMB::DBObject::EOY->new({base => $request});
     $eoy->list_earnings_accounts;
     $eoy->{closed_date} = $eoy->latest_closing;
     $eoy->{user} = $request->{_user};    
@@ -186,7 +186,8 @@ sub yearend_info {
         locale => $request->{_locale},
         template => 'accounts/yearend'
     );
-    $template->render($eoy);
+    $template->render({ request => $request,
+                        eoy => $eoy});
 }
 
 =item post_yearend
@@ -203,7 +204,7 @@ in_retention_acc_id: Account id to post retained earnings into
 
 sub post_yearend {
     my ($request) = @_;
-    my $eoy =  LedgerSMB::DBObject::EOY->new(base => $request);
+    my $eoy =  LedgerSMB::DBObject::EOY->new({base => $request});
     $eoy->close_books;
     my $template = LedgerSMB::Template->new_UI(
         user => $request->{_user},
@@ -222,7 +223,7 @@ This reopens books as of $request->{reopen_date}
 
 sub reopen_books {
     my ($request) = @_;
-    my $eoy =  LedgerSMB::DBObject::EOY->new(base => $request);
+    my $eoy =  LedgerSMB::DBObject::EOY->new({base => $request});
     $eoy->reopen_books;
     delete $request->{reopen_date};
     yearend_info($request);

@@ -17,7 +17,12 @@
 	</tr>
 	<tr>
 	  <th align="right"><?lsmb text('Close Books up to') ?></th>
-	  <td><input class="date" name="closedto" size="11" title="<?lsmb user.dateformat ?>" value="<?lsmb form.closedto ?>" /></td>
+	  <td><?lsmb PROCESS input element_data = {
+		     class = "date"
+		     name = "closedto"
+		     size = 11
+		     title = user.dateformat
+		     value = form.closedto } ?></td>
 	</tr>
 	<tr>
 	  <th align="right"><?lsmb text('Activate Audit trail') ?></th>

@@ -4,6 +4,7 @@
 ?>
 <?lsmb PROCESS 'elements.html' ?>
 <body onLoad="init()" class="<?lsmb dojo_theme ?>">
+<div id="business_units">
 <div class="listtop">
    <?lsmb 
    IF id; 
@@ -11,7 +12,7 @@
    ELSE;
       text('Add Reporting Unit');
     END; ?></div>
-<form action="<?lsmb script ?>" method="post">
+<form action="<?lsmb request.script ?>" method="post">
 <!-- These are for Javascript automation of defaults -CT -->
 <?lsmb PROCESS input element_data = {
 	type = "hidden"
@@ -105,6 +106,7 @@ default_blank = 1
 </form>
 <div id="children">
 <!-- TODO:  Show and link to children here -->
+</div>
 </div>
 </body>
 </html>
