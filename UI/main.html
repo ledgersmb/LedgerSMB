@@ -1,4 +1,6 @@
-<?lsmb INCLUDE "ui-header.html" include_stylesheet = ['UI/menu/expanding.css'] include_script = ['UI/lib/main.js'] ?>
+<?lsmb INCLUDE "ui-header.html"
+       include_stylesheet = ['UI/menu/expanding.css']
+       include_script = ['UI/users/preferences.js'] ?>
 <body class="<?lsmb dojo_theme ?>">
 <div id="console-container" data-dojo-type="dijit/layout/BorderContainer"
      style="width: 100%; height: 100%">
@@ -8,6 +10,9 @@
      <div id="menudiv" class="edgePanel"
             data-dojo-type="dijit/layout/ContentPane"
             data-dojo-props="region: 'left', splitter: true"><?lsmb INCLUDE menu/expanding.html ?></div>
+	  <div id="errorDialog" title="An error occurred!"
+			 style="display:none;min-width:40ex"
+			 data-dojo-type="dijit/Dialog"></div>
 </div>
 </body>
 </html>

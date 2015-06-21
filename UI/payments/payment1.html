@@ -1,17 +1,17 @@
 <?lsmb INCLUDE 'ui-header.html' ?>
 <body id="payment-1-body" class="<?lsmb dojo_theme?>">
 
-<form name="search" method="get" action="payment.pl">
+<form name="search" method="get" action="<?lsmb script ?>">
 <?lsmb PROCESS elements.html  # Include form elements helper. -?>
-<?lsmb login.type = 'hidden' ; INCLUDE input element_data=login -?>
-<?lsmb accountclass.type = 'hidden'; INCLUDE input element_data=accountclass -?>
+<?lsmb login.type = 'hidden' ; PROCESS input element_data=login -?>
+<?lsmb accountclass.type = 'hidden'; PROCESS input element_data=accountclass -?>
 <?lsmb # The first_load field is required on payment2.html to initialize discounts the first time, on each subsequent update it wont exist-?>
-<?lsmb INCLUDE input element_data={
+<?lsmb PROCESS input element_data={
             name => 'first_load',
             id   => 'first_load',
             type => 'hidden',
             value => 'on'} ?>
-<?lsmb type.type = "hidden"; INCLUDE input element_data=type; -?>
+<?lsmb type.type = "hidden"; PROCESS input element_data=type; -?>
 <table width="100%">
   <tr id="top-bar" class="listtop">
     <th id="top-bar-header" class="listtop"><label  id="top-bar-header-label">
@@ -38,13 +38,18 @@
 		 <?lsmb END -?>                     		 
 		</td>
 		<td id="vc-column">
-			<input id="vc_name" name="vc_name"/>
+			<?lsmb PROCESS input element_data = {
+			       id="vc_name"
+			       name="vc_name" } ?>
 		</td>
 		<td id="vc-label-column2" align="right">
 			<?lsmb text('SSN')?>
 		</td>
 		<td id="vc-column2">
-			<input id="vc_ssn" name="vc_ssn" size="10"/>	
+			<?lsmb PROCESS input element_data = {
+			       id="vc_ssn"
+			       name="vc_ssn"
+			       size=10 } ?>	
 		</td>
 	</tr>	
 	<tr>	
@@ -62,7 +67,7 @@
 			     datefrom.maxlenght = "10"  ;
                              datefrom.class     = 'date';
 			     datefrom.name      = "datefrom";
-			     INCLUDE input element_data=datefrom;
+			     PROCESS input element_data=datefrom;
 		         -?>
 		</td>
 		<td id="dateto-label-column" class="label-left" align=right><?lsmb text('Date to') ?> &lt;=</td>
@@ -73,7 +78,7 @@
 			     dateto.maxlenght   = "10"  ;
                              dateto.class       = 'date';
 			     dateto.name	= "dateto";
-			     INCLUDE input element_data=dateto;
+			     PROCESS input element_data=dateto;
 			-?>
 		</td>
 	</tr>

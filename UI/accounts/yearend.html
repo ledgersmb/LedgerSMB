@@ -1,7 +1,7 @@
 <?lsmb INCLUDE 'ui-header.html' ?> 
 <?lsmb PROCESS elements.html ?> 
 <body class="<?lsmb dojo_theme ?>">
-<form method="post" action="<?lsmb script ?>">
+<form method="post" action="<?lsmb request.script ?>">
 <table width="100%">
   <tr><th class="listtop"><?lsmb text('Post Yearend') ?></th></tr>
   <tr><td> </td></tr>
@@ -35,22 +35,22 @@
         </tr>
         <tr>
           <th align="right"><?lsmb text('Retained Earnings') ?></th>
-          <?lsmb FOREACH opt = earnings_accounts; 
+          <?lsmb FOREACH opt = eoy.earnings_accounts; 
                      opt.text = opt.accno _ '--' _ opt.description;
-		END -?>
+		           END -?>
           <td><?lsmb PROCESS select element_data={
                      name = "retention_acc_id"
-                     options = earnings_accounts
+                     options = eoy.earnings_accounts
                      value_attr = "id"
                 } -?></td>
         </tr>
 <tr><td colspan="2">
 <hr size="3" noshade="noshade" />
-<?lsmb FOREACH hidden IN hiddens.keys;
-	PROCESS input element_data={
-		type = 'hidden',
-		name = hidden,
-		value = hiddens.item(hidden)
+<?lsmb FOREACH hidden IN eoy.hiddens.keys;
+	       PROCESS input element_data={
+		      type = 'hidden',
+		      name = hidden,
+		      value = hiddens.item(hidden)
 		}; END ?></td>
 </tr>
 <tr>

@@ -37,4 +37,35 @@ sub set_dbh {
     return  LedgerSMB::App_State::DBH();
 }
 
+sub _parse_array {
+    my ($self, $value) = @_;
+    return @$value if ref $value eq 'ARRAY';
+    return if !defined $value;
+    # No longer needed since we require DBD::Pg 2.x 
+}
+
+sub _db_array_scalars {
+    my $self = shift @_;
+    my @args = @_;
+    return \@args; 
+    # No longer needed since we require DBD::Pg 2.x
+}
+
+sub _db_array_literal {
+    my $self = shift @_;
+    my @args = @_;
+    return \@args;
+    # No longer needed since we require DBD::Pg 2.x
+}
+
+sub merge {
+	 my ($self, $base, %args) = @_;
+    my @keys = $args{keys} || keys %$base;
+	 foreach my $key (@keys) {
+		  $self->{$key} = $base->{$key};
+	 }
+	 return $self;
+}
+
+
 1; 

@@ -1,26 +1,28 @@
 function submit_form() {
-	var http = get_http_request_object();
-        var username = document.getElementById('s-user').value;
-	var password = document.getElementById('s-password').value;
-	var dbName = 'postgres';
+	 require(['dojo/request/xhr','dojo/dom', 'dojo/dom-style'],
+				function(xhr,dom,style){
 
-	http.open("get", 'login.pl?action=authenticate&company='+dbName,
-		false, username, password);
-	http.send("");
-        if (http.status != 200){
-                if (http.status != '454'){
-  		     alert("Access Denied:  Bad username/Password");
-                } else {
-                     alert('Company does not exist.');
-                }
-		return false;
-	}
-	document.location = "setup.pl?action=login&company="+
-		document.credentials.database.value;
+					 var username = dom.byId('s_user').value;
+					 var password = dom.byId('s_password').value;
+					 var company = document.login_form.company.value;
+					 var action = document.login_form.action.value;
+
+		  xhr('login.pl?action=authenticate&company=postgres',
+				{
+					 user: username,
+					 password: password
+				}).then(function(data){
+					 window.location.href=action
+						  +".pl?action=login&company="+company;
+				}, function(err) {
+					 var status = err.response.status;
+					 if (status == '454'){
+						  alert('Company does not exist.');
+					 } else {
+						  alert('Access denied ('+status+'): Bad username/password');
+					 }
+				});
+	 });
+	 return false;
 }
 
-function init() {
-    document.getElementById('userpass').style.display = 'block';
-    document.getElementById('loginform').addEventListener('submit', 
-           function () {submit_form()}, false);
-}

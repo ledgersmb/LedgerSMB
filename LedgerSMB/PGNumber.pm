@@ -4,13 +4,15 @@ LedgerSMB::PGNumeric
 
 =cut
 
+
+package LedgerSMB::PGNumber;
+# ensure we're using the GMP library for Math::BigFloat (for speed)
+use Math::BigFloat lib => 'GMP';
+use base qw(PGObject::Type::BigFloat);
 use strict;
 use warnings;
 use Number::Format;
 use LedgerSMB::Setting;
-
-package LedgerSMB::PGNumber;
-use base qw(PGObject::Type::BigFloat);
 
 PGObject->register_type(pg_type => $_,
                                   perl_class => __PACKAGE__)
@@ -22,14 +24,14 @@ PGObject->register_type(pg_type => $_,
 This is a wrapper class for handling a database interface for numeric (int, 
 float, numeric) data types to/from the database and to/from user input.
 
-This extends PBObject::Type::BigFloat which further extends Math::BigFloat and 
+This extends PBObject::Type::BigFloat which further extends LedgerSMB::PGNumber and 
 can be used in this way.
 
 =head1 INHERITS
 
 =over
 
-=item Math::BigFloat
+=item LedgerSMB::PGNumber
 
 =back
 
@@ -156,7 +158,7 @@ sub from_input {
     {    
         return $string;
     }
-    if (UNIVERSAL::isa( $string, 'Math::BigFloat' ) ) {
+    if (UNIVERSAL::isa( $string, 'LedgerSMB::PGNumber' ) ) {
         $pgnum = $string; 
     } else {
         my $formatter = new Number::Format(
@@ -164,7 +166,7 @@ sub from_input {
                     -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
         );
         $newval = $formatter->unformat_number($string);
-        $pgnum = Math::BigFloat->new($newval);
+        $pgnum = LedgerSMB::PGNumber->new($newval);
         $self->round_mode('+inf');
     } 
     bless $pgnum, $self;

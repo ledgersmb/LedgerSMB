@@ -4,11 +4,15 @@ LedgerSMB::PgDate
 =cut
 
 package LedgerSMB::PGDate;
-use Moose;
 use DateTime::Format::Strptime;
 use LedgerSMB::App_State;
 use Carp;
 use base qw(PGObject::Type::DateTime);
+
+PGObject->register_type(pg_type => $_,
+                                  perl_class => __PACKAGE__)
+   for ('date');
+
 
 =head1 SYNPOSIS
 This class handles formatting and mapping between the DateTime module and
@@ -135,12 +139,13 @@ sub _parse_string {
 sub from_input{
     my ($self, $input, $has_time) = @_;
     return $input if eval {$input->isa(__PACKAGE__)};
-    return if (!defined $input) || ('' eq $input);
+    #return if (!defined $input) || ('' eq $input);
     $input = undef if $input eq '';
     my $format = $LedgerSMB::App_State::User->{dateformat} || 'yyyy-mm-dd';
     $format ||= 'yyyy-mm-dd';
     $format = 'yyyy-mm-dd' if $input =~ /^\d{4}/;
-    my $dt =  _parse_string($self, $input, uc($format), $has_time);
+    my $dt =  _parse_string($self, $input, uc($format), $has_time)
+		  if $input;
     my %prop = (date => $dt, dummy => !defined $dt);
     delete $prop{date} unless defined $prop{date} and $prop{date} ne '';
     return $self->new(%prop);
@@ -156,7 +161,8 @@ used.  If $format is not supplied, the dateformat of the user is used.
 
 sub to_output {
     my ($self) = @_;
-    return undef if !defined $self;
+    #return undef if !defined $self;
+	 return undef if !defined $self->{date};
     my $fmt;
     if (defined $LedgerSMB::App_State::User->{dateformat}){
         $fmt = $LedgerSMB::App_State::User->{dateformat};

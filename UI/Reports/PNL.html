@@ -25,6 +25,7 @@ LINK = LINK.replace('\&amp;\&amp;', '&amp;');
 ?>
 <?lsmb COLS = comparison.length + 2 ?>
 <body class="financial-statement <?lsmb dojo_theme ?>">
+<div id="PNL"> <!-- Also used in balance sheet! -->
 <h1><?lsmb name ?></h1>
 <h2><?lsmb text('Accounting period: [_1] to [_2]', report.from_date, report.to_date); ?></h2>
 <?lsmb 
@@ -151,6 +152,7 @@ END ?>
 <?lsmb END ?>
 </tbody>
 </table>
+</div>
 </body>
 </html>
 

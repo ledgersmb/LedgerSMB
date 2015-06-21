@@ -917,7 +917,7 @@ sub post_invoice {
     my $invoice_id;
     my $ndx;
     for (keys %$form) {
-        if (UNIVERSAL::isa( $form->{$_}, 'Math::BigFloat' )){
+        if (UNIVERSAL::isa( $form->{$_}, 'LedgerSMB::PGNumber' )){
             $form->{$_} = $form->{$_}->bstr();
         }
     }
@@ -993,8 +993,8 @@ sub post_invoice {
                     $form->{"taxaccounts"}
                 );
                 $ml    = 1;
-                $tax   = Math::BigFloat->bzero();
-                $fxtax = Math::BigFloat->bzero();
+                $tax   = LedgerSMB::PGNumber->bzero();
+                $fxtax = LedgerSMB::PGNumber->bzero();
 
                 if ( $form->{taxincluded} ) {
                     $tax += $amount =

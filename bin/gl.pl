@@ -397,7 +397,7 @@ sub save_temp {
                   };
         }
     }
-    $template = LedgerSMB::DBObject::TransTemplate->new(base => $lsmb);
+    $template = LedgerSMB::DBObject::TransTemplate->new({base => $lsmb});
     $template->save;
     $form->redirect( $locale->text('Template Saved!') );
 }
@@ -420,7 +420,7 @@ sub display_row
 	$temphash1->{accnoset}=1;
         $temphash1->{projectset}=1;
         $temphash1->{fx_transactionset}=1;
-	if (!defined $form->{"accno_$i"})
+	if (!defined $form->{"accno_$i"} || ! $form->{"accno_$i"})
 	{
 			      $temphash1->{accnoset}=0;   #use  @{ $form->{all_accno} }
 			      $temphash1->{projectset}=0; #use  @{ $form->{all_project} }
@@ -512,8 +512,8 @@ sub edit {
     }
     $i = 0;
 
-    my $minusOne    = new Math::BigFloat(-1);#HV make sure BigFloat stays BigFloat
-    my $plusOne     = new Math::BigFloat(1);#HV make sure BigFloat stays BigFloat
+    my $minusOne    = new LedgerSMB::PGNumber(-1);#HV make sure BigFloat stays BigFloat
+    my $plusOne     = new LedgerSMB::PGNumber(1);#HV make sure BigFloat stays BigFloat
 
     foreach $ref ( @{ $form->{GL} } ) {
         $form->{"accno_$i"} = "$ref->{accno}--$ref->{description}";

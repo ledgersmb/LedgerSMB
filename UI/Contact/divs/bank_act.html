@@ -1,4 +1,8 @@
-<div class="lsmbtab" id="bank_act_div" title="<?lsmb text('Bank Accounts') ?>">
+<div id="bank_act_div"
+     title="<?lsmb text('Bank Accounts') ?>"
+     data-dojo-type="dijit/layout/ContentPane"
+     <?lsmb IF request.target_div == 'bank_act_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+     >
 <div class="listtop"><?lsmb text('Bank Accounts') ?></div>
 <?lsmb 
 href_base = script _ '?&entity_id=' _ entity_id _ '&target_div=bank_act_div' _
@@ -20,7 +24,8 @@ PROCESS dynatable
      { col_id='delete', type='href', href_base=href_base, name=' ' }
    ];
 ?>
-<form name="bank_acct" action="<?lsmb script ?>" method="post">
+<form name="bank_acct" action="<?lsmb request.script ?>" method="post">
+<div data-dojo-type="lsmb/lib/TabularForm" data-dojo-props="cols:1">
 <?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "form_id"
@@ -40,11 +45,12 @@ PROCESS dynatable
 		type="hidden" 
 		name="bank_account_id" 
 		value=request.id
-	} ?><div class="tabular col-1">
+	} ?>
 	<div>
 	<?lsmb INCLUDE input element_data = {
 		type="text" 
-		label = text('BIC/SWIFT Code')
+		title = text('BIC/SWIFT Code')
+		label = "_none_"
 		name="bic" 
 		value=request.bic
 		size=20
@@ -53,22 +59,25 @@ PROCESS dynatable
 	<div>
 	<?lsmb PROCESS input element_data = {
 		type="text" 
-		label = text('Bank Account')
+		title = text('Bank Account')
+		label = "_none_"
 		name="iban" 
 		value=request.iban
 		size=20
                 required = 'true'
 	} #' ?>
-	</div></div>
+	</div>
 	<div>
 	<?lsmb PROCESS input element_data = {
 		type="text" 
-		label = text('Remark')
+		title = text('Remark')
+		label = "_none_"
 		name="remark" 
 		value=request.remark
 		size=30
 	} # ?>
 	</div>
+</div>
 	<div><?lsmb PROCESS button element_data = {
 		name="action" 
 		value="save_bank_account"

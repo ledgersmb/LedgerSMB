@@ -87,12 +87,10 @@
                                                  	    } 
 			       ?>
 			<?lsmb ELSE ?>
-				  <?lsmb INCLUDE input element_data = {
+				  <?lsmb INCLUDE textarea element_data = {
 						      name = "notes",
 						      value = form.notes,
-						      type = "text",
 						      size = "50",
-						      dojo_type = 'dijit/form/Textarea',
 						      class = 'notes'
 						      id = "not_1"
                                                           } 
@@ -133,13 +131,13 @@
 			<?lsmb IF displayrow.accnoset == 0 ?>
               			<?lsmb PROCESS input element_data = {
 		                     name = "accno_$INDEX"
-				     type = "text"
-		                     initial_value = ${"accno_$INDEX"}
-		                     value = ${"accno_$INDEX"}
-		                     text_attr = 'accno'
-		                     value_attr = 'id'
-				     class = 'AccountBox'
-				     dojo_type = 'lsmb/accounts/AccountSelector'
+									 type = "text"
+		                      initial_value = ${"accno_$INDEX"}
+		                      value = ${"accno_$INDEX"}
+		                      text_attr = 'accno'
+		                      value_attr = 'id'
+									 class = 'AccountBox'
+									 'data-dojo-type' = 'lsmb/accounts/AccountSelector'
 		              } ?> 
 			   
 			  <?lsmb ELSE ?>
@@ -206,7 +204,6 @@
 			  <?lsmb PROCESS input element_data = {
 				  value = displayrow.source
 				  name = "source_$INDEX"
-				  dojo_type = 'dijit/form/TextBox'
 				  type = "text"
 				  size = 10
 				  id = "sou_$INDEX"
@@ -216,11 +213,9 @@
 		   </td>
 
 		    <td>
-			  <?lsmb PROCESS input element_data = {
+			  <?lsmb PROCESS textarea element_data = {
 				  value = displayrow.memo
 				  name = "memo_$INDEX"
-				  dojo_type = 'dijit/form/Textarea'
-				  type = "text"
 				  size = 30
 			          id = "mem_$INDEX"
                                      }  ?>

@@ -1,6 +1,9 @@
 div.input {
     float: left;
 }
+div.date {
+    width: 13ex;
+}
 html, body {
     height: 100%;
     margin: 0;
@@ -22,4 +25,273 @@ html, body {
 #viewsChart {
     width: 550px;
     height: 550px;
+}
+
+
+
+/******** For account editing page */
+#account-tabs #H div.inputline,
+#account-tabs #A div.inputline
+{
+   overflow: auto;
+}
+
+#account-tabs #H label,
+#account-tabs #A label
+ {
+   display: block;
+   float: left;
+   text-align: right;
+   margin-right: 0.5ex;
+}
+#account-tabs #H div.inputgroup,
+#account-tabs #A div.inputgroup
+ {
+   float: left;
+   display: block;
+}
+
+#account-tabs #H label.line,
+#account-tabs #A label.line
+ {
+   font-weight: bold; 
+   width: 12em;
+   margin-right: 0.5em;
+   vertical-align: center;
+   height: 100%
+}
+
+#account-tabs #H div.inputgroup label,
+#account-tabs #A div.inputgroup label
+ {
+   width: 8em; 
+}
+
+#account-tabs #H div.subsectionhead,
+#account-tabs #A div.subsectionhead
+ {
+   font-weight: bold;
+   margin: 1em;
+}
+
+/********* For business units editing page ********/
+
+#business_units div.table { display: table;}
+#business_units form.tr,
+#business_units div.tr { display: table-row; }
+#business_units div.td,
+#business_units div.th {display: table-cell; }
+
+
+/********* For assets editing page ********/
+
+#assets label
+{ display: block;
+	float: left;
+	width: 170px;	
+	text-align: right;
+}
+
+#assets span.inputgroup
+{ display: block;
+	float: left;
+	width: 40%;
+}
+
+#assets div.inputrow
+{
+   display: block;
+	width: 100%;
+   clear: both;
+}
+
+#assets .invisible
+{
+       display: none;
+}
+
+
+/***** Contact screens ******/
+
+
+#credit_div table label { display: inline-block; width: 12ex; }
+
+
+
+/***** Budgetting screens ******/
+
+
+#budgets div.input_row {
+    overflow: auto;
+}
+#budgets div.input_group {
+    float: left;
+    width: 35em;
+}
+
+#budgets div label {
+    text-align: right;
+    width: 7em;
+    display: block;
+    float: left;
+    padding-right: 3px;
+}
+
+
+
+/***** PNL Report ******/
+
+#PNL a {
+	color: inherit;
+	background-color: inherit;
+	text-decoration: none;
+}
+#PNL a:link {
+	color: inherit;
+	background-color: inherit;
+	text-decoration: none;
+}
+#PNL a:visited {
+	color: inherit;
+	background-color: inherit;
+	text-decoration: none;
+}
+#PNL a:hover {
+	color: inherit;
+	background-color: inherit;
+	text-decoration: none;
+	border-bottom: thin dashed;
+}
+#PNL td.amount {
+	text-align: right;
+}
+#PNL tr.separator {
+        min-height: 1em;
+}
+#PNL tr.sectionhead {
+}
+#PNL tr.sectionhead th {
+        padding-top: 2em;
+        margin-top: 4em;
+        font-size: 120%;
+        font-weight: bold;
+}
+
+#PNL td.total {
+        border: 0px;
+	border-top: 1px;
+        border-color: black;
+        border-style: solid;
+}
+
+#PNL th {
+	vertical-align: bottom;	
+}
+
+#PNL table {
+      margin-right: auto;
+      margin-left: auto;
+}
+#PNL h1, h2 {
+       text-align: center;
+}
+
+/****** Reconciliation ****/
+
+
+#reconciliation #cleared-table {
+	width: 800px;
+}
+
+#reconciliation #outstanding-table {
+	width: 800px;
+}
+
+#reconciliation #error-table {
+	width: 800px;
+}
+
+#reconciliation span.heading {
+	font-weight: bold;
+}
+
+#reconciliation table.info tr th {
+	text-align: left;
+}
+
+#reconciliation tr.spacer {
+	margin-bottom: 100px;
+}
+
+#reconciliation span.data {
+}
+#reconciliation th {
+	font-weight: bold;
+}
+
+#reconciliation table {
+	border: 0;
+}
+
+
+/*********** payments *************/
+
+/*
+#payments table.detail_table_visible {
+	display: block;
+}
+#payments table.detail_table_hidden{
+	display: none;
+}
+
+#payments div.selectall {
+       float: left;
+}
+
+#payments div {
+	overflow: auto;
+}
+
+#payments label {
+	text-align: right;
+        float: left;
+	width: 8em;
+	margin-right: 1em;
+}
+
+
+#payments input {
+	float: left;
+}
+
+#payments input[type="checkbox"],
+#payments input[type="radio"]{
+	float: none;
+}
+*/
+
+#payments .details_select input[type="radio"] {
+        float: left;
+}
+#payments select {
+	float: left;
+}
+#payments span.input {
+     display: block;
+     float: left;
+}
+
+#payments .details-popup {
+    position: absolute;
+    z-index: 100;
+    padding: 3px;
+    border-radius: 6px;
+    border-bottom: 1px solid black;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+}
+
+#payments img.details-toggler {
+    height: 0.5em;
+    width: auto;
 }

@@ -40,7 +40,7 @@ sub view {
     %myconfig = %{$request->{_user}};
     $form->{stylesheet} = $myconfig{stylesheet};
     $locale = $request->{_locale};
-    my $transtemplate = LedgerSMB::DBObject::TransTemplate->new(base => $request);
+    my $transtemplate = LedgerSMB::DBObject::TransTemplate->new({base => $request});
     $transtemplate->get;
     my $script = $template_dispatch->{$request->{entry_type}}->{script};
     $form->{script} = $script;
@@ -131,7 +131,7 @@ Displays a list of template transactions
 
 sub display_results {
     my ($request) = @_;
-    my $transtemplate = LedgerSMB::DBObject::TransTemplate->new(base => $request);
+    my $transtemplate = LedgerSMB::DBObject::TransTemplate->new({base => $request});
     my $template = LedgerSMB::Template->new(
         user     => $request->{_user},
         locale   => $request->{_locale},

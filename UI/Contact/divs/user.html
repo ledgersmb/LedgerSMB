@@ -1,5 +1,9 @@
 <?lsmb IF employee.first_name ?>
-<div id="user_div" class="lsmbtab"  title="<?lsmb text('User') ?>">
+<div id="user_div"
+     title="<?lsmb text('User') ?>"
+     data-dojo-type="dijit/layout/ContentPane"
+     <?lsmb IF request.target_div == 'user_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+     >
 	<div class="listtop">
             <?lsmb 
                IF request.pls_import;
@@ -14,7 +18,7 @@
                 END ?>
         </div>
     
-    <form method="POST" action="<?lsmb script ?>">
+    <form method="POST" action="<?lsmb request.script ?>">
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
 	<input type="hidden" name="id" value="<?lsmb user.id ?>" />
         <table>
@@ -43,7 +47,10 @@
             <tr>
                 <td><?lsmb text('Password') ?></td>
                 <td>
-                    <input type="password" name="reset_password" value=""/>
+                    <?lsmb INCLUDE input element_data = {
+                           type="password"
+                           name="reset_password"
+                           value="" } ?>
                 </td>
             </tr>
 
@@ -60,14 +67,16 @@
                   END; ?> 
                 <td><div class="input_line"><div overflow="auto" class="input_group">
                   <?lsmb INCLUDE input element_data = {
-                           label   = 'Yes'
+                           title = 'Yes'
+                           label = "_none_"
                            value   = '1'
                            checked = importc1
                            name    = 'pls_import'
                            type    = 'radio'
                    } ?></div><div overflow="auto" class="input_group"><?lsmb
                    INCLUDE input element_data = {
-                           label   = 'No'
+                           title = 'No'
+                           label = "_none_"
                            value   = '0'
                            checked = importc0
                            name    = 'pls_import'
@@ -102,7 +111,7 @@
     </form>
     <?lsmb IF user.entity_id and not request.pls_import?>
         <hr /> 
-        <form name="groups" method="POST" action="<?lsmb script ?>">
+        <form name="groups" method="POST" action="<?lsmb request.script ?>">
             <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>" />
             <?lsmb PROCESS input element_data = {
                type="hidden"
@@ -116,7 +125,7 @@
                 };
            ?>
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
-           <div class="tabular col-2">
+           
             <table>
                 <!-- Groups section -->
                 <tr>
@@ -132,6 +141,7 @@
                            END ?>
                         <?lsmb PROCESS input element_data = {
                                type = "checkbox"
+                               title = role.description
                                label = role.description
                                value = 1
                                name = role.rolname
@@ -152,7 +162,7 @@
                           value = "save_roles"
                     } ?></td>
                 </tr>
-            </table></div>
+            </table>
         </form>   
 <?lsmb END ?>
 </div>

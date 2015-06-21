@@ -134,7 +134,7 @@ sub combine {
     for (1 .. $request->{rowcount_}){
         push @ids, $request->{"selected_$_"} if $request->{"selected_$_"};
     }
-    $request->call_procedure(procname => 'order__combine', args => [\@ids]);
+    $request->call_procedure(funcname => 'order__combine', args => [\@ids]);
     $request->{search_type} = 'combine';
     get_criteria($request);
 }

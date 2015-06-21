@@ -27,7 +27,7 @@
 #====================================================================
 package Tax;
 
-use Math::BigFloat;
+use LedgerSMB::PGNumber;
 use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('Tax');
@@ -79,13 +79,13 @@ sub init_taxes {
 
         $tax->pass( $ref->{'pass'} );
         $tax->account($taxaccount);
-        $tax->rate( Math::BigFloat->new( $ref->{'rate'} ) );
+        $tax->rate( LedgerSMB::PGNumber->new( $ref->{'rate'} ) );
         $tax->taxnumber( $ref->{'taxnumber'} );
         $tax->chart( $ref->{'chart'} );
         $tax->description( $ref->{'description'} );
-        $tax->value( Math::BigFloat->bzero() );
-        $tax->minvalue(Math::BigFloat->new($ref->{'minvalue'} || 0));
-        $tax->maxvalue(Math::BigFloat->new($ref->{'maxvalue'} || 0));
+        $tax->value( LedgerSMB::PGNumber->bzero() );
+        $tax->minvalue(LedgerSMB::PGNumber->new($ref->{'minvalue'} || 0));
+        $tax->maxvalue(LedgerSMB::PGNumber->new($ref->{'maxvalue'} || 0));
 
         push @taxes, $tax;
     }
@@ -96,7 +96,7 @@ sub init_taxes {
 
 sub calculate_taxes {
     my ( $taxes, $form, $subtotal, $extract ) = @_;
-    my $total = Math::BigFloat->bzero();
+    my $total = LedgerSMB::PGNumber->bzero();
     my %passes;
     foreach my $tax (@taxes) {
         push @{ $passes{ $tax->pass } }, $tax;
@@ -104,8 +104,8 @@ sub calculate_taxes {
     my @passkeys = sort keys %passes;
     @passkeys = reverse @passkeys if $extract;
     foreach my $pass (@passkeys) {
-        my $passrate  = Math::BigFloat->bzero();
-        my $passtotal = Math::BigFloat->bzero();
+        my $passrate  = LedgerSMB::PGNumber->bzero();
+        my $passtotal = LedgerSMB::PGNumber->bzero();
         foreach my $tax ( @{ $passes{$pass} } ) {
             $passrate += $tax->rate;
         }

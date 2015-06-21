@@ -16,7 +16,7 @@
 
 package CreditCard;
 
-use base qw(LedgerSMB::DBObject);
+use base qw(LedgerSMB::PGOld);
 
 # use LedgerSMB::CreditCard::Config;  # moving elsewhere
 

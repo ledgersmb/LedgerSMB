@@ -43,7 +43,7 @@ use LedgerSMB::PriceMatrix;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::App_State;
-use Math::BigFloat;
+use LedgerSMB::PGNumber;
 
 =over
 
@@ -314,8 +314,8 @@ sub post_invoice {
                     $form->{'taxaccounts'}
                 );
 
-                $tax   = Math::BigFloat->bzero();
-                $fxtax = Math::BigFloat->bzero();
+                $tax   = LedgerSMB::PGNumber->bzero();
+                $fxtax = LedgerSMB::PGNumber->bzero();
     
                 if ( $form->{taxincluded} ) {
                     $tax += $amount =
@@ -1033,9 +1033,9 @@ sub retrieve_invoice {
               $form->db_parse_numeric(sth=>$tax_sth,hashref=>$taxref);
               $form->{manual_tax} = 1;
               my $taccno = $taxref->{accno};
-              $form->{"mt_amount_$taccno"} = Math::BigFloat->new($taxref->{amount} * -1);
+              $form->{"mt_amount_$taccno"} = LedgerSMB::PGNumber->new($taxref->{amount} * -1);
               $form->{"mt_rate_$taccno"}  = $taxref->{rate};
-              $form->{"mt_basis_$taccno"} = Math::BigFloat->new($taxref->{tax_basis} * -1);
+              $form->{"mt_basis_$taccno"} = LedgerSMB::PGNumber->new($taxref->{tax_basis} * -1);
               $form->{"mt_memo_$taccno"}  = $taxref->{memo};
               $form->{"mt_ref_$taccno"}  = $taxref->{source};
         }

@@ -72,7 +72,7 @@ END -?>
               <tr>
                 <th align="right"><?lsmb text('Notes') ?></th>
                 <td><?lsmb INCLUDE textarea element_data={
-  rows = '3', cols = '32', name = 'notes'} ?></td>
+			   rows = '3', cols = '32', name = 'notes'} ?></td>
               </tr>
             </table>
           </td>
@@ -81,40 +81,49 @@ END -?>
               <tr>
                 <th align="right"><?lsmb text("Account Number") ?></th>
                 <td><?lsmb INCLUDE input element_data={
-  size = '32', name = "meta_number"} ?></td>
+			   size = '32', name = "meta_number"} ?></td>
               </tr>
               <tr>
                 <th align="right"><?lsmb text('Address') ?></th>
                 <td><?lsmb INCLUDE input element_data={
-  size = '32', name = 'address'} ?></td>
+			   size = '32', name = 'address'} ?></td>
               </tr>
               <tr>
                 <th align="right"><?lsmb text('City') ?></th>
                 <td><?lsmb INCLUDE input element_data={
-  size = '32', name = 'city'} ?></td>
+			   size = '32', name = 'city'} ?></td>
               </tr>
               <tr>
                 <th align="right"><?lsmb text('State/Province') ?></th>
                 <td><?lsmb INCLUDE input element_data={
-  size = '32', name = 'state'} ?></td>
+			   size = '32', name = 'state'} ?></td>
               </tr>
               <tr>
                 <th align="right"><?lsmb text('Zip/Postal Code') ?></th>
                 <td><?lsmb INCLUDE input element_data={
-  size = '10', name = 'mail_code'} ?></td>
+			   size = '10', name = 'mail_code'} ?></td>
               </tr>
               <tr>
                 <th align="right"><?lsmb text('Country') ?></th>
                 <td><?lsmb INCLUDE input element_data={
-  size = '32', name = 'country'} ?></td>
+			   size = '32', name = 'country'} ?></td>
               </tr>
               <tr>
                 <th align="right"><?lsmb text('Active') ?></th>
                 <td>
-                   <?lsmb text('From'); ' '; INCLUDE input element_data={
-  size = '11', name = 'active_date_from', class = 'date', title = user.dateformat};
-                          text('Date to'); ' '; INCLUDE input element_data={
-  size = '11', name = 'active_date_to', class = 'date', title = user.dateformat} ?>
+                  <?lsmb text('From'); ' '; INCLUDE input element_data={
+			 size = '11',
+			 name = 'active_date_from',
+			 class = 'date',
+			 type = 'date',
+			 title = user.dateformat
+			 };
+                         text('Date to'); ' '; INCLUDE input element_data={
+			 size = '11',
+			 name = 'active_date_to',
+			 class = 'date',
+			 type = 'date',
+			 title = user.dateformat} ?>
                 </td>
               </tr>
             </table>
