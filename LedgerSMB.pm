@@ -493,15 +493,19 @@ sub _error {
     #Carp::confess();
     if ( $ENV{GATEWAY_INTERFACE} ) {
 
+        my $status = 500;
+        my $status = $msg->{status} if ref $msg;
+        my $msg = $msg->{error} if ref $msg;
         $self->{msg}    = $msg;
         $self->{format} = "html";
+        
         $logger->error($msg);
         $logger->error("dbversion: $self->{dbversion}, company: $self->{company}");
 
         delete $self->{pre};
 
-        
-        print qq|Status: 500 ISE\nContent-Type: text/html; charset=utf-8\n\n|;
+                
+        print qq|Status: $status ISE\nContent-Type: text/html; charset=utf-8\n\n|;
         print "<head><link rel='stylesheet' href='css/$self->{_user}->{stylesheet}' type='text/css'></head>";
         $self->{msg} =~ s/\n/<br \/>\n/;
         print
