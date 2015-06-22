@@ -153,6 +153,7 @@ use LedgerSMB::User;
 use LedgerSMB::Setting;
 use LedgerSMB::Company_Config;
 use LedgerSMB::DBH;
+use LedgerSMB::Request::Error;
 use Carp;
 use strict;
 use utf8;
@@ -490,29 +491,17 @@ sub error {
 sub _error {
 
     my ( $self, $msg ) = @_;
-    #Carp::confess();
+    my $error;
+    if (eval { $msg->isa('LedgerSMB::Request::Error') }){
+        $error = $msg;
+    } else {
+        $error = LedgerSMB::Request::Error->new(msg => "$msg");
+    }
+    
     if ( $ENV{GATEWAY_INTERFACE} ) {
 
-        my $status = 500;
-        my $status = $msg->{status} if ref $msg;
-        my $msg = $msg->{error} if ref $msg;
-        $self->{msg}    = $msg;
-        $self->{format} = "html";
-        
-        $logger->error($msg);
-        $logger->error("dbversion: $self->{dbversion}, company: $self->{company}");
-
         delete $self->{pre};
-
-                
-        print qq|Status: $status ISE\nContent-Type: text/html; charset=utf-8\n\n|;
-        print "<head><link rel='stylesheet' href='css/$self->{_user}->{stylesheet}' type='text/css'></head>";
-        $self->{msg} =~ s/\n/<br \/>\n/;
-        print
-          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></p>
-             <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
-             </body>|;
-
+        print $error->http_response("<p>dbversion: $self->{dbversion}, company: $self->{company}</p>");
 
     }
     else {
@@ -520,7 +509,7 @@ sub _error {
         if ( $ENV{error_function} ) {
             &{ $ENV{error_function} }($msg);
         }
-        die "Error: $msg\n";
+        $error->throw;
     }
 }
 # Database routines used throughout

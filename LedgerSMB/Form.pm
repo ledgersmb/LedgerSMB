@@ -425,38 +425,26 @@ sub error {
 sub _error {
 
     my ( $self, $msg ) = @_;
-
+    my $error;
+    if (eval { $msg->isa('LedgerSMB::Request::Error') }){
+        $error = $msg;
+    } else {
+        $error = LedgerSMB::Request::Error->new(msg => "$msg");
+    }
+    
     if ( $ENV{GATEWAY_INTERFACE} ) {
 
-        $self->{msg}    = $msg;
-        $self->{format} = "html";
-        $self->format_string('msg');
-
         delete $self->{pre};
-
-		  print "Status: 500 ISE\n";
-        if ( !$self->{header} ) {
-            $self->header;
-        }
-        $logger->error($msg);
-        $logger->error("dbversion: $self->{dbversion}, company: $self->{company}");
-
-        print
-          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></p>
-             <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
-             </body></html>|;
-
-        $self->finalize_request();
+        print $error->http_response("<p>dbversion: $self->{dbversion}, company: $self->{company}</p>");
 
     }
     else {
 
         if ( $ENV{error_function} ) {
-            __PACKAGE__->can($ENV{error_function})->($msg);
+            &{ $ENV{error_function} }($msg);
         }
-        die "Error: $msg\n";
+        $error->throw;
     }
-    die;
 }
 
 =item $form->finalize_request();
