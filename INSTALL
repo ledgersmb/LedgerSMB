@@ -179,6 +179,7 @@ LedgerSMB depends on these additional modules (not listing core modules):
   DateTime::Format::Strptime
   Moose
   Try::Tiny
+  JSON
 
 and these optional ones:
 
@@ -240,7 +241,8 @@ following command:
    libfile-mimeinfo-perl libtemplate-plugin-number-format-perl \
    libdatetime-format-strptime-perl libconfig-general-perl \
    libdatetime-format-strptime-perl libio-stringy-perl libmoose-perl \
-   libconfig-inifiles-perl
+   libconfig-inifiles-perl libnamespace-autoclean-perl \
+   libcarp-always-perl libjson-perl
 
 
 This installs the required modules available from the Wheezy repository.

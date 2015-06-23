@@ -6,7 +6,14 @@ Changelog for 1.4.12
 * Fixed printing of purchase order due to SQL error (bug 1359) (Erik H)
 * Don't show button for dis-allowed action in GL entry (bug 1355) (Erik H)
 * Admin can't reset user's password due to SQL error (bug 1333) (Erik H)
+* Fix dependency listing (include JSON) (bug 1347) (Erik H)
+* Make setup.pl generate fewer warnings in the error logs (Erik H)
+* Fix 'Save as' in contact account clobbering existing one (bug 1364) (Erik H)
+* Fixed empty response causing some problems. (Chris T)
+* Detect account heading graph loops and throw errors (Chris T)
+* Fixed errors about missing employee.pm (Erik H)
 
+Chris T is Chris Travers
 Erik H is Erik Huelsmann
 
 
