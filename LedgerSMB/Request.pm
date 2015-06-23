@@ -45,12 +45,22 @@ in the current hash or an empty string.  '0' does pass however.
 
 =cut
 
+our $return_errors = 0; # override with local only!
+
 sub requires {
     my $self = shift @_;
-    for (@_){
-        Carp::croak({ status => 422 error => LedgerSMB::App_State->Locale->text("Required attribute not provided: [_1]", $_) } )
-              unless $self->{$_} or $self->{$_} eq '0';
-    }
+    my @error_list = map { { field => $_, 
+                               msg => LedgerSMB::App_State->Locale->text("Required attribute not provided: [_1]", $_) } } 
+                     grep {not ($self->{$_} or $self->{$_})} @_;
+    # todo, allow error list to be returned
+    die LedgerSMB::Request::Error(status => 422,
+                                     msg => [join "\n"
+                                              map {$_->msg} @error_list ]) 
+    if @error_list and not $return_errors;
+    return {missing => [map {$_->field } @error_list ],
+            error => LedgerSMB::Request::Error(status => 422,
+                                     msg => [join "\n"
+                                              map {$_->msg} @error_list ])
 }
 
 =head2 requries_series($start, $stop, @attnames)
