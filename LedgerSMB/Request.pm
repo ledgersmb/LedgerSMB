@@ -54,13 +54,14 @@ sub requires {
                      grep {not ($self->{$_} or $self->{$_})} @_;
     # todo, allow error list to be returned
     die LedgerSMB::Request::Error(status => 422,
-                                     msg => [join "\n"
-                                              map {$_->msg} @error_list ]) 
+                                     msg => [join "\n",
+                                              (map {$_->msg} @error_list) ]) 
     if @error_list and not $return_errors;
     return {missing => [map {$_->field } @error_list ],
             error => LedgerSMB::Request::Error(status => 422,
-                                     msg => [join "\n"
-                                              map {$_->msg} @error_list ])
+                                     msg => [join "\n",
+                                              (map {$_->msg} @error_list) ])
+           };
 }
 
 =head2 requries_series($start, $stop, @attnames)
