@@ -76,7 +76,9 @@ sub requires_series {
     my $start = shift @_;
     my $end  = shift @_;
     for my $att (@_){
-        $self->requires("${att}_$_") for ($start .. $stop);
+    $self->requires(map { $att = $_; 
+                          map { "${att}_$_" } ($start .. $stop) 
+                        } @_ );
     }
 }
 
@@ -94,9 +96,8 @@ sub requires_from {
     eval { $meta = $class->meta } 
          or Carp::croak 
             "Could not get meta object.  Is $class a valid Moose class?";
-    for my $att($meta->get_attibute_list){
-        $self->require($att) if $meta->get_attribute($_)->is_required;
-    }
+    $self->require(grep { $meta->get_attribute($_)->is_required }
+                   ($meta->get_attribute_list));
 }
 
 =head2 numbers(@attnames)
@@ -125,7 +126,7 @@ sub numbers_series {
     my $start = shift @_;
     my $end  = shift @_;
     for my $att (@_){
-        $self->numbers("${att}_$_") for ($start .. $stop);
+        $self->numbers( map { "${att}_$_" } ($start .. $stop));
     }
 }
 
