@@ -10,6 +10,11 @@ API Enhancements:
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.13
+* Fixed time cards failing to save (GitHub bug 636) (Erik H)
+
+Erik H is Erik Huelsmann
+
 Changelog for 1.4.12
 * Updated German translation by Adrian v. Meibom <meibomberlin@googlemail.com>
 * Fixed printing of purchase order due to SQL error (bug 1359) (Erik H)
@@ -23,6 +28,7 @@ Changelog for 1.4.12
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
+
 Changelog for 1.4.11
 * Fixed account dropdowns on default screen (Nick P)
 * Fixed broken comparison with oldvendor (Nick P)
