@@ -1507,6 +1507,14 @@ COMMENT ON COLUMN acc_trans.source IS
 $$Document Source identifier for individual line items, usually used 
 for payments.$$;
 
+COMMENT ON COLUMN acc_trans.fx_transaction IS
+$$When 'f', indicates that the amount column states the amount in the currency
+as specified in the associated ar, ap, payment or gl record.
+
+When 't', indicates that the amount column states the difference between
+the foreighn currency amount and the base amount so that their sum equals the
+base amount.$$;
+
 CREATE INDEX acc_trans_voucher_id_idx ON acc_trans(voucher_id);
 
 -- preventing closed transactions
