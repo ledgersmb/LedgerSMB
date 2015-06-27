@@ -103,10 +103,21 @@ $$ Only affects equity accounts.  If set, close at end of year. $$;
 COMMENT ON TABLE  account IS
 $$ This table stores the main account info.$$;
 
+CREATE TABLE currency (
+  curr char(3) primary key,
+  description text
+);
+
+COMMENT ON TABLE currency IS
+$$This table holds the list of currencies available for posting in the system;
+it mostly serves as the canonical definition of currency codes.$$;
+
 CREATE TABLE account_checkpoint (
   end_date date not null, 
   account_id int not null references account(id), 
   amount numeric not null,
+  amount_fc numeric not null,
+  curr char(3) not null references currency(curr),
   id serial not null unique,
   debits NUMERIC,
   credits NUMERIC,
@@ -898,7 +909,7 @@ CREATE TABLE entity_credit_account (
     business_id int,
     language_code varchar(6) DEFAULT 'en' references language(code) ON DELETE SET DEFAULT,
     pricegroup_id int references pricegroup(id),
-    curr char(3),
+    curr char(3) references currency(curr),
     startdate date DEFAULT CURRENT_DATE,
     enddate date,
     threshold numeric default 0,
@@ -1282,6 +1293,8 @@ CREATE TABLE journal_line (
     account_id int references account(id)  not null,
     journal_id int references journal_entry(id) not null,
     amount numeric not null check (amount <> 'NaN'),
+    amount_fc numeric not null check (amount <> 'NaN'),
+    curr char(3) not null references currency(curr),    
     cleared bool not null default false,
     reconciliation_report int references cr_report(id),
     line_type text references account_link_description,
@@ -1484,6 +1497,8 @@ CREATE TABLE acc_trans (
   trans_id int NOT NULL REFERENCES transactions(id),
   chart_id int NOT NULL REFERENCES  account(id),
   amount NUMERIC NOT NULL,
+  amount_fc numeric not null,
+  curr char(3) not null references currency(curr),
   transdate date DEFAULT current_date,
   source text,
   cleared bool DEFAULT 'f',
@@ -1697,17 +1712,20 @@ CREATE TABLE ar (
   transdate date DEFAULT current_date,
   entity_id int REFERENCES entity(id),
   taxincluded bool,
-  amount NUMERIC,
-  netamount NUMERIC,
-  paid NUMERIC,
+  amount_lc NUMERIC,
+  amount_fc numeric,
+  netamount_lc NUMERIC,
+  netamount_fc numeric,
+  paid_deprecated NUMERIC,
   datepaid date,
   duedate date,
   invoice bool DEFAULT 'f',
   shippingpoint text,
   terms int2 DEFAULT 0,
   notes text,
-  curr char(3) CHECK ( (amount IS NULL AND curr IS NULL) 
-      OR (amount IS NOT NULL AND curr IS NOT NULL)),
+  curr char(3) references currency(curr)
+        CHECK ( (amount IS NULL AND curr IS NULL) 
+               OR (amount IS NOT NULL AND curr IS NOT NULL)),
   ordnumber text,
   person_id integer references entity_employee(entity_id),
   till varchar(20),
@@ -1789,15 +1807,19 @@ CREATE TABLE ap (
   transdate date DEFAULT current_date,
   entity_id int REFERENCES entity(id),
   taxincluded bool DEFAULT 'f',
-  amount NUMERIC,
-  netamount NUMERIC,
-  paid NUMERIC,
+  amount_lc NUMERIC,
+  amount_fc numeric,
+  netamount_lc NUMERIC,
+  netamount_fc numeric,
+  paid_deprecated NUMERIC,
   datepaid date,
   duedate date,
   invoice bool DEFAULT 'f',
   ordnumber text,
-  curr char(3) CHECK ( (amount IS NULL AND curr IS NULL) 
-    OR (amount IS NOT NULL AND curr IS NOT NULL)) , -- This can be null, but shouldn't be.
+  curr char(3) references currency(curr)
+       CHECK ( (amount IS NULL AND curr IS NULL)
+              -- This can be null, but shouldn't be.
+              OR (amount IS NOT NULL AND curr IS NOT NULL)) ,
   notes text,
   person_id integer references entity_employee(entity_id),
   till varchar(20),
@@ -1970,13 +1992,13 @@ CREATE TABLE oe (
   ordnumber text,
   transdate date default current_date,
   entity_id integer references entity(id),
-  amount NUMERIC,
-  netamount NUMERIC,
+  amount_fc NUMERIC,
+  netamount_fc NUMERIC,
   reqdate date,
   taxincluded bool,
   shippingpoint text,
   notes text,
-  curr char(3),
+  curr char(3) references currency(curr),
   person_id integer references person(id),
   closed bool default 'f',
   quotation bool default 'f',
@@ -2015,20 +2037,32 @@ CREATE TABLE orderitems (
 
 COMMENT ON TABLE orderitems IS
 $$ Line items for sales/purchase orders and quotations.$$;
---
-CREATE TABLE exchangerate (
-  curr char(3),
-  transdate date,
-  buy numeric,
-  sell numeric,
-  PRIMARY KEY (curr, transdate)
+
+CREATE TABLE exchangerate_type (
+  id serial primary key,
+  description text
 );
-COMMENT ON TABLE exchangerate IS
-$$ When you receive money in a foreign currency, it is worth to you in your local currency
-whatever you can get for it when you sell the acquired currency (sell rate).
-When you have to pay someone in a foreign currency, the equivalent amount is the amount
-you have to spend to acquire the foreign currency (buy rate).$$;
---
+
+COMMENT ON TABLE exchangerate_type IS
+$$This table defines various types of exchange rates which may be used for
+different purposes (posting, valuation, translation, ...).$$
+
+CREATE TABLE exchangerate_default (
+  rate_type int not null references exchangerate_type(id),
+  curr char(3) not null references currency(curr),
+  valid_from date not null,
+  valid_to date default infinity,
+  rate numeric,
+  PRIMARY KEY (rate_type, curr, valid_from)
+);
+COMMENT ON TABLE exchangerate_default IS
+$$This table contains applicable rates for various rate types in the
+indicated interval [valid_from, valid_to].
+
+### NOTE: This table needs an INSERT trigger to update any 'valid_to'
+'infinity' values to ensure non-overlapping records.
+$$;
+
 
 CREATE TABLE business_unit_class (
     id serial not null unique,
@@ -2146,6 +2180,8 @@ CREATE TABLE budget_line (
     account_id int not null references account(id),
     description text,
     amount numeric not null,
+    amount_fc numeric not null,
+    curr char(3) not null references currency(curr),
     primary key (budget_id, account_id) 
 );
 
@@ -2239,7 +2275,7 @@ CREATE TABLE partsvendor (
   partnumber text,
   leadtime int2,
   lastcost NUMERIC,
-  curr char(3),
+  curr char(3) not null references currency(curr),
   entry_id SERIAL PRIMARY KEY
 );
 
@@ -2255,7 +2291,7 @@ CREATE TABLE partscustomer (
   sellprice NUMERIC,
   validfrom date,
   validto date,
-  curr char(3),
+  curr char(3) not null references currency(curr),
   entry_id SERIAL PRIMARY KEY
 );
 
@@ -2405,7 +2441,7 @@ CREATE TABLE jcitems (
   total numeric not null,
   non_billable numeric not null default 0,
   jctype int not null,
-  curr char(3) not null
+  curr char(3) not null references currency(curr)
 );
 
 COMMENT ON TABLE jcitems IS $$ Time and materials cards. 
