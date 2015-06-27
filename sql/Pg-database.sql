@@ -116,7 +116,7 @@ CREATE TABLE account_checkpoint (
   end_date date not null, 
   account_id int not null references account(id), 
   amount numeric not null,
-  amount_fc numeric not null,
+  amount_tc numeric not null,
   curr char(3) not null references currency(curr),
   id serial not null unique,
   debits NUMERIC,
@@ -1293,7 +1293,7 @@ CREATE TABLE journal_line (
     account_id int references account(id)  not null,
     journal_id int references journal_entry(id) not null,
     amount numeric not null check (amount <> 'NaN'),
-    amount_fc numeric not null check (amount <> 'NaN'),
+    amount_tc numeric not null check (amount <> 'NaN'),
     curr char(3) not null references currency(curr),    
     cleared bool not null default false,
     reconciliation_report int references cr_report(id),
@@ -1496,8 +1496,8 @@ COMMENT ON COLUMN voucher.id IS $$ This is simply a surrogate key for easy refer
 CREATE TABLE acc_trans (
   trans_id int NOT NULL REFERENCES transactions(id),
   chart_id int NOT NULL REFERENCES  account(id),
-  amount NUMERIC NOT NULL,
-  amount_fc numeric not null,
+  amount_bc NUMERIC NOT NULL,
+  amount_tc numeric not null,
   curr char(3) not null references currency(curr),
   transdate date DEFAULT current_date,
   source text,
@@ -1712,10 +1712,10 @@ CREATE TABLE ar (
   transdate date DEFAULT current_date,
   entity_id int REFERENCES entity(id),
   taxincluded bool,
-  amount_lc NUMERIC,
-  amount_fc numeric,
-  netamount_lc NUMERIC,
-  netamount_fc numeric,
+  amount_bc NUMERIC,
+  amount_tc numeric,
+  netamount_bc NUMERIC,
+  netamount_tc numeric,
   paid_deprecated NUMERIC,
   datepaid date,
   duedate date,
@@ -1724,8 +1724,8 @@ CREATE TABLE ar (
   terms int2 DEFAULT 0,
   notes text,
   curr char(3) references currency(curr)
-        CHECK ( (amount IS NULL AND curr IS NULL) 
-               OR (amount IS NOT NULL AND curr IS NOT NULL)),
+        CHECK ( (amount_bc IS NULL AND curr IS NULL) 
+               OR (amount_bc IS NOT NULL AND curr IS NOT NULL)),
   ordnumber text,
   person_id integer references entity_employee(entity_id),
   till varchar(20),
@@ -1762,11 +1762,12 @@ COMMENT ON COLUMN ar.invoice IS
 $$ True if the transaction tracks goods/services purchase using the invoice
 table.  False otherwise.$$;
 
-COMMENT ON COLUMN ar.amount IS
-$$ This stores the total amount (including taxes) for the transaction.$$;
+COMMENT ON COLUMN ar.amount_bc IS
+$$ This stores the total amount (including taxes) for the transaction
+in base currency.$$;
 
-COMMENT ON COLUMN ar.netamount IS
-$$ Total amount excluding taxes for the transaction.$$;
+COMMENT ON COLUMN ar.netamount_bc IS
+$$ Total amount excluding taxes for the transaction in base currency.$$;
 
 COMMENT ON COLUMN ar.curr IS $$ 3 letters to identify the currency.$$;
 
@@ -1807,19 +1808,19 @@ CREATE TABLE ap (
   transdate date DEFAULT current_date,
   entity_id int REFERENCES entity(id),
   taxincluded bool DEFAULT 'f',
-  amount_lc NUMERIC,
-  amount_fc numeric,
-  netamount_lc NUMERIC,
-  netamount_fc numeric,
+  amount_bc NUMERIC,
+  amount_tc numeric,
+  netamount_bc NUMERIC,
+  netamount_tc numeric,
   paid_deprecated NUMERIC,
   datepaid date,
   duedate date,
   invoice bool DEFAULT 'f',
   ordnumber text,
   curr char(3) references currency(curr)
-       CHECK ( (amount IS NULL AND curr IS NULL)
+       CHECK ( (amount_bc IS NULL AND curr IS NULL)
               -- This can be null, but shouldn't be.
-              OR (amount IS NOT NULL AND curr IS NOT NULL)) ,
+              OR (amount_bc IS NOT NULL AND curr IS NOT NULL)) ,
   notes text,
   person_id integer references entity_employee(entity_id),
   till varchar(20),
@@ -1854,11 +1855,12 @@ COMMENT ON COLUMN ap.invoice IS
 $$ True if the transaction tracks goods/services purchase using the invoice
 table.  False otherwise.$$;
 
-COMMENT ON COLUMN ap.amount IS
-$$ This stores the total amount (including taxes) for the transaction.$$;
+COMMENT ON COLUMN ap.amount_bc IS
+$$ This stores the total amount (including taxes) for the transaction
+in base currency.$$;
 
-COMMENT ON COLUMN ap.netamount IS
-$$ Total amount excluding taxes for the transaction.$$;
+COMMENT ON COLUMN ap.netamount_bc IS
+$$ Total amount excluding taxes for the transaction in base currency.$$;
 
 COMMENT ON COLUMN ap.curr IS $$ 3 letters to identify the currency.$$;
 
@@ -1992,8 +1994,8 @@ CREATE TABLE oe (
   ordnumber text,
   transdate date default current_date,
   entity_id integer references entity(id),
-  amount_fc NUMERIC,
-  netamount_fc NUMERIC,
+  amount_tc NUMERIC,
+  netamount_tc NUMERIC,
   reqdate date,
   taxincluded bool,
   shippingpoint text,
@@ -2045,16 +2047,17 @@ CREATE TABLE exchangerate_type (
 
 COMMENT ON TABLE exchangerate_type IS
 $$This table defines various types of exchange rates which may be used for
-different purposes (posting, valuation, translation, ...).$$
+different purposes (posting, valuation, translation, ...).$$;
 
 CREATE TABLE exchangerate_default (
   rate_type int not null references exchangerate_type(id),
   curr char(3) not null references currency(curr),
   valid_from date not null,
-  valid_to date default infinity,
+  valid_to timestamp default 'infinity'::timestamp,
   rate numeric,
   PRIMARY KEY (rate_type, curr, valid_from)
 );
+
 COMMENT ON TABLE exchangerate_default IS
 $$This table contains applicable rates for various rate types in the
 indicated interval [valid_from, valid_to].
@@ -2180,7 +2183,7 @@ CREATE TABLE budget_line (
     account_id int not null references account(id),
     description text,
     amount numeric not null,
-    amount_fc numeric not null,
+    amount_tc numeric not null,
     curr char(3) not null references currency(curr),
     primary key (budget_id, account_id) 
 );
@@ -2592,8 +2595,6 @@ CREATE TRIGGER je_audit_trail AFTER insert or update or delete ON journal_entry
 FOR EACH ROW EXECUTE PROCEDURE gl_audit_trail_append();
 
 create index assembly_id_key on assembly (id);
---
-create index exchangerate_ct_key on exchangerate (curr, transdate);
 --
 create unique index gifi_accno_key on gifi (accno);
 --
@@ -4929,27 +4930,27 @@ $$ This view provides join and approval information for transactions.$$;
 CREATE VIEW cash_impact AS
 SELECT id, '1'::numeric AS portion, 'gl' as rel, gl.transdate FROM gl
 UNION ALL
-SELECT id, CASE WHEN gl.amount = 0 THEN 0 -- avoid div by 0
+SELECT id, CASE WHEN gl.amount_bc = 0 THEN 0 -- avoid div by 0
                 WHEN gl.transdate = ac.transdate
-                     THEN 1 + sum(ac.amount) / gl.amount
-                ELSE 
-                     1 - (gl.amount - sum(ac.amount)) / gl.amount
+                     THEN 1 + sum(ac.amount_bc) / gl.amount_bc
+                ELSE
+                     1 - (gl.amount_bc - sum(ac.amount_bc)) / gl.amount_bc
                 END , 'ar' as rel, ac.transdate
   FROM ar gl
   JOIN acc_trans ac ON ac.trans_id = gl.id
   JOIN account_link al ON ac.chart_id = al.account_id and al.description = 'AR'
- GROUP BY gl.id, gl.amount, ac.transdate, gl.transdate
+ GROUP BY gl.id, gl.amount_bc, ac.transdate, gl.transdate
 UNION ALL
-SELECT id, CASE WHEN gl.amount = 0 THEN 0
+SELECT id, CASE WHEN gl.amount_bc = 0 THEN 0
                 WHEN gl.transdate = ac.transdate
-                     THEN 1 - sum(ac.amount) / gl.amount
+                     THEN 1 - sum(ac.amount_bc) / gl.amount_bc
                 ELSE 
-                     1 - (gl.amount + sum(ac.amount)) / gl.amount
+                     1 - (gl.amount_bc + sum(ac.amount_bc)) / gl.amount_bc
             END, 'ap' as rel, ac.transdate
   FROM ap gl
   JOIN acc_trans ac ON ac.trans_id = gl.id
   JOIN account_link al ON ac.chart_id = al.account_id and al.description = 'AP'
- GROUP BY gl.id, gl.amount, ac.transdate, gl.transdate;
+ GROUP BY gl.id, gl.amount_bc, ac.transdate, gl.transdate;
 
 COMMENT ON VIEW cash_impact IS
 $$ This view is used by cash basis reports to determine the fraction of a
