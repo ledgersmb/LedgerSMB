@@ -546,15 +546,19 @@ BEGIN
         ELSE
             UPDATE bulk_payments_in
                SET fxrate =
-                (SELECT CASE WHEN in_account_class = 1 THEN sell
-                             ELSE buy
-                        END
-                   FROM exchangerate e
-                   JOIN (SELECT transdate, id, curr FROM ar
+                (SELECT fxrate
+                   
+                   FROM (SELECT id, CASE WHEN amount_tc<>0
+                         --###VERIFY: is it _bc/_tc or the other way around???
+                                      THEN amount_bc/amount_tc
+                                    ELSE NULL END as fxrate
+                         FROM ar
                          UNION
-                         SELECT transdate, id, curr FROM ap) a
-                     ON (e.transdate = a.transdate
-                         AND e.curr = a.curr)
+                         SELECT id, CASE WHEN amount_tc<>0
+                         --###VERIFY: is it _bc/_tc or the other way around???
+                                      THEN amount_bc/amount_tc
+                                    ELSE NULL END as fxrate
+                         FROM ap) a
                    WHERE a.id = bulk_payments_in.id);
             UPDATE bulk_payments_in
                SET gain_loss_accno =
@@ -710,8 +714,10 @@ BEGIN
           RAISE EXCEPTION 'Wrong number of accounts';
       END IF;
         
-        SELECT * INTO default_currency  FROM defaults_get_defaultcurrency(); 
-        SELECT * INTO current_exchangerate FROM currency_get_exchangerate(in_curr, in_datepaid, in_account_class);
+        SELECT * INTO default_currency  FROM defaults_get_defaultcurrency();
+        --###TODO
+        current_exchangerate := null;
+        --SELECT * INTO current_exchangerate FROM currency_get_exchangerate(in_curr, in_datepaid, in_account_class);
 
 
         SELECT INTO var_employee p.id 
@@ -946,32 +952,6 @@ It should scale per the number of currencies used rather than the size of the
 ar or ap tables.
 $$;
 
-CREATE OR REPLACE FUNCTION currency_get_exchangerate(in_currency char(3), in_date date, in_account_class int) 
-RETURNS NUMERIC AS
-$$
-DECLARE 
-    out_exrate exchangerate.buy%TYPE;
-    default_currency char(3);
-    
-    BEGIN 
-        SELECT * INTO default_currency  FROM defaults_get_defaultcurrency();
-        IF default_currency = in_currency THEN
-           RETURN 1;
-        END IF; 
-        IF in_account_class = 2 THEN
-          SELECT buy INTO out_exrate 
-          FROM exchangerate
-          WHERE transdate = in_date AND curr = in_currency;
-        ELSE 
-          SELECT sell INTO out_exrate 
-          FROM exchangerate
-          WHERE transdate = in_date AND curr = in_currency;   
-        END IF;
-        RETURN out_exrate;
-    END;
-$$ language plpgsql;                                                                  
-COMMENT ON FUNCTION currency_get_exchangerate(in_currency char(3), in_date date, in_account_class int) IS
-$$ This function return the exchange rate of a given currency, date and exchange rate class (buy or sell). $$;
 
 --
 --  payment_location_result has the same arch as location_result, except for one field 
@@ -1125,8 +1105,9 @@ BEGIN
         t_rev_fx := in_exchangerate;
 
         --### TODO
-        SELECT * INTO t_paid_fx FROM currency_get_exchangerate(
-              in_currency, in_date_paid, in_account_class);
+        t_paid_fx := null;
+        --SELECT * INTO t_paid_fx FROM currency_get_exchangerate(
+        --      in_currency, in_date_paid, in_account_class);
 
        select value::int INTO t_fxgain_id FROM setting_get('fxgain_accno_id');
        select value::int INTO t_fxloss_id FROM setting_get('fxloss_accno_id');
@@ -1342,7 +1323,7 @@ DROP VIEW IF EXISTS overpayments CASCADE;
 CREATE VIEW overpayments AS
 SELECT p.id as payment_id, p.reference as payment_reference, p.payment_class, p.closed as payment_closed,
        p.payment_date, ac.chart_id, c.accno, c.description as chart_description,
-       sum(ac.amount) * CASE WHEN eca.entity_class = 1 THEN -1 ELSE 1 END 
+       sum(ac.amount_bc) * CASE WHEN eca.entity_class = 1 THEN -1 ELSE 1 END 
           as available, cmp.legal_name, 
        eca.id as entity_credit_id, eca.entity_id, eca.discount, eca.meta_number
 FROM payment p
@@ -1478,7 +1459,7 @@ $$
 -- This should never hit an income statement-side account but I have handled it 
 -- in case of configuration error. --CT
 SELECT o.payment_id, e.name, o.available, g.transdate, 
-       (select amount * CASE WHEN c.category in ('A', 'E') THEN -1 ELSE 1 END
+       (select amount_bc * CASE WHEN c.category in ('A', 'E') THEN -1 ELSE 1 END
           from acc_trans 
          where g.id = trans_id 
                AND chart_id = o.chart_id ORDER BY entry_id ASC LIMIT 1) as amount
