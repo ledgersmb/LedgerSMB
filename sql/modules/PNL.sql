@@ -88,8 +88,12 @@ acc_balance AS (
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
    )
-SELECT ac.chart_id AS id, sum(ac.amount) AS balance
-     FROM acc_trans ac
+   SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
+          ah.description, 
+          sum(ac.amount_bc) * -1, at.path
+     FROM account a
+     JOIN account_heading ah on a.heading = ah.id
+     JOIN acc_trans ac ON ac.chart_id = a.id
      JOIN invoice i ON i.id = ac.invoice_id
      JOIN account_link l ON l.account_id = ac.chart_id
      JOIN ar ON ar.id = ac.trans_id
@@ -207,10 +211,16 @@ acc_balance AS (
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
    )
-   SELECT ac.chart_id AS id, sum(ac.amount) AS balance
-     FROM acc_trans ac
-    INNER JOIN tx_report gl ON ac.trans_id = gl.id AND gl.approved
-     LEFT JOIN (SELECT array_agg(path) AS bu_ids, entry_id
+   SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
+          ah.description, 
+          CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount_bc), 
+          at.path
+     FROM account a
+     JOIN account_heading ah on a.heading = ah.id
+     JOIN acc_trans ac ON a.id = ac.chart_id AND ac.approved
+     JOIN tx_report gl ON ac.trans_id = gl.id AND gl.approved
+     JOIN account_heading_tree at ON a.heading = at.id
+LEFT JOIN (select array_agg(path) as bu_ids, entry_id
                   FROM business_unit_ac buac
                  INNER JOIN bu_tree ON bu_tree.id = buac.bu_id
                  GROUP BY buac.entry_id) bu
@@ -317,8 +327,13 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
 )
-   SELECT ac.chart_id AS id, sum(ac.amount * ca.portion) AS balance
-     FROM acc_trans ac
+   SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
+          ah.description, 
+          CASE WHEN a.category = 'E' THEN -1 ELSE 1 END 
+               * sum(ac.amount_bc * ca.portion), at.path
+     FROM account a
+     JOIN account_heading ah on a.heading = ah.id
+     JOIN acc_trans ac ON a.id = ac.chart_id AND ac.approved
      JOIN tx_report gl ON ac.trans_id = gl.id AND gl.approved
      JOIN (SELECT id, sum(portion) as portion
              FROM cash_impact ca
@@ -367,15 +382,9 @@ $$;
 CREATE OR REPLACE FUNCTION pnl__invoice(in_id integer)
   RETURNS SETOF pnl_line LANGUAGE SQL AS
 $$
-WITH acc_meta AS (
-  SELECT a.id, a.accno,
-         coalesce(at.description, a.description) as description,
-         CASE WHEN (SELECT value::int FROM defaults where setting_key = 'earn_id') IS NULL THEN aht.path
-         ELSE array_splice_from((SELECT value::int FROM defaults
-                             WHERE setting_key = 'earn_id'),aht.path)
-         END AS path,
-         a.category, 'A'::char as account_type, contra, a.gifi_accno,
-         gifi.description as gifi_description
+SELECT a.id, a.accno, a.description, a.category, 
+       ah.id, ah.accno, ah.description,
+       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount_bc), at.path
      FROM account a
     INNER JOIN account_heading_tree aht on a.heading = aht.id
      LEFT JOIN gifi ON a.gifi_accno = gifi.accno
@@ -508,33 +517,37 @@ WITH gl (id) AS
 UNION ALL
    SELECT id FROM ar WHERE approved is true AND entity_credit_account = $1
 )
-SELECT ac.chart_id AS id, sum(ac.amount) AS balance
-  FROM acc_trans ac
+SELECT a.id, a.accno, a.description, a.category, 
+       ah.id, ah.accno, ah.description,
+       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount_bc), at.path
+  FROM account a
+  JOIN account_heading ah on a.heading = ah.id
+  JOIN acc_trans ac ON a.id = ac.chart_id
+  JOIN account_heading_tree at ON a.heading = at.id
   JOIN gl ON ac.trans_id = gl.id
  WHERE ac.approved is true
           AND ($2 IS NULL OR ac.transdate >= $2)
           AND ($3 IS NULL OR ac.transdate <= $3)
- GROUP BY ac.chart_id
- ),
-hdr_balance AS (
-   select ahd.id, sum(balance) as balance
-     FROM acc_balance ab
-    INNER JOIN account acc ON ab.id = acc.id
-    INNER JOIN account_heading_descendant ahd
-            ON acc.heading = ahd.descendant_id
-    GROUP BY ahd.id
-)
-   SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
-          null::text as gifi, null::text as gifi_description, hm.contra,
-          hb.balance, hm.path
-     FROM hdr_meta hm
-    INNER JOIN hdr_balance hb ON hm.id = hb.id
-   UNION
-   SELECT am.id, am.accno, am.description, am.account_type, am.category,
-          gifi_accno as gifi, gifi_description, am.contra, ab.balance, am.path
-     FROM acc_meta am
-    INNER JOIN acc_balance ab on am.id = ab.id
-$$;
+          AND a.category IN ('I', 'E')
+ GROUP BY a.id, a.accno, a.description, a.category, 
+          ah.id, ah.accno, ah.description, at.path
+ ORDER BY a.category DESC, a.accno ASC;
+$$ LANGUAGE SQL;
+
+CREATE OR REPLACE FUNCTION pnl__invoice(in_id int) RETURNS SETOF pnl_line AS
+$$
+SELECT a.id, a.accno, a.description, a.category, 
+       ah.id, ah.accno, ah.description,
+       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount_bc), at.path
+  FROM account a
+  JOIN account_heading ah on a.heading = ah.id
+  JOIN acc_trans ac ON a.id = ac.chart_id
+  JOIN account_heading_tree at ON a.heading = at.id
+ WHERE ac.approved AND ac.trans_id = $1 AND a.category IN ('I', 'E')
+ GROUP BY a.id, a.accno, a.description, a.category, 
+          ah.id, ah.accno, ah.description, at.path
+ ORDER BY a.category DESC, a.accno ASC;
+$$ LANGUAGE SQL;
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
