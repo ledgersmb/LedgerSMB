@@ -23,24 +23,24 @@ BEGIN
 			SELECT c.id, c.accno, c.description, 
 				SUM(CASE WHEN ac.transdate < in_datefrom 
 				              AND c.category IN ('I', 'L', 'Q')
-				    THEN ac.amount
-				    ELSE ac.amount * -1
+				    THEN ac.amount_bc
+				    ELSE ac.amount_bc * -1
 				    END), 
 			        SUM(CASE WHEN ac.transdate >= in_date_from 
-				              AND ac.amount > 0 
-			            THEN ac.amount
+				              AND ac.amount_bc > 0 
+			            THEN ac.amount_bc
 			            ELSE 0 END),
 			        SUM(CASE WHEN ac.transdate >= in_date_from 
-				              AND ac.amount < 0
-			            THEN ac.amount
+				              AND ac.amount_bc < 0
+			            THEN ac.amount_bc
 			            ELSE 0 END) * -1,
 				SUM(CASE WHEN ac.transdate >= in_date_from
 					AND c.charttype IN ('I')
-				    THEN ac.amount
+				    THEN ac.amount_bc
 				    WHEN ac.transdate >= in_date_from
 				              AND c.category IN ('I', 'L', 'Q')
-				    THEN ac.amount
-				    ELSE ac.amount * -1
+				    THEN ac.amount_bc
+				    ELSE ac.amount_bc * -1
 				    END)
 				FROM acc_trans ac
 				JOIN (select id, approved FROM ap
@@ -586,8 +586,8 @@ CREATE TYPE coa_entry AS (
 CREATE OR REPLACE FUNCTION report__coa() RETURNS SETOF coa_entry AS
 $$
 
-WITH ac (chart_id, amount) AS (
-     SELECT chart_id, CASE WHEN acc_trans.approved and gl.approved THEN amount
+WITH ac (chart_id, amount_bc) AS (
+     SELECT chart_id, CASE WHEN acc_trans.approved and gl.approved THEN amount_bc
                            ELSE 0 
                        END
        FROM acc_trans
@@ -609,9 +609,9 @@ ha(heading) AS (
        FROM account
 )
 SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno, 
-       CASE WHEN sum(ac.amount) < 0 THEN sum(amount) * -1 ELSE null::numeric
+       CASE WHEN sum(ac.amount_bc) < 0 THEN sum(amount_bc) * -1 ELSE null::numeric
         END,
-       CASE WHEN sum(ac.amount) > 0 THEN sum(amount) ELSE null::numeric END,
+       CASE WHEN sum(ac.amount_bc) > 0 THEN sum(amount_bc) ELSE null::numeric END,
        count(ac.*)+count(hh.*)+count(ha.*), l.link
   FROM (SELECT id, heading, false as is_heading, accno, description, gifi_accno
           FROM account
