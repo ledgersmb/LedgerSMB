@@ -125,7 +125,7 @@ BEGIN
                                    WHERE link = 'AP'
                                    GROUP BY chart_id,
                                          trans_id, entity_credit_account
-                                   HAVING SUM(acc_trans.amount) <> 0)
+                                   HAVING SUM(acc_trans.amount_bc) <> 0)
                                WHEN in_account_class = 2 THEN
                                 ec.id IN (SELECT entity_credit_account
                                    FROM acc_trans
@@ -134,7 +134,7 @@ BEGIN
                                    WHERE link = 'AR'
                                    GROUP BY chart_id,
                                          trans_id, entity_credit_account
-                                   HAVING SUM(acc_trans.amount) <> 0)
+                                   HAVING SUM(acc_trans.amount_bc) <> 0)
                           END
         LOOP
                 RETURN NEXT out_entity;
@@ -204,73 +204,51 @@ DECLARE payment_inv payment_invoice;
 BEGIN
 	FOR payment_inv IN
 		SELECT a.id AS invoice_id, a.invnumber AS invnumber,a.invoice AS invoice, 
-		       a.transdate AS invoice_date, a.amount AS amount, 
-		       a.amount/
-		       (CASE WHEN a.curr = (SELECT * from defaults_get_defaultcurrency())
-                         THEN 1
-		        ELSE
-		        (CASE WHEN in_account_class = 2
-		              THEN ex.buy
-		              ELSE ex.sell END)
-		        END) as amount_fx, 
+		       a.transdate AS invoice_date, a.amount_bc AS amount, 
+		       a.amount_tc, 
 		       (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
 		        THEN 0
-		        ELSE (coalesce(ac.due, a.amount)) * coalesce(c.discount, 0) / 100
+		        ELSE (coalesce(ac.due, a.amount_bc)) * coalesce(c.discount, 0) / 100
 		        END) AS discount,
-		        (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
+              (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
 		        THEN 0
-		        ELSE (coalesce(ac.due, a.amount)) * coalesce(c.discount, 0) / 100
-		        END)/
-		        (CASE WHEN a.curr = (SELECT * from defaults_get_defaultcurrency())
-                         THEN 1
-		        ELSE
-		        (CASE WHEN in_account_class = 2
-		              THEN ex.buy
-		              ELSE ex.sell END)
-		        END) as discount_fx,		        
+		        ELSE (coalesce(ac.due_fx, a.amount_tc)) * coalesce(c.discount, 0) / 100
+		        END) AS discount_fx,     
 		        ac.due - (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
 		        THEN 0
-		        ELSE (coalesce(ac.due, a.amount)) * coalesce(c.discount, 0) / 100
+		        ELSE (coalesce(ac.due, a.amount_bc)) * coalesce(c.discount, 0) / 100
 		        END) AS due,
-		        (ac.due - (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
-		        THEN 0 
-		        ELSE (coalesce(ac.due, a.amount)) * coalesce(c.discount, 0) / 100
-		        END))/
-		        (CASE WHEN a.curr = (SELECT * from defaults_get_defaultcurrency())
-                         THEN 1
-		         ELSE
-		         (CASE WHEN in_account_class = 2
-		              THEN ex.buy
-		              ELSE ex.sell END)
-		         END) AS due_fx,
-		        (CASE WHEN a.curr = (SELECT * from defaults_get_defaultcurrency())
-		         THEN 1
-		         ELSE
-		        (CASE WHEN in_account_class = 2
-		         THEN ex.buy
-		         ELSE ex.sell END)
-		         END) AS exchangerate
+              ac.due_fx - (CASE WHEN c.discount_terms < extract('days' FROM age(a.transdate))
+		        THEN 0
+		        ELSE (coalesce(ac.due_fx, a.amount_tc)) * coalesce(c.discount, 0) / 100
+		        END) AS due_fx,
+		        null::numeric AS exchangerate
                  --TODO HV prepare drop entity_id from ap,ar
                  --FROM  (SELECT id, invnumber, transdate, amount, entity_id,
-                 FROM  (SELECT id, invnumber, invoice, transdate, amount,
+                 FROM  (SELECT id, invnumber, invoice, transdate, amount_bc,
+                       amount_tc,
 		               1 as invoice_class, curr,
 		               entity_credit_account, approved
 		          FROM ap
                          UNION
 		         --SELECT id, invnumber, transdate, amount, entity_id,
-		         SELECT id, invnumber, invoice, transdate, amount,
+		         SELECT id, invnumber, invoice, transdate, amount_bc,
+                      amount_tc,
 		               2 AS invoice_class, curr,
 		               entity_credit_account, approved
 		         FROM ar
 		         ) a 
-		JOIN (SELECT trans_id, chart_id, sum(CASE WHEN in_account_class = 1 THEN amount
+		JOIN (SELECT trans_id, chart_id, sum(CASE WHEN in_account_class = 1 THEN amount_bc
 		                                  WHEN in_account_class = 2 
-		                             THEN amount * -1
-		                             END) as due
+		                             THEN amount_bc * -1
+		                             END) as due,
+                                   sum(CASE WHEN in_account_class = 1 THEN amount_tc
+                                        WHEN in_account_class = 2
+                                   THEN amount_tc * -1
+                                   END) as due_fx
 		        FROM acc_trans 
 		        GROUP BY trans_id, chart_id) ac ON (ac.trans_id = a.id)
 		        JOIN chart ON (chart.id = ac.chart_id)
-		        LEFT JOIN exchangerate ex ON ( ex.transdate = a.transdate AND ex.curr = a.curr )         
 		        JOIN entity_credit_account c ON (c.id = a.entity_credit_account)
                 --        OR (a.entity_credit_account IS NULL and a.entity_id = c.entity_id))
 	 	        WHERE ((chart.link = 'AP' AND in_account_class = 1)
@@ -284,13 +262,13 @@ BEGIN
 		             OR in_datefrom IS NULL)
 		        AND (a.transdate <= in_dateto
 		             OR in_dateto IS NULL)
-		        AND (a.amount >= in_amountfrom 
+		        AND (a.amount_bc >= in_amountfrom 
 		             OR in_amountfrom IS NULL)
-		        AND (a.amount <= in_amountto
+		        AND (a.amount_bc <= in_amountto
 		             OR in_amountto IS NULL)
 		        AND due <> 0 
 		        AND a.approved = true         
-		        GROUP BY a.invnumber, a.transdate, a.amount, amount_fx, discount, discount_fx, ac.due, a.id, c.discount_terms, ex.buy, ex.sell, a.curr, a.invoice
+		        GROUP BY a.invnumber, a.transdate, a.amount_bc, amount_fx, discount, discount_fx, ac.due, a.id, c.discount_terms, a.curr, a.invoice
 	LOOP
 		RETURN NEXT payment_inv;
 	END LOOP;
@@ -509,8 +487,7 @@ DECLARE
         t_batch batch;
 BEGIN
 
-        SELECT * INTO t_exchangerate FROM currency_get_exchangerate(
-              in_currency, in_payment_date, in_account_class);
+        t_exchangerate := in_exchangerate;
 
         IF in_batch_id IS NULL THEN
                 -- t_voucher_id := NULL;
@@ -536,14 +513,6 @@ BEGIN
 
         IF (in_currency IS NULL OR in_currency = t_currs[1]) THEN
                 t_exchangerate := 1;
-        ELSIF t_exchangerate IS NULL THEN
-                t_exchangerate := in_exchangerate;
-                PERFORM payments_set_exchangerate(in_account_class,
-                                                  in_exchangerate, 
-                                                  in_currency,
-                                                  in_payment_date);
-        ELSIF t_exchangerate <> in_exchangerate THEN
-                RAISE EXCEPTION 'Exchange rate different than on file';
         END IF;
         IF t_exchangerate IS NULL THEN
             RAISE EXCEPTION 'No exchangerate provided and not default currency';
@@ -1153,9 +1122,9 @@ DECLARE
         t_fxloss_id int;
         t_paid_fx numeric;
 BEGIN
-        SELECT * INTO t_rev_fx FROM currency_get_exchangerate(
-              in_currency, in_date_reversed, in_account_class);
+        t_rev_fx := in_exchangerate;
 
+        --### TODO
         SELECT * INTO t_paid_fx FROM currency_get_exchangerate(
               in_currency, in_date_paid, in_account_class);
 
@@ -1169,14 +1138,6 @@ BEGIN
         IF in_currency IS NULL OR in_currency = t_currs[1] THEN
                 t_rev_fx := 1;
                 t_paid_fx := 1;
-        ELSIF t_rev_fx IS NULL THEN
-                t_rev_fx := in_exchangerate;
-                PERFORM payments_set_exchangerate(in_account_class,
-                                                  in_exchangerate,
-                                                  in_currency,
-                                                  in_date_reversed);
-        ELSIF t_rev_fx <> in_exchangerate THEN
-                RAISE EXCEPTION 'Exchange rate different than on file';
         END IF;
         IF t_rev_fx IS NULL THEN
             RAISE EXCEPTION 'No exchangerate provided and not default currency';
@@ -1270,40 +1231,6 @@ Reverses a payment.  All fields are mandatory except batch_id and voucher_id
 because they determine the identity of the payment to be reversed.
 $$;
 
-CREATE OR REPLACE FUNCTION payments_set_exchangerate(in_account_class int,
- in_exchangerate numeric, in_curr char(3), in_datepaid date )
-RETURNS INT
-AS $$
-DECLARE current_exrate  exchangerate%ROWTYPE;
-BEGIN
-select  * INTO current_exrate
-        FROM  exchangerate 
-        WHERE transdate = in_datepaid
-              AND curr = in_curr;
-IF current_exrate.transdate = in_datepaid THEN
-   IF in_account_class = 2 THEN 
-      UPDATE exchangerate set buy = in_exchangerate  where transdate = in_datepaid;
-   ELSE
-      UPDATE exchangerate set sell = in_exchangerate where transdate = in_datepaid;
-   END IF;
-   RETURN 0; 
-ELSE
-    IF in_account_class = 2 THEN
-     INSERT INTO exchangerate (curr, transdate, buy) values (in_curr, in_datepaid, in_exchangerate);
-  ELSE   
-     INSERT INTO exchangerate (curr, transdate, sell) values (in_curr, in_datepaid, in_exchangerate);
-  END IF;                                       
-RETURN 0;
-END IF;
-END;
-$$ language plpgsql;
-
-COMMENT ON FUNCTION payments_set_exchangerate(in_account_class int,
- in_exchangerate numeric, in_curr char(3), in_datepaid date ) IS
-$$ 1.3 only.  This will be replaced by a more generic function in 1.4.
-
-This sets the exchange rate for a class of transactions (payable, receivable) 
-to a certain rate for a specific date.$$;
 
 DROP TYPE IF EXISTS payment_header_item CASCADE;
 CREATE TYPE payment_header_item AS (
