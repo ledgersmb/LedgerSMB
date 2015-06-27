@@ -36,7 +36,7 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
 )
    SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
           ah.description, 
-          sum(ac.amount) * -1, at.path
+          sum(ac.amount_bc) * -1, at.path
      FROM account a
      JOIN account_heading ah on a.heading = ah.id
      JOIN acc_trans ac ON ac.chart_id = a.id
@@ -96,7 +96,7 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
 )
    SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
           ah.description, 
-          CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), 
+          CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount_bc), 
           at.path
      FROM account a
      JOIN account_heading ah on a.heading = ah.id
@@ -143,7 +143,7 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
    SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
           ah.description, 
           CASE WHEN a.category = 'E' THEN -1 ELSE 1 END 
-               * sum(ac.amount * ca.portion), at.path
+               * sum(ac.amount_bc * ca.portion), at.path
      FROM account a
      JOIN account_heading ah on a.heading = ah.id
      JOIN acc_trans ac ON a.id = ac.chart_id AND ac.approved
@@ -181,7 +181,7 @@ CREATE OR REPLACE FUNCTION pnl__invoice(in_id int) RETURNS SETOF pnl_line AS
 $$
 SELECT a.id, a.accno, a.description, a.category, 
        ah.id, ah.accno, ah.description,
-       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
+       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount_bc), at.path
   FROM account a
   JOIN account_heading ah on a.heading = ah.id
   JOIN acc_trans ac ON a.id = ac.chart_id
@@ -203,7 +203,7 @@ UNION ALL
 )
 SELECT a.id, a.accno, a.description, a.category, 
        ah.id, ah.accno, ah.description,
-       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
+       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount_bc), at.path
   FROM account a
   JOIN account_heading ah on a.heading = ah.id
   JOIN acc_trans ac ON a.id = ac.chart_id
@@ -222,7 +222,7 @@ CREATE OR REPLACE FUNCTION pnl__invoice(in_id int) RETURNS SETOF pnl_line AS
 $$
 SELECT a.id, a.accno, a.description, a.category, 
        ah.id, ah.accno, ah.description,
-       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
+       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount_bc), at.path
   FROM account a
   JOIN account_heading ah on a.heading = ah.id
   JOIN acc_trans ac ON a.id = ac.chart_id
