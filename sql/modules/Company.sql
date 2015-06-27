@@ -107,8 +107,8 @@ $$
             i.unit::text, i.sellprice, i.discount, 
             i.deliverydate,
             i.serialnumber, 
-            case when $16 = 1 then ex.buy else ex.sell end as exchange_rate,
-            ee.id as salesperson_id, 
+            null::numeric as exchange_rate,
+            ee.id as salesperson_id,
             ep.last_name || ', ' || ep.first_name as salesperson_name
      FROM (select * from entity_credit_account 
             where meta_number = $2
@@ -120,13 +120,15 @@ $$
                    person_id, notes
              FROM ar 
             where $16 = 2 and $13 = 'i'
-                  and (($17 and amount = paid) or ($18 and amount <> paid))
+                  and (($17 and amount_bc = paid_deprecated)
+                       or ($18 and amount_bc <> paid_deprecated))
             UNION 
            select invnumber, curr, transdate, entity_credit_account, id,
                   person_id, notes
              FROM ap 
             where $16 = 1 and $13 = 'i'
-                  and (($17 and amount = paid) or ($18 and amount <> paid))
+                  and (($17 and amount_bc = paid_deprecated)
+                       or ($18 and amount_bc <> paid_deprecated))
            union 
            select ordnumber, curr, transdate, entity_credit_account, id,
                   person_id, notes
@@ -166,7 +168,6 @@ $$
              FROM orderitems where $13 <> 'i'
           ) i on i.trans_id = a.id
      JOIN parts p ON (p.id = i.parts_id)
-LEFT JOIN exchangerate ex ON (ex.transdate = a.transdate)
 LEFT JOIN entity ee ON (a.person_id = ee.id)
 LEFT JOIN person ep ON (ep.entity_id = ee.id)
     -- these filters don't perform as well on large databases
