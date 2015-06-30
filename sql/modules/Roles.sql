@@ -1144,6 +1144,15 @@ IF TG_OP = 'DELETE' THEN
 ELSE 
    IF pg_has_role('postgres', 'USAGE') THEN RETURN NEW; -- is superuser
    END IF;
+   PERFORM 1 FROM pg_catalog.pg_database db
+             INNER JOIN pg_catalog.pg_roles rol
+             ON db.datdba = rol.oid
+          WHERE db.datname = current_database()
+            AND rol.rolname = CURRENT_USER;
+   IF FOUND THEN RETURN NEW; -- is database owner
+   END IF;                   -- without this permission, non-superusers,
+                             -- with create-role *and* create-db perms
+                             -- can't create new companies
    SELECT * INTO r_eclass from entity_class WHERE id = NEW.entity_class;
    IF pg_has_role(SESSION_USER,
                   lsmb__role('contact_class_'
