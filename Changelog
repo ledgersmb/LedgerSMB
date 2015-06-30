@@ -1,6 +1,11 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.13
+* Account edit group can checkboxes and mark acocunts obsolete (Chris T)
+
+Chris T is Chris Travers
+
 Changelog for 1.4.12
 * Updated German translation by Adrian v. Meibom <meibomberlin@googlemail.com>
 * Fixed printing of purchase order due to SQL error (bug 1359) (Erik H)

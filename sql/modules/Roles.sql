@@ -948,6 +948,7 @@ SELECT lsmb__grant_perms('account_edit', obj, perm)
   FROM unnest(array['account'::text, 'account_heading', 'account_link', 
                     'cr_coa_to_account', 'tax']) obj
  CROSS JOIN unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) perm;
+SELECT lsmb__grant_perms('account_edit', 'account_link', 'DELETE')
 
 SELECT lsmb__create_role('account_delete');
 SELECT lsmb__grant_perms('account_delete', obj, 'DELETE')
