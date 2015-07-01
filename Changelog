@@ -2,9 +2,11 @@ Changelog for 1.4 Series
 Released 2014-09-15
 
 Changelog for 1.4.13
+* Account edit group can checkboxes and mark acocunts obsolete (Chris T)
 * Fixed time cards failing to save (GitHub bug 636) (Erik H)
 
 Erik H is Erik Huelsmann
+Chris T is Chris Travers
 
 Changelog for 1.4.12
 * Updated German translation by Adrian v. Meibom <meibomberlin@googlemail.com>
@@ -198,7 +200,7 @@ Changelog for 1.4.1
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
-Pongracz I is Pongracz IstvÃan
+Pongracz I is Pongracz Istvan
 
 Changelog for 1.4.0
 General Enhancements:
@@ -1524,7 +1526,7 @@ Changelog for 1.2.10
 * Fixed 1814437, Multiple paths set causing errors (Seneca)
 * Add the ampersand to the HTML escape list for parse_template (Seneca)
 * fixed 1815329, $ not escaped properly for LaTeX (Seneca)
-* updated Hungarian translation from PongrÃ¡cz IstvÃ¡n (patch 1814156, Seneca)
+* updated Hungarian translation from Pongrácz István (patch 1814156, Seneca)
 * Properly handle invoice-type quantities from customer search (Seneca)
 * Correcting improper redirect when reposting POS invoices.(Chris T)
 * Fixing issues relating to database queries and POS-module redirects (Seneca)
