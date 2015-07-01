@@ -36,6 +36,7 @@ Files.sql
 Parts.sql
 COGS.sql
 Budgetting.sql
+Inventory.sql
 Inventory_Report.sql
 Payroll.sql
 Transaction_Templates.sql

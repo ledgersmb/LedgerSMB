@@ -22,6 +22,7 @@ PROCESS elements.html ?>
            END;
            PROCESS input element_data = {
               name = ITEM.name
+                id = ITEM.name _ '-yes'
               type = 'radio'
              label = text('Yes')
              value = 1
@@ -29,6 +30,7 @@ PROCESS elements.html ?>
            };
            PROCESS input element_data = {
               name = ITEM.name
+                id = ITEM.name _ '-no'
               type = 'radio'
              label = text('No')
              value = 0

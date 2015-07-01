@@ -12,7 +12,10 @@ Released 2014-09-15
 
 Changelog for 1.4.13
 * Account edit group can checkboxes and mark acocunts obsolete (Chris T)
+* Fixed time cards failing to save (GitHub bug 636) (Erik H)
 
+
+Erik H is Erik Huelsmann
 Chris T is Chris Travers
 
 Changelog for 1.4.12
@@ -25,6 +28,8 @@ Changelog for 1.4.12
 * Fix 'Save as' in contact account clobbering existing one (bug 1364) (Erik H)
 * Fixed empty response causing some problems. (Chris T)
 * Detect account heading graph loops and throw errors (Chris T)
+* Fixed errors about missing employee.pm (Erik H)
+* Add PNL and Balance sheet CSV export (Erik H)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
