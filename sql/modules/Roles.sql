@@ -1019,7 +1019,9 @@ SELECT lsmb__grant_exec('users_manage', 'admin__get_roles_for_user(int)');
 SELECT lsmb__grant_exec('users_manage', 'admin__save_user(int,int,text,text,bool)');
 SELECT lsmb__grant_exec('users_manage', 'admin__delete_user(TEXT, bool)');
 SELECT lsmb__grant_perms('users_manage', 'role_view', 'SELECT');
-SELECT lsmb__grant_menu('users_manage', 222, 'allow');
+SELECT lsmb__grant_menu('users_manage', 48, 'allow');
+SELECT lsmb__grant_menu('users_manage', 49, 'allow');
+
 
 SELECT lsmb__create_role('system_admin');
 SELECT lsmb__grant_role('system_admin', rname)
@@ -1142,7 +1144,10 @@ BEGIN
 IF TG_OP = 'DELETE' THEN
    RETURN OLD;
 ELSE 
-   IF pg_has_role('postgres', 'USAGE') THEN RETURN NEW; -- is superuser
+   PERFORM 1 FROM pg_catalog.pg_roles rol
+            WHERE rolname = CURRENT_USER
+              AND rolsuper;
+   IF FOUND THEN RETURN NEW; -- is superuser
    END IF;
    PERFORM 1 FROM pg_catalog.pg_database db
              INNER JOIN pg_catalog.pg_roles rol
