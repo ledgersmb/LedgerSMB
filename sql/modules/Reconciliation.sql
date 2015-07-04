@@ -127,8 +127,8 @@ disable the block_change_when_approved trigger on cr_report.$$;
 CREATE OR REPLACE FUNCTION reconciliation__get_cleared_balance(in_chart_id int)
 RETURNS numeric AS
 $$
-	select CASE WHEN c.category in('A', 'E') THEN sum(ac.amount) * -1 ELSE
-		sum(ac.amount) END
+	select CASE WHEN c.category in('A', 'E') THEN sum(ac.amount_bc) * -1 ELSE
+		sum(ac.amount_bc) END
 	FROM account c
 	JOIN acc_trans ac ON (ac.chart_id = c.id)
 	JOIN (select id from ar where approved
@@ -403,45 +403,34 @@ RETURNS int as $$
                             THEN gl.ref
                             ELSE ac.source END,
 		       0, 
-		       sum(amount / CASE WHEN t_recon_fx IS NOT TRUE OR gl.table = 'gl'
-                                         THEN 1
-                                         WHEN t_recon_fx and gl.table = 'ap' 
-                                         THEN ex.sell
-                                         WHEN t_recon_fx and gl.table = 'ar' 
-                                         THEN ex.buy
-                                    END) AS amount,
+		       sum(CASE WHEN t_recon_fx THEN amount_tc
+                 ELSE amount_bc END) AS amount,
 				(select entity_id from users 
 				where username = CURRENT_USER),
 			ac.voucher_id, min(ac.entry_id), ac.transdate
 		FROM acc_trans ac
 		JOIN transactions t on (ac.trans_id = t.id)
 		JOIN (select id, entity_credit_account::text as ref, curr, 
-                             transdate, 'ar' as table 
+                             transdate
                         FROM ar where approved
 			UNION
 		      select id, entity_credit_account::text, curr, 
-                             transdate, 'ap' as table 
+                             transdate
                         FROM ap WHERE approved
 			UNION
 		      select id, reference, '', 
-                             transdate, 'gl' as table 
+                             transdate
                         FROM gl WHERE approved) gl 
-			ON (gl.table = t.table_name AND gl.id = t.id)
+			ON (gl.id = t.id)
 		LEFT JOIN cr_report_line rl ON (rl.report_id = in_report_id
 			AND ((rl.ledger_id = ac.entry_id 
 				AND ac.voucher_id IS NULL) 
 				OR (rl.voucher_id = ac.voucher_id)))
                 LEFT JOIN cr_report r ON r.id = in_report_id
-                LEFT JOIN exchangerate ex ON gl.transdate = ex.transdate
 		WHERE ac.cleared IS FALSE
 			AND ac.approved IS TRUE
 			AND ac.chart_id = in_chart_id
-			AND ac.transdate <= in_end_date
-                        AND ((t_recon_fx is not true 
-                                and ac.fx_transaction is not true) 
-                            OR (t_recon_fx is true 
-                                AND (gl.table <> 'gl' OR ac.fx_transaction
-                                                      IS TRUE))) 
+			AND ac.transdate <= in_end_date 
                         AND (ac.entry_id > coalesce(r.max_ac_id, 0))
 		GROUP BY gl.ref, ac.source, ac.transdate,
 			ac.memo, ac.voucher_id, gl.table, 
@@ -582,8 +571,8 @@ $$
 DECLARE outval NUMERIC;
 BEGIN
 	SELECT CASE WHEN (select category FROM account WHERE id = in_account_id)
-			IN ('A', 'E') THEN sum(a.amount) * -1
-		ELSE sum(a.amount) END
+			IN ('A', 'E') THEN sum(a.amount_bc) * -1
+		ELSE sum(a.amount_bc) END
 	FROM acc_trans a
 	JOIN (
 		SELECT id FROM ar

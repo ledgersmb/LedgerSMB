@@ -93,19 +93,19 @@ BEGIN
 	               a.invnumber, a.transdate, a.till, a.ordnumber, 
 		       a.ponumber, a.notes, 
 		       CASE WHEN a.age/30 = 0
-		                 THEN (a.sign * sum(ac.amount)) 
+		                 THEN (a.sign * sum(ac.amount_bc)) 
                             ELSE 0 END
 		            as c0, 
 		       CASE WHEN a.age/30 = 1
-		                 THEN (a.sign * sum(ac.amount))
+		                 THEN (a.sign * sum(ac.amount_bc))
                             ELSE 0 END
 		            as c30, 
 		       CASE WHEN a.age/30 = 2
-		            THEN (a.sign * sum(ac.amount))
+		            THEN (a.sign * sum(ac.amount_bc))
                             ELSE 0 END
 		            as c60, 
 		       CASE WHEN a.age/30 > 2
-		            THEN (a.sign * sum(ac.amount))
+		            THEN (a.sign * sum(ac.amount_bc))
                             ELSE 0 END
 		            as c90, 
 		       a.duedate, a.id, a.curr,
@@ -171,7 +171,7 @@ BEGIN
                 HAVING (in_business_units is null or in_business_units 
                        <@ compound_array(string_to_array(bu_tree.path, 
                                          ',')::int[]))
-                       AND sum(ac.amount::numeric(20,2)) <> 0
+                       AND sum(ac.amount_bc::numeric(20,2)) <> 0
 	      ORDER BY entity_id, curr, transdate, invnumber
 	LOOP
 		return next item;
@@ -252,10 +252,10 @@ FOR retval IN
               JOIN bu_tree ON bu_tree.id = bu.parent_id
             )
        SELECT g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
-              ac.source, ac.amount, c.accno, c.gifi_accno, 
+              ac.source, ac.amount_bc, c.accno, c.gifi_accno, 
               g.till, ac.cleared, ac.memo, c.description AS accname, 
               ac.chart_id, ac.entry_id, 
-              sum(ac.amount) over (rows unbounded preceding) + t_balance 
+              sum(ac.amount_bc) over (rows unbounded preceding) + t_balance 
                 as running_balance,
               compound_array(ARRAY[ARRAY[bac.class_id, bac.bu_id]])
          FROM (select id, 'gl' as type, false as invoice, reference, 
@@ -293,11 +293,11 @@ FOR retval IN
                    OR (transdate <= in_to_date AND in_from_date IS NULL)
                    OR (in_to_date IS NULL AND in_from_date IS NULL))
               AND (in_approved is false OR (g.approved AND ac.approved))
-              AND (in_from_amount IS NULL OR ac.amount >= in_from_amount)
-              AND (in_to_amount IS NULL OR ac.amount <= in_to_amount)
+              AND (in_from_amount IS NULL OR ac.amount_bc >= in_from_amount)
+              AND (in_to_amount IS NULL OR ac.amount_bc <= in_to_amount)
               AND (in_category = c.category OR in_category IS NULL)
      GROUP BY g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
-              ac.source, ac.amount, c.accno, c.gifi_accno,
+              ac.source, ac.amount_bc, c.accno, c.gifi_accno,
               g.till, ac.cleared, ac.memo, c.description,
               ac.chart_id, ac.entry_id, ac.trans_id
        HAVING in_business_units is null or in_business_units 
@@ -327,8 +327,8 @@ CREATE OR REPLACE FUNCTION report__cash_summary
 RETURNS SETOF cash_summary_item AS 
 $$
 SELECT a.id, a.accno, a.is_heading, a.description, t.label, 
-       sum(CASE WHEN ac.amount < 0 THEN ac.amount * -1 ELSE NULL END),
-       sum(CASE WHEN ac.amount > 0 THEN ac.amount ELSE NULL END)
+       sum(CASE WHEN ac.amount_bc < 0 THEN ac.amount_bc * -1 ELSE NULL END),
+       sum(CASE WHEN ac.amount_bc > 0 THEN ac.amount_bc ELSE NULL END)
   FROM (select id, accno, false as is_heading, description FROM account
        UNION
         SELECT id, accno, true, description FROM account_heading) a
@@ -365,12 +365,12 @@ RETURNS SETOF general_balance_line AS
 $$
 
 SELECT a.id, a.accno, a.description,
-      sum(CASE WHEN ac.transdate < $1 THEN abs(amount) ELSE null END),
-      sum(CASE WHEN ac.transdate >= $1 AND ac.amount < 0 
-               THEN ac.amount * -1 ELSE null END),
-      SUM(CASE WHEN ac.transdate >= $1 AND ac.amount > 0
-               THEN ac.amount ELSE null END),
-      SUM(ABS(ac.amount))
+      sum(CASE WHEN ac.transdate < $1 THEN abs(amount_bc) ELSE null END),
+      sum(CASE WHEN ac.transdate >= $1 AND ac.amount_bc < 0 
+               THEN ac.amount_bc * -1 ELSE null END),
+      SUM(CASE WHEN ac.transdate >= $1 AND ac.amount_bc > 0
+               THEN ac.amount_bc ELSE null END),
+      SUM(ABS(ac.amount_bc))
  FROM account a 
  LEFT
  JOIN acc_trans ac ON ac.chart_id = a.id
@@ -640,7 +640,7 @@ WITH a_bs AS (
      FROM account a
 )
    SELECT a2.id, a2.accno, a.description, a.category, 
-          sum(ac.amount * CASE WHEN  a.category = 'A' THEN -1 ELSE 1 END), 
+          sum(ac.amount_bc * CASE WHEN  a.category = 'A' THEN -1 ELSE 1 END), 
           at.path
      FROM a_bs a
 LEFT JOIN account_heading_tree at ON a.heading = at.id

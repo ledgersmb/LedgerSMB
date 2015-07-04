@@ -163,8 +163,9 @@ GRANT SELECT ON business_unit_class, business_unit, bu_class_to_module
 
 \echo Exchange rate creation (requires insert/update on exchangerate table)
 SELECT lsmb__create_role('exchangerate_edit');
-SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'INSERT');
-SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'UPDATE');
+--### TODO: advisory rates still need to work!
+--SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'INSERT');
+--SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'UPDATE');
 
 \echo Basic file attachments
 SELECT lsmb__create_role('file_read');
@@ -1111,7 +1112,10 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
                     'menu_node', 'menu_attribute', 'menu_acl',
                     'chart', 'gifi', 'country', 'taxmodule',
                     'parts', 'partsgroup', 'country_tax_form', 'translation',
-                    'business', 'exchangerate', 'new_shipto', 'tax',
+                    'business',
+                    --###TODO: Add table for advisory rates
+                    --'exchangerate',
+                    'new_shipto', 'tax',
                     'entity_employee', 'jcitems', 'salutation', 'assembly']) obj;
 
 SELECT lsmb__grant_perms('base_user', 'new_shipto', 'UPDATE');
