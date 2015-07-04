@@ -2,9 +2,11 @@ Changelog for 1.4 Series
 Released 2014-09-15
 
 Changelog for 1.4.13
+* Account edit group can checkboxes and mark accounts obsolete (Chris T)
 * Fixed time cards failing to save (GitHub bug 636) (Erik H)
 
 Erik H is Erik Huelsmann
+Chris T is Chris Travers
 
 Changelog for 1.4.12
 * Updated German translation by Adrian v. Meibom <meibomberlin@googlemail.com>
@@ -17,6 +19,7 @@ Changelog for 1.4.12
 * Fixed empty response causing some problems. (Chris T)
 * Detect account heading graph loops and throw errors (Chris T)
 * Fixed errors about missing employee.pm (Erik H)
+* Add PNL and Balance sheet CSV export (Erik H)
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
