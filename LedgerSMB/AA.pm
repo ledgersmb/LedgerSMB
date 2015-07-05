@@ -238,9 +238,15 @@ sub post_transaction {
         }
     }
 
-    my $invnetamount = 0;
-    for ( @{ $form->{acc_trans}{lineitems} } ) { $invnetamount += $_->{amount} }
-    my $invamount = $invnetamount + $tax;
+   my $invnetamount = 0;
+   my $fxinvnetamount = 0;
+   for ( @{ $form->{acc_trans}{lineitems} } )
+   {
+       $invnetamount += $_->{amount};
+       $fxinvnetamount += $_->{amount}
+          unless $_->{fx_transaction};
+   }
+   my $invamount = $invnetamount + $tax;
 
     # adjust paidaccounts if there is no date in the last row
     $form->{paidaccounts}--
@@ -343,46 +349,63 @@ sub post_transaction {
 
     }
 
-        my $uid = localtime;
-        $uid .= "$$";
-        
-        # The query is done like this as the login name maps to the users table
-        # which maps to the user conf table, which links to an entity, to which 
-        # a person is also attached. This is done in this fashion because we 
-        # are using the current username as the "person" inserting the new 
-        # AR/AP Transaction.
-        # ~A
+   
+   if ($table eq 'ar') {
+   $query = qq|
+      INSERT INTO ar
+        (invnumber, description, ordnumber, transdate, taxincluded,
+         amount_bc, netamount_bc, curr, amount_tc, netamount_tc, duedate,
+         notes, intnotes, ponumber, crdate, reverse,
+         person_id, entity_credit_account, approved,
+         setting_sequence
+        )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+              (SELECT u.entity_id FROM users u WHERE u.username = ?), ?, ?, ?)
+      RETURNING id
+    |;
+   }
+   else {
+   $query = qq|
+      INSERT INTO $table
+        (invnumber, description, ordnumber, transdate, taxincluded,
+         amount_bc, netamount_bc, curr, amount_tc, netamount_tc, duedate,
+         notes, intnotes, ponumber, crdate, reverse,
+         person_id, entity_credit_account, approved
+        )
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,
+              (SELECT u.entity_id FROM users u WHERE u.username = ?), ?, ?)
+      RETURNING id
+    |;
+   }
 
-    #tshvr4 trunk svn-revison 6589,$form->login seems to contain id instead of name or '',so person_id not found,thus reports with join on person_id not working,quick fix,use employee_name
-    $query = qq|
-			INSERT INTO $table (invnumber, person_id, 
-				entity_credit_account)
-			     VALUES (?,    (select  u.entity_id from users u
-                 join entity e on(e.id = u.entity_id)
-                 where u.username=? and u.entity_id in(select p.entity_id from person p) ), ?)|;
-
-        # the second param is undef, as the DBI api expects a hashref of
-        # attributes to pass to $dbh->prepare. This is not used here.
-        # ~A
-        
-    #$dbh->do($query,undef,$uid,$form->{login}, $form->{"$form->{vc}_id"}) || $form->dberror($query);
-    $dbh->do($query,undef,$uid,$form->{employee_name}, $form->{"$form->{vc}_id"}) || $form->dberror($query);
-
-    $query = qq|
-			SELECT id FROM $table
-			 WHERE invnumber = ?|;
-
-    ( $form->{id} ) = $dbh->selectrow_array($query,undef,$uid);
-
-    # record last payment date in ar/ap table
+    $form->{invnumber} = undef if $form->{invnumber} eq '';
     $form->{datepaid} = $form->{transdate} unless $form->{datepaid};
     my $datepaid = ($paid) ? qq|'$form->{datepaid}'| : undef;
+    
+    my @queryargs = (
+        $form->{invnumber},        $form->{description},    
+        $form->{ordnumber},        $form->{transdate},     
+        $form->{taxincluded},
+        $invamount,                $invnetamount,
+        $form->{currency},
+        $fxinvamount,              $fxinvnetamount,
+        $form->{duedate},
+        $form->{notes},            $form->{intnotes},
+        $form->{ponumber},         $form->{crdate},
+        $form->{reverse},          $form->{employee_name},
+        $form->{"$form->{vc}_id"}, $form->{approved}
+        );
+   if ($table eq 'ar') {
+       push @queryargs, $form->{setting_sequence}
+   }
+
+   $sth = $dbh->prepare($query) or $form->dberror($query);
+   $sth->execute(@queryargs) or $form->dberror($query);
+   ($form->{id}) = $sth->fetchrow_array() or $form->dberror($query);
+   @queries = $form->run_custom_queries( $table, 'INSERT' );
+
 
     if (defined $form->{approved}) {
-
-        $query = qq| UPDATE $table SET approved = ? WHERE id = ?|;
-        $dbh->prepare($query)->execute($form->{approved}, $form->{id}) ||
-            $form->dberror($query);
         if (!$form->{approved} && $form->{batch_id}){
            if ($form->{ARAP} eq 'AR'){
                $batch_class = 'ar';
@@ -403,50 +426,6 @@ sub post_transaction {
         }
         
     }
-    if ($table eq 'ar' and $form->{setting_sequence}){
-       my $seqsth = $dbh->prepare(
-            'UPDATE ar SET setting_sequence = ? WHERE id = ?'
-       );
-       $seqsth->execute($form->{setting_sequence}, $form->{id});
-       $seqsth->finish;
-    }
-
-    $query = qq|
-		UPDATE $table 
-		SET invnumber = ?,
-                    description = ?,
-			ordnumber = ?,
-			transdate = ?,
-			taxincluded = ?,
-			amount = ?,
-			duedate = ?,
-			paid = ?,
-			datepaid = ?,
-			netamount = ?,
-			curr = ?,
-			notes = ?,
-			intnotes = ?,
-			ponumber = ?,
-			crdate = ?,
-                        reverse = ?
-		WHERE id = ?
-	|;
-
-    $form->{invnumber} = undef if $form->{invnumber} eq '';
-    
-    my @queryargs = (
-        $form->{invnumber},     $form->{description},    
-        $form->{ordnumber},     $form->{transdate},     
-        $form->{taxincluded},   $invamount,
-        $form->{duedate},       $paid,
-        $datepaid,              $invnetamount,
-        $form->{currency},      $form->{notes},
-        $form->{intnotes},
-        $form->{ponumber},      $form->{crdate},
-	$form->{reverse},        $form->{id}
-    );
-    $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
-    @queries = $form->run_custom_queries( $table, 'INSERT' );
 
     # update exchangerate
     my $buy  = $form->{exchangerate};
@@ -951,15 +930,15 @@ sub get_name {
     $form->{exchangerate} = 0
       if $form->{currency} eq $form->{defaultcurrency};
 
-    if ( $form->{transdate}
-        && ( $form->{currency} ne $form->{defaultcurrency} ) )
-    {
-        $form->{exchangerate} =
-          $form->get_exchangerate( $dbh, $form->{currency}, $form->{transdate},
-            $buysell );
-    }
+    # if ( $form->{transdate}
+    #     && ( $form->{currency} ne $form->{defaultcurrency} ) )
+    # {
+    #     $form->{exchangerate} =
+    #       $form->get_exchangerate( $dbh, $form->{currency}, $form->{transdate},
+    #         $buysell );
+    # }
 
-    $form->{forex} = $form->{exchangerate};
+    # $form->{forex} = $form->{exchangerate};
 
     # if no employee, default to login
     ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh)
