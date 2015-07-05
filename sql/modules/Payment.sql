@@ -734,13 +734,19 @@ DECLARE current_exchangerate numeric;
 DECLARE old_exchangerate numeric;
 DECLARE fx_gain_loss_amount numeric;
 DECLARE gain_loss_acc_id int;
+DECLARE sign int;
 BEGIN
    IF array_upper(in_amount, 1) <> array_upper(in_cash_account_id, 1) THEN
       RAISE EXCEPTION 'Wrong number of accounts';
    END IF;
         
-   SELECT * INTO default_currency  FROM defaults_get_defaultcurrency();
    current_exchangerate := in_exchangerate;
+   IF in_account_class = 1 THEN
+      sign := 1;
+   ELSE
+      sign := -1;
+   END IF;
+   SELECT * INTO default_currency  FROM defaults_get_defaultcurrency();
 
    SELECT INTO var_employee p.id 
      FROM users u
@@ -768,10 +774,7 @@ BEGIN
 	    INSERT INTO acc_trans
           (chart_id, amount, trans_id, transdate, approved, source, memo)
 		   VALUES (in_cash_account_id[out_count], 
-		           CASE WHEN in_account_class = 1
-                      THEN in_amount[out_count]*current_exchangerate  
-		                ELSE (in_amount[out_count]*current_exchangerate)* - 1
-		           END,
+		           in_amount[out_count]*current_exchangerate*sign,
 		           in_transaction_id[out_count],
                  in_datepaid,
                  coalesce(in_approved, true), 
@@ -807,11 +810,8 @@ BEGIN
          -- Now we post the AP/AR transaction
          INSERT INTO acc_trans (chart_id, amount,
                                 trans_id, transdate, approved, source, memo)
-		      VALUES (var_account_id, 
-		              CASE WHEN in_account_class = 1
-                         THEN (in_amount[out_count]*old_exchangerate) * -1 
-		                   ELSE  in_amount[out_count]*old_exchangerate
-		              END,
+		      VALUES (var_account_id,
+                    in_amount[out_count]*old_exchangerate*sign,
 		              in_transaction_id[out_count],
                     in_datepaid,
                     coalesce(in_approved, true), 
@@ -873,11 +873,8 @@ BEGIN
      LOOP
         INSERT INTO acc_trans (chart_id, amount, trans_id,
                                transdate, approved, source, memo)
-             VALUES (in_op_cash_account_id[out_count], 
-                     CASE WHEN in_account_class = 1
-                          THEN in_op_amount[out_count]  
-                          ELSE in_op_amount[out_count] * - 1
-                     END,
+             VALUES (in_op_cash_account_id[out_count],
+                     in_op_amount[out_count]*sign,
                      var_gl_id,
                      in_datepaid,
                      coalesce(in_approved, true), 
@@ -895,11 +892,8 @@ BEGIN
      LOOP
         INSERT INTO acc_trans (chart_id, amount, trans_id,
                                transdate, approved, source, memo)
-             VALUES (in_op_account_id[out_count], 
-                     CASE WHEN in_account_class = 1
-                          THEN in_op_amount[out_count] * -1 
-                          ELSE in_op_amount[out_count]
-                     END,
+             VALUES (in_op_account_id[out_count],
+                     in_op_amount[out_count]*sign,
                      var_gl_id,
                      in_datepaid,
                      coalesce(in_approved, true), 
