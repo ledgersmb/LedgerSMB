@@ -1653,59 +1653,59 @@ $dbh is not used, favouring $self->{dbh}.
 
 sub update_exchangerate {
 
-    my ( $self, $dbh, $curr, $transdate, $buy, $sell ) = @_;
+    # my ( $self, $dbh, $curr, $transdate, $buy, $sell ) = @_;
 
-    # some sanity check for currency
-    return if ( $curr eq "" );
+    # # some sanity check for currency
+    # return if ( $curr eq "" );
 
-    my $query = qq|
-        SELECT curr
-        FROM exchangerate
-        WHERE curr = ?
-        AND transdate = ?
-        FOR UPDATE|;
+    # my $query = qq|
+	 #   SELECT curr 
+	 #   FROM exchangerate
+	 #   WHERE curr = ?
+	 #   AND transdate = ?
+	 #   FOR UPDATE|;
 
-    my $sth = $self->{dbh}->prepare($query);
-    $sth->execute( $curr, $transdate ) || $self->dberror($query);
+    # my $sth = $self->{dbh}->prepare($query);
+    # $sth->execute( $curr, $transdate ) || $self->dberror($query);
 
-    my $set;
-    my @queryargs;
+    # my $set;
+    # my @queryargs;
 
-    if ( $buy && $sell ) {
-        $set = "buy = ?, sell = ?";
-        @queryargs = ( $buy, $sell );
-    }
-    elsif ($buy) {
-        $set       = "buy = ?";
-        @queryargs = ($buy);
-    }
-    elsif ($sell) {
-        $set       = "sell = ?";
-        @queryargs = ($sell);
-    }
+    # if ( $buy && $sell ) {
+    #     $set = "buy = ?, sell = ?";
+    #     @queryargs = ( $buy, $sell );
+    # }
+    # elsif ($buy) {
+    #     $set       = "buy = ?";
+    #     @queryargs = ($buy);
+    # }
+    # elsif ($sell) {
+    #     $set       = "sell = ?";
+    #     @queryargs = ($sell);
+    # }
 
-    if ( !$set ) {
-        $self->error("Exchange rate missing!");
-    }
-    if ( $sth->fetchrow_array ) {
-        $query = qq|UPDATE exchangerate
-                       SET $set
-                     WHERE curr = ?
-                       AND transdate = ?|;
-        push( @queryargs, $curr, $transdate );
+    # if ( !$set ) {
+    #     $self->error("Exchange rate missing!");
+    # }
+    # if ( $sth->fetchrow_array ) {
+    #     $query = qq|UPDATE exchangerate
+	 #   			   SET $set
+	 #   			 WHERE curr = ?
+	 #   			   AND transdate = ?|;
+    #     push( @queryargs, $curr, $transdate );
 
-    }
-    else {
-        $query = qq|
-            INSERT INTO exchangerate (
-            curr, buy, sell, transdate)
-            VALUES (?, ?, ?, ?)|;
-        @queryargs = ( $curr, $buy, $sell, $transdate );
-    }
-    $sth->finish;
-    $sth = $self->{dbh}->prepare($query);
+    # }
+    # else {
+    #     $query = qq|
+	 #   	INSERT INTO exchangerate (
+	 #   	curr, buy, sell, transdate)
+	 #   	VALUES (?, ?, ?, ?)|;
+    #     @queryargs = ( $curr, $buy, $sell, $transdate );
+    # }
+    # $sth->finish;
+    # $sth = $self->{dbh}->prepare($query);
 
-    $sth->execute(@queryargs) || $self->dberror($query);
+    # $sth->execute(@queryargs) || $self->dberror($query);
 
 }
 
@@ -1746,21 +1746,22 @@ sub get_exchangerate {
 
     my ( $self, $dbh, $curr, $transdate, $fld ) = @_;
 
-    my $exchangerate = 1;
+   #  my $exchangerate = 1;
 
-    if ($transdate) {
-        my $query = qq|
-            SELECT $fld FROM exchangerate
-            WHERE curr = ? AND transdate = ?|;
-        my $sth = $self->{dbh}->prepare($query);
-        $sth->execute( $curr, $transdate );
+   #  if ($transdate) {
+   #      my $query = qq|
+	# 		SELECT $fld FROM exchangerate
+	# 		WHERE curr = ? AND transdate = ?|;
+   #      my $sth = $self->{dbh}->prepare($query);
+   #      $sth->execute( $curr, $transdate );
 
-        ($exchangerate) = $sth->fetchrow_array;
-    $exchangerate = LedgerSMB::PGNumber->new($exchangerate);
-        $sth->finish;
-    }
+   #      ($exchangerate) = $sth->fetchrow_array;
+	# $exchangerate = Math::BigFloat->new($exchangerate);
+   #      $sth->finish;
+   #  }
 
-    $exchangerate;
+   #  $exchangerate;
+    return 1;
 }
 
 =item $form->check_exchangerate($myconfig, $currency, $transdate, $fld);
@@ -1775,24 +1776,27 @@ $myconfig is not used.
 
 sub check_exchangerate {
 
-    my ( $self, $myconfig, $currency, $transdate, $fld ) = @_;
+    return "";
 
-    return "" unless $transdate;
 
-    my $query = qq|
-        SELECT $fld
-        FROM exchangerate
-        WHERE curr = ? AND transdate = ?|;
+    # my ( $self, $myconfig, $currency, $transdate, $fld ) = @_;
 
-    my $sth = $self->{dbh}->prepare($query);
-    $sth->execute( $currency, $transdate );
-    my @array = $sth->fetchrow_array;
-    $self->db_parse_numeric(sth => $sth, arrayref => \@array);
-    my ($exchangerate) = @array;
+    # return "" unless $transdate;
 
-    $sth->finish;
+    # my $query = qq|
+	 #   SELECT $fld 
+	 #   FROM exchangerate
+	 #   WHERE curr = ? AND transdate = ?|;
 
-    $exchangerate;
+    # my $sth = $self->{dbh}->prepare($query);
+    # $sth->execute( $currency, $transdate );
+    # my @array = $sth->fetchrow_array;
+    # $self->db_parse_numeric(sth => $sth, arrayref => \@array);
+    # my ($exchangerate) = @array;
+
+    # $sth->finish;
+
+    # $exchangerate;
 }
 
 =item $form->add_shipto($dbh, $id);
