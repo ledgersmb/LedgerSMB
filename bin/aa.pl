@@ -323,7 +323,6 @@ sub create_links {
                 else {
 
 
-
                     $form->{"${akey}_$i"} =
                       $form->{acc_trans}{$key}->[ $i - 1 ]->{amount} * $ml;
 
@@ -473,7 +472,6 @@ sub form_header {
                 <input type=hidden name=selectcurrency value="$form->{selectcurrency}">
 		<input type=hidden name=defaultcurrency value=$form->{defaultcurrency}>
 |;
-
     if (   $form->{defaultcurrency}
         && $form->{currency} ne $form->{defaultcurrency} )
     {
@@ -1255,19 +1253,20 @@ sub update {
             $form->{invtotal} += $form->{"amount_$_"};
         }
 
-        $form->{exchangerate} = $exchangerate
-          if (
-            $form->{forex} = (
-                $exchangerate = $form->check_exchangerate(
-                    \%myconfig, $form->{currency}, $form->{transdate},
-                    ( $form->{ARAP} eq 'AR' ) ? 'buy' : 'sell'
-                )
-            )
-          );
+        # $form->{exchangerate} = $exchangerate
+        #   if (
+        #     $form->{forex} = (
+        #         $exchangerate = $form->check_exchangerate(
+        #             \%myconfig, $form->{currency}, $form->{transdate},
+        #             ( $form->{ARAP} eq 'AR' ) ? 'buy' : 'sell'
+        #         )
+        #     )
+        #   );
 
         if ( $newname = &check_name( $form->{vc} ) ) {
             $form->{notes} = $form->{intnotes} unless $form->{id};
             &rebuild_vc( $form->{vc}, $form->{ARAP}, $form->{transdate} );
+
         }
         if ( $form->{transdate} ne $form->{oldtransdate} ) {
             $form->{duedate} =
