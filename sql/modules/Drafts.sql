@@ -23,9 +23,9 @@ BEGIN
 	       type, amount FROM (
 	    SELECT id, transdate, reference, 
 		   description, false as invoice,
-                   (SELECT SUM(line.amount)
+                   (SELECT SUM(line.amount_bc)
                       FROM acc_trans line
-                     WHERE line.amount > 0
+                     WHERE line.amount_bc > 0
                            and line.trans_id = gl.id) as amount,
                    'gl' as type
 	      from gl
@@ -37,7 +37,7 @@ BEGIN
             UNION
             SELECT id, transdate, invnumber as reference, 
 		(SELECT name FROM eca__get_entity(entity_credit_account)),
-		invoice, amount, 'ap' as type
+		invoice, amount_bc as amount, 'ap' as type
 	      FROM ap
 	     WHERE (lower(in_type) = 'ap' or in_type is null)
                    AND NOT approved
@@ -46,7 +46,7 @@ BEGIN
                                     WHERE v.trans_id = ap.id)
 	    UNION
 	    SELECT id, transdate, invnumber as reference,
-		description, invoice, amount, 'ar' as type
+		description, invoice, amount_bc as amount, 'ar' as type
               FROM ar
 	     WHERE (lower(in_type) = 'ar' or in_type is null)
                    AND NOT approved
