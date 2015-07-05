@@ -2360,7 +2360,9 @@ sub create_links {
 				a.datepaid, a.duedate, a.ordnumber,
 				a.taxincluded, a.curr AS currency, a.notes, 
 				a.intnotes, ce.name AS $vc, 
-				a.amount AS oldinvtotal, a.paid AS oldtotalpaid,
+				a.amount_tc AS oldinvtotal, -- a.paid AS oldtotalpaid,
+            case when a.amount_tc = 0 then 0
+            else a.amount_bc / a.amount_tc end as exchangerate,
 				a.person_id, e.name AS employee, 
 				c.language_code, a.ponumber, a.reverse,
                                 a.approved, ctf.default_reportable, 
@@ -2448,7 +2450,7 @@ sub create_links {
 
         # get amounts from individual entries
         $query = qq|
-			SELECT c.accno, c.description, a.source, a.amount,
+			SELECT c.accno, c.description, a.source, a.amount_tc as amount,
 				a.memo,a.entry_id, a.transdate, a.cleared, 
                                 compound_array(ARRAY[ARRAY[bul.class_id, bul.bu_id]])
                                 AS bu_lines
@@ -2456,8 +2458,8 @@ sub create_links {
 			JOIN chart c ON (c.id = a.chart_id)
                    LEFT JOIN business_unit_ac bul ON a.entry_id = bul.entry_id
 			WHERE a.trans_id = ?
-				AND a.fx_transaction = '0'
-                        GROUP BY c.accno, c.description, a.source, a.amount,
+--				AND a.fx_transaction = '0'
+                        GROUP BY c.accno, c.description, a.source, a.amount_tc,
                                 a.memo,a.entry_id, a.transdate, a.cleared
 			ORDER BY transdate|;
 
@@ -2466,9 +2468,9 @@ sub create_links {
 
         my $fld = ( $vc eq 'customer' ) ? 'buy' : 'sell';
 
-        $self->{exchangerate} =
-          $self->get_exchangerate( $dbh, $self->{currency}, $self->{transdate},
-            $fld );
+        # $self->{exchangerate} =
+        #   $self->get_exchangerate( $dbh, $self->{currency}, $self->{transdate},
+        #     $fld );
 
         # store amounts in {acc_trans}{$key} for multiple accounts
         while ( my $ref = $sth->fetchrow_hashref('NAME_lc') ) {
@@ -3449,8 +3451,9 @@ sub update_invnumber {
     my $sth = $LedgerSMB::App_State::DBH->prepare(
         'select invnumber from ar where id = ?'
     );
-    $sth->execute($self->{id});
-    my ($invnumber) = $sth->fetchrow_array;
+    $sth->execute($self->{id}) or $self->error($sth->errstr);
+    my ($invnumber) = $sth->fetchrow_array
+        or $self->error($sth->errstr);
     return if defined $invnumber or !$sth->rows;
     $sth->finish;
     $sth = $LedgerSMB::App_State::DBH->prepare(
