@@ -34,6 +34,8 @@ use LedgerSMB::File;
 use Math::BigFloat;
 use LedgerSMB::Setting;
 
+use Carp::Always;
+
 my $logger = Log::Log4perl->get_logger("AA");
 
 =pod
@@ -112,14 +114,15 @@ sub post_transaction {
         $form->{exchangerate} = 1;
     }
     else {
-        $exchangerate =
-          $form->check_exchangerate( $myconfig, $form->{currency},
-            $form->{transdate}, $buysell );
+        # $exchangerate =
+        #   $form->check_exchangerate( $myconfig, $form->{currency},
+        #     $form->{transdate}, $buysell );
 
         $form->{exchangerate} =
-          ($exchangerate)
-          ? $exchangerate
-          : $form->parse_amount( $myconfig, $form->{exchangerate} );
+          # ($exchangerate)
+          # ? $exchangerate
+          # : 
+          $form->parse_amount( $myconfig, $form->{exchangerate} );
     }
 
     my @taxaccounts = split / /, $form->{taxaccounts};
@@ -137,35 +140,25 @@ sub post_transaction {
         $form->{"tax_$accno"} *= -1 if $form->{reverse};
         $fxtax += $tax{fxamount}{$accno} = $form->{"tax_$accno"};
         $tax += $tax{fxamount}{$accno};
-
-        push @{ $form->{acc_trans}{taxes} },
-          {
-            accno          => $accno,
-            amount         => $tax{fxamount}{$accno},
-            project_id     => undef,
-            fx_transaction => 0
-          };
-
         $amount = $tax{fxamount}{$accno} * $form->{exchangerate};
         $tax{amount}{$accno} = $form->round_amount( $amount - $diff, 2 );
         $diff = $tax{amount}{$accno} - ( $amount - $diff );
         $amount = $tax{amount}{$accno} - $tax{fxamount}{$accno};
         $tax += $amount;
 
-        if ( $form->{currency} ne $form->{defaultcurrency} ) {
-            push @{ $form->{acc_trans}{taxes} },
-              {
-                accno          => $accno,
-                amount         => $amount,
-                project_id     => undef,
-                fx_transaction => 1
-              };
-        }
+        push @{ $form->{acc_trans}{taxes} },
+        {
+            accno          => $accno,
+            amount_bc      => $amount,
+            amount_tc      => $tax{fxamount}{$accno},
+            curr           => $form->{currency},
+            project_id     => undef,
+        };
 
     }
 
     my %amount      = ();
-    my $fxinvamount = 0;
+   my $fxinvamount = 0;
     for ( 1 .. $form->{rowcount} ) {
         $fxinvamount += $amount{fxamount}{$_} = $form->{"amount_$_"};
     }
@@ -178,11 +171,11 @@ sub post_transaction {
 
     $diff = 0;
 
-    # deduct tax from amounts if tax included
     for $i ( 1 .. $form->{rowcount} ) {
 
         if ( $amount{fxamount}{$i} ) {
 
+            # deduct tax from amounts if tax included
             if ( $form->{taxincluded} ) {
                 $amount =
                   ($fxinvamount)
@@ -212,29 +205,15 @@ sub post_transaction {
             push @{ $form->{acc_trans}{lineitems} },
               {
                 row_num        => $i,
-                accno          => $accno,
-                amount         => $amount{fxamount}{$i},
+                accno          => $accno,                
+                amount_tc      => $amount{fxamount}{$i},
+                curr           => $form->{currency},
+                amount_bc      => $amount{amount}{$i},
                 project_id     => $project_id,
                 description    => $form->{"description_$i"},
                 taxformcheck   => $form->{"taxformcheck_$i"},
                 cleared        => $cleared,
-                fx_transaction => 0
               };
-
-            if ( $form->{currency} ne $form->{defaultcurrency} ) {
-                $amount = $amount{amount}{$i} - $amount{fxamount}{$i};
-                push @{ $form->{acc_trans}{lineitems} },
-                  {
-                    row_num        => $i,
-                    accno          => $accno,
-                    amount         => $amount,
-                    project_id     => $project_id,
-                    description    => $form->{"description_$i"},
-                    taxformcheck   => $form->{"taxformcheck_$i"},
-                    cleared        => $cleared,
-                    fx_transaction => 1
-                  };
-            }
         }
     }
 
@@ -242,9 +221,8 @@ sub post_transaction {
    my $fxinvnetamount = 0;
    for ( @{ $form->{acc_trans}{lineitems} } )
    {
-       $invnetamount += $_->{amount};
-       $fxinvnetamount += $_->{amount}
-          unless $_->{fx_transaction};
+       $invnetamount += $_->{amount_bc};
+       $fxinvnetamount += $_->{amount_tc};
    }
    my $invamount = $invnetamount + $tax;
 
@@ -454,21 +432,22 @@ sub post_transaction {
 
     foreach $ref ( @{ $form->{acc_trans}{lineitems} } ) {
         # insert detail records in acc_trans
-        if ( $ref->{amount} ) {
+        if ( $ref->{amount_bc} ) {
             $query = qq|
 				INSERT INTO acc_trans 
-				            (trans_id, chart_id, amount, 
-				            transdate, memo, 
-				            fx_transaction, cleared)
+				            (trans_id, chart_id, amount_bc, curr, amount_tc, 
+				            transdate, memo, cleared)
 				    VALUES  (?, (SELECT id FROM chart
 				                  WHERE accno = ?), 
-				            ?, ?, ?, ?, ?)|;
+				             ?, ?, ?, ?, ?, ?)|;
 
             @queryargs = (
                 $form->{id},            $ref->{accno},
-                $ref->{amount} * $ml,   $form->{transdate},
+                $ref->{amount_bc} * $ml, $ref->{curr},
+                $ref->{amount_tc} * $ml,
+                $form->{transdate},
                 $ref->{description},
-                $ref->{fx_transaction}, $ref->{cleared}
+                $ref->{cleared}
             );
            $dbh->prepare($query)->execute(@queryargs)
               || $form->dberror($query);
@@ -499,17 +478,18 @@ sub post_transaction {
 
     # save taxes
     foreach $ref ( @{ $form->{acc_trans}{taxes} } ) {
-        if ( $ref->{amount} ) {
+        if ( $ref->{amount_bc} ) {
             $query = qq|
 				INSERT INTO acc_trans 
-				            (trans_id, chart_id, amount,
+				            (trans_id, chart_id, amount_bc, curr, amount_tc,
 				            transdate, fx_transaction)
 				     VALUES (?, (SELECT id FROM chart
 					          WHERE accno = ?),
-				            ?, ?, ?)|;
+				            ?, ?, ?, ?, ?)|;
 
             @queryargs = (
-                $form->{id}, $ref->{accno}, $ref->{amount} * $ml,
+                $form->{id}, $ref->{accno}, $ref->{amount_bc} * $ml,
+                $form->{currency}, $ref->{amount_tc} * $ml,
                 $form->{transdate}, $ref->{fx_transaction}
             );
             $dbh->prepare($query)->execute(@queryargs)
@@ -522,25 +502,26 @@ sub post_transaction {
     # record ar/ap
     if ( ( $arap = $invamount ) ) {
         ($accno) = split /--/, $form->{$ARAP};
-
         $query = qq|
 			INSERT INTO acc_trans 
-			            (trans_id, chart_id, amount, transdate)
+			            (trans_id, chart_id, amount_bc, curr, amount_tc, transdate)
 			     VALUES (?, (SELECT id FROM chart
 			                  WHERE accno = ?), 
-			                  ?, ?)|;
+			                  ?, ?, ?, ?)|;
         @queryargs =
-          ( $form->{id}, $accno, $invamount * -1 * $ml / $form->{exchangerate}, 
+            ( $form->{id}, $accno,
+              $invamount, $form->{currency},
+              $invamount * -1 * $ml / $form->{exchangerate},
             $form->{transdate} );
 
         $dbh->prepare($query)->execute(@queryargs)
           || $form->dberror($query);
-        if ($form->{exchangerate} != 1){
-           $dbh->prepare($query)->execute($form->{id}, $accno,
-                  ($invamount * -1 * $ml) - 
-                  ($invamount * -1 * $ml / $form->{exchangerate}),
-                  $form->{transdate} );
-        }
+        # if ($form->{exchangerate} != 1){
+        #    $dbh->prepare($query)->execute($form->{id}, $accno,
+        #           ($invamount * -1 * $ml) - 
+        #           ($invamount * -1 * $ml / $form->{exchangerate}),
+        #           $form->{transdate} );
+        # }
     }
 
     # if there is no amount force ar/ap
