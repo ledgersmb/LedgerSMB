@@ -423,23 +423,26 @@ BEGIN
 
 FOR retval IN
 SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
-       a.invnumber, a.amount, a.netamount, a.netamount - a.amount as tax, 
-       a.amount - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
+       a.invnumber, a.amount_bc as amount, a.netamount_bc as netamount,
+       a.netamount_bc - a.amount_bc as tax, 
+       a.amount_bc - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
        a.till, ee.name, me.name, a.shippingpoint, a.shipvia, 
        '{}' as business_units -- TODO
-  FROM (select id, transdate, invnumber, amount, netamount, duedate, notes, 
-               till, person_id, entity_credit_account, invoice, shippingpoint,
-               shipvia, ordnumber, ponumber, description, on_hold, force_closed
+  FROM (select id, transdate, invnumber, amount_bc, netamount_bc, duedate,
+               notes, till, person_id, entity_credit_account, invoice,
+               shippingpoint, shipvia, ordnumber, ponumber, description,
+               on_hold, force_closed
           FROM ar
          WHERE in_entity_class = 2 and approved
          UNION
-        SELECT id, transdate, invnumber, amount, netamount, duedate, notes,
-               null, person_id, entity_credit_account, invoice, shippingpoint,
-               shipvia, ordnumber, ponumber, description, on_hold, force_closed
+        SELECT id, transdate, invnumber, amount_bc, netamount_bc, duedate,
+               notes, null, person_id, entity_credit_account, invoice,
+               shippingpoint, shipvia, ordnumber, ponumber, description,
+               on_hold, force_closed
           FROM ap 
          WHERE in_entity_class = 1 and approved) a 
   LEFT
-  JOIN (SELECT trans_id, sum(amount) * 
+  JOIN (SELECT trans_id, sum(amount_bc) * 
                CASE WHEN in_entity_class = 1 THEN 1 ELSE -1 END AS due,
                max(transdate) as last_payment
           FROM acc_trans ac
@@ -522,25 +525,29 @@ BEGIN
 FOR retval IN
 
 SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
-       a.transdate, a.invnumber, a.amount, a.netamount, 
-       a.amount - a.netamount as tax, a.amount - p.due, p.due, p.last_payment, 
+       a.transdate, a.invnumber, a.amount_bc as amount, a.netamount_bc
+                    as netamount, 
+       a.amount_bc - a.netamount_bc as tax, a.amount_bc - p.due,
+       p.due, p.last_payment, 
        a.duedate, a.notes,
        a.till, eee.name as employee, mee.name as manager, a.shippingpoint, 
        a.shipvia, '{}'
        
-  FROM (select id, transdate, invnumber, amount, netamount, duedate, notes, 
+  FROM (select id, transdate, invnumber, amount_bc, netamount_bc, duedate,
+               notes, 
                till, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ar
          WHERE in_entity_class = 2 and approved
          UNION
-        SELECT id, transdate, invnumber, amount, netamount, duedate, notes,
+        SELECT id, transdate, invnumber, amount_bc, netamount_bc, duedate,
+               notes,
                null, person_id, entity_credit_account, invoice, shippingpoint,
                shipvia, ordnumber, ponumber, description, on_hold, force_closed
           FROM ap 
          WHERE in_entity_class = 1 and approved) a 
   LEFT
-  JOIN (select sum(amount) * case when in_entity_class = 1 THEN 1 ELSE -1 END
+  JOIN (select sum(amount_bc) * case when in_entity_class = 1 THEN 1 ELSE -1 END
                as due, trans_id, max(transdate) as last_payment
           FROM acc_trans ac
           JOIN account_link l ON ac.chart_id = l.account_id
