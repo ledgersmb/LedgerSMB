@@ -146,13 +146,7 @@ my $database = LedgerSMB::Database->new(
        password => $pass}
 );
 
-# Creating the actual database and loading it.  Note that process_roles is 
-# currently a separate call.  If you don't do that then permissions are never 
-# set up and therefore creating a user and assigning roles become futile 
-# endeavors
-
 $database->create_and_load();
-$database->process_roles();
 
 
 # CREATING THE USER
