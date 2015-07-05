@@ -1502,7 +1502,6 @@ CREATE TABLE acc_trans (
   transdate date DEFAULT current_date,
   source text,
   cleared bool DEFAULT 'f',
-  fx_transaction bool DEFAULT 'f',
   memo text,
   invoice_id int,
   approved bool default true,
