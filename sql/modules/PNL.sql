@@ -18,6 +18,8 @@ CREATE TYPE pnl_line AS (
     account_heading_id int,
     account_heading_number text,
     account_heading_description text,
+    gifi text,
+    gifi_description text,
     amount numeric,
     heading_path text[]
 );
@@ -35,7 +37,7 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
         JOIN bu_tree ON bu.parent_id = bu_tree.id
 )
    SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, 
+          ah.description, g.accno, g.description,
           sum(ac.amount) * -1, at.path
      FROM account a
      JOIN account_heading ah on a.heading = ah.id
@@ -44,6 +46,7 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
      JOIN account_link l ON l.account_id = a.id
      JOIN account_heading_tree at ON a.heading = at.id
      JOIN ar ON ar.id = ac.trans_id 
+LEFT JOIN gifi g ON a.gifi_accno = g.accno
 LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
              from business_unit_inv bui 
              JOIN bu_tree bu ON bui.bu_id = bu.id
@@ -95,7 +98,7 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
         JOIN bu_tree ON bu.parent_id = bu_tree.id
 )
    SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, 
+          ah.description, g.accno, g.description,
           CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), 
           at.path
      FROM account a
@@ -103,6 +106,7 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
      JOIN acc_trans ac ON a.id = ac.chart_id AND ac.approved
      JOIN tx_report gl ON ac.trans_id = gl.id AND gl.approved
      JOIN account_heading_tree at ON a.heading = at.id
+LEFT JOIN gifi g ON a.gifi_accno = g.accno
 LEFT JOIN (select array_agg(path) as bu_ids, entry_id
              FROM business_unit_ac buac
              JOIN bu_tree ON bu_tree.id = buac.bu_id
@@ -141,7 +145,7 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
         JOIN bu_tree ON bu.parent_id = bu_tree.id
 )
    SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, 
+          ah.description, g.accno, g.description,
           CASE WHEN a.category = 'E' THEN -1 ELSE 1 END 
                * sum(ac.amount * ca.portion), at.path
      FROM account a
@@ -155,6 +159,7 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
                   AND ($2 IS NULL OR ca.transdate <= $2)
            GROUP BY id
           ) ca ON gl.id = ca.id 
+LEFT JOIN gifi g ON a.gifi_accno = g.accno
 LEFT JOIN (select array_agg(path) as bu_ids, entry_id
              FROM business_unit_ac buac
              JOIN bu_tree ON bu_tree.id = buac.bu_id
@@ -180,12 +185,14 @@ $$ LANGUAGE SQL;
 CREATE OR REPLACE FUNCTION pnl__invoice(in_id int) RETURNS SETOF pnl_line AS
 $$
 SELECT a.id, a.accno, a.description, a.category, 
-       ah.id, ah.accno, ah.description,
+       ah.id, ah.accno, 
+       ah.description, g.accno, g.description,
        CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
   FROM account a
   JOIN account_heading ah on a.heading = ah.id
   JOIN acc_trans ac ON a.id = ac.chart_id
   JOIN account_heading_tree at ON a.heading = at.id
+LEFT JOIN gifi g ON a.gifi_accno = g.accno
  WHERE ac.approved is true and ac.trans_id = $1
  GROUP BY a.id, a.accno, a.description, a.category, 
           ah.id, ah.accno, ah.description, at.path
@@ -202,7 +209,8 @@ UNION ALL
    SELECT id FROM ar WHERE approved is true AND entity_credit_account = $1
 )
 SELECT a.id, a.accno, a.description, a.category, 
-       ah.id, ah.accno, ah.description,
+       ah.id, ah.accno, 
+       ah.description, g.accno, g.description,
        CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
   FROM account a
   JOIN account_heading ah on a.heading = ah.id
