@@ -676,7 +676,7 @@ Note that in_transactions is a two-dimensional numeric array.  Of each
 sub-array, the first element is the (integer) transaction id, and the second
 is the amount for that transaction.  $$;
 
-DROP FUNCTION  payment_post 
+DROP FUNCTION IF EXISTS payment_post 
 (in_datepaid      		  date,
  in_account_class 		  int,
  in_entity_credit_id                     int,
@@ -733,7 +733,7 @@ DECLARE default_currency char(3);
 DECLARE current_exchangerate numeric;
 DECLARE old_exchangerate numeric;
 DECLARE fx_gain_loss_amount numeric;
-DECLARE gain_loss_acc_id int;
+DECLARE gain_loss_accno_id int;
 DECLARE sign int;
 BEGIN
    IF array_upper(in_amount, 1) <> array_upper(in_cash_account_id, 1) THEN
@@ -764,6 +764,29 @@ BEGIN
 	          in_account_class, in_datepaid, var_employee,
              in_curr, in_notes, in_entity_credit_id);
 
+  -- Assuming a transaction with foreign currency being recorded,
+  -- at an exchangerate of 3 upon AR creation and an exchangerate of 2
+  -- upon payment. The owed (and paid) amount is 20 in the foreign currency.
+
+  -- 5000 = 'AR' account
+  -- 5100 = 'Cash' account
+  -- 9999 = fx gain/loss account
+
+  -- +-------+----------+----------+----------+----------+
+  -- | accno | Deb (bc) | Deb (tc) | Cre (bc) | Cre (tc) |
+  -- +-------+----------+----------+----------+----------+
+  -- | 5000  |          |          |    60.00 |    20.00 |
+  -- +-------+----------+----------+----------+----------+
+  -- | 5100  |    40.00 |    20.00 |          |          |
+  -- +-------+----------+----------+----------+----------+
+  -- | 9999  |    20.00 |    00.00 |          |          |
+  -- +-------+----------+----------+----------+----------+
+
+  -- +-------+----------+----------+----------+----------+
+  -- | Total |    60.00 |    20.00 |    60.00 |    20.00 |
+  -- +-------+----------+----------+----------+----------+
+
+
    SELECT currval('payment_id_seq') INTO var_payment_id;
    IF (array_upper(in_cash_account_id, 1) > 0) THEN
 	  FOR out_count IN 
@@ -771,10 +794,14 @@ BEGIN
 			array_upper(in_cash_account_id, 1)
 	  LOOP
        -- Insert cash account side of the payment
+       -- Each payment can have its own cash account set through the UI
 	    INSERT INTO acc_trans
-          (chart_id, amount, trans_id, transdate, approved, source, memo)
+          (chart_id, amount_bc, curr, amount_tc, trans_id,
+           transdate, approved, source, memo)
 		   VALUES (in_cash_account_id[out_count], 
 		           in_amount[out_count]*current_exchangerate*sign,
+                 in_curr,
+                 in_amount[out_count]*sign,
 		           in_transaction_id[out_count],
                  in_datepaid,
                  coalesce(in_approved, true), 
@@ -808,10 +835,12 @@ BEGIN
                 AND ( c.link = 'AP' OR c.link = 'AR' );
                 
          -- Now we post the AP/AR transaction
-         INSERT INTO acc_trans (chart_id, amount,
+         INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
                                 trans_id, transdate, approved, source, memo)
 		      VALUES (var_account_id,
-                    in_amount[out_count]*old_exchangerate*sign,
+                    in_amount[out_count]*old_exchangerate*sign*-1,
+                    in_curr,
+                    in_amount[out_count]*sign*-1,
 		              in_transaction_id[out_count],
                     in_datepaid,
                     coalesce(in_approved, true), 
@@ -819,36 +848,40 @@ BEGIN
                     in_memo[out_count]);
                     
          -- Calculate the gain/loss on the transaction
+         -- everything above depends on this being an AR/AP posting
+         -- the PNL posting and decision to post a gain or loss does not
+         --  --> incorporate sign here instead of when posting.
          fx_gain_loss_amount :=
-             in_amount[out_count]*current_exchangerate
-             - in_amount[out_count]*old_exchangerate;
-             
-         IF (in_account_class = 1) THEN
-           -- negate, just as above
-           fx_gain_loss_amount := fx_gain_loss_amount * -1;
-         END IF;
+             in_amount[out_count]*sign*(old_exchangerate-current_exchangerate);
 
-         IF (fx_gain_loss_amount < 0) THEN
+         IF (fx_gain_loss_amount > 0) THEN
             SELECT value::int INTO gain_loss_accno_id             
               FROM defaults
              WHERE setting_key = 'fxgain_accno_id';
-         ELSIF (fx_gain_loss_amount > 0) THEN
+         ELSIF (fx_gain_loss_amount < 0) THEN
             SELECT value::int INTO gain_loss_accno_id             
               FROM defaults
              WHERE setting_key = 'fxloss_accno_id';
          END IF;
-         INSERT INTO acc_trans
-               (chart_id, amount, trans_id, transdate, approved, source)
-            VALUES (gain_loss_accno_id,
-                    fx_gain_loss_amount,
-                    in_transaction_id[out_count],
-                    in_datepaid,
-                    coalesce(in_approved, true),
-                    in_source[out_count]);
+         IF gain_loss_accno_id IS NOT NULL THEN
+           INSERT INTO acc_trans
+                 (chart_id, amount_bc, curr, amount_tc,
+                  trans_id, transdate, approved, source)
+              -- In this transaction we can't use the default currency,
+              -- because by definition the tc and bc amounts are the same.
+              VALUES (gain_loss_accno_id,
+                      fx_gain_loss_amount,
+                      in_curr,
+                      0, -- the transaction currency side is zero by definition
+                      in_transaction_id[out_count],
+                      in_datepaid,
+                      coalesce(in_approved, true),
+                      in_source[out_count]);
 
-         -- Now we set the links
-         INSERT INTO payment_links 
-		     VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
+           -- Now we set the links
+           INSERT INTO payment_links 
+	           VALUES (var_payment_id, currval('acc_trans_entry_id_seq'), 1);
+         END IF;
      END LOOP;
    END IF;
 
@@ -863,7 +896,6 @@ BEGIN
 	              in_notes, in_approved);
      SELECT currval('id') INTO var_gl_id;
 
-     -- SET THE GL_ID FIELD ON PAYMENT RECORD
      UPDATE payment SET gl_id = var_gl_id 
      WHERE id = var_payment_id;
 
@@ -871,9 +903,12 @@ BEGIN
 			array_lower(in_op_cash_account_id, 1) ..
 			array_upper(in_op_cash_account_id, 1)
      LOOP
-        INSERT INTO acc_trans (chart_id, amount, trans_id,
-                               transdate, approved, source, memo)
+        -- Cash account side of the transaction
+        INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc,
+                               trans_id, transdate, approved, source, memo)
              VALUES (in_op_cash_account_id[out_count],
+                     in_op_amount[out_count]*current_exchangerate*sign,
+                     in_curr,
                      in_op_amount[out_count]*sign,
                      var_gl_id,
                      in_datepaid,
@@ -893,6 +928,8 @@ BEGIN
         INSERT INTO acc_trans (chart_id, amount, trans_id,
                                transdate, approved, source, memo)
              VALUES (in_op_account_id[out_count],
+                     in_op_amount[out_count]*current_exchangerate*sign,
+                     in_curr,
                      in_op_amount[out_count]*sign,
                      var_gl_id,
                      in_datepaid,
