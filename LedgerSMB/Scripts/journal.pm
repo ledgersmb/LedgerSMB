@@ -85,7 +85,7 @@ Returns and displays the chart of accounts
 
 sub chart_of_accounts {
     my ($request) = @_;
-    for my $col(qw(accno description gifi_accno debit_balance credit_balance)){
+    for my $col(qw(accno description gifi debit_balance credit_balance)){
         $request->{"col_$col"} = '1'; 
     }
     if ($request->is_allowed_role({allowed_roles => ['account_edit']})){
