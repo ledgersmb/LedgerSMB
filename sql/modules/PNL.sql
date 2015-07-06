@@ -230,7 +230,7 @@ CREATE OR REPLACE FUNCTION pnl__invoice(in_id int) RETURNS SETOF pnl_line AS
 $$
 SELECT a.id, a.accno, a.description, a.category, 
        ah.id, ah.accno,
-       ah.description, g.accno, g.description,
+       ah.description, 
        CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
   FROM account a
   JOIN account_heading ah on a.heading = ah.id
