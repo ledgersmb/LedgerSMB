@@ -433,8 +433,7 @@ RETURNS int as $$
 			AND ac.transdate <= in_end_date 
                         AND (ac.entry_id > coalesce(r.max_ac_id, 0))
 		GROUP BY gl.ref, ac.source, ac.transdate,
-			ac.memo, ac.voucher_id, gl.table, 
-                        case when gl.table = 'gl' then gl.id else 1 end
+			ac.memo, ac.voucher_id
 		HAVING count(rl.id) = 0;
 
 		UPDATE cr_report set updated = now(),
