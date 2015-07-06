@@ -450,16 +450,9 @@ sub display_payments {
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
     $payment->{default_currency} =  $payment->get_default_currency();;
     $payment->get_payment_detail_data();
-    $request->open_form();
-    my $db_fx = $payment->get_exchange_rate($payment->{currency},
-                                            $payment->{batch_date});
-    if ($db_fx){
-        $payment->{exchangerate} = $db_fx->bstr;
-        $payment->{fx_from_db} = 1;
-    } else {
-        $payment->{exchangerate} = undef;
-    }
-    $payment->{grand_total} = LedgerSMB::PGNumber->from_input(0);
+    $payment->open_form();
+    $payment->{exchangerate} = undef;
+    $payment->{grand_total} = 0;
     for (@{$payment->{contact_invoices}}){
         my $contact_total = 0;
         my $contact_to_pay = 0;
@@ -767,9 +760,12 @@ my @column_headers =  ({text => $locale->text('Invoice')},
      # entered for the current date and the user selects a different date after opening
      # the screen: today's rate would be used with no way for the user to override, if
      # we would simply take the exrate from the request.
-     $exchangerate = $Payment->get_exchange_rate($request->{curr},
-                         $request->{datepaid} ? $request->{datepaid}
-                         : $Payment->{current_date});
+        # $exchangerate = $Payment->get_exchange_rate(
+        #     $request->{curr},
+        #     $request->{datepaid} ? $request->{datepaid} : $Payment->{current_date}
+        #);
+
+        if ((! $exchangerate) && $request->{datepaid} eq $request->{olddatepaid}) {
      $exchangerate = $request->{exrate}
         if ((! $exchangerate) &&
         $request->{datepaid} eq $request->{olddatepaid});
@@ -1194,6 +1190,8 @@ for (my $i=1 ; $i <= $request->{overpayment_qty}; $i++) {
     $Payment->{op_source}          =  $Payment->_db_array_scalars(@op_source);
     $Payment->{op_memo}            =  $Payment->_db_array_scalars(@op_memo);
     $Payment->{op_account_id}      =  $Payment->_db_array_scalars(@op_account_id);
+    $Payment->{exchangerate}       =  $Payment->{exrate};
+
 # Ok, passing the control to postgresql and hoping for the best...
 
     $Payment->post_payment();
@@ -1374,10 +1372,7 @@ $default_currency = $Payment->get_default_currency();
 if ($default_currency ne $request->{curr} ) {
 # DOES THE CURRENCY IN USE HAS AN EXCHANGE RATE?, IF SO
 # WE MUST SET THE VALUE, OTHERWISE THE UI WILL HANDLE IT
-  $exchangerate = $Payment->{exrate} ?
-                  $Payment->{exrate} :
-                  $Payment->get_exchange_rate($request->{curr},
-                  $Payment->{datepaid} ? $Payment->{datepaid} : $Payment->{current_date});
+        $exchangerate = $Payment->{exrate};
   if ($exchangerate) {
     $ui_exchangerate = {
      id => 'exrate',
