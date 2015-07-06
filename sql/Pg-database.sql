@@ -115,7 +115,7 @@ it mostly serves as the canonical definition of currency codes.$$;
 CREATE TABLE account_checkpoint (
   end_date date not null, 
   account_id int not null references account(id), 
-  amount numeric not null,
+  amount_bc numeric not null,
   amount_tc numeric not null,
   curr char(3) not null references currency(curr),
   id serial not null unique,

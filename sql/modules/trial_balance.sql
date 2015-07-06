@@ -91,7 +91,7 @@ BEGIN
 
 
     RETURN QUERY
-       WITH ac (transdate, amount, chart_id) AS (
+       WITH ac (transdate, amount_bc, chart_id) AS (
            WITH RECURSIVE bu_tree (id, path) AS (
             SELECT id, id::text AS path
               FROM business_unit
@@ -101,7 +101,7 @@ BEGIN
               FROM business_unit bu
               JOIN bu_tree ON bu_tree.id = bu.parent_id
             )
-       SELECT ac.transdate, ac.amount, ac.chart_id
+       SELECT ac.transdate, ac.amount_bc, ac.chart_id
          FROM acc_trans ac
          JOIN (SELECT id, approved FROM ar UNION ALL
                SELECT id, approved FROM ap UNION ALL
@@ -119,30 +119,30 @@ BEGIN
          case when in_date_from is null then 0 else
               COALESCE(t_balance_sign, 
                       CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END )
-              * (coalesce(cp.amount, 0) 
+              * (coalesce(cp.amount_bc, 0) 
               + sum(CASE WHEN ac.transdate < coalesce(in_date_from, 
                                                       t_roll_forward)
-                         THEN ac.amount ELSE 0 END)) end, 
+                         THEN ac.amount_bc ELSE 0 END)) end, 
               sum(CASE WHEN ac.transdate BETWEEN coalesce(in_date_from, 
                                                          t_roll_forward)
                                                  AND coalesce(in_date_to, 
                                                          ac.transdate)
-                             AND ac.amount < 0 THEN ac.amount * -1 ELSE 0 END) -
+                             AND ac.amount_bc < 0 THEN ac.amount_bc * -1 ELSE 0 END) -
               case when in_date_from is null then coalesce(cp.debits, 0) else 0 end, 
               sum(CASE WHEN ac.transdate BETWEEN coalesce(in_date_from, 
                                                          t_roll_forward) 
                                                  AND coalesce(in_date_to, 
                                                          ac.transdate)
-                             AND ac.amount > 0 THEN ac.amount ELSE 0 END) + 
+                             AND ac.amount_bc > 0 THEN ac.amount_bc ELSE 0 END) + 
               case when in_date_from is null then coalesce(cp.credits, 0) else 0 end, 
               COALESCE(t_balance_sign, 
                        CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END)
-              * (coalesce(cp.amount, 0) + sum(ac.amount)),
-              CASE WHEN sum(ac.amount) + coalesce(cp.amount, 0) < 0 
-                   THEN (sum(ac.amount) + coalesce(cp.amount, 0)) * -1 
+              * (coalesce(cp.amount_bc, 0) + sum(ac.amount_bc)),
+              CASE WHEN sum(ac.amount_bc) + coalesce(cp.amount_bc, 0) < 0 
+                   THEN (sum(ac.amount_bc) + coalesce(cp.amount_bc, 0)) * -1 
                    ELSE NULL END,
-              CASE WHEN sum(ac.amount) + coalesce(cp.amount, 0) > 0 
-                   THEN sum(ac.amount) + coalesce(cp.amount, 0) ELSE NULL END
+              CASE WHEN sum(ac.amount_bc) + coalesce(cp.amount_bc, 0) > 0 
+                   THEN sum(ac.amount_bc) + coalesce(cp.amount_bc, 0) ELSE NULL END
          FROM account a
     LEFT JOIN ac ON ac.chart_id = a.id
     LEFT JOIN account_checkpoint cp ON cp.account_id = a.id
@@ -151,8 +151,8 @@ BEGIN
                OR a.id = ANY(in_accounts))
               AND (in_heading IS NULL OR in_heading = a.heading)
      GROUP BY a.id, a.accno, a.description, a.category, a.gifi_accno,
-              cp.end_date, cp.account_id, cp.amount, cp.debits, cp.credits
-       HAVING abs(cp.amount) > 0 or count(ac) > 0
+              cp.end_date, cp.account_id, cp.amount_bc, cp.debits, cp.credits
+       HAVING abs(cp.amount_bc) > 0 or count(ac) > 0
      ORDER BY a.accno;
 END;
 $$ language plpgsql;
