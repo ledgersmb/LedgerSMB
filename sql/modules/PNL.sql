@@ -226,6 +226,22 @@ SELECT a.id, a.accno, a.description, a.category,
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
 
+CREATE OR REPLACE FUNCTION pnl__invoice(in_id int) RETURNS SETOF pnl_line AS
+$$
+SELECT a.id, a.accno, a.description, a.category, 
+       ah.id, ah.accno,
+       ah.description, 
+       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
+  FROM account a
+  JOIN account_heading ah on a.heading = ah.id
+  JOIN acc_trans ac ON a.id = ac.chart_id
+  JOIN account_heading_tree at ON a.heading = at.id
+ WHERE ac.approved AND ac.trans_id = $1 AND a.category IN ('I', 'E')
+ GROUP BY a.id, a.accno, a.description, a.category, 
+          ah.id, ah.accno, ah.description, at.path
+ ORDER BY a.category DESC, a.accno ASC;
+$$ LANGUAGE SQL;
+
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
 COMMIT;
