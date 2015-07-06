@@ -350,7 +350,7 @@ BEGIN
                              END) AS total_due,
                          compound_array(ARRAY[[
                               a.id::text, a.invnumber, a.transdate::text, 
-                              a.amount::text, (a.amount - p.due)::text,
+                              a.amount_bc::text, (a.amount_bc - p.due)::text,
                               (CASE WHEN c.discount_terms 
                                         < extract('days' FROM age(a.transdate))
                                    THEN 0
@@ -378,20 +378,20 @@ BEGIN
                            
                     FROM entity e
                     JOIN entity_credit_account c ON (e.id = c.entity_id)
-                    JOIN (SELECT ap.id, invnumber, transdate, amount, entity_id, 
+                    JOIN (SELECT ap.id, invnumber, transdate, amount_bc, entity_id, 
                                  curr, 1 as invoice_class,
                                  entity_credit_account, on_hold, v.batch_id,
-                                 approved, paid
+                                 approved, paid_deprecated
                             FROM ap
                        LEFT JOIN (select * from voucher where batch_class = 1) v 
                                  ON (ap.id = v.trans_id)
                            WHERE in_account_class = 1
                                  AND (v.batch_class = 1 or v.batch_id IS NULL)
                            UNION
-                          SELECT ar.id, invnumber, transdate, amount, entity_id,
+                          SELECT ar.id, invnumber, transdate, amount_bc, entity_id,
                                  curr, 2 as invoice_class,
                                  entity_credit_account, on_hold, v.batch_id,
-                                 approved, paid
+                                 approved, paid_deprecated
                             FROM ar
                        LEFT JOIN (select * from voucher where batch_class = 2) v 
                                  ON (ar.id = v.trans_id)
@@ -401,9 +401,9 @@ BEGIN
                          ) a ON (a.entity_credit_account = c.id)
                     JOIN transactions t ON (a.id = t.id)
                     JOIN (SELECT acc_trans.trans_id, 
-                                 sum(CASE WHEN in_account_class = 1 THEN amount
+                                 sum(CASE WHEN in_account_class = 1 THEN amount_bc
                                           WHEN in_account_class = 2 
-                                          THEN amount * -1
+                                          THEN amount_bc * -1
                                      END) AS due 
                             FROM acc_trans 
                             JOIN account coa ON (coa.id = acc_trans.chart_id)
