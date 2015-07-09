@@ -163,7 +163,7 @@ sub defaults_screen{
     unshift @language_code_list, {}
         if ! defined $request->{default_language};
 
-    my $expense_accounts = $setting_handle->accounts_by_link('IC_expense');
+    my $expense_accounts = $setting_handle->accounts_by_link('IC_cogs');
     my $income_accounts = $setting_handle->accounts_by_link('IC_income');
     my $fx_loss_accounts = $setting_handle->all_accounts();
     my $fx_gain_accounts = $setting_handle->all_accounts();
