@@ -200,7 +200,6 @@ if ($progress) {
 	print "\$mc = $mc\n";
 }
 $logger->info("load modules mc=$mc");
-$database->process_roles('Roles.sql');
 
   # Load a chart of accounts
 $dbh->disconnect;
