@@ -4,6 +4,7 @@ Released 2014-09-15
 Changelog for 1.4.13
 * Account edit group can checkboxes and mark accounts obsolete (Chris T)
 * Fixed time cards failing to save (GitHub bug 636) (Erik H)
+* List COGS accounts under 'Default COGS' (instead of expense) (Erik H)
 * Fix preprocessing Roles.sql was required in 1.3 (obsolete in 1.4) (Erik H)
 * Fix entry, selection and listing of GIFI account codes (Erik H)
 
