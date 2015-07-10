@@ -16,6 +16,7 @@ Changelog for 1.4.13
 * List COGS accounts under 'Default COGS' (instead of expense) (Erik H)
 * Fix preprocessing Roles.sql was required in 1.3 (obsolete in 1.4) (Erik H)
 * Fix entry, selection and listing of GIFI account codes (Erik H)
+* Fix 'Business Type' not showing up in Contact Account tab (Erik H)
 
 Erik H is Erik Huelsmann
 Chris T is Chris Travers
