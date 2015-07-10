@@ -18,9 +18,11 @@ Changelog for 1.4.13
 * Fix entry, selection and listing of GIFI account codes (Erik H)
 * Fix entity "Accounts" 'Save as' button (Erik H)
 * Fix 'Business Type' not showing up in Contact Account tab (Erik H)
+* Fix balance sheet CSV missing 'description' column content (Erik H)
 
 Erik H is Erik Huelsmann
 Chris T is Chris Travers
+
 
 Changelog for 1.4.12
 * Updated German translation by Adrian v. Meibom <meibomberlin@googlemail.com>
@@ -83,10 +85,12 @@ Kaiser F is Kaiser Farrel
 Erik H is Erik Huelsmann
 John L is John Locke
 
+
 Changelog for 1.4.9
 * Removed optional dependency on LaTeX from starman preload (Chris T)
 
 Chris T is Chris Travers
+
 
 Changelog for 1.4.8
 * Fixed end-date not a date widget on employee div (Chris T)
