@@ -12,6 +12,7 @@ Changelog for 1.4.13
 Erik H is Erik Huelsmann
 Chris T is Chris Travers
 
+
 Changelog for 1.4.12
 * Updated German translation by Adrian v. Meibom <meibomberlin@googlemail.com>
 * Fixed printing of purchase order due to SQL error (bug 1359) (Erik H)
@@ -184,7 +185,6 @@ Changelog for 1.4.2
 
 Chris T is Chris Travers
 
->>>>>>> /tmp/Changelog~other.LbdXqA
 Changelog for 1.4.1
 * Fixed bug 1205, copy does not copy roles (Chris T)
 * Added multi-date inventory uploads (Erik H)
