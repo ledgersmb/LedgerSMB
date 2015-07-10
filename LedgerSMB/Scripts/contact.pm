@@ -349,6 +349,7 @@ sub _main_screen {
              entity_class => $entity_class,
       location_class_list => \@location_class_list,
        contact_class_list => \@contact_class_list,
+           business_types => \@business_types,
                 all_taxes => \@all_taxes,
                 all_years => \@all_years,
                all_months =>  LedgerSMB::App_State::all_months()->{dropdown},
