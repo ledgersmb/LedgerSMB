@@ -577,7 +577,7 @@ push @tests, __PACKAGE__->new(
     name => 'no_headers_defined',
     display_cols => ['accno', 'charttype', 'description'],
  instructions => $locale->text(
-                   'Please add at least one header to your CoA which sorts before all other account numbers (no UI available)'),
+                   'Please add at least one header to your CoA which sorts before all other account numbers (in the standard SL UI)'),
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -596,7 +596,7 @@ push @tests, __PACKAGE__->new(
     name => 'insufficient_headings',
     display_cols => ['accno', 'description'],
  instructions => $locale->text(
-                   'Please add a header to the CoA which sorts before the listed accounts (usually "0000" works) (no UI available)'),
+                   'Please add a header to the CoA which sorts before the listed accounts (usually "0000" works) (in the standard SL UI)'),
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
@@ -614,11 +614,11 @@ push @tests, __PACKAGE__->new(
                           and exists (select 1
                                        from (select unnest(array_from_string(link,':') as single_link))
                                       where single_link ~ '^(AR|AP|IC)_')",
-    display_name => $locale->text(''),
+    display_name => $locale->text('Accounts can\'t be simultaneously used as summary accounts (AR,AP,IC) and be listed in dropdowns elsewhere.'),
     name => 'disallowed_link_combinations',
-    display_cols => ['accno', 'description'],
+    display_cols => ['accno', 'description', 'link'],
  instructions => $locale->text(
-                   'Please add a header to the CoA which sorts before the listed accounts [usually "0000" works] (no UI available)'),
+                   'Please unmark accounts as summary accounts, or remove dropdown checkmarks (in the standard SL UI)'),
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
