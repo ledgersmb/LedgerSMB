@@ -350,6 +350,7 @@ sub _main_screen {
              entity_class => $entity_class,
       location_class_list => \@location_class_list,
        contact_class_list => \@contact_class_list,
+           business_types => \@business_types,
                 all_taxes => \@all_taxes,
                 all_years => \@all_years,
                all_months =>  LedgerSMB::App_State::all_months()->{dropdown},
@@ -622,7 +623,7 @@ This inserts a new credit account.
 
 sub save_credit_new {
     my ($request) = @_;
-    delete $request->{credit_id};
+    delete $request->{id};
     save_credit($request);
 }
 

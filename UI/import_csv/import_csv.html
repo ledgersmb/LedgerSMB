@@ -17,12 +17,15 @@
 <?lsmb IF multi ?>
 <div class="listtop"><?lsmb text('Batch Information') ?></div>
 <?lsmb END ?>
+<div data-dojo-type="lsmb/lib/TabularForm"
+     data-dojo-props="cols:1">
 <div class="inputrow" id = "referencerow">
 <?lsmb PROCESS input element_data = {
     type  = "text"
     class = "reference"
     name  = "reference"
-    label = text('Reference')
+    title = text('Reference')
+    label = "_none_"
     value = reference
     size  = 15
 } ?>
@@ -32,7 +35,8 @@
     type  = "text"
     class = "description"
     name  = "description"
-    label = text('Description')
+    title = text('Description')
+    label = "_none_"
     value = description
 } ?>
 </div>
@@ -40,11 +44,14 @@
 <?lsmb PROCESS input element_data = {
      type = "text"
      class = "date"
-     label = text("Transaction Date") #" 
+     title = text("Transaction Date") #'
+     label = "_none_"
      name = "transdate"
      value = transdate
      size = 12
 } ?>
+</div>
+</div>
 <div class="inputrow" id="filerow">
 <?lsmb PROCESS input element_data = {
        name = "import_file"

@@ -8,7 +8,7 @@ account,description,is_heading,heading_account,amount <?lsmb report.to_date -?>
 <?lsmb FOREACH cat IN ['A', 'L', 'Q'] ; -?>
 <?lsmb FOREACH line IN report.balance_sheet.${cat}.lines ; -?>
 
-<?lsmb line.account_number -?>,"<?lsmb line.account_description ?>",<?lsmb IF line.is_heading -?>Y<?lsmb ELSE ?>N<?lsmb END ?>,<?lsmb line.heading_path.-1 ?>,<?lsmb line.balance -?>
+<?lsmb line.account_number -?>,"<?lsmb line.account_desc ?>",<?lsmb IF line.is_heading -?>Y<?lsmb ELSE ?>N<?lsmb END ?>,<?lsmb line.heading_path.-1 ?>,<?lsmb line.balance -?>
 <?lsmb FOREACH c IN comparisons ; -?>
 ,<?lsmb c.index.${line.account_number} -?>
 <?lsmb END; -?>

@@ -168,6 +168,18 @@ sub list {
     return @{$self->{account_list}};
 }
 
+=item gifi_list()
+
+Returns a list of all gifi codes and descriptions.
+
+=cut
+
+sub gifi_list {
+    my $self = shift @_;
+    @{$self->{gifi_list}} = $self->exec_method(funcname => 'gifi__list');
+    return @{$self->{gifi_list}};
+}
+
 =item generate_links()
 
 A mostly-private method for generating and checking whether link data is valid.

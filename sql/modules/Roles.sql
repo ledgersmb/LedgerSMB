@@ -948,6 +948,7 @@ SELECT lsmb__grant_perms('account_edit', obj, perm)
   FROM unnest(array['account'::text, 'account_heading', 'account_link', 
                     'cr_coa_to_account', 'tax']) obj
  CROSS JOIN unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) perm;
+SELECT lsmb__grant_perms('account_edit', 'account_link', 'DELETE');
 
 SELECT lsmb__create_role('account_delete');
 SELECT lsmb__grant_perms('account_delete', obj, 'DELETE')
@@ -1019,7 +1020,9 @@ SELECT lsmb__grant_exec('users_manage', 'admin__get_roles_for_user(int)');
 SELECT lsmb__grant_exec('users_manage', 'admin__save_user(int,int,text,text,bool)');
 SELECT lsmb__grant_exec('users_manage', 'admin__delete_user(TEXT, bool)');
 SELECT lsmb__grant_perms('users_manage', 'role_view', 'SELECT');
-SELECT lsmb__grant_menu('users_manage', 222, 'allow');
+SELECT lsmb__grant_menu('users_manage', 48, 'allow');
+SELECT lsmb__grant_menu('users_manage', 49, 'allow');
+
 
 SELECT lsmb__create_role('system_admin');
 SELECT lsmb__grant_role('system_admin', rname)
@@ -1142,8 +1145,20 @@ BEGIN
 IF TG_OP = 'DELETE' THEN
    RETURN OLD;
 ELSE 
-   IF pg_has_role('postgres', 'USAGE') THEN RETURN NEW; -- is superuser
+   PERFORM 1 FROM pg_catalog.pg_roles rol
+            WHERE rolname = CURRENT_USER
+              AND rolsuper;
+   IF FOUND THEN RETURN NEW; -- is superuser
    END IF;
+   PERFORM 1 FROM pg_catalog.pg_database db
+             INNER JOIN pg_catalog.pg_roles rol
+             ON db.datdba = rol.oid
+          WHERE db.datname = current_database()
+            AND rol.rolname = CURRENT_USER;
+   IF FOUND THEN RETURN NEW; -- is database owner
+   END IF;                   -- without this permission, non-superusers,
+                             -- with create-role *and* create-db perms
+                             -- can't create new companies
    SELECT * INTO r_eclass from entity_class WHERE id = NEW.entity_class;
    IF pg_has_role(SESSION_USER,
                   lsmb__role('contact_class_'

@@ -94,7 +94,7 @@ sub columns {
   href_base => '',
      pwidth => '6', },
 
-    {col_id => 'gifi_accno',
+    {col_id => 'gifi',
        name => LedgerSMB::Report::text('GIFI'),
        type => 'text',
      pwidth => '1', },
