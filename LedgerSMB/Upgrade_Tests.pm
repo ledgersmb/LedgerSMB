@@ -533,6 +533,40 @@ push @tests, __PACKAGE__->new(
     max_version => '2.8'
     );
 
+push @tests, __PACKAGE__->new(
+    test_query => "select *
+                     from chart
+                    where not charttype in ('H', 'A')",
+    display_name => $locale->text('Unknown '),
+    name => 'Unknown charttype; should be H(eader)/A(ccount))',
+    display_cols => ['accno', 'charttype', 'description'],
+    column => 'charttype',
+ instructions => $locale->text(
+                   'Please fix the pricegroup data in your partscustomer table (no UI available)'),
+    table => 'chart',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+
+push @tests, __PACKAGE__->new(
+    test_query => "select *
+                     from chart
+                    where charttype = 'A'
+                          and category not in ('A','L','E','I','Q')",
+    display_name => $locale->text('Unknown '),
+    name => 'Unknown account category (should be A(sset)/L(iability)/E(xpense)/I(ncome)/(e)Q(uity))',
+    display_cols => ['accno', 'category', 'description'],
+    column => 'category',
+ instructions => $locale->text(
+                   'Please fix the pricegroup data in your partscustomer table (no UI available)'),
+    table => 'chart',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
 #  ### On the vendor side, SL doesn't use pricegroups
 # push @tests, __PACKAGE__->new(
 #     test_query => "select *
