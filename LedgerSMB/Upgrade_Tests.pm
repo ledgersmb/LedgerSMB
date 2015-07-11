@@ -431,6 +431,24 @@ push @tests, __PACKAGE__->new(
 #     max_version => '2.8'
 #     );
 
+push @tests, __PACKAGE__->new(
+   test_query => "select * from parts where obsolete is not true 
+                  and partnumber in 
+                  (select partnumber from parts 
+                  WHERE obsolete is not true
+                  group by partnumber having count(*) > 1)",
+         name => 'duplicate_partnumbers',
+ display_name => $locale->text('Unique nonobsolete partnumbers'),
+ instructions => $locale->text(
+                   'Make non-obsolete partnumbers unique'),
+ display_cols => ['partnumber', 'description', 'sellprice'],
+       column => 'partnumber',
+        table => 'parts',
+      appname => 'sql-ledger',
+  min_version => '2.7',
+  max_version => '2.8'
+);
+
 
 push @tests, __PACKAGE__->new(
     test_query => "select *
