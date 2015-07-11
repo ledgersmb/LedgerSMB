@@ -19,6 +19,7 @@ Changelog for 1.4.13
 * Fix entity "Accounts" 'Save as' button (Erik H)
 * Fix 'Business Type' not showing up in Contact Account tab (Erik H)
 * Fix balance sheet CSV missing 'description' column content (Erik H)
+* Fix can't delete draft transactions with reporting units (SF 1391) (Erik H)
 
 Erik H is Erik Huelsmann
 Chris T is Chris Travers
