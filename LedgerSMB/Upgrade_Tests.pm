@@ -318,6 +318,22 @@ push @tests, __PACKAGE__->new(
 push @tests,__PACKAGE__->new(
     test_query => "select *
                     from customer
+                   where customernumber is null",
+    display_name => $locale->text('Empty customernumbers'), 
+    name => 'no_empty_customernumbers',
+    display_cols => ['id', 'customernumber', 'name'],
+ instructions => $locale->text(
+                   'Please make sure there are no empty customer numbers.'),
+    column => 'customernumber',
+    table => 'customer',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+push @tests,__PACKAGE__->new(
+    test_query => "select *
+                    from customer
                    where customernumber in (select customernumber
                                               from customer
                                              group by customernumber
@@ -329,6 +345,22 @@ push @tests,__PACKAGE__->new(
                    'Please make all customer numbers unique'),
     column => 'customernumber',
     table => 'customer',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+push @tests,__PACKAGE__->new(
+    test_query => "select *
+                    from vendor
+                   where vendornumber is null",
+    display_name => $locale->text('Empty vendornumbers'), 
+    name => 'no_empty_vendornumbers',
+    display_cols => ['id', 'vendornumber', 'name'],
+ instructions => $locale->text(
+                   'Please make sure there are no empty vendor numbers.'),
+    column => 'vendornumber',
+    table => 'vendor',
     appname => 'sql-ledger',
     min_version => '2.7',
     max_version => '2.8'
