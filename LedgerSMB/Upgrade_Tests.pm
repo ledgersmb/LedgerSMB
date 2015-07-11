@@ -542,7 +542,7 @@ push @tests, __PACKAGE__->new(
     display_cols => ['accno', 'charttype', 'description'],
     column => 'charttype',
  instructions => $locale->text(
-                   'Please fix the pricegroup data in your partscustomer table (no UI available)'),
+                   'Please fix the presented rows to either be "H" or "A"'),
     table => 'chart',
     appname => 'sql-ledger',
     min_version => '2.7',
