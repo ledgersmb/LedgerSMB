@@ -1,5 +1,5 @@
 <?lsmb INCLUDE 'ui-header.html' 
-	stylesheet=form.stylesheet ?>
+	    include_stylesheet=[ 'css/journal.css' ] ?>
 <?lsmb PROCESS elements.html ?> 
 
 <body class="<?lsmb dojo_theme ?>">
@@ -46,7 +46,7 @@
                         type = 'text'
 			class = 'date'
 	      } ?>
-          </td>
+     </td>
 	</tr>
 	<tr>
           <th align="right"><?lsmb text('Description') ?></th>
@@ -103,13 +103,30 @@
 
 	  </td>
 	</tr>
+   <tr>
+     <th align="right"><?lsmb text('FX') ?></th>
+     <td colspan="3">
+       <?lsmb PROCESS input element_data = {
+              name="fx_transaction"
+              type="fx_checkbox"
+              class='fx_checkbox'
+              dojo_type="lsmb/journal/fx_checkbox"
+              value=1
+              checked=form.fx_transaction } ?>
+   </tr>
       </table>
     </td>
  </tr>
 
 <tr>
     <td>
-      <table width="100%">
+      <table width="100%" id="transaction-table"
+             <?lsmb IF form.fx_transaction ?>
+             class="fx-transaction"
+             <?lsmb ELSE ?>
+             class="no-fx-transaction"
+             <?lsmb END ?>
+             >
 	  <tr class="listheading">
 	  <th class="listheading"><?lsmb text('Account') ?></th>
 	  <th class="listheading"><?lsmb text('FX') ?></th>
@@ -126,7 +143,12 @@
                <?lsmb END ?>
           <?lsmb END ?>
 	</tr>
-	<?lsmb FOREACH displayrow IN displayrows ?> 
+	  <?lsmb
+        curr = [];
+        FOREACH c IN form.currencies;
+           curr.push({ text = c, value = c });
+        END;
+        FOREACH displayrow IN displayrows ?> 
 	<tr>
 		<?lsmb INDEX=displayrow.index ?>
 		  <td>
@@ -155,26 +177,7 @@
 	  
 		 </td>
 	      
-		      <td>
-
-			    <?lsmb IF  displayrow.fx_transactionset == 1 ?>
-			                   <?lsmb PROCESS input element_data = {
-					      value = 1
-					      type = "checkbox"
-					      checked = "true"
-					      name = "fx_transaction_$INDEX"
-					      id = "fxt_$INDEX"
-                                              } ?>
-			    <?lsmb ELSE ?>
-			                   <?lsmb PROCESS input element_data = {
-					      value = 1
-					      type = "checkbox"
-					      checked = ""
-					      name = "fx_transaction_$INDEX"
-					      id = "fxt_$INDEX"
-                                              } ?>
-			    <?lsmb END ?>
-			    
+		      <td>			    
 
 		      </td>
 		
@@ -270,7 +273,38 @@
                    <?lsmb END ?>
 		  <?lsmb END ?>
 
-        </tr>
+   </tr>
+     <tr class="fx-row">
+       <td><!-- account cell is empty --></td>
+       <td><?lsmb PROCESS select element_data = {
+                  options = curr
+                  name = "curr_$INDEX"
+                  default_values = [displayrow.curr]
+                  } ?></td>
+
+		  <td>
+			  <?lsmb PROCESS input element_data = {
+				  value = displayrow.debit_fx
+				  name = "debit_fx_$INDEX"
+				  type = "currency"
+				  size = 12
+				  accesskey = displayrow.index
+			          id = "deb_fx_$INDEX"
+                                              }  ?>
+		  
+		   </td>
+
+		  <td>
+			  <?lsmb PROCESS input element_data = {
+				  value = displayrow.credit_fx
+				  name = "credit_fx_$INDEX"
+				  type = "currency"
+				  size = 12
+			          id = "cre_fx_$INDEX"
+                                      }  ?>
+		  
+		   </td>
+     </tr>
 	<?lsmb END ?>
         <tr class="listtotal">
 	  <th>&nbsp;</th>

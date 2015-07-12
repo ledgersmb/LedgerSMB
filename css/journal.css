@@ -1,0 +1,8 @@
+
+
+table.fx-transaction tr.fx-row {
+}
+
+table.no-fx-transaction tr.fx-row {
+    display: none;
+}
