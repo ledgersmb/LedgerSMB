@@ -157,6 +157,11 @@ select c.id, c.accno, c.description,
 group by c.id, c.accno, c.description, c.category, c.heading,
          c.gifi_accno, c.contra, c.tax;
 
+
+DROP FUNCTION IF EXISTS journal__add_line(
+  in_account_id int, in_journal_id int, in_amount numeric, 
+  in_cleared bool, in_memo text, in_business_units int[]); 
+
 BEGIN;
 ALTER TABLE account_heading ADD COLUMN category CHAR(1);
 END;
