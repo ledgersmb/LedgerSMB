@@ -35,6 +35,7 @@ define([
     //row2
     'dijit/form/Select',
     'dijit/form/Button',
+    'lsmb/journal/fx_checkbox',
     //more
     'dojo/on'
     ],
@@ -43,7 +44,8 @@ function(
     declare, date_locale, registry, parser, query, ready, wbase, construct,
     // widgets
     tabular, textarea, datebox, checkbox, radio, textbox, 
-    select, button, on) {
+    select, button, fx_checkbox,
+    on) {
     return declare(wbase, {
         nodeMap: { // hierarchy nodeName->class, input type treated as class
                    // for INPUT elements, type beats class.
@@ -101,6 +103,15 @@ function(
                                                 }, input);
 
                                   },
+                      'fx_checkbox': function(input){
+                                        return new fx_checkbox({
+                                             "name": input.name,
+                                            "value": input.value,
+                                            "title": input.title,
+                                         "required": input.required,
+                                          "checked": input.checked
+                                         }, input);
+                                 },
                       'checkbox': function(input){
                                         return new checkbox({
                                              "name": input.name,

@@ -1,7 +1,9 @@
 <?lsmb 
   default_keys = ['id', 'class', 'title']  # Defaults for all attributes
    # Defaults for input attributes 
-  input_keys = ['type', 'name', 'disabled', 'size', 'value', 'dojo_type', 'dojo_params', 'data-dojo-type','data-dojo-props', 'required']  
+   input_keys = ['type', 'name', 'disabled', 'size', 'value',
+                 'dojo_type', 'dojo_params',
+                 'data-dojo-type','data-dojo-props', 'required']  
 
   # ELEMENT DEFAULTS
 
@@ -71,7 +73,7 @@
 	        input_defaults = file_defaults;
 	      CASE 'image';
 	        input_type_keys = input_keys.merge(['alt', 'src']);
-	      CASE ['checkbox'];
+	      CASE ['checkbox','fx_checkbox'];
 	        input_type_keys = input_keys.merge(['checked']);
 	        input_defaults = checkbox_defaults;
 	      CASE ['radio'];
