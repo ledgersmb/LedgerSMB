@@ -97,7 +97,9 @@ our $DBI_TRACE=0;
 # available printers
 our %printer;
 
-my $cfg = Config::IniFiles->new( -file => "ledgersmb.conf" ) || die @Config::IniFiles::errors;
+my $cfg = Config::IniFiles->new( -file =>
+               ($ENV{"LSMB_CONFIG_FILE"} || "ledgersmb.conf"))
+                                 || die @Config::IniFiles::errors;
 
 # Root variables
 for my $var (

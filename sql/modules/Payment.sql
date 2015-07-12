@@ -925,7 +925,7 @@ BEGIN
            array_lower(in_op_account_id, 1) ..
            array_upper(in_op_account_id, 1)
      LOOP
-        INSERT INTO acc_trans (chart_id, amount, trans_id,
+        INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc, trans_id,
                                transdate, approved, source, memo)
              VALUES (in_op_account_id[out_count],
                      in_op_amount[out_count]*current_exchangerate*sign,
@@ -1080,8 +1080,8 @@ DECLARE
 	out_row payment_record;
 BEGIN
 	FOR out_row IN 
-		select sum(CASE WHEN c.entity_class = 1 then a.amount
-				ELSE a.amount * -1 END), c.meta_number, 
+		select sum(CASE WHEN c.entity_class = 1 then a.amount_bc
+				ELSE a.amount_bc * -1 END), c.meta_number, 
 			c.id, e.name as legal_name,
 			compound_array(ARRAY[ARRAY[ch.id::text, ch.accno, 
 				ch.description]]), a.source, 
@@ -1286,14 +1286,14 @@ CREATE OR REPLACE FUNCTION payment_gather_header_info(in_account_class int, in_p
  BEGIN
  FOR out_payment IN 
    SELECT p.id as payment_id, p.reference as payment_reference, p.payment_date,  
-          c.legal_name as legal_name, am.amount as amount, em.first_name, em.last_name, p.currency, p.notes
+          c.legal_name as legal_name, am.amount_bc as amount, em.first_name, em.last_name, p.currency, p.notes
    FROM payment p
    JOIN entity_employee ent_em ON (ent_em.entity_id = p.employee_id)
    JOIN person em ON (ent_em.entity_id = em.entity_id)
    JOIN entity_credit_account eca ON (eca.id = p.entity_credit_id)
    JOIN company c ON   (c.entity_id  = eca.entity_id)
    JOIN payment_links pl ON (p.id = pl.payment_id)
-   LEFT JOIN (  SELECT sum(a.amount) as amount
+   LEFT JOIN (  SELECT sum(a.amount_bc) as amount_bc
  		FROM acc_trans a
  		JOIN account acc ON (a.chart_id = acc.id)
                 JOIN account_link al ON (acc.id =al.account_id)
@@ -1348,7 +1348,7 @@ CREATE OR REPLACE FUNCTION payment_gather_line_info(in_account_class int, in_pay
    FOR out_payment_line IN 
      SELECT pl.payment_id, ac.entry_id, pl.type as link_type, ac.trans_id, a.invnumber as invoice_number,
      ac.chart_id, ch.accno as chart_accno, ch.description as chart_description, ch.link as chart_link,
-     ac.amount,  ac.transdate as trans_date, ac.source, ac.cleared_on, ac.fx_transaction, ac.project_id,
+     ac.amount_bc,  ac.transdate as trans_date, ac.source, ac.cleared_on, ac.fx_transaction, ac.project_id,
      ac.memo, ac.invoice_id, ac.approved, ac.cleared_on, ac.reconciled_on
      FROM acc_trans ac
      JOIN payment_links pl ON (pl.entry_id = ac.entry_id )
