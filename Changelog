@@ -11,7 +11,7 @@ Changelog for 1.4 Series
 Released 2014-09-15
 
 Changelog for 1.4.13
-* Account edit group can checkboxes and mark accounts obsolete (Chris T)
+* Account edit group can checkboxes and mark acocunts obsolete (Chris T)
 * Fixed time cards failing to save (GitHub bug 636) (Erik H)
 * List COGS accounts under 'Default COGS' (instead of expense) (Erik H)
 * Fix preprocessing Roles.sql was required in 1.3 (obsolete in 1.4) (Erik H)
@@ -21,9 +21,9 @@ Changelog for 1.4.13
 * Fix balance sheet CSV missing 'description' column content (Erik H)
 * Fix can't delete draft transactions with reporting units (SF 1391) (Erik H)
 
+
 Erik H is Erik Huelsmann
 Chris T is Chris Travers
-
 
 Changelog for 1.4.12
 * Updated German translation by Adrian v. Meibom <meibomberlin@googlemail.com>
@@ -40,7 +40,6 @@ Changelog for 1.4.12
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
-
 Changelog for 1.4.11
 * Fixed account dropdowns on default screen (Nick P)
 * Fixed broken comparison with oldvendor (Nick P)
@@ -86,12 +85,10 @@ Kaiser F is Kaiser Farrel
 Erik H is Erik Huelsmann
 John L is John Locke
 
-
 Changelog for 1.4.9
 * Removed optional dependency on LaTeX from starman preload (Chris T)
 
 Chris T is Chris Travers
-
 
 Changelog for 1.4.8
 * Fixed end-date not a date widget on employee div (Chris T)
@@ -217,7 +214,7 @@ Changelog for 1.4.1
 
 Chris T is Chris Travers
 Erik H is Erik Huelsmann
-Pongracz I is Pongracz IstvÃan
+Pongracz I is Pongracz Istv�an
 
 Changelog for 1.4.0
 General Enhancements:
@@ -1541,7 +1538,7 @@ Changelog for 1.2.10
 * Fixed 1814437, Multiple paths set causing errors (Seneca)
 * Add the ampersand to the HTML escape list for parse_template (Seneca)
 * fixed 1815329, $ not escaped properly for LaTeX (Seneca)
-* updated Hungarian translation from PongrÃ¡cz IstvÃ¡n (patch 1814156, Seneca)
+* updated Hungarian translation from Pongrácz István (patch 1814156, Seneca)
 * Properly handle invoice-type quantities from customer search (Seneca)
 * Correcting improper redirect when reposting POS invoices.(Chris T)
 * Fixing issues relating to database queries and POS-module redirects (Seneca)

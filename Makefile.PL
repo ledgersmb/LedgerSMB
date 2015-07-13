@@ -15,6 +15,7 @@ perl_version '5.8.1';
 
 requires 'Data::Dumper';
 requires 'Carp::Always';
+requires 'TeX::Encode';
 requires 'Log::Log4perl';
 requires 'Locale::Maketext';
 requires 'DateTime';
