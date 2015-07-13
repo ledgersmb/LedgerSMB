@@ -188,7 +188,6 @@ Changelog for 1.4.2
 
 Chris T is Chris Travers
 
->>>>>>> /tmp/Changelog~other.LbdXqA
 Changelog for 1.4.1
 * Fixed bug 1205, copy does not copy roles (Chris T)
 * Added multi-date inventory uploads (Erik H)
