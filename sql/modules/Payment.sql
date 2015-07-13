@@ -928,9 +928,9 @@ BEGIN
         INSERT INTO acc_trans (chart_id, amount_bc, curr, amount_tc, trans_id,
                                transdate, approved, source, memo)
              VALUES (in_op_account_id[out_count],
-                     in_op_amount[out_count]*current_exchangerate*sign,
+                     in_op_amount[out_count]*current_exchangerate*sign*-1,
                      in_curr,
-                     in_op_amount[out_count]*sign,
+                     in_op_amount[out_count]*sign*-1,
                      var_gl_id,
                      in_datepaid,
                      coalesce(in_approved, true), 
