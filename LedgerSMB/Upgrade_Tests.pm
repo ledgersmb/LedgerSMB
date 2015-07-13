@@ -290,6 +290,54 @@ push @tests, __PACKAGE__->new(
   max_version => '1.4'
 );
 
+push @tests, __PACKAGE__->new(
+   test_query => "select distinct gifi_accno from chart
+                   where not exists (select 1
+                                       from gifi
+                                      where gifi.accno = chart.gifi_accno)",
+ display_name => $locale->text('GIFI accounts not in "gifi" table'),
+         name => 'missing_gifi_table_rows',
+ display_cols => [ 'gifi_accno' ],
+        table => 'chart',
+ instructions => $locale->text("Please use the 1.2 UI to add the GIFI accounts"),
+      appname => 'ledgersmb',
+  min_version => '1.2',
+  max_version => '1.2'
+);
+
+push @tests, __PACKAGE__->new(
+   test_query => "select distinct gifi_accno from chart
+                   where not exists (select 1
+                                       from gifi
+                                      where gifi.accno = chart.gifi_accno)",
+ display_name => $locale->text('GIFI accounts not in "gifi" table'),
+         name => 'missing_gifi_table_rows',
+ display_cols => [ 'gifi_accno' ],
+        table => 'chart',
+ instructions => $locale->text("Please use the 1.2 UI to add the GIFI accounts"),
+      appname => 'sql-ledger',
+  min_version => '2.7',
+  max_version => '2.8'
+);
+
+
+push @tests, __PACKAGE__->new(
+   test_query => "select distinct gifi_accno from account
+                   where not exists (select 1
+                                       from gifi
+                                      where gifi.accno = account.gifi_accno)",
+ display_name => $locale->text('GIFI accounts not in "gifi" table'),
+         name => 'missing_gifi_table_rows',
+ display_cols => [ 'gifi_accno' ],
+        table => 'account',
+ instructions => $locale->text("Please use the 1.2 UI to add the GIFI accounts"),
+      appname => 'ledgersmb',
+  min_version => '1.3',
+  max_version => '1.4'
+);
+
+
+
 =pod 
 
  push @tests, __PACKAGE__->new(
