@@ -141,15 +141,16 @@ sub _transform_gifi {
     $hashamount{E} = { map { 
                        $_->{gifi} => {%$_}
                      } grep {$_->{account_category} eq 'E'} @rows };
-    my @xformed_rows = map {$_-> } @rows;
-    for my $c (keys %hashamount){
-        for keys ($hashamount{$c}){
-            $hashamount{$c}->{$_} = 0;
+    my @xformed_rows =  @rows;
+    $_->{accno} = $_->{gifi} for @xformed_rows;
+    for my $cat (keys %hashamount){
+        for (keys %{$hashamount{$cat}}){
+            $hashamount{$cat}->{$_} = 0;
         }
     }
     $hashamount{$_->{account_category}}->{$_->{gifi}}->{amount} 
-               += $_->{amount}
-    return sort values %{$hashamount{I}}, sort values %{$hashamount{E}};
+               += $_->{amount} for @xformed_rows;
+    return (sort(values %{$hashamount{I}})), (sort (values %{$hashamount{E}}));
 }
 
 
