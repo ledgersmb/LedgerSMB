@@ -165,8 +165,6 @@ sub run_report {
     my ($self) = @_;
     my @rows = $self->report_base();
     @rows = _transform_gifi(@rows) if $self->gifi;
-    use Data::Dumper;
-    warn Dumper(@rows);
     $self->rows(\@rows);
     $self->_merge_rows('main', @rows);
     return @rows;
