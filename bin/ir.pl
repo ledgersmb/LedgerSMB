@@ -902,7 +902,7 @@ qq|<input type=hidden name="exchangerate_$i" value=$form->{"exchangerate_$i"}>$f
             }
             else {
                 $exchangerate =
-qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" size=10 value=$form->{"exchangerate_$i"}>|;
+qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" id="exchangerate_$i" size=10 value=$form->{"exchangerate_$i"}>|;
             }
         }
         $exchangerate .= qq|
@@ -910,17 +910,17 @@ qq|<input data-dojo-type="dijit/form/TextBox" name="exchangerate_$i" size=10 val
 |;
 
         $column_data{"paid_$i"} =
-qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="paid_$i" size=11 value=$form->{"paid_$i"}></td>|;
+qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="paid_$i" id="paid_$i" size=11 value=$form->{"paid_$i"}></td>|;
         $column_data{"exchangerate_$i"} =
           qq|<td align=center>$exchangerate</td>|;
         $column_data{"AP_paid_$i"} =
-qq|<td align=center><select data-dojo-type="dijit/form/Select" name="AP_paid_$i">$form->{"selectAP_paid_$i"}</select></td>|;
+qq|<td align=center><select data-dojo-type="dijit/form/Select" name="AP_paid_$i" id="AP_paid_$i">$form->{"selectAP_paid_$i"}</select></td>|;
         $column_data{"datepaid_$i"} =
-qq|<td align=center><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="datepaid_$i" size=11 title="$myconfig{dateformat}" value=$form->{"datepaid_$i"}></td>|;
+qq|<td align=center><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name="datepaid_$i" id="datepaid_$i" size=11 title="$myconfig{dateformat}" value=$form->{"datepaid_$i"}></td>|;
         $column_data{"source_$i"} =
-qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="source_$i" size=11 value="$form->{"source_$i"}"></td>|;
+qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="source_$i" id="source_$i" size=11 value="$form->{"source_$i"}"></td>|;
         $column_data{"memo_$i"} =
-qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" size=11 value="$form->{"memo_$i"}"></td>|;
+qq|<td align=center><input data-dojo-type="dijit/form/TextBox" name="memo_$i" id="memo_$i" size=11 value="$form->{"memo_$i"}"></td>|;
 
         for (@column_index) { print qq|$column_data{"${_}_$i"}\n| }
 
