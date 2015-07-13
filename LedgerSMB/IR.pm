@@ -120,15 +120,6 @@ sub post_invoice {
     $form->{department_id} *= 1;
 
     $query = qq|
-		SELECT (SELECT value FROM defaults
-		         WHERE setting_key = 'fxgain_accno_id') 
-		       AS fxgain_accno_id, 
-		       (SELECT value FROM defaults
-		         WHERE setting_key = 'fxloss_accno_id')
-		       AS fxloss_accno_id|;
-    my ( $fxgain_accno_id, $fxloss_accno_id ) = $dbh->selectrow_array($query);
-
-    $query = qq|
 		SELECT inventory_accno_id, income_accno_id, expense_accno_id
 		  FROM parts
 		 WHERE id = ?|;
@@ -239,41 +230,41 @@ sub post_invoice {
             $pth->finish;
 
             # project
-            push( @{ $form->{runningnumber} }, $runningnumber++ );
-            push( @{ $form->{number} },        $form->{"partnumber_$i"} );
-            push( @{ $form->{image} },        $form->{"image_$i"} );
-            push( @{ $form->{sku} },           $form->{"sku_$i"} );
-            push( @{ $form->{serialnumber} },  $form->{"serialnumber_$i"} );
+            # push( @{ $form->{runningnumber} }, $runningnumber++ );
+            # push( @{ $form->{number} },        $form->{"partnumber_$i"} );
+            # push( @{ $form->{image} },        $form->{"image_$i"} );
+            # push( @{ $form->{sku} },           $form->{"sku_$i"} );
+            # push( @{ $form->{serialnumber} },  $form->{"serialnumber_$i"} );
 
-            push( @{ $form->{bin} },         $form->{"bin_$i"} );
-            warn $form->{"description_$i"};
-            push( @{ $form->{item_description} }, $form->{"description_$i"} );
-            push( @{ $form->{itemnotes} },   $form->{"notes_$i"} );
-            push(
-                @{ $form->{qty} },
-                $form->format_amount( $myconfig, $form->{"qty_$i"} )
-            );
+            # push( @{ $form->{bin} },         $form->{"bin_$i"} );
+            # warn $form->{"description_$i"};
+            # push( @{ $form->{item_description} }, $form->{"description_$i"} );
+            # push( @{ $form->{itemnotes} },   $form->{"notes_$i"} );
+            # push(
+            #     @{ $form->{qty} },
+            #     $form->format_amount( $myconfig, $form->{"qty_$i"} )
+            # );
 
-            push(
-                @{ $form->{ship} },
-                $form->format_amount( $myconfig, $form->{"qty_$i"} )
-            );
+            # push(
+            #     @{ $form->{ship} },
+            #     $form->format_amount( $myconfig, $form->{"qty_$i"} )
+            # );
 
-            push( @{ $form->{unit} },         $form->{"unit_$i"} );
-            push( @{ $form->{deliverydate} }, $form->{"deliverydate_$i"} );
+            # push( @{ $form->{unit} },         $form->{"unit_$i"} );
+            # push( @{ $form->{deliverydate} }, $form->{"deliverydate_$i"} );
 
-            push( @{ $form->{projectnumber} }, $form->{"projectnumber_$i"} );
+            # push( @{ $form->{projectnumber} }, $form->{"projectnumber_$i"} );
 
-            push( @{ $form->{sellprice} }, $form->{"sellprice_$i"} );
+            # push( @{ $form->{sellprice} }, $form->{"sellprice_$i"} );
 
-            push( @{ $form->{listprice} }, $form->{"listprice_$i"} );
+            # push( @{ $form->{listprice} }, $form->{"listprice_$i"} );
 
-            push(
-                @{ $form->{weight} },
-                $form->format_amount(
-                    $myconfig, $form->{"weight_$i"} * $form->{"qty_$i"}
-                )
-            );
+            # push(
+            #     @{ $form->{weight} },
+            #     $form->format_amount(
+            #         $myconfig, $form->{"weight_$i"} * $form->{"qty_$i"}
+            #     )
+            # );
 
             if ( $form->{"projectnumber_$i"} ne "" ) {
                 ( $null, $project_id ) =
@@ -659,137 +650,8 @@ sub post_invoice {
 
     my $cleared = 0;
 
-    # record payments and offsetting AP
-    for my $i ( 1 .. $form->{paidaccounts} ) {
-
-        if ( $form->{"paid_$i"} ) {
-            my ($accno) = split /--/, $form->{"AP_paid_$i"};
-            $form->{"datepaid_$i"} = $form->{transdate}
-              unless ( $form->{"datepaid_$i"} );
-
-            $form->{datepaid} = $form->{"datepaid_$i"};
-
-            $exchangerate = 0;
-
-            if ( $form->{currency} eq $form->{defaultcurrency} ) {
-                $form->{"exchangerate_$i"} = 1;
-            }
-            else {
-                $exchangerate =
-                  $form->check_exchangerate( $myconfig, $form->{currency},
-                    $form->{"datepaid_$i"}, 'sell' );
-
-                $form->{"exchangerate_$i"} =
-                  ($exchangerate)
-                  ? $exchangerate
-                  : $form->parse_amount( $myconfig,
-                    $form->{"exchangerate_$i"} );
-            }
-
-            # record AP
-            $amount = (
-                $form->round_amount(
-                    $form->{"paid_$i"} * $form->{exchangerate}, 2
-                )
-            ) * -1;
-
-            if ( $form->{payables} ) {
-                $query = qq|
-					INSERT INTO acc_trans 
-					            (trans_id, chart_id, amount,
-		    			            transdate)
-		    			VALUES (?, (SELECT id FROM chart
-					             WHERE accno = ?),
-		    			             ?, ?)|;
-
-                $sth = $dbh->prepare($query);
-                $sth->execute( $form->{id}, $form->{AP}, $amount,
-                    $form->{"datepaid_$i"} )
-                  || $form->dberror($query);
-            }
-
-            if ($keepcleared) {
-                $cleared = ( $form->{"cleared_$i"} ) ? 1 : 0;
-            }
-
-            # record payment
-            $query = qq|
-				INSERT INTO acc_trans 
-				            (trans_id, chart_id, amount, 
-				            transdate, source, memo, cleared)
-				     VALUES (?, (SELECT id FROM chart 
-				                  WHERE accno = ?),
-				            ?, ?, ?, ?, ?)|;
-
-            $sth = $dbh->prepare($query);
-            $sth->execute( $form->{id}, $accno, $form->{"paid_$i"},
-                $form->{"datepaid_$i"},
-                $form->{"source_$i"}, $form->{"memo_$i"}, $cleared )
-              || $form->dberror($query);
-
-            # exchangerate difference
-            $amount = $form->round_amount(
-                $form->{"paid_$i"} * $form->{"exchangerate_$i"} -
-                  $form->{"paid_$i"},
-                2
-            );
-
-            if ($amount) {
-                $query = qq|
-					INSERT INTO acc_trans 
-					            (trans_id, chart_id, amount,
-					            transdate, source, 
-					            fx_transaction, cleared)
-					     VALUES (?, (SELECT id FROM chart
-					                  WHERE accno = ?),
-					            ?, ?, ?, '1', ?)|;
-                $sth = $dbh->prepare($query);
-                $sth->execute( $form->{id}, $accno, $amount,
-                    $form->{"datepaid_$i"},
-                    $form->{"source_$i"}, $cleared )
-                  || $form->dberror($query);
-
-            }
-
-            # gain/loss
-            $amount = $form->round_amount(
-                $form->round_amount( $form->{"paid_$i"} * $form->{exchangerate},
-                    2 ) - $form->round_amount(
-                    $form->{"paid_$i"} * $form->{"exchangerate_$i"}, 2
-                    ),
-                2
-            );
-
-            if ($amount) {
-                my $accno_id =
-                  ( $amount > 0 )
-                  ? $fxgain_accno_id
-                  : $fxloss_accno_id;
-                $query = qq|
-					INSERT INTO acc_trans 
-					            (trans_id, chart_id, amount,
-					            transdate, fx_transaction, 
-					            cleared)
-					     VALUES (?, ?, ?, ?, '1', ?)|;
-
-                $sth = $dbh->prepare($query);
-                $sth->execute( $form->{id}, $accno_id, $amount,
-                    $form->{"datepaid_$i"}, $cleared )
-                  || $form->dberror($query);
-            }
-
-            # update exchange rate
-            if ( ( $form->{currency} ne $form->{defaultcurrency} )
-                && !$exchangerate )
-            {
-
-                $form->update_exchangerate( $dbh, $form->{currency},
-                    $form->{"datepaid_$i"},
-                    0, $form->{"exchangerate_$i"} );
-            }
-        }
-    }
-
+    IIAA->process_form_payments($myconfig, $form);
+    
     # set values which could be empty
     $form->{taxincluded} *= 1;
 

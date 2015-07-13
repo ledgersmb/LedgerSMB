@@ -529,53 +529,9 @@ sub post_transaction {
         $arap = 1;
     }
 
-    # add paid transactions
-    for $i ( 1 .. $form->{paidaccounts} ) {
-        $query = qq|
-SELECT payment_post(?, ?, ?, ?, ?,
-                    ?, ?, ARRAY[(select id from account where accno = ?)], ?, ?,
-                    ?, ?, ?, ?, ?,
-                    ?, ?, ?, ?, ?)
-|;
-        my $sth = $dbh->prepare($query)
-           or $form->dberror($dbh->errstr);
-        
-        if ( $paid{fxamount}{$i} ) {
-            # variables in same order as arguments of payment_post sproc
-            my $datepaid = $form->{"datepaid_$i"};
-            my $eca_class = ($form->{vc} eq 'vendor') ? 1 : 2;
-            my $eca_id = $form->{"$form->{vc}_id"};
-            my $curr = $form->{currency};
-            my $exchangerate;
-            # no 'notes'
-            # no 'gl description'
-            my ($cashaccno) = split( /--/, $form->{"${ARAP}_paid_$i"} );
-            my $amount = $paid{amount}{$i}->to_db();
-            # no 'cash approved'
-            my $source = $form->{"source_$i"};
-            my $memo = $form->{"memo_$i"};
-            my $trans_id = $form->{id};
-            # none of the in_op_*
-            # ###Verify that there's no overpayment going on!!
 
-            if ( $form->{currency} eq $form->{defaultcurrency} ) {
-                $exchangerate = 1;
-            }
-            else {
-                $exchangerate =
-                    $form->parse_amount( $myconfig,
-                                         $form->{"exchangerate_$i"} )->to_db();
-            }
-            @queryargs = ($datepaid, $eca_class, $eca_id, $curr, $exchangerate,
-                          undef, undef, $cashaccno, [$amount], [0],
-                          [$source], [$memo], [$trans_id], undef, undef,
-                          undef, undef, undef, undef, 0);
-
-            $sth->execute(@queryargs)
-                or $form->dberror($sth->errstr);
-        }
-    }
-
+    IIAA->process_form_payments($myconfig, $form);
+   
     # save printed and queued
     $form->save_status($dbh);
 
