@@ -12,9 +12,11 @@ Changelog for 1.4.13
 * Fix balance sheet CSV missing 'description' column content (Erik H)
 * Fix can't delete draft transactions with reporting units (SF 1391) (Erik H)
 * GIFI PNL reports are back.  (Chris T)
+* Fix payment entry at the bottom of invoices (SF 1394) (Erik H)
 
 Erik H is Erik Huelsmann
 Chris T is Chris Travers
+
 
 Changelog for 1.4.12
 * Updated German translation by Adrian v. Meibom <meibomberlin@googlemail.com>
