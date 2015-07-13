@@ -318,6 +318,22 @@ push @tests, __PACKAGE__->new(
 push @tests,__PACKAGE__->new(
     test_query => "select *
                     from customer
+                   where customernumber is null",
+    display_name => $locale->text('Empty customernumbers'), 
+    name => 'no_empty_customernumbers',
+    display_cols => ['id', 'customernumber', 'name'],
+ instructions => $locale->text(
+                   'Please make sure there are no empty customer numbers.'),
+    column => 'customernumber',
+    table => 'customer',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+push @tests,__PACKAGE__->new(
+    test_query => "select *
+                    from customer
                    where customernumber in (select customernumber
                                               from customer
                                              group by customernumber
@@ -329,6 +345,22 @@ push @tests,__PACKAGE__->new(
                    'Please make all customer numbers unique'),
     column => 'customernumber',
     table => 'customer',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+push @tests,__PACKAGE__->new(
+    test_query => "select *
+                    from vendor
+                   where vendornumber is null",
+    display_name => $locale->text('Empty vendornumbers'), 
+    name => 'no_empty_vendornumbers',
+    display_cols => ['id', 'vendornumber', 'name'],
+ instructions => $locale->text(
+                   'Please make sure there are no empty vendor numbers.'),
+    column => 'vendornumber',
+    table => 'vendor',
     appname => 'sql-ledger',
     min_version => '2.7',
     max_version => '2.8'
@@ -431,6 +463,24 @@ push @tests, __PACKAGE__->new(
 #     max_version => '2.8'
 #     );
 
+push @tests, __PACKAGE__->new(
+   test_query => "select * from parts where obsolete is not true 
+                  and partnumber in 
+                  (select partnumber from parts 
+                  WHERE obsolete is not true
+                  group by partnumber having count(*) > 1)",
+         name => 'duplicate_partnumbers',
+ display_name => $locale->text('Unique nonobsolete partnumbers'),
+ instructions => $locale->text(
+                   'Make non-obsolete partnumbers unique'),
+ display_cols => ['partnumber', 'description', 'sellprice'],
+       column => 'partnumber',
+        table => 'parts',
+      appname => 'sql-ledger',
+  min_version => '2.7',
+  max_version => '2.8'
+);
+
 
 push @tests, __PACKAGE__->new(
     test_query => "select *
@@ -482,6 +532,99 @@ push @tests, __PACKAGE__->new(
     min_version => '2.7',
     max_version => '2.8'
     );
+
+push @tests, __PACKAGE__->new(
+    test_query => "select *
+                     from chart
+                    where not charttype in ('H', 'A')",
+    display_name => $locale->text('Unknown charttype; should be H(eader)/A(ccount))'),
+    name => 'unknown_charttype',
+    display_cols => ['accno', 'charttype', 'description'],
+    column => 'charttype',
+ instructions => $locale->text(
+                   'Please fix the presented rows to either be "H" or "A"'),
+    table => 'chart',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+
+push @tests, __PACKAGE__->new(
+    test_query => "select *
+                     from chart
+                    where charttype = 'A'
+                          and category not in ('A','L','E','I','Q')",
+    display_name => $locale->text('Unknown account category (should be A(sset)/L(iability)/E(xpense)/I(ncome)/(e)Q(uity))'),
+    name => 'unknown_account_category',
+    display_cols => ['accno', 'category', 'description'],
+    column => 'category',
+ instructions => $locale->text(
+                   'Please fix the pricegroup data in your partscustomer table (no UI available)'),
+    table => 'chart',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+
+push @tests, __PACKAGE__->new(
+    test_query => "select count(*)
+                     from chart
+                    where charttype = 'H'
+                    having count(*) < 1",
+    display_name => $locale->text('Unknown '),
+    name => 'no_headers_defined',
+    display_cols => ['accno', 'charttype', 'description'],
+ instructions => $locale->text(
+                   'Please add at least one header to your CoA which sorts before all other account numbers (in the standard SL UI)'),
+    table => 'chart',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+
+push @tests, __PACKAGE__->new(
+    test_query => "select *
+                     from chart
+                    where charttype = 'A'
+                          and accno < (select min(accno)
+                                        from chart
+                                       where charttype = 'H')",
+    display_name => $locale->text(''),
+    name => 'insufficient_headings',
+    display_cols => ['accno', 'description'],
+ instructions => $locale->text(
+                   'Please add a header to the CoA which sorts before the listed accounts (usually "0000" works) (in the standard SL UI)'),
+    table => 'chart',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
+
+push @tests, __PACKAGE__->new(
+    test_query => "select *
+                     from chart
+                    where charttype = 'A'
+                          and exists (select 1
+                                       from (select unnest(array_from_string(link,':') as single_link))
+                                      where single_link in ('AR', 'AP', 'IC'))
+                          and exists (select 1
+                                       from (select unnest(array_from_string(link,':') as single_link))
+                                      where single_link ~ '^(AR|AP|IC)_')",
+    display_name => $locale->text('Accounts can\'t be simultaneously used as summary accounts (AR,AP,IC) and be listed in dropdowns elsewhere.'),
+    name => 'disallowed_link_combinations',
+    display_cols => ['accno', 'description', 'link'],
+ instructions => $locale->text(
+                   'Please unmark accounts as summary accounts, or remove dropdown checkmarks (in the standard SL UI)'),
+    table => 'chart',
+    appname => 'sql-ledger',
+    min_version => '2.7',
+    max_version => '2.8'
+    );
+
 
 #  ### On the vendor side, SL doesn't use pricegroups
 # push @tests, __PACKAGE__->new(
