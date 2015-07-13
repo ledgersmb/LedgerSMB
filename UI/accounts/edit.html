@@ -128,7 +128,7 @@ INCLUDE 'ui-header.html'
     FOREACH h IN form.all_headings;
         h.text = h.accno _ '--' _ h.description;
     END;
-    form.all_headings.push({});
+    form.all_headings.unshift({});
     INCLUDE select element_data = {
                   name = 'heading'
                options = form.all_headings
@@ -143,10 +143,17 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="gifi-line">
    <label class="line"><?lsmb text('GIFI') ?></label>
    <div class="inputgroup">
-       <?lsmb INCLUDE input element_data={
-            name = 'gifi_accno',
-            size = '9',
-           value = form.gifi_accno} ?>
+       <?lsmb
+          FOREACH g IN form.all_gifi;
+             g.text = g.accno _ '--' _ g.description;
+          END;
+          form.all_gifi.unshift({});
+          INCLUDE select element_data={
+            name = 'gifi_accno'
+          default_values = [form.gifi_accno]
+            options = form.all_gifi
+           text_attr='text'
+          value_attr='accno' } ?>
    </div>
 </div>
 <div class="inputline" id="acctype-line">

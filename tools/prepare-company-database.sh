@@ -267,9 +267,6 @@ for module in `grep -v -E '^[[:space:]]*#' $srcdir/sql/modules/LOADORDER`
 do
   cat $srcdir/sql/modules/$module | $psql_cmd 2>&1 | unchatter
 done
-# -- Authorizations
-sed -e "s/<?lsmb dbname ?>/$company_name/g" \
-  $srcdir/sql/modules/Roles.sql | $psql_cmd 2>&1 | unchatter
 
 
 if ! test "$coa" = "none" ; then

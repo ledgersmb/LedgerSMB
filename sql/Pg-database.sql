@@ -2127,20 +2127,26 @@ CREATE TABLE business_unit_jl (
 );
 
 CREATE TABLE business_unit_ac (
-  entry_id int references acc_trans(entry_id),
+  entry_id int references acc_trans(entry_id) on delete cascade,
   class_id int references business_unit_class(id),
   bu_id int,
   primary key(bu_id, class_id, entry_id),
   foreign key(class_id, bu_id) references business_unit(class_id, id)
 );
+-- The index is required for fast lookup when deleting acc_trans lines
+-- which happens when not-approved transactions are deleted
+CREATE INDEX business_unit_ac_entry_id_idx ON business_unit_ac(entry_id);
 
 CREATE TABLE business_unit_inv (
-  entry_id int references invoice(id),
+  entry_id int references invoice(id) on delete cascade,
   class_id int references business_unit_class(id),
   bu_id int,
   primary key(bu_id, class_id, entry_id),
   foreign key(class_id, bu_id) references business_unit(class_id, id)
 );
+-- The index is required for fast lookup when deleting invoices
+-- which happens when not-approved transactions are deleted
+CREATE INDEX business_unit_inv_entry_id_idx ON business_unit_inv(entry_id);
 
 CREATE TABLE business_unit_oitem (
   entry_id int references orderitems(id) on delete cascade,
@@ -2149,6 +2155,9 @@ CREATE TABLE business_unit_oitem (
   primary key(bu_id, class_id, entry_id),
   foreign key(class_id, bu_id) references business_unit(class_id, id)
 );
+-- The index is required for fast lookup when deleting order item lines
+-- which happens when not-approved transactions are deleted
+CREATE INDEX business_unit_oitem_entry_id_idx ON business_unit_oitem(entry_id);
 
 COMMENT ON TABLE business_unit IS
 $$ Tracks Projects, Departments, Funds, Etc.$$;
