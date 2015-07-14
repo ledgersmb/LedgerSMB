@@ -13,6 +13,7 @@ Changelog for 1.4.13
 * Fix can't delete draft transactions with reporting units (SF 1391) (Erik H)
 * GIFI PNL reports are back.  (Chris T)
 * Fix payment entry at the bottom of invoices (SF 1394) (Erik H)
+* Some additional constraint checks for migrations from SL 2.8 (Erik H)
 
 Erik H is Erik Huelsmann
 Chris T is Chris Travers
