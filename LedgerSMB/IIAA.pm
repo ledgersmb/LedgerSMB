@@ -56,9 +56,9 @@ SELECT payment_post(?, ?, ?, ?, ?,
         or $form->dberror($dbh->errstr);
     
     # add paid transactions
-    for $i ( 1 .. $form->{paidaccounts} ) {
+    for my $i ( 1 .. $form->{paidaccounts} ) {
 
-        if ( $paid{fxamount}{$i} ) {
+        if ( $form->{"paid_$i"} ) {
             # variables in same order as arguments of payment_post sproc
             my $datepaid = $form->{"datepaid_$i"};
             my $eca_class = ($form->{vc} eq 'vendor') ? 1 : 2;
@@ -67,8 +67,9 @@ SELECT payment_post(?, ?, ?, ?, ?,
             my $exchangerate;
             # no 'notes'
             # no 'gl description'
-            my ($cashaccno) = split( /--/, $form->{"${ARAP}_paid_$i"} );
-            my $amount = $paid{amount}{$i}->to_db();
+            my ($cashaccno) = split( /--/, $form->{"$form->{ARAP}_paid_$i"} );
+            my $amount =
+                LedgerSMB::PGNumber->from_input($form->{"paid_$i"})->to_db;
             # no 'cash approved'
             my $source = $form->{"source_$i"};
             my $memo = $form->{"memo_$i"};
@@ -84,13 +85,60 @@ SELECT payment_post(?, ?, ?, ?, ?,
                     $form->parse_amount( $myconfig,
                                          $form->{"exchangerate_$i"} )->to_db();
             }
-            @queryargs = ($datepaid, $eca_class, $eca_id, $curr, $exchangerate,
+
+            $sth->execute($datepaid, $eca_class, $eca_id, $curr, $exchangerate,
                           undef, undef, $cashaccno, [$amount], [0],
                           [$source], [$memo], [$trans_id], undef, undef,
-                          undef, undef, undef, undef, 0);
-
-            $sth->execute(@queryargs)
+                          undef, undef, undef, undef, 0)
                 or $form->dberror($sth->errstr);
         }
     }
 }
+
+
+sub post_form_manual_tax {
+    my ($self, $myconfig, $form, $sign, $pay_rec) = @_;
+    my $dbh = $form->{dbh};
+    my $invamount = 0;
+    
+    my $ac_sth = $dbh->prepare(
+        "INSERT INTO acc_trans (chart_id, trans_id,
+                                amount_bc, curr, amount_tc, source, memo)
+                    VALUES ((select id from account where accno = ?), 
+                            ?, ?, ?, ?, ?, ?)"
+        ) or $form->dberror($dbh->errstr);
+    my $tax_sth = $dbh->prepare(
+        "INSERT INTO tax_extended (entry_id, tax_basis, rate)
+                    VALUES (currval('acc_trans_entry_id_seq'), ?, ?)"
+        ) or $form->dberror($dbh->errstr);
+    for my $taccno (split / /, $form->{taxaccounts}){
+        my $taxamount;
+        my $taxbasis;
+        my $taxrate;
+        my $fx = $form->{exchangerate} || 1;
+        $taxamount = $form->parse_amount($myconfig, 
+                                         $form->{"mt_amount_$taccno"});
+        $taxbasis = $form->parse_amount($myconfig,
+                                        $form->{"mt_basis_$taccno"});
+        $taxrate=$form->parse_amount($myconfig,$form->{"mt_rate_$taccno"});
+        my $fx_taxamount = $taxamount * $fx;
+        my $fx_taxbasis = $taxbasis * $fx;
+        $form->{$pay_rec} += $fx_taxamount * $sign * -1;
+        $invamount += $fx_taxamount;
+        $ac_sth->execute($taccno, $form->{id}, $fx_taxamount * $sign,
+                         $form->{defaultcurrency},
+                         $fx_taxamount * $sign, 
+                         $form->{"mt_ref_$taccno"}, 
+                         $form->{"mt_desc_$taccno"})
+            or $form->dberror($ac_sth->errstr);
+        $tax_sth->execute($fx_taxbasis * $sign, $taxrate)
+            or $form->dberror($tax_sth->errstr);
+    }
+    $ac_sth->finish;
+    $tax_sth->finish;
+
+    return $invamount;
+}
+
+
+1;
