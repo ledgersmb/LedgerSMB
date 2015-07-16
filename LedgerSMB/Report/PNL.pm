@@ -135,17 +135,18 @@ sub _merge_rows {
 sub _transform_gifi {
     my @rows = @_;
     my %hashamount;
+    my @xformed_rows =  map { {%$_, 
+                               account_number => $_->{gifi}, 
+                               account_description => $_->{gifi_description}} } @rows;
     $hashamount{I} = { map { 
-                       $_->{gifi} => {%$_}
-                     } grep {$_->{account_category} eq 'I'} @rows };
+                       ($_->{gifi},  {%$_})
+                     } grep {$_->{account_category} eq 'I' and $_->{gifi}} @xformed_rows};
     $hashamount{E} = { map { 
-                       $_->{gifi} => {%$_}
-                     } grep {$_->{account_category} eq 'E'} @rows };
-    my @xformed_rows =  @rows;
-    $_->{accno} = $_->{gifi} for @xformed_rows;
+                       ($_->{gifi}, {%$_})
+                     } grep {$_->{account_category} eq 'E' and $_->{gifi}} @xformed_rows};
     for my $cat (keys %hashamount){
         for (keys %{$hashamount{$cat}}){
-            $hashamount{$cat}->{$_} = 0;
+            $hashamount{$cat}->{$_}->{amount} = 0;
         }
     }
     $hashamount{$_->{account_category}}->{$_->{gifi}}->{amount} 

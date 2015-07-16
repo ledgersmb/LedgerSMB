@@ -11,6 +11,8 @@ Changelog for 1.4.13
 * Fix 'Business Type' not showing up in Contact Account tab (Erik H)
 * Fix balance sheet CSV missing 'description' column content (Erik H)
 * Fix can't delete draft transactions with reporting units (SF 1391) (Erik H)
+* GIFI PNL reports are back.  (Chris T)
+* Fix payment entry at the bottom of invoices (SF 1394) (Erik H)
 
 Erik H is Erik Huelsmann
 Chris T is Chris Travers
@@ -80,10 +82,8 @@ Kaiser F is Kaiser Farrel
 Erik H is Erik Huelsmann
 John L is John Locke
 
-
 Changelog for 1.4.9
 * Fixed issue with contacts not loading in 1.4,8 (regression, Chris T)
-
 
 Changelog for 1.4.8
 * Fixed end-date not a date widget on employee div (Chris T)
