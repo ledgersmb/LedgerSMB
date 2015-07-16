@@ -158,10 +158,12 @@ sub from_input{
     my ($self, $input, $has_time) = @_;
     return $input if eval {$input->isa(__PACKAGE__)};
     $input = undef if $input eq '';
+    return $self->new() if ! defined $input;
     my $format = $LedgerSMB::App_State::User->{dateformat};
     $format ||= 'yyyy-mm-dd';
     $format = 'yyyy-mm-dd' if $input =~ /^\d{4}/;
-    my $dt =  _parse_string($self, $input, uc($format), $has_time);
+    my $dt =  _parse_string($self, $input, uc($format), $has_time)
+        if defined $input && $input;
     my %prop = (date => $dt, dummy => !defined $dt);
     delete $prop{date} unless defined $prop{date} and $prop{date} ne '';
     return $self->new(%prop);
