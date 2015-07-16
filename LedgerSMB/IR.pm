@@ -44,6 +44,7 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::App_State;
 use LedgerSMB::PGNumber;
+use LedgerSMB::IIAA;
 
 =over
 
@@ -464,17 +465,14 @@ sub post_invoice {
         $amount = $ref->{amount} + $diff;
         $fxlinetotal = $ref->{fxlinetotal} + $diff/$form->{exchangerate};
         $query  = qq|
-            INSERT INTO acc_trans (trans_id, chart_id, amount,
-                        transdate, invoice_id, fx_transaction)
-                        VALUES (?, ?, ?, ?, ?, ?)|;
+			INSERT INTO acc_trans (trans_id, chart_id, amount_bc, curr, amount_tc,
+			            transdate, invoice_id)
+			            VALUES (?, ?, ?, ?, ?, ?, ?)|;
         $sth = $dbh->prepare($query);
         $sth->execute(
-            $form->{id},        $ref->{chart_id},   $fxlinetotal * -1,
-            $form->{transdate}, $ref->{invoice_id}, 0
-        ) || $form->dberror($query);
-        $sth->execute(
-            $form->{id},        $ref->{chart_id},   ($amount - $fxlinetotal) * -1,
-            $form->{transdate}, $ref->{invoice_id}, 1
+            $form->{id},        $ref->{chart_id},  $amount * -1,
+            $form->{currency},  $fxlinetotal * -1, $form->{transdate},
+            $ref->{invoice_id}
         ) || $form->dberror($query);
 
         $diff   = 0;
@@ -496,36 +494,8 @@ sub post_invoice {
             0, $form->{exchangerate} );
     }
     if ($form->{manual_tax}){
-        my $ac_sth = $dbh->prepare(
-              "INSERT INTO acc_trans (chart_id, trans_id, amount, source, memo)
-                    VALUES ((select id from account where accno = ?),
-                            ?, ?, ?, ?)"
-        );
-        my $tax_sth = $dbh->prepare(
-              "INSERT INTO tax_extended (entry_id, tax_basis, rate)
-                    VALUES (currval('acc_trans_entry_id_seq'), ?, ?)"
-        );
-        for $taccno (split / /, $form->{taxaccounts}){
-            my $taxamount;
-            my $taxbasis;
-            my $taxrate;
-            my $fx = $form->{exchangerate} || 1;
-            $taxamount = $form->parse_amount($myconfig,
-                                             $form->{"mt_amount_$taccno"});
-            $taxbasis = $form->parse_amount($myconfig,
-                                           $form->{"mt_basis_$taccno"});
-            $taxrate=$form->parse_amount($myconfig,$form->{"mt_rate_$taccno"});
-            my $fx_taxamount = $taxamount * $fx;
-            my $fx_taxbasis = $taxbasis * $fx;
-            $form->{payables} += $fx_taxamount;
-            $invamount += $fx_taxamount;
-            $ac_sth->execute($taccno, $form->{id}, $fx_taxamount * -1,
-                             $form->{"mt_ref_$taccno"},
-                             $form->{"mt_desc_$taccno"});
-            $tax_sth->execute($fx_taxbasis * -1, $taxrate);
-        }
-        $ac_sth->finish;
-        $tax_sth->finish;
+        $invamount +=
+            IIAA->post_form_manual_tax($myconfig, $form, -1, "payables");
     }
 
 
@@ -534,22 +504,20 @@ sub post_invoice {
         ($accno) = split /--/, $form->{AP};
 
         $query = qq|
-            INSERT INTO acc_trans (trans_id, chart_id, amount,
-                                transdate, fx_transaction)
-                         VALUES (?, (SELECT id FROM account WHERE accno = ?),
-                                ?, ?, ?)|;
-        $sth = $dbh->prepare($query);
+			INSERT INTO acc_trans (trans_id, chart_id,
+                                amount_bc, curr, amount_tc, transdate)
+                	     VALUES (?, (SELECT id FROM account WHERE accno = ?),
+                	            ?, ?, ?, ?)|;
+        $sth = $dbh->prepare($query)
+            or $form->dberror($dbh->errstr);
         $sth->execute( $form->{id}, $accno,
+                       $form->{payables}, $form->{currency},
                     $form->{payables}/$form->{exchangerate},
-            $form->{transdate} , 0)
-          || $form->dberror($query);
-        $sth->execute( $form->{id}, $accno,
-                    $form->{payables} -
-                   ($form->{payables}/$form->{exchangerate}),
-            $form->{transdate} , 0)
+                       $form->{transdate})
           || $form->dberror($query);
     }
 
+    # post taxes, if !$form->{manual} (see above)    
     foreach my $trans_id ( keys %{ $form->{acc_trans} } ) {
         foreach my $accno ( keys %{ $form->{acc_trans}{$trans_id} } ) {
             $amount =
@@ -559,13 +527,16 @@ sub post_invoice {
             if ($amount) {
                 $query = qq|
                     INSERT INTO acc_trans
-                                (trans_id, chart_id, amount,
+					            (trans_id, chart_id, amount_bc, curr, amount_tc,
                                 transdate)
                             VALUES (?, (SELECT id FROM account
                                 WHERE accno = ?),
-                                ?, ?)|;
-                $sth = $dbh->prepare($query);
-                $sth->execute( $trans_id, $accno, $amount, $form->{transdate} )
+                    			?, ?, ?, ?)|;
+                $sth = $dbh->prepare($query)
+                    || $form->dberror($dbh->errstr);
+                $sth->execute( $trans_id, $accno,
+                               $amount, $form->{defaultcurrency}, $amount,
+                               $form->{transdate} )
                   || $form->dberror($query);
             }
         }
@@ -594,9 +565,11 @@ sub post_invoice {
                quonumber = ?,
                        description = ?,
                transdate = ?,
-               amount = ?,
-               netamount = ?,
-               paid = ?,
+		       amount_bc = ?,
+		       amount_tc = ?,
+		       netamount_bc = ?,
+		       netamount_tc = ?,
+		       paid_deprecated = ?,
                datepaid = ?,
                duedate = ?,
                invoice = '1',
@@ -617,7 +590,9 @@ sub post_invoice {
     $sth->execute(
         $form->{invnumber},     $form->{ordnumber},     $form->{quonumber},
         $form->{description},   $form->{transdate},     $invamount,
-        $invnetamount,          $form->{paid},          $form->{datepaid},
+        $invamount/$form->{exchangerate},
+        $invnetamount,          $invnetamount/$form->{exchangerate},
+        $form->{paid},          $form->{datepaid},
         $form->{duedate},       $form->{shippingpoint}, $form->{shipvia},
         $form->{taxincluded},   $form->{notes},         $form->{intnotes},
         $form->{currency},
@@ -676,7 +651,8 @@ sub retrieve_invoice {
     if ( $form->{id} ) {
 
         my $tax_sth = $dbh->prepare(
-                  qq| SELECT amount, source, memo, tax_basis, rate, accno
+                  qq| SELECT amount_bc as amount, source, memo, tax_basis,
+                             rate, accno
                         FROM acc_trans ac
                         JOIN tax_extended t USING(entry_id)
                         JOIN account c ON c.id = ac.chart_id
@@ -775,7 +751,7 @@ sub retrieve_invoice {
 
         $query = qq|
             SELECT a.invnumber, a.transdate, a.duedate,
-                   a.ordnumber, a.quonumber, a.paid, a.taxincluded,
+			       a.ordnumber, a.quonumber, a.paid_deprecated as paid, a.taxincluded,
                    a.notes, a.intnotes, a.curr AS currency,
                    a.entity_credit_account as vendor_id, a.language_code, a.ponumber, a.crdate,
                    a.on_hold, a.reverse, a.description
@@ -880,7 +856,7 @@ sub retrieve_invoice {
             # price matrix
             $ref->{sellprice} =
               $form->round_amount(
-                $ref->{fxsellprice} * $form->{ $form->{currency} },
+                $ref->{fxsellprice} * $form->{exchangerate},
                 $decimalplaces );
 
             $ref->{sellprice} = $ref->{fxsellprice};
