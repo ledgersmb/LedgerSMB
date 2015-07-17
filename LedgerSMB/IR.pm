@@ -675,6 +675,9 @@ sub post_invoice {
 
 }
 
+###TODO: this looks a whole lot like dead code since 1.3:
+### because post_invoice can't (shouldn't) be called for
+###  a form that has a form->{id}
 sub reverse_invoice {
     my ( $dbh, $form ) = @_;
 
