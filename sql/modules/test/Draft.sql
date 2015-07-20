@@ -17,31 +17,31 @@ INSERT INTO ap (invnumber, entity_credit_account, amount_bc, netamount_bc,
        amount_tc, netamount_tc, paid_deprecated, approved, curr)
 select '_TEST AP', -1000, '100', '100', '100', '100', '0', FALSE, 'XTS';
 
-INSERT INTO acc_trans (chart_id, trans_id, amount_bc, approved)
-SELECT id, currval('id'), '100', TRUE FROM chart WHERE accno = '00001';
+INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
+SELECT id, currval('id'), '100', 'XTS', 100, TRUE FROM chart WHERE accno = '00001';
 INSERT INTO ac_tax_form (entry_id, reportable)
 VALUES (currval('acc_trans_entry_id_seq')::int, true);
-INSERT INTO acc_trans (chart_id, trans_id, amount_bc, approved)
-SELECT id, currval('id'), '-100', TRUE FROM chart WHERE accno = '00002';
+INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
+SELECT id, currval('id'), '-100', 'XTS', -100, TRUE FROM chart WHERE accno = '00002';
 INSERT INTO ac_tax_form (entry_id, reportable)
 VALUES (currval('acc_trans_entry_id_seq')::int, false);
 
 INSERT INTO ar (invnumber, entity_credit_account, amount_bc, netamount_bc,
        amount_tc, netamount_tc, paid_deprecated, approved, curr)
-select '_TEST AR', -1001, '100', '100', '0', FALSE, 'XTS';
+select '_TEST AR', -1001, '100', '100', 100, 100, '0', FALSE, 'XTS';
 
-INSERT INTO acc_trans (chart_id, trans_id, amount_bc, approved)
-SELECT id, currval('id'), '-100', TRUE FROM chart WHERE accno = '00001';
-INSERT INTO acc_trans (chart_id, trans_id, amount_bc, approved)
-SELECT id, currval('id'), '100', TRUE FROM chart WHERE accno = '00002';
+INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
+SELECT id, currval('id'), '-100', 'XTS', -100, TRUE FROM chart WHERE accno = '00001';
+INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
+SELECT id, currval('id'), '100', 'XTS', 100, TRUE FROM chart WHERE accno = '00002';
 
 INSERT INTO gl (reference, description, approved)
 VALUES ('_TEST GL', 'Testing GL Drafts', false);
 
-INSERT INTO acc_trans (chart_id, trans_id, amount_bc, approved)
-SELECT id, currval('id'), '-100', TRUE FROM chart WHERE accno = '00001';
-INSERT INTO acc_trans (chart_id, trans_id, amount_bc, approved)
-SELECT id, currval('id'), '100', TRUE FROM chart WHERE accno = '00002';
+INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
+SELECT id, currval('id'), '-100', 'XTS', -100, TRUE FROM chart WHERE accno = '00001';
+INSERT INTO acc_trans (chart_id, trans_id, amount_bc, curr, amount_tc, approved)
+SELECT id, currval('id'), '100', 'XTS', 100, TRUE FROM chart WHERE accno = '00002';
 
 INSERT INTO test_result(test_name, success)
 SELECT '"ap" search successful', count(*) = 1
