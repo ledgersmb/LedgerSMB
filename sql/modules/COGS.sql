@@ -383,7 +383,8 @@ ELSE -- reversal
      FROM parts p
     WHERE id = t_inv.parts_id
     UNION
-   SELECT p.expense_accno_id, t_inv.trans_id, true, t_adj * -1, t_ap.transdate,
+   SELECT p.expense_accno_id, t_inv.trans_id, true, t_adj * -1,
+          defaults_get_defaultcurrency(), t_adj * -1, t_ap.transdate,
           in_invoice_id
      FROM parts p
     WHERE id = t_inv.parts_id;
