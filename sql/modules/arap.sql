@@ -198,7 +198,7 @@ BEGIN
   invnumber=in_invnumber;
  END IF;
 
- select defaults_get_defaultcurrency into curr_default from defaults_get_defaultcurrency();
+ select defaults_get_defaultcurrency() into curr_default;
  IF in_curr IS NULL THEN
   curr=curr_default;
  ELSE
