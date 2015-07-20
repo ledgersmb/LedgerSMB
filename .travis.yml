@@ -8,6 +8,8 @@ perl:
   - '5.16'
   - '5.18'
   - '5.20'
+env:
+  - COVERAGE=1
 addons:
    postgresql: "9.3"
 before_install:
