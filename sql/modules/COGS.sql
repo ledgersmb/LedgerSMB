@@ -326,7 +326,7 @@ VALUES (t_inv.trans_id, COALESCE(t_override_cogs,
                       defaults_get_defaultcurrency(),
                       t_cogs[2] * -1, 
        coalesce(t_transdate, t_ar.transdate), t_inv.id),
-       (t_inv.trans_id, t_part.inventory_accno_id, TRUE, t_cogs[2]
+       (t_inv.trans_id, t_part.inventory_accno_id, TRUE, t_cogs[2],
         defaults_get_defaultcurrency(), t_cogs[2], t_transdate, t_inv.id);
 
 RETURN t_cogs[1];
