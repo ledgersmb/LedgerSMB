@@ -63,7 +63,7 @@ INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr,
                 amount_tc, netamount_tc, entity_credit_account, approved)
 values(-1024, date1(), 1010, 1010, 'XTS', 1010, 1010, -255, true);
 
-INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc
+INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, amount_tc,
                       curr, approved, entry_id)
      VALUES (-1024, -1000, date1(), 1010, 1010, 'XTS', true, -111);
 

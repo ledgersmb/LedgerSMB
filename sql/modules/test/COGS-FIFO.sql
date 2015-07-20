@@ -36,8 +36,8 @@ VALUES (-1000, 'Test act', 232, 1);
 
 INSERT INTO entity_credit_account 
         (id, entity_class, meta_number, entity_id, curr, ar_ap_account_id)
-VALUES (-1000, 1, 'cogs test1', -1000, 'USD', -1103), 
-       (-2000, 2, 'cogs test2', -1000, 'USD', -1103);
+VALUES (-1000, 1, 'cogs test1', -1000, 'XTS', -1103), 
+       (-2000, 2, 'cogs test2', -1000, 'XTS', -1103);
 -- First series of tests, AR before AP
 INSERT INTO ar (id, invoice, invnumber, transdate, entity_credit_account, approved)
 VALUES (-1201, true, 'test1001', now() - '10 days'::interval, -2000, 't');
