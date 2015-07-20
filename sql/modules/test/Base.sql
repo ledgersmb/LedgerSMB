@@ -42,3 +42,20 @@ CREATE OR REPLACE FUNCTION test_get_account_id(in_accno text) returns int as
 $$ 
 SELECT id FROM chart WHERE accno = $1; 
 $$ language sql;
+
+CREATE OR REPLACE FUNCTION test_insert_default_currency() returns boolean as
+$$
+BEGIN
+   PERFORM * FROM defaults WHERE setting_key = 'curr';
+
+   IF NOT FOUND THEN
+      INSERT INTO defaults
+      VALUES ('curr', 'XTS');
+      RETURN 'f'::boolean;
+   ELSE
+      RETURN 't'::boolean;
+   END IF;
+END;
+$$ language pgplsql;
+
+select test_insert_default_currency();
