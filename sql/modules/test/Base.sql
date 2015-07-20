@@ -3,6 +3,10 @@ CREATE TEMPORARY TABLE test_result (
 	success bool
 );
 
+-- from https://en.wikipedia.org/wiki/ISO_4217
+INSERT INTO currency (curr, description)
+VALUES ('XTS', 'Code reserved for testing purposes');
+
 INSERT INTO entity (id, name, entity_class, control_code, country_id)
 VALUES (-100, 'Testing.....', 3, '_TESTING.....', 242);
 
