@@ -32,16 +32,16 @@ values (-205, '-2003', '10', '10', '0', 10, 10, -200, '1000-01-03', 'XTS');
 
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, paid_deprecated, amount_tc, netamount_tc,
                 entity_credit_account, transdate, curr)
-values (-206, '-2004', '10', '10', '0', -201, '1000-01-01', 'XTS');
+values (-206, '-2004', '10', '10', '0', 10, 10, -201, '1000-01-01', 'XTS');
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, paid_deprecated, amount_tc, netamount_tc,
                 entity_credit_account, transdate, curr)
-values (-207, '-2005', '10', '10', '0', -201, '1000-01-03', 'XTS');
+values (-207, '-2005', '10', '10', '0', 10, 10, -201, '1000-01-03', 'XTS');
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, paid_deprecated, amount_tc, netamount_tc,
                 entity_credit_account, transdate, curr)
-values (-208, '-2006', '10', '10', '0', -201, '1000-01-01', 'XTS');
+values (-208, '-2006', '10', '10', '0', 10, 10, -201, '1000-01-01', 'XTS');
 INSERT INTO ar (id, invnumber, amount_bc, netamount_bc, paid_deprecated, amount_tc, netamount_tc,
                 entity_credit_account, transdate, curr)
-values (-209, '-2007', '10', '10', '0', -201, '1000-01-03', 'XTS');
+values (-209, '-2007', '10', '10', '0', 10, 10, -201, '1000-01-03', 'XTS');
 
 INSERT INTO gl (id, reference, transdate) values (-202, 'Recon gl test 1', '1000-01-01');
 INSERT INTO gl (id, reference, transdate) values (-203, 'Recon gl test 2', '1000-01-01');

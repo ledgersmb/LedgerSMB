@@ -14,8 +14,8 @@ values (-100, 'test1', -100, 1, -1000);
 INSERT INTO ap (invnumber, netamount_bc, amount_bc, entity_credit_account,
                 id, curr, netamount_tc, amount_tc) 
 VALUES ('TEST', '0', '0', -100, -100, 'XTS', 0, 0);
-INSERT INTO acc_trans (trans_id, chart_id, amount)
-VALUES (-100, currval('account_id_seq')::int, '0');
+INSERT INTO acc_trans (trans_id, chart_id, amount_bc, curr, amount_tc)
+VALUES (-100, currval('account_id_seq')::int, '0', 'XTS', 0);
 
 INSERT INTO chart (description, charttype, category, accno, link)
 VALUES ('TEST AP 1', 'A', 'L', '00003', 'AP');
