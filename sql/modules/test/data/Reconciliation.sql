@@ -70,13 +70,13 @@ values (-201, test_get_account_id('-11111'), '1000-01-03', -10, 'XTS', -10, '1')
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
 values (-201, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-202, test_get_account_id('-11111'), '1000-01-01', -10, 't gl 1');
+values (-202, test_get_account_id('-11111'), '1000-01-01', -10, 'XTS', -10,'t gl 1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-202, test_get_account_id('-11112'), '1000-01-01', 10, 't gl 1');
+values (-202, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10,'t gl 1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-203, test_get_account_id('-11111'), '1000-01-01', -10, 't gl 1');
+values (-203, test_get_account_id('-11111'), '1000-01-01', -10, 'XTS', -10,'t gl 1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-203, test_get_account_id('-11112'), '1000-01-01', 10, 't gl 1');
+values (-203, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10,'t gl 1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
 values (-204, test_get_account_id('-11111'), '1000-01-01', -10, 'XTS', -10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
@@ -94,21 +94,21 @@ values (-207, test_get_account_id('-11111'), '1000-01-03', -10, 'XTS', -10, '1')
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
 values (-207, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-208, test_get_account_id('-11111'), '1000-01-01', -10, '2');
+values (-208, test_get_account_id('-11111'), '1000-01-01', -10, 'XTS', -10,'2');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-208, test_get_account_id('-11112'), '1000-01-01', 10, '2');
+values (-208, test_get_account_id('-11112'), '1000-01-01', 10, 'XTS', 10,'2');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-209, test_get_account_id('-11111'), '1000-01-03', -10, '2');
+values (-209, test_get_account_id('-11111'), '1000-01-03', -10, 'XTS', -10, '2');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-209, test_get_account_id('-11112'), '1000-01-03', 10, '2');
+values (-209, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10,'2');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
 values (-210, test_get_account_id('-11111'), '1000-01-03', -10, 'XTS', -10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
 values (-210, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10, '1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-211, test_get_account_id('-11111'), '1000-01-03', -10, 't gl 1');
+values (-211, test_get_account_id('-11111'), '1000-01-03', -10, 'XTS', -10,'t gl 1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source)
-values (-211, test_get_account_id('-11112'), '1000-01-03', 10, 't gl 1');
+values (-211, test_get_account_id('-11112'), '1000-01-03', 10, 'XTS', 10,'t gl 1');
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source, cleared)
 values (-212, test_get_account_id('-11111'), '1000-01-03', -10, 'XTS', -10, '1', true);
 INSERT INTO acc_trans (trans_id, chart_id, transdate, amount_bc, curr, amount_tc,  source, cleared)
