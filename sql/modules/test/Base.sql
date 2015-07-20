@@ -55,6 +55,6 @@ BEGIN
       RETURN 't'::boolean;
    END IF;
 END;
-$$ language pgplsql;
+$$ language plpgsql;
 
 select test_insert_default_currency();
