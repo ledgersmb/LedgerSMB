@@ -109,9 +109,9 @@ INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc,
 -- 2) AP transaction: Reportable amount $1000, non-reportable amount $10,
 -- partially paid ($500) in current year -1025
 
-INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,entity_credit_account,
-            approved)
-values(-1025, date1(), 1010, 1010, 'XTS', -255, true);
+INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
+                entity_credit_account, approved)
+values(-1025, date1(), 1010, 1010, 'XTS', 1010, 1010, -255, true);
 
 INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)
      VALUES (-1025, -1000, date1(), 1010, 'XTS', 1010, true, -121);
@@ -134,8 +134,8 @@ INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc,
 -- paid $500 currnet year, $500 in future year -1026
 
 
-INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,entity_credit_account,
-            approved)
+INSERT INTO ap (id, transdate, amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
+                entity_credit_account, approved)
       values(-1026, date1(), 1010, 1010, 'XTS', 1010, 10101, -255, true);
 
 INSERT INTO acc_trans(trans_id, chart_id, transdate, amount_bc, curr, amount_tc, approved, entry_id)

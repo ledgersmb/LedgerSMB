@@ -57,7 +57,7 @@ VALUES (true, now()::date, '-100000', 'XTS', '-100000', currval('id'),
 
 INSERT INTO ap (id, invnumber, entity_credit_account, approved,
                 amount_bc, netamount_bc, curr, amount_tc, netamount_tc,
-                transdate, paid)
+                transdate, paid_deprecated)
 VALUES (-300, 'test_show3', -101, true, 1000000, 1000000, 'XTS',
         1000000, 1000000, now()::date, 0);
 
