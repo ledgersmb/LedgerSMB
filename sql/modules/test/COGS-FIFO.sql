@@ -45,7 +45,7 @@ INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
 VALUES (-1201, -1201, -1, 100, 0, 3);
 
 INSERT INTO test_result (test_name, success)
-SELECT 'initial COGS is null, (invoice 1, series 1)', sum(amount) IS NULL
+SELECT 'initial COGS is null, (invoice 1, series 1)', sum(amount_bc) IS NULL
   from acc_trans 
  where trans_id = -1201 and chart_id = -1102;
 
@@ -54,7 +54,7 @@ SELECT cogs__add_for_ar_line(-1201);
 select * from invoice where id < 0;
 
 INSERT INTO test_result (test_name, success)
-SELECT 'post-run COGS is 0, (invoice 1, series 1)', sum(amount) = 0
+SELECT 'post-run COGS is 0, (invoice 1, series 1)', sum(amount_bc) = 0
   from acc_trans 
  where trans_id = -1201 and chart_id = -1102;
 
@@ -66,7 +66,7 @@ VALUES (-1202, -1202, -1, -75, 0, 0.5);
 SELECT cogs__add_for_ap_line(-1202);
 
 INSERT INTO test_result (test_name, success)
-SELECT 'post-ap-run COGS is 37.50, (invoice 1, series 1)', sum(amount) = -37.5
+SELECT 'post-ap-run COGS is 37.50, (invoice 1, series 1)', sum(amount_bc) = -37.5
   from acc_trans 
  where trans_id = -1201 and chart_id = -1102;
 
@@ -84,7 +84,7 @@ INSERT INTO invoice (id, trans_id, parts_id, qty, allocated, sellprice)
 VALUES (-1203, -1203, -1, 100, 0, 3);
 
 INSERT INTO test_result (test_name, success)
-SELECT 'initial COGS is null, (invoice 3, series 1)', sum(amount) IS NULL
+SELECT 'initial COGS is null, (invoice 3, series 1)', sum(amount_bc) IS NULL
   from acc_trans 
  where trans_id = -1203 and chart_id = -1102;
 
@@ -105,13 +105,13 @@ FROM invoice WHERE id = -1203;
 --duplicate to check against reversals
 INSERT INTO test_result (test_name, success)
 SELECT 'post-ap-run COGS still 37.50, (invoice 1, series 1)', 
-       sum(amount) = -37.5
+       sum(amount_bc) = -37.5
   from acc_trans 
  where trans_id = -1201 and chart_id = -1102;
 
 INSERT INTO test_result (test_name, success)
 SELECT 'post-run COGS is 0, (invoice 3, series 1)', 
-        sum(amount) = 0 
+        sum(amount_bc) = 0 
   from acc_trans 
  where trans_id = -1203 and chart_id = -1102;
 
@@ -139,12 +139,12 @@ SELECT 'post-ap-run allocated 75 (invoice 4, series 1)', allocated = 75
 FROM invoice WHERE id = -1204;
 
 INSERT INTO test_result (test_name, success)
-SELECT 'post-ap-run COGS is 62.50, (invoice 1, series 1)', sum(amount) = -62.5
+SELECT 'post-ap-run COGS is 62.50, (invoice 1, series 1)', sum(amount_bc) = -62.5
   from acc_trans 
  where trans_id = -1201 and chart_id = -1102;
 
 INSERT INTO test_result (test_name, success)
-SELECT 'post-ap-run COGS is 50, (invoice 2, series 1)', sum(amount) = -50
+SELECT 'post-ap-run COGS is 50, (invoice 2, series 1)', sum(amount_bc) = -50
   from acc_trans 
  where trans_id = -1203 and chart_id = -1102;
 
@@ -178,17 +178,17 @@ SELECT 'post-ap-run allocated 50 (invoice 5, series 1)', allocated = 50
 FROM invoice WHERE id = -1205;
 
 INSERT INTO test_result (test_name, success)
-SELECT 'post-ap-run COGS is 62.50, (invoice 1, series 1)', sum(amount) = -62.5
+SELECT 'post-ap-run COGS is 62.50, (invoice 1, series 1)', sum(amount_bc) = -62.5
   from acc_trans 
  where trans_id = -1201 and chart_id = -1102;
 
-SELECT 'post-ap-run COGS is 62.50, (invoice 1, series 1)', sum(amount)
+SELECT 'post-ap-run COGS is 62.50, (invoice 1, series 1)', sum(amount_bc)
 from acc_trans
  where trans_id = -1201 and chart_id = -1102;
 
 
 INSERT INTO test_result (test_name, success)
-SELECT 'post-ap-run COGS is 150, (invoice 2, series 1)', sum(amount) = -150
+SELECT 'post-ap-run COGS is 150, (invoice 2, series 1)', sum(amount_bc) = -150
   from acc_trans 
  where trans_id = -1203 and chart_id = -1102;
 
@@ -221,7 +221,7 @@ SELECT 'Allocated is 75 post-AR run (invoice 2 series 2)', allocated = -75
   FROM invoice WHERE id = -2202;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-run COGS is 37.50, (invoice 2, series 2)', sum(amount) = -37.5
+SELECT 'post-ar-run COGS is 37.50, (invoice 2, series 2)', sum(amount_bc) = -37.5
 from acc_trans
  where trans_id = -2202 and chart_id = -2102;
 
@@ -268,12 +268,12 @@ SELECT 'post-ar-4, allocation invoice 4 series 2 is 75', allocated = -75
   FROM invoice WHERE id = -2204;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-4 COGS is 37.50, (invoice 2, series 2)', sum(amount) = -37.5
+SELECT 'post-ar-4 COGS is 37.50, (invoice 2, series 2)', sum(amount_bc) = -37.5
 from acc_trans
  where trans_id = -2202 and chart_id = -2102;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-4 COGS is 62.50, (invoice 2, series 4)', sum(amount) = -62.5
+SELECT 'post-ar-4 COGS is 62.50, (invoice 2, series 4)', sum(amount_bc) = -62.5
 from acc_trans
  where trans_id = -2204 and chart_id = -2102;
 
@@ -306,17 +306,17 @@ SELECT 'post-ar-5, allocation invoice 5 series 2 is 50', allocated = -50
   FROM invoice WHERE id = -2205;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-5 COGS is 37.50, (invoice 2, series 2)', sum(amount) = -37.5
+SELECT 'post-ar-5 COGS is 37.50, (invoice 2, series 2)', sum(amount_bc) = -37.5
 from acc_trans
  where trans_id = -2202 and chart_id = -2102;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-5 COGS is 62.50, (invoice 2, series 4)', sum(amount) = -62.5
+SELECT 'post-ar-5 COGS is 62.50, (invoice 2, series 4)', sum(amount_bc) = -62.5
 from acc_trans
  where trans_id = -2204 and chart_id = -2102;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-5 COGS is 50, (invoice 2, series 5)', sum(amount) = -50
+SELECT 'post-ar-5 COGS is 50, (invoice 2, series 5)', sum(amount_bc) = -50
 from acc_trans
  where trans_id = -2205 and chart_id = -2102;
 
@@ -355,22 +355,22 @@ SELECT 'post-ar-6, allocation invoice 6 series 2 is -150', allocated = 150
   FROM invoice WHERE id = -2206;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-6 COGS is 37.50, (invoice 2, series 2)', sum(amount) = -37.5
+SELECT 'post-ar-6 COGS is 37.50, (invoice 2, series 2)', sum(amount_bc) = -37.5
 from acc_trans
  where trans_id = -2202 and chart_id = -2102;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-6 COGS is 62.50, (invoice 4, series 2)', sum(amount) = -62.5
+SELECT 'post-ar-6 COGS is 62.50, (invoice 4, series 2)', sum(amount_bc) = -62.5
 from acc_trans
  where trans_id = -2204 and chart_id = -2102;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-6 COGS is 50, (invoice 5, series 2)', sum(amount) = -50
+SELECT 'post-ar-6 COGS is 50, (invoice 5, series 2)', sum(amount_bc) = -50
 from acc_trans
  where trans_id = -2205 and chart_id = -2102;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-6 COGS is -125, (invoice 6, series 2)', sum(amount) = 125
+SELECT 'post-ar-6 COGS is -125, (invoice 6, series 2)', sum(amount_bc) = 125
 from acc_trans
  where trans_id = -2206 and chart_id = -2102;
 
@@ -403,7 +403,7 @@ SELECT 'Allocated is 75 post-AR run (invoice 2 series 3)', allocated = -75
   FROM invoice WHERE id = -3202;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-run COGS is 37.50, (invoice 2, series 3)', sum(amount) = -37.5
+SELECT 'post-ar-run COGS is 37.50, (invoice 2, series 3)', sum(amount_bc) = -37.5
 from acc_trans
  where trans_id = -3202 and chart_id = -3102;
 
@@ -427,12 +427,12 @@ SELECT 'Allocated is 75 post-AR run (invoice 3 series 3)', allocated = -25
   FROM invoice WHERE id = -3203;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-run COGS is 37.50, (invoice 2, series 3)', sum(amount) = -37.5
+SELECT 'post-ar-run COGS is 37.50, (invoice 2, series 3)', sum(amount_bc) = -37.5
 from acc_trans
  where trans_id = -3202 and chart_id = -3102;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ar-run COGS is 12.5, (invoice 3, series 3)', sum(amount) = -12.5
+SELECT 'post-ar-run COGS is 12.5, (invoice 3, series 3)', sum(amount_bc) = -12.5
 from acc_trans
  where trans_id = -3203 and chart_id = -3102;
 
@@ -462,12 +462,12 @@ SELECT 'post-ap-4 Allocated is 50 post-AR run (invoice 4 series 3)', allocated =
   FROM invoice WHERE id = -3204;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ap-4 COGS is 37.50, (invoice 2, series 3)', sum(amount) = -37.5
+SELECT 'post-ap-4 COGS is 37.50, (invoice 2, series 3)', sum(amount_bc) = -37.5
 from acc_trans
  where trans_id = -3202 and chart_id = -3102;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ap-4 COGS is 62.5, (invoice 3, series 3)', sum(amount) = -62.5
+SELECT 'post-ap-4 COGS is 62.5, (invoice 3, series 3)', sum(amount_bc) = -62.5
 from acc_trans
  where trans_id = -3203 and chart_id = -3102;
 
@@ -503,17 +503,17 @@ SELECT 'post-ap-5 Allocated is 50 post-AR run (invoice 5 series 3)', allocated =
   FROM invoice WHERE id = -3205;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ap-5 COGS is 37.50, (invoice 2, series 3)', sum(amount) = -37.5
+SELECT 'post-ap-5 COGS is 37.50, (invoice 2, series 3)', sum(amount_bc) = -37.5
 from acc_trans
  where trans_id = -3202 and chart_id = -3102;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ap-5 COGS is 62.5, (invoice 3, series 3)', sum(amount) = -62.5
+SELECT 'post-ap-5 COGS is 62.5, (invoice 3, series 3)', sum(amount_bc) = -62.5
 from acc_trans
  where trans_id = -3203 and chart_id = -3102;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ap-5 COGS is 50, (invoice 3, series 5)', sum(amount) = -50
+SELECT 'post-ap-5 COGS is 50, (invoice 3, series 5)', sum(amount_bc) = -50
 from acc_trans
  where trans_id = -3205 and chart_id = -3102;
 
@@ -547,7 +547,7 @@ SELECT 'post-ap-2 Allocated is -75 (invoice 2 series 4)', allocated = -75
   FROM invoice WHERE id = -4202;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ap-2 COGS is 0, invoice 2, series 4)', sum(amount) = 0
+SELECT 'post-ap-2 COGS is 0, invoice 2, series 4)', sum(amount_bc) = 0
   FROM acc_trans
  WHERE trans_id = -4202 and chart_id = -4102;
 
@@ -571,7 +571,7 @@ SELECT 'post-ap-3 Allocated is 0 (invoice 3 series 4)', allocated = 0
   FROM invoice WHERE id = -4203;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ap-3 COGS is 0, invoice 2, series 4)', sum(amount) = 0
+SELECT 'post-ap-3 COGS is 0, invoice 2, series 4)', sum(amount_bc) = 0
   FROM acc_trans
  WHERE trans_id = -4202 and chart_id = -4102;
 
@@ -599,12 +599,12 @@ SELECT 'post-ap-4 Allocated is 75 (invoice 4 series 4)', allocated = -75
   FROM invoice WHERE id = -4204;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ap-4 COGS is 0, invoice 2, series 4)', sum(amount) = 0
+SELECT 'post-ap-4 COGS is 0, invoice 2, series 4)', sum(amount_bc) = 0
   FROM acc_trans
  WHERE trans_id = -4202 and chart_id = -4102;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'post-ap-4 COGS is 25, invoice 2, series 4)', sum(amount) = 25
+SELECT 'post-ap-4 COGS is 25, invoice 2, series 4)', sum(amount_bc) = 25
   FROM acc_trans
  WHERE trans_id = -4204 and chart_id = -4102;
 

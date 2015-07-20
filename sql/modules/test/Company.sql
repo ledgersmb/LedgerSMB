@@ -10,7 +10,7 @@ SELECT 'Saving Company',
 INSERT INTO test_result (test_name, success)
 SELECT 'Saving Credit Acct', 
 	eca__save(  NULL , 1, currval('entity_id_seq')::int, 'TEST', 0, false,
-		0, 0, 0, 'test-123', NULL, NULL, NULL, 'USD', now()::date, now()::date,
+		0, 0, 0, 'test-123', NULL, NULL, NULL, 'XTS', now()::date, now()::date,
 		0, -1000, NULL, NULL, NULL, NULL)
 	IS NOT NULL;
 
