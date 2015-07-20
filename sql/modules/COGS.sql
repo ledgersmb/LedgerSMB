@@ -258,7 +258,11 @@ LOOP
        SELECT income_accno_id,
               CASE WHEN t_ar.transdate > coalesce(t_cp.end_date, t_ar.transdate - 1) THEN t_ar.transdate
                    ELSE t_cp.end_date + '1 day'::interval
-               END, -t_avail * in_lastcost, t_inv.id, true, t_inv.trans_id
+               END,
+               -t_avail * in_lastcost,
+               defaults_get_defaultcurrency(),
+               -t_avail * in_lastcost,
+               t_inv.id, true, t_inv.trans_id
          FROM parts
        WHERE  id = t_inv.parts_id AND inventory_accno_id IS NOT NULL
               AND expense_accno_id IS NOT NULL;
