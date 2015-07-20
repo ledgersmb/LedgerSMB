@@ -11,36 +11,14 @@ addons:
 env:
   - DB_TESTING: 1
 before_install:
-   - "cpanm DBI"
-   - "cpanm HTTP::Tiny"
-   - "cpanm DBD::Pg"
-   - "cpanm Try::Tiny"
-   - "cpanm Memoize"
-   - "cpanm Test::More"
-   - "cpanm Test::Trap"
-   - "cpanm Test::Exception"
-   - "cpanm Devel::Cover::Report::Coveralls"
-   - "cpanm Data::Dumper"
-   - "cpanm http://search.cpan.org/CPAN/authors/id/M/MS/MSCHILLI/Log-Log4perl-1.44.tar.gz"
-   - "cpanm Locale::Maketext"
-   - "cpanm DateTime"
-   - "cpanm Locale::Maketext::Lexicon"
-   - "cpanm MIME::Base64"
-   - "cpanm Digest::MD5"
-   - "cpanm HTML::Entities"
-   - "cpanm Math::BigFloat"
-   - "cpanm IO::File"
-   - "cpanm IO::Scalar"
-   - "cpanm Encode"
-   - "cpanm Time::Local"
-   - "cpanm Cwd"
-   - "cpanm Config::IniFiles"
-   - "cpanm Moose"
-   - "cpanm MIME::Lite"
-   - "cpanm Template"
-   - "cpanm Error"
-   - "cpanm JSON"
-   - "cpanm CGI::Simple"
-   - "cpanm File::MimeInfo"
+  - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
+  - source ~/travis-perl-helpers/init
+  - build-perl
+  - perl -V
+  - build-dist
+  - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
+install:
+  - cpan-install --deps       # installs prereqs, including recommends
+  - cpan-install --coverage   # installs converage prereqs, if enabled
 script:
    export RELEASE_TESTING=1 && yes n | perl Makefile.PL && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest make test && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest cover -test -report coveralls
