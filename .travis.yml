@@ -1,17 +1,33 @@
 # run on container-based build:
 sudo: false
 language: perl
-perl:
-  - '5.10'
-  - '5.12'
-  - '5.14'
-  - '5.16'
-  - '5.18'
-  - '5.20'
+matrix:
+  include:
+    - perl: '5.20'
+      addons:
+        postgresql: "9.4"
+      env:
+        - COVERAGE=1
+    - perl: '5.18'
+      addons:
+        postgresql: "9.3"
+    - perl: '5.16'
+      addons:
+        postgresql: "9.2"
+    - perl: '5.14'
+      addons:
+        postgresql: "9.1"
+    - perl: '5.12'
+      addons:
+        postgresql: "9.3"
+    - perl: '5.10'
+      addons:
+        postgresql: "9.3"
+
 env:
-  - COVERAGE=1
-addons:
-   postgresql: "9.3"
+  global:
+    - DB_TESTING=1
+
 before_install:
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
@@ -19,12 +35,16 @@ before_install:
   - perl -V
   - build-dist
   - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
+
 install:
   - cpan-install --deps       # installs prereqs, including recommends
   - cpan-install --coverage   # installs converage prereqs, if enabled
+
 before_script:
   - coverage-setup
+
 script:
    export RELEASE_TESTING=1 && yes n | perl Makefile.PL && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest make test
+
 after_success:
   - coverage-report
