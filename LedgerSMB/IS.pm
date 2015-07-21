@@ -848,22 +848,7 @@ sub post_invoice {
     $form->{is_return} ||= 0;
 
     if ( $form->{id} ) {
-        $keepcleared = 1;
-        $query       = qq|SELECT id FROM ar WHERE id = ?|;
-        $sth         = $dbh->prepare($query);
-        $sth->execute( $form->{id} );
-
-        if ( $sth->fetchrow_array ) {
-            &reverse_invoice( $dbh, $form );
-        }
-        else {
-            $query = qq|INSERT INTO ar (id, entity_credit_account, is_return) 
-                        VALUES (?, ?, ?)|;
-            $sth   = $dbh->prepare($query);
-            $sth->execute($form->{id}, $form->{customer_id}, $form->{is_return})
-                 || $form->dberror($query);
-        }
-
+        $form->error("Can't re-post invoices.");
     }
 
     my $uid = localtime;
@@ -1598,94 +1583,6 @@ sub cogs {
 
     }
     return $allocated;
-}
-
-sub reverse_invoice {
-    my ( $dbh2, $form ) = @_;
-    my $dbh   = $form->{dbh};
-    my $query = qq|
-		SELECT id FROM ar
-		WHERE id = ?|;
-
-    my $sth;
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{id} );
-    my ($id) = $sth->fetchrow_array;
-
-    return unless $id;
-
-    # reverse inventory items
-    $query = qq|
-		SELECT i.id, i.parts_id, i.qty, i.assemblyitem, p.assembly,
-		       p.inventory_accno_id
-		  FROM invoice i
-		  JOIN parts p ON (i.parts_id = p.id)
-		 WHERE i.trans_id = ?|;
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-
-        if ( $ref->{inventory_accno_id} || $ref->{assembly} ) {
-
-            # if the invoice item is not an assemblyitem
-            # adjust parts onhand
-            if ( !$ref->{assemblyitem} ) {
-
-                # adjust onhand in parts table
-                $form->update_balance( $dbh, "parts", "onhand",
-                    qq|id = $ref->{parts_id}|,
-                    $ref->{qty} );
-            }
-
-            # loop if it is an assembly
-            next if ( $ref->{assembly} );
-
-            # de-allocated purchases
-            $query = qq|
-				  SELECT id, trans_id, allocated
-				    FROM invoice
-				   WHERE parts_id = ?
-				         AND allocated > 0
-				ORDER BY trans_id DESC|;
-            my $sth = $dbh->prepare($query);
-            $sth->execute( $ref->{parts_id} )
-              || $form->dberror($query);
-
-            while ( my $inhref = $sth->fetchrow_hashref(NAME_lc) ) {
-                $qty = $ref->{qty};
-                if ( ( $ref->{qty} - $inhref->{allocated} ) > 0 ) {
-                    $qty = $inhref->{allocated};
-                }
-
-                # update invoice
-                $form->update_balance( $dbh, "invoice", "allocated",
-                    qq|id = $inhref->{id}|,
-                    $qty * -1 );
-
-                last if ( ( $ref->{qty} -= $qty ) <= 0 );
-            }
-            $sth->finish;
-        }
-    }
-
-    $sth->finish;
-
-    # delete acc_trans
-    $query = qq|DELETE FROM acc_trans WHERE trans_id = ?|;
-
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    # delete invoice entries
-    $query = qq|DELETE FROM invoice WHERE trans_id = ?|;
-    $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    $query = qq|DELETE FROM new_shipto WHERE trans_id = ?|;
-    $sth   = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
 }
 
 sub retrieve_invoice {
