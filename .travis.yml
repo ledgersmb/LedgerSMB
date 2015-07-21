@@ -10,23 +10,30 @@ matrix:
         - COVERAGE=1
     - perl: '5.18'
       addons:
-        postgresql: "9.3"
+        postgresql: "9.4"
+      env:
+        - DB_TESTING=1
     - perl: '5.16'
       addons:
-        postgresql: "9.2"
+        postgresql: "9.3"
+      env:
+        - DB_TESTING=1
     - perl: '5.14'
       addons:
-        postgresql: "9.1"
+        postgresql: "9.2"
+      env:
+        - DB_TESTING=1
     - perl: '5.12'
       addons:
-        postgresql: "9.3"
+        postgresql: "9.1"
+      env:
+        - DB_TESTING=1
     - perl: '5.10'
       addons:
         postgresql: "9.3"
 
 env:
   global:
-    - DB_TESTING=1
 
 before_install:
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
