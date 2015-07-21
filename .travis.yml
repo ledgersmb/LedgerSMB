@@ -32,9 +32,6 @@ matrix:
       addons:
         postgresql: "9.3"
 
-env:
-  global:
-
 before_install:
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
