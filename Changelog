@@ -1,6 +1,10 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.14
+* Replace spanish CoA for compliance; donated by AccountNet
+
+
 Changelog for 1.4.13
 * Account edit group can checkboxes and mark accounts obsolete (Chris T)
 * Fixed time cards failing to save (GitHub bug 636) (Erik H)
