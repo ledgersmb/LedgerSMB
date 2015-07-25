@@ -973,8 +973,7 @@ sub save_roles {
                push @$roles, $key;
            }
        }
-       $user->role_list($roles);
-       $user->save_roles;
+       $user->save_roles($roles);
     }
     get($request);
 }

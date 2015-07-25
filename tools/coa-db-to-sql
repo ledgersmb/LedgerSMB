@@ -1,0 +1,162 @@
+#!/usr/bin/perl
+
+use warnings;
+use strict;
+use diagnostics;
+
+use DBI;
+
+# use environment variables for authentication
+my $dbh = DBI->connect('dbi:Pg:', undef, undef)
+    or die "Unable to connect: $DBI::errstr\n";
+
+print "-- Create the entire COA in 1 transaction\n\nBEGIN;";
+
+my $sth = $dbh->prepare(qq|
+select h.id, h.accno, h.parent_id, h.description
+  from account_heading_tree t
+  join account_heading h on t.id = h.id
+ order by level asc, t.accno asc
+|)
+    or die "Unable to prepare statement: $dbh->errstr\n";
+$sth->execute()
+   or die "Unable to execute statement: $sth->errstr\n";
+
+print "-- HEADINGS DEFINITION\n";
+while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+    $row->{$_} = $dbh->quote($row->{$_})
+        for ('id', 'parent_id', 'accno', 'description');
+    print qq|
+INSERT INTO account_heading (id, parent_id, accno, description)
+     VALUES ($row->{id}, $row->{parent_id}, $row->{accno}, $row->{description});|;
+}
+
+
+
+$sth = $dbh->prepare(qq|
+select * from account
+|)
+    or die "Unable to prepare statement: $dbh->errstr\n";
+$sth->execute()
+   or die "Unable to execute statement: $sth->errstr\n";
+
+
+print "\n\n\n-- GIFI DEFINITION (need gifi before account creation)";
+while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+    $row->{$_} = $dbh->quote($row->{$_})
+        for ('accno', 'description');
+    print qq|
+INSERT INTO gifi (accno, description)
+     VALUES ($row->{accno}, $row->{description});|;
+}
+
+
+
+$sth = $dbh->prepare(qq|
+select * from account
+|)
+    or die "Unable to prepare statement: $dbh->errstr\n";
+$sth->execute()
+   or die "Unable to execute statement: $sth->errstr\n";
+
+
+print "\n\n\n-- ACCOUNTS DEFINITION";
+while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+    $row->{$_} = $dbh->quote($row->{$_})
+        for ('id', 'accno', 'description', 'is_temp', 'category', 'gifi_accno',
+             'heading', 'contra', 'tax', 'obsolete');
+    print qq|
+INSERT INTO account (id, accno, description, is_temp, category, gifi_accno,
+            heading, contra, tax, obsolete)
+     VALUES ($row->{id}, $row->{accno}, $row->{description}, $row->{is_temp}, $row->{category}, $row->{gifi_accno},
+             $row->{heading}, $row->{contra}, $row->{tax}, $row->{obsolete});|;
+}
+
+
+
+$sth = $dbh->prepare(qq|
+select * from account_link_description where custom
+|)
+    or die "Unable to prepare statement: $dbh->errstr\n";
+$sth->execute()
+   or die "Unable to execute statement: $sth->errstr\n";
+
+
+print "\n\n\n-- CUSTOM ACCOUNT LINK DEFINITION";
+while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+    $row->{$_} = $dbh->quote($row->{$_})
+        for ('description', 'summary', 'custom');
+    print qq|
+INSERT INTO account_link_description (description, summary, custom)
+     VALUES ($row->{description}, $row->{summary}, $row->{custom});|;
+}
+
+
+$sth = $dbh->prepare(qq|
+select * from account_link
+|)
+    or die "Unable to prepare statement: $dbh->errstr\n";
+$sth->execute()
+   or die "Unable to execute statement: $sth->errstr\n";
+
+
+print "\n\n\n-- ACCOUNT LINKS";
+while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+    $row->{$_} = $dbh->quote($row->{$_})
+        for ('id', 'description');
+    print qq|
+INSERT INTO account_link (account_id, description)
+     VALUES ($row->{account_id}, $row->{description});|;
+}
+
+
+
+$sth = $dbh->prepare(qq|
+select * from tax
+|)
+    or die "Unable to prepare statement: $dbh->errstr\n";
+$sth->execute()
+   or die "Unable to execute statement: $sth->errstr\n";
+
+
+print "\n\n\n-- TAX DEFINITION";
+while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+    $row->{$_} = $dbh->quote($row->{$_})
+        for ('chart_id', 'rate', 'minvalue', 'maxvalue', 'taxnumber',
+             'validto', 'pass', 'taxmodule');
+    print qq|
+INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
+                 validto, pass, taxmodule)
+     VALUES ($row->{chart_id}, $row->{rate}, $row->{minvalue}, $row->{maxvalue}, $row->{taxnumber},
+             $row->{validto}, $row->{pass}, $row->{taxmodule});|;
+}
+
+
+
+$sth = $dbh->prepare(qq|
+select * from defaults
+ where setting_key in ('inventory_accno_id',
+                       'income_accno_id',
+                       'expense_accno_id',
+                       'fxgain_accno_id',
+                       'fxloss_accno_id',
+                       'curr');
+|)
+    or die "Unable to prepare statement: $dbh->errstr\n";
+$sth->execute()
+   or die "Unable to execute statement: $sth->errstr\n";
+
+
+print "\n\n\n-- SET UP DEFAULTS";
+while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
+    $row->{$_} = $dbh->quote($row->{$_})
+        for ('setting_key', 'value');
+    print qq|
+INSERT INTO tax (setting_key, value)
+     VALUES ($row->{setting_key}, $row->{value});|;
+}
+
+
+
+
+print "\n\n-- END of transaction\nCOMMIT;\n";
