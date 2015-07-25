@@ -273,6 +273,7 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns set
             ) as ar
          where 
             r.oid = ar.roleid
+            and r.rolname like (lsmb__role_prefix() || '%')
          LOOP
         
             RETURN NEXT u_role.rolname::text;
