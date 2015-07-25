@@ -87,7 +87,7 @@ ID of asset class.
 
 =cut
 
-use base qw(LedgerSMB::DBObject);
+use base qw(LedgerSMB::PGOld);
 use strict;
 
 =item save

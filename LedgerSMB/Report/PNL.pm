@@ -44,6 +44,14 @@ comparisons and comparisons are added using the "add_comparison" method.
 
 has 'account_data' =>  (is => 'rw', isa => 'HashRef[Any]');
 
+=item gifi
+
+Boolean, true if it is a gifi report.
+
+=cut
+
+has gifi => (is => 'rw', isa => 'Bool');
+
 =item comparisons
 
 This stores a list of comparison itnervals, each is a hashref with the following
@@ -88,6 +96,7 @@ sub columns { [{col_id => 'amount',
                 money => 1  }]
 }
 
+
 =back
 
 =head1 METHODS
@@ -119,6 +128,29 @@ sub _merge_rows {
     $self->account_data($data);
 }
 
+sub _transform_gifi {
+    my @rows = @_;
+    my %hashamount;
+    my @xformed_rows =  map { {%$_, 
+                               account_number => $_->{gifi}, 
+                               account_description => $_->{gifi_description}} } @rows;
+    $hashamount{I} = { map { 
+                       ($_->{gifi},  {%$_})
+                     } grep {$_->{account_category} eq 'I' and $_->{gifi}} @xformed_rows};
+    $hashamount{E} = { map { 
+                       ($_->{gifi}, {%$_})
+                     } grep {$_->{account_category} eq 'E' and $_->{gifi}} @xformed_rows};
+    for my $cat (keys %hashamount){
+        for (keys %{$hashamount{$cat}}){
+            $hashamount{$cat}->{$_}->{amount} = 0;
+        }
+    }
+    $hashamount{$_->{account_category}}->{$_->{gifi}}->{amount} 
+               += $_->{amount} for @xformed_rows;
+    return (sort(values %{$hashamount{I}})), (sort (values %{$hashamount{E}}));
+}
+
+
 =over
 
 =item run_report
@@ -128,6 +160,7 @@ sub _merge_rows {
 sub run_report {
     my ($self) = @_;
     my @rows = $self->report_base();
+    @rows = _transform_gifi(@rows) if $self->gifi;
     $self->rows(\@rows);
     $self->_merge_rows('main', @rows);
     return @rows;

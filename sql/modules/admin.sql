@@ -21,6 +21,7 @@ CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEX
         stmt TEXT;
         a_role name;
         a_user name;
+	t_userid int;
     BEGIN
     
         -- Issue the grant
@@ -32,16 +33,27 @@ CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEX
         select rolname into a_user from pg_roles where rolname = in_username;
         
         IF NOT FOUND THEN
-            RAISE EXCEPTION 'Cannot grant permissions to a non-existant user.';
+            RAISE EXCEPTION 'Cannot grant permissions to a non-existant database user.';
         END IF;
         
         stmt := 'GRANT '|| quote_ident(in_role) ||' to '|| quote_ident(in_username);
         
         EXECUTE stmt;
-        insert into lsmb_roles (user_id, role) 
-        SELECT id, in_role from users where username = in_username 
-               AND id not in (select user_id from lsmb_roles 
-                               where role = in_role);
+
+	select id into t_userid from users where username = in_username;
+	if not FOUND then
+	  RAISE EXCEPTION 'Cannot grant permissions to a non-existant application user.';
+        end if;
+
+	perform * from lsmb_roles
+	 where user_id = t_userid and role = in_role;
+	if not FOUND then
+          -- not found --> adding
+          insert into lsmb_roles (user_id, role) 
+          SELECT id, in_role from users where username = in_username 
+                 AND id not in (select user_id from lsmb_roles 
+                                 where role = in_role);
+        end if;
         return 1;
     END;
     
@@ -261,6 +273,7 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns set
             ) as ar
          where 
             r.oid = ar.roleid
+            and r.rolname like (lsmb__role_prefix() || '%')
          LOOP
         
             RETURN NEXT u_role.rolname::text;

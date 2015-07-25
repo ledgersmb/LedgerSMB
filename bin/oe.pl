@@ -122,42 +122,12 @@ sub order_links {
 				 ( $form->{vc} eq 'customer' ) ? "AR" : "AP",
 				 undef, $form->{transdate}, 1 );
 
-    # currencies
-    @curr = split /:/, $form->{currencies};
-    $form->{defaultcurrency} = $curr[0];
-    chomp $form->{defaultcurrency};
-    $form->{currency} = $form->{defaultcurrency} unless $form->{currency};
-
-    for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
-
     $form->{oldlanguage_code} = $form->{language_code};
 
     $l{language_code} = $form->{language_code};
     $l{searchitems} = 'nolabor' if $form->{vc} eq 'customer';
 
     $form->get_partsgroup( \%myconfig, \%l );
-
-    if ( @{ $form->{all_partsgroup} } ) {
-        $form->{selectpartsgroup} = "<option>\n";
-        foreach $ref ( @{ $form->{all_partsgroup} } ) {
-            if ( $ref->{translation} ) {
-                $form->{selectpartsgroup} .=
-qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{translation}\n|;
-            }
-            else {
-                $form->{selectpartsgroup} .=
-qq|<option value="$ref->{partsgroup}--$ref->{id}">$ref->{partsgroup}\n|;
-            }
-        }
-    }
-
-    if ( @{ $form->{all_project} } ) {
-        $form->{selectprojectnumber} = "<option>\n";
-        for ( @{ $form->{all_project} } ) {
-            $form->{selectprojectnumber} .=
-qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
-        }
-    }
 
     for (qw(terms taxincluded)) { $temp{$_} = $form->{$_} }
     $form->{shipto} = 1 if $form->{id};
@@ -173,36 +143,7 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
     $form->{"old$form->{vc}"} =
       qq|$form->{$form->{vc}}--$form->{"$form->{vc}_id"}|;
 
-    # departments
-    if ( @{ $form->{all_department} } ) {
-        $form->{selectdepartment} = "<option>\n";
-        $form->{department} = "$form->{department}--$form->{department_id}"
-          if $form->{department_id};
-
-        for ( @{ $form->{all_department} } ) {
-            $form->{selectdepartment} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-    }
-
     $form->{employee} = "$form->{employee}--$form->{employee_id}";
-
-    # sales staff
-    if ( @{ $form->{all_employee} } ) {
-        $form->{selectemployee} = "";
-        for ( @{ $form->{all_employee} } ) {
-            $form->{selectemployee} .=
-              qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
-        }
-    }
-
-    if ( @{ $form->{all_language} } ) {
-        $form->{selectlanguage} = "<option>\n";
-        for ( @{ $form->{all_language} } ) {
-            $form->{selectlanguage} .=
-              qq|<option value="$_->{code}">$_->{description}\n|;
-        }
-    }
 
     # forex
     $form->{forex} = $form->{exchangerate};
@@ -363,25 +304,14 @@ sub form_header {
     if ( $form->{id} ) {
         $openclosed = qq|
       <tr>
-	<th nowrap align=right><input name=closed type=radio class=radio value=0 $checkedopen> |
+	<th nowrap align=right><input name=closed type=radio data-dojo-type="dijit/form/RadioButton" class=radio value=0 $checkedopen> |
           . $locale->text('Open')
           . qq|</th>
-	<th nowrap align=left><input name=closed type=radio class=radio value=1 $checkedclosed> |
+	<th nowrap align=left><input name=closed type=radio data-dojo-type="dijit/form/RadioButton" class=radio value=1 $checkedclosed> |
           . $locale->text('Closed')
           . qq|</th>
       </tr>
 |;
-    }
-
-    # set option selected
-    $form->{selectcurrency} =~ s/ selected//;
-    $form->{selectcurrency} =~
-      s/option>\Q$form->{currency}\E/option selected>$form->{currency}/;
-
-    for ( "$form->{vc}", "department", "employee" ) {
-        $form->{"select$_"} = $form->unescape( $form->{"select$_"} );
-        $form->{"select$_"} =~ s/ selected//;
-        $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected/;
     }
 
     $form->{exchangerate} =
@@ -390,12 +320,8 @@ sub form_header {
     $exchangerate = qq|<tr id="exchangerate-row">|;
     $exchangerate .= qq|
                 <th align=right nowrap>| . $locale->text('Currency') . qq|</th>
-		<td><select name=currency>$form->{selectcurrency}</select></td> |
+		<td><select data-dojo-type="dijit/form/Select" name=currency>$form->{selectcurrency}</select></td> |
       if $form->{defaultcurrency};
-    $exchangerate .= qq|
-                <input type=hidden name=selectcurrency value="$form->{selectcurrency}">
-		<input type=hidden name=defaultcurrency value=$form->{defaultcurrency}>
-|;
 
     if (   $form->{defaultcurrency}
         && $form->{currency} ne $form->{defaultcurrency} )
@@ -412,7 +338,7 @@ sub form_header {
             $exchangerate .=
                 qq|<th align=right>|
               . $locale->text('Exchange Rate')
-              . qq|</th><td><input name=exchangerate size=10 value=$form->{exchangerate}></td>|;
+              . qq|</th><td><input data-dojo-type="dijit/form/TextBox" name=exchangerate size=10 value=$form->{exchangerate}></td>|;
         }
     }
     $exchangerate .= qq|
@@ -426,7 +352,7 @@ sub form_header {
     $terms = qq|
                     <tr id="terms-row">
 		      <th align=right nowrap>| . $locale->text('Terms') . qq|</th>
-		      <td nowrap><input name=terms size="3" maxlength="3" value=$form->{terms}> |
+		      <td nowrap><input data-dojo-type="dijit/form/TextBox" name=terms size="3" maxlength="3" value=$form->{terms}> |
       . $locale->text('days')
       . qq|</td>
                     </tr>
@@ -451,21 +377,21 @@ sub form_header {
         $ordnumber = qq|
 	      <tr class="ordnumber-row">
 		<th width=70% align=right nowrap>| . $locale->text('Order Number') . qq|</th>
-                <td><input name=ordnumber size=20 value="$form->{ordnumber}">
+                <td><input data-dojo-type="dijit/form/TextBox" name=ordnumber size=20 value="$form->{ordnumber}">
                      $sequences</td>
 		<input type=hidden name=quonumber value="$form->{quonumber}">
 	      </tr>
 	      <tr class="transdate-row">
 		<th align=right nowrap>| . $locale->text('Order Date') . qq|</th>
-		<td><input class="date" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
+		<td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
 	      </tr>
 	      <tr class="reqdate-row">
 		<th align=right nowrap=true>| . $locale->text('Required by') . qq|</th>
-		<td><input class="date" name=reqdate size=11 title="$myconfig{dateformat}" value="$form->{reqdate}" id="reqdate"></td>
+		<td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=reqdate size=11 title="$myconfig{dateformat}" value="$form->{reqdate}" id="reqdate"></td>
 	      </tr>
 	      <tr class="ponunber-row">
 		<th align=right nowrap>| . $locale->text('PO Number') . qq|</th>
-		<td><input name=ponumber size=20 value="$form->{ponumber}"></td>
+		<td><input data-dojo-type="dijit/form/TextBox" name=ponumber size=20 value="$form->{ponumber}"></td>
 	      </tr>
 |;
 
@@ -523,7 +449,7 @@ sub form_header {
 		<th width=70% align=right nowrap>|
               . $locale->text('Quotation Number')
               . qq|</th>
-		<td><input name=quonumber size=20 value="$form->{quonumber}">
+		<td><input data-dojo-type="dijit/form/TextBox" name=quonumber size=20 value="$form->{quonumber}">
                     $sequences</td>
 		<input type=hidden name=ordnumber value="$form->{ordnumber}">
 	      </tr>
@@ -533,7 +459,7 @@ sub form_header {
             $ordnumber = qq|
 	      <tr class="rfqnumber-row">
 		<th width=70% align=right nowrap>| . $locale->text('RFQ Number') . qq|</th>
-		<td><input name=quonumber size=20 value="$form->{quonumber}">
+		<td><input data-dojo-type="dijit/form/TextBox" name=quonumber size=20 value="$form->{quonumber}">
                     $sequences</td>
 		<input type=hidden name=ordnumber value="$form->{ordnumber}">
 	      </tr>
@@ -545,11 +471,11 @@ sub form_header {
         $ordnumber .= qq|
 	      <tr class="transdate-row">
 		<th align=right nowrap>| . $locale->text('Quotation Date') . qq|</th>
-		<td><input class="date" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
+		<td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdate size=11 title="$myconfig{dateformat}" value="$form->{transdate}" id="transdate"></td>
 	      </tr>
 	      <tr>
 		<th align=right nowrap=true>$reqlabel</th>
-		<td><input class="date" name=reqdate size=11 title="$myconfig{dateformat}" value="$form->{reqdate}" id="reqdate"></td>
+		<td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=reqdate size=11 title="$myconfig{dateformat}" value="$form->{reqdate}" id="reqdate"></td>
 	      </tr>
 |;
 
@@ -559,9 +485,7 @@ sub form_header {
 <input type=hidden name=oldtransdate value=$form->{oldtransdate}>|;
 
     if ( $form->{"select$form->{vc}"} ) {
-        $vc = qq|<select name=$form->{vc}>$form->{"select$form->{vc}"}</select>
-             <input type=hidden name="select$form->{vc}" value="|
-          . $form->escape( $form->{"select$form->{vc}"}, 1 ) . qq|">|;
+        $vc = qq|<select data-dojo-type="dijit/form/Select" name=$form->{vc}>$form->{"select$form->{vc}"}</select>|;
     }
     else {
         if ($form->{vc} eq 'vendor'){
@@ -569,7 +493,7 @@ sub form_header {
         } elsif ($form->{vc} eq 'customer'){
             $eclass = 2
         }
-        $vc = qq|<input name=$form->{vc} value="$form->{$form->{vc}}" size=35>
+        $vc = qq|<input data-dojo-type="dijit/form/TextBox" name=$form->{vc} value="$form->{$form->{vc}}" size=35>
              <a id="new-contact" target="new" 
                  href="contact.pl?action=add&entity_class=$eclass">
                  [| . $locale->text('New') . qq|]</a>|;
@@ -578,9 +502,7 @@ sub form_header {
     $department = qq|
               <tr class="department-row">
 	        <th align="right" nowrap>| . $locale->text('Department') . qq|</th>
-		<td colspan=3><select name=department>$form->{selectdepartment}</select>
-		<input type=hidden name=selectdepartment value="|
-      . $form->escape( $form->{selectdepartment}, 1 ) . qq|">
+		<td colspan=3><select data-dojo-type="dijit/form/Select" name=department>$form->{selectdepartment}</select>
 		</td>
 	      </tr>
 | if $form->{selectdepartment};
@@ -594,9 +516,7 @@ sub form_header {
             $employee = qq|
  	      <tr class="employee-row">
 	        <th align=right nowrap>| . $locale->text('Salesperson') . qq|</th>
-		<td><select name=employee>$form->{selectemployee}</select></td>
-		<input type=hidden name=selectemployee value="|
-              . $form->escape( $form->{selectemployee}, 1 ) . qq|"
+		<td><select data-dojo-type="dijit/form/Select" name=employee>$form->{selectemployee}</select></td>
 	      </tr>
 |;
         }
@@ -606,9 +526,7 @@ sub form_header {
             $employee = qq|
  	      <tr class="employee-row">
 	        <th align=right nowrap>| . $locale->text('Employee') . qq|</th>
-		<td><select name=employee>$form->{selectemployee}</select></td>
-		<input type=hidden name=selectemployee value="|
-              . $form->escape( $form->{selectemployee}, 1 ) . qq|"
+		<td><select data-dojo-type="dijit/form/Select" name=employee>$form->{selectemployee}</select></td>
 	      </tr>
 |;
         }
@@ -672,11 +590,11 @@ function on_return_submit(event){
 	      $exchangerate
 	      <tr class="shippingpoint-row">
 		<th align=right>| . $locale->text('Shipping Point') . qq|</th>
-		<td colspan=3><input name=shippingpoint size=35 value="$form->{shippingpoint}"></td>
+		<td colspan=3><input data-dojo-type="dijit/form/TextBox" name=shippingpoint size=35 value="$form->{shippingpoint}"></td>
 	      </tr>
 	      <tr class="shipvia-row">
 		<th align=right>| . $locale->text('Ship via') . qq|</th>
-		<td colspan=3><textarea name="shipvia" cols="35" 
+		<td colspan=3><textarea data-dojo-type="dijit/form/Textarea" name="shipvia" cols="35" 
                                 rows="3">$form->{shipvia}</textarea></td>
 	      </tr>
 	    </table>
@@ -828,9 +746,9 @@ sub form_footer {
     }
     $rows = ( $rows > $introws ) ? $rows : $introws;
     $notes =
-qq|<textarea name=notes rows=$rows cols=35 wrap=soft>$form->{notes}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" name=notes rows=$rows cols=35 wrap=soft>$form->{notes}</textarea>|;
     $intnotes =
-qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
+qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</textarea>|;
 
     $form->{taxincluded} = ( $form->{taxincluded} ) ? "checked" : "";
 
@@ -840,7 +758,7 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
             <tr height="5"></tr>
             <tr>
 	      <td align=right>
-	      <input name=taxincluded class=checkbox type=checkbox value=1 $form->{taxincluded}></td>
+	      <input name=taxincluded class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value=1 $form->{taxincluded}></td>
 	      <th align=left>| . $locale->text('Tax Included') . qq|</th>
 	    </tr>
 |;
@@ -1085,14 +1003,6 @@ sub update {
                     )
                 )
               );
-        }
-
-        $form->{selectemployee} = "";
-        if ( @{ $form->{all_employee} } ) {
-            for ( @{ $form->{all_employee} } ) {
-                $form->{selectemployee} .=
-                  qq|<option value="$_->{name}--$_->{id}">$_->{name}\n|;
-            }
         }
     }
 
@@ -1412,7 +1322,7 @@ sub delete {
 
 <h4>$msg $form->{$ordnumber}</h4>
 <p>
-<button name="action" class="submit" type="submit" value="yes">|
+<button data-dojo-type="dijit/form/Button" name="action" class="submit" type="submit" value="yes">|
       . $locale->text('Yes')
       . qq|</button>
 </form>
@@ -1620,7 +1530,7 @@ sub backorder_exchangerate {
 	</tr>
         <tr>
 	  <th align=right>| . $locale->text('Exchange Rate') . qq|</th>
-	  <td><input name=exchangerate size=11></td>
+	  <td><input data-dojo-type="dijit/form/TextBox" name=exchangerate size=11></td>
         </tr>
       </table>
     </td>
@@ -1632,7 +1542,7 @@ sub backorder_exchangerate {
 <br>
 <input type=hidden name=nextsub value=save_exchangerate>
 
-<button name="action" class="submit" type="submit" value="continue">|
+<button data-dojo-type="dijit/form/Button" name="action" class="submit" type="submit" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 
@@ -1765,22 +1675,6 @@ sub ship_receive {
 
     OE->get_warehouses( \%myconfig, \%$form );
 
-    # warehouse
-    if ( @{ $form->{all_warehouse} } ) {
-        $form->{selectwarehouse} = "<option>\n";
-
-        for ( @{ $form->{all_warehouse} } ) {
-            $form->{selectwarehouse} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-
-        if ( $form->{warehouse} ) {
-            $form->{selectwarehouse} = qq|<option value="$form->{warehouse}">|;
-            $form->{warehouse} =~ s/--.*//;
-            $form->{selectwarehouse} .= $form->{warehouse};
-        }
-    }
-
     $form->{shippingdate} = $form->current_date( \%myconfig );
     $form->{"$form->{vc}"} =~ s/--.*//;
     $form->{"old$form->{vc}"} =
@@ -1824,6 +1718,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
 }
 
 sub display_ship_receive {
+	 $form->generate_selects(\%myconfig);
 
     $vclabel = ucfirst $form->{vc};
     $vclabel = $locale->text($vclabel);
@@ -1839,19 +1734,10 @@ sub display_ship_receive {
         $shipped = $locale->text('Date Received');
     }
 
-    # set option selected
-    for (qw(warehouse employee)) {
-        $form->{"select$_"} = $form->unescape( $form->{"select$_"} );
-        $form->{"select$_"} =~ s/ selected//;
-        $form->{"select$_"} =~ s/(<option value="\Q$form->{$_}\E")/$1 selected/;
-    }
-
     $warehouse = qq|
 	      <tr>
 		<th align=right>| . $locale->text('Warehouse') . qq|</th>
-		<td><select name=warehouse>$form->{selectwarehouse}</select></td>
-		<input type=hidden name=selectwarehouse value="|
-      . $form->escape( $form->{selectwarehouse}, 1 ) . qq|">
+		<td><select data-dojo-type="dijit/form/Select" name=warehouse>$form->{selectwarehouse}</select></td>
 	      </tr>
 | if $form->{selectwarehouse};
 
@@ -1896,12 +1782,12 @@ sub display_ship_receive {
 	      <tr>
 		<th align=right>| . $locale->text('Shipping Point') . qq|</th>
 		<td colspan=3>
-		<input name=shippingpoint size=35 value="$form->{shippingpoint}">
+		<input data-dojo-type="dijit/form/TextBox" name=shippingpoint size=35 value="$form->{shippingpoint}">
 	      </tr>
 	      <tr>
 		<th align=right>| . $locale->text('Ship via') . qq|</th>
 		<td colspan=3>
-		<input name=shipvia size=35 value="$form->{shipvia}">
+		<input data-dojo-type="dijit/form/TextBox" name=shipvia size=35 value="$form->{shipvia}">
 	      </tr>
 	      $warehouse
 	    </table>
@@ -1926,7 +1812,7 @@ sub display_ship_receive {
 	      </tr>
 	      <tr>
 		<th align=right nowrap>$shipped</th>
-		<td><input class="date" name=shippingdate id=shippingdate size=11 value=$form->{shippingdate}></td>
+		<td><input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=shippingdate id=shippingdate size=11 value=$form->{shippingdate}></td>
 	      </tr>
 	    </table>
 	  </td>
@@ -2011,7 +1897,7 @@ qq|<td>$description<input type=hidden name="description_$i" value="$form->{"desc
           . $form->format_amount( \%myconfig, $form->{"qty_$i"} )
           . qq|<input type=hidden name="qty_$i" value="$form->{"qty_$i"}"></td>|;
         $column_data{ship} =
-            qq|<td align=right><input name="ship_$i" size=5 value="|
+            qq|<td align=right><input data-dojo-type="dijit/form/TextBox" name="ship_$i" size=5 value="|
           . $form->format_amount( \%myconfig, $form->{"ship_$i"} )
           . qq|"></td>|;
         $column_data{unit} =
@@ -2020,7 +1906,7 @@ qq|<td>$form->{"unit_$i"}<input type=hidden name="unit_$i" value="$form->{"unit_
 qq|<td>$form->{"bin_$i"}<input type=hidden name="bin_$i" value="$form->{"bin_$i"}"></td>|;
 
         $column_data{serialnumber} =
-qq|<td><input name="serialnumber_$i" size=15 value="$form->{"serialnumber_$i"}"></td>|;
+qq|<td><input data-dojo-type="dijit/form/TextBox" name="serialnumber_$i" size=15 value="$form->{"serialnumber_$i"}"></td>|;
 
         print qq|
         <tr valign=top>|;
@@ -2128,28 +2014,13 @@ sub search_transfer {
     OE->get_warehouses( \%myconfig, \%$form );
 
     # warehouse
-    if ( @{ $form->{all_warehouse} } ) {
-        $form->{selectwarehouse} = "<option>\n";
-        $form->{warehouse}       = qq|$form->{warehouse}--$form->{warehouse_id}|
-          if $form->{warehouse_id};
-
-        for ( @{ $form->{all_warehouse} } ) {
-            $form->{selectwarehouse} .=
-qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
-        }
-    }
-    else {
+    if ( ! @{ $form->{all_warehouse} } ) {
         $form->error( $locale->text('Nothing to transfer!') );
     }
 
     $form->get_partsgroup( \%myconfig, { searchitems => 'part' } );
-    if ( @{ $form->{all_partsgroup} } ) {
-        $form->{selectpartsgroup} = "<option>\n";
-        for ( @{ $form->{all_partsgroup} } ) {
-            $form->{selectpartsgroup} .=
-              qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}\n|;
-        }
-    }
+
+	 $form->generate_selects();
 
     $form->{title} = $locale->text('Transfer Inventory');
 
@@ -2170,23 +2041,23 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
       <table>
         <tr>
           <th align=right nowrap>| . $locale->text('Transfer from') . qq|</th>
-          <td><select name=fromwarehouse>$form->{selectwarehouse}</select></td>
+          <td><select data-dojo-type="dijit/form/Select" name=fromwarehouse>$form->{selectwarehouse}</select></td>
         </tr>
         <tr>
           <th align=right nowrap>| . $locale->text('Transfer to') . qq|</th>
-          <td><select name=towarehouse>$form->{selectwarehouse}</select></td>
+          <td><select data-dojo-type="dijit/form/Select" name=towarehouse>$form->{selectwarehouse}</select></td>
         </tr>
 	<tr>
 	  <th align="right" nowrap="true">| . $locale->text('Part Number') . qq|</th>
-	  <td><input name=partnumber size=20></td>
+	  <td><input data-dojo-type="dijit/form/TextBox" name=partnumber size=20></td>
 	</tr>
 	<tr>
 	  <th align="right" nowrap="true">| . $locale->text('Description') . qq|</th>
-	  <td><input name=description size=40></td>
+	  <td><input data-dojo-type="dijit/form/TextBox" name=description size=40></td>
 	</tr>
 	<tr>
 	  <th align=right nowrap>| . $locale->text('Group') . qq|</th>
-	  <td><select name=partsgroup>$form->{selectpartsgroup}</select></td>
+	  <td><select data-dojo-type="dijit/form/Select" name=partsgroup>$form->{selectpartsgroup}</select></td>
 	</tr>
       </table>
     </td>
@@ -2199,7 +2070,7 @@ qq|<option value="$_->{description}--$_->{id}">$_->{description}\n|;
 <br>
 <input type=hidden name=nextsub value=list_transfer>
 
-<button class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>|;
 
@@ -2353,7 +2224,7 @@ qq|<td><input type=hidden name="warehouse_id_$i" value="$ref->{warehouse_id}">$r
             qq|<td><input type=hidden name="qty_$i" value="$ref->{qty}">|
           . $form->format_amount( \%myconfig, $ref->{qty} )
           . qq|</td>|;
-        $column_data{transfer} = qq|<td><input name="transfer_$i" size=4></td>|;
+        $column_data{transfer} = qq|<td><input data-dojo-type="dijit/form/TextBox" name="transfer_$i" size=4></td>|;
 
         $j++;
         $j %= 2;
@@ -2389,7 +2260,7 @@ qq|<td><input type=hidden name="warehouse_id_$i" value="$ref->{warehouse_id}">$r
     $form->hide_form(qw(path login sessionid action));
 
     print qq|
-<button class="submit" type="submit" name="action" value="transfer">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="transfer">|
       . $locale->text('Transfer')
       . qq|</button>|;
 
@@ -2593,7 +2464,7 @@ sub po_orderitems {
         }
 
         $column_data{qty} =
-qq|<td align=right><input name="qty_$i" size="6" value="$form->{"qty_$i"}"></td>|;
+qq|<td align=right><input data-dojo-type="dijit/form/TextBox" name="qty_$i" size="6" value="$form->{"qty_$i"}"></td>|;
 
         if ( $form->{"$form->{vc}_id_$i"} ) {
             $name = $form->{"$form->{vc}_$i"};
@@ -2603,7 +2474,7 @@ qq|<td align=right><input name="qty_$i" size="6" value="$form->{"qty_$i"}"></td>
         }
         else {
             $column_data{name} =
-qq|<td><input name="ndx_$i" class=checkbox type=checkbox value="1"></td>|;
+qq|<td><input name="ndx_$i" class=checkbox type=checkbox data-dojo-type="dijit/form/CheckBox" value="1"></td>|;
         }
 
         $form->hide_form( map { "${_}_$i" }
@@ -2651,12 +2522,12 @@ qq|<td><input name="ndx_$i" class=checkbox type=checkbox value="1"></td>|;
     );
 
     print qq|
-<button class="submit" type="submit" name="action" value="generate_orders">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="generate_orders">|
       . $locale->text('Generate Orders')
       . qq|</button>|;
 
     print qq|
-<button class="submit" type="submit" name="action" value="select_vendor">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="select_vendor">|
       . $locale->text('Select Vendor')
       . qq|</button>|;
 
@@ -2700,7 +2571,7 @@ sub select_vendor {
 
 <form method=post action=$form->{script}>
 
-<b>| . $locale->text('Vendor') . qq|</b> <input name=vendor size=40>
+<b>| . $locale->text('Vendor') . qq|</b> <input data-dojo-type="dijit/form/TextBox" name=vendor size=40>
 
 |;
 
@@ -2710,7 +2581,7 @@ sub select_vendor {
     $form->hide_form;
 
     print qq|
-<button class="submit" type="submit" name="action" value="continue">|
+<button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
       . qq|</button>
 

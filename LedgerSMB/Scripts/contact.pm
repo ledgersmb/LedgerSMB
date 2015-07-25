@@ -123,7 +123,6 @@ sub get {
 sub _main_screen {
     my ($request, $company, $person) = @_;
 
-
     # DIVS logic
     my @DIVS;
     my @entity_files;
@@ -145,7 +144,7 @@ sub _main_screen {
        my $employee = LedgerSMB::Entity::Person::Employee->get($entity_id);
        $person = $employee if $employee;
        $user = LedgerSMB::Entity::User->get($entity_id);
-    } elsif ($person->{entity_class} == 3) {
+    } elsif (defined $person->{entity_class} && $person->{entity_class} == 3) {
        @DIVS = ('employee');
     } else {
        @DIVS = qw(company person);
@@ -174,7 +173,8 @@ sub _main_screen {
                files => $locale->text('Files'),
     );
 
-    if ($LedgerSMB::Scripts::employee::country::country_divs{
+    if (defined $person->{country_id}
+	&& $LedgerSMB::Scripts::employee::country::country_divs{
             $person->{country_id}
     }){
         for my $cform (@{$LedgerSMB::Scripts::employee::country::country_divs{
@@ -226,7 +226,8 @@ sub _main_screen {
                credit_id => $credit_act->{id}}
     );
     my @bank_account = 
-         LedgerSMB::Entity::Bank->list($entity_id);
+         LedgerSMB::Entity::Bank->list(
+	     entity_id => $entity_id);
     my @notes =
          LedgerSMB::Entity::Note->list($entity_id,
                                                  $credit_act->{id});
@@ -238,7 +239,7 @@ sub _main_screen {
     my @all_taxes = LedgerSMB->call_procedure(funcname => 'account__get_taxes');
 
     my $arap_class = $entity_class;
-    $arap_class = 2 if $arap_class == 3;
+    $arap_class = 2 if defined $arap_class && $arap_class == 3;
     my @ar_ap_acc_list = LedgerSMB->call_procedure(funcname => 'chart_get_ar_ap',
                                            args => [$arap_class]);
 
@@ -349,6 +350,7 @@ sub _main_screen {
              entity_class => $entity_class,
       location_class_list => \@location_class_list,
        contact_class_list => \@contact_class_list,
+           business_types => \@business_types,
                 all_taxes => \@all_taxes,
                 all_years => \@all_years,
                all_months =>  LedgerSMB::App_State::all_months()->{dropdown},
@@ -367,7 +369,7 @@ sub save_employee {
     my ($request) = @_;
     unless ($request->{control_code}){
         my ($ref) = $request->call_procedure(
-                             procname => 'setting_increment', 
+                             funcname => 'setting_increment', 
                              args     => ['entity_control']
                            );
         ($request->{control_code}) = values %$ref;
@@ -621,7 +623,7 @@ This inserts a new credit account.
 
 sub save_credit_new {
     my ($request) = @_;
-    $request->{credit_id} = undef;
+    delete $request->{id};
     save_credit($request);
 }
 
@@ -971,8 +973,7 @@ sub save_roles {
                push @$roles, $key;
            }
        }
-       $user->role_list($roles);
-       $user->save_roles;
+       $user->save_roles($roles);
     }
     get($request);
 }

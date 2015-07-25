@@ -1513,6 +1513,14 @@ COMMENT ON COLUMN acc_trans.source IS
 $$Document Source identifier for individual line items, usually used 
 for payments.$$;
 
+COMMENT ON COLUMN acc_trans.fx_transaction IS
+$$When 'f', indicates that the amount column states the amount in the currency
+as specified in the associated ar, ap, payment or gl record.
+
+When 't', indicates that the amount column states the difference between
+the foreighn currency amount and the base amount so that their sum equals the
+base amount.$$;
+
 CREATE INDEX acc_trans_voucher_id_idx ON acc_trans(voucher_id);
 
 -- preventing closed transactions
@@ -2097,20 +2105,26 @@ CREATE TABLE business_unit_jl (
 );
 
 CREATE TABLE business_unit_ac (
-  entry_id int references acc_trans(entry_id),
+  entry_id int references acc_trans(entry_id) on delete cascade,
   class_id int references business_unit_class(id),
   bu_id int,
   primary key(bu_id, class_id, entry_id),
   foreign key(class_id, bu_id) references business_unit(class_id, id)
 );
+-- The index is required for fast lookup when deleting acc_trans lines
+-- which happens when not-approved transactions are deleted
+CREATE INDEX business_unit_ac_entry_id_idx ON business_unit_ac(entry_id);
 
 CREATE TABLE business_unit_inv (
-  entry_id int references invoice(id),
+  entry_id int references invoice(id) on delete cascade,
   class_id int references business_unit_class(id),
   bu_id int,
   primary key(bu_id, class_id, entry_id),
   foreign key(class_id, bu_id) references business_unit(class_id, id)
 );
+-- The index is required for fast lookup when deleting invoices
+-- which happens when not-approved transactions are deleted
+CREATE INDEX business_unit_inv_entry_id_idx ON business_unit_inv(entry_id);
 
 CREATE TABLE business_unit_oitem (
   entry_id int references orderitems(id) on delete cascade,
@@ -2119,6 +2133,9 @@ CREATE TABLE business_unit_oitem (
   primary key(bu_id, class_id, entry_id),
   foreign key(class_id, bu_id) references business_unit(class_id, id)
 );
+-- The index is required for fast lookup when deleting order item lines
+-- which happens when not-approved transactions are deleted
+CREATE INDEX business_unit_oitem_entry_id_idx ON business_unit_oitem(entry_id);
 
 COMMENT ON TABLE business_unit IS
 $$ Tracks Projects, Departments, Funds, Etc.$$;
@@ -2214,7 +2231,7 @@ CREATE TABLE warehouse (
   description text
 );
 --
-CREATE TABLE inventory (
+CREATE TABLE warehouse_inventory (
   entity_id integer references entity_employee(entity_id),
   warehouse_id int,
   parts_id int,
@@ -2225,7 +2242,7 @@ CREATE TABLE inventory (
   entry_id SERIAL PRIMARY KEY
 );
 
-COMMENT ON TABLE inventory IS
+COMMENT ON TABLE warehouse_inventory IS
 $$ This table contains inventory mappings to warehouses, not general inventory
 management data.$$;
 --

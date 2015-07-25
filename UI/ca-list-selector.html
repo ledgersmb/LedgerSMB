@@ -37,10 +37,11 @@
            <th align="right" colspan="1"><?lsmb text('Bank Register Mode') ?>
            </th>
            <td colspan="1" align="left">
-             <select name="bank_register_mode">
-                  <option value="0"><?lsmb text('No') ?></option>
-                  <option value="1"><?lsmb text('Yes') ?></option>
-             </select>
+             <?lsmb PROCESS select element_data = {
+                      name="bank_register_mode"
+                      options = [ { text = 'No', value = "0" },
+                                  { text = 'Yes', value = "1" } ]
+                     ?>
            </td>
            <td colspan=2>(<?lsmb text('Swaps debits and credits to match bank statements') ?>)</td>
         </tr>

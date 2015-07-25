@@ -102,16 +102,9 @@ define([
                 }
             }
             var myself = this;
-            require(['lsmb/lib/Loader', 'dojo/ready', 'dojo/dom-construct'],
-            function(l, ready, construct){
-             ready(80, function(){
-                 loader = new l;
-                 query('*', myself.domNode).forEach(function(dnode){
-                                            myself.TFRenderElement(dnode)
-             
-                 }); 
-             });
-            });
+				query('*', myself.domNode).forEach(function(dnode){
+                myself.TFRenderElement(dnode)
+				}); 
             this.maxCols = this.cols;
             this.initOrient = this.orientation;
         },
@@ -122,13 +115,6 @@ define([
               }
               if (cls.contains(dnode, 'input-row')){
                  TFRenderRow(dnode);
-              }
-              else {
-                 var widget = loader.createWidget(dnode);
-                 if (undefined !== widget) {
-                    myself.addChild(widget);
-                    widget.startup();
-                 }
               }
         },
         TFRenderRow: function (dnode){

@@ -709,6 +709,39 @@ $$
 SELECT * FROM gifi ORDER BY accno;
 $$;
 
+CREATE OR REPLACE FUNCTION account_heading__check_tree()
+RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
+BEGIN
+
+PERFORM* from ( 
+  WITH RECURSIVE account_headings AS (
+      SELECT id, accno, 1 as level, accno as path
+        FROM account_heading
+      UNION ALL
+      SELECT ah.id, ah.accno, at.level + 1 as level, at.path  || '||||' || ah.accno
+        FROM account_heading ah
+        JOIN account_headings at ON ah.parent_id = at.id
+       WHERE NOT ah.accno = ANY(string_to_array(path, '||||'))
+  )
+  SELECT * 
+    FROM account_heading ah
+    JOIN account_headings at ON ah.parent_id = at.id
+   WHERE at.path || '||||' ||  ah.accno NOT IN 
+          (select path from account_headings)
+) x;
+
+IF found then
+   RAISE EXCEPTION 'ACCOUNT_HEADING_LOOP';
+END IF;
+
+RETURN NEW;
+end;
+$$;
+
+DROP TRIGGER IF EXISTS loop_detection ON account_heading;
+CREATE TRIGGER loop_detection AFTER INSERT OR UPDATE ON account_heading
+FOR EACH ROW EXECUTE PROCEDURE account_heading__check_tree();
+
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
 COMMIT;

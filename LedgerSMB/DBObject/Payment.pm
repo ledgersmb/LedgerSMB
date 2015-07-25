@@ -22,8 +22,8 @@ package LedgerSMB::DBObject::Payment;
 use LedgerSMB::Num2text;
 use base qw(LedgerSMB::PGOld);
 use strict;
-use Math::BigFloat lib => 'GMP';
-use Data::Dumper;
+use LedgerSMB::PGNumber;
+
 our $VERSION = '0.1.0';
 
 =head1 METHODS
@@ -347,7 +347,7 @@ sub get_all_contact_invoices {
                  $new_invoice->{$_} = shift @$invoice;
                  if ($_ =~ /^(amount|discount|due)$/){
                      $new_invoice->{$_} = 
-                          Math::BigFloat->new($new_invoice->{$_});
+                          LedgerSMB::PGNumber->new($new_invoice->{$_});
                  }
             }
             push(@$processed_invoices, $new_invoice);
@@ -584,9 +584,10 @@ sub get_payment_detail_data {
         @{$inv->{invoices}} = $self->_parse_array($tmp_invoices);
         @{$inv->{invoices}} = sort { $a->[2] cmp $b->[2] } @{ $inv->{invoices} };
         for my $invoice (@{$inv->{invoices}}){
-            $invoice->[6] = Math::BigFloat->new($invoice->[6]);
-            $invoice->[3] = Math::BigFloat->new($invoice->[3]);
-            $invoice->[4] = Math::BigFloat->new($invoice->[4]);
+            $invoice->[6] = LedgerSMB::PGNumber->new($invoice->[6]);
+            $invoice->[5] = LedgerSMB::PGNumber->new($invoice->[5]);
+            $invoice->[4] = LedgerSMB::PGNumber->new($invoice->[4]);
+            $invoice->[3] = LedgerSMB::PGNumber->new($invoice->[3]);
         }
     }
  

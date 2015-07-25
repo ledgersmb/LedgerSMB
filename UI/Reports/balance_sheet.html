@@ -25,6 +25,7 @@ LINK = LINK.replace('\&\&', '&');
 
  comparisons = report.comparisons ?>
 <body class="financial-statement <?lsmb dojo_theme ?>">
+<div id="PNL"> <!-- TODO: Find better name!! -->
 <h1><?lsmb text('Balance Sheet') ?></h1>
 <?lsmb # TODO:  header hierarchy handling ?>
 <table>
@@ -116,5 +117,6 @@ LINK = LINK.replace('\&\&', '&');
 </tr>
 <?lsmb END ?>
 </table>
+</div>
 </body>
 </html>

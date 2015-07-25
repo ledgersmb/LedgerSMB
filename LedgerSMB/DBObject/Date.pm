@@ -13,7 +13,7 @@ LedgerSMB.
 package LedgerSMB::DBObject::Date;
 use base qw(LedgerSMB::PGOld);
 use strict;
-use Math::BigFloat lib => 'GMP';
+use LedgerSMB::PGNumber;
 our $VERSION = '0.1.0';
 
 =head1 METHODS
@@ -39,7 +39,7 @@ so you just pass the hash to the template system. :)
 
 sub build_filter_by_period {
     my ($self, $locale) = @_; 
-    my @all_years = $self->call_procedure(procname => 'date_get_all_years');
+    my @all_years = $self->call_procedure(funcname => 'date_get_all_years');
     
     for my $day (1 .. 31) {
       push@{$self->{daysOptions}} , { value => $day, text => $day }

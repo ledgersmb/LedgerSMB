@@ -10,6 +10,47 @@ API Enhancements:
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.14
+* Replace spanish CoA for compliance; donated by AccountNet
+* Correctly set HTML form element 'required' attribute in output (ErikH)
+* In Employee entry screen, mark required fields as such (ErikH)
+* Fix being unable to remove roles from user (SF 1395) (ErikH)
+
+ErikH is Erik Huelsmann
+
+
+Changelog for 1.4.13
+* Account edit group can checkboxes and mark accounts obsolete (Chris T)
+* Fixed time cards failing to save (GitHub bug 636) (Erik H)
+* List COGS accounts under 'Default COGS' (instead of expense) (Erik H)
+* Fix preprocessing Roles.sql was required in 1.3 (obsolete in 1.4) (Erik H)
+* Fix entry, selection and listing of GIFI account codes (Erik H)
+* Fix entity "Accounts" 'Save as' button (Erik H)
+* Fix 'Business Type' not showing up in Contact Account tab (Erik H)
+* Fix balance sheet CSV missing 'description' column content (Erik H)
+* Fix can't delete draft transactions with reporting units (SF 1391) (Erik H)
+* GIFI PNL reports are back.  (Chris T)
+* Fix payment entry at the bottom of invoices (SF 1394) (Erik H)
+
+Erik H is Erik Huelsmann
+Chris T is Chris Travers
+
+
+Changelog for 1.4.12
+* Updated German translation by Adrian v. Meibom <meibomberlin@googlemail.com>
+* Fixed printing of purchase order due to SQL error (bug 1359) (Erik H)
+* Don't show button for dis-allowed action in GL entry (bug 1355) (Erik H)
+* Admin can't reset user's password due to SQL error (bug 1333) (Erik H)
+* Fix dependency listing (include JSON) (bug 1347) (Erik H)
+* Make setup.pl generate fewer warnings in the error logs (Erik H)
+* Fix 'Save as' in contact account clobbering existing one (bug 1364) (Erik H)
+* Fixed empty response causing some problems. (Chris T)
+* Detect account heading graph loops and throw errors (Chris T)
+* Fixed errors about missing employee.pm (Erik H)
+* Add PNL and Balance sheet CSV export (Erik H)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
 Changelog for 1.4.11
 * Fixed account dropdowns on default screen (Nick P)
 * Fixed broken comparison with oldvendor (Nick P)
@@ -17,12 +58,12 @@ Changelog for 1.4.11
 * Fixed HTML errors in payment details (Nick P)
 * Making LaTeX optional on starman (Chris T)
 * Fixing issues where colon is in password (Chris T)
-* Fixed 'New' button on GL entry screen leaving an uncleared line (Erik H)
-* Fixed Account/Heading entry screen selecting tab on 'Update' (Erik H)
-* Fixed Heading 'Save' action complaining about conflicting data (Erik H)
 * Fixed missing separation of duties on GL (Chris T)
 * Fixed GL new button preserving first line (Chris T)
 * Fixed AR/AP transactions not saving when using dojo widget (Chris T)
+* Fixed 'New' button on GL entry screen leaving an uncleared line (Erik H)
+* Fixed Account/Heading entry screen selecting tab on 'Update' (Erik H)
+* Fixed Heading 'Save' action complaining about conflicting data (Erik H)
 * Multiple fixes showing and saving account/heading headings (Erik H)
 * Add 'Delete' option for headings not linked to accounts/headings (Erik H)
 * Fixed encoding issue for special characters in password change (Erik H)
@@ -32,8 +73,6 @@ Chris T is Chris Travers
 Nick P is Nick Prater
 Erik H is Erik Huelsmann
 Pongracz I is Istvan Pongracz
-
-
 Changelog for 1.4.10
 * Note:  Corrected version numbers in 1.4.10.1, 1.4.10 had 1.4.9 as version
 * Malay translation added (Kaiser F, and others)
@@ -99,11 +138,14 @@ Changelog for 1.4.6
 * Fixed bug 1260, Multiple vendor skus breaks display of invoice (Chris T)
 * Removed buggy batch printing interface (Chris T)
 * Added search for approved batches (Chris T)
+* Fixed PGNumber error when posting gl entry (Chris T)
+* Fixed bug 1273, some invoices cannot be opened (John L)
 
 Pongracz I is Pongracz Istvan
 Chris T is Chris Travers
 Frans S is Frans van der Star
 Erik H is Erik Huelsmann
+John L is John Locke
 
 Changelog for 1.4.5
 * Fixed bug 1245, print and email buttons lost after email invoice (Chris T)

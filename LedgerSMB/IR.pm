@@ -43,7 +43,7 @@ use LedgerSMB::PriceMatrix;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::App_State;
-use Math::BigFloat;
+use LedgerSMB::PGNumber;
 
 =over
 
@@ -138,42 +138,7 @@ sub post_invoice {
     my %updparts = ();
 
     if ( $form->{id} ) {
-
-        my $sth;
-
-        $keepcleared = 1;
-
-        $query = qq|SELECT id FROM ap WHERE id = ?|;
-        $sth   = $dbh->prepare($query);
-        $sth->execute( $form->{id} );
-
-        if ( $sth->fetchrow_array ) {
-            $query = qq|
-				SELECT p.id, p.inventory_accno_id, 
-				       p.income_accno_id
-				  FROM invoice i
-				  JOIN parts p ON (p.id = i.parts_id)
-				 WHERE i.trans_id = ?|;
-            $sth = $dbh->prepare($query);
-            $sth->execute( $form->{id} ) || $form->dberror($query);
-            while ( $ref = $sth->fetchrow_hashref ) {
-                if (   $ref->{inventory_accno_id}
-                    && $ref->{income_accno_id} )
-                {
-
-                    $updparts{ $ref->{id} } = 1;
-                }
-            }
-            $sth->finish;
-
-            &reverse_invoice( $dbh, $form );
-        }
-        else {
-            $query = qq|INSERT INTO ap (id, is_return) VALUES (?, ?)|;
-            $sth   = $dbh->prepare($query);
-            $sth->execute( $form->{id} , $form->{is_return} ) 
-                || $form->dberror($query);
-        }
+        $form->error("Can't re-post invoice!");
     }
 
     my $uid = localtime;
@@ -314,8 +279,8 @@ sub post_invoice {
                     $form->{'taxaccounts'}
                 );
 
-                $tax   = Math::BigFloat->bzero();
-                $fxtax = Math::BigFloat->bzero();
+                $tax   = LedgerSMB::PGNumber->bzero();
+                $fxtax = LedgerSMB::PGNumber->bzero();
     
                 if ( $form->{taxincluded} ) {
                     $tax += $amount =
@@ -875,143 +840,6 @@ sub post_invoice {
 
 }
 
-sub reverse_invoice {
-    my ( $dbh, $form ) = @_;
-
-    my $query = qq|SELECT id FROM ap
-                 WHERE id = $form->{id}|;
-    my ($id) = $dbh->selectrow_array($query);
-
-    return unless $id;
-
-    # reverse inventory items
-    $query = qq|
-		SELECT i.parts_id, p.inventory_accno_id, p.expense_accno_id,
-		       i.qty, i.allocated, i.sellprice, i.project_id
-		  FROM invoice i, parts p
-		 WHERE i.parts_id = p.id
-		       AND i.trans_id = ?|;
-    my $sth = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    my $netamount = 0;
-
-    while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-        $netamount +=
-          $form->round_amount( $ref->{sellprice} * $ref->{qty} * -1, 2 );
-
-        if ( $ref->{inventory_accno_id} ) {
-
-            # update onhand
-            $form->update_balance( $dbh, "parts", "onhand",
-                qq|id = $ref->{parts_id}|,
-                $ref->{qty} );
-
-            # if $ref->{allocated} > 0 than we sold that many items
-            if ( $ref->{allocated} > 0 ) {
-
-                # get references for sold items
-                $query = qq|
-					  SELECT i.id, i.trans_id, i.allocated, 
-					         a.transdate
-					    FROM invoice i, ar a
-					   WHERE i.parts_id = ?
-					         AND i.allocated < 0
-					         AND i.trans_id = a.id
-					ORDER BY transdate DESC|;
-                my $sth = $dbh->prepare($query);
-                $sth->execute( $ref->{parts_id} )
-                  || $form->dberror($query);
-
-                while ( my $pthref = $sth->fetchrow_hashref(NAME_lc) ) {
-
-                    my $qty = $ref->{allocated};
-
-                    if ( ( $ref->{allocated} + $pthref->{allocated} ) > 0 ) {
-                        $qty = $pthref->{allocated} * -1;
-                    }
-
-                    my $amount =
-                      $form->round_amount( $ref->{sellprice} * $qty, 2 );
-
-                    #adjust allocated
-                    $form->update_balance( $dbh, "invoice", "allocated",
-                        qq|id = $pthref->{id}|, $qty );
-
-                    # add reversal for sale
-                    $ref->{project_id} *= 1;
-                    $query = qq|
-						INSERT INTO acc_trans 
-						            (trans_id, 
-							    chart_id, amount, 
-						            transdate, 
-						            project_id)
-						     VALUES (?, ?, ?, ?, ?)|;
-                    $sth = $dbh->prepare($query);
-                    $sth->execute( $pthref->{trans_id},
-                        $ref->{expense_accno_id},
-                        $amount, $form->{transdate}, $ref->{project_id} )
-                      || $form->dberror($query);
-
-                    $query = qq|
-						INSERT INTO acc_trans 
-						            (trans_id, chart_id,
-						            amount, transdate, 
-						            project_id)
-						     VALUES (?, ?, ?, ?, ?)|;
-                    $sth = $dbh->prepare($query);
-                    $sth->execute(
-                        $pthref->{trans_id},
-                        $ref->{inventory_accno_id},
-                        $amount * -1,
-                        $form->{transdate}, $ref->{project_id}
-                    ) || $form->dberror($query);
-                    last if ( ( $ref->{allocated} -= $qty ) <= 0 );
-                }
-                $sth->finish;
-            }
-        }
-    }
-    $sth->finish;
-
-    #tshvr delete tax_extended invoice_tax_form 
-    $query=qq|SELECT entry_id FROM acc_trans ac JOIN tax_extended t using(entry_id) WHERE ac.trans_id = ?|;
-    $sth   = $dbh->prepare($query);
-    $sth->execute($form->{id}) || $form->dberror($query);
-    while ( my $entry_id=$sth->fetchrow_array ) {
-     my $query1="DELETE FROM tax_extended WHERE entry_id=?";
-     my $sth1   = $dbh->prepare($query1);
-     $sth1->execute($entry_id) || $form->dberror($query);
-     $sth1->finish;
-    }#while entry_id
-    $sth->finish;
-    $query=qq|select id from invoice WHERE trans_id=?|;
-    $sth   = $dbh->prepare($query);
-    $sth->execute($form->{id}) || $form->dberror($query);
-    while(my $invoice_id=$sth->fetchrow()){
-     my $query1=qq|delete from invoice_tax_form where invoice_id=?|;
-     my $sth1   = $dbh->prepare($query1);
-     $sth1->execute($invoice_id) || $form->dberror($query);
-     $sth1->finish;
-    }#while invoice_id
-    $sth->finish;
-    #tshvr delete tax_extended invoice_tax_form end
-    # delete acc_trans
-    $query = qq|DELETE FROM acc_trans WHERE trans_id = ?|;
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    # delete invoice entries
-    $query = qq|DELETE FROM invoice WHERE trans_id = ?|;
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-    $query = qq|DELETE FROM new_shipto WHERE trans_id = ?|;
-    $sth = $dbh->prepare($query);
-    $sth->execute( $form->{id} ) || $form->dberror($query);
-
-}
-
 sub retrieve_invoice {
     my ( $self, $myconfig, $form ) = @_;
 
@@ -1033,9 +861,9 @@ sub retrieve_invoice {
               $form->db_parse_numeric(sth=>$tax_sth,hashref=>$taxref);
               $form->{manual_tax} = 1;
               my $taccno = $taxref->{accno};
-              $form->{"mt_amount_$taccno"} = Math::BigFloat->new($taxref->{amount} * -1);
+              $form->{"mt_amount_$taccno"} = LedgerSMB::PGNumber->new($taxref->{amount} * -1);
               $form->{"mt_rate_$taccno"}  = $taxref->{rate};
-              $form->{"mt_basis_$taccno"} = Math::BigFloat->new($taxref->{tax_basis} * -1);
+              $form->{"mt_basis_$taccno"} = LedgerSMB::PGNumber->new($taxref->{tax_basis} * -1);
               $form->{"mt_memo_$taccno"}  = $taxref->{memo};
               $form->{"mt_ref_$taccno"}  = $taxref->{source};
         }
@@ -1453,7 +1281,7 @@ sub vendor_details {
                                   FROM eca_to_contact) ct_base
                         GROUP BY credit_id) ct ON ct.credit_id = eca.id
              LEFT JOIN entity_bank_account ba ON ba.id = eca.bank_account
-		 WHERE eca.id = ? and location_class = 1|;
+		 WHERE eca.id = ?|;
     my $sth = $dbh->prepare($query);
     $sth->execute( $form->{vendor_id} ) || $form->dberror($query);
 

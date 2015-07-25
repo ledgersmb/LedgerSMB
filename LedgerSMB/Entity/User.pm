@@ -28,6 +28,14 @@ Saving permissions:
 
 =over
 
+=item id
+
+This is the integer id of the user
+
+=cut 
+
+has id => (is => 'ro', isa => 'Int');
+
 =item entity_id
 
 This is the integer id of the entity of the user
@@ -131,11 +139,23 @@ Saves (grants) roles requested.
 
 sub save_roles{
     my ($self, $role_list) = @_;
-    $role_list = $self->role_list unless $role_list;
-    for my $rol_name (@$role_list) {
-        $self->call_procedure(funcname => 'admin__add_user_to_role',
+	 my @all_roles = map { $_->{rolname} } $self->list_roles;
+	 my (%have_role, %want_role);
+	 $have_role{$_} = 1
+		  for @{$self->role_list};
+	 $want_role{$_} = 1
+		  for @$role_list;
+    for my $rol_name (@all_roles) {
+        if ($want_role{$rol_name} && !$have_role{$rol_name}) {
+            $self->call_procedure(funcname => 'admin__add_user_to_role',
                                   args => [$self->{username}, $rol_name]);
+        }
+        elsif ($have_role{$rol_name} && !$want_role{$rol_name}) {
+            $self->call_procedure(funcname => 'admin__remove_user_from_role',
+                                  args => [$self->{username}, $rol_name]);
+        }
     }
+    $self->role_list($role_list);
 }
 
 =item list_roles

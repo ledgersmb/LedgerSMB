@@ -1,10 +1,19 @@
-<div class="lsmbtab" id="company_div" title="<?lsmb text('Company') ?>">
+<div id="company_div"
+     title="<?lsmb text('Company') ?>"
+     data-dojo-type="dijit/layout/ContentPane"
+     <?lsmb IF request.target_div == 'company_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
+	  
+     >
+
+
 <?lsmb SWITCH entity_class
 	?><?lsmb CASE 1 ?><?lsmb entity_classname = "Vendor" 
 	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
 	?><?lsmb END ?>
 	<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
-<form name="company" method="post" action="<?lsmb script ?>">
+<form id="company" method="post" action="<?lsmb request.script ?>">
+<div data-dojo-type="lsmb/lib/TabularForm"
+     data-dojo-props="cols:2">
 <?lsmb PROCESS input element_data = {
                   id = 'company-target-div'
 		type = "hidden"
@@ -35,11 +44,12 @@
 		name = "account_class"
 		value = account_class
 	} ?>	
-<div class="tabular col-2">
+<div class=" col-2 ">
 <div class="input_line">
 <div class="input_group1">
 	<?lsmb PROCESS input element_data = {
-		label = text('Control Code') #'
+		label = '_none_'
+	        title = text('Control Code') #'
                   id = 'company-control-code' 
 		type = "text"
 		name = "control_code"
@@ -62,14 +72,16 @@
 		default_values = [company_entity_class]
 		text_attr = 'class'
 		value_attr = 'id'
-		label = text('Class')
+		title = text('Class')
+	        label = '_none_'
 	} ?>
 </div>
 </div>
 <div class="input_line">
 <div class="input_group1">
 	<?lsmb PROCESS input element_data = {
-		label = text('Name')
+		title = text('Name')
+	        label = '_none_'
 		type= "text"
 		name = "legal_name"
 		value = company.legal_name
@@ -90,7 +102,8 @@
 			default_values = [company_country_id]
 			options = country_list
 			name = "country_id"
-			label = text('Country') 
+			title = text('Country')
+	                label = '_none_'
                         required = 'true'
 	} ?> 
 </div>
@@ -98,7 +111,8 @@
 <div class="input_line">
 <div class="input_group1">
 		<?lsmb INCLUDE input element_data = {
-			label = text('Tax Number/SSN'),
+			label = '_none_'
+		        title = text('Tax Number/SSN'),
 			name = "tax_id",
 			value = company.tax_id,
 			type = "text",
@@ -107,7 +121,8 @@
 </div>
 <div class="input_group2">
 		<?lsmb INCLUDE input element_data = {
-			label = text('SIC'),
+			label = '_none_'
+		        title = text('SIC'),
 			name = "sic_code",
 			value = company.sic_code,
 			type = "text",
@@ -116,10 +131,12 @@
 		} ?>
 </div>
 </div>
-<div class="input_line" id="sales-tax-info">
+<div class="input_line"
+     id="sales-tax-info">
 <div class="input_group1">
      <?lsmb INCLUDE input element_data = {
-         label = text('Sales Tax ID') #'
+         label = '_none_'
+	 title = text('Sales Tax ID') #'
           name = 'sales_tax_id'
           type = 'text'
          class = 'taxnumber'
@@ -129,13 +146,15 @@
 </div>
 <div class="input_group2">
      <?lsmb INCLUDE input element_data = {
-         label = text('License Number') #'
+         title = text('License Number') #'
+	 label = '_none_'
           name = 'license_number'
           type = 'text'
          class = 'taxnumber'
           size = '19'
          value = company.license_number
      } ?>
+</div>
 </div>
 </div>
 </div>
@@ -151,7 +170,7 @@
 		class = "submit"
         } ?>
         <?lsmb PROCESS button element_data = {
-                  id = 'company-action-retireve'
+                  id = 'company-action-retrieve'
                 text = text('Retrieve')
                 type = 'submit'
                 name = 'action'
@@ -159,7 +178,8 @@
                class = 'submit'
         } ?>
 		<?lsmb INCLUDE button element_data = {
-			text = text('Save'),
+			text = text('Save')
+		        id = 'company-action-save'
 			class="submit" 
 			type="submit" 
 			name="action" 

@@ -53,7 +53,7 @@ sub get {
        } else {
             my @results = ();
             for my $ref (LedgerSMB::Entity->call_procedure(
-                          procname => 'entity__list_classes'
+                          funcname => 'entity__list_classes'
                       )
             ){
                 push @results,  _search_entity_class($request, $ref->{id});

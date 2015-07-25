@@ -7,7 +7,7 @@
 <body onLoad="init()" class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb title ?></div>
 <div class="info"><?lsmb info ?></div>
-<form action="<?lsmb script ?>" method="post" enctype="multipart/form-data">
+<form action="<?lsmb request.script ?>" method="post" enctype="multipart/form-data">
 <div class="inputrow" id="ar-account-row">
 <?lsmb PROCESS select element_data = {
      label = text("AR account")

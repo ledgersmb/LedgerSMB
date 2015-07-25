@@ -15,6 +15,7 @@ perl_version '5.8.1';
 
 requires 'Data::Dumper';
 requires 'Carp::Always';
+requires 'TeX::Encode';
 requires 'Log::Log4perl';
 requires 'Locale::Maketext';
 requires 'DateTime';
@@ -39,6 +40,7 @@ requires 'Number::Format';
 requires 'DateTime::Format::Strptime';
 requires 'Moose';
 requires 'namespace::autoclean';
+requires 'JSON';
 requires 'PGObject';
 requires 'PGObject::Simple';
 requires 'PGObject::Simple::Role';

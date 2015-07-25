@@ -1,16 +1,17 @@
 <?lsmb 
 INCLUDE 'ui-header.html' 
     include_stylesheet =  ['UI/accounts/edit.css']
-    include_script = ['UI/accounts/edit.js']
 ?> 
 <?lsmb PROCESS elements.html ?> 
 <body class="<?lsmb dojo_theme ?>">
-<script type="text/javascript" language="Javascript">
-    var activeDiv = "<?lsmb form.charttype ?>";
-</script>
-<div class="TabSet" id="account-tabs">
-<div class="lsmbtab" title="<?lsmb text('Heading') ?>" id="H">
-<form method="post" action="<?lsmb form.script ?>">
+<div id="account-tabs"
+     data-dojo-type="dijit/layout/TabContainer">
+<div data-dojo-type="dijit/layout/ContentPane"
+     <?lsmb IF form.charttype == 'H'; ?>
+     data-dojo-props="selected:true"
+     <?lsmb END; ?>
+     title="<?lsmb text('Heading') ?>" id="H">
+<form method="post" action="account.pl">
 <?lsmb PROCESS input element_data = {
         value = 'H'
         name = 'charttype'
@@ -72,8 +73,12 @@ INCLUDE 'ui-header.html'
 <?lsmb FOREACH button IN buttons; INCLUDE button element_data=button; END ?>
 </form>
 </div>
-<div class="lsmbtab" title="<?lsmb text('Account') ?>" id="A">
-<form method="post" action="<?lsmb form.script ?>">
+<div data-dojo-type="dijit/layout/ContentPane"
+     <?lsmb IF form.charttype == 'A'; ?>
+     data-dojo-props="selected:true"
+     <?lsmb END; ?>
+     title="<?lsmb text('Account') ?>" id="A">
+<form method="post" action="account.pl">
 <?lsmb PROCESS input element_data = {
         value = 'A'
         name = 'charttype'
@@ -128,7 +133,7 @@ INCLUDE 'ui-header.html'
     FOREACH h IN form.all_headings;
         h.text = h.accno _ '--' _ h.description;
     END;
-    form.all_headings.push({});
+    form.all_headings.unshift({});
     INCLUDE select element_data = {
                   name = 'heading'
                options = form.all_headings
@@ -143,10 +148,17 @@ INCLUDE 'ui-header.html'
 <div class="inputline" id="gifi-line">
    <label class="line"><?lsmb text('GIFI') ?></label>
    <div class="inputgroup">
-       <?lsmb INCLUDE input element_data={
-            name = 'gifi_accno',
-            size = '9',
-           value = form.gifi_accno} ?>
+       <?lsmb
+          FOREACH g IN form.all_gifi;
+             g.text = g.accno _ '--' _ g.description;
+          END;
+          form.all_gifi.unshift({});
+          INCLUDE select element_data={
+            name = 'gifi_accno'
+          default_values = [form.gifi_accno]
+            options = form.all_gifi
+           text_attr='text'
+          value_attr='accno' } ?>
    </div>
 </div>
 <div class="inputline" id="acctype-line">

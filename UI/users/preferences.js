@@ -55,11 +55,13 @@ function submit_form() {
 	}
     }
     if (do_submit) {
-	r('',
-	  {
-	      'data': document.prefs.formToObject(),
-	      'method': 'POST'
-	  });
+        require(['dojo/dom-form'],function(form) {
+	         r('',
+	           {
+	               'data': form.toQuery('prefs'),
+	               'method': 'POST'
+	           });
+        });
     }
     
     return false;

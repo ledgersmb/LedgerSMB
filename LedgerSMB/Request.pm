@@ -45,12 +45,23 @@ in the current hash or an empty string.  '0' does pass however.
 
 =cut
 
+our $return_errors = 0; # override with local only!
+
 sub requires {
     my $self = shift @_;
-    for (@_){
-        Carp::croak(LedgerSMB::App_State->Locale->text("Required attribute not provided: [_1]", $_))
-              unless $self->{$_} or $self->{$_} eq '0';
-    }
+    my @error_list = map { { field => $_, 
+                               msg => LedgerSMB::App_State->Locale->text("Required attribute not provided: [_1]", $_) } } 
+                     grep {not ($self->{$_} or $self->{$_})} @_;
+    # todo, allow error list to be returned
+    die LedgerSMB::Request::Error(status => 422,
+                                     msg => [join "\n",
+                                              (map {$_->msg} @error_list) ]) 
+    if @error_list and not $return_errors;
+    return {missing => [map {$_->field } @error_list ],
+            error => LedgerSMB::Request::Error(status => 422,
+                                     msg => [join "\n",
+                                              (map {$_->msg} @error_list) ])
+           };
 }
 
 =head2 requries_series($start, $stop, @attnames)
@@ -65,7 +76,9 @@ sub requires_series {
     my $start = shift @_;
     my $end  = shift @_;
     for my $att (@_){
-        $self->requires("${att}_$_") for ($start .. $stop);
+    $self->requires(map { $att = $_; 
+                          map { "${att}_$_" } ($start .. $stop) 
+                        } @_ );
     }
 }
 
@@ -83,9 +96,8 @@ sub requires_from {
     eval { $meta = $class->meta } 
          or Carp::croak 
             "Could not get meta object.  Is $class a valid Moose class?";
-    for my $att($meta->get_attibute_list){
-        $self->require($att) if $meta->get_attribute($_)->is_required;
-    }
+    $self->require(grep { $meta->get_attribute($_)->is_required }
+                   ($meta->get_attribute_list));
 }
 
 =head2 numbers(@attnames)
@@ -114,7 +126,7 @@ sub numbers_series {
     my $start = shift @_;
     my $end  = shift @_;
     for my $att (@_){
-        $self->numbers("${att}_$_") for ($start .. $stop);
+        $self->numbers( map { "${att}_$_" } ($start .. $stop));
     }
 }
 

@@ -257,7 +257,6 @@ sub copy_db {
     $dbh->prepare("SELECT setting__set('role_prefix', 
                                coalesce((setting_get('role_prefix')).value, ?))"
     )->execute("lsmb_$database->{company_name}__");
-    $dbh->commit;
     $dbh->disconnect;
     complete($request);
 }
@@ -386,6 +385,7 @@ sub revert_migration {
     my ($request) = @_;
     my $database = _get_database($request);
     my $dbh = $database->connect();
+    $dbh->{AutoCommit} = 0;
     my $sth = $dbh->prepare(qq(
          SELECT value
            FROM defaults
@@ -398,7 +398,6 @@ sub revert_migration {
     $dbh->do("DROP SCHEMA public CASCADE");
     $dbh->do("ALTER SCHEMA $src_schema RENAME TO public");
     $dbh->commit();
-    #$dbh->begin_work; # no need to begin work; there's no further work
     
     my $template = LedgerSMB::Template->new(
         path => 'UI/setup',
@@ -459,14 +458,14 @@ and not the user creation screen.
 sub load_templates {
     my ($request) = @_;
     my $dir = $LedgerSMB::Sysconfig::templates . '/' . $request->{template_dir};
-    my $dbh = _get_database($request)->connect;
+    _init_db($request);
+    my $dbh = $request->{dbh};
     opendir(DIR, $dir);
     while (readdir(DIR)){
        next unless -f "$dir/$_";
        my $dbtemp = LedgerSMB::Template::DB->get_from_file("$dir/$_");
        $dbtemp->save;
     }
-    $dbh->commit;
     return _render_new_user($request) unless $request->{only_templates};
     return complete($request);
 }
@@ -830,10 +829,10 @@ sub _render_new_user {
     $request->{dbh}->{AutoCommit} = 0;
 
     @{$request->{salutations}} 
-    = $request->call_procedure(procname => 'person__list_salutations' ); 
+    = $request->call_procedure(funcname => 'person__list_salutations' ); 
     
     @{$request->{countries}} 
-    = $request->call_procedure(procname => 'location_list_country' ); 
+    = $request->call_procedure(funcname => 'location_list_country' ); 
     for my $country (@{$request->{countries}}){
         if (lc($request->{coa_lc}) eq lc($country->{short_name})){
            $request->{country_id} = $country->{id};
@@ -892,10 +891,10 @@ sub save_user {
            $request->{pls_import} = 1;
 
            @{$request->{salutations}} 
-            = $request->call_procedure(procname => 'person__list_salutations' );
+            = $request->call_procedure(funcname => 'person__list_salutations' );
          
            @{$request->{countries}} 
-              = $request->call_procedure(procname => 'location_list_country' ); 
+              = $request->call_procedure(funcname => 'location_list_country' ); 
 
            my $locale = $request->{_locale};
 
@@ -917,15 +916,15 @@ sub save_user {
     return if $duplicate;
     if ($request->{perms} == 1){
          for my $role (
-                $request->call_procedure(procname => 'admin__get_roles')
+                $request->call_procedure(funcname => 'admin__get_roles')
          ){
-             $request->call_procedure(procname => 'admin__add_user_to_role',
+             $request->call_procedure(funcname => 'admin__add_user_to_role',
                                       args => [ $request->{username}, 
                                                 $role->{rolname}
                                               ]);
          }
     } elsif ($request->{perms} == 0) {
-        $request->call_procedure(procname => 'admin__add_user_to_role',
+        $request->call_procedure(funcname => 'admin__add_user_to_role',
                                  args => [ $request->{username},
                                            "lsmb_$request->{database}__".
                                             "users_manage",
@@ -948,6 +947,7 @@ sub save_user {
 sub process_and_run_upgrade_script {
     my ($request, $database, $src_schema, $template) = @_;
     my $dbh = $database->connect;
+    $dbh->{AutoCommit} = 0;
     my $temp = $database->loader_log_filename();
     my $rc;
 
@@ -1078,10 +1078,10 @@ sub create_initial_user {
 
    my $database = _init_db($request) unless $request->{dbh};
    @{$request->{salutations}} 
-    = $request->call_procedure(procname => 'person__list_salutations' ); 
+    = $request->call_procedure(funcname => 'person__list_salutations' ); 
           
    @{$request->{countries}} 
-    = $request->call_procedure(procname => 'location_list_country' ); 
+    = $request->call_procedure(funcname => 'location_list_country' ); 
 
    my $locale = $request->{_locale};
 

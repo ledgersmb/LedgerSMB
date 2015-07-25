@@ -117,7 +117,7 @@ sub import_file {
     
     my $self = shift @_;
     
-    my $csv = LedgerSMB::Reconciliation::CSV->new(base=>$self);
+    my $csv = LedgerSMB::Reconciliation::CSV->new({base=>$self});
     $self->{import_entries} = $csv->process($self, 'csv_file');
     
     return $self->{import_entries};
@@ -322,7 +322,7 @@ sub get {
 		funcname=>'reconciliation__report_details_payee'
     );
     ($ref) = $self->call_dbmethod(funcname=>'account_get', 
-                                args => [$self->{chart_id}]);
+                                args => {id => $self->{chart_id} });
     my $neg = 1;
     if ($self->{account_info}->{category} =~ /(A|E)/){
         $neg = -1;

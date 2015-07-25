@@ -153,17 +153,17 @@ sub defaults_screen{
     }
 
     my @country_list = $request->call_procedure(
-                     procname => 'location_list_country'
+                     funcname => 'location_list_country'
     );
     unshift @country_list, {}
         if ! defined $request->{default_country};
 
     my @language_code_list =
-             $request->call_procedure(procname=> 'person__list_languages');
+             $request->call_procedure(funcname => 'person__list_languages');
     unshift @language_code_list, {}
         if ! defined $request->{default_language};
 
-    my $expense_accounts = $setting_handle->accounts_by_link('IC_expense');
+    my $expense_accounts = $setting_handle->accounts_by_link('IC_cogs');
     my $income_accounts = $setting_handle->accounts_by_link('IC_income');
     my $fx_loss_accounts = $setting_handle->all_accounts();
     my $fx_gain_accounts = $setting_handle->all_accounts();

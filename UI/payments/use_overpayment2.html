@@ -1,7 +1,7 @@
 <?lsmb INCLUDE "ui-header.html" ?>
 <body id="payment_2_body" onLoad="maximize_minimize_on_load('div_topay_state', 'UI/payments/img/down.gif','UI/payments/img/up.gif') " 
 class="<?lsmb dojo_theme ?>">
- <form name="pay_single_dues" method="post" action="payment.pl">
+ <form name="pay_single_dues" method="post" action="<?lsmb script ?>">
 
  <?lsmb PROCESS elements.html  # Include form elements helper. ?>
 
@@ -70,7 +70,14 @@ class="<?lsmb dojo_theme ?>">
      </tr>
      <tr align="right" id="notes_row">
       <th valign="top" id="notes_column"><?lsmb text('Notes') ?></th>
-      <td id="text_notes_column"><textarea id="notes" name="notes" cols="35" rows="3"><?lsmb notes ?></textarea></td>
+      <td id="text_notes_column">
+		  <?lsmb PROCESS textarea element_data = {
+					id="notes"
+					name="notes"
+					cols="35"
+					rows="3"
+					text=notes ?>
+		</td>
      </tr>
     </table>
    </td>
@@ -155,99 +162,173 @@ class="<?lsmb dojo_theme ?>">
   <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" -?>
   <tr class="<?lsmb alterning_style -?>">
    <td align="center"> <a href="<?lsmb data.invoice.href ?>"><?lsmb data.invoice.number ?></a>
-    <input type="hidden" id="invnumber_<?lsmb i -?>" name="invnumber_<?lsmb i -?>" value="<?lsmb data.invoice.number -?>" />
-    <input type="hidden" id="invoice_id_<?lsmb i -?>" name="invoice_id_<?lsmb i -?>" value="<?lsmb data.invoice.id -?>" />
+    <?lsmb PROCESS input element_data = {
+			  type="hidden"
+			  id="invnumber_$i"
+			  name="invnumber_$i"
+			  value=data.invoice.number } ?>
+    <?lsmb PROCESS input element_data = {
+			  type="hidden"
+			  id="invoice_id_$i"
+			  name="invoice_id_$i"
+			  value=data.invoice.id } ?>
    </td>
    <td align="center"> <?lsmb data.entity_name ?>
-    <input type="hidden" id="entity_id_<?lsmb i -?>" name="entity_id_<?lsmb i -?>" value="<?lsmb data.entity_id -?>" />
+    <?lsmb PROCESS input element_data = {
+			  type="hidden"
+			  id="entity_id_$i"
+			  name="entity_id_$i"
+			  value=data.entity_id } ?>
    </td>
    <td align="center"> <?lsmb data.invoice_date ?>
-    <input type="hidden" id="invoice_date_<?lsmb i -?>" name="invoice_date_<?lsmb i -?>" value="<?lsmb data.invoice_date -?>" />
+    <?lsmb PROCESS input element_data = {
+			  type="hidden"
+			  id="invoice_date_$i"
+			  name="invoice_date_$i"
+			  value=data.invoice_date  } ?>
    </td>
    <td align="right"> <?lsmb data.applied_due -?>
-    <input type="hidden" id="due_<?lsmb i -?>" name="due_<?lsmb i -?>" value="<?lsmb data.due -?>" />
+    <?lsmb PROCESS input element_data  {
+			  type="hidden"
+			  id="due_$i"
+			  name="due_$i"
+			  value=data.due } ?>
    </td>
    <?lsmb IF data.repeated_invoice == 'true' -?>
     <td align="center"> &nbsp;
     </td>
    <?lsmb END -?>
    <td align="center"> <?lsmb data.selected_accno.ovp_accno ?>
-    <input type="hidden" id="selected_accno_<?lsmb i -?>" name="selected_accno_<?lsmb i -?>" value="<?lsmb data.selected_accno.id -?>--<?lsmb data.selected_accno.ovp_accno -?>" />
+    <?lsmb PROCESS input element_data = {
+			  type="hidden"
+			  id="selected_accno_$i"
+			  name="selected_accno_$i"
+			  value=data.selected_accno.id _ '--' _ data.selected_accno.ovp_accno
+			  } ?>
    </td>
    <td align="center">
-    <input name="amount_<?lsmb i -?>" id="amount_<?lsmb i -?>" value="<?lsmb data.amount -?>">
+    <?lsmb PROCESS input element_data = {
+			  name="amount_$i"
+			  id="amount_$i"
+			  value=data.amount } ?>
     <?lsmb subtotal_inv = subtotal_inv + data.amount -?>
    </td>
-   <td align="center"><input type="checkbox" name="checkbox_<?lsmb i -?>"></td>
+   <td align="center"><?lsmb PROCESS input element_data = {
+									  type="checkbox"
+									  name="checkbox_$i" } ?></td>
   </tr>
   <?lsmb END -?>
   <?lsmb FOREACH data IN avble_invoices  # Loop through selected entity invoices -?>
   <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" -?>   
   <tr class="<?lsmb alterning_style ?>">
    <td align="center"> <a href="<?lsmb data.invoice.href ?>"><?lsmb data.invoice.number ?></a>
-    <input type="hidden" id="invnumber_<?lsmb i -?>" name="invnumber_<?lsmb i -?>" value="<?lsmb data.invoice.number -?>" />
-    <input type="hidden" id="invoice_id_<?lsmb i -?>" name="invoice_id_<?lsmb i -?>" value="<?lsmb data.invoice.id-?>" />
+    <?lsmb PROCESS input element_data = {
+			  type="hidden"
+			  id="invnumber_$i"
+			  name="invnumber_$i"
+			  value=data.invoice.number } ?>
+    <?lsmb PROCESS input element_data = {
+			  type="hidden"
+			  id="invoice_id_$i"
+			  name="invoice_id_$i"
+			  value=data.invoice.id ?>
    </td>
    <td align="center"> <?lsmb data.entity_name ?>
-    <input type="hidden" id="entity_id_<?lsmb i -?>" name="entity_id_<?lsmb i -?>" value="<?lsmb data.entity_id -?>" />
+    <?lsmb PROCESS input element_data = {
+			  type="hidden"
+			  id="entity_id_$i"
+			  name="entity_id_$i"
+			  value=data.entity_id  } ?>
    </td>
    <td align="center"> <?lsmb data.invoice_date ?>
-    <input type="hidden" id="invoice_date_<?lsmb i -?>" name="invoice_date_<?lsmb i -?>" value="<?lsmb data.invoice_date -?>" />
+    <?lsmb PROCESS input element_data = {
+			  type="hidden"
+			  id="invoice_date_$i"
+			  name="invoice_date_$i"
+			  value=data.invoice_date } ?>
    </td >
    <td align="right"> <?lsmb data.due ?>
-    <input type="hidden" id="due_<?lsmb i -?>" name="due_<?lsmb i -?>" value="<?lsmb data.due -?>" />    
+    <?lsmb PROCESS input element_data = {
+			  type="hidden"
+			  id="due_$i"
+			  name="due_$i"
+			  value=data.due } ?>    
    </td>
    <?lsmb IF data.repeated_invoice == 'true' -?>
     <td align="center"> &nbsp; </td>
    <?lsmb END -?>
    <td align="center"> <?lsmb data.selected_accno.ovp_accno ?>
-    <input type="hidden" id="selected_accno_<?lsmb i -?>" name="selected_accno_<?lsmb i -?>" value="<?lsmb data.selected_accno.id -?>--<?lsmb data.selected_accno.ovp_accno -?>" />
+    <?lsmb PROCESS input element_data = {
+			  type="hidden"
+			  id="selected_accno_$i"
+			  name="selected_accno_$i"
+			  value=data.selected_accno.id _ '--' _ data.selected_accno.ovp_accno
+			  } ?>
    </td>
    <td align="center">
-    <input name="amount_<?lsmb i -?>" id="amount_<?lsmb i -?>" value="<?lsmb data.amount -?>">
+    <?lsmb PROCESS input element_data = {
+			  name="amount_$i"
+			  id="amount_$i"
+			  value=data.amount } ?>
     <?lsmb subtotal_inv = subtotal_inv + data.amount -?>
    </td>
-   <td align="center"><input type="checkbox" name="checkbox_<?lsmb i ?>"></td>   
+   <td align="center">
+	  <?lsmb PROCESS input element_data = {
+				type="checkbox"
+				name="checkbox_$i" } ?></td>   
   </tr>
   <?lsmb END -?>
   <?lsmb i = i + 1; j = i % 2; alterning_style = "listrow$j" -?>
   <tr class="<?lsmb alterning_style ?>">
-   <td align="center"><input name="new_invoice" id="new_invoice" value=""></td>
+   <td align="center"><?lsmb PROCESS input element_data = {
+									  name="new_invoice"
+									  id="new_invoice"
+									  value="" } ?></td>
    <td align="center">
-    <select id="new_entity_id" name="new_entity_id">
-    <?lsmb FOREACH item IN vc_list -?>
-     <?lsmb  IF item.value == entity_credit_id #by default, select the entity wich was chosen in the previous screen -?>
-     <option value="<?lsmb item.value -?>--<?lsmb item.name -?>--<?lsmb item.vc_discount_accno -?>" selected><?lsmb item.name?></option>
-     <?lsmb ELSE -?>
-     <option value="<?lsmb item.value -?>--<?lsmb item.name -?>--<?lsmb item.vc_discount_accno -?>"><?lsmb item.name?></option>
-     <?lsmb END -?>
-    <?lsmb END -?>
-    </select>
+	  <?lsmb FOREACH item in vc_list ;
+				  item.id = item.value ;
+				  item.value = item.value _ '--' _ item.name _ '--' item.vc_discount_accno ;
+				  IF item.id == entity_credit_id ;
+				    selected_value = item.value ;
+              END ;
+            END ; ?>
+	  <?lsmb PROCESS select element_data = {
+				value_attr = 'value'
+				title_attr = 'name'
+				options = vc_list
+				default_values = [ selected_value ] } ?>
    </td>
    <td align="center">N/A</td>
    <td align="center">N/A</td>
    <td align="center">
-    <select id="new_accno" name="new_accno">
-     <?lsmb FOREACH item IN overpayments ?>
-     <option value="<?lsmb item.id -?>--<?lsmb item.accno -?>"><?lsmb item.accno -?></option>
-     <?lsmb END ?>
-    </select>
+	  <?lsmb PROCESS select element_data = {
+				id="new_accno"
+				name="new_accno"
+				options = overpayments
+				value_attr = 'id'
+				text_attr = 'accno' } ?>
    </td>	
    <td align="center">
-    <input name="new_amount" id="new_amount" value="">
+    <?lsmb PROCESS input element_data = {
+			  name="new_amount"
+			  id="new_amount"
+			  value="" } ?>
    </td>
    <td align="center">
-    <?lsmb IF dont_search_inv -?>
-    <input type="checkbox" name="new_checkbox" checked>
-    <?lsmb ELSE -?>
-    <input type="checkbox" name="new_checkbox"> 
-    <?lsmb END -?>
+	  <?lsmb PROCESS input element_data = {
+				type="checkbox"
+				name="new_checkbox"
+				checked=dont_search_inv } ?>
    </td>
   </tr>
   <tr class="listsubtotal" >
    <th class="listsubtotal" colspan="5" align="right">&nbsp;<?lsmb text('Subtotal') -?></th>
    <th class="listsubtotal"> <?lsmb subtotal_inv -?>
-     <input type="hidden" id="subtotal_inv" name="subtotal_inv" value="<?lsmb subtotal_inv -?>" />  
+     <?lsmb PROCESS input element_data = {
+				type="hidden"
+				id="subtotal_inv"
+				name="subtotal_inv"
+				value=subtotal_inv } ?>
    </th>
    <th class="listsubtotal" align="center">&nbsp;</th>
   </tr> 
@@ -286,7 +367,13 @@ class="<?lsmb dojo_theme ?>">
    </td>
    <td id="warning_column" align="right">
    <?lsmb IF warning -?>
-     <textarea id="warning_text" name="warning_text" cols="35" readonly="true" style="transparent;"><?lsmb warning ?></textarea>
+     <?lsmb PROCESS textarea element_data = {
+				id="warning_text"
+				name="warning_text"
+				cols="35"
+				readonly="true"
+				style="transparent;"
+				text=warning ?>
    <?lsmb END -?>  
    </td>
   </tr>           

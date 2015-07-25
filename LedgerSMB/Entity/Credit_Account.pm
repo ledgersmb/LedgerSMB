@@ -92,7 +92,7 @@ The number of days before the payment discount expires.
 
 =cut
 
-has 'discount_terms' => (is => 'rw', isa => 'Int', required => 0);
+has 'discount_terms' => (is => 'rw', isa => 'Maybe[Int]', required => 0);
 
 =item discount_account_id
 
@@ -100,7 +100,7 @@ The id of the account that the discounts are tracked against.
 
 =cut
 
-has 'discount_account_id' => (is => 'rw', isa => 'Int', required => 0);
+has 'discount_account_id' => (is => 'rw', isa => 'Maybe[Int]', required => 0);
 
 =item taxincluded
 
@@ -135,7 +135,7 @@ This is the number of days before an invoice is considered overdue.
 
 =cut
 
-has 'terms' => (is => 'rw', isa => 'Int', required => 0);
+has 'terms' => (is => 'rw', isa => 'Maybe[Int]', required => 0);
 
 =item meta_number
 
@@ -155,8 +155,8 @@ This is the name of the business type associated.
 
 =cut
 
-has 'business_id'   => (is => 'rw', isa => 'Int', required => 0);
-has 'business_type' => (is => 'rw', isa => 'Str', required => 0);
+has 'business_id'   => (is => 'rw', isa => 'Maybe[Int]', required => 0);
+has 'business_type' => (is => 'rw', isa => 'Maybe[Str]', required => 0);
 
 =item language_code
 
@@ -252,7 +252,7 @@ Bank account for the credit account
 
 =cut
 
-has 'bank_account' => (is => 'rw', isa => 'Int', required => 0);
+has 'bank_account' => (is => 'rw', isa => 'Maybe[Int]', required => 0);
 
 =item taxform_id   
 

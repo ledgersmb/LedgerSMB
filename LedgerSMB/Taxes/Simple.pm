@@ -27,17 +27,17 @@
 package LedgerSMB::Taxes::Simple;
 
 use Class::Struct;
-use Math::BigFloat;
+use LedgerSMB::PGNumber;
 
 struct LedgerSMB::Taxes::Simple => {
     taxnumber   => '$',
     description => '$',
-    rate        => 'Math::BigFloat',
+    rate        => 'LedgerSMB::PGNumber',
     chart       => '$',
     account     => '$',
-    value       => 'Math::BigFloat',
-    minvalue    => 'Math::BigFloat', #Ignored in Simple Tax rules
-    maxvalue    => 'Math::BigFloat', #Ignored in Simple Tax rules
+    value       => 'LedgerSMB::PGNumber',
+    minvalue    => 'LedgerSMB::PGNumber', #Ignored in Simple Tax rules
+    maxvalue    => 'LedgerSMB::PGNumber', #Ignored in Simple Tax rules
     pass        => '$'
 };
 
@@ -50,7 +50,7 @@ sub calculate_tax {
     ){
          return 0;
     }
-    my $tax = $subtotal * $rate / ( Math::BigFloat->bone() + $passrate );
+    my $tax = $subtotal * $rate / ( LedgerSMB::PGNumber->bone() + $passrate );
     $tax = $subtotal * $rate if not $extract;
     return $tax;
 }
@@ -58,7 +58,7 @@ sub calculate_tax {
 sub apply_tax {
     my ( $self, $form, $subtotal ) = @_;
     my $tax = $self->calculate_tax( $form, $subtotal, 0 );
-    $tax = Math::BigFloat->bzero unless $tax;
+    $tax = LedgerSMB::PGNumber->bzero unless $tax;
     $self->value($tax);
     return $tax;
 }
