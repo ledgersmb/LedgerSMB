@@ -226,7 +226,7 @@
 	  <?lsmb PROCESS attributes  # Process regular attributes.
 	    attribute_data=element_data
 	    attribute_defaults = {}  # Make sure old defaults are cleared out.
-	    element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey', 'tabindex']  # Attributes that apply to selects.
+	    element_keys=['name', 'size', 'multiple', 'disabled', 'accesskey', 'tabindex', 'required']  # Attributes that apply to selects.
 	  ?>
 	  <?lsmb PROCESS custom_attributes  # Process custom attributes.
 	    custom_attribute_data=element_data.attributes 
