@@ -12,6 +12,11 @@ Released 2014-09-15
 
 Changelog for 1.4.14
 * Replace spanish CoA for compliance; donated by AccountNet
+* Correctly set HTML form element 'required' attribute in output (ErikH)
+* In Employee entry screen, mark required fields as such (ErikH)
+* Fix being unable to remove roles from user (SF 1395) (ErikH)
+
+ErikH is Erik Huelsmann
 
 
 Changelog for 1.4.13
