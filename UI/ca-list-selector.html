@@ -16,7 +16,7 @@
 <?lsmb PROCESS elements.html ?> 
 <body class="<?lsmb dojo_theme ?>">
 
-<form method="post" action="gl.pl">
+<form data-dojo-type="lsmb/lib/Form" method="post" action="gl.pl">
 <?lsmb IF form.accounttype == '' ; form.accounttype = 'standard'; END ?>
 <?lsmb FOREACH hidden IN ['accno', 'sort', 'oldsort', 'accounttype', 'gifi_accno', 'gifi_description'];
     PROCESS input element_data={type => 'hidden', name => hidden, value => form.item(hidden)}; END ?>
