@@ -2,7 +2,7 @@
     include_script = [ 'UI/payments/javascript/maximize_minimize.js' ] ?>
 <body id="payment_2_body" class="<?lsmb dojo_theme ?>"
 onLoad="maximize_minimize_on_load(event, 'div_topay_state', 'UI/payments/img/down.gif','UI/payments/img/up.gif') ">
- <form name="pay_single_dues" method="post" action="payment.pl">
+ <form data-dojo-type="lsmb/lib/Form" name="pay_single_dues" method="post" action="payment.pl">
 
  <?lsmb PROCESS elements.html  # Include form elements helper. ?>
  <?lsmb accountclass.type = 'hidden';

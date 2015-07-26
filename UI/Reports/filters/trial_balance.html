@@ -12,7 +12,7 @@ TRIAL_BALANCE_TYPES = [
 ] ?>
 
 <body class="<?lsmb dojo_theme ?>">
-    <form method="get" action="trial_balance.pl">
+    <form data-dojo-type="lsmb/lib/Form" method="get" action="trial_balance.pl">
         <?lsmb IF report.id;
             INCLUDE input element_data = {
                 type="hidden",

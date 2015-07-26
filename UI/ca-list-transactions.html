@@ -80,7 +80,7 @@
 
 <br />
 
-<form method="post" action="ca.pl">
+<form data-dojo-type="lsmb/lib/Form" method="post" action="ca.pl">
 <?lsmb FOREACH pair IN form.callback.split('&amp;') ?><?lsmb hidden = pair.split('=') ?>
 <?lsmb IF NOT loop.first ?>
 <?lsmb PROCESS input element_data={type => 'hidden', name => hidden.0, value => hidden.1} ?>

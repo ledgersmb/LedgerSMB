@@ -4,7 +4,7 @@
 	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
 	?><?lsmb END ?>
 	<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
-<form name="customer" method="post" action="<?lsmb script ?>">
+<form data-dojo-type="lsmb/lib/Form" name="customer" method="post" action="<?lsmb script ?>">
 <?lsmb PROCESS input element_data = { # Only for generate_control_code
                   id = 'person-target-div'
 		type = "hidden"
