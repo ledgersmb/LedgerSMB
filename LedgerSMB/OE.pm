@@ -383,10 +383,7 @@ sub save {
         $form->{exchangerate} = 1;
     }
     else {
-        $exchangerate =
-          $form->check_exchangerate( $myconfig, $form->{currency},
-            $form->{transdate},
-            ( $form->{vc} eq 'customer' ) ? 'buy' : 'sell' );
+        $exchangerate = "";
     }
 
     $form->{exchangerate} =
@@ -469,17 +466,6 @@ sub save {
     # save printed, emailed, queued
 
     $form->save_status($dbh);
-
-    if ( ( $form->{currency} ne $form->{defaultcurrency} ) && !$exchangerate ) {
-        if ( $form->{vc} eq 'customer' ) {
-            $form->update_exchangerate( $dbh, $form->{currency},
-                $form->{transdate}, $form->{exchangerate}, 0 );
-        }
-        if ( $form->{vc} eq 'vendor' ) {
-            $form->update_exchangerate( $dbh, $form->{currency},
-                $form->{transdate}, 0, $form->{exchangerate} );
-        }
-    }
 
     if ( $form->{type} =~ /_order$/ ) {
 

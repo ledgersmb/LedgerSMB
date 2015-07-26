@@ -1151,30 +1151,12 @@ sub update {
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};
-            $form->{exchangerate} = $exchangerate
-              if (
-                $form->{forex} = (
-                    $exchangerate = $form->check_exchangerate(
-                        \%myconfig,         $form->{currency},
-                        $form->{transdate}, 'sell'
-                    )
-                )
-              );
             $form->{oldcurrency} = $form->{currency};
         }
     }
 
     if ( $form->{currency} ne $form->{oldcurrency} ) {
         delete $form->{exchangerate};
-        $form->{exchangerate} = $exchangerate
-          if (
-            $form->{forex} = (
-                $exchangerate = $form->check_exchangerate(
-                    \%myconfig,         $form->{currency},
-                    $form->{transdate}, 'sell'
-                )
-            )
-          );
     }
 
     $j = 1;
@@ -1188,15 +1170,6 @@ sub update {
                   $form->parse_amount( \%myconfig, $form->{"${_}_$i"} );
             }
 
-            $form->{"exchangerate_$j"} = $exchangerate
-              if (
-                $form->{"forex_$j"} = (
-                    $exchangerate = $form->check_exchangerate(
-                        \%myconfig,             $form->{currency},
-                        $form->{"datepaid_$j"}, 'sell'
-                    )
-                )
-              );
             if ( $j++ != $i ) {
                 for (qw(datepaid source memo cleared paid exchangerate forex)) {
                     delete $form->{"${_}_$i"};

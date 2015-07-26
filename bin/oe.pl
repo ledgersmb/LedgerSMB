@@ -995,29 +995,11 @@ sub update {
 
         if ( $form->{currency} ne $form->{defaultcurrency} ) {
             delete $form->{exchangerate};
-            $form->{exchangerate} = $exchangerate
-              if (
-                $form->{forex} = (
-                    $exchangerate = $form->check_exchangerate(
-                        \%myconfig,         $form->{currency},
-                        $form->{transdate}, $buysell
-                    )
-                )
-              );
         }
     }
 
     if ( $form->{currency} ne $form->{oldcurrency} ) {
         delete $form->{exchangerate};
-        $form->{exchangerate} = $exchangerate
-          if (
-            $form->{forex} = (
-                $exchangerate = $form->check_exchangerate(
-                    \%myconfig,         $form->{currency},
-                    $form->{transdate}, $buysell
-                )
-            )
-          );
     }
 
     $exchangerate = ( $form->{exchangerate} ) ? $form->{exchangerate} : 1;
@@ -1384,9 +1366,7 @@ sub invoice {
         $buysell = ( $form->{type} eq 'sales_order' ) ? "buy" : "sell";
 
         $orddate = $form->current_date( \%myconfig );
-        $exchangerate =
-          $form->check_exchangerate( \%myconfig, $form->{currency}, $orddate,
-            $buysell );
+        $exchangerate = "";
 
         if ( !$exchangerate ) {
             &backorder_exchangerate( $orddate, $buysell );
@@ -1467,14 +1447,6 @@ sub invoice {
 
     $form->{exchangerate} = "";
     $form->{forex}        = "";
-    $form->{exchangerate} = $exchangerate
-      if (
-        $form->{forex} = (
-            $exchangerate = $form->check_exchangerate(
-                \%myconfig, $form->{currency}, $form->{transdate}, $buysell
-            )
-        )
-      );
 
     for $i ( 1 .. $form->{rowcount} ) {
         $form->{"deliverydate_$i"} = $form->{"reqdate_$i"};
@@ -1541,7 +1513,6 @@ sub backorder_exchangerate {
 <hr size=3 noshade>
 
 <br>
-<input type=hidden name=nextsub value=save_exchangerate>
 
 <button data-dojo-type="dijit/form/Button" name="action" class="submit" type="submit" value="continue">|
       . $locale->text('Continue')
@@ -1555,18 +1526,6 @@ sub backorder_exchangerate {
 
 }
 
-sub save_exchangerate {
-
-    $form->isblank( "exchangerate", $locale->text('Exchange rate missing!') );
-    $form->{exchangerate} =
-      $form->parse_amount( \%myconfig, $form->{exchangerate} );
-    $form->save_exchangerate( \%myconfig, $form->{currency},
-        $form->{exchangeratedate},
-        $form->{exchangerate}, $form->{buysell} );
-
-    &invoice;
-
-}
 
 sub create_backorder {
 
