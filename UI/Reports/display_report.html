@@ -50,7 +50,7 @@ END;
             ?></span>
 </div>
 <?lsmb END ?>
-<form method="post" action="<?lsmb ENVARS.SCRIPT_NAME ?>">
+<form data-dojo-type="lsmb/lib/Form" method="post" action="<?lsmb ENVARS.SCRIPT_NAME ?>">
 <?lsmb PROCESS input element_data = {
      name = 'form_id'
     value = request.form_id

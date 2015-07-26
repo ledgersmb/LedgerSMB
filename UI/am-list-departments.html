@@ -45,7 +45,7 @@
 
 <br />
 
-<form method="post" action="<?lsmb form.script ?>">
+<form data-dojo-type="lsmb/lib/Form" method="post" action="<?lsmb form.script ?>">
 <?lsmb FOREACH hidden IN hiddens ?>
 <?lsmb PROCESS input element_data={type => 'hidden', name => hidden, value => form.$hidden} ?>
 <?lsmb END ?>

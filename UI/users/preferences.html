@@ -3,7 +3,7 @@
 ?> 
 <?lsmb PROCESS elements.html ?> 
 <body class="lsmb <?lsmb dojo_theme ?>">
-<form method="post" id="prefs" name="prefs" action="<?lsmb request.script ?>" onsubmit="return submit_form()">
+<form data-dojo-type="lsmb/lib/Form" method="post" id="prefs" name="prefs" action="<?lsmb request.script ?>" onsubmit="return submit_form()">
 <?lsmb INCLUDE input element_data = {
                name = "username"
                type = "hidden"

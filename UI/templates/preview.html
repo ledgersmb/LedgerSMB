@@ -14,7 +14,7 @@ PROCESS input element_data = {
 END
  ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
-<form action="<?lsmb request.script ?>" method="post"
+<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method="post"
       enctype="multipart/form-data">
 <?lsmb
 PROCESS HIDDENS;
@@ -36,7 +36,7 @@ PROCESS button element_data = {
  IF language_code; "($language_code)"; ELSE; "(" _ text("No language") _ ")";
  END; ?></div>
 <div class="template_body"><pre><?lsmb content ?></pre></div>
-<form action="<?lsmb request.script ?>" method="get">
+<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method="get">
 <?lsmb 
 PROCESS HIDDENS;
 PROCESS select element_data = {

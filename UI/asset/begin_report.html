@@ -3,7 +3,7 @@
 <?lsmb PROCESS "elements.html" -?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div id="assets">
-<form action="<?lsmb request.script ?>" method="post">
+<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method="post">
 <div class="listtop"><?lsmb text('New Asset Report') ?></div>
 <div class="inputrow" id="classrow"><div class="inputgroup" id="classgrp">
 <?lsmb PROCESS select element_data = {

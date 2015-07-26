@@ -4,7 +4,7 @@
 <?lsmb PROCESS 'elements.html' ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb title ?></div>
-<form action="<?lsmb request.script ?>" method="post">
+<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method="post">
 <?lsmb PROCESS inout element_data = {
      type = "hidden"
      name = "class_id"

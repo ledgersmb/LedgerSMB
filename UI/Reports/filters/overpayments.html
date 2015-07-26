@@ -3,7 +3,7 @@
       PROCESS 'report_base.html'; ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('List Overpayments') ?></div>
-<form action="reports.pl" method="get">
+<form data-dojo-type="lsmb/lib/Form" action="reports.pl" method="get">
 <table>
  <?lsmb PROCESS date_row ?>
  <tr>
