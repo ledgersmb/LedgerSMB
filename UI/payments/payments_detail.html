@@ -17,7 +17,7 @@
     this -->
 <div id="payments">
 <div class="listtop"><?lsmb payment.payment_type ?></div>
- <form name="pay_dues" method="post" action="<?lsmb request.script ?>">
+ <form data-dojo-type="lsmb/lib/Form" name="pay_dues" method="post" action="<?lsmb request.script ?>">
  <!-- Moving all hidden variables to the top.  -CT -->
  <?lsmb INCLUDE input element_data = {
 	type = "hidden"

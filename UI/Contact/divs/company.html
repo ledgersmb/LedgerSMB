@@ -11,7 +11,7 @@
 	?><?lsmb CASE 2 ?><?lsmb entity_classname = "Customer" 
 	?><?lsmb END ?>
 	<div class="listtop"><strong><?lsmb text("$operation $entity_classname") ?></strong></div>
-<form id="company" method="post" action="<?lsmb request.script ?>">
+<form data-dojo-type="lsmb/lib/Form" id="company" method="post" action="<?lsmb request.script ?>">
 <div data-dojo-type="lsmb/lib/TabularForm"
      data-dojo-props="cols:2">
 <?lsmb PROCESS input element_data = {
