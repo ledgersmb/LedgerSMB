@@ -183,7 +183,7 @@ sub select_name {
     $title = $locale->text('Select from one of the names below');
 
     print qq|
-<body class="$form->{dojo_theme}">
+<body class="lsmb $form->{dojo_theme}">
 
 <form method=post action=$form->{script}>
 
@@ -567,7 +567,7 @@ sub schedule {
     $form->header;
 
     print qq|
-<body class="$form->{dojo_theme}">
+<body class="lsmb $form->{dojo_theme}">
 
 <form method=post action=$form->{script}>
 

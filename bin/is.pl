@@ -367,7 +367,7 @@ sub form_header {
     $form->header;
 
     print qq|
-<body class="$form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" /> 
+<body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" /> 
 | . $form->open_status_div . qq|
 <script> 
 function on_return_submit(event){
@@ -1457,7 +1457,7 @@ sub save_info {
 	    if ($form->{callback}){
 		print "Location: $form->{callback}\n";
 		print "Status: 302 Found\n\n";
-		print qq|<html><body class="$form->{dojo_theme}">|;
+		print qq|<html><body class="lsmb $form->{dojo_theme}">|;
 		my $url = $form->{callback};
 		print qq|If you are not redirected automatically, click <a href="$url">|
 			. qq|here</a>.</body></html>|;

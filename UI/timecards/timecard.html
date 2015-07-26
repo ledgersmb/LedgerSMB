@@ -3,7 +3,7 @@
        PROCESS 'report_base.html';
        PROCESS 'utilities.html';
 ?>
-<body class="<?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 <form data-dojo-type="lsmb/lib/Form" action="timecard.pl" method="post">
 <?lsmb FOR hidden IN ['id', 'parts_id'];
 PROCESS input element_data = {
