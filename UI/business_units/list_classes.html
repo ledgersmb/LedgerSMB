@@ -21,7 +21,7 @@
        FOR c IN classes;
            id = c.id;
 ?>
-<form action="<?lsmb request.script ?>" method=POST id="edit-<?lsmb id ?>" class="tr">
+<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method=POST id="edit-<?lsmb id ?>" class="tr">
 <div class="td">
 <?lsmb PROCESS input element_data = {
     type = "hidden"

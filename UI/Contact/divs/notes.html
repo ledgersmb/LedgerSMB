@@ -4,7 +4,7 @@
      <?lsmb IF request.target_div == 'notes_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
      >
 <div class="listtop"><?lsmb text('Notes') ?></div>
-<form action="<?lsmb request.script ?>" method="post">
+<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method="post">
 <?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "target_div"

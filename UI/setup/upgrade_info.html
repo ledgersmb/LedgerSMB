@@ -5,7 +5,7 @@ include_stylesheet=["UI/setup/stylesheet.css"] ?>
 <body class="<?lsmb dojo_theme ?>">
 <h2><?lsmb text('Database Management Console') ?></h2>
 <div class="listtop"><?lsmb text('Upgrade Info') ?></div>
-<form action="setup.pl" method="POST" name="upgrade_info">
+<form data-dojo-type="lsmb/lib/Form" action="setup.pl" method="POST" name="upgrade_info">
 <?lsmb INCLUDE input element_data = {
     name = 'database'
     type = 'hidden'

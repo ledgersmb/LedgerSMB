@@ -4,7 +4,7 @@
 <div class="listtop"><?lsmb template.template_name ?>.<?lsmb template.format ?><?lsmb
  IF language_code; "($language_code)"; ELSE; "(" _ text("No language") _ ")";
  END; ?></div>
-<form action="<?lsmb request.script ?>" method="post">
+<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method="post">
   <?lsmb PROCESS textarea element_data = {
 			class="template-body " _ template.format _ " editor" 
 			cols="80"

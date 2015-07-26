@@ -36,7 +36,7 @@ PROCESS dynatable
          {col_id='edit', type='href', href_base='', name='' }
          {col_id='delete', type='href', href_base='', name='' }
         ] ?>
-	<form action="<?lsmb request.script ?>" method="post">
+	<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method="post">
 <?lsmb PROCESS input element_data = {
 		type = "hidden"
 		name = "form_id"
