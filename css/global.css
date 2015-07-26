@@ -1,6 +1,12 @@
 div.input {
     float: left;
 }
+.lsmb .dijitTextBox {
+    /* neutralize default textbox width of 15em */
+    /* we need two classes here, because it needs to be more specific
+       than the .dijitTextBox class in order to be the applicable rule */
+    width: auto;
+}
 div.date {
     width: 13ex;
 }
