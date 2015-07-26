@@ -198,9 +198,7 @@ sub post_invoice {
         $form->{exchangerate} = 1;
     }
     else {
-        $exchangerate =
-          $form->check_exchangerate( $myconfig, $form->{currency},
-            $form->{transdate}, 'sell' );
+        $exchangerate = "";
     }
 
     $form->{exchangerate} = $form->parse_amount( $myconfig, $form->{exchangerate} );
@@ -523,11 +521,6 @@ sub post_invoice {
 
     delete $form->{acc_trans}{lineitems};
 
-    # update exchangerate
-    if ( ( $form->{currency} ne $form->{defaultcurrency} ) && !$exchangerate ) {
-        $form->update_exchangerate( $dbh, $form->{currency}, $form->{transdate},
-            0, $form->{exchangerate} );
-    }
     if ($form->{manual_tax}){
         $invamount +=
             IIAA->post_form_manual_tax($myconfig, $form, -1, "payables");

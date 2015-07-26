@@ -1229,12 +1229,6 @@ sub post_invoice {
             IIAA->post_form_manual_tax($myconfig, $form, 1, "receivables");
     }
 
-    # update exchangerate
-    # if ( ( $form->{currency} ne $form->{defaultcurrency} ) && !$exchangerate ) {
-    #     $form->update_exchangerate( $dbh, $form->{currency}, $form->{transdate},
-    #         $form->{exchangerate}, 0 );
-    # }
-
     # record receivable
     if ( $form->{receivables} ) {
         ($accno) = split /--/, $form->{AR};

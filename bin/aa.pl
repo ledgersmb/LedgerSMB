@@ -1253,16 +1253,6 @@ sub update {
             $form->{invtotal} += $form->{"amount_$_"};
         }
 
-        # $form->{exchangerate} = $exchangerate
-        #   if (
-        #     $form->{forex} = (
-        #         $exchangerate = $form->check_exchangerate(
-        #             \%myconfig, $form->{currency}, $form->{transdate},
-        #             ( $form->{ARAP} eq 'AR' ) ? 'buy' : 'sell'
-        #         )
-        #     )
-        #   );
-
         if ( $newname = &check_name( $form->{vc} ) ) {
             $form->{notes} = $form->{intnotes} unless $form->{id};
             &rebuild_vc( $form->{vc}, $form->{ARAP}, $form->{transdate} );
@@ -1307,17 +1297,6 @@ sub update {
             }
 
             $totalpaid += $form->{"paid_$j"};
-
-            $form->{"exchangerate_$j"} = $exchangerate
-              if (
-                $form->{"forex_$j"} = (
-                    $exchangerate = $form->check_exchangerate(
-                        \%myconfig, $form->{currency},
-                        $form->{"datepaid_$j"},
-                        ( $form->{ARAP} eq 'AR' ) ? 'buy' : 'sell'
-                    )
-                )
-              );
 
             if ( $j++ != $i ) {
                 for (qw(datepaid source memo paid exchangerate forex cleared)) {

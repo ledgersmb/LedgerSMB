@@ -114,14 +114,8 @@ sub post_transaction {
         $form->{exchangerate} = 1;
     }
     else {
-        # $exchangerate =
-        #   $form->check_exchangerate( $myconfig, $form->{currency},
-        #     $form->{transdate}, $buysell );
 
         $form->{exchangerate} =
-          # ($exchangerate)
-          # ? $exchangerate
-          # : 
           $form->parse_amount( $myconfig, $form->{exchangerate} );
     }
 
@@ -403,19 +397,6 @@ sub post_transaction {
                 $batch_class) || $form->dberror($query);
         }
         
-    }
-
-    # update exchangerate
-    my $buy  = $form->{exchangerate};
-    my $sell = 0;
-    if ( $form->{vc} eq 'vendor' ) {
-        $buy  = 0;
-        $sell = $form->{exchangerate};
-    }
-
-    if ( ( $form->{currency} ne $form->{defaultcurrency} ) && !$exchangerate ) {
-        $form->update_exchangerate( $dbh, $form->{currency}, $form->{transdate},
-            $buy, $sell );
     }
 
     my $ref;
@@ -742,16 +723,6 @@ sub get_name {
       : $form->{defaultcurrency};
     $form->{exchangerate} = 0
       if $form->{currency} eq $form->{defaultcurrency};
-
-    # if ( $form->{transdate}
-    #     && ( $form->{currency} ne $form->{defaultcurrency} ) )
-    # {
-    #     $form->{exchangerate} =
-    #       $form->get_exchangerate( $dbh, $form->{currency}, $form->{transdate},
-    #         $buysell );
-    # }
-
-    # $form->{forex} = $form->{exchangerate};
 
     # if no employee, default to login
     ( $form->{employee}, $form->{employee_id} ) = $form->get_employee($dbh)
