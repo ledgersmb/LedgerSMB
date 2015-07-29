@@ -30,10 +30,6 @@
 ##sub dbconnect_noauto {
 ##sub dbquote {
 ##sub update_balance {
-##sub update_exchangerate {
-##sub save_exchangerate {
-##sub get_exchangerate {
-##sub check_exchangerate {
 ##sub add_shipto {
 ##sub get_employee {
 ##sub get_name {
@@ -91,7 +87,9 @@ ok(defined $form);
 isa_ok($form, 'Form');
 
 my $expStackTrace = 0;
-if ( $ENV{PERL5OPT}=~/.*?Devel::SimpleTrace.*/ || $ENV{PERL5OPT}=~/.*?Carp::Always.*/ )
+if ( defined $ENV{PERL5OPT} &&
+     ($ENV{PERL5OPT}=~/.*?Devel::SimpleTrace.*/ ||
+      $ENV{PERL5OPT}=~/.*?Carp::Always.*/ ))
 {
    $expStackTrace = 1;
 }

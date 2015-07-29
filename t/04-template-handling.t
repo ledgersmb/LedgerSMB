@@ -20,6 +20,11 @@ use LedgerSMB::Template::Elements;
 use LedgerSMB::Template::CSV;
 use LedgerSMB::Template::HTML;
 use LedgerSMB::Template::TXT;
+use LedgerSMB::App_State;
+use Log::Log4perl;
+Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+
+
 
 $LedgerSMB::Sysconfig::tempdir = 't/var';
 
@@ -37,7 +42,9 @@ $locale = LedgerSMB::Locale->get_handle('fr');
 ## AM tests ##
 ##############
 my $expStackTrace = 0;
-if ( $ENV{PERL5OPT}=~/.*?Devel::SimpleTrace.*/ || $ENV{PERL5OPT}=~/.*?Carp::Always.*/ )
+if ( defined $ENV{PERL5OPT}
+     && ($ENV{PERL5OPT}=~/.*?Devel::SimpleTrace.*/ ||
+         $ENV{PERL5OPT}=~/.*?Carp::Always.*/ ))
 {
    $expStackTrace = 1;
 }

@@ -11,6 +11,8 @@ use warnings;
 use LedgerSMB::Locale;
 my $locale =  LedgerSMB::Locale->get_handle('en');
 $LedgerSMB::App_State::Locale = $locale;
+## Prevent "name referenced once" warning by repeating the same assignment again
+$LedgerSMB::App_State::Locale = $locale;
 
 use Test::More;
 eval "use Test::Pod::Coverage";
