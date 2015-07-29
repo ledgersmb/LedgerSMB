@@ -2,7 +2,7 @@
       include_stylesheet = ["UI/business_units/list_classes.css"] 
 ?>
 <?lsmb PROCESS 'elements.html' ?>
-<body class="<?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb title ?></div>
 <div class="table">
 <!-- headings -->
@@ -21,7 +21,7 @@
        FOR c IN classes;
            id = c.id;
 ?>
-<form action="<?lsmb request.script ?>" method=POST id="edit-<?lsmb id ?>" class="tr">
+<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method=POST id="edit-<?lsmb id ?>" class="tr">
 <div class="td">
 <?lsmb PROCESS input element_data = {
     type = "hidden"

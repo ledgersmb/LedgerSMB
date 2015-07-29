@@ -3,11 +3,11 @@
       include_script = ["UI/asset/asset.js"] 
 ?>
 <?lsmb PROCESS 'elements.html' ?>
-<body onLoad="init()" class="<?lsmb dojo_theme ?>">
+<body onLoad="init()" class="lsmb <?lsmb dojo_theme ?>">
 <div id="assets">
 <div class="listtop"><?lsmb title ?></div>
 <div class="info"><?lsmb info ?></div>
-<form action="<?lsmb script ?>" method="post" enctype="multipart/form-data">
+<form data-dojo-type="lsmb/lib/Form" action="<?lsmb script ?>" method="post" enctype="multipart/form-data">
 <!-- These are for Javascript automation of defaults -CT -->
 <?lsmb PROCESS input element_data = {
 	type = "hidden"

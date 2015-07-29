@@ -1,7 +1,7 @@
 <?lsmb INCLUDE 'ui-header.html' ?> 
 <?lsmb PROCESS elements.html ?>
-<body class="<?lsmb dojo_theme ?>">
-<form method="post" action="<?lsmb form.script ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
+<form data-dojo-type="lsmb/lib/Form" method="post" action="<?lsmb form.script ?>">
 <table width="100%">
   <tr class="listtop">
     <th class="listtop"><?lsmb text('E-mail [_1]', form.${form.vc}.remove('--.*')) ?></th>

@@ -30,11 +30,11 @@ LINK = PROTO _ '://' _ SERVER _ ENVARS.SCRIPT_NAME
 
 LINK = LINK.replace('\&\&', '&');
 ?>
-<body class="<?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 <div class="report_header"><label><?lsmb text('Report Name') ?>:</label>
 <span class="report_header"><?lsmb name ?></span>
 </div>
-<body class="<?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 <div class="report_header"><label><?lsmb text('Company') ?>:</label>
 <span class="report_header"><?lsmb request.company ?></span>
 </div>
@@ -50,7 +50,7 @@ END;
             ?></span>
 </div>
 <?lsmb END ?>
-<form method="post" action="<?lsmb ENVARS.SCRIPT_NAME ?>">
+<form data-dojo-type="lsmb/lib/Form" method="post" action="<?lsmb ENVARS.SCRIPT_NAME ?>">
 <?lsmb PROCESS input element_data = {
      name = 'form_id'
     value = request.form_id

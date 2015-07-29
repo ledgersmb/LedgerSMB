@@ -1,7 +1,7 @@
 <?lsmb INCLUDE 'ui-header.html' ?>
-<body id="payment-1-body" class="<?lsmb dojo_theme ?>">
+<body id="payment-1-body" class="lsmb <?lsmb dojo_theme ?>">
 
-<form name="search" method="post" action="<?lsmb script ?>">
+<form data-dojo-type="lsmb/lib/Form" name="search" method="post" action="<?lsmb script ?>">
 <?lsmb PROCESS elements.html  # Include form elements helper. -?>
 <?lsmb login.type = 'hidden' ; INCLUDE input element_data=login -?>
 <?lsmb department.type = 'hidden' ; INCLUDE input element_data=department -?>

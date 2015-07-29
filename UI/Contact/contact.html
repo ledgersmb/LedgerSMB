@@ -11,7 +11,7 @@ PROCESS "dynatable.html"  ?>
 <?lsmb IF !country_id_t; country_id_t = default_country; END -?>
 <?lsmb  # Target_div handling now moved to controller script -- CT -?>
 
-<body class="<?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 
     <?lsmb IF name ?> 
 <div class="pageheading"><?lsmb text('Company') ?>: <?lsmb name ?></div>

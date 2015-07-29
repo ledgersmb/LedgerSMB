@@ -6,14 +6,14 @@
         ]
 ?>
 <?lsmb PROCESS 'elements.html'  # Include form elements helper. ?>
-<body class="<?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 <?lsmb IF id; 
           title = text('Edit Tax Form'); #'
        ELSE;
           title = text('Create New Tax Form'); #'
        END ?> 
 <div class="listtop"><?lsmb title ?></div>
-<form name="add_taxform" method="post">
+<form data-dojo-type="lsmb/lib/Form" name="add_taxform" method="post">
 <?lsmb PROCESS input element_data = {
     type = "hidden"
     name = "id"

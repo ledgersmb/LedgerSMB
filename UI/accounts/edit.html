@@ -3,7 +3,7 @@ INCLUDE 'ui-header.html'
     include_stylesheet =  ['UI/accounts/edit.css']
 ?> 
 <?lsmb PROCESS elements.html ?> 
-<body class="<?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 <div id="account-tabs"
      data-dojo-type="dijit/layout/TabContainer">
 <div data-dojo-type="dijit/layout/ContentPane"
@@ -11,7 +11,7 @@ INCLUDE 'ui-header.html'
      data-dojo-props="selected:true"
      <?lsmb END; ?>
      title="<?lsmb text('Heading') ?>" id="H">
-<form method="post" action="account.pl">
+<form data-dojo-type="lsmb/lib/Form" method="post" action="account.pl">
 <?lsmb PROCESS input element_data = {
         value = 'H'
         name = 'charttype'
@@ -78,7 +78,7 @@ INCLUDE 'ui-header.html'
      data-dojo-props="selected:true"
      <?lsmb END; ?>
      title="<?lsmb text('Account') ?>" id="A">
-<form method="post" action="account.pl">
+<form data-dojo-type="lsmb/lib/Form" method="post" action="account.pl">
 <?lsmb PROCESS input element_data = {
         value = 'A'
         name = 'charttype'
