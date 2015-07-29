@@ -15,10 +15,14 @@ use LedgerSMB::Form;
 use LedgerSMB::PGNumber;
 use DBI;
 use LedgerSMB::App_State;
+use Log::Log4perl;
+Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+
 
 my $skipdbtests = 1;
 
-$LedgerSMB::App_State::DBH =  DBI->connect('dbi:Pg:');
+$LedgerSMB::App_State::DBH =  DBI->connect('dbi:Pg:')
+    if defined $ENV{PGPASSWORD} && $ENV{PGPASSWORD};
 
 $skipdbtests = 0 if $LedgerSMB::App_State::DBH;
 
