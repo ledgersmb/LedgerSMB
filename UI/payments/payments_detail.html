@@ -20,7 +20,7 @@
     any cleaner solution to embedding tabular data within tabular data than
     this -->
 <div class="listtop"><?lsmb payment_type ?></div>
- <form name="pay_dues" method="post" action="payment.pl">
+ <form data-dojo-type="lsmb/lib/Form" name="pay_dues" method="post" action="payment.pl">
  <!-- Moving all hidden variables to the top.  -CT -->
  <?lsmb INCLUDE input element_data = {
 	type = "hidden"

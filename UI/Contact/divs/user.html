@@ -14,7 +14,7 @@
                 END ?>
         </div>
     
-    <form method="POST" action="<?lsmb script ?>">
+    <form data-dojo-type="lsmb/lib/Form" method="POST" action="<?lsmb script ?>">
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
 	<input type="hidden" name="id" value="<?lsmb user.id ?>" />
         <table>
@@ -102,7 +102,7 @@
     </form>
     <?lsmb IF user.entity_id and not request.pls_import?>
         <hr /> 
-        <form name="groups" method="POST" action="<?lsmb script ?>">
+        <form data-dojo-type="lsmb/lib/Form" name="groups" method="POST" action="<?lsmb script ?>">
             <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>" />
             <?lsmb PROCESS input element_data = {
                type="hidden"

@@ -6,7 +6,7 @@
 <body onLoad="init()" class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb title ?></div>
 <div class="info"><?lsmb info ?></div>
-<form action="<?lsmb script ?>" method="post" enctype="multipart/form-data">
+<form data-dojo-type="lsmb/lib/Form" action="<?lsmb script ?>" method="post" enctype="multipart/form-data">
 <!-- These are for Javascript automation of defaults -CT -->
 <?lsmb PROCESS input element_data = {
 	type = "hidden"
