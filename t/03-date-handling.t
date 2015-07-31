@@ -12,6 +12,11 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
+use LedgerSMB::App_State;
+use Log::Log4perl;
+Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+
+
 
 my $form = new Form;
 my $locale_en = LedgerSMB::Locale->get_handle('en_CA');

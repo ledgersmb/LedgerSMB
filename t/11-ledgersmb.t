@@ -14,12 +14,13 @@ use Math::BigFloat;
 use LedgerSMB::Sysconfig;
 use LedgerSMB;
 use LedgerSMB::App_State;
+use Log::Log4perl;
+Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+
+
 my $lsmb;
-if ($ENV{PGDATABASE}){
-    plan tests => 61;
-} else {
-    plan tests => 57;
-}
+plan tests => 61;
+
 
 
 
@@ -113,7 +114,7 @@ ok(defined $lsmb->{version}, 'new: lynx, version defined');
 
 # $lsmb->call_procedure checks
 SKIP: {
-	skip 'Skipping call_procedure tests, no db specified' 
+	skip 'Skipping call_procedure tests, no db specified', 5
 		if !defined $ENV{PGDATABASE};
 	$lsmb = LedgerSMB->new();
 	$lsmb->{dbh} = DBI->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", 
