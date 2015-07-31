@@ -2,7 +2,7 @@
 <?lsmb PROCESS 'elements.html' ?>
 <body class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('Search Asset Class') ?></div>
-<form action="<?lsmb script ?>" method="post">
+<form data-dojo-type="lsmb/lib/Form" action="<?lsmb script ?>" method="post">
 <div class="inputrow" id="labelrow">
 <?lsmb PROCESS input element_data = {
 	type = "text"

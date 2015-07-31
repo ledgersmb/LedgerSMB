@@ -6,6 +6,7 @@ Changelog for 1.4.14
 * Correctly set HTML form element 'required' attribute in output (ErikH)
 * In Employee entry screen, mark required fields as such (ErikH)
 * Fix being unable to remove roles from user (SF 1395) (ErikH)
+* Improved required input checking on form submit (SF 1382/GH 715) (ErikH)
 
 ErikH is Erik Huelsmann
 

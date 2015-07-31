@@ -3,7 +3,7 @@
 <?lsmb PROCESS "elements.html" -?>
 <body class="<?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('Depreciate All') ?></div>
-<form action="asset.pl" method="post">
+<form data-dojo-type="lsmb/lib/Form" action="asset.pl" method="post">
 <div class="inputrow" id="daterow"><div class="inputgroup" id="dategroup">
 <?lsmb PROCESS input element_data = {
      name = "report_date"

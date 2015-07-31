@@ -65,7 +65,7 @@ checking a price deal for a customer.
          pm.delete = '[' _ text('Delete') _ ']';
          pm.row_id = pm.entry_id;
      END ?>
-<form name="pricematrix" action="<?lsmb script ?>" method="post">
+<form data-dojo-type="lsmb/lib/Form" name="pricematrix" action="<?lsmb script ?>" method="post">
  <input type="hidden" name="entity_class"  value="<?lsmb account_class ?>" />
  <input type="hidden" name="credit_id" value="<?lsmb credit_id ?>" />
  <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>" /><?lsmb
