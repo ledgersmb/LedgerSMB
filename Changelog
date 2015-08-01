@@ -1,8 +1,13 @@
 Changelog for 1.5 Series
 Forthcoming
 
+UI changes:
+* LedgerSMB now frameless (ChrisT)
+* Full use of Dojo widgets (ErikH)
+
 Code Cleanup:
 * LedgerSMB now relies on plack.  Previous stub scripts removed (ChrisT)
+* Removed LedgerSMB's custom dojo page loader
 
 API Enhancements:
 * Moved a great deal of code into PGObject framework on CPAN (Chris T)
