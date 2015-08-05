@@ -282,7 +282,6 @@ sub _main_screen {
     push@{$attach_level_options},
         {text => $locale->text('Credit Account'),
          value => 3} if $credit_act->{id};
-    ;
 
     $request->close_form() if eval {$request->can('close_form')};
     $request->open_form() if eval {$request->can('close_form')};
