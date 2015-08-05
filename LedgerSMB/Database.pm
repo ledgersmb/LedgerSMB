@@ -577,9 +577,9 @@ sub load_base_schema {
     my $success;
     my $log = loader_log_filename();
     
-    my $sth = $dbh->prepare(
+    my $sth = $self->dbh->prepare(
         "SELECT count(*) FROM pg_language WHERE lanname='plpgsql'")
-        or die $dbh->errstr();
+        or die $self->dbh->errstr();
     $sth->execute()
         or die $sth->errstr();
     my ($rv) = $sth->fetchall_arrayref()
