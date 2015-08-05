@@ -117,16 +117,6 @@ it.  Leading zeroes and spaces are preserved as placeholders.  Currently <?lsmb
 parsing is not supported in this routine though it may be added at a later date.
 $$;
 
-CREATE OR REPLACE FUNCTION setting__get_currencies() RETURNS text[]
-AS
-$$
-SELECT string_to_array(value, ':') from defaults where setting_key = 'curr';
-$$ LANGUAGE SQL;
--- Table schema defaults
-
-COMMENT ON FUNCTION setting__get_currencies() is
-$$ Returns an array of currencies from the defaults table.$$;
-
 ALTER TABLE entity ALTER control_code SET default setting_increment('entity_control');
 
 

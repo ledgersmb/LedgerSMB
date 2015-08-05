@@ -278,8 +278,9 @@ BEGIN;
 UPDATE language SET code = 'ms_MY' WHERE code = 'my';
 COMMIT;
 
-BEGIN;
+------------ CHANGES FOR MC-branch
 ---- Intentially not added at the end to prevent merge problems!
+BEGIN;
 -- changes to menu ; 
 
 -- 128 == System menu
@@ -307,6 +308,14 @@ insert into menu_acl (role_name, acl_type, node_id)
          (select max(id) from menu_node));
 
 COMMIT;
+
+DROP FUNCTION IF EXISTS setting__get_currencies();
+
+
+
+------------ END OF: CHANGES FOR MC-branch
+
+
 
 BEGIN;
 ALTER TABLE business_unit_ac
