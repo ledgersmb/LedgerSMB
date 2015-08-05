@@ -295,7 +295,6 @@ sub _main_screen {
     push@{$attach_level_options},
         {text => $locale->text('Credit Account'),
          value => 3} if $credit_act->{id};
-    ;
 
     { # pre-5.14 compatibility block
         local ($@); # pre-5.14, do not die() in this block
