@@ -171,8 +171,13 @@ SELECT lsmb__grant_perms('exchangerate_edit', 'currency', 'UPDATE');
 SELECT lsmb__grant_perms('exchangerate_edit', 'currency', 'DELETE');
 SELECT lsmb__grant_menu('exchangerate_edit',
        (SELECT id FROM menu_node WHERE label = 'Edit currencies'), 'allow');
-
 GRANT SELECT ON currency TO PUBLIC;
+
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type', 'INSERT');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type', 'UPDATE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type', 'DELETE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type_id_seq', 'ALL');
+GRANT SELECT ON exchangerate_type TO PUBLIC;
 
 
 \echo Basic file attachments

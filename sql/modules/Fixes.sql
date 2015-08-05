@@ -325,6 +325,42 @@ COMMIT;
 
 DROP FUNCTION IF EXISTS setting__get_currencies();
 
+BEGIN;
+
+create or replace function fixes_tmp()
+returns void as $$
+begin
+   perform * from menu_node where label='Edit rate types';
+
+   if not found then
+     insert into menu_node (label, parent, "position")
+      values ('Edit rate types',
+              (SELECT id FROM menu_node WHERE label = 'Currency'),
+              2);
+
+     insert into menu_attribute
+      values
+       ((SELECT id FROM menu_node WHERE label = 'Edit rate types'),
+        'module', 'currency.pl'),
+       ((SELECT id FROM menu_node WHERE label = 'Edit rate types'),
+        'action', 'list_exchangerate_types');
+
+     insert into menu_acl (role_name, acl_type, node_id)
+      values ('lsmb_mc__exchangerate_edit', 'allow',
+              (SELECT id FROM menu_node WHERE label = 'Edit rate types'));
+   end if;
+
+   return;
+end;
+$$ language plpgsql;
+
+select fixes_tmp();
+
+drop function if exists fixes_tmp();
+
+
+COMMIT;
+
 
 
 ------------ END OF: CHANGES FOR MC-branch
