@@ -138,6 +138,8 @@ foreach my $format (0 .. $#formats) {
 		$value =~ s/d/\./gx;
 		##$value = Math::BigFloat->new($value);
 		$LedgerSMB::Sysconfig::decimal_places = 2;
+      # Repeat the statement to suppress the 'referenced only once' warning
+		$LedgerSMB::Sysconfig::decimal_places = 2;
 		$value = $lsmb->parse_amount(user =>\%myfooconfig, 
 			amount =>$value);
 		is($form->format_amount(\%myconfig, $value, 2, '0'), $expected,
