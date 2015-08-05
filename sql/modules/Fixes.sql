@@ -190,8 +190,13 @@ BEGIN;
 
 ---- Intentially not added at the end to prevent merge problems!
 BEGIN;
--- changes to menu ; 
 
+create or replace function fixes_tmp()
+returns void as $$
+begin
+   perform * from menu_node where label='Currency';
+
+   if not found then
 -- 128 == System menu
 insert into menu_node (label, parent, "position")
  values ('Currency', 128, 0);
@@ -215,6 +220,15 @@ insert into menu_attribute
 insert into menu_acl (role_name, acl_type, node_id)
  values ('lsmb_mc__exchangerate_edit', 'allow',
          (select max(id) from menu_node));
+   end if;
+
+   return;
+end;
+$$ language plpgsql;
+
+select fixes_tmp();
+
+drop function if exists fixes_tmp();
 
 COMMIT;
 
