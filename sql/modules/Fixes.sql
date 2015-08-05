@@ -372,6 +372,40 @@ INSERT INTO exchangerate_type (id, description, builtin)
 SELECT setval('exchangerate_type_id_seq', 1, 't');
 END;
 
+BEGIN;
+
+create or replace function fixes_tmp()
+returns void as $$
+begin
+   perform * from menu_node where label='Edit rates';
+
+   if not found then
+     insert into menu_node (label, parent, "position")
+      values ('Edit rates',
+              (SELECT id FROM menu_node WHERE label = 'Currency'),
+              3);
+
+     insert into menu_attribute
+      values
+       ((SELECT id FROM menu_node WHERE label = 'Edit rates'),
+        'module', 'currency.pl'),
+       ((SELECT id FROM menu_node WHERE label = 'Edit rates'),
+        'action', 'list_exchangerates');
+
+     insert into menu_acl (role_name, acl_type, node_id)
+      values ('lsmb_mc__exchangerate_edit', 'allow',
+              (SELECT id FROM menu_node WHERE label = 'Edit rates'));
+   end if;
+
+   return;
+end;
+$$ language plpgsql;
+
+select fixes_tmp();
+
+drop function if exists fixes_tmp();
+
+COMMIT;
 
 ------------ END OF: CHANGES FOR MC-branch
 

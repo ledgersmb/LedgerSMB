@@ -177,7 +177,17 @@ SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type', 'INSERT');
 SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type', 'UPDATE');
 SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type', 'DELETE');
 SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_type_id_seq', 'ALL');
+SELECT lsmb__grant_menu('exchangerate_edit',
+       (SELECT id FROM menu_node WHERE label = 'Edit rate types'), 'allow');
 GRANT SELECT ON exchangerate_type TO PUBLIC;
+
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_default', 'INSERT');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_default', 'UPDATE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate_default', 'DELETE');
+SELECT lsmb__grant_menu('exchangerate_edit',
+       (SELECT id FROM menu_node WHERE label = 'Edit rates'), 'allow');
+GRANT SELECT ON exchangerate_default TO PUBLIC;
+
 
 
 \echo Basic file attachments
