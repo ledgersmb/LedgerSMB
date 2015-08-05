@@ -577,17 +577,24 @@ sub load_base_schema {
     my $success;
     my $log = loader_log_filename();
     
-    # The statement below is likely to fail, because
-    # the language already exists. Unfortunately, it's an error.
-    # If it had been a notice, 
-    $self->dbh->do("CREATE LANGUAGE plpgsql");
-    $self->dbh->commit;
+    my $sth = $dbh->prepare(
+        "SELECT count(*) FROM pg_language WHERE lanname='plpgsql'")
+        or die $dbh->errstr();
+    $sth->execute()
+        or die $sth->errstr();
+    my ($rv) = $sth->fetchall_arrayref()
+        or die $sth->errstr();
+
+    unless ($rv->[0] > 0) {
+        $self->dbh->do("CREATE LANGUAGE plpgsql");
+        $self->dbh->commit;
+    }
     $self->exec_script(
-	{
-	    script => "$self->{source_dir}sql/Pg-database.sql",
-	    log => ($args->{log} || "${log}_stdout"),
-	    errlog => ($args->{errlog} || "${log}_stderr")
-	});
+        {
+            script => "$self->{source_dir}sql/Pg-database.sql",
+            log => ($args->{log} || "${log}_stdout"),
+            errlog => ($args->{errlog} || "${log}_stderr")
+        });
 
     opendir(LOADDIR, 'sql/on_load');
     while (my $fname = readdir(LOADDIR)){
