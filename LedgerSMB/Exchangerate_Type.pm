@@ -37,6 +37,15 @@ This is the human-readible type description.  It must be unique among types.
 
 has 'description' => (is => 'rw', isa => 'Str');
 
+=item builtin
+
+This boolean indicates every LedgerSMB application should hold this
+value and it thus can't be deleted.
+
+=cut
+
+has 'builtin' => (is => 'ro', isa => 'Bool');
+
 
 =back
 
