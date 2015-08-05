@@ -278,6 +278,29 @@ BEGIN;
 UPDATE language SET code = 'ms_MY' WHERE code = 'my';
 COMMIT;
 
+BEGIN;
+---- Intentially not added at the end to prevent merge problems!
+-- changes to menu ; 
+
+-- 128 == System menu
+select menu_insert(128, 1, 'Currency');
+
+
+insert into menu_attribute
+ values ((select max(id) from menu_node), 'menu', 128);
+
+select menu_insert((select max(id) from menu_node), 0, 'Edit currencies');
+
+insert into menu_attribute
+ values
+  ((select max(id) from menu_node), 'module', 'currency.pl'),
+  ((select max(id) from menu_node), 'action', 'list_currencies');
+
+insert into menu_acl (role_name, acl_type, node_id)
+ values ('lsmb_mc__exchangerate_edit', 'allow',
+         (select max(id) from menu_node));
+
+COMMIT;
 
 BEGIN;
 ALTER TABLE business_unit_ac
@@ -296,3 +319,4 @@ CREATE INDEX business_unit_ac_entry_id_idx ON business_unit_ac (entry_id);
 CREATE INDEX business_unit_inv_entry_id_idx ON business_unit_inv(entry_id);
 CREATE INDEX business_unit_oitem_entry_id_idx ON business_unit_oitem(entry_id);
 COMMIT;
+

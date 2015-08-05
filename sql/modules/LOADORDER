@@ -9,6 +9,7 @@ Settings.sql
 Util.sql
 App_Module.sql
 Menu.sql
+Currency.sql
 Drafts.sql
 Account.sql
 Session.sql

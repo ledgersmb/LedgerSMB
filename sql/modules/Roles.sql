@@ -166,6 +166,14 @@ SELECT lsmb__create_role('exchangerate_edit');
 --### TODO: advisory rates still need to work!
 --SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'INSERT');
 --SELECT lsmb__grant_perms('exchangerate_edit', 'exchangerate', 'UPDATE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'currency', 'INSERT');
+SELECT lsmb__grant_perms('exchangerate_edit', 'currency', 'UPDATE');
+SELECT lsmb__grant_perms('exchangerate_edit', 'currency', 'DELETE');
+SELECT lsmb__grant_menu('exchangerate_edit',
+       (SELECT id FROM menu_node WHERE label = 'Edit currencies'), 'allow');
+
+GRANT SELECT ON currency TO PUBLIC;
+
 
 \echo Basic file attachments
 SELECT lsmb__create_role('file_read');
