@@ -20,6 +20,7 @@ This module provides the workflow scripts for managing currencies and fx rates.
 use LedgerSMB::Template;
 use LedgerSMB::Currency;
 use LedgerSMB::Exchangerate_Type;
+use LedgerSMB::Setting;
 use Log::Log4perl;
 
 
@@ -35,6 +36,7 @@ Displays a list of configured currencies.  No inputs required or used.
 sub list_currencies {
     my ($request) = @_;
     my @currencies = LedgerSMB::Currency->list();
+    my $default_curr = LedgerSMB::Setting->new()->get('curr');
     my $template = LedgerSMB::Template->new(
         user => $request->{_user},
         template => 'Configuration/currency', 
@@ -54,10 +56,17 @@ sub list_currencies {
     my $base_url = "currency.pl?action=delete_currency";
     for my $s (@currencies) {
         $s->{i} = $rowcount % 2;
-        $s->{drop} = {
-            href =>"$base_url&curr=$s->{curr}", 
-            text => '[' . $request->{_locale}->text('delete') . ']',
-        };
+        if ($s->{curr} eq $default_curr) {
+           $s->{drop} = {
+               text => '(' . $request->{_locale}->text('default') . ')',
+           };
+        }
+        else {
+           $s->{drop} = {
+               href =>"$base_url&curr=$s->{curr}", 
+               text => '[' . $request->{_locale}->text('delete') . ']',
+           };
+        }
         push @$rows, $s;
         ++$rowcount;
     }
@@ -135,7 +144,7 @@ sub list_exchangerate_types {
         $s->{drop} = {
             href =>"$base_url&id=$s->{id}", 
             text => '[' . $request->{_locale}->text('delete') . ']',
-        };
+        } if ! $s->{builtin};
         push @$rows, $s;
         ++$rowcount;
     }

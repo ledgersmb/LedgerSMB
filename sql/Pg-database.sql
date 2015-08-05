@@ -2041,12 +2041,22 @@ $$ Line items for sales/purchase orders and quotations.$$;
 
 CREATE TABLE exchangerate_type (
   id serial primary key,
-  description text
+  description text,
+  builtin boolean
 );
+
+INSERT INTO exchangerate_type (id, description, builtin)
+     VALUES (1, 'Default rate', 't');
+
+SELECT setval('exchangerate_type_id_seq', 1, 't');
 
 COMMENT ON TABLE exchangerate_type IS
 $$This table defines various types of exchange rates which may be used for
 different purposes (posting, valuation, translation, ...).$$;
+
+COMMENT ON COLUMN exchangerate_type.builtin IS
+$$This column is 't' (true) in case the record is a built-in value
+(and thus can''t be deleted).$$;
 
 CREATE TABLE exchangerate_default (
   rate_type int not null references exchangerate_type(id),

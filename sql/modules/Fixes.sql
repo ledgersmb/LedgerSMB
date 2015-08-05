@@ -358,9 +358,19 @@ select fixes_tmp();
 
 drop function if exists fixes_tmp();
 
-
 COMMIT;
 
+
+BEGIN;
+ALTER TABLE exchangerate_type ADD COLUMN builtin boolean;
+COMMIT;
+
+BEGIN;
+INSERT INTO exchangerate_type (id, description, builtin)
+     VALUES (1, 'Default rate', 't');
+
+SELECT setval('exchangerate_type_id_seq', 1, 't');
+END;
 
 
 ------------ END OF: CHANGES FOR MC-branch
