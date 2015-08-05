@@ -19,6 +19,7 @@ This module provides the workflow scripts for managing currencies and fx rates.
 
 use LedgerSMB::Template;
 use LedgerSMB::Currency;
+use LedgerSMB::Exchangerate;
 use LedgerSMB::Exchangerate_Type;
 use LedgerSMB::Setting;
 use Log::Log4perl;
@@ -189,6 +190,97 @@ sub delete_exchangerate_type {
     $ratetype->delete;
 
     return &list_exchangerate_types($request);
+}
+
+=item list_exchangerates
+
+Displays a list of configured exchangerate types.  No inputs required or used.
+
+=cut
+
+sub list_exchangerates {
+    my ($request) = @_;
+    my @exchangerate_types = LedgerSMB::Exchangerate_Type->list();
+    my @currencies = LedgerSMB::Currency->list();
+    my %rate_types = map { $_->{id} => $_->{description} } @exchangerate_types;
+    my @exchangerates = LedgerSMB::Exchangerate->list(
+        curr => $request->{curr},
+        type_id => $request->{type} || 1,
+        offset => $request->{offset},
+        limit => $request->{limit} || 30,
+        );
+    my $template = LedgerSMB::Template->new(
+        user => $request->{_user},
+        template => 'Configuration/rate', 
+        locale => $request->{_locale}, 
+        format => 'HTML', 
+            path=>'UI'
+    );
+    my $columns;
+    @$columns = qw(curr rate_type valid_from rate drop);
+    my $column_names = {
+        id => 'ID',
+        description => 'Description',
+    };
+    my $column_heading = $template->column_heading($column_names);
+    my $rows = [];
+    my $rowcount = "0";
+    my $base_url = "currency.pl?action=delete_exchangerate";
+    for my $s (@exchangerates) {
+        $s->{i} = $rowcount % 2;
+        $s->{rate} = $s->{rate}->to_output();
+        $s->{drop} = {
+            href =>"$base_url&curr=$s->{curr}&rate_type=$s->{rate_type}&valid_from=" . $s->{valid_from}->to_output(), 
+            text => '[' . $request->{_locale}->text('delete') . ']',
+        } if ! $s->{builtin};
+        # Translate here, because the URL above depends on the rate_type_id!
+        $s->{rate_type} = $rate_types{$s->{rate_type}};
+        push @$rows, $s;
+        ++$rowcount;
+    }
+    $request->{title} = $request->{_locale}->text('Defined exchange rate types');
+    $template->render({
+   form    => $request,
+	columns => $columns,
+    heading => $column_heading,
+        rows    => $rows,
+   currencies => \@currencies,
+   exchangerate_types => \@exchangerate_types,
+	buttons => [],
+	hiddens => [],
+    }); 
+
+}
+
+=item save_exchangerate_type
+
+Creates a currency - or if it exists, updates the description.
+
+=cut
+
+sub save_exchangerate {
+    my ($request) = @_;
+
+    my $ratetype = LedgerSMB::Exchangerate->new(%$request);
+    $ratetype->save;
+
+    return &list_exchangerates($request);
+}
+
+=item delete_exchangerate_type
+
+Deletes an exchangerate type. Returns an error in case the rate type is
+still referenced in the system.
+
+=cut
+
+sub delete_exchangerate {
+    my ($request) = @_;
+
+    my $ratetype = LedgerSMB::Exchangerate->new(%$request);
+    $ratetype->delete;
+
+    return &list_exchangerates($request);
 }
 
 
