@@ -283,18 +283,24 @@ BEGIN;
 -- changes to menu ; 
 
 -- 128 == System menu
-select menu_insert(128, 1, 'Currency');
+insert into menu_node (label, parent, "position")
+ values ('Currency', 128, 0);
 
 
 insert into menu_attribute
- values ((select max(id) from menu_node), 'menu', 128);
+ values ((SELECT id FROM menu_node WHERE label = 'Currency'), 'menu', 128);
 
-select menu_insert((select max(id) from menu_node), 0, 'Edit currencies');
+insert into menu_node (label, parent, "position")
+ values ('Edit currencies',
+         (SELECT id FROM menu_node WHERE label = 'Currency'),
+         0);
 
 insert into menu_attribute
  values
-  ((select max(id) from menu_node), 'module', 'currency.pl'),
-  ((select max(id) from menu_node), 'action', 'list_currencies');
+  ((SELECT id FROM menu_node WHERE label = 'Edit currencies'),
+   'module', 'currency.pl'),
+  ((SELECT id FROM menu_node WHERE label = 'Edit currencies'),
+   'action', 'list_currencies');
 
 insert into menu_acl (role_name, acl_type, node_id)
  values ('lsmb_mc__exchangerate_edit', 'allow',
