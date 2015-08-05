@@ -31,6 +31,7 @@ use LedgerSMB::File;
 use LedgerSMB::App_State;
 use LedgerSMB::Setting;
 use LedgerSMB::Template;
+use LedgerSMB::Setting;
 use Try::Tiny;
 
 use strict;
@@ -283,13 +284,7 @@ sub _main_screen {
     my @business_types =
                LedgerSMB->call_procedure(funcname => 'business_type__list');
 
-    my ($curr_list) =
-          LedgerSMB->call_procedure(funcname => 'setting__get_currencies');
-
-    my @all_currencies;
-    for my $curr (@{$curr_list->{'setting__get_currencies'}}){
-        push @all_currencies, { text => $curr};
-    }
+    my @all_currencies = LedgerSMB::Setting->new()->get_currencies;
 
     my $default_country = LedgerSMB::Setting->get('default_country');
 

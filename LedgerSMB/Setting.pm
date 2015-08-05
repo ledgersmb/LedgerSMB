@@ -179,8 +179,8 @@ sub _increment_process{
 
 sub get_currencies {
     my $self = shift;
-    my @data = $self->call_dbmethod(funcname => 'setting__get_currencies');
-    @{$self->{currencies}} = $self->_parse_array($data[0]->{setting__get_currencies});
+    @{$self->{currencies}} = $self->call_dbmethod(funcname => 'currency__list');
+
     return @{$self->{currencies}};
 }
 

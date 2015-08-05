@@ -42,7 +42,8 @@ sub _default_settings {
               { name => 'company_license_number',
                 label =>  $locale->text('Company License Number') },
               { name => 'curr',
-                label => $locale->text('Currencies (colon-separated)')},
+        label => $locale->text('Currencies'),
+        type => 'SELECT_ONE', },
               { name => 'weightunit', label => $locale->text('Weight Unit') },
               { name => 'default_country',
                 label => $locale->text('Default Country'),
@@ -150,6 +151,7 @@ Shows the defaults screen
 sub defaults_screen{
     my ($request) = @_;
     my $setting_handle = LedgerSMB::Setting->new({base => $request});
+    $setting_handle->get_currencies();
     my @defaults;
     my @default_settings = &_default_settings($request);
     for my $dg (@default_settings) {
@@ -213,6 +215,12 @@ sub defaults_screen{
             text_attr      => 'text',
             value_attr     => 'id',
             default_values => [$request->{'earn_id'}],
+        'curr' => {
+            name => 'curr',
+            options => $setting_handle->{currencies},
+            default_values => [$request->{curr}],
+            text_attr => 'description',
+            value_attr => 'curr',
         },
         'fxloss_accno_id' => {
             name           => 'fxloss_accno_id',
