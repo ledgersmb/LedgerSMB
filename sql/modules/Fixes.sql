@@ -281,31 +281,45 @@ COMMIT;
 ------------ CHANGES FOR MC-branch
 ---- Intentially not added at the end to prevent merge problems!
 BEGIN;
--- changes to menu ; 
 
--- 128 == System menu
-insert into menu_node (label, parent, "position")
- values ('Currency', 128, 0);
+create or replace function fixes_tmp()
+returns void as $$
+begin
+   perform * from menu_node where label='Currency';
+
+   if not found then
+     -- 128 == System menu
+     insert into menu_node (label, parent, "position")
+      values ('Currency', 128, 0);
 
 
-insert into menu_attribute
- values ((SELECT id FROM menu_node WHERE label = 'Currency'), 'menu', 128);
+     insert into menu_attribute
+      values ((SELECT id FROM menu_node WHERE label = 'Currency'), 'menu', 128);
 
-insert into menu_node (label, parent, "position")
- values ('Edit currencies',
-         (SELECT id FROM menu_node WHERE label = 'Currency'),
-         0);
+     insert into menu_node (label, parent, "position")
+      values ('Edit currencies',
+              (SELECT id FROM menu_node WHERE label = 'Currency'),
+              0);
 
-insert into menu_attribute
- values
-  ((SELECT id FROM menu_node WHERE label = 'Edit currencies'),
-   'module', 'currency.pl'),
-  ((SELECT id FROM menu_node WHERE label = 'Edit currencies'),
-   'action', 'list_currencies');
+     insert into menu_attribute
+      values
+       ((SELECT id FROM menu_node WHERE label = 'Edit currencies'),
+        'module', 'currency.pl'),
+       ((SELECT id FROM menu_node WHERE label = 'Edit currencies'),
+        'action', 'list_currencies');
 
-insert into menu_acl (role_name, acl_type, node_id)
- values ('lsmb_mc__exchangerate_edit', 'allow',
-         (select max(id) from menu_node));
+     insert into menu_acl (role_name, acl_type, node_id)
+      values ('lsmb_mc__exchangerate_edit', 'allow',
+              (select max(id) from menu_node));
+   end if;
+
+   return;
+end;
+$$ language plpgsql;
+
+select fixes_tmp();
+
+drop function if exists fixes_tmp();
 
 COMMIT;
 
