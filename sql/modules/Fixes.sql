@@ -185,6 +185,30 @@ ALTER SEQUENCE inventory_entry_id_seq
 COMMIT;
 
 BEGIN;
+---- Intentially not added at the end to prevent merge problems!
+-- changes to menu ; 
+
+-- 128 == System menu
+select menu_insert(128, 1, 'Currency');
+
+
+insert into menu_attribute
+ values ((select max(id) from menu_node), 'menu', 128);
+
+select menu_insert((select max(id) from menu_node), 0, 'Edit currencies');
+
+insert into menu_attribute
+ values
+  ((select max(id) from menu_node), 'module', 'currency.pl'),
+  ((select max(id) from menu_node), 'action', 'list_currencies');
+
+insert into menu_acl (role_name, acl_type, node_id)
+ values ('lsmb_mc__exchangerate_edit', 'allow',
+         (select max(id) from menu_node));
+
+COMMIT;
+
+BEGIN;
 ALTER TABLE business_unit_ac
   DROP CONSTRAINT business_unit_ac_entry_id_fkey,
   ADD CONSTRAINT business_unit_ac_entry_id_fkey
@@ -258,3 +282,4 @@ COMMIT;
 
 DROP FUNCTION IF EXISTS je_get_default_lines();
 DROP FUNCTION IF EXISTS je_set_default_lines(integer);
+
