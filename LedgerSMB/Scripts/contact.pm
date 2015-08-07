@@ -145,8 +145,6 @@ sub _main_screen {
        my $employee = LedgerSMB::Entity::Person::Employee->get($entity_id);
        $person = $employee if $employee;
        $user = LedgerSMB::Entity::User->get($entity_id);
-    } elsif ($person->{entity_class} == 3) {
-       @DIVS = ('employee');
     } else {
        @DIVS = qw(company person);
     }

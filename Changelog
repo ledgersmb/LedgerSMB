@@ -8,7 +8,9 @@ Changelog for 1.4.14
 * Fix being unable to remove roles from user (SF 1395) (ErikH)
 * Improved required input checking on form submit (SF 1382/GH 715) (ErikH)
 * Fixed css making it difficult or impossible to save person records (Chris T)
+* Fixed sudden bouncing to employee screen along with info loss (Chris T)
 
+Chris T is Chris Travers
 ErikH is Erik Huelsmann
 
 
