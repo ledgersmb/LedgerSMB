@@ -146,8 +146,6 @@ sub _main_screen {
        my $employee = LedgerSMB::Entity::Person::Employee->get($entity_id);
        $person = $employee if $employee;
        $user = LedgerSMB::Entity::User->get($entity_id);
-    } elsif ($person->{entity_class} == 3) {
-       @DIVS = ('employee');
     } else {
        @DIVS = qw(company person);
     }
@@ -311,6 +309,7 @@ sub _main_screen {
     $template->render({
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,
+             entity_class => $entity_class,
                   PLUGINS => \@plugins,
                   request => $request,
                   company => $company,

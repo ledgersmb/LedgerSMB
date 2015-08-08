@@ -7,8 +7,14 @@ Changelog for 1.4.14
 * In Employee entry screen, mark required fields as such (ErikH)
 * Fix being unable to remove roles from user (SF 1395) (ErikH)
 * Improved required input checking on form submit (SF 1382/GH 715) (ErikH)
+* Fixed css making it difficult or impossible to save person records (Chris T)
+* Fixed sudden bouncing to employee screen along with info loss (Chris T)
+* Fixed salutation and entity class not setting, entering person (Chris T)
+* Prevent CREATE LANGUAGE error when creating new company (RobR)
 
+Chris T is Chris Travers
 ErikH is Erik Huelsmann
+RobR is Rob Ransbottom
 
 
 Changelog for 1.4.13
