@@ -315,6 +315,7 @@ sub _main_screen {
     $template->render({
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,
+             entity_class => $entity_class,
                   PLUGINS => \@plugins,
                   request => $request,
                   company => $company,
