@@ -1,6 +1,8 @@
 use Test::More;
 use strict;
 
+$ENV{PGHOST} = $LedgerSMB::Sysconfig::db_host;
+
 if (!defined $ENV{LSMB_TEST_DB}){
 	plan skip_all => 'Skipping all.  Told not to test db.';
 }
@@ -17,6 +19,7 @@ else {
 my @testscripts = qw(Account Reconciliation Business_type Company Draft Payment 
 			Session Voucher System Taxform COGS-FIFO PNL Roles);
 
+
 chdir 'sql/modules/test/';
 
 for my $testscript (@testscripts){
@@ -28,3 +31,5 @@ for my $testscript (@testscripts){
 		like($parts[1], qr/t\s?$/, $parts[0]);
 	}
 }
+
+diag("PGHost: $ENV{PGHOST}");

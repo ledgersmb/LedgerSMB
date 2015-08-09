@@ -153,7 +153,7 @@ sub call_script {
       # -- CT
      $LedgerSMB::App_State::DBH->rollback if ($LedgerSMB::App_State::DBH and $_ eq 'Died');
      LedgerSMB::App_State->cleanup();
-     $request->_error($_) unless $_ =~ 'Died at' or $_ =~ /^exit at/;
+     $request->_error($_) unless $_ =~ /^Died at/;
   };
 }
 
