@@ -43,6 +43,8 @@ requires 'TeX::Encode';
 requires 'Template' => '2.14';
 requires 'namespace::autoclean';
 
+requires 'JSON';
+requires 'Text::CSV';
 
 recommends 'Math::BigInt::GMP';
 

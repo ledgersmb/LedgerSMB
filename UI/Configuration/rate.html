@@ -10,7 +10,8 @@
 
 <form data-dojo-type="lsmb/lib/Form"
       method="post"
-      action="<?lsmb form.script ?>">
+      action="<?lsmb form.script ?>"
+      enctype="multipart/form-data">
   <?lsmb FOREACH hidden IN hiddens.keys;
 	        PROCESS input element_data={
 		        type => 'hidden',
@@ -64,11 +65,30 @@
 			accesskey="S" 
 			title="Save [Alt-S]"
          } ?>
-  
          
   <?lsmb FOREACH button IN buttons;
             PROCESS button element_data=button;
          END ?>
+
+  <hr />
+  
+  <?lsmb PROCESS input element_data = {
+         name = "import_file"
+         type = "file"
+         label = text('From File') #'
+         class = "file"
+         } ?>
+
+  <?lsmb PROCESS button element_data={
+			text = text('Upload'),
+			class="submit" 
+			type="submit" 
+			name="action" 
+			value="upload_exchangerates" 
+			accesskey="U" 
+			title="Upload [Alt-U]"
+         } ?>
+
 </form>
 </body>
 </html>
