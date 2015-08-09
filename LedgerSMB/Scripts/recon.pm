@@ -413,8 +413,7 @@ the uncorrected entries.
 sub approve {
     my ($request) = @_;
     if (!$request->close_form){
-        get_results($request);
-        $request->finalize_request();
+        return get_results($request);
     }
     
     # Approve will also display the report in a blurred/opaqued out version,

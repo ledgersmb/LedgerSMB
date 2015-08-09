@@ -56,15 +56,12 @@
 	END; # IF !created_as_class ?> 
 </div>
 <div class="input_group2">
-        <?lsmb company_entity_class =persony.entity_class;
-        IF !company_entity_class;
-              company_entity_class = request.entity_class;
-        END;
+        <?lsmb 
         PROCESS select element_data = {
                 id = 'person-entity-class'
 		name = "entity_class"
 		options = entity_classes
-		default_values = [person_entity_class]
+		default_values = [entity_class]
 		text_attr = 'class'
 		value_attr = 'id'
 		title = text('Class')
@@ -79,7 +76,7 @@
                   title = text('Salutation')
                   label = "_none_"
                    name = 'salutation_id'
-         default_values = [salutation_id]
+         default_values = [person.salutation_id]
           default_blank = 1
                 options = salutations
                   class = 'salutations'
@@ -178,7 +175,7 @@
 </div>
 <div class="input_line">
             <hr/>
-<div class="input_group1">
+<div class="buttonrow">
 	<?lsmb PROCESS button element_data = {
                  id = 'person-generate-control-code'
 		text = text('Generate Control Code') #'
