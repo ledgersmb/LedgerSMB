@@ -103,7 +103,6 @@ sub delete {
     my ($request) = @_;
     if (!$request->close_form){
         list_drafts($request);
-        $request->finalize_request();
         return;
     }
     my $draft= LedgerSMB::DBObject::Draft->new(base => $request);
