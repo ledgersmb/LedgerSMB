@@ -22,8 +22,9 @@ use LedgerSMB::Currency;
 use LedgerSMB::Exchangerate;
 use LedgerSMB::Exchangerate_Type;
 use LedgerSMB::Setting;
-use Log::Log4perl;
 
+use Log::Log4perl;
+use Text::CSV;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::currency');
 
@@ -200,15 +201,29 @@ Displays a list of configured exchangerate types.  No inputs required or used.
 
 sub list_exchangerates {
     my ($request) = @_;
-    my @exchangerate_types = LedgerSMB::Exchangerate_Type->list();
-    my @currencies = LedgerSMB::Currency->list();
-    my %rate_types = map { $_->{id} => $_->{description} } @exchangerate_types;
     my @exchangerates = LedgerSMB::Exchangerate->list(
         curr => $request->{curr},
         type_id => $request->{type} || 1,
         offset => $request->{offset},
         limit => $request->{limit} || 30,
         );
+
+    return &_list_exchangerates($request, \@exchangerates);
+}
+
+# item _list_exchangerates($request, $rows)
+#
+# Lists exchangerates in array ref $rows in response to $request
+#
+# $rows is a reference to an array of LedgerSMB::Exchangerate refs
+#
+# used by &list_exchangerates and &upload_exchangerates
+
+sub _list_exchangerates {
+    my ($request, $exchangerates) = @_;
+    my @exchangerate_types = LedgerSMB::Exchangerate_Type->list();
+    my @currencies = LedgerSMB::Currency->list();
+    my %rate_types = map { $_->{id} => $_->{description} } @exchangerate_types;
     my $template = LedgerSMB::Template->new(
         user => $request->{_user},
         template => 'Configuration/rate', 
@@ -226,13 +241,13 @@ sub list_exchangerates {
     my $rows = [];
     my $rowcount = "0";
     my $base_url = "currency.pl?action=delete_exchangerate";
-    for my $s (@exchangerates) {
+    for my $s (@$exchangerates) {
         $s->{i} = $rowcount % 2;
         $s->{rate} = $s->{rate}->to_output();
         $s->{drop} = {
             href =>"$base_url&curr=$s->{curr}&rate_type=$s->{rate_type}&valid_from=" . $s->{valid_from}->to_output(), 
             text => '[' . $request->{_locale}->text('delete') . ']',
-        } if ! $s->{builtin};
+        };
         # Translate here, because the URL above depends on the rate_type_id!
         $s->{rate_type} = $rate_types{$s->{rate_type}};
         push @$rows, $s;
@@ -251,6 +266,9 @@ sub list_exchangerates {
     }); 
 
 }
+
+
+
 
 =item save_exchangerate_type
 
@@ -281,6 +299,51 @@ sub delete_exchangerate {
     $ratetype->delete;
 
     return &list_exchangerates($request);
+}
+
+=item upload_exchangerates
+
+
+
+=cut
+
+my @csv_upload_fields = (
+    'curr', 'rate_type', 'valid_from', 'rate'
+    );
+
+sub upload_exchangerates {
+    my ($request) = @_;
+
+    my $csv = Text::CSV->new()
+        or $request->error("Can't use CSV parser: " . Text::CSV->error_diag());
+    my $file = $request->{_request}->upload('import_file');
+    my $provided_cols;
+    my @rows;
+    
+    while (my $row = $csv->getline($file)) {
+        my @fields = @$row;
+
+        unless ($provided_cols) {
+            my $msg = "Columns provided in upload (" . join(@fields,',')
+                . ") don't match required columns ("
+                . join(@csv_upload_fields,',') . ")";
+            
+            $request->error($msg)
+                unless scalar(@fields) == scalar(@csv_upload_fields);
+            for (0..$#fields) {
+                $request->error($msg)
+                    unless $fields[$_] eq $csv_upload_fields[$_];
+            }
+            $provided_cols = $row;
+            next;
+        }
+
+        my %rowhash = map { $csv_upload_fields[$_] => $fields[$_] } 0..$#fields;
+        my $rate = LedgerSMB::Exchangerate->new(%rowhash);
+        push @rows, $rate->save;;
+    }
+
+    return &_list_exchangerates($request,\@rows);
 }
 
 

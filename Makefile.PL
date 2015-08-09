@@ -41,6 +41,7 @@ requires 'DateTime::Format::Strptime';
 requires 'Moose';
 requires 'namespace::autoclean';
 requires 'JSON';
+requires 'Text::CSV';
 
 recommends 'Math::BigInt::GMP';
 
