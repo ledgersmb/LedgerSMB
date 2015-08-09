@@ -1,8 +1,6 @@
 use Test::More;
 use strict;
 
-$ENV{PGHOST} = $LedgerSMB::Sysconfig::db_host;
-
 if (!defined $ENV{LSMB_TEST_DB}){
 	plan skip_all => 'Skipping all.  Told not to test db.';
 }
@@ -32,4 +30,3 @@ for my $testscript (@testscripts){
 	}
 }
 
-diag("PGHost: $ENV{PGHOST}");
