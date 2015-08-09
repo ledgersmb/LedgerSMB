@@ -207,7 +207,9 @@ sub list_exchangerates {
         offset => $request->{offset},
         limit => $request->{limit} || 30,
         );
-
+    $request->{title} =
+        $request->{_locale}->text('Available exchange rates');
+    
     return &_list_exchangerates($request, \@exchangerates);
 }
 
@@ -253,7 +255,7 @@ sub _list_exchangerates {
         push @$rows, $s;
         ++$rowcount;
     }
-    $request->{title} = $request->{_locale}->text('Defined exchange rate types');
+
     $template->render({
    form    => $request,
 	columns => $columns,
@@ -324,9 +326,9 @@ sub upload_exchangerates {
         my @fields = @$row;
 
         unless ($provided_cols) {
-            my $msg = "Columns provided in upload (" . join(@fields,',')
+            my $msg = "Columns provided in upload (" . join(',',@fields)
                 . ") don't match required columns ("
-                . join(@csv_upload_fields,',') . ")";
+                . join(',',@csv_upload_fields) . ")";
             
             $request->error($msg)
                 unless scalar(@fields) == scalar(@csv_upload_fields);
@@ -343,6 +345,8 @@ sub upload_exchangerates {
         push @rows, $rate->save;;
     }
 
+    $request->{title} =
+        $request->{_locale}->text('Uploaded rates');    
     return &_list_exchangerates($request,\@rows);
 }
 
