@@ -204,7 +204,7 @@ sub print {
     );
     $template->render($request);;
     $template->output(%$request);
-    $request->finalize_request if $request->{media} eq 'screen';
+    return if $request->{media} eq 'screen';
     display($request);
 }
 

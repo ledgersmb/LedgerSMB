@@ -363,8 +363,7 @@ sub batch_delete {
     my ($request)  = @_;
     my $batch = LedgerSMB::Batch->new(base => $request);
     if (!$batch->close_form){
-        list_batches($request);
-        $request->finalize_request();
+        return list_batches($request);
     }
     for my $count (1 .. $batch->{rowcount_}){
         next unless $batch->{"select_" . $count};
