@@ -629,8 +629,6 @@ sub is_allowed_role {
 
 sub finalize_request {
     LedgerSMB::App_State->cleanup();
-    die 'exit'; # return to error handling and cleanup
-                # Without dying, we tend to continue with a bad dbh. --CT
 }
 
 # To be replaced with a generic interface to an Error class
@@ -661,7 +659,7 @@ sub _error {
              <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
              </body>|;
 
-        die;
+        $self->finalize_request;
 
     }
     else {
