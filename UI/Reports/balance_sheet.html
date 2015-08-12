@@ -1,27 +1,9 @@
 <?lsmb INCLUDE 'ui-header.html' stylesheet=request.stylesheet 
          include_stylesheet = ['UI/Reports/pnl.css']; 
+
 FORMATS = LIST_FORMATS();
-
-PROTO='http';
-
-IF (ENVARS.SERVER_PORT == '443') or 
-   (ENVARS.HTTPS and ENVARS.HTTPS != 'OFF'); 
-   PROTO='https'; 
-END;
-
-SERVER = ENVARS.SERVER_NAME;
-
-IF (ENVARS.SERVER_PORT != '80') and ENVARS.SERVER_PORT
-                                and (ENVARS.SERVER_PORT != '443');
-   SERVER = SERVER _ ':' _ ENVARS.SERVER_PORT;
-END;
-
-QSTR=ENVARS.QUERY_STRING;
-
-LINK = PROTO _ '://' _ SERVER _ ENVARS.SCRIPT_NAME 
-           _ '?' _ QSTR _ '&' _ 'company=' _ DBNAME;
-
-LINK = LINK.replace('\&\&', '&');
+LINK = request.script _ '?' _ ENVARS.QUERY_STRING _ '&amp;company=' _ DBNAME;
+LINK = LINK.replace('\&amp;\&amp;', '&amp;');
 
  comparisons = report.comparisons ?>
 <body class="financial-statement <?lsmb dojo_theme ?>">
