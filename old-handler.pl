@@ -83,10 +83,44 @@ use LedgerSMB::Session;
 use LedgerSMB::App_State;
 use Data::Dumper;
 
-#our $logger=Log::Log4perl->get_logger('old-handler-chain');#make logger available to other old programs
-#Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
-#sleep 10000;
+sub _error {
+
+    my ( $self, $msg ) = @_;
+
+    if ( $ENV{GATEWAY_INTERFACE} ) {
+
+        $self->{msg}    = $msg;
+        $self->{format} = "html";
+        $self->format_string('msg');
+
+        delete $self->{pre};
+
+        if ( !$self->{header} ) {
+            $self->header;
+        }
+        $logger->error($msg);
+        $logger->error("dbversion: $self->{dbversion}, company: $self->{company}");
+
+        print
+          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b>
+             <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
+             </body>|;
+
+        $self->finalize_request();
+
+    }
+    else {
+
+        if ( $ENV{error_function} ) {
+            __PACKAGE__->can($ENV{error_function})->($msg);
+        }
+        die "Error: $msg\n";
+    }
+    die;
+}
+
+
 
 use Data::Dumper;
 require "common.pl";

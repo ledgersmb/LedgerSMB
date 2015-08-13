@@ -34,6 +34,44 @@ use LedgerSMB::Locale;
 use Data::Dumper;
 use Log::Log4perl;
 use strict;
+
+
+sub _error {
+
+    my ( $self, $msg ) = @_;
+    #Carp::confess();
+    if ( $ENV{GATEWAY_INTERFACE} ) {
+
+        $self->{msg}    = $msg;
+        $self->{format} = "html";
+        $logger->error($msg);
+        $logger->error("dbversion: $self->{dbversion}, company: $self->{company}");
+
+        delete $self->{pre};
+
+        
+        print qq|Content-Type: text/html; charset=utf-8\n\n|;
+        print "<head><link rel='stylesheet' href='css/$self->{_user}->{stylesheet}' type='text/css'></head>";
+        $self->{msg} =~ s/\n/<br \/>\n/;
+        print
+          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></p>
+             <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
+             </body>|;
+
+        $self->finalize_request;
+
+    }
+    else {
+
+        if ( $ENV{error_function} ) {
+            &{ $ENV{error_function} }($msg);
+        }
+        die "Error: $msg\n";
+    }
+}
+
+
+
 binmode STDIN, ':bytes' if (defined $ENV{REQUEST_METHOD}) and ($ENV{REQUEST_METHOD} eq 'POST');
 binmode STDOUT, ':utf8';
 
