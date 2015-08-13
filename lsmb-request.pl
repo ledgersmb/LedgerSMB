@@ -39,7 +39,6 @@ use strict;
 sub _error {
 
     my ( $self, $msg ) = @_;
-    #Carp::confess();
     if ( $ENV{GATEWAY_INTERFACE} ) {
 
         $self->{msg}    = $msg;
@@ -58,15 +57,12 @@ sub _error {
              <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
              </body>|;
 
-        $self->finalize_request;
-
     }
     else {
 
         if ( $ENV{error_function} ) {
             &{ $ENV{error_function} }($msg);
         }
-        die "Error: $msg\n";
     }
 }
 

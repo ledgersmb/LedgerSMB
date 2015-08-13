@@ -107,17 +107,13 @@ sub _error {
              <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
              </body>|;
 
-        $self->finalize_request();
-
     }
     else {
 
         if ( $ENV{error_function} ) {
             __PACKAGE__->can($ENV{error_function})->($msg);
         }
-        die "Error: $msg\n";
     }
-    die;
 }
 
 
