@@ -203,7 +203,7 @@ map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
 
 if ($myconfig{language}){
     $locale   = LedgerSMB::Locale->get_handle( $myconfig{language} )
-      or $form->_error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
+      or &_error( $form, __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 }
 
 $LedgerSMB::App_State::Locale = $locale;
@@ -250,7 +250,7 @@ $LedgerSMB::App_State::Locale = $locale;
   # -- CT
   $form->{_error} = 1;
   $LedgerSMB::App_State::DBH = undef;
-  $form->_error("'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at Ledger/; 
+  &_error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at Ledger/; 
 } 
 ;
 
