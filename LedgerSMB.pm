@@ -629,6 +629,7 @@ sub is_allowed_role {
 
 sub finalize_request {
     LedgerSMB::App_State->cleanup();
+    die "exit";
 }
 
 # To be replaced with a generic interface to an Error class
