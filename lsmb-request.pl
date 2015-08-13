@@ -30,6 +30,7 @@ $| = 1;
 use LedgerSMB::User;
 use LedgerSMB::App_State;
 use LedgerSMB;
+use LedgerSMB::Request::Error;
 use LedgerSMB::Locale;
 use Data::Dumper;
 use Log::Log4perl;
@@ -40,6 +41,29 @@ binmode STDOUT, ':utf8';
 
 my $logger;
 
+sub _error {
+
+    my ( $self, $msg ) = @_;
+    my $error;
+    if (eval { $msg->isa('LedgerSMB::Request::Error') }){
+        $error = $msg;
+    } else {
+        $error = LedgerSMB::Request::Error->new(msg => "$msg");
+    }
+    
+    if ( $ENV{GATEWAY_INTERFACE} ) {
+
+        delete $self->{pre};
+        print $error->http_response("<p>dbversion: $self->{dbversion}, company: $self->{company}</p>");
+
+    }
+    else {
+
+        if ( $ENV{error_function} ) {
+            &{ $ENV{error_function} }($msg);
+        }
+    }
+}
 
 
 sub get_script {
@@ -153,7 +177,7 @@ sub call_script {
       # -- CT
      $LedgerSMB::App_State::DBH->rollback if ($LedgerSMB::App_State::DBH and $_ eq 'Died');
      LedgerSMB::App_State->cleanup();
-     $request->_error($_) unless $_ =~ /^Died at/;
+     &_error($request, $_) unless $_ =~ /^Died at/;
   };
 }
 
