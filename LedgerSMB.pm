@@ -172,8 +172,6 @@ use Carp;
 use strict;
 use utf8;
 
-use Carp::Always;
-
 $CGI::Simple::POST_MAX = -1;
 
 package LedgerSMB;
