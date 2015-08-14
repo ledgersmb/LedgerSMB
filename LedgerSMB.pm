@@ -629,6 +629,7 @@ sub is_allowed_role {
 
 sub finalize_request {
     LedgerSMB::App_State->cleanup();
+    die "exit";
 }
 
 # To be replaced with a generic interface to an Error class
@@ -637,39 +638,6 @@ sub error {
     Carp::croak $msg;
 }
 
-sub _error {
-
-    my ( $self, $msg ) = @_;
-    #Carp::confess();
-    if ( $ENV{GATEWAY_INTERFACE} ) {
-
-        $self->{msg}    = $msg;
-        $self->{format} = "html";
-        $logger->error($msg);
-        $logger->error("dbversion: $self->{dbversion}, company: $self->{company}");
-
-        delete $self->{pre};
-
-        
-        print qq|Content-Type: text/html; charset=utf-8\n\n|;
-        print "<head><link rel='stylesheet' href='css/$self->{_user}->{stylesheet}' type='text/css'></head>";
-        $self->{msg} =~ s/\n/<br \/>\n/;
-        print
-          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></p>
-             <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
-             </body>|;
-
-        $self->finalize_request;
-
-    }
-    else {
-
-        if ( $ENV{error_function} ) {
-            &{ $ENV{error_function} }($msg);
-        }
-        die "Error: $msg\n";
-    }
-}
 # Database routines used throughout
 
 sub _db_init {
