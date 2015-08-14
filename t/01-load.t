@@ -6,62 +6,35 @@ use Test::More tests => 60;
 
 use_ok('LedgerSMB::Sysconfig') 
     || BAIL_OUT('System Configuration could be loaded!');
-use_ok('LedgerSMB');
-use_ok('LedgerSMB::App_State');
-use_ok('LedgerSMB::AA');
-use_ok('LedgerSMB::AM');
-use_ok('LedgerSMB::Auth');
-use_ok('LedgerSMB::CP');
-use_ok('LedgerSMB::DBObject::Account');
-use_ok('LedgerSMB::DBObject::Admin');
-use_ok('LedgerSMB::DBObject::Date');
-use_ok('LedgerSMB::DBObject::Draft');
-use_ok('LedgerSMB::DBObject::EOY');
-use_ok('LedgerSMB::DBObject::Menu');
-use_ok('LedgerSMB::DBObject::Payment');
-use_ok('LedgerSMB::DBObject::TaxForm');
-use_ok('LedgerSMB::Report');
-use_ok('LedgerSMB::Form');
-use_ok('LedgerSMB::GL');
-use_ok('LedgerSMB::IC');
-use_ok('LedgerSMB::IR');
-use_ok('LedgerSMB::IS');
-use_ok('LedgerSMB::Timecard');
-use_ok('LedgerSMB::Timecard::Type');
-use_ok('LedgerSMB::Report::Timecards');
-use_ok('LedgerSMB::Scripts::timecard');
-use_ok('LedgerSMB::Locale');
-$LedgerSMB::App_State::Locale = LedgerSMB::Locale->get_handle('en');
-use_ok('LedgerSMB::Mailer');
-use_ok('LedgerSMB::Num2text');
-use_ok('LedgerSMB::OE');
-use_ok('LedgerSMB::PE');
-use_ok('LedgerSMB::PriceMatrix');
-use_ok('LedgerSMB::Auth');
-use_ok('LedgerSMB::DBObject::Reconciliation');
-use_ok('LedgerSMB::Tax');
-use_ok('LedgerSMB::Template');
-use_ok('LedgerSMB::Template::Elements');
-use_ok('LedgerSMB::Template::CSV');
-use_ok('LedgerSMB::Template::HTML');
-use_ok('LedgerSMB::File');
-use_ok('LedgerSMB::File::Transaction');
-use_ok('LedgerSMB::File::Order');
-use_ok('LedgerSMB::DBObject::Asset');
-use_ok('LedgerSMB::DBObject::Asset_Report');
-use_ok('LedgerSMB::DBObject::Asset_Class');
-use_ok('LedgerSMB::Entity');
-use_ok('LedgerSMB::Entity::Company');
-use_ok('LedgerSMB::Entity::Person');
-use_ok('LedgerSMB::Entity::User');
-use_ok('LedgerSMB::Entity::Person::Employee');
-use_ok('LedgerSMB::Entity::Contact');
-use_ok('LedgerSMB::Entity::Bank');
-use_ok('LedgerSMB::Entity::Location');
-use_ok('LedgerSMB::Entity::Note');
-use_ok('LedgerSMB::Entity::Payroll::Deduction');
-use_ok('LedgerSMB::Entity::Payroll::Wage');
-use_ok('LedgerSMB::Scripts::setup');
+for $module (qw(
+'LedgerSMB', 'LedgerSMB::App_State',
+'LedgerSMB::AA', 'LedgerSMB::AM', 'LedgerSMB::Auth', 'LedgerSMB::CP',
+'LedgerSMB::DBObject::Account', 'LedgerSMB::DBObject::Admin',
+'LedgerSMB::DBObject::Date', 'LedgerSMB::DBObject::Draft',
+'LedgerSMB::DBObject::EOY', 'LedgerSMB::DBObject::Menu',
+'LedgerSMB::DBObject::Payment', 'LedgerSMB::DBObject::TaxForm',
+'LedgerSMB::Report', 'LedgerSMB::Form', 'LedgerSMB::GL', 'LedgerSMB::IC',
+'LedgerSMB::IR', 'LedgerSMB::IS', 'LedgerSMB::Timecard',
+'LedgerSMB::Timecard::Type', 'LedgerSMB::Report::Timecards',
+'LedgerSMB::Scripts::timecard', 'LedgerSMB::Locale', 'LedgerSMB::Mailer',
+'LedgerSMB::Num2text', 'LedgerSMB::OE', 'LedgerSMB::PE',
+'LedgerSMB::PriceMatrix', 'LedgerSMB::Auth',
+'LedgerSMB::DBObject::Reconciliation', 'LedgerSMB::Tax',
+'LedgerSMB::Template', 'LedgerSMB::Template::Elements',
+'LedgerSMB::Template::CSV', 'LedgerSMB::Template::HTML',
+'LedgerSMB::File', 'LedgerSMB::File::Transaction',
+'LedgerSMB::File::Order', 'LedgerSMB::DBObject::Asset',
+'LedgerSMB::DBObject::Asset_Report', 'LedgerSMB::DBObject::Asset_Class',
+'LedgerSMB::Entity', 'LedgerSMB::Entity::Company',
+'LedgerSMB::Entity::Person', 'LedgerSMB::Entity::User',
+'LedgerSMB::Entity::Person::Employee', 'LedgerSMB::Entity::Contact',
+'LedgerSMB::Entity::Bank', 'LedgerSMB::Entity::Location',
+'LedgerSMB::Entity::Note', 'LedgerSMB::Entity::Payroll::Deduction',
+'LedgerSMB::Entity::Payroll::Wage', 'LedgerSMB::Scripts::setup',
+'LedgerSMB::Template::TXT', 'LedgerSMB::User',
+)) {
+    use_ok($module);
+}
 SKIP: {
     eval{ require Template::Plugin::Latex} ||
     skip 'Template::Plugin::Latex not installed';
@@ -70,8 +43,6 @@ SKIP: {
 
     use_ok('LedgerSMB::Template::LaTeX');
 }
-use_ok('LedgerSMB::Template::TXT');
-use_ok('LedgerSMB::User');
 
 SKIP: {
 	eval { require Net::TCLink };
