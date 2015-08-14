@@ -77,52 +77,53 @@ Amount
 
 =cut
 
-our @COLUMNS = (
-    {col_id => 'select',
-       name => '',
-       type => 'checkbox' },
-
-    {col_id => 'batch_class',
-       name => LedgerSMB::Report::text('Type'),
-       type => 'text'},
-
-    {col_id => 'id',
-       name => LedgerSMB::Report::text('ID'),
-       type => 'text',
-     pwidth => 1, },
-
-    {col_id => 'default_date',
-       name => LedgerSMB::Report::text('Date'),
-       type => 'text',
-     pwidth => '4', },
-
-    {col_id => 'control_code',
-       name => LedgerSMB::Report::text('Control Code'),
-       type => 'href',
-  href_base => 'vouchers.pl?action=get_batch&batch_id=',
-     pwidth => '3', },
-
-    {col_id => 'description',
-       name => LedgerSMB::Report::text('Description'),
-       type => 'text',
-     pwidth => '6', },
-
-    {col_id => 'transaction_total',
-       name => LedgerSMB::Report::text('AR/AP/GL Amount'),
-       type => 'text',
-      money => 1,
-     pwidth => '2', },
-
-    {col_id => 'payment_total',
-       name => LedgerSMB::Report::text('Payment Amount'),
-       type => 'text',
-      money => 1,
-     pwidth => '2', },
-
-);
 
 sub columns {
-    return \@COLUMNS;
+    my ($self) = @_;
+    my @COLUMNS = (
+        {col_id => 'select',
+         name => '',
+         type => 'checkbox' },
+        
+        {col_id => 'batch_class',
+         name => $self->_locale->text('Type'),
+         type => 'text'},
+
+        {col_id => 'id',
+         name => $self->_locale->text('ID'),
+         type => 'text',
+         pwidth => 1, },
+
+        {col_id => 'default_date',
+         name => $self->_locale->text('Date'),
+         type => 'text',
+         pwidth => '4', },
+
+        {col_id => 'control_code',
+         name => $self->_locale->text('Control Code'),
+         type => 'href',
+         href_base => 'vouchers.pl?action=get_batch&batch_id=',
+         pwidth => '3', },
+
+        {col_id => 'description',
+         name => $self->_locale->text('Description'),
+         type => 'text',
+         pwidth => '6', },
+
+        {col_id => 'transaction_total',
+         name => $self->_locale->text('AR/AP/GL Amount'),
+         type => 'text',
+         money => 1,
+         pwidth => '2', },
+
+        {col_id => 'payment_total',
+         name => $self->_locale->text('Payment Amount'),
+         type => 'text',
+         money => 1,
+         pwidth => '2', },
+        );
+
+    return @COLUMNS;
 }
 
     # TODO:  business_units int[]
@@ -134,7 +135,8 @@ Returns the localized template name
 =cut
 
 sub name {
-    return LedgerSMB::Report::text('Batch Search');
+    my ($self) = @_;
+    return $self->_locale->text('Batch Search');
 }
 
 =item header_lines
@@ -144,14 +146,15 @@ Returns the inputs to display on header.
 =cut
 
 sub header_lines {
+    my ($self) = @_;
     return [{name => 'batch_class',
-             text => LedgerSMB::Report::text('Batch Type')},
+             text => $self->_locale->text('Batch Type')},
             {name => 'reference',
-             text => LedgerSMB::Report::text('Reference')},
+             text => $self->_locale->text('Reference')},
             {name => 'amount_gt',
-             text => LedgerSMB::Report::text('Amount Greater Than')},
+             text => $self->_locale->text('Amount Greater Than')},
             {name => 'amount_lt',
-             text => LedgerSMB::Report::text('Amount Less Than')}, ]
+             text => $self->_locale->text('Amount Less Than')}, ]
 }
 
 =item subtotal_cols
@@ -165,7 +168,8 @@ sub subtotal_cols {
 }
 
 sub text {
-    return LedgerSMB::Report::LedgerSMB::Report::text(@_);
+    my ($self) = @_;
+    return $self->_locale->text(@_);
 }
 
 =back
@@ -234,19 +238,19 @@ sub run_report{
     $self->buttons([{
                     name  => 'action',
                     type  => 'submit',
-                    text  => LedgerSMB::Report::text('Post'),
+                    text  => $self->_locale->text('Post'),
                     value => 'batch_approve',
                     class => 'submit',
                  },{
                     name  => 'action',
                     type  => 'submit',
-                    text  => LedgerSMB::Report::text('Delete'),
+                    text  => $self->_locale->text('Delete'),
                     value => 'batch_delete',
                     class => 'submit',
                  },{
                     name  => 'action',
                     type  => 'submit',
-                    text  => LedgerSMB::Report::text('Unlock'),
+                    text  => $self->_locale->text('Unlock'),
                     value => 'batch_unlock',
                     class => 'submit',
                 }]);
@@ -268,4 +272,5 @@ later version.  Please see included LICENSE.TXT for details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
-return 1;
+
+1;
