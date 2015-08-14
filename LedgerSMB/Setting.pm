@@ -216,3 +216,5 @@ sub all_accounts {
     }
     return \@results;
 }
+
+1;

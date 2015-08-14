@@ -229,3 +229,5 @@ option any later version.  A copy of the license should have been included with
 your software.
 
 =cut
+
+1;

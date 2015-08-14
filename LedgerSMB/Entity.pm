@@ -119,4 +119,4 @@ around BUILDARGS => sub {
 
 __PACKAGE__->meta->make_immutable;
 
-return 1;
+1;
