@@ -11,123 +11,128 @@ package LedgerSMB::Scripts::configuration;
 use LedgerSMB::Setting;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::AM; # To be removed, only for template directories right now
+use LedgerSMB::App_State;
 use strict;
 use warnings;
 
-my $locale = LedgerSMB::App_State::Locale();
+sub _default_settings {
+    my ($request) = @_;
+    my $locale = $request->{_locale};
 
-our @default_settings = (
-   { title => $locale->text('Company Information'),
-     items => [
-       { name => 'company_name', label => $locale->text('Company Name') },
-       { name => 'company_address', 
-         type => 'TEXTAREA',
-        label => $locale->text('Company Address') },
-       { name => 'company_phone', label => $locale->text('Company Phone') },
-       { name => 'company_fax', label => $locale->text('Company Fax') },
-       { name => 'businessnumber', label => $locale->text('Business Number') },
-       { name => 'default_email_to', 
-        label => $locale->text('Default Email To') },
-       { name => 'default_email_cc', 
-        label => $locale->text('Default Email CC') },
-       { name => 'default_email_bcc', 
-        label => $locale->text('Default Email BCC') },
-       { name => 'default_email_from', 
-        label => $locale->text('Default Email From') },
-       { name => 'company_sales_tax_id', 
-        label =>  $locale->text('Company Sales Tax ID') },
-       { name => 'company_license_number',
-        label =>  $locale->text('Company License Number') },
-       { name => 'curr', 
-        label => $locale->text('Currencies (colon-separated)')},
-       { name => 'weightunit', label => $locale->text('Weight Unit') },
-       { name => 'default_country',
-        label => $locale->text('Default Country'),
-         type => 'SELECT_ONE', },
-       { name => 'default_language',
-        label => $locale->text('Default Language'),
-         type => 'SELECT_ONE', },
-       { name => 'format',
-         type => 'SELECT_ONE',
-        label => $locale->text('Default Format'), },
-     ] },
-   { title => $locale->text('Security Settings'),
-     items => [
-       { name => 'disable_back',
-        label => $locale->text('Disable Back Button'),
-         type => 'YES_NO', },
-       { name => 'password_duration',
-        label => $locale->text('Password Duration') },
-       { name => 'session_timeout',
+    my @default_settings = (
+        { title => $locale->text('Company Information'),
+          items => [
+              { name => 'company_name', label => $locale->text('Company Name') },
+              { name => 'company_address', 
+                type => 'TEXTAREA',
+                label => $locale->text('Company Address') },
+              { name => 'company_phone', label => $locale->text('Company Phone') },
+              { name => 'company_fax', label => $locale->text('Company Fax') },
+              { name => 'businessnumber', label => $locale->text('Business Number') },
+              { name => 'default_email_to', 
+                label => $locale->text('Default Email To') },
+              { name => 'default_email_cc', 
+                label => $locale->text('Default Email CC') },
+              { name => 'default_email_bcc', 
+                label => $locale->text('Default Email BCC') },
+              { name => 'default_email_from', 
+                label => $locale->text('Default Email From') },
+              { name => 'company_sales_tax_id', 
+                label =>  $locale->text('Company Sales Tax ID') },
+              { name => 'company_license_number',
+                label =>  $locale->text('Company License Number') },
+              { name => 'curr', 
+                label => $locale->text('Currencies (colon-separated)')},
+              { name => 'weightunit', label => $locale->text('Weight Unit') },
+              { name => 'default_country',
+                label => $locale->text('Default Country'),
+                type => 'SELECT_ONE', },
+              { name => 'default_language',
+                label => $locale->text('Default Language'),
+                type => 'SELECT_ONE', },
+              { name => 'format',
+                type => 'SELECT_ONE',
+                label => $locale->text('Default Format'), },
+              ] },
+        { title => $locale->text('Security Settings'),
+          items => [
+              { name => 'disable_back',
+                label => $locale->text('Disable Back Button'),
+                type => 'YES_NO', },
+              { name => 'password_duration',
+                label => $locale->text('Password Duration') },
+              { name => 'session_timeout',
         label => $locale->text('Session Timeout'), },
-       { name => 'never_logout',
-        label => $locale->text('Only Timeout Locks'),
-         type => 'YES_NO', },
-       { name => 'separate_duties',
-        label => $locale->text('Separate Duties'),
-         type => 'YES_NO', },
-       { name => 'lock_description',
-        label => $locale->text('Lock Item Description'),
-         type => 'YES_NO', },
-       { name => 'gapless_ar',
-        label => $locale->text('Gapless AR'), 
-         type => 'YES_NO', },
-     ] },
- { title => $locale->text('Default Accounts'),
-   items => [
-       { name => 'inventory_accno_id',
-         type => 'SELECT_ONE',
-        label => $locale->text('Inventory'), },
-       { name => 'income_accno_id',
-         type => 'SELECT_ONE',
-        label => $locale->text('Income'), },
-       { name => 'expense_accno_id',
-         type => 'SELECT_ONE',
-        label => $locale->text('Cost of Goods Sold'), },
-       { name => 'fxgain_accno_id',
-         type => 'SELECT_ONE',
-        label => $locale->text('Foreign Exchange Gain') },
-       { name => 'fxloss_accno_id',
-         type => 'SELECT_ONE',
-        label => $locale->text('Foreign Exchange Loss') },
-   ] },
- { title => $locale->text('Next in Sequence'),
-   items => [
-     { name => 'glnumber', label => $locale->text('GL Reference Number') },
-     { name => 'sinumber', 
-      label => $locale->text('Sales Invoice/AR Transaction Number'), },
-     { name => 'sonumber', label => $locale->text('Sales Order Number') },
-     { name => 'sqnumber', label => $locale->text('Sales Quotation Number') },
-     { name => 'vinumber' , 
-      label => $locale->text('Vendor Invoice/AP Transaction Number')},
-     { name => 'ponumber', label => $locale->text('Purchase Order Number') },
-     { name => 'rfqnumber', label => $locale->text('RFQ Number') },
-     { name => 'partnumber', label => $locale->text('Part Number') },
-     { name => 'projectnumber', label => $locale->text('Business Unit Number') },
-     { name => 'employeenumber', label => $locale->text('Employee Number') },
-     { name => 'customernumber', label => $locale->text('Customer Number') },
-     { name => 'vendornumber', label => $locale->text('Vendor Number') },
-   ] },
-   { title => $locale->text('Misc Settings'),
-     items => [  
-       { name => 'show_creditlimit', type => 'YES_NO', 
-        label => $locale->text('Show Credit Limit') },
-       { name => 'dojo_theme',
-         type => 'SELECT_ONE',
-        label => $locale->text('Widgit Themes') },
-       { name => 'check_prefix', label => $locale->text('Check Prefix') },
-     { name => 'vclimit', label => $locale->text('Max per dropdown') },
-       { name => 'check_max_invoices',
-        label =>  $locale->text('Max Invoices per Check Stub') },
-       { name => 'decimal_places',
-        label =>  $locale->text('Decimal Places for Money') },
-       { name => 'template_immages',
-        label => $locale->text('Images in Templates'),
-         type => 'YES_NO', },
-       { name => 'min_empty',
-        label => $locale->text('Min Empty Lines') },
-     ] },
-);
+              { name => 'never_logout',
+                label => $locale->text('Only Timeout Locks'),
+                type => 'YES_NO', },
+              { name => 'separate_duties',
+                label => $locale->text('Separate Duties'),
+                type => 'YES_NO', },
+              { name => 'lock_description',
+                label => $locale->text('Lock Item Description'),
+                type => 'YES_NO', },
+              { name => 'gapless_ar',
+                label => $locale->text('Gapless AR'), 
+                type => 'YES_NO', },
+              ] },
+        { title => $locale->text('Default Accounts'),
+          items => [
+              { name => 'inventory_accno_id',
+                type => 'SELECT_ONE',
+                label => $locale->text('Inventory'), },
+              { name => 'income_accno_id',
+                type => 'SELECT_ONE',
+                label => $locale->text('Income'), },
+              { name => 'expense_accno_id',
+                type => 'SELECT_ONE',
+                label => $locale->text('Cost of Goods Sold'), },
+              { name => 'fxgain_accno_id',
+                type => 'SELECT_ONE',
+                label => $locale->text('Foreign Exchange Gain') },
+              { name => 'fxloss_accno_id',
+                type => 'SELECT_ONE',
+                label => $locale->text('Foreign Exchange Loss') },
+              ] },
+        { title => $locale->text('Next in Sequence'),
+          items => [
+              { name => 'glnumber', label => $locale->text('GL Reference Number') },
+              { name => 'sinumber', 
+                label => $locale->text('Sales Invoice/AR Transaction Number'), },
+              { name => 'sonumber', label => $locale->text('Sales Order Number') },
+              { name => 'sqnumber', label => $locale->text('Sales Quotation Number') },
+              { name => 'vinumber' , 
+                label => $locale->text('Vendor Invoice/AP Transaction Number')},
+              { name => 'ponumber', label => $locale->text('Purchase Order Number') },
+              { name => 'rfqnumber', label => $locale->text('RFQ Number') },
+              { name => 'partnumber', label => $locale->text('Part Number') },
+              { name => 'projectnumber', label => $locale->text('Business Unit Number') },
+              { name => 'employeenumber', label => $locale->text('Employee Number') },
+              { name => 'customernumber', label => $locale->text('Customer Number') },
+              { name => 'vendornumber', label => $locale->text('Vendor Number') },
+              ] },
+        { title => $locale->text('Misc Settings'),
+          items => [  
+              { name => 'show_creditlimit', type => 'YES_NO', 
+                label => $locale->text('Show Credit Limit') },
+              { name => 'dojo_theme',
+                type => 'SELECT_ONE',
+                label => $locale->text('Widgit Themes') },
+              { name => 'check_prefix', label => $locale->text('Check Prefix') },
+              { name => 'vclimit', label => $locale->text('Max per dropdown') },
+              { name => 'check_max_invoices',
+                label =>  $locale->text('Max Invoices per Check Stub') },
+              { name => 'decimal_places',
+                label =>  $locale->text('Decimal Places for Money') },
+              { name => 'template_immages',
+                label => $locale->text('Images in Templates'),
+                type => 'YES_NO', },
+              { name => 'min_empty',
+                label => $locale->text('Min Empty Lines') },
+              ] },
+        );
+    return @default_settings;
+}
 
 =head1 METHODS/ACTIONS
 
@@ -143,7 +148,8 @@ sub defaults_screen{
     my ($request) = @_;
     my $setting_handle = LedgerSMB::Setting->new({base => $request});
     my @defaults;
-    for my $dg (@default_settings){
+    my @default_settings = &_default_settings($request);
+    for my $dg (@default_settings) {
         for my $tb (@{$dg->{items}}){
             push @defaults, $tb->{name};
         }
@@ -255,12 +261,12 @@ sub defaults_screen{
 
     my $template = LedgerSMB::Template->new_UI(
         user => $LedgerSMB::App_State::User, 
-        locale => $locale,
+        locale => $request->{_locale},
         template => 'Configuration/settings');
     $template->render({
         form => $request,
-	# hiddens => \%hiddens,
-	selects => \%selects,
+        # hiddens => \%hiddens,
+        selects => \%selects,
         default_settings => \@default_settings,
     });
 }
@@ -274,6 +280,8 @@ No inputs expected or used
 sub sequence_screen {
     my ($request) = @_;
     @{$request->{sequence_list}} = LedgerSMB::Setting::Sequence->list();
+    my @default_settings = &_default_settings($request);
+    my $locale = $request->{_locale};
     for my $subset (@default_settings){
         $request->{setting_keys} = $subset->{items} 
              if $subset->{title} eq $locale->text('Next in Sequence');
@@ -303,10 +311,11 @@ sub save_defaults {
     if (!$request->is_allowed_role(
         {allowed_roles => ['system_settings_change'] })
     ){
-       die $locale->text('Access Denied');
+       die $request->{_locale}->text('Access Denied');
     }
     my $setting_handle = LedgerSMB::Setting->new({base => $request});
     my @defaults;
+    my @default_settings = &_default_settings($request);
     for my $dg (@default_settings){
         for my $tb (@{$dg->{items}}){
             push @defaults, $tb->{name};

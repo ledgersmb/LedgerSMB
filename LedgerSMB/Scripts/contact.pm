@@ -477,8 +477,10 @@ sub dispatch_legacy {
     $form->{dbh} = $request->{dbh};
     $form->{script} =~ s|.*/||;
     { no strict; no warnings 'redefine'; do $script; }
-    $lsmb_legacy::form = $form;
-    $lsmb_legacy::locale = LedgerSMB::App_State::Locale();
+    { no warnings;
+      # Suppress 'only referenced once' warnings
+      $lsmb_legacy::form = $form;
+      $lsmb_legacy::locale = LedgerSMB::App_State::Locale(); }
     "lsmb_legacy"->can($form->{action})->();
 }
 

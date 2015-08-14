@@ -124,4 +124,4 @@ later version.  Please see attached LICENSE file for details.
 
 =cut
 
-return 1;
+1;

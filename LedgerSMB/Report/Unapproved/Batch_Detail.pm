@@ -262,5 +262,7 @@ the terms of the GNU General Public License version 2 or at your option any
 later version.  Please see included LICENSE.TXT for details.
 
 =cut
+
 __PACKAGE__->meta->make_immutable;
-return 1;
+
+1;
