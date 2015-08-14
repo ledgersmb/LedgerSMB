@@ -19,17 +19,32 @@ find(\&collect, 'LedgerSMB/');
 
 my @exception_modules = 
     (
-     # Exclude because tested conditionally way below
+     # Exclude because tested conditionally on Net::TCLink way below
      'LedgerSMB::CreditCard', 'LedgerSMB::CreditCard::TrustCommerce',
      'LedgerSMB::CreditCard::Config',
      'LedgerSMB::CreditCard::TrustCommerce::Config',
 
-     # Exclude because tested conditionally way below
+     # Exclude because tested conditionally on Template::Plugin::Latex way below
      'LedgerSMB::Template::LaTeX',
+
+     # Exclude because tested conditionally on XML::Twig way below
+     'LedgerSMB::RESTXML::Document::Base',
+     'LedgerSMB::RESTXML::Document::Customer',
+     'LedgerSMB::RESTXML::Document::Customer_Search',
+     'LedgerSMB::RESTXML::Document::Part',
+     'LedgerSMB::RESTXML::Document::Part_Search',
+     'LedgerSMB::RESTXML::Document::SalesOrder',
+     'LedgerSMB::RESTXML::Document::Session',
+     'LedgerSMB::Template::ODS',
+
+     # Exclude because tested conditionally on XML::Simple way below
+     'LedgerSMB::REST_Format::xml',
+
+     # Exclude because tested conditionally on CGI::Emulate::PSGI way below
+     'LedgerSMB::PSGI',
 
      # Exclude because tested first to see if tests can succeed at all
      'LedgerSMB::Sysconfig',
-
 
      # Exclude because currently broken
      #@@@TODO: 1.5 release blocker!
@@ -55,7 +70,7 @@ my @modules =
           'LedgerSMB::File', 'LedgerSMB::Report',
           'LedgerSMB::Template', 'LedgerSMB::Company_Config',
           'LedgerSMB::Contact', 'LedgerSMB::Database',
-          'LedgerSMB::PGObject', 'LedgerSMB::Auth', 'LedgerSMB::PSGI',
+          'LedgerSMB::PGObject', 'LedgerSMB::Auth',
           'LedgerSMB::AA', 'LedgerSMB::AM', 'LedgerSMB::Batch',
           'LedgerSMB::IC', 'LedgerSMB::IR', 'LedgerSMB::PGDate',
           'LedgerSMB::PGNumber', 'LedgerSMB::PGOld', 'LedgerSMB::Request',
@@ -86,15 +101,8 @@ my @modules =
           'LedgerSMB::Inventory::Adjust_Line',
           'LedgerSMB::Payroll::Deduction_Type',
           'LedgerSMB::Payroll::Income_Type',
-          'LedgerSMB::RESTXML::Document::Base',
-          'LedgerSMB::RESTXML::Document::Customer',
-          'LedgerSMB::RESTXML::Document::Customer_Search',
-          'LedgerSMB::RESTXML::Document::Part',
-          'LedgerSMB::RESTXML::Document::Part_Search',
-          'LedgerSMB::RESTXML::Document::SalesOrder',
-          'LedgerSMB::RESTXML::Document::Session',
           'LedgerSMB::REST_Format::json',
-          'LedgerSMB::REST_Format::xml', 'LedgerSMB::Reconciliation::CSV',
+          'LedgerSMB::Reconciliation::CSV',
           'LedgerSMB::Report::File', 'LedgerSMB::Report::GL',
           'LedgerSMB::Report::Orders', 'LedgerSMB::Report::Timecards',
           'LedgerSMB::Report::Balance_Sheet', 'LedgerSMB::Report::Dates',
@@ -168,7 +176,7 @@ my @modules =
           'LedgerSMB::Scripts::timecard', 'LedgerSMB::Scripts::vouchers',
           'LedgerSMB::Scripts::employee::country',
           'LedgerSMB::Setting::Sequence', 'LedgerSMB::Taxes::Simple',
-          'LedgerSMB::Template::Elements', 'LedgerSMB::Template::ODS',
+          'LedgerSMB::Template::Elements',
           'LedgerSMB::Template::TTI18N', 'LedgerSMB::Template::TXT',
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',
@@ -208,4 +216,36 @@ SKIP: {
 
 	skip 'Net::TCLink not installed', 1 if $@;
 	use_ok('LedgerSMB::CreditCard');
+}
+
+SKIP: {
+    eval { require XML::Twig };
+   
+    skip 'XML::Twig not installed', 8 if $@;
+
+    for ('LedgerSMB::RESTXML::Document::Base',
+         'LedgerSMB::RESTXML::Document::Customer',
+         'LedgerSMB::RESTXML::Document::Customer_Search',
+         'LedgerSMB::RESTXML::Document::Part',
+         'LedgerSMB::RESTXML::Document::Part_Search',
+         'LedgerSMB::RESTXML::Document::SalesOrder',
+         'LedgerSMB::RESTXML::Document::Session',
+         'LedgerSMB::Template::ODS'
+        ) {
+        use_ok($_);
+    }
+}
+
+SKIP: {
+	eval { require XML::Simple };
+
+	skip 'XML::Simple not installed', 1 if $@;
+	use_ok('LedgerSMB::REST_Format::xml');
+}
+
+SKIP: {
+	eval { require CGI::Emulate::PSGI };
+
+	skip 'CGI::Emulate::PSGI not installed', 1 if $@;
+	use_ok('LedgerSMB::PSGI');
 }
