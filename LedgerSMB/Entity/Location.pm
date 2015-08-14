@@ -19,6 +19,7 @@ attached either to the entity (person or company) or credit account
 
 package LedgerSMB::Entity::Location;
 use Moose;
+use LedgerSMB::MooseTypes;
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
 with 'LedgerSMB::PGObject';

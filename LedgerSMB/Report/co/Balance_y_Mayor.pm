@@ -25,6 +25,7 @@ standards. This report shows total activity over a time period.
 
 package LedgerSMB::Report::co::Balance_y_Mayor;
 use Moose;
+use LedgerSMB::MooseTypes;
 extends 'LedgerSMB::Report';
 
 my $doctypes = {};
