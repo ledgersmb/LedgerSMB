@@ -42,6 +42,7 @@ use LedgerSMB::PriceMatrix;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Setting;
 use LedgerSMB::App_State;
+use LedgerSMB::Num2text;
 use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::IS');
@@ -137,8 +138,6 @@ sub clear_till {
 }
 
 sub invoice_details {
-
-    use LedgerSMB::CP;
     my ( $self, $myconfig, $form ) = @_;
 
     $form->{duedate} = $form->{transdate} unless ( $form->{duedate} );
@@ -712,10 +711,10 @@ sub invoice_details {
 
     my $c;
     if ( $form->{language_code} ne "" ) {
-        $c = new CP $form->{language_code};
+        $c = LedgerSMB::Num2text->new( $form->{language_code});
     }
     else {
-        $c = new CP $myconfig->{countrycode};
+        $c = LedgerSMB::Num2text->new( $myconfig->{countrycode});
     }
     $c->init;
     my $whole;

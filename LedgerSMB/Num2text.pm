@@ -31,6 +31,8 @@
 #
 #=====================================================================
 
+package LedgerSMB::Num2text;
+
 # The conversion routines can be tested with for example:
 # perl <<EOF
 #   use LedgerSMB::CP;
@@ -42,6 +44,18 @@
 
 use utf8;
 no warnings;
+use LedgerSMB::Locale;
+
+sub new {
+    my ( $type, $countrycode ) = @_;
+
+    $self = {};
+    $self->{'locale'} = LedgerSMB::Locale->get_handle($countrycode);
+    bless $self, $type;
+
+    return $self;
+}
+
 
 sub init {
     my $self    = shift;
