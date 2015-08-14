@@ -210,16 +210,16 @@ sub send {
 	#     header set.  This ensures that MIME::Lite will not rewrite
 	#     it during the preparation of the message.
 	$self->{_message}->replace( 'X-Mailer' => "LedgerSMB::Mailer $VERSION" );
-	if ( ${LedgerSMB::Sysconfig::smtphost} ) {
+	if ( $LedgerSMB::Sysconfig::smtphost ) {
 		$self->{_message}->send(
 			'smtp',
-			${LedgerSMB::Sysconfig::smtphost},
-			Timeout => ${LedgerSMB::Sysconfig::smtptimeout}
+			$LedgerSMB::Sysconfig::smtphost,
+			Timeout => $LedgerSMB::Sysconfig::smtptimeout
 			) || return $!;
 	} else {
 		$self->{_message}->send(
 			'sendmail',
-			SendMail => ${LedgerSMB::Sysconfig::sendmail},
+			SendMail => $LedgerSMB::Sysconfig::sendmail,
 		        SetSender => 1
 			) || return $!;
 	}

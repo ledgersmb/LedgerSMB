@@ -76,7 +76,7 @@ our $sendmail = "/usr/sbin/sendmail -t";
 
 # SMTP settings
 our $smtphost   = '';
-our $smtptimout = 60;
+our $smtptimeout = 60;
 our $smtpuser   = '';
 our $smtppass   = '';
 our $smtpauthmethod = '';
