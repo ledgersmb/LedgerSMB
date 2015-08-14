@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 60;
+use Test::More tests => 59;
 
 use_ok('LedgerSMB::Sysconfig') 
     || BAIL_OUT('System Configuration could be loaded!');
