@@ -2,7 +2,22 @@
 
 use strict;
 use warnings;
-use Test::More tests => 60;
+use Test::More tests => 61;
+use File::Find;
+use Data::Dumper;
+
+my @on_disk;
+sub collect {
+    return if $File::Find::name !~ m/\.pm$/;
+
+    my $module = $File::Find::name;
+    $module =~ s#/#::#g;
+    $module =~ s#\.pm$##g;
+    push @on_disk, $module
+}
+find(\&collect, 'LedgerSMB/');
+# print STDERR Dumper(\@on_disk);
+
 
 my @exception_modules = 
     ('LedgerSMB::Template::LaTeX', 'LedgerSMB::CreditCard',
@@ -35,6 +50,19 @@ my @modules =
      'LedgerSMB::Entity::Payroll::Wage', 'LedgerSMB::Scripts::setup',
      'LedgerSMB::Template::TXT', 'LedgerSMB::User',
     );
+
+my %modules;
+$modules{$_} = 1 for @modules;
+$modules{$_} = 1 for @exception_modules;
+
+my @untested_modules;
+for (@on_disk) {
+    push @untested_modules, $_
+        if ! defined($modules{$_});
+}
+
+ok(scalar(@untested_modules) eq 0, 'All on-disk modules are tested')
+    or diag ('Failing: ', explain \@untested_modules);
 
 use_ok('LedgerSMB::Sysconfig') 
     || BAIL_OUT('System Configuration could be loaded!');
