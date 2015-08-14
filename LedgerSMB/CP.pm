@@ -36,6 +36,9 @@
 
 package CP;
 use LedgerSMB::Sysconfig;
+use base qw(LedgerSMB::Num2text);
+use LedgerSMB::Locale;
+
 
 
 sub new {
@@ -44,8 +47,6 @@ sub new {
 
     $self = {};
 
-    use LedgerSMB::Num2text;
-    use LedgerSMB::Locale;
     $self->{'locale'} = LedgerSMB::Locale->get_handle($countrycode);
 
     bless $self, $type;
