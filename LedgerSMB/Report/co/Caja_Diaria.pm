@@ -26,6 +26,7 @@ specific period.
 
 package LedgerSMB::Report::co::Caja_Diaria;
 use Moose;
+use LedgerSMB::MooseTypes;
 extends 'LedgerSMB::Report';
 
 my $doctypes = {};
