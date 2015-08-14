@@ -289,4 +289,4 @@ version.  Please see the enclosed LICENSE file for details.
 
 __PACKAGE__->meta->make_immutable;
 
-return 1;
+1;

@@ -167,6 +167,16 @@ List of select boxes for options for buttons.
 
 has options => (is => 'rw', isa => 'ArrayRef[Any]',
                 default => sub {[]} );
+
+=item _locale
+
+Locale to be used for the translation/localization of the report
+
+=cut
+
+has _locale => (is => 'ro',
+                default => sub { return $LedgerSMB::App_State::Locale; } );
+
 =back
 
 =head1 METHODS
