@@ -17,9 +17,6 @@ use strict;
 use warnings;
 use Moose;
 
-my @tests;
-my $locale = $LedgerSMB::App_State::Locale;
-
 =head1 FUNCTIONS
 
 =over
@@ -30,7 +27,9 @@ Returns the test array
 
 =cut
 
-sub get_tests{
+sub get_tests {
+    my ($self) = @_;
+    my @tests = $self->_get_tests;
     return @tests;
 }
 
@@ -41,7 +40,8 @@ Returns the test object with the name.
 =cut
 
 sub get_by_name {
-    my ($self, $name) = $_;
+    my ($self, $name) = @_;
+    my @tests = $self->_get_tests;
     for my $test (@tests){
        return $test if $test->name eq $name;
     }
@@ -137,6 +137,13 @@ Human readable instructions for test, localized.
 =cut
 
 has instructions => (is => 'ro', isa => 'Str', required => 1);
+
+
+sub _tests {
+    my ($request) = @_;
+
+    my @tests;
+    my $locale = $request->{_locale};
 
 
 # 1.2-1.3 tests
@@ -692,6 +699,8 @@ push @tests, __PACKAGE__->new(
 #     max_version => '2.8'
 #     );
 
+    return @tests;
+}
 
 __PACKAGE__->meta->make_immutable;
 

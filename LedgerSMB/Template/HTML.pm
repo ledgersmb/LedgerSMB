@@ -52,7 +52,6 @@ use LedgerSMB::Template::TTI18N;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Company_Config;
 use LedgerSMB::App_State;
-use LedgerSMB::Company_Config;
 use LedgerSMB::Template::DB;
 
 my $binmode = ':utf8';
@@ -114,7 +113,7 @@ sub process {
 
         my $dojo_theme; 
         if ($LedgerSMB::App_State::DBH){
-           eval { $LedgerSMB::Company_Config->initialize() 
+           eval { LedgerSMB::Company_Config->initialize() 
                        unless $LedgerSMB::App_State::Company_Config;
              $dojo_theme = $LedgerSMB::App_State::Company_Config->{dojo_theme};
            }; # eval required to make setup.pl work as advertised

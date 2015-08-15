@@ -7,6 +7,7 @@ package LedgerSMB::PGDate;
 use DateTime::Format::Strptime;
 use LedgerSMB::App_State;
 use Carp;
+use PGObject;
 use base qw(PGObject::Type::DateTime);
 
 PGObject->register_type(pg_type => $_,

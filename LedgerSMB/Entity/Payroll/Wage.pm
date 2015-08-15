@@ -21,6 +21,7 @@ To save a new wage:
 
 package LedgerSMB::Entity::Payroll::Wage;
 use Moose;
+use LedgerSMB::MooseTypes;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES

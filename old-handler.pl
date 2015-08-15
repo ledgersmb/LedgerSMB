@@ -79,6 +79,7 @@ use LedgerSMB::User;
 use LedgerSMB::Form;
 use LedgerSMB::Locale;
 use LedgerSMB::Auth;
+use LedgerSMB::Request::Error;
 use LedgerSMB::Session;
 use LedgerSMB::App_State;
 use Data::Dumper;
@@ -173,7 +174,7 @@ map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
 
 if ($myconfig{language}){
     $locale   = LedgerSMB::Locale->get_handle( $myconfig{language} )
-      or $form->_error( __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
+      or &_error($form, __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
 }
 
 $LedgerSMB::App_State::Locale = $locale;
@@ -220,7 +221,7 @@ $LedgerSMB::App_State::Locale = $locale;
   # -- CT
   $form->{_error} = 1;
   $LedgerSMB::App_State::DBH = undef;
-  $form->_error("'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at Ledger/; 
+  _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at Ledger/; 
 } 
 ;
 
@@ -254,6 +255,30 @@ sub check_password {
     }
     else {
         return;
+    }
+}
+
+sub _error {
+
+    my ( $self, $msg ) = @_;
+    my $error;
+    if (eval { $msg->isa('LedgerSMB::Request::Error') }){
+        $error = $msg;
+    } else {
+        $error = LedgerSMB::Request::Error->new(msg => "$msg");
+    }
+    
+    if ( $ENV{GATEWAY_INTERFACE} ) {
+
+        delete $self->{pre};
+        print $error->http_response("<p>dbversion: $self->{dbversion}, company: $self->{company}</p>");
+
+    }
+    else {
+
+        if ( $ENV{error_function} ) {
+            &{ $ENV{error_function} }($msg);
+        }
     }
 }
 

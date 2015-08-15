@@ -115,7 +115,7 @@ has unit => (is => 'ro', isa => 'Str', required => '0');
 sub run_report {
     my ($self) = $_;
     my @rows = $self->call_dbmethod(funcname => 'payroll_deduction_type__search');
-    $_->{row_id} = $_->{id} for my (@rows);
+    $_->{row_id} = $_->{id} for @rows;
     $self->rows(@rows);
 }
 

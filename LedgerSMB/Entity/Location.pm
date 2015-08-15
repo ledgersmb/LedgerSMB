@@ -19,6 +19,7 @@ attached either to the entity (person or company) or credit account
 
 package LedgerSMB::Entity::Location;
 use Moose;
+use LedgerSMB::MooseTypes;
 use LedgerSMB::App_State;
 use LedgerSMB::Locale;
 with 'LedgerSMB::PGObject';
@@ -289,4 +290,4 @@ version.  Please see the enclosed LICENSE file for details.
 
 __PACKAGE__->meta->make_immutable;
 
-return 1;
+1;

@@ -126,4 +126,4 @@ Copyright (C) 2012 LedgerSMB Core Team.  This file may be re-used under the term
 
 =cut
 
-return 1;
+1;

@@ -85,4 +85,4 @@ the included LICENSE.txt for details.
 
 =cut
 
-return 1;
+1;
