@@ -419,42 +419,6 @@ sub error {
     Carp::croak $msg;
 }
 
-sub _error {
-
-    my ( $self, $msg ) = @_;
-
-    if ( $ENV{GATEWAY_INTERFACE} ) {
-
-        $self->{msg}    = $msg;
-        $self->{format} = "html";
-        $self->format_string('msg');
-
-        delete $self->{pre};
-
-        if ( !$self->{header} ) {
-            $self->header;
-        }
-        $logger->error($msg);
-        $logger->error("dbversion: $self->{dbversion}, company: $self->{company}");
-
-        print
-          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b>
-             <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
-             </body>|;
-
-        $self->finalize_request();
-
-    }
-    else {
-
-        if ( $ENV{error_function} ) {
-            __PACKAGE__->can($ENV{error_function})->($msg);
-        }
-        die "Error: $msg\n";
-    }
-    die;
-}
-
 =item $form->finalize_request();
 
 Stops further processing, allowing post-request cleanup on intermediate
@@ -466,6 +430,7 @@ This function replaces explicit 'exit()' calls.
 
 sub finalize_request {
     LedgerSMB::finalize_request();
+    die;
 }
 
 
