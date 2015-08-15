@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 203;
+use Test::More tests => 206;
 use File::Find;
 
 my @on_disk;
@@ -43,14 +43,16 @@ my @exception_modules =
      # Exclude because tested conditionally on CGI::Emulate::PSGI way below
      'LedgerSMB::PSGI',
 
+     # Exclude because tested conditionally on X12::Parser way below
+     'LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894',
+
      # Exclude because tested first to see if tests can succeed at all
      'LedgerSMB::Sysconfig',
 
      # Exclude because currently broken
      #@@@TODO: 1.5 release blocker!
-     'LedgerSMB::X12', 'LedgerSMB::Report::Payroll::Deduction_Types',
-     'LedgerSMB::ScriptLib::Common_Search::Customer', 'LedgerSMB::X12::EDI850',
-     'LedgerSMB::X12::EDI894',
+     'LedgerSMB::Report::Payroll::Deduction_Types',
+     'LedgerSMB::ScriptLib::Common_Search::Customer',
     );
 
 # USE STATEMENTS BELOW AS HELPERS TO REFRESH THE TABLE
@@ -61,7 +63,6 @@ my @modules =
           'LedgerSMB::App_State',
           'LedgerSMB::DBH', 'LedgerSMB::DBTest', 'LedgerSMB::I18N',
           'LedgerSMB::Locale', 'LedgerSMB::Mailer', 'LedgerSMB::Session',
-          # 'LedgerSMB::X12',
           'LedgerSMB::User', 'LedgerSMB::Entity',
           'LedgerSMB::GL', 'LedgerSMB::Group', 'LedgerSMB::Timecard',
           'LedgerSMB::PE', 'LedgerSMB::App_Module', 'LedgerSMB::Budget',
@@ -180,7 +181,6 @@ my @modules =
           'LedgerSMB::Template::TTI18N', 'LedgerSMB::Template::TXT',
           'LedgerSMB::Template::HTML', 'LedgerSMB::Template::CSV',
           'LedgerSMB::Template::DB', 'LedgerSMB::Timecard::Type',
-          #'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894',
           'LedgerSMB::REST_Class::contact', 'LedgerSMB::Request::Error',
     );
 
@@ -248,4 +248,13 @@ SKIP: {
 
 	skip 'CGI::Emulate::PSGI not installed', 1 if $@;
 	use_ok('LedgerSMB::PSGI');
+}
+
+SKIP: {
+    eval { require X12::Parser };
+
+    skip 'X12::Parser not installed', 3 if $@;
+    for ('LedgerSMB::X12', 'LedgerSMB::X12::EDI850', 'LedgerSMB::X12::EDI894') {
+        use_ok($_);
+    }
 }
