@@ -47,20 +47,24 @@ sub columns {
     my ($self) = @_;
     my $script = 'contacts.pl';
 
+    my $entity_class_param = '';
+    $entity_class_param = "&entity_class=".$self->entity_class
+        if $self->entity_class;
+
     return [
        {col_id => 'name',
             type => 'href',
-       href_base => "contact.pl?action=get&entity_class=".$self->entity_class,
+       href_base => "contact.pl?action=get$entity_class_param",
             name => LedgerSMB::Report::text('Name') },
 
        {col_id => 'entity_control_code',
             type => 'href',
-       href_base => "contact.pl?action=get&entity_class=".$self->entity_class,
+       href_base => "contact.pl?action=get$entity_class_param",
             name => LedgerSMB::Report::text('Control Code') },
 
        {col_id => 'meta_number',
             type => 'href',
-       href_base => "contact.pl?action=get&entity_class=".$self->entity_class,
+       href_base => "contact.pl?action=get$entity_class_param",
             name => LedgerSMB::Report::text('Credit Account Number') },
 
        {col_id => 'credit_description',
@@ -260,6 +264,7 @@ sub run_report {
     my ($self) = @_;
     my @rows = $self->exec_method({funcname => 'contact__search'});
     for my $r(@rows){
+        $r->{meta_number} ||= "";
         $r->{name_href_suffix} = 
                "&entity_id=$r->{entity_id}&meta_number=$r->{meta_number}";
         $r->{meta_number_href_suffix} = 
