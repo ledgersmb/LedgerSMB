@@ -395,12 +395,12 @@ sub print {
                 my $invhash = {};
                 my $inv_id = $payment->{"invoice_${id}_$inv"};
                 for (qw(invnumber due invoice_date)){
-                    $invhash->{$_} = $payment->{"${_}_$inv_id"};
+                    $invhash->{$_} = $payment->{"${_}_${inv_id}"};
                 }
                 if ($payment->{"paid_$id"} eq 'some'){
-                    $invhash->{paid} = LedgerSMB::PGNumber->from_input($payment->{"payment_$inv_id"});
+                    $invhash->{paid} = LedgerSMB::PGNumber->from_input($payment->{"payment_${inv_id}"});
                 } elsif ($payment->{"paid_$id"} eq 'all'){
-                    $invhash->{paid} = LedgerSMB::PGNumber->from_input($payment->{"net_$inv_id"});
+                    $invhash->{paid} = LedgerSMB::PGNumber->from_input($payment->{"net_${inv_id}"});
                 } else {
                     $payment->error("Invalid Payment Amount Option"); 
                 }
