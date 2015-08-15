@@ -156,7 +156,7 @@ $request->{id} must be set.
 
 sub delete_class {
     my ($request) = @_;
-    my $bu_class = LedgerSMB::Business_Unit_Class->new($request);
+    my $bu_class = LedgerSMB::Business_Unit_Class->new(%$request);
     $bu_class->delete;
     list_classes($request);
 }
