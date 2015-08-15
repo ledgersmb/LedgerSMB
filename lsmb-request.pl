@@ -34,6 +34,8 @@ use LedgerSMB::Locale;
 use Data::Dumper;
 use Log::Log4perl;
 use strict;
+
+
 binmode STDIN, ':bytes' if (defined $ENV{REQUEST_METHOD}) and ($ENV{REQUEST_METHOD} eq 'POST');
 binmode STDOUT, ':utf8';
 
@@ -92,6 +94,36 @@ $request->{dbh}->disconnect()
     if defined $request->{dbh};
 $logger->debug("End");
 
+sub _error {
+
+    my ( $self, $msg ) = @_;
+    if ( $ENV{GATEWAY_INTERFACE} ) {
+
+        $self->{msg}    = $msg;
+        $self->{format} = "html";
+        $logger->error($msg);
+        $logger->error("dbversion: $self->{dbversion}, company: $self->{company}");
+
+        delete $self->{pre};
+
+        
+        print qq|Content-Type: text/html; charset=utf-8\n\n|;
+        print "<head><link rel='stylesheet' href='css/$self->{_user}->{stylesheet}' type='text/css'></head>";
+        $self->{msg} =~ s/\n/<br \/>\n/;
+        print
+          qq|<body><h2 class="error">Error!</h2> <p><b>$self->{msg}</b></p>
+             <p>dbversion: $self->{dbversion}, company: $self->{company}</p>
+             </body>|;
+
+    }
+    else {
+
+        if ( $ENV{error_function} ) {
+            &{ $ENV{error_function} }($msg);
+        }
+    }
+}
+
 sub call_script {
   my $script = shift @_;
   my $request = shift @_;
@@ -118,7 +150,7 @@ sub call_script {
       # -- CT
      $LedgerSMB::App_State::DBH->rollback if ($LedgerSMB::App_State::DBH and $_ eq 'Died');
      LedgerSMB::App_State->cleanup();
-     $request->_error($_) unless $_ =~ /^Died at/;
+     &_error($request, $_) unless $_ =~ /^Died at/;
   };
 }
 1;
