@@ -19,6 +19,7 @@ against what was budgetted.
 
 package LedgerSMB::Report::Budget::Variance;
 use Moose;
+use LedgerSMB::MooseTypes;
 extends 'LedgerSMB::Report';
 use LedgerSMB::Budget;
 

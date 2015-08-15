@@ -87,4 +87,4 @@ version.  Please see the included LICENSE.txt for more information.
 
 =cut
 
-return 1;
+1;

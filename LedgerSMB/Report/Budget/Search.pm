@@ -16,6 +16,7 @@ This is a basic search report for budgets.
 
 package LedgerSMB::Report::Budget::Search;
 use Moose;
+use LedgerSMB::MooseTypes;
 extends 'LedgerSMB::Report';
 
 
@@ -223,4 +224,4 @@ see the included License.txt for details.
 __PACKAGE__->meta->make_immutable;
 
 
-return 1;
+1;

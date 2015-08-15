@@ -158,6 +158,7 @@ use Carp;
 use strict;
 use utf8;
 
+
 $CGI::Simple::POST_MAX = -1;
 
 package LedgerSMB;
@@ -488,30 +489,6 @@ sub error {
     Carp::croak $msg;
 }
 
-sub _error {
-
-    my ( $self, $msg ) = @_;
-    my $error;
-    if (eval { $msg->isa('LedgerSMB::Request::Error') }){
-        $error = $msg;
-    } else {
-        $error = LedgerSMB::Request::Error->new(msg => "$msg");
-    }
-    
-    if ( $ENV{GATEWAY_INTERFACE} ) {
-
-        delete $self->{pre};
-        print $error->http_response("<p>dbversion: $self->{dbversion}, company: $self->{company}</p>");
-
-    }
-    else {
-
-        if ( $ENV{error_function} ) {
-            &{ $ENV{error_function} }($msg);
-        }
-        $error->throw;
-    }
-}
 # Database routines used throughout
 
 sub _db_init {
