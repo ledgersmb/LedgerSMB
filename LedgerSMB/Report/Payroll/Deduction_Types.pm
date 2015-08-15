@@ -8,7 +8,7 @@ LedgerSMB::Payroll::Deduction_Types - Deduction Types Searches for LedgerSMB
 
 =cut
 
-package LedgerSMB::Payroll::Deduction_Types;
+package LedgerSMB::Report::Payroll::Deduction_Types;
 use Moose;
 extends 'LedgerSMB::Report';
 
