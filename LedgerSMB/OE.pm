@@ -58,7 +58,7 @@ rewritten
 sub get_files {
      my ($self, $form, $locale) = @_;
      return if !$form->{id};
-     my $file = LedgerSMB::File->new(%$form);
+     my $file = LedgerSMB::File->new;
      @{$form->{files}} = $file->list({ref_key => $form->{id}, file_class => 2});
      @{$form->{file_links}} = $file->list_links(
                   {ref_key => $form->{id}, file_class => 2}
