@@ -21,7 +21,6 @@ use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
 use CGI::Simple;
-use LedgerSMB::CP;
 use strict;
 
 
