@@ -40,6 +40,8 @@
 #     {print $_.":".$c->num2text($_)."\n";};'
 # EOF
 
+package LedgerSMB::Num2text;
+
 use utf8;
 no warnings;
 

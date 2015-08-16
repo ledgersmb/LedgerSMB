@@ -19,8 +19,7 @@ included COPYRIGHT and LICENSE files for more information.
 =cut
 
 package LedgerSMB::DBObject::Payment;
-use LedgerSMB::Num2text;
-use base qw(LedgerSMB::DBObject);
+use base qw(LedgerSMB::DBObject LedgerSMB::Num2text);
 use strict;
 use Math::BigFloat lib => 'GMP';
 use Data::Dumper;
@@ -75,7 +74,6 @@ numeric value passed.
 =cut
 
 sub text_amount {
-    use LedgerSMB::Num2text;
     my ($self, $value) = @_;
     $self->{locale} = $self->{_locale};
     $self->init();
