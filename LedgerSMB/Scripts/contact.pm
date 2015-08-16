@@ -98,7 +98,7 @@ of the company information.
 
 sub get {
     my ($request) = @_;
-    if ($request->{entity_class} == 3){
+    if ($request->{entity_class} && $request->{entity_class} == 3){
         my $emp = LedgerSMB::Entity::Person::Employee->get(
                           $request->{entity_id}
         );
@@ -172,7 +172,8 @@ sub _main_screen {
                files => $locale->text('Files'),
     );
 
-    if ($LedgerSMB::Scripts::employee::country::country_divs{
+    if ($person->{country_id}
+        && $LedgerSMB::Scripts::employee::country::country_divs{
             $person->{country_id}
     }){
         for my $cform (@{$LedgerSMB::Scripts::employee::country::country_divs{
@@ -196,8 +197,9 @@ sub _main_screen {
         );
     my $credit_act;
     for my $ref(@credit_list){
-        if (($request->{credit_id} eq $ref->{id}) 
-              or ($request->{meta_number} eq $ref->{meta_number})){
+        if (($request->{credit_id} && $request->{credit_id} eq $ref->{id}) 
+              or ($request->{meta_number}
+                  && $request->{meta_number} eq $ref->{meta_number})){
         
             $credit_act = $ref;
             @eca_files = LedgerSMB::File->list(
@@ -249,6 +251,7 @@ sub _main_screen {
 
     for my $var (\@ar_ap_acc_list, \@cash_acc_list, \@discount_acc_list){
         for my $ref (@$var){
+            $ref->{description} ||= "";
             $ref->{text} = "$ref->{accno}--$ref->{description}";
         }
     }

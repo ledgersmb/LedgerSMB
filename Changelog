@@ -1,6 +1,18 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.15
+* Fix printing invoices and orders under Starman (GH 736) (ErikH)
+* Fix payroll deduction types report failing to load (GH 740) (ChrisT)
+* Fix absolute URLs interacting badly with reverse-proxy (GH 730) (ErikH)
+* Fix printing of payments (GH 733) (JohnL)
+* Fix deletion of reporting unit class (SF 1378) (ErikH)
+* Fix warnings in webserver logs on contact screen/search (ErikH)
+
+ErikH is Erik Huelsmann
+ChrisT is Chris Travers
+JohnL is John Locke
+
 Changelog for 1.4.14
 * Replace spanish CoA for compliance; donated by AccountNet
 * Correctly set HTML form element 'required' attribute in output (ErikH)
