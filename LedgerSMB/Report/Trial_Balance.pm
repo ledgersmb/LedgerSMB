@@ -189,7 +189,7 @@ sub header_lines {
              text => LedgerSMB::Report::text('From date') },
             {name => 'to_date',
              text => LedgerSMB::Report::text('To Date') },
-            {name => 'yearend',
+            {name => 'ignore_yearend',
              text => LedgerSMB::Report::text('Ignore Yearends') },
             ];
 }
