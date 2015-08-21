@@ -53,18 +53,13 @@ criteria set.
 
 has id => (is => 'rw', isa => 'Maybe[Int]');
 
-=item date_from
+=item from_date
+=item to_date
 
-Standard start date for trial balance.
-
-=item date_to
-
-Standard end date for report.
+Dates come from LedgerSMB::Report::Dates
 
 =cut
 
-has date_from => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
-has date_to => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item description
 
@@ -74,7 +69,7 @@ Only used for saved criteria sets, is a human-readable description.
 
 has description => (is => 'rw', isa => 'Str', required => 0);
 
-=item yearend
+=item ignore_yearend
 
 This value holds information related to yearend handling.  It can be either
 'all', 'none', or 'last' each of which describes which yearends to ignore.
@@ -202,11 +197,11 @@ sub columns {
 =cut
 
 sub header_lines {
-    return [{name => 'date_from',
+    return [{name => 'from_date',
              text => LedgerSMB::Report::text('From date') },
-            {name => 'date_to',
+            {name => 'to_date',
              text => LedgerSMB::Report::text('To Date') },
-            {name => 'yearend',
+            {name => 'ignore_yearend',
              text => LedgerSMB::Report::text('Ignore Yearends') },
             ];
 }
@@ -259,10 +254,10 @@ sub run_report {
         next if (($ref->{starting_balance} == 0)
                         and ($ref->{credits} == 0) and ($ref->{debits} == 0));
         my $href_suffix = "&accno=" . $ref->{account_number};
-        $href_suffix .= "&from_date=" . $self->date_from->to_db 
-              if defined $self->date_from;
-        $href_suffix .= "&to_date=" . $self->date_to->to_db
-              if defined $self->date_to;
+        $href_suffix .= "&from_date=" . $self->from_date->to_db 
+              if defined $self->from_date;
+        $href_suffix .= "&to_date=" . $self->to_date->to_db
+              if defined $self->to_date;
                
         $total_debits += $ref->{debits}; 
         $total_credits += $ref->{credits}; 
