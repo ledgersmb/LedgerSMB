@@ -278,7 +278,8 @@ our $process = {
                        }
                        ++$form->{rowcount};
                    }
-                   GL->post_transaction($request->{_user}, $form);
+                   GL->post_transaction($request->{_user}, $form,
+                                        $request->{_locale});
                 },
    ar_multi => sub { 
                    my  ($request, $entries) = @_;
