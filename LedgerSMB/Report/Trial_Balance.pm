@@ -54,17 +54,12 @@ criteria set.
 has id => (is => 'rw', isa => 'Maybe[Int]');
 
 =item from_date
-
-Standard start date for trial balance.
-
 =item to_date
 
-Standard end date for report.
+Dates come from LedgerSMB::Report::Dates
 
 =cut
 
-has from_date => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
-has to_date => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item description
 
@@ -74,7 +69,7 @@ Only used for saved criteria sets, is a human-readable description.
 
 has description => (is => 'rw', isa => 'Str', required => 0);
 
-=item yearend
+=item ignore_yearend
 
 This value holds information related to yearend handling.  It can be either
 'all', 'none', or 'last' each of which describes which yearends to ignore.
