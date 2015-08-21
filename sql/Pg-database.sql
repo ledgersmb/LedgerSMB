@@ -165,7 +165,7 @@ VALUES
 
 
 CREATE TABLE account_link (
-   account_id int references account(id),
+   account_id int references account(id) on delete cascade,
    description text references account_link_description(description),
    primary key (account_id, description)
 );
@@ -595,7 +595,7 @@ session_id serial PRIMARY KEY,
 token VARCHAR(32) CHECK(length(token) = 32),
 last_used TIMESTAMP default now(),
 ttl int default 3600 not null,
-users_id INTEGER NOT NULL references users(id),
+users_id INTEGER NOT NULL references users(id) on delete cascade,
 notify_pasword interval not null default '7 days'::interval
 );
 
@@ -1672,7 +1672,7 @@ VALUES
 
 --
 CREATE TABLE assembly (
-  id int REFERENCES parts(id),
+  id int REFERENCES parts(id) on delete cascade,
   parts_id int REFERENCES parts(id),
   qty numeric,
   bom bool,
@@ -2323,7 +2323,7 @@ $$ Translation information for partsgroups.$$;
 
 --
 CREATE TABLE user_preference (
-    id int PRIMARY KEY REFERENCES users(id),
+    id int PRIMARY KEY REFERENCES users(id) on delete cascade,
     language varchar(6) REFERENCES language(code),
     stylesheet text default 'ledgersmb.css' not null,
     printer text,
@@ -3696,7 +3696,7 @@ $$;
 CREATE TABLE new_shipto (
 	id serial primary key,
 	trans_id int references transactions(id),
-	oe_id int references oe(id),
+	oe_id int references oe(id) on delete cascade,
 	location_id int references location(id)
 );
 
@@ -4643,7 +4643,7 @@ CREATE TABLE file_order (
        check (file_class=2),
        unique(id),
        primary key (ref_key, file_name, file_class),
-       foreign key (ref_key) references oe(id)
+       foreign key (ref_key) references oe(id) on delete cascade
 ) inherits (file_base);
 
 COMMENT ON TABLE file_order IS
@@ -4653,7 +4653,7 @@ CREATE TABLE file_part (
        check (file_class=3),
        unique(id),
        primary key (ref_key, file_name, file_class),
-       foreign key (ref_key) references parts(id)
+       foreign key (ref_key) references parts(id) on delete cascade
 ) inherits (file_base);
 
 COMMENT ON TABLE file_part IS
