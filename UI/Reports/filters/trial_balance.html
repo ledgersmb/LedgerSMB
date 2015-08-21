@@ -50,6 +50,7 @@ BALANCE_TYPES = [
                              ],
                              default_values = [report.ignore_yearend],
                              name = 'ignore_yearend',
+                             id = 'ignore_yearend',
                              text_attr = 'label',
                              value_attr = 'id',
                              } ?>
@@ -58,8 +59,9 @@ BALANCE_TYPES = [
                 <tr><th><?lsmb text('Balances as') ?></th>
                     <td><?lsmb PROCESS select element_data = {
                                name = 'balance_sign'
-                            options = BALANCE_TYPES 
-                     default_values = ['0']
+                               id = 'balance_sign'
+                               options = BALANCE_TYPES 
+                               default_values = ['0']
                           value_attr = 'id'
                         } ?></td>
               </table>
@@ -83,6 +85,7 @@ BALANCE_TYPES = [
                            PROCESS input element_data = {
                                type="radio",
                                name="heading",
+                               id="heading-" _ heading.id,
                                value=heading.id,
                                checked=checked
                     }?>
@@ -95,6 +98,7 @@ BALANCE_TYPES = [
                         <?lsmb id = account.id; PROCESS input element_data = {
                             type="checkbox",
                             name="accounts",
+                            id="accounts" _ account.id,
                             value=account.id
                             checked=report_accounts.$id
                         }?>
