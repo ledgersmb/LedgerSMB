@@ -81,11 +81,11 @@ has is_manager => (is => 'rw', isa => 'Bool');
 
 =item ssn
 
-Social security number, tax number, or the like for the employee.  Required
+Social security number, tax number, or the like for the employee. 
 
 =cut
 
-has ssn => (is => 'rw', isa => 'Str', required => 1);
+has ssn => (is => 'rw', isa => 'Str');
 
 =item sales
 

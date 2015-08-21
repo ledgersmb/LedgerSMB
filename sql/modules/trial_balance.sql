@@ -13,11 +13,11 @@ create type tb_row AS (
 );
 
 DROP FUNCTION IF EXISTS trial_balance__generate
-(in_date_from DATE, in_date_to DATE, in_heading INT, in_accounts INT[],
+(in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
  in_ignore_yearend TEXT, in_business_units int[]);
 
 CREATE OR REPLACE FUNCTION trial_balance__generate 
-(in_date_from DATE, in_date_to DATE, in_heading INT, in_accounts INT[],
+(in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
  in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int) 
 returns setof tb_row AS
 $$
@@ -38,17 +38,17 @@ BEGIN
        RAISE EXCEPTION 'Invalid Balance Type';
     END IF;
 
-    IF in_date_from IS NULL AND in_ignore_yearend = 'none' THEN
+    IF in_from_date IS NULL AND in_ignore_yearend = 'none' THEN
        SELECT max(end_date) INTO t_roll_forward 
          FROM account_checkpoint;
-    ELSIF in_date_from IS NULL AND in_ignore_yearend = 'last' THEN
+    ELSIF in_from_date IS NULL AND in_ignore_yearend = 'last' THEN
        SELECT max(end_date) INTO t_roll_forward 
          FROM account_checkpoint 
         WHERE end_date < (select max(gl.transdate)
                             FROM gl JOIN yearend y ON y.trans_id = gl.id
-                           WHERE y.transdate < coalesce(in_date_to, gl.transdate)
+                           WHERE y.transdate < coalesce(in_to_date, gl.transdate)
                          );
-    ELSIF in_date_from IS NULL THEN
+    ELSIF in_from_date IS NULL THEN
        SELECT min(transdate) - 1 INTO t_roll_forward
          FROM (select min(transdate) as transdate from ar
                 union ALL
@@ -61,7 +61,7 @@ BEGIN
     ELSE
       SELECT max(end_date) INTO t_roll_forward
          FROM account_checkpoint 
-        WHERE end_date < in_date_from;
+        WHERE end_date < in_from_date;
     END IF;
 
     IF t_roll_forward IS NULL 
@@ -81,10 +81,10 @@ BEGIN
        ignore_trans := '{}';
     END IF;
 
-    IF in_date_to IS NULL THEN
+    IF in_to_date IS NULL THEN
         SELECT max(transdate) INTO t_end_date FROM acc_trans;
     ELSE
-        t_end_date := in_date_to;
+        t_end_date := in_to_date;
     END IF;
 
 
@@ -114,25 +114,25 @@ BEGIN
                OR bu_tree.id IS NOT NULL)
        )
        SELECT a.id, a.accno, a.description, a.gifi_accno,
-         case when in_date_from is null then 0 else
+         case when in_from_date is null then 0 else
               COALESCE(t_balance_sign, 
                       CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END )
               * (coalesce(cp.amount, 0) 
-              + sum(CASE WHEN ac.transdate < coalesce(in_date_from, 
+              + sum(CASE WHEN ac.transdate < coalesce(in_from_date, 
                                                       t_roll_forward)
                          THEN ac.amount ELSE 0 END)) end, 
-              sum(CASE WHEN ac.transdate BETWEEN coalesce(in_date_from, 
+              sum(CASE WHEN ac.transdate BETWEEN coalesce(in_from_date, 
                                                          t_roll_forward)
-                                                 AND coalesce(in_date_to, 
+                                                 AND coalesce(in_to_date, 
                                                          ac.transdate)
                              AND ac.amount < 0 THEN ac.amount * -1 ELSE 0 END) -
-              case when in_date_from is null then coalesce(cp.debits, 0) else 0 end, 
-              sum(CASE WHEN ac.transdate BETWEEN coalesce(in_date_from, 
+              case when in_from_date is null then coalesce(cp.debits, 0) else 0 end, 
+              sum(CASE WHEN ac.transdate BETWEEN coalesce(in_from_date, 
                                                          t_roll_forward) 
-                                                 AND coalesce(in_date_to, 
+                                                 AND coalesce(in_to_date, 
                                                          ac.transdate)
                              AND ac.amount > 0 THEN ac.amount ELSE 0 END) + 
-              case when in_date_from is null then coalesce(cp.credits, 0) else 0 end, 
+              case when in_from_date is null then coalesce(cp.credits, 0) else 0 end, 
               COALESCE(t_balance_sign, 
                        CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END)
               * (coalesce(cp.amount, 0) + sum(coalesce(ac.amount, 0)))

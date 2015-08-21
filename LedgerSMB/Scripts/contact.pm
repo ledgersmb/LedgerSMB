@@ -378,8 +378,8 @@ sub save_employee {
         ($request->{control_code}) = values %$ref;
     }
     $request->{entity_class} = 3;
-    $request->{ssn} ||= $request->{personal_id};
-    $request->{control_code} = $request->{employeenumber} if $request->{employeenumber};
+    $request->{ssn} = $request->{personal_id} if defined $request->{personal_id};
+    $request->{control_code} = $request->{employeenumber} if defined $request->{employeenumber};
     $request->{employeenumber} ||= $request->{control_code};
     $request->{name} = "$request->{last_name}, $request->{first_name}";
     my $employee = LedgerSMB::Entity::Person::Employee->new(%$request);

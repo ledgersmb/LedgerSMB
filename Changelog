@@ -22,6 +22,9 @@ Changelog for 1.4.15
 * Fix printing of payments (GH 733) (JohnL)
 * Fix deletion of reporting unit class (SF 1378) (ErikH)
 * Fix warnings in webserver logs on contact screen/search (ErikH)
+* Fix false values of social security/tax id number for employee (Chris T)
+* Fix errors in upload of GL and inventory CSVs (ErikH)
+* Fix trial balance not respecting filters (ErikH)
 
 ErikH is Erik Huelsmann
 ChrisT is Chris Travers

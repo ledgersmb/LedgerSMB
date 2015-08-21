@@ -233,6 +233,8 @@ sub post_invoice {
 
             push( @{ $form->{listprice} }, $form->{"listprice_$i"} );
 
+            $form->{"weight_$i"} = 0
+                if ! defined($form->{"weight_$i"});
             push(
                 @{ $form->{weight} },
                 $form->format_amount(
