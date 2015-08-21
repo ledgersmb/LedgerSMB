@@ -53,18 +53,18 @@ criteria set.
 
 has id => (is => 'rw', isa => 'Maybe[Int]');
 
-=item date_from
+=item from_date
 
 Standard start date for trial balance.
 
-=item date_to
+=item to_date
 
 Standard end date for report.
 
 =cut
 
-has date_from => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
-has date_to => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has from_date => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
+has to_date => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 =item description
 
@@ -202,9 +202,9 @@ sub columns {
 =cut
 
 sub header_lines {
-    return [{name => 'date_from',
+    return [{name => 'from_date',
              text => LedgerSMB::Report::text('From date') },
-            {name => 'date_to',
+            {name => 'to_date',
              text => LedgerSMB::Report::text('To Date') },
             {name => 'yearend',
              text => LedgerSMB::Report::text('Ignore Yearends') },
@@ -259,10 +259,10 @@ sub run_report {
         next if (($ref->{starting_balance} == 0)
                         and ($ref->{credits} == 0) and ($ref->{debits} == 0));
         my $href_suffix = "&accno=" . $ref->{account_number};
-        $href_suffix .= "&from_date=" . $self->date_from->to_db 
-              if defined $self->date_from;
-        $href_suffix .= "&to_date=" . $self->date_to->to_db
-              if defined $self->date_to;
+        $href_suffix .= "&from_date=" . $self->from_date->to_db 
+              if defined $self->from_date;
+        $href_suffix .= "&to_date=" . $self->to_date->to_db
+              if defined $self->to_date;
                
         $total_debits += $ref->{debits}; 
         $total_credits += $ref->{credits}; 
