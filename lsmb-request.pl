@@ -1,70 +1,3 @@
-=head1 NAME
-
-lsmb-request.pl - The LedgerSMB Request Handler
-
-=head1 SYNOPSYS
-This file receives the web request, instantiates the proper objects, and passes
-execution off to the appropriate workflow scripts.  This is for use with new 
-code only and should not be used with old SQL-Ledger(TM) code as it is 
-architecturally dissimilar.
-
-=head1 COPYRIGHT
-
-Copyright (C) 2007 The LedgerSMB Core Team
-
-This file is licensed under the GNU General Public License (GPL)  version 2 or 
-at your option any later version.  A copy of the GNU GPL has been included with
-this software.
-
-=cut
-
-package LedgerSMB::Handler;
-
-use LedgerSMB::Sysconfig;
-use LedgerSMB::Locale;
-use Digest::MD5;
-use Try::Tiny;
-
-$| = 1;
-
-use LedgerSMB::User;
-use LedgerSMB::App_State;
-use LedgerSMB;
-use LedgerSMB::Request::Error;
-use LedgerSMB::Locale;
-use Data::Dumper;
-use Log::Log4perl;
-use strict;
-binmode STDIN, ':bytes' if (defined $ENV{REQUEST_METHOD}) and ($ENV{REQUEST_METHOD} eq 'POST');
-binmode STDOUT, ':utf8';
-
-
-my $logger;
-
-sub _error {
-
-    my ( $self, $msg ) = @_;
-    my $error;
-    if (eval { $msg->isa('LedgerSMB::Request::Error') }){
-        $error = $msg;
-    } else {
-        $error = LedgerSMB::Request::Error->new(msg => "$msg");
-    }
-    
-    if ( $ENV{GATEWAY_INTERFACE} ) {
-
-        delete $self->{pre};
-        print $error->http_response("<p>dbversion: $self->{dbversion}, company: $self->{company}</p>");
-
-    }
-    else {
-
-        if ( $ENV{error_function} ) {
-            &{ $ENV{error_function} }($msg);
-        }
-    }
-}
-
 
 sub get_script {
     my ($locale, $request) = @_;
@@ -177,7 +110,7 @@ sub call_script {
       # -- CT
      $LedgerSMB::App_State::DBH->rollback if ($LedgerSMB::App_State::DBH and $_ eq 'Died');
      LedgerSMB::App_State->cleanup();
-     &_error($request, $_) unless $_ =~ /^Died at/;
+     $request->_error($_) unless $_ =~ /^Died at/;
   };
 }
 
