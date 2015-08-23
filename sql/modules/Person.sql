@@ -142,7 +142,7 @@ BEGIN
 			l.state, l.mail_code, c.id, c.name, lc.id, lc.class
 		FROM location l
 		JOIN entity_to_location ctl ON (ctl.location_id = l.id)
-		JOIN person p ON (ctl.person_id = p.entity_id)
+		JOIN person p ON (ctl.entity_id = p.entity_id)
 		JOIN location_class lc ON (ctl.location_class = lc.id)
 		JOIN country c ON (c.id = l.country_id)
 		WHERE p.entity_id = in_entity_id
@@ -165,7 +165,7 @@ BEGIN
 		SELECT cc.class, cc.id, c.description, c.contact
 		FROM entity_to_contact c
 		JOIN contact_class cc ON (c.contact_class_id = cc.id)
-		JOIN person p ON (c.person_id = p.entity_id)
+		JOIN person p ON (c.entity_id = p.entity_id)
 		WHERE p.entity_id = in_entity_id
 	LOOP
 		RETURN NEXT out_row;
