@@ -1106,7 +1106,8 @@ sub create_initial_user {
 sub edit_user_roles {
     my ($request) = @_;
 
-    _init_db($request);
+    _init_db($request)
+        unless $request->{dbh};
 
     my $admin = LedgerSMB::DBObject::Admin->new(%$request);
     my @all_roles = $admin->get_roles($request->{database});
@@ -1121,6 +1122,7 @@ sub edit_user_roles {
     # as its argument... So, we're going brute force here, for 1.4
     my @user_rec = grep { $_->{id} == $request->{id} }
           @{$user_obj->get_all_users};
+
     $user_obj->{username} = $user_rec[0]->{username};
 
     my $template = LedgerSMB::Template->new( 
@@ -1146,9 +1148,17 @@ sub save_user_roles {
     my ($request) = @_;
 
     _init_db($request);
+    $request->{user_id} = $request->{id};
+    my $admin = LedgerSMB::DBObject::Admin->new(base => $request, copy=>'all');
+    my $roles = [];
+    for my $r (grep { $_ =~ m/lsmb_(.+)__/ } keys %$request) {
+        push @$roles, $r;
+    }
+    $admin->save_roles($roles);
 
-
+    edit_user_roles($request);
 }
+
 
 =item cancel
 
