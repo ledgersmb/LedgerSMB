@@ -19,8 +19,7 @@ include_stylesheet=["UI/setup/stylesheet.css"];
         </div>
     
     <form data-dojo-type="lsmb/lib/Form" method="POST">
-        <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
-	     <input type="hidden" name="id" value="<?lsmb user.id ?>" />
+	     <input type="hidden" name="id" value="<?lsmb request.id ?>" />
         <input type="hidden" name="database" value="<?lsmb request.database ?>" />
         <table>
 
@@ -48,7 +47,7 @@ include_stylesheet=["UI/setup/stylesheet.css"];
             <tr>
                 <td><?lsmb text('Password') ?></td>
                 <td>
-                    <input type="password" name="reset_password" value=""/>
+                    <input type="password" name="password" value=""/>
                 </td>
             </tr>
 
