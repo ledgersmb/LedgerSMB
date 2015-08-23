@@ -1160,6 +1160,26 @@ sub save_user_roles {
 }
 
 
+=item reset_password
+
+=cut
+
+sub reset_password {
+    my ($request) = @_;
+
+    _init_db($request);
+    my $user = LedgerSMB::DBObject::User->new(base => $request, copy=>'all');
+    my $result = $user->save();
+
+    print STDERR $result;
+
+    $request->{password} = '';
+
+    edit_user_roles($request);
+}
+
+    
+
 =item cancel
 
 Cancels work.  Returns to login screen.
