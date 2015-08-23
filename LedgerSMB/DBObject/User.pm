@@ -7,7 +7,6 @@ LedgerSMB::DBObject::User - LedgerSMB User DB Objects
 package LedgerSMB::DBObject::User;
 
 use base qw/LedgerSMB::PGOld/;
-use Data::Dumper;
 use strict;
 use Log::Log4perl;
 
@@ -266,9 +265,7 @@ sub save_contact {
     my @ret;
     my $logger = Log::Log4perl->get_logger("LedgerSMB");
 
-    $logger->debug( sub { Dumper($self->{entity}->{id}) });
     if ($id) {
-        $logger->debug("Found ID..");
         @ret = $self->call_procedure(funcname=>"person__save_contact", 
             args=>[
                 $self->{entity}->{id},
@@ -279,10 +276,6 @@ sub save_contact {
         );
     } 
     else{
-        $logger->debug("Did not find an ID, attempting to save a new contact..\n");
-        $logger->debug($class."\n");
-        $logger->debug($contact."\n");
-        $logger->debug($self->{entity_id}."\n");
         @ret = $self->call_procedure(funcname=>"person__save_contact",
             args=>[
                 $self->{entity_id},
@@ -292,7 +285,6 @@ sub save_contact {
             ]
         );
     }
-    $logger->debug(sub { return Dumper(\@ret) });
     if ($ret[0]->{person__save_contact} != 1){
         die "Couldn't save contact...";
     }
