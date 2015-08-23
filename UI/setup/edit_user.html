@@ -1,0 +1,12 @@
+<?lsmb INCLUDE "ui-header.html"
+stylesheet="ledgersmb.css"
+include_stylesheet=["UI/setup/stylesheet.css"];
+       PROCESS "elements.html";
+       PROCESS "dynatable.html"; ?>
+<body class="<?lsmb dojo_theme ?>">
+<div class="listtop"><?lsmb text('Available Users') ?></div>
+<?lsmb 
+    INCLUDE "user.html"
+ ?>
+</body>
+</html>

@@ -23,6 +23,8 @@ package LedgerSMB::Scripts::setup;
 use Locale::Country;
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
+use LedgerSMB::DBObject::Admin;
+use LedgerSMB::DBObject::User;
 use LedgerSMB::App_State;
 use LedgerSMB::Upgrade_Tests;
 use LedgerSMB::Sysconfig;
@@ -30,6 +32,8 @@ use LedgerSMB::Template::DB;
 use LedgerSMB::Setting;
 use Try::Tiny;
 use strict;
+use Carp::Always;
+use Data::Dumper;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 
@@ -236,6 +240,28 @@ sub list_databases {
             path => 'UI/setup',
             template => 'list_databases',
 	    format => 'HTML',
+    );
+    $template->render($request);
+}
+
+=item list_users
+Lists all users in the selected database
+
+=cut
+
+sub list_users {
+    my ($request) = @_;
+    _init_db($request);
+    my $user = LedgerSMB::DBObject::User->new(%$request);
+    my $users = $user->get_all_users;
+    $request->{users} = [];
+    for my $u (@$users) {
+        push @{$request->{users}}, {row_id => $u->{id}, name => $u->{username} };
+    }
+    my $template = LedgerSMB::Template->new(
+        path => 'UI/setup',
+        template => 'list_users',
+        format => 'HTML',
     );
     $template->render($request);
 }
@@ -1097,6 +1123,56 @@ sub create_initial_user {
      $template->render($request);
 }
 
+=item edit_user_roles
+
+=cut
+
+sub edit_user_roles {
+    my ($request) = @_;
+
+    _init_db($request);
+
+    my $admin = LedgerSMB::DBObject::Admin->new(%$request);
+    my @all_roles = $admin->get_roles($request->{database});
+
+    my $user_obj = LedgerSMB::DBObject::User->new(%$request);
+    $user_obj->get($request->{id});
+
+    # LedgerSMB::DBObject::User doesn't retrieve the username
+    # field from the users table (nor any of the other values from it,
+    # really) and there's no stored procedure to do so.
+    # The name 'admin__get_user' is already taken, but takes the entity_id
+    # as its argument... So, we're going brute force here, for 1.4
+    my @user_rec = grep { $_->{id} == $request->{id} }
+          @{$user_obj->get_all_users};
+    $user_obj->{username} = $user_rec[0]->{username};
+
+    my $template = LedgerSMB::Template->new( 
+        user => $request->{_user}, 
+        template => 'edit_user', 
+        format => 'HTML', 
+        path=>'UI/setup',
+    );
+    my $template_data = {
+                        request => $request,
+                           user => $user_obj,
+                          roles => @all_roles,
+            };
+    
+    $template->render($template_data);
+}
+
+=item save_user_roles
+
+=cut
+
+sub save_user_roles {
+    my ($request) = @_;
+
+    _init_db($request);
+
+
+}
 
 =item cancel
 
