@@ -25,6 +25,8 @@ Changelog for 1.4.15
 * Fix false values of social security/tax id number for employee (Chris T)
 * Fix errors in upload of GL and inventory CSVs (ErikH)
 * Fix trial balance not respecting filters (ErikH)
+* Fix SQL for listing of locations and contacts of Persons (ErikH)
+* Remove some debug output in error logs (ErikH)
 
 ErikH is Erik Huelsmann
 ChrisT is Chris Travers
