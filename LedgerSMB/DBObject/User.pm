@@ -7,7 +7,6 @@ LedgerSMB::DBObject::User - LedgerSMB User DB Objects
 package LedgerSMB::DBObject::User;
 
 use base qw/LedgerSMB::DBObject/;
-use Data::Dumper;
 use strict;
 
 =head2 NOTES
@@ -280,9 +279,7 @@ sub save_contact {
     my $contact = shift @_;
     my @ret;
     
-    print STDERR Dumper($self->{entity}->{id});
     if ($id) {
-        print STDERR "Found ID..";
         @ret = $self->exec_method(funcname=>"person__save_contact", 
             args=>[
                 $self->{entity}->{id},
@@ -293,10 +290,6 @@ sub save_contact {
         );
     } 
     else{
-        print STDERR "Did not find an ID, attempting to save a new contact..\n";
-        print STDERR ($class."\n");
-        print STDERR ($contact."\n");
-        print STDERR ($self->{entity_id}."\n");
         @ret = $self->exec_method(funcname=>"person__save_contact",
             args=>[
                 $self->{entity_id},
@@ -306,7 +299,6 @@ sub save_contact {
             ]
         );
     }
-    print STDERR Dumper(\@ret);
     if ($ret[0]->{person__save_contact} != 1){
         die "Couldn't save contact...";
     }

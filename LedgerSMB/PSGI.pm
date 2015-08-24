@@ -40,7 +40,13 @@ sub app {
        if ($uri =~ m|/rest/|){
          do 'rest-handler.pl';
        } elsif (-f "LedgerSMB/Scripts/$nscript"){
-         do 'lsmb-request.pl'; 
+         try {
+           do 'lsmb-request.pl'; 
+         }
+         catch {
+           die $_
+               unless $_ eq 'exit';
+         }
        } else {
           _run_old($script);
        }
