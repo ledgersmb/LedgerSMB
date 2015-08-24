@@ -234,7 +234,24 @@ FROM public;
         
 --$$ language 'plpgsql';
 
-CREATE OR REPLACE FUNCTION admin__get_user(in_entity_id INT) returns setof users as $$
+DROP FUNCTION IF EXISTS  admin__get_user(in_entity_id INT);
+CREATE OR REPLACE FUNCTION admin__get_user(in_id INT) returns setof users as $$
+    
+    DECLARE
+        a_user users;
+    BEGIN
+        
+        select * into a_user from users where id = in_id;
+        return next a_user;
+        return;
+    
+    END;    
+$$ language plpgsql;
+
+COMMENT ON FUNCTION admin__get_user(in_user_id INT) IS
+$$ Returns a set of (only one) user specified by the id.$$;
+
+CREATE OR REPLACE FUNCTION admin__get_user_by_entity(in_entity_id INT) returns setof users as $$
     
     DECLARE
         a_user users;
@@ -247,9 +264,10 @@ CREATE OR REPLACE FUNCTION admin__get_user(in_entity_id INT) returns setof users
     END;    
 $$ language plpgsql;
 
-COMMENT ON FUNCTION admin__get_user(in_user_id INT) IS
-$$ Returns a set of (only one) user specified by the id.$$;
+COMMENT ON FUNCTION admin__get_user_by_entity(in_entity_id INT) IS
+$$ Returns a set of (only one) user specified by the entity_id.$$;
 
+DROP FUNCTION IF EXISTS admin__get_roles_for_user(in_entity_id INT);
 CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns setof text as $$
     
     declare
@@ -284,10 +302,50 @@ CREATE OR REPLACE FUNCTION admin__get_roles_for_user(in_user_id INT) returns set
     
 $$ language 'plpgsql' SECURITY DEFINER;
 
-REVOKE EXECUTE ON FUNCTION admin__get_roles_for_user(in_user_id INT) from PUBLIC;
+REVOKE EXECUTE ON FUNCTION admin__get_roles_for_user(in_entity_id INT) from PUBLIC;
 
 COMMENT ON FUNCTION admin__get_roles_for_user(in_user_id INT) IS
 $$ Returns a set of roles that  a user is a part of.$$;
+
+CREATE OR REPLACE FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT) returns setof text as $$
+    
+    declare
+        u_role record;
+        a_user users;
+    begin
+        select * into a_user from admin__get_user_by_entity(in_entity_id);
+        
+        FOR u_role IN 
+        select r.rolname 
+        from 
+            pg_roles r,
+            (select 
+                m.roleid 
+             from 
+                pg_auth_members m, pg_roles b 
+             where 
+                m.member = b.oid 
+             and 
+                b.rolname = a_user.username
+            ) as ar
+         where 
+            r.oid = ar.roleid
+            and r.rolname like (lsmb__role_prefix() || '%')
+         LOOP
+        
+            RETURN NEXT u_role.rolname::text;
+        
+        END LOOP;
+        RETURN;
+    end;
+    
+$$ language 'plpgsql' SECURITY DEFINER;
+
+REVOKE EXECUTE ON FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT) from PUBLIC;
+
+COMMENT ON FUNCTION admin__get_roles_for_user_by_entity(in_entity_id INT) IS
+$$ Returns a set of roles that  a user is a part of.$$;
+
 
 CREATE OR REPLACE FUNCTION user__check_my_expiration()
 returns interval as

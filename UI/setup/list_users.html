@@ -1,0 +1,17 @@
+<?lsmb INCLUDE "ui-header.html"
+stylesheet="ledgersmb.css"
+include_stylesheet=["UI/setup/stylesheet.css"];
+       PROCESS "elements.html";
+       PROCESS "dynatable.html"; ?>
+<body class="<?lsmb dojo_theme ?>">
+<div class="listtop"><?lsmb text('Available Users') ?></div>
+<?lsmb 
+    INCLUDE dynatable
+            columns = [{col_id = 'name', 
+                       name = text('Username'), 
+                       type = 'href'
+                  href_base = 'setup.pl?action=edit_user_roles&amp;database=' _ database _ '&amp;id='}]
+            tbody = {rows = users}
+              id = 'user_list' ?>
+</body>
+</html>

@@ -73,7 +73,15 @@ sub _run_new {
     my ($script) = @_;
     &$pre_dispatch() if $pre_dispatch;
     if (-f 'lsmb-request.pl'){
-        do 'lsmb-request.pl' or die 'script failed' . $@; 
+        try {
+            do 'lsmb-request.pl';
+        }
+        catch {
+            # simple 'die' statements are request terminations
+            # so we don't want to cause a 500 ISE to be returned
+            die $_
+                unless $_ =~ /^Died at/;
+        } 
     } else {
         die 'something is wrong, cannot find lsmb-request.pl';
     }
