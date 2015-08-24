@@ -27,6 +27,7 @@ Changelog for 1.4.15
 * Fix trial balance not respecting filters (ErikH)
 * Fix SQL for listing of locations and contacts of Persons (ErikH)
 * Remove some debug output in error logs (ErikH)
+* Create user management screens in setup.pl to work around GH 765 (ErikH)
 
 ErikH is Erik Huelsmann
 ChrisT is Chris Travers
