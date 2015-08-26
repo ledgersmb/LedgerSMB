@@ -81,10 +81,6 @@ sub save_roles {
     my @user_roles = $self->exec_method(funcname => "admin__get_roles_for_user");
     my %active_roles;
     for my $role (@user_roles) {
-       
-       # These are our user's roles.
-       print STDERR "Have $role->{admin__get_roles_for_user}\n";
-        
        $active_roles{"$role->{admin__get_roles_for_user}"} = 1;
     }
     
