@@ -30,7 +30,6 @@ use LedgerSMB::Template::DB;
 use LedgerSMB::Setting;
 use Try::Tiny;
 use strict;
-use Carp::Always;
 use Data::Dumper;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
@@ -1170,8 +1169,6 @@ sub reset_password {
     _init_db($request);
     my $user = LedgerSMB::DBObject::User->new(base => $request, copy=>'all');
     my $result = $user->save();
-
-    print STDERR $result;
 
     $request->{password} = '';
 
