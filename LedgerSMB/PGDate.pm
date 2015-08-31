@@ -147,9 +147,10 @@ sub from_input{
     $format = 'yyyy-mm-dd' if $input =~ /^\d{4}/;
     my $dt =  _parse_string($self, $input, uc($format), $has_time)
 		  if $input;
-    my %prop = (date => $dt, dummy => !defined $dt);
-    delete $prop{date} unless defined $prop{date} and $prop{date} ne '';
-    return $self->new(%prop);
+    my $rv = $self->now();
+    $rv->{date} = $dt
+        if $dt;
+    return $rv;
 }
 
 
