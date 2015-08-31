@@ -47,7 +47,8 @@ sub http_response {
 
     my $status = $self->status;
     my $msg = $self->msg;
-    $msg =~ s/\n/<br \/>\n/;
+    $msg =~ s#\n#<br \/>\n#g;
+    $additional_html =~ s#\n#<br />\n#g;
     my $user = LedgerSMB::App_State::User;
 
     return qq|Status: $status ISE\nContent-Type: text/html; charset=utf-8\n\n|
