@@ -265,7 +265,15 @@ $$ Returns set of accounts where the tax attribute is true.$$;
 
 CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS setof chart AS
 $$
-SELECT * from chart where id = $1 and charttype = 'A';
+select c.id, c.accno, c.description,
+       'A'::text as charttype, c.category, concat_colon(l.description) as link,
+       heading, gifi_accno, contra, tax
+  from account c
+  left join account_link l
+    ON (c.id = l.account_id)
+  where  id = $1
+group by c.id, c.accno, c.description, c.category,
+         c.heading, c.gifi_accno, c.contra, c.tax;
 $$ LANGUAGE sql;
 
 COMMENT ON FUNCTION account_get(in_id int) IS
@@ -324,8 +332,15 @@ $$
 DECLARE
 	account chart%ROWTYPE;
 BEGIN
-	SELECT * INTO account FROM chart WHERE id = in_id AND charttype = 'H';
-	RETURN account;
+SELECT ah.id, ah.accno, ah.description,
+       'H' as charttype, NULL as category, NULL as link,
+       ah.parent_id as account_heading,
+       null as gifi_accno, false as contra,
+       false as tax
+       INTO account
+   from account_heading ah
+  WHERE id = in_id;
+  RETURN account;
 END;
 $$ LANGUAGE plpgsql;
 
