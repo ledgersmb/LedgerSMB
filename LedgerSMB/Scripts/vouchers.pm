@@ -21,7 +21,6 @@ use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
 use CGI::Simple;
-use LedgerSMB::CP;
 use strict;
 
 
@@ -363,8 +362,7 @@ sub batch_delete {
     my ($request)  = @_;
     my $batch = LedgerSMB::Batch->new(base => $request);
     if (!$batch->close_form){
-        list_batches($request);
-        $request->finalize_request();
+        return list_batches($request);
     }
     for my $count (1 .. $batch->{rowcount_}){
         next unless $batch->{"select_" . $count};

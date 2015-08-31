@@ -177,8 +177,8 @@ sub new {
     #menubar will be deprecated, replaced with below
     $self->{lynx} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
 
-    $self->{version}   = "1.4.999";
-    $self->{dbversion} = "1.4.999";
+    $self->{version}   = "1.5.0-dev";
+    $self->{dbversion} = "1.5.0-dev";
 
     bless $self, $type;
 
@@ -422,31 +422,6 @@ sub error {
     Carp::croak $msg;
 }
 
-sub _error {
-
-    my ( $self, $msg ) = @_;
-    my $error;
-    if (eval { $msg->isa('LedgerSMB::Request::Error') }){
-        $error = $msg;
-    } else {
-        $error = LedgerSMB::Request::Error->new(msg => "$msg");
-    }
-    
-    if ( $ENV{GATEWAY_INTERFACE} ) {
-
-        delete $self->{pre};
-        print $error->http_response("<p>dbversion: $self->{dbversion}, company: $self->{company}</p>");
-
-    }
-    else {
-
-        if ( $ENV{error_function} ) {
-            &{ $ENV{error_function} }($msg);
-        }
-        $error->throw;
-    }
-}
-
 =item $form->finalize_request();
 
 Stops further processing, allowing post-request cleanup on intermediate
@@ -458,6 +433,7 @@ This function replaces explicit 'exit()' calls.
 
 sub finalize_request {
     LedgerSMB::finalize_request();
+    die;
 }
 
 

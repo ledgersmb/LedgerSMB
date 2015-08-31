@@ -19,7 +19,7 @@ PROCESS dynatable
 
 <table>
 <tr>
-<form action="<?lsmb request.script ?>" method="post" name="wage">
+<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method="post" name="wage">
 <td><?lsmb PROCESS select element_data = {
                 options = wage_types
              value_attr = 'id'
@@ -48,7 +48,7 @@ PROCESS dynatable
 </form>
 </tr>
 <tr>
-<form action="<?lsmb request.script ?>" method="post" name="deduction">
+<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method="post" name="deduction">
 <td><?lsmb PROCESS select element_data = {
                 options = deduction_types
              value_attr = 'id'

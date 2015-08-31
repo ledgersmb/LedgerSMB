@@ -2,9 +2,9 @@
 ?>
 <?lsmb PROCESS 'elements.html';
        PROCESS 'report_base.html' ?>
-<body class="<?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 
-<form method="get" action="journal.pl">
+<form data-dojo-type="lsmb/lib/Form" method="get" action="journal.pl">
 <?lsmb PROCESS input element_data = {
     type = "hidden"
     name = "sort"

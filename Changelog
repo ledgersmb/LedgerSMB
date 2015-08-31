@@ -1,8 +1,13 @@
 Changelog for 1.5 Series
 Forthcoming
 
+UI changes:
+* LedgerSMB now frameless (ChrisT)
+* Full use of Dojo widgets (ErikH)
+
 Code Cleanup:
 * LedgerSMB now relies on plack.  Previous stub scripts removed (ChrisT)
+* Removed LedgerSMB's custom dojo page loader
 
 API Enhancements:
 * Moved a great deal of code into PGObject framework on CPAN (Chris T)
@@ -10,13 +15,39 @@ API Enhancements:
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.15
+* Fix printing invoices and orders under Starman (GH 736) (ErikH)
+* Fix payroll deduction types report failing to load (GH 740) (ChrisT)
+* Fix absolute URLs interacting badly with reverse-proxy (GH 730) (ErikH)
+* Fix printing of payments (GH 733) (JohnL)
+* Fix deletion of reporting unit class (SF 1378) (ErikH)
+* Fix warnings in webserver logs on contact screen/search (ErikH)
+* Fix false values of social security/tax id number for employee (Chris T)
+* Fix errors in upload of GL and inventory CSVs (ErikH)
+* Fix trial balance not respecting filters (ErikH)
+* Fix SQL for listing of locations and contacts of Persons (ErikH)
+* Remove some debug output in error logs (ErikH)
+* Create user management screens in setup.pl to work around GH 765 (ErikH)
+
+ErikH is Erik Huelsmann
+ChrisT is Chris Travers
+JohnL is John Locke
+
 Changelog for 1.4.14
 * Replace spanish CoA for compliance; donated by AccountNet
 * Correctly set HTML form element 'required' attribute in output (ErikH)
 * In Employee entry screen, mark required fields as such (ErikH)
 * Fix being unable to remove roles from user (SF 1395) (ErikH)
+* Improved required input checking on form submit (SF 1382/GH 715) (ErikH)
+* Fixed css making it difficult or impossible to save person records (Chris T)
+* Fixed sudden bouncing to employee screen along with info loss (Chris T)
+* Fixed salutation and entity class not setting, entering person (Chris T)
+* Prevent CREATE LANGUAGE error when creating new company (RobR)
+* Fixed errors not showing up properly using Starman (Chris T)
 
+Chris T is Chris Travers
 ErikH is Erik Huelsmann
+RobR is Rob Ransbottom
 
 
 Changelog for 1.4.13

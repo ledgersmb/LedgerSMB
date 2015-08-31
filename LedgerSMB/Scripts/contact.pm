@@ -98,7 +98,7 @@ of the company information.
 
 sub get {
     my ($request) = @_;
-    if ($request->{entity_class} == 3){
+    if ($request->{entity_class} && $request->{entity_class} == 3){
         my $emp = LedgerSMB::Entity::Person::Employee->get(
                           $request->{entity_id}
         );
@@ -198,8 +198,9 @@ sub _main_screen {
         );
     my $credit_act;
     for my $ref(@credit_list){
-        if (($request->{credit_id} eq $ref->{id}) 
-              or ($request->{meta_number} eq $ref->{meta_number})){
+        if (($request->{credit_id} && $request->{credit_id} eq $ref->{id}) 
+              or ($request->{meta_number}
+                  && $request->{meta_number} eq $ref->{meta_number})){
         
             $credit_act = $ref;
             @eca_files = LedgerSMB::File->list(
@@ -252,6 +253,7 @@ sub _main_screen {
 
     for my $var (\@ar_ap_acc_list, \@cash_acc_list, \@discount_acc_list){
         for my $ref (@$var){
+            $ref->{description} ||= "";
             $ref->{text} = "$ref->{accno}--$ref->{description}";
         }
     }
@@ -318,6 +320,7 @@ sub _main_screen {
     $template->render({
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,
+             entity_class => $entity_class,
                   PLUGINS => \@plugins,
                   request => $request,
                   company => $company,
@@ -375,8 +378,8 @@ sub save_employee {
         ($request->{control_code}) = values %$ref;
     }
     $request->{entity_class} = 3;
-    $request->{ssn} ||= $request->{personal_id};
-    $request->{control_code} = $request->{employeenumber} if $request->{employeenumber};
+    $request->{ssn} = $request->{personal_id} if defined $request->{personal_id};
+    $request->{control_code} = $request->{employeenumber} if defined $request->{employeenumber};
     $request->{employeenumber} ||= $request->{control_code};
     $request->{name} = "$request->{last_name}, $request->{first_name}";
     my $employee = LedgerSMB::Entity::Person::Employee->new(%$request);
@@ -476,8 +479,10 @@ sub dispatch_legacy {
     $form->{dbh} = $request->{dbh};
     $form->{script} =~ s|.*/||;
     { no strict; no warnings 'redefine'; do $script; }
-    $lsmb_legacy::form = $form;
-    $lsmb_legacy::locale = LedgerSMB::App_State::Locale();
+    { no warnings;
+      # Suppress 'only referenced once' warnings
+      $lsmb_legacy::form = $form;
+      $lsmb_legacy::locale = LedgerSMB::App_State::Locale(); }
     "lsmb_legacy"->can($form->{action})->();
 }
 

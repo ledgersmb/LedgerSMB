@@ -27,6 +27,7 @@ use LedgerSMB::Report::Listings::Overpayments;
 use LedgerSMB::DBObject::Payment; # To move this off after rewriting payments
 use strict;
 
+
 =pod
 
 =over
@@ -97,6 +98,7 @@ sub start_report {
         funcname => 'employee__all_salespeople'
     );
     my $template = LedgerSMB::Template->new(
+        request => $request,
         user => $request->{_user},
         locale => $request->{_locale},
         path => 'UI/Reports/filters',

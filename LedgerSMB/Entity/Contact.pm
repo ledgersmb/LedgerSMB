@@ -20,6 +20,7 @@ companies in LedgerSMB.
 
 package LedgerSMB::Entity::Contact;
 use Moose;
+use LedgerSMB::App_State;
 with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
@@ -213,4 +214,4 @@ version.  Please see the enclosed LICENSE file for details.
 
 __PACKAGE__->meta->make_immutable;
 
-return 1;
+1;

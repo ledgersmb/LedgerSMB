@@ -1,15 +1,15 @@
-<?lsmb IF employee.first_name ?>
-<div id="user_div"
-     title="<?lsmb text('User') ?>"
-     data-dojo-type="dijit/layout/ContentPane"
-     <?lsmb IF request.target_div == 'user_div' ?>data-dojo-props="selected:true"<?lsmb END ?>
-     >
+<?lsmb INCLUDE "ui-header.html"
+stylesheet="ledgersmb.css"
+include_stylesheet=["UI/setup/stylesheet.css"];
+       PROCESS "elements.html";
+       PROCESS "dynatable.html"; ?>
+<body class="<?lsmb dojo_theme ?>">
 	<div class="listtop">
             <?lsmb 
                IF request.pls_import;
                        text('Duplicate User Found: Importing User');
                        action = 'save_user';
-                ELSIF user.username;
+                ELSIF user.user_id;
                       text('Editing User');
                       action = 'edit_user';
                 ELSE;
@@ -18,12 +18,12 @@
                 END ?>
         </div>
     
-    <form data-dojo-type="lsmb/lib/Form" method="POST" action="<?lsmb request.script ?>">
-        <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
-	<input type="hidden" name="id" value="<?lsmb user.id ?>" />
+    <form data-dojo-type="lsmb/lib/Form" method="POST">
+	     <input type="hidden" name="id" value="<?lsmb request.id ?>" />
+        <input type="hidden" name="database" value="<?lsmb request.database ?>" />
         <table>
 
-            <?lsmb IF user.username and not request.pls_import ?>
+            <?lsmb IF user.user_id and not request.pls_import ?>
             <tr>
                 <td><?lsmb text('Username') ?></td>
                 <td>
@@ -47,10 +47,7 @@
             <tr>
                 <td><?lsmb text('Password') ?></td>
                 <td>
-                    <?lsmb INCLUDE input element_data = {
-                           type="password"
-                           name="reset_password"
-                           value="" } ?>
+                    <input type="password" name="password" value=""/>
                 </td>
             </tr>
 
@@ -67,16 +64,14 @@
                   END; ?> 
                 <td><div class="input_line"><div overflow="auto" class="input_group">
                   <?lsmb INCLUDE input element_data = {
-                           title = 'Yes'
-                           label = "_none_"
+                           label   = 'Yes'
                            value   = '1'
                            checked = importc1
                            name    = 'pls_import'
                            type    = 'radio'
                    } ?></div><div overflow="auto" class="input_group"><?lsmb
                    INCLUDE input element_data = {
-                           title = 'No'
-                           label = "_none_"
+                           label   = 'No'
                            value   = '0'
                            checked = importc0
                            name    = 'pls_import'
@@ -109,14 +104,14 @@
                 };
     ?>
     </form>
-    <?lsmb IF user.entity_id and not request.pls_import?>
+    <?lsmb IF user.user_id and not request.pls_import?>
         <hr /> 
-        <form data-dojo-type="lsmb/lib/Form" name="groups" method="POST" action="<?lsmb request.script ?>">
-            <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>" />
+        <form data-dojo-type="lsmb/lib/Form" name="groups" method="POST" action="<?lsmb script ?>">
+            <input type="hidden" name="database" value="<?lsmb request.database ?>" />
             <?lsmb PROCESS input element_data = {
                type="hidden"
-               name="user_id"
-               value=user.id
+               name="id"
+               value=request.id
               };
                 PROCESS input element_data = {
                          type = 'hidden'
@@ -125,7 +120,7 @@
                 };
            ?>
         <input type="hidden" name="entity_id" value="<?lsmb entity_id ?>"/>
-           
+           <div>
             <table>
                 <!-- Groups section -->
                 <tr>
@@ -136,16 +131,15 @@
                 <?lsmb END ?>
                     <td>
                         <?lsmb rolcheck = undef; 
-                           IF user.role_list.grep(role.rolname).size;
+                           IF user.roles.grep(role.name).size;
                               rolcheck = "checked";
                            END ?>
                         <?lsmb PROCESS input element_data = {
                                type = "checkbox"
-                               title = role.description
                                label = role.description
                                value = 1
-                               name = role.rolname
-                               id = role.rolname
+                               name = role.name
+                               id = role.name
                                checked = rolcheck
                          }, label_pos = 1 ?>
                     </td>
@@ -159,11 +153,12 @@
                           text = text('Save Groups') #'
                           class = "submit"
                           name = "action"
-                          value = "save_roles"
+                          value = "save_user_roles"
                     } ?></td>
                 </tr>
-            </table>
+            </table></div>
         </form>   
 <?lsmb END ?>
-</div>
-<?lsmb END ?>
+
+</body>
+</html>

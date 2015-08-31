@@ -29,6 +29,7 @@ and the like.
 
 package LedgerSMB::Entity::Credit_Account;
 use Moose;
+use LedgerSMB::MooseTypes;
 with 'LedgerSMB::PGObject';
 
 our $VERSION = '1.4.0';
@@ -459,4 +460,4 @@ version.  Please see the attached LICENSE file for details.
 
 __PACKAGE__->meta->make_immutable;
 
-return 1;
+1;

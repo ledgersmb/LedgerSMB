@@ -8,7 +8,7 @@
 ?><?lsmb PROCESS 'elements.html';
          PROCESS 'report_base.html';
          IF ! entity_class.defined; entity_class = account_class; END ?>
-<body class="<?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 <?lsmb IF account_class == 2;
             CONTACT = "Customer Number";
             TITLE = text('Search Receipts'); #'
@@ -22,7 +22,7 @@
 	<?lsmb text('Vendor Number') ?>
 	<?lsmb text('Unsupported Number') ?>
 -->
-<form action="payment.pl" method="get" name="main_form" 
+<form data-dojo-type="lsmb/lib/Form" action="payment.pl" method="get" name="main_form" 
 	id="payment_search_form">
 	<?lsmb INCLUDE input element_data = {
 		type  = "hidden"

@@ -5,9 +5,9 @@
 		'css/global.css'
 	]
 ?><?lsmb PROCESS 'elements.html' ?>
-<body class="<?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('Adjustment Details'); ?></div>
-<form name="setup_inv_adjust" action="inventory.pl" method="post">
+<form data-dojo-type="lsmb/lib/Form" name="setup_inv_adjust" action="inventory.pl" method="post">
 <div class="tabular col-1">
 <div id="date_input_div">
 	<?lsmb INCLUDE input element_data = {

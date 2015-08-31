@@ -1,8 +1,8 @@
 <?lsmb INCLUDE 'ui-header.html';
        PROCESS 'elements.html';
        PROCESS 'report_base.html'; ?>
-<body class="<?lsmb dojo_theme ?>">
-<form action="timecard.pl" method="get">
+<body class="lsmb <?lsmb dojo_theme ?>">
+<form data-dojo-type="lsmb/lib/Form" action="timecard.pl" method="get">
 <div class="listtop"><?lsmb text('Time and Material Cards') ?></div>
 <table>
 <?lsmb PROCESS business_classes ?>

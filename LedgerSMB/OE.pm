@@ -41,6 +41,7 @@ LedgerSMB::OE - Order Entry
 package OE;
 use LedgerSMB::Tax;
 use LedgerSMB::Sysconfig;
+use LedgerSMB::Num2text;
 use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('OE');
@@ -58,7 +59,7 @@ rewritten
 sub get_files {
      my ($self, $form, $locale) = @_;
      return if !$form->{id};
-     my $file = LedgerSMB::File->new(%$form);
+     my $file = LedgerSMB::File->new;
      @{$form->{files}} = $file->list({ref_key => $form->{id}, file_class => 2});
      @{$form->{file_links}} = $file->list_links(
                   {ref_key => $form->{id}, file_class => 2}
@@ -848,7 +849,6 @@ sub exchangerate_defaults {
 }
 
 sub order_details {
-    use LedgerSMB::CP;
     my ( $self, $myconfig, $form ) = @_;
 
     # connect to database
@@ -1419,10 +1419,10 @@ sub order_details {
 
     my $c;
     if ( $form->{language_code} ne "" ) {
-        $c = new CP $form->{language_code};
+        $c = LedgerSMB::Num2text->new( $form->{language_code});
     }
     else {
-        $c = new CP $myconfig->{countrycode};
+        $c = LedgerSMB::Num2text->new( $myconfig->{countrycode});
     }
     $c->init;
     my $whole;

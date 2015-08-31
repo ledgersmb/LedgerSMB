@@ -13,6 +13,7 @@ inventory adjustments
 
 package LedgerSMB::Report::Inventory::Search_Adj;
 use Moose;
+use LedgerSMB::MooseTypes;
 extends 'LedgerSMB::Report';
 
 =head1 DESCRIPTION

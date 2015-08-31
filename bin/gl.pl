@@ -121,7 +121,7 @@ sub approve {
     if ($form->{callback}){
         print "Location: $form->{callback}\n";
         print "Status: 302 Found\n\n";
-        print qq|<html><body class="$form->{dojo_theme}">|;
+        print qq|<html><body class="lsmb $form->{dojo_theme}">|;
         my $url = $form->{callback};
         print qq|If you are not redirected automatically, click <a href="$url">|
                 . qq|here</a>.</body></html>|;

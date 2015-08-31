@@ -1,8 +1,8 @@
 <?lsmb INCLUDE 'ui-header.html';
        PROCESS 'elements.html'; ?>
-<body class="<?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb text('Balance Sheet') ?></div>
-<form action="reports.pl" method="get">
+<form data-dojo-type="lsmb/lib/Form" action="reports.pl" method="get">
 <div class="inputrow">
 <?lsmb 
 PROCESS input element_data = {

@@ -5,6 +5,7 @@
           <?lsmb b_units.${BUC.id}.unshift({}) ?>
           <td colspan=3><?lsmb PROCESS select element_data = {
                    name = 'business_unit_' _ loop.count
+                   id = 'business_unit_' _ loop.count
                 options = b_units.${BUC.id}
               text_attr = 'text'
              value_attr = 'id'
@@ -24,6 +25,7 @@ END # BLOCK -?>
 <div class="inputrow"><div class="inputgroup">
           <?lsmb PROCESS select element_data = {
                    name = 'business_unit_' _ loop.count
+                   id = 'business_unit_' _ loop.count
                 options = b_units.${BUC.id}
               text_attr = 'text'
              value_attr = 'id'
@@ -41,6 +43,7 @@ END # BLOCK -?>
         entity_classes.unshift({text = '', value_attr = ''});
         PROCESS select element_data = {
 		name = "entity_class"
+      id = "entity_class"
 		options = entity_classes
 		default_values = [entity_class]
 		text_attr = 'class'
@@ -56,6 +59,7 @@ END # BLOCK -?>
   <?lsmb PROCESS input element_data={
     type = 'radio',
     name = 'accounttype',
+    id = 'accounttype-standard',
     value = 'standard',
     label = text('Standard'),
     checked = 'checked',
@@ -63,6 +67,7 @@ END # BLOCK -?>
   <?lsmb PROCESS input element_data={
     type = 'radio',
     name = 'accounttype',
+    id = 'accounttype-gifi',
     value = 'gifi',
     label = text('GIFI'),
     } -?>
@@ -78,6 +83,7 @@ END # BLOCK -?>
                  options = form.yearend_options,
                  default_values = [form.ignore_yearend],
                  name = 'ignore_yearend',
+                 id = 'ignore_yearend',
                  text_attr = 'label',
                  value_attr = 'id',
            }?>
@@ -92,12 +98,14 @@ END # BLOCK -?>
 	  <td><?lsmb PROCESS input element_data = {
                class="date" 
                name="from_date" _ SUFFIX 
+               id="from_date" _ SUFFIX 
                size="11" 
                title=datestyle } ?></td>
 	  <th align="right"><?lsmb text('To') ?></th>
 	  <td><?lsmb PROCESS input element_data = {
                  class="date" 
                  name="to_date" _ SUFFIX 
+                 id="to_date" _ SUFFIX 
                  size="11" 
                  title=datestyle } ?></td>
 	</tr>
@@ -111,11 +119,13 @@ END # BLOCK -?>
         all_years.unshift({}); 
         PROCESS select element_data = {
                name = "from_month" _ SUFFIX
+               id = "from_month" _ SUFFIX
                options = all_months
         } ?>
 
 	<?lsmb PROCESS select element_data = {
                name="from_year" _ SUFFIX
+               id="from_year" _ SUFFIX
                options = all_years
                text_attr = "date_get_all_years"
                value_attr = "date_get_all_years"
@@ -156,6 +166,7 @@ END # BLOCK -?>
                label=text('From')
                class="date" 
                name="from_date" 
+               id="from_date" 
                size="11" 
                title=datestyle } ?></div>
           <div class="input_group">
@@ -163,6 +174,7 @@ END # BLOCK -?>
                label=text('To')
                  class="date" 
                  name="to_date" 
+                 id="to_date" 
                  size="11" 
                  title=datestyle } ?></div>
         <div class="input_row">
@@ -174,33 +186,39 @@ END # BLOCK -?>
         all_years.unshift({}); 
         PROCESS select element_data = {
                name = "from_month"
+               id = "from_month"
                options = all_months
         } ?>
 
 	<?lsmb PROCESS select element_data = {
                name="from_year"
+               id="from_year"
                options = all_years
                text_attr = "date_get_all_years"
                value_attr = "date_get_all_years"
         } ?>
 	<?lsmb PROCESS input element_data = {
                name="interval"
+               id="interval-current"
                class="radio"
                type="radio"
                value="none" 
                checked="checked" } ?>&nbsp;<?lsmb text('Current') ?>
 	<?lsmb PROCESS input element_data = { 
                name="interval" 
+               id="interval-month"
                class="radio" 
                type="radio" 
                value="month" } ?>&nbsp;<?lsmb text('Month') ?>
 	<?lsmb PROCESS input element_data = {
                name="interval"
+               id="interval-quarter"
                class="radio"
                type="radio"
                value="quarter" } ?>&nbsp;<?lsmb text('Quarter') ?>
         <?lsmb PROCESS input element_data = {
                name="interval"
+               id="interval-year"
                class="radio"
                type="radio"
                value="year" } ?>&nbsp;<?lsmb text('Year') ?>
@@ -226,6 +244,7 @@ END # BLOCK -?>
   <th><?lsmb text('Employees') ?></th>
   <td><?lsmb PROCESS select element_data = {
                  name = SELECTNAME
+                 id = SELECTNAME
        default_values = [$SELECTNAME]
               options = employees
            value_attr = 'person_id' #??

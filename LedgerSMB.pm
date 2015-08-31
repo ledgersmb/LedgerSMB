@@ -158,6 +158,7 @@ use Carp;
 use strict;
 use utf8;
 
+
 $CGI::Simple::POST_MAX = -1;
 
 package LedgerSMB;
@@ -165,7 +166,7 @@ use Try::Tiny;
 use DBI;
 
 use base qw(LedgerSMB::Request);
-our $VERSION = '1.4.999';
+our $VERSION = '1.5.0-dev';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
@@ -509,9 +510,10 @@ sub _error {
         if ( $ENV{error_function} ) {
             &{ $ENV{error_function} }($msg);
         }
-        $error->throw;
     }
+    die;
 }
+
 # Database routines used throughout
 
 sub _db_init {

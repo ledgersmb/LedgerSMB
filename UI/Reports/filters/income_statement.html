@@ -1,8 +1,8 @@
 <?lsmb INCLUDE 'ui-header.html' ?>
 <?lsmb PROCESS elements.html;
        PROCESS 'report_base.html'; ?>
-<body class="<?lsmb dojo_theme ?>">
-<form method="get" action="pnl.pl">
+<body class="lsmb <?lsmb dojo_theme ?>">
+<form data-dojo-type="lsmb/lib/Form" method="get" action="pnl.pl">
 <?lsmb PROCESS input element_data = {
      name = 'pnl_type',
      type = 'hidden',

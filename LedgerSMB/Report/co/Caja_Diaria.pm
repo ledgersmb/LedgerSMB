@@ -26,6 +26,7 @@ specific period.
 
 package LedgerSMB::Report::co::Caja_Diaria;
 use Moose;
+use LedgerSMB::MooseTypes;
 extends 'LedgerSMB::Report';
 
 my $doctypes = {};
@@ -200,4 +201,5 @@ later version.  Please see included LICENSE.TXT for details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
-return 1;
+
+1;

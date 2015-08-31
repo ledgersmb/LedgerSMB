@@ -2,8 +2,8 @@
 		include_stylesheet = ['UI/file/attach.css']
 ?>
 <?lsmb PROCESS 'elements.html' ?>
-<body class="<?lsmb dojo_theme ?>">
-<form action="file.pl" method="post" enctype="multipart/form-data">
+<body class="lsmb <?lsmb dojo_theme ?>">
+<form data-dojo-type="lsmb/lib/Form" action="file.pl" method="post" enctype="multipart/form-data">
     <?lsmb INCLUDE input element_data = {
             type = "hidden"
            value = file_class

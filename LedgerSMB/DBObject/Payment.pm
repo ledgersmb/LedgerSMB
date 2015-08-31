@@ -19,8 +19,7 @@ included COPYRIGHT and LICENSE files for more information.
 =cut
 
 package LedgerSMB::DBObject::Payment;
-use LedgerSMB::Num2text;
-use base qw(LedgerSMB::PGOld);
+use base qw(LedgerSMB::PGOld LedgerSMB::Num2text);
 use strict;
 use LedgerSMB::PGNumber;
 
@@ -81,6 +80,7 @@ sub text_amount {
     $self->init();
     return $self->num2text($value);
 }
+
 
 =over
 

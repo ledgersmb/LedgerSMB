@@ -2,7 +2,7 @@
 <?lsmb PROCESS elements.html;
        PROCESS report_base.html;
 ?> 
-<body class="<?lsmb dojo_theme ?>">
+<body class="lsmb <?lsmb dojo_theme ?>">
 <?lsmb 
 IF !account_class;
    title = text('Contact Search'); #'
@@ -15,7 +15,7 @@ ELSIF account_class == 3;
 ELSE;
    title = text('Unsupported.  Expect errors'); #'
 END -?>
-<form method="get" action="contact_reports.pl">
+<form data-dojo-type="lsmb/lib/Form" method="get" action="contact_reports.pl">
 <table width="100%">
   <tr><th class="listtop"><?lsmb title ?></th></tr>
 

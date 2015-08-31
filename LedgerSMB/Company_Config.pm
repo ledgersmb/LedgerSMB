@@ -51,3 +51,5 @@ sub initialize{
    }
    $LedgerSMB::App_State::Company_Config = $settings;
 }
+
+1;

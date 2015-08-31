@@ -3,7 +3,7 @@
 		titlebar = text('Selection')
 ?>
 <?lsmb PROCESS 'elements.html'  # Include form elements helper. ?>
-<body id="payments-filter-body" class="<?lsmb dojo_theme ?>">
+<body id="payments-filter-body" class="lsmb <?lsmb dojo_theme ?>">
 <div id="payments">
 <div class="listtop">
 	<!-- CT:  Strings for locales:
@@ -14,7 +14,7 @@
 	?><?lsmb END ?>
 	<?lsmb text("Filtering $t") ?>
 </div>
-<form name="search" method="post"
+<form data-dojo-type="lsmb/lib/Form" name="search" method="post"
       <?lsmb # action set explicitly,
              # because this file renders from vouchers.pl ?>
       action="payment.pl">
