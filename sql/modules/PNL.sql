@@ -15,9 +15,6 @@ CREATE TYPE pnl_line AS (
     account_number text,
     account_description text,
     account_category char,
-    account_heading_id int,
-    account_heading_number text,
-    account_heading_description text,
     gifi text,
     gifi_description text,
     amount numeric,
@@ -36,11 +33,9 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
 )
-   SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, g.accno, g.description,
+   SELECT a.id, a.accno, a.description, a.category, g.accno, g.description,
           sum(ac.amount) * -1, at.path
      FROM account a
-     JOIN account_heading ah on a.heading = ah.id
      JOIN acc_trans ac ON ac.chart_id = a.id
      JOIN invoice i ON i.id = ac.invoice_id
      JOIN account_link l ON l.account_id = a.id
@@ -57,11 +52,10 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
           AND ar.approved
           AND l.description = 'IC_expense'
           AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
- GROUP BY a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, at.path, g.accno, g.description
+ GROUP BY a.id, a.accno, a.description, a.category,
+          at.path, g.accno, g.description
     UNION
-   SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, g.accno, g.description,
+   SELECT a.id, a.accno, a.description, a.category, g.accno, g.description,
           sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0))), at.path
      FROM parts p
      JOIN invoice i ON i.id = p.id
@@ -69,7 +63,6 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
      JOIN account a ON p.income_accno_id = a.id
      JOIN ar ON ar.id = ac.trans_id
      JOIN account_heading_tree at ON a.heading = at.id
-     JOIN account_heading ah on a.heading = ah.id
 LEFT JOIN gifi g ON a.gifi_accno = g.accno
 LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
              from business_unit_inv bui 
@@ -80,8 +73,8 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
           AND (ac.transdate <= $2 OR $2 IS NULL)
           AND ar.approved
           AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
- GROUP BY a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, at.path, g.accno, g.description, g.accno, g.description
+ GROUP BY a.id, a.accno, a.description, a.category,
+          at.path, g.accno, g.description, g.accno, g.description
 $$ language SQL;
 
 
@@ -98,8 +91,7 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
 )
-   SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, g.accno, g.description,
+   SELECT a.id, a.accno, a.description, a.category, g.accno, g.description,
           CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), 
           at.path
      FROM account a
@@ -126,7 +118,7 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
                    AND NOT EXISTS (SELECT 1 FROM yearend 
                                    HAVING max(trans_id) = gl.id)))
  GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description, at.path, g.accno, g.description
+          at.path, g.accno, g.description
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
 
@@ -143,12 +135,11 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
 )
-   SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, g.accno, g.description,
+   SELECT a.id, a.accno, a.description, a.category,
+          g.accno, g.description,
           CASE WHEN a.category = 'E' THEN -1 ELSE 1 END 
                * sum(ac.amount * ca.portion), at.path
      FROM account a
-     JOIN account_heading ah on a.heading = ah.id
      JOIN acc_trans ac ON a.id = ac.chart_id AND ac.approved
      JOIN tx_report gl ON ac.trans_id = gl.id AND gl.approved
      JOIN account_heading_tree at ON a.heading = at.id
@@ -177,25 +168,23 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
                                    HAVING max(trans_id) = gl.id))
               )
  GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description, at.path, g.accno, g.description
+          at.path, g.accno, g.description
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION pnl__invoice(in_id int) RETURNS SETOF pnl_line AS
 $$
 SELECT a.id, a.accno, a.description, a.category, 
-       ah.id, ah.accno, 
-       ah.description, g.accno, g.description,
+       g.accno, g.description,
        CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
   FROM account a
-  JOIN account_heading ah on a.heading = ah.id
   JOIN acc_trans ac ON a.id = ac.chart_id
   JOIN account_heading_tree at ON a.heading = at.id
 LEFT JOIN gifi g ON a.gifi_accno = g.accno
  WHERE ac.approved is true and ac.trans_id = $1
        and a.category in ('I', 'E')
  GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description, at.path, g.accno, g.description
+          at.path, g.accno, g.description
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE sql;
 
@@ -210,11 +199,9 @@ UNION ALL
    SELECT id FROM ar WHERE approved is true AND entity_credit_account = $1
 )
 SELECT a.id, a.accno, a.description, a.category, 
-       ah.id, ah.accno, 
-       ah.description, g.accno, g.description,
+       g.accno, g.description,
        CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
   FROM account a
-  JOIN account_heading ah on a.heading = ah.id
   JOIN acc_trans ac ON a.id = ac.chart_id
   JOIN account_heading_tree at ON a.heading = at.id
   JOIN gl ON ac.trans_id = gl.id
@@ -224,24 +211,22 @@ LEFT JOIN gifi g ON a.gifi_accno = g.accno
           AND ($3 IS NULL OR ac.transdate <= $3)
           AND a.category IN ('I', 'E')
  GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description, at.path, g.accno, g.description
+          at.path, g.accno, g.description
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION pnl__invoice(in_id int) RETURNS SETOF pnl_line AS
 $$
 SELECT a.id, a.accno, a.description, a.category, 
-       ah.id, ah.accno,
-       ah.description, g.accno, g.description,
+       g.accno, g.description,
        CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
   FROM account a
-  JOIN account_heading ah on a.heading = ah.id
   JOIN acc_trans ac ON a.id = ac.chart_id
   JOIN account_heading_tree at ON a.heading = at.id
 LEFT JOIN gifi g ON a.gifi_accno = g.accno
  WHERE ac.approved AND ac.trans_id = $1 AND a.category IN ('I', 'E')
  GROUP BY a.id, a.accno, a.description, a.category, 
-          ah.id, ah.accno, ah.description, at.path, g.accno, g.description
+          at.path, g.accno, g.description
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
 
