@@ -39,12 +39,14 @@
 <div class="inputrow" id="typerow">
 <?lsmb PROCESS input element_data = {
        name = "stock_type"
+       id   = 'stock_type-absolute'
        type = "radio"
        value = "absolute"
        label = text("Onhand amount")
 } ?> <br />
 <?lsmb PROCESS input element_data = {
        name = "stock_type"
+       id   = 'stock_type-relative'
        type = "radio"
        value = "relative"
        label = text("Onhand delta")
@@ -53,12 +55,14 @@
 <div class="inputrow" id="typerow">
 <?lsmb PROCESS input element_data = {
        name = "type"
+       id   = 'type-single'
        type = "radio"
        value = "inventory"
        label = text("Single date")
 } ?> <br />
 <?lsmb PROCESS input element_data = {
        name = "type"
+       id   = 'type-multiple'
        type = "radio"
        value = "inventory_multi"
        label = text("Multiple dates")

@@ -85,6 +85,7 @@ default_values = [partsgroup_id]
     label_pos = -1;
     PROCESS input element_data = {
         name = "status"
+        id   = 'status-active'
         type = 'radio'
      checked = 'CHECKED'
        value = 'active'
@@ -92,24 +93,28 @@ default_values = [partsgroup_id]
     };
     PROCESS input element_data = {
         name = "status"
+        id   = 'status-onhand'
         type = 'radio'
        value = 'onhand'
        label = text('On Hand') #'
     };
     PROCESS input element_data = {
         name = "status"
+        id   = 'status-short'
         type = 'radio'
        value = 'short'
        label = text('Short')
     };
     PROCESS input element_data = {
         name = "status"
+        id   = 'status-obsolete'
         type = 'radio'
        value = 'obsolete'
        label = text('Obsolete')
     };
     PROCESS input element_data = {
         name = "status"
+        id   = 'status-unused'
         type = 'radio'
        value = 'unused'
        label = text('Unused')

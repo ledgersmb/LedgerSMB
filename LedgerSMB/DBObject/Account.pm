@@ -176,7 +176,7 @@ Returns a list of all gifi codes and descriptions.
 
 sub gifi_list {
     my $self = shift @_;
-    @{$self->{gifi_list}} = $self->exec_method(funcname => 'gifi__list');
+    @{$self->{gifi_list}} = $self->call_dbmethod(funcname => 'gifi__list');
     return @{$self->{gifi_list}};
 }
 

@@ -171,6 +171,7 @@
         label = text('All')
          type = 'radio'
          name = 'on_hold'
+         id   = 'on_hold-all'
         value = ''
       checked = 'CHECKED'
      };
@@ -178,12 +179,14 @@
         label = text('Active')
          type = 'radio'
          name = 'on_hold'
+         id   = 'on_hold-active'
         value = '0'
      };
      PROCESS input element_data = {
         label = text('On Hold') #'
          type = 'radio'
          name = 'on_hold'
+         id   = 'on_hold-hold'
         value = '1'
      }; ?></td>
 </tr>

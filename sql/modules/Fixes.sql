@@ -171,6 +171,11 @@ ALTER TABLE inventory RENAME TO warehouse_inventory;
 COMMIT;
 
 BEGIN;
+ALTER SEQUENCE inventory_entry_id_seq
+   RENAME TO warehouse_inventory_entry_id_seq;
+COMMIT;
+
+BEGIN;
 ALTER TABLE business_unit_ac
   DROP CONSTRAINT business_unit_ac_entry_id_fkey,
   ADD CONSTRAINT business_unit_ac_entry_id_fkey
