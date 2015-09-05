@@ -23,6 +23,7 @@ package LedgerSMB::Request;
 use LedgerSMB::App_State;
 use LedgerSMB::PGNumber;
 use LedgerSMB::PGDate;
+use LedgerSMB::Request::Error;
 use Carp;
 
 =head1 DESCRIPTION
@@ -53,14 +54,14 @@ sub requires {
                                msg => LedgerSMB::App_State->Locale->text("Required attribute not provided: [_1]", $_) } } 
                      grep {not ($self->{$_} or $self->{$_})} @_;
     # todo, allow error list to be returned
-    die LedgerSMB::Request::Error(status => 422,
-                                     msg => [join "\n",
-                                              (map {$_->msg} @error_list) ]) 
+    die LedgerSMB::Request::Error->new(status => 422,
+                                     msg => (join "\n",
+                                              (map {$_->msg} @error_list) )) 
     if @error_list and not $return_errors;
     return {missing => [map {$_->field } @error_list ],
-            error => LedgerSMB::Request::Error(status => 422,
-                                     msg => [join "\n",
-                                              (map {$_->msg} @error_list) ])
+            error => LedgerSMB::Request::Error->new(status => 422,
+                                     msg => (join "\n",
+                                              (map {$_->msg} @error_list) ))
            };
 }
 

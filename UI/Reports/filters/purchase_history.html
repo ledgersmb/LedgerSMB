@@ -167,6 +167,7 @@
                          <?lsmb INCLUDE input element_data = {
                                 checked = 'CHECKED',
                                 name    = 'type',
+                                id      = 'type-i',
                                 type    = 'radio',
                                 class   = 'radio',
                                 value   = 'i'
@@ -175,6 +176,7 @@
 		    <td> 
                          <?lsmb INCLUDE input element_data = {
                                 name    = 'type',
+                                id      = 'type-o',
                                 type    = 'radio',
                                 class   = 'radio',
                                 value   = 'o'
@@ -183,6 +185,7 @@
                     <td> 
                          <?lsmb INCLUDE input element_data = {
                                 name    = 'type',
+                                id      = 'type-q',
                                 type    = 'radio',
                                 class   = 'radio',
                                 value   = 'q'
@@ -216,7 +219,8 @@
 		<td><?lsmb
                      INCLUDE input element_data= {
                              label = text('Summary'),
-                             name  = 'is_summary'
+                             name  = 'is_summary',
+                             id    = 'is_summary-1',
                              type  = 'radio',
                              value = '1',
                              class = 'radio',
@@ -226,6 +230,7 @@
                      INCLUDE input element_data= {
                              label = text('Detail'),
                              name  = 'is_summary',
+                             id    = 'is_summary-0',
                              type  = 'radio',
                              value = '0',
                              class = 'radio',
