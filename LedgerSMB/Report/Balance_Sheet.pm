@@ -39,6 +39,9 @@ sub run_report {
                                              ]);
         my $col_id = $self->cheads->map_path([ 1 ]);
         $self->cell_value($row_id, $col_id, $line->{balance});
+        $self->rheads->id_props($row_id, $line);
+        $self->cheads->id_props($col_id, { description => 
+                                               $self->to_date });
     }
     $self->rows([]);
 }
