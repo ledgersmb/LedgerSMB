@@ -4,8 +4,6 @@ use Test::More (tests => 10);
 use strict;
 use warnings;
 
-use Data::Dumper;
-
 use LedgerSMB::Report::Axis;
 
 my $axis = LedgerSMB::Report::Axis->new;
@@ -21,19 +19,25 @@ is_deeply($axis->tree(),
           {
               'a' => {
                   'children' => {},
+                  'path' => ['a'],
                   'id' => 1
               },
               'b' => {
+                  'path' => ['b'],
                   'children' => {
                       'c' => {
+                          'path' => ['b','c'],
                           'children' => {
                               'd' => {
+                                  'path' => ['b','c','d'],
                                   'children' => {
                                       'e' => {
+                                          'path' => ['b','c','d','e'],
                                           'children' => {},
                                           'id' => 6
                                       },
                                       'f' => {
+                                          'path' => ['b','c','d','f'],
                                           'children' => {},
                                           'id' => 5
                                       }
