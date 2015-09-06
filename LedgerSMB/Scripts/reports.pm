@@ -180,7 +180,7 @@ sub balance_sheet {
         $request->{to_date} = $request->{"to_date_$count"};
         my $comparison = LedgerSMB::Report::Balance_Sheet->new(%$request);
         $comparison->run_report;
-        $report->add_comparison($comparison);
+        $report->add_comparison($comparison, col_path_prefix => [$count]);
     }
     $report->render($request);
 }
