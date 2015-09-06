@@ -1,85 +1,35 @@
-<?lsmb INCLUDE 'ui-header.html' stylesheet=request.stylesheet 
-         include_stylesheet = ['UI/Reports/pnl.css']; 
+<?lsmb INCLUDE 'ui-header.html' stylesheet=request.stylesheet
+         include_stylesheet = ['UI/Reports/pnl.css'];
 
 FORMATS = LIST_FORMATS();
 LINK = request.script _ '?' _ ENVARS.QUERY_STRING _ '&amp;company=' _ DBNAME;
 LINK = LINK.replace('\&amp;\&amp;', '&amp;');
-comparisons = report.comparisons ?>
+
+USE String;
+
+ comparisons = report.comparisons ?>
 <body class="financial-statement <?lsmb dojo_theme ?>">
 <div id="PNL"> <!-- TODO: Find better name!! -->
 <h1><?lsmb text('Balance Sheet') ?></h1>
-<?lsmb # TODO:  header hierarchy handling ?>
+
 <table>
 <tr class="report-head">
-<td colspan="2"><h2><?lsmb text('Through date:') _ ' ' _ report.to_date ?></h2></td>
-<?lsmb FOREACH c IN comparisons ?>
-<td><?lsmb c.to_date ?></td>
-<?lsmb END; ?>
-<tr class="sectionhead">
-   <th colspan="2"><?lsmb text('Assets') ?></th>
+  <th></th>
+<?lsmb FOREACH col IN report.cheads.ids.keys -?>
+  <th><?lsmb report.cheads.ids.$col.props.description ?></th>
+<?lsmb END -?>
 </tr>
-<?lsmb FOREACH line IN report.balance_sheet.A.lines ?> 
-<tr><th><a href="journal.pl?action=search&amp;to_date=<?lsmb report.to_date 
-       ?>&amp;accno=<?lsmb line.account_number ?>"
-       ><?lsmb line.account_number _ ' - ' _ line.account_desc ?></a></th>
-    <td class="amount"><?lsmb line.balance ?> </td>
-    <?lsmb FOREACH c IN comparisons ?>
-    <td class="amount"><?lsmb c.index.${line.account_number} ?></td>
-    <?lsmb END; ?>
+<?lsmb FOREACH row IN report.rheads.ids.keys ?>
+<tr>
+  <th><?lsmb nbsp = String.new("&nbsp;"); nbsp.repeat(report.rheads.ids.$row.path.size); -?>
+<?lsmb report.rheads.ids.$row.props.account_number _ ' - ' _
+         report.rheads.ids.$row.props.account_desc ?></th>
+<?lsmb FOREACH col IN report.cheads.ids.keys -?>
+  <td class="amount"><?lsmb report.cells.$row.$col ?></td><?lsmb END ?>
 </tr>
 <?lsmb END ?>
-<tr class="total"><th><?lsmb text('Total Assets') ?></th>
-    <td class="amount"><?lsmb report.balance_sheet.A.total ?></td>
-    <?lsmb FOREACH c IN comparisons ?>
-    <td class="amount"><?lsmb c.totals.A ?></td>
-    <?lsmb END; ?>
-</tr>
-<tr class="sectionhead">
-   <th colspan="2"><?lsmb text('Liabilities') ?></th>
-</tr>
-<?lsmb FOREACH line IN report.balance_sheet.L.lines ?> 
-<tr><th><a href="journal.pl?action=search&amp;to_date=<?lsmb report.to_date 
-       ?>&amp;accno=<?lsmb line.account_number ?>"
-       ><?lsmb line.account_number _ ' - ' _ line.account_desc ?></a></th>
-    <td class="amount"><?lsmb line.balance ?> </td>
-    <?lsmb FOREACH c IN comparisons ?>
-    <td class="amount"><?lsmb c.index.${line.account_number} ?></td>
-    <?lsmb END; ?>
-</tr>
-<?lsmb END ?>
-<tr class="total"><th><?lsmb text('Total Liabilities') ?></th>
-    <td class="amount"><?lsmb report.balance_sheet.L.total ?></td>
-    <?lsmb FOREACH c IN comparisons ?>
-    <td class="amount"><?lsmb c.totals.L ?></td>
-    <?lsmb END ?>
-</tr>
-<tr class="sectionhead">
-   <th colspan="2"><?lsmb text('Equity') ?></th>
-</tr>
-<?lsmb FOREACH line IN report.balance_sheet.Q.lines ?> 
-<tr><th><a href="journal.pl?action=search&amp;to_date=<?lsmb report.to_date 
-       ?>&amp;accno=<?lsmb account_number ?>"
-       ><?lsmb IF line.account_number; line.account_number _ ' - '; END; line.account_desc ?></a></th>
-    <td class="amount"><?lsmb line.balance ?> </td>
-    <?lsmb FOREACH c IN comparisons ?>
-    <td class="amount"><?lsmb c.index.${line.account_number} ?></td>
-    <?lsmb END; ?>
-</tr>
-<?lsmb END ?>
-<tr class="total"><th><?lsmb text('Total Equity') ?></th>
-    <td class="amount"><?lsmb report.balance_sheet.Q.total ?></td>
-    <?lsmb FOREACH c IN comparisons ?>
-    <td class="amount"><?lsmb c.totals.Q ?></td>
-    <?lsmb END ?>
-</tr>
-<tr class="total"><th><?lsmb text('Total Liabilities Plus Equity') ?></th>
-    <td class="amount"><?lsmb report.balance_sheet.total_LQ ?></td>
-    <?lsmb FOREACH c IN comparisons ?>
-    <td class="amount"><?lsmb c.totals.LQ ?></td>
-    <?lsmb END ?>
-</tr>
-</table>
 
+<!--
 <h2><?lsmb text('Key Ratios'); ?></h2>
 <h2><?lsmb text('First column only') ?></h2>
 <table>
@@ -97,6 +47,7 @@ comparisons = report.comparisons ?>
 <td><a href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></td>
 </tr>
 <?lsmb END ?>
+-->
 </table>
 </div>
 </body>
