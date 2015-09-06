@@ -147,6 +147,13 @@ sub add_comparison{
             $self->cell_value($row_id, $col_id,
                               $compared->cells->{$orig_row_id}->{$orig_col_id})
                 if exists $compared->cells->{$orig_row_id}->{$orig_col_id};
+
+            $self->rheads->id_props($row_id,
+                                    $compared->rheads->id_props($orig_row_id))
+                if ! defined $self->rheads->id_props($row_id);
+            $self->cheads->id_props($col_id,
+                                    $compared->cheads->id_props($orig_col_id))
+                if ! defined $self->cheads->id_props($col_id);
         }
     }
 }

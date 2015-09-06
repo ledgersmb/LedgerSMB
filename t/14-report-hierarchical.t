@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More (tests => 3);
+use Test::More (tests => 5);
 use strict;
 use warnings;
 
@@ -19,6 +19,7 @@ my $row2_id = $report->rheads->map_path([2]);
 
 $report->cell_value($row1_id, $col_id, 15);
 $report->cell_value($row2_id, $col_id, 3);
+$report->rheads->id_props($row1_id, { test => "ok" });
 
 is_deeply($report->cells, {'1' => { '1' => 15 },
                            '2' => { '1' => 3 },
@@ -35,6 +36,8 @@ $row2_id = $compared->rheads->map_path([2]);
 
 $compared->cell_value($row1_id, $col_id, 2);
 $compared->cell_value($row2_id, $col_id, 7);
+$compared->rheads->id_props($row1_id, { test => "ok2" });
+$compared->rheads->id_props($row2_id, { test => "ok2" });
 
 is_deeply($compared->cells, {'1' => { '1' => 2 },
                              '2' => { '1' => 7 },
@@ -47,6 +50,9 @@ is_deeply($report->cells, {'1' => { '1' => 15,
                            '2' => { '1' => 3,
                                     '3' => 7 },
           }, 'report after merge has 2 columns');
-
+is_deeply($report->rheads->id_props('1'), { test => "ok" },
+          'props of row 1 have not been overwritten');
+is_deeply($report->rheads->id_props('2'), { test => "ok2" },
+          'props of row 2 have been merged from the comparison');
 
 
