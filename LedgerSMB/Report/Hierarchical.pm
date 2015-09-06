@@ -15,7 +15,6 @@ This report class is an abstract class.
 package LedgerSMB::Report::Hierarchical;
 use Moose;
 extends 'LedgerSMB::Report';
-with 'LedgerSMB::Report::Dates';
 
 use LedgerSMB::Report::Axis;
 
@@ -103,34 +102,23 @@ sub header_lines {
 
 =head1 SEMI-PUBLIC METHODS
 
-=head2 run_report()
+=head2 cell_value($row_id, $col_id, [$value])
 
-This sets rows to an empty hashref, and sets balance_sheet to the structure of 
-the balance sheet. 
+Returns the value of the cell specified by $row_id and $col_id,
+  optionally setting the value to $value if specified.
 
 =cut
 
-sub _set_cell_value {
+sub cell_value {
     my ($self, $row_id, $col_id, $value) = @_;
 
     $self->cells->{$row_id} = {}
-       if ! exists $self->cells->{$row_id};
+        if ! exists $self->cells->{$row_id};
 
-    $self->cells->{$row_id}->{$col_id} = $value;
-}
+    $self->cells->{$row_id}->{$col_id} = $value
+        if defined $value;
 
-sub run_report {
-    my ($self) = @_;
-   
-    my @lines = $self->call_dbmethod(funcname => 'report__balance_sheet');
-
-    for my $line (@lines) {
-        my $row_id = $self->rheads->map_path([ ( @{$line->{path}} ),
-                                               $line->{accno} ]);
-        my $col_id = $self->cheads->map_path([ 1 ]);
-        $self->_set_cell_value($row_id, $col_id, $line->{balance});
-    }
-    $self->rows([]);
+    return $self->cells->{$row_id}->{$col_id};
 }
 
 =head2 add_comparison($compared, col_path_prefix => [],
@@ -156,8 +144,8 @@ sub add_comparison{
                 $self->cheads->map_path([
                     (@$col_path_prefix),
                     (@{$compared->cheads->ids->{$orig_col_id}->{path}}) ]);
-            $self->_set_cell_value($row_id, $col_id,
-                                   $compared->cells->{$orig_row_id}->{$orig_col_id})
+            $self->cell_value($row_id, $col_id,
+                              $compared->cells->{$orig_row_id}->{$orig_col_id})
                 if exists $compared->cells->{$orig_row_id}->{$orig_col_id};
         }
     }
