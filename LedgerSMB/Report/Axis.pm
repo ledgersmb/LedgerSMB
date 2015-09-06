@@ -75,8 +75,10 @@ sub map_path {
     my $subtree = $self->tree;
 
     my $elem;
+    my $this_path = [];
     for my $step (@$path) {
-        $self->_new_elem($subtree, $step)
+        push @$this_path, $step;
+        $self->_new_elem($subtree, $step, $this_path)
             if ! exists $subtree->{$step};
 
         $elem = $subtree->{$step};
@@ -86,10 +88,11 @@ sub map_path {
 }
 
 sub _new_elem {
-    my ($self, $subtree, $step) = @_;
+    my ($self, $subtree, $step, $path) = @_;
 
     $subtree->{$step} = {
         id => $self->_last_id($self->_last_id + 1),
+        path => [ (@$path) ],
         children => {},
     };
     $self->ids->{$subtree->{$step}->{id}} = $subtree->{$step};
