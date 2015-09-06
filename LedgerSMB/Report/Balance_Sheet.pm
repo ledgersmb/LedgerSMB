@@ -10,7 +10,8 @@ LedgerSMB::Report::Balance_Sheet - The LedgerSMB Balance Sheet Report
 =head1 DESCRIPTION
 
 This report class defines the balance sheet functionality for LedgerSMB.   The
-primary work is done in the database procedures, while this module largely translates data structures for the report.
+primary work is done in the database procedures, while this module largely
+translates data structures for the report.
 
 =cut
 

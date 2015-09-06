@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 204;
+use Test::More tests => 205;
 use File::Find;
 
 my @on_disk;
@@ -117,6 +117,7 @@ my @modules =
           'LedgerSMB::Report::Contact::Search',
           'LedgerSMB::Report::File::Incoming',
           'LedgerSMB::Report::File::Internal',
+          'LedgerSMB::Report::Hierarchical',
           'LedgerSMB::Report::Inventory::Activity',
           'LedgerSMB::Report::Inventory::Partsgroups',
           'LedgerSMB::Report::Inventory::Pricegroups',
