@@ -97,6 +97,7 @@ sub run_report {
     for my $line (@lines) {
         my $row_id = &$row_map($line);
         my $col_id = $self->cheads->map_path([ 1 ]);
+        # signs have already been converted in the query
         $self->cell_value($row_id, $col_id, $line->{amount});
         $self->rheads->id_props($row_id, &$row_props($line));
         $self->cheads->id_props($col_id, { description => 
