@@ -75,15 +75,30 @@ sub run_report {
     my ($self) = @_;
    
     my @lines = $self->report_base();
+    my $row_map = ($self->gifi) ?
+        sub { my ($line) = @_;
+              return $self->rheads->map_path([ $line->{account_category},
+                                               $line->{gifi} ]);
+        } :
+        sub { my ($line) = @_;
+              return $self->rheads->map_path([ ( @{$line->{heading_path}},
+                                                 $line->{account_number})
+                                             ]);
+        };
+    my $row_props = ($self->gifi) ?
+        sub { my ($line) = @_;
+              return { account_number => $line->{gifi},
+                       account_desc => $line->{gifi_description},
+              };
+        } :
+        sub { my ($line) = @_; return $line; };
+
 
     for my $line (@lines) {
-        ###TODO-REPORT-HEADINGS: map GIFI differently
-        my $row_id = $self->rheads->map_path([ ( @{$line->{heading_path}},
-                                               $line->{account_number})
-                                             ]);
+        my $row_id = &$row_map($line);
         my $col_id = $self->cheads->map_path([ 1 ]);
         $self->cell_value($row_id, $col_id, $line->{amount});
-        $self->rheads->id_props($row_id, $line);
+        $self->rheads->id_props($row_id, &$row_props($line));
         $self->cheads->id_props($col_id, { description => 
                                                $self->to_date });
     }

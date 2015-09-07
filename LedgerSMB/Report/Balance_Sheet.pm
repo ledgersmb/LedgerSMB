@@ -20,6 +20,21 @@ use Moose;
 extends 'LedgerSMB::Report::Hierarchical';
 with 'LedgerSMB::Report::Dates';
 
+=head1 Datastore Properties
+
+=over
+
+
+=item gifi
+
+Boolean, true if it is a gifi report.
+
+=cut
+
+has gifi => (is => 'rw', isa => 'Bool');
+
+=back
+
 =head1 SEMI-PUBLIC METHODS
 
 =head2 run_report()
@@ -33,14 +48,31 @@ sub run_report {
     my ($self) = @_;
    
     my @lines = $self->call_dbmethod(funcname => 'report__balance_sheet');
+    my $row_map = ($self->gifi) ?
+        sub { my ($line) = @_;
+              return $self->rheads->map_path([ $line->{account_category},
+                                               $line->{gifi} ]);
+        } :
+        sub { my ($line) = @_;
+              ###TODO-REPORT-HEADINGS: 'current earnings' node doesn't
+              # have a HEADING_PATH
+              return $self->rheads->map_path([ ( @{$line->{heading_path}},
+                                                 $line->{account_number})
+                                             ]);
+        };
+    my $row_props = ($self->gifi) ?
+        sub { my ($line) = @_;
+              return { account_number => $line->{gifi},
+                       account_desc => $line->{gifi_description},
+              };
+        } :
+        sub { my ($line) = @_; return $line; };
 
     for my $line (@lines) {
-        my $row_id = $self->rheads->map_path([ ( @{$line->{heading_path}},
-                                               $line->{account_number})
-                                             ]);
+        my $row_id = &$row_map($line);
         my $col_id = $self->cheads->map_path([ 1 ]);
         $self->cell_value($row_id, $col_id, $line->{balance});
-        $self->rheads->id_props($row_id, $line);
+        $self->rheads->id_props($row_id, &$row_props($line));
         $self->cheads->id_props($col_id, { description => 
                                                $self->to_date });
     }
