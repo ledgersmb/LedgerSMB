@@ -90,6 +90,48 @@ sub run_report {
         $self->cheads->id_props($col_id, { description =>
                                                $self->to_date });
     }
+
+    # Header rows don't have descriptions
+    my %header_desc;
+    if ($self->gifi || $self->legacy_hierarchy) {
+        %header_desc = ( 'E' => { 'account_number' => 'E',
+                                  'account_desc' => 
+                                      $self->_locale->text('Expenses'),
+                                  'account_description' =>
+                                      $self->_locale->text('Expenses') },
+                         'I' => { 'account_number' => 'I',
+                                  'account_desc' =>
+                                      $self->_locale->text('Income'),
+                                  'account_description' =>
+                                      $self->_locale->text('Income') },
+                         'A' => { 'account_number' => 'A',
+                                  'account_desc' =>
+                                      $self->_locale->text('Assets'),
+                                  'account_description' =>
+                                      $self->_locale->text('Assets') },
+                         'L' => { 'account_number' => 'L',
+                                  'account_desc' =>
+                                      $self->_locale->text('Liabilities'),
+                                  'account_description' =>
+                                      $self->_locale->text('Liabilities') },
+                         'Q' => { 'account_number' => 'Q',
+                                  'account_desc' =>
+                                      $self->_locale->text('Equity'),
+                                  'account_description' =>
+                                      $self->_locale->text('Equity') },
+            );
+    }
+    else {
+        %header_desc =
+            map { $_->{accno} => { 'account_number' => $_->{accno},
+                                   'account_desc'   => $_->{description},
+                                   'account_description' => $_->{description} }
+            }
+            $self->call_dbmethod(funcname => 'account__all_headings');
+    };
+    for my $id (grep { ! defined $_->{props} } values %{$self->rheads->ids}) {
+        $self->rheads->id_props($id->{id}, $header_desc{$id->{accno}});
+    }
     $self->rows([]);
 }
 
