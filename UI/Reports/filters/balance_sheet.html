@@ -13,6 +13,15 @@ PROCESS input element_data = {
             size = 12
 };
 ?></div>
+<div class="inputrow">
+<?lsmb
+PROCESS input element_data = {
+   label = text('GIFI')    #'
+    name = 'gifi'
+      id = 'gifi'
+    type = 'checkbox'
+};
+?></div>
 <div class="subsection"><h3><?lsmb text('Enter up to 3 comparison dates') ?></h3></div>
 <?lsmb FOR ct IN [1, 2, 3]; ?>
 <div class="inputrow"><?lsmb 
