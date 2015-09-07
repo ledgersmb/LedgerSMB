@@ -109,6 +109,11 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
      JOIN tx_report gl ON ac.trans_id = gl.id AND gl.approved
      JOIN account_heading_tree at ON a.heading = at.id
 LEFT JOIN gifi g ON a.gifi_accno = g.accno
+LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
 LEFT JOIN (select array_agg(path) as bu_ids, entry_id
              FROM business_unit_ac buac
              JOIN bu_tree ON bu_tree.id = buac.bu_id
@@ -160,6 +165,11 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
            GROUP BY id
           ) ca ON gl.id = ca.id
 LEFT JOIN gifi g ON a.gifi_accno = g.accno
+LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
 LEFT JOIN (select array_agg(path) as bu_ids, entry_id
              FROM business_unit_ac buac
              JOIN bu_tree ON bu_tree.id = buac.bu_id
@@ -189,8 +199,13 @@ SELECT a.id, a.accno, a.description, a.category,
        CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
   FROM account a
   JOIN acc_trans ac ON a.id = ac.chart_id
-  JOIN account_heading_tree at ON a.heading = at.id
-  JOIN account_heading_descendant ahd ON at.id = ahd.id
+  JOIN account_heading_tree aht ON a.heading = aht.id
+LEFT JOIN gifi g ON a.gifi_accno = g.accno
+LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
  WHERE ac.approved is true and ac.trans_id = $1
        and a.category in ('I', 'E')
  GROUP BY a.id, a.accno, a.description, a.category,
@@ -216,6 +231,11 @@ SELECT a.id, a.accno, a.description, a.category,
   JOIN account_heading_tree at ON a.heading = at.id
   JOIN gl ON ac.trans_id = gl.id
 LEFT JOIN gifi g ON a.gifi_accno = g.accno
+LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
  WHERE ac.approved is true
           AND ($2 IS NULL OR ac.transdate >= $2)
           AND ($3 IS NULL OR ac.transdate <= $3)
@@ -234,6 +254,11 @@ SELECT a.id, a.accno, a.description, a.category,
   JOIN acc_trans ac ON a.id = ac.chart_id
   JOIN account_heading_tree at ON a.heading = at.id
 LEFT JOIN gifi g ON a.gifi_accno = g.accno
+LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
  WHERE ac.approved AND ac.trans_id = $1 AND a.category IN ('I', 'E')
  GROUP BY a.id, a.accno, a.description, a.category,
           at.path, g.accno, g.description
