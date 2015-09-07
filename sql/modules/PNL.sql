@@ -52,11 +52,6 @@ LEFT JOIN (SELECT trans_id, description
           INNER JOIN user_preference up ON up.language = at.language_code
           INNER JOIN users ON up.id = users.id
             WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
-LEFT JOIN (SELECT trans_id, description
-             FROM account_heading_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) ht ON ah.id = ht.trans_id
     WHERE i.parts_id = $3
           AND (ac.transdate >= $1 OR $1 IS NULL) 
           AND (ac.transdate <= $2 OR $2 IS NULL)
@@ -84,11 +79,6 @@ LEFT JOIN (SELECT trans_id, description
           INNER JOIN user_preference up ON up.language = at.language_code
           INNER JOIN users ON up.id = users.id
             WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
-LEFT JOIN (SELECT trans_id, description
-             FROM account_heading_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) ht ON ah.id = ht.trans_id
     WHERE i.parts_id = $3
           AND (ac.transdate >= $1 OR $1 IS NULL) 
           AND (ac.transdate <= $2 OR $2 IS NULL)
