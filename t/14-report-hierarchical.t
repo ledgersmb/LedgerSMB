@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-use Test::More (tests => 5);
+use Test::More (tests => 6);
 use strict;
 use warnings;
 
@@ -17,13 +17,19 @@ my $col_id = $report->cheads->map_path([1]);
 my $row1_id = $report->rheads->map_path([1]);
 my $row2_id = $report->rheads->map_path([2]);
 
-$report->cell_value($row1_id, $col_id, 15);
+$report->cell_value($row1_id, $col_id, 14);
 $report->cell_value($row2_id, $col_id, 3);
 $report->rheads->id_props($row1_id, { test => "ok" });
 
-is_deeply($report->cells, {'1' => { '1' => 15 },
+is_deeply($report->cells, {'1' => { '1' => 14 },
                            '2' => { '1' => 3 },
           }, 'report has 1 column and 2 rows, with 2 values');
+
+$report->accum_cell_value($row1_id, $col_id, 1);
+
+is_deeply($report->cells, {'1' => { '1' => 15 },
+                           '2' => { '1' => 3 },
+          }, 'report accumulates cell value');
 
 my $compared = LedgerSMB::Report::Hierarchical->new;
 

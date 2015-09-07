@@ -121,6 +121,26 @@ sub cell_value {
     return $self->cells->{$row_id}->{$col_id};
 }
 
+=head2 accum_cell_value($row_id, $col_id, $increment)
+
+Returns the value of the cell identified by $row_id and $col_id,
+  after incrementing the value of the cell by $increment.
+
+If the cell doesn't exist yet, a value of 0 (zero) is assumed,
+  effectively setting the value to $increment.
+
+=cut
+
+sub accum_cell_value {
+    my ($self, $row_id, $col_id, $increment) = @_;
+
+    return $self->cell_value($row_id, $col_id,
+                             ($self->cell_value($row_id, $col_id) || 0)
+                             + $increment);
+}
+
+
+
 =head2 add_comparison($compared, col_path_prefix => [],
     row_path_prefix => [])
 
