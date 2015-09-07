@@ -71,6 +71,37 @@ INCLUDE 'ui-header.html'
 </div>
 <hr size="3" noshade="noshade" />
 <?lsmb FOREACH button IN buttons; INCLUDE button element_data=button; END ?>
+<hr />
+<table>
+<caption>Translations for this heading</caption>
+<tbody>
+<?lsmb
+   PROCESS input element_data = {
+       type="hidden"
+       name="languagecount"
+       value=form.languages.size
+   };
+   lang_index = 0;
+   FOREACH language IN form.languages;
+     lang_index = lang_index + 1; ?>
+  <tr>
+    <td><?lsmb language.description ?>
+      <?lsmb PROCESS input element_data = {
+             type="hidden"
+             name = 'languagecode_' _ lang_index
+             value = language.code } ?>
+    </td>
+    <td><?lsmb PROCESS input element_data = {
+               name = 'languagetranslation_' _ lang_index
+               id = 'heading-languagetranslation-' _ lang_index
+               class = 'translation'
+               value = form.translations.${language.code}.description
+       } ?>
+      </td>
+    </tr>
+  <?lsmb END ?>
+</tbody>
+</table>
 </form>
 </div>
 <div data-dojo-type="dijit/layout/ContentPane"
@@ -455,6 +486,37 @@ INCLUDE 'ui-header.html'
 
 <hr size="3" noshade="noshade" />
 <?lsmb FOREACH button IN buttons; button.id = button.name _ '-A'; INCLUDE button element_data=button; END ?>
+<hr />
+<table>
+<caption>Translations for this account</caption>
+<tbody>
+<?lsmb
+   PROCESS input element_data = {
+       type="hidden"
+       name="languagecount"
+       value=form.languages.size
+   };
+   lang_index = 0;
+   FOREACH language IN form.languages;
+     lang_index = lang_index + 1; ?>
+  <tr>
+    <td><?lsmb language.description ?>
+      <?lsmb PROCESS input element_data = {
+             type="hidden"
+             name = 'languagecode_' _ lang_index
+             value = language.code } ?>
+    </td>
+    <td><?lsmb PROCESS input element_data = {
+               name = 'languagetranslation_' _ lang_index
+               id = 'account-languagetranslation-' _ lang_index
+               class = 'translation'
+               value = form.translations.${language.code}.description
+       } ?>
+      </td>
+    </tr>
+  <?lsmb END ?>
+</tbody>
+</table>
 </form>
 </div>
 </body>
