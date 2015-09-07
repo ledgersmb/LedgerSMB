@@ -116,11 +116,6 @@ LEFT JOIN (SELECT trans_id, description
           INNER JOIN user_preference up ON up.language = at.language_code
           INNER JOIN users ON up.id = users.id
             WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
-LEFT JOIN (SELECT trans_id, description
-             FROM account_heading_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) ht ON ah.id = ht.trans_id
 LEFT JOIN (select array_agg(path) as bu_ids, entry_id
              FROM business_unit_ac buac
              JOIN bu_tree ON bu_tree.id = buac.bu_id
@@ -178,11 +173,6 @@ LEFT JOIN (SELECT trans_id, description
           INNER JOIN user_preference up ON up.language = at.language_code
           INNER JOIN users ON up.id = users.id
             WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
-LEFT JOIN (SELECT trans_id, description
-             FROM account_heading_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) ht ON ah.id = ht.trans_id
 LEFT JOIN (select array_agg(path) as bu_ids, entry_id
              FROM business_unit_ac buac
              JOIN bu_tree ON bu_tree.id = buac.bu_id
@@ -219,11 +209,6 @@ LEFT JOIN (SELECT trans_id, description
           INNER JOIN user_preference up ON up.language = at.language_code
           INNER JOIN users ON up.id = users.id
             WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
-LEFT JOIN (SELECT trans_id, description
-             FROM account_heading_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) ht ON ah.id = ht.trans_id
  WHERE ac.approved is true and ac.trans_id = $1
        and a.category in ('I', 'E')
  GROUP BY a.id, a.accno, coalesce(at.description, a.description), a.category, 
@@ -254,11 +239,6 @@ LEFT JOIN (SELECT trans_id, description
           INNER JOIN user_preference up ON up.language = at.language_code
           INNER JOIN users ON up.id = users.id
             WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
-LEFT JOIN (SELECT trans_id, description
-             FROM account_heading_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) ht ON ah.id = ht.trans_id
  WHERE ac.approved is true 
           AND ($2 IS NULL OR ac.transdate >= $2) 
           AND ($3 IS NULL OR ac.transdate <= $3)
@@ -282,11 +262,6 @@ LEFT JOIN (SELECT trans_id, description
           INNER JOIN user_preference up ON up.language = at.language_code
           INNER JOIN users ON up.id = users.id
             WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
-LEFT JOIN (SELECT trans_id, description
-             FROM account_heading_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) ht ON ah.id = ht.trans_id
  WHERE ac.approved AND ac.trans_id = $1 AND a.category IN ('I', 'E')
  GROUP BY a.id, a.accno, coalesce(at.description, a.description), a.category,
           aht.path, g.accno, g.description
