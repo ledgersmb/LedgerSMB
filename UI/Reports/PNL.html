@@ -22,7 +22,7 @@ LINK = LINK.replace('\&amp;\&amp;', '&amp;');
 <tr>
   <th><?lsmb nbsp = String.new("&nbsp;"); nbsp.repeat(report.rheads.ids.$row.path.size); -?>
 <?lsmb report.rheads.ids.$row.props.account_number _ ' - ' _
-         report.rheads.ids.$row.props.account_desc ?></th>
+         report.rheads.ids.$row.props.account_description ?></th>
 <?lsmb FOREACH col IN report.cheads.ids.keys -?>
   <!-- ###TODO-REPORT-HEADINGS: implement sign conversion A/L/Q*contra -->
   <!-- ###TODO-REPORT-HEADINGS: add links on the cells to 'drill downs' -->
