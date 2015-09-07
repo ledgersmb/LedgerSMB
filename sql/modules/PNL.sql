@@ -46,6 +46,11 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
              from business_unit_inv bui
              JOIN bu_tree bu ON bui.bu_id = bu.id
          GROUP BY entry_id) bui ON bui.entry_id = i.id
+LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
     WHERE i.parts_id = $3
           AND (ac.transdate >= $1 OR $1 IS NULL)
           AND (ac.transdate <= $2 OR $2 IS NULL)
@@ -68,6 +73,11 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
              from business_unit_inv bui
              JOIN bu_tree bu ON bui.bu_id = bu.id
          GROUP BY entry_id) bui ON bui.entry_id = i.id
+LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
     WHERE i.parts_id = $3
           AND (ac.transdate >= $1 OR $1 IS NULL)
           AND (ac.transdate <= $2 OR $2 IS NULL)
