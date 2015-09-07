@@ -25,6 +25,7 @@ USE String;
 <?lsmb report.rheads.ids.$row.props.account_number _ ' - ' _
          report.rheads.ids.$row.props.account_desc ?></th>
 <?lsmb FOREACH col IN report.cheads.ids.keys -?>
+  <!-- ###TODO-REPORT-HEADINGS: implement sign conversion A/L/Q*contra -->
   <td class="amount"><?lsmb report.cells.$row.$col ?></td><?lsmb END ?>
 </tr>
 <?lsmb END ?>
