@@ -33,6 +33,15 @@ Boolean, true if it is a gifi report.
 
 has gifi => (is => 'rw', isa => 'Bool');
 
+=item legacy_hierarchy
+
+Boolean, true if the regular hierarchies need to be ignored,
+  using account category as the "hierarchy".
+
+=cut
+
+has legacy_hierarchy => (is => 'rw', isa => 'Bool');
+
 =back
 
 =head1 SEMI-PUBLIC METHODS
@@ -52,6 +61,10 @@ sub run_report {
         sub { my ($line) = @_;
               return $self->rheads->map_path([ $line->{account_category},
                                                $line->{gifi} ]);
+        } : ($self->legacy_hierarchy) ?
+        sub { my ($line) = @_;
+              return $self->rheads->map_path([ $line->{account_category},
+                                               $line->{account_number} ]);
         } :
         sub { my ($line) = @_;
               ###TODO-REPORT-HEADINGS: 'current earnings' node doesn't

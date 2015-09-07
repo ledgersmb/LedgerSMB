@@ -62,6 +62,24 @@
                               label = 'gifi',
                                name = 'gifi',
                           } ?></td></tr>
+                <tr><td><?lsmb text('Hierarchy type') ?>
+<?lsmb
+PROCESS input element_data = {
+   label = text('Full')
+    type = 'radio'
+    name = 'legacy_hierarchy'
+   value = 0
+      id = 'legacy-hierarchy-0'
+};
+
+PROCESS input element_data = {
+   label = text('Account category')
+    type = 'radio'
+    name = 'legacy_hierarchy'
+   value = 1
+      id = 'legacy-hierarchy-1'
+};
+?></td></tr>
       </table>
     </td>
   </tr>
