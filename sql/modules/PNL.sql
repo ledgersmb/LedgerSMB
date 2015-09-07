@@ -240,8 +240,8 @@ LEFT JOIN (SELECT trans_id, description
           AND ($2 IS NULL OR ac.transdate >= $2)
           AND ($3 IS NULL OR ac.transdate <= $3)
           AND a.category IN ('I', 'E')
- GROUP BY a.id, a.accno, a.description, a.category,
-          at.path, g.accno, g.description
+ GROUP BY a.id, a.accno, coalesce(at.description, a.description), a.category,
+          aht.path, g.accno, g.description
  ORDER BY a.category DESC, a.accno ASC;
 $$ LANGUAGE SQL;
 
