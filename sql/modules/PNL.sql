@@ -67,7 +67,7 @@ LEFT JOIN (SELECT trans_id, description
      JOIN acc_trans ac ON ac.invoice_id = i.id
      JOIN account a ON p.income_accno_id = a.id
      JOIN ar ON ar.id = ac.trans_id
-     JOIN account_heading_tree at ON a.heading = at.id
+     JOIN account_heading_tree aht ON a.heading = aht.id
 LEFT JOIN gifi g ON a.gifi_accno = g.accno
 LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
              from business_unit_inv bui
