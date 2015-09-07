@@ -31,7 +31,11 @@ Read-only accessor, a hash of hashes, keyed on the "account number".
 E.g.:
 
  { 'head1' => { id => 1,
+                accno => 'head1',
+                path => [ 'head1' ],
                 children => { 'head2' => { id => 2,
+                                           accno => 'head2',
+                                           path => [ 'head1', 'head2' ],
                                            children => {} }
                             }
               }
@@ -92,6 +96,7 @@ sub _new_elem {
 
     $subtree->{$step} = {
         id => $self->_last_id($self->_last_id + 1),
+        accno => $step,
         path => [ (@$path) ],
         children => {},
     };
