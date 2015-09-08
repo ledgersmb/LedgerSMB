@@ -229,7 +229,6 @@ sub display_form
 
     $focus = ( $form->{focus} ) ? $form->{focus} : "debit_$form->{rowcount}";
     our %hiddens = (
-    'action' => $form->{action},
     'direction' => $form->{direction},
     'oldsort' => $form->{oldsort},
     'path' => $form->{path},
