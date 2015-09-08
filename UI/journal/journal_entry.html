@@ -130,7 +130,7 @@
 		  <td>
 			<?lsmb IF displayrow.accnoset == 0 ?>
               			<?lsmb PROCESS input element_data = {
-		                     name = "accno_$INDEX"
+		                      name = "accno_$INDEX"
 									 type = "text"
 		                      initial_value = ${"accno_$INDEX"}
 		                      value = ${"accno_$INDEX"}
@@ -138,6 +138,7 @@
 		                      value_attr = 'id'
 									 class = 'AccountBox'
 									 'data-dojo-type' = 'lsmb/accounts/AccountSelector'
+                            'data-dojo-props' = 'required: false'
 		              } ?> 
 			   
 			  <?lsmb ELSE ?>
