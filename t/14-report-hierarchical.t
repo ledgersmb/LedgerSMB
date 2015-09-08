@@ -49,7 +49,7 @@ is_deeply($compared->cells, {'1' => { '1' => 2 },
                              '2' => { '1' => 7 },
           }, 'comparison has 1 column and 2 rows, with 2 values');
 
-$report->add_comparison($compared, col_path_prefix => [ 'comp1' ]);
+$report->add_comparison($compared, column_path_prefix => [ 'comp1' ]);
 
 is_deeply($report->cells, {'1' => { '1' => 15,
                                     '3' => 2 },
