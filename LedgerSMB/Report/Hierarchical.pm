@@ -152,7 +152,7 @@ sub add_comparison{
     my ($self, $compared, @args) = @_;
     my %args = (@args);
     my $row_path_prefix = $args{row_path_prefix} || [];
-    my $col_path_prefix = $args{col_path_prefix} || [];
+    my $col_path_prefix = $args{column_path_prefix} || [];
 
     for my $orig_row_id (keys %{$compared->rheads->ids}) {
         for my $orig_col_id (keys %{$compared->cheads->ids}) {

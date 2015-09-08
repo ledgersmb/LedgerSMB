@@ -42,6 +42,16 @@ Boolean, true if the regular hierarchies need to be ignored,
 
 has legacy_hierarchy => (is => 'rw', isa => 'Bool');
 
+=item column_path_prefix
+
+
+
+=cut
+
+has column_path_prefix => (is => 'ro', isa => 'ArrayRef',
+                           default => sub { [ 1 ] });
+
+
 =back
 
 =head1 SEMI-PUBLIC METHODS
