@@ -93,7 +93,7 @@ sub run_report {
 
     for my $line (@lines) {
         my $row_id = &$row_map($line);
-        my $col_id = $self->cheads->map_path([ 1 ]);
+        my $col_id = $self->cheads->map_path($self->column_path_prefix);
         # signs have already been converted in the query
         $self->cell_value($row_id, $col_id, $line->{balance});
         $self->rheads->id_props($row_id, &$row_props($line));
