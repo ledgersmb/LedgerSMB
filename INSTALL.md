@@ -3,8 +3,8 @@
 Contents
 --------
 
- * System requirements
- * Simple Server Setup: Running on Starman
+ * [System requirements](#system-requirements)
+ * [Simple Server Setup: Running on Starman](Running-on-Starman)
  * Installing Apache 2
  * Installing PostgreSQL
  * PostgreSQL authorization settings
@@ -33,17 +33,17 @@ LedgerSMB depends on the following software:
 Installation process overview
 =============================
 
- 1) Install the base software: web server (Apache),
-    database server (PostgreSQL) and Perl from your distribution
-    and package manager or source. Read on for details
- 2) Installing Perl module dependencies from your distribution and
-    package manager or CPAN.  Read on for details
- 3) Give the web server access to the ledgersmb directory
- 4) Edit ./ledgersmb/ledgersmb.conf to be able to access the database
+ 1. Install the base software: web server (Apache),  
+    database server (PostgreSQL) and Perl from your distribution  
+    and package manager or source. Read on for details  
+ 2. Installing Perl module dependencies from your distribution and  
+    package manager or CPAN.  Read on for details  
+ 3. Give the web server access to the ledgersmb directory
+ 4. Edit ./ledgersmb/ledgersmb.conf to be able to access the database
     and locate the relevant PostgreSQL contrib scripts
- 5) Initializing a company database
+ 5. Initializing a company database
     Database setup and upgrade script at http://localhost/ledgersmb/setup.pl
- 6) Login with your name (database username),
+ 6. Login with your name (database username),
     password (database user password), Company (databasename)
 
 Running on Starman
@@ -486,3 +486,4 @@ In the tools/ directory, there's a script which will remove a company
 database and all the standard authorization data that's created by
 the 'prepare-company-database.sh' script.  Said script is called
 'delete-company-database.sh'.
+
