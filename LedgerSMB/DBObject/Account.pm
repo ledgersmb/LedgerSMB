@@ -32,8 +32,8 @@ sub _get_translations {
     }
 
     $self->{translations} = {};
-    my @translations = $self->exec_method(funcname => $trans_func,
-                                          args => [ $self->{id} ]);
+    my @translations = $self->call_procedure(funcname => $trans_func,
+                                             args => [ $self->{id} ]);
     for my $trans (@translations) {
         $self->{translations}->{$trans->{language_code}} = $trans;
     }
@@ -102,13 +102,14 @@ sub save {
 
     for my $lang_code (keys %{$self->{translations}}) {
         if ($self->{translations}->{$lang_code} eq '') {
-            $self->exec_method(funcname => $trans_del_func,
-                               args => [ $self->{id}, $lang_code ]);
+            $self->call_procedure(funcname => $trans_del_func,
+                                  args => [ $self->{id}, $lang_code ]);
         }
         else {
-            $self->exec_method(funcname => $trans_save_func,
-                               args => [ $self->{id}, $lang_code,
-                                         $self->{translations}->{$lang_code}]);
+            $self->call_procedure(
+                funcname => $trans_save_func,
+                args => [ $self->{id}, $lang_code,
+                          $self->{translations}->{$lang_code}]);
         }
     }
     $self->_get_translations;
