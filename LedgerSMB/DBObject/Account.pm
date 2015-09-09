@@ -19,10 +19,13 @@ and accounts).
 
 =cut
 
-use strict;
 package LedgerSMB::DBObject::Account;
+use strict;
+use warnings;
 use base qw(LedgerSMB::PGOld);
+
 use Data::Dumper;
+use Try::Tiny;
 
 sub _get_translations {
     my ($self) = @_;
