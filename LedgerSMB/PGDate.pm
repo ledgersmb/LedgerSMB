@@ -139,7 +139,8 @@ sub _parse_string {
 
 sub from_input{
     my ($self, $input, $has_time) = @_;
-    local ($@); # pre-5.14, do not die() in this block
+    local $@;
+    return from_db(@_) unless (defined $input) or ($input =~ /^\d+:/);
     return $input if eval {$input->isa(__PACKAGE__)};
     #return if (!defined $input) || ('' eq $input);
     $input = undef if $input eq '';
@@ -148,10 +149,11 @@ sub from_input{
     $format = 'yyyy-mm-dd' if $input =~ /^\d{4}/;
     my $dt =  _parse_string($self, $input, uc($format), $has_time)
 		  if $input;
-    my $rv = $self->now();
-    $rv->{date} = $dt
-        if $dt;
-    return $rv;
+    my $retval = $self->new($ddt);
+    $retval->{_pgobject_is_date} = 1 if $year;
+    $retval->{_pgobject_is_time} = 1 if defined $hour;
+    return $retval;
+
 }
 
 
@@ -167,13 +169,16 @@ sub to_output {
     #return undef if !defined $self;
 	 return undef if !defined $self->{date};
     my $fmt;
-    if (defined $LedgerSMB::App_State::User->{dateformat}){
-        $fmt = $LedgerSMB::App_State::User->{dateformat};
-    } else {
-        $fmt = '%F';
+    if ($self->{_pgobject_is_date}){
+        if (defined $LedgerSMB::App_State::User->{dateformat}){
+            $fmt = $LedgerSMB::App_State::User->{dateformat};
+        } else {
+            $fmt = '%F';
+        }
+        $fmt = $formats->{uc($fmt)}->[0] if defined $formats->{uc($fmt)};
     }
-    $fmt = $formats->{uc($fmt)}->[0] if defined $formats->{uc($fmt)};
-    $fmt .= ' %T' if ($self->hour);
+    $fmt .= ' %T' if ($self->{_pgobject_is_time});
+    $fmt =~ s/^\s+//;
     
     my $formatter = new DateTime::Format::Strptime(
              pattern => $fmt,
