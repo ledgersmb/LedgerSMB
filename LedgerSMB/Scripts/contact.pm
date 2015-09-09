@@ -33,6 +33,7 @@ use LedgerSMB::Template;
 
 use strict;
 use warnings;
+use Try::Tiny;
 
 #Plugins
 opendir(my $dh, 'LedgerSMB/Entity/Plugins') 
