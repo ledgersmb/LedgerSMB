@@ -86,7 +86,7 @@ sub save {
     }
     my ($id_ref) = try { $self->call_dbmethod(funcname => $func) } 
                    catch { 
-                       $msg = $@;
+                       my $msg = $@;
                         if ($msg =~ /Invalid link settings:\s*Summary/){
                             die LedgerSMB::App_State::Locale->text(
                  'Error: Cannot include summary account in other dropdown menus'
