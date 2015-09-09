@@ -248,24 +248,23 @@ sub get_info {
        $dbh->rollback;
        # LedgerSMB 1.2 and above
        $sth = $dbh->prepare('SELECT value FROM defaults WHERE setting_key = ?');
-       $sth->execute('version');
-       if (my $ref = $sth->fetchrow_hashref('NAME_lc')){
+       if (defined $sth && $sth->execute('version')) {
+           my $ref = $sth->fetchrow_hashref('NAME_lc');
            $retval->{full_version} = $ref->{value};
            $retval->{appname} = 'ledgersmb';
            if ($ref->{value} eq '1.2.0') {
                 $retval->{version} = '1.2';
            } elsif ($ref->{value} eq '1.2.99'){
                 $retval->{version} = '1.3dev';
-           } elsif ($ref->{value} =~ /^1.3.999/ or $ref->{value} =~ /^1.4/){
+           } elsif ($ref->{value} =~ /^1\.3\.999/ or $ref->{value} =~ /^1.4/){
                 $retval->{version} = "1.4";
-           } elsif ($ref->{value} =~ /^1.3/){
+           } elsif ($ref->{value} =~ /^1\.3/){
                 $retval->{version} = '1.3';
+           } elsif ($ref->{value} =~ /^1\.5\./){
+                $retval->{version} = '1.5';
            }
-           if ($retval->{version}){
-
-	       $dbh->rollback();
-              return $retval;
-           }
+           $dbh->rollback();
+           return $retval;
        }
        $dbh->rollback;
        # SQL-Ledger 2.7-2.8 (fldname, fldvalue)
@@ -346,7 +345,7 @@ sub load_modules {
         $mod =~ s/(\s+|#.*)//g;
         next unless $mod;
         if ($mod eq 'Fixes.sql'){
-     
+            local ($@); # pre-5.14, do not die() in this block
             eval { 
               $self->run_file(
                        file       => "$self->{source_dir}sql/modules/$mod",

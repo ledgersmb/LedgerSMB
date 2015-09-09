@@ -245,13 +245,16 @@ sub get_for_template{
         binmode FILE, ':bytes';
         print FILE $result->{content};
         close FILE;
-        eval { # Block used so that Image::Size is optional
-           require Image::Size;
-           my ($x, $y);
-           ($x, $y) = imgsize(\{$result->{content}});
-           $result->{sizex} = $x;
-           $result->{sizey} = $y;
-        };
+        { #pre-5.14 compatibility block
+            local ($@); # pre-5.14, do not die() in this block
+            eval { # Block used so that Image::Size is optional
+                require Image::Size;
+                my ($x, $y);
+                ($x, $y) = imgsize(\{$result->{content}});
+                $result->{sizex} = $x;
+                $result->{sizey} = $y;
+            };
+        }
         if ($result->{file_class} == 3){ 
            $result->{ref_key} = $result->{file_name};
            $result->{ref_key} =~ s/-.*//;

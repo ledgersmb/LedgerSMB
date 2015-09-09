@@ -66,8 +66,11 @@ sub get_template {
 sub preprocess {
     my $rawvars = shift;
     my $vars;
-    if (eval {$rawvars->can('to_output')}){
-        $rawvars = $rawvars->to_output;
+    { # pre-5.14 compatibility block
+        local ($@); # pre-5.14, do not die() in this block
+        if (eval {$rawvars->can('to_output')}){
+            $rawvars = $rawvars->to_output;
+        }
     }
     my $type = ref $rawvars;
 
@@ -113,6 +116,7 @@ sub process {
 
         my $dojo_theme; 
         if ($LedgerSMB::App_State::DBH){
+           local ($@); # pre-5.14, do not die() in this block
            eval { LedgerSMB::Company_Config->initialize() 
                        unless $LedgerSMB::App_State::Company_Config;
              $dojo_theme = $LedgerSMB::App_State::Company_Config->{dojo_theme};

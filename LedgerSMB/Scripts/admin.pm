@@ -165,6 +165,7 @@ sub delete_session {
     list_sessions($request);
 }
 
+###TODO-LOCALIZE-DOLLAR-AT
 eval { do "scripts/custom/admin.pl"};
 
 =back

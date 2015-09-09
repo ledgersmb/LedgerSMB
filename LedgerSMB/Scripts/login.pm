@@ -171,6 +171,7 @@ sub logout_js {
 }
     
 
+###TODO-LOCALIZE-DOLLAR-AT
 eval { do "scripts/custom/login.pl"};
 
 =back
