@@ -86,14 +86,15 @@ sub save {
     }
     my ($id_ref) = try { $self->call_dbmethod(funcname => $func) } 
                    catch { 
-                        if ($_ =~ /Invalid link settings:\s*Summary/){
+                       $msg = $@;
+                        if ($msg =~ /Invalid link settings:\s*Summary/){
                             die LedgerSMB::App_State::Locale->text(
                  'Error: Cannot include summary account in other dropdown menus'
                             );
                         }
                         die LedgerSMB::App_State::Locale->text(
                             'Internal Database Error.'
-                        ) . " $_";
+                        ) . " $msg";
                   };
     $self->{id} = $id_ref->{$func};
     if (defined $self->{recon}){
