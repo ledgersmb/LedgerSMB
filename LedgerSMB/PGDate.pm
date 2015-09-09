@@ -139,6 +139,7 @@ sub _parse_string {
 
 sub from_input{
     my ($self, $input, $has_time) = @_;
+    local ($@); # pre-5.14, do not die() in this block
     return $input if eval {$input->isa(__PACKAGE__)};
     #return if (!defined $input) || ('' eq $input);
     $input = undef if $input eq '';

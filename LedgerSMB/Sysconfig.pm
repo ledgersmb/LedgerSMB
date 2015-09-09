@@ -47,6 +47,7 @@ our @scripts = (
 );
 
 # if you have latex installed set to 1
+###TODO-LOCALIZE-DOLLAR-AT
 our $latex = eval {require Template::Plugin::Latex}; 
 
 # Defaults to 1 megabyte
