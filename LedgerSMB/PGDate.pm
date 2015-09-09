@@ -9,6 +9,8 @@ use LedgerSMB::App_State;
 use Carp;
 use PGObject;
 use base qw(PGObject::Type::DateTime);
+use strict;
+use warnings;
 
 PGObject->register_type(pg_type => $_,
                                   perl_class => __PACKAGE__)
@@ -149,9 +151,9 @@ sub from_input{
     $format = 'yyyy-mm-dd' if $input =~ /^\d{4}/;
     my $dt =  _parse_string($self, $input, uc($format), $has_time)
 		  if $input;
-    my $retval = $self->new($ddt);
-    $retval->{_pgobject_is_date} = 1 if $year;
-    $retval->{_pgobject_is_time} = 1 if defined $hour;
+    my $retval = $self->new($dt);
+    $retval->{_pgobject_is_date} = 1;
+    $retval->{_pgobject_is_time} = 1 if $has_time;
     return $retval;
 
 }
