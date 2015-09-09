@@ -500,6 +500,7 @@ any later version.  Please see the included LICENSE.txt for more details.
 
 =cut
 
+###TODO-LOCALIZE-DOLLAR-AT
 eval { do 'scripts/custom/import_trans.pl'; };
 
 1;

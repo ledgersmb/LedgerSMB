@@ -992,6 +992,7 @@ sub run_import {
     begin_import($request);
 }
 
+###TODO-LOCALIZE-DOLLAR-AT
 eval { do "scripts/custom/asset.pl"};
 
 1;
