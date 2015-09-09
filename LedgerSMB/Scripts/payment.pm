@@ -1852,6 +1852,7 @@ for my $key (keys %entity_list)
 
 =cut
 
+###TODO-LOCALIZE-DOLLAR-AT
 eval { do "scripts/custom/payment.pl"};
 1;
 
