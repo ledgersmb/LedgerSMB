@@ -77,11 +77,13 @@ sub get_by_cc {
            LedgerSMB::Entity::Company->get_by_cc($request->{control_code});
     $entity ||=  LedgerSMB::Entity::Person->get_by_cc($request->{control_code});
     my ($company, $person) = (undef, undef);
-    local ($@);
-    if (eval {$entity->isa('LedgerSMB::Entity::Company')}){
-       $company = $entity;
-    } elsif (eval {$entity->isa('LedgerSMB::Entity::Person')}){
-       $person = $entity;
+    { # pre-5.14 compatibility block
+        local ($@); # pre-5.14, do not die() in this block
+        if (eval {$entity->isa('LedgerSMB::Entity::Company')}){
+            $company = $entity;
+        } elsif (eval {$entity->isa('LedgerSMB::Entity::Person')}){
+            $person = $entity;
+        }
     }
     _main_screen($request, $company, $person);
 }
@@ -108,11 +110,13 @@ sub get {
     my $entity = LedgerSMB::Entity::Company->get($request->{entity_id});
     $entity ||= LedgerSMB::Entity::Person->get($request->{entity_id});
     my ($company, $person) = (undef, undef);
-    local ($@);
-    if (eval {$entity->isa('LedgerSMB::Entity::Company')}){
-       $company = $entity;
-    } elsif (eval {$entity->isa('LedgerSMB::Entity::Person')}){
-       $person = $entity;
+    { # pre-5.14 compatibility block
+        local ($@); # pre-5.14, do not die() in this block
+        if (eval {$entity->isa('LedgerSMB::Entity::Company')}){
+            $company = $entity;
+        } elsif (eval {$entity->isa('LedgerSMB::Entity::Person')}){
+            $person = $entity;
+        }
     }
     _main_screen($request, $company, $person);
 }
@@ -294,9 +298,11 @@ sub _main_screen {
          value => 3} if $credit_act->{id};
     ;
 
-    local ($@);
-    $request->close_form() if eval {$request->can('close_form')};
-    $request->open_form() if eval {$request->can('close_form')};
+    { # pre-5.14 compatibility block
+        local ($@); # pre-5.14, do not die() in this block
+        $request->close_form() if eval {$request->can('close_form')};
+        $request->open_form() if eval {$request->can('close_form')};
+    }
     opendir(my $dh2, 'UI/Contact/plugins') || die "can't opendir plugins directory: $!";
     my @plugins = grep { /^[^.]/ && -f "UI/Contact/plugins/$_" } readdir($dh2);
     closedir $dh2;
@@ -320,7 +326,8 @@ sub _main_screen {
                       funcname => 'entity__list_classes'
     );
 
-    local ($@);
+    { # pre-5.14 compatibility block
+    local ($@); # pre-5.14, do not die() in this block
     $template->render({
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,
@@ -364,6 +371,7 @@ sub _main_screen {
           default_country => $default_country,
          default_language => $default_language
     });
+    }
 }
 
 =item save_employee

@@ -42,8 +42,10 @@ Displays a template for review
 sub display {
     my ($request) = @_;
     my $dbtemp;
-    local ($@);
-    eval {$dbtemp = LedgerSMB::Template::DB->get(%$request)};
+    { # pre-5.14 compatibility block
+        local ($@); # pre-5.14, do not die() in this block
+        eval {$dbtemp = LedgerSMB::Template::DB->get(%$request)};
+    }
     $dbtemp->{content} = $dbtemp->template if defined $dbtemp;
     $dbtemp = $request unless $dbtemp->{format};
     $dbtemp->{languages} = 
@@ -66,10 +68,12 @@ Displays a screen for editing the template
 
 sub edit {
     my ($request) = @_;
-    local ($@);
-    my $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) } ;
-    delete $request->{language_code} unless $dbtemp;
-    $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) } unless $dbtemp;
+    { # pre-5.14 compatibility block
+        local ($@); # pre-5.14, do not die() in this block
+        my $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) } ;
+        delete $request->{language_code} unless $dbtemp;
+        $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) } unless $dbtemp;
+    }
     die $LedgerSMB::App_State::Locale->text('Template Not Found') unless $dbtemp;
     $dbtemp->{content} = $dbtemp->template;
     $dbtemp = $request unless $dbtemp->{format};

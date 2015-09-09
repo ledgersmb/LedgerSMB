@@ -61,10 +61,12 @@ sub get_template {
 sub preprocess {
 	my $rawvars = shift;
 	my $vars;
-   local ($@);
-        if (eval {$rawvars->can('to_output')}){
+   { # pre-5.14 compatibility block
+       local ($@); # pre-5.14, do not die() in this block
+       if (eval {$rawvars->can('to_output')}){
            $rawvars = $rawvars->to_output;
-        }
+       }
+   }
 	my $type = ref $rawvars;
 
 	#XXX fix escaping function
