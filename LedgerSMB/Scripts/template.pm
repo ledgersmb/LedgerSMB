@@ -42,6 +42,7 @@ Displays a template for review
 sub display {
     my ($request) = @_;
     my $dbtemp;
+    local ($@);
     eval {$dbtemp = LedgerSMB::Template::DB->get(%$request)};
     $dbtemp->{content} = $dbtemp->template if defined $dbtemp;
     $dbtemp = $request unless $dbtemp->{format};
@@ -65,6 +66,7 @@ Displays a screen for editing the template
 
 sub edit {
     my ($request) = @_;
+    local ($@);
     my $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) } ;
     delete $request->{language_code} unless $dbtemp;
     $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) } unless $dbtemp;

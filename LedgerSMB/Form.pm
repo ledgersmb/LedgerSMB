@@ -552,6 +552,7 @@ sub header {
     }
     elsif ($LedgerSMB::App_State::DBH){
         # we have a db connection, so are logged in.  Let's see about caching.
+        local ($@);
         $cache = 0 if eval { LedgerSMB::Setting->get('disable_back')};
     }
 
@@ -880,6 +881,7 @@ Calls $form->error if the value is NaN.
 sub parse_amount {
 
     my ( $self, $myconfig, $amount ) = @_;
+    local ($@);
     return $amount if eval {$amount->isa('LedgerSMB::PGNumber') };
 
     if ( ( ! defined $amount ) or ( $amount eq '' ) ) {
@@ -2136,6 +2138,7 @@ $module and $dbh are unused.
 sub get_regular_metadata {
     my ( $self, $myconfig, $vc, $module, $dbh, $transdate, $job ) = @_;
     $dbh = $self->{dbh};
+    local ($@);
     $transdate = $transdate->to_db if eval { $transdate->can('to_db') };
 
     $self->all_employees( $myconfig, $dbh, $transdate, 1 );

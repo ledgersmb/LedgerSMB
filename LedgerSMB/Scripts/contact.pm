@@ -77,6 +77,7 @@ sub get_by_cc {
            LedgerSMB::Entity::Company->get_by_cc($request->{control_code});
     $entity ||=  LedgerSMB::Entity::Person->get_by_cc($request->{control_code});
     my ($company, $person) = (undef, undef);
+    local ($@);
     if (eval {$entity->isa('LedgerSMB::Entity::Company')}){
        $company = $entity;
     } elsif (eval {$entity->isa('LedgerSMB::Entity::Person')}){
@@ -107,6 +108,7 @@ sub get {
     my $entity = LedgerSMB::Entity::Company->get($request->{entity_id});
     $entity ||= LedgerSMB::Entity::Person->get($request->{entity_id});
     my ($company, $person) = (undef, undef);
+    local ($@);
     if (eval {$entity->isa('LedgerSMB::Entity::Company')}){
        $company = $entity;
     } elsif (eval {$entity->isa('LedgerSMB::Entity::Person')}){
@@ -292,6 +294,7 @@ sub _main_screen {
          value => 3} if $credit_act->{id};
     ;
 
+    local ($@);
     $request->close_form() if eval {$request->can('close_form')};
     $request->open_form() if eval {$request->can('close_form')};
     opendir(my $dh2, 'UI/Contact/plugins') || die "can't opendir plugins directory: $!";
@@ -317,6 +320,7 @@ sub _main_screen {
                       funcname => 'entity__list_classes'
     );
 
+    local ($@);
     $template->render({
                      DIVS => \@DIVS,
                 DIV_LABEL => \%DIV_LABEL,

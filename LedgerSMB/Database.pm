@@ -345,7 +345,7 @@ sub load_modules {
         $mod =~ s/(\s+|#.*)//g;
         next unless $mod;
         if ($mod eq 'Fixes.sql'){
-     
+            local ($@);
             eval { 
               $self->run_file(
                        file       => "$self->{source_dir}sql/modules/$mod",

@@ -224,6 +224,7 @@ sub render {
     $self->run_report($request) if !defined $testref;
     # This is a hook for other modules to use to override the default
     # template --CT
+    local ($@);
     eval {$template = $self->template};
     $template ||= 'Reports/display_report';
 
@@ -248,6 +249,7 @@ sub render {
     @$rows = sort {
                    my $srt_a = $a->{$self->order_by};
                    my $srt_b = $b->{$self->order_by};
+                   local ($@);
                    $srt_a = $srt_a->to_sort if eval { $srt_a->can('to_sort') };
                    $srt_b = $srt_b->to_sort if eval { $srt_b->can('to_sort') };
                    no warnings 'numeric';
@@ -267,6 +269,7 @@ sub render {
     for my $r (@{$self->rows}){
         for my $k (keys %$r){
             next if $exclude->{$k};
+            local ($@);
             if (eval { $r->{$k}->isa('LedgerSMB::PGNumber') }){
                 $total_row->{$k} ||= LedgerSMB::PGNumber->from_input('0');
                 $total_row->{$k}->badd($r->{$k});
@@ -309,6 +312,7 @@ sub render {
         if ($col->{money}) {
             $col->{class} = 'money';
             for my $row(@{$self->rows}){
+                local ($@);
                  if ( eval {$row->{$col->{col_id}}->can('to_output')}){
                     $row->{$col->{col_id}} = $row->{$col->{col_id}}->to_output(money => 1);
                  }       

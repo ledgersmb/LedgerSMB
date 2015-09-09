@@ -520,7 +520,8 @@ sub __default {
     );
 }
 
- eval { do "scripts/custom/recon.pl" };
+###TODO-LOCALIZE-DOLLAR-AT
+eval { do "scripts/custom/recon.pl" };
 1;
 
 =back

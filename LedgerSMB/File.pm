@@ -245,6 +245,7 @@ sub get_for_template{
         binmode FILE, ':bytes';
         print FILE $result->{content};
         close FILE;
+        local ($@);
         eval { # Block used so that Image::Size is optional
            require Image::Size;
            my ($x, $y);

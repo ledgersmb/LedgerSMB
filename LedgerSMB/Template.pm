@@ -164,6 +164,7 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Template');
 
 sub available_formats {
     my @retval = ('HTML', 'TXT');
+    local ($@);
     if (eval {require LedgerSMB::Template::LaTeX}){
         push @retval, 'PDF', 'PS';
     }
@@ -299,6 +300,7 @@ sub render {
            }
         }
         $vars->{STDFORMATS} = \@stdformats;
+        local ($@);
         eval {
              $vars->{PRINTERS} = [
                    {text => $LedgerSMB::App_State::Locale->text('Screen'),

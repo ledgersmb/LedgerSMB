@@ -61,6 +61,7 @@ sub get_template {
 sub preprocess {
 	my $rawvars = shift;
 	my $vars;
+   local ($@);
         if (eval {$rawvars->can('to_output')}){
            $rawvars = $rawvars->to_output;
         }

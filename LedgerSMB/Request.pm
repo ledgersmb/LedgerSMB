@@ -94,6 +94,7 @@ sub requires_from {
     no strict 'refs';
     my ($self, $class) = @_;
     my $meta;
+    local ($@);
     eval { $meta = $class->meta } 
          or Carp::croak 
             "Could not get meta object.  Is $class a valid Moose class?";

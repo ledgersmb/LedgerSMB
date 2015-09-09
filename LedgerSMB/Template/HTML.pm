@@ -66,6 +66,7 @@ sub get_template {
 sub preprocess {
     my $rawvars = shift;
     my $vars;
+    local ($@);
     if (eval {$rawvars->can('to_output')}){
         $rawvars = $rawvars->to_output;
     }
@@ -113,6 +114,7 @@ sub process {
 
         my $dojo_theme; 
         if ($LedgerSMB::App_State::DBH){
+           local ($@);
            eval { LedgerSMB::Company_Config->initialize() 
                        unless $LedgerSMB::App_State::Company_Config;
              $dojo_theme = $LedgerSMB::App_State::Company_Config->{dojo_theme};
