@@ -90,50 +90,50 @@ take.
 
 my @login_actions_dispatch_table =
     ( { appname => 'sql-ledger',
-	version => '2.7',
-	message => "SQL-Ledger database detected.",
-	operation => "Would you like to migrate the database?",
-	next_action => 'upgrade' },
+        version => '2.7',
+        message => "SQL-Ledger database detected.",
+        operation => "Would you like to migrate the database?",
+        next_action => 'upgrade' },
       { appname => 'sql-ledger',
-	version => '2.8',
-	message => "SQL-Ledger database detected.",
-	operation => "Would you like to migrate the database?",
-	next_action => 'upgrade' },
+        version => '2.8',
+        message => "SQL-Ledger database detected.",
+        operation => "Would you like to migrate the database?",
+        next_action => 'upgrade' },
       { appname => 'sql-ledger',
-	version => undef,
-	message => "Unsupported SQL-Ledger version detected.",
-	operation => "Cancel.",
-	next_action => 'cancel' },
+        version => undef,
+        message => "Unsupported SQL-Ledger version detected.",
+        operation => "Cancel.",
+        next_action => 'cancel' },
       { appname => 'ledgersmb',
-	version => '1.2',
-	message => "LedgerSMB 1.2 db found.",
-	operation => "Would you like to upgrade the database?",
-	next_action => 'upgrade' },
+        version => '1.2',
+        message => "LedgerSMB 1.2 db found.",
+        operation => "Would you like to upgrade the database?",
+        next_action => 'upgrade' },
       { appname => 'ledgersmb',
-	version => '1.3dev',
-	message => 'Development version found.  Please upgrade manually first',
-	operation => 'Cancel?',
-	next_action => 'cancel' },
+        version => '1.3dev',
+        message => 'Development version found.  Please upgrade manually first',
+        operation => 'Cancel?',
+        next_action => 'cancel' },
       { appname => 'ledgersmb',
-	version => 'legacy',
-	message => 'Legacy version found.  Please upgrade first',
-	operation => 'Cancel?',
-	next_action => 'cancel' },
+        version => 'legacy',
+        message => 'Legacy version found.  Please upgrade first',
+        operation => 'Cancel?',
+        next_action => 'cancel' },
       { appname => 'ledgersmb',
-	version => '1.3',
-	message => "LedgerSMB 1.3 db found.",
-	operation => "Would you like to upgrade the database?",
-	next_action => 'upgrade' },
+        version => '1.3',
+        message => "LedgerSMB 1.3 db found.",
+        operation => "Would you like to upgrade the database?",
+        next_action => 'upgrade' },
       { appname => 'ledgersmb',
-	version => '1.4',
-	message => "LedgerSMB 1.4 db found.",
-	operation => 'Rebuild/Upgrade?',
-	next_action => 'rebuild_modules' },
+        version => '1.4',
+        message => "LedgerSMB 1.4 db found.",
+        operation => 'Rebuild/Upgrade?',
+        next_action => 'rebuild_modules' },
       { appname => 'ledgersmb',
-	version => undef,
-	message => "Unsupported LedgerSMB version detected.",
-	operation => "Cancel.",
-	next_action => 'cancel' } );
+        version => undef,
+        message => "Unsupported LedgerSMB version detected.",
+        operation => "Cancel.",
+        next_action => 'cancel' } );
 
 
 sub login {
@@ -164,8 +164,8 @@ sub login {
 
 	foreach $dispatch_entry (@login_actions_dispatch_table) {
 	    if ($version_info->{appname} eq $dispatch_entry->{appname}
-		&& ($version_info->{version} eq $dispatch_entry->{version}
-		    || ! defined $dispatch_entry->{version})) {
+           && ($version_info->{version} eq $dispatch_entry->{version}
+               || ! defined $dispatch_entry->{version})) {
 		my $field;
 
 		foreach $field (qw|operation message next_action|) {
