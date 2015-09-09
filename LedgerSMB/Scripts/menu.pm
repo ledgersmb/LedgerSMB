@@ -171,5 +171,6 @@ files.
 
 =cut
 
+###TODO-LOCALIZE-DOLLAR-AT
 eval { do "scripts/custom/menu.pl"};
 1;

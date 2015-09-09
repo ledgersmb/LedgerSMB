@@ -236,5 +236,6 @@ files.
 
 =cut
 
+###TODO-LOCALIZE-DOLLAR-AT
 eval { require LedgerSMB::Scripts::custom::reports };
 1;

@@ -224,7 +224,10 @@ sub render {
     $self->run_report($request) if !defined $testref;
     # This is a hook for other modules to use to override the default
     # template --CT
-    eval {$template = $self->template};
+    { # pre-5.14 compatibility block
+        local ($@); # pre-5.14, do not die() in this block
+        eval {$template = $self->template};
+    }
     $template ||= 'Reports/display_report';
 
     # Sorting and Subtotal logic
@@ -248,8 +251,13 @@ sub render {
     @$rows = sort {
                    my $srt_a = $a->{$self->order_by};
                    my $srt_b = $b->{$self->order_by};
-                   $srt_a = $srt_a->to_sort if eval { $srt_a->can('to_sort') };
-                   $srt_b = $srt_b->to_sort if eval { $srt_b->can('to_sort') };
+                   { # pre-5.14 compatibility block
+                       local ($@); # pre-5.14, do not die() in this block
+                       $srt_a = $srt_a->to_sort
+                           if eval { $srt_a->can('to_sort') };
+                       $srt_b = $srt_b->to_sort
+                           if eval { $srt_b->can('to_sort') };
+                   }
                    no warnings 'numeric';
                    $srt_a <=> $srt_b or $srt_a cmp $srt_b;
               } @$rows
@@ -267,9 +275,12 @@ sub render {
     for my $r (@{$self->rows}){
         for my $k (keys %$r){
             next if $exclude->{$k};
-            if (eval { $r->{$k}->isa('LedgerSMB::PGNumber') }){
-                $total_row->{$k} ||= LedgerSMB::PGNumber->from_input('0');
-                $total_row->{$k}->badd($r->{$k});
+            { # pre-5.14 compatibility block
+                local ($@); # pre-5.14, do not die() in this block
+                if (eval { $r->{$k}->isa('LedgerSMB::PGNumber') }){
+                    $total_row->{$k} ||= LedgerSMB::PGNumber->from_input('0');
+                    $total_row->{$k}->badd($r->{$k});
+                }
             }
             
         }
@@ -309,9 +320,13 @@ sub render {
         if ($col->{money}) {
             $col->{class} = 'money';
             for my $row(@{$self->rows}){
-                 if ( eval {$row->{$col->{col_id}}->can('to_output')}){
-                    $row->{$col->{col_id}} = $row->{$col->{col_id}}->to_output(money => 1);
-                 }       
+                { # pre-5.14 compatibility block
+                    local ($@); # pre-5.14, do not die() in this block
+                    if ( eval {$row->{$col->{col_id}}->can('to_output')}){
+                        $row->{$col->{col_id}} =
+                            $row->{$col->{col_id}}->to_output(money => 1);
+                    }
+                }    
             }
         }
     } 

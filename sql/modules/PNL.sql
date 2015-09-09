@@ -36,8 +36,9 @@ WITH RECURSIVE bu_tree (id, parent, path) AS (
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
 )
-   SELECT a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, g.accno, g.description,
+   SELECT a.id, a.accno, coalesce(at.description, a.description), a.category,
+          ah.id, ah.accno, coalesce(ht.description, ah.description),
+          g.accno, g.description,
           sum(ac.amount) * -1, aht.path
      FROM account a
      JOIN account_heading ah on a.heading = ah.id
@@ -51,14 +52,25 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
              from business_unit_inv bui 
              JOIN bu_tree bu ON bui.bu_id = bu.id
          GROUP BY entry_id) bui ON bui.entry_id = i.id
+LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
+LEFT JOIN (SELECT trans_id, description
+             FROM account_heading_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) ht ON ah.id = ht.trans_id
     WHERE i.parts_id = $3
           AND (ac.transdate >= $1 OR $1 IS NULL) 
           AND (ac.transdate <= $2 OR $2 IS NULL)
           AND ar.approved
           AND l.description = 'IC_expense'
           AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
- GROUP BY a.id, a.accno, a.description, a.category, ah.id, ah.accno,
-          ah.description, aht.path, g.accno, g.description
+ GROUP BY a.id, a.accno, coalesce(at.description, a.description), a.category,
+          ah.id, ah.accno, coalesce(ht.description, ah.description),
+          aht.path, g.accno, g.description
     UNION
    SELECT a.id, a.accno, coalesce(at.description, a.description), a.category,
           ah.id, ah.accno, coalesce(ht.description, ah.description),
