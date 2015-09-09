@@ -57,7 +57,7 @@ INCLUDE 'ui-header.html'
     FOREACH h IN form.all_headings;
         h.text = h.accno _ '--' _ h.description;
     END;
-    form.all_headings.unshift({});
+    form.all_headings.unshift({ id => '', text => text('-- NONE --') });
     INCLUDE select element_data = {
                   name = 'parent'
                options = form.all_headings
