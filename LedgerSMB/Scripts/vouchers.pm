@@ -26,6 +26,7 @@ use strict;
 
 our $custom_batch_types = {};
 
+###TODO-LOCALIZE-DOLLAR-AT
 eval { do "scripts/custom/vouchers.pl"};
 
 =item create_batch
@@ -532,6 +533,7 @@ sub print_batch {
     
 }
 
+###TODO-LOCALIZE-DOLLAR-AT
 eval { do "scripts/custom/vouchers.pl"};
 1;
 

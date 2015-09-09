@@ -493,6 +493,7 @@ sub _error {
 
     my ( $self, $msg ) = @_;
     my $error;
+    local ($@); # pre-5.14, do not die() in this block
     if (eval { $msg->isa('LedgerSMB::Request::Error') }){
         $error = $msg;
     } else {
