@@ -26,8 +26,6 @@ requires 'Digest::MD5';
 requires 'HTML::Entities';
 requires 'DBD::Pg';
 requires 'Math::BigFloat';
-requires 'IO::File';
-requires 'IO::Scalar';
 requires 'Encode';
 requires 'Time::Local';
 requires 'Cwd';
