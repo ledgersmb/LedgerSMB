@@ -74,11 +74,6 @@ sub increment {
     my $key = shift;
     $key ||= $self->{key};
 
-    # Long-run, we may want to run this via Parse::RecDescent, but this is
-    # at least a start for here.  Chris T.
-
-    # Replaces Form::UpdateDefaults
-
     my ($retval) = $self->call_procedure(funcname => 'setting_increment',
                                              args => [$key]) ;
     my $value = $retval->{setting_increment};

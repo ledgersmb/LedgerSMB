@@ -71,10 +71,6 @@ feature 'POS module credit card processing support',
     -default => 0,
     'Net::TCLink' => 0;
 
-feature 'Experimental scripting engine',
-    -default => 0,
-    'Parse::RecDescent' => 0;
-
 feature 'X12 EDI support',
     -default => 0,
     'X12::Parser' => 0;
