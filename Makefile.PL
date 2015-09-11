@@ -80,11 +80,6 @@ feature 'Experimental scripting engine',
     -default => 0,
     'Parse::RecDescent' => 0;
 
-feature 'Developer tool dependencies',
-    -default => 0,
-    'Getopt::Long' => 0,
-    'FileHandle' => 0;
-
 feature 'X12 EDI support',
     -default => 0,
     'X12::Parser' => 0;
