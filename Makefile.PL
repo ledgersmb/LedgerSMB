@@ -75,10 +75,6 @@ feature 'POS module credit card processing support',
     -default => 0,
     'Net::TCLink' => 0;
 
-feature 'Experimental scripting engine',
-    -default => 0,
-    'Parse::RecDescent' => 0;
-
 feature 'Developer tool dependencies',
     -default => 0,
     'Getopt::Long' => 0,
