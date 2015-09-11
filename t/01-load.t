@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 203;
+use Test::More tests => 202;
 use File::Find;
 
 my @on_disk;
@@ -19,11 +19,6 @@ find(\&collect, 'LedgerSMB/');
 
 my @exception_modules = 
     (
-     # Exclude because tested conditionally on Net::TCLink way below
-     'LedgerSMB::CreditCard', 'LedgerSMB::CreditCard::TrustCommerce',
-     'LedgerSMB::CreditCard::Config',
-     'LedgerSMB::CreditCard::TrustCommerce::Config',
-
      # Exclude because tested conditionally on Template::Plugin::Latex way below
      'LedgerSMB::Template::LaTeX',
 
@@ -205,13 +200,6 @@ SKIP: {
     skip 'Template::Latex not installed', 1;
 
     use_ok('LedgerSMB::Template::LaTeX');
-}
-
-SKIP: {
-	eval { require Net::TCLink };
-
-	skip 'Net::TCLink not installed', 1 if $@;
-	use_ok('LedgerSMB::CreditCard');
 }
 
 SKIP: {
