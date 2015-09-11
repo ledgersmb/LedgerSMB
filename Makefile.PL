@@ -71,9 +71,9 @@ feature 'Size detection for images for embedding in LaTeX templates',
     -default => 0,
     'Image::Size' => 0;
 
-feature 'Experimental scripting engine',
+feature 'POS module credit card processing support',
     -default => 0,
-    'Parse::RecDescent' => 0;
+    'Net::TCLink' => 0;
 
 feature 'Developer tool dependencies',
     -default => 0,
