@@ -26,7 +26,6 @@ requires 'Digest::MD5';
 requires 'HTML::Entities';
 requires 'DBD::Pg';
 requires 'Math::BigFloat';
-requires 'Encode';
 requires 'Config::IniFiles';
 requires 'MIME::Lite';
 requires 'Template' => '2.14';
