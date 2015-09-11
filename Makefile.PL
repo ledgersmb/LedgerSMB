@@ -49,6 +49,7 @@ requires 'PGObject::Type::DateTime';
 requires 'PGObject::Util::DBMethod';
 requires 'App::LedgerSMB::Admin' => 0.04;
 
+
 recommends 'Math::BigInt::GMP';
 
 test_requires 'Test::More';
@@ -82,9 +83,7 @@ feature 'Experimental scripting engine',
 feature 'Developer tool dependencies',
     -default => 0,
     'Getopt::Long' => 0,
-    'FileHandle' => 0,
-    'Locale::Country' => 0,
-    'Locale::Language' => 0;
+    'FileHandle' => 0;
 
 feature 'X12 EDI support',
     -default => 0,
