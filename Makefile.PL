@@ -27,8 +27,6 @@ requires 'HTML::Entities';
 requires 'DBD::Pg';
 requires 'Math::BigFloat';
 requires 'Encode';
-requires 'Time::Local';
-requires 'Cwd';
 requires 'Config::IniFiles';
 requires 'MIME::Lite';
 requires 'Template' => '2.14';
