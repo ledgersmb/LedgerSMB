@@ -152,7 +152,6 @@ my @modules =
           'LedgerSMB::Report::co::Balance_y_Mayor',
           'LedgerSMB::Report::co::Caja_Diaria',
           'LedgerSMB::ScriptLib::Common_Search',
-          # 'LedgerSMB::ScriptLib::Common_Search::Customer',
           'LedgerSMB::ScriptLib::Common_Search::Part',
           'LedgerSMB::Scripts::budget_reports',
           'LedgerSMB::Scripts::contact_reports', 'LedgerSMB::Scripts::file',
