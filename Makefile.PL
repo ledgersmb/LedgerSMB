@@ -67,10 +67,6 @@ feature 'Size detection for images for embedding in LaTeX templates',
     -default => 0,
     'Image::Size' => 0;
 
-feature 'POS module credit card processing support',
-    -default => 0,
-    'Net::TCLink' => 0;
-
 feature 'X12 EDI support',
     -default => 0,
     'X12::Parser' => 0;
