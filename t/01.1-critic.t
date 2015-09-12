@@ -30,7 +30,7 @@ sub collect {
     my $module = $File::Find::name;
     push @on_disk, $module
 }
-find(\&collect, 'LedgerSMB/', 'bin/');
+find(\&collect, 'LedgerSMB.pm', 'LedgerSMB/', 'bin/');
 
 my @on_disk_oldcode =
     grep { m#^bin/# || m#^LedgerSMB/..\.pm#
@@ -47,7 +47,7 @@ my @on_disk_oldcode =
 plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
 
 &test_files(Perl::Critic->new(
-                -profile => '',
+                -profile => 't/perlcriticrc',
                 -severity => 5,
                 -theme => '',
                 -exclude => [ 'BuiltinFunctions',
@@ -74,7 +74,7 @@ plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
             \@on_disk);
 
 &test_files(Perl::Critic->new(
-                -profile => '',
+                -profile => 't/perlcriticrc',
                 -severity => 5,
                 -theme => '',
                 -exclude => [ 'BuiltinFunctions',
