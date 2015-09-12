@@ -18,7 +18,7 @@ binmode STDERR, ':utf8';
 our $pathsep = ':';
 
 our $auth = 'DB';
-our $images = getcwd() . '/images'; 
+our $images = getcwd() . '/images';
 our $cssdir = 'css/';
 our $fs_cssdir = 'css/';
 our $dojo_theme = 'claro';
@@ -31,7 +31,7 @@ our @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
 #
 our @newscripts = qw(
    account.pl admin.pl asset.pl budget_reports.pl budgets.pl business_unit.pl
-   configuration.pl contact.pl contact_reports.pl document_series.pl drafts.pl
+   configuration.pl contact.pl contact_reports.pl drafts.pl
    file.pl goods.pl import_csv.pl inventory.pl invoice.pl inv_reports.pl
    journal.pl login.pl lreports_co.pl menu.pl order.pl payment.pl payroll.pl
    pnl.pl recon.pl report_aging.pl reports.pl setup.pl taxform.pl template.pl
@@ -39,16 +39,16 @@ our @newscripts = qw(
 );
 
 our @scripts = (
-    'aa.pl', 'am.pl',      'ap.pl',
-    'ar.pl', 'arap.pl',  'arapprn.pl', 'bp.pl',   'gl.pl',
-    'ic.pl',  'ir.pl',
-    'is.pl', 'jc.pl',    'oe.pl',       'pe.pl',  'pos.pl',     'ps.pl',
+    'aa.pl', 'am.pl',    'ap.pl',
+    'ar.pl', 'arap.pl',  'arapprn.pl', 'gl.pl',
+    'ic.pl', 'ir.pl',
+    'is.pl', 'oe.pl',    'pe.pl',
     'pw.pl',
 );
 
 # if you have latex installed set to 1
 ###TODO-LOCALIZE-DOLLAR-AT
-our $latex = eval {require Template::Plugin::Latex}; 
+our $latex = eval {require Template::Plugin::Latex};
 
 # Defaults to 1 megabyte
 our $max_post_size = 1024 * 1024;
@@ -120,7 +120,7 @@ if ($cssdir !~ m|/$|){
 $fs_cssdir =~ s|/$||;
 
 for ($cfg->Parameters('printers')){
-     $printer{$_} = $cfg->val('printers', $_);   
+     $printer{$_} = $cfg->val('printers', $_);
 }
 
 # ENV Paths
@@ -139,8 +139,8 @@ for my $var (qw(gzip zip)) {
 }
 
 # mail configuration
-for my $var (qw(sendmail smtphost smtptimeout smtpuser 
-             smtppass smtpauthmethod backup_email_from)) 
+for my $var (qw(sendmail smtphost smtptimeout smtpuser
+             smtppass smtpauthmethod backup_email_from))
 {
     ${$var} = $cfg->val('mail', $var) if $cfg->val('mail', $var);
 }
@@ -199,7 +199,7 @@ $ENV{PGHOST} = $db_host;
 $ENV{PGPORT} = $db_port;
 our $default_db = $cfg->val('database', 'default_db');
 our $db_namespace = $cfg->val('database', 'db_namespace') || 'public';
-$ENV{PGSSLMODE} = $cfg->val('database', 'sslmode') 
+$ENV{PGSSLMODE} = $cfg->val('database', 'sslmode')
     if $cfg->val('database', 'sslmode');
 
 $ENV{HOME} = $tempdir;
