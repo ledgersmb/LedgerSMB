@@ -138,7 +138,6 @@ if ($@) {
 
 try {
     $form->db_init( \%myconfig );
-    &check_password;
 
     # we get rid of myconfig and use User as a real object
     %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
@@ -207,27 +206,6 @@ $form->{dbh}->disconnect()
 
 # end
 
-sub check_password {
-
-    require "bin/pw.pl";
-    if ( $ENV{GATEWAY_INTERFACE} ) {
-        $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
-        @cookies = split /;/, $ENV{HTTP_COOKIE};
-        foreach (@cookies) {
-            ( $name, $value ) = split /=/, $_, 2;
-            $cookie{$name} = $value;
-        }
-
-        #check for valid session
-        if ( !LedgerSMB::Session::check( $cookie{${LedgerSMB::Sysconfig::cookie_name}}, $form ) ) {
-            &getpassword(1);
-            return;
-        }
-    }
-    else {
-        return;
-    }
-}
 
 sub _error {
 
