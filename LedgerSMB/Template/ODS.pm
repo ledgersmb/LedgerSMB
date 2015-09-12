@@ -47,7 +47,7 @@ package LedgerSMB::Template::ODS;
 use strict;
 use warnings;
 
-use Data::Dumper;
+use Data::Dumper;  ## no critic
 use CGI::Simple::Standard qw(:html);
 use Template;
 use XML::Twig;

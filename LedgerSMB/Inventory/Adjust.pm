@@ -196,7 +196,6 @@ sub get_part_at_date {
     my ($ref) = $self->call_procedure(funcname => 'get_item_at_day',
                                         args => [$transdate, $partnumber],
                                     funcprefix => 'inventory_');
-    use Data::Dumper;
     return $ref;
 }
 
