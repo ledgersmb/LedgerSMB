@@ -50,7 +50,7 @@ our $logger=Log::Log4perl->get_logger('old-handler-chain');#make logger availabl
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 # Clearing all namespaces for persistant code use
-for my $nsp (qw(lsmb_legacy Form GL AA IS IR OE RP JC PE IC AM BP CP PE User)) {
+for my $nsp (qw(lsmb_legacy Form GL AA IS IR OE PE IC AM User)) {
    for my $k (keys %{"${nsp}::"}){
         next if $k =~ /[A-Z]+/;
         next if $k eq 'try' or $k eq 'catch';
