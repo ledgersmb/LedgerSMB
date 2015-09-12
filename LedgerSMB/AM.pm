@@ -78,9 +78,9 @@ sub get_gifi {
     my $sth;
 
     my $query = qq|
-		SELECT accno, description
-		  FROM gifi
-		 WHERE accno = ?|;
+        SELECT accno, description
+          FROM gifi
+         WHERE accno = ?|;
 
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{accno} ) || $form->dberror($query);
@@ -90,11 +90,11 @@ sub get_gifi {
 
     # check for transactions
     $query = qq|
-		SELECT count(*)
-		  FROM acc_trans a
-		  JOIN account c ON (a.chart_id = c.id)
-		  JOIN gifi g ON (c.gifi_accno = g.accno)
-		 WHERE g.accno = ?|;
+        SELECT count(*)
+          FROM acc_trans a
+          JOIN account c ON (a.chart_id = c.id)
+          JOIN gifi g ON (c.gifi_accno = g.accno)
+         WHERE g.accno = ?|;
 
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{accno} ) || $form->dberror($query);
@@ -137,17 +137,17 @@ sub save_gifi {
     # id is the old account number!
     if ( $form->{id} ) {
         $query = qq|
-			UPDATE gifi
-			   SET accno = ?,
-			       description = ?
-			 WHERE accno = ?|;
+            UPDATE gifi
+               SET accno = ?,
+                   description = ?
+             WHERE accno = ?|;
         push @queryargs, $form->{id};
 
     }
     else {
         $query = qq|
-			INSERT INTO gifi (accno, description)
-			     VALUES (?, ?)|;
+            INSERT INTO gifi (accno, description)
+                 VALUES (?, ?)|;
     }
 
     $sth = $dbh->prepare($query);
@@ -173,8 +173,8 @@ sub delete_gifi {
 
     # id is the old account number!
     $query = qq|
-		DELETE FROM gifi
-		      WHERE accno = ?|;
+        DELETE FROM gifi
+              WHERE accno = ?|;
 
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -201,9 +201,9 @@ sub get_warehouse {
     my $sth;
 
     my $query = qq|
-		SELECT description
-		  FROM warehouse
-		 WHERE id = ?|;
+        SELECT description
+          FROM warehouse
+         WHERE id = ?|;
 
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -212,9 +212,9 @@ sub get_warehouse {
 
     # see if it is in use
     $query = qq|
-		SELECT count(*)
-		  FROM warehouse_inventory
-		 WHERE warehouse_id = ?|;
+        SELECT count(*)
+          FROM warehouse_inventory
+         WHERE warehouse_id = ?|;
 
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} );
@@ -254,15 +254,15 @@ sub save_warehouse {
 
     if ( $form->{id} ) {
         $query = qq|
-			UPDATE warehouse
-			   SET description = ?
-			 WHERE id = ?|;
+            UPDATE warehouse
+               SET description = ?
+             WHERE id = ?|;
         push @queryargs, $form->{id};
     }
     else {
         $query = qq|
-			INSERT INTO warehouse (description)
-			     VALUES (?)|;
+            INSERT INTO warehouse (description)
+                 VALUES (?)|;
     }
 
     $sth = $dbh->prepare($query);
@@ -287,8 +287,8 @@ sub delete_warehouse {
     my $dbh = $form->{dbh};
 
     $query = qq|
-		DELETE FROM warehouse
-		      WHERE id = ?|;
+        DELETE FROM warehouse
+              WHERE id = ?|;
 
     $dbh->prepare($query)->execute( $form->{id} ) || $form->dberror($query);
 
@@ -311,9 +311,9 @@ sub get_business {
     my $dbh = $form->{dbh};
 
     my $query = qq|
-		SELECT description, discount
-		  FROM business
-		 WHERE id = ?|;
+        SELECT description, discount
+          FROM business
+         WHERE id = ?|;
 
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} );
@@ -350,16 +350,16 @@ sub save_business {
 
     if ( $form->{id} ) {
         $query = qq|
-			UPDATE business
-			   SET description = ?,
-			       discount = ?
-			 WHERE id = ?|;
+            UPDATE business
+               SET description = ?,
+                   discount = ?
+             WHERE id = ?|;
         push @queryargs, $form->{id};
 
     }
     else {
         $query = qq|INSERT INTO business (description, discount)
-						 VALUES (?, ?)|;
+                         VALUES (?, ?)|;
     }
 
     $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
@@ -386,8 +386,8 @@ sub delete_business {
     my $dbh = $form->{dbh};
 
     $query = qq|
-		DELETE FROM business
-		      WHERE id = ?|;
+        DELETE FROM business
+              WHERE id = ?|;
 
     $dbh->prepare($query)->execute( $form->{id} ) || $form->dberror($query);
 
@@ -411,9 +411,9 @@ sub get_sic {
     my $dbh = $form->{dbh};
 
     my $query = qq|
-		SELECT code, sictype, description
-		  FROM sic
-		 WHERE code = | . $dbh->quote( $form->{code} );
+        SELECT code, sictype, description
+          FROM sic
+         WHERE code = | . $dbh->quote( $form->{code} );
 
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
@@ -451,18 +451,18 @@ sub save_sic {
     # if there is an id
     if ( $form->{id} ) {
         $query = qq|
-			UPDATE sic
-			   SET code = ?,
-			       sictype = ?,
-			       description = ?
-			 WHERE code = ?|;
+            UPDATE sic
+               SET code = ?,
+                   sictype = ?,
+                   description = ?
+             WHERE code = ?|;
         push @queryargs, $form->{id};
 
     }
     else {
         $query = qq|
-		INSERT INTO sic (code, sictype, description)
-		     VALUES (?, ?, ?)|;
+        INSERT INTO sic (code, sictype, description)
+             VALUES (?, ?, ?)|;
 
     }
 
@@ -485,8 +485,8 @@ sub delete_sic {
     my $dbh = $form->{dbh};
 
     $query = qq|
-		DELETE FROM sic
-		      WHERE code = ?|;
+        DELETE FROM sic
+              WHERE code = ?|;
 
     $dbh->prepare($query)->execute( $form->{code} );
 
@@ -509,9 +509,9 @@ sub get_language {
     my $dbh = $form->{dbh};
 
     my $query = qq|
-		SELECT code, description
-		  FROM language
-		 WHERE code = ?|;
+        SELECT code, description
+          FROM language
+         WHERE code = ?|;
 
     my $sth = $dbh->prepare($query);
     $sth->execute( $form->{code} ) || $form->dberror($query);
@@ -553,17 +553,17 @@ sub save_language {
     # if there is an id
     if ( $form->{id} ) {
         $query = qq|
-			UPDATE language
-			   SET code = ?,
-			       description = ?
-			 WHERE code = ?|;
+            UPDATE language
+               SET code = ?,
+                   description = ?
+             WHERE code = ?|;
         push @queryargs, $form->{id};
 
     }
     else {
         $query = qq|
-			INSERT INTO language (code, description)
-			     VALUES (?, ?)|;
+            INSERT INTO language (code, description)
+                 VALUES (?, ?)|;
     }
 
     $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
@@ -586,8 +586,8 @@ sub delete_language {
     my $dbh = $form->{dbh};
 
     $query = qq|
-		DELETE FROM language
-		      WHERE code = | . $dbh->quote( $form->{code} );
+        DELETE FROM language
+              WHERE code = | . $dbh->quote( $form->{code} );
 
     $dbh->do($query) || $form->dberror($query);
 
@@ -639,103 +639,103 @@ sub recurring_transactions {
     my $sortorder = $form->sort_order( \@a );
 
     $query = qq|
-		   SELECT 'ar' AS module, 'ar' AS transaction, a.invoice,
-		          e.name AS description, a.amount,
-		          s.*, se.formname AS recurringemail,
-		          sp.formname AS recurringprint,
-		          s.nextdate - current_date AS overdue,
-		          'customer' AS vc,
-		          ex.buy AS exchangerate, a.curr,
-	                  (s.nextdate IS NULL OR s.nextdate > s.enddate)
+           SELECT 'ar' AS module, 'ar' AS transaction, a.invoice,
+                  e.name AS description, a.amount,
+                  s.*, se.formname AS recurringemail,
+                  sp.formname AS recurringprint,
+                  s.nextdate - current_date AS overdue,
+                  'customer' AS vc,
+                  ex.buy AS exchangerate, a.curr,
+                      (s.nextdate IS NULL OR s.nextdate > s.enddate)
                           AS expired
-		     FROM recurring s
-		     JOIN ar a ON (a.id = s.id)
+             FROM recurring s
+             JOIN ar a ON (a.id = s.id)
                      JOIN entity_credit_account eca
                           ON a.entity_credit_account = eca.id
-		     JOIN entity e ON (eca.entity_id = e.id)
-		LEFT JOIN recurringemail se ON (se.id = s.id)
-		LEFT JOIN recurringprint sp ON (sp.id = s.id)
-		LEFT JOIN exchangerate ex
-		          ON (ex.curr = a.curr AND a.transdate = ex.transdate)
+             JOIN entity e ON (eca.entity_id = e.id)
+        LEFT JOIN recurringemail se ON (se.id = s.id)
+        LEFT JOIN recurringprint sp ON (sp.id = s.id)
+        LEFT JOIN exchangerate ex
+                  ON (ex.curr = a.curr AND a.transdate = ex.transdate)
 
-		    UNION
+            UNION
 
-		  SELECT 'ap' AS module, 'ap' AS transaction, a.invoice,
-		          e.name AS description, a.amount,
-		          s.*, se.formname AS recurringemail,
-		          sp.formname AS recurringprint,
-		          s.nextdate - current_date AS overdue, 'vendor' AS vc,
-		          ex.sell AS exchangerate, a.curr,
-		          (s.nextdate IS NULL OR s.nextdate > s.enddate)
-		          AS expired
-		     FROM recurring s
-		     JOIN ap a ON (a.id = s.id)
+          SELECT 'ap' AS module, 'ap' AS transaction, a.invoice,
+                  e.name AS description, a.amount,
+                  s.*, se.formname AS recurringemail,
+                  sp.formname AS recurringprint,
+                  s.nextdate - current_date AS overdue, 'vendor' AS vc,
+                  ex.sell AS exchangerate, a.curr,
+                  (s.nextdate IS NULL OR s.nextdate > s.enddate)
+                  AS expired
+             FROM recurring s
+             JOIN ap a ON (a.id = s.id)
                      JOIN entity_credit_account eca
                           ON a.entity_credit_account = eca.id
-		     JOIN entity e ON (eca.entity_id = e.id)
-		LEFT JOIN recurringemail se ON (se.id = s.id)
-		LEFT JOIN recurringprint sp ON (sp.id = s.id)
-		LEFT JOIN exchangerate ex ON
-		          (ex.curr = a.curr AND a.transdate = ex.transdate)
+             JOIN entity e ON (eca.entity_id = e.id)
+        LEFT JOIN recurringemail se ON (se.id = s.id)
+        LEFT JOIN recurringprint sp ON (sp.id = s.id)
+        LEFT JOIN exchangerate ex ON
+                  (ex.curr = a.curr AND a.transdate = ex.transdate)
 
-		    UNION
+            UNION
 
-		   SELECT 'gl' AS module, 'gl' AS transaction, FALSE AS invoice,
-		          a.description, (SELECT SUM(ac.amount)
-		     FROM acc_trans ac
-		    WHERE ac.trans_id = a.id
-		      AND ac.amount > 0) AS amount,
-		          s.*, se.formname AS recurringemail,
-		          sp.formname AS recurringprint,
-		          s.nextdate - current_date AS overdue, '' AS vc,
-		          '1' AS exchangerate, $defaultcurrency AS curr,
-		          (s.nextdate IS NULL OR s.nextdate > s.enddate)
-		          AS expired
-		     FROM recurring s
-		     JOIN gl a ON (a.id = s.id)
-		LEFT JOIN recurringemail se ON (se.id = s.id)
-		LEFT JOIN recurringprint sp ON (sp.id = s.id)
+           SELECT 'gl' AS module, 'gl' AS transaction, FALSE AS invoice,
+                  a.description, (SELECT SUM(ac.amount)
+             FROM acc_trans ac
+            WHERE ac.trans_id = a.id
+              AND ac.amount > 0) AS amount,
+                  s.*, se.formname AS recurringemail,
+                  sp.formname AS recurringprint,
+                  s.nextdate - current_date AS overdue, '' AS vc,
+                  '1' AS exchangerate, $defaultcurrency AS curr,
+                  (s.nextdate IS NULL OR s.nextdate > s.enddate)
+                  AS expired
+             FROM recurring s
+             JOIN gl a ON (a.id = s.id)
+        LEFT JOIN recurringemail se ON (se.id = s.id)
+        LEFT JOIN recurringprint sp ON (sp.id = s.id)
 
-		    UNION
+            UNION
 
-		   SELECT 'oe' AS module, 'so' AS transaction, FALSE AS invoice,
-		          e.name AS description, a.amount,
-		          s.*, se.formname AS recurringemail,
-		          sp.formname AS recurringprint,
-		          s.nextdate - current_date AS overdue,
-		          'customer' AS vc,
-		          ex.buy AS exchangerate, a.curr,
-		          (s.nextdate IS NULL OR s.nextdate > s.enddate)
-		          AS expired
-		     FROM recurring s
-		     JOIN oe a ON (a.id = s.id)
-		     JOIN entity e ON (a.entity_id = e.id)
-		LEFT JOIN recurringemail se ON (se.id = s.id)
-		LEFT JOIN recurringprint sp ON (sp.id = s.id)
-		LEFT JOIN exchangerate ex ON
-		          (ex.curr = a.curr AND a.transdate = ex.transdate)
-		    WHERE a.quotation = '0'
+           SELECT 'oe' AS module, 'so' AS transaction, FALSE AS invoice,
+                  e.name AS description, a.amount,
+                  s.*, se.formname AS recurringemail,
+                  sp.formname AS recurringprint,
+                  s.nextdate - current_date AS overdue,
+                  'customer' AS vc,
+                  ex.buy AS exchangerate, a.curr,
+                  (s.nextdate IS NULL OR s.nextdate > s.enddate)
+                  AS expired
+             FROM recurring s
+             JOIN oe a ON (a.id = s.id)
+             JOIN entity e ON (a.entity_id = e.id)
+        LEFT JOIN recurringemail se ON (se.id = s.id)
+        LEFT JOIN recurringprint sp ON (sp.id = s.id)
+        LEFT JOIN exchangerate ex ON
+                  (ex.curr = a.curr AND a.transdate = ex.transdate)
+            WHERE a.quotation = '0'
 
-		    UNION
+            UNION
 
-		   SELECT 'oe' AS module, 'po' AS transaction, FALSE AS invoice,
-		          e.name AS description, a.amount,
-		          s.*, se.formname AS recurringemail,
-		          sp.formname AS recurringprint,
-		          s.nextdate - current_date AS overdue, 'vendor' AS vc,
-		          ex.sell AS exchangerate, a.curr,
-		          (s.nextdate IS NULL OR s.nextdate > s.enddate)
-		          AS expired
-		     FROM recurring s
-		     JOIN oe a ON (a.id = s.id)
-		     JOIN entity e ON (a.entity_id = e.id)
-		LEFT JOIN recurringemail se ON (se.id = s.id)
-		LEFT JOIN recurringprint sp ON (sp.id = s.id)
-		LEFT JOIN exchangerate ex ON
-		          (ex.curr = a.curr AND a.transdate = ex.transdate)
-		    WHERE a.quotation = '0'
+           SELECT 'oe' AS module, 'po' AS transaction, FALSE AS invoice,
+                  e.name AS description, a.amount,
+                  s.*, se.formname AS recurringemail,
+                  sp.formname AS recurringprint,
+                  s.nextdate - current_date AS overdue, 'vendor' AS vc,
+                  ex.sell AS exchangerate, a.curr,
+                  (s.nextdate IS NULL OR s.nextdate > s.enddate)
+                  AS expired
+             FROM recurring s
+             JOIN oe a ON (a.id = s.id)
+             JOIN entity e ON (a.entity_id = e.id)
+        LEFT JOIN recurringemail se ON (se.id = s.id)
+        LEFT JOIN recurringprint sp ON (sp.id = s.id)
+        LEFT JOIN exchangerate ex ON
+                  (ex.curr = a.curr AND a.transdate = ex.transdate)
+            WHERE a.quotation = '0'
 
-		 ORDER BY $sortorder|;
+         ORDER BY $sortorder|;
 
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
@@ -845,12 +845,12 @@ sub recurring_details {
 
     my $dbh   = $form->{dbh};
     my $query = qq|
-		   SELECT s.*, ar.id AS arid, ar.invoice AS arinvoice,
-		          ap.id AS apid, ap.invoice AS apinvoice,
-		          ar.duedate - ar.transdate AS overdue,
-		          ar.datepaid - ar.transdate AS paid,
-		          oe.reqdate - oe.transdate AS req,
-		          oe.id AS oeid,
+           SELECT s.*, ar.id AS arid, ar.invoice AS arinvoice,
+                  ap.id AS apid, ap.invoice AS apinvoice,
+                  ar.duedate - ar.transdate AS overdue,
+                  ar.datepaid - ar.transdate AS paid,
+                  oe.reqdate - oe.transdate AS req,
+                  oe.id AS oeid,
                           CASE oe.oe_class_id
                              WHEN 1 THEN oe.entity_credit_account
                              ELSE NULL
@@ -859,11 +859,11 @@ sub recurring_details {
                              WHEN 2 THEN oe.entity_credit_account
                              ELSE NULL
                              END AS vendor_id
-		     FROM recurring s
-		LEFT JOIN ar ON (ar.id = s.id)
-		LEFT JOIN ap ON (ap.id = s.id)
-		LEFT JOIN oe ON (oe.id = s.id)
-		    WHERE s.id = ?|;
+             FROM recurring s
+        LEFT JOIN ar ON (ar.id = s.id)
+        LEFT JOIN ap ON (ap.id = s.id)
+        LEFT JOIN oe ON (oe.id = s.id)
+            WHERE s.id = ?|;
 
     my $sth = $dbh->prepare($query);
     $sth->execute($id) || $form->dberror($query);
@@ -879,9 +879,9 @@ sub recurring_details {
       unless $form->{invoice};
 
     $query = qq|
-		SELECT *
-		  FROM recurringemail
-		 WHERE id = ?|;
+        SELECT *
+          FROM recurringemail
+         WHERE id = ?|;
 
     $sth = $dbh->prepare($query);
     $sth->execute($id) || $form->dberror($query);
@@ -896,9 +896,9 @@ sub recurring_details {
     $sth->finish;
 
     $query = qq|
-		SELECT *
-		  FROM recurringprint
-		 WHERE id = ?|;
+        SELECT *
+          FROM recurringprint
+         WHERE id = ?|;
 
     $sth = $dbh->prepare($query);
     $sth->execute($id) || $form->dberror($query);
@@ -938,9 +938,9 @@ sub update_recurring {
 
     $id = $dbh->quote($id);
     my $query = qq|
-		SELECT nextdate, repeat, unit
-		  FROM recurring
-		 WHERE id = $id|;
+        SELECT nextdate, repeat, unit
+          FROM recurring
+         WHERE id = $id|;
 
     my ( $nextdate, $repeat, $unit ) = $dbh->selectrow_array($query);
 
@@ -949,21 +949,21 @@ sub update_recurring {
 
     # check if it is the last date
     $query = qq|
-		SELECT (date $nextdate + interval $interval) > enddate
-		  FROM recurring
-		 WHERE id = $id|;
+        SELECT (date $nextdate + interval $interval) > enddate
+          FROM recurring
+         WHERE id = $id|;
 
     my ($last_repeat) = $dbh->selectrow_array($query);
     if ($last_repeat) {
         $query = qq|
-    		UPDATE recurring
-    		   SET nextdate = NULL
-    		 WHERE id = $id|;
+            UPDATE recurring
+               SET nextdate = NULL
+             WHERE id = $id|;
     } else {
         $query = qq|
-    		UPDATE recurring
-    		   SET nextdate = (date $nextdate + interval $interval)
-    		 WHERE id = $id|;
+            UPDATE recurring
+               SET nextdate = (date $nextdate + interval $interval)
+             WHERE id = $id|;
     }
 
     $dbh->do($query) || $form->dberror($query);
@@ -1037,16 +1037,16 @@ sub taxes {
     my $dbh = $form->{dbh};
 
     my $query = qq|
-		  SELECT c.id, c.accno, c.description,
-		         t.rate * 100 AS rate, t.taxnumber, t.validto::date,
-			 t.minvalue, t.pass, m.taxmodulename
-		    FROM chart c
-		    LEFT JOIN
+          SELECT c.id, c.accno, c.description,
+                 t.rate * 100 AS rate, t.taxnumber, t.validto::date,
+             t.minvalue, t.pass, m.taxmodulename
+            FROM chart c
+            LEFT JOIN
                      (tax t JOIN taxmodule m
                             ON (t.taxmodule_id = m.taxmodule_id))
                     ON (c.id = t.chart_id)
                     WHERE c.tax
-		ORDER BY 3, 6|;
+        ORDER BY 3, 6|;
 
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
@@ -1060,8 +1060,8 @@ sub taxes {
     $sth->finish;
 
     $query = qq|
-		SELECT taxmodule_id, taxmodulename FROM taxmodule
-		ORDER BY 2|;
+        SELECT taxmodule_id, taxmodulename FROM taxmodule
+        ORDER BY 2|;
 
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);

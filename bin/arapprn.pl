@@ -320,7 +320,7 @@ sub print_transaction {
     my $template = LedgerSMB::Template->new(
         user => \%myconfig, template => $form->{'formname'},
         locale => $locale,
-	no_auto_output => 1,
+    no_auto_output => 1,
         format => uc $form->{format} );
 
     $template->render($form);
@@ -476,7 +476,7 @@ sub print_options {
     if ( ${LedgerSMB::Sysconfig::latex} ) {
         $form->{selectformat} .= qq|
             <option value="postscript">| . $locale->text('Postscript') . qq|
-	    <option value="pdf">| . $locale->text('PDF');
+        <option value="pdf">| . $locale->text('PDF');
     }
 
     $format = qq|<select data-dojo-type="dijit/form/Select" name=format>$form->{selectformat}</select>|;

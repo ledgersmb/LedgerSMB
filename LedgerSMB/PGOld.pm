@@ -59,12 +59,12 @@ sub _db_array_literal {
 }
 
 sub merge {
-	 my ($self, $base, %args) = @_;
+     my ($self, $base, %args) = @_;
     my @keys = $args{keys} || keys %$base;
-	 foreach my $key (@keys) {
-		  $self->{$key} = $base->{$key};
-	 }
-	 return $self;
+     foreach my $key (@keys) {
+          $self->{$key} = $base->{$key};
+     }
+     return $self;
 }
 
 

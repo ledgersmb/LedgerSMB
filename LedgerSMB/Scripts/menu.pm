@@ -67,7 +67,7 @@ sub root_doc {
     my $template;
 
     $request->{title} = "LedgerSMB $request->{VERSION} -- ".
-	"$request->{login} -- $request->{company}";
+    "$request->{login} -- $request->{company}";
 
     my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
     $menu->generate();
@@ -82,7 +82,7 @@ sub root_doc {
             locale => $request->{_locale},
             path => 'UI',
             template => 'main',
-	     format => 'HTML'
+         format => 'HTML'
     );
     $template->render($menu);
 }
@@ -104,7 +104,7 @@ there nodes which are supposed to be open are marked.
 sub expanding_menu {
     my ($request) = @_;
     if ($request->{'open'} !~ s/:$request->{id}:/:/){
-	$request->{'open'} .= ":$request->{id}:";
+    $request->{'open'} .= ":$request->{id}:";
     }
 
     # The above system can lead to extra colons.

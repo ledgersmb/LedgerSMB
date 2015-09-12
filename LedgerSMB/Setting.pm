@@ -154,7 +154,7 @@ sub _increment_process{
             }
 
             if ( $param =~ /<\?lsmb (yy|mm|dd)/i ) {
-		# SC: XXX Does this even work anymore?
+        # SC: XXX Does this even work anymore?
                 my $p = $param;
                 $p =~ s/lsmb//;
                 $p =~ s/[^YyMmDd]//g;

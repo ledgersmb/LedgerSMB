@@ -65,8 +65,8 @@ sub http_error {
     my $cgi = CGI::Simple->new();
 
     my $err = {
-	'500' => {status  => '500 Internal Server Error',
-		  message => 'An error occurred. Information on this error has been logged.',
+    '500' => {status  => '500 Internal Server Error',
+          message => 'An error occurred. Information on this error has been logged.',
                   others  => {}},
         '403' => {status  => '403 Forbidden',
                   message => 'You are not allowed to access the specified resource.',

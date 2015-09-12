@@ -92,8 +92,8 @@ sub fetch_config {
     }
 
     $query = qq|
-		SELECT * FROM user_preference
-		 WHERE id = (SELECT id FROM users WHERE username = ?)|;
+        SELECT * FROM user_preference
+         WHERE id = (SELECT id FROM users WHERE username = ?)|;
     my $sth = $dbh->prepare($query);
     $sth->execute($login);
     $myconfig = $sth->fetchrow_hashref(NAME_lc);

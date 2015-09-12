@@ -76,18 +76,18 @@ sub get_part {
     my $i;
 
     my $query = qq|
-		   SELECT p.*, a1.accno AS inventory_accno,
-		          a1.description AS inventory_description,
-		          a2.accno AS income_accno,
-		          a2.description AS income_description,
-		          a3.accno AS expense_accno,
-		          a3.description AS expense_description, pg.partsgroup
-		     FROM parts p
-		LEFT JOIN account a1 ON (p.inventory_accno_id = a1.id)
-		LEFT JOIN account a2 ON (p.income_accno_id = a2.id)
-		LEFT JOIN account a3 ON (p.expense_accno_id = a3.id)
-		LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-		    WHERE p.id = ?|;
+           SELECT p.*, a1.accno AS inventory_accno,
+                  a1.description AS inventory_description,
+                  a2.accno AS income_accno,
+                  a2.description AS income_description,
+                  a3.accno AS expense_accno,
+                  a3.description AS expense_description, pg.partsgroup
+             FROM parts p
+        LEFT JOIN account a1 ON (p.inventory_accno_id = a1.id)
+        LEFT JOIN account a2 ON (p.income_accno_id = a2.id)
+        LEFT JOIN account a3 ON (p.expense_accno_id = a3.id)
+        LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
+            WHERE p.id = ?|;
     my $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
     my $ref = $sth->fetchrow_hashref(NAME_lc);
@@ -106,14 +106,14 @@ sub get_part {
 
         # retrieve assembly items
         $query = qq|
-			   SELECT p.id, p.partnumber, p.description,
-			          p.sellprice, p.weight, a.qty, a.bom, a.adj,
-			          p.unit, p.lastcost, p.listprice,
-			          pg.partsgroup, p.assembly, p.partsgroup_id
-			     FROM parts p
-			     JOIN assembly a ON (a.parts_id = p.id)
-			LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-			    WHERE a.id = ?|;
+               SELECT p.id, p.partnumber, p.description,
+                      p.sellprice, p.weight, a.qty, a.bom, a.adj,
+                      p.unit, p.lastcost, p.listprice,
+                      pg.partsgroup, p.assembly, p.partsgroup_id
+                 FROM parts p
+                 JOIN assembly a ON (a.parts_id = p.id)
+            LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
+                WHERE a.id = ?|;
 
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -145,9 +145,9 @@ sub get_part {
 
         if ( $form->{makemodel} ne "" ) {
             $query = qq|
-				SELECT make, model, barcode
-				  FROM makemodel
-				 WHERE parts_id = ?|;
+                SELECT make, model, barcode
+                  FROM makemodel
+                 WHERE parts_id = ?|;
 
             $sth = $dbh->prepare($query);
             $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -161,8 +161,8 @@ sub get_part {
 
     # now get accno for taxes
     $query = qq|
-		SELECT c.accno FROM chart c, partstax pt
-		 WHERE pt.chart_id = c.id AND pt.parts_id = ?|;
+        SELECT c.accno FROM chart c, partstax pt
+         WHERE pt.chart_id = c.id AND pt.parts_id = ?|;
 
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -177,13 +177,13 @@ sub get_part {
 
     # is it an orphan
     $query = qq|
-		SELECT parts_id FROM invoice WHERE parts_id = $id
-		UNION
-		SELECT parts_id FROM orderitems WHERE parts_id = $id
-		UNION
-		SELECT parts_id FROM assembly WHERE parts_id = $id
-		UNION
-		SELECT parts_id FROM jcitems WHERE parts_id = $id|;
+        SELECT parts_id FROM invoice WHERE parts_id = $id
+        UNION
+        SELECT parts_id FROM orderitems WHERE parts_id = $id
+        UNION
+        SELECT parts_id FROM assembly WHERE parts_id = $id
+        UNION
+        SELECT parts_id FROM jcitems WHERE parts_id = $id|;
     ( $form->{orphaned} ) = $dbh->selectrow_array($query);
     $form->{orphaned} = !$form->{orphaned};
 
@@ -199,15 +199,15 @@ sub get_part {
 
         # get vendors
         $query = qq|
-			  SELECT v.id, e.name, pv.partnumber,
-			         pv.lastcost, pv.leadtime,
-			         pv.curr AS vendorcurr, v.meta_number
-			    FROM partsvendor pv
-			    JOIN entity_credit_account v
+              SELECT v.id, e.name, pv.partnumber,
+                     pv.lastcost, pv.leadtime,
+                     pv.curr AS vendorcurr, v.meta_number
+                FROM partsvendor pv
+                JOIN entity_credit_account v
                                  ON (v.id = pv.credit_id)
                             JOIN entity e ON (e.id = v.entity_id)
-			   WHERE pv.parts_id = ?
-			ORDER BY 2|;
+               WHERE pv.parts_id = ?
+            ORDER BY 2|;
 
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -222,17 +222,17 @@ sub get_part {
     # get matrix
     if ( $form->{item} ne 'labor' ) {
         $query = qq|
-			   SELECT pc.pricebreak, pc.sellprice AS customerprice,
-			          pc.curr AS customercurr, pc.validfrom,
-			          pc.validto, e.name, c.id AS cid,
-			          g.pricegroup, g.id AS gid, c.meta_number
-			     FROM partscustomer pc
-			LEFT JOIN entity_credit_account c
+               SELECT pc.pricebreak, pc.sellprice AS customerprice,
+                      pc.curr AS customercurr, pc.validfrom,
+                      pc.validto, e.name, c.id AS cid,
+                      g.pricegroup, g.id AS gid, c.meta_number
+                 FROM partscustomer pc
+            LEFT JOIN entity_credit_account c
                                   ON (c.id = pc.credit_id)
-			LEFT JOIN pricegroup g ON (g.id = pc.pricegroup_id)
+            LEFT JOIN pricegroup g ON (g.id = pc.pricegroup_id)
                         LEFT JOIN entity e ON (e.id = c.entity_id)
-			    WHERE pc.parts_id = ?
-			 ORDER BY e.name, g.pricegroup, pc.pricebreak|;
+                WHERE pc.parts_id = ?
+             ORDER BY e.name, g.pricegroup, pc.pricebreak|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
@@ -282,9 +282,9 @@ sub save {
 
         # get old price
         $query = qq|
-			SELECT id, listprice, sellprice, lastcost, weight
-			  FROM parts
-			 WHERE id = ?|;
+            SELECT id, listprice, sellprice, lastcost, weight
+              FROM parts
+             WHERE id = ?|;
         my $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} );
         my ( $id, $listprice, $sellprice, $lastcost, $weight) =
@@ -297,9 +297,9 @@ sub save {
                 # if item is part of an assembly
                 # adjust all assemblies
                 $query = qq|
-					SELECT id, qty, adj
-					  FROM assembly
-					 WHERE parts_id = ?|;
+                    SELECT id, qty, adj
+                      FROM assembly
+                     WHERE parts_id = ?|;
                 $sth = $dbh->prepare($query);
                 $sth->execute( $form->{id} )
                   || $form->dberror($query);
@@ -320,8 +320,8 @@ sub save {
 
                 # delete partsvendor records
                 $query = qq|
-					DELETE FROM partsvendor
-					      WHERE parts_id = ?|;
+                    DELETE FROM partsvendor
+                          WHERE parts_id = ?|;
                 $sth = $dbh->prepare($query);
                 $sth->execute( $form->{id} )
                   || $form->dberror($query);
@@ -331,8 +331,8 @@ sub save {
 
                 # delete makemodel records
                 $query = qq|
-					DELETE FROM makemodel
-					      WHERE parts_id = ?|;
+                    DELETE FROM makemodel
+                          WHERE parts_id = ?|;
                 $sth = $dbh->prepare($query);
                 $sth->execute( $form->{id} )
                   || $form->dberror($query);
@@ -349,8 +349,8 @@ sub save {
 
                     # delete assembly records
                     $query = qq|
-						DELETE FROM assembly
-						      WHERE id = ?|;
+                        DELETE FROM assembly
+                              WHERE id = ?|;
                     $sth = $dbh->prepare($query);
                     $sth->execute( $form->{id} )
                       || $form->dberror($query);
@@ -365,11 +365,11 @@ sub save {
                         }
 
                         $query = qq|
-							UPDATE assembly
-							   SET bom = ?,
-							       adj = ?
-							 WHERE id = ?
-							       AND parts_id = ?|;
+                            UPDATE assembly
+                               SET bom = ?,
+                                   adj = ?
+                             WHERE id = ?
+                                   AND parts_id = ?|;
                         $sth = $dbh->prepare($query);
                         $sth->execute(
                             $form->{"bom_$i"}, $form->{"adj_$i"},
@@ -390,8 +390,8 @@ sub save {
 
             # delete matrix
             $query = qq|
-				DELETE FROM partscustomer
-				      WHERE parts_id = ?|;
+                DELETE FROM partscustomer
+                      WHERE parts_id = ?|;
 
             $sth = $dbh->prepare($query);
             $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -431,35 +431,35 @@ sub save {
         $form->{priceupdate} = 'now';
     }
     $query = qq|
-		UPDATE parts
-		   SET partnumber = ?,
-		       description = ?,
-		       makemodel = ?,
-		       alternate = ?,
-		       assembly = ?,
-		       listprice = ?,
-		       sellprice = ?,
-		       lastcost = ?,
-		       weight = ?,
-		       priceupdate = ?,
-		       unit = ?,
-		       notes = ?,
-		       rop = ?,
-		       bin = ?,
-		       inventory_accno_id = (SELECT id FROM account
-		                              WHERE accno = ?),
-		       income_accno_id = (SELECT id FROM account
-		                           WHERE accno = ?),
-		       expense_accno_id = (SELECT id FROM account
-		                            WHERE accno = ?),
+        UPDATE parts
+           SET partnumber = ?,
+               description = ?,
+               makemodel = ?,
+               alternate = ?,
+               assembly = ?,
+               listprice = ?,
+               sellprice = ?,
+               lastcost = ?,
+               weight = ?,
+               priceupdate = ?,
+               unit = ?,
+               notes = ?,
+               rop = ?,
+               bin = ?,
+               inventory_accno_id = (SELECT id FROM account
+                                      WHERE accno = ?),
+               income_accno_id = (SELECT id FROM account
+                                   WHERE accno = ?),
+               expense_accno_id = (SELECT id FROM account
+                                    WHERE accno = ?),
                        returns_accno_id = (SELECT id FROM account
                                             WHERE accno = ?),
-		       obsolete = ?,
-		       image = ?,
-		       drawing = ?,
-		       microfiche = ?,
-		       partsgroup_id = ?
-		 WHERE id = ?|;
+               obsolete = ?,
+               image = ?,
+               drawing = ?,
+               microfiche = ?,
+               partsgroup_id = ?
+         WHERE id = ?|;
     $sth = $dbh->prepare($query);
     $sth->execute(
         $form->{partnumber},      $form->{description},
@@ -480,8 +480,8 @@ sub save {
     # insert makemodel records
     if ( $form->{item} =~ /(part|assembly)/ ) {
         $query = qq|
-			INSERT INTO makemodel (parts_id, make, model, barcode)
-			     VALUES (?, ?, ?, ?)|;
+            INSERT INTO makemodel (parts_id, make, model, barcode)
+                 VALUES (?, ?, ?, ?)|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
         for $i ( 1 .. $form->{makemodel_rows} ) {
             if (   ( $form->{"make_$i"} ne "" )
@@ -496,8 +496,8 @@ sub save {
 
     # insert taxes
     $query = qq|
-		INSERT INTO partstax (parts_id, chart_id)
-		     VALUES (?, (SELECT id FROM chart WHERE accno = ?))|;
+        INSERT INTO partstax (parts_id, chart_id)
+             VALUES (?, (SELECT id FROM chart WHERE accno = ?))|;
     $sth = $dbh->prepare($query);
     for ( split / /, $form->{taxaccounts} ) {
         if ( $form->{"IC_tax_$_"} ) {
@@ -520,9 +520,9 @@ sub save {
 
         if ( $form->{orphaned} ) {
             $query = qq|
-				INSERT INTO assembly
-				            (id, parts_id, qty, bom, adj)
-				     VALUES (?, ?, ?, ?, ?)|;
+                INSERT INTO assembly
+                            (id, parts_id, qty, bom, adj)
+                     VALUES (?, ?, ?, ?, ?)|;
             $sth = $dbh->prepare($query);
             for $i ( 1 .. $form->{assembly_rows} - 1) {
                 $form->{"qty_$i"} =
@@ -564,11 +564,11 @@ sub save {
                 }
 
                 $query = qq|
-					INSERT INTO partsvendor
-					            (credit_id, parts_id,
-					            partnumber, lastcost,
-					            leadtime, curr)
-					     VALUES (?, ?, ?, ?, ?, ?)|;
+                    INSERT INTO partsvendor
+                                (credit_id, parts_id,
+                                partnumber, lastcost,
+                                leadtime, curr)
+                         VALUES (?, ?, ?, ?, ?, ?)|;
                 $sth = $dbh->prepare($query);
                 $sth->execute(
                     $vendor_id,               $form->{id},
@@ -600,12 +600,12 @@ sub save {
             $validfrom = $form->{"validfrom_$i"} if $form->{"validfrom_$i"};
             $validto   = $form->{"validto_$i"}   if $form->{"validto_$i"};
             $query     = qq|
-				INSERT INTO partscustomer
-				            (parts_id, credit_id,
-				            pricegroup_id, pricebreak,
-				            sellprice, curr,
-				            validfrom, validto)
-			             VALUES (?, ?, ?, ?, ?, ?, ?, ?)|;
+                INSERT INTO partscustomer
+                            (parts_id, credit_id,
+                            pricegroup_id, pricebreak,
+                            sellprice, curr,
+                            validfrom, validto)
+                         VALUES (?, ?, ?, ?, ?, ?, ?, ?)|;
             $sth = $dbh->prepare($query);
             $sth->execute(
                 $form->{id},                 $customer_id,
@@ -658,16 +658,16 @@ sub update_assembly {
     $id            = $dbh->quote($id);
 
     $query = qq|
-		UPDATE parts
-		   SET listprice = listprice +
-		       $qty * cast($formlistprice AS numeric),
-		       sellprice = sellprice +
-		       $qty * cast($formsellprice AS numeric),
-		       lastcost = lastcost +
-		       $qty * cast($formlastcost AS numeric),
-		       weight = weight +
-		       $qty * cast($weight AS numeric)
-		 WHERE id = $id|;
+        UPDATE parts
+           SET listprice = listprice +
+               $qty * cast($formlistprice AS numeric),
+               sellprice = sellprice +
+               $qty * cast($formsellprice AS numeric),
+               lastcost = lastcost +
+               $qty * cast($formlastcost AS numeric),
+               weight = weight +
+               $qty * cast($weight AS numeric)
+         WHERE id = $id|;
     $dbh->do($query) || $form->dberror($query);
 
     delete $form->{$id};
@@ -704,32 +704,32 @@ sub retrieve_assemblies {
 
     # retrieve assembly items
     my $query = qq|
-		  SELECT p.id, p.partnumber, p.description, p.bin, p.onhand,
-		         p.rop
-		    FROM parts p
- 		   WHERE $where
-		         AND p.assembly = '1'
-		 ORDER BY $sortorder|;
+          SELECT p.id, p.partnumber, p.description, p.bin, p.onhand,
+                 p.rop
+            FROM parts p
+            WHERE $where
+                 AND p.assembly = '1'
+         ORDER BY $sortorder|;
 
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
     $query = qq|
-		  SELECT sum(p.inventory_accno_id), p.assembly
-		    FROM parts p
-		    JOIN assembly a ON (a.parts_id = p.id)
-		   WHERE a.id = ?
-		GROUP BY p.assembly|;
+          SELECT sum(p.inventory_accno_id), p.assembly
+            FROM parts p
+            JOIN assembly a ON (a.parts_id = p.id)
+           WHERE a.id = ?
+        GROUP BY p.assembly|;
     my $svh = $dbh->prepare($query) || $form->dberror($query);
 
     my $inh;
     if ( $form->{checkinventory} ) {
         $query = qq|
-			SELECT p.id, p.onhand, a.qty
-			  FROM parts p
-			  JOIN assembly a ON (a.parts_id = p.id)
-			 WHERE (p.inventory_accno_id > 0 OR p.assembly)
-			       AND p.income_accno_id > 0 AND a.id = ?|;
+            SELECT p.id, p.onhand, a.qty
+              FROM parts p
+              JOIN assembly a ON (a.parts_id = p.id)
+             WHERE (p.inventory_accno_id > 0 OR p.assembly)
+                   AND p.income_accno_id > 0 AND a.id = ?|;
         $inh = $dbh->prepare($query) || $form->dberror($query);
     }
 
@@ -826,10 +826,10 @@ sub adjust_inventory {
     my ( $dbh, $form, $id, $qty ) = @_;
 
     my $query = qq|
-		SELECT p.id, p.inventory_accno_id, p.assembly, a.qty
-		  FROM parts p
-		  JOIN assembly a ON (a.parts_id = p.id)
-		 WHERE a.id = ?|;
+        SELECT p.id, p.inventory_accno_id, p.assembly, a.qty
+          FROM parts p
+          JOIN assembly a ON (a.parts_id = p.id)
+         WHERE a.id = ?|;
     my $sth = $dbh->prepare($query);
     $sth->execute($id) || $form->dberror($query);
 
@@ -937,12 +937,12 @@ sub assembly_item {
     }
 
     my $query = qq|
-		   SELECT p.id, p.partnumber, p.description, p.sellprice,
-		          p.weight, p.onhand, p.unit, p.lastcost, p.listprice,
-		          pg.partsgroup, p.partsgroup_id
-		     FROM parts p
-		LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
-		    WHERE $where|;
+           SELECT p.id, p.partnumber, p.description, p.sellprice,
+                  p.weight, p.onhand, p.unit, p.lastcost, p.listprice,
+                  pg.partsgroup, p.partsgroup_id
+             FROM parts p
+        LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
+            WHERE $where|;
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
@@ -965,10 +965,10 @@ sub create_links {
     my $ref;
 
     my $query = qq|
-		SELECT accno, description, link
-		  FROM chart
-		 WHERE link LIKE ?
-		 ORDER BY accno|;
+        SELECT accno, description, link
+          FROM chart
+         WHERE link LIKE ?
+         ORDER BY accno|;
     my $sth = $dbh->prepare($query);
     $sth->execute("%$module%") || $form->dberror($query);
 
@@ -1037,12 +1037,12 @@ sub create_links {
 
     if ( $form->{id} ) {
         $query = qq|
-			SELECT value FROM defaults
-			 WHERE setting_key = 'weightunit'|;
+            SELECT value FROM defaults
+             WHERE setting_key = 'weightunit'|;
         ( $form->{weightunit} ) = $dbh->selectrow_array($query);
         $query = qq|
-			SELECT value FROM defaults
-			 WHERE setting_key = 'curr'|;
+            SELECT value FROM defaults
+             WHERE setting_key = 'curr'|;
         ( $form->{currencies} ) = $dbh->selectrow_array($query);
 
     }

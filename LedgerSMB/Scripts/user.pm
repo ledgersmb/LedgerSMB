@@ -51,7 +51,7 @@ sub preference_screen {
             locale   => $request->{_locale},
             path     => 'UI/users',
             template => 'preferences',
-	    format   => 'HTML'
+        format   => 'HTML'
     );
 
     my $creds = LedgerSMB::Auth::get_credentials();

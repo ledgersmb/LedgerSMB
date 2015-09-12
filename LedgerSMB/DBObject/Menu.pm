@@ -89,7 +89,7 @@ sub __generate {
 
     for my $attribute (@{$self->{menu_items}}){
 
-	for (@{$attribute->{args}}){
+    for (@{$attribute->{args}}){
             if ($_ =~ /(module|menu|action)=/){
                @elems = split(/=/, $_);
                $attribute->{$elems[0]} = $elems[1];

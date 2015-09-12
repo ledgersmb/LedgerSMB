@@ -232,14 +232,14 @@ sub defaults_screen{
             value_attr     => 'id',
             default_values => [$request->{'inventory_accno_id'}],
         },
-	'default_country' => {
+    'default_country' => {
             name           => 'default_country',
             options        => \@country_list,
             default_values => [$request->{'default_country'}],
             text_attr      => 'name',
             value_attr     => 'id',
         },
-	'default_language' => {
+    'default_language' => {
             name           => 'default_language',
             options        => \@language_code_list,
             default_values => [$request->{'default_language'}],

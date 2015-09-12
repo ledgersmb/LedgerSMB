@@ -107,11 +107,11 @@ sub escape {
 }
 
 sub process {
-	my $parent = shift;
-	my $cleanvars = shift;
-	my $template;
-	my $output;
-	my $source;
+    my $parent = shift;
+    my $cleanvars = shift;
+    my $template;
+    my $output;
+    my $source;
         $parent->{binmode} = $binmode;
 
         my $dojo_theme;
@@ -123,59 +123,59 @@ sub process {
            }; # eval required to make setup.pl work as advertised
         }
         $dojo_theme ||= $LedgerSMB::Sysconfig::dojo_theme;
-	$cleanvars->{dojo_theme} ||= $dojo_theme;
+    $cleanvars->{dojo_theme} ||= $dojo_theme;
         $cleanvars->{UNESCAPE} = sub { return unescapeHTML(shift @_) };
 
-	if ($parent->{outputfile}) {
+    if ($parent->{outputfile}) {
             if (ref $parent->{outputfile}){
-		$output = $parent->{outputfile};
+        $output = $parent->{outputfile};
             } else {
-		$output = "$parent->{outputfile}.html";
+        $output = "$parent->{outputfile}.html";
             }
-	} else {
-		$output = \$parent->{output};
-	}
+    } else {
+        $output = \$parent->{output};
+    }
         if ($parent->{include_path} eq 'DB'){
                 $source = LedgerSMB::Template::DB->get_template(
                        $parent->{template}, undef, 'html'
                 );
-	} elsif (ref $parent->{template} eq 'SCALAR') {
-		$source = $parent->{template};
-	} elsif (ref $parent->{template} eq 'ARRAY') {
-		$source = join "\n", @{$parent->{template}};
-	} else {
-		$source = get_template($parent->{template});
-	}
+    } elsif (ref $parent->{template} eq 'SCALAR') {
+        $source = $parent->{template};
+    } elsif (ref $parent->{template} eq 'ARRAY') {
+        $source = join "\n", @{$parent->{template}};
+    } else {
+        $source = get_template($parent->{template});
+    }
         my $tempdir;
         my $paths = [$parent->{include_path},'templates/demo','UI/lib'];
         unshift @$paths, $parent->{include_path_lang}
             if defined $parent->{include_path_lang};
         my $arghash = {
-		INCLUDE_PATH => $paths,
+        INCLUDE_PATH => $paths,
                 ENCODING => 'utf8',
-		START_TAG => quotemeta('<?lsmb'),
-		END_TAG => quotemeta('?>'),
-		DELIMITER => ';',
-		TRIM => 1,
-		DEBUG => ($parent->{debug})? 'dirs': undef,
-		DEBUG_FORMAT => '',
+        START_TAG => quotemeta('<?lsmb'),
+        END_TAG => quotemeta('?>'),
+        DELIMITER => ';',
+        TRIM => 1,
+        DEBUG => ($parent->{debug})? 'dirs': undef,
+        DEBUG_FORMAT => '',
         };
         if ($LedgerSMB::Sysconfig::cache_templates){
             $arghash->{COMPILE_EXT} = '.lttc';
             $arghash->{COMPILE_DIR} = $LedgerSMB::Sysconfig::cache_template_dir;
         }
 
-	$template = Template->new(
+    $template = Template->new(
                     $arghash
-		) || die Template->error();
-	if (not $template->process(
-		$source,
-		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
-			'escape' => \&preprocess},
-		$output, {binmode => ':utf8'})) {
-		die $template->error();
-	}
-	$parent->{mimetype} = 'text/html';
+        ) || die Template->error();
+    if (not $template->process(
+        $source,
+        {%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
+            'escape' => \&preprocess},
+        $output, {binmode => ':utf8'})) {
+        die $template->error();
+    }
+    $parent->{mimetype} = 'text/html';
 }
 
 sub postprocess {

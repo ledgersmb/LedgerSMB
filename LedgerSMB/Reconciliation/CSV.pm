@@ -11,9 +11,9 @@ try {
 no warnings;
 opendir (DCSV, 'LedgerSMB/Reconciliation/CSV/Formats');
 for my $format (readdir(DCSV)){
-	if ($format !~ /^\./){
-		do "LedgerSMB/Reconciliation/CSV/Formats/$format";
-	}
+    if ($format !~ /^\./){
+        do "LedgerSMB/Reconciliation/CSV/Formats/$format";
+    }
 }
 };
 

@@ -1166,9 +1166,9 @@ sub num2text_sl {
     if ($numblock[$i] > 99) {
       # the one from hundreds
       if ( $num[0] > 2 ) {
-	push @textnumber, $self->{numbername}{$num[0]};
+    push @textnumber, $self->{numbername}{$num[0]};
       } elsif ( $num[0] > 1 ) {
-	push @textnumber, 'dve';
+    push @textnumber, 'dve';
       }
 
       # add hundred designation
@@ -1204,37 +1204,37 @@ sub num2text_sl {
     } elsif ($numblock[$i] > 1) {
       # ones
       if (2*10**9 <= $check1md && $check1md < 3*10**9) {
-	push @textnumber, 'dve';
+    push @textnumber, 'dve';
       } else {
-	push @textnumber, $self->{numbername}{$numblock[$i]};
+    push @textnumber, $self->{numbername}{$numblock[$i]};
       }
     } elsif ($numblock[$i] == 1) {
       if ($i == 0) {
-	push @textnumber, $self->{numbername}{$numblock[$i]};
+    push @textnumber, $self->{numbername}{$numblock[$i]};
       } else {
-	if ($i >= 5) {
-	    push @textnumber, $self->{numbername}{$numblock[$i]}.'-!-too big number-!-?!';
-	} elsif ($i == 4) {
-	  if ($skip1b == 0) {
-	    push @textnumber, $self->{numbername}{$numblock[$i]};
-	  }
-	} elsif ($i == 3) {
-	  if (1*10**9 <= $check1md && $check1md < 2*10**9) {
-	    push @textnumber, 'ena';
-	  } else {
-	    push @textnumber, $self->{numbername}{$numblock[$i]};
-	  }
-	} elsif ($i == 2) {
-	  if ($skip1m == 0) {
-	    push @textnumber, $self->{numbername}{$numblock[$i]};
-	  }
-	} elsif ($i == 1) {
-	  if ($skip1k == 0) {
-	    push @textnumber, $self->{numbername}{$numblock[$i]};
-	  }
-	} else {
-	  push @textnumber, $self->{numbername}{$numblock[$i]};
-	}
+    if ($i >= 5) {
+        push @textnumber, $self->{numbername}{$numblock[$i]}.'-!-too big number-!-?!';
+    } elsif ($i == 4) {
+      if ($skip1b == 0) {
+        push @textnumber, $self->{numbername}{$numblock[$i]};
+      }
+    } elsif ($i == 3) {
+      if (1*10**9 <= $check1md && $check1md < 2*10**9) {
+        push @textnumber, 'ena';
+      } else {
+        push @textnumber, $self->{numbername}{$numblock[$i]};
+      }
+    } elsif ($i == 2) {
+      if ($skip1m == 0) {
+        push @textnumber, $self->{numbername}{$numblock[$i]};
+      }
+    } elsif ($i == 1) {
+      if ($skip1k == 0) {
+        push @textnumber, $self->{numbername}{$numblock[$i]};
+      }
+    } else {
+      push @textnumber, $self->{numbername}{$numblock[$i]};
+    }
       }
       $appendn = "";
     }

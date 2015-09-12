@@ -142,12 +142,12 @@ sub list_sessions {
     }
     $admin->{title} = $request->{_locale}->text('Active Sessions');
     $template->render({
-	form    => $admin,
-	columns => $columns,
+    form    => $admin,
+    columns => $columns,
     heading => $column_heading,
         rows    => $rows,
-	buttons => [],
-	hiddens => [],
+    buttons => [],
+    hiddens => [],
     });
 
 }

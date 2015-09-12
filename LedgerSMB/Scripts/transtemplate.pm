@@ -47,7 +47,7 @@ sub view {
     $form->{script} =~ s/(bin|scripts)\///;
     delete $form->{id};
     if ($script =~ /^bin/){
-	# I hate this old code!
+    # I hate this old code!
         {
              no strict;
              no warnings 'redefine';
@@ -166,7 +166,7 @@ sub display_results {
        }
        $line->{source} = {
             text => $line->{source},
-	    href => "$base_url&entry_type=$line->{entry_type}&id=$line->{id}",
+        href => "$base_url&entry_type=$line->{entry_type}&id=$line->{id}",
        };
        push @$rows, $line;
    }

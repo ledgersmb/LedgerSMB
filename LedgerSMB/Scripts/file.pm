@@ -100,7 +100,7 @@ sub attach_file {
     $file->file_name($fnames[0]) if $fnames[0];
     if ($request->{url}){
         $file->file_name($request->{url});
-	$file->mime_type_text('text/x-uri');
+    $file->mime_type_text('text/x-uri');
         $file->file_name($request->{url});
         $file->get_mime_type;
         $file->content($request->{url});

@@ -139,12 +139,12 @@ Saves (grants) roles requested.
 
 sub save_roles{
     my ($self, $role_list) = @_;
-	 my @all_roles = map { $_->{rolname} } $self->list_roles;
-	 my (%have_role, %want_role);
-	 $have_role{$_} = 1
-		  for @{$self->role_list};
-	 $want_role{$_} = 1
-		  for @$role_list;
+     my @all_roles = map { $_->{rolname} } $self->list_roles;
+     my (%have_role, %want_role);
+     $have_role{$_} = 1
+          for @{$self->role_list};
+     $want_role{$_} = 1
+          for @$role_list;
     for my $rol_name (@all_roles) {
         if ($want_role{$rol_name} && !$have_role{$rol_name}) {
             $self->call_procedure(funcname => 'admin__add_user_to_role',

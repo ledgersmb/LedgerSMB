@@ -59,7 +59,7 @@ Post transaction uses the following variables in the $form variable:
 =cut
 
 sub post_transaction {
-	use strict;
+    use strict;
 
     my ( $self, $myconfig, $form ) = @_;
     $form->all_business_units;
@@ -194,10 +194,10 @@ sub post_transaction {
             # multiply by exchangerate
             $amount = $amount{fxamount}{$i} * $form->{exchangerate};
 
-	    # The following line used to be
-	    # $amount{amount}{$i} =  $form->round_amount( $amount - $diff, 2 );
-	    # but that causes problems when processing the payments
-	    # due to the fact that the payments are un-rounded
+        # The following line used to be
+        # $amount{amount}{$i} =  $form->round_amount( $amount - $diff, 2 );
+        # but that causes problems when processing the payments
+        # due to the fact that the payments are un-rounded
             $amount{amount}{$i} = $amount;
             $diff = $amount{amount}{$i} - ( $amount - $diff );
 
@@ -292,10 +292,10 @@ sub post_transaction {
       : $form->round_amount( $paid * $form->{exchangerate}, 2 );
 
     $query = q|
-		SELECT (SELECT value FROM defaults
-		         WHERE setting_key = 'fxgain_accno_id'),
-		       (SELECT value FROM defaults
-		         WHERE setting_key = 'fxloss_accno_id')|;
+        SELECT (SELECT value FROM defaults
+                 WHERE setting_key = 'fxgain_accno_id'),
+               (SELECT value FROM defaults
+                 WHERE setting_key = 'fxloss_accno_id')|;
 
     my ( $fxgain_accno_id, $fxloss_accno_id ) = $dbh->selectrow_array($query);
 
@@ -311,9 +311,9 @@ sub post_transaction {
         my $id = $dbh->quote( $form->{id} );
         $keepcleared = 1;
         $query       = qq|
-			SELECT id
-			  FROM $table
-			 WHERE id = $id|;
+            SELECT id
+              FROM $table
+             WHERE id = $id|;
         my ($exists) = $dbh->selectrow_array($query);
         if ($exists and $form->{batch_id}) {
            $query = "SELECT voucher__delete(id)
@@ -324,18 +324,18 @@ sub post_transaction {
 
            # delete detail records
 
-	    $dbh->do($query) || $form->dberror($query);
+        $dbh->do($query) || $form->dberror($query);
             $query = qq|
-				DELETE FROM ac_tax_form
+                DELETE FROM ac_tax_form
                                        WHERE entry_id IN
                                              (SELECT entry_id FROM acc_trans
-				              WHERE trans_id = $id)|;
+                              WHERE trans_id = $id)|;
 
             $dbh->do($query) || $form->dberror($query);
 
             $query = qq|
-				DELETE FROM acc_trans
-				 WHERE trans_id = $id|;
+                DELETE FROM acc_trans
+                 WHERE trans_id = $id|;
 
             $dbh->do($query) || $form->dberror($query);
             $dbh->do("DELETE FROM $table where id = $id");
@@ -355,9 +355,9 @@ sub post_transaction {
 
     #tshvr4 trunk svn-revison 6589,$form->login seems to contain id instead of name or '',so person_id not found,thus reports with join on person_id not working,quick fix,use employee_name
     $query = qq|
-			INSERT INTO $table (invnumber, person_id,
-				entity_credit_account)
-			     VALUES (?,    (select  u.entity_id from users u
+            INSERT INTO $table (invnumber, person_id,
+                entity_credit_account)
+                 VALUES (?,    (select  u.entity_id from users u
                  join entity e on(e.id = u.entity_id)
                  where u.username=? and u.entity_id in(select p.entity_id from person p) ), ?)|;
 
@@ -369,8 +369,8 @@ sub post_transaction {
     $dbh->do($query,undef,$uid,$form->{employee_name}, $form->{"$form->{vc}_id"}) || $form->dberror($query);
 
     $query = qq|
-			SELECT id FROM $table
-			 WHERE invnumber = ?|;
+            SELECT id FROM $table
+             WHERE invnumber = ?|;
 
     ( $form->{id} ) = $dbh->selectrow_array($query,undef,$uid);
 
@@ -396,8 +396,8 @@ sub post_transaction {
            $form->error('Approved Batch') if $bref->{approved_by};
            $form->error('Locked Batch') if $bref->{locked_by};
            $query = qq|
-		INSERT INTO voucher (batch_id, trans_id, batch_class)
-		VALUES (?, ?, (select id from batch_class where class = ?))|;
+        INSERT INTO voucher (batch_id, trans_id, batch_class)
+        VALUES (?, ?, (select id from batch_class where class = ?))|;
            $dbh->prepare($query)->execute($form->{batch_id}, $form->{id},
                 $batch_class) || $form->dberror($query);
         }
@@ -412,25 +412,25 @@ sub post_transaction {
     }
 
     $query = qq|
-		UPDATE $table
-		SET invnumber = ?,
+        UPDATE $table
+        SET invnumber = ?,
                     description = ?,
-			ordnumber = ?,
-			transdate = ?,
-			taxincluded = ?,
-			amount = ?,
-			duedate = ?,
-			paid = ?,
-			datepaid = ?,
-			netamount = ?,
-			curr = ?,
-			notes = ?,
-			intnotes = ?,
-			ponumber = ?,
-			crdate = ?,
+            ordnumber = ?,
+            transdate = ?,
+            taxincluded = ?,
+            amount = ?,
+            duedate = ?,
+            paid = ?,
+            datepaid = ?,
+            netamount = ?,
+            curr = ?,
+            notes = ?,
+            intnotes = ?,
+            ponumber = ?,
+            crdate = ?,
                         reverse = ?
-		WHERE id = ?
-	|;
+        WHERE id = ?
+    |;
 
     $form->{invnumber} = undef if $form->{invnumber} eq '';
 
@@ -443,7 +443,7 @@ sub post_transaction {
         $form->{currency},      $form->{notes},
         $form->{intnotes},
         $form->{ponumber},      $form->{crdate},
-	$form->{reverse},        $form->{id}
+    $form->{reverse},        $form->{id}
     );
     $dbh->prepare($query)->execute(@queryargs) || $form->dberror($query);
     @queries = $form->run_custom_queries( $table, 'INSERT' );
@@ -477,13 +477,13 @@ sub post_transaction {
         # insert detail records in acc_trans
         if ( $ref->{amount} ) {
             $query = qq|
-				INSERT INTO acc_trans
-				            (trans_id, chart_id, amount,
-				            transdate, memo,
-				            fx_transaction, cleared)
-				    VALUES  (?, (SELECT id FROM chart
-				                  WHERE accno = ?),
-				            ?, ?, ?, ?, ?)|;
+                INSERT INTO acc_trans
+                            (trans_id, chart_id, amount,
+                            transdate, memo,
+                            fx_transaction, cleared)
+                    VALUES  (?, (SELECT id FROM chart
+                                  WHERE accno = ?),
+                            ?, ?, ?, ?, ?)|;
 
             @queryargs = (
                 $form->{id},            $ref->{accno},
@@ -522,12 +522,12 @@ sub post_transaction {
     foreach $ref ( @{ $form->{acc_trans}{taxes} } ) {
         if ( $ref->{amount} ) {
             $query = qq|
-				INSERT INTO acc_trans
-				            (trans_id, chart_id, amount,
-				            transdate, fx_transaction)
-				     VALUES (?, (SELECT id FROM chart
-					          WHERE accno = ?),
-				            ?, ?, ?)|;
+                INSERT INTO acc_trans
+                            (trans_id, chart_id, amount,
+                            transdate, fx_transaction)
+                     VALUES (?, (SELECT id FROM chart
+                              WHERE accno = ?),
+                            ?, ?, ?)|;
 
             @queryargs = (
                 $form->{id}, $ref->{accno}, $ref->{amount} * $ml,
@@ -545,11 +545,11 @@ sub post_transaction {
         ($accno) = split /--/, $form->{$ARAP};
 
         $query = qq|
-			INSERT INTO acc_trans
-			            (trans_id, chart_id, amount, transdate)
-			     VALUES (?, (SELECT id FROM chart
-			                  WHERE accno = ?),
-			                  ?, ?)|;
+            INSERT INTO acc_trans
+                        (trans_id, chart_id, amount, transdate)
+                 VALUES (?, (SELECT id FROM chart
+                              WHERE accno = ?),
+                              ?, ?)|;
         @queryargs =
           ( $form->{id}, $accno, $invamount * -1 * $ml / $form->{exchangerate},
             $form->{transdate} );
@@ -606,12 +606,12 @@ sub post_transaction {
 
                 # add ar/ap
                 $query = qq|
-					INSERT INTO acc_trans
-					            (trans_id, chart_id,
-					            amount,transdate)
-					     VALUES (?, (SELECT id FROM chart
-					                  WHERE accno = ?),
-					            ?, ?)|;
+                    INSERT INTO acc_trans
+                                (trans_id, chart_id,
+                                amount,transdate)
+                         VALUES (?, (SELECT id FROM chart
+                                      WHERE accno = ?),
+                                ?, ?)|;
 
                 @queryargs = (
                     $form->{id}, $accno,
@@ -633,13 +633,13 @@ sub post_transaction {
 
                 $amount = $paid{fxamount}{$i};
                 $query  = qq|
-					INSERT INTO acc_trans
-					            (trans_id, chart_id, amount,
-					            transdate, source, memo,
-					            cleared)
-					     VALUES (?, (SELECT id FROM chart
-						          WHERE accno = ?),
-					            ?, ?, ?, ?, ?)|;
+                    INSERT INTO acc_trans
+                                (trans_id, chart_id, amount,
+                                transdate, source, memo,
+                                cleared)
+                         VALUES (?, (SELECT id FROM chart
+                                  WHERE accno = ?),
+                                ?, ?, ?, ?, ?)|;
 
                 @queryargs = (
                     $form->{id},          $accno,
@@ -669,16 +669,16 @@ sub post_transaction {
                           : $fxloss_accno_id;
 
                         $query = qq|
-							INSERT INTO acc_trans
-							            (trans_id,
-							            chart_id,
-							            amount,
-							            transdate,
-							            fx_transaction,
-							            cleared)
-							     VALUES (?, ?,
-							            ?,
-							            ?, '1', ?)|;
+                            INSERT INTO acc_trans
+                                        (trans_id,
+                                        chart_id,
+                                        amount,
+                                        transdate,
+                                        fx_transaction,
+                                        cleared)
+                                 VALUES (?, ?,
+                                        ?,
+                                        ?, '1', ?)|;
 
                         @queryargs = (
                             $form->{id}, $accno_id,
@@ -694,18 +694,18 @@ sub post_transaction {
                     $amount = $paid{amount}{$i} - $paid{fxamount}{$i} + $amount;
 
                     $query = qq|
-						INSERT INTO acc_trans
-						            (trans_id, chart_id,
-						            amount,
-						            transdate,
-						            fx_transaction,
-						            cleared, source)
-						     VALUES (?, (SELECT id
-						                   FROM chart
-						                  WHERE accno
-						                        = ?),
-						            ?, ?,
-						            '1', ?, ?)|;
+                        INSERT INTO acc_trans
+                                    (trans_id, chart_id,
+                                    amount,
+                                    transdate,
+                                    fx_transaction,
+                                    cleared, source)
+                             VALUES (?, (SELECT id
+                                           FROM chart
+                                          WHERE accno
+                                                = ?),
+                                    ?, ?,
+                                    '1', ?, ?)|;
 
                     @queryargs = (
                         $form->{id}, $accno,
@@ -845,7 +845,7 @@ sub get_name {
     my $tdate = $dbh->quote( $form->{transdate} );
     $duedate = ( $form->{transdate} )
       ? "to_date($tdate, $dateformat)
-			+ c.terms"
+            + c.terms"
       : "current_date + c.terms";
 
     $form->{"$form->{vc}_id"} *= 1;
@@ -853,24 +853,24 @@ sub get_name {
 
     # get customer/vendor
     my $query = qq/
-		   SELECT entity.name AS $form->{vc}, c.discount,
-		          c.creditlimit,
-		          c.terms, c.taxincluded,
-		          c.curr AS currency,
-		          c.language_code, $duedate AS duedate,
-			  b.discount AS tradediscount,
-		          b.description AS business,
-			  entity.control_code AS entity_control_code,
+           SELECT entity.name AS $form->{vc}, c.discount,
+                  c.creditlimit,
+                  c.terms, c.taxincluded,
+                  c.curr AS currency,
+                  c.language_code, $duedate AS duedate,
+              b.discount AS tradediscount,
+                  b.description AS business,
+              entity.control_code AS entity_control_code,
                           co.tax_id AS tax_id,
-			  c.meta_number, ctf.default_reportable,
+              c.meta_number, ctf.default_reportable,
                           c.cash_account_id, ca.accno as cash_accno,
                           c.id as eca_id,
                           coalesce(ecl.address, el.address) as address,
                           coalesce(ecl.city, el.city) as city
-		     FROM entity_credit_account c
-		     JOIN entity ON (entity.id = c.entity_id)
+             FROM entity_credit_account c
+             JOIN entity ON (entity.id = c.entity_id)
                 LEFT JOIN account ca ON c.cash_account_id = ca.id
-		LEFT JOIN business b ON (b.id = c.business_id)
+        LEFT JOIN business b ON (b.id = c.business_id)
                 LEFT JOIN country_tax_form ctf ON ctf.id = c.taxform_id
                 LEFT JOIN company co ON co.entity_id = c.entity_id
                 LEFT JOIN (SELECT coalesce(line_one, '')
@@ -887,7 +887,7 @@ sub get_name {
                           JOIN location l ON etl.location_id = l.id
                           WHERE etl.location_class = 1) el
                         ON (c.entity_id = el.entity_id)
-		    WHERE c.id = ?/;
+            WHERE c.id = ?/;
 
     @queryargs = ( $form->{"$form->{vc}_id"} );
     my $sth = $dbh->prepare($query);
@@ -910,11 +910,11 @@ sub get_name {
                       WHERE class_id BETWEEN 12 AND ?
                       ORDER BY class_id DESC;|;
     my %id_map = ( 12 => 'email',
-    	       13 => 'cc',
-    	       14 => 'bcc',
-    	       15 => 'email',
-    	       16 => 'cc',
-    	       17 => 'bcc' );
+               13 => 'cc',
+               14 => 'bcc',
+               15 => 'email',
+               16 => 'cc',
+               17 => 'bcc' );
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{eca_id}, 17) || $form->dberror( $query );
 
@@ -931,13 +931,13 @@ sub get_name {
         $ctype = $ref->{class_id};
         $ctype = $id_map{$ctype};
         $billing_email = 1
-    	if $ref->{class_id} == 15;
+        if $ref->{class_id} == 15;
 
         # If there's an explicit billing email, don't use
         # the standard email addresses; otherwise fall back to standard
         $form->{$ctype} .= ($form->{$ctype} ? ", " : "") . $ref->{contact}
-    	if (($ref->{class_id} < 15 && ! $billing_email)
-    	    || $ref->{class_id} >= 15);
+        if (($ref->{class_id} < 15 && ! $billing_email)
+            || $ref->{class_id} >= 15);
     }
     $sth->finish;
 
@@ -975,13 +975,13 @@ sub get_name {
         # the ar or ap record level.  --CT
         $query = qq|
                 SELECT sum(used) FROM (
-		SELECT SUM(ac.amount)
+        SELECT SUM(ac.amount)
                        * CASE WHEN '$arap' = 'ar' THEN -1 ELSE 1 END as used
-		  FROM $arap a
+          FROM $arap a
                   JOIN acc_trans ac ON a.id = ac.trans_id and ac.approved
                   JOIN account_link al ON al.account_id = ac.chart_id
                                        AND al.description IN ('AR', 'AP')
-		 WHERE entity_credit_account = ?
+         WHERE entity_credit_account = ?
                  UNION
                 SELECT sum(o.amount * coalesce(e.$buysell, 1)) as used
                   FROM oe o
@@ -1001,10 +1001,10 @@ sub get_name {
 
     # get taxes
     $query = qq|
-		SELECT c.accno
-		  FROM account c
-		  JOIN eca_tax ct ON (ct.chart_id = c.id)
-		 WHERE ct.eca_id = ? AND NOT obsolete |;
+        SELECT c.accno
+          FROM account c
+          JOIN eca_tax ct ON (ct.chart_id = c.id)
+         WHERE ct.eca_id = ? AND NOT obsolete |;
 
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{"$form->{vc}_id"} ) || $form->dberror($query);
@@ -1022,12 +1022,12 @@ sub get_name {
 
     # get tax rates and description
     $query = qq|
-		   SELECT c.accno, c.description, t.rate, t.taxnumber
-		     FROM chart c
-		     JOIN tax t ON (c.id = t.chart_id)
-		    WHERE true
-		          $where
-		 ORDER BY accno, validto|;
+           SELECT c.accno, c.description, t.rate, t.taxnumber
+             FROM chart c
+             JOIN tax t ON (c.id = t.chart_id)
+            WHERE true
+                  $where
+         ORDER BY accno, validto|;
 
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
@@ -1116,7 +1116,7 @@ sub update_ac_tax_form
 
    if($found)
    {
-	  my $query = qq|update ac_tax_form set reportable=? where entry_id=?|;
+      my $query = qq|update ac_tax_form set reportable=? where entry_id=?|;
           my $sth = $dbh->prepare($query);
           $sth->execute($report,$entry_id) || $form->dberror($query);
    }

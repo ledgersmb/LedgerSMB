@@ -72,7 +72,7 @@ sub save {
         $self->{contra} = '0';
     }
     if (!defined $self->{tax}) {
-	$self->{tax} = '0';
+    $self->{tax} = '0';
     }
     if ($self->{category} eq 'Qt'){
        $self->{is_temp} = '1';
@@ -189,11 +189,11 @@ $account->{id} and $account->{charttype} must be set.
 sub delete {
     my $self = shift @_;
     if ($self->{charttype} eq 'A') {
-	$self->call_dbmethod(funcname => 'account__delete');
+    $self->call_dbmethod(funcname => 'account__delete');
     } elsif ($self->{charttype} eq 'H') {
-	$self->call_dbmethod(funcname => 'account_heading__delete');
+    $self->call_dbmethod(funcname => 'account_heading__delete');
     } else {
-	die "Unknown charttype."
+    die "Unknown charttype."
     }
 }
 

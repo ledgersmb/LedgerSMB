@@ -146,14 +146,14 @@ sub get_roles {
     $logger->debug("get_roles: self = " . Data::Dumper::Dumper($self));
     for my $role (@s_rows) {
         my $rolname = $role->{'rolname'};
-	my $description = $rolname;
-	$description =~ s/lsmb_//;
-	$description =~ s/${company}__//
-	    if defined $company;
-	$description =~ s/_/ /g;
+    my $description = $rolname;
+    $description =~ s/lsmb_//;
+    $description =~ s/${company}__//
+        if defined $company;
+    $description =~ s/_/ /g;
         push @rows, { name => $rolname, description => #"lsmb_$company\_"  #
-			  $description
-	};
+              $description
+    };
     }
     return \@rows;
 }

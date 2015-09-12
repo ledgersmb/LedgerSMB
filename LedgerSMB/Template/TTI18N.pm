@@ -39,15 +39,15 @@ my %locales; # Cache string-loaded locales
 our $ttfuncs = {};
 
 $ttfuncs->{gettext} = sub {
-	my $locale = shift;
-	if (ref $locale) {
-		return $locale->text(@_);
-	} elsif ($locales{$locale}) {
-		return $locales{$locale}->text(@_);
-	} else {
-		$locales{$locale} = LedgerSMB::Locale->get_handle($locale);
-		return $locales{$locale}->text(@_);
-	}
+    my $locale = shift;
+    if (ref $locale) {
+        return $locale->text(@_);
+    } elsif ($locales{$locale}) {
+        return $locales{$locale}->text(@_);
+    } else {
+        $locales{$locale} = LedgerSMB::Locale->get_handle($locale);
+        return $locales{$locale}->text(@_);
+    }
 };
 
 

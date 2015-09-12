@@ -52,12 +52,12 @@ sub generate_hidden_elements {
     my $self = shift;
 
     if (! $self->{form_elements}{hidden_elements} ) {
-    	$self->{form_elements}{hidden_elements} = [];
+        $self->{form_elements}{hidden_elements} = [];
     }
 
     for (@_) {
-    	my $value = defined($self->{$_}) ? $self->quote( $self->{$_} ) : '';
-    	push @{$self->{form_elements}{hidden_elements}}, { type => 'hidden', name => $_, value => $value };
+        my $value = defined($self->{$_}) ? $self->quote( $self->{$_} ) : '';
+        push @{$self->{form_elements}{hidden_elements}}, { type => 'hidden', name => $_, value => $value };
     }
     return $self->{form_elements}{hidden_elements};
 }

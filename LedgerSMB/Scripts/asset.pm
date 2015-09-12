@@ -102,10 +102,10 @@ sub asset_category_screen {
     } else {
         $request->{title} = $request->{_locale}->text('Add Asset Class');
     }
-	 if (! defined $ac) {
-		  $ac = LedgerSMB::DBObject::Asset_Class->new({base => $request});
-	 }
-	 $ac->get_metadata;
+     if (! defined $ac) {
+          $ac = LedgerSMB::DBObject::Asset_Class->new({base => $request});
+     }
+     $ac->get_metadata;
     my $template = LedgerSMB::Template->new(
         user => $request->{_user},
         locale => $request->{_locale},
@@ -649,7 +649,7 @@ sub report_details {
         push @$rows, $r;
     }
     my $template = LedgerSMB::Template->new(
-		  request => $request,
+          request => $request,
         user => $request->{_user},
         locale => $request->{_locale},
         path => 'UI',
@@ -717,7 +717,7 @@ sub partial_disposal_details {
         push @$rows, $r;
     }
     my $template = LedgerSMB::Template->new(
-		  request => $request,
+          request => $request,
         user => $request->{_user},
         locale => $request->{_locale},
         path => 'UI',
@@ -781,7 +781,7 @@ sub disposal_details {
         push @$rows, $r;
     }
     my $template = LedgerSMB::Template->new(
-		  request => $request,
+          request => $request,
         user => $request->{_user},
         locale => $request->{_locale},
         path => 'UI',

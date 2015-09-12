@@ -88,15 +88,15 @@ sub authenticate {
 
         print "Content-Type: text/html\n";
         print "Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path\n";
-	    print "Status: 302 Found\n";
-	    print "Location: ".$path.$request->{next}."\n";
-	    print "\n";
-	    $request->finalize_request();
+        print "Status: 302 Found\n";
+        print "Location: ".$path.$request->{next}."\n";
+        print "\n";
+        $request->finalize_request();
     }
     elsif ($request->{dbh} and !$request->{log_out}){
         print "Content-Type: text/html\n";
         print "Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path\n";
-	    print "Status: 200 Success\n\nSuccess\n";
+        print "Status: 200 Success\n\nSuccess\n";
         if ($request->{log_out}){
             $request->finalize_request();
         }
@@ -108,7 +108,7 @@ sub authenticate {
         } else {
             print "WWW-Authenticate: Basic realm=\"LedgerSMB\"\n";
             print "Status: 401 Unauthorized\n\n";
-	    print "Please enter your credentials.\n";
+        print "Please enter your credentials.\n";
         }
         $request->finalize_request();
     }

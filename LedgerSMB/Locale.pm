@@ -93,8 +93,8 @@ sub text {
 }
 
 ##sub date {
-##	my ($self, $myconfig, $date, $longformat) = @_;
-##	return $date;
+##    my ($self, $myconfig, $date, $longformat) = @_;
+##    return $date;
 ##}
 sub date {
     my ( $self, $myconfig, $date, $longformat ) = @_;

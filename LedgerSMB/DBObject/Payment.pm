@@ -101,18 +101,18 @@ sub get_metadata {
         push @{$self->{currencies}}, $c->{payments_get_open_currencies};
     }
     @{$self->{businesses}} = $self->call_dbmethod(
-		funcname => 'business_type__list'
+        funcname => 'business_type__list'
     );
 
    @{$self->{payment_types}} = $self->call_dbmethod(
-		funcname => 'payment_type__list'
+        funcname => 'payment_type__list'
     );
 
 
     if($self->{payment_type_id})
     {
        @{$self->{payment_type_label_id}} =$self->call_dbmethod(
-		funcname => 'payment_type__get_label'  );
+        funcname => 'payment_type__get_label'  );
 
        $self->{payment_type_return_id}=$self->{payment_type_label_id}->[0]->{id};
 
@@ -122,9 +122,9 @@ sub get_metadata {
 
 
     @{$self->{debt_accounts}} = $self->call_dbmethod(
-		funcname => 'chart_get_ar_ap');
+        funcname => 'chart_get_ar_ap');
     @{$self->{cash_accounts}} = $self->call_dbmethod(
-		funcname => 'chart_list_cash');
+        funcname => 'chart_list_cash');
     for my $ref(@{$self->{cash_accounts}}){
         $ref->{text} = "$ref->{accno}--$ref->{description}";
     }
@@ -150,14 +150,14 @@ sub search {
     my ($self) = @_;
     if ($self->{meta_number} && !$self->{credit_id}){
         my ($ref) = $self->call_dbmethod(
-		funcname => 'entity_credit_get_id_by_meta_number'
+        funcname => 'entity_credit_get_id_by_meta_number'
         );
         my @keys = keys %$ref;
         my $key = shift @keys;
         $self->{credit_id} = $ref->{$key};
     }
     @{$self->{search_results}} = $self->call_dbmethod(
-		funcname => 'payment__search'
+        funcname => 'payment__search'
     );
     return @{$self->{search_results}};
 }
@@ -557,29 +557,29 @@ sub get_payment_detail_data {
     my $source_length = length($source_inc);
 
     @{$self->{contact_invoices}} = $self->call_dbmethod(
-		funcname => 'payment_get_all_contact_invoices');
+        funcname => 'payment_get_all_contact_invoices');
 
     for my $inv (@{$self->{contact_invoices}}) {
         if (($self->{action} ne 'update_payments') or
-		(defined $self->{"id_$inv->{contact_id}"})
+        (defined $self->{"id_$inv->{contact_id}"})
         ) {
-		    my $source = $self->{source_start};
+            my $source = $self->{source_start};
             $source = "" unless defined $source;
-    		if (length($source_inc) < $source_length) {
+            if (length($source_inc) < $source_length) {
                 $source_inc = sprintf('%0*s', $source_length, $source_inc);
             }
-    		$source =~ s/$source_src(\D*)$/$source_inc$1/;
-    		++ $source_inc;
-		if ($self->{account_class} == 1) { # skip for AR Receipts
-		  $inv->{source} = $source;
-		  $self->{"source_$inv->{contact_id}"} = $source;
-		}
-    	} else {
-		# Clear source numbers every time.
-		$inv->{source} = "";
-		$self->{"source_$inv->{contact_id}"} = "";
+            $source =~ s/$source_src(\D*)$/$source_inc$1/;
+            ++ $source_inc;
+        if ($self->{account_class} == 1) { # skip for AR Receipts
+          $inv->{source} = $source;
+          $self->{"source_$inv->{contact_id}"} = $source;
         }
-	my $tmp_invoices = $inv->{invoices};
+        } else {
+        # Clear source numbers every time.
+        $inv->{source} = "";
+        $self->{"source_$inv->{contact_id}"} = "";
+        }
+    my $tmp_invoices = $inv->{invoices};
         $inv->{invoices} = [];
         @{$inv->{invoices}} = $self->_parse_array($tmp_invoices);
         @{$inv->{invoices}} = sort { $a->[2] cmp $b->[2] } @{ $inv->{invoices} };
@@ -667,7 +667,7 @@ sub post_bulk {
         $self->{job_id} = $job_ref->{job__create};
 
          ($self->{job}) = $self->call_dbmethod(
-		funcname => 'job__status'
+        funcname => 'job__status'
          );
     }
     $self->{payment_date} = $self->{datepaid};
@@ -675,11 +675,11 @@ sub post_bulk {
         my $contact_id = $self->{"contact_$contact_row"};
         next if (!$self->{"id_$contact_id"});
         my $invoice_array = "{}"; # Pg Array
-	for my $invoice_row (1 .. $self->{"invoice_count_$contact_id"}){
+    for my $invoice_row (1 .. $self->{"invoice_count_$contact_id"}){
             my $invoice_id = $self->{"invoice_${contact_id}_${invoice_row}"};
             my $pay_amount = ($self->{"paid_$contact_id"} eq 'all' )
-			? $self->{"net_$invoice_id"}
-			: $self->{"payment_$invoice_id"};
+            ? $self->{"net_$invoice_id"}
+            : $self->{"payment_$invoice_id"};
             next if ! $pay_amount;
             $pay_amount = $self->parse_amount(amount => $pay_amount);
             $pay_amount = $self->format_amount({amount => $pay_amount, format => '1000.00'});
@@ -688,14 +688,14 @@ sub post_bulk {
                 die "Invalid subarray: $invoice_subarray";
             }
             $invoice_subarray =~ s/[^0123456789{},.-]//;
-	    if ($invoice_array eq '{}'){ # Omit comma
+        if ($invoice_array eq '{}'){ # Omit comma
                 $invoice_array = "{$invoice_subarray}";
-	    } else {
+        } else {
                 $invoice_array =~ s/\}$/,$invoice_subarray\}/;
             }
         }
         $self->{transactions} = $invoice_array;
-	$self->{source} = $self->{"source_$contact_id"};
+    $self->{source} = $self->{"source_$contact_id"};
         if ($queue_payments){
              $self->{batch_class} = 3;
              $self->call_dbmethod(

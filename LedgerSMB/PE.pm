@@ -91,10 +91,10 @@ sub projects {
     my $where = "WHERE class_id = 2";
 
     $query = qq|
-		   SELECT pr.*, e.name
-		     FROM business_unit pr
-		LEFT JOIN entity_credit_account c ON (c.id = pr.credit_id)
-		LEFT JOIN entity e ON (c.entity_id = e.id)|;
+           SELECT pr.*, e.name
+             FROM business_unit pr
+        LEFT JOIN entity_credit_account c ON (c.id = pr.credit_id)
+        LEFT JOIN entity e ON (c.entity_id = e.id)|;
 
     my $var;
     if ( $form->{projectnumber} ne "" ) {
@@ -127,21 +127,21 @@ sub projects {
                                    WHERE class_id = 2;
                                  UNION
                                     SELECT DISTINCT bu_id
-		                    FROM business_unit_inv
+                            FROM business_unit_inv
                                    WHERE class_id = 2;
-				 UNION
-		                    SELECT DISTINCT bu_id
-		                    FROM business_unit_oitems
+                 UNION
+                            SELECT DISTINCT bu_id
+                            FROM business_unit_oitems
                                    WHERE class_id = 2;
-				 UNION
-		                    SELECT DISTINCT project_id
-		                    FROM jcitems
-				    WHERE project_id > 0)
-		|;
+                 UNION
+                            SELECT DISTINCT project_id
+                            FROM jcitems
+                    WHERE project_id > 0)
+        |;
 
     } elsif ( $form->{status} eq 'active' ) {
         $where .= qq|
-			current_date BETWEEN pr.start_date
+            current_date BETWEEN pr.start_date
                                       AND coalesce(pr.end_date, current_date)|;
     } elsif ( $form->{status} eq 'inactive' ) {
         $where .= qq| current_date NOT BETWEEN pr.start_date
@@ -149,8 +149,8 @@ sub projects {
     }
 
     $query .= qq|
-		 $where
-		 ORDER BY $sortorder|;
+         $where
+         ORDER BY $sortorder|;
 
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
@@ -212,27 +212,27 @@ sub get_customer {
     }
 
     $query = qq|
-		SELECT count(*)
-		  FROM entity_credit_account
-		 WHERE $where|;
+        SELECT count(*)
+          FROM entity_credit_account
+         WHERE $where|;
     my ($count) = $dbh->selectrow_array($query);
 
     if ( $count < $myconfig->{vclimit} ) {
         $query = qq|
-			SELECT id, name
-			  FROM entity_credit_account
-			 WHERE $where|;
+            SELECT id, name
+              FROM entity_credit_account
+             WHERE $where|;
 
         if ( $form->{customer_id} ) {
             $query .= qq|
-				UNION
-				SELECT id,name
-				  FROM entity_credit_account
-				 WHERE id = | . $dbh->quote( $form->{customer_id} );
+                UNION
+                SELECT id,name
+                  FROM entity_credit_account
+                 WHERE id = | . $dbh->quote( $form->{customer_id} );
         }
 
         $query .= qq|
-			ORDER BY name|;
+            ORDER BY name|;
         $sth = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
 
@@ -340,16 +340,16 @@ sub save_partsgroup {
 
     if ( $form->{id} ) {
         $query = qq|
-			UPDATE partsgroup
-			   SET partsgroup = ?
-			 WHERE id = ?|;
+            UPDATE partsgroup
+               SET partsgroup = ?
+             WHERE id = ?|;
         push @group,  $form->{id};
     }
     else {
         $form->{parent}  = undef unless $form->{parent};
         $query = qq|
-			INSERT INTO partsgroup (partsgroup, parent)
-			     VALUES (?, ?)|;
+            INSERT INTO partsgroup (partsgroup, parent)
+                 VALUES (?, ?)|;
         push @group, $form->{parent};
     }
     $dbh->do($query, undef, @group) || $form->dberror($query);
@@ -410,14 +410,14 @@ sub save_pricegroup {
 
     if ( $form->{id} ) {
         $query = qq|
-			UPDATE pricegroup SET
-			       pricegroup = ?
-			 WHERE id = | . $dbh->quote( $form->{id} );
+            UPDATE pricegroup SET
+                   pricegroup = ?
+             WHERE id = | . $dbh->quote( $form->{id} );
     }
     else {
         $query = qq|
-			INSERT INTO pricegroup (pricegroup)
-			VALUES (?)|;
+            INSERT INTO pricegroup (pricegroup)
+            VALUES (?)|;
     }
     $sth = $dbh->prepare($query);
     $sth->execute( $form->{pricegroup} ) || $form->dberror($query);
@@ -500,19 +500,19 @@ sub description_translations {
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
     my $query = qq|
-		  SELECT l.description AS language,
-		         t.description AS translation, l.code
-		    FROM parts_translation t
-		    JOIN language l ON (l.code = t.language_code)
-		   WHERE trans_id = ?
-		ORDER BY 1|;
+          SELECT l.description AS language,
+                 t.description AS translation, l.code
+            FROM parts_translation t
+            JOIN language l ON (l.code = t.language_code)
+           WHERE trans_id = ?
+        ORDER BY 1|;
     my $tth = $dbh->prepare($query);
 
     $query = qq|
-		  SELECT p.id, p.partnumber, p.description
-		    FROM parts p
-		   WHERE $where
-		ORDER BY $sortorder|;
+          SELECT p.id, p.partnumber, p.description
+            FROM parts p
+           WHERE $where
+        ORDER BY $sortorder|;
 
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
@@ -570,21 +570,21 @@ sub partsgroup_translations {
     $where .= " AND p.id = " . $dbh->quote( $form->{id} ) if $form->{id};
 
     my $query = qq|
-		  SELECT l.description AS language,
-		         t.description AS translation, l.code
-		    FROM partsgroup_translation t
-		    JOIN language l ON (l.code = t.language_code)
-		   WHERE trans_id = ?
-		ORDER BY 1|;
+          SELECT l.description AS language,
+                 t.description AS translation, l.code
+            FROM partsgroup_translation t
+            JOIN language l ON (l.code = t.language_code)
+           WHERE trans_id = ?
+        ORDER BY 1|;
     my $tth = $dbh->prepare($query);
 
     $form->sort_order();
 
     $query = qq|
-		  SELECT p.id, p.partsgroup AS description
-		    FROM partsgroup p
-		   WHERE $where
-		ORDER BY 2 $form->{direction}|;
+          SELECT p.id, p.partsgroup AS description
+            FROM partsgroup p
+           WHERE $where
+        ORDER BY 2 $form->{direction}|;
 
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
@@ -650,19 +650,19 @@ sub project_translations {
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
     my $query = qq|
-		  SELECT l.description AS language,
-		         t.description AS translation, l.code
-		    FROM business_unit_translation t
-		    JOIN language l ON (l.code = t.language_code)
-		   WHERE trans_id = ?
-		ORDER BY 1|;
+          SELECT l.description AS language,
+                 t.description AS translation, l.code
+            FROM business_unit_translation t
+            JOIN language l ON (l.code = t.language_code)
+           WHERE trans_id = ?
+        ORDER BY 1|;
     my $tth = $dbh->prepare($query);
 
     $query = qq|
-		  SELECT p.id, p.projectnumber, p.description
-		    FROM project p
-		   WHERE $where
-		ORDER BY $sortorder|;
+          SELECT p.id, p.projectnumber, p.description
+            FROM project p
+           WHERE $where
+        ORDER BY $sortorder|;
 
     my $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
@@ -742,8 +742,8 @@ sub save_translation {
     $sth->execute( $form->{id} ) || $form->dberror($query);
 
     $query = qq|
-		INSERT INTO $table (trans_id, language_code, description)
-		     VALUES (?, ?, ?)|;
+        INSERT INTO $table (trans_id, language_code, description)
+             VALUES (?, ?, ?)|;
     my $sth = $dbh->prepare($query) || $form->dberror($query);
 
     foreach my $i ( 1 .. $form->{translation_rows} ) {
@@ -907,20 +907,20 @@ sub get_jcitems {
 # XXX Note that this is aimed at current customer functionality only.  In the
 # future, this will be more generaly constructed.
     $query = qq|
-		   SELECT j.id, j.description, j.qty - j.allocated AS qty,
-		          j.sellprice, j.parts_id, pr.credit_id as customer_id,
-		          j.business_unit_id as project_id,
+           SELECT j.id, j.description, j.qty - j.allocated AS qty,
+                  j.sellprice, j.parts_id, pr.credit_id as customer_id,
+                  j.business_unit_id as project_id,
                           j.checkedin::date AS transdate,
-		          j.notes, c.legal_name AS customer,
+                  j.notes, c.legal_name AS customer,
                           pr.description as projectnumber,
-		          p.partnumber
-		     FROM jcitems j
-		     JOIN business_unit pr ON (pr.id = j.business_unit_id)
-		     JOIN parts p ON (p.id = j.parts_id)
-		LEFT JOIN entity_credit_account eca ON (eca.id = pr.credit_id)
+                  p.partnumber
+             FROM jcitems j
+             JOIN business_unit pr ON (pr.id = j.business_unit_id)
+             JOIN parts p ON (p.id = j.parts_id)
+        LEFT JOIN entity_credit_account eca ON (eca.id = pr.credit_id)
                 LEFT JOIN company c ON eca.entity_id = c.entity_id
-		    WHERE j.allocated != j.qty $where
-		 ORDER BY pr.description, c.legal_name, j.checkedin::date|;
+            WHERE j.allocated != j.qty $where
+         ORDER BY pr.description, c.legal_name, j.checkedin::date|;
     if ( $form->{summary} ) {
         $query =~ s/j\.description/p\.description/;
         $query =~ s/c\.name,/c\.name, j\.parts_id, /;
@@ -931,10 +931,10 @@ sub get_jcitems {
 
     # tax accounts
     $query = qq|
-		SELECT c.accno
-		  FROM chart c
-		  JOIN partstax pt ON (pt.chart_id = c.id)
-		 WHERE pt.parts_id = ?|;
+        SELECT c.accno
+          FROM chart c
+          JOIN partstax pt ON (pt.chart_id = c.id)
+         WHERE pt.parts_id = ?|;
     my $tth = $dbh->prepare($query) || $form->dberror($query);
     my $ptref;
 
@@ -962,9 +962,9 @@ sub get_jcitems {
     $form->{defaultcurrency} = $form->{currency};
 
     $query = qq|
-		SELECT c.accno, t.rate
-		  FROM tax t
-		  JOIN chart c ON (c.id = t.chart_id)|;
+        SELECT c.accno, t.rate
+          FROM tax t
+          JOIN chart c ON (c.id = t.chart_id)|;
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {

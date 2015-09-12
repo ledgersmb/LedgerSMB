@@ -217,7 +217,7 @@ sub display_form
 
     if ( ( $rows = $form->numtextrows( $form->{notes}, 50 ) ) > 1 ) {
         $form->{rowsnotes}=$rows;$form->{colsnotes}=50;
-	$form->{colrownotes}=1;
+    $form->{colrownotes}=1;
     }
     else {
                $form->{colrownotes}=0;
@@ -256,7 +256,7 @@ sub display_form
 
   for (qw(totaldebit totalcredit)) {
       $form->{$_} =
-	$form->format_amount( \%myconfig, $form->{$_}, 2, "0" );
+    $form->format_amount( \%myconfig, $form->{$_}, 2, "0" );
   }
 
   $hiddens{sessionid}=$form->{sessionid};
@@ -266,81 +266,81 @@ sub display_form
   $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
   my @buttons;
   if ( !$form->{readonly} ) {
-	      my $i=1;
-	      %button = (
-		  'update' =>
-		    { ndx => 1, key => 'U', value => $locale->text('Update') },
-		  'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
+          my $i=1;
+          %button = (
+          'update' =>
+            { ndx => 1, key => 'U', value => $locale->text('Update') },
+          'post' => { ndx => 3, key => 'O', value => $locale->text('Post') },
                   'edit_and_save' => {ndx => 4, key => 'V',
                           value => $locale->text('Save Draft') },
                   'save_temp' =>
                     { ndx   => 9,
                       key   => 'T',
                       value => $locale->text('Save Template') },
-		  'save_as_new' =>
-		    { ndx => 6, key => 'N', value => $locale->text('Save as new') },
-		  'schedule' =>
-		    { ndx => 7, key => 'H', value => $locale->text('Schedule') },
+          'save_as_new' =>
+            { ndx => 6, key => 'N', value => $locale->text('Save as new') },
+          'schedule' =>
+            { ndx => 7, key => 'H', value => $locale->text('Schedule') },
                   'new' =>
                     { ndx => 9, key => 'N', value => $locale->text('New') },
-	      );
+          );
 
-	      if ($form->{separate_duties}){
-		  $hiddens{separate_duties}=$form->{separate_duties};
-		  $button{post}->{value} = $locale->text('Save');
-	      }
-	      %a = ();
+          if ($form->{separate_duties}){
+          $hiddens{separate_duties}=$form->{separate_duties};
+          $button{post}->{value} = $locale->text('Save');
+          }
+          %a = ();
               $a{'save_temp'} = 1;
 
-	      if ( $form->{id}) {
+          if ( $form->{id}) {
                   $a{'new'} = 1;
 
-		  for ( 'save_as_new', 'schedule' ) { $a{$_} = 1 }
+          for ( 'save_as_new', 'schedule' ) { $a{$_} = 1 }
 
-		  for ( 'post', 'delete' ) { $a{$_} = 1 }
-	      }
-	      elsif (!$form->{id}){
+          for ( 'post', 'delete' ) { $a{$_} = 1 }
+          }
+          elsif (!$form->{id}){
                  $a{'update'} = 1;
-		  if ( $transdate > $closedto ) {
-		      for ( "post", "schedule" ) { $a{$_} = 1 }
-		  }
-	      }
+          if ( $transdate > $closedto ) {
+              for ( "post", "schedule" ) { $a{$_} = 1 }
+          }
+          }
 
-	      if ($form->{id} && (!$form->{approved} && !$form->{batch_id})){
-		$button{approve} = {
-			ndx   => 3,
-			key   => 'S',
-			value => $locale->text('Post') };
-		$a{approve} = 1;
-		$a{edit_and_save} = 1;
-		$a{update} = 1;
-		if (grep /__draft_edit$/, @{$form->{_roles}}){
-		    $button{edit_and_save} = {
-			ndx   => 4,
-			key   => 'O',
-			value => $locale->text('Save Draft') };
-		}
-		delete $button{post};
-	      }
-	      if ($form->{id} && ($form->{approved} || $form->{batch_id})) {
-		  delete $button{post};
-	      }
+          if ($form->{id} && (!$form->{approved} && !$form->{batch_id})){
+        $button{approve} = {
+            ndx   => 3,
+            key   => 'S',
+            value => $locale->text('Post') };
+        $a{approve} = 1;
+        $a{edit_and_save} = 1;
+        $a{update} = 1;
+        if (grep /__draft_edit$/, @{$form->{_roles}}){
+            $button{edit_and_save} = {
+            ndx   => 4,
+            key   => 'O',
+            value => $locale->text('Save Draft') };
+        }
+        delete $button{post};
+          }
+          if ($form->{id} && ($form->{approved} || $form->{batch_id})) {
+          delete $button{post};
+          }
 
-	      for ( keys %button ) { delete $button{$_} if !$a{$_} }
-	      my $i=1;
-	      for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
-	      {
-				  push @buttons, {
-				  name => 'action',
-				  value => $_ ,
-				  text => $button{$_}->{value},
-				  type => 'submit',
-				  class => 'submit',
-				  accesskey => $button{$_}->{key},
-				  order => $i
-						};
-				  $i++;
-	      }
+          for ( keys %button ) { delete $button{$_} if !$a{$_} }
+          my $i=1;
+          for ( sort { $button{$a}->{ndx} <=> $button{$b}->{ndx} } keys %button )
+          {
+                  push @buttons, {
+                  name => 'action',
+                  value => $_ ,
+                  text => $button{$_}->{value},
+                  type => 'submit',
+                  class => 'submit',
+                  accesskey => $button{$_}->{key},
+                  order => $i
+                        };
+                  $i++;
+          }
 
   }
 
@@ -350,18 +350,18 @@ sub display_form
   }
   my $template;
   my $template = LedgerSMB::Template->new(
-			    user => \%myconfig,
-			    locale => $locale,
-			    path => 'UI/journal',
-			    template => 'journal_entry',
-			    format => 'HTML',
-					);
+                user => \%myconfig,
+                locale => $locale,
+                path => 'UI/journal',
+                template => 'journal_entry',
+                format => 'HTML',
+                    );
 
   $template->render({
-			form => \%$form,
-			buttons => \@buttons,
-			hiddens => \%hiddens,
-			displayrows => \@displayrows
+            form => \%$form,
+            buttons => \@buttons,
+            hiddens => \%hiddens,
+            displayrows => \@displayrows
                    });
 
   if ( $form->{lynx} ) {
@@ -416,67 +416,67 @@ sub display_row
         my $temphash1;
         $temphash1->{index}=$i;
         $temphash1->{source}=$form->{"source_$i"};#input box
-	$temphash1->{memo}=$form->{"memo_$i"}; #input box;
-	$temphash1->{accnoset}=1;
+    $temphash1->{memo}=$form->{"memo_$i"}; #input box;
+    $temphash1->{accnoset}=1;
         $temphash1->{projectset}=1;
         $temphash1->{fx_transactionset}=1;
-	if (!defined $form->{"accno_$i"} || ! $form->{"accno_$i"})
-	{
-			      $temphash1->{accnoset}=0;   #use  @{ $form->{all_accno} }
-			      $temphash1->{projectset}=0; #use  @{ $form->{all_project} }
-			      $temphash1->{fx_transactionset}=0;    #use checkbox and value=1 if transfer=1
+    if (!defined $form->{"accno_$i"} || ! $form->{"accno_$i"})
+    {
+                  $temphash1->{accnoset}=0;   #use  @{ $form->{all_accno} }
+                  $temphash1->{projectset}=0; #use  @{ $form->{all_project} }
+                  $temphash1->{fx_transactionset}=0;    #use checkbox and value=1 if transfer=1
 
         }
         else
-	{
+    {
                               $form->{"debit_$i"} = LedgerSMB::PGNumber->from_input($form->{"debit_$i"});
                               $form->{"credit_$i"}= LedgerSMB::PGNumber->from_input($form->{"credit_$i"});
-			      $form->{totaldebit}  += $form->{"debit_$i"};
-			      $form->{totalcredit} += $form->{"credit_$i"};
-			      for (qw(debit credit)) {
-				  $form->{"${_}_$i"} =
-				    ( $form->{"${_}_$i"} )
-				    ? $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 )
-				    : "";
-			      }
+                  $form->{totaldebit}  += $form->{"debit_$i"};
+                  $form->{totalcredit} += $form->{"credit_$i"};
+                  for (qw(debit credit)) {
+                  $form->{"${_}_$i"} =
+                    ( $form->{"${_}_$i"} )
+                    ? $form->format_amount( \%myconfig, $form->{"${_}_$i"}, 2 )
+                    : "";
+                  }
 
-			      $temphash1->{debit}=$form->{"debit_$i"};
-			      $temphash1->{credit}=$form->{"credit_$i"};
+                  $temphash1->{debit}=$form->{"debit_$i"};
+                  $temphash1->{credit}=$form->{"credit_$i"};
                               for my $cls(@{$form->{bu_class}}){
                                   $temphash1->{"b_unit_$cls->{id}"} =
                                          $form->{"b_unit_$cls->{id}_$i"};
                               }
 
-			      if ( $i < $form->{rowcount} )
-			      {
-						    $temphash1->{accno}=$form->{"accno_$i"};
+                  if ( $i < $form->{rowcount} )
+                  {
+                            $temphash1->{accno}=$form->{"accno_$i"};
 
-						    if ( $form->{projectset} and $form->{"projectnumber_$i"} ) {
-							$temphash1->{projectnumber}=$form->{"projectnumber_$i"};
-							$temphash1->{projectnumber}=~ s/--.*//;
+                            if ( $form->{projectset} and $form->{"projectnumber_$i"} ) {
+                            $temphash1->{projectnumber}=$form->{"projectnumber_$i"};
+                            $temphash1->{projectnumber}=~ s/--.*//;
 
-						    }
+                            }
 
-						    if ( $form->{transfer} and $form->{"fx_transaction_$i"})
-						    {
-							$temphash1->{fx_transactionset}=1;
-						    }
-						    else
-						    {
+                            if ( $form->{transfer} and $form->{"fx_transaction_$i"})
+                            {
+                            $temphash1->{fx_transactionset}=1;
+                            }
+                            else
+                            {
 
-							$temphash1->{fx_transactionset}=0;
-						    }
-						    $hiddens{"accno_$i"}=$form->{"accno_$i"};
-						    $hiddens{"projectnumber_$i"}=$form->{"projectnumber_$i"};
+                            $temphash1->{fx_transactionset}=0;
+                            }
+                            $hiddens{"accno_$i"}=$form->{"accno_$i"};
+                            $hiddens{"projectnumber_$i"}=$form->{"projectnumber_$i"};
 
-			      }
-			      else
-			      {
-						    $temphash1->{accnoset}=0;   #use  @{ $form->{all_accno} }
-						    $temphash1->{projectset}=0;   #use  @{ $form->{all_accno} }
-						    $temphash1->{fx_transactionset}=0;
+                  }
+                  else
+                  {
+                            $temphash1->{accnoset}=0;   #use  @{ $form->{all_accno} }
+                            $temphash1->{projectset}=0;   #use  @{ $form->{all_accno} }
+                            $temphash1->{fx_transactionset}=0;
 
-			      }
+                  }
 
          }
 

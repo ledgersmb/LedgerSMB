@@ -315,11 +315,11 @@ sub get {
     $self->merge($ref);
     if (!$self->{submitted}){
         $self->call_dbmethod(
-		funcname=>'reconciliation__pending_transactions'
+        funcname=>'reconciliation__pending_transactions'
         );
     }
     @{$self->{report_lines}} = $self->call_dbmethod(
-		funcname=>'reconciliation__report_details_payee'
+        funcname=>'reconciliation__report_details_payee'
     );
     ($ref) = $self->call_dbmethod(funcname=>'account_get',
                                 args => {id => $self->{chart_id} });
@@ -348,9 +348,9 @@ sub get {
         if ($line->{cleared}){
             $our_balance += ($neg * $line->{our_balance});
             $self->{cleared_total} += ($neg * $line->{our_balance});
-	}elsif ((($self->{their_balance} != '0')
-		and ($self->{their_balance} != $self->{our_balance}))
-		or $line->{our_balance} == 0){
+    }elsif ((($self->{their_balance} != '0')
+        and ($self->{their_balance} != $self->{our_balance}))
+        or $line->{our_balance} == 0){
 
             $line->{err} = 'mismatch';
             $self->{mismatch_our_total} += $line->{our_balance};
@@ -358,12 +358,12 @@ sub get {
             if ($line->{our_balance} < 0){
                 $self->{mismatch_our_debits} += -$line->{our_balance};
             } else {
-		$self->{mismatch_our_credits} += $line->{our_balance};
+        $self->{mismatch_our_credits} += $line->{our_balance};
             }
             if ($line->{their_balance} < 0){
                 $self->{mismatch_their_debits} += -$line->{their_balance};
             } else {
-		$self->{mismatch_their_credits} += $line->{their_balance};
+        $self->{mismatch_their_credits} += $line->{their_balance};
             }
         } else {
             $self->{outstanding_total} += $line->{our_balance};

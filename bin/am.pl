@@ -616,7 +616,7 @@ sub display_taxes {
             push @rows, [$form->{"taxdescription_$i"}, \%select];
         }
 
-	$sametax = $form->{"taxdescription_$i"};
+    $sametax = $form->{"taxdescription_$i"};
 
     }
 
@@ -639,9 +639,9 @@ sub display_taxes {
         template => 'am-taxes');
     $template->render({
         form => $form,
-	hiddens => \%hiddens,
-	selects => \%selects,
-	rows => \@rows,
+    hiddens => \%hiddens,
+    selects => \%selects,
+    rows => \@rows,
     });
 }
 
@@ -657,7 +657,7 @@ sub update {
         ( $accno, $i ) = split /_/, $item;
         push @t, $accno;
 
-	$i=$i+$inserted;
+    $i=$i+$inserted;
 
         $form->{"taxmodulename_$i"} =
           $form->{ "taxmodule_" . $form->{"taxmodule_id_$i"} };
@@ -884,7 +884,7 @@ sub recurring_transactions {
     my $j;
     my $k;
     foreach my $transaction ( sort keys %{ $form->{transactions} } ) {
-    	my $transaction_count = scalar( @{ $form->{transactions}{$transaction} } );
+        my $transaction_count = scalar( @{ $form->{transactions}{$transaction} } );
         push @transactions, {type => $transaction,
             title => "$tr{$transaction} ($transaction_count)",
             transactions => [],
@@ -1081,7 +1081,7 @@ sub edit_recurring {
     if ( ${LedgerSMB::Sysconfig::latex} ) {
         $form->{selectformat} .= qq|
             <option value="postscript">| . $locale->text('Postscript') . qq|
-	    <option value="pdf">| . $locale->text('PDF');
+        <option value="pdf">| . $locale->text('PDF');
     }
 
     &schedule;

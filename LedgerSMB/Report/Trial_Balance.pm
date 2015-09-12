@@ -38,7 +38,7 @@ reports.
 
 Unlike other reports, trial balance reports can be saved:
 
-=head1 	CRITERIA PRPERTIES
+=head1     CRITERIA PRPERTIES
 
 Criteria sets can also be saved/loaded.
 

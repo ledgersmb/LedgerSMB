@@ -110,10 +110,10 @@ Returns the appropriate stored proc name.
 # This needs to be refactored.  Input sanitation should be moved to
 # get_search_results
 sub get_search_method {
-	my ($self, @args) = @_;
-	my $search_proc;
+    my ($self, @args) = @_;
+    my $search_proc;
 
-	if ($self->{empty}){
+    if ($self->{empty}){
         $search_proc = "batch_search_empty";
     } elsif ($args->{mini}){
         $search_proc = "batch_search_mini";
@@ -122,7 +122,7 @@ sub get_search_method {
     }
 
     if ( !defined $self->{created_by_eid} || $self->{created_by_eid} == 0){
-		delete $self->{created_by_eid};
+        delete $self->{created_by_eid};
     }
 
     if ( !defined $self->{class_id} )
@@ -137,7 +137,7 @@ sub get_search_method {
           $self->error("Invalid Batch Type");
     }
 
-	return $search_proc;
+    return $search_proc;
 }
 
 =item get_search_results
@@ -148,7 +148,7 @@ Returns the appropriate search as detected by get_search_method.
 
 sub get_search_results {
     my ($self, $args) = @_;
-	my $search_proc = $self->get_search_method($args);
+    my $search_proc = $self->get_search_method($args);
     @{$self->{search_results}} = $self->call_dbmethod(funcname => $search_proc);
     return @{$self->{search_results}};
 }

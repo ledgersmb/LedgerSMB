@@ -181,7 +181,7 @@ sub _main_screen {
     );
 
     if (defined $person->{country_id}
-	&& $LedgerSMB::Scripts::employee::country::country_divs{
+    && $LedgerSMB::Scripts::employee::country::country_divs{
             $person->{country_id}
     }){
         for my $cform (@{$LedgerSMB::Scripts::employee::country::country_divs{
@@ -235,7 +235,7 @@ sub _main_screen {
     );
     my @bank_account =
          LedgerSMB::Entity::Bank->list(
-	     entity_id => $entity_id);
+         entity_id => $entity_id);
     my @notes =
          LedgerSMB::Entity::Note->list($entity_id,
                                                  $credit_act->{id});

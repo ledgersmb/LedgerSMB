@@ -79,20 +79,20 @@ sub build_filter_by_period {
               },
               {
                   label => $locale->text('Month'),
-		  name    => 'radioPeriod',
-		  value   => '2',
-		  active => '1',
+          name    => 'radioPeriod',
+          value   => '2',
+          active => '1',
               },
               {
-		label => $locale->text('Quarter'),
-		name => 'radioPeriod',
-		value => '3',
-	      },
-	      {
-		label => $locale->text('Year'),
-		name => 'radioPeriod',
-		value => '4',
-	      });
+        label => $locale->text('Quarter'),
+        name => 'radioPeriod',
+        value => '3',
+          },
+          {
+        label => $locale->text('Year'),
+        name => 'radioPeriod',
+        value => '4',
+          });
 }
 
 =head1 COPYRIGHT

@@ -216,7 +216,7 @@ sub create {
 
 
     my $newCookieValue = $newSessionID . ':' . $newToken . ':'
-	. $lsmb->{company};
+    . $lsmb->{company};
 
     #now set the cookie in the browser
     #TODO set domain from ENV, also set path to install path
