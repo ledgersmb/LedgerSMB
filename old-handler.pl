@@ -137,67 +137,67 @@ if ($@) {
 }
 
 try {
-$form->db_init( \%myconfig );
-&check_password;
+    $form->db_init( \%myconfig );
+    &check_password;
 
 # we get rid of myconfig and use User as a real object
-%myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
-$LedgerSMB::App_State::User = \%myconfig;
-map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
-  unless ( $form->{type} eq 'preferences' );
+    %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
+    $LedgerSMB::App_State::User = \%myconfig;
+    map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
+        unless ( $form->{type} eq 'preferences' );
 
-if ($myconfig{language}){
-    $locale   = LedgerSMB::Locale->get_handle( $myconfig{language} )
-      or &_error($form, __FILE__ . ':' . __LINE__ . ": Locale not loaded: $!\n" );
-}
+    if ($myconfig{language}){
+        $locale   = LedgerSMB::Locale->get_handle( $myconfig{language} )
+            or &_error($form, __FILE__ . ':' . __LINE__
+                       . ": Locale not loaded: $!\n" );
+    }
 
-$LedgerSMB::App_State::Locale = $locale;
+    $LedgerSMB::App_State::Locale = $locale;
 # pull in the main code
 #eval {
-  $logger->trace("requiring bin/$form->{script}");
-  require "bin/$form->{script}";
+    $logger->trace("requiring bin/$form->{script}");
+    require "bin/$form->{script}";
 
-  # customized scripts
-  if ( -f "bin/custom/$form->{script}" ) {
-    eval { require "bin/custom/$form->{script}"; };
-  }
+    # customized scripts
+    if ( -f "bin/custom/$form->{script}" ) {
+        eval { require "bin/custom/$form->{script}"; };
+    }
 
-  # customized scripts for login
-  if ( -f "bin/custom/$form->{login}_$form->{script}" ) {
-    eval { require "bin/custom/$form->{login}_$form->{script}"; };
-  }
+    # customized scripts for login
+    if ( -f "bin/custom/$form->{login}_$form->{script}" ) {
+        eval { require "bin/custom/$form->{login}_$form->{script}"; };
+    }
 
-  if ( $form->{action} ) {
-    $logger->trace("action $form->{action}");
+    if ( $form->{action} ) {
+        $logger->trace("action $form->{action}");
 
-    binmode STDOUT, ':utf8';
-    binmode STDERR, ':utf8';
-    # window title bar, user info
-    $form->{titlebar} =
-        "LedgerSMB "
-      . $locale->text('Version')
-      . " $form->{version} - $myconfig{name} - $myconfig{dbname}";
+        binmode STDOUT, ':utf8';
+        binmode STDERR, ':utf8';
+        # window title bar, user info
+        $form->{titlebar} =
+            "LedgerSMB "
+            . $locale->text('Version')
+            . " $form->{version} - $myconfig{name} - $myconfig{dbname}";
 
-    &{ $form->{action} };
-    LedgerSMB::App_State::cleanup();
+        &{ $form->{action} };
+        LedgerSMB::App_State::cleanup();
 
-  }
-  else {
-    $form->error( __FILE__ . ':' . __LINE__ . ': '
-          . $locale->text('action not defined!'));
-  }
+    }
+    else {
+        $form->error( __FILE__ . ':' . __LINE__ . ': '
+                      . $locale->text('action not defined!'));
+    }
 #  1;
 #} ||
- }catch  {
+}catch  {
   # We have an exception here because otherwise we always get an exception
   # when output terminates.  A mere 'die' will no longer trigger an automatic
   # error, but die 'foo' will map to $form->error('foo')
   # -- CT
-  $form->{_error} = 1;
-  $LedgerSMB::App_State::DBH = undef;
-  _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at Ledger/;
-}
-;
+    $form->{_error} = 1;
+    $LedgerSMB::App_State::DBH = undef;
+    _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at Ledger/;
+};
 
 $logger->trace("leaving after script=bin/$form->{script} action=$form->{action}");#trace flow
 
