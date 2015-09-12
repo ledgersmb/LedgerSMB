@@ -9,8 +9,13 @@ LedgerSMB::Scripts::transtemplate - Transaction Template Workflows for LedgerSMB
 =cut
 
 package LedgerSMB::Scripts::transtemplate;
+
+use strict;
+use warnings;
+
 use LedgerSMB::DBObject::TransTemplate;
 use LedgerSMB::Template;
+
 our $VERSION = '0.1';
 
 =head1 ROUTINES
@@ -73,6 +78,7 @@ object for old code.
 
 sub convert_to_form{
     my ($trans, $form, $type) = @_;
+    my %myconfig;
     if ($type eq 'gl'){
         $form->{reference} = $trans->{reference};
         $form->{description} = $trans->{description};
@@ -80,7 +86,7 @@ sub convert_to_form{
         if (!$form->{reference}){
              $form->{reference} = $form->update_defaults(\%myconfig,'glnumber');
         }
-        for $row (@{$trans->{line_items}}){
+        for my $row (@{$trans->{line_items}}){
             if ($row->{amount} < 0){
                 $form->{"debit_$form->{rowcount}"} = $row->{amount} * -1;
             } else {
@@ -99,7 +105,7 @@ sub convert_to_form{
             $form->{vendor} = $meta_number;
         }
         $form->{rowcount} = 1;
-        for $row (@{$trans->{line_items}}){
+        for my $row (@{$trans->{line_items}}){
             $form->{"amount_$form->{rowcount}"} = $row->{amount};
         }
     }
@@ -149,8 +155,8 @@ sub display_results {
       entity_class       => 'Type of Account',
    };
    my $rows = [];
-   $base_url = $request->{script} . "?action=view";
-    $transtemplate->search;
+   my $base_url = $request->{script} . "?action=view";
+   $transtemplate->search;
    for my $line (@{$transtemplate->{search_results}}){
        if (!$line->{source}){
            $line->{source} = '[none]';

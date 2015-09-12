@@ -3,6 +3,9 @@
 
 package LedgerSMB::Reconciliation::CSV;
 
+use strict;
+use warnings;
+
 use base qw/LedgerSMB::DBObject::Reconciliation/;
 use LedgerSMB::App_State;
 use Try::Tiny;
@@ -37,7 +40,7 @@ sub process {
 
     my $func = "parse_${LedgerSMB::App_State::DBName}_$recon->{chart_id}";
     if ($self->can($func)){
-       @entries = $self->can($func)->($self,$contents);
+       my @entries = $self->can($func)->($self,$contents);
        @{$self->{entries}} = @entries;
 
        $self->{file_upload} = 1;

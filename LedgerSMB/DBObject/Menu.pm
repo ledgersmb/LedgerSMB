@@ -17,9 +17,10 @@ included COPYRIGHT and LICENSE files for more information.
 
 package LedgerSMB::DBObject::Menu;
 
-use base(qw(LedgerSMB::PGOld));
 use strict;
 use warnings;
+
+use base qw(LedgerSMB::PGOld);
 
 =head1 METHODS
 

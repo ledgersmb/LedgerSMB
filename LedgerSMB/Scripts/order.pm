@@ -14,6 +14,10 @@ shipping or receiving, merging several orders into one, or the like.
 =cut
 
 package LedgerSMB::Scripts::order;
+
+use strict;
+use warnings;
+
 use LedgerSMB::App_State;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Orders;
@@ -153,7 +157,7 @@ sub generate {
         $form->{$k} = $request->{$k};
     }
     { no strict; no warnings 'redefine'; do 'bin/oe.pl'; }
-    $locale = $LedgerSMB::App_State::Locale;
+    my $locale = $LedgerSMB::App_State::Locale;
     lsmb_legacy::generate_purchase_orders($form, $locale);
 }
 

@@ -6,8 +6,10 @@ LedgerSMB::DBObject::User - LedgerSMB User DB Objects
 
 package LedgerSMB::DBObject::User;
 
-use base qw/LedgerSMB::PGOld/;
 use strict;
+use warnings;
+
+use base qw(LedgerSMB::PGOld);
 use Log::Log4perl;
 
 use Try::Tiny;
