@@ -27,18 +27,23 @@ version.  See the COPYRIGHT and LICENSE files for more information.
 # Methods are documented inline.
 
 package LedgerSMB::Database;
+
+use strict;
+use warnings;
+
 use LedgerSMB::Auth;
 use DBI;
 use base qw(App::LedgerSMB::Admin::Database);
 
-our $VERSION = '1.1';
-
 use LedgerSMB::Sysconfig;
 use base('LedgerSMB');
-use strict;
 use DateTime;
 use Log::Log4perl;
+
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
+
+our $VERSION = '1.1';
+
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Database');
 
 my $temp = $LedgerSMB::Sysconfig::tempdir;

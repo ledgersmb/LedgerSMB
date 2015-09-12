@@ -20,6 +20,10 @@ Error:  Attribute 'myattribute2_10' is not provided.
 =cut
 
 package LedgerSMB::Request;
+
+use strict;
+use warnings;
+
 use LedgerSMB::App_State;
 use LedgerSMB::PGNumber;
 use LedgerSMB::PGDate;
@@ -75,10 +79,10 @@ from $start to $stop, for each in @attnames
 sub requires_series {
     my $self = shift @_;
     my $start = shift @_;
-    my $end  = shift @_;
+    my $stop  = shift @_;
     for my $att (@_){
-    $self->requires(map { $att = $_;
-                          map { "${att}_$_" } ($start .. $stop)
+        $self->requires(map { $att = $_;
+                              map { "${att}_$_" } ($start .. $stop)
                         } @_ );
     }
 }
@@ -91,7 +95,7 @@ required attributes on the Moose class.
 =cut
 
 sub requires_from {
-    no strict 'refs';
+#    no strict 'refs';
     my ($self, $class) = @_;
     my $meta;
 
@@ -131,7 +135,7 @@ directly handled by Moose (yet) or where old code is concerned.
 sub numbers_series {
     my $self = shift @_;
     my $start = shift @_;
-    my $end  = shift @_;
+    my $stop  = shift @_;
     for my $att (@_){
         $self->numbers( map { "${att}_$_" } ($start .. $stop));
     }
@@ -158,9 +162,9 @@ Like numbers_series above but with PGDate objects instead.
 sub dates_series {
     my $self = shift @_;
     my $start = shift @_;
-    my $end  = shift @_;
+    my $stop  = shift @_;
     for my $att (@_){
-        $self->dates(map { "${att}_$_" }  ($start .. $end));
+        $self->dates(map { "${att}_$_" }  ($start .. $stop));
     }
 }
 

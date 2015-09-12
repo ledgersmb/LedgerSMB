@@ -11,6 +11,9 @@ PSGI wrapper functionality for LedgerSMB
 
 =cut
 
+use strict;
+use warnings;
+
 # Preloads
 use LedgerSMB;
 use LedgerSMB::Form;
