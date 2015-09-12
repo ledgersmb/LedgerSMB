@@ -21,6 +21,7 @@ included COPYRIGHT and LICENSE files for more information.
 package LedgerSMB::DBObject::Payment;
 use base qw(LedgerSMB::PGOld LedgerSMB::Num2text);
 use strict;
+use warnings;
 use LedgerSMB::PGNumber;
 
 our $VERSION = '0.1.0';

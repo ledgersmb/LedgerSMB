@@ -31,6 +31,7 @@ closure
 package LedgerSMB::DBObject::EOY;
 use base qw(LedgerSMB::PGOld);
 use strict;
+use warnings;
 
 =item $eoy->checkpoint_only();
 

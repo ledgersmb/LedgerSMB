@@ -33,6 +33,7 @@ use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::DBObject::User;
 use Log::Log4perl;
 use strict;
+use warnings;
 
 my $logger = Log::Log4perl->get_logger("LedgerSMB::DBObject::Admin");
 

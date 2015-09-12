@@ -26,6 +26,7 @@ package LedgerSMB::DBObject::TaxForm;
 use base qw(LedgerSMB::PGOld);
 
 use strict;
+use warnings;
 
 =item save
 Saves the tax form. Inputs are:
