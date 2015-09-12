@@ -43,7 +43,6 @@ our @scripts = (
     'ar.pl', 'arap.pl',  'arapprn.pl', 'gl.pl',
     'ic.pl', 'ir.pl',
     'is.pl', 'oe.pl',    'pe.pl',
-    'pw.pl',
 );
 
 # if you have latex installed set to 1
