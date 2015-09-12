@@ -88,3 +88,5 @@ later version.  Please see the included LICENSE.TXT for details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

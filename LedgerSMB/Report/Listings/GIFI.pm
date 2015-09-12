@@ -95,3 +95,5 @@ This file may be used in accordance with the GNU General Public License version
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

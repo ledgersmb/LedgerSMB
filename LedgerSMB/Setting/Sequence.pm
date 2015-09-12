@@ -223,3 +223,5 @@ version.  Please see the enclosed LICENSE.TXT for details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

@@ -50,4 +50,4 @@ $ttfuncs->{gettext} = sub {
     }
 };
 
-
+1;
