@@ -71,9 +71,10 @@ sub display {
     my ($request) = @_;
     $request->{non_billable} ||= 0;
     if ($request->{in_hour} and $request->{in_min}) {
-        my $request->{min_used} = ($request->{in_hour} * 60) + $request->{in_min} -
-                                ($request->{out_hour} * 60) - $request->{out_min};
-        $request->{qty} = $min_used/60 - $request->{non_billable};
+        my $request->{min_used} =
+            ($request->{in_hour} * 60) + $request->{in_min} -
+            ($request->{out_hour} * 60) - $request->{out_min};
+        $request->{qty} = $request->{min_used}/60 - $request->{non_billable};
     } else { # Default to current date and time
         my $now = DateTime->now;
         $request->{in_hour} = $now->hour unless defined $request->{in_hour};
