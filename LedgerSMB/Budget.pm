@@ -103,7 +103,7 @@ has 'approved_at' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
 has 'obsolete_at' => (is => 'rw', isa => 'Maybe[LedgerSMB::PGDate]');
 
 =item   $entered_by_name text
-   Name of entity who entered the budget. 
+   Name of entity who entered the budget.
 
 =cut
 
@@ -131,7 +131,7 @@ List of id's of business units which the budget covers
 
 has 'business_unit_ids' => (is => 'rw', isa => 'Maybe[ArrayRef[Int]]');
 
-=item   @lines 
+=item   @lines
    These are the actual lines of the budget.  Each one is a hashref containing
 
 =cut
@@ -162,7 +162,7 @@ has 'lines' => (is => 'rw', isa => 'Maybe[ArrayRef[HashRef[Any]]]');
 =item @notes
 Where each note is a hashref containing
 
-=over 
+=over
 
 =item $subject string
    Subject of note
@@ -197,8 +197,8 @@ sub save {
     $self->{details} = [];
     return unless $self->lines;
     for my $line (@{$self->lines}){
-       my $l_info = [$line->{account_id}, 
-                     $line->{description}, 
+       my $l_info = [$line->{account_id},
+                     $line->{description},
                      $line->{amount},
        ];
        push @{$self->{details}}, $l_info;
@@ -236,11 +236,11 @@ sub from_input {
              $input->error($input->{_locale}->text(
                  'Cannot specify both debits and credits for budget line [_1]',
                  $rownum
-             )); 
+             ));
          } elsif(!$input->{"debit_$rownum"} and !$input->{"credit_$rownum"}){
              next;
          } else {
-             $line->{amount} =   $input->{"credit_$rownum"} 
+             $line->{amount} =   $input->{"credit_$rownum"}
                                - $input->{"debit_$rownum"};
              $line->{credit} = $line->{amount} if $line->{amount} > 0;
              $line->{debit}  = $line->{amount} * -1 if $line->{amount} < 0;
@@ -260,7 +260,7 @@ sub from_input {
 }
 
 =item search
-This method uses the object as the search criteria.  Nulls/undefs match all 
+This method uses the object as the search criteria.  Nulls/undefs match all
 values.  The properties used are:
 
 =over
@@ -293,7 +293,7 @@ Exact match of department_id
 Exact match of project_id
 
 =item is_approved
-true lists approved budgets, false lists unapproved budgets.  null/undef lists 
+true lists approved budgets, false lists unapproved budgets.  null/undef lists
 all.
 
 =item is_obsolete
@@ -302,13 +302,13 @@ all.
 
 =back
 
-=cut 
+=cut
 
 sub search {
     my ($self) = @_; # self is search criteria here.
     @{$self->{search_results}}
        = $self->call_dbmethod(funcname => 'budget__search');
-    return @{$self->{search_results}}; 
+    return @{$self->{search_results}};
 }
 
 =item get(id)
@@ -366,7 +366,7 @@ Attaches a note with this subject and content to the budget.
 sub save_note {
    my ($self, $subject, $note) = @_;
    my ($info) = $self->call_procedure(
-          funcname => 'budget__save_note', 
+          funcname => 'budget__save_note',
            args => [$self->{id}, $subject, $note]
    );
 }
@@ -383,7 +383,7 @@ sub save_note {
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

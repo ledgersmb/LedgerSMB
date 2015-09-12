@@ -32,11 +32,11 @@ Returns the output filename.
 =head1 Copyright (C) 2007, The LedgerSMB core team.
 
 This work contains copyrighted information from a number of sources all used
-with permission.  
+with permission.
 
-It is released under the GNU General Public License Version 2 or, at your 
-option, any later version.  See COPYRIGHT file for details.  For a full list 
-including contact information of contributors, maintainers, and copyright 
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
 holders, see the CONTRIBUTORS file.
 =cut
 
@@ -76,7 +76,7 @@ sub preprocess {
 		for (@{$rawvars}) {
 			push @{$vars}, preprocess( $_ );
 		}
-	} elsif ( !$type or $type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') { 
+	} elsif ( !$type or $type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
 			# Scalars or GMP objects (which are SCALAR refs) --CT
 		if ($type eq 'SCALAR' or $type eq 'Math::BigInt::GMP') {
 			$vars = $$rawvars;
@@ -130,10 +130,10 @@ sub process {
 		DELIMITER => ';',
 		DEBUG => ($parent->{debug})? 'dirs': undef,
 		DEBUG_FORMAT => '',
-		}) || die Template->error(); 
+		}) || die Template->error();
 
 	if (not $template->process(
-		$source, 
+		$source,
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
 		$output, binmode => ':utf8')) {

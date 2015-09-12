@@ -14,7 +14,7 @@ use LedgerSMB::MooseTypes;
 
 =head1 DESCRIPTION
 
-This handles standard date controls in reports.  It just adds properties to 
+This handles standard date controls in reports.  It just adds properties to
 relevant Moose objects.
 
 =head1 PROPERTIES ADDED
@@ -23,14 +23,14 @@ relevant Moose objects.
 
 =item from_date
 
-=cut 
+=cut
 
-has from_date => (is => 'ro', isa => 'LedgerSMB::Moose::Date', coerce => 1, 
+has from_date => (is => 'ro', isa => 'LedgerSMB::Moose::Date', coerce => 1,
                 lazy => 1, builder => '_get_from_date');
 
 =item to_date
 
-=cut 
+=cut
 
 has to_date => (is => 'ro', isa => 'LedgerSMB::Moose::Date', coerce => 1,
               lazy => 1, builder => '_get_to_date');
@@ -77,7 +77,7 @@ sub _get_from_date {
         } else {
             return LedgerSMB::PGDate->new();
         }
-               
+
     }
 }
 
@@ -90,7 +90,7 @@ sub _get_to_date {
         } else {
             return LedgerSMB::PGDate->new();
         }
-            
+
     }
     my $dateobj = $self->from_date;
     my $date = $dateobj->from_db($dateobj->to_db, 'date'); # copy, round trip
@@ -114,12 +114,12 @@ sub _set_lazy_dates {
               $self->date_to;
 }
 
-before 'render' => sub { 
+before 'render' => sub {
               my ($self) = @_;
               # Set lazy attributes
               $self->_set_lazy_dates;
 };
-before 'run_report' => sub { 
+before 'run_report' => sub {
               my ($self) = @_;
               # Set lazy attributes
               $self->_set_lazy_dates;

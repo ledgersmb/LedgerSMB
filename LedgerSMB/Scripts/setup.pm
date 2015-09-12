@@ -153,7 +153,7 @@ sub login {
     $logger->trace("\$database=".Data::Dumper::Dumper(\$database));
     my $server_info = $database->server_version;
     $logger->trace("\$server_info=".Data::Dumper::Dumper(\$server_info));
-    
+
     my $version_info = $database->get_info();
 
     _init_db($request);
@@ -279,12 +279,12 @@ Copies db to the name of $request->{new_name}
 sub copy_db {
     my ($request) = @_;
     my $database = _get_database($request);
-    my $rc = $database->copy($request->{new_name}) 
+    my $rc = $database->copy($request->{new_name})
            || die 'An error occurred. Please check your database logs.' ;
     my $dbh = LedgerSMB::Database->new(
            {%$database, (company_name => $request->{new_name})}
     )->connect;
-    $dbh->prepare("SELECT setting__set('role_prefix', 
+    $dbh->prepare("SELECT setting__set('role_prefix',
                                coalesce((setting_get('role_prefix')).value, ?))"
     )->execute("lsmb_$database->{company_name}__");
     $dbh->disconnect;
@@ -330,7 +330,7 @@ sub _begin_backup {
 
 =item run_backup
 
-Runs the backup.  If backup_type is set to email, emails the 
+Runs the backup.  If backup_type is set to email, emails the
 
 =cut
 
@@ -404,7 +404,7 @@ sub run_backup {
     } else {
         $request->error($request->{_locale}->text("Don't know what to do with backup"));
     }
- 
+
 }
 
 =item revert_migration
@@ -428,7 +428,7 @@ sub revert_migration {
     $dbh->do("DROP SCHEMA public CASCADE");
     $dbh->do("ALTER SCHEMA $src_schema RENAME TO public");
     $dbh->commit();
-    
+
     my $template = LedgerSMB::Template->new(
         path => 'UI/setup',
         template => 'complete_migration_revert',
@@ -437,7 +437,7 @@ sub revert_migration {
 
     $template->render($request);
 }
-   
+
 =item _get_template_directories
 
 Returns set of template directories available.
@@ -480,7 +480,7 @@ sub template_screen {
 =item load_templates
 
 This bulk loads the templates.  Expectated inputs are template_dir and
-optionally only_templates (which if true returns to the confirmation screen 
+optionally only_templates (which if true returns to the confirmation screen
 and not the user creation screen.
 
 =cut
@@ -547,7 +547,7 @@ my %info_applicable_for_upgrade = (
 Checks settings for applicability for a given upgrade, for the form.
 
 =cut
-	
+
 sub applicable_for_upgrade {
     my ($info, $upgrade) = @_;
 
@@ -594,7 +594,7 @@ sub upgrade_info {
 	    sort { $a->{country} cmp $b->{country} } @{$request->{countries}};
 	unshift @{$request->{countries}}, {};
     }
-    
+
     my $retval = 0;
     foreach my $key (keys %info_applicable_for_upgrade) {
 	$retval++
@@ -603,7 +603,7 @@ sub upgrade_info {
     return $retval;
 }
 
-=item upgrade 
+=item upgrade
 
 
 =cut
@@ -625,7 +625,7 @@ sub upgrade {
     my $locale = $request->{_locale};
 
     for my $check (LedgerSMB::Upgrade_Tests->get_tests()){
-        next if ($check->min_version gt $dbinfo->{version}) 
+        next if ($check->min_version gt $dbinfo->{version})
 	    || ($check->max_version lt $dbinfo->{version})
 	    || ($check->appname ne $dbinfo->{appname});
         my $sth = $request->{dbh}->prepare($check->test_query);
@@ -652,7 +652,7 @@ sub upgrade {
         $request->{dbh}->begin_work();
 
         __PACKAGE__->can($upgrade_run_step{$upgrade_type})->($request);
-    } 
+    }
 
 }
 
@@ -674,7 +674,7 @@ sub _failed_check {
     }
     while (my $row = $sth->fetchrow_hashref('NAME_lc')){
           warn $check;
-          $row->{$check->column} = 
+          $row->{$check->column} =
                     { input => {
                                 name => $check->column . "_$row->{id}",
                                 value => $row->{$check->column},
@@ -710,7 +710,7 @@ sub _failed_check {
 
 =item fix_tests
 
-Handles input from the failed test function and then re-runs the migrate db 
+Handles input from the failed test function and then re-runs the migrate db
 script.
 
 =cut
@@ -727,7 +727,7 @@ sub fix_tests{
     my $sth = $request->{dbh}->prepare(
             "UPDATE $table SET $edit = ? where id = ?"
     );
-    
+
     for my $count (1 .. $request->{count}){
         warn $count;
         my $id = $request->{"id_$count"};
@@ -802,7 +802,7 @@ sub select_coa {
             map +{ code => $_ },
             sort(grep !/^(\.|[Ss]ample.*)/,
                  readdir(COA));
-        closedir(COA); 
+        closedir(COA);
     }
 
     my $template = LedgerSMB::Template->new(
@@ -810,7 +810,7 @@ sub select_coa {
             template => 'select_coa',
 	    format => 'HTML',
     );
-    $template->render($request);    
+    $template->render($request);
 }
 
 
@@ -844,11 +844,11 @@ sub _render_new_user {
 
     # One thing to remember here is that the setup.pl does not get the
     # benefit of the automatic db connection.  So in order to build this
-    # form, we have to manage that ourselves. 
+    # form, we have to manage that ourselves.
     #
     # However we get the benefit of having had to set the environment
     # variables for the Pg connection above, so don't need to pass much
-    # info. 
+    # info.
     #
     # Also I am opting to use the lower-level call_procedure interface
     # here in order to avoid creating objects just to get argument
@@ -858,11 +858,11 @@ sub _render_new_user {
     _init_db($request);
     $request->{dbh}->{AutoCommit} = 0;
 
-    @{$request->{salutations}} 
-    = $request->call_procedure(funcname => 'person__list_salutations' ); 
-    
-    @{$request->{countries}} 
-    = $request->call_procedure(funcname => 'location_list_country' ); 
+    @{$request->{salutations}}
+    = $request->call_procedure(funcname => 'person__list_salutations' );
+
+    @{$request->{countries}}
+    = $request->call_procedure(funcname => 'location_list_country' );
     for my $country (@{$request->{countries}}){
         if (lc($request->{coa_lc}) eq lc($country->{short_name})){
            $request->{country_id} = $country->{id};
@@ -920,11 +920,11 @@ sub save_user {
             );
            $request->{pls_import} = 1;
 
-           @{$request->{salutations}} 
+           @{$request->{salutations}}
             = $request->call_procedure(funcname => 'person__list_salutations' );
-         
-           @{$request->{countries}} 
-              = $request->call_procedure(funcname => 'location_list_country' ); 
+
+           @{$request->{countries}}
+              = $request->call_procedure(funcname => 'location_list_country' );
 
            my $locale = $request->{_locale};
 
@@ -949,7 +949,7 @@ sub save_user {
                 $request->call_procedure(funcname => 'admin__get_roles')
          ){
              $request->call_procedure(funcname => 'admin__add_user_to_role',
-                                      args => [ $request->{username}, 
+                                      args => [ $request->{username},
                                                 $role->{rolname}
                                               ]);
          }
@@ -1007,7 +1007,7 @@ sub process_and_run_upgrade_script {
     $dbh->begin_work;
 
     my $dbtemplate = LedgerSMB::Template->new(
-        user => {}, 
+        user => {},
         path => 'sql/upgrade',
         template => $template,
         no_auto_output => 1,
@@ -1107,11 +1107,11 @@ sub create_initial_user {
     my ($request) = @_;
 
    my $database = _init_db($request) unless $request->{dbh};
-   @{$request->{salutations}} 
-    = $request->call_procedure(funcname => 'person__list_salutations' ); 
-          
-   @{$request->{countries}} 
-    = $request->call_procedure(funcname => 'location_list_country' ); 
+   @{$request->{salutations}}
+    = $request->call_procedure(funcname => 'person__list_salutations' );
+
+   @{$request->{countries}}
+    = $request->call_procedure(funcname => 'location_list_country' );
 
    my $locale = $request->{_locale};
 
@@ -1153,10 +1153,10 @@ sub edit_user_roles {
 
     $user_obj->{username} = $user_rec[0]->{username};
 
-    my $template = LedgerSMB::Template->new( 
-        user => $request->{_user}, 
-        template => 'edit_user', 
-        format => 'HTML', 
+    my $template = LedgerSMB::Template->new(
+        user => $request->{_user},
+        template => 'edit_user',
+        format => 'HTML',
         path=>'UI/setup',
     );
     my $template_data = {
@@ -1164,7 +1164,7 @@ sub edit_user_roles {
                            user => $user_obj,
                           roles => @all_roles,
             };
-    
+
     $template->render($template_data);
 }
 
@@ -1204,7 +1204,7 @@ sub reset_password {
     edit_user_roles($request);
 }
 
-    
+
 
 =item cancel
 
@@ -1233,7 +1233,7 @@ sub rebuild_modules {
     complete($request);
 }
 
-=item complete 
+=item complete
 
 Gets the info and adds shows the complete screen.
 
@@ -1257,7 +1257,7 @@ sub complete {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

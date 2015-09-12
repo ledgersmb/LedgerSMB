@@ -49,8 +49,8 @@ my $logger = Log::Log4perl->get_logger('IC');
 
 =item get_files
 
-Returns a list of files associated with the existing transaction.  This is 
-provisional, and wil change for 1.4 as the GL transaction functionality is 
+Returns a list of files associated with the existing transaction.  This is
+provisional, and wil change for 1.4 as the GL transaction functionality is
                   {ref_key => $self->{id}, file_class => 1}
 rewritten
 
@@ -76,11 +76,11 @@ sub get_part {
     my $i;
 
     my $query = qq|
-		   SELECT p.*, a1.accno AS inventory_accno, 
-		          a1.description AS inventory_description, 
-		          a2.accno AS income_accno, 
+		   SELECT p.*, a1.accno AS inventory_accno,
+		          a1.description AS inventory_description,
+		          a2.accno AS income_accno,
 		          a2.description AS income_description,
-		          a3.accno AS expense_accno, 
+		          a3.accno AS expense_accno,
 		          a3.description AS expense_description, pg.partsgroup
 		     FROM parts p
 		LEFT JOIN account a1 ON (p.inventory_accno_id = a1.id)
@@ -108,7 +108,7 @@ sub get_part {
         $query = qq|
 			   SELECT p.id, p.partnumber, p.description,
 			          p.sellprice, p.weight, a.qty, a.bom, a.adj,
-			          p.unit, p.lastcost, p.listprice, 
+			          p.unit, p.lastcost, p.listprice,
 			          pg.partsgroup, p.assembly, p.partsgroup_id
 			     FROM parts p
 			     JOIN assembly a ON (a.parts_id = p.id)
@@ -200,10 +200,10 @@ sub get_part {
         # get vendors
         $query = qq|
 			  SELECT v.id, e.name, pv.partnumber,
-			         pv.lastcost, pv.leadtime, 
+			         pv.lastcost, pv.leadtime,
 			         pv.curr AS vendorcurr, v.meta_number
 			    FROM partsvendor pv
-			    JOIN entity_credit_account v 
+			    JOIN entity_credit_account v
                                  ON (v.id = pv.credit_id)
                             JOIN entity e ON (e.id = v.entity_id)
 			   WHERE pv.parts_id = ?
@@ -223,11 +223,11 @@ sub get_part {
     if ( $form->{item} ne 'labor' ) {
         $query = qq|
 			   SELECT pc.pricebreak, pc.sellprice AS customerprice,
-			          pc.curr AS customercurr, pc.validfrom, 
-			          pc.validto, e.name, c.id AS cid, 
+			          pc.curr AS customercurr, pc.validfrom,
+			          pc.validto, e.name, c.id AS cid,
 			          g.pricegroup, g.id AS gid, c.meta_number
 			     FROM partscustomer pc
-			LEFT JOIN entity_credit_account c 
+			LEFT JOIN entity_credit_account c
                                   ON (c.id = pc.credit_id)
 			LEFT JOIN pricegroup g ON (g.id = pc.pricegroup_id)
                         LEFT JOIN entity e ON (e.id = c.entity_id)
@@ -390,7 +390,7 @@ sub save {
 
             # delete matrix
             $query = qq|
-				DELETE FROM partscustomer 
+				DELETE FROM partscustomer
 				      WHERE parts_id = ?|;
 
             $sth = $dbh->prepare($query);
@@ -431,7 +431,7 @@ sub save {
         $form->{priceupdate} = 'now';
     }
     $query = qq|
-		UPDATE parts 
+		UPDATE parts
 		   SET partnumber = ?,
 		       description = ?,
 		       makemodel = ?,
@@ -520,7 +520,7 @@ sub save {
 
         if ( $form->{orphaned} ) {
             $query = qq|
-				INSERT INTO assembly 
+				INSERT INTO assembly
 				            (id, parts_id, qty, bom, adj)
 				     VALUES (?, ?, ?, ?, ?)|;
             $sth = $dbh->prepare($query);
@@ -564,9 +564,9 @@ sub save {
                 }
 
                 $query = qq|
-					INSERT INTO partsvendor 
-					            (credit_id, parts_id, 
-					            partnumber, lastcost, 
+					INSERT INTO partsvendor
+					            (credit_id, parts_id,
+					            partnumber, lastcost,
 					            leadtime, curr)
 					     VALUES (?, ?, ?, ?, ?, ?)|;
                 $sth = $dbh->prepare($query);
@@ -600,9 +600,9 @@ sub save {
             $validfrom = $form->{"validfrom_$i"} if $form->{"validfrom_$i"};
             $validto   = $form->{"validto_$i"}   if $form->{"validto_$i"};
             $query     = qq|
-				INSERT INTO partscustomer 
+				INSERT INTO partscustomer
 				            (parts_id, credit_id,
-				            pricegroup_id, pricebreak, 
+				            pricegroup_id, pricebreak,
 				            sellprice, curr,
 				            validfrom, validto)
 			             VALUES (?, ?, ?, ?, ?, ?, ?, ?)|;
@@ -704,7 +704,7 @@ sub retrieve_assemblies {
 
     # retrieve assembly items
     my $query = qq|
-		  SELECT p.id, p.partnumber, p.description, p.bin, p.onhand, 
+		  SELECT p.id, p.partnumber, p.description, p.bin, p.onhand,
 		         p.rop
 		    FROM parts p
  		   WHERE $where
@@ -715,7 +715,7 @@ sub retrieve_assemblies {
     $sth->execute || $form->dberror($query);
 
     $query = qq|
-		  SELECT sum(p.inventory_accno_id), p.assembly 
+		  SELECT sum(p.inventory_accno_id), p.assembly
 		    FROM parts p
 		    JOIN assembly a ON (a.parts_id = p.id)
 		   WHERE a.id = ?
@@ -991,9 +991,9 @@ sub create_links {
         my ($count) = $dbh->selectrow_array($query);
 
         if ( $count < $myconfig->{vclimit} ) {
-            $query = qq|SELECT v.id, e.name 
-                FROM entitiy_credit_account v 
-                join entity e on e.id = v.entity_id 
+            $query = qq|SELECT v.id, e.name
+                FROM entitiy_credit_account v
+                join entity e on e.id = v.entity_id
                WHERE entity_class = 1
                 ORDER BY e.name|;
             $sth   = $dbh->prepare($query);
@@ -1007,14 +1007,14 @@ sub create_links {
     }
 
     # pricegroups, customers
-    $query = qq|SELECT count(*) FROM entity_credit_account 
+    $query = qq|SELECT count(*) FROM entity_credit_account
                 where entity_class = 2|;
     ($count) = $dbh->selectrow_array($query);
 
     if ( $count < $myconfig->{vclimit} ) {
-        $query = qq|SELECT c.id, e.name 
-            FROM entity_credit_account c 
-            join entity e on e.id = c.entity_id 
+        $query = qq|SELECT c.id, e.name
+            FROM entity_credit_account c
+            join entity e on e.id = c.entity_id
            WHERE entity_class = 2
             ORDER BY e.name|;
         $sth   = $dbh->prepare($query);
@@ -1037,11 +1037,11 @@ sub create_links {
 
     if ( $form->{id} ) {
         $query = qq|
-			SELECT value FROM defaults 
+			SELECT value FROM defaults
 			 WHERE setting_key = 'weightunit'|;
         ( $form->{weightunit} ) = $dbh->selectrow_array($query);
         $query = qq|
-			SELECT value FROM defaults 
+			SELECT value FROM defaults
 			 WHERE setting_key = 'curr'|;
         ( $form->{currencies} ) = $dbh->selectrow_array($query);
 

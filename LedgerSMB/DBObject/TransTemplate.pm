@@ -25,7 +25,7 @@ sub save {
            $self->error($self->{_locale}->text('No Account id for [_1]', $l->{accno}));
        }
        $l->call_dbmethod(funcname=> 'journal__add_line');
-   } 
+   }
    if ($self->{is_invoice}){
        $self->call_dbmethod(funcname => 'journal__make_invoice');
    }
@@ -70,7 +70,7 @@ sub get {
 sub get_account_info {
     my ($self, $acct_id) = @_;
     my ($ref) = $self->call_procedure(
-               funcname => 'account_get', 
+               funcname => 'account_get',
                args     => [$acct_id]
     );
     return $ref;

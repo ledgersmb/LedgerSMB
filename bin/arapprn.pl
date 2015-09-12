@@ -318,7 +318,7 @@ sub print_transaction {
     $form->{fileid} =~ s/(\s|\W)+//g;
 
     my $template = LedgerSMB::Template->new(
-        user => \%myconfig, template => $form->{'formname'}, 
+        user => \%myconfig, template => $form->{'formname'},
         locale => $locale,
 	no_auto_output => 1,
         format => uc $form->{format} );
@@ -428,9 +428,9 @@ sub select_payment {
         locale => $locale,
         template => 'form-dynatable',
         );
-        
+
     my $column_heading = $template->column_heading($column_names);
-    
+
     $template->render({
         form => $form,
         buttons => \@buttons,
@@ -468,7 +468,7 @@ sub print_options {
 
     if ( %{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex} ) {
         for ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
-            $media .= qq| 
+            $media .= qq|
           <option value="$_">$_|;
         }
     }

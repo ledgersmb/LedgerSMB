@@ -44,21 +44,21 @@ column is intended to be visible to all who have permissions to run the report.
 
 =item accno
 
-Displays the account number.  
+Displays the account number.
 
 =item description
 
-Account description.  
+Account description.
 
 =item gifi_accno
 
-This is the GIFI account number. 
+This is the GIFI account number.
 
 =item debit_balance
 
 This is the debit balance (or blank if none or balance is credit).
 
-=item credit_balance 
+=item credit_balance
 
 This is the credit balance (or blank if none or balance is debit)
 
@@ -180,22 +180,22 @@ sub run_report{
     my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__coa');
     for my $r(@rows){
-        my $ct; 
+        my $ct;
         if ($r->{is_heading}){
            $ct = 'H';
         } else {
            $ct = 'A';
         }
         $r->{edit} = '['.LedgerSMB::Report::text('Edit').']';
-        $r->{delete} = '['.LedgerSMB::Report::text('Delete').']' 
+        $r->{delete} = '['.LedgerSMB::Report::text('Delete').']'
                   if !$r->{rowcount};
-        $r->{edit_href_suffix} = 'account.pl?action=edit&id='.$r->{id} . 
+        $r->{edit_href_suffix} = 'account.pl?action=edit&id='.$r->{id} .
            "&charttype=$ct";
         $r->{delete_href_suffix} = 'journal.pl?action=delete_account&id='
 	    . $r->{id} . "&charttype=$ct";
-        $r->{accno_href_suffix} = 
+        $r->{accno_href_suffix} =
                 'reports.pl?action=start_report&module_name=gl&report_name=gl' .
-                "&accno=$r->{accno}--$r->{description}" 
+                "&accno=$r->{accno}--$r->{description}"
                      unless $r->{is_heading};
         $r->{description_href_suffix} = $r->{accno_href_suffix};
         $r->{html_class} = 'listheading' if $r->{is_heading};

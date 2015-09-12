@@ -5,7 +5,7 @@ LedgerSMB::Setting - LedgerSMB class for managing Business Locations
 
 =head1 SYOPSIS
 
-This module creates object instances based on LedgerSMB's in-database ORM.  
+This module creates object instances based on LedgerSMB's in-database ORM.
 
 =head1 METHODS
 
@@ -31,9 +31,9 @@ Returns a list of all accounts on the system.
 
 =item parse_increment ($self->{key})
 
-This function updates a default entry in the database, incrimenting the last 
-set of digits not including <?lsmb ?> tags or non-digits, and then parses the 
-returned value, doing tag substitution.  The final value is then returned by 
+This function updates a default entry in the database, incrimenting the last
+set of digits not including <?lsmb ?> tags or non-digits, and then parses the
+returned value, doing tag substitution.  The final value is then returned by
 the function.
 
 =back

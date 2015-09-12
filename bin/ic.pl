@@ -284,7 +284,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}\n|;
     foreach $ref ( @{ $form->{vendormatrix} } ) {
         $form->{"vendor_$i"} = qq|$ref->{name}--$ref->{id}|;
         $form->{"vendor_mn_$i"} = $ref->{meta_number};
-        
+
 
         for (qw(partnumber lastcost leadtime vendorcurr)) {
             $form->{"${_}_$i"} = $ref->{$_};
@@ -637,7 +637,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows 
               <tr>
 	        <th align="right" nowrap="true">|
               . $locale->text('Last Cost')
-              . qq|</th> 
+              . qq|</th>
 		<td><input type=hidden name=lastcost value=$form->{lastcost}>$form->{lastcost}</td>
 	      </tr>
 	      <tr>
@@ -752,7 +752,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows 
 	  <th align=left>$group</th>
 	</tr>
 	<tr valign=top>
-          <td><input data-dojo-type="dijit/form/TextBox" name=partnumber value="$form->{partnumber}" size=20> 
+          <td><input data-dojo-type="dijit/form/TextBox" name=partnumber value="$form->{partnumber}" size=20>
               | . $form->sequence_dropdown('partnumber') . qq| </td>
           <td>$description</td>
 	  <td>$partsgroup</td>
@@ -786,7 +786,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows=$rows 
 	    <table width="100%">
 	      <tr>
 		<th align="right" nowrap="true">| . $locale->text('Updated') . qq|</th>
-		<td><input name="priceupdate" size="11" title="$myconfig{dateformat}" class="date" data-dojo-type="lsmb/lib/DateTextBox" id="priceupdate" value="$form->{priceupdate}"></td>    
+		<td><input name="priceupdate" size="11" title="$myconfig{dateformat}" class="date" data-dojo-type="lsmb/lib/DateTextBox" id="priceupdate" value="$form->{priceupdate}"></td>
 	      </tr>
 	      $sellprice
 	      $lastcost
@@ -885,10 +885,10 @@ sub form_footer {
               print qq|
 <tr>
 <td><a href="file.pl?action=get&file_class=3&ref_key=$form->{id}&id=$file->{id}"
-            >$file->{file_name}</a></td> 
-<td>$file->{mime_type}</td> 
-<td>|.$file->{uploaded_at}->to_output . qq|</td> 
-<td>$file->{uploaded_by_name}</td> 
+            >$file->{file_name}</a></td>
+<td>$file->{mime_type}</td>
+<td>|.$file->{uploaded_at}->to_output . qq|</td>
+<td>$file->{uploaded_by_name}</td>
 </tr>
               |;
         }
@@ -911,12 +911,12 @@ sub form_footer {
             }
             print qq|
 <tr>
-<td> $file->{file_name} </td> 
-<td> $file->{mime_type} </td> 
-<td> $aclass </td> 
-<td> $file->{reference} </td> 
-<td> $file->{attached_at} </td> 
-<td> $file->{attached_by} </td> 
+<td> $file->{file_name} </td>
+<td> $file->{mime_type} </td>
+<td> $aclass </td>
+<td> $file->{reference} </td>
+<td> $file->{attached_at} </td>
+<td> $file->{attached_by} </td>
 </tr>|;
        }
        print qq|
@@ -956,14 +956,14 @@ sub form_footer {
             <th>| . $locale->text('Date To') . qq|</th>
             <td><input data-dojo-type="dijit/form/TextBox" type="text" size="12" name="date_to" class="date"></td>
         </tr><tr>
-            <td><button data-dojo-type="dijit/form/Button" type="submit" name="action" 
-                        value="generate_income_statement" 
+            <td><button data-dojo-type="dijit/form/Button" type="submit" name="action"
+                        value="generate_income_statement"
                         class="submit">| . $locale->text('Continue') .
                         qq|</button><td>
         </tr>
         </table>
         </form>|;
-    } 
+    }
     print $form->close_status_div . qq|
 </body>
 </html>
@@ -1020,7 +1020,7 @@ sub vendor_row {
     print qq|
   <input type=hidden name=selectvendor value="|
       . $form->escape( $form->{selectvendor}, 1 ) . qq|">
-  
+
   <tr>
     <td>
       <table width=100%>
@@ -1121,7 +1121,7 @@ sub customer_row {
       . $form->escape( $form->{selectcustomer}, 1 ) . qq|">
   <input type=hidden name=selectpricegroup value="|
       . $form->escape( $form->{selectpricegroup}, 1 ) . qq|">
-  
+
   <tr>
     <td>
       <table width=100%>
@@ -1557,7 +1557,7 @@ sub check_vendor {
 
     if ( !$form->{selectvendor} ) {
 
-        if ( ($form->{"vendor_$i"} || $form->{vendornumber}) 
+        if ( ($form->{"vendor_$i"} || $form->{vendornumber})
               && !$form->{"vendor_id_$i"} ) {
             ( $form->{vendor} ) = split /--/, $form->{"vendor_$i"};
             if ( ( $j = $form->get_name( \%myconfig, "vendor", undef, 1) ) > 1 ) {
@@ -2074,7 +2074,7 @@ sub stock_assembly {
     }
 
     print qq|
- 
+
 </body>
 </html>
 |;

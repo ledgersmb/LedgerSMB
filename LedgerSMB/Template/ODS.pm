@@ -33,11 +33,11 @@ Returns the output filename.
 =head1 Copyright (C) 2007, The LedgerSMB core team.
 
 This work contains copyrighted information from a number of sources all used
-with permission.  
+with permission.
 
-It is released under the GNU General Public License Version 2 or, at your 
-option, any later version.  See COPYRIGHT file for details.  For a full list 
-including contact information of contributors, maintainers, and copyright 
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
 holders, see the CONTRIBUTORS file.
 
 =cut
@@ -154,7 +154,7 @@ sub _row_handler {
 sub _cell_handler {
         $ods->expandTable($sheetname, $maxrows, $maxcols);
 	my $cell = $ods->getCell($sheetname, $rowcount, $currcol);
-	
+
 	if (@style_stack and $celltype{$style_stack[0][0]}) {
 		$ods->cellValueType($cell, $celltype{$style_stack[0][0]}[0]);
 	} elsif ($_->{att}->{type}) {
@@ -174,7 +174,7 @@ sub _cell_handler {
 
 sub _formula_handler {
 	my $cell = $ods->getCell($sheetnum, $rowcount, $currcol);
-	
+
 	if (@style_stack and $celltype{$style_stack[0][0]}) {
 		$ods->cellValueType($cell, $celltype{$style_stack[0][0]}[0]);
 	} elsif ($_->{att}->{type}) {
@@ -267,7 +267,7 @@ sub _create_positive_style {
 			'style:volatile' => 'true',
 			},
 		);
-	$pstyle->insert_new_elt('last-child', 
+	$pstyle->insert_new_elt('last-child',
 		'number:text', {}, ' ');
 }
 
@@ -303,26 +303,26 @@ sub _format_handler {
 			&_border_set($format, \%properties, 'border-right');
 		} elsif ($attr eq 'bg_color' or $attr eq 'bg_colour') {
 			if ($val =~ /^\d+$/) {
-				$properties{cell}{'fo:background-color'} = 
+				$properties{cell}{'fo:background-color'} =
 					$colour[$val - 8];
 			} elsif ($val =~ /^\#[0-9A-Fa-f]{6}$/) {
 				$properties{cell}{'fo:background-color'} = $val;
 			} else {
-				$properties{cell}{'fo:background-color'} = 
+				$properties{cell}{'fo:background-color'} =
 					$colour_name{$val};
 			}
 		} elsif ($attr eq 'color' or $attr eq 'colour') {
 			if ($val =~ /^\d+$/) {
-				$properties{text}{'fo:color'} = 
+				$properties{text}{'fo:color'} =
 					$colour[$val - 8];
 			} elsif ($val =~ /^\#[0-9A-Fa-f]{6}$/) {
 				$properties{text}{'fo:color'} = $val;
 			} else {
-				$properties{text}{'fo:color'} = 
+				$properties{text}{'fo:color'} =
 					$colour_name{$val};
 			}
 		} elsif ($attr eq 'align') {
-			if (lc $val eq 'right') { 
+			if (lc $val eq 'right') {
 				$properties{paragraph}{'fo:text-align'} = 'end';
 			} elsif (lc $val eq 'left') {
 				$properties{paragraph}{'fo:text-align'} = 'start';
@@ -598,7 +598,7 @@ sub _format_handler {
 						'style:apply-style-name' => "NP37",
 						}],
 					);
-				
+
 				&_create_positive_style("NP37",
 					$nstyle, \%base);
 			} elsif ($val == 38) { ## (#,##0_);[Red](#,##0)
@@ -617,7 +617,7 @@ sub _format_handler {
 						'style:apply-style-name' => "NP38",
 						}]
 					);
-				
+
 				&_create_positive_style("NP38",
 					$nstyle, \%base);
 			} elsif ($val == 39) { ## (#,##0.00_);(#,##0.00)
@@ -634,7 +634,7 @@ sub _format_handler {
 						'style:apply-style-name' => "NP39",
 						}]
 					);
-				
+
 				&_create_positive_style("NP39",
 					$nstyle, \%base);
 			} elsif ($val == 40) { ## (#,##0.00_);[Red](#,##0.00)
@@ -740,7 +740,7 @@ sub _format_handler {
 		$ods->createStyle(
 			$style,
 			family => 'table-cell',
-			properties => $properties{cell}, 
+			properties => $properties{cell},
 			@extras,
 			);
 		$ods->updateStyle(
@@ -776,7 +776,7 @@ sub _format_cleanup_handler {
 sub _ods_process {
 	my ($filename, $template) = @_;
 	$ods = ooDocument(file => "$filename", create => 'spreadsheet');
-	
+
 	my $parser = XML::Twig->new(
 		start_tag_handlers => {
 			worksheet => \&_worksheet_handler,
@@ -836,7 +836,7 @@ sub preprocess {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
         }
     }
-    
+
     return $vars;
 }
 
@@ -868,10 +868,10 @@ sub process {
 		DELIMITER => ';',
 		DEBUG => ($parent->{debug})? 'dirs': undef,
 		DEBUG_FORMAT => '',
-		}) || die Template->error(); 
+		}) || die Template->error();
 
 	if (not $template->process(
-		$source, 
+		$source,
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
 		\$output, binmode => ':utf8')) {

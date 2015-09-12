@@ -30,7 +30,7 @@ Sets up and manages the db connection.  This returns a DBI database handle.
 
 =head2 connect ($username, $password)
 
-Returns a connection authenticated with $username and $password.  If $username 
+Returns a connection authenticated with $username and $password.  If $username
 is not sent, then these are taken from LedgerSMB::Auth::get_credentials.
 
 Note:  if get_credentials returns a username of 'logoud', then this will return
@@ -43,8 +43,8 @@ sub connect {
     if (!$username){
         my $creds = LedgerSMB::Auth::get_credentials;
         LedgerSMB::Auth::credential_prompt() if $creds->{login} eq 'logout';
-        $username = $creds->{login};    
-        $password = $creds->{password};    
+        $username = $creds->{login};
+        $password = $creds->{password};
     }
     return undef unless $username;
     my $dbh = DBI->connect(qq|dbi:Pg:dbname="$company"|, $username, $password,
@@ -60,7 +60,7 @@ sub connect {
 
 =head2 set_datestyle
 
-This is used for old code, to set the datetyle for input.  It is not needed 
+This is used for old code, to set the datetyle for input.  It is not needed
 for new code because of PGDate support to/from the db.  For this reason, once
 order entry is removed, we should probably remove support for it.
 
@@ -90,7 +90,7 @@ set and true.
 
 Otherwise, requires a specific version (exactly).  Dies if doesn't match.
 
-The ignore_version setting is intended to be temporarily set during 
+The ignore_version setting is intended to be temporarily set during
 zero-downtime upgrades.
 
 =cut
@@ -110,9 +110,9 @@ sub require_version {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2014 The LedgerSMB Core Team. 
+Copyright (C) 2014 The LedgerSMB Core Team.
 
-This file may be reused under the terms of the GNU General Public License, 
+This file may be reused under the terms of the GNU General Public License,
 version 2 or at your option any later version.  Please see the included
 LICENSE.txt for more information.
 

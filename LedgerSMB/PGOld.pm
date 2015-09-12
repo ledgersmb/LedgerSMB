@@ -41,13 +41,13 @@ sub _parse_array {
     my ($self, $value) = @_;
     return @$value if ref $value eq 'ARRAY';
     return if !defined $value;
-    # No longer needed since we require DBD::Pg 2.x 
+    # No longer needed since we require DBD::Pg 2.x
 }
 
 sub _db_array_scalars {
     my $self = shift @_;
     my @args = @_;
-    return \@args; 
+    return \@args;
     # No longer needed since we require DBD::Pg 2.x
 }
 
@@ -68,4 +68,4 @@ sub merge {
 }
 
 
-1; 
+1;

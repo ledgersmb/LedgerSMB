@@ -21,21 +21,21 @@ sub _get_prefix { 'inventory_adjust__' }
 
 =head1 DESCRIPTION
 
-This module includes the basic routines for importing inventory adjustments, 
-initial inventory and the like.  Inventory adjustments follow the following 
+This module includes the basic routines for importing inventory adjustments,
+initial inventory and the like.  Inventory adjustments follow the following
 rules:
 
 =over
 
 =item Shrinkage and Loss
 
-If the counted is less than expected (the normal case) then an we sell the 
+If the counted is less than expected (the normal case) then an we sell the
 goods to ourselves at a 100% discount thus recording cost of goods sold for the
 missing parts.
 
 =item More than Expected
 
-In the case where more is counted than expected we purchase the difference 	
+In the case where more is counted than expected we purchase the difference
 from ourselves at last cost.  This invoice would be expected to be paid using an
 equity account, though this is not currently automated.
 
@@ -57,12 +57,12 @@ has id => (is => 'rw', isa => 'Int', required => '0');
 
 =item transdate date
 
-This is the date the inventory was counted at.  The invoices take effect on 
+This is the date the inventory was counted at.  The invoices take effect on
 this date.  Required.
 
 =cut
 
-has transdate => (is => 'ro',      isa => 'LedgerSMB::Moose::Date', 
+has transdate => (is => 'ro',      isa => 'LedgerSMB::Moose::Date',
               coerce => '1',  required => '1');
 
 =item source text
@@ -81,7 +81,7 @@ a time.)
 
 =cut
 
-has rows => (is => 'rw', 
+has rows => (is => 'rw',
             isa => 'ArrayRef[LedgerSMB::Inventory::Adjust_Line]',
        required => '0');
 
@@ -110,7 +110,7 @@ sub add_line{
 
 =item lines_from_form
 
-This function flattens a form.  It loops from 1 to $hashref->{rowcount}, and 
+This function flattens a form.  It loops from 1 to $hashref->{rowcount}, and
 for each item found, checks for parts_id_$_ and partnumber_$_.  If either is
 found and counted_$_ is found, it creates a new line with the indexed keys of
 parts_id, partnumber, counted, and expected.
@@ -127,7 +127,7 @@ sub lines_from_form {
     my ($self, $hashref) = @_;
     my @lines;
     for my $ln (1 .. $hashref->{rowcount}){
-        next 
+        next
           if $hashref->{"id_$ln"} eq 'new';
         my $line = LedgerSMB::Inventory::Adjust_Line->new(
           parts_id => $hashref->{"id_$ln"},
@@ -140,11 +140,11 @@ sub lines_from_form {
     my $rows = $self->rows;
     push @$rows, @lines;
     $self->rows($rows);
-} 
+}
 
 =item save
 
-This saves the report.  In the process we run every line through a variance 
+This saves the report.  In the process we run every line through a variance
 check which allows the expected number of parts to be looked up if not provided.
 
 =cut
@@ -161,7 +161,7 @@ sub save {
 
 =item approve
 
-Approves the inventory adjustment and creates the (draft) AR/AP invoices. 
+Approves the inventory adjustment and creates the (draft) AR/AP invoices.
 These can then be approved, adjusted, have payment lines recorded, and the like.
 
 =cut
@@ -170,7 +170,7 @@ sub approve {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'approve');
 };
-    
+
 
 =item delete
 

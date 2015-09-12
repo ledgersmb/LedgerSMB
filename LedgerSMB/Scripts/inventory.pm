@@ -7,8 +7,8 @@ functions, template instantiation and rendering for inventory management.
 
 =head1 SYOPSIS
 
-This module is the UI controller for the customer DB access; it provides the 
-View interface, as well as defines the Save customer. 
+This module is the UI controller for the customer DB access; it provides the
+View interface, as well as defines the Save customer.
 Save customer will update or create as needed.
 
 
@@ -35,9 +35,9 @@ This entry point specifies the screen for setting up an inventory adjustment.
 
 sub begin_adjust {
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new( 
-	user => $request->{_user}, 
-    	template => 'adjustment_setup', 
+    my $template = LedgerSMB::Template->new(
+	user => $request->{_user},
+    	template => 'adjustment_setup',
 	locale => $request->{_locale},
 	path => 'UI/inventory',
         format => 'HTML'
@@ -54,8 +54,8 @@ This entry point specifies the screen for entering an inventory adjustment.
 sub enter_adjust {
     my ($request) = @_;
     my $template = LedgerSMB::Template->new(
-	user => $request->{_user}, 
-    	template => 'adjustment_entry', 
+	user => $request->{_user},
+    	template => 'adjustment_entry',
 	locale => $request->{_locale},
 	path => 'UI/inventory',
         format => 'HTML'
@@ -84,8 +84,8 @@ sub adjustment_next {
             $request->{"onhand_$i"} = $item->{onhand};
         }
         $request->{"counted_$i"} ||= 0;
-        $request->{"qty_$i"} = $request->{"onhand_$i"} 
-		- $request->{"counted_$i"}; 
+        $request->{"qty_$i"} = $request->{"onhand_$i"}
+		- $request->{"counted_$i"};
     }
     ++$request->{rowcount};
     enter_adjust($request);
@@ -104,7 +104,7 @@ sub adjustment_save {
     $adjustment->lines_from_form($request);
     $adjustment->save;
     begin_adjust($request);
-} 
+}
 
 =item adjustment_list
 

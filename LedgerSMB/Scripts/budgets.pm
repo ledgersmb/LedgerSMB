@@ -27,7 +27,7 @@ use LedgerSMB::Business_Unit_Class;
 
 =over
 
-=item new_budget 
+=item new_budget
 No inputs provided.  LedgerSMB::Budget properties can be used to set
 defaults however.
 
@@ -64,12 +64,12 @@ sub _render_screen {
     $budget->{rowcount} ||= 0;
     for (1 .. $additional_rows) {
         my $lines = $budget->lines;
-        push @{$lines}, 
+        push @{$lines},
              {accnoset => 0, index => $_ + $budget->{rowcount}};
         ++$budget->{rowcount};
         $budget->lines($lines);
     }
-    $budget->error('Invalid object') 
+    $budget->error('Invalid object')
          unless $budget->isa('LedgerSMB::Budget');
     # The button logic is kinda complicated here.  The basic idea is that there
     # are three stages in the handling of the budget:  Initial entry, review and
@@ -149,16 +149,16 @@ sub update {
     my ($request) = @_;
     $request->{display_rows} = [];
     for (1 .. $request->{rowcount}){
-        push @{$request->{display_rows}}, 
+        push @{$request->{display_rows}},
              { account_id => $request->{"account_id_$_"},
                debit => $request->{"debit_$_"},
                credit => $request->{"credit_$_"},
                description => $request->{"description_$_"},
              } if ($request->{"debit_$_"} or $request->{"credit_$_"});
-             
+
     }
     $request->{rowcount} = scalar @{$request->{display_rows}} + 1;
-    new_budget(@_); 
+    new_budget(@_);
 }
 
 =item view_budget
@@ -179,7 +179,7 @@ sub view_budget {
         } else {
             $row->{credit} = $line->{amount};
         }
-        my ($account) = $budget->call_procedure( 
+        my ($account) = $budget->call_procedure(
                           funcname => 'account_get',
                               args => [$line->{account_id}]
         );
@@ -199,8 +199,8 @@ sub save {
     my ($request) = @_;
     my $budget = LedgerSMB::Budget->from_input($request);
     $budget->save();
-    view_budget($budget); 
-} 
+    view_budget($budget);
+}
 
 =item approve
 Requires id.  Approves the budget.
@@ -212,7 +212,7 @@ sub approve {
     my $budget = LedgerSMB::Budget->new(%$request);
     $budget->approve;
     view_budget($request);
-} 
+}
 
 =item reject
 Requires id.  Rejects unapproved budget and deletes it.
@@ -224,7 +224,7 @@ sub reject {
     my $budget = LedgerSMB::Budget->new(%$request);
     $budget->reject;
     begin_search($request);
-} 
+}
 
 =item obsolete
 Requires id, Marks budget obsolete.
@@ -236,7 +236,7 @@ sub obsolete {
     my $budget = LedgerSMB::Budget->new(%$request);
     $budget->obsolete;
     view_budget($request);
-} 
+}
 
 =item add_note
 Requires id, subject, and note.  Adds a note to the budget.
@@ -248,7 +248,7 @@ sub add_note {
     my $budget = LedgerSMB::Budget->new(%$request);
     $budget->save_note($request->{subject}, $request->{note});
     view_budget($request);
-} 
+}
 
 =item begin_search
 No inputs expected or used
@@ -275,7 +275,7 @@ sub begin_search{
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

@@ -18,13 +18,13 @@ This module wraps both DBI and the PostgreSQL commandline tools.
 
 =head1 COPYRIGHT
 
-This module is copyright (C) 2007, the LedgerSMB Core Team and subject to 
+This module is copyright (C) 2007, the LedgerSMB Core Team and subject to
 the GNU General Public License (GPL) version 2, or at your option, any later
 version.  See the COPYRIGHT and LICENSE files for more information.
 
 =cut
 
-# Methods are documented inline.  
+# Methods are documented inline.
 
 package LedgerSMB::Database;
 use LedgerSMB::Auth;
@@ -60,8 +60,8 @@ sub loader_log_filename {
 
 =head2 get_info()
 
-This routine connects to the database using DBI and attempts to determine if a 
-related application is running in that database and if so what version.  
+This routine connects to the database using DBI and attempts to determine if a
+related application is running in that database and if so what version.
 It returns a hashref with the following keys set:
 
 =over
@@ -123,12 +123,12 @@ The database could not be confirmed to exist, or not
 
 =back
 
-It is worth noting that this is designed to be informative and helpful in 
-determining whether automatic upgrades can in fact occur or other 
+It is worth noting that this is designed to be informative and helpful in
+determining whether automatic upgrades can in fact occur or other
 administrative tasks can be run.  Sample output might be:
 
-{    appname => undef, 
-     version => undef, 
+{    appname => undef,
+     version => undef,
 full_version => undef,
       status => 'does not exist'}
 
@@ -152,11 +152,11 @@ set, this merely means that the database exists but is not used by a recognized
 application.  So administrative functions are advised to check both the appname
 and status values.
 
-Finally, it is important to note that LedgerSMB 1.1 and prior, and SQL-Ledger 
+Finally, it is important to note that LedgerSMB 1.1 and prior, and SQL-Ledger
 2.6.x and prior are lumped under appname => 'ledgersmb' and version => 'legacy',
 though the fullversion may give you an idea of what the actual version is run.
 
-=cut 
+=cut
 
 sub get_info {
     my $self = shift @_;
@@ -230,7 +230,7 @@ sub get_info {
 	       'SELECT version FROM defaults'
 	       );
 	   #avoid DBD::Pg::st fetchrow_hashref failed: no statement executing
-	   my $rv=$sth->execute();     
+	   my $rv=$sth->execute();
 	   if(defined($rv))
 	   {
 	       if (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
@@ -278,7 +278,7 @@ sub get_info {
        } else {
             $retval->{appname} = 'unknown';
             $retval->{exists} = 'exists';
-       } 
+       }
        $dbh->rollback;
    }
    #$logger->debug("DBI->disconnect dbh=$dbh");
@@ -296,7 +296,7 @@ sub copy {
     my ($self, $new_name) = @_;
     $self->new($self->export, (dbname => $new_name)
               )->create(copy_of => $self->dbname);
-}        
+}
 
 =head2 $db->load_base_schema()
 
@@ -308,9 +308,9 @@ sub load_base_schema {
     my ($self, $args) = @_;
     my $success;
     my $log = loader_log_filename();
-    
+
     $self->run_file(
-	
+
 	    file       => "$self->{source_dir}sql/Pg-database.sql",
 	    log_stdout => ($args->{log} || "${log}_stdout"),
 	    log_stderr => ($args->{errlog} || "${log}_stderr")
@@ -346,21 +346,21 @@ sub load_modules {
         next unless $mod;
         if ($mod eq 'Fixes.sql'){
             local ($@); # pre-5.14, do not die() in this block
-            eval { 
+            eval {
               $self->run_file(
                        file       => "$self->{source_dir}sql/modules/$mod",
                        log_stdout  => $args->{log} || "${log}_stdout",
 		       log_stderr  => $args->{errlog} || "${log}_stderr"
-	      ); 
+	      );
             };
         } else {
             $self->run_file(
                        file       => "$self->{source_dir}sql/modules/$mod",
                        log_stdout  => $args->{log} || "${log}_stdout",
 		       log_stderr  => $args->{errlog} || "${log}_stderr"
-	    ); 
+	    );
         }
-           
+
     }
     close (LOADORDER); ### return failure to execute the script?
     return 1;
@@ -379,8 +379,8 @@ sub load_coa {
     my $log = loader_log_filename();
 
     $self->run_file (
-            file  => "sql/coa/$args->{country}/chart/$args->{chart}", 
-            log   => $log 
+            file  => "sql/coa/$args->{country}/chart/$args->{chart}",
+            log   => $log
     );
     if (-f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
         $self->exec_script(

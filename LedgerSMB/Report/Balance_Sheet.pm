@@ -49,7 +49,7 @@ has 'balance_sheet' => (is => 'rw', isa => 'HashRef[Any]', required => 0);
 
 An arrayref of hashrefs, each is:
 
-=over 
+=over
 
 =item through_date
 
@@ -81,7 +81,7 @@ sub columns {
 
 Returns none since this is not applicable to this.
 
-=cut 
+=cut
 
 sub header_lines {
     return [];
@@ -115,8 +115,8 @@ sub template {
 
 =head2 run_report()
 
-This sets rows to an empty hashref, and sets balance_sheet to the structure of 
-the balance sheet. 
+This sets rows to an empty hashref, and sets balance_sheet to the structure of
+the balance sheet.
 
 =cut
 
@@ -125,30 +125,30 @@ sub run_report {
     my @headings = $self->call_dbmethod(funcname => 'account__all_headings');
     my $head = {};
     $head->{$_->{accno}} = $_ for (@headings);
-   
+
     my @lines = $self->call_dbmethod(funcname => 'report__balance_sheet');
 
     my $sheet = {A => { # Assets
-                       lines => [], 
+                       lines => [],
                        total => 0, },
-                 L => { # Liabilities 
-                       lines => [], 
+                 L => { # Liabilities
+                       lines => [],
                        total => 0, },
-                 Q => { # Equity 
-                       lines => [], 
+                 Q => { # Equity
+                       lines => [],
                        total => 0, },
                  ratios => {},
     };
     for my $ref(@lines){
         my $cat = $ref->{account_category};
         push @{$sheet->{$cat}->{lines}},  $ref;
-        $sheet->{$cat}->{total} += $ref->{balance}; 
+        $sheet->{$cat}->{total} += $ref->{balance};
     }
-    $sheet->{ratios}->{AL} = $sheet->{A}->{total} / $sheet->{L}->{total} 
+    $sheet->{ratios}->{AL} = $sheet->{A}->{total} / $sheet->{L}->{total}
         if $sheet->{L}->{total};
-    $sheet->{ratios}->{AQ} = $sheet->{A}->{total} / $sheet->{Q}->{total} 
+    $sheet->{ratios}->{AQ} = $sheet->{A}->{total} / $sheet->{Q}->{total}
         if $sheet->{Q}->{total};
-    $sheet->{ratios}->{QL} = $sheet->{Q}->{total} / $sheet->{L}->{total} 
+    $sheet->{ratios}->{QL} = $sheet->{Q}->{total} / $sheet->{L}->{total}
         if $sheet->{L}->{total};
     $sheet->{total_LQ} = $sheet->{L}->{total} + $sheet->{Q}->{total};
     $self->headings($head);
@@ -158,7 +158,7 @@ sub run_report {
 
 =head2 add_comparison($balance_sheet)
 
-Adds a comparison to the current balance sheet.  Among other things it checks 
+Adds a comparison to the current balance sheet.  Among other things it checks
 the sheet for new account keys and adds them.
 
 =cut
@@ -176,7 +176,7 @@ sub add_comparison{
             for my $l2 (@{$old_sheet->{$type}->{lines}}){
                $found = 1 if $l2->{account_number} eq $line->{account_number};
             }
-            push @{$old_sheet->{$type}->{lines}}, 
+            push @{$old_sheet->{$type}->{lines}},
                {account_number => $line->{account_number},
                 account_desc   =>  $line->{account_desc},
                     balance    => '---' } unless $found;

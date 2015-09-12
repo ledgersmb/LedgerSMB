@@ -240,7 +240,7 @@ sub prepare_order {
 
         $form->{selectformname} =
           qq|<option value="sales_order">|
-          . $locale->text('Sales Order') . qq| 
+          . $locale->text('Sales Order') . qq|
     <option value="work_order">| . $locale->text('Work Order') . qq|
     <option value="pick_list">| . $locale->text('Pick List') . qq|
     <option value="packing_list">| . $locale->text('Packing List');
@@ -254,14 +254,14 @@ sub prepare_order {
 
         $form->{selectformname} =
           qq|<option value="purchase_order">|
-          . $locale->text('Purchase Order') . qq| 
+          . $locale->text('Purchase Order') . qq|
     <option value="bin_list">| . $locale->text('Bin List');
     }
 
     if ( $form->{type} eq 'ship_order' ) {
         $form->{selectformname} =
           qq|<option value="pick_list">|
-          . $locale->text('Pick List') . qq| 
+          . $locale->text('Pick List') . qq|
     <option value="packing_list">| . $locale->text('Packing List');
     }
 
@@ -297,7 +297,7 @@ sub form_header {
     $form->{nextsub} = 'update';
 
     $sequences = $form->sequence_dropdown($numberfld) unless $form->{id};
-   
+
     $checkedopen   = ( $form->{closed} ) ? ""        : "checked";
     $checkedclosed = ( $form->{closed} ) ? "checked" : "";
 
@@ -418,10 +418,10 @@ sub form_header {
          if ($form->{entity_control_code}){
 			$creditremaining .= qq|
 	        <tr class="control-code-field">
-		<th align="right" nowrap>| . 
+		<th align="right" nowrap>| .
 			$locale->text('Entity Code') . qq|</th>
 		<td colspan="2">$form->{entity_control_code}</td>
-		<th align="right" nowrap>| . 
+		<th align="right" nowrap>| .
 			$locale->text('Account') . qq|</th>
 		<td colspan=3>$form->{meta_number}</td>
 	      </tr>
@@ -494,7 +494,7 @@ sub form_header {
             $eclass = 2
         }
         $vc = qq|<input data-dojo-type="dijit/form/TextBox" name=$form->{vc} value="$form->{$form->{vc}}" size=35>
-             <a id="new-contact" target="new" 
+             <a id="new-contact" target="new"
                  href="contact.pl?action=add&entity_class=$eclass">
                  [| . $locale->text('New') . qq|]</a>|;
     }
@@ -540,7 +540,7 @@ sub form_header {
     print qq|
 <body class="lsmb $form->{dojo_theme}" onLoad="document.forms[0].${focus}.focus()" />
 | . $form->open_status_div . qq|
-<script> 
+<script>
 function on_return_submit(event){
   var kc;
   if (window.event){
@@ -594,7 +594,7 @@ function on_return_submit(event){
 	      </tr>
 	      <tr class="shipvia-row">
 		<th align=right>| . $locale->text('Ship via') . qq|</th>
-		<td colspan=3><textarea data-dojo-type="dijit/form/Textarea" name="shipvia" cols="35" 
+		<td colspan=3><textarea data-dojo-type="dijit/form/Textarea" name="shipvia" cols="35"
                                 rows="3">$form->{shipvia}</textarea></td>
 	      </tr>
 	    </table>
@@ -884,10 +884,10 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
               print qq|
 <tr>
 <td><a href="file.pl?action=get&file_class=2&ref_key=$form->{id}&id=$file->{id}&type=sales_quotation&additional=type"
-            >$file->{file_name}</a></td> 
-<td>$file->{mime_type}</td> 
-<td>|.$file->{uploaded_at}->to_output.qq|</td> 
-<td>$file->{uploaded_by_name}</td> 
+            >$file->{file_name}</a></td>
+<td>$file->{mime_type}</td>
+<td>|.$file->{uploaded_at}->to_output.qq|</td>
+<td>$file->{uploaded_by_name}</td>
 </tr>
               |;
         }
@@ -910,12 +910,12 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
             }
             print qq|
 <tr>
-<td> $file->{file_name} </td> 
-<td> $file->{mime_type} </td> 
-<td> $aclass </td> 
-<td> $file->{reference} </td> 
-<td> $file->{attached_at} </td> 
-<td> $file->{attached_by} </td> 
+<td> $file->{file_name} </td>
+<td> $file->{mime_type} </td>
+<td> $aclass </td>
+<td> $file->{reference} </td>
+<td> $file->{attached_at} </td>
+<td> $file->{attached_by} </td>
 </tr>|;
        }
        print qq|
@@ -933,7 +933,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
 
     $form->hide_form(qw(rowcount callback path login sessionid));
 
-    print qq| 
+    print qq|
 </form>
 | . $form->close_status_div . qq|
 </body>
@@ -980,7 +980,7 @@ sub update {
         if($newname>1){return;}#tshvr4 may be dropped if finalize_request() does not return here
     }
 
-    # I think this is safe because the shipping or receiving is tied to the 
+    # I think this is safe because the shipping or receiving is tied to the
     # order which is tied to the customer or vendor.  -CT
     $newname = 1 if $form->{type} =~ /(ship|receive)/;
 
@@ -1078,7 +1078,7 @@ sub update {
             if ($rows) {
 
                 if ( $rows > 1 ) {
-    
+
                     &select_item;
                     $form->finalize_request();
 
@@ -1091,7 +1091,7 @@ sub update {
                       if $form->{type} ne 'sales_quotation';
                     $sellprice =
                       $form->parse_amount( \%myconfig, $form->{"sellprice_$i"} );
-    
+
                     for (qw(partnumber description unit)) {
                         $form->{item_list}[$i]{$_} =
                           $form->quote( $form->{item_list}[$i]{$_} );
@@ -1104,7 +1104,7 @@ sub update {
                     }
                     if ($sellprice) {
                         $form->{"sellprice_$i"} = $sellprice;
-    
+
                         ($dec) = ( $form->{"sellprice_$i"} =~ /\.(\d+)/ );
                         $dec = length $dec;
                         $decimalplaces1 = ( $dec > 2 ) ? $dec : 2;
@@ -1113,7 +1113,7 @@ sub update {
                         ($dec) = ( $form->{"sellprice_$i"} =~ /\.(\d+)/ );
                         $dec = length $dec;
                         $decimalplaces1 = ( $dec > 2 ) ? $dec : 2;
-    
+
                         $form->{"sellprice_$i"} /= $exchangerate;
                     }
 
@@ -1151,7 +1151,7 @@ sub update {
                         $form->{"{_}_$i"} =
                           $form->format_amount( \%myconfig, $form->{"${_}_$i"} );
                     }
-    
+
                 }
 
             }
@@ -1182,7 +1182,7 @@ sub update {
 sub save {
     delete $form->{display_form};
 
-     
+
     if ( $form->{type} =~ /_order$/ ) {
         $msg = $locale->text('Order Date missing!');
     }
@@ -1268,9 +1268,9 @@ sub save {
        &update;
        $form->finalize_request();
     }
- 
+
     if ( OE->save( \%myconfig, \%$form ) ) {
-       edit(); 
+       edit();
     }
     else {
         $form->error($err);
@@ -1972,7 +1972,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="serialnumber_$i" size=15
     $form->hide_form(qw(rowcount callback path login sessionid));
 
     print qq|
-  
+
 </form>
 
 </body>
@@ -2243,7 +2243,7 @@ qq|<td><input type=hidden name="warehouse_id_$i" value="$ref->{warehouse_id}">$r
       </table>
     </td>
   </tr>
-  
+
   <tr>
     <td><hr size=3 noshade></td>
   </tr>
@@ -2508,7 +2508,7 @@ qq|<td><input name="ndx_$i" class=checkbox type=checkbox data-dojo-type="dijit/f
       </table>
     </td>
   </tr>
-  
+
   <tr>
     <td><hr size=3 noshade></td>
   </tr>

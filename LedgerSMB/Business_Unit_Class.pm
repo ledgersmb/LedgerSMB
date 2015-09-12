@@ -4,9 +4,9 @@ LedgerSMB::Business_Unit_Class
 
 =head1 SYNOPSYS
 
-This holds the information as to the handling of classes of buisness units.  
-Business units are reporting units which can be used to classify various line 
-items of transactions in different ways and include handling for departments, 
+This holds the information as to the handling of classes of buisness units.
+Business units are reporting units which can be used to classify various line
+items of transactions in different ways and include handling for departments,
 funds, and projects.
 
 =cut
@@ -23,7 +23,7 @@ with 'LedgerSMB::PGObject';
 =item id
 
 This is the internal id of the unit class.  It is undef when the class has not
-yet been saved in the database 
+yet been saved in the database
 
 =cut
 
@@ -56,11 +56,11 @@ this is indivated for CRM and other applications.
 
 =cut
 
-has 'modules' => (is => 'rw', 
+has 'modules' => (is => 'rw',
                  isa => 'ArrayRef[LedgerSMB::App_Module]'
 );
 
-=item ordering 
+=item ordering
 
 The entry boxes (drop down or text entry) are set arranged from low to high
 by this field on the data entry screens.
@@ -83,7 +83,7 @@ returns the business unit class that corresponds to the id requested.
 
 sub get {
     my ($self, $id) = @_;
-    my @classes = $self->call_procedure(funcname => 'business_unit_class__get', 
+    my @classes = $self->call_procedure(funcname => 'business_unit_class__get',
                                             args => [$id]
     );
     my $ref = shift @classes;
@@ -96,7 +96,7 @@ sub get {
 
 =item save
 
-Saves the existing buisness unit class to the database, and updates any fields 
+Saves the existing buisness unit class to the database, and updates any fields
 changed in the process.
 
 =cut
@@ -107,12 +107,12 @@ sub save {
     $self->save_modules();
     $self = $self->new(%$ref);
     return $self;
-}   
+}
 
 =item save_modules
 
-This saves only the module permissions.  This takes the list of modules and prepares an array for the saving and then saves the modules.  This is broken off as a public 
-interface because it makes it possible to activate/deactive regarding modules after the 
+This saves only the module permissions.  This takes the list of modules and prepares an array for the saving and then saves the modules.  This is broken off as a public
+interface because it makes it possible to activate/deactive regarding modules after the
 fact without changing anything else.
 
 =cut
@@ -157,11 +157,11 @@ sub list {
 Deletes a business unit class.  Such classes may not have business units attached.
 
 =cut
- 
+
 sub delete {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'business_unit_class__delete');
-}   
+}
 
 =back
 

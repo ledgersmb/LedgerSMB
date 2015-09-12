@@ -19,7 +19,7 @@ To get by control code:
 
 =head1 INHERITS
 
-=over 
+=over
 
 =item LedgerSMB::Entity
 
@@ -75,7 +75,7 @@ has 'last_name' => (is => 'rw', isa => 'Str', required => 1);
 
 Salutation id.  These are fixed as:
 
-  id | salutation 
+  id | salutation
  ----+------------
    1 | Dr.
    2 | Miss.
@@ -99,7 +99,7 @@ Constant hashref of above salutations, key is id.
 =cut
 
 sub salutations {
-    return { 
+    return {
        '1' => $locale->text('Dr.'),
        '2' => $locale->text('Miss.'),
        '3' => $locale->text('Mr.'),
@@ -109,7 +109,7 @@ sub salutations {
     };
 }
 
-=item created 
+=item created
 
 Date when the  person was entered into LedgerSMB
 
@@ -152,7 +152,7 @@ sub get {
 
 =item get_by_cc($cc)
 
-This retrieves a person associated with a control code.  Dies with error if 
+This retrieves a person associated with a control code.  Dies with error if
 person does not exist.
 
 =cut
@@ -183,12 +183,12 @@ sub save {
 =head1 COPYRIGHT
 
 Copyright (C) 2012, the LedgerSMB Core Team.  This file may be re-used under the GNU GPL
-version 2 or at your option any future version.  Please see the accompanying LICENSE 
+version 2 or at your option any future version.  Please see the accompanying LICENSE
 file for details.
 
 =cut
 
-# Not sure why but making the class immutable causes parent attributes to be 
+# Not sure why but making the class immutable causes parent attributes to be
 # lost.  Is this a bug in Class::MOP?
 #
 __PACKAGE__->meta->make_immutable;

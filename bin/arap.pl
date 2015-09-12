@@ -90,7 +90,7 @@ sub check_name {
         # check name, combine name and id
         #HV $form->{$name} , form->vendor or form->customer , should be at least ' ' for comparison 'ne' to work.('' ne undef) returns undef.(' ' ne undef) returns 1
         if(! $form->{$name}){$form->{$name}=' ';}
-        if ( $form->{"old$name"} ne qq|$form->{$name}--$form->{"${name}_id"}| 
+        if ( $form->{"old$name"} ne qq|$form->{$name}--$form->{"${name}_id"}|
              or !$form->{"${name}_id"}
         )
         {
@@ -164,7 +164,7 @@ sub select_name {
 
     $label = ucfirst $table;
     %column_data = (ndx => qq|<th>&nbsp;</th>|,
-                   name => qq|<th class=listheading>| . 
+                   name => qq|<th class=listheading>| .
                                $locale->text('Name') . qq|</th>|,
            control_code => qq|<th class=listheading>| .
                                $locale->text('Control Code') . qq|</th>|,
@@ -175,7 +175,7 @@ sub select_name {
             city => qq|<th class=listheading>| .
 	                       $locale->text('City') . '</th>',
     );
-    
+
 
     # list items with radio button on a form
     $form->header;
@@ -409,7 +409,7 @@ sub schedule {
 	  <tr>
 	    <th colspan=2 class=listheading>| . $locale->text('E-mail') . qq|</th>
 	  </tr>
-	  
+
 	  <tr>
 	    <td>
 	      <table>
@@ -605,7 +605,7 @@ sub schedule {
       </table>
     </td>
   </tr>
-	
+
   <tr>
     <td>
       <table>
@@ -613,7 +613,7 @@ sub schedule {
 	  <td>$repeat</td>
 	  <td>$print</td>
 	</tr>
-	<tr valign=top>  
+	<tr valign=top>
 	  <td>$email</td>
 	  <td>$message</td>
 	</tr>

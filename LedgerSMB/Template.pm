@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Template - Template support module for LedgerSMB 
+LedgerSMB::Template - Template support module for LedgerSMB
 
 =head1 SYNOPSIS
 
@@ -124,10 +124,10 @@ This function outputs the rendered file in an appropriate manner.
 
 =item my $bool = _valid_language()
 
-This command checks for valid langages.  Returns 1 if the language is valid, 
+This command checks for valid langages.  Returns 1 if the language is valid,
 0 if it is not.
 
-=item column_heading() 
+=item column_heading()
 
 Apply locale settings to column headings and add sort urls if necessary.
 
@@ -239,7 +239,7 @@ sub new {
 			}
 			$self->{include_path_lang} = "$self->{'include_path'}"
 					."/$self->{language}";
-                        $self->{locale} 
+                        $self->{locale}
                              = LedgerSMB::Locale->get_handle($self->{language});
 		}
 	}
@@ -306,7 +306,7 @@ sub render {
                 $vars->{PRINTERS} = [
                     {text => $LedgerSMB::App_State::Locale->text('Screen'),
                      value => 'screen'},
-                    ]; 
+                    ];
             };
         }
         for (keys %LedgerSMB::Sysconfig::printers){
@@ -335,13 +335,13 @@ sub render {
 	}
         $cleanvars->{escape} = sub { return $format->escape(@_)};
 	if (UNIVERSAL::isa($self->{locale}, 'LedgerSMB::Locale')){
-		$cleanvars->{text} = sub { 
-                    return $self->escape($self->{locale}->text(@_)) 
+		$cleanvars->{text} = sub {
+                    return $self->escape($self->{locale}->text(@_))
                         if defined $_[0]};
-	} 
+	}
 	else {
             $cleanvars->{text} = sub { return $self->escape(shift @_) };
-	
+
         }
         $cleanvars->{tt_url} = sub {
                my $str  = shift @_;
@@ -351,7 +351,7 @@ sub render {
                return $str;
         };
 
-           
+
 	$format->can('process')->($self, $cleanvars);
 	#return $format->can('postprocess')->($self);
 	my $post = $format->can('postprocess')->($self) unless $self->{_no_postprocess};
@@ -362,7 +362,7 @@ sub render {
 		$self->output(%$vars);
                 $logger->debug("after self output,but does not seem to return here!");
 		if ($self->{rendered}) {
-			unlink($self->{rendered}); 
+			unlink($self->{rendered});
 		}
 	}
 	return $post;
@@ -376,7 +376,7 @@ sub escape {
     } else {
          return $vars;
     }
-} 
+}
 
 sub output {
 	my $self = shift;
@@ -390,7 +390,7 @@ sub output {
 	if ('email' eq lc $method) {
 		$self->_email_output;
         } elsif (defined $args{OUT} and $args{printmode} eq '>'){ # To file
-                cp($self->{rendered}, $args{OUT}); 
+                cp($self->{rendered}, $args{OUT});
                 return if "zip" eq lc($method);
 	} elsif ('print' eq lc $method) {
 		$self->_lpr_output;
@@ -404,7 +404,7 @@ sub output {
         binmode (STDOUT, ':utf8'); # Reset binmode *after* sending file to
                                    # email, printer, or screen.  For screen
                                    # this should have no effect.  For printer
-                                   # or email, this should fix bug 884. --CT 
+                                   # or email, this should fix bug 884. --CT
 }
 
 sub _http_output {
@@ -413,11 +413,11 @@ sub _http_output {
 	$data ||= $self->{output};
         my $cache = 1; # default
         if ($LedgerSMB::App_State::DBH){
-            # we have a db connection, so are logged in.  
+            # we have a db connection, so are logged in.
             # Let's see about caching.
             $cache = 0 if LedgerSMB::Setting->get('disable_back');
         }
-        
+
 	if ($self->{format} !~ /^\p{IsAlnum}+$/) {
 		die "Invalid format";
 	}
@@ -472,9 +472,9 @@ sub _http_output_file {
 		$data = <$FH>;
 	}
 	close($FH);
-	
+
 	$self->_http_output($data);
-	
+
 	unlink($self->{rendered}) or
 		die 'Unable to delete output file';
 }
@@ -552,38 +552,38 @@ sub _lpr_output {
 
 # apply locale settings to column headings and add sort urls if necessary.
 sub column_heading {
-	
+
 	my $self = shift;
-	my ($names, $sortby) = @_; 
+	my ($names, $sortby) = @_;
 	my %sorturls;
-	
+
 	if ($sortby) {
-		%sorturls = map 
+		%sorturls = map
 		{ $_ => $sortby->{href}."=$_"} @{$sortby->{columns}};
 	}
-		
+
 	foreach my $attname (keys %$names) {
-		
+
 		# process 2 cases - simple name => value, and complex name => hash
 		# pairs. The latter is used to include urls in column headers.
-		
+
 		if (ref $names->{$attname} eq 'HASH') {
 			my $t = $self->{locale}->text($names->{$attname}{text});
 			$names->{$attname}{text} = $t;
 		} else {
 			my $t = $self->{locale}->text($names->{$attname});
 			if (defined $sorturls{$attname}) {
-				$names->{$attname} = 
+				$names->{$attname} =
 				{
 					text => $t,
-				 	href => $sorturls{$attname} 
+				 	href => $sorturls{$attname}
 				};
 			} else {
 				$names->{$attname} = $t;
 			}
 		}
 	}
-	
+
 	return $names;
 }
 
@@ -591,14 +591,14 @@ sub column_heading {
 #
 # This is a private method used to handle things like including files that are
 # db templates.  It is not performance-optimal for frequently used operations
-# like user-interface templates.  It returns processed but not post-processed 
+# like user-interface templates.  It returns processed but not post-processed
 # content.
 
 sub _include {
     my ($self, $templatename, $vars) = @_;
     die 'No Template Name in _include' unless $templatename;
     my $template = LedgerSMB::Template->new(
-                  user => $self->{myconfig}, 
+                  user => $self->{myconfig},
               template => $templatename,
                 locale => $self->{locale},
         no_auto_output => 1,

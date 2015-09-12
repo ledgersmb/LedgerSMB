@@ -49,8 +49,8 @@ use LedgerSMB::PGNumber;
 
 =item get_files
 
-Returns a list of files associated with the existing transaction.  This is 
-provisional, and will change for 1.4 as the GL transaction functionality is 
+Returns a list of files associated with the existing transaction.  This is
+provisional, and will change for 1.4 as the GL transaction functionality is
                   {ref_key => $self->{id}, file_class => 1}
 rewritten
 
@@ -70,7 +70,7 @@ sub get_files {
 sub add_cogs {
     my ($self, $form) = @_;
     my $dbh = $form->{dbh};
-    my $query = 
+    my $query =
      "select cogs__add_for_ap_line(id) FROM invoice WHERE trans_id = ?";
     my $sth = $dbh->prepare($query) || $form->dberror($query);
     $sth->execute($form->{id}) || $form->dberror($query);
@@ -121,8 +121,8 @@ sub post_invoice {
 
     $query = qq|
 		SELECT (SELECT value FROM defaults
-		         WHERE setting_key = 'fxgain_accno_id') 
-		       AS fxgain_accno_id, 
+		         WHERE setting_key = 'fxgain_accno_id')
+		       AS fxgain_accno_id,
 		       (SELECT value FROM defaults
 		         WHERE setting_key = 'fxloss_accno_id')
 		       AS fxloss_accno_id|;
@@ -178,9 +178,9 @@ sub post_invoice {
 
     $form->{exchangerate} = $form->parse_amount( $myconfig, $form->{exchangerate} );
 
-    
+
     my $taxformfound=IR->taxform_exist($form,$form->{"vendor_id"});#tshvr this always returns true!!
-  
+
     my $b_unit_sth = $dbh->prepare(
          "INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
           VALUES (currval('invoice_id_seq'), ?, ?)"
@@ -258,7 +258,7 @@ sub post_invoice {
             my ($dec) = ( $fxsellprice =~ /\.(\d+)/ );
             # deduct discount
             my $moneyplaces = LedgerSMB::Setting->get('decimal_places');
-            $decimalplaces = ($form->{"precision_$i"} > $moneyplaces) 
+            $decimalplaces = ($form->{"precision_$i"} > $moneyplaces)
                              ? $form->{"precision_$i"}
                              : $moneyplaces;
             $form->{"sellprice_$i"} = $fxsellprice -
@@ -283,7 +283,7 @@ sub post_invoice {
 
                 $tax   = LedgerSMB::PGNumber->bzero();
                 $fxtax = LedgerSMB::PGNumber->bzero();
-    
+
                 if ( $form->{taxincluded} ) {
                     $tax += $amount =
                       Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 1 );
@@ -293,7 +293,7 @@ sub post_invoice {
                 else {
                     $tax += $amount =
                       Tax::calculate_taxes( \@taxaccounts, $form, $linetotal, 0 );
-    
+
                     $fxtax +=
                       Tax::calculate_taxes( \@taxaccounts, $form, $fxlinetotal, 0 );
                 }
@@ -332,7 +332,7 @@ sub post_invoice {
             ($invoice_id) = $dbh->selectrow_array($query);
 
             $query = qq|
-				UPDATE invoice 
+				UPDATE invoice
 				   SET trans_id = ?,
 				       parts_id = ?,
 				       description = ?,
@@ -356,7 +356,7 @@ sub post_invoice {
                 $form->{"discount_$i"},    $allocated,
                 $form->{"unit_$i"},        $form->{"deliverydate_$i"},
                 $form->{"serialnumber_$i"},
-                $form->{"precision_$i"},   $form->{"notes_$i"},       
+                $form->{"precision_$i"},   $form->{"notes_$i"},
                 $form->{"partnumber_$i"},
                 $invoice_id
             ) || $form->dberror($query);
@@ -376,13 +376,13 @@ sub post_invoice {
             if (defined $form->{approved}) {
 
                 $query = qq| UPDATE ap SET approved = ? WHERE id = ?|;
-                $dbh->prepare($query)->execute($form->{approved}, $form->{id}) 
+                $dbh->prepare($query)->execute($form->{approved}, $form->{id})
                      || $form->dberror($query);
                 if (!$form->{approved}){
                    if (not defined $form->{batch_id}){
                        $form->error($locale->text('Batch ID Missing'));
                    }
-                   $query = qq| 
+                   $query = qq|
 			INSERT INTO voucher (batch_id, trans_id) VALUES (?, ?)|;
                    $sth = $dbh->prepare($query);
                    $sth->execute($form->{batch_id}, $form->{id}) ||
@@ -414,7 +414,7 @@ sub post_invoice {
                         $allocated += $qty;
                         last if ( ( $totalqty -= $qty ) >= 0 );
             	    }
-		} 
+		}
 
                 # add purchase to inventory
                 push @{ $form->{acc_trans}{lineitems} },
@@ -524,7 +524,7 @@ sub post_invoice {
             $form->{id},        $ref->{chart_id},   ($amount - $fxlinetotal) * -1,
             $form->{transdate}, $ref->{invoice_id}, 1
         ) || $form->dberror($query);
-        
+
         $diff   = 0;
         $fxdiff = 0;
         for my $cls(@{$form->{bu_class}}){
@@ -546,7 +546,7 @@ sub post_invoice {
     if ($form->{manual_tax}){
         my $ac_sth = $dbh->prepare(
               "INSERT INTO acc_trans (chart_id, trans_id, amount, source, memo)
-                    VALUES ((select id from account where accno = ?), 
+                    VALUES ((select id from account where accno = ?),
                             ?, ?, ?, ?)"
         );
         my $tax_sth = $dbh->prepare(
@@ -558,7 +558,7 @@ sub post_invoice {
             my $taxbasis;
             my $taxrate;
             my $fx = $form->{exchangerate} || 1;
-            $taxamount = $form->parse_amount($myconfig, 
+            $taxamount = $form->parse_amount($myconfig,
                                              $form->{"mt_amount_$taccno"});
             $taxbasis = $form->parse_amount($myconfig,
                                            $form->{"mt_basis_$taccno"});
@@ -567,8 +567,8 @@ sub post_invoice {
             my $fx_taxbasis = $taxbasis * $fx;
             $form->{payables} += $fx_taxamount;
             $invamount += $fx_taxamount;
-            $ac_sth->execute($taccno, $form->{id}, $fx_taxamount * -1, 
-                             $form->{"mt_ref_$taccno"}, 
+            $ac_sth->execute($taccno, $form->{id}, $fx_taxamount * -1,
+                             $form->{"mt_ref_$taccno"},
                              $form->{"mt_desc_$taccno"});
             $tax_sth->execute($fx_taxbasis * -1, $taxrate);
         }
@@ -587,12 +587,12 @@ sub post_invoice {
                 	     VALUES (?, (SELECT id FROM chart WHERE accno = ?),
                 	            ?, ?, ?)|;
         $sth = $dbh->prepare($query);
-        $sth->execute( $form->{id}, $accno, 
+        $sth->execute( $form->{id}, $accno,
                     $form->{payables}/$form->{exchangerate},
             $form->{transdate} , 0)
           || $form->dberror($query);
-        $sth->execute( $form->{id}, $accno, 
-                    $form->{payables} - 
+        $sth->execute( $form->{id}, $accno,
+                    $form->{payables} -
                    ($form->{payables}/$form->{exchangerate}),
             $form->{transdate} , 0)
           || $form->dberror($query);
@@ -606,7 +606,7 @@ sub post_invoice {
 
             if ($amount) {
                 $query = qq|
-					INSERT INTO acc_trans 
+					INSERT INTO acc_trans
 					            (trans_id, chart_id, amount,
 					            transdate)
 	            			VALUES (?, (SELECT id FROM chart
@@ -662,7 +662,7 @@ sub post_invoice {
 
             if ( $form->{payables} ) {
                 $query = qq|
-					INSERT INTO acc_trans 
+					INSERT INTO acc_trans
 					            (trans_id, chart_id, amount,
 		    			            transdate)
 		    			VALUES (?, (SELECT id FROM chart
@@ -681,10 +681,10 @@ sub post_invoice {
 
             # record payment
             $query = qq|
-				INSERT INTO acc_trans 
-				            (trans_id, chart_id, amount, 
+				INSERT INTO acc_trans
+				            (trans_id, chart_id, amount,
 				            transdate, source, memo, cleared)
-				     VALUES (?, (SELECT id FROM chart 
+				     VALUES (?, (SELECT id FROM chart
 				                  WHERE accno = ?),
 				            ?, ?, ?, ?, ?)|;
 
@@ -703,9 +703,9 @@ sub post_invoice {
 
             if ($amount) {
                 $query = qq|
-					INSERT INTO acc_trans 
+					INSERT INTO acc_trans
 					            (trans_id, chart_id, amount,
-					            transdate, source, 
+					            transdate, source,
 					            fx_transaction, cleared)
 					     VALUES (?, (SELECT id FROM chart
 					                  WHERE accno = ?),
@@ -733,9 +733,9 @@ sub post_invoice {
                   ? $fxgain_accno_id
                   : $fxloss_accno_id;
                 $query = qq|
-					INSERT INTO acc_trans 
+					INSERT INTO acc_trans
 					            (trans_id, chart_id, amount,
-					            transdate, fx_transaction, 
+					            transdate, fx_transaction,
 					            cleared)
 					     VALUES (?, ?, ?, ?, '1', ?)|;
 
@@ -765,7 +765,7 @@ sub post_invoice {
 
     # save AP record
     $query = qq|
-		UPDATE ap 
+		UPDATE ap
 		   SET invnumber = ?,
 		       ordnumber = ?,
 		       quonumber = ?,
@@ -784,7 +784,7 @@ sub post_invoice {
 		       intnotes = ?,
 		       curr = ?,
 		       language_code = ?,
-		       ponumber = ?, 
+		       ponumber = ?,
                        approved = ?,
                        reverse = ?,
 		       crdate = ?
@@ -798,7 +798,7 @@ sub post_invoice {
         $form->{duedate},       $form->{shippingpoint}, $form->{shipvia},
         $form->{taxincluded},   $form->{notes},         $form->{intnotes},
         $form->{currency},
-        $form->{language_code}, $form->{ponumber},      
+        $form->{language_code}, $form->{ponumber},
         $approved,              $form->{reverse},       $form->{crdate},
         $form->{id}
     ) || $form->dberror($query);
@@ -832,7 +832,7 @@ sub post_invoice {
     foreach $item ( keys %updparts ) {
         $item  = $dbh->quote($item);
         $query = qq|
-			UPDATE parts 
+			UPDATE parts
 			   SET avgcost = avgcost($item),
 			       lastcost = lastcost($item)
 			 WHERE id = $item|;
@@ -872,9 +872,9 @@ sub retrieve_invoice {
 
         # get default accounts and last invoice number
         $query = qq|
-			SELECT (select c.accno FROM account c 
-			         WHERE c.id = (SELECT value::int FROM defaults 
-			                        WHERE setting_key = 
+			SELECT (select c.accno FROM account c
+			         WHERE c.id = (SELECT value::int FROM defaults
+			                        WHERE setting_key =
 			                              'inventory_accno_id'))
 			       AS inventory_accno,
 
@@ -900,15 +900,15 @@ sub retrieve_invoice {
 			         WHERE c.id = (SELECT value::int FROM defaults
 			                        WHERE setting_key =
 			                              'fxloss_accno_id'))
-			       AS fxloss_accno, 
+			       AS fxloss_accno,
 			       (SELECT value FROM defaults
 			         WHERE setting_key = 'curr') AS currencies|;
     }
     else {
         $query = qq|
-			SELECT (select c.accno FROM account c 
-			         WHERE c.id = (SELECT value::int FROM defaults 
-			                        WHERE setting_key = 
+			SELECT (select c.accno FROM account c
+			         WHERE c.id = (SELECT value::int FROM defaults
+			                        WHERE setting_key =
 			                              'inventory_accno_id'))
 			       AS inventory_accno,
 
@@ -934,7 +934,7 @@ sub retrieve_invoice {
 			         WHERE c.id = (SELECT value::int FROM defaults
 			                        WHERE setting_key =
 			                              'fxloss_accno_id'))
-			       AS fxloss_accno, 
+			       AS fxloss_accno,
 			       (SELECT value FROM defaults
 			         WHERE setting_key = 'curr') AS currencies,
 			       current_date AS transdate|;
@@ -953,7 +953,7 @@ sub retrieve_invoice {
         $query = qq|
 			SELECT a.invnumber, a.transdate, a.duedate,
 			       a.ordnumber, a.quonumber, a.paid, a.taxincluded,
-			       a.notes, a.intnotes, a.curr AS currency, 
+			       a.notes, a.intnotes, a.curr AS currency,
 			       a.entity_credit_account as vendor_id, a.language_code, a.ponumber, a.crdate,
 			       a.on_hold, a.reverse, a.description
 			  FROM ap a
@@ -982,23 +982,23 @@ sub retrieve_invoice {
         # retrieve individual items
         $query = qq|
 			   SELECT i.id as invoice_id,
-                                  coalesce(i.vendor_sku, p.partnumber) 
+                                  coalesce(i.vendor_sku, p.partnumber)
                                         as partnumber,
-                                  i.description, i.qty, 
+                                  i.description, i.qty,
 			          i.fxsellprice, i.sellprice, i.precision,
-			          i.parts_id AS id, i.unit, p.bin, 
+			          i.parts_id AS id, i.unit, p.bin,
 			          i.deliverydate,
-			          i.serialnumber, 
-			          i.discount, i.notes, pg.partsgroup, 
-			          p.partsgroup_id, p.partnumber AS sku, 
-			          p.weight, p.onhand, p.inventory_accno_id, 
+			          i.serialnumber,
+			          i.discount, i.notes, pg.partsgroup,
+			          p.partsgroup_id, p.partnumber AS sku,
+			          p.weight, p.onhand, p.inventory_accno_id,
 			          p.income_accno_id, p.expense_accno_id,
 			          t.description AS partsgrouptranslation
 			     FROM invoice i
 			     JOIN parts p ON (i.parts_id = p.id)
 			LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
-			LEFT JOIN translation t 
-			          ON (t.trans_id = p.partsgroup_id 
+			LEFT JOIN translation t
+			          ON (t.trans_id = p.partsgroup_id
 			          AND t.language_code = ?)
 			    WHERE i.trans_id = ?
 		         ORDER BY i.id|;
@@ -1118,13 +1118,13 @@ sub retrieve_item {
     my $query = qq|
 		   SELECT p.id, coalesce(
                                 CASE WHEN pv.partnumber <> '' THEN pv.partnumber
-                                     ELSE NULL END, p.partnumber) as partnumber, 
+                                     ELSE NULL END, p.partnumber) as partnumber,
                           p.description, pg.partsgroup, p.partsgroup_id,
-		          coalesce(pv.lastcost, p.lastcost) AS sellprice, 
-                          p.unit, p.bin, p.onhand, 
-		          p.notes, p.inventory_accno_id, p.income_accno_id, 
+		          coalesce(pv.lastcost, p.lastcost) AS sellprice,
+                          p.unit, p.bin, p.onhand,
+		          p.notes, p.inventory_accno_id, p.income_accno_id,
 		          p.expense_accno_id, p.partnumber AS sku, p.weight,
-		          t1.description AS translation, 
+		          t1.description AS translation,
 		          t2.description AS grouptranslation
 		     FROM parts p
                 LEFT JOIN makemodel mm ON (mm.parts_id = p.id AND mm.barcode = |
@@ -1132,15 +1132,15 @@ sub retrieve_item {
 		LEFT JOIN partsgroup pg ON (pg.id = p.partsgroup_id)
                 LEFT JOIN partsvendor pv ON (pv.parts_id = p.id
                                            AND pv.credit_id = ?)
-		LEFT JOIN translation t1 
+		LEFT JOIN translation t1
 		          ON (t1.trans_id = p.id AND t1.language_code = ?)
-		LEFT JOIN translation t2 
-		          ON (t2.trans_id = p.partsgroup_id 
+		LEFT JOIN translation t2
+		          ON (t2.trans_id = p.partsgroup_id
 		          AND t2.language_code = ?)
 	         $where|;
     my $sth = $dbh->prepare($query);
     #die "$query:$i";
-    $sth->execute( $form->{vendor_id}, $form->{language_code}, 
+    $sth->execute( $form->{vendor_id}, $form->{language_code},
                    $form->{language_code} )
       || $form->dberror($query);
 
@@ -1256,13 +1256,13 @@ sub vendor_details {
 
     # get rest for the vendor
     my $query = qq|
-		SELECT meta_number as vendornumber, e.name, 
+		SELECT meta_number as vendornumber, e.name,
                        line_one as address1, line_two as address2, city, state,
-		       mail_code as zipcode, c.name as country, 
-                       pay_to_name as contact, 
-                       phone as vendorphone, fax as vendorfax, 
+		       mail_code as zipcode, c.name as country,
+                       pay_to_name as contact,
+                       phone as vendorphone, fax as vendorfax,
 		       tax_id AS vendortaxnumber, sic_code AS sic, iban, bic, remark,
-		       -- gifi_accno AS gifi, 
+		       -- gifi_accno AS gifi,
                        startdate, enddate
 		  FROM entity_credit_account eca
                   JOIN entity e ON eca.entity_id = e.id
@@ -1271,15 +1271,15 @@ sub vendor_details {
                                      and e2l.location_class = 1
              LEFT JOIN entity_to_location el ON eca.entity_id = el.entity_id
                                      and el.location_class = 1
-             LEFT JOIN location l ON l.id = 
+             LEFT JOIN location l ON l.id =
                                      coalesce(e2l.location_id, el.location_id)
              LEFT JOIN country c ON l.country_id = c.id
              LEFT JOIN (select max(phone) as phone, max(fax) as fax, credit_id
                           FROM (SELECT CASE WHEN contact_class_id =1 THEN contact
-                                       END as phone, 
+                                       END as phone,
                                        CASE WHEN contact_class_id =9 THEN contact
                                        END as fax,
-                                       credit_id 
+                                       credit_id
                                   FROM eca_to_contact) ct_base
                         GROUP BY credit_id) ct ON ct.credit_id = eca.id
              LEFT JOIN entity_bank_account ba ON ba.id = eca.bank_account
@@ -1328,22 +1328,22 @@ sub item_links {
 
 
 sub toggle_on_hold {
-    
+
     my $self = shift @_;
     my $form = shift @_;
-    
+
     if ($form->{id}) { # it's an existing (.. probably) invoice.
-        
+
         my $dbh = $form->{dbh};
-        
+
         $sth = $dbh->prepare("update ap set on_hold = not on_hold where ap.id = ?");
         my $code = $sth->execute($form->{id});#tshvr4
-        
+
         return 1;
-        
+
     } else { # This shouldn't even be possible, but check for it anyway.
-        
-        # Definitely, DEFINITELY check it.        
+
+        # Definitely, DEFINITELY check it.
         # happily return 0. Find out about proper error states.
         return 0;
     }
@@ -1370,7 +1370,7 @@ sub taxform_exist
    {
         $retval=1;
    }
-   
+
    return $retval;
 
 
@@ -1388,12 +1388,12 @@ sub update_invoice_tax_form
    my $query=qq|select count(*) from invoice_tax_form where invoice_id=?|;
    my $sth=$dbh->prepare($query);
    $sth->execute($invoice_id) ||  $form->dberror($query);
-   
+
    my $found=0;
 
    while(my $ret1=$sth->fetchrow())
    {
-      $found=1;  
+      $found=1;
 
    }
 
@@ -1426,7 +1426,7 @@ sub get_taxcheck
    my $query=qq|select reportable from invoice_tax_form where invoice_id=?|;
    my $sth=$dbh->prepare($query);
    $sth->execute($invoice_id) ||  $form->dberror($query);
-   
+
    my $found=0;
 
    while(my $ret1=$sth->fetchrow())

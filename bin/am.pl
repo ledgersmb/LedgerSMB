@@ -111,7 +111,7 @@ sub add_gifi {
     &gifi_footer(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
+        user => \%myconfig,
         locale => $locale,
         template => 'am-gifi-form');
     $template->render({
@@ -137,7 +137,7 @@ sub edit_gifi {
     &gifi_footer(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
+        user => \%myconfig,
         locale => $locale,
         template => 'am-gifi-form');
     $template->render({
@@ -236,7 +236,7 @@ sub add_business {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
+        user => \%myconfig,
         locale => $locale,
         template => 'am-business-form');
     $template->render({
@@ -261,7 +261,7 @@ sub edit_business {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
+        user => \%myconfig,
         locale => $locale,
         template => 'am-business-form');
     $template->render({
@@ -318,7 +318,7 @@ sub add_sic {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
+        user => \%myconfig,
         locale => $locale,
         template => 'am-sic-form');
     $template->render({
@@ -346,7 +346,7 @@ sub edit_sic {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
+        user => \%myconfig,
         locale => $locale,
         template => 'am-sic-form');
     $template->render({
@@ -407,7 +407,7 @@ sub add_language {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
+        user => \%myconfig,
         locale => $locale,
         template => 'am-language-form');
     $template->render({
@@ -436,7 +436,7 @@ sub edit_language {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
+        user => \%myconfig,
         locale => $locale,
         template => 'am-language-form');
     $template->render({
@@ -523,7 +523,7 @@ sub delete_language {
         text => $locale->text('Delete Language'),
         });
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
+        user => \%myconfig,
         locale => $locale,
         template => 'form-confirmation');
     $template->render({
@@ -559,9 +559,9 @@ sub taxes {
     $i = 0;
     foreach $ref ( @{ $form->{taxrates} } ) {
         $i++;
-        $form->{"minvalue_$i"} = 
+        $form->{"minvalue_$i"} =
           $form->format_amount( \%myconfig, $ref->{minvalue}) || 0;
-        
+
         $form->{"taxrate_$i"} =
           $form->format_amount( \%myconfig, $ref->{rate} );
         $form->{"taxdescription_$i"} = $ref->{description};
@@ -634,7 +634,7 @@ sub display_taxes {
 ##    }
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
+        user => \%myconfig,
         locale => $locale,
         template => 'am-taxes');
     $template->render({
@@ -740,7 +740,7 @@ sub add_warehouse {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
+        user => \%myconfig,
         locale => $locale,
         template => 'am-warehouse-form');
     $template->render({
@@ -764,7 +764,7 @@ sub edit_warehouse {
     &form_footer_buttons(\%hiddens, \@buttons);
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
+        user => \%myconfig,
         locale => $locale,
         template => 'am-warehouse-form');
     $template->render({
@@ -1009,7 +1009,7 @@ sub recurring_transactions {
     };
 
     my $template = LedgerSMB::Template->new_UI(
-        user => \%myconfig, 
+        user => \%myconfig,
         locale => $locale,
         template => 'am-list-recurring');
     $template->render({
@@ -1117,11 +1117,11 @@ sub process_transactions {
             # This is old code from SL, and it basically forces a reset of the
             # LedgerSMB::Form object by deleting all keys and then copying a few
             # back in.  This is error prone and buggy.  If you have issues with
-            # recurring transactions, the first thing to do is to see if 
-            # something is not being copied back that needs to be.  Looking 
+            # recurring transactions, the first thing to do is to see if
+            # something is not being copied back that needs to be.  Looking
             # forward to removing this code. --CT
             for ( keys %$form ) { delete $form->{$_}; }
-            for (qw(header dbversion company dbh login path sessionid 
+            for (qw(header dbversion company dbh login path sessionid
                     stylesheet timeout id)
             ) {
                 $form->{$_} = $pt->{$_};

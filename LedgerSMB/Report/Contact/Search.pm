@@ -98,7 +98,7 @@ sub header_lines {
              text => LedgerSMB::Report::text('Name')},
             {name => 'meta_number',
              text => LedgerSMB::Report::text('Account Number')}
-       ]; 
+       ];
 }
 
 =back
@@ -117,7 +117,7 @@ has entity_class => (is => 'ro', isa => 'Int');
 
 =item name_part
 
-Full text search on contact name.  This also matches the beginning of a 
+Full text search on contact name.  This also matches the beginning of a
 company's name.  So Acme Software Testing Inc would come up under searches of
 'Ac', 'Software', 'Software Tester', and so forth but not 'Sting' or 'are.'
 
@@ -133,7 +133,7 @@ Matches the beginning of the control code string
 
 has control_code => (is => 'ro', isa => 'Str', required => 0);
 
-=item contact_info 
+=item contact_info
 
 Aggregated from email, phone, fax, etc.  Aggregated by this report (internal).
 
@@ -220,7 +220,7 @@ Full or short name of country (i.e. US or United States, or CA or Canada).
 
 =cut
 
-has country => (is => 'ro', isa => 'Str', required => 0); 
+has country => (is => 'ro', isa => 'Str', required => 0);
 
 =item active_date_from
 
@@ -232,12 +232,12 @@ Active items only to this date.
 
 =cut
 
-has active_date_from => (is => 'ro', 
-                        isa => 'LedgerSMB::Moose::Date', 
+has active_date_from => (is => 'ro',
+                        isa => 'LedgerSMB::Moose::Date',
                      coerce => 1,
                    required => 0);
-has active_date_to => (is => 'ro', 
-                      isa => 'LedgerSMB::Moose::Date', 
+has active_date_to => (is => 'ro',
+                      isa => 'LedgerSMB::Moose::Date',
                    coerce => 1,
                  required => 0);
 
@@ -253,7 +253,7 @@ has users => (is => 'ro', isa => 'Bool', required => 0);
 
 =head1 METHODS
 
-=over 
+=over
 
 =item run_report
 
@@ -266,9 +266,9 @@ sub run_report {
     my @rows = $self->call_dbmethod(funcname => 'contact__search');
     for my $r(@rows){
         $r->{meta_number} ||= "";
-        $r->{name_href_suffix} = 
+        $r->{name_href_suffix} =
                "&entity_id=$r->{entity_id}&meta_number=$r->{meta_number}";
-        $r->{meta_number_href_suffix} = 
+        $r->{meta_number_href_suffix} =
                "&entity_id=$r->{entity_id}&meta_number=$r->{meta_number}";
         $r->{entity_control_code_href_suffix} = $r->{meta_number_href_suffix};
     }

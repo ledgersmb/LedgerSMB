@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-LedgerSMB::File::Incoming - Incoming queue for not-yet-associated file 
+LedgerSMB::File::Incoming - Incoming queue for not-yet-associated file
 attachments
 
 =head1 SYNOPSIS
@@ -15,7 +15,7 @@ TODO
 
 =item  LedgerSMB::File
 
-Provides all properties and accessors.  This subclass provides additional 
+Provides all properties and accessors.  This subclass provides additional
 methods only
 
 =back

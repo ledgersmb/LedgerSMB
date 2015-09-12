@@ -119,8 +119,8 @@ sub get {
 =head2 get_from_file($path, $language_code)
 
 Loads a template from a file path.  This should only be used during database
-setup because it could be used to access any file on the system that the web 
-server or fcgi process could.  It is highly recommended that other web app code 
+setup because it could be used to access any file on the system that the web
+server or fcgi process could.  It is highly recommended that other web app code
 does not call this without carefully whitelisting values.
 
 =cut
@@ -146,7 +146,7 @@ sub get_from_file {
     my $self = LedgerSMB::Template::DB->new(%args);
     return $self;
 }
-    
+
 
 =head2 save
 
@@ -163,8 +163,8 @@ sub save {
 
 Copyright (C) 2014 The LedgerSMB Core Team
 
-This file may be re-used under the terms of the GNU General Public License 
-version 2 or at your option any later version.  Please see the included 
+This file may be re-used under the terms of the GNU General Public License
+version 2 or at your option any later version.  Please see the included
 LICENSE.txt for details.
 
 =cut

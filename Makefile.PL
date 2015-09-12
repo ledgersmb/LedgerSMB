@@ -50,6 +50,7 @@ recommends 'Math::BigInt::GMP';
 test_requires 'Test::More';
 test_requires 'Test::Trap';
 test_requires 'Test::Exception';
+test_requires 'Perl::Critic';
 
 feature 'RESTful Web Services XML support',
     -default => 0,

@@ -1,12 +1,12 @@
 =pod
 
-=head1 NAME 
+=head1 NAME
 
 LedgerSMB::Scripts::import_trans
 
 =head1 SYNPOSIS
 
-This is a module that demonstrates how to set up scripts for importing bulk 
+This is a module that demonstrates how to set up scripts for importing bulk
 data.
 
 =cut
@@ -20,9 +20,9 @@ use strict;
 my $default_currency = 'USD';
 our $cols = {
    gl       =>  ['accno', 'debit', 'credit', 'source', 'memo'],
-   ap_multi =>  ['vendor', 'amount', 'account', 'ap', 'description', 
+   ap_multi =>  ['vendor', 'amount', 'account', 'ap', 'description',
                  'invnumber', 'transdate'],
-   ar_multi =>  ['customer', 'amount', 'account', 'ar', 'description', 
+   ar_multi =>  ['customer', 'amount', 'account', 'ar', 'description',
                  'invnumber', 'transdate'],
    timecard =>  ['employee', 'projectnumber', 'transdate', 'partnumber',
                  'description', 'qty', 'noncharge', 'sellprice', 'allocated',
@@ -51,13 +51,13 @@ sub _inventory_template_setup {
 
     $sth->execute(1); # AP accounts
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-        push @{$request->{AP_accounts}}, $row; 
+        push @{$request->{AP_accounts}}, $row;
     }
-     
+
 
     $sth->execute(2); # AR accounts
     while (my $row = $sth->fetchrow_hashref('NAME_lc')) {
-        push @{$request->{AR_accounts}}, $row; 
+        push @{$request->{AR_accounts}}, $row;
     }
 };
 
@@ -92,8 +92,8 @@ sub _aa_multi {
     $batch->{batch_number} = $request->{reference};
     $batch->{batch_date} = $request->{transdate};
     $batch->{batch_class} = $arap;
-    $batch->create(); 
-    # Necessary to test things are found before starting to 
+    $batch->create();
+    # Necessary to test things are found before starting to
     # import! -- CT
     my $acst = $request->{dbh}->prepare(
         "select count(*) from account where accno = ?"
@@ -132,7 +132,7 @@ sub _aa_multi {
         $form->{amount_1} = shift @$ref;
         next if $form->{amount_1} !~ /\d/;
         $form->{amount_1} = $form->parse_amount(
-            $request->{_user}, $form->{amount_1}); 
+            $request->{_user}, $form->{amount_1});
         $form->{"$form->{ARAP}_amount_1"} = shift @$ref;
         $form->{vc} = ($arap eq "ar") ? "customer" : "vendor";
         $form->{arap} = $arap;
@@ -151,7 +151,7 @@ sub _aa_multi {
                        uc($form->{vendornumber}));
         ($form->{vendor_id}) = $sth->fetchrow_array;
         $form->{customer_id} = $form->{vendor_id};
-        
+
         AA->post_transaction($request->{_user}, $form);
     }
     return 1;
@@ -212,13 +212,13 @@ sub _inventory_single_date {
         $ins_sth->execute($part->{id}, $line->{onhand},
                           $part->{onhand}, $report_id)
             or $ap_form->dberror();
-        
+
     }
     $ar_form->{ARAP} = 'AR';
     $ar_form->{AR} = $request->{AR};
     $ap_form->{ARAP} = 'AP';
     $ap_form->{AP} = $request->{AP};
-    
+
     # ECA
     $ar_form->{'customernumber'} = $ar_eca_for_inventory;
     $ap_form->{'vendornumber'} = $ap_eca_for_inventory;
@@ -226,18 +226,18 @@ sub _inventory_single_date {
     $ap_form->get_name(undef, 'vendor', 'today', 1);
     my $ar_eca = shift @{$ar_form->{name_list}};
     my $ap_eca = shift @{$ap_form->{name_list}};
-    $ar_form->{customer_id} = $ar_eca->{id}; 
-    $ap_form->{vendor_id} = $ap_eca->{id}; 
+    $ar_form->{customer_id} = $ar_eca->{id};
+    $ap_form->{vendor_id} = $ap_eca->{id};
 
     # POST
     IS->post_invoice(undef, $ar_form) if $ar_form->{rowcount};
     IR->post_invoice(undef, $ap_form) if $ap_form->{rowcount};
-    
+
     $ar_form->{id} = "NULL"
         if ! $ar_form->{id};
     $ap_form->{id} = "NULL"
         if ! $ap_form->{id};
-    
+
     # Now, update the report record.
     $dbh->do( # These two params come from posting above, and from
               # the db.
@@ -283,11 +283,11 @@ our $process = {
                    GL->post_transaction($request->{_user}, $form,
                                         $request->{_locale});
                 },
-   ar_multi => sub { 
+   ar_multi => sub {
                    my  ($request, $entries) = @_;
                    return &_aa_multi($request, $entries, 'ar');
                },
-   ap_multi => sub { 
+   ap_multi => sub {
                    my  ($request, $entries) = @_;
                    return &_aa_multi($request, $entries, 'ap');
                },
@@ -358,14 +358,14 @@ our $process = {
    inventory => sub {
        my ($request, $entries) = @_;
        my $dbh = $request->{dbh};
-       
+
        $dbh->do( # Not worth parameterizing for one input
-              "INSERT INTO inventory_report 
+              "INSERT INTO inventory_report
                             (transdate, source)
                      VALUES (".$dbh->quote($request->{transdate}).
               ", 'CSV upload')"
         ) or $request->dberror();
-    
+
        my ($report_id) = $dbh->selectrow_array(
            "SELECT currval('inventory_report_id_seq')"
            ) or $request->dberror();
@@ -379,24 +379,24 @@ our $process = {
    inventory_multi => sub {
        my ($request, $entries) = @_;
        my $dbh = $request->{dbh};
-       
+
        @$entries =
            map { map_columns_into_hash($cols->{inventory_multi}, $_) }
            @$entries;
        my %dated_entries;
        for my $entry (@$entries) {
            push @{$dated_entries{$entry->{date}}}, $entry;
-       } 
+       }
 
        for my $key (keys %dated_entries) {
            $dbh->do( # Not worth parameterizing for one input
-                     "INSERT INTO inventory_report 
+                     "INSERT INTO inventory_report
                             (transdate, source)
                      VALUES (".$dbh->quote($key).
                      ", 'CSV upload (' || ".$dbh->quote($request->{transdate})
                      ." || ')')"
                ) or $request->dberror();
-    
+
            my ($report_id) = $dbh->selectrow_array(
                "SELECT currval('inventory_report_id_seq')"
                ) or $request->dberror();
@@ -427,7 +427,7 @@ sub parse_file {
         $line =~ s/[^"]"",/"/g;
         while ($line ne '') {
             if ($line =~ /^"/){
-                $line =~ s/"(.*?)"(,|$)// 
+                $line =~ s/"(.*?)"(,|$)//
                     || $self->error($self->{_locale}->text('Invalid file'));
                 my $field = $1;
                 $field =~ s/\s*$//;
@@ -440,7 +440,7 @@ sub parse_file {
             }
         }
         push @{$self->{import_entries}}, \@fields;
-    }     
+    }
     return @{$self->{import_entries}};
 }
 
@@ -452,7 +452,7 @@ This displays the begin data entry screen.
 
 sub begin_import {
     my ($request) = @_;
-    my $template_file = 
+    my $template_file =
         ($template_file{$request->{type}}) ?
         $template_file{$request->{type}} : 'import_csv';
 
@@ -461,7 +461,7 @@ sub begin_import {
     }
 
     my $template = LedgerSMB::Template->new(
-        user =>$request->{_user}, 
+        user =>$request->{_user},
         locale => $request->{_locale},
         path => 'UI/import_csv',
         template => $template_file,
@@ -472,7 +472,7 @@ sub begin_import {
 
 =head2 run_import
 
-run_import is the routine responsible for the primary work.  It accepts the 
+run_import is the routine responsible for the primary work.  It accepts the
 data in $request and processes it according to the dispatch tables.
 
 =cut
@@ -494,8 +494,8 @@ sub run_import {
 
 =head1 COPYRIGHT
 
-Copyright(C) 2008-2013 The LedgerSMB Core Team.  This file may be re-used in 
-accordance with the GNU General Public License (GNU GPL) v2 or at your option 
+Copyright(C) 2008-2013 The LedgerSMB Core Team.  This file may be re-used in
+accordance with the GNU General Public License (GNU GPL) v2 or at your option
 any later version.  Please see the included LICENSE.txt for more details.
 
 =cut

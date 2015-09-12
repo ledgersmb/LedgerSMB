@@ -10,7 +10,7 @@ Called via lsmb-handler.pl:
 
 =head1 DESCRIPTION
 
-This module provides workflow logic for producing various reports regaridng 
+This module provides workflow logic for producing various reports regaridng
 profit and loss.
 
 =head1 METHODS/WORKFLOWS

@@ -6,15 +6,15 @@ LedgerSMB:Scripts::drafts, LedgerSMB workflow scripts for managing drafts
 
 =head1 SYNOPSIS
 
-This module contains the workflows for managing unapproved, unbatched financial 
-transactions.  This does not contain facities for creating such transactions, 
+This module contains the workflows for managing unapproved, unbatched financial
+transactions.  This does not contain facities for creating such transactions,
 only searching for them, and posting them to the books or deleting those
 which have not been approved yet.
-    
+
 =head1 METHODS
-        
-=over   
-        
+
+=over
+
 =cut
 
 
@@ -42,7 +42,7 @@ amount_ge: total greater than or equal to
 
 sub search {
     use LedgerSMB::Scripts::reports;
-   
+
     my $request = shift @_;
     $request->{search_type} = 'drafts';
     $request->{report_name} = 'unapproved';
@@ -61,7 +61,7 @@ draft_$id:  true if selected.
 
 
 Approves selected drafts.  If close_form fails, does nothing and lists
-drafts again.  
+drafts again.
 
 =cut
 
@@ -95,7 +95,7 @@ draft_$id:  true if selected.
 
 
 Deletes selected drafts.  If close_form fails, does nothing and lists
-drafts again.  
+drafts again.
 
 =cut
 
@@ -149,7 +149,7 @@ sub list_drafts {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

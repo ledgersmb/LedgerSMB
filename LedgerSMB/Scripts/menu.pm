@@ -78,7 +78,7 @@ sub root_doc {
     }
 
     $template = LedgerSMB::Template->new(
-            user =>$request->{_user}, 
+            user =>$request->{_user},
             locale => $request->{_locale},
             path => 'UI',
             template => 'main',
@@ -110,7 +110,7 @@ sub expanding_menu {
     # The above system can lead to extra colons.
     $request->{'open'} =~ s/:+/:/g;
 
-    
+
     my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
     $menu->generate();
     for my $item (@{$menu->{menu_items}}){
@@ -120,7 +120,7 @@ sub expanding_menu {
     }
 
     my $template = LedgerSMB::Template->new(
-         user => $request->{_user}, 
+         user => $request->{_user},
          locale => $request->{_locale},
          path => 'UI/menu',
          template => 'expanding',
@@ -152,7 +152,7 @@ sub drilldown_menu {
 
     $menu->generate_section;
     my $template = LedgerSMB::Template->new(
-         user => $request->{_user}, 
+         user => $request->{_user},
          locale => $request->{_locale},
          path => 'UI/menu',
          template => 'drilldown',
@@ -161,12 +161,12 @@ sub drilldown_menu {
     $template->render($menu);
 }
 
-=pod 
+=pod
 
 =head1 Copyright (C) 2007 The LedgerSMB Core Team
 
-Licensed under the GNU General Public License version 2 or later (at your 
-option).  For more information please see the included LICENSE and COPYRIGHT 
+Licensed under the GNU General Public License version 2 or later (at your
+option).  For more information please see the included LICENSE and COPYRIGHT
 files.
 
 =cut

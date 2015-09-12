@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Report::Taxform::Details - 1099 and similar details forms for 
+LedgerSMB::Report::Taxform::Details - 1099 and similar details forms for
 LedgerSMB
 
 =head1 SYNPOSIS
@@ -18,7 +18,7 @@ with 'LedgerSMB::Report::Dates';
 =head1 DESCRIPTION
 
 Taxforms are used to handle VAT reporting in Europe and 1099 reporting in the
-US.  These can be set up to do accrual or cash basis reporting (different 
+US.  These can be set up to do accrual or cash basis reporting (different
 countries have different requirements).
 
 This report provides a listing of transactions and invoices which are reported
@@ -110,7 +110,7 @@ sub header_lines {
        { name => 'meta_number',   text => LedgerSMB::Report::text('Account Number') },
     ];
 }
-=head2 name 
+=head2 name
 
 =cut
 
@@ -153,7 +153,7 @@ sub run_report {
 =head1 COPYRIGHT
 
 COPYRIGHT(C) 2013 The LedgerSMB Core Team.  This file may be used under the
-terms of the GNU General Public License version 2 or at your option any later 
+terms of the GNU General Public License version 2 or at your option any later
 version.  Please see the LICENSE.TXT that came with this software for more
 details.
 

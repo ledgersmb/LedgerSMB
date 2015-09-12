@@ -1,9 +1,9 @@
 BEGIN;
 CREATE OR REPLACE FUNCTION invoice__start_ap
-(in_invnumber text, in_transdate date, in_taxincluded bool, 
+(in_invnumber text, in_transdate date, in_taxincluded bool,
  in_amount numeric, in_netamount numeric, in_paid numeric, in_datepaid date,
  in_duedate date, in_invoice bool, in_curr char(3), person_id int,
- in_till varchar(20), in_department_id int, in_approved bool, 
+ in_till varchar(20), in_department_id int, in_approved bool,
  in_entity_credit_account int, in_ar_accno text)
 RETURNS int LANGUAGE SQL AS
 $$
@@ -29,24 +29,24 @@ $$
 $$;
 
 CREATE OR REPLACE FUNCTION invoice__start_ar
-(in_invnumber text, in_transdate date, in_taxincluded bool, 
+(in_invnumber text, in_transdate date, in_taxincluded bool,
  in_amount numeric, in_netamount numeric, in_paid numeric, in_datepaid date,
  in_duedate date, in_invoice bool, in_curr char(3), person_id int,
- in_till varchar(20), in_department_id int, in_approved bool, 
+ in_till varchar(20), in_department_id int, in_approved bool,
  in_entity_credit_account int, in_ar_accno text)
 RETURNS int LANGUAGE SQL AS
 $$
- INSERT INTO ar 
+ INSERT INTO ar
         (invnumber, transdate, taxincluded,
          amount, netamount, paid, datepaid,
          duedate, invoice, curr, person_id,
          till, department_id, approved, entity_credit_account)
  VALUES ($1, $2, coalesce($3, 'f'),
          $4,$5, $6, coalesce($7, 'today'),
-         coalesce($8, 'today'), $9, coalesce($10, 
-         (select defaults_get_defaultcurrency from 
-          defaults_get_defaultcurrency())), 
-         coalesce($11, person__get_my_entity_id()), 
+         coalesce($8, 'today'), $9, coalesce($10,
+         (select defaults_get_defaultcurrency from
+          defaults_get_defaultcurrency())),
+         coalesce($11, person__get_my_entity_id()),
          $12, $13, coalesce($14, true), $15);
 
  INSERT INTO acc_trans
@@ -58,11 +58,11 @@ $$
 $$;
 
 COMMENT ON FUNCTION invoice__start_ar
-(in_invnumber text, in_transdate date, in_taxincluded bool, 
+(in_invnumber text, in_transdate date, in_taxincluded bool,
  in_amount numeric, in_netamount numeric, in_paid numeric, in_datepaid date,
  in_duedate date, in_invoice bool, in_curr char(3), person_id int,
- in_till varchar(20), in_department_id int, in_approved bool, 
- in_entity_credit_account int, in_ar_accno text) 
+ in_till varchar(20), in_department_id int, in_approved bool,
+ in_entity_credit_account int, in_ar_accno text)
 IS $$ Saves an ar transaction header.  The following fields are optional:
 
 1.  in_tax_included, defaults to false
@@ -109,7 +109,7 @@ $$;
 COMMENT ON FUNCTION invoice__add_item_ar
 (in_id int, in_parts_id int, in_qty numeric, in_discount numeric,
  in_unit text, in_sellprice numeric)
-IS $$This adds an item to the invoice.  This is not safe to use alone.  If you 
+IS $$This adds an item to the invoice.  This is not safe to use alone.  If you
 use it, you MUST also use invoice__finalize_ar.  In particular this function does
 not add income, inventory, or COGS calculations. $$;
 
@@ -120,9 +120,9 @@ RETURNS BOOL LANGUAGE SQL AS
 $$
 INSERT INTO acc_trans (trans_id, chart_id, transdate, source, memo, amount,
                        approved)
-VALUES ($1, (select id from account where accno = $2), coalesce($4, 'today'), $5, 
+VALUES ($1, (select id from account where accno = $2), coalesce($4, 'today'), $5,
         $6, $7, true),
-       ($1, (select id from account where accno = $3), coalesce($4, 'today'), $5, 
+       ($1, (select id from account where accno = $3), coalesce($4, 'today'), $5,
         $6, $7 * -1, true);
 
 SELECT TRUE;
@@ -135,20 +135,20 @@ RETURNS BOOL LANGUAGE SQL AS
 $$
 INSERT INTO acc_trans (trans_id, chart_id, transdate, source, memo, amount,
                        approved)
-VALUES ($1, (select id from account where accno = $2), coalesce($4, 'today'), $5, 
+VALUES ($1, (select id from account where accno = $2), coalesce($4, 'today'), $5,
         $6, $7 * -1, true),
-       ($1, (select id from account where accno = $3), coalesce($4, 'today'), $5, 
+       ($1, (select id from account where accno = $3), coalesce($4, 'today'), $5,
         $6, $7, true);
 
 SELECT TRUE;
 $$;
 
-CREATE OR REPLACE FUNCTION invoice__finalize_ap(in_id int) 
+CREATE OR REPLACE FUNCTION invoice__finalize_ap(in_id int)
 returns bool language plpgsql as
 $$
 BEGIN
    -- inventory
-   INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, approved, 
+   INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, approved,
                          invoice_id)
    SELECT in_id, p.income_accno_id, a.transdate, i.qty * i.sellprice * -1, true, i.id
      FROM parts p
@@ -169,18 +169,18 @@ BEGIN
    IF FOUND THEN
       RAISE EXCEPTION 'Out of balance';
    END IF;
-    
+
    RETURN TRUE;
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION invoice__finalize_ar(in_id int) 
+CREATE OR REPLACE FUNCTION invoice__finalize_ar(in_id int)
 returns bool language plpgsql as
 $$
 DECLARE balance numeric;
 BEGIN
-   -- income 
-   INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, approved, 
+   -- income
+   INSERT INTO acc_trans (trans_id, chart_id, transdate, amount, approved,
                          invoice_id)
    SELECT in_id, p.income_accno_id, a.transdate, i.qty * i.sellprice , true, i.id
      FROM parts p
@@ -201,7 +201,7 @@ BEGIN
       RAISE WARNING 'Balance: %', balance;
       RAISE EXCEPTION 'Out of balance';
    END IF;
-    
+
    RETURN TRUE;
 END;
 $$;

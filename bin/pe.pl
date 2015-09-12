@@ -307,7 +307,7 @@ sub translation {
     $form->hide_form(qw(translation title number));
 
     print qq|
-  
+
 <table width="100%">
   <tr><th class=listtop>$form->{title}</th></tr>
   <tr height="5"></tr>
@@ -560,7 +560,7 @@ sub translation_header {
     );
 
     print qq|
-  
+
 <table width="100%">
   <tr><th class=listtop>$form->{title}</th></tr>
   <tr height="5"></tr>
@@ -1212,8 +1212,8 @@ sub select_customer {
     print qq|
 <button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
-      . qq|</button> 
-    
+      . qq|</button>
+
 </form>
 |;
 

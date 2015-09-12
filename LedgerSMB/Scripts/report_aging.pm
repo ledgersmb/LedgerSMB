@@ -77,7 +77,7 @@ sub generate_statement {
     my @statements;
     my $old_meta = $request->{meta_number};
 
-    # The reason to work backwards here is that if we are sending emails out, we 
+    # The reason to work backwards here is that if we are sending emails out, we
     # can hide form submission info and not lose track of where we are.  This
     # will need additional documentation, however.  --CT
     while ($request->{rowcount} > 0){
@@ -86,12 +86,12 @@ sub generate_statement {
         next unless $request->{"select_$rc"};
         my ($meta_number, $entity_id) = split /:/, $request->{"select_$rc"};
         my $company = LedgerSMB::Entity::get($entity_id);
-        my $credit_act = 
+        my $credit_act =
               LedgerSMB::Entity::Credit_Account->get_by_meta_number(
                  $meta_number, $request->{entity_class}
         );
         my ($location) = LedgerSMB::Entity::Location->get_active(
-             $request, {entity_id => $entity_id, 
+             $request, {entity_id => $entity_id,
                         credit_id => $credit_act->{id},
                        only_class => 1}
         );
@@ -122,7 +122,7 @@ sub generate_statement {
         method => $request->{print_to},
         no_auto_output => 1,
     );
-    if ($request->{print_to} eq 'email'){ 
+    if ($request->{print_to} eq 'email'){
        #TODO -- mailer stuff
     } elsif ($request->{print_to} eq 'screen'){
         $template->render({statements => \@statements});
@@ -132,7 +132,7 @@ sub generate_statement {
         $request->{module_name}='gl';
         $request->{report_type}='aging';
         LedgerSMB::Scripts::reports::start_report($request);
-    }   
+    }
 
 }
 

@@ -41,7 +41,7 @@ none
 
 sub columns {
     return [
-      {col_id => 'form_name', 
+      {col_id => 'form_name',
          type => 'href',
     href_base => 'taxform.pl?action=edit&id=',
          name => LedgerSMB::Report::text('Form Name')},
@@ -95,7 +95,7 @@ sub run_report {
     my @rows = $self->call_dbmethod(funcname => 'tax_form__list_all');
     for my $row(@rows){
         $row->{row_id} = $row->{id};
-        $row->{default_reportable} = ($row->{default_reportable}) 
+        $row->{default_reportable} = ($row->{default_reportable})
                                      ? LedgerSMB::Report::text('Yes')
                                      : LedgerSMB::Report::text('No');
     }
@@ -106,7 +106,7 @@ sub run_report {
 
 Copyright(C) 2013 The LedgerSMB Core Team
 
-This file may be re-used in accordance with the GNU General Public License 
+This file may be re-used in accordance with the GNU General Public License
 version 2 or at your option any later version.  Please see the LICENSE.TXT
 included.
 

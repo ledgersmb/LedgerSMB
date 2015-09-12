@@ -10,11 +10,11 @@ LedgerSMB:Scripts::admin
 =head1 SYNOPSIS
 
 This module provides the workflow scripts for managing users and permissions.
-    
+
 =head1 METHODS
-        
-=over   
-        
+
+=over
+
 =cut
 
 use LedgerSMB::Template;
@@ -24,7 +24,7 @@ use LedgerSMB::Setting;
 use Log::Log4perl;
 
 # I don't really like the code in this module.  The callbacks are per form which
-# means there is no semantic difference between different buttons that can be 
+# means there is no semantic difference between different buttons that can be
 # clicked.  This results in a lot of code with a lot of conditionals which is
 # both difficult to read and maintain.  In the future, this should be revisited
 # and rewritten.  It makes the module too closely tied to the HTML.  --CT
@@ -33,30 +33,30 @@ my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::admin');
 
 
 sub __edit_page {
-    
-    
+
+
     my ($request, $otd) = @_;
     # otd stands for Other Template Data.
     my $dcsetting = LedgerSMB::Setting->new( {base=>$request, copy=>'base'} );
-    my $default_country = $dcsetting->get('default_country'); 
+    my $default_country = $dcsetting->get('default_country');
     my $admin = LedgerSMB::DBObject::Admin->new({base=>$request, copy=>'list', merge =>['user_id']});
     my @all_roles = $admin->get_roles($request->{company});
     my $user_obj = LedgerSMB::DBObject::User->new({base=>$request, copy=>'list', merge=>['user_id','company']});
     $user_obj->{company} = $request->{company};
     $user_obj->get($request->{user_id});
     my $user = $request->{_user};
-    my $template = LedgerSMB::Template->new( 
-        user => $request->{_user}, 
-        template => 'Admin/edit_user', 
-        language => $user->{language}, 
-        format => 'HTML', 
+    my $template = LedgerSMB::Template->new(
+        user => $request->{_user},
+        template => 'Admin/edit_user',
+        language => $user->{language},
+        format => 'HTML',
         path=>'UI'
     );
     my @countries = $admin->get_countries();
     my @salutations = $admin->get_salutations();
-    my $template_data = 
+    my $template_data =
             {
-                           user => $user_obj, 
+                           user => $user_obj,
                           roles => @all_roles,
                       countries => $admin->get_countries(),
                      user_roles => $user_obj->{roles},
@@ -66,9 +66,9 @@ sub __edit_page {
                     salutations => \@salutations,
             };
 
-    
+
     for my $key (keys(%{$otd})) {
-        
+
         $template_data->{$key} = $otd->{$key};
     }
     $template->render($template_data);
@@ -99,7 +99,7 @@ sub delete_user {
     my $admin = LedgerSMB::DBObject::Admin->new({base => $request});
     $admin->delete_user($request->{delete_user});
     delete $request->{username};
-    search_users($request); 
+    search_users($request);
 }
 
 =item list_sessions
@@ -113,10 +113,10 @@ sub list_sessions {
     my $admin = LedgerSMB::DBObject::Admin->new({base => $request});
     my @sessions = $admin->list_sessions();
     my $template = LedgerSMB::Template->new(
-            user => $request->{_user}, 
-            template => 'form-dynatable', 
-            locale => $request->{_locale}, 
-            format => 'HTML', 
+            user => $request->{_user},
+            template => 'form-dynatable',
+            locale => $request->{_locale},
+            format => 'HTML',
             path=>'UI'
     );
     my $columns;
@@ -134,7 +134,7 @@ sub list_sessions {
     for my $s (@sessions) {
         $s->{i} = $rowcount % 2;
         $s->{drop} = {
-            href =>"$base_url&session_id=$s->{id}", 
+            href =>"$base_url&session_id=$s->{id}",
             text => '[' . $request->{_locale}->text('delete') . ']',
         };
         push @$rows, $s;
@@ -148,8 +148,8 @@ sub list_sessions {
         rows    => $rows,
 	buttons => [],
 	hiddens => [],
-    }); 
-    
+    });
+
 }
 
 =item delete_session
@@ -172,7 +172,7 @@ eval { do "scripts/custom/admin.pl"};
 
 =head1 COPYRIGHT
 
-Copyright (C) 2010 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2010 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

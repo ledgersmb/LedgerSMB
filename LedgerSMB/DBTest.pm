@@ -5,9 +5,9 @@ LedgerSMB::DBTest - LedgerSMB commit filter for test cases.
 
 =head1 SYOPSIS
 
-This module creates a DBI-like interface but ensures autocommit is off, 
-and filters commit statements such that they don't do anything.  This can be 
-used for making API test cases which involve DB commits safe for production 
+This module creates a DBI-like interface but ensures autocommit is off,
+and filters commit statements such that they don't do anything.  This can be
+used for making API test cases which involve DB commits safe for production
 environments.
 
 =head1 USAGE
@@ -50,7 +50,7 @@ with normal transactional behavior.
 
 Returns a statement handle, via the private DBI database handle.
 
-=item do() 
+=item do()
 
 passes this statement on to the private database handle
 

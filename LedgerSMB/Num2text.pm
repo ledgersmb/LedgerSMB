@@ -136,7 +136,7 @@ sub num2text {
 
 sub num2text_en {
     my ( $self, $amount ) = @_;
-      
+
     return $self->{numbername}{0} unless $amount;
 
     my @textnumber = ();
@@ -1147,17 +1147,17 @@ sub num2text_sl {
     }
     push @numblock, join / /, reverse @a;
   }
-  
+
   my $belowhundred = !$#numblock;
-  
+
   while (@numblock) {
 
     $i = $#numblock;
     @num = split //, $numblock[$i];
     $appendn = "";
-    
+
     $numblock[$i] *= 1;
-    
+
     if ($numblock[$i] == 0) {
       pop @numblock;
       next;
@@ -1179,7 +1179,7 @@ sub num2text_sl {
     }
 
 # Appends, where for 1 they shall be eliminated later below:
-    if ($i == 2) {    
+    if ($i == 2) {
       if (2*10**6 <= $check1m && $check1m < 3*10**6) {
         $appendn = 'a';
       } elsif (3*10**6 <= $check1m && $check1m < 5*10**6) {
@@ -1188,7 +1188,7 @@ sub num2text_sl {
         $appendn = 'ov';
       }
     }
-    if ($i == 4) {    
+    if ($i == 4) {
       if (2*10**12 <= $check1b && $check1b < 3*10**12) {
         $appendn = 'a';
       } elsif (3*10**12 <= $check1b && $check1b < 5*10**12) {
@@ -1238,12 +1238,12 @@ sub num2text_sl {
       }
       $appendn = "";
     }
-    
+
 # Appends, where also for 1 they shall be considered as below;
 # if specified above with the others, they would be eliminated
 # by a command just a few lines above...
 #
-    if ($i == 3) {    
+    if ($i == 3) {
       if (1*10**9 <= $check1md && $check1md < 2*10**9) {
         $appendn = 'a';
       } elsif (2*10**9 <= $check1md && $check1md < 3*10**9) {
@@ -1258,11 +1258,11 @@ sub num2text_sl {
       $amount = 10**($i * 3);
       push @textnumber, $self->{numbername}{$amount}.$appendn;
     }
-    
+
     pop @numblock;
 
     @textnumber = 'NAPAKA! ¿TEVILKA JE PREVELIKA!' if ($i > 4);
-    
+
   }
 
   join '', @textnumber;
@@ -1272,14 +1272,14 @@ sub num2text_sl {
 
 sub format_ten_sl {
   my ($self, $amount, $belowhundred) = @_;
-  
+
   my $textnumber = "";
   my @num = split //, $amount;
 
   if ($amount > 20) {
-    if ($num[1] == 0) { 
-      $textnumber = $self->{numbername}{$amount}; 
-    } elsif ($num[1] == 1) { 
+    if ($num[1] == 0) {
+      $textnumber = $self->{numbername}{$amount};
+    } elsif ($num[1] == 1) {
       $amount = $num[0] * 10;
       $textnumber = $self->{numbername}{$num[1]}.'ain'.$self->{numbername}{$amount};
     } else {
@@ -1289,9 +1289,9 @@ sub format_ten_sl {
   } else {
     $textnumber = $self->{numbername}{$amount};
   }
-  
+
   $textnumber;
-  
+
 }
 
 

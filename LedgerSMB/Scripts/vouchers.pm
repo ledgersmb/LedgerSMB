@@ -33,7 +33,7 @@ eval { do "scripts/custom/vouchers.pl"};
 
 Displays the new batch screen.  Required inputs are
 
-=over 
+=over
 
 =item batch_type
 
@@ -52,22 +52,22 @@ sub create_batch {
 		{name => "form_id",   value => $request->{form_id}},
         {name => 'overpayment', value => $request->{overpayment}},
     ];
- 
+
     my $batch = LedgerSMB::Batch->new({base => $request});
     $batch->{class_id} = $batch->get_class_id($batch->{batch_type});
     $batch->get_new_info;
-    
+
     if ($batch->{order_by}) {
         $batch->set_ordering({
                 method => $batch->get_search_method({mini => 1}),
-                column => $batch->{order_by}   
+                column => $batch->{order_by}
         });
     }
-    
+
     $batch->get_search_results({mini => 1});
 
     my $template = LedgerSMB::Template->new(
-        user =>$request->{_user}, 
+        user =>$request->{_user},
         locale => $request->{_locale},
         path => 'UI',
         template => 'create_batch',
@@ -94,7 +94,7 @@ sub create_vouchers {
         $batch->create;
         add_vouchers($batch);
     } else {
-        $request->{notice} = 
+        $request->{notice} =
             $request->{_locale}->text("Error creating batch.  Please try again.");
         create_batch($request);
     }
@@ -109,26 +109,26 @@ Redirects to a script to add vouchers for the type.  batch_type must be set.
 sub add_vouchers {
     #  This function is not safe for caching as long as the scripts are in bin.
     #  This is because these scripts import all functions into the *current*
-    #  namespace.  People using fastcgi and modperl should *not* cache this 
+    #  namespace.  People using fastcgi and modperl should *not* cache this
     #  module at the moment. -- CT
     #  Also-- request is in 'our' scope here due to the redirect logic.
     our ($request) = shift @_;
     use LedgerSMB::Form;
     my $batch = LedgerSMB::Batch->new({base => $request});
-    our $vouchers_dispatch = 
+    our $vouchers_dispatch =
     {
         ap         => {script => 'bin/ap.pl', function => sub {lsmb_legacy::add()}},
         ar         => {script => 'bin/ar.pl', function => sub {lsmb_legacy::add()}},
         gl         => {script => 'bin/gl.pl', function => sub {lsmb_legacy::add()}},
      sales_invoice => {script => 'bin/is.pl', function => sub {lsmb_legacy::add()}},
     vendor_invoice => {script => 'bin/ir.pl', function => sub {lsmb_legacy::add()}},
-        receipt    => {script => undef, 
+        receipt    => {script => undef,
 	             function => sub {
 				my ($request) = @_;
 				$request->{account_class} = 2;
 				LedgerSMB::Scripts::payment::payments($request);
 				}},
-        payment   => {script => undef, 
+        payment   => {script => undef,
 	             function => sub {
 				my ($request) = @_;
 				$request->{account_class} = 1;
@@ -140,7 +140,7 @@ sub add_vouchers {
 				my ($request) = @_;
 				$request->{account_class} = 1;
                                 if ($request->{overpayment}){
-                                    $request->{report_name} = 'overpayments'; 
+                                    $request->{report_name} = 'overpayments';
                                     LedgerSMB::Scripts::reports::start_report($request);
                                 } else {
 				    LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
@@ -152,12 +152,12 @@ sub add_vouchers {
 				my ($request) = @_;
 				$request->{account_class} = 2;
                                 if ($request->{overpayment}){
-                                    $request->{report_name} = 'overpayments'; 
+                                    $request->{report_name} = 'overpayments';
                                     LedgerSMB::Scripts::reports::start_report($request);
                                 } else {
 			   	    LedgerSMB::Scripts::payment::get_search_criteria($request, $custom_batch_types);
                                 }
-     
+
                      }},
     };
 
@@ -187,8 +187,8 @@ sub add_vouchers {
     delete $request->{id};
     if ($script =~ /^bin/){
 
-        # Note that the line below is generally considered incredibly bad form. 
-        # However, the code we are including is going to require it for now. 
+        # Note that the line below is generally considered incredibly bad form.
+        # However, the code we are including is going to require it for now.
         # -- CT
         { no strict; no warnings 'redefine'; do $script; }
         lsmb_legacy::locale($locale);
@@ -217,7 +217,7 @@ sub list_batches {
     my ($request) = @_;
     $request->open_form;
     LedgerSMB::Report::Unapproved::Batch_Overview->new(
-                 %$request)->render($request);     
+                 %$request)->render($request);
 }
 
 =item get_batch
@@ -291,7 +291,7 @@ sub single_batch_unlock {
 
 =item batch_voucher_delete
 
-Deletes selected vouchers. 
+Deletes selected vouchers.
 
 =cut
 
@@ -325,14 +325,14 @@ sub batch_approve {
         $batch->{batch_id} = $batch->{"row_$count"};
         $batch->post;
     }
-    $request->{report_name} = 'unapproved'; 
+    $request->{report_name} = 'unapproved';
     $request->{search_type} = 'batches';
     LedgerSMB::Scripts::reports::start_report($request);
 }
 
 =item batch_unlock
 
-Unlocks selected batches 
+Unlocks selected batches
 
 =cut
 
@@ -348,7 +348,7 @@ sub batch_unlock {
             $batch->unlock($request->{"row_$count"});
         }
     }
-    $request->{report_name} = 'unapproved'; 
+    $request->{report_name} = 'unapproved';
     $request->{search_type} = 'batches';
     LedgerSMB::Scripts::reports::start_report($request);
 }
@@ -370,12 +370,12 @@ sub batch_delete {
         $batch->{batch_id} = $batch->{"row_$count"};
         $batch->delete;
     }
-    $request->{report_name} = 'unapproved'; 
+    $request->{report_name} = 'unapproved';
     $request->{search_type} = 'batches';
     LedgerSMB::Scripts::reports::start_report($request);
 }
 
-=item reverse_overpayment 
+=item reverse_overpayment
 
 Adds overpayment reversal vouchers to a batch
 
@@ -390,7 +390,7 @@ sub reverse_overpayment {
         my $id = $request->{"id_$_"};
         $batch->call_procedure(funcname => 'overpayment__reverse',
            args => [$id, $batch->{post_date}, $batch->{id}, $a_class,
-                 $request->{cash_accno}, $request->{exchangerate}, 
+                 $request->{cash_accno}, $request->{exchangerate},
                  $request->{curr}]
          ) if $id;
     }
@@ -398,10 +398,10 @@ sub reverse_overpayment {
 }
 
 my %print_dispatch = (
-   2 => sub { 
+   2 => sub {
                my ($voucher, $request) = @_;
                if (my $cpid = fork()){
-                  wait; 
+                  wait;
                } else {
                   do 'bin/ar.pl';
                   require 'LedgerSMB/Form.pm';
@@ -412,7 +412,7 @@ my %print_dispatch = (
                   $lsmb_legacy::form->{ARAP} = 'AR';
                   $lsmb_legacy::form->{arap} = 'ar';
                   $lsmb_legacy::form->{vc} = 'customer';
-                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
+                  $lsmb_legacy::form->{id} = $voucher->{transaction_id}
                                if ref $voucher;
                   $lsmb_legacy::form->{formname} = 'ar_transaction';
                   $lsmb_legacy::locale = $LedgerSMB::App_State::Locale;
@@ -426,10 +426,10 @@ my %print_dispatch = (
                1;
              },
    1 => sub { 0 },
-   8 => sub { 
+   8 => sub {
                my ($voucher, $request) = @_;
                if (fork){
-                  wait; 
+                  wait;
                } else {
                   do 'bin/is.pl';
                   require 'LedgerSMB/Form.pm';
@@ -438,7 +438,7 @@ my %print_dispatch = (
                   local $LedgerSMB::App_State::DBH = 0;
                   $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
                   $lsmb_legacy::form->{formname} = 'invoice';
-                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
+                  $lsmb_legacy::form->{id} = $voucher->{transaction_id}
                                if ref $voucher;
 
                   lsmb_legacy::create_links();
@@ -451,7 +451,7 @@ my %print_dispatch = (
    9 => sub {
                my ($voucher, $request) = @_;
                if (fork){
-                  wait; 
+                  wait;
                } else {
                   do 'bin/is.pl';
                   require 'LedgerSMB/Form.pm';
@@ -461,7 +461,7 @@ my %print_dispatch = (
                   $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
                   $lsmb_legacy::form->db_init($LedgerSMB::App_State::User);
                   $lsmb_legacy::form->{formname} = 'product_receipt';
-                  $lsmb_legacy::form->{id} = $voucher->{transaction_id} 
+                  $lsmb_legacy::form->{id} = $voucher->{transaction_id}
                                if ref $voucher;
 
                   lsmb_legacy::create_links();
@@ -498,9 +498,9 @@ sub print_batch {
 
     my $cgi = CGI::Simple->new;
 
-    my @files = 
+    my @files =
       map { my $contents;
-            
+
             $contents = &{$print_dispatch{lc($_->{batch_class_id})}}($_, $request)
                 if $print_dispatch{lc($_->{batch_class_id})};
             $contents ? $contents : (); }
@@ -509,7 +509,7 @@ sub print_batch {
     if (@files) {
        my $zipcmd = $LedgerSMB::Sysconfig::zip;
        $zipcmd =~ s/\%dir/$dirname/g;
-       
+
        `$zipcmd`;
 
        binmode (STDOUT, ':bytes');
@@ -525,12 +525,12 @@ sub print_batch {
        binmode (ZIP, ':bytes');
        print <ZIP>;
        close ZIP;
-    
+
 
     } else {
-       $report->render($request); 
+       $report->render($request);
     }
-    
+
 }
 
 ###TODO-LOCALIZE-DOLLAR-AT
@@ -546,19 +546,19 @@ eval { do "scripts/custom/vouchers.pl"};
 
 =over
 
-=item map_to int 
+=item map_to int
 
 maps to another type, not needed for new types in batch_class table
 
-=item select_method 
+=item select_method
 
 maps to the selection stored proc
 
 =back
 
   for example:
-  $custom_batch_types->{ap_sample} = 
-      {map_to       => 1, 
+  $custom_batch_types->{ap_sample} =
+      {map_to       => 1,
       select_method => 'custom_sample_ap_select'};
 
 =head1 Copyright (C) 2009, The LedgerSMB core team.

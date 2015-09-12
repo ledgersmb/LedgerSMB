@@ -91,7 +91,7 @@ sub projects {
     my $where = "WHERE class_id = 2";
 
     $query = qq|
-		   SELECT pr.*, e.name 
+		   SELECT pr.*, e.name
 		     FROM business_unit pr
 		LEFT JOIN entity_credit_account c ON (c.id = pr.credit_id)
 		LEFT JOIN entity e ON (c.entity_id = e.id)|;
@@ -140,11 +140,11 @@ sub projects {
 		|;
 
     } elsif ( $form->{status} eq 'active' ) {
-        $where .= qq| 
-			current_date BETWEEN pr.start_date 
+        $where .= qq|
+			current_date BETWEEN pr.start_date
                                       AND coalesce(pr.end_date, current_date)|;
     } elsif ( $form->{status} eq 'inactive' ) {
-        $where .= qq| current_date NOT BETWEEN pr.start_date 
+        $where .= qq| current_date NOT BETWEEN pr.start_date
                                    AND coalesce(pr.end_date, current_date)|;
     }
 
@@ -225,7 +225,7 @@ sub get_customer {
 
         if ( $form->{customer_id} ) {
             $query .= qq|
-				UNION 
+				UNION
 				SELECT id,name
 				  FROM entity_credit_account
 				 WHERE id = | . $dbh->quote( $form->{customer_id} );
@@ -310,7 +310,7 @@ sub partsgroups {
     my $dbh = $form->{dbh};
     my $sth = $dbh->prepare("select * from partsgroup__search(null)");
     $sth->execute;
-    
+
     while ( my $ref = $sth->fetchrow_hashref(NAME_lc) ) {
         push @{ $form->{item_list} }, $ref;
         $i++;
@@ -340,7 +340,7 @@ sub save_partsgroup {
 
     if ( $form->{id} ) {
         $query = qq|
-			UPDATE partsgroup 
+			UPDATE partsgroup
 			   SET partsgroup = ?
 			 WHERE id = ?|;
         push @group,  $form->{id};
@@ -500,7 +500,7 @@ sub description_translations {
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
     my $query = qq|
-		  SELECT l.description AS language, 
+		  SELECT l.description AS language,
 		         t.description AS translation, l.code
 		    FROM parts_translation t
 		    JOIN language l ON (l.code = t.language_code)
@@ -570,7 +570,7 @@ sub partsgroup_translations {
     $where .= " AND p.id = " . $dbh->quote( $form->{id} ) if $form->{id};
 
     my $query = qq|
-		  SELECT l.description AS language, 
+		  SELECT l.description AS language,
 		         t.description AS translation, l.code
 		    FROM partsgroup_translation t
 		    JOIN language l ON (l.code = t.language_code)
@@ -617,7 +617,7 @@ details about projects and their translated names.  A master hash contains the
 id, project number, and description of the project and is immediately followed
 by its translation hashes, which have the same id as the master and also
 contain the language, translation, and code of the translation.  The list
-contains the details for all projects unless $form->{description} or 
+contains the details for all projects unless $form->{description} or
 $form->{projectnumber} is set, in which case only projects that match the
 appropriate field are included, or $form->{id} is set.  When $form->{id} is
 set, only translations for the project with that id are included and
@@ -650,7 +650,7 @@ sub project_translations {
     my $sortorder = $form->sort_order( \@a, \%ordinal );
 
     my $query = qq|
-		  SELECT l.description AS language, 
+		  SELECT l.description AS language,
 		         t.description AS translation, l.code
 		    FROM business_unit_translation t
 		    JOIN language l ON (l.code = t.language_code)
@@ -904,15 +904,15 @@ sub get_jcitems {
 
     my $query;
     my $ref;
-# XXX Note that this is aimed at current customer functionality only.  In the 
+# XXX Note that this is aimed at current customer functionality only.  In the
 # future, this will be more generaly constructed.
     $query = qq|
 		   SELECT j.id, j.description, j.qty - j.allocated AS qty,
-		          j.sellprice, j.parts_id, pr.credit_id as customer_id, 
-		          j.business_unit_id as project_id, 
-                          j.checkedin::date AS transdate, 
-		          j.notes, c.legal_name AS customer, 
-                          pr.description as projectnumber, 
+		          j.sellprice, j.parts_id, pr.credit_id as customer_id,
+		          j.business_unit_id as project_id,
+                          j.checkedin::date AS transdate,
+		          j.notes, c.legal_name AS customer,
+                          pr.description as projectnumber,
 		          p.partnumber
 		     FROM jcitems j
 		     JOIN business_unit pr ON (pr.id = j.business_unit_id)
@@ -925,7 +925,7 @@ sub get_jcitems {
         $query =~ s/j\.description/p\.description/;
         $query =~ s/c\.name,/c\.name, j\.parts_id, /;
     }
-    
+
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 

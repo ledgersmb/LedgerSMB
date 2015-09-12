@@ -13,7 +13,7 @@ Locale support module for LedgerSMB.  Uses Locale::Maketext::Lexicon as a base.
 
 =item get_handle ($language_code)
 
-Returns a locale handle for accessing the other methods.  Inherited from 
+Returns a locale handle for accessing the other methods.  Inherited from
 Locale::Maketext.
 
 =item text ($string, @params)
@@ -47,7 +47,7 @@ $myconfig->{dateformat}.
  #
  # Copyright (C) 2006
  # This work contains copyrighted information from a number of sources
- # all used with permission.  It is released under the GNU General 
+ # all used with permission.  It is released under the GNU General
  # Public License Version 2 or, at your option, any later version.
  # See COPYRIGHT file for details.
  #

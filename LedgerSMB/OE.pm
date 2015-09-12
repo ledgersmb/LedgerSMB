@@ -49,8 +49,8 @@ my $logger = Log::Log4perl->get_logger('OE');
 
 =item get_files
 
-Returns a list of files associated with the existing transaction.  This is 
-provisional, and will change for 1.4 as the GL transaction functionality is 
+Returns a list of files associated with the existing transaction.  This is
+provisional, and will change for 1.4 as the GL transaction functionality is
                   {ref_key => $self->{id}, file_class => 2}
 rewritten
 
@@ -67,7 +67,7 @@ sub get_files {
 
 }
 
-=get_type 
+=get_type
 
 Sets the type field for an existing order or quotation
 
@@ -76,7 +76,7 @@ Sets the type field for an existing order or quotation
 sub get_type {
     my ($self, $form) = @_;
     my $dbh = $form->{dbh};
-    my @types = qw(null sales_order purchase_order sales_quotation 
+    my @types = qw(null sales_order purchase_order sales_quotation
                    request_quotation);
     my $sth = $dbh->prepare('select oe_class_id from oe where id = ?');
     $sth->execute($form->{id});
@@ -87,7 +87,7 @@ sub get_type {
 
 sub save {
     my ( $self, $myconfig, $form ) = @_;
-  
+
     $form->all_business_units;
     $form->db_prepare_vars(
         "quonumber", "transdate",     "vendor_id",     "entity_id",
@@ -150,12 +150,12 @@ sub save {
     my $ml = ( $form->{type} eq 'sales_order' ) ? 1 : -1;
 
     $query = qq|
-		SELECT p.assembly 
+		SELECT p.assembly
 		FROM parts p WHERE p.id = ?|;
     my $pth = $dbh->prepare($query) || $form->dberror($query);
 
     if ( $form->{id} ) {
-        
+
         $query = qq|SELECT id FROM oe WHERE id = $form->{id}|;
 
         if ( $dbh->selectrow_array($query) ) {
@@ -199,14 +199,14 @@ sub save {
 
         # $form->{id} is safe because it is only pulled *from* the db.
         $query = qq|
-			INSERT INTO oe 
-				(id, ordnumber, quonumber, transdate, 
+			INSERT INTO oe
+				(id, ordnumber, quonumber, transdate,
 				reqdate, shippingpoint, shipvia,
-				notes, intnotes, curr, closed, 
+				notes, intnotes, curr, closed,
 				person_id, language_code, ponumber, terms,
 				quotation, oe_class_id, entity_credit_account)
-			VALUES 
-				($form->{id}, ?, ?, 
+			VALUES
+				($form->{id}, ?, ?,
 				?, ?, ?,
 				?, ?, ?, ?, ?,
 				?, ?, ?, ?,
@@ -343,7 +343,7 @@ sub save {
             # save detail record in orderitems table
             $query = qq|INSERT INTO orderitems (
 		          trans_id, parts_id, description, qty, sellprice,
-		          discount, unit, reqdate, ship, 
+		          discount, unit, reqdate, ship,
 		          serialnumber, notes, precision)
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)|;
             $sth = $dbh->prepare($query);
@@ -366,7 +366,7 @@ sub save {
 
         }
         $form->{"discount_$i"} *= 100;
- 
+
     }
 
     # set values which could be empty
@@ -402,35 +402,35 @@ sub save {
 
     if ($did_insert) {
         $query = qq|
-			UPDATE oe SET 
+			UPDATE oe SET
 				amount = ?,
 				netamount = ?,
 				taxincluded = ?
 			WHERE id = ?|;
-        @queryargs = ( $amount, $netamount, $form->{taxincluded}, $form->{id} ); 
+        @queryargs = ( $amount, $netamount, $form->{taxincluded}, $form->{id} );
     }
     else {
 
         # save OE record
         $query = qq|
 			UPDATE oe set
-				ordnumber = ?, 
+				ordnumber = ?,
 				quonumber = ?,
 				transdate = ?,
-				amount = ?, 
+				amount = ?,
 				netamount = ?,
 				reqdate = ?,
-				taxincluded = ?, 
-				shippingpoint = ?, 
-				shipvia = ?, 
-				notes = ?, 
-				intnotes = ?, 
-				curr = ?, 
-				closed = ?, 
-				quotation = ?, 
-				person_id = ?, 
-				language_code = ?, 
-				ponumber = ?, 
+				taxincluded = ?,
+				shippingpoint = ?,
+				shipvia = ?,
+				notes = ?,
+				intnotes = ?,
+				curr = ?,
+				closed = ?,
+				quotation = ?,
+				person_id = ?,
+				language_code = ?,
+				ponumber = ?,
 				terms = ?
 			WHERE id = ?|;
 
@@ -604,24 +604,24 @@ sub retrieve {
 		SELECT value, current_date FROM defaults
 		 WHERE setting_key = 'curr'|;
     ( $form->{currencies}, $form->{transdate} ) = $dbh->selectrow_array($query);
-    
+
     $query = qq|
 		SELECT value FROM defaults
 		 WHERE setting_key = 'lock_description'|;
     ( $form->{lock_description}) = $dbh->selectrow_array($query);
-    
+
 
     if ( $form->{id} ) {
 
         # retrieve order
         $query = qq|
 			SELECT o.ordnumber, o.transdate, o.reqdate, o.terms,
-                		o.taxincluded, o.shippingpoint, o.shipvia, 
-				o.notes, o.intnotes, o.curr AS currency, 
+                		o.taxincluded, o.shippingpoint, o.shipvia,
+				o.notes, o.intnotes, o.curr AS currency,
 				pe.first_name \|\| ' ' \|\| pe.last_name AS employee,
 				o.person_id AS employee_id,
 				o.entity_credit_account, vc.name as legal_name,
-				o.amount AS invtotal, o.closed, o.reqdate, 
+				o.amount AS invtotal, o.closed, o.reqdate,
 				o.quonumber, o.language_code,
 				o.ponumber, cr.entity_class,
 				ns.location_id as locationid
@@ -629,7 +629,7 @@ sub retrieve {
 			JOIN entity_credit_account cr ON (cr.id = o.entity_credit_account)
 			JOIN entity vc ON (cr.entity_id = vc.id)
 			LEFT JOIN person pe ON (o.person_id = pe.id)
-			LEFT JOIN entity_employee e 
+			LEFT JOIN entity_employee e
                                   ON (pe.entity_id = e.entity_id)
                         LEFT JOIN new_shipto ns ON ns.oe_id = o.id
 			WHERE o.id = ?|;
@@ -677,27 +677,27 @@ sub retrieve {
 
         # retrieve individual items
         $query = qq|
-			SELECT o.id AS orderitems_id, 
+			SELECT o.id AS orderitems_id,
                                 COALESCE(CASE WHEN pv.partnumber <> ''
-                                              THEN pv.partnumber ELSE null 
-                                          END, p.partnumber) AS partnumber, 
-                                p.assembly, 
-				o.description, o.qty, o.sellprice, o.precision, 
+                                              THEN pv.partnumber ELSE null
+                                          END, p.partnumber) AS partnumber,
+                                p.assembly,
+				o.description, o.qty, o.sellprice, o.precision,
 				o.parts_id AS id, o.unit, o.discount, p.bin,
 				o.reqdate, o.ship, o.serialnumber,
-				o.notes, pg.partsgroup, 
+				o.notes, pg.partsgroup,
 				p.partsgroup_id, p.partnumber AS sku,
 				p.listprice, p.lastcost, p.weight, p.onhand,
-				p.inventory_accno_id, p.income_accno_id, 
-				p.expense_accno_id, t.description 
+				p.inventory_accno_id, p.income_accno_id,
+				p.expense_accno_id, t.description
 					AS partsgrouptranslation
 			FROM orderitems o
 			JOIN parts p ON (o.parts_id = p.id)
 			LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
 			LEFT JOIN partsvendor pv ON (pv.parts_id = p.id
                                            AND pv.credit_id = ?)
-			LEFT JOIN translation t 
-				ON (t.trans_id = p.partsgroup_id 
+			LEFT JOIN translation t
+				ON (t.trans_id = p.partsgroup_id
 					AND t.language_code = ?)
 			WHERE o.trans_id = ?
 			ORDER BY o.id|;
@@ -833,7 +833,7 @@ sub exchangerate_defaults {
             @exchangelist = $eth2->fetchrow_array;
             $form->db_parse_numeric(sth=>$eth2, arrayref=>\@exchangelist);
 
-            ( $form->{$var} ) = @exchangelist; 
+            ( $form->{$var} ) = @exchangelist;
             ( $null, $form->{$var} ) = split / /, $form->{$var};
             $form->{$var} = 1 unless $form->{$var};
             $eth2->finish;
@@ -879,7 +879,7 @@ sub order_details {
     $query = qq|
 		SELECT p.description, t.description
 		FROM project p
-		LEFT JOIN translation t ON (t.trans_id = p.id AND 
+		LEFT JOIN translation t ON (t.trans_id = p.id AND
 			t.language_code = $language_code)
 	       WHERE id = ?|;
     my $prh = $dbh->prepare($query) || $form->dberror($query);
@@ -1441,7 +1441,7 @@ sub order_details {
     $form->format_string(qw(text_amount text_decimal));
 
     $query = qq|
-		SELECT value FROM defaults 
+		SELECT value FROM defaults
 		 WHERE setting_key = 'weightunit'|;
     ( $form->{weightunit} ) = $dbh->selectrow_array($query);
 
@@ -1482,8 +1482,8 @@ sub assembly_details {
       : "a.bom = '1'";
 
     my $query = qq|
-		SELECT p.partnumber, p.description, p.unit, a.qty, 
-			pg.partsgroup, p.partnumber AS sku, p.assembly, p.id, 
+		SELECT p.partnumber, p.description, p.unit, a.qty,
+			pg.partsgroup, p.partnumber AS sku, p.assembly, p.id,
 			p.bin
 		FROM assembly a
 		JOIN parts p ON (a.parts_id = p.id)
@@ -1685,11 +1685,11 @@ sub save_inventory {
 
             $ship *= $ml;
             $query = qq|
-				INSERT INTO warehouse_inventory 
-					(parts_id, warehouse_id, qty, trans_id, 
-					orderitems_id, shippingdate, 
+				INSERT INTO warehouse_inventory
+					(parts_id, warehouse_id, qty, trans_id,
+					orderitems_id, shippingdate,
 					entity_id)
-				VALUES 
+				VALUES
 					(?, ?, ?, ?, ?, ?, ?)|;
             $sth2 = $dbh->prepare($query);
             $sth2->execute( $form->{"id_$i"}, $warehouse_id, $ship,
@@ -1738,7 +1738,7 @@ sub save_inventory {
             #
             # This leads to corner cases regarding inventory not being adjusted
             # correctly.  Going to look at how to provide a report which shows
-            # inventory shipping/recieving numbers  for adjusting inventory 
+            # inventory shipping/recieving numbers  for adjusting inventory
             # instead. --CT
             # $form->update_balance(
             #    $dbh, "parts", "onhand",
@@ -1911,33 +1911,33 @@ sub get_inventory {
         $query = qq|
 			SELECT p.id, p.partnumber, p.description,
 				sum(i.qty) * 2 AS onhand, sum(i.qty) AS qty,
-				pg.partsgroup, w.description AS warehouse, 
+				pg.partsgroup, w.description AS warehouse,
 				i.warehouse_id
 			FROM warehouse_inventory i
 			JOIN parts p ON (p.id = i.parts_id)
 			LEFT JOIN partsgroup pg ON (p.partsgroup_id = pg.id)
 			LEFT JOIN warehouse w ON (w.id = i.warehouse_id)
-			WHERE (i.warehouse_id = $fromwarehouse_id OR 
+			WHERE (i.warehouse_id = $fromwarehouse_id OR
 				i.warehouse_id IS NULL)
 			$where
-			GROUP BY p.id, p.partnumber, p.description, 
-				pg.partsgroup, w.description, i.warehouse_id 
+			GROUP BY p.id, p.partnumber, p.description,
+				pg.partsgroup, w.description, i.warehouse_id
 			ORDER BY $sortorder|;
     }
     else {
         if ($towarehouse_id) {
             $query = qq|
 				SELECT p.id, p.partnumber, p.description,
-					p.onhand, 
-						(SELECT SUM(qty) 
-						FROM warehouse_inventory i 
+					p.onhand,
+						(SELECT SUM(qty)
+						FROM warehouse_inventory i
 						WHERE i.parts_id = p.id) AS qty,
-					pg.partsgroup, '' AS warehouse, 
+					pg.partsgroup, '' AS warehouse,
 					0 AS warehouse_id
 				FROM parts p
-				LEFT JOIN partsgroup pg 
+				LEFT JOIN partsgroup pg
 					ON (p.partsgroup_id = pg.id)
-				WHERE p.onhand > 0 
+				WHERE p.onhand > 0
 					$where
 				UNION|;
         }
@@ -1945,7 +1945,7 @@ sub get_inventory {
         $query .= qq|
 			SELECT p.id, p.partnumber, p.description,
 				sum(i.qty) * 2 AS onhand, sum(i.qty) AS qty,
-				pg.partsgroup, w.description AS warehouse, 
+				pg.partsgroup, w.description AS warehouse,
 				i.warehouse_id
 			FROM warehouse_inventory i
 			JOIN parts p ON (p.id = i.parts_id)
@@ -1953,7 +1953,7 @@ sub get_inventory {
 			LEFT JOIN warehouse w ON (w.id = i.warehouse_id)
 			WHERE i.warehouse_id != $towarehouse_id
 				$where
-			GROUP BY p.id, p.partnumber, p.description, 
+			GROUP BY p.id, p.partnumber, p.description,
 				pg.partsgroup, w.description, i.warehouse_id
 			ORDER BY $sortorder|;
     }
@@ -2012,7 +2012,7 @@ sub transfer {
             # from warehouse
             if ( $form->{"warehouse_id_$i"} ) {
                 $sth->execute( $form->{"warehouse_id_$i"},
-                    $form->{"id_$i"}, $qty * -1, $shippingdate, 
+                    $form->{"id_$i"}, $qty * -1, $shippingdate,
                     $form->{employee_id})
                   || $form->dberror;
                 $sth->finish;
@@ -2072,7 +2072,7 @@ sub add_items_required {
 
     if ($assembly) {
         $query = qq|
-			SELECT p.id, a.qty, p.assembly 
+			SELECT p.id, a.qty, p.assembly
 			FROM assembly a
 			JOIN parts p ON (p.id = a.parts_id)
 			WHERE a.id = ?|;
@@ -2202,7 +2202,7 @@ sub generate_orders {
 
         # TODO:  Make this function insert as much as possible
         $query = qq|
-			INSERT INTO oe (ordnumber, entity_credit_account, 
+			INSERT INTO oe (ordnumber, entity_credit_account,
                                        oe_class_id)
 			VALUES (?, ?, 2)|;
         $sth = $dbh->prepare($query);
@@ -2237,7 +2237,7 @@ sub generate_orders {
                 2 );
 
             $query = qq|
-				SELECT p.description, p.unit, c.accno 
+				SELECT p.description, p.unit, c.accno
 				FROM parts p
 				LEFT JOIN partstax pt ON (p.id = pt.parts_id)
 				LEFT JOIN chart c ON (c.id = pt.chart_id)
@@ -2268,9 +2268,9 @@ sub generate_orders {
             }
 
             $query = qq|
-				INSERT INTO orderitems 
+				INSERT INTO orderitems
 					(trans_id, parts_id, description,
-					qty, ship, sellprice, unit) 
+					qty, ship, sellprice, unit)
 				VALUES
 					(?, ?, ?, ?, 0, ?, ?)|;
             $sth = $dbh->prepare($query);

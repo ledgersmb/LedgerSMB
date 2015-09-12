@@ -69,7 +69,7 @@ SELECT account__save(NULL,'5790','Utilities','E','', NULL, false,string_to_array
 SELECT account__save(NULL,'5795','Registrations','E','', NULL, false,string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'5800','Licenses','E','', NULL, false,string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'5810','Foreign Exchange Loss','E','', NULL, false,string_to_array('', ':'), false, false);
- 
+
 SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE id IN (select account_id FROM account_link
                            WHERE description = 'AP_paid');
@@ -78,18 +78,18 @@ insert into tax (chart_id,rate) values ((select id from chart where accno = '231
 insert into tax (chart_id,rate) values ((select id from chart where accno = '2320'),0.14);
 insert into tax (chart_id,rate) values ((select id from chart where accno = '2330'),0.3);
 --
-insert into  defaults (setting_key, value) 
-VALUES ('inventory_accno_id', (select id from chart where accno = '1520')); 
-INSERT INTO defaults (setting_key, value) 
-VALUES ('income_accno_id', (select id from chart where accno = '4020')); 
-INSERT INTO defaults (setting_key, value) 
-VALUES ('expense_accno_id', (select id from chart where accno = '5010')); 
-INSERT INTO defaults (setting_key, value) 
+insert into  defaults (setting_key, value)
+VALUES ('inventory_accno_id', (select id from chart where accno = '1520'));
+INSERT INTO defaults (setting_key, value)
+VALUES ('income_accno_id', (select id from chart where accno = '4020'));
+INSERT INTO defaults (setting_key, value)
+VALUES ('expense_accno_id', (select id from chart where accno = '5010'));
+INSERT INTO defaults (setting_key, value)
 VALUES ('fxgain_accno_id', (select id from chart where accno = '4450'));
-INSERT INTO defaults (setting_key, value) 
+INSERT INTO defaults (setting_key, value)
 VALUES ('fxloss_accno_id', (select id from chart where accno = '5810'));
-INSERT INTO defaults (setting_key, value) 
+INSERT INTO defaults (setting_key, value)
 VALUES ('curr', 'USD:CAD:EUR');
-INSERT INTO defaults (setting_key, value) 
+INSERT INTO defaults (setting_key, value)
 VALUES ('weightunit', 'kg');
 commit;

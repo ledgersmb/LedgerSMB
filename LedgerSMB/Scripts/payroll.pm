@@ -14,7 +14,7 @@ use LedgerSMB::Template;
 
 =head1 DESCRIPTION
 
-This module handles the workflow routines for payroll management.  These are 
+This module handles the workflow routines for payroll management.  These are
 divided into three areas, namely income types, deduction types, and full payroll
 workflows.
 

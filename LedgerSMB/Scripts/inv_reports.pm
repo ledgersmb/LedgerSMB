@@ -36,7 +36,7 @@ sub search_adj{
 
 Shows adjustment details
 
-=cut 
+=cut
 
 sub adj_detail {
     my ($request) = @_;

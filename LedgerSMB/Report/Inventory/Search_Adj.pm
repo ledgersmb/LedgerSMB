@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Report::Inventory::Search_Adj - LedgerSMB report of 
+LedgerSMB::Report::Inventory::Search_Adj - LedgerSMB report of
 inventory adjustments
 
 =head1 SYNPOSIS
@@ -25,7 +25,7 @@ on set criteria.
 
 =over
 
-=item from_date 
+=item from_date
 
 Standard start date
 
@@ -38,7 +38,7 @@ Standard to date
 has 'from_date' => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 has 'to_date' => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
-=item partnumber 
+=item partnumber
 
 Part number.  This is a full text search, in order to allow for space-separated
 alternatives
@@ -47,7 +47,7 @@ alternatives
 
 has partnumber => (is => 'ro', isa => 'Maybe[Str]');
 
-=item source 
+=item source
 
 Matches the beginning of the source string on the report source string
 

@@ -44,8 +44,8 @@ struct LedgerSMB::Taxes::Simple => {
 sub calculate_tax {
     my ( $self, $form, $subtotal, $extract, $passrate ) = @_;
     my $rate = $self->rate;
-    if ($form->{subtotal} && (abs($form->{subtotal}) < $self->minvalue 
-                            || ($self->maxvalue && 
+    if ($form->{subtotal} && (abs($form->{subtotal}) < $self->minvalue
+                            || ($self->maxvalue &&
                                abs($form->{subtotal}) > $self->maxvalue))
     ){
          return 0;

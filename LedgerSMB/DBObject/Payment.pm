@@ -5,14 +5,14 @@ LedgerSMB::DBOject::Payment - Payment Handling Back-end Routines for LedgerSMB
 
 =head1 SYNOPSIS
 
-Provides the functions for generating the data structures payments made in 
+Provides the functions for generating the data structures payments made in
 LedgerSMB.   This module currently handles only basic payment logic, and does
 handle overpayment logic, though these features will be moved into this module
 in the near future.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007 The LedgerSMB Core Team.  Licensed under the GNU General 
+Copyright (c) 2007 The LedgerSMB Core Team.  Licensed under the GNU General
 Public License version 2 or at your option any later version.  Please see the
 included COPYRIGHT and LICENSE files for more information.
 
@@ -35,15 +35,15 @@ Inherited from LedgerSMB::DBObject.  Please see that documnetation for details.
 
 =item $payment->get_open_accounts()
 
-This function returns a list of open accounts depending on the 
-$payment->{account_class} property.  If this property is 1, it returns a list 
+This function returns a list of open accounts depending on the
+$payment->{account_class} property.  If this property is 1, it returns a list
 of vendor accounts, for 2, a list of customer accounts are returned.
 
 The returned list of hashrefs is stored in the $payment->{accounts} property.
 Each hashref has the following keys:  id (entity id), name, and entity_class.
 
-An account is considered open if there are outstanding, unpaid invoices 
-attached to it.  Customer/vendor payment threshold is not considered for this 
+An account is considered open if there are outstanding, unpaid invoices
+attached to it.  Customer/vendor payment threshold is not considered for this
 calculation.
 
 =back
@@ -52,11 +52,11 @@ calculation.
 
 sub __validate__ {
   my ($self) = shift @_;
-  # If the account class is not set, we don't know if it is a payment or a 
+  # If the account class is not set, we don't know if it is a payment or a
   # receipt.  --CT
   if (!$self->{account_class}) {
     $self->error("account_class must be set")
-  }; 
+  };
   # We should try to re-engineer this so that we don't have to include SQL in
   # this file.  --CT
   ($self->{current_date}) = $self->{dbh}->selectrow_array('select current_date');
@@ -107,15 +107,15 @@ sub get_metadata {
    @{$self->{payment_types}} = $self->call_dbmethod(
 		funcname => 'payment_type__list'
     );
-    
+
 
     if($self->{payment_type_id})
     {
        @{$self->{payment_type_label_id}} =$self->call_dbmethod(
 		funcname => 'payment_type__get_label'  );
-       
+
        $self->{payment_type_return_id}=$self->{payment_type_label_id}->[0]->{id};
-     
+
        $self->{payment_type_return_label}=$self->{payment_type_label_id}->[0]->{label};
 
     }
@@ -176,7 +176,7 @@ These are also stored on $payment->{accounts}
 
 sub get_open_accounts {
     my ($self) = @_;
-    @{$self->{accounts}} = 
+    @{$self->{accounts}} =
         $self->call_dbmethod(funcname => 'payment_get_open_accounts');
     return @{$self->{accounts}};
 }
@@ -196,7 +196,7 @@ at $payment->{entity_accounts}/
 sub get_entity_credit_account{
   my ($self) = @_;
 
-  # This is ugly but not sure what else to do for the moment.  Looking at 
+  # This is ugly but not sure what else to do for the moment.  Looking at
   # refactoring later.  -CT
   if ($self->{credit_id}){
     @{$self->{entity_accounts}} =
@@ -213,8 +213,8 @@ sub get_entity_credit_account{
 
 =item $payment->get_all_accounts()
 
-This function returns a list of open or closed accounts depending on the 
-$payment->{account_class} property.  If this property is 1, it returns a list 
+This function returns a list of open or closed accounts depending on the
+$payment->{account_class} property.  If this property is 1, it returns a list
 of vendor accounts, for 2, a list of customer accounts are returned.
 
 The returned list of hashrefs is stored in the $payment->{accounts} property.
@@ -226,7 +226,7 @@ Each hashref has the following keys:  id (entity id), name, and entity_class.
 
 sub get_all_accounts {
     my ($self) = @_;
-    @{$self->{accounts}} = 
+    @{$self->{accounts}} =
         $self->call_dbmethod(funcname => 'payment_get_all_accounts');
     return @{$self->{accounts}};
 }
@@ -234,9 +234,9 @@ sub get_all_accounts {
 
 =item $payment->reverse()
 
-This function reverses a payment.  A payment is defined as one source 
-($payment->{source}) to one cash account ($payment->{cash_accno}) to one date 
-($payment->{date_paid}) to one vendor/customer ($payment->{credit_id}, 
+This function reverses a payment.  A payment is defined as one source
+($payment->{source}) to one cash account ($payment->{cash_accno}) to one date
+($payment->{date_paid}) to one vendor/customer ($payment->{credit_id},
 $payment->{account_class}).  This reverses the entries with that source.
 
 =back
@@ -246,20 +246,20 @@ $payment->{account_class}).  This reverses the entries with that source.
 sub reverse {
     my ($self) = @_;
     $self->call_dbmethod(funcname => 'payment__reverse');
-}  
+}
 
 =over
 
 =item $payment->get_open_invoices()
 
-This function returns a list of open invoices depending on the 
-$payment->{account_class}, $payment->{entity_id}, and $payment->{curr} 
+This function returns a list of open invoices depending on the
+$payment->{account_class}, $payment->{entity_id}, and $payment->{curr}
 properties.  Account classes follow the conventions above.  This list is hence
 specific to a customer or vendor and currency as well.
 
-The returned list of hashrefs is stored in the $payment->{open_invoices} 
+The returned list of hashrefs is stored in the $payment->{open_invoices}
 property. Each hashref has the following keys:  invoice_id int, invnumber text,
-invoice bool, invoice_date date, amount numeric, amount_fx numeric, 
+invoice bool, invoice_date date, amount numeric, amount_fx numeric,
 discount numeric, discount_fx numeric, due numeric, due_fx numeric,
  exchangerate numeric
 
@@ -270,7 +270,7 @@ discount numeric, discount_fx numeric, due numeric, due_fx numeric,
 
 sub get_open_invoices {
     my ($self) = @_;
-    @{$self->{open_invoices}} = 
+    @{$self->{open_invoices}} =
         $self->call_dbmethod(funcname => 'payment_get_open_invoices');
     return @{$self->{open_invoices}};
 }
@@ -279,9 +279,9 @@ sub get_open_invoices {
 
 =item $payment->get_open_invoice()
 
-This function is an especific case of get_open_invoices(), because get_open_invoice() 
-can search for a specific invoice, wich can be searched by the $payment->{invnumber} 
-variable 
+This function is an especific case of get_open_invoices(), because get_open_invoice()
+can search for a specific invoice, wich can be searched by the $payment->{invnumber}
+variable
 
 =back
 
@@ -289,7 +289,7 @@ variable
 
 sub get_open_invoice {
     my ($self) = @_;
-    @{$self->{open_invoice}} = 
+    @{$self->{open_invoice}} =
         $self->call_dbmethod(funcname => 'payment_get_open_invoice');
     return @{$self->{open_invoice}};
 }
@@ -301,17 +301,17 @@ sub get_open_invoice {
 
 =item $payment->get_all_contact_invoices()
 
-This function returns a list of open accounts depending on the 
-$payment->{account_class} property.  If this property is 1, it returns a list 
+This function returns a list of open accounts depending on the
+$payment->{account_class} property.  If this property is 1, it returns a list
 of vendor accounts, for 2, a list of customer accounts are returned.  Attached
-to each account is a list of open invoices.  The data structure is somewhat 
+to each account is a list of open invoices.  The data structure is somewhat
 complex.
 
 Each item in the list has the following keys: contact_id, contact_name, \
 account_number, total_due, and invoices.
 
-The invoices entry is a reference to an array of hashrefs.  Each of these 
-hashrefs has the following keys: invoice_id, invnumber, invoice_date, amount, 
+The invoices entry is a reference to an array of hashrefs.  Each of these
+hashrefs has the following keys: invoice_id, invnumber, invoice_date, amount,
 discount, and due.
 
 These are filtered based on the (required) properties:
@@ -320,7 +320,7 @@ $payment->{date_to}, and $payment->{ar_ap_accno}.
 
 The $payment->{ar_ap_accno} property is used to filter out by AR or AP account.
 
-The following can also be optionally passed: $payment->{batch_id}.  If this is 
+The following can also be optionally passed: $payment->{batch_id}.  If this is
 patched, vouchers in the current batch will be picked up as well.
 
 The returned list of hashrefs is stored in the $payment->{contact} property.
@@ -332,7 +332,7 @@ Each hashref has the following keys:  id (entity id), name, and entity_class.
 
 sub get_all_contact_invoices {
     my ($self) = @_;
-    @{$self->{contacts}} = 
+    @{$self->{contacts}} =
         $self->call_dbmethod(funcname => 'payment_get_all_contact_invoices');
 
     # When arrays of complex types are supported by all versions of Postgres
@@ -346,7 +346,7 @@ sub get_all_contact_invoices {
             for (qw(invoice_id invnumber invoice_date amount discount due)){
                  $new_invoice->{$_} = shift @$invoice;
                  if ($_ =~ /^(amount|discount|due)$/){
-                     $new_invoice->{$_} = 
+                     $new_invoice->{$_} =
                           LedgerSMB::PGNumber->new($new_invoice->{$_});
                  }
             }
@@ -354,7 +354,7 @@ sub get_all_contact_invoices {
         }
         #$contact->{invoice} = sort { $a->{invoice_date} cmp $b->{invoice_date} } @{ $processed_invoices };
         my @sorted = sort { $a->{invoice_date} cmp $b->{invoice_date} } @{ $processed_invoices };
-        $contact->{invoice} = $sorted[0]; 
+        $contact->{invoice} = $sorted[0];
         $contact->{invoice} = $processed_invoices;
     }
     return @{$self->{contacts}};
@@ -373,8 +373,8 @@ projects.  The list is attached to $self->{projects} and returned.
 
 sub list_open_projects {
     my ($self) = @_;
-    @{$self->{projects}} = $self->call_procedure( 
-         funcname => 'project_list_open',  args => [$self->{current_date}] 
+    @{$self->{projects}} = $self->call_procedure(
+         funcname => 'project_list_open',  args => [$self->{current_date}]
     );
     return  @{$self->{projects}};
 }
@@ -394,8 +394,8 @@ The list is attached to $self->{departments} and returned.
 sub list_departments {
   my ($self) = shift @_;
   my @args = @_;
-  @{$self->{departments}} = $self->call_procedure( 
-      funcname => 'department_list', 
+  @{$self->{departments}} = $self->call_procedure(
+      funcname => 'department_list',
       args => \@args
   );
   return @{$self->{departments}};
@@ -414,13 +414,13 @@ The list is attached to $self->{departments} and returned.
 =cut
 
 =over
-                      
+
 =item get_open_currencies
 
-This method gets a list of the open currencies inside the database, it requires that  
-$self->{account_class} (must be 1 or 2)  exist to work. 
+This method gets a list of the open currencies inside the database, it requires that
+$self->{account_class} (must be 1 or 2)  exist to work.
 
-WARNING THIS IS NOT BEEING USED BY THE SINGLE PAYMENT SYSTEM.... 
+WARNING THIS IS NOT BEEING USED BY THE SINGLE PAYMENT SYSTEM....
 
 =back
 
@@ -438,34 +438,34 @@ sub get_open_currencies {
 =item list_accounting
 
 This method lists all accounts that match the role specified in account_class property and
-are available to store the payment or receipts. 
+are available to store the payment or receipts.
 
 =cut
 
 sub list_accounting {
  my ($self) = @_;
  @{$self->{pay_accounts}} = $self->call_dbmethod( funcname => 'chart_list_cash');
- return @{$self->{pay_accounts}}; 
+ return @{$self->{pay_accounts}};
 }
 
 =item list_overpayment_accounting
 
 This method lists all accounts that match the role specified in account_class property and
-are available to store an overpayment / advanced payment / pre-payment. 
+are available to store an overpayment / advanced payment / pre-payment.
 
 =cut
 
 sub list_overpayment_accounting {
  my ($self) = @_;
  @{$self->{overpayment_accounts}} = $self->call_dbmethod( funcname => 'chart_list_overpayment');
- return @{$self->{overpayment_accounts}}; 
+ return @{$self->{overpayment_accounts}};
 }
 
 
 =item get_sources
 
 This method builds all the possible sources of money,
-in the future it will look inside the DB. 
+in the future it will look inside the DB.
 
 =cut
 
@@ -475,26 +475,26 @@ sub get_sources {
                              $locale->text('check'),
                              $locale->text('deposit'),
                              $locale->text('other'));
- return @{$self->{cash_sources}}; 
+ return @{$self->{cash_sources}};
 }
 
 =item get_exchange_rate(currency, date)
 
 This method gets the exchange rate for the specified currency and date
 
-=cut 
+=cut
 
-sub get_exchange_rate { 
+sub get_exchange_rate {
  my ($self) = shift @_;
  ($self->{currency}, $self->{date}) = @_;
- ($self->{exchangerate}) = $self->call_dbmethod(funcname => 'currency_get_exchangerate'); 
+ ($self->{exchangerate}) = $self->call_dbmethod(funcname => 'currency_get_exchangerate');
   return $self->{exchangerate}->{currency_get_exchangerate};
- 
+
 }
 
 =item get_default_currency
 
-This method gets the default currency 
+This method gets the default currency
 
 =cut
 
@@ -512,7 +512,7 @@ This method returns the system's current date
 
 sub get_current_date {
  my ($self) = shift @_;
- return $self->{current_date}; 
+ return $self->{current_date};
 }
 
 =item get_vc_info
@@ -525,7 +525,7 @@ $self->{account_class}
 sub get_vc_info {
  my ($self) = @_;
  my $temp = $self->{"id"};
- $self->{"id"} = $self->{"entity_credit_id"}; 
+ $self->{"id"} = $self->{"entity_credit_id"};
  @{$self->{vendor_customer_info}} = $self->call_dbmethod(funcname => 'company_get_billing_info');
  $self->{"id"} = $temp;
  return ${$self->{vendor_customer_info}}[0];
@@ -543,7 +543,7 @@ sub get_payment_detail_data {
     if ( $self->{account_class} != 2 && !defined $self->{source_start} ){
         die 'No source start defined!';
     }
-    #$self->error('No source start defined!') unless defined $self->{source_start}; 
+    #$self->error('No source start defined!') unless defined $self->{source_start};
 
     my $source_inc;
     my $source_src;
@@ -555,12 +555,12 @@ sub get_payment_detail_data {
         $source_inc = 0;
     }
     my $source_length = length($source_inc);
-   
+
     @{$self->{contact_invoices}} = $self->call_dbmethod(
 		funcname => 'payment_get_all_contact_invoices');
 
     for my $inv (@{$self->{contact_invoices}}) {
-        if (($self->{action} ne 'update_payments') or 
+        if (($self->{action} ne 'update_payments') or
 		(defined $self->{"id_$inv->{contact_id}"})
         ) {
 		    my $source = $self->{source_start};
@@ -570,7 +570,7 @@ sub get_payment_detail_data {
             }
     		$source =~ s/$source_src(\D*)$/$source_inc$1/;
     		++ $source_inc;
-		if ($self->{account_class} == 1) { # skip for AR Receipts 
+		if ($self->{account_class} == 1) { # skip for AR Receipts
 		  $inv->{source} = $source;
 		  $self->{"source_$inv->{contact_id}"} = $source;
 		}
@@ -590,15 +590,15 @@ sub get_payment_detail_data {
             $invoice->[3] = LedgerSMB::PGNumber->new($invoice->[3]);
         }
     }
- 
-}    
+
+}
 
 =item post_bulk
 
-This function posts the payments in bulk.  Note that queue_payments is not a 
+This function posts the payments in bulk.  Note that queue_payments is not a
 common setting and rather this provides a hook for an add-on.
 
-This API was developed early in 1.3 and is likely to change for better 
+This API was developed early in 1.3 and is likely to change for better
 encapsulation.  Currenty it uses the following structure:
 
 Within the main hashref:
@@ -611,7 +611,7 @@ The number of payments.  One per contact.
 
 =item contact_$row
 
-for (1 .. contact_count), contact_$_ is the entity credit account's id 
+for (1 .. contact_count), contact_$_ is the entity credit account's id
 associated with the current contact.  We will call this $contact_id below.
 
 For each contact id, we have the following, suffixed with _$contact_id:
@@ -631,7 +631,7 @@ invoice.
 
 =back
 
-Each invoice has the following attributes, suffxed with 
+Each invoice has the following attributes, suffxed with
 ${invoice_id}
 
 =over
@@ -646,7 +646,7 @@ ${invoice_id}
 
 =back
 
-In the future the payment posting API will become more standardized and the 
+In the future the payment posting API will become more standardized and the
 conversion between flat and hierarchical representation will be moved to the
 workflow scripts.
 
@@ -656,7 +656,7 @@ sub post_bulk {
     my ($self) = @_;
     my $total_count = 0;
     my ($ref) = $self->call_procedure(
-          funcname => 'setting_get', 
+          funcname => 'setting_get',
           args     => ['queue_payments'],
     );
     my $queue_payments = $ref->{setting_get};
@@ -677,8 +677,8 @@ sub post_bulk {
         my $invoice_array = "{}"; # Pg Array
 	for my $invoice_row (1 .. $self->{"invoice_count_$contact_id"}){
             my $invoice_id = $self->{"invoice_${contact_id}_${invoice_row}"};
-            my $pay_amount = ($self->{"paid_$contact_id"} eq 'all' ) 
-			? $self->{"net_$invoice_id"} 
+            my $pay_amount = ($self->{"paid_$contact_id"} eq 'all' )
+			? $self->{"net_$invoice_id"}
 			: $self->{"payment_$invoice_id"};
             next if ! $pay_amount;
             $pay_amount = $self->parse_amount(amount => $pay_amount);
@@ -687,7 +687,7 @@ sub post_bulk {
             if ($invoice_subarray !~ /^\{\d+\,\-?\d*\.?\d+\}$/){
                 die "Invalid subarray: $invoice_subarray";
             }
-            $invoice_subarray =~ s/[^0123456789{},.-]//; 
+            $invoice_subarray =~ s/[^0123456789{},.-]//;
 	    if ($invoice_array eq '{}'){ # Omit comma
                 $invoice_array = "{$invoice_subarray}";
 	    } else {
@@ -736,7 +736,7 @@ sub post_payment {
    my $db_exchangerate = $self->get_exchange_rate($self->{curr},$self->{datepaid});
    if (!$db_exchangerate) {
    # We have to set the exchangerate
-  
+
    $self->call_procedure(funcname => 'payments_set_exchangerate',  args => ["$self->{account_class}", $self->{exrate} ,"$self->{curr}", "$self->{datepaid}"]);
 
 
@@ -758,7 +758,7 @@ sub post_payment {
  return $self->{payment_id};
 }
 
-=item gather_printable_info 
+=item gather_printable_info
 
 This method retrieves all the payment related info needed to build a
 document and print it. IT IS NECESSARY TO ALREADY HAVE payment_id on $self
@@ -775,7 +775,7 @@ for my $row(@{$self->{line_info}}){
 }
 }
 
-=item get_open_overpayment_entities 
+=item get_open_overpayment_entities
 
 This method retrieves all the entities with the specified
 account_class which have unused overpayments
@@ -785,7 +785,7 @@ account_class which have unused overpayments
 sub get_open_overpayment_entities {
 my ($self) = @_;
 @{$self->{open_overpayment_entities}} = $self->call_dbmethod(funcname => 'payment_get_open_overpayment_entities');
-return @{$self->{open_overpayment_entities}}; 
+return @{$self->{open_overpayment_entities}};
 }
 
 =item get_unused_overpayments
@@ -797,7 +797,7 @@ This is a simple wrapper around payment_get_unused_overpayments sql function.
 sub get_unused_overpayments {
 my ($self) = @_;
 @{$self->{unused_overpayment}} = $self->call_dbmethod(funcname => 'payment_get_unused_overpayment');
-return @{$self->{unused_overpayment}}; 
+return @{$self->{unused_overpayment}};
 }
 
 =item get_available_overpayment_amount

@@ -90,7 +90,7 @@ sub get_gifi {
 
     # check for transactions
     $query = qq|
-		SELECT count(*) 
+		SELECT count(*)
 		  FROM acc_trans a
 		  JOIN account c ON (a.chart_id = c.id)
 		  JOIN gifi g ON (c.gifi_accno = g.accno)
@@ -137,7 +137,7 @@ sub save_gifi {
     # id is the old account number!
     if ( $form->{id} ) {
         $query = qq|
-			UPDATE gifi 
+			UPDATE gifi
 			   SET accno = ?,
 			       description = ?
 			 WHERE accno = ?|;
@@ -212,7 +212,7 @@ sub get_warehouse {
 
     # see if it is in use
     $query = qq|
-		SELECT count(*) 
+		SELECT count(*)
 		  FROM warehouse_inventory
 		 WHERE warehouse_id = ?|;
 
@@ -254,7 +254,7 @@ sub save_warehouse {
 
     if ( $form->{id} ) {
         $query = qq|
-			UPDATE warehouse 
+			UPDATE warehouse
 			   SET description = ?
 			 WHERE id = ?|;
         push @queryargs, $form->{id};
@@ -350,7 +350,7 @@ sub save_business {
 
     if ( $form->{id} ) {
         $query = qq|
-			UPDATE business 
+			UPDATE business
 			   SET description = ?,
 			       discount = ?
 			 WHERE id = ?|;
@@ -451,7 +451,7 @@ sub save_sic {
     # if there is an id
     if ( $form->{id} ) {
         $query = qq|
-			UPDATE sic 
+			UPDATE sic
 			   SET code = ?,
 			       sictype = ?,
 			       description = ?
@@ -553,7 +553,7 @@ sub save_language {
     # if there is an id
     if ( $form->{id} ) {
         $query = qq|
-			UPDATE language 
+			UPDATE language
 			   SET code = ?,
 			       description = ?
 			 WHERE code = ?|;
@@ -643,19 +643,19 @@ sub recurring_transactions {
 		          e.name AS description, a.amount,
 		          s.*, se.formname AS recurringemail,
 		          sp.formname AS recurringprint,
-		          s.nextdate - current_date AS overdue, 
+		          s.nextdate - current_date AS overdue,
 		          'customer' AS vc,
 		          ex.buy AS exchangerate, a.curr,
-	                  (s.nextdate IS NULL OR s.nextdate > s.enddate) 
+	                  (s.nextdate IS NULL OR s.nextdate > s.enddate)
                           AS expired
 		     FROM recurring s
 		     JOIN ar a ON (a.id = s.id)
-                     JOIN entity_credit_account eca 
+                     JOIN entity_credit_account eca
                           ON a.entity_credit_account = eca.id
 		     JOIN entity e ON (eca.entity_id = e.id)
 		LEFT JOIN recurringemail se ON (se.id = s.id)
 		LEFT JOIN recurringprint sp ON (sp.id = s.id)
-		LEFT JOIN exchangerate ex 
+		LEFT JOIN exchangerate ex
 		          ON (ex.curr = a.curr AND a.transdate = ex.transdate)
 
 		    UNION
@@ -666,30 +666,30 @@ sub recurring_transactions {
 		          sp.formname AS recurringprint,
 		          s.nextdate - current_date AS overdue, 'vendor' AS vc,
 		          ex.sell AS exchangerate, a.curr,
-		          (s.nextdate IS NULL OR s.nextdate > s.enddate) 
+		          (s.nextdate IS NULL OR s.nextdate > s.enddate)
 		          AS expired
 		     FROM recurring s
 		     JOIN ap a ON (a.id = s.id)
-                     JOIN entity_credit_account eca 
+                     JOIN entity_credit_account eca
                           ON a.entity_credit_account = eca.id
 		     JOIN entity e ON (eca.entity_id = e.id)
 		LEFT JOIN recurringemail se ON (se.id = s.id)
 		LEFT JOIN recurringprint sp ON (sp.id = s.id)
-		LEFT JOIN exchangerate ex ON 
+		LEFT JOIN exchangerate ex ON
 		          (ex.curr = a.curr AND a.transdate = ex.transdate)
 
 		    UNION
 
 		   SELECT 'gl' AS module, 'gl' AS transaction, FALSE AS invoice,
-		          a.description, (SELECT SUM(ac.amount) 
-		     FROM acc_trans ac 
-		    WHERE ac.trans_id = a.id 
+		          a.description, (SELECT SUM(ac.amount)
+		     FROM acc_trans ac
+		    WHERE ac.trans_id = a.id
 		      AND ac.amount > 0) AS amount,
 		          s.*, se.formname AS recurringemail,
 		          sp.formname AS recurringprint,
 		          s.nextdate - current_date AS overdue, '' AS vc,
 		          '1' AS exchangerate, $defaultcurrency AS curr,
-		          (s.nextdate IS NULL OR s.nextdate > s.enddate) 
+		          (s.nextdate IS NULL OR s.nextdate > s.enddate)
 		          AS expired
 		     FROM recurring s
 		     JOIN gl a ON (a.id = s.id)
@@ -702,17 +702,17 @@ sub recurring_transactions {
 		          e.name AS description, a.amount,
 		          s.*, se.formname AS recurringemail,
 		          sp.formname AS recurringprint,
-		          s.nextdate - current_date AS overdue, 
+		          s.nextdate - current_date AS overdue,
 		          'customer' AS vc,
 		          ex.buy AS exchangerate, a.curr,
-		          (s.nextdate IS NULL OR s.nextdate > s.enddate) 
+		          (s.nextdate IS NULL OR s.nextdate > s.enddate)
 		          AS expired
 		     FROM recurring s
 		     JOIN oe a ON (a.id = s.id)
 		     JOIN entity e ON (a.entity_id = e.id)
 		LEFT JOIN recurringemail se ON (se.id = s.id)
 		LEFT JOIN recurringprint sp ON (sp.id = s.id)
-		LEFT JOIN exchangerate ex ON 
+		LEFT JOIN exchangerate ex ON
 		          (ex.curr = a.curr AND a.transdate = ex.transdate)
 		    WHERE a.quotation = '0'
 
@@ -724,14 +724,14 @@ sub recurring_transactions {
 		          sp.formname AS recurringprint,
 		          s.nextdate - current_date AS overdue, 'vendor' AS vc,
 		          ex.sell AS exchangerate, a.curr,
-		          (s.nextdate IS NULL OR s.nextdate > s.enddate) 
+		          (s.nextdate IS NULL OR s.nextdate > s.enddate)
 		          AS expired
 		     FROM recurring s
 		     JOIN oe a ON (a.id = s.id)
 		     JOIN entity e ON (a.entity_id = e.id)
 		LEFT JOIN recurringemail se ON (se.id = s.id)
 		LEFT JOIN recurringprint sp ON (sp.id = s.id)
-		LEFT JOIN exchangerate ex ON 
+		LEFT JOIN exchangerate ex ON
 		          (ex.curr = a.curr AND a.transdate = ex.transdate)
 		    WHERE a.quotation = '0'
 
@@ -818,7 +818,7 @@ sub recurring_transactions {
 =item AM->recurring_details($myconfig, $form, $id);
 
 Retrieves details about the recurring transaction $id and places them into
-attributes of $form.  Sets id (the transaction id passed in, $id), reference 
+attributes of $form.  Sets id (the transaction id passed in, $id), reference
 (a reference string for the recurring transaction), startdate (the date the
 recurrence series started on), nextdate (the date of the next occurrence of the
 event), enddate (the date of the final occurrence of the event), repeat (the
@@ -832,7 +832,7 @@ oe event), customer_id (vendor id if sales order), vendor_id (vendor id if
 puchase order), vc ('customer' if customer_id set, 'vendor' if vendor_id set),
 invoice (true if both arid and arinvoice set or if both apid and apinvoice set),
 recurringemail (colon separated list of forms and formats to be emailed),
-message (the non-attachement message body for the emails), and recurringprint 
+message (the non-attachement message body for the emails), and recurringprint
 (colon separated list of form names, formats, and printer names).
 
 $myconfig is unused.
@@ -879,7 +879,7 @@ sub recurring_details {
       unless $form->{invoice};
 
     $query = qq|
-		SELECT * 
+		SELECT *
 		  FROM recurringemail
 		 WHERE id = ?|;
 
@@ -896,7 +896,7 @@ sub recurring_details {
     $sth->finish;
 
     $query = qq|
-		SELECT * 
+		SELECT *
 		  FROM recurringprint
 		 WHERE id = ?|;
 
@@ -915,7 +915,7 @@ sub recurring_details {
     chop $form->{recurringprint};
 
     for (qw(arinvoice apinvoice invnumber)) { delete $form->{$_} }
-    
+
 
 
 }
@@ -956,12 +956,12 @@ sub update_recurring {
     my ($last_repeat) = $dbh->selectrow_array($query);
     if ($last_repeat) {
         $query = qq|
-    		UPDATE recurring 
+    		UPDATE recurring
     		   SET nextdate = NULL
     		 WHERE id = $id|;
     } else {
         $query = qq|
-    		UPDATE recurring 
+    		UPDATE recurring
     		   SET nextdate = (date $nextdate + interval $interval)
     		 WHERE id = $id|;
     }
@@ -985,7 +985,7 @@ sub check_template_name {
     my @allowedsuff = qw(css tex txt html xml);
     my $test = $form->{file};
     $test =~ s|^$LedgerSMB::Sysconfig::fs_cssdir||;
-    if ($LedgerSMB::Sysconfig::fs_cssdir 
+    if ($LedgerSMB::Sysconfig::fs_cssdir
            and $LedgerSMB::Sysconfig::fs_cssdir !~ m|/$|){
          $test =~ s|^/||;
     }
@@ -1037,12 +1037,12 @@ sub taxes {
     my $dbh = $form->{dbh};
 
     my $query = qq|
-		  SELECT c.id, c.accno, c.description, 
+		  SELECT c.id, c.accno, c.description,
 		         t.rate * 100 AS rate, t.taxnumber, t.validto::date,
 			 t.minvalue, t.pass, m.taxmodulename
 		    FROM chart c
 		    LEFT JOIN
-                     (tax t JOIN taxmodule m 
+                     (tax t JOIN taxmodule m
                             ON (t.taxmodule_id = m.taxmodule_id))
                     ON (c.id = t.chart_id)
                     WHERE c.tax
@@ -1117,19 +1117,19 @@ sub save_taxes {
         if($old_validto eq '')
         {
          $logger->info("will insert new chart_id=$chart_id i=$i rate=$rate validto=$validto pass=$pass taxnumber=$taxnumber old_validto=$old_validto");
-        }        
+        }
 
         #$rate=$form->parse_amount( $myconfig, $form->{"taxrate_$i"} ) / 100;
         $validto = $form->{"validto_$i"};
         $validto = 'infinity' if not $validto;
         $form->{"pass_$i"} = 0 if not $form->{"pass_$i"};
         delete $form->{"old_validto_$i"} if ! $form->{"old_validto_$i"};
-	
-        $sth = $dbh->prepare('select account__save_tax(?,?,?,?,?,?,?,?,?)');         
+
+        $sth = $dbh->prepare('select account__save_tax(?,?,?,?,?,?,?,?,?)');
         my @queryargs = (
-            $chart_id, $validto, $rate, 
+            $chart_id, $validto, $rate,
             $form->{"minvalue_$i"}, $form->{"maxvalue_$i"},
-            $form->{"taxnumber_$i"}, $form->{"pass_$i"}, 
+            $form->{"taxnumber_$i"}, $form->{"pass_$i"},
             $form->{"taxmodule_id_$i"}, $form->{"old_validto_$i"}
         );
        $sth->execute(@queryargs) ||$form->dberror($query);

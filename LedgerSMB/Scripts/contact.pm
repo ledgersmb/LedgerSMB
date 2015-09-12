@@ -8,7 +8,7 @@ functions, template instantiation and rendering for customer editing and display
 
 =head1 SYOPSIS
 
-This module is the UI controller for the customer, vendor, etc functions; it 
+This module is the UI controller for the customer, vendor, etc functions; it
 
 =head1 METHODS
 
@@ -36,7 +36,7 @@ use warnings;
 use Try::Tiny;
 
 #Plugins
-opendir(my $dh, 'LedgerSMB/Entity/Plugins') 
+opendir(my $dh, 'LedgerSMB/Entity/Plugins')
     || die "can't opendir plugins directory: $!";
 my @pluginmods = grep { /^[^.]/ && -f "LedgerSMB/Entity/Plugins/$_" } readdir($dh);
 closedir $dh;
@@ -49,8 +49,8 @@ my $locale = $LedgerSMB::App_State::Locale;
 
 =head1 COPYRIGHT
 
-Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU 
-General Public License, version 2, or at your option any later version.  Please 
+Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU
+General Public License, version 2, or at your option any later version.  Please
 see the accompanying License.txt for more information.
 
 =cut
@@ -59,9 +59,9 @@ see the accompanying License.txt for more information.
 
 =over
 
-=item get_by_cc 
+=item get_by_cc
 
-Populates the company area with info on the company, pulled up through the 
+Populates the company area with info on the company, pulled up through the
 control code
 
 =cut
@@ -74,7 +74,7 @@ sub get_by_cc {
         );
         return _main_screen($request, undef, $emp);
     }
-    my $entity = 
+    my $entity =
            LedgerSMB::Entity::Company->get_by_cc($request->{control_code});
     $entity ||=  LedgerSMB::Entity::Person->get_by_cc($request->{control_code});
     my ($company, $person) = (undef, undef);
@@ -123,7 +123,7 @@ sub get {
 }
 
 
-# private method _main_screen 
+# private method _main_screen
 #
 # this attaches everything other than {company} to $request and displays it.
 
@@ -198,23 +198,23 @@ sub _main_screen {
     my @pricegroups = LedgerSMB->call_procedure(
         funcname => 'pricegroups__list'
     );
-    my @credit_list = 
+    my @credit_list =
        LedgerSMB::Entity::Credit_Account->list_for_entity(
                           $entity_id,
                           $request->{entity_class}
         );
     my $credit_act;
     for my $ref(@credit_list){
-        if (($request->{credit_id} && $request->{credit_id} eq $ref->{id}) 
+        if (($request->{credit_id} && $request->{credit_id} eq $ref->{id})
               or ($request->{meta_number}
                   && $request->{meta_number} eq $ref->{meta_number})){
-        
+
             $credit_act = $ref;
             @eca_files = LedgerSMB::File->list(
                {ref_key => $ref->{id}, file_class => '5'}
              );
 
-        }     
+        }
     }
 
     my $entity_class = $credit_act->{entity_class};
@@ -233,7 +233,7 @@ sub _main_screen {
               {entity_id => $entity_id,
                credit_id => $credit_act->{id}}
     );
-    my @bank_account = 
+    my @bank_account =
          LedgerSMB::Entity::Bank->list(
 	     entity_id => $entity_id);
     my @notes =
@@ -266,14 +266,14 @@ sub _main_screen {
     }
 
 #
-    my @language_code_list = 
+    my @language_code_list =
              LedgerSMB->call_procedure(funcname => 'person__list_languages');
 
     for my $ref (@language_code_list){
         $ref->{text} = "$ref->{description}";
     }
-    
-    my @location_class_list = 
+
+    my @location_class_list =
        grep { $_->{id} < 4 }
             LedgerSMB->call_procedure(funcname => 'location_list_class');
 
@@ -308,7 +308,7 @@ sub _main_screen {
     my @plugins = grep { /^[^.]/ && -f "UI/Contact/plugins/$_" } readdir($dh2);
     closedir $dh2;
 
-    # Template info and rendering 
+    # Template info and rendering
     my $template = LedgerSMB::Template->new(
         user => $request->{_user},
         template => 'contact',
@@ -360,7 +360,7 @@ sub _main_screen {
        language_code_list => \@language_code_list,
        language_code_list => \@language_code_list,
            all_currencies => \@all_currencies,
-     attach_level_options => $attach_level_options, 
+     attach_level_options => $attach_level_options,
                 entity_id => $entity_id,
              entity_class => $entity_class,
       location_class_list => \@location_class_list,
@@ -385,7 +385,7 @@ sub save_employee {
     my ($request) = @_;
     unless ($request->{control_code}){
         my ($ref) = $request->call_procedure(
-                             funcname => 'setting_increment', 
+                             funcname => 'setting_increment',
                              args     => ['entity_control']
                            );
         ($request->{control_code}) = values %$ref;
@@ -401,7 +401,7 @@ sub save_employee {
     _main_screen($request, undef, $employee);
 }
 
-=item generate_control_code 
+=item generate_control_code
 
 Generates a control code and hands off execution to other routines
 
@@ -410,7 +410,7 @@ Generates a control code and hands off execution to other routines
 sub generate_control_code {
     my ($request) = @_;
     my ($ref) = $request->call_procedure(
-                             funcname => 'setting_increment', 
+                             funcname => 'setting_increment',
                              args     => ['entity_control']
                            );
     ($request->{control_code}) = values %$ref;
@@ -420,7 +420,7 @@ sub generate_control_code {
 =item dispatch_legacy
 
 This is a semi-private method which interfaces with the old code.  Note that
-as long as any other functions use this, the contact interface cannot be said to 
+as long as any other functions use this, the contact interface cannot be said to
 be safe for code caching.
 
 Not fully documented because this will go away as soon as possible.
@@ -453,27 +453,27 @@ sub dispatch_legacy {
     } else {
        $request->error($request->{_locale}->text('Unsupported account type'));
     }
-    our $dispatch = 
+    our $dispatch =
     {
-        add_transaction  => {script => "bin/$aa.pl", 
+        add_transaction  => {script => "bin/$aa.pl",
                                data => {"${cv}_id" => $request->{credit_id}},
                             },
         add_invoice      => {script => "bin/$inv.pl",
                                data => {"${cv}_id" => $request->{credit_id}},
                             },
-        add_order        => {script => 'bin/oe.pl', 
+        add_order        => {script => 'bin/oe.pl',
                                data => {"${cv}_id" => $request->{credit_id},
                                             type   => $otype,
                                                vc  => $cv,
                                        },
                             },
-        rfq              => {script => 'bin/oe.pl', 
+        rfq              => {script => 'bin/oe.pl',
                                data => {"${cv}_id" => $request->{credit_id},
                                             type   => $qtype,
                                                vc  => $cv,
                                        },
                             },
- 
+
     };
 
     our $form = new Form;
@@ -547,7 +547,7 @@ sub rfq {
 
 This method creates a blank screen for entering a company's information.
 
-=cut 
+=cut
 
 sub add {
     my ($request) = @_;
@@ -565,7 +565,7 @@ sub save_company {
     my ($request) = @_;
     unless ($request->{control_code}){
         my ($ref) = $request->call_procedure(
-                             funcname => 'setting_increment', 
+                             funcname => 'setting_increment',
                              args     => ['entity_control']
                            );
         ($request->{control_code}) = values %$ref;
@@ -605,7 +605,7 @@ This inserts or updates a credit account of the sort listed here.
 =cut
 
 sub save_credit {
-    
+
     my ($request) = @_;
     $request->{target_div} = 'credit_div';
     my $company;
@@ -622,7 +622,7 @@ sub save_credit {
         if ($key =~ /^taxact_(\d+)$/){
            my $tax = $1;
            push @{$request->{tax_ids}}, $tax;
-        }  
+        }
     }
     if ($request->close_form){
         my $credit = LedgerSMB::Entity::Credit_Account->new(%$request);
@@ -645,7 +645,7 @@ sub save_credit_new {
     save_credit($request);
 }
 
-=item save_location 
+=item save_location
 
 Adds a location to the company as defined in the inherited object
 
@@ -667,10 +667,10 @@ sub save_location {
     # and country more often than not -- CT
     delete $request->{"$_"} for (qw(line_one line_two line_three mail_code));
     get($request);
-	
+
 }
 
-=item save_new_location 
+=item save_new_location
 
 Adds a location to the company as defined in the inherited object, not
 overwriting existing locations.
@@ -747,13 +747,13 @@ sub save_contact_new {
     my ($request) = @_;
     delete $request->{contact_id};
     delete $request->{old_contact};
-    
+
     save_contact($request);
 }
 
 =item delete_contact
 
-Deletes the specified contact info.  Note that for_credit is used to pass the 
+Deletes the specified contact info.  Note that for_credit is used to pass the
 credit id over in this case.
 
 =cut
@@ -783,7 +783,7 @@ sub delete_bank_account{
     get($request);
 }
 
-=item save_bank_account 
+=item save_bank_account
 
 Adds a bank account to a company and, if defined, an entity credit account.
 
@@ -799,7 +799,7 @@ sub save_bank_account {
 
 =item save_notes($request)
 
-Saves notes.  entity_id or credit_id must be set, as must note_class, note, and 
+Saves notes.  entity_id or credit_id must be set, as must note_class, note, and
 subject.
 
 =cut
@@ -906,7 +906,7 @@ sub save_pricelist {
     # Return to UI
     if (!$redirect_to_selection){
         get_pricelist($request);
-    } else { 
+    } else {
         $request->{search_redirect} = 'pricelist_search_handle';
         $psearch->render($request);
    }
@@ -984,7 +984,7 @@ sub save_roles {
     if ($request->close_form){
        my $user = LedgerSMB::Entity::User->get($request->{entity_id});
        my $roles = [];
-       $request->{_role_prefix} = "lsmb_$request->{company}__" 
+       $request->{_role_prefix} = "lsmb_$request->{company}__"
            unless defined $request->{_role_prefix};
        for my $key(keys %$request){
            if ($key =~ /$request->{_role_prefix}/ and $request->{$key}){
@@ -1000,8 +1000,8 @@ sub save_roles {
 
 =head1 COPYRIGHT
 
-Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU 
-General Public License, version 2, or at your option any later version.  Please 
+Copyright (c) 2012, the LedgerSMB Core Team.  This is licensed under the GNU
+General Public License, version 2, or at your option any later version.  Please
 see the accompanying License.txt for more information.
 
 =cut

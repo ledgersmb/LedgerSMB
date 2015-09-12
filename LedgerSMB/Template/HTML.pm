@@ -14,7 +14,7 @@ Returns the appropriate template filename for this format.
 =item preprocess ($vars)
 
 This method returns a reference to a hash that contains a copy of the passed
-hashref's data with HTML entities converted to escapes. 
+hashref's data with HTML entities converted to escapes.
 
 =item process ($parent, $cleanvars)
 
@@ -33,11 +33,11 @@ Escapes a scalar string and returns the sanitized version.
 =head1 Copyright (C) 2007, The LedgerSMB core team.
 
 This work contains copyrighted information from a number of sources all used
-with permission.  
+with permission.
 
-It is released under the GNU General Public License Version 2 or, at your 
-option, any later version.  See COPYRIGHT file for details.  For a full list 
-including contact information of contributors, maintainers, and copyright 
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
 holders, see the CONTRIBUTORS file.
 =cut
 
@@ -93,7 +93,7 @@ sub preprocess {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
         }
     }
-     
+
     return $vars;
 }
 
@@ -114,18 +114,18 @@ sub process {
 	my $source;
         $parent->{binmode} = $binmode;
 
-        my $dojo_theme; 
+        my $dojo_theme;
         if ($LedgerSMB::App_State::DBH){
            local ($@); # pre-5.14, do not die() in this block
-           eval { LedgerSMB::Company_Config->initialize() 
+           eval { LedgerSMB::Company_Config->initialize()
                        unless $LedgerSMB::App_State::Company_Config;
              $dojo_theme = $LedgerSMB::App_State::Company_Config->{dojo_theme};
            }; # eval required to make setup.pl work as advertised
-        } 
+        }
         $dojo_theme ||= $LedgerSMB::Sysconfig::dojo_theme;
 	$cleanvars->{dojo_theme} ||= $dojo_theme;
         $cleanvars->{UNESCAPE} = sub { return unescapeHTML(shift @_) };
-	
+
 	if ($parent->{outputfile}) {
             if (ref $parent->{outputfile}){
 		$output = $parent->{outputfile};
@@ -148,7 +148,7 @@ sub process {
 	}
         my $tempdir;
         my $paths = [$parent->{include_path},'templates/demo','UI/lib'];
-        unshift @$paths, $parent->{include_path_lang} 
+        unshift @$paths, $parent->{include_path_lang}
             if defined $parent->{include_path_lang};
         my $arghash = {
 		INCLUDE_PATH => $paths,
@@ -159,17 +159,17 @@ sub process {
 		TRIM => 1,
 		DEBUG => ($parent->{debug})? 'dirs': undef,
 		DEBUG_FORMAT => '',
-        }; 
+        };
         if ($LedgerSMB::Sysconfig::cache_templates){
             $arghash->{COMPILE_EXT} = '.lttc';
             $arghash->{COMPILE_DIR} = $LedgerSMB::Sysconfig::cache_template_dir;
-        } 
-       
+        }
+
 	$template = Template->new(
                     $arghash
-		) || die Template->error(); 
+		) || die Template->error();
 	if (not $template->process(
-		$source, 
+		$source,
 		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
 			'escape' => \&preprocess},
 		$output, {binmode => ':utf8'})) {

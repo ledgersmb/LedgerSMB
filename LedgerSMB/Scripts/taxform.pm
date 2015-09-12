@@ -45,12 +45,12 @@ sub report {
     use LedgerSMB::Scripts::reports;
     my ($request) = @_;
     $request->{report_name} = 'taxforms';
-    
+
     # Get tax forms.
     my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
     $taxform->get_forms();
     $request->{forms} = $taxform->{forms};
-    LedgerSMB::Scripts::reports::start_report($request);    
+    LedgerSMB::Scripts::reports::start_report($request);
 }
 
 =pod
@@ -65,10 +65,10 @@ sub _taxform_screen
 {
     my ($request) = @_;
     my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
-    
+
     $taxform->get_metadata();
     my $template = LedgerSMB::Template->new(
-        user =>$request->{_user}, 
+        user =>$request->{_user},
         locale => $request->{_locale},
         path => 'UI',
         template => 'taxform/add_taxform',
@@ -81,7 +81,7 @@ sub add_taxform {
     _taxform_screen(@_);
 }
 
-=item edit 
+=item edit
 
 This retrieves and edits a tax form.  Requires that id be set.
 
@@ -151,8 +151,8 @@ Saves a tax form, returns to edit screen.
 sub save
 {
     my ($request) = @_;
-    my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request}); 
-    
+    my $taxform = LedgerSMB::DBObject::TaxForm->new({base => $request});
+
     $taxform->save();
     edit($taxform);
 }
@@ -188,9 +188,9 @@ sub print {
     $request->{company_address}   = $cc->{company_address};
     $request->{company_telephone} = $cc->{company_phone};
     $request->{my_tax_code}       = $cc->{businessnumber};
-      
+
     my $template = LedgerSMB::Template->new(
-          user => $request->{_user}, 
+          user => $request->{_user},
           locale => $request->{_locale},
           path => 'UI',
           media => 'screen',
@@ -215,8 +215,8 @@ sub list_all {
 
 =head1 Copyright (C) 2010 The LedgerSMB Core Team
 
-Licensed under the GNU General Public License version 2 or later (at your 
-option).  For more information please see the included LICENSE and COPYRIGHT 
+Licensed under the GNU General Public License version 2 or later (at your
+option).  For more information please see the included LICENSE and COPYRIGHT
 files.
 
 =cut

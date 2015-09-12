@@ -42,7 +42,7 @@ On the database side, these are all converted to YYYY-MM-DD format.
 
 =item MM-DD-YYYY
 
-=item MM/DD/YYYY 
+=item MM/DD/YYYY
 
 =item YYYYMMDD
 
@@ -60,7 +60,7 @@ On the database side, these are all converted to YYYY-MM-DD format.
 
 =cut
 
-our $formats = { 
+our $formats = {
     'YYYY-MM-DD' => ['%F'],
     'DD-MM-YYYY' => ['%d-%m-%Y', '%d-%m-%y'],
     'DD.MM.YYYY' => ['%d.%m.%Y', '%d.%m.%y'],
@@ -86,7 +86,7 @@ LedgerSMB::PgDate->new({ date => DateTime->new(year => 2012, day => 31, month =>
 
 Note the constructor here is private, and not intended to be called directly.
 
-Use from_db and from_input methods instead since these handle appropriately 
+Use from_db and from_input methods instead since these handle appropriately
 different formats and handle construction differently.
 
 =cut
@@ -125,7 +125,7 @@ sub _parse_string {
             );
             if (my $dt = $parser->parse_datetime($string)){
                 return $dt;
-            } 
+            }
         }
         if (!$has_time or ! defined $has_time){
             my $parser = new DateTime::Format::Strptime(
@@ -161,7 +161,7 @@ sub from_input{
 
 =item to_output(optional string $format)
 
-This returns the human readable formatted date.  If $format is supplied, it is 
+This returns the human readable formatted date.  If $format is supplied, it is
 used.  If $format is not supplied, the dateformat of the user is used.
 
 =cut
@@ -181,7 +181,7 @@ sub to_output {
     }
     $fmt .= ' %T' if ($self->{_pgobject_is_time});
     $fmt =~ s/^\s+//;
-    
+
     my $formatter = new DateTime::Format::Strptime(
              pattern => $fmt,
               locale => 'en_US',

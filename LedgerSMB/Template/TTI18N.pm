@@ -23,11 +23,11 @@ locale is loaded, cached, and used.
 =head1 Copyright (C) 2007, The LedgerSMB core team.
 
 This work contains copyrighted information from a number of sources all used
-with permission.  
+with permission.
 
-It is released under the GNU General Public License Version 2 or, at your 
-option, any later version.  See COPYRIGHT file for details.  For a full list 
-including contact information of contributors, maintainers, and copyright 
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
 holders, see the CONTRIBUTORS file.
 =cut
 

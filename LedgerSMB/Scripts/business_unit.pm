@@ -1,4 +1,4 @@
-=head1 NAME 
+=head1 NAME
 
 LedgerSMB::Scripts::business_unit
 
@@ -57,14 +57,14 @@ sub add {
         $request->{class_id} = $request->{id};
         delete $request->{id};
     }
-    @{$request->{sequences}} = 
-          LedgerSMB::Setting::Sequence->list('projectnumber') 
+    @{$request->{sequences}} =
+          LedgerSMB::Setting::Sequence->list('projectnumber')
           unless $request->{id};
     $request->{control_code} = '';
     my $b_unit = LedgerSMB::Business_Unit->new(%$request);
     @{$request->{parent_options}} = $b_unit->list($request->{class_id});
     $request->{id} = undef;
-    _display($request); 
+    _display($request);
 }
 
 =item edit
@@ -80,7 +80,7 @@ sub edit {
     my $b_unit = LedgerSMB::Business_Unit->new(%$request);
     my $bu = $b_unit->get($request->{id});
     @{$bu->{parent_options}} = $b_unit->list($bu->{class_id});
-    
+
     _display($bu);
 }
 
@@ -114,10 +114,10 @@ dates
 
 =item credit_id
 
-If set, filters excludes those which are for customers/vendors other than than 
+If set, filters excludes those which are for customers/vendors other than than
 identified by this value.
 
-=item strict_credit_id 
+=item strict_credit_id
 
 If set, excludes those which are not associated with customers/vendors.
 
@@ -132,7 +132,7 @@ sub list {
 
 =item delete
 
-Deletes an existing business unit.  Only vaid for ones with no transactions or 
+Deletes an existing business unit.  Only vaid for ones with no transactions or
 sub-units.
 
 $request->{id} must be set.
@@ -163,7 +163,7 @@ sub delete_class {
 
 =item save
 
-Saves the existing unit.  Standard properties of 
+Saves the existing unit.  Standard properties of
 LedgerSMB::Business_Unit must be set for $request.
 
 =cut
@@ -171,8 +171,8 @@ LedgerSMB::Business_Unit must be set for $request.
 sub save {
     my ($request) = @_;
     if ($request->{sequence}){
-       $request->{control_code} = 
-           LedgerSMB::Setting::Sequence->increment($request->{sequence}, 
+       $request->{control_code} =
+           LedgerSMB::Setting::Sequence->increment($request->{sequence},
                                                               $request)
               if LedgerSMB::Setting::Sequence->should_increment(
                         $request, 'control_code', $request->{sequence});
@@ -188,7 +188,7 @@ sub save {
 
 =item save_class
 
-Saves the existing unit class.  Standard properties for 
+Saves the existing unit class.  Standard properties for
 LedgerSMB::Business_Unit_Class must be set for $request.
 
 =cut
@@ -218,7 +218,7 @@ sub save_class {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2012 LedgerSMB core team.  Redistribution and use of work is 
+Copyright (C) 2012 LedgerSMB core team.  Redistribution and use of work is
 governed under the GNU General Public License, version 2 or at your option any
 later version.
 

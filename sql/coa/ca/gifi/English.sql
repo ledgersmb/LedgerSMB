@@ -4,13 +4,13 @@ begin;
 -- PDF Tammes, Tue , 02 Apr 2002
 -- remarks or questions to finance@bermuda-holding.com
 --
--- From the GIFI documentation: 
+-- From the GIFI documentation:
 --
 -- The GIFI information has to balance. We use the following rules to verify the information you provide.
 -- total assets = total liabilities + total shareholder equity
 -- total revenue - total expenses = net non-farming income
 -- total farm revenue - total farm expenses = net farm income
--- 
+--
 -- You have to provide certain line items so that we can verify the above equations. Each GIFI must include:
 -- balance sheet
 -- Item 2599  Total assets
@@ -18,8 +18,8 @@ begin;
 -- Item 3620  Total shareholder equity
 -- non-farming income and expenses
 -- Item 8299  Total revenue
--- Item 9368  Total expenses 
--- and/or 
+-- Item 9368  Total expenses
+-- and/or
 -- farming income and expenses
 -- Item 9659  Total farm revenue
 -- Item 9898  Total farm expenses
@@ -747,15 +747,15 @@ INSERT INTO gifi (accno,description) VALUES ('9990', 'Current Income Taxes');
 INSERT INTO gifi (accno,description) VALUES ('9995', 'Deferred Income Tax Provision');
 INSERT INTO gifi (accno,description) VALUES ('9999', 'Net Income/Loss After Taxes And Extraordinary Items');
 -- This item represents the net amount of:
--- Item 9970 - Net income/loss before taxes and extraordinary items minus 
--- Item 9975 - Extraordinary item(s) minus 
+-- Item 9970 - Net income/loss before taxes and extraordinary items minus
+-- Item 9975 - Extraordinary item(s) minus
 -- Item 9976 - Legal settlements plus
 -- Item 9980 - Unrealized gains/losses minus
 -- Item 9985 - Unusual items minus
 -- Item 9990 - Current income taxes minus
 -- Item 9995 - Deferred income tax provision
 -- and must be reported.
--- Any amount reported in this item should be equal to the amount reported at Item 3680 - Net income/loss, 
--- in the retained earnings section. 
+-- Any amount reported in this item should be equal to the amount reported at Item 3680 - Net income/loss,
+-- in the retained earnings section.
 --
 commit;

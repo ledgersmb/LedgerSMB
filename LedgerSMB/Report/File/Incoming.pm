@@ -41,7 +41,7 @@ sub columns {
          name => '', },
      { col_id => 'file_name',
          type => 'href',
-    href_base => 'file.pl?action=get&file_class=' . _set_file_class() . 
+    href_base => 'file.pl?action=get&file_class=' . _set_file_class() .
                  "&id=",
          name => text('File Name'), },
      { col_id => 'description',
@@ -127,8 +127,8 @@ sub run_report {
 
 Copyright (C) 2014 The LedgerSMB Core Team
 
-This file may be re-used under the terms of the GNU General Public License 
-version 2 or at your option any later version.  Please see the included 
+This file may be re-used under the terms of the GNU General Public License
+version 2 or at your option any later version.  Please see the included
 LICENSE.txt file for more information.
 
 =cut

@@ -45,7 +45,7 @@ sub create {
 
 =item delete_voucher($id)
 
-Deletes the voucher specified by $id. 
+Deletes the voucher specified by $id.
 
 =cut
 
@@ -100,19 +100,19 @@ sub get_search_criteria {
 
 =item get_search_method (private)
 
-Determines the appropriate search method, either for empty, mini, or full 
+Determines the appropriate search method, either for empty, mini, or full
 searches
 
 Returns the appropriate stored proc name.
 
 =cut
 
-# This needs to be refactored.  Input sanitation should be moved to 
+# This needs to be refactored.  Input sanitation should be moved to
 # get_search_results
 sub get_search_method {
 	my ($self, @args) = @_;
 	my $search_proc;
-	
+
 	if ($self->{empty}){
         $search_proc = "batch_search_empty";
     } elsif ($args->{mini}){
@@ -131,8 +131,8 @@ sub get_search_method {
     }
 
     if ( ( defined $args->{custom_types} ) && ( defined $self->{class_id} ) && ( $args->{custom_types}->{$self->{class_id}}->{select_method} ) ){
-        $search_proc 
-             = $args->{custom_types}->{$self->{class_id}}->{select_method}; 
+        $search_proc
+             = $args->{custom_types}->{$self->{class_id}}->{select_method};
     } elsif ( ( defined $self->{class_id} ) && ( $self->{class_id} =~ /[\D]/ ) ){
           $self->error("Invalid Batch Type");
     }
@@ -162,7 +162,7 @@ Returns the class_id of batch class specified by its label.
 sub get_class_id {
     my ($self, $type) = @_;
     @results = $self->call_procedure(
-                                     funcname => 'batch_get_class_id', 
+                                     funcname => 'batch_get_class_id',
                                      args     => [$type]
     );
     my $result = pop @results;
@@ -171,7 +171,7 @@ sub get_class_id {
 
 =item post
 
-Posts a batch to the books and makes the vouchers show up in transaction 
+Posts a batch to the books and makes the vouchers show up in transaction
 reports, financial statements, and more.
 
 =cut
@@ -195,7 +195,7 @@ sub delete {
 }
 
 =item list_vouchers
-Returns a list of all vouchers in the batch and attaches that list to 
+Returns a list of all vouchers in the batch and attaches that list to
 $self->{vouchers}
 
 =cut

@@ -17,29 +17,29 @@ BEGIN
         RAISE EXCEPTION 'Lot not found';
     END IF;
 
-    UPDATE parts SET onhand = onhand 
+    UPDATE parts SET onhand = onhand
                               - (select t_mfg_lot.qty from mfg_lot_item
                                   WHERE parts_id = parts.id AND
                                         mfg_lot_id = $1)
-     WHERE id in (select parts_id from mfg_lot_item 
+     WHERE id in (select parts_id from mfg_lot_item
                    WHERE mfg_lot_id = $1);
 
-    UPDATE parts SET onhand = onhand + t_mfg_lot.qty 
+    UPDATE parts SET onhand = onhand + t_mfg_lot.qty
      where id = t_mfg_lot.parts_id;
 
     INSERT INTO gl (reference, description, transdate, approved)
-    values ('mfg-' || $1::TEXT, 'Manufacturing lot', 
+    values ('mfg-' || $1::TEXT, 'Manufacturing lot',
             now(), true);
 
     INSERT INTO invoice (trans_id, parts_id, qty, allocated)
     SELECT currval('id')::int, parts_id, qty, 0
       FROM mfg_lot_item WHERE mfg_lot_id = $1;
 
-    PERFORM cogs__add_for_ar_line(id) FROM invoice 
+    PERFORM cogs__add_for_ar_line(id) FROM invoice
       WHERE trans_id = currval('id')::int;
-      
 
-    PERFORM * FROM invoice 
+
+    PERFORM * FROM invoice
       WHERE qty + allocated <> 0 AND trans_id = currval('id')::int;
 
     IF FOUND THEN
@@ -47,9 +47,9 @@ BEGIN
     END IF;
 
     INSERT INTO invoice (trans_id, parts_id, qty, allocated, sellprice)
-    SELECT currval('id')::int, t_mfg_lot.parts_id, t_mfg_lot.qty * -1, 0, 
+    SELECT currval('id')::int, t_mfg_lot.parts_id, t_mfg_lot.qty * -1, 0,
            sum(amount) / t_mfg_lot.qty
-      FROM acc_trans 
+      FROM acc_trans
      WHERE amount < 0 and trans_id = currval('id')::int;
 
     PERFORM cogs__add_for_ap_line(currval('invoice_id_seq')::int);
@@ -57,7 +57,7 @@ BEGIN
     -- move from reverse COGS.
     INSERT INTO acc_trans(trans_id, chart_id, transdate, amount)
     SELECT trans_id, chart_id, transdate, amount * -1
-      FROM acc_trans 
+      FROM acc_trans
      WHERE amount < 0 and trans_id = currval('id')::int;
 
     -- difference goes into inventory
@@ -87,15 +87,15 @@ DROP TYPE IF EXISTS goods_search_result CASCADE;
 
 CREATE TYPE goods_search_result AS (
 partnumber text,
-id int, 
-description text, 
-onhand numeric, 
-unit text, 
+id int,
+description text,
+onhand numeric,
+unit text,
 priceupdate date,
 partsgroup text,
-listprice numeric, 
-sellprice numeric, 
-lastcost numeric, 
+listprice numeric,
+sellprice numeric,
+lastcost numeric,
 avgcost numeric,
 markup numeric,
 bin text,
@@ -115,25 +115,25 @@ DROP FUNCTION IF EXISTS goods__search
  in_model text, in_drawing text, in_microfiche text,
  in_status text, in_date_from date, in_date_to date,
  in_sales_invoices bool, in_purchase_invoices bool,
- in_sales_orders bool, in_purchase_orders bool, in_quotations bool, 
+ in_sales_orders bool, in_purchase_orders bool, in_quotations bool,
  in_rfqs bool);
 
-CREATE OR REPLACE FUNCTION goods__search 
+CREATE OR REPLACE FUNCTION goods__search
 (in_partnumber text, in_description text,
  in_partsgroup_id int, in_serial_number text, in_make text,
  in_model text, in_drawing text, in_microfiche text,
  in_status text, in_date_from date, in_date_to date)
-RETURNS SETOF goods_search_result 
+RETURNS SETOF goods_search_result
 LANGUAGE PLPGSQL STABLE AS $$
 BEGIN
 
-RETURN QUERY 
-       SELECT p.partnumber, 
-              p.id, p.description, p.onhand, p.unit::text, p.priceupdate, 
+RETURN QUERY
+       SELECT p.partnumber,
+              p.id, p.description, p.onhand, p.unit::text, p.priceupdate,
               pg.partsgroup,
-              p.listprice, p.sellprice, p.lastcost, p.avgcost, 
+              p.listprice, p.sellprice, p.lastcost, p.avgcost,
               CASE WHEN p.lastcost = 0 THEN NULL
-                   ELSE ((p.sellprice / p.lastcost) - 1) * 100 
+                   ELSE ((p.sellprice / p.lastcost) - 1) * 100
               END as markup,
               p.bin, p.rop, p.weight, p.notes, p.image, p.drawing, p.microfiche,
               m.make, m.model
@@ -141,9 +141,9 @@ RETURN QUERY
     LEFT JOIN makemodel m ON m.parts_id = p.id
     LEFT JOIN partsgroup pg ON p.partsgroup_id = pg.id
         WHERE (in_partnumber is null or p.partnumber ilike in_partnumber || '%')
-              AND (in_description is null 
+              AND (in_description is null
                   or p.description @@ plainto_tsquery(in_description))
-              AND (in_partsgroup_id is null 
+              AND (in_partsgroup_id is null
                   or p.partsgroup_id = in_partsgroup_id )
               AND (in_make is null or m.make ilike in_make || '%')
               AND (in_model is null or m.model  ilike in_model || '%')
@@ -154,11 +154,11 @@ RETURN QUERY
                       (select parts_id from invoice
                         where in_serial_number is not null
                               and serialnumber = in_serial_number))
-              AND ((in_status = 'active' and not p.obsolete) 
+              AND ((in_status = 'active' and not p.obsolete)
                    OR (in_status = 'obsolete' and p.obsolete)
                    OR (in_status = 'short' and p.onhand <= p.rop)
                    OR (in_status = 'unused'
-                      AND NOT EXISTS (select 1 FROM invoice 
+                      AND NOT EXISTS (select 1 FROM invoice
                                        WHERE parts_id = p.id
                                        UNION
                                       SELECT 1 FROM orderitems
@@ -170,7 +170,7 @@ DROP FUNCTION IF EXISTS partsgroups__list_all();
 
 CREATE OR REPLACE FUNCTION partsgroup__search(in_pricegroup text)
 RETURNS SETOF partsgroup LANGUAGE SQL STABLE AS $$
-  SELECT * FROM partsgroup 
+  SELECT * FROM partsgroup
    WHERE $1 is null or partsgroup ilike $1 || '%'
 ORDER BY partsgroup;
 $$;
@@ -192,18 +192,18 @@ CREATE TYPE inv_activity_line AS (
    receivable numeric,
    payable numeric
 );
-   
+
 CREATE OR REPLACE FUNCTION inventory__activity
 (in_from_date date, in_to_date date, in_partnumber text, in_description text)
 RETURNS SETOF inv_activity_line LANGUAGE SQL AS
 $$
-    SELECT p.id, p.description, p.partnumber,  
+    SELECT p.id, p.description, p.partnumber,
            SUM(CASE WHEN transtype = 'ar' THEN i.qty ELSE 0 END) AS sold,
            SUM(CASE WHEN transtype = 'ar' THEN i.sellprice * i.qty ELSE 0 END)
            AS receivable,
-           SUM(CASE WHEN transtype = 'ap' THEN i.qty * -1 ELSE 0 END) 
+           SUM(CASE WHEN transtype = 'ap' THEN i.qty * -1 ELSE 0 END)
            AS payable,
-           SUM(CASE WHEN transtype = 'ap' THEN -1 * i.sellprice * i.qty ELSE 0 
+           SUM(CASE WHEN transtype = 'ap' THEN -1 * i.sellprice * i.qty ELSE 0
                 END) AS expenses
       FROM invoice i
       JOIN parts p ON (i.parts_id = p.id)
@@ -234,7 +234,7 @@ CREATE TYPE part_at_date AS (
 DROP VIEW IF EXISTS invoice_sum CASCADE;
 DROP VIEW IF EXISTS order_sum CASCADE;
 
--- since we are dealing with physical counts care must be taken with the 
+-- since we are dealing with physical counts care must be taken with the
 -- approval process during inventory counting.
 CREATE VIEW invoice_sum AS
 SELECT a.transdate, sum(i.qty) as qty, i.parts_id
@@ -245,7 +245,7 @@ SELECT a.transdate, sum(i.qty) as qty, i.parts_id
  GROUP BY a.transdate, i.parts_id;
 
 CREATE VIEW order_sum AS
-SELECT oe.transdate, 
+SELECT oe.transdate,
        sum(oi.ship * case when oe_class_id = 1 THEN 1 ELSE -1 END) as qty,
        oi.parts_id
   FROM orderitems oi
@@ -262,15 +262,15 @@ WITH RECURSIVE assembly_comp (a_id, parts_id, qty) AS (
      SELECT ac.a_id, a.parts_id, ac.qty * a.qty
        FROM assembly a JOIN assembly_comp ac ON a.parts_id = ac.parts_id
 )
-     SELECT p.id, p.partnumber, 
-            sum((coalesce(i.qty, 0) + coalesce(oi.qty, 0)) * a.qty ) 
+     SELECT p.id, p.partnumber,
+            sum((coalesce(i.qty, 0) + coalesce(oi.qty, 0)) * a.qty )
        FROM parts p
   LEFT JOIN assembly_comp a ON a.a_id = p.id
   LEFT JOIN invoice_sum i ON i.parts_id = p.id OR a.parts_id = i.parts_id
   LEFT JOIN order_sum oi ON oi.parts_id = p.id OR a.parts_id = i.parts_id
-      WHERE p.id = $1 OR p.partnumber = $2 
+      WHERE p.id = $1 OR p.partnumber = $2
             OR (p.id IN (select parts_id FROM makemodel WHERE barcode = $2)
-               AND NOT EXISTS (select id from parts 
+               AND NOT EXISTS (select id from parts
                                 where partnumber = $2 AND NOT obsolete
             ))
             and (i.transdate is null or i.transdate <= $3)
@@ -279,7 +279,7 @@ WITH RECURSIVE assembly_comp (a_id, parts_id, qty) AS (
 $$;
 
 CREATE OR REPLACE FUNCTION inventory_adjust__save_line
-(in_adjust_id int, in_parts_id int, 
+(in_adjust_id int, in_parts_id int,
 in_counted numeric, in_expected numeric, in_variance numeric)
 RETURNS inventory_report_line
 LANGUAGE SQL AS
@@ -311,8 +311,8 @@ BEGIN
 SELECT * INTO inv FROM inventory_report where id = in_id;
 
 INSERT INTO ar (entity_credit_account, invnumber, invoice, approved,
-                amount, netamount, transdate) 
-VALUES (setting__get('inventory_ar_eca'), setting_increment('sinumber'), 
+                amount, netamount, transdate)
+VALUES (setting__get('inventory_ar_eca'), setting_increment('sinumber'),
         't', 'f', 0, 0, inv.transdate);
 
 SELECT * INTO t_ar FROM ar WHERE id = currval('id');
@@ -353,14 +353,14 @@ SELECT t_ap.id, p.id, p.description, l.variance * -1, p.sellprice, 3, 0
  WHERE l.adjust_id = in_id;
 
 INSERT INTO acc_trans (trans_id, chart_id, amount, transdate, approved)
-SELECT t_ap.id, p.expense_accno_id, sum(l.variance * -1 * p.lastcost), 
+SELECT t_ap.id, p.expense_accno_id, sum(l.variance * -1 * p.lastcost),
        inv.transdate, true
   FROM parts p
   JOIN inventory_report_line l ON p.id = l.parts_id
  WHERE l.adjust_id = in_id
  GROUP BY p.expense_accno_id
  UNION
-SELECT t_ap.id, eca.ar_ap_accno_id, sum(l.variance * -1 * p.lastcost), 
+SELECT t_ap.id, eca.ar_ap_accno_id, sum(l.variance * -1 * p.lastcost),
        inv.transdate, true
   FROM parts p
   JOIN inventory_report_line l ON p.id = l.parts_id
@@ -373,7 +373,7 @@ SELECT * INTO inv FROM inventory_report where id = in_id;
 RETURN inv;
 
 END;
-$$; 
+$$;
 
 CREATE OR REPLACE FUNCTION inventory_adjust__delete(in_id int)
 RETURNS BOOL LANGUAGE PLPGSQL AS
@@ -446,7 +446,7 @@ serial_number text
 );
 
 CREATE OR REPLACE FUNCTION goods__history(
-  in_date_from date, in_date_to date, 
+  in_date_from date, in_date_to date,
   in_partnumber text, in_description text, in_serial_number text,
   in_inc_po bool, in_inc_so bool, in_inc_quo bool, in_inc_rfq bool,
   in_inc_is bool, in_inc_ir bool
@@ -473,15 +473,15 @@ RETURN QUERY
           SELECT id, 'ar' as o_table, invnumber as ordnumber, 'is' as oe_class,
                  null, transdate, entity_credit_account
             FROM ar
-           UNION 
+           UNION
           SELECT id, 'ap' as o_table, invnumber as ordnumber, 'ir' as oe_class,
                  null, transdate, entity_credit_account
-            FROM ap) o ON o.id = i.trans_id 
+            FROM ap) o ON o.id = i.trans_id
                           AND (o_table = 'oe') = (i_type = 'o')
     JOIN entity_credit_account eca ON o.entity_credit_account = eca.id
-    JOIN entity e ON e.id = eca.entity_id 
+    JOIN entity e ON e.id = eca.entity_id
    WHERE (in_partnumber is null or p.partnumber like in_partnumber || '%')
-         AND (in_description IS NULL 
+         AND (in_description IS NULL
               OR p.description @@ plainto_tsquery(in_description))
          AND (in_date_from is null or in_date_from <= o.transdate)
          and (in_date_to is null or in_date_to >= o.transdate)
