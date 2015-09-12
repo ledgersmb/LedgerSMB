@@ -14,7 +14,6 @@ list of matching accounts in a ul/li pair
 =cut
 
 package LedgerSMB::Scripts::journal;
-our $VERSION = '1.0';
 
 use LedgerSMB;
 use LedgerSMB::Template;
@@ -24,6 +23,9 @@ use LedgerSMB::Report::COA;
 use LedgerSMB::REST_Format::json;
 use CGI::Simple;
 use strict;
+use warnings;
+
+our $VERSION = '1.0';
 
 =pod
 

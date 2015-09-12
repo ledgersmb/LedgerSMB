@@ -33,6 +33,8 @@ holders, see the CONTRIBUTORS file.
 
 package LedgerSMB::Template::TTI18N;
 
+use strict;
+use warnings;
 use LedgerSMB::Locale;
 
 my %locales; # Cache string-loaded locales

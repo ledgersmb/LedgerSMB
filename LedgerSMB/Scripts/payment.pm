@@ -54,7 +54,7 @@ use LedgerSMB::PGNumber;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Invoices::Payments;
 use strict;
-
+use warnings;
 
 # CT:  A few notes for future refactoring of this code:
 # 1:  I don't think it is a good idea to make the UI too dependant on internal

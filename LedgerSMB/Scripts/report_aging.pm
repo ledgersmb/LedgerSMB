@@ -11,7 +11,6 @@ This module provides AR/AP aging reports and statements for LedgerSMB.
 =cut
 
 package LedgerSMB::Scripts::report_aging;
-our $VERSION = '1.0';
 
 use LedgerSMB;
 use LedgerSMB::Template;
@@ -20,6 +19,8 @@ use LedgerSMB::Report::Aging;
 use LedgerSMB::Scripts::reports;
 use strict;
 use warnings;
+
+our $VERSION = '1.0';
 
 =pod
 

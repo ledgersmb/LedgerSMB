@@ -14,6 +14,7 @@ use LedgerSMB::Entity::Person;
 use LedgerSMB::Entity::Bank;
 use LedgerSMB::Report::Contact::Search;
 use strict;
+use warnings;
 
 =head1 SYNOPSIS
 

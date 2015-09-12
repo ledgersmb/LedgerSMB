@@ -6,6 +6,7 @@ use LedgerSMB::DBObject::EOY;
 use Log::Log4perl;
 use Data::Dumper;
 use strict;
+use warnings;
 
 =pod
 

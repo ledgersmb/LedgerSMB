@@ -1,5 +1,7 @@
 package LedgerSMB::Scripts::admin;
+
 use strict;
+use warnings;
 
 =pod
 

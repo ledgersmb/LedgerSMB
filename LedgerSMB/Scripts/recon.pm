@@ -25,6 +25,7 @@ use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Reconciliation::Summary;
 use Data::Dumper;
 use strict;
+use warnings;
 
 =over
 

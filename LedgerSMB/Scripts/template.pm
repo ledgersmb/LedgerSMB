@@ -5,6 +5,10 @@ LedgerSMB::Scripts::template - Template editing workflows for LedgerSMB
 =cut
 
 package LedgerSMB::Scripts::template;
+
+use strict;
+use warnings;
+
 use LedgerSMB::Template::DB;
 use LedgerSMB::Report::Listings::Templates;
 use LedgerSMB::Template;

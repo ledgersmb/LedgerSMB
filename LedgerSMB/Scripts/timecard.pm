@@ -24,6 +24,9 @@ use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Setting;
 use DateTime;
+use strict;
+use warnings;
+
 
 =head1 ROUTINES
 

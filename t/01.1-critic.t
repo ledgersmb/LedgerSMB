@@ -14,7 +14,7 @@ sub test_files {
 
     for my $file (@$files) {
         my @findings = $critic->critique($file);
-        
+
         ok(scalar(@findings) == 0, "Critique for $file");
         for my $finding (@findings) {
             diag($finding->description);
@@ -33,10 +33,11 @@ sub collect {
 find(\&collect, 'LedgerSMB/', 'bin/');
 
 my @on_disk_oldcode =
-    grep { m#^bin/# } @on_disk;
+    grep { m#^bin/# || m#^LedgerSMB/..\.pm# } @on_disk;
 
-@on_disk = 
+@on_disk =
     grep { ! m#^bin/# }
+    grep { ! m#^LedgerSMB/..\.pm# }
     grep { ! m#^LedgerSMB/Auth/# }
     @on_disk;
 
@@ -58,13 +59,15 @@ plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
                               'Objects',
                               'RegularExpressions',
                               'Subroutines',
-                              'TestingAndDebugging',
+                              'TestingAndDebugging::ProhibitNoStrict',
+                              'TestingAndDebugging::ProhibitNoWarnings',
                               'ValuesAndExpressions',
                               'Variables'
                 ],
                 -include => [ 'ProhibitTrailingWhitespace',
                               'ProhibitHardTabs',
                               'Modules',
+                              'TestingAndDebugging',
                 ]),
             \@on_disk);
 
