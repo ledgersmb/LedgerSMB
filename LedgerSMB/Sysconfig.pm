@@ -31,7 +31,7 @@ our @io_lineitem_columns = qw(unit onhand sellprice discount linetotal);
 #
 our @newscripts = qw(
    account.pl admin.pl asset.pl budget_reports.pl budgets.pl business_unit.pl
-   configuration.pl contact.pl contact_reports.pl document_series.pl drafts.pl
+   configuration.pl contact.pl contact_reports.pl drafts.pl
    file.pl goods.pl import_csv.pl inventory.pl invoice.pl inv_reports.pl
    journal.pl login.pl lreports_co.pl menu.pl order.pl payment.pl payroll.pl
    pnl.pl recon.pl report_aging.pl reports.pl setup.pl taxform.pl template.pl
@@ -39,10 +39,10 @@ our @newscripts = qw(
 );
 
 our @scripts = (
-    'aa.pl', 'am.pl',      'ap.pl',
-    'ar.pl', 'arap.pl',  'arapprn.pl', 'bp.pl',   'gl.pl',
-    'ic.pl',  'ir.pl',
-    'is.pl', 'jc.pl',    'oe.pl',       'pe.pl',  'pos.pl',     'ps.pl',
+    'aa.pl', 'am.pl',    'ap.pl',
+    'ar.pl', 'arap.pl',  'arapprn.pl', 'gl.pl',
+    'ic.pl', 'ir.pl',
+    'is.pl', 'oe.pl',    'pe.pl',
     'pw.pl',
 );
 
