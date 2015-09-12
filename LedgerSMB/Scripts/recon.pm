@@ -23,7 +23,6 @@ use LedgerSMB::DBObject::Reconciliation;
 use LedgerSMB::Setting;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Reconciliation::Summary;
-use Data::Dumper;
 use strict;
 use warnings;
 
@@ -501,8 +500,6 @@ sub pending {
 sub __default {
 
     my ($request) = @_;
-
-    $request->error(Dumper($request));
 
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base=>$request, copy=>'all'});
     my $template;

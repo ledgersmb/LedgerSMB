@@ -317,9 +317,6 @@ sub _main_screen {
         format => 'HTML'
     );
 
-    use Data::Dumper;
-    $Data::Dumper::Sortkeys = 1;
-    #die '<pre>' . Dumper($request) . '</pre>';
     my @country_list = LedgerSMB->call_procedure(
                      funcname => 'location_list_country'
       );
@@ -430,7 +427,6 @@ Not fully documented because this will go away as soon as possible.
 sub dispatch_legacy {
     our ($request) = shift @_;
     use LedgerSMB::Form;
-    use Data::Dumper;
     my $aa;
     my $inv;
     my $otype;
@@ -590,8 +586,6 @@ sub save_person {
     my $person = LedgerSMB::Entity::Person->new(
               %$request
     );
-    use Data::Dumper;
-    $Data::Dumper::Sortkeys = 1;
     $request->{target_div} = 'credit_div';
     $person->save;
     _main_screen($request, undef, $person);

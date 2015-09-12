@@ -77,8 +77,6 @@ TT2 system.
 
 =cut
 
-use Data::Dumper;
-
 sub payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
@@ -447,7 +445,6 @@ This displays the bulk payment screen with current data.
 
 =cut
 
-use Data::Dumper;
 sub display_payments {
     my ($request) = @_;
     my $payment =  LedgerSMB::DBObject::Payment->new({'base' => $request});
@@ -626,9 +623,7 @@ sub payment1_5 {
 my ($request)    = @_;
 #my $locale       = $request->{_locale};#avoid duplicating variables as much as possible?
 my  $dbPayment = LedgerSMB::DBObject::Payment->new({'base' => $request});
-#print STDERR localtime()." payment.pl payment1_5 dbPayment=".Data::Dumper::Dumper(\$dbPayment)."\n";
 my @array_options = $dbPayment->get_entity_credit_account();
-#print STDERR localtime()." payment.pl payment1_5 \$\#array_options=".Data::Dumper::Dumper(\@array_options)."\n";
 if ($#array_options == -1) {
    &payment($request);
 } elsif ($#array_options == 0) {
@@ -858,7 +853,6 @@ for my $ref (0 .. $#array_options) {
          #$request->{"topay_fx_$array_options[$ref]->{invoice_id}"} = "$due_fx";
          $request_topay_fx_bigfloat=$due_fx;
      }
- #print STDERR localtime()." payment.pl array=".Data::Dumper::Dumper($array_options[$ref])."\n";
  my $paid = $array_options[$ref]->{amount} - $array_options[$ref]->{due} - $array_options[$ref]->{discount};
  my $paid_formatted=$paid->to_output;
  #Now its time to build the link to the invoice :)

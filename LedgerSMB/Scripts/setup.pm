@@ -34,7 +34,6 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Setting;
 use Try::Tiny;
-use Data::Dumper;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');
 
@@ -146,15 +145,12 @@ my @login_actions_dispatch_table =
 sub login {
     use LedgerSMB::Locale;
     my ($request) = @_;
-    $logger->trace("\$request=$request \$request->{dbh}=$request->{dbh} request=".Data::Dumper::Dumper(\$request));
     if (!$request->{database}){
         list_databases($request);
         return;
     }
     my $database = _get_database($request);
-    $logger->trace("\$database=".Data::Dumper::Dumper(\$database));
     my $server_info = $database->server_version;
-    $logger->trace("\$server_info=".Data::Dumper::Dumper(\$server_info));
 
     my $version_info = $database->get_info();
 
