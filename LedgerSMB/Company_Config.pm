@@ -29,6 +29,7 @@ namespace (scope of which is 'my') and setting keys as expected.
 
 package LedgerSMB::Company_Config;
 use strict;
+use warnings;
 use base qw(LedgerSMB);
 use LedgerSMB::Setting;
 use LedgerSMB::App_State;

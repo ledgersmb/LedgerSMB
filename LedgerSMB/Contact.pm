@@ -36,7 +36,10 @@ your software.
 
 package LedgerSMB::Contact;
 
-use base LedgerSMB::PGOld;
+use strict;
+use warnings;
+
+use base qw(LedgerSMB::PGOld);
 
 
 sub save {

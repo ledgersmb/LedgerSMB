@@ -27,8 +27,10 @@ use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::DBObject::User;
 use LedgerSMB::App_State;
-our $VERSION = 1.0;
 use strict;
+use warnings;
+
+our $VERSION = 1.0;
 
 my $slash = "::";
 
