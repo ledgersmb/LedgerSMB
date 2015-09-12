@@ -265,26 +265,133 @@ $$ Returns set of accounts where the tax attribute is true.$$;
 
 CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS setof chart AS
 $$
-SELECT * from chart where id = $1 and charttype = 'A';
+select c.id, c.accno, c.description,
+       'A'::text as charttype, c.category, concat_colon(l.description) as link,
+       heading, gifi_accno, contra, tax
+  from account c
+  left join account_link l
+    ON (c.id = l.account_id)
+  where  id = $1
+group by c.id, c.accno, c.description, c.category,
+         c.heading, c.gifi_accno, c.contra, c.tax;
 $$ LANGUAGE sql;
 
 COMMENT ON FUNCTION account_get(in_id int) IS
 $$Returns an entry from the chart view which matches the id requested, and which
 is an account, not a heading.$$;
 
+CREATE OR REPLACE FUNCTION account__list_translations(in_id int)
+RETURNS account_translation AS
+$$
+   SELECT * FROM account_translation WHERE trans_id = $1;
+$$ LANGUAGE sql;
+
+COMMENT ON FUNCTION account__list_translations(in_id int) IS
+$$Returns the list of translations for the given account.$$;
+
+CREATE OR REPLACE FUNCTION account__save_translation(
+       in_id int, in_language_code text, in_description text)
+RETURNS void AS
+$$
+BEGIN
+   UPDATE account_translation
+      SET description = in_description
+    WHERE language_code = in_language_code
+      AND trans_id = in_id;
+
+   IF NOT FOUND THEN
+      INSERT INTO account_translation
+             (trans_id, language_code, description)
+      VALUES (in_id, in_language_code, in_description);
+   END IF;
+   RETURN;
+END;$$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION account__save_translation(in_id int,
+           in_language_code text, in_description text) IS
+$$Saves the translation for the given account, creating a new
+translation if none existed for the account+language combination.$$;
+
+CREATE OR REPLACE FUNCTION account__delete_translation(
+       in_id int, in_language_code text)
+RETURNS void AS
+$$
+   DELETE FROM account_translation
+    WHERE trans_id = $1
+      AND language_code = $2;
+$$ LANGUAGE sql;
+
+COMMENT ON FUNCTION account__delete_translation(
+       in_id int, in_language_code text) IS
+$$Deletes the translation for the account+language combination.$$;
+
+
+
 CREATE OR REPLACE FUNCTION account_heading_get (in_id int) RETURNS chart AS
 $$
 DECLARE
 	account chart%ROWTYPE;
 BEGIN
-	SELECT * INTO account FROM chart WHERE id = in_id AND charttype = 'H';
-	RETURN account;
+SELECT ah.id, ah.accno, ah.description,
+       'H' as charttype, NULL as category, NULL as link,
+       ah.parent_id as account_heading,
+       null as gifi_accno, false as contra,
+       false as tax
+       INTO account
+   from account_heading ah
+  WHERE id = in_id;
+  RETURN account;
 END;
 $$ LANGUAGE plpgsql;
 
 COMMENT ON FUNCTION account_heading_get(in_id int) IS
 $$Returns an entry from the chart view which matches the id requested, and which
 is a heading, not an account.$$;
+
+CREATE OR REPLACE FUNCTION account_heading__list_translations(in_id int)
+RETURNS account_heading_translation AS
+$$
+   SELECT * FROM account_heading_translation WHERE trans_id = $1;
+$$ LANGUAGE sql;
+
+COMMENT ON FUNCTION account_heading__list_translations(in_id int) IS
+$$Returns the list of translations for the given account.$$;
+
+CREATE OR REPLACE FUNCTION account_heading__save_translation(
+       in_id int, in_language_code text, in_description text)
+RETURNS void AS
+$$
+BEGIN
+   UPDATE account_heading_translation
+      SET description = in_description
+    WHERE language_code = in_language_code
+      AND trans_id = in_id;
+
+   IF NOT FOUND THEN
+      INSERT INTO account_heading_translation
+             (trans_id, language_code, description)
+      VALUES (in_id, in_language_code, in_description);
+   END IF;
+   RETURN;
+END;$$ LANGUAGE plpgsql;
+
+COMMENT ON FUNCTION account_heading__save_translation(in_id int,
+           in_language_code text, in_description text) IS
+$$Saves the translation for the given account, creating a new
+translation if none existed for the account+language combination.$$;
+
+CREATE OR REPLACE FUNCTION account_heading__delete_translation(
+       in_id int, in_language_code text)
+RETURNS void AS
+$$
+   DELETE FROM account_heading_translation
+    WHERE trans_id = $1
+      AND language_code = $2;
+$$ LANGUAGE sql;
+
+COMMENT ON FUNCTION account_heading__delete_translation(
+       in_id int, in_language_code text) IS
+$$Deletes the translation for the account+language combination.$$;
 
 CREATE OR REPLACE FUNCTION account_has_transactions (in_id int) RETURNS bool AS
 $$

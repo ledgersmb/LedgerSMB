@@ -115,7 +115,8 @@ BEGIN
               AND ((in_business_units = '{}' OR in_business_units IS NULL)
                OR bu_tree.id IS NOT NULL)
        )
-       SELECT a.id, a.accno, a.description, a.gifi_accno,
+       SELECT a.id, a.accno,
+         coalesce(at.description, a.description) as description, a.gifi_accno,
          case when in_from_date is null then 0 else
               COALESCE(t_balance_sign, 
                       CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END )
@@ -147,11 +148,17 @@ BEGIN
     LEFT JOIN ac ON ac.chart_id = a.id
     LEFT JOIN account_checkpoint cp ON cp.account_id = a.id
               AND end_date = t_roll_forward
+    LEFT JOIN (SELECT trans_id, description
+                 FROM account_translation at
+              INNER JOIN user_preference up ON up.language = at.language_code
+              INNER JOIN users ON up.id = users.id
+                WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
         WHERE (in_accounts IS NULL OR in_accounts = '{}' 
                OR a.id = ANY(in_accounts))
               AND (in_heading IS NULL OR in_heading = a.heading)
-     GROUP BY a.id, a.accno, a.description, a.category, a.gifi_accno,
-              cp.end_date, cp.account_id, cp.amount_bc, cp.debits, cp.credits
+     GROUP BY a.id, a.accno, coalesce(at.description, a.description),
+              a.category, a.gifi_accno, cp.end_date, cp.account_id,
+              cp.amount_bc, cp.debits, cp.credits
        HAVING abs(cp.amount_bc) > 0 or count(ac) > 0
      ORDER BY a.accno;
 END;

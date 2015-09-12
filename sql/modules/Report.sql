@@ -637,7 +637,8 @@ WITH a_bs AS (
    SELECT a.id,
           CASE WHEN a.category IN ('I', 'E') THEN 'Q' ELSE a.category END
           AS category,
-          CASE WHEN a.category NOT IN ('I', 'E') THEN a.description
+          CASE WHEN a.category NOT IN ('I', 'E') THEN
+               coalesce(at.description, a.description)
                ELSE 'Current Earnings'
           END as description,
           CASE WHEN a.category IN ('I', 'E') THEN NULL ELSE a.accno END
@@ -645,23 +646,30 @@ WITH a_bs AS (
           CASE WHEN a.category IN ('I', 'E') THEN NULL ELSE a.heading END
           AS heading
      FROM account a
+     LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
 )
-   SELECT a2.id, a2.accno, a.description, a.category, 
+   SELECT CASE WHEN a.accno IS NULL THEN NULL ELSE a.id END,
+          a.accno, a.description, a.category, 
           sum(ac.amount_bc * CASE WHEN  a.category = 'A' THEN -1 ELSE 1 END), 
-          at.path
+          CASE WHEN a.accno IS NULL THEN NULL ELSE aht.path END
      FROM a_bs a
-LEFT JOIN account_heading_tree at ON a.heading = at.id
+LEFT JOIN account_heading_tree aht ON a.heading = aht.id
      JOIN acc_trans ac ON ac.approved AND a.id = ac.chart_id
      JOIN tx_report t ON t.approved AND t.id = ac.trans_id
-LEFT JOIN account a2 ON a.id = a2.id AND a2.category NOT IN ('I', 'E')
     WHERE ac.transdate <= coalesce($1, (select max(transdate) from acc_trans))
- GROUP BY a2.id, a2.accno, a.description, a.category, at.path
+ GROUP BY CASE WHEN a.accno IS NULL THEN NULL ELSE a.id END, 
+          a.accno, a.description, a.category,
+          CASE WHEN a.accno IS NULL THEN NULL ELSE aht.path END
  ORDER BY CASE WHEN a.category = 'A' THEN 1
                WHEN a.category = 'L' THEN 2
                ELSE 3
           END,
-          at.path,
-          a2.accno NULLS LAST;
+          CASE WHEN a.accno IS NULL THEN NULL ELSE aht.path END,
+          a.accno NULLS LAST;
 $$;
 
 COMMENT ON function report__balance_sheet(date) IS
