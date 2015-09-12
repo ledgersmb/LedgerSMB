@@ -14,7 +14,7 @@ Manages attachments to financial transactions (in 1.3, AR, AP, and GL entries)
 
 =item  LedgerSMB::File
 
-Provides all properties and accessors.  This subclass provides additional 
+Provides all properties and accessors.  This subclass provides additional
 methods only
 
 =cut
@@ -42,7 +42,7 @@ sub attach {
 
 =item attach_all_from_order({id = int})
 
-Links all files to a specific transaction from a specific order.  Note this 
+Links all files to a specific transaction from a specific order.  Note this
 only handles files that were attached to orders to start with.
 
 =cut

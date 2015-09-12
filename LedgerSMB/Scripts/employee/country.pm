@@ -12,7 +12,7 @@ none really.  This just allows viewing of certain info,
 
 =item country_divs
 
-This is a hashref where country_id => arrayref of hashrefs, where that hashref 
+This is a hashref where country_id => arrayref of hashrefs, where that hashref
 has the following keys:
 
 =over

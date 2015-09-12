@@ -8,11 +8,11 @@ LedgerSMB::REST_Format::json - JSON support for LedgerSMB RESTful web services.
 my $hash = LedgerSMB::REST_Format::json::from_input($request);
 my $json = LedgerSMB::REST_Format::json::to_output($request);
 
-=head1 COPYRIGHT 
+=head1 COPYRIGHT
 
 Copyright (C) 2012 The LedgerSMB Core Team.
 
-This file may be used under the terms of the GNU General Public License 
+This file may be used under the terms of the GNU General Public License
 version 2 or at your option any later version.  Please see the included
 LICENSE.TXT file.
 
@@ -36,7 +36,7 @@ sub from_input{
 }
 
 sub to_output{
-    my $request = shift @_; 
+    my $request = shift @_;
     my $output = shift @_;
     return $json->encode($output);
 }

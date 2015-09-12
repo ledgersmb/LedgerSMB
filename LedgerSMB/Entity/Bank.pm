@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Entity::Bank - Bank account info for customers, vendors, 
+LedgerSMB::Entity::Bank - Bank account info for customers, vendors,
 employees, and more.
 
 =head1 SYNPOSIS
@@ -50,7 +50,7 @@ has 'credit_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item id
 
-If set this indicates this has been saved to the db. 
+If set this indicates this has been saved to the db.
 
 =cut
 
@@ -95,7 +95,7 @@ blessed reference.  All return results are objects.
 
 =cut
 
-dbmethod list => (funcname => 'list_bank_account', 
+dbmethod list => (funcname => 'list_bank_account',
                    arglist => ['entity_id'],
                funcschema => 'public',
            returns_objects => 1 );

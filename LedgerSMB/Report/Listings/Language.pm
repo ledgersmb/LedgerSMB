@@ -14,8 +14,8 @@ extends 'LedgerSMB::Report';
 
 =head1 DESCRIPTION
 
-The language list is used in a number of places for manual and automatic 
-translation.  Note the same listing is used for both manual and .po-based 
+The language list is used in a number of places for manual and automatic
+translation.  Note the same listing is used for both manual and .po-based
 translation so if you add new languages, you may have to add new translations
 to make them work in the UI.
 

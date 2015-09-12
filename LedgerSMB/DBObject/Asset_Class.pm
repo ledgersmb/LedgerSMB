@@ -21,15 +21,15 @@ Integer ID of record.
 
 Text description of asset class
 
-=item asset_account_id 
+=item asset_account_id
 
 Integer id of asset account.
 
-=item dep_account_id 
+=item dep_account_id
 
 Integer id of depreciation account.
 
-=item method 
+=item method
 
 Integer id of depreciation method.
 
@@ -47,9 +47,9 @@ use strict;
 =item save
 
 Properties used:
-id:  (Optional) ID of existing class to overwrite. 
+id:  (Optional) ID of existing class to overwrite.
 asset_account_id: Account id to store asset values
-dep_account_id: Account id for depreciation information 
+dep_account_id: Account id for depreciation information
 method:  ID of depreciation method
 label:  Name of the asset class
 unit_label:  Label of the depreciation unit
@@ -65,7 +65,7 @@ sub save {
     return $ref;
 }
 
-=item get_metadata 
+=item get_metadata
 
 sets:
 

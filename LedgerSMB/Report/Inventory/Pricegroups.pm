@@ -32,7 +32,7 @@ has pricegroup => (is => 'ro', isa => 'Str', required => '0');
 
 =head2 columns
 
-=over 
+=over
 
 =item pricegroup
 

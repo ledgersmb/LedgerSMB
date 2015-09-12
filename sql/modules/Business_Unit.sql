@@ -4,10 +4,10 @@ CREATE OR REPLACE FUNCTION business_unit__list_classes(in_active bool, in_module
 RETURNS SETOF business_unit_class AS
 $$
 
-SELECT bc.* 
+SELECT bc.*
   FROM business_unit_class bc
  WHERE     (active = $1 OR $1 IS NULL)
-       AND (id IN (select bu_class_id 
+       AND (id IN (select bu_class_id
                      FROM bu_class_to_module bcm
                      JOIN lsmb_module mod ON mod.id = bcm.module_id
                     WHERE lower(label) = lower($2))
@@ -17,7 +17,7 @@ ORDER BY ordering;
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION business_unit__list_classes(in_active bool, in_module text) IS
-$$ This function lists all business unit clases.  If in_active is true, then 
+$$ This function lists all business unit clases.  If in_active is true, then
 only active classes are listed.  If it is false then only inactive classes are
 listed.  If it is null, then all classes are listed.$$;
 
@@ -26,14 +26,14 @@ AS
 $$ SELECT * FROM business_unit WHERE id = $1; $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION business_unit__list_by_class
-(in_business_unit_class_id int, in_active_on date, in_credit_id int, 
+(in_business_unit_class_id int, in_active_on date, in_credit_id int,
 in_strict_credit bool)
 RETURNS SETOF business_unit AS
 $$
 BEGIN
-RETURN QUERY SELECT * FROM business_unit 
-              WHERE (in_active_on BETWEEN coalesce(start_date, in_active_on) 
-                                      AND coalesce(end_date, in_active_on) 
+RETURN QUERY SELECT * FROM business_unit
+              WHERE (in_active_on BETWEEN coalesce(start_date, in_active_on)
+                                      AND coalesce(end_date, in_active_on)
                       OR in_active_on IS NULL)
                     AND (in_credit_id = credit_id
                         OR (credit_id IS NULL and in_strict_credit IS NOT TRUE)
@@ -70,15 +70,15 @@ level int
 CREATE OR REPLACE FUNCTION business_unit__get_tree_for(in_id int)
 RETURNS SETOF business_unit_short AS
 $$
-WITH RECURSIVE tree  (id, control_code, description,  start_date, end_date, 
+WITH RECURSIVE tree  (id, control_code, description,  start_date, end_date,
                       parent_id, path, level)
 AS (
-   SELECT id, control_code, description, start_date, end_date, parent_id, 
+   SELECT id, control_code, description, start_date, end_date, parent_id,
           ARRAY[parent_id] AS path, 1 as level
      FROM business_unit WHERE $1 = id
     UNION
-   SELECT t.id, t.control_code, t.description, t.start_date, t.end_date, 
-          t.parent_id,   
+   SELECT t.id, t.control_code, t.description, t.start_date, t.end_date,
+          t.parent_id,
           t.path || bu.id AS path, t.level + 1 as level
      FROM business_unit bu JOIN tree t ON t.parent_id = bu.id
 )
@@ -86,7 +86,7 @@ SELECT * FROM tree ORDER BY path;
 $$ LANGUAGE SQL;
 
 COMMENT ON FUNCTION business_unit__get_tree_for(in_id int) IS
-$$ This function returns tree-related records with the root of the tree being 
+$$ This function returns tree-related records with the root of the tree being
 the business unit of in_id.  $$;
 
 CREATE OR REPLACE FUNCTION business_unit_class__save_modules
@@ -104,12 +104,12 @@ $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION business_unit_class__get_modules(in_id int)
 RETURNS SETOF lsmb_module AS
-$$ SELECT * FROM lsmb_module 
+$$ SELECT * FROM lsmb_module
     WHERE id IN (select module_id from bu_class_to_module where bu_class_id = $1)
  ORDER BY id;
 $$ language sql;
 
-CREATE OR REPLACE FUNCTION business_unit_class__save 
+CREATE OR REPLACE FUNCTION business_unit_class__save
 (in_id int, in_label text, in_active bool, in_ordering int)
 RETURNS business_unit_class AS
 $$
@@ -164,10 +164,10 @@ UPDATE business_unit
 IF FOUND THEN
    t_id := in_id;
 ELSE
-   INSERT INTO business_unit 
+   INSERT INTO business_unit
           (class_id, control_code, description, start_date, end_date, parent_id,
            credit_id)
-   VALUES (in_class_id, in_control_code, in_description, in_start_date, 
+   VALUES (in_class_id, in_control_code, in_description, in_start_date,
            in_end_date, in_parent_id, in_credit_id);
     t_id := currval('business_unit_id_seq');
 END IF;
@@ -207,7 +207,7 @@ $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 DROP TRIGGER IF EXISTS eca_maintain_b_units ON entity_credit_account;
 DROP TRIGGER IF EXISTS eca_maintain_b_units_del ON entity_credit_account;
 
-CREATE TRIGGER eca_maintain_b_units AFTER INSERT OR UPDATE 
+CREATE TRIGGER eca_maintain_b_units AFTER INSERT OR UPDATE
        ON entity_credit_account
        FOR EACH ROW EXECUTE PROCEDURE eca_bu_trigger();
 

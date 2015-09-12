@@ -9,7 +9,7 @@ LedgerSMB
 
 =head1 METHODS
 
-=over 
+=over
 
 =item initialize()
 
@@ -19,8 +19,8 @@ Initializes the $settings hashref.
 
 =head1 DATA
 
-All data is contained in the LedgerSMB::Company_Config::settings hashref.  
-These are defined by looking at the @company_settings list in the current 
+All data is contained in the LedgerSMB::Company_Config::settings hashref.
+These are defined by looking at the @company_settings list in the current
 namespace (scope of which is 'my') and setting keys as expected.
 
 =head1 Copyright (C) 2006, The LedgerSMB core team.
@@ -45,7 +45,7 @@ our $settings = {};
 
 sub initialize{
    my ($self) = @_;
-   $settings= {map {$_ => LedgerSMB::Setting->get($_) } @company_settings}; 
+   $settings= {map {$_ => LedgerSMB::Setting->get($_) } @company_settings};
    { no strict 'refs';
    @{$settings->{curr}} = split (/:/, $settings->{curr});
    }

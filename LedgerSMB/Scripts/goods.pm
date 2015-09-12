@@ -53,7 +53,7 @@ sub search {
 
 =item search_partsgroups
 
-This routine searches partsgroups.  The partsgroup input is optionally set 
+This routine searches partsgroups.  The partsgroup input is optionally set
 for a prefix search
 
 =cut
@@ -66,7 +66,7 @@ sub search_partsgroups {
 
 =item search_pricegroups
 
-This routine searches pricegroups.  The pricegroup input is optionally set 
+This routine searches pricegroups.  The pricegroup input is optionally set
 for a prefix search
 
 =cut

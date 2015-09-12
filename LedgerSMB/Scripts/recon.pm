@@ -38,7 +38,7 @@ report_id.
 
 sub display_report {
     my ($request) = @_;
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy => 'all'}); 
+    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy => 'all'});
     _display_report($recon);
 }
 
@@ -47,7 +47,7 @@ sub display_report {
 Renders out a list of reports based on the search criteria passed to the
 search function.
 Meta-reports are report_id, date_range, and likely errors.
-Search criteria accepted are 
+Search criteria accepted are
 
 =over
 
@@ -71,11 +71,11 @@ and re-renders the reconciliation screen.
 sub update_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request});
-    $recon->{their_total} = LedgerSMB::PGNumber->from_input($recon->{their_total}) if defined $recon->{their_total}; 
+    $recon->{their_total} = LedgerSMB::PGNumber->from_input($recon->{their_total}) if defined $recon->{their_total};
     if ($recon->{line_order}){
        $recon->set_ordering(
-		{method => 'reconciliation__report_details_payee', 
-		column  => $recon->{line_order}}
+        {method => 'reconciliation__report_details_payee',
+        column  => $recon->{line_order}}
        );
     }
     $recon->save() if !$recon->{submitted};
@@ -98,7 +98,7 @@ sub select_all_recons {
     }
     update_recon_set($request);
 
-} 
+}
 
 =item reject
 
@@ -123,14 +123,14 @@ sub submit_recon_set {
     my ($request) = shift;
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request});
     $recon->submit();
-    my $template = LedgerSMB::Template->new( 
-            user => $request->{_user}, 
-    	    template => 'reconciliation/submitted', 
+    my $template = LedgerSMB::Template->new(
+            user => $request->{_user},
+            template => 'reconciliation/submitted',
             locale => $request->{_locale},
             format => 'HTML',
             path=>"UI");
     return $template->render($recon);
-    
+
 }
 
 =item save_recon_set
@@ -171,14 +171,14 @@ Displays search criteria screen
 
 sub search {
     my ($request) = @_;
-    
+
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base=>$request, copy=>'all'});
-	if (!$recon->{hide_status}){
-            $recon->{show_approved} = 1;        
-            $recon->{show_submitted} = 1;        
+    if (!$recon->{hide_status}){
+            $recon->{show_approved} = 1;
+            $recon->{show_submitted} = 1;
         }
         @{$recon->{recon_accounts}} = $recon->get_accounts();
-	unshift @{$recon->{recon_accounts}}, {id => '', name => '' };
+    unshift @{$recon->{recon_accounts}}, {id => '', name => '' };
     $recon->{report_name} = 'reconciliation_search';
     LedgerSMB::Scripts::reports::start_report($recon);
 }
@@ -207,19 +207,19 @@ sub _display_report {
         $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
         $recon->{can_approve} = $recon->is_allowed_role({allowed_roles => ['reconciliation_approve']});
         $recon->get();
-        my $template = LedgerSMB::Template->new( 
+        my $template = LedgerSMB::Template->new(
             user=> $recon->{_user},
-            template => 'reconciliation/report', 
+            template => 'reconciliation/report',
             locale => $recon->{_locale},
             format=>'HTML',
             path=>"UI"
         );
         $recon->{sort_options} = [
-		{id => 'clear_time', label => $recon->{_locale}->text('Clear date')},
-		{id => 'scn', label => $recon->{_locale}->text('Source')},
-		{id => 'post_date', label => $recon->{_locale}->text('Post Date')},
-		{id => 'our_balance', label => $recon->{_locale}->text('Our Balance')},
-		{id => 'their_balance', label => $recon->{_locale}->text('Their Balance')},
+        {id => 'clear_time', label => $recon->{_locale}->text('Clear date')},
+        {id => 'scn', label => $recon->{_locale}->text('Source')},
+        {id => 'post_date', label => $recon->{_locale}->text('Post Date')},
+        {id => 'our_balance', label => $recon->{_locale}->text('Our Balance')},
+        {id => 'their_balance', label => $recon->{_locale}->text('Their Balance')},
         ];
         if (!$recon->{line_order}){
            $recon->{line_order} = 'scn';
@@ -232,7 +232,7 @@ sub _display_report {
         if ($recon->{account_info}->{category} =~ /(A|E)/){
            $recon->{their_total} *= -1;
            $neg_factor = -1;
-           
+
         }
 
 
@@ -271,40 +271,40 @@ sub _display_report {
             $l->{our_credits} = $l->{our_credits}->to_output(money => 1);
         }
 
-	$recon->{zero_string} = LedgerSMB::PGNumber->from_input(0)->to_output(money => 1);
+    $recon->{zero_string} = LedgerSMB::PGNumber->from_input(0)->to_output(money => 1);
 
-	$recon->{statement_gl_calc} = $neg_factor * 
+    $recon->{statement_gl_calc} = $neg_factor *
                 ($recon->{their_total}
-		+ $recon->{outstanding_total} 
+        + $recon->{outstanding_total}
                 + $recon->{mismatch_our_total});
-	$recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
+    $recon->{out_of_balance} = $recon->{their_total} - $recon->{our_total};
         $recon->{cleared_total} = $recon->{cleared_total}->to_output(money => 1);
         $recon->{outstanding_total} = $recon->{outstanding_total}->to_output(money => 1);
-        $recon->{mismatch_our_debits} = 
+        $recon->{mismatch_our_debits} =
                 $recon->{mismatch_our_debits}->to_output(money => 1);
         $recon->{mismatch_our_credits} =
-		$recon->{mismatch_our_credits}->to_output(money => 1);
-        $recon->{mismatch_their_debits} = 
-		$recon->{mismatch_their_debits}->to_output(money => 1);
+        $recon->{mismatch_our_credits}->to_output(money => 1);
+        $recon->{mismatch_their_debits} =
+        $recon->{mismatch_their_debits}->to_output(money => 1);
         $recon->{mismatch_their_credits} =
-		$recon->{mismatch_their_credits}->to_output(money => 1);
+        $recon->{mismatch_their_credits}->to_output(money => 1);
         $recon->{statement_gl_calc} =
-		$recon->{statement_gl_calc}->to_output(money => 1);
-        $recon->{total_cleared_debits} = 
+        $recon->{statement_gl_calc}->to_output(money => 1);
+        $recon->{total_cleared_debits} =
                 $recon->{total_cleared_debits}->to_output(money => 1);
-        $recon->{total_cleared_credits} = 
+        $recon->{total_cleared_credits} =
                 $recon->{total_cleared_credits}->to_output(money => 1);
-        $recon->{total_uncleared_debits} = 
+        $recon->{total_uncleared_debits} =
                 $recon->{total_uncleared_debits}->to_output(money => 1);
-        $recon->{total_uncleared_credits} = 
+        $recon->{total_uncleared_credits} =
                 $recon->{total_uncleared_credits}->to_output(money => 1);
-	$recon->{their_total} = $recon->{their_total} * $neg_factor;
+    $recon->{their_total} = $recon->{their_total} * $neg_factor;
         $recon->{their_total} = $recon->{their_total}->to_output(money => 1);
-	$recon->{our_total} = $recon->{our_total}->to_output(money => 1);
-	$recon->{beginning_balance} = 
-		$recon->{beginning_balance}->to_output(money => 1);
-	$recon->{out_of_balance} = 
-		$recon->{out_of_balance}->to_output(money => 1);
+    $recon->{our_total} = $recon->{our_total}->to_output(money => 1);
+    $recon->{beginning_balance} =
+        $recon->{beginning_balance}->to_output(money => 1);
+    $recon->{out_of_balance} =
+        $recon->{out_of_balance}->to_output(money => 1);
 
         return $template->render($recon);
 }
@@ -318,7 +318,7 @@ Displays the new report screen.
 sub new_report {
     my ($request) = @_;
 
-    # Trap user error: dates accidentally entered in the amount field    
+    # Trap user error: dates accidentally entered in the amount field
     if ($request->{total} && $request->{total} =~ m|\d[/-]|){
         $request->error($request->{_locale}->text(
            'Invalid statement balance.  Hint: Try entering a number'
@@ -328,23 +328,23 @@ sub new_report {
     $request->{total} = LedgerSMB::PGNumber->from_input($request->{total});
     my $template;
     my $return;
-    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy => 'all'}); 
+    my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy => 'all'});
     # This method detection makes debugging a bit harder.
     # Not sure I like it but won't refactor until 1.4..... --CT
     #
     if ($request->type() eq "POST") {
-        
+
         # We can assume that we're doing something useful with new data.
         # We can also assume that we've got a file.
-        
-        # $self is expected to have both the file handling logic, as well as 
+
+        # $self is expected to have both the file handling logic, as well as
         # the logic to load the processing module.
-        
+
         # Why isn't this testing for errors?
         my ($report_id, $entries) = $recon->new_report($recon->import_file());
         if ($recon->{error}) {
             #$recon->{error};
-            
+
             $template = LedgerSMB::Template->new(
                 user=>$recon->{_user},
                 template=> 'reconciliation/upload',
@@ -357,12 +357,12 @@ sub new_report {
         _display_report($recon);
     }
     else {
-        
+
         # we can assume we're to generate the "Make a happy new report!" page.
         @{$recon->{accounts}} = $recon->get_accounts;
-        $template = LedgerSMB::Template->new( 
-            user => $recon->{_user}, 
-            template => 'reconciliation/upload', 
+        $template = LedgerSMB::Template->new(
+            user => $recon->{_user},
+            template => 'reconciliation/upload',
             locale => $recon->{_locale},
             format => 'HTML',
             path=>"UI"
@@ -370,7 +370,7 @@ sub new_report {
         return $template->render($recon);
     }
     return undef;
-    
+
 }
 
 =item delete_report($request)
@@ -379,21 +379,21 @@ Requires report_id
 
 This deletes a report.  Reports may not be deleted if approved (this will throw
 a database-level exception).  Users may delete their own reports if they have
-not yet been submitted for approval.  Those who have approval permissions may 
-delete any non-approved reports. 
+not yet been submitted for approval.  Those who have approval permissions may
+delete any non-approved reports.
 
 =cut
-                                                                               
+
 sub delete_report {
     my ($request) = @_;
-    
+
     my $recon = LedgerSMB::DBObject::Reconciliation->new({
-                         base=>$request, 
+                         base=>$request,
                          copy=>'all'
     });
-        
+
     my $resp = $recon->delete($request->{report_id});
-        
+
     delete($request->{report_id});
     return search($request);
 }
@@ -402,10 +402,10 @@ sub delete_report {
 
 Requires report_id
 
-Approves the given report based on id. Generally, the roles should be 
+Approves the given report based on id. Generally, the roles should be
 configured so as to disallow the same user from approving, as created the report.
 
-Returns a success page on success, returns a new report on failure, showing 
+Returns a success page on success, returns a new report on failure, showing
 the uncorrected entries.
 
 =cut
@@ -415,16 +415,16 @@ sub approve {
     if (!$request->close_form){
         return get_results($request);
     }
-    
+
     # Approve will also display the report in a blurred/opaqued out version,
     # with the controls removed/disabled, so that we know that it has in fact
-    # been cleared. This will also provide for return-home links, auditing, 
+    # been cleared. This will also provide for return-home links, auditing,
     # etc.
-    
+
     if ($request->type() eq "POST") {
-        
+
         # we need a report_id for this.
-        
+
         my $recon = LedgerSMB::DBObject::Reconciliation->new({base => $request, copy=> 'all'});
 
         my $template;
@@ -432,23 +432,23 @@ sub approve {
         if ($code == 0) {
 
             $template = LedgerSMB::Template->new(
-                user => $recon->{_user}, 
-                template => 'reconciliation/approved', 
+                user => $recon->{_user},
+                template => 'reconciliation/approved',
                 locale => $recon->{_locale},
                 format => 'HTML',
                 path=>"UI"
                 );
-                
+
             return $template->render($recon);
         }
         else {
-            
+
             # failure case
-            
-            $template = LedgerSMB::Template->new( 
-                user => $recon->{_user}, 
-        	    template => 'reconciliation/report', 
-        	locale => $recon->{_locale},
+
+            $template = LedgerSMB::Template->new(
+                user => $recon->{_user},
+                template => 'reconciliation/report',
+            locale => $recon->{_locale},
                 format => 'HTML',
                 path=>"UI"
                 );
@@ -464,19 +464,19 @@ sub approve {
 =item pending ($self, $request, $user)
 
 Requires {date} and {month}, to handle the month-to-month pending transactions
-in the database. No mechanism is provided to grab ALL pending transactions 
+in the database. No mechanism is provided to grab ALL pending transactions
 from the acc_trans table.
 
 =cut
 
 
 sub pending {
-    
+
     my ($request) = @_;
-    
+
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base=>$request, copy=>'all'});
     my $template;
-    
+
     $template= LedgerSMB::Template->new(
         user => $request->{_user},
         template=>'reconciliation/pending',
@@ -490,22 +490,22 @@ sub pending {
                 pending=>$recon->get_pending($request->{year}."-".$request->{month})
             }
         );
-    } 
+    }
     else {
-        
+
         return $template->render();
     }
 }
 
 sub __default {
-    
+
     my ($request) = @_;
-    
+
     $request->error(Dumper($request));
-    
+
     my $recon = LedgerSMB::DBObject::Reconciliation->new({base=>$request, copy=>'all'});
     my $template;
-    
+
     $template = LedgerSMB::Template->new(
         user => $request->{_user},
         template => 'reconciliation/list',

@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Report::Inventory::Search - Search for Goods and Services in 
+LedgerSMB::Report::Inventory::Search - Search for Goods and Services in
 LedgerSMB
 
 =head1 SYNPOSIS
@@ -18,7 +18,7 @@ with 'LedgerSMB::Report::Dates';
 =head1 DESCRIPTION
 
 This is the main inventory item search for goods and services in LedgerSMB
-starting with version 1.4.  Compared to LedgerSMB 1.3 this has no summary 
+starting with version 1.4.  Compared to LedgerSMB 1.3 this has no summary
 and details support and no searching for open vs closed invoices. The eqivalent
 of a summary report is found in the inventory activities report instead.
 
@@ -133,7 +133,7 @@ has sales_invoices => (is => 'ro', isa => 'Bool', required => 0);
 
 =item purchase_invoices bool
 
-If true, show parts attached to purchase/vendor invoices in the specified 
+If true, show parts attached to purchase/vendor invoices in the specified
 period.
 
 =cut
@@ -191,75 +191,75 @@ sub columns {
        type => 'href',
   href_base => 'ic.pl?action=edit&id=',
        name => LedgerSMB::Report::text('Part Number'),},
-   
+
     {col_id => 'description',
        type => 'text',
        name => LedgerSMB::Report::text('Description'),},
-   
+
     {col_id => 'onhand',
        type => 'text',
        name => LedgerSMB::Report::text('On Hand'),},
-   
+
     {col_id => 'unit',
        type => 'text',
        name => LedgerSMB::Report::text('Unit'),},
-   
+
     {col_id => 'rop',
        type => 'text',
        name => LedgerSMB::Report::text('ROP'),},
-   
+
     {col_id => 'bin',
        type => 'text',
        name => LedgerSMB::Report::text('Bin'),},
-   
+
     {col_id => 'weight',
        type => 'text',
        name => LedgerSMB::Report::text('Weight'),},
-   
+
     {col_id => 'listprice',
        type => 'text',
       money => 1,
        name => LedgerSMB::Report::text('List Price'),},
-   
+
     {col_id => 'sellprice',
        type => 'text',
       money => 1,
        name => LedgerSMB::Report::text('Sell Price'),},
-   
+
     {col_id => 'lastcost',
        type => 'text',
       money => 1,
        name => LedgerSMB::Report::text('Last Cost'),},
-   
+
     {col_id => 'avgcost',
        type => 'text',
       money => 1,
        name => LedgerSMB::Report::text('Avg. Cost'),},
-   
+
     {col_id => 'markup',
        type => 'text',
        name => LedgerSMB::Report::text('Markup'),},
-   
+
     {col_id => 'price_updated',
        type => 'text',
        name => LedgerSMB::Report::text('Price Updated'),},
- 
+
     {col_id => 'make',
        type => 'text',
        name => LedgerSMB::Report::text('Make'),},
- 
+
     {col_id => 'model',
        type => 'text',
        name => LedgerSMB::Report::text('Model'),},
- 
+
     {col_id => 'image',
        type => 'href',
        name => LedgerSMB::Report::text('Image'),},
- 
+
     {col_id => 'drawing',
        type => 'href',
        name => LedgerSMB::Report::text('Drawing'),},
- 
+
     {col_id => 'microfiche',
        type => 'text',
        name => LedgerSMB::Report::text('Microfiche'),},
@@ -267,43 +267,43 @@ sub columns {
     {col_id => 'notes',
        type => 'text',
        name => LedgerSMB::Report::text('Notes'),},
- 
+
     {col_id => 'partsgroup',
        type => 'text',
        name => LedgerSMB::Report::text('Partsgroup'),},
- 
+
     {col_id => 'invnumber',
        type => 'href',
        name => LedgerSMB::Report::text('Invoice'),},
- 
+
     {col_id => 'ordnumber',
        type => 'href',
        name => LedgerSMB::Report::text('Order'),},
- 
+
     {col_id => 'quonumber',
        type => 'href',
        name => LedgerSMB::Report::text('Quotation'),},
- 
+
     {col_id => 'curr',
        type => 'text',
        name => LedgerSMB::Report::text('Currency'),},
- 
+
     {col_id => 'qty',
        type => 'text',
        name => LedgerSMB::Report::text('Qty'),},
- 
+
     {col_id => 'linetotal',
        type => 'text',
       money => 1,
        name => LedgerSMB::Report::text('Total'),},
- 
+
     {col_id => 'serialnumber',
        type => 'text',
        name => LedgerSMB::Report::text('Serial Number'),},
- 
-    ]; 
-}     
-     
+
+    ];
+}
+
 =head2 header_lines
 
 None yet

@@ -18,13 +18,13 @@ This module wraps both DBI and the PostgreSQL commandline tools.
 
 =head1 COPYRIGHT
 
-This module is copyright (C) 2007, the LedgerSMB Core Team and subject to 
+This module is copyright (C) 2007, the LedgerSMB Core Team and subject to
 the GNU General Public License (GPL) version 2, or at your option, any later
 version.  See the COPYRIGHT and LICENSE files for more information.
 
 =cut
 
-# Methods are documented inline.  
+# Methods are documented inline.
 
 package LedgerSMB::Database;
 use LedgerSMB::Auth;
@@ -60,8 +60,8 @@ sub loader_log_filename {
 
 =head2 get_info()
 
-This routine connects to the database using DBI and attempts to determine if a 
-related application is running in that database and if so what version.  
+This routine connects to the database using DBI and attempts to determine if a
+related application is running in that database and if so what version.
 It returns a hashref with the following keys set:
 
 =over
@@ -123,12 +123,12 @@ The database could not be confirmed to exist, or not
 
 =back
 
-It is worth noting that this is designed to be informative and helpful in 
-determining whether automatic upgrades can in fact occur or other 
+It is worth noting that this is designed to be informative and helpful in
+determining whether automatic upgrades can in fact occur or other
 administrative tasks can be run.  Sample output might be:
 
-{    appname => undef, 
-     version => undef, 
+{    appname => undef,
+     version => undef,
 full_version => undef,
       status => 'does not exist'}
 
@@ -152,11 +152,11 @@ set, this merely means that the database exists but is not used by a recognized
 application.  So administrative functions are advised to check both the appname
 and status values.
 
-Finally, it is important to note that LedgerSMB 1.1 and prior, and SQL-Ledger 
+Finally, it is important to note that LedgerSMB 1.1 and prior, and SQL-Ledger
 2.6.x and prior are lumped under appname => 'ledgersmb' and version => 'legacy',
 though the fullversion may give you an idea of what the actual version is run.
 
-=cut 
+=cut
 
 sub get_info {
     my $self = shift @_;
@@ -175,8 +175,8 @@ sub get_info {
            $dbh = $self->new($self->export, (dbname => 'postgres'))->connect;
            return $retval unless $dbh;
            $logger->debug("DBI->connect dbh=$dbh");
-	   # don't assign to App_State::DBH, since we're a fallback connection,
-	   #  not one to the company database
+       # don't assign to App_State::DBH, since we're a fallback connection,
+       #  not one to the company database
 
            my $sth = $dbh->prepare(
                  "select count(*) = 1 from pg_database where datname = ?"
@@ -191,8 +191,8 @@ sub get_info {
            $sth = $dbh->prepare("SELECT SESSION_USER");
            $sth->execute;
            $retval->{username} = $sth->fetchrow_array();
-	   $sth->finish();
-	   $dbh->disconnect();
+       $sth->finish();
+       $dbh->disconnect();
 
            return $retval;
    } else { # Got a db handle... try to find the version and app by a few
@@ -208,42 +208,42 @@ sub get_info {
        # Is there a chance this is an SL or LSMB legacy version?
        # (ie. is there a VERSION column to query in the DEFAULTS table?
        $sth = $dbh->prepare(
-	   qq|select count(*)=1
-	        from pg_attribute attr
-	        join pg_class cls
-	          on cls.oid = attr.attrelid
-	        join pg_namespace nsp
-	          on nsp.oid = cls.relnamespace
-	       where cls.relname = 'defaults'
-	         and attr.attname='version'
+       qq|select count(*)=1
+            from pg_attribute attr
+            join pg_class cls
+              on cls.oid = attr.attrelid
+            join pg_namespace nsp
+              on nsp.oid = cls.relnamespace
+           where cls.relname = 'defaults'
+             and attr.attname='version'
                  and nsp.nspname = 'public'
              |
-	   );
+       );
        $sth->execute();
        my ($have_version_column) =
-	   $sth->fetchrow_array();
+       $sth->fetchrow_array();
        $sth->finish();
 
        if ($have_version_column) {
-	   # Legacy SL and LSMB
-	   $sth = $dbh->prepare(
-	       'SELECT version FROM defaults'
-	       );
-	   #avoid DBD::Pg::st fetchrow_hashref failed: no statement executing
-	   my $rv=$sth->execute();     
-	   if(defined($rv))
-	   {
-	       if (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
-		   if ($ref->{version}){
-		       $retval->{appname} = 'ledgersmb';
-		       $retval->{version} = 'legacy';
-		       $retval->{full_version} = $ref->{version};
+       # Legacy SL and LSMB
+       $sth = $dbh->prepare(
+           'SELECT version FROM defaults'
+           );
+       #avoid DBD::Pg::st fetchrow_hashref failed: no statement executing
+       my $rv=$sth->execute();
+       if(defined($rv))
+       {
+           if (my $ref = $sth->fetchrow_hashref('NAME_lc')) {
+           if ($ref->{version}){
+               $retval->{appname} = 'ledgersmb';
+               $retval->{version} = 'legacy';
+               $retval->{full_version} = $ref->{version};
 
-		       $dbh->rollback();
-		       return $retval;
-		   }
-	       }
-	   }
+               $dbh->rollback();
+               return $retval;
+           }
+           }
+       }
        }
        $dbh->rollback;
        # LedgerSMB 1.2 and above
@@ -278,7 +278,7 @@ sub get_info {
        } else {
             $retval->{appname} = 'unknown';
             $retval->{exists} = 'exists';
-       } 
+       }
        $dbh->rollback;
    }
    #$logger->debug("DBI->disconnect dbh=$dbh");
@@ -296,7 +296,7 @@ sub copy {
     my ($self, $new_name) = @_;
     $self->new($self->export, (dbname => $new_name)
               )->create(copy_of => $self->dbname);
-}        
+}
 
 =head2 $db->load_base_schema()
 
@@ -308,20 +308,20 @@ sub load_base_schema {
     my ($self, $args) = @_;
     my $success;
     my $log = loader_log_filename();
-    
+
     $self->run_file(
-	
-	    file       => "$self->{source_dir}sql/Pg-database.sql",
-	    log_stdout => ($args->{log} || "${log}_stdout"),
-	    log_stderr => ($args->{errlog} || "${log}_stderr")
-	);
+
+        file       => "$self->{source_dir}sql/Pg-database.sql",
+        log_stdout => ($args->{log} || "${log}_stdout"),
+        log_stderr => ($args->{errlog} || "${log}_stderr")
+    );
 
     opendir(LOADDIR, 'sql/on_load');
     while (my $fname = readdir(LOADDIR)){
         $self->run_file(
             file       => "$self->{source_dir}sql/on_load/$fname",
-	    log_stdout => ($args->{log} || "${log}_stdout"),
-	    log_stderr => ($args->{errlog} || "${log}_stderr")
+        log_stdout => ($args->{log} || "${log}_stdout"),
+        log_stderr => ($args->{errlog} || "${log}_stderr")
         ) if -f "sql/on_load/$fname";
     }
     return 1;
@@ -346,21 +346,21 @@ sub load_modules {
         next unless $mod;
         if ($mod eq 'Fixes.sql'){
             local ($@); # pre-5.14, do not die() in this block
-            eval { 
+            eval {
               $self->run_file(
                        file       => "$self->{source_dir}sql/modules/$mod",
                        log_stdout  => $args->{log} || "${log}_stdout",
-		       log_stderr  => $args->{errlog} || "${log}_stderr"
-	      ); 
+               log_stderr  => $args->{errlog} || "${log}_stderr"
+          );
             };
         } else {
             $self->run_file(
                        file       => "$self->{source_dir}sql/modules/$mod",
                        log_stdout  => $args->{log} || "${log}_stdout",
-		       log_stderr  => $args->{errlog} || "${log}_stderr"
-	    ); 
+               log_stderr  => $args->{errlog} || "${log}_stderr"
+        );
         }
-           
+
     }
     close (LOADORDER); ### return failure to execute the script?
     return 1;
@@ -379,8 +379,8 @@ sub load_coa {
     my $log = loader_log_filename();
 
     $self->run_file (
-            file  => "sql/coa/$args->{country}/chart/$args->{chart}", 
-            log   => $log 
+            file  => "sql/coa/$args->{country}/chart/$args->{chart}",
+            log   => $log
     );
     if (-f "sql/coa/$args->{coa_lc}/gifi/$args->{chart}"){
         $self->exec_script(
@@ -400,13 +400,13 @@ sub create_and_load(){
     my ($self, $args) = @_;
     $self->create;
     $self->load_base_schema({
-	log_stdout     => $args->{log},
-	errlog  => $args->{errlog},
-		  });
+    log_stdout     => $args->{log},
+    errlog  => $args->{errlog},
+          });
     $self->load_modules('LOADORDER', {
-	log     => $args->{log},
-	errlog  => $args->{errlog},
-			});
+    log     => $args->{log},
+    errlog  => $args->{errlog},
+            });
 }
 
 
@@ -422,9 +422,9 @@ sub upgrade_modules {
     my $temp = $self->loader_log_filename();
 
     $self->load_modules($loadorder, {
-	log     => $temp . "_stdout",
-	errlog  => $temp . "_stderr"
-			    })
+    log     => $temp . "_stdout",
+    errlog  => $temp . "_stderr"
+                })
         or die "Modules failed to be loaded.";
 
     my $dbh = $self->connect;

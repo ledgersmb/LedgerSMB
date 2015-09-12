@@ -1,6 +1,6 @@
 -- VERSION 1.3.0
 
--- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General 
+-- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General
 -- Public License v 2 or at your option any later version.
 
 -- Docstrings already added to this file.
@@ -11,14 +11,14 @@ DROP FUNCTION IF EXISTS employee__save
         in_role text, in_ssn text, in_sales bool, in_manager_id int,
         in_employeenumber text);
 
-CREATE OR REPLACE FUNCTION employee__save 
-(in_entity_id int, in_start_date date, in_end_date date, in_dob date, 
-	in_role text, in_ssn text, in_sales bool, in_manager_id int, 
+CREATE OR REPLACE FUNCTION employee__save
+(in_entity_id int, in_start_date date, in_end_date date, in_dob date,
+	in_role text, in_ssn text, in_sales bool, in_manager_id int,
         in_employeenumber text, in_is_manager bool)
 RETURNS int AS $$
 DECLARE out_id INT;
 BEGIN
-	UPDATE entity_employee 
+	UPDATE entity_employee
 	SET startdate = coalesce(in_start_date, now()::date),
 		enddate = in_end_date,
 		dob = in_dob,
@@ -32,13 +32,13 @@ BEGIN
 	out_id = in_entity_id;
 
 	IF NOT FOUND THEN
-		INSERT INTO entity_employee 
-			(startdate, enddate, dob, role, ssn, manager_id, 
+		INSERT INTO entity_employee
+			(startdate, enddate, dob, role, ssn, manager_id,
 				employeenumber, entity_id, is_manager)
 		VALUES
-			(coalesce(in_start_date, now()::date), in_end_date, 
+			(coalesce(in_start_date, now()::date), in_end_date,
                                 in_dob, in_role, in_ssn,
-				in_manager_id, in_employeenumber, 
+				in_manager_id, in_employeenumber,
                                 in_entity_id, in_is_manager);
 		RETURN in_entity_id;
 	END IF;
@@ -61,7 +61,7 @@ $$ Returns username, user_id, etc. information if the employee is a user.$$;
 
 drop view if exists employees cascade;
 create view employees as
-    select 
+    select
         s.salutation,
         p.first_name,
         p.last_name,
@@ -111,7 +111,7 @@ LEFT JOIN salutation s on (p.salutation_id = s.id)
 LEFT JOIN person mp ON ee.manager_id = p.entity_id
     WHERE ee.is_manager
  ORDER BY ee.employeenumber;
-$$ LANGUAGE SQL; 
+$$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION employee__get
 (in_entity_id integer)
@@ -139,7 +139,7 @@ in_first_name text, in_middle_name text, in_last_name text,
 in_notes text, in_is_user bool)
 RETURNS SETOF employee_result as
 $$
-SELECT p.entity_id, e.control_code, p.id, s.salutation, s.id, 
+SELECT p.entity_id, e.control_code, p.id, s.salutation, s.id,
           p.first_name, p.middle_name, p.last_name, ee.is_manager,
           ee.startdate, ee.enddate, ee.role, ee.ssn, ee.sales, ee.manager_id,
           mp.first_name, mp.last_name, ee.employeenumber, ee.dob, e.country_id
@@ -156,7 +156,7 @@ LEFT JOIN person mp ON ee.manager_id = p.entity_id
           and ($4 is null or p.first_name ilike '%' || $4 || '%')
           and ($5 is null or p.middle_name ilike '%' || $5 || '%')
           and ($6 is null or p.last_name ilike '%' || $6 || '%')
-          and ($8 is null 
+          and ($8 is null
                or $8 = (exists (select 1 from users where entity_id = e.id)));
 $$ language sql;
 
@@ -166,7 +166,7 @@ in_first_name text, in_middle_name text, in_last_name text,
 in_notes text, in_users bool) IS
 $$ Returns a list of employee_result records matching the search criteria.
 
-employeenumber is an exact match.  
+employeenumber is an exact match.
 stardate_from and startdate_to specify the start dates for employee searches
 All others are partial matches.
 
@@ -179,12 +179,12 @@ $$
 DECLARE
 	emp employees%ROWTYPE;
 BEGIN
-	FOR emp IN 
-		SELECT 
+	FOR emp IN
+		SELECT
 		    e.salutation,
 		    e.first_name,
 		    e.last_name,
-		    ee.* 
+		    ee.*
 		FROM entity_employee ee
 		JOIN entity e on e.id = ee.entity_id
 		WHERE ee.sales = 't'::bool AND ee.role='manager'
@@ -223,11 +223,11 @@ BEGIN
 		WHERE coalesce(startdate, 'infinity'::timestamp)
 			>= coalesce(in_startdateto, '-infinity'::timestamp)
 			AND coalesce(startdate, '-infinity'::timestamp) <=
-				coalesce(in_startdatefrom, 
+				coalesce(in_startdatefrom,
 						'infinity'::timestamp)
-			AND coalesce(enddate, '-infinity'::timestamp) <= 
+			AND coalesce(enddate, '-infinity'::timestamp) <=
 				coalesce(in_enddateto, 'infinity'::timestamp)
-			AND coalesce(enddate, 'infinity'::timestamp) >= 
+			AND coalesce(enddate, 'infinity'::timestamp) >=
 				coalesce(in_enddatefrom, '-infinity'::timestamp)
 			AND (name % in_name
 			    OR note % in_notes)

@@ -11,7 +11,7 @@ and more.
 
 =head1 DESCRIPTION
 
-This report provides purchase history reports.  It can be used to search for 
+This report provides purchase history reports.  It can be used to search for
 both customers and vendors.
 
 =head1 INHERITS
@@ -59,7 +59,7 @@ sub columns {
             name => LedgerSMB::Report::text('Account Number') }];
 
     if (!$self->is_summary){
-     
+
       push @$cols,
          {col_id => 'invnumber',
             type => 'href',
@@ -88,14 +88,14 @@ sub columns {
          {col_id => 'unit',
             type => 'text',
             name => LedgerSMB::Report::text('Unit') };
-      
-   push @$cols, 
+
+   push @$cols,
          {col_id => 'sellprice',
             type => 'text',
            money => 1,
             name => LedgerSMB::Report::text('Sell Price') };
 
-   push @$cols, 
+   push @$cols,
          {col_id => 'discount',
             type => 'text',
             name => LedgerSMB::Report::text('Disc') },
@@ -108,8 +108,8 @@ sub columns {
             type => 'text',
             name => LedgerSMB::Report::text('Serial Number') }
           unless $self->is_summary;
-    
-    push @$cols, 
+
+    push @$cols,
          {col_id => 'exchangerate',
             type => 'text',
             name => LedgerSMB::Report::text('Exchange Rate') },
@@ -135,7 +135,7 @@ sub header_lines {
      return [
             {name => 'name',
              text => LedgerSMB::Report::text('Name')},
-      
+
             {name => 'meta_number',
              text => LedgerSMB::Report::text('Account Number')},
             {name => 'from_date',
@@ -144,7 +144,7 @@ sub header_lines {
             {name => 'to_date',
              text => LedgerSMB::Report::text('End Date')},
 
-      
+
       ];
 }
 
@@ -204,7 +204,7 @@ has city => (is => 'ro', isa => 'Maybe[Str]');
 
 =item state
 
-Partial match on name of state or probince 
+Partial match on name of state or probince
 
 =cut
 
@@ -311,7 +311,7 @@ has is_summary => (is => 'ro', isa => 'Bool');
 
 =head1 METHODS
 
-=over 
+=over
 
 =item run_report
 
@@ -322,7 +322,7 @@ Runs the report, populates rows.
 sub run_report {
     my ($self) = @_;
     my $proc = 'eca__history';
-    $proc .= '_summary' if $self->is_summary; 
+    $proc .= '_summary' if $self->is_summary;
     my @rows = $self->call_dbmethod(funcname => $proc);
     for my $r(@rows){
      my $script;

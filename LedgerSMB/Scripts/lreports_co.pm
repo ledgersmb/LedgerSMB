@@ -89,8 +89,8 @@ sub run_bm {
 
 =head1 Copyright (C) 2007 The LedgerSMB Core Team
 
-Licensed under the GNU General Public License version 2 or later (at your 
-option).  For more information please see the included LICENSE and COPYRIGHT 
+Licensed under the GNU General Public License version 2 or later (at your
+option).  For more information please see the included LICENSE and COPYRIGHT
 files.
 
 =cut

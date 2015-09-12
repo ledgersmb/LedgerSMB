@@ -4,9 +4,9 @@ LedgerSMB::Business_Unit - Accounting Reporting Dimensions for LedgerSMB
 
 =head1 SYNOPSYS
 
-This holds the information as to the handling of classes of buisness units.  
-Business units are reporting units which can be used to classify various line 
-items of transactions in different ways and include handling for departments, 
+This holds the information as to the handling of classes of buisness units.
+Business units are reporting units which can be used to classify various line
+items of transactions in different ways and include handling for departments,
 funds, and projects.
 
 =cut
@@ -23,7 +23,7 @@ with 'LedgerSMB::PGObject';
 =item id
 
 This is the internal id of the unit class.  It is undef when the class has not
-yet been saved in the database 
+yet been saved in the database
 
 =cut
 
@@ -35,9 +35,9 @@ Required. Internal id of class (1 for department, 2 for project, etc)
 
 =cut
 
-has 'class_id' => (is => 'ro', isa => 'Int', required => '1'); 
+has 'class_id' => (is => 'ro', isa => 'Int', required => '1');
 
-=item control_code  
+=item control_code
 
 This is a textual reference to the business reporting unit.  It must be unique
 to the business units of its class.
@@ -91,7 +91,7 @@ has 'parent' => (is => 'rw', isa => 'Maybe[LedgerSMB::Business_Unit]');
 
 =item credit_id
 
-The internal id of the customer, vendor, employee, etc. attached to this 
+The internal id of the customer, vendor, employee, etc. attached to this
 unit.
 
 =cut
@@ -126,7 +126,7 @@ sub get {
                                             args => [$id]
     );
     return $self->new(%$unit);
-} 
+}
 
 =item save
 
@@ -138,7 +138,7 @@ sub save {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'business_unit__save');
     $self = $self->new($ref);
-}   
+}
 
 =item list ($date, $class_id, $credit_id, $strict, $active_on)
 
@@ -150,7 +150,7 @@ credit_ids), and of $class.  Undef on date and credit_id match all rows.
 sub list {
     my ($self, $class_id, $credit_id, $strict, $active_on) = @_;
     my @rows =  $self->call_procedure(funcname => 'business_unit__list_by_class',
-                                      args => [$class_id, $active_on, 
+                                      args => [$class_id, $active_on,
                                                $credit_id, $strict]);
     for my $row(@rows){
         $row = $self->new($row);
@@ -160,7 +160,7 @@ sub list {
 
 =item delete
 
-Deletes the buisness reporting unit.  A unit can only be deleted if it has no 
+Deletes the buisness reporting unit.  A unit can only be deleted if it has no
 children and no transactions attached.
 
 =cut
@@ -168,7 +168,7 @@ children and no transactions attached.
 sub delete {
     my ($self) = @_;
     my ($ref) = $self->call_dbmethod(funcname => 'business_unit__delete');
-}   
+}
 
 =item search
 
@@ -176,13 +176,13 @@ Returns a list of buisness reporting units matching search criteria.
 
 =item get_tree
 
-Retrieves children recursively from the database and populates children 
+Retrieves children recursively from the database and populates children
 appropriately
 
 =item tree_to_list
 
 Returns tree as a list.
- 
+
 =back
 
 =head1 COPYRIGHT

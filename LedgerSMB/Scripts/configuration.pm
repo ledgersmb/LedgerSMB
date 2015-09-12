@@ -23,25 +23,25 @@ sub _default_settings {
         { title => $locale->text('Company Information'),
           items => [
               { name => 'company_name', label => $locale->text('Company Name') },
-              { name => 'company_address', 
+              { name => 'company_address',
                 type => 'TEXTAREA',
                 label => $locale->text('Company Address') },
               { name => 'company_phone', label => $locale->text('Company Phone') },
               { name => 'company_fax', label => $locale->text('Company Fax') },
               { name => 'businessnumber', label => $locale->text('Business Number') },
-              { name => 'default_email_to', 
+              { name => 'default_email_to',
                 label => $locale->text('Default Email To') },
-              { name => 'default_email_cc', 
+              { name => 'default_email_cc',
                 label => $locale->text('Default Email CC') },
-              { name => 'default_email_bcc', 
+              { name => 'default_email_bcc',
                 label => $locale->text('Default Email BCC') },
-              { name => 'default_email_from', 
+              { name => 'default_email_from',
                 label => $locale->text('Default Email From') },
-              { name => 'company_sales_tax_id', 
+              { name => 'company_sales_tax_id',
                 label =>  $locale->text('Company Sales Tax ID') },
               { name => 'company_license_number',
                 label =>  $locale->text('Company License Number') },
-              { name => 'curr', 
+              { name => 'curr',
                 label => $locale->text('Currencies (colon-separated)')},
               { name => 'weightunit', label => $locale->text('Weight Unit') },
               { name => 'default_country',
@@ -73,7 +73,7 @@ sub _default_settings {
                 label => $locale->text('Lock Item Description'),
                 type => 'YES_NO', },
               { name => 'gapless_ar',
-                label => $locale->text('Gapless AR'), 
+                label => $locale->text('Gapless AR'),
                 type => 'YES_NO', },
               ] },
         { title => $locale->text('Default Accounts'),
@@ -97,11 +97,11 @@ sub _default_settings {
         { title => $locale->text('Next in Sequence'),
           items => [
               { name => 'glnumber', label => $locale->text('GL Reference Number') },
-              { name => 'sinumber', 
+              { name => 'sinumber',
                 label => $locale->text('Sales Invoice/AR Transaction Number'), },
               { name => 'sonumber', label => $locale->text('Sales Order Number') },
               { name => 'sqnumber', label => $locale->text('Sales Quotation Number') },
-              { name => 'vinumber' , 
+              { name => 'vinumber' ,
                 label => $locale->text('Vendor Invoice/AP Transaction Number')},
               { name => 'ponumber', label => $locale->text('Purchase Order Number') },
               { name => 'rfqnumber', label => $locale->text('RFQ Number') },
@@ -112,8 +112,8 @@ sub _default_settings {
               { name => 'vendornumber', label => $locale->text('Vendor Number') },
               ] },
         { title => $locale->text('Misc Settings'),
-          items => [  
-              { name => 'show_creditlimit', type => 'YES_NO', 
+          items => [
+              { name => 'show_creditlimit', type => 'YES_NO',
                 label => $locale->text('Show Credit Limit') },
               { name => 'dojo_theme',
                 type => 'SELECT_ONE',
@@ -232,14 +232,14 @@ sub defaults_screen{
             value_attr     => 'id',
             default_values => [$request->{'inventory_accno_id'}],
         },
-	'default_country' => {
+    'default_country' => {
             name           => 'default_country',
             options        => \@country_list,
             default_values => [$request->{'default_country'}],
             text_attr      => 'name',
             value_attr     => 'id',
         },
-	'default_language' => {
+    'default_language' => {
             name           => 'default_language',
             options        => \@language_code_list,
             default_values => [$request->{'default_language'}],
@@ -260,7 +260,7 @@ sub defaults_screen{
     );
 
     my $template = LedgerSMB::Template->new_UI(
-        user => $LedgerSMB::App_State::User, 
+        user => $LedgerSMB::App_State::User,
         locale => $request->{_locale},
         template => 'Configuration/settings');
     $template->render({
@@ -283,7 +283,7 @@ sub sequence_screen {
     my @default_settings = &_default_settings($request);
     my $locale = $request->{_locale};
     for my $subset (@default_settings){
-        $request->{setting_keys} = $subset->{items} 
+        $request->{setting_keys} = $subset->{items}
              if $subset->{title} eq $locale->text('Next in Sequence');
     }
     my $count = 0;
@@ -294,10 +294,10 @@ sub sequence_screen {
     ++$count;
     }
     LedgerSMB::Template->new_UI(
-        user => $LedgerSMB::App_State::User, 
+        user => $LedgerSMB::App_State::User,
         locale => $locale,
         template => 'Configuration/sequence')->render($request);
-      
+
 }
 
 =item save_defaults

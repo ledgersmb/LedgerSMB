@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Report::Listings::Overpayments - Overpayments Search Results for 
+LedgerSMB::Report::Listings::Overpayments - Overpayments Search Results for
 LedgerSMB
 
 =head1 SYNPOSIS
@@ -16,7 +16,7 @@ with 'LedgerSMB::Report::Dates';
 
 =head1 DESCRIPTION
 
-This report provides a general listing of overpayments for reversal or 
+This report provides a general listing of overpayments for reversal or
 reporting.
 
 
@@ -24,7 +24,7 @@ reporting.
 
 In addition to standard dates, we also have:
 
-=over 
+=over
 
 =item name_part
 
@@ -44,7 +44,7 @@ has meta_number => (is => 'ro', isa => 'Str', required => 0);
 
 =head1 PASSTHROUGH PROPERTIES
 
-These properties are there specifically to pass through to the form for 
+These properties are there specifically to pass through to the form for
 submission.
 
 =over
@@ -58,7 +58,7 @@ submission.
 =cut
 
 has batch_id => (is => 'ro', isa => 'Int', required => 0);
-has post_date => (is => 'ro', isa => 'LedgerSMB::Moose::Date', 
+has post_date => (is => 'ro', isa => 'LedgerSMB::Moose::Date',
                 required => 0, coerce => 1);
 
 has batch_number => (is => 'ro', isa => 'Str', required => 0);
@@ -163,7 +163,7 @@ sub set_buttons {
    ] if $self->batch_id;
    return [];
 }
-  
+
 =back
 
 =head1 METHODS

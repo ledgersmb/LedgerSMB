@@ -34,7 +34,7 @@ This module contains the basic  handlers
 
 Searches or retrieves one or more records.
 
-=cut 
+=cut
 
 my $cname = 'LedgerSMB::REST_Class::contact';
 
@@ -48,7 +48,7 @@ sub get {
        if ($request->{args}->{entity_class}) {
           @{$data->{contacts}} =  _search_entity_class(
               $request, $request->{args}->{entity_class}
-          ); 
+          );
           return $data;
        } else {
             my @results = ();
@@ -95,13 +95,13 @@ sub _get_entity {
           die '404 Not Found';
        }
     }
-    @{$data->{credit_accounts}} = 
+    @{$data->{credit_accounts}} =
        LedgerSMB::Entity::Credit_Account->list_for_entity($id);
-    @{$data->{locations}} = 
+    @{$data->{locations}} =
       LedgerSMB::Entity::Location->get_active({entity_id => $id});
     @{$data->{contact}} =
       LedgerSMB::Entity::Contact->list({{entity_id => $id}});
-    @{$data->{bank_accounts}} = 
+    @{$data->{bank_accounts}} =
       LedgerSMB::Entity::Bank-> list($id);
     return $data;
 }
@@ -143,12 +143,12 @@ sub put {
     for my $act (@{$payload->{credit_accounts}}){
         LedgerSMB::Entity::Credit_Account->new(%$payload)->save();
     }
-    if ($id){ 
+    if ($id){
         die "303 Contact/$id.$request->{format}";
     } else {
         die "303 $id.$request->{format}";
     }
-} 
+}
 
 =item delete not implemented.
 
@@ -156,8 +156,8 @@ sub put {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2012, the LedgerSMB Core Team.  This file may be re-used under 
-the GNU GPL version 2 or at your option any future version.  Please see the 
+Copyright (C) 2012, the LedgerSMB Core Team.  This file may be re-used under
+the GNU GPL version 2 or at your option any future version.  Please see the
 accompanying LICENSE file for details.
 
 =cut

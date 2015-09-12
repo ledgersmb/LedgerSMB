@@ -9,7 +9,7 @@ LedgerSMB::Report::Timecards - Time and materials reports for LedgerSMB
 
 =head1 DESCRIPTION
 
-This report class provides a way to report on time and materials for projects, 
+This report class provides a way to report on time and materials for projects,
 departments, and the like.  These reports are designed to be useful for payroll
 and sales order generation among other things.
 
@@ -30,9 +30,9 @@ In addition to the standard date fields, we also have
 =item business_unts
 
 This is the set of business units searched for.  Note that unlike other reports,
-the fact that timecards are only associated with a single business unit means 
-that these are additive.  In other words, if you select a department and a 
-project, you will get timecards associated with either the department or the 
+the fact that timecards are only associated with a single business unit means
+that these are additive.  In other words, if you select a department and a
+project, you will get timecards associated with either the department or the
 project, instead of the intersection of sets (which doesn't exist in this case).
 
 =cut
@@ -85,7 +85,7 @@ has jctype => (is => 'ro', isa => 'Int', required => 0);
 
 =over
 
-=item columns 
+=item columns
 
 =cut
 

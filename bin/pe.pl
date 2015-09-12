@@ -128,7 +128,7 @@ sub partsgroup_header {
   <tr>
     <td>
       <table width=100%>
-	<tr>
+    <tr>
           <th align="right">| . $locale->text('Parent') . qq|</th>
           <td><select data-dojo-type="dijit/form/Select" name='parent'>
               <option></option>|;
@@ -139,11 +139,11 @@ sub partsgroup_header {
                   print qq|<option value='$pg->{id}' $selected>
                                   $pg->{partsgroup} </option>|;
               }
-	  print qq|</select>
+      print qq|</select>
           <th align="right">| . $locale->text('Group') . qq|</th>
 
           <td><input data-dojo-type="dijit/form/TextBox" name=partsgroup size=30 value="$form->{partsgroup}"></td>
-	</tr>
+    </tr>
       </table>
     </td>
   </tr>
@@ -216,11 +216,11 @@ sub pricegroup_header {
   <tr>
     <td>
       <table width=100%>
-	<tr>
-	  <th align=right>| . $locale->text('Pricegroup') . qq|</th>
+    <tr>
+      <th align=right>| . $locale->text('Pricegroup') . qq|</th>
 
           <td><input data-dojo-type="dijit/form/TextBox" name=pricegroup size=30 value="$form->{pricegroup}"></td>
-	</tr>
+    </tr>
       </table>
     </td>
   </tr>
@@ -307,7 +307,7 @@ sub translation {
     $form->hide_form(qw(translation title number));
 
     print qq|
-  
+
 <table width="100%">
   <tr><th class=listtop>$form->{title}</th></tr>
   <tr height="5"></tr>
@@ -560,7 +560,7 @@ sub translation_header {
     );
 
     print qq|
-  
+
 <table width="100%">
   <tr><th class=listtop>$form->{title}</th></tr>
   <tr height="5"></tr>
@@ -569,13 +569,13 @@ sub translation_header {
       <table width=100%>
         <tr>
           <td align=left>$form->{"$form->{number}"}</th>
-	  <td align=left>$form->{description}</th>
+      <td align=left>$form->{description}</th>
         </tr>
         <tr>
-	<tr>
-	  <th class=listheading>| . $locale->text('Language') . qq|</th>
-	  <th class=listheading>| . $locale->text('Translation') . qq|</th>
-	</tr>
+    <tr>
+      <th class=listheading>| . $locale->text('Language') . qq|</th>
+      <th class=listheading>| . $locale->text('Translation') . qq|</th>
+    </tr>
 |;
 
     for $i ( 1 .. $form->{translation_rows} ) {
@@ -592,10 +592,10 @@ qq|<input data-dojo-type="dijit/form/TextBox" name="translation_$i" size=40 valu
         }
 
         print qq|
-	<tr valign=top>
-	  <td><select data-dojo-type="dijit/form/Select" name="language_code_$i">$form->{"selectlanguage_$i"}</select></td>
-	  <td>$translation</td>
-	</tr>
+    <tr valign=top>
+      <td><select data-dojo-type="dijit/form/Select" name="language_code_$i">$form->{"selectlanguage_$i"}</select></td>
+      <td>$translation</td>
+    </tr>
 |;
     }
 
@@ -701,12 +701,12 @@ sub select_name {
   <tr>
     <td>
       <table width=100%>
-	<tr class=listheading>|;
+    <tr class=listheading>|;
 
     for (@column_index) { print "\n$column_data{$_}" }
 
     print qq|
-	</tr>
+    </tr>
 |;
 
     @column_index = qw(ndx name address city state zipcode country);
@@ -729,12 +729,12 @@ qq|<td><input name="new_name_$i" type=hidden value="$ref->{name}">$ref->{name}</
         $j++;
         $j %= 2;
         print qq|
-	<tr class=listrow$j>|;
+    <tr class=listrow$j>|;
 
         for (@column_index) { print "\n$column_data{$_}" }
 
         print qq|
-	</tr>
+    </tr>
 
 <input name="new_id_$i" type=hidden value=$ref->{id}>
 
@@ -830,34 +830,34 @@ sub project_sales_order {
 
         $selectfrom = qq|
         <tr>
-	  <th align=right>| . $locale->text('Period') . qq|</th>
-	  <td colspan=3>
-	  <select data-dojo-type="dijit/form/Select" name=month>$form->{selectaccountingmonth}</select>
-	  <select data-dojo-type="dijit/form/Select" name=year>$form->{selectaccountingyear}</select>
-	  <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=0 checked>&nbsp;|
+      <th align=right>| . $locale->text('Period') . qq|</th>
+      <td colspan=3>
+      <select data-dojo-type="dijit/form/Select" name=month>$form->{selectaccountingmonth}</select>
+      <select data-dojo-type="dijit/form/Select" name=year>$form->{selectaccountingyear}</select>
+      <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=0 checked>&nbsp;|
           . $locale->text('Current') . qq|
-	  <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=1>&nbsp;|
+      <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=1>&nbsp;|
           . $locale->text('Month') . qq|
-	  <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=3>&nbsp;|
+      <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=3>&nbsp;|
           . $locale->text('Quarter') . qq|
-	  <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=12>&nbsp;|
+      <input name=interval class=radio type=radio data-dojo-type="dijit/form/RadioButton" value=12>&nbsp;|
           . $locale->text('Year') . qq|
-	  </td>
-	</tr>
+      </td>
+    </tr>
 |;
     }
 
     $fromto = qq|
         <tr>
-	  <th align=right nowrap>| . $locale->text('Transaction Dates') . qq|</th>
-	  <td>|
+      <th align=right nowrap>| . $locale->text('Transaction Dates') . qq|</th>
+      <td>|
       . $locale->text('From')
       . qq| <input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdatefrom size=11 title="$myconfig{dateformat}">
-	  |
+      |
       . $locale->text('To')
       . qq| <input class="date" data-dojo-type="lsmb/lib/DateTextBox" name=transdateto size=11 title="$myconfig{dateformat}"></td>
-	</tr>
-	$selectfrom
+    </tr>
+    $selectfrom
 |;
 
     if ( @{ $form->{all_project} } ) {
@@ -880,9 +880,9 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
 
         $employee = qq|
               <tr>
-	        <th align=right nowrap>| . $locale->text('Employee') . qq|</th>
-		<td><select data-dojo-type="dijit/form/Select" name=employee>$form->{selectemployee}</select></td>
-	      </tr>
+            <th align=right nowrap>| . $locale->text('Employee') . qq|</th>
+        <td><select data-dojo-type="dijit/form/Select" name=employee>$form->{selectemployee}</select></td>
+          </tr>
 |;
     }
 
@@ -906,19 +906,19 @@ qq|<option value="$_->{projectnumber}--$_->{id}">$_->{projectnumber}\n|;
     <td>
       <table>
         <tr>
-	  <th align=right>| . $locale->text('Project') . qq|</th>
-	  <td colspan=3><select data-dojo-type="dijit/form/Select" name=projectnumber>$form->{selectprojectnumber}</select></td>
-	</tr>
-	$employee
-	$fromto
-	<tr>
-	  <th></th>
-  	  <td><input name=summary type=radio data-dojo-type="dijit/form/RadioButton" class=radio value=1> |
+      <th align=right>| . $locale->text('Project') . qq|</th>
+      <td colspan=3><select data-dojo-type="dijit/form/Select" name=projectnumber>$form->{selectprojectnumber}</select></td>
+    </tr>
+    $employee
+    $fromto
+    <tr>
+      <th></th>
+        <td><input name=summary type=radio data-dojo-type="dijit/form/RadioButton" class=radio value=1> |
       . $locale->text('Summary') . qq|
-  	  <input name=summary type=radio data-dojo-type="dijit/form/RadioButton" class=radio value=0 checked> |
+        <input name=summary type=radio data-dojo-type="dijit/form/RadioButton" class=radio value=0 checked> |
       . $locale->text('Detail') . qq|
-  	  </td>
-  	</tr>
+        </td>
+      </tr>
       </table>
     </td>
   </tr>
@@ -1212,8 +1212,8 @@ sub select_customer {
     print qq|
 <button data-dojo-type="dijit/form/Button" class="submit" type="submit" name="action" value="continue">|
       . $locale->text('Continue')
-      . qq|</button> 
-    
+      . qq|</button>
+
 </form>
 |;
 

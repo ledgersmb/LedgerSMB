@@ -8,8 +8,8 @@ LedgerSMB::Scripts::timecard - LedgerSMB workflow routines for timecards.
 
 =head1 DESCRIPTION
 
-This module contains the basic workflow scripts for managing timecards for 
-LedgerSMB.  Timecards are used to track time and materials consumed in the 
+This module contains the basic workflow scripts for managing timecards for
+LedgerSMB.  Timecards are used to track time and materials consumed in the
 process of work, from professional services to payroll and manufacturing.
 
 =cut
@@ -59,7 +59,7 @@ sub new {
 
 =item display
 
-Displays a timecard.  LedgerSMB::Timecard properties set are treated as 
+Displays a timecard.  LedgerSMB::Timecard properties set are treated as
 defaults.
 
 =cut
@@ -68,7 +68,7 @@ sub display {
     my ($request) = @_;
     $request->{non_billable} ||= 0;
     if ($request->{in_hour} and $request->{in_min}) {
-        my $request->{min_used} = ($request->{in_hour} * 60) + $request->{in_min} - 
+        my $request->{min_used} = ($request->{in_hour} * 60) + $request->{in_min} -
                                 ($request->{out_hour} * 60) - $request->{out_min};
         $request->{qty} = $min_used/60 - $request->{non_billable};
     } else { # Default to current date and time
@@ -111,7 +111,7 @@ sub timecard_screen {
          my $curr = LedgerSMB::Setting->get('curr');
          @{$request->{currencies}} = split /:/, $curr;
          my $startdate = LedgerSMB::PGDate->from_input($request->{date_from});
-         
+
          my @dates = ();
          for (0 .. 6){
             push @dates, LedgerSMB::PGDate->from_db(
@@ -168,7 +168,7 @@ sub save_week {
                          checkedin => LedgerSMB::PGDate->from_input($date), };
             $date =~ s#\D#_#g;
             next unless $request->{"partnumber_${date}_${row}"};
-            $hash->{$_} = $request->{"${_}_${date}_${row}"} 
+            $hash->{$_} = $request->{"${_}_${date}_${row}"}
                  for (qw(business_unit_id partnumber description qty curr
                                  non_billable));
             $hash->{non_billable} ||= 0;
@@ -241,7 +241,7 @@ sub get {
     my ($request) = @_;
     my $tcard = LedgerSMB::Timecard->get($request->{id});
     $tcard->{transdate} = LedgerSMB::PGDate->from_db(
-              $tcard->checkedin->to_db, 
+              $tcard->checkedin->to_db,
              'date');
     display($tcard);
 }

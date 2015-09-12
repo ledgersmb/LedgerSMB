@@ -17,9 +17,9 @@ extends 'LedgerSMB::Report';
 
 =head1 DESCRIPTION
 
-GIFI is the Generalized Index of Financial Information that the Canadian tax 
+GIFI is the Generalized Index of Financial Information that the Canadian tax
 authorities use in tax reporting.  LedgerSMB allows you to map accounts to GIFI
-codes for tax reporting.  Non-Canadian users can use this to group accounts 
+codes for tax reporting.  Non-Canadian users can use this to group accounts
 together for other reporting uses.
 
 =head1 REPORT CONSTANTS

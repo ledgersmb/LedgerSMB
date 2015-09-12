@@ -47,11 +47,11 @@ sub preference_screen {
     $user->get_option_data;
 
     my $template = LedgerSMB::Template->new(
-            user     => $user, 
+            user     => $user,
             locale   => $request->{_locale},
             path     => 'UI/users',
             template => 'preferences',
-	    format   => 'HTML'
+        format   => 'HTML'
     );
 
     my $creds = LedgerSMB::Auth::get_credentials();
@@ -104,7 +104,7 @@ sub change_password {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

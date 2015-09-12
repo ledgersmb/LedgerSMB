@@ -81,11 +81,11 @@ our $DBName;
 
 =back
 
-Each of the above has an accessor function fo the same name which reads the 
-data, and a set_... function which writes it.  The set_ function should be 
+Each of the above has an accessor function fo the same name which reads the
+data, and a set_... function which writes it.  The set_ function should be
 used sparingly.
 
-The direct access approach is deprecated and is likely to go away in 1.5 with 
+The direct access approach is deprecated and is likely to go away in 1.5 with
 the variables above given a "my" scope instead of an "our" one.
 
 =cut
@@ -159,7 +159,7 @@ sub set_Role_Prefix {
     return _set_n('Role_Prefix', @_);
 }
 
-=head1 METHODS 
+=head1 METHODS
 
 =head2 cleanup
 
@@ -203,7 +203,7 @@ sub get_url {
 
 Returns hashref of localized date data with following members:
 
-If $is_short is set and true, returns short names (Jan, Feb, etc) instead of 
+If $is_short is set and true, returns short names (Jan, Feb, etc) instead of
 long names (January, February, etc).
 
 =over
@@ -258,7 +258,7 @@ sub all_months {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

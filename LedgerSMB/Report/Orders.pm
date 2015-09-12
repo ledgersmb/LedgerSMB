@@ -28,8 +28,8 @@ scripts as this report serves number of different roles.
 =item oe_class_id int
 
 This is the ID of the order entry class.  Valid values are:
- 
-  id |    oe_class    
+
+  id |    oe_class
  ----+----------------
    1 | Sales Order
    2 | Purchase Order
@@ -121,9 +121,9 @@ Sets the href action for the ordnumber field
 
 has href_action => (is => 'ro', isa => 'Str', required => '0');
 
-=item selectable bool 
+=item selectable bool
 
-If set true, then the display will include a checkbox for each order and a 
+If set true, then the display will include a checkbox for each order and a
 hidden id field.
 
 =cut
@@ -182,7 +182,7 @@ sub columns {
     my ($self) = @_;
     my $ORDNUMBER;
     my $METANUMBER;
-    if (1 == $self->oe_class_id){ 
+    if (1 == $self->oe_class_id){
        $ORDNUMBER = LedgerSMB::Report::text('Sales Orders');
        $METANUMBER = LedgerSMB::Report::text('Customer');
     } elsif (2 == $self->oe_class_id){
@@ -271,19 +271,19 @@ sub columns {
 
 =head2 header_lines
 
-=cut 
+=cut
 
 sub header_lines {
     return [];
 }
 
-=head2 name 
+=head2 name
 
 =cut
 
 sub name {
     my ($self) = @_;
-    if (1 == $self->oe_class_id){ 
+    if (1 == $self->oe_class_id){
        return LedgerSMB::Report::text('Sales Orders');
     } elsif (2 == $self->oe_class_id){
        return LedgerSMB::Report::text('Purchase Orders');
@@ -300,7 +300,7 @@ sub name {
 
 =head2 run_report
 
-This sets the $report->rows attribute but does not set buttons.  The calling 
+This sets the $report->rows attribute but does not set buttons.  The calling
 script should do that separately.
 
 =cut

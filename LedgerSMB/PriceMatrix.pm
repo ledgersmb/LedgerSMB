@@ -47,63 +47,63 @@ sub price_matrix_query {
     if ( $form->{customer_id} ) {
         my $defaultcurrency = $form->{dbh}->quote( $form->{defaultcurrency} );
         $query = qq|
-    			SELECT p.parts_id, p.credit_id AS entity_id, 
-				NULL AS pricegroup_id, 
-				p.pricebreak, p.sellprice, p.validfrom,
-				p.validto, p.curr, NULL AS pricegroup, 
-				1 as priority
-			FROM partscustomer p
-			WHERE p.parts_id = ?
-				AND coalesce(p.validfrom, $transdate) <= 
-					$transdate
-				AND coalesce(p.validto, $transdate) >= 
-					$transdate
-				AND p.credit_id = $credit_id
+                SELECT p.parts_id, p.credit_id AS entity_id,
+                NULL AS pricegroup_id,
+                p.pricebreak, p.sellprice, p.validfrom,
+                p.validto, p.curr, NULL AS pricegroup,
+                1 as priority
+            FROM partscustomer p
+            WHERE p.parts_id = ?
+                AND coalesce(p.validfrom, $transdate) <=
+                    $transdate
+                AND coalesce(p.validto, $transdate) >=
+                    $transdate
+                AND p.credit_id = $credit_id
 
-			UNION
+            UNION
 
-    			SELECT p.parts_id, p.credit_id AS entity_id, 
-				p.pricegroup_id, 
-				p.pricebreak, p.sellprice, p.validfrom,
-				p.validto, p.curr, g.pricegroup, 2 AS priority
-			FROM partscustomer p
-			JOIN pricegroup g ON (g.id = p.pricegroup_id)
-			JOIN entity_credit_account c ON (c.pricegroup_id = g.id)
-			WHERE p.parts_id = ?
-				AND coalesce(p.validfrom, $transdate) <= 
-					$transdate
-				AND coalesce(p.validto, $transdate) >= 
-					$transdate
-				AND c.id = $credit_id
+                SELECT p.parts_id, p.credit_id AS entity_id,
+                p.pricegroup_id,
+                p.pricebreak, p.sellprice, p.validfrom,
+                p.validto, p.curr, g.pricegroup, 2 AS priority
+            FROM partscustomer p
+            JOIN pricegroup g ON (g.id = p.pricegroup_id)
+            JOIN entity_credit_account c ON (c.pricegroup_id = g.id)
+            WHERE p.parts_id = ?
+                AND coalesce(p.validfrom, $transdate) <=
+                    $transdate
+                AND coalesce(p.validto, $transdate) >=
+                    $transdate
+                AND c.id = $credit_id
 
-			UNION
+            UNION
 
-    			SELECT p.parts_id, p.credit_id AS entity_id, 
-				p.pricegroup_id, 
-				p.pricebreak, p.sellprice, p.validfrom,
-				p.validto, p.curr, g.pricegroup, 3 AS priority
-			FROM partscustomer p
-			LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
-			WHERE p.credit_id = 0
-				AND p.pricegroup_id = 0
-				AND coalesce(p.validfrom, $transdate) <= 
-					$transdate
-				AND coalesce(p.validto, $transdate) >= 
-					$transdate
-				AND p.parts_id = ?
+                SELECT p.parts_id, p.credit_id AS entity_id,
+                p.pricegroup_id,
+                p.pricebreak, p.sellprice, p.validfrom,
+                p.validto, p.curr, g.pricegroup, 3 AS priority
+            FROM partscustomer p
+            LEFT JOIN pricegroup g ON (g.id = p.pricegroup_id)
+            WHERE p.credit_id = 0
+                AND p.pricegroup_id = 0
+                AND coalesce(p.validfrom, $transdate) <=
+                    $transdate
+                AND coalesce(p.validto, $transdate) >=
+                    $transdate
+                AND p.parts_id = ?
 
-			ORDER BY priority LIMIT 1;
-			|;
+            ORDER BY priority LIMIT 1;
+            |;
         $sth = $dbh->prepare($query) || $form->dberror($query);
     }
     elsif ( $form->{vendor_id} ) {
 
         # price matrix and vendor's partnumber
         $query = qq|
-			SELECT partnumber, lastcost
-			FROM partsvendor
-			WHERE parts_id = ?
-			AND credit_id = $credit_id|;
+            SELECT partnumber, lastcost
+            FROM partsvendor
+            WHERE parts_id = ?
+            AND credit_id = $credit_id|;
         $sth = $dbh->prepare($query) || $form->dberror($query);
     }
 
@@ -126,20 +126,20 @@ sub price_matrix {
         $form->error('Missing counter-party (customer or vendor)');
         return;
     }
-   
+
     if ( $mref = $pmh->fetchrow_hashref('NAME_lc') ) {
        if ($form->{customer_id}){
             $form->db_parse_numeric(sth=>$pmh, hashref=>$mref);
             $sellprice = $mref->{sellprice} || $ref->{sellprice};
             if ($mref->{pricebreak}){
-		$sellprice = $sellprice
+        $sellprice = $sellprice
                            - ($sellprice * ($mref->{pricebreak} / 100));
             }
             $ref->{sellprice} = $sellprice;
        } elsif ($form->{vendor_id}){
             $sellprice = $mref->{lastcost} || $ref->{sellprice};
             die $sellprice;
-            $ref->{sellprice} = $sellprice;    
+            $ref->{sellprice} = $sellprice;
        }
     }
 

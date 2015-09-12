@@ -82,7 +82,7 @@ sub fetch_config {
     my $login;
     my $creds = LedgerSMB::Auth::get_credentials;
     $login = $creds->{login};
-     
+
     my $dbh = $lsmb->{dbh};
 
     if ( !$login ) { # Assume this is for current connected user
@@ -92,8 +92,8 @@ sub fetch_config {
     }
 
     $query = qq|
-		SELECT * FROM user_preference 
-		 WHERE id = (SELECT id FROM users WHERE username = ?)|;
+        SELECT * FROM user_preference
+         WHERE id = (SELECT id FROM users WHERE username = ?)|;
     my $sth = $dbh->prepare($query);
     $sth->execute($login);
     $myconfig = $sth->fetchrow_hashref(NAME_lc);

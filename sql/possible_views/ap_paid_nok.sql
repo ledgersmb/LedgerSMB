@@ -8,7 +8,7 @@ drop view IF EXISTS ap_paid_nok;
 drop view IF EXISTS ap_paid_nok1;
 
 --View definition with cte
-CREATE VIEW ap_paid_nok AS 
+CREATE VIEW ap_paid_nok AS
  WITH cte(ap_id, ac_amount) AS (
          SELECT ap.id, sum(ac.amount) AS sum
            FROM ap ap
@@ -43,7 +43,7 @@ BEGIN
  END IF;
  delete from acc_trans where trans_id=OLD.id;
  DELETE FROM ap WHERE id=OLD.id;
-return OLD; 
+return OLD;
 END;
 $$ language plpgsql;
 

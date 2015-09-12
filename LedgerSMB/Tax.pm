@@ -50,17 +50,17 @@ sub init_taxes {
      $logger->trace("taxaccounts2 undefined");
     }
     my $query = qq|
-		SELECT t.taxnumber, c.description,
-			t.rate, t.chart_id, t.pass, m.taxmodulename, t.minvalue
-			FROM tax t INNER JOIN chart c ON (t.chart_id = c.id)
-			INNER JOIN taxmodule m 
-				ON (t.taxmodule_id = m.taxmodule_id)
-			WHERE c.accno = ? 
-		              AND coalesce(validto::timestamp, 'infinity') 
-		                  >= coalesce(?::timestamp, now())
-			ORDER BY validto ASC
-			LIMIT 1
-		|;
+        SELECT t.taxnumber, c.description,
+            t.rate, t.chart_id, t.pass, m.taxmodulename, t.minvalue
+            FROM tax t INNER JOIN chart c ON (t.chart_id = c.id)
+            INNER JOIN taxmodule m
+                ON (t.taxmodule_id = m.taxmodule_id)
+            WHERE c.accno = ?
+                      AND coalesce(validto::timestamp, 'infinity')
+                          >= coalesce(?::timestamp, now())
+            ORDER BY validto ASC
+            LIMIT 1
+        |;
     my $sth = $dbh->prepare($query);
     foreach $taxaccount (@accounts) {
         next if ( !defined $taxaccount );

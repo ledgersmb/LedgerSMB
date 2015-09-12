@@ -51,20 +51,20 @@ sub columns {
     return [
       { col_id => 'control_code',
           type => 'href',
-     href_base => 'business_unit.pl?action=edit&id=', 
+     href_base => 'business_unit.pl?action=edit&id=',
           name => LedgerSMB::Report::text('Control Code') },
 
       { col_id => 'description',
           type => 'text',
-          name => LedgerSMB::Report::text('Description') }, 
+          name => LedgerSMB::Report::text('Description') },
 
       { col_id => 'start_date',
           type => 'text',
-          name => LedgerSMB::Report::text('Start Date') }, 
+          name => LedgerSMB::Report::text('Start Date') },
 
       { col_id => 'description',
           type => 'text',
-          name => LedgerSMB::Report::text('End Date') }, 
+          name => LedgerSMB::Report::text('End Date') },
     ];
 }
 

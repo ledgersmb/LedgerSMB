@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Report::Inventory::History - Sales/Purchase History for Goods 
+LedgerSMB::Report::Inventory::History - Sales/Purchase History for Goods
 
 =head1 SYNPOSIS
 
@@ -15,7 +15,7 @@ with 'LedgerSMB::Report::Dates';
 
 =head1 DESCRIPTION
 
-This 
+This
 
 =head1 CRITERIA PROPERTIES
 
@@ -57,7 +57,7 @@ has inc_is => (is => 'ro', isa => 'Bool', required => 0);
 
 =item inc_ir bool
 
-If true, show parts attached to purchase/vendor invoices in the specified 
+If true, show parts attached to purchase/vendor invoices in the specified
 period.
 
 =cut
@@ -115,23 +115,23 @@ sub columns {
        type => 'href',
   href_base => 'ic.pl?action=edit&id=',
        name => LedgerSMB::Report::text('Part Number'),},
-   
+
     {col_id => 'description',
        type => 'text',
        name => LedgerSMB::Report::text('Description'),},
-   
+
     {col_id => 'onhand',
        type => 'text',
        name => LedgerSMB::Report::text('On Hand'),},
-   
+
     {col_id => 'unit',
        type => 'text',
        name => LedgerSMB::Report::text('Unit'),},
-   
+
     {col_id => 'bin',
        type => 'text',
        name => LedgerSMB::Report::text('Bin'),},
-   
+
     {col_id => 'ordnumber',
        type => 'href',
        name => LedgerSMB::Report::text('Order/Invoice'),},
@@ -148,23 +148,23 @@ sub columns {
        type => 'text',
       money => 1,
        name => LedgerSMB::Report::text('Sell Price'),},
-   
+
     {col_id => 'qty',
        type => 'text',
        name => LedgerSMB::Report::text('Qty'),},
- 
+
     {col_id => 'linetotal',
        type => 'text',
       money => 1,
        name => LedgerSMB::Report::text('Total'),},
- 
+
     {col_id => 'serialnumber',
        type => 'text',
        name => LedgerSMB::Report::text('Serial Number'),},
- 
-    ]; 
-}     
-     
+
+    ];
+}
+
 =head2 header_lines
 
 None yet

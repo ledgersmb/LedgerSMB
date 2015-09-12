@@ -6,8 +6,8 @@ LedgerSMB::DBObject::Draft - LedgerSMB base class for managing "drafts."
 
 =head1 SYNOPSIS
 
-This module contains the methods for managing unapproved, unbatched financial 
-transactions.  This does not contain facities for creating such transactions, 
+This module contains the methods for managing unapproved, unbatched financial
+transactions.  This does not contain facities for creating such transactions,
 only searching for them, and posting them to the books.
 
 =head1 METHODS
@@ -22,7 +22,7 @@ use base qw/LedgerSMB::PGOld/;
 
 =item search()
 
-returns a list of results for the search criteria.  This list is also stored 
+returns a list of results for the search criteria.  This list is also stored
 in $draft->{search_resuts}
 
 Requres $self->{type} to be one of 'ar', 'ap', or 'gl'
@@ -81,7 +81,7 @@ sub delete {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

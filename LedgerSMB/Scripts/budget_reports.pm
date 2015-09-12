@@ -19,7 +19,7 @@ use strict;
 
 =item search
 
-Searches for budgets.  See LedgerSMB::Report::Budget::Search for 
+Searches for budgets.  See LedgerSMB::Report::Budget::Search for
 more.
 
 =cut

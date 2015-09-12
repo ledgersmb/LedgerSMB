@@ -48,7 +48,7 @@ sub display {
     }
     $dbtemp->{content} = $dbtemp->template if defined $dbtemp;
     $dbtemp = $request unless $dbtemp->{format};
-    $dbtemp->{languages} = 
+    $dbtemp->{languages} =
         [ LedgerSMB->call_procedure(funcname => 'person__list_languages') ];
     LedgerSMB::Template->new(
         user     => $request->{_user},
@@ -77,7 +77,7 @@ sub edit {
     die $LedgerSMB::App_State::Locale->text('Template Not Found') unless $dbtemp;
     $dbtemp->{content} = $dbtemp->template;
     $dbtemp = $request unless $dbtemp->{format};
-    $dbtemp->{languages} = 
+    $dbtemp->{languages} =
         [ LedgerSMB->call_procedure(funcname => 'person__list_languages') ];
 
     LedgerSMB::Template->new(
@@ -105,7 +105,7 @@ sub save {
 
 =head2 upload($request)
 
-Sends the file as an upload.  The template_name and format must match before it 
+Sends the file as an upload.  The template_name and format must match before it
 will be accepted.
 
 =cut
@@ -132,8 +132,8 @@ sub upload {
 
 Copyright (C) 2014 The LedgerSMB Core Team.
 
-This file may be re-used under the terms of the GNU General Public License 
-version 2 or at your option any later version.  Please see the included 
+This file may be re-used under the terms of the GNU General Public License
+version 2 or at your option any later version.  Please see the included
 LICENSE.txt for details.
 
 =cut
