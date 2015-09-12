@@ -27,6 +27,8 @@ has the following keys:
 
 =cut
 
+package LedgerSMB::Scripts::employee::country;
+
 our %country_divs = (
 
        "232" => [ { div_title => 'W4', # UNITED STATES

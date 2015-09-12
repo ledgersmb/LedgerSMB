@@ -2,34 +2,28 @@
 
 use strict;
 use warnings;
-use Test::More;
+use Test::More; # plan automatically generated below
 use File::Find;
 use Perl::Critic;
 
-my $critic = Perl::Critic->new(
-    -profile => '',
-    -severity => 5,
-    -theme => '',
-    -exclude => [ 'BuiltinFunctions',
-                  'ClassHierarchies',
-                  'ControlStructures',
-                  'Documentation',
-                  'ErrorHandling',
-                  'InputOutput',
-                  'Miscelenea',
-                  'Modules',
-                  'Objects',
-                  'RegularExpressions',
-                  'Subroutines',
-                  'TestingAndDebugging',
-                  'ValuesAndExpressions',
-                  'Variables'
-    ],
-    -include => [ 'ProhibitTrailingWhitespace',
-                  'ProhibitHardTabs',
-    ]);
-
 my @on_disk;
+
+
+sub test_files {
+    my ($critic, $files) = @_;
+
+    for my $file (@$files) {
+        my @findings = $critic->critique($file);
+        
+        ok(scalar(@findings) == 0, "Critique for $file");
+        for my $finding (@findings) {
+            diag($finding->description);
+        }
+    }
+
+    return;
+}
+
 sub collect {
     return if $File::Find::name !~ m/\.(pm|pl)$/;
 
@@ -38,15 +32,64 @@ sub collect {
 }
 find(\&collect, 'LedgerSMB/', 'bin/');
 
+my @on_disk_oldcode =
+    grep { m#^bin/# } @on_disk;
 
-plan tests => scalar(@on_disk);
+@on_disk = 
+    grep { ! m#^bin/# }
+    grep { ! m#^LedgerSMB/Auth/# }
+    @on_disk;
 
-for my $file (@on_disk) {
-    my @findings = $critic->critique($file);
 
-    ok(scalar(@findings) == 0, "Critique for $file");
-    for my $finding (@findings) {
-        diag($finding->description);
-    }
-}
+plan tests => scalar(@on_disk) + scalar(@on_disk_oldcode);
+
+&test_files(Perl::Critic->new(
+                -profile => '',
+                -severity => 5,
+                -theme => '',
+                -exclude => [ 'BuiltinFunctions',
+                              'ClassHierarchies',
+                              'ControlStructures',
+                              'Documentation',
+                              'ErrorHandling',
+                              'InputOutput',
+                              'Miscelenea',
+                              'Modules::RequireVersionVar',
+                              'Objects',
+                              'RegularExpressions',
+                              'Subroutines',
+                              'TestingAndDebugging',
+                              'ValuesAndExpressions',
+                              'Variables'
+                ],
+                -include => [ 'ProhibitTrailingWhitespace',
+                              'ProhibitHardTabs',
+                              'Modules',
+                ]),
+            \@on_disk);
+
+&test_files(Perl::Critic->new(
+                -profile => '',
+                -severity => 5,
+                -theme => '',
+                -exclude => [ 'BuiltinFunctions',
+                              'ClassHierarchies',
+                              'ControlStructures',
+                              'Documentation',
+                              'ErrorHandling',
+                              'InputOutput',
+                              'Miscelenea',
+                              'Modules',
+                              'Objects',
+                              'RegularExpressions',
+                              'Subroutines',
+                              'TestingAndDebugging',
+                              'ValuesAndExpressions',
+                              'Variables'
+                ],
+                -include => [ 'ProhibitTrailingWhitespace',
+                              'ProhibitHardTabs',
+                ]),
+            \@on_disk_oldcode);
+
 
