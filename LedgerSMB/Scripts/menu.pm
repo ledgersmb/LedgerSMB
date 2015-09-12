@@ -15,12 +15,13 @@ devices.
 =cut
 
 package LedgerSMB::Scripts::menu;
-our $VERSION = '1.0';
 
 use LedgerSMB::DBObject::Menu;
 use LedgerSMB::Template;
 use strict;
+use warnings;
 
+our $VERSION = '1.0';
 
 =pod
 

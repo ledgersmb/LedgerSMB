@@ -9,6 +9,10 @@ LedgerSMB::Scripts::payroll - Payroll workflows for LedgerSMB
 =cut
 
 package LedgerSMB::Scripts::payroll;
+
+use strict;
+use warnings;
+
 use LedgerSMB::Payroll::Income_Type;
 use LedgerSMB::Template;
 

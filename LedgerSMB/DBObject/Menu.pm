@@ -17,8 +17,10 @@ included COPYRIGHT and LICENSE files for more information.
 
 package LedgerSMB::DBObject::Menu;
 
-use base(qw(LedgerSMB::PGOld));
-1;
+use strict;
+use warnings;
+
+use base qw(LedgerSMB::PGOld);
 
 =head1 METHODS
 
@@ -91,7 +93,7 @@ sub __generate {
 
     for (@{$attribute->{args}}){
             if ($_ =~ /(module|menu|action)=/){
-               @elems = split(/=/, $_);
+               my @elems = split(/=/, $_);
                $attribute->{$elems[0]} = $elems[1];
             }
         }

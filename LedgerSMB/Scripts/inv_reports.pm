@@ -21,6 +21,10 @@ Searches for inventory adjustment reports
 =cut
 
 package LedgerSMB::Scripts::inv_reports;
+
+use strict;
+use warnings;
+
 use LedgerSMB::Report::Inventory::Search_Adj;
 use LedgerSMB::Report::Inventory::Adj_Details;
 use LedgerSMB::Scripts::reports;

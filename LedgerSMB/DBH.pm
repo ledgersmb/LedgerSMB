@@ -16,6 +16,8 @@ to use credentials returned by LedgerSMB::Auth::get_credentials
 
 package LedgerSMB::DBH;
 use strict;
+use warnings;
+
 use LedgerSMB::Auth;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::App_State;

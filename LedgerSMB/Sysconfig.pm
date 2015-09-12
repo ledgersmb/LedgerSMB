@@ -5,7 +5,7 @@
 package LedgerSMB::Sysconfig;
 use strict;
 use warnings;
-no strict qw(refs);
+# no strict qw(refs);
 use Cwd;
 
 # use LedgerSMB::Form;
@@ -110,6 +110,7 @@ for my $var (
     return_accno no_db_str tempdir cache_templates fs_cssdir dojo_theme)
   )
 {
+    no strict 'refs';
     ${$var} = $cfg->val('main', $var) if $cfg->val('main', $var);
 }
 
@@ -130,11 +131,13 @@ for my $var (qw(PATH PERL5LIB)) {
 
 # Application-specific paths
 for my $var (qw(localepath spool templates images)) {
+    no strict 'refs';
     ${$var} = $cfg->val('paths', $var) if $cfg->val('paths', $var);
 }
 
 # Programs
 for my $var (qw(gzip zip)) {
+    no  strict 'refs';
     ${$var} = $cfg->val('programs', $var) if $cfg->val('programs', $var);
 }
 
@@ -142,6 +145,7 @@ for my $var (qw(gzip zip)) {
 for my $var (qw(sendmail smtphost smtptimeout smtpuser
              smtppass smtpauthmethod backup_email_from))
 {
+    no strict 'refs';
     ${$var} = $cfg->val('mail', $var) if $cfg->val('mail', $var);
 }
 

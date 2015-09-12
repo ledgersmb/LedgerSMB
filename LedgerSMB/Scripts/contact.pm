@@ -430,7 +430,6 @@ Not fully documented because this will go away as soon as possible.
 sub dispatch_legacy {
     our ($request) = shift @_;
     use LedgerSMB::Form;
-    no strict;
     use Data::Dumper;
     my $aa;
     my $inv;

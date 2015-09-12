@@ -5,6 +5,10 @@ LedgerSMB::Scripts::template - Template editing workflows for LedgerSMB
 =cut
 
 package LedgerSMB::Scripts::template;
+
+use strict;
+use warnings;
+
 use LedgerSMB::Template::DB;
 use LedgerSMB::Report::Listings::Templates;
 use LedgerSMB::Template;
@@ -12,7 +16,7 @@ use LedgerSMB::App_State;
 
 =head1 SYNPOSIS
 
-To display the edit screen
+To display the edit screen1
 
    LedgerSMB::Scripts::template::display($request)
 
@@ -68,13 +72,17 @@ Displays a screen for editing the template
 
 sub edit {
     my ($request) = @_;
+    my $dbtemp;
     { # pre-5.14 compatibility block
         local ($@); # pre-5.14, do not die() in this block
-        my $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) } ;
-        delete $request->{language_code} unless $dbtemp;
-        $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) } unless $dbtemp;
+        $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) } ;
+        delete $request->{language_code}
+            unless $dbtemp;
+        $dbtemp = eval { LedgerSMB::Template::DB->get(%$request) }
+            unless $dbtemp;
     }
-    die $LedgerSMB::App_State::Locale->text('Template Not Found') unless $dbtemp;
+    die $LedgerSMB::App_State::Locale->text('Template Not Found')
+       unless $dbtemp;
     $dbtemp->{content} = $dbtemp->template;
     $dbtemp = $request unless $dbtemp->{format};
     $dbtemp->{languages} =
@@ -86,7 +94,7 @@ sub edit {
         path     => 'UI/templates',
         template => 'edit',
         format   => 'HTML'
-    )->render({ request => $script,
+    )->render({ request => $request,
                 template => $dbtemp });
 }
 
@@ -113,7 +121,7 @@ will be accepted.
 sub upload {
     my ($request) = @_;
     my @fnames =  $request->{_request}->upload_info;
-    $name = $fnames[0];
+    my $name = $fnames[0];
     my $fh = $request->{_request}->upload($name);
     my $fdata = join ("", <$fh>);
     die "No content" unless $fdata;

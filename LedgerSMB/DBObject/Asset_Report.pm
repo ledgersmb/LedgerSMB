@@ -73,6 +73,7 @@ If true, submitted for approval
 
 use base qw(LedgerSMB::PGOld);
 use strict;
+use warnings;
 
 =item save
 

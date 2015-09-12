@@ -12,6 +12,8 @@ use LedgerSMB::Template;
 use LedgerSMB::Setting::Sequence;
 use LedgerSMB::Report::Listings::Business_Unit;
 use Carp;
+use strict;
+use warnings;
 
 $Carp::Verbose = 1;
 

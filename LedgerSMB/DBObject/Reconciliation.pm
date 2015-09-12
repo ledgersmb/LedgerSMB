@@ -46,6 +46,9 @@ uncleared.
 
 package LedgerSMB::DBObject::Reconciliation;
 
+use strict;
+use warnings;
+
 use base qw(LedgerSMB::PGOld);
 use LedgerSMB::Reconciliation::CSV;
 
@@ -66,7 +69,7 @@ sub update {
 
 sub _pre_save {
     my $self = shift @_;
-    $i = 1;
+    my $i = 1;
     my $ids = ();
     $self->{line_ids} = '{';
     while (my $id = $self->{"id_$i"}){
@@ -177,7 +180,9 @@ sub new_report {
     # Ideally, we OUGHT to not return anything here, save the report number.
 
 
-    return ($report_id, $entries); # returns the report ID.
+    return ($report_id,
+            ###TODO-ISSUE-UNDECLARED-ENTRIES $entries
+        ); # returns the report ID.
 }
 
 
@@ -253,7 +258,7 @@ sub add_entries {
         #in_account INT,
         #in_user TEXT,
         #in_date TIMESTAMP
-        $code = $self->call_procedure(
+        my $code = $self->call_procedure(
             funcname=>'reconciliation__add_entry',
             args=>[
                 $self->{report_id},
@@ -263,7 +268,8 @@ sub add_entries {
                 $entry->{amount}, # needs leading 0's trimmed.
             ]
         );
-        $entry{report_id} = $report_id;
+        ###TODO-ISSUE-UNDECLARED-ENTRIES
+        #$entry->{report_id} = $report_id;
     }
 }
 
@@ -332,7 +338,7 @@ sub get {
                 funcname=>'reconciliation__get_cleared_balance'
     );
 
-    $our_balance = $ref->{reconciliation__get_cleared_balance};
+    my $our_balance = $ref->{reconciliation__get_cleared_balance};
     $self->{beginning_balance} = $our_balance;
     $self->{cleared_total} = $self->parse_amount(amount => 0);
     $self->{outstanding_total} = $self->parse_amount(amount => 0);

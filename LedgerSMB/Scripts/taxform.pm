@@ -17,9 +17,10 @@ information depending on what one clicks.
 =cut
 
 package LedgerSMB::Scripts::taxform;
-our $VERSION = '1.0';
 
 use strict;
+use warnings;
+
 use LedgerSMB;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Template;
@@ -30,6 +31,9 @@ use LedgerSMB::Form;
 use LedgerSMB::Report::Taxform::Summary;
 use LedgerSMB::Report::Taxform::Details;
 use LedgerSMB::Report::Taxform::List;
+
+our $VERSION = '1.0';
+
 
 =pod
 

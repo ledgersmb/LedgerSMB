@@ -74,6 +74,9 @@ $myconfig->{dateformat}.
 
 package LedgerSMB::Locale;
 
+use strict;
+use warnings;
+
 use base 'Locale::Maketext';
 use LedgerSMB::Sysconfig;
 use Locale::Maketext::Lexicon;

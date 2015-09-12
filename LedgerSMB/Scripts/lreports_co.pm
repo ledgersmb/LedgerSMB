@@ -11,13 +11,15 @@ This module holds Colombia-specific reports.
 =cut
 
 package LedgerSMB::Scripts::lreports_co;
-our $VERSION = '1.0';
 
 use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Report::co::Caja_Diaria;
 use LedgerSMB::Report::co::Balance_y_Mayor;
 use strict;
+use warnings;
+
+our $VERSION = '1.0';
 
 =pod
 

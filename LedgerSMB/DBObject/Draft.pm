@@ -18,6 +18,9 @@ only searching for them, and posting them to the books.
 
 package LedgerSMB::DBObject::Draft;
 
+use strict;
+use warnings;
+
 use base qw/LedgerSMB::PGOld/;
 
 =item search()

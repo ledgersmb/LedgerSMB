@@ -12,7 +12,6 @@ LedgerSMB::Scripts::vouchers
 =cut
 
 package LedgerSMB::Scripts::vouchers;
-our $VERSION = '0.1';
 
 use LedgerSMB::Batch;
 use LedgerSMB::Template;
@@ -21,9 +20,11 @@ use LedgerSMB::Report::Unapproved::Batch_Detail;
 use LedgerSMB::Scripts::payment;
 use LedgerSMB::Scripts::reports;
 use CGI::Simple;
+
 use strict;
+use warnings;
 
-
+our $VERSION = '0.1';
 our $custom_batch_types = {};
 
 ###TODO-LOCALIZE-DOLLAR-AT

@@ -4,7 +4,9 @@ LedgerSMB::Scripts::budgets
 =cut
 
 package LedgerSMB::Scripts::budgets;
+
 use strict;
+use warnings;
 
 =head1 SYNOPSYS
 Budget workflow scripts.

@@ -1,6 +1,7 @@
 package LedgerSMB::DBObject::TransTemplate;
 use base qw(LedgerSMB::PGOld);
 use strict;
+use warnings;
 use Log::Log4perl;
 
 sub save {

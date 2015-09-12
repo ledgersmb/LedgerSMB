@@ -43,13 +43,14 @@ package LedgerSMB::Num2text;
 # EOF
 
 use utf8;
-no warnings;
+use strict;
+use warnings;
 use LedgerSMB::Locale;
 
 sub new {
     my ( $type, $countrycode ) = @_;
 
-    $self = {};
+    my $self = {};
     $self->{'locale'} = LedgerSMB::Locale->get_handle($countrycode);
     bless $self, $type;
 
@@ -152,7 +153,7 @@ sub num2text_en {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     while (@numblock) {
@@ -193,7 +194,7 @@ sub num2text_en {
 
         # add thousand, million
         if ($i) {
-            $num = 10**( $i * 3 );
+            my $num = 10**( $i * 3 );
             push @textnumber, $self->{numbername}{$num};
         }
 
@@ -244,7 +245,7 @@ sub num2text_de {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     my $belowhundred = !$#numblock;
@@ -369,7 +370,7 @@ sub num2text_et {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     while (@numblock) {
@@ -379,7 +380,7 @@ sub num2text_et {
         @num = split //, $numblock[$i];
 
         $appendit = "it";
-        $hundred  = 0;
+        my $hundred  = 0;
 
         if ( $numblock[$i] == 0 ) {
             pop @numblock;
@@ -412,7 +413,7 @@ sub num2text_et {
             if ($hundred) {
                 @num = split //, $numblock[$i];
             }
-            $num = $num[1];
+            my $num = $num[1];
 
             push @textnumber, "$self->{numbername}{$num}teist";
 
@@ -463,7 +464,7 @@ sub num2text_es {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     # special case for 1000
@@ -518,14 +519,14 @@ sub num2text_es {
         elsif ( $numblock[$i] > 0 ) {
 
             # ones
-            $num = $numblock[$i];
+            my $num = $numblock[$i];
             $num .= 'o' if ( $num == 1 && $i == 0 );
             push @textnumber, $self->{numbername}{$num};
         }
 
         # add thousand, million
         if ($i) {
-            $num = 10**( $i * 3 );
+            my $num = 10**( $i * 3 );
             if ( $numblock[$i] > 1 ) {
                 if ( $i == 2 || $i == 4 ) {
                     $a = $self->{numbername}{$num} . "es";
@@ -602,7 +603,7 @@ sub num2text_fr {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     my $cent = 0;
@@ -667,7 +668,7 @@ sub num2text_fr {
 
         # add thousand, million
         if ($i) {
-            $num = 10**( $i * 3 );
+            my $num = 10**( $i * 3 );
             if ( $i == 1 ) {
                 push @textnumber, $self->{numbername}{$num};
             }
@@ -751,7 +752,7 @@ sub num2text_hu {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
     while (@numblock) {
         $i = $#numblock;
@@ -788,12 +789,12 @@ sub num2text_hu {
         if ($i) {
             if ( $i == 1 && $amount < 2000 ) {
 
-                $num = 10**( $i * 3 );
+                my $num = 10**( $i * 3 );
                 push @textnumber, $self->{numbername}{$num};
             }
             else {
 
-                $num = 10**( $i * 3 );
+                my $num = 10**( $i * 3 );
                 push @textnumber, $self->{numbername}{$num} . "-";
             }
         }
@@ -844,7 +845,7 @@ sub num2text_nl {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     while (@numblock) {
@@ -936,7 +937,7 @@ sub num2text_it {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     while (@numblock) {
@@ -1031,7 +1032,7 @@ sub num2text_da {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     my $i;
@@ -1046,7 +1047,7 @@ sub num2text_da {
         }
 
         # Plural suffix "er" for million and up, not for tusinde
-        $bigpluralsuffix = "";
+        my $bigpluralsuffix = "";
         $bigpluralsuffix = "er" if ( $i > 1 && $numblock[$i] > 1 );
 
         if ( $numblock[$i] > 99 ) {
@@ -1145,7 +1146,7 @@ sub num2text_sl {
     for (1 .. 3) {
       push @a, shift @num;
     }
-    push @numblock, join / /, reverse @a;
+    push @numblock, join ' ', reverse @a;
   }
 
   my $belowhundred = !$#numblock;

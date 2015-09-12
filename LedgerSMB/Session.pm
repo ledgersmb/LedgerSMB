@@ -20,6 +20,8 @@ use Log::Log4perl;
 use LedgerSMB::Auth;
 use CGI::Simple;
 use strict;
+use warnings;
+
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 

@@ -5,6 +5,10 @@ LedgerSMB::Scripts::goods - Goods and Services workflows for LedgerSMB
 =cut
 
 package LedgerSMB::Scripts::goods;
+
+use strict;
+use warnings;
+
 use LedgerSMB::Report::Inventory::Search;
 use LedgerSMB::Report::Inventory::History;
 use LedgerSMB::Report::Invoices::COGS;

@@ -19,11 +19,13 @@ which have not been approved yet.
 
 
 package LedgerSMB::Scripts::drafts;
-our $VERSION = '0.1';
 
 use LedgerSMB::DBObject::Draft;
 use LedgerSMB::Template;
 use strict;
+use warnings;
+
+our $VERSION = '0.1';
 
 =item search
 

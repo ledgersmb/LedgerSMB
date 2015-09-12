@@ -13,6 +13,8 @@ LedgerSMB.
 package LedgerSMB::DBObject::Date;
 use base qw(LedgerSMB::PGOld);
 use strict;
+use warnings;
+
 use LedgerSMB::PGNumber;
 our $VERSION = '0.1.0';
 

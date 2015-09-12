@@ -89,6 +89,7 @@ ID of asset class.
 
 use base qw(LedgerSMB::PGOld);
 use strict;
+use warnings;
 
 =item save
 

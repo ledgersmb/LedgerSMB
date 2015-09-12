@@ -20,6 +20,9 @@ management tasks.
 #
 package LedgerSMB::Scripts::setup;
 
+use strict;
+use warnings;
+
 use Locale::Country;
 use LedgerSMB::Auth;
 use LedgerSMB::Database;
@@ -31,7 +34,6 @@ use LedgerSMB::Sysconfig;
 use LedgerSMB::Template::DB;
 use LedgerSMB::Setting;
 use Try::Tiny;
-use strict;
 use Data::Dumper;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::Scripts::setup');

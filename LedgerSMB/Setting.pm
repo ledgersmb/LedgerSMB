@@ -52,6 +52,8 @@ package LedgerSMB::Setting;
 use LedgerSMB::App_State;
 use base qw(LedgerSMB::PGOld);
 use strict;
+use warnings;
+
 our $VERSION = '1.0.0';
 
 

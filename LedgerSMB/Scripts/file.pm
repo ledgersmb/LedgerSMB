@@ -21,6 +21,10 @@ Requires that id and file_class be set.
 =cut
 
 package LedgerSMB::Scripts::file;
+
+use strict;
+use warnings;
+
 use LedgerSMB::File;
 use LedgerSMB::File::Transaction;
 use LedgerSMB::File::Order;
@@ -30,7 +34,6 @@ use LedgerSMB::File::ECA;
 use LedgerSMB::File::Internal;
 use LedgerSMB::File::Incoming;
 use DBD::Pg qw(:pg_types);
-use strict;
 use CGI::Simple;
 
 our $fileclassmap = {

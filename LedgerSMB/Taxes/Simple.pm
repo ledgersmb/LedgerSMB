@@ -26,10 +26,13 @@
 #====================================================================
 package LedgerSMB::Taxes::Simple;
 
+use strict;
+use warnings;
+
 use Class::Struct;
 use LedgerSMB::PGNumber;
 
-struct LedgerSMB::Taxes::Simple => {
+struct 'LedgerSMB::Taxes::Simple' => {
     taxnumber   => '$',
     description => '$',
     rate        => 'LedgerSMB::PGNumber',

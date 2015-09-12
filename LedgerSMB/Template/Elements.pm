@@ -20,8 +20,9 @@ Returns a blessed hashref from this namespace.
 =cut
 
 package LedgerSMB::Template::Elements;
-use strict;
 
+use strict;
+use warnings;
 
 sub new {
     my ($class) = @_;

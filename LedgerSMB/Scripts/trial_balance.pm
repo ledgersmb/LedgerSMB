@@ -9,6 +9,10 @@ LedgerSMB::Scripts::trial_balance - Trial Balance logic for LedgerSMB
 =cut
 
 package LedgerSMB::Scripts::trial_balance;
+
+use strict;
+use warnings;
+
 use LedgerSMB::Report::Trial_Balance;
 
 
