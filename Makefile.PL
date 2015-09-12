@@ -24,7 +24,6 @@ requires 'DateTime';
 requires 'DateTime::Format::Strptime';
 requires 'Digest::MD5';
 requires 'File::MimeInfo';
-requires 'HTML::Entities';
 requires 'JSON';
 requires 'Locale::Maketext';
 requires 'Locale::Maketext::Lexicon' => '0.62';
