@@ -138,7 +138,7 @@ my @modules =
           #'LedgerSMB::Report::Payroll::Deduction_Types',
           'LedgerSMB::Report::Payroll::Income_Types',
           'LedgerSMB::Report::Reconciliation::Summary',
-          'LedgerSMB::Report::Taxform::Detail',
+          'LedgerSMB::Report::Taxform::Details',
           'LedgerSMB::Report::Taxform::Summary',
           'LedgerSMB::Report::Taxform::List',
           'LedgerSMB::Report::Unapproved::Batch_Overview',

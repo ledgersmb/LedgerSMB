@@ -255,6 +255,7 @@ sub all_months {
     return { as_hashref => $as_hashref, dropdown=> $for_dropdown };
 }
 
+1;
 
 =head1 COPYRIGHT
 

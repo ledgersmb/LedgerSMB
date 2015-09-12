@@ -248,164 +248,184 @@ sub _inventory_single_date {
         ) or $ap_form->dberror();
 };
 
-our $process = {
-   gl       => sub {
-                   use LedgerSMB::GL;
-                   my ($request, $entries) = @_;
-                   my $form = Form->new();
-                   $form->{reference} = $request->{reference};
-                   $form->{description} = $request->{description};
-                   $form->{transdate} = $request->{transdate};
-                   $form->{rowcount} = 0;
-                   $form->{approved} = '0';
-                   $form->{dbh} = $request->{dbh};
-                   for my $ref (@$entries){
-                       if ($ref->[1] !~ /\d/){
-                          delete $ref->[1];
-                       } else {
-                          $ref->[1] = $form->parse_amount(
-                                         $request->{_user}, $ref->[1]
-                          );
-                       }
-                       if ($ref->[2] !~ /\d/){
-                          delete $ref->[2];
-                       } else {
-                          $ref->[2] = $form->parse_amount(
-                                         $request->{_user}, $ref->[2]
-                          );
-                       }
-                       next if !$ref->[1] and !$ref->[2];
-                       for my $col (@{$cols->{$request->{type}}}){
-                           $form->{"${col}_$form->{rowcount}"} = shift @$ref;
-                       }
-                       ++$form->{rowcount};
-                   }
-                   GL->post_transaction($request->{_user}, $form,
-                                        $request->{_locale});
-                },
-   ar_multi => sub {
-                   my  ($request, $entries) = @_;
-                   return &_aa_multi($request, $entries, 'ar');
-               },
-   ap_multi => sub {
-                   my  ($request, $entries) = @_;
-                   return &_aa_multi($request, $entries, 'ap');
-               },
-    chart => sub {
-               use LedgerSMB::DBObject::Account;
+sub _process_ar_multi {
+    my  ($request, $entries) = @_;
+    return &_aa_multi($request, $entries, 'ar');
+}
 
-               my ($request, $entries) = @_;
+sub _process_ap_multi {
+    my  ($request, $entries) = @_;
+    return &_aa_multi($request, $entries, 'ap');
+}
 
-               foreach my $entry (@$entries){
-                  my $account = LedgerSMB::DBObject::Account->new({base=>$request});
-                  my $settings = {
-                      accno => $entry->[0],
-                      description => $entry->[1],
-                      charttype => $entry->[2],
-                      category => $entry->[3],
-                      contra => $entry->[4],
-                      tax => $entry->[5],
-#                      heading => $entry->[7],
-                      gifi_accno => $entry->[8],
-                  };
+sub _process_gl {
+    use LedgerSMB::GL;
+    my ($request, $entries) = @_;
+    my $form = Form->new();
+    $form->{reference} = $request->{reference};
+    $form->{description} = $request->{description};
+    $form->{transdate} = $request->{transdate};
+    $form->{rowcount} = 0;
+    $form->{approved} = '0';
+    $form->{dbh} = $request->{dbh};
+    for my $ref (@$entries){
+        if ($ref->[1] !~ /\d/){
+            delete $ref->[1];
+        } else {
+            $ref->[1] = $form->parse_amount(
+                $request->{_user}, $ref->[1]
+                );
+        }
+        if ($ref->[2] !~ /\d/){
+            delete $ref->[2];
+        } else {
+            $ref->[2] = $form->parse_amount(
+                $request->{_user}, $ref->[2]
+                );
+        }
+        next if !$ref->[1] and !$ref->[2];
+        for my $col (@{$cols->{$request->{type}}}){
+            $form->{"${col}_$form->{rowcount}"} = shift @$ref;
+        }
+        ++$form->{rowcount};
+    }
+    GL->post_transaction($request->{_user}, $form,
+                         $request->{_locale});
+}
 
-                  if ($entry->[6] !~ /:/) {
-                    $settings->{$entry->[6]} = 1
-                      if ($entry->[6] ne "");
-                  } else {
-                    foreach my $link (split( /:/, $entry->[6])) {
-                       $settings->{$link} = 1;
-                    }
-                  }
+sub _process_chart {
+    use LedgerSMB::DBObject::Account;
 
-                  $account->merge($settings);
-                  $account->save();
-               }
-             },
-    gifi  => sub {
-               my ($request, $entries) = @_;
-               my $dbh = $request->{dbh};
-               my $sth = $dbh->prepare('INSERT INTO gifi (accno, description) VALUES (?, ?)') || die $dbh->errstr;;
+    my ($request, $entries) = @_;
 
-               foreach my $entry (@$entries) {
-                 $sth->execute($entry->[0], $entry->[1]) || die $sth->errstr();
-               }
-             },
-    sic   => sub {
-               my ($request, $entries) = @_;
-               my $dbh = $request->{dbh};
-               my $sth = $dbh->prepare('INSERT INTO sic (code, sictype, description) VALUES (?, ?, ?)') || die $dbh->errstr;;
+    foreach my $entry (@$entries){
+        my $account = LedgerSMB::DBObject::Account->new({base=>$request});
+        my $settings = {
+            accno => $entry->[0],
+            description => $entry->[1],
+            charttype => $entry->[2],
+            category => $entry->[3],
+            contra => $entry->[4],
+            tax => $entry->[5],
+#            heading => $entry->[7],
+            gifi_accno => $entry->[8],
+        };
 
-               foreach my $entry (@$entries) {
-                 $sth->execute($entry->[0], $entry->[1], $entry->[2])
-                    || die $sth->errstr();
-               }
-             },
- timecard => sub {
-               use LedgerSMB::Timecard;
-               my ($request, $entries) = @_;
-               my $myconfig = {};
-               my $jc = {};
-               for my $entry (@$entries) {
-                   my $counter = 0;
-                   for my $col (@{$cols->{timecard}}){
-                       $jc->{$col} = $entry->[$counter];
-                       ++$counter;
-                   }
-                   LedgerSMB::Timecard->new(%$jc)->save;
-               }
-             },
-   inventory => sub {
-       my ($request, $entries) = @_;
-       my $dbh = $request->{dbh};
+        if ($entry->[6] !~ /:/) {
+            $settings->{$entry->[6]} = 1
+                if ($entry->[6] ne "");
+        } else {
+            foreach my $link (split( /:/, $entry->[6])) {
+                $settings->{$link} = 1;
+            }
+        }
 
-       $dbh->do( # Not worth parameterizing for one input
+        $account->merge($settings);
+        $account->save();
+    }
+}
+
+sub _process_gifi {
+    my ($request, $entries) = @_;
+    my $dbh = $request->{dbh};
+    my $sth =
+        $dbh->prepare('INSERT INTO gifi (accno, description) VALUES (?, ?)')
+        || die $dbh->errstr;;
+
+    foreach my $entry (@$entries) {
+        $sth->execute($entry->[0], $entry->[1]) || die $sth->errstr();
+    }
+}
+
+sub _process_sic {
+    my ($request, $entries) = @_;
+    my $dbh = $request->{dbh};
+    my $sth =
+        $dbh->prepare('INSERT INTO sic (code, sictype, description) VALUES (?, ?, ?)') || die $dbh->errstr;;
+
+    foreach my $entry (@$entries) {
+        $sth->execute($entry->[0], $entry->[1], $entry->[2])
+            || die $sth->errstr();
+    }
+}
+
+sub _process_timecard {
+    use LedgerSMB::Timecard;
+    my ($request, $entries) = @_;
+    my $myconfig = {};
+    my $jc = {};
+    for my $entry (@$entries) {
+        my $counter = 0;
+        for my $col (@{$cols->{timecard}}){
+            $jc->{$col} = $entry->[$counter];
+            ++$counter;
+        }
+        LedgerSMB::Timecard->new(%$jc)->save;
+    }
+}
+
+sub _process_inventory {
+    my ($request, $entries) = @_;
+    my $dbh = $request->{dbh};
+
+    $dbh->do( # Not worth parameterizing for one input
               "INSERT INTO inventory_report
                             (transdate, source)
                      VALUES (".$dbh->quote($request->{transdate}).
               ", 'CSV upload')"
         ) or $request->dberror();
 
-       my ($report_id) = $dbh->selectrow_array(
-           "SELECT currval('inventory_report_id_seq')"
-           ) or $request->dberror();
+    my ($report_id) = $dbh->selectrow_array(
+        "SELECT currval('inventory_report_id_seq')"
+        ) or $request->dberror();
 
-       @$entries =
-           map { map_columns_into_hash($cols->{inventory}, $_) } @$entries;
-       &_inventory_single_date($request, $entries,
-                              $report_id, $request->{transdate});
+    @$entries =
+        map { map_columns_into_hash($cols->{inventory}, $_) } @$entries;
+    &_inventory_single_date($request, $entries,
+                            $report_id, $request->{transdate});
 
-   },
-   inventory_multi => sub {
-       my ($request, $entries) = @_;
-       my $dbh = $request->{dbh};
+}
 
-       @$entries =
-           map { map_columns_into_hash($cols->{inventory_multi}, $_) }
-           @$entries;
-       my %dated_entries;
-       for my $entry (@$entries) {
-           push @{$dated_entries{$entry->{date}}}, $entry;
-       }
+sub _process_inventory_multi {
+    my ($request, $entries) = @_;
+    my $dbh = $request->{dbh};
 
-       for my $key (keys %dated_entries) {
-           $dbh->do( # Not worth parameterizing for one input
-                     "INSERT INTO inventory_report
+    @$entries =
+        map { map_columns_into_hash($cols->{inventory_multi}, $_) }
+        @$entries;
+    my %dated_entries;
+    for my $entry (@$entries) {
+        push @{$dated_entries{$entry->{date}}}, $entry;
+    }
+
+    for my $key (keys %dated_entries) {
+        $dbh->do( # Not worth parameterizing for one input
+                  "INSERT INTO inventory_report
                             (transdate, source)
                      VALUES (".$dbh->quote($key).
-                     ", 'CSV upload (' || ".$dbh->quote($request->{transdate})
-                     ." || ')')"
-               ) or $request->dberror();
+                  ", 'CSV upload (' || ".$dbh->quote($request->{transdate})
+                  ." || ')')"
+            ) or $request->dberror();
 
-           my ($report_id) = $dbh->selectrow_array(
-               "SELECT currval('inventory_report_id_seq')"
-               ) or $request->dberror();
+        my ($report_id) = $dbh->selectrow_array(
+            "SELECT currval('inventory_report_id_seq')"
+            ) or $request->dberror();
 
-           &_inventory_single_date($request, $dated_entries{$key},
-                                  $report_id, $key);
-       }
+        &_inventory_single_date($request, $dated_entries{$key},
+                                $report_id, $key);
+    }
+}
 
-   },
+our $process = {
+    gl              => \&_process_gl,
+    ar_multi        => \&_process_ar_multi,
+    ap_multi        => \&_process_ap_multi,
+    chart           => \&_process_chart,
+    gifi            => \&_process_gifi,
+    sic             => \&_process_sic,
+    timecard        => \&_process_timecard,
+    inventory       => \&_process_inventory,
+    inventory_multi => \&_process_inventory_multi,
 };
 
 =head2 parse_file

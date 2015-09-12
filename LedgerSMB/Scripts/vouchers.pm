@@ -404,7 +404,7 @@ my %print_dispatch = (
                   wait;
                } else {
                   do 'bin/ar.pl';
-                  require 'LedgerSMB/Form.pm';
+                  require LedgerSMB::Form;
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
                   local $LedgerSMB::App_State::DBH = 0;
@@ -432,7 +432,7 @@ my %print_dispatch = (
                   wait;
                } else {
                   do 'bin/is.pl';
-                  require 'LedgerSMB/Form.pm';
+                  require LedgerSMB::Form;
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
                   local $LedgerSMB::App_State::DBH = 0;
@@ -454,7 +454,7 @@ my %print_dispatch = (
                   wait;
                } else {
                   do 'bin/is.pl';
-                  require 'LedgerSMB/Form.pm';
+                  require LedgerSMB::Form;
                   %$lsmb_legacy::form = (%$request);
                   bless $lsmb_legacy::form, 'Form';
                   local $LedgerSMB::App_State::DBH = 0;

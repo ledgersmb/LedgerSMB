@@ -72,8 +72,9 @@ sub init_taxes {
         my $ref = $sth->fetchrow_hashref;
         next unless $ref;
 
-        my $module = $ref->{'taxmodulename'};
-        require "LedgerSMB/Taxes/${module}.pm";
+        my $module = "LedgerSMB/Taxes/$ref->{taxmodulename}.pm";
+        require $module;
+        $module = $ref->{taxmodulename};
         $module =~ s/\//::/g;
         my $tax = ( eval 'LedgerSMB::Taxes::' . $module )->new();
 

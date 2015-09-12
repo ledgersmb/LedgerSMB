@@ -28,7 +28,7 @@ use LedgerSMB::DBObject::Date;
 use LedgerSMB::Template;
 use LedgerSMB::Form;
 use LedgerSMB::Report::Taxform::Summary;
-use LedgerSMB::Report::Taxform::Detail;
+use LedgerSMB::Report::Taxform::Details;
 use LedgerSMB::Report::Taxform::List;
 
 =pod
@@ -125,7 +125,7 @@ sub _generate_report {
     my ($request) = @_;
     my $report;
     if ($request->{meta_number}){
-        $report = LedgerSMB::Report::Taxform::Detail->new(%$request);
+        $report = LedgerSMB::Report::Taxform::Details->new(%$request);
     } else {
         $report = LedgerSMB::Report::Taxform::Summary->new(%$request);
     }

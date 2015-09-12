@@ -54,6 +54,8 @@ Deprecated
 
 =cut
 
+package Form;
+
 #inline documentation
 use strict;
 
@@ -75,7 +77,6 @@ use DBI;
 
 use charnames qw(:full);
 use open ':utf8';
-package Form;
 use base qw(LedgerSMB::Request);
 use utf8;
 

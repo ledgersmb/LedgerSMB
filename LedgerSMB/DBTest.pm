@@ -79,10 +79,11 @@ back all statements issues through this object.
 
 =cut
 
-use DBI;
 package LedgerSMB::DBTest;
 
-sub DISTROY {
+use DBI;
+
+sub DESTROY {
     my ($self) = @_;
     $self->disconnect;
 }

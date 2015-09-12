@@ -1,7 +1,8 @@
+
+package LedgerSMB::Scripts::account;
 use Template;
 use LedgerSMB::DBObject::Account;
 use LedgerSMB::DBObject::EOY;
-package LedgerSMB::Scripts::account;
 use Log::Log4perl;
 use Data::Dumper;
 use strict;

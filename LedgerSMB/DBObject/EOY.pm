@@ -28,9 +28,9 @@ closure
 
 =cut
 
-use strict;
 package LedgerSMB::DBObject::EOY;
 use base qw(LedgerSMB::PGOld);
+use strict;
 
 =item $eoy->checkpoint_only();
 

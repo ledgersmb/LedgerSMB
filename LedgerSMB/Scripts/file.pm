@@ -105,7 +105,6 @@ sub attach_file {
         $file->get_mime_type;
         $file->content($request->{url});
     } else {
-        use File::MimeInfo;
         $file->file_name($fnames[0]);
         if (!$file->file_name){
              $request->error($request->{_locale}->text(

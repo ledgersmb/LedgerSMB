@@ -103,3 +103,5 @@ LICENSE.txt for more information.
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

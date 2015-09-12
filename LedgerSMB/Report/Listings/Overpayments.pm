@@ -190,3 +190,5 @@ Please see the included LICENSE.txt for more details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

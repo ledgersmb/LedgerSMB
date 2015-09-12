@@ -56,7 +56,8 @@ if ( !${LedgerSMB::Sysconfig::auth} ) {
     ${LedgerSMB::Sysconfig::auth} = 'DB';
 }
 
-require "LedgerSMB/Auth/" . ${LedgerSMB::Sysconfig::auth} . ".pm" || die $!;
+my $auth_lib = "LedgerSMB/Auth/" . ${LedgerSMB::Sysconfig::auth} . ".pm";
+require $auth_lib || die $!;
 
 sub http_error {
     #my ($errcode, $msg_plus) = @_;

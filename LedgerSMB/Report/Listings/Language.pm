@@ -90,3 +90,5 @@ option, any later version.  Please see the LICENSE.TXT included.
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;
