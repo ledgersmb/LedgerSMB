@@ -13,6 +13,10 @@ Batch/voucher management model for LedgerSMB 1.3
 =cut
 
 package LedgerSMB::Batch;
+
+use strict;
+use warnings;
+
 use LedgerSMB::Setting;
 use base qw(LedgerSMB::PGOld);
 
@@ -24,7 +28,7 @@ just populates the batch_number hashref value.
 =cut
 
 sub get_new_info {
-    $self = shift @_;
+    my $self = shift @_;
     my $cc_object = LedgerSMB::Setting->new({base => $self});
     $cc_object->{key} = 'batch_cc';
     $self->{batch_number} = $cc_object->increment;
@@ -37,7 +41,7 @@ Saves the batch info and populates the id hashref value with the id inserted.
 =cut
 
 sub create {
-    $self = shift @_;
+    my $self = shift @_;
     my ($ref) = $self->call_dbmethod(funcname => 'batch_create');
     $self->{id} = $ref->{batch_create};
     return $ref->{id};
@@ -81,7 +85,7 @@ List of all users
 =cut
 
 sub get_search_criteria {
-    $self = shift @_;
+    my $self = shift @_;
     my ($custom_types) = @_;
     @{$self->{batch_classes}} = $self->call_dbmethod(
          funcname => 'batch_list_classes'
@@ -110,7 +114,7 @@ Returns the appropriate stored proc name.
 # This needs to be refactored.  Input sanitation should be moved to
 # get_search_results
 sub get_search_method {
-    my ($self, @args) = @_;
+    my ($self, $args) = @_;
     my $search_proc;
 
     if ($self->{empty}){
@@ -161,7 +165,7 @@ Returns the class_id of batch class specified by its label.
 
 sub get_class_id {
     my ($self, $type) = @_;
-    @results = $self->call_procedure(
+    my @results = $self->call_procedure(
                                      funcname => 'batch_get_class_id',
                                      args     => [$type]
     );

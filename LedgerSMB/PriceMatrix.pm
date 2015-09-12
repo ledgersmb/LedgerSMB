@@ -34,6 +34,9 @@
 
 package PriceMatrix;
 
+use strict;
+use warnings;
+
 sub price_matrix_query {
     my ( $dbh, $form ) = @_;
 

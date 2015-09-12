@@ -81,6 +81,8 @@ back all statements issues through this object.
 
 package LedgerSMB::DBTest;
 
+use strict;
+use warnings;
 use DBI;
 
 sub DESTROY {
