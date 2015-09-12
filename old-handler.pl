@@ -50,7 +50,7 @@ our $logger=Log::Log4perl->get_logger('old-handler-chain');#make logger availabl
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 # Clearing all namespaces for persistant code use
-for my $nsp (qw(lsmb_legacy Form GL AA IS IR OE RP JC PE IC AM BP CP PE User)) {    
+for my $nsp (qw(lsmb_legacy Form GL AA IS IR OE RP JC PE IC AM BP CP PE User)) {
    for my $k (keys %{"${nsp}::"}){
         next if $k =~ /[A-Z]+/;
         next if $k eq 'try' or $k eq 'catch';
@@ -64,7 +64,7 @@ for my $nsp (qw(lsmb_legacy Form GL AA IS IR OE RP JC PE IC AM BP CP PE User)) {
         if (*{"${nsp}::{$k}"}{SCALAR}){
            ${"${nsp}::{$k}"} = undef;
         }
-    }   
+    }
 }
 package lsmb_legacy;
 use Digest::MD5;
@@ -83,11 +83,6 @@ use LedgerSMB::Request::Error;
 use LedgerSMB::Session;
 use LedgerSMB::App_State;
 use Data::Dumper;
-
-#our $logger=Log::Log4perl->get_logger('old-handler-chain');#make logger available to other old programs
-#Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
-
-#sleep 10000;
 
 use Data::Dumper;
 require "common.pl";
@@ -127,27 +122,6 @@ $script =~ s/\.pl//;
 
 # pull in DBI
 use DBI qw(:sql_types);
-
-# send warnings to browser
-# $SIG{__WARN__} = sub { $form->info( $_[0] ) };
-
-# send errors to browser
-#$SIG{__DIE__} =
-#  sub { print STDERR  __FILE__ . ':' . __LINE__ . ': ' . $_[0]; };
-
-## did sysadmin lock us out
-#if (-f "${LedgerSMB::Sysconfig::userspath}/nologin") {
-#	$locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language}) or
-#		$form->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
-#	$form->{charset} = 'UTF-8';
-#	$locale->encoding('UTF-8');
-#
-#	$form->{callback} = "";
-#	$form->error(__FILE__.':'.__LINE__.': '.$locale->text('System currently down for maintenance!'));
-#}
-
-
-# grab user config. This is ugly and unecessary if/when
 
 # locale messages
 #$form->{charset} = $locale->encoding;
@@ -221,8 +195,8 @@ $LedgerSMB::App_State::Locale = $locale;
   # -- CT
   $form->{_error} = 1;
   $LedgerSMB::App_State::DBH = undef;
-  _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at Ledger/; 
-} 
+  _error($form, "'$_'") unless $_ =~ /^Died/i or $_ =~ /^exit at Ledger/;
+}
 ;
 
 $logger->trace("leaving after script=bin/$form->{script} action=$form->{action}");#trace flow
@@ -267,7 +241,7 @@ sub _error {
     } else {
         $error = LedgerSMB::Request::Error->new(msg => "$msg");
     }
-    
+
     if ( $ENV{GATEWAY_INTERFACE} ) {
 
         delete $self->{pre};
