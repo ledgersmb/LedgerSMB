@@ -50,7 +50,7 @@ our $logger=Log::Log4perl->get_logger('old-handler-chain');#make logger availabl
 Log::Log4perl::init(\$LedgerSMB::Sysconfig::log4perl_config);
 
 # Clearing all namespaces for persistant code use
-for my $nsp (qw(lsmb_legacy Form GL AA IS IR OE PE IC AM User)) {
+for my $nsp (qw(lsmb_legacy Form GL AA IS IR OE PE IC AM)) {
    for my $k (keys %{"${nsp}::"}){
         next if $k =~ /[A-Z]+/;
         next if $k eq 'try' or $k eq 'catch';
@@ -140,7 +140,7 @@ try {
     $form->db_init( \%myconfig );
     &check_password;
 
-# we get rid of myconfig and use User as a real object
+    # we get rid of myconfig and use User as a real object
     %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
     $LedgerSMB::App_State::User = \%myconfig;
     map { $form->{$_} = $myconfig{$_} } qw(stylesheet timeout)
@@ -153,8 +153,7 @@ try {
     }
 
     $LedgerSMB::App_State::Locale = $locale;
-# pull in the main code
-#eval {
+    # pull in the main code
     $logger->trace("requiring bin/$form->{script}");
     require "bin/$form->{script}";
 
@@ -187,8 +186,6 @@ try {
         $form->error( __FILE__ . ':' . __LINE__ . ': '
                       . $locale->text('action not defined!'));
     }
-#  1;
-#} ||
 }catch  {
   # We have an exception here because otherwise we always get an exception
   # when output terminates.  A mere 'die' will no longer trigger an automatic
