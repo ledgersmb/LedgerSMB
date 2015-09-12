@@ -5,7 +5,7 @@
 package LedgerSMB::Sysconfig;
 use strict;
 use warnings;
-no strict qw(refs);
+# no strict qw(refs);
 use Cwd;
 
 # use LedgerSMB::Form;
