@@ -33,11 +33,13 @@ sub collect {
 find(\&collect, 'LedgerSMB/', 'bin/');
 
 my @on_disk_oldcode =
-    grep { m#^bin/# || m#^LedgerSMB/..\.pm# } @on_disk;
+    grep { m#^bin/# || m#^LedgerSMB/..\.pm#
+               || m#^LedgerSMB/Form\.pm# } @on_disk;
 
 @on_disk =
     grep { ! m#^bin/# }
     grep { ! m#^LedgerSMB/..\.pm# }
+    grep { ! m#^LedgerSMB/Form\.pm# }
     grep { ! m#^LedgerSMB/Auth/# }
     @on_disk;
 
