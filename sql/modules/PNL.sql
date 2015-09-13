@@ -23,72 +23,92 @@ CREATE TYPE pnl_line AS (
     heading_path text[]
 );
 
-CREATE OR REPLACE FUNCTION pnl__product
-(in_from_date date, in_to_date date, in_parts_id int, in_business_units int[])
-RETURNS SETOF pnl_line AS
+CREATE OR REPLACE FUNCTION pnl__product(in_from_date date, in_to_date date, in_parts_id integer, in_business_units integer[])
+  RETURNS SETOF pnl_line LANGUAGE SQL AS
 $$
-WITH RECURSIVE bu_tree (id, parent, path) AS (
+WITH hdr_meta AS (
+   SELECT aht.id, aht.accno, coalesce(at.description, aht.description) as description,
+          aht.path, ahc.derived_category as category, 'H'::char as account_type,
+          'f'::boolean as contra
+     FROM account_heading_tree aht
+    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
+    LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+),
+acc_meta AS (
+  SELECT a.id, a.accno, coalesce(at.description, a.description) as description,
+          aht.path, a.category, 'A'::char as account_type, contra
+     FROM account a
+    INNER JOIN account_heading_tree aht on a.heading = aht.id
+     LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
+),
+acc_balance AS (
+   WITH RECURSIVE bu_tree (id, parent, path) AS (
       SELECT id, null, row(array[id])::tree_record FROM business_unit
        WHERE id = any($4)
       UNION ALL
       SELECT bu.id, parent, row((path).t || bu.id)::tree_record
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
-)
-   SELECT a.id, a.accno, a.description, a.category, g.accno, g.description,
-          sum(ac.amount) * -1, at.path
-     FROM account a
-     JOIN acc_trans ac ON ac.chart_id = a.id
+   )
+SELECT ac.chart_id AS id, sum(ac.amount) AS balance
+     FROM acc_trans ac
      JOIN invoice i ON i.id = ac.invoice_id
-     JOIN account_link l ON l.account_id = a.id
-     JOIN account_heading_tree at ON a.heading = at.id
+     JOIN account_link l ON l.account_id = ac.chart_id
      JOIN ar ON ar.id = ac.trans_id
-LEFT JOIN gifi g ON a.gifi_accno = g.accno
 LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
              from business_unit_inv bui
              JOIN bu_tree bu ON bui.bu_id = bu.id
          GROUP BY entry_id) bui ON bui.entry_id = i.id
-LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
     WHERE i.parts_id = $3
           AND (ac.transdate >= $1 OR $1 IS NULL)
           AND (ac.transdate <= $2 OR $2 IS NULL)
           AND ar.approved
           AND l.description = 'IC_expense'
           AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
- GROUP BY a.id, a.accno, a.description, a.category,
-          at.path, g.accno, g.description
+ GROUP BY ac.chart_id
     UNION
-   SELECT a.id, a.accno, a.description, a.category, g.accno, g.description,
-          sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0))), at.path
-     FROM parts p
-     JOIN invoice i ON i.id = p.id
+   SELECT ac.chart_id,
+          sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0)))
+     FROM invoice i
      JOIN acc_trans ac ON ac.invoice_id = i.id
-     JOIN account a ON p.income_accno_id = a.id
      JOIN ar ON ar.id = ac.trans_id
-     JOIN account_heading_tree aht ON a.heading = aht.id
-LEFT JOIN gifi g ON a.gifi_accno = g.accno
 LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
              from business_unit_inv bui
              JOIN bu_tree bu ON bui.bu_id = bu.id
          GROUP BY entry_id) bui ON bui.entry_id = i.id
-LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
     WHERE i.parts_id = $3
           AND (ac.transdate >= $1 OR $1 IS NULL)
           AND (ac.transdate <= $2 OR $2 IS NULL)
           AND ar.approved
           AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
- GROUP BY a.id, a.accno, a.description, a.category,
-          at.path, g.accno, g.description, g.accno, g.description
-$$ language SQL;
-
+ GROUP BY ac.chart_id
+ ),
+hdr_balance AS (
+   select ahd.id, sum(balance) as balance
+     FROM acc_balance ab
+    INNER JOIN account_heading_descendant ahd
+            ON ab.id = ahd.descendant_id
+    GROUP BY ahd.id
+)
+   SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
+          ''::text as gifi, ''::text as gifi_description, hm.contra, hb.balance, hm.path
+     FROM hdr_meta hm
+    INNER JOIN hdr_balance hb ON hm.id = hb.id
+   UNION
+   SELECT am.id, am.accno, am.description, am.account_type, am.category,
+          ''::text as gifi, ''::text as gifi_description, am.contra, ab.balance, am.path
+     FROM acc_meta am
+    INNER JOIN acc_balance ab on am.id = ab.id
+$$;
+>>>>>>> other
 
 CREATE OR REPLACE FUNCTION pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[])
   RETURNS SETOF pnl_line LANGUAGE SQL AS
