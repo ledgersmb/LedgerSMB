@@ -618,7 +618,9 @@ CREATE TYPE balance_sheet_line AS (
     account_id int,
     account_number text,
     account_desc text,
+    account_type char,
     account_category char,
+    account_contra boolean,
     balance numeric,
     heading_path text[]
 );
@@ -637,7 +639,7 @@ WITH a_bs AS (
           CASE WHEN a.category IN ('I', 'E') THEN NULL ELSE a.accno END
           AS accno, 
           CASE WHEN a.category IN ('I', 'E') THEN NULL ELSE a.heading END
-          AS heading
+          AS heading, a.contra
      FROM account a
      LEFT JOIN (SELECT trans_id, description
              FROM account_translation at
@@ -646,7 +648,8 @@ WITH a_bs AS (
             WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
 )
    SELECT CASE WHEN a.accno IS NULL THEN NULL ELSE a.id END,
-          a.accno, a.description, a.category, 
+          a.accno, a.description, 'A'::char as account_type, a.category,
+          a.contra,
           sum(ac.amount * CASE WHEN  a.category = 'A' THEN -1 ELSE 1 END), 
           CASE WHEN a.accno IS NULL THEN NULL ELSE aht.path END
      FROM a_bs a
@@ -655,7 +658,7 @@ LEFT JOIN account_heading_tree aht ON a.heading = aht.id
      JOIN tx_report t ON t.approved AND t.id = ac.trans_id
     WHERE ac.transdate <= coalesce($1, (select max(transdate) from acc_trans))
  GROUP BY CASE WHEN a.accno IS NULL THEN NULL ELSE a.id END, 
-          a.accno, a.description, a.category,
+          a.accno, a.description, a.category, a.contra,
           CASE WHEN a.accno IS NULL THEN NULL ELSE aht.path END
  ORDER BY CASE WHEN a.category = 'A' THEN 1
                WHEN a.category = 'L' THEN 2
