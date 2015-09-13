@@ -1,4 +1,4 @@
-/* Designing tests here based on data in taxform.sql.  We may want to split 
+/* Designing tests here based on data in taxform.sql.  We may want to split
    this out into another data script. --CT
  */
 
@@ -81,12 +81,12 @@ INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
      VALUES (-1024, -1000, date1(), -1010, true, -115);
 
 INSERT INTO test_result(test_name, success)
-SELECT '-1024, cash impact 1 across all dates', sum(portion) = 1 
+SELECT '-1024, cash impact 1 across all dates', sum(portion) = 1
   FROM cash_impact
  WHERE id = -1024;
 
 INSERT INTO test_result(test_name, success)
-SELECT '-1024, one cash impact row', count(*) = 1 
+SELECT '-1024, one cash impact row', count(*) = 1
   FROM cash_impact
  WHERE id = -1024;
 
@@ -115,12 +115,12 @@ INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
      VALUES (-1025, -1000, date1(), -505, true, -125);
 
 INSERT INTO test_result(test_name, success)
-SELECT '-1025, cash impact 0.5 across all dates', sum(portion) = 0.5 
+SELECT '-1025, cash impact 0.5 across all dates', sum(portion) = 0.5
   FROM cash_impact
  WHERE id = -1025;
 
 INSERT INTO test_result(test_name, success)
-SELECT '-1025, one cash impact row', count(*) = 1 
+SELECT '-1025, one cash impact row', count(*) = 1
   FROM cash_impact
  WHERE id = -1025;
 
@@ -156,7 +156,7 @@ INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
      VALUES (-1026, -1000, date2(), -505, true, -137);
 
 INSERT INTO test_result(test_name, success)
-SELECT '-1026, cash impact 1 across all dates', sum(portion) = 1 
+SELECT '-1026, cash impact 1 across all dates', sum(portion) = 1
   FROM cash_impact
  WHERE id = -1026;
 
@@ -201,7 +201,7 @@ INSERT INTO acc_trans(trans_id, chart_id, transdate, amount, approved, entry_id)
      VALUES (-1027, -1000, date1(), -1010, true, -145);
 
 INSERT INTO test_result(test_name, success)
-SELECT '-1027, cash impact 1 across all dates', sum(portion) = 1 
+SELECT '-1027, cash impact 1 across all dates', sum(portion) = 1
   FROM cash_impact
  WHERE id = -1027;
 
@@ -216,7 +216,7 @@ SELECT 'Account -1001 shows up in accrual income statement', count(*) = 1
  WHERE account_id = -1001;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'Account -1001 accrual total 4040', amount = 4040
+SELECT 'Account -1001 accrual total -4040', amount = -4040
   FROM pnl__income_statement_accrual(date1(), date2() - 1, 'none', ARRAY[]::int[])
  WHERE account_id = -1001;
 
@@ -231,7 +231,7 @@ SELECT 'Account -1001 shows up in cash income statement', count(*) = 1
  WHERE account_id = -1001;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'Account -1001 cash total 3030', amount = 3030
+SELECT 'Account -1001 cash total -3030', amount = -3030
   FROM pnl__income_statement_cash(date1(), date2() - 1, 'none', ARRAY[]::int[])
  WHERE account_id = -1001;
 
@@ -243,15 +243,15 @@ SELECT 'Account -1001 shows up in future cash pnl', count(*) = 1
  WHERE account_id = -1001;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'Account -1001 future cash total 505', sum(amount) = 505
+SELECT 'Account -1001 future cash total -505', sum(amount) = -505
   FROM pnl__income_statement_cash(date2() - 5, date2() + 20, 'none', ARRAY[]::int[])
  WHERE account_id = -1001;
 
 SELECT * FROM test_result;
 
-SELECT (select count(*) from test_result where success is true) 
-|| ' tests passed and ' 
-|| (select count(*) from test_result where success is not true) 
+SELECT (select count(*) from test_result where success is true)
+|| ' tests passed and '
+|| (select count(*) from test_result where success is not true)
 || ' failed' as message;
 
 ROLLBACK;
