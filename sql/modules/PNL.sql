@@ -14,9 +14,11 @@ CREATE TYPE pnl_line AS (
     account_id int,
     account_number text,
     account_description text,
+    account_type char,
     account_category char,
     gifi text,
     gifi_description text,
+    contra boolean,
     amount numeric,
     heading_path text[]
 );
