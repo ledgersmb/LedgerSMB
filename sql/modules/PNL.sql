@@ -90,54 +90,81 @@ LEFT JOIN (SELECT trans_id, description
 $$ language SQL;
 
 
-CREATE OR REPLACE FUNCTION pnl__income_statement_accrual(
-       in_from_date date, in_to_date date, in_ignore_yearend text,
-       in_business_units integer[])
-RETURNS SETOF pnl_line AS
+CREATE OR REPLACE FUNCTION pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[])
+  RETURNS SETOF pnl_line LANGUAGE SQL AS
 $$
-WITH RECURSIVE bu_tree (id, parent, path) AS (
+WITH hdr_meta AS (
+   SELECT aht.id, aht.accno, coalesce(at.description, aht.description) as description,
+          aht.path, ahc.derived_category as category, 'H'::char as account_type,
+          'f'::boolean as contra
+     FROM account_heading_tree aht
+    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
+    LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+),
+acc_meta AS (
+  SELECT a.id, a.accno, coalesce(at.description, a.description) as description,
+          aht.path, a.category, 'A'::char as account_type, contra
+     FROM account a
+    INNER JOIN account_heading_tree aht on a.heading = aht.id
+     LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
+),
+acc_balance AS (
+   WITH RECURSIVE bu_tree (id, parent, path) AS (
       SELECT id, null, row(array[id])::tree_record FROM business_unit
        WHERE id = any($4)
       UNION ALL
       SELECT bu.id, parent, row((path).t || bu.id)::tree_record
         FROM business_unit bu
         JOIN bu_tree ON bu.parent_id = bu_tree.id
-)
-   SELECT a.id, a.accno, a.description, a.category, g.accno, g.description,
-          CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount),
-          at.path
-     FROM account a
-     JOIN acc_trans ac ON a.id = ac.chart_id AND ac.approved
-     JOIN tx_report gl ON ac.trans_id = gl.id AND gl.approved
-     JOIN account_heading_tree at ON a.heading = at.id
-LEFT JOIN gifi g ON a.gifi_accno = g.accno
-LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
-LEFT JOIN (select array_agg(path) as bu_ids, entry_id
-             FROM business_unit_ac buac
-             JOIN bu_tree ON bu_tree.id = buac.bu_id
-        GROUP BY buac.entry_id) bu
+   )
+   SELECT ac.chart_id AS id, sum(ac.amount) AS balance
+     FROM acc_trans ac
+    INNER JOIN tx_report gl ON ac.trans_id = gl.id AND gl.approved
+     LEFT JOIN (SELECT array_agg(path) AS bu_ids, entry_id
+                  FROM business_unit_ac buac
+                 INNER JOIN bu_tree ON bu_tree.id = buac.bu_id
+                 GROUP BY buac.entry_id) bu
           ON (ac.entry_id = bu.entry_id)
-    WHERE ac.approved is true
+    WHERE ac.approved
           AND ($1 IS NULL OR ac.transdate >= $1)
           AND ($2 IS NULL OR ac.transdate <= $2)
           AND ($4 = '{}'
               OR $4 is null or in_tree($4, bu_ids))
-          AND a.category IN ('I', 'E')
-          AND ($3 = 'none'
+           AND ($3 = 'none'
                OR ($3 = 'all'
                    AND NOT EXISTS (SELECT * FROM yearend
                                     WHERE trans_id = gl.id))
                OR ($3 = 'last'
                    AND NOT EXISTS (SELECT 1 FROM yearend
-                                   HAVING max(trans_id) = gl.id)))
- GROUP BY a.id, a.accno, a.description, a.category,
-          at.path, g.accno, g.description
- ORDER BY a.category DESC, a.accno ASC;
-$$ LANGUAGE SQL;
+                                   HAVING max(trans_id) = gl.id))
+              )
+   GROUP BY ac.chart_id
+ ),
+hdr_balance AS (
+   select ahd.id, sum(balance) as balance
+     FROM acc_balance ab
+    INNER JOIN account_heading_descendant ahd
+            ON ab.id = ahd.descendant_id
+    GROUP BY ahd.id
+)
+   SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
+          ''::text as gifi, ''::text as gifi_description, hm.contra, hb.balance, hm.path
+     FROM hdr_meta hm
+    INNER JOIN hdr_balance hb ON hm.id = hb.id
+   UNION
+   SELECT am.id, am.accno, am.description, am.account_type, am.category,
+          ''::text as gifi, ''::text as gifi_description, am.contra, ab.balance, am.path
+     FROM acc_meta am
+    INNER JOIN acc_balance ab on am.id = ab.id
+$$;
 
 CREATE OR REPLACE FUNCTION pnl__income_statement_cash
 (in_from_date date, in_to_date date, in_ignore_yearend text,
