@@ -643,9 +643,8 @@ WITH a_bs AS (
 )
    SELECT CASE WHEN a.accno IS NULL THEN NULL ELSE a.id END,
           a.accno, a.description, 'A'::char as account_type, a.category,
-          a.contra,
-          sum(ac.amount * CASE WHEN  a.category = 'A' THEN -1 ELSE 1 END),
-          at.path
+          a.contra, sum(ac.amount) as balance,
+          CASE WHEN a.accno IS NULL THEN NULL ELSE aht.path END
      FROM a_bs a
 LEFT JOIN account_heading_tree at ON a.heading = at.id
      JOIN acc_trans ac ON ac.approved AND a.id = ac.chart_id
