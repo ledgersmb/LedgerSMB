@@ -291,56 +291,63 @@ hdr_balance AS (
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
 
-CREATE OR REPLACE FUNCTION pnl__customer
-(in_id int, in_from_date date, in_to_date date)
-RETURNS SETOF pnl_line AS
+CREATE OR REPLACE FUNCTION pnl__customer(in_id integer, in_from_date date, in_to_date date)
+  RETURNS SETOF pnl_line LANGUAGE SQL AS
 $$
+WITH hdr_meta AS (
+   SELECT aht.id, aht.accno, coalesce(at.description, aht.description) as description,
+          aht.path, ahc.derived_category as category, 'H'::char as account_type,
+          'f'::boolean as contra
+     FROM account_heading_tree aht
+    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
+    LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+),
+acc_meta AS (
+  SELECT a.id, a.accno, coalesce(at.description, a.description) as description,
+          aht.path, a.category, 'A'::char as account_type, contra
+     FROM account a
+    INNER JOIN account_heading_tree aht on a.heading = aht.id
+     LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
+),
+acc_balance AS (
 WITH gl (id) AS
  ( SELECT id FROM ap WHERE approved is true AND entity_credit_account = $1
 UNION ALL
    SELECT id FROM ar WHERE approved is true AND entity_credit_account = $1
 )
-SELECT a.id, a.accno, a.description, a.category,
-       g.accno, g.description,
-       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
-  FROM account a
-  JOIN acc_trans ac ON a.id = ac.chart_id
-  JOIN account_heading_tree at ON a.heading = at.id
+SELECT ac.chart_id AS id, sum(ac.amount) AS balance
+  FROM acc_trans ac
   JOIN gl ON ac.trans_id = gl.id
-LEFT JOIN gifi g ON a.gifi_accno = g.accno
-LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
  WHERE ac.approved is true
           AND ($2 IS NULL OR ac.transdate >= $2)
           AND ($3 IS NULL OR ac.transdate <= $3)
-          AND a.category IN ('I', 'E')
- GROUP BY a.id, a.accno, coalesce(at.description, a.description), a.category,
-          aht.path, g.accno, g.description
- ORDER BY a.category DESC, a.accno ASC;
-$$ LANGUAGE SQL;
-
-CREATE OR REPLACE FUNCTION pnl__invoice(in_id int) RETURNS SETOF pnl_line AS
-$$
-SELECT a.id, a.accno, a.description, a.category,
-       g.accno, g.description,
-       CASE WHEN a.category = 'E' THEN -1 ELSE 1 END * sum(ac.amount), at.path
-  FROM account a
-  JOIN acc_trans ac ON a.id = ac.chart_id
-  JOIN account_heading_tree at ON a.heading = at.id
-LEFT JOIN gifi g ON a.gifi_accno = g.accno
-LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
- WHERE ac.approved AND ac.trans_id = $1 AND a.category IN ('I', 'E')
- GROUP BY a.id, a.accno, a.description, a.category,
-          at.path, g.accno, g.description
- ORDER BY a.category DESC, a.accno ASC;
-$$ LANGUAGE SQL;
+ GROUP BY ac.chart_id
+ ),
+hdr_balance AS (
+   select ahd.id, sum(balance) as balance
+     FROM acc_balance ab
+    INNER JOIN account_heading_descendant ahd
+            ON ab.id = ahd.descendant_id
+    GROUP BY ahd.id
+)
+   SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
+          ''::text as gifi, ''::text as gifi_description, hm.contra, hb.balance, hm.path
+     FROM hdr_meta hm
+    INNER JOIN hdr_balance hb ON hm.id = hb.id
+   UNION
+   SELECT am.id, am.accno, am.description, am.account_type, am.category,
+          ''::text as gifi, ''::text as gifi_description, am.contra, ab.balance, am.path
+     FROM acc_meta am
+    INNER JOIN acc_balance ab on am.id = ab.id
+$$;
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
