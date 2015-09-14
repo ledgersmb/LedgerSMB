@@ -622,7 +622,7 @@ CREATE TYPE balance_sheet_line AS (
     account_category char,
     account_contra boolean,
     balance numeric,
-    heading_path text[]
+    heading_path int[]
 );
 
 CREATE OR REPLACE FUNCTION report__balance_sheet(in_to_date date)
@@ -630,7 +630,8 @@ RETURNS SETOF balance_sheet_line LANGUAGE SQL AS
 $$
 WITH hdr_meta AS (
    SELECT aht.id, aht.accno, coalesce(at.description, aht.description) as description,
-          aht.path, ahc.derived_category as category, 'H'::char as account_type,
+          aht.path,
+          ahc.derived_category as category, 'H'::char as account_type,
           'f'::boolean as contra
      FROM account_heading_tree aht
     INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
@@ -639,10 +640,16 @@ WITH hdr_meta AS (
           INNER JOIN user_preference up ON up.language = at.language_code
           INNER JOIN users ON up.id = users.id
             WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+     WHERE array_endswith((SELECT value::int FROM defaults
+                            WHERE setting_key = 'earn_id'), aht.path)
+           -- legacy (no earn_id) returns all headers 
+           OR (NOT aht.path @> ARRAY[(SELECT value::int FROM defaults
+                                      WHERE setting_key = 'earn_id')])
 ),
 acc_meta AS (
   SELECT a.id, a.accno, coalesce(at.description, a.description) as description,
-          aht.path, a.category, 'A'::char as account_type, contra
+         aht.path,
+         a.category, 'A'::char as account_type, contra
      FROM account a
     INNER JOIN account_heading_tree aht on a.heading = aht.id
      LEFT JOIN (SELECT trans_id, description
@@ -650,6 +657,11 @@ acc_meta AS (
           INNER JOIN user_preference up ON up.language = at.language_code
           INNER JOIN users ON up.id = users.id
             WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
+     WHERE array_endswith((SELECT value::int FROM defaults
+                            WHERE setting_key = 'earn_id'), aht.path)
+           -- legacy (no earn_id) returns all accounts; bug?
+           OR (NOT aht.path @> ARRAY[(SELECT value::int FROM defaults
+                                      WHERE setting_key = 'earn_id')])
 ),
 acc_balance AS (
    SELECT ac.chart_id as id, sum(ac.amount) as balance
