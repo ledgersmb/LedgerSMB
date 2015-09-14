@@ -49,9 +49,11 @@ acc_meta AS (
          coalesce(at.description, a.description) as description,
          array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path) AS path,
-         a.category, 'A'::char as account_type, contra
+         a.category, 'A'::char as account_type, contra, a.gifi_accno,
+         gifi.description as gifi_description
      FROM account a
     INNER JOIN account_heading_tree aht on a.heading = aht.id
+     LEFT JOIN gifi ON a.gifi_accno = gifi.accno
      LEFT JOIN (SELECT trans_id, description
              FROM account_translation at
           INNER JOIN user_preference up ON up.language = at.language_code
@@ -115,12 +117,13 @@ hdr_balance AS (
     GROUP BY ahd.id
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
-          ''::text as gifi, ''::text as gifi_description, hm.contra, hb.balance, hm.path
+          null::text as gifi, null::text as gifi_description, hm.contra,
+          hb.balance, hm.path
      FROM hdr_meta hm
     INNER JOIN hdr_balance hb ON hm.id = hb.id
    UNION
    SELECT am.id, am.accno, am.description, am.account_type, am.category,
-          ''::text as gifi, ''::text as gifi_description, am.contra, ab.balance, am.path
+          gifi_accno as gifi, gifi_description, am.contra, ab.balance, am.path
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
@@ -152,9 +155,11 @@ acc_meta AS (
          coalesce(at.description, a.description) as description,
          array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path) AS path,
-         a.category, 'A'::char as account_type, contra
+         a.category, 'A'::char as account_type, contra, a.gifi_accno,
+         gifi.description as gifi_description
      FROM account a
     INNER JOIN account_heading_tree aht on a.heading = aht.id
+     LEFT JOIN gifi ON a.gifi_accno = gifi.accno
      LEFT JOIN (SELECT trans_id, description
              FROM account_translation at
           INNER JOIN user_preference up ON up.language = at.language_code
@@ -209,12 +214,13 @@ hdr_balance AS (
     GROUP BY ahd.id
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
-          ''::text as gifi, ''::text as gifi_description, hm.contra, hb.balance, hm.path
+          null::text as gifi, null::text as gifi_description, hm.contra,
+          hb.balance, hm.path
      FROM hdr_meta hm
     INNER JOIN hdr_balance hb ON hm.id = hb.id
    UNION
    SELECT am.id, am.accno, am.description, am.account_type, am.category,
-          ''::text as gifi, ''::text as gifi_description, am.contra, ab.balance, am.path
+          gifi_accno as gifi, gifi_description, am.contra, ab.balance, am.path
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
@@ -245,9 +251,11 @@ acc_meta AS (
          coalesce(at.description, a.description) as description,
          array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path) AS path,
-         a.category, 'A'::char as account_type, contra
+         a.category, 'A'::char as account_type, contra, a.gifi_accno,
+         gifi.description as gifi_description
      FROM account a
     INNER JOIN account_heading_tree aht on a.heading = aht.id
+     LEFT JOIN gifi ON a.gifi_accno = gifi.accno
      LEFT JOIN (SELECT trans_id, description
              FROM account_translation at
           INNER JOIN user_preference up ON up.language = at.language_code
@@ -306,12 +314,13 @@ hdr_balance AS (
     GROUP BY ahd.id
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
-          ''::text as gifi, ''::text as gifi_description, hm.contra, hb.balance, hm.path
+          null::text as gifi, null::text as gifi_description, hm.contra,
+          hb.balance, hm.path
      FROM hdr_meta hm
     INNER JOIN hdr_balance hb ON hm.id = hb.id
    UNION
    SELECT am.id, am.accno, am.description, am.account_type, am.category,
-          ''::text as gifi, ''::text as gifi_description, am.contra, ab.balance, am.path
+          gifi_accno as gifi, gifi_description, am.contra, ab.balance, am.path
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
@@ -342,9 +351,11 @@ acc_meta AS (
          coalesce(at.description, a.description) as description,
          array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path) AS path,
-         a.category, 'A'::char as account_type, contra
+         a.category, 'A'::char as account_type, contra, a.gifi_accno,
+         gifi.description as gifi_description
      FROM account a
     INNER JOIN account_heading_tree aht on a.heading = aht.id
+     LEFT JOIN gifi ON a.gifi_accno = gifi.accno
      LEFT JOIN (SELECT trans_id, description
              FROM account_translation at
           INNER JOIN user_preference up ON up.language = at.language_code
@@ -373,12 +384,13 @@ hdr_balance AS (
     GROUP BY ahd.id
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
-          ''::text as gifi, ''::text as gifi_description, hm.contra, hb.balance, hm.path
+          null::text as gifi, null::text as gifi_description, hm.contra,
+          hb.balance, hm.path
      FROM hdr_meta hm
     INNER JOIN hdr_balance hb ON hm.id = hb.id
    UNION
    SELECT am.id, am.accno, am.description, am.account_type, am.category,
-          ''::text as gifi, ''::text as gifi_description, am.contra, ab.balance, am.path
+          gifi_accno as gifi, gifi_description, am.contra, ab.balance, am.path
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
@@ -409,9 +421,11 @@ acc_meta AS (
          coalesce(at.description, a.description) as description,
          array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path) AS path,
-         a.category, 'A'::char as account_type, contra
+         a.category, 'A'::char as account_type, contra, a.gifi_accno,
+         gifi.description as gifi_description
      FROM account a
     INNER JOIN account_heading_tree aht on a.heading = aht.id
+     LEFT JOIN gifi ON a.gifi_accno = gifi.accno
      LEFT JOIN (SELECT trans_id, description
              FROM account_translation at
           INNER JOIN user_preference up ON up.language = at.language_code
@@ -448,12 +462,13 @@ hdr_balance AS (
     GROUP BY ahd.id
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
-          ''::text as gifi, ''::text as gifi_description, hm.contra, hb.balance, hm.path
+          null::text as gifi, null::text as gifi_description, hm.contra,
+          hb.balance, hm.path
      FROM hdr_meta hm
     INNER JOIN hdr_balance hb ON hm.id = hb.id
    UNION
    SELECT am.id, am.accno, am.description, am.account_type, am.category,
-          ''::text as gifi, ''::text as gifi_description, am.contra, ab.balance, am.path
+          gifi_accno as gifi, gifi_description, am.contra, ab.balance, am.path
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;

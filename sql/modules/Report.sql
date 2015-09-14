@@ -621,6 +621,8 @@ CREATE TYPE balance_sheet_line AS (
     account_type char,
     account_category char,
     account_contra boolean,
+    gifi_accno text,
+    gifi_description text,
     balance numeric,
     heading_path int[]
 );
@@ -648,10 +650,11 @@ WITH hdr_meta AS (
 ),
 acc_meta AS (
   SELECT a.id, a.accno, coalesce(at.description, a.description) as description,
-         aht.path,
-         a.category, 'A'::char as account_type, contra
+         aht.path, a.category, 'A'::char as account_type, contra,
+         a.gifi_accno, gifi.description as gifi_description
      FROM account a
     INNER JOIN account_heading_tree aht on a.heading = aht.id
+    INNER JOIN gifi ON a.gifi_accno = gifi.accno
      LEFT JOIN (SELECT trans_id, description
              FROM account_translation at
           INNER JOIN user_preference up ON up.language = at.language_code
@@ -680,12 +683,13 @@ hdr_balance AS (
     GROUP BY ahd.id
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
-          hm.contra, hb.balance, hm.path
+          hm.contra, null::text as gifi_accno,
+          null::text as gifi_description, hb.balance, hm.path
      FROM hdr_meta hm
     INNER JOIN hdr_balance hb ON hm.id = hb.id
    UNION
    SELECT am.id, am.accno, am.description, am.account_type, am.category,
-          am.contra, ab.balance, am.path
+          am.contra, am.gifi_accno, am.gifi_description, ab.balance, am.path
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
