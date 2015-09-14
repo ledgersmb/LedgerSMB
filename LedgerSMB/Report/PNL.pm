@@ -99,7 +99,8 @@ sub run_report {
                                                $line->{gifi} ]);
         } : ($self->legacy_hierarchy) ?
         sub { my ($line) = @_;
-              return $self->rheads->map_path([ $line->{account_category},
+              return $self->rheads->map_path([ 'q',
+                                               $line->{account_category},
                                                $line->{account_number} ]);
         } :
         sub { my ($line) = @_;
@@ -120,6 +121,9 @@ sub run_report {
 
 
     for my $line (@lines) {
+        next
+            if $self->legacy_hierarchy && $line->{account_type} eq 'H';
+
         my $row_id = &$row_map($line);
         my $col_id = $self->cheads->map_path($self->column_path_prefix);
         # signs have already been converted in the query
@@ -127,6 +131,16 @@ sub run_report {
         $self->rheads->id_props($row_id, &$row_props($line));
         $self->cheads->id_props($col_id, { description =>
                                                $self->to_date });
+
+        if ($self->legacy_hierarchy
+            && ($line->{account_category} eq 'E'
+                || $line->{account_category} eq 'I')) {
+            $self->accum_cell_value($self->rheads->map_path(['q']),
+                                    $col_id, $line->{amount});
+            $self->accum_cell_value(
+                $self->rheads->map_path(['q', $line->{account_category} ]),
+                $col_id, $line->{amount});
+        }
     }
 
     # Header rows don't have descriptions
@@ -157,6 +171,11 @@ sub run_report {
                                       $self->_locale->text('Equity'),
                                   'account_description' =>
                                       $self->_locale->text('Equity') },
+                         'q' => { 'account_number' => '',
+                                  'account_desc' =>
+                                      $self->_locale->text('Profit/Loss'),
+                                  'account_description' =>
+                                      $self->_locale->text('Profit/Loss') },
             );
     }
     else {

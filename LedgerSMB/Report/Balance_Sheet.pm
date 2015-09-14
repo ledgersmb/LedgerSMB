@@ -93,13 +93,30 @@ sub run_report {
         sub { my ($line) = @_; return $line; };
 
     for my $line (@lines) {
-        my $row_id = &$row_map($line);
+        next if ($self->gifi
+                 || ($self->legacy_hierarchy && $line->{account_type} eq 'H'));
+
         my $col_id = $self->cheads->map_path($self->column_path_prefix);
         # signs have already been converted in the query
-        $self->accum_cell_value($row_id, $col_id, $line->{balance});
-        $self->rheads->id_props($row_id, &$row_props($line));
-        $self->cheads->id_props($col_id, { description =>
-                                               $self->to_date });
+        if (! ($self->legacy_hierarchy
+               && ($line->{account_category} eq 'E'
+                   || $line->{account_category} eq 'I'))) {
+            my $row_id = &$row_map($line);
+            $self->accum_cell_value($row_id, $col_id, $line->{balance});
+            $self->rheads->id_props($row_id, &$row_props($line));
+            $self->cheads->id_props($col_id, { description =>
+                                                   $self->to_date });
+        }
+
+        if ($self->legacy_hierarchy
+            && ($line->{account_category} eq 'E'
+                || $line->{account_category} eq 'I')) {
+            $self->accum_cell_value($self->rheads->map_path(['Q']),
+                                    $col_id, $line->{balance});
+            $self->accum_cell_value(
+                $self->rheads->map_path(['Q', 'q']),
+                $col_id, $line->{balance});
+        }
     }
 
     # Header rows don't have descriptions
@@ -130,6 +147,11 @@ sub run_report {
                                       $self->_locale->text('Equity'),
                                   'account_description' =>
                                       $self->_locale->text('Equity') },
+                         'q' => { 'account_number' => '',
+                                  'account_desc' =>
+                                      $self->_locale->text('Current earnings'),
+                                  'account_description' =>
+                                      $self->_locale->text('Current earnings') },
             );
     }
     else {
