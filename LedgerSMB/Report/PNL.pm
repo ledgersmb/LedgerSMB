@@ -162,35 +162,41 @@ sub run_report {
     my %header_desc;
     if ($self->gifi || $self->legacy_hierarchy) {
         %header_desc = ( 'E' => { 'account_number' => 'E',
-                                  'account_desc' => 
+                                  'account_category' => 'E',
+                                  'account_desc' =>
                                       $self->_locale->text('Expenses'),
                                   'account_description' =>
                                       $self->_locale->text('Expenses') },
                          'I' => { 'account_number' => 'I',
+                                  'account_category' => 'I',
                                   'account_desc' =>
                                       $self->_locale->text('Income'),
                                   'account_description' =>
                                       $self->_locale->text('Income') },
                          'A' => { 'account_number' => 'A',
+                                  'account_category' => 'A',
                                   'account_desc' =>
                                       $self->_locale->text('Assets'),
                                   'account_description' =>
                                       $self->_locale->text('Assets') },
                          'L' => { 'account_number' => 'L',
+                                  'account_category' => 'L',
                                   'account_desc' =>
                                       $self->_locale->text('Liabilities'),
                                   'account_description' =>
                                       $self->_locale->text('Liabilities') },
                          'Q' => { 'account_number' => 'Q',
+                                  'account_category' => 'Q',
                                   'account_desc' =>
                                       $self->_locale->text('Equity'),
                                   'account_description' =>
                                       $self->_locale->text('Equity') },
                          'q' => { 'account_number' => '',
+                                  'account_category' => 'Q',
                                   'account_desc' =>
-                                      $self->_locale->text('Profit/Loss'),
+                                      $self->_locale->text('Current earnings'),
                                   'account_description' =>
-                                      $self->_locale->text('Profit/Loss') },
+                                      $self->_locale->text('Current earnings') },
             );
     }
     else {
@@ -204,6 +210,24 @@ sub run_report {
     for my $id (grep { ! defined $_->{props} } values %{$self->rheads->ids}) {
         $self->rheads->id_props($id->{id}, $header_desc{$id->{accno}});
     }
+    for $col_id (keys $self->cheads->ids) {
+        for my $row_id (keys $self->rheads->ids) {
+            my $value = $self->cells->{$row_id}->{$col_id};
+
+            next unless $value;
+
+            my $props = $self->rheads->id_props($row_id);
+            my $cat = $props->{account_category};
+            my $contra = $props->{contra};
+
+            my $sign = (($contra) ? -1 : 1)
+                * ((($cat eq 'A') || ($cat eq 'E')) ? -1 : 1);
+
+            $self->cell_value($row_id, $col_id, $sign * $value)
+                if $sign < 0;
+        }
+    }
+
     $self->rows([]);
 }
 
