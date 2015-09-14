@@ -1,5 +1,5 @@
-<?lsmb INCLUDE 'ui-header.html' stylesheet=request.stylesheet 
-         include_stylesheet = ['UI/Reports/pnl.css']; 
+<?lsmb INCLUDE 'ui-header.html' stylesheet=request.stylesheet
+         include_stylesheet = ['UI/Reports/pnl.css'];
 
 FORMATS = LIST_FORMATS();
 LINK = request.script _ '?' _ ENVARS.QUERY_STRING _ '&amp;company=' _ DBNAME;
@@ -19,7 +19,7 @@ USE String;
   <th><?lsmb report.cheads.ids.$col.props.description ?></th>
 <?lsmb END -?>
 </tr>
-<?lsmb FOREACH row IN report.rheads.ids.keys ?>
+<?lsmb FOREACH row IN report.sorted_row_ids ?>
 <tr>
   <th><?lsmb nbsp = String.new("&nbsp;"); nbsp.repeat(report.rheads.ids.$row.path.size); -?>
 <?lsmb report.rheads.ids.$row.props.account_number _ ' - ' _

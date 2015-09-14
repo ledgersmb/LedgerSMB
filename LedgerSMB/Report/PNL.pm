@@ -103,9 +103,12 @@ sub run_report {
                                                $line->{account_number} ]);
         } :
         sub { my ($line) = @_;
-              return $self->rheads->map_path([ ( @{$line->{heading_path}},
-                                                 $line->{account_number})
-                                             ]);
+              return $self->rheads->map_path(
+                  ($line->{account_type} eq 'H')
+                  ? $line->{heading_path}
+                  : [ ( @{$line->{heading_path}},
+                        $line->{account_number})
+                  ]);
         };
     my $row_props = ($self->gifi) ?
         sub { my ($line) = @_;
