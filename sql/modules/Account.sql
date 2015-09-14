@@ -744,12 +744,12 @@ $$;
 DROP VIEW IF EXISTS account_heading_tree CASCADE;
 CREATE VIEW account_heading_tree AS
 WITH RECURSIVE account_headings AS (
-    SELECT id, accno, description, 1 as level, ARRAY[accno]::text[] as path
+    SELECT id, accno, description, 1 as level, ARRAY[id] as path
       FROM account_heading
      WHERE parent_id IS NULL
     UNION ALL
     SELECT ah.id, ah.accno, ah.description, at.level + 1 as level,
-           array_append(at.path, ah.accno) as path 
+           array_append(at.path, ah.id) as path 
       FROM account_heading ah
       JOIN account_headings at ON ah.parent_id = at.id
 )
