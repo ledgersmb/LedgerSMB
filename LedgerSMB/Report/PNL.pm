@@ -95,51 +95,56 @@ sub run_report {
     my @lines = $self->report_base();
     my $row_map = ($self->gifi) ?
         sub { my ($line) = @_;
-              return $self->rheads->map_path([ $line->{account_category},
-                                               $line->{gifi} ]);
+              return ($line->{account_type} eq 'H')
+                  ? []
+                  : [ [ $line->{account_category},
+                        $line->{gifi} ],
+                      [ $line->{account_category} ],
+                  ];
         } : ($self->legacy_hierarchy) ?
         sub { my ($line) = @_;
-              return $self->rheads->map_path([ 'q',
-                                               $line->{account_category},
-                                               $line->{account_number} ]);
+              return ($line->{account_type} eq 'H')
+                  ? []
+                  : [ [ 'q',
+                        $line->{account_category},
+                        $line->{account_number} ],
+                      [ 'q',
+                        $line->{account_category} ],
+                      [ 'q' ],
+                  ];
         } :
         sub { my ($line) = @_;
-              return $self->rheads->map_path(
-                  ($line->{account_type} eq 'H')
-                  ? $line->{heading_path}
-                  : [ ( @{$line->{heading_path}},
-                        $line->{account_number})
-                  ]);
+              return [ ($line->{account_type} eq 'H')
+                       ? $line->{heading_path}
+                       : [ ( @{$line->{heading_path}},
+                             $line->{account_number})
+                       ],
+                  ];
         };
     my $row_props = ($self->gifi) ?
         sub { my ($line) = @_;
               return { account_number => $line->{gifi},
                        account_desc => $line->{gifi_description},
               };
-        } :
-        sub { my ($line) = @_; return $line; };
+       } :
+       sub { my ($line) = @_; return $line; };
 
+
+    my $col_id = $self->cheads->map_path($self->column_path_prefix);
+    $self->cheads->id_props($col_id, { description =>
+                                           $self->to_date });
 
     for my $line (@lines) {
-        next
-            if $self->legacy_hierarchy && $line->{account_type} eq 'H';
+        my $props = &$row_props($line);
+        my $paths = &$row_map($line);
 
-        my $row_id = &$row_map($line);
-        my $col_id = $self->cheads->map_path($self->column_path_prefix);
-        # signs have already been converted in the query
-        $self->accum_cell_value($row_id, $col_id, $line->{amount});
-        $self->rheads->id_props($row_id, &$row_props($line));
-        $self->cheads->id_props($col_id, { description =>
-                                               $self->to_date });
+        for my $path (@$paths) {
+            my $row_id = $self->rheads->map_path($path);
+            $self->accum_cell_value($row_id, $col_id, $line->{amount});
+            $self->rheads->id_props($row_id, $props)
+                if defined $props;
 
-        if ($self->legacy_hierarchy
-            && ($line->{account_category} eq 'E'
-                || $line->{account_category} eq 'I')) {
-            $self->accum_cell_value($self->rheads->map_path(['q']),
-                                    $col_id, $line->{amount});
-            $self->accum_cell_value(
-                $self->rheads->map_path(['q', $line->{account_category} ]),
-                $col_id, $line->{amount});
+            $props = undef;
         }
     }
 
