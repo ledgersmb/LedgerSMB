@@ -661,8 +661,9 @@ acc_balance AS (
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
      FROM acc_balance ab
+    INNER JOIN account acc ON ab.id = acc.id
     INNER JOIN account_heading_descendant ahd
-            ON ab.id = ahd.descendant_id
+            ON acc.heading = ahd.descendant_id
     GROUP BY ahd.id
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
