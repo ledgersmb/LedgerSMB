@@ -618,51 +618,75 @@ CREATE TYPE balance_sheet_line AS (
     account_id int,
     account_number text,
     account_desc text,
+    account_type char,
     account_category char,
+    account_contra boolean,
     balance numeric,
-    heading_path text[]
+    heading_path int[]
 );
 
 CREATE OR REPLACE FUNCTION report__balance_sheet(in_to_date date)
 RETURNS SETOF balance_sheet_line LANGUAGE SQL AS
 $$
-WITH a_bs AS (
-   SELECT a.id,
-          CASE WHEN a.category IN ('I', 'E') THEN 'Q' ELSE a.category END
-          AS category,
-          CASE WHEN a.category NOT IN ('I', 'E') THEN
-               coalesce(at.description, a.description)
-               ELSE 'Current Earnings'
-          END as description,
-          CASE WHEN a.category IN ('I', 'E') THEN NULL ELSE a.accno END
-          AS accno, 
-          CASE WHEN a.category IN ('I', 'E') THEN NULL ELSE a.heading END
-          AS heading
+WITH hdr_meta AS (
+   SELECT aht.id, aht.accno, coalesce(at.description, aht.description) as description,
+          aht.path,
+          ahc.derived_category as category, 'H'::char as account_type,
+          'f'::boolean as contra
+     FROM account_heading_tree aht
+    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
+    LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+     WHERE array_endswith((SELECT value::int FROM defaults
+                            WHERE setting_key = 'earn_id'), aht.path)
+           -- legacy (no earn_id) returns all headers 
+           OR (NOT aht.path @> ARRAY[(SELECT value::int FROM defaults
+                                      WHERE setting_key = 'earn_id')])
+),
+acc_meta AS (
+  SELECT a.id, a.accno, coalesce(at.description, a.description) as description,
+         aht.path,
+         a.category, 'A'::char as account_type, contra
      FROM account a
+    INNER JOIN account_heading_tree aht on a.heading = aht.id
      LEFT JOIN (SELECT trans_id, description
              FROM account_translation at
           INNER JOIN user_preference up ON up.language = at.language_code
           INNER JOIN users ON up.id = users.id
             WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
-)
-   SELECT CASE WHEN a.accno IS NULL THEN NULL ELSE a.id END,
-          a.accno, a.description, a.category, 
-          sum(ac.amount * CASE WHEN  a.category = 'A' THEN -1 ELSE 1 END), 
-          CASE WHEN a.accno IS NULL THEN NULL ELSE aht.path END
-     FROM a_bs a
-LEFT JOIN account_heading_tree aht ON a.heading = aht.id
-     JOIN acc_trans ac ON ac.approved AND a.id = ac.chart_id
+     WHERE array_endswith((SELECT value::int FROM defaults
+                            WHERE setting_key = 'earn_id'), aht.path)
+           -- legacy (no earn_id) returns all accounts; bug?
+           OR (NOT aht.path @> ARRAY[(SELECT value::int FROM defaults
+                                      WHERE setting_key = 'earn_id')])
+),
+acc_balance AS (
+   SELECT ac.chart_id as id, sum(ac.amount) as balance
+     FROM acc_trans ac
      JOIN tx_report t ON t.approved AND t.id = ac.trans_id
     WHERE ac.transdate <= coalesce($1, (select max(transdate) from acc_trans))
- GROUP BY CASE WHEN a.accno IS NULL THEN NULL ELSE a.id END, 
-          a.accno, a.description, a.category,
-          CASE WHEN a.accno IS NULL THEN NULL ELSE aht.path END
- ORDER BY CASE WHEN a.category = 'A' THEN 1
-               WHEN a.category = 'L' THEN 2
-               ELSE 3
-          END,
-          CASE WHEN a.accno IS NULL THEN NULL ELSE aht.path END,
-          a.accno NULLS LAST;
+ GROUP BY ac.chart_id
+),
+hdr_balance AS (
+   select ahd.id, sum(balance) as balance
+     FROM acc_balance ab
+    INNER JOIN account acc ON ab.id = acc.id
+    INNER JOIN account_heading_descendant ahd
+            ON acc.heading = ahd.descendant_id
+    GROUP BY ahd.id
+)
+   SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
+          hm.contra, hb.balance, hm.path
+     FROM hdr_meta hm
+    INNER JOIN hdr_balance hb ON hm.id = hb.id
+   UNION
+   SELECT am.id, am.accno, am.description, am.account_type, am.category,
+          am.contra, ab.balance, am.path
+     FROM acc_meta am
+    INNER JOIN acc_balance ab on am.id = ab.id
 $$;
 
 COMMENT ON function report__balance_sheet(date) IS

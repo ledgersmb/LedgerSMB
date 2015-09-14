@@ -9,7 +9,7 @@ LedgerSMB::Report::PNL - Profit and Loss Reporting Base Class for LedgerSMB
 
 =head1 DESCRIPTION
 
-This provides the common profit and loss reporting functions for LedgerSMB 1.4 
+This provides the common profit and loss reporting functions for LedgerSMB 1.4
 and later.
 
 =cut
@@ -74,7 +74,7 @@ sub template { return 'Reports/PNL' }
 
 =cut
 
-sub columns { 
+sub columns {
     return [];
 }
 
@@ -91,7 +91,7 @@ sub columns {
 
 sub run_report {
     my ($self) = @_;
-   
+
     my @lines = $self->report_base();
     my $row_map = ($self->gifi) ?
         sub { my ($line) = @_;
@@ -122,7 +122,7 @@ sub run_report {
         # signs have already been converted in the query
         $self->accum_cell_value($row_id, $col_id, $line->{amount});
         $self->rheads->id_props($row_id, &$row_props($line));
-        $self->cheads->id_props($col_id, { description => 
+        $self->cheads->id_props($col_id, { description =>
                                                $self->to_date });
     }
 
@@ -130,7 +130,7 @@ sub run_report {
     my %header_desc;
     if ($self->gifi || $self->legacy_hierarchy) {
         %header_desc = ( 'E' => { 'account_number' => 'E',
-                                  'account_desc' => 
+                                  'account_desc' =>
                                       $self->_locale->text('Expenses'),
                                   'account_description' =>
                                       $self->_locale->text('Expenses') },
