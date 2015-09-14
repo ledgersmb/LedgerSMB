@@ -136,6 +136,13 @@ $BODY$
   $BODY$
   LANGUAGE sql IMMUTABLE;
 
+CREATE OR REPLACE FUNCTION array_endswith(elem anyelement, arr anyarray)
+  RETURNS boolean
+  LANGUAGE SQL
+AS $$
+   SELECT $2[array_upper($2,1)]=$1;
+$$ IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION lsmb__min_date() RETURNS date
 LANGUAGE SQL AS
 $$ SELECT min(transdate) from acc_trans; $$;
