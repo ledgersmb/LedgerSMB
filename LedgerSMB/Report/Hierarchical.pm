@@ -72,6 +72,17 @@ has 'cells' => (is => 'ro', isa => 'HashRef',
                 default => sub { {} });
 
 
+=head2 sorted_row_ids
+
+Don't use! This field is here as a workaround for the fact that TT2
+doesn't allow us to call methods on objects referenced through
+retrieved values.
+
+=cut
+
+has sorted_row_ids => (is => 'rw');
+
+
 
 =head1 STATIC METHODS
 
@@ -91,7 +102,7 @@ sub columns {
 
 Returns an empty arrayref since this is not applicable.
 
-=cut 
+=cut
 
 sub header_lines {
     return [];
@@ -177,6 +188,13 @@ sub add_comparison{
         }
     }
 }
+
+
+before 'render' => sub {
+    my ($self) = @_;
+
+    $self->sorted_row_ids($self->rheads->sort);
+};
 
 =head1 COPYRIGHT
 
