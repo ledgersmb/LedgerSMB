@@ -113,6 +113,29 @@ SELECT bool_and(in_tree(e, $2))
   FROM unnest($1) e;
 $$;
 
+CREATE OR REPLACE FUNCTION array_splice_to(element anyelement, arr anyarray)
+  RETURNS anyarray AS
+$BODY$
+   select $2[1:i]
+     from generate_subscripts($2,1) as i
+    where $2[i] = $1
+   order by i
+   limit 1;
+ $BODY$
+  LANGUAGE sql IMMUTABLE;
+
+
+CREATE OR REPLACE FUNCTION array_splice_from(elem anyelement, arr anyarray)
+  RETURNS anyarray AS
+$BODY$
+    select $2[i:array_upper($2,1)]
+      from generate_subscripts($2,1) as i
+     where $2[i] = $1
+     order by i
+     limit 1;
+  $BODY$
+  LANGUAGE sql IMMUTABLE;
+
 CREATE OR REPLACE FUNCTION lsmb__min_date() RETURNS date
 LANGUAGE SQL AS
 $$ SELECT min(transdate) from acc_trans; $$;
