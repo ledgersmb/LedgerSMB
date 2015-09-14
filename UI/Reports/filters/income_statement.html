@@ -59,8 +59,15 @@
                 <tr><td><?lsmb PROCESS input element_data = {
                                type = 'checkbox',
                               value = 1,
-                              label = 'gifi',
+                              label = text('GIFI'),
                                name = 'gifi',
+                          } ?></td></tr>
+                <tr><td><?lsmb PROCESS input element_data = {
+                               type = 'checkbox',
+                              value = 1,
+                              label = text('Account numbers'),
+                               name = 'incl_accnos',
+                            checked = 'checked'
                           } ?></td></tr>
                 <tr><td><?lsmb text('Hierarchy type') ?>
 <?lsmb
@@ -93,7 +100,7 @@ PROCESS input element_data = {
        <th colspan="7"><?lsmb text('Enter up to 3 date ranges for comparison') ?></th>
        </tr>
        <?lsmb FOREACH c IN [1, 2, 3];
-              PROCESS date_row SUFFIX='_' _ c; 
+              PROCESS date_row SUFFIX='_' _ c;
               END ?>
     </table>
   </td>
