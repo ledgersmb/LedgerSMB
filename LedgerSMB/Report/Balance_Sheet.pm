@@ -77,11 +77,12 @@ sub run_report {
                                                $line->{account_number} ]);
         } :
         sub { my ($line) = @_;
-              ###TODO-REPORT-HEADINGS: 'current earnings' node doesn't
-              # have a HEADING_PATH
-              return $self->rheads->map_path([ ( @{$line->{heading_path}},
-                                                 $line->{account_number})
-                                             ]);
+              return $self->rheads->map_path(
+                  ($line->{account_type} eq 'H')
+                  ? $line->{heading_path}
+                  : [ ( @{$line->{heading_path}},
+                        $line->{account_number})
+                  ]);
         };
     my $row_props = ($self->gifi) ?
         sub { my ($line) = @_;
@@ -105,7 +106,7 @@ sub run_report {
     my %header_desc;
     if ($self->gifi || $self->legacy_hierarchy) {
         %header_desc = ( 'E' => { 'account_number' => 'E',
-                                  'account_desc' => 
+                                  'account_desc' =>
                                       $self->_locale->text('Expenses'),
                                   'account_description' =>
                                       $self->_locale->text('Expenses') },
