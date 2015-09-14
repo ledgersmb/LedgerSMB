@@ -22,7 +22,7 @@ USE String;
 <?lsmb FOREACH row IN report.sorted_row_ids ?>
 <tr>
   <th><?lsmb nbsp = String.new("&nbsp;"); nbsp.repeat(report.rheads.ids.$row.path.size); -?>
-<?lsmb IF report.rheads.ids.$row.props.account_number; ?>
+<?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?>
 <?lsmb report.rheads.ids.$row.props.account_number ?> - <?lsmb END; -?>
 <?lsmb report.rheads.ids.$row.props.account_desc ?></th>
 <?lsmb FOREACH col IN report.cheads.ids.keys -?>

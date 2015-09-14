@@ -56,6 +56,12 @@ has legacy_hierarchy => (is => 'rw', isa => 'Bool');
 has column_path_prefix => (is => 'ro', isa => 'ArrayRef',
                            default => sub { [ 1 ] });
 
+=item incl_accnos
+
+=cut
+
+has incl_accnos => (is => 'ro', isa => 'Bool');
+
 =back
 
 =head1 CONSTANT REPORT-RELATED FUNCTIONS
