@@ -94,8 +94,9 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
      FROM acc_balance ab
+    INNER JOIN account acc ON ab.id = acc.id
     INNER JOIN account_heading_descendant ahd
-            ON ab.id = ahd.descendant_id
+            ON acc.heading = ahd.descendant_id
     GROUP BY ahd.id
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
@@ -171,8 +172,9 @@ acc_balance AS (
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
      FROM acc_balance ab
+    INNER JOIN account acc ON ab.id = acc.id
     INNER JOIN account_heading_descendant ahd
-            ON ab.id = ahd.descendant_id
+            ON acc.heading = ahd.descendant_id
     GROUP BY ahd.id
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
@@ -251,8 +253,9 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
      FROM acc_balance ab
+    INNER JOIN account acc ON ab.id = acc.id
     INNER JOIN account_heading_descendant ahd
-            ON ab.id = ahd.descendant_id
+            ON acc.heading = ahd.descendant_id
     GROUP BY ahd.id
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
@@ -301,8 +304,9 @@ SELECT ac.chart_id AS id, sum(ac.amount) AS balance
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
      FROM acc_balance ab
+    INNER JOIN account acc ON ab.id = acc.id
     INNER JOIN account_heading_descendant ahd
-            ON ab.id = ahd.descendant_id
+            ON acc.heading = ahd.descendant_id
     GROUP BY ahd.id
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
@@ -359,8 +363,9 @@ SELECT ac.chart_id AS id, sum(ac.amount) AS balance
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
      FROM acc_balance ab
+    INNER JOIN account acc ON ab.id = acc.id
     INNER JOIN account_heading_descendant ahd
-            ON ab.id = ahd.descendant_id
+            ON acc.heading = ahd.descendant_id
     GROUP BY ahd.id
 )
    SELECT hm.id, hm.accno, hm.description, hm.account_type, hm.category,
