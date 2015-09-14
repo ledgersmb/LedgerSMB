@@ -132,7 +132,7 @@ sub run_report {
 
     my $col_id = $self->cheads->map_path($self->column_path_prefix);
     $self->cheads->id_props($col_id, { description =>
-                                           $self->to_date });
+                                           $self->to_date->to_output });
 
     for my $line (@lines) {
         my $props = &$row_props($line);
