@@ -21,29 +21,35 @@ is_deeply($axis->tree(),
                   'children' => {},
                   'accno' => 'a',
                   'path' => ['a'],
-                  'id' => 1
+                  'id' => 1,
+                  'parent_id' => undef,
               },
               'b' => {
                   'path' => ['b'],
                   'accno' => 'b',
+                  'parent_id' => undef,
                   'children' => {
                       'c' => {
                           'path' => ['b','c'],
                           'accno' => 'c',
+                          'parent_id' => 2,
                           'children' => {
                               'd' => {
                                   'path' => ['b','c','d'],
                                   'accno' => 'd',
+                                  'parent_id' => 3,
                                   'children' => {
                                       'e' => {
                                           'path' => ['b','c','d','e'],
                                           'accno' => 'e',
+                                          'parent_id' => 4,
                                           'children' => {},
                                           'id' => 6
                                       },
                                       'f' => {
                                           'path' => ['b','c','d','f'],
                                           'accno' => 'f',
+                                          'parent_id' => 4,
                                           'children' => {},
                                           'id' => 5
                                       }
