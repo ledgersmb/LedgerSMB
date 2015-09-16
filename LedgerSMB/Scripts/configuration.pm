@@ -131,8 +131,6 @@ my $locale = LedgerSMB::App_State::Locale();
                 label => $locale->text('Min Empty Lines') },
               ] },
         );
-    return @default_settings;
-}
 
 =head1 METHODS/ACTIONS
 
