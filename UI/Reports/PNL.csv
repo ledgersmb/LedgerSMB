@@ -1,20 +1,11 @@
-<?lsmb 
-account_data = report.account_data;
-COLS = comparison.length + 2
-comparisons = report.comparisons; -?>
-account,description,is_heading,heading_account,amount <?lsmb report.from_date _ ' to ' _ report.to_date -?>
-<?lsmb 
-IF comparisons;
-    FOREACH COMP IN comparisons -?>
-,amount <?lsmb COMP.from_date _ ' - ' _ COMP.to_date -?>
-<?lsmb END ; -?>
-<?lsmb END ; -?>
-<?lsmb FOREACH cat IN ['I', 'E'] ; -?>
-<?lsmb FOREACH k IN account_data.${cat}.keys.sort ; -?>
-
-<?lsmb k ?>,"<?lsmb account_data.${cat}.${k}.main.account_description ?>",<?lsmb IF account_data.${cat}.${k}.main.is_heading ?>Y<?lsmb ELSE ?>N<?lsmb END ?>,<?lsmb account_data.${cat}.${k}.main.heading_path.-1 ?>,<?lsmb account_data.${cat}.${k}.main.amount -?>
-<?lsmb FOREACH COMP IN comparisons ; -?>
-,<?lsmb COMP.account_data.${cat}.${k}.info.amount -?>
-<?lsmb END; -?>
-<?lsmb END; -?>
+account,description,is_heading,heading_account<?lsmb
+ FOREACH col IN report.cheads.ids.keys -?>
+,"<?lsmb report.cheads.ids.$col.props.description ?>"<?lsmb END; ?>
+<?lsmb FOREACH row IN report.sorted_row_ids ; -?>
+<?lsmb report.rheads.ids.$row.props.account_number -?>,"<?lsmb report.rheads.ids.$row.props.account_description ?>",<?lsmb IF report.rheads.ids.$row.props.account_type == 'H' -?>Y<?lsmb ELSE ?>N<?lsmb END ?>,<?lsmb
+PARENT = report.rheads.ids.$row.parent_id ;
+report.rheads.ids.$PARENT.props.account_number ?><?lsmb
+ FOREACH col IN report.cheads.ids.keys ; -?>
+,<?lsmb report.cells.$row.$col -?><?lsmb
+END; ?>
 <?lsmb END; -?>

@@ -19,7 +19,6 @@ final report.
 package LedgerSMB::Report::Axis;
 use Moose;
 
-
 =head1 PROPERTIES
 
 =over
@@ -82,7 +81,7 @@ sub map_path {
     my $this_path = [];
     for my $step (@$path) {
         push @$this_path, $step;
-        $self->_new_elem($subtree, $step, $this_path)
+        $self->_new_elem($subtree, $step, $this_path, $elem)
             if ! exists $subtree->{$step};
 
         $elem = $subtree->{$step};
@@ -92,13 +91,14 @@ sub map_path {
 }
 
 sub _new_elem {
-    my ($self, $subtree, $step, $path) = @_;
+    my ($self, $subtree, $step, $path, $parent) = @_;
 
     $subtree->{$step} = {
         id => $self->_last_id($self->_last_id + 1),
         accno => $step,
         path => [ (@$path) ],
         children => {},
+        parent_id => $parent->{id},
     };
     $self->ids->{$subtree->{$step}->{id}} = $subtree->{$step};
 }

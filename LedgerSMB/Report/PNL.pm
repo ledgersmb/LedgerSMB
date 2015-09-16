@@ -163,36 +163,43 @@ sub run_report {
     if ($self->gifi || $self->legacy_hierarchy) {
         %header_desc = ( 'E' => { 'account_number' => 'E',
                                   'account_category' => 'E',
+                                  'account_type' => 'H',
                                   'account_desc' =>
                                       $self->_locale->text('Expenses'),
                                   'account_description' =>
                                       $self->_locale->text('Expenses') },
                          'I' => { 'account_number' => 'I',
                                   'account_category' => 'I',
+                                  'account_type' => 'H',
                                   'account_desc' =>
                                       $self->_locale->text('Income'),
                                   'account_description' =>
                                       $self->_locale->text('Income') },
                          'A' => { 'account_number' => 'A',
                                   'account_category' => 'A',
+                                  'account_type' => 'H',
                                   'account_desc' =>
                                       $self->_locale->text('Assets'),
                                   'account_description' =>
                                       $self->_locale->text('Assets') },
                          'L' => { 'account_number' => 'L',
                                   'account_category' => 'L',
+                                  'account_type' => 'H',
                                   'account_desc' =>
                                       $self->_locale->text('Liabilities'),
                                   'account_description' =>
                                       $self->_locale->text('Liabilities') },
                          'Q' => { 'account_number' => 'Q',
                                   'account_category' => 'Q',
+                                  'account_type' => 'H',
                                   'account_desc' =>
                                       $self->_locale->text('Equity'),
                                   'account_description' =>
                                       $self->_locale->text('Equity') },
                          'q' => { 'account_number' => '',
                                   'account_category' => 'Q',
+                                  'account_type' => 'H',
+                                  'heading_path' => [ 'Q', 'q' ],
                                   'account_desc' =>
                                       $self->_locale->text('Current earnings'),
                                   'account_description' =>
