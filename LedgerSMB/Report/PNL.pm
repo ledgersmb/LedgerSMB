@@ -122,7 +122,9 @@ sub run_report {
         sub { my ($line) = @_;
               return [ ($line->{account_type} eq 'H')
                        ? $line->{heading_path}
-                       : [ ( @{$line->{heading_path}},
+                       : [ ( # heading_path undefined iff
+                             # hierarchy config missing
+                             @{$line->{heading_path} || []},
                              $line->{account_number})
                        ],
                   ];
