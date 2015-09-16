@@ -6,8 +6,7 @@ LINK = request.script _ '?' _ ENVARS.QUERY_STRING _ '&amp;company=' _ DBNAME;
 LINK = LINK.replace('\&amp;\&amp;', '&amp;');
 
 USE String;
-
- comparisons = report.comparisons ?>
+ ?>
 <body class="financial-statement <?lsmb dojo_theme ?>">
 <div id="PNL"> <!-- TODO: Find better name!! -->
 <h1><?lsmb text('Balance Sheet') ?></h1>
@@ -26,7 +25,6 @@ USE String;
 <?lsmb report.rheads.ids.$row.props.account_number ?> - <?lsmb END; -?>
 <?lsmb report.rheads.ids.$row.props.account_desc ?></th>
 <?lsmb FOREACH col IN report.cheads.ids.keys -?>
-  <!-- ###TODO-REPORT-HEADINGS: implement sign conversion A/L/Q*contra -->
   <!-- ###TODO-REPORT-HEADINGS: add links on the cells to 'drill downs' -->
   <td class="amount"><?lsmb report.cells.$row.$col ?></td><?lsmb END ?>
 </tr>
@@ -45,12 +43,13 @@ USE String;
 <tr><th><?lsmb text('Equity to Liabilities') ?></th>
     <td><?lsmb report.balance_sheet.ratios.QL ?></td>
 </tr>
+-->
+
 <?lsmb IF FORMATS.grep('PDF').size() ?>
 <tr><td><a href="<?lsmb LINK ?>&amp;format=PDF">[<?lsmb text('PDF') ?>]</a></td>
 <td><a href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></td>
 </tr>
 <?lsmb END ?>
--->
 </table>
 </div>
 </body>
