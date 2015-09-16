@@ -46,8 +46,10 @@ USE String;
 -->
 
 <?lsmb IF FORMATS.grep('PDF').size() ?>
-<tr><td><a href="<?lsmb LINK ?>&amp;format=PDF">[<?lsmb text('PDF') ?>]</a></td>
-<td><a href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></td>
+<tr><td><a target="_blank"
+           href="<?lsmb LINK ?>&amp;format=PDF">[<?lsmb text('PDF') ?>]</a></td>
+<td><a target="_blank"
+       href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></td>
 </tr>
 <?lsmb END ?>
 </table>
