@@ -45,7 +45,7 @@ WITH hdr_meta AS (
                            IS NOT NULL
 ),
 acc_meta AS (
-  SELECT a.id, a.accno, 
+  SELECT a.id, a.accno,
          coalesce(at.description, a.description) as description,
          array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path) AS path,
@@ -127,7 +127,6 @@ hdr_balance AS (
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
->>>>>>> other
 
 CREATE OR REPLACE FUNCTION pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[])
   RETURNS SETOF pnl_line LANGUAGE SQL AS
@@ -147,11 +146,11 @@ WITH hdr_meta AS (
           INNER JOIN users ON up.id = users.id
             WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
     WHERE array_splice_from((SELECT value::int FROM defaults
-                              WHERE setting_key = 'earn_id'),aht.path) 
+                              WHERE setting_key = 'earn_id'),aht.path)
                            IS NOT NULL
 ),
 acc_meta AS (
-  SELECT a.id, a.accno, 
+  SELECT a.id, a.accno,
          coalesce(at.description, a.description) as description,
          array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path) AS path,
@@ -243,11 +242,11 @@ WITH hdr_meta AS (
           INNER JOIN users ON up.id = users.id
             WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
     WHERE array_splice_from((SELECT value::int FROM defaults
-                              WHERE setting_key = 'earn_id'),aht.path) 
+                              WHERE setting_key = 'earn_id'),aht.path)
                            IS NOT NULL
 ),
 acc_meta AS (
-  SELECT a.id, a.accno, 
+  SELECT a.id, a.accno,
          coalesce(at.description, a.description) as description,
          array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path) AS path,
@@ -343,11 +342,11 @@ WITH hdr_meta AS (
           INNER JOIN users ON up.id = users.id
             WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
     WHERE array_splice_from((SELECT value::int FROM defaults
-                              WHERE setting_key = 'earn_id'),aht.path) 
+                              WHERE setting_key = 'earn_id'),aht.path)
                            IS NOT NULL
 ),
 acc_meta AS (
-  SELECT a.id, a.accno, 
+  SELECT a.id, a.accno,
          coalesce(at.description, a.description) as description,
          array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path) AS path,
@@ -413,11 +412,11 @@ WITH hdr_meta AS (
           INNER JOIN users ON up.id = users.id
             WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
     WHERE array_splice_from((SELECT value::int FROM defaults
-                              WHERE setting_key = 'earn_id'),aht.path) 
+                              WHERE setting_key = 'earn_id'),aht.path)
                            IS NOT NULL
 ),
 acc_meta AS (
-  SELECT a.id, a.accno, 
+  SELECT a.id, a.accno,
          coalesce(at.description, a.description) as description,
          array_splice_from((SELECT value::int FROM defaults
                              WHERE setting_key = 'earn_id'),aht.path) AS path,

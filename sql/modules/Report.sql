@@ -644,7 +644,7 @@ WITH hdr_meta AS (
             WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
      WHERE array_endswith((SELECT value::int FROM defaults
                             WHERE setting_key = 'earn_id'), aht.path)
-           -- legacy (no earn_id) returns all headers 
+           -- legacy (no earn_id) returns all headers
            OR (NOT aht.path @> ARRAY[(SELECT value::int FROM defaults
                                       WHERE setting_key = 'earn_id')])
 ),
@@ -670,7 +670,6 @@ acc_balance AS (
    SELECT ac.chart_id as id, sum(ac.amount) as balance
      FROM acc_trans ac
      JOIN tx_report t ON t.approved AND t.id = ac.trans_id
-LEFT JOIN account a2 ON a.id = a2.id AND a2.category NOT IN ('I', 'E')
     WHERE ac.transdate <= coalesce($1, (select max(transdate) from acc_trans))
  GROUP BY ac.chart_id
 ),

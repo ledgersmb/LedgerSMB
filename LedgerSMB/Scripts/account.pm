@@ -90,6 +90,14 @@ sub save {
     my ($request) = @_;
     my $account = LedgerSMB::DBObject::Account->new(base => $request);
     $account->{$account->{summary}}=$account->{summary};
+    if ($request->{languagecount} > 0) {
+        $account->{translations} = {};
+        for my $index (1..$request->{languagecount}) {
+            $account->{translations}->{$request->{"languagecode_$index"}}
+            = $request->{"languagetranslation_$index"};
+        }
+    }
+
     $account->save;
     edit($account); 
 }
@@ -124,6 +132,9 @@ sub _display_account_screen {
         $form->{$item} = 1;
     }
  
+    @{$form->{languages}} = 
+             LedgerSMB->call_procedure(funcname => 'person__list_languages');
+
     $hiddens->{type} = 'account';
     $hiddens->{$_} = $form->{$_} foreach qw(id inventory_accno_id income_accno_id expense_accno_id fxgain_accno_id fxloss_accno_id);
     $checked->{ $form->{charttype} } = "checked";
@@ -157,6 +168,7 @@ sub _display_account_screen {
             text => $button{$_}{value},
             };
     }
+    
     my $template = LedgerSMB::Template->new_UI(
         user => $form->{_user}, 
         locale => $locale,
