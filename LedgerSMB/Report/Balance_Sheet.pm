@@ -137,8 +137,10 @@ sub run_report {
          sub { my ($line) = @_; return $line; };
 
     my $col_id = $self->cheads->map_path($self->column_path_prefix);
-    $self->cheads->id_props($col_id, { description =>
-                                           $self->to_date->to_output });
+    $self->cheads->id_props($col_id,
+                            { description => $self->date_to->to_output,
+                              to_date => $self->date_to->to_output,
+                            });
 
     for my $line (@lines) {
         my $props = &$row_props($line);
