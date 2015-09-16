@@ -185,7 +185,6 @@ and these optional ones:
 
   XML::Simple        [RESTful Web Services XML support]
   Image::Size        [Size detection for images for embedding in LaTeX]
-  Net::TCLink        [Support for TrustCommerce credit card processing]
   Parse::RecDescent  [Support for the *experimental* scripting engine]
   Getopt::Long       [Developer tool dependencies]
   FileHandle         [Developer tool dependencies]
@@ -251,11 +250,6 @@ To install the (optional) PDF/Postscript output module, install the
 following packages by executing this command:
 
  $ aptitude install libtemplate-plugin-latex-perl texlive-latex-recommended
-
-The credit card processing support for TrustCommerce is available
-from the Wheezy repository through:
-
- $ aptitude install libnet-tclink-perl
 
 The Open Office output option is available from the Wheezy repository
 as well through the command:

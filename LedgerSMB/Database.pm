@@ -139,12 +139,11 @@ failure.
 sub base_backup {
     my $self = shift @_;
 
-    local %ENV; # Make sure that - when leaving the scope - %ENV is restored
-    $ENV{PGUSER} = $self->{username};
-    $ENV{PGPASSWORD} = $self->{password};
-    $ENV{PGDATABASE} = $self->{company_name};
-    $ENV{PGHOST} = $LedgerSMB::Sysconfig::db_host;
-    $ENV{PGPORT} = $LedgerSMB::Sysconfig::db_port;
+    local $ENV{PGUSER} = $self->{username};
+    local $ENV{PGPASSWORD} = $self->{password};
+    local $ENV{PGDATABASE} = $self->{company_name};
+    local $ENV{PGHOST} = $LedgerSMB::Sysconfig::db_host;
+    local $ENV{PGPORT} = $LedgerSMB::Sysconfig::db_port;
 
     my @t = localtime(time);
     $t[4]++;
@@ -185,12 +184,11 @@ failure.
 sub db_backup {
     my $self = shift @_;
 
-    local %ENV; # Make sure that - when leaving the scope - %ENV is restored
-    $ENV{PGUSER} = $self->{username};
-    $ENV{PGPASSWORD} = $self->{password};
-    $ENV{PGDATABASE} = $self->{company_name};
-    $ENV{PGHOST} = $LedgerSMB::Sysconfig::db_host;
-    $ENV{PGPORT} = $LedgerSMB::Sysconfig::db_port;
+    local $ENV{PGUSER} = $self->{username};
+    local $ENV{PGPASSWORD} = $self->{password};
+    local $ENV{PGDATABASE} = $self->{company_name};
+    local $ENV{PGHOST} = $LedgerSMB::Sysconfig::db_host;
+    local $ENV{PGPORT} = $LedgerSMB::Sysconfig::db_port;
 
     my @t = localtime(time);
     $t[4]++;
@@ -695,14 +693,11 @@ that types are already created, and 2 if there are other errors.
 sub exec_script {
     my ($self, $args) = @_;
 
-
-    local %ENV;
-
-    $ENV{PGUSER} = $self->{username};
-    $ENV{PGPASSWORD} = $self->{password};
-    $ENV{PGDATABASE} = $self->{company_name};
-    $ENV{PGHOST} = $LedgerSMB::Sysconfig::db_host;
-    $ENV{PGPORT} = $LedgerSMB::Sysconfig::db_port;
+    local $ENV{PGUSER} = $self->{username};
+    local $ENV{PGPASSWORD} = $self->{password};
+    local $ENV{PGDATABASE} = $self->{company_name};
+    local $ENV{PGHOST} = $LedgerSMB::Sysconfig::db_host;
+    local $ENV{PGPORT} = $LedgerSMB::Sysconfig::db_port;
 
     open (LOG, '>>', $args->{log});
     if ($args->{errlog}) {
