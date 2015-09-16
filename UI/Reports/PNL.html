@@ -33,8 +33,10 @@ END; -?><?lsmb report.rheads.ids.$row.props.account_description ?></th>
 </tr>
 <?lsmb END ?>
 <?lsmb IF FORMATS.grep('PDF').size() ?>
-<tr><td><a href="<?lsmb LINK ?>&amp;format=PDF">[<?lsmb text('PDF') ?>]</a></td>
-<td><a href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></td>
+<tr><td><a target="_blank"
+           href="<?lsmb LINK ?>&amp;format=PDF">[<?lsmb text('PDF') ?>]</a></td>
+<td><a target="_blank"
+       href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></td>
 <?lsmb END ?>
 </tbody>
 </table>

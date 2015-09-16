@@ -23,8 +23,8 @@ LINK = LINK.replace('\&amp;\&amp;', '&amp;');
 <?lsmb FOREACH LINE IN hlines ?>
 <div class="report_header"><label><?lsmb LINE.text ?>:</label>
 <span class="report_header">
-<?lsmb 
-IF request.${LINE.name}; 
+<?lsmb
+IF request.${LINE.name};
     request.${LINE.name};
 ELSE;
     report.${LINE.name};
@@ -47,7 +47,7 @@ END;
         value = request.hiddens.$K
     };
     END; ?>
-<?lsmb PROCESS dynatable tbody = {rows = rows } 
+<?lsmb PROCESS dynatable tbody = {rows = rows }
                attributes = {class = 'report', order_url = order_url } ?>
 <div id="options">
 <?lsmb
@@ -58,18 +58,21 @@ END; ?>
 <?lsmb
 FOREACH BUTTON IN buttons;
   PROCESS button element_data = BUTTON;
-END; ?><br /> 
+END; ?><br />
 <a href="<?lsmb LINK ?>">[<?lsmb text('permalink') ?>]</a>&nbsp;
 <?lsmb IF FORMATS.grep('PDF').size()
-?> 
-<a href="<?lsmb LINK _ '&format=PDF' ?>">[<?lsmb text('PDF') ?>]</a>&nbsp;
+?>
+<a target="_blank"
+   href="<?lsmb LINK _ '&format=PDF' ?>">[<?lsmb text('PDF') ?>]</a>&nbsp;
 <?lsmb END;
 IF FORMATS.grep('TXT').size();
 ?>
-<a href="<?lsmb LINK _ '&format=CSV' ?>">[<?lsmb text('CSV') ?>]</a>&nbsp;
+<a target="_blank"
+   href="<?lsmb LINK _ '&format=CSV' ?>">[<?lsmb text('CSV') ?>]</a>&nbsp;
 <?lsmb END;
 IF FORMATS.grep('ODS').size() ?>
-<a href="<?lsmb LINK _ '&format=ODS' ?>">[<?lsmb text('ODS') ?>]</a>&nbsp;
+<a target="_blank"
+   href="<?lsmb LINK _ '&format=ODS' ?>">[<?lsmb text('ODS') ?>]</a>&nbsp;
 <?lsmb END; ?>
 </body>
 <?lsmb PROCESS end_html ?>
