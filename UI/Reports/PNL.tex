@@ -12,13 +12,13 @@
 <?lsmb END ?>
 }
 
-\begin{longtable}{lll<?lsmb FOREACH c IN report.cheads.ids.keys; '|r'; END ?>}
+\begin{longtable}{lll<?lsmb FOREACH c IN report.cheads.ids.keys; 'r'; END ?>}
 \multicolumn{3}{l}{\bf <?lsmb text('Accounts') ?>}
 <?lsmb FOREACH col IN report.cheads.ids.keys; ' & '; END ?>
 <?lsmb FOREACH row IN report.sorted_row_ids ?> \\
 <?lsmb IF report.rheads.ids.$row.props.account_number
           && report.incl_accnos; -?><?lsmb
-    report.rheads.ids.$row.props.account_description ?> & - <?lsmb ELSE ?> & <?lsmb END ?>
+    report.rheads.ids.$row.props.account_number ?> & - <?lsmb ELSE ?> & <?lsmb END ?>
 <?lsmb report.rheads.ids.$row.props.account_description ?> &
 <?lsmb FOREACH col IN report.cheads.ids.keys;
   ' & '; report.cells.$row.$col;
