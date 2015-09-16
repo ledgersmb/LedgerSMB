@@ -42,7 +42,7 @@ On the database side, these are all converted to YYYY-MM-DD format.
 
 =item MM-DD-YYYY
 
-=item MM/DD/YYYY 
+=item MM/DD/YYYY
 
 =item YYYYMMDD
 
@@ -60,7 +60,7 @@ On the database side, these are all converted to YYYY-MM-DD format.
 
 =cut
 
-our $formats = { 
+our $formats = {
     'YYYY-MM-DD' => ['%F'],
     'DD-MM-YYYY' => ['%d-%m-%Y', '%d-%m-%y'],
     'DD.MM.YYYY' => ['%d.%m.%Y', '%d.%m.%y'],
@@ -86,7 +86,7 @@ LedgerSMB::PgDate->new({ date => DateTime->new(year => 2012, day => 31, month =>
 
 Note the constructor here is private, and not intended to be called directly.
 
-Use from_db and from_input methods instead since these handle appropriately 
+Use from_db and from_input methods instead since these handle appropriately
 different formats and handle construction differently.
 
 =cut
@@ -125,7 +125,7 @@ sub _parse_string {
             );
             if (my $dt = $parser->parse_datetime($string)){
                 return $dt;
-            } 
+            }
         }
         if (!$has_time or ! defined $has_time){
             my $parser = new DateTime::Format::Strptime(
@@ -151,17 +151,17 @@ sub from_input{
     $format = 'yyyy-mm-dd' if $input =~ /^\d{4}/;
     my $dt =  _parse_string($self, $input, uc($format), $has_time)
 		  if $input;
-    my $retval = $self->new($dt);
-    $retval->{_pgobject_is_date} = 1;
-    $retval->{_pgobject_is_time} = 1 if $has_time;
-    return $retval;
-
+    #my $retval = $self->new($dt);
+    bless $dt, __PACKAGE__;
+    $dt->{_pgobject_is_date} = 1;
+    $dt->{_pgobject_is_time} = 1 if $has_time;
+    return $dt;
 }
 
 
 =item to_output(optional string $format)
 
-This returns the human readable formatted date.  If $format is supplied, it is 
+This returns the human readable formatted date.  If $format is supplied, it is
 used.  If $format is not supplied, the dateformat of the user is used.
 
 =cut
@@ -169,7 +169,7 @@ used.  If $format is not supplied, the dateformat of the user is used.
 sub to_output {
     my ($self) = @_;
     #return undef if !defined $self;
-	 return undef if !defined $self->{date};
+	 return undef if !defined $self->{_pgobject_is_date};
     my $fmt;
     if ($self->{_pgobject_is_date}){
         if (defined $LedgerSMB::App_State::User->{dateformat}){
@@ -181,7 +181,7 @@ sub to_output {
     }
     $fmt .= ' %T' if ($self->{_pgobject_is_time});
     $fmt =~ s/^\s+//;
-    
+
     my $formatter = new DateTime::Format::Strptime(
              pattern => $fmt,
               locale => 'en_US',
