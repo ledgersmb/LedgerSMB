@@ -25,7 +25,7 @@ insert into test_exempt_funcs values ('crosstab');
 insert into test_exempt_funcs values ('concat_colon');
 insert into test_exempt_funcs values ('to_args');
 insert into test_exempt_funcs values ('table_log_restore_table');
-insert into test_exempt_funcs values ('lsmb__grant_perms'); 
+insert into test_exempt_funcs values ('lsmb__grant_perms');
 -- there's an array and a non-array form of the above function
 
 create table test_exempt_tables (tablename text, reason text);
@@ -37,9 +37,9 @@ insert into test_exempt_tables values ('pg_ts_dict', 'security definer only');
 insert into test_exempt_tables values ('pg_ts_parser', 'security definer only');
 insert into test_exempt_tables values ('file_view_catalog', 'addon installaiton only');
 
-insert into test_exempt_tables 
+insert into test_exempt_tables
 values ('person_to_company', 'Unused in core, for addons only');
-insert into test_exempt_tables 
+insert into test_exempt_tables
 values ('person_to_entity', 'Unused in core, for addons only');
 
 insert into test_exempt_tables values ('test_exempt_funcs', 'test data only');
@@ -51,9 +51,9 @@ analyze test_exempt_tables;
 
 INSERT INTO test_result(test_name, success)
 select 'No overloaded functions in current schema', count(*) = 0
-FROM (select proname FROM pg_proc 
-	WHERE pronamespace = 
-		(select oid from pg_namespace 
+FROM (select proname FROM pg_proc
+	WHERE pronamespace =
+		(select oid from pg_namespace
 		where nspname = current_schema())
 		AND proname NOT IN (select funcname FROM test_exempt_funcs)
 	group by proname
@@ -61,7 +61,7 @@ FROM (select proname FROM pg_proc
 ) t;
 
 select proname FROM pg_proc WHERE pronamespace =
-	(select oid from pg_namespace 
+	(select oid from pg_namespace
 	where nspname = current_schema())
 	AND proname NOT IN (select funcname from test_exempt_funcs)
 group by proname

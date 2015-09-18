@@ -9,12 +9,12 @@ LedgerSMB::Report::PNL::Product - Profit/Loss reports on Products
 
 =head1 DESCRIPTION
 
-This provides the income statement-like report for products on LedgerSMB on 1.4 
-and later.  This report gives decision-makers a general overview of what the 
-actual profit and loss of a business is regarding historical performance of 
+This provides the income statement-like report for products on LedgerSMB on 1.4
+and later.  This report gives decision-makers a general overview of what the
+actual profit and loss of a business is regarding historical performance of
 specific products.
 
-This is only supported on products with inventory because otherwise there is no 
+This is only supported on products with inventory because otherwise there is no
 real way to track revenue vs loss, for example with the case of resold services.
 
 =cut

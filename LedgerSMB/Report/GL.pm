@@ -10,7 +10,7 @@ LedgerSMB::Report::GL - GL Reports for LedgerSMB
 
 =head1 DESCRIPTION
 
-This module provides GL reports for LedgerSMB.  GL reports are useful for 
+This module provides GL reports for LedgerSMB.  GL reports are useful for
 searching for and reporting financial transactions.
 
 =head1 INHERITS
@@ -283,7 +283,7 @@ has 'description' => (is => 'rw', isa => 'Maybe[Str]');
 
 =item approved
 
-Unless false, only matches approved transactions.  When false, matches all 
+Unless false, only matches approved transactions.  When false, matches all
 transactions.  This is the one exception to the general rule that undef matches
 all.
 
@@ -301,9 +301,9 @@ The highest value that can match, amount-wise.
 
 =cut
 
-has 'amount_from' => (is => 'rw', coerce => 1, 
+has 'amount_from' => (is => 'rw', coerce => 1,
                      isa => 'LedgerSMB::Moose::Number');
-has 'amount_to' => (is => 'rw', coerce => 1, 
+has 'amount_to' => (is => 'rw', coerce => 1,
                    isa => 'LedgerSMB::Moose::Number');
 
 =item business_units

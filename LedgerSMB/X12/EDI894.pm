@@ -34,9 +34,9 @@ data in a $form object.
 This is an order hashref using the same data structures that a form screen
 would submit (flat format).
 
-=cut 
+=cut
 
-has order => (is => 'ro', isa => 'HashRef[Any]', lazy => 1, 
+has order => (is => 'ro', isa => 'HashRef[Any]', lazy => 1,
           builder => '_order');
 
 sub _order {
@@ -45,7 +45,7 @@ sub _order {
     my $form = new Form;
     my $sender_idx;
     my $sender_id;
-    
+
     my $i = 0;
 
     while (my $loop = $self->parser->get_next_loop){
@@ -56,7 +56,7 @@ sub _order {
                 $sender_idx = $elements[5];
                 $sender_id = $elements[6];
             }
-            when ('G82') { 
+            when ('G82') {
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 $form->{transdate} = $elements[10];
@@ -81,3 +81,5 @@ sub _order {
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

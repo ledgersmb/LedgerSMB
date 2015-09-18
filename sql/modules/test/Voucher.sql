@@ -2,12 +2,12 @@ BEGIN;
 \i Base.sql
 
 INSERT INTO test_result (test_name, success)
-SELECT 'Batch Created', 
+SELECT 'Batch Created',
 	batch_create('_TEST', '_TEST', 'payment', '2008-01-01') IS NOT NULL;
 
-INSERT INTO entity (id, name, entity_class, control_code, country_id) 
+INSERT INTO entity (id, name, entity_class, control_code, country_id)
 values (-3, 'Test', 1, 'test', 242);
-INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id) 
+INSERT INTO entity_credit_account (entity_id, id, meta_number, entity_class, ar_ap_account_id)
 values (-3, -1, 'Test', 1, -1000);
 
 INSERT INTO entity_employee(entity_id) values (-3);
@@ -54,18 +54,18 @@ INSERT INTO voucher (id, trans_id, batch_id, batch_class)
 values (-3, -5, currval('batch_id_seq'), 3);
 
 INSERT INTO test_result(test_name, success)
-select 'Voucher Seach finds Payable Vouchers',  count(*)=2 
+select 'Voucher Seach finds Payable Vouchers',  count(*)=2
 from voucher__list( currval('batch_id_seq')::int);
 
 INSERT INTO test_result (test_name, success)
-SELECT 'partial payment support', count(*) > 1 
+SELECT 'partial payment support', count(*) > 1
 FROM voucher where trans_id = -5 and batch_class = 3;
 
 -- Adding the test for empty batch sproc
 
 INSERT INTO test_result(test_name, success)
-SELECT 'creating batch 2', 
-batch_create('EMPTYBATCHTEST1', 'EMPTY BATCH TEST', 'ap', '2008-01-01') 
+SELECT 'creating batch 2',
+batch_create('EMPTYBATCHTEST1', 'EMPTY BATCH TEST', 'ap', '2008-01-01')
 IS NOT NULL;
 
 INSERT INTO test_result (test_name, success)
@@ -98,9 +98,9 @@ FROM batch where id = currval('batch_id_seq');
 
 SELECT * FROM test_result;
 
-SELECT (select count(*) from test_result where success is true) 
-|| ' tests passed and ' 
-|| (select count(*) from test_result where success is not true) 
+SELECT (select count(*) from test_result where success is true)
+|| ' tests passed and '
+|| (select count(*) from test_result where success is not true)
 || ' failed' as message;
 
 ROLLBACK;

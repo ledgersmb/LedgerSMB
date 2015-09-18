@@ -151,7 +151,6 @@ sub from_input{
     $format = 'yyyy-mm-dd' if $input =~ /^\d{4}/;
     my $dt =  _parse_string($self, $input, uc($format), $has_time)
 		  if $input;
-    #my $retval = $self->new($dt);
     bless $dt, __PACKAGE__;
     $dt->{_pgobject_is_date} = 1;
     $dt->{_pgobject_is_time} = 1 if $has_time;

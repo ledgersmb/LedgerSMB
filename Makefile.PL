@@ -24,7 +24,6 @@ requires 'DateTime';
 requires 'DateTime::Format::Strptime';
 requires 'Digest::MD5';
 requires 'File::MimeInfo';
-requires 'HTML::Entities';
 requires 'JSON';
 requires 'Locale::Maketext';
 requires 'Locale::Maketext::Lexicon' => '0.62';
@@ -50,6 +49,7 @@ recommends 'Math::BigInt::GMP';
 test_requires 'Test::More';
 test_requires 'Test::Trap';
 test_requires 'Test::Exception';
+test_requires 'Perl::Critic';
 
 feature 'RESTful Web Services XML support',
     -default => 0,

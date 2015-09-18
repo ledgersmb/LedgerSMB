@@ -7,7 +7,7 @@ CREATE TYPE lsmb_date_fields AS (
     decade double precision,
     year double precision,
     month double precision,
-    day double precision, 
+    day double precision,
     hour double precision,
     minute double precision,
     second double precision,
@@ -20,11 +20,11 @@ CREATE TYPE lsmb_date_fields AS (
     as_time time
 );
 
-CREATE OR REPLACE FUNCTION lsmb__decompose_timestamp 
+CREATE OR REPLACE FUNCTION lsmb__decompose_timestamp
 (in_timestamp timestamptz)
 RETURNS lsmb_date_fields language sql AS
 $$
-SELECT extract('century' from $1) as century, 
+SELECT extract('century' from $1) as century,
        extract('decade' from $1) as decade,
        extract('year' from $1) as year,
        extract('month' from $1) as month,
@@ -51,20 +51,20 @@ CREATE OR REPLACE FUNCTION je_set_default_lines(in_rowcount int) returns int
 as
 $$
 BEGIN
-    UPDATE menu_attribute set value = $1 
+    UPDATE menu_attribute set value = $1
      where node_id = 74 and attribute='rowcount';
 
     IF NOT FOUND THEN
          INSERT INTO menu_attribute (node_id, attribute, value)
               values (74, 'rowcount', $1);
     END IF;
-    RETURN $1; 
+    RETURN $1;
 END;
 $$ language plpgsql;
 
 
 CREATE OR REPLACE FUNCTION get_default_lang() RETURNS text AS
-$$ SELECT coalesce((select description FROM language 
+$$ SELECT coalesce((select description FROM language
     WHERE code = (SELECT substring(value, 1, 2) FROM defaults
                    WHERE setting_key = 'default_language')), 'english');
 $$ LANGUAGE sql;
@@ -72,7 +72,7 @@ $$ LANGUAGE sql;
 CREATE OR REPLACE FUNCTION je_get_default_lines() returns varchar as
 $$
 SELECT value FROM menu_attribute where node_id = 74 and attribute = 'rowcount';
-$$ language sql; 
+$$ language sql;
 
 CREATE OR REPLACE FUNCTION warehouse__list_all() RETURNS SETOF warehouse AS
 $$
@@ -85,7 +85,7 @@ RETURNS ap AS
 $$
 DECLARE retval ap;
 BEGIN
-	SELECT * INTO retval FROM ap WHERE entity_credit_id = 
+	SELECT * INTO retval FROM ap WHERE entity_credit_id =
 		(select id from entity_credit_account where entity_class = 1
 		AND meta_number = in_meta_number)
 		AND invnumber = in_invoice_number;
@@ -96,7 +96,7 @@ $$ LANGUAGE PLPGSQL;
 DROP TYPE if exists tree_record CASCADE;
 CREATE TYPE tree_record AS (t int[]);
 
-CREATE OR REPLACE FUNCTION in_tree 
+CREATE OR REPLACE FUNCTION in_tree
 (in_node_id int, in_search_array tree_record[])
 RETURNS BOOL IMMUTABLE LANGUAGE SQL AS
 $$

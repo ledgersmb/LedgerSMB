@@ -4,7 +4,7 @@ LedgerSMB::App_Module -- Application Module Lists for LedgerSMB
 
 =head1 SYNOPSYS
 
-Application modules, new to LedgerSMB 1.4, are ways to categorize functionality in 
+Application modules, new to LedgerSMB 1.4, are ways to categorize functionality in
 LedgerSMB.  In future versions, these may be important to security management and the
 like.  However at present they are mostly available to tie various reporting entries
 to various parts of the software.

@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Report::Invoices::Transactions - AR/AP Transactions Reports for 
+LedgerSMB::Report::Invoices::Transactions - AR/AP Transactions Reports for
 LedgerSMB
 
 =head1 SYNOPSIS
@@ -17,8 +17,8 @@ with 'LedgerSMB::Report::Dates';
 
 =head1 DESCRIPTION
 
-The AR/AP transaction reports provide basic search capabilities for AR and AP 
-transactions and invoices.  
+The AR/AP transaction reports provide basic search capabilities for AR and AP
+transactions and invoices.
 
 =head1 CRITERIA PROPERTIES
 
@@ -248,7 +248,7 @@ sub columns {
        $meta_number_label = LedgerSMB::Report::text('Customer Account');
        $entity_name_label = LedgerSMB::Report::text('Customer');
     }
-       
+
     return [
        { col_id => 'id',
            name => LedgerSMB::Report::text('ID'),
@@ -366,3 +366,5 @@ later version.  Please see included LICENSE.TXT for details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

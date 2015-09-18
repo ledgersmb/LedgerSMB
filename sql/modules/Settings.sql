@@ -1,34 +1,34 @@
 -- VERSION 1.3.0
 
--- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General 
+-- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General
 -- Public License v 2 or at your option any later version.
 
 -- Docstrings already added to this file.
 
 BEGIN;
 
-CREATE OR REPLACE FUNCTION defaults_get_defaultcurrency() 
+CREATE OR REPLACE FUNCTION defaults_get_defaultcurrency()
 RETURNS SETOF char(3) AS
 $$
 DECLARE defaultcurrency defaults.value%TYPE;
-      BEGIN   
+      BEGIN
            SELECT INTO defaultcurrency substr(value,1,3)
            FROM defaults
            WHERE setting_key = 'curr';
            RETURN NEXT defaultcurrency;
       END;
-$$ language plpgsql;                                                                  
+$$ language plpgsql;
 COMMENT ON FUNCTION defaults_get_defaultcurrency() IS
 $$ This function return the default currency asigned by the program. $$;
 
 DROP FUNCTION IF EXISTS setting__set(varchar, varchar);
-CREATE OR REPLACE FUNCTION setting__set (in_setting_key varchar, in_value varchar) 
+CREATE OR REPLACE FUNCTION setting__set (in_setting_key varchar, in_value varchar)
 RETURNS BOOL AS
 $$
 BEGIN
 	UPDATE defaults SET value = in_value WHERE setting_key = in_setting_key;
         IF NOT FOUND THEN
-             INSERT INTO defaults (setting_key, value) 
+             INSERT INTO defaults (setting_key, value)
                   VALUES (in_setting_key, in_value);
         END IF;
 	RETURN TRUE;
@@ -46,14 +46,14 @@ $$ LANGUAGE sql;
 COMMENT ON FUNCTION setting_get (in_key varchar) IS
 $$ Returns the value of the setting in the defaults table.$$;
 
-CREATE OR REPLACE FUNCTION setting_get_default_accounts () 
+CREATE OR REPLACE FUNCTION setting_get_default_accounts ()
 RETURNS SETOF defaults AS
 $$
 DECLARE
 	account defaults%ROWTYPE;
 BEGIN
-	FOR account IN 
-		SELECT * FROM defaults 
+	FOR account IN
+		SELECT * FROM defaults
 		WHERE setting_key like '%accno_id'
                 ORDER BY setting_key
 	LOOP
@@ -63,7 +63,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 COMMENT ON FUNCTION setting_get_default_accounts () IS
-$$ Returns a set of settings for default accounts.$$; 
+$$ Returns a set of settings for default accounts.$$;
 
 CREATE OR REPLACE FUNCTION setting__increment_base(in_raw_var text)
 returns varchar language plpgsql as $$
@@ -74,16 +74,16 @@ declare raw_value VARCHAR;
        new_value VARCHAR;
 begin
     raw_value := in_raw_var;
-    base_value := substring(raw_value from  
-                                '(' || E'\\' || 'd*)(' || E'\\' || 'D*|<' 
-                                    || E'\\' || '?lsmb [^<>] ' || E'\\' 
+    base_value := substring(raw_value from
+                                '(' || E'\\' || 'd*)(' || E'\\' || 'D*|<'
+                                    || E'\\' || '?lsmb [^<>] ' || E'\\'
                                     || '?>)*$');
     IF base_value like '0%' THEN
          increment := base_value::integer + 1;
          inc_length := char_length(increment::text);
          new_value := overlay(base_value placing increment::varchar
                               from (char_length(base_value)
-                                    - inc_length + 1) 
+                                    - inc_length + 1)
                               for inc_length);
     ELSE
          new_value := base_value::integer + 1;
@@ -99,14 +99,14 @@ DECLARE
 	raw_value VARCHAR;
 	new_value VARCHAR;
 BEGIN
-	SELECT value INTO raw_value FROM defaults 
+	SELECT value INTO raw_value FROM defaults
 	WHERE setting_key = in_key
 	FOR UPDATE;
 
         new_value := setting__increment_base(raw_value);
 	UPDATE defaults SET value = new_value WHERE setting_key = in_key;
 
-	return new_value;	
+	return new_value;
 END;
 $$ LANGUAGE PLPGSQL;
 
@@ -173,7 +173,7 @@ RETURNS lsmb_sequence LANGUAGE plpgsql AS
 $$
 DECLARE retval lsmb_sequence;
 BEGIN
-UPDATE lsmb_sequence 
+UPDATE lsmb_sequence
    SET prefix = coalesce(in_prefix, ''),
        suffix = coalesce(in_suffix, ''),
        sequence = coalesce(in_sequence, '1'),
@@ -181,16 +181,16 @@ UPDATE lsmb_sequence
        accept_input = coalesce(in_accept_input, false)
  WHERE label = in_label;
 
-IF FOUND THEN 
+IF FOUND THEN
    retval := sequence__get(in_label);
    RETURN retval;
 END IF;
 
-INSERT INTO lsmb_sequence(label, setting_key, prefix, suffix, sequence, 
+INSERT INTO lsmb_sequence(label, setting_key, prefix, suffix, sequence,
                           accept_input)
-VALUES (in_label, in_setting_key, 
-        coalesce(in_prefix, ''), 
-        coalesce(in_suffix, ''), 
+VALUES (in_label, in_setting_key,
+        coalesce(in_prefix, ''),
+        coalesce(in_suffix, ''),
         coalesce(in_sequence, '1'),
         coalesce(in_accept_input, false)
 );
@@ -218,7 +218,7 @@ BEGIN
 
    retval := row(t_seq.setting_key, t_seq.prefix || new_value || t_seq.suffix);
    return retval;
-   
+
 END;
 $$;
 

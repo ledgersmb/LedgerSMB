@@ -452,31 +452,31 @@ INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '467
 INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '4672'),0.27);
 
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT id FROM chart WHERE accno = '2610')); 
-INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id',    (SELECT id FROM chart WHERE accno = '9111')); 
-INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id',   (SELECT id FROM chart WHERE accno = '8140')); 
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT id FROM chart WHERE accno = '2610'));
+INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id',    (SELECT id FROM chart WHERE accno = '9111'));
+INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id',   (SELECT id FROM chart WHERE accno = '8140'));
 INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id',    (SELECT id FROM chart WHERE accno = '9762'));
 INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id',    (SELECT id FROM chart WHERE accno = '8762'));
 INSERT INTO defaults (setting_key, value) VALUES ('curr', 'HUF:EUR:USD');
 INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 
-UPDATE defaults SET value = 'K000000'    WHERE setting_key = 'glnumber';                                                                                                                         
-UPDATE defaults SET value = 'VSZ10000'   WHERE setting_key = 'sinumber';                                                                                                                         
-UPDATE defaults SET value = 'SSZ10000'   WHERE setting_key = 'vinumber';                                                                                                                         
-UPDATE defaults SET value = 'SR10000'    WHERE setting_key = 'ponumber';                                                                                                                         
-UPDATE defaults SET value = 'VR10000'    WHERE setting_key = 'sonumber';                                                                                                                         
-UPDATE defaults SET value = 'VA10000'    WHERE setting_key = 'sqnumber';                                                                                                                         
-UPDATE defaults SET value = 'SA10000'    WHERE setting_key = 'rfqnumber';                                                                                                                        
-UPDATE defaults SET value = 'ALK0000'    WHERE setting_key = 'employeenumber';                                                                                                                   
-UPDATE defaults SET value = 'V100000'    WHERE setting_key = 'customernumber';                                                                                                                   
-UPDATE defaults SET value = 'S100000'    WHERE setting_key = 'vendornumber';                                                                                                                     
+UPDATE defaults SET value = 'K000000'    WHERE setting_key = 'glnumber';
+UPDATE defaults SET value = 'VSZ10000'   WHERE setting_key = 'sinumber';
+UPDATE defaults SET value = 'SSZ10000'   WHERE setting_key = 'vinumber';
+UPDATE defaults SET value = 'SR10000'    WHERE setting_key = 'ponumber';
+UPDATE defaults SET value = 'VR10000'    WHERE setting_key = 'sonumber';
+UPDATE defaults SET value = 'VA10000'    WHERE setting_key = 'sqnumber';
+UPDATE defaults SET value = 'SA10000'    WHERE setting_key = 'rfqnumber';
+UPDATE defaults SET value = 'ALK0000'    WHERE setting_key = 'employeenumber';
+UPDATE defaults SET value = 'V100000'    WHERE setting_key = 'customernumber';
+UPDATE defaults SET value = 'S100000'    WHERE setting_key = 'vendornumber';
 UPDATE defaults SET value = 'P100000'    WHERE setting_key = 'projectnumber';
 
 
 commit;
-UPDATE account                                                                                                                                                                                    
-   SET tax = true                                                                                                                                                                                 
-WHERE id                                                                                                                                                                                          
-   IN (SELECT account_id                                                                                                                                                                          
-       FROM account_link                                                                                                                                                                          
-       WHERE description LIKE '%_tax');   
+UPDATE account
+   SET tax = true
+WHERE id
+   IN (SELECT account_id
+       FROM account_link
+       WHERE description LIKE '%_tax');

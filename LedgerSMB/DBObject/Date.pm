@@ -5,14 +5,16 @@ LedgerSMB::DBobject::Date - Date Handling Back-end Routines for LedgerSMB
 
 =head1 SYNOPSIS
 
-Provides the functions for generating the data structures for dates used in 
-LedgerSMB.  
+Provides the functions for generating the data structures for dates used in
+LedgerSMB.
 
 =cut
 
 package LedgerSMB::DBObject::Date;
 use base qw(LedgerSMB::PGOld);
 use strict;
+use warnings;
+
 use LedgerSMB::PGNumber;
 our $VERSION = '0.1.0';
 
@@ -29,7 +31,7 @@ Inherited from LedgerSMB::DBObject.  Please see that documnetation for details.
 This function takes $locale as an argument to build the list boxes, of the
 period filter.
 
-It sets $self->{yearsOptions}, $self->{$monthsOptions}, $self->{radioOptions} 
+It sets $self->{yearsOptions}, $self->{$monthsOptions}, $self->{radioOptions}
 so you just pass the hash to the template system. :)
 
 =back
@@ -38,13 +40,13 @@ so you just pass the hash to the template system. :)
 
 
 sub build_filter_by_period {
-    my ($self, $locale) = @_; 
+    my ($self, $locale) = @_;
     my @all_years = $self->call_procedure(funcname => 'date_get_all_years');
-    
+
     for my $day (1 .. 31) {
       push@{$self->{daysOptions}} , { value => $day, text => $day }
     }
-    
+
     for my $ref (0 .. $#all_years) {
       if ($all_years[$ref]{year})
       {
@@ -70,7 +72,7 @@ sub build_filter_by_period {
           { value => '12', text => $locale->text('December')}
           );
 
- 
+
     @{$self->{radioOptions}} = (
                {
                   label  => $locale->text('Current'),
@@ -79,30 +81,30 @@ sub build_filter_by_period {
               },
               {
                   label => $locale->text('Month'),
-		  name    => 'radioPeriod',
-		  value   => '2',
-		  active => '1',
+          name    => 'radioPeriod',
+          value   => '2',
+          active => '1',
               },
               {
-		label => $locale->text('Quarter'),
-		name => 'radioPeriod',
-		value => '3',
-	      },
-	      {
-		label => $locale->text('Year'),
-		name => 'radioPeriod',
-		value => '4',
-	      });
+        label => $locale->text('Quarter'),
+        name => 'radioPeriod',
+        value => '3',
+          },
+          {
+        label => $locale->text('Year'),
+        name => 'radioPeriod',
+        value => '4',
+          });
 }
 
 =head1 COPYRIGHT
 
-Copyright (c) 2009, the LedgerSMB Core Team.  This is licensed under the GNU 
-General Public License, version 2, or at your option any later version.  Please 
+Copyright (c) 2009, the LedgerSMB Core Team.  This is licensed under the GNU
+General Public License, version 2, or at your option any later version.  Please
 see the accompanying License.txt for more information.
 
 =cut
 
 
 1;
- 
+

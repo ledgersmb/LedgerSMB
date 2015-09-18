@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Report::Unapproved::Batch_Overview - Search Batches in 
+LedgerSMB::Report::Unapproved::Batch_Overview - Search Batches in
 LedgerSMB
 
 =head1 SYNPOSIS
@@ -12,7 +12,7 @@ LedgerSMB
 =head1 DESCRIPTION
 
 This provides an ability to search for (and approve or delete) pending
-transactions grouped in batches.  This report only handles the batches 
+transactions grouped in batches.  This report only handles the batches
 themselves.  You cannot delete individual vouchers in this report.  For that,
 use LedgerSMB::Report::Unapproved::Batch_Detail instead.
 
@@ -84,7 +84,7 @@ sub columns {
         {col_id => 'select',
          name => '',
          type => 'checkbox' },
-        
+
         {col_id => 'batch_class',
          name => $self->_locale->text('Type'),
          type => 'text'},

@@ -56,9 +56,12 @@ Deprecated
 # inline documentation
 
 package LedgerSMB::User;
+
+use strict;
+use warnings;
+
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Auth;
-use Data::Dumper;
 use Log::Log4perl;
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB::User');
@@ -82,7 +85,7 @@ sub fetch_config {
     my $login;
     my $creds = LedgerSMB::Auth::get_credentials;
     $login = $creds->{login};
-     
+
     my $dbh = $lsmb->{dbh};
 
     if ( !$login ) { # Assume this is for current connected user
@@ -91,12 +94,12 @@ sub fetch_config {
         ($login) = $sth->fetchrow_array();
     }
 
-    $query = qq|
-		SELECT * FROM user_preference 
-		 WHERE id = (SELECT id FROM users WHERE username = ?)|;
+    my $query = qq|
+        SELECT * FROM user_preference
+         WHERE id = (SELECT id FROM users WHERE username = ?)|;
     my $sth = $dbh->prepare($query);
     $sth->execute($login);
-    $myconfig = $sth->fetchrow_hashref(NAME_lc);
+    my $myconfig = $sth->fetchrow_hashref('NAME_lc');
     $myconfig->{templates} = "DB";
     bless $myconfig, __PACKAGE__;
     return $myconfig;

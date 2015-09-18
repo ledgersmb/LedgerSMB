@@ -16,11 +16,11 @@ with 'LedgerSMB::Report::Dates';
 
 =head1 DESCRIPTION
 
-LedgerSMB inventory is calculated (assuming no customizations here) using the 
+LedgerSMB inventory is calculated (assuming no customizations here) using the
 FIFO or First In, First Out method.  The first inventory in the system which
 is unallocated is the first inventory used for costs.
 
-This report provides useful support for verifying and controlling for the 
+This report provides useful support for verifying and controlling for the
 FIFO COGS and inventoy numbers.
 
 =head1 REPORT CRITERIA
@@ -86,7 +86,7 @@ sub columns {
         pwidth => 1,
           name => LedgerSMB::Report::text('Invoice Number'),
      href_base => 'ir.pl?action=edit&id=', },
-         
+
       { col_id => 'transdate',
           type => 'text',
         pwidth => 1,
@@ -95,7 +95,7 @@ sub columns {
       { col_id => 'partnumber',
           type => 'href',
         pwidth => 1,
-          name => LedgerSMB::Report::text('Part Number'), 
+          name => LedgerSMB::Report::text('Part Number'),
      href_base => 'ic.pl?action=edit&id=', },
 
       { col_id => 'description',
@@ -130,7 +130,7 @@ sub columns {
 
     ];
 }
-      
+
 
 =head2 header_lines
 
@@ -146,7 +146,7 @@ sub columns {
 
 =back
 
-=cut 
+=cut
 
 sub header_lines {
     return [
@@ -191,10 +191,12 @@ sub run_report {
 
 Copyright (C) 2014 The LedgerSMB Core Team
 
-This file may be reused under the terms of the GNU General Public License 
-version 2 or at your option any later version.  Please see the included 
+This file may be reused under the terms of the GNU General Public License
+version 2 or at your option any later version.  Please see the included
 LICENSE.TXT for more information.
 
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

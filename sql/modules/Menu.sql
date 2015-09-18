@@ -13,33 +13,33 @@ CREATE TYPE menu_item AS (
 
 
 
-CREATE OR REPLACE FUNCTION menu_generate() RETURNS SETOF menu_item AS 
+CREATE OR REPLACE FUNCTION menu_generate() RETURNS SETOF menu_item AS
 $$
-DECLARE 
+DECLARE
 	item menu_item;
 	arg menu_attribute%ROWTYPE;
 BEGIN
-	FOR item IN 
+	FOR item IN
                WITH RECURSIVE tree (path, id, parent, level, positions)
-                               AS (select id::text as path, id, parent, 
+                               AS (select id::text as path, id, parent,
                                            0 as level, position::text
                                       FROM menu_node where parent is null
-                                     UNION 
-                                    select path || ',' || n.id::text, n.id, 
+                                     UNION
+                                    select path || ',' || n.id::text, n.id,
                                            n.parent,
-                                           t.level + 1, 
+                                           t.level + 1,
                                            t.positions || ',' || n.position
                                       FROM menu_node n
-                                      JOIN tree t ON t.id = n.parent) 
+                                      JOIN tree t ON t.id = n.parent)
 		SELECT n.position, n.id, c.level, n.label, c.path, n.parent,
                        to_args(array[ma.attribute, ma.value])
 		FROM tree c
 		JOIN menu_node n USING(id)
                 JOIN menu_attribute ma ON (n.id = ma.node_id)
-               WHERE n.id IN (select node_id 
+               WHERE n.id IN (select node_id
                                 FROM menu_acl acl
                           LEFT JOIN pg_roles pr on pr.rolname = acl.role_name
-                               WHERE CASE WHEN role_name 
+                               WHERE CASE WHEN role_name
                                                            ilike 'public'
                                                       THEN true
                                                       WHEN rolname IS NULL
@@ -56,12 +56,12 @@ BEGIN
                     or exists (select cn.id, cc.path
                                  FROM tree cc
                                  JOIN menu_node cn USING(id)
-                                WHERE cn.id IN 
-                                      (select node_id 
+                                WHERE cn.id IN
+                                      (select node_id
                                          FROM menu_acl acl
-                                    LEFT JOIN pg_roles pr 
+                                    LEFT JOIN pg_roles pr
                                               on pr.rolname = acl.role_name
-                                        WHERE CASE WHEN rolname 
+                                        WHERE CASE WHEN rolname
                                                            ilike 'public'
                                                       THEN true
                                                       WHEN rolname IS NULL
@@ -70,14 +70,14 @@ BEGIN
                                                                        'USAGE')
                                                 END
                                      GROUP BY node_id
-                                       HAVING bool_and(CASE WHEN acl_type 
+                                       HAVING bool_and(CASE WHEN acl_type
                                                                  ilike 'DENY'
                                                             THEN false
-                                                            WHEN acl_type 
+                                                            WHEN acl_type
                                                                  ilike 'ALLOW'
                                                             THEN TRUE
                                                          END))
-                                       and cc.path::text 
+                                       and cc.path::text
                                            like c.path::text || ',%')
             GROUP BY n.position, n.id, c.level, n.label, c.path, c.positions,
                      n.parent
@@ -99,22 +99,22 @@ AS $$
 SELECT * FROM menu_generate() where parent = $1;
 $$ language sql;
 
-COMMENT ON FUNCTION menu_children(int) IS 
-$$ This function returns all menu  items which are children of in_parent_id 
-(the only input parameter). 
+COMMENT ON FUNCTION menu_children(int) IS
+$$ This function returns all menu  items which are children of in_parent_id
+(the only input parameter).
 
-It is thus similar to menu_generate() but it only returns the menu items 
+It is thus similar to menu_generate() but it only returns the menu items
 associated with nodes directly descendant from the parent.  It is used for
 menues for frameless browsers.$$;
 
-CREATE OR REPLACE FUNCTION 
+CREATE OR REPLACE FUNCTION
 menu_insert(in_parent_id int, in_position int, in_label text)
 returns int
 AS $$
 DECLARE
 	new_id int;
 BEGIN
-	UPDATE menu_node 
+	UPDATE menu_node
 	SET position = position * -1
 	WHERE parent = in_parent_id
 		AND position >= in_position;
@@ -124,7 +124,7 @@ BEGIN
 
 	SELECT INTO new_id currval('menu_node_id_seq');
 
-	UPDATE menu_node 
+	UPDATE menu_node
 	SET position = (position * -1) + 1
 	WHERE parent = in_parent_id
 		AND position < 0;
@@ -142,19 +142,19 @@ item created. $$;
 DROP VIEW IF EXISTS menu_friendly;
 CREATE VIEW menu_friendly AS
 WITH RECURSIVE tree (path, id, parent, level, positions)
-                               AS (select id::text as path, id, parent, 
+                               AS (select id::text as path, id, parent,
                                            0 as level, position::text
                                       FROM menu_node where parent is null
-                                     UNION 
-                                    select path || ',' || n.id::text, n.id, 
+                                     UNION
+                                    select path || ',' || n.id::text, n.id,
                                            n.parent,
-                                           t.level + 1, 
+                                           t.level + 1,
                                            t.positions || ',' || n.position
                                       FROM menu_node n
-                                      JOIN tree t ON t.id = n.parent) 
+                                      JOIN tree t ON t.id = n.parent)
 SELECT t."level", t.path,
-       (repeat(' '::text, (2 * t."level")) || (n.label)::text) AS label, 
-        n.id, n."position" 
+       (repeat(' '::text, (2 * t."level")) || (n.label)::text) AS label,
+        n.id, n."position"
    FROM tree t
    JOIN menu_node n USING (id)
   ORDER BY string_to_array(t.positions, ',')::int[];

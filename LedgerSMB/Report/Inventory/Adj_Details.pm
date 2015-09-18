@@ -46,7 +46,7 @@ has id => (is => 'ro', isa => 'Int', required => 1);
 
 =over
 
-=item source 
+=item source
 
 Matches the beginning of the source string on the report source string
 
@@ -135,14 +135,14 @@ sub run_report {
     $self->source($rpt->{source});
     my @rows = $self->call_dbmethod(funcname => 'inventory_adj__details');
     for my $row (@rows){
-        $row->{row_id} = $row->{parts_id}; 
+        $row->{row_id} = $row->{parts_id};
     }
     $self->rows(\@rows);
 }
 
 =head2 approve
 
-Approves the report.  This currently goes through the legacy code and is the 
+Approves the report.  This currently goes through the legacy code and is the
 point where caching becomes unsafe.
 
 =cut
@@ -174,7 +174,7 @@ sub approve {
     $form_ap->{vendor_id} = $form_ap->{'name_list'}->[0]->{id};
     $form_ap->{currency} = $curr;
     $form_ap->{defaultcurrency} = $curr;
-    
+
 
     ## Processing reports
     $self->run_report;
@@ -185,8 +185,8 @@ sub approve {
             my $form = $form_ar;
             my $rc = $form->{rowcount};
             $form->{"qty_$rc"} = -1 * $row->{variance};
-            $form->{"id_$rc"} = $row->{parts_id}; 
-            $form->{"description_$rc"} = $row->{description}; 
+            $form->{"id_$rc"} = $row->{parts_id};
+            $form->{"description_$rc"} = $row->{description};
             $form->{"discount_$rc"} = '100';
             $form->{"sellprice_$rc"} = $row->{sellprice};
             ++$form->{rowcount};
@@ -194,12 +194,12 @@ sub approve {
             my $form = $form_ap;
             my $rc = $form->{rowcount};
             $form->{"qty_$rc"} = $row->{variance};
-            $form->{"id_$rc"} = $row->{parts_id}; 
-            $form->{"description_$rc"} = $row->{description}; 
+            $form->{"id_$rc"} = $row->{parts_id};
+            $form->{"description_$rc"} = $row->{description};
             $form->{"discount_$rc"} = '100';
             $form->{"sellprice_$rc"} = $row->{lastcost};
             ++$form->{rowcount};
-           
+
         }
     }
     ## Posting

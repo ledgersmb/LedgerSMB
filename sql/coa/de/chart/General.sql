@@ -1,10 +1,10 @@
 begin;
--- Einfacher Deutscher Kontenrahmen => Very Easy German Default Chart  
+-- Einfacher Deutscher Kontenrahmen => Very Easy German Default Chart
 -- Vorbereitet von / Prepared by Paul Tammes May 9th, 2002. Kommentar / Comments : finance@bermuda-holding.com
 -- Englische Texte für eigene Zwecke und um Refernz in LedgerSMB Dokumentation zu erleichtern.
 -- English terms used mostly for my own reference and to make lookup in LedgerSMB documentation easier.
--- GIFI-codes werden benutzt/misbraucht um die art der Rechnung zu deuten, Fehler nicht ausgeschlossen denn 
--- Ich bin kein Deutscher Steuerberater ;-( 
+-- GIFI-codes werden benutzt/misbraucht um die art der Rechnung zu deuten, Fehler nicht ausgeschlossen denn
+-- Ich bin kein Deutscher Steuerberater ;-(
 -- GIFI field codes re-used for following specs:
 -- Link: Achtung, sehr wenig benutzt da mir die Kentnisse zum Deutschen System fehlen. Sehr gut aufpassen und wenn
 -- Ihr Fehler oder Praktische TIPS hat: gerne!
@@ -13,19 +13,19 @@ begin;
 -- A1-1 = Warenbestand			/ Inventory
 -- A1-2 = Forderungen			/ Liabilities
 -- A1-3 = Liquide Mittel		/ Assets
--- A1-4	= Aktive Rechnungsabgrenzung 	/ Closing Account results 
--- E    = Erträge			/ Income 
+-- A1-4	= Aktive Rechnungsabgrenzung 	/ Closing Account results
+-- E    = Erträge			/ Income
 -- K0	= Wareneinsatz			/ COGS
 -- K1   = Personalkosten		/ Salaries etc
 -- K2   = Raumkosten			/ Rental etc
 -- K3   = Sonstige Kosten		/ Various costs
--- NA 	= Neutrale Aufwendungen		/ Neutral Costs 
+-- NA 	= Neutrale Aufwendungen		/ Neutral Costs
 -- NE	- Neutrale Erlöse		/ Neutral Income
 -- P0 	= Eigenkapital			/ Equity
 -- P1 	= Rückstellungen		/ Reserves
 -- P2 	= Fremdkapital Langfristig	/ Liabilities Long Term
 -- P3 	= Fremdkapital Kurzfristig	/ Liabilities Short Term
--- P4	= Passive Rechnungsabgrenzung	/ Closing Account results 
+-- P4	= Passive Rechnungsabgrenzung	/ Closing Account results
 --
 -- A0
 SELECT account_heading_save(NULL,'0000','ANLAGEVERMÖGEN', NULL);

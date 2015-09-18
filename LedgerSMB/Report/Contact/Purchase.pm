@@ -74,7 +74,7 @@ sub columns {
          {col_id => 'curr',
             type => 'text',
             name => LedgerSMB::Report::text('Currency') },
-        
+
          {col_id => 'amount',
             type => 'text',
            money => 1,
@@ -121,10 +121,10 @@ sub columns {
 
 =cut
 
-sub name { 
+sub name {
    my ($self) = @_;
    if ($self->entity_class == 1){
-       return LedgerSMB::Report::text('AP Transactions'); 
+       return LedgerSMB::Report::text('AP Transactions');
    } elsif ($self->entity_class == 2){
        return LedgerSMB::Report::text('AR Transactions');
    }
@@ -140,7 +140,7 @@ sub header_lines {
              text => LedgerSMB::Report::text('Name')},
             {name => 'meta_number',
              text => LedgerSMB::Report::text('Account Number')}
-       ]; 
+       ];
 }
 
 =back
@@ -159,7 +159,7 @@ has entity_class => (is => 'ro', isa => 'Int');
 
 =item accno
 
-Account Number for search.  If set can be either in the form of the actual 
+Account Number for search.  If set can be either in the form of the actual
 account number itself or in the form of accno--description (returned by the
 current ajaxselect implementation).
 
@@ -261,7 +261,7 @@ has summarize => (is => 'ro', isa => 'Bool');
 
 =head1 METHODS
 
-=over 
+=over
 
 =item run_report
 
@@ -294,7 +294,7 @@ sub run_report {
                 } else {
                     $href = 'ar.pl';
                 }
-            } 
+            }
             $r->{invnumber_href_suffix} = "$href?action=edit&id=$r->{id}";
        }
     }

@@ -36,7 +36,7 @@ has parts_id => (is => 'rw', isa => 'Int', required => 0);
 
 =item partnumber
 
-This matches either the barcode or partnumber of the part.  If there is a 
+This matches either the barcode or partnumber of the part.  If there is a
 conflict, partnumber wins.  Note that this is an exact match, not a prefix
 search.
 
@@ -100,7 +100,7 @@ has counted_date => (is => 'rw', isa => 'LedgerSMB::Moose::Date', coerce => 1,
 =item search_part($partnumber, $count_on)
 
 This routine searches for a part based on partnumber and returns a hashref with
-the parts_id and counted if it is found.  The $count_on parameter provides an 
+the parts_id and counted if it is found.  The $count_on parameter provides an
 optional date which to use to calculate.  If none is provided, current date is
 used.
 
@@ -111,7 +111,7 @@ sub search_part{
     my $ref;
     if ($partnumber){
         ($ref) = $self->call_procedure(
-           funcname => 'inventory__search_part', 
+           funcname => 'inventory__search_part',
                 args => [$partnumber, $count_on]
         );
     } else {
@@ -173,3 +173,5 @@ later version.  Please see enclosed LICENSE file for details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

@@ -1,4 +1,4 @@
-=pod 
+=pod
 
 =head1 NAME
 
@@ -39,7 +39,7 @@ Entity name of individual who attached file
 
 has attached_by => (is => 'rw', isa => 'Maybe[Str]');
 
-=item attached_at 
+=item attached_at
 
 Timestamp of attachment point.
 
@@ -171,12 +171,12 @@ sub get_mime_type {
     my ($self) = @_;
     if (!($self->mime_type_id || $self->mime_type_text)){
        $self->mime_type_text(mimetype($self->file_name));
-    } 
+    }
     if (!($self->mime_type_id && $self->mime_type_text)){
        my ($ref) = $self->call_dbmethod(funcname => 'file__get_mime_type');
        $self->mime_type_text($ref->{mime_type});
        $self->mime_type_id($ref->{id});
-    } 
+    }
     return $self->mime_type_text;
 }
 
@@ -189,7 +189,7 @@ Sets the mipe_type_id from the mime_type_text
 sub set_mime_type {
     my ($self, $mime_type) = @_;
     $self->mime_type_text($mime_type);
-    my ($ref) = $self->call_procedure(funcname => 'file__mime_type_text', 
+    my ($ref) = $self->call_procedure(funcname => 'file__mime_type_text',
          args => [undef, $self->mime_type_text]);
     $self->mime_type_id($ref->{id});
 
@@ -238,7 +238,7 @@ sub get_for_template{
     }
     mkdir $LedgerSMB::Sysconfig::tempdir . '/' . $$;
     $self->file_path($LedgerSMB::Sysconfig::tempdir . '/' . $$);
-    
+
     for my $result (@results) {
         $result->{file_name} =~ s/\_//g;
         open FILE, '>', $self->file_path . "/$result->{file_name}";
@@ -255,7 +255,7 @@ sub get_for_template{
                 $result->{sizey} = $y;
             };
         }
-        if ($result->{file_class} == 3){ 
+        if ($result->{file_class} == 3){
            $result->{ref_key} = $result->{file_name};
            $result->{ref_key} =~ s/-.*//;
         } else {
@@ -265,7 +265,7 @@ sub get_for_template{
     return @results;
 }
 
-=item DEMOLISH 
+=item DEMOLISH
 
 This is called by Moose on destruction of the object.  We just clean up any
 files we have left around.
@@ -292,7 +292,7 @@ Lists files directly attached to the object.
 sub list{
     my ($self, $args) = @_;
     my @results = $self->call_procedure(
-                 funcname => 'file__list_by', 
+                 funcname => 'file__list_by',
                       args => [$args->{ref_key}, $args->{file_class}]
      );
     return @results;
@@ -307,7 +307,7 @@ Lists the links directly attached to the object.
 sub list_links{
     my ($self, $args) = @_;
     my @results = $self->call_procedure(
-                 funcname => 'file__list_links', 
+                 funcname => 'file__list_links',
                       args => [$args->{ref_key}, $args->{file_class}]
      );
     return @results;

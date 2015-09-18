@@ -7,7 +7,7 @@ LedgerSMB::Auth::DB - Standard Authentication DB module.
 
 =head1 SYNOPSIS
 
-This is the standard DB-based module for authentication.  Uses HTTP basic 
+This is the standard DB-based module for authentication.  Uses HTTP basic
 authentication.
 
 =head1 METHODS
@@ -38,7 +38,7 @@ sub get_credentials {
     my $auth = $ENV{'HTTP_AUTHORIZATION'};
     $auth =~ s/Basic //i; # strip out basic authentication preface
     $auth = MIME::Base64::decode($auth);
-    #tshvr4 2014-01-14 Firefox, after logout on normal application (login.pl) and coming to setup.pl, auth seems to be  'logout:logout', TODO remove Dumper statements  
+    #tshvr4 2014-01-14 Firefox, after logout on normal application (login.pl) and coming to setup.pl, auth seems to be  'logout:logout', TODO remove Dumper statements
 
     #$auth =~ s/Basic //i; # strip out basic authentication preface
     #$auth = MIME::Base64::decode($auth);
@@ -54,7 +54,7 @@ sub get_credentials {
     }
 
     return $return_value;
-    
+
 }
 
 =item credential_prompt

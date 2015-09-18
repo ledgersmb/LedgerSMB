@@ -1,10 +1,11 @@
+
+package LedgerSMB::Scripts::account;
 use Template;
 use LedgerSMB::DBObject::Account;
 use LedgerSMB::DBObject::EOY;
-package LedgerSMB::Scripts::account;
 use Log::Log4perl;
-use Data::Dumper;
 use strict;
+use warnings;
 
 =pod
 
@@ -16,14 +17,14 @@ LedgerSMB:Scripts::account, LedgerSMB workflow scripts for managing accounts
 
 This module contains the workflows for managing chart of accounts entries.
 
-In prior versions of LedgerSMB, these were found in the AM.pm.  In the current 
-version, these have been broken out and given their own API which is more 
+In prior versions of LedgerSMB, these were found in the AM.pm.  In the current
+version, these have been broken out and given their own API which is more
 maintainable.
-    
+
 =head1 METHODS
-        
-=over   
-        
+
+=over
+
 =cut
 
 
@@ -39,12 +40,12 @@ sub new {
     my ($request) = @_;
     $request->{title} = $request->{_locale}->text('Add Account');
     $request->{charttype} = 'A';
-    _display_account_screen($request);     
+    _display_account_screen($request);
 }
 
 =item edit
 
-Retrieves account information and then displays the screen.  
+Retrieves account information and then displays the screen.
 
 Requires the id and charttype variables in the request to be set.
 
@@ -79,7 +80,7 @@ accno: the text used to specify the account number
 description:  Text to describe the account
 category: see COMMENT ON COLUMN account.category
 gifi_accno:  The GIFI account entry control code
-heading: (Optional) The integer representing the heading.id desired 
+heading: (Optional) The integer representing the heading.id desired
 contra:  If true, the account balances on the opposite side.
 tax:  If true, is a tax account
 link:  a list of strings representing text box identifier.
@@ -99,7 +100,7 @@ sub save {
     }
 
     $account->save;
-    edit($account); 
+    edit($account);
 }
 
 =item save_as_new
@@ -131,8 +132,8 @@ sub _display_account_screen {
     foreach my $item ( split( /:/, $form->{link} ) ) {
         $form->{$item} = 1;
     }
- 
-    @{$form->{languages}} = 
+
+    @{$form->{languages}} =
              LedgerSMB->call_procedure(funcname => 'person__list_languages');
 
     $hiddens->{type} = 'account';
@@ -168,9 +169,9 @@ sub _display_account_screen {
             text => $button{$_}{value},
             };
     }
-    
+
     my $template = LedgerSMB::Template->new_UI(
-        user => $form->{_user}, 
+        user => $form->{_user},
         locale => $locale,
         template => 'accounts/edit');
     $template->render({
@@ -193,9 +194,9 @@ sub yearend_info {
     my $eoy =  LedgerSMB::DBObject::EOY->new({base => $request});
     $eoy->list_earnings_accounts;
     $eoy->{closed_date} = $eoy->latest_closing;
-    $eoy->{user} = $request->{_user};    
+    $eoy->{user} = $request->{_user};
     my $template = LedgerSMB::Template->new_UI(
-        user => $request->{_user}, 
+        user => $request->{_user},
         locale => $request->{_locale},
         template => 'accounts/yearend'
     );
@@ -208,7 +209,7 @@ sub yearend_info {
 Posts a year-end closing transaction.
 
 Request variables expected:
-end_date: Date for the yearend transaction.  
+end_date: Date for the yearend transaction.
 reference: GL Source identifier.
 description: Description of transaction
 in_retention_acc_id: Account id to post retained earnings into
@@ -225,7 +226,7 @@ sub post_yearend {
         template => 'accounts/yearend_complete'
     );
     $template->render($eoy);
-    
+
 }
 
 =item reopen_books
@@ -246,7 +247,7 @@ sub reopen_books {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

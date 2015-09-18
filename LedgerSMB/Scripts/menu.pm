@@ -15,12 +15,13 @@ devices.
 =cut
 
 package LedgerSMB::Scripts::menu;
-our $VERSION = '1.0';
 
 use LedgerSMB::DBObject::Menu;
 use LedgerSMB::Template;
 use strict;
+use warnings;
 
+our $VERSION = '1.0';
 
 =pod
 
@@ -67,7 +68,7 @@ sub root_doc {
     my $template;
 
     $request->{title} = "LedgerSMB $request->{VERSION} -- ".
-	"$request->{login} -- $request->{company}";
+    "$request->{login} -- $request->{company}";
 
     my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
     $menu->generate();
@@ -78,11 +79,11 @@ sub root_doc {
     }
 
     $template = LedgerSMB::Template->new(
-            user =>$request->{_user}, 
+            user =>$request->{_user},
             locale => $request->{_locale},
             path => 'UI',
             template => 'main',
-	     format => 'HTML'
+         format => 'HTML'
     );
     $template->render($menu);
 }
@@ -104,13 +105,13 @@ there nodes which are supposed to be open are marked.
 sub expanding_menu {
     my ($request) = @_;
     if ($request->{'open'} !~ s/:$request->{id}:/:/){
-	$request->{'open'} .= ":$request->{id}:";
+    $request->{'open'} .= ":$request->{id}:";
     }
 
     # The above system can lead to extra colons.
     $request->{'open'} =~ s/:+/:/g;
 
-    
+
     my $menu = LedgerSMB::DBObject::Menu->new({base => $request});
     $menu->generate();
     for my $item (@{$menu->{menu_items}}){
@@ -120,7 +121,7 @@ sub expanding_menu {
     }
 
     my $template = LedgerSMB::Template->new(
-         user => $request->{_user}, 
+         user => $request->{_user},
          locale => $request->{_locale},
          path => 'UI/menu',
          template => 'expanding',
@@ -152,7 +153,7 @@ sub drilldown_menu {
 
     $menu->generate_section;
     my $template = LedgerSMB::Template->new(
-         user => $request->{_user}, 
+         user => $request->{_user},
          locale => $request->{_locale},
          path => 'UI/menu',
          template => 'drilldown',
@@ -161,12 +162,12 @@ sub drilldown_menu {
     $template->render($menu);
 }
 
-=pod 
+=pod
 
 =head1 Copyright (C) 2007 The LedgerSMB Core Team
 
-Licensed under the GNU General Public License version 2 or later (at your 
-option).  For more information please see the included LICENSE and COPYRIGHT 
+Licensed under the GNU General Public License version 2 or later (at your
+option).  For more information please see the included LICENSE and COPYRIGHT
 files.
 
 =cut

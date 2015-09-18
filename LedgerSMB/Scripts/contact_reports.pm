@@ -11,13 +11,15 @@ This module provides AR/AP aging reports and statements for LedgerSMB.
 =cut
 
 package LedgerSMB::Scripts::contact_reports;
-our $VERSION = '1.0';
 
 use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Report::Contact::Search;
 use LedgerSMB::Report::Contact::History;
 use strict;
+use warnings;
+
+our $VERSION = '1.0';
 
 =over
 
