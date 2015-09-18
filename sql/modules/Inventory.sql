@@ -8,8 +8,8 @@ DECLARE out_row RECORD;
 	t_parts_id int;
         int_outrow RECORD;
 BEGIN
-	SELECT id INTO t_parts_id 
-	FROM parts 
+	SELECT id INTO t_parts_id
+	FROM parts
 	WHERE (partnumber like in_partnumber|| ' %'
 		or partnumber = in_partnumber)
 		and obsolete is not true
@@ -18,7 +18,7 @@ BEGIN
         SELECT * INTO out_row FROM parts WHERE id = t_parts_id;
 
         WITH RECURSIVE c AS (
-             SELECT 1::numeric as multiplier, t_parts_id  as part_used, 
+             SELECT 1::numeric as multiplier, t_parts_id  as part_used,
                     t_parts_id as current_part_id
              UNION ALL
              SELECT c.multiplier * a.qty, t_parts_id as part_used,
@@ -27,7 +27,7 @@ BEGIN
                JOIN c ON c.current_part_id = a.id
         )
         SELECT  sum(coalesce(c.multiplier, 1) * i.qty) * -1
-                AS onhand 
+                AS onhand
 	INTO int_outrow
         FROM parts p
 	LEFT JOIN c ON c.part_used = t_parts_id
@@ -35,7 +35,7 @@ BEGIN
 	JOIN (select id, transdate from ar
 		UNION select id, transdate from ap) a ON (i.trans_id = a.id)
 
-        WHERE (p.partnumber = in_partnumber 
+        WHERE (p.partnumber = in_partnumber
 		or p.partnumber like in_partnumber || ' %')
 		AND a.transdate <= in_transdate
                 AND assembly IS FALSE AND obsolete IS NOT TRUE

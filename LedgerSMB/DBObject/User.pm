@@ -6,15 +6,17 @@ LedgerSMB::DBObject::User - LedgerSMB User DB Objects
 
 package LedgerSMB::DBObject::User;
 
-use base qw/LedgerSMB::PGOld/;
 use strict;
+use warnings;
+
+use base qw(LedgerSMB::PGOld);
 use Log::Log4perl;
 
 use Try::Tiny;
 
 =head2 NOTES
 
-This badly needs to be rewritten and moved to later frameworks.  Planned for 
+This badly needs to be rewritten and moved to later frameworks.  Planned for
 1.5.
 
 =over
@@ -65,7 +67,7 @@ sub change_my_password {
     my $old_dbh = $self->{dbh};
 
     my $creds = LedgerSMB::Auth::get_credentials();
-  
+
     $self->{login} = $creds->{login};
     my $dbname = $self->{company};
 
@@ -75,7 +77,7 @@ sub change_my_password {
     # error string.  CT
     $self->{dbh} = DBI->connect(
         qq|dbi:Pg:dbname="$dbname"|, "$self->{login}", "$self->{old_password}", { AutoCommit => 0 }
-    ); 
+    );
     if (!$self->{dbh}){
         $self->error($self->{_locale}->text('Incorrect Password'));
     }
@@ -122,7 +124,7 @@ sub get_option_data {
     }
     closedir CSS;
 
-    $self->{printers} = [];    
+    $self->{printers} = [];
 
     if ( %{LedgerSMB::Sysconfig::printer} && ${LedgerSMB::Sysconfig::latex} ) {
         foreach my $item ( sort keys %{LedgerSMB::Sysconfig::printer} ) {
@@ -137,10 +139,10 @@ sub get_option_data {
 
 # Return codes:  0 as success, 8 as duplicate user, and 1 as general failure
 sub save {
-    
+
     my $self = shift @_;
     my $user = $self->get();
-    
+
     my $errcode;
     my ($ref) = try { $self->call_dbmethod(funcname=>'admin__save_user') }
                 catch {
@@ -157,14 +159,14 @@ sub save {
 
     ($self->{id}) = values %$ref;
     if (!$self->{id}) {
-        
+
         return 0;
     }
     return 1;
 }
 
 sub get {
-    
+
     my $self = shift @_;
     my $id = shift;
     if ($id){
@@ -182,9 +184,9 @@ sub get {
         args=>[$self->{user}->{entity_id}]
         );
     $self->{employee} = $emp;
-    my ($ent) = $self->call_procedure( 
+    my ($ent) = $self->call_procedure(
         funcname=>'entity__get',
-        args=>[ $self->{user}->{entity_id} ] 
+        args=>[ $self->{user}->{entity_id} ]
         );
     $self->{entity} = $ent;
     my @roles = $self->call_dbmethod(
@@ -209,27 +211,27 @@ sub get {
         push @rolstore, $rolname; # Only one key=>value pair
     }
     $self->{roles} = \@rolstore;
-    
+
     $self->{entity_id} = $self->{entity}->{id};
-    
+
     return $user;
 }
 
 sub remove {
-    
+
     my $self = shift;
-    
+
     my $code = $self->call_procedure(funcname=>"admin__delete_user", args=>[$self->{id}, $self->{username}]);
-    $self->{id} = undef; 
-    
+    $self->{id} = undef;
+
     return $code->[0];
 }
 
 sub save_prefs {
-    
-    my $self = shift @_; 
-    
-    my $pref_id = $self->call_procedure(funcname=>"admin__save_preferences", 
+
+    my $self = shift @_;
+
+    my $pref_id = $self->call_procedure(funcname=>"admin__save_preferences",
         args=>[
             'language',
             'stylesheet',
@@ -241,23 +243,23 @@ sub save_prefs {
 }
 
 sub get_all_users {
-    
+
     my $self = shift @_;
-    
+
     my @ret = $self->call_dbmethod( funcname=>"user__get_all_users" );
     $self->{users} = \@ret;
 }
 
 sub roles {
-    
+
     my $self = shift @_;
     my $id = shift @_;
-    
-    
+
+
 }
 
 sub save_contact {
-    
+
     my $self = shift @_;
     my $id = shift @_;
     my $class = shift @_;
@@ -266,7 +268,7 @@ sub save_contact {
     my $logger = Log::Log4perl->get_logger("LedgerSMB");
 
     if ($id) {
-        @ret = $self->call_procedure(funcname=>"person__save_contact", 
+        @ret = $self->call_procedure(funcname=>"person__save_contact",
             args=>[
                 $self->{entity}->{id},
                 $self->{contacts}->[$id]->{contact_class},
@@ -274,7 +276,7 @@ sub save_contact {
                 $contact
             ]
         );
-    } 
+    }
     else{
         @ret = $self->call_procedure(funcname=>"person__save_contact",
             args=>[

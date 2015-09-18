@@ -1,6 +1,6 @@
 --
 
--- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General 
+-- Copyright (C) 2011 LedgerSMB Core Team.  Licensed under the GNU General
 -- Public License v 2 or at your option any later version.
 
 -- Docstrings already added to this file.
@@ -14,13 +14,13 @@ CREATE OR REPLACE FUNCTION entity_save(
     DECLARE
         e entity;
         e_id int;
-        
+
     BEGIN
-    
+
         select * into e from entity where id = in_entity_id;
-        
-        update 
-            entity 
+
+        update
+            entity
         SET
             name = in_name,
             entity_class = in_entity_class
@@ -29,7 +29,7 @@ CREATE OR REPLACE FUNCTION entity_save(
         IF NOT FOUND THEN
             -- do the insert magic.
             e_id = nextval('entity_id_seq');
-            insert into entity (id, name, entity_class) values 
+            insert into entity (id, name, entity_class) values
                 (e_id,
                 in_name,
                 in_entity_class
@@ -37,7 +37,7 @@ CREATE OR REPLACE FUNCTION entity_save(
             return e_id;
         END IF;
         return in_entity_id;
-            
+
     END;
 
 $$ language 'plpgsql';
@@ -47,21 +47,21 @@ COMMENT ON FUNCTION entity_save(
 )  IS
 $$ Currently unused.  Left in because it is believed it may be helpful.
 
-This saves an entity, with the control code being the next available via the 
+This saves an entity, with the control code being the next available via the
 defaults table.$$;
 
 CREATE OR REPLACE FUNCTION entity__list_classes ()
 RETURNS SETOF entity_class AS $$
 DECLARE out_row entity_class;
 BEGIN
-	FOR out_row IN 
+	FOR out_row IN
 		SELECT * FROM entity_class
              LEFT JOIN defaults ON setting_key = 'roll_prefix'
-		WHERE active and pg_has_role(SESSION_USER, 
-                                     coalesce(defaults.value, 
+		WHERE active and pg_has_role(SESSION_USER,
+                                     coalesce(defaults.value,
                                      lsmb__role_prefix() ||
                                      'contact_class_' ||
-                                     lower(regexp_replace(class, ' ', '_'))), 
+                                     lower(regexp_replace(class, ' ', '_'))),
                                      'USAGE')
 		ORDER BY id
 	LOOP
@@ -118,7 +118,7 @@ COMMENT ON FUNCTION eca__get_entity (
     in_credit_id int
 )  IS
 $$ Returns a set of (only one) entity to which the entity credit account is
-attached.$$; 
+attached.$$;
 
 CREATE OR REPLACE FUNCTION entity__get_bank_account(in_id int)
 RETURNS entity_bank_account

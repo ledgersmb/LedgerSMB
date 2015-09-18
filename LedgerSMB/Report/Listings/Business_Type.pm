@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Report::Listings::Business_Type - List the Business Types in 
+LedgerSMB::Report::Listings::Business_Type - List the Business Types in
 LedgerSMB
 
 =head1 SYNPOPSIS
@@ -74,7 +74,7 @@ sub name {
 
 =back
 
-=head1 METHODS 
+=head1 METHODS
 
 =head2 run_report()
 
@@ -102,3 +102,5 @@ later version.  Please see included LICENSE.TXT for details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

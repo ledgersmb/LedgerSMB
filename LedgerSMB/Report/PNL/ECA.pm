@@ -9,11 +9,11 @@ LedgerSMB::Report::PNL::ECA - Income Statement-like Reports for Customers
 
 =head1 DESCRIPTION
 
-This provides the income statement-like report for customers on LedgerSMB 1.4 
+This provides the income statement-like report for customers on LedgerSMB 1.4
 and higher.  The format is identical to that of an income statement and allows
 businesses to address the profitability of specific customer accounts.
 
-This can also be run against vendors, but it will only show purchases of 
+This can also be run against vendors, but it will only show purchases of
 services and other non-inventory purchases.  Inventory purchases will not show
 up since they are treated as an expense only on sale.
 
@@ -29,7 +29,7 @@ Standard dates plus
 
 =over
 
-=item id 
+=item id
 
 This is the id of the customer account.
 
@@ -37,13 +37,13 @@ This is the id of the customer account.
 
 has id => (is => 'rw', isa =>'Int');
 
-=item legal_name 
+=item legal_name
 
 Name of the customer
 
 =cut
 
-has 'legal_name' => (is => 'rw', isa =>'Str'); 
+has 'legal_name' => (is => 'rw', isa =>'Str');
 
 =item meta_number
 

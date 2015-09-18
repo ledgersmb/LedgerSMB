@@ -98,7 +98,7 @@ sub render {
     );
     $template->render($datahash);
 }
-    
+
 
 =back
 

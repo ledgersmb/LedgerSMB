@@ -9,7 +9,7 @@ menu.
 
 =head1 COPYRIGHT
 
-Copyright (c) 2007 The LedgerSMB Core Team.  Licensed under the GNU General 
+Copyright (c) 2007 The LedgerSMB Core Team.  Licensed under the GNU General
 Public License version 2 or at your option any later version.  Please see the
 included COPYRIGHT and LICENSE files for more information.
 
@@ -17,8 +17,10 @@ included COPYRIGHT and LICENSE files for more information.
 
 package LedgerSMB::DBObject::Menu;
 
-use base(qw(LedgerSMB::PGOld));
-1;
+use strict;
+use warnings;
+
+use base qw(LedgerSMB::PGOld);
 
 =head1 METHODS
 
@@ -31,8 +33,8 @@ Inherited from LedgerSMB::DBObject.  Please see that documnetation for details.
 =item generate()
 
 This function returns a list of menu items.  Each list item is a hashref:
-keys %menu_item would return the equivalent of qw(position id level label path 
-args).  Returns the complete list and sets $menu->{menu_items} to a referene to 
+keys %menu_item would return the equivalent of qw(position id level label path
+args).  Returns the complete list and sets $menu->{menu_items} to a referene to
 th result set, This function does not return an entry for the top-level menu.
 
 =cut
@@ -48,7 +50,7 @@ sub generate {
 
 =item generate_section()
 
-This class acts like Menu::Generate except it returns only a cross-section of 
+This class acts like Menu::Generate except it returns only a cross-section of
 the menu.  Basically it returns all nodes which are direct children below
 $object->{parent_id}.
 
@@ -65,7 +67,7 @@ sub generate_section {
 
 =item will_expire_soon()
 
-This method returns true if the user's password will expire soon 
+This method returns true if the user's password will expire soon
 (within the next week).
 
 =cut
@@ -88,23 +90,24 @@ sub __generate {
     shift @{$self->{menu_items}};
 
     for my $attribute (@{$self->{menu_items}}){
-        
-	for (@{$attribute->{args}}){
+
+    for (@{$attribute->{args}}){
             if ($_ =~ /(module|menu|action)=/){
-               @elems = split(/=/, $_);
+               my @elems = split(/=/, $_);
                $attribute->{$elems[0]} = $elems[1];
             }
         }
     }
 }
 
+1;
+
 =back
 
 =head1 Copyright (C) 2007-2014 The LedgerSMB Core Team
 
-Licensed under the GNU General Public License version 2 or later (at your 
-option).  For more information please see the included LICENSE and COPYRIGHT 
+Licensed under the GNU General Public License version 2 or later (at your
+option).  For more information please see the included LICENSE and COPYRIGHT
 files.
 
-=cut
 

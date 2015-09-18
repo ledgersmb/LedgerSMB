@@ -21,7 +21,7 @@ CREATE TYPE order_search_line AS (
     shippingpoint text,
     exchangerate numeric,
     shipvia text,
-    employee text, 
+    employee text,
     manager text,
     curr char(3),
     ponumber text,
@@ -29,9 +29,9 @@ CREATE TYPE order_search_line AS (
     entity_id int
 );
 
-CREATE OR REPLACE FUNCTION order__search 
+CREATE OR REPLACE FUNCTION order__search
 (in_oe_class_id int, in_meta_number text, in_legal_name text, in_ponumber text,
- in_ordnumber text, in_open bool, in_closed bool, in_shipvia text, 
+ in_ordnumber text, in_open bool, in_closed bool, in_shipvia text,
  in_description text, in_date_from date, in_date_to date, in_shippable bool,
  in_buisness_units int[])
 RETURNS SETOF order_search_line
@@ -42,16 +42,16 @@ DECLARE retval order_search_line;
 BEGIN
 
 FOR retval IN
-       SELECT o.id, 
+       SELECT o.id,
               CASE WHEN oe_class_id IN (1, 2) THEN o.ordnumber
                    WHEN oe_class_id IN (3, 4) THEN o.quonumber
                    ELSE NULL
                END as ordnumber, o.transdate, o.reqdate,
-              o.amount, c.name, o.netamount, 
+              o.amount, c.name, o.netamount,
               o.entity_credit_account, o.closed, o.quonumber, o.shippingpoint,
               CASE WHEN ct.entity_class = 2 THEN ex.buy ELSE ex.sell END
-              AS exchangerate, o.shipvia, pe.first_name || ' ' || pe.last_name 
-              AS employee, pm.first_name || ' ' || pm.last_name AS manager, 
+              AS exchangerate, o.shipvia, pe.first_name || ' ' || pe.last_name
+              AS employee, pm.first_name || ' ' || pm.last_name AS manager,
               o.curr, o.ponumber, ct.meta_number, c.id
          FROM oe o
          JOIN entity_credit_account ct ON (o.entity_credit_account = ct.id)
@@ -60,35 +60,35 @@ FOR retval IN
     LEFT JOIN entity_employee e ON (pe.entity_id = e.entity_id)
     LEFT JOIN person pm ON (e.manager_id = pm.id)
     LEFT JOIN entity_employee m ON (pm.entity_id = m.entity_id)
-    LEFT JOIN exchangerate ex 
+    LEFT JOIN exchangerate ex
               ON (ex.curr = o.curr AND ex.transdate = o.transdate)
         WHERE o.oe_class_id = in_oe_class_id
-             AND (in_meta_number IS NULL 
+             AND (in_meta_number IS NULL
                    or ct.meta_number ILIKE in_meta_number || '%')
              AND (in_legal_name IS NULL OR
                      c.name @@ plainto_tsquery(in_legal_name))
              AND (in_ponumber IS NULL OR o.ponumber ILIKE in_ponumber || '%')
-            AND (in_ordnumber IS NULL 
+            AND (in_ordnumber IS NULL
                      OR o.ordnumber ILIKE in_ordnumber || '%')
              AND ((in_open is true and o.closed is false)
                  OR (in_closed is true and o.closed is true))
-             AND (in_shipvia IS NULL 
+             AND (in_shipvia IS NULL
                       OR o.shipvia @@ plainto_tsquery(in_shipvia))
              AND (in_description IS NULL AND in_shippable IS NULL OR
-                     EXISTS (SELECT 1 
-                               FROM orderitems oi 
+                     EXISTS (SELECT 1
+                               FROM orderitems oi
                                JOIN parts p ON p.id = oi.parts_id
                               WHERE trans_id = o.id
-                                    AND (in_description IS NULL OR 
-                                        oi.description 
+                                    AND (in_description IS NULL OR
+                                        oi.description
                                         @@ plainto_tsquery(in_description))
                                     AND (in_shippable IS NULL OR
-                                         p.assembly OR 
+                                         p.assembly OR
                                          p.inventory_accno_id IS NOT NULL))
                  )
              AND (in_date_from IS NULL OR o.transdate >= in_date_from)
              AND (in_date_to IS NULL OR o.transdate <= in_date_to)
-                                    
+
 LOOP
    RETURN NEXT retval;
 END LOOP;
@@ -108,15 +108,15 @@ DECLARE retval oe;
         my_person_id int;
 BEGIN
 
-SELECT id INTO my_person_id 
-  FROM person 
+SELECT id INTO my_person_id
+  FROM person
  WHERE entity_id = person__get_my_entity_id();
 
 settings := ARRAY['sonumber', 'ponumber', 'sqnumber', 'rfqnumber'];
 ids := array[]::int[];
 
--- This approach of looping through insert/select operations will break down 
--- if overly complex order consolidation jobs are run (think, hundreds of 
+-- This approach of looping through insert/select operations will break down
+-- if overly complex order consolidation jobs are run (think, hundreds of
 -- combined orders in the *output*
 --
 -- The tradeoff is that if we address the huge complex runs here, then we have
@@ -133,10 +133,10 @@ LOOP
 INSERT INTO oe
        (ordnumber, transdate,   amount,        netamount,
         reqdate,   taxincluded, shippingpoint, notes,
-        curr,      person_id,   closed,        quotation, 
+        curr,      person_id,   closed,        quotation,
         quonumber, intnotes,    shipvia,       language_code,
         ponumber,  terms,       oe_class_id,   entity_credit_account)
-SELECT CASE WHEN oe_class_id IN (1, 2) 
+SELECT CASE WHEN oe_class_id IN (1, 2)
             THEN setting_increment(settings[oe_class_id])
             ELSE NULL
         END,          now()::date,        sum(amount),        sum(netamount),
@@ -147,7 +147,7 @@ SELECT CASE WHEN oe_class_id IN (1, 2)
             ELSE NULL
         END,          NULL,      NULL,          NULL,
         null,       min(terms),  oe_class_id,  entity_credit_account
-  FROM oe 
+  FROM oe
  WHERE id = any (in_ids)
        AND taxincluded = loop_info.taxincluded
        AND entity_credit_account = loop_info.entity_credit_account

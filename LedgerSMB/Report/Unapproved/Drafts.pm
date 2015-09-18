@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Report::Unapproved::Drafts - Unapproved Drafts (single 
+LedgerSMB::Report::Unapproved::Drafts - Unapproved Drafts (single
 transactions) in LedgerSMB
 
 =head1 SYNPOSIS
@@ -12,7 +12,7 @@ transactions) in LedgerSMB
 =head1 DESCRIPTION
 
 This provides an ability to search for (and approve or delete) pending
-transactions.  
+transactions.
 
 =head1 INHERITS
 
@@ -193,7 +193,7 @@ has 'amount_lt' => (is => 'rw', coerce => 1, isa =>'LedgerSMB::Moose::Number');
 
 =over
 
-=item set_buttons 
+=item set_buttons
 
 =cut
 
@@ -201,10 +201,10 @@ sub set_buttons {
 return [
       {name => 'action',
        type => 'submit',
-       text => LedgerSMB::Report::text('Approve'), 
+       text => LedgerSMB::Report::text('Approve'),
       value => 'approve',
       class => 'submit', },
-    
+
       {name => 'action',
        type => 'submit',
        text => LedgerSMB::Report::text('Delete'),

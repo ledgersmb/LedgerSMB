@@ -7,8 +7,8 @@ functions, template instantiation and rendering for inventory management.
 
 =head1 SYOPSIS
 
-This module is the UI controller for the customer DB access; it provides the 
-View interface, as well as defines the Save customer. 
+This module is the UI controller for the customer DB access; it provides the
+View interface, as well as defines the Save customer.
 Save customer will update or create as needed.
 
 
@@ -16,6 +16,9 @@ Save customer will update or create as needed.
 
 =cut
 package LedgerSMB::Scripts::inventory;
+
+use strict;
+use warnings;
 
 use LedgerSMB::Template;
 use LedgerSMB::Inventory::Adjust;
@@ -35,11 +38,11 @@ This entry point specifies the screen for setting up an inventory adjustment.
 
 sub begin_adjust {
     my ($request) = @_;
-    my $template = LedgerSMB::Template->new( 
-	user => $request->{_user}, 
-    	template => 'adjustment_setup', 
-	locale => $request->{_locale},
-	path => 'UI/inventory',
+    my $template = LedgerSMB::Template->new(
+    user => $request->{_user},
+        template => 'adjustment_setup',
+    locale => $request->{_locale},
+    path => 'UI/inventory',
         format => 'HTML'
     );
     $template->render($request);
@@ -54,10 +57,10 @@ This entry point specifies the screen for entering an inventory adjustment.
 sub enter_adjust {
     my ($request) = @_;
     my $template = LedgerSMB::Template->new(
-	user => $request->{_user}, 
-    	template => 'adjustment_entry', 
-	locale => $request->{_locale},
-	path => 'UI/inventory',
+    user => $request->{_user},
+        template => 'adjustment_entry',
+    locale => $request->{_locale},
+    path => 'UI/inventory',
         format => 'HTML'
     );
     $template->render($request);
@@ -78,14 +81,14 @@ sub adjustment_next {
     for my $i (1 .. $request->{rowcount}){
         if ($request->{"id_$i"} eq "new" or !$request->{"id_$i"}){
             my $item = $adjustment->get_part_at_date(
-		$request->{transdate}, $request->{"partnumber_$i"});
+        $request->{transdate}, $request->{"partnumber_$i"});
             $request->{"id_$i"} = $item->{id};
             $request->{"description_$i"} = $item->{description};
             $request->{"onhand_$i"} = $item->{onhand};
         }
         $request->{"counted_$i"} ||= 0;
-        $request->{"qty_$i"} = $request->{"onhand_$i"} 
-		- $request->{"counted_$i"}; 
+        $request->{"qty_$i"} = $request->{"onhand_$i"}
+        - $request->{"counted_$i"};
     }
     ++$request->{rowcount};
     enter_adjust($request);
@@ -104,7 +107,7 @@ sub adjustment_save {
     $adjustment->lines_from_form($request);
     $adjustment->save;
     begin_adjust($request);
-} 
+}
 
 =item adjustment_list
 

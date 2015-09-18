@@ -5,7 +5,7 @@ begin;
 -- From: Daniele Giacomini <daniele@swlibero.org>
 -- 13 ottobre  2003
 -- 05 novembre 2003
--- 
+--
 -- Il codice GIFI viene usato per rappresentare il codice corrispondente
 -- al bilancio riclassificato, come da codice civile, art. 2424.
 -- Il codice in questione e' rappresentato separando i vari elementi
@@ -260,7 +260,7 @@ INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '22
 -- update defaults
 --
 
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', 
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',
 	(select id from chart where accno = '105001'));
 INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '541001'));
 INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '645001'));

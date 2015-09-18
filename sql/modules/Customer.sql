@@ -3,7 +3,7 @@ begin;
 
 CREATE OR REPLACE FUNCTION customer_location_save (
     in_entity_id int,
-    in_location_class int, in_line_one text, in_line_two text, 
+    in_location_class int, in_line_one text, in_line_two text,
     in_line_three text,
     in_city TEXT, in_state text, in_mail_code text, in_country_id int
 ) returns int AS $$

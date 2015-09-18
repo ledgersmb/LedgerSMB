@@ -8,7 +8,7 @@ LedgerSMB::DBObject::TaxForm - Includes methods for saving and retrieving tax fo
 
 This module includes methods for saving and retrieving tax forms, and running
 reports.  The tax forms are for reporting purchases or sales to tax bodies, and
-as of 1.3.0, the only tax forms officially included are those of the 1099-MISC 
+as of 1.3.0, the only tax forms officially included are those of the 1099-MISC
 and 1099-INT forms of the USA.
 
 Currently there is no abstraction layer to allow replacing the various reports
@@ -26,6 +26,7 @@ package LedgerSMB::DBObject::TaxForm;
 use base qw(LedgerSMB::PGOld);
 
 use strict;
+use warnings;
 
 =item save
 Saves the tax form. Inputs are:
@@ -48,13 +49,13 @@ an abstraction layer.
 
 =cut
 
-sub save 
+sub save
 {
-  
+
     my ($self) = shift @_;
     my ($ref) = $self->call_dbmethod(funcname => 'tax_form__save');
     $self->{taxform_id} = $ref->{'tax_form__save'};
-  
+
 }
 
 =item get($id)
@@ -77,7 +78,7 @@ ID of country attached to tax form
 
 =cut
 
-sub get 
+sub get
 {
     my ($self, $id) = @_;
 
@@ -89,11 +90,11 @@ sub get
 
 =item get_full_list
 
-No inputs required.  Provides a list of hashrefs (and attaches them to the 
+No inputs required.  Provides a list of hashrefs (and attaches them to the
 form property of the object hashref).
 
 Each hashref has the same properties as are set by get($id) above, but also
-includes country_name which is the full name of the country (eg, 'United 
+includes country_name which is the full name of the country (eg, 'United
 States').
 
 Default ordering is by country name and then by tax form name.
@@ -103,7 +104,7 @@ Default ordering is by country name and then by tax form name.
 sub get_full_list
 {
     my ($self) = @_;
-    
+
     @{$self->{forms}} = $self->call_dbmethod(
                 funcname => 'tax_form__list_ext',
     );
@@ -123,7 +124,7 @@ then tax form id.
 sub get_forms
 {
     my ($self) = @_;
-    
+
     @{$self->{forms}} = $self->call_dbmethod(
                 funcname => 'tax_form__list_all',
     );
@@ -166,7 +167,7 @@ sub get_metadata
 
 =head1 COPYRIGHT
 
-Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

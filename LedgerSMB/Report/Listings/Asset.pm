@@ -61,7 +61,7 @@ has salvage_value   => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
 
 =over
 
-=item tag 
+=item tag
 
 =item description
 
@@ -99,7 +99,7 @@ sub columns {
 
 =head2 header_lines
 
-=over 
+=over
 
 =item tag
 
@@ -150,10 +150,12 @@ sub run_report {
 
 Copyright (C) 2014 The LedgerSMB Core Team
 
-This file may be re-used under the terms of the GNU General Public License 
-version 2 or at your option any later version.  Please see the included 
+This file may be re-used under the terms of the GNU General Public License
+version 2 or at your option any later version.  Please see the included
 LICENSE.txt for details
 
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

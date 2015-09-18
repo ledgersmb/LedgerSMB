@@ -1,4 +1,4 @@
-=head1 NAME 
+=head1 NAME
 
 LedgerSMB::Payroll::Income_Types - Income Types Searches for LedgerSMB
 
@@ -108,7 +108,7 @@ has unit => (is => 'ro', isa => 'Str', required => '0');
 
 =over
 
-=item run_report 
+=item run_report
 
 =cut
 

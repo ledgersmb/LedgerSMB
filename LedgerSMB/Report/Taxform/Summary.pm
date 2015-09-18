@@ -1,6 +1,6 @@
-=head1 NAME 
+=head1 NAME
 
-LedgerSMB::Report::Taxform::Summary - Summary reports for 1099 and similar 
+LedgerSMB::Report::Taxform::Summary - Summary reports for 1099 and similar
 forms for LedgerSMB
 
 =head1 SYNPOSIS
@@ -19,12 +19,12 @@ with 'LedgerSMB::Report::Dates';
 =head1 DESCRIPTION
 
 Taxforms are used to handle VAT reporting in Europe and 1099 reporting in the
-US.  These can be set up to do accrual or cash basis reporting (different 
+US.  These can be set up to do accrual or cash basis reporting (different
 countries have different requirements).
 
-This particular report shows the summary for a vendor over a given period of 
+This particular report shows the summary for a vendor over a given period of
 time.  The numbers are broken up into transactions and with inventory.  Although
-this usually has no significance regarding tax reporting, it is helpful for 
+this usually has no significance regarding tax reporting, it is helpful for
 internally revieing the numbers for accuracy.
 
 =head1 CRITERIA PROPERTIES
@@ -141,11 +141,11 @@ sub run_report {
     $fname .= '_accrual' if $tf->{is_accrual};
     my @rows = $self->call_dbmethod(funcname => $fname);
 
-    my $href_suffix_base = 'from_date=' . $self->from_date 
+    my $href_suffix_base = 'from_date=' . $self->from_date
                          . '&to_date=' . $self->to_date
                          . '&tax_form_id=' . $self->tax_form_id;
     for my $row(@rows){
-       $row->{total_href_suffix} = $href_suffix_base 
+       $row->{total_href_suffix} = $href_suffix_base
                                  . '&meta_number=' . $row->{meta_number};
        $row->{total} = $row->{acc_total} + $row->{invoice_total};
     }
@@ -155,10 +155,12 @@ sub run_report {
 =head1 COPYRIGHT
 
 COPYRIGHT(C) 2013 The LedgerSMB Core Team.  This file may be used under the
-terms of the GNU General Public License version 2 or at your option any later 
+terms of the GNU General Public License version 2 or at your option any later
 version.  Please see the LICENSE.TXT that came with this software for more
 details.
 
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

@@ -557,7 +557,7 @@ SELECT account__save(NULL,'3315','Övrig ryttarutbildn','I','400', NULL, false, 
 SELECT account__save(NULL,'3316','Tillridn av hästar ','I','400', NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
 SELECT account__save(NULL,'3317','Inkörning av hästar','I','', NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
 SELECT account__save(NULL,'3319','Övrig hästutbildni','I','400', NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
-SELECT account_heading_save(NULL,'34','Förs.momsfria tj.', NULL); 
+SELECT account_heading_save(NULL,'34','Förs.momsfria tj.', NULL);
 SELECT account_heading_save(NULL,'340','Sång och kultur ', NULL);
 SELECT account__save(NULL,'3400','Sångframträdanden ','I','400', NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
 SELECT account__save(NULL,'3401','Musikframträdanden','I','400', NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);

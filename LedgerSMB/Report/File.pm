@@ -17,7 +17,7 @@ with 'LedgerSMB::I18N';
 =head1 DESCRIPTION
 
 This role adds a consistent handling of file query inputs.  The basic criteria
-are lazy and can be set by functions overridden by the reporting class or 
+are lazy and can be set by functions overridden by the reporting class or
 provided in the constructor.
 
 =head1 PROPERTIES ADDED
@@ -28,7 +28,7 @@ Builder is _set_ref_key
 
 =cut
 
-has ref_key => (is => 'ro', lazy => '1', builder => '_set_ref_key', 
+has ref_key => (is => 'ro', lazy => '1', builder => '_set_ref_key',
                isa => 'Int');
 
 sub _set_ref_key {
@@ -41,7 +41,7 @@ builder is _set_file_class
 
 =cut
 
-has file_class => (is => 'ro', lazy => '1', builder => '_set_file_class', 
+has file_class => (is => 'ro', lazy => '1', builder => '_set_file_class',
                    isa => 'Int');
 
 sub _set_file_class {
@@ -87,7 +87,7 @@ sub list_links {
 Copyright (C) 2014 The LedgerSMB Core Team.
 
 This file may be reused under the terms of the GNU General Public License
-version 2, or at your option, any later version.  Please see the included 
+version 2, or at your option, any later version.  Please see the included
 LICENSE.txt for details.
 
 =cut

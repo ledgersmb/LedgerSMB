@@ -26,9 +26,9 @@ Effective date of report
 
 ID of GL transaction if applicable and approved.
 
-=item asset_class bigint 
+=item asset_class bigint
 
-ID of asset class for the report the assets are 
+ID of asset class for the report the assets are
 
 =item report_class int
 
@@ -50,7 +50,7 @@ Timestamp the report was created
 
 Timestamp the report was approved
 
-=item depreciated_qty 
+=item depreciated_qty
 
 Number of units (production or time) depreciated
 
@@ -73,6 +73,7 @@ If true, submitted for approval
 
 use base qw(LedgerSMB::PGOld);
 use strict;
+use warnings;
 
 =item save
 
@@ -105,8 +106,8 @@ sub save {
            if ($self->{"asset_$i"} == 1){
               my $id = $self->{"id_$i"};
               $self->call_procedure(funcname => 'asset_report__dispose',
-                               args => [$ref->{id}, 
-                                        $id, 
+                               args => [$ref->{id},
+                                        $id,
                                         $self->{"amount_$id"},
                                         $self->{"dm_$id"},
                                         $self->{"percent_$id"}]);
@@ -146,7 +147,7 @@ sub get {
 
 Properties used:
 
-* report_id int:  Report to enter the transactions into, 
+* report_id int:  Report to enter the transactions into,
 * accum_account_id int:  ID for accumulated depreciation.
 
 =cut
@@ -173,7 +174,7 @@ For depreciation accounts, expense_acct must be set.
 
 For disposal accounts, gain_acct and loss_acct must be set.
 
-Approves the referenced transaction and creates a GL draft (which must then be 
+Approves the referenced transaction and creates a GL draft (which must then be
 approved.
 
 =cut

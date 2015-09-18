@@ -4,7 +4,7 @@ LedgerSMB::Session
 
 =head1 SYNOPSIS
 
-Routines for tracking general session actions (create, check, and destroy 
+Routines for tracking general session actions (create, check, and destroy
 sessions).
 
 =head1 METHODS
@@ -20,12 +20,14 @@ use Log::Log4perl;
 use LedgerSMB::Auth;
 use CGI::Simple;
 use strict;
+use warnings;
+
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
 =item check
 
-Checks to see if a session exists based on current logged in credentials. 
+Checks to see if a session exists based on current logged in credentials.
 
 Handles failure by creating a new session, since credentials are now separate.
 
@@ -42,7 +44,7 @@ sub check {
     }
     my $timeout;
 
-    
+
     my $dbh = $form->{dbh};
 
     my $checkQuery = $dbh->prepare(
@@ -73,7 +75,7 @@ sub check {
     $sessionValid = $sessionValid->{session_id};
 
     if ($sessionValid) {
-       
+
 
 
         my $login = $form->{login};
@@ -116,7 +118,7 @@ sub check {
 
 =item create
 
-Creates a new session, sets $lsmb->{session_id} to that session, sets cookies, 
+Creates a new session, sets $lsmb->{session_id} to that session, sets cookies,
 etc.
 
 =cut
@@ -148,7 +150,7 @@ sub create {
 
     # TODO Change this to use %myconfig
     my $deleteExisting = $dbh->prepare(
-        "DELETE 
+        "DELETE
            FROM session
           WHERE session.users_id = (select id from users where username = ?)"
     );
@@ -158,7 +160,7 @@ sub create {
       $dbh->prepare("SELECT nextval('session_session_id_seq'), md5(random()::text);");
 
     my $createNew = $dbh->prepare(
-        "INSERT INTO session (session_id, users_id, token) 
+        "INSERT INTO session (session_id, users_id, token)
                                         VALUES(?, (SELECT id
                                                      FROM users
                                                     WHERE username = SESSION_USER), ?);"
@@ -175,7 +177,7 @@ sub create {
     }
 
 # this is assuming that the login is safe, which might be a bad assumption
-# so, I'm going to remove some chars, which might make previously valid 
+# so, I'm going to remove some chars, which might make previously valid
 # logins invalid --CM
 
 # I am changing this to use HTTP Basic Auth credentials for now.  -- CT
@@ -192,10 +194,10 @@ sub create {
         __FILE__ . ':' . __LINE__ . ': Delete from session: ' . $DBI::errstr);
 
 #doing the random stuff in the db so that LedgerSMB won't
-#require a good random generator - maybe this should be reviewed, 
+#require a good random generator - maybe this should be reviewed,
 #pgsql's isn't great either  -CM
 #
-#I think we should be OK.  The random number generator is only a small part 
+#I think we should be OK.  The random number generator is only a small part
 #of the credentials in 1.3.x, and for people that need greater security, there
 #is always Kerberos....  -- CT
     $fetchSequence->execute()
@@ -215,8 +217,8 @@ sub create {
         __FILE__ . ':' . __LINE__ . ': Reseed random generator: ' );
 
 
-    my $newCookieValue = $newSessionID . ':' . $newToken . ':' 
-	. $lsmb->{company};
+    my $newCookieValue = $newSessionID . ':' . $newToken . ':'
+    . $lsmb->{company};
 
     #now set the cookie in the browser
     #TODO set domain from ENV, also set path to install path
@@ -247,7 +249,7 @@ sub destroy {
     my $dbh = $form->{dbh};
 
     my $deleteExisting = $dbh->prepare( "
-        DELETE FROM session 
+        DELETE FROM session
                WHERE users_id = (select id from users where username = ?)
     " );
 
@@ -260,7 +262,7 @@ sub destroy {
          $secure = ' Secure;';
     }
     print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=::$form->{company}; path=$path;$secure\n|;
-    $dbh->commit; # called before anything else on the page, make sure the 
+    $dbh->commit; # called before anything else on the page, make sure the
                   # session is really gone.  -CT
 }
 
@@ -273,7 +275,7 @@ sub destroy {
 
 # Small Medium Business Accounting software
 # http://www.ledgersmb.org/
-# 
+#
 #
 # Copyright (C) 2006-2011
 # This work contains copyrighted information from a number of sources all used

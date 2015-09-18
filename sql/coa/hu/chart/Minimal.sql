@@ -1,5 +1,5 @@
 begin;
---Hungarian chart of accounts 
+--Hungarian chart of accounts
 -- Magyar fõkönyvi számlák, minimális, bővíthető igény szerint
 --
 SELECT account_heading_save(NULL, '1', 'BEFEKTETETT ESZKÖZÖK', NULL);
@@ -54,16 +54,16 @@ INSERT INTO defaults (setting_key, value) VALUES ('curr', 'HUF:EUR:USD');
 INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 
 UPDATE defaults SET value = 'K000000'    WHERE setting_key = 'glnumber';
-UPDATE defaults SET value = 'VSZ10000'   WHERE setting_key = 'sinumber';  
-UPDATE defaults SET value = 'SSZ10000'   WHERE setting_key = 'vinumber';  
-UPDATE defaults SET value = 'SR10000'    WHERE setting_key = 'ponumber';  
-UPDATE defaults SET value = 'VR10000'    WHERE setting_key = 'sonumber';  
-UPDATE defaults SET value = 'VA10000'    WHERE setting_key = 'sqnumber';  
-UPDATE defaults SET value = 'SA10000'    WHERE setting_key = 'rfqnumber';  
-UPDATE defaults SET value = 'ALK0000'    WHERE setting_key = 'employeenumber';  
-UPDATE defaults SET value = 'V100000'    WHERE setting_key = 'customernumber';  
-UPDATE defaults SET value = 'S100000'    WHERE setting_key = 'vendornumber';  
-UPDATE defaults SET value = 'P100000'    WHERE setting_key = 'projectnumber';  
+UPDATE defaults SET value = 'VSZ10000'   WHERE setting_key = 'sinumber';
+UPDATE defaults SET value = 'SSZ10000'   WHERE setting_key = 'vinumber';
+UPDATE defaults SET value = 'SR10000'    WHERE setting_key = 'ponumber';
+UPDATE defaults SET value = 'VR10000'    WHERE setting_key = 'sonumber';
+UPDATE defaults SET value = 'VA10000'    WHERE setting_key = 'sqnumber';
+UPDATE defaults SET value = 'SA10000'    WHERE setting_key = 'rfqnumber';
+UPDATE defaults SET value = 'ALK0000'    WHERE setting_key = 'employeenumber';
+UPDATE defaults SET value = 'V100000'    WHERE setting_key = 'customernumber';
+UPDATE defaults SET value = 'S100000'    WHERE setting_key = 'vendornumber';
+UPDATE defaults SET value = 'P100000'    WHERE setting_key = 'projectnumber';
 
 commit;
 UPDATE account

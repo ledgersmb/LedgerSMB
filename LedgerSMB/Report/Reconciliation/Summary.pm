@@ -18,7 +18,7 @@ with "LedgerSMB::Report::Dates";
 
 =head1 DESCRIPTION
 
-This report allows for searching reconciliation reports.  The reports are then 
+This report allows for searching reconciliation reports.  The reports are then
 accessed by clicking on the hyperlinks and can be then approved or denied.
 
 LedgerSMB follows a two-stage bank reconciliation process.  In the first stage,
@@ -42,7 +42,7 @@ Only show reports where the amount is greater or equal to this
 
 =cut
 
-has amount_from => (is => 'ro', isa => 'LedgerSMB::Moose::Number', 
+has amount_from => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
               required => 0, coerce => 1);
 
 =item amount_to
@@ -51,10 +51,10 @@ Only show reports where the amount is less than or equal to this
 
 =cut
 
-has amount_to => (is => 'ro', isa => 'LedgerSMB::Moose::Number', required => 0, 
+has amount_to => (is => 'ro', isa => 'LedgerSMB::Moose::Number', required => 0,
               coerce => 1);
 
-=item account_id 
+=item account_id
 
 Show repoirts only for this specific account
 
@@ -64,7 +64,7 @@ has account_id => (is => 'ro', isa => 'Int', required => 0);
 
 =item approved
 
-If undef, show all reports, if true, show approved ones and if false show 
+If undef, show all reports, if true, show approved ones and if false show
 unapproved ones.
 
 =cut
@@ -107,7 +107,7 @@ The bank statement total.
 
 0 for not, 1 for approved
 
-=item submitted 
+=item submitted
 
 0 for not, 1 for approved
 
@@ -156,7 +156,7 @@ sub columns {
           ];
 }
 
-             
+
 
 =back
 
@@ -171,7 +171,7 @@ sub columns {
 =cut
 
 sub header_lines {
-    return [{name => 'date_from',  
+    return [{name => 'date_from',
              text => LedgerSMB::Report::text('From Date')},
             {name => 'date_to',
              text => LedgerSMB::Report::text('To Date') },
@@ -224,3 +224,5 @@ later version.  Please see enclosed LICENSE file for details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

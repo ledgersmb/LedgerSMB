@@ -10,7 +10,7 @@ LedgerSMB::Report::co::Balance_y_Mayor - Colombian Balance/Ledger Rpt
 
 =head1 DESCRIPTION
 
-This module provides Balance y Mayor reports for LedgerSMB to Colombian 
+This module provides Balance y Mayor reports for LedgerSMB to Colombian
 standards. This report shows total activity over a time period.
 
 =head1 INHERITS

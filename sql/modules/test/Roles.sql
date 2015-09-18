@@ -1,10 +1,10 @@
 BEGIN;
 \i Base.sql
 
--- This function is vulnerable to SQL injection but it is transient for the 
+-- This function is vulnerable to SQL injection but it is transient for the
 -- purposes of these test cases. In particular it is intended only to ensure
 -- that basic permissions are tested.
--- 
+--
 -- IT IS THE RESPONSIBILITY OF TEST CASE AUTHORS TO ENSURE THAT THE USAGE OF
 -- THIS FUNCTION IS SAFE.
 CREATE OR REPLACE FUNCTION test__has_select_permission
@@ -17,7 +17,7 @@ BEGIN
    RESET SESSION AUTHORIZATION;
    RETURN TRUE;
 EXCEPTION
-   WHEN insufficient_privilege THEN 
+   WHEN insufficient_privilege THEN
        RESET SESSION AUTHORIZATION;
        RETURN FALSE;
 END;
@@ -33,30 +33,30 @@ SELECT 'budget_view can read budget_info',
              test__has_select_permission('budget_view', 'budget_line');
 
 INSERT INTO test_result (test_name, success)
-SELECT 'file_read can read file_base', 
+SELECT 'file_read can read file_base',
         test__has_select_permission('file_read', 'file_base');
 
 INSERT INTO test_result (test_name, success)
-SELECT 'file_read can read file_links', 
+SELECT 'file_read can read file_links',
         test__has_select_permission('file_read', 'file_links');
 
 INSERT INTO test_result (test_name, success)
-SELECT 'file_read can read file_secondary_transaction', 
+SELECT 'file_read can read file_secondary_transaction',
         test__has_select_permission('file_read', 'file_secondary_attachment');
 
 INSERT INTO test_result (test_name, success)
-SELECT 'file_read can read file_order', 
+SELECT 'file_read can read file_order',
         test__has_select_permission('file_read', 'file_order');
 
 INSERT INTO test_result (test_name, success)
-SELECT 'file_read can read file_part', 
+SELECT 'file_read can read file_part',
         test__has_select_permission('file_read', 'file_part');
 
 INSERT INTO test_result(test_name, success)
-SELECT 'contact_read can read ' || t, 
+SELECT 'contact_read can read ' || t,
        test__has_select_permission('contact_read', t)
   FROM unnest(ARRAY['partsvendor'::text, 'partscustomer', 'taxcategory',
-          'entity', 'company', 'location', 'entity_to_location', 
+          'entity', 'company', 'location', 'entity_to_location',
           'entity_to_contact', 'person', 'entity_credit_account',
           'contact_class', 'eca_tax', 'entity_class', 'entity_note',
           'entity_bank_account', 'entity_other_name', 'location_class',
@@ -68,7 +68,7 @@ INSERT INTO test_result(test_name, success)
 SELECT 'ar_transaction_list can read ' || t,
        test__has_select_permission('ar_transaction_list', t)
   FROM unnest(ARRAY['partsvendor'::text, 'partscustomer', 'taxcategory',
-          'entity', 'company', 'location', 'entity_to_location', 
+          'entity', 'company', 'location', 'entity_to_location',
           'entity_to_contact', 'person', 'entity_credit_account',
           'contact_class', 'eca_tax', 'entity_class', 'entity_note',
           'entity_bank_account', 'entity_other_name', 'location_class',
@@ -80,7 +80,7 @@ INSERT INTO test_result(test_name, success)
 SELECT 'ap_transaction_list can read ' || t,
        test__has_select_permission('ap_transaction_list', t)
   FROM unnest(ARRAY['partsvendor'::text, 'partscustomer', 'taxcategory',
-          'entity', 'company', 'location', 'entity_to_location', 
+          'entity', 'company', 'location', 'entity_to_location',
           'entity_to_contact', 'person', 'entity_credit_account',
           'contact_class', 'eca_tax', 'entity_class', 'entity_note',
           'entity_bank_account', 'entity_other_name', 'location_class',
@@ -92,7 +92,7 @@ INSERT INTO test_result(test_name, success)
 SELECT 'sales_order_list can read ' || t,
        test__has_select_permission('sales_order_list', t)
   FROM unnest(ARRAY['partsvendor'::text, 'partscustomer', 'taxcategory',
-          'entity', 'company', 'location', 'entity_to_location', 
+          'entity', 'company', 'location', 'entity_to_location',
           'entity_to_contact', 'person', 'entity_credit_account',
           'contact_class', 'eca_tax', 'entity_class', 'entity_note',
           'entity_bank_account', 'entity_other_name', 'location_class',
@@ -104,7 +104,7 @@ INSERT INTO test_result(test_name, success)
 SELECT 'purchase_order_list can read ' || t,
        test__has_select_permission('purchase_order_list', t)
   FROM unnest(ARRAY['partsvendor'::text, 'partscustomer', 'taxcategory',
-          'entity', 'company', 'location', 'entity_to_location', 
+          'entity', 'company', 'location', 'entity_to_location',
           'entity_to_contact', 'person', 'entity_credit_account',
           'contact_class', 'eca_tax', 'entity_class', 'entity_note',
           'entity_bank_account', 'entity_other_name', 'location_class',
@@ -120,13 +120,13 @@ FROM unnest(array['ar'::text, 'ap', 'warehouse_inventory', 'invoice', 'acc_trans
 INSERT INTO test_result(test_name, success)
 SELECT 'gl_reports can read ' || t,
        test__has_select_permission('gl_reports', t)
-FROM unnest(array['gl'::text, 'acc_trans', 'account_checkpoint', 'ar', 'ap', 
+FROM unnest(array['gl'::text, 'acc_trans', 'account_checkpoint', 'ar', 'ap',
                   'entity', 'entity_credit_account'])t;
 
 INSERT INTO test_result(test_name, success)
 SELECT 'financial_reports can read ' || t,
        test__has_select_permission('financial_reports', t)
-FROM unnest(array['gl'::text, 'acc_trans', 'account_checkpoint', 'ar', 'ap', 
+FROM unnest(array['gl'::text, 'acc_trans', 'account_checkpoint', 'ar', 'ap',
                   'entity', 'entity_credit_account', 'cash_impact'])t;
 
 -- TEST RESULTS
