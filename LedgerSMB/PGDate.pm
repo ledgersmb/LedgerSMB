@@ -150,12 +150,11 @@ sub from_input{
     $format ||= 'yyyy-mm-dd';
     $format = 'yyyy-mm-dd' if $input =~ /^\d{4}/;
     my $dt =  _parse_string($self, $input, uc($format), $has_time)
-          if $input;
-    my $retval = $self->new($dt);
-    $retval->{_pgobject_is_date} = 1;
-    $retval->{_pgobject_is_time} = 1 if $has_time;
-    return $retval;
-
+		  if $input;
+    bless $dt, __PACKAGE__;
+    $dt->{_pgobject_is_date} = 1;
+    $dt->{_pgobject_is_time} = 1 if $has_time;
+    return $dt;
 }
 
 
@@ -169,7 +168,7 @@ used.  If $format is not supplied, the dateformat of the user is used.
 sub to_output {
     my ($self) = @_;
     #return undef if !defined $self;
-     return undef if !defined $self->{date};
+	 return undef if !defined $self->{_pgobject_is_date};
     my $fmt;
     if ($self->{_pgobject_is_date}){
         if (defined $LedgerSMB::App_State::User->{dateformat}){
