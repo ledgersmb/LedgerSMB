@@ -575,17 +575,28 @@ BEGIN
             -- so we have an easy check for which 
         END IF;
 
-        -- Insert cash side
+        -- Insert cash side @ current fx rate
         INSERT INTO acc_trans
              (trans_id, chart_id, amount, approved,
               voucher_id, transdate, source)
-           SELECT id, t_cash_id, amount * t_cash_sign * t_exchangerate/fxrate,
+           SELECT id, t_cash_id, amount * t_cash_sign,
                   CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
                   t_voucher_id, in_payment_date, in_source
              FROM bulk_payments_in  where amount <> 0;
+        IF t_exchangerate <> 1 THEN
+           INSERT INTO acc_trans
+                (trans_id, chart_id, amount, approved,
+                 voucher_id, transdate, source, fx_transaction)
+              SELECT id, t_cash_id, amount * t_cash_sign * (t_exchangerate - 1),
+                     CASE WHEN t_voucher_id IS NULL THEN true
+                          ELSE false END,
+                     t_voucher_id, in_payment_date, in_source, 't'::boolean
+                FROM bulk_payments_in  where amount <> 0;
+        END IF;
 
-        -- early payment discounts
+        -- early payment discounts @ original fx rate (because against ar/ap
+        --   meaning it uses the old transaction date for fx lookup later)
         IF t_cash_sign IS NULL THEN
              raise exception 't_cash_sign is null';
         ELSIF t_exchangerate IS NULL THEN
@@ -595,7 +606,7 @@ BEGIN
                (trans_id, chart_id, amount, approved,
                voucher_id, transdate, source)
         SELECT bpi.id, eca.discount_account_id, 
-               amount * t_cash_sign * t_exchangerate/fxrate 
+               amount * t_cash_sign 
                / (1 - discount::numeric/100) 
                * (discount::numeric/100),
                CASE WHEN t_voucher_id IS NULL THEN true
@@ -612,12 +623,35 @@ BEGIN
                AND extract('days' from age(gl.transdate)) < eca.discount_terms
                and eca.discount_terms is not null AND discount IS NOT NULL
                AND eca.discount_account_id IS NOT NULL;
+        IF t_exchangerate <> 1 THEN
+           INSERT INTO acc_trans
+                  (trans_id, chart_id, amount, approved,
+                  voucher_id, transdate, source, fx_transaction)
+           SELECT bpi.id, eca.discount_account_id, 
+                  amount * t_cash_sign * (fxrate - 1) 
+                  / (1 - discount::numeric/100) 
+                  * (discount::numeric/100),
+                  CASE WHEN t_voucher_id IS NULL THEN true
+                          ELSE false END,
+                  t_voucher_id, in_payment_date, in_source
+             FROM bulk_payments_in bpi
+             JOIN (select entity_credit_account, id, transdate FROM ar 
+                    WHERE in_account_class = 2
+                    UNION
+                   SELECT entity_credit_account, id, transdate FROM ap
+                    WHERE in_account_class = 1) gl ON gl.id = bpi.id
+             JOIN entity_credit_account eca ON gl.entity_credit_account = eca.id
+            WHERE bpi.amount <> 0 
+                  AND extract('days' from age(gl.transdate)) < eca.discount_terms
+                  and eca.discount_terms is not null AND discount IS NOT NULL
+                  AND eca.discount_account_id IS NOT NULL;
+        END IF;
 
         INSERT INTO acc_trans
                (trans_id, chart_id, amount, approved,
                voucher_id, transdate, source)
         SELECT bpi.id, t_ar_ap_id, 
-               amount * t_cash_sign * -1 * t_exchangerate/fxrate 
+               amount * t_cash_sign * -1 * fxrate 
                / (1 - discount::numeric/100) 
                * (discount::numeric/100),
                CASE WHEN t_voucher_id IS NULL THEN true
@@ -634,8 +668,32 @@ BEGIN
                AND extract('days' from age(gl.transdate)) < eca.discount_terms
                AND eca.discount_terms IS NOT NULL AND discount IS NOT NULL
                AND eca.discount_account_id IS NOT NULL;
+        IF t_exchangerate <> 1 THEN
+           INSERT INTO acc_trans
+                  (trans_id, chart_id, amount, approved,
+                  voucher_id, transdate, source)
+           SELECT bpi.id, t_ar_ap_id, 
+                  amount * t_cash_sign * -1 * (fxrate - 1)
+                  / (1 - discount::numeric/100) 
+                  * (discount::numeric/100),
+                  CASE WHEN t_voucher_id IS NULL THEN true
+                          ELSE false END,
+                  t_voucher_id, in_payment_date, in_source
+             FROM bulk_payments_in bpi
+             JOIN (select entity_credit_account, id, transdate FROM ar 
+                    WHERE in_account_class = 2
+                    UNION
+                   SELECT entity_credit_account, id, transdate FROM ap
+                    WHERE in_account_class = 1) gl ON gl.id = bpi.id
+             JOIN entity_credit_account eca ON gl.entity_credit_account = eca.id
+            WHERE bpi.amount <> 0 
+                  AND extract('days' from age(gl.transdate)) < eca.discount_terms
+                  AND eca.discount_terms IS NOT NULL AND discount IS NOT NULL
+                  AND eca.discount_account_id IS NOT NULL;
+        END IF;
 
-        -- Insert ar/ap side
+
+        -- Insert ar/ap side @ original fx rate
         INSERT INTO acc_trans
              (trans_id, chart_id, amount, approved,
               voucher_id, transdate, source)
@@ -646,12 +704,24 @@ BEGIN
                   t_voucher_id, in_payment_date, in_source
              FROM bulk_payments_in where amount <> 0;
 
+        IF t_exchangerate <> 1 THEN
+           INSERT INTO acc_trans
+                (trans_id, chart_id, amount, approved,
+                 voucher_id, transdate, source)
+              SELECT id, t_ar_ap_id,
+                     amount * -1 * t_cash_sign * (1 - fxrate),
+                     CASE WHEN t_voucher_id IS NULL THEN true
+                          ELSE false END,
+                     t_voucher_id, in_payment_date, in_source
+                FROM bulk_payments_in where amount <> 0;
+        END IF;       
+
         -- Insert fx gain/loss effects, if applicable
         INSERT INTO acc_trans
              (trans_id, chart_id, amount, approved,
               voucher_id, transdate, source)
            SELECT id, gain_loss_accno,
-                  amount * t_cash_sign * (1 - t_exchangerate/fxrate),
+                  amount * t_cash_sign * (t_exchangerate - fxrate),
                   CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
                   t_voucher_id, in_payment_date, in_source
