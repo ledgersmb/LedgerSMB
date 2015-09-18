@@ -160,7 +160,7 @@ sub new {
     $self->{login} = "" unless defined $self->{login};
     $self->{login} =~ s/[^a-zA-Z0-9._+\@'-]//g;
 
-    if (!$self->{company} && $ENV{HTTP_COOKIE}){
+    if ($ENV{HTTP_COOKIE}){
         $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
         my %cookie;
         my @cookies = split /;/, $ENV{HTTP_COOKIE};
@@ -168,9 +168,10 @@ sub new {
             my ( $name, $value ) = split /=/, $_, 2;
             $cookie{$name} = $value;
         }
-         my $ccookie = $cookie{${LedgerSMB::Sysconfig::cookie_name}};
-         $ccookie =~ s/.*:([^:]*)$/$1/;
-         $self->{company} = $ccookie;
+        $self->{cookie} = $cookie{${LedgerSMB::Sysconfig::cookie_name}};
+        $self->{cookie} =~ m/.*:([^:]*)$/;
+        $self->{company} = $1
+            if ! $self->{company};
     }
 
     $self->{menubar} = 1 if ( ( defined $self->{path} ) && ( $self->{path} =~ /lynx/i ) );
@@ -1399,6 +1400,13 @@ sub db_init {
     $self->{dbh} ||= LedgerSMB::DBH->connect($self->{company});
     LedgerSMB::Auth::credential_prompt unless $self->{dbh};
     my $dbh = $self->{dbh};
+
+    if ($ENV{GATEWAY_INTERFACE} and !$ENV{LSMB_NOHEAD}) {
+        if (! LedgerSMB::Session::check( $self->{cookie}, $self)) {
+            LedgerSMB::Auth::credential_prompt;
+        }
+    }
+
     LedgerSMB::App_State::set_DBH($dbh);
     LedgerSMB::DBH->set_datestyle;
 
