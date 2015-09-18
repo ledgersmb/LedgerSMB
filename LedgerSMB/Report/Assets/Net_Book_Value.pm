@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Report::Assets::Net_Book_Value - Fixed Asset Current Book Value 
+LedgerSMB::Report::Assets::Net_Book_Value - Fixed Asset Current Book Value
 Report
 
 =head1 SYNPOSIS
@@ -10,9 +10,9 @@ Report
 
 =head1 DESCRIPTION
 
-The Net Book Value report provides current information on the book value of 
-assets at the current date.  The net book value is the depreciable basis plus 
-the estimated salvage value, less accumulated depreciation.  This thus gives 
+The Net Book Value report provides current information on the book value of
+assets at the current date.  The net book value is the depreciable basis plus
+the estimated salvage value, less accumulated depreciation.  This thus gives
 a view of the current value left per asset, as they contribute to the specific
 asset accounts.
 
@@ -40,7 +40,7 @@ none
 
 =item begin_depreciation, date when asset begins to depreciate
 
-=item method, short description of method. 
+=item method, short description of method.
 
 =item remaining life, how much is left to depreciate
 
@@ -59,55 +59,55 @@ none
 =cut
 
 sub columns {
-    return 
+    return
     [
-          {type => 'text', 
-         col_id => 'id', 
+          {type => 'text',
+         col_id => 'id',
            name =>  LedgerSMB::Report::text('ID'), },
 
-          {type => 'href', 
-         col_id => 'tag', 
+          {type => 'href',
+         col_id => 'tag',
       href_base => 'asset.pl?action=ed&id=',
            name =>  LedgerSMB::Report::text('Tag'),},
 
           {type => 'text',
-         col_id => 'description', 
+         col_id => 'description',
            name =>  LedgerSMB::Report::text('Description'), },
 
-          {type => 'text', 
-         col_id => 'begin_depreciation', 
+          {type => 'text',
+         col_id => 'begin_depreciation',
            name =>  LedgerSMB::Report::text('In Svc'), },
 
-          {type => 'text', 
-         col_id => 'method', 
+          {type => 'text',
+         col_id => 'method',
            name =>  LedgerSMB::Report::text('Method'),},
 
-          {type => 'text', 
-         col_id => 'remaining_life', 
+          {type => 'text',
+         col_id => 'remaining_life',
            name =>  LedgerSMB::Report::text('Rem. Life'),},
 
-          {type => 'text', 
-         col_id => 'basis', 
+          {type => 'text',
+         col_id => 'basis',
            name =>  LedgerSMB::Report::text('Basis'),},
 
-          {type => 'text', 
-         col_id => 'salvage_value', 
+          {type => 'text',
+         col_id => 'salvage_value',
            name =>  LedgerSMB::Report::text('(+) Salvage Value'),},
 
-          {type => 'text', 
-         col_id => 'through_date', 
+          {type => 'text',
+         col_id => 'through_date',
            name =>  LedgerSMB::Report::text('Dep. Through'),},
 
-          {type => 'text', 
-         col_id => 'accum_depreciation', 
+          {type => 'text',
+         col_id => 'accum_depreciation',
            name =>  LedgerSMB::Report::text('(-) Accum. Dep.'),},
 
-          {type => 'text', 
-         col_id => 'net_book_value', 
+          {type => 'text',
+         col_id => 'net_book_value',
            name =>  LedgerSMB::Report::text('(=) NBV'),},
 
-          {type => 'text', 
-         col_id => 'percent_depreciated', 
+          {type => 'text',
+         col_id => 'percent_depreciated',
            name =>  LedgerSMB::Report::text('% Dep.'),},
   ];
 };
@@ -157,3 +157,5 @@ later version.  Please see enclosed LICENSE file for details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

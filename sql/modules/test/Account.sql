@@ -8,10 +8,10 @@ VALUES ('TEST testing 1', 'A', 'A', '00001');
 INSERT INTO chart (description, charttype, category, accno)
 VALUES ('TEST testing 2', 'A', 'A', '00002');
 
-INSERT INTO entity_credit_account (id, meta_number, entity_id, entity_class, ar_ap_account_id) 
+INSERT INTO entity_credit_account (id, meta_number, entity_id, entity_class, ar_ap_account_id)
 values (-100, 'test1', -100, 1, -1000);
 
-INSERT INTO ap (invnumber, netamount, amount, entity_credit_account, id, curr) 
+INSERT INTO ap (invnumber, netamount, amount, entity_credit_account, id, curr)
 VALUES ('TEST', '0', '0', -100, -100, 'USD');
 INSERT INTO acc_trans (trans_id, chart_id, amount)
 VALUES (-100, currval('account_id_seq')::int, '0');
@@ -102,15 +102,15 @@ INSERT INTO test_result(test_name, success)
 VALUES ('Chart 2 is not orphaned', account_has_transactions((select id from chart where accno = '00002')) is true);
 
 INSERT INTO test_result(test_name, success)
-SELECT 'All Test Accounts Exist', count(*) = 23 FROM chart_list_all() 
+SELECT 'All Test Accounts Exist', count(*) = 23 FROM chart_list_all()
 where accno like '0%' AND description LIKE 'TEST%';
 
 INSERT INTO test_result(test_name, success)
-SELECT 'List AR Cash Test Accounts', count(*) = 3 FROM chart_list_cash(2) 
+SELECT 'List AR Cash Test Accounts', count(*) = 3 FROM chart_list_cash(2)
 where accno like '0%' AND description LIKE 'TEST%';
 
 INSERT INTO test_result(test_name, success)
-SELECT 'List AP Cash Test Accounts', count(*) = 3 FROM chart_list_cash(1) 
+SELECT 'List AP Cash Test Accounts', count(*) = 3 FROM chart_list_cash(1)
 where accno like '0%' AND description LIKE 'TEST%';
 
 INSERT INTO test_result(test_name, success)
@@ -131,9 +131,9 @@ where accno like '0%' AND description LIKE 'TEST%';
 
 SELECT * FROM test_result;
 
-SELECT (select count(*) from test_result where success is true) 
-|| ' tests passed and ' 
-|| (select count(*) from test_result where success is not true) 
+SELECT (select count(*) from test_result where success is true)
+|| ' tests passed and '
+|| (select count(*) from test_result where success is not true)
 || ' failed' as message;
 
 ROLLBACK;

@@ -9,7 +9,7 @@ LedgerSMB::Report::PNL - Profit and Loss Reporting Base Class for LedgerSMB
 
 =head1 DESCRIPTION
 
-This provides the common profit and loss reporting functions for LedgerSMB 1.4 
+This provides the common profit and loss reporting functions for LedgerSMB 1.4
 and later.
 
 =cut
@@ -34,7 +34,7 @@ Standard dates.  Additional fields can be added by child reports.
 This is a hash with three keys:  I, E, and totals.
 
 I and E contain hashes where each property is formed from the pnl_line type from
-the database for each interval.  Totals contains three totals for each 
+the database for each interval.  Totals contains three totals for each
 interval:  I, E, and total.
 
 By default the only interval listed is "main".  The others are stored in
@@ -61,7 +61,7 @@ keys:
 
 =item label
 
-This is the label for the comparison, used for coordinating with account_data 
+This is the label for the comparison, used for coordinating with account_data
 above
 
 =item from_date
@@ -121,10 +121,10 @@ sub _merge_rows {
     my $e_total = LedgerSMB::PGNumber->from_input('0');
     my $total;
     for my $k (keys %{$data->{I}}){
-       $i_total += $data->{I}->{$k}->{$label}->{amount}; 
+       $i_total += $data->{I}->{$k}->{$label}->{amount};
     }
     for my $k (keys %{$data->{E}}){
-       $e_total += $data->{E}->{$k}->{$label}->{amount}; 
+       $e_total += $data->{E}->{$k}->{$label}->{amount};
     }
     $data->{totals}->{$label}->{I} = $i_total->to_output(money => 1);
     $data->{totals}->{$label}->{E} = $e_total->to_output(money => 1);
@@ -135,13 +135,13 @@ sub _merge_rows {
 sub _transform_gifi {
     my @rows = @_;
     my %hashamount;
-    my @xformed_rows =  map { {%$_, 
-                               account_number => $_->{gifi}, 
+    my @xformed_rows =  map { {%$_,
+                               account_number => $_->{gifi},
                                account_description => $_->{gifi_description}} } @rows;
-    $hashamount{I} = { map { 
+    $hashamount{I} = { map {
                        ($_->{gifi},  {%$_})
                      } grep {$_->{account_category} eq 'I' and $_->{gifi}} @xformed_rows};
-    $hashamount{E} = { map { 
+    $hashamount{E} = { map {
                        ($_->{gifi}, {%$_})
                      } grep {$_->{account_category} eq 'E' and $_->{gifi}} @xformed_rows};
     for my $cat (keys %hashamount){
@@ -149,7 +149,7 @@ sub _transform_gifi {
             $hashamount{$cat}->{$_}->{amount} = 0;
         }
     }
-    $hashamount{$_->{account_category}}->{$_->{gifi}}->{amount} 
+    $hashamount{$_->{account_category}}->{$_->{gifi}}->{amount}
                += $_->{amount} for @xformed_rows;
     return (sort(values %{$hashamount{I}})), (sort (values %{$hashamount{E}}));
 }
@@ -184,14 +184,14 @@ sub add_comparison {
     my $new_ad = $new_pnl->account_data;
     for my $cat (qw(I E)){
        for my $k (keys %{$new_ad->{$cat}}){
-           $old_ad->{$cat}->{$k}->{main}->{account_description} 
+           $old_ad->{$cat}->{$k}->{main}->{account_description}
              ||=  $new_ad->{$cat}->{$k}->{main}->{account_description};
        }
     }
-    push @$comparisons, {from_date => $new_pnl->from_date, 
+    push @$comparisons, {from_date => $new_pnl->from_date,
                            to_date => $new_pnl->to_date,
                       account_data => $new_pnl->account_data,
-                         }; 
+                         };
     $self->comparisons($comparisons);
 }
 

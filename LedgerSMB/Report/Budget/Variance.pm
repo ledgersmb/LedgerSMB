@@ -31,7 +31,7 @@ use LedgerSMB::Budget;
 
 Read only accessor.  This provides the columns for the report
 
-=over 
+=over
 
 =item budget_description
 
@@ -63,30 +63,30 @@ Difference between budgetted and used.
 
 sub columns {
    return [
-      {col_id => 'budget_description', 
-         type => 'text', 
+      {col_id => 'budget_description',
+         type => 'text',
          name => LedgerSMB::Report::text('Description')},
 
-      {col_id => 'accno', 
-         type => 'text', 
+      {col_id => 'accno',
+         type => 'text',
          name => LedgerSMB::Report::text('Account Number')},
 
-      {col_id => 'account_label', 
-         type => 'text', 
+      {col_id => 'account_label',
+         type => 'text',
          name => LedgerSMB::Report::text('Account Label')},
 
-      {col_id => 'budget_amount', 
-         type => 'text', 
+      {col_id => 'budget_amount',
+         type => 'text',
          money => 1,
          name => LedgerSMB::Report::text('Amount Budgetted')},
 
-      {col_id => 'used_amount', 
-         type => 'text', 
+      {col_id => 'used_amount',
+         type => 'text',
          money => 1,
          name => '- ' . LedgerSMB::Report::text('Used')},
 
-      {col_id => 'variance', 
-         type => 'text', 
+      {col_id => 'variance',
+         type => 'text',
          money => 1,
          name => '= ' . LedgerSMB::Report::text('Variance')},
    ];
@@ -127,7 +127,7 @@ sub header_lines {
 
 =item id
 
-Budget id for variance report.  This is the only search criteria currently 
+Budget id for variance report.  This is the only search criteria currently
 supported.
 
 =cut
@@ -138,7 +138,7 @@ has id => (is => 'ro', isa => 'Int');
 
 =head1 HEADER PROPERTIES
 
-These are used to generate the header as displayed and are typically pulled in 
+These are used to generate the header as displayed and are typically pulled in
 from a budget object.
 
 =over
@@ -167,7 +167,7 @@ has start_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
 has end_date => (is => 'ro', coerce => 1, isa => 'LedgerSMB::Moose::Date');
 
-=back 
+=back
 
 =head1 METHODS
 
@@ -183,7 +183,7 @@ sub for_budget_id {
     my ($self, $id) = @_;
 
     my $budget = LedgerSMB::Budget->get($id);
-    my $report = $self->new(%$budget); 
+    my $report = $self->new(%$budget);
     return $report;
 }
 
@@ -203,7 +203,7 @@ sub run_report {
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2012 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2012 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

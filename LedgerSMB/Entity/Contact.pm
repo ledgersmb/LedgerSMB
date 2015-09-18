@@ -51,7 +51,7 @@ This must be set, and references the class id of the contact.  These can be
 presumed to be static values, and are contained in the contact_class table.
 Currently that table contains:
 
-  id |      class      
+  id |      class
  ----+-----------------
    1 | Primary Phone
    2 | Secondary Phone
@@ -107,7 +107,7 @@ has 'contact' => (is => 'rw', isa => 'Str', required => 1);
 If this is set, along with old_contact (below), then saving will try to overwrite
 if possible.
 
-=item old_contact 
+=item old_contact
 
 =cut
 
@@ -172,7 +172,7 @@ sub save {
 deletes the record
 
 This can be called from $self->delete() if you have  a contact object, or it
-can be called as LedgerSMB::Entity::Contact::delete($hashref) if the hashref 
+can be called as LedgerSMB::Entity::Contact::delete($hashref) if the hashref
 contains either entity_id or credit_id, and location_id, and location class.
 
 =cut

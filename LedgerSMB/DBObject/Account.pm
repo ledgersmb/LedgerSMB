@@ -4,7 +4,7 @@ LedgerSMB::DBObject::Account - Base class for chart of accounts entries
 
 =head1 SYNOPSYS
 
-This class contains methods for managing chart of accounts entries (headings 
+This class contains methods for managing chart of accounts entries (headings
 and accounts).
 
 =head1 INERITS
@@ -24,7 +24,6 @@ use strict;
 use warnings;
 use base qw(LedgerSMB::PGOld);
 
-use Data::Dumper;
 use Try::Tiny;
 
 sub _get_translations {
@@ -59,7 +58,7 @@ accno: the text used to specify the account number
 description:  Text to describe the account
 category: A = asset, L = liability, Q = Equity, I = Income, E = expense
 gifi_accno:  The GIFI account entry control code
-heading: (Optional) The integer representing the heading.id desired 
+heading: (Optional) The integer representing the heading.id desired
 contra:  If true, the account balances on the opposite side.
 tax:  If true, is a tax account
 link:  a list of strings representing text box identifier.
@@ -72,7 +71,7 @@ sub save {
         $self->{contra} = '0';
     }
     if (!defined $self->{tax}) {
-	$self->{tax} = '0';
+    $self->{tax} = '0';
     }
     if ($self->{category} eq 'Qt'){
        $self->{is_temp} = '1';
@@ -87,8 +86,8 @@ sub save {
         $trans_save_func = 'account_heading__save_translation';
         $trans_del_func = 'account_heading__delete_translation';
     }
-    my ($id_ref) = try { $self->call_dbmethod(funcname => $func) } 
-                   catch { 
+    my ($id_ref) = try { $self->call_dbmethod(funcname => $func) }
+                   catch {
                         if ($_ =~ /Invalid link settings:\s*Summary/){
                             die LedgerSMB::App_State::Locale->text(
                  'Error: Cannot include summary account in other dropdown menus'
@@ -160,7 +159,7 @@ sub check_transactions {
     my $self = shift @_;
     my ($ref) = $self->call_dbmethod(funcname => 'account_has_transactions');
     $self->{has_transactions} = $ref->{'account_has_transactions'};
-} 
+}
 
 =item is_recon
 
@@ -189,11 +188,11 @@ $account->{id} and $account->{charttype} must be set.
 sub delete {
     my $self = shift @_;
     if ($self->{charttype} eq 'A') {
-	$self->call_dbmethod(funcname => 'account__delete');
+    $self->call_dbmethod(funcname => 'account__delete');
     } elsif ($self->{charttype} eq 'H') {
-	$self->call_dbmethod(funcname => 'account_heading__delete');
+    $self->call_dbmethod(funcname => 'account_heading__delete');
     } else {
-	die "Unknown charttype."
+    die "Unknown charttype."
     }
 }
 
@@ -225,7 +224,7 @@ sub gifi_list {
 
 A mostly-private method for generating and checking whether link data is valid.
 
-This is usually done (automatically) in preparation for saving the information 
+This is usually done (automatically) in preparation for saving the information
 to the database.
 
 =cut
@@ -241,14 +240,14 @@ sub generate_links {
        my $l = $d->{description};
        if ($self->{$l}) {
            $is_summary++ if ($d->{summary} == 1);
-           $is_custom++ if ($d->{custom} == 1);       
+           $is_custom++ if ($d->{custom} == 1);
            if ($is_summary > 1 || ($is_summary == 1 && $is_custom >=1 )) {
                 $self->error($self->{_locale}->text("Too many links on summary account!"));
            }
            push (@links, $l);
         }
      }
- 
+
      $self->{link} = $self->_db_array_scalars(@links);
 }
 
@@ -271,8 +270,8 @@ LedgerSMB::DBObject, LedgerSMB
 
 =head1 COPYRIGHT
 
-Copyright (c) 2009, the LedgerSMB Core Team.  This is licensed under the GNU 
-General Public License, version 2, or at your option any later version.  Please 
+Copyright (c) 2009, the LedgerSMB Core Team.  This is licensed under the GNU
+General Public License, version 2, or at your option any later version.  Please
 see the accompanying License.txt for more information.
 
 =cut

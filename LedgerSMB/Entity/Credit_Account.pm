@@ -1,4 +1,4 @@
-=head1 NAME 
+=head1 NAME
 
 LedgerSMB::Entity::Credit_Account - Customer/Vendor Acct Management for LSMB
 
@@ -255,7 +255,7 @@ Bank account for the credit account
 
 has 'bank_account' => (is => 'rw', isa => 'Maybe[Int]', required => 0);
 
-=item taxform_id   
+=item taxform_id
 
 This is the tax reporting form associated with the account.
 
@@ -279,25 +279,25 @@ sub prepare_input {
     my ($self, $request) = @_;
 
     $request->{startdate} =
-       LedgerSMB::PGDate->from_input($request->{startdate}) 
+       LedgerSMB::PGDate->from_input($request->{startdate})
             if defined $request->{startdate};
     $request->{enddate} =
-       LedgerSMB::PGDate->from_input($request->{enddate}) 
+       LedgerSMB::PGDate->from_input($request->{enddate})
             if defined $request->{enddate};
-    $request->{discount} = 
+    $request->{discount} =
        LedgerSMB::PGNumber->from_input($request->{discount})
             if defined $request->{discount};
-    $request->{threshold} = 
+    $request->{threshold} =
        LedgerSMB::PGNumber->from_input($request->{threshold})
             if defined $request->{threshold};
-    $request->{creditlimit} = 
+    $request->{creditlimit} =
        LedgerSMB::PGNumber->from_input($request->{creditlimit})
             if defined $request->{creditlimit};
 }
 
 =item get_by_id($id int);
 
-Retrieves and returns the entity credit account corresponding with the id 
+Retrieves and returns the entity credit account corresponding with the id
 mentioned.
 
 =cut
@@ -312,7 +312,7 @@ sub get_by_id {
 
 =item get_by_meta_number($meta_number string, $entity_class int)
 
-Retrieves and returns the entity credit account, of entity class $entity_class, 
+Retrieves and returns the entity credit account, of entity class $entity_class,
 identified by $meta_number
 
 =cut
@@ -320,7 +320,7 @@ identified by $meta_number
 sub get_by_meta_number {
     my ($self, $meta_number, $entity_class) = @_;
     my ($ref) = __PACKAGE__->call_procedure(funcname => 'eca__get_by_meta_number',
-                                          args => [$meta_number, 
+                                          args => [$meta_number,
                                                    $entity_class]);
     $ref->{tax_ids} = __PACKAGE__->_get_tax_ids($ref->{id});
     return __PACKAGE__->new(%$ref);
@@ -389,7 +389,7 @@ sub save {
 
 =item get_pricematrix
 
-This routine gets the price matrix for the customer or vendor.  This returns a 
+This routine gets the price matrix for the customer or vendor.  This returns a
 hashref with up to two keys:  pricematrix for all vendors and customers, and
 pricematrix_pricegroup for customers.
 
@@ -420,7 +420,7 @@ This deletes a pricematrix line identified by $entry_id
 sub delete_pricematrix {
     my $self = shift @_;
     my ($entry_id) = @_;
-    my ($retval) = $self->call_procedure(funcname => 'eca__delete_pricematrix', 
+    my ($retval) = $self->call_procedure(funcname => 'eca__delete_pricematrix',
                            args => [$self->credit_id, $entry_id]
     );
     return $retval;
@@ -452,8 +452,8 @@ sub save_pricematrix {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team. This file may be reused under the 
-terms of the GNU General Public License version 2 or at your option any later 
+Copyright (C) 2012 The LedgerSMB Core Team. This file may be reused under the
+terms of the GNU General Public License version 2 or at your option any later
 version.  Please see the attached LICENSE file for details.
 
 =cut

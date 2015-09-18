@@ -20,7 +20,7 @@ likely inherit this class.
 =item id
 
 This is the internal, system id, which is a surrogate key.  This will be undefined when
-the entity has not yet been saved to the database and set once it has been saved or 
+the entity has not yet been saved to the database and set once it has been saved or
 retrieved.
 
 =cut
@@ -29,7 +29,7 @@ has 'id' => (is => 'rw', isa => 'Str', required => '0');
 
 =item control_code
 
-The control code is the internal handling number for the operator to use to pull up 
+The control code is the internal handling number for the operator to use to pull up
 an entity,
 
 =cut
@@ -65,7 +65,7 @@ has 'country_name' => (is => 'rw', isa => 'Str', required => 0);
 =item entity_class
 
 Primary class of entity.  This is mostly for reporting purposes.  See entity_class
-table in database for list of valid values, but 1 is for vendors, 2 for customers, 
+table in database for list of valid values, but 1 is for vendors, 2 for customers,
 3 for employees, etc.
 
 =back
@@ -86,7 +86,7 @@ Returns an entity by id
 
 sub get{
     my ($id) = @_;
-    my ($result) =  __PACKAGE__->call_procedure(funcname => 'entity__get', 
+    my ($result) =  __PACKAGE__->call_procedure(funcname => 'entity__get',
                                                    args => [$id]);
     return __PACKAGE__->new(%$result);
 }

@@ -15,12 +15,12 @@ To get by entity id:
 
 To get by control code:
 
- my $emp 
+ my $emp
      = LedgerSMB::Entity::Person::Employee->get_by_cc($control_code);
 
 =head1 INHERITS
 
-=over 
+=over
 
 =item LedgerSMB::Entity::Person
 
@@ -81,7 +81,7 @@ has is_manager => (is => 'rw', isa => 'Bool');
 
 =item ssn
 
-Social security number, tax number, or the like for the employee. 
+Social security number, tax number, or the like for the employee.
 
 =cut
 
@@ -119,7 +119,7 @@ has employeenumber => (is => 'rw', isa => 'Str', required => 1);
 
 =item get($entity_id)
 
-This does not need to be a blessed reference.  It does return a reference 
+This does not need to be a blessed reference.  It does return a reference
 blessed if the employee is found or undef otherwise.
 
 =cut
@@ -167,8 +167,8 @@ sub save {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2012, the LedgerSMB Core Team.  This file may be re-used under 
-the GNU GPL version 2 or at your option any future version.  Please see the 
+Copyright (C) 2012, the LedgerSMB Core Team.  This file may be re-used under
+the GNU GPL version 2 or at your option any future version.  Please see the
 accompanying LICENSE file for details.
 
 =cut

@@ -12,7 +12,7 @@ package LedgerSMB::ScriptLib::Common_Search::Part;
 use base qw(LedgerSMB::ScriptLib::Common_Search);
 use strict;
 use warnings;
-use LedgerSMB::DBObject::Part; 
+use LedgerSMB::DBObject::Part;
 
 =head1 PROPERTIES/ACCESSORS
 
@@ -73,7 +73,7 @@ sub results {
 
 =head1 METHODS
 
-=over 
+=over
 
 =item new ($request)
 
@@ -109,7 +109,7 @@ sub search {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2012 The LedgerSMB Core Team.  This file may be used in 
+Copyright (C) 2012 The LedgerSMB Core Team.  This file may be used in
 accordance with the GNU General Public License version 2 or at your option any
 later version.  Please see attached LICENSE file for details.
 

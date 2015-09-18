@@ -85,12 +85,12 @@ has curr => (is => 'ro', isa => 'Str', required => '0');
 =item exchange_rate
 
 Exchange rate for reversal.  If not set, we use 1 if the currency is the default
-currency.  If not, we pull the existing exchange rate for the reversal date, 
+currency.  If not, we pull the existing exchange rate for the reversal date,
 and if this is not set, an error will be returned during the reversal process.
 
-=cut 
+=cut
 
-has exchange_rate => (is => 'ro', isa => 'LedgerSMB::Moose::Number', 
+has exchange_rate => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
                 required => 0, coerce => 1);
 
 =back
@@ -138,7 +138,7 @@ sub columns {
         {col_id => 'source',
            type => 'text',
            name => LedgerSMB::Report::text('Source'), },
-        {col_id => 'meta_number', 
+        {col_id => 'meta_number',
            name => $meta_number,
            type => 'text', },
         {col_id => 'company_paid',
@@ -186,9 +186,9 @@ sub header_lines {
         die 'Invalid entity class';
     }
     return [{name => 'meta_number', text => $meta_number },
-            {name => 'cash_accno',  
+            {name => 'cash_accno',
              text => LedgerSMB::Report::text('Account Number') },
-            {name => 'from_date',   
+            {name => 'from_date',
              text => LedgerSMB::Report::text('From Date')},
             {name => 'to_date',
              text => LedgerSMB::Report::text('To Date')}
@@ -220,7 +220,7 @@ Runs the report and sets $self->rows
 
 sub run_report{
     my ($self) = @_;
-    die LedgerSMB::Report::text('Must have cash account in batch') 
+    die LedgerSMB::Report::text('Must have cash account in batch')
         if $self->batch_id and !defined $self->cash_accno;
     $ENV{LSMB_ALWAYS_MONEY} = 1;
     my @rows = $self->call_dbmethod(funcname => 'payment__search');
@@ -247,3 +247,5 @@ sub run_report{
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

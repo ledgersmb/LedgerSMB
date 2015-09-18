@@ -5,7 +5,7 @@ LedgerSMB::Setting - LedgerSMB class for managing Business Locations
 
 =head1 SYOPSIS
 
-This module creates object instances based on LedgerSMB's in-database ORM.  
+This module creates object instances based on LedgerSMB's in-database ORM.
 
 =head1 METHODS
 
@@ -31,9 +31,9 @@ Returns a list of all accounts on the system.
 
 =item parse_increment ($self->{key})
 
-This function updates a default entry in the database, incrimenting the last 
-set of digits not including <?lsmb ?> tags or non-digits, and then parses the 
-returned value, doing tag substitution.  The final value is then returned by 
+This function updates a default entry in the database, incrimenting the last
+set of digits not including <?lsmb ?> tags or non-digits, and then parses the
+returned value, doing tag substitution.  The final value is then returned by
 the function.
 
 =back
@@ -52,6 +52,8 @@ package LedgerSMB::Setting;
 use LedgerSMB::App_State;
 use base qw(LedgerSMB::PGOld);
 use strict;
+use warnings;
+
 our $VERSION = '1.0.0';
 
 
@@ -154,7 +156,7 @@ sub _increment_process{
             }
 
             if ( $param =~ /<\?lsmb (yy|mm|dd)/i ) {
-		# SC: XXX Does this even work anymore?
+        # SC: XXX Does this even work anymore?
                 my $p = $param;
                 $p =~ s/lsmb//;
                 $p =~ s/[^YyMmDd]//g;

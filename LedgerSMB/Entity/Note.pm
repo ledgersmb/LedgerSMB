@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Entity::Note - Notes handling for customers, vendors, 
+LedgerSMB::Entity::Note - Notes handling for customers, vendors,
 employees, etc.
 
 =head1 SYNPOSIS
@@ -15,7 +15,7 @@ leads, and more.  Notes are expected to be read-only, and essentially
 append-only.
 
 This module handles attaching notes either at the entity level or the credit id
-level.  
+level.
 
 =cut
 
@@ -48,7 +48,7 @@ has 'credit_id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item id
 
-If set this indicates this has been saved to the db. 
+If set this indicates this has been saved to the db.
 
 =cut
 
@@ -56,7 +56,7 @@ has 'id' => (is =>'ro', isa => 'Int', required => 0);
 
 =item subject
 
-This is the subject of the note. 
+This is the subject of the note.
 
 =cut
 

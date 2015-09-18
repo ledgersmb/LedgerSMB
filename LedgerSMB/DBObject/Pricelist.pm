@@ -27,7 +27,7 @@ pricelist routines will be added.
 
 This tells us whether this is a customer or vendor's pricelist.
 
-=item credit_id 
+=item credit_id
 
 tells us who this is for.
 
@@ -46,8 +46,8 @@ Saves the pricelist.
 sub save {
     my ($self, $lines) = @_;
     for my $ref (@$lines){
-        my $line = __PACKAGE__->new({base => $self, 
-                               copy => 'list',  
+        my $line = __PACKAGE__->new({base => $self,
+                               copy => 'list',
                               merge => ['entity_class', 'credit_id'], }
         );
         $line->merge($ref);

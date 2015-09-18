@@ -39,7 +39,7 @@ Prompt user for credentials
 
 =item http_error
 
-Send an http error to the browser. 
+Send an http error to the browser.
 
 =back
 
@@ -56,7 +56,8 @@ if ( !${LedgerSMB::Sysconfig::auth} ) {
     ${LedgerSMB::Sysconfig::auth} = 'DB';
 }
 
-require "LedgerSMB/Auth/" . ${LedgerSMB::Sysconfig::auth} . ".pm" || die $!;
+my $auth_lib = "LedgerSMB/Auth/" . ${LedgerSMB::Sysconfig::auth} . ".pm";
+require $auth_lib || die $!;
 
 sub http_error {
     #my ($errcode, $msg_plus) = @_;
@@ -65,14 +66,14 @@ sub http_error {
     my $cgi = CGI::Simple->new();
 
     my $err = {
-	'500' => {status  => '500 Internal Server Error', 
-		  message => 'An error occurred. Information on this error has been logged.', 
+    '500' => {status  => '500 Internal Server Error',
+          message => 'An error occurred. Information on this error has been logged.',
                   others  => {}},
-        '403' => {status  => '403 Forbidden', 
-                  message => 'You are not allowed to access the specified resource.', 
+        '403' => {status  => '403 Forbidden',
+                  message => 'You are not allowed to access the specified resource.',
                   others  => {}},
-        '401' => {status  => '401 Unauthorized', 
-                  message => 'Please enter your credentials', 
+        '401' => {status  => '401 Unauthorized',
+                  message => 'Please enter your credentials',
                   others  => {'WWW-Authenticate' => "Basic realm=\"LedgerSMB\""}
                  },
         '404' => {status  => '404 Resource not Found',

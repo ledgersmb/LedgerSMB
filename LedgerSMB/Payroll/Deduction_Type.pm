@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Payroll::Deduction_Type - Deduction Types for LedgerSMB's Payroll 
+LedgerSMB::Payroll::Deduction_Type - Deduction Types for LedgerSMB's Payroll
 Engine
 
 =head1 SYNOPSIS
@@ -34,7 +34,7 @@ different states and have to pay differing state income taxes and workers comp
 rates.  Similearly different classes might be used to indicate
 different health insurance plans, or for tracking liabilities relating to
 vacation pay and the like. Employees are attached to income types and deduction
-types, allowing organizations to set up payroll flexibly for their own 
+types, allowing organizations to set up payroll flexibly for their own
 businesses.
 
 Unlike payroll income types, the deduction types are calculated using specific
@@ -63,7 +63,7 @@ has account_id => (is => 'ro', isa => 'Int', required => 1);
 
 =item pdc_id int
 
-This is the payroll deduction class.  These are not defined through the user 
+This is the payroll deduction class.  These are not defined through the user
 interface but rather defined country-wise.  It is required.
 
 =cut
@@ -149,3 +149,6 @@ later version.  Please see enclosed LICENSE file for details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;
+

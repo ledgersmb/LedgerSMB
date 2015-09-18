@@ -9,12 +9,16 @@ LedgerSMB::Scripts::payroll - Payroll workflows for LedgerSMB
 =cut
 
 package LedgerSMB::Scripts::payroll;
+
+use strict;
+use warnings;
+
 use LedgerSMB::Payroll::Income_Type;
 use LedgerSMB::Template;
 
 =head1 DESCRIPTION
 
-This module handles the workflow routines for payroll management.  These are 
+This module handles the workflow routines for payroll management.  These are
 divided into three areas, namely income types, deduction types, and full payroll
 workflows.
 

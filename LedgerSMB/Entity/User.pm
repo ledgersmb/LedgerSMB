@@ -1,4 +1,4 @@
-=head1 NAME 
+=head1 NAME
 
 LedgerSMB::Entity::User - User management Logic for LedgerSMB
 
@@ -17,7 +17,7 @@ Resetting a password (expires in 24 hrs):
   my $user->reset_password('temporary_password');
 
 Creating a new user:
-  my $user = LedgerSMB::Entity::User->new(%$request); 
+  my $user = LedgerSMB::Entity::User->new(%$request);
   $user->save;
 
 Saving permissions:
@@ -32,7 +32,7 @@ Saving permissions:
 
 This is the integer id of the user
 
-=cut 
+=cut
 
 has id => (is => 'ro', isa => 'Int');
 
@@ -40,7 +40,7 @@ has id => (is => 'ro', isa => 'Int');
 
 This is the integer id of the entity of the user
 
-=cut 
+=cut
 
 has entity_id => (is => 'ro', isa => 'Int', required => 1);
 
@@ -68,7 +68,7 @@ This is only used for new users. It sets a temporary password (good for 24 hrs)
 
 =cut
 
-has password => (is => 'rw', isa => 'Str', required => 0, 
+has password => (is => 'rw', isa => 'Str', required => 0,
                  clearer => 'clear_password');
 
 =item role_list
@@ -139,12 +139,12 @@ Saves (grants) roles requested.
 
 sub save_roles{
     my ($self, $role_list) = @_;
-	 my @all_roles = map { $_->{rolname} } $self->list_roles;
-	 my (%have_role, %want_role);
-	 $have_role{$_} = 1
-		  for @{$self->role_list};
-	 $want_role{$_} = 1
-		  for @$role_list;
+     my @all_roles = map { $_->{rolname} } $self->list_roles;
+     my (%have_role, %want_role);
+     $have_role{$_} = 1
+          for @{$self->role_list};
+     $want_role{$_} = 1
+          for @$role_list;
     for my $rol_name (@all_roles) {
         if ($want_role{$rol_name} && !$have_role{$rol_name}) {
             $self->call_procedure(funcname => 'admin__add_user_to_role',

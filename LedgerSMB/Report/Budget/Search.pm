@@ -28,7 +28,7 @@ extends 'LedgerSMB::Report';
 
 Read only accessor.  This provides the columns for the report
 
-=over 
+=over
 
 =item start_date
 
@@ -68,30 +68,30 @@ sub columns {
           href_base => 'budget_reports.pl?action=variance_report&id=',
                name => LedgerSMB::Report::text('Start Date') },
 
-            {col_id => 'end_date', 
+            {col_id => 'end_date',
                type => 'href',
           href_base => 'budget_reports.pl?action=variance_report&id=',
                name => LedgerSMB::Report::text('End Date') },
 
-            {col_id => 'reference', 
+            {col_id => 'reference',
                type => 'href',
           href_base => 'budgets.pl?action=view_budget&id=',
                name => LedgerSMB::Report::text('Reference') },
 
-            {col_id => 'description', 
+            {col_id => 'description',
                type => 'href',
           href_base => 'budgets.pl?action=view_budget&id=',
                name => LedgerSMB::Report::text('Description') },
 
-            {col_id => 'entered_by_name', 
+            {col_id => 'entered_by_name',
                type => 'text',
                name => LedgerSMB::Report::text('Entered By') },
 
-            {col_id => 'approved_by_name', 
+            {col_id => 'approved_by_name',
                type => 'text',
                name => LedgerSMB::Report::text('Approved By') },
 
-            {col_id => 'obsolete_by_name', 
+            {col_id => 'obsolete_by_name',
                type => 'text',
                name => LedgerSMB::Report::text('Obsolete By') },
    ];
@@ -189,7 +189,7 @@ sub prepare_criteria {
     my ($self, $request) = @_;
     my @business_units;
     for my $count(1 .. $request->{bclass_count}){
-       push @business_units, $request->{"business_unit_$count"} 
+       push @business_units, $request->{"business_unit_$count"}
                  if defined $request->{"business_unit_$count"};
     }
     $request->{business_units} = \@business_units;
@@ -215,7 +215,7 @@ sub run_report{
 
 =head1 COPYRIGHT AND LICENSE
 
-Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

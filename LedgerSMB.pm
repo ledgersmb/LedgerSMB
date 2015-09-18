@@ -14,8 +14,8 @@ in database objects (LedgerSMB::DBObject)
 
 =item new ()
 
-This method creates a new base request instance. It also validates the 
-session/user credentials, as appropriate for the run mode.  Finally, it sets up 
+This method creates a new base request instance. It also validates the
+session/user credentials, as appropriate for the run mode.  Finally, it sets up
 the database connections for the user.
 
 =item unescape($var)
@@ -24,17 +24,17 @@ Unescapes the var, i.e. converts html entities back to their characters.
 
 =item open_form()
 
-This sets a $self->{form_id} to be used in later form validation (anti-XSRF 
+This sets a $self->{form_id} to be used in later form validation (anti-XSRF
 measure).
 
 =item check_form()
 
-This returns true if the form_id was associated with the session, and false if 
+This returns true if the form_id was associated with the session, and false if
 not.  Use this if the form may be re-used (back-button actions are valid).
 
 =item close_form()
 
-Identical with check_form() above, but also removes the form_id from the 
+Identical with check_form() above, but also removes the form_id from the
 session.  This should be used when back-button actions are not valid.
 
 =item is_run_mode ('(cli|cgi|mod_perl)')
@@ -45,19 +45,19 @@ returns 0.
 =item is_allowed_role({allowed_roles => @role_names})
 
 This function returns 1 if the user's roles include any of the roles in
-@role_names.  
+@role_names.
 
 =item merge ($hashref, keys => @list, index => $number);
 
-This command merges the $hashref into the current object.  If keys are 
+This command merges the $hashref into the current object.  If keys are
 specified, only those keys are used.  Otherwise all keys are merged.
 
-If an index is specified, the merged keys are given a form of 
+If an index is specified, the merged keys are given a form of
 "$key" . "_$index", otherwise the key is used on both sides.
 
 =item set (@attrs)
 
-Copies the given key=>vars to $self. Allows for finer control of 
+Copies the given key=>vars to $self. Allows for finer control of
 merging hashes into self.
 
 =item remove_cgi_globals()
@@ -69,10 +69,10 @@ ability to hide the entire structure for things like CSV lookups.
 
 Function that allows you to call a stored procedure by name and map the appropriate argument to the function values.
 
-Args is an arrayref.  The members of args can be scalars or arrayrefs in which 
+Args is an arrayref.  The members of args can be scalars or arrayrefs in which
 case they are just bound to the placeholders (arrayref to Pg array conversion
 occurs automatically in DBD::Pg 2.x), or they can be hashrefs of the following
-syntax: {value => $data, type=> $db_type}.  The type field is any SQL type 
+syntax: {value => $data, type=> $db_type}.  The type field is any SQL type
 DBD::Pg supports (such as 'PG_BYTEA').
 
 =item dberror()
@@ -113,14 +113,14 @@ This function sets up the db handle for the request
 
 =head1 Copyright (C) 2006, The LedgerSMB core team.
 
- # This work contains copyrighted information from a number of sources 
+ # This work contains copyrighted information from a number of sources
  # all used with permission.
  #
  # This file contains source code included with or based on SQL-Ledger
  # which is Copyright Dieter Simader and DWS Systems Inc. 2000-2005
  # and licensed under the GNU General Public License version 2 or, at
  # your option, any later version.  For a full list including contact
- # information of contributors, maintainers, and copyright holders, 
+ # information of contributors, maintainers, and copyright holders,
  # see the CONTRIBUTORS file.
  #
  # Original Copyright Notice from SQL-Ledger 2.6.17 (before the fork):
@@ -135,6 +135,11 @@ This function sets up the db handle for the request
  #               Jim Rawlings <jim@your-dba.com> (DB2)
  #====================================================================
 =cut
+
+package LedgerSMB;
+
+use strict;
+use warnings;
 
 use CGI::Simple;
 $CGI::Simple::DISABLE_UPLOADS = 0;
@@ -155,13 +160,11 @@ use LedgerSMB::Company_Config;
 use LedgerSMB::DBH;
 use LedgerSMB::Request::Error;
 use Carp;
-use strict;
 use utf8;
 
 
 $CGI::Simple::POST_MAX = -1;
 
-package LedgerSMB;
 use Try::Tiny;
 use DBI;
 
@@ -229,7 +232,7 @@ sub open_form {
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
-    my @vars = $self->call_procedure(procname => 'form_open', 
+    my @vars = $self->call_procedure(procname => 'form_open',
                               args => [$self->{session_id}],
                               continue_on_error => 1
     );
@@ -245,7 +248,7 @@ sub check_form {
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
-    my @vars = $self->call_procedure(funcname => 'form_check', 
+    my @vars = $self->call_procedure(funcname => 'form_check',
                               args => [$self->{session_id}, $self->{form_id}]
     );
     return $vars[0]->{form_check};
@@ -256,7 +259,7 @@ sub close_form {
     if (!$ENV{GATEWAY_INTERFACE}){
         return 1;
     }
-    my @vars = $self->call_procedure(funcname => 'form_close', 
+    my @vars = $self->call_procedure(funcname => 'form_close',
                               args => [$self->{session_id}, $self->{form_id}]
     );
     delete $self->{form_id};
@@ -329,7 +332,7 @@ sub _set_default_locale {
 
     my $lang = $LedgerSMB::Sysconfig::language;
     $self->{_locale}=LedgerSMB::Locale->get_handle($lang);
-    $self->error( __FILE__ . ':' . __LINE__ 
+    $self->error( __FILE__ . ':' . __LINE__
                   . ": Locale ($lang) not loaded: $!\n" )
         unless $self->{_locale};
 }
@@ -388,14 +391,13 @@ sub _process_argstr {
     # are not parameters of the CGI query.
     %params = $query->Vars;
     for my $p(keys %params){
-        if (($params{$p} eq undef) or ($params{$p} eq '')){
+        if ((! defined $params{$p}) or ($params{$p} eq '')){
             delete $params{$p};
             next;
         }
         utf8::decode($params{$p});
         utf8::upgrade($params{$p});
     }
-    $logger->debug("params=", Data::Dumper::Dumper(\%params));
     $self->merge(\%params);
 
     # Adding this so that empty values are stored in the db as NULL's.  If
@@ -403,7 +405,8 @@ sub _process_argstr {
     # they must opt to do so.
     # -- CT
     for (keys %$self){
-        if ($self->{$_} eq ''){
+        if (defined $self->{$_}
+            && $self->{$_} eq ''){
             $self->{$_} = undef;
         }
     }
@@ -474,7 +477,7 @@ sub is_allowed_role {
             return 1;
         }
     }
-    return 0; 
+    return 0;
 }
 
 sub finalize_request {
@@ -499,7 +502,7 @@ sub _error {
     } else {
         $error = LedgerSMB::Request::Error->new(msg => "$msg");
     }
-    
+
     if ( $ENV{GATEWAY_INTERFACE} ) {
 
         delete $self->{pre};
@@ -521,7 +524,7 @@ sub _db_init {
     my $self     = shift @_;
     my %args     = @_;
     (my $package,my $filename,my $line)=caller;
-    if (!$self->{company}){ 
+    if (!$self->{company}){
         $self->{company} = $LedgerSMB::Sysconfig::default_db;
     }
     if (!($self->{dbh} = LedgerSMB::App_State::DBH)){
@@ -536,9 +539,9 @@ sub _db_init {
     } catch {
         $self->_error($_);
     };
-    
+
     my $sth = $self->{dbh}->prepare("
-            SELECT value FROM defaults 
+            SELECT value FROM defaults
              WHERE setting_key = 'role_prefix'");
     $sth->execute;
 
@@ -548,7 +551,7 @@ sub _db_init {
     $sth = $self->{dbh}->prepare('SELECT check_expiration()');
     $sth->execute;
     ($self->{warn_expire}) = $sth->fetchrow_array;
-   
+
     if ($self->{warn_expire}){
         $sth = $self->{dbh}->prepare('SELECT user__check_my_expiration()');
         $sth->execute;
@@ -556,11 +559,11 @@ sub _db_init {
     }
 
 
-    my $query = "SELECT t.extends, 
-			coalesce (t.table_name, 'custom_' || extends) 
-			|| ':' || f.field_name as field_def
-		FROM custom_table_catalog t
-		JOIN custom_field_catalog f USING (table_id)";
+    my $query = "SELECT t.extends,
+            coalesce (t.table_name, 'custom_' || extends)
+            || ':' || f.field_name as field_def
+        FROM custom_table_catalog t
+        JOIN custom_field_catalog f USING (table_id)";
     $sth = $self->{dbh}->prepare($query);
     $sth->execute;
     my $ref;
@@ -570,9 +573,9 @@ sub _db_init {
           $ref->{field_def};
     }
 
-    # Adding role list to self 
+    # Adding role list to self
     $self->{_roles} = [];
-    $query = "select rolname from pg_roles 
+    $query = "select rolname from pg_roles
                where pg_has_role(SESSION_USER, 'USAGE')";
     $sth = $self->{dbh}->prepare($query);
     $sth->execute();
@@ -617,7 +620,7 @@ sub dberror{
            $dbh->err . ", string " .$dbh->errstr);
    if (defined $state_error->{$dbh->state}){
        die $state_error->{$dbh->state}
-           . "\n" . 
+           . "\n" .
           $locale->text('More information has been reported in the error logs');
        $dbh->rollback;
        die;
@@ -673,29 +676,29 @@ sub merge {
 }
 
 sub type {
-    
+
     my $self = shift @_;
-    
-    if (!$ENV{REQUEST_METHOD} or 
+
+    if (!$ENV{REQUEST_METHOD} or
         ( !grep {$ENV{REQUEST_METHOD} eq $_} ("HEAD", "GET", "POST") ) ) {
-        
+
         $self->error("Request method unset or set to unknown value");
     }
-    
+
     return $ENV{REQUEST_METHOD};
 }
 
 sub DESTROY {}
 
 sub set {
-    
+
     my $self = shift @_;
     my %args = @_;
-    
+
     for my $arg (keys(%args)) {
         $self->{$arg} = $args{$arg};
     }
-    return 1;    
+    return 1;
 
 }
 

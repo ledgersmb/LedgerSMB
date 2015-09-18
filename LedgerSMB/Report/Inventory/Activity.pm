@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Report::Inventory::Activity - Inventory Activity reports for 
+LedgerSMB::Report::Inventory::Activity - Inventory Activity reports for
 LedgerSMB
 
 =head1 SYNOPSIS
@@ -45,7 +45,7 @@ has description  => (is => 'ro', isa => 'Str', required => 0);
 
 =over
 
-=item partnumber 
+=item partnumber
 
 =item description
 
@@ -80,7 +80,7 @@ sub columns {
 
      {col_id => 'sold',
         type => 'href',
-        name => LedgerSMB::Report::text('Sold'), 
+        name => LedgerSMB::Report::text('Sold'),
    href_base => "invoice.pl?&from_date=$from_date&to_date=$to_date"
                 . "&open=1&closed=1&action=invoice_search&"
                 . 'col_invnumber=1&col_transdate=1&col_entity_name=1&'
@@ -94,7 +94,7 @@ sub columns {
 
      {col_id => 'purchased',
         type => 'href',
-        name => LedgerSMB::Report::text('Purchased'), 
+        name => LedgerSMB::Report::text('Purchased'),
    href_base => "invoice.pl?&date_from=$self->date_from&date_to=$self->date_to"
                 . "&open=1&closed=1&action=invoice_search&"
                 . 'col_invnumber=1&col_transdate=1&col_entity_name=1&'
@@ -164,3 +164,5 @@ sub run_report {
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

@@ -184,7 +184,7 @@ sub run_report{
     my ($self) = @_;
     my @rows = $self->call_dbmethod(funcname => 'report__cash_summary');
     for my $ref(@rows){
-        $ref->{document_type} = $doctypes->{$ref->{document_type}} 
+        $ref->{document_type} = $doctypes->{$ref->{document_type}}
                 if $doctypes->{$ref->{document_type}};
     }
     $self->rows(\@rows);

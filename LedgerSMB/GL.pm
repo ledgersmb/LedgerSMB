@@ -45,8 +45,8 @@ use LedgerSMB::File;
 
 =item get_files
 
-Returns a list of files associated with the existing transaction.  This is 
-provisional, and wil change for 1.4 as the GL transaction functionality is 
+Returns a list of files associated with the existing transaction.  This is
+provisional, and wil change for 1.4 as the GL transaction functionality is
                   {ref_key => $self->{id}, file_class => 1}
 rewritten
 
@@ -94,11 +94,11 @@ sub post_transaction {
 
             # delete individual transactions
             $query = qq|
-				DELETE FROM acc_trans WHERE trans_id = $id|;
+                DELETE FROM acc_trans WHERE trans_id = $id|;
 
             $dbh->do($query) || $form->dberror($query);
             $query = qq|
-				DELETE FROM voucher WHERE trans_id = $id
+                DELETE FROM voucher WHERE trans_id = $id
                                             and batch_class = 5|;
 
             $dbh->do($query) || $form->dberror($query);
@@ -111,16 +111,16 @@ sub post_transaction {
         $uid .= "$$";
 
         $query = qq|
-		INSERT INTO gl (reference)
-		     VALUES ('$uid')|;
+        INSERT INTO gl (reference)
+             VALUES ('$uid')|;
 
         $sth = $dbh->prepare($query);
         $sth->execute() || $form->dberror($query);
 
         $query = qq|
-			SELECT id 
-			  FROM gl
-			 WHERE reference = '$uid'|;
+            SELECT id
+              FROM gl
+             WHERE reference = '$uid'|;
 
         ( $form->{id} ) = $dbh->selectrow_array($query);
     }
@@ -131,16 +131,16 @@ sub post_transaction {
     $form->{reference} ||= $form->{id};
 
     $query = qq|
-		UPDATE gl 
-		   SET reference = | . $dbh->quote( $form->{reference} ) . qq|,
-		      description = | . $dbh->quote( $form->{description} ) . qq|,
-		      notes = | . $dbh->quote( $form->{notes} ) . qq|,
-		      transdate = ?
-		WHERE id = ?|;
+        UPDATE gl
+           SET reference = | . $dbh->quote( $form->{reference} ) . qq|,
+              description = | . $dbh->quote( $form->{description} ) . qq|,
+              notes = | . $dbh->quote( $form->{notes} ) . qq|,
+              transdate = ?
+        WHERE id = ?|;
 
     if (defined $form->{approved}) {
         my $query = qq| UPDATE gl SET approved = ? WHERE id = ?|;
-        $dbh->prepare($query)->execute($form->{approved}, $form->{id}) 
+        $dbh->prepare($query)->execute($form->{approved}, $form->{id})
              || $form->dberror($query);
         if (!$form->{approved} and $form->{batch_id}){
            if (not defined $form->{batch_id}){
@@ -152,10 +152,10 @@ sub post_transaction {
            # Change the below to die with localization in 1.4
            $form->error('Approved Batch') if $bref->{approved_by};
            $form->error('Locked Batch') if $bref->{locked_by};
-           my $query = qq| 
-			INSERT INTO voucher (batch_id, trans_id, batch_class) 
-			VALUES (?, ?, (select id FROM batch_class 
-			                        WHERE class = ?))|;
+           my $query = qq|
+            INSERT INTO voucher (batch_id, trans_id, batch_class)
+            VALUES (?, ?, (select id FROM batch_class
+                                    WHERE class = ?))|;
            my $sth2 = $dbh->prepare($query);
            $sth2->execute($form->{batch_id}, $form->{id}, 'gl') ||
                 $form->dberror($query);
@@ -171,7 +171,7 @@ sub post_transaction {
     my $credit;
 
     $b_sth = $dbh->prepare(
-            qq|INSERT INTO business_unit_ac (entry_id, class_id, bu_id) | . 
+            qq|INSERT INTO business_unit_ac (entry_id, class_id, bu_id) | .
             qq|VALUES (currval('acc_trans_entry_id_seq'), ?, ?)|
     );
     # insert acc_trans transactions
@@ -206,25 +206,25 @@ sub post_transaction {
             }
 
             $query = qq|
-				INSERT INTO acc_trans 
-				            (trans_id, chart_id, amount, 
-				            transdate, source,
-				            fx_transaction, memo, cleared)
-				    VALUES  (?, (SELECT id
-				                   FROM account
-				                  WHERE accno = ? ),
-				           ?, ?, ?, ?, ?, ?)|;
+                INSERT INTO acc_trans
+                            (trans_id, chart_id, amount,
+                            transdate, source,
+                            fx_transaction, memo, cleared)
+                    VALUES  (?, (SELECT id
+                                   FROM account
+                                  WHERE accno = ? ),
+                           ?, ?, ?, ?, ?, ?)|;
             $sth = $dbh->prepare($query);
             $sth->execute(
                 $form->{id},                  $accno,
                 $amount,                      $form->{transdate},
-                $form->{"source_$i"}, 
+                $form->{"source_$i"},
                 ($form->{"fx_transaction_$i"} || 0), $form->{"memo_$i"},
                 ($form->{"cleared_$i"} || 0)
             ) || $form->dberror($query);
             for my $cls(@{$form->{bu_class}}){
                 if ($form->{"b_unit_$cls->{id}_$i"}){
-                    $b_sth->execute($cls->{id}, 
+                    $b_sth->execute($cls->{id},
                                      $form->{"b_unit_$cls->{id}_$i"});
                 }
             }
@@ -258,11 +258,11 @@ sub transaction {
     if ( $form->{id} ) {
 
         $query = "SELECT setting_key, value
-					FROM defaults
-					WHERE setting_key IN 
-						('closedto', 
-						'revtrans', 
-						'separate_duties')";
+                    FROM defaults
+                    WHERE setting_key IN
+                        ('closedto',
+                        'revtrans',
+                        'separate_duties')";
 
         $sth = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
@@ -273,9 +273,9 @@ sub transaction {
         #$form->{separate_duties} = $results->{'separate_duties'}->{'value'};
         $sth->finish;
 
-        $query = qq|SELECT g.* 
-					  FROM gl g
-					 WHERE g.id = ?|;
+        $query = qq|SELECT g.*
+                      FROM gl g
+                     WHERE g.id = ?|;
 
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
@@ -286,16 +286,16 @@ sub transaction {
 
         # retrieve individual rows
         $query = qq|SELECT ac.*, c.accno, c.description
-					  FROM acc_trans ac
-					  JOIN chart c ON (ac.chart_id = c.id and c.charttype = 'A')
-					 WHERE ac.trans_id = ?
-				  ORDER BY ac.entry_id|;
+                      FROM acc_trans ac
+                      JOIN chart c ON (ac.chart_id = c.id and c.charttype = 'A')
+                     WHERE ac.trans_id = ?
+                  ORDER BY ac.entry_id|;
 
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id} ) || $form->dberror($query);
 
         my $bu_sth = $dbh->prepare(
-            qq|SELECT * FROM business_unit_ac 
+            qq|SELECT * FROM business_unit_ac
                 WHERE entry_id = ?  |
         );
 
@@ -317,11 +317,11 @@ sub transaction {
     else {
 
         $query = "SELECT current_date AS transdate, setting_key, value
-					FROM defaults
-					WHERE setting_key IN 
-						('closedto', 
-						'separate_duties',
-						'revtrans')";
+                    FROM defaults
+                    WHERE setting_key IN
+                        ('closedto',
+                        'separate_duties',
+                        'revtrans')";
 
         $sth = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
@@ -339,14 +339,14 @@ sub transaction {
 
     # get chart of accounts
     $query = qq|SELECT id,accno,description
-				  FROM account
-			  ORDER BY accno|;
+                  FROM account
+              ORDER BY accno|;
 
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-	$ref->{accstyle}=$ref->{accno}."--".$ref->{description};
+    $ref->{accstyle}=$ref->{accno}."--".$ref->{description};
         push @{ $form->{all_accno} }, $ref;
     }
 
@@ -362,27 +362,27 @@ sub get_all_acc_dep_pro
 {
 
    my ( $self, $myconfig, $form ) = @_;
- 
+
    my ( $query, $sth, $ref );
 
    # connect to database
    my $dbh = $form->{dbh};
 
     $query = qq|SELECT id,accno,description
-				  FROM account
-			  ORDER BY accno|;
+                  FROM account
+              ORDER BY accno|;
 
     $sth = $dbh->prepare($query);
     $sth->execute || $form->dberror($query);
 
     while ( $ref = $sth->fetchrow_hashref(NAME_lc) ) {
-	$ref->{accstyle}=$ref->{accno}."--".$ref->{description};
+    $ref->{accstyle}=$ref->{accno}."--".$ref->{description};
         push @{ $form->{all_accno} }, $ref;
     }
 
     $sth->finish;
-   
-    
+
+
     # get projects
     $form->all_business_units( $form->{transdate} );
 

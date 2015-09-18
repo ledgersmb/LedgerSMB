@@ -38,15 +38,15 @@ delete from account_link where description = 'CT_tax';
 --Entity
 
 INSERT INTO entity (name, control_code, entity_class, country_id)
-SELECT name, 'V-' || vendornumber, 1, 
-       (select id from country 
+SELECT name, 'V-' || vendornumber, 1,
+       (select id from country
          where lower(short_name)  = lower(:default_country))
 FROM sl28.vendor
 GROUP BY name, vendornumber;
 
 INSERT INTO entity (name, control_code, entity_class, country_id)
-SELECT name, 'C-' || customernumber, 2, 
-       (select id from country 
+SELECT name, 'C-' || customernumber, 2,
+       (select id from country
          where lower(short_name)  =  lower(:default_country))
 FROM sl28.customer
 GROUP BY name, customernumber;
@@ -58,13 +58,13 @@ UPDATE sl28.customer SET entity_id = coalesce((SELECT min(id) FROM entity WHERE 
 --Entity Credit Account
 
 INSERT INTO entity_credit_account
-(entity_id, meta_number, business_id, creditlimit, ar_ap_account_id, 
+(entity_id, meta_number, business_id, creditlimit, ar_ap_account_id,
 	cash_account_id, startdate, enddate, threshold, entity_class)
 SELECT entity_id, vendornumber, business_id, creditlimit,
        (select id
           from account
          where accno = coalesce((select accno from sl28.chart
-                                  where id = arap_accno_id) ,:ap)),   
+                                  where id = arap_accno_id) ,:ap)),
 	(select id
 	   from account
 	   where accno = (select accno from sl28.chart
@@ -72,19 +72,19 @@ SELECT entity_id, vendornumber, business_id, creditlimit,
 	 startdate, enddate, threshold, 1
 FROM sl28.vendor WHERE entity_id IS NOT NULL;
 
-UPDATE sl28.vendor SET credit_id = 
-	(SELECT id FROM entity_credit_account e 
+UPDATE sl28.vendor SET credit_id =
+	(SELECT id FROM entity_credit_account e
 	WHERE e.meta_number = vendornumber and entity_class = 1
         and e.entity_id = vendor.entity_id);
 
 INSERT INTO entity_credit_account
-(entity_id, meta_number, business_id, creditlimit, ar_ap_account_id, 
+(entity_id, meta_number, business_id, creditlimit, ar_ap_account_id,
 	cash_account_id, startdate, enddate, threshold, entity_class)
 SELECT entity_id, customernumber, business_id, creditlimit,
        (select id
           from account
          where accno = coalesce((select accno from sl28.chart
-                                  where id = arap_accno_id) ,:ar)), 
+                                  where id = arap_accno_id) ,:ar)),
 	(select id
 	   from account
 	   where accno = (select accno from sl28.chart
@@ -92,15 +92,15 @@ SELECT entity_id, customernumber, business_id, creditlimit,
         startdate, enddate, threshold, 2
 FROM sl28.customer WHERE entity_id IS NOT NULL;
 
-UPDATE sl28.customer SET credit_id = 
-	(SELECT id FROM entity_credit_account e 
+UPDATE sl28.customer SET credit_id =
+	(SELECT id FROM entity_credit_account e
 	WHERE e.meta_number = customernumber and entity_class = 2
         and e.entity_id = customer.entity_id);
 
 --Company
 
 INSERT INTO company (entity_id, legal_name, tax_id)
-SELECT entity_id, name, max(taxnumber) FROM sl28.vendor 
+SELECT entity_id, name, max(taxnumber) FROM sl28.vendor
 WHERE entity_id IS NOT NULL AND entity_id IN (select id from entity) GROUP BY entity_id, name;
 
 UPDATE sl28.vendor SET company_id = (select id from company c where entity_id = vendor.entity_id);
@@ -113,68 +113,68 @@ UPDATE sl28.customer SET company_id = (select id from company c where entity_id 
 
 -- Contact
 
-insert into eca_to_contact (credit_id, contact_class_id, contact,description) 
+insert into eca_to_contact (credit_id, contact_class_id, contact,description)
 select v.credit_id, 1, v.phone, 'Primary phone: '||max(v.contact) as description
-from sl28.vendor v 
-where v.company_id is not null and v.phone is not null 
-       and v.phone ~ '[[:alnum:]_]'::text 
+from sl28.vendor v
+where v.company_id is not null and v.phone is not null
+       and v.phone ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.phone
 UNION
-select v.credit_id, 12, v.email, 
-       'email address: '||max(v.contact) as description 
-from sl28.vendor v 
-where v.company_id is not null and v.email is not null 
-       and v.email ~ '[[:alnum:]_]'::text 
+select v.credit_id, 12, v.email,
+       'email address: '||max(v.contact) as description
+from sl28.vendor v
+where v.company_id is not null and v.email is not null
+       and v.email ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.email
 UNION
-select v.credit_id, 12, v.cc, 'Carbon Copy email address' as description 
-from sl28.vendor v 
-where v.company_id is not null and v.cc is not null 
-      and v.cc ~ '[[:alnum:]_]'::text 
+select v.credit_id, 12, v.cc, 'Carbon Copy email address' as description
+from sl28.vendor v
+where v.company_id is not null and v.cc is not null
+      and v.cc ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.cc
-UNION 
-select v.credit_id, 12, v.bcc, 'Blind Carbon Copy email address' as description 
-from sl28.vendor v 
-where v.company_id is not null and v.bcc is not null 
-       and v.bcc ~ '[[:alnum:]_]'::text 
+UNION
+select v.credit_id, 12, v.bcc, 'Blind Carbon Copy email address' as description
+from sl28.vendor v
+where v.company_id is not null and v.bcc is not null
+       and v.bcc ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.bcc
 UNION
-    select v.credit_id, 9, v.fax, 'Fax number' as description 
-from sl28.vendor v 
-where v.company_id is not null and v.fax is not null 
-      and v.fax ~ '[[:alnum:]_]'::text 
+    select v.credit_id, 9, v.fax, 'Fax number' as description
+from sl28.vendor v
+where v.company_id is not null and v.fax is not null
+      and v.fax ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.fax;
 
-insert into eca_to_contact (credit_id, contact_class_id, contact,description) 
+insert into eca_to_contact (credit_id, contact_class_id, contact,description)
 select v.credit_id, 1, v.phone, 'Primary phone: '||max(v.contact) as description
-from sl28.customer v 
-where v.company_id is not null and v.phone is not null 
-       and v.phone ~ '[[:alnum:]_]'::text 
+from sl28.customer v
+where v.company_id is not null and v.phone is not null
+       and v.phone ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.phone
 UNION
-select v.credit_id, 12, v.email, 
-       'email address: '||max(v.contact) as description 
-from sl28.customer v 
-where v.company_id is not null and v.email is not null 
-       and v.email ~ '[[:alnum:]_]'::text 
+select v.credit_id, 12, v.email,
+       'email address: '||max(v.contact) as description
+from sl28.customer v
+where v.company_id is not null and v.email is not null
+       and v.email ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.email
 UNION
-select v.credit_id, 12, v.cc, 'Carbon Copy email address' as description 
-from sl28.customer v 
-where v.company_id is not null and v.cc is not null 
-      and v.cc ~ '[[:alnum:]_]'::text 
+select v.credit_id, 12, v.cc, 'Carbon Copy email address' as description
+from sl28.customer v
+where v.company_id is not null and v.cc is not null
+      and v.cc ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.cc
-UNION 
-select v.credit_id, 12, v.bcc, 'Blind Carbon Copy email address' as description 
-from sl28.customer v 
-where v.company_id is not null and v.bcc is not null 
-       and v.bcc ~ '[[:alnum:]_]'::text 
+UNION
+select v.credit_id, 12, v.bcc, 'Blind Carbon Copy email address' as description
+from sl28.customer v
+where v.company_id is not null and v.bcc is not null
+       and v.bcc ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.bcc
 UNION
-    select v.credit_id, 9, v.fax, 'Fax number' as description 
-from sl28.customer v 
-where v.company_id is not null and v.fax is not null 
-      and v.fax ~ '[[:alnum:]_]'::text 
+    select v.credit_id, 9, v.fax, 'Fax number' as description
+from sl28.customer v
+where v.company_id is not null and v.fax is not null
+      and v.fax ~ '[[:alnum:]_]'::text
 group by v.credit_id, v.fax;
 
 
@@ -186,27 +186,27 @@ INSERT INTO eca_to_location(credit_id, location_class, location_id)
 SELECT eca.id, 1,
     min(location_save(NULL,
 
-    case 
+    case
         when oa.address1 !~ '[[:alnum:]_]' then 'Null'
         when oa.address1 is null then 'Null'
-        else oa.address1 
+        else oa.address1
     end,
-    oa.address2, 
+    oa.address2,
     NULL,
-    case 
-        when oa.city !~ '[[:alnum:]_]' then 'Invalid' 
-        when oa.city is null then 'Null' 
-        else oa.city 
+    case
+        when oa.city !~ '[[:alnum:]_]' then 'Invalid'
+        when oa.city is null then 'Null'
+        else oa.city
     end,
-    case 
-        when oa.state !~ '[[:alnum:]_]' then 'Invalid' 
-        when oa.state is null then 'Null' 
-        else oa.state 
+    case
+        when oa.state !~ '[[:alnum:]_]' then 'Invalid'
+        when oa.state is null then 'Null'
+        else oa.state
     end,
-    case 
-        when oa.zipcode !~ '[[:alnum:]_]' then 'Invalid' 
-        when oa.zipcode is null then 'Null' 
-        else oa.zipcode 
+    case
+        when oa.zipcode !~ '[[:alnum:]_]' then 'Invalid'
+        when oa.zipcode is null then 'Null'
+        else oa.zipcode
     end,
     coalesce(c.id, -1)
     ))
@@ -230,27 +230,27 @@ INSERT INTO eca_to_location(credit_id, location_class, location_id)
 SELECT eca.id, 2,
     min(location_save(NULL,
 
-    case 
+    case
         when oa.shiptoaddress1 !~ '[[:alnum:]_]' then 'Null'
         when oa.shiptoaddress1 is null then 'Null'
-        else oa.shiptoaddress1 
+        else oa.shiptoaddress1
     end,
-    oa.shiptoaddress2, 
+    oa.shiptoaddress2,
     NULL,
-    case 
-        when oa.shiptocity !~ '[[:alnum:]_]' then 'Invalid' 
-        when oa.shiptocity is null then 'Null' 
-        else oa.shiptocity 
+    case
+        when oa.shiptocity !~ '[[:alnum:]_]' then 'Invalid'
+        when oa.shiptocity is null then 'Null'
+        else oa.shiptocity
     end,
-    case 
-        when oa.shiptostate !~ '[[:alnum:]_]' then 'Invalid' 
-        when oa.shiptostate is null then 'Null' 
-        else oa.shiptostate 
+    case
+        when oa.shiptostate !~ '[[:alnum:]_]' then 'Invalid'
+        when oa.shiptostate is null then 'Null'
+        else oa.shiptostate
     end,
-    case 
-        when oa.shiptozipcode !~ '[[:alnum:]_]' then 'Invalid' 
-        when oa.shiptozipcode is null then 'Null' 
-        else oa.shiptozipcode 
+    case
+        when oa.shiptozipcode !~ '[[:alnum:]_]' then 'Invalid'
+        when oa.shiptozipcode is null then 'Null'
+        else oa.shiptozipcode
     end,
     coalesce(c.id, -1)
     ))
@@ -269,15 +269,15 @@ JOIN entity_credit_account eca ON (v.credit_id = eca.id)
 GROUP BY eca.id;
 
 INSERT INTO eca_note(note_class, ref_key, note, vector)
-SELECT 3, credit_id, notes, '' FROM sl28.vendor 
+SELECT 3, credit_id, notes, '' FROM sl28.vendor
 WHERE notes IS NOT NULL AND credit_id IS NOT NULL;
 
 INSERT INTO eca_note(note_class, ref_key, note, vector)
 SELECT 3, credit_id, notes, '' FROM sl28.customer
 WHERE notes IS NOT NULL AND credit_id IS NOT NULL;
 
-UPDATE entity SET country_id = 
-(select country_id FROM location l 
+UPDATE entity SET country_id =
+(select country_id FROM location l
    JOIN eca_to_location e2l ON l.id = e2l.location_id
         AND e2l.location_class = 1
    JOIN entity_credit_account eca ON e2l.credit_id = eca.id
@@ -285,7 +285,7 @@ UPDATE entity SET country_id =
         AND l.country_id > -1
   LIMIT 1)
 WHERE id IN
-(select eca.entity_id FROM location l 
+(select eca.entity_id FROM location l
    JOIN eca_to_location e2l ON l.id = e2l.location_id
         AND e2l.location_class = 1
    JOIN entity_credit_account eca ON e2l.credit_id = eca.id
@@ -302,10 +302,10 @@ select 'E-' || employeenumber, 3, name,
         (select id from country where lower(short_name) = lower(:default_country))
 FROM sl28.employee;
 
-UPDATE sl28.employee set entity_id = 
+UPDATE sl28.employee set entity_id =
        (select id from entity where 'E-'||employeenumber = control_code);
 
-INSERT INTO person (first_name, last_name, entity_id) 
+INSERT INTO person (first_name, last_name, entity_id)
 select name, name, entity_id FROM sl28.employee;
 
 -- users in SL2.8 have to be re-created using the 1.4 user interface
@@ -314,7 +314,7 @@ select name, name, entity_id FROM sl28.employee;
 --     SELECT entity_id, login FROM sl28.employee em
 --      WHERE login IS NOT NULL;
 
-INSERT 
+INSERT
   INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
        employeenumber, dob, manager_id)
 SELECT entity_id, startdate, enddate, role, ssn, sales, employeenumber, dob,
@@ -349,7 +349,7 @@ makemodel, assembly, alternate, rop, (select id
 drawing, microfiche, partsgroup_id, avgcost FROM sl28.parts;
 
 
-INSERT INTO makemodel (parts_id, make, model) 
+INSERT INTO makemodel (parts_id, make, model)
 SELECT parts_id, make, model FROM sl28.makemodel;
 
 INSERT INTO gifi
@@ -363,8 +363,8 @@ be migrated using queries, not just copied over.
 To watch out for: keys which are semantically the same, but have
 different names
 
-UPDATE defaults 
-   SET value = (select fldvalue from sl28.defaults src 
+UPDATE defaults
+   SET value = (select fldvalue from sl28.defaults src
                  WHERE src.fldname = defaults.setting_key)
  WHERE setting_key IN (select fldvalue FROM sl28.defaults
                         where );
@@ -390,7 +390,7 @@ SELECT 1000+id, 2, projectnumber, description, startdate, enddate,
 
 INSERT INTO gl(id, reference, description, transdate, person_id, notes)
     SELECT gl.id, reference, description, transdate, p.id, gl.notes
-      FROM sl28.gl 
+      FROM sl28.gl
  LEFT JOIN sl28.employee em ON gl.employee_id = em.id
  LEFT JOIN person p ON em.entity_id = p.id;
 
@@ -398,20 +398,20 @@ ALTER TABLE gl ENABLE TRIGGER gl_audit_trail;
 
 ALTER TABLE ar DISABLE TRIGGER ar_audit_trail;
 
-insert into ar 
+insert into ar
 (entity_credit_account, person_id,
-	id, invnumber, transdate, taxincluded, amount, netamount, paid, 
+	id, invnumber, transdate, taxincluded, amount, netamount, paid,
 	datepaid, duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
-	shipvia, language_code, ponumber, shippingpoint, 
+	shipvia, language_code, ponumber, shippingpoint,
 	on_hold, approved, reverse, terms, description)
-SELECT 
+SELECT
 	customer.credit_id,
-	(select entity_id from sl28.employee 
+	(select entity_id from sl28.employee
 		WHERE id = ar.employee_id),
-	ar.id, invnumber, transdate, ar.taxincluded, amount, netamount, paid, 
-	datepaid, duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber, 
+	ar.id, invnumber, transdate, ar.taxincluded, amount, netamount, paid,
+	datepaid, duedate, invoice, ordnumber, ar.curr, ar.notes, quonumber,
 	intnotes,
-	shipvia, ar.language_code, ponumber, shippingpoint, 
+	shipvia, ar.language_code, ponumber, shippingpoint,
 	onhold, approved, case when amount < 0 then true else false end,
 	ar.terms, description
 FROM sl28.ar JOIN sl28.customer ON (ar.customer_id = customer.id) ;
@@ -420,20 +420,20 @@ ALTER TABLE ar ENABLE TRIGGER ar_audit_trail;
 
 ALTER TABLE ap DISABLE TRIGGER ap_audit_trail;
 
-insert into ap 
+insert into ap
 (entity_credit_account, person_id,
-	id, invnumber, transdate, taxincluded, amount, netamount, paid, 
+	id, invnumber, transdate, taxincluded, amount, netamount, paid,
 	datepaid, duedate, invoice, ordnumber, curr, notes, quonumber, intnotes,
-        shipvia, language_code, ponumber, shippingpoint, 
+        shipvia, language_code, ponumber, shippingpoint,
 	on_hold, approved, reverse, terms, description)
-SELECT 
+SELECT
 	vendor.credit_id,
-	(select entity_id from sl28.employee 
+	(select entity_id from sl28.employee
 		WHERE id = ap.employee_id),
-	ap.id, invnumber, transdate, ap.taxincluded, amount, netamount, paid, 
-	datepaid, duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber, 
+	ap.id, invnumber, transdate, ap.taxincluded, amount, netamount, paid,
+	datepaid, duedate, invoice, ordnumber, ap.curr, ap.notes, quonumber,
 	intnotes,
-	shipvia, ap.language_code, ponumber, shippingpoint, 
+	shipvia, ap.language_code, ponumber, shippingpoint,
 	onhold, approved, case when amount < 0 then true else false end,
 	ap.terms, description
 FROM sl28.ap JOIN sl28.vendor ON (ap.vendor_id = vendor.id) ;
@@ -450,7 +450,7 @@ update sl28.acc_trans
   set lsmb_entry_id = nextval('acc_trans_entry_id_seq');
 
 INSERT INTO acc_trans
-(entry_id, trans_id, chart_id, amount, transdate, source, cleared, fx_transaction, 
+(entry_id, trans_id, chart_id, amount, transdate, source, cleared, fx_transaction,
 	memo, approved, cleared_on, voucher_id)
 SELECT lsmb_entry_id, trans_id, (select id
                     from account
@@ -464,16 +464,16 @@ SELECT lsmb_entry_id, trans_id, (select id
 
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 1, gl.department_id
-  FROM acc_trans ac 
+  FROM acc_trans ac
   JOIN (SELECT id, department_id FROM sl28.ar UNION ALL
         SELECT id, department_id FROM sl28.ap UNION ALL
-        SELECT id, department_id FROM sl28.gl) gl ON gl.id = ac.trans_id 
+        SELECT id, department_id FROM sl28.gl) gl ON gl.id = ac.trans_id
  WHERE department_id > 0;
 
 INSERT INTO business_unit_ac (entry_id, class_id, bu_id)
 SELECT ac.entry_id, 2, slac.project_id+1000
-  FROM acc_trans ac 
-  JOIN sl28.acc_trans slac ON slac.entry_id = ac.entry_id 
+  FROM acc_trans ac
+  JOIN sl28.acc_trans slac ON slac.entry_id = ac.entry_id
  WHERE project_id > 0;
 
 
@@ -487,14 +487,14 @@ SELECT ac.entry_id, 2, slac.project_id+1000
 
 INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
 SELECT inv.id, 1, gl.department_id
-  FROM invoice inv 
+  FROM invoice inv
   JOIN (SELECT id, department_id FROM sl28.ar UNION ALL
         SELECT id, department_id FROM sl28.ap UNION ALL
         SELECT id, department_id FROM sl28.gl) gl ON gl.id = inv.trans_id
  WHERE department_id > 0;
 
 INSERT INTO business_unit_inv (entry_id, class_id, bu_id)
-SELECT id, 2, project_id + 1000 FROM sl28.invoice 
+SELECT id, 2, project_id + 1000 FROM sl28.invoice
  WHERE project_id > 0 and  project_id in (select id from sl28.project);
 
 
@@ -507,7 +507,7 @@ INSERT INTO partstax (parts_id, chart_id)
        JOIN account a ON chart.accno = a.accno;
 
 INSERT INTO tax(chart_id, rate, taxnumber, validto, pass, taxmodule_id)
-     SELECT a.id, t.rate, t.taxnumber, 
+     SELECT a.id, t.rate, t.taxnumber,
             coalesce(t.validto::timestamp, 'infinity'), 1, 1
        FROM sl28.tax t
        JOIN sl28.chart c ON (t.chart_id = c.id)
@@ -530,7 +530,7 @@ INSERT INTO eca_tax (eca_id, chart_id)
 
 
 
-INSERT 
+INSERT
   INTO oe(id, ordnumber, transdate, amount, netamount, reqdate, taxincluded,
        shippingpoint, notes, curr, person_id, closed, quotation, quonumber,
        intnotes, shipvia, language_code, ponumber, terms,
@@ -539,7 +539,7 @@ SELECT oe.id,  ordnumber, transdate, amount, netamount, reqdate, oe.taxincluded,
        shippingpoint, oe.notes, oe.curr, p.id, closed, quotation, quonumber,
        intnotes, shipvia, oe.language_code, ponumber, oe.terms,
        coalesce(c.credit_id, v.credit_id),
-       case 
+       case
            when c.id is not null and quotation is not true THEN 1
            WHEN v.id is not null and quotation is not true THEN 2
            when c.id is not null and quotation is true THEN 3
@@ -558,7 +558,7 @@ INSERT INTO orderitems(id, trans_id, parts_id, description, qty, sellprice,
        FROM sl28.orderitems;
 
 INSERT INTO business_unit_oitem (entry_id, class_id, bu_id)
-SELECT oi.id, 1, oe.department_id 
+SELECT oi.id, 1, oe.department_id
   FROM orderitems oi
   JOIN sl28.oe ON oi.trans_id = oe.id AND department_id > 0;
 
@@ -619,9 +619,9 @@ INSERT INTO user_preference(id)
 
 INSERT INTO recurring(id, reference, startdate, nextdate, enddate,
             recurring_interval, howmany, payment)
-     SELECT id, reference, startdate, nextdate, enddate, 
+     SELECT id, reference, startdate, nextdate, enddate,
             (repeat || ' ' || unit)::interval,
-            howmany, payment 
+            howmany, payment
        FROM sl28.recurring;
 
 INSERT INTO recurringemail SELECT * FROM sl28.recurringemail;
