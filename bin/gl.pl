@@ -229,12 +229,11 @@ sub display_form
 
     $focus = ( $form->{focus} ) ? $form->{focus} : "debit_$form->{rowcount}";
     our %hiddens = (
-    'action' => $form->{action},
     'direction' => $form->{direction},
     'oldsort' => $form->{oldsort},
     'path' => $form->{path},
     'login' => $form->{login},
-    'sessionid' => $form->{sessionid},
+    'session_id' => $form->{session_id},
     'batch_id' => $form->{batch_id},
     'id' => $form->{id},
     'transfer' => $form->{transfer},
@@ -244,6 +243,8 @@ sub display_form
     'recurring' => $form->{recurring},
     'title' => $title,
     'approved' => $form->{approved}
+     'callback' => $form->{callback};
+     'form_id' => $form->{form_id};
     );
 
 
@@ -259,9 +260,6 @@ sub display_form
     $form->format_amount( \%myconfig, $form->{$_}, 2, "0" );
   }
 
-  $hiddens{sessionid}=$form->{sessionid};
-  $hiddens{callback}=$form->{callback};
-  $hiddens{form_id}= $form->{form_id};
   $transdate = $form->datetonum( \%myconfig, $form->{transdate} );
   $closedto  = $form->datetonum( \%myconfig, $form->{closedto} );
   my @buttons;
