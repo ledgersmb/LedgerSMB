@@ -2325,13 +2325,19 @@ sub create_links {
 
         ($val) = $sth->fetchrow_array();
         if ( $_ eq 'curr' ) {
-            $self->{currencies} = $val;
+            $self->{defaultcurrency} = $val;
         }
         else {
             $self->{$_} = $val;
         }
         $sth->finish;
     }
+    $sth = $dbh->prepare("select curr from currency");
+    $sth->execute || $self->dberror($query);
+    my @curr = grep { ! ($_ eq $self->{defaultcurrency}) }
+               map { $_->[0] } @{$sth->fetchall_arrayref()};
+    $self->{currencies} = [
+        $self->{defaultcurrency}, (@curr) ];
     if (!$self->{id} && !$self->{transdate}){
         $self->{transdate} = $self->{current_date};
     }

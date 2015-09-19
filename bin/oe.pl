@@ -123,9 +123,7 @@ sub order_links {
 				 undef, $form->{transdate}, 1 );
 
     # currencies
-    @curr = split /:/, $form->{currencies};
-    $form->{defaultcurrency} = $curr[0];
-    chomp $form->{defaultcurrency};
+    @curr = @{$form->{currencies}};
     $form->{currency} = $form->{defaultcurrency} unless $form->{currency};
 
     for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }

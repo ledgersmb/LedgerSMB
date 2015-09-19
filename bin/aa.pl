@@ -209,9 +209,7 @@ sub create_links {
            'No currencies defined.  Please set these up under System/Defaults.'
         ));
     }
-    @curr = split /:/, $form->{currencies};
-    $form->{defaultcurrency} = $curr[0];
-    chomp $form->{defaultcurrency};
+    @curr = @{$form->{currencies}};
 
     for (@curr) { $form->{selectcurrency} .= "<option>$_\n"  
                      unless  $form->{selectcurrency} =~ /<option[^>]*>$_/
