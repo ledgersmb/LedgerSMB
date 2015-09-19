@@ -24,6 +24,7 @@ use LedgerSMB::Report::Listings::Warehouse;
 use LedgerSMB::Report::Listings::Language;
 use LedgerSMB::Report::Listings::SIC;
 use LedgerSMB::Report::Listings::Overpayments;
+use LedgerSMB::Setting;
 use LedgerSMB::DBObject::Payment; # To move this off after rewriting payments
 use strict;
 
@@ -83,8 +84,7 @@ sub start_report {
     @{$request->{all_years}} = $request->call_procedure(
               procname => 'date_get_all_years'
     );
-    my $curr = LedgerSMB::Setting->get('curr');
-    @{$request->{currencies}} = split ':', $curr;
+    @{$request->{currencies}} = (LedgerSMB::Setting->new)->get_currencies();
     $_ = {id => $_, text => $_} for @{$request->{currencies}};
     my $months = LedgerSMB::App_State::all_months();
     $request->{all_months} = $months->{dropdown};

@@ -867,9 +867,7 @@ sub retrieve_invoice {
 			         WHERE c.id = (SELECT value::int FROM defaults
 			                        WHERE setting_key =
 			                              'fxloss_accno_id'))
-			       AS fxloss_accno, 
-			       (SELECT value FROM defaults
-			         WHERE setting_key = 'curr') AS currencies|;
+			       AS fxloss_accno|;
     }
     else {
         $query = qq|
@@ -901,9 +899,7 @@ sub retrieve_invoice {
 			         WHERE c.id = (SELECT value::int FROM defaults
 			                        WHERE setting_key =
 			                              'fxloss_accno_id'))
-			       AS fxloss_accno, 
-			       (SELECT value FROM defaults
-			         WHERE setting_key = 'curr') AS currencies,
+			       AS fxloss_accno,
 			       current_date AS transdate|;
     }
     my $sth = $dbh->prepare($query);
@@ -914,6 +910,7 @@ sub retrieve_invoice {
         $form->{$_} = $ref->{$_};
     }
     $sth->finish;
+    @{$form->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
 
     if ( $form->{id} ) {
 

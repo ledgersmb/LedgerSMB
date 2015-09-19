@@ -79,8 +79,7 @@ sub display {
     @{$request->{b_units}} = LedgerSMB::Business_Unit->list(
           $request->{bu_class_id}, undef, 0, $request->{transdate}
     );
-    my $curr = LedgerSMB::Setting->get('curr');
-    @{$request->{currencies}} = split /:/, $curr;
+    @{$request->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
     $request->{total} = $request->{qty} + $request->{non_billable};
      my $template = LedgerSMB::Template->new(
          user     => $request->{_user},
@@ -108,8 +107,7 @@ sub timecard_screen {
          @{$request->{b_units}} = LedgerSMB::Business_Unit->list(
               $request->{bu_class_id}, undef, 0, $request->{transdate}
          );
-         my $curr = LedgerSMB::Setting->get('curr');
-         @{$request->{currencies}} = split /:/, $curr;
+         @{$request->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
          my $startdate = LedgerSMB::PGDate->from_input($request->{date_from});
          
          my @dates = ();

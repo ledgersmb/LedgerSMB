@@ -1533,26 +1533,20 @@ sub retrieve_invoice {
 
     my $query;
 
-    if ( $form->{id} ) {
-
-        # get default accounts and last invoice number
+    if ( ! $form->{id} ) {
         $query = qq|
-			SELECT value AS currencies FROM defaults
-			 WHERE setting_key = 'curr'|;
-    }
-    else {
-        $query = qq|
-			SELECT value AS currencies, current_date AS transdate
+			SELECT current_date AS transdate
 			  FROM defaults
 			 WHERE setting_key = 'curr'|;
+        my $sth = $dbh->prepare($query);
+        $sth->execute || $form->dberror($query);
+
+        my $ref = $sth->fetchrow_hashref(NAME_lc);
+        for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
+        $sth->finish;
     }
-    my $sth = $dbh->prepare($query);
-    $sth->execute || $form->dberror($query);
-
-    my $ref = $sth->fetchrow_hashref(NAME_lc);
-    for ( keys %$ref ) { $form->{$_} = $ref->{$_} }
-    $sth->finish;
-
+    @{$form->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
+    
     if ( $form->{id} ) {
 
         # retrieve invoice
