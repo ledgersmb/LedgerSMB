@@ -272,7 +272,9 @@ sub _main_screen {
     my @business_types =
                LedgerSMB->call_procedure(funcname => 'business_type__list');
 
-    my @all_currencies = LedgerSMB::Setting->new()->get_currencies;
+    my @all_currencies =
+        map { { curr => $_ } }
+        (LedgerSMB::Setting->new())->get_currencies;
 
     my $default_country = LedgerSMB::Setting->get('default_country');
 
