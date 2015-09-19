@@ -40,6 +40,7 @@ LedgerSMB:GL - General Ledger backend code
 package GL;
 
 use LedgerSMB::File;
+use LedgerSMB::Setting;
 
 =over
 
@@ -273,8 +274,7 @@ sub transaction {
 					WHERE setting_key IN 
 						('closedto', 
 						'revtrans', 
-						'separate_duties',
-                  'curr')";
+						'separate_duties')";
 
         $sth = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
@@ -282,7 +282,7 @@ sub transaction {
         my $results = $sth->fetchall_hashref('setting_key');
         $form->{closedto} = $results->{'closedto'}->{'value'};
         $form->{revtrans} = $results->{'revtrans'}->{'value'};
-        @{$form->{currencies}} = split /:/, $results->{'curr'}->{'value'};
+        @{$form->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
         #$form->{separate_duties} = $results->{'separate_duties'}->{'value'};
         $sth->finish;
 
@@ -332,8 +332,7 @@ sub transaction {
 					WHERE setting_key IN 
 						('closedto', 
 						'separate_duties',
-						'revtrans',
-                  'curr')";
+						'revtrans')";
 
         $sth = $dbh->prepare($query);
         $sth->execute || $form->dberror($query);
@@ -342,7 +341,7 @@ sub transaction {
         $form->{separate_duties} = $results->{'separate_duties'}->{'value'};
         $form->{closedto}  = $results->{'closedto'}->{'value'};
         $form->{revtrans}  = $results->{'revtrans'}->{'value'};
-        @{$form->{currencies}} = split /:/, $results->{'curr'}->{'value'};
+        @{$form->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
         if (!$form->{transdate}){
             $form->{transdate} = $results->{'revtrans'}->{'transdate'};
         }
