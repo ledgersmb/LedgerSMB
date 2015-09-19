@@ -483,12 +483,11 @@ DECLARE
         t_amount numeric;
         t_ar_ap_id int;
         t_cash_id int;
-        t_currs text[];
+        t_defaultcurr text;
         t_exchangerate numeric;
         t_cash_sign int;
         t_batch batch;
 BEGIN
-
         t_exchangerate := in_exchangerate;
 
         IF in_batch_id IS NULL THEN
@@ -509,40 +508,49 @@ BEGIN
                 t_voucher_id := currval('voucher_id_seq');
         END IF;
 
-        SELECT string_to_array(value, ':') into t_currs
-          from defaults
-         where setting_key = 'curr';
+        SELECT * INTO t_defaultcurr
+          FROM defaults_get_defaultcurrency();
 
-        IF (in_currency IS NULL OR in_currency = t_currs[1]) THEN
+        IF (in_currency IS NULL OR in_currency = t_defaultcurr) THEN
                 t_exchangerate := 1;
         END IF;
         IF t_exchangerate IS NULL THEN
             RAISE EXCEPTION 'No exchangerate provided and not default currency';
         END IF;
 
-        CREATE TEMPORARY TABLE bulk_payments_in
-           (id int, amount numeric, fxrate numeric, gain_loss_accno int);
-
-        select id into t_ar_ap_id from chart where accno = in_ar_ap_accno;
-        select id into t_cash_id from chart where accno = in_cash_accno;
+        CREATE TEMPORARY TABLE bulk_payments_in (
+            id int,                   -- AR/AP id
+            eca_id int,               -- entity_credit_account.id
+            amount_bc numeric,        -- amount in local currency (current rate)
+            amount_tc numeric,        -- amount in foreign currency
+            disc_amount_bc numeric,   -- discount amount in
+            disc_amount_tc numeric,
+            fxrate numeric,
+            gain_loss_accno int);
 
         FOR out_count IN
                         array_lower(in_transactions, 1) ..
                         array_upper(in_transactions, 1)
         LOOP
             -- Fill the bulk payments table
-            INSERT INTO bulk_payments_in(id, amount)
+            IF in_transactions[out_count][2] <> 0;
+               INSERT INTO bulk_payments_in(id, amount_tc)
             VALUES (in_transactions[out_count][1],
                     in_transactions[out_count][2]);
+            END IF;
         END LOOP;
 
-        IF in_account_class = 1 THEN
-            t_cash_sign := 1;
-        ELSE
-            t_cash_sign := -1;
-        END IF;
+        UPDATE bulk_payments_in bpi
+           SET eca_id =
+                  (SELECT entity_credit_account FROM ar
+                            WHERE in_account_class = 2
+                              AND bpi.id = ar.id
+                            UNION
+                           SELECT entity_credit_account FROM ap
+                            WHERE in_account_class = 1
+                              AND bpi.id = ap.id);
 
-        IF (in_currency IS NULL OR in_currency = t_currs[1]) THEN
+        IF (in_currency IS NULL OR in_currency = t_defaultcurr) THEN
             UPDATE bulk_payments_in
                SET fxrate = 1;
         ELSE
@@ -551,112 +559,137 @@ BEGIN
                 (SELECT fxrate
                    
                    FROM (SELECT id, CASE WHEN amount_tc<>0
-                         --###VERIFY: is it _bc/_tc or the other way around???
                                       THEN amount_bc/amount_tc
                                     ELSE NULL END as fxrate
                          FROM ar
                          UNION
                          SELECT id, CASE WHEN amount_tc<>0
-                         --###VERIFY: is it _bc/_tc or the other way around???
                                       THEN amount_bc/amount_tc
                                     ELSE NULL END as fxrate
                          FROM ap) a
                    WHERE a.id = bulk_payments_in.id);
+
             UPDATE bulk_payments_in
                SET gain_loss_accno =
                 (SELECT value::int FROM defaults
                   WHERE setting_key = 'fxgain_accno_id')
-             WHERE ((t_exchangerate - bulk_payments_in.fxrate) * t_cash_sign) < 0;
+             WHERE ((t_exchangerate - bulk_payments_in.fxrate)
+                    * t_cash_sign) < 0;
+
             UPDATE bulk_payments_in
                SET gain_loss_accno = (SELECT value::int FROM defaults
                   WHERE setting_key = 'fxloss_accno_id')
-             WHERE ((t_exchangerate - bulk_payments_in.fxrate) * t_cash_sign) > 0;
+             WHERE ((t_exchangerate - bulk_payments_in.fxrate)
+                    * t_cash_sign) > 0;
             -- explicitly leave zero gain/loss accno_id entries at NULL
-            -- so we have an easy check for which
+            -- so we have an easy check later
         END IF;
 
-        -- Insert cash side
+        UPDATE bulk_payments_in bpi
+           SET disc_amount_tc = coalesce(
+                  (SELECT bpi.amount_tc
+                          / (100 - eca.discount::numeric)
+                          * eca.discount::numeric
+                     FROM entity_credit_account eca
+                    WHERE extract('days' from age(gl.transdate))
+                                  < eca.discount_terms
+                          AND eca.discount_terms IS NOT NULL
+                          AND eca.discount IS NOT NULL
+                          AND eca.discount_account_id IS NOT NULL
+                          AND eca.id = bpi.eca_id),
+                  0);
+
+        UPDATE bulk_payments_in
+           SET amount_bc = amount_tc * t_exchangerate,
+               disc_amount_bc = disc_amount_tc * t_exchangerate;
+
+
+        select id into t_ar_ap_id from chart where accno = in_ar_ap_accno;
+        select id into t_cash_id from chart where accno = in_cash_accno;
+
+        IF in_account_class = 1 THEN
+            t_cash_sign := 1;
+        ELSE
+            t_cash_sign := -1;
+        END IF;
+
+
+-- Given an open item, created on an earlier date, at an FX rate of '2',
+-- the code below inserts this transaction (for each line in bulk_payments_in),
+-- with the FX rate of the current transaction being '3' and the terms of the
+-- transaction being 10/30 and the transaction being paid within the term.
+
+--                   |   Credits       |   Debits        |   FX  |
+--                   |   BC   |   TC   |   BC   |   TC   |  rate |
+--   ----------------+--------+--------+--------+--------+-------|
+--   Current account |     81 |     27 |        |        |  curr |
+--   Discounts       |      9 |      3 |        |        |  curr |
+--   ----------------+--------+--------+--------+--------+-------|
+--   Accounts rec    |        |        |     60 |     30 |  orig |
+--   FX effects      |        |        |     30 |      0 |   na  |
+--   ----------------+--------+--------+--------+--------+-------|
+--   Total           |     90 |     30 |     90 |     30 |       |
+--   ----------------+--------+--------+--------+--------|-------|
+
+-- Note: due to the fact that the discount is valued at the current rate,
+--   the revaluation is based on the accounts receivable amount.
+--   If the discount amount were to be valued at the original rate,
+--   the FX effect should be calculated based on the current payment amount
+
+
+        -- Insert cash side @ current fx rate
         INSERT INTO acc_trans
-             (trans_id, chart_id, amount, approved,
+             (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
               voucher_id, transdate, source)
-           SELECT id, t_cash_id, amount * t_cash_sign * t_exchangerate/fxrate,
+           SELECT id, t_cash_id, amount_bc * t_cash_sign,
+                  in_currency, amount_tc * t_cash_sign,
                   CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
                   t_voucher_id, in_payment_date, in_source
-             FROM bulk_payments_in  where amount <> 0;
+             FROM bulk_payments_in  where amount_tc <> 0;
 
-        -- early payment discounts
-        IF t_cash_sign IS NULL THEN
-             raise exception 't_cash_sign is null';
-        ELSIF t_exchangerate IS NULL THEN
-             raise exception 't_exchangerate is null';
-        END IF;
+        -- Insert discount @ current fx rate
         INSERT INTO acc_trans
-               (trans_id, chart_id, amount, approved,
+               (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
                voucher_id, transdate, source)
         SELECT bpi.id, eca.discount_account_id,
-               amount * t_cash_sign * t_exchangerate/fxrate
-               / (1 - discount::numeric/100)
-               * (discount::numeric/100),
+               disc_amount_bc * t_cash_sign, in_currency,
+               disc_amount_tc * t_cash_sign,
                CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
                t_voucher_id, in_payment_date, in_source
           FROM bulk_payments_in bpi
-          JOIN (select entity_credit_account, id, transdate FROM ar
-                 WHERE in_account_class = 2
-                 UNION
-                SELECT entity_credit_account, id, transdate FROM ap
-                 WHERE in_account_class = 1) gl ON gl.id = bpi.id
-          JOIN entity_credit_account eca ON gl.entity_credit_account = eca.id
-         WHERE bpi.amount <> 0
-               AND extract('days' from age(gl.transdate)) < eca.discount_terms
-               and eca.discount_terms is not null AND discount IS NOT NULL
-               AND eca.discount_account_id IS NOT NULL;
+          JOIN entity_credit_account eca ON bpi.eca_id = eca.id
+         WHERE bpi.disc_amount_bc <> 0;
 
+        -- Insert AR/AP amount @ orginal rate
         INSERT INTO acc_trans
-               (trans_id, chart_id, amount, approved,
+               (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
                voucher_id, transdate, source)
         SELECT bpi.id, t_ar_ap_id,
-               amount * t_cash_sign * -1 * t_exchangerate/fxrate
-               / (1 - discount::numeric/100)
-               * (discount::numeric/100),
+               (bpi.amount_tc + bpi.disc_amount_tc)
+                  * t_cash_sign * -1 * bpi.fxrate, in_currency,
+               (bpi.amount_tc + bpi.disc_amount_tc)
+                  * t_cash_sign * -1,
                CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
                t_voucher_id, in_payment_date, in_source
           FROM bulk_payments_in bpi
-          JOIN (select entity_credit_account, id, transdate FROM ar
-                 WHERE in_account_class = 2
-                 UNION
-                SELECT entity_credit_account, id, transdate FROM ap
-                 WHERE in_account_class = 1) gl ON gl.id = bpi.id
-          JOIN entity_credit_account eca ON gl.entity_credit_account = eca.id
-         WHERE bpi.amount <> 0
-               AND extract('days' from age(gl.transdate)) < eca.discount_terms
-               AND eca.discount_terms IS NOT NULL AND discount IS NOT NULL
-               AND eca.discount_account_id IS NOT NULL;
-
-        -- Insert ar/ap side
-        INSERT INTO acc_trans
-             (trans_id, chart_id, amount, approved,
-              voucher_id, transdate, source)
-           SELECT id, t_ar_ap_id,
-                  amount * -1 * t_cash_sign,
-                  CASE WHEN t_voucher_id IS NULL THEN true
-                       ELSE false END,
-                  t_voucher_id, in_payment_date, in_source
-             FROM bulk_payments_in where amount <> 0;
+          JOIN entity_credit_account eca ON bpi.eca_id = eca.id;
 
         -- Insert fx gain/loss effects, if applicable
         INSERT INTO acc_trans
-             (trans_id, chart_id, amount, approved,
+             (trans_id, chart_id, amount_bc, curr, amount_tc, approved,
               voucher_id, transdate, source)
            SELECT id, gain_loss_accno,
-                  amount * t_cash_sign * (1 - t_exchangerate/fxrate),
+                  (amount_tc + amount_bc) * t_cash_sign *
+                     (t_exchangerate - fxrate),
+                  in_currency, 0,
                   CASE WHEN t_voucher_id IS NULL THEN true
                        ELSE false END,
                   t_voucher_id, in_payment_date, in_source
              FROM bulk_payments_in
-            WHERE amount <> 0 AND gain_loss_accno IS NOT NULL;
+            WHERE gain_loss_accno IS NOT NULL;
 
         DROP TABLE bulk_payments_in;
         perform unlock_all();
