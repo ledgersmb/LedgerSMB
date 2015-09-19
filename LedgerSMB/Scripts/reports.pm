@@ -23,6 +23,7 @@ use LedgerSMB::Report::Listings::Warehouse;
 use LedgerSMB::Report::Listings::Language;
 use LedgerSMB::Report::Listings::SIC;
 use LedgerSMB::Report::Listings::Overpayments;
+use LedgerSMB::Setting;
 use LedgerSMB::DBObject::Payment; # To move this off after rewriting payments
 use strict;
 use warnings;
