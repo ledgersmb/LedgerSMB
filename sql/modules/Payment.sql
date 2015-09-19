@@ -533,7 +533,7 @@ BEGIN
                         array_upper(in_transactions, 1)
         LOOP
             -- Fill the bulk payments table
-            IF in_transactions[out_count][2] <> 0;
+            IF in_transactions[out_count][2] <> 0 THEN
                INSERT INTO bulk_payments_in(id, amount_tc)
                     VALUES (in_transactions[out_count][1],
                             in_transactions[out_count][2]);
