@@ -181,7 +181,9 @@ sub _increment_process{
 sub get_currencies {
     my $self = shift;
 
-    @{$self->{currencies}} = $self->exec_method(funcname => 'currency__list');
+    @{$self->{currencies}} =
+        map { $_->{curr} }
+        $self->exec_method(funcname => 'currency__list');
     return @{$self->{currencies}};
 }
 
