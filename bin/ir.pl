@@ -820,12 +820,19 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
         }
 
         $form->{invsubtotal} =
-          $form->format_amount( \%myconfig, $form->{invsubtotal}, 2, 0 );
+            $form->format_amount( \%myconfig, $form->{invsubtotal}, 2, 0 );
+        my $invsubtotal_bc =
+            $form->format_amount( \%myconfig,
+                                  $form->{invsubtotal} * $form->{exchangerate},
+                                  2);
 
         $subtotal = qq|
 	      <tr>
 		<th align=right>| . $locale->text('Subtotal') . qq|</th>
-		<td align=right>$form->{invsubtotal}</td>
+		<td align=right>$form->{invsubtotal}</td>| .
+      (($form->{currency} ne $form->{defaultcurrency})
+       ? "<td align=right>$invsubtotal_bc</td>" : '')
+      . qq|
 	      </tr>
 |;
 
@@ -885,16 +892,25 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
 	    $taxincluded <br/>
 	    <table>
               <tr><th align="center" colspan="2">|.
-                   $locale->text('Calculate Taxes').qq|</th>
-              </tr>
+              $locale->text('Calculate Taxes').qq|</th></tr>
               <tr>
                    <td colspan=2>$manual_tax</td>
-               </tr>
+               </tr>| .
+              (($form->{currency} ne $form->{defaultcurrency})
+               ? "<tr><td colspan=2></td><td align=right>$form->{defaultcurrency}</td></tr>" : '')
+              . qq|</tr>
+
 	      $subtotal
 	      $tax
 	      <tr>
 		<th align=right>| . $locale->text('Total') . qq|</th>
-		<td align=right>$form->{invtotal}</td>
+		<td align=right>$form->{invtotal}</td>| .
+      (($form->{currency} ne $form->{defaultcurrency})
+       ? ("<td align=right>" . $form->format_amount( \%myconfig,
+                                                     $form->{invtotal}
+                                                     * $form->{exchangerate}, 2)
+          . "</td>") : '') . qq|
+
 	      </tr>
 	    </table>
 	  </td>

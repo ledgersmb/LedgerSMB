@@ -913,15 +913,26 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
         $subtotal = qq|
 	      <tr>
 		<th align=right>| . $locale->text('Subtotal') . qq|</th>
-		<td align=right>$form->{invsubtotal}</td>
-	      </tr>
+		<td align=right>$form->{invsubtotal}</td>| .
+      (($form->{currency} ne $form->{defaultcurrency})
+         ? ("<td align=right>".$form->format_amount( \%myconfig,
+                                         $form->{invsubtotal}
+                                        * $form->{exchangerate}, 2)."</td>")
+         : '')
+      . qq|</tr>
 |;
 
     }
 
     $form->{oldinvtotal} = $form->{invtotal};
     $form->{invtotal} =
-    $form->format_amount( \%myconfig, $form->{invtotal}, 2, 0 );
+        $form->format_amount( \%myconfig, $form->{invtotal}, 2, 0 );
+    my $invtotal_bc;
+    $invtotal_bc =
+        $form->format_amount( \%myconfig,
+                              $form->{invtotal} * $form->{exchangerate}, 2)
+        if $form->{currency} ne $form->{defaultcurrency};
+                                         
     
     my $hold;
     my $hold_button_text;
@@ -970,16 +981,20 @@ qq|<textarea name="intnotes" rows="$rows" cols="40" wrap="soft">$form->{intnotes
 	  <td align=right>
 	    <table>
               <tr><th align="center" 
-                      colspan="2">|.$locale->text('Calculate Taxes').qq|</th>
+                      colspan="2">|.$locale->text('Calculate Taxes') . qq|</th>
               </tr>
               <tr>
-                   <td colspan="3">$manual_tax</td>
-               </tr>
+                   <td colspan="3">$manual_tax</td>|.
+    (($form->{currency} ne $form->{defaultcurrency})
+         ? "<tr><th colspan=2></th><th>$form->{defaultcurrency}</th></tr>" : '') . qq|</tr>
 	      $subtotal
 	      $tax
 	      <tr>
 		<th align=right>| . $locale->text('Total') . qq|</th>
-		<td align=right>$form->{invtotal}</td>
+		<td align=right>$form->{invtotal}</td>| .
+      (($form->{currency} ne $form->{defaultcurrency})
+       ? "<td align=right>$invtotal_bc</td>" : '')
+      . qq|
 	      </tr>
 	      $taxincluded
 	    </table>
