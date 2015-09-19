@@ -657,7 +657,7 @@ $form->open_status_div . qq|
     print qq|
     <tr>
       <th>| . $locale->text('Amount') . qq|</th>
-      <th></th>
+	  <th>| . (($form->{currency} ne $form->{defaultcurrency}) ? $form->{defaultcurrency} : '') . qq|</th>
       <th>| . $locale->text('Account') . qq|</th>
       <th>| . $locale->text('Description') . qq|</th>
       <th>| . $locale->text('Tax Form Applied') . qq|</th>|;
@@ -704,9 +704,12 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     $taxformcheck=qq|<td><input type="checkbox" data-dojo-type="dijit/form/CheckBox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
         print qq|
     <tr valign=top>
-      <td><input data-dojo-type="dijit/form/TextBox" name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
-      <td></td>
-      <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_amount_$i">$form->{"select$form->{ARAP}_amount_$i"}</select></td>
+	  <td><input data-dojo-type="dijit/form/TextBox" name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
+	  <td>| . (($form->{currency} ne $form->{defaultcurrency})
+              ? $form->format_amount(\%myconfig, $form->{"amount_$i"}
+                                                  * $form->{exchangerate},2)
+              : '')  . qq|</td>
+	  <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_amount_$i">$selectamount</select></td>
       $description
           $taxformcheck
       $project|;
@@ -775,8 +778,11 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     print qq|
         <tr>
       <th align=left>$form->{invtotal}</th>
-      <td></td>
-      <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}" id="$form->{ARAP}">
+	  <td>| . (($form->{currency} ne $form->{defaultcurrency})
+              ? $form->format_amount(\%myconfig,
+                                     $form->{invtotal}
+                                     * $form->{exchangerate}, 2) : '') . qq|</td>
+	  <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}" id="$form->{ARAP}">
                  $form->{"select$form->{ARAP}"}
               </select></td>
         </tr>
