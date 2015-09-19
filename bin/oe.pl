@@ -44,6 +44,7 @@ use LedgerSMB::OE;
 use LedgerSMB::IR;
 use LedgerSMB::IS;
 use LedgerSMB::PE;
+use LedgerSMB::Setting;
 use LedgerSMB::Tax;
 use LedgerSMB::Locale;
 

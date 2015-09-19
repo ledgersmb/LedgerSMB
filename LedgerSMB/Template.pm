@@ -152,11 +152,12 @@ use warnings;
 use strict;
 use Carp;
 
-use LedgerSMB::Sysconfig;
-use LedgerSMB::Mailer;
+use LedgerSMB::App_State;
 use LedgerSMB::Company_Config;
 use LedgerSMB::Locale;
-use LedgerSMB::App_State;
+use LedgerSMB::Mailer;
+use LedgerSMB::Setting;
+use LedgerSMB::Sysconfig;
 use Log::Log4perl;
 use File::Copy "cp";
 
