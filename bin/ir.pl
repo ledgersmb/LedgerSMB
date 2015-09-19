@@ -169,6 +169,8 @@ sub invoice_links {
               'No currencies defined.  Please set these up under System/Defaults.'
                             ));
     }
+    @curr = @{$form->{currencies}};
+    for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
 
 
     if ( @{ $form->{all_vendor} } ) {

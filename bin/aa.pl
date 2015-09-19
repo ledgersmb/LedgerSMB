@@ -214,6 +214,11 @@ sub create_links {
            'No currencies defined.  Please set these up under System/Defaults.'
         ));
     }
+    @curr = @{$form->{currencies}};
+
+    for (@curr) { $form->{selectcurrency} .= "<option>$_\n"  
+                     unless  $form->{selectcurrency} =~ /<option[^>]*>$_/
+    }
 
     my $vc = $form->{vc};
     AA->get_name( \%myconfig, \%$form )

@@ -123,6 +123,12 @@ sub order_links {
                  ( $form->{vc} eq 'customer' ) ? "AR" : "AP",
                  undef, $form->{transdate}, 1 );
 
+    # currencies
+    @curr = @{$form->{currencies}};
+    $form->{currency} = $form->{defaultcurrency} unless $form->{currency};
+
+    for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
+
     $form->{oldlanguage_code} = $form->{language_code};
 
     $l{language_code} = $form->{language_code};

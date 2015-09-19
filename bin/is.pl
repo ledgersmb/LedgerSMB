@@ -154,6 +154,17 @@ sub invoice_links {
            'No currencies defined.  Please set these up under System/Defaults.'
         ));
     }
+    @curr = @{$form->{currencies}};
+
+    for (@curr) { $form->{selectcurrency} .= "<option>$_\n" }
+
+    ###TODO 20151108: came with merge from 1.4-mc; incorrectly?
+    if ( @{ $form->{all_customer} } ) {
+        unless ( $form->{customer_id} ) {
+            $form->{customer_id} = $form->{all_customer}->[0]->{id};
+        }
+    }
+    ###TODO 20151108; end of merge region
 
     AA->get_name( \%myconfig, \%$form );
     delete $form->{notes};
