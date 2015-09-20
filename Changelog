@@ -20,6 +20,7 @@ Changelog for 1.4.16
 * Fixed shell environment being clobbered when loading schema (GH #813) (ErikH)
 * Fixed FX handling in payment bulk posting workflow (GH #758)
 * Removed unused Net::TCLink dependency and POS code (ErikH)
+* Update schema documentation files in doc/database/ (ErikH)
 
 ErikH is Erik Huelsmann
 
