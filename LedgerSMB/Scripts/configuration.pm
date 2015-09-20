@@ -151,7 +151,7 @@ Shows the defaults screen
 sub defaults_screen{
     my ($request) = @_;
     my $setting_handle = LedgerSMB::Setting->new({base => $request});
-    $setting_handle->get_currencies();
+    my @curr = map { { curr => $_ } } $setting_handle->get_currencies();
     my @defaults;
     my @default_settings = &_default_settings($request);
     for my $dg (@default_settings) {
@@ -217,9 +217,9 @@ sub defaults_screen{
             default_values => [$request->{'earn_id'}],
         'curr' => {
             name => 'curr',
-            options => $setting_handle->{currencies},
+            options => \@curr,
             default_values => [$request->{curr}],
-            text_attr => 'description',
+            text_attr => 'curr',
             value_attr => 'curr',
         },
         'fxloss_accno_id' => {
