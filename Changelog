@@ -1,6 +1,15 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.16
+* FEATURE: Added possibility to translate account descriptions (ErikH)
+* Fixed shell environment being clobbered when loading schema (GH #813) (ErikH)
+* Fixed FX handling in payment bulk posting workflow (GH #758)
+* Removed unused Net::TCLink dependency and POS code (ErikH)
+
+ErikH is Erik Huelsmann
+
+
 Changelog for 1.4.15
 * Fix printing invoices and orders under Starman (GH 736) (ErikH)
 * Fix payroll deduction types report failing to load (GH 740) (ChrisT)
@@ -17,6 +26,7 @@ Changelog for 1.4.15
 ErikH is Erik Huelsmann
 ChrisT is Chris Travers
 JohnL is John Locke
+
 
 Changelog for 1.4.14
 * Replace spanish CoA for compliance; donated by AccountNet

@@ -155,31 +155,30 @@ Installing Perl module dependencies
 
 LedgerSMB depends on these additional modules (not listing core modules):
 
-  Test::More
-  Test::Trap
-  Test::Exception
+  CGI::Simple
+  Carp::Always
+  Config::IniFiles
+  DBD::Pg
+  DBI
   Data::Dumper
-  Log::Log4perl
+  DateTime
+  DateTime::Format::Strptime
+  Digest::MD5
+  File::MimeInfo
+  HTML::Entities    (part of HTML::Parser)
+  IO::Scalar        (part of IO-stringy)
+  JSON
   Locale::Maketext
   Locale::Maketext::Lexicon
-  DateTime
-  DBI
-  DBD::Pg
+  Log::Log4perl
   MIME::Base64
-  Digest::MD5
-  HTML::Entities    (part of HTML::Parser)
-  Math::BigFloat    (part of Math::BigInt)
-  IO::Scalar        (part of IO-stringy)
-  Config::IniFiles
   MIME::Lite
-  Template  (also known as The Template Toolkit or TT)
-  CGI::Simple
-  File::MimeInfo
-  Number::Format
-  DateTime::Format::Strptime
+  Math::BigFloat    (part of Math::BigInt)
   Moose
+  Number::Format
+  Template  (also known as The Template Toolkit or TT)
   Try::Tiny
-  JSON
+  namespace::autoclean
 
 and these optional ones:
 
@@ -191,12 +190,20 @@ and these optional ones:
   Locale::Country    [Developer tool dependencies]
   Locale::Language   [Developer tool dependencies]
   Template::Plugin::Latex [Support for Postscript and PDF output]
+  Tex::Encode             [Support for Postscript and PDF output]
   XML::Twig               [Support for OpenOffice output]
   OpenOffice::OODoc       [Support for OpenOffice output]
 
 To build using the Makefile.PL you will also need:
 
   Module::Install
+
+To run the tests, you additionally need:
+
+  Test::More
+  Test::Trap
+  Test::Exception
+
 
 All these modules can be downloaded from CPAN, the modules distribution
 archive for Perl. However our experience has been that if your distribution
@@ -228,7 +235,7 @@ CPAN module (the Perl module downloader) as well.
 
 >>> Perl module dependencies for Debian
 
----- Actions for Debian Wheezy  (7.x stable)
+---- Actions for Debian Wheezy  (7.x oldstable)
 
 To install all the required packages which Wheezy supports, execute the
 following command:
@@ -256,9 +263,43 @@ as well through the command:
 
  $ aptitude install libxml-twig-perl
 
+
+---- Actions for Debian Jessie  (8.x stable)
+
+To install all the required packages which Wheezy supports, execute the
+following command:
+
+ $ aptitude install libcgi-simple-perl libcarp-always-perl \
+     libconfig-inifiles-perl libdbi-perl libdbd-pg-perl \
+     libdata-dumper-perl libdatetime-perl libdatetime-format-strptime-perl \
+     libfile-mimeinfo-perl libhtml-parser-perl libio-stringy-perl \
+     libjson-perl liblocale-maketext-perl liblocale-maketext-lexicon-perl \
+     liblog-log4perl-perl libmime-lite-perl libmath-bigfloat-gmp-perl \
+     libmoose-perl libnumber-format-perl libtemplate-perl \
+     libtry-tiny-perl libnamespace-autoclean-perl
+
+
+This installs the required modules available from the Jessie repository.
+
+To install the (optional) PDF/Postscript output module, install the
+following packages by executing this command:
+
+ $ aptitude install libtemplate-plugin-latex-perl \
+     texlive-latex-recommended libtex-encode-perl 
+
+The Open Office output option is available from the Wheezy repository
+as well through the command:
+
+ $ aptitude install libopenoffice-oodoc-perl
+
+
+---- Common Debian related remarks
+
 Please see the following about UTF8 characters, XeTeX, and templates:
 
 http://ledgersmb.org/faq/localization/im-using-non-ascii-unicode-characters-why-cant-i-generate-pdf-output
+
+
 
 
 
