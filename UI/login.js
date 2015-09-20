@@ -26,8 +26,7 @@ function send_form() {
 					 user: username,
 					 password: password
 				}).then(function(data){
-					 window.location.href=action
-						  +".pl?action=login&company="+company;
+					 window.location.href=action+".pl";
 				}, function(err) {
 					 var status = err.response.status;
 					 if (status == '454'){
@@ -48,7 +47,7 @@ require(['dojo/dom-construct', 'dijit/ProgressBar', 'dojo/domReady!'],
                 "value": 100,
                 "indeterminate": true
 				}).placeAt("login-indicator", "only");
-				indicator.startup();   
+				indicator.startup();
 		  });
 
 
