@@ -53,7 +53,12 @@ function set_main_div(doc){
             });
 }
 
+var last_page;
 function load_form(xhr, url, options) {
+    if (url == last_page) {
+        return;
+    }
+    last_page = url;
 	 xhr(url, options).then(
 		  function(doc){
 				set_main_div(doc);
