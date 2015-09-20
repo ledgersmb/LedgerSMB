@@ -61,11 +61,12 @@ function(
 						 var options = { "handleAs": "text" };
 						 if ('get' == method.toLowerCase()){
 							  url = url + '?' + qobj;
+                       load_link(xhr, url);
 						 } else {
 							  options['method'] = method;
 							  options['data'] = qobj;
+						     load_form(xhr, url, options);
 						 }
-						 load_form(xhr, url, options);
 					});
 		  },
 		  rewriteAllFormSubmissions: function() {
