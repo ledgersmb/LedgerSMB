@@ -45,6 +45,7 @@
 #======================================================================
 
 package lsmb_legacy;
+use LedgerSMB::Setting;
 use LedgerSMB::Tax;
 use LedgerSMB::Company_Config;
 

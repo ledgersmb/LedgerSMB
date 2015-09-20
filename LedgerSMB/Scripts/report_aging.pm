@@ -17,6 +17,7 @@ use LedgerSMB::Template;
 use LedgerSMB::Business_Unit;
 use LedgerSMB::Report::Aging;
 use LedgerSMB::Scripts::reports;
+use LedgerSMB::Setting;
 use strict;
 use warnings;
 

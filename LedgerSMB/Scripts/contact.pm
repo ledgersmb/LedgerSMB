@@ -29,6 +29,7 @@ use LedgerSMB::Entity::Note;
 use LedgerSMB::Entity::User;
 use LedgerSMB::File;
 use LedgerSMB::App_State;
+use LedgerSMB::Setting;
 use LedgerSMB::Template;
 
 use strict;

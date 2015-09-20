@@ -35,6 +35,7 @@ extends 'LedgerSMB::Report';
 
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
+use LedgerSMB::Setting;
 
 
 =head1 PROPERTIES
