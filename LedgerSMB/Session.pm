@@ -94,6 +94,9 @@ sub check {
             if ($ENV{SERVER_PORT} == 443){
                  $secure = ' Secure;';
             }
+            else {
+                $secure = '';
+            }
             print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue; path=$path;$secure\n|;
             return 1;
 
@@ -224,6 +227,9 @@ sub create {
     #TODO set domain from ENV, also set path to install path
     if ($ENV{SERVER_PORT} == 443){
          $secure = ' Secure;';
+    }
+    else {
+        $secure = '';
     }
     print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=$newCookieValue; path=$path;$secure\n|;
     $lsmb->{LedgerSMB} = $newCookieValue;
