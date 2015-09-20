@@ -86,16 +86,17 @@ sub authenticate {
     my $path = $ENV{SCRIPT_NAME};
     $path =~ s|[^/]*$||;
 
-    if ($request->{dbh} && $request->{next}) {
+    # if ($request->{dbh} && $request->{next}) {
 
-        print "Content-Type: text/html\n";
-        print "Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path\n";
-        print "Status: 302 Found\n";
-        print "Location: ".$path.$request->{next}."\n";
-        print "\n";
-        $request->finalize_request();
-    }
-    elsif ($request->{dbh} and !$request->{log_out}){
+    #     print "Content-Type: text/html\n";
+    #     print "Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path\n";
+    #     print "Status: 302 Found\n";
+    #     print "Location: ".$path.$request->{next}."\n";
+    #     print "\n";
+    #     $request->finalize_request();
+    # }
+    # els
+    if ($request->{dbh} and !$request->{log_out}){
         print "Content-Type: text/html\n";
         print "Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path\n";
         print "Status: 200 Success\n\nSuccess\n";

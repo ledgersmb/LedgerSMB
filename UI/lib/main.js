@@ -24,7 +24,7 @@ function SwitchMenu(id) {
     console.log(id);
     if (document.getElementById) {
         var element = document.getElementById(obj);
-		
+
         element = document.getElementById(obj);
         if (element.className == 'menu_open'){
             element.className = 'menu_closed';
@@ -32,7 +32,7 @@ function SwitchMenu(id) {
             element.className = 'menu_open';
         }
         return false;
-    }		
+    }
 }
 
 function set_main_div(doc){
@@ -72,7 +72,11 @@ function load_form(xhr, url, options) {
 }
 
 function load_link(xhr, href) {
-	 load_form(xhr,href,{"handlesAs": "text"});
+    require(['dojo/hash'],
+            function (hash) {
+                hash(href);
+	             load_form(xhr,href,{"handlesAs": "text"});
+            });
 }
 
 function setup_dojo() {
@@ -94,8 +98,10 @@ function setup_dojo() {
 }
 
 require([
-       'dojo/on', 'dojo/query', "dojo/request/xhr", 'dojo/domReady!'
-   ], function (on, query, xhr) {
+    'dojo/on', 'dojo/query',
+    'dojo/dom-attr', 'dojo/topic',
+    'dojo/request/xhr', 'dojo/domReady!'
+], function (on, query, domattr, topic, xhr) {
         query('a.t-submenu').forEach(function(node){
              on(node, 'click', function(e){
                    e.preventDefault();
@@ -106,11 +112,14 @@ require([
         query('a.menu-terminus').forEach(function(node){
              if (node.href.search(/pl/)){
                  on(node, 'click', function(e){
-                           e.preventDefault();
-                           load_link(xhr, node.href);
-                     }
-                 );
+                     e.preventDefault();
+                     load_link(xhr, domattr.get(node,'href'));
+                 });
              }
-        });   
+        });
+        topic.subscribe("/dojo/hashchange", function(hash) {
+            console.log(hash);
+            load_link(xhr, hash);
+        });
     }
 );
