@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Scripts::reports - Common Report workflows 
+LedgerSMB::Scripts::reports - Common Report workflows
 
 =head1 SYNOPSIS
 
@@ -37,7 +37,7 @@ our $VERSION = '1.0';
 
 =item start_report
 
-This displays the filter screen for the report.  It expects the following 
+This displays the filter screen for the report.  It expects the following
 request properties to be set:
 
 =over
@@ -94,7 +94,7 @@ sub start_report {
     if (!$request->{report_name}){
         die $request->{_locale}->text('No report specified');
     }
-    @{$request->{country_list}} = $request->call_procedure( 
+    @{$request->{country_list}} = $request->call_procedure(
                    funcname => 'location_list_country'
     );
     @{$request->{employees}} =  $request->call_procedure(
@@ -110,9 +110,9 @@ sub start_report {
     );
     $template->render($request); # request not used for script;
                                  # forms submit to other URLs than back to here
-}   
+}
 
-=item list_business_types 
+=item list_business_types
 
 Lists the business types.  No inputs expected or used.
 
@@ -166,8 +166,8 @@ sub list_sic {
     my ($request) = @_;
     LedgerSMB::Report::Listings::SIC->new(%$request)->render($request);
 }
-    
-=item balance_sheet 
+
+=item balance_sheet
 
 Generates a balance sheet
 
@@ -233,8 +233,8 @@ sub reverse_overpayment {
 
 =head1 Copyright (C) 2007 The LedgerSMB Core Team
 
-Licensed under the GNU General Public License version 2 or later (at your 
-option).  For more information please see the included LICENSE and COPYRIGHT 
+Licensed under the GNU General Public License version 2 or later (at your
+option).  For more information please see the included LICENSE and COPYRIGHT
 files.
 
 =cut
