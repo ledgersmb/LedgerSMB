@@ -22,7 +22,10 @@ use LedgerSMB::Locale;
 use LedgerSMB;
 use LedgerSMB::User;
 use LedgerSMB::Auth;
+use LedgerSMB::Scripts::menu;
 use LedgerSMB::Sysconfig;
+use Try::Tiny;
+
 use strict;
 use warnings;
 
@@ -46,16 +49,25 @@ Displays the login screen.
 =cut
 
 sub __default {
-   my ($request) = @_;
-    #HV _locale from request
-    #my $locale;
-    #$locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language})
-    #  or $request->error( __FILE__ . ':' . __LINE__ .
-    #     ": Locale not loaded: $!\n" );
+    my ($request) = @_;
 
+    if ($request->{cookie} && $request->{cookie} ne 'Login') {
+        $request->_db_init();
+        $request->initialize_with_db();
+        LedgerSMB::Scripts::menu::root_doc($request);
+        return;
+    }
+
+    my $secure = '';
+    my $path = $ENV{SCRIPT_NAME};
+    my $cookie_name = $LedgerSMB::Sysconfig::cookie_name;
+    if ($ENV{SERVER_PORT} == 443){
+        $secure = ' Secure;';
+    }
+    print qq|Set-Cookie: $cookie_name=Login; path=$path;$secure\n|;
     $request->{stylesheet} = "ledgersmb.css";
     $request->{titlebar} = "LedgerSMB $request->{VERSION}";
-     my $template = LedgerSMB::Template->new(
+    my $template = LedgerSMB::Template->new(
         user =>$request->{_user},
         locale => $request->{_locale},
         path => 'UI',
@@ -97,12 +109,10 @@ sub authenticate {
     # }
     # els
     if ($request->{dbh} and !$request->{log_out}){
-        print "Content-Type: text/html\n";
-        print "Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path\n";
+
+        print "Content-Type: text/plain\n";
+        LedgerSMB::Session::check($request->{cookie}, $request);
         print "Status: 200 Success\n\nSuccess\n";
-        if ($request->{log_out}){
-            $request->finalize_request();
-        }
     }
     else {
         if ($request->{_auth_error} =~/$LedgerSMB::Sysconfig::no_db_str/i){
@@ -111,7 +121,7 @@ sub authenticate {
         } else {
             print "WWW-Authenticate: Basic realm=\"LedgerSMB\"\n";
             print "Status: 401 Unauthorized\n\n";
-        print "Please enter your credentials.\n";
+            print "Please enter your credentials.\n";
         }
         $request->finalize_request();
     }
@@ -131,7 +141,6 @@ sub login {
     }
     require LedgerSMB::Scripts::menu;
     LedgerSMB::Scripts::menu::root_doc($request);
-
 }
 
 =item logout
@@ -146,8 +155,12 @@ sub logout {
     my ($request) = @_;
     $request->{callback}   = "";
     $request->{endsession} = 1;
-    if($request->{dbh}){LedgerSMB::Session::destroy($request);}#if logout on already logged out session
-     my $template = LedgerSMB::Template->new(
+
+    try { # failure only means we clear out the session later
+        $request->_db_init();
+        LedgerSMB::Session::destroy($request);
+    };
+    my $template = LedgerSMB::Template->new(
         user =>$request->{_user},
         locale => $request->{_locale},
         path => 'UI',

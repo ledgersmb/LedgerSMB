@@ -245,7 +245,7 @@ sub destroy {
 
     my ($form) = @_;
     my $path = ($ENV{SCRIPT_NAME});
-    my $secure;
+    my $secure = '';
     $path =~ s|[^/]*$||;
 
     my $login = $form->{login};
@@ -267,7 +267,7 @@ sub destroy {
     if ($ENV{SERVER_PORT} == 443){
          $secure = ' Secure;';
     }
-    print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=::$form->{company}; path=$path;$secure\n|;
+    print qq|Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path;$secure\n|;
     $dbh->commit; # called before anything else on the page, make sure the
                   # session is really gone.  -CT
 }

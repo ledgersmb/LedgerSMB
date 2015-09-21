@@ -429,7 +429,7 @@ sub _process_cookies {
     $self->{cookie} = $cookie{$LedgerSMB::Sysconfig::cookie_name};
 
 
-    if (! $self->{company} && $self->is_run_mode('cgi', 'mod_perl')){
+    if (! $self->{company} && $self->{cookie}) {
         my $ccookie = $self->{cookie};
         $ccookie =~ s/.*:([^:]*)$/$1/;
         $self->{company} = $ccookie
