@@ -31,9 +31,13 @@ function send_form() {
 					 var status = err.response.status;
 					 if (status == '454'){
 						  alert('Company does not exist.');
-					 } else {
-						  alert('Access denied ('+status+'): Bad username/password');
-					 }
+					 } else if (status == '401') {
+						  alert('Access denied: Bad username/password');
+					 } else if (status == '521') {
+                    alert('Database version mismatch');
+                } else {
+                    alert('Unknown error preventing login');
+                }
 					 style.set(dom.byId('login-indicator'),'visibility','hidden');
 				});
 	 });

@@ -44,10 +44,11 @@ Generates full http response based on error.  Does NOT exit
 
 sub http_response {
     my ($self, $additional_html) = @_;
-
     my $status = $self->status;
     my $msg = $self->msg;
+    $msg ||= '';
     $msg =~ s#\n#<br \/>\n#g;
+    $additional_html ||= '';
     $additional_html =~ s#\n#<br />\n#g;
     my $user = LedgerSMB::App_State::User;
 
