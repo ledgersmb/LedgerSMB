@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Entity::Payroll::Wage - Wages and Salary Handling 
+LedgerSMB::Entity::Payroll::Wage - Wages and Salary Handling
 for LedgerSMB
 
 =head1 SYNPOSIS
@@ -28,7 +28,7 @@ with 'LedgerSMB::PGObject';
 
 =over
 
-=item entry_id 
+=item entry_id
 
 This is the entry id (when set) of the wage.
 
@@ -46,10 +46,10 @@ has type_id => (is => 'rw', isa => 'Int', required => 1);
 
 =item rate
 
-This is the rate that one is paid.  Depending on class could be hourly, per 
+This is the rate that one is paid.  Depending on class could be hourly, per
 month, or per unit produced.
 
-=cut 
+=cut
 
 has rate => (is => 'rw', coerce => 1, isa => 'LedgerSMB::Moose::Number',
              required => 1);
@@ -80,7 +80,7 @@ Returns a list of wage classes
 
 sub types{
     my ($self, $country_id) = @_;
-    return __PACKAGE__->call_procedure(funcname => 'wage__list_types', 
+    return __PACKAGE__->call_procedure(funcname => 'wage__list_types',
                                      args => [$country_id]);
 }
 

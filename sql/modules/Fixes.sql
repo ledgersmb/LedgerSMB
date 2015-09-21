@@ -250,3 +250,6 @@ group by c.id, c.accno, coalesce(at.description, c.description), c.category,
          c.heading, c.gifi_accno, c.contra, c.tax;
 
 COMMIT;
+
+DROP FUNCTION IF EXISTS je_get_default_lines();
+DROP FUNCTION IF EXISTS je_set_default_lines(integer);

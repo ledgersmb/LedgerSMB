@@ -13,6 +13,10 @@ Batch/voucher management model for LedgerSMB 1.3
 =cut
 
 package LedgerSMB::Batch;
+
+use strict;
+use warnings;
+
 use LedgerSMB::Setting;
 use base qw(LedgerSMB::PGOld);
 
@@ -24,7 +28,7 @@ just populates the batch_number hashref value.
 =cut
 
 sub get_new_info {
-    $self = shift @_;
+    my $self = shift @_;
     my $cc_object = LedgerSMB::Setting->new({base => $self});
     $cc_object->{key} = 'batch_cc';
     $self->{batch_number} = $cc_object->increment;
@@ -37,7 +41,7 @@ Saves the batch info and populates the id hashref value with the id inserted.
 =cut
 
 sub create {
-    $self = shift @_;
+    my $self = shift @_;
     my ($ref) = $self->call_dbmethod(funcname => 'batch_create');
     $self->{id} = $ref->{batch_create};
     return $ref->{id};
@@ -45,7 +49,7 @@ sub create {
 
 =item delete_voucher($id)
 
-Deletes the voucher specified by $id. 
+Deletes the voucher specified by $id.
 
 =cut
 
@@ -81,7 +85,7 @@ List of all users
 =cut
 
 sub get_search_criteria {
-    $self = shift @_;
+    my $self = shift @_;
     my ($custom_types) = @_;
     @{$self->{batch_classes}} = $self->call_dbmethod(
          funcname => 'batch_list_classes'
@@ -100,20 +104,20 @@ sub get_search_criteria {
 
 =item get_search_method (private)
 
-Determines the appropriate search method, either for empty, mini, or full 
+Determines the appropriate search method, either for empty, mini, or full
 searches
 
 Returns the appropriate stored proc name.
 
 =cut
 
-# This needs to be refactored.  Input sanitation should be moved to 
+# This needs to be refactored.  Input sanitation should be moved to
 # get_search_results
 sub get_search_method {
-	my ($self, @args) = @_;
-	my $search_proc;
-	
-	if ($self->{empty}){
+    my ($self, $args) = @_;
+    my $search_proc;
+
+    if ($self->{empty}){
         $search_proc = "batch_search_empty";
     } elsif ($args->{mini}){
         $search_proc = "batch_search_mini";
@@ -122,7 +126,7 @@ sub get_search_method {
     }
 
     if ( !defined $self->{created_by_eid} || $self->{created_by_eid} == 0){
-		delete $self->{created_by_eid};
+        delete $self->{created_by_eid};
     }
 
     if ( !defined $self->{class_id} )
@@ -131,13 +135,13 @@ sub get_search_method {
     }
 
     if ( ( defined $args->{custom_types} ) && ( defined $self->{class_id} ) && ( $args->{custom_types}->{$self->{class_id}}->{select_method} ) ){
-        $search_proc 
-             = $args->{custom_types}->{$self->{class_id}}->{select_method}; 
+        $search_proc
+             = $args->{custom_types}->{$self->{class_id}}->{select_method};
     } elsif ( ( defined $self->{class_id} ) && ( $self->{class_id} =~ /[\D]/ ) ){
           $self->error("Invalid Batch Type");
     }
 
-	return $search_proc;
+    return $search_proc;
 }
 
 =item get_search_results
@@ -148,7 +152,7 @@ Returns the appropriate search as detected by get_search_method.
 
 sub get_search_results {
     my ($self, $args) = @_;
-	my $search_proc = $self->get_search_method($args);
+    my $search_proc = $self->get_search_method($args);
     @{$self->{search_results}} = $self->call_dbmethod(funcname => $search_proc);
     return @{$self->{search_results}};
 }
@@ -161,8 +165,8 @@ Returns the class_id of batch class specified by its label.
 
 sub get_class_id {
     my ($self, $type) = @_;
-    @results = $self->call_procedure(
-                                     funcname => 'batch_get_class_id', 
+    my @results = $self->call_procedure(
+                                     funcname => 'batch_get_class_id',
                                      args     => [$type]
     );
     my $result = pop @results;
@@ -171,7 +175,7 @@ sub get_class_id {
 
 =item post
 
-Posts a batch to the books and makes the vouchers show up in transaction 
+Posts a batch to the books and makes the vouchers show up in transaction
 reports, financial statements, and more.
 
 =cut
@@ -195,7 +199,7 @@ sub delete {
 }
 
 =item list_vouchers
-Returns a list of all vouchers in the batch and attaches that list to 
+Returns a list of all vouchers in the batch and attaches that list to
 $self->{vouchers}
 
 =cut

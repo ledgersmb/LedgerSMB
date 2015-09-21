@@ -32,7 +32,7 @@ with 'LedgerSMB::PGObject';
 
 =over
 
-=item entry_id 
+=item entry_id
 
 This is the entry id (when set) of the deduction.
 
@@ -50,13 +50,13 @@ has type_id => (is => 'rw', isa => 'Int', required => 1);
 
 =item rate
 
-The rate handling here is deduction class specific.  Some deductions may be 
-percentages of income, they may be fixed amounts, or they may be calculated on 
+The rate handling here is deduction class specific.  Some deductions may be
+percentages of income, they may be fixed amounts, or they may be calculated on
 some other basis.  Therefore.....
 
-=cut 
+=cut
 
-has rate => (is => 'rw', coerce => 1., isa => 'LedgerSMB::Moose::Number', 
+has rate => (is => 'rw', coerce => 1., isa => 'LedgerSMB::Moose::Number',
              required => 1);
 
 =back
@@ -85,7 +85,7 @@ Returns a list of deduction classes
 
 sub types{
     my ($self, $country_id) = @_;
-    return __PACKAGE__->call_procedure(funcname => 'deduction__list_types', 
+    return __PACKAGE__->call_procedure(funcname => 'deduction__list_types',
                                      args => [$country_id]);
 }
 

@@ -10,7 +10,7 @@ invoices
 
 =head1 DESCRIPTION
 
-This provides the income statement-like report for invoices on LedgerSMB on 
+This provides the income statement-like report for invoices on LedgerSMB on
 1.4 and later.  This report is designed to give a business an ability to look
 profit margins of specific invoices.
 

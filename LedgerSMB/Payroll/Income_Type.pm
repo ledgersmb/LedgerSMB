@@ -27,8 +27,8 @@ deductions and taxes.
 Income types are categorized into tax-jurisdiction-dependent classes.  In the
 US, for example, we might see Pay-for-production, hourly, salary, and salary
 exempt.  Income types are organization-specific manifestations of these.  For
-example, an organization may employ some hourly workers, some salary workers, 
-and some salary exempt workers but may want to split up expense reporting on 
+example, an organization may employ some hourly workers, some salary workers,
+and some salary exempt workers but may want to split up expense reporting on
 the income statement.  Similearly different classes might be used to indicate
 different default amounts, or to track efforts worked for profit sharing and
 other purposes.  Employees are attached to income types and deduction type,
@@ -56,7 +56,7 @@ has account_id => (is => 'ro', isa => 'Int', required => 1);
 
 =item pic_id int
 
-This is the payroll income class.  These are not defined through the user 
+This is the payroll income class.  These are not defined through the user
 interface but rather defined country-wise.  It is required.
 
 =cut
@@ -142,3 +142,6 @@ later version.  Please see enclosed LICENSE file for details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;
+

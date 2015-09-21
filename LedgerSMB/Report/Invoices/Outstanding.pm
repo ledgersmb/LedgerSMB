@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Report::Invoices::Outstanding - Outstanding Invoice Reports for 
+LedgerSMB::Report::Invoices::Outstanding - Outstanding Invoice Reports for
 LedgerSMB
 
 =head1 SYNOPSIS
@@ -162,8 +162,8 @@ sub columns {
     my $inv_label = LedgerSMB::Report::text('# Invoices');
     my $inv_type = 'text';
     if ($self->is_detailed){
-        $inv_label = LedgerSMB::Report::text('Invoice');       
-        $inv_type = 'href';  
+        $inv_label = LedgerSMB::Report::text('Invoice');
+        $inv_type = 'href';
     }
     my $entity_label;
     if ($self->entity_class == 1){
@@ -176,97 +176,97 @@ sub columns {
     return [
         {col_id => 'running_number',
            name => '#',
-           type => 'text', 
+           type => 'text',
          pwidth => 1, },
         {col_id => 'transdate',
            name => LedgerSMB::Report::text('Date'),
-           type => 'text', 
+           type => 'text',
          pwidth => 4, },
         {col_id => 'id',
            name => LedgerSMB::Report::text('ID'),
-           type => 'text', 
+           type => 'text',
          pwidth => 2, },
         {col_id => 'invnumber',
            name => $inv_label,
-           type => $inv_type, 
+           type => $inv_type,
          pwidth => 10, },
         {col_id => 'ordnumber',
            name => LedgerSMB::Report::text('Order'),
-           type => 'text', 
+           type => 'text',
          pwidth => 10, },
         {col_id => 'ponumber',
            name => LedgerSMB::Report::text('PO Number'),
-           type => 'text', 
+           type => 'text',
          pwidth => 10, },
         {col_id => 'meta_number',
            name => LedgerSMB::Report::text('Account'),
-           type => 'text', 
+           type => 'text',
          pwidth => 10, },
         {col_id => 'entity_name',
            name => $entity_label,
-           type => 'href', 
+           type => 'href',
       href_base => 'contact.pl?action=edit&',
          pwidth => 15, },
         {col_id => 'amount',
            name => LedgerSMB::Report::text('Amount'),
-           type => 'text', 
+           type => 'text',
           money => 1,
          pwidth => 8, },
         {col_id => 'tax',
            name => LedgerSMB::Report::text('Tax'),
-           type => 'text', 
+           type => 'text',
           money => 1,
          pwidth => 8, },
         {col_id => 'netamount',
            name => LedgerSMB::Report::text('Total'),
-           type => 'text', 
+           type => 'text',
           money => 1,
          pwidth => 8, },
         {col_id => 'paid',
            name => LedgerSMB::Report::text('Paid'),
-           type => 'text', 
+           type => 'text',
           money => 1,
          pwidth => 8, },
         {col_id => 'due',
            name => LedgerSMB::Report::text('Amount Due'),
-           type => 'text', 
+           type => 'text',
           money => 1,
          pwidth => 8, },
         {col_id => 'curr',
            name => LedgerSMB::Report::text('Curr'),
-           type => 'text', 
+           type => 'text',
          pwidth => 8, },
         {col_id => 'last_paydate',
            name => LedgerSMB::Report::text('Date Paid'),
-           type => 'text', 
+           type => 'text',
          pwidth => 8, },
         {col_id => 'duedate',
            name => LedgerSMB::Report::text('Due Date'),
-           type => 'text', 
+           type => 'text',
          pwidth => 8, },
         {col_id => 'notes',
            name => LedgerSMB::Report::text('Notes'),
-           type => 'text', 
+           type => 'text',
          pwidth => 15, },
         {col_id => 'till',
            name => LedgerSMB::Report::text('Till'),
-           type => 'text', 
+           type => 'text',
          pwidth => 8, },
         {col_id => 'employee_name',
            name => LedgerSMB::Report::text('Salesperson'),
-           type => 'text', 
+           type => 'text',
          pwidth => 10, },
         {col_id => 'manager_name',
            name => LedgerSMB::Report::text('Manager'),
-           type => 'text', 
+           type => 'text',
          pwidth => 10, },
         {col_id => 'shipping_point',
            name => LedgerSMB::Report::text('Shipping Point'),
-           type => 'text', 
+           type => 'text',
          pwidth => 10, },
         {col_id => 'ship_via',
            name => LedgerSMB::Report::text('Ship_Via'),
-           type => 'text', 
+           type => 'text',
          pwidth => 10, },
     ];
 }
@@ -324,8 +324,8 @@ sub run_report {
         #tshvr4 avoid 'Use of uninitialized value in concatenation (.) or string at LedgerSMB/Report/Invoices/Outstanding.pm'
         if($r->{id}){
          $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{id}";
-        }        
-        $r->{entity_name_href_suffix} = "entity_class=" . $self->entity_class 
+        }
+        $r->{entity_name_href_suffix} = "entity_class=" . $self->entity_class
                          . "&entity_id=$r->{entity_id}&".
                          "meta_number=$r->{meta_number}";
     }
@@ -341,3 +341,5 @@ later version.  Please see included LICENSE.TXT for details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

@@ -25,7 +25,7 @@ Standard dates plus
 
 =item basis
 
-This is either 'cash' or 'accrual' 
+This is either 'cash' or 'accrual'
 
 =cut
 
@@ -79,7 +79,7 @@ sub header_lines {
 
 sub report_base {
     my ($self, $from_date, $to_date) = @_;
-    die LedgerSMB::Report::text('Invalid Reporting Basis') 
+    die LedgerSMB::Report::text('Invalid Reporting Basis')
            if ($self->basis ne 'accrual') and ($self->basis ne 'cash');
     my $procname = 'pnl__income_statement_' . $self->basis;
     return $self->call_dbmethod(funcname => $procname);

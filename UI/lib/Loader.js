@@ -1,6 +1,6 @@
 /* lsmb/lib/Loader
  * A module for loading and setting up Dojo on LSMB screens.
- * 
+ *
  */
 
 define([
@@ -28,12 +28,12 @@ function(
 					 if (! dnode.target && dnode.href) {
                     on(dnode, 'click', function(e){
 								e.preventDefault();
-								load_link(xhr, dnode.href);
+								load_link(xhr, domattr.get(dnode,'href'));
                     });
 					 }
 				});
 		  },
-		  rewriteFormSubmissions: function(formnode){ 
+		  rewriteFormSubmissions: function(formnode){
 				if (undefined == formnode.action){
 					 return undefined;
 				}
@@ -45,12 +45,12 @@ function(
 					 });
 				});
 
-				on(formnode, 'submit', 
-					function(evt){ 
+				on(formnode, 'submit',
+					function(evt){
 						 var method = domattr.get(formnode,'method');
 						 evt.preventDefault();
 						 var qobj = domform.toQuery(formnode);
-						 qobj = 'action=' 
+						 qobj = 'action='
 							  + domattr.get(formnode, 'clicked-action')
 							  + '&' + qobj;
 						 if (undefined == method){
@@ -61,11 +61,12 @@ function(
 						 var options = { "handleAs": "text" };
 						 if ('get' == method.toLowerCase()){
 							  url = url + '?' + qobj;
+                       load_link(xhr, url);
 						 } else {
 							  options['method'] = method;
 							  options['data'] = qobj;
+						     load_form(xhr, url, options);
 						 }
-						 load_form(xhr, url, options);
 					});
 		  },
 		  rewriteAllFormSubmissions: function() {
@@ -75,11 +76,11 @@ function(
 		  },
         setup: function(){
             var myself = this;
-				
+
 				ready(function(){
 					 myself.redirectMainATags();
 					 myself.rewriteAllFormSubmissions();
 				});
         }
-    }); 
-});   
+    });
+});

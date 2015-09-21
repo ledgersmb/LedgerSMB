@@ -1,8 +1,8 @@
 begin;
 --
--- Plan único de Cuentas de Colombia, elaborado por Rene Real Hernandez (SDI S.A.), Francico Padilla (SDI S.A.), 
+-- Plan único de Cuentas de Colombia, elaborado por Rene Real Hernandez (SDI S.A.), Francico Padilla (SDI S.A.),
 -- Silfredo Godoy Chavez (CaribeNet S.A.),
--- Lourdes Mejía Martinez (CaribeNet S.A.) y Dirk Enrique Seiffert (CaribeNet S.A.) 
+-- Lourdes Mejía Martinez (CaribeNet S.A.) y Dirk Enrique Seiffert (CaribeNet S.A.)
 -- Si quieres aportar: Contactenos www.caribenet.com - info@caribenet.com
 --
 
@@ -660,7 +660,7 @@ SELECT account__save(NULL,'4130100001','Ingresos por Obras Civiles','I','4130100
 SELECT account__save(NULL,'4130950002','Interventorias','I','4130950002', NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
 SELECT account__save(NULL,'4220100001','Arriendo de locales y oficinas','I','4220100001', NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
 SELECT account__save(NULL,'4220150001','Arriendo de Maquinaria y Equipos','I','4220150001', NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
-INSERT INTO chart (accno, description, charttype, category, link, gifi_accno) VALUES ('4235950001', 'Algo', 
+INSERT INTO chart (accno, description, charttype, category, link, gifi_accno) VALUES ('4235950001', 'Algo',
 'A', 'I', 'AR_amount:IC_income', '4235950001');
 SELECT account__save(NULL,'5205060001','Sueldos de Personal','E','5205060001', NULL, false, false, string_to_array('AP_amount:IC_expense', ':'), false, false);
 SELECT account__save(NULL,'2370060001','Aportes a ARP','L','2370060001', NULL, false, false, string_to_array('', ':'), false, false);
@@ -771,7 +771,7 @@ INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '24
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '2408100001'), 0.16);
 INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '2408100002'), 0.07);
 
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', 
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',
 (SELECT id FROM chart WHERE accno = '141005001'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id FROM chart WHERE accno = '412027001'));
@@ -785,7 +785,7 @@ INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'COP');
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
- 
+
 SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE id IN (select account_id FROM account_link
                            WHERE description = 'AP_paid');

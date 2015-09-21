@@ -6,7 +6,7 @@ LedgerSMB::DBObject::Part - Base parts functions to support new 1.3 stuff
 
  my $psearch  = LedgerSMB::DBObject::Part->new({base => $request});
  my $results = $psearch->search_lite(
-           {partnumber => '124', 
+           {partnumber => '124',
            description => '200GB USB Drive' };
 
 
@@ -38,7 +38,7 @@ following attributes
 
 =over
 
-=item partnumber 
+=item partnumber
 
 This matches on the beginning of the string of the partnumber only.
 

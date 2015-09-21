@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 205;
+use Test::More tests => 202;
 use File::Find;
 
 my @on_disk;
@@ -17,13 +17,8 @@ sub collect {
 find(\&collect, 'LedgerSMB/');
 
 
-my @exception_modules = 
+my @exception_modules =
     (
-     # Exclude because tested conditionally on Net::TCLink way below
-     'LedgerSMB::CreditCard', 'LedgerSMB::CreditCard::TrustCommerce',
-     'LedgerSMB::CreditCard::Config',
-     'LedgerSMB::CreditCard::TrustCommerce::Config',
-
      # Exclude because tested conditionally on Template::Plugin::Latex way below
      'LedgerSMB::Template::LaTeX',
 
@@ -145,7 +140,7 @@ my @modules =
           #'LedgerSMB::Report::Payroll::Deduction_Types',
           'LedgerSMB::Report::Payroll::Income_Types',
           'LedgerSMB::Report::Reconciliation::Summary',
-          'LedgerSMB::Report::Taxform::Detail',
+          'LedgerSMB::Report::Taxform::Details',
           'LedgerSMB::Report::Taxform::Summary',
           'LedgerSMB::Report::Taxform::List',
           'LedgerSMB::Report::Unapproved::Batch_Overview',
@@ -154,7 +149,6 @@ my @modules =
           'LedgerSMB::Report::co::Balance_y_Mayor',
           'LedgerSMB::Report::co::Caja_Diaria',
           'LedgerSMB::ScriptLib::Common_Search',
-          # 'LedgerSMB::ScriptLib::Common_Search::Customer',
           'LedgerSMB::ScriptLib::Common_Search::Part',
           'LedgerSMB::Scripts::budget_reports',
           'LedgerSMB::Scripts::contact_reports', 'LedgerSMB::Scripts::file',
@@ -196,7 +190,7 @@ for (@on_disk) {
 ok(scalar(@untested_modules) eq 0, 'All on-disk modules are tested')
     or diag ('Missing in test: ', explain \@untested_modules);
 
-use_ok('LedgerSMB::Sysconfig') 
+use_ok('LedgerSMB::Sysconfig')
     || BAIL_OUT('System Configuration could be loaded!');
 for my $module (@modules) {
     use_ok($module);
@@ -211,15 +205,8 @@ SKIP: {
 }
 
 SKIP: {
-	eval { require Net::TCLink };
-
-	skip 'Net::TCLink not installed', 1 if $@;
-	use_ok('LedgerSMB::CreditCard');
-}
-
-SKIP: {
     eval { require XML::Twig };
-   
+
     skip 'XML::Twig not installed', 8 if $@;
 
     for ('LedgerSMB::RESTXML::Document::Base',

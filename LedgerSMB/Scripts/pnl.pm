@@ -32,6 +32,8 @@ use LedgerSMB::Report::PNL::Invoice;
 use LedgerSMB::Report;
 use LedgerSMB::App_State;
 
+use strict;
+use warnings;
 
 sub generate_income_statement {
     my ($request) = @_;

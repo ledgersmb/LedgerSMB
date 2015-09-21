@@ -15,10 +15,10 @@ To save a timecard:
 
 =head1 DESCRIPTION
 
-LedgerSMB::Timecard provides generalized routines for timecard storage and 
+LedgerSMB::Timecard provides generalized routines for timecard storage and
 retrieval.  Reporting is handled separately using LedgerSMB::Report::Timecards.
 
-A timecard is actually a simple device that allows us to track the utilization 
+A timecard is actually a simple device that allows us to track the utilization
 of a resource, whether time in the offering of a billable service, labor in the
 manufacturing process, utilization of materials, and the like.  Heavy
 manufacturing solutions are likely to use the timecard system extensively to
@@ -42,7 +42,7 @@ use LedgerSMB::MooseTypes;
 
 This is the internal id of the timecard.  Not set before saving
 
-=cut 
+=cut
 
 has 'id' => (isa => 'Int', is => 'rw', required => '0');
 
@@ -72,7 +72,7 @@ has parts_id => (isa => 'Int', is => 'ro', required => '1');
 
 =item description text
 
-The description field is typically used as a description of the work done and 
+The description field is typically used as a description of the work done and
 may show up on reports or sales orders.
 
 =cut
@@ -95,7 +95,7 @@ Quantities allocated for manufacturing, orders etc.
 
 =cut
 
-has allocated  => (isa => 'LedgerSMB::Moose::Number', is => 'ro', 
+has allocated  => (isa => 'LedgerSMB::Moose::Number', is => 'ro',
               required => '0', coerce => 1);
 
 =item sellprice numeric
@@ -141,7 +141,7 @@ Time and date work ended for this card
 
 =cut
 
-has checkedout  => (isa => 'LedgerSMB::Moose::Date', is => 'ro', 
+has checkedout  => (isa => 'LedgerSMB::Moose::Date', is => 'ro',
                required => '0', coerce => 1);
 
 =item person_id int
@@ -164,14 +164,14 @@ has notes => (isa => 'Str', is => 'ro', required => '0');
 
 =cut
 
-has total => (is => 'ro', isa => 'LedgerSMB::Moose::Number', required => 0, 
+has total => (is => 'ro', isa => 'LedgerSMB::Moose::Number', required => 0,
           coerce => 1);
 
 =item non_billable numeric
 
 =cut
 
-has non_billable => (is => 'ro', isa => 'LedgerSMB::Moose::Number', 
+has non_billable => (is => 'ro', isa => 'LedgerSMB::Moose::Number',
                required => 1,  coerce => 1);
 
 =item jctype int
@@ -206,7 +206,7 @@ sub get {
          funcname => 'timecard__get', args => [$id]);
     my ($buclass) = __PACKAGE__->call_procedure(
          funcname => 'timecard__bu_class', args => [$id]);
-   
+
     $retval->{bu_class_id} = $buclass->{id};
     return __PACKAGE__->new(%$retval);
 }
@@ -247,9 +247,9 @@ Returns a list of parts matching the criteria requested
 sub find_part {
     my ($self, $args) = @_;
     return __PACKAGE__->call_procedure(
-                 funcname => 'timecard__part', 
-                     args => [$args->{is_timecard}, 
-                              $args->{is_service}, 
+                 funcname => 'timecard__part',
+                     args => [$args->{is_timecard},
+                              $args->{is_service},
                               $args->{partnumber}]);
 }
 
@@ -261,7 +261,7 @@ Adds $amount to the allocation amount of the timecard.
 
 sub allocate {
     my ($self, $amount) = @_;
-    $self->call_procedure(funcname => 'timecard__allocate', 
+    $self->call_procedure(funcname => 'timecard__allocate',
                               args => [$self->id, $amount]);
 }
 

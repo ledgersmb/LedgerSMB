@@ -21,10 +21,10 @@ PGObject->register_type(pg_type => $_,
 
 =head1 SYNPOSIS
 
-This is a wrapper class for handling a database interface for numeric (int, 
+This is a wrapper class for handling a database interface for numeric (int,
 float, numeric) data types to/from the database and to/from user input.
 
-This extends PBObject::Type::BigFloat which further extends LedgerSMB::PGNumber and 
+This extends PBObject::Type::BigFloat which further extends LedgerSMB::PGNumber and
 can be used in this way.
 
 =head1 INHERITS
@@ -148,7 +148,7 @@ sub from_input {
      return undef;
     }
     #$string = undef if $string eq '';
-    my %args   = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;  
+    my %args   = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     my $format = ($args{format}) ? $args{format}
                               : $LedgerSMB::App_State::User->{numberformat};
     die 'LedgerSMB::PGNumber No Format Set' if !$format;
@@ -158,11 +158,11 @@ sub from_input {
     my $newval;
     $negate = 1 if $string =~ /(^\(|DR$)/;
     if ( UNIVERSAL::isa( $string, 'LedgerSMB::PGNumber' ) )
-    {    
+    {
         return $string;
     }
     if (UNIVERSAL::isa( $string, 'LedgerSMB::PGNumber' ) ) {
-        $pgnum = $string; 
+        $pgnum = $string;
     } else {
         my $formatter = new Number::Format(
                     -thousands_sep => $lsmb_formats->{$format}->{thousands_sep},
@@ -171,7 +171,7 @@ sub from_input {
         $newval = $formatter->unformat_number($string);
         $pgnum = LedgerSMB::PGNumber->new($newval);
         $self->round_mode('+inf');
-    } 
+    }
     bless $pgnum, $self;
     $pgnum->bmul(-1) if $negate;
     die 'LedgerSMB::PGNumber Invalid Number' if $pgnum->is_nan();
@@ -208,7 +208,7 @@ Specifies the negative format
 
 sub to_output {
     my $self = shift @_;
-    my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;  
+    my %args  = (ref($_[0]) eq 'HASH')? %{$_[0]}: @_;
     $args{money} = 1 if $ENV{LSMB_ALWAYS_MONEY};
     my $is_neg = $self->is_neg;
 
@@ -238,7 +238,7 @@ sub to_output {
                     -decimal_point => $lsmb_formats->{$format}->{decimal_sep},
                      -decimal_fill => $zfill,
                        -neg_format => 'x'
-        );   
+        );
         $str = $formatter->format_number($str, $dplaces);
     }
 
@@ -246,7 +246,7 @@ sub to_output {
     $neg_format = 'def' unless $lsmb_neg_formats->{$neg_format};
     my $fmt = ($is_neg) ? $lsmb_neg_formats->{$neg_format}->{neg}
                         : $lsmb_neg_formats->{$neg_format}->{pos};
-   
+
     return sprintf($fmt, $str);
 }
 

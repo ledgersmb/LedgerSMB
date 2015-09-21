@@ -17,9 +17,9 @@ $$
 DECLARE out_row RECORD;
 BEGIN
 	FOR out_row IN
-		SELECT l.*, as_array(e.entity_class) 
+		SELECT l.*, as_array(e.entity_class)
                   FROM location_class l
-                  JOIN location_class_to_entity_class e 
+                  JOIN location_class_to_entity_class e
                        ON (l.id = e.location_class)
               GROUP BY l.id, l.class, l.authoritative
               ORDER BY l.id
@@ -50,28 +50,28 @@ $$ Lists countries, by default in alphabetical order.$$;
 
 CREATE OR REPLACE FUNCTION location_save
 (in_location_id int, in_address1 text, in_address2 text, in_address3 text,
-	in_city text, in_state text, in_zipcode text, in_country int) 
+	in_city text, in_state text, in_zipcode text, in_country int)
 returns integer AS
 $$
 DECLARE
 	location_id integer;
 	location_row RECORD;
 BEGIN
-	
+
 	IF in_location_id IS NULL THEN
 	    SELECT id INTO location_id FROM location
 	    WHERE line_one = in_address1 AND line_two = in_address2
-	          AND line_three = in_address3 AND in_city = city 
+	          AND line_three = in_address3 AND in_city = city
 	          AND in_state = state AND in_zipcode = mail_code
-	          AND in_country = country_id 
+	          AND in_country = country_id
 	    LIMIT 1;
 
 	    IF NOT FOUND THEN
 	    -- Straight insert.
 	    location_id = nextval('location_id_seq');
 	    INSERT INTO location (
-	        id, 
-	        line_one, 
+	        id,
+	        line_one,
 	        line_two,
 	        line_three,
 	        city,
@@ -99,12 +99,12 @@ BEGIN
 	        RAISE EXCEPTION 'location_save called with nonexistant location ID %', in_location_id;
 	    ELSE
 	        -- Okay, we're good.
-	        
+
 	        UPDATE location SET
 	            line_one = in_address1,
 	            line_two = in_address2,
 	            line_three = in_address3,
-	            city = in_city, 
+	            city = in_city,
 	            state = in_state,
 	            mail_code = in_zipcode,
 	            country_id = in_country
@@ -120,9 +120,9 @@ COMMENT ON function location_save
 (in_location_id int, in_address1 text, in_address2 text, in_address3 text,
 	in_city text, in_state text, in_zipcode text, in_country int) IS
 $$ Note that this does NOT override the data in the database unless in_location_id is specified.
-Instead we search for locations matching the desired specifications and if none 
+Instead we search for locations matching the desired specifications and if none
 are found, we insert one.  Either way, the return value of the location can be
-used for mapping to other things.  This is necessary because locations are 
+used for mapping to other things.  This is necessary because locations are
 only loosly coupled with entities, etc.$$;
 
 CREATE OR REPLACE FUNCTION location__get (in_id integer) returns location AS
@@ -138,9 +138,9 @@ $$ language plpgsql;
 COMMENT ON FUNCTION location__get (in_id integer) IS
 $$ Returns the location specified by in_id.$$;
 
-CREATE OR REPLACE FUNCTION location_search 
-(in_address1 varchar, in_address2 varchar, 
-	in_city varchar, in_state varchar, in_zipcode varchar, 
+CREATE OR REPLACE FUNCTION location_search
+(in_address1 varchar, in_address2 varchar,
+	in_city varchar, in_state varchar, in_zipcode varchar,
 	in_country varchar)
 RETURNS SETOF location
 AS
@@ -149,7 +149,7 @@ DECLARE
 	out_location location%ROWTYPE;
 BEGIN
 	FOR out_location IN
-		SELECT * FROM location 
+		SELECT * FROM location
 		WHERE address1 ilike '%' || in_address1 || '%'
 			AND address2 ilike '%' || in_address2 || '%'
 			AND in_city ilike '%' || in_city || '%'
@@ -171,11 +171,11 @@ $$ Returns matching locations.  All matches may be partial.$$;
 
 CREATE OR REPLACE FUNCTION location_list_all () RETURNS SETOF location AS
 $$
-DECLARE 
+DECLARE
 	out_location location%ROWTYPE;
 BEGIN
 	FOR out_location IN
-		SELECT * FROM location 
+		SELECT * FROM location
 		ORDER BY country, state, city
 	LOOP
 		RETURN NEXT out_location;

@@ -16,9 +16,9 @@ DROP FUNCTION IF EXISTS trial_balance__generate
 (in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
  in_ignore_yearend TEXT, in_business_units int[]);
 
-CREATE OR REPLACE FUNCTION trial_balance__generate 
+CREATE OR REPLACE FUNCTION trial_balance__generate
 (in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
- in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int) 
+ in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int)
 returns setof tb_row AS
 $$
 DECLARE
@@ -26,7 +26,7 @@ DECLARE
         t_roll_forward  date;
         t_cp            account_checkpoint;
         ignore_trans    int[];
-        t_start_date    date; 
+        t_start_date    date;
         t_end_date      date;
         t_balance_sign  int;
 BEGIN
@@ -34,16 +34,16 @@ BEGIN
        t_balance_sign = null;
     ELSIF in_balance_sign = -1 OR in_balance_sign = 1 THEN
        t_balance_sign = in_balance_sign;
-    ELSE 
+    ELSE
        RAISE EXCEPTION 'Invalid Balance Type';
     END IF;
 
     IF in_from_date IS NULL AND in_ignore_yearend = 'none' THEN
-       SELECT max(end_date) INTO t_roll_forward 
+       SELECT max(end_date) INTO t_roll_forward
          FROM account_checkpoint;
     ELSIF in_from_date IS NULL AND in_ignore_yearend = 'last' THEN
-       SELECT max(end_date) INTO t_roll_forward 
-         FROM account_checkpoint 
+       SELECT max(end_date) INTO t_roll_forward
+         FROM account_checkpoint
         WHERE end_date < (select max(gl.transdate)
                             FROM gl JOIN yearend y ON y.trans_id = gl.id
                            WHERE y.transdate < coalesce(in_to_date, gl.transdate)
@@ -57,27 +57,27 @@ BEGIN
                select min(transdate) from gl
                 union all
                select min(transdate) from acc_trans) gl;
-                           
+
     ELSE
       SELECT max(end_date) INTO t_roll_forward
-         FROM account_checkpoint 
+         FROM account_checkpoint
         WHERE end_date < in_from_date;
     END IF;
 
-    IF t_roll_forward IS NULL 
-       OR array_upper(in_business_units, 1) > 0 
+    IF t_roll_forward IS NULL
+       OR array_upper(in_business_units, 1) > 0
     THEN
-       SELECT min(transdate) - '1 day'::interval 
-         INTO t_roll_forward 
+       SELECT min(transdate) - '1 day'::interval
+         INTO t_roll_forward
          FROM acc_trans;
     END IF;
 
     IF in_ignore_yearend = 'last' THEN
-       SELECT ARRAY[trans_id] INTO ignore_trans FROM yearend 
+       SELECT ARRAY[trans_id] INTO ignore_trans FROM yearend
      ORDER BY transdate DESC LIMIT 1;
     ELSIF in_ignore_yearend = 'all' THEN
        SELECT array_agg(trans_id) INTO ignore_trans FROM yearend;
-    ELSE 
+    ELSE
        ignore_trans := '{}';
     END IF;
 
@@ -107,7 +107,7 @@ BEGIN
                    ON ac.approved and gl.approved and ac.trans_id = gl.id
     LEFT JOIN business_unit_ac buac ON ac.entry_id = buac.entry_id
     LEFT JOIN bu_tree ON buac.bu_id = bu_tree.id
-        WHERE ac.transdate BETWEEN t_roll_forward + '1 day'::interval 
+        WHERE ac.transdate BETWEEN t_roll_forward + '1 day'::interval
                                     AND t_end_date
               AND (ignore_trans is null or ac.trans_id <> ALL(ignore_trans))
               AND ((in_business_units = '{}' OR in_business_units IS NULL)
@@ -116,25 +116,25 @@ BEGIN
        SELECT a.id, a.accno,
          coalesce(at.description, a.description) as description, a.gifi_accno,
          case when in_from_date is null then 0 else
-              COALESCE(t_balance_sign, 
+              COALESCE(t_balance_sign,
                       CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END )
-              * (coalesce(cp.amount, 0) 
-              + sum(CASE WHEN ac.transdate < coalesce(in_from_date, 
+              * (coalesce(cp.amount, 0)
+              + sum(CASE WHEN ac.transdate < coalesce(in_from_date,
                                                       t_roll_forward)
-                         THEN ac.amount ELSE 0 END)) end, 
-              sum(CASE WHEN ac.transdate BETWEEN coalesce(in_from_date, 
+                         THEN ac.amount ELSE 0 END)) end,
+              sum(CASE WHEN ac.transdate BETWEEN coalesce(in_from_date,
                                                          t_roll_forward)
-                                                 AND coalesce(in_to_date, 
+                                                 AND coalesce(in_to_date,
                                                          ac.transdate)
                              AND ac.amount < 0 THEN ac.amount * -1 ELSE 0 END) -
-              case when in_from_date is null then coalesce(cp.debits, 0) else 0 end, 
-              sum(CASE WHEN ac.transdate BETWEEN coalesce(in_from_date, 
-                                                         t_roll_forward) 
-                                                 AND coalesce(in_to_date, 
+              case when in_from_date is null then coalesce(cp.debits, 0) else 0 end,
+              sum(CASE WHEN ac.transdate BETWEEN coalesce(in_from_date,
+                                                         t_roll_forward)
+                                                 AND coalesce(in_to_date,
                                                          ac.transdate)
-                             AND ac.amount > 0 THEN ac.amount ELSE 0 END) + 
-              case when in_from_date is null then coalesce(cp.credits, 0) else 0 end, 
-              COALESCE(t_balance_sign, 
+                             AND ac.amount > 0 THEN ac.amount ELSE 0 END) +
+              case when in_from_date is null then coalesce(cp.credits, 0) else 0 end,
+              COALESCE(t_balance_sign,
                        CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END)
               * (coalesce(cp.amount, 0) + sum(coalesce(ac.amount, 0)))
          FROM account a
@@ -146,7 +146,7 @@ BEGIN
               INNER JOIN user_preference up ON up.language = at.language_code
               INNER JOIN users ON up.id = users.id
                 WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
-        WHERE (in_accounts IS NULL OR in_accounts = '{}' 
+        WHERE (in_accounts IS NULL OR in_accounts = '{}'
                OR a.id = ANY(in_accounts))
               AND (in_heading IS NULL OR in_heading = a.heading)
      GROUP BY a.id, a.accno, coalesce(at.description, a.description),
@@ -161,18 +161,18 @@ CREATE OR REPLACE FUNCTION trial_balance__accounts (
     in_report_id INT
 ) RETURNS SETOF account AS $body$
 
-    SELECT a.* 
+    SELECT a.*
       FROM account a
       JOIN trial_balance__account_to_report tbr ON a.id = tbr.account_id
      WHERE tbr.report_id = $1
-     
+
      UNION
-     
+
      SELECT a.*
        FROM account a
        JOIN trial_balance__heading_to_report tbhr ON a.heading = tbhr.heading_id
       WHERE tbhr.report_id = $1
-      
+
       ORDER BY accno DESC;
 $body$ LANGUAGE SQL;
 
@@ -210,7 +210,7 @@ CREATE OR REPLACE FUNCTION trial_balance__delete (
 
     BEGIN
         PERFORM id FROM trial_balance WHERE id = in_report_id;
-        
+
         IF FOUND THEN
             DELETE FROM trial_balance__heading_to_report WHERE report_id = in_report_id;
             DELETE FROM trial_balance__account_to_report WHERE report_id = in_report_id;

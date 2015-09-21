@@ -12,7 +12,7 @@ This class contains methods for end of year entry.
 
 =item end_date specifies the end date for a closed period.
 
-=item reference specifies the gl reference field associated with the account 
+=item reference specifies the gl reference field associated with the account
 closure
 
 =item description specifies the gl description field associated with the account
@@ -28,9 +28,10 @@ closure
 
 =cut
 
-use strict;
 package LedgerSMB::DBObject::EOY;
 use base qw(LedgerSMB::PGOld);
+use strict;
+use warnings;
 
 =item $eoy->checkpoint_only();
 
@@ -49,7 +50,7 @@ sub checkpoint_only {
 
 =item $eoy->reopen_books()
 
-This reverses any end of year transaction on $eoy->{reopen_date}, and deletes 
+This reverses any end of year transaction on $eoy->{reopen_date}, and deletes
 checkpoints later than that and creates a checkpoint for the prior day.
 
 =cut
@@ -61,7 +62,7 @@ sub reopen_books {
 
 =item $eoy->latest_closing()
 
-Needs no properties set (other than internal private ones).  Retrieves the 
+Needs no properties set (other than internal private ones).  Retrieves the
 latest closing date and returns it.
 
 =cut
@@ -74,7 +75,7 @@ sub latest_closing {
 
 =item $eoy->close_books()
 
-Requires all properies in BASIC PROPERTIES to be set.  This creates a gl 
+Requires all properies in BASIC PROPERTIES to be set.  This creates a gl
 yearend transaction, and moves income/expenses to the selected equity account
 for retained earnings.
 
@@ -87,8 +88,8 @@ sub close_books {
 
 =item $eoy->list_earnings_accounts
 
-Returns a list of equity accounts, and sets $eoy->{earnings_accounts} to a 
-list of hashrefs.  These are used to select retained earnings accounts in 
+Returns a list of equity accounts, and sets $eoy->{earnings_accounts} to a
+list of hashrefs.  These are used to select retained earnings accounts in
 closing books.
 
 =cut

@@ -11,7 +11,6 @@ This module holds common workflow routines for reports.
 =cut
 
 package LedgerSMB::Scripts::reports;
-our $VERSION = '1.0';
 
 use LedgerSMB;
 use LedgerSMB::Template;
@@ -24,8 +23,12 @@ use LedgerSMB::Report::Listings::Warehouse;
 use LedgerSMB::Report::Listings::Language;
 use LedgerSMB::Report::Listings::SIC;
 use LedgerSMB::Report::Listings::Overpayments;
+use LedgerSMB::Setting;
 use LedgerSMB::DBObject::Payment; # To move this off after rewriting payments
 use strict;
+use warnings;
+
+our $VERSION = '1.0';
 
 
 =pod

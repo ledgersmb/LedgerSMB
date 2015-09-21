@@ -43,13 +43,14 @@ package LedgerSMB::Num2text;
 # EOF
 
 use utf8;
-no warnings;
+use strict;
+use warnings;
 use LedgerSMB::Locale;
 
 sub new {
     my ( $type, $countrycode ) = @_;
 
-    $self = {};
+    my $self = {};
     $self->{'locale'} = LedgerSMB::Locale->get_handle($countrycode);
     bless $self, $type;
 
@@ -136,7 +137,7 @@ sub num2text {
 
 sub num2text_en {
     my ( $self, $amount ) = @_;
-      
+
     return $self->{numbername}{0} unless $amount;
 
     my @textnumber = ();
@@ -152,7 +153,7 @@ sub num2text_en {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     while (@numblock) {
@@ -193,7 +194,7 @@ sub num2text_en {
 
         # add thousand, million
         if ($i) {
-            $num = 10**( $i * 3 );
+            my $num = 10**( $i * 3 );
             push @textnumber, $self->{numbername}{$num};
         }
 
@@ -244,7 +245,7 @@ sub num2text_de {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     my $belowhundred = !$#numblock;
@@ -369,7 +370,7 @@ sub num2text_et {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     while (@numblock) {
@@ -379,7 +380,7 @@ sub num2text_et {
         @num = split //, $numblock[$i];
 
         $appendit = "it";
-        $hundred  = 0;
+        my $hundred  = 0;
 
         if ( $numblock[$i] == 0 ) {
             pop @numblock;
@@ -412,7 +413,7 @@ sub num2text_et {
             if ($hundred) {
                 @num = split //, $numblock[$i];
             }
-            $num = $num[1];
+            my $num = $num[1];
 
             push @textnumber, "$self->{numbername}{$num}teist";
 
@@ -463,7 +464,7 @@ sub num2text_es {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     # special case for 1000
@@ -518,14 +519,14 @@ sub num2text_es {
         elsif ( $numblock[$i] > 0 ) {
 
             # ones
-            $num = $numblock[$i];
+            my $num = $numblock[$i];
             $num .= 'o' if ( $num == 1 && $i == 0 );
             push @textnumber, $self->{numbername}{$num};
         }
 
         # add thousand, million
         if ($i) {
-            $num = 10**( $i * 3 );
+            my $num = 10**( $i * 3 );
             if ( $numblock[$i] > 1 ) {
                 if ( $i == 2 || $i == 4 ) {
                     $a = $self->{numbername}{$num} . "es";
@@ -602,7 +603,7 @@ sub num2text_fr {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     my $cent = 0;
@@ -667,7 +668,7 @@ sub num2text_fr {
 
         # add thousand, million
         if ($i) {
-            $num = 10**( $i * 3 );
+            my $num = 10**( $i * 3 );
             if ( $i == 1 ) {
                 push @textnumber, $self->{numbername}{$num};
             }
@@ -751,7 +752,7 @@ sub num2text_hu {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
     while (@numblock) {
         $i = $#numblock;
@@ -788,12 +789,12 @@ sub num2text_hu {
         if ($i) {
             if ( $i == 1 && $amount < 2000 ) {
 
-                $num = 10**( $i * 3 );
+                my $num = 10**( $i * 3 );
                 push @textnumber, $self->{numbername}{$num};
             }
             else {
 
-                $num = 10**( $i * 3 );
+                my $num = 10**( $i * 3 );
                 push @textnumber, $self->{numbername}{$num} . "-";
             }
         }
@@ -844,7 +845,7 @@ sub num2text_nl {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     while (@numblock) {
@@ -936,7 +937,7 @@ sub num2text_it {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     while (@numblock) {
@@ -1031,7 +1032,7 @@ sub num2text_da {
         for ( 1 .. 3 ) {
             push @a, shift @num;
         }
-        push @numblock, join / /, reverse @a;
+        push @numblock, join ' ', reverse @a;
     }
 
     my $i;
@@ -1046,7 +1047,7 @@ sub num2text_da {
         }
 
         # Plural suffix "er" for million and up, not for tusinde
-        $bigpluralsuffix = "";
+        my $bigpluralsuffix = "";
         $bigpluralsuffix = "er" if ( $i > 1 && $numblock[$i] > 1 );
 
         if ( $numblock[$i] > 99 ) {
@@ -1145,19 +1146,19 @@ sub num2text_sl {
     for (1 .. 3) {
       push @a, shift @num;
     }
-    push @numblock, join / /, reverse @a;
+    push @numblock, join ' ', reverse @a;
   }
-  
+
   my $belowhundred = !$#numblock;
-  
+
   while (@numblock) {
 
     $i = $#numblock;
     @num = split //, $numblock[$i];
     $appendn = "";
-    
+
     $numblock[$i] *= 1;
-    
+
     if ($numblock[$i] == 0) {
       pop @numblock;
       next;
@@ -1166,9 +1167,9 @@ sub num2text_sl {
     if ($numblock[$i] > 99) {
       # the one from hundreds
       if ( $num[0] > 2 ) {
-	push @textnumber, $self->{numbername}{$num[0]};
+    push @textnumber, $self->{numbername}{$num[0]};
       } elsif ( $num[0] > 1 ) {
-	push @textnumber, 'dve';
+    push @textnumber, 'dve';
       }
 
       # add hundred designation
@@ -1179,7 +1180,7 @@ sub num2text_sl {
     }
 
 # Appends, where for 1 they shall be eliminated later below:
-    if ($i == 2) {    
+    if ($i == 2) {
       if (2*10**6 <= $check1m && $check1m < 3*10**6) {
         $appendn = 'a';
       } elsif (3*10**6 <= $check1m && $check1m < 5*10**6) {
@@ -1188,7 +1189,7 @@ sub num2text_sl {
         $appendn = 'ov';
       }
     }
-    if ($i == 4) {    
+    if ($i == 4) {
       if (2*10**12 <= $check1b && $check1b < 3*10**12) {
         $appendn = 'a';
       } elsif (3*10**12 <= $check1b && $check1b < 5*10**12) {
@@ -1204,46 +1205,46 @@ sub num2text_sl {
     } elsif ($numblock[$i] > 1) {
       # ones
       if (2*10**9 <= $check1md && $check1md < 3*10**9) {
-	push @textnumber, 'dve';
+    push @textnumber, 'dve';
       } else {
-	push @textnumber, $self->{numbername}{$numblock[$i]};
+    push @textnumber, $self->{numbername}{$numblock[$i]};
       }
     } elsif ($numblock[$i] == 1) {
       if ($i == 0) {
-	push @textnumber, $self->{numbername}{$numblock[$i]};
+    push @textnumber, $self->{numbername}{$numblock[$i]};
       } else {
-	if ($i >= 5) {
-	    push @textnumber, $self->{numbername}{$numblock[$i]}.'-!-too big number-!-?!';
-	} elsif ($i == 4) {
-	  if ($skip1b == 0) {
-	    push @textnumber, $self->{numbername}{$numblock[$i]};
-	  }
-	} elsif ($i == 3) {
-	  if (1*10**9 <= $check1md && $check1md < 2*10**9) {
-	    push @textnumber, 'ena';
-	  } else {
-	    push @textnumber, $self->{numbername}{$numblock[$i]};
-	  }
-	} elsif ($i == 2) {
-	  if ($skip1m == 0) {
-	    push @textnumber, $self->{numbername}{$numblock[$i]};
-	  }
-	} elsif ($i == 1) {
-	  if ($skip1k == 0) {
-	    push @textnumber, $self->{numbername}{$numblock[$i]};
-	  }
-	} else {
-	  push @textnumber, $self->{numbername}{$numblock[$i]};
-	}
+    if ($i >= 5) {
+        push @textnumber, $self->{numbername}{$numblock[$i]}.'-!-too big number-!-?!';
+    } elsif ($i == 4) {
+      if ($skip1b == 0) {
+        push @textnumber, $self->{numbername}{$numblock[$i]};
+      }
+    } elsif ($i == 3) {
+      if (1*10**9 <= $check1md && $check1md < 2*10**9) {
+        push @textnumber, 'ena';
+      } else {
+        push @textnumber, $self->{numbername}{$numblock[$i]};
+      }
+    } elsif ($i == 2) {
+      if ($skip1m == 0) {
+        push @textnumber, $self->{numbername}{$numblock[$i]};
+      }
+    } elsif ($i == 1) {
+      if ($skip1k == 0) {
+        push @textnumber, $self->{numbername}{$numblock[$i]};
+      }
+    } else {
+      push @textnumber, $self->{numbername}{$numblock[$i]};
+    }
       }
       $appendn = "";
     }
-    
+
 # Appends, where also for 1 they shall be considered as below;
 # if specified above with the others, they would be eliminated
 # by a command just a few lines above...
 #
-    if ($i == 3) {    
+    if ($i == 3) {
       if (1*10**9 <= $check1md && $check1md < 2*10**9) {
         $appendn = 'a';
       } elsif (2*10**9 <= $check1md && $check1md < 3*10**9) {
@@ -1258,11 +1259,11 @@ sub num2text_sl {
       $amount = 10**($i * 3);
       push @textnumber, $self->{numbername}{$amount}.$appendn;
     }
-    
+
     pop @numblock;
 
     @textnumber = 'NAPAKA! ¿TEVILKA JE PREVELIKA!' if ($i > 4);
-    
+
   }
 
   join '', @textnumber;
@@ -1272,14 +1273,14 @@ sub num2text_sl {
 
 sub format_ten_sl {
   my ($self, $amount, $belowhundred) = @_;
-  
+
   my $textnumber = "";
   my @num = split //, $amount;
 
   if ($amount > 20) {
-    if ($num[1] == 0) { 
-      $textnumber = $self->{numbername}{$amount}; 
-    } elsif ($num[1] == 1) { 
+    if ($num[1] == 0) {
+      $textnumber = $self->{numbername}{$amount};
+    } elsif ($num[1] == 1) {
       $amount = $num[0] * 10;
       $textnumber = $self->{numbername}{$num[1]}.'ain'.$self->{numbername}{$amount};
     } else {
@@ -1289,9 +1290,9 @@ sub format_ten_sl {
   } else {
     $textnumber = $self->{numbername}{$amount};
   }
-  
+
   $textnumber;
-  
+
 }
 
 

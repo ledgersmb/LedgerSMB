@@ -7,13 +7,31 @@ UI changes:
 
 Code Cleanup:
 * LedgerSMB now relies on plack.  Previous stub scripts removed (ChrisT)
-* Removed LedgerSMB's custom dojo page loader
+* Removed LedgerSMB's custom dojo page loader (ErikH)
 
 API Enhancements:
 * Moved a great deal of code into PGObject framework on CPAN (Chris T)
 
+Quality assurance:
+* Assurance of completeness of 'use'-tested source files (ErikH)
+* Extended 'use'-tests to cover full set of source files (ErikH)
+* New tests validating source code requirements, such as (ErikH)
+  - Reject code using certain modules (Data::Dumper, Carp::Always, ...)
+  - Reject code which doesn't meet certain formatting
+  - Reject code which uses certain constructs
+
 Changelog for 1.4 Series
 Released 2014-09-15
+
+Changelog for 1.4.16
+* FEATURE: Added possibility to translate account descriptions (ErikH)
+* Fixed shell environment being clobbered when loading schema (GH #813) (ErikH)
+* Fixed FX handling in payment bulk posting workflow (GH #758)
+* Removed unused Net::TCLink dependency and POS code (ErikH)
+* Update schema documentation files in doc/database/ (ErikH)
+
+ErikH is Erik Huelsmann
+
 
 Changelog for 1.4.15
 * Fix printing invoices and orders under Starman (GH 736) (ErikH)
@@ -32,6 +50,7 @@ Changelog for 1.4.15
 ErikH is Erik Huelsmann
 ChrisT is Chris Travers
 JohnL is John Locke
+
 
 Changelog for 1.4.14
 * Replace spanish CoA for compliance; donated by AccountNet

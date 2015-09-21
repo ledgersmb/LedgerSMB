@@ -8,23 +8,25 @@ LedgerSMB:Scripts::login, LedgerSMB workflow scripts for managing drafts
 =head1 SYNOPSIS
 
 This script contains the request handlers for logging in and out of LedgerSMB.
-    
+
 =head1 METHODS
-        
-=over   
-        
+
+=over
+
 =cut
 
 
 package LedgerSMB::Scripts::login;
-our $VERSION = 1.0;
 
 use LedgerSMB::Locale;
-use LedgerSMB; 
+use LedgerSMB;
 use LedgerSMB::User;
 use LedgerSMB::Auth;
 use LedgerSMB::Sysconfig;
 use strict;
+use warnings;
+
+our $VERSION = 1.0;
 
 =item no_db_actions
 
@@ -48,13 +50,13 @@ sub __default {
     #HV _locale from request
     #my $locale;
     #$locale = LedgerSMB::Locale->get_handle(${LedgerSMB::Sysconfig::language})
-    #  or $request->error( __FILE__ . ':' . __LINE__ . 
-    #     ": Locale not loaded: $!\n" );         
+    #  or $request->error( __FILE__ . ':' . __LINE__ .
+    #     ": Locale not loaded: $!\n" );
 
     $request->{stylesheet} = "ledgersmb.css";
     $request->{titlebar} = "LedgerSMB $request->{VERSION}";
      my $template = LedgerSMB::Template->new(
-        user =>$request->{_user}, 
+        user =>$request->{_user},
         locale => $request->{_locale},
         path => 'UI',
         template => 'login',
@@ -83,20 +85,21 @@ sub authenticate {
     }
     my $path = $ENV{SCRIPT_NAME};
     $path =~ s|[^/]*$||;
-    
-    if ($request->{dbh} && $request->{next}) {
-        
+
+    # if ($request->{dbh} && $request->{next}) {
+
+    #     print "Content-Type: text/html\n";
+    #     print "Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path\n";
+    #     print "Status: 302 Found\n";
+    #     print "Location: ".$path.$request->{next}."\n";
+    #     print "\n";
+    #     $request->finalize_request();
+    # }
+    # els
+    if ($request->{dbh} and !$request->{log_out}){
         print "Content-Type: text/html\n";
         print "Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path\n";
-	    print "Status: 302 Found\n";
-	    print "Location: ".$path.$request->{next}."\n";
-	    print "\n";
-	    $request->finalize_request();	    
-    }
-    elsif ($request->{dbh} and !$request->{log_out}){
-        print "Content-Type: text/html\n";
-        print "Set-Cookie: ${LedgerSMB::Sysconfig::cookie_name}=Login; path=$path\n";
-	    print "Status: 200 Success\n\nSuccess\n";
+        print "Status: 200 Success\n\nSuccess\n";
         if ($request->{log_out}){
             $request->finalize_request();
         }
@@ -108,9 +111,9 @@ sub authenticate {
         } else {
             print "WWW-Authenticate: Basic realm=\"LedgerSMB\"\n";
             print "Status: 401 Unauthorized\n\n";
-	    print "Please enter your credentials.\n";
-        } 
-        $request->finalize_request(); 
+        print "Please enter your credentials.\n";
+        }
+        $request->finalize_request();
     }
 }
 
@@ -122,7 +125,7 @@ Logs in the user and displays the root document.
 
 sub login {
     my ($request) = @_;
-    
+
     if (!$request->{_user}){
         __default($request);
     }
@@ -140,12 +143,12 @@ Firefox, Opera, and Internet Explorer are all supported.  Not sure about Chrome
 =cut
 
 sub logout {
-    my ($request) = @_;    
+    my ($request) = @_;
     $request->{callback}   = "";
     $request->{endsession} = 1;
     if($request->{dbh}){LedgerSMB::Session::destroy($request);}#if logout on already logged out session
      my $template = LedgerSMB::Template->new(
-        user =>$request->{_user}, 
+        user =>$request->{_user},
         locale => $request->{_locale},
         path => 'UI',
         template => 'logout',
@@ -156,7 +159,7 @@ sub logout {
 
 =item logout_js
 
-This is a stup for a js logout feature.  It allows javascript to log out by 
+This is a stup for a js logout feature.  It allows javascript to log out by
 requiring only bogus credentials (logout:logout).
 
 =cut
@@ -164,12 +167,12 @@ requiring only bogus credentials (logout:logout).
 sub logout_js {
     my $request = shift @_;
     my $creds = LedgerSMB::Auth::get_credentials();
-    LedgerSMB::Auth::credential_prompt 
-        unless ($creds->{password} eq 'logout') 
+    LedgerSMB::Auth::credential_prompt
+        unless ($creds->{password} eq 'logout')
                and ($creds->{login} eq 'logout');
     logout($request);
 }
-    
+
 
 ###TODO-LOCALIZE-DOLLAR-AT
 eval { do "scripts/custom/login.pl"};
@@ -178,7 +181,7 @@ eval { do "scripts/custom/login.pl"};
 
 =head1 COPYRIGHT
 
-Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2009 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

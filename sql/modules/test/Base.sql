@@ -34,6 +34,6 @@ INSERT INTO account(id, accno, description, category, heading, contra)
 values (-1002, '-1000000002', 'Test cases only', 'A', (select id from account_heading WHERE accno  = '000000000000000000000'), false);
 
 CREATE OR REPLACE FUNCTION test_get_account_id(in_accno text) returns int as
-$$ 
-SELECT id FROM chart WHERE accno = $1; 
+$$
+SELECT id FROM chart WHERE accno = $1;
 $$ language sql;

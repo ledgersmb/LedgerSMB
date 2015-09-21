@@ -9,6 +9,10 @@ LedgerSMB::Scripts::trial_balance - Trial Balance logic for LedgerSMB
 =cut
 
 package LedgerSMB::Scripts::trial_balance;
+
+use strict;
+use warnings;
+
 use LedgerSMB::Report::Trial_Balance;
 
 
@@ -40,10 +44,10 @@ sub run {
     $cols = \@balance_columns if $request->{tb_type} eq 'balance';
     $request->{"col_$_"} = 1 for @$cols;
     $request->{business_units} = [map {$request->{$_}}
-                                 sort 
-                                 grep {$_ =~ /business_/} 
+                                 sort
+                                 grep {$_ =~ /business_/}
                                  keys %$request];
-    delete $request->{business_units} 
+    delete $request->{business_units}
            unless scalar @{$request->{business_units}};
     LedgerSMB::Report::Trial_Balance->new(%$request)->render($request);
 }

@@ -1,4 +1,4 @@
-=head1 NAME 
+=head1 NAME
 
 LedgerSMB::Payroll::Deduction_Types - Deduction Types Searches for LedgerSMB
 
@@ -108,7 +108,7 @@ has unit => (is => 'ro', isa => 'Str', required => '0');
 
 =over
 
-=item run_report 
+=item run_report
 
 =cut
 
@@ -130,3 +130,5 @@ later version.  Please see included LICENSE.TXT for details.
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;
