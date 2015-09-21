@@ -44,7 +44,8 @@ sub connect {
     my ($package, $company, $username, $password) = @_;
     if (!$username){
         my $creds = LedgerSMB::Auth::get_credentials;
-        LedgerSMB::Auth::credential_prompt() if $creds->{login} eq 'logout';
+        LedgerSMB::Auth::credential_prompt()
+            if $creds->{login} && $creds->{login} eq 'logout';
         $username = $creds->{login};
         $password = $creds->{password};
     }
