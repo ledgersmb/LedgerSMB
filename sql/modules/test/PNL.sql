@@ -216,7 +216,7 @@ SELECT 'Account -1001 shows up in accrual income statement', count(*) = 1
  WHERE account_id = -1001;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'Account -1001 accrual total 4040', amount = 4040
+SELECT 'Account -1001 accrual total -4040', amount = -4040
   FROM pnl__income_statement_accrual(date1(), date2() - 1, 'none', ARRAY[]::int[])
  WHERE account_id = -1001;
 
@@ -231,7 +231,7 @@ SELECT 'Account -1001 shows up in cash income statement', count(*) = 1
  WHERE account_id = -1001;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'Account -1001 cash total 3030', amount = 3030
+SELECT 'Account -1001 cash total -3030', amount = -3030
   FROM pnl__income_statement_cash(date1(), date2() - 1, 'none', ARRAY[]::int[])
  WHERE account_id = -1001;
 
@@ -243,7 +243,7 @@ SELECT 'Account -1001 shows up in future cash pnl', count(*) = 1
  WHERE account_id = -1001;
 
 INSERT INTO test_result(test_name, success)
-SELECT 'Account -1001 future cash total 505', sum(amount) = 505
+SELECT 'Account -1001 future cash total -505', sum(amount) = -505
   FROM pnl__income_statement_cash(date2() - 5, date2() + 20, 'none', ARRAY[]::int[])
  WHERE account_id = -1001;
 

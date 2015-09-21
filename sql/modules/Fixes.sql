@@ -1,5 +1,5 @@
--- SQL Fixes for upgrades.  These must be safe to run repeatedly, or they must
--- fail transactionally.  Please:  one transaction per fix.
+-- SQL Fixes for upgrades.  These must be safe to run repeatedly, or they must 
+-- fail transactionally.  Please:  one transaction per fix.  
 --
 -- These will be cleaned up going back no more than one beta.
 
@@ -7,13 +7,13 @@
 
 update defaults set value='yes' where setting_key='module_load_ok';
 
-DELETE FROM menu_acl
- WHERE node_id IN (select node_id from menu_attribute
+DELETE FROM menu_acl 
+ WHERE node_id IN (select node_id from menu_attribute 
                     where attribute = 'module' and value = 'bp.pl');
-DELETE FROM menu_attribute
- WHERE node_id IN (select node_id from menu_attribute
+DELETE FROM menu_attribute 
+ WHERE node_id IN (select node_id from menu_attribute 
                     where attribute = 'module' and value = 'bp.pl');
-DELETE FROM menu_node
+DELETE FROM menu_node 
  WHERE id NOT IN (select node_id from menu_attribute);
 
 DELETE FROM menu_acl
@@ -25,7 +25,7 @@ DELETE FROM menu_attribute
  WHERE node_id IN (select node_id from menu_attribute
                     where attribute = 'menu' and node_id not in
                           (select parent from menu_node));
-DELETE FROM menu_node
+DELETE FROM menu_node 
  WHERE id NOT IN (select node_id from menu_attribute);
 COMMIT;
 
@@ -52,7 +52,7 @@ COMMIT;
 BEGIN;
 ALTER TABLE BATCH DROP CONSTRAINT "batch_locked_by_fkey";
 
-ALTER TABLE BATCH ADD FOREIGN KEY (locked_by) references session (session_id)
+ALTER TABLE BATCH ADD FOREIGN KEY (locked_by) references session (session_id) 
 ON DELETE SET NULL;
 
 COMMIT;
@@ -68,14 +68,14 @@ update entity_credit_account set language_code = 'en' where language_code is nul
 COMMIT;
 
 BEGIN;
-UPDATE menu_node set position = (position * -1) - 1
+UPDATE menu_node set position = (position * -1) - 1 
  where parent IN (172, 156) and position > 1;
 UPDATE menu_node set position = position * -1 where position < 0;
 INSERT INTO menu_node (id, parent, position, label)
 VALUES (90, 172, 2, 'Product Receipt'),
        (99, 156, 2, 'Product Receipt');
 
-INSERT INTO menu_attribute
+INSERT INTO menu_attribute 
 (id, node_id, attribute, value) VALUES
 (228, 90, 'module', 'template.pm'),
 (229, 90, 'action', 'display'),
@@ -156,6 +156,10 @@ select c.id, c.accno, c.description,
     ON (c.id = l.account_id)
 group by c.id, c.accno, c.description, c.category, c.heading,
          c.gifi_accno, c.contra, c.tax;
+
+BEGIN;
+ALTER TABLE account_heading ADD COLUMN category CHAR(1);
+END;
 
 BEGIN;
 UPDATE language SET code = 'ms_MY' WHERE code = 'my';

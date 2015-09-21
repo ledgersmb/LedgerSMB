@@ -4,134 +4,46 @@ account_data = report.account_data;
 FORMATS = LIST_FORMATS();
 LINK = request.script _ '?' _ ENVARS.QUERY_STRING _ '&amp;company=' _ DBNAME;
 LINK = LINK.replace('\&amp;\&amp;', '&amp;');
+DRILLBASE = 'journal.pl?sort=transdate&amp;&amp;category=X'
+       _ '&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y'
+       _ '&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y'
+       _ '&amp;col_accno=Y&amp;action=search';
+
+USE String;
 
 ?>
-<?lsmb COLS = comparison.length + 2 ?>
 <body class="financial-statement <?lsmb dojo_theme ?>">
 <div id="PNL"> <!-- Also used in balance sheet! -->
 <h1><?lsmb name ?></h1>
 <h2><?lsmb text('Accounting period: [_1] to [_2]', report.from_date, report.to_date); ?></h2>
-<?lsmb 
-comparisons = report.comparisons;
-IF comparisons;
-    FOREACH COMP IN comparisons ?>
-<h2><?lsmb text('Compared to: [_1] to [_2]', COMP.from_date, COMP.to_date) ?>
-</h2>
-   <?lsmb END;
-END ?>
 <table class="income_statement">
 <tbody>
     <tr class="sectionhead">
-        <th><?lsmb text('Income Account') ?></th>
-        <th><?lsmb IF report.from_date || report.to_date; 
-                        report.from_date _ '<br /> - <br />' 
-                        _ report.to_date; 
-                   ELSE; '&nbsp;'; END ?>
-        </th>
-    <?lsmb FOREACH COMP IN comparisons ?>
-        <th><?lsmb IF COMP.from_date || COMP.to_date; 
-                            COMP.from_date _ '<br /> - <br />' _ COMP.to_date;
-                   ELSE; '&nbsp;'; END ?></th>
-    <?lsmb END ?>
+        <th><?lsmb text('Account') ?></th>
+<?lsmb FOREACH col IN report.cheads.ids.keys -?>
+        <th><?lsmb report.cheads.ids.$col.props.description ?></th>
+<?lsmb END -?>
     </tr>
-  <?lsmb FOREACH k IN account_data.I.keys.sort ?>
-    <tr class="incomerow">
-        <td class="label"><a href="journal.pl?sort=transdate&amp;accno=<?lsmb k
-                                    ?>&amp;from_date=<?lsmb report.from_date 
-                                    ?>&amp;to_date=<?lsmb report.to_date 
-                                    ?>&amp;category=X&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y&amp;col_accno=Y&amp;action=search"
-        >
-             <?lsmb k _ '--' 
-                             _ account_data.I.${k}.main.account_description ?></a></td>
-        <td class="amount"><a href="journal.pl?sort=transdate&amp;accno=<?lsmb k
-                                    ?>&amp;from_date=<?lsmb report.from_date 
-                                    ?>&amp;to_date=<?lsmb report.to_date 
-                                    ?>&amp;category=X&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y&amp;col_accno=Y&amp;action=search"
-        ><?lsmb account_data.I.${k}.main.amount ?></a></td>
-       
-    <?lsmb FOREACH COMP IN comparisons ?>
-        <td class="amount"><a href="journal.pl?sort=transdate&amp;accno=<?lsmb k 
-                                   ?>&amp;from_date=<?lsmb COMP.from_date 
-                                   ?>&amp;to_date=<?lsmb COMP.to_date
-                                   ?>&amp;category=X&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y&amp;col_accno=Y&amp;action=search"
-           ><?lsmb COMP.account_data.I.${k}.info.amount ?></a></td>
-    <?lsmb END ?>
-    </tr>
- <?lsmb END ?>
-   <tr class="sectionfoot">
-     <th><?lsmb text('Total Income') ?></th>
-     <td class="amount total"><?lsmb account_data.totals.main.I ?></td>
-    <?lsmb FOREACH COMP IN comparisons ?>
-        <td class="amount total">
-            <?lsmb COMP.account_data.totals.main.I ?></td>
-    <?lsmb END ?>
-   </tr>
-   <tr class="separator"><td colspan="<?lsmb COLS ?>"></td></tr>
-    <tr class="sectionhead">
-        <th><?lsmb text('Expense Account') ?></th>
-        <th>&nbsp;</th>
-    <?lsmb FOREACH COMP IN comparison ?>
-        <th>&nbsp;</th>
-    <?lsmb END ?>
-    </tr>
-  <?lsmb FOREACH k IN account_data.E.keys.sort ?>
-    <tr class="incomerow">
-        <td class="label"><a href="journal.pl?sort=transdate&amp;accno=<?lsmb k
-                                    ?>&amp;from_date=<?lsmb report.from_date 
-                                    ?>&amp;to_date=<?lsmb report.to_date 
-                                    ?>&amp;category=X&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y&amp;col_accno=Y&amp;action=search"
-        >
-             <?lsmb k _ '--' _
-             account_data.E.${k}.main.account_description ?></a></td>
-        <td class="amount"><a href="journal.pl?sort=transdate&amp;accno=<?lsmb k
-                                    ?>&amp;from_date=<?lsmb report.from_date 
-                                    ?>&amp;to_date=<?lsmb report.to_date 
-                                    ?>&amp;category=X&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y&amp;col_accno=Y&amp;action=search"
-        ><?lsmb account_data.E.${k}.main.amount ?></a></td>
-    <?lsmb FOREACH COMP IN comparisons ?>
-        <td class="amount"><a href="journal.pl?sort=transdate&amp;accno=<?lsmb k 
-                                   ?>&amp;from_date=<?lsmb COMP.from_date 
-                                   ?>&amp;to_date=<?lsmb COMP.to_date
-                                   ?>&amp;category=X&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y&amp;col_accno=Y&amp;action=search"
-	><?lsmb COMP.account_data.E.${k}.info.amount ?></a></td>
-    <?lsmb END ?>
-    </tr>
- <?lsmb END ?>
-   <tr class="sectionfoot">
-     <th><?lsmb text('Total Expense') ?></th>
-     <td class="amount total"><?lsmb account_data.totals.main.E ?></td>
-    <?lsmb FOREACH COMP IN comparisons ?>
-        <td class="amount total">
-            <?lsmb COMP.account_data.totals.main.E ?></td>
-    <?lsmb END ?></tr>
-   <tr class="separator"><td colspan="<?lsmb COLS ?>">&nbsp;</td></tr>
-   <tr class="sectionfoot">
-     <th><?lsmb text('Total Income') ?></th>
-     <td class="amount"><?lsmb account_data.totals.main.I ?></td>
-    <?lsmb FOREACH COMP IN comparisons ?>
-        <td class="amount">
-            <?lsmb COMP.account_data.totals.main.I ?></td>
-    <?lsmb END ?>
-   </tr>
-   <tr class="reportfoot">
-     <th><?lsmb text('Less Total Expense') ?></th>
-     <td class="amount"><?lsmb account_data.totals.main.E ?></td>
-    <?lsmb FOREACH COMP IN comparisons ?>
-        <td class="amount">
-            <?lsmb COMP.account_data.totals.main.E ?></td>
-    <?lsmb END ?>
-   </tr>
-   <tr class="reportfoot">
-     <th> = <?lsmb text('Net Income (Loss)') ?></th>
-     <td class="amount total"><?lsmb account_data.totals.main.total ?></td>
-    <?lsmb FOREACH COMP IN comparisons ?>
-        <td class="amount total">
-            <?lsmb COMP.account_data.totals.main.total ?></td>
-    <?lsmb END ?>
-   </tr>
+<?lsmb FOREACH row IN report.sorted_row_ids ?>
+<tr>
+  <th><?lsmb nbsp = String.new("&nbsp;"); nbsp.repeat(report.rheads.ids.$row.path.size); -?>
+<?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?>
+<?lsmb report.rheads.ids.$row.props.account_number -?> - <?lsmb
+END; -?><?lsmb report.rheads.ids.$row.props.account_description ?></th>
+<?lsmb FOREACH col IN report.cheads.ids.keys -?>
+  <!-- ###TODO-REPORT-HEADINGS: implement sign conversion A/L/Q*contra -->
+  <!-- ###TODO-REPORT-HEADINGS: add links on the cells to 'drill downs' -->
+  <td class="amount"><a href="<?lsmb
+ DRILLBASE _ '&amp;accno=' _ report.rheads.ids.$row.props.account_number
+           _ '&amp;from_date=' _ report.cheads.ids.$col.props.from_date
+           _ '&amp;to_date=' _ report.cheads.ids.$col.props.to_date ?>"><?lsmb report.cells.$row.$col ?></a></td><?lsmb END ?>
+</tr>
+<?lsmb END ?>
 <?lsmb IF FORMATS.grep('PDF').size() ?>
-<tr><td><a href="<?lsmb LINK ?>&amp;format=PDF">[<?lsmb text('PDF') ?>]</a></td>
-<td><a href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></td>
+<tr><td><a target="_blank"
+           href="<?lsmb LINK ?>&amp;format=PDF">[<?lsmb text('PDF') ?>]</a></td>
+<td><a target="_blank"
+       href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></td>
 <?lsmb END ?>
 </tbody>
 </table>
