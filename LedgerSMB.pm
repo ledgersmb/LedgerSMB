@@ -494,13 +494,15 @@ sub error {
 
 sub _error {
 
-    my ( $self, $msg ) = @_;
+    my ( $self, $msg, $status ) = @_;
     my $error;
+    $status = 500 if ! defined $status;
     local ($@); # pre-5.14, do not die() in this block
     if (eval { $msg->isa('LedgerSMB::Request::Error') }){
         $error = $msg;
     } else {
-        $error = LedgerSMB::Request::Error->new(msg => "$msg");
+        $error = LedgerSMB::Request::Error->new(msg => $msg,
+                                                status => $status );
     }
 
     if ( $ENV{GATEWAY_INTERFACE} ) {
@@ -537,7 +539,7 @@ sub _db_init {
     try {
         LedgerSMB::DBH->require_version($VERSION);
     } catch {
-        $self->_error($_);
+        $self->_error($_, 521);
     };
 
     my $sth = $self->{dbh}->prepare("
