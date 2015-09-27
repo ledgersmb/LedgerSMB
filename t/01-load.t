@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 202;
+use Test::More tests => 204;
 use File::Find;
 
 my @on_disk;
@@ -17,7 +17,7 @@ sub collect {
 find(\&collect, 'LedgerSMB/');
 
 
-my @exception_modules = 
+my @exception_modules =
     (
      # Exclude because tested conditionally on Template::Plugin::Latex way below
      'LedgerSMB::Template::LaTeX',
@@ -98,6 +98,7 @@ my @modules =
           'LedgerSMB::Payroll::Income_Type',
           'LedgerSMB::REST_Format::json',
           'LedgerSMB::Reconciliation::CSV',
+          'LedgerSMB::Report::Axis',
           'LedgerSMB::Report::File', 'LedgerSMB::Report::GL',
           'LedgerSMB::Report::Orders', 'LedgerSMB::Report::Timecards',
           'LedgerSMB::Report::Balance_Sheet', 'LedgerSMB::Report::Dates',
@@ -111,6 +112,7 @@ my @modules =
           'LedgerSMB::Report::Contact::Search',
           'LedgerSMB::Report::File::Incoming',
           'LedgerSMB::Report::File::Internal',
+          'LedgerSMB::Report::Hierarchical',
           'LedgerSMB::Report::Inventory::Activity',
           'LedgerSMB::Report::Inventory::Partsgroups',
           'LedgerSMB::Report::Inventory::Pricegroups',
@@ -188,7 +190,7 @@ for (@on_disk) {
 ok(scalar(@untested_modules) eq 0, 'All on-disk modules are tested')
     or diag ('Missing in test: ', explain \@untested_modules);
 
-use_ok('LedgerSMB::Sysconfig') 
+use_ok('LedgerSMB::Sysconfig')
     || BAIL_OUT('System Configuration could be loaded!');
 for my $module (@modules) {
     use_ok($module);
@@ -204,7 +206,7 @@ SKIP: {
 
 SKIP: {
     eval { require XML::Twig };
-   
+
     skip 'XML::Twig not installed', 8 if $@;
 
     for ('LedgerSMB::RESTXML::Document::Base',

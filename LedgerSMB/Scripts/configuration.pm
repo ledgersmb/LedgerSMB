@@ -78,6 +78,9 @@ sub _default_settings {
               ] },
         { title => $locale->text('Default Accounts'),
           items => [
+              { name => 'earn_id',
+                type => 'SELECT_ONE',
+                label => $locale->text('Current earnings'), },
               { name => 'inventory_accno_id',
                 type => 'SELECT_ONE',
                 label => $locale->text('Inventory'), },
@@ -174,6 +177,11 @@ sub defaults_screen{
     my $fx_loss_accounts = $setting_handle->all_accounts();
     my $fx_gain_accounts = $setting_handle->all_accounts();
     my $inventory_accounts = $setting_handle->accounts_by_link('IC');
+    my $headings =
+        [$request->call_procedure(funcname => 'account__all_headings')];
+    for my $ref (@$headings){
+        $ref->{text} = "$ref->{accno} -- $ref->{description}";
+    }
 
     unshift @$expense_accounts, {}
         if ! defined $request->{expense_accno_id};
@@ -185,6 +193,8 @@ sub defaults_screen{
         if ! defined $request->{fxgain_accno_id};
     unshift @$inventory_accounts, {}
         if ! defined $request->{inventory_accno_id};
+    unshift @$headings, {}
+        if ! defined $request->{earn_id};
 
     my %selects = (
         'dojo_theme' => {
@@ -196,6 +206,13 @@ sub defaults_screen{
                 {text => 'Tundra', value => 'tundra'},
             ],
             default_values  => [$request->{dojo_theme}],
+        },
+        'earn_id'         => {
+            name           => 'earn_id',
+            options        => $headings,
+            text_attr      => 'text',
+            value_attr     => 'id',
+            default_values => [$request->{'earn_id'}],
         },
         'fxloss_accno_id' => {
             name           => 'fxloss_accno_id',
@@ -232,14 +249,14 @@ sub defaults_screen{
             value_attr     => 'id',
             default_values => [$request->{'inventory_accno_id'}],
         },
-    'default_country' => {
+        'default_country' => {
             name           => 'default_country',
             options        => \@country_list,
             default_values => [$request->{'default_country'}],
             text_attr      => 'name',
             value_attr     => 'id',
         },
-    'default_language' => {
+	'default_language' => {
             name           => 'default_language',
             options        => \@language_code_list,
             default_values => [$request->{'default_language'}],

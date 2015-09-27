@@ -101,7 +101,7 @@ sub get {
     my @roles = __PACKAGE__->call_procedure(
                  funcname => 'admin__get_roles_for_user_by_entity', args => [$entity_id]
     );
-    $_ = $_->{admin__get_roles_for_user} for (@roles);
+    $_ = $_->{admin__get_roles_for_user_by_entity} for (@roles);
     $ref->{role_list} = \@roles;
     return $self->new(%$ref);
 }

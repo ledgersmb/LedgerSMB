@@ -16,7 +16,7 @@ and later.
 
 package LedgerSMB::Report::PNL;
 use Moose;
-extends 'LedgerSMB::Report';
+extends 'LedgerSMB::Report::Hierarchical';
 with 'LedgerSMB::Report::Dates';
 
 =head1 CRITERIA PROPERTIES
@@ -29,20 +29,6 @@ Standard dates.  Additional fields can be added by child reports.
 
 =over
 
-=item account_data
-
-This is a hash with three keys:  I, E, and totals.
-
-I and E contain hashes where each property is formed from the pnl_line type from
-the database for each interval.  Totals contains three totals for each
-interval:  I, E, and total.
-
-By default the only interval listed is "main".  The others are stored in
-comparisons and comparisons are added using the "add_comparison" method.
-
-=cut
-
-has 'account_data' =>  (is => 'rw', isa => 'HashRef[Any]');
 
 =item gifi
 
@@ -52,27 +38,29 @@ Boolean, true if it is a gifi report.
 
 has gifi => (is => 'rw', isa => 'Bool');
 
-=item comparisons
+=item legacy_hierarchy
 
-This stores a list of comparison itnervals, each is a hashref with the following
-keys:
-
-=over
-
-=item label
-
-This is the label for the comparison, used for coordinating with account_data
-above
-
-=item from_date
-
-=item to_date
-
-=back
+Boolean, true if the regular hierarchies need to be ignored,
+  using account category as the "hierarchy".
 
 =cut
 
-has 'comparisons'  =>  (is => 'rw', isa => 'ArrayRef[Any]');
+has legacy_hierarchy => (is => 'rw', isa => 'Bool');
+
+=item column_path_prefix
+
+
+
+=cut
+
+has column_path_prefix => (is => 'ro', isa => 'ArrayRef',
+                           default => sub { [ 1 ] });
+
+=item incl_accnos
+
+=cut
+
+has incl_accnos => (is => 'ro', isa => 'Bool');
 
 =back
 
@@ -92,68 +80,14 @@ sub template { return 'Reports/PNL' }
 
 =cut
 
-sub columns { [{col_id => 'amount',
-                money => 1  }]
+sub columns {
+    return [];
 }
 
 
 =back
 
 =head1 METHODS
-
-=cut
-
-# private method
-# _merge_rows(arrayref $rows, string $label, report $report)
-
-sub _merge_rows {
-    my $self = shift @_;
-    my $label = shift @_;
-    my @rows = @_;
-
-    my $data = $self->account_data;
-    $data ||= $data = {'I' => {}, 'E' => {}};
-    for my $r (@rows){
-        $data->{$r->{account_category}}->{$r->{account_number}} = {$label => $r};
-        $data->{$r->{account_category}}->{$r->{account_number}}->{info} = $r;
-    }
-    my $i_total = LedgerSMB::PGNumber->from_input('0');
-    my $e_total = LedgerSMB::PGNumber->from_input('0');
-    my $total;
-    for my $k (keys %{$data->{I}}){
-       $i_total += $data->{I}->{$k}->{$label}->{amount};
-    }
-    for my $k (keys %{$data->{E}}){
-       $e_total += $data->{E}->{$k}->{$label}->{amount};
-    }
-    $data->{totals}->{$label}->{I} = $i_total->to_output(money => 1);
-    $data->{totals}->{$label}->{E} = $e_total->to_output(money => 1);
-    $data->{totals}->{$label}->{total} = ($i_total - $e_total)->to_output(money => 1);
-    $self->account_data($data);
-}
-
-sub _transform_gifi {
-    my @rows = @_;
-    my %hashamount;
-    my @xformed_rows =  map { {%$_,
-                               account_number => $_->{gifi},
-                               account_description => $_->{gifi_description}} } @rows;
-    $hashamount{I} = { map {
-                       ($_->{gifi},  {%$_})
-                     } grep {$_->{account_category} eq 'I' and $_->{gifi}} @xformed_rows};
-    $hashamount{E} = { map {
-                       ($_->{gifi}, {%$_})
-                     } grep {$_->{account_category} eq 'E' and $_->{gifi}} @xformed_rows};
-    for my $cat (keys %hashamount){
-        for (keys %{$hashamount{$cat}}){
-            $hashamount{$cat}->{$_}->{amount} = 0;
-        }
-    }
-    $hashamount{$_->{account_category}}->{$_->{gifi}}->{amount}
-               += $_->{amount} for @xformed_rows;
-    return (sort(values %{$hashamount{I}})), (sort (values %{$hashamount{E}}));
-}
-
 
 =over
 
@@ -163,36 +97,150 @@ sub _transform_gifi {
 
 sub run_report {
     my ($self) = @_;
-    my @rows = $self->report_base();
-    @rows = _transform_gifi(@rows) if $self->gifi;
-    $self->rows(\@rows);
-    $self->_merge_rows('main', @rows);
-    return @rows;
-}
 
-=item add_comparison($from, $to)
+    my @lines = $self->report_base();
+    my $row_map = ($self->gifi) ?
+        sub { my ($line) = @_;
+              return ($line->{account_type} eq 'H')
+                  ? []
+                  : [ [ $line->{account_category},
+                        $line->{gifi} ],
+                      [ $line->{account_category} ],
+                  ];
+        } : ($self->legacy_hierarchy) ?
+        sub { my ($line) = @_;
+              return ($line->{account_type} eq 'H')
+                  ? []
+                  : [ [ 'q',
+                        $line->{account_category},
+                        $line->{account_number} ],
+                      [ 'q',
+                        $line->{account_category} ],
+                      [ 'q' ],
+                  ];
+        } :
+        sub { my ($line) = @_;
+              return [ ($line->{account_type} eq 'H')
+                       ? $line->{heading_path}
+                       : [ ( # heading_path undefined iff
+                             # hierarchy config missing
+                             @{$line->{heading_path} || []},
+                             $line->{account_number})
+                       ],
+                  ];
+        };
+    my $row_props = ($self->gifi) ?
+        sub { my ($line) = @_;
+              return { account_number => $line->{gifi},
+                       account_desc => $line->{gifi_description},
+              };
+       } :
+       sub { my ($line) = @_; return $line; };
 
-Adds a comparison.
 
-=cut
+    my $col_id = $self->cheads->map_path($self->column_path_prefix);
+    $self->cheads->id_props($col_id,
+                            { description =>
+                                  $self->_locale->text(
+                                      '[_1] to [_2]',
+                                      $self->from_date->to_output,
+                                      $self->to_date->to_output),
+                              from_date => $self->date_from->to_output,
+                              to_date => $self->date_to->to_output,
+                            });
 
-sub add_comparison {
-    my ($self, $new_pnl) = @_;
-    my $comparisons = $self->comparisons;
-    $comparisons ||= [];
-    my $old_ad = $self->account_data;
-    my $new_ad = $new_pnl->account_data;
-    for my $cat (qw(I E)){
-       for my $k (keys %{$new_ad->{$cat}}){
-           $old_ad->{$cat}->{$k}->{main}->{account_description}
-             ||=  $new_ad->{$cat}->{$k}->{main}->{account_description};
-       }
+    for my $line (@lines) {
+        my $props = &$row_props($line);
+        my $paths = &$row_map($line);
+
+        for my $path (@$paths) {
+            my $row_id = $self->rheads->map_path($path);
+            $self->accum_cell_value($row_id, $col_id, $line->{amount});
+            $self->rheads->id_props($row_id, $props)
+                if defined $props;
+
+            $props = undef;
+        }
     }
-    push @$comparisons, {from_date => $new_pnl->from_date,
-                           to_date => $new_pnl->to_date,
-                      account_data => $new_pnl->account_data,
-                         };
-    $self->comparisons($comparisons);
+
+    # Header rows don't have descriptions
+    my %header_desc;
+    if ($self->gifi || $self->legacy_hierarchy) {
+        %header_desc = ( 'E' => { 'account_number' => 'E',
+                                  'account_category' => 'E',
+                                  'account_type' => 'H',
+                                  'account_desc' =>
+                                      $self->_locale->text('Expenses'),
+                                  'account_description' =>
+                                      $self->_locale->text('Expenses') },
+                         'I' => { 'account_number' => 'I',
+                                  'account_category' => 'I',
+                                  'account_type' => 'H',
+                                  'account_desc' =>
+                                      $self->_locale->text('Income'),
+                                  'account_description' =>
+                                      $self->_locale->text('Income') },
+                         'A' => { 'account_number' => 'A',
+                                  'account_category' => 'A',
+                                  'account_type' => 'H',
+                                  'account_desc' =>
+                                      $self->_locale->text('Assets'),
+                                  'account_description' =>
+                                      $self->_locale->text('Assets') },
+                         'L' => { 'account_number' => 'L',
+                                  'account_category' => 'L',
+                                  'account_type' => 'H',
+                                  'account_desc' =>
+                                      $self->_locale->text('Liabilities'),
+                                  'account_description' =>
+                                      $self->_locale->text('Liabilities') },
+                         'Q' => { 'account_number' => 'Q',
+                                  'account_category' => 'Q',
+                                  'account_type' => 'H',
+                                  'account_desc' =>
+                                      $self->_locale->text('Equity'),
+                                  'account_description' =>
+                                      $self->_locale->text('Equity') },
+                         'q' => { 'account_number' => '',
+                                  'account_category' => 'Q',
+                                  'account_type' => 'H',
+                                  'heading_path' => [ 'Q', 'q' ],
+                                  'account_desc' =>
+                                      $self->_locale->text('Current earnings'),
+                                  'account_description' =>
+                                      $self->_locale->text('Current earnings') },
+            );
+    }
+    else {
+        %header_desc =
+            map { $_->{accno} => { 'account_number' => $_->{accno},
+                                   'account_desc'   => $_->{description},
+                                   'account_description' => $_->{description} }
+            }
+            $self->call_dbmethod(funcname => 'account__all_headings');
+    };
+    for my $id (grep { ! defined $_->{props} } values %{$self->rheads->ids}) {
+        $self->rheads->id_props($id->{id}, $header_desc{$id->{accno}});
+    }
+    for $col_id (keys %{$self->cheads->ids}) {
+        for my $row_id (keys %{$self->rheads->ids}) {
+            my $value = $self->cells->{$row_id}->{$col_id};
+
+            next unless $value;
+
+            my $props = $self->rheads->id_props($row_id);
+            my $cat = $props->{account_category};
+            my $contra = $props->{contra};
+
+            my $sign = (($contra) ? -1 : 1)
+                * ((($cat eq 'A') || ($cat eq 'E')) ? -1 : 1);
+
+            $self->cell_value($row_id, $col_id, $sign * $value)
+                if $sign < 0;
+        }
+    }
+
+    $self->rows([]);
 }
 
 =back

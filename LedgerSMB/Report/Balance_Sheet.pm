@@ -10,104 +10,53 @@ LedgerSMB::Report::Balance_Sheet - The LedgerSMB Balance Sheet Report
 =head1 DESCRIPTION
 
 This report class defines the balance sheet functionality for LedgerSMB.   The
-primary work is done in the database procedures, while this module largely translates data structures for the report.
+primary work is done in the database procedures, while this module largely
+translates data structures for the report.
 
 =cut
 
 package LedgerSMB::Report::Balance_Sheet;
 use Moose;
-extends 'LedgerSMB::Report';
+extends 'LedgerSMB::Report::Hierarchical';
 with 'LedgerSMB::Report::Dates';
 
-=head1 CRITERIA PROPERTIES
+=head1 Datastore Properties
 
 =over
 
-=item to_date LedgerSMB::PGDate
 
-=back
+=item gifi
 
-=head1 INTERNAL PROPERTIES
-
-=head2 headings
-
-This stores the account headings for handling the hierarchy in a single hashref
+Boolean, true if it is a gifi report.
 
 =cut
 
-has 'headings' => (is => 'rw', isa => 'HashRef[Any]', required => 0);
+has gifi => (is => 'rw', isa => 'Bool');
 
-=head2 balance_sheet
+=item legacy_hierarchy
 
-This is the hashref that holds the main balance sheet data structure
-
-=cut
-
-has 'balance_sheet' => (is => 'rw', isa => 'HashRef[Any]', required => 0);
-
-=head2 comparisons
-
-An arrayref of hashrefs, each is:
-
-=over
-
-=item through_date
-
-=item index
-
-A hashref of hashref in the form of account_number => balance
-
-=back
+Boolean, true if the regular hierarchies need to be ignored,
+  using account category as the "hierarchy".
 
 =cut
 
-has 'comparisons' => (is => 'rw', isa => 'ArrayRef[Any]', required => 0, default => sub { return [] });
+has legacy_hierarchy => (is => 'rw', isa => 'Bool');
 
-=head1 STATIC METHODS
+=item column_path_prefix
 
-=over
 
-=item columns
-
-Returns no columns since this is hardwired into the template
 
 =cut
 
-sub columns {
-    return [];
-};
+has column_path_prefix => (is => 'ro', isa => 'ArrayRef',
+                           default => sub { [ 1 ] });
 
-=item header_lines
 
-Returns none since this is not applicable to this.
+=item incl_accnos
 
 =cut
 
-sub header_lines {
-    return [];
-}
-
-
-
-=item name
-
-Returns the localized string 'Balance Sheet'
-
-=cut
-
-sub name {
-    return LedgerSMB::Report::text('Balance Sheet');
-}
-
-=item template
-
-Returns 'Reports/balance_sheet'
-
-=cut
-
-sub template {
-    return 'Reports/balance_sheet';
-}
+has incl_accnos => (is => 'ro', isa => 'Bool');
 
 =back
 
@@ -115,81 +64,196 @@ sub template {
 
 =head2 run_report()
 
-This sets rows to an empty hashref, and sets balance_sheet to the structure of
+This sets rows to an empty arrayref, and sets balance_sheet to the structure of
 the balance sheet.
 
 =cut
 
 sub run_report {
     my ($self) = @_;
-    my @headings = $self->call_dbmethod(funcname => 'account__all_headings');
-    my $head = {};
-    $head->{$_->{accno}} = $_ for (@headings);
 
     my @lines = $self->call_dbmethod(funcname => 'report__balance_sheet');
+    my ($row) = $self->call_procedure(funcname => 'setting_get',
+                                      args => [ 'earn_id' ]);
+    my $earn_id = ($row) ? $row->{value} : -1;
+    my $row_map = ($self->gifi) ?
+        sub { my ($line) = @_;
+              return ($line->{account_type} eq 'H')
+                  ? []
+                  : [ [ $line->{account_category},
+                        $line->{gifi} ],
+                      [ $line->{account_category} ],
+                  ];
+        } : ($self->legacy_hierarchy) ?
+        sub { my ($line) = @_;
+              if ($line->{account_type} eq 'A'
+                  && ($line->{account_category} eq 'E'
+                      || $line->{account_category} eq 'I')) {
+                  # If the 'earn_id' configuration is missing,
+                  #  this is the case we hit
+                  # (the query doesn't know which node to aggregate into)
+                  return [ [ 'Q', 'q' ],
+                           [ 'Q' ],
+                      ];
+              }
+              elsif ($line->{account_type} eq 'A') {
+                  return [ [ $line->{account_category},
+                             $line->{account_number} ],
+                           [ $line->{account_category} ],
+                      ];
+              }
+              elsif ($line->{account_type} eq 'H'
+                     && $line->{account_id} == $earn_id) {
+                  # If the 'earn_id' is configured, we hit this case
+                  # be sure to map the heading
+                  return [ [ 'Q', 'q' ],
+                           [ 'Q' ],
+                      ];
+              }
+              return [];
+        } :
+        sub { my ($line) = @_;
+              return [ ($line->{account_type} eq 'H')
+                       ? $line->{heading_path}
+                       : [ ( @{$line->{heading_path}},
+                             $line->{account_number})
+                       ],
+                  ];
+        };
+    my $row_props = ($self->gifi) ?
+        sub { my ($line) = @_;
+              return { account_number => $line->{gifi},
+                       account_desc => $line->{gifi_description},
+              };
+        } : ($self->legacy_hierarchy) ?
+        sub { my ($line) = @_;
+              if ($line->{account_type} eq 'A'
+                  && ($line->{account_category} eq 'E'
+                      || $line->{account_category} eq 'I')) {
+                  return undef;
+              }
+              return $line;
+         } :
+         sub { my ($line) = @_; return $line; };
 
-    my $sheet = {A => { # Assets
-                       lines => [],
-                       total => 0, },
-                 L => { # Liabilities
-                       lines => [],
-                       total => 0, },
-                 Q => { # Equity
-                       lines => [],
-                       total => 0, },
-                 ratios => {},
-    };
-    for my $ref(@lines){
-        my $cat = $ref->{account_category};
-        push @{$sheet->{$cat}->{lines}},  $ref;
-        $sheet->{$cat}->{total} += $ref->{balance};
+    my $col_id = $self->cheads->map_path($self->column_path_prefix);
+    $self->cheads->id_props($col_id,
+                            { description => $self->date_to->to_output,
+                              to_date => $self->date_to->to_output,
+                            });
+
+    for my $line (@lines) {
+        my $props = &$row_props($line);
+        my $paths = &$row_map($line);
+
+        for my $path (@$paths) {
+            my $row_id = $self->rheads->map_path($path);
+            $self->accum_cell_value($row_id, $col_id, $line->{balance});
+            $self->rheads->id_props($row_id, $props)
+                if defined $props;
+
+            $props = undef;
+        }
     }
-    $sheet->{ratios}->{AL} = $sheet->{A}->{total} / $sheet->{L}->{total}
-        if $sheet->{L}->{total};
-    $sheet->{ratios}->{AQ} = $sheet->{A}->{total} / $sheet->{Q}->{total}
-        if $sheet->{Q}->{total};
-    $sheet->{ratios}->{QL} = $sheet->{Q}->{total} / $sheet->{L}->{total}
-        if $sheet->{L}->{total};
-    $sheet->{total_LQ} = $sheet->{L}->{total} + $sheet->{Q}->{total};
-    $self->headings($head);
-    $self->balance_sheet($sheet);
+
+    # Header rows don't have descriptions
+    my %header_desc;
+    if ($self->gifi || $self->legacy_hierarchy) {
+        %header_desc = ( 'E' => { 'account_number' => 'E',
+                                  'account_category' => 'E',
+                                  'account_type' => 'H',
+                                  'account_desc' =>
+                                      $self->_locale->text('Expenses'),
+                                  'account_description' =>
+                                      $self->_locale->text('Expenses') },
+                         'I' => { 'account_number' => 'I',
+                                  'account_category' => 'I',
+                                  'account_type' => 'H',
+                                  'account_desc' =>
+                                      $self->_locale->text('Income'),
+                                  'account_description' =>
+                                      $self->_locale->text('Income') },
+                         'A' => { 'account_number' => 'A',
+                                  'account_category' => 'A',
+                                  'account_type' => 'H',
+                                  'account_desc' =>
+                                      $self->_locale->text('Assets'),
+                                  'account_description' =>
+                                      $self->_locale->text('Assets') },
+                         'L' => { 'account_number' => 'L',
+                                  'account_category' => 'L',
+                                  'account_type' => 'H',
+                                  'account_desc' =>
+                                      $self->_locale->text('Liabilities'),
+                                  'account_description' =>
+                                      $self->_locale->text('Liabilities') },
+                         'Q' => { 'account_number' => 'Q',
+                                  'account_category' => 'Q',
+                                  'account_type' => 'H',
+                                  'account_desc' =>
+                                      $self->_locale->text('Equity'),
+                                  'account_description' =>
+                                      $self->_locale->text('Equity') },
+                         'q' => { 'account_number' => '',
+                                  'account_category' => 'Q',
+                                  'account_type' => 'H',
+                                  'heading_path' => [ 'Q' ],
+                                  'account_desc' =>
+                                      $self->_locale->text('Current earnings'),
+                                  'account_description' =>
+                                      $self->_locale->text('Current earnings') },
+            );
+    }
+    else {
+        %header_desc =
+            map { $_->{accno} => { 'account_number' => $_->{accno},
+                                   'account_desc'   => $_->{description},
+                                   'account_description' => $_->{description} }
+            }
+            $self->call_dbmethod(funcname => 'account__all_headings');
+    };
+    for my $id (grep { ! defined $_->{props} } values %{$self->rheads->ids}) {
+        $self->rheads->id_props($id->{id}, $header_desc{$id->{accno}});
+    }
+    for $col_id (keys %{$self->cheads->ids}) {
+        for my $row_id (keys %{$self->rheads->ids}) {
+            my $value = $self->cells->{$row_id}->{$col_id};
+
+            next unless $value;
+
+            my $props = $self->rheads->id_props($row_id);
+            my $cat = $props->{account_category};
+            my $contra = $props->{contra};
+
+            my $sign = (($contra) ? -1 : 1)
+                * ((($cat eq 'A') || ($cat eq 'E')) ? -1 : 1);
+
+            $self->cell_value($row_id, $col_id, $sign * $value)
+                if $sign < 0;
+        }
+    }
+
     $self->rows([]);
 }
 
-=head2 add_comparison($balance_sheet)
+=head2 template
 
-Adds a comparison to the current balance sheet.  Among other things it checks
-the sheet for new account keys and adds them.
+Implements LedgerSMB::Report's abstract template method.
 
 =cut
 
-sub add_comparison{
-    my ($self, $comparison) = @_;
-    my $old_sheet = $self->balance_sheet;
-    my $new_sheet = $comparison->balance_sheet;
-    my $comparisons = $self->comparisons;
-    my $idx = {};
-    for my $type (('A', 'L', 'Q')){
-        for my $line (@{$new_sheet->{$type}->{lines}}){
-            $idx->{$line->{account_number}} = $line->{balance};
-            my $found = 0;
-            for my $l2 (@{$old_sheet->{$type}->{lines}}){
-               $found = 1 if $l2->{account_number} eq $line->{account_number};
-            }
-            push @{$old_sheet->{$type}->{lines}},
-               {account_number => $line->{account_number},
-                account_desc   =>  $line->{account_desc},
-                    balance    => '---' } unless $found;
-        }
-    }
-    my $comparison_hash = {     to_date => $comparison->to_date,
-                                  index => $idx,
-                                 totals => {A => $new_sheet->{A}->{total},
-                                            L => $new_sheet->{L}->{total},
-                                            Q => $new_sheet->{Q}->{total},
-                                           LQ => $new_sheet->{total_LQ}, }};
-    push @$comparisons, $comparison_hash;
-    $self->comparisons($comparisons);
+sub template {
+    return "Reports/balance_sheet";
+}
+
+=head2 name
+
+Implements LedgerSMB::Report's abstract 'name' method.
+
+=cut
+
+sub name {
+    return 'Balance sheet';
 }
 
 =head1 COPYRIGHT
