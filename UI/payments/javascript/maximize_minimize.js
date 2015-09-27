@@ -19,15 +19,15 @@
 
 // This function should not be called directly
  function maximize(element) {
-      try { 
+      try {
            var obj = document.getElementById(element);
            obj.style.visibility =  'visible';
            obj.style.height = "60px";
-	             
+
       }
       catch(err) { alert("ERROR ON maximize: "+err);  }
-       
-    
+
+
     }
 // This funciton should not be called directly
  function minimize(element) {
@@ -41,20 +41,14 @@
 /* This is the handler for maximize_minimize, it is intended to be called
  directly this will call maximize and minimize */
 
-var min_max_counter = 1; // used to prevent double dispatches under dojo
-
  function maximize_minimize(event, element, state, img, plusimage, minusimage) {
-     ++min_max_counter;
-     if (min_max_counter % 2){
-        return undefined;
-     }
-     try {   
+     try {
         var obj = document.getElementById(element);
         var obj3 = document.getElementById(state);
       if ( obj.style.visibility  == 'hidden'   ) {
         img.src = minusimage;
         maximize(element);
-        obj3.value = 'visible'; 
+        obj3.value = 'visible';
       } else {
          img.src = plusimage;
          minimize(element);
@@ -66,19 +60,19 @@ var min_max_counter = 1; // used to prevent double dispatches under dojo
 /* This function gets the form state and set it invisible */
 /* Container is the element that contains the tagname elements, all of them must match the same criteria */
  function maximize_minimize_on_load (event, container, plusimage, minusimage) {
- 
- var table = document.getElementById(container); 
+
+ var table = document.getElementById(container);
  var cells = table.getElementsByTagName("input");
  var regex = new RegExp("topaystate_");
- try{ 
+ try{
 	for (var i = 0; i < cells.length; i++) {
-       
-	 var extra_info =  cells[i].id.replace(regex,"div_topay_");   
+
+	 var extra_info =  cells[i].id.replace(regex,"div_topay_");
 	 var img        =  document.getElementById(cells[i].id.replace(regex,"button_topay_"));
          if (cells[i].value == '' || cells[i].value == "hidden") {
 		 maximize_minimize(event, extra_info , cells[i].id, img, plusimage, minusimage);
          }
- }        
+ }
  } catch (err) { alert("ERROR ON maximize_minimize_on_load: " + err)  }
 }
 
