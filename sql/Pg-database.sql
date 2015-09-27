@@ -11,7 +11,7 @@ CREATE TABLE lsmb_group_grants (
      group_name text references lsmb_group(role_name),
      granted_role text,
      PRIMARY KEY (group_name, granted_role)
-); 
+);
 
 CREATE TABLE lsmb_module (
      id int not null unique,
@@ -19,8 +19,8 @@ CREATE TABLE lsmb_module (
 );
 
 COMMENT ON TABLE lsmb_module IS
-$$ This stores categories functionality into modules.  Addons may add rows here, but 
-the id should be hardcoded.  As always 900-1000 will be reserved for internal use, 
+$$ This stores categories functionality into modules.  Addons may add rows here, but
+the id should be hardcoded.  As always 900-1000 will be reserved for internal use,
 and negative numbers will be reserved for testing.$$;
 
 INSERT INTO lsmb_module (id, label)
@@ -54,7 +54,7 @@ select CASE WHEN $1 IS NULL THEN $2 ELSE $1 || ':' || $2 END;
 $$ language sql;
 
 COMMENT ON FUNCTION concat_colon(TEXT, TEXT) IS $$
-This function takes two arguments and creates a list out  of them.  It's useful 
+This function takes two arguments and creates a list out  of them.  It's useful
 as an aggregate base (see aggregate concat_colon).  However this is a temporary
 function only and should not be relied upon.$$; --'
 
@@ -64,9 +64,9 @@ CREATE AGGREGATE concat_colon (
 	SFUNC = concat_colon
 );
 
-COMMENT ON AGGREGATE concat_colon(text) IS 
-$$ This is a sumple aggregate to return values from the database in a 
-colon-separated list.  Other programs probably should not rely on this since 
+COMMENT ON AGGREGATE concat_colon(text) IS
+$$ This is a sumple aggregate to return values from the database in a
+colon-separated list.  Other programs probably should not rely on this since
 it is primarily included for the chart view.$$;
 
 CREATE TABLE account_heading (
@@ -77,8 +77,8 @@ CREATE TABLE account_heading (
 );
 
 COMMENT ON TABLE account_heading IS $$
-This table holds the account headings in the system.  Each account must belong 
-to a heading, and a heading can belong to another heading.  In this way it is 
+This table holds the account headings in the system.  Each account must belong
+to a heading, and a heading can belong to another heading.  In this way it is
 possible to nest accounts for reporting purposes.$$;
 
 CREATE TABLE account (
@@ -104,8 +104,8 @@ COMMENT ON TABLE  account IS
 $$ This table stores the main account info.$$;
 
 CREATE TABLE account_checkpoint (
-  end_date date not null, 
-  account_id int not null references account(id), 
+  end_date date not null,
+  account_id int not null references account(id),
   amount numeric not null,
   id serial not null unique,
   debits NUMERIC,
@@ -115,24 +115,24 @@ CREATE TABLE account_checkpoint (
 
 COMMENT ON TABLE account_checkpoint IS
 $$ This table holds account balances at various dates.  Transactions MUST NOT
-be posted prior to the latest end_date in this table, and no unapproved 
+be posted prior to the latest end_date in this table, and no unapproved
 transactions (vouchers or drafts) can remain in the closed period.$$;
 
 CREATE TABLE account_link_description (
     description text    primary key,
     summary     boolean not null,
-    custom      boolean not null   
+    custom      boolean not null
 );
 
-COMMENT ON TABLE account_link_description IS 
+COMMENT ON TABLE account_link_description IS
 $$ This is a lookup table which provide basic information as to categories and
-dropdowns of accounts.  In general summary accounts cannot belong to more than 
-one category (an AR summary account cannot appear in other dropdowns for 
+dropdowns of accounts.  In general summary accounts cannot belong to more than
+one category (an AR summary account cannot appear in other dropdowns for
 example).  Custom fields are not overwritten when the account is edited from
 the front-end.$$;
 
-INSERT INTO account_link_description (description, summary, custom) 
-VALUES 
+INSERT INTO account_link_description (description, summary, custom)
+VALUES
 --summary links
 ('AR', TRUE, FALSE),
 ('AP', TRUE, FALSE),
@@ -184,7 +184,7 @@ together.$$;
 INSERT INTO language (code, description)
 VALUES ('ar_EG', 'Arabic (Egypt)'),
        ('es_AR', 'Spanish (Argentina)'),
-       ('bg',    'Bulgarian'), 
+       ('bg',    'Bulgarian'),
        ('ca',    'Catalan'),
        ('cs',    'Czech'),
        ('da',    'Danish'),
@@ -499,7 +499,7 @@ create table country_tax_form (country_id int  references country(id) not null,
    primary key(country_id, form_name)
 );
 
-COMMENT ON TABLE country_tax_form IS 
+COMMENT ON TABLE country_tax_form IS
 $$ This table was designed for holding information relating to reportable
 sales or purchases, such as IRS 1099 forms and international equivalents.$$;
 
@@ -509,11 +509,11 @@ CREATE TABLE entity_class (
   id serial primary key,
   class text check (class ~ '[[:alnum:]_]') NOT NULL,
   active boolean not null default TRUE);
-  
+
 COMMENT ON TABLE entity_class IS $$ Defines the class type such as vendor, customer, contact, employee $$;
-COMMENT ON COLUMN entity_class.id IS $$ The first 7 values are reserved and 
-permanent.  Individuals who create new classes, however, should coordinate 
-with others for ranges to use.$$;  
+COMMENT ON COLUMN entity_class.id IS $$ The first 7 values are reserved and
+permanent.  Individuals who create new classes, however, should coordinate
+with others for ranges to use.$$;
 
 CREATE index entity_class_idx ON entity_class(lower(class));
 
@@ -532,7 +532,7 @@ COMMENT ON COLUMN entity.name IS $$ This is the common name of an entity. If it 
 
 ALTER TABLE entity ADD FOREIGN KEY (entity_class) REFERENCES entity_class(id);
 
-INSERT INTO entity_class (id,class) 
+INSERT INTO entity_class (id,class)
 VALUES (1,'Vendor'),
        (2,'Customer'),
        (3,'Employee'),
@@ -546,7 +546,7 @@ SELECT setval('entity_class_id_seq',8);
 
 -- USERS stuff --
 CREATE TABLE users (
-    id serial UNIQUE, 
+    id serial UNIQUE,
     username varchar(30) primary key,
     notify_password interval not null default '7 days'::interval,
     entity_id int not null references entity(id) on delete cascade
@@ -554,13 +554,13 @@ CREATE TABLE users (
 
 
 create table lsmb_roles (
-    
+
     user_id integer not null references users(id) ON DELETE CASCADE,
     role text not null
-    
+
 );
 
-COMMENT ON TABLE lsmb_roles IS 
+COMMENT ON TABLE lsmb_roles IS
 $$ Tracks role assignments in the front end.  Not sure why we need this.  Will
 rethink for 1.4.
 $$;
@@ -579,10 +579,10 @@ notify_pasword interval not null default '7 days'::interval
 );
 
 COMMENT ON TABLE session IS
-$$ This table is used to track sessions on a database level across page 
+$$ This table is used to track sessions on a database level across page
 requests (discretionary locks,open forms for anti-xsrf measures).
-Because of the way LedgerSMB authentication works currently we do 
-not time out authentication when the session times out.  We do time out 
+Because of the way LedgerSMB authentication works currently we do
+not time out authentication when the session times out.  We do time out
 highly pessimistic locks used for large batch payment workflows.$$;
 
 CREATE TABLE open_forms (
@@ -605,14 +605,14 @@ CREATE TABLE transactions (
 
 CREATE INDEX transactions_locked_by_i ON transactions(locked_by);
 
-COMMENT on TABLE transactions IS 
+COMMENT on TABLE transactions IS
 $$ This table provides referential integrity between AR, AP, GL tables on one
 hand and acc_trans on the other, pending the refactoring of those tables.  It
-also is used to provide discretionary locking of financial transactions across 
+also is used to provide discretionary locking of financial transactions across
 database connections, for example in batch payment workflows.$$;
 
-CREATE OR REPLACE FUNCTION lock_record (in_id int, in_session_id int) 
-returns bool as 
+CREATE OR REPLACE FUNCTION lock_record (in_id int, in_session_id int)
+returns bool as
 $$
 declare
    locked int;
@@ -631,7 +631,7 @@ $$ language plpgsql;
 COMMENT ON FUNCTION lock_record(int, int) is $$
 This function seeks to lock a record with an id of in_id to a session with an
 id of in_session_id.  If possible, it returns true.  If it is already locked,
-false.  These are not hard locks and the application is free to disregard or 
+false.  These are not hard locks and the application is free to disregard or
 not even ask.  They time out when the session is destroyed.
 $$;
 
@@ -673,7 +673,7 @@ INSERT INTO location_class(id,class,authoritative) VALUES ('5','Mailing',FALSE);
 
 SELECT SETVAL('location_class_id_seq',5);
 
-INSERT INTO location_class_to_entity_class 
+INSERT INTO location_class_to_entity_class
        (location_class, entity_class)
 SELECT lc.id, ec.id
   FROM entity_class ec
@@ -683,7 +683,7 @@ SELECT lc.id, ec.id
 
 INSERT INTO location_class_to_entity_class (location_class, entity_class)
 SELECT id, 3 from location_class lc where lc.id > 3;
-  
+
 CREATE TABLE location (
   id serial PRIMARY KEY,
   line_one text check (line_one ~ '[[:alnum:]_]') NOT NULL,
@@ -701,7 +701,7 @@ CREATE TABLE location (
 COMMENT ON TABLE location IS $$
 This table stores addresses, such as shipto and bill to addresses.
 $$;
-  
+
 CREATE TABLE company (
   id serial UNIQUE,
   entity_id integer not null references entity(id),
@@ -712,8 +712,8 @@ CREATE TABLE company (
   sic_code varchar,
   created date default current_date not null,
   PRIMARY KEY (entity_id,legal_name));
-  
-COMMENT ON COLUMN company.tax_id IS $$ In the US this would be a EIN. $$;  
+
+COMMENT ON COLUMN company.tax_id IS $$ In the US this would be a EIN. $$;
 
 CREATE TABLE entity_to_location (
   location_id integer references location(id) not null,
@@ -750,11 +750,11 @@ CREATE TABLE person (
     personal_id text,
     unique(entity_id) -- needed due to entity_employee assumptions --CT
  );
- 
+
 COMMENT ON TABLE person IS $$ Every person, must have an entity to derive a common or display name. The correct way to get class information on a person would be person.entity_id->entity_class_to_entity.entity_id. $$;
 
 create table entity_employee (
-    
+
     entity_id integer references entity(id) not null unique,
     startdate date not null default current_date,
     enddate date,
@@ -768,14 +768,14 @@ create table entity_employee (
     PRIMARY KEY (entity_id)
 );
 
-COMMENT ON TABLE entity_employee IS 
+COMMENT ON TABLE entity_employee IS
 $$ This contains employee-specific extensions to person/entity. $$;
 
 CREATE TABLE person_to_company (
   location_id integer references location(id) not null,
   person_id integer not null references person(id) ON DELETE CASCADE,
   company_id integer not null references company(id) ON DELETE CASCADE,
-  PRIMARY KEY (location_id,person_id)); 
+  PRIMARY KEY (location_id,person_id));
 
 COMMENT ON TABLE person_to_company IS
 $$ currently unused in the front-end, but can be used to map persons
@@ -785,20 +785,20 @@ CREATE TABLE entity_other_name (
  entity_id integer not null references entity(id) ON DELETE CASCADE,
  other_name text check (other_name ~ '[[:alnum:]_]'),
  PRIMARY KEY (other_name, entity_id));
- 
+
 COMMENT ON TABLE entity_other_name IS $$ Similar to company_other_name, a person
 may be jd, Joshua Drake, linuxpoet... all are the same person.  Currently
 unused in the front-end but will likely be added in future versions.$$;
 
 CREATE TABLE contact_class (
   id serial UNIQUE,
-  class text check (class ~ '[[:alnum:]_]') NOT NULL, 
+  class text check (class ~ '[[:alnum:]_]') NOT NULL,
   PRIMARY KEY (class));
 
-COMMENT ON TABLE contact_class IS 
+COMMENT ON TABLE contact_class IS
 $$ Stores type of contact information attached to companies and persons.
 Please coordinate with others before adding new types.$$;
- 
+
 CREATE UNIQUE INDEX contact_class_class_idx ON contact_class(lower(class));
 
 INSERT INTO contact_class (id,class) values (1,'Primary Phone');
@@ -831,10 +831,10 @@ CREATE TABLE entity_to_contact (
   contact text check(contact ~ '[[:alnum:]_]') not null,
   description text,
   PRIMARY KEY (entity_id,contact_class_id,contact));
-  
-COMMENT ON TABLE entity_to_contact IS 
+
+COMMENT ON TABLE entity_to_contact IS
 $$ This table stores contact information for entities$$;
-  
+
 CREATE TABLE entity_bank_account (
     id serial not null,
     entity_id int not null references entity(id) ON DELETE CASCADE,
@@ -845,7 +845,7 @@ CREATE TABLE entity_bank_account (
     PRIMARY KEY (entity_id, bic, iban)
 );
 
-COMMENT ON TABLE entity_bank_account IS 
+COMMENT ON TABLE entity_bank_account IS
 $$This stores bank account information for both companies and persons.$$;
 
 COMMENT ON COLUMN entity_bank_account.bic IS
@@ -866,7 +866,7 @@ CREATE TABLE entity_credit_account (
     entity_id int not null references entity(id) ON DELETE CASCADE,
     entity_class int not null references entity_class(id) check ( entity_class in (1,2) ),
     pay_to_name text,
-    discount numeric, 
+    discount numeric,
     description text,
     discount_terms int default 0,
     discount_account_id int references account(id),
@@ -893,15 +893,15 @@ CREATE TABLE entity_credit_account (
 
 COMMENT ON TABLE entity IS $$ The primary entity table to map to all contacts $$;
 COMMENT ON TABLE entity_credit_account IS
-$$This table stores information relating to general relationships regarding 
-moneys owed on invoice.  Invoices, whether AR or AP, must be attached to 
+$$This table stores information relating to general relationships regarding
+moneys owed on invoice.  Invoices, whether AR or AP, must be attached to
 a record in this table.$$;
 
 COMMENT ON COLUMN entity_credit_account.meta_number IS
 $$ This stores the human readable control code for the customer/vendor record.
 This is typically called the customer/vendor "account" in the application.$$;
 
-CREATE UNIQUE INDEX entity_credit_ar_accno_idx_u 
+CREATE UNIQUE INDEX entity_credit_ar_accno_idx_u
 ON entity_credit_account(meta_number)
 WHERE entity_class = 2;
 
@@ -909,20 +909,20 @@ COMMENT ON INDEX entity_credit_ar_accno_idx_u IS
 $$This index is used to ensure that AR accounts are not reused.$$;
 
 CREATE TABLE eca_to_contact (
-  credit_id integer not null references entity_credit_account(id) 
+  credit_id integer not null references entity_credit_account(id)
 	ON DELETE CASCADE,
   contact_class_id integer references contact_class(id) not null,
   contact text check(contact ~ '[[:alnum:]_]') not null,
   description text,
-  PRIMARY KEY (credit_id, contact_class_id,  contact));  
+  PRIMARY KEY (credit_id, contact_class_id,  contact));
 
-COMMENT ON TABLE eca_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single vendor or customer account. For generic 
+COMMENT ON TABLE eca_to_contact IS $$ To keep track of the relationship between multiple contact methods and a single vendor or customer account. For generic
 contacts, use entity_to_contact instead.$$;
-  
+
 CREATE TABLE eca_to_location (
   location_id integer references location(id) not null,
   location_class integer not null references location_class(id),
-  credit_id integer not null references entity_credit_account(id) 
+  credit_id integer not null references entity_credit_account(id)
 	ON DELETE CASCADE,
   PRIMARY KEY(location_id,credit_id, location_class));
 
@@ -959,10 +959,10 @@ CREATE TABLE payroll_income_category (
    label text
 );
 
-INSERT INTO payroll_income_category (label) 
-values ('Salary'), 
-       ('Hourly'), 
-       ('Chord'), 
+INSERT INTO payroll_income_category (label)
+values ('Salary'),
+       ('Hourly'),
+       ('Chord'),
        ('Non-cash');
 
 CREATE TABLE payroll_income_type (
@@ -973,7 +973,7 @@ CREATE TABLE payroll_income_type (
    label text not null,
    unit text not null,
    default_amount numeric,
-   foreign key(pic_id, country_id) 
+   foreign key(pic_id, country_id)
               references payroll_income_class(id, country_id)
 );
 
@@ -1014,7 +1014,7 @@ CREATE TABLE payroll_deduction_type (
    unit text not null,
    default_amount numeric,
    calc_percent bool not null,
-   foreign key(pdc_id, country_id) 
+   foreign key(pdc_id, country_id)
               references payroll_deduction_class(id, country_id)
 );
 
@@ -1066,19 +1066,19 @@ INSERT INTO note_class(id,class) VALUES (3,'Entity Credit Account');
 INSERT INTO note_class(id,class) VALUES (5,'Journal Entry');
 CREATE UNIQUE INDEX note_class_idx ON note_class(lower(class));
 
-COMMENT ON TABLE note_class IS 
+COMMENT ON TABLE note_class IS
 $$ Coordinate with others before adding entries. $$;
 
-CREATE TABLE note (id serial primary key, 
-                   note_class integer not null references note_class(id), 
-                   note text not null, 
-                   vector tsvector not null default '', 
+CREATE TABLE note (id serial primary key,
+                   note_class integer not null references note_class(id),
+                   note text not null,
+                   vector tsvector not null default '',
                    created timestamp not null default now(),
                    created_by text DEFAULT SESSION_USER,
                    ref_key integer not null,
                    subject text);
 
-COMMENT ON TABLE note IS 
+COMMENT ON TABLE note IS
 $$ This is an abstract table which should have zero rows.  It is inherited by
 other tables for specific notes.$$;
 
@@ -1087,11 +1087,11 @@ $$ Subclassed tables use this column as a foreign key against the table storing
 the record a note is attached to.$$;
 
 COMMENT ON COLUMN note.note IS $$Body of note.$$;
-COMMENT ON COLUMN note.vector IS $$tsvector for full text indexing, requires 
+COMMENT ON COLUMN note.vector IS $$tsvector for full text indexing, requires
 both setting up tsearch dictionaries and adding triggers to use at present.$$;
 
 CREATE TABLE entity_note(
-      entity_id int references entity(id), 
+      entity_id int references entity(id),
       primary key(id)) INHERITS (note);
 ALTER TABLE entity_note ADD CHECK (note_class = 1);
 ALTER TABLE entity_note ADD FOREIGN KEY (ref_key) REFERENCES entity(id) ON DELETE CASCADE;
@@ -1103,11 +1103,11 @@ CREATE INDEX invoice_note_id_idx ON invoice_note(id);
 CREATE UNIQUE INDEX invoice_note_class_idx ON note_class(lower(class));
 CREATE INDEX invoice_note_vectors_idx ON invoice_note USING gist(vector);
 
-CREATE TABLE eca_note(primary key(id)) 
+CREATE TABLE eca_note(primary key(id))
 	INHERITS (note);
 ALTER TABLE eca_note ADD CHECK (note_class = 3);
-ALTER TABLE eca_note ADD FOREIGN KEY (ref_key) 
-	REFERENCES entity_credit_account(id) 
+ALTER TABLE eca_note ADD FOREIGN KEY (ref_key)
+	REFERENCES entity_credit_account(id)
 	ON DELETE CASCADE;
 
 COMMENT ON TABLE eca_note IS
@@ -1116,7 +1116,7 @@ $$ Notes for entity_credit_account entries.$$;
 COMMENT ON COLUMN eca_note.ref_key IS
 $$ references entity_credit_account.id$$;
 
--- END entity   
+-- END entity
 
 --
 CREATE TABLE makemodel (
@@ -1137,7 +1137,7 @@ CREATE TABLE journal_type (
 );
 
 COMMENT ON TABLE journal_type IS
-$$ This table describes the journal entry type of the transaction.  The 
+$$ This table describes the journal entry type of the transaction.  The
 following values are hard coded by default:
 1:  General journal
 2:  Sales (AR)
@@ -1176,10 +1176,10 @@ CREATE TABLE cr_report_line (
     their_balance numeric,
     our_balance numeric,
     errorcode INT,
-    "user" int references entity(id) not null, 
+    "user" int references entity(id) not null,
     clear_time date,
     insert_time TIMESTAMPTZ NOT NULL DEFAULT now(),
-    trans_type text, 
+    trans_type text,
     post_date date,
     ledger_id int,
     voucher_id int,
@@ -1189,7 +1189,7 @@ CREATE TABLE cr_report_line (
 
 
 COMMENT ON TABLE cr_report_line IS
-$$ This stores line item data on transaction lines and whether they are 
+$$ This stores line item data on transaction lines and whether they are
 cleared.$$;
 
 COMMENT ON COLUMN cr_report_line.scn IS
@@ -1203,8 +1203,8 @@ CREATE TABLE cr_coa_to_account (
 COMMENT ON TABLE cr_coa_to_account IS
 $$ Provides name mapping for the cash reconciliation screen.$$;
 
-INSERT INTO journal_type (id, name) 
-VALUES (1, 'General'), 
+INSERT INTO journal_type (id, name)
+VALUES (1, 'General'),
        (2, 'Sales'),
        (3, 'Purchases'),
        (4, 'Receipts'),
@@ -1212,13 +1212,13 @@ VALUES (1, 'General'),
 
 
 CREATE TABLE journal_entry (
-    id serial not null, 
-    reference text not null, 
-    description text, 
+    id serial not null,
+    reference text not null,
+    description text,
     locked_by int references session(session_id) on delete set null,
     journal int references journal_type(id),
     post_date date not null default now(),
-    effective_start date not null, 
+    effective_start date not null,
     effective_end date not null,
     currency char(3) not null,
     approved bool default false,
@@ -1231,33 +1231,33 @@ CREATE TABLE journal_entry (
 
 
 COMMENT ON TABLE journal_entry IS $$
-This tale records the header information for each transaction.  It replaces 
+This tale records the header information for each transaction.  It replaces
 parts of the following tables:  acc_trans, ar, ap, gl, transactions.
 
 Note now all ar/ap transactions are also journal entries.$$;
 
-COMMENT ON COLUMN journal_entry.reference IS 
+COMMENT ON COLUMN journal_entry.reference IS
 $$ Invoice number or journal entry number.$$;
 
 COMMENT ON COLUMN journal_entry.effective_start IS
 $$ For transactions whose effects are spread out over a period of time, this is
-the effective start date for the transaction.  To be used by add-ons for 
+the effective start date for the transaction.  To be used by add-ons for
 automating adjustments.$$;
 
 COMMENT ON COLUMN journal_entry.effective_end IS
 $$ For transactions whose effects are spread out over a period of time, this is
-the effective end date for the transaction.  To be used by add-ons for 
+the effective end date for the transaction.  To be used by add-ons for
 automating adjustments.$$;
 
 COMMENT ON COLUMN journal_entry.is_template IS
 $$ Set true for template transactions.  Templates can never be approved but can
 be copied into new transactions and are useful for recurrances. $$;
 
-CREATE UNIQUE INDEX je_unique_source ON journal_entry (journal, reference) 
+CREATE UNIQUE INDEX je_unique_source ON journal_entry (journal, reference)
 WHERE journal IN (1, 2); -- cannot reuse GL source and AR invoice numbers
 
 CREATE TABLE journal_line (
-    id serial, 
+    id serial,
     account_id int references account(id)  not null,
     journal_id int references journal_entry(id) not null,
     amount numeric not null check (amount <> 'NaN'),
@@ -1271,7 +1271,7 @@ COMMENT ON TABLE journal_line IS
 $$ Replaces acc_trans as the main account transaction line table.$$;
 
 COMMENT ON COLUMN journal_line.cleared IS
-$$ Still needed both for legacy data and in case reconciliation data must 
+$$ Still needed both for legacy data and in case reconciliation data must
 eventually be purged.$$;
 
 CREATE TABLE eca_invoice (
@@ -1281,21 +1281,21 @@ CREATE TABLE eca_invoice (
     reverse bool default false,
     credit_id int references entity_credit_account(id) not null,
     due date not null,
-    language_code char(6) references language(code), 
-    force_closed bool not null default false, 
+    language_code char(6) references language(code),
+    force_closed bool not null default false,
     order_number text,
     PRIMARY KEY  (journal_id)
 );
 
-COMMENT ON TABLE eca_invoice IS 
+COMMENT ON TABLE eca_invoice IS
 $$ Replaces the rest of the ar and ap tables.
 Also tracks payments and receipts. $$;
 
-COMMENT ON COLUMN eca_invoice.order_id IS 
+COMMENT ON COLUMN eca_invoice.order_id IS
 $$ Link to order it was created from$$;
 
-COMMENT ON COLUMN eca_invoice.on_hold IS 
-$$ On hold invoices can not be paid, and overpayments that are on hold cannot 
+COMMENT ON COLUMN eca_invoice.on_hold IS
+$$ On hold invoices can not be paid, and overpayments that are on hold cannot
 be used to pay invoices.$$;
 
 COMMENT ON COLUMN eca_invoice.reverse IS
@@ -1304,12 +1304,12 @@ i.e. negatives appear as positives, and positives appear as negatives.$$;
 
 COMMENT ON COLUMN eca_invoice.force_closed IS
 $$ When this is set to true, the invoice does not show up on outstanding reports
-and cannot be paid.  Overpayments where this is set to true do not appear on 
+and cannot be paid.  Overpayments where this is set to true do not appear on
 outstanding reports and cannot be paid.$$;
 
 COMMENT ON COLUMN eca_invoice.order_number IS
-$$ This is the order number of the other party.  So for a sales invoice, this 
-would be a purchase order, and for a vendor invoice, this would be a sales 
+$$ This is the order number of the other party.  So for a sales invoice, this
+would be a purchase order, and for a vendor invoice, this would be a sales
 order.$$;
 
 --
@@ -1335,8 +1335,8 @@ CREATE TABLE gifi (
   description text
 );
 
-COMMENT ON TABLE gifi IS 
-$$ GIFI labels for accounts, used in Canada and some EU countries for tax 
+COMMENT ON TABLE gifi IS
+$$ GIFI labels for accounts, used in Canada and some EU countries for tax
 reporting$$;
 --
 CREATE TABLE defaults (
@@ -1344,9 +1344,9 @@ CREATE TABLE defaults (
   value text
 );
 
-COMMENT ON TABLE defaults IS 
+COMMENT ON TABLE defaults IS
 $$  This is a free-form table for managing application settings per company
-database.  We use key-value modelling here because this most accurately maps 
+database.  We use key-value modelling here because this most accurately maps
 the actual semantics of the data.
 $$ ;
 
@@ -1403,7 +1403,7 @@ CREATE TABLE batch_class (
   class varchar primary key
 );
 
-COMMENT ON TABLE batch_class IS 
+COMMENT ON TABLE batch_class IS
 $$ These values are hard-coded.  Please coordinate before adding standard
 values. Values from 900 to 999 are reserved for local use.$$;
 
@@ -1441,7 +1441,7 @@ COMMENT ON COLUMN batch.batch_class_id IS
 $$ Note that this field is largely used for sorting the vouchers.  A given batch is NOT restricted to this type.$$;
 
 
--- Although I am moving the primary key to voucher.id for now, as of 1.4, I 
+-- Although I am moving the primary key to voucher.id for now, as of 1.4, I
 -- would expect trans_id to be primary key
 CREATE TABLE voucher (
   trans_id int REFERENCES transactions(id) NOT NULL,
@@ -1450,10 +1450,10 @@ CREATE TABLE voucher (
   batch_class int references batch_class(id) not null
 );
 
-COMMENT ON TABLE voucher IS 
+COMMENT ON TABLE voucher IS
 $$Mapping transactions to batches for batch approval.$$;
 
-COMMENT ON COLUMN voucher.batch_class IS $$ This is the authoritative class of the 
+COMMENT ON COLUMN voucher.batch_class IS $$ This is the authoritative class of the
 voucher. $$;
 
 COMMENT ON COLUMN voucher.id IS $$ This is simply a surrogate key for easy reference.$$;
@@ -1483,7 +1483,7 @@ $$This table stores line items for financial transactions.  Please note that
 payments in 1.3 are not full-fledged transactions.$$;
 
 COMMENT ON COLUMN acc_trans.source IS
-$$Document Source identifier for individual line items, usually used 
+$$Document Source identifier for individual line items, usually used
 for payments.$$;
 
 CREATE INDEX acc_trans_voucher_id_idx ON acc_trans(voucher_id);
@@ -1508,7 +1508,7 @@ CREATE TABLE parts (
   makemodel bool DEFAULT 'f',
   assembly bool DEFAULT 'f',
   alternate bool DEFAULT 'f',
-  rop numeric, 
+  rop numeric,
   inventory_accno_id int references account(id),
   income_accno_id int references account(id),
   expense_accno_id int references account(id),
@@ -1544,8 +1544,8 @@ $$Show on Bill of Materials.$$;
 
 COMMENT ON COLUMN parts.image IS
 $$Hyperlink to product image.$$;
-	
-CREATE UNIQUE INDEX parts_partnumber_index_u ON parts (partnumber) 
+
+CREATE UNIQUE INDEX parts_partnumber_index_u ON parts (partnumber)
 WHERE obsolete is false;
 
 CREATE SEQUENCE lot_tracking_number;
@@ -1557,10 +1557,10 @@ CREATE TABLE mfg_lot (
     stock_date date not null default now()::date
 );
 
-COMMENT ON TABLE mfg_lot IS 
+COMMENT ON TABLE mfg_lot IS
 $$ This tracks assembly restocks.  This is designed to work with old code and
 may change as we refactor the parts.$$;
-    
+
 CREATE TABLE mfg_lot_item (
     id serial not null unique,
     mfg_lot_id int not null references mfg_lot(id),
@@ -1595,7 +1595,7 @@ $$Line items of invoices with goods/services attached.$$;
 
 COMMENT ON COLUMN invoice.allocated IS
 $$Number of allocated items, negative relative to qty.
-When qty + allocated = 0, then the item is fully used for purposes of COGS 
+When qty + allocated = 0, then the item is fully used for purposes of COGS
 calculations.$$;
 
 COMMENT ON COLUMN invoice.qty IS
@@ -1635,17 +1635,17 @@ invoices.$$;
 COMMENT ON COLUMN journal_note.internal_only IS
 $$ When set to true, does not show up in notes list for invoice templates$$;
 -- THe following credit accounts are used for inventory adjustments.
-INSERT INTO entity (id, name, entity_class, control_code,country_id) 
+INSERT INTO entity (id, name, entity_class, control_code,country_id)
 values (0, 'Inventory Entity', 1, 'AUTO-01','232');
 
-INSERT INTO company (legal_name, entity_id) 
+INSERT INTO company (legal_name, entity_id)
 values ('Inventory Entity', 0);
 
 INSERT INTO entity_credit_account (entity_id, meta_number, entity_class)
-VALUES 
+VALUES
 (0, '00000', 1);
 INSERT INTO entity_credit_account (entity_id, meta_number, entity_class)
-VALUES 
+VALUES
 (0, '00000', 2);
 
 
@@ -1685,7 +1685,7 @@ CREATE TABLE ar (
   shippingpoint text,
   terms int2 DEFAULT 0,
   notes text,
-  curr char(3) CHECK ( (amount IS NULL AND curr IS NULL) 
+  curr char(3) CHECK ( (amount IS NULL AND curr IS NULL)
       OR (amount IS NOT NULL AND curr IS NOT NULL)),
   ordnumber text,
   person_id integer references entity_employee(entity_id),
@@ -1711,7 +1711,7 @@ CREATE UNIQUE INDEX ar_invnumber_key ON ar(invnumber) where invnumber is not nul
 
 COMMENT ON TABLE ar IS
 $$ Summary/header information for AR transactions and sales invoices.
-Note that some constraints here are hard to enforce because we haven not gotten 
+Note that some constraints here are hard to enforce because we haven not gotten
 to rewriting the relevant code here.
 HV TODO drop entity_id
 $$;
@@ -1733,13 +1733,13 @@ COMMENT ON COLUMN ar.curr IS $$ 3 letters to identify the currency.$$;
 
 COMMENT ON COLUMN ar.ordnumber IS $$ Order Number$$;
 
-COMMENT ON COLUMN ar.ponumber is $$Purchase Order Number$$; 
+COMMENT ON COLUMN ar.ponumber is $$Purchase Order Number$$;
 
 COMMENT ON COLUMN ar.person_id IS $$Person who created the transaction$$;
 
 COMMENT ON COLUMN ar.quonumber IS $$Quotation Number$$;
 
-COMMENT ON COLUMN ar.notes IS 
+COMMENT ON COLUMN ar.notes IS
 $$These notes are displayed on the invoice when printed or emailed$$;
 
 COMMENT ON COLUMN ar.intnotes IS
@@ -1775,7 +1775,7 @@ CREATE TABLE ap (
   duedate date,
   invoice bool DEFAULT 'f',
   ordnumber text,
-  curr char(3) CHECK ( (amount IS NULL AND curr IS NULL) 
+  curr char(3) CHECK ( (amount IS NULL AND curr IS NULL)
     OR (amount IS NOT NULL AND curr IS NOT NULL)) , -- This can be null, but shouldn't be.
   notes text,
   person_id integer references entity_employee(entity_id),
@@ -1799,7 +1799,7 @@ CREATE TABLE ap (
 
 COMMENT ON TABLE ap IS
 $$ Summary/header information for AP transactions and vendor invoices.
-Note that some constraints here are hard to enforce because we haven not gotten 
+Note that some constraints here are hard to enforce because we haven not gotten
 to rewriting the relevant code here.
 HV TODO drop entity_id
 $$;
@@ -1821,13 +1821,13 @@ COMMENT ON COLUMN ap.curr IS $$ 3 letters to identify the currency.$$;
 
 COMMENT ON COLUMN ap.ordnumber IS $$ Order Number$$;
 
-COMMENT ON COLUMN ap.ponumber is $$Purchase Order Number$$; 
+COMMENT ON COLUMN ap.ponumber is $$Purchase Order Number$$;
 
 COMMENT ON COLUMN ap.person_id IS $$Person who created the transaction$$;
 
 COMMENT ON COLUMN ap.quonumber IS $$Quotation Number$$;
 
-COMMENT ON COLUMN ap.notes IS 
+COMMENT ON COLUMN ap.notes IS
 $$These notes are displayed on the invoice when printed or emailed$$;
 
 COMMENT ON COLUMN ap.intnotes IS
@@ -1851,14 +1851,14 @@ for payment or in outstanding reports.$$;
 
 CREATE TABLE inventory_report (
    id serial primary key, -- these are not tied to external sources usually
-   transdate date NOT NULL,    
-   source text, -- may be null 
+   transdate date NOT NULL,
+   source text, -- may be null
    ar_trans_id int,  -- would be null if no items were adjusted down
    ap_trans_id int  -- would be null if no items were adjusted up
 );
 
 CREATE TABLE inventory_report_line (
-   adjust_id int REFERENCES inventory_report(id), 
+   adjust_id int REFERENCES inventory_report(id),
    parts_id int REFERENCES parts(id),
    counted numeric,
    expected numeric,
@@ -1913,7 +1913,7 @@ COMMENT ON TABLE tax IS
 $$Information on tax rates.$$;
 
 COMMENT ON COLUMN tax.pass IS
-$$This is an integer indicating the pass of the tax. This is to support 
+$$This is an integer indicating the pass of the tax. This is to support
 cumultative sales tax rules (for example, Quebec charging taxes on the federal
 taxes collected).$$;
 --
@@ -1928,7 +1928,7 @@ COMMENT ON TABLE eca_tax IS $$ Mapping customers and vendors to taxes.$$;
 CREATE TABLE oe_class (
   id smallint unique check(id IN (1,2,3,4)),
   oe_class text primary key);
-  
+
 INSERT INTO oe_class(id,oe_class) values (1,'Sales Order');
 INSERT INTO oe_class(id,oe_class) values (2,'Purchase Order');
 INSERT INTO oe_class(id,oe_class) values (3,'Quotation');
@@ -1936,12 +1936,12 @@ INSERT INTO oe_class(id,oe_class) values (4,'RFQ');
 
 -- Moving this comment to SQL comments because it is about this code rather than
 -- the database structure as API. --CT
--- This could probably be done better. But I need to remove the 
+-- This could probably be done better. But I need to remove the
 -- customer_id/vendor_id relationship and instead rely on a classification;
 -- JD
 
-COMMENT ON TABLE oe_class IS 
-$$ Hardwired classifications for orders and quotations. 
+COMMENT ON TABLE oe_class IS
+$$ Hardwired classifications for orders and quotations.
 Coordinate before adding.$$;
 
 CREATE TABLE oe (
@@ -2016,7 +2016,7 @@ CREATE TABLE business_unit_class (
     ordering int
 );
 
-COMMENT ON TABLE business_unit_class IS 
+COMMENT ON TABLE business_unit_class IS
 $$ Consolidates projects and departments, and allows this to be extended for
 funds accounting and other purposes.$$;
 
@@ -2040,7 +2040,7 @@ SELECT business_unit_class.id, lsmb_module.id
   FROM business_unit_class
  CROSS
   JOIN lsmb_module; -- by default activate all existing business units on all modules
-       
+
 
 CREATE TABLE business_unit (
   id serial PRIMARY KEY,
@@ -2052,7 +2052,7 @@ CREATE TABLE business_unit (
   parent_id int references business_unit(id),
   credit_id int references entity_credit_account(id),
   UNIQUE(id, class_id), -- needed for foreign keys
-  UNIQUE(class_id, control_code) 
+  UNIQUE(class_id, control_code)
 );
 
 CREATE TABLE job (
@@ -2111,7 +2111,7 @@ CREATE TABLE budget_info (
    end_date date not null,
    reference text primary key,
    description text not null,
-   entered_by int not null references entity(id) 
+   entered_by int not null references entity(id)
                   default person__get_my_entity_id(),
    approved_by int references entity(id),
    obsolete_by int references entity(id),
@@ -2134,7 +2134,7 @@ CREATE TABLE budget_line (
     account_id int not null references account(id),
     description text,
     amount numeric not null,
-    primary key (budget_id, account_id) 
+    primary key (budget_id, account_id)
 );
 
 INSERT INTO note_class (id, class) values ('6', 'Budget');
@@ -2218,7 +2218,7 @@ CREATE TABLE yearend (
 );
 
 COMMENT ON TABLE yearend IS
-$$ An extension to the journal_entry table to track transactionsactions which close out 
+$$ An extension to the journal_entry table to track transactionsactions which close out
 the books at yearend.$$;
 --
 CREATE TABLE partsvendor (
@@ -2232,7 +2232,7 @@ CREATE TABLE partsvendor (
 );
 
 COMMENT ON TABLE partsvendor IS
-$$ Tracks vendor's pricing, as well as vendor's part number, lead time 
+$$ Tracks vendor's pricing, as well as vendor's part number, lead time
 required and currency.$$;
 --
 CREATE TABLE partscustomer (
@@ -2274,27 +2274,27 @@ CREATE TABLE translation (
   PRIMARY KEY (trans_id, language_code)
 );
 
-COMMENT ON TABLE translation IS 
+COMMENT ON TABLE translation IS
 $$abstract table for manual translation data. Should have zero rows.$$;
 
-CREATE TABLE parts_translation 
+CREATE TABLE parts_translation
 (PRIMARY KEY (trans_id, language_code)) INHERITS (translation);
 ALTER TABLE parts_translation ADD foreign key (trans_id) REFERENCES parts(id);
 
 COMMENT ON TABLE parts_translation IS
 $$ Translation information for parts.$$;
 
-CREATE TABLE business_unit_translation 
+CREATE TABLE business_unit_translation
 (PRIMARY KEY (trans_id, language_code)) INHERITS (translation);
-ALTER TABLE business_unit_translation 
+ALTER TABLE business_unit_translation
 ADD foreign key (trans_id) REFERENCES business_unit(id);
 
 COMMENT ON TABLE business_unit_translation IS
 $$ Translation information for projects, departments, etc.$$;
 
-CREATE TABLE partsgroup_translation 
+CREATE TABLE partsgroup_translation
 (PRIMARY KEY (trans_id, language_code)) INHERITS (translation);
-ALTER TABLE partsgroup_translation 
+ALTER TABLE partsgroup_translation
 ADD foreign key (trans_id) REFERENCES partsgroup(id);
 
 COMMENT ON TABLE partsgroup_translation IS
@@ -2330,7 +2330,7 @@ CREATE TABLE user_preference (
 );
 
 -- user_preference is here due to a dependency on language.code
-COMMENT ON TABLE user_preference IS 
+COMMENT ON TABLE user_preference IS
 $$ This table sets the basic preferences for formats, languages, printers, and user-selected stylesheets.$$;
 
 CREATE TABLE recurring (
@@ -2339,14 +2339,14 @@ CREATE TABLE recurring (
   startdate date,
   nextdate date,
   enddate date,
-  recurring_interval interval, 
+  recurring_interval interval,
   howmany int,
   payment bool default 'f'
 );
 
 COMMENT ON TABLE recurring IS
 $$ Stores recurring information on transactions which will recur in the future.
-Note that this means that only fully posted transactions can recur. 
+Note that this means that only fully posted transactions can recur.
 I would highly recommend depricating this table and working instead on extending
 the template transaction addon to handle recurring information.$$;
 
@@ -2357,14 +2357,14 @@ CREATE TABLE payment_type (
 
 --
 CREATE TABLE recurringemail (
-  id int references recurring(id), 
+  id int references recurring(id),
   formname text,
   format text,
   message text,
   PRIMARY KEY (id, formname)
 );
 
-COMMENT ON TABLE recurringemail IS 
+COMMENT ON TABLE recurringemail IS
 $$Email  to be sent out when recurring transaction is posted.$$;
 --
 CREATE TABLE recurringprint (
@@ -2415,24 +2415,24 @@ CREATE TABLE jcitems (
   curr char(3) not null
 );
 
-COMMENT ON TABLE jcitems IS $$ Time and materials cards. 
+COMMENT ON TABLE jcitems IS $$ Time and materials cards.
 Materials cards not implemented.$$;
 
 CREATE OR REPLACE FUNCTION track_global_sequence() RETURNS TRIGGER AS
 $$
 BEGIN
 	IF tg_op = 'INSERT' THEN
-		INSERT INTO transactions (id, table_name, approved) 
+		INSERT INTO transactions (id, table_name, approved)
 		VALUES (new.id, TG_RELNAME, new.approved);
 	ELSEIF tg_op = 'UPDATE' THEN
 		IF new.id = old.id AND new.approved = old.approved THEN
 			return new;
 		ELSE
-			UPDATE transactions SET id = new.id, 
+			UPDATE transactions SET id = new.id,
                                                 approved = new.approved
                          WHERE id = old.id;
 		END IF;
-	ELSE 
+	ELSE
 		DELETE FROM transactions WHERE id = old.id;
 	END IF;
 	RETURN new;
@@ -2440,8 +2440,8 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION track_global_sequence() is
-$$ This trigger is used to track the id sequence entries across the 
-transactions table, and with the ar, ap, and gl tables.  This is necessary 
+$$ This trigger is used to track the id sequence entries across the
+transactions table, and with the ar, ap, and gl tables.  This is necessary
 because these have not been properly refactored yet.
 $$;
 
@@ -2473,9 +2473,8 @@ COMMENT ON TABLE custom_field_catalog IS
 $$ Deprecated, use only with old code.$$;
 
 INSERT INTO taxmodule (
-  taxmodule_id, taxmodulename
-  ) VALUES (1, 'Simple'), 
-  (2, 'Rounded');
+  taxmodule_id, taxmodulename)
+  VALUES (1, 'Simple');
 
 CREATE TABLE ac_tax_form (
         entry_id int references acc_trans(entry_id) primary key,
@@ -2509,7 +2508,7 @@ END IF;
 
 IF TG_RELNAME IN ('ar', 'ap') THEN
     t_reference := t_row.invnumber;
-ELSE 
+ELSE
     t_reference := t_row.reference;
 END IF;
 
@@ -2539,13 +2538,13 @@ RETURN new;
 END;
 $$;
 
-CREATE TRIGGER acc_trans_prevent_closed BEFORE INSERT ON acc_trans 
+CREATE TRIGGER acc_trans_prevent_closed BEFORE INSERT ON acc_trans
 FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
-CREATE TRIGGER ap_prevent_closed BEFORE INSERT ON ap 
+CREATE TRIGGER ap_prevent_closed BEFORE INSERT ON ap
 FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
-CREATE TRIGGER ar_prevent_closed BEFORE INSERT ON ar 
+CREATE TRIGGER ar_prevent_closed BEFORE INSERT ON ar
 FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
-CREATE TRIGGER gl_prevent_closed BEFORE INSERT ON gl 
+CREATE TRIGGER gl_prevent_closed BEFORE INSERT ON gl
 FOR EACH ROW EXECUTE PROCEDURE prevent_closed_transactions();
 
 
@@ -2642,7 +2641,7 @@ BEGIN
   FROM invoice i
   JOIN ap a ON (a.id = i.trans_id)
   WHERE i.parts_id = v_parts_id;
-  
+
   IF v_cost IS NULL THEN
     v_cost := 0;
   END IF;
@@ -2697,21 +2696,21 @@ END;
 ' LANGUAGE PLPGSQL;
 -- end function
 
-CREATE TRIGGER parts_short AFTER UPDATE ON parts 
+CREATE TRIGGER parts_short AFTER UPDATE ON parts
 FOR EACH ROW EXECUTE PROCEDURE trigger_parts_short();
 -- end function
 
-CREATE OR REPLACE FUNCTION add_custom_field (table_name VARCHAR, new_field_name VARCHAR, field_datatype VARCHAR) 
+CREATE OR REPLACE FUNCTION add_custom_field (table_name VARCHAR, new_field_name VARCHAR, field_datatype VARCHAR)
 RETURNS BOOL AS
 '
 BEGIN
-	perform TABLE_ID FROM custom_table_catalog 
+	perform TABLE_ID FROM custom_table_catalog
 		WHERE extends = table_name;
 	IF NOT FOUND THEN
 		BEGIN
-			INSERT INTO custom_table_catalog (extends) 
+			INSERT INTO custom_table_catalog (extends)
 				VALUES (table_name);
-			EXECUTE ''CREATE TABLE '' || 
+			EXECUTE ''CREATE TABLE '' ||
                                quote_ident(''custom_'' ||table_name) ||
 				'' (row_id INT PRIMARY KEY)'';
 		EXCEPTION WHEN duplicate_table THEN
@@ -2719,31 +2718,31 @@ BEGIN
 		END;
 	END IF;
 	INSERT INTO custom_field_catalog (field_name, table_id)
-	values (new_field_name, (SELECT table_id 
+	values (new_field_name, (SELECT table_id
                                         FROM custom_table_catalog
 		WHERE extends = table_name));
-	EXECUTE ''ALTER TABLE ''|| quote_ident(''custom_''||table_name) || 
-                '' ADD COLUMN '' || quote_ident(new_field_name) || '' '' || 
+	EXECUTE ''ALTER TABLE ''|| quote_ident(''custom_''||table_name) ||
+                '' ADD COLUMN '' || quote_ident(new_field_name) || '' '' ||
                   quote_ident(field_datatype);
 	RETURN TRUE;
 END;
 ' LANGUAGE PLPGSQL;
 -- end function
 
-CREATE OR REPLACE FUNCTION drop_custom_field (VARCHAR, VARCHAR) 
+CREATE OR REPLACE FUNCTION drop_custom_field (VARCHAR, VARCHAR)
 RETURNS BOOL AS
 '
 DECLARE
 table_name ALIAS FOR $1;
 custom_field_name ALIAS FOR $2;
 BEGIN
-	DELETE FROM custom_field_catalog 
-	WHERE field_name = custom_field_name AND 
-		table_id = (SELECT table_id FROM custom_table_catalog 
+	DELETE FROM custom_field_catalog
+	WHERE field_name = custom_field_name AND
+		table_id = (SELECT table_id FROM custom_table_catalog
 			WHERE extends = table_name);
-	EXECUTE ''ALTER TABLE '' || quote_ident(''custom_'' || table_name) || 
+	EXECUTE ''ALTER TABLE '' || quote_ident(''custom_'' || table_name) ||
 		'' DROP COLUMN '' || quote_ident(custom_field_name);
-	RETURN TRUE;	
+	RETURN TRUE;
 END;
 ' LANGUAGE PLPGSQL;
 -- end function
@@ -2986,7 +2985,7 @@ ALTER TABLE ONLY menu_node
 
 
 --
--- Name: menu_node_pkey; Type: CONSTRAINT; Schema: public; Owner: ledgersmb; Tablespace: 
+-- Name: menu_node_pkey; Type: CONSTRAINT; Schema: public; Owner: ledgersmb; Tablespace:
 --
 
 ALTER TABLE ONLY menu_node
@@ -3011,11 +3010,11 @@ CREATE TABLE menu_attribute (
 );
 
 COMMENT ON TABLE menu_attribute IS
-$$ This table stores the callback information for each menu item.  The 
+$$ This table stores the callback information for each menu item.  The
 attributes are stored in key/value modelling because of the fact that this
 best matches the semantic structure of the information.
 
-Each node should have EITHER a menu or a module attribute, menu for a menu with 
+Each node should have EITHER a menu or a module attribute, menu for a menu with
 sub-items, module for an executiable script.  The module attribute identifies
 the perl script to be run.  The action attribute identifies the entry point.
 
@@ -3615,9 +3614,9 @@ CREATE TABLE menu_acl (
 COMMENT ON TABLE menu_acl IS
 $$Provides access control list entries for menu nodes.$$;
 
-COMMENT ON COLUMN menu_acl.acl_type IS 
+COMMENT ON COLUMN menu_acl.acl_type IS
 $$ Nodes are hidden unless a role is found of which the user is a member, and
-where the acl_type for that role type and node is set to 'allow' and no acl is 
+where the acl_type for that role type and node is set to 'allow' and no acl is
 found for any role of which the user is a member, where the acl_type is set to
 'deny'.$$;
 
@@ -3630,18 +3629,18 @@ CREATE INDEX menu_acl_node_id_idx ON menu_acl (node_id);
 CREATE OR REPLACE FUNCTION to_args (in_base text[], in_args text[])
 RETURNS text[] AS
 $$
-SELECT CASE WHEN $2[1] IS NULL OR $2[2] IS NULL THEN $1 
+SELECT CASE WHEN $2[1] IS NULL OR $2[2] IS NULL THEN $1
             ELSE $1 || ($2[1]::text || '=' || $2[2]::text)
        END;
 $$ language sql;
 
 COMMENT ON FUNCTION to_args(text[], text[]) IS
 $$
-This function takes two arguments.  The first is a one-dimensional array 
-representing the  base state of the argument array.  The second is a two 
+This function takes two arguments.  The first is a one-dimensional array
+representing the  base state of the argument array.  The second is a two
 element array of {key, value}.
 
-If either of the args is null, it returns the first argument.  Otherwise it 
+If either of the args is null, it returns the first argument.  Otherwise it
 returns the first initial array, concatenated with key || '=' || value.
 
 It primarily exists for the to_args aggregate.
@@ -3655,7 +3654,7 @@ CREATE AGGREGATE to_args (
 );
 
 COMMENT ON AGGREGATE to_args(text[]) IS
-$$ Turns a setof ARRAY[key,value] into an 
+$$ Turns a setof ARRAY[key,value] into an
 ARRAY[key||'='||value, key||'='||value,...]
 $$;
 
@@ -3707,14 +3706,14 @@ CREATE TABLE tax_extended (
     entry_id int primary key references acc_trans(entry_id)
 );
 
-COMMENT ON TABLE tax_extended IS 
+COMMENT ON TABLE tax_extended IS
 $$ This stores extended information for manual tax calculations.$$;
 
 CREATE OR REPLACE VIEW periods AS
-SELECT 'ytd' as id, 'Year to Date' as label, now()::date as date_to, 
+SELECT 'ytd' as id, 'Year to Date' as label, now()::date as date_to,
        (extract('year' from now())::text || '-01-01')::date as date_from
 UNION
-SELECT 'last_year', 'Last Year', 
+SELECT 'last_year', 'Last Year',
        ((extract('YEAR' from now()) - 1)::text || '-12-31')::date as date_to,
        ((extract('YEAR' from now()) - 1)::text || '-01-01')::date as date_from
 ;
@@ -3727,7 +3726,7 @@ CREATE TABLE asset_unit_class (
 );
 
 INSERT INTO asset_unit_class (id, class) values (1, 'time');
-INSERT INTO asset_unit_class (id, class) values (2, 'production'); 
+INSERT INTO asset_unit_class (id, class) values (2, 'production');
 -- production-based depreciation is unlikely to be supported initially
 
 CREATE TABLE asset_dep_method(
@@ -3736,7 +3735,7 @@ CREATE TABLE asset_dep_method(
         sproc text not null unique,
         unit_label text not null,
         short_name text not null unique,
-	unit_class int not null references asset_unit_class(id) 
+	unit_class int not null references asset_unit_class(id)
 );
 
 COMMENT ON TABLE asset_dep_method IS
@@ -3753,18 +3752,18 @@ Here in_asset_ids are the assets to be depreciated, in_report_date is the date
 of the report, and in_report_id is the id of the report.  The sproc MUST
 insert the relevant lines into asset_report_line. $$;
 
-comment on column asset_dep_method.method IS 
+comment on column asset_dep_method.method IS
 $$ These are keyed to specific stored procedures.  Currently only "straight_line" is supported$$;
 
-INSERT INTO asset_dep_method(method, unit_class, sproc, unit_label, short_name) 
+INSERT INTO asset_dep_method(method, unit_class, sproc, unit_label, short_name)
 values ('Annual Straight Line Daily', 1, 'asset_dep_straight_line_yr_d', 'in years', 'SLYD');
 
 
-INSERT INTO asset_dep_method(method, unit_class, sproc, unit_label, short_name) 
-values ('Whole Month Straight Line', 1, 'asset_dep_straight_line_whl_m', 
+INSERT INTO asset_dep_method(method, unit_class, sproc, unit_label, short_name)
+values ('Whole Month Straight Line', 1, 'asset_dep_straight_line_whl_m',
 'in months', 'SLMM');
 
-INSERT INTO asset_dep_method(method, unit_class, sproc, unit_label, short_name) 
+INSERT INTO asset_dep_method(method, unit_class, sproc, unit_label, short_name)
 values ('Annual Straight Line Monthly', 1, 'asset_dep_straight_line_yr_m', 'in years', 'SLYM');
 
 CREATE TABLE asset_class (
@@ -3812,10 +3811,10 @@ CREATE TABLE asset_item (
         unique (tag, obsolete_by) -- part 1 of natural key enforcement
 );
 
-CREATE UNIQUE INDEX asset_item_active_tag_u ON asset_item(tag) 
+CREATE UNIQUE INDEX asset_item_active_tag_u ON asset_item(tag)
               WHERE obsolete_by is null; -- part 2 of natural key enforcement
 
-COMMENT ON TABLE asset_item IS 
+COMMENT ON TABLE asset_item IS
 $$ Stores details of asset items.  The account fields here are authoritative,
 while the ones in the asset_class table are defaults.$$;
 
@@ -3840,7 +3839,7 @@ INSERT INTO asset_report_class (id, class) values (2, 'disposal');
 INSERT INTO asset_report_class (id, class) values (3, 'import');
 INSERT INTO asset_report_class (id, class) values (4, 'partial disposal');
 
-COMMENT ON TABLE asset_report_class IS 
+COMMENT ON TABLE asset_report_class IS
 $$  By default only four types of asset reports are supported.  In the future
 others may be added.  Please correspond on the list before adding more types.$$;
 
@@ -4597,8 +4596,8 @@ insert into file_class values (1, 'transaction'),
 
 
 COMMENT ON TABLE file_class IS
-$$ File classes are collections of files attached against rows in specific 
-tables in the database.  They can be used in the future to implement other form 
+$$ File classes are collections of files attached against rows in specific
+tables in the database.  They can be used in the future to implement other form
 of file attachment. $$;
 
 CREATE TABLE file_base (
@@ -4696,7 +4695,7 @@ CREATE TABLE file_incoming (
    check (file_class = 7),
    unique(id),
    primary key (ref_key, file_name, file_class),
-   check (ref_key = 0) 
+   check (ref_key = 0)
 ) inherits (file_base);
 
 
@@ -4705,7 +4704,7 @@ $$ Always must be 0, and we have no primary key since these files all
 are for interal incoming use, not categorized.$$;
 
 COMMENT ON TABLE file_incoming IS
-$$ This is essentially a spool for files to be reviewed and attached.  It is 
+$$ This is essentially a spool for files to be reviewed and attached.  It is
 important that the names are somehow guaranteed to be unique, so one may want to prepend them with an email equivalent or the like.$$;
 
 CREATE TABLE file_secondary_attachment (
@@ -4720,7 +4719,7 @@ CREATE TABLE file_secondary_attachment (
 
 COMMENT ON TABLE file_secondary_attachment IS
 $$Another abstract table.  This one will use rewrite rules to make inserts safe
-because of the difficulty in managing inserts otherwise. Inheriting tables 
+because of the difficulty in managing inserts otherwise. Inheriting tables
 provide secondary links between the file and other database objects.
 
 Due to the nature of database inheritance and unique constraints
@@ -4738,12 +4737,12 @@ CREATE RULE file_sec_insert_tx_oe AS ON INSERT TO file_secondary_attachment
 WHERE source_class = 1 and dest_class = 2
 DO INSTEAD
 INSERT INTO file_tx_to_order(file_id, source_class, ref_key, dest_class,
-attached_by, attached_at) 
-VALUES (new.file_id, 1, new.ref_key, 2, 
+attached_by, attached_at)
+VALUES (new.file_id, 1, new.ref_key, 2,
        new.attached_by,
        coalesce(new.attached_at, now()));
 
-COMMENT ON TABLE file_tx_to_order IS 
+COMMENT ON TABLE file_tx_to_order IS
 $$ Secondary links from journal entries to orders.$$;
 
 CREATE TABLE file_order_to_order (
@@ -4762,8 +4761,8 @@ CREATE RULE file_sec_insert_oe_oe AS ON INSERT TO file_secondary_attachment
 WHERE source_class = 2 and dest_class = 2
 DO INSTEAD
 INSERT INTO file_order_to_order(file_id, source_class, ref_key, dest_class,
-attached_by, attached_at) 
-VALUES (new.file_id, 2, new.ref_key, 2, 
+attached_by, attached_at)
+VALUES (new.file_id, 2, new.ref_key, 2,
        new.attached_by,
        coalesce(new.attached_at, now()));
 
@@ -4802,7 +4801,7 @@ $$ LANGUAGE SQL;
 COMMENT ON FUNCTION person__get_my_entity_id() IS
 $$ Returns the entity_id of the current, logged in user.$$;
 --
--- WE NEED A PAYMENT TABLE 
+-- WE NEED A PAYMENT TABLE
 --
 
 CREATE TABLE payment (
@@ -4816,25 +4815,25 @@ CREATE TABLE payment (
   employee_id integer references person(id),
   currency char(3),
   notes text);
-              
+
 COMMENT ON TABLE payment IS $$ This table will store the main data on a payment, prepayment, overpayment, et$$;
-COMMENT ON COLUMN payment.reference IS $$ This field will store the code for both receipts and payment order  $$; 
+COMMENT ON COLUMN payment.reference IS $$ This field will store the code for both receipts and payment order  $$;
 COMMENT ON COLUMN payment.closed IS $$ This will store the current state of a payment/receipt order $$;
 COMMENT ON COLUMN payment.gl_id IS $$ A payment should always be linked to a GL movement $$;
 CREATE  INDEX payment_id_idx ON payment(id);
-                  
+
 CREATE TABLE payment_links (
   payment_id integer references Payment(id),
   entry_id   integer references acc_trans(entry_id),
   type       integer);
-COMMENT ON TABLE payment_links IS $$  
+COMMENT ON TABLE payment_links IS $$
  An explanation to the type field.
  * A type 0 means the link is referencing an ar/ap  and was created
-   using an overpayment movement after the receipt was created 
- * A type 1 means the link is referencing an ar/ap and  was made 
-   on the payment creation, its not the product of an overpayment movement 
+   using an overpayment movement after the receipt was created
+ * A type 1 means the link is referencing an ar/ap and  was made
+   on the payment creation, its not the product of an overpayment movement
  * A type 2 means the link is not referencing an ar/ap and its the product
-   of the overpayment logic 
+   of the overpayment logic
 
  With this ideas in order we can do the following
 
@@ -4848,13 +4847,13 @@ $$;
 CREATE TABLE trial_balance__yearend_types (
     type text primary key
 );
-INSERT INTO trial_balance__yearend_types (type) 
+INSERT INTO trial_balance__yearend_types (type)
      VALUES ('none'), ('all'), ('last');
 
 
 CREATE TABLE trial_balance (
     id serial primary key,
-    date_from date, 
+    date_from date,
     date_to date,
     description text NOT NULL,
     yearend text not null references trial_balance__yearend_types(type)
@@ -4919,7 +4918,7 @@ COMMENT ON VIEW chart IS $$Compatibility chart for 1.2 and earlier.$$;
 
 
 CREATE VIEW tx_report AS
-SELECT id, reference, null::int as entity_credit_account, 'gl' as table, 
+SELECT id, reference, null::int as entity_credit_account, 'gl' as table,
        approved
   FROM gl
 UNION ALL
@@ -4938,7 +4937,7 @@ UNION ALL
 SELECT id, CASE WHEN gl.amount = 0 THEN 0 -- avoid div by 0
                 WHEN gl.transdate = ac.transdate
                      THEN 1 + sum(ac.amount) / gl.amount
-                ELSE 
+                ELSE
                      1 - (gl.amount - sum(ac.amount)) / gl.amount
                 END , 'ar' as rel, ac.transdate
   FROM ar gl
@@ -4949,7 +4948,7 @@ UNION ALL
 SELECT id, CASE WHEN gl.amount = 0 THEN 0
                 WHEN gl.transdate = ac.transdate
                      THEN 1 - sum(ac.amount) / gl.amount
-                ELSE 
+                ELSE
                      1 - (gl.amount + sum(ac.amount)) / gl.amount
             END, 'ap' as rel, ac.transdate
   FROM ap gl
@@ -4973,7 +4972,7 @@ CREATE TABLE template ( -- not for UI templates
     unique(template_name, language_code, format)
 );
 
-CREATE UNIQUE INDEX template_name_idx_u ON template(template_name, format) 
+CREATE UNIQUE INDEX template_name_idx_u ON template(template_name, format)
 WHERE language_code is null; -- Pseudo-Pkey
 
 commit;
