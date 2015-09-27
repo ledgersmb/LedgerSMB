@@ -34,7 +34,7 @@ function submit_form() {
 				  }
 				  do_submit = false;
 			 });
-        
+
 		  if (do_submit) {
 				r('login.pl',
 				  {
@@ -53,16 +53,5 @@ function submit_form() {
               });
 		  }
     }
-	 require(['dojo/dom-form'],function(f) {
-		  if (do_submit) {
-				r('',
-				  {
-						'data': f.toQuery('prefs'),
-						'method': 'POST'
-				  });
-		  }
-	 });
-    
-    return false;
 }
 
