@@ -7,8 +7,13 @@ Changelog for 1.4.16
 * Fixed FX handling in payment bulk posting workflow (GH #758)
 * Removed unused Net::TCLink dependency and POS code (ErikH)
 * Update schema documentation files in doc/database/ (ErikH)
+* Failure to open HR/Employee screen (ChrisT)
+* Failure to save user preferences (ErikH)
+* Tax module 'Rounded' offered, but not available (ErikH)
+* Single-payment screen doesn't collapse details divs on open (ErikH)
 
 ErikH is Erik Huelsmann
+ChrisT is Chris Travers
 
 
 Changelog for 1.4.15
