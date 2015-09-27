@@ -41,13 +41,7 @@
 /* This is the handler for maximize_minimize, it is intended to be called
  directly this will call maximize and minimize */
 
-var min_max_counter = 1; // used to prevent double dispatches under dojo
-
  function maximize_minimize(event, element, state, img, plusimage, minusimage) {
-     ++min_max_counter;
-     if (min_max_counter % 2){
-        return undefined;
-     }
      try {
         var obj = document.getElementById(element);
         var obj3 = document.getElementById(state);
