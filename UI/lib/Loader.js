@@ -183,6 +183,7 @@ function(
                                          "value": input.value,
                                           "name": input.name,
                                          "style": style,
+                                      "disabled": input.disabled,
                                       "required": input.required,
                                             "id": input.id
                                      }, input);
