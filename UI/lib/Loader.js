@@ -43,6 +43,7 @@ function(
 						  domattr.set(formnode, 'clicked-action',
 										  domattr.get(b,'value'));
 					 });
+                                      "disabled": input.disabled,
 				});
 
 				on(formnode, 'submit',
