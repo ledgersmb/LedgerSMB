@@ -12,7 +12,7 @@ CREATE TYPE trial_balance_line AS (
 );
 
 CREATE OR REPLACE FUNCTION report_trial_balance
-(in_datefrom date, in_dateto date, in_department_id int, in_project_id int, 
+(in_datefrom date, in_dateto date, in_department_id int, in_project_id int,
 in_gifi bool)
 RETURNS setof trial_balance_line
 AS $$
@@ -20,17 +20,17 @@ DECLARE out_row trial_balance_line;
 BEGIN
 	IF in_department_id IS NULL THEN
 		FOR out_row IN
-			SELECT c.id, c.accno, c.description, 
-				SUM(CASE WHEN ac.transdate < in_datefrom 
+			SELECT c.id, c.accno, c.description,
+				SUM(CASE WHEN ac.transdate < in_datefrom
 				              AND c.category IN ('I', 'L', 'Q')
 				    THEN ac.amount
 				    ELSE ac.amount * -1
-				    END), 
-			        SUM(CASE WHEN ac.transdate >= in_date_from 
-				              AND ac.amount > 0 
+				    END),
+			        SUM(CASE WHEN ac.transdate >= in_date_from
+				              AND ac.amount > 0
 			            THEN ac.amount
 			            ELSE 0 END),
-			        SUM(CASE WHEN ac.transdate >= in_date_from 
+			        SUM(CASE WHEN ac.transdate >= in_date_from
 				              AND ac.amount < 0
 			            THEN ac.amount
 			            ELSE 0 END) * -1,
@@ -44,7 +44,7 @@ BEGIN
 				    END)
 				FROM acc_trans ac
 				JOIN (select id, approved FROM ap
-					UNION ALL 
+					UNION ALL
 					select id, approved FROM gl
 					UNION ALL
 					select id, approved FROM ar) g
@@ -52,15 +52,15 @@ BEGIN
 				JOIN chart c ON (c.id = ac.chart_id)
 				WHERE ac.transdate <= in_date_to
 					AND ac.approved AND g.approved
-					AND (in_project_id IS NULL 
+					AND (in_project_id IS NULL
 						OR in_project_id = ac.project_id)
 				GROUP BY c.id, c.accno, c.description
 				ORDER BY c.accno
-				
+
 		LOOP
 			RETURN NEXT out_row;
 		END LOOP;
-	ELSE 
+	ELSE
 		FOR out_row IN
 			SELECT 1
 		LOOP
@@ -70,7 +70,7 @@ BEGIN
 END;
 $$ language plpgsql;
 
-COMMENT ON FUNCTION report_trial_balance 
+COMMENT ON FUNCTION report_trial_balance
 (in_datefrom date, in_dateto date, in_department_id int, in_project_id int,
 in_gifi bool) IS
 $$ This is a simple routine to generate trial balances for the full
@@ -81,7 +81,7 @@ RETURNS SETOF chart AS
 $$
 DECLARE out_row chart%ROWTYPE;
 BEGIN
-	FOR out_row IN 
+	FOR out_row IN
 		SELECT * FROM chart ORDER BY accno
 	LOOP
 		RETURN next out_row;
@@ -101,7 +101,7 @@ BEGIN
 		RAISE EXCEPTION 'Bad Account Type';
 	END IF;
        FOR out_row IN
-               SELECT * FROM chart 
+               SELECT * FROM chart
                WHERE link = CASE WHEN in_account_class = 1 THEN 'AP'
                                WHEN in_account_class = 2 THEN 'AR'
                                END
@@ -113,10 +113,10 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION chart_get_ar_ap(in_account_class int) IS
-$$ This function returns the cash account acording with in_account_class which 
+$$ This function returns the cash account acording with in_account_class which
 must be 1 or 2.
 
-If in_account_class is 1 then it returns a list of AP accounts, and if 
+If in_account_class is 1 then it returns a list of AP accounts, and if
 in_account_class is 2, then a list of AR accounts.$$;
 
 CREATE OR REPLACE FUNCTION chart_list_search(in_search text, in_link_desc text)
@@ -124,13 +124,13 @@ RETURNS SETOF account AS
 $$
 DECLARE out_row account%ROWTYPE;
 BEGIN
-	FOR out_row IN 
-		SELECT * FROM account 
-                 WHERE (accno ~* ('^'||in_search) 
+	FOR out_row IN
+		SELECT * FROM account
+                 WHERE (accno ~* ('^'||in_search)
                        OR description ~* ('^'||in_search))
-                       AND (in_link_desc IS NULL 
-                           or id in 
-                          (select account_id from account_link 
+                       AND (in_link_desc IS NULL
+                           or id in
+                          (select account_id from account_link
                             where description = in_link_desc))
                        AND not obsolete
               ORDER BY accno
@@ -141,10 +141,10 @@ END;$$
 LANGUAGE 'plpgsql';
 
 COMMENT ON FUNCTION chart_list_search(in_search text, in_link_desc text) IS
-$$ This returns a list of account entries where the description or account 
+$$ This returns a list of account entries where the description or account
 number begins with in_search.
 
-If in_link_desc is provided, the list is further filtered by which accounts are 
+If in_link_desc is provided, the list is further filtered by which accounts are
 set to an account_link.description equal to that provided.$$;
 
 CREATE OR REPLACE FUNCTION chart_list_overpayment(in_account_class int)
@@ -155,7 +155,7 @@ DECLARE resultrow record;
 BEGIN
         IF in_account_class = 1 THEN
            link_string := '%AP_overpayment%';
-        ELSE 
+        ELSE
            link_string := '%AR_overpayment%';
         END IF;
 
@@ -181,10 +181,10 @@ as $$
  BEGIN
          IF in_account_class = 1 THEN
             link_string := '%AP_paid%';
-         ELSE 
+         ELSE
             link_string := '%AR_paid%';
          END IF;
- 
+
          FOR resultrow IN
            SELECT *  FROM chart
            WHERE link LIKE link_string
@@ -195,10 +195,10 @@ as $$
  END;
 $$ language plpgsql;
 COMMENT ON FUNCTION chart_list_cash(in_account_class int) IS
-$$ This function returns the overpayment accounts acording with 
+$$ This function returns the overpayment accounts acording with
 in_account_class which must be 1 or 2.
 
-If in_account_class is 1 it returns a list of AP cash accounts and 
+If in_account_class is 1 it returns a list of AP cash accounts and
 if 2, AR cash accounts.$$;
 
 CREATE OR REPLACE FUNCTION chart_list_discount(in_account_class int)
@@ -224,10 +224,10 @@ END;
 $$ language plpgsql;
 
 COMMENT ON FUNCTION chart_list_discount(in_account_class int) IS
-$$ This function returns the discount accounts acording with in_account_class 
+$$ This function returns the discount accounts acording with in_account_class
 which must be 1 or 2.
 
-If in_account_class is 1, returns AP discount accounts, if 2, AR discount 
+If in_account_class is 1, returns AP discount accounts, if 2, AR discount
 accounts.$$;
 
 
@@ -238,13 +238,13 @@ $$
 $$ language sql;
 
 COMMENT ON FUNCTION account__get_from_accno(in_accno text) IS
-$$ Returns the account where the accno field matches (excatly) the 
+$$ Returns the account where the accno field matches (excatly) the
 in_accno provided.$$;
 
 CREATE OR REPLACE FUNCTION account__is_recon(in_accno text) RETURNS BOOL AS
-$$ SELECT count(*) > 0 
+$$ SELECT count(*) > 0
      FROM cr_coa_to_account c2a
-     JOIN account ON account.id = c2a.chart_id 
+     JOIN account ON account.id = c2a.chart_id
     WHERE accno = $1; $$
 LANGUAGE SQL;
 
@@ -255,7 +255,7 @@ Note that returns false on invalid account number too$$;
 CREATE OR REPLACE FUNCTION account__get_taxes()
 RETURNS setof account AS
 $$
-SELECT * FROM account 
+SELECT * FROM account
  WHERE tax is true
 ORDER BY accno;
 $$ language sql;
@@ -411,12 +411,12 @@ COMMENT ON FUNCTION account_has_transactions (in_id int) IS
 $$ Checks to see if any transactions use this account.  If so, returns true.
 If not, returns false.$$;
 
-CREATE OR REPLACE FUNCTION account__save 
-(in_id int, in_accno text, in_description text, in_category char(1), 
+CREATE OR REPLACE FUNCTION account__save
+(in_id int, in_accno text, in_description text, in_category char(1),
 in_gifi_accno text, in_heading int, in_contra bool, in_tax bool,
 in_link text[], in_obsolete bool, in_is_temp bool)
 RETURNS int AS $$
-DECLARE 
+DECLARE
 	t_heading_id int;
 	t_link record;
 	t_id int;
@@ -427,7 +427,7 @@ BEGIN
     t_tax := t_tax OR in_tax;
 	-- check to ensure summary accounts are exclusive
         -- necessary for proper handling by legacy code
-    FOR t_link IN SELECT description FROM account_link_description 
+    FOR t_link IN SELECT description FROM account_link_description
     WHERE summary='t'
 	LOOP
 		IF t_link.description = ANY (in_link) and array_upper(in_link, 1) > 1 THEN
@@ -436,20 +436,20 @@ BEGIN
 	END LOOP;
 	-- heading settings
 	IF in_heading IS NULL THEN
-		SELECT id INTO t_heading_id FROM account_heading 
+		SELECT id INTO t_heading_id FROM account_heading
 		WHERE accno < in_accno order by accno desc limit 1;
 	ELSE
 		t_heading_id := in_heading;
 	END IF;
 
     -- don't remove custom links.
-	DELETE FROM account_link 
-	WHERE account_id = in_id 
-              and description in ( select description 
+	DELETE FROM account_link
+	WHERE account_id = in_id
+              and description in ( select description
                                     from  account_link_description
                                     where custom = 'f');
 
-	UPDATE account 
+	UPDATE account
 	SET accno = in_accno,
 		description = in_description,
 		category = in_category,
@@ -474,32 +474,32 @@ BEGIN
 		t_id := currval('account_id_seq');
 	END IF;
 
-	FOR t_link IN 
+	FOR t_link IN
 		select in_link[generate_series] AS val
-		FROM generate_series(array_lower(in_link, 1), 
+		FROM generate_series(array_lower(in_link, 1),
 			array_upper(in_link, 1))
 	LOOP
 		INSERT INTO account_link (account_id, description)
 		VALUES (t_id, t_link.val);
 	END LOOP;
 
-	
+
 	RETURN t_id;
 END;
 $$ language plpgsql;
 
 COMMENT ON FUNCTION account__save
-(in_id int, in_accno text, in_description text, in_category char(1), 
+(in_id int, in_accno text, in_description text, in_category char(1),
 in_gifi_accno text, in_heading int, in_contra bool, in_tax bool,
 in_link text[], in_obsolete bool, in_is_temp bool) IS
-$$ This deletes existing account_link entries, where the 
-account_link.description is not designated as a custom one in the 
+$$ This deletes existing account_link entries, where the
+account_link.description is not designated as a custom one in the
 account_link_description table.
 
 If no account heading is provided, the account heading which has an accno field
 closest to but prior (by collation order) is used.
 
-Then it saves the account information, and rebuilds the account_link records 
+Then it saves the account information, and rebuilds the account_link records
 based on the in_link array.
 $$;
 
@@ -515,7 +515,7 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION account__delete(int) IS
-$$ This deletes an account with the id specified.  If the account has 
+$$ This deletes an account with the id specified.  If the account has
 transactions associated with it, it will fail and raise a foreign key constraint.
 $$;
 
@@ -533,7 +533,7 @@ $$ LANGUAGE SQL;
 COMMENT ON FUNCTION account_heading_list() IS
 $$ Lists all existing account headings.$$;
 
-CREATE OR REPLACE FUNCTION account_heading_save 
+CREATE OR REPLACE FUNCTION account_heading_save
 (in_id int, in_accno text, in_description text, in_parent int)
 RETURNS int AS
 $$
@@ -568,13 +568,13 @@ END;
 $$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION account_heading__delete(int) IS
-$$ This deletes an account heading with the id specified.  If the heading has 
+$$ This deletes an account heading with the id specified.  If the heading has
 accounts associated with it, it will fail and raise a foreign key constraint.
 $$;
 
 CREATE OR REPLACE RULE chart_i AS ON INSERT TO chart
 DO INSTEAD
-SELECT CASE WHEN new.charttype='H' THEN 
+SELECT CASE WHEN new.charttype='H' THEN
  account_heading_save(new.id, new.accno, new.description, NULL)
 ELSE
  account__save(new.id, new.accno, new.description, new.category,
@@ -598,12 +598,12 @@ RETURNS void AS $BODY$
            SELECT id INTO v_chart_id FROM chart WHERE accno = in_accno;
            INSERT INTO cr_coa_to_account (chart_id, account) VALUES (v_chart_id, in_accno||'--'||in_description);
         END IF;
-        -- Already found, no need to do anything. =) 
+        -- Already found, no need to do anything. =)
     END;
 $BODY$ LANGUAGE PLPGSQL;
 
 COMMENT ON FUNCTION cr_coa_to_account_save(in_accno text, in_description text)
-IS $$ Provides default rules for setting reconciliation labels.  Currently 
+IS $$ Provides default rules for setting reconciliation labels.  Currently
 saves a label of accno ||'--' || description.$$;
 
 CREATE OR REPLACE FUNCTION account__get_by_accno(in_accno text)
@@ -621,7 +621,7 @@ COMMENT ON FUNCTION account__get_by_link_desc(in_description text) IS
 $$ Gets a list of accounts with a specific link description set.  For example,
 for a dropdown list.$$;
 
-CREATE OR REPLACE FUNCTION get_link_descriptions() 
+CREATE OR REPLACE FUNCTION get_link_descriptions()
 RETURNS SETOF account_link_description AS
 $$
     SELECT * FROM account_link_description;
@@ -643,8 +643,8 @@ DROP FUNCTION IF EXISTS account__save_tax
 in_pass int, in_taxmodule_id int, in_old_validto date);
 
 CREATE OR REPLACE FUNCTION account__save_tax
-(in_chart_id int, in_validto date, in_rate numeric, in_minvalue numeric, 
-in_maxvalue numeric, in_taxnumber text, 
+(in_chart_id int, in_validto date, in_rate numeric, in_minvalue numeric,
+in_maxvalue numeric, in_taxnumber text,
 in_pass int, in_taxmodule_id int, in_old_validto date)
 returns bool as
 $$
@@ -664,7 +664,7 @@ BEGIN
 
          INSERT INTO tax(chart_id, validto, rate, minvalue, maxvalue, taxnumber,
                         pass, taxmodule_id)
-         VALUES (in_chart_id, in_validto, in_rate, in_minvalue, in_maxvalue, 
+         VALUES (in_chart_id, in_validto, in_rate, in_minvalue, in_maxvalue,
                 in_taxnumber, in_pass, in_taxmodule_id);
 
          RETURN TRUE;
@@ -673,10 +673,10 @@ END;
 $$ language plpgsql;
 
 COMMENT ON FUNCTION account__save_tax
-(in_chart_id int, in_validto date, in_rate numeric, in_minvalue numeric, 
-in_maxvalue numeric, in_taxnumber text, 
+(in_chart_id int, in_validto date, in_rate numeric, in_minvalue numeric,
+in_maxvalue numeric, in_taxnumber text,
 in_pass int, in_taxmodule_id int, in_old_validto date) IS
-$$ This saves tax rates.$$; 
+$$ This saves tax rates.$$;
 
 DROP TYPE IF EXISTS coa_entry CASCADE;
 
@@ -697,7 +697,7 @@ $$
 
 WITH ac (chart_id, amount) AS (
      SELECT chart_id, CASE WHEN acc_trans.approved and gl.approved THEN amount
-                           ELSE 0 
+                           ELSE 0
                        END
        FROM acc_trans
        JOIN (select id, approved from ar union all
@@ -717,7 +717,7 @@ ha(heading) AS (
      SELECT heading
        FROM account
 )
-SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno, 
+SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
        CASE WHEN sum(ac.amount) < 0 THEN sum(amount) * -1 ELSE null::numeric
         END,
        CASE WHEN sum(ac.amount) > 0 THEN sum(amount) ELSE null::numeric END,
@@ -725,7 +725,7 @@ SELECT a.id, a.is_heading, a.accno, a.description, a.gifi_accno,
   FROM (SELECT id, heading, false as is_heading, accno, description, gifi_accno
           FROM account
          UNION
-        SELECT id, parent_id, true, accno, description, null::text 
+        SELECT id, parent_id, true, accno, description, null::text
           FROM account_heading) a
 
  LEFT JOIN ac ON ac.chart_id = a.id AND not a.is_heading
@@ -739,24 +739,80 @@ $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION account__all_headings() RETURNS SETOF account_heading
 LANGUAGE SQL AS
-$$ 
+$$
 SELECT * FROM account_heading ORDER BY accno;
 $$;
 
 DROP VIEW IF EXISTS account_heading_tree CASCADE;
 CREATE VIEW account_heading_tree AS
 WITH RECURSIVE account_headings AS (
-    SELECT id, accno, 1 as level, accno as path
+    SELECT id, accno, description, 1 as level, ARRAY[id] as path
       FROM account_heading
+     WHERE parent_id IS NULL
     UNION ALL
-    SELECT ah.id, ah.accno, at.level + 1 as level, at.path  || '||||' || ah.accno
+    SELECT ah.id, ah.accno, ah.description, at.level + 1 as level,
+           array_append(at.path, ah.id) as path
       FROM account_heading ah
       JOIN account_headings at ON ah.parent_id = at.id
 )
-SELECT id, accno, level, string_to_array(path, '||||') as path
+SELECT id, accno, description, level, path
   FROM account_headings;
 
-CREATE OR REPLACE FUNCTION gifi__list() RETURNS SETOF gifi 
+COMMENT ON VIEW account_heading_tree IS $$ Returns in the 'path' field an
+array which contains the path of the heading to its associated root.$$;
+
+DROP VIEW IF EXISTS account_heading_descendant CASCADE;
+CREATE VIEW account_heading_descendant
+AS
+WITH RECURSIVE account_headings AS (
+    SELECT account_heading.id as id, 1 AS level,
+           id as descendant_id, accno, accno as descendant_accno
+      FROM account_heading
+    UNION ALL
+    SELECT at.id, at.level+1 as level,
+    	   ah.id as descendant_id, at.accno, ah.accno as descendant_accno
+    FROM account_heading ah
+    JOIN account_headings at ON ah.parent_id = at.descendant_id
+)
+SELECT id, level, descendant_id, accno, descendant_accno
+   FROM account_headings;
+
+COMMENT ON VIEW account_heading_descendant IS $$ Returns rows for
+each heading listing its immediate children, children of children, etc., etc.
+
+This is primarily practical when calculating subtotals
+for PNL and B/S headings.$$;
+
+DROP VIEW IF EXISTS account_heading_derived_category CASCADE;
+CREATE VIEW account_heading_derived_category AS
+SELECT *, coalesce(original_category, derived_category) as category
+FROM (
+SELECT *, CASE WHEN equity_count > 0 THEN 'Q'
+               WHEN income_count > 0 AND expense_count > 0 THEN 'Q'
+               WHEN asset_count > 0 AND liability_count >0 THEN 'Q'
+               WHEN asset_count > 0 THEN 'A'
+               WHEN liability_count > 0 THEN 'L'
+               WHEN expense_count > 0 THEN 'E'
+               WHEN income_count > 0 THEN 'I' END AS derived_category
+FROM (
+     SELECT ah.id, ah.accno, ah.description, ah.parent_id,
+            ah.category as original_category,
+      count(CASE WHEN acc.category = 'A' THEN acc.category END) AS asset_count,
+      count(CASE WHEN acc.category = 'L' THEN acc.category END) AS liability_count,
+      count(CASE WHEN acc.category = 'E' THEN acc.category END) AS expense_count,
+      count(CASE WHEN acc.category = 'I' THEN acc.category END) AS income_count,
+      count(CASE WHEN acc.category = 'Q' THEN acc.category END) AS equity_count
+       FROM account_heading_descendant ahd
+     INNER JOIN account_heading ah on ahd.id = ah.id
+     LEFT JOIN account acc ON ahd.descendant_id = acc.heading
+     GROUP BY ah.id, ah.accno, ah.description, ah.parent_id,
+              ah.category) category_counts) derivation;
+
+COMMENT ON VIEW account_heading_derived_category IS $$ Lists for each row
+the derived category for each heading, based on the categories of the
+linked accounts.$$;
+
+CREATE OR REPLACE FUNCTION gifi__list() RETURNS SETOF gifi
 LANGUAGE SQL AS
 $$
 SELECT * FROM gifi ORDER BY accno;
@@ -766,7 +822,7 @@ CREATE OR REPLACE FUNCTION account_heading__check_tree()
 RETURNS TRIGGER LANGUAGE PLPGSQL AS $$
 BEGIN
 
-PERFORM* from ( 
+PERFORM* from (
   WITH RECURSIVE account_headings AS (
       SELECT id, accno, 1 as level, accno as path
         FROM account_heading
@@ -776,10 +832,10 @@ PERFORM* from (
         JOIN account_headings at ON ah.parent_id = at.id
        WHERE NOT ah.accno = ANY(string_to_array(path, '||||'))
   )
-  SELECT * 
+  SELECT *
     FROM account_heading ah
     JOIN account_headings at ON ah.parent_id = at.id
-   WHERE at.path || '||||' ||  ah.accno NOT IN 
+   WHERE at.path || '||||' ||  ah.accno NOT IN
           (select path from account_headings)
 ) x;
 

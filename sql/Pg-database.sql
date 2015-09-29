@@ -73,13 +73,19 @@ CREATE TABLE account_heading (
   id serial not null unique,
   accno text primary key,
   parent_id int references account_heading(id),
-  description text
+  description text,
+  category char(1) check (category IN ('A','L','Q','I','E'))
 );
 
 COMMENT ON TABLE account_heading IS $$
 This table holds the account headings in the system.  Each account must belong
 to a heading, and a heading can belong to another heading.  In this way it is
 possible to nest accounts for reporting purposes.$$;
+
+COMMENT ON COLUMN account_heading.category IS $$
+Same as the column account.category, except that if NULL the category
+is automatically derived from the linked accounts.
+$$;
 
 CREATE TABLE account (
   id serial not null unique,

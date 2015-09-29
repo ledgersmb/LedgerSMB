@@ -6,68 +6,24 @@
 \maketitle
 
 {\large
-<?lsmb text('Accounting period: [_1] to [_2]', report.from_date, report.to_date); ?>
-<?lsmb-
-comparisons = report.comparisons;
-account_data = report.account_data;
-IF comparisons;
-    FOREACH COMP IN comparisons ?>
+<?lsmb FOREACH col IN report.cheads.ids.keys ?>
+<?lsmb report.cheads.ids.$col.props.description ?>
 
-<?lsmb text('Compared to: [_1] to [_2]', COMP.from_date, COMP.to_date) ?>
-   <?lsmb END;
-END ?>
+<?lsmb END ?>
 }
 
-\begin{longtable}{lllr<?lsmb FOREACH c IN comparisons; 'r'; END ?>}
-\multicolumn{3}{l}{\bf <?lsmb text('Income') ?>} &
-<?lsmb  FOREACH COMP IN comparisons; ' & '; END ?> \\
-<?lsmb FOREACH k IN account_data.I.keys.sort ?> 
-<?lsmb k ?> & 
- ---  & 
-<?lsmb account_data.I.${k}.main.account_description ?> &
-<?lsmb account_data.I.${k}.main.amount ?>
-<?lsmb FOREACH COMP IN comparisons; ' & '; 
-    COMP.account_data.I.${k}.info.amount;
-END; ?>\\
-<?lsmb- END ?>
-\multicolumn{3}{r}{<?lsmb text('Total Income') ?>} & 
-<?lsmb account_data.totals.main.I ?>
-<?lsmb FOREACH COMP IN comparisons; ' & '; 
-    COMP.account_data.totals.main.I;
-END; ?>\\
- & & & <?lsmb FOREACH COMP IN comparisons; ' & '; END ?>\\
-\multicolumn{3}{l}{\bf <?lsmb text('Expense') ?>} & 
-<?lsmb  FOREACH COMP IN comparisons; ' & '; END ?> \\
-<?lsmb FOREACH k IN account_data.E.keys.sort ?> 
-<?lsmb k ?> & 
- ---  & 
-<?lsmb account_data.E.${k}.main.account_description ?> &
-<?lsmb account_data.E.${k}.main.amount ?>
-<?lsmb FOREACH COMP IN comparisons; ' & '; 
-    COMP.account_data.E.${k}.info.amount;
-END; ?>\\
-<?lsmb- END ?>
-\multicolumn{3}{r}{<?lsmb text('Total Expense') ?>} & 
-<?lsmb account_data.totals.main.E ?>
-<?lsmb FOREACH COMP IN comparisons; ' & '; 
-    COMP.account_data.totals.main.E;
-END; ?>\\
- & & & <?lsmb FOREACH COMP IN comparisons; ' & '; END ?>\\
-\multicolumn{3}{r}{<?lsmb text('Total Income') ?>} & 
-<?lsmb account_data.totals.main.I ?>
-<?lsmb FOREACH COMP IN comparisons; ' & '; 
-    COMP.account_data.totals.main.I;
-END; ?>\\
-\multicolumn{3}{r}{<?lsmb text('Less Total Expense') ?>} & 
-<?lsmb account_data.totals.main.E ?>
-<?lsmb FOREACH COMP IN comparisons; ' & '; 
-    COMP.account_data.totals.main.E;
-END; ?>\\
-\multicolumn{3}{r}{= <?lsmb text('Net Profit (Loss)') ?>} &
-<?lsmb account_data.totals.main.total ?>
-<?lsmb FOREACH COMP IN comparisons; ' & '; 
-    COMP.account_data.totals.main.total;
-END; ?>\\
+\begin{longtable}{lll<?lsmb FOREACH c IN report.cheads.ids.keys; 'r'; END ?>}
+\multicolumn{3}{l}{\bf <?lsmb text('Accounts') ?>}
+<?lsmb FOREACH col IN report.cheads.ids.keys; ' & '; END ?>
+<?lsmb FOREACH row IN report.sorted_row_ids ?> \\
+<?lsmb IF report.rheads.ids.$row.props.account_number
+          && report.incl_accnos; -?><?lsmb
+    report.rheads.ids.$row.props.account_number ?> & - <?lsmb ELSE ?> & <?lsmb END ?>
+<?lsmb report.rheads.ids.$row.props.account_description ?> &
+<?lsmb FOREACH col IN report.cheads.ids.keys;
+  ' & '; report.cells.$row.$col;
+END; ?>
+<?lsmb END ?> \\
 \end{longtable}
 \end{document}
 <?lsmb END ?>
