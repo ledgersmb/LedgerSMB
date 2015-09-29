@@ -750,7 +750,7 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
                                  class="checkbox" type="checkbox" data-dojo-type="dijit/form/CheckBox" value=1
                                  $form->{"calctax_$item"}
                             title="Calculate automatically"></td>
- 	  <td><input type="hidden" name="$form->{ARAP}_tax_$item"
+          <td><input type="hidden" name="$form->{ARAP}_tax_$item"
                 id="$form->{ARAP}_tax_$item"
                 value="$item" />$item--$form->{"${item}_description"}</td>
     </tr>
