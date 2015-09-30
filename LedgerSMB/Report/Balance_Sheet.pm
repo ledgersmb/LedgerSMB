@@ -72,7 +72,7 @@ the balance sheet.
 sub run_report {
     my ($self) = @_;
 
-    my @lines = $self->call_dbmethod(funcname => 'report__balance_sheet');
+    my @lines = $self->exec_method(funcname => 'report__balance_sheet');
     my ($row) = $self->call_procedure(funcname => 'setting_get',
                                       args => [ 'earn_id' ]);
     my $earn_id = ($row) ? $row->{value} : -1;
@@ -163,45 +163,45 @@ sub run_report {
                                   'account_category' => 'E',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Expenses'),
+                                      $self->text('Expenses'),
                                   'account_description' =>
-                                      $self->_locale->text('Expenses') },
+                                      $self->text('Expenses') },
                          'I' => { 'account_number' => 'I',
                                   'account_category' => 'I',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Income'),
+                                      $self->text('Income'),
                                   'account_description' =>
-                                      $self->_locale->text('Income') },
+                                      $self->text('Income') },
                          'A' => { 'account_number' => 'A',
                                   'account_category' => 'A',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Assets'),
+                                      $self->text('Assets'),
                                   'account_description' =>
-                                      $self->_locale->text('Assets') },
+                                      $self->text('Assets') },
                          'L' => { 'account_number' => 'L',
                                   'account_category' => 'L',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Liabilities'),
+                                      $self->text('Liabilities'),
                                   'account_description' =>
-                                      $self->_locale->text('Liabilities') },
+                                      $self->text('Liabilities') },
                          'Q' => { 'account_number' => 'Q',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Equity'),
+                                      $self->text('Equity'),
                                   'account_description' =>
-                                      $self->_locale->text('Equity') },
+                                      $self->text('Equity') },
                          'q' => { 'account_number' => '',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
                                   'heading_path' => [ 'Q' ],
                                   'account_desc' =>
-                                      $self->_locale->text('Current earnings'),
+                                      $self->text('Current earnings'),
                                   'account_description' =>
-                                      $self->_locale->text('Current earnings') },
+                                      $self->text('Current earnings') },
             );
     }
     else {
@@ -210,7 +210,7 @@ sub run_report {
                                    'account_desc'   => $_->{description},
                                    'account_description' => $_->{description} }
             }
-            $self->call_dbmethod(funcname => 'account__all_headings');
+            $self->call_procedure(funcname => 'account__all_headings');
     };
     for my $id (grep { ! defined $_->{props} } values %{$self->rheads->ids}) {
         $self->rheads->id_props($id->{id}, $header_desc{$id->{accno}});
