@@ -280,8 +280,9 @@ COMMENT ON FUNCTION account_get(in_id int) IS
 $$Returns an entry from the chart view which matches the id requested, and which
 is an account, not a heading.$$;
 
+DROP FUNCTION IF EXISTS account__list_translations(int);
 CREATE OR REPLACE FUNCTION account__list_translations(in_id int)
-RETURNS account_translation AS
+RETURNS SETOF account_translation AS
 $$
    SELECT * FROM account_translation WHERE trans_id = $1;
 $$ LANGUAGE sql;
@@ -348,8 +349,9 @@ COMMENT ON FUNCTION account_heading_get(in_id int) IS
 $$Returns an entry from the chart view which matches the id requested, and which
 is a heading, not an account.$$;
 
+DROP FUNCTION IF EXISTS account_heading__list_translations(int);
 CREATE OR REPLACE FUNCTION account_heading__list_translations(in_id int)
-RETURNS account_heading_translation AS
+RETURNS SETOF account_heading_translation AS
 $$
    SELECT * FROM account_heading_translation WHERE trans_id = $1;
 $$ LANGUAGE sql;

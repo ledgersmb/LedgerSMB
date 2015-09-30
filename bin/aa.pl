@@ -333,7 +333,7 @@ sub create_links {
 
     @taxaccounts = Tax::init_taxes( $form, $form->{taxaccounts} );
 
-    if ( !$form->{id} ) {
+    if ( !$form->{oldinvtotal} ) { # first round loading (or amount was 0)
         for (@taxaccounts) { $form->{ "calctax_" . $_->account } = 1 }
     }
 
@@ -729,27 +729,30 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     $form->hide_form( "entry_id_$i"); #New block of code to pass entry_id
 
     }
+     my $tax_base = $form->{invtotal};
     foreach $item ( split / /, $form->{taxaccounts} ) {
 
     if($form->{"calctax_$item"} && $is_update){
-             $form->{invtotal} += $form->{"tax_$item"};
+       $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
     }
+             $form->{invtotal} += $form->{"tax_$item"};
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
+   my $disabled = ($form->{"calctax_$item"}) ? 'disabled="disabled"' : "";
 
         $form->{"tax_$item"} =
           $form->format_amount( \%myconfig, $form->{"tax_$item"}, 2 );
-    # CT:  This should probably be moved to a hidden field and a text label.
         print qq|
         <tr>
       <td><input data-dojo-type="dijit/form/TextBox" name="tax_$item" id="tax_$item"
-                     size=10 value=$form->{"tax_$item"}></td>
+                     size=10 value=$form->{"tax_$item"} $disabled></td>
       <td align=right><input data-dojo-type="dijit/form/TextBox" id="calctax_$item" name="calctax_$item"
                                  class="checkbox" type="checkbox" data-dojo-type="dijit/form/CheckBox" value=1
-                                 $form->{"calctax_$item"}></td>
-       <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_tax_$item"
-                      id="$form->{ARAP}_tax_$item">
-     <option value="$form->{ARAP}_tax_$item">$item--$form->{"${item}_description"}</option></select></td>
+                                 $form->{"calctax_$item"}
+                            title="Calculate automatically"></td>
+          <td><input type="hidden" name="$form->{ARAP}_tax_$item"
+                id="$form->{ARAP}_tax_$item"
+                value="$item" />$item--$form->{"${item}_description"}</td>
     </tr>
 |;
 
