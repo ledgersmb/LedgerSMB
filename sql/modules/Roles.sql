@@ -936,7 +936,8 @@ SELECT lsmb__grant_menu('taxes_set', 130, 'allow');
 SELECT lsmb__create_role('account_create');
 SELECT lsmb__grant_perms('account_create', obj, 'INSERT')
   FROM unnest(array['chart'::text, 'account', 'cr_coa_to_account',
-                    'account_heading', 'account_link']) obj;
+                    'account_heading', 'account_link',
+                    'account_translation', 'account_heading_translation']) obj;
 
 SELECT lsmb__grant_perms('account_create', obj, 'ALL')
   FROM unnest(array['account_id_seq'::text, 'account_heading_id_seq']) obj;
@@ -946,6 +947,7 @@ SELECT lsmb__grant_menu('account_create', id, 'allow')
 SELECT lsmb__create_role('account_edit');
 SELECT lsmb__grant_perms('account_edit', obj, perm)
   FROM unnest(array['account'::text, 'account_heading', 'account_link',
+                    'account_translation', 'account_heading_translation',
                     'cr_coa_to_account', 'tax']) obj
  CROSS JOIN unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) perm;
 SELECT lsmb__grant_perms('account_edit', 'account_link', 'DELETE');
@@ -953,6 +955,7 @@ SELECT lsmb__grant_perms('account_edit', 'account_link', 'DELETE');
 SELECT lsmb__create_role('account_delete');
 SELECT lsmb__grant_perms('account_delete', obj, 'DELETE')
   FROM unnest(array['account'::text, 'account_heading', 'account_link',
+                    'account_translation', 'account_heading_translation',
                     'cr_coa_to_account', 'tax']) obj;
 
 SELECT lsmb__create_role('auditor');
@@ -1093,6 +1096,7 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['account_heading'::text, 'account',
                     'acc_trans', 'account_link',
+                    'account_translation', 'account_heading_translation',
                     'account_link_description']) obj;
                                      -- I don't like loose grants on acc_trans
                                      -- but we need to
@@ -1123,6 +1127,7 @@ SELECT lsmb__grant_perms('base_user', 'new_shipto', 'UPDATE');
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['partstax'::text, 'partscustomer',
                     'account_heading_descendant',
+                    'account_heading_derived_category',
                     'account_heading_tree', 'payment_type', 'warehouse',
                     'sic', 'voucher', 'mime_type',
                     'parts_translation', 'partsgroup_translation',
