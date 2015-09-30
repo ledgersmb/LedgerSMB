@@ -1,6 +1,13 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.17
+* FEATURE: Automatic calculation of taxes in AR/AP transactions (ErikH)
+* FEATURE: Use account hierarchies in balance and PnL reporting (ErikH)
+
+ErikH is Erik Huelsmann
+
+
 Changelog for 1.4.16
 * FEATURE: Added possibility to translate account descriptions (ErikH)
 * Fixed shell environment being clobbered when loading schema (GH #813) (ErikH)

@@ -275,6 +275,10 @@ DROP FUNCTION IF EXISTS journal__add_line(
   in_cleared bool, in_memo text, in_business_units int[]); 
 
 BEGIN;
+ALTER TABLE account_heading ADD COLUMN category CHAR(1);
+END;
+
+BEGIN;
 UPDATE language SET code = 'ms_MY' WHERE code = 'my';
 COMMIT;
 

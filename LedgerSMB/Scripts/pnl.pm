@@ -44,7 +44,9 @@ sub generate_income_statement {
     } elsif ($request->{pnl_type} eq 'product'){
         $rpt = LedgerSMB::Report::PNL::Product->new(%$request);
     } else {
-        $rpt =LedgerSMB::Report::PNL::Income_Statement->new(%$request);
+        $rpt =LedgerSMB::Report::PNL::Income_Statement->new(
+            %$request,
+            column_path_prefix => [ 0 ]);
         $rpt->run_report;
         for my $c_per (1 .. 3) {
             my $found = 0;
@@ -54,7 +56,10 @@ sub generate_income_statement {
                 $found = 1 if defined $request->{$_} and $_ ne 'interval';
             }
             next unless $found;
-            my $comparison = LedgerSMB::Report::PNL::Income_Statement->new(%$request);
+            my $comparison =
+                LedgerSMB::Report::PNL::Income_Statement->new(
+                    %$request,
+                    column_path_prefix => [ $c_per ]);
             $comparison->run_report;
             $rpt->add_comparison($comparison);
         }

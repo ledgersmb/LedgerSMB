@@ -16,7 +16,7 @@ use warnings;
 
 my $locale = LedgerSMB::App_State::Locale();
 
-our @default_settings = (
+my @default_settings = (
    { title => $locale->text('Company Information'),
      items => [
        { name => 'company_name', label => $locale->text('Company Name') },
@@ -61,74 +61,77 @@ our @default_settings = (
         label => $locale->text('Password Duration') },
        { name => 'session_timeout',
         label => $locale->text('Session Timeout'), },
-       { name => 'never_logout',
-        label => $locale->text('Only Timeout Locks'),
-         type => 'YES_NO', },
-       { name => 'separate_duties',
-        label => $locale->text('Separate Duties'),
-         type => 'YES_NO', },
-       { name => 'lock_description',
-        label => $locale->text('Lock Item Description'),
-         type => 'YES_NO', },
-       { name => 'gapless_ar',
-        label => $locale->text('Gapless AR'), 
-         type => 'YES_NO', },
-     ] },
- { title => $locale->text('Default Accounts'),
-   items => [
-       { name => 'inventory_accno_id',
-         type => 'SELECT_ONE',
-        label => $locale->text('Inventory'), },
-       { name => 'income_accno_id',
-         type => 'SELECT_ONE',
-        label => $locale->text('Income'), },
-       { name => 'expense_accno_id',
-         type => 'SELECT_ONE',
-        label => $locale->text('Cost of Goods Sold'), },
-       { name => 'fxgain_accno_id',
-         type => 'SELECT_ONE',
-        label => $locale->text('Foreign Exchange Gain') },
-       { name => 'fxloss_accno_id',
-         type => 'SELECT_ONE',
-        label => $locale->text('Foreign Exchange Loss') },
-   ] },
- { title => $locale->text('Next in Sequence'),
-   items => [
-     { name => 'glnumber', label => $locale->text('GL Reference Number') },
-     { name => 'sinumber', 
-      label => $locale->text('Sales Invoice/AR Transaction Number'), },
-     { name => 'sonumber', label => $locale->text('Sales Order Number') },
-     { name => 'sqnumber', label => $locale->text('Sales Quotation Number') },
-     { name => 'vinumber' , 
-      label => $locale->text('Vendor Invoice/AP Transaction Number')},
-     { name => 'ponumber', label => $locale->text('Purchase Order Number') },
-     { name => 'rfqnumber', label => $locale->text('RFQ Number') },
-     { name => 'partnumber', label => $locale->text('Part Number') },
-     { name => 'projectnumber', label => $locale->text('Business Unit Number') },
-     { name => 'employeenumber', label => $locale->text('Employee Number') },
-     { name => 'customernumber', label => $locale->text('Customer Number') },
-     { name => 'vendornumber', label => $locale->text('Vendor Number') },
-   ] },
-   { title => $locale->text('Misc Settings'),
-     items => [  
-       { name => 'show_creditlimit', type => 'YES_NO', 
-        label => $locale->text('Show Credit Limit') },
-       { name => 'dojo_theme',
-         type => 'SELECT_ONE',
-        label => $locale->text('Widgit Themes') },
-       { name => 'check_prefix', label => $locale->text('Check Prefix') },
-     { name => 'vclimit', label => $locale->text('Max per dropdown') },
-       { name => 'check_max_invoices',
-        label =>  $locale->text('Max Invoices per Check Stub') },
-       { name => 'decimal_places',
-        label =>  $locale->text('Decimal Places for Money') },
-       { name => 'template_immages',
-        label => $locale->text('Images in Templates'),
-         type => 'YES_NO', },
-       { name => 'min_empty',
-        label => $locale->text('Min Empty Lines') },
-     ] },
-);
+              { name => 'never_logout',
+                label => $locale->text('Only Timeout Locks'),
+                type => 'YES_NO', },
+              { name => 'separate_duties',
+                label => $locale->text('Separate Duties'),
+                type => 'YES_NO', },
+              { name => 'lock_description',
+                label => $locale->text('Lock Item Description'),
+                type => 'YES_NO', },
+              { name => 'gapless_ar',
+                label => $locale->text('Gapless AR'),
+                type => 'YES_NO', },
+              ] },
+        { title => $locale->text('Default Accounts'),
+          items => [
+              { name => 'earn_id',
+                type => 'SELECT_ONE',
+                label => $locale->text('Current earnings'), },
+              { name => 'inventory_accno_id',
+                type => 'SELECT_ONE',
+                label => $locale->text('Inventory'), },
+              { name => 'income_accno_id',
+                type => 'SELECT_ONE',
+                label => $locale->text('Income'), },
+              { name => 'expense_accno_id',
+                type => 'SELECT_ONE',
+                label => $locale->text('Cost of Goods Sold'), },
+              { name => 'fxgain_accno_id',
+                type => 'SELECT_ONE',
+                label => $locale->text('Foreign Exchange Gain') },
+              { name => 'fxloss_accno_id',
+                type => 'SELECT_ONE',
+                label => $locale->text('Foreign Exchange Loss') },
+              ] },
+        { title => $locale->text('Next in Sequence'),
+          items => [
+              { name => 'glnumber', label => $locale->text('GL Reference Number') },
+              { name => 'sinumber',
+                label => $locale->text('Sales Invoice/AR Transaction Number'), },
+              { name => 'sonumber', label => $locale->text('Sales Order Number') },
+              { name => 'sqnumber', label => $locale->text('Sales Quotation Number') },
+              { name => 'vinumber' ,
+                label => $locale->text('Vendor Invoice/AP Transaction Number')},
+              { name => 'ponumber', label => $locale->text('Purchase Order Number') },
+              { name => 'rfqnumber', label => $locale->text('RFQ Number') },
+              { name => 'partnumber', label => $locale->text('Part Number') },
+              { name => 'projectnumber', label => $locale->text('Business Unit Number') },
+              { name => 'employeenumber', label => $locale->text('Employee Number') },
+              { name => 'customernumber', label => $locale->text('Customer Number') },
+              { name => 'vendornumber', label => $locale->text('Vendor Number') },
+              ] },
+        { title => $locale->text('Misc Settings'),
+          items => [
+              { name => 'show_creditlimit', type => 'YES_NO',
+                label => $locale->text('Show Credit Limit') },
+              { name => 'dojo_theme',
+                type => 'SELECT_ONE',
+                label => $locale->text('Widgit Themes') },
+              { name => 'check_prefix', label => $locale->text('Check Prefix') },
+              { name => 'vclimit', label => $locale->text('Max per dropdown') },
+              { name => 'check_max_invoices',
+                label =>  $locale->text('Max Invoices per Check Stub') },
+              { name => 'decimal_places',
+                label =>  $locale->text('Decimal Places for Money') },
+              { name => 'template_immages',
+                label => $locale->text('Images in Templates'),
+                type => 'YES_NO', },
+              { name => 'min_empty',
+                label => $locale->text('Min Empty Lines') },
+              ] },
+        );
 
 =head1 METHODS/ACTIONS
 
@@ -170,6 +173,11 @@ sub defaults_screen{
     my $fx_loss_accounts = $setting_handle->all_accounts();
     my $fx_gain_accounts = $setting_handle->all_accounts();
     my $inventory_accounts = $setting_handle->accounts_by_link('IC');
+    my $headings =
+        [$request->call_procedure(funcname => 'account__all_headings')];
+    for my $ref (@$headings){
+        $ref->{text} = "$ref->{accno} -- $ref->{description}";
+    }
 
     unshift @$expense_accounts, {}
         if ! defined $request->{expense_accno_id};
@@ -181,6 +189,8 @@ sub defaults_screen{
         if ! defined $request->{fxgain_accno_id};
     unshift @$inventory_accounts, {}
         if ! defined $request->{inventory_accno_id};
+    unshift @$headings, {}
+        if ! defined $request->{earn_id};
 
     my %selects = (
         'dojo_theme' => {
@@ -199,6 +209,13 @@ sub defaults_screen{
             default_values => [$request->{curr}],
             text_attr => 'curr',
             value_attr => 'curr',
+        },
+        'earn_id'         => {
+            name           => 'earn_id',
+            options        => $headings,
+            text_attr      => 'text',
+            value_attr     => 'id',
+            default_values => [$request->{'earn_id'}],
         },
         'fxloss_accno_id' => {
             name           => 'fxloss_accno_id',
@@ -235,7 +252,7 @@ sub defaults_screen{
             value_attr     => 'id',
             default_values => [$request->{'inventory_accno_id'}],
         },
-	'default_country' => {
+        'default_country' => {
             name           => 'default_country',
             options        => \@country_list,
             default_values => [$request->{'default_country'}],
@@ -263,8 +280,8 @@ sub defaults_screen{
     );
 
     my $template = LedgerSMB::Template->new_UI(
-        user => $LedgerSMB::App_State::User, 
-        locale => $locale,
+        user => $LedgerSMB::App_State::User,
+        locale => $request->{_locale},
         template => 'Configuration/settings');
     $template->render({
         form => $request,
@@ -284,7 +301,7 @@ sub sequence_screen {
     my ($request) = @_;
     @{$request->{sequence_list}} = LedgerSMB::Setting::Sequence->list();
     for my $subset (@default_settings){
-        $request->{setting_keys} = $subset->{items} 
+        $request->{setting_keys} = $subset->{items}
              if $subset->{title} eq $locale->text('Next in Sequence');
     }
     my $count = 0;
@@ -295,10 +312,10 @@ sub sequence_screen {
     ++$count;
     }
     LedgerSMB::Template->new_UI(
-        user => $LedgerSMB::App_State::User, 
+        user => $LedgerSMB::App_State::User,
         locale => $locale,
         template => 'Configuration/sequence')->render($request);
-      
+
 }
 
 =item save_defaults
