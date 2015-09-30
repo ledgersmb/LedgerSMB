@@ -660,7 +660,7 @@ acc_meta AS (
          a.gifi_accno, gifi.description as gifi_description
      FROM account a
     INNER JOIN account_heading_tree aht on a.heading = aht.id
-    INNER JOIN gifi ON a.gifi_accno = gifi.accno
+     LEFT JOIN gifi ON a.gifi_accno = gifi.accno
      LEFT JOIN (SELECT trans_id, description
              FROM account_translation at
           INNER JOIN user_preference up ON up.language = at.language_code
