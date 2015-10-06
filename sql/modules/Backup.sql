@@ -6,8 +6,8 @@
 --
 -- Routines for role/permissions backups and restores per db users and roles
 --
--- Note that these must be explicitly activated.  They are not done by default 
--- because they pose a security info leakage risk. 
+-- Note that these must be explicitly activated.  They are not done by default
+-- because they pose a security info leakage risk.
 --
 --
 -- The default backup routines do not call these functions
@@ -50,7 +50,7 @@ BEGIN
 PERFORM lsmb__clear_role_backup();
 
 CREATE TABLE lsmb_role_grants AS
-SELECT u.id, rm.rolname 
+SELECT u.id, rm.rolname
   FROM users u
   JOIN pg_authid r ON r.rolname = u.username
   JOIN pg_auth_members m ON m.member = r.oid
@@ -69,10 +69,10 @@ $$;
 COMMENT ON FUNCTION lsmb__backup_roles() IS
 $$ This function creates two tables, dropping them if they exist previously:
 
-* lsmb_role_grants 
+* lsmb_role_grants
 * lsmb_password_backups
 
-These contain sensitive security information and should only be used when 
+These contain sensitive security information and should only be used when
 creating customer-ready backups from shared hosting environments.$$;
 
 CREATE OR REPLACE FUNCTION lsmb__restore_roles() RETURNS BOOL LANGUAGE PLPGSQL
@@ -81,22 +81,22 @@ DECLARE temp_rec RECORD;
 
 BEGIN
 
-FOR temp_rec IN 
-    select u.username, l.* 
-      FROM users u 
+FOR temp_rec IN
+    select u.username, l.*
+      FROM users u
       JOIN lsmb_password_backups l ON u.id = l.id
 LOOP
     PERFORM 1 FROM pg_authid WHERE rolname = temp_rec.username;
- 
+
     IF FOUND THEN
         EXECUTE $e$ ALTER USER $e$ || quote_ident(temp_rec.username) ||
         $e$ WITH ENCRYPTED PASSWORD $e$ || quote_literal(temp_rec.rolpassword) ||
-        $e$ VALID UNTIL $e$ || coalesce(quote_literal(temp_rec.rolvaliduntil), 
+        $e$ VALID UNTIL $e$ || coalesce(quote_literal(temp_rec.rolvaliduntil),
                                          'NULL');
     ELSE
         EXECUTE $e$ CREATE USER $e$ || quote_ident(temp_rec.username) ||
         $e$ WITH ENCRYPTED PASSWORD $e$ || quote_literal(temp_rec.rolpassword) ||
-        $e$ VALID UNTIL $e$ || coalesce(quote_literal(temp_rec.rolvaliduntil), 
+        $e$ VALID UNTIL $e$ || coalesce(quote_literal(temp_rec.rolvaliduntil),
                                          'NULL');
     END IF;
 END LOOP;

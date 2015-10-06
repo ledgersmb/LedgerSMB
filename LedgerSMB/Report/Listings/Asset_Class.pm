@@ -22,11 +22,11 @@ Partial match for asset class label
 
 Exact match for method, by id, int
 
-=head2 asset_account_id 
+=head2 asset_account_id
 
 id for asset account id, exact match
 
-=head2 dep_account_id 
+=head2 dep_account_id
 
 id for depreciation account id, exact match
 
@@ -58,7 +58,7 @@ has dep_account_id    => (is => 'ro', isa => 'Int', required => 0);
 =cut
 
 sub columns {
-    return [ 
+    return [
    {  col_id => 'id',
         name => LedgerSMB::Report::text('ID'),
         type => 'text' },
@@ -86,7 +86,7 @@ Label and method
 
 sub header_lines {
     return [
-       {name => 'label', 
+       {name => 'label',
         text => LedgerSMB::Report::text('Label') },
        {name => 'method',
         text => LedgerSMB::Report::text('Depreciation Method') },
@@ -122,9 +122,11 @@ sub run_report {
 =head1 COPYRIGHT
 
 Copyright(C) 2014 The LedgerSMB Core Team.  This file may be re-used under the
-terms of the GNU General Public License version 2 or at your option any later 
+terms of the GNU General Public License version 2 or at your option any later
 version.  Please see the included LICENSE.txt for details.
 
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

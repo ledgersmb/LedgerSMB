@@ -16,7 +16,11 @@ html, body {
     overflow: hidden;
     padding: 0;
 }
- 
+
+#maindiv {
+    overflow-y: auto;
+}
+
 #appLayout {
     height: 100%;
 }

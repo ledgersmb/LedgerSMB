@@ -10,7 +10,10 @@ PSGI wrapper functionality for LedgerSMB
  my $app = LedgerSMB::PSGI->get_app();
 
 =cut
- 
+
+use strict;
+use warnings;
+
 # Preloads
 use LedgerSMB;
 use LedgerSMB::Form;
@@ -33,7 +36,7 @@ sub app {
        my $uri = $ENV{REQUEST_URI};
        $ENV{SCRIPT_NAME} = $uri;
        my $script = $uri;
-       $ENV{SCRIPT_NAME} =~ s/\?.*//; 
+       $ENV{SCRIPT_NAME} =~ s/\?.*//;
        $script =~ s/.*[\\\/]([^\\\/\?=]+\.pl).*/$1/;
 
        my $nscript = $script;
@@ -82,7 +85,7 @@ sub _run_new {
             # so we don't want to cause a 500 ISE to be returned
             die $_
                 unless $_ =~ /^Died at/;
-        } 
+        }
     } else {
         die 'something is wrong, cannot find lsmb-request.pl';
     }

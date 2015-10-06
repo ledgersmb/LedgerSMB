@@ -158,6 +158,10 @@ group by c.id, c.accno, c.description, c.category, c.heading,
          c.gifi_accno, c.contra, c.tax;
 
 BEGIN;
+ALTER TABLE account_heading ADD COLUMN category CHAR(1);
+END;
+
+BEGIN;
 UPDATE language SET code = 'ms_MY' WHERE code = 'my';
 COMMIT;
 
@@ -246,3 +250,6 @@ group by c.id, c.accno, coalesce(at.description, c.description), c.category,
          c.heading, c.gifi_accno, c.contra, c.tax;
 
 COMMIT;
+
+DROP FUNCTION IF EXISTS je_get_default_lines();
+DROP FUNCTION IF EXISTS je_set_default_lines(integer);

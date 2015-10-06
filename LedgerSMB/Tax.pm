@@ -30,12 +30,16 @@ package Tax;
 use LedgerSMB::PGNumber;
 use Log::Log4perl;
 
+use strict;
+use warnings;
+
+
 my $logger = Log::Log4perl->get_logger('Tax');
 
 sub init_taxes {
     my ( $form, $taxaccounts, $taxaccounts2 ) = @_;
     my $dbh = $form->{dbh};
-    @taxes = ();
+    my @taxes = ();
     my @accounts = split / /, $taxaccounts;
     if ( defined $taxaccounts2 ) {
         #my @tmpaccounts = @accounts;#unused var
@@ -50,19 +54,19 @@ sub init_taxes {
      $logger->trace("taxaccounts2 undefined");
     }
     my $query = qq|
-		SELECT t.taxnumber, c.description,
-			t.rate, t.chart_id, t.pass, m.taxmodulename, t.minvalue
-			FROM tax t INNER JOIN chart c ON (t.chart_id = c.id)
-			INNER JOIN taxmodule m 
-				ON (t.taxmodule_id = m.taxmodule_id)
-			WHERE c.accno = ? 
-		              AND coalesce(validto::timestamp, 'infinity') 
-		                  >= coalesce(?::timestamp, now())
-			ORDER BY validto ASC
-			LIMIT 1
-		|;
+        SELECT t.taxnumber, c.description,
+            t.rate, t.chart_id, t.pass, m.taxmodulename, t.minvalue
+            FROM tax t INNER JOIN chart c ON (t.chart_id = c.id)
+            INNER JOIN taxmodule m
+                ON (t.taxmodule_id = m.taxmodule_id)
+            WHERE c.accno = ?
+                      AND coalesce(validto::timestamp, 'infinity')
+                          >= coalesce(?::timestamp, now())
+            ORDER BY validto ASC
+            LIMIT 1
+        |;
     my $sth = $dbh->prepare($query);
-    foreach $taxaccount (@accounts) {
+    foreach my $taxaccount (@accounts) {
         next if ( !defined $taxaccount );
         if ( defined $taxaccounts2 ) {
             next if $taxaccounts2 !~ /\b$taxaccount\b/;
@@ -72,8 +76,9 @@ sub init_taxes {
         my $ref = $sth->fetchrow_hashref;
         next unless $ref;
 
-        my $module = $ref->{'taxmodulename'};
-        require "LedgerSMB/Taxes/${module}.pm";
+        my $module = "LedgerSMB/Taxes/$ref->{taxmodulename}.pm";
+        require $module;
+        $module = $ref->{taxmodulename};
         $module =~ s/\//::/g;
         my $tax = ( eval 'LedgerSMB::Taxes::' . $module )->new();
 
@@ -98,7 +103,7 @@ sub calculate_taxes {
     my ( $taxes, $form, $subtotal, $extract ) = @_;
     my $total = LedgerSMB::PGNumber->bzero();
     my %passes;
-    foreach my $tax (@taxes) {
+    foreach my $tax (@$taxes) {
         push @{ $passes{ $tax->pass } }, $tax;
     }
     my @passkeys = sort keys %passes;

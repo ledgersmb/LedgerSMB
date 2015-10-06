@@ -20,8 +20,8 @@ with 'LedgerSMB::PGObject';
 
 =head1 DESCRIPTION
 
-The timecard type system is used to categorize time, material, and overhead 
-cards for projects, payroll, manufacturing, and the like.  These are not 
+The timecard type system is used to categorize time, material, and overhead
+cards for projects, payroll, manufacturing, and the like.  These are not
 created through the front-end but rather integral to modules which may be
 developed in the future.  The three preloaded types are:
 
@@ -37,7 +37,7 @@ Tracks materials used for projects
 
 =item overhead
 
-Tracks time used for payroll and the like.  
+Tracks time used for payroll and the like.
 
 =back
 
@@ -51,7 +51,7 @@ Other types may be created over time.
 
 This is the internal id of the timecard type.
 
-=cut 
+=cut
 
 has id => (is => 'ro', isa => 'Str', required => 1);
 

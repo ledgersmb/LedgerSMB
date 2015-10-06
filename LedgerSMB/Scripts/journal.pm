@@ -14,7 +14,6 @@ list of matching accounts in a ul/li pair
 =cut
 
 package LedgerSMB::Scripts::journal;
-our $VERSION = '1.0';
 
 use LedgerSMB;
 use LedgerSMB::Template;
@@ -24,6 +23,9 @@ use LedgerSMB::Report::COA;
 use LedgerSMB::REST_Format::json;
 use CGI::Simple;
 use strict;
+use warnings;
+
+our $VERSION = '1.0';
 
 =pod
 
@@ -39,7 +41,7 @@ sub chart_json {
     my ($request) = @_;
     my $funcname = 'chart_list_all';
     my @results = $request->call_procedure( funcname => $funcname, order_by => 'accno' );
-    
+
     my $json = LedgerSMB::REST_Format::json->to_output(\@results);
     my $cgi = CGI::Simple->new();
     binmode STDOUT, ':raw';
@@ -56,11 +58,11 @@ Returns and displays the chart of accounts
 sub chart_of_accounts {
     my ($request) = @_;
     for my $col(qw(accno description gifi debit_balance credit_balance)){
-        $request->{"col_$col"} = '1'; 
+        $request->{"col_$col"} = '1';
     }
     if ($request->is_allowed_role({allowed_roles => ['account_edit']})){
        for my $col(qw(link edit delete)){
-           $request->{"col_$col"} = '1'; 
+           $request->{"col_$col"} = '1';
        }
     }
     my $report = LedgerSMB::Report::COA->new(%$request);
@@ -126,8 +128,8 @@ sub search_purchases {
 
 =head1 Copyright (C) 2007 The LedgerSMB Core Team
 
-Licensed under the GNU General Public License version 2 or later (at your 
-option).  For more information please see the included LICENSE and COPYRIGHT 
+Licensed under the GNU General Public License version 2 or later (at your
+option).  For more information please see the included LICENSE and COPYRIGHT
 files.
 
 =cut

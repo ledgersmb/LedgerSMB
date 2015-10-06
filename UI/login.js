@@ -26,15 +26,18 @@ function send_form() {
 					 user: username,
 					 password: password
 				}).then(function(data){
-					 window.location.href=action
-						  +".pl?action=login&company="+company;
+					 window.location.href=action+".pl";
 				}, function(err) {
 					 var status = err.response.status;
 					 if (status == '454'){
 						  alert('Company does not exist.');
-					 } else {
-						  alert('Access denied ('+status+'): Bad username/password');
-					 }
+					 } else if (status == '401') {
+						  alert('Access denied: Bad username/password');
+					 } else if (status == '521') {
+                    alert('Database version mismatch');
+                } else {
+                    alert('Unknown error preventing login');
+                }
 					 style.set(dom.byId('login-indicator'),'visibility','hidden');
 				});
 	 });
@@ -48,7 +51,7 @@ require(['dojo/dom-construct', 'dijit/ProgressBar', 'dojo/domReady!'],
                 "value": 100,
                 "indeterminate": true
 				}).placeAt("login-indicator", "only");
-				indicator.startup();   
+				indicator.startup();
 		  });
 
 

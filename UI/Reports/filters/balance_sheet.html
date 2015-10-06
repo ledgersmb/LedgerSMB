@@ -4,7 +4,7 @@
 <div class="listtop"><?lsmb text('Balance Sheet') ?></div>
 <form data-dojo-type="lsmb/lib/Form" action="reports.pl" method="get">
 <div class="inputrow">
-<?lsmb 
+<?lsmb
 PROCESS input element_data = {
            label = text('Through date') #'
             name = 'to_date'
@@ -13,9 +13,49 @@ PROCESS input element_data = {
             size = 12
 };
 ?></div>
+<div class="inputrow">
+<?lsmb
+PROCESS input element_data = {
+   label = text('GIFI')    #'
+    name = 'gifi'
+      id = 'gifi'
+    type = 'checkbox'
+};
+?></div>
+<div class="inputrow">
+<?lsmb
+PROCESS input element_data = {
+   label = text('Account numbers')    #'
+    name = 'incl_accnos'
+      id = 'incl_accnos'
+    type = 'checkbox'
+ checked = 'checked' # checked by default
+};
+?></div>
+<div class="inputrow">
+<?lsmb text('Hierarchy type') ?>
+<?lsmb
+PROCESS input element_data = {
+   label = text('Full')
+    type = 'radio'
+    name = 'legacy_hierarchy'
+   value = 0
+      id = 'legacy-hierarchy-0'
+ checked = 'checked'
+};
+
+PROCESS input element_data = {
+   label = text('Account category')
+    type = 'radio'
+    name = 'legacy_hierarchy'
+   value = 1
+      id = 'legacy-hierarchy-1'
+};
+?>
+</div>
 <div class="subsection"><h3><?lsmb text('Enter up to 3 comparison dates') ?></h3></div>
 <?lsmb FOR ct IN [1, 2, 3]; ?>
-<div class="inputrow"><?lsmb 
+<div class="inputrow"><?lsmb
 PROCESS input element_data = {
            label = text('Through date') #'
             name = 'to_date_' _ ct

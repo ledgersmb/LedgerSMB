@@ -14,7 +14,7 @@ Manages attachments to goods and services.
 
 =item  LedgerSMB::File
 
-Provides all properties and accessors.  This subclass provides additional 
+Provides all properties and accessors.  This subclass provides additional
 methods only
 
 =back

@@ -250,7 +250,7 @@ INSERT INTO chart (accno, description, charttype, category, link, gifi_accno) VA
 --
 INSERT INTO tax (chart_id,rate) VALUES ((select id from chart where accno = '2.151'),'0.1');
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', 
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',
 (select id from chart where accno = '1.141'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '4.110'));

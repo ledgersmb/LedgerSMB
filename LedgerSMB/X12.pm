@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::X12 - Base Class for LedgerSMB X12 handling 
+LedgerSMB::X12 - Base Class for LedgerSMB X12 handling
 
 =head1 SYNOPSIS
 
@@ -22,7 +22,7 @@ character-separated-value formatted EDI files that are needed at present.  XML
 files would need to go through another interface.
 
 This application relies on X12::Parser and includes some extra configuration
-files, namely 850.cf and 895.cf.  Separators for segments and elements is 
+files, namely 850.cf and 895.cf.  Separators for segments and elements is
 supported by X12::Parser.
 
 =cut
@@ -44,12 +44,12 @@ my $time = sprintf('%02d%02d', $dt->hour, $dt->min);
 
 This is the textual message of the EDI file to be processed.  This is only
 required if parsing, as running the builders with no message will generate
-errors.  Note that interfaces other than parsing do not require instantiation 
+errors.  Note that interfaces other than parsing do not require instantiation
 of the object externally....
 
-Note that if message is shorter than 180 chars long, if it does not start with 
-"ISA" and if it contains slashes or ends in /\.\w{3}/, it will be seen as a 
-path to a file, but if it is 180 chars or longer, if it does not start with 
+Note that if message is shorter than 180 chars long, if it does not start with
+"ISA" and if it contains slashes or ends in /\.\w{3}/, it will be seen as a
+path to a file, but if it is 180 chars or longer, if it does not start with
 'ISA' or if it does not end in a . followed by a three letter/number extension,
 it will be seen as the message text itself.  This can be overridden by setting
 the read_file property explicitly below.
@@ -109,7 +109,7 @@ sub _ISA {
     my $isa = {};
 
     my @keys;
-    
+
     push @keys, sprintf('ISA%02d', $_) for (1 .. 16);
 
     for my $key (@keys){
@@ -125,7 +125,7 @@ sub _ISA {
 
 =item is_message_file
 
-Returns 1 if message is a file, 0 or undef if message is not a file, and dies 
+Returns 1 if message is a file, 0 or undef if message is not a file, and dies
 on error.
 
 =cut
@@ -134,7 +134,7 @@ sub is_message_file {
     my ($self) = @_;
     return $self->read_file if $self->has_read_file;
 
-    if (length($self->message) > 180 
+    if (length($self->message) > 180
         or ($self->message !~ /\.\w{3}$/ and $self->message !~ /\//)
     ){
        return 0;
@@ -175,9 +175,9 @@ sub parse {
 
 =item set_segment_sep(char $sep)
 
-In certain cases, people have been known to generate EDI files using illegal 
-characters as separators, or otherwise have EDI files where the parser cannot 
-properly define the segment separator (the element separator poses no such 
+In certain cases, people have been known to generate EDI files using illegal
+characters as separators, or otherwise have EDI files where the parser cannot
+properly define the segment separator (the element separator poses no such
 problems).
 
 In these cases one needs to set it manually.  Use this function to do this.
@@ -205,7 +205,7 @@ sub write_997{
        $status = 'R';
     }
     my $sep = $self->parser->get_element_separator;
-    my $seg = $self->parser->{_SEGMENT_SEPARATOR}; 
+    my $seg = $self->parser->{_SEGMENT_SEPARATOR};
     my $x12_997 = "$form->{edi_isa_return}$seg";
     $x12_997 .= "GS${sep}FA${sep}$form->{edi_gs}->[3]${sep}$form->{edi_gs}->[2]${sep}${date}${sep}${time}${sep}1${sep}X${sep}$form->{edi_gs}->[8]$seg"
              .  "ST${sep}997${sep}${counter}${seg}"
@@ -214,7 +214,7 @@ sub write_997{
              .  "SE${sep}4${sep}${counter}$seg"
              .  "GE${sep}1${sep}1$seg"
              .  "IEA${sep}1${sep}$form->{edi_isa}->[13]$seg";
-   
+
     return $x12_997;
 }
 

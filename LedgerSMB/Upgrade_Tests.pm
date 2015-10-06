@@ -70,7 +70,7 @@ The first version to run this against
 
 has min_version => (is => 'ro', isa => 'Str', required => 1);
 
-=item max_version 
+=item max_version
 
 The maximum version to run this against
 
@@ -91,7 +91,7 @@ has appname => (is => 'ro', isa => 'Str', required => 1);
 
 Text of the query to run
 
-=cut 
+=cut
 
 has test_query => (is => 'ro', isa => 'Str', required => 1);
 
@@ -99,7 +99,7 @@ has test_query => (is => 'ro', isa => 'Str', required => 1);
 
 Repair query table to run once per result.
 
-=cut 
+=cut
 
 has table => (is => 'ro', isa => 'Str', required => 0);
 
@@ -151,7 +151,7 @@ sub _tests {
 push @tests, __PACKAGE__->new(
         test_query =>
            "select id, customernumber, name, address1, city, state, zipcode
-                   from customer where customernumber in 
+                   from customer where customernumber in
                     (SELECT customernumber from customer
                    GROUP BY customernumber
                    HAVING count(*) > 1)",
@@ -170,7 +170,7 @@ push @tests, __PACKAGE__->new(
 push @tests, __PACKAGE__->new(
         test_query =>
            "select id, vendornumber, name, address1, city, state, zipcode
-                   from vendor where vendornumber in 
+                   from vendor where vendornumber in
                     (SELECT vendornumber from vendor
                    GROUP BY vendornumber
                    HAVING count(*) > 1)",
@@ -216,9 +216,9 @@ push @tests, __PACKAGE__->new(
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => 'SELECT * FROM employee 
-                   WHERE employeenumber IN 
-                         (SELECT employeenumber FROM employee 
+   test_query => 'SELECT * FROM employee
+                   WHERE employeenumber IN
+                         (SELECT employeenumber FROM employee
                         GROUP BY employeenumber
                           HAVING count(*) > 1)',
          name => 'duplicate_employee_numbers',
@@ -234,9 +234,9 @@ push @tests, __PACKAGE__->new(
 );
 
 push @tests, __PACKAGE__->new(
-   test_query => "select * from parts where obsolete is not true 
-                  and partnumber in 
-                  (select partnumber from parts 
+   test_query => "select * from parts where obsolete is not true
+                  and partnumber in
+                  (select partnumber from parts
                   WHERE obsolete is not true
                   group by partnumber having count(*) > 1)",
          name => 'duplicate_partnumbers',
@@ -345,7 +345,7 @@ push @tests, __PACKAGE__->new(
 
 
 
-=pod 
+=pod
 
  push @tests, __PACKAGE__->new(
     test_query => "select * from customer where arap_accno_id is null",
@@ -374,7 +374,7 @@ push @tests,__PACKAGE__->new(
     test_query => "select *
                     from customer
                    where customernumber is null",
-    display_name => $locale->text('Empty customernumbers'), 
+    display_name => $locale->text('Empty customernumbers'),
     name => 'no_empty_customernumbers',
     display_cols => ['id', 'customernumber', 'name'],
  instructions => $locale->text(
@@ -393,7 +393,7 @@ push @tests,__PACKAGE__->new(
                                               from customer
                                              group by customernumber
                                              having count(*) > 1)",
-    display_name => $locale->text('Double customernumbers'), 
+    display_name => $locale->text('Double customernumbers'),
     name => 'no_double_customernumbers',
     display_cols => ['id', 'customernumber', 'name'],
  instructions => $locale->text(
@@ -409,7 +409,7 @@ push @tests,__PACKAGE__->new(
     test_query => "select *
                     from vendor
                    where vendornumber is null",
-    display_name => $locale->text('Empty vendornumbers'), 
+    display_name => $locale->text('Empty vendornumbers'),
     name => 'no_empty_vendornumbers',
     display_cols => ['id', 'vendornumber', 'name'],
  instructions => $locale->text(
@@ -428,7 +428,7 @@ push @tests,__PACKAGE__->new(
                                               from vendor
                                              group by vendornumber
                                              having count(*) > 1)",
-    display_name => $locale->text('Double vendornumbers'), 
+    display_name => $locale->text('Double vendornumbers'),
     name => 'no_double_vendornumbers',
     display_cols => ['id', 'vendornumber', 'name'],
  instructions => $locale->text(
@@ -496,7 +496,7 @@ push @tests, __PACKAGE__->new(
     max_version => '2.8'
     );
 
-#  There's no AP uniqueness requirement? 
+#  There's no AP uniqueness requirement?
 # push @tests, __PACKAGE__->new(
 #     test_query => "select *
 #                      from ap
@@ -519,9 +519,9 @@ push @tests, __PACKAGE__->new(
 #     );
 
 push @tests, __PACKAGE__->new(
-   test_query => "select * from parts where obsolete is not true 
-                  and partnumber in 
-                  (select partnumber from parts 
+   test_query => "select * from parts where obsolete is not true
+                  and partnumber in
+                  (select partnumber from parts
                   WHERE obsolete is not true
                   group by partnumber having count(*) > 1)",
          name => 'duplicate_partnumbers',

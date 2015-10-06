@@ -7,7 +7,7 @@ PROCESS "elements.html";
 
 PROCESS "dynatable.html";
 
-LINK = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME 
+LINK = 'http://' _ ENVARS.SERVER_NAME _ ENVARS.SCRIPT_NAME
            _ '?' _ ENVARS.QUERY_STRING _ '&company=' _ DBNAME;
 
 ?>
@@ -52,7 +52,7 @@ PROCESS input element_data = {
     type = 'hidden'
 };
 
-PROCESS dynatable tbody = {rows = rows } 
+PROCESS dynatable tbody = {rows = rows }
                attributes = {id = 'aging', class = 'report' };
 PROCESS button element_data = {
     text = text('Select All') #'
@@ -108,17 +108,21 @@ PROCESS button element_data = {
 <a href="<?lsmb LINK ?>">[<?lsmb text('permalink') ?>]</a>&nbsp;
 <?lsmb IF FORMATS.grep('PDF').size()
 ?>
-<a href="<?lsmb LINK _ '&format=PDF' ?>">[<?lsmb text('PDF') ?>]</a>&nbsp;
+<a target="_blank"
+   href="<?lsmb LINK _ '&format=PDF' ?>">[<?lsmb text('PDF') ?>]</a>&nbsp;
 <?lsmb END;
 IF FORMATS.grep('TXT').size();
 ?>
-<a href="<?lsmb LINK _ '&format=CSV' ?>">[<?lsmb text('CSV') ?>]</a>&nbsp;
+<a target="_blank"
+   href="<?lsmb LINK _ '&format=CSV' ?>">[<?lsmb text('CSV') ?>]</a>&nbsp;
 <?lsmb END;
 IF FORMATS.grep('XLS').size() ?>
-<a href="<?lsmb LINK _ '&format=XLS' ?>">[<?lsmb text('XLS') ?>]</a>&nbsp;
+<a target="_blank"
+   href="<?lsmb LINK _ '&format=XLS' ?>">[<?lsmb text('XLS') ?>]</a>&nbsp;
 <?lsmb END;
 IF FORMATS.grep('ODS').size() ?>
-<a href="<?lsmb LINK _ '&format=ODS' ?>">[<?lsmb text('ODS') ?>]</a>&nbsp;
+<a target="_blank"
+   href="<?lsmb LINK _ '&format=ODS' ?>">[<?lsmb text('ODS') ?>]</a>&nbsp;
 <?lsmb END; ?>
 </body>
 <?lsmb PROCESS end_html ?>

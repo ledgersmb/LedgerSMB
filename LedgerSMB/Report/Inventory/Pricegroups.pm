@@ -32,7 +32,7 @@ has pricegroup => (is => 'ro', isa => 'Str', required => '0');
 
 =head2 columns
 
-=over 
+=over
 
 =item pricegroup
 
@@ -92,3 +92,5 @@ sub run_report {
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

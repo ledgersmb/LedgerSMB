@@ -1,6 +1,6 @@
 =head1 NAME
 
-LedgerSMB::Report::Unapproved::Batch_Detail - List Vouchers by Batch 
+LedgerSMB::Report::Unapproved::Batch_Detail - List Vouchers by Batch
 in LedgerSMB
 
 =head1 SYNPOSIS
@@ -14,7 +14,7 @@ in LedgerSMB
 =head1 DESCRIPTION
 
 This provides an ability to search for (and approve or delete) pending
-transactions grouped in batches.  This report only handles the vouchers in the 
+transactions grouped in batches.  This report only handles the vouchers in the
 bach themselves. For searching for batches, use
 LedgerSMB::Report::Unapproved::Batch_Overview instead.
 
@@ -35,6 +35,7 @@ extends 'LedgerSMB::Report';
 
 use LedgerSMB::Business_Unit_Class;
 use LedgerSMB::Business_Unit;
+use LedgerSMB::Setting;
 
 
 =head1 PROPERTIES
@@ -74,7 +75,7 @@ Description of transaction
 
 =item amount
 
-Total on voucher.  For AR/AP amount, this is the total of the AR/AP account 
+Total on voucher.  For AR/AP amount, this is the total of the AR/AP account
 before payments.  For payments, receipts, and GL, it is the sum of the credits.
 
 =back
@@ -94,7 +95,7 @@ sub columns {
 
     {col_id => 'batch_class',
        name => LedgerSMB::Report::text('Batch Class'),
-       type => 'text', 
+       type => 'text',
      pwidth => 2, },
 
     {col_id => 'default_date',
@@ -189,8 +190,8 @@ sub run_report{
     my $locales = [ map { { text => $lhash{$_}, value => $_ } }
                     sort {$lhash{$a} cmp $lhash{$b}} keys %lhash
                   ];
-    my $printer = [ {text => 'Screen', value => 'zip'}, 
-                    map { { 
+    my $printer = [ {text => 'Screen', value => 'zip'},
+                    map { {
                          text => $_, value => $LedgerSMB::Sysconfig::printer{$_}
                           } }
                   keys %LedgerSMB::Sysconfig::printer];
@@ -201,7 +202,7 @@ sub run_report{
     }, {
        name => 'media',
        options => $printer,
-    }, 
+    },
     ]);
 
     $self->buttons([{

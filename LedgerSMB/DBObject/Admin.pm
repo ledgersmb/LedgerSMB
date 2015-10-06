@@ -33,12 +33,13 @@ use LedgerSMB::Entity::Person::Employee;
 use LedgerSMB::DBObject::User;
 use Log::Log4perl;
 use strict;
+use warnings;
 
 my $logger = Log::Log4perl->get_logger("LedgerSMB::DBObject::Admin");
 
 =item list_sessions
 
-returns a list of active sessions, when they were last used, and how many 
+returns a list of active sessions, when they were last used, and how many
 discretionary locks they hold.  The list is also attached to the
 active_sessions hash value.  No inputs required or used.
 
@@ -51,7 +52,7 @@ sub list_sessions {
    return @sessions;
 }
 
-=item delete_session 
+=item delete_session
 
 Deletes a session identified by the session_id hashref.
 
@@ -62,7 +63,7 @@ sub delete_session {
    my @sessions = $self->call_dbmethod(funcname => 'admin__drop_session');
 }
 
-=item save_roles 
+=item save_roles
 
 Saves the roles assigned to a user.
 Each role is specified as a hashref true value, where the key is the full name
@@ -71,9 +72,9 @@ of the role (i.e. starting with lsmb_[dbname]__).
 =cut
 
 sub save_roles {
-    
+
     my $self = shift @_;
-    
+
     my $user = LedgerSMB::DBObject::User->new( { base=>$self, copy=>'all' } );
     $user->get();
     $self->{modifying_user} = $user->{user}->{username};
@@ -83,30 +84,30 @@ sub save_roles {
     for my $role (@user_roles) {
        $active_roles{"$role->{admin__get_roles_for_user}"} = 1;
     }
-    
+
     my $status;
 
     for my $r ( @roles) {
         my $role = $r->{rolname};
         my $reqrole = $role;
-        
+
         if ( $active_roles{$role} && $self->{$reqrole} ) {
             # do nothing.
             ;
         }
         elsif ($active_roles{$role} && !($self->{$reqrole} )) {
-            
+
             # do remove function
             $status = $self->call_procedure(funcname => "admin__remove_user_from_role",
                 args=>[ $self->{modifying_user}, $role ] );
         }
         elsif ($self->{$reqrole} and !($active_roles{$role} )) {
-            
+
             # do add function
             $status = $self->call_procedure(funcname=> "admin__add_user_to_role",
-               args=>[ $self->{modifying_user}, $role ] 
+               args=>[ $self->{modifying_user}, $role ]
             );
-        }         
+        }
     }
 }
 
@@ -117,13 +118,13 @@ Returns a list of salutation records from the db for the dropdowns.
 =cut
 
 sub get_salutations {
-    
+
     my $self = shift;
     return $self->call_dbmethod(funcname => 'person__list_salutations');
 }
 
 
-=item get_roles 
+=item get_roles
 
 Returns a list of role names with the following format:
 
@@ -135,7 +136,7 @@ the lsmb_[dbname]__ prefix).
 =cut
 
 sub get_roles {
-    
+
     my $self = shift @_;
     my $company = shift; # optional
     my @s_rows = $self->call_procedure(funcname =>'admin__get_roles');
@@ -146,14 +147,14 @@ sub get_roles {
     $logger->debug("get_roles: self = " . Data::Dumper::Dumper($self));
     for my $role (@s_rows) {
         my $rolname = $role->{'rolname'};
-	my $description = $rolname;
-	$description =~ s/lsmb_//;
-	$description =~ s/${company}__//
-	    if defined $company;
-	$description =~ s/_/ /g;
+    my $description = $rolname;
+    $description =~ s/lsmb_//;
+    $description =~ s/${company}__//
+        if defined $company;
+    $description =~ s/_/ /g;
         push @rows, { name => $rolname, description => #"lsmb_$company\_"  #
-			  $description
-	};
+              $description
+    };
     }
     return \@rows;
 }
@@ -162,8 +163,8 @@ sub get_roles {
 
 =head1 COPYRIGHT
 
-Copyright (c) 2009, the LedgerSMB Core Team.  This is licensed under the GNU 
-General Public License, version 2, or at your option any later version.  Please 
+Copyright (c) 2009, the LedgerSMB Core Team.  This is licensed under the GNU
+General Public License, version 2, or at your option any later version.  Please
 see the accompanying License.txt for more information.
 
 =cut

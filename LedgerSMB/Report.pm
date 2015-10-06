@@ -142,15 +142,15 @@ has show_subtotals => (is => 'rw', isa => 'Bool');
 
 =item manual_totals
 
-Defaults to false.  Shows totals for all numeric (but not int) columns.  
-Typically this would be set to true in the run_report function if manual 
+Defaults to false.  Shows totals for all numeric (but not int) columns.
+Typically this would be set to true in the run_report function if manual
 totals are used.
 
 =cut
 
 has manual_totals => (is => 'rw', isa => 'Bool');
 
-=item buttons 
+=item buttons
 
 Buttons to show at the bottom of the screen
 
@@ -194,9 +194,9 @@ sub set_buttons {
     return [];
 }
 
-=item _exclude_from_totals 
+=item _exclude_from_totals
 
-Returns a hashref with the keys pointing to true values for column id's that 
+Returns a hashref with the keys pointing to true values for column id's that
 should not appear on the total row.
 
 This is useful in avoiding a running total column from being added together and
@@ -282,16 +282,16 @@ sub render {
                     $total_row->{$k}->badd($r->{$k});
                 }
             }
-            
+
         }
-        if ($self->show_subtotals and defined $col_val and 
+        if ($self->show_subtotals and defined $col_val and
             ($col_val ne $r->{$self->order_by})
          ){
             my $subtotals = {html_class => 'listsubtotal', NOINPUT => 1};
             for my $k (keys %$total_row){
-                $subtotals->{$k} = $total_row->{$k}->copy 
+                $subtotals->{$k} = $total_row->{$k}->copy
                         unless $subtotals->{k};
-                $subtotals->{$k}->bsub($old_subtotal->{$k}) 
+                $subtotals->{$k}->bsub($old_subtotal->{$k})
                         if ref $old_subtotal->{$k};
             }
             push @newrows, $subtotals;
@@ -305,13 +305,13 @@ sub render {
     $self->format('html') unless defined $self->format;
     my $name = $self->name || '';
     $name =~ s/ /_/g;
-    $name = $name . '_' . $self->from_date->to_output 
-            if $self->can('from_date') 
-               and defined $self->from_date 
+    $name = $name . '_' . $self->from_date->to_output
+            if $self->can('from_date')
+               and defined $self->from_date
                and defined $self->from_date->to_output;
-    $name = $name . '-' . $self->to_date->to_output 
-            if $self->can('to_date') 
-               and defined $self->to_date 
+    $name = $name . '-' . $self->to_date->to_output
+            if $self->can('to_date')
+               and defined $self->to_date
                and defined $self->to_date->to_output;
     $name = undef unless $request->{format};
     my $columns = $self->show_cols($request);
@@ -326,10 +326,10 @@ sub render {
                         $row->{$col->{col_id}} =
                             $row->{$col->{col_id}}->to_output(money => 1);
                     }
-                }    
+                }
             }
         }
-    } 
+    }
 
     $template = LedgerSMB::Template->new(
         user => $LedgerSMB::App_State::User,
@@ -339,18 +339,18 @@ sub render {
         output_file => $name,
         format => uc($request->{format} || 'HTML'),
     );
-    $template->render({report => $self, 
+    $template->render({report => $self,
                       request => $request,
                          name => $self->name,
                        hlines => $self->header_lines,
-                      columns => $columns, 
+                      columns => $columns,
                     order_url => $self->order_url,
                       buttons => $self->buttons,
                       options => $self->options,
                          rows => $self->rows});
 }
 
-=item show_cols 
+=item show_cols
 
 Returns a list of columns based on selected ones from the report
 
@@ -375,7 +375,7 @@ sub show_cols {
 
 =over
 
-=item none 
+=item none
 
 No start date, end date as first of the month
 
@@ -411,8 +411,8 @@ sub prepare_input {
 
 =item process_bclasses($ref)
 
-This function processes a ref for a hashref key of business_units, which holds 
-an array of arrays of (class_id, bu_id) and adds keys in the form of 
+This function processes a ref for a hashref key of business_units, which holds
+an array of arrays of (class_id, bu_id) and adds keys in the form of
 bc_$class_id holding the $bu_id fields.
 
 =cut
@@ -420,7 +420,7 @@ sub process_bclasses {
     my ($self, $ref) = @_;
     for my $bu (@{$ref->{business_units}}){
      if($bu->[1]){#avoid message:Use of uninitialized value in hash element
-        push @{$ref->{$bu->[0]}}, $bu->[1] 
+        push @{$ref->{$bu->[0]}}, $bu->[1]
                  unless grep(/$bu->[1]/, @{$ref->{$bu->[0]}});
      }
     }
@@ -428,7 +428,7 @@ sub process_bclasses {
 
 =back
 
-=head1 WRITING REPORTS 
+=head1 WRITING REPORTS
 
 LedgerSMB::Report subclasses are written typically in a few parts:
 

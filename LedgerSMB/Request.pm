@@ -20,6 +20,10 @@ Error:  Attribute 'myattribute2_10' is not provided.
 =cut
 
 package LedgerSMB::Request;
+
+use strict;
+use warnings;
+
 use LedgerSMB::App_State;
 use LedgerSMB::PGNumber;
 use LedgerSMB::PGDate;
@@ -29,10 +33,10 @@ use Carp;
 =head1 DESCRIPTION
 
 This package provides methods (as an interface package, as of 1.4) for both new
-and old code to use for declarative handling of required inputs, dates, and 
+and old code to use for declarative handling of required inputs, dates, and
 amounts.
 
-In future versions, this may take on more of the role found in LedgerSMB.pm 
+In future versions, this may take on more of the role found in LedgerSMB.pm
 today, but hopefully with a lot less cruft.  It isn't clear we will use
 CGI::Simple or rely on a specific interface and so some portability in request
 handling will be required.  That's where this module comes in.
@@ -50,13 +54,13 @@ our $return_errors = 0; # override with local only!
 
 sub requires {
     my $self = shift @_;
-    my @error_list = map { { field => $_, 
-                               msg => LedgerSMB::App_State->Locale->text("Required attribute not provided: [_1]", $_) } } 
+    my @error_list = map { { field => $_,
+                               msg => LedgerSMB::App_State->Locale->text("Required attribute not provided: [_1]", $_) } }
                      grep {not ($self->{$_} or $self->{$_})} @_;
     # todo, allow error list to be returned
     die LedgerSMB::Request::Error->new(status => 422,
                                      msg => (join "\n",
-                                              (map {$_->msg} @error_list) )) 
+                                              (map {$_->msg} @error_list) ))
     if @error_list and not $return_errors;
     return {missing => [map {$_->field } @error_list ],
             error => LedgerSMB::Request::Error->new(status => 422,
@@ -75,10 +79,10 @@ from $start to $stop, for each in @attnames
 sub requires_series {
     my $self = shift @_;
     my $start = shift @_;
-    my $end  = shift @_;
+    my $stop  = shift @_;
     for my $att (@_){
-    $self->requires(map { $att = $_; 
-                          map { "${att}_$_" } ($start .. $stop) 
+        $self->requires(map { $att = $_;
+                              map { "${att}_$_" } ($start .. $stop)
                         } @_ );
     }
 }
@@ -91,7 +95,7 @@ required attributes on the Moose class.
 =cut
 
 sub requires_from {
-    no strict 'refs';
+#    no strict 'refs';
     my ($self, $class) = @_;
     my $meta;
 
@@ -102,7 +106,7 @@ sub requires_from {
          or $dummy = "Could not get meta object.  Is $class a valid Moose class?";
     }
     Carp::croak $dummy if defined $dummy;
-            
+
     $self->require(grep { $meta->get_attribute($_)->is_required }
                    ($meta->get_attribute_list));
 }
@@ -123,7 +127,7 @@ sub numbers {
 =head2 numbers_series($start, $stop, @attnames)
 
 Like numbers() above, except uses start and stop to generate attribute lists.
-This can be useful for larger series of numbers where line items are not 
+This can be useful for larger series of numbers where line items are not
 directly handled by Moose (yet) or where old code is concerned.
 
 =cut
@@ -131,7 +135,7 @@ directly handled by Moose (yet) or where old code is concerned.
 sub numbers_series {
     my $self = shift @_;
     my $start = shift @_;
-    my $end  = shift @_;
+    my $stop  = shift @_;
     for my $att (@_){
         $self->numbers( map { "${att}_$_" } ($start .. $stop));
     }
@@ -158,9 +162,9 @@ Like numbers_series above but with PGDate objects instead.
 sub dates_series {
     my $self = shift @_;
     my $start = shift @_;
-    my $end  = shift @_;
+    my $stop  = shift @_;
     for my $att (@_){
-        $self->dates(map { "${att}_$_" }  ($start .. $end));
+        $self->dates(map { "${att}_$_" }  ($start .. $stop));
     }
 }
 

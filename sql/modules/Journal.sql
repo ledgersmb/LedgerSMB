@@ -7,16 +7,16 @@ begin;
 --License version 2 or at your option any later version.  Please see included
 --LICENSE file for details.
 
--- This file contains many functions which are by nature security definer 
+-- This file contains many functions which are by nature security definer
 -- functions.  The tradeoff security-wise is that we can more tightly control
 -- what can be inserted into the tables via security definer functions, but
 -- at the same time the opportunity for privilege escallation is also higher
--- because security definer functions to some extent break a declarative 
+-- because security definer functions to some extent break a declarative
 -- security model.   As always avoid executing dynamic SQL as much as possible,
 -- etc.
 
 CREATE TYPE journal_entry_ext AS (
-    id int, 
+    id int,
     reference text,
     description text,
     journal int,
@@ -34,12 +34,12 @@ CREATE TYPE journal_entry_ext AS (
     lines journal_line[]
 );
 
-COMMENT ON TYPE journal_entry_ext IS 
+COMMENT ON TYPE journal_entry_ext IS
 $$ Contains all relevant data for journal entries. $$;
 
 CREATE OR REPLACE FUNCTION je_get (arg_id int) returns journal_entry_ext AS
 $$
-SELECT je.id, je.reference, je.journal, j.name, je.post_date, 
+SELECT je.id, je.reference, je.journal, j.name, je.post_date,
        je.effective_start, je.effective_end, je.currency, je.approved,
        je.is_template, je.entered_by, ee.name, je.approved_by, ae.name,
        array_agg(row(jl.*))
@@ -62,9 +62,9 @@ CREATE OR REPLACE FUNCTION je_approve (prop_id int) returns journal_entry_ext
 AS $$
 -- Must be security definer.  otherwise we risk giving people permission to
 -- de-approve transactions which is bad, even with column perms.  --CT
-UPDATE journal_entry 
-   SET approved = true, 
-       approved_by = person__get_my_entity_id() 
+UPDATE journal_entry
+   SET approved = true,
+       approved_by = person__get_my_entity_id()
  WHERE id = $1;
 
 SELECT je_get($1);
@@ -73,12 +73,12 @@ $$ LANGUAGE SQL SECURITY DEFINER;
 COMMENT ON FUNCTION je_approve (prop_id int) IS
 $$ This function approvies the journal entry specified.$$;
 
-CREATE OR REPLACE FUNCTION je_delete_unapproved(arg_id int) 
+CREATE OR REPLACE FUNCTION je_delete_unapproved(arg_id int)
 RETURNS journal_entry_ext AS
 $$
-DELETE FROM journal_line 
- WHERE je_id = (select id 
-                 from journal_entry 
+DELETE FROM journal_line
+ WHERE je_id = (select id
+                 from journal_entry
                 where id = $1 and approved is false);
 
 DELETE FROM journal_id
@@ -98,9 +98,9 @@ prop_currency char(3),
 prop_effective_start date,
 prop_effective_end date,
 prop_lines journal_line[]
-) RETURNS journal_entry_ext AS 
+) RETURNS journal_entry_ext AS
 $$
-DECLARE 
+DECLARE
     test bool;
 BEGIN
 
@@ -125,7 +125,7 @@ END IF;
 
 DELETE FROM journal_line WHERE je_id = prop_id;
 
-UPDATE journal_entry 
+UPDATE journal_entry
    SET reference = prop_reference,
        description = prop_description,
        post_date = prop_post_date,
@@ -158,36 +158,36 @@ prop_currency char(3),
 prop_effective_start date,
 prop_effective_end date,
 prop_lines journal_line[]
-) RETURNS journal_entry_ext AS 
+) RETURNS journal_entry_ext AS
 $$
 DECLARE retval journal_entry_ext;
      test bool;
      separate_duties bool;
 BEGIN
-   -- must be security definer because otherwise we can't guarantee balanced 
+   -- must be security definer because otherwise we can't guarantee balanced
    -- transactions --CT
    SELECT sum(amount) = 0 into test FROM expand(prop_lines);
    IF test is not true
      RAISE EXCEPTION 'Unbalanced transaction';
    END IF;
 
-   SELECT value <> '0' INTO separate_duties 
-     FROM defaults 
+   SELECT value <> '0' INTO separate_duties
+     FROM defaults
     WHERE setting_key = 'separate_duties';
 
-   INSERT INTO journal_entry 
-               (reference, description, journal, post_date, is_template, 
+   INSERT INTO journal_entry
+               (reference, description, journal, post_date, is_template,
                currency, effective_start, effective_end, approved)
         VALUES (prop_reference, prop_description, prop_journal, prop_post_date,
-               prop_is_template, prop_currency, 
+               prop_is_template, prop_currency,
                coalesce(prop_effective_start, prop_post_date),
-               coalesce(prop_effective_end, prop_post_date), 
+               coalesce(prop_effective_end, prop_post_date),
                separate_duties is false);
 
-   INSERT 
+   INSERT
      INTO journal_line
           (je_id, account_id, amount, project_id, department_id)
-   SELECT currval('journal_entry_id_seq'), account_id, amount, 
+   SELECT currval('journal_entry_id_seq'), account_id, amount,
           project_id, department_id
      FROM expand(prop_lines);
 
@@ -195,11 +195,11 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL SECURITY DEFINER;
 
-CREATE OR REPLACE FUNCTION je_reverse 
+CREATE OR REPLACE FUNCTION je_reverse
 (arg_id int, arg_reference text, arg_post_date date)
 RETURNS journal_entry_ext AS
-$$ 
-INSERT 
+$$
+INSERT
   INTO journal_entry
        (reference, description, journal, post_date, is_template,
        currency, effective_start, effective_end, approved)

@@ -4,7 +4,7 @@ CREATE OR REPLACE FUNCTION file__get_mime_type
  (in_mime_type_id int, in_mime_type_text text)
 RETURNS mime_type AS
 $$
-select * from mime_type 
+select * from mime_type
  where ($1 IS NULL OR id = $1) AND ($2 IS NULL OR mime_type = $2);
 $$ language sql;
 
@@ -23,7 +23,7 @@ BEGIN
        IF in_content THEN
           RAISE EXCEPTION $e$Can't specify id and content in attachment$e$;--'
        END IF;
-       INSERT INTO file_order_to_tx        
+       INSERT INTO file_order_to_tx
               (file_id, source_class, ref_key, dest_class, attached_by,
               attached_at)
        VALUES (in_id, 2, in_ref_key, 1, person__get_my_entity_id(), now());
@@ -31,13 +31,13 @@ BEGIN
        SELECT * INTO retval FROM file_base where id = in_id;
        RETURN retval;
    ELSE
-       INSERT INTO file_transaction 
+       INSERT INTO file_transaction
                    (content, mime_type_id, file_name, description, ref_key,
                    file_class, uploaded_by, uploaded_at)
             VALUES (in_content, in_mime_type_id, in_file_name, in_description,
-                   in_ref_key, in_file_class, person__get_my_entity_id(), 
+                   in_ref_key, in_file_class, person__get_my_entity_id(),
                    now());
-        SELECT * INTO retval FROM file_base 
+        SELECT * INTO retval FROM file_base
          where id = currval('file_base_id_seq');
 
         RETURN retval;
@@ -71,9 +71,9 @@ BEGIN
                    (content, mime_type_id, file_name, description, ref_key,
                    file_class, uploaded_by, uploaded_at)
             VALUES (in_content, in_mime_type_id, in_file_name, in_description,
-                   in_ref_key, in_file_class, person__get_my_entity_id(), 
+                   in_ref_key, in_file_class, person__get_my_entity_id(),
                    now());
-        SELECT * INTO retval FROM file_base 
+        SELECT * INTO retval FROM file_base
          where id = currval('file_base_id_seq');
 
         RETURN retval;
@@ -109,9 +109,9 @@ BEGIN
                    (content, mime_type_id, file_name, description, ref_key,
                    file_class, uploaded_by, uploaded_at)
             VALUES (in_content, in_mime_type_id, in_file_name, in_description,
-                   in_ref_key, in_file_class, person__get_my_entity_id(), 
+                   in_ref_key, in_file_class, person__get_my_entity_id(),
                    now());
-        SELECT * INTO retval FROM file_base 
+        SELECT * INTO retval FROM file_base
          where id = currval('file_base_id_seq');
 
         RETURN retval;
@@ -122,7 +122,7 @@ $$ LANGUAGE PLPGSQL;
 COMMENT ON FUNCTION file__attach_to_entity
 (in_content bytea, in_mime_type_id int, in_file_name text,
 in_description text, in_id int, in_ref_key int, in_file_class int) IS
-$$ Attaches or links a file to a contact or entity.  in_content OR id can be 
+$$ Attaches or links a file to a contact or entity.  in_content OR id can be
 set. Setting both raises an exception.
 
 Note that currently links (setting id) is NOT supported because we dont have a
@@ -147,9 +147,9 @@ BEGIN
                    (content, mime_type_id, file_name, description, ref_key,
                    file_class, uploaded_by, uploaded_at)
             VALUES (in_content, in_mime_type_id, in_file_name, in_description,
-                   in_ref_key, in_file_class, person__get_my_entity_id(), 
+                   in_ref_key, in_file_class, person__get_my_entity_id(),
                    now());
-        SELECT * INTO retval FROM file_base 
+        SELECT * INTO retval FROM file_base
          where id = currval('file_base_id_seq');
 
         RETURN retval;
@@ -179,7 +179,7 @@ BEGIN
           RAISE EXCEPTION $e$Conflicting options file_id and content$e$;
        END IF;
        IF in_file_class = 1 THEN
-           INSERT INTO file_tx_to_order        
+           INSERT INTO file_tx_to_order
                   (file_id, source_class, ref_key, dest_class, attached_by,
                   attached_at)
            VALUES (in_id, 1, in_ref_key, 2, person__get_my_entity_id(), now());
@@ -188,7 +188,7 @@ BEGIN
                   (file_id, source_class, ref_key, dest_class, attached_by,
                   attached_at)
            VALUES (in_id, 2, in_ref_key, 2, person__get_my_entity_id(), now());
-       ELSE 
+       ELSE
            RAISE EXCEPTION $E$Invalid file class$E$;
        END IF;
        SELECT * INTO retval FROM file_base where id = in_id;
@@ -198,9 +198,9 @@ BEGIN
                    (content, mime_type_id, file_name, description, ref_key,
                    file_class, uploaded_by, uploaded_at)
             VALUES (in_content, in_mime_type_id, in_file_name, in_description,
-                   in_ref_key, in_file_class, person__get_my_entity_id(), 
+                   in_ref_key, in_file_class, person__get_my_entity_id(),
                    now());
-        SELECT * INTO retval FROM file_base 
+        SELECT * INTO retval FROM file_base
          where id = currval('file_base_id_seq');
 
         RETURN retval;
@@ -213,7 +213,7 @@ CREATE OR REPLACE FUNCTION file__save_incoming
 in_description text)
 RETURNS file_base LANGUAGE SQL AS
 $$
-INSERT INTO file_incoming(content, mime_type_id, file_name, description, 
+INSERT INTO file_incoming(content, mime_type_id, file_name, description,
                           ref_key, file_class, uploaded_by)
 SELECT $1, $2, $3, $4, 0, 7, entity_id
   FROM users where username = SESSION_USER
@@ -222,7 +222,7 @@ $$;
 
 COMMENT ON FUNCTION file__save_incoming
 (in_content bytea, in_mime_type_id int, in_file_name text,
-in_description text) IS 
+in_description text) IS
 $$If the file_name is not unique, a unique constraint violation will be thrown.
 $$;
 
@@ -232,25 +232,25 @@ in_description text)
 RETURNS file_base LANGUAGE SQL AS
 $$
 WITH up AS (
-    UPDATE file_internal 
+    UPDATE file_internal
        SET content = $1, uploaded_at = now(),
-           uploaded_by = (select entity_id from users 
+           uploaded_by = (select entity_id from users
                            where username = session_user)
      WHERE file_name = $3
  RETURNING true as found_it
-)   
+)
 INSERT INTO file_internal (content, mime_type_id, file_name, description,
                           ref_key, file_class, uploaded_by)
 SELECT $1, $2, $3, $4, 0, 6, entity_id
-  FROM users 
- where username = SESSION_USER 
+  FROM users
+ where username = SESSION_USER
        AND NOT EXISTS (select 1 from up)
 RETURNING *;
 $$;
 
 COMMENT ON FUNCTION file__save_internal
 (in_content bytea, in_mime_type_id int, in_file_name text,
-in_description text) IS 
+in_description text) IS
 $$If the file_name is not unique, this will overwrite the previous stored file.
 $$;
 
@@ -277,18 +277,18 @@ CREATE TYPE file_list_item AS (
 CREATE OR REPLACE FUNCTION file__get_for_template
 (in_ref_key int, in_file_class int)
 RETURNS SETOF file_list_item AS
-$$ 
+$$
 
 SELECT m.mime_type, CASE WHEN f.file_class = 3 THEN ref_key ||'-'|| f.file_name
-                         ELSE f.file_name END, 
-       f.description, f.uploaded_by, e.name, 
+                         ELSE f.file_name END,
+       f.description, f.uploaded_by, e.name,
        f.uploaded_at, f.id, f.ref_key, f.file_class,  f.content
   FROM mime_type m
   JOIN file_base f ON f.mime_type_id = m.id
   JOIN entity e ON f.uploaded_by = e.id
  WHERE f.ref_key = $1 and f.file_class = $2
-       AND m.invoice_include 
-       OR f.id IN (SELECT max(fb.id) 
+       AND m.invoice_include
+       OR f.id IN (SELECT max(fb.id)
                    FROM file_base fb
                    JOIN mime_type m ON fb.mime_type_id = m.id
                         AND m.mime_type ilike 'image%'
@@ -303,8 +303,8 @@ CREATE OR REPLACE FUNCTION file__list_by(in_ref_key int, in_file_class int)
 RETURNS SETOF file_list_item AS
 $$
 
-SELECT m.mime_type, f.file_name, f.description, f.uploaded_by, e.name, 
-       f.uploaded_at, f.id, f.ref_key, f.file_class, 
+SELECT m.mime_type, f.file_name, f.description, f.uploaded_by, e.name,
+       f.uploaded_at, f.id, f.ref_key, f.file_class,
        case when m.mime_type = 'text/x-uri' THEN f.content ELSE NULL END
   FROM mime_type m
   JOIN file_base f ON f.mime_type_id = m.id
@@ -314,7 +314,7 @@ SELECT m.mime_type, f.file_name, f.description, f.uploaded_by, e.name,
 $$ language sql;
 
 COMMENT ON FUNCTION file__list_by(in_ref_key int, in_file_class int) IS
-$$ Returns a list of files attached to a database object.  No content is 
+$$ Returns a list of files attached to a database object.  No content is
 retrieved.$$;
 
 CREATE OR REPLACE FUNCTION file__get(in_id int, in_file_class int)
@@ -342,28 +342,28 @@ SELECT file_id, ref_key, gl.reference, gl.type, dest_class, source_class,
           FROM ap) gl ON sl.ref_key = gl.id and sl.source_class = 1;
 -- view of links FROM transactions
 
-INSERT INTO file_view_catalog (file_class, view_name) 
+INSERT INTO file_view_catalog (file_class, view_name)
      VALUES (1, 'file_tx_links');
 
 CREATE OR REPLACE view file_order_links AS
-SELECT file_id, ref_key, oe.ordnumber as reference, oc.oe_class, dest_class, 
+SELECT file_id, ref_key, oe.ordnumber as reference, oc.oe_class, dest_class,
        source_class, sl.ref_key as dest_ref
-  FROM file_secondary_attachment sl   
+  FROM file_secondary_attachment sl
   JOIN oe ON sl.ref_key = oe.id
   JOIN oe_class oc ON oe.oe_class_id = oc.id
  WHERE sl.source_class = 2;
-       
+
 
 -- view of links FROM orders
 
-INSERT INTO file_view_catalog (file_class, view_name) 
+INSERT INTO file_view_catalog (file_class, view_name)
      VALUES (2, 'file_order_links');
 
 
 CREATE OR REPLACE FUNCTION file_links_vrebuild()
 RETURNS bool AS
 $$
-DECLARE 
+DECLARE
    viewline file_view_catalog%rowtype;
    stmt text;
 BEGIN
@@ -378,7 +378,7 @@ BEGIN
            stmt := stmt || ' UNION
 SELECT * FROM '|| quote_ident(viewline.view_name) || '
 ';
-       END IF; 
+       END IF;
    END LOOP;
    EXECUTE 'CREATE OR REPLACE VIEW file_links AS
 ' || stmt;

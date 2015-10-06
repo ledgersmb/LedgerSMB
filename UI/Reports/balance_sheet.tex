@@ -1,49 +1,32 @@
 <?lsmb FILTER latex ?>
 \documentclass{article}
 \usepackage{longtable}
-\title{<?lsmb text('Balance Sheet') ?>} 
-<?lsmb- comparisons = report.comparisons ?>
+\title{<?lsmb text('Balance Sheet') ?>}
 \begin{document}
 \maketitle
 
-\begin{longtable}{@{\extracolsep{\fill}}lllr<?lsmb- FOREACH c IN comparisons;
-'r'; END -?>}
-\multicolumn{3}{l}{<?lsmb text('Assets') ?>} & <?lsmb report.to_date ?>
-<?lsmb- FOREACH c IN comparisons; " & "; c.to_date; END; ?>\\
-<?lsmb- FOREACH line IN report.balance_sheet.A.lines; line.account_number ?> &
---- &
-<?lsmb line.account_desc ?> &
-<?lsmb line.balance ?>  
-<?lsmb FOREACH c IN comparisons; ' & '; c.index.${line.account_number}; END ?>
-\\
-<?lsmb END ?>\multicolumn{3}{l}{<?lsmb text('Total Assets') ?>} & 
-<?lsmb report.balance_sheet.A.total ?>
-<?lsmb FOREACH c IN comparisons; ' & '; c.totals.A; END ?>\medskip\\
-\multicolumn{3}{l}{<?lsmb text('Liabilities') ?>} &
-<?lsmb- FOREACH c IN comparisons; " & "; END; ?>\\
-<?lsmb- FOREACH line IN report.balance_sheet.L.lines; line.account_number ?> &
---- &
-<?lsmb line.account_desc ?> &
-<?lsmb line.balance ?>  
-<?lsmb FOREACH c IN comparisons; ' & '; c.index.${line.account_number}; END ?>
-\\
-<?lsmb END ?>\multicolumn{3}{l}{<?lsmb text('Total Liabilities') ?>} & 
-<?lsmb report.balance_sheet.L.total ?>
-<?lsmb FOREACH c IN comparisons; ' & '; c.totals.L; END ?>\medskip\\
-\multicolumn{3}{l}{<?lsmb text('Equities') ?>} & 
-<?lsmb- FOREACH c IN comparisons; " & "; END; ?>\\
-<?lsmb- FOREACH line IN report.balance_sheet.Q.lines; line.account_number ?> &
---- &
-<?lsmb line.account_desc ?> &
-<?lsmb line.balance ?>  
-<?lsmb FOREACH c IN comparisons; ' & '; c.index.${line.account_number}; END ?>
-\\
-<?lsmb END ?>\multicolumn{3}{l}{<?lsmb text('Total Equities') ?>} & 
-<?lsmb report.balance_sheet.Q.total ?>
-<?lsmb FOREACH c IN comparisons; ' & '; c.totals.Q; END ?>\medskip\\
-\multicolumn{3}{l}{<?lsmb text('Total Liabilities and Equities') ?>} &
-<?lsmb report.balance_sheet.total_LQ ?>
-<?lsmb FOREACH c IN comparisons; ' & '; c.totals.LQ; END ?>\medskip\\
+\begin{longtable}{@{\extracolsep{\fill}}lll<?lsmb
+ FOREACH c IN report.cheads.ids.keys; 'r'; END -?>}
+\multicolumn{3}{l}{<?lsmb text('Accounts') ?>}
+<?lsmb
+ FOREACH col IN report.cheads.ids.keys;
+     ' & ';
+     report.cheads.ids.$col.props.description ;
+ END;
+ ?> \\
+
+<?lsmb FOREACH row IN report.sorted_row_ids ?>
+<?lsmb IF report.rheads.ids.$row.props.account_number
+          && report.incl_accnos; -?><?lsmb
+    report.rheads.ids.$row.props.account_number ?> & - <?lsmb
+       ELSE ?> & <?lsmb
+       END ?>
+&
+<?lsmb report.rheads.ids.$row.props.account_desc ?>
+<?lsmb FOREACH col IN report.cheads.ids.keys;
+  ' & '; report.cells.$row.$col;
+END; ?> \\
+<?lsmb END ?>
 
 \end{longtable}
 

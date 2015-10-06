@@ -59,7 +59,7 @@ has 'id' => (is => 'rw', isa => 'Int', required => 0);
 
 =item entity_id
 
-Internal id of linked entity.  Is undef if linked to an entity credit account 
+Internal id of linked entity.  Is undef if linked to an entity credit account
 instead
 
 =cut
@@ -189,7 +189,7 @@ has 'country_name' => (is => 'rw', 'isa' => 'Str', required => 0);
 
 Retrieves locations and returns them.  Args include:
 
-=over 
+=over
 
 =item entity_id (required)
 
@@ -199,10 +199,10 @@ Retrieves locations and returns them.  Args include:
 
 =back
 
-This function returns all locations attached to the entity_id and, if the credit_id is provided, all locations attached to the credit_id as well.  The two 
+This function returns all locations attached to the entity_id and, if the credit_id is provided, all locations attached to the credit_id as well.  The two
 are appended together with the ones at the entity level coming first.
 
-If only_class is set, all results will be discarded that are not a specific 
+If only_class is set, all results will be discarded that are not a specific
 class (useful for retrieving billing info only).
 
 =cut
@@ -213,7 +213,7 @@ sub get_active {
     for my $ref (__PACKAGE__->call_procedure(funcname => 'entity__list_locations',
                                            args => [$args->{entity_id}]))
     {
-       next if ($args->{only_class}) 
+       next if ($args->{only_class})
                and ($args->{only_class} != $ref->{location_class});
         push @results, __PACKAGE__->new(%$ref);
     }
@@ -222,7 +222,7 @@ sub get_active {
     for my $ref (__PACKAGE__->call_procedure(funcname => 'eca__list_locations',
                                            args => [$args->{credit_id}]))
     {
-       next if ($args->{only_class}) 
+       next if ($args->{only_class})
                and ($args->{only_class} != $ref->{location_class});
         $ref->{credit_id} = $args->{credit_id};
         push @results, __PACKAGE__->new(%$ref);
@@ -255,7 +255,7 @@ sub save {
 Deletes the current location
 
 This can be called from $self->delete() if you have  a location object, or it
-can be called as LedgerSMB::Entity::Location::delete($hashref) if the hashref 
+can be called as LedgerSMB::Entity::Location::delete($hashref) if the hashref
 contains either entity_id or credit_id, and location_id, and location class.
 
 =cut

@@ -7,19 +7,21 @@ LedgerSMB::Scripts::budget_reports - Budget search and reporting workflows.
 =cut
 
 package LedgerSMB::Scripts::budget_reports;
-our $VERSION = '1.0';
 
 use LedgerSMB;
 use LedgerSMB::Template;
 use LedgerSMB::Report::Budget::Search;
 use LedgerSMB::Report::Budget::Variance;
 use strict;
+use warnings;
+
+our $VERSION = '1.0';
 
 =over
 
 =item search
 
-Searches for budgets.  See LedgerSMB::Report::Budget::Search for 
+Searches for budgets.  See LedgerSMB::Report::Budget::Search for
 more.
 
 =cut

@@ -4,12 +4,12 @@ LedgerSMB::Entity::Company -- Company (business) handling for LedgerSMB
 
 =head1 SYNOPSIS
 
-This handles the overall data management for companies as customers, vendors, sales 
+This handles the overall data management for companies as customers, vendors, sales
 leads etc.
 
 =head1 INHERITS
 
-=over 
+=over
 
 =item LedgerSMB::Entity
 
@@ -74,7 +74,7 @@ Business categorization code.  SIC, NAICS, or other systems can be used.
 
 has 'sic_code' => (is => 'rw', isa => 'Maybe[Str]', required => 0);
 
-=item created 
+=item created
 
 Date when the company was entered into LedgerSMB
 
@@ -105,7 +105,7 @@ sub get {
 
 =item get_by_cc($cc)
 
-This retrieves a company associated with a control code.  Dies with error if 
+This retrieves a company associated with a control code.  Dies with error if
 company does not exist.
 
 =cut
@@ -142,7 +142,7 @@ sub save {
 =head1 COPYRIGHT
 
 Copyright (C) 2012, the LedgerSMB Core Team.  This file may be re-used under the GNU GPL
-version 2 or at your option any future version.  Please see the accompanying LICENSE 
+version 2 or at your option any future version.  Please see the accompanying LICENSE
 file for details.
 
 =cut

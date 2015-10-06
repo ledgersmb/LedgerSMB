@@ -27,7 +27,7 @@ with 'LedgerSMB::PGObject';
 
 =head1 DESCRIPTION
 
-This module adds handling of separate invoice sequences to LedgerSMB.  The 
+This module adds handling of separate invoice sequences to LedgerSMB.  The
 module is intended to be called from both pre-1.3 code as well as new code.
 
 This module allows multiple sequences to be "attached" to a given setting. At
@@ -116,7 +116,7 @@ sub get{
 
 =head2 list(setting_key)
 
-Lists all sequences applicable.  If setting_key is defined, only sequences 
+Lists all sequences applicable.  If setting_key is defined, only sequences
 attached to the setting are applicable.
 
 =cut
@@ -153,7 +153,7 @@ sub save {
 
 Like the increment method of LedgerSMB::Setting, but works on the sequence.
 
-label is optional and if set to a string will be used as the sequence to 
+label is optional and if set to a string will be used as the sequence to
 increment,
 
 =cut
@@ -210,16 +210,18 @@ Deletes a sequence.
 
 sub delete {
     my ($self, $label) = @_;
-    return __PACKAGE__->call_procedure(funcname => 'sequence__delete', 
+    return __PACKAGE__->call_procedure(funcname => 'sequence__delete',
                                      args => [$label]);
 }
 
 =head1 COPYRIGHT
 
 COPYRIGHT(C) 2013 The LedgerSMB Core Team.  This file may be used in accordance
-with the GNU General Public License version 2 or at your option any later 
+with the GNU General Public License version 2 or at your option any later
 version.  Please see the enclosed LICENSE.TXT for details.
 
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

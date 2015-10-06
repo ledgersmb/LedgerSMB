@@ -13,6 +13,10 @@ or
 =cut
 
 package LedgerSMB::Scripts::invoice;
+
+use strict;
+use warnings;
+
 use LedgerSMB::Template;
 use LedgerSMB::Report::Invoices::Transactions;
 use LedgerSMB::Report::Invoices::Outstanding;

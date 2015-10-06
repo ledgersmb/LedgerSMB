@@ -28,7 +28,7 @@ Arbitrary tag identifier, unique for current, non-disposed assets.
 =item purchase_value (numeric)
 
 Numeric representation of purchase value.
- 
+
 =item salvage_value (numeric)
 
 Numeric representation of estimated salvage value.
@@ -72,7 +72,7 @@ ID of account to store expense when disposed of.
 
 =item obsolete_by (int)
 
-Obsolete by other asset id.  Undef if active, otherwise the id of the active 
+Obsolete by other asset id.  Undef if active, otherwise the id of the active
 asset that replaces this. Used for partial depreciation.
 
 =item asset_class_id (int)
@@ -89,6 +89,7 @@ ID of asset class.
 
 use base qw(LedgerSMB::PGOld);
 use strict;
+use warnings;
 
 =item save
 
@@ -111,7 +112,7 @@ sub save {
 =item import_file
 
 Parses a csv file.  Sets $self->{import_entries} to an arrayref where each
-member is an arrayref of fields.  It is up to the workflow script to handle 
+member is an arrayref of fields.  It is up to the workflow script to handle
 these entries.
 
 Header information is set to $self->{import_header}.
@@ -144,9 +145,9 @@ sub import_file {
             }
         }
         push @{$self->{import_entries}}, \@fields;
-    }     
+    }
                    # get rid of header line
-    @{$self->{import_header}} = shift @{$self->{import_entries}}; 
+    @{$self->{import_header}} = shift @{$self->{import_entries}};
     return @{$self->{import_entries}};
 }
 
@@ -165,7 +166,7 @@ sub get {
 
 =item search
 
-Searches for asset_items matching criteria.  Sets $self->{search_results} to 
+Searches for asset_items matching criteria.  Sets $self->{search_results} to
 the result.
 
 Search criteria set by the following properties:
@@ -176,11 +177,11 @@ Search criteria set by the following properties:
 * purchase_date
 * purchase_value
 * usable_life
-* salvage_value 
+* salvage_value
 * start_depreciation
 * warehouse_id
 * department_id
-* invoice_id 
+* invoice_id
 * asset_account_id
 * dep_account_id
 
@@ -262,7 +263,7 @@ Sets $self->{tag} to that value.
 sub get_next_tag {
     my ($self) =  @_;
     my ($ref) = $self->call_procedure(
-          funcname => 'setting_increment', 
+          funcname => 'setting_increment',
           args     => ['asset_tag']
     );
     $self->{tag} = $ref->{setting_increment};
@@ -270,7 +271,7 @@ sub get_next_tag {
 
 =item import_asset
 
-Uses standard properties.  Saves record in import report for batch review and 
+Uses standard properties.  Saves record in import report for batch review and
 creation.
 
 =cut

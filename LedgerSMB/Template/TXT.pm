@@ -31,11 +31,11 @@ Returns the output filename.
 =head1 Copyright (C) 2007, The LedgerSMB core team.
 
 This work contains copyrighted information from a number of sources all used
-with permission.  
+with permission.
 
-It is released under the GNU General Public License Version 2 or, at your 
-option, any later version.  See COPYRIGHT file for details.  For a full list 
-including contact information of contributors, maintainers, and copyright 
+It is released under the GNU General Public License Version 2 or, at your
+option, any later version.  See COPYRIGHT file for details.  For a full list
+including contact information of contributors, maintainers, and copyright
 holders, see the CONTRIBUTORS file.
 =cut
 
@@ -73,7 +73,7 @@ sub get_template {
     return "${name}.". get_extension($parent);
 }
 
-sub preprocess { 
+sub preprocess {
     # I wonder how much of this can be concentrated in the main template
     # module? --CT
     my $rawvars = shift;
@@ -105,66 +105,66 @@ sub preprocess {
             $vars->{preprocess($_)} = preprocess( $rawvars->{$_} );
         }
     }
-     
+
     return $vars;
 }
 
 sub process {
-	my $parent = shift;
-	my $cleanvars = shift;
+    my $parent = shift;
+    my $cleanvars = shift;
         $cleanvars->{EDI_CURRENT_DATE} = $date;
         $cleanvars->{EDI_CURRENT_TIME} = $time;
-	my $template;
-	my $source;
-	my $output;
+    my $template;
+    my $source;
+    my $output;
         $parent->{binmode} = $binmode;
-	if ($parent->{outputfile}) {
+    if ($parent->{outputfile}) {
             if (ref $parent->{outputfile}){
                 $output = $parent->{outputfile};
             } else {
-		$output = "$parent->{outputfile}.". get_extension($parent);
+        $output = "$parent->{outputfile}.". get_extension($parent);
                 $parent->{outputfile} = $output;
             }
-	}
+    }
         if ($parent->{include_path} eq 'DB'){
                 $source = LedgerSMB::Template::DB->get_template(
                        $parent->{template}, undef, 'ods'
                 );
-	} elsif (ref $parent->{template} eq 'SCALAR') {
-		$source = $parent->{template};
-	} elsif (ref $parent->{template} eq 'ARRAY') {
-		$source = join "\n", @{$parent->{template}};
-	} else {
-		$source = get_template($parent->{template}, $parent);
-	}
-	$template = Template->new({
-		INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path}, 'UI/lib'],
-		START_TAG => quotemeta('<?lsmb'),
-		END_TAG => quotemeta('?>'),
-		DELIMITER => ';',
-		DEBUG => ($parent->{debug})? 'dirs': undef,
-		DEBUG_FORMAT => '',
-		}) || die Template->error(); 
+    } elsif (ref $parent->{template} eq 'SCALAR') {
+        $source = $parent->{template};
+    } elsif (ref $parent->{template} eq 'ARRAY') {
+        $source = join "\n", @{$parent->{template}};
+    } else {
+        $source = get_template($parent->{template}, $parent);
+    }
+    $template = Template->new({
+        INCLUDE_PATH => [$parent->{include_path_lang}, $parent->{include_path}, 'UI/lib'],
+        START_TAG => quotemeta('<?lsmb'),
+        END_TAG => quotemeta('?>'),
+        DELIMITER => ';',
+        DEBUG => ($parent->{debug})? 'dirs': undef,
+        DEBUG_FORMAT => '',
+        }) || die Template->error();
 
-	if (not $template->process(
-		$source, 
-		{%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
-			'escape' => \&preprocess},
-		\$parent->{output}, binmode => ':utf8')) {
-		die $template->error();
-	}
+    if (not $template->process(
+        $source,
+        {%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
+            'escape' => \&preprocess},
+        \$parent->{output}, binmode => ':utf8')) {
+        die $template->error();
+    }
         if ($output){
             open(OUT, '>', $output);
             print OUT $parent->{output};
             close OUT;
         }
-	$parent->{mimetype} = 'text/plain';
+    $parent->{mimetype} = 'text/plain';
 }
 
 sub postprocess {
     my ($parent) = shift;
     if (!$parent->{rendered}){
-        return $parent->{template} . '.' . get_extension($parent); 
+        return $parent->{template} . '.' . get_extension($parent);
     }
     $parent->{rendered} = "$parent->{outputfile}.". get_extension($parent) if $parent->{outputfile};
     return $parent->{rendered};

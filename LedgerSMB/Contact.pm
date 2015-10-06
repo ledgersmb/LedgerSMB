@@ -5,7 +5,7 @@ LedgerSMB::Contact - LedgerSMB class for managing Contacts
 
 =head1 SYOPSIS
 
-This module creates object instances based on LedgerSMB's in-database ORM.  
+This module creates object instances based on LedgerSMB's in-database ORM.
 
 =head1 METHODS
 
@@ -36,23 +36,26 @@ your software.
 
 package LedgerSMB::Contact;
 
-use base LedgerSMB::PGOld;
+use strict;
+use warnings;
+
+use base qw(LedgerSMB::PGOld);
 
 
 sub save {
-    
+
     my $self = shift @_;
-    
+
     # check for the various fields being appropriately set..
-    
+
     if ($self->{person_id} && $self->{contact} && $self->{contact_class}) {
-        
+
         my $id = shift @ {$self->call_dbmethod( funcname => "save_contact" ) };
         $self->merge($id);
         return $self->{id};
     }
     else {
-        
+
         # raise an exception
         my $err = LedgerSMB::Error->new();
         $err->text("Unable to save contact information");
@@ -61,10 +64,10 @@ sub save {
 }
 
 sub get {
-    
+
     my $self = shift @_;
     my $id = shift @_;
-    
+
     my $result = shift @{ $self->call_procedure(
         funcname => 'get',
         args     =>[$id]
@@ -72,15 +75,15 @@ sub get {
 }
 
 sub search {
-    
+
     my $self = shift @_;
     my ($pattern, $offset, $limit) = @_;
-    
-    my $results = $self->call_procedure( 
-        funcname => 'search', 
-        args     =>[$pattern, $offset, $limit] 
+
+    my $results = $self->call_procedure(
+        funcname => 'search',
+        args     =>[$pattern, $offset, $limit]
     );
-    
+
     return $results;
 }
 

@@ -8,12 +8,16 @@ LedgerSMB::Scripts::order - Order search functions for LedgerSMB
 
 =head1 DESCRIPTION
 
-This module contains the routines needed to search for orders, whether for 
+This module contains the routines needed to search for orders, whether for
 shipping or receiving, merging several orders into one, or the like.
 
 =cut
 
 package LedgerSMB::Scripts::order;
+
+use strict;
+use warnings;
+
 use LedgerSMB::App_State;
 use LedgerSMB::Scripts::reports;
 use LedgerSMB::Report::Orders;
@@ -25,7 +29,7 @@ use LedgerSMB::Form; # for dispatching to old code
 
 =item get_criteria
 
-Expects "search_type" and "oe_class_id" to be set.  Any other properties of 
+Expects "search_type" and "oe_class_id" to be set.  Any other properties of
 LedgerSMB::Report::Orders can be set here and will act as defaults.
 
 Search type can be one of
@@ -52,7 +56,7 @@ sub get_criteria {
         if ($request->{search_type} eq 'search'){
             $request->{title} = $locale->text('Search Sales Orders');
         } elsif ($request->{search_type} eq 'generate'){
-            $request->{title} = 
+            $request->{title} =
                    $locale->text('Generate Purchase Orders from Sales Orders');
         } elsif ($request->{search_type} eq 'combine'){
             $request->{title} = $locale->text('Combine Sales Orders');
@@ -65,7 +69,7 @@ sub get_criteria {
         } elsif ($request->{search_type} eq 'combine'){
             $request->{title} = $locale->text('Combine Purchase Orders');
         } elsif ($request->{search_type} eq 'generate'){
-            $request->{title} = 
+            $request->{title} =
                    $locale->text('Generate Sales Orders from Purchase Orders');
         } elsif ($request->{search_type} eq 'ship'){
             $request->{title} = $locale->text('Receive');
@@ -73,11 +77,11 @@ sub get_criteria {
     } elsif ($request->{oe_class_id} == 3){
         if ($request->{search_type} eq 'search'){
             $request->{title} = $locale->text('Search Quotations');
-        } 
+        }
     } elsif ($request->{oe_class_id} == 4){
         if ($request->{search_type} eq 'search'){
             $request->{title} = $locale->text('Search Requests for Quotation');
-        } 
+        }
     }
     LedgerSMB::Scripts::reports::start_report($request);
 }
@@ -153,7 +157,7 @@ sub generate {
         $form->{$k} = $request->{$k};
     }
     { no strict; no warnings 'redefine'; do 'bin/oe.pl'; }
-    $locale = $LedgerSMB::App_State::Locale;
+    my $locale = $LedgerSMB::App_State::Locale;
     lsmb_legacy::generate_purchase_orders($form, $locale);
 }
 

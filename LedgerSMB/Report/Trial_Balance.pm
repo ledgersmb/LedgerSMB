@@ -30,7 +30,7 @@ with 'LedgerSMB::Report::Dates';
 
 =head1 DESCRIPTION
 
-The trial balance is a report used to test the books and whether they balance 
+The trial balance is a report used to test the books and whether they balance
 in paper accounting systems.  In digital systems it tends to also be repurposed
 also as a general, quick look at accounting activity.  For this reason it is
 probably the second most important report in the system, behind only the GL
@@ -38,7 +38,7 @@ reports.
 
 Unlike other reports, trial balance reports can be saved:
 
-=head1 	CRITERIA PRPERTIES
+=head1     CRITERIA PRPERTIES
 
 Criteria sets can also be saved/loaded.
 
@@ -46,7 +46,7 @@ Criteria sets can also be saved/loaded.
 
 =item id
 
-This is the id of the trial balance, only used to save over an existing 
+This is the id of the trial balance, only used to save over an existing
 criteria set.
 
 =cut
@@ -80,7 +80,7 @@ has ignore_yearend => (is => 'rw', isa => 'Str');
 
 =item balance_sign
 
-Either 1, 0, or -1.  1 for credit, -1 for debit, 0 for normal balances (i.e 
+Either 1, 0, or -1.  1 for credit, -1 for debit, 0 for normal balances (i.e
 credit balances except for asset and expense accounts).
 
 =cut
@@ -180,7 +180,7 @@ sub columns {
     ];
 }
 
-=item header_lines 
+=item header_lines
 
 =cut
 
@@ -217,21 +217,21 @@ sub run_report {
         next if (($ref->{starting_balance} == 0)
                         and ($ref->{credits} == 0) and ($ref->{debits} == 0));
         my $href_suffix = "&accno=" . $ref->{account_number};
-        $href_suffix .= "&from_date=" . $self->from_date->to_db 
+        $href_suffix .= "&from_date=" . $self->from_date->to_db
               if defined $self->from_date;
         $href_suffix .= "&to_date=" . $self->to_date->to_db
               if defined $self->to_date;
-               
-        $total_debits += $ref->{debits}; 
-        $total_credits += $ref->{credits}; 
+
+        $total_debits += $ref->{debits};
+        $total_credits += $ref->{credits};
         $ref->{account_number_href_suffix} = $href_suffix;
         $ref->{account_desc_href_suffix} = $href_suffix;
         $ref->{gifi_accno_href_suffix} = $href_suffix;
         push @rows, $ref;
     }
-    push @rows, {class => 'total', 
+    push @rows, {class => 'total',
                debits => $total_debits,
-              credits => $total_credits, 
+              credits => $total_credits,
             html_class => 'listtotal'};
     $self->rows(\@rows);
 }

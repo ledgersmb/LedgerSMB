@@ -1,6 +1,6 @@
-=head1 NAME 
+=head1 NAME
 
-LedgerSMB::X12::EDI850 - Conversion class for X12 850 files to LedgerSMB 
+LedgerSMB::X12::EDI850 - Conversion class for X12 850 files to LedgerSMB
 structures
 
 =head1 SYNOPSIS
@@ -22,7 +22,7 @@ sub _config {
 
 =head1 DESCRIPTION
 
-This module processes X12 EDI 850 purchase orders and can present them in 
+This module processes X12 EDI 850 purchase orders and can present them in
 structures compatible with LedgerSMB's order entry system.  The API is simple.
 
 =head1 PROPERTIES
@@ -34,9 +34,9 @@ structures compatible with LedgerSMB's order entry system.  The API is simple.
 This is an order hashref using the same data structures that a form screen
 would submit (flat format).
 
-=cut 
+=cut
 
-has order => (is => 'ro', isa => 'Form', lazy => 1, 
+has order => (is => 'ro', isa => 'Form', lazy => 1,
           builder => '_order');
 
 sub _order {
@@ -46,7 +46,7 @@ sub _order {
     my $form = new Form;
     my $sender_idx;
     my $sender_id;
-    
+
     my $i = 0;
 
     while (my $loop = $self->parser->get_next_loop){
@@ -117,7 +117,7 @@ sub _order {
                 $form->{"description_$i"}  = $elements[5];
             }
             when ('CTT'){
-                # Perform checks and error if does not work. 
+                # Perform checks and error if does not work.
                 my ($segment) = $self->parser->get_loop_segments;
                 my @elements = split(/\Q$sep\E/, $segment);
                 my $invtotal;
@@ -135,3 +135,5 @@ sub _order {
 =cut
 
 __PACKAGE__->meta->make_immutable;
+
+1;

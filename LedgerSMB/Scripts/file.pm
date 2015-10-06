@@ -7,9 +7,9 @@ LedgerSMB::Scripts::file
 =head1 SYNOPSIS
 
 This supplies file retrival and attachment workflows
-    
+
 =head1 METHODS
-        
+
 =over
 
 =item get
@@ -21,6 +21,10 @@ Requires that id and file_class be set.
 =cut
 
 package LedgerSMB::Scripts::file;
+
+use strict;
+use warnings;
+
 use LedgerSMB::File;
 use LedgerSMB::File::Transaction;
 use LedgerSMB::File::Order;
@@ -30,7 +34,6 @@ use LedgerSMB::File::ECA;
 use LedgerSMB::File::Internal;
 use LedgerSMB::File::Incoming;
 use DBD::Pg qw(:pg_types);
-use strict;
 use CGI::Simple;
 
 our $fileclassmap = {
@@ -90,7 +93,7 @@ sub show_attachment_screen {
 =item attach_file
 
 Attaches a file to an object
-        
+
 =cut
 
 sub attach_file {
@@ -100,12 +103,11 @@ sub attach_file {
     $file->file_name($fnames[0]) if $fnames[0];
     if ($request->{url}){
         $file->file_name($request->{url});
-	$file->mime_type_text('text/x-uri');
+    $file->mime_type_text('text/x-uri');
         $file->file_name($request->{url});
         $file->get_mime_type;
         $file->content($request->{url});
     } else {
-        use File::MimeInfo;
         $file->file_name($fnames[0]);
         if (!$file->file_name){
              $request->error($request->{_locale}->text(
@@ -128,7 +130,7 @@ sub attach_file {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2011 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 
