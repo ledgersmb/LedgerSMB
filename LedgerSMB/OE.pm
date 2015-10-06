@@ -486,7 +486,6 @@ sub save {
     if ( $form->{type} =~ /_order$/ ) {
 
         # adjust onhand
-        &adj_onhand( $dbh, $form, $ml * -1 );
         &adj_inventory( $dbh, $myconfig, $form );
     }
 
