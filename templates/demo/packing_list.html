@@ -9,10 +9,10 @@
 <table width="100%">
 
   <?lsmb LETTERHEAD ?>
-  
+
   <tr>
-    <td width=10>&nbsp;</td> 
-    
+    <td width=10>&nbsp;</td>
+
     <th colspan=3>
       <h4 style="text-transform:uppercase">
            <?lsmb text('Packing List') ?></h4>
@@ -46,16 +46,16 @@
 	  <br><?lsmb shiptocountry ?>
 	  <?lsmb END ?>
 	  </td>
-	
+
 	  <td>
 	  <?lsmb IF shiptocontact ?>
 	  <br><?lsmb text('Attn: [_1]', shiptocontact) ?>
 	  <?lsmb END ?>
-	  
+
 	  <?lsmb IF shiptophone ?>
 	  <br><?lsmb text('Tel: [_1]', shiptophone) ?>
 	  <?lsmb END ?>
-	  
+
 	  <?lsmb IF shiptofax ?>
 	  <br><?lsmb text('Fax: [_1]', shiptofax) ?>
 	  <?lsmb END ?>
@@ -68,7 +68,7 @@
   </tr>
 
   <tr height=5></tr>
-  
+
   <tr>
     <td>&nbsp;</td>
 
@@ -89,15 +89,15 @@
         <tr>
 	  <td><?lsmb invnumber ?>&nbsp;</td>
 	  <td><?lsmb ordnumber ?>&nbsp;</td>
-	  
+
 	  <?lsmb IF shippingdate ?>
 	  <td><?lsmb shippingdate ?></td>
 	  <?lsmb ELSE ?>
 	  <td><?lsmb transdate ?></td>
 	  <?lsmb END ?>
-  
+
           <td><?lsmb employee ?>&nbsp;</td>
-	  
+
 	  <?lsmb IF warehouse ?>
 	  <td><?lsmb warehouse ?>&nbsp;</td>
 	  <?lsmb END ?>
@@ -130,7 +130,7 @@
 	<tr valign=top>
 	  <td><?lsmb runningnumber.${loop_count} ?></td>
 	  <td><?lsmb number.${loop_count} ?></td>
-	  <td><?lsmb description.${loop_count} ?></td>
+	  <td><?lsmb item_description.${loop_count} ?></td>
 	  <td><?lsmb serialnumber.${loop_count} ?></td>
 	  <td><?lsmb deliverydate.${loop_count} ?></td>
 	  <td align=right><?lsmb qty.${loop_count} ?></td>
@@ -152,7 +152,7 @@
   <?lsmb IF notes ?>
   <tr>
     <td>&nbsp;</td>
-    
+
     <td>
       <table width="100%">
 	<tr valign=top>
@@ -168,7 +168,7 @@
 
   <tr>
     <td>&nbsp;</td>
-    
+
     <td>
       <table width="100%">
 	<tr valign=top>

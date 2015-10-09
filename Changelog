@@ -26,7 +26,10 @@ Released 2014-09-15
 Changelog for 1.4.17
 * FEATURE: Automatic calculation of taxes in AR/AP transactions (ErikH)
 * FEATURE: Use account hierarchies in balance and PnL reporting (ErikH)
+* Fixed partial shipments decrementing extra inventory (ChrisT)
+* Fixed template references to item (order/invoice) descriptions (ErikH)
 
+ChrisT is Chris Travers
 ErikH is Erik Huelsmann
 
 
