@@ -6,6 +6,7 @@ Changelog for 1.4.17
 * FEATURE: Use account hierarchies in balance and PnL reporting (ErikH)
 * Fixed partial shipments decrementing extra inventory (ChrisT)
 * Fixed template references to item (order/invoice) descriptions (ErikH)
+* Added more SQL Ledger 2.8 migration checks (ErikH)
 
 ChrisT is Chris Travers
 ErikH is Erik Huelsmann
