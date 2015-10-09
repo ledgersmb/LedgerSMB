@@ -26,29 +26,13 @@ CREATE TYPE pnl_line AS (
 CREATE OR REPLACE FUNCTION pnl__product(in_from_date date, in_to_date date, in_parts_id integer, in_business_units integer[])
   RETURNS SETOF pnl_line LANGUAGE SQL AS
 $$
-WITH hdr_meta AS (
-   SELECT aht.id, aht.accno,
-          coalesce(at.description, aht.description) as description,
-          array_splice_from((SELECT value::int FROM defaults
-                              WHERE setting_key = 'earn_id'),aht.path) as path,
-          ahc.derived_category as category,
-          'H'::char as account_type, 'f'::boolean as contra
-     FROM account_heading_tree aht
-    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
-    LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
-    WHERE array_splice_from((SELECT value::int FROM defaults
-                              WHERE setting_key = 'earn_id'),aht.path)
-                           IS NOT NULL
-),
-acc_meta AS (
+WITH acc_meta AS (
   SELECT a.id, a.accno,
          coalesce(at.description, a.description) as description,
-         array_splice_from((SELECT value::int FROM defaults
-                             WHERE setting_key = 'earn_id'),aht.path) AS path,
+         CASE WHEN (SELECT value::int FROM defaults where setting_key = 'earn_id') IS NULL THEN aht.path
+         ELSE array_splice_from((SELECT value::int FROM defaults
+                             WHERE setting_key = 'earn_id'),aht.path)
+         END AS path,
          a.category, 'A'::char as account_type, contra, a.gifi_accno,
          gifi.description as gifi_description
      FROM account a
@@ -65,7 +49,36 @@ acc_meta AS (
          -- legacy: earn_id not configured (yet)
          OR (NOT EXISTS (SELECT 1 FROM defaults
                          WHERE setting_key = 'earn_id')
-             AND category IN ('E', 'I'))),
+             AND category IN ('E', 'I'))
+),
+hdr_meta AS (
+   SELECT aht.id, aht.accno,
+          coalesce(at.description, aht.description) as description,
+          CASE WHEN (SELECT value::int FROM defaults where setting_key = 'earn_id') IS NULL THEN aht.path
+          ELSE array_splice_from((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id'),aht.path)
+          END AS path,
+          ahc.derived_category as category,
+          'H'::char as account_type, 'f'::boolean as contra
+     FROM account_heading_tree aht
+    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
+    LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+    WHERE ((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id') IS NOT NULL
+           AND array_splice_from((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id'),aht.path)
+                           IS NOT NULL)
+          -- legacy: earn_id not configured; select headings belonging to
+          --    selected accounts
+          OR ((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id') IS NULL
+              AND EXISTS (SELECT 1 FROM acc_meta
+                                  WHERE aht.id = ANY(acc_meta.path)))
+),
 acc_balance AS (
    WITH RECURSIVE bu_tree (id, parent, path) AS (
       SELECT id, null, row(array[id])::tree_record FROM business_unit
@@ -128,32 +141,17 @@ hdr_balance AS (
     INNER JOIN acc_balance ab on am.id = ab.id
 $$;
 
+
 CREATE OR REPLACE FUNCTION pnl__income_statement_accrual(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[])
-  RETURNS SETOF pnl_line LANGUAGE SQL AS
-$$
-WITH hdr_meta AS (
-   SELECT aht.id, aht.accno,
-          coalesce(at.description, aht.description) as description,
-          array_splice_from((SELECT value::int FROM defaults
-                              WHERE setting_key = 'earn_id'),aht.path) as path,
-          ahc.derived_category as category,
-          'H'::char as account_type, 'f'::boolean as contra
-     FROM account_heading_tree aht
-    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
-    LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
-    WHERE array_splice_from((SELECT value::int FROM defaults
-                              WHERE setting_key = 'earn_id'),aht.path)
-                           IS NOT NULL
-),
-acc_meta AS (
+  RETURNS SETOF pnl_line AS
+$BODY$
+WITH acc_meta AS (
   SELECT a.id, a.accno,
          coalesce(at.description, a.description) as description,
-         array_splice_from((SELECT value::int FROM defaults
-                             WHERE setting_key = 'earn_id'),aht.path) AS path,
+         CASE WHEN (SELECT value::int FROM defaults where setting_key = 'earn_id') IS NULL THEN aht.path
+         ELSE array_splice_from((SELECT value::int FROM defaults
+                             WHERE setting_key = 'earn_id'),aht.path)
+         END AS path,
          a.category, 'A'::char as account_type, contra, a.gifi_accno,
          gifi.description as gifi_description
      FROM account a
@@ -171,6 +169,34 @@ acc_meta AS (
          OR (NOT EXISTS (SELECT 1 FROM defaults
                          WHERE setting_key = 'earn_id')
              AND category IN ('E', 'I'))
+),
+hdr_meta AS (
+   SELECT aht.id, aht.accno,
+          coalesce(at.description, aht.description) as description,
+          CASE WHEN (SELECT value::int FROM defaults where setting_key = 'earn_id') IS NULL THEN aht.path
+          ELSE array_splice_from((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id'),aht.path)
+          END AS path,
+          ahc.derived_category as category,
+          'H'::char as account_type, 'f'::boolean as contra
+     FROM account_heading_tree aht
+    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
+    LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+    WHERE ((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id') IS NOT NULL
+           AND array_splice_from((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id'),aht.path)
+                           IS NOT NULL)
+          -- legacy: earn_id not configured; select headings belonging to
+          --    selected accounts
+          OR ((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id') IS NULL
+              AND EXISTS (SELECT 1 FROM acc_meta
+                                  WHERE aht.id = ANY(acc_meta.path)))
 ),
 acc_balance AS (
    WITH RECURSIVE bu_tree (id, parent, path) AS (
@@ -222,34 +248,20 @@ hdr_balance AS (
           gifi_accno as gifi, gifi_description, am.contra, ab.balance, am.path
      FROM acc_meta am
     INNER JOIN acc_balance ab on am.id = ab.id
-$$;
+$BODY$
+  LANGUAGE sql;
+
 
 CREATE OR REPLACE FUNCTION pnl__income_statement_cash(in_from_date date, in_to_date date, in_ignore_yearend text, in_business_units integer[])
   RETURNS SETOF pnl_line LANGUAGE SQL AS
 $$
-WITH hdr_meta AS (
-   SELECT aht.id, aht.accno,
-          coalesce(at.description, aht.description) as description,
-          array_splice_from((SELECT value::int FROM defaults
-                              WHERE setting_key = 'earn_id'),aht.path) as path,
-          ahc.derived_category as category,
-          'H'::char as account_type, 'f'::boolean as contra
-     FROM account_heading_tree aht
-    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
-    LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
-    WHERE array_splice_from((SELECT value::int FROM defaults
-                              WHERE setting_key = 'earn_id'),aht.path)
-                           IS NOT NULL
-),
-acc_meta AS (
+WITH acc_meta AS (
   SELECT a.id, a.accno,
          coalesce(at.description, a.description) as description,
-         array_splice_from((SELECT value::int FROM defaults
-                             WHERE setting_key = 'earn_id'),aht.path) AS path,
+         CASE WHEN (SELECT value::int FROM defaults where setting_key = 'earn_id') IS NULL THEN aht.path
+         ELSE array_splice_from((SELECT value::int FROM defaults
+                             WHERE setting_key = 'earn_id'),aht.path)
+         END AS path,
          a.category, 'A'::char as account_type, contra, a.gifi_accno,
          gifi.description as gifi_description
      FROM account a
@@ -267,6 +279,34 @@ acc_meta AS (
          OR (NOT EXISTS (SELECT 1 FROM defaults
                          WHERE setting_key = 'earn_id')
              AND category IN ('E', 'I'))
+),
+hdr_meta AS (
+   SELECT aht.id, aht.accno,
+          coalesce(at.description, aht.description) as description,
+          CASE WHEN (SELECT value::int FROM defaults where setting_key = 'earn_id') IS NULL THEN aht.path
+          ELSE array_splice_from((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id'),aht.path)
+          END AS path,
+          ahc.derived_category as category,
+          'H'::char as account_type, 'f'::boolean as contra
+     FROM account_heading_tree aht
+    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
+    LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+    WHERE ((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id') IS NOT NULL
+           AND array_splice_from((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id'),aht.path)
+                           IS NOT NULL)
+          -- legacy: earn_id not configured; select headings belonging to
+          --    selected accounts
+          OR ((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id') IS NULL
+              AND EXISTS (SELECT 1 FROM acc_meta
+                                  WHERE aht.id = ANY(acc_meta.path)))
 ),
 acc_balance AS (
 WITH RECURSIVE bu_tree (id, parent, path) AS (
@@ -327,29 +367,13 @@ $$;
 CREATE OR REPLACE FUNCTION pnl__invoice(in_id integer)
   RETURNS SETOF pnl_line LANGUAGE SQL AS
 $$
-WITH hdr_meta AS (
-   SELECT aht.id, aht.accno,
-          coalesce(at.description, aht.description) as description,
-          array_splice_from((SELECT value::int FROM defaults
-                              WHERE setting_key = 'earn_id'),aht.path) as path,
-          ahc.derived_category as category,
-          'H'::char as account_type, 'f'::boolean as contra
-     FROM account_heading_tree aht
-    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
-    LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
-    WHERE array_splice_from((SELECT value::int FROM defaults
-                              WHERE setting_key = 'earn_id'),aht.path)
-                           IS NOT NULL
-),
-acc_meta AS (
+WITH acc_meta AS (
   SELECT a.id, a.accno,
          coalesce(at.description, a.description) as description,
-         array_splice_from((SELECT value::int FROM defaults
-                             WHERE setting_key = 'earn_id'),aht.path) AS path,
+         CASE WHEN (SELECT value::int FROM defaults where setting_key = 'earn_id') IS NULL THEN aht.path
+         ELSE array_splice_from((SELECT value::int FROM defaults
+                             WHERE setting_key = 'earn_id'),aht.path)
+         END AS path,
          a.category, 'A'::char as account_type, contra, a.gifi_accno,
          gifi.description as gifi_description
      FROM account a
@@ -367,6 +391,34 @@ acc_meta AS (
          OR (NOT EXISTS (SELECT 1 FROM defaults
                          WHERE setting_key = 'earn_id')
              AND category IN ('E', 'I'))
+),
+hdr_meta AS (
+   SELECT aht.id, aht.accno,
+          coalesce(at.description, aht.description) as description,
+          CASE WHEN (SELECT value::int FROM defaults where setting_key = 'earn_id') IS NULL THEN aht.path
+          ELSE array_splice_from((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id'),aht.path)
+          END AS path,
+          ahc.derived_category as category,
+          'H'::char as account_type, 'f'::boolean as contra
+     FROM account_heading_tree aht
+    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
+    LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+    WHERE ((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id') IS NOT NULL
+           AND array_splice_from((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id'),aht.path)
+                           IS NOT NULL)
+          -- legacy: earn_id not configured; select headings belonging to
+          --    selected accounts
+          OR ((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id') IS NULL
+              AND EXISTS (SELECT 1 FROM acc_meta
+                                  WHERE aht.id = ANY(acc_meta.path)))
 ),
 acc_balance AS (
 SELECT ac.chart_id AS id, sum(ac.amount) AS balance
@@ -397,29 +449,13 @@ $$;
 CREATE OR REPLACE FUNCTION pnl__customer(in_id integer, in_from_date date, in_to_date date)
   RETURNS SETOF pnl_line LANGUAGE SQL AS
 $$
-WITH hdr_meta AS (
-   SELECT aht.id, aht.accno,
-          coalesce(at.description, aht.description) as description,
-          array_splice_from((SELECT value::int FROM defaults
-                              WHERE setting_key = 'earn_id'),aht.path) as path,
-          ahc.derived_category as category,
-          'H'::char as account_type, 'f'::boolean as contra
-     FROM account_heading_tree aht
-    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
-    LEFT JOIN (SELECT trans_id, description
-             FROM account_translation at
-          INNER JOIN user_preference up ON up.language = at.language_code
-          INNER JOIN users ON up.id = users.id
-            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
-    WHERE array_splice_from((SELECT value::int FROM defaults
-                              WHERE setting_key = 'earn_id'),aht.path)
-                           IS NOT NULL
-),
-acc_meta AS (
+WITH acc_meta AS (
   SELECT a.id, a.accno,
          coalesce(at.description, a.description) as description,
-         array_splice_from((SELECT value::int FROM defaults
-                             WHERE setting_key = 'earn_id'),aht.path) AS path,
+         CASE WHEN (SELECT value::int FROM defaults where setting_key = 'earn_id') IS NULL THEN aht.path
+         ELSE array_splice_from((SELECT value::int FROM defaults
+                             WHERE setting_key = 'earn_id'),aht.path)
+         END AS path,
          a.category, 'A'::char as account_type, contra, a.gifi_accno,
          gifi.description as gifi_description
      FROM account a
@@ -437,6 +473,34 @@ acc_meta AS (
          OR (NOT EXISTS (SELECT 1 FROM defaults
                          WHERE setting_key = 'earn_id')
              AND category IN ('E', 'I'))
+),
+hdr_meta AS (
+   SELECT aht.id, aht.accno,
+          coalesce(at.description, aht.description) as description,
+          CASE WHEN (SELECT value::int FROM defaults where setting_key = 'earn_id') IS NULL THEN aht.path
+          ELSE array_splice_from((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id'),aht.path)
+          END AS path,
+          ahc.derived_category as category,
+          'H'::char as account_type, 'f'::boolean as contra
+     FROM account_heading_tree aht
+    INNER JOIN account_heading_derived_category ahc ON aht.id = ahc.id
+    LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON aht.id = at.trans_id
+    WHERE ((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id') IS NOT NULL
+           AND array_splice_from((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id'),aht.path)
+                           IS NOT NULL)
+          -- legacy: earn_id not configured; select headings belonging to
+          --    selected accounts
+          OR ((SELECT value::int FROM defaults
+                              WHERE setting_key = 'earn_id') IS NULL
+              AND EXISTS (SELECT 1 FROM acc_meta
+                                  WHERE aht.id = ANY(acc_meta.path)))
 ),
 acc_balance AS (
 WITH gl (id) AS
