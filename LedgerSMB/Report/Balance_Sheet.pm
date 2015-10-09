@@ -163,45 +163,45 @@ sub run_report {
                                   'account_category' => 'E',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->text('Expenses'),
+                                      LedgerSMB::Report::text('Expenses'),
                                   'account_description' =>
-                                      $self->text('Expenses') },
+                                      LedgerSMB::Report::text('Expenses') },
                          'I' => { 'account_number' => 'I',
                                   'account_category' => 'I',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->text('Income'),
+                                      LedgerSMB::Report::text('Income'),
                                   'account_description' =>
-                                      $self->text('Income') },
+                                      LedgerSMB::Report::text('Income') },
                          'A' => { 'account_number' => 'A',
                                   'account_category' => 'A',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->text('Assets'),
+                                      LedgerSMB::Report::text('Assets'),
                                   'account_description' =>
-                                      $self->text('Assets') },
+                                      LedgerSMB::Report::text('Assets') },
                          'L' => { 'account_number' => 'L',
                                   'account_category' => 'L',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->text('Liabilities'),
+                                      LedgerSMB::Report::text('Liabilities'),
                                   'account_description' =>
-                                      $self->text('Liabilities') },
+                                      LedgerSMB::Report::text('Liabilities') },
                          'Q' => { 'account_number' => 'Q',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->text('Equity'),
+                                      LedgerSMB::Report::text('Equity'),
                                   'account_description' =>
-                                      $self->text('Equity') },
+                                      LedgerSMB::Report::text('Equity') },
                          'q' => { 'account_number' => '',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
                                   'heading_path' => [ 'Q' ],
                                   'account_desc' =>
-                                      $self->text('Current earnings'),
+                                      LedgerSMB::Report::text('Current earnings'),
                                   'account_description' =>
-                                      $self->text('Current earnings') },
+                                      LedgerSMB::Report::text('Current earnings') },
             );
     }
     else {
