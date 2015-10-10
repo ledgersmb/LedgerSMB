@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 204;
+use Test::More tests => 205;
 use File::Find;
 
 my @on_disk;
@@ -46,7 +46,6 @@ my @exception_modules =
 
      # Exclude because currently broken
      #@@@TODO: 1.5 release blocker!
-     'LedgerSMB::Report::Payroll::Deduction_Types',
     );
 
 # USE STATEMENTS BELOW AS HELPERS TO REFRESH THE TABLE
@@ -137,7 +136,7 @@ my @modules =
           'LedgerSMB::Report::PNL::ECA',
           'LedgerSMB::Report::PNL::Income_Statement',
           'LedgerSMB::Report::PNL::Invoice', 'LedgerSMB::Report::PNL::Product',
-          #'LedgerSMB::Report::Payroll::Deduction_Types',
+          'LedgerSMB::Report::Payroll::Deduction_Types',
           'LedgerSMB::Report::Payroll::Income_Types',
           'LedgerSMB::Report::Reconciliation::Summary',
           'LedgerSMB::Report::Taxform::Details',
