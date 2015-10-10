@@ -7,6 +7,7 @@ div.input {
        than the .dijitTextBox class in order to be the applicable rule */
     width: auto;
 }
+
 div.date {
     width: 13ex;
 }
@@ -27,11 +28,11 @@ html, body {
 #leftCol {
     width: 14em;
 }
- 
+
 .claro .demoLayout .edgePanel {
     background-color: #d0e9fc;
 }
- 
+
 #viewsChart {
     width: 550px;
     height: 550px;
@@ -64,7 +65,7 @@ html, body {
 #account-tabs #H label.line,
 #account-tabs #A label.line
  {
-   font-weight: bold; 
+   font-weight: bold;
    width: 12em;
    margin-right: 0.5em;
    vertical-align: center;
@@ -74,7 +75,7 @@ html, body {
 #account-tabs #H div.inputgroup label,
 #account-tabs #A div.inputgroup label
  {
-   width: 8em; 
+   width: 8em;
 }
 
 #account-tabs #H div.subsectionhead,
@@ -86,11 +87,15 @@ html, body {
 
 /********* For business units editing page ********/
 
-#business_units div.table { display: table;}
-#business_units form.tr,
+#business_units div.table { display: table; }
 #business_units div.tr { display: table-row; }
 #business_units div.td,
-#business_units div.th {display: table-cell; }
+#business_units div.th {
+  display: table-cell;
+  padding-left: 0.5ex;
+  padding-right: 0.5ex;
+  text-align: center;
+ }
 
 
 /********* For assets editing page ********/
@@ -98,7 +103,7 @@ html, body {
 #assets label
 { display: block;
 	float: left;
-	width: 170px;	
+	width: 170px;
 	text-align: right;
 }
 
@@ -195,7 +200,7 @@ html, body {
 }
 
 #PNL th {
-	vertical-align: bottom;	
+	vertical-align: bottom;
 }
 
 #PNL table {

@@ -6,7 +6,6 @@ package LedgerSMB::Reconciliation::CSV;
 use strict;
 use warnings;
 
-use base qw/LedgerSMB::DBObject::Reconciliation/;
 use LedgerSMB::App_State;
 use Try::Tiny;
 

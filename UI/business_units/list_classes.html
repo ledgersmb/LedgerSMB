@@ -1,12 +1,14 @@
-<?lsmb INCLUDE 'ui-header.html' 
-      include_stylesheet = ["UI/business_units/list_classes.css"] 
+<?lsmb INCLUDE 'ui-header.html'
+      include_stylesheet = ["UI/business_units/list_classes.css"]
 ?>
 <?lsmb PROCESS 'elements.html' ?>
 <body class="lsmb <?lsmb dojo_theme ?>">
 <div class="listtop"><?lsmb title ?></div>
+<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method=POST id="edit-<?lsmb id ?>">
+<div id="business_units">
 <div class="table">
 <!-- headings -->
-<div class="tr listheading"> 
+<div class="tr listheading">
     <div class="th"><?lsmb text('ID') ?></div>
     <div class="th"><?lsmb text('Label') ?></div>
     <div class="th"><?lsmb text('Active') ?></div>
@@ -17,11 +19,12 @@
     <div class="th">&nbsp;</div>
     <div class="th">&nbsp;</div>
 </div>
-<?lsmb classes.push({}); 
+<?lsmb classes.push({});
        FOR c IN classes;
            id = c.id;
 ?>
-<form data-dojo-type="lsmb/lib/Form" action="<?lsmb request.script ?>" method=POST id="edit-<?lsmb id ?>" class="tr">
+<div class="tr">
+
 <div class="td">
 <?lsmb PROCESS input element_data = {
     type = "hidden"
@@ -56,7 +59,7 @@
 } ?>
 </div>
   <?lsmb FOREACH m IN modules ?>
-    <div class="td"><?lsmb 
+    <div class="td"><?lsmb
     checked = undef;
     FOREACH mm IN c.modules;
        IF mm.id == m.id;
@@ -89,7 +92,7 @@ PROCESS button element_data = {
     text = text('Delete')
 } ?>
 </div>
-<div class="td"><?lsmb 
+<div class="td"><?lsmb
 IF c.id;
 PROCESS button element_data = {
     type = "submit"
@@ -108,8 +111,11 @@ PROCESS button element_data = {
     text = text('List Units')#'
 };
 END; ?></div>
-</form>
+</div>
 <?lsmb END ?>
 </div>
+</form>
+</div>
+
 </body>
 </html>

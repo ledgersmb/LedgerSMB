@@ -307,6 +307,10 @@ sub get_by_id {
     my ($ref) = __PACKAGE__->call_procedure(funcname => 'entity_credit__get',
                                           args => [$id]);
     $ref->{tax_ids} = $self->_get_tax_ids($id);
+    for (keys %$ref) {
+        delete $ref->{$_}
+        if ! defined $ref->{$_};
+    }
     return __PACKAGE__->new(%$ref);
 }
 
@@ -354,6 +358,10 @@ sub list_for_entity {
     );
     for my $ref (@results){
         $ref->{tax_ids} = $self->_get_tax_ids($ref->{id});
+        for (keys %$ref) {
+            delete $ref->{$_}
+               if ! defined $ref->{$_};
+        }
         $ref = __PACKAGE__->new(%$ref);
     }
     return @results;
