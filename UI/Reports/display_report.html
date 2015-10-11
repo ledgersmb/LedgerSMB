@@ -16,7 +16,6 @@ LINK = LINK.replace('\&amp;\&amp;', '&amp;');
 <div class="report_header"><label><?lsmb text('Report Name') ?>:</label>
 <span class="report_header"><?lsmb name ?></span>
 </div>
-<body class="lsmb <?lsmb dojo_theme ?>">
 <div class="report_header"><label><?lsmb text('Company') ?>:</label>
 <span class="report_header"><?lsmb request.company ?></span>
 </div>
@@ -74,5 +73,6 @@ IF FORMATS.grep('ODS').size() ?>
 <a target="_blank"
    href="<?lsmb LINK _ '&format=ODS' ?>">[<?lsmb text('ODS') ?>]</a>&nbsp;
 <?lsmb END; ?>
+</form>
 </body>
 <?lsmb PROCESS end_html ?>
