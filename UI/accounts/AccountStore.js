@@ -24,10 +24,12 @@ define([
             item.text = item.accno + '--' + item.description;
             store.put(item);
           });
-         console.log('AccountStore emitting loadclomplete');
+//         console.log('AccountStore emitting loadclomplete');
          store.emitter.emit("accountstore_loadcomplete",{bubbles: true,cancelable: false});
         },
-        function(error){console.error(eror);}
-        );
-     return store;
+        function(error){
+//            console.error(error);
+        }
+    );
+    return store;
 });

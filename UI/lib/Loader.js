@@ -57,7 +57,7 @@ function(
 							  method = 'GET';
 						 }
 						 var url = domattr.get(formnode, 'action');
-						 console.log(url);
+//						 console.log(url);
 						 var options = { "handleAs": "text" };
 						 if ('get' == method.toLowerCase()){
 							  url = url + '?' + qobj;
