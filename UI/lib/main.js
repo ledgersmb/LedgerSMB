@@ -105,26 +105,31 @@ function setup_dojo() {
 require([
     'dojo/on', 'dojo/query',
     'dojo/dom-attr', 'dojo/topic',
-    'dojo/request/xhr', 'dojo/domReady!'
-], function (on, query, domattr, topic, xhr) {
-        query('a.t-submenu').forEach(function(node){
-             on(node, 'click', function(e){
-                   e.preventDefault();
-                   SwitchMenu(node.id.replace(/a/, 'menu'));
-                }
-             );
-        });
-        query('a.menu-terminus').forEach(function(node){
-             if (node.href.search(/pl/)){
-                 on(node, 'click', function(e){
-                     e.preventDefault();
-                     load_link(xhr, domattr.get(node,'href'));
-                 });
-             }
-        });
-        topic.subscribe("/dojo/hashchange", function(hash) {
+    'dojo/request/xhr', 'dojo/ready', 'dojo/domReady!'
+], function (on, query, domattr, topic, xhr, ready) {
+    query('a.t-submenu').forEach(function(node){
+        on(node, 'click', function(e){
+            e.preventDefault();
+            SwitchMenu(node.id.replace(/a/, 'menu'));
+        }
+          );
+    });
+    query('a.menu-terminus').forEach(function(node){
+        if (node.href.search(/pl/)){
+            on(node, 'click', function(e){
+                e.preventDefault();
+                load_link(xhr, domattr.get(node,'href'));
+            });
+        }
+    });
+    ready(function() {
+        if (window.location.hash) {
+            load_link(xhr, window.location.hash.substring(1));
+        }
+    });
+    topic.subscribe("/dojo/hashchange", function(hash) {
 //            console.log(hash);
-            load_link(xhr, hash);
-        });
-    }
-);
+        load_link(xhr, hash);
+    });
+});
+
