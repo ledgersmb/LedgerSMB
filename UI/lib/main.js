@@ -21,7 +21,7 @@ function(l){
 
 function SwitchMenu(id) {
     var obj = id.replace(/^a/, 'menu');
-    console.log(id);
+//    console.log(id);
     if (document.getElementById) {
         var element = document.getElementById(obj);
 
@@ -36,7 +36,7 @@ function SwitchMenu(id) {
 }
 
 function set_main_div(doc){
-    console.log('setting body');
+//    console.log('setting body');
     var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
     var newbody = body[1];
     require(['dojo/query', 'dojo/dom', 'dojo/dom-style',
@@ -128,7 +128,7 @@ require([
         }
     });
     topic.subscribe("/dojo/hashchange", function(hash) {
-        console.log(hash);
+//            console.log(hash);
         load_link(xhr, hash);
     });
 });
