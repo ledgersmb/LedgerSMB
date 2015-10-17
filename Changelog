@@ -31,6 +31,12 @@ Changelog for 1.4.17
 * Added more SQL Ledger 2.8 migration checks (ErikH)
 * Fixed incomplete (xe)demo and demo-with-images templates (ErikH)
 
+Note: This release changes the way the account headings are used
+   on the balancesheet and income statement reports.  This requires
+   additional configuration. See
+       http://ledgersmb.org/topic/using-account-hierarchies-reporting
+   for more information.
+
 ChrisT is Chris Travers
 ErikH is Erik Huelsmann
 
