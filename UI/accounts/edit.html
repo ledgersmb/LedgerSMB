@@ -56,7 +56,10 @@ INCLUDE 'ui-header.html'
     FOREACH h IN form.all_headings;
         h.text = h.accno _ '--' _ h.description;
     END;
-    form.all_headings.push({h.id = -1, text = '(none)' });
+    form.all_headings.push({ id = -1, text = '(none)' });
+    IF (! form.account_heading);
+       form.account_heading = -1;
+    END;
     INCLUDE select element_data = {
                   name = 'parent'
                options = form.all_headings
