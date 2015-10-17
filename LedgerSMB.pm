@@ -337,15 +337,6 @@ sub new {
     }
     $self->get_user_info;
 
-    my %date_setting = (
-        'mm/dd/yy' => "ISO, MDY",
-        'mm-dd-yy' => "ISO, MDY",
-        'dd/mm/yy' => "ISO, DMY",
-        'dd-mm-yy' => "ISO, DMY",
-        'dd.mm.yy' => "ISO, DMY",
-    );
-
-    $self->{dbh}->do("set DateStyle to '".$date_setting{$self->{_user}->{dateformat}}."'");
     $self->{_locale}=LedgerSMB::Locale->get_handle($self->{_user}->{language})
      or $self->error(__FILE__.':'.__LINE__.": Locale not loaded: $!\n");
 
