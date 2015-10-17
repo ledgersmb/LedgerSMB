@@ -45,15 +45,6 @@ CREATE OR REPLACE FUNCTION admin__add_user_to_role(in_username TEXT, in_role TEX
 	  RAISE EXCEPTION 'Cannot grant permissions to a non-existant application user.';
         end if;
 
-	perform * from lsmb_roles
-	 where user_id = t_userid and role = in_role;
-	if not FOUND then
-          -- not found --> adding
-          insert into lsmb_roles (user_id, role)
-          SELECT id, in_role from users where username = in_username
-                 AND id not in (select user_id from lsmb_roles
-                                 where role = in_role);
-        end if;
         return 1;
     END;
 
@@ -68,7 +59,6 @@ CREATE OR REPLACE FUNCTION admin__remove_user_from_role(in_username TEXT, in_rol
         stmt TEXT;
         a_role name;
         a_user name;
-    BEGIN
 
         -- Issue the grant
         select rolname into a_role from pg_roles where rolname = in_role;

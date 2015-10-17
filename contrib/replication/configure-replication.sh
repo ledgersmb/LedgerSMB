@@ -147,7 +147,7 @@ TABLES=" ac_tax_form acc_trans account account_checkpoint account_heading
          file_order_to_tx file_part file_secondary_attachment file_transaction
          file_tx_to_order file_view_catalog gifi gl inventory invoice
          invoice_note invoice_tax_form jcitems language location location_class
-         lsmb_roles makemodel menu_acl menu_attribute menu_node mime_type
+         makemodel menu_acl menu_attribute menu_node mime_type
          new_shipto note note_class oe oe_class open_forms orderitems parts
          parts_translation partscustomer partsgroup partsgroup_translation
          partstax partsvendor payment payment_links payment_type payments_queue

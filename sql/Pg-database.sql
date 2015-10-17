@@ -558,22 +558,7 @@ CREATE TABLE users (
     entity_id int not null references entity(id) on delete cascade
 );
 
-
-create table lsmb_roles (
-    
-    user_id integer not null references users(id) ON DELETE CASCADE,
-    role text not null
-    
-);
-
-COMMENT ON TABLE lsmb_roles IS 
-$$ Tracks role assignments in the front end.  Not sure why we need this.  Will
-rethink for 1.4.
-$$;
-
-
 -- Session tracking table
-
 
 CREATE TABLE session(
 session_id serial PRIMARY KEY,

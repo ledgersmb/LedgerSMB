@@ -1107,7 +1107,7 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
 SELECT lsmb__grant_perms('base_user', 'defaults', 'ALL');
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['contact_class'::text, 'batch_class',
-                    'entity_class', 'lsmb_roles', 'users']) obj;
+                    'entity_class', 'users']) obj;
 
 SELECT lsmb__grant_perms('base_user', obj, 'ALL')
   FROM unnest(array['session'::text, 'session_session_id_seq',
