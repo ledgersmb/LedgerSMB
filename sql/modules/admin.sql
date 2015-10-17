@@ -59,6 +59,7 @@ CREATE OR REPLACE FUNCTION admin__remove_user_from_role(in_username TEXT, in_rol
         stmt TEXT;
         a_role name;
         a_user name;
+    BEGIN
 
         -- Issue the grant
         select rolname into a_role from pg_roles where rolname = in_role;
