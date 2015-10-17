@@ -10,6 +10,12 @@ Changelog for 1.4.17
 * Fixed incomplete (xe)demo and demo-with-images templates (ErikH)
 * Fixed unable to make heading its own root (GH 896, Chris T)
 
+Note: This release changes the way the account headings are used
+   on the balancesheet and income statement reports.  This requires
+   additional configuration. See
+       http://ledgersmb.org/topic/using-account-hierarchies-reporting
+   for more information.
+
 ChrisT is Chris Travers
 ErikH is Erik Huelsmann
 
