@@ -23,6 +23,9 @@ Quality assurance:
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.18
+* Fixed nbv report showing 0 before item is depreciated (GH 879, Chris T)
+
 Changelog for 1.4.17
 * FEATURE: Automatic calculation of taxes in AR/AP transactions (ErikH)
 * FEATURE: Use account hierarchies in balance and PnL reporting (ErikH)
@@ -30,6 +33,7 @@ Changelog for 1.4.17
 * Fixed template references to item (order/invoice) descriptions (ErikH)
 * Added more SQL Ledger 2.8 migration checks (ErikH)
 * Fixed incomplete (xe)demo and demo-with-images templates (ErikH)
+* Fixed cannot make header its own root, GH 896 (Chris T)
 
 ChrisT is Chris Travers
 ErikH is Erik Huelsmann
