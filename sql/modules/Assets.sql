@@ -686,7 +686,7 @@ $$
                                            ai.start_depreciation,
                                            ai.purchase_date))/ 12,
           ai.purchase_value - ai.salvage_value, ai.salvage_value, max(r.report_date),
-          sum(rl.amount), ai.purchase_value - sum(rl.amount) 
+          sum(rl.amount), ai.purchase_value - coalesce(sum(rl.amount), 0)
      FROM asset_item ai
      JOIN asset_class ac ON (ai.asset_class_id = ac.id)
      JOIN asset_dep_method adm ON (adm.id = ac.method)
