@@ -1061,7 +1061,9 @@ SELECT lsmb__create_role('assets_enter');
 SELECT lsmb__grant_perms('assets_enter', 'asset_item_id_seq', 'ALL');
 SELECT lsmb__grant_perms('assets_enter', 'asset_class', 'SELECT');
 SELECT lsmb__grant_perms('assets_enter', 'asset_item', ptype)
-  FROM unnest(array['SELECT'::text, 'INSERT']) ptype;
+  FROM unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) ptype;
+SELECT lsmb__grant_perms('assets_enter', 'asset_note', ptype)
+  FROM unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) ptype;
 
 SELECT lsmb__grant_menu('assets_enter', id, 'allow')
   FROM unnest(array[230, 231, 232, 233, 235]) id;
@@ -1105,7 +1107,7 @@ SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
 SELECT lsmb__grant_perms('base_user', 'defaults', 'ALL');
 SELECT lsmb__grant_perms('base_user', obj, 'SELECT')
   FROM unnest(array['contact_class'::text, 'batch_class',
-                    'entity_class', 'lsmb_roles', 'users']) obj;
+                    'entity_class', 'users']) obj;
 
 SELECT lsmb__grant_perms('base_user', obj, 'ALL')
   FROM unnest(array['session'::text, 'session_session_id_seq',
