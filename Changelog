@@ -7,6 +7,7 @@ Changelog for 1.4.17
 * Fixed partial shipments decrementing extra inventory (ChrisT)
 * Fixed template references to item (order/invoice) descriptions (ErikH)
 * Added more SQL Ledger 2.8 migration checks (ErikH)
+* Fixed cannot make header its own root, GH 896 (Chris T)
 
 ChrisT is Chris Travers
 ErikH is Erik Huelsmann
