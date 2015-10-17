@@ -9,10 +9,10 @@
 <table width="100%">
 
   <?lsmb LETTERHEAD ?>
-  
+
   <tr>
     <td width=10>&nbsp;</td>
-  
+
     <th colspan=3>
       <h4 style="text-transform:uppercase">
              <?lsmb text('Purchase Order') ?>
@@ -22,7 +22,7 @@
 
   <tr>
     <td>&nbsp;</td>
-    
+
     <td>
       <table width=100% cellspacing=0 cellpadding=0>
 	<tr bgcolor=000000>
@@ -49,11 +49,11 @@
 	  <?lsmb IF contact ?>
 	  <br><?lsmb text('Attn: [_1]', contact) ?>
 	  <?lsmb END ?>
-	  
+
 	  <?lsmb IF vendorphone ?>
 	  <br><?lsmb text('Tel: [_1]', vendorphone) ?>
 	  <?lsmb END ?>
-	  
+
 	  <?lsmb IF vendorfax ?>
 	  <br><?lsmb text('Fax: [_1]', vendorfax) ?>
 	  <?lsmb END ?>
@@ -77,11 +77,11 @@
 	  <?lsmb IF shiptocontact ?>
 	  <br><?lsmb text('Attn: [_1]', shiptocontact) ?>
 	  <?lsmb END ?>
-	  
+
 	  <?lsmb IF shiptophone ?>
 	  <br><?lsmb text('Tel: [_1]', shiptophone) ?>
 	  <?lsmb END ?>
-	  
+
 	  <?lsmb IF shiptofax ?>
 	  <br><?lsmb text('Fax: [_1]', shiptofax) ?>
 	  <?lsmb END ?>
@@ -138,7 +138,7 @@
 	<tr valign=top>
 	  <td align=right><?lsmb runningnumber.${loop_count} ?>.</td>
 	  <td><?lsmb number.${loop_count} ?></td>
-	  <td><?lsmb description.${loop_count} ?></td>
+	  <td><?lsmb item_description.${loop_count} ?></td>
 	  <td align=right><?lsmb qty.${loop_count} ?></td>
 	  <td><?lsmb unit.${loop_count} ?></td>
 	  <td align=right><?lsmb sellprice.${loop_count} ?></td>
@@ -150,7 +150,7 @@
 	<tr>
 	  <td colspan=8><hr noshade></td>
 	</tr>
-	
+
 	<tr>
           <?lsmb IF taxincluded ?>
 	  <th colspan=7 align=right><?lsmb text('Total') ?></th>
@@ -173,7 +173,7 @@
 	  <td colspan=4>&nbsp;</td>
 	  <td colspan=4><hr noshade></td>
 	</tr>
-	
+
         <?lsmb IF NOT taxincluded ?>
 	  <th colspan=7 align=right><?lsmb text('Total') ?></th>
 	  <td colspan=1 align=right><?lsmb ordtotal ?></td>
@@ -196,7 +196,7 @@
 	<tr>
 	  <td>&nbsp;</td>
 	</tr>
-	
+
         <?lsmb IF ordtotal ?>
 	<tr>
 	  <td colspan=8 align=right>
@@ -212,7 +212,7 @@
   <?lsmb IF notes ?>
   <tr>
     <td>&nbsp;</td>
-    
+
     <td>
     <table width="100%">
       <tr valign=top>
@@ -229,7 +229,7 @@
 
   <tr>
     <td>&nbsp;</td>
-  
+
     <td>
       <table width="100%">
 	<tr valign=top>

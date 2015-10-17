@@ -9,10 +9,10 @@
 <table width="100%">
 
   <?lsmb LETTERHEAD ?>
-  
+
   <tr>
     <td width=10>&nbsp;</td>
-    
+
     <th colspan=3>
       <h4 style="text-transform:uppercase">
 	<?lsmb text('Work Order') ?></h4>
@@ -92,10 +92,10 @@
   </tr>
 
   <tr height=5></tr>
-  
+
   <tr>
     <td>&nbsp;</td>
-    
+
     <td>
       <table width=100% border=1>
 	<tr>
@@ -121,7 +121,7 @@
 
   <tr>
     <td>&nbsp;</td>
- 
+
     <td>
       <table width="100%">
 	<tr bgcolor=000000>
@@ -139,7 +139,7 @@
 	<tr valign=top>
           <td align=right><?lsmb runningnumber.${loop_count} ?>.</td>
 	  <td><?lsmb number.${loop_count} ?></td>
-	  <td><?lsmb description.${loop_count} ?></td>
+	  <td><?lsmb item_description.${loop_count} ?></td>
 	  <td align=right><?lsmb qty.${loop_count} ?></td>
 	  <td><?lsmb unit.${loop_count} ?></td>
            <td><?lsmb bin.${loop_count} ?></td>

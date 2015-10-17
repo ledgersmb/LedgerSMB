@@ -1016,6 +1016,7 @@ SELECT lsmb__grant_menu('template_edit', id, 'allow')
 
 SELECT lsmb__create_role('users_manage');
 SELECT lsmb__grant_role('users_manage', 'contact_read');
+SELECT lsmb__grant_role('users_manage', 'contact_create');
 SELECT lsmb__grant_role('users_manage', 'contact_class_employee');
 SELECT lsmb__grant_exec('users_manage', 'admin__add_user_to_role(TEXT, TEXT)');
 SELECT lsmb__grant_exec('users_manage', 'admin__remove_user_from_role(TEXT, TEXT)');
@@ -1059,7 +1060,9 @@ SELECT lsmb__create_role('assets_enter');
 SELECT lsmb__grant_perms('assets_enter', 'asset_item_id_seq', 'ALL');
 SELECT lsmb__grant_perms('assets_enter', 'asset_class', 'SELECT');
 SELECT lsmb__grant_perms('assets_enter', 'asset_item', ptype)
-  FROM unnest(array['SELECT'::text, 'INSERT']) ptype;
+  FROM unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) ptype;
+SELECT lsmb__grant_perms('assets_enter', 'asset_note', ptype)
+  FROM unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) ptype;
 
 SELECT lsmb__grant_menu('assets_enter', id, 'allow')
   FROM unnest(array[230, 231, 232, 233, 235]) id;
