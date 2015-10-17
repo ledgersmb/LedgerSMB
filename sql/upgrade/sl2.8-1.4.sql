@@ -308,9 +308,11 @@ UPDATE sl28.employee set entity_id =
 INSERT INTO person (first_name, last_name, entity_id) 
 select name, name, entity_id FROM sl28.employee;
 
-INSERT INTO users (entity_id, username)
-     SELECT entity_id, login FROM sl28.employee em
-      WHERE login IS NOT NULL;
+-- users in SL2.8 have to be re-created using the 1.4 user interface
+-- Intentionally do *not* migrate the users table to prevent later conflicts
+--INSERT INTO users (entity_id, username)
+--     SELECT entity_id, login FROM sl28.employee em
+--      WHERE login IS NOT NULL;
 
 INSERT 
   INTO entity_employee(entity_id, startdate, enddate, role, ssn, sales,
@@ -442,15 +444,15 @@ ALTER TABLE ap ENABLE TRIGGER ap_audit_trail;
 -- ### Move those to business_units
 -- ### TODO: Reconciled disappeared from the source table...
 
-ALTER TABLE sl28.acc_trans ADD COLUMN entry_id integer;
+ALTER TABLE sl28.acc_trans ADD COLUMN lsmb_entry_id integer;
 
 update sl28.acc_trans
-  set entry_id = nextval('acc_trans_entry_id_seq');
+  set lsmb_entry_id = nextval('acc_trans_entry_id_seq');
 
 INSERT INTO acc_trans
 (entry_id, trans_id, chart_id, amount, transdate, source, cleared, fx_transaction, 
 	memo, approved, cleared_on, voucher_id)
-SELECT entry_id, trans_id, (select id
+SELECT lsmb_entry_id, trans_id, (select id
                     from account
                    where accno = (select accno
                                     from sl28.chart
@@ -599,7 +601,10 @@ INSERT INTO partscustomer(parts_id, credit_id, pricegroup_id, pricebreak,
        FROM sl28.partscustomer pv
        JOIN sl28.customer v ON v.id = pv.customer_id;
 
-INSERT INTO language SELECT * FROM sl28.language;
+INSERT INTO language
+SELECT * FROM sl28.language sllang
+ WHERE NOT EXISTS (SELECT 1
+                     FROM language l WHERE l.code = sllang.code);
 
 INSERT INTO audittrail(trans_id, tablename, reference, formname, action,
             transdate, person_id)
