@@ -2468,10 +2468,14 @@ sub create_links {
                   FROM chart a
                   JOIN account ON a.id = account.id AND NOT account.obsolete
                  WHERE (link LIKE ?) OR account.tax
+                       AND (a.id in (select acctrans.chart_id 
+                                       FROM acctrans 
+                                      WHERE trans_id = coalesce(?, -1))
+                           OR NOT account.obsolete)
               ORDER BY accno|;
 
     $sth = $dbh->prepare($query);
-    $sth->execute( "%" . "$module%" ) || $self->dberror($query);
+    $sth->execute( "%" . "$module%", $self->{id}) || $self->dberror($query);
 
     $self->{accounts} = "";
 
