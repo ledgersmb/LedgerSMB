@@ -89,7 +89,7 @@ link:  a list of strings representing text box identifier.
 
 sub save {
     my ($request) = @_;
-    $request->{parent} = undef if $reques->{parent} == -1;
+    $request->{parent} = undef if $request->{parent} == -1;
     my $account = LedgerSMB::DBObject::Account->new({base => $request});
     $account->{$account->{summary}}=$account->{summary};
     if ($request->{languagecount} > 0) {
