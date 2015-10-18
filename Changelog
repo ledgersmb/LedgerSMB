@@ -24,8 +24,6 @@ Changelog for 1.4 Series
 Released 2014-09-15
 
 Changelog for 1.4.18
-* Fixed nbv report showing 0 before item is depreciated (GH 879, Chris T)
-* Fixed permissions entering assets (GH 878, Chris T)
 * Removed broken handling of old datestyle settings (Chris T)
 * Fixed #765, manage_users broken on db creation (Chris T)
 * Fixed date showing up as PGDate::Hash on Asset report (Chris T)
