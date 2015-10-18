@@ -1,8 +1,16 @@
 # run on container-based build:
 sudo: false
 language: perl
+env:
+  global:
+    - secure: UF72BIXXxkPTIJTV4jl3Sm2eg9JdSK0yNqZLdlF2eDc9M1WldvIOr2qg9zJDcBW7M3qB7wKbyBk6PMcqLcY7mCOVTHQB1ORJa8F4dLTK0JFbGLqARAheCrYjQPhy8cIySbV1yFs5hrP2KeTXd0ZcS0bA+MyK0azMRztu+P3WD80=
+    - secure: Htra4bK1HEcUoxtraW+Usv+xXuTlIAuMQDWDc7rrMKLKZMNDuC9buuGbOaXDJx1Rty8h05gMkEcN7LD0fD9FhFzDOW7cnKfYHtysH+Gq1a21TZIKb3lgT4n0344Qg/7FuoV9zUl7WWzW5bg6TYvchdOasJ9CVl4n92dYsr4Y+Ck=
 matrix:
   include:
+    - perl: '5.22'
+      addons:
+        postgresql: '9.4'
+        sauce_connect: true
     - perl: '5.20'
       addons:
         postgresql: "9.4"
@@ -35,17 +43,18 @@ matrix:
 before_install:
   - git clone git://github.com/travis-perl/helpers ~/travis-perl-helpers
   - source ~/travis-perl-helpers/init
-  - build-perl
+  - build-perl 2>/dev/null
   - perl -V
-  - build-dist
+  - build-dist 2>/dev/null
   - cd $BUILD_DIR             # $BUILD_DIR is set by the build-dist command
 
 install:
-  - cpan-install --deps       # installs prereqs, including recommends
+  - cpan-install --deps  2>/dev/null   # installs prereqs, including recommends
   - cpan-install --coverage   # installs converage prereqs, if enabled
+  - cpanm starman # needed for sauce tests
 
 before_script:
-  - coverage-setup
+  - coverage-setup 2>/dev/null
 
 script:
    export RELEASE_TESTING=1 && yes n | perl Makefile.PL && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest make test
