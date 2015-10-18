@@ -4,6 +4,7 @@ BEGIN: {
         plan tests => 2;
     } else {
         plan skipall => 'not a pull request' unless $ENV{TRAVIS_PULL_REQUEST};
+        exit 0;
     }
 }
 
