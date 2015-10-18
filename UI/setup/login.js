@@ -11,7 +11,7 @@ function submit_form() {
 					 user: username,
 					 password: password
 				}).then(function(data){
-					 window.location.href="setup.pl?action=login&company="+company;
+					 window.location.href="setup.pl?action=login&database="+company;
 				}, function(err) {
 					 var status = err.response.status;
 					 if (status == '454'){
