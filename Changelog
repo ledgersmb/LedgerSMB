@@ -29,6 +29,7 @@ Changelog for 1.4.18
 * Fixed date showing up as PGDate::Hash on Asset report (Chris T)
 * Fixed Net Book Value reporting '0' before depreciation (GH 879, ChrisT)
 * Fixed permissions entering assets (GH 878, ChrisT)
+* Removed unused pos_invoice.txt (GH #875, Chris T)
 
 ChrisT is Chris Travers
 
