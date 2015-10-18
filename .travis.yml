@@ -51,7 +51,7 @@ before_install:
 install:
   - cpan-install --deps  2>/dev/null   # installs prereqs, including recommends
   - cpan-install --coverage   # installs converage prereqs, if enabled
-  - cpanm starman # needed for sauce tests
+  - cpan-install Starman # needed for sauce tests
 
 before_script:
   - coverage-setup 2>/dev/null
