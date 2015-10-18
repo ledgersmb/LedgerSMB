@@ -407,7 +407,7 @@ sub _process_cookies {
     my ($self) = @_;
     my %cookie;
 
-    if ($self->is_run_mode('cgi', 'mod_perl')) {
+    if ($self->is_run_mode('cgi', 'mod_perl') and $ENV{HTTP_COOKIE}) {
         $ENV{HTTP_COOKIE} =~ s/;\s*/;/g;
         my @cookies = split /;/, $ENV{HTTP_COOKIE};
         foreach (@cookies) {
@@ -525,6 +525,7 @@ sub _db_init {
     }
     LedgerSMB::App_State::set_DBH($self->{dbh});
     LedgerSMB::App_State::set_DBName($self->{company});
+    return if $self->{company} eq 'postgres';
 
     try {
         LedgerSMB::DBH->require_version($VERSION);

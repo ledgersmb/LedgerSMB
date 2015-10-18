@@ -2,18 +2,16 @@ function submit_form() {
 	 require(['dojo/request/xhr','dojo/dom', 'dojo/dom-style'],
 				function(xhr,dom,style){
 
-					 var username = dom.byId('s_user').value;
-					 var password = dom.byId('s_password').value;
-					 var company = document.login_form.company.value;
-					 var action = document.login_form.action.value;
+					 var username = document.getElementsByName('s_user')[0].value;
+					 var password = document.getElementsByName('s_password')[0].value;
+					 var company = document.getElementsByName('database')[0].value;
 
 		  xhr('login.pl?action=authenticate&company=postgres',
 				{
 					 user: username,
 					 password: password
 				}).then(function(data){
-					 window.location.href=action
-						  +".pl?action=login&company="+company;
+					 window.location.href="setup.pl?action=login&database="+company;
 				}, function(err) {
 					 var status = err.response.status;
 					 if (status == '454'){

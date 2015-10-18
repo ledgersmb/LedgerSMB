@@ -75,8 +75,9 @@ sub _get_database {
 sub _init_db {
     my ($request) = @_;
     my $database = _get_database($request);
-    $request->{dbh} = $database->connect()
-    if ! defined $request->{dbh};
+    local $@;
+    $request->{dbh} = eval { $database->connect() }
+        if ! defined $request->{dbh};
     $LedgerSMB::App_State::DBH = $request->{dbh};
 
     return $database;
