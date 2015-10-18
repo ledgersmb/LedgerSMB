@@ -37,7 +37,10 @@
 					target = '_top'
 				<?lsmb END ?>
 				id="a_<?lsmb- item.id -?>"
-                                class="<?lsmb IF item.module; 'menu-terminus';
+                                class="<?lsmb IF item.label == 'New Window';
+                                                   'menu-new-window';
+                                              ELSIF item.module; 
+                                                   'menu-terminus';
                                               ELSE; 't-submenu'; END ?>"
 				><?lsmb text(item.label) ?></a>
 		<?lsmb IF item.menu && (item.label != 'New Window') ?>
