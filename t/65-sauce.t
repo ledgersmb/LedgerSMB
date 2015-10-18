@@ -1,10 +1,13 @@
 use Test::More;
 BEGIN: {
-    plan skipall => 'not a pull request' unless $ENV{TRAVIS_PULL_REQUEST};
+    if ($ENV{TRAVIS_PULL_REQUEST} and $ENV{TEST_SAUCE}){
+        plan tests => 2;
+    } else {
+        plan skipall => 'not a pull request' unless $ENV{TRAVIS_PULL_REQUEST};
+    }
 }
 
 use Selenium::Remote::Driver;
-plan tests => 2 if $ENV{TRAVIS_PULL_REQUEST};
 
 my $host = "$ENV{SAUCE_USER_NAME}:$ENV{SAUCE_API_KEY}\@ondemand.saucelabs.com";
 

@@ -11,6 +11,8 @@ matrix:
       addons:
         postgresql: '9.4'
         sauce_connect: true
+      env:
+        - TEST_SAUCE=1
     - perl: '5.20'
       addons:
         postgresql: "9.4"
@@ -52,6 +54,7 @@ install:
   - cpan-install --deps  2>/dev/null   # installs prereqs, including recommends
   - cpan-install --coverage   # installs converage prereqs, if enabled
   - cpan-install Starman # needed for sauce tests
+  - cpan-install Selenium::Remote::Driver;
 
 before_script:
   - coverage-setup 2>/dev/null
