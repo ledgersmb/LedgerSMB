@@ -959,8 +959,6 @@ sub save_user {
                                             "users_manage",
                                          ]
         );
-    } else {
-        $request->error($request->{_locale}->text('No Permissions Assigned'));
    }
    $request->{dbh}->commit;
    $request->{dbh}->begin_work;
@@ -1117,6 +1115,7 @@ sub create_initial_user {
    @{$request->{perm_sets}} = (
        {id => '0', label => $locale->text('Manage Users')},
        {id => '1', label => $locale->text('Full Permissions')},
+       {id => '-1', label => $locale->text('No changes')},
    );
     my $template = LedgerSMB::Template->new(
                    path => 'UI/setup',
