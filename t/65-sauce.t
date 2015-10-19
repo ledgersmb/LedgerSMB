@@ -19,7 +19,7 @@ my $driver = new Selenium::Remote::Driver(
                           'version' => "46",
                           'platform' => "Linux",
                           );
-$driver->get('http://saucelabs.com:5000/login.pl');
+$driver->get('http://$ENV{SAUCE_USER_NAME}:$ENV{SAUCE_API_KEY}@saucelabs.com:5000/login.pl');
 
 ok($driver->find_element_by_name('password'), 'got a password');
 
