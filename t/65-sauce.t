@@ -1,10 +1,10 @@
 use Test::More;
 if ($ENV{TEST_SAUCE} and
-   $ENV{SAUCE_USER_NAME} and $ENV{SAUCE_API_KEY}
+   $ENV{SAUCE_USERNAME} and $ENV{SAUCE_API_KEY}
 ){
     plan tests => 2;
     require Selenium::Remote::Driver;
-    my $host = "$ENV{SAUCE_USER_NAME}:$ENV{SAUCE_API_KEY}\@ondemand.saucelabs.com";
+    my $host = "$ENV{SAUCE_USERNAME}:$ENV{SAUCE_API_KEY}\@ondemand.saucelabs.com";
 
     my $driver = new Selenium::Remote::Driver(
                           'remote_server_addr' => $host,
@@ -21,9 +21,6 @@ if ($ENV{TEST_SAUCE} and
 
     ok($driver->find_element_by_name('s_passwd'), 'got a password');
 } else {
-    use Data::Dumper;
-    $Data::Dumper::Sortkeys = 1;
-    print STDERR Dumper(\%ENV);
     plan skip_all => 'not a told to ';
     ok(1);
 }
