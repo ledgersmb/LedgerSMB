@@ -609,7 +609,7 @@ sub post_invoice {
                     INSERT INTO acc_trans
                                 (trans_id, chart_id, amount,
                                 transdate)
-                            VALUES (?, (SELECT id FROM accno
+                            VALUES (?, (SELECT id FROM account
                                 WHERE accno = ?),
                                 ?, ?)|;
                 $sth = $dbh->prepare($query);
