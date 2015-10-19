@@ -21,7 +21,8 @@ if ($ENV{TEST_SAUCE} and
 
     ok($driver->find_element_by_name('s_passwd'), 'got a password');
 } else {
-    plan skip_all => 'not a pull request';
+    printenv();
+    plan skip_all => 'not a told to ';
     ok(1);
 }
 
