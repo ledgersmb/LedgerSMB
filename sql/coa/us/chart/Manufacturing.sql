@@ -80,17 +80,17 @@ SELECT account__save(NULL,'5540','Taxes - Personal Property','E','', NULL, false
 SELECT account__save(NULL,'5550','Taxes - Franchise','E','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5560','Taxes - Foreign Withholding','E','', NULL, false, false, string_to_array('', ':'), false, false);
 --
-insert into tax (chart_id,rate) values ((select id from chart where accno = '2150'),0.05);
+insert into tax (chart_id,rate) values ((select id from account where accno = '2150'),0.05);
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '1520'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno = '1520'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '4020'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '4020'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '5020'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '5020'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '4450'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '4450'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '5810'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '5810'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'USD:CAD:EUR');
 

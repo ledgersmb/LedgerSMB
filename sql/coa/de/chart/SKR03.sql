@@ -254,23 +254,23 @@ SELECT account__save(NULL,'3400','Wareneingang, 16% Vorsteuer','E','3400', NULL,
 SELECT account__save(NULL,'8400','Umsatzerlöse 16%','I','8400', NULL, false, false, string_to_array('AR_amount:IC_sale', ':'), false, false);
 SELECT account__save(NULL,'8840','Erträge aus Kursdifferenzen','I','8840', NULL, false, false, string_to_array('AR_amount:IC_sale:IC_income', ':'), false, false);
 --
-insert into tax (chart_id,rate) values ((select id from chart where accno = '1571'),0.07);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '1575'),0.16);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '1576'),0.15);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '1775'),0.16);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '1776'),0.15);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '3400'),0.16);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '8400'),0.16);
+insert into tax (chart_id,rate) values ((select id from account where accno = '1571'),0.07);
+insert into tax (chart_id,rate) values ((select id from account where accno = '1575'),0.16);
+insert into tax (chart_id,rate) values ((select id from account where accno = '1576'),0.15);
+insert into tax (chart_id,rate) values ((select id from account where accno = '1775'),0.16);
+insert into tax (chart_id,rate) values ((select id from account where accno = '1776'),0.15);
+insert into tax (chart_id,rate) values ((select id from account where accno = '3400'),0.16);
+insert into tax (chart_id,rate) values ((select id from account where accno = '8400'),0.16);
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '7140'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno = '7140'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '8400'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '8400'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '4700'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '4700'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '8840'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '8840'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '8840'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '8840'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR:USD');
 

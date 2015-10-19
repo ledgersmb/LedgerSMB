@@ -220,24 +220,24 @@ SELECT account__save(NULL,'0830000','Erlöse 7%USt','I','0830000', NULL, false, 
 SELECT account__save(NULL,'0840000','Erlöse 16% USt.','I','0840000', NULL, false, false, string_to_array('AR_amount:IC_sale:IC_income', ':'), false, false);
 SELECT account_heading_save(NULL, '950', 'Rückstellungen', NULL);
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '0398000'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno = '0398000'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '0840000'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '0840000'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '0399000'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '0399000'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '0266000'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '0266000'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '0215000'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '0215000'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR:USD');
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 --
-INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '0157100'),0.07);
-INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '0157500'),0.16);
-INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '0177100'),0.07);
-INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '0177500'),0.16);
+INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM account WHERE accno = '0157100'),0.07);
+INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM account WHERE accno = '0157500'),0.16);
+INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM account WHERE accno = '0177100'),0.07);
+INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM account WHERE accno = '0177500'),0.16);
 
 commit;
 UPDATE account

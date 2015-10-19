@@ -584,7 +584,7 @@ sub post_invoice {
         $query = qq|
             INSERT INTO acc_trans (trans_id, chart_id, amount,
                                 transdate, fx_transaction)
-                         VALUES (?, (SELECT id FROM chart WHERE accno = ?),
+                         VALUES (?, (SELECT id FROM account WHERE accno = ?),
                                 ?, ?, ?)|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id}, $accno,
@@ -609,7 +609,7 @@ sub post_invoice {
                     INSERT INTO acc_trans
                                 (trans_id, chart_id, amount,
                                 transdate)
-                            VALUES (?, (SELECT id FROM chart
+                            VALUES (?, (SELECT id FROM account
                                 WHERE accno = ?),
                                 ?, ?)|;
                 $sth = $dbh->prepare($query);
@@ -665,7 +665,7 @@ sub post_invoice {
                     INSERT INTO acc_trans
                                 (trans_id, chart_id, amount,
                                     transdate)
-                        VALUES (?, (SELECT id FROM chart
+                        VALUES (?, (SELECT id FROM account
                                  WHERE accno = ?),
                                      ?, ?)|;
 
@@ -684,7 +684,7 @@ sub post_invoice {
                 INSERT INTO acc_trans
                             (trans_id, chart_id, amount,
                             transdate, source, memo, cleared)
-                     VALUES (?, (SELECT id FROM chart
+                     VALUES (?, (SELECT id FROM account
                                   WHERE accno = ?),
                             ?, ?, ?, ?, ?)|;
 
@@ -707,7 +707,7 @@ sub post_invoice {
                                 (trans_id, chart_id, amount,
                                 transdate, source,
                                 fx_transaction, cleared)
-                         VALUES (?, (SELECT id FROM chart
+                         VALUES (?, (SELECT id FROM account
                                       WHERE accno = ?),
                                 ?, ?, ?, '1', ?)|;
                 $sth = $dbh->prepare($query);
@@ -1020,7 +1020,7 @@ sub retrieve_invoice {
         # tax rates for part
         $query = qq|
             SELECT c.accno
-              FROM chart c
+              FROM account c
               JOIN partstax pt ON (pt.chart_id = c.id)
              WHERE pt.parts_id = ?|;
         my $tth = $dbh->prepare($query);
@@ -1150,7 +1150,7 @@ sub retrieve_item {
     # taxes
     $query = qq|
         SELECT c.accno
-          FROM chart c
+          FROM account c
           JOIN partstax pt ON (pt.chart_id = c.id)
          WHERE pt.parts_id = ?|;
     my $tth = $dbh->prepare($query) || $form->dberror($query);
