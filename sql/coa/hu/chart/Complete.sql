@@ -417,22 +417,22 @@ SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE id IN (select account_id FROM account_link
                            WHERE description = 'AP_paid');
 
-INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno='4661'),'0.20','VIS');
-INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno='4662'),'0.05','VIS');
-INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno='4663'),'0','VIS');
-INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno='4664'),'0','VIS');
-INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno='4671'),'0.20','FIZ');
-INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno='4672'),'0.05','FIZ');
-INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno='4673'),'0','FIZ');
-INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno='4674'),'0','FIZ');
+INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM account WHERE accno='4661'),'0.20','VIS');
+INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM account WHERE accno='4662'),'0.05','VIS');
+INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM account WHERE accno='4663'),'0','VIS');
+INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM account WHERE accno='4664'),'0','VIS');
+INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM account WHERE accno='4671'),'0.20','FIZ');
+INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM account WHERE accno='4672'),'0.05','FIZ');
+INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM account WHERE accno='4673'),'0','FIZ');
+INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM account WHERE accno='4674'),'0','FIZ');
 --
 INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', 
-(SELECT id FROM chart WHERE accno = '2110'));
+(SELECT id FROM account WHERE accno = '2110'));
 
-INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id FROM chart WHERE accno = '9111'));
-INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM chart WHERE accno = '8140'));
-INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (SELECT id FROM chart WHERE accno = '9761'));
-INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM chart WHERE accno = '8761'));
+INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id FROM account WHERE accno = '9111'));
+INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM account WHERE accno = '8140'));
+INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (SELECT id FROM account WHERE accno = '9761'));
+INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM account WHERE accno = '8761'));
 INSERT INTO defaults (setting_key, value) VALUES ('curr', 'HUF:EUR:USD');
 INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 UPDATE defaults SET value = 'VK00000' WHERE setting_key = 'glnumber';

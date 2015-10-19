@@ -481,7 +481,7 @@ sub post_transaction {
 				            (trans_id, chart_id, amount, 
 				            transdate, memo, 
 				            fx_transaction, cleared)
-				    VALUES  (?, (SELECT id FROM chart
+				    VALUES  (?, (SELECT id FROM account
 				                  WHERE accno = ?), 
 				            ?, ?, ?, ?, ?)|;
 
@@ -525,7 +525,7 @@ sub post_transaction {
 				INSERT INTO acc_trans 
 				            (trans_id, chart_id, amount,
 				            transdate, fx_transaction)
-				     VALUES (?, (SELECT id FROM chart
+				     VALUES (?, (SELECT id FROM account
 					          WHERE accno = ?),
 				            ?, ?, ?)|;
 
@@ -547,7 +547,7 @@ sub post_transaction {
         $query = qq|
 			INSERT INTO acc_trans 
 			            (trans_id, chart_id, amount, transdate)
-			     VALUES (?, (SELECT id FROM chart
+			     VALUES (?, (SELECT id FROM account
 			                  WHERE accno = ?), 
 			                  ?, ?)|;
         @queryargs =
@@ -609,7 +609,7 @@ sub post_transaction {
 					INSERT INTO acc_trans 
 					            (trans_id, chart_id, 
 					            amount,transdate)
-					     VALUES (?, (SELECT id FROM chart
+					     VALUES (?, (SELECT id FROM account
 					                  WHERE accno = ?),
 					            ?, ?)|;
 
@@ -637,7 +637,7 @@ sub post_transaction {
 					            (trans_id, chart_id, amount,
 					            transdate, source, memo, 
 					            cleared)
-					     VALUES (?, (SELECT id FROM chart
+					     VALUES (?, (SELECT id FROM account
 						          WHERE accno = ?),
 					            ?, ?, ?, ?, ?)|;
 
@@ -701,7 +701,7 @@ sub post_transaction {
 						            fx_transaction, 
 						            cleared, source)
 						     VALUES (?, (SELECT id 
-						                   FROM chart
+						                   FROM account
 						                  WHERE accno 
 						                        = ?),
 						            ?, ?, 
@@ -1023,7 +1023,7 @@ sub get_name {
     # get tax rates and description
     $query = qq|
 		   SELECT c.accno, c.description, t.rate, t.taxnumber
-		     FROM chart c
+		     FROM account c
 		     JOIN tax t ON (c.id = t.chart_id)
 		    WHERE true
 		          $where

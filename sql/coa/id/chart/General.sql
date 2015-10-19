@@ -69,19 +69,19 @@ SELECT account__save(NULL,'5795','Registrasi','E','', NULL, false, false, string
 SELECT account__save(NULL,'5800','Licensi','E','', NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'5810','Rugi Selisih Kurs','E','', NULL, false, false, string_to_array('', ':'), false, false);
 --
-insert into tax (chart_id,rate) values ((select id from chart where accno = '2310'),0.1);
---insert into tax (chart_id,rate) values ((select id from chart where accno = '2320'),0.14);
---insert into tax (chart_id,rate) values ((select id from chart where accno = '2330'),0.3);
+insert into tax (chart_id,rate) values ((select id from account where accno = '2310'),0.1);
+--insert into tax (chart_id,rate) values ((select id from account where accno = '2320'),0.14);
+--insert into tax (chart_id,rate) values ((select id from account where accno = '2330'),0.3);
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '1520'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno = '1520'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '4020'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '4020'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '5010'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '5010'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '4450'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '4450'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '5810'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '5810'));
 
  UPDATE defaults SET value  = 'IDR:USD:CAD:EUR'
   where setting_key = 'curr';

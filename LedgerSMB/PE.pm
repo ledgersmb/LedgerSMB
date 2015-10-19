@@ -932,7 +932,7 @@ sub get_jcitems {
     # tax accounts
     $query = qq|
 		SELECT c.accno
-		  FROM chart c
+		  FROM account c
 		  JOIN partstax pt ON (pt.chart_id = c.id)
 		 WHERE pt.parts_id = ?|;
     my $tth = $dbh->prepare($query) || $form->dberror($query);

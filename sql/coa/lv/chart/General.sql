@@ -251,18 +251,18 @@ SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE id IN (select account_id FROM account_link
                            WHERE description = 'AP_paid');
 --
-INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart where accno = '2352'),'0.18','');
-INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart where accno = '2354'),'0.18','');
+INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM account where accno = '2352'),'0.18','');
+INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM account where accno = '2354'),'0.18','');
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '1230'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno = '1230'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '6010'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '6010'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '7110'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '7110'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '8170'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '8170'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '8270'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '8270'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'LVL');
 

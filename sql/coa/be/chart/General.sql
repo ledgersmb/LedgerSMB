@@ -426,22 +426,22 @@ SELECT account__save(NULL,'743300','Intervention assurance salaires garant.','I'
 SELECT account__save(NULL,'763750','+Val.s/mat.informatique','I','76', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'406','Acomptes versés - Vooruitbetalingen','A','40', NULL, false, false, string_to_array('AP_paid', ':'), false, false);
 --
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '411590'), 0.06);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '411591'), 0.21);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '451540'), 0.06);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '451541'), 0.21);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '640700'), 0.21);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '411590'), 0.06);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '411591'), 0.21);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '451540'), 0.06);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '451541'), 0.21);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '640700'), 0.21);
 --
 INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT 
-id FROM chart WHERE accno = '340'));
+id FROM account WHERE accno = '340'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id FROM chart WHERE accno = '743200'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id FROM account WHERE accno = '743200'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM chart WHERE accno = '604'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM account WHERE accno = '604'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (SELECT id FROM chart WHERE accno = '755000'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (SELECT id FROM account WHERE accno = '755000'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM chart WHERE accno = '655000'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM account WHERE accno = '655000'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR:USD');
