@@ -1,7 +1,11 @@
 use Test::More;
-if ($ENV{TEST_SAUCE} and
-   $ENV{SAUCE_USERNAME} and $ENV{SAUCE_API_KEY}
-){
+
+my @reqenv = qw(TEST_SAUCE SAUCE_USERNAME SAUCE_API_KEY);
+my @missing = grep { ! $ENV{$_} } @reqenv;
+if (@missing) {
+    plan skip_all => 'not a told to: ' . join (' and ', @missing) . ' not set';
+    ok(1);
+} else {
     plan tests => 2;
     require Selenium::Remote::Driver;
     my $host = "$ENV{SAUCE_USERNAME}:$ENV{SAUCE_API_KEY}\@ondemand.saucelabs.com";
@@ -13,15 +17,11 @@ if ($ENV{TEST_SAUCE} and
                           'version' => "46",
                           'platform' => "Linux",
                           );
-    $driver->get('http://$ENV{SAUCE_USER_NAME}:$ENV{SAUCE_API_KEY}@saucelabs.com:5000/login.pl');
+    $driver->get('http://$ENV{SAUCE_USERNAME}:$ENV{SAUCE_API_KEY}@saucelabs.com:5000/login.pl');
 
     ok($driver->find_element_by_name('password'), 'got a password');
 
     $driver->get('http://saucelabs.com:5000/setup.pl');
 
     ok($driver->find_element_by_name('s_passwd'), 'got a password');
-} else {
-    plan skip_all => 'not a told to ';
-    ok(1);
 }
-
