@@ -1,5 +1,5 @@
 use Test::More;
-if ($ENV{TRAVIS_PULL_REQUEST} and $ENV{TEST_SAUCE} and
+if ($ENV{TEST_SAUCE} and
    $ENV{SAUCE_USER_NAME} and $ENV{SAUCE_API_KEY}
 ){
     plan tests => 2;
