@@ -23,7 +23,7 @@ if ($ENV{TEST_SAUCE} and
 } else {
     use Data::Dumper;
     $Data::Dumper::Sortkeys = 1;
-    print STDERR Dumper($ENV);
+    print STDERR Dumper(\%ENV);
     plan skip_all => 'not a told to ';
     ok(1);
 }
