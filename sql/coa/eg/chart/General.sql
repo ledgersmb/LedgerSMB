@@ -76,22 +76,22 @@ SELECT account__save(NULL,'5810','خسارة تحويل عملة','E','', NULL, 
 SELECT account__save(NULL,'5790','مرافق','E','', NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'2280','ضرائب مرتبات مستحقة','L','', NULL, false, false, string_to_array('', ':'), false, false);
 
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT id FROM chart WHERE accno = '1520'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT id FROM account WHERE accno = '1520'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id FROM chart WHERE accno = '4020'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id FROM account WHERE accno = '4020'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM chart WHERE accno = '5010'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM account WHERE accno = '5010'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (SELECT id FROM chart WHERE accno = '4450'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (SELECT id FROM account WHERE accno = '4450'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM chart WHERE accno = '5810'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM account WHERE accno = '5810'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 INSERT INTO defaults (setting_key, value) VALUES ('curr', 'USD:CAD:EUR');
 
-INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '2310'),'0.1',NULL);
-INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '2320'),'0.14',NULL);
-INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '2330'),'0.3',NULL);
+INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM account WHERE accno = '2310'),'0.1',NULL);
+INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM account WHERE accno = '2320'),'0.14',NULL);
+INSERT INTO tax (chart_id,rate,taxnumber) VALUES ((SELECT id FROM account WHERE accno = '2330'),'0.3',NULL);
 
 commit;
 UPDATE account

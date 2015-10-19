@@ -79,18 +79,18 @@ SELECT account__save(NULL,'5765','Réparation et entretien','E','8964', NULL, fa
 SELECT account__save(NULL,'5800','Taxes d''affaires, droits d''adhésion et permis','E','8760', NULL, false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL,'5810','Perte sur change','E','8231', NULL, false, false, string_to_array('', ':'), false, false);
 --
-insert into tax (chart_id,rate) values ((select id from chart where accno = '2310'),0.05);
-insert into tax (chart_id,rate,pass) values ((select id from chart where accno = '2320'),0.075,1);
+insert into tax (chart_id,rate) values ((select id from account where accno = '2310'),0.05);
+insert into tax (chart_id,rate,pass) values ((select id from account where accno = '2320'),0.075,1);
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '1520'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno = '1520'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '4020'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '4020'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '5010'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '5010'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '4450'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '4450'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '4450'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '4450'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'CAD:USD:EUR');
 

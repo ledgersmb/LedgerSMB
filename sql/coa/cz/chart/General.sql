@@ -318,20 +318,20 @@ SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE id IN (select account_id FROM account_link
                            WHERE description = 'AP_paid');
 --
-insert into tax (chart_id,rate) values ((select id from chart where accno = '34311'),0.05);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '34312'),0.19);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '34321'),0.05);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '34322'),0.19);
+insert into tax (chart_id,rate) values ((select id from account where accno = '34311'),0.05);
+insert into tax (chart_id,rate) values ((select id from account where accno = '34312'),0.19);
+insert into tax (chart_id,rate) values ((select id from account where accno = '34321'),0.05);
+insert into tax (chart_id,rate) values ((select id from account where accno = '34322'),0.19);
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '13200'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno = '13200'));
 
-INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '60000'));
+INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '60000'));
 
-INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '50000'));
+INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '50000'));
 
-INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '99998'));
+INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '99998'));
 
-INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '99999'));
+INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '99999'));
 
 INSERT INTO defaults (setting_key, value) VALUES ('curr', 'CZK');
 

@@ -111,18 +111,18 @@ SELECT account__save(NULL,'5830','Discounts / Refunds / Rounding','E','5000', NU
 SELECT account__save(NULL,'3390','Retained Profits','Q','3300', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5840','Fines - NON DEDUCTIBLE EXPENSES','E','', NULL, false, false, string_to_array('', ':'), false, false);
 --
-INSERT INTO tax (chart_id, rate, taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '1230'), 0.1, '');
-INSERT INTO tax (chart_id, rate, taxnumber) VALUES ((SELECT id FROM chart WHERE accno = '2290'), 0.1, '');
+INSERT INTO tax (chart_id, rate, taxnumber) VALUES ((SELECT id FROM account WHERE accno = '1230'), 0.1, '');
+INSERT INTO tax (chart_id, rate, taxnumber) VALUES ((SELECT id FROM account WHERE accno = '2290'), 0.1, '');
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT id FROM chart WHERE accno = '1520'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (SELECT id FROM account WHERE accno = '1520'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id FROM chart WHERE accno = '4020'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id FROM account WHERE accno = '4020'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM chart WHERE accno = '5020'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM account WHERE accno = '5020'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (SELECT id FROM chart WHERE accno = '4450'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (SELECT id FROM account WHERE accno = '4450'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM chart WHERE accno = '5810'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM account WHERE accno = '5810'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'AUD');
 
