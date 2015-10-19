@@ -21,7 +21,7 @@ if ($ENV{TEST_SAUCE} and
 
     ok($driver->find_element_by_name('s_passwd'), 'got a password');
 } else {
-    plan skipall => 'not a pull request' unless $ENV{TRAVIS_PULL_REQUEST};
+    plan skip_all => 'not a pull request';
     ok(1);
 }
 
