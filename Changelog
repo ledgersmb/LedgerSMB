@@ -34,6 +34,7 @@ Changelog for 1.4.18
 * Fixed SF1312, receipt not skipped on empty pay field (Chris T)
 * Fixed SF1315, inv/part problems when heading/acc have same accno (Chris T)
 * Fixed cannot create user with same user id as already in db (GH882 Chris T)
+* Fixed sales checkbox doesnt save or display correctly (GH877, Chris T)
 
 ChrisT is Chris Travers
 
