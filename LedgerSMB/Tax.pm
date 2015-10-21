@@ -75,22 +75,24 @@ sub init_taxes {
         $sth->execute($taxaccount, $form->{transdate}) || $form->dberror($query);
         my $ref = $sth->fetchrow_hashref;
         next unless $ref;
+     #   $ref->{rate} = LedgerSMB::PGNumber->from_db($ref->{rate});
+     #   $ref->{value} = LedgerSMB::PGNumber->from_db($ref->{value});
+     #   $ref->{maxvalue} = LedgerSMB::PGNumber->from_db($ref->{maxvalue});
+     #   $ref->{minvalue} = LedgerSMB::PGNumber->from_db($ref->{minvalue});
 
         my $module = "LedgerSMB/Taxes/$ref->{taxmodulename}.pm";
         require $module;
         $module = $ref->{taxmodulename};
         $module =~ s/\//::/g;
-        my $tax = ( eval 'LedgerSMB::Taxes::' . $module )->new();
+        my $tax;
+        {
+          no strict 'refs';
+          $tax = "LedgerSMB::Taxes::$module"->new(%$ref);
+        }
 
-        $tax->pass( $ref->{'pass'} );
         $tax->account($taxaccount);
-        $tax->rate( LedgerSMB::PGNumber->new( $ref->{'rate'} ) );
         $tax->taxnumber( $ref->{'taxnumber'} );
-        $tax->chart( $ref->{'chart'} );
-        $tax->description( $ref->{'description'} );
-        $tax->value( LedgerSMB::PGNumber->bzero() );
-        $tax->minvalue(LedgerSMB::PGNumber->new($ref->{'minvalue'} || 0));
-        $tax->maxvalue(LedgerSMB::PGNumber->new($ref->{'maxvalue'} || 0));
+        $tax->value( 0 );
 
         push @taxes, $tax;
     }
