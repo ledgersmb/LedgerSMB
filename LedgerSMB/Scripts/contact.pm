@@ -248,7 +248,7 @@ sub _main_screen {
     my @all_taxes = LedgerSMB->call_procedure(funcname => 'account__get_taxes');
 
     my $arap_class = $entity_class;
-    $arap_class = 2 if defined $arap_class && $arap_class == 3;
+    $arap_class = 2 unless $arap_class == 1;
     my @ar_ap_acc_list = LedgerSMB->call_procedure(funcname => 'chart_get_ar_ap',
                                            args => [$arap_class]);
 

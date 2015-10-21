@@ -9,6 +9,7 @@ UI changes:
 Code Cleanup:
 * LedgerSMB now relies on plack.  Previous stub scripts removed (ChrisT)
 * Removed LedgerSMB's custom dojo page loader (ErikH)
+* Removed dependency on Class::Struct (Chris T)
 
 API Enhancements:
 * Moved a great deal of code into PGObject framework on CPAN (Chris T)
