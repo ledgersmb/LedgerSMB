@@ -142,7 +142,7 @@ sub _parse_string {
 sub from_input{
     my ($self, $input, $has_time) = @_;
     local $@;
-    return from_db(@_) unless (defined $input) or ($input =~ /^\d+:/);
+    return $self->from_db(@_) unless (defined $input) or ($input =~ /^\d+:/);
     return $input if eval {$input->isa(__PACKAGE__)};
     #return if (!defined $input) || ('' eq $input);
     $input = undef if $input eq '';
@@ -151,6 +151,7 @@ sub from_input{
     $format = 'yyyy-mm-dd' if $input =~ /^\d{4}/;
     my $dt =  _parse_string($self, $input, uc($format), $has_time)
 		  if $input;
+    return $self->from_db($dt) unless defined $dt;
     bless $dt, __PACKAGE__;
     $dt->{_pgobject_is_date} = 1;
     $dt->{_pgobject_is_time} = 1 if $has_time;
