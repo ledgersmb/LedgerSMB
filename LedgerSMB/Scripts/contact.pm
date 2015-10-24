@@ -412,7 +412,12 @@ sub generate_control_code {
                              args     => ['entity_control']
                            );
     ($request->{control_code}) = values %$ref;
-    _main_screen($request, $request, $request);
+    my ($company, $person);
+    $company = $request if $request->{entity_id} and $request->{legal_name};
+    $person = $request if $request->{entity_id} and $request->{first_name};
+    ($person, $company) = ($request, $request)
+        unless $person or $company;
+    _main_screen($request, $company, $person);
 }
 
 =item dispatch_legacy
