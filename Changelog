@@ -14,6 +14,7 @@ Changelog for 1.4.18
 * Fixed cannot create user with same user id as already in db (GH882 Chris T)
 * Fixed sales checkbox doesnt save or display correctly (GH877, Chris T)
 * Fixed orders search not respecting name field (SF1345, Chris T)
+* Add datepicker widget to Transaction Form date fields (NickP)
 
 ChrisT is Chris Travers
 
