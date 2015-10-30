@@ -16,9 +16,11 @@ Changelog for 1.4.18
 * Fixed orders search not respecting name field (SF1345, Chris T)
 * Fixed role_prefix not committed after Copy Database (GH964, NickP)
 * Add datepicker widget to Transaction Form date fields (NickP)
+* Fixed invoice query not showing addresses for persons (Rami H
 
 ChrisT is Chris Travers
 NickP is Nick Prater
+Rami H is Rami Hovi
 
 
 Changelog for 1.4.17
