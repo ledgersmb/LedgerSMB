@@ -147,7 +147,7 @@ BEGIN
   retval := budget__get_info(t_id);
   return retval;
 END;
-$$ language plpgsql;
+$$ security definer language plpgsql;
 
 COMMENT ON FUNCTION budget__save_info
 (in_id int, in_start_date date, in_end_date date, in_reference text,
