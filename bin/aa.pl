@@ -732,10 +732,10 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
      my $tax_base = $form->{invtotal};
     foreach $item ( split / /, $form->{taxaccounts} ) {
 
-    if($form->{"calctax_$item"} && $is_update){
-       $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
-    }
-             $form->{invtotal} += $form->{"tax_$item"};
+	if($form->{"calctax_$item"} && $is_update){
+            $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
+            $form->{invtotal} += $form->{"tax_$item"};
+	}
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
         $form->{"tax_$item"} =
