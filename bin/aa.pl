@@ -801,9 +801,9 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
     foreach $item ( split / /, $form->{taxaccounts} ) {
 
 	if($form->{"calctax_$item"} && $is_update){
-       $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
+            $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
+            $form->{invtotal} += $form->{"tax_$item"};
 	}
-             $form->{invtotal} += $form->{"tax_$item"};
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
          
