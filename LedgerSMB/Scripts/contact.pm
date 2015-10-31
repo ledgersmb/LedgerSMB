@@ -589,6 +589,13 @@ sub save_person {
         $request->{dob} = $request->{birthdate} if $request->{birthdate};
        return save_employee($request);
     }
+    unless ($request->{control_code}){
+        my ($ref) = $request->call_procedure(
+                             procname => 'setting_increment', 
+                             args     => ['entity_control']
+                           );
+        ($request->{control_code}) = values %$ref;
+    }
     my $person = LedgerSMB::Entity::Person->new(
               %$request
     );
