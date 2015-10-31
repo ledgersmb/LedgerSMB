@@ -27,6 +27,7 @@ Changelog for 1.4.18
 * Fixed role_prefix not committed after Copy Database (GH964, NickP)
 * Add datepicker widget to Transaction Form date fields (NickP)
 * Fixed invoice query not showing addresses for persons (Rami H
+* Fixed ar/ap handling with calculated taxes. (GH 
 
 ChrisT is Chris Travers
 NickP is Nick Prater

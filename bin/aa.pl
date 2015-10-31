@@ -116,7 +116,7 @@ sub new_screen {
 
 sub add {
     $form->{title} = "Add";
-	
+
     $form->{callback} =
 "$form->{script}?action=add&path=$form->{path}&login=$form->{login}&sessionid=$form->{sessionid}"
       unless $form->{callback};
@@ -181,7 +181,7 @@ sub create_links {
 
     if ( $form->{script} eq 'ap.pl' ) {
         $form->{ARAP} = 'AP';
-        $form->{vc}   = 'vendor';	
+        $form->{vc}   = 'vendor';
     }
     elsif ( $form->{script} eq 'ar.pl' ) {
         $form->{ARAP} = 'AR';
@@ -213,14 +213,14 @@ sub create_links {
     $form->{defaultcurrency} = $curr[0];
     chomp $form->{defaultcurrency};
 
-    for (@curr) { $form->{selectcurrency} .= "<option>$_\n"  
+    for (@curr) { $form->{selectcurrency} .= "<option>$_\n"
                      unless  $form->{selectcurrency} =~ /<option[^>]*>$_/
     }
 
     my $vc = $form->{vc};
 
-    AA->get_name( \%myconfig, \%$form ) 
-            unless $form->{"old$vc"} eq $form->{$vc} 
+    AA->get_name( \%myconfig, \%$form )
+            unless $form->{"old$vc"} eq $form->{$vc}
                     or $form->{"old$vc"} =~ /^\Q$form->{$vc}\E--/;
 
     $form->{currency} =~ s/ //g;
@@ -342,7 +342,7 @@ sub create_links {
                         my $ref = $form->{acc_trans}{$key}->[ $i - 1 ];
                         for my $cls (@{$form->{bu_class}}){
                            if ($ref->{"b_unit_$cls->{id}"}){
-                              $form->{"b_unit_$cls->{id}_$i"} 
+                              $form->{"b_unit_$cls->{id}_$i"}
                                                          = $ref->{"b_unit_$cls->{id}"};
                            }
                         }
@@ -396,8 +396,8 @@ sub form_header {
      my $min_lines = $LedgerSMB::Company_Config::settings->{min_empty};
 
     $title = $form->{title};
-    $form->all_business_units($form->{transdate}, 
-                              $form->{"$form->{vc}_id"}, 
+    $form->all_business_units($form->{transdate},
+                              $form->{"$form->{vc}_id"},
                               $form->{ARAP});
 
     if($form->{batch_id})
@@ -509,8 +509,8 @@ qq|<textarea name=intnotes rows=$rows cols=35 wrap=soft>$form->{intnotes}</texta
     $name =
       ( $form->{"select$form->{vc}"} )
       ? qq|<select name="$form->{vc}">$form->{"select$form->{vc}"}</select>|
-      : qq|<input name="$form->{vc}" value="$form->{$form->{vc}}" size=35> 
-                 <a href="contact.pl?action=add&entity_class=$eclass" 
+      : qq|<input name="$form->{vc}" value="$form->{$form->{vc}}" size=35>
+                 <a href="contact.pl?action=add&entity_class=$eclass"
                     target="new" id="new-contact">[|
                  .  $locale->text('New') . qq|]</a>|;
 
@@ -550,7 +550,7 @@ $form->open_status_div . qq|
         $form->{approved} = 1;
     }
     $form->hide_form(
-        qw(batch_id approved id printed emailed sort closedto locked 
+        qw(batch_id approved id printed emailed sort closedto locked
            oldtransdate audittrail recurring checktax reverse batch_id subtype
            entity_control_code tax_id meta_number default_reportable address city)
     );
@@ -585,7 +585,7 @@ $form->open_status_div . qq|
 	    <table>
 	      <tr>
 		<th align="right" nowrap>$label</th>
-		<td colspan=3>$name 
+		<td colspan=3>$name
                 </td>
 		<input type=hidden name="select$form->{vc}" value="|
       . $form->escape( $form->{"select$form->{vc}"}, 1 ) . qq|">
@@ -614,12 +614,12 @@ $form->open_status_div . qq|
 		if($form->{batch_id})
 		{
 		print qq|	<tr>
-		<th align="right" nowrap>| . 
+		<th align="right" nowrap>| .
 			$locale->text('Batch Control Code') . qq|</th>
 		<td>$form->{batch_control_code}</td>
 	      </tr>
 		<tr>
-		<th align="right" nowrap>| . 
+		<th align="right" nowrap>| .
 			$locale->text('Batch Name') . qq|</th>
 		<td>$form->{batch_description}</td>
 	      </tr>
@@ -633,17 +633,17 @@ $form->open_status_div . qq|
 		if ($form->{entity_control_code}){
 			print qq|
 	        <tr>
-		<th align="right" nowrap>| . 
+		<th align="right" nowrap>| .
 			$locale->text('Entity Control Code') . qq|</th>
 		<td colspan=3>$form->{entity_control_code}</td>
 	      </tr>
 	        <tr>
-		<th align="right" nowrap>| . 
+		<th align="right" nowrap>| .
 			$locale->text('Tax ID') . qq|</th>
 		<td colspan=3>$form->{tax_id}</td>
 	      </tr>
 	        <tr>
-		<th align="right" nowrap>| . 
+		<th align="right" nowrap>| .
 			$locale->text('Account') . qq|</th>
 		<td colspan=3>$form->{meta_number}</td>
 	      </tr>
@@ -660,7 +660,7 @@ $form->open_status_div . qq|
             <tr>
                <th align="right" nowrap>| . $locale->text('Description') . qq|
                </th>
-               <td><input type="text" name="description" id="description" size="40" 
+               <td><input type="text" name="description" id="description" size="40"
                    value="| . $form->{description} . qq|" /></td>
             </tr>
 	    </table>
@@ -800,20 +800,20 @@ qq|<td><input name="description_$i" size=40 value="$form->{"description_$i"}"></
      my $tax_base = $form->{invtotal};
     foreach $item ( split / /, $form->{taxaccounts} ) {
 
-	if($form->{"calctax_$item"} && $is_update){
-       $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
+	if($is_update){
+            $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base
+                if $form->{"calctax_$item"};
+            $form->{invtotal} += $form->{"tax_$item"};
 	}
-             $form->{invtotal} += $form->{"tax_$item"};
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
-   my $disabled = ($form->{"calctax_$item"}) ? 'disabled="disabled"' : "";
-         
+
         $form->{"tax_$item"} =
           $form->format_amount( \%myconfig, $form->{"tax_$item"}, 2 );
         print qq|
         <tr>
 	  <td><input name="tax_$item" id="tax_$item"
-                     size=10 value=$form->{"tax_$item"} $disabled></td>
+                     size=10 value=$form->{"tax_$item"} /></td>
 	  <td align=right><input id="calctax_$item" name="calctax_$item"
                                  class="checkbox" type="checkbox" value=1
                                  $form->{"calctax_$item"}
@@ -988,13 +988,13 @@ sub form_footer {
         } else {
             $hold_text = $locale->text('On Hold');
         }
-            
+
 
         %button = (
             'update' =>
               { ndx => 1, key => 'U', value => $locale->text('Update') },
             'copy_to_new' => # Shares an index with copy because one or the other
-                             # must be deleted.  One can only either copy or 
+                             # must be deleted.  One can only either copy or
                              # update, not both. --CT
               { ndx => 1, key => 'C', value => $locale->text('Copy to New') },
             'print' =>
@@ -1004,9 +1004,9 @@ sub form_footer {
               { ndx => 7, key => 'H', value => $locale->text('Schedule') },
             'delete' =>
               { ndx => 8, key => 'D', value => $locale->text('Delete') },
-            'on_hold' => 
+            'on_hold' =>
               { ndx => 9, key => 'O', value => $hold_text },
-            'save_info' => 
+            'save_info' =>
               { ndx => 10, key => 'I', value => $locale->text('Save Info') },
             'save_temp' =>
               { ndx => 11, key => 'T', value => $locale->text('Save Template')},
@@ -1016,14 +1016,14 @@ sub form_footer {
         my $is_draft = 0;
         if (!$form->{approved} && !$form->{batch_id}){
            $is_draft = 1;
-           $button{approve} = { 
-                   ndx   => 3, 
-                   key   => 'O', 
+           $button{approve} = {
+                   ndx   => 3,
+                   key   => 'O',
                    value => $locale->text('Post') };
            if (grep /^lsmb_$form->{company}__draft_edit$/, @{$form->{_roles}}){
-               $button{edit_and_save} = { 
-                   ndx   => 4, 
-                   key   => 'E', 
+               $button{edit_and_save} = {
+                   ndx   => 4,
+                   key   => 'E',
                    value => $locale->text('Save Draft') };
           }
            delete $button{post_as_new};
@@ -1035,7 +1035,7 @@ sub form_footer {
             $button{post_as_new}->{value} = $locale->text('Save as New');
             $form->hide_form('separate_duties');
         }
-        if ( $form->{id}) { 
+        if ( $form->{id}) {
             for ( "post","delete" ) {
                 delete $button{$_};
             }
@@ -1048,7 +1048,7 @@ sub form_footer {
             }
 
             if ( $transdate && ($transdate <= $closedto) ) {
-                for ( "post","save_info") { 
+                for ( "post","save_info") {
                     delete $button{$_};
                 }
             }
@@ -1083,10 +1083,10 @@ sub form_footer {
               print qq|
 <tr>
 <td><a href="file.pl?action=get&file_class=1&ref_key=$form->{id}&id=$file->{id}"
-            >$file->{file_name}</a></td> 
-<td>$file->{mime_type}</td> 
-<td>|. $file->{uploaded_at}->to_output .qq|</td> 
-<td>$file->{uploaded_by_name}</td> 
+            >$file->{file_name}</a></td>
+<td>$file->{mime_type}</td>
+<td>|. $file->{uploaded_at}->to_output .qq|</td>
+<td>$file->{uploaded_by_name}</td>
 </tr>
               |;
         }
@@ -1109,12 +1109,12 @@ sub form_footer {
             }
             print qq|
 <tr>
-<td> $file->{file_name} </td> 
-<td> $file->{mime_type} </td> 
-<td> $aclass </td> 
-<td> $file->{reference} </td> 
-<td> | . $file->{attached_at}->to_output . qq| </td> 
-<td> $file->{attached_by} </td> 
+<td> $file->{file_name} </td>
+<td> $file->{mime_type} </td>
+<td> $aclass </td>
+<td> $file->{reference} </td>
+<td> | . $file->{attached_at}->to_output . qq| </td>
+<td> $file->{attached_by} </td>
 </tr>|;
        }
        print qq|
@@ -1142,15 +1142,15 @@ sub form_footer {
 sub on_hold {
     use LedgerSMB::IS;
     use LedgerSMB::IR; # TODO: refactor this over time
-    
+
     if ($form->{id}) {
         if ($form->{ARAP} eq 'AR'){
             my $toggled = IS->toggle_on_hold($form);
         } else {
             my $toggled = IR->toggle_on_hold($form);
         }
-        &edit(); 
-    }    
+        &edit();
+    }
 }
 
 
@@ -1171,15 +1171,15 @@ sub save_temp {
     } else {
         $lsmb->{entity_class} = 1;
     }
-    $lsmb->{transaction_date} = $form->{transdate}; 
+    $lsmb->{transaction_date} = $form->{transdate};
     for my $iter (0 .. $form->{rowcount}){
-        if ($form->{"AP_amount_$iter"} and 
+        if ($form->{"AP_amount_$iter"} and
                   ($form->{"amount_$iter"} != 0)){
              my ($acc_id, $acc_name) = split /--/, $form->{"AP_amount_$iter"};
              my $amount = $form->{"amount_$iter"};
-             push @{$lsmb->{journal_lines}}, 
+             push @{$lsmb->{journal_lines}},
                   {accno => $acc_id,
-                   amount => $amount, 
+                   amount => $amount,
                    cleared => false,
                   };
         }
@@ -1338,9 +1338,9 @@ sub update {
     $form->{paidaccounts} = $j;
 
     $form->{creditremaining} -=
-      ( $form->parse_amount(\%myconfig, $form->{invtotal}) 
-        - $form->parse_amount(\%myconfig, $totalpaid) 
-        + $form->parse_amount(\%myconfig, $form->{oldtotalpaid}) 
+      ( $form->parse_amount(\%myconfig, $form->{invtotal})
+        - $form->parse_amount(\%myconfig, $totalpaid)
+        + $form->parse_amount(\%myconfig, $form->{oldtotalpaid})
         - $form->parse_amount(\%myconfig, $form->{oldinvtotal}) );
     $form->{oldinvtotal}  = $form->{invtotal};
     $form->{oldtotalpaid} = $totalpaid;
@@ -1352,7 +1352,7 @@ sub update {
     # and updates $form->{oldvendor} or $form->{oldcustomer}
 
     #tshvr4 should be revised!
-    &create_links; 
+    &create_links;
 
 
     &display_form;
@@ -1418,7 +1418,7 @@ sub post {
 
     # if oldname ne name redo form
     ($name) = split /--/, $form->{ $form->{vc} };
-    if ( $form->{"old$form->{vc}"} ne qq|$name--$form->{"$form->{vc}_id"}| 
+    if ( $form->{"old$form->{vc}"} ne qq|$name--$form->{"$form->{vc}_id"}|
         and $form->{"old$form->{vc}"} ne $name) {
         &update;
         $form->finalize_request();
@@ -1431,16 +1431,16 @@ sub post {
         }
     }
 
-    
-    
+
+
     if ( AA->post_transaction( \%myconfig, \%$form ) ) {
-	  
+
        $form->update_status( \%myconfig );
        if ( $form->{printandpost} ) {
            &{"print_$form->{formname}"}( $old_form, 1 );
         }
 
-        if(defined($form->{batch_id}) and $form->{batch_id} 
+        if(defined($form->{batch_id}) and $form->{batch_id}
            and ($form->{callback} !~ /vouchers/))
 	{
         	$form->{callback}.= qq|&batch_id=$form->{batch_id}|;
@@ -1468,13 +1468,13 @@ sub save_info {
 	    $taxformfound=AA->taxform_exist($form,$form->{"$form->{vc}_id"});
             $form->{arap} = lc($form->{ARAP});
             AA->save_intnotes($form);
-	    
+
 	    foreach my $i(1..($form->{rowcount}))
 	    {
-		
+
 		if($form->{"taxformcheck_$i"} and $taxformfound)
 		{
-			
+
 		  AA->update_ac_tax_form($form,$form->{dbh},$form->{"entry_id_$i"},"true") if($form->{"entry_id_$i"});
 
 		}
@@ -1484,8 +1484,8 @@ sub save_info {
 		    AA->update_ac_tax_form($form,$form->{dbh},$form->{"entry_id_$i"},"false") if($form->{"entry_id_$i"});
 
 		}
-		
-	    }    
+
+	    }
 
 	    if ($form->{callback}){
 		print "Location: $form->{callback}\n";
@@ -1768,16 +1768,16 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox value=Y checked> |
       </table>
     </td>
   </tr>
-  
+
   <tr>
-    <td>        
-        |.$locale->text('All Invoices').qq|: <input type="radio" name="invoice_type" checked value="1"> 
-        |.$locale->text('Active').qq|: <input type="radio" name="invoice_type" value="2">  
-        |.$locale->text('On Hold').qq|: <input type="radio" name="invoice_type" value="3"> 
-        <br/>    
+    <td>
+        |.$locale->text('All Invoices').qq|: <input type="radio" name="invoice_type" checked value="1">
+        |.$locale->text('Active').qq|: <input type="radio" name="invoice_type" value="2">
+        |.$locale->text('On Hold').qq|: <input type="radio" name="invoice_type" value="3">
+        <br/>
     </td>
   </tr>
-  
+
   <tr>
     <td>
       <table>
@@ -1835,7 +1835,7 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox value=Y checked> |
     }
 
     print qq|
- 
+
 </body>
 </html>
 |;
