@@ -31,6 +31,7 @@ Changelog for 1.4.19
 * Fixed report sorting back proxying to different directory (GH858, Chris T)
 * Added auto-generation of person control code like company (Chris T)
 * Removed redirect on posting sales invoice draft (GH 941, Chris T)
+* Fixed aging report not respecting name search field (GH 954, Chris T)
 
 Changelog for 1.4.18
 * New feature:  Create users from setup.pl with no new perms (GH 883, Chris T)
