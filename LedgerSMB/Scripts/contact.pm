@@ -591,7 +591,7 @@ sub save_person {
     }
     unless ($request->{control_code}){
         my ($ref) = $request->call_procedure(
-                             procname => 'setting_increment', 
+                             procname => 'setting_increment',
                              args     => ['entity_control']
                            );
         ($request->{control_code}) = values %$ref;
