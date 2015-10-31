@@ -738,14 +738,12 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
              $form->{invtotal} += $form->{"tax_$item"};
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
-   my $disabled = ($form->{"calctax_$item"}) ? 'disabled="disabled"' : "";
-
         $form->{"tax_$item"} =
           $form->format_amount( \%myconfig, $form->{"tax_$item"}, 2 );
         print qq|
         <tr>
       <td><input data-dojo-type="dijit/form/TextBox" name="tax_$item" id="tax_$item"
-                     size=10 value=$form->{"tax_$item"} $disabled></td>
+                     size=10 value=$form->{"tax_$item"} /></td>
       <td align=right><input data-dojo-type="dijit/form/TextBox" id="calctax_$item" name="calctax_$item"
                                  class="checkbox" type="checkbox" data-dojo-type="dijit/form/CheckBox" value=1
                                  $form->{"calctax_$item"}
