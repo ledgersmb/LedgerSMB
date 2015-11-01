@@ -130,6 +130,7 @@ SELECT account_heading_save(NULL, '5.2.5.','OTROS GASTOS',(SELECT id FROM accoun
 SELECT account__save(NULL, '5.2.5.01','Contribucion Escuela regional','E','', (SELECT id FROM account WHERE accno LIKE '5.2.5.'), false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL, '5.2.5.02','Cambio de moneda perdido','E','', (SELECT id FROM account WHERE accno LIKE '5.2.5.'), false, false, string_to_array('', ':'), false, false);
 commit;
+BEGIN;
 -- Impuestos
 -- Ganancias
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM account WHERE accno  = '2.1.2.01'), 0.09);

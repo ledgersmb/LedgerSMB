@@ -1657,91 +1657,91 @@ INSERT INTO account_link (account_id, description)
 
 -- TAX DEFINITION
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('435', '0.21', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('432', '0.21', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('306', '0.21', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('433', '0.04', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('430', '0.04', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('304', '0.04', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('305', '0.1', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('434', '0.1', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('431', '0.1', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('300', '0.21', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('423', '0.21', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('420', '0.21', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('421', '0.04', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('418', '0.04', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('298', '0.04', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('299', '0.1', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('422', '0.1', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 INSERT INTO tax (chart_id, rate, minvalue, maxvalue, taxnumber,
-                 validto, pass, taxmodule)
+                 validto, pass, taxmodule_id)
      VALUES ('419', '0.1', '0', NULL, '',
-             'infinity', '0', NULL);
+             'infinity', '0', 1);
 
 
 -- SET UP DEFAULTS
-INSERT INTO tax (setting_key, value)
+INSERT INTO defaults (setting_key, value)
      VALUES ('curr', 'EUR');
-INSERT INTO tax (setting_key, value)
+INSERT INTO defaults (setting_key, value)
      VALUES ('inventory_accno_id', '282');
-INSERT INTO tax (setting_key, value)
+INSERT INTO defaults (setting_key, value)
      VALUES ('income_accno_id', '338');
-INSERT INTO tax (setting_key, value)
+INSERT INTO defaults (setting_key, value)
      VALUES ('expense_accno_id', '328');
-INSERT INTO tax (setting_key, value)
+INSERT INTO defaults (setting_key, value)
      VALUES ('fxgain_accno_id', '346');
-INSERT INTO tax (setting_key, value)
+INSERT INTO defaults (setting_key, value)
      VALUES ('fxloss_accno_id', '334');
 
 -- END of transaction
