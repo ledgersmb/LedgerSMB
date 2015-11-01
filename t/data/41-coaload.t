@@ -10,7 +10,7 @@ sql/coa/au/chart/General-00000.sql
 sql/coa/au/chart/General-0000.sql
 sql/coa/cn/chart/General.sql
 sql/coa/co/chart/PUC.sql
-sql/coa/fr/chart/General.sql
+#sql/coa/fr/chart/General.sql
 sql/coa/hu/chart/Old-general.sql
 sql/coa/hu/chart/Minimal.sql
 sql/coa/hu/chart/Extended.sql
