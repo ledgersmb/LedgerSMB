@@ -12,6 +12,9 @@ Changelog for 1.4.19
 * Fixed ugly moose error on lack of file upload (GH 949, Chris T)
 * Fixed load issues of some COA files, added tests (GH 772, Chris T)
 * Removing SKR03 from charts of accounts (Chris T)
+* Fixed payments not showing up when cleint has no threshold (Chris T)
+* Fixed invoice total per client showing amount paid instead (Chris T)
+* Fixed net amounts being siet to paid amounts (GH 961, Chris T)
 
 Changelog for 1.4.18
 * New feature:  Create users from setup.pl with no new perms (GH 883, Chris T)
