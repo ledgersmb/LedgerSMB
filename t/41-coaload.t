@@ -6,7 +6,7 @@ my @missing = grep { ! $ENV{$_} } (qw(LSMB_NEW_DB COA_TESTING LSMB_TEST_DB));
 plan skip_all (join ', ', @missing) . ' not set' if @missing;
 
 open FILES, '<', 't/data/41-coaload.t';
-my @files = <FILES>;
+my @files = grep { /^[^#]/ } <FILES>;
 close FILES;
 
 my $test_db = "$ENV{LSMB_NEW_DB}_lsmb_test_coa";
