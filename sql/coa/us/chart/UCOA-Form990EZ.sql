@@ -73,7 +73,7 @@ SELECT account__save(NULL,'2710','Bonds payable','L','26', NULL, false, false, s
 SELECT account__save(NULL,'2730','Mortgages payable','L','26', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2750','Capital leases','L','26', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2770','Long-term liabilities - other','L','26', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'2810','Gov\'t-owned fixed assets liability','L','26', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'2810','Gov''t-owned fixed assets liability','L','26', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2910','Custodial funds','L','26', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'3000','Unrestricted net assets', NULL);
 SELECT account__save(NULL,'3010','Unrestricted net assets','Q','21&27', NULL, false, false, string_to_array('', ':'), false, false);
