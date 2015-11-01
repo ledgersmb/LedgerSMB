@@ -8,20 +8,26 @@ if (@missing) {
 } else {
     plan tests => 2;
     require Selenium::Remote::Driver;
-    my $host = "$ENV{SAUCE_USERNAME}:$ENV{SAUCE_ACCESS_KEY}\@ondemand.saucelabs.com";
+    my $user = $ENV{SAUCE_USERNAME};
+    my $passwd = $ENV{SAUCE_ACCESS_KEY};
+    my $host = "$user:$passwd\@localhost";
 
     my $driver = new Selenium::Remote::Driver(
                           'remote_server_addr' => $host,
-                          'port' => "80",
+                          'port' => 4445,
+#                          'remote_server_addr' => $host,
                           'browser_name' => "chrome",
                           'version' => "46",
                           'platform' => "Linux",
+                          'extra_capabilities' => {
+                            'tunnel-identifier' => $ENV{TRAVIS_JOB_NUMBER},
+                          },
                           );
-    $driver->get('http://saucelabs.com:5000/login.pl');
+    $driver->get('http://localhost:5000/login.pl');
 
     ok($driver->find_element_by_name('password'), 'got a password');
 
-    $driver->get('http://saucelabs.com:5000/setup.pl');
+    $driver->get('http://localhost:5000/setup.pl');
 
     ok($driver->find_element_by_name('s_passwd'), 'got a password');
 }
