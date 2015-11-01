@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 my @missing = grep { ! $ENV{$_} } (qw(LSMB_NEW_DB COA_TESTING LSMB_TEST_DB));
-plan skip_all (join ', ', @missing) . ' not set' if @missing;
+plan skip_all => (join ', ', @missing) . ' not set' if @missing;
 
 open FILES, '<', 't/data/41-coaload.t';
 my @files = grep { /^[^#]/ } <FILES>;
