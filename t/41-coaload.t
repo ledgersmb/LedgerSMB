@@ -13,8 +13,8 @@ my $test_db = "$ENV{LSMB_NEW_DB}_lsmb_test_coa";
 
 for my $sqlfile(@files){
     local $!;
-    system("dropdb '$test_db'");
     $! = undef; # reset if drop failed
+    system("dropdb '$test_db' 2>/dev/null");
     system("createdb '$test_db' -T '$ENV{LSMB_NEW_DB}'");
     ok(! $!, "DB created for $sqlfile testing");
     system("psql $test_db -f $sqlfile");
@@ -23,6 +23,9 @@ for my $sqlfile(@files){
     my ($testval) = grep { /TESTRESULT/ } split("\n", $returnstring);
     $testval =~ s/\D//g;
     ok($testval, "Got rows back for account, for $sqlfile");
+    system("dropdb '$test_db'");
 }
+
+
 
 done_testing;
