@@ -498,7 +498,7 @@ sub save {
     # insert taxes
     $query = qq|
 		INSERT INTO partstax (parts_id, chart_id)
-		     VALUES (?, (SELECT id FROM chart WHERE accno = ?))|;
+		     VALUES (?, (SELECT id FROM account WHERE accno = ?))|;
     $sth = $dbh->prepare($query);
     for ( split / /, $form->{taxaccounts} ) {
         if ( $form->{"IC_tax_$_"} ) {

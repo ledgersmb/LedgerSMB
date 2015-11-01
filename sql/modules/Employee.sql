@@ -26,7 +26,8 @@ BEGIN
 		ssn = in_ssn,
 		manager_id = in_manager_id,
 		employeenumber = in_employeenumber,
-                is_manager = coalesce(in_is_manager, false)
+                is_manager = coalesce(in_is_manager, false),
+                sales = in_sales
 	WHERE entity_id = in_entity_id;
 
 	out_id = in_entity_id;
@@ -34,12 +35,12 @@ BEGIN
 	IF NOT FOUND THEN
 		INSERT INTO entity_employee 
 			(startdate, enddate, dob, role, ssn, manager_id, 
-				employeenumber, entity_id, is_manager)
+				employeenumber, entity_id, is_manager, sales)
 		VALUES
 			(coalesce(in_start_date, now()::date), in_end_date, 
                                 in_dob, in_role, in_ssn,
 				in_manager_id, in_employeenumber, 
-                                in_entity_id, in_is_manager);
+                                in_entity_id, in_is_manager, in_sales);
 		RETURN in_entity_id;
 	END IF;
         RETURN out_id;

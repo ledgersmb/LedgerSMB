@@ -77,20 +77,24 @@ problems with multi-word single-quoted constructs in PI tags. -CT  -->
 </div>
 <div class="input_line" id="person-role-div">
 <div class="input_group g1">
-<?lsmb PROCESS input element_data = {
+<?lsmb 
+IF employee.sales; checked = "CHECKED"; ELSE; checked = undef; END;
+PROCESS input element_data = {
 	label = text('Sales')
 	value = 1
 	type = "checkbox"
-	checked = employee.sales
+	checked = checked
 	name = "sales"
 } ?>
 </div>
 <div class="input_group g2">
-<?lsmb PROCESS input element_data = {
+<?lsmb
+IF employee.is_manager; checked = "CHECKED"; ELSE; checked = undef; END;
+ PROCESS input element_data = {
         label = text('Manager')
         value = '1'
         type = "checkbox"
-        checked = employee.is_manager
+        checked = checked
         name = "is_manager"
 } ?>
 </div>
