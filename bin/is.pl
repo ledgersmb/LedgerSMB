@@ -1372,7 +1372,6 @@ sub post {
             }
         }
     }
-
     $form->{label} = $locale->text('Invoice');
 
     if ( !$form->{repost} ) {

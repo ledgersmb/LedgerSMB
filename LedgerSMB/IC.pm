@@ -161,7 +161,7 @@ sub get_part {
 
     # now get accno for taxes
     $query = qq|
-        SELECT c.accno FROM chart c, partstax pt
+        SELECT c.accno FROM account c, partstax pt
          WHERE pt.chart_id = c.id AND pt.parts_id = ?|;
 
     $sth = $dbh->prepare($query);
@@ -496,8 +496,8 @@ sub save {
 
     # insert taxes
     $query = qq|
-        INSERT INTO partstax (parts_id, chart_id)
-             VALUES (?, (SELECT id FROM chart WHERE accno = ?))|;
+         INSERT INTO partstax (parts_id, chart_id)
+         VALUES (?, (SELECT id FROM account WHERE accno = ?))|;
     $sth = $dbh->prepare($query);
     for ( split / /, $form->{taxaccounts} ) {
         if ( $form->{"IC_tax_$_"} ) {

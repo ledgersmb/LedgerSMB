@@ -483,7 +483,10 @@ sub display_payments {
             $invoice->[5] = $invoice->[5]->to_output(money  => 1);
             $invoice->[6] = $invoice->[6]->to_output(money  => 1);
             my $fld = "payment_" . $invoice->[0];
-            if (!defined $payment->{"$fld"} ){
+
+            if (defined $payment->{"net_$invoice->[0]"} ){
+                $invoice->[6] = $payment->{"$fld"};
+            } else {
                 $payment->{"$fld"} = $invoice->[6];
             }
         }

@@ -82,34 +82,35 @@ SELECT account__save(NULL, '5.4.00','Vacaciones','E','', (SELECT id FROM account
 SELECT account__save(NULL, '5.4.10','Cooperadora Escuela','E','', (SELECT id FROM account WHERE accno LIKE '5.4.'), false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL, '5.4.20','Cambio de Moneda Perdido','E','', (SELECT id FROM account WHERE accno LIKE '5.4.'), false, false, string_to_array('AP_amount', ':'), false, false);
 commit;
+BEGIN;
 -- Impuestos
 -- Ganancias (9% - 35%)
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '2.1.20'), 0.09);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM account WHERE accno  = '2.1.20'), 0.09);
 -- Jubilacion (11%)
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '2.1.21'), 0.11);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM account WHERE accno  = '2.1.21'), 0.11);
 -- Jubilacion INSSJP (3%)
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '2.1.22'), 0.03);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM account WHERE accno  = '2.1.22'), 0.03);
 -- Servicio Social (3%)
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '2.1.23'), 0.03);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM account WHERE accno  = '2.1.23'), 0.03);
 -- Bienes Personales (0,5% - 1,25%)
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '2.1.24'), 0.01);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM account WHERE accno  = '2.1.24'), 0.01);
 -- Valor Agregado (IVA 10,5% - 27%)
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '2.1.25'), 0.21);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM account WHERE accno  = '2.1.25'), 0.21);
 -- Ingresos Brutos (3%)
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '2.1.26'), 0.03);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM account WHERE accno  = '2.1.26'), 0.03);
 -- IVA Favor
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '1.4.10'), 0.21);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM account WHERE accno  = '1.4.10'), 0.21);
 
 SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE id IN (select account_id FROM account_link
                            WHERE description = 'AP_paid');
 -- Sistema
 -- Predeterminados
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '0.20'));
-INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '4.1.00'));
-INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '5.1.00'));
-INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '4.2.30'));
-INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '5.4.20'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno = '0.20'));
+INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '4.1.00'));
+INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '5.1.00'));
+INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '4.2.30'));
+INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '5.4.20'));
 INSERT INTO defaults (setting_key, value) VALUES ('curr', 'ARS:USD:EUR');
 INSERT INTO defaults (setting_key, value) VALUES ('weightunit' , 'Kg');
 --

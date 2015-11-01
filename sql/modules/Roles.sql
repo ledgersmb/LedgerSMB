@@ -127,6 +127,7 @@ SELECT lsmb__grant_perms('budget_enter', 'budget_info', 'INSERT');
 SELECT lsmb__grant_perms('budget_enter', 'budget_to_business_unit', 'INSERT');
 SELECT lsmb__grant_perms('budget_enter', 'budget_line', 'INSERT');
 SELECT lsmb__grant_perms('budget_enter', 'budget_note', 'INSERT');
+SELECT lsmb__grant_exec('budget_enter', ' budget__save_info(integer,date,date,text,text,integer[])');
 SELECT lsmb__grant_perms('budget_approve', 'budget_info', 'UPDATE',
        array['approved_at'::text, 'approved_by']);
 SELECT lsmb__grant_perms('budget_obsolete', 'budget_info', 'UPDATE',
@@ -1012,10 +1013,11 @@ SELECT lsmb__grant_perms('template_edit', 'template_id_seq', 'ALL');
 SELECT lsmb__grant_menu('template_edit', id, 'allow')
   FROM unnest(array[90, 99, 159,160,161,162,163,164,165,166,167,168,169,170,
                     171,173,174,175,176,177,178,179,180,181,182,183,184,
-                    185,186,187,189,241,242]) id;
+                    185,186,187,241,242]) id;
 
 SELECT lsmb__create_role('users_manage');
 SELECT lsmb__grant_role('users_manage', 'contact_read');
+SELECT lsmb__grant_role('users_manage', 'contact_create');
 SELECT lsmb__grant_role('users_manage', 'contact_class_employee');
 SELECT lsmb__grant_exec('users_manage', 'admin__add_user_to_role(TEXT, TEXT)');
 SELECT lsmb__grant_exec('users_manage', 'admin__remove_user_from_role(TEXT, TEXT)');

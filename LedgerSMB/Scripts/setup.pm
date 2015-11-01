@@ -75,8 +75,9 @@ sub _get_database {
 sub _init_db {
     my ($request) = @_;
     my $database = _get_database($request);
-    $request->{dbh} = $database->connect()
-    if ! defined $request->{dbh};
+    local $@;
+    $request->{dbh} = eval { $database->connect() }
+        if ! defined $request->{dbh};
     $LedgerSMB::App_State::DBH = $request->{dbh};
 
     return $database;
@@ -285,6 +286,7 @@ sub copy_db {
     $dbh->prepare("SELECT setting__set('role_prefix',
                                coalesce((setting_get('role_prefix')).value, ?))"
     )->execute("lsmb_$database->{company_name}__");
+    $dbh->commit;
     $dbh->disconnect;
     complete($request);
 }
@@ -958,8 +960,6 @@ sub save_user {
                                             "users_manage",
                                          ]
         );
-    } else {
-        $request->error($request->{_locale}->text('No Permissions Assigned'));
    }
    $request->{dbh}->commit;
    $request->{dbh}->begin_work;
@@ -1116,6 +1116,7 @@ sub create_initial_user {
    @{$request->{perm_sets}} = (
        {id => '0', label => $locale->text('Manage Users')},
        {id => '1', label => $locale->text('Full Permissions')},
+       {id => '-1', label => $locale->text('No changes')},
    );
     my $template = LedgerSMB::Template->new(
                    path => 'UI/setup',

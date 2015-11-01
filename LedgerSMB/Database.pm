@@ -171,10 +171,11 @@ sub get_info {
     full_version => undef,
           status => undef,
     };
+    local $@;
 
     my $creds = LedgerSMB::Auth->get_credentials();
     $logger->trace("\$creds=".Data::Dumper::Dumper(\$creds));
-    my $dbh = $self->connect();
+    my $dbh = eval { $self->connect() };
     if (!$dbh){ # Could not connect, try to validate existance by connecting
                 # to postgres and checking
            $dbh = $self->new($self->export, (dbname => 'postgres'))->connect;

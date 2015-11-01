@@ -29,20 +29,19 @@ package LedgerSMB::Taxes::Simple;
 use strict;
 use warnings;
 
-use Class::Struct;
+use Moose;
 use LedgerSMB::PGNumber;
+use LedgerSMB::MooseTypes;
 
-struct 'LedgerSMB::Taxes::Simple' => {
-    taxnumber   => '$',
-    description => '$',
-    rate        => 'LedgerSMB::PGNumber',
-    chart       => '$',
-    account     => '$',
-    value       => 'LedgerSMB::PGNumber',
-    minvalue    => 'LedgerSMB::PGNumber', #Ignored in Simple Tax rules
-    maxvalue    => 'LedgerSMB::PGNumber', #Ignored in Simple Tax rules
-    pass        => '$'
-};
+has taxnumber   => (isa => 'Str', is => 'rw');
+has description => (isa => 'Str', is => 'rw');
+has rate        => (isa => 'LedgerSMB::Moose::Number', is => 'ro', coerce => 1);
+has chart       => (isa => 'Str', is => 'ro');
+has account     => (isa => 'Str', is => 'rw');
+has value       => (isa => 'LedgerSMB::Moose::Number', is => 'rw', coerce => 1);
+has minvalue    => (isa => 'LedgerSMB::Moose::Number', is => 'ro', coerce => 1);
+has maxvalue    => (isa => 'LedgerSMB::Moose::Number', is => 'ro', coerce => 1);
+has pass        => (isa => 'Str', is => 'ro');
 
 sub calculate_tax {
     my ( $self, $form, $subtotal, $extract, $passrate ) = @_;

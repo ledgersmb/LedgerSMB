@@ -5,23 +5,23 @@ begin;
 SELECT account_heading_save(NULL, '1', 'Tillgångar', NULL);
 SELECT account_heading_save(NULL, '10', 'Immateriella anläggningstillgångar', NULL);
 SELECT account__save(NULL,'1010','Balanserade utgifter','A','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'1019','Ack avskriningar balanserade utg','C','', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'1019','Ack avskriningar balanserade utg','A','', NULL, true, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1060','Hyresrätt','A','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'1069','Ack avskrivn hyresrätt','C','', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'1069','Ack avskrivn hyresrätt','A','', NULL, true, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'11','Byggnader och mark', NULL);
 SELECT account__save(NULL,'1110','Byggnader','A','', NULL, false, false, string_to_array('IC', ':'), false, false);
-SELECT account__save(NULL,'1119','Ack avskrivn byggnader','C','', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'1119','Ack avskrivn byggnader','A','', NULL, true, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1130','Mark','A','', NULL, false, false, string_to_array('IC', ':'), false, false);
 SELECT account__save(NULL,'1140','Tomter, markomr obebyggda','A','', NULL, false, false, string_to_array('IC', ':'), false, false);
 SELECT account__save(NULL,'1150','Markanläggningar','A','', NULL, false, false, string_to_array('IC', ':'), false, false);
-SELECT account__save(NULL,'1159','Ack avskrivn markanläggn','C','', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'1159','Ack avskrivn markanläggn','A','', NULL, true, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1190','Övriga byggnader och mark','A','', NULL, false, false, string_to_array('IC', ':'), false, false);
 SELECT account_heading_save(NULL,'12','Maskiner och inventarier', NULL);
 SELECT account__save(NULL,'1230','Installationer','A','', NULL, false, false, string_to_array('IC', ':'), false, false);
-SELECT account__save(NULL,'1238','Ack nedskrivn installationer','C','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'1239','Ack avskrivn installationer','C','', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'1238','Ack nedskrivn installationer','A','', NULL, true, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'1239','Ack avskrivn installationer','A','', NULL, true, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1250','Datorer','A','', NULL, false, false, string_to_array('IC', ':'), false, false);
-SELECT account__save(NULL,'1259','Ack avskrivn datorer','C','', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'1259','Ack avskrivn datorer','A','', NULL, false, true, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'13','Finansiella anläggningstillgångar', NULL);
 SELECT account__save(NULL,'1370','Uppskjuten skattefordran','A','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1380','Långfristiga fordringar','A','', NULL, false, false, string_to_array('', ':'), false, false);
@@ -231,15 +231,15 @@ SELECT account__save(NULL,'8910','Årets skattekostnad','E','', NULL, false, fal
 SELECT account_heading_save(NULL,'899','Redovisat resultat', NULL);
 SELECT account__save(NULL,'8999','Redovisat resultat','E','', NULL, false, false, string_to_array('', ':'), false, false);
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno ='1130'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno ='1130'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '3400'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '3400'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '4400'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '4400'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '3960'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '3960'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '7960'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '7960'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'SEK:EUR:USD');
 
