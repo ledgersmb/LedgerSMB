@@ -467,28 +467,20 @@ sub display_payments {
             if (($payment->{action} ne 'update_payments')
                   or (defined $payment->{"id_$_->{contact_id}"})){
                    $payment->{"paid_$_->{contact_id}"} = "" unless defined $payment->{"paid_$_->{contact_id}"};
-
-                   if ($payment->{"paid_$_->{contact_id}"} eq 'some'){
-                      my $i_id = $invoice->[0];
-                      my $payment_amt = LedgerSMB::PGNumber->from_input(
-                          $payment->{"payment_$i_id"}
-                      );
-                      $contact_total += $payment_amt;
-                   }
             }
             $invoice->[6] = $invoice->[3] - $invoice->[4] - $invoice->[5];
-            $contact_to_pay +=  $invoice->[6];
+            $contact_total +=  $invoice->[6];
+            $contact_to_pay += $invoice->[3];
             $invoice->[3] = $invoice->[3]->to_output(money  => 1);
             $invoice->[4] = $invoice->[4]->to_output(money  => 1);
             $invoice->[5] = $invoice->[5]->to_output(money  => 1);
             $invoice->[6] = $invoice->[6]->to_output(money  => 1);
             my $fld = "payment_" . $invoice->[0];
 
-            if (defined $payment->{"net_$invoice->[0]"} ){
-                $invoice->[6] = $payment->{"$fld"};
-            } else {
+            if ('display_mayments' eq $request->{action} ){
                 $payment->{"$fld"} = $invoice->[6];
             }
+            $contact_total +=  $payment->parse_amount(amount => $payment->{$fld});
         }
         if ($payment->{"paid_$_->{contact_id}"} ne 'some') {
                   $contact_total = $contact_to_pay;
