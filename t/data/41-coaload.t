@@ -2,7 +2,6 @@ sql/coa/ch/chart/German.sql
 sql/coa/se/chart/General.sql
 sql/coa/se/chart/Church_Society.sql
 sql/coa/se/chart/Agriculture.sql
-sql/coa/de/chart/DATEV-SKR03.sql
 sql/coa/de/chart/General.sql
 sql/coa/be/chart/General.sql
 sql/coa/tw/chart/General.sql
