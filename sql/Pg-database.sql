@@ -2850,7 +2850,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 1	AR	0	2
 21	AP	0	4
 35	Cash	0	5
-189	POS Invoice	188	1
 19	Contacts	0	1
 246	Import Chart	73	7
 136	GIFI	128	7
@@ -2873,7 +2872,6 @@ COPY menu_node (id, label, parent, "position") FROM stdin;
 210	Drafts	205	2
 211	Reconciliation	205	3
 218	Add Tax Form	217	1
-188	Text Templates	128	15
 172	LaTeX Templates	128	14
 156	HTML Templates	128	13
 153	SIC	128	12
@@ -3385,11 +3383,6 @@ COPY menu_attribute (node_id, attribute, value, id) FROM stdin;
 183	template_name	check	516
 184	template_name	receipt	517
 242	template_name	letterhead	649
-188	menu	1	521
-189	module	template.pl	522
-189	action	display	523
-189	template_name	pos_invoice	524
-189	format	txt	525
 193	module	login.pl	532
 193	action	logout	533
 193	target	_top	534

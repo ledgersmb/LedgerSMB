@@ -486,7 +486,10 @@ sub display_payments {
                                                     money  => 1);
             $contact_to_pay +=  $payment->parse_amount(amount => $invoice->[6]);
             my $fld = "payment_" . $invoice->[0];
-            if (!defined $payment->{"$fld"} ){
+           
+            if (defined $payment->{"net_$invoice->[0]"} ){
+                $invoice->[6] = $payment->{"$fld"};
+            } else {
                 $payment->{"$fld"} = $invoice->[6];
             }
         }

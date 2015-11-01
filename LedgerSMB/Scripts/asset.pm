@@ -622,7 +622,7 @@ sub report_details {
                  usable_life basis prior_through prior_dep dep_this_time
                  dep_ytd dep_total);
     $report->{title} = $locale->text("Report [_1] on date [_2]", 
-                     $report->{id}, $report->{report_date});
+                     $report->{id}, $report->{report_date}->to_output);
     my $header = {
                             tag => $locale->text('Tag'),
              start_depreciation => $locale->text('Dep. Starts'),
