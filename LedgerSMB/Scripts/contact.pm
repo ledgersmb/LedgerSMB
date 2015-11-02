@@ -142,6 +142,7 @@ sub _main_screen {
        @DIVS = qw(credit address contact_info bank_act notes files);
        unshift @DIVS, 'company' if $company->{entity_id};
        unshift @DIVS, 'person' if $person->{entity_id};
+       no warnings 'uninitialized';
        if ($person->{entity_id} && $person->{entity_class} == 3){
           shift @DIVS;
           unshift @DIVS, 'employee', 'user', 'wage';
@@ -247,7 +248,7 @@ sub _main_screen {
     );
     my @all_taxes = LedgerSMB->call_procedure(funcname => 'account__get_taxes');
 
-    my $arap_class = $entity_class;
+    my $arap_class = $entity_class || '0';
     $arap_class = 2 unless $arap_class == 1;
     my @ar_ap_acc_list = LedgerSMB->call_procedure(funcname => 'chart_get_ar_ap',
                                            args => [$arap_class]);
