@@ -261,9 +261,9 @@ SELECT account__save(NULL, '4810', 'Költségek, ráfordítások passzív időbe
 SELECT account__save(NULL, '4820', 'Árbevételek passzív időbeli elhatárolása', 'L', '', NULL, false, false, string_to_array('', ':'),false,false);
 SELECT account__save(NULL, '4830', 'Halasztott bevételek', 'L', '', NULL, false, false, string_to_array('', ':'),false,false);
 SELECT account_heading_save (NULL, '49', 'Évi mérlegszámlák', NULL);
-SELECT account__save(NULL, '4910', 'Nyitómérleg számla', 'C', '', NULL, false, false, string_to_array('', ':'),false,false);
-SELECT account__save(NULL, '4920', 'Záró mérleg számla', 'C', '', NULL, false, false, string_to_array('', ':'),false,false);
-SELECT account__save(NULL, '4930', 'Adózott eredmény elszámolási számla', 'C', '', NULL, false, false, string_to_array('', ':'),false,false);
+SELECT account__save(NULL, '4910', 'Nyitómérleg számla', 'L', '', NULL, false, false, string_to_array('', ':'),false,false);
+SELECT account__save(NULL, '4920', 'Záró mérleg számla', 'L', '', NULL, false, false, string_to_array('', ':'),false,false);
+SELECT account__save(NULL, '4930', 'Adózott eredmény elszámolási számla', 'L', '', NULL, false, false, string_to_array('', ':'),false,false);
 SELECT account_heading_save (NULL, '5', 'KÖLTSÉGNEMEK', NULL);
 SELECT account_heading_save (NULL, '51', 'Anyagjellegű költségek', NULL);
 SELECT account__save(NULL, '5110', 'Anyagköltség', 'E', '', NULL, false, false, string_to_array('AP_amount', ':'),false,false);

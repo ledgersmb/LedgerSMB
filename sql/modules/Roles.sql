@@ -127,6 +127,7 @@ SELECT lsmb__grant_perms('budget_enter', 'budget_info', 'INSERT');
 SELECT lsmb__grant_perms('budget_enter', 'budget_to_business_unit', 'INSERT');
 SELECT lsmb__grant_perms('budget_enter', 'budget_line', 'INSERT');
 SELECT lsmb__grant_perms('budget_enter', 'budget_note', 'INSERT');
+SELECT lsmb__grant_exec('budget_enter', ' budget__save_info(integer,date,date,text,text,integer[])');
 SELECT lsmb__grant_perms('budget_approve', 'budget_info', 'UPDATE',
        array['approved_at'::text, 'approved_by']);
 SELECT lsmb__grant_perms('budget_obsolete', 'budget_info', 'UPDATE',

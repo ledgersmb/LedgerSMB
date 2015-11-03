@@ -82,6 +82,7 @@ SELECT account__save(NULL, '5.4.00','Vacaciones','E','', (SELECT id FROM account
 SELECT account__save(NULL, '5.4.10','Cooperadora Escuela','E','', (SELECT id FROM account WHERE accno LIKE '5.4.'), false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL, '5.4.20','Cambio de Moneda Perdido','E','', (SELECT id FROM account WHERE accno LIKE '5.4.'), false, false, string_to_array('AP_amount', ':'), false, false);
 commit;
+BEGIN;
 -- Impuestos
 -- Ganancias (9% - 35%)
 INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '2.1.20'), 0.09);
