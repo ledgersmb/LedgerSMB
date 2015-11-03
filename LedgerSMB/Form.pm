@@ -2475,6 +2475,7 @@ sub create_links {
               ORDER BY accno|;
 
     $sth = $dbh->prepare($query);
+    $self->{id} = undef if $self->{id} eq '';
     $sth->execute( "%" . "$module%", $self->{id}) || $self->dberror($query);
 
     $self->{accounts} = "";

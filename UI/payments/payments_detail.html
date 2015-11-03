@@ -281,7 +281,7 @@
 								name    = "paid_" _ r.contact_id
 								value   = "all"
 								class   = "paid_all"
-								id      = "paid-all-" _ $r.contact_id
+								id      = "paid-all-" _ r.contact_id
 								label   = text('All')
 								checked = (${"paid_$r.contact_id"} != 'some') ? "checked" : ""
 								type    = "radio"
