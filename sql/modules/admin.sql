@@ -462,16 +462,18 @@ AS $$
             -- Insert cycle
             
             --- The entity is expected to already BE created. See admin.pm.
-            
-            
-            v_user_id := nextval('users_id_seq');
-            insert into users (id, username, entity_id) VALUES (
-                v_user_id,
-                in_username,
-                in_entity_id
-            );
-            
-            insert into user_preference (id) values (v_user_id);
+
+            PERFORM * FROM USERS where username = in_username;
+            IF NOT FOUND THEN
+                v_user_id := nextval('users_id_seq');
+                insert into users (id, username, entity_id) VALUES (
+                    v_user_id,
+                    in_username,
+                    in_entity_id
+                );
+
+                insert into user_preference (id) values (v_user_id);
+            END IF;
 
             IF NOT exists(SELECT * FROM entity_employee WHERE entity_id = in_entity_id) THEN
                 INSERT into entity_employee (entity_id) values (in_entity_id);

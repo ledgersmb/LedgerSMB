@@ -770,7 +770,17 @@ sub customer_details {
 		       '' as contact, '' as customerphone, '' as customerfax,
 		       '' AS customertaxnumber, sic_code AS sic, iban, remark,
  		       bic,eca.startdate,eca.enddate
-		  FROM company cm
+              FROM (SELECT id, entity_id,
+                    '' AS first_name, '' AS middle_name, legal_name,
+                    '' AS personal_id, tax_id, sales_tax_id, license_number,
+                    sic_code
+                FROM company
+                UNION
+                SELECT id, entity_id,
+                    first_name, middle_name, last_name,
+                    personal_id, '', '', '', ''
+                FROM person)
+                cm
 		  JOIN entity e ON (cm.entity_id = e.id)
                   JOIN entity_credit_account eca ON e.id = eca.entity_id
                   LEFT JOIN entity_bank_account eba ON eca.entity_id = eba.entity_id

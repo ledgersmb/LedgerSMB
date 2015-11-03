@@ -870,6 +870,11 @@ sub form_footer {
         }
 
     }
+    if ($form->{callback} and $form->{id}){
+        print qq|<div class='returnlink'><a href='$form->{callback}'>|
+              . $locale->text('Continue Previous Workflow') 
+                . qq|</a></div>|;
+    }
     if ($form->{id}){
         print qq|
 <table width="100%">

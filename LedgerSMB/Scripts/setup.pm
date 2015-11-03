@@ -269,6 +269,7 @@ sub copy_db {
     $dbh->prepare("SELECT setting__set('role_prefix', 
                                coalesce((setting_get('role_prefix')).value, ?))"
     )->execute("lsmb_$database->{company_name}__");
+    $dbh->commit;
     $dbh->disconnect;
     complete($request);
 }

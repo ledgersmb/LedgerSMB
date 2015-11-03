@@ -2,6 +2,19 @@ Changelog for 1.4 Series
 Released 2014-09-15
 
 Changelog for 1.4.19
+* Fixed permission denied when entering budgets (GH944, Chris T)
+* Fixed error when deleting batches with inventory (GH953 Chris T)
+* Fixed report sorting back proxying to different directory (GH858, Chris T)
+* Added auto-generation of person control code like company (Chris T)
+* Removed redirect on posting sales invoice draft (GH 941, Chris T)
+* Fixed aging report not respecting name search field (GH 954, Chris T)
+* Fixed lack of redirection w/parts causing workflow problems (GH 940 Chris T)
+* Fixed ugly moose error on lack of file upload (GH 949, Chris T)
+* Fixed load issues of some COA files, added tests (GH 772, Chris T)
+* Removing SKR03 from charts of accounts (Chris T)
+* Fixed payments not showing up when cleint has no threshold (Chris T)
+* Fixed invoice total per client showing amount paid instead (Chris T)
+* Fixed net amounts being siet to paid amounts (GH 961, Chris T)
 * Removed many references to the chart view (GH #930, Chris T)
 
 Chris T is Chris Travers
@@ -16,8 +29,17 @@ Changelog for 1.4.18
 * Removed unused pos_invoice.txt (GH #875, Chris T)
 * Fixed SF1312, receipt not skipped on empty pay field (Chris T)
 * Fixed SF1315, inv/part problems when heading/acc have same accno (Chris T)
+* Fixed cannot create user with same user id as already in db (GH882 Chris T)
+* Fixed sales checkbox doesnt save or display correctly (GH877, Chris T)
+* Fixed orders search not respecting name field (SF1345, Chris T)
+* Fixed role_prefix not committed after Copy Database (GH964, NickP)
+* Add datepicker widget to Transaction Form date fields (NickP)
+* Fixed invoice query not showing addresses for persons (Rami H
+* Fixed ar/ap handling with calculated taxes. (GH 
 
 ChrisT is Chris Travers
+NickP is Nick Prater
+Rami H is Rami Hovi
 
 
 Changelog for 1.4.17

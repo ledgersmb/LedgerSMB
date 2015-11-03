@@ -199,6 +199,15 @@ sub get_url {
     return "$ENV{SCRIPT_NAME}?$ENV{QUERY_STRING}";
 }
 
+sub get_relative_url {
+    if ($ENV{REQUEST_METHOD} ne 'GET') {
+       return undef;
+    }
+    my $script = $ENV{SCRIPT_NAME};
+    $script =~ s#.*/([^/]+)$#$1#;
+    return "$script?$ENV{QUERY_STRING}";
+}
+
 =head2 all_months(is_short $bool)
 
 Returns hashref of localized date data with following members:
