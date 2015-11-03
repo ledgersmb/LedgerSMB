@@ -231,15 +231,15 @@ SELECT account__save(NULL,'8910','Årets skattekostnad','E','', NULL, false, fal
 SELECT account_heading_save(NULL,'899','Redovisat resultat', NULL);
 SELECT account__save(NULL,'8999','Redovisat resultat','E','', NULL, false, false, string_to_array('', ':'), false, false);
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno ='1130'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno ='1130'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '3400'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '3400'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '4400'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '4400'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '3960'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '3960'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '7960'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '7960'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'SEK:EUR:USD');
 

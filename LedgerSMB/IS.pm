@@ -69,7 +69,7 @@ sub getposlines {
 
     my $query = qq| 
 		  SELECT sum(amount) AS amount, memo FROM acc_trans
-		   WHERE chart_id = (SELECT id FROM chart 
+		   WHERE chart_id = (SELECT id FROM account
 		                    WHERE accno = ?)
 		         AND transdate = date 'NOW' AND cleared IS NOT TRUE
 		GROUP BY memo|;
@@ -82,7 +82,7 @@ sub getposlines {
     $sth->finish;
     $query = qq| 
 		SELECT sum(amount) AS sum FROM acc_trans
-		 WHERE chart_id =  (SELECT id FROM chart WHERE accno = ?)
+		 WHERE chart_id =  (SELECT id FROM account WHERE accno = ?)
 	  AND transdate = date 'NOW'
           AND cleared IS NOT TRUE|;
     $sth = $dbh->prepare($query);
@@ -129,7 +129,7 @@ sub clear_till {
 		UPDATE acc_trans
 		SET cleared = TRUE
 		WHERE chart_id = 
-			(SELECT id FROM chart WHERE accno = ?)
+			(SELECT id FROM account WHERE accno = ?)
 		  AND transdate = date 'NOW'|;
 
     my $sth = $dbh->prepare($query);
@@ -905,7 +905,7 @@ sub post_invoice {
 
      my $return_cid = 0;
      if ($LedgerSMB::Sysconfig::return_accno and !$form->{void}){
-         my $rquery = "SELECT id FROM chart WHERE accno = ?";
+         my $rquery = "SELECT id FROM account WHERE accno = ?";
          my $sth = $dbh->prepare($rquery);
          $sth->execute($LedgerSMB::Sysconfig::return_accno);
          ($return_cid) = $sth->fetchrow_array();
@@ -1358,7 +1358,7 @@ sub post_invoice {
 					INSERT INTO acc_trans 
 					            (trans_id, chart_id, amount,
 					            transdate)
-					     VALUES (?, (SELECT id FROM chart
+					     VALUES (?, (SELECT id FROM account 
 					                  WHERE accno = ?),
 					            ?, ?)|;
                 $sth = $dbh->prepare($query);
@@ -1377,7 +1377,7 @@ sub post_invoice {
 				INSERT INTO acc_trans 
 				            (trans_id, chart_id, amount, 
 				            transdate, source, memo, cleared)
-                  		     VALUES (?, (SELECT id FROM chart
+                  		     VALUES (?, (SELECT id FROM account
 		                                   WHERE accno = ?),
 		  		            ?, ?, ?, ?, ?)|;
 
@@ -1404,8 +1404,8 @@ sub post_invoice {
 					            (trans_id, chart_id, amount,
 					            transdate, source, 
 					            fx_transaction, cleared)
-					     VALUES (?, (SELECT id FROM chart
-					                   WHERE accno = >),
+					     VALUES (?, (SELECT id FROM account
+					                   WHERE accno = ?),
 					            ?, ?, ?, '1', ?)|;
 
                 $sth = $dbh->prepare($query);
@@ -1825,7 +1825,7 @@ sub retrieve_invoice {
         # taxes
         $query = qq|
 			SELECT c.accno
-			  FROM chart c
+			  FROM account c
 			  JOIN partstax pt ON (pt.chart_id = c.id)
 			 WHERE pt.parts_id = ?|;
         my $tth = $dbh->prepare($query) || $form->dberror($query);
@@ -1958,7 +1958,7 @@ sub retrieve_item {
     # taxes
     $query = qq|
 		SELECT c.accno
-		  FROM chart c
+		  FROM account c
 		  JOIN partstax pt ON (c.id = pt.chart_id)
 		 WHERE pt.parts_id = ?|;
     my $tth = $dbh->prepare($query) || $form->dberror($query);

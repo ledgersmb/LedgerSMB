@@ -1040,7 +1040,7 @@ sub taxes {
 		  SELECT c.id, c.accno, c.description, 
 		         t.rate * 100 AS rate, t.taxnumber, t.validto::date,
 			 t.minvalue, t.pass, m.taxmodulename
-		    FROM chart c
+		    FROM account c
 		    LEFT JOIN
                      (tax t JOIN taxmodule m 
                             ON (t.taxmodule_id = m.taxmodule_id))
