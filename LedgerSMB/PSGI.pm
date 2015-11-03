@@ -19,8 +19,6 @@ use LedgerSMB;
 use LedgerSMB::Form;
 use LedgerSMB::Sysconfig;
 use LedgerSMB::Template;
-###TODO-LOCALIZE-DOLLAR-AT
-eval { require LedgerSMB::Template::LaTeX; };
 use LedgerSMB::Template::HTML;
 use LedgerSMB::Locale;
 use LedgerSMB::File;
@@ -29,6 +27,9 @@ use LedgerSMB::PGObject;
 use Try::Tiny;
 
 use CGI::Emulate::PSGI;
+
+local $@; # localizes just for initial load.
+eval { require LedgerSMB::Template::LaTeX; };
 $ENV{GATEWAY_INTERFACE}="cgi/1.1";
 sub app {
    return CGI::Emulate::PSGI->handler(
