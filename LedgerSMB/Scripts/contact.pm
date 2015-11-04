@@ -31,6 +31,7 @@ use LedgerSMB::File;
 use LedgerSMB::App_State;
 use LedgerSMB::Setting;
 use LedgerSMB::Template;
+use Try::Tiny;
 
 use strict;
 use warnings;
