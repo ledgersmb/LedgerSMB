@@ -39,16 +39,6 @@ function set_main_div(doc){
 //    console.log('setting body');
     var body = doc.match(/<body[^>]*>([\s\S]*)<\/body>/i);
     var newbody = body[1];
-    require(['dojo/query', 'dijit/registry', 'dojo/dom', 'dojo/domReady!'],
-            function(query, registry, dom){
-               query('form').forEach(function(node){
-                    var form = registry.byNode(node);
-                    if (!form){
-                       return undefined;
-                    }
-                    form.destroy;
-               });
-            });
     require(['dojo/query', 'dojo/dom', 'dojo/dom-style',
 	     'dijit/registry', 'dojo/domReady!'],
             function(query, dom, style, registry){
