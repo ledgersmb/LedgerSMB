@@ -1,4 +1,4 @@
-BEGIN;
+EGIN;
 -- WAGE FUNCTIONS
 CREATE OR REPLACE FUNCTION wage__list_for_entity(in_entity_id int)
 RETURNS SETOF payroll_wage AS
@@ -14,7 +14,7 @@ $$ language sql;
 
 CREATE OR REPLACE FUNCTION wage__save
 (in_rate numeric, in_entity_id int, in_type_id int)
-RETURNS SETOF payroll_wage
+RETURNS payroll_wage
 AS
 $$
 BEGIN
@@ -49,7 +49,7 @@ $$ language sql;
 
 CREATE OR REPLACE FUNCTION deduction__save
 (in_rate numeric, in_entity_id int, in_type_id int)
-RETURNS SETOF payroll_deduction
+RETURNS payroll_deduction
 AS
 $$
 BEGIN

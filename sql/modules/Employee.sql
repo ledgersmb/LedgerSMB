@@ -54,7 +54,7 @@ COMMENT ON FUNCTION employee__save
 $$ Saves an employeerecord with the specified information.$$;
 
 CREATE OR REPLACE FUNCTION employee__get_user(in_entity_id int)
-RETURNS SETOF users AS
+RETURNS users AS
 $$SELECT * FROM users WHERE entity_id = $1;$$ language sql;
 
 COMMENT ON FUNCTION employee__get_user(in_entity_id int) IS

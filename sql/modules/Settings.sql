@@ -8,7 +8,7 @@
 BEGIN;
 
 CREATE OR REPLACE FUNCTION defaults_get_defaultcurrency()
-RETURNS SETOF char(3) AS
+RETURNS char(3) AS
 $$
 DECLARE defaultcurrency defaults.value%TYPE;
       BEGIN

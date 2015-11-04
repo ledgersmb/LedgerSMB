@@ -263,7 +263,7 @@ $$ language sql;
 COMMENT ON FUNCTION account__get_taxes() IS
 $$ Returns set of accounts where the tax attribute is true.$$;
 
-CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS setof chart AS
+CREATE OR REPLACE FUNCTION account_get (in_id int) RETURNS chart AS
 $$
 select c.id, c.accno, c.description,
        'A'::text as charttype, c.category, concat_colon(l.description) as link,
