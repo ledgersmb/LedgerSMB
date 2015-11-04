@@ -30,6 +30,7 @@ use LedgerSMB::Entity::User;
 use LedgerSMB::File;
 use LedgerSMB::App_State;
 use LedgerSMB::Template;
+use Try::Tiny;
 
 use strict;
 use warnings;
@@ -238,6 +239,7 @@ sub _main_screen {
     my @all_taxes = LedgerSMB->call_procedure(procname => 'account__get_taxes');
 
     my $arap_class = $entity_class;
+    $arap_class ||= 1;
     $arap_class = 2 if $arap_class == 3;
     my @ar_ap_acc_list = LedgerSMB->call_procedure(funcname => 'chart_get_ar_ap',
                                            args => [$arap_class]);
