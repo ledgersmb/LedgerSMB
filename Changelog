@@ -39,6 +39,10 @@ Changelog for 1.4.19
 * Fixed payments not showing up when cleint has no threshold (Chris T)
 * Fixed invoice total per client showing amount paid instead (Chris T)
 * Fixed net amounts being siet to paid amounts (GH 961, Chris T)
+* Removed many references to the chart view (GH #930, Chris T)
+* Fuxed saving user fails with error 4 or 5 (GH #1008, Chris T)
+
+Chris T is Chris Travers
 
 Changelog for 1.4.18
 * New feature:  Create users from setup.pl with no new perms (GH 883, Chris T)
