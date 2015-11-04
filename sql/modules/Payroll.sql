@@ -1,4 +1,4 @@
-EGIN;
+BEGIN;
 -- WAGE FUNCTIONS
 CREATE OR REPLACE FUNCTION wage__list_for_entity(in_entity_id int)
 RETURNS SETOF payroll_wage AS
@@ -12,11 +12,16 @@ $$
 SELECT * FROM payroll_income_type where country_id = $1
 $$ language sql;
 
+DROP FUNCTION IF EXISTS wage__save
+(in_rate numeric, in_entity_id int, in_type_id int);
+
 CREATE OR REPLACE FUNCTION wage__save
 (in_rate numeric, in_entity_id int, in_type_id int)
 RETURNS payroll_wage
 AS
 $$
+DECLARE
+  return_wage payroll_wage;
 BEGIN
 
 UPDATE payroll_wage
@@ -29,8 +34,10 @@ IF NOT FOUND THEN
     VALUES (in_entity_id, in_type_id, in_rate);
 END IF;
 
-RETURN QUERY SELECT * FROM payroll_wage
+SELECT * INTO return_wage FROM payroll_wage
              WHERE entity_id = in_entity_id and in_type_id;
+
+RETURN return_wage;
 END;
 $$ language plpgsql;
 
@@ -47,11 +54,15 @@ $$
 SELECT * FROM payroll_deduction_type where country_id = $1
 $$ language sql;
 
+DROP FUNCTION IF EXISTS deduction__save
+(in_rate numeric, in_entity_id int, in_type_id int);
+
 CREATE OR REPLACE FUNCTION deduction__save
 (in_rate numeric, in_entity_id int, in_type_id int)
 RETURNS payroll_deduction
 AS
 $$
+DECLARE return_ded payroll_deduction;
 BEGIN
 
 UPDATE payroll_deduction
@@ -64,8 +75,9 @@ IF NOT FOUND THEN
     VALUES (in_entity_id, in_type_id, in_rate);
 END IF;
 
-RETURN QUERY SELECT * FROM payroll_deduction
+SELECT * INTO return_ded FROM payroll_deduction
              WHERE entity_id = in_entity_id and in_type_id;
+RETURN return_ded;
 END;
 $$ language plpgsql;
 

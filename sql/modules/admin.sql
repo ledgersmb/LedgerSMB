@@ -162,14 +162,15 @@ CREATE OR REPLACE FUNCTION admin__get_user(in_id INT) returns users as $$
     BEGIN
 
         select * into a_user from users where id = in_id;
-        return next a_user;
-        return;
+        return a_user;
 
     END;
 $$ language plpgsql;
 
 COMMENT ON FUNCTION admin__get_user(in_user_id INT) IS
 $$ Returns a set of (only one) user specified by the id.$$;
+
+DROP FUNCTION IF EXISTS admin__get_user_by_entity(in_entity_id INT);
 
 CREATE OR REPLACE FUNCTION admin__get_user_by_entity(in_entity_id INT) returns users as $$
 
@@ -178,8 +179,7 @@ CREATE OR REPLACE FUNCTION admin__get_user_by_entity(in_entity_id INT) returns u
     BEGIN
 
         select * into a_user from users where entity_id = in_entity_id;
-        return next a_user;
-        return;
+        return a_user;
 
     END;
 $$ language plpgsql;
@@ -682,6 +682,7 @@ COMMENT ON function user__save_preferences(
 $$ Saves user preferences.  Returns true if successful, false if no preferences
 were found to update.$$;
 
+DROP FUNCTION IF EXISTS user__get_preferences (in_user_id int);
 create or replace function user__get_preferences (in_user_id int) returns user_preference as $$
 
 declare
@@ -693,7 +694,7 @@ BEGIN
 
         RAISE EXCEPTION 'Could not find user preferences for id %', in_user_id;
     ELSE
-        return next v_row;
+        return v_row;
     END IF;
 END;
 $$ language plpgsql;
