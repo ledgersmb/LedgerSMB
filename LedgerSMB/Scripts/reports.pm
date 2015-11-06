@@ -97,6 +97,7 @@ sub start_report {
     @{$request->{employees}} =  $request->call_procedure(
         procname => 'employee__all_salespeople'
     );
+    $request->{earn_id} = LedgerSMB::Setting->get('earn_id');
     my $template = LedgerSMB::Template->new(
         request => $request,
         user => $request->{_user},
