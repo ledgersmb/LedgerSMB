@@ -36,13 +36,13 @@ SELECT account__save(NULL,'102002','Fabbricati non strumentali','A','1.B.II.1', 
 SELECT account__save(NULL,'102003','Fabbricati','A','1.B.II.1', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'102004','Impianti e macchinari','A','1.B.II.2', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'102006','Attrezzature commerciali','A','1.B.II.3', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'102007','Attrezzature d\'ufficio','A','1.B.II.3', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'102007','Attrezzature d''ufficio','A','1.B.II.3', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'102008','Arredamento','A','1.B.II.3', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'102009','Automezzi','A','1.B.II.3', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'102021','Fondo ammortamento fabbricati','A','1.B.II.1', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'102022','Fondo ammortamento impianti e macchinari','A','1.B.II.3', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'102023','Fondo ammortamento attrezzature commerciali','A','1.B.II.3', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'102024','Fondo ammortamento attrezzature d\'ufficio','A','1.B.II.3', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'102024','Fondo ammortamento attrezzature d''ufficio','A','1.B.II.3', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'102025','Fondo ammortamento arredamento','A','1.B.II.3', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'102026','Fondo ammortamento automezzi','A','1.B.II.3', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'103000','IMMOBILIZZAZIONI FINANZIARIE', NULL);
@@ -57,7 +57,7 @@ SELECT account__save(NULL,'106001','Crediti verso clienti','A','1.C.II.1', NULL,
 SELECT account_heading_save(NULL,'111000','CREDITI COMMERCIALI', NULL);
 SELECT account__save(NULL,'111002','Cambiali attive','A','1.C.II.1', NULL, false, false, string_to_array('AR_paid', ':'), false, false);
 SELECT account__save(NULL,'111003','Cambiali allo sconto','A','1.C.II.1', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'111005','Cambiali all\'incasso','A','1.C.II.1', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'111005','Cambiali all''incasso','A','1.C.II.1', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'111006','Effetti insoluti e protestati','A','1.C.II.1', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'111007','Crediti insoluti','A','1.C.II.1', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'111011','Fatture da emettere','A','1.C.II.1', NULL, false, false, string_to_array('', ':'), false, false);
@@ -75,7 +75,7 @@ SELECT account__save(NULL,'112073','Crediti per cauzioni','A','1.C.II.5', NULL, 
 SELECT account__save(NULL,'112074','Crediti diversi','A','1.C.II.5', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'113000','VALORI MOBILIARI', NULL);
 SELECT account__save(NULL,'113001','Titoli','A','1.C.III.6', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account_heading_save(NULL,'114000','DISPONIBILITA\' LIQUIDE', NULL);
+SELECT account_heading_save(NULL,'114000','DISPONIBILITA'' LIQUIDE', NULL);
 SELECT account__save(NULL,'114001','Banca c/c','A','1.C.IV.1', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 SELECT account__save(NULL,'114003','Poste c/c','A','1.C.IV.1', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 SELECT account__save(NULL,'114004','Assegni','A','1.C.IV.2', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
@@ -86,8 +86,8 @@ SELECT account__save(NULL,'115002','Risconti attivi','A','1.D', NULL, false, fal
 SELECT account_heading_save(NULL,'200000','PASSIVO', NULL);
 SELECT account_heading_save(NULL,'216000','PATRIMONIO NETTO', NULL);
 SELECT account__save(NULL,'216001','Patrimonio netto','Q','2.A.I', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'216002','Utile d\'esercizio','Q','2.A.IX', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'216003','Perdita d\'esercizio','Q','2.A.IX', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'216002','Utile d''esercizio','Q','2.A.IX', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'216003','Perdita d''esercizio','Q','2.A.IX', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'217000','FONDO ACCANTONAMENTO RISCHI E ONERI', NULL);
 SELECT account__save(NULL,'217002','Fondo per imposte','L','2.B.2', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'217003','Fondo manutenzioni e riparazioni','L','2.B.3', NULL, false, false, string_to_array('', ':'), false, false);
@@ -111,7 +111,7 @@ SELECT account__save(NULL,'226002','IVA nostro debito 10%','L','2.D.13', NULL, f
 SELECT account__save(NULL,'226004','IVA nostro debito 20%','L','2.D.13', NULL, false, false, string_to_array('AR_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'226062','Debito per IVA','L','2.D.13', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'226065','Erario c/ritenute da versarare','L','2.D.13', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'226066','Altri debiti verso l\'erario','L','2.D.13', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'226066','Altri debiti verso l''erario','L','2.D.13', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'226067','Debiti per imposte','L','2.D.13', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'227000','DEBITI DIVERSI', NULL);
 SELECT account__save(NULL,'227001','Personale c/retribuzioni','L','2.D.13', NULL, false, false, string_to_array('', ':'), false, false);
@@ -127,7 +127,7 @@ SELECT account_heading_save(NULL,'329000','CONTI TRANSITORI E FINALALI', NULL);
 SELECT account__save(NULL,'329006','Istituti previdenziali','A','2.D.12', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'329011','Conto del patrimonio','A','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'329012','Bilancio di apertura','A','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account_heading_save(NULL,'400000','CONTI D\'ORDINE', NULL);
+SELECT account_heading_save(NULL,'400000','CONTI D''ORDINE', NULL);
 SELECT account_heading_save(NULL,'431000','IMPEGNI', NULL);
 SELECT account__save(NULL,'431001','Beni da ricevere','A','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'431002','Fornitori per beni da ricevere','A','', NULL, false, false, string_to_array('', ':'), false, false);
@@ -162,7 +162,7 @@ SELECT account__save(NULL,'645008','Premi da fornitori','E','3.A.5', NULL, false
 SELECT account_heading_save(NULL,'646000','COSTI PER PRESTAZIONI E SERVIZI', NULL);
 SELECT account__save(NULL,'646001','Costi di trasporto','E','3.B.7', NULL, false, false, string_to_array('AP_amount:IC_expense', ':'), false, false);
 SELECT account__save(NULL,'646002','Costi di energia','E','3.B.7', NULL, false, false, string_to_array('AP_amount:IC_expense', ':'), false, false);
-SELECT account__save(NULL,'646003','Costi di pubblicita\'','E','3.B.7', NULL, false, false, string_to_array('AP_amount:IC_expense', ':'), false, false);
+SELECT account__save(NULL,'646003','Costi di pubblicita''','E','3.B.7', NULL, false, false, string_to_array('AP_amount:IC_expense', ':'), false, false);
 SELECT account__save(NULL,'646004','Assicurazioni','E','3.B.7', NULL, false, false, string_to_array('AP_amount:IC_expense', ':'), false, false);
 SELECT account__save(NULL,'646005','Spese postali','E','3.B.7', NULL, false, false, string_to_array('AP_amount:IC_expense', ':'), false, false);
 SELECT account__save(NULL,'646006','Spese telefoniche','E','3.B.7', NULL, false, false, string_to_array('AP_amount:IC_expense', ':'), false, false);
@@ -190,7 +190,7 @@ SELECT account_heading_save(NULL,'650000','AMMORTAMENTO IMMOBILIZZAZIONI MATERIA
 SELECT account__save(NULL,'650001','Ammortamento fabbricati','E','3.B.10.b', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'650002','Ammortamento impianti e macchinari','E','3.B.10.b', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'650003','Ammortamento attrezzature commerciali','E','3.B.10.b', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'650005','Ammortamento attrezzature d\'ufficio','E','3.B.10.b', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'650005','Ammortamento attrezzature d''ufficio','E','3.B.10.b', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'650006','Ammortamento arredamento','E','3.B.10.b', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'650007','Ammortamento automezzi','E','3.B.10.b', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'651000','SVALUTAZIONI', NULL);
@@ -248,24 +248,24 @@ SELECT account__save(NULL,'861002','Sopravvenienze e insussistenze passive','I',
 SELECT account_heading_save(NULL,'900000','CONTI DI RIEPILOGO ECONOMICI', NULL);
 SELECT account__save(NULL,'970001','Conto del risultato economico','I','3.E.23', NULL, false, false, string_to_array('', ':'), false, false);
 
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '112001'), 0.04);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '112002'), 0.1);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '112004'), 0.2);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '112001'), 0.04);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '112002'), 0.1);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '112004'), 0.2);
 
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '226001'), 0.04);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '226002'), 0.1);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '226004'), 0.2);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '226001'), 0.04);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '226002'), 0.1);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '226004'), 0.2);
 
 --
 -- update defaults
 --
 
 INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', 
-	(select id from chart where accno = '105001'));
-INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '541001'));
-INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '645001'));
-INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '756011'));
-INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '655011'));
+	(select id from account where accno = '105001'));
+INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '541001'));
+INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '645001'));
+INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '756011'));
+INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '655011'));
 INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR');
 INSERT INTO defaults (setting_key, value) VALUES ('weightunit', 'kg');
 

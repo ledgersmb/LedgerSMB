@@ -12,7 +12,7 @@ matrix:
       addons:
         postgresql: "9.4"
       env:
-        - DB_TESTING=1
+        - COA_TESTING=1
     - perl: '5.16'
       addons:
         postgresql: "9.3"

@@ -218,7 +218,7 @@ sub render {
     $template ||= 'Reports/display_report';
 
     # Sorting and Subtotal logic
-    my $url = LedgerSMB::App_State::get_url();
+    my $url = LedgerSMB::App_State::get_relative_url();
     $self->order_dir('asc') if defined $self->order_by;
     if (defined $self->old_order_by and ($self->order_by eq $self->old_order_by)){
         if (lc($self->order_dir) eq 'asc'){

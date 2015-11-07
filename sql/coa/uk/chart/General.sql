@@ -108,19 +108,19 @@ SELECT account__save(NULL,'8500','Dividends','E','', NULL, false, false, string_
 SELECT account__save(NULL,'8600','Corporation Tax','E','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'9999','Suspense Account','E','', NULL, false, false, string_to_array('', ':'), false, false);
 --
-INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '2200'),0.20);
-INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '2205'),0.05);
-INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM chart WHERE accno = '2209'),0.00);
+INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM account WHERE accno = '2200'),0.20);
+INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM account WHERE accno = '2205'),0.05);
+INSERT INTO tax (chart_id,rate) VALUES ((SELECT id FROM account WHERE accno = '2209'),0.00);
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',  (SELECT id FROM chart WHERE accno = '1001'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id',  (SELECT id FROM account WHERE accno = '1001'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id FROM chart WHERE accno = '4000'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (SELECT id FROM account WHERE accno = '4000'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM chart WHERE accno = '5000'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (SELECT id FROM account WHERE accno = '5000'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (SELECT id FROM chart WHERE accno = '4920'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (SELECT id FROM account WHERE accno = '4920'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM chart WHERE accno = '5220'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (SELECT id FROM account WHERE accno = '5220'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'GBP:USD:EUR');
 

@@ -13,10 +13,10 @@ begin;
 -- ('2001111'5 Invertito i ruoli di ('6470005' e ('6470010' (erano sbagliati)
 -- ('2001111'5 Eliminata l'applicabilita' della RA al cliente test
 -- ('2001112'0 Aggiunto IC_expense al conto ('7005005' (mancava un conto di default per i servizi)
-SELECT account_heading_save(NULL,'2010000','COSTI DI RICERCA, DI SVILUPPO E DI PUBBLICITA\'', NULL);
+SELECT account_heading_save(NULL,'2010000','COSTI DI RICERCA, DI SVILUPPO E DI PUBBLICITA''', NULL);
 SELECT account__save(NULL,'2010005','Spese di ricerca e di sviluppo','A','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'2010010','Spese di pubblicita\'','A','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account_heading_save(NULL,'2015000','DIRITTI DI BREV. IND. E DIRITTI DI UTILIZZ DELLE OPERE DELL\'INGEGNO', NULL);
+SELECT account__save(NULL,'2010010','Spese di pubblicita''','A','', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account_heading_save(NULL,'2015000','DIRITTI DI BREV. IND. E DIRITTI DI UTILIZZ DELLE OPERE DELL''INGEGNO', NULL);
 SELECT account__save(NULL,'2015005','Brevetti','A','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2020005','Concessioni, licenze e diritti simili','A','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2025005','Avviamento','A','', NULL, false, false, string_to_array('', ':'), false, false);
@@ -27,19 +27,19 @@ SELECT account__save(NULL,'2250005','Impianti generici','A','', NULL, false, fal
 SELECT account_heading_save(NULL,'2255000','ATTREZZATURE INDUSTRIALI E COMMERCIALI', NULL);
 SELECT account__save(NULL,'2255005','Attrezzature','A','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2255010','Mobili','A','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'2255015','Macchine d\'ufficio','A','', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'2255015','Macchine d''ufficio','A','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2255025','Autovetture','A','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'3005000','RIMANENZE MATERIE PRIME, SUSSIDIARIE E DI CONSUMO', NULL);
 SELECT account__save(NULL,'3005005','Rimanenze materie prime','A','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'3020000','RIMANENZE PRODOTTI FINITI E MERCI', NULL);
 SELECT account__save(NULL,'3020005','Rimanenze prodotti finiti','A','', NULL, false, false, string_to_array('IC', ':'), false, false);
-SELECT account_heading_save(NULL,'4001000','CREDITI VERSO CL. PER FATT. EM. ESIGIBILI ENTRO L\'ESER. SUCC.', NULL);
+SELECT account_heading_save(NULL,'4001000','CREDITI VERSO CL. PER FATT. EM. ESIGIBILI ENTRO L''ESER. SUCC.', NULL);
 SELECT account__save(NULL,'4001001','Crediti verso clienti per fatture emesse','A','', NULL, false, false, string_to_array('AR', ':'), false, false);
-SELECT account_heading_save(NULL,'4064000','CREDITI VERSO ALTRI - CREDITI D\'IMPOSTA', NULL);
+SELECT account_heading_save(NULL,'4064000','CREDITI VERSO ALTRI - CREDITI D''IMPOSTA', NULL);
 SELECT account__save(NULL,'4064005','IRPEF acconto','A','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4064020','IRPEG acconto','A','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'4064800','Credito verso erario per IVA','A','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account_heading_save(NULL,'4400000','DISPONIBILITA\' LIQUIDE', NULL);
+SELECT account_heading_save(NULL,'4400000','DISPONIBILITA'' LIQUIDE', NULL);
 SELECT account__save(NULL,'4480105','Banca ...c/c','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 SELECT account__save(NULL,'4480400','Assegni','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 SELECT account__save(NULL,'4480500','Cassa e valori','A','', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
@@ -51,9 +51,9 @@ SELECT account__save(NULL,'5020005','Riserva legale','Q','', NULL, false, false,
 SELECT account_heading_save(NULL,'5080000','UTILI (PERDITE) PORTATI A NUOVO', NULL);
 SELECT account__save(NULL,'5080005','Utili esercizi precedenti','Q','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'5080010','Perdite esercizi precedenti','Q','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account_heading_save(NULL,'5090000','UTILE (PERDITA) DELL\'ESERCIZIO', NULL);
-SELECT account__save(NULL,'5090005','Utile dell\'esercizio','Q','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'5090010','Perdita dell\'esercizio','Q','', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account_heading_save(NULL,'5090000','UTILE (PERDITA) DELL''ESERCIZIO', NULL);
+SELECT account__save(NULL,'5090005','Utile dell''esercizio','Q','', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'5090010','Perdita dell''esercizio','Q','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'6200000','TRATTAMENTO DI FINE RAPPORTO DI LAVORO SUBORDINATO', NULL);
 SELECT account__save(NULL,'6220005','Trattamento di fine rapporto di lavoro subordinato','L','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6220010','Anticipazioni erogate su trattamento di fine rapporto di lavoro subordinato','L','', NULL, false, false, string_to_array('', ':'), false, false);
@@ -68,8 +68,8 @@ SELECT account__save(NULL,'6470005','IRPEF dipendenti','L','', NULL, false, fals
 SELECT account__save(NULL,'6470010','IRPEF terzi','L','', NULL, false, false, string_to_array('AP_tax:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'6470015','IVA da versare','L','', NULL, false, false, string_to_array('AR_tax:AP_tax:IC_taxpart:IC_taxservice', ':'), false, false);
 SELECT account__save(NULL,'6470020','IVA in sospeso','L','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'6470025','IRPEG sul reddito d\'esercizio','L','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'6470030','ILOR sul reddito d\'esercizio','L','', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'6470025','IRPEG sul reddito d''esercizio','L','', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'6470030','ILOR sul reddito d''esercizio','L','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6470050','Imposta patrimoniale','L','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'6475000','DEBITI VERSO ISTITUTI PREV. ESIGIBILI ENTRO ES. SUCC.', NULL);
 SELECT account__save(NULL,'6475005','INPS','L','', NULL, false, false, string_to_array('', ':'), false, false);
@@ -88,7 +88,7 @@ SELECT account__save(NULL,'6480020','IVA versata','L','', NULL, false, false, st
 SELECT account__save(NULL,'6480025','IVA acconto','L','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6480030','IVA a credito','L','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6480035','IVA ulteriore detrazione','L','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'6480040','Crediti d\'imposta diversi','L','', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'6480040','Crediti d''imposta diversi','L','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6480045','IVA pro-rata indetraibile','L','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6480050','IVA da contabilità separata','L','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'6480055','IVA c/riepilogativo','L','', NULL, false, false, string_to_array('', ':'), false, false);
@@ -140,7 +140,7 @@ SELECT account__save(NULL,'7056040','Tassa possesso autoveicoli','E','', NULL, f
 SELECT account_heading_save(NULL,'7260000','INTERESSI E ONERI FINANZIARI', NULL);
 SELECT account__save(NULL,'7260020','Interessi passivi bancari','E','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7260025','Interessi passivi mutui','E','', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account_heading_save(NULL,'7875000','IMPOSTE SUL REDDITO DELL\'ESERCIZIO', NULL);
+SELECT account_heading_save(NULL,'7875000','IMPOSTE SUL REDDITO DELL''ESERCIZIO', NULL);
 SELECT account__save(NULL,'7875005','IRPEG corrente','E','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'7875020','IRPEG differita','E','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'8005000','RICAVI DELLE VENDITE', NULL);
@@ -162,29 +162,29 @@ SELECT account__save(NULL,'9990010','Foreign Exchange Loss','E','', NULL, false,
 -- insert taxes
 --
 --Ritenuta d'acconto
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '6470010'), -0.2);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '6470010'), -0.2);
 --IVA Acquisti 4%
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '6480003'), 0.04);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '6480003'), 0.04);
 --IVA Acquisti 10%
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '6480004'), 0.1);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '6480004'), 0.1);
 --IVA Acquisti 20%
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '6480005'), 0.2);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '6480005'), 0.2);
 --IVA Fatture Emesse
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '6480010'), 0.2);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '6480010'), 0.2);
 --IVA su corrispettivi
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '6480015'), 0.2);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '6480015'), 0.2);
 --
 -- update defaults
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '3020005'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno = '3020005'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '8005005'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '8005005'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '7005005'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '7005005'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '9990000'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '9990000'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '9990010'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '9990010'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR');
 

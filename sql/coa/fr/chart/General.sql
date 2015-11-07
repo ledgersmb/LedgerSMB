@@ -946,22 +946,22 @@ FROM account WHERE id IN (select account_id FROM account_link
 --
 -- insert taxes
 --
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '445661'), 0.055);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '445663'), 0.196);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '445711'), 0.055);
-INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM chart WHERE accno = '445713'), 0.196);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '445661'), 0.055);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '445663'), 0.196);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '445711'), 0.055);
+INSERT INTO tax (chart_id, rate) VALUES ((SELECT id FROM account WHERE accno = '445713'), 0.196);
 --
 -- update defaults
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '681730'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno = '681730'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '707000'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '707000'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '601000'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '601000'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '999000'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '999000'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '999010'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '999010'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'EUR');
 

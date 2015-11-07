@@ -506,12 +506,16 @@ BEGIN
 	-- transactions, vouchers, and batches, and jobs which are in progress.
 	-- -CT
 	SELECT as_array(trans_id) INTO t_transaction_ids
-	FROM voucher WHERE batch_id = in_batch_id AND batch_class IN (1, 2, 5);
+	FROM voucher WHERE batch_id = in_batch_id AND batch_class IN (1, 2, 5, 8, 9);
 
         DELETE FROM ac_tax_form WHERE entry_id in
                (select entry_id from acc_trans 
                  where trans_id = any(t_transaction_ids));
+        DELETE FROM invoice_tax_form WHERE invoice_id in
+               (select id from invoice
+                 where trans_id = any(t_transaction_ids));
 
+        DELETE FROM invoice WHERE trans_id = ANY(t_transaction_ids);
 	DELETE FROM acc_trans WHERE trans_id = ANY(t_transaction_ids);
 	DELETE FROM ar WHERE id = ANY(t_transaction_ids);
 	DELETE FROM ap WHERE id = ANY(t_transaction_ids);
