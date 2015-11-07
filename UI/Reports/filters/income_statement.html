@@ -71,13 +71,24 @@
                           } ?></td></tr>
                 <tr><td><?lsmb text('Hierarchy type') ?>
 <?lsmb
+HIERARCHY_SETUP = earn_id;
+IF HIERARCHY_SETUP;
+    full_checked = 'CHECKED';
+    full_disabled = undef;
+    legacy_checked = 'undef';
+ELSE;
+    full_disabled = 'DISABLED';
+    full_checked = undef;
+    legacy_checked = 'CHECKED';
+END;
 PROCESS input element_data = {
    label = text('Full')
     type = 'radio'
     name = 'legacy_hierarchy'
    value = 0
       id = 'legacy-hierarchy-0'
- checked = 'checked'
+ checked = full_checked
+disabled = full_disabled
 };
 
 PROCESS input element_data = {
@@ -86,8 +97,14 @@ PROCESS input element_data = {
     name = 'legacy_hierarchy'
    value = 1
       id = 'legacy-hierarchy-1'
+ checked = legacy_checked
 };
 ?></td></tr>
+<?lsmb IF full_disabled ?>
+<tr class="setupwarning" id="warning-hierarchy-not-setup">
+  <th colspan="2"><a href="http://ledgersmb.org/topic/using-account-hierarchies-reporting" target='_blank'><?lsmb text('Not set up for hierarchy reporting, please see linked instructions') ?></a></th>
+</tr>
+<?lsmb END ?>
       </table>
     </td>
   </tr>

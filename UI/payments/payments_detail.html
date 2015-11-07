@@ -281,7 +281,7 @@
 								name    = "paid_" _ r.contact_id
 								value   = "all"
 								class   = "paid_all"
-								id      = "paid-all-" _ $r.contact_id
+								id      = "paid-all-" _ r.contact_id
 								label   = text('All')
 								checked = (${"paid_$r.contact_id"} != 'some') ? "checked" : ""
 								type    = "radio"
@@ -414,7 +414,7 @@
 								 } ?>
 
 						<tr class="subtotal">
-							<td colspan="5" class="total_label">
+							<td colspan="6" class="total_label">
 								<?lsmb text('Contact Total (if paying "some")') ?>
 							</td>
 							<td>

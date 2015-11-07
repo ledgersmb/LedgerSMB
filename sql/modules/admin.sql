@@ -154,87 +154,15 @@ $$ language 'plpgsql' SECURITY DEFINER;
 REVOKE EXECUTE ON FUNCTION admin__remove_function_from_group(text, text)
 FROM public;
 
--- not even sure if these should be here --CT
---CREATE OR REPLACE FUNCTION admin__add_table_to_group(in_table TEXT, in_role TEXT, in_perm TEXT) returns INT AS $$
-    -- Do we need this table stuff at the moment? CT
---    declare
---        stmt TEXT;
---        a_role name;
---        a_user name;
---    BEGIN
-
-        -- Issue the grant
---        select rolname into a_role from pg_roles where rolname = in_role;
-
---        IF NOT FOUND THEN
---            RAISE EXCEPTION 'Cannot grant permissions of a non-existant role.';
---        END IF;
-
---        select table_name into a_table from information_schema.tables
---        where table_schema NOT IN ('information_schema','pg_catalog','pg_toast')
---        and table_type='BASE TABLE'
---        and table_name = in_table;
-
---        IF NOT FOUND THEN
---            RAISE EXCEPTION 'Cannot grant permissions to a non-existant table.';
---        END IF;
-
---        if lower(in_perm) not in ('select','insert','update','delete') THEN
---            raise exception 'Cannot add unknown permission';
---        END IF;
-
- --       stmt := 'GRANT '|| quote_ident(in_perm) || 'ON TABLE '|| quote_ident(in_table) ||' to '|| quote_ident(in_role);
-
---        EXECUTE stmt;
-
---        return 1;
---    END;
-
---$$ language 'plpgsql';
-
---CREATE OR REPLACE FUNCTION admin__remove_table_from_group(in_table TEXT, in_role TEXT) returns INT AS $$
-    -- do we need this table stuff at the moment?  CT
---    declare
---        stmt TEXT;
---        a_role name;
---        a_table text;
---    BEGIN
-
-        -- Issue the grant
---        select rolname into a_role from pg_roles where rolname = in_role;
-
---        IF NOT FOUND THEN
- --           RAISE EXCEPTION 'Cannot revoke permissions of a non-existant role.';
---        END IF;
---
---        select table_name into a_table from information_schema.tables
- --       where table_schema NOT IN ('information_schema','pg_catalog','pg_toast')
- --       and table_type='BASE TABLE'
- --       and table_name = in_table;
-
---        IF NOT FOUND THEN
---            RAISE EXCEPTION 'Cannot revoke permissions from a non-existant table.';
---        END IF;
-
---        stmt := 'REVOKE '|| quote_literal(in_role) ||' FROM '|| quote_literal(in_user);
-
- --       EXECUTE stmt;
-
-  --      return 1;
---    END;
-
---$$ language 'plpgsql';
-
 DROP FUNCTION IF EXISTS  admin__get_user(in_entity_id INT);
-CREATE OR REPLACE FUNCTION admin__get_user(in_id INT) returns setof users as $$
+CREATE OR REPLACE FUNCTION admin__get_user(in_id INT) returns users as $$
 
     DECLARE
         a_user users;
     BEGIN
 
         select * into a_user from users where id = in_id;
-        return next a_user;
-        return;
+        return a_user;
 
     END;
 $$ language plpgsql;
@@ -242,15 +170,16 @@ $$ language plpgsql;
 COMMENT ON FUNCTION admin__get_user(in_user_id INT) IS
 $$ Returns a set of (only one) user specified by the id.$$;
 
-CREATE OR REPLACE FUNCTION admin__get_user_by_entity(in_entity_id INT) returns setof users as $$
+DROP FUNCTION IF EXISTS admin__get_user_by_entity(in_entity_id INT);
+
+CREATE OR REPLACE FUNCTION admin__get_user_by_entity(in_entity_id INT) returns users as $$
 
     DECLARE
         a_user users;
     BEGIN
 
         select * into a_user from users where entity_id = in_entity_id;
-        return next a_user;
-        return;
+        return a_user;
 
     END;
 $$ language plpgsql;
@@ -677,14 +606,6 @@ comment on function admin__delete_group(text) IS $$
     remove a login-capable user.
 $$;
 
--- TODO:  Add admin user
-
---CREATE OR REPLACE FUNCTION admin_audit_log () returns int as $$
-
-
-
---$$ language plpgsql;
-
 create or replace function admin__is_user (in_user text) returns bool as $$
     BEGIN
 
@@ -761,7 +682,8 @@ COMMENT ON function user__save_preferences(
 $$ Saves user preferences.  Returns true if successful, false if no preferences
 were found to update.$$;
 
-create or replace function user__get_preferences (in_user_id int) returns setof user_preference as $$
+DROP FUNCTION IF EXISTS user__get_preferences (in_user_id int);
+create or replace function user__get_preferences (in_user_id int) returns user_preference as $$
 
 declare
     v_row user_preference;
@@ -772,7 +694,7 @@ BEGIN
 
         RAISE EXCEPTION 'Could not find user preferences for id %', in_user_id;
     ELSE
-        return next v_row;
+        return v_row;
     END IF;
 END;
 $$ language plpgsql;

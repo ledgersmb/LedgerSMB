@@ -37,6 +37,7 @@ defaults however.
 
 sub new_budget {
     my ($request) = @_;
+    $request->{rowcount} ||= 0;
     my $budget = LedgerSMB::Budget->from_input($request);
     _render_screen($budget);
 }

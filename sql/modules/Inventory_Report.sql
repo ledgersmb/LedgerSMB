@@ -64,7 +64,7 @@ LEFT JOIN ap ON ap.id = r.ap_trans_id
 $$ LANGUAGE SQL;
 
 CREATE OR REPLACE FUNCTION inventory_adj__get(in_id int)
-RETURNS SETOF inventory_adjustment_info AS
+RETURNS inventory_adjustment_info AS
 $$
 
    SELECT r.id, r.transdate, r.source, r.ar_trans_id, r.ap_trans_id,

@@ -24,7 +24,7 @@ PROCESS dynatable
       columns = [ 
         { col_id = 'account_class_label', type = 'text', name = text('Type') }
         { col_id = 'meta_number', type = 'href', name = text("Number"), 
-          href_base = "$script?action=get&amp;" }
+          href_base = "$request.script?action=get&amp;" }
         { col_id = 'description', type = 'text', name = text("Description") }
         { col_id = 'creditlimit', type = 'text', name = text('Credit Limit') }
         { col_id = 'startdate', type = 'text', name = text('Start Date') }

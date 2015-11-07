@@ -493,29 +493,6 @@ CREATE OR REPLACE FUNCTION reconciliation__report_summary (in_report_id INT) RET
 
 $$ language 'plpgsql';
 
--- why is this not called reconciliation__get_report or something? --CT
-CREATE OR REPLACE FUNCTION reconciliation__get_total (in_report_id INT) returns setof cr_report AS $$
-
-    DECLARE
-        row cr_report;
-    BEGIN
-
-        SELECT * INTO row FROM cr_report
-        where id = in_report_id
-        AND scn = -1;
-
-        IF NOT FOUND THEN -- I think this is a fairly major error condition
-            RAISE EXCEPTION 'Bad report id.';
-        ELSE
-            return next row;
-        END IF;
-    END;
-
-$$ language 'plpgsql';
-
-COMMENT ON FUNCTION reconciliation__get_total (in_report_id INT) IS
-$$ Retrieves all header info from the reconciliation report.$$;
-
 CREATE OR REPLACE FUNCTION reconciliation__search
 (in_date_from date, in_date_to date,
 	in_balance_from numeric, in_balance_to numeric,

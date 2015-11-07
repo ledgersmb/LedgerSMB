@@ -53,21 +53,17 @@ function set_main_div(doc){
             });
 }
 
-var last_page;
 function load_form(xhr, url, options) {
-    if (url == last_page) {
-        return;
-    }
-    last_page = url;
 	 xhr(url, options).then(
 		  function(doc){
+                                console.log(doc);
 				set_main_div(doc);
 		  },
 		  function(err){
 				require(['dijit/registry'],function(registry){
 					 var d = registry.byId('errorDialog');
 					 if (0 == err.response.status) {
-						  d.set('content','Low level networking problem');
+						  d.set('content','Could not connect to server');
 					 } else {
 						  d.set('content',err.response.data);
 					 }
@@ -76,10 +72,15 @@ function load_form(xhr, url, options) {
 		  });
 }
 
+var last_page;
 function load_link(xhr, href) {
+    if (last_page == href) {
+        return;
+    }
     require(['dojo/hash'],
             function (hash) {
-                hash(href);
+                     hash(href);
+                     last_page = href;
 	             load_form(xhr,href,{"handlesAs": "text"});
             });
 }

@@ -406,8 +406,9 @@ SELECT * FROM inventory_report
 
 $$;
 
+DROP FUNCTION IF EXISTS inventory_adjust__get(in_id int);
 CREATE OR REPLACE FUNCTION inventory_adjust__get(in_id int)
-RETURNS SETOF inventory_report -- only 0-1....
+RETURNS inventory_report -- only 0-1....
 LANGUAGE SQL AS
 $$
 SELECT * FROM inventory_report WHERE id = $1;

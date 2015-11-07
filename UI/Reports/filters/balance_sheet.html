@@ -35,13 +35,24 @@ PROCESS input element_data = {
 <div class="inputrow">
 <?lsmb text('Hierarchy type') ?>
 <?lsmb
+HIERARCHY_SETUP = earn_id;
+IF HIERARCHY_SETUP;
+    full_checked = 'CHECKED';
+    full_disabled = undef;
+    legacy_checked = 'undef';
+ELSE;
+    full_disabled = 'DISABLED';
+    full_checked = undef;
+    legacy_checked = 'CHECKED';
+END;
 PROCESS input element_data = {
    label = text('Full')
     type = 'radio'
     name = 'legacy_hierarchy'
    value = 0
       id = 'legacy-hierarchy-0'
- checked = 'checked'
+ checked = full_checked
+disabled = full_disabled
 };
 
 PROCESS input element_data = {
@@ -50,9 +61,15 @@ PROCESS input element_data = {
     name = 'legacy_hierarchy'
    value = 1
       id = 'legacy-hierarchy-1'
+ checked = legacy_checked
 };
 ?>
 </div>
+<?lsmb IF full_disabled ?>
+<div class="setupwarning" id="warning-hierarchy-not-setup">
+  <a href="http://ledgersmb.org/topic/using-account-hierarchies-reporting" target='_blank'><?lsmb text('Not set up for hierarchy reporting, please see linked instructions') ?></a>
+</div>
+<?lsmb END ?>
 <div class="subsection"><h3><?lsmb text('Enter up to 3 comparison dates') ?></h3></div>
 <?lsmb FOR ct IN [1, 2, 3]; ?>
 <div class="inputrow"><?lsmb

@@ -53,8 +53,9 @@ COMMENT ON FUNCTION employee__save
         in_employee_number text, in_is_manager bool) IS
 $$ Saves an employeerecord with the specified information.$$;
 
+drop function if exists  employee__get_user(in_entity_id int);
 CREATE OR REPLACE FUNCTION employee__get_user(in_entity_id int)
-RETURNS SETOF users AS
+RETURNS users AS
 $$SELECT * FROM users WHERE entity_id = $1;$$ language sql;
 
 COMMENT ON FUNCTION employee__get_user(in_entity_id int) IS

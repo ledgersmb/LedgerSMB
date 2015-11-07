@@ -40,6 +40,7 @@ sub init_taxes {
     my ( $form, $taxaccounts, $taxaccounts2 ) = @_;
     my $dbh = $form->{dbh};
     my @taxes = ();
+    do { $_ = '' unless defined $_ } for ($taxaccounts, $taxaccounts2);
     my @accounts = split / /, $taxaccounts;
     if ( defined $taxaccounts2 ) {
         #my @tmpaccounts = @accounts;#unused var
