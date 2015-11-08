@@ -1431,7 +1431,7 @@ sub post {
             $form->{rowcount} = 0;
             edit();
         }
-        else {$form->redirect( $locale->text('Transaction posted!') );}
+        else { edit(); }
     }
     else {
         $form->error( $locale->text('Cannot post transaction!') );

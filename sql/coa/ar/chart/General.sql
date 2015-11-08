@@ -130,28 +130,29 @@ SELECT account_heading_save(NULL, '5.2.5.','OTROS GASTOS',(SELECT id FROM accoun
 SELECT account__save(NULL, '5.2.5.01','Contribucion Escuela regional','E','', (SELECT id FROM account WHERE accno LIKE '5.2.5.'), false, false, string_to_array('AP_amount', ':'), false, false);
 SELECT account__save(NULL, '5.2.5.02','Cambio de moneda perdido','E','', (SELECT id FROM account WHERE accno LIKE '5.2.5.'), false, false, string_to_array('', ':'), false, false);
 commit;
+BEGIN;
 -- Impuestos
 -- Ganancias
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '2.1.2.01'), 0.09);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM account WHERE accno  = '2.1.2.01'), 0.09);
 -- Bienes Personales
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '2.1.2.02'), 0.05);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM account WHERE accno  = '2.1.2.02'), 0.05);
 -- Ganancia Minima Presunta
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '2.1.2.03'), 0.01);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM account WHERE accno  = '2.1.2.03'), 0.01);
 -- IVA
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '2.1.2.04'), 0.21);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM account WHERE accno  = '2.1.2.04'), 0.21);
 -- IVA Favor
-INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM chart WHERE accno  = '1.1.5.01'), 0.21);
+INSERT INTO "tax" ("chart_id", "rate") VALUES ((SELECT id FROM account WHERE accno  = '1.1.5.01'), 0.21);
 
 SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE id IN (select account_id FROM account_link
                            WHERE description = 'AP_paid');
 -- Sistema
 -- Predeterminados
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '0.03'));
-INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '4.1.1.03'));
-INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '5.1.1.03'));
-INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '4.2.1.04'));
-INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '5.2.5.02'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno = '0.03'));
+INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '4.1.1.03'));
+INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '5.1.1.03'));
+INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '4.2.1.04'));
+INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '5.2.5.02'));
 INSERT INTO defaults (setting_key, value) VALUES ('default_country', '12');
 INSERT INTO defaults (setting_key, value) VALUES ('default_language', 'es_AR');
 INSERT INTO defaults (setting_key, value) VALUES ('curr', 'ARS:USD:EUR');

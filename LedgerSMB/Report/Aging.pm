@@ -251,6 +251,7 @@ Customer/Vendor entity id
 =cut
 
 has entity_id => (is => 'ro', isa => 'Maybe[Int]');
+has name_part => (is => 'ro', isa => 'Maybe[Str]');
 
 =back
 

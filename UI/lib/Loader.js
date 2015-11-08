@@ -126,6 +126,7 @@ function(
                                              "name": input.name,
                                             "value": input.value,
                                             "title": input.title,
+                                         "disabled": input.disabled,
                                          "required": input.required,
                                           "checked": input.checked
                                         }, input);

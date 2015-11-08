@@ -457,17 +457,10 @@ sub display_payments {
             if (($payment->{action} ne 'update_payments')
                   or (defined $payment->{"id_$_->{contact_id}"})){
                    $payment->{"paid_$_->{contact_id}"} = "" unless defined $payment->{"paid_$_->{contact_id}"};
-
-                   if ($payment->{"paid_$_->{contact_id}"} eq 'some'){
-                      my $i_id = $invoice->[0];
-                      my $payment_amt = $payment->parse_amount(
-				amount => $payment->{"payment_$i_id"});
-                      $contact_total
-                              += $payment_amt;
-                   }
             }
             $invoice->[3] = $payment->format_amount(amount => $invoice->[3],
                                                     money  => 1);
+            $contact_to_pay += $invoice->[3];
             $invoice->[4] = $payment->format_amount(amount => $invoice->[4],
                                                     money  => 1);
             $invoice->[5] = $payment->format_amount(amount => $invoice->[5],
@@ -477,14 +470,12 @@ sub display_payments {
                     - $payment->parse_amount(amount => $invoice->[4])
                     - $payment->parse_amount(amount => $invoice->[5])),
                                                     money  => 1);
-            $contact_to_pay +=  $payment->parse_amount(amount => $invoice->[6]);
             my $fld = "payment_" . $invoice->[0];
            
-            if (defined $payment->{"net_$invoice->[0]"} ){
-                $invoice->[6] = $payment->{"$fld"};
-            } else {
+            if ('display_mayments' eq $request->{action} ){
                 $payment->{"$fld"} = $invoice->[6];
             }
+            $contact_total +=  $payment->parse_amount(amount => $payment->{$fld});
         }
         if ($payment->{"paid_$_->{contact_id}"} ne 'some') {
                   $contact_total = $contact_to_pay;

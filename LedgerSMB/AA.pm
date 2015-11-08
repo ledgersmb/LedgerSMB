@@ -418,7 +418,7 @@ sub post_transaction {
 				INSERT INTO acc_trans 
 				            (trans_id, chart_id, amount_bc, curr, amount_tc, 
 				            transdate, memo, cleared)
-				    VALUES  (?, (SELECT id FROM chart
+				    VALUES  (?, (SELECT id FROM account
 				                  WHERE accno = ?), 
 				             ?, ?, ?, ?, ?, ?)|;
 
@@ -464,7 +464,7 @@ sub post_transaction {
 				INSERT INTO acc_trans 
 				            (trans_id, chart_id, amount_bc, curr, amount_tc,
 				            transdate, fx_transaction)
-				     VALUES (?, (SELECT id FROM chart
+				     VALUES (?, (SELECT id FROM account
 					          WHERE accno = ?),
 				            ?, ?, ?, ?, ?)|;
 
@@ -486,7 +486,7 @@ sub post_transaction {
         $query = qq|
 			INSERT INTO acc_trans 
 			            (trans_id, chart_id, amount_bc, curr, amount_tc, transdate)
-			     VALUES (?, (SELECT id FROM chart
+			     VALUES (?, (SELECT id FROM account
 			                  WHERE accno = ?), 
 			                  ?, ?, ?, ?)|;
         @queryargs =
@@ -512,7 +512,7 @@ sub post_transaction {
 
 
     IIAA->process_form_payments($myconfig, $form);
-   
+
     # save printed and queued
     $form->save_status($dbh);
 
@@ -786,7 +786,7 @@ sub get_name {
     # get tax rates and description
     $query = qq|
 		   SELECT c.accno, c.description, t.rate, t.taxnumber
-		     FROM chart c
+		     FROM account c
 		     JOIN tax t ON (c.id = t.chart_id)
 		    WHERE true
 		          $where

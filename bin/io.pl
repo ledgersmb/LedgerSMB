@@ -142,18 +142,7 @@ sub approve {
     my $draft = LedgerSMB::DBObject::Draft->new({base => $lsmb});
 
     $draft->approve();
-
-    if ($form->{callback}){
-        print "Location: $form->{callback}\n";
-        print "Status: 302 Found\n\n";
-        print qq|<html><body class="$form->{dojo_theme}">|;
-        my $url = $form->{callback};
-        print qq|If you are not redirected automatically, click <a href="$url">|
-                . qq|here</a>.</body></html>|;
-
-    } else {
-        $form->info($locale->text('Draft Posted'));
-    }
+    edit();
 }
 
 sub display_row {

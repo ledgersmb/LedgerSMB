@@ -67,10 +67,13 @@ CREATE TYPE report_aging_item AS (
         age int
 );
 
+DROP FUNCTION IF EXISTS report__invoice_aging_detail
+(in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
+ in_business_units int[], in_use_duedate bool);
 
 CREATE OR REPLACE FUNCTION report__invoice_aging_detail
 (in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
- in_business_units int[], in_use_duedate bool)
+ in_business_units int[], in_use_duedate bool, in_name_part text)
 RETURNS SETOF report_aging_item
 AS
 $$
@@ -162,6 +165,7 @@ BEGIN
                  WHERE (e.id = in_entity_id OR in_entity_id IS NULL)
                        AND (in_accno IS NULL or acc.accno = in_accno)
                        AND a.force_closed IS NOT TRUE
+                       AND e.name like '%' || in_name_part || '%'
               GROUP BY c.entity_id, c.meta_number, e.name,
                        l.line_one, l.line_two, l.line_three,
                        l.city, l.state, l.mail_code, country.name,
@@ -179,16 +183,20 @@ BEGIN
 END;
 $$ language plpgsql;
 
+DROP FUNCTION IF EXISTS report__invoice_aging_summary
+(in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
+ in_business_units int[], in_use_duedate bool);
+
 CREATE OR REPLACE FUNCTION report__invoice_aging_summary
 (in_entity_id int, in_entity_class int, in_accno text, in_to_date date,
- in_business_units int[], in_use_duedate bool)
+ in_business_units int[], in_use_duedate bool, in_name_part text)
 RETURNS SETOF report_aging_item
 AS $$
 SELECT entity_id, account_number, name, contact_name, null::text, null::date,
        null::text, null::text, null::text, null::text,
        sum(c0), sum(c30), sum(c60), sum(c90), null::date, null::int, curr,
        null::numeric, null::text[], null::int
-  FROM report__invoice_aging_detail($1, $2, $3, $4, $5, $6)
+  FROM report__invoice_aging_detail($1, $2, $3, $4, $5, $6, $7)
  GROUP BY entity_id, account_number, name, contact_name, curr
  ORDER BY account_number
 $$ LANGUAGE SQL;

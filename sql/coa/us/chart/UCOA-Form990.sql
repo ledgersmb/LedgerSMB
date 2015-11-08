@@ -73,7 +73,7 @@ SELECT account__save(NULL,'2710','Bonds payable','L','64a', NULL, false, false, 
 SELECT account__save(NULL,'2730','Mortgages payable','L','64b', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2750','Capital leases','L','64b', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2770','Long-term liabilities - other','L','64a', NULL, false, false, string_to_array('', ':'), false, false);
-SELECT account__save(NULL,'2810','Gov\'t-owned fixed assets liability','L','65', NULL, false, false, string_to_array('', ':'), false, false);
+SELECT account__save(NULL,'2810','Gov''t-owned fixed assets liability','L','65', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2910','Custodial funds','L','65', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL,'3000','Unrestricted net assets', NULL);
 SELECT account__save(NULL,'3010','Unrestricted net assets','Q','21&67', NULL, false, false, string_to_array('', ':'), false, false);
@@ -225,19 +225,19 @@ SELECT account__save(NULL,'9910','Payments to affiliates','E','16', NULL, false,
 SELECT account__save(NULL,'9920','Additions to reserves','E','', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'9930','Program administration allocations','E','', NULL, false, false, string_to_array('', ':'), false, false);
 --
-insert into tax (chart_id,rate) values ((select id from chart where accno = '8620'),0);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '8630'),0);
-insert into tax (chart_id,rate) values ((select id from chart where accno = '8650'),0);
+insert into tax (chart_id,rate) values ((select id from account where accno = '8620'),0);
+insert into tax (chart_id,rate) values ((select id from account where accno = '8630'),0);
+insert into tax (chart_id,rate) values ((select id from account where accno = '8650'),0);
 --
-INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from chart where accno = '1410'));
+INSERT INTO defaults (setting_key, value) VALUES ('inventory_accno_id', (select id from account where accno = '1410'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from chart where accno = '4010'));
+ INSERT INTO defaults (setting_key, value) VALUES ('income_accno_id', (select id from account where accno = '4010'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from chart where accno = '7510'));
+ INSERT INTO defaults (setting_key, value) VALUES ('expense_accno_id', (select id from account where accno = '7510'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from chart where accno = '5490'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxgain_accno_id', (select id from account where accno = '5490'));
 
- INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from chart where accno = '8590'));
+ INSERT INTO defaults (setting_key, value) VALUES ('fxloss_accno_id', (select id from account where accno = '8590'));
 
  INSERT INTO defaults (setting_key, value) VALUES ('curr', 'USD');
 

@@ -31,6 +31,7 @@ use LedgerSMB::File;
 use LedgerSMB::App_State;
 use LedgerSMB::Template;
 use LedgerSMB::Setting;
+use Try::Tiny;
 
 use strict;
 use warnings;
@@ -239,6 +240,7 @@ sub _main_screen {
     my @all_taxes = LedgerSMB->call_procedure(procname => 'account__get_taxes');
 
     my $arap_class = $entity_class;
+    $arap_class ||= 1;
     $arap_class = 2 if $arap_class == 3;
     my @ar_ap_acc_list = LedgerSMB->call_procedure(funcname => 'chart_get_ar_ap',
                                            args => [$arap_class]);
@@ -566,6 +568,13 @@ sub save_person {
     if ($request->{entity_class} == 3){
         $request->{dob} = $request->{birthdate} if $request->{birthdate};
        return save_employee($request);
+    }
+    unless ($request->{control_code}){
+        my ($ref) = $request->call_procedure(
+                             procname => 'setting_increment', 
+                             args     => ['entity_control']
+                           );
+        ($request->{control_code}) = values %$ref;
     }
     my $person = LedgerSMB::Entity::Person->new(
               %$request
