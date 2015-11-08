@@ -68,9 +68,6 @@ our $templates = "templates";
 # Temporary files stored at"
 our $tempdir = ( $ENV{TEMP} || '/tmp' );
 
-# member file
-our $memberfile = "users/members";
-
 # location of sendmail
 our $sendmail = "/usr/sbin/sendmail -t";
 
@@ -81,9 +78,6 @@ our $smtpuser   = '';
 our $smtppass   = '';
 our $smtpauthmethod = '';
 our $zip = 'zip -r %dir %dir';
-
-# set language for login and admin
-our $language = "en";
 
 # Maximum number of invoices that can be printed on a check
 our $check_max_invoices = 5;
