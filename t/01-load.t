@@ -2,7 +2,7 @@
 
 use strict;
 use warnings;
-use Test::More tests => 205;
+use Test::More;
 use File::Find;
 
 my @on_disk;
@@ -254,3 +254,5 @@ SKIP: {
         use_ok($_);
     }
 }
+
+&done_testing();
