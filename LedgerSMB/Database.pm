@@ -322,7 +322,8 @@ sub load_base_schema {
         log_stderr => ($args->{errlog} || "${log}_stderr")
     );
 
-    opendir(LOADDIR, 'sql/on_load');
+    opendir(LOADDIR, 'sql/on_load')
+        or return 1; # done if 'sql/on_load' doesn't exist
     while (my $fname = readdir(LOADDIR)){
         $self->run_file(
             file       => "$self->{source_dir}sql/on_load/$fname",
