@@ -71,7 +71,7 @@ before_script:
 
 script:
    - starman --daemonize tools/starman.psgi
-   - export RELEASE_TESTING=1 && yes n | echo "travis_fold:start:Makefile_PL" && perl Makefile.PL && echo "travis_fold:end:Makefile_PL" && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest make test
+   - export RELEASE_TESTING=1 && yes n | perl Makefile.PL && PGUSER=postgres PGPASSWORD=test LSMB_TEST_DB=1 LSMB_NEW_DB=lsmb13installtest make test
 
 after_success:
   - coverage-report
