@@ -771,7 +771,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
         $subtotal = qq|
           <tr>
         <th align=right>| . $locale->text('Subtotal') . qq|</th>
-		<td align=right>$form->{invsubtotal}</td>| .
+      <td align=right>$form->{invsubtotal}</td>| .
       (($form->{currency} ne $form->{defaultcurrency})
        ? "<td align=right>$invsubtotal_bc</td>" : '')
       . qq|
@@ -846,7 +846,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name=intnotes rows=$rows cols=
           $tax
           <tr>
         <th align=right>| . $locale->text('Total') . qq|</th>
-		<td align=right>$form->{invtotal}</td>| .
+      <td align=right>$form->{invtotal}</td>| .
       (($form->{currency} ne $form->{defaultcurrency})
        ? ("<td align=right>" . $form->format_amount( \%myconfig,
                                                      $form->{invtotal}
@@ -1457,8 +1457,3 @@ sub save_info {
         }
 
 }
-
-
-
-
-

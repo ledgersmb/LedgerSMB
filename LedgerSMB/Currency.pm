@@ -4,7 +4,7 @@ LedgerSMB::Currency
 
 =head1 SYNOPSYS
 
-This holds the information as to the handling of classes of exchange rates.  
+This holds the information as to the handling of classes of exchange rates.
 Different classes may be created for the purpose of daily entry, revaluation,
 translation or other purposes.
 
@@ -50,7 +50,7 @@ returns the currency that corresponds to the id requested.
 
 sub get {
     my ($self, $id) = @_;
-    my @classes = $self->call_procedure(procname => 'currency__get', 
+    my @classes = $self->call_procedure(procname => 'currency__get',
                                             args => [$id]
         );
     my $ref = shift @classes;
@@ -59,7 +59,7 @@ sub get {
 
 =item save
 
-Saves the existing exchange rate class to the database, and updates any fields 
+Saves the existing exchange rate class to the database, and updates any fields
 changed in the process.
 
 =cut
@@ -68,7 +68,7 @@ sub save {
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'currency__save'});
     return $self->get($self->curr);
-}   
+}
 
 
 =item list(bool $active, string $mod_name)
@@ -93,11 +93,11 @@ sub list {
 Deletes a currency.  Such currencies may not be referenced by other entities such as transactions or rates.
 
 =cut
- 
+
 sub delete {
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'currency__delete'});
-}   
+}
 
 =back
 

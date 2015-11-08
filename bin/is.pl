@@ -824,7 +824,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
         $subtotal = qq|
           <tr>
         <th align=right>| . $locale->text('Subtotal') . qq|</th>
-		<td align=right>$form->{invsubtotal}</td>| .
+      <td align=right>$form->{invsubtotal}</td>| .
       (($form->{currency} ne $form->{defaultcurrency})
          ? ("<td align=right>".$form->format_amount( \%myconfig,
                                          $form->{invsubtotal}
@@ -843,7 +843,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
         $form->format_amount( \%myconfig,
                               $form->{invtotal} * $form->{exchangerate}, 2)
         if $form->{currency} ne $form->{defaultcurrency};
-                                         
+
 
     my $hold;
     my $hold_button_text;
@@ -902,7 +902,7 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="intnotes" rows="$rows" c
           $tax
           <tr>
         <th align=right>| . $locale->text('Total') . qq|</th>
-		<td align=right>$form->{invtotal}</td>| .
+      <td align=right>$form->{invtotal}</td>| .
       (($form->{currency} ne $form->{defaultcurrency})
        ? "<td align=right>$invtotal_bc</td>" : '')
       . qq|
@@ -1465,5 +1465,3 @@ sub save_info {
         }
 
 }
-
-

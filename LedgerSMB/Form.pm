@@ -2368,7 +2368,7 @@ sub create_links {
                 a.datepaid, a.duedate, a.ordnumber,
                 a.taxincluded, a.curr AS currency, a.notes,
                 a.intnotes, ce.name AS $vc,
-				a.amount_tc AS oldinvtotal, -- a.paid AS oldtotalpaid,
+            a.amount_tc AS oldinvtotal, -- a.paid AS oldtotalpaid,
             case when a.amount_tc = 0 then 0
             else a.amount_bc / a.amount_tc end as exchangerate,
                 a.person_id, e.name AS employee,
@@ -2458,7 +2458,7 @@ sub create_links {
 
         # get amounts from individual entries
         $query = qq|
-			SELECT c.accno, c.description, a.source, a.amount_tc as amount,
+         SELECT c.accno, c.description, a.source, a.amount_tc as amount,
                 a.memo,a.entry_id, a.transdate, a.cleared,
                                 compound_array(ARRAY[ARRAY[bul.class_id, bul.bu_id]])
                                 AS bu_lines
@@ -2466,7 +2466,7 @@ sub create_links {
             JOIN chart c ON (c.id = a.chart_id)
                    LEFT JOIN business_unit_ac bul ON a.entry_id = bul.entry_id
             WHERE a.trans_id = ?
---				AND a.fx_transaction = '0'
+--          AND a.fx_transaction = '0'
                         GROUP BY c.accno, c.description, a.source, a.amount_tc,
                                 a.memo,a.entry_id, a.transdate, a.cleared
             ORDER BY transdate|;

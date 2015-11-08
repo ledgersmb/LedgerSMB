@@ -463,9 +463,9 @@ sub post_invoice {
         $amount = $ref->{amount} + $diff;
         $fxlinetotal = $ref->{fxlinetotal} + $diff/$form->{exchangerate};
         $query  = qq|
-			INSERT INTO acc_trans (trans_id, chart_id, amount_bc, curr, amount_tc,
-			            transdate, invoice_id)
-			            VALUES (?, ?, ?, ?, ?, ?, ?)|;
+         INSERT INTO acc_trans (trans_id, chart_id, amount_bc, curr, amount_tc,
+                     transdate, invoice_id)
+                     VALUES (?, ?, ?, ?, ?, ?, ?)|;
         $sth = $dbh->prepare($query);
         $sth->execute(
             $form->{id},        $ref->{chart_id},  $amount * -1,
@@ -497,10 +497,10 @@ sub post_invoice {
         ($accno) = split /--/, $form->{AP};
 
         $query = qq|
-			INSERT INTO acc_trans (trans_id, chart_id,
+         INSERT INTO acc_trans (trans_id, chart_id,
                                 amount_bc, curr, amount_tc, transdate)
-                	     VALUES (?, (SELECT id FROM account WHERE accno = ?),
-                	            ?, ?, ?, ?)|;
+                       VALUES (?, (SELECT id FROM account WHERE accno = ?),
+                              ?, ?, ?, ?)|;
         $sth = $dbh->prepare($query)
             or $form->dberror($dbh->errstr);
         $sth->execute( $form->{id}, $accno,
@@ -520,11 +520,11 @@ sub post_invoice {
             if ($amount) {
                 $query = qq|
                     INSERT INTO acc_trans
-					            (trans_id, chart_id, amount_bc, curr, amount_tc,
+                           (trans_id, chart_id, amount_bc, curr, amount_tc,
                                 transdate)
                             VALUES (?, (SELECT id FROM account
                                 WHERE accno = ?),
-                    			?, ?, ?, ?)|;
+                           ?, ?, ?, ?)|;
                 $sth = $dbh->prepare($query)
                     || $form->dberror($dbh->errstr);
                 $sth->execute( $trans_id, $accno,
@@ -558,11 +558,11 @@ sub post_invoice {
                quonumber = ?,
                        description = ?,
                transdate = ?,
-		       amount_bc = ?,
-		       amount_tc = ?,
-		       netamount_bc = ?,
-		       netamount_tc = ?,
-		       paid_deprecated = ?,
+             amount_bc = ?,
+             amount_tc = ?,
+             netamount_bc = ?,
+             netamount_tc = ?,
+             paid_deprecated = ?,
                datepaid = ?,
                duedate = ?,
                invoice = '1',
@@ -692,7 +692,7 @@ sub retrieve_invoice {
                      WHERE c.id = (SELECT value::int FROM defaults
                                     WHERE setting_key =
                                           'fxloss_accno_id'))
-			       AS fxloss_accno|;
+                AS fxloss_accno|;
     }
     else {
         $query = qq|
@@ -741,7 +741,7 @@ sub retrieve_invoice {
 
         $query = qq|
             SELECT a.invnumber, a.transdate, a.duedate,
-			       a.ordnumber, a.quonumber, a.paid_deprecated as paid, a.taxincluded,
+                a.ordnumber, a.quonumber, a.paid_deprecated as paid, a.taxincluded,
                    a.notes, a.intnotes, a.curr AS currency,
                    a.entity_credit_account as vendor_id, a.language_code, a.ponumber, a.crdate,
                    a.on_hold, a.reverse, a.description

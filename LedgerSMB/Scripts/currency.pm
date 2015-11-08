@@ -1,5 +1,7 @@
 package LedgerSMB::Scripts::currency;
+
 use strict;
+use warnings;
 
 =pod
 
@@ -10,11 +12,11 @@ LedgerSMB:Scripts::currency
 =head1 SYNOPSIS
 
 This module provides the workflow scripts for managing currencies and fx rates.
-    
+
 =head1 METHODS
-        
-=over   
-        
+
+=over
+
 =cut
 
 use LedgerSMB::Template;
@@ -41,9 +43,9 @@ sub list_currencies {
     my $default_curr = LedgerSMB::Setting->new()->get('curr');
     my $template = LedgerSMB::Template->new(
         user => $request->{_user},
-        template => 'Configuration/currency', 
-        locale => $request->{_locale}, 
-        format => 'HTML', 
+        template => 'Configuration/currency',
+        locale => $request->{_locale},
+        format => 'HTML',
             path=>'UI'
     );
     my $columns;
@@ -65,7 +67,7 @@ sub list_currencies {
         }
         else {
            $s->{drop} = {
-               href =>"$base_url&curr=$s->{curr}", 
+               href =>"$base_url&curr=$s->{curr}",
                text => '[' . $request->{_locale}->text('delete') . ']',
            };
         }
@@ -80,7 +82,7 @@ sub list_currencies {
         rows    => $rows,
 	buttons => [],
 	hiddens => [],
-    }); 
+    });
 
 }
 
@@ -126,9 +128,9 @@ sub list_exchangerate_types {
     my @exchangerate_types = LedgerSMB::Exchangerate_Type->list();
     my $template = LedgerSMB::Template->new(
         user => $request->{_user},
-        template => 'Configuration/ratetype', 
-        locale => $request->{_locale}, 
-        format => 'HTML', 
+        template => 'Configuration/ratetype',
+        locale => $request->{_locale},
+        format => 'HTML',
             path=>'UI'
     );
     my $columns;
@@ -144,7 +146,7 @@ sub list_exchangerate_types {
     for my $s (@exchangerate_types) {
         $s->{i} = $rowcount % 2;
         $s->{drop} = {
-            href =>"$base_url&id=$s->{id}", 
+            href =>"$base_url&id=$s->{id}",
             text => '[' . $request->{_locale}->text('delete') . ']',
         } if ! $s->{builtin};
         push @$rows, $s;
@@ -158,7 +160,7 @@ sub list_exchangerate_types {
         rows    => $rows,
 	buttons => [],
 	hiddens => [],
-    }); 
+    });
 
 }
 
@@ -209,7 +211,7 @@ sub list_exchangerates {
         );
     $request->{title} =
         $request->{_locale}->text('Available exchange rates');
-    
+
     return &_list_exchangerates($request, \@exchangerates);
 }
 
@@ -228,9 +230,9 @@ sub _list_exchangerates {
     my %rate_types = map { $_->{id} => $_->{description} } @exchangerate_types;
     my $template = LedgerSMB::Template->new(
         user => $request->{_user},
-        template => 'Configuration/rate', 
-        locale => $request->{_locale}, 
-        format => 'HTML', 
+        template => 'Configuration/rate',
+        locale => $request->{_locale},
+        format => 'HTML',
             path=>'UI'
     );
     my $columns;
@@ -247,7 +249,7 @@ sub _list_exchangerates {
         $s->{i} = $rowcount % 2;
         $s->{rate} = $s->{rate}->to_output();
         $s->{drop} = {
-            href =>"$base_url&curr=$s->{curr}&rate_type=$s->{rate_type}&valid_from=" . $s->{valid_from}->to_output(), 
+            href =>"$base_url&curr=$s->{curr}&rate_type=$s->{rate_type}&valid_from=" . $s->{valid_from}->to_output(),
             text => '[' . $request->{_locale}->text('delete') . ']',
         };
         # Translate here, because the URL above depends on the rate_type_id!
@@ -265,7 +267,7 @@ sub _list_exchangerates {
    exchangerate_types => \@exchangerate_types,
 	buttons => [],
 	hiddens => [],
-    }); 
+    });
 
 }
 
@@ -321,7 +323,7 @@ sub upload_exchangerates {
     my $file = $request->{_request}->upload('import_file');
     my $provided_cols;
     my @rows;
-    
+
     while (my $row = $csv->getline($file)) {
         my @fields = @$row;
 
@@ -329,7 +331,7 @@ sub upload_exchangerates {
             my $msg = "Columns provided in upload (" . join(',',@fields)
                 . ") don't match required columns ("
                 . join(',',@csv_upload_fields) . ")";
-            
+
             $request->error($msg)
                 unless scalar(@fields) == scalar(@csv_upload_fields);
             for (0..$#fields) {
@@ -346,7 +348,7 @@ sub upload_exchangerates {
     }
 
     $request->{title} =
-        $request->{_locale}->text('Uploaded rates');    
+        $request->{_locale}->text('Uploaded rates');
     return &_list_exchangerates($request,\@rows);
 }
 
@@ -355,7 +357,7 @@ sub upload_exchangerates {
 
 =head1 COPYRIGHT
 
-Copyright (C) 2010 LedgerSMB Core Team.  This file is licensed under the GNU 
+Copyright (C) 2010 LedgerSMB Core Team.  This file is licensed under the GNU
 General Public License version 2, or at your option any later version.  Please
 see the included License.txt for details.
 

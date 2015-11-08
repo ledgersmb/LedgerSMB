@@ -585,7 +585,7 @@ sub retrieve {
     my $ref;
 
     $query = qq|
-		SELECT current_date FROM defaults
+      SELECT current_date FROM defaults
          WHERE setting_key = 'curr'|;
     ( $form->{transdate} ) = $dbh->selectrow_array($query);
     @{$form->{currencies}} = (LedgerSMB::Setting->new)->get_currencies;
@@ -790,7 +790,7 @@ sub exchangerate_defaults {
 
     # get default currencies
     my $query = qq|
-		SELECT substr(value,1,3) FROM defaults
+      SELECT substr(value,1,3) FROM defaults
          WHERE setting_key = 'curr'|;
     ( $form->{defaultcurrency} ) =
       $dbh->selectrow_array($query);

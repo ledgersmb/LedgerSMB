@@ -438,7 +438,7 @@ sub display_row
             $form->{"debit_$i"} =
                 LedgerSMB::PGNumber->from_input($form->{"debit_$i"});
             $form->{"credit_$i"}=
-                LedgerSMB::PGNumber->from_input($form->{"credit_$i"}); 	    
+                LedgerSMB::PGNumber->from_input($form->{"credit_$i"});
                   $form->{totaldebit}  += $form->{"debit_$i"};
                   $form->{totalcredit} += $form->{"credit_$i"};
             for (qw(debit debit_fx credit credit_fx)) {
@@ -454,7 +454,7 @@ sub display_row
                                          $form->{"b_unit_$cls->{id}_$i"};
                               }
 
-            if ( $i < $form->{rowcount} ) {					      
+            if ( $i < $form->{rowcount} ) {
                             $temphash1->{accno}=$form->{"accno_$i"};
 
                             if ( $form->{projectset} and $form->{"projectnumber_$i"} ) {
@@ -614,8 +614,8 @@ sub update {
     for $i ( 0 .. $form->{rowcount} ) {
         $form->{"debit_$i"} =~ s/\s+//g;
         $form->{"credit_$i"} =~ s/\s+//g;
-        $form->{"debit_fx_$i"} =~ s/\s+//g; 
-        $form->{"credit_fx_$i"} =~ s/\s+//g; 
+        $form->{"debit_fx_$i"} =~ s/\s+//g;
+        $form->{"credit_fx_$i"} =~ s/\s+//g;
         unless ( ( $form->{"debit_$i"} eq "" )
             && ( $form->{"credit_$i"} eq "" )
             && ( $form->{"debit_fx_$i"} eq "" )

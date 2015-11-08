@@ -54,7 +54,7 @@ SELECT payment_post(?, ?, ?, ?, ?,
 
     my $sth = $dbh->prepare($query)
         or $form->dberror($dbh->errstr);
-    
+
     # add paid transactions
     for my $i ( 1 .. $form->{paidaccounts} ) {
 
@@ -100,11 +100,11 @@ sub post_form_manual_tax {
     my ($self, $myconfig, $form, $sign, $pay_rec) = @_;
     my $dbh = $form->{dbh};
     my $invamount = 0;
-    
+
     my $ac_sth = $dbh->prepare(
         "INSERT INTO acc_trans (chart_id, trans_id,
                                 amount_bc, curr, amount_tc, source, memo)
-                    VALUES ((select id from account where accno = ?), 
+                    VALUES ((select id from account where accno = ?),
                             ?, ?, ?, ?, ?, ?)"
         ) or $form->dberror($dbh->errstr);
     my $tax_sth = $dbh->prepare(
@@ -116,7 +116,7 @@ sub post_form_manual_tax {
         my $taxbasis;
         my $taxrate;
         my $fx = $form->{exchangerate} || 1;
-        $taxamount = $form->parse_amount($myconfig, 
+        $taxamount = $form->parse_amount($myconfig,
                                          $form->{"mt_amount_$taccno"});
         $taxbasis = $form->parse_amount($myconfig,
                                         $form->{"mt_basis_$taccno"});
@@ -127,8 +127,8 @@ sub post_form_manual_tax {
         $invamount += $fx_taxamount;
         $ac_sth->execute($taccno, $form->{id}, $fx_taxamount * $sign,
                          $form->{defaultcurrency},
-                         $fx_taxamount * $sign, 
-                         $form->{"mt_ref_$taccno"}, 
+                         $fx_taxamount * $sign,
+                         $form->{"mt_ref_$taccno"},
                          $form->{"mt_desc_$taccno"})
             or $form->dberror($ac_sth->errstr);
         $tax_sth->execute($fx_taxbasis * $sign, $taxrate)

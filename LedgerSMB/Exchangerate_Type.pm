@@ -4,7 +4,7 @@ LedgerSMB::Exchangerate_Type
 
 =head1 SYNOPSYS
 
-This holds the information as to the handling of types of exchange rates.  
+This holds the information as to the handling of types of exchange rates.
 Different classes may be created for the purpose of daily entry, revaluation,
 translation or other purposes.
 
@@ -60,7 +60,7 @@ returns the business unit type that corresponds to the id requested.
 
 sub get {
     my ($self, $id) = @_;
-    my @classes = $self->call_procedure(procname => 'exchangerate_type__get', 
+    my @classes = $self->call_procedure(procname => 'exchangerate_type__get',
                                             args => [$id]
         );
     my $ref = shift @classes;
@@ -70,7 +70,7 @@ sub get {
 
 =item save
 
-Saves the existing exchange rate type to the database, and updates any fields 
+Saves the existing exchange rate type to the database, and updates any fields
 changed in the process.
 
 =cut
@@ -79,7 +79,7 @@ sub save {
     my ($self) = @_;
     my $id = $self->exec_method({funcname => 'exchangerate_type__save'});
     return $self->get($id);
-}   
+}
 
 
 =item list
@@ -104,11 +104,11 @@ sub list {
 Deletes an exchange rate type.  Such types may not have actual rates attached.
 
 =cut
- 
+
 sub delete {
     my ($self) = @_;
     $self->exec_method({funcname => 'exchangerate_type__delete'});
-}   
+}
 
 =back
 

@@ -216,7 +216,7 @@ sub create_links {
     }
     @curr = @{$form->{currencies}};
 
-    for (@curr) { $form->{selectcurrency} .= "<option>$_\n"  
+    for (@curr) { $form->{selectcurrency} .= "<option>$_\n"
                      unless  $form->{selectcurrency} =~ /<option[^>]*>$_/
     }
 
@@ -425,7 +425,7 @@ sub form_header {
       if $form->{defaultcurrency};
     $exchangerate .= qq|
                 <input type=hidden name=selectcurrency value="$form->{selectcurrency}">
-		<input type=hidden name=defaultcurrency value=$form->{defaultcurrency}>
+      <input type=hidden name=defaultcurrency value=$form->{defaultcurrency}>
 |;
     if (   $form->{defaultcurrency}
         && $form->{currency} ne $form->{defaultcurrency} )
@@ -657,7 +657,7 @@ $form->open_status_div . qq|
     print qq|
     <tr>
       <th>| . $locale->text('Amount') . qq|</th>
-	  <th>| . (($form->{currency} ne $form->{defaultcurrency}) ? $form->{defaultcurrency} : '') . qq|</th>
+     <th>| . (($form->{currency} ne $form->{defaultcurrency}) ? $form->{defaultcurrency} : '') . qq|</th>
       <th>| . $locale->text('Account') . qq|</th>
       <th>| . $locale->text('Description') . qq|</th>
       <th>| . $locale->text('Tax Form Applied') . qq|</th>|;
@@ -704,12 +704,12 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     $taxformcheck=qq|<td><input type="checkbox" data-dojo-type="dijit/form/CheckBox" name="taxformcheck_$i" value="1" $taxchecked></td>|;
         print qq|
     <tr valign=top>
-	  <td><input data-dojo-type="dijit/form/TextBox" name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
-	  <td>| . (($form->{currency} ne $form->{defaultcurrency})
+     <td><input data-dojo-type="dijit/form/TextBox" name="amount_$i" size=10 value="$form->{"amount_$i"}" accesskey="$i"></td>
+     <td>| . (($form->{currency} ne $form->{defaultcurrency})
               ? $form->format_amount(\%myconfig, $form->{"amount_$i"}
                                                   * $form->{exchangerate},2)
               : '')  . qq|</td>
-	  <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_amount_$i">$selectamount</select></td>
+     <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}_amount_$i">$selectamount</select></td>
       $description
           $taxformcheck
       $project|;
@@ -742,10 +742,10 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
      my $tax_base = $form->{invtotal};
     foreach $item ( split / /, $form->{taxaccounts} ) {
 
-	if($form->{"calctax_$item"} && $is_update){
+   if($form->{"calctax_$item"} && $is_update){
             $form->{"tax_$item"} = $form->{"${item}_rate"} * $tax_base;
             $form->{invtotal} += $form->{"tax_$item"};
-	}
+   }
         $form->{"calctax_$item"} =
           ( $form->{"calctax_$item"} ) ? "checked" : "";
         $form->{"tax_$item"} =
@@ -778,11 +778,11 @@ qq|<td><input data-dojo-type="dijit/form/TextBox" name="description_$i" size=40 
     print qq|
         <tr>
       <th align=left>$form->{invtotal}</th>
-	  <td>| . (($form->{currency} ne $form->{defaultcurrency})
+     <td>| . (($form->{currency} ne $form->{defaultcurrency})
               ? $form->format_amount(\%myconfig,
                                      $form->{invtotal}
                                      * $form->{exchangerate}, 2) : '') . qq|</td>
-	  <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}" id="$form->{ARAP}">
+     <td><select data-dojo-type="dijit/form/Select" name="$form->{ARAP}" id="$form->{ARAP}">
                  $form->{"select$form->{ARAP}"}
               </select></td>
         </tr>
@@ -1753,4 +1753,3 @@ qq|<input name="l_projectnumber" class=checkbox type=checkbox data-dojo-type="di
 |;
 
 }
-

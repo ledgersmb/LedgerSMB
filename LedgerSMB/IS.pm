@@ -1197,9 +1197,9 @@ sub post_invoice {
 
         $query  = qq|
             INSERT INTO acc_trans
-			            (trans_id, chart_id, amount_bc, curr, amount_tc,
-			            transdate, invoice_id)
-			     VALUES (?, ?, ?, ?, ?, ?, ?)|;
+                     (trans_id, chart_id, amount_bc, curr, amount_tc,
+                     transdate, invoice_id)
+              VALUES (?, ?, ?, ?, ?, ?, ?)|;
         $sth = $dbh->prepare($query);
         $sth->execute( $form->{id}, $ref->{chart_id}, $amount,
                        $form->{currency}, $amount - $ref->{fxdiff},
@@ -1229,10 +1229,10 @@ sub post_invoice {
 
         $query = qq|
             INSERT INTO acc_trans
-			            (trans_id, chart_id,
+                     (trans_id, chart_id,
                       amount_bc, curr, amount_tc, transdate)
                  VALUES (?, (SELECT id FROM account WHERE accno = ?),
-			            ?, ?, ?, ?)|;
+                     ?, ?, ?, ?)|;
 
         $sth = $dbh->prepare($query)
             or $form->dberror($dbh->errstr);
@@ -1253,11 +1253,11 @@ sub post_invoice {
 
                 $query = qq|
                     INSERT INTO acc_trans
-					            (trans_id, chart_id, amount_bc, curr, amount_tc,
+                           (trans_id, chart_id, amount_bc, curr, amount_tc,
                                 transdate)
                     VALUES (?, (SELECT id FROM account
                                  WHERE accno = ?),
-					       ?, ?, ?, ?)|;
+                      ?, ?, ?, ?)|;
 
                 $sth = $dbh->prepare($query)
                     || $form->dberror($dbh->errstr);
@@ -1294,11 +1294,11 @@ sub post_invoice {
                        description = ?,
                transdate = ?,
                entity_credit_account = ?,
-		       amount_bc = ?,
-		       amount_tc = ?,
-		       netamount_bc = ?,
-		       netamount_tc = ?,
-		       paid_deprecated = ?,
+             amount_bc = ?,
+             amount_tc = ?,
+             netamount_bc = ?,
+             netamount_tc = ?,
+             paid_deprecated = ?,
                datepaid = ?,
                duedate = ?,
                invoice = '1',
@@ -1441,7 +1441,7 @@ sub retrieve_invoice {
 
     if ( ! $form->{id} ) {
         $query = qq|
-			SELECT current_date AS transdate
+         SELECT current_date AS transdate
               FROM defaults
              WHERE setting_key = 'curr'|;
     my $sth = $dbh->prepare($query);
@@ -1459,7 +1459,7 @@ sub retrieve_invoice {
         #HV TODO drop entity_id from ar
         $query = qq|
                SELECT a.invnumber, a.ordnumber, a.quonumber,
-			          a.transdate, a.paid_deprecated as paid,
+                   a.transdate, a.paid_deprecated as paid,
                       a.shippingpoint, a.shipvia, a.terms, a.notes,
                       a.intnotes,
                       a.duedate, a.taxincluded, a.curr AS currency,
@@ -2048,5 +2048,3 @@ sub get_taxcheck
 =cut
 
 1;
-
-

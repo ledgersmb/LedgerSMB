@@ -4,9 +4,9 @@ LedgerSMB::Exchangerate - Accounting Reporting Dimensions for LedgerSMB
 
 =head1 SYNOPSYS
 
-This holds the information as to the handling of classes of buisness units.  
-Business units are reporting units which can be used to classify various line 
-items of transactions in different ways and include handling for departments, 
+This holds the information as to the handling of classes of buisness units.
+Business units are reporting units which can be used to classify various line
+items of transactions in different ways and include handling for departments,
 funds, and projects.
 
 =cut
@@ -49,9 +49,9 @@ Required. Internal id of rate type.
 
 =cut
 
-has 'rate_type' => (is => 'ro', isa => 'Int', required => '1'); 
+has 'rate_type' => (is => 'ro', isa => 'Int', required => '1');
 
-=item valid_from  
+=item valid_from
 
 Required. This is the first date that the rate is applicable (inclusive).
 
@@ -108,7 +108,7 @@ sub get {
     );
     $self->prepare_dbhash($unit);
     return $self->new(%$unit);
-} 
+}
 
 =item save
 
@@ -121,7 +121,7 @@ sub save {
     my ($ref) = $self->exec_method({funcname => 'exchangerate__save'});
     $self->prepare_dbhash($ref);
     $self = $self->new($ref);
-}   
+}
 
 =item list (curr => $curr, start => $date, end => $date, type => $rate_type_id)
 
@@ -148,7 +148,7 @@ sub list {
 
 =item delete
 
-Deletes the exchange rate. 
+Deletes the exchange rate.
 
 Note: deleting exchange rates generally doesn't make much sense as rate information
          is copied into transactions using the rates. Thus deleting rates only impacts future
@@ -159,7 +159,7 @@ Note: deleting exchange rates generally doesn't make much sense as rate informat
 sub delete {
     my ($self) = @_;
     my ($ref) = $self->exec_method({funcname => 'exchangerate__delete'});
-}   
+}
 
 =back
 
