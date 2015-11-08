@@ -261,8 +261,8 @@ FOR retval IN
             )
        SELECT g.id, g.type, g.invoice, g.reference, g.description, ac.transdate,
               ac.source, ac.amount_bc, c.accno, c.gifi_accno, 
-              g.till, ac.cleared, ac.memo, c.description AS accname,
-              ac.chart_id, ac.entry_id,
+              g.till, ac.cleared, ac.memo, c.description AS accname, 
+              ac.chart_id, ac.entry_id, 
               sum(ac.amount_bc) over (rows unbounded preceding) + t_balance 
                 as running_balance,
               compound_array(ARRAY[ARRAY[bac.class_id, bac.bu_id]])
@@ -334,7 +334,7 @@ CREATE OR REPLACE FUNCTION report__cash_summary
 (in_from_date date, in_to_date date, in_from_accno text, in_to_accno text)
 RETURNS SETOF cash_summary_item AS
 $$
-SELECT a.id, a.accno, a.is_heading, a.description, t.label,
+SELECT a.id, a.accno, a.is_heading, a.description, t.label, 
        sum(CASE WHEN ac.amount_bc < 0 THEN ac.amount_bc * -1 ELSE NULL END),
        sum(CASE WHEN ac.amount_bc > 0 THEN ac.amount_bc ELSE NULL END)
   FROM (select id, accno, false as is_heading, description FROM account
@@ -379,7 +379,7 @@ SELECT a.id, a.accno, a.description,
       SUM(CASE WHEN ac.transdate >= $1 AND ac.amount_bc > 0
                THEN ac.amount_bc ELSE null END),
       SUM(ABS(ac.amount_bc))
- FROM account a
+ FROM account a 
  LEFT
  JOIN acc_trans ac ON ac.chart_id = a.id
  LEFT
@@ -434,7 +434,7 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
        a.invnumber, a.amount_bc as amount, a.netamount_bc as netamount,
        a.netamount_bc - a.amount_bc as tax, 
        a.amount_bc - p.due as paid, p.due, p.last_payment, a.duedate, a.notes,
-       a.till, ee.name, me.name, a.shippingpoint, a.shipvia,
+       a.till, ee.name, me.name, a.shippingpoint, a.shipvia, 
        '{}' as business_units -- TODO
   FROM (select id, transdate, invnumber, amount_bc, netamount_bc, duedate,
                notes, till, person_id, entity_credit_account, invoice,
@@ -447,8 +447,8 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name, a.transdate,
                notes, null, person_id, entity_credit_account, invoice,
                shippingpoint, shipvia, ordnumber, ponumber, description,
                on_hold, force_closed
-          FROM ap
-         WHERE in_entity_class = 1 and approved) a
+          FROM ap 
+         WHERE in_entity_class = 1 and approved) a 
   LEFT
   JOIN (SELECT trans_id, sum(amount_bc) * 
                CASE WHEN in_entity_class = 1 THEN 1 ELSE -1 END AS due,
@@ -540,7 +540,6 @@ SELECT a.id, a.invoice, eeca.id, eca.meta_number, eeca.name,
        a.duedate, a.notes,
        a.till, eee.name as employee, mee.name as manager, a.shippingpoint,
        a.shipvia, '{}'
-
   FROM (select id, transdate, invnumber, amount_bc, netamount_bc, duedate,
                notes, 
                till, person_id, entity_credit_account, invoice, shippingpoint,
@@ -668,13 +667,22 @@ acc_meta AS (
          aht.path, a.category, 'A'::char as account_type, contra,
          a.gifi_accno, gifi.description as gifi_description
      FROM account a
-)
-   SELECT a2.id, a2.accno, a.description, a.category, 
-          sum(ac.amount_bc * CASE WHEN  a.category = 'A' THEN -1 ELSE 1 END), 
-          at.path
-     FROM a_bs a
-LEFT JOIN account_heading_tree at ON a.heading = at.id
-     JOIN acc_trans ac ON ac.approved AND a.id = ac.chart_id
+    INNER JOIN account_heading_tree aht on a.heading = aht.id
+     LEFT JOIN gifi ON a.gifi_accno = gifi.accno
+     LEFT JOIN (SELECT trans_id, description
+             FROM account_translation at
+          INNER JOIN user_preference up ON up.language = at.language_code
+          INNER JOIN users ON up.id = users.id
+            WHERE users.username = SESSION_USER) at ON a.id = at.trans_id
+     WHERE array_endswith((SELECT value::int FROM defaults
+                            WHERE setting_key = 'earn_id'), aht.path)
+           -- legacy (no earn_id) returns all accounts; bug?
+           OR (NOT aht.path @> ARRAY[(SELECT value::int FROM defaults
+                                      WHERE setting_key = 'earn_id')])
+),
+acc_balance AS (
+   SELECT ac.chart_id as id, sum(ac.amount_bc) as balance
+     FROM acc_trans ac
      JOIN tx_report t ON t.approved AND t.id = ac.trans_id
     WHERE ac.transdate <= coalesce($1, (select max(transdate) from acc_trans))
  GROUP BY ac.chart_id
