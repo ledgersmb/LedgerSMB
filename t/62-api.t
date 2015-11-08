@@ -48,7 +48,7 @@ for (qw(	drafts     login      payment
 } # Import new code namespaces
 
 my $dbh = LedgerSMB::DBTest->connect("dbi:Pg:dbname=$ENV{PGDATABASE}", undef, undef);
-my $locale = LedgerSMB::Locale->get_handle( ${LedgerSMB::Sysconfig::language} );
+my $locale = LedgerSMB::Locale->get_handle( 'en' );
 
 for my $test (@$test_request_data){
     my $argstr="";
