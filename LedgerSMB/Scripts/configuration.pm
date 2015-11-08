@@ -148,7 +148,7 @@ Shows the defaults screen
 
 =cut
 
-sub defaults_screen{
+sub defaults_screen {
     my ($request) = @_;
     my $setting_handle = LedgerSMB::Setting->new({base => $request});
     my @curr = map { { curr => $_ } } $setting_handle->get_currencies();
@@ -215,6 +215,7 @@ sub defaults_screen{
             text_attr      => 'text',
             value_attr     => 'id',
             default_values => [$request->{'earn_id'}],
+        },
         'curr' => {
             name => 'curr',
             options => \@curr,

@@ -12,9 +12,8 @@ translation or other purposes.
 
 package LedgerSMB::Exchangerate_Type;
 use Moose;
-use LedgerSMB::DBObject_Moose;
-use LedgerSMB::DBObject::App_Module;
-with 'LedgerSMB::DBObject_Moose';
+use LedgerSMB::PGObject;
+with 'LedgerSMB::PGObject';
 
 =head1 PROPERTIES
 

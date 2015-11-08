@@ -13,8 +13,8 @@ funds, and projects.
 
 package LedgerSMB::Exchangerate;
 use Moose;
-use LedgerSMB::DBObject_Moose;
-with 'LedgerSMB::DBObject_Moose';
+use LedgerSMB::PGObject;
+with 'LedgerSMB::PGObject';
 
 use Moose::Util::TypeConstraints;
 use LedgerSMB::PGNumber;

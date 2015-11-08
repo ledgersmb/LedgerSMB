@@ -765,7 +765,6 @@ my @column_headers =  ({text => $locale->text('Invoice')},
         #     $request->{datepaid} ? $request->{datepaid} : $Payment->{current_date}
         #);
 
-        if ((! $exchangerate) && $request->{datepaid} eq $request->{olddatepaid}) {
      $exchangerate = $request->{exrate}
         if ((! $exchangerate) &&
         $request->{datepaid} eq $request->{olddatepaid});

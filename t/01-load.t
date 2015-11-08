@@ -63,8 +63,11 @@ my @modules =
           'LedgerSMB::MooseTypes', 'LedgerSMB::PriceMatrix',
           'LedgerSMB::File', 'LedgerSMB::Report',
           'LedgerSMB::Template', 'LedgerSMB::Company_Config',
-          'LedgerSMB::Contact', 'LedgerSMB::Database',
+          'LedgerSMB::Contact', 'LedgerSMB::Currency',
+          'LedgerSMB::Database',
+          'LedgerSMB::Exchangerate', 'LedgerSMB::Exchangerate_Type',
           'LedgerSMB::PGObject', 'LedgerSMB::Auth',
+          'LedgerSMB::IIAA',
           'LedgerSMB::AA', 'LedgerSMB::AM', 'LedgerSMB::Batch',
           'LedgerSMB::IC', 'LedgerSMB::IR', 'LedgerSMB::PGDate',
           'LedgerSMB::PGNumber', 'LedgerSMB::PGOld', 'LedgerSMB::Request',
@@ -150,7 +153,8 @@ my @modules =
           'LedgerSMB::ScriptLib::Common_Search',
           'LedgerSMB::ScriptLib::Common_Search::Part',
           'LedgerSMB::Scripts::budget_reports',
-          'LedgerSMB::Scripts::contact_reports', 'LedgerSMB::Scripts::file',
+          'LedgerSMB::Scripts::contact_reports',
+          'LedgerSMB::Scripts::currency', 'LedgerSMB::Scripts::file',
           'LedgerSMB::Scripts::inv_reports', 'LedgerSMB::Scripts::lreports_co',
           'LedgerSMB::Scripts::pnl', 'LedgerSMB::Scripts::report_aging',
           'LedgerSMB::Scripts::import_csv', 'LedgerSMB::Scripts::inventory',
@@ -206,7 +210,7 @@ SKIP: {
 SKIP: {
     eval { require XML::Twig };
 
-    skip 'XML::Twig not installed', 8 if $@;
+    skip 'XML::Twig not installed', 7 if $@;
 
     for ('LedgerSMB::RESTXML::Document::Base',
          'LedgerSMB::RESTXML::Document::Customer',
@@ -215,10 +219,17 @@ SKIP: {
          'LedgerSMB::RESTXML::Document::Part_Search',
          'LedgerSMB::RESTXML::Document::SalesOrder',
          'LedgerSMB::RESTXML::Document::Session',
-         'LedgerSMB::Template::ODS'
         ) {
         use_ok($_);
     }
+}
+
+ SKIP: {
+     eval { require XML::Twig; require OpenOffice::OODoc; };
+
+     skip 'XML::Twig or OpenOffice::OODoc not installed', 1 if $@;
+     
+     use_ok('LedgerSMB::Template::ODS');
 }
 
 SKIP: {

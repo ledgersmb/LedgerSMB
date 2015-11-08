@@ -1204,7 +1204,7 @@ sub generate_selects {
           foreach (@curr) {
                 $curr{$_} = 1;
           }
-          my @curr = keys %curr;
+          @curr = keys %curr;
 
           $form->{currency} = $form->{defaultcurrency}
                unless $form->{currency};
