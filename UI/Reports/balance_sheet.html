@@ -17,7 +17,7 @@ USE String;
 
 <table>
 <tr class="report-head">
-  <th>Accounts</th>
+  <th><?lsmb text('Accounts') ?></th>
 <?lsmb FOREACH col IN report.cheads.ids.keys -?>
   <th><?lsmb report.cheads.ids.$col.props.description ?></th>
 <?lsmb END -?>
