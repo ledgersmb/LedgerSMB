@@ -3,6 +3,7 @@ Released 2014-09-15
 
 Changelog for 1.4.20
 * Fixed one untranslated string in balance sheet (Chris T)
+* Added running balance to report drill downs (Chris T, GH1007)
 
 Changelog for 1.4.19
 * Fixed permission denied when entering budgets (GH944, Chris T)
