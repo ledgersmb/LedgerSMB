@@ -26,11 +26,12 @@ FIRSTHEAD = '\\multicolumn{2}{r}{' _ text('Report Name') _ ':} & ' _
             _ '} \\\\
             ';
 
-FOREACH LINE IN report.header_lines();
+newlines = new_heads(hlines);
+FOREACH LINE IN newlines;
     IF request.${LINE.name}; #$
-        headval = "request.${LINE.name}"; #$
+        headval = request.${LINE.name}; #$
     ELSE;
-         headval = "'report.${LINE.name}' is " _ report.from_date; #$
+         headval = report.${LINE.name};
     END;
     FIRSTHEAD = FIRSTHEAD _ '\\multicolumn{2}{r}{ ' _ LINE.text _ ':} & ';
     FIRSTHEAD = FIRSTHEAD _ '\\multicolumn{' _ (COLNUMBER - 2) _ '}{l}{ ' _ headval;
