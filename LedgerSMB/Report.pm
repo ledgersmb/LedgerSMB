@@ -339,8 +339,14 @@ sub render {
         output_file => $name,
         format => uc($request->{format} || 'HTML'),
     );
+    my $replace_hnames = sub {
+        my $lines = shift;
+        my @newlines = map { { name => $_->{name} } } @{$self->header_lines};
+        return [map { { %$_, %{shift @newlines} } } @$lines ];
+    };
     $template->render({report => $self,
                       request => $request,
+                    new_heads => $replace_hnames,
                          name => $self->name,
                        hlines => $self->header_lines,
                       columns => $columns,
