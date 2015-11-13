@@ -8,12 +8,12 @@ values (-200, '_test1', -200);
 insert into session (session_id, users_id, token, last_used)
 values (-200, -200, md5(random()::text), now());
 
-INSERT INTO chart (accno, description, charttype, category, link)
-VALUES ('00001', 'testing', 'A', 'L', 'AP');
-INSERT INTO chart (accno, description, charttype, category, link)
-VALUES ('00002', 'testing2', 'A', 'E', 'AP_amount');
-INSERT INTO chart (accno, description, charttype, category, link)
-VALUES ('00003', 'testing2', 'A', 'A', 'AP_paid');
+SELECT account__save(null, accno, description, category, null, null, false, 
+                    false, array[link], false, false)
+  FROM (VALUES ('00001', 'testing', 'L', 'AP'),
+               ('00002', 'testing2', 'E', 'AP_amount'),
+               ('00003', 'testing2', 'A', 'AP_paid')) f
+               (accno, description, category, link);
 
 INSERT INTO session (users_id, last_used, token)
 values (currval('users_id_seq'),  now(), md5('test2'));
