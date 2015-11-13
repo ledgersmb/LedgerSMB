@@ -26,6 +26,7 @@ FIRSTHEAD = '\\multicolumn{2}{r}{' _ text('Report Name') _ ':} & ' _
             _ '} \\\\
             ';
 
+# use new_heads to get around variable name escaping
 newlines = new_heads(hlines);
 FOREACH LINE IN newlines;
     IF request.${LINE.name}; #$

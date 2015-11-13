@@ -339,6 +339,9 @@ sub render {
         output_file => $name,
         format => uc($request->{format} || 'HTML'),
     );
+    # needed to get aroud escaping of header line names 
+    # i.e. ignore_yearends -> ignore\_yearends
+    # in latex
     my $replace_hnames = sub {
         my $lines = shift;
         my @newlines = map { { name => $_->{name} } } @{$self->header_lines};
