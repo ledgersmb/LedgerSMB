@@ -139,6 +139,7 @@ $request->{_locale} = $locale;
 my $script = get_script($locale, $request);
 
 $logger->debug("calling $script");
+LedgerSMB::App_State::DBH->commit() if LedgerSMB::App_State::DBH;
 &call_script( $script, $request, $locale);
 $logger->debug("after calling script=$script action=$request->{action} "
                . "\$request->{dbh}=$request->{dbh}");
