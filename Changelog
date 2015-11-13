@@ -13,6 +13,7 @@ Code Cleanup:
 
 API Enhancements:
 * Moved a great deal of code into PGObject framework on CPAN (Chris T)
+* Session handling committed before main action (Chris T, GH 943)
 
 Quality assurance:
 * Assurance of completeness of 'use'-tested source files (ErikH)
