@@ -7,6 +7,7 @@ Changelog for 1.4.20
 * Fixed ar/ap transactions not setting currency right (Chris T, GH1032)
 * Fixed ar/ap transactions not setting forex rate right (Chris T, GH1033)
 * Fixed pdf report criteria not showing up on reports (Chris T, GH1038)
+* Fixed paying some invoices defaulting to 0 (Chris T, GH1021)
 
 
 Changelog for 1.4.19
