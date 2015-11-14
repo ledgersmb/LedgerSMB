@@ -11,6 +11,7 @@ Code Cleanup:
 * Removed LedgerSMB's custom dojo page loader (ErikH)
 * Removed dependency on Class::Struct (Chris T)
 * Removed all inserts into chart view (Chris T, GH 931)
+* Removed long-broken French chart of accounts (Chris T)
 
 API Enhancements:
 * Moved a great deal of code into PGObject framework on CPAN (Chris T)
