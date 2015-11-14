@@ -45,7 +45,7 @@ SELECT account_heading_save(NULL, accno, description, NULL)
                ('67000', 'Zúčtování rezerv a opravných položek finančních výnosů'),
                ('69000', 'Převodové účty'),
                ('70000', 'Účty rozvažné')
-       ) h as (accno, description);
+       ) h (accno, description);
 
 SELECT account__save(null, accno, description, category, gifi, null, contra, false, string_to_array(link, ':'), false, false)
   FROM (VALUES (10001, '1000', 'Dlouhodobý nehmotný majetek', 'A', 'A', 'AP_amount', '', false),
@@ -317,7 +317,7 @@ SELECT account__save(null, accno, description, category, gifi, null, contra, fal
                (10603, '70100', 'Počáteční účet rozvažný', 'A', 'A', '', '', false),
                (10605, '70200', 'Konečný účet rozvažný', 'A', 'A', '', '', false),
                (10607, '71000', 'Účet zisků a ztrát', 'A', 'A', '', '', false)
-       ) c        (id, accno, description, charttype, category, link, gifi_accno, contra);  
+       ) c (id, accno, description, charttype, category, link, gifi_accno, contra);  
 
 SELECT cr_coa_to_account_save(accno, accno || '--' || description)
 FROM account WHERE id IN (select account_id FROM account_link
