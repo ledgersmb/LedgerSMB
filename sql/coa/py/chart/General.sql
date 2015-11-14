@@ -69,7 +69,7 @@ SELECT account_heading_save(null, accno, description, null)
                 ('5.140','GASTOS DE ADMINISTRACIÓN','H','E','',''),
                 ('5.150','GASTOS FINANCIEROS','H','E','',''),
                 ('5.200','EGRESOS NO OPERATIVOS','H','E','',''),
-                ('5.300','EGRESOS EXTRAORDINARIOS','H','E','',''),
+                ('5.300','EGRESOS EXTRAORDINARIOS','H','E','','')
        ) c (accno, description, charttype, category, link, gifi_accno);
 
 SELECT account__save(NULL, accno description, category, gifi_accno, null, false, false, 
@@ -250,7 +250,7 @@ SELECT account__save(NULL, accno description, category, gifi_accno, null, false,
                 ('5.320','Donaciones y contribuciones negativas','A','E','',''),
                 ('5.330','Indemnizaciones a terceros','A','E','',''),
                 ('5.340','Diferencias de cambios negativos','A','E','',''),
-                ('5.350','Otros resultados negativos extraordinarios','A','E','',''),
+                ('5.350','Otros resultados negativos extraordinarios','A','E','','')
        ) c (accno, description, charttype, category, link, gifi_accno);
 --
 INSERT INTO tax (chart_id,rate) VALUES ((select id from account where accno = '2.151'),'0.1');

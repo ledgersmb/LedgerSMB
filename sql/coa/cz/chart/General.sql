@@ -47,7 +47,7 @@ SELECT account_heading_save(NULL, accno, description, NULL)
                ('70000', 'Účty rozvažné')
        ) h (accno, description);
 
-SELECT account__save(null, accno, description, category, gifi, null, contra, false, string_to_array(link, ':'), false, false)
+SELECT account__save(null, accno, description, category, gifi_accno, null, contra, false, string_to_array(link, ':'), false, false)
   FROM (VALUES (10001, '1000', 'Dlouhodobý nehmotný majetek', 'A', 'A', 'AP_amount', '', false),
                (10033, '3200', 'Umělecká díla a sbírky', 'A', 'A', 'AP_amount', '', false),
                (10005, '1200', 'Nehmotné výsledky výzkumu a vývoje', 'A', 'A', 'AP_amount', '', false),
