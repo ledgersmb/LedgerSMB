@@ -72,7 +72,7 @@ SELECT account_heading_save(null, accno, description, null)
                 ('5.300','EGRESOS EXTRAORDINARIOS','H','E','','')
        ) c (accno, description, charttype, category, link, gifi_accno);
 
-SELECT account__save(NULL, accno description, category, gifi_accno, null, false, false, 
+SELECT account__save(NULL, accno, description, category, gifi_accno, null, false, false, 
                      string_to_array(link, ':'), false false)
   FROM ( VALUES ('1.111.01','Recaudaciones a depositar','A','A','',''),
                 ('1.111.02','Fondo fijo','A','A','',''),
