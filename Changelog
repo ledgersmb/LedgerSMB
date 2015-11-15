@@ -18,6 +18,7 @@ Changelog for 1.4.19
 * Removed many references to the chart view (GH #930, Chris T)
 * Fixed saving user fails with error 4 or 5 (GH #1008, Chris T)
 * Disabled hierarchy reports where not set up (GH #1025, Chris T)
+* Fixed unable to create accounts without delete privilege (Chris T)
 
 Chris T is Chris Travers
 
