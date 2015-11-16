@@ -478,8 +478,8 @@ sub display_payments {
                     - $payment->parse_amount(amount => $invoice->[5])),
                                                     money  => 1);
             my $fld = "payment_" . $invoice->[0];
-           
-            if ('display_mayments' eq $request->{action} ){
+
+            if ('display_payments' eq $request->{action} ){
                 $payment->{"$fld"} = $invoice->[6];
             }
             $contact_total +=  $payment->parse_amount(amount => $payment->{$fld});
