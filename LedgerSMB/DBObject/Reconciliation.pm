@@ -126,6 +126,12 @@ sub import_file {
     return $self->{import_entries};
 }
 
+sub unapproved_checks {
+    my $self = shift @_;
+    $self->{check} = { map { $_->{setting_key} => $_->{value} } $self->call_dbmethod(funcname=>'reconciliation__check') };
+}
+    
+
 =item approve($self,$reportid)
 
 Approves the pending report $reportid.

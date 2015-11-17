@@ -204,6 +204,7 @@ sub _display_report {
                                         eq 'A';
         $recon->close_form;
         $recon->open_form;
+        $recon->unapproved_checks;
         $recon->add_entries($recon->import_file('csv_file')) if !$recon->{submitted};
         $recon->{can_approve} = $recon->is_allowed_role({allowed_roles => ['reconciliation_approve']});
         $recon->get();
