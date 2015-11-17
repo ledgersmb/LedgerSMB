@@ -142,7 +142,6 @@ sub unapproved_checks {
     my $self = shift @_;
     $self->{check} = { map { $_->{setting_key} => $_->{value} } $self->call_dbmethod(funcname=>'reconciliation__check') };
 }
-    
 
 =item approve($self,$reportid)
 
