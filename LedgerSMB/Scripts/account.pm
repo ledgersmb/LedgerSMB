@@ -91,7 +91,7 @@ sub save {
     my ($request) = @_;
     $request->{parent} = undef if $request->{parent} == -1;
     die $request->{_locale}->text('Please select a valid heading')
-       if (defined $request->{heading} 
+       if (defined $request->{heading}
            and $request->{heading} =~ /\D/);
     my $account = LedgerSMB::DBObject::Account->new({base => $request});
     $account->{$account->{summary}}=$account->{summary};
