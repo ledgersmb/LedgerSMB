@@ -282,7 +282,9 @@ sub single_batch_unlock {
     if ($request->close_form){
         my $batch = LedgerSMB::Batch->new(base => $request);
         $batch->unlock;
-        list_batches($request);
+        $request->{report_name} = 'unapproved'; 
+        $request->{search_type} = 'batches';
+        LedgerSMB::Scripts::reports::start_report($request);
     } else {
         get_batch($request);
     }
