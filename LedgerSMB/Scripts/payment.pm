@@ -894,7 +894,7 @@ sub payment2 {
             my $topay_fx_value;
             if ("$exchangerate") {
                 $topay_fx_value = $due_fx;
-                if (!$request->{"optional_discount_$array_options[$ref]->{invoice_id}"}) {
+                if (! $request->{"optional_discount_$array_options[$ref]->{invoice_id}"}) {
                     $topay_fx_value = $due_fx = $due_fx + $request->round_amount($array_options[$ref]->{discount}/$array_options[$ref]->{exchangerate});
                 }
             } else {
@@ -973,7 +973,7 @@ sub payment2 {
                 },#END HASH
                 topay_fx          => {
                     name  => "topay_fx_$array_options[$ref]->{invoice_id}",
-                    value =>  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} ?
+                    value =>  (defined $request->{"topay_fx_$array_options[$ref]->{invoice_id}"}) ?
                                                            $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} eq 'N/A' ?
                                                            "$topay_fx_value" :
                                                            "$request_topay_fx_bigfloat":
