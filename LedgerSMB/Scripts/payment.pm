@@ -904,7 +904,7 @@ for my $ref (0 .. $#array_options) {
                                                        value => $request->{"memo_invoice_$array_options[$ref]->{invoice_id}"}
                                                      },#END HASH
                                topay_fx          =>  { name  => "topay_fx_$array_options[$ref]->{invoice_id}",
-                                                       value =>  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} ?
+                                                       value =>  (defined $request->{"topay_fx_$array_options[$ref]->{invoice_id}"}) ?
                                                            $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} eq 'N/A' ?
                                                            "$topay_fx_value" :
                                                            "$request_topay_fx_bigfloat":
