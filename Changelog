@@ -10,6 +10,7 @@ Changelog for 1.4.20
 * Fixed paying some invoices defaulting to 0 (Chris T, GH1021)
 * Added warning for unapproved transaction in recon period (Chris T, GH856)
 * Added warning on previous unapproved recons in recon period (Chris T, GH857)
+* Fixed batch locking problems (Chris T, GH992)
 
 
 Changelog for 1.4.19
