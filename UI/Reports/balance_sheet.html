@@ -7,7 +7,7 @@ LINK = LINK.replace('\&amp;\&amp;', '&amp;');
 DRILLBASE = 'journal.pl?sort=transdate&amp;&amp;category=X'
        _ '&amp;col_transdate=Y&amp;col_reference=Y&amp;col_description=Y'
        _ '&amp;col_debits=Y&amp;col_credits=Y&amp;col_source=Y'
-       _ '&amp;col_accno=Y&amp;action=search';
+       _ '&amp;col_accno=Y&amp;action=search&amp;col_running_balance=Y';
 
 USE String;
  ?>
@@ -17,7 +17,7 @@ USE String;
 
 <table>
 <tr class="report-head">
-  <th>Accounts</th>
+  <th><?lsmb text('Accounts') ?></th>
 <?lsmb FOREACH col IN report.cheads.ids.keys -?>
   <th><?lsmb report.cheads.ids.$col.props.description ?></th>
 <?lsmb END -?>

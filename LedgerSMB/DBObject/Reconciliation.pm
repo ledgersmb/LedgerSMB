@@ -124,6 +124,24 @@ sub import_file {
     return $self->{import_entries};
 }
 
+=item unapproved_checks
+
+Checks for unapproved
+
+ * transactions (generally, since these could change)
+ * payments against the account
+ * reconciliation reports
+
+Sets $self->{check} with the name of the test and the number of failures
+
+=cut
+
+sub unapproved_checks {
+    my $self = shift @_;
+    $self->{check} = { map { $_->{setting_key} => $_->{value} } $self->exec_method(funcname=>'reconciliation__check') };
+}
+    
+
 =item approve($self,$reportid)
 
 Approves the pending report $reportid.

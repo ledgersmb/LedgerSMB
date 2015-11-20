@@ -3,6 +3,11 @@
 ?>
 <?lsmb PROCESS 'elements.html' ?>
 <body class="<?lsmb dojo_theme ?>">
+<?lsmb IF check.unapproved_transactions 
+?><div class="warning"><?lsmb text('There are unapproved transactions before the end date of this report.') ?></div>
+<?lsmb END; IF check.unapproved_reports
+?><div class="warning"><?lsmb text('There are unapproved reconciliations before the end date of this report.') ?></div>
+<?lsmb END ?>
 
 <form data-dojo-type="lsmb/lib/Form" action="recon.pl" method="post" enctype="multipart/form-data">
 <div class="listtop" id="title"><?lsmb text('Reconciliation Report') ?></div>
