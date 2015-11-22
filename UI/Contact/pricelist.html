@@ -82,7 +82,9 @@ checking a price deal for a customer.
     attributes = { id = 'pricematrix' }
          tbody = { rows = pricematrix }
          tfoot = { coltypes = { int_partnumber = 'input_text',
-                                   description = 'input_text', }
+                                   description = 'text', 
+                              },
+                  dojo_type = { int_partnumber = "lsmb/parts/PartSelector" },
                    rows = [{}]} ?>
 <?lsmb PROCESS button element_data = {
     type = "submit"

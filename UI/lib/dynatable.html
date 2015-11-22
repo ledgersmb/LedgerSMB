@@ -44,9 +44,11 @@ END; ?>
       <?lsmb- ELSE - ?>
       <td class="<?lsmb COL.col_id _ ' ' _ COL.class _ ' ' _ COL.type ?>">
           <?lsmb- IF TYPE == 'input_text' -?>
-          <?lsmb PROCESS input element_data = {
+          <?lsmb 
+                 PROCESS input element_data = {
 					  id=COL.col_id _ '-' _ ROWCOUNT
 					  type="text"
+                                          "data-dojo-type" = COL.data_dojo_type
 					  class=COL.class
 					  name=PFX _ COL.col_id _ '_' _ ROW.row_id
 					  value=ROW.${COL.col_id} } ?>
@@ -108,6 +110,7 @@ END; ?>
 				 ELSE; 
 				    TYPE = COL.type;
 				 END;
+				 DOJO = tfoot.dojo_type.$COL_ID;
 				 IF tfoot.coltypes.${COL.col_id} == 'spacer';
 				    SPACECOUNT = SPACECOUNT + 1;
 				 ELSE;
@@ -128,6 +131,7 @@ END; ?>
 				  id=COL.col_id _ '-' _ ROWCOUNT
 				  type="text"
 				  class=COL.class
+                       "data-dojo-type"=DOJO
 				  name=PFX _ COL.col_id _ '_tfoot_' _ ROWCOUNT
 				  value=ROW.${COL.col_id} } ?>
          <?lsmb- ELSIF TYPE == 'checkbox';
