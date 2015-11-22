@@ -75,7 +75,7 @@ sub _get_from_date {
         if ($ref->{lsmb__min_date}){
             return LedgerSMB::PGDate->from_db($ref->{lsmb__min_date}, 'date');
         } else {
-            return LedgerSMB::PGDate->new();
+            return LedgerSMB::PGDate->from_db();
         }
 
     }
@@ -88,7 +88,7 @@ sub _get_to_date {
         if ($ref->{lsmb__max_date}){
              return LedgerSMB::PGDate->from_db($ref->{lsmb__max_date}, 'date');
         } else {
-            return LedgerSMB::PGDate->new();
+            return LedgerSMB::PGDate->from_db();
         }
 
     }
