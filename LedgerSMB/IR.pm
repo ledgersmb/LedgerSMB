@@ -1089,18 +1089,8 @@ sub retrieve_item {
     my $where = "WHERE p.assembly = '0' AND p.obsolete = '0'";
 
     if ( $form->{"partnumber_$i"} ne "" ) {
-        $var = $dbh->quote( $form->like( lc $form->{"partnumber_$i"} ) );
-        $where .= " AND lower(p.partnumber) LIKE $var or mm.barcode is not null";
-    }
-
-    if ( $form->{"description_$i"} ne "" ) {
-        $var = $dbh->quote( $form->like( lc $form->{"description_$i"} ) );
-        if ( $form->{language_code} ne "" ) {
-            $where .= " AND lower(t1.description) LIKE $var";
-        }
-        else {
-            $where .= " AND lower(p.description) LIKE $var";
-        }
+        $var = $dbh->quote( $form->{"partnumber_$i"} );
+        $where .= " AND lower(p.partnumber) = $var or mm.barcode is not null";
     }
 
     if ( $form->{"partsgroup_$i"} ne "" ) {
@@ -1109,12 +1099,6 @@ sub retrieve_item {
         $where .= qq| AND p.partsgroup_id = $var|;
     }
 
-    if ( $form->{"description_$i"} ne "" ) {
-        $where .= " ORDER BY 3";
-    }
-    else {
-        $where .= " ORDER BY 2";
-    }
     my $query = qq|
            SELECT p.id, coalesce(
                                 CASE WHEN pv.partnumber <> '' THEN pv.partnumber
@@ -1137,7 +1121,8 @@ sub retrieve_item {
         LEFT JOIN translation t2
                   ON (t2.trans_id = p.partsgroup_id
                   AND t2.language_code = ?)
-             $where|;
+             $where
+         ORDER BY 2|;
     my $sth = $dbh->prepare($query);
     #die "$query:$i";
     $sth->execute( $form->{vendor_id}, $form->{language_code},
