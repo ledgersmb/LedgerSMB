@@ -65,4 +65,5 @@ This file may be reused under the terms of the GNU General Public License versio
 
 =cut
 
-
+__PACKAGE__->meta->make_immutable;
+1;

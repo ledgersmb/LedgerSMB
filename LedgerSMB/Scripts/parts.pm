@@ -5,6 +5,8 @@ LedgerSMB::Scripts::parts
 =cut
 
 package LedgerSMB::Scripts::parts;
+use strict;
+use warnings;
 use CGI::Simple;
 
 use LedgerSMB::Part;
@@ -20,19 +22,19 @@ Minimal information is returned:
 
 =over
 
-=id
+=item id
 
-=partnumber
+=item partnumber
 
-=description
+=item description
 
-=list_price
+=item list_price
 
-=last_cost
+=item last_cost
 
-=sell_price
+=item sell_price
 
-=tax_accnos
+=item tax_accnos
 
 =back
 
