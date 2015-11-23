@@ -16,6 +16,7 @@ This module is the UI controller for the customer, vendor, etc functions; it
 
 package LedgerSMB::Scripts::contact;
 
+use LedgerSMB::Part;
 use LedgerSMB::Entity::Company;
 use LedgerSMB::Entity::Person;
 use LedgerSMB::Entity::Credit_Account;
@@ -836,7 +837,6 @@ sub get_pricelist {
                 format => uc($request->{format} || 'HTML'),
                 locale => $request->{_locale},
     );
-
     $template->render($request);
 }
 
@@ -854,7 +854,6 @@ and the description is a full text search.
 sub save_pricelist {
     my ($request) = @_;
     use LedgerSMB::App_State;
-    use LedgerSMB::ScriptLib::Common_Search::Part;
     use LedgerSMB::DBObject::Pricelist;
 
     my $count = $request->{rowcount_pricematrix};
@@ -868,27 +867,16 @@ sub save_pricelist {
     if (defined $request->{"int_partnumber_tfoot_$count"}
          or defined $request->{"description_tfoot_$count"})
     {
-        $psearch = LedgerSMB::ScriptLib::Common_Search::Part->new($request);
-        my @parts = $psearch->search(
-                   { partnumber => $request->{"int_partnumber_tfoot_$count"},
-                    description => $request->{"description_tfoot_$count"}, }
-        );
-
-        if (scalar @parts == 0) {
-            $request->error($request->{_locale}->text('Part not found'));
-        } elsif (scalar @parts > 1){
-            $redirect_to_selection = 1;
-        } else {
-            my $part = shift @parts;
-            push @lines, {
+        my ($partnumber) = split(/--/, $request->{"int_partnumber_tfoot_$count"});
+        my $part = LedgerSMB::Part->get_by_partnumber($partnumber);
+        push @lines, {
                    parts_id => $part->{id},
                   validfrom => $request->{"validfrom_tfoot_$count"},
                     validto => $request->{"validto_tfoot_$count"},
                       price => $request->{"lastcost_tfoot_$count"} ||
                                $request->{"sellprice_tfoot_$count"},
                    leadtime => $request->{"leadtime_tfoot_$count"},
-             };
-        }
+         } if defined $part->{id};
     }
 
     # Save rows

@@ -21,6 +21,7 @@ LICENSE.TXT file.
 package LedgerSMB::REST_Format::json;
 
 use JSON;
+use LedgerSMB::Template::TXT; # sanitization
 use strict;
 use warnings;
 
@@ -38,7 +39,7 @@ sub from_input{
 sub to_output{
     my $request = shift @_;
     my $output = shift @_;
-    return $json->encode($output);
+    return $json->encode(LedgerSMB::Template::TXT::preprocess($output));
 }
 
 1;

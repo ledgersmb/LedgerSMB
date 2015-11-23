@@ -660,8 +660,7 @@ SELECT account__save(NULL,'4130100001','Ingresos por Obras Civiles','I','4130100
 SELECT account__save(NULL,'4130950002','Interventorias','I','4130950002', NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
 SELECT account__save(NULL,'4220100001','Arriendo de locales y oficinas','I','4220100001', NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
 SELECT account__save(NULL,'4220150001','Arriendo de Maquinaria y Equipos','I','4220150001', NULL, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
-INSERT INTO chart (accno, description, charttype, category, link, gifi_accno) VALUES ('4235950001', 'Algo',
-'A', 'I', 'AR_amount:IC_income', '4235950001');
+select account__save(NULL, '4235950001', 'Algo', 'I', '4235950001', null, false, false, string_to_array('AR_amount:IC_income', ':'), false, false);
 SELECT account__save(NULL,'5205060001','Sueldos de Personal','E','5205060001', NULL, false, false, string_to_array('AP_amount:IC_expense', ':'), false, false);
 SELECT account__save(NULL,'2370060001','Aportes a ARP','L','2370060001', NULL, false, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'2380950002','Otros Acreedores Varios','L','2380950001', NULL, false, false, string_to_array('AP', ':'), false, false);

@@ -413,7 +413,8 @@ $column_data{runningnumber} =
                        value="$form->{"partnumber_$i"}" /></td>|;
         } else {
             $column_data{partnumber} =
-qq|<td class="partnumber"><input data-dojo-type="dijit/form/TextBox" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]">$skunumber</td>|;
+qq|<td class="partnumber" colspan="2"><input data-dojo-type="lsmb/parts/PartSelector" name="partnumber_$i" size=15 value="$form->{"partnumber_$i"}" accesskey="$i" title="[Alt-$i]">$skunumber</td>|;
+            $column_data{description} = '';
         }
         $column_data{qty} =
 qq|<td align=right class="qty"><input data-dojo-type="dijit/form/TextBox" name="qty_$i" title="$form->{"onhand_$i"}" size="5" value="|

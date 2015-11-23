@@ -11,6 +11,32 @@ BEGIN
 END;
 $$ LANGUAGE PLPGSQL;
 
+CREATE OR REPLACE FUNCTION reconciliation__check(in_end_date date, in_chart_id int)
+RETURNS SETOF defaults
+LANGUAGE SQL AS
+$$
+WITH unapproved_tx as (
+     SELECT 'unapproved_transactions'::text, count(*)::text
+       FROM (select id::text from ar where approved is false and transdate < $1
+              UNION
+             select id::text from ap where approved is false and transdate < $1
+              UNION
+             select id::text from gl where approved is false and transdate < $1
+              UNION
+             SELECT distinct source from acc_trans
+              where approved is false and transdate < $1 and chart_id = $2
+            ) tx
+),
+     unapproved_cr as (
+     SELECT 'unapproved_reports'::text, count(*)::text
+       FROM cr_report
+      WHERE end_date < $1 AND approved is not true and chart_id = $2
+)
+SELECT * FROM unapproved_tx
+ UNION
+SELECT * FROM unapproved_cr;
+$$;
+
 CREATE OR REPLACE FUNCTION reconciliation__reject_set(in_report_id int)
 RETURNS bool language plpgsql as $$
 BEGIN

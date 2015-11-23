@@ -1,7 +1,7 @@
 begin;
 
 -- handle NULL chart_id's
-insert into chart (accno, description, charttype) values ('1000000000', 'Broken SQL-Ledger Data', 'L');
+SELECT account__save(null, '1000000000', 'Broken SQL-Ledger Data', 'L', null, null, false, false, '{}', false, false);
 
 --handle duplicate transaction id's.
 CREATE TEMPORARY TABLE id_agregator (id INT, table_name text);

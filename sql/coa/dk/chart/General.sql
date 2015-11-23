@@ -17,9 +17,9 @@ SELECT account__save(NULL,'1540','Lager / tillægssalg','A','', NULL, false, fal
 SELECT account__save(NULL,'1550','Lager / arrangementer','A','', NULL, false, false, string_to_array('IC', ':'), false, false);
 SELECT account_heading_save(NULL,'1800','AKTIVER', NULL);
 SELECT account__save(NULL,'1820','Kontorinventar og -udstyr','A','', NULL, false, false, string_to_array('AP_amount', ':'), false, false);
-insert into chart (accno,description,charttype,gifi_accno,category,link,contra) values ('1825','Samlede afskrivninger, inventar, udstyr','A','','A','','1');
+SELECT account__save(NULL, '1825','Samlede afskrivninger, inventar, udstyr', 'A', '', NULL, true, false, '{}'::text[], false, false);
 SELECT account__save(NULL,'1840','Køretøjer','A','', NULL, false, false, string_to_array('AP_amount', ':'), false, false);
-insert into chart (accno,description,charttype,gifi_accno,category,link,contra) values ('1845','Samlede afskrivninger, køretøjer','A','','A','','1');
+SELECT account__save(NULL,'1845','Samlede afskrivninger, køretøjer','A','', NULL, true, false, '{}'::text[], false, false);
 SELECT account_heading_save(NULL,'2000','KORTFRISTET GÆLD', NULL);
 SELECT account__save(NULL,'2100','Udbetalinger','L','', NULL, false, false, string_to_array('AP', ':'), false, false);
 SELECT account__save(NULL,'2160','Selskabsskat','L','', NULL, false, false, string_to_array('', ':'), false, false);
