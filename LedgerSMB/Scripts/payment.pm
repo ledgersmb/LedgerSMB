@@ -477,7 +477,7 @@ sub display_payments {
             $invoice->[6] = $invoice->[6]->to_output(money  => 1);
             my $fld = "payment_" . $invoice->[0];
 
-            if ('display_mayments' eq $request->{action} ){
+            if ('display_payments' eq $request->{action} ){
                 $payment->{"$fld"} = $invoice->[6];
             }
             $contact_total +=  $payment->parse_amount(amount => $payment->{$fld});
@@ -904,7 +904,7 @@ for my $ref (0 .. $#array_options) {
                                                        value => $request->{"memo_invoice_$array_options[$ref]->{invoice_id}"}
                                                      },#END HASH
                                topay_fx          =>  { name  => "topay_fx_$array_options[$ref]->{invoice_id}",
-                                                       value =>  $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} ?
+                                                       value =>  (defined $request->{"topay_fx_$array_options[$ref]->{invoice_id}"}) ?
                                                            $request->{"topay_fx_$array_options[$ref]->{invoice_id}"} eq 'N/A' ?
                                                            "$topay_fx_value" :
                                                            "$request_topay_fx_bigfloat":

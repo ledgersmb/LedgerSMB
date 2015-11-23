@@ -1,5 +1,6 @@
 =head1 NAME
 
+            ($form->{"$partnumber_$i"}) = split(/--/, $form->{"$partnumber_$i"});
 LedgerSMB::IS - Inventory Invoicing
 
 =cut
@@ -1787,18 +1788,8 @@ sub retrieve_item {
     my $where = "WHERE p.obsolete = '0' AND NOT p.income_accno_id IS NULL";
 
     if ( $form->{"partnumber_$i"} ne "" ) {
-        $var = $dbh->quote( $form->like( lc $form->{"partnumber_$i"} ) );
-        $where .= " AND (lower(p.partnumber) LIKE $var or mm.barcode is not null)";
-    }
-    if ( $form->{"description_$i"} ne "" ) {
-        $var = $dbh->quote( $form->like( lc $form->{"description_$i"} ) );
-
-        if ( $form->{language_code} ne "" ) {
-            $where .= " AND lower(t1.description) LIKE $var";
-        }
-        else {
-            $where .= " AND lower(p.description) LIKE $var";
-        }
+        $var = $dbh->quote( $form->{"partnumber_$i"} );
+        $where .= " AND (lower(p.partnumber) = $var or mm.barcode is not null)";
     }
 
     if ( $form->{"partsgroup_$i"} ne "" ) {
@@ -1814,13 +1805,6 @@ sub retrieve_item {
             $var = $dbh->quote($var);
             $where .= qq| AND p.partsgroup_id = $var|;
         }
-    }
-
-    if ( $form->{"description_$i"} ne "" ) {
-        $where .= " ORDER BY 3";
-    }
-    else {
-        $where .= " ORDER BY 2";
     }
 
     my $query = qq|
@@ -1840,7 +1824,8 @@ sub retrieve_item {
         LEFT JOIN translation t2
                   ON (t2.trans_id = p.partsgroup_id
                   AND t2.language_code = ?)
-             $where|;
+             $where
+         ORDER BY 2|;
     my $sth = $dbh->prepare($query);
     $sth->execute( $form->{language_code}, $form->{language_code} )
       || $form->dberror($query);

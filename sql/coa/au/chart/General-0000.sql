@@ -13,9 +13,9 @@ SELECT account_heading_save(NULL, '3300', 'EQUITY', NULL);
 SELECT account__save(NULL,'1520','SOH / Leather','A','1500', NULL, false, false, string_to_array('IC', ':'), false, false);
 SELECT account_heading_save(NULL, '1000', 'CURRENT ASSETS', NULL);
 SELECT account__save(NULL,'1820','Plant & Equipment - at Cost','A','1800', NULL, false, false, string_to_array('AP_amount', ':'), false, false);
-INSERT INTO chart (accno, description, charttype, category, link, gifi_accno, contra) VALUES ('1825', 'Less: Accumulated Depreciation', 'A', 'A', '', '1800', '1');
+SELECT account__save(NULL, '1825', 'Less: Accumulated Depreciation', 'A', '1800', null, true, false, string_to_array('', ':'), false, false);
 SELECT account__save(NULL,'1840','Motor Vehicles - at Cost','A','1800', NULL, false, false, string_to_array('AP_amount', ':'), false, false);
-INSERT INTO chart (accno, description, charttype, category, link, gifi_accno, contra) VALUES ('1845', 'Less: Accumulated Depreciation', 'A', 'A', '', '1800', '1');
+SELECT account__save(NULL,'1845', 'Less: Accumulated Depreciation', 'A', '1800', NULL, true, false, string_to_array('', ':'), false, false);
 SELECT account_heading_save(NULL, '1800', 'CAPITAL ASSETS', NULL);
 SELECT account__save(NULL,'1060','Cheque Account','A','1000', NULL, false, false, string_to_array('AR_paid:AP_paid', ':'), false, false);
 
