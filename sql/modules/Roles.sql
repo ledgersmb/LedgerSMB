@@ -976,6 +976,8 @@ SELECT lsmb__grant_perms('account_edit', obj, perm)
                     'cr_coa_to_account', 'tax']) obj
  CROSS JOIN unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) perm;
 SELECT lsmb__grant_perms('account_edit', 'account_link', 'DELETE');
+SELECT lsmb__grant_perms('account_edit', 'account_translation', 'DELETE');
+SELECT lsmb__grant_perms('account_edit', 'account_heading_translation', 'DELETE');
 
 SELECT lsmb__create_role('account_delete');
 SELECT lsmb__grant_perms('account_delete', obj, 'DELETE')
@@ -1001,7 +1003,7 @@ SELECT lsmb__grant_menu('gifi_edit', 140, 'allow');
 SELECT lsmb__create_role('account_all');
 SELECT lsmb__grant_role('account_all', rname)
   FROM unnest(array['account_create'::text, 'taxes_set', 'account_edit',
-                    'gifi_create', 'gifi_edit']) rname;
+                    'gifi_create', 'gifi_edit', 'account_delete']) rname;
 
 SELECT lsmb__create_role('business_type_create');
 SELECT lsmb__grant_perms('business_type_create', 'business', 'INSERT');

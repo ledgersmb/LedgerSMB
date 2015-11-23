@@ -165,7 +165,8 @@ BEGIN
                  WHERE (e.id = in_entity_id OR in_entity_id IS NULL)
                        AND (in_accno IS NULL or acc.accno = in_accno)
                        AND a.force_closed IS NOT TRUE
-                       AND e.name like '%' || in_name_part || '%'
+                       AND (in_name_part IS NULL
+                            OR e.name like '%' || in_name_part || '%')
               GROUP BY c.entity_id, c.meta_number, e.name,
                        l.line_one, l.line_two, l.line_three,
                        l.city, l.state, l.mail_code, country.name,

@@ -498,7 +498,15 @@ BEGIN
                 IF t_batch.approved_by IS NOT NULL THEN
                     RAISE EXCEPTION 'Approved Batch';
                 ELSIF t_batch.locked_by IS NOT NULL THEN
-                    RAISE EXCEPTION 'Locked Batch';
+                    PERFORM * FROM session 
+                       JOIN users ON (session.users_id = users.id)
+                      WHERE id = t_batch.locked_by 
+                            AND users.user_id = SESSION_USER;
+
+                    IF NOT FOUND THEN
+                        -- locked by someone else
+                        RAISE EXCEPTION 'Locked Batch';
+                    END IF;
                 END IF;
                 INSERT INTO voucher (batch_id, batch_class, trans_id)
                 values (in_batch_id,

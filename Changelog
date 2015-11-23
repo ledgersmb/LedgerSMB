@@ -1,6 +1,22 @@
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.20
+* Fixed one untranslated string in balance sheet (Chris T)
+* Added running balance to report drill downs (Chris T, GH1007)
+* Fixed ar/ap transactions not setting currency right (Chris T, GH1032)
+* Fixed ar/ap transactions not setting forex rate right (Chris T, GH1033)
+* Fixed pdf report criteria not showing up on reports (Chris T, GH1038)
+* Fixed paying some invoices defaulting to 0 (Chris T, GH1021)
+* Added warning for unapproved transaction in recon period (Chris T, GH856)
+* Added warning on previous unapproved recons in recon period (Chris T, GH857)
+* Fixed batch locking problems (Chris T, GH992)
+* Fixed single receipt received jumping from 0 to full (Chris T, GH974)
+* Fixed confusing error creating account without a heading (Chris T, GH1052)
+
+Chris T is Chris Travers
+
+
 Changelog for 1.4.19
 * Fixed permission denied when entering budgets (GH944, Chris T)
 * Fixed error when deleting batches with inventory (GH953 Chris T)
@@ -18,6 +34,7 @@ Changelog for 1.4.19
 * Removed many references to the chart view (GH #930, Chris T)
 * Fixed saving user fails with error 4 or 5 (GH #1008, Chris T)
 * Disabled hierarchy reports where not set up (GH #1025, Chris T)
+* Fixed unable to create accounts without delete privilege (Chris T)
 
 Chris T is Chris Travers
 

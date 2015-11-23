@@ -11,7 +11,7 @@ FOREACH COL IN columns;
             COLNUMBER = COLNUMBER + 1;
     END;
 END;
-FILTER latex;
+ FILTER latex;
 -?>
 \documentclass[<?lsmb papersize ?>]{article}
 \usepackage{longtable}
@@ -26,12 +26,18 @@ FIRSTHEAD = '\\multicolumn{2}{r}{' _ text('Report Name') _ ':} & ' _
             _ '} \\\\
             ';
 
-FOREACH LINE IN hlines;
+# use new_heads to get around variable name escaping
+newlines = new_heads(hlines);
+FOREACH LINE IN newlines;
+    IF request.${LINE.name}; #$
+        headval = request.${LINE.name}; #$
+    ELSE;
+         headval = report.${LINE.name};
+    END;
     FIRSTHEAD = FIRSTHEAD _ '\\multicolumn{2}{r}{ ' _ LINE.text _ ':} & ';
-    FIRSTHEAD = FIRSTHEAD _ '\\multicolumn{' _ (COLNUMBER - 2) _ '}{l}{ ' _ 
-                      request.${LINE.name}; #$
+    FIRSTHEAD = FIRSTHEAD _ '\\multicolumn{' _ (COLNUMBER - 2) _ '}{l}{ ' _ headval;
     FIRSTHEAD = FIRSTHEAD _ '}\\\\
-                  ';
+             ';
 END;
 
 PROCESS dynatable 
