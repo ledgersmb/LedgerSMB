@@ -686,7 +686,7 @@ sub redirect {
 sub _redirect {
     # referenced directly from am.pl, because of the need of our return value
     use List::Util qw(first);
-    my ($self) = @_;
+    my ($form) = @_;
 
     my ( $script, $argv ) = split( /\?/, $form->{callback} );
 
