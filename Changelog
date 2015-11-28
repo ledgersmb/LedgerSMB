@@ -12,6 +12,7 @@ Code Cleanup:
 * Removed dependency on Class::Struct (Chris T)
 * Removed all inserts into chart view (Chris T, GH 931)
 * Removed long-broken French chart of accounts (Chris T)
+* Removed unused saved trial balance components (Chris T, GH 775)
 
 API Enhancements:
 * Moved a great deal of code into PGObject framework on CPAN (Chris T)

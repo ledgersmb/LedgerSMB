@@ -157,32 +157,6 @@ BEGIN
 END;
 $$ language plpgsql;
 
-CREATE OR REPLACE FUNCTION trial_balance__accounts (
-    in_report_id INT
-) RETURNS SETOF account AS $body$
-
-    SELECT a.*
-      FROM account a
-      JOIN trial_balance__account_to_report tbr ON a.id = tbr.account_id
-     WHERE tbr.report_id = $1
-
-     UNION
-
-     SELECT a.*
-       FROM account a
-       JOIN trial_balance__heading_to_report tbhr ON a.heading = tbhr.heading_id
-      WHERE tbhr.report_id = $1
-
-      ORDER BY accno DESC;
-$body$ LANGUAGE SQL;
-
--- Just lists all valid report_ids
-
-CREATE OR REPLACE FUNCTION trial_balance__list (
-) RETURNS SETOF trial_balance AS $body$
-    SELECT * FROM trial_balance ORDER BY id ASC;
-$body$ LANGUAGE SQL STABLE;
-
 DROP TYPE IF EXISTS trial_balance__heading CASCADE;
 CREATE TYPE trial_balance__heading AS (
     id int,
@@ -203,23 +177,6 @@ CREATE OR REPLACE FUNCTION trial_balance__heading_accounts (
     SELECT * FROM account WHERE id in (SELECT unnest($1));
 $body$ LANGUAGE SQL IMMUTABLE;
 
-
-CREATE OR REPLACE FUNCTION trial_balance__delete (
-    in_report_id int
-) RETURNS boolean AS $body$
-
-    BEGIN
-        PERFORM id FROM trial_balance WHERE id = in_report_id;
-
-        IF FOUND THEN
-            DELETE FROM trial_balance__heading_to_report WHERE report_id = in_report_id;
-            DELETE FROM trial_balance__account_to_report WHERE report_id = in_report_id;
-            DELETE FROM trial_balance WHERE id = in_report_id;
-            RETURN TRUE;
-        END IF;
-        RETURN FALSE;
-    END;
-$body$ LANGUAGE PLPGSQL;
 
 update defaults set value = 'yes' where setting_key = 'module_load_ok';
 
