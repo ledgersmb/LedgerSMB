@@ -168,12 +168,13 @@ sub process {
     $template = Template->new(
                     $arghash
         ) || die Template->error();
-    if (not $template->process(
+    unless ($template->process(
         $source,
         {%$cleanvars, %$LedgerSMB::Template::TTI18N::ttfuncs,
             'escape' => \&preprocess},
-        $output, {binmode => ':utf8'})) {
-        die $template->error();
+        $output, {binmode => ':utf8'})){
+        my $err = $template->error();
+        die "Template error: $err" if $err;
     }
     $parent->{mimetype} = 'text/html';
 }
