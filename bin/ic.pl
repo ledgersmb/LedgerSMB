@@ -194,7 +194,7 @@ sub link_part {
             else {
 
                 $form->{"select$key"} .=
-                  "<option>$ref->{accno}--$ref->{description}\n";
+                  "<option>$ref->{accno}--$ref->{description}</option>\n";
 
             }
         }
