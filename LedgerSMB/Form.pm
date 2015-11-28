@@ -705,7 +705,7 @@ sub _redirect {
         return;
     }
     $form->error(
-        $locale->text(
+        $form->_locale->text(
             __FILE__ . ':' . __LINE__ . ':' . $script . ':' . "Invalid Redirect"
         )
     ) unless first { $_ eq $script } @{LedgerSMB::Sysconfig::scripts};
@@ -726,9 +726,7 @@ sub _redirect {
 
     $form->{script} = $script;
 
-    if ( !%myconfig ) {    # needed for login
-        %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
-    }
+    my %myconfig = %{ LedgerSMB::User->fetch_config( $form ) };
     if ( !$form->{dbh} and ( $script ne 'admin.pl' ) ) {
         $form->db_init( \%myconfig );
     }
