@@ -106,7 +106,8 @@ sub _new_elem {
 =item sort
 
 Returns an array reference with axis IDs, alphabetically sorted
-by the elements in the path (usually header and account numbers)
+by the elements in the path (usually header and account numbers),
+unless the 'order' property is defined, in which case that's used.
 
 =cut
 
@@ -120,7 +121,11 @@ sub _sort_aux {
     my ($subtree) = @_;
 
     my @sorted;
-    for (sort { $a cmp $b } keys %$subtree) {
+    my $cmpv = sub {
+        return ((defined $subtree->{$_[0]}->{props}
+                 && $subtree->{$_[0]}->{props}->{order}) || $_[0]);
+    };
+    for (sort { &$cmpv($a) cmp &$cmpv($b) } keys %$subtree) {
         push @sorted, $subtree->{$_}->{id};
         push @sorted, @{_sort_aux($subtree->{$_}->{children})};
     }
