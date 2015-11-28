@@ -257,6 +257,8 @@ sub save {
     ( $form->{expense_accno} )   = split( /--/, $form->{IC_expense} );
     ( $form->{income_accno} )    = split( /--/, $form->{IC_income} );
     ( $form->{returns_accno} )    = split( /--/, $form->{IC_returns} );
+    use Data::Dumper;
+    die Dumper($form);
 
     my $dbh = $form->{dbh};
 

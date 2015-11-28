@@ -194,7 +194,7 @@ sub link_part {
             else {
 
                 $form->{"select$key"} .=
-                  "<option>$ref->{accno}--$ref->{description}\n";
+                  "<option>$ref->{accno}--$ref->{description}</option>\n";
 
             }
         }
@@ -517,22 +517,22 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
         $linkaccounts = qq|
           <tr>
         <th align=right>| . $locale->text('Inventory') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" name=IC_inventory>$form->{selectIC_inventory}</select></td>
+        <td><select id="IC-inventory" data-dojo-type="dijit/form/Select" name="IC_inventory">$form->{selectIC_inventory}</select></td>
         <input name=selectIC type=hidden value="$form->{selectIC}">
           </tr>
           <tr>
         <th align=right>| . $locale->text('Income') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" name=IC_income>$form->{selectIC_income}</select></td>
+        <td><select id="IC-income" data-dojo-type="dijit/form/Select" name="IC_income">$form->{selectIC_income}</select></td>
         <input name=selectIC_income type=hidden value="$form->{selectIC_income}">
           </tr>
           <tr>
         <th align=right>| . $locale->text('COGS') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" name=IC_expense>$form->{selectIC_expense}</select></td>
+        <td><select id="IC-expense" data-dojo-type="dijit/form/Select" name="IC_expense">$form->{selectIC_expense}</select></td>
         <input name=selectIC_expense type=hidden value="$form->{selectIC_expense}">
           </tr>
           <tr>
         <th align=right>| . $locale->text('Returns') . qq|</th>
-        <td><select data-dojo-type="dijit/form/Select" name=IC_returns>$form->{selectIC_returns}</select></td>
+        <td><select id="IC-returns" data-dojo-type="dijit/form/Select" name=IC_returns>$form->{selectIC_returns}</select></td>
         <input name=selectIC_returns type=hidden value="$form->{selectIC_returns}">
           </tr>
 |;
