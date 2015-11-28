@@ -675,7 +675,7 @@ sub redirect {
 
     if ( $self->{callback} || !$msg ) {
         $logger->trace("Full redirect \$self->{callback}=$self->{callback} \$msg=$msg");
-        _redirect();
+        $self->_redirect();
         $self->finalize_request();
     }
     else {
@@ -686,6 +686,7 @@ sub redirect {
 sub _redirect {
     # referenced directly from am.pl, because of the need of our return value
     use List::Util qw(first);
+    my ($self) = @_;
 
     my ( $script, $argv ) = split( /\?/, $form->{callback} );
 
