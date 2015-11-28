@@ -104,6 +104,7 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
           AND l.description = 'IC_expense'
           AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
  GROUP BY ac.chart_id
+   HAVING sum(ac.amount) <> 0.00
     UNION
    SELECT ac.chart_id,
           sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0)))
@@ -120,6 +121,7 @@ LEFT JOIN (select as_array(bu.path) as bu_ids, entry_id
           AND ar.approved
           AND ($4 is null or $4 = '{}' OR in_tree($4, bu_ids))
  GROUP BY ac.chart_id
+   HAVING sum(i.sellprice * i.qty * (1 - coalesce(i.discount, 0))) <> 0.00
  ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
@@ -229,6 +231,7 @@ acc_balance AS (
                                    HAVING max(trans_id) = gl.id))
               )
    GROUP BY ac.chart_id
+     HAVING sum(ac.amount) <> 0.00
  ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
@@ -343,6 +346,7 @@ LEFT JOIN (select array_agg(path) as bu_ids, entry_id
                                    HAVING max(trans_id) = gl.id))
               )
  GROUP BY ac.chart_id
+   HAVING sum(ac.amount * ca.portion) <> 0.00
  ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
@@ -515,6 +519,7 @@ SELECT ac.chart_id AS id, sum(ac.amount) AS balance
           AND ($2 IS NULL OR ac.transdate >= $2)
           AND ($3 IS NULL OR ac.transdate <= $3)
  GROUP BY ac.chart_id
+   HAVING sum(ac.amount) <> 0.00
  ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance
