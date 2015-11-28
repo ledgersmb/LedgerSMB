@@ -194,7 +194,7 @@ sub link_part {
             else {
 
                 $form->{"select$key"} .=
-                  "<option>$ref->{accno}--$ref->{description}</option>\n";
+                  qq|<option value="$ref->{accno}">$ref->{accno}--$ref->{description}</option>\n|;
 
             }
         }
@@ -336,7 +336,7 @@ qq|<option value="$_->{partsgroup}--$_->{id}">$_->{partsgroup}\n|;
 }
 
 sub form_header {
-
+    link_part();
     if ( $form->{lastcost} > 0 ) {
         $markup =
           $form->round_amount(
@@ -518,22 +518,18 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
           <tr>
         <th align=right>| . $locale->text('Inventory') . qq|</th>
         <td><select id="IC-inventory" data-dojo-type="dijit/form/Select" name="IC_inventory">$form->{selectIC_inventory}</select></td>
-        <input name=selectIC type=hidden value="$form->{selectIC}">
           </tr>
           <tr>
         <th align=right>| . $locale->text('Income') . qq|</th>
         <td><select id="IC-income" data-dojo-type="dijit/form/Select" name="IC_income">$form->{selectIC_income}</select></td>
-        <input name=selectIC_income type=hidden value="$form->{selectIC_income}">
           </tr>
           <tr>
         <th align=right>| . $locale->text('COGS') . qq|</th>
         <td><select id="IC-expense" data-dojo-type="dijit/form/Select" name="IC_expense">$form->{selectIC_expense}</select></td>
-        <input name=selectIC_expense type=hidden value="$form->{selectIC_expense}">
           </tr>
           <tr>
         <th align=right>| . $locale->text('Returns') . qq|</th>
         <td><select id="IC-returns" data-dojo-type="dijit/form/Select" name=IC_returns>$form->{selectIC_returns}</select></td>
-        <input name=selectIC_returns type=hidden value="$form->{selectIC_returns}">
           </tr>
 |;
 
@@ -659,12 +655,10 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
           <tr>
         <th align=right>| . $locale->text('Income') . qq|</th>
         <td><select data-dojo-type="dijit/form/Select" name=IC_income>$form->{selectIC_income}</select></td>
-        <input name=selectIC_income type=hidden value="$form->{selectIC_income}">
           </tr>
           <tr>
         <th align=right>| . $locale->text('Expense') . qq|</th>
         <td><select data-dojo-type="dijit/form/Select" name=IC_expense>$form->{selectIC_expense}</select></td>
-        <input name=selectIC_expense type=hidden value="$form->{selectIC_expense}">
           </tr>
 |;
 
@@ -696,13 +690,11 @@ qq|<textarea data-dojo-type="dijit/form/Textarea" name="description" rows="$rows
           <tr>
         <th align=right>| . $locale->text('Labor/Overhead') . qq|</th>
         <td><select data-dojo-type="dijit/form/Select" name="IC_inventory">$form->{selectIC_inventory}</select></td>
-        <input name=selectIC type=hidden value="$form->{selectIC}">
           </tr>
 
           <tr>
         <th align=right>| . $locale->text('COGS') . qq|</th>
         <td><select data-dojo-type="dijit/form/Select" name="IC_expense">$form->{selectIC_expense}</select></td>
-        <input name=selectIC_expense type=hidden value="$form->{selectIC_expense}">
           </tr>
 |;
 
