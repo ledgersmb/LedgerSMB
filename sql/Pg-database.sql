@@ -4969,8 +4969,8 @@ CREATE UNIQUE INDEX template_name_idx_u ON template(template_name, format)
 WHERE language_code is null; -- Pseudo-Pkey
 
 CREATE TABLE fixes (
-    sha1 text primary key,
-    filename text not null,
+    checksum text primary key,
+    path text not null,
     stdout text,
     stderr text,
     applied_at timestamp default now()
