@@ -30,6 +30,7 @@ maintainable.
 
 my $logger = Log::Log4perl::get_logger("LedgerSMB::DBObject::Account");
 
+
 =item new
 
 Displays a screen to create a new account.
@@ -174,9 +175,11 @@ sub _display_account_screen {
             };
     }
 
-    my $template = LedgerSMB::Template->new_UI(
+    my $template = LedgerSMB::Template->new(
         user => $form->{_user},
         locale => $locale,
+        format => 'HTML',
+        path   => 'UI',
         template => 'accounts/edit');
     $template->render({
         form => $form,
