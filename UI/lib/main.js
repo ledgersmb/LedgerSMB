@@ -56,7 +56,7 @@ function set_main_div(doc){
 function load_form(xhr, url, options) {
 	 xhr(url, options).then(
 		  function(doc){
-                                console.log(doc);
+                                //console.log(doc);
 				set_main_div(doc);
 		  },
 		  function(err){
