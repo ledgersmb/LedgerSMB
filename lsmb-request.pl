@@ -26,9 +26,9 @@ sub get_locale {
     } else {
         $locale =
             LedgerSMB::Locale->get_handle( $LedgerSMB::Sysconfig::language );
-        $request->error( __FILE__ . ':' . __LINE__ . 
+        $request->error( __FILE__ . ':' . __LINE__ .
                          ": Locale ($LedgerSMB::Sysconfig::language) "
-                         . "not loaded: $!\n" 
+                         . "not loaded: $!\n"
             ) unless $locale;
         $LedgerSMB::App_State::Locale = $locale;
     }
@@ -72,14 +72,14 @@ sub call_script {
   my $request = shift @_;
   my $locale = shift @_;
 
-  try {        
+  try {
     $request->{script} = $script;
     $script =~ s/\.pl$//;
     $script = "LedgerSMB::Scripts::$script";
     $request->{_script_handle} = $script;
 
     eval "require $script;"
-      || die $locale->text('Unable to open script') . 
+      || die $locale->text('Unable to open script') .
                           ": $script : $!: $@";
 
     my @no_db_actions =
@@ -97,7 +97,7 @@ sub call_script {
         $request->initialize_with_db();
     }
 
-    $script->can($request->{action}) 
+    $script->can($request->{action})
       || die $locale->text("Action Not Defined: ") . $request->{action};
     $script->can( $request->{action} )->($request);
     $request->{dbh}->commit if defined $request->{dbh};
@@ -105,7 +105,7 @@ sub call_script {
   }
   catch {
       # We have an exception here because otherwise we always get an exception
-      # when output terminates.  A mere 'die' will no longer trigger an 
+      # when output terminates.  A mere 'die' will no longer trigger an
       # automatic error, but die 'foo' will map to $request->error('foo')
       # -- CT
      $LedgerSMB::App_State::DBH->rollback if ($LedgerSMB::App_State::DBH and $_ eq 'Died');
@@ -125,9 +125,6 @@ sub request_cleanup {
 
 
 &app_initialize();
-
-# for custom preprocessing logic
-eval { require "custom.pl"; };
 
 my $request = request_instantiate();
 

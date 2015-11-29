@@ -1477,7 +1477,7 @@ sub email_recurring {
               unless first { $_ eq $form->{script} }
               @{LedgerSMB::Sysconfig::scripts};
             $form->{callback} = "$form->{script}?action=reprint&module=$form->{module}&type=$form->{type}&login=$form->{login}&path=$form->{path}&sessionid=$form->{sessionid}&id=$form->{id}&formname=$f[$j]&format=$f[$j+1]&media=email&vc=$form->{vc}&ARAP=$form->{ARAP}&message=$message";
-            $ok = !( main::redirect() );
+            $ok = !( $form->_redirect() );
 
             if ($ok) {
                 $form->info( " ..... " . $locale->text('done') );
