@@ -147,7 +147,6 @@ sub to_output {
         $fmt = $formats->{uc($fmt)}->[0] if defined $formats->{uc($fmt)};
     }
     $fmt .= ' %T' if ($self->is_time);
-    warn $fmt;
     $fmt =~ s/^\s+//;
 
     my $formatter = new DateTime::Format::Strptime(
