@@ -162,8 +162,9 @@ sub columns {
     my $inv_label = LedgerSMB::Report::text('# Invoices');
     my $details_url = LedgerSMB::App_State::get_relative_url();
     $details_url =~ s/is_detailed=0/is_detailed=1/;
+    $details_url =~ s/meta_number=[^&]*//;
     my $inv_type = 'href';
-    my $inv_href_base = $details_url . '&credit_id=';
+    my $inv_href_base = $details_url . '&meta_number=';
     if ($self->is_detailed){
         $inv_label = LedgerSMB::Report::text('Invoice');       
         $inv_type = 'href';  
@@ -328,8 +329,10 @@ sub run_report {
         }
         #tshvr4 avoid 'Use of uninitialized value in concatenation (.) or string at LedgerSMB/Report/Invoices/Outstanding.pm'
         if($r->{id}){
-         $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{id}";
-        }        
+            $r->{invnumber_href_suffix} = "$script?action=edit&id=$r->{id}";
+        } else {
+            $r->{invnumber_href_suffix} = $r->{meta_number};
+        }
         $r->{entity_name_href_suffix} = "entity_class=" . $self->entity_class 
                          . "&entity_id=$r->{entity_id}&".
                          "meta_number=$r->{meta_number}";
