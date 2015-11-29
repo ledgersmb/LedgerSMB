@@ -29,6 +29,12 @@ LedgerSMB depends on the following software:
  * PostgreSQL 9.1+
  * Perl 5.10+
 
+LedgerSMB can't be used with these browsers:
+
+ * Lynx
+ * w3m
+ * Internet Explorer 9 or earlier
+
 
 Installation process overview
 =============================
