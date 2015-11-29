@@ -99,21 +99,21 @@ $utfstr = "\xd8\xad";
 utf8::decode($utfstr);
 for my $sig ('1.3.37', '2.2.4', '2.0.59') {
 	$ENV{SERVER_SIGNATURE} = 'Apache/'.$sig;
-	cmp_ok($form->escape('foo'), 'eq', 'foo', 
+	cmp_ok($form->escape('foo'), 'eq', 'foo',
 		"($sig) escape: foo");
-	cmp_ok($form->escape('foo bar'), 'eq', 'foo%20bar', 
+	cmp_ok($form->escape('foo bar'), 'eq', 'foo%20bar',
 		"($sig) escape: foo bar");
-	cmp_ok($form->escape($utfstr), 'eq', '%d8%ad', 
+	cmp_ok($form->escape($utfstr), 'eq', '%d8%ad',
 		"($sig) escape: U+D8AD");
 }
 $ENV{SERVER_SIGNATURE} = 'Apache/2.0.22';
-cmp_ok($form->escape('foo'), 'eq', 'foo', 
+cmp_ok($form->escape('foo'), 'eq', 'foo',
 	'(2.0.22) escape: foo');
-cmp_ok($form->escape('foo bar'), 'eq', 'foo%2520bar', 
+cmp_ok($form->escape('foo bar'), 'eq', 'foo%2520bar',
 	'(2.0.22) escape: foo bar');
-cmp_ok($form->escape($utfstr), 'eq', '%25d8%25ad', 
+cmp_ok($form->escape($utfstr), 'eq', '%25d8%25ad',
 	'(2.0.22) escape: U+D8AD');
-cmp_ok($form->escape('foo%20bar', 1), 'eq', 'foo%2520bar', 
+cmp_ok($form->escape('foo%20bar', 1), 'eq', 'foo%2520bar',
 	'(2.0.22, been) escape: foo bar');
 
 ## $form->unescape checks
@@ -124,23 +124,23 @@ cmp_ok($form->unescape('\\'), 'eq', '', 'unescape: \\');
 cmp_ok($form->unescape('%20'), 'eq', ' ', 'unescape: %20');
 cmp_ok($form->unescape("foo\r\n"), 'eq', "foo\n", 'unescape: foo\r\n');
 ok(utf8::is_utf8($form->unescape('foo%d8%ad')), 'unescape: (utf8 output)');
-cmp_ok(unpack("U", $form->unescape('%d8%ad')), 'eq', 
+cmp_ok(unpack("U", $form->unescape('%d8%ad')), 'eq',
 	unpack("U", $utfstr), 'unescape: %d8%ad');
-cmp_ok(unpack("U", $form->unescape($form->unescape('%d8%ad'))), 'eq', 
+cmp_ok(unpack("U", $form->unescape($form->unescape('%d8%ad'))), 'eq',
 	unpack("U", $utfstr), '(2x) unescape: %d8%ad');
 
 ## $form->quote checks
 ok(!defined $form->quote(), 'quote: (undef)');
 cmp_ok($form->quote(\%myconfig), '==', \%myconfig, 'quote: (reference)');
 cmp_ok($form->quote('hello'), 'eq', 'hello', 'quote: hello');
-cmp_ok($form->quote('hello"world'), 'eq', 'hello&quot;world', 
+cmp_ok($form->quote('hello"world'), 'eq', 'hello&quot;world',
 	'quote: hello"world');
 
 ## $form->unquote checks
 ok(!defined $form->unquote(), 'unquote: (undef)');
 cmp_ok($form->unquote(\%myconfig), '==', \%myconfig, 'unquote: (reference)');
 cmp_ok($form->unquote('hello'), 'eq', 'hello', 'unquote: hello');
-cmp_ok($form->unquote('hello&quot;world'), 'eq', 'hello"world', 
+cmp_ok($form->unquote('hello&quot;world'), 'eq', 'hello"world',
 	'unquote: hello&quot;world');
 
 ## $form->numtextrows checks
@@ -158,7 +158,7 @@ $form = new Form;
 
 $form->{header} = 1;
 @r = trap{$form->hide_form('path')};
-is($trap->stdout, "<input type=\"hidden\" name=\"path\" value=\"bin/mozilla\" />\n", 
+is($trap->stdout, "<input type=\"hidden\" name=\"path\" value=\"bin/mozilla\" />\n",
 	'hide_form: path');
 ok($form->{header}, 'hide_form: header flag not cleared');
 
@@ -189,7 +189,7 @@ $ENV{info_function} = 'main::form_info_func';
 SKIP: {
 	skip 'Environment variable info_function could not be set' unless
 		$ENV{info_function} eq 'main::form_info_func';
-	is($form->info('hello world'), 'hello world', 
+	is($form->info('hello world'), 'hello world',
 		'info: CLI, function call');
 };
 delete $ENV{info_function};
@@ -201,7 +201,7 @@ $ENV{GATEWAY_INTERFACE} = 'yes';
 $form->{header} = 'yes';
 $form->{blank} = '    ';
 ok(!$form->isblank('version'), 'isblank: Not blank');
-is($trap->exit, undef, 
+is($trap->exit, undef,
 	'isblank: Blank, termination');
 
 ## $form->header checks
@@ -227,7 +227,7 @@ $ENV{LSMB_NOHEAD} = 0;
 $form = new Form;
 @ary = ('projectnumber', 'description', 'name', 'startdate');
 $form->{sort} = 'name';
-is_deeply([$form->sort_columns(@ary)], 
+is_deeply([$form->sort_columns(@ary)],
 	['name', 'projectnumber', 'description', 'startdate'],
 	'sort_column: sort name');
 $form->{sort} = 'apple';
@@ -302,9 +302,9 @@ is($form->like('hello world'), '%hello world%', 'like');
 $form = new Form;
 ok(!defined $form->{callback}, 'redirect: No callback set');
 @r = trap{$form->redirect};
-is($trap->stdout, "", 'redirect: No message or callback redirect');
+is($trap->stdout, "Location: login.pl\nContent-type: text/html\n\n", 'redirect: No message or callback redirect');
 @r = trap{$form->redirect('hello world')};
-is($trap->stdout, "hello world\n", 
+is($trap->stdout, "hello world\n",
 	'redirect: message, no callback redirect');
 $form->{callback} = 1;
 @r = trap{$form->redirect};
