@@ -140,10 +140,12 @@ sub _parse_string {
 }
 
 sub from_input{
-    my ($self, $input, $has_time) = @_;
+    my ($self, $input) = @_;
     local $@;
     return $self->from_db(@_) unless (defined $input and $input =~ /^\d+:/);
     return $input if eval {$input->isa(__PACKAGE__)};
+    my $has_time = 0;
+    $has_time = 1 if $input =~ /:/;
     #return if (!defined $input) || ('' eq $input);
     $input = undef if $input eq '';
     my $format = $LedgerSMB::App_State::User->{dateformat} || 'yyyy-mm-dd';
