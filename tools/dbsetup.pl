@@ -333,7 +333,7 @@ sub setup_ledgersmb_conf {
 		You do not have a copy of ledgersmb.conf.\n
 		Please edit this new copy derived from ledgersmb.conf.default\n";
 	sleep 4;
-	system "cp $srcdir/ledgersmb.conf.default $srcdir/ledgersmb.conf;$editor $srcdir/ledgersmb.conf";
+	system "cp $srcdir/conf/ledgersmb.conf.default $srcdir/ledgersmb.conf;$editor $srcdir/ledgersmb.conf";
 }
 
 1;
