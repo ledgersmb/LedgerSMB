@@ -160,10 +160,14 @@ has on_hold => (is => 'ro', isa => 'Bool', required => 0);
 sub columns {
     my $self = shift;
     my $inv_label = LedgerSMB::Report::text('# Invoices');
-    my $inv_type = 'text';
+    my $details_url = LedgerSMB::App_State::get_relative_url();
+    $details_url =~ s/is_detailed=0/is_detailed=1/;
+    my $inv_type = 'href';
+    my $inv_href_base = $details_url . '&credit_id=';
     if ($self->is_detailed){
         $inv_label = LedgerSMB::Report::text('Invoice');       
         $inv_type = 'href';  
+        $inv_href_base = '';
     }
     my $entity_label;
     if ($self->entity_class == 1){
@@ -188,7 +192,8 @@ sub columns {
          pwidth => 2, },
         {col_id => 'invnumber',
            name => $inv_label,
-           type => $inv_type, 
+           type => 'href',
+      href_base => $inv_href_base,
          pwidth => 10, },
         {col_id => 'ordnumber',
            name => LedgerSMB::Report::text('Order'),
