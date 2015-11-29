@@ -85,10 +85,7 @@ use LedgerSMB::App_State;
 use Data::Dumper;
 
 use Data::Dumper;
-require "common.pl";
 
-# for custom preprocessing logic
-eval { require "custom.pl"; };
 
 $form = new Form;
 use Data::Dumper;
