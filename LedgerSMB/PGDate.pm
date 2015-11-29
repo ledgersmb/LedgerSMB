@@ -109,54 +109,18 @@ module to handle the parsing.
 
 =cut
 
-# Private method _parse_string($string, $format, $has_time)
-# Implements above parsing spec
-
-sub _parse_string {
-    my ($self, $string, $format, $has_time) = @_;
-    return undef if (!defined $string) or ('' eq $string);
-    my $locale = $LedgerSMB::App_State::Locale->{datetime};
-    $locale ||= 'en_US';
-    for my $fmt (@{$formats->{$format}}){
-        if ($has_time or ! defined $has_time){
-            my $parser = new DateTime::Format::Strptime(
-                     pattern => $fmt . ' %T',
-                      locale => $locale,
-            );
-            if (my $dt = $parser->parse_datetime($string)){
-                return $dt;
-            }
-        }
-        if (!$has_time or ! defined $has_time){
-            my $parser = new DateTime::Format::Strptime(
-                     pattern => $fmt,
-                      locale => 'en_US',
-            );
-            if (my $dt = $parser->parse_datetime($string)){
-                return $dt;
-            }
-        }
-    }
-}
-
 sub from_input{
     my ($self, $input) = @_;
-    local $@;
-    return $self->from_db(@_) unless (defined $input and $input =~ /^\d+:/);
-    return $input if eval {$input->isa(__PACKAGE__)};
+    {
+        local $@;
+        return $input if eval {$input->isa(__PACKAGE__)};
+    }
     my $has_time = 0;
-    $has_time = 1 if $input =~ /:/;
-    #return if (!defined $input) || ('' eq $input);
-    $input = undef if $input eq '';
-    my $format = $LedgerSMB::App_State::User->{dateformat} || 'yyyy-mm-dd';
-    $format ||= 'yyyy-mm-dd';
-    $format = 'yyyy-mm-dd' if $input =~ /^\d{4}/;
-    my $dt =  _parse_string($self, $input, uc($format), $has_time)
-		  if $input;
-    return $self->from_db($dt) unless defined $dt;
+    $has_time = 1 if $input =~ /\:/;
+    my $dt = $self->from_db($input);
     bless $dt, __PACKAGE__;
-    $dt->{_pgobject_is_date} = 1;
-    $dt->{_pgobject_is_time} = 1 if $has_time;
+    $dt->is_date(1);
+    $dt->is_time($has_time);
     return $dt;
 }
 
@@ -170,6 +134,7 @@ used.  If $format is not supplied, the dateformat of the user is used.
 
 sub to_output {
     my ($self) = @_;
+    warn $self->is_time;
     #return undef if !defined $self;
 	 return undef if !defined $self->{_pgobject_is_date};
     my $fmt;
@@ -181,7 +146,8 @@ sub to_output {
         }
         $fmt = $formats->{uc($fmt)}->[0] if defined $formats->{uc($fmt)};
     }
-    $fmt .= ' %T' if ($self->{_pgobject_is_time});
+    $fmt .= ' %T' if ($self->is_time);
+    warn $fmt;
     $fmt =~ s/^\s+//;
 
     my $formatter = new DateTime::Format::Strptime(
@@ -196,6 +162,8 @@ sub to_sort {
     my $self = shift;
     return $self->epoch;
 }
+
+#sub is_time { 0 };
 
 #__PACKAGE__->meta->make_immutable;
 

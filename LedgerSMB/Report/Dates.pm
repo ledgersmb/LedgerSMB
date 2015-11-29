@@ -73,7 +73,9 @@ sub _get_from_date {
     } else {
         my ($ref) = $self->call_dbmethod(funcname => 'lsmb__min_date');
         if ($ref->{lsmb__min_date}){
-            return LedgerSMB::PGDate->from_db($ref->{lsmb__min_date}, 'date');
+            my $dt = LedgerSMB::PGDate->from_db($ref->{lsmb__min_date});
+            $dt->is_time(0);
+            return $dt;
         } else {
             return LedgerSMB::PGDate->from_db();
         }
@@ -86,14 +88,16 @@ sub _get_to_date {
     if (!$self->from_month or !$self->from_year or $self->interval eq 'none'){
         my ($ref) = $self->call_dbmethod(funcname => 'lsmb__max_date');
         if ($ref->{lsmb__max_date}){
-             return LedgerSMB::PGDate->from_db($ref->{lsmb__max_date}, 'date');
+             my $dt = LedgerSMB::PGDate->from_db($ref->{lsmb__max_date});
+             $dt->is_time(0);
+             return $dt;
         } else {
             return LedgerSMB::PGDate->from_db();
         }
 
     }
     my $dateobj = $self->from_date;
-    my $date = $dateobj->from_db($dateobj->to_db, 'date'); # copy, round trip
+    my $date = $dateobj->from_db($dateobj->to_db); # copy, round trip
     if ($self->interval eq 'month'){
        $date->add(months => 1);
     } elsif ($self->interval eq 'quarter'){
