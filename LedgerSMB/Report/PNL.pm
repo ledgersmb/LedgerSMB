@@ -145,8 +145,8 @@ sub run_report {
                                       '[_1] to [_2]',
                                       $self->from_date->to_output,
                                       $self->to_date->to_output),
-                              from_date => $self->date_from->to_output,
-                              to_date => $self->date_to->to_output,
+                              from_date => $self->from_date->to_output,
+                              to_date => $self->to_date->to_output,
                             });
 
     for my $line (@lines) {
