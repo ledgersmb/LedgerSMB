@@ -681,7 +681,6 @@ acc_balance AS (
      JOIN tx_report t ON t.approved AND t.id = ac.trans_id
     WHERE ac.transdate <= coalesce($1, (select max(transdate) from acc_trans))
  GROUP BY ac.chart_id
-   HAVING sum(ac.amount) <> 0.00
 ),
 hdr_balance AS (
    select ahd.id, sum(balance) as balance

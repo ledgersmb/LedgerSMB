@@ -166,16 +166,14 @@ sub run_report {
     # Header rows don't have descriptions
     my %header_desc;
     if ($self->gifi || $self->legacy_hierarchy) {
-        %header_desc = ( 'E' => { 'order' => '2', # Sort *after* Income
-                                  'account_number' => 'E',
+        %header_desc = ( 'E' => { 'account_number' => 'E',
                                   'account_category' => 'E',
                                   'account_type' => 'H',
                                   'account_desc' =>
                                       LedgerSMB::Report::text('Expenses'),
                                   'account_description' =>
                                       LedgerSMB::Report::text('Expenses') },
-                         'I' => { 'order' => '1', # Sort *before* Expenses
-                                  'account_number' => 'I',
+                         'I' => { 'account_number' => 'I',
                                   'account_category' => 'I',
                                   'account_type' => 'H',
                                   'account_desc' =>
