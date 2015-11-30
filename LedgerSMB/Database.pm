@@ -322,8 +322,7 @@ sub load_base_schema {
         log_stderr => ($args->{errlog} || "${log}_stderr")
     );
 
-    opendir(LOADDIR, 'sql/on_load')
-        or return 1; # done if 'sql/on_load' doesn't exist
+    opendir(LOADDIR, 'sql/on_load');
     while (my $fname = readdir(LOADDIR)){
         $self->run_file(
             file       => "$self->{source_dir}sql/on_load/$fname",
@@ -354,6 +353,7 @@ sub load_modules {
         if ($mod eq 'Fixes.sql'){
             local ($@); # pre-5.14, do not die() in this block
             eval {
+              no warnings 'uninitialized';
               $self->run_file(
                        file       => "$self->{source_dir}sql/modules/$mod",
                        log_stdout  => $args->{log} || "${log}_stdout",
@@ -361,6 +361,7 @@ sub load_modules {
           );
             };
         } else {
+            no warnings 'uninitialized';
             $self->run_file(
                        file       => "$self->{source_dir}sql/modules/$mod",
                        log_stdout  => $args->{log} || "${log}_stdout",
