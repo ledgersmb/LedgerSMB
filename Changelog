@@ -33,6 +33,8 @@ Changelog for 1.4.21
 * Added drilldown to AR outstanding report (Chris T GH1053)
 * FEATURE: Added (back) user-selectable report language (Erik H GH1106)
 * Fixed missing report styling on financial reports (Erik H GH1080)
+* Fixed 0 amount accounts showing up in financial statements (Erik H, GH1079)
+* Fixed order of PNL Account Category is Off (Erik H, GH1069)
 * Fixed reports show totals above sections (Erik H GH1083)
 * Fixed 'Defaults' screen saves NULL 'earn_id' breaks PNL (Erik H GH1117)
 
