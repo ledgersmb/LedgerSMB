@@ -10,7 +10,6 @@ in_description text,
 in_journal int,
 in_post_date date,
 in_approved bool,
-in_is_template bool
 in_is_template bool,
 in_currency text
 ) RETURNS journal_entry AS
