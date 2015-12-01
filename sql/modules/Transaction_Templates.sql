@@ -2,6 +2,7 @@
 
 BEGIN;
 
+update defaults set value='yes' where setting_key='module_load_ok';
 DROP FUNCTION IF EXISTS journal__add(text, text, int, date, bool, bool);
 
 CREATE OR REPLACE FUNCTION journal__add(
