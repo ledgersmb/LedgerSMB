@@ -6,7 +6,7 @@ sub save {
    my $self = shift @_;
    $self->{is_template} = '1';
    $self->{approved} = 0;
-   $self->{source} = $self->{invnumber} if $self->{invnumber};
+   $self->{reference} = $self->{invnumber} if $self->{invnumber};
    my ($ref) = $self->exec_method(funcname => 'journal__add');
    $self->merge($ref);
    $self->{journal_id} = $self->{id};

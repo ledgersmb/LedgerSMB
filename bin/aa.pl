@@ -1175,7 +1175,7 @@ sub save_temp {
     } else {
         $lsmb->{entity_class} = 1;
     }
-    $lsmb->{transaction_date} = $form->{transdate};
+    $lsmb->{post_date} = $form->{transdate};
     for my $iter (0 .. $form->{rowcount}){
         if ($form->{"AP_amount_$iter"} and
                   ($form->{"amount_$iter"} != 0)){
