@@ -350,24 +350,12 @@ sub load_modules {
         chomp($mod);
         $mod =~ s/(\s+|#.*)//g;
         next unless $mod;
-        if ($mod eq 'Fixes.sql'){
-            local ($@); # pre-5.14, do not die() in this block
-            eval {
-              no warnings 'uninitialized';
-              $self->run_file(
-                       file       => "$self->{source_dir}sql/modules/$mod",
-                       log_stdout  => $args->{log} || "${log}_stdout",
-               log_stderr  => $args->{errlog} || "${log}_stderr"
-          );
-            };
-        } else {
-            no warnings 'uninitialized';
-            $self->run_file(
+        no warnings 'uninitialized';
+        $self->run_file(
                        file       => "$self->{source_dir}sql/modules/$mod",
                        log_stdout  => $args->{log} || "${log}_stdout",
                log_stderr  => $args->{errlog} || "${log}_stderr"
         );
-        }
 
     }
     close (LOADORDER); ### return failure to execute the script?
