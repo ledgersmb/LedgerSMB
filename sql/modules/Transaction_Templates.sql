@@ -111,7 +111,7 @@ BEGIN
 		LEFT JOIN entity e ON (eca.entity_id = e.id)
 		LEFT JOIN entity_class ec ON (eca.entity_class = ec.id)
                 LEFT JOIN recurring r ON j.id = r.id
-		WHERE (in_reference IS NULL OR in_source = j.source) AND
+		WHERE (in_reference IS NULL OR in_reference = j.source) AND
 			(in_description IS NULL 
 				or in_description = j.description) AND
 			(in_entry_type is null or in_entry_type = j.entry_type)
