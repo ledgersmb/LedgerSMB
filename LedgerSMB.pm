@@ -169,7 +169,7 @@ use Try::Tiny;
 use DBI;
 
 use base qw(LedgerSMB::Request);
-our $VERSION = '1.5.0-dev';
+our $VERSION = '1.5.0-beta3';
 
 my $logger = Log::Log4perl->get_logger('LedgerSMB');
 
