@@ -115,7 +115,6 @@ sub generate_statement {
     my $path = LedgerSMB::Setting->get('templates');
     my $template = LedgerSMB::Template->new(
         locale => $LedgerSMB::App_Date::Locale,
-        path => "templates/$path",
         template => $request->{print_template},
         #language => $language->{language_code}, #TODO
         format => uc $request->{print_format},
