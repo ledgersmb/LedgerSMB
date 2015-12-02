@@ -1094,6 +1094,8 @@ sub save_temp {
     my $lsmb = LedgerSMB->new();
     $lsmb->merge($form);
     $lsmb->{is_invoice} = 1;
+    $lsmb->{due} = $form->{invtotal};
+    $lsmb->{credit_id} = $form->{customer_id} // $form->{vendor_id};
     my ($department_name, $department_id) = split/--/, $form->{department};
      if (!$lsmb->{language_code}){
         delete $lsmb->{language_code};
