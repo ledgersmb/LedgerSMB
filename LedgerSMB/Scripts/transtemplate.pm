@@ -145,10 +145,10 @@ sub display_results {
         template => 'form-dynatable',
         format   => 'HTML',
    );
-   my @cols = qw(id entry_type source description meta_number entity_name entity_class);
+   my @cols = qw(id entry_type reference description meta_number entity_name entity_class);
    my $column_headers = {
       id          => 'ID',
-      source      => 'Reference',
+      reference   => 'Reference',
       description => 'Description',
       meta_number => 'Account Number',
       entity_name => 'Name',
@@ -158,8 +158,8 @@ sub display_results {
    my $base_url = $request->{script} . "?action=view";
    $transtemplate->search;
    for my $line (@{$transtemplate->{search_results}}){
-       if (!$line->{source}){
-           $line->{source} = '[none]';
+       if (!$line->{reference}){
+           $line->{reference} = '[none]';
        }
        if (lc($line->{entity_class}) eq 'vendor'){
            $line->{entry_type} = 'ap';
@@ -170,9 +170,9 @@ sub display_results {
        else {
            $line->{entry_type} = 'gl';
        }
-       $line->{source} = {
-            text => $line->{source},
-        href => "$base_url&entry_type=$line->{entry_type}&id=$line->{id}",
+       $line->{reference} = {
+            text => $line->{reference},
+	    href => "$base_url&entry_type=$line->{entry_type}&id=$line->{id}",
        };
        push @$rows, $line;
    }
