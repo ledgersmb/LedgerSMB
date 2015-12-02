@@ -1164,6 +1164,8 @@ sub save_temp {
     my $lsmb = LedgerSMB->new();
     $lsmb->merge($form);
     $lsmb->{is_invoice} = 1;
+    $lsmb->{due} = $form->{invtotal};
+    $lsmb->{credit_id} = $form->{customer_id} // $form->{vendor_id};
     my ($department_name, $department_id) = split/--/, $form->{department};
      if (!$lsmb->{language_code}){
         delete $lsmb->{language_code};
@@ -1175,7 +1177,7 @@ sub save_temp {
     } else {
         $lsmb->{entity_class} = 1;
     }
-    $lsmb->{transaction_date} = $form->{transdate};
+    $lsmb->{post_date} = $form->{transdate};
     for my $iter (0 .. $form->{rowcount}){
         if ($form->{"AP_amount_$iter"} and
                   ($form->{"amount_$iter"} != 0)){
