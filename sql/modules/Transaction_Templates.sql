@@ -18,11 +18,10 @@ $$
 	INSERT INTO journal_entry (reference, description, journal, post_date,
 			approved, is_template, effective_start, effective_end,
                         currency, entered_by)
-	VALUES (coalesce(in_reference, ''), in_description, in_journal, in_post_date,
-			coalesce(in_approved, false), 
-			coalesce(in_is_template, false),
-               in_post_date, in_post_date, in_currency, person__get_my_entity_id()) RETURNING *;
-
+	VALUES (coalesce($1, ''), $2, $3, $4,
+			coalesce($5 , false), 
+			coalesce($6, false),
+               $4, $4, $7, person__get_my_entity_id()) RETURNING *;
 $$ language sql; 
 
 CREATE OR REPLACE FUNCTION journal__add_line(
