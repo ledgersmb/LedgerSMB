@@ -56,9 +56,9 @@ in_credit_id int, in_language_code varchar
 DECLARE retval eca_invoice;
 BEGIN	
 	INSERT INTO eca_invoice (order_id, journal_id, on_hold, reverse,
-		credit_id, language_code)
+		credit_id, language_code, due)
 	VALUES (in_order_id, in_journal_id, coalesce(in_on_hold, false), 
-		in_reverse, in_credit_id, in_language_code);
+		in_reverse, in_credit_id, in_language_code, 'today');
 
 	SELECT * INTO retval FROM eca_invoice WHERE journal_id = in_journal_id;
 
