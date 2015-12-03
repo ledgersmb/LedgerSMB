@@ -31,6 +31,9 @@ Released 2014-09-15
 
 Changelog for 1.4.21
 * Added drilldown to AR outstanding report (Chris T GH1053)
+* Fixed 0 amount accounts showing up in financial statements (Erik H, GH1079)
+* Fixed order of PNL Account Category is Off (Erik H, GH1069)
+* Fixed statements not printing from db templates (Chris T)
 
 Changelog for 1.4.20
 * Fixed one untranslated string in balance sheet (Chris T)
