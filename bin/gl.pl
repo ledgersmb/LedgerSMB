@@ -378,10 +378,10 @@ sub save_temp {
     my $lsmb = LedgerSMB->new();
     my ($department_name, $department_id) = split/--/, $form->{department};
     $lsmb->{department_id} = $department_id;
-    $lsmb->{source} = $form->{reference};
+    $lsmb->{reference} = $form->{reference};
     $lsmb->{description} = $form->{description};
     $lsmb->{department_id} = $department_id;
-    $lsmb->{transaction_date} = $form->{transdate};
+    $lsmb->{post_date} = $form->{transdate};
     $lsmb->{type} = 'gl';
     $lsmb->{journal_lines} = [];
     for my $iter (0 .. $form->{rowcount}){

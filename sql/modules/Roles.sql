@@ -360,7 +360,11 @@ SELECT lsmb__grant_perms('ar_transaction_create', 'ar', 'INSERT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'invoice_note', 'INSERT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'business_unit_ac', 'INSERT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'journal_entry', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create', 'journal_entry', 'SELECT');
+SELECT lsmb__grant_perms('ar_transaction_create', 'eca_invoice', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create', 'eca_invoice', 'SELECT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'journal_line', 'INSERT');
+SELECT lsmb__grant_perms('ar_transaction_create', 'journal_line', 'SELECT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'business_unit_jl', 'INSERT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'oe', 'SELECT');
 SELECT lsmb__grant_perms('ar_transaction_create', 'id', 'ALL');
@@ -516,6 +520,12 @@ SELECT lsmb__grant_role('ap_transaction_create_voucher', 'batch_create');
 SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'oe', 'SELECT');
 SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'business_unit_ac', 'INSERT');
 SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'acc_trans', 'INSERT');
+SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'journal_entry', 'INSERT');
+SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'journal_entry', 'SELECT');
+SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'journal_line', 'INSERT');
+SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'journal_line', 'SELECT');
+SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'eca_invoice', 'INSERT');
+SELECT lsmb__grant_perms('ap_transaction_create_voucher', 'eca_invoice', 'SELECT');
 SELECT lsmb__grant_perms('ap_transaction_create_voucher', obj, ptype)
   FROM unnest(array['ap'::text, 'invoice', 'business_unit_inv']) obj
  CROSS JOIN unnest(array['SELECT'::text, 'INSERT', 'UPDATE']) ptype;

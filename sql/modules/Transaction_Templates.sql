@@ -2,27 +2,27 @@
 
 BEGIN;
 
+update defaults set value='yes' where setting_key='module_load_ok';
+DROP FUNCTION IF EXISTS journal__add(text, text, int, date, bool, bool);
+
 CREATE OR REPLACE FUNCTION journal__add(
-in_source text,
+in_reference text,
 in_description text,
-in_entry_type int,
-in_transaction_date date,
+in_journal int,
+in_post_date date,
 in_approved bool,
-in_is_template bool
+in_is_template bool,
+in_currency text
 ) RETURNS journal_entry AS 
 $$
-DECLARE retval journal_entry;
-BEGIN
-	INSERT INTO journal_entry (source, description, entry_type, transaction_date,
-			approved, is_template)
-	VALUES (in_source, in_description, in_entry_type, in_transaction_date,
-			coalesce(in_approved, false), 
-			coalesce(in_is_template, false));
-
-	SELECT * INTO retval FROM journal_entry WHERE id = currval('journal_id_seq');
-	RETURN retval;
-END;
-$$ language plpgsql; 
+	INSERT INTO journal_entry (reference, description, journal, post_date,
+			approved, is_template, effective_start, effective_end,
+                        currency, entered_by)
+	VALUES (coalesce($1, ''), $2, $3, $4,
+			coalesce($5 , false), 
+			coalesce($6, false),
+               $4, $4, $7, person__get_my_entity_id()) RETURNING *;
+$$ language sql; 
 
 CREATE OR REPLACE FUNCTION journal__add_line(
 in_account_id int, in_journal_id int, in_amount numeric, 
@@ -56,9 +56,9 @@ in_credit_id int, in_language_code varchar
 DECLARE retval eca_invoice;
 BEGIN	
 	INSERT INTO eca_invoice (order_id, journal_id, on_hold, reverse,
-		credit_id, language_code)
+		credit_id, language_code, due)
 	VALUES (in_order_id, in_journal_id, coalesce(in_on_hold, false), 
-		in_reverse, in_credit_id, in_language_code);
+		in_reverse, in_credit_id, in_language_code, 'today');
 
 	SELECT * INTO retval FROM eca_invoice WHERE journal_id = in_journal_id;
 
@@ -70,7 +70,7 @@ $$ language plpgsql;
 DROP TYPE IF EXISTS journal_search_result CASCADE; 
 CREATE TYPE journal_search_result AS (
 id bigint,
-source text,
+reference text,
 description text,
 entry_type int,
 transaction_date date,
@@ -83,7 +83,7 @@ nextdate date
 );
 
 CREATE OR REPLACE FUNCTION journal__search(
-in_source text,
+in_reference text,
 in_description text,
 in_entry_type int,
 in_transaction_date date,
@@ -110,7 +110,7 @@ BEGIN
 		LEFT JOIN entity e ON (eca.entity_id = e.id)
 		LEFT JOIN entity_class ec ON (eca.entity_class = ec.id)
                 LEFT JOIN recurring r ON j.id = r.id
-		WHERE (in_source IS NULL OR in_source = j.source) AND
+		WHERE (in_reference IS NULL OR in_reference = j.source) AND
 			(in_description IS NULL 
 				or in_description = j.description) AND
 			(in_entry_type is null or in_entry_type = j.entry_type)
