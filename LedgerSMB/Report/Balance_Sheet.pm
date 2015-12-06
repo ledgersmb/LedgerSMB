@@ -173,30 +173,34 @@ sub run_report {
                                       LedgerSMB::Report::text('Income'),
                                   'account_description' =>
                                       LedgerSMB::Report::text('Income') },
-                         'A' => { 'account_number' => 'A',
+                         'A' => { 'order' => '1',
+                                  'account_number' => '',
                                   'account_category' => 'A',
                                   'account_type' => 'H',
                                   'account_desc' =>
                                       LedgerSMB::Report::text('Assets'),
                                   'account_description' =>
                                       LedgerSMB::Report::text('Assets') },
-                         'L' => { 'account_number' => 'L',
+                         'L' => { 'order' => '2',
+                                  'account_number' => '',
                                   'account_category' => 'L',
                                   'account_type' => 'H',
                                   'account_desc' =>
                                       LedgerSMB::Report::text('Liabilities'),
                                   'account_description' =>
                                       LedgerSMB::Report::text('Liabilities') },
-                         'Q' => { 'account_number' => 'Q',
+                         'Q' => { 'order' => '3',
+                                  'account_number' => '',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
                                   'account_desc' =>
                                       LedgerSMB::Report::text('Equity'),
                                   'account_description' =>
                                       LedgerSMB::Report::text('Equity') },
-                         'q' => { 'account_number' => '',
-                                  'account_category' => 'Q',
-                                  'account_type' => 'H',
+                         'q' => { 'order' => '1',
+                                  'account_number' => '',
+                                  'account_category' => '',
+                                  'account_type' => 'A',
                                   'heading_path' => [ 'Q' ],
                                   'account_desc' =>
                                       LedgerSMB::Report::text('Current earnings'),

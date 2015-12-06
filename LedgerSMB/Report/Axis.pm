@@ -126,8 +126,8 @@ sub _sort_aux {
                  && $subtree->{$_[0]}->{props}->{order}) || $_[0]);
     };
     for (sort { &$cmpv($a) cmp &$cmpv($b) } keys %$subtree) {
-        push @sorted, $subtree->{$_}->{id};
         push @sorted, @{_sort_aux($subtree->{$_}->{children})};
+        push @sorted, $subtree->{$_}->{id};
     }
     return \@sorted;
 }
