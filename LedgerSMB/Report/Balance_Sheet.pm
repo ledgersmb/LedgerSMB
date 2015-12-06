@@ -173,30 +173,34 @@ sub run_report {
                                       $self->_locale->text('Income'),
                                   'account_description' =>
                                       $self->_locale->text('Income') },
-                         'A' => { 'account_number' => 'A',
+                         'A' => { 'order' => '1',
+                                  'account_number' => '',
                                   'account_category' => 'A',
                                   'account_type' => 'H',
                                   'account_desc' =>
                                       $self->_locale->text('Assets'),
                                   'account_description' =>
                                       $self->_locale->text('Assets') },
-                         'L' => { 'account_number' => 'L',
+                         'L' => { 'order' => '2',
+                                  'account_number' => '',
                                   'account_category' => 'L',
                                   'account_type' => 'H',
                                   'account_desc' =>
                                       $self->_locale->text('Liabilities'),
                                   'account_description' =>
                                       $self->_locale->text('Liabilities') },
-                         'Q' => { 'account_number' => 'Q',
+                         'Q' => { 'order' => '3',
+                                  'account_number' => '',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
                                   'account_desc' =>
                                       $self->_locale->text('Equity'),
                                   'account_description' =>
                                       $self->_locale->text('Equity') },
-                         'q' => { 'account_number' => '',
-                                  'account_category' => 'Q',
-                                  'account_type' => 'H',
+                         'q' => { 'order' => '1',
+                                  'account_number' => '',
+                                  'account_category' => '',
+                                  'account_type' => 'A',
                                   'heading_path' => [ 'Q' ],
                                   'account_desc' =>
                                       $self->_locale->text('Current earnings'),
