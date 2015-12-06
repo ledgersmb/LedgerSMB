@@ -14,7 +14,7 @@ ok($axis->map_path(['b','c']) == 3, 'sub-item of existing element');
 ok($axis->map_path(['b','c','d','f']) == 5, 'sub path of existing path');
 ok($axis->map_path(['b','c','d','e']) == 6, 'second leaf in existing path');
 
-is_deeply($axis->sort(), [1, 2, 3, 4, 6, 5], 'tree-order sorted row-IDs');
+is_deeply($axis->sort(), [1, 6, 5, 4, 3, 2], 'tree-order sorted row-IDs');
 is_deeply($axis->tree(),
           {
               'a' => {
