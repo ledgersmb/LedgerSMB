@@ -116,8 +116,7 @@ sub generate_statement {
     $request->{meta_number} = $old_meta;
     my $path = LedgerSMB::Setting->get('templates');
     my $template = LedgerSMB::Template->new(
-        locale => $request->{_locale},
-        path => "templates/$path",
+        locale => $LedgerSMB::App_Date::Locale,
         template => $request->{print_template},
         #language => $language->{language_code}, #TODO
         format => uc $request->{print_format},

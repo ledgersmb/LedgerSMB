@@ -29,6 +29,9 @@ Quality assurance:
 Changelog for 1.4 Series
 Released 2014-09-15
 
+Changelog for 1.4.21
+* Added drilldown to AR outstanding report (Chris T GH1053)
+
 Changelog for 1.4.20
 * Fixed one untranslated string in balance sheet (Chris T)
 * Added running balance to report drill downs (Chris T, GH1007)
