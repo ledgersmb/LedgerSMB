@@ -17,7 +17,8 @@ html, body {
     overflow: hidden;
     padding: 0;
 }
-.financial-statement .heading1 {
+
+.financial-statement.flat-hierarchy .heading1 {
     border-top: 1px solid black;
     height: 2em;
     vertical-align: top;
@@ -25,7 +26,7 @@ html, body {
     font-size: bigger;
 }
 
-.financial-statement .heading2 {
+.financial-statement.flat-hierarchy .heading2 {
     border-top: 1px solid black;
     height: 2em;
     vertical-align: top;
@@ -36,7 +37,7 @@ html, body {
 #maindiv {
     overflow-y: auto;
 ]
-.financial-statement table {
+.financial-statement.flat-hierarchy table {
     min-width: 60ex;
 }
 

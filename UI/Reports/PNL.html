@@ -15,9 +15,13 @@ FOREACH row IN report.sorted_row_ids ;
      max_path_depth = report.rheads.ids.$row.path.size;
    END;
 END;
-
+IF report.legacy_hierarchy ;
+   hierarchy = 'flat-hierarchy';
+ELSE ;
+   hierarchy = 'full-hierarchy';
+END ;
 ?>
-<body class="financial-statement <?lsmb dojo_theme ?>">
+<body class="financial-statement <?lsmb dojo_theme ?> <?lsmb hierarchy ?>">
 <div id="PNL"> <!-- Also used in balance sheet! -->
 <h1><?lsmb name ?></h1>
 <h2><?lsmb text('Accounting period: [_1] to [_2]', report.from_date, report.to_date); ?></h2>
