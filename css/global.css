@@ -1,3 +1,23 @@
 div.input {
     float: left;
 }
+
+.financial-statement .heading1 {
+    border-top: 1px solid black;
+    height: 2em;
+    vertical-align: top;
+    font-weight: bold;
+    font-size: bigger;
+}
+
+.financial-statement .heading2 {
+    border-top: 1px solid black;
+    height: 2em;
+    vertical-align: top;
+    font-style: italic;
+    font-size: bigger;
+}
+
+.financial-statement table {
+    min-width: 60ex;
+}
