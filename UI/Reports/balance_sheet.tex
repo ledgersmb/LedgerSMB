@@ -1,20 +1,12 @@
 <?lsmb FILTER latex ?>
 \documentclass[12pt]{article}
-%\usepackage{fontspec}
-%\setmainfont{Arial}
 \usepackage{longtable}
-%\usepackage{helvet}
-%\title{<?lsmb text('Balance Sheet') ?>}
 \begin{document}
 \renewcommand\baselinestretch{1.2}\selectfont
-%\renewcommand\familydefault{\sfdefault}
-%\maketitle
 \begin{center}
 \Huge{<?lsmb text('Balance Sheet') ?>}
 \end{center}
 
-%\setlength\LTleft{0pt}
-%\setlength\LTright{0pt}
 \begin{longtable}{@{\extracolsep{10pt}}llll<?lsmb
  FOREACH c IN report.cheads.ids.keys; 'r'; END -?>}
 \\
