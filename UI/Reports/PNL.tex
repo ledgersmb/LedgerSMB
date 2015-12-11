@@ -7,16 +7,20 @@
         max_path_depth = report.rheads.ids.$row.path.size ;
      END;
   END;
+  last_col_no = max_path_depth + 1 + report.cheads.ids.keys.size;
+
  -?>
 
-\documentclass{article}
+\documentclass[12pt]{article}
 \usepackage{longtable}
-\title{<?lsmb text('Income Statement') ?>}
 \begin{document}
-\maketitle
+\renewcommand\baselinestretch{1.2}\selectfont
+\begin{center}
+\Huge{<?lsmb text('Income Statement') ?>}
+\end{center}
 
 
-\begin{longtable}{<?lsmb i = 1; WHILE i <= max_path_depth ; 'l'; i = i + 1; END;
+\begin{longtable}{@{\extracolsep{10pt}}<?lsmb i = 1; WHILE i <= max_path_depth ; 'l'; i = i + 1; END;
  -?>p{2cm}<?lsmb FOREACH c IN report.cheads.ids.keys; 'r'; END ?>}
 \\
 \multicolumn{<?lsmb max_path_depth+1 ?>}{l}{}%
@@ -39,7 +43,7 @@
    END;
 
   IF report.rheads.ids.$row.props.account_type == 'H';
-    '\hline';
+    '\cline{' _ path_depth _ '-' _ last_col_no _ '} ';
     desc = '\emph{' _ desc _ '}';
   END ;
 -?>%
