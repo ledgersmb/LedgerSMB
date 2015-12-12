@@ -75,7 +75,7 @@ sub run_report {
     my @lines = $self->call_dbmethod(funcname => 'report__balance_sheet');
     my ($row) = $self->call_procedure(funcname => 'setting_get',
                                       args => [ 'earn_id' ]);
-    my $earn_id = ($row) ? $row->{value} : -1;
+    my $earn_id = ($row && $row->{value}) ? $row->{value} : -1;
     my $row_map = ($self->gifi) ?
         sub { my ($line) = @_;
               return ($line->{account_type} eq 'H')
