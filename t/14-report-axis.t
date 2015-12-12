@@ -24,6 +24,7 @@ is_deeply($axis->tree(),
                   'id' => 1,
                   'section' => {
                       id => 2,
+                      'path' => ['a'],
                       props => {
                           section_for => 1,
                       },
@@ -53,6 +54,7 @@ is_deeply($axis->tree(),
                                           'id' => 11,
                                           'section' => {
                                               id => 12,
+                                              'path' => ['b','c','d','e'],
                                               props => {
                                                   section_for => 11,
                                               },
@@ -66,6 +68,7 @@ is_deeply($axis->tree(),
                                           'id' => 9,
                                           'section' => {
                                               id => 10,
+                                              'path' => ['b','c','d','f'],
                                               props => {
                                                   section_for => 9,
                                               },
@@ -75,6 +78,7 @@ is_deeply($axis->tree(),
                                   'id' => 7,
                                   'section' => {
                                       id => 8,
+                                      'path' => ['b','c','d'],
                                       props => {
                                           section_for => 7,
                                       },
@@ -84,6 +88,7 @@ is_deeply($axis->tree(),
                           'id' => 5,
                           'section' => {
                               id => 6,
+                              'path' => ['b','c'],
                               props => {
                                   section_for => 5,
                               },
@@ -93,6 +98,7 @@ is_deeply($axis->tree(),
                   'id' => 3,
                   'section' => {
                       id => 4,
+                      'path' => ['b'],
                       props => {
                           section_for => 3,
                       },
