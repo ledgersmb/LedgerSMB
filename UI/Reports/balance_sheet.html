@@ -28,7 +28,7 @@ END ;
 <div class="company-name"><?lsmb company_name ?></div>
 <div class="company-address"><?lsmb company_address ?></div>
 
-<table style="border-collapse: collapse">
+<table class="balancesheet" style="border-collapse: collapse">
 <tr class="report-head">
   <th colspan="<?lsmb max_path_depth ?>"
       style="font-weight:bold"> </th>
@@ -43,6 +43,9 @@ END ;
    IF report.rheads.ids.$row.props.account_type == 'H' ;
      class = 'class="heading' _ path_depth _ '"';
      clazz = "heading" _ path_depth;
+   ELSIF report.rheads.ids.$row.props.section_for ;
+     class = 'class="section' _ path_depth _ '"';
+     clazz = "section" _ path_depth;
    ELSE;
      class = '';
      clazz = '';
@@ -53,6 +56,12 @@ END ;
   <th colspan="<?lsmb path_prefix_len ?>"></th>
   <?lsmb END ?>
   <th colspan="<?lsmb path_suffix_len ?>" <?lsmb class ?>>
+<?lsmb IF report.rheads.ids.$row.props.section_for ;
+  head_id = report.rheads.ids.$row.props.section_for;
+  report.rheads.ids.$head_id.props.account_description; ?>
+</th><th colspan="<?lsmb report.cheads.ids.keys.size ?>" <?lsmb class ?>></th>
+<?lsmb ELSE ?>
+
 <?lsmb IF report.rheads.ids.$row.props.account_number && report.incl_accnos; -?>
 <?lsmb report.rheads.ids.$row.props.account_number ?> - <?lsmb END; -?>
 <?lsmb report.rheads.ids.$row.props.account_desc ?></th>
@@ -60,6 +69,7 @@ END ;
   <td class="amount <?lsmb clazz ?>"><a href="<?lsmb
  DRILLBASE _ '&amp;accno=' _ report.rheads.ids.$row.props.account_number
            _ '&amp;to_date=' _ report.cheads.ids.$col.props.to_date ?>"><?lsmb report.cells.$row.$col ?></a></td><?lsmb END ?>
+<?lsmb END ?>
 </tr>
 <?lsmb END ?>
 
@@ -77,15 +87,16 @@ END ;
     <td><?lsmb report.balance_sheet.ratios.QL ?></td>
 </tr>
 -->
-
-<?lsmb IF FORMATS.grep('PDF').size() ?>
-<tr><td><a target="_blank"
-           href="<?lsmb LINK ?>&amp;format=PDF">[<?lsmb text('PDF') ?>]</a></td>
-<td><a target="_blank"
-       href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></td>
-</tr>
-<?lsmb END ?>
 </table>
 </div>
+
+<?lsmb IF FORMATS.grep('PDF').size() ?>
+<div class="export-links">
+<div class="export-link"><a target="_blank"
+           href="<?lsmb LINK ?>&amp;format=PDF">[<?lsmb text('PDF') ?>]</a></div>
+<div class="export-link"><a target="_blank"
+       href="<?lsmb LINK ?>&amp;format=CSV">[<?lsmb text('CSV') ?>]</a></div>
+</div>
+<?lsmb END ?>
 </body>
 </html>
