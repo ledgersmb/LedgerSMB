@@ -28,7 +28,7 @@ END ;
 <table class="income_statement" style="border-collapse: collapse">
 <tbody>
     <tr class="sectionhead">
-        <th colspan="<?lsmb max_path_depth ?>"><?lsmb text('Account') ?></th>
+        <th colspan="<?lsmb max_path_depth ?>"></th>
 <?lsmb FOREACH col IN report.cheads.ids.keys -?>
         <th><?lsmb report.cheads.ids.$col.props.description ?></th>
 <?lsmb END -?>
