@@ -46,11 +46,21 @@ html, body {
 }
 #leftCol {
     width: 14em;
+    margin-top: 3em;
+}
+
+.financial-statement .company-name {
+   margin-top: 2em;
+   font-family: monospace;
+   text-align: center;
 }
 
 .claro .demoLayout .edgePanel {
     background-color: #d0e9fc;
 }
+.financial-statement .company-address {
+   font-family: monospace;
+   text-align: center;
 
 #viewsChart {
     width: 550px;
