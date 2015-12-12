@@ -23,7 +23,9 @@ END ;
 ?>
 <body class="financial-statement <?lsmb dojo_theme ?> <?lsmb hierarchy ?>">
 <h1><?lsmb name ?></h1>
-<h2><?lsmb text('Accounting period: [_1] to [_2]', report.from_date, report.to_date); ?></h2>
+<div class="company-name"><?lsmb company_name ?></div>
+<div class="company-address"><?lsmb company_address ?></div>
+
 <table class="income_statement" style="border-collapse: collapse">
 <tbody>
     <tr class="sectionhead">

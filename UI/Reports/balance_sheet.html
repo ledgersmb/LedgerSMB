@@ -25,10 +25,13 @@ END ;
 <div id="PNL"> <!-- TODO: Find better name!! -->
 <h1><?lsmb text('Balance Sheet') ?></h1>
 
+<div class="company-name"><?lsmb company_name ?></div>
+<div class="company-address"><?lsmb company_address ?></div>
+
 <table style="border-collapse: collapse">
 <tr class="report-head">
   <th colspan="<?lsmb max_path_depth ?>"
-      style="font-weight:bold"><?lsmb text('Accounts') ?></th>
+      style="font-weight:bold"> </th>
 <?lsmb FOREACH col IN report.cheads.ids.keys -?>
   <th><?lsmb report.cheads.ids.$col.props.description ?></th>
 <?lsmb END -?>

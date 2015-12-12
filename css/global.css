@@ -20,4 +20,16 @@ div.input {
 
 .financial-statement.flat-hierarchy table {
     min-width: 60ex;
+    margin-top: 3em;
+}
+
+.financial-statement .company-name {
+   margin-top: 2em;
+   font-family: monospace;
+   text-align: center;
+}
+
+.financial-statement .company-address {
+   font-family: monospace;
+   text-align: center;
 }
