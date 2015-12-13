@@ -100,6 +100,11 @@ sub start_report {
     @{$request->{employees}} =  $request->call_procedure(
         funcname => 'employee__all_salespeople'
     );
+    @{$request->{languages}} = $request->call_procedure(
+        procname => 'person__list_languages'
+        );
+
+    print STDERR Data::Dumper::Dumper($request->{_user});
     $request->{earn_id} = LedgerSMB::Setting->get('earn_id');
     my $template = LedgerSMB::Template->new(
         request => $request,
