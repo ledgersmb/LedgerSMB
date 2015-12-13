@@ -47,6 +47,7 @@ div.input {
 .financial-statement .company-address {
    font-family: monospace;
    text-align: center;
+   font-size: smaller;
 }
 
 @media print {
