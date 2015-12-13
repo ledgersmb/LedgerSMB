@@ -76,7 +76,8 @@ html, body {
 .financial-statement .company-address {
    font-family: monospace;
    text-align: center;
-
+   font-size: smaller;
+}
 #viewsChart {
     width: 550px;
     height: 550px;
