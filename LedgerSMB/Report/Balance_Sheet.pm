@@ -163,49 +163,49 @@ sub run_report {
                                   'account_category' => 'E',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Expenses'),
+                                      $self->Text('Expenses'),
                                   'account_description' =>
-                                      $self->_locale->text('Expenses') },
+                                      $self->Text('Expenses') },
                          'I' => { 'account_number' => 'I',
                                   'account_category' => 'I',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Income'),
+                                      $self->Text('Income'),
                                   'account_description' =>
-                                      $self->_locale->text('Income') },
+                                      $self->Text('Income') },
                          'A' => { 'order' => '1',
                                   'account_number' => '',
                                   'account_category' => 'A',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Assets'),
+                                      $self->Text('Assets'),
                                   'account_description' =>
-                                      $self->_locale->text('Assets') },
+                                      $self->Text('Assets') },
                          'L' => { 'order' => '2',
                                   'account_number' => '',
                                   'account_category' => 'L',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Liabilities'),
+                                      $self->Text('Liabilities'),
                                   'account_description' =>
-                                      $self->_locale->text('Liabilities') },
+                                      $self->Text('Liabilities') },
                          'Q' => { 'order' => '3',
                                   'account_number' => '',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Equity'),
+                                      $self->Text('Equity'),
                                   'account_description' =>
-                                      $self->_locale->text('Equity') },
+                                      $self->Text('Equity') },
                          'q' => { 'order' => '1',
                                   'account_number' => '',
                                   'account_category' => '',
                                   'account_type' => 'A',
                                   'heading_path' => [ 'Q' ],
                                   'account_desc' =>
-                                      $self->_locale->text('Current earnings'),
+                                      $self->Text('Current earnings'),
                                   'account_description' =>
-                                      $self->_locale->text('Current earnings') },
+                                      $self->Text('Current earnings') },
             );
     }
     else {
