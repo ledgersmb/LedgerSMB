@@ -29,7 +29,22 @@ END ;
 <div class="company-address"><?lsmb company_address ?></div>
 
 <table class="balancesheet" style="border-collapse: collapse">
-<!--###TODO: Add colgroups to allow CSS styling indentation!! -->
+<colgroup class="headings">
+<?lsmb i = 1;
+   WHILE i <= max_path_depth;
+     '  <col class="level' _ i _ '" />';
+     i = i + 1;
+   END;
+?>
+</colgroup>
+<colgroup class="values">
+<?lsmb i = 1;
+   WHILE i <= report.cheads.ids.keys.size;
+     '  <col class="values' _ i _ '" />';
+     i = i + 1;
+   END;
+?>
+</colgroup>
 <tbody>
 <tr class="report-head">
   <th colspan="<?lsmb max_path_depth ?>"
