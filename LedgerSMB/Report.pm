@@ -41,6 +41,7 @@ package LedgerSMB::Report;
 use Moose;
 with 'LedgerSMB::PGObject', 'LedgerSMB::I18N';
 use LedgerSMB::Setting;
+
 use LedgerSMB::Template;
 use LedgerSMB::App_State;
 
@@ -334,7 +335,7 @@ sub render {
 
     $template = LedgerSMB::Template->new(
         user => $LedgerSMB::App_State::User,
-        locale => $LedgerSMB::App_State::Locale,
+        locale => $self->locale,
         path => 'UI',
         template => $template,
         output_file => $name,
