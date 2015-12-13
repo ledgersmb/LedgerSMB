@@ -104,7 +104,6 @@ sub start_report {
         procname => 'person__list_languages'
         );
 
-    print STDERR Data::Dumper::Dumper($request->{_user});
     $request->{earn_id} = LedgerSMB::Setting->get('earn_id');
     my $template = LedgerSMB::Template->new(
         request => $request,
