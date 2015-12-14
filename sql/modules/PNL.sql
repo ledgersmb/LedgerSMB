@@ -53,7 +53,8 @@ WITH acc_meta AS (
                           IS NOT NULL
          -- legacy: earn_id not configured (yet)
          OR (NOT EXISTS (SELECT 1 FROM defaults
-                         WHERE setting_key = 'earn_id')
+                         WHERE setting_key = 'earn_id'
+                           AND value IS NOT NULL)
              AND category IN ('E', 'I'))
 ),
 hdr_meta AS (
@@ -182,7 +183,8 @@ WITH acc_meta AS (
                           IS NOT NULL
          -- legacy: earn_id not configured (yet)
          OR (NOT EXISTS (SELECT 1 FROM defaults
-                         WHERE setting_key = 'earn_id')
+                         WHERE setting_key = 'earn_id'
+                               AND value IS NOT NULL)
              AND category IN ('E', 'I'))
 ),
 hdr_meta AS (
@@ -302,7 +304,8 @@ WITH acc_meta AS (
                           IS NOT NULL
          -- legacy: earn_id not configured (yet)
          OR (NOT EXISTS (SELECT 1 FROM defaults
-                         WHERE setting_key = 'earn_id')
+                         WHERE setting_key = 'earn_id'
+                           AND value IS NOT NULL)
              AND category IN ('E', 'I'))
 ),
 hdr_meta AS (
@@ -424,7 +427,8 @@ WITH acc_meta AS (
                           IS NOT NULL
          -- legacy: earn_id not configured (yet)
          OR (NOT EXISTS (SELECT 1 FROM defaults
-                         WHERE setting_key = 'earn_id')
+                         WHERE setting_key = 'earn_id'
+                           AND value IS NOT NULL)
              AND category IN ('E', 'I'))
 ),
 hdr_meta AS (
@@ -515,7 +519,8 @@ WITH acc_meta AS (
                           IS NOT NULL
          -- legacy: earn_id not configured (yet)
          OR (NOT EXISTS (SELECT 1 FROM defaults
-                         WHERE setting_key = 'earn_id')
+                         WHERE setting_key = 'earn_id'
+                           AND value IS NOT NULL)
              AND category IN ('E', 'I'))
 ),
 hdr_meta AS (
