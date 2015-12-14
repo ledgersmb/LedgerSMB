@@ -141,7 +141,7 @@ sub run_report {
     my $col_id = $self->cheads->map_path($self->column_path_prefix);
     $self->cheads->id_props($col_id,
                             { description =>
-                                  $self->text(
+                                  $self->Text(
                                       '[_1] to [_2]',
                                       $self->from_date->to_output,
                                       $self->to_date->to_output),
@@ -171,46 +171,46 @@ sub run_report {
                                   'account_category' => 'E',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->text('Expenses'),
+                                      $self->Text('Expenses'),
                                   'account_description' =>
-                                      $self->text('Expenses') },
+                                      $self->Text('Expenses') },
                          'I' => { 'order' => '1', # Sort *before* Expenses
                                   'account_number' => '',
                                   'account_category' => 'I',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->text('Income'),
+                                      $self->Text('Income'),
                                   'account_description' =>
-                                      $self->text('Income') },
+                                      $self->Text('Income') },
                          'A' => { 'account_number' => 'A',
                                   'account_category' => 'A',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->text('Assets'),
+                                      $self->Text('Assets'),
                                   'account_description' =>
-                                      $self->_locale->text('Assets') },
+                                      $self->Text('Assets') },
                          'L' => { 'account_number' => 'L',
                                   'account_category' => 'L',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->text('Liabilities'),
+                                      $self->Text('Liabilities'),
                                   'account_description' =>
-                                      $self->text('Liabilities') },
+                                      $self->Text('Liabilities') },
                          'Q' => { 'account_number' => 'Q',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->text('Equity'),
+                                      $self->Text('Equity'),
                                   'account_description' =>
-                                      $self->text('Equity') },
+                                      $self->Text('Equity') },
                          'q' => { 'account_number' => '',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
                                   'heading_path' => [ 'Q', 'q' ],
                                   'account_desc' =>
-                                      $self->text('Current earnings'),
+                                      $self->Text('Current earnings'),
                                   'account_description' =>
-                                      $self->text('Current earnings') },
+                                      $self->Text('Current earnings') },
             );
     }
     else {
