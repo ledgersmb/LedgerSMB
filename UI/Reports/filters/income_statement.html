@@ -105,6 +105,17 @@ PROCESS input element_data = {
   <th colspan="2"><a href="http://ledgersmb.org/topic/using-account-hierarchies-reporting" target='_blank'><?lsmb text('Not set up for hierarchy reporting, please see linked instructions') ?></a></th>
 </tr>
 <?lsmb END ?>
+<tr>
+  <td><?lsmb PROCESS select element_data = {
+             label = text('Language')
+             name = 'language'
+             options = languages
+             text_attr = 'description'
+             value_attr = 'code'
+             default_values = [USER.language]
+};
+?></td>
+</tr>
       </table>
     </td>
   </tr>
