@@ -31,6 +31,14 @@ Released 2014-09-15
 
 Changelog for 1.4.21
 * Added drilldown to AR outstanding report (Chris T GH1053)
+* FEATURE: Added (back) user-selectable report language (Erik H GH1106)
+* Fixed missing report styling on financial reports (Erik H GH1080)
+* Fixed reports show totals above sections (Erik H GH1083)
+* Fixed 'Defaults' screen saves NULL 'earn_id' breaks PNL (Erik H GH1117)
+
+Chris T is Chris Travers
+Erik H is Erik Huelsmann
+
 
 Changelog for 1.4.20
 * Fixed one untranslated string in balance sheet (Chris T)
@@ -69,6 +77,7 @@ Changelog for 1.4.19
 
 Chris T is Chris Travers
 
+
 Changelog for 1.4.18
 * New feature:  Create users from setup.pl with no new perms (GH 883, Chris T)
 * Fixed Net Book Value reporting '0' before depreciation (GH 879, ChrisT)
@@ -90,6 +99,7 @@ Changelog for 1.4.18
 ChrisT is Chris Travers
 NickP is Nick Prater
 Rami H is Rami Hovi
+
 
 Changelog for 1.4.17
 * FEATURE: Automatic calculation of taxes in AR/AP transactions (ErikH)
