@@ -166,7 +166,13 @@ sub add_comparison{
     my $col_path_prefix = $args{column_path_prefix} || [];
 
     for my $orig_row_id (keys %{$compared->rheads->ids}) {
+        my $rprops = $compared->rheads->id_props($orig_row_id);
+        next if $rprops->{section_for};
+
         for my $orig_col_id (keys %{$compared->cheads->ids}) {
+            my $cprops = $compared->cheads->id_props($orig_col_id);
+            next if $cprops->{section_for};
+
             my $row_id =
                 $self->rheads->map_path([
                     (@$row_path_prefix),

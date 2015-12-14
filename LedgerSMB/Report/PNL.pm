@@ -167,7 +167,7 @@ sub run_report {
     my %header_desc;
     if ($self->gifi || $self->legacy_hierarchy) {
         %header_desc = ( 'E' => { 'order' => '2', # Sort *after* Income
-                                  'account_number' => 'E',
+                                  'account_number' => '',
                                   'account_category' => 'E',
                                   'account_type' => 'H',
                                   'account_desc' =>
@@ -175,7 +175,7 @@ sub run_report {
                                   'account_description' =>
                                       LedgerSMB::Report::text('Expenses') },
                          'I' => { 'order' => '1', # Sort *before* Expenses
-                                  'account_number' => 'I',
+                                  'account_number' => '',
                                   'account_category' => 'I',
                                   'account_type' => 'H',
                                   'account_desc' =>

@@ -1,29 +1,82 @@
-<?lsmb FILTER latex ?>
-\documentclass{article}
+%<?lsmb FILTER latex ?>
+%
+%<?lsmb
+  max_path_depth = 0;
+  FOREACH row IN report.sorted_row_ids ;
+     IF max_path_depth < report.rheads.ids.$row.path.size ;
+        max_path_depth = report.rheads.ids.$row.path.size ;
+     END;
+  END;
+  last_col_no = max_path_depth + 1 + report.cheads.ids.keys.size;
+
+ -?>
+
+\documentclass[12pt]{article}
 \usepackage{longtable}
-\title{<?lsmb text('Income Statement') ?>}
 \begin{document}
-\maketitle
+\renewcommand\baselinestretch{1.2}\selectfont
+\begin{center}
+\Huge{<?lsmb text('Income Statement') ?>}
+\end{center}
 
-{\large
-<?lsmb FOREACH col IN report.cheads.ids.keys ?>
-<?lsmb report.cheads.ids.$col.props.description ?>
 
-<?lsmb END ?>
-}
+\begin{longtable}{@{\extracolsep{10pt}}<?lsmb i = 1; WHILE i <= max_path_depth ; 'l'; i = i + 1; END;
+ -?>p{2cm}<?lsmb FOREACH c IN report.cheads.ids.keys; 'r'; END ?>}
+\\
+\multicolumn{<?lsmb max_path_depth+1 ?>}{l}{}%
+<?lsmb
+ FOREACH col IN report.cheads.ids.keys;
+     ' & ';
+     report.cheads.ids.$col.props.description ;
+ END;
+ ?> \\
+\\
+<?lsmb FOREACH row IN report.sorted_row_ids ;
+   path_depth = report.rheads.ids.$row.path.size;
+   path_prefix_len = path_depth - 1;
+   path_suffix_len = max_path_depth - path_prefix_len;
 
-\begin{longtable}{lll<?lsmb FOREACH c IN report.cheads.ids.keys; 'r'; END ?>}
-\multicolumn{3}{l}{\bf <?lsmb text('Accounts') ?>}
-<?lsmb FOREACH col IN report.cheads.ids.keys; ' & '; END ?>
-<?lsmb FOREACH row IN report.sorted_row_ids ?> \\
-<?lsmb IF report.rheads.ids.$row.props.account_number
-          && report.incl_accnos; -?><?lsmb
-    report.rheads.ids.$row.props.account_number ?> & - <?lsmb ELSE ?> & <?lsmb END ?>
-<?lsmb report.rheads.ids.$row.props.account_description ?> &
+   IF report.incl_accnos && report.rheads.ids.$row.props.account_number;
+     desc = report.rheads.ids.$row.props.account_number _ ' - ' _ report.rheads.ids.$row.props.account_description;
+   ELSE;
+     desc = report.rheads.ids.$row.props.account_description;
+   END;
+
+  IF report.rheads.ids.$row.props.account_type == 'H';
+    '\cline{' _ path_depth _ '-' _ last_col_no _ '} ';
+    desc = '\emph{' _ desc _ '}';
+  END ;
+-?>%
+%
+<?lsmb
+  j = 1;
+  WHILE j < path_prefix_len ;
+    '& ';
+    j = j + 1;
+  END;
+-?>
+<?lsmb IF path_prefix_len > 0 -?>
+ &
+<?lsmb END -?>
+<?lsmb IF path_suffix_len > 1 -?>
+\multicolumn{<?lsmb path_suffix_len ?>}{l}{<?lsmb desc ?>}%
+<?lsmb ELSE -?>
+<?lsmb desc ?>
+<?lsmb END -?>
+%
+& %
 <?lsmb FOREACH col IN report.cheads.ids.keys;
   ' & '; report.cells.$row.$col;
-END; ?>
-<?lsmb END ?> \\
+END; -?>
+%
+\\
+%
+<?lsmb IF report.rheads.ids.$row.props.account_type == 'H'; ?>
+\\
+<?lsmb END -?>
+<?lsmb END -?>
+
 \end{longtable}
 \end{document}
-<?lsmb END ?>
+
+%<?lsmb END ?>
