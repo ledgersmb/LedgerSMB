@@ -101,7 +101,7 @@ sub start_report {
         funcname => 'employee__all_salespeople'
     );
     @{$request->{languages}} = $request->call_procedure(
-        procname => 'person__list_languages'
+        funcname => 'person__list_languages'
         );
 
     $request->{earn_id} = LedgerSMB::Setting->get('earn_id');
