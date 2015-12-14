@@ -1,31 +1,49 @@
 <?lsmb FILTER latex ?>
-\documentclass{article}
+\documentclass[12pt]{article}
 \usepackage{longtable}
-\title{<?lsmb text('Balance Sheet') ?>}
 \begin{document}
-\maketitle
+\renewcommand\baselinestretch{1.2}\selectfont
+\begin{center}
+\Huge{<?lsmb text('Balance Sheet') ?>}
+\end{center}
 
-\begin{longtable}{@{\extracolsep{\fill}}lll<?lsmb
+\begin{longtable}{@{\extracolsep{10pt}}llll<?lsmb
  FOREACH c IN report.cheads.ids.keys; 'r'; END -?>}
-\multicolumn{3}{l}{<?lsmb text('Accounts') ?>}
+\\
+\multicolumn{4}{l}{}
 <?lsmb
  FOREACH col IN report.cheads.ids.keys;
      ' & ';
      report.cheads.ids.$col.props.description ;
  END;
  ?> \\
-
+\\
 <?lsmb FOREACH row IN report.sorted_row_ids ?>
-<?lsmb IF report.rheads.ids.$row.props.account_number
-          && report.incl_accnos; -?><?lsmb
-    report.rheads.ids.$row.props.account_number ?> & - <?lsmb
-       ELSE ?> & <?lsmb
-       END ?>
-&
-<?lsmb report.rheads.ids.$row.props.account_desc ?>
+<?lsmb IF report.rheads.ids.$row.props.account_type == 'H'; ?>
+<?lsmb END ?>
+
+<?lsmb
+  IF report.incl_accnos;
+    IF report.rheads.ids.$row.props.account_number;
+       report.rheads.ids.$row.props.account_number; ' & '; report.rheads.ids.$row.props.account_desc;
+    ELSIF report.rheads.ids.$row.props.account_type == 'H';
+      '\hline ';
+       '\multicolumn{2}{l}{{\em '; report.rheads.ids.$row.props.account_desc; '}}';
+    ELSE;
+       ' & '; report.rheads.ids.$row.props.account_desc;
+    END;
+  END;
+?>
+& &
 <?lsmb FOREACH col IN report.cheads.ids.keys;
   ' & '; report.cells.$row.$col;
-END; ?> \\
+END; ?>
+
+\\
+
+<?lsmb IF report.rheads.ids.$row.props.account_type == 'H'; ?>
+   \\
+<?lsmb END ?>
 <?lsmb END ?>
 
 \end{longtable}
