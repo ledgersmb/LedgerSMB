@@ -17,6 +17,30 @@ we look only to the current locale.
 package LedgerSMB::I18N;
 use Moose::Role;
 use LedgerSMB::App_State;
+use LedgerSMB::Locale;
+
+has 'language' => (is => 'ro', isa => 'Maybe[Str]');
+
+has 'locale' => (is => 'ro',
+                 lazy => 1,
+                 builder => '_build_locale');
+
+sub _build_locale {
+    my ($self) = @_;
+
+    my $locale;
+    if ($self->language) {
+        $locale = LedgerSMB::Locale->get_handle($self->language);
+    }
+
+    return ($locale) ? $locale : LedgerSMB::App_State->Locale;
+}
+
+sub Text {
+    my $self = shift;
+
+    return $self->locale->text(@_);
+}
 
 sub text {
     return LedgerSMB::App_State->Locale->text(@_);
