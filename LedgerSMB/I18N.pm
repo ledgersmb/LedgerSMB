@@ -43,8 +43,7 @@ sub Text {
 }
 
 sub text {
-    my ($string) = @_;
-    return LedgerSMB::App_State->Locale->text($string);
+    return LedgerSMB::App_State->Locale->text(@_);
 }
 
 =head1 COPYRIGHT
