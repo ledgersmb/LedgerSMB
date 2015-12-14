@@ -75,7 +75,7 @@ sub run_report {
     my @lines = $self->call_dbmethod(funcname => 'report__balance_sheet');
     my ($row) = $self->call_procedure(funcname => 'setting_get',
                                       args => [ 'earn_id' ]);
-    my $earn_id = ($row) ? $row->{value} : -1;
+    my $earn_id = ($row && $row->{value}) ? $row->{value} : -1;
     my $row_map = ($self->gifi) ?
         sub { my ($line) = @_;
               return ($line->{account_type} eq 'H')
@@ -163,45 +163,49 @@ sub run_report {
                                   'account_category' => 'E',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Expenses'),
+                                      $self->Text('Expenses'),
                                   'account_description' =>
-                                      $self->_locale->text('Expenses') },
+                                      $self->Text('Expenses') },
                          'I' => { 'account_number' => 'I',
                                   'account_category' => 'I',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Income'),
+                                      $self->Text('Income'),
                                   'account_description' =>
-                                      $self->_locale->text('Income') },
-                         'A' => { 'account_number' => 'A',
+                                      $self->Text('Income') },
+                         'A' => { 'order' => '1',
+                                  'account_number' => '',
                                   'account_category' => 'A',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Assets'),
+                                      $self->Text('Assets'),
                                   'account_description' =>
-                                      $self->_locale->text('Assets') },
-                         'L' => { 'account_number' => 'L',
+                                      $self->Text('Assets') },
+                         'L' => { 'order' => '2',
+                                  'account_number' => '',
                                   'account_category' => 'L',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Liabilities'),
+                                      $self->Text('Liabilities'),
                                   'account_description' =>
-                                      $self->_locale->text('Liabilities') },
-                         'Q' => { 'account_number' => 'Q',
+                                      $self->Text('Liabilities') },
+                         'Q' => { 'order' => '3',
+                                  'account_number' => '',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
                                   'account_desc' =>
-                                      $self->_locale->text('Equity'),
+                                      $self->Text('Equity'),
                                   'account_description' =>
-                                      $self->_locale->text('Equity') },
-                         'q' => { 'account_number' => '',
-                                  'account_category' => 'Q',
-                                  'account_type' => 'H',
+                                      $self->Text('Equity') },
+                         'q' => { 'order' => '1',
+                                  'account_number' => '',
+                                  'account_category' => '',
+                                  'account_type' => 'A',
                                   'heading_path' => [ 'Q' ],
                                   'account_desc' =>
-                                      $self->_locale->text('Current earnings'),
+                                      $self->Text('Current earnings'),
                                   'account_description' =>
-                                      $self->_locale->text('Current earnings') },
+                                      $self->Text('Current earnings') },
             );
     }
     else {
