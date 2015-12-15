@@ -18,11 +18,17 @@ html, body {
     padding: 0;
 }
 
+.flat-hierarchy .balancesheet .report-head th {
+    text-align: right;
+    font-weight: bold;
+}
+
 .flat-hierarchy .balancesheet .section1.QL,
 .flat-hierarchy .income_statement .section1 {
-    visibility: hidden;
+    display: none;
     border: none;
 }
+
 
 .flat-hierarchy .balancesheet .section1,
 .flat-hierarchy .balancesheet .section2,
