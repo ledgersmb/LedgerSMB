@@ -142,7 +142,7 @@ sub run_report {
     $self->cheads->id_props($col_id,
                             { description =>
                                   $self->Text(
-                                      '[_1] to [_2]',
+                                      "[_1]\n[_2]",
                                       $self->from_date->to_output,
                                       $self->to_date->to_output),
                               from_date => $self->date_from->to_output,
