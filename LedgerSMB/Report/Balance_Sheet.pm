@@ -92,22 +92,35 @@ sub run_report {
                   # If the 'earn_id' configuration is missing,
                   #  this is the case we hit
                   # (the query doesn't know which node to aggregate into)
-                  return [ [ 'Q', 'q' ],
-                           [ 'Q' ],
+                  return [ [ 'QL', 'Q', 'q' ],
+                           [ 'QL', 'Q' ],
+                           [ 'QL' ],
                       ];
               }
               elsif ($line->{account_type} eq 'A') {
-                  return [ [ $line->{account_category},
-                             $line->{account_number} ],
-                           [ $line->{account_category} ],
-                      ];
+                  if ($line->{account_category} eq 'A') {
+                      return [ [ $line->{account_category},
+                                 $line->{account_number} ],
+                               [ $line->{account_category} ],
+                          ];
+                  }
+                  else {
+                      return [ [ 'QL',
+                                 $line->{account_category},
+                                 $line->{account_number} ],
+                               [ 'QL',
+                                 $line->{account_category} ],
+                               [ 'QL' ],
+                          ];
+                  }
               }
               elsif ($line->{account_type} eq 'H'
                      && $line->{account_id} == $earn_id) {
                   # If the 'earn_id' is configured, we hit this case
                   # be sure to map the heading
-                  return [ [ 'Q', 'q' ],
-                           [ 'Q' ],
+                  return [ [ 'QL', 'Q', 'q' ],
+                           [ 'QL', 'Q' ],
+                           [ 'QL' ],
                       ];
               }
               return [];
@@ -181,10 +194,19 @@ sub run_report {
                                       $self->Text('Assets'),
                                   'account_description' =>
                                       $self->Text('Assets') },
+                         'QL' => { 'order' => '2',
+                                  'account_number' => '',
+                                  'account_category' => 'QL',
+                                  'account_type' => 'H',
+                                  'account_desc' =>
+                                      $self->Text('Equity & Liabilities'),
+                                  'account_description' =>
+                                      $self->Text('Equity & Liabilities') },
                          'L' => { 'order' => '2',
                                   'account_number' => '',
                                   'account_category' => 'L',
                                   'account_type' => 'H',
+                                  'heading_path' => [ 'QL' ],
                                   'account_desc' =>
                                       $self->Text('Liabilities'),
                                   'account_description' =>
@@ -193,6 +215,7 @@ sub run_report {
                                   'account_number' => '',
                                   'account_category' => 'Q',
                                   'account_type' => 'H',
+                                  'heading_path' => [ 'QL' ],
                                   'account_desc' =>
                                       $self->Text('Equity'),
                                   'account_description' =>
@@ -201,7 +224,7 @@ sub run_report {
                                   'account_number' => '',
                                   'account_category' => '',
                                   'account_type' => 'A',
-                                  'heading_path' => [ 'Q' ],
+                                  'heading_path' => [ 'QL', 'Q' ],
                                   'account_desc' =>
                                       $self->Text('Current earnings'),
                                   'account_description' =>
