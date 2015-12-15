@@ -2,24 +2,28 @@ div.input {
     float: left;
 }
 
+.flat-hierarchy .balancesheet .section1.QL,
 .flat-hierarchy .income_statement .section1 {
     visibility: hidden;
+    border: none;
 }
 
 .flat-hierarchy .balancesheet .section1,
+.flat-hierarchy .balancesheet .section2,
 .flat-hierarchy .income_statement .section2 {
     font-size: large;
     border-bottom: 3px double black;
 }
 
-.financial-statement.flat-hierarchy .heading1 {
+.financial-statement.flat-hierarchy .heading1,
+.financial-statement.flat-hierarchy .balancesheet .heading2 {
     border-top: 1px solid black;
     height: 2em;
     vertical-align: top;
     font-weight: bold;
 }
 
-.financial-statement.flat-hierarchy .heading2 {
+.financial-statement.flat-hierarchy .income_statement .heading2 {
     border-top: 1px solid black;
     height: 2em;
     vertical-align: top;
