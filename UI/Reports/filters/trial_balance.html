@@ -1,4 +1,4 @@
-<?lsmb INCLUDE 'ui-header.html' ?> 
+<?lsmb INCLUDE 'ui-header.html' ?>
 <?lsmb PROCESS elements.html;
        PROCESS report_base.html;
 BALANCE_TYPES = [
@@ -8,7 +8,7 @@ BALANCE_TYPES = [
 ];
 TRIAL_BALANCE_TYPES = [
    {text = text('Full'), id = 'sql-ledger' },
-   {text = text('Ending'), id = 'balance' } 
+   {text = text('Ending'), id = 'balance' }
 ] ?>
 
 <body class="<?lsmb dojo_theme ?>">
@@ -30,6 +30,16 @@ TRIAL_BALANCE_TYPES = [
                 <?lsmb PROCESS date_row ?>
                 <tr>
             </table>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <?lsmb PROCESS input element_data = {
+                       label = text('All accounts')
+                       name  = 'all_accounts'
+                       type  = 'checkbox'
+                   }
+            ?>
           </td>
         </tr>
         <tr>
@@ -64,14 +74,14 @@ TRIAL_BALANCE_TYPES = [
                     <td><?lsmb PROCESS select element_data = {
                                name = 'balance_sign'
                                id = 'balance_sign'
-                               options = BALANCE_TYPES 
+                               options = BALANCE_TYPES
                                default_values = ['0']
                           value_attr = 'id'
                         } ?></td></tr>
                 <tr><th><?lsmb text('Report Type') ?></th>
                     <td><?lsmb PROCESS select element_data = {
                                name = 'tb_type'
-                            options = TRIAL_BALANCE_TYPES 
+                            options = TRIAL_BALANCE_TYPES
                           value_attr = 'id'
                         } ?></td></tr>
               </table>
@@ -85,13 +95,13 @@ TRIAL_BALANCE_TYPES = [
             <tr class="heading">
                 <td class="title"><?lsmb heading.accno?> -- <?lsmb heading.description?></td>
                 <td class="check">
-                    <?lsmb IF report.heading_id; 
-                            IF report.heading_id == heading.id; 
-                                checked="checked"; 
-                            END; 
-                           ELSE; 
+                    <?lsmb IF report.heading_id;
+                            IF report.heading_id == heading.id;
+                                checked="checked";
+                            END;
+                           ELSE;
                             checked=undef;
-                           END; 
+                           END;
                            PROCESS input element_data = {
                                type="radio",
                                name="heading",
@@ -118,7 +128,7 @@ TRIAL_BALANCE_TYPES = [
           <?lsmb END?>
         </table>
         <br />
-        
+
         <?lsmb PROCESS button element_data={
             text = text('Continue'),
             attributes = {
