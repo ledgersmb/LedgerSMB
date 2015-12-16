@@ -112,6 +112,16 @@ A list of business account ids
 
 has business_units => (is => 'ro', isa => 'ArrayRef[Int]', required => 0);
 
+
+=item all_accounts
+
+A boolean indicating that even unused accounts should be output
+
+=cut
+
+has all_accounts => (is => 'ro', isa => 'Bool', required => 0);
+
+
 =back
 
 =head1  REPORT CONSTANT FUNCTIONS
@@ -177,6 +187,7 @@ sub columns {
          name => LedgerSMB::Report::text('Ending Balance'),
         pwidth => 1} ,
 
+        
     ];
 }
 
@@ -214,8 +225,9 @@ sub run_report {
     my $total_credits;
     my @rows = ();
     for my $ref(@rawrows){
-        next if (($ref->{starting_balance} == 0)
-                        and ($ref->{credits} == 0) and ($ref->{debits} == 0));
+        next if ! $self->all_accounts
+                && (($ref->{starting_balance} == 0)
+                    and ($ref->{credits} == 0) and ($ref->{debits} == 0));
         my $href_suffix = "&accno=" . $ref->{account_number};
         $href_suffix .= "&from_date=" . $self->from_date->to_db
               if defined $self->from_date;
