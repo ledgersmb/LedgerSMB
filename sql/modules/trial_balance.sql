@@ -142,7 +142,7 @@ BEGIN
               case when in_from_date is null then coalesce(cp.credits, 0) else 0 end,
               COALESCE(t_balance_sign,
                        CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END)
-              * (coalesce(cp.amount, 0) + sum(coalesce(ac.amount, 0)))
+              * (coalesce(cp.amount, 0) + sum(coalesce(ac.amount, 0))),
               CASE WHEN sum(ac.amount) + coalesce(cp.amount, 0) < 0
                    THEN (sum(ac.amount) + coalesce(cp.amount, 0)) * -1
                    ELSE NULL END,
