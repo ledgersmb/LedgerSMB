@@ -187,7 +187,7 @@ sub columns {
          name => LedgerSMB::Report::text('Ending Balance'),
         pwidth => 1} ,
 
-        
+
     ];
 }
 
