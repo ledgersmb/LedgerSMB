@@ -16,7 +16,7 @@ DROP FUNCTION IF EXISTS trial_balance__generate
 (in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
  in_ignore_yearend TEXT, in_business_units int[]);
 
-CREATE OR REPLACE FUNCTION trial_balance__generate
+DROP FUNCTION IF EXISTS trial_balance__generate
 (in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
  in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int);
 
