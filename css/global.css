@@ -243,8 +243,9 @@ html, body {
 #PNL tr.sectionhead th {
         padding-top: 2em;
         margin-top: 4em;
-        font-size: 120%;
         font-weight: bold;
+	white-space: pre;
+	text-align: right;
 }
 
 #PNL td.total {
