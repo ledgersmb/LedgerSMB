@@ -111,7 +111,7 @@ sub authenticate {
     if ($request->{dbh} and !$request->{log_out}){
 
         print "Content-Type: text/plain\n";
-        LedgerSMB::Session::check($request->{cookie}, $request) 
+        LedgerSMB::Session::check($request->{cookie}, $request)
              unless $request->{dbonly};
         print "Status: 200 Success\n\nSuccess\n";
     }
