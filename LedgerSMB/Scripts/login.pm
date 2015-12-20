@@ -111,11 +111,12 @@ sub authenticate {
     if ($request->{dbh} and !$request->{log_out}){
 
         print "Content-Type: text/plain\n";
-        LedgerSMB::Session::check($request->{cookie}, $request);
+        LedgerSMB::Session::check($request->{cookie}, $request) 
+             unless $request->{dbonly};
         print "Status: 200 Success\n\nSuccess\n";
     }
     else {
-        if ($request->{_auth_error} =~/$LedgerSMB::Sysconfig::no_db_str/i){
+        if (($request->{_auth_error} ) && ($request->{_auth_error} =~/$LedgerSMB::Sysconfig::no_db_str/i)){
             print "Status: 454 Database Does Not Exist\n\n";
             print "No message here";
         } else {
