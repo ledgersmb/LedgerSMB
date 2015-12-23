@@ -1696,23 +1696,23 @@ sub print_form {
 
     $form->isblank( "email", $locale->text('E-mail address missing!') )
       if ( $form->{media} eq 'email' );
+
+    # $locale->text('Invoice Date missing!')
+    # $locale->text('Packing List Date missing!')
+    # $locale->text('Order Date missing!')
+    # $locale->text('Quotation Date missing!')
     $form->isblank( "${inv}date",
-        $locale->text( $form->{label} . ' Date missing!' ) );
+                    $locale->maketext( $form->{label} . ' Date missing!' ) );
 
     # We used to increment the number but we no longer allow printing before
     # posting, so the safe thing to do is just to display an error.  --Chris T
     if ( !$form->{"${inv}number"} and $inv) {
+        # $locale->text('Invoice Number missing!')
+        # $locale->text('Packing List Number missing!')
+        # $locale->text('Order Number missing!')
+        # $locale->text('Quotation Number missing!')
         $form->error($locale->text('Reference Number Missing'));
     }
-
-    # $locale->text('Invoice Number missing!')
-    # $locale->text('Invoice Date missing!')
-    # $locale->text('Packing List Number missing!')
-    # $locale->text('Packing List Date missing!')
-    # $locale->text('Order Number missing!')
-    # $locale->text('Order Date missing!')
-    # $locale->text('Quotation Number missing!')
-    # $locale->text('Quotation Date missing!')
 
     &{"$form->{vc}_details"};
 

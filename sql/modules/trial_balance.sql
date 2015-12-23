@@ -16,9 +16,15 @@ DROP FUNCTION IF EXISTS trial_balance__generate
 (in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
  in_ignore_yearend TEXT, in_business_units int[]);
 
+DROP FUNCTION IF EXISTS trial_balance__generate
+(in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
+ in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int);
+
+
 CREATE OR REPLACE FUNCTION trial_balance__generate
 (in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
- in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int)
+ in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int,
+ in_all_accounts boolean)
 returns setof tb_row AS
 $$
 DECLARE
@@ -136,7 +142,12 @@ BEGIN
               case when in_from_date is null then coalesce(cp.credits, 0) else 0 end,
               COALESCE(t_balance_sign,
                        CASE WHEN a.category IN ('A', 'E') THEN -1 ELSE 1 END)
-              * (coalesce(cp.amount, 0) + sum(coalesce(ac.amount, 0)))
+              * (coalesce(cp.amount, 0) + sum(coalesce(ac.amount, 0))),
+              CASE WHEN sum(ac.amount) + coalesce(cp.amount, 0) < 0
+                   THEN (sum(ac.amount) + coalesce(cp.amount, 0)) * -1
+                   ELSE NULL END,
+              CASE WHEN sum(ac.amount) + coalesce(cp.amount, 0) > 0
+                   THEN sum(ac.amount) + coalesce(cp.amount, 0) ELSE NULL END
          FROM account a
     LEFT JOIN ac ON ac.chart_id = a.id
     LEFT JOIN account_checkpoint cp ON cp.account_id = a.id
@@ -152,10 +163,21 @@ BEGIN
      GROUP BY a.id, a.accno, coalesce(at.description, a.description),
               a.category, a.gifi_accno, cp.end_date, cp.account_id, cp.amount,
               cp.debits, cp.credits
-       HAVING abs(cp.amount) > 0 or count(ac) > 0
+       HAVING abs(cp.amount) > 0 or count(ac) > 0 or in_all_accounts
      ORDER BY a.accno;
 END;
 $$ language plpgsql;
+
+
+COMMENT ON FUNCTION trial_balance__generate
+(in_from_date DATE, in_to_date DATE, in_heading INT, in_accounts INT[],
+ in_ignore_yearend TEXT, in_business_units int[], in_balance_sign int,
+ in_all_accounts boolean) IS
+$$Returns a row for each account which has transactions or a starting or
+ending balance over the indicated period, except when in_all_accounts
+is true, in which case a record is returned for all accounts, even ones
+unused over the reporting period.$$;
+
 
 DROP TYPE IF EXISTS trial_balance__heading CASCADE;
 CREATE TYPE trial_balance__heading AS (

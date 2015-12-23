@@ -102,10 +102,10 @@ sub delete {
 sub partsgroup_header {
 
     $form->{action} =~ s/_.*//;
-    $form->{title} = $locale->text( ucfirst $form->{action} . " Group" );
-
     # $locale->text('Add Group')
     # $locale->text('Edit Group')
+    $form->{title} = $locale->maketext( ucfirst $form->{action} . " Group" );
+
 
     $form->{partsgroup} = $form->quote( $form->{partsgroup} );
     PE->partsgroups(\%myconfig, $form);
@@ -191,10 +191,10 @@ sub partsgroup_footer {
 sub pricegroup_header {
 
     $form->{action} =~ s/_.*//;
-    $form->{title} = $locale->text( ucfirst $form->{action} . " Pricegroup" );
-
     # $locale->text('Add Pricegroup')
     # $locale->text('Edit Pricegroup')
+    $form->{title} = $locale->maketext(
+        ucfirst $form->{action} . " Pricegroup" );
 
     $form->{pricegroup} = $form->quote( $form->{pricegroup} );
 
@@ -680,7 +680,7 @@ sub select_name {
     @column_index = qw(ndx name address);
     $column_data{ndx} = qq|<th>&nbsp;</th>|;
     $column_data{name} =
-      qq|<th class=listheading>| . $locale->text($label) . qq|</th>|;
+      qq|<th class=listheading>| . $locale->maketext($label) . qq|</th>|;
     $column_data{address} =
         qq|<th class=listheading colspan=5>|
       . $locale->text('Address')
@@ -825,7 +825,7 @@ sub project_sales_order {
         for ( sort keys %{ $form->{all_month} } ) {
             $form->{selectaccountingmonth} .=
               qq|<option value=$_>|
-              . $locale->text( $form->{all_month}{$_} ) . qq|\n|;
+              . $locale->maketext( $form->{all_month}{$_} ) . qq|\n|;
         }
 
         $selectfrom = qq|
@@ -1246,7 +1246,7 @@ sub customer_selected {
           ( $form->{vc} eq 'customer' )
           ? $locale->text('Customer not on file!')
           : $locale->text('Vendor not on file!');
-        $form->error( $locale->text($msg) );
+        $form->error($msg);
     }
 
     &display_form;

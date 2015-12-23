@@ -70,7 +70,7 @@ while (<>) {
               && do { $state = TXT; redo; };
 
           $state==TXT &&
-              m/^[\s\t\n]*'(([^']|'')*)'/g
+              m/^[\s\t\n]*'(([^'\\]|''|\\.)*)'/g
               && do { $state = TXT_FIN;
                       my $string = $1;
                       $string =~ s/\\/\\\\/g;
@@ -81,9 +81,16 @@ while (<>) {
           };
 
           $state==TXT &&
-              m/^[\s\t\n]*"(([^"]|\\\\|\\")*)"/g
+              m/^[\s\t\n]*"(([^"\\]|\\.)*)"/g
               && do { $state = TXT_FIN;
-                      add_entry($1, $file, $line_no);
+                      my $string = $1;
+                      if ($string =~ m/(?<!\\)\$/) {
+                          warn "$file:$line_no: Direct variable interpolation not supported; use bracketed ([_1]) syntax!";
+                          $state = NUL;
+                      }
+                      else {
+                          add_entry($1, $file, $line_no);
+                      }
                       redo; };
 
           $state==TXT &&
@@ -102,7 +109,7 @@ while (<>) {
 
           $state==TXT_FIN &&
               ! m/^[\s\t\n]*$/g
-              && do { warn "$file:$line_no: junk after first text() argument; resetting scan!\n";
+              && do { warn "$file:$line_no: junk '$_' after first text() argument; resetting scan!\n";
                       $state = NUL;
           };
         };
