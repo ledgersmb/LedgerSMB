@@ -470,7 +470,7 @@ msgstr "Tambah Gudang"
 msgid "%1 Warehouse"
 msgstr "%1 Gudang"
 
-#: bin/am.pl:1571t  
+#: bin/am.pl:1571t
 msgid "Warehouse saved!"
 msgstr "Gudang disimpan!"
 
@@ -2624,7 +2624,7 @@ msgstr "Edit POS Invois"
 
 #: addons/1.4/pos/trunk/bin/pos.pl:342
 msgid "Check ID"
-msgstr "Semak ID" 
+msgstr "Semak ID"
 
 #: addons/1.4/pos/trunk/bin/pos.pl:461
 msgid "Credit Card Track"
@@ -4437,7 +4437,7 @@ msgstr "Laporan Asas Tidak Sah"
 msgid "Invoice Profit/Loss"
 msgstr "Invois Keuntungan/Kerugian"
 
-;	#: LedgerSMB/Report/PNL/Product.pm:69
+#: LedgerSMB/Report/PNL/Product.pm:69
 #: addons/1.3/report_framework/trunk/LedgerSMB/Report/PNL/Product.pm:69
 msgid "Proft/Loss on Inventory Sales"
 msgstr "Keuntungan/Kerugian Stok Jualan"

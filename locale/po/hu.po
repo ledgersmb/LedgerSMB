@@ -192,7 +192,8 @@ msgstr "Tétel"
 #: templates/xedemo/sales_quotation.html:71
 #: templates/xedemo/sales_quotation.html:98 templates/xedemo/invoice.html:135
 #: templates/xedemo/pick_list.html:111 templates/xedemo/sales_order.html:129
-#: templates/xedemo/packing_list.html:119 templates/xedemo/printPayment.html:41
+#: templates/xedemo/packing_list.html:119
+#: templates/xedemo/printPayment.html:41
 msgid "Number"
 msgstr "Azonosító"
 
@@ -248,7 +249,8 @@ msgstr "Azonosító"
 #: templates/xedemo/sales_quotation.html:99 templates/xedemo/invoice.html:136
 #: templates/xedemo/timecard.html:85 templates/xedemo/timecard.html:93
 #: templates/xedemo/pick_list.html:112 templates/xedemo/sales_order.html:130
-#: templates/xedemo/packing_list.html:120 templates/xedemo/printPayment.html:47
+#: templates/xedemo/packing_list.html:120
+#: templates/xedemo/printPayment.html:47
 msgid "Description"
 msgstr "Leírás"
 
@@ -373,20 +375,20 @@ msgstr "Kért kiszállítás"
 msgid "Select items"
 msgstr "Cikkek kiválasztása"
 
-#: bin/io.pl:617 bin/io.pl:823 bin/io.pl:1261 bin/io.pl:2198 bin/arapprn.pl:468
-#: bin/pos.pl:1174 bin/bp.pl:162 bin/jc.pl:348 bin/pe.pl:629 bin/pe.pl:864
-#: bin/pe.pl:1870 bin/pe.pl:2365 bin/pe.pl:2535 bin/pe.pl:2812 bin/am.pl:2076
-#: bin/ic.pl:1398 bin/ic.pl:2503 bin/ic.pl:3572 bin/ic.pl:3846 bin/ic.pl:4000
-#: bin/oe.pl:1586 bin/oe.pl:2598 bin/oe.pl:3165 bin/oe.pl:3702 bin/aa.pl:1768
-#: bin/rp.pl:287 bin/rp.pl:1399 bin/arap.pl:264 bin/arap.pl:472 bin/arap.pl:582
-#: scripts/payment.pl:749 scripts/payment.pl:820 scripts/payment.pl:1478
-#: UI/am-audit-control.html:44 UI/search_results.html:33
-#: UI/journal/search.html:328 UI/get_password.html:45
-#: UI/inventory/adjustment_setup.html:24 UI/create_batch.html:37
-#: UI/payments/payments_filter.html:168 UI/employee/filter.html:305
-#: UI/asset/begin_report.html:58 UI/asset/begin_approval.html:66
-#: UI/asset/begin_depreciation_all.html:25 UI/taxform/filter.html:111
-#: UI/Contact/history_filter.html:359
+#: bin/io.pl:617 bin/io.pl:823 bin/io.pl:1261 bin/io.pl:2198
+#: bin/arapprn.pl:468 bin/pos.pl:1174 bin/bp.pl:162 bin/jc.pl:348
+#: bin/pe.pl:629 bin/pe.pl:864 bin/pe.pl:1870 bin/pe.pl:2365 bin/pe.pl:2535
+#: bin/pe.pl:2812 bin/am.pl:2076 bin/ic.pl:1398 bin/ic.pl:2503 bin/ic.pl:3572
+#: bin/ic.pl:3846 bin/ic.pl:4000 bin/oe.pl:1586 bin/oe.pl:2598 bin/oe.pl:3165
+#: bin/oe.pl:3702 bin/aa.pl:1768 bin/rp.pl:287 bin/rp.pl:1399 bin/arap.pl:264
+#: bin/arap.pl:472 bin/arap.pl:582 scripts/payment.pl:749
+#: scripts/payment.pl:820 scripts/payment.pl:1478 UI/am-audit-control.html:44
+#: UI/search_results.html:33 UI/journal/search.html:328
+#: UI/get_password.html:45 UI/inventory/adjustment_setup.html:24
+#: UI/create_batch.html:37 UI/payments/payments_filter.html:168
+#: UI/employee/filter.html:305 UI/asset/begin_report.html:58
+#: UI/asset/begin_approval.html:66 UI/asset/begin_depreciation_all.html:25
+#: UI/taxform/filter.html:111 UI/Contact/history_filter.html:359
 msgid "Continue"
 msgstr "Folytatás"
 
@@ -444,7 +446,8 @@ msgstr "Számla"
 #: t/data/04-complex_template.html:352
 #: templates/demo_with_images/sales_quotation.html:4
 #: templates/demo_with_images/sales_quotation.html:17
-#: templates/demo/sales_quotation.html:4 templates/demo/sales_quotation.html:17
+#: templates/demo/sales_quotation.html:4
+#: templates/demo/sales_quotation.html:17
 #: templates/xedemo/sales_quotation.html:4
 #: templates/xedemo/sales_quotation.html:17
 msgid "Quotation"
@@ -458,9 +461,9 @@ msgid "RFQ"
 msgstr "Ajánlatkérés"
 
 #: bin/io.pl:1338 bin/io.pl:1518 bin/am.pl:2644 bin/ic.pl:1537 bin/oe.pl:301
-#: bin/oe.pl:830 bin/oe.pl:1764 bin/oe.pl:2277 bin/is.pl:976 tools/dbstrings:52
-#: tools/dbstrings:143 tools/dbstrings:157 UI/Contact/contact.html:697
-#: t/data/04-complex_template.html:343
+#: bin/oe.pl:830 bin/oe.pl:1764 bin/oe.pl:2277 bin/is.pl:976
+#: tools/dbstrings:52 tools/dbstrings:143 tools/dbstrings:157
+#: UI/Contact/contact.html:697 t/data/04-complex_template.html:343
 #: templates/demo_with_images/sales_order.html:4
 #: templates/demo_with_images/sales_order.html:18
 #: templates/demo/sales_order.html:4 templates/demo/sales_order.html:18
@@ -479,9 +482,9 @@ msgstr "Munka rendelés"
 #: bin/io.pl:1346 bin/io.pl:1364 bin/io.pl:1555 bin/oe.pl:303 bin/oe.pl:322
 #: bin/is.pl:285 tools/dbstrings:142 tools/dbstrings:156
 #: templates/demo_with_images/pick_list.html:4
-#: templates/demo_with_images/pick_list.html:18 templates/demo/pick_list.html:4
-#: templates/demo/pick_list.html:18 templates/xedemo/pick_list.html:4
-#: templates/xedemo/pick_list.html:18
+#: templates/demo_with_images/pick_list.html:18
+#: templates/demo/pick_list.html:4 templates/demo/pick_list.html:18
+#: templates/xedemo/pick_list.html:4 templates/xedemo/pick_list.html:18
 msgid "Pick List"
 msgstr "Kitárolási lista"
 
@@ -495,9 +498,9 @@ msgid "Packing List"
 msgstr "Szállítólevél"
 
 #: bin/io.pl:1355 bin/io.pl:1566 bin/am.pl:2650 bin/ic.pl:1532 bin/oe.pl:315
-#: bin/oe.pl:841 bin/oe.pl:1710 bin/oe.pl:2283 bin/ir.pl:877 tools/dbstrings:53
-#: tools/dbstrings:145 tools/dbstrings:159 UI/Contact/contact.html:697
-#: t/data/04-complex_template.html:343
+#: bin/oe.pl:841 bin/oe.pl:1710 bin/oe.pl:2283 bin/ir.pl:877
+#: tools/dbstrings:53 tools/dbstrings:145 tools/dbstrings:159
+#: UI/Contact/contact.html:697 t/data/04-complex_template.html:343
 #: templates/demo_with_images/purchase_order.html:4
 #: templates/demo_with_images/purchase_order.html:18
 #: templates/demo/purchase_order.html:4 templates/demo/purchase_order.html:18
@@ -801,18 +804,18 @@ msgstr "Új"
 
 #: bin/gl.pl:281 bin/jc.pl:698 bin/jc.pl:944 bin/pe.pl:455 bin/pe.pl:1243
 #: bin/pe.pl:1569 bin/pe.pl:1774 bin/pe.pl:2152 bin/am.pl:107 bin/am.pl:118
-#: bin/am.pl:485 bin/ic.pl:864 bin/oe.pl:810 bin/aa.pl:977 scripts/asset.pl:548
-#: scripts/account.pl:136 scripts/account.pl:147 UI/am-defaults.html:191
-#: UI/reconciliation/report.html:266 UI/inventory/adjustment_entry.html:78
-#: UI/payments/payments_detail.html:415 UI/am-userconfig.html:64
-#: UI/asset/import_asset.html:57 UI/asset/edit_class.html:56
-#: UI/asset/edit_asset.html:206 UI/taxform/add_taxform.html:73
-#: UI/Contact/pricelist.html:82 UI/Contact/contact.html:233
-#: UI/Contact/contact.html:374 UI/Contact/contact.html:1095
-#: UI/Contact/contact.html:1149 UI/am-taxes.html:45
-#: UI/users/preferences.html:106 t/data/04-complex_template.html:131
-#: t/data/04-complex_template.html:310 t/data/04-complex_template.html:609
-#: t/data/04-complex_template.html:633
+#: bin/am.pl:485 bin/ic.pl:864 bin/oe.pl:810 bin/aa.pl:977
+#: scripts/asset.pl:548 scripts/account.pl:136 scripts/account.pl:147
+#: UI/am-defaults.html:191 UI/reconciliation/report.html:266
+#: UI/inventory/adjustment_entry.html:78 UI/payments/payments_detail.html:415
+#: UI/am-userconfig.html:64 UI/asset/import_asset.html:57
+#: UI/asset/edit_class.html:56 UI/asset/edit_asset.html:206
+#: UI/taxform/add_taxform.html:73 UI/Contact/pricelist.html:82
+#: UI/Contact/contact.html:233 UI/Contact/contact.html:374
+#: UI/Contact/contact.html:1095 UI/Contact/contact.html:1149
+#: UI/am-taxes.html:45 UI/users/preferences.html:106
+#: t/data/04-complex_template.html:131 t/data/04-complex_template.html:310
+#: t/data/04-complex_template.html:609 t/data/04-complex_template.html:633
 msgid "Save"
 msgstr "Mentés"
 
@@ -843,8 +846,8 @@ msgstr "Tőke"
 
 #: bin/gl.pl:530 bin/pe.pl:260 bin/ic.pl:530 bin/ic.pl:657 bin/ic.pl:678
 #: bin/ic.pl:1910 UI/am-defaults.html:63 UI/journal/search.html:187
-#: UI/accounts/edit.html:87 UI/accounts/edit.html:170 UI/accounts/edit.html:271
-#: UI/accounts/edit.html:301
+#: UI/accounts/edit.html:87 UI/accounts/edit.html:170
+#: UI/accounts/edit.html:271 UI/accounts/edit.html:301
 #: templates/demo_with_images/income_statement.html:81
 #: templates/demo/income_statement.html:81
 #: templates/xedemo/income_statement.html:81
@@ -978,7 +981,8 @@ msgstr "Költséghely/profitcenter"
 #: templates/xedemo/purchase_order.html:219
 #: templates/xedemo/request_quotation.html:175
 #: templates/xedemo/sales_quotation.html:173
-#: templates/xedemo/sales_order.html:205 templates/xedemo/printPayment.html:124
+#: templates/xedemo/sales_order.html:205
+#: templates/xedemo/printPayment.html:124
 msgid "Notes"
 msgstr "Megjegyzés"
 
@@ -1206,8 +1210,9 @@ msgstr "Átváltási árfolyam"
 #: templates/demo_with_images/work_order.html:105
 #: templates/demo/ar_transaction.html:92 templates/demo/sales_order.html:105
 #: templates/demo/work_order.html:105 templates/demo/invoice.html:110
-#: templates/xedemo/ar_transaction.html:92 templates/xedemo/work_order.html:105
-#: templates/xedemo/invoice.html:110 templates/xedemo/sales_order.html:105
+#: templates/xedemo/ar_transaction.html:92
+#: templates/xedemo/work_order.html:105 templates/xedemo/invoice.html:110
+#: templates/xedemo/sales_order.html:105
 msgid "Salesperson"
 msgstr "Értékesítő"
 
@@ -1519,8 +1524,9 @@ msgstr "Meddig: %1"
 #: templates/demo_with_images/sales_quotation.html:72
 #: templates/demo_with_images/bin_list.html:109
 #: templates/demo/request_quotation.html:104 templates/demo/statement.html:75
-#: templates/demo/ap_transaction.html:73 templates/demo/ap_transaction.html:192
-#: templates/demo/bin_list.html:109 templates/demo/ar_transaction.html:72
+#: templates/demo/ap_transaction.html:73
+#: templates/demo/ap_transaction.html:192 templates/demo/bin_list.html:109
+#: templates/demo/ar_transaction.html:72
 #: templates/demo/ar_transaction.html:191 templates/demo/pick_list.html:79
 #: templates/demo/printPayment.html:78 templates/demo/sales_quotation.html:72
 #: templates/demo/timecard.html:48 templates/demo/packing_list.html:80
@@ -1937,7 +1943,8 @@ msgstr "Új feladat"
 msgid "Enddate"
 msgstr "Befejező dátum"
 
-#: bin/pe.pl:353 bin/pe.pl:532 bin/pe.pl:1004 bin/ic.pl:1897 tools/dbstrings:89
+#: bin/pe.pl:353 bin/pe.pl:532 bin/pe.pl:1004 bin/ic.pl:1897
+#: tools/dbstrings:89
 msgid "Assembly"
 msgstr "Saját termék"
 
@@ -1999,7 +2006,8 @@ msgstr "Tranzakció nélküli"
 
 #. the project will be shown if it was selected in the first step
 #. Only process element if the value exists.
-#: bin/pe.pl:731 bin/pe.pl:946 tools/dbstrings:189 UI/payments/payment2.html:61
+#: bin/pe.pl:731 bin/pe.pl:946 tools/dbstrings:189
+#: UI/payments/payment2.html:61
 msgid "Projects"
 msgstr "Projektek"
 
@@ -3117,7 +3125,8 @@ msgstr "Ajánlat módosítás"
 msgid "Terms"
 msgstr "Határidő"
 
-#: bin/oe.pl:435 bin/oe.pl:2880 templates/demo_with_images/sales_order.html:103
+#: bin/oe.pl:435 bin/oe.pl:2880
+#: templates/demo_with_images/sales_order.html:103
 #: templates/demo_with_images/purchase_order.html:103
 #: templates/demo_with_images/work_order.html:103
 #: templates/demo/purchase_order.html:103 templates/demo/sales_order.html:103
@@ -3445,7 +3454,6 @@ msgstr "Kézi"
 msgid "Invoice Date"
 msgstr "Teljesítés dátuma"
 
-
 msgid "Invoice Created"
 msgstr "Számla kelte"
 
@@ -3723,9 +3731,9 @@ msgstr "időszakhoz %1"
 
 #: bin/rp.pl:1322 tools/dbstrings:147 tools/dbstrings:161
 #: templates/demo_with_images/statement.html:4
-#: templates/demo_with_images/statement.html:20 templates/demo/statement.html:4
-#: templates/demo/statement.html:20 templates/xedemo/statement.html:4
-#: templates/xedemo/statement.html:20
+#: templates/demo_with_images/statement.html:20
+#: templates/demo/statement.html:4 templates/demo/statement.html:20
+#: templates/xedemo/statement.html:4 templates/xedemo/statement.html:20
 msgid "Statement"
 msgstr "Kimutatás"
 
@@ -4932,7 +4940,8 @@ msgstr "December"
 #: LedgerSMB/DBObject/Company.pm:133
 msgid "No company or credit id in LedgerSMB::DBObject::delete_contact"
 msgstr ""
-"Nincs társaság vagy hitel azonosító ebben: LedgerSMB::DBObject::delete_contact"
+"Nincs társaság vagy hitel azonosító ebben: LedgerSMB::DBObject::"
+"delete_contact"
 
 #: LedgerSMB/DBObject/Company.pm:171
 msgid "No company or credit id in LedgerSMB::DBObject::delete_location"
@@ -5103,9 +5112,9 @@ msgid "Add Customer"
 msgstr "Új vevő"
 
 #: tools/dbstrings:20 tools/dbstrings:37 tools/dbstrings:54 tools/dbstrings:68
-#: tools/dbstrings:73 tools/dbstrings:81 tools/dbstrings:98 tools/dbstrings:172
-#: tools/dbstrings:177 tools/dbstrings:183 tools/dbstrings:190
-#: tools/dbstrings:210 tools/dbstrings:227
+#: tools/dbstrings:73 tools/dbstrings:81 tools/dbstrings:98
+#: tools/dbstrings:172 tools/dbstrings:177 tools/dbstrings:183
+#: tools/dbstrings:190 tools/dbstrings:210 tools/dbstrings:227
 msgid "Reports"
 msgstr "Jelentések"
 
@@ -5720,7 +5729,8 @@ msgid ""
 "This database operation has completed successfully.  LedgerSMB may now be "
 "used."
 msgstr ""
-"Az adatbázisművelet sikeresen megtörtént. Most már használhatja a LedgerSMB-t."
+"Az adatbázisművelet sikeresen megtörtént. Most már használhatja a LedgerSMB-"
+"t."
 
 #: UI/setup/complete.html:10
 msgid "Return to setup"
@@ -5916,8 +5926,8 @@ msgstr "Árfolyamkülönbséget tartalmazza"
 
 #: UI/logout.html:16
 msgid ""
-"Opera detected.  To complete this logout, please close your browser window or "
-"clear private/authentication information"
+"Opera detected.  To complete this logout, please close your browser window "
+"or clear private/authentication information"
 msgstr ""
 "Opera bögésző detektálva. A kilépés biztonságossá tételéhez kérem indítsa "
 "újra a böngészőjét, vagy törölje a Személyes adatok törlésén keresztül a "
@@ -7348,10 +7358,11 @@ msgstr "Fax: %1"
 #: templates/demo_with_images/ap_transaction.html:69
 #: templates/demo_with_images/statement.html:73
 #: templates/demo_with_images/pick_list.html:77
-#: templates/demo_with_images/invoice.html:106 templates/demo/statement.html:73
-#: templates/demo/ap_transaction.html:69 templates/demo/ar_transaction.html:68
-#: templates/demo/pick_list.html:77 templates/demo/packing_list.html:78
-#: templates/demo/invoice.html:106 templates/xedemo/ap_transaction.html:69
+#: templates/demo_with_images/invoice.html:106
+#: templates/demo/statement.html:73 templates/demo/ap_transaction.html:69
+#: templates/demo/ar_transaction.html:68 templates/demo/pick_list.html:77
+#: templates/demo/packing_list.html:78 templates/demo/invoice.html:106
+#: templates/xedemo/ap_transaction.html:69
 #: templates/xedemo/ar_transaction.html:68 templates/xedemo/invoice.html:106
 #: templates/xedemo/pick_list.html:77 templates/xedemo/statement.html:73
 #: templates/xedemo/packing_list.html:78
@@ -7368,15 +7379,16 @@ msgstr "Számla #"
 #: templates/demo_with_images/bin_list.html:108
 #: templates/demo_with_images/work_order.html:102
 #: templates/demo/ap_transaction.html:88 templates/demo/bin_list.html:108
-#: templates/demo/ar_transaction.html:87 templates/demo/purchase_order.html:102
-#: templates/demo/pick_list.html:78 templates/demo/sales_order.html:102
-#: templates/demo/packing_list.html:79 templates/demo/work_order.html:102
-#: templates/demo/invoice.html:109 templates/xedemo/bin_list.html:108
-#: templates/xedemo/ap_transaction.html:88
+#: templates/demo/ar_transaction.html:87
+#: templates/demo/purchase_order.html:102 templates/demo/pick_list.html:78
+#: templates/demo/sales_order.html:102 templates/demo/packing_list.html:79
+#: templates/demo/work_order.html:102 templates/demo/invoice.html:109
+#: templates/xedemo/bin_list.html:108 templates/xedemo/ap_transaction.html:88
 #: templates/xedemo/purchase_order.html:102
-#: templates/xedemo/ar_transaction.html:87 templates/xedemo/work_order.html:102
-#: templates/xedemo/invoice.html:109 templates/xedemo/pick_list.html:78
-#: templates/xedemo/sales_order.html:102 templates/xedemo/packing_list.html:79
+#: templates/xedemo/ar_transaction.html:87
+#: templates/xedemo/work_order.html:102 templates/xedemo/invoice.html:109
+#: templates/xedemo/pick_list.html:78 templates/xedemo/sales_order.html:102
+#: templates/xedemo/packing_list.html:79
 msgid "Order #"
 msgstr "Rendelés #"
 
@@ -7392,13 +7404,13 @@ msgstr "Sorozatszám"
 #: templates/demo/packing_list.html:176 templates/demo/invoice.html:286
 #: templates/xedemo/invoice.html:286 templates/xedemo/packing_list.html:176
 msgid ""
-"Items returned are subject to a 10% restocking charge. A return authorization "
-"must be obtained from %1 before goods are returned. Returns must be shipped "
-"prepaid and properly insured. %1 will not be responsible for damages during "
-"transit."
+"Items returned are subject to a 10% restocking charge. A return "
+"authorization must be obtained from %1 before goods are returned. Returns "
+"must be shipped prepaid and properly insured. %1 will not be responsible for "
+"damages during transit."
 msgstr ""
-"A visszaszállított termékekért 10% újraraktározási költséget számítunk fel. A "
-"visszaszállítás megkezdése előtt %1 hivatalos engedélye szükséges. A "
+"A visszaszállított termékekért 10% újraraktározási költséget számítunk fel. "
+"A visszaszállítás megkezdése előtt %1 hivatalos engedélye szükséges. A "
 "visszaszállítást előre kell fizetni és megfelelő biztosítással ellátni. %1 "
 "semmilyen felelősséget nem vállal a szállítás folyamán keletkezett károkért."
 
@@ -7506,9 +7518,10 @@ msgstr "Adószám:"
 #: templates/demo_with_images/ar_transaction.html:76
 #: templates/demo_with_images/ap_transaction.html:77
 #: templates/demo_with_images/statement.html:76
-#: templates/demo_with_images/invoice.html:108 templates/demo/statement.html:76
-#: templates/demo/ap_transaction.html:77 templates/demo/ar_transaction.html:76
-#: templates/demo/invoice.html:108 templates/xedemo/ap_transaction.html:77
+#: templates/demo_with_images/invoice.html:108
+#: templates/demo/statement.html:76 templates/demo/ap_transaction.html:77
+#: templates/demo/ar_transaction.html:76 templates/demo/invoice.html:108
+#: templates/xedemo/ap_transaction.html:77
 #: templates/xedemo/ar_transaction.html:76 templates/xedemo/invoice.html:108
 #: templates/xedemo/statement.html:76
 msgid "Due"
@@ -7763,6 +7776,30 @@ msgstr "Speciális rendelések visszamondása esetén 10% díjat számítunk fel
 #: templates/demo/bin_list.html:149 templates/xedemo/bin_list.html:149
 msgid "Serialnumber"
 msgstr "Sorozatszám"
+
+msgid "Add AP Transaction"
+msgstr "Új szállítói tranzakció"
+
+msgid "Add AR Transaction"
+msgstr "Új vevő tranzakció"
+
+msgid "Assemblies"
+msgstr "Saját termékek"
+
+msgid "Items"
+msgstr "Tételek"
+
+msgid "Non-taxable Purchases"
+msgstr "Adómentes beszerzések"
+
+msgid "Non-taxable Sales"
+msgstr "Adómentes eladások"
+
+msgid "Tax collected"
+msgstr "Fizetendő ÁFA"
+
+msgid "Tax paid"
+msgstr "Levonható ÁFA"
 
 #~ msgid "No database specified"
 #~ msgstr "Nincs megadva adatbázis"
@@ -8065,37 +8102,6 @@ msgstr "Sorozatszám"
 #~ msgid "Budgets"
 #~ msgstr "Költségvetés"
 
-# 91%
-#, fuzzy
-#~ msgid "Cannot set multiple options for %1"
-#~ msgstr "Nem lehet beállítani a töbszörös opciót"
-
-# 78%
-#, fuzzy
-#~ msgid "%1 Department"
-#~ msgstr "Új osztály"
-
-# 75%
-#, fuzzy
-#~ msgid "%1 Business"
-#~ msgstr "Új üzletág"
-
-# 75%
-#, fuzzy
-#~ msgid "%1 Language"
-#~ msgstr "Új nyelv"
-
-# 95%
-#, fuzzy
-#~ msgid ""
-#~ "Deleting a language will also delete the templates for the language %1"
-#~ msgstr "A nyelv törlése törli a nyelvhez tartozó sablonokat is"
-
-# 86%
-#, fuzzy
-#~ msgid "Edit Preferences for %1"
-#~ msgstr "Felhasználói paraméterek módosítása:"
-
 # 86%
 #, fuzzy
 #~ msgid "No email address for %1"
@@ -8106,90 +8112,8 @@ msgstr "Sorozatszám"
 #~ msgid "Backup sent to %1"
 #~ msgstr "Biztonsági másolat elküldve:"
 
-# 92%
-#, fuzzy
-#~ msgid "Transaction reversal enforced up to %1"
-#~ msgstr "E dátumig csak ellentétes előjelű tranzakcióval lehet stornózni:"
-
-# 83%
-#, fuzzy
-#~ msgid "%1 Warehouse"
-#~ msgstr "Raktárba"
-
-# 77%
-#, fuzzy
-#~ msgid "Invoice Number: %1"
-#~ msgstr "Számlaszám"
-
-# 75%
-#, fuzzy
-#~ msgid "Order Number: %1"
-#~ msgstr "Rendelés száma"
-
-# 80%
-#, fuzzy
-#~ msgid "Quotation Number: %1"
-#~ msgstr "Ajánlat száma"
-
-# 89%
-#, fuzzy
-#~ msgid "%1 Cash Transfer Transaction"
-#~ msgstr "Új számlák közötti pénzmozgás"
-
-# 90%
-#, fuzzy
-#~ msgid "%1 General Ledger Transaction"
-#~ msgstr "Új főkönyvi könyvelés"
-
-# 93%
-#, fuzzy
-#~ msgid "Are you sure you want to delete Transaction %1"
-#~ msgstr "Biztos benne, hogy törölni akarja? Tranzakció:"
-
-# 82%
-#, fuzzy
-#~ msgid "%1: Vendor not on file!"
-#~ msgstr "Szállító nincs az adatbázisban!"
-
-# 84%
-#, fuzzy
-#~ msgid "%1: Customer not on file!"
-#~ msgstr "A vevő hiányzik az adatbázisból!"
-
-# 94%
-#, fuzzy
-#~ msgid "Inventory quantity must be zero before you can set this %1 obsolete!"
-#~ msgstr ""
-#~ "Mielőtt ezt az anyagot/árut elévültnek nyilvánítja,a mennyiségnek nullának "
-#~ "kell lennie!!"
-
-# 92%
-#, fuzzy
-#~ msgid "Are you sure you want to delete Invoice Number %1?"
-#~ msgstr "Biztos benne, hogy törölni akarja? Számlaszám:"
-
 #~ msgid "Print and Post as new"
 #~ msgstr "Újként nyomtat és rögzít"
-
-# 83%
-#, fuzzy
-#~ msgid "Are you sure you want to delete time card for %1 %2 %3"
-#~ msgstr "Biztos benne, ki akarja törölni az időkártyát"
-
-# 77%
-#, fuzzy
-#~ msgid "Project Number: %1"
-#~ msgstr "Projektszám"
-
-# 85%
-#, fuzzy
-#~ msgid "Statement sent to %1"
-#~ msgstr "Kimutatás elküldve:"
-
-# 77%
-#, fuzzy
-#~ msgid "%1 Number"
-#~ msgstr "Beszerzési rendelésszám"
 
 #~ msgid "Above"
 #~ msgstr "Fent"
@@ -8205,12 +8129,6 @@ msgstr "Sorozatszám"
 
 #~ msgid "Accounting Menu"
 #~ msgstr "Menü"
-
-msgid "Add AP Transaction"
-msgstr "Új szállítói tranzakció"
-
-msgid "Add AR Transaction"
-msgstr "Új vevő tranzakció"
 
 #~ msgid "Add Cash Transfer Transaction"
 #~ msgstr "Új számlák közötti pénzmozgás"
@@ -8247,9 +8165,6 @@ msgstr "Új vevő tranzakció"
 
 #~ msgid "Are you sure you want to delete time card for"
 #~ msgstr "Biztos benne, ki akarja törölni az időkártyát"
-
-msgid "Assemblies"
-msgstr "Saját termékek"
 
 #~ msgid "Audit trail removed up to"
 #~ msgstr "Audit követés törlés dátuma"
@@ -8548,8 +8463,8 @@ msgstr "Saját termékek"
 #~ msgid ""
 #~ "Inventory quantity must be zero before you can set this part obsolete!"
 #~ msgstr ""
-#~ "Mielőtt ezt az anyagot/árut elévültnek nyilvánítja,a mennyiségnek nullának "
-#~ "kell lennie!!"
+#~ "Mielőtt ezt az anyagot/árut elévültnek nyilvánítja,a mennyiségnek "
+#~ "nullának kell lennie!!"
 
 #~ msgid "Invoice Number missing!"
 #~ msgstr "Számlaszám hiányzik!"
@@ -8560,15 +8475,12 @@ msgstr "Saját termékek"
 #~ msgid "Item already on pricelist!"
 #~ msgstr "A cikk már szerepel az árlistában!"
 
-msgid "Items"
-msgstr "Tételek"
-
 #~ msgid ""
 #~ "Leave host and port field empty unless you want to make a remote "
 #~ "connection."
 #~ msgstr ""
-#~ "Hagyja üresen a Hely és a Port mezőket, hacsak nem akar távoli kapcsolatot "
-#~ "létesíteni"
+#~ "Hagyja üresen a Hely és a Port mezőket, hacsak nem akar távoli "
+#~ "kapcsolatot létesíteni"
 
 #~ msgid "Licensed to"
 #~ msgstr "Cég:"
@@ -8620,12 +8532,6 @@ msgstr "Tételek"
 
 #~ msgid "No email address for"
 #~ msgstr "Nincs e-mail címe:"
-
-msgid "Non-taxable Purchases"
-msgstr "Adómentes beszerzések"
-
-msgid "Non-taxable Sales"
-msgstr "Adómentes eladások"
 
 #~ msgid "Nothing open!"
 #~ msgstr "Nincs nyitva"
@@ -8780,12 +8686,6 @@ msgstr "Adómentes eladások"
 #~ msgid "Tax Number / SSN"
 #~ msgstr "Tax Number / SSN"
 
-msgid "Tax collected"
-msgstr "Fizetendő ÁFA"
-
-msgid "Tax paid"
-msgstr "Levonható ÁFA"
-
 #~ msgid "Templates"
 #~ msgstr "Sablonok"
 
@@ -8802,8 +8702,8 @@ msgstr "Levonható ÁFA"
 #~ "This is a preliminary check for existing sources. Nothing will be created "
 #~ "or deleted at this stage!"
 #~ msgstr ""
-#~ "A meglévő adatbázisok előzetes ellenőrzése. A program itt még nem töröl és "
-#~ "nem hoz létre semmit!"
+#~ "A meglévő adatbázisok előzetes ellenőrzése. A program itt még nem töröl "
+#~ "és nem hoz létre semmit!"
 
 #~ msgid "Timecard deleted!"
 #~ msgstr "Időkártya törölve!"
